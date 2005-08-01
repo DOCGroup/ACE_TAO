@@ -1,0 +1,28 @@
+// -*- MPC -*-
+// $Id$
+
+project(StaticDAnCEApp): ciao_deployment_stub, ciao_deployment_svnt, ciao_server_dnc, taoexe, iortable, xerces {
+  exename   = StaticDAnCEApp
+  requires += exceptions
+  includes += /usr/include
+  includes += ../NodeApplicationManager ../DomainApplicationManager ../NodeManager
+  libpaths += /usr/lib
+  libs     += XSC_Config_Handlers 
+  after    += XSC_Config_Handlers
+  libs     += DomainApplicationManager Node_Daemon NodeDaemon_stub NodeApplicationManager  
+  after    += DomainApplicationManager Node_Daemon NodeDaemon_stub NodeApplicationManager 
+
+  libs     += Hello_Base_DnC_stub
+  libs     += Hello_Base_DnC_svnt
+  libs     += Receiver_DnC_stub
+  libs     += Receiver_DnC_svnt
+  libs     += Receiver_DnC_exec
+  libs     += Sender_DnC_stub
+  libs     += Sender_DnC_svnt
+  libs     += Sender_DnC_exec
+
+  Source_Files {
+    StaticDAnCEApp.cpp
+  }
+}
+
