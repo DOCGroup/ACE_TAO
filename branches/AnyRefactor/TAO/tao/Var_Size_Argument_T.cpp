@@ -5,10 +5,6 @@
 
 #include "tao/Var_Size_Argument_T.h"
 
-#if TAO_HAS_INTERCEPTORS == 1
-# include "tao/Dynamic_ParameterC.h"
-#endif /* TAO_HAS_INTERCEPTORS */
-
 #if !defined (__ACE_INLINE__)
 #include "tao/Var_Size_Argument_T.inl"
 #endif /* __ACE_INLINE__ */

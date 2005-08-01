@@ -28,7 +28,7 @@
  * environment.
  *
  */
-class TAO_Export TAO_Wait_On_Reactor : public TAO_Wait_Strategy
+class TAO_Wait_On_Reactor : public TAO_Wait_Strategy
 {
 
 public:

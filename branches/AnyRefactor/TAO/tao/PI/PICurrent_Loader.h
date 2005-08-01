@@ -17,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include "pi_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,7 +31,7 @@
 
 #include "ace/Service_Config.h"
 
-class TAO_Export TAO_PICurrent_Loader
+class TAO_PI_Export TAO_PICurrent_Loader
   : public TAO_Object_Loader
 {
 public:

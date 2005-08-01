@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,7 +32,7 @@ class TAO_Synch_Reply_Dispatcher;
  * @brief Strategy for waiting for the reply.
  *
  */
-class TAO_Export TAO_Wait_Strategy
+class TAO_Wait_Strategy
 {
 
 public:

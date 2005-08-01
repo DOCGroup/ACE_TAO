@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include "pi_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,7 +26,6 @@
 #if TAO_HAS_INTERCEPTORS == 1
 
 #include "ace/Array_Base.h"
-#include "Any.h"
 #include "PICurrentC.h"
 #include "LocalObject.h"
 
@@ -54,7 +53,7 @@ namespace TAO
    * request interceptors, in addition to passing data from an
    * interceptor to the calling thread.
    */
-  class TAO_Export PICurrent
+  class TAO_PI_Export PICurrent
     : public virtual PortableInterceptor::Current,
       public virtual TAO_Local_RefCounted_Object
   {

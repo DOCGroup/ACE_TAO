@@ -28,8 +28,8 @@
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:153
 
-#ifndef _TAO_IDL_ORIG_VALUEMODIFIERC_H_
-#define _TAO_IDL_ORIG_VALUEMODIFIERC_H_
+#ifndef _TAO_IDL_ORIG_VISIBILITYC_H_
+#define _TAO_IDL_ORIG_VISIBILITYC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -40,14 +40,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
+#include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
 #include "tao/ORB.h"
 #include "tao/Environment.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO TAO_Export
+#define TAO_EXPORT_MACRO TAO_AnyTypeCode_Export
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -63,32 +63,22 @@
 
 namespace CORBA
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:379
-  
-  typedef CORBA::Short ValueModifier;
-  typedef CORBA::Short_out ValueModifier_out;
-  
+
+  typedef CORBA::Short Visibility;
+  typedef CORBA::Short_out Visibility_out;
+
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-  
-  const CORBA::ValueModifier VM_NONE = 0;
-  
+
+  const CORBA::Visibility PRIVATE_MEMBER = 0;
+
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-  
-  const CORBA::ValueModifier VM_CUSTOM = 1;
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_constant/constant_ch.cpp:52
-  
-  const CORBA::ValueModifier VM_ABSTRACT = 2;
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_constant/constant_ch.cpp:52
-  
-  const CORBA::ValueModifier VM_TRUNCATABLE = 3;
+
+  const CORBA::Visibility PUBLIC_MEMBER = 1;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66

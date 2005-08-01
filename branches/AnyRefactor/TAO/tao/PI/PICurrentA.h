@@ -40,13 +40,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
-#include "tao/PICurrentC.h"
+#include "pi_export.h"
+#include "tao/PI/PICurrentC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO TAO_AnyTypeCode_Export
+#define TAO_EXPORT_MACRO TAO_PI_Export
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -65,7 +65,7 @@ namespace PortableInterceptor
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
 
-  extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_Current;
+  extern TAO_PI_Export ::CORBA::TypeCode_ptr const _tc_Current;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
@@ -75,9 +75,9 @@ namespace PortableInterceptor
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_ch.cpp:52
 
-TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, PortableInterceptor::Current_ptr); // copying
-TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, PortableInterceptor::Current_ptr *); // non-copying
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableInterceptor::Current_ptr &);
+TAO_PI_Export void operator<<= (CORBA::Any &, PortableInterceptor::Current_ptr); // copying
+TAO_PI_Export void operator<<= (CORBA::Any &, PortableInterceptor::Current_ptr *); // non-copying
+TAO_PI_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableInterceptor::Current_ptr &);
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:955

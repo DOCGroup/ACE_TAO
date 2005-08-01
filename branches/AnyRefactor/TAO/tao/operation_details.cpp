@@ -7,22 +7,15 @@
 #include "SystemException.h"
 #include "Argument.h"
 
-#if TAO_HAS_INTERCEPTORS == 1
-# include "TypeCode.h"
-# include "DynamicC.h"
-#endif
-
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/operation_details.i"
 #endif /* ! __ACE_INLINE__ */
 
-
 ACE_RCSID (tao,
            operation_details,
            "$Id$")
-
 
 CORBA::Exception *
 TAO_Operation_Details::corba_exception (const char *id
@@ -87,12 +80,12 @@ TAO_Operation_Details::demarshal_args (TAO_InputCDR &cdr)
 bool
 TAO_Operation_Details::parameter_list (Dynamic::ParameterList &param_list)
 {
-  // Account for the return type that could be in the argument list.
+/* @todo // Account for the return type that could be in the argument list.
   param_list.length (this->num_args_ - 1);
 
    for (CORBA::ULong i = 1; i != this->num_args_; ++i)
      this->args_[i]->interceptor_param (param_list[i - 1]);
-
+  */
    return true;
 }
 
@@ -102,7 +95,7 @@ TAO_Operation_Details::parameter_list (Dynamic::ParameterList &param_list)
 
 bool
 TAO_Operation_Details::exception_list (Dynamic::ExceptionList &exception_list)
-{
+{       /*
   if (this->ex_count_)
     {
       exception_list.length (this->ex_count_);
@@ -115,7 +108,7 @@ TAO_Operation_Details::exception_list (Dynamic::ExceptionList &exception_list)
           TAO_Pseudo_Object_Manager<CORBA::TypeCode> tcp_object (&tcp, 1);
           exception_list[i] = tcp_object;
         }
-    }
+    }     */
   return true;
 }
 

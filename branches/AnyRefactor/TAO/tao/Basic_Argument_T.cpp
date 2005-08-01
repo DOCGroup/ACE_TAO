@@ -5,10 +5,6 @@
 
 #include "tao/Basic_Argument_T.h"
 
-#if TAO_HAS_INTERCEPTORS == 1
-# include "tao/Dynamic_ParameterC.h"
-#endif /* TAO_HAS_INTERCEPTORS */
-
 #if !defined (__ACE_INLINE__)
 #include "tao/Basic_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -25,6 +21,15 @@ TAO::In_Basic_Argument_T<S>::marshal (TAO_OutputCDR & cdr)
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
+
+template<>
+void
+TAO::In_Basic_Argument_T<unsigned int>::interceptor_param (Dynamic::Parameter & p)
+{
+// @todo
+//  p.argument <<= this->x_;
+//  p.mode = CORBA::PARAM_IN;
+}
 
 template<typename S>
 void
@@ -95,6 +100,14 @@ TAO::Ret_Basic_Argument_T<S>::demarshal (TAO_InputCDR & cdr)
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
+
+template<>
+void
+TAO::Ret_Basic_Argument_T<unsigned int>::interceptor_result (CORBA::Any * any)
+{
+// @todo
+//  (*any) <<= this->x_;
+}
 
 template<typename S>
 void

@@ -2083,8 +2083,8 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion
       this->object_ref_table_.destroy ();
 
 #if (TAO_HAS_INTERCEPTORS == 1)
-      CORBA::release (this->pi_current_);
-      this->pi_current_ = 0;  // For the sake of consistency.
+//      CORBA::release (this->pi_current_);
+//      this->pi_current_ = 0;  // For the sake of consistency.
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
     }
   ACE_CATCHALL
@@ -2271,7 +2271,7 @@ TAO_ORB_Core::resolve_picurrent_i (ACE_ENV_SINGLE_ARG_DECL)
         loader->create_object (this->orb_, 0, 0 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      this->pi_current_ = dynamic_cast <TAO::PICurrent *> (pi);
+  //    this->pi_current_ = dynamic_cast <TAO::PICurrent *> (pi);
     }
 }
 

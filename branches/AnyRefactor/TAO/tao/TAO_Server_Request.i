@@ -200,13 +200,13 @@ TAO_ServerRequest::interceptor_count (void)
   return this->interceptor_count_;
 }
 
-ACE_INLINE TAO::PICurrent_Impl &
+ACE_INLINE TAO::PICurrent_Impl *
 TAO_ServerRequest::rs_pi_current (void)
 {
   return this->rs_pi_current_;
 }
 
-ACE_INLINE TAO::PICurrent_Copy_Callback &
+ACE_INLINE TAO::PICurrent_Copy_Callback *
 TAO_ServerRequest::pi_current_copy_callback (void)
 {
   return this->pi_current_copy_callback_;

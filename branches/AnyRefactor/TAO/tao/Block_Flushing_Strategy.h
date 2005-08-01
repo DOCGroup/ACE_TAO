@@ -25,7 +25,7 @@
  *
  * @brief Implement a flushing strategy that blocks on write to flush
  */
-class TAO_Export TAO_Block_Flushing_Strategy : public TAO_Flushing_Strategy
+class TAO_Block_Flushing_Strategy : public TAO_Flushing_Strategy
 {
 public:
   virtual int schedule_output (TAO_Transport *transport);

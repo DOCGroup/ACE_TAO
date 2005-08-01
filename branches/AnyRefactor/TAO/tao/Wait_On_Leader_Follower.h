@@ -35,7 +35,7 @@
  * is Muxed and hence there are multiple threads running in the
  * same Transport context.
  */
-class TAO_Export TAO_Wait_On_Leader_Follower : public TAO_Wait_Strategy
+class TAO_Wait_On_Leader_Follower : public TAO_Wait_Strategy
 {
 
 public:

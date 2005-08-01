@@ -1,14 +1,136 @@
+Mon Aug  1 11:19:12 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/AnyTypeCode.mpc:
+          Updated for a lot of changes
+
+        * tao/Basic_Argument_T.cpp:
+          Added a temporarily specialization for unsigned int, will need to be
+          removed soon
+
+        * tao/Object_Argument_T.cpp
+          Added a temporarily specialization for Policy, will need to be
+          removed soon
+
+        * tao/Special_Basic_Argument_T.cpp:
+          Added a temporarily specialization for bool, will need to be
+          removed soon
+
+        * tao/UB_String_Argument_T.cpp:
+          Added a temporarily specialization for string, will need to be
+          removed soon
+
+        * tao/BD_String_Argument_T.cpp:
+        * tao/Fixed_Array_Argument_T.cpp:
+        * tao/Fixed_Size_Argument_T.cpp:
+          Removed include of Dynamic_ParameterC.h
+
+        * tao/Block_Flushing_Strategy.h:
+        * tao/Flushing_Strategy.h:
+        * tao/Leader_Follower_Flushing_Strategy.h:
+        * tao/Reactive_Flushing_Strategy.h:
+        * tao/Wait_On_Leader_Follower.h:
+        * tao/Wait_On_LF_No_Upcall.h:
+        * tao/Wait_On_Reactor.h:
+        * tao/Wait_On_Read.h:
+        * tao/Wait_Strategy.h:
+          No need to export the class in this file
+
+        * tao/DomainC.cpp:
+          Pass the Dynamic_Parameter to the IFR Adapter, this way we don't
+          depend on Any
+
+        * tao/IFR_Client_Adapter.h:
+          Pass the Dynamic::Parameter to interfacedef_any_insert
+
+        * tao/InvalidSlot*.*:
+          Moved to the PI library
+
+        * tao/Invocation_Base.cpp:
+        * tao/operation_details.cpp:
+          Commented out several methods which need to be reimplemented
+          using a new adapter
+
+        * tao/ORB.cpp:
+        * tao/ORB_Core.{h,cpp,i}:
+        * tao/ORB_Core_TSS_Resources.{h,cpp}:
+          Commented out creation of PICurrent, will have to reimplement this
+          now PICurrent moved to the PI lib
+
+        * tao/PortableInterceptor.pidl:
+        * tao/PortableInterceptorC.h:
+          Removed the files that moved to the PI lib
+
+        * tao/PICurrent.{h,cpp,inl,pidl}:
+        * tao/PICurrent_Copy_Callback.{h,cpp}:
+        * tao/PICurrent_Impl.{h,cpp,inl}:
+        * tao/PICurrent_Loader.{h,cpp}:
+        * tao/PICurrentC.{h,cpp}:
+        * tao/PICurrentS.h:
+          Moved to the PI lib
+
+        * tao/Server_Request.{h,cpp,inl}:
+          Use pointers for the PI stuff, will need to update this soon
+
+        * tao/TypeCodeFactory_Adapter.h:
+          Added forward declaration for ValueModifier
+
+        * tao/ValueModifier.pidl:
+        * tao/ValueModifierC.{h,cpp}:
+        * tao/ValueModifierS.h:
+          Moved to AnyTypeCode lib
+
+        * tao/Visibility.pidl:
+        * tao/VisibilityC.{h,cpp}:
+        * tao/VisibilityS.h:
+          Moved to AnyTypeCode lib
+
+        * tao/AnyTypeCode/PICurrentA.{h,cpp}:
+        * tao/AnyTypeCode/InvalidSlotA.{h,cpp}:
+          Moved to the PI lib
+
+        * tao/AnyTypeCode/PortableInterceptorA.h:
+          Removed some includes
+
+        * tao/AnyTypeCode/TypeCode.h:
+        * tao/AnyTypeCode/Value_TypeCode:
+        * tao/AnyTypeCode/Value_TypeCode_Static.h:
+          Updated includes
+
+        * tao/IFR_Client/*C.cpp:
+          Added include of Dynamic_Parameter.h
+
+        * tao/PI/ClientRequestInfo.{h,cpp}:
+          Updated includes
+
+        * tao/PI/PICurrent*.*:
+          Moved here from the tao lib
+
+        * tao/PoratbleServer/Basic_SArgument_T.cpp
+        * tao/PoratbleServer/BD_String_SArgument_T.cpp
+        * tao/PoratbleServer/Fixed_Array_SArgument_T.cpp
+        * tao/PoratbleServer/Fixed_Size_SArgument_T.cpp
+        * tao/PoratbleServer/Object_SArgument_T.cpp
+        * tao/PoratbleServer/Special_Basic_SArgument_T.cpp
+        * tao/PoratbleServer/UB_String_SArgument_T.cpp
+        * tao/PoratbleServer/Var_Array_SArgument_T.cpp
+        * tao/PoratbleServer/Var_Size_SArgument_T.cpp
+          Update includes
+
+        * tao/PortableServer/Upcall_Wrapper.cpp:
+          Temporarily commented out PICurrent_Guard. Need to change this
+          to a call to the PI adapter and an auto_ptr
+
 Fri Jul 29 19:23:17 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_global.cpp:
         * TAO_IDL/be_include/be_global.h:
-        
+
           Added -oA <path> option to direct the output of generated
-          *A.* files. The -oA option overrides path specified by 
+          *A.* files. The -oA option overrides path specified by
           -o, if any.
-          
+
         * docs/compiler.html:
-        
+
           Added above option to commandline option table.
 
 Fri Jul 29 18:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>

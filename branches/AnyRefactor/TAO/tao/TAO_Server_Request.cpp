@@ -72,8 +72,8 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
     argument_flag_ (1)
 #if TAO_HAS_INTERCEPTORS == 1
     , interceptor_count_ (0)
-    , rs_pi_current_ ()
-    , pi_current_copy_callback_ ()
+    , rs_pi_current_ (0)
+    , pi_current_copy_callback_ (0)
     , result_seq_ (0)
     , caught_exception_ (0)
     , reply_status_ (-1)
@@ -115,7 +115,8 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
     argument_flag_ (true)
 #if TAO_HAS_INTERCEPTORS == 1
   , interceptor_count_ (0)
-  , rs_pi_current_ ()
+  , rs_pi_current_ (0)
+  , pi_current_copy_callback_ (0)
   , result_seq_ (0)
   , caught_exception_ (0)
   , reply_status_ (-1)
@@ -150,7 +151,8 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_ORB_Core * orb_core,
     argument_flag_ (false)
 #if TAO_HAS_INTERCEPTORS == 1
   , interceptor_count_ (0)
-  , rs_pi_current_ ()
+  , rs_pi_current_ (0)
+  , pi_current_copy_callback_ (0)
   , result_seq_ (0)
   , caught_exception_ (0)
   , reply_status_ (-1)
@@ -179,6 +181,13 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_ORB_Core * orb_core,
 
 TAO_ServerRequest::~TAO_ServerRequest (void)
 {
+#if TAO_HAS_INTERCEPTORS == 1
+  delete pi_current_copy_callback_;
+  pi_current_copy_callback_ = 0;
+
+  delete rs_pi_current_;
+  rs_pi_current_ = 0;
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 }
 
 CORBA::ORB_ptr

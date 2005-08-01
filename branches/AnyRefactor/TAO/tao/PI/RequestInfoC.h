@@ -53,7 +53,7 @@
 #include "tao/PI_ForwardC.h"
 #include "tao/AnyTypeCode/DynamicC.h"
 #include "tao/Messaging_SyncScopeC.h"
-#include "tao/InvalidSlotC.h"
+#include "tao/PI/InvalidSlotC.h"
 #include "tao/IOP_IORC.h"
 
 #if defined (TAO_EXPORT_MACRO)

@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "TAO_Export.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -45,7 +45,7 @@ class TAO_Queued_Message;
  * no-op.
  *
  */
-class TAO_Export TAO_Flushing_Strategy
+class TAO_Flushing_Strategy
 {
 public:
   /// Destructor

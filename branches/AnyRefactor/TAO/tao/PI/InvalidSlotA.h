@@ -28,8 +28,8 @@
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:153
 
-#ifndef _TAO_IDL_ORIG_VISIBILITYC_H_
-#define _TAO_IDL_ORIG_VISIBILITYC_H_
+#ifndef _TAO_IDL_ORIG_INVALIDSLOTA_H_
+#define _TAO_IDL_ORIG_INVALIDSLOTA_H_
 
 #include /**/ "ace/pre.h"
 
@@ -40,14 +40,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
-#include "tao/ORB.h"
-#include "tao/Environment.h"
+#include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
+#include "tao/PI/InvalidSlotC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO TAO_Export
+#define TAO_EXPORT_MACRO TAO_AnyTypeCode_Export
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -61,29 +60,17 @@
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:48
 
-namespace CORBA
+namespace PortableInterceptor
 {
-
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:379
+  // be\be_visitor_typecode/typecode_decl.cpp:44
 
-  typedef CORBA::Short Visibility;
-  typedef CORBA::Short_out Visibility_out;
-
-  // TAO_IDL - Generated from
-  // be\be_visitor_constant/constant_ch.cpp:52
-
-  const CORBA::Visibility PRIVATE_MEMBER = 0;
-
-  // TAO_IDL - Generated from
-  // be\be_visitor_constant/constant_ch.cpp:52
-
-  const CORBA::Visibility PUBLIC_MEMBER = 1;
+  extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_InvalidSlot;
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
 
-} // module CORBA
+} // module PortableInterceptor
 
 // TAO_IDL - Generated from
 // be\be_visitor_traits.cpp:61
@@ -92,6 +79,14 @@ namespace CORBA
 namespace TAO
 {
 }
+
+// TAO_IDL - Generated from
+// be\be_visitor_exception/any_op_ch.cpp:52
+
+TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const PortableInterceptor::InvalidSlot &); // copying version
+TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, PortableInterceptor::InvalidSlot*); // noncopying version
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableInterceptor::InvalidSlot *&); // deprecated
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, const PortableInterceptor::InvalidSlot *&);
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:955

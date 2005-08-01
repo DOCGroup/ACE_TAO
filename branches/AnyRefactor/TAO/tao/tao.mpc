@@ -92,7 +92,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     IIOP_Transport.cpp
     IIOPC.cpp
     Incoming_Message_Queue.cpp
-    InvalidSlotC.cpp
     Invocation_Adapter.cpp
     Invocation_Base.cpp
     Invocation_Endpoint_Selectors.cpp
@@ -149,11 +148,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     params.cpp
     Parser_Registry.cpp
     PI_ForwardC.cpp
-    PICurrent.cpp
-    PICurrentC.cpp
-    PICurrent_Copy_Callback.cpp
-    PICurrent_Impl.cpp
-    PICurrent_Loader.cpp
     Pluggable_Messaging.cpp
     Pluggable_Messaging_Utils.cpp
     Policy_Current.cpp
@@ -223,8 +217,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     UserException.cpp
     UShortSeqC.cpp
     Valuetype_Adapter.cpp
-    ValueModifierC.cpp
-    VisibilityC.cpp
     Wait_On_Leader_Follower.cpp
     Wait_On_LF_No_Upcall.cpp
     Wait_On_Reactor.cpp
@@ -373,8 +365,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     IIOP_Profile.h
     IIOP_Transport.h
     Incoming_Message_Queue.h
-    InvalidSlotC.h
-    InvalidSlotS.h
     Invocation_Adapter.h
     Invocation_Base.h
     Invocation_Endpoint_Selectors.h
@@ -448,12 +438,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     ParameterModeS.h
     params.h
     Parser_Registry.h
-    PICurrent_Copy_Callback.h
-    PICurrent.h
-    PICurrentC.h
-    PICurrentS.h
-    PICurrent_Impl.h
-    PICurrent_Loader.h
     PI_ForwardC.h
     Pluggable_Messaging.h
     Pluggable_Messaging_Utils.h
@@ -575,10 +559,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     VarOut_T.h
     Var_Size_Argument_T.h
     Version.h
-    VisibilityC.h
-    VisibilityS.h
-    ValueModifierC.h
-    ValueModifierS.h
     Wait_On_Leader_Follower.h
     Wait_On_LF_No_Upcall.h
     Wait_On_Reactor.h

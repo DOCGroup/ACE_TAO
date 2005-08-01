@@ -6,7 +6,7 @@
 #include "tao/PortableServer/Object_SArgument_T.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-# include "tao/Dynamic_ParameterC.h"
+# include "tao/AnyTypeCode/Dynamic_ParameterC.h"
 #endif /* TAO_HAS_INTERCEPTORS */
 
 #if !defined (__ACE_INLINE__)
