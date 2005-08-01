@@ -13,6 +13,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Adapter.cpp
     Adapter_Factory.cpp
     Adapter_Registry.cpp
+    AnyTypeCode_Adapter.cpp
     Argument.cpp
     Asynch_Queued_Message.cpp
     Asynch_Reply_Dispatcher_Base.cpp
