@@ -75,7 +75,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 			{
 				rm->installPackage (options->name_.c_str (), options->path_.c_str ());
 			}
-			catch (CORBA::Exception &ex)
+			catch (CORBA::Exception &)
 			{
 				cout << "\nPackage is already in the repository!\n";
 				return 0;
@@ -89,7 +89,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 				cout << "Label: " << pc->label << endl;
 				cout << "UUID: " << pc->UUID << endl;
 			}
-			catch (CORBA::Exception &ex)
+			catch (CORBA::Exception &)
 			{
 				cout << "\nError! Package not found!" << endl;
 			}
@@ -101,7 +101,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 				rm->deletePackage (options->name_.c_str ());
 				cout << options->name_.c_str () << " deleted" << endl;
 			}
-			catch (CORBA::Exception &ex)
+			catch (CORBA::Exception &)
 			{
 				cout << "\nNo such package!" << endl;
 			}
