@@ -54,10 +54,9 @@ exception_holder_raise (TAO::Exception_Data *exception_data,
           (_tao_in >> completion) == 0)
         ACE_THROW (CORBA::MARSHAL (TAO::VMCID,
                                    CORBA::COMPLETED_MAYBE));
+
       CORBA::SystemException* exception =
-        TAO_Exceptions::create_system_exception (type_id.in ()
-                                                 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+        TAO_Exceptions::create_system_exception (type_id.in ());
 
       if (exception == 0)
         {

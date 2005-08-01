@@ -610,9 +610,7 @@ namespace TAO
       }
 
     CORBA::SystemException *ex =
-      TAO_Exceptions::create_system_exception (type_id.in ()
-                                               ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+      TAO_Exceptions::create_system_exception (type_id.in ());
 
     if (ex == 0)
       {
