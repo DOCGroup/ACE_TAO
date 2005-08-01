@@ -28,39 +28,41 @@
 class Options
 {
 public:
+  /// Returns the singleton instance
   static Options *instance (void);
-  // Returns the singleton instance
 
+  /// parses commandline arguments
   void parse_args (int argc, ACE_TCHAR *argv[]);
-  // parses commandline arguments
 
+  /// Name of package
   ACE_CString name_;
-  // Name of package
 
+  /// Name of package
   ACE_CString uuid_;
-  // Name of package
 
+  /// specifies the local path for install
   ACE_CString path_;
-  // specifies the local path for install
 
+  /// delete the package_ name
   bool delete_;
-  // delete the package_ name
 
+  /// installs the package_ name
   bool install_;
-  // installs the package_ name
 
+  /// installs the package_ name
   bool find_;
-  // installs the package_ name
 
+  /// shutdown the RepositoryManagerDemon
   bool shutdown_;
-  //shutdown the RepositoryManagerDemon
+
 
 protected:
+  /// protected constructor, singleton
   Options (void);
-  // protected constructor, singleton
 
+  /// the singleton
   static Options *instance_;
-  // the singleton
+
 
   void usage (void);
 };
