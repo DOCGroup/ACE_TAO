@@ -1,8 +1,18 @@
+Mon Aug  1 18:10:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Exception.{h,cpp}:
+        * tao/SystemException.{h,cpp}:
+        * tao/UserException.{h,cpp}:
+          Removed _is_a, it is TAO specific to handle environments without
+          RTTI but we require and use that, so zapped this method.
+          Reimplemented SystemException::_tao_get_omg_exception_description
+          to use dynamic_cast to check for the specific exception type
+
 Mon Aug  1 15:22:59 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/AnyTypeCode/DynamicA.h:
         * tao/AnyTypeCode/DynamicC.h:
-        
+
           Fixed some export macros that were not changed when these
           files were moved to the AnyTypeCode library.
 
