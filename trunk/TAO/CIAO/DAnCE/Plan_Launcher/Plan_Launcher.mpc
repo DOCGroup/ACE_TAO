@@ -8,7 +8,6 @@ project(Plan_Launcher_Impl) : naming, ciao_server_dnc, xerces {
   after += XSC_Config_Handlers ExecutionManager_stub NodeDaemon_stub
   libs     += XSC_Config_Handlers
   libs     += ExecutionManager_stub
-  after    += XSC_Config_Handlers
   
   dynamicflags = PLAN_LAUNCHER_IMPL_BUILD_DLL
   
@@ -16,16 +15,18 @@ project(Plan_Launcher_Impl) : naming, ciao_server_dnc, xerces {
     Plan_Launcher_Impl.cpp
     DAM_Map.cpp
   }
+
+  Header_Files {
+    Plan_Launcher_Impl_Export.h
+  }
 }
 
 project(Plan_Launcher) : ciao_server_dnc, taoexe  {
   exename = plan_launcher
 
 
-  after += XSC_Config_Handlers ExecutionManager_stub NodeDaemon_stub
-  libs     += XSC_Config_Handlers Plan_Launcher_Impl
-  libs     += ExecutionManager_stub
-  after    += XSC_Config_Handlers Plan_Launcher_Impl
+  after += Plan_Launcher_Impl
+  libs  += XSC_Config_Handlers Plan_Launcher_Impl ExecutionManager_stub
 
   Source_Files {
     Plan_Launcher.cpp
