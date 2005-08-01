@@ -6,12 +6,13 @@
 #include "CORBA_String.h"
 #include "CDR.h"
 #include "debug.h"
+#include "AnyTypeCode_Adapter.h"
 
 #include "ace/Malloc.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
-
+#include "ace/Dynamic_Service.h"
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 // Needed for ostream& operator<< (ostream &os, const CORBA::Exception &e)
@@ -889,14 +890,15 @@ TAO::excp_factory excp_array [] = {
 CORBA::TypeCode_ptr \
 CORBA::name ::_tao_type (void) const \
 { \
-  return 0; \
+    TAO_AnyTypeCode_Adapter *adapter = \
+      ACE_Dynamic_Service<TAO_AnyTypeCode_Adapter>::instance ( \
+          "AnyTypeCode_Adapter" \
+        ); \
+    return adapter->_tao_type_ ## name (); \
 }
 
 STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
-
-// @todo implement method above
-//  return CORBA::_tc_ ## name;
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 void \
