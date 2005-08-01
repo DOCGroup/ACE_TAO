@@ -139,9 +139,3 @@ namespace CORBA
 
 #endif /* (ACE_LACKS_IOSTREAM_TOTALLY) */
 
-
-#if defined (TAO_DONT_CATCH_DOT_DOT_DOT)
-TAO_DONT_CATCH::TAO_DONT_CATCH (void)
-{}
-#endif /* TAO_DONT_CATCH_DOT_DOT_DOT */
-
