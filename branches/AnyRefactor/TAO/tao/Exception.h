@@ -150,6 +150,9 @@ namespace CORBA
 
 #if defined (ACE_USES_WCHAR)
     /// ACE_WCHAR_T version of _tao_print_exception.
+    /**
+     * @note This method is TAO-specific.
+     */
     void _tao_print_exception (const ACE_WCHAR_T *info,
                                FILE *f = stdout) const;
 #endif  // ACE_USES_WCHAR
@@ -159,9 +162,10 @@ namespace CORBA
     virtual ACE_CString _info (void) const = 0;
 
     virtual void _tao_encode (TAO_OutputCDR &cdr
-                              ACE_ENV_ARG_DECL_NOT_USED) const = 0;
+                              ACE_ENV_ARG_DECL) const = 0;
+
     virtual void _tao_decode (TAO_InputCDR &cdr
-                              ACE_ENV_ARG_DECL_NOT_USED) = 0;
+                              ACE_ENV_ARG_DECL) = 0;
 
     /// Used in the non-copying Any insertion operator.
     static void _tao_any_destructor (void *);
@@ -178,7 +182,13 @@ namespace CORBA
      * public:
      *   virtual CORBA::Exception *_tao_duplicate (void) const
      *   {
-     *     return new SomeException (*this);
+     *     CORBA::Exception *result = 0;
+     *     ACE_NEW_RETURN (
+     *         result,
+     *         SomeException (*this),
+     *         0
+     *       );
+     *     return result;
      *   }
      * };
      * </PRE>
