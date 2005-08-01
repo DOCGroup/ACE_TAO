@@ -129,7 +129,7 @@ TAO_CORBANAME_Parser::parse_string (const char *ior,
       // Make a dynamic request for resolve_str in this naming context
       obj = this->parse_string_dynamic_request_helper (name_context.in (),
                                                        key_string
-                                                        ACE_ENV_ARG_PARAMETER);
+                                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, ex)
@@ -155,8 +155,3 @@ ACE_STATIC_SVC_DEFINE (TAO_CORBANAME_Parser,
 
 ACE_FACTORY_DEFINE (TAO, TAO_CORBANAME_Parser)
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
