@@ -57,6 +57,8 @@ namespace CORBA
 
     virtual void _raise (void) const = 0;
 
+    virtual CORBA::TypeCode_ptr _tao_type (void) const;
+
     // = TAO specific extension.
 
     /// Constructor from a repository id.

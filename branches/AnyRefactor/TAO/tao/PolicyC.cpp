@@ -190,10 +190,12 @@ CORBA::PolicyError::PolicyError (
 }
 
 // TAO extension - the virtual _type method.
-//CORBA::TypeCode_ptr CORBA::PolicyError::_tao_type (void) const
-//{
+CORBA::TypeCode_ptr CORBA::PolicyError::_tao_type (void) const
+{
+/// @todo use adapter
+  return 0;
 //  return ::CORBA::_tc_PolicyError;
-//}
+}
 
 // TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
@@ -313,10 +315,12 @@ CORBA::InvalidPolicies::InvalidPolicies (
 }
 
 // TAO extension - the virtual _type method.
-//CORBA::TypeCode_ptr CORBA::InvalidPolicies::_tao_type (void) const
-//{
-//  return ::CORBA::_tc_InvalidPolicies;
-//}
+CORBA::TypeCode_ptr CORBA::InvalidPolicies::_tao_type (void) const
+{
+  // todo
+  //return ::CORBA::_tc_InvalidPolicies;
+  return 0;
+}
 
 // TAO_IDL - Generated from
 // be\be_visitor_interface/interface_cs.cpp:60

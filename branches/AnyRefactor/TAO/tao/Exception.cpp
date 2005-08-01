@@ -86,12 +86,6 @@ CORBA::Exception::_name (void) const
   return this->name_.in ();
 }
 
-/*CORBA::TypeCode_ptr
-CORBA::Exception::_tao_type (void) const
-{
-  return CORBA::TypeCode::_nil ();
-} */
-
 int
 CORBA::Exception::_is_a (const char* repository_id) const
 {

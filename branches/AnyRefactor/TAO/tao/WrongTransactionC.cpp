@@ -147,10 +147,12 @@ void CORBA::WrongTransaction::_tao_decode (
 }
 
 // TAO extension - the virtual _type method.
-//CORBA::TypeCode_ptr CORBA::WrongTransaction::_tao_type (void) const
-//{
-//  return ::CORBA::_tc_WrongTransaction;
-//}
+CORBA::TypeCode_ptr CORBA::WrongTransaction::_tao_type (void) const
+{
+  // @todo
+  //return ::CORBA::_tc_WrongTransaction;
+  return 0;
+}
 
 // TAO_IDL - Generated from
 // be\be_visitor_exception/cdr_op_cs.cpp:60

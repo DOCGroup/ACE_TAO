@@ -136,7 +136,7 @@ namespace CORBA
     // = These are TAO-specific extensions.
 
     /// Will be overridden in the concrete derived classes.
-//    virtual CORBA::TypeCode_ptr _tao_type (void) const;
+    virtual CORBA::TypeCode_ptr _tao_type (void) const = 0;
 
     // = To implement the narrow method.
     virtual int _is_a (const char* repository_id) const;

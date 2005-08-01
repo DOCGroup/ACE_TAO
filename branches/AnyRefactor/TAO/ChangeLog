@@ -1,4 +1,35 @@
-Mon Aug  1 11:19:12 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+Mon Aug  1 12:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Exception.{h,cpp}:
+          Declared _tao_type as pure virtual. No need to have a default
+          implementation here
+
+        * tao/ORB.{h,cpp}:
+          Optimized InvalidName::_downcast. Implemented _tao_type as
+          return 0, we don't have a default implementatio anymore in the
+          base
+
+        * tao/PolicyC.{h,cpp}:
+        * tao/WrongTransactionC.{h,cpp}:
+          Made _tao_type active again, implement this as return 0 at this
+          moment, have to call a new adapter later
+
+        * tao/SystemException.{h,cpp}:
+          Added _tao_type again, implemented it as return 0, have to add
+          a call to an adapter later for all system exceptions
+
+        * tao/UserException.{h,cpp}:
+          Added _tao_type with return 0 as default implementation, coming
+          from the base
+
+        * tao/AnyTypeCode/BoundsC.{h,cpp}:
+        * tao/PI/InvalidSlotC.{h,cpp}:
+          Added _tao_type again.
+
+        * tao/AnyTypeCode/TypeCode.{h,cpp}:
+          Added _tao_type with return 0
+
+Mon Aug  1 11:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode.mpc:
           Updated for a lot of changes

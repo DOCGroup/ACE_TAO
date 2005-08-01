@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "BoundsC.h"
+#include "BoundsA.h"
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
 #include "ace/OS_NS_string.h"
@@ -147,10 +147,10 @@ void CORBA::Bounds::_tao_decode (
 }
 
 // TAO extension - the virtual _type method.
-//CORBA::TypeCode_ptr CORBA::Bounds::_tao_type (void) const
-//{
-//  return ::CORBA::_tc_Bounds;
-//}
+CORBA::TypeCode_ptr CORBA::Bounds::_tao_type (void) const
+{
+  return ::CORBA::_tc_Bounds;
+}
 
 // TAO_IDL - Generated from
 // be\be_visitor_exception/cdr_op_cs.cpp:60

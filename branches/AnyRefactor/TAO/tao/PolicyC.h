@@ -159,7 +159,7 @@ namespace CORBA
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:129
 
-    //virtual CORBA::TypeCode_ptr _tao_type (void) const;
+    virtual CORBA::TypeCode_ptr _tao_type (void) const;
   };
 
 #endif /* end #if !defined */
@@ -212,7 +212,7 @@ namespace CORBA
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:129
 
-    //virtual CORBA::TypeCode_ptr _tao_type (void) const;
+    virtual CORBA::TypeCode_ptr _tao_type (void) const;
   };
 
 #endif /* end #if !defined */
