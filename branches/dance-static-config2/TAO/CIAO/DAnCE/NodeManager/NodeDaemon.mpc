@@ -28,5 +28,26 @@ project(Node_Daemon): ciao_deployment_stub, ciao_deployment_svnt, ciao_server_dn
     NodeDaemon_Impl.cpp
     Node_Daemon.cpp
     NAM_Map.cpp
+    NodeDaemonC.cpp
+  }
+}
+
+project(libNode_Daemon): ciao_server_dnc,ciao_deployment_svnt, ciao_deployment_stub, iortable, ifr_client, naming { 
+  sharedname = Node_Daemon
+  requires += exceptions
+  includes += /usr/include
+  libpaths += /usr/lib
+  after += NodeApplicationManager NodeDaemon_stub
+  libs += NodeDaemon_stub NodeApplicationManager
+ 
+  IDL_Files {
+  }
+ 
+  Source_Files {
+    NodeDaemonS.cpp
+    NodeDaemon_Impl.cpp
+    Node_Daemon.cpp
+    NAM_Map.cpp
+    NodeDaemonC.cpp
   }
 }
