@@ -85,7 +85,6 @@ CORBA::SystemException::SystemException (CORBA::ULong code,
 {
 }
 
-
 CORBA::SystemException::SystemException (const CORBA::SystemException &src)
   : CORBA::Exception (src),
     minor_ (src.minor_),
@@ -106,16 +105,6 @@ CORBA::SystemException::operator= (const CORBA::SystemException &src)
   this->completed_ = src.completed_;
 
   return *this;
-}
-
-
-int
-CORBA::SystemException::_is_a (const char* interface_id) const
-{
-  return ((ACE_OS::strcmp (interface_id, this->_rep_id ()) == 0) ||
-          (ACE_OS::strcmp (interface_id,
-                           "IDL:omg.org/CORBA/SystemException:1.0") == 0)
-          || this->Exception::_is_a (interface_id));
 }
 
 void
@@ -573,7 +562,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
       "Operation not implemented in local object"   // 8
     };
 
-  static const char *NO_RESOURCE_TABLE[] =
+  static const char *NO_RESOURCES_TABLE[] =
     {
       "Portable Interceptor operation not support in this binding.", // 1
       "No connection for request's priority."                        // 2
@@ -690,87 +679,129 @@ CORBA::SystemException::_tao_get_omg_exception_description (
 
   minor_code--;  // Adjust to match table offset.
 
-  if (exc._is_a ("IDL:omg.org/CORBA/UNKNOWN:1.0")
+  CORBA::UNKNOWN const * unknown_exception =
+    dynamic_cast <const CORBA::UNKNOWN *> (&exc);
+  if (unknown_exception != 0
       && minor_code < sizeof UNKNOWN_TABLE / sizeof (char *))
     return UNKNOWN_TABLE[minor_code];
 
-  if (exc._is_a ("IDL:omg.org/CORBA/BAD_PARAM:1.0")
+  CORBA::BAD_PARAM const * bad_param__exception =
+    dynamic_cast <const CORBA::BAD_PARAM *> (&exc);
+  if (bad_param__exception != 0
       && minor_code < sizeof BAD_PARAM_TABLE / sizeof (char *))
     return BAD_PARAM_TABLE[minor_code];
 
-  if (exc._is_a ("IDL:omg.org/CORBA/IMP_LIMIT:1.0")
+  CORBA::IMP_LIMIT const * imp_limit_exception =
+    dynamic_cast <const CORBA::IMP_LIMIT *> (&exc);
+  if (imp_limit_exception != 0
       && minor_code < sizeof IMP_LIMIT_TABLE / sizeof (char *))
     return IMP_LIMIT_TABLE[minor_code];
 
-  if (exc._is_a ("IDL:omg.org/CORBA/INITIALIZE:1.0")
+  CORBA::INITIALIZE const * initialize_exception =
+    dynamic_cast <const CORBA::INITIALIZE *> (&exc);
+  if (initialize_exception != 0
       && minor_code < sizeof INITIALIZE_TABLE / sizeof (char *))
     return INITIALIZE_TABLE[minor_code];
 
-  if (exc._is_a ("IDL:omg.org/CORBA/INV_OBJREF:1.0")
+  CORBA::INV_OBJREF const * inv_objref_exception =
+    dynamic_cast <const CORBA::INV_OBJREF *> (&exc);
+  if (inv_objref_exception != 0
       && minor_code < sizeof INV_OBJREF_TABLE / sizeof (char *))
     return INV_OBJREF_TABLE[minor_code];
 
-  if (exc._is_a ("IDL:omg.org/CORBA/MARSHAL:1.0")
+  CORBA::MARSHAL const * marshal_exception =
+    dynamic_cast <const CORBA::MARSHAL *> (&exc);
+  if (marshal_exception != 0
       && minor_code < sizeof MARSHAL_TABLE / sizeof (char *))
     return MARSHAL_TABLE[minor_code];
 
-  if (exc._is_a ("IDL:omg.org/CORBA/BAD_TYPECODE:1.0")
+  CORBA::BAD_TYPECODE const * bad_typecode_exception =
+    dynamic_cast <const CORBA::BAD_TYPECODE *> (&exc);
+  if (bad_typecode_exception != 0
       && minor_code < sizeof BAD_TYPECODE_TABLE / sizeof (char *))
     return BAD_TYPECODE_TABLE[minor_code];
 
-  if (exc._is_a ("IDL:omg.org/CORBA/NO_IMPLEMENT:1.0")
+  CORBA::NO_IMPLEMENT const * no_implement_exception =
+    dynamic_cast <const CORBA::NO_IMPLEMENT *> (&exc);
+  if (no_implement_exception != 0
       && minor_code < sizeof NO_IMPLEMENT_TABLE / sizeof (char *))
     return NO_IMPLEMENT_TABLE[minor_code];
 
-  if (exc._is_a ("IDL:omg.org/CORBA/NO_RESOURCE:1.0")
-      && minor_code < sizeof NO_RESOURCE_TABLE / sizeof (char *))
-    return NO_RESOURCE_TABLE[minor_code];
+  CORBA::NO_RESOURCES const * no_resource_exception =
+    dynamic_cast <const CORBA::NO_RESOURCES *> (&exc);
+  if (no_resource_exception != 0
+      && minor_code < sizeof NO_RESOURCES_TABLE / sizeof (char *))
+    return NO_RESOURCES_TABLE[minor_code];
 
-  if (exc._is_a ("IDL:omg.org/CORBA/BAD_INV_ORDER:1.0")
+  CORBA::BAD_INV_ORDER const * bad_inv_order_exception =
+    dynamic_cast <const CORBA::BAD_INV_ORDER *> (&exc);
+  if (bad_inv_order_exception != 0
       && minor_code < sizeof BAD_INV_ORDER_TABLE / sizeof (char *))
     return BAD_INV_ORDER_TABLE[minor_code];
 
-  if (exc._is_a ("IDL:omg.org/CORBA/TRANSIENT:1.0")
+  CORBA::TRANSIENT const * transient_exception =
+    dynamic_cast <const CORBA::TRANSIENT *> (&exc);
+  if (transient_exception != 0
       && minor_code < sizeof TRANSIENT_TABLE / sizeof (char *))
     return TRANSIENT_TABLE[minor_code];
 
-  if (exc._is_a ("IDL:omg.org/CORBA/OBJ_ADAPTER:1.0")
+  CORBA::OBJ_ADAPTER const * obj_adapter_exception =
+    dynamic_cast <const CORBA::OBJ_ADAPTER *> (&exc);
+  if (obj_adapter_exception != 0
       && minor_code < sizeof OBJ_ADAPTER_TABLE / sizeof (char *))
     return OBJ_ADAPTER_TABLE[minor_code];
 
-  if (exc._is_a ("IDL:omg.org/CORBA/DATA_CONVERSION:1.0")
+  CORBA::DATA_CONVERSION const * data_conversion_exception =
+    dynamic_cast <const CORBA::DATA_CONVERSION *> (&exc);
+  if (data_conversion_exception != 0
       && minor_code < sizeof DATA_CONVERSION_TABLE / sizeof (char *))
     return DATA_CONVERSION_TABLE[minor_code];
 
-  if (exc._is_a ("IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0")
+  CORBA::OBJECT_NOT_EXIST const * object_not_exist_exception =
+    dynamic_cast <const CORBA::OBJECT_NOT_EXIST *> (&exc);
+  if (object_not_exist_exception != 0
       && minor_code < sizeof OBJECT_NOT_EXIST_TABLE / sizeof (char *))
     return OBJECT_NOT_EXIST_TABLE[minor_code];
 
-  if (exc._is_a ("IDL:omg.org/CORBA/INV_POLICY:1.0")
+  CORBA::INV_POLICY const * inv_policy_exception =
+    dynamic_cast <const CORBA::INV_POLICY *> (&exc);
+  if (inv_policy_exception != 0
       && minor_code < sizeof INV_POLICY_TABLE / sizeof (char *))
     return INV_POLICY_TABLE[minor_code];
 
-  if (exc._is_a ("IDL:omg.org/CORBA/ACTIVITY_COMPLETED:1.0")
+  CORBA::ACTIVITY_COMPLETED const * activity_completed_exception =
+    dynamic_cast <const CORBA::ACTIVITY_COMPLETED *> (&exc);
+  if (activity_completed_exception != 0
       && minor_code < sizeof ACTIVITY_COMPLETED_TABLE / sizeof (char *))
     return ACTIVITY_COMPLETED_TABLE[minor_code];
 
-  if (exc._is_a ("IDL:omg.org/CORBA/ACTIVITY_REQUIRED:1.0")
+  CORBA::ACTIVITY_REQUIRED const * activity_required_exception =
+    dynamic_cast <const CORBA::ACTIVITY_REQUIRED *> (&exc);
+  if (activity_required_exception != 0
       && minor_code < sizeof ACTIVITY_REQUIRED_TABLE / sizeof (char *))
     return ACTIVITY_REQUIRED_TABLE[minor_code];
 
-  if (exc._is_a ("IDL:omg.org/CORBA/BAD_OPERATION:1.0")
+  CORBA::BAD_OPERATION const * bad_operation_exception =
+    dynamic_cast <const CORBA::BAD_OPERATION *> (&exc);
+  if (bad_operation_exception != 0
       && minor_code < sizeof BAD_OPERATION_TABLE / sizeof (char *))
     return BAD_OPERATION_TABLE[minor_code];
 
-  if (exc._is_a ("IDL:omg.org/CORBA/BAD_CONTEXT:1.0")
+  CORBA::BAD_CONTEXT const * bad_context_exception =
+    dynamic_cast <const CORBA::BAD_CONTEXT *> (&exc);
+  if (bad_context_exception != 0
       && minor_code < sizeof BAD_CONTEXT_TABLE / sizeof (char *))
     return BAD_CONTEXT_TABLE[minor_code];
 
-  if (exc._is_a ("IDL:omg.org/CORBA/CODESET_INCOMPATIBLE:1.0")
+  CORBA::CODESET_INCOMPATIBLE const * codeset_incompatible_exception =
+    dynamic_cast <const CORBA::CODESET_INCOMPATIBLE *> (&exc);
+  if (codeset_incompatible_exception != 0
       && minor_code < sizeof CODESET_INCOMPATIBLE_TABLE / sizeof (char *))
     return CODESET_INCOMPATIBLE_TABLE[minor_code];
 
-  if (exc._is_a ("IDL:omg.org/CORBA/INTF_REPOS:1.0")
+  CORBA::INTF_REPOS const * intf_repos_exception =
+    dynamic_cast <const CORBA::INTF_REPOS *> (&exc);
+  if (intf_repos_exception != 0
       && minor_code < sizeof INTF_REPOS_TABLE / sizeof (char *))
     return INTF_REPOS_TABLE[minor_code];
 

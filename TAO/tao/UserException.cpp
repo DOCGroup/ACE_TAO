@@ -36,14 +36,6 @@ CORBA::UserException::operator= (CORBA::UserException const & rhs)
   return *this;
 }
 
-int
-CORBA::UserException::_is_a (char const * interface_id) const
-{
-  return ACE_OS::strcmp (interface_id,
-                         "IDL:omg.org/CORBA/UserException:1.0") == 0
-    || this->Exception::_is_a (interface_id);
-}
-
 ACE_CString
 CORBA::UserException::_info (void) const
 {
