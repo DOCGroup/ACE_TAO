@@ -1,3 +1,21 @@
+Mon Aug  1 19:39:30 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc:
+        
+          Removed duplicate 'after' and 'libs' items, and added the
+          new export macro definition file (see below) to
+          Header_Files.
+          
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.h:
+        
+          Added export macro to class declaration and include of export
+          macro definitin file.
+          
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl_Export.h:
+        
+          New file to define the export macro for the Plan_Launcher_Impl
+          library.
+
 Fri Jul 31 21:56:43 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
 
         * DAnCE/new_RepositoryManager/Options.h

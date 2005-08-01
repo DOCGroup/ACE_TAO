@@ -8,10 +8,13 @@
  */
 #ifndef PLAN_LAUNCHER_IMPL_H
 #define PLAN_LAUNCHER_IMPL_H
-#include "DeploymentS.h"
-#include "CIAO_common.h"
+
+#include "Plan_Launcher_Impl_Export.h"
+#include "ciao/DeploymentS.h"
+#include "ciao/CIAO_common.h"
 #include "ExecutionManager/DAM_Map.h"
 #include "ExecutionManager/ExecutionManagerC.h"
+
 namespace CIAO
 {
   namespace Plan_Launcher
@@ -21,7 +24,7 @@ namespace CIAO
      * @class Plan_Launcher_i
      * @brief This class launches and manages deployment plans.
      */
-    class Plan_Launcher_i
+    class Plan_Launcher_Impl_Export Plan_Launcher_i
     {
     public:
       Plan_Launcher_i ();
