@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbconf.h"
+#include "tao/orbconf.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
