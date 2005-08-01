@@ -1,3 +1,8 @@
+Mon Aug  1 07:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_1395_Regression/Makefile.am:
+          Added ImR_Client
+
 Sat Jul 30 10:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_1395_Regression/Test_i.cpp:

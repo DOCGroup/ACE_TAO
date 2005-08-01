@@ -35,7 +35,7 @@ Test-stamp: $(srcdir)/Test.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
 	@touch $@
 
-## Makefile.Bug_1395_Regression_Client.am 
+## Makefile.Bug_1395_Regression_Client.am
 
 noinst_PROGRAMS = client
 
@@ -58,7 +58,7 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 
-## Makefile.Bug_1395_Regression_Server.am 
+## Makefile.Bug_1395_Regression_Server.am
 
 noinst_PROGRAMS += server
 
@@ -82,6 +82,7 @@ server_SOURCES = \
   TestS_T.inl
 
 server_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_ImR_Client.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
   $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
