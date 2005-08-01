@@ -86,15 +86,6 @@ CORBA::Exception::_name (void) const
   return this->name_.in ();
 }
 
-int
-CORBA::Exception::_is_a (const char* repository_id) const
-{
-  return ACE_OS::strcmp (repository_id,
-                         "IDL:omg.org/CORBA/Exception:1.0") == 0;
-}
-
-
-
 void
 CORBA::Exception::_tao_print_exception (const char *user_provided_info,
                                         FILE *) const

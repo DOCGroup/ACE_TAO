@@ -65,9 +65,6 @@ namespace CORBA
     UserException (char const * repository_id,
                    char const * local_name);
 
-    /// Used for narrowing
-    virtual int _is_a (char const * interface_id) const;
-
     /// Returns a string containing information about the exception. This
     /// function is not CORBA compliant.
     virtual ACE_CString _info (void) const;

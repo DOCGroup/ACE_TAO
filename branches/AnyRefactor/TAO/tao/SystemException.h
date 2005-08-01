@@ -112,9 +112,6 @@ namespace CORBA
 
     // = TAO-specific extension.
 
-    /// Helper for the _downcast operation.
-    virtual int _is_a (const char *type_id) const;
-
     /// Print the system exception @c ex to output determined by @c f.
     /// This function is not CORBA compliant.
     void _tao_print_system_exception (FILE *f = stdout) const;
