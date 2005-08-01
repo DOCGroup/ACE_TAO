@@ -455,6 +455,7 @@ int CIAO_RepositoryManagerDaemon_i::extract_necessary_files (char* package, char
 		delete inf;
 	}
 
+    return 1;
 }
 
 
