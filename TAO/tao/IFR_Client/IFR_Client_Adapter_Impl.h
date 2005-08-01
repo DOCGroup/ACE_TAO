@@ -47,7 +47,7 @@ public:
     );
 
   virtual void interfacedef_any_insert (
-      CORBA::Any &any,
+      Dynamic::Parameter &p,
       CORBA::InterfaceDef_ptr object_type
     );
 

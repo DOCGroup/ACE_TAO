@@ -25,8 +25,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/AnyTypeCode/TypeCode_Base_Attributes.h"
-#include "tao/ValueModifierC.h"
-#include "tao/VisibilityC.h"
+#include "tao/AnyTypeCode/ValueModifierC.h"
+#include "tao/AnyTypeCode/VisibilityC.h"
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 
 

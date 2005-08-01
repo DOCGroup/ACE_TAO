@@ -46,8 +46,6 @@
 
 #include "tao/PI_ForwardC.h"
 #include "tao/Messaging_SyncScopeC.h"
-#include "tao/InvalidSlotC.h"
-#include "tao/PICurrentC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

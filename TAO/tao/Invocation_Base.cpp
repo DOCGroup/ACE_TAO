@@ -8,7 +8,6 @@
 #include "ace/Dynamic_Service.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-# include "DynamicC.h"
 # include "PortableInterceptorC.h"
 # include "RequestInfo_Util.h"
 # include "ClientRequestInterceptor_Adapter_Factory.h"
@@ -84,7 +83,7 @@ namespace TAO
   Invocation_Base::arguments (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    // Generate the argument list on demand.
+/*    // Generate the argument list on demand.
     Dynamic::ParameterList *parameter_list =
       TAO_RequestInfo_Util::make_parameter_list (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
@@ -95,7 +94,8 @@ namespace TAO
       ACE_THROW_RETURN (CORBA::MARSHAL (),
                         0);
 
-    return safe_parameter_list._retn ();
+    return safe_parameter_list._retn ();*/
+    return 0;
   }
 
   Dynamic::ExceptionList *
@@ -103,7 +103,7 @@ namespace TAO
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Generate the argument list on demand.
-    Dynamic::ExceptionList *exception_list =
+/*    Dynamic::ExceptionList *exception_list =
       TAO_RequestInfo_Util::make_exception_list (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
 
@@ -113,7 +113,8 @@ namespace TAO
       ACE_THROW_RETURN (CORBA::MARSHAL (),
                         0);
 
-    return safe_exception_list._retn ();
+    return safe_exception_list._retn ();*/
+    return 0;
   }
 
   CORBA::Any *
@@ -121,7 +122,7 @@ namespace TAO
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Generate the result on demand.
-    static const CORBA::Boolean tk_void_any = 0;
+/*    static const CORBA::Boolean tk_void_any = 0;
     CORBA::Any *result_any =
       TAO_RequestInfo_Util::make_any (tk_void_any ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
@@ -132,7 +133,8 @@ namespace TAO
       ACE_THROW_RETURN (CORBA::MARSHAL (),
                         0);
 
-    return safe_result_any._retn ();
+    return safe_result_any._retn ();*/
+    return 0;
   }
 
   CORBA::Octet

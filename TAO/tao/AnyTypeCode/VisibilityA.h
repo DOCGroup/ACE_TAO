@@ -41,8 +41,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
-#include "tao/ORB.h"
-#include "tao/Environment.h"
+#include "tao/AnyTypeCode/VisibilityC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

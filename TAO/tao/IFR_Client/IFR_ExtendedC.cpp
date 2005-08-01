@@ -39,6 +39,7 @@
 #include "tao/Special_Basic_Arguments.h"
 #include "tao/UB_String_Arguments.h"
 #include "tao/Var_Size_Argument_T.h"
+#include "tao/AnyTypeCode/Dynamic_ParameterC.h"
 #include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)

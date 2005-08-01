@@ -70,15 +70,14 @@ namespace TAO
 
   template<>
   void
-  In_Object_Argument_T<CORBA::InterfaceDef_ptr>::interceptor_param (Dynamic::Parameter & p)
+  In_Object_Argument_T<CORBA::InterfaceDef_ptr>::interceptor_param (Dynamic::Parameter &p)
   {
     TAO_IFR_Client_Adapter *adapter =
       ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
           TAO_ORB_Core::ifr_client_adapter_name ()
         );
 
-    adapter->interfacedef_any_insert (p.argument, this->x_);
-    p.mode = CORBA::PARAM_IN;
+    adapter->interfacedef_any_insert (p, this->x_);
   }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -102,7 +101,7 @@ namespace TAO
 
 #if !defined (_CORBA_POLICY__ARG_TRAITS_CS_)
 #define _CORBA_POLICY__ARG_TRAITS_CS_
-  
+
   template<>
   class  Arg_Traits<CORBA::Policy>
     : public
@@ -119,7 +118,7 @@ namespace TAO
 
 #if !defined (_CORBA_INTERFACEDEF__ARG_TRAITS_CS_)
 #define _CORBA_INTERFACEDEF__ARG_TRAITS_CS_
-  
+
   template<>
   class  Arg_Traits<CORBA::InterfaceDef>
     : public
@@ -173,7 +172,7 @@ TAO::Objref_Traits<CORBA::DomainManager>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*CORBA__TAO_DomainManager_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -193,7 +192,7 @@ TAO::Collocation_Proxy_Broker *
     {
       ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
     }
-  
+
   if (this->the_TAO_DomainManager_Proxy_Broker_ == 0)
     {
       CORBA_DomainManager_setup_collocation ();

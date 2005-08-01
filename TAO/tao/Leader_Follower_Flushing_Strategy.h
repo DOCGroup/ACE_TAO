@@ -27,7 +27,7 @@
  * @brief Implement a flushing strategy that uses the Leader/Follower
  *        set.
  */
-class TAO_Export TAO_Leader_Follower_Flushing_Strategy 
+class TAO_Leader_Follower_Flushing_Strategy
   : public TAO_Flushing_Strategy
 {
 public:

@@ -33,10 +33,10 @@
 
 #include "ClientRequestInfoC.h"
 #include "PIForwardRequestC.h"
+#include "PICurrent_Impl.h"
+#include "PICurrent_Copy_Callback.h"
 #include "tao/ORB_Constants.h"
 #include "tao/Invocation_Utils.h"
-#include "tao/PICurrent_Impl.h"
-#include "tao/PICurrent_Copy_Callback.h"
 
 class TAO_Service_Context;
 

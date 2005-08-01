@@ -4,7 +4,7 @@
 #define TAO_FIXED_ARRAY_SARGUMENT_T_CPP
 
 #include "tao/PortableServer/Fixed_Array_SArgument_T.h"
-#include "tao/Dynamic_ParameterC.h"
+#include "tao/AnyTypeCode/Dynamic_ParameterC.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/PortableServer/Fixed_Array_SArgument_T.inl"

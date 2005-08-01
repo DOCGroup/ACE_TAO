@@ -40,21 +40,21 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
+#include "pi_export.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/Object.h"
 #include "tao/Objref_VarOut_T.h"
 
-#include "tao/InvalidSlotC.h"
+#include "tao/PI/InvalidSlotC.h"
 #include "tao/PI_ForwardC.h"
 #include "tao/CurrentC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO TAO_Export
+#define TAO_EXPORT_MACRO TAO_PI_Export
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -100,7 +100,7 @@ namespace PortableInterceptor
 #if !defined (_PORTABLEINTERCEPTOR_CURRENT_CH_)
 #define _PORTABLEINTERCEPTOR_CURRENT_CH_
 
-  class TAO_Export Current
+  class TAO_PI_Export Current
     : public virtual ::CORBA::Current
   {
   public:
@@ -196,7 +196,7 @@ namespace TAO
 #define _PORTABLEINTERCEPTOR_CURRENT__TRAITS_CH_
 
   template<>
-  struct TAO_Export Objref_Traits< ::PortableInterceptor::Current>
+  struct TAO_PI_Export Objref_Traits< ::PortableInterceptor::Current>
   {
     static ::PortableInterceptor::Current_ptr duplicate (
         ::PortableInterceptor::Current_ptr

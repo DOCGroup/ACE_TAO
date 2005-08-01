@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "TAO_Export.h"
+#include "pi_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -40,7 +40,7 @@ namespace TAO
    * object's slot table to the destination PICurrent_Impl object's
    * slot table.
    */
-  class TAO_Export PICurrent_Copy_Callback
+  class TAO_PI_Export PICurrent_Copy_Callback
     : public ACE_Command_Base
   {
   public:

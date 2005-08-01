@@ -37,9 +37,6 @@
 #include <PI_Forward.pidl>
 #include <Messaging_SyncScope.pidl>
 
-#include <InvalidSlot.pidl>
-#include <PICurrent.pidl>
-
 module PortableInterceptor {
 
   typeprefix PortableInterceptor "omg.org";

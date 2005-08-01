@@ -6,10 +6,6 @@
 #include "tao/UB_String_Argument_T.h"
 #include "tao/CDR.h"
 
-#if TAO_HAS_INTERCEPTORS == 1
-#include "tao/Dynamic_ParameterC.h"
-#endif /* TAO_HAS_INTERCEPTORS */
-
 #if !defined (__ACE_INLINE__)
 #include "tao/UB_String_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -26,6 +22,14 @@ TAO::In_UB_String_Argument_T<S>::marshal (TAO_OutputCDR & cdr)
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
+
+template<>
+void
+TAO::In_UB_String_Argument_T<char>::interceptor_param (Dynamic::Parameter & p)
+{
+  //p.argument <<= this->x_;
+  //p.mode = CORBA::PARAM_IN;
+}
 
 template<typename S>
 void
@@ -99,6 +103,14 @@ TAO::Ret_UB_String_Argument_T<S,S_var>::demarshal (TAO_InputCDR & cdr)
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
+
+template<>
+void
+TAO::Ret_UB_String_Argument_T<char, CORBA::String_var>::interceptor_result (CORBA::Any * any)
+{
+  //(*any) <<= this->x_.in ();
+}
+
 
 template<typename S, typename S_var>
 void

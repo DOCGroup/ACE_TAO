@@ -5,10 +5,6 @@
 
 #include "tao/Object_Argument_T.h"
 
-#if TAO_HAS_INTERCEPTORS == 1
-#include "tao/Dynamic_ParameterC.h"
-#endif /* TAO_HAS_INTERCEPTORS */
-
 #if !defined (__ACE_INLINE__)
 #include "tao/Object_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -100,6 +96,13 @@ TAO::Ret_Object_Argument_T<S_ptr,S_var>::demarshal (TAO_InputCDR & cdr)
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
+
+template<>
+void
+TAO::Ret_Object_Argument_T<CORBA::Policy_ptr,CORBA::Policy_var>::interceptor_result (CORBA::Any * any)
+{
+//  (*any) <<= this->x_.in ();
+}
 
 template<typename S_ptr, typename S_var>
 void

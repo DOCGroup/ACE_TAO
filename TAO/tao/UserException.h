@@ -43,7 +43,7 @@ namespace CORBA
     UserException (UserException const & rhs);
 
     /// Destructor.
-    ~UserException (void);
+    virtual ~UserException (void);
 
     /// Assignment operator.
     UserException & operator= (UserException const & rhs);

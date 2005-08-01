@@ -4,7 +4,6 @@
 #include "Upcall_Command.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-# include "PICurrent_Guard.h"
 # include "tao/ServerRequestInterceptor_Adapter.h"
 # include "tao/PortableInterceptorC.h"
 # include "tao/ORB_Core.h"
@@ -54,8 +53,9 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard pi_guard (server_request,
-                                       true  /* Copy TSC to RSC */);
+// @todo, PICurrent_Guard makes PortableServer dependent on PI, use the adapter with an auto_ptr.
+//        TAO::PICurrent_Guard pi_guard (server_request,
+//                                       true  /* Copy TSC to RSC */);
 
         if (interceptor_adapter != 0)
           {

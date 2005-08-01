@@ -4,7 +4,6 @@
 #define TAO_BD_STRING_ARGUMENT_T_C
 
 #include "tao/BD_String_Argument_T.h"
-#include "tao/Dynamic_ParameterC.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/BD_String_Argument_T.inl"
@@ -74,10 +73,10 @@ TAO::Inout_BD_String_Argument_T<S,to_S,from_S,BOUND>::interceptor_param (
 
 // ==============================================================
 
-template<typename S, 
-         typename S_out, 
-         typename to_S, 
-         typename from_S, 
+template<typename S,
+         typename S_out,
+         typename to_S,
+         typename from_S,
          size_t BOUND>
 CORBA::Boolean
 TAO::Out_BD_String_Argument_T<S,S_out,to_S,from_S,BOUND>::demarshal (
@@ -89,10 +88,10 @@ TAO::Out_BD_String_Argument_T<S,S_out,to_S,from_S,BOUND>::demarshal (
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-template<typename S, 
-         typename S_out, 
-         typename to_S, 
-         typename from_S, 
+template<typename S,
+         typename S_out,
+         typename to_S,
+         typename from_S,
          size_t BOUND>
 void
 TAO::Out_BD_String_Argument_T<S,S_out,to_S,from_S,BOUND>::interceptor_param (
@@ -107,10 +106,10 @@ TAO::Out_BD_String_Argument_T<S,S_out,to_S,from_S,BOUND>::interceptor_param (
 
 // ============================================================
 
-template<typename S, 
-         typename S_var, 
-         typename to_S, 
-         typename from_S, 
+template<typename S,
+         typename S_var,
+         typename to_S,
+         typename from_S,
          size_t BOUND>
 CORBA::Boolean
 TAO::Ret_BD_String_Argument_T<S,S_var,to_S,from_S,BOUND>::demarshal (
@@ -122,10 +121,10 @@ TAO::Ret_BD_String_Argument_T<S,S_var,to_S,from_S,BOUND>::demarshal (
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-template<typename S, 
-         typename S_var, 
-         typename to_S, 
-         typename from_S, 
+template<typename S,
+         typename S_var,
+         typename to_S,
+         typename from_S,
          size_t BOUND>
 void
 TAO::Ret_BD_String_Argument_T<S,S_var,to_S,from_S,BOUND>::interceptor_result (

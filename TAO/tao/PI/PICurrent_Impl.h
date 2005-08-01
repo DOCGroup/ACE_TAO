@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include "pi_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,7 +26,7 @@
 #if TAO_HAS_INTERCEPTORS == 1
 
 #include "ace/Array_Base.h"
-#include "Any.h"
+#include "tao/AnyTypeCode/Any.h"
 #include "PICurrentC.h"
 
 /// Forward declarations.
@@ -47,7 +47,7 @@ namespace TAO
    * "thread scope current" objects as required by Portable
    * Interceptors.
    */
-  class TAO_Export PICurrent_Impl
+  class TAO_PI_Export PICurrent_Impl
   {
   public:
 

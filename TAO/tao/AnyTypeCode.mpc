@@ -32,7 +32,6 @@ project : taolib, core {
     AnyTypeCode/GIOPA.cpp
     AnyTypeCode/IIOPA.cpp
     AnyTypeCode/IIOP_EndpointsA.cpp
-    AnyTypeCode/InvalidSlotA.cpp
     AnyTypeCode/IOP_IORA.cpp
     AnyTypeCode/LongDoubleSeqA.cpp
     AnyTypeCode/LongLongSeqA.cpp
@@ -45,7 +44,6 @@ project : taolib, core {
     AnyTypeCode/OctetSeqA.cpp
     AnyTypeCode/orb_typesA.cpp
     AnyTypeCode/ParameterModeA.cpp
-    AnyTypeCode/PICurrentA.cpp
     AnyTypeCode/PI_ForwardA.cpp
     AnyTypeCode/PolicyA.cpp
     AnyTypeCode/Policy_ForwardA.cpp
@@ -70,7 +68,9 @@ project : taolib, core {
     AnyTypeCode/Union_TypeCode_Static.cpp
     AnyTypeCode/UShortSeqA.cpp
     AnyTypeCode/Value_TypeCode_Static.cpp
+    AnyTypeCode/ValueModifierC.cpp
     AnyTypeCode/VisibilityA.cpp
+    AnyTypeCode/VisibilityC.cpp
     AnyTypeCode/WCharSeqA.cpp
     AnyTypeCode/WrongTransactionA.cpp
     AnyTypeCode/WStringSeqA.cpp

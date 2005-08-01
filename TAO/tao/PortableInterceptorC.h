@@ -46,8 +46,6 @@
 
 #include "tao/PI_ForwardC.h"
 #include "tao/Messaging_SyncScopeC.h"
-#include "tao/InvalidSlotC.h"
-#include "tao/PICurrentC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -68,60 +66,60 @@
 
 namespace PortableInterceptor
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const PortableInterceptor::AdapterState HOLDING = 0;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const PortableInterceptor::AdapterState ACTIVE = 1;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const PortableInterceptor::AdapterState DISCARDING = 2;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const PortableInterceptor::AdapterState INACTIVE = 3;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const PortableInterceptor::AdapterState NON_EXISTENT = 4;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const PortableInterceptor::ReplyStatus SUCCESSFUL = 0;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const PortableInterceptor::ReplyStatus SYSTEM_EXCEPTION = 1;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const PortableInterceptor::ReplyStatus USER_EXCEPTION = 2;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const PortableInterceptor::ReplyStatus LOCATION_FORWARD = 3;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const PortableInterceptor::ReplyStatus TRANSPORT_RETRY = 4;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const PortableInterceptor::ReplyStatus UNKNOWN = 5;
 
 // TAO_IDL - Generated from

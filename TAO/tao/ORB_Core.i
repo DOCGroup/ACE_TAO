@@ -426,12 +426,13 @@ TAO_ORB_Core::resolve_picurrent (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
                     CORBA::Object::_nil ());
-  if (CORBA::is_nil (this->pi_current_))
-    {
-      this->resolve_picurrent_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
-    }
-  return CORBA::Object::_duplicate (this->pi_current_);
+//  if (CORBA::is_nil (this->pi_current_))
+//    {
+//      this->resolve_picurrent_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+//      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+//    }
+//  return CORBA::Object::_duplicate (this->pi_current_);
+return                    CORBA::Object::_nil ();
 }
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

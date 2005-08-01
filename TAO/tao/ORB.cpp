@@ -30,8 +30,8 @@ ACE_RCSID (tao,
 #include "default_environment.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-# include "PICurrent_Loader.h"  /* @@ This should go away! */
-# include "PICurrent.h"  /* @@ This should go away! */
+//# include "PICurrent_Loader.h"  /* @@ This should go away! */
+//# include "PICurrent.h"  /* @@ This should go away! */
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #if !defined (__ACE_INLINE__)
@@ -1649,8 +1649,8 @@ CORBA::ORB_init (int &argc,
 #if TAO_HAS_INTERCEPTORS == 1
       TAO::PICurrent *pi = oc->pi_current ();
 
-      if (pi != 0)
-        pi->initialize (slotid);
+    //  if (pi != 0)
+  //      pi->initialize (slotid);
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
     }
 

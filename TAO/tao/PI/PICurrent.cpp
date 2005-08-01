@@ -15,6 +15,7 @@ ACE_RCSID (tao,
 #include "ORB_Core_TSS_Resources.h"
 #include "TAO_Server_Request.h"
 #include "PICurrent_Copy_Callback.h"
+#include "PICurrent_Impl.h"
 #include "SystemException.h"
 
 
@@ -73,7 +74,9 @@ TAO::PICurrent::tsc (void)
   TAO_ORB_Core_TSS_Resources *tss =
     this->orb_core_.get_tss_resources ();
 
-  return &tss->pi_current_;
+// todo
+//  return &tss->pi_current_;
+    return 0;
 }
 
 void

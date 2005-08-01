@@ -54,8 +54,8 @@
 #include "tao/VarOut_T.h"
 
 #include "tao/IFR_Client/IFR_BasicC.h"
-#include "tao/VisibilityC.h"
-#include "tao/ValueModifierC.h"
+#include "tao/AnyTypeCode/VisibilityC.h"
+#include "tao/AnyTypeCode/ValueModifierC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
