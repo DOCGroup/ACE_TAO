@@ -1,3 +1,9 @@
+Mon Aug 01 14:55:43 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
+
+        * DAnCE/new_RepositoryManager/RepositoryManager_Impl.cpp
+
+        Fixed a C4715 warning under MSVC7.1
+
 Mon Aug  1 19:39:30 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher.mpc:
@@ -21,7 +27,7 @@ Fri Jul 31 21:56:43 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
         * DAnCE/new_RepositoryManager/Options.h
 
         Improved documentation to meet the requirement of Doxygen
-        
+
 Fri Jul 31 21:45:43 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
 
         * DAnCE/new_RepositoryManager/RMadmin.cpp
