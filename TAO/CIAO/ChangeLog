@@ -1,3 +1,10 @@
+Mon Aug 01 16:01:43 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
+
+        * ChangeLog
+
+        Fixed several incorrect checkin date
+
+
 Mon Aug 01 14:55:43 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
 
         * DAnCE/new_RepositoryManager/RepositoryManager_Impl.cpp
@@ -22,19 +29,19 @@ Mon Aug  1 19:39:30 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
           New file to define the export macro for the Plan_Launcher_Impl
           library.
 
-Fri Jul 31 21:56:43 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
+Sun Jul 31 21:56:43 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
 
         * DAnCE/new_RepositoryManager/Options.h
 
         Improved documentation to meet the requirement of Doxygen
 
-Fri Jul 31 21:45:43 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
+Sun Jul 31 21:45:43 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
 
         * DAnCE/new_RepositoryManager/RMadmin.cpp
 
         Fixed C4101 warnings in MSVC
 
-Fri Jul 31 21:26:43 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
+Sun Jul 31 21:26:43 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
 
         * DAnCE/new_RepositoryManager/RMadmin.cpp
 
