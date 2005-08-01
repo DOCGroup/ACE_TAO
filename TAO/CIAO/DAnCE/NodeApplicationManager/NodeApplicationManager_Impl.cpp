@@ -1,20 +1,23 @@
 // $Id$
 
+
 #include "NodeApplicationManager_Impl.h"
 #include "ace/Process.h"
 #include "ace/OS_NS_stdio.h"
+#include "ciao/Container_Base.h"
+#include "ciao/NodeApplication_Impl.h"
 
 #if !defined (__ACE_INLINE__)
 # include "NodeApplicationManager_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
 
-CIAO::NodeApplicationManager_Impl::~NodeApplicationManager_Impl (void)
+CIAO::NodeApplicationManager_Impl_Base::~NodeApplicationManager_Impl_Base (void)
 {
 }
 
 PortableServer::ObjectId
-CIAO::NodeApplicationManager_Impl::init (
+CIAO::NodeApplicationManager_Impl_Base::init (
     const char *nodeapp_location,
     const CORBA::ULong delay,
     const Deployment::DeploymentPlan & plan,
@@ -61,7 +64,7 @@ CIAO::NodeApplicationManager_Impl::init (
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "NodeApplicationManager_Impl::init\t\n");
+                           "NodeApplicationManager_Impl_Base::init\t\n");
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
@@ -72,7 +75,7 @@ CIAO::NodeApplicationManager_Impl::init (
 }
 
 void
-CIAO::NodeApplicationManager_Impl::
+CIAO::NodeApplicationManager_Impl_Base::
 parse_config_value (ACE_CString & str
                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -82,6 +85,192 @@ parse_config_value (ACE_CString & str
   ACE_UNUSED_ARG (str);
 
   ACE_THROW ( CORBA::NO_IMPLEMENT() );
+}
+
+Deployment::Connections *
+CIAO::NodeApplicationManager_Impl_Base::
+create_connections (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::ResourceNotAvailable,
+                   Deployment::StartError,
+                   Deployment::InvalidProperty))
+{
+  CIAO_TRACE("CIAO::NodeApplicationManager_Impl::create_connections");
+  Deployment::Connections_var retv;
+
+  ACE_NEW_THROW_EX (retv,
+                    Deployment::Connections (),
+                    CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
+  CORBA::ULong len = retv->length ();
+
+  const Component_Iterator end (this->component_map_.end ());
+  for (Component_Iterator iter (this->component_map_.begin ());
+       iter != end;
+       ++iter)
+  {
+    // Get all the facets first
+    Components::FacetDescriptions_var facets =
+      ((*iter).int_id_)->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK_RETURN (0);
+
+    // Get all the event consumers
+    Components::ConsumerDescriptions_var consumers =
+      ((*iter).int_id_)->get_all_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK_RETURN (0);
+
+    const CORBA::ULong facet_len = facets->length ();
+    const CORBA::ULong consumer_len = consumers->length ();
+
+    CORBA::ULong curr_len = retv->length ();
+    retv->length (curr_len + facet_len + consumer_len);
+
+    CORBA::ULong i = 0;
+    for (i = 0; i < facet_len; ++i)
+    {
+      Deployment::Connection & conn = retv[len];
+      conn.instanceName = (*iter).ext_id_.c_str ();
+      conn.portName = facets[i]->name ();
+      conn.kind = Deployment::Facet;
+      conn.endpoint = CORBA::Object::_duplicate (facets[i]->facet_ref ());
+      ++len;
+    }
+
+    for (i = 0; i < consumer_len; ++i)
+    {
+      Deployment::Connection & conn = retv[len];
+      conn.instanceName = (*iter).ext_id_.c_str ();
+      conn.portName = consumers[i]->name ();
+      conn.kind = Deployment::EventConsumer;
+      conn.endpoint = CORBA::Object::_duplicate (consumers[i]->consumer ());
+      ++len;
+    }
+  }
+  return retv._retn ();
+}
+
+Deployment::Application_ptr
+CIAO::NodeApplicationManager_Impl_Base::
+startLaunch (const Deployment::Properties & configProperty,
+             Deployment::Connections_out providedReference,
+             CORBA::Boolean start
+             ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::ResourceNotAvailable,
+                   Deployment::StartError,
+                   Deployment::InvalidProperty))
+{
+  CIAO_TRACE("CIAO::NodeApplicationManager_Impl::startLaunch");
+  ACE_UNUSED_ARG (configProperty);
+  ACE_UNUSED_ARG (start);
+  /**
+   *  1. First Map properties to TAO/CIAO specific property/configurations
+   *  2. Necessary property checking (needed?)
+   *  3. Call create_nade_application to spawn new process.
+   *  4. Initialize the NodeApplication.
+   *  5. get the provided connection endpoints back and return them.
+   */
+
+  Deployment::NodeImplementationInfo node_info;
+
+  if (!(node_info << (this->plan_)))
+  {
+    if (CIAO::debug_level () > 1)
+      ACE_DEBUG ((LM_DEBUG, "Failed to create Node Implementation Infos!\n"));
+
+    ACE_THROW_RETURN (Deployment::StartError (),
+                      Deployment::Application::_nil());
+  } //@@ I am not sure about which exception to throw. I will come back to this.
+
+  // Now spawn the NodeApplication process.
+  ACE_CString cmd_option ("");
+  Deployment::NodeApplication_var tmp =
+    create_node_application (cmd_option.c_str () ACE_ENV_ARG_PARAMETER);
+
+  ACE_CHECK_RETURN (Deployment::Application::_nil());
+
+  // This is what we will get back, a sequence of compoent object refs.
+  Deployment::ComponentInfos_var comp_info;
+
+  // For debugging.
+  if (true) //(CIAO::debug_level () > 1)
+  {
+    Deployment::ComponentImplementationInfos infos = node_info[0].impl_infos;
+
+    const CORBA::ULong info_len = infos.length ();
+    for (CORBA::ULong i = 0; i < info_len; ++i)
+    {
+      ACE_DEBUG ((LM_DEBUG, "The info for installation: \n\t%s\n\t%s\n\t%s\n\t%s\n\t%s\n",
+                  infos[i].component_instance_name.in (),
+                  infos[i].executor_dll.in (),
+                  infos[i].executor_entrypt.in (),
+                  infos[i].servant_dll.in (),
+                  infos[i].servant_entrypt.in () ));
+    }
+  }
+
+  // This will install all homes and components.
+  comp_info = this->nodeapp_->install (node_info ACE_ENV_ARG_PARAMETER);
+
+  ACE_CHECK_RETURN (Deployment::Application::_nil());
+
+  // Now fill in the map we have for the components.
+  const CORBA::ULong comp_len = comp_info->length ();
+  for (CORBA::ULong len = 0;
+       len < comp_len;
+       ++len)
+  {
+    //Since we know the type ahead of time...narrow is omitted here.
+    if (this->component_map_.
+        bind (comp_info[len].component_instance_name.in(),
+              Components::CCMObject::_duplicate (comp_info[len].component_ref.in())))
+      ACE_THROW_RETURN (Deployment::StartError (), 0);
+  }
+
+  providedReference = this->create_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (Deployment::Application::_nil());
+
+  if (providedReference == 0)
+    ACE_THROW_RETURN (Deployment::StartError () ,
+                      Deployment::Application::_nil());
+
+  return Deployment::NodeApplication::_duplicate (this->nodeapp_.in ());
+}
+
+
+void
+CIAO::NodeApplicationManager_Impl_Base::
+destroyApplication (Deployment::Application_ptr app
+                    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::StopError))
+{
+  CIAO_TRACE("CIAO::NodeApplicationManager_Impl::destroyApplication");
+  ACE_UNUSED_ARG (app);
+
+  //ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+  //@@ Since we know there is only 1 nodeapp so the passed in
+  //   parameter is ignored for now.
+  if (CORBA::is_nil (this->nodeapp_.in () ))
+    ACE_THROW (Deployment::StopError ());
+
+  this->nodeapp_->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  return;
+}
+
+
+CIAO::NodeApplicationManager_Impl::~NodeApplicationManager_Impl (void)
+{
+}
+
+CIAO::NodeApplicationManager_Impl::
+NodeApplicationManager_Impl (CORBA::ORB_ptr o,
+                             PortableServer::POA_ptr p)
+  : NodeApplicationManager_Impl_Base (o, p)
+{
 }
 
 Deployment::NodeApplication_ptr
@@ -205,176 +394,72 @@ create_node_application (const ACE_CString & options
   return retval._retn ();
 }
 
-Deployment::Connections *
-CIAO::NodeApplicationManager_Impl::
-create_connections (ACE_ENV_SINGLE_ARG_DECL)
+
+CIAO::Static_NodeApplicationManager_Impl::~Static_NodeApplicationManager_Impl (void)
+{
+}
+
+CIAO::Static_NodeApplicationManager_Impl::
+Static_NodeApplicationManager_Impl (CORBA::ORB_ptr o,
+                             PortableServer::POA_ptr p,
+                             Static_Config_EntryPoints_Maps* static_config_entrypoints_maps)
+  : NodeApplicationManager_Impl_Base (o, p),
+    static_config_entrypoints_maps_ (static_config_entrypoints_maps)
+{
+}
+
+Deployment::NodeApplication_ptr
+CIAO::Static_NodeApplicationManager_Impl::
+create_node_application (const ACE_CString & options
+                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::ResourceNotAvailable,
                    Deployment::StartError,
                    Deployment::InvalidProperty))
 {
-  CIAO_TRACE("CIAO::NodeApplicationManager_Impl::create_connections");
-  Deployment::Connections_var retv;
+  ACE_UNUSED_ARG(options);
 
-  ACE_NEW_THROW_EX (retv,
-                    Deployment::Connections (),
-                    CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (0);
+  CIAO::NodeApplication_Impl *nodeapp_servant;
 
-  CORBA::ULong len = retv->length ();
+  ACE_DEBUG ((LM_DEBUG, "create_static_node_application\n"));
 
-  const Component_Iterator end (this->component_map_.end ());
-  for (Component_Iterator iter (this->component_map_.begin ());
-       iter != end;
-       ++iter)
-  {
-    // Get all the facets first
-    Components::FacetDescriptions_var facets =
-      ((*iter).int_id_)->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
-
-    // Get all the event consumers
-    Components::ConsumerDescriptions_var consumers =
-      ((*iter).int_id_)->get_all_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
-
-    const CORBA::ULong facet_len = facets->length ();
-    const CORBA::ULong consumer_len = consumers->length ();
-
-    CORBA::ULong curr_len = retv->length ();
-    retv->length (curr_len + facet_len + consumer_len);
-
-    CORBA::ULong i = 0;
-    for (i = 0; i < facet_len; ++i)
+  ACE_NEW_RETURN (nodeapp_servant,
+                   CIAO::NodeApplication_Impl (orb_.in (),
+                                               poa_.in (),
+                                               this->static_config_entrypoints_maps_),
+                  Deployment::NodeApplication::_nil ()
+                   );
+  if (nodeapp_servant->init (ACE_ENV_SINGLE_ARG_PARAMETER))
     {
-      Deployment::Connection & conn = retv[len];
-      conn.instanceName = (*iter).ext_id_.c_str ();
-      conn.portName = facets[i]->name ();
-      conn.kind = Deployment::Facet;
-      conn.endpoint = CORBA::Object::_duplicate (facets[i]->facet_ref ());
-      ++len;
+      ACE_DEBUG ((LM_DEBUG, "NodeApplication Failed on creating and\
+                               initializing the session container!"));
+      return Deployment::NodeApplication::_nil ();
+    }
+  ACE_TRY_CHECK;
+
+  // CONFIGURING NodeApplication
+  PortableServer::ObjectId_var nodeapp_oid
+    = poa_->activate_object (nodeapp_servant
+                            ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+  
+  CORBA::Object_var
+    obj = poa_->id_to_reference (nodeapp_oid.in ()
+                              ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+  
+  Deployment::NodeApplication_var nodeapp_obj =
+    Deployment::NodeApplication::_narrow (obj.in ()
+                                          ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+  
+  if (CORBA::is_nil (nodeapp_obj.in ()))
+    {
+      ACE_ERROR ((LM_ERROR, "Unable to activate NodeApplication object\n"));
+      return Deployment::NodeApplication::_nil ();
     }
 
-    for (i = 0; i < consumer_len; ++i)
-    {
-      Deployment::Connection & conn = retv[len];
-      conn.instanceName = (*iter).ext_id_.c_str ();
-      conn.portName = consumers[i]->name ();
-      conn.kind = Deployment::EventConsumer;
-      conn.endpoint = CORBA::Object::_duplicate (consumers[i]->consumer ());
-      ++len;
-    }
-  }
-  return retv._retn ();
-}
+  this->nodeapp_ = Deployment::NodeApplication::_duplicate (nodeapp_obj.in ());
 
-Deployment::Application_ptr
-CIAO::NodeApplicationManager_Impl::
-startLaunch (const Deployment::Properties & configProperty,
-             Deployment::Connections_out providedReference,
-             CORBA::Boolean start
-             ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Deployment::ResourceNotAvailable,
-                   Deployment::StartError,
-                   Deployment::InvalidProperty))
-{
-  CIAO_TRACE("CIAO::NodeApplicationManager_Impl::startLaunch");
-  ACE_UNUSED_ARG (configProperty);
-  ACE_UNUSED_ARG (start);
-  /**
-   *  1. First Map properties to TAO/CIAO specific property/configurations
-   *  2. Necessary property checking (needed?)
-   *  3. Call create_nade_application to spawn new process.
-   *  4. Initialize the NodeApplication.
-   *  5. get the provided connection endpoints back and return them.
-   */
-
-  Deployment::NodeImplementationInfo node_info;
-
-  if (!(node_info << (this->plan_)))
-  {
-    if (CIAO::debug_level () > 1)
-      ACE_DEBUG ((LM_DEBUG, "Failed to create Node Implementation Infos!\n"));
-
-    ACE_THROW_RETURN (Deployment::StartError (),
-                      Deployment::Application::_nil());
-  } //@@ I am not sure about which exception to throw. I will come back to this.
-
-  // Now spawn the NodeApplication process.
-  ACE_CString cmd_option ("");
-  Deployment::NodeApplication_var tmp =
-    create_node_application (cmd_option.c_str () ACE_ENV_ARG_PARAMETER);
-
-  ACE_CHECK_RETURN (Deployment::Application::_nil());
-
-  // This is what we will get back, a sequence of compoent object refs.
-  Deployment::ComponentInfos_var comp_info;
-
-  // For debugging.
-  if (true) //(CIAO::debug_level () > 1)
-  {
-    Deployment::ComponentImplementationInfos infos = node_info[0].impl_infos;
-
-    const CORBA::ULong info_len = infos.length ();
-    for (CORBA::ULong i = 0; i < info_len; ++i)
-    {
-      ACE_DEBUG ((LM_DEBUG, "The info for installation: \n\t%s\n\t%s\n\t%s\n\t%s\n\t%s\n",
-                  infos[i].component_instance_name.in (),
-                  infos[i].executor_dll.in (),
-                  infos[i].executor_entrypt.in (),
-                  infos[i].servant_dll.in (),
-                  infos[i].servant_entrypt.in () ));
-    }
-  }
-
-  // This will install all homes and components.
-  comp_info = this->nodeapp_->install (node_info ACE_ENV_ARG_PARAMETER);
-
-  ACE_CHECK_RETURN (Deployment::Application::_nil());
-
-  // Now fill in the map we have for the components.
-  const CORBA::ULong comp_len = comp_info->length ();
-  for (CORBA::ULong len = 0;
-       len < comp_len;
-       ++len)
-  {
-    //Since we know the type ahead of time...narrow is omitted here.
-    if (this->component_map_.
-        bind (comp_info[len].component_instance_name.in(),
-              Components::CCMObject::_duplicate (comp_info[len].component_ref.in())))
-      ACE_THROW_RETURN (Deployment::StartError (), 0);
-  }
-
-  providedReference = this->create_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (Deployment::Application::_nil());
-
-  if (providedReference == 0)
-    ACE_THROW_RETURN (Deployment::StartError () ,
-                      Deployment::Application::_nil());
-
-  return Deployment::NodeApplication::_duplicate (this->nodeapp_.in ());
-}
-
-
-void
-CIAO::NodeApplicationManager_Impl::
-destroyApplication (Deployment::Application_ptr app
-                    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Deployment::StopError))
-{
-  CIAO_TRACE("CIAO::NodeApplicationManager_Impl::destroyApplication");
-  ACE_UNUSED_ARG (app);
-
-  //ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
-  //@@ Since we know there is only 1 nodeapp so the passed in
-  //   parameter is ignored for now.
-  if (CORBA::is_nil (this->nodeapp_.in () ))
-    ACE_THROW (Deployment::StopError ());
-
-  this->nodeapp_->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-  return;
+  return nodeapp_obj._retn ();
 }

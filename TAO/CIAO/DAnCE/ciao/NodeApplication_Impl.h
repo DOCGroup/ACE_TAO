@@ -63,7 +63,8 @@ namespace CIAO
   public:
     /// Default constructor.
     NodeApplication_Impl (CORBA::ORB_ptr o,
-                          PortableServer::POA_ptr p);
+                          PortableServer::POA_ptr p,
+                          const Static_Config_EntryPoints_Maps* static_entrypts_maps =0);
 
     /// Default destructor.
     virtual ~NodeApplication_Impl (void);
@@ -227,6 +228,8 @@ namespace CIAO
 
     /// Cache the object reference (of ourselves).
     ::Deployment::NodeApplication_var objref_;
+    
+    const Static_Config_EntryPoints_Maps* static_entrypts_maps_;
   };
 }
 

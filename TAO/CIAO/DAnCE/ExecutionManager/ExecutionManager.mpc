@@ -23,9 +23,9 @@ project(ExecutionManager): ciao_deployment_svnt, naming, ifr_client, ciao_server
 
   exename = Execution_Manager
 
-  after += DomainApplicationManager ExecutionManager_stub
+  after += DomainApplicationManager ExecutionManager_stub Node_Daemon
 
-  libs += DomainApplicationManager ExecutionManager_stub
+  libs += DomainApplicationManager ExecutionManager_stub Node_Daemon
 
   IDL_Files {
   }

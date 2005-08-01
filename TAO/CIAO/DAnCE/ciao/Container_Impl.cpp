@@ -41,10 +41,21 @@ CIAO::Container_Impl::init (const ::Deployment::Properties &properties
   // @@Jai, what is the condition to create an upgradeable container?
   // Where is it getting created and how? Need to address that.
 
-  ACE_NEW_THROW_EX (this->container_,
-                    CIAO::Session_Container (this->orb_.in (), this),
-                    CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (-1);
+  if (this->static_entrypts_maps_ == 0)
+    {
+      ACE_NEW_THROW_EX (this->container_,
+                        CIAO::Session_Container (this->orb_.in (), this),
+                        CORBA::INTERNAL ());
+      ACE_CHECK_RETURN (-1);
+    }
+  else
+    {
+      ACE_NEW_THROW_EX (this->container_,
+                        CIAO::Session_Container (this->orb_.in (), this, 1, 
+                                                 this->static_entrypts_maps_),
+                        CORBA::INTERNAL ());
+      ACE_CHECK_RETURN (-1);
+    }
 
   return this->container_->init (0,
                                  0
