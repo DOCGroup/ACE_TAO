@@ -3,7 +3,7 @@
 @page Node_Daemon README File
 
       CIAO's NodeDaemon implementation. NodeDaemon is the bootstraping
-mechanism to create new NodeApplication on the localhost.  We
+mechanism to create new NodeApplication on the local host.  We
 currently depend on starting the NodeApplicationManager process on
 some port of all the hosts that have NodeApplication install to
 function properly. The port to run this daemon can be set by using the
