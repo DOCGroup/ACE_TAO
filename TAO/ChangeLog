@@ -1,3 +1,10 @@
+Mon Aug  1 14:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Exception.h:
+        * tao/SystemException.h:
+        * tao/UserException.h:
+          Documentation improvements
+
 Mon Aug  1 12:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Exception.{h,cpp}:
