@@ -109,7 +109,7 @@ namespace Dynamic
       >
     ParameterList_out;
 
-  class TAO_Export ParameterList
+  class TAO_AnyTypeCode_Export ParameterList
     : public
         TAO_Unbounded_Sequence<
             Parameter
@@ -218,11 +218,11 @@ namespace Dynamic
 #if !defined _TAO_CDR_OP_Dynamic_ParameterList_H_
 #define _TAO_CDR_OP_Dynamic_ParameterList_H_
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_AnyTypeCode_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const Dynamic::ParameterList &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_AnyTypeCode_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     Dynamic::ParameterList &
   );

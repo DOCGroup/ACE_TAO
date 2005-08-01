@@ -72,7 +72,7 @@ namespace Dynamic
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
 
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ParameterList;
+  extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_ParameterList;
 
   extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_ContextList;
 
@@ -97,10 +97,10 @@ namespace Dynamic
 // TAO_IDL - Generated from
 // be\be_visitor_sequence/any_op_ch.cpp:52
 
-TAO_Export void operator<<= (CORBA::Any &, const Dynamic::ParameterList &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, Dynamic::ParameterList*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Dynamic::ParameterList *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const Dynamic::ParameterList *&);
+TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const Dynamic::ParameterList &); // copying version
+TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, Dynamic::ParameterList*); // noncopying version
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, Dynamic::ParameterList *&); // deprecated
+TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, const Dynamic::ParameterList *&);
 
 // TAO_IDL - Generated from
 // be\be_visitor_interface_fwd/any_op_ch.cpp:63
