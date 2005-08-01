@@ -1,3 +1,13 @@
+Mon Aug  1 19:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode_Adapter.{h,cpp}:
+        * tao/SystemException.cpp:
+          Added first version of Adapter interface and implemented
+          SystemException::_tao_type to call the adapter method.
+
+        * tao/tao.mpc:
+          Added new file
+
 Mon Aug  1 18:10:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Exception.{h,cpp}:
