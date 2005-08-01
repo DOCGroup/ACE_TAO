@@ -29,7 +29,7 @@
 // be\be_codegen.cpp:291
 
 
-#include "InvalidSlotC.h"
+#include "InvalidSlotA.h"
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
 #include "ace/OS_NS_string.h"
@@ -147,10 +147,10 @@ void PortableInterceptor::InvalidSlot::_tao_decode (
 }
 
 // TAO extension - the virtual _type method.
-//CORBA::TypeCode_ptr PortableInterceptor::InvalidSlot::_tao_type (void) const
-//{
-//  return ::PortableInterceptor::_tc_InvalidSlot;
-//}
+CORBA::TypeCode_ptr PortableInterceptor::InvalidSlot::_tao_type (void) const
+{
+  return ::PortableInterceptor::_tc_InvalidSlot;
+}
 
 // TAO_IDL - Generated from
 // be\be_visitor_exception/cdr_op_cs.cpp:60

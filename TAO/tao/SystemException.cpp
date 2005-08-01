@@ -855,6 +855,19 @@ TAO::excp_factory excp_array [] = {
 };
 
 #define TAO_SYSTEM_EXCEPTION(name) \
+CORBA::TypeCode_ptr \
+CORBA::name ::_tao_type (void) const \
+{ \
+  return 0; \
+}
+
+STANDARD_EXCEPTION_LIST
+#undef  TAO_SYSTEM_EXCEPTION
+
+// @todo implement method above
+//  return CORBA::_tc_ ## name;
+
+#define TAO_SYSTEM_EXCEPTION(name) \
 void \
 CORBA::name ::_tao_any_destructor (void * x) \
 { \

@@ -157,6 +157,8 @@ namespace CORBA
 
       virtual void _raise (void) const;
 
+      virtual CORBA::TypeCode_ptr _tao_type (void) const;
+
       virtual void _tao_encode (TAO_OutputCDR &
                                 ACE_ENV_ARG_DECL) const;
 

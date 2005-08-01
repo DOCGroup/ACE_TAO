@@ -97,15 +97,7 @@ CORBA::ORB::InvalidName::operator= (const ::CORBA::ORB::InvalidName &_tao_excp)
 CORBA::ORB::InvalidName *
 CORBA::ORB::InvalidName::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/ORB/InvalidName:1.0",
-                       exc->_rep_id ()))
-    {
-      return dynamic_cast<InvalidName *> (exc);
-    }
-  else
-    {
-      return 0;
-    }
+  return dynamic_cast<InvalidName *> (exc);
 }
 
 CORBA::Exception *CORBA::ORB::InvalidName::_alloc (void)
@@ -118,7 +110,7 @@ CORBA::Exception *CORBA::ORB::InvalidName::_alloc (void)
 CORBA::Exception *
 CORBA::ORB::InvalidName::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::CORBA::ORB::InvalidName (*this),
@@ -130,6 +122,14 @@ CORBA::ORB::InvalidName::_tao_duplicate (void) const
 void CORBA::ORB::InvalidName::_raise (void) const
 {
   TAO_RAISE (*this);
+}
+
+CORBA::TypeCode_ptr
+CORBA::ORB::InvalidName::_tao_type (void) const
+{
+  // Probably do something else, but it seems we got just this implementation
+  // from the base.
+  return 0;
 }
 
 void CORBA::ORB::InvalidName::_tao_encode (
