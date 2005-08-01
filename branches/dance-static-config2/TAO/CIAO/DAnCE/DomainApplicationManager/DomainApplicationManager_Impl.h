@@ -13,6 +13,7 @@
  */
 //=====================================================================
 
+
 #ifndef CIAO_DOMAINAPPLICATIONMANAGER_IMPL_H
 #define CIAO_DOMAINAPPLICATIONMANAGER_IMPL_H
 #include /**/ "ace/pre.h"
@@ -47,7 +48,7 @@ namespace CIAO
    * deploying an application on the domain level, i.e. across
    * nodes. It specializes the ApplicationManager abstract interface.
    */
-  class DomainApplicationManager_Export DomainApplicationManager_Impl
+  class DomainApplicationManager_Export DomainApplicationManager_Impl_Base
     : public virtual POA_Deployment::DomainApplicationManager
   {
   public:
@@ -65,11 +66,11 @@ namespace CIAO
     } Chained_Artifacts;
 
     /// Constructor
-    DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
-                                   PortableServer::POA_ptr poa,
-                                   Deployment::TargetManager_ptr manager,
-                                   const Deployment::DeploymentPlan &plan,
-                                   const char * deployment_file)
+    DomainApplicationManager_Impl_Base (CORBA::ORB_ptr orb,
+                                        PortableServer::POA_ptr poa,
+                                        Deployment::TargetManager_ptr manager,
+                                        const Deployment::DeploymentPlan &plan,
+                                        const char * deployment_file)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
 
@@ -182,8 +183,8 @@ namespace CIAO
 
   protected:
     /// Destructor
-    virtual ~DomainApplicationManager_Impl (void);
-
+    virtual ~DomainApplicationManager_Impl_Base (void);    
+    
     /**
      * (1) Parse the global deployment plan, get the total number of
      *     child plans included in the global plan, and get the list of
@@ -224,6 +225,9 @@ namespace CIAO
 
     /// Dump connections, a static method
     void dump_connections (const ::Deployment::Connections & connections);
+
+    virtual ::Deployment::NodeManager_ptr
+      get_node_manager (const char* name) = 0;
 
   protected:
     /// location of the Domainapplication
@@ -284,6 +288,61 @@ namespace CIAO
     ::Deployment::Connections_var all_connections_;
 
   };
+
+
+  /**
+   * @class DomainApplicationManager_Impl
+   *
+   */
+  class DomainApplicationManager_Impl
+    : public virtual DomainApplicationManager_Impl_Base
+  {
+  public:
+    /// Constructor
+    DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
+                                   PortableServer::POA_ptr poa,
+                                   Deployment::TargetManager_ptr manager,
+                                   const Deployment::DeploymentPlan &plan,
+                                   const char * deployment_file)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  protected:
+    /// Destructor
+    virtual ~DomainApplicationManager_Impl (void);    
+
+    virtual ::Deployment::NodeManager_ptr get_node_manager (const char* name);
+  };
+
+  struct Static_Config_EntryPoints_Maps;
+
+  /**
+   * @class Static_DomainApplicationManager_Impl
+   *
+   */
+  class Static_DomainApplicationManager_Impl
+    : public virtual DomainApplicationManager_Impl_Base
+  {
+  public:
+    /// Constructor
+    Static_DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
+                                   PortableServer::POA_ptr poa,
+                                   Deployment::TargetManager_ptr manager,
+                                   const Deployment::DeploymentPlan &plan,
+                                   const char * deployment_file,
+                                   Static_Config_EntryPoints_Maps* static_config_entrypoints_maps)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  protected:
+    /// Destructor
+    virtual ~Static_DomainApplicationManager_Impl (void);    
+
+    virtual ::Deployment::NodeManager_ptr get_node_manager (const char* name);
+
+  protected:
+    ::Deployment::NodeManager_var static_node_manager_;
+
+  };
+
 }
 
 #if defined (__ACE_INLINE__)
