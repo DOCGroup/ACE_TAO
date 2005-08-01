@@ -890,11 +890,14 @@ TAO::excp_factory excp_array [] = {
 CORBA::TypeCode_ptr \
 CORBA::name ::_tao_type (void) const \
 { \
-    TAO_AnyTypeCode_Adapter *adapter = \
-      ACE_Dynamic_Service<TAO_AnyTypeCode_Adapter>::instance ( \
-          "AnyTypeCode_Adapter" \
-        ); \
+  TAO_AnyTypeCode_Adapter *adapter = \
+    ACE_Dynamic_Service<TAO_AnyTypeCode_Adapter>::instance ( \
+        "AnyTypeCode_Adapter" \
+      ); \
+  if (adapter != 0) \
     return adapter->_tao_type_ ## name (); \
+  else \
+    return 0; \
 }
 
 STANDARD_EXCEPTION_LIST
