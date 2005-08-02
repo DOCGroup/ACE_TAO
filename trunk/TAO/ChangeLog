@@ -1,3 +1,12 @@
+Tue Aug  2 21:18:02 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        
+          Fixed some mismatched allocate/deallocate errors. Thanks to
+          Johnny Willemsen <jwillemsen@rememdy.nl> for pointing them
+          out.
+
 Tue Aug  2 13:01:58 2005  Steve Totten  <totten_s@ociweb.com>
 
         Applied the following change from the OCI TAO 1.4a repository on
