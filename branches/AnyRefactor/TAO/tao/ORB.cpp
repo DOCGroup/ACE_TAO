@@ -124,14 +124,6 @@ void CORBA::ORB::InvalidName::_raise (void) const
   TAO_RAISE (*this);
 }
 
-CORBA::TypeCode_ptr
-CORBA::ORB::InvalidName::_tao_type (void) const
-{
-  // Probably do something else, but it seems we got just this implementation
-  // from the base.
-  return 0;
-}
-
 void CORBA::ORB::InvalidName::_tao_encode (
     TAO_OutputCDR &
     ACE_ENV_ARG_DECL

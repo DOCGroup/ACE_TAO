@@ -60,3 +60,23 @@ TAO_AnyTypeCode_Adapter_Impl::_tao_type_ ## name (void) const \
 STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
 
+int
+TAO_AnyTypeCode_Adapter_Impl::Initializer (void)
+{
+  return ACE_Service_Config::process_directive (
+        ace_svc_desc_TAO_AnyTypeCode_Adapter_Impl
+      );
+}
+
+
+ACE_STATIC_SVC_DEFINE (
+  TAO_AnyTypeCode_Adapter_Impl,
+  ACE_TEXT ("AnyTypeCode_Adapter"),
+  ACE_SVC_OBJ_T,
+  &ACE_SVC_NAME (TAO_AnyTypeCode_Adapter_Impl),
+  ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+  0)
+
+ACE_FACTORY_DEFINE (TAO_AnyTypeCode, TAO_AnyTypeCode_Adapter_Impl)
+
+
