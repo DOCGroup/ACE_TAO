@@ -1,3 +1,35 @@
+Tue Aug  2 13:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/TC_Constants_Forward.h:
+        * tao/AnyTypeCode/TC_Constants_Forward.h:
+          Moved to AnyTypeCode lib
+
+Tue Aug  2 12:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CORBA_methods.h:
+          Removed not needed forward declarations
+
+        * tao/Dynamic_Adapter.cpp:
+          Removed not needed includes and explicit templates
+
+        * tao/NVList_Adapter.{h,cpp}:
+          New NVList adapter
+
+        * tao/ORB.{h,cpp}:
+          Use new NVList Adapter
+
+        * tao/tao.mpc:
+          Added NVList_Adapter files
+
+        * tao/AnyTypeCode.mpc:
+          Added new files
+
+        * tao/NVList.h:
+          Updated friends
+
+        * tao/NVList_Adapter_Impl.{h,cpp}:
+          Concrete NVList Adapter implementation
+
 Tue Aug  2 12:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.{h,cpp}:
