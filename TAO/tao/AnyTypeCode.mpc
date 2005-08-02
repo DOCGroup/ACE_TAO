@@ -12,6 +12,7 @@ project : taolib, core {
     AnyTypeCode/Any_Impl.cpp
     AnyTypeCode/Any_SystemException.cpp
     AnyTypeCode/Any_Unknown_IDL_Type.cpp
+    AnyTypeCode/AnyTypeCode_Adapter_Impl.cpp
     AnyTypeCode/append.cpp
     AnyTypeCode/BooleanSeqA.cpp
     AnyTypeCode/BoundsA.cpp
