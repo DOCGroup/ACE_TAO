@@ -18,6 +18,7 @@ ACE_RCSID (tao,
 #include "default_ports.h"
 #include "ORBInitializer_Registry_Adapter.h"
 #include "PolicyFactory_Registry_Adapter.h"
+#include "NVList_Adapter.h"
 #include "TAO_Singleton_Manager.h"
 #include "Policy_Current.h"
 #include "Policy_Manager.h"
@@ -288,40 +289,17 @@ CORBA::ORB::create_list (CORBA::Long count,
                          CORBA::NVList_ptr &new_list
                          ACE_ENV_ARG_DECL)
 {
-  ACE_ASSERT (CORBA::ULong (count) <= UINT_MAX);
-/*-----------------27-7-2005 16:11------------------
- * Todo, add an adapter
- * --------------------------------------------------
-  // Create an empty list
-  ACE_NEW_THROW_EX (new_list,
-                    CORBA::NVList,
-                    CORBA::NO_MEMORY (
-                      CORBA::SystemException::_tao_minor_code (
-                        0,
-                        ENOMEM),
-                      CORBA::COMPLETED_NO));
-  ACE_CHECK;
+  TAO_NVList_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_NVList_Adapter>::instance (
+        "TAO_NVList_Adapter"
+      );
 
-  // If count is greater than 0, create a list of NamedValues.
-  if (count != 0)
+  if (adapter == 0)
     {
-      new_list->max_ = (CORBA::ULong) count;
+      ACE_THROW (CORBA::INTERNAL ());
+    }
 
-      for (CORBA::Long i = 0; i < count; ++i)
-        {
-          CORBA::NamedValue_ptr nv = 0;
-          ACE_NEW_THROW_EX (nv,
-                            CORBA::NamedValue,
-                            CORBA::NO_MEMORY (
-                              CORBA::SystemException::_tao_minor_code (
-                                0,
-                                ENOMEM),
-                              CORBA::COMPLETED_NO));
-          ACE_CHECK;
-
-          new_list->values_.enqueue_tail (nv);
-        }
-    }*/
+  adapter->create_list (count, new_list ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -374,16 +352,19 @@ CORBA::ORB::create_environment (CORBA::Environment_ptr &environment
 
 void
 CORBA::ORB::create_named_value (CORBA::NamedValue_ptr &nv
-                               ACE_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
 {
-/* todo
- *   ACE_NEW_THROW_EX (nv,
-                    CORBA::NamedValue,
-                    CORBA::NO_MEMORY (
-                      CORBA::SystemException::_tao_minor_code (
-                        0,
-                        ENOMEM),
-                      CORBA::COMPLETED_NO));*/
+  TAO_NVList_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_NVList_Adapter>::instance (
+        "TAO_NVList_Adapter"
+      );
+
+  if (adapter == 0)
+    {
+      ACE_THROW (CORBA::INTERNAL ());
+    }
+
+  adapter->create_named_value (nv ACE_ENV_ARG_PARAMETER);
 }
 
 // The following functions are not implemented - they just throw

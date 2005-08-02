@@ -40,6 +40,7 @@ project : taolib, core {
     AnyTypeCode/Marshal.cpp
     AnyTypeCode/Messaging_PolicyValueA.cpp
     AnyTypeCode/NVList.cpp
+    AnyTypeCode/NVList_Adapter_Impl.cpp
     AnyTypeCode/ObjectIdListA.cpp
     AnyTypeCode/Objref_TypeCode_Static.cpp
     AnyTypeCode/OctetSeqA.cpp

@@ -57,9 +57,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     DomainC.cpp
     DoubleSeqC.cpp
     Dynamic_Adapter.cpp
-//    Dynamic_ParameterA.cpp
-//    Dynamic_ParameterC.cpp
-//    DynamicC.cpp
     Endpoint.cpp
     Endpoint_Selector_Factory.cpp
     Environment.cpp
@@ -128,6 +125,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     MProfile.cpp
     Muxed_TMS.cpp
     New_Leader_Generator.cpp
+    NVList_Adapter.cpp
     Object.cpp
     Object_KeyC.cpp
     Object_Loader.cpp
