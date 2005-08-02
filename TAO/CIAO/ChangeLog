@@ -1,3 +1,9 @@
+Tue Aug  2 08:36:40 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/Plan_Launcher/Plan_Launcher.mpc
+
+	Possiible fix for borlan build problem.
+
 Mon Aug 01 16:01:43 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
 
         * ChangeLog

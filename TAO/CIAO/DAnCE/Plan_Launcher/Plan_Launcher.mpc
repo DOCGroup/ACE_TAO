@@ -21,7 +21,7 @@ project(Plan_Launcher_Impl) : naming, ciao_server_dnc, xerces {
   }
 }
 
-project(Plan_Launcher) : ciao_server_dnc, taoexe  {
+project(Plan_Launcher) : ciao_server_dnc, taoexe, xerces  {
   exename = plan_launcher
 
 
