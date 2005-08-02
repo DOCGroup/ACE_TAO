@@ -1,3 +1,9 @@
+Tue Aug  2 12:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/Attic/ExceptionA.cpp:
+          Reenabled CORBA::Exception Any operators now _tao_type is available
+          again
+
 Mon Aug  1 19:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Exception.{h,cpp}:
