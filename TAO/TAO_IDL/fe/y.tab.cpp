@@ -7179,7 +7179,7 @@ tao_yyreduce:
               home->factories ().enqueue_tail (o);
             }
 
-           ACE_OS::free (tao_yyvsp[0].idval);
+           delete tao_yyvsp[0].idval;
            tao_yyvsp[0].idval = 0;
 
           /*
@@ -7253,7 +7253,7 @@ tao_yyreduce:
               home->finders ().enqueue_tail (o);
             }
 
-           ACE_OS::free (tao_yyvsp[0].idval);
+           delete tao_yyvsp[0].idval;
            tao_yyvsp[0].idval = 0;
 
           /*
