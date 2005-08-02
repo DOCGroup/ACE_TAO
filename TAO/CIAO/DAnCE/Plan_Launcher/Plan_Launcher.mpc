@@ -24,7 +24,7 @@ project(Plan_Launcher_Impl) : naming, ciao_server_dnc, xerces {
 project(Plan_Launcher) : ciao_server_dnc, taoexe, xerces  {
   exename = plan_launcher
 
-
+  requires += exceptions
   after += Plan_Launcher_Impl
   libs  += XSC_Config_Handlers Plan_Launcher_Impl ExecutionManager_stub
 
