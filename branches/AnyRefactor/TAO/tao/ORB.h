@@ -76,6 +76,9 @@ namespace CORBA
   class NVList;
   typedef NVList *NVList_ptr;
 
+  class NamedValue;
+  typedef NamedValue *NamedValue_ptr;
+
   // TODO - implement OMG's 'ORBid CORBA::ORB::id (void)'.
 
   typedef

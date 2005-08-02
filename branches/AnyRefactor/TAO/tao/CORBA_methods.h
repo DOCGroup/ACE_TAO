@@ -38,12 +38,6 @@ namespace CORBA
   class Environment;
   typedef Environment *Environment_ptr;
 
-  class NamedValue;
-  typedef NamedValue *NamedValue_ptr;
-
-  class NVList;
-  typedef NVList *NVList_ptr;
-
   class Object;
   typedef Object *Object_ptr;
 
