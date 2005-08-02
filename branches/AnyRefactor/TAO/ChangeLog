@@ -1,6 +1,12 @@
+Tue Aug  2 12:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.{h,cpp}:
+          Adapter implementation. _tao_type for all systemexceptions
+          is not available
+
 Tue Aug  2 12:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-        * tao/AnyTypeCode/Attic/ExceptionA.cpp:
+        * tao/AnyTypeCode/ExceptionA.cpp:
           Reenabled CORBA::Exception Any operators now _tao_type is available
           again
 
