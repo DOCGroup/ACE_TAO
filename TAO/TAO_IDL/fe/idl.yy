@@ -4889,7 +4889,7 @@ factory_decl :
               home->factories ().enqueue_tail (o);
             }
 
-           ACE_OS::free ($2);
+           delete $2;
            $2 = 0;
 
           /*
@@ -4958,7 +4958,7 @@ finder_decl :
               home->finders ().enqueue_tail (o);
             }
 
-           ACE_OS::free ($2);
+           delete $2;
            $2 = 0;
 
           /*
