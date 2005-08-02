@@ -1,6 +1,8 @@
 Tue Aug  2 09:53:23 2005  Simon McQueen  <sm@prismtech.com>
 
-	* 
+        * orbsvcs/tests/Bug_1630_Regression/test.mpc:
+
+          Use imr_client base project.
 
 Mon Aug  1 07:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
