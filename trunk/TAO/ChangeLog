@@ -1,3 +1,15 @@
+Tue Aug  2 13:01:58 2005  Steve Totten  <totten_s@ociweb.com>
+
+        Applied the following change from the OCI TAO 1.4a repository on
+        behalf of Abdel Rigumye:
+
+        Fri Jul 29 14:30 2005 Abdel Rigumye   <rigumyea@ociweb.com>
+
+        * orbsvc/Naming_Service/README:
+
+          Added and documented the existence of the -u and -r persistence
+          options
+
 Tue Aug  2 09:53:23 2005  Simon McQueen  <sm@prismtech.com>
 
         * orbsvcs/tests/Bug_1630_Regression/test.mpc:
