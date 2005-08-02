@@ -1,3 +1,10 @@
+Mon Aug  1 19:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Exception.{h,cpp}:
+          Removed class TAO_DONT_CATCH, it is not used at all. Also removed
+          the emulated exception argument from create_system_exception, it
+          is not needed
+
 Mon Aug  1 19:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode_Adapter.{h,cpp}:
