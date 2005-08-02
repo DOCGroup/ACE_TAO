@@ -23,14 +23,17 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/AnyTypeCode_Adapter.h"
+#include "ace/Service_Config.h"
 
 /**
  * @class TAO_AnyTypeCode_Adapter
  */
-class TAO_Export TAO_AnyTypeCode_Adapter_Impl
+class TAO_AnyTypeCode_Export TAO_AnyTypeCode_Adapter_Impl
   : public TAO_AnyTypeCode_Adapter
 {
 public:
+    // Used to force the initialization of the code.
+    static int Initializer (void);
 
 #define ANYTYPECODE__EXCEPTION_LIST \
     TAO_SYSTEM_EXCEPTION (UNKNOWN) \
@@ -80,6 +83,12 @@ public:
 ANYTYPECODE__EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
 };
+
+ACE_STATIC_SVC_DECLARE (TAO_AnyTypeCode_Adapter_Impl)
+ACE_FACTORY_DECLARE (TAO_AnyTypeCode, TAO_AnyTypeCode_Adapter_Impl)
+
+static int TAO_Requires_TAO_AnyTypeCode_Adapter_Impl =
+  TAO_AnyTypeCode_Adapter_Impl::Initializer ();
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ANYTYPECODE_ADAPTER_IMPL_H */
