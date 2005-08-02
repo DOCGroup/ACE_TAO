@@ -17,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
 
 namespace CORBA
 {
@@ -27,27 +27,27 @@ namespace CORBA
    * All the TypeCode constants
    */
   //@{
-  extern TAO_Export TypeCode_ptr const _tc_null;
-  extern TAO_Export TypeCode_ptr const _tc_void;
-  extern TAO_Export TypeCode_ptr const _tc_short;
-  extern TAO_Export TypeCode_ptr const _tc_long;
-  extern TAO_Export TypeCode_ptr const _tc_ushort;
-  extern TAO_Export TypeCode_ptr const _tc_ulong;
-  extern TAO_Export TypeCode_ptr const _tc_float;
-  extern TAO_Export TypeCode_ptr const _tc_double;
-  extern TAO_Export TypeCode_ptr const _tc_boolean;
-  extern TAO_Export TypeCode_ptr const _tc_char;
-  extern TAO_Export TypeCode_ptr const _tc_octet;
-  extern TAO_Export TypeCode_ptr const _tc_any;
-  extern TAO_Export TypeCode_ptr const _tc_TypeCode;
-  extern TAO_Export TypeCode_ptr const _tc_Principal;
-  extern TAO_Export TypeCode_ptr const _tc_Object;
-  extern TAO_Export TypeCode_ptr const _tc_string;
-  extern TAO_Export TypeCode_ptr const _tc_longlong;
-  extern TAO_Export TypeCode_ptr const _tc_ulonglong;
-  extern TAO_Export TypeCode_ptr const _tc_longdouble;
-  extern TAO_Export TypeCode_ptr const _tc_wchar;
-  extern TAO_Export TypeCode_ptr const _tc_wstring;
+  extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_null;
+  extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_void;
+  extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_short;
+  extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_long;
+  extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_ushort;
+  extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_ulong;
+  extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_float;
+  extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_double;
+  extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_boolean;
+  extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_char;
+  extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_octet;
+  extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_any;
+  extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_TypeCode;
+  extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_Principal;
+  extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_Object;
+  extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_string;
+  extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_longlong;
+  extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_ulonglong;
+  extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_longdouble;
+  extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_wchar;
+  extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_wstring;
 
 #define TAO_SYSTEM_EXCEPTION_LIST \
   TAO_SYSTEM_EXCEPTION(UNKNOWN); \
@@ -93,16 +93,16 @@ namespace CORBA
 
   // = Typecode constants for system exceptions.
 #define TAO_SYSTEM_EXCEPTION(name) \
-  extern TAO_Export TypeCode_ptr const _tc_ ## name
+  extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_ ## name
   TAO_SYSTEM_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
   //@}
 
-  extern TAO_Export TypeCode_ptr const _tc_UnknownUserException;
+  extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_UnknownUserException;
 
-  extern TAO_Export TypeCode_ptr const _tc_Current;
+  extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_Current;
 
-  extern TAO_Export TypeCode_ptr const _tc_NamedValue;
+  extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_NamedValue;
 }
 
 #include /**/ "ace/post.h"

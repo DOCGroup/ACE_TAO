@@ -17,12 +17,12 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
-#include "tao/CORBA_methods.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/CORBA_methods.h"
 #include "tao/Pseudo_VarOut_T.h"
 #include "tao/Arg_Traits_T.h"
 
