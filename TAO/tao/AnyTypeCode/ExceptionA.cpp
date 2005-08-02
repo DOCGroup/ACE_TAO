@@ -96,25 +96,23 @@ namespace TAO
 void
 operator<<= (CORBA::Any &any, const CORBA::Exception &exception)
 {
-// @todo, find solution for _tao_type
-//  TAO::Any_Dual_Impl_T<CORBA::Exception>::insert_copy (
-//      any,
-//      CORBA::Exception::_tao_any_destructor,
-//      exception._tao_type (),
-//      exception
-//    );
+  TAO::Any_Dual_Impl_T<CORBA::Exception>::insert_copy (
+      any,
+      CORBA::Exception::_tao_any_destructor,
+      exception._tao_type (),
+      exception
+    );
 }
 
 // Insertion of CORBA::Exception - non-copying.
 void
 operator<<= (CORBA::Any &any, CORBA::Exception *exception)
 {
-// @todo, find solution for _tao_type
-//  TAO::Any_Dual_Impl_T<CORBA::Exception>::insert (
-//      any,
-//      CORBA::Exception::_tao_any_destructor,
-//      exception->_tao_type (),
-//      exception
-//    );
+  TAO::Any_Dual_Impl_T<CORBA::Exception>::insert (
+      any,
+      CORBA::Exception::_tao_any_destructor,
+      exception->_tao_type (),
+      exception
+    );
 }
 
