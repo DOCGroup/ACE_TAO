@@ -131,12 +131,6 @@ TAO_Operation_Details::response_flags (void) const
 }
 
 ACE_INLINE TAO_Target_Specification::TAO_Target_Address
-TAO_Operation_Details::addressing_mode (void)
-{
-  return this->addressing_mode_;
-}
-
-ACE_INLINE TAO_Target_Specification::TAO_Target_Address
 TAO_Operation_Details::addressing_mode (void) const
 {
   return this->addressing_mode_;

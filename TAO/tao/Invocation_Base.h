@@ -64,8 +64,8 @@ namespace TAO
   public:
     virtual ~Invocation_Base (void);
 
-    //@{
     /// Accessor and mutator methods
+    //@{
     TAO_ORB_Core *orb_core (void) const;
 
     TAO_Stub *stub (void) const;
@@ -109,6 +109,9 @@ namespace TAO
 
     /// Does this invocation return a response?
     CORBA::Boolean response_expected (void) const;
+
+    /// The operaton details of the invocation
+    TAO_Operation_Details &operation_details (void);
     //@}
 
   protected:
