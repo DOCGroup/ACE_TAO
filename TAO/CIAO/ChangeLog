@@ -1,15 +1,20 @@
+Wed Aug  3 12:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc:
+          Corrected order of the libraries to resolve static link
+          errors
+
 Tue Aug  2 08:36:40 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/Plan_Launcher/Plan_Launcher.mpc
 
-	Possiible fix for borlan build problem.
+          Possiible fix for borlan build problem.
 
 Mon Aug 01 16:01:43 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
 
         * ChangeLog
 
-        Fixed several incorrect checkin date
-
+          Fixed several incorrect checkin date
 
 Mon Aug 01 14:55:43 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
 
@@ -20,18 +25,18 @@ Mon Aug 01 14:55:43 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
 Mon Aug  1 19:39:30 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/Plan_Launcher/Plan_Launcher.mpc:
-        
+
           Removed duplicate 'after' and 'libs' items, and added the
           new export macro definition file (see below) to
           Header_Files.
-          
+
         * DAnCE/Plan_Launcher/Plan_Launcher_Impl.h:
-        
+
           Added export macro to class declaration and include of export
           macro definitin file.
-          
+
         * DAnCE/Plan_Launcher/Plan_Launcher_Impl_Export.h:
-        
+
           New file to define the export macro for the Plan_Launcher_Impl
           library.
 
@@ -39,19 +44,19 @@ Sun Jul 31 21:56:43 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
 
         * DAnCE/new_RepositoryManager/Options.h
 
-        Improved documentation to meet the requirement of Doxygen
+          Improved documentation to meet the requirement of Doxygen
 
 Sun Jul 31 21:45:43 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
 
         * DAnCE/new_RepositoryManager/RMadmin.cpp
 
-        Fixed C4101 warnings in MSVC
+          Fixed C4101 warnings in MSVC
 
 Sun Jul 31 21:26:43 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
 
         * DAnCE/new_RepositoryManager/RMadmin.cpp
 
-        Updated RMadmin.cpp to merge latest changes
+          Updated RMadmin.cpp to merge latest changes
 
 Fri Jul 29 15:02:43 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 

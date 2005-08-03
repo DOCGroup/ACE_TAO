@@ -1,5 +1,5 @@
 // -*- MPC -*-
-// $Id$ 
+// $Id$
 
 project(Plan_Launcher_Impl) : naming, ciao_server_dnc, xerces {
 
@@ -8,9 +8,9 @@ project(Plan_Launcher_Impl) : naming, ciao_server_dnc, xerces {
   after += XSC_Config_Handlers ExecutionManager_stub NodeDaemon_stub
   libs     += XSC_Config_Handlers
   libs     += ExecutionManager_stub
-  
+
   dynamicflags = PLAN_LAUNCHER_IMPL_BUILD_DLL
-  
+
   Source_Files {
     Plan_Launcher_Impl.cpp
     DAM_Map.cpp
@@ -26,7 +26,7 @@ project(Plan_Launcher) : ciao_server_dnc, taoexe, xerces  {
 
   requires += exceptions
   after += Plan_Launcher_Impl
-  libs  += XSC_Config_Handlers Plan_Launcher_Impl ExecutionManager_stub
+  libs  += Plan_Launcher_Impl XSC_Config_Handlers  ExecutionManager_stub
 
   Source_Files {
     Plan_Launcher.cpp
