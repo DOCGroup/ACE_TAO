@@ -10,13 +10,13 @@ TAO::Argument::~Argument (void)
 CORBA::Boolean
 TAO::Argument::marshal (TAO_OutputCDR &)
 {
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
 TAO::Argument::demarshal (TAO_InputCDR &)
 {
-  return 1;
+  return true;
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
