@@ -30,7 +30,8 @@
 
 #if !defined (ACE_LACKS_FORK) && \
   (defined (ACE_WIN32) || \
-   (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED)) || \
+   (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && \
+      !defined (ACE_LACKS_MUTEXATTR_PSHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)) || \
    defined (ACE_USES_FIFO_SEM) || \
    (defined (ACE_HAS_POSIX_SEM) && defined (ACE_HAS_POSIX_SEM_TIMEOUT) && !defined (ACE_LACKS_NAMED_POSIX_SEM)))
 static int iterations = 10;
@@ -160,7 +161,8 @@ run_main (int argc, ACE_TCHAR *argv[])
               ACE_TEXT ("fork is not supported on this platform\n")));
   ACE_END_TEST;
 #elif defined (ACE_WIN32) || \
-       (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED)) || \
+       (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && \
+          !defined (ACE_LACKS_MUTEXATTR_PSHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)) || \
        defined (ACE_USES_FIFO_SEM) || \
        (defined (ACE_HAS_POSIX_SEM) && defined (ACE_HAS_POSIX_SEM_TIMEOUT) && !defined (ACE_LACKS_NAMED_POSIX_SEM))
 
