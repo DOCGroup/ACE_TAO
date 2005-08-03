@@ -103,7 +103,6 @@ public:
   CORBA::ULong request_id (void) const;
 
   /// Accessor method for the addressing mode
-  TAO_Target_Specification::TAO_Target_Address addressing_mode (void);
   TAO_Target_Specification::TAO_Target_Address addressing_mode (void) const;
 
   /// Set method for the addressing mode
