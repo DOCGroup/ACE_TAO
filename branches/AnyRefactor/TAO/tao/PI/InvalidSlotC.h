@@ -40,14 +40,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
+#include "tao/PI/pi_export.h"
 #include "tao/ORB.h"
 #include "tao/Environment.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO TAO_Export
+#define TAO_EXPORT_MACRO TAO_PI_Export
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -70,7 +70,7 @@ namespace PortableInterceptor
 #if !defined (_PORTABLEINTERCEPTOR_INVALIDSLOT_CH_)
 #define _PORTABLEINTERCEPTOR_INVALIDSLOT_CH_
 
-  class TAO_Export InvalidSlot : public CORBA::UserException
+  class TAO_PI_Export InvalidSlot : public CORBA::UserException
   {
   public:
 
@@ -125,8 +125,8 @@ namespace TAO
 // TAO_IDL - Generated from
 // be\be_visitor_exception/cdr_op_ch.cpp:52
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableInterceptor::InvalidSlot &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::InvalidSlot &);
+TAO_PI_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableInterceptor::InvalidSlot &);
+TAO_PI_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::InvalidSlot &);
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:955
