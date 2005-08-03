@@ -55,16 +55,6 @@ CORBA::UnknownUserException::exception (void)
   return *this->exception_;
 }
 
-int
-CORBA::UnknownUserException::_is_a (const char *interface_id) const
-{
-  return
-    ((ACE_OS::strcmp (interface_id,
-                      "IDL:omg.org/CORBA/UnknownUserException:1.0")
-        == 0)
-      || UserException::_is_a (interface_id));
-}
-
 CORBA::UnknownUserException *
 CORBA::UnknownUserException::_downcast (CORBA::Exception *ex)
 {
