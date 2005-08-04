@@ -219,6 +219,12 @@ public:
 
 private:
 
+  bool parameter_list (Dynamic::ParameterList &param_list);
+
+  bool exception_list (Dynamic::ExceptionList &exception_list);
+
+  bool result (CORBA::Any *any);
+
   /// Check if this ClientRequestInfo object is called within the
   /// context of a request.
   void check_validity (ACE_ENV_SINGLE_ARG_DECL);

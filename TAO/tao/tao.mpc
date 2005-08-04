@@ -172,7 +172,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Remote_Object_Proxy_Broker.cpp
     Reply_Dispatcher.cpp
     Request_Dispatcher.cpp
-    RequestInfo_Util.cpp
     Resource_Factory.cpp
     Resume_Handle.cpp
     Sequence.cpp
@@ -469,7 +468,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Remote_Object_Proxy_Broker.h
     Reply_Dispatcher.h
     Request_Dispatcher.h
-    RequestInfo_Util.h
     Resource_Factory.h
     Resume_Handle.h
     Seq_Out_T.h

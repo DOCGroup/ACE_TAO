@@ -9,7 +9,7 @@ ACE_RCSID (PortableServer,
            "$Id$")
 
 #include "ServerRequestInfo.h"
-#include "tao/PortableServer/PICurrent_Guard.h"
+#include "PICurrent_Guard.h"
 
 #include "tao/ServerRequestInterceptor_Adapter.h"
 #include "tao/TAO_Server_Request.h"

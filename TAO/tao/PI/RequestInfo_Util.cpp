@@ -6,12 +6,11 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "TypeCode.h"
-#include "ORB_Constants.h"
-#include "StringSeqC.h"
-#include "DynamicC.h"
-#include "SystemException.h"
-
+#include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/DynamicC.h"
+#include "tao/ORB_Constants.h"
+#include "tao/StringSeqC.h"
+#include "tao/SystemException.h"
 
 ACE_RCSID (tao,
            RequestInfo_Util,
