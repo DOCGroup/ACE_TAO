@@ -14,16 +14,19 @@
 #define TAO_REQUEST_INFO_UTIL_H
 
 #include /**/ "ace/pre.h"
-#include "ace/CORBA_macros.h"
+
+#include "tao/Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/orbconf.h"
+
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "tao/Basic_Types.h"
-#include "tao/TAO_Export.h"
+#include "ace/CORBA_macros.h"
+#include "pi_export.h"
 
 namespace CORBA
 {
@@ -47,7 +50,7 @@ namespace Dynamic
  * PortableInterceptor::ClientRequestInfo and
  * PortableInterceptor::ServerRequestInfo objects.
  */
-class TAO_Export TAO_RequestInfo_Util
+class TAO_PI_Export TAO_RequestInfo_Util
 {
 public:
 

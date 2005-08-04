@@ -10,7 +10,6 @@
 #include "tao/AnyTypeCode/DynamicC.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/operation_details.h"
-#include "tao/RequestInfo_Util.h"
 #include "tao/Invocation_Utils.h"
 #include "tao/debug.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
@@ -18,6 +17,10 @@
 #include "tao/ORB_Constants.h"
 
 #include "ace/OS_NS_string.h"
+
+#if TAO_HAS_INTERCEPTORS == 1
+# include "tao/PI/RequestInfo_Util.h"
+#endif
 
 ACE_RCSID (DynamicInterface,
            DII_Invocation,

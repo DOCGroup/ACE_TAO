@@ -76,7 +76,6 @@ public:
   void response_flags (CORBA::Octet flags);
 
   /// Get the response flags
-  CORBA::Octet response_flags (void);
   CORBA::Octet response_flags (void) const;
 
   /// Accessors for the service context list
@@ -132,21 +131,14 @@ public:
   /// Demarshals the list of <this->arg_> into the \a cdr.
   bool demarshal_args (TAO_InputCDR &cdr);
 
-  /**
-   * The following methods are used by client interceptors to extract
-   * the list of parameters passed by the operation, exceptions
-   * declared for the operation, and the result when available.
-   */
-#if TAO_HAS_INTERCEPTORS == 1
-  bool exception_list (Dynamic::ExceptionList &exception_list);
-  bool parameter_list (Dynamic::ParameterList &param_list);
-  bool result (CORBA::Any *any);
-#endif /* TAO_HAS_INTERCEPTORS == 1 */
-  //@}
-
   /// Accessors for the argument list
   TAO::Argument ** args (void) const;
   CORBA::ULong args_num (void) const ;
+
+  /// Exception count
+  CORBA::ULong ex_count (void) const;
+
+  TAO::Exception_Data const * ex_data (void) const;
 
 private:
 

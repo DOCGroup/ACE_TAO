@@ -18,7 +18,10 @@ ACE_RCSID (PortableServer,
 #include "tao/AnyTypeCode/DynamicC.h"
 #include "tao/ORB_Core.h"
 #include "tao/Service_Context.h"
-#include "tao/RequestInfo_Util.h"
+#include "tao/PI/RequestInfo_Util.h"
+#include "tao/PI/PICurrent.h"
+#include "tao/PI/PICurrent_Impl.h"
+#include "tao/AnyTypeCode/ExceptionA.h"
 
 #include "ace/OS_NS_string.h"
 
@@ -260,9 +263,9 @@ TAO::ServerRequestInfo::get_slot (PortableInterceptor::SlotId id
   ACE_CHECK_RETURN (0);
 
   // Retrieve the request scope PICurrent object.
-  TAO::PICurrent_Impl &rsc = this->server_request_.rs_pi_current ();
+  TAO::PICurrent_Impl *rsc = this->server_request_.rs_pi_current ();
 
-  return rsc.get_slot (id ACE_ENV_ARG_PARAMETER);
+  return rsc->get_slot (id ACE_ENV_ARG_PARAMETER);
 
 }
 
@@ -527,9 +530,9 @@ TAO::ServerRequestInfo::set_slot (PortableInterceptor::SlotId id,
   ACE_CHECK;
 
   // Retrieve the "request scope current" (RSC).
-  TAO::PICurrent_Impl & rsc = this->server_request_.rs_pi_current ();
+  TAO::PICurrent_Impl * rsc = this->server_request_.rs_pi_current ();
 
-  rsc.set_slot (id, data ACE_ENV_ARG_PARAMETER);
+  rsc->set_slot (id, data ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 

@@ -174,28 +174,6 @@ namespace TAO
     //@{
 #if TAO_HAS_INTERCEPTORS == 1
   public:
-    /// Return the name of the operation.
-    char *operation_name (void);
-
-    /// Return the list of arguments as a ParameterList
-    /**
-     * It is declared virtual so that the DynamicInterface can use its
-     * own way of creating the ParameterList.
-     */
-    virtual Dynamic::ParameterList *arguments (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-    /// Return the list of exceptions declared as a ExceptionList
-    Dynamic::ExceptionList *exceptions (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-    /// Return the result of the operation as an Any.
-    CORBA::Any * result (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
-    /// Return the syncscope policy of the operation.
-    CORBA::Octet sync_scope (void) const;
-
     /// Return a reference to the number of interceptors pushed on to
     /// the current interceptor flow stack.
     /**
