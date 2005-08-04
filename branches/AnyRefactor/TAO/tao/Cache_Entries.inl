@@ -164,12 +164,6 @@ namespace TAO
 
 
   ACE_INLINE CORBA::ULong
-  Cache_ExtId::index (void)
-  {
-    return this->index_;
-  }
-
-  ACE_INLINE CORBA::ULong
   Cache_ExtId::index (void) const
   {
     return this->index_;
