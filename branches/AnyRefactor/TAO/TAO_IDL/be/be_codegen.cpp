@@ -922,7 +922,7 @@ TAO_CodeGen::start_anyop_source (const char *fname)
     }
 
   *this->anyop_source_ << "\n";
-  
+
   this->gen_typecode_includes (this->anyop_source_);
 
   return 0;
@@ -1619,11 +1619,15 @@ TAO_CodeGen::gen_stub_src_includes (void)
 
   // Conditional includes.
 
-  // Operations for local interfaces are pure virtual.
-  if (idl_global->non_local_op_seen_)
+  if (idl_global->exception_seen_)
     {
       this->gen_standard_include (this->client_stubs_,
                                   "tao/Exception_Data.h");
+    }
+
+  // Operations for local interfaces are pure virtual.
+  if (idl_global->non_local_op_seen_)
+    {
       this->gen_standard_include (this->client_stubs_,
                                   "tao/Invocation_Adapter.h");
     }
