@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Arg_Traits_T.h
+ *  @file    SArg_Traits_T.h
  *
  *  $Id$
  *
@@ -11,8 +11,8 @@
 //=============================================================================
 
 
-#ifndef TAO_ARG_TRAITS_T_H
-#define TAO_ARG_TRAITS_T_H
+#ifndef TAO_SARG_TRAITS_T_H
+#define TAO_SARG_TRAITS_T_H
 
 #include /**/ "ace/pre.h"
 
@@ -24,15 +24,15 @@ namespace TAO
 {
   /**
    *
-   * @brief Base class for all stub arg traits specializations.
+   * @brief Base class for all skeleton arg traits specializations.
    *
    */
   template<typename T>
-  class Arg_Traits
+  class SArg_Traits
   {
   };
 }
 
 #include /**/ "ace/post.h"
 
-#endif /* TAO_ARG_TRAITS_T_H */
+#endif /* TAO_SARG_TRAITS_T_H */
