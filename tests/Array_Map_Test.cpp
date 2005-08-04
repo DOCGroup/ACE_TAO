@@ -419,13 +419,23 @@ reference_count_test (void)
 
     ACE_ASSERT (counted.refcount () == 2);
 
-    map.insert (std::make_pair (ACE_TString (ACE_TEXT ("Two")),
-                                counted));
+    {
+      // enter a new scope block to assure destruction of temporaries
+      // on systems like Solaris
+
+      map.insert (std::make_pair (ACE_TString (ACE_TEXT ("Two")),
+				  counted));
+    }
 
     ACE_ASSERT (counted.refcount () == 3);
 
-    map.insert (std::make_pair (ACE_TString (ACE_TEXT ("Three")),
-                                counted));
+    {
+      // enter a new scope block to assure destruction of temporaries
+      // on systems like Solaris
+
+      map.insert (std::make_pair (ACE_TString (ACE_TEXT ("Three")),
+				  counted));
+    }
 
     ACE_ASSERT (counted.refcount () == 4);
 

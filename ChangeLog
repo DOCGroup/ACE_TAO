@@ -1,3 +1,10 @@
+Thu Aug  4 16:10:24 BST 2005  Donald Sharp   <Donald.Sharp@prismtech.com>
+
+        * tests/Array_Map_Test.cpp:
+          Some compilers, like SunCC5.5 on Solaris, do not delete their
+          temporaries in expression scope. Placing the expressions in an
+          inner block ensures that the reference count is as expected
+
 Wed Aug 03 09:35:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Process_Manual_Event_Test.cpp:
@@ -270,14 +277,14 @@ Tue Jul 19 10:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Jul 18 18:21:20 2005  Steve Huston  <shuston@riverace.com>
 
-	* NEWS: Added ACE_OS::closesocket() and Solaris 10 notes.
+        * NEWS: Added ACE_OS::closesocket() and Solaris 10 notes.
 
 Mon Jul 18 12:11:39 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* bin/msvc_static_order.lst:
+        * bin/msvc_static_order.lst:
 
-	  Add CosNaming_IDL, CosTrading_IDL, and CosNotification_IDL
-	  projects to list.
+          Add CosNaming_IDL, CosTrading_IDL, and CosNotification_IDL
+          projects to list.
 
 Mon Jul 18 11:42:09 2005  Chad Elliott  <elliott_c@ociweb.com>
 
