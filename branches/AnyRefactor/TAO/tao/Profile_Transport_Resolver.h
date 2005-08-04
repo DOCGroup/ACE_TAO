@@ -89,7 +89,7 @@ namespace TAO
 
     //@{
     /**
-     * Accessors and mutators for this class. The following methods
+     * @name Accessors and mutators for this class. The following methods
      * are used by the clients of this class to access strategies and
      * other internal workings.
      */

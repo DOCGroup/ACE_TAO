@@ -1,3 +1,62 @@
+Thu Aug  4 18:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Cache_Entries.{h,inl}:
+          Removed non const index method
+
+        * tao/PortableServer/SArg_Traits_T.h:
+        * tao/PortableServer/Basic_SArguments.h:
+        * tao/PortableServer/Special_Basic_SArguments.h:
+        * tao/PortableServer/UB_String_SArguments.h:
+        * tao/Arg_Traits_T.h:
+          Moved SArg_Traits to its own file and updated includes
+
+        * tao/PI_Server/ServerRequestInfo.cpp:
+        * tao/PI_Server/ServerInterceptorAdapter.cpp:
+          Updated for PICurrent changes
+
+        * tao/PI/ClientRequestInfo.{h,cpp}:
+          Implemented several methods here instead of using
+          functionality that was in the TAO lib for interceptors
+
+        * tao/DynamicInterface/DII_Invocation.cpp:
+          Updated include of RequestInfo_Util.h
+
+        * tao/Invocation_Base.{h,cpp}:
+        * tao/operation_details.{h,cpp,i}:
+          Removed several methods that are just there for the
+          ClientRequestInfo. The functionality moved to the
+          ClientRequestInfo class in the PI library where we just
+          access the operation details.
+
+        * tao/tao.mpc:
+          Removed files
+
+        * tao/RequestInfo_Util.{h,cpp}:
+        * tao/PI/RequestInfo_Util.{h,cpp}:
+          Moved to the PI lib
+
+        * tao/Invocation_Adapter.h:
+          Removed obsolete forward declaration of TAO_Exception_Data
+
+        * tao/AnyTypeCode/TypeCode.cpp:
+          Applied some patches Ossama did to the main branch also
+
+        * tao/Argument.cpp:
+          Use true instead of 1
+
+        * tao/PI/InvalidSlotA.h:
+        * tao/PI/InvalidSlotC.h:
+          Corrected export macro
+
+        * tao/DynamicInterface/Unknown_User_Exception.{h,cpp}:
+          Removed _is_a method
+
+        * tao/operation_details.{h,i}:
+          Removed non const version of addressing_mode
+
+        * tao/Invocation_Base.{h,inl}:
+          Added accessor for operation details
+
 Tue Aug  2 13:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/TC_Constants_Forward.h:
