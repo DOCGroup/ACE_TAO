@@ -1,9 +1,0 @@
-<?xml version='1.0'?>
-<!-- Converted from svc.conf by svcconf-convert.pl -->
-<ACE_Svc_Conf>
- <!--  Options for SHMIOP protocol -->
- <static id="SHMIOP_Factory" params="-MMAPFilePrefix server_shmiop"/>
- <!--  No other options required for regular testing -->
- <!--  For real-time testing, uncomment the following line: -->
- <!--  static RT_ORB_Loader "-ORBSchedPolicy SCHED_FIFO -ORBScopePolicy SYSTEM" -->
-</ACE_Svc_Conf>
