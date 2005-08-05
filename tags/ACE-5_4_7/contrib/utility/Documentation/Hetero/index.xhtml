@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<!--
+
+file      : Documentation/Hetero/index.xhtml
+author    : Boris Kolpackov <boris@kolpackov.net>
+copyright : Copyright (c) 2002-2003 Boris Kolpackov
+license   : http://kolpackov.net/license.html
+
+-->
+
+<head>
+
+  <title>Heterogeneous Container Library</title>
+
+  <meta name="author" content="Boris Kolpackov"/>
+  <meta name="copyright" content="&copy; 2001-2003 Boris Kolpackov"/>
+  <meta name="keywords" content="c++,heterogeneous,container"/>
+  <meta name="description" content="Heterogeneous Container Library"/>
+
+  <link rel="stylesheet" type="text/css" href="../Style/Default.css"/>
+
+</head>
+
+<body>
+
+<h1>Introduction</h1>
+
+<p>Have you ever wanted to write something like this:</p>
+
+<pre>
+vector v;
+
+v.push_back (10);
+v.push_back (true);
+v.push_back ("hello");
+</pre>
+
+<p>Or maybe even something like this:</p>
+
+<pre>
+template &lt;typename T&gt;
+void print (T const&amp; t)
+{
+  cout &lt;&lt; t &lt;&lt; endl;
+}
+
+for (vector::const_iterator i = v.begin (); i != v.end (); i++)
+{
+  print (*i);
+}
+</pre>
+
+<p>If so then you may be interested in Heterogeneous Container Library.
+It is still in active development but you can take a look for some
+examples in Example/Hetero directory.</p>
+
+</body>
+</html>
+<!-- $Id$ -->
