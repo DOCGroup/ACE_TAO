@@ -1,0 +1,50 @@
+# $Id$
+
+	Performance tests for the real-time event channel.
+
+This directory contains several tests to measure the performance of
+the real-time event channel.  Remember to compile ACE and TAO with
+optimizations enabled when running this tests.
+
+	Here are some canonical test configurations:
+
+# Measure throughput and latency, in a configuration suitable for
+# single threaded systems.  This is probably the best case scenario,
+# one supplier, one consumer and no locking.
+
+$ Throughput -burstsize 100000 -burstcount 1
+
+# Same test as above, but with a configuration that is MT-safe
+
+$ Throughput -ORBsvcconf ec.st.conf -burstsize 100000 -burstcount 1
+
+# Increase the number of consumers, but only the first one receives
+# events.
+
+$ Throughput -ORBsvcconf ec.st.conf -burstsize 100000 -burstcount 1 \
+  -consumers 4
+
+# Now increase the number of suppliers, only one consumer receives
+# events from each supplier.
+
+$ Throughput -ORBsvcconf ec.st.conf -burstsize 100000 -burstcount 1 \
+  -consumers 4 -suppliers 4
+
+# Now a test where all consumers receive events from all suppliers
+
+$ Throughput -ORBsvcconf ec.st.conf -burstsize 100000 -burstcount 1 \
+  -consumers 4 -suppliers 4 -consumers_tshift 0 -suppliers_tshift 0
+
+
+# Measure the time required to connect the 100 consumers and 100
+# suppliers, inserting one supplier first and then one supplier.
+# Try -connection_order "consumers" or "suppliers"
+
+$ Connect -ORBsvcconf ec.st.conf -consumers 100 -suppliers 100 \
+  -connection_order interleaved
+
+
+NOTES
+
+	Don't worry about the "incomplete data" warning, it is a
+deffect in the test.
