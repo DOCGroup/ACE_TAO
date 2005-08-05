@@ -21,6 +21,7 @@
 
 #include "tao/Basic_Types.h"
 #include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
+#include "tao/AnyTypeCode/Any.h"
 #include "tao/orbconf.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Null_Mutex.h"
@@ -64,13 +65,6 @@ namespace TAO
 
     CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean marshal_value (TAO_OutputCDR &) = 0;
-
-    /// @deprecated
-    /// Deprecated by the OMG. This no longer appears in
-    /// the C++ mapping. It is here only for backward
-    /// compatibility. It is no longer (as of 5/26/04)
-    /// used anywhere in TAO.
-    virtual const void *value (void) const;
 
     virtual void free_value (void);
 

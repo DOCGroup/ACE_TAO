@@ -41,9 +41,9 @@ namespace TAO
   public:
     In_Object_Argument_T (S_ptr x);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual void interceptor_param (Dynamic::Parameter &p);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S_ptr arg (void) const;
 
@@ -63,10 +63,10 @@ namespace TAO
   public:
     Inout_Object_Argument_T (S_ptr & x);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+    virtual CORBA::Boolean demarshal (TAO_InputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual void interceptor_param (Dynamic::Parameter &p);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S_ptr & arg (void);
 
@@ -86,9 +86,9 @@ namespace TAO
   public:
     Out_Object_Argument_T (S_out & x);
 
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    virtual CORBA::Boolean demarshal (TAO_InputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual void interceptor_param (Dynamic::Parameter &p);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S_out arg (void);
 
@@ -131,12 +131,10 @@ namespace TAO
   struct TAO_Export Object_Tag {};
 
   /**
-   * @struct Basic_Arg_Traits_T
+   * @struct Object_Arg_Traits_T
    *
    * @brief Template class for stub argument traits of objects.
-   *
    */
-
   template<typename T_ptr, typename T_var, typename T_out, typename T_traits>
   struct Object_Arg_Traits_T
   {

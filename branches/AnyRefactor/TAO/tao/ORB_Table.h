@@ -76,7 +76,9 @@ namespace TAO
     typedef Table::size_type  size_type;
     typedef Table::iterator   iterator;
 
-    /// The canonical ACE_Map methods.
+    /**
+     * @name The canonical ACE_Map methods.
+     */
     //@{
     iterator begin (void);
     iterator end (void);
