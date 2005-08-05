@@ -1,3 +1,9 @@
+Fri Aug  5 13:19:33 2005  Simon McQueen  <sm@prismtech.com>
+
+        * Release:
+
+          Remove tagging of man/* files.
+
 Thu Aug  4 16:10:24 BST 2005  Donald Sharp   <Donald.Sharp@prismtech.com>
 
         * tests/Array_Map_Test.cpp:
