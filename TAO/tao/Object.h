@@ -449,14 +449,14 @@ namespace TAO
    */
   template<>
   class TAO_Export Ret_Object_Argument_T <CORBA::Object_ptr, CORBA::Object_var>
-    : public Argument
+    : public RetArgument
   {
   public:
     Ret_Object_Argument_T (void);
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 
-    virtual void interceptor_result (CORBA::Any *);
+    virtual void interceptor_value (CORBA::Any *any) const;
 
     CORBA::Object_ptr & arg (void);
 

@@ -42,14 +42,14 @@ namespace TAO
    *
    * @brief Class for the return value of a CORBA::(Server)Request.
    */
-  class NamedValue_Argument : public Argument
+  class NamedValue_Argument : public RetArgument
   {
   public:
     NamedValue_Argument (CORBA::NamedValue_ptr);
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 
-    virtual void interceptor_result (CORBA::Any *);
+    virtual void interceptor_value (CORBA::Any *any) const;
 
     int byte_order (void) const;
 
@@ -65,7 +65,7 @@ namespace TAO
    *
    * @brief Class for the argument list of a CORBA::(Server)Request.
    */
-  class NVList_Argument : public Argument
+  class NVList_Argument : public InArgument
   {
   public:
     NVList_Argument (CORBA::NVList_ptr,

@@ -26,12 +26,10 @@ TAO::In_BD_String_Argument_T<S,to_S,from_S,BOUND>::marshal (
 
 template<typename S, typename to_S, typename from_S, size_t BOUND>
 void
-TAO::In_BD_String_Argument_T<S,to_S,from_S,BOUND>::interceptor_param (
-    Dynamic::Parameter & p
-  )
+TAO::In_BD_String_Argument_T<S,to_S,from_S,BOUND>::interceptor_value (
+  CORBA::Any *any) const
 {
-  p.argument <<= from_S (this->x_, BOUND);
-  p.mode = CORBA::PARAM_IN;
+  (*any) <<= from_S (this->x_, BOUND);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -61,12 +59,10 @@ TAO::Inout_BD_String_Argument_T<S,to_S,from_S,BOUND>::demarshal (
 
 template<typename S, typename to_S, typename from_S, size_t BOUND>
 void
-TAO::Inout_BD_String_Argument_T<S,to_S,from_S,BOUND>::interceptor_param (
-    Dynamic::Parameter & p
-  )
+TAO::Inout_BD_String_Argument_T<S,to_S,from_S,BOUND>::interceptor_value (
+  CORBA::Any *any) const
 {
-  p.argument <<= from_S (this->x_, BOUND);
-  p.mode = CORBA::PARAM_INOUT;
+  (*any) <<= from_S (this->x_, BOUND);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -94,12 +90,10 @@ template<typename S,
          typename from_S,
          size_t BOUND>
 void
-TAO::Out_BD_String_Argument_T<S,S_out,to_S,from_S,BOUND>::interceptor_param (
-    Dynamic::Parameter & p
-  )
+TAO::Out_BD_String_Argument_T<S,S_out,to_S,from_S,BOUND>::interceptor_value (
+  CORBA::Any *any) const
 {
-  p.argument <<= from_S (this->x_, BOUND);
-  p.mode = CORBA::PARAM_OUT;
+  (*any) <<= from_S (this->x_, BOUND);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -127,9 +121,8 @@ template<typename S,
          typename from_S,
          size_t BOUND>
 void
-TAO::Ret_BD_String_Argument_T<S,S_var,to_S,from_S,BOUND>::interceptor_result (
-    CORBA::Any * any
-  )
+TAO::Ret_BD_String_Argument_T<S,S_var,to_S,from_S,BOUND>::interceptor_value (
+  CORBA::Any *any) const
 {
   (*any) <<= from_S (this->x_.in (), BOUND);
 }

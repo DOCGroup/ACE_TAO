@@ -36,14 +36,14 @@ namespace TAO
    *
    */
   template<typename S_ptr>
-  class In_Object_Argument_T : public Argument
+  class In_Object_Argument_T : public InArgument
   {
   public:
     In_Object_Argument_T (S_ptr x);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_param (Dynamic::Parameter &p);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S_ptr arg (void) const;
 
@@ -58,7 +58,7 @@ namespace TAO
    *
    */
   template<typename S_ptr, typename S_traits>
-  class Inout_Object_Argument_T : public Argument
+  class Inout_Object_Argument_T : public InoutArgument
   {
   public:
     Inout_Object_Argument_T (S_ptr & x);
@@ -66,7 +66,7 @@ namespace TAO
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_param (Dynamic::Parameter &p);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S_ptr & arg (void);
 
@@ -77,18 +77,18 @@ namespace TAO
   /**
    * @class Out_Object_Argument_T
    *
-   * @brief Template class for INOUT object argument.
+   * @brief Template class for OUT object argument.
    *
    */
   template<typename S_ptr, typename S_out>
-  class Out_Object_Argument_T : public Argument
+  class Out_Object_Argument_T : public OutArgument
   {
   public:
     Out_Object_Argument_T (S_out & x);
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_param (Dynamic::Parameter &p);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S_out arg (void);
 
@@ -103,7 +103,7 @@ namespace TAO
    *
    */
   template<typename S_ptr, typename S_var>
-  class Ret_Object_Argument_T : public Argument
+  class Ret_Object_Argument_T : public RetArgument
   {
   public:
 
@@ -111,7 +111,7 @@ namespace TAO
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_result (CORBA::Any *);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S_ptr & arg (void);
 

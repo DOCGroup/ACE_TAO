@@ -1018,7 +1018,8 @@ namespace TAO
   }
 
   void
-  Ret_Object_Argument_T<Object_ptr,Object_var>::interceptor_result (CORBA::Any * )
+  Ret_Object_Argument_T<Object_ptr,Object_var>::
+    interceptor_value (CORBA::Any *) const
   {
     if (TAO_debug_level > 2)
       {

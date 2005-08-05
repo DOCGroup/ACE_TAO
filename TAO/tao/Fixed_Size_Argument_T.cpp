@@ -24,10 +24,9 @@ TAO::In_Fixed_Size_Argument_T<S>::marshal (TAO_OutputCDR & cdr)
 
 template<typename S>
 void
-TAO::In_Fixed_Size_Argument_T<S>::interceptor_param (Dynamic::Parameter & p)
+TAO::In_Fixed_Size_Argument_T<S>::interceptor_value (CORBA::Any *any) const
 {
-  p.argument <<= *this->x_;
-  p.mode = CORBA::PARAM_IN;
+  (*any) <<= *this->x_;
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -52,12 +51,9 @@ TAO::Inout_Fixed_Size_Argument_T<S>::demarshal (TAO_InputCDR & cdr)
 
 template<typename S>
 void
-TAO::Inout_Fixed_Size_Argument_T<S>::interceptor_param (
-    Dynamic::Parameter & p
-  )
+TAO::Inout_Fixed_Size_Argument_T<S>::interceptor_value (CORBA::Any *any) const
 {
-  p.argument <<= *this->x_;
-  p.mode = CORBA::PARAM_INOUT;
+  (*any) <<= *this->x_;
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -75,12 +71,9 @@ TAO::Out_Fixed_Size_Argument_T<S>::demarshal (TAO_InputCDR & cdr)
 
 template<typename S>
 void
-TAO::Out_Fixed_Size_Argument_T<S>::interceptor_param (
-    Dynamic::Parameter & p
-  )
+TAO::Out_Fixed_Size_Argument_T<S>::interceptor_value (CORBA::Any *any) const
 {
-  p.argument <<= this->x_;
-  p.mode = CORBA::PARAM_OUT;
+  (*any) <<= this->x_;
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -98,7 +91,7 @@ TAO::Ret_Fixed_Size_Argument_T<S>::demarshal (TAO_InputCDR & cdr)
 
 template<typename S>
 void
-TAO::Ret_Fixed_Size_Argument_T<S>::interceptor_result (CORBA::Any * any)
+TAO::Ret_Fixed_Size_Argument_T<S>::interceptor_value (CORBA::Any *any) const
 {
   (*any) <<= this->x_;
 }
