@@ -1,0 +1,7 @@
+# $Id$
+
+	This directory contains a partial implementation of the COS
+Event Service, using TAO's RT Event Service as the backend.  It is
+preserved for historical reasons, most applications are better served
+by the full implementation of the COS Event Service included with TAO
+or by the standard Notification Service.

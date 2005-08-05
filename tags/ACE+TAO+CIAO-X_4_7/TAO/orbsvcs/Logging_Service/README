@@ -1,0 +1,32 @@
+// README v 1.3 dhanvey <d.hanvey@qub.ac.uk> 14:43 30/05/02
+
+                        Telecom Log Service
+                        -------------------
+
+This is an implementation of the Telecom Log Service.
+
+The Log Service implementations are in $TAO_ROOT/orbsvcs/orbsvcs/Log
+
+The Logging Service is comprised of 3 separate services ...
+
+1. The Basic Logging Service - an event unaware service.
+   $TAO_ROOT/orbsvcs/Logging_Service/Basic_Logging_Service
+
+2. The Event Logging Service - an integration with the COS Event Service.
+   $TAO_ROOT/orbsvcs/Logging_Service/Event_Logging_Service
+
+3. The Notification Logging Service - an integration with the Notification Service.
+   $TAO_ROOT/orbsvcs/Logging_Service/Notify_Logging_Service
+
+There is also a RTEvent Logging Service available ...
+
+4. The RTEvent Logging Service 
+   $TAO_ROOT/orbsvcs/orbsvcs/Logging_Service/RTEvent_Logging_Service
+
+Please see the README documents in each of the above folders for
+details on how to execute the respective services.
+
+Author:
+-------
+David Hanvey
+send suggestions, bugs, to David Hanvey <d.hanvey@qub.ac.uk>

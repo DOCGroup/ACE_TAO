@@ -1,0 +1,12 @@
+// -*- MPC -*-
+// $Id$
+
+project(Bug_1630_testclient ) : taoexe, minimum_corba, ifr_client {
+   exename = testclient
+   
+   IDL_Files {
+   }
+   Source_Files {
+      testclient.cpp
+   }
+}

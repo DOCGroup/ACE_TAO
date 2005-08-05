@@ -1,0 +1,6 @@
+<?xml version='1.0'?>
+<!-- Converted from ./orbsvcs/tests/EC_Throughput/ec.conf by svcconf-convert.pl -->
+<ACE_Svc_Conf>
+ <!--  $Id$ -->
+ <static id="EC_Factory" params="-ECdispatching reactive -ECfiltering basic -ECproxyconsumerlock thread -ECsupplierfiltering per-supplier"/>
+</ACE_Svc_Conf>
