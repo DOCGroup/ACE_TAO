@@ -1,9 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : aceexe {
-  exename = udp_test
-  verbatim(gnuace, local) {
-    LDLIBS += $(MATHLIB)
-  }
-}
