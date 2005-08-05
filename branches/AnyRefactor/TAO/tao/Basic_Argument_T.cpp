@@ -24,7 +24,7 @@ TAO::In_Basic_Argument_T<S>::marshal (TAO_OutputCDR & cdr)
 
 template<>
 void
-TAO::In_Basic_Argument_T<unsigned int>::interceptor_param (Dynamic::Parameter & p)
+TAO::In_Basic_Argument_T<unsigned int>::interceptor_value (CORBA::Any *any) const
 {
 // @todo
 //  p.argument <<= this->x_;
@@ -33,10 +33,9 @@ TAO::In_Basic_Argument_T<unsigned int>::interceptor_param (Dynamic::Parameter & 
 
 template<typename S>
 void
-TAO::In_Basic_Argument_T<S>::interceptor_param (Dynamic::Parameter & p)
+TAO::In_Basic_Argument_T<S>::interceptor_value (CORBA::Any *any) const
 {
-  p.argument <<= this->x_;
-  p.mode = CORBA::PARAM_IN;
+  (*any) <<= this->x_;
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -61,10 +60,9 @@ TAO::Inout_Basic_Argument_T<S>::demarshal (TAO_InputCDR & cdr)
 
 template<typename S>
 void
-TAO::Inout_Basic_Argument_T<S>::interceptor_param (Dynamic::Parameter & p)
+TAO::Inout_Basic_Argument_T<S>::interceptor_value (CORBA::Any *any) const
 {
-  p.argument <<= this->x_;
-  p.mode = CORBA::PARAM_INOUT;
+  (*any) <<= this->x_;
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -82,10 +80,9 @@ TAO::Out_Basic_Argument_T<S>::demarshal (TAO_InputCDR & cdr)
 
 template<typename S>
 void
-TAO::Out_Basic_Argument_T<S>::interceptor_param (Dynamic::Parameter & p)
+TAO::Out_Basic_Argument_T<S>::interceptor_value (CORBA::Any *any) const
 {
-  p.argument <<= this->x_;
-  p.mode = CORBA::PARAM_OUT;
+  (*any) <<= this->x_;
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -103,7 +100,7 @@ TAO::Ret_Basic_Argument_T<S>::demarshal (TAO_InputCDR & cdr)
 
 template<>
 void
-TAO::Ret_Basic_Argument_T<unsigned int>::interceptor_result (CORBA::Any * any)
+TAO::Ret_Basic_Argument_T<unsigned int>::interceptor_value (CORBA::Any *any) const
 {
 // @todo
 //  (*any) <<= this->x_;
@@ -111,7 +108,7 @@ TAO::Ret_Basic_Argument_T<unsigned int>::interceptor_result (CORBA::Any * any)
 
 template<typename S>
 void
-TAO::Ret_Basic_Argument_T<S>::interceptor_result (CORBA::Any * any)
+TAO::Ret_Basic_Argument_T<S>::interceptor_value (CORBA::Any *any) const
 {
   (*any) <<= this->x_;
 }

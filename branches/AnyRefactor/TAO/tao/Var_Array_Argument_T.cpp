@@ -26,12 +26,10 @@ TAO::In_Var_Array_Argument_T<S,S_slice,S_forany>::marshal (
 
 template<typename S, typename S_slice, typename S_forany>
 void
-TAO::In_Var_Array_Argument_T<S,S_slice,S_forany>::interceptor_param (
-    Dynamic::Parameter & p
-  )
+TAO::In_Var_Array_Argument_T<S,S_slice,S_forany>::interceptor_value (
+  CORBA::Any *any) const
 {
-  p.argument <<= this->x_;
-  p.mode = CORBA::PARAM_IN;
+  (*any) <<= this->x_;
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -60,12 +58,10 @@ TAO::Inout_Var_Array_Argument_T<S,S_slice,S_forany>::demarshal (
 
 template<typename S, typename S_slice, typename S_forany>
 void
-TAO::Inout_Var_Array_Argument_T<S,S_slice,S_forany>::interceptor_param (
-    Dynamic::Parameter & p
-  )
+TAO::Inout_Var_Array_Argument_T<S,S_slice,S_forany>::interceptor_value (
+  CORBA::Any *any) const
 {
-  p.argument <<= this->x_;
-  p.mode = CORBA::PARAM_INOUT;
+  (*any) <<= this->x_;
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -101,11 +97,10 @@ template<typename S,
          typename S_tag>
 void
 TAO::Out_Var_Array_Argument_T<S,S_slice,S_var,S_out,S_forany,S_tag>::
-interceptor_param (Dynamic::Parameter & p)
+interceptor_value (CORBA::Any *any) const
 {
   S_forany tmp (this->x_);
-  p.argument <<= tmp;
-  p.mode = CORBA::PARAM_OUT;
+  (*any) <<= tmp;
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -141,7 +136,7 @@ template<typename S,
          typename S_tag>
 void
 TAO::Ret_Var_Array_Argument_T<S,S_slice,S_var,S_forany,S_tag>::
-interceptor_result (CORBA::Any * any)
+interceptor_value (CORBA::Any *any) const
 {
   (*any) <<= S_forany (this->x_.ptr ());
 }

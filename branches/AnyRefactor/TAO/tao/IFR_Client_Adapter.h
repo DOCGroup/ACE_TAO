@@ -29,11 +29,6 @@
 
 class TAO_OutputCDR;
 
-namespace Dynamic
-{
-  struct Parameter;
-}
-
 namespace CORBA
 {
   class InterfaceDef;
@@ -72,7 +67,7 @@ public:
     ) = 0;
 
   virtual void interfacedef_any_insert (
-      Dynamic::Parameter &p,
+      CORBA::Any *any,
       CORBA::InterfaceDef_ptr object_type
     ) = 0;
 

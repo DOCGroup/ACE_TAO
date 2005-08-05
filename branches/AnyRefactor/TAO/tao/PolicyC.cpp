@@ -31,7 +31,6 @@
 
 #include "PolicyC.h"
 #include "tao/CDR.h"
-#include "tao/Exception_Data.h"
 #include "tao/Invocation_Adapter.h"
 #include "tao/Object_T.h"
 #include "tao/Basic_Arguments.h"
@@ -48,6 +47,36 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
+
+// TAO specific stuff.
+namespace CORBA
+{
+  class Policy;
+  typedef Policy *Policy_ptr;
+  typedef TAO_Objref_Var_T<Policy> Policy_var;
+  typedef TAO_Objref_Out_T<Policy> Policy_out;
+}
+
+namespace TAO
+{
+
+#if TAO_HAS_INTERCEPTORS == 1
+
+  template<>
+  void
+  Ret_Object_Argument_T<CORBA::Policy_ptr,CORBA::Policy_var>::interceptor_value (CORBA::Any *any) const
+  {
+//    TAO_IFR_Client_Adapter *adapter =
+//      ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
+//          TAO_ORB_Core::ifr_client_adapter_name ()
+//        );
+//
+//    adapter->interfacedef_any_insert (p, this->x_);
+  }
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+}
 
 // Arg traits specializations.
 namespace TAO
