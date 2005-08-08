@@ -1,3 +1,11 @@
+Mon Aug  8 08:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added two new collocation tests
+
+        * apps/JAWS2/JAWS/jaws2.mpc:
+          New MPC file
+
 Fri Aug 05 07:37:20 2005  Simon Massey  <sma@prismtech.com>
 
         * ACE version 5.4.7 released.
