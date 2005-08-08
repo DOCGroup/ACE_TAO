@@ -399,6 +399,9 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int vsprintf (char *buffer, const char *format, va_list argptr);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int vsnprintf (char *buffer, size_t maxlen, const char *format, va_list argptr);
+
 # if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   int vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr);

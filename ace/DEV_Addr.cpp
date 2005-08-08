@@ -69,9 +69,12 @@ ACE_DEV_Addr::set (const ACE_DEV_Addr &sa)
                            0,
                            sizeof this->devname_);
   else
-    (void) ACE_OS::memcpy ((void *) &this->devname_,
-                           (void *) &sa.devname_,
-                           sa.get_size ());
+    {
+      (void) ACE_OS::memcpy ((void *) &this->devname_,
+                             (void *) &sa.devname_,
+                             sa.get_size () - 1);
+      this->devname_[sa.get_size () - 1] = ACE_TCHAR (0);
+    }
   return 0;
 }
 

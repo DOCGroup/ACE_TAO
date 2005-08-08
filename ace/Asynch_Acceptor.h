@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
+#if (defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)) && !defined(ACE_HAS_WINCE)
 // This only works on platforms that support async i/o.
 
 #include "ace/Default_Constants.h"
