@@ -1,7 +1,8 @@
 Mon Aug  8 10:44:16 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* ace/OS_NS_stdio.inl
-
+	* ace/Process.cpp
+	
 	Fixed a compilation problem from:
 
 	Fri Jul 22 13:29:32 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
