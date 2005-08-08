@@ -6965,8 +6965,8 @@ Thu Mar 11 08:47:55 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
           completion has been posted, which is wrong.  To fix the problem,
           those two operations must be swapped: FIRST post a completion,
           THEN signal the event.  Thanks to Enrico Detoma
-          <enrico.detoma@email.it> for reporting this.  This closes bugid
-          1763.
+          <enrico.detoma@email.it> and Ishay Green <Ishay@onigma.com>
+          for reporting this.  This closes bugid 1763.
 
 Thu Mar 11 16:36:09 2004  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 

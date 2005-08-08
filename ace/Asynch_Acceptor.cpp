@@ -12,7 +12,7 @@
 
 ACE_RCSID(ace, Asynch_Acceptor, "$Id$")
 
-#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
+#if (defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)) && !defined(ACE_HAS_WINCE)
 // This only works on platforms that support async i/o.
 
 #include "ace/OS_Errno.h"

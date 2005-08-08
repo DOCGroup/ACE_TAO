@@ -517,7 +517,7 @@ ACE_WIN32_Proactor::handle_signal (int, siginfo_t *, ucontext_t *)
 
   for (ACE_Time_Value timeout (0, 0);
        ;
-       )
+      )
     {
       result = this->handle_events (timeout);
 
@@ -631,7 +631,7 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
       //     so pass this "result_err" code
       //     to the application_specific_code ()
 
-      if ( result_err == 0 )
+      if (result_err == 0)
         result_err = errno ;
 
       this->application_specific_code (asynch_result,
@@ -678,7 +678,7 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
   DWORD bytes_transferred = 0;
   const void * completion_key = 0 ;
 
-  if ( result != 0 )
+  if (result != 0)
     {
       // This cast is ok since the original API calls restricted the transfer
       // counts to DWORD range.
@@ -696,7 +696,7 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
                                     bytes_transferred,      // xfer count
                                     comp_key,               // completion key
                                     result                  // overlapped
-                                    ) == FALSE)
+                                   ) == FALSE)
     {
       delete result;
 

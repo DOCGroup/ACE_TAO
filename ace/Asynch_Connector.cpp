@@ -12,7 +12,7 @@
 
 ACE_RCSID(ace, Asynch_Connector, "$Id$")
 
-#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
+#if (defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)) && !defined(ACE_HAS_WINCE)
 // This only works on platforms that support async I/O.
 
 #include "ace/OS_NS_sys_socket.h"
