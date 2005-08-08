@@ -71,7 +71,7 @@ namespace TAO
     NVList_Argument (CORBA::NVList_ptr,
                      bool lazy_eval);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 

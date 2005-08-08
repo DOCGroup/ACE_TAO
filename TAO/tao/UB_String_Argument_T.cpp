@@ -16,20 +16,12 @@ ACE_RCSID (tao,
 
 template<typename S>
 CORBA::Boolean
-TAO::In_UB_String_Argument_T<S>::marshal (TAO_OutputCDR & cdr)
+TAO::In_UB_String_Argument_T<S>::marshal (TAO_OutputCDR &cdr)
 {
   return cdr << this->x_;
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
-
-template<>
-void
-TAO::In_UB_String_Argument_T<char>::interceptor_value (CORBA::Any *any) const
-{
-  //p.argument <<= this->x_;
-  //p.mode = CORBA::PARAM_IN;
-}
 
 template<typename S>
 void
@@ -44,7 +36,7 @@ TAO::In_UB_String_Argument_T<S>::interceptor_value (CORBA::Any *any) const
 
 template<typename S>
 CORBA::Boolean
-TAO::Inout_UB_String_Argument_T<S>::marshal (TAO_OutputCDR & cdr)
+TAO::Inout_UB_String_Argument_T<S>::marshal (TAO_OutputCDR &cdr)
 {
   return cdr << this->x_;
 }
@@ -99,14 +91,6 @@ TAO::Ret_UB_String_Argument_T<S,S_var>::demarshal (TAO_InputCDR & cdr)
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
-
-template<>
-void
-TAO::Ret_UB_String_Argument_T<char, CORBA::String_var>::interceptor_value (CORBA::Any *any) const
-{
-  //(*any) <<= this->x_.in ();
-}
-
 
 template<typename S, typename S_var>
 void

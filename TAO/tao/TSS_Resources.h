@@ -105,12 +105,6 @@ public:
   TAO::GUIResource_Factory * gui_resource_factory_;
 };
 
-/**
- * @todo TAO_TSS_RESOURCES typedef should go away.  It is deprecated,
- *       and only exists for backward compatibility.
- */
-typedef TAO_TSS_Resources TAO_TSS_RESOURCES;
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_TSS_RESOURCES_H */

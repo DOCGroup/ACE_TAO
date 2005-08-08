@@ -26,6 +26,24 @@
 
 namespace TAO
 {
+
+template<>
+void
+TAO::In_Special_Basic_Argument_T<bool, ACE_InputCDR::to_boolean, ACE_OutputCDR::from_boolean>::
+  interceptor_value (CORBA::Any *) const
+{
+//  p.argument <<= from_S (this->x_);
+}
+
+template<>
+void
+TAO::Ret_Special_Basic_Argument_T<bool, ACE_InputCDR::to_boolean, ACE_OutputCDR::from_boolean>::interceptor_value (CORBA::Any *) const
+{
+  //(*any) <<= from_S (this->x_);
+}
+
+
+
   /**
    *
    * @brief Specializations for (w)char, octet and boolean.

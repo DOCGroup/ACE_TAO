@@ -20,7 +20,7 @@ TAO_Policy_Current_Impl &
 TAO_Policy_Current::implementation (TAO_Policy_Current_Impl &current)
 {
   TAO_TSS_Resources *tss =
-    TAO_TSS_RESOURCES::instance ();
+    TAO_TSS_Resources::instance ();
 
   TAO_Policy_Current_Impl *old = tss->policy_current_;
   tss->policy_current_ = &current;
@@ -30,7 +30,7 @@ TAO_Policy_Current::implementation (TAO_Policy_Current_Impl &current)
 TAO_Policy_Current_Impl &
 TAO_Policy_Current::implementation (void) const
 {
-  return *TAO_TSS_RESOURCES::instance ()->policy_current_;
+  return *TAO_TSS_Resources::instance ()->policy_current_;
 }
 
 CORBA::Policy_ptr

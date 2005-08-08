@@ -37,7 +37,7 @@ namespace IOP
 /**
  * @class TAO_Synch_Reply_Dispatcher
  *
- * @brief Reply dispatcher for Synchoronous Method Invocation (SMI)s.
+ * @brief Reply dispatcher for Synchronous Method Invocation (SMI)s.
  *
  */
 class TAO_Export TAO_Synch_Reply_Dispatcher

@@ -1620,7 +1620,8 @@ CORBA::ORB_init (int &argc,
       ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
 #if TAO_HAS_INTERCEPTORS == 1
-      TAO::PICurrent *pi = oc->pi_current ();
+      //TAO::PICurrent *pi = oc->pi_current ();
+// use PI adapter
 
     //  if (pi != 0)
   //      pi->initialize (slotid);
