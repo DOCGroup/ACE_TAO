@@ -17,6 +17,8 @@ TAO/tests/AMH_Exceptions/run_test.pl: !MINIMUM
 TAO/tests/Collocation/run_test.pl:
 TAO/tests/Collocation_Tests/run_test.pl: !ST
 TAO/tests/Collocation_Opportunities/run_test.pl: !ST
+TAO/tests/Collocation_Oneway_Tests/run_test.pl: !ST !NO_MESSAGING
+TAO/tests/Collocation_Exception_Test/run_test.pl: !ST
 TAO/tests/OctetSeq/run_test.pl:
 TAO/tests/OctetSeq/run_test1.pl: !STATIC
 TAO/tests/OctetSeq/run_test2.pl: !STATIC
