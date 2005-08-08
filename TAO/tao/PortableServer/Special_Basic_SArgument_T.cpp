@@ -5,10 +5,6 @@
 
 #include "tao/PortableServer/Special_Basic_SArgument_T.h"
 
-#if TAO_HAS_INTERCEPTORS == 1
-# include "tao/AnyTypeCode/Dynamic_ParameterC.h"
-#endif /* TAO_HAS_INTERCEPTORS */
-
 #if !defined (__ACE_INLINE__)
 #include "tao/PortableServer/Special_Basic_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -29,12 +25,10 @@ TAO::In_Special_Basic_SArgument_T<S,to_S,from_S>::demarshal (
 
 template<typename S, typename to_S, typename from_S>
 void
-TAO::In_Special_Basic_SArgument_T<S,to_S,from_S>::interceptor_param (
-    Dynamic::Parameter & p
-  )
+TAO::In_Special_Basic_SArgument_T<S,to_S,from_S>::interceptor_value (
+  CORBA::Any *any) const
 {
-  p.argument <<= from_S (this->x_);
-  p.mode = CORBA::PARAM_IN;
+  (*any) <<= from_S (this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -63,12 +57,10 @@ TAO::Inout_Special_Basic_SArgument_T<S,to_S,from_S>::demarshal (
 
 template<typename S, typename to_S, typename from_S>
 void
-TAO::Inout_Special_Basic_SArgument_T<S,to_S,from_S>::interceptor_param (
-    Dynamic::Parameter & p
-  )
+TAO::Inout_Special_Basic_SArgument_T<S,to_S,from_S>::interceptor_value (
+  CORBA::Any *any) const
 {
-  p.argument <<= from_S (this->x_);
-  p.mode = CORBA::PARAM_INOUT;
+  (*any) <<= from_S (this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -88,12 +80,10 @@ TAO::Out_Special_Basic_SArgument_T<S,to_S,from_S>::marshal (
 
 template<typename S, typename to_S, typename from_S>
 void
-TAO::Out_Special_Basic_SArgument_T<S,to_S,from_S>::interceptor_param (
-    Dynamic::Parameter & p
-  )
+TAO::Out_Special_Basic_SArgument_T<S,to_S,from_S>::interceptor_value (
+  CORBA::Any *any) const
 {
-  p.argument <<= from_S (this->x_);
-  p.mode = CORBA::PARAM_OUT;
+  (*any) <<= from_S (this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -113,9 +103,8 @@ TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S>::marshal (
 
 template<typename S, typename to_S, typename from_S>
 void
-TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S>::interceptor_result (
-    CORBA::Any * any
-  )
+TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S>::interceptor_value (
+  CORBA::Any *any) const
 {
   (*any) <<= from_S (this->x_);
 }

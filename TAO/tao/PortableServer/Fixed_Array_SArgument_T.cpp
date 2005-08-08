@@ -4,7 +4,6 @@
 #define TAO_FIXED_ARRAY_SARGUMENT_T_CPP
 
 #include "tao/PortableServer/Fixed_Array_SArgument_T.h"
-#include "tao/AnyTypeCode/Dynamic_ParameterC.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/PortableServer/Fixed_Array_SArgument_T.inl"
@@ -27,12 +26,10 @@ template<typename S, typename S_slice, typename S_forany>
 void
 TAO::In_Fixed_Array_SArgument_T<S,
                                 S_slice,
-                                S_forany>::interceptor_param (
-    Dynamic::Parameter & p
-  )
+                                S_forany>::interceptor_value (
+    CORBA::Any *any) const
 {
-  p.argument <<= S_forany (this->x_);
-  p.mode = CORBA::PARAM_IN;
+  (*any) <<= S_forany (this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -43,7 +40,7 @@ template<typename S, typename S_slice, typename S_forany>
 CORBA::Boolean
 TAO::Inout_Fixed_Array_SArgument_T<S,
                                    S_slice,
-                                   S_forany>::marshal (TAO_OutputCDR & cdr)
+                                   S_forany>::marshal (TAO_OutputCDR &cdr)
 {
   return cdr << S_forany (this->x_);
 }
@@ -64,12 +61,10 @@ template<typename S, typename S_slice, typename S_forany>
 void
 TAO::Inout_Fixed_Array_SArgument_T<S,
                                    S_slice,
-                                   S_forany>::interceptor_param (
-    Dynamic::Parameter & p
-  )
+                                   S_forany>::interceptor_value (
+    CORBA::Any *any) const
 {
-  p.argument <<= S_forany (this->x_);
-  p.mode = CORBA::PARAM_INOUT;
+  (*any) <<= S_forany (this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -91,11 +86,10 @@ template<typename S, typename S_slice, typename S_forany>
 void
 TAO::Out_Fixed_Array_SArgument_T<S,
                                  S_slice,
-                                 S_forany>::interceptor_param (
-    Dynamic::Parameter & p)
+                                 S_forany>::interceptor_value (
+    CORBA::Any *any) const
 {
-  p.argument <<= S_forany (this->x_);
-  p.mode = CORBA::PARAM_OUT;
+  (*any) <<= S_forany (this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -115,9 +109,8 @@ TAO::Ret_Fixed_Array_SArgument_T<S_slice,S_var,S_forany>::marshal (
 
 template<typename S_slice, typename S_var, typename S_forany>
 void
-TAO::Ret_Fixed_Array_SArgument_T<S_slice,S_var,S_forany>::interceptor_result (
-    CORBA::Any * any
-  )
+TAO::Ret_Fixed_Array_SArgument_T<S_slice,S_var,S_forany>::interceptor_value (
+  CORBA::Any *any) const
 {
   (*any) <<= S_forany (this->x_.ptr ());
 }

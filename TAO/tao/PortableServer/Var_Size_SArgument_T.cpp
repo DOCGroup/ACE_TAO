@@ -5,10 +5,6 @@
 
 #include "tao/PortableServer/Var_Size_SArgument_T.h"
 
-#if TAO_HAS_INTERCEPTORS == 1
-# include "tao/AnyTypeCode/Dynamic_ParameterC.h"
-#endif /* TAO_HAS_INTERCEPTORS */
-
 #if !defined (__ACE_INLINE__)
 #include "tao/PortableServer/Var_Size_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -25,10 +21,9 @@ TAO::In_Var_Size_SArgument_T<S>::demarshal (TAO_InputCDR &cdr)
 
 template<typename S>
 void
-TAO::In_Var_Size_SArgument_T<S>::interceptor_param (Dynamic::Parameter & p)
+TAO::In_Var_Size_SArgument_T<S>::interceptor_value (CORBA::Any *any) const
 {
-  p.argument <<= this->x_;
-  p.mode = CORBA::PARAM_IN;
+  (*any) <<= this->x_;
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -37,7 +32,7 @@ TAO::In_Var_Size_SArgument_T<S>::interceptor_param (Dynamic::Parameter & p)
 
 template<typename S>
 CORBA::Boolean
-TAO::Inout_Var_Size_SArgument_T<S>::marshal (TAO_OutputCDR & cdr)
+TAO::Inout_Var_Size_SArgument_T<S>::marshal (TAO_OutputCDR &cdr)
 {
   return cdr << this->x_;
 }
@@ -53,10 +48,9 @@ TAO::Inout_Var_Size_SArgument_T<S>::demarshal (TAO_InputCDR & cdr)
 
 template<typename S>
 void
-TAO::Inout_Var_Size_SArgument_T<S>::interceptor_param (Dynamic::Parameter & p)
+TAO::Inout_Var_Size_SArgument_T<S>::interceptor_value (CORBA::Any *any) const
 {
-  p.argument <<= this->x_;
-  p.mode = CORBA::PARAM_INOUT;
+  (*any) <<= this->x_;
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -74,12 +68,10 @@ TAO::Out_Var_Size_SArgument_T<S,S_var>::marshal (TAO_OutputCDR &cdr)
 
 template<typename S, typename S_var>
 void
-TAO::Out_Var_Size_SArgument_T<S,S_var>::interceptor_param (
-    Dynamic::Parameter & p
-  )
+TAO::Out_Var_Size_SArgument_T<S,S_var>::interceptor_value (
+  CORBA::Any *any) const
 {
-  p.argument <<= this->x_.in ();
-  p.mode = CORBA::PARAM_OUT;
+  (*any) <<= this->x_.in ();
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -88,7 +80,7 @@ TAO::Out_Var_Size_SArgument_T<S,S_var>::interceptor_param (
 
 template<typename S, typename S_var>
 CORBA::Boolean
-TAO::Ret_Var_Size_SArgument_T<S,S_var>::marshal (TAO_OutputCDR & cdr)
+TAO::Ret_Var_Size_SArgument_T<S,S_var>::marshal (TAO_OutputCDR &cdr)
 {
   return cdr << this->x_.in ();
 }
@@ -97,7 +89,8 @@ TAO::Ret_Var_Size_SArgument_T<S,S_var>::marshal (TAO_OutputCDR & cdr)
 
 template<typename S, typename S_var>
 void
-TAO::Ret_Var_Size_SArgument_T<S,S_var>::interceptor_result (CORBA::Any * any)
+TAO::Ret_Var_Size_SArgument_T<S,S_var>::interceptor_value (
+  CORBA::Any *any) const
 {
   (*any) <<= this->x_.in ();
 }

@@ -5,10 +5,6 @@
 
 #include "tao/PortableServer/Basic_SArgument_T.h"
 
-#if TAO_HAS_INTERCEPTORS == 1
-# include "tao/AnyTypeCode/Dynamic_ParameterC.h"
-#endif /* TAO_HAS_INTERCEPTORS */
-
 #if !defined (__ACE_INLINE__)
 #include "tao/PortableServer/Basic_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -25,10 +21,9 @@ TAO::In_Basic_SArgument_T<S>::demarshal (TAO_InputCDR &cdr)
 
 template<typename S>
 void
-TAO::In_Basic_SArgument_T<S>::interceptor_param (Dynamic::Parameter & p)
+TAO::In_Basic_SArgument_T<S>::interceptor_value (CORBA::Any *any) const
 {
-  p.argument <<= this->x_;
-  p.mode = CORBA::PARAM_IN;
+  (*any) <<= this->x_;
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -37,7 +32,7 @@ TAO::In_Basic_SArgument_T<S>::interceptor_param (Dynamic::Parameter & p)
 
 template<typename S>
 CORBA::Boolean
-TAO::Inout_Basic_SArgument_T<S>::marshal (TAO_OutputCDR & cdr)
+TAO::Inout_Basic_SArgument_T<S>::marshal (TAO_OutputCDR &cdr)
 {
   return cdr << this->x_;
 }
@@ -53,10 +48,9 @@ TAO::Inout_Basic_SArgument_T<S>::demarshal (TAO_InputCDR & cdr)
 
 template<typename S>
 void
-TAO::Inout_Basic_SArgument_T<S>::interceptor_param (Dynamic::Parameter & p)
+TAO::Inout_Basic_SArgument_T<S>::interceptor_value (CORBA::Any *any) const
 {
-  p.argument <<= this->x_;
-  p.mode = CORBA::PARAM_INOUT;
+  (*any) <<= this->x_;
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -74,10 +68,9 @@ TAO::Out_Basic_SArgument_T<S>::marshal (TAO_OutputCDR &cdr)
 
 template<typename S>
 void
-TAO::Out_Basic_SArgument_T<S>::interceptor_param (Dynamic::Parameter & p)
+TAO::Out_Basic_SArgument_T<S>::interceptor_value (CORBA::Any *any) const
 {
-  p.argument <<= this->x_;
-  p.mode = CORBA::PARAM_OUT;
+  (*any) <<= this->x_;
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -86,7 +79,7 @@ TAO::Out_Basic_SArgument_T<S>::interceptor_param (Dynamic::Parameter & p)
 
 template<typename S>
 CORBA::Boolean
-TAO::Ret_Basic_SArgument_T<S>::marshal (TAO_OutputCDR & cdr)
+TAO::Ret_Basic_SArgument_T<S>::marshal (TAO_OutputCDR &cdr)
 {
   return cdr << this->x_;
 }
@@ -95,7 +88,7 @@ TAO::Ret_Basic_SArgument_T<S>::marshal (TAO_OutputCDR & cdr)
 
 template<typename S>
 void
-TAO::Ret_Basic_SArgument_T<S>::interceptor_result (CORBA::Any * any)
+TAO::Ret_Basic_SArgument_T<S>::interceptor_value (CORBA::Any *any) const
 {
   (*any) <<= this->x_;
 }

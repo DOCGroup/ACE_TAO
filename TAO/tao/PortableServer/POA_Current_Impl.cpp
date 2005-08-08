@@ -39,7 +39,7 @@ namespace TAO
       this->object_key_ = &key;
 
       // Set the current context and remember the old one.
-      this->tss_resources_ = TAO_TSS_RESOURCES::instance ();
+      this->tss_resources_ = TAO_TSS_Resources::instance ();
 
       this->previous_current_impl_ =
         static_cast <POA_Current_Impl *>

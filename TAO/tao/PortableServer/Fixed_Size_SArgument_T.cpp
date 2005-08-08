@@ -5,10 +5,6 @@
 
 #include "tao/PortableServer/Fixed_Size_SArgument_T.h"
 
-#if TAO_HAS_INTERCEPTORS == 1
-# include "tao/AnyTypeCode/Dynamic_ParameterC.h"
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
 #if !defined (__ACE_INLINE__)
 #include "tao/PortableServer/Fixed_Size_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -37,7 +33,7 @@ TAO::In_Fixed_Size_SArgument_T<S>::interceptor_param (Dynamic::Parameter & p)
 
 template<typename S>
 CORBA::Boolean
-TAO::Inout_Fixed_Size_SArgument_T<S>::marshal (TAO_OutputCDR & cdr)
+TAO::Inout_Fixed_Size_SArgument_T<S>::marshal (TAO_OutputCDR &cdr)
 {
   return cdr << this->x_;
 }
@@ -88,7 +84,7 @@ TAO::Out_Fixed_Size_SArgument_T<S>::interceptor_param (Dynamic::Parameter & p)
 
 template<typename S>
 CORBA::Boolean
-TAO::Ret_Fixed_Size_SArgument_T<S>::marshal (TAO_OutputCDR & cdr)
+TAO::Ret_Fixed_Size_SArgument_T<S>::marshal (TAO_OutputCDR &cdr)
 {
   return cdr << this->x_;
 }

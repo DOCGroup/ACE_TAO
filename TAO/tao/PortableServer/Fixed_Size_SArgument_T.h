@@ -36,7 +36,7 @@ namespace TAO
    * size IDL types.
    */
   template<typename S>
-  class In_Fixed_Size_SArgument_T : public Argument
+  class In_Fixed_Size_SArgument_T : public InArgument
   {
   public:
 
@@ -52,7 +52,7 @@ namespace TAO
     virtual CORBA::Boolean demarshal (TAO_InputCDR & cdr);
 
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_param (Dynamic::Parameter & p);
+    virtual void interceptor_value (CORBA::Any *any) const
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     //@}
 
@@ -75,7 +75,7 @@ namespace TAO
    *
    */
   template<typename S>
-  class Inout_Fixed_Size_SArgument_T : public Argument
+  class Inout_Fixed_Size_SArgument_T : public InoutArgument
   {
   public:
 
@@ -91,10 +91,10 @@ namespace TAO
      * @see @c TAO::Argument.
      */
     //@{
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     //@}
 
@@ -114,7 +114,7 @@ namespace TAO
    *
    */
   template<typename S>
-  class Out_Fixed_Size_SArgument_T : public Argument
+  class Out_Fixed_Size_SArgument_T : public OutArgument
   {
   public:
 
@@ -130,9 +130,9 @@ namespace TAO
      * @see @c TAO::Argument.
      */
     //@{
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     //@}
 
@@ -153,7 +153,7 @@ namespace TAO
    *
    */
   template<typename S>
-  class Ret_Fixed_Size_SArgument_T : public Argument
+  class Ret_Fixed_Size_SArgument_T : public RetArgument
   {
   public:
 
@@ -169,9 +169,9 @@ namespace TAO
      * @see @c TAO::Argument.
      */
     //@{
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_result (CORBA::Any *);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     //@}
 
