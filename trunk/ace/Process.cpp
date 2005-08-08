@@ -944,7 +944,7 @@ ACE_Process_Options::command_line (const ACE_TCHAR *format, ...)
 
   // sprintf the format and args into command_line_buf__.
   ACE_OS::vsnprintf (command_line_buf_,
-                     command_line_buf_len - 1,
+                     command_line_buf_len_ - 1,
                      format,
                      argp);
 
