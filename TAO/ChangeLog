@@ -1,3 +1,10 @@
+Mon Aug  8 18:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Strategies/advanced_resource.cpp:
+          Added include of tao/Protocol_Factory.h to not get compile errors
+          when all protocols are disabled. Thanks to Arvind S. Krishna
+          <arvindk at dre dot vanderbilt dot edu> for reporting this
+
 Mon Aug  8 10:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Collocation_Oneway_Tests/Collocation_Oneway_Tests.mpc:
