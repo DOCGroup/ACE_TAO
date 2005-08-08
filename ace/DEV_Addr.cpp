@@ -69,12 +69,9 @@ ACE_DEV_Addr::set (const ACE_DEV_Addr &sa)
                            0,
                            sizeof this->devname_);
   else
-    {
-      (void) ACE_OS::memcpy ((void *) &this->devname_,
-                             (void *) &sa.devname_,
-                             sa.get_size () - 1);
-      this->devname_[sa.get_size () - 1] = ACE_TCHAR (0);
-    }
+    (void) ACE_OS::strsncpy (this->devname_,
+                             sa.devname_,
+                             ACE_DEV_Addr::DEVNAME_LENGTH);
   return 0;
 }
 
@@ -102,9 +99,8 @@ ACE_DEV_Addr::operator= (const ACE_DEV_Addr &sa)
   ACE_TRACE ("ACE_DEV_Addr::operator=");
 
   if (this != &sa)
-    (void) ACE_OS::memcpy ((void *) &this->devname_,
-			   (void *) &sa.devname_,
-			   sa.get_size ());
+    this->set (sa);
+
   return *this;
 }
 

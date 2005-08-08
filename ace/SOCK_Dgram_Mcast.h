@@ -324,14 +324,15 @@ public:
 
   /// Set a socket option.
   /**
-   * Set an ip option that takes a char as input, such as <IP_MULTICAST_LOOP>
-   * or <IP_MULTICAST_TTL>.  This is just a more concise, nice interface to a
-   * subset of possible <ACE_SOCK::set_option> calls, but only works for
-   * IPPROTO_IP or IPPROTO_IPV6 level options.  Use <ACE_SOCK::set_option>
-   * directly to set anything else.
-   * @deprecated { This method has been deprecated since it cannot be used
-   * easily with with IPv6 options.}
+   * Set an IP option that takes a char as input, such as IP_MULTICAST_LOOP
+   * or IP_MULTICAST_TTL.  This is just a more concise, nice interface to a
+   * subset of possible ACE_SOCK::set_option calls, but only works for
+   * IPPROTO_IP or IPPROTO_IPV6 level options.
+   *
    * Returns 0 on success, -1 on failure.
+   *
+   * @deprecated  This method has been deprecated since it cannot be used
+   * easily with with IPv6 options. Use ACE_SOCK::set_option instead.
    */
   int set_option (int option,
                   char optval);

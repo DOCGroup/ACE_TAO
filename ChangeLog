@@ -1,3 +1,38 @@
+Mon Aug  8 12:54:51 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/Log_Msg.cpp (open): Reverted these changes:
+	  Fri Apr 22 18:02:37 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+          * ace/Log_Msg.cpp (open): Fixed a problem with LOGGER and logger_key
+            and the backend_->open() call.  Thanks to Jerry D. De Master
+            <jdemaste at rite-solutions dot com> for reporting this.
+
+	  Tue Jan 18 08:17:10 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+          * ace/Log_Msg.cpp (open): Fixed the logic to pass prog_name
+            rather than logger_key, which fixes a bug with syslog.  Thanks
+            to Robert Iakobashvili <roberti@GoNetworks.com> for this fix.
+
+	  They broke a fix from:
+	  Sat Dec  1 19:39:22 2001  Steve Huston  <shuston@riverace.com>
+
+	* ace/Log_Msg.h: Improved the documentation for open() to note the
+	  role of the logger_key argument when LOGGER and SYSLOG are set in
+	  flags.
+	  To get the progr_name used as the syslog/event log source ID, pass
+	  a 0 logger_key.
+
+	* ace/SOCK_Dgram_Mcast.h: Clarified that instead of using set_option,
+	  use ACE_SOCK::set_option().
+
+	* ace/DEV_Addr.{h inl cpp}: Fix non-0-terminated name possibility
+	  when setting a new name. Thanks to James Damour
+	  <james dot damour at request dot com> for this fix.
+	  Also introduced a private enum to define the length of the name
+	  buffer and use the new value to limit string copy sizes.
+
+	* THANKS: Added James Damour to the Hall of Fame.
+
 Mon Aug  8 10:44:16 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* ace/OS_NS_stdio.inl

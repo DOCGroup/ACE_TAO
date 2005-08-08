@@ -785,16 +785,12 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
       || ACE_BIT_ENABLED (flags, ACE_Log_Msg::SYSLOG))
     {
       // The SYSLOG backends (both NT and UNIX) can get along fine
-      // without the logger_key.
-      if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::LOGGER))
-        {
-          if (logger_key == 0)
-            status = -1;
-          else
-            status = ACE_Log_Msg_Manager::log_backend_->open (logger_key);
-        }
+      // without the logger_key - they will default to prog_name if
+      // logger key is 0.
+      if (logger_key == 0 && ACE_BIT_ENABLED (flags, ACE_Log_Msg::LOGGER))
+        status = -1;
       else
-        status = ACE_Log_Msg_Manager::log_backend_->open (prog_name);
+        status = ACE_Log_Msg_Manager::log_backend_->open (logger_key);
 
       if (status == -1)
         ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::STDERR);

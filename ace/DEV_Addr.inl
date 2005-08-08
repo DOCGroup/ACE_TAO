@@ -13,7 +13,7 @@ ACE_DEV_Addr::set (const ACE_TCHAR *devname)
 
   this->ACE_Addr::base_set
     (AF_DEV, static_cast<int> (ACE_OS::strlen (devname)));
-  ACE_OS::strsncpy (this->devname_, devname, MAXPATHLEN);
+  ACE_OS::strsncpy (this->devname_, devname, ACE_DEV_Addr::DEVNAME_LENGTH);
 }
 
 // Compare two addresses for equality.
