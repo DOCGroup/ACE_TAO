@@ -22,11 +22,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// This set of classes is also used by valuetype arguments. If the
-// specialization is done using S * for the parameter, the semantics
-// are the same as for interfaces, so there's no need for another
-// set of classes.
-
 namespace TAO
 {
   /**
@@ -151,6 +146,26 @@ namespace TAO
     typedef Object_Tag                                    idl_tag;
   };
 }
+
+// This set of classes is also used by valuetype arguments. If the
+// specialization is done using S * for the parameter, the semantics
+// are the same as for interfaces, so there's no need for another
+// set of classes.
+
+  template<>
+  void
+  TAO::Ret_Object_Argument_T<CORBA::Policy_ptr,CORBA::Policy_var>::interceptor_value (CORBA::Any *) const
+  {
+//    TAO_IFR_Client_Adapter *adapter =
+//      ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
+//          TAO_ORB_Core::ifr_client_adapter_name ()
+//        );
+//
+//    adapter->interfacedef_any_insert (p, this->x_);
+  }
+
+
+
 
 #if defined (__ACE_INLINE__)
 #include "tao/Object_Argument_T.inl"

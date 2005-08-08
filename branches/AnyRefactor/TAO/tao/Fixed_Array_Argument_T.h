@@ -35,7 +35,7 @@ namespace TAO
   public:
     In_Fixed_Array_Argument_T (const S_slice * x);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
@@ -57,7 +57,7 @@ namespace TAO
   public:
     Inout_Fixed_Array_Argument_T (S_slice *&x);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;

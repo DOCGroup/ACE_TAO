@@ -67,18 +67,6 @@ namespace TAO
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-  template<>
-  void
-  Ret_Object_Argument_T<CORBA::Policy_ptr,CORBA::Policy_var>::interceptor_value (CORBA::Any *any) const
-  {
-//    TAO_IFR_Client_Adapter *adapter =
-//      ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
-//          TAO_ORB_Core::ifr_client_adapter_name ()
-//        );
-//
-//    adapter->interfacedef_any_insert (p, this->x_);
-  }
-
 #endif /* TAO_HAS_INTERCEPTORS */
 
 }
@@ -113,7 +101,7 @@ namespace TAO
 
   template<>
   CORBA::Boolean
-  In_Object_Argument_T<CORBA::InterfaceDef_ptr>::marshal (TAO_OutputCDR & cdr)
+  In_Object_Argument_T<CORBA::InterfaceDef_ptr>::marshal (TAO_OutputCDR &cdr)
   {
     TAO_IFR_Client_Adapter *adapter =
       ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
