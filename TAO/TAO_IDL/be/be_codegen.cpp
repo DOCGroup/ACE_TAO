@@ -199,7 +199,7 @@ TAO_CodeGen::start_client_header (const char *fname)
     {
       *this->client_header_ << "\n";
     }
-
+   
   // We must include all the client headers corresponding to
   // IDL files included by the current IDL file.
   // We will use the included IDL file names as they appeared
@@ -229,9 +229,10 @@ TAO_CodeGen::start_client_header (const char *fname)
         }
       else
         {
-          ACE_ERROR ((LM_WARNING,
-                      ACE_TEXT ("\nWARNING, invalid file '%s' included"),
-                      idl_name));
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("\nERROR, invalid file '%s' included"),
+                             idl_name),
+                            -1);
         }
     }
 
@@ -292,10 +293,10 @@ TAO_CodeGen::start_client_stubs (const char *fname)
                        << "// " << __FILE__ << ":" << __LINE__
                        << be_nl << be_nl;
 
+  this->gen_stub_src_includes ();
+
   // Generate the ident string, if any.
   this->gen_ident_string (this->client_stubs_);
-
-  this->gen_stub_src_includes ();
 
   *this->client_stubs_ << "\n\n#if defined (__BORLANDC__)\n"
                        << "#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig\n"
@@ -885,6 +886,48 @@ TAO_CodeGen::start_anyop_source (const char *fname)
                        << "\"";
 
 
+  // If we have not suppressed Any operator generation and also
+  // are not generating the operators in a separate file, we
+  // need to include the *A.h file from all .pidl files here.
+  if (be_global->any_support () && !be_global->gen_anyop_files ())
+    {
+      for (size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
+        {
+          char* idl_name = idl_global->included_idl_files ()[j];
+
+          ACE_CString pidl_checker (idl_name);
+          bool got_pidl =
+            (pidl_checker.find (".pidl") != ACE_SString::npos);
+          
+          // If we're here and we have a .pidl file, we need to generate
+          // the *A.h include from the AnyTypeCode library.
+          if (got_pidl)
+            {
+              // Make a String out of it.
+              UTL_String idl_name_str = idl_name;
+
+              const char *anyop_hdr =
+                BE_GlobalData::be_get_anyop_header (&idl_name_str, 1);
+                
+              // Stripped off any scope in the name and add the
+              // AnyTypeCode prefix.  
+              ACE_CString work_hdr (anyop_hdr);
+              int pos = work_hdr.rfind ('/');
+              
+              if (pos != ACE_SString::npos)
+                {
+                  work_hdr = work_hdr.substr (pos + 1);
+                }
+                
+              ACE_CString final_hdr ("tao/AnyTypeCode/");
+              final_hdr += work_hdr;
+
+              this->client_stubs_->print ("\n#include \"%s\"",
+                                          final_hdr.c_str ());
+            }
+        }
+    }
+
   size_t nfiles = idl_global->n_included_idl_files ();
 
   // We must include all the client headers corresponding to
@@ -910,15 +953,49 @@ TAO_CodeGen::start_anyop_source (const char *fname)
       // Sanity check and then print.
       if (anyop_hdr_name != 0)
         {
-          this->anyop_source_->print ("\n#include \"%s\"",
-                                      anyop_hdr_name);
+          ACE_CString pidl_checker (idl_name);
+          bool got_pidl =
+            (pidl_checker.find (".pidl") != ACE_SString::npos);
+          
+          // If we're here and we have a .pidl file, we need to generate
+          // the *A.h include from the AnyTypeCode library.
+          if (got_pidl)
+            {
+              // Make a String out of it.
+              UTL_String idl_name_str = idl_name;
+
+              const char *anyop_hdr =
+                BE_GlobalData::be_get_anyop_header (&idl_name_str, 1);
+                
+              // Stripped off any scope in the name and add the
+              // AnyTypeCode prefix.  
+              ACE_CString work_hdr (anyop_hdr);
+              int pos = work_hdr.rfind ('/');
+              
+              if (pos != ACE_SString::npos)
+                {
+                  work_hdr = work_hdr.substr (pos + 1);
+                }
+                
+              ACE_CString final_hdr ("tao/AnyTypeCode/");
+              final_hdr += work_hdr;
+
+              this->anyop_source_->print ("\n#include \"%s\"",
+                                          final_hdr.c_str ());
+            }
+          else
+            {
+              this->anyop_source_->print ("\n#include \"%s\"",
+                                          anyop_hdr_name);
+            }
         }
       else
         {
-          ACE_ERROR ((LM_WARNING,
-                      ACE_TEXT ("\nWARNING, invalid file '%s' included"),
-                      idl_name));
-        }
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("\nERROR, invalid file '%s' included"),
+                             idl_name),
+                            -1);
+        }       
     }
 
   *this->anyop_source_ << "\n";
@@ -1616,6 +1693,48 @@ TAO_CodeGen::gen_stub_src_includes (void)
   // Always generated.
   this->gen_standard_include (this->client_stubs_,
                               "tao/CDR.h");
+
+  // If we have not suppressed Any operator generation and also
+  // are not generating the operators in a separate file, we
+  // need to include the *A.h file from all .pidl files here.
+  if (be_global->any_support () && !be_global->gen_anyop_files ())
+    {
+      for (size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
+        {
+          char* idl_name = idl_global->included_idl_files ()[j];
+
+          ACE_CString pidl_checker (idl_name);
+          bool got_pidl =
+            (pidl_checker.find (".pidl") != ACE_SString::npos);
+          
+          // If we're here and we have a .pidl file, we need to generate
+          // the *A.h include from the AnyTypeCode library.
+          if (got_pidl)
+            {
+              // Make a String out of it.
+              UTL_String idl_name_str = idl_name;
+
+              const char *anyop_hdr =
+                BE_GlobalData::be_get_anyop_header (&idl_name_str, 1);
+                
+              // Stripped off any scope in the name and add the
+              // AnyTypeCode prefix.  
+              ACE_CString work_hdr (anyop_hdr);
+              int pos = work_hdr.rfind ('/');
+              
+              if (pos != ACE_SString::npos)
+                {
+                  work_hdr = work_hdr.substr (pos + 1);
+                }
+                
+              ACE_CString final_hdr ("tao/AnyTypeCode/");
+              final_hdr += work_hdr;
+
+              this->client_stubs_->print ("\n#include \"%s\"",
+                                          final_hdr.c_str ());
+            }
+        }
+    }
 
   // Conditional includes.
 
