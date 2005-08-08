@@ -60,7 +60,7 @@ sub run_node_daemons {
       $iiop = "iiop://localhost:$port";
       $node_app = "$DAnCE/NodeApplication/NodeApplication";
 
-      $d_cmd = "$DAnCE/NodeManager/Node_Daemon";
+      $d_cmd = "$DAnCE/NodeManager/NodeManager";
       $d_param = "-ORBEndpoint $iiop -s $node_app -o $iorfile";
 
       $Daemons[$i] = new PerlACE::Process ($d_cmd, $d_param);

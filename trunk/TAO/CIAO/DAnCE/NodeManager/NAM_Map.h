@@ -28,7 +28,7 @@ namespace CIAO
    * @class NAM_Map
    * @brief Implementation of a map of NodeApplicationManagers.
    *
-   * This table is used by the Node_Daemon to keep track of
+   * This table is used by the NodeManager to keep track of
    * NAMs started for multiple assemblies.
    */
   class NAM_Map

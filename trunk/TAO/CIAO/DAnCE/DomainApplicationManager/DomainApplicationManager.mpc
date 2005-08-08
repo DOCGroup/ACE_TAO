@@ -2,7 +2,7 @@
 // $Id$
 
 project (DomainApplicationManager): ciao_deployment_svnt {
-  after += Config_Handlers Node_Daemon                           
+  after += Config_Handlers NodeManager                           
 
   sharedname = DomainApplicationManager
 

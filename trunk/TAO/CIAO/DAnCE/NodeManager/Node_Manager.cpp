@@ -1,6 +1,6 @@
 // $Id$
 
-#include "NodeDaemon_Impl.h"
+#include "NodeManager_Impl.h"
 #include "orbsvcs/CosNamingC.h"
 #include "tao/IORTable/IORTable.h"
 #include "ace/SString.h"
@@ -93,7 +93,7 @@ write_IOR(const char* ior)
 bool
 register_with_ns (const char * name_context,
                   CORBA::ORB_ptr orb,
-                  CIAO::NodeDaemon_ptr obj
+                  CIAO::NodeManager_ptr obj
                   ACE_ENV_ARG_DECL)
 {
   // Naming Service related operations
@@ -168,9 +168,9 @@ main (int argc, char *argv[])
 
 
       // Create and install the CIAO Daemon servant
-      CIAO::NodeDaemon_Impl *daemon_servant = 0;
+      CIAO::NodeManager_Impl *daemon_servant = 0;
       ACE_NEW_RETURN (daemon_servant,
-                      CIAO::NodeDaemon_Impl("NodeDaemon",
+                      CIAO::NodeManager_Impl("NodeManager",
                       orb.in (),
                       poa.in (),
                       nodeapp_location_,
@@ -181,7 +181,7 @@ main (int argc, char *argv[])
       daemon_servant->init ();
       
       // Implicit activation
-      CIAO::NodeDaemon_var daemon =
+      CIAO::NodeManager_var daemon =
         daemon_servant->_this ();
 
       CORBA::String_var str =
@@ -214,7 +214,7 @@ main (int argc, char *argv[])
           ACE_TRY_CHECK;
         }
 
-      ACE_DEBUG ((LM_INFO, "CIAO_NodeDaemon IOR: %s\n", str.in ()));
+      ACE_DEBUG ((LM_INFO, "CIAO_NodeManager IOR: %s\n", str.in ()));
 
       // Activate POA manager
       PortableServer::POAManager_var mgr
@@ -226,7 +226,7 @@ main (int argc, char *argv[])
 
       // End Deployment part
       ACE_DEBUG ((LM_DEBUG,
-                  "CIAO_NodeDaemon is running...\n"));
+                  "CIAO_NodeManager is running...\n"));
 
       // Run the main event loop for the ORB.
       orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -241,12 +241,12 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "CIAO_NodeDaemon::main\t\n");
+                           "CIAO_NodeManager::main\t\n");
       return 1;
     }
   ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG,
-              "CIAO_NodeDaemon has closed\n"));
+              "CIAO_NodeManager has closed\n"));
   return 0;
 }

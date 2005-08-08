@@ -34,6 +34,6 @@ This directory contains the RTNodeApplication implementation
            You may need to tweak this shell script to suit your need. 
            Here's an example of how to use the script: 
 
-            $ sudo senv.sh $CIAO_ROOT/DAnCE/NodeManager/Node_Daemon \
+            $ sudo senv.sh $CIAO_ROOT/DAnCE/NodeManager/NodeManager \
                 -ORBEndpoint iiop://localhost:10000 \
                 -s $CIAO_ROOT/DAnCE/RTNodeApplication/RTNodeApplication

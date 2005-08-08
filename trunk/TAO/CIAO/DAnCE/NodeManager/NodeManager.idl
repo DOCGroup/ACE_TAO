@@ -1,7 +1,7 @@
 // $Id$
 
 /**
- * @file NodeDaemon.idl
+ * @file NodeManager.idl
  *
  * @brief Controling interface for managing and controling CIAO daemon.
  */
@@ -17,7 +17,7 @@ module CIAO
    * it's an easy way of combining features. In the future we could
    * move this definition into Deployment.idl.
    */
-  interface NodeDaemon : Deployment::NodeManager
+  interface NodeManager : Deployment::NodeManager
   {
     // Canonical name of this daemon
     readonly attribute string name;
