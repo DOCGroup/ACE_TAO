@@ -3,11 +3,8 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . Subset ACE for TAO and TAO Services
 
-. Create lightweight ACE_Hash_Manager for use in TAO
-
 PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.8
 ====================================================
-
 
 USER VISIBLE CHANGES BETWEEN ACE-5.4.6 and ACE-5.4.7
 ====================================================
