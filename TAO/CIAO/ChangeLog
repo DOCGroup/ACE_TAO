@@ -1,3 +1,15 @@
+Fri Aug  5 11:45:13 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/Config_Handlers/CIAOServerResources.cpp
+	* DAnCE/Config_Handlers/CIAOServerResources.hpp
+
+	XSC code generated from CIAOServerResources.xsd for RT-CCM
+	properties. 
+	
+	* docs/schema/CIAOServerResources.xsd
+
+	Fixed some namespace errors.
+
 Fri Aug 05 08:00:08 2005  Simon Massey  <sma@prismtech.com>
 
         * CIAO version 0.4.7 released.
