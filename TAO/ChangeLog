@@ -1,3 +1,9 @@
+Mon Aug  8 20:26:22 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/AnyTypeCode/NVList_Adapter_Impl.h:
+        
+          Corrected the export macro.
+
 Mon Aug  8 19:55:07 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:

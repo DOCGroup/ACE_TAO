@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,7 +26,8 @@
 /**
  * @class TAO_NVList_Adapter
  */
-class TAO_Export TAO_NVList_Adapter_Impl : public TAO_NVList_Adapter
+class TAO_AnyTypeCode_Export TAO_NVList_Adapter_Impl 
+  : public TAO_NVList_Adapter
 {
 public:
   virtual void create_list (
@@ -37,7 +38,6 @@ public:
   virtual void create_named_value (
       CORBA::NamedValue_ptr &nv
       ACE_ENV_ARG_DECL);
-
 };
 
 
