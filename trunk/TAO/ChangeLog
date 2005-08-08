@@ -1,3 +1,9 @@
+Mon Aug  8 10:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Collocation_Oneway_Tests/Collocation_Oneway_Tests.mpc:
+        * tests/Collocation_Exception_Test/Collocation_Excep_Test.mpc:
+          Made projects unique
+
 Mon Aug  8 08:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/ImplRepo/nestea_i.cpp:
