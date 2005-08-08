@@ -207,8 +207,8 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest & req,
   // it is a one way that is SYNC_WITH_SERVER.
   // Add the following line to handle this reply send as well.
 
-  // Handle the one ways that are SYNC_WITH_SERVER
-  if (req.sync_with_server ())
+  // Handle the one ways that are SYNC_WITH_SERVER and not collocated
+  if (req.sync_with_server () && !req.collocated ())
     {
       req.send_no_exception_reply ();
     }
