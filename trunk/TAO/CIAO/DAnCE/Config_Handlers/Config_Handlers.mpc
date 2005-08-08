@@ -1,6 +1,6 @@
 //$Id$
 
-project (XSC_Config_Handlers) : acelib, ciao_deployment_stub,xerces {
+project (XSC_Config_Handlers) : acelib, ciao_deployment_stub, xerces {
   sharedname = XSC_Config_Handlers
   dynamicflags   = CONFIG_HANDLERS_BUILD_DLL
   macros   += XML_USE_PTHREADS
