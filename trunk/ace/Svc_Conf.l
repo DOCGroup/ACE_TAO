@@ -51,7 +51,7 @@ inactive	      { return token (ACE_INACTIVE); }
 "{"                   { return token ('{'); }
 "}"                   { return token ('}'); }
 {string}	      {
-                        /* Remove trailing quote character (' or ") */
+                        /* Remove trailing double quote character */
                         ACE_TCHAR *s = ACE_OS::strrchr (yytext, yytext[0]);
 
                         ACE_ASSERT (s != 0);

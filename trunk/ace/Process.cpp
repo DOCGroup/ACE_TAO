@@ -939,10 +939,14 @@ ACE_Process_Options::command_line (const ACE_TCHAR *format, ...)
   va_list argp;
   va_start (argp, format);
 
+  if (command_line_buf_len_ < 1)
+    return -1;
+
   // sprintf the format and args into command_line_buf__.
-  ACE_OS::vsprintf (command_line_buf_,
-                    format,
-                    argp);
+  ACE_OS::vsnprintf (command_line_buf_,
+                     command_line_buf_len - 1,
+                     format,
+                     argp);
 
   // Useless macro.
   va_end (argp);
