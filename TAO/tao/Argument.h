@@ -57,7 +57,7 @@ namespace TAO
     /**
      * @note The default implementation simply returns @c true.
      */
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
     /// Demarshal the argument from the given CDR input stream.
     /**

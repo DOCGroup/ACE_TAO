@@ -15,7 +15,7 @@ ACE_RCSID (tao,
 
 template<typename S>
 CORBA::Boolean
-TAO::In_Var_Size_Argument_T<S>::marshal (TAO_OutputCDR & cdr)
+TAO::In_Var_Size_Argument_T<S>::marshal (TAO_OutputCDR &cdr)
 {
   return cdr << *this->x_;
 }
@@ -35,7 +35,7 @@ TAO::In_Var_Size_Argument_T<S>::interceptor_value (CORBA::Any *any) const
 
 template<typename S>
 CORBA::Boolean
-TAO::Inout_Var_Size_Argument_T<S>::marshal (TAO_OutputCDR & cdr)
+TAO::Inout_Var_Size_Argument_T<S>::marshal (TAO_OutputCDR &cdr)
 {
   return cdr << *this->x_;
 }

@@ -42,6 +42,25 @@ namespace TAO
     typedef Basic_Tag   idl_tag;
   };
 
+  template<>
+  void
+  TAO::In_Basic_Argument_T<unsigned int>::interceptor_value (CORBA::Any *) const
+{
+// @todo
+//  p.argument <<= this->x_;
+}
+
+template<>
+void
+TAO::Ret_Basic_Argument_T<unsigned int>::interceptor_value (CORBA::Any *) const
+{
+// @todo
+//  (*any) <<= this->x_;
+}
+
+
+
+
   /**
    *
    * @brief Specializations for basic stub arg types,

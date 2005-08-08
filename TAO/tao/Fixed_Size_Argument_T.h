@@ -35,7 +35,7 @@ namespace TAO
   public:
     In_Fixed_Size_Argument_T (S const & x);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
@@ -57,7 +57,7 @@ namespace TAO
   public:
     Inout_Fixed_Size_Argument_T (S & x);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
@@ -125,7 +125,7 @@ namespace TAO
   struct TAO_Export Fixed_Size_Tag {};
 
   /**
-   * @struct Basic_Arg_Traits_T
+   * @struct Fixed_Size_Arg_Traits_T
    *
    * @brief Template class for argument traits of fixed size IDL types.
    *
