@@ -28,9 +28,9 @@ public:
   int svc (void);
 
 private:
-  int test_system_exception (Test::Hello_ptr hello_ptr ACE_ENV_ARG_DECL);
-  int test_user_exception_expected (Test::Hello_ptr hello_ptr ACE_ENV_ARG_DECL);
-  int test_user_exception_not_expected (Test::Hello_ptr hello_ptr ACE_ENV_ARG_DECL);
+  void test_system_exception (Test::Hello_ptr hello_ptr ACE_ENV_ARG_DECL);
+  void test_user_exception_expected (Test::Hello_ptr hello_ptr ACE_ENV_ARG_DECL);
+  void test_user_exception_not_expected (Test::Hello_ptr hello_ptr ACE_ENV_ARG_DECL);
 
   const char *input_;
 
