@@ -1,7 +1,7 @@
 // -*- C++ -*-
 //=============================================================================
 /**
- *  @file NodeDaemon_Impl.h
+ *  @file NodeManager_Impl.h
  *
  *  $Id$
  *
@@ -17,11 +17,11 @@
 //=============================================================================
 
 
-#ifndef CIAO_NODEDAEMON_IMPL_H
-#define CIAO_NODEDAEMON_IMPL_H
+#ifndef CIAO_NODEMANAGER_IMPL_H
+#define CIAO_NODEMANAGER_IMPL_H
 #include /**/ "ace/pre.h"
 
-#include "NodeDaemonS.h"
+#include "NodeManagerS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -37,28 +37,28 @@
 namespace CIAO
 {
   /**
-   * @class NodeDaemon_Impl
+   * @class NodeManager_Impl
    *
    * @brief Servant implementation CIAO's daemon process control
    * interface
    *
-   * This class implements the CIAO:NodeDaemon interface.
+   * This class implements the CIAO:NodeManager interface.
    *
    */
-  class NodeDaemon_Impl
-    : public virtual POA_CIAO::NodeDaemon
+  class NodeManager_Impl
+    : public virtual POA_CIAO::NodeManager
   {
   public:
 
     /// Constructor
-    NodeDaemon_Impl (const char *name,
+    NodeManager_Impl (const char *name,
                      CORBA::ORB_ptr orb,
                      PortableServer::POA_ptr p,
                      const char * nodeapp_loc,
                      int spawn_delay)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    /// Initializes the NodeDaemon.
+    /// Initializes the NodeManager.
     virtual void init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -102,7 +102,7 @@ namespace CIAO
     /// through the reference counting mechanism (i.e. to
     /// disallow calling operator delete() on an instance of
     /// this class.
-    virtual ~NodeDaemon_Impl (void);
+    virtual ~NodeManager_Impl (void);
 
     /// Keep a pointer to the managing ORB serving this servant.
     CORBA::ORB_var orb_;
@@ -134,8 +134,8 @@ namespace CIAO
 #endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
-# include "NodeDaemon_Impl.inl"
+# include "NodeManager_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-#endif /* CIAO_NODEDAEMON_IMPL_H */
+#endif /* CIAO_NODEMANAGER_IMPL_H */

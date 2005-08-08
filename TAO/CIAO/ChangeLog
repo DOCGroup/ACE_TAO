@@ -1,3 +1,42 @@
+Mon Aug  8 18:50:36 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/DomainApplicationManager/DomainApplicationManager.mpc
+	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+	* DAnCE/NodeManager/NAM_Map.h
+	* DAnCE/NodeManager/NodeManager.idl
+	* DAnCE/NodeManager/NodeManager.mpc
+	* DAnCE/NodeManager/NodeManager_Impl.cpp
+	* DAnCE/NodeManager/NodeManager_Impl.h
+	* DAnCE/NodeManager/NodeManager_Impl.inl
+	* DAnCE/NodeManager/NodeManager_stub_export.h
+	* DAnCE/NodeManager/Node_Manager.cpp
+	* DAnCE/NodeManager/README
+	* DAnCE/RTNodeApplication/README
+
+	Changed all references to Node_Daemon to NodeManager to avoid
+	confusion, since these phrases are used interchangeably. 
+		
+	* DAnCE/NodeManager/NodeDaemon.idl
+	* DAnCE/NodeManager/NodeDaemon.mpc
+	* DAnCE/NodeManager/NodeDaemon_Impl.cpp
+	* DAnCE/NodeManager/NodeDaemon_Impl.h
+	* DAnCE/NodeManager/NodeDaemon_Impl.inl
+	* DAnCE/NodeManager/NodeDaemon_stub_export.h
+	* DAnCE/NodeManager/Node_Daemon.cpp
+
+	Removed these files to support the change above. 
+	
+	* DAnCE/examples/BasicSP/descriptors/basicNodeDaemon.pl
+	* DAnCE/examples/Display/descriptors/basicNodeDaemon.pl
+	* DAnCE/examples/Hello/step-by-step.html
+	* DAnCE/examples/Hello/descriptors/run_NodeDaemons.pl
+	* DAnCE/examples/Hello/descriptors/run_test.pl
+	* DAnCE/examples/Hello/descriptors/run_test_without_ns.pl
+	* DAnCE/tests/scripts/BasicSP/basicNodeDaemon.pl
+	* docs/tutorials/Quoter/Simple/descriptors/runNodeDaemons.pl
+
+	Updated these scripts to call NodeManager instead of NodeDaemon. 
+	
 Fri Aug  5 11:45:13 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/Config_Handlers/CIAOServerResources.cpp

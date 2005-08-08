@@ -1,9 +1,9 @@
 // $Id$
 
-#include "NodeDaemon_Impl.h"
+#include "NodeManager_Impl.h"
 #include "../NodeApplicationManager/NodeApplicationManager_Impl.h"
 
-CIAO::NodeDaemon_Impl::NodeDaemon_Impl (const char *name,
+CIAO::NodeManager_Impl::NodeManager_Impl (const char *name,
                                         CORBA::ORB_ptr orb,
                                         PortableServer::POA_ptr poa,
                                         const char * nodapp_loc,
@@ -18,13 +18,13 @@ CIAO::NodeDaemon_Impl::NodeDaemon_Impl (const char *name,
 {
 }
 
-CIAO::NodeDaemon_Impl::~NodeDaemon_Impl ()
+CIAO::NodeManager_Impl::~NodeManager_Impl ()
 {
 
 }
 
 void
-CIAO::NodeDaemon_Impl::init (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeManager_Impl::init (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
@@ -45,7 +45,7 @@ CIAO::NodeDaemon_Impl::init (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "NodeDaemon_Impl::init\t\n");
+                           "NodeManager_Impl::init\t\n");
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
@@ -53,21 +53,21 @@ CIAO::NodeDaemon_Impl::init (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 PortableServer::POA_ptr
-CIAO::NodeDaemon_Impl::_default_POA (void)
+CIAO::NodeManager_Impl::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 
 char *
-CIAO::NodeDaemon_Impl::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+CIAO::NodeManager_Impl::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->name_.in ());
 }
 
 void
-CIAO::NodeDaemon_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeManager_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
@@ -75,7 +75,7 @@ CIAO::NodeDaemon_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-CIAO::NodeDaemon_Impl::joinDomain (const Deployment::Domain & ,
+CIAO::NodeManager_Impl::joinDomain (const Deployment::Domain & ,
                                    Deployment::TargetManager_ptr ,
                                    Deployment::Logger_ptr
                                    ACE_ENV_ARG_DECL)
@@ -85,7 +85,7 @@ CIAO::NodeDaemon_Impl::joinDomain (const Deployment::Domain & ,
 }
 
 void
-CIAO::NodeDaemon_Impl::leaveDomain (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeManager_Impl::leaveDomain (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //Implementation undefined.
@@ -94,13 +94,13 @@ CIAO::NodeDaemon_Impl::leaveDomain (ACE_ENV_SINGLE_ARG_DECL)
 
 
 Deployment::NodeApplicationManager_ptr
-CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
+CIAO::NodeManager_Impl::preparePlan (const Deployment::DeploymentPlan &plan
                                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError,
                    Deployment::PlanError))
 {
-  CIAO_TRACE("CIAO::NodeDaemon_Impl::preparePlan");
+  CIAO_TRACE("CIAO::NodeManager_Impl::preparePlan");
   ACE_TRY
     {
       if (!this->map_.is_available (plan.UUID.in ()))
@@ -162,7 +162,7 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "(%P|%t) NodeDaemon_Impl::preparePlan\t\n");
+                           "(%P|%t) NodeManager_Impl::preparePlan\t\n");
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
@@ -172,14 +172,14 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
 }
 
 void
-CIAO::NodeDaemon_Impl::destroyManager
+CIAO::NodeManager_Impl::destroyManager
         (Deployment::NodeApplicationManager_ptr manager
          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StopError,
                    Deployment::InvalidReference))
 {
-  CIAO_TRACE("CIAO::NodeDaemon_Impl::destroyManager");
+  CIAO_TRACE("CIAO::NodeManager_Impl::destroyManager");
   ACE_TRY
     {
       // Deactivate this object
@@ -191,7 +191,7 @@ CIAO::NodeDaemon_Impl::destroyManager
       if (!this->map_.remove_nam (id))
         {
           ACE_ERROR ((LM_ERROR,
-                      "NodeDaemon_Impl::destroyManager: "
+                      "NodeManager_Impl::destroyManager: "
                       "Unable to remove object from map!\n"));
         }
 
@@ -202,7 +202,7 @@ CIAO::NodeDaemon_Impl::destroyManager
   ACE_CATCH (PortableServer::POA::WrongAdapter, ex)
     {
       ACE_ERROR ((LM_ERROR, 
-                  "NodeDaemon_Impl::destroyManager: EXCEPTION -  "
+                  "NodeManager_Impl::destroyManager: EXCEPTION -  "
                   "Invalid reference passed to destroyManager\n"));
       
       ACE_THROW (::Deployment::InvalidReference ());
@@ -210,14 +210,14 @@ CIAO::NodeDaemon_Impl::destroyManager
   ACE_CATCH (PortableServer::POA::ObjectNotActive, ex)
     {
       ACE_ERROR ((LM_ERROR,
-                  "NodeDaemon_Impl::destroyManager: EXCEPTION - "
+                  "NodeManager_Impl::destroyManager: EXCEPTION - "
                   " asked to destroy an already inactive object.\n"));
       ACE_THROW (::Deployment::InvalidReference ());
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "NodeDaemon_Impl::destroyManager\t\n");
+                           "NodeManager_Impl::destroyManager\t\n");
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
