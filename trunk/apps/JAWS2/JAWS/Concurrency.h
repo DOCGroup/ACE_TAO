@@ -20,7 +20,7 @@ class JAWS_Data_Block;
 class JAWS_Dispatch_Policy;
 class JAWS_Reaper;
 
-class JAWS_Export JAWS_Concurrency_Base : public ACE_Task<ACE_MT_SYNCH>
+class JAWS_Export JAWS_Concurrency_Base : public ACE_Task<ACE_SYNCH>
   // = TITLE
   //     Base class for different concurrency models
   //
