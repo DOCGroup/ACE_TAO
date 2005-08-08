@@ -15,21 +15,12 @@ ACE_RCSID (tao,
 
 template<typename S, typename to_S, typename from_S>
 CORBA::Boolean
-TAO::In_Special_Basic_Argument_T<S,to_S,from_S>::marshal (TAO_OutputCDR & cdr)
+TAO::In_Special_Basic_Argument_T<S,to_S,from_S>::marshal (TAO_OutputCDR &cdr)
 {
   return cdr << from_S (this->x_);
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
-
-template<>
-void
-TAO::In_Special_Basic_Argument_T<bool, ACE_InputCDR::to_boolean, ACE_OutputCDR::from_boolean>::
-  interceptor_value (CORBA::Any *any) const
-{
-//  p.argument <<= from_S (this->x_);
-//  p.mode = CORBA::PARAM_IN;
-}
 
 template<typename S, typename to_S, typename from_S>
 void
@@ -46,8 +37,7 @@ TAO::In_Special_Basic_Argument_T<S,to_S,from_S>::interceptor_value (
 template<typename S, typename to_S, typename from_S>
 CORBA::Boolean
 TAO::Inout_Special_Basic_Argument_T<S,to_S,from_S>::marshal (
-    TAO_OutputCDR & cdr
-  )
+    TAO_OutputCDR & cdr)
 {
   return cdr << from_S (this->x_);
 }
@@ -108,14 +98,6 @@ TAO::Ret_Special_Basic_Argument_T<S,to_S,from_S>::demarshal (
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
-
-template<>
-void
-TAO::Ret_Special_Basic_Argument_T<bool, ACE_InputCDR::to_boolean, ACE_OutputCDR::from_boolean>::interceptor_value (CORBA::Any *any) const
-{
-  //(*any) <<= from_S (this->x_);
-}
-
 
 template<typename S, typename to_S, typename from_S>
 void

@@ -37,7 +37,7 @@ namespace TAO
   public:
     In_Special_Basic_Argument_T (S const &);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
@@ -59,7 +59,7 @@ namespace TAO
   public:
     Inout_Special_Basic_Argument_T (S & x);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
@@ -126,7 +126,7 @@ namespace TAO
   struct TAO_Export Special_Basic_Tag {};
 
   /**
-   * @struct Special_Basic_Traits_T
+   * @struct Special_Basic_Arg_Traits_T
    *
    * @brief Template class for stub argument traits of (w)char/boolean/octet.
    *

@@ -23,6 +23,24 @@
 
 #include "tao/Arg_Traits_T.h"
 
+template<>
+void
+TAO::In_UB_String_Argument_T<char>::interceptor_value (CORBA::Any *) const
+{
+  //p.argument <<= this->x_;
+  //p.mode = CORBA::PARAM_IN;
+}
+
+template<>
+void
+TAO::Ret_UB_String_Argument_T<char, CORBA::String_var>::interceptor_value (CORBA::Any *) const
+{
+  //(*any) <<= this->x_.in ();
+}
+
+
+
+
 namespace TAO
 {
   /**

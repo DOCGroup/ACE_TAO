@@ -15,11 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Object_KeyC.h"
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Object_KeyC.h"
 
 namespace TAO
 {
@@ -29,8 +31,8 @@ namespace TAO
    * @brief A wrapper class that ties together a refcount to an
    * ObjectKey.
    *
-   * The refounts in this class is manipulated within the context of
-   * the lock in the TAO::ObjectKey_Table. Manipulating the refcounts
+   * The refcount in this class is manipulated within the context of
+   * the lock in the TAO::ObjectKey_Table. Manipulating the refcount
    * from anywhere else is strictly forbidden.
    */
   class TAO_Export Refcounted_ObjectKey

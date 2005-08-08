@@ -426,13 +426,12 @@ TAO_ORB_Core::resolve_picurrent (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
                     CORBA::Object::_nil ());
-//  if (CORBA::is_nil (this->pi_current_))
-//    {
-//      this->resolve_picurrent_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-//      ACE_CHECK_RETURN (CORBA::Object::_nil ());
-//    }
-//  return CORBA::Object::_duplicate (this->pi_current_);
-return                    CORBA::Object::_nil ();
+  if (CORBA::is_nil (this->pi_current_))
+    {
+      this->resolve_picurrent_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    }
+  return CORBA::Object::_duplicate (this->pi_current_);
 }
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
@@ -597,7 +596,7 @@ TAO_ORB_Core::resolve_rt_orb (void)
 }
 
 #if (TAO_HAS_INTERCEPTORS == 1)
-ACE_INLINE TAO::PICurrent *
+ACE_INLINE CORBA::Object_ptr
 TAO_ORB_Core::pi_current (void)
 {
   // A pointer/reference to PICurrent is cached in the ORB Core since
@@ -608,7 +607,7 @@ TAO_ORB_Core::pi_current (void)
 }
 
 ACE_INLINE void
-TAO_ORB_Core::pi_current (TAO::PICurrent *current)
+TAO_ORB_Core::pi_current (CORBA::Object_ptr current)
 {
   // Not duplicated since the ORB Core's "object_ref_table" already
   // contains a duplicate of the PICurrent object.

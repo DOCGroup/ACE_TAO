@@ -80,7 +80,7 @@ ACE_RCSID (tao,
 CORBA::Environment&
 TAO_default_environment (void)
 {
-  return *TAO_TSS_RESOURCES::instance ()->default_environment_;
+  return *TAO_TSS_Resources::instance ()->default_environment_;
 }
 
 // ****************************************************************
@@ -196,7 +196,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     policy_factory_registry_ (0),
     orbinitializer_registry_ (0),
 #if (TAO_HAS_INTERCEPTORS == 1)
-    pi_current_ (0),
+    pi_current_ (CORBA::Object::_nil ()),
     client_request_interceptor_adapter_ (0),
     server_request_interceptor_adapter_ (0),
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
@@ -1304,15 +1304,15 @@ TAO_ORB_Core::set_resource_factory (const char *resource_factory_name)
 void
 TAO_ORB_Core::set_gui_resource_factory (TAO::GUIResource_Factory *gui_resource_factory)
 {
-  if (TAO_TSS_RESOURCES::instance ()->gui_resource_factory_ != 0)
+  if (TAO_TSS_Resources::instance ()->gui_resource_factory_ != 0)
     {
 
       ACE_DEBUG ((LM_WARNING,
                   "TAO (%P|%t) - Deleting old gui_resource_factory.\n"));
-      delete TAO_TSS_RESOURCES::instance ()->gui_resource_factory_;
+      delete TAO_TSS_Resources::instance ()->gui_resource_factory_;
     }
 
-  TAO_TSS_RESOURCES::instance ()->gui_resource_factory_ = gui_resource_factory;
+  TAO_TSS_Resources::instance ()->gui_resource_factory_ = gui_resource_factory;
 }
 
 void
@@ -1395,7 +1395,7 @@ TAO_ORB_Core::resource_factory (void)
 TAO::GUIResource_Factory *
 TAO_ORB_Core::gui_resource_factory (void)
 {
-  return TAO_TSS_RESOURCES::instance ()->gui_resource_factory_;
+  return TAO_TSS_Resources::instance ()->gui_resource_factory_;
 }
 
 
@@ -2083,8 +2083,7 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion
       this->object_ref_table_.destroy ();
 
 #if (TAO_HAS_INTERCEPTORS == 1)
-//      CORBA::release (this->pi_current_);
-//      this->pi_current_ = 0;  // For the sake of consistency.
+      CORBA::release (this->pi_current_);
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
     }
   ACE_CATCHALL
@@ -2258,7 +2257,7 @@ TAO_ORB_Core::resolve_picurrent_i (ACE_ENV_SINGLE_ARG_DECL)
     {
       ACE_Service_Config::process_directive (
         ACE_DYNAMIC_SERVICE_DIRECTIVE("PICurrent_Loader",
-                                      "TAO",
+                                      "TAO_PI",
                                       "_make_TAO_PICurrent_Loader",
                                       ""));
       loader =
@@ -2271,7 +2270,7 @@ TAO_ORB_Core::resolve_picurrent_i (ACE_ENV_SINGLE_ARG_DECL)
         loader->create_object (this->orb_, 0, 0 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-  //    this->pi_current_ = dynamic_cast <TAO::PICurrent *> (pi);
+      this->pi_current_ = pi;
     }
 }
 
@@ -2845,13 +2844,13 @@ TAO_ORB_Core::get_cached_policy_including_current (
 CORBA::Environment *
 TAO_ORB_Core::default_environment (void) const
 {
-  return TAO_TSS_RESOURCES::instance ()->default_environment_;
+  return TAO_TSS_Resources::instance ()->default_environment_;
 }
 
 void
 TAO_ORB_Core::default_environment (CORBA::Environment *env)
 {
-  TAO_TSS_RESOURCES::instance ()->default_environment_ = env;
+  TAO_TSS_Resources::instance ()->default_environment_ = env;
 }
 
 void
