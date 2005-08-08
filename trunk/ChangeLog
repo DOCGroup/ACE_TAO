@@ -1,6 +1,12 @@
+Mon Aug  8 13:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/JAWS2/JAWS/IO.cpp:
+        * apps/JAWS2/JAWS/Concurrency.{h,cpp}:
+          Fixed compile problems in single threaded build
+
 Sat Aug  6 17:25:04 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Svc_Conf.l: Removed the ' and " characters to avoid 
+	* ace/Svc_Conf.l: Removed the ' and " characters to avoid
 	  problems with Lex.  Thanks to Rohini Madhavan <ro_madhavan at
  	  sify dot com> and Brian Buesker <bbuesker at qualcomm dot com>
  	  for helping with this.
@@ -15,7 +21,7 @@ Wed Aug  3 12:35:23 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 	* ace/DEV_Addr.cpp (set): NULL-terminate the devname_ string.
 	  Thanks to James Damour <james.damour@request.com> for reporting
  	  this problem.
-	
+
 Tue Aug  2 14:01:39 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* THANKS: Added Abdel Rigumye <rigumyea at ociweb dot com>,
