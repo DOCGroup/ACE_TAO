@@ -11,9 +11,10 @@ ACE_RCSID (tao,
 # include "PICurrent_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "TAO_Server_Request.h"
 #include "PICurrent_Copy_Callback.h"
-#include "SystemException.h"
+
+#include "tao/TAO_Server_Request.h"
+#include "tao/SystemException.h"
 #include "ace/Log_Msg.h"
 
 TAO::PICurrent_Impl::PICurrent_Impl (void)
