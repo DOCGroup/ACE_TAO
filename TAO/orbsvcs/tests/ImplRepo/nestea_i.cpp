@@ -27,7 +27,7 @@ Nestea_i::Nestea_i (CORBA::ORB_ptr orb, const char *filename)
 
 Nestea_i::~Nestea_i (void)
 {
-  delete this->data_filename_;
+  delete [] this->data_filename_;
 }
 
 
