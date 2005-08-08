@@ -50,19 +50,6 @@ ifdef COMSPEC
 endif # COMSPEC
 
 ####
-#### TAO libraries
-####
-TAO_BASE_LIBS=-lTAO $(ACELIB) $(LIBS)
-RT_TAO_BASE_LIBS=-lTAO_RTCORBA $(TAO_BASE_LIBS)
-TAO_SRVR_LIBS=-lTAO_PortableServer -lTAO_IORInterceptor -lTAO_ObjRefTemplate \
-  -lTAO_Valuetype $(TAO_BASE_LIBS)
-RT_TAO_SRVR_LIBS=-lTAO_RTPortableServer -lTAO_PortableServer -lTAO_IORInterceptor -lTAO_ObjRefTemplate  -lTAO_Valuetype $(RT_TAO_BASE_LIBS)
-TAO_CLNT_LIBS= $(TAO_BASE_LIBS)
-TAO_CLNT_VT_LIBS=-lTAO_Valuetype $(TAO_CLNT_LIBS)
-RT_TAO_CLNT_LIBS= $(RT_TAO_BASE_LIBS)
-TAO_DYNAMIC_LIBS=-lTAO_DynamicInterface -lTAO_Messaging
-
-####
 #### Macro customization.
 ####
 security ?= 1

@@ -2,7 +2,7 @@
 // $Id$
 
 project(*Server): taoserver {
-  idlflags += -GA
+  idlflags += -St -Sa
 
   Source_Files {
     Hello.cpp
@@ -11,7 +11,7 @@ project(*Server): taoserver {
 }
 
 project(*Client): taoclient {
-  idlflags += -GA
+  idlflags += -St -Sa
 
   Source_Files {
     TestC.cpp
