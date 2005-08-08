@@ -223,8 +223,12 @@ public:
    *                       enum above for the valid values).
    * @param logger_key     The name of ACE_FIFO rendezvous point where the
    *                       local client logger daemon is listening for logging
-   *                       messages. Only meaningful if the LOGGER bit is
-   *                       set in the @a flags argument.
+   *                       messages if the LOGGER bit is set in the @a flags
+   *                       argument. If the SYSLOG bit is set in @a flags,
+   *                       @a logger_key is the source/program name specified
+   *                       in the syslog facility (UNIX/Linux) or the Windows
+   *                       event log (Windows). In the SYSLOG case, if
+   *                       @a logger_key is 0, @a prog_name is used.
    */
   int open (const ACE_TCHAR *prog_name,
             u_long options_flags = ACE_Log_Msg::STDERR,
