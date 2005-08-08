@@ -16,7 +16,7 @@ Client_Task::Client_Task (const char *ior,
 {
 }
 
-int
+void
 Client_Task::test_system_exception (
   Test::Hello_ptr hello_ptr ACE_ENV_ARG_DECL)
 {
@@ -40,7 +40,7 @@ Client_Task::test_system_exception (
   ACE_CHECK;
 }
 
-int
+void
 Client_Task::test_user_exception_expected (
   Test::Hello_ptr hello_ptr ACE_ENV_ARG_DECL)
 {
@@ -64,7 +64,7 @@ Client_Task::test_user_exception_expected (
   ACE_CHECK;
 }
 
-int
+void
 Client_Task::test_user_exception_not_expected (
   Test::Hello_ptr hello_ptr ACE_ENV_ARG_DECL)
 {

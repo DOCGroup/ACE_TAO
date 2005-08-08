@@ -18,14 +18,14 @@ void
 Hello::system_exception_test (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW ((CORBA::INTERNAL ()));
+  ACE_THROW (CORBA::INTERNAL ());
 }
 
 void
 Hello::user_exception_expected (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException, ::Test::Hello::A))
 {
-  ACE_THROW ((::Test::Hello::A ()));
+  ACE_THROW (::Test::Hello::A ());
 }
 
 void
@@ -38,7 +38,7 @@ Hello::user_exception_not_expected (ACE_ENV_SINGLE_ARG_DECL)
 void
 Hello::throw_internal_b (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_THROW ((::Test::Hello::B ()));
+  ACE_THROW (::Test::Hello::B ());
 }
 
 char *
