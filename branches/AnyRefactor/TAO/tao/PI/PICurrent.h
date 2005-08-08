@@ -25,9 +25,10 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "ace/Array_Base.h"
 #include "PICurrentC.h"
-#include "LocalObject.h"
+
+#include "ace/Array_Base.h"
+#include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)
 # pragma warning(push)
