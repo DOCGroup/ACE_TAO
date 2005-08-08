@@ -13,7 +13,7 @@
 ACE_RCSID(JAWS, Concurrency, "$Id$")
 
 JAWS_Concurrency_Base::JAWS_Concurrency_Base (void)
-  : ACE_Task<ACE_MT_SYNCH> (new ACE_Thread_Manager),
+  : ACE_Task<ACE_SYNCH> (new ACE_Thread_Manager),
     mb_acquired_ (0),
     mb_ (0),
     reaper_ (new JAWS_Reaper (this))
@@ -36,7 +36,7 @@ JAWS_Concurrency_Base::singleton_mb (void)
       if (this->mb_acquired_ == 0)
         {
           int result;
-          ACE_Message_Block *mb;
+          ACE_Message_Block *mb = 0;
 
           result = this->getq (mb);
           this->mb_acquired_ = 1;
@@ -62,8 +62,8 @@ JAWS_Concurrency_Base::svc (void)
 {
   JAWS_TRACE ("JAWS_Concurrency_Base::svc");
 
-  ACE_Message_Block *mb;         // The message queue element
-  JAWS_Data_Block *db;           // Contains the task list
+  ACE_Message_Block *mb = 0;         // The message queue element
+  JAWS_Data_Block *db = 0;           // Contains the task list
 
   mb = this->singleton_mb ();
 
