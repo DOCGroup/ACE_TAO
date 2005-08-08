@@ -1,3 +1,28 @@
+Mon Aug  8 08:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/ImplRepo/nestea_i.cpp:
+          Fixed invalid delete
+
+        * tao/PortableServer/Servant_Base.cpp:
+          Fixed bug when invoking collocated oneways with SYNC_WITH_SERVER
+          is set
+
+        * tests/Collocation_Oneway_Tests/*:
+          New test for collocated oneways. Thanks to Vito Bico
+          <vbica at qualcomm dot com> for making this test to reproduce
+          the bug in Servant_Base.
+
+        * tests/Collocation_Exception_Test/*:
+          New test for testing exceptions in collocated case
+
+        * rules.tao.GNU:
+          Removed TAO libraries, MPC now handles this.
+
+        * tests/Hello/Hello.mpc:
+          Added -St and -Sa as idl flags. This test doesn't need Any
+          and TypeCode and this way we can get the footprint down more
+          when AnyTypeCode refactoring is ready.
+
 Fri Aug 05 07:49:26 2005  Simon Massey  <sma@prismtech.com>
 
         * TAO version 1.4.7 released.
@@ -6,7 +31,7 @@ Tue Aug  2 21:18:02 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.yy:
         * TAO_IDL/fe/y.tab.cpp:
-        
+
           Fixed some mismatched allocate/deallocate errors. Thanks to
           Johnny Willemsen <jwillemsen@rememdy.nl> for pointing them
           out.
