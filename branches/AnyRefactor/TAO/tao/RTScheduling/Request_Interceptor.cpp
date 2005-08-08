@@ -36,7 +36,7 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
   TAO_RTScheduler_Current_i *new_current = 0;
   TAO_RTScheduler_Current_i *current = 0;
 
-  TAO_TSS_Resources *tss = TAO_TSS_RESOURCES::instance ();
+  TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
   current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
 
@@ -129,7 +129,7 @@ Client_Interceptor::send_poll (PortableInterceptor::ClientRequestInfo_ptr ri
 
     TAO_RTScheduler_Current_i *current = 0;
 
-    TAO_TSS_Resources *tss = TAO_TSS_RESOURCES::instance ();
+    TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
     current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
     if (current != 0)
@@ -148,7 +148,7 @@ Client_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
 
   TAO_RTScheduler_Current_i *current = 0;
 
-  TAO_TSS_Resources *tss = TAO_TSS_RESOURCES::instance ();
+  TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
   current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
   if (current != 0)
@@ -168,7 +168,7 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
 
   TAO_RTScheduler_Current_i *current = 0;
 
-  TAO_TSS_Resources *tss = TAO_TSS_RESOURCES::instance ();
+  TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
   current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
 
@@ -232,7 +232,7 @@ Client_Interceptor::receive_other (PortableInterceptor::ClientRequestInfo_ptr ri
 
   TAO_RTScheduler_Current_i *current = 0;
 
-  TAO_TSS_Resources *tss = TAO_TSS_RESOURCES::instance ();
+  TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
   current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
   if (current != 0)
@@ -376,7 +376,7 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
   // Install new current in the ORB and store the previous current
   // implementation
   // current->implementation (new_current)
-  TAO_TSS_Resources *tss = TAO_TSS_RESOURCES::instance ();
+  TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
   tss->rtscheduler_previous_current_impl_ = this->current_->implementation (new_current);
 }
@@ -393,7 +393,7 @@ Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
   TAO_RTScheduler_Current_i *current = 0;
   TAO_RTScheduler_Current_i *prev_current = 0;
 
-  TAO_TSS_Resources *tss = TAO_TSS_RESOURCES::instance ();
+  TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
   current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
   if (current != 0)
@@ -444,7 +444,7 @@ Server_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr r
 
   TAO_RTScheduler_Current_i *current = 0;
 
-  TAO_TSS_Resources *tss = TAO_TSS_RESOURCES::instance ();
+  TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
   current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
   if (current != 0)
@@ -469,7 +469,7 @@ Server_Interceptor::send_other (PortableInterceptor::ServerRequestInfo_ptr ri
 
   TAO_RTScheduler_Current_i *current = 0;
 
-  TAO_TSS_Resources *tss = TAO_TSS_RESOURCES::instance ();
+  TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
   current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
   if (current != 0)

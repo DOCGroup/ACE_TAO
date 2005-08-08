@@ -9,7 +9,6 @@
 #include "tao/Stub.h"
 #include "tao/AnyTypeCode/NVList.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
-#include "tao/AnyTypeCode/Dynamic_ParameterC.h"
 
 ACE_RCSID (IFR_Client,
            IFR_Client_Adapter_Impl,
@@ -45,12 +44,11 @@ TAO_IFR_Client_Adapter_Impl::interfacedef_cdr_insert (
 
 void
 TAO_IFR_Client_Adapter_Impl::interfacedef_any_insert (
-    Dynamic::Parameter &p,
+    CORBA::Any *any,
     CORBA::InterfaceDef_ptr object_type
   )
 {
-  p.argument <<= object_type;
-  p.mode = CORBA::PARAM_IN;
+  (*any) <<= object_type;
 }
 
 void

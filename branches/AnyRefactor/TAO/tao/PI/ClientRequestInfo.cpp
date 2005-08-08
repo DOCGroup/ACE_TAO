@@ -4,7 +4,6 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-
 ACE_RCSID (tao,
            ClientRequestInfo,
            "$Id$")
@@ -37,8 +36,11 @@ void
 TAO_ClientRequestInfo::setup_picurrent (void)
 {
   // Retrieve the thread scope current (no TSS access incurred yet).
-  TAO::PICurrent *pi_current =
+  CORBA::Object_ptr pi_current_obj =
     this->invocation_->orb_core ()->pi_current ();
+
+  TAO::PICurrent *pi_current =
+    dynamic_cast <TAO::PICurrent*> (pi_current_obj);
 
   // If the slot count is zero, then there is nothing to copy.
   // Prevent any copying (and hence TSS accesses) from occurring.
@@ -495,7 +497,13 @@ TAO_ClientRequestInfo::parameter_list (Dynamic::ParameterList &param_list)
   param_list.length (this->invocation_->operation_details ().args_num () - 1);
 
   for (CORBA::ULong i = 1; i != this->invocation_->operation_details ().args_num (); ++i)
-    this->invocation_->operation_details ().args ()[i]->interceptor_param (param_list[i - 1]);
+    {
+      TAO::Argument *argument =
+        this->invocation_->operation_details ().args ()[i];
+      Dynamic::Parameter &p = param_list[i - 1];
+      p.mode = argument->mode ();
+      argument->interceptor_value (&p.argument);
+    }
 
   return true;
 }
@@ -590,7 +598,7 @@ bool
 TAO_ClientRequestInfo::result (CORBA::Any *any)
 {
   for (CORBA::ULong i = 0; i != this->invocation_->operation_details ().args_num (); ++i)
-    (*this->invocation_->operation_details ().args ()[i]).interceptor_result (any);
+    (*this->invocation_->operation_details ().args ()[i]).interceptor_value (any);
 
   return true;
 }

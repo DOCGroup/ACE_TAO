@@ -39,7 +39,7 @@ namespace TAO
   public:
 
     typedef void        ret_type;
-    typedef Argument    ret_val;
+    typedef RetArgument ret_val;
 
   };
 

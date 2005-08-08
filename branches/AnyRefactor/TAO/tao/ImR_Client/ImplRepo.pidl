@@ -15,7 +15,7 @@
  */
 //=============================================================================
 
-#include "ServerObject.pidl"
+#include "tao/ImR_Client/ServerObject.pidl"
 
 module ImplementationRepository
 {

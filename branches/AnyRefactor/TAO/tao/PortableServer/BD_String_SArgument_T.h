@@ -37,14 +37,14 @@ namespace TAO
            typename to_S,
            typename from_S,
            size_t BOUND>
-  class In_BD_String_SArgument_T : public Argument
+  class In_BD_String_SArgument_T : public InArgument
   {
   public:
     In_BD_String_SArgument_T (void);
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     const S * arg (void) const;
 
@@ -63,15 +63,15 @@ namespace TAO
            typename to_S,
            typename from_S,
            size_t BOUND>
-  class Inout_BD_String_SArgument_T : public Argument
+  class Inout_BD_String_SArgument_T : public InoutArgument
   {
   public:
     Inout_BD_String_SArgument_T (void);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S *& arg (void);
 
@@ -91,14 +91,14 @@ namespace TAO
            typename to_S,
            typename from_S,
            size_t BOUND>
-  class Out_BD_String_SArgument_T : public Argument
+  class Out_BD_String_SArgument_T : public OutArgument
   {
   public:
     Out_BD_String_SArgument_T (void);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S *& arg (void);
 
@@ -117,14 +117,14 @@ namespace TAO
            typename to_S,
            typename from_S,
            size_t BOUND>
-  class Ret_BD_String_SArgument_T : public Argument
+  class Ret_BD_String_SArgument_T : public RetArgument
   {
   public:
     Ret_BD_String_SArgument_T (void);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_result (CORBA::Any *);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S *& arg (void);
 

@@ -252,7 +252,7 @@ namespace TAO
           // upcall.
           TAO::Portable_Server::POA_Current_Impl *poa_current_impl =
             static_cast <TAO::Portable_Server::POA_Current_Impl *>
-                        (TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
+                        (TAO_TSS_Resources::instance ()->poa_current_impl_);
           // If we are in an upcall on the default servant, return the
           // ObjectId associated with the current invocation.
           if (poa_current_impl != 0 &&

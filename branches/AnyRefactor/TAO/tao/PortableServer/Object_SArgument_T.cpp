@@ -5,10 +5,6 @@
 
 #include "tao/PortableServer/Object_SArgument_T.h"
 
-#if TAO_HAS_INTERCEPTORS == 1
-# include "tao/AnyTypeCode/Dynamic_ParameterC.h"
-#endif /* TAO_HAS_INTERCEPTORS */
-
 #if !defined (__ACE_INLINE__)
 #include "tao/PortableServer/Object_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -25,12 +21,10 @@ TAO::In_Object_SArgument_T<S_ptr,S_var>::demarshal (TAO_InputCDR &cdr)
 
 template<typename S_ptr, typename S_var>
 void
-TAO::In_Object_SArgument_T<S_ptr,S_var>::interceptor_param (
-    Dynamic::Parameter & p
-  )
+TAO::In_Object_SArgument_T<S_ptr,S_var>::interceptor_value (
+  CORBA::Any *any) const
 {
-  p.argument <<= this->x_.in ();
-  p.mode = CORBA::PARAM_IN;
+  (*any) <<= this->x_.in ();
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -39,7 +33,7 @@ TAO::In_Object_SArgument_T<S_ptr,S_var>::interceptor_param (
 
 template<typename S_ptr, typename S_var>
 CORBA::Boolean
-TAO::Inout_Object_SArgument_T<S_ptr,S_var>::marshal (TAO_OutputCDR & cdr)
+TAO::Inout_Object_SArgument_T<S_ptr,S_var>::marshal (TAO_OutputCDR &cdr)
 {
   return cdr << this->x_.in ();
 }
@@ -55,12 +49,10 @@ TAO::Inout_Object_SArgument_T<S_ptr,S_var>::demarshal (TAO_InputCDR & cdr)
 
 template<typename S_ptr, typename S_var>
 void
-TAO::Inout_Object_SArgument_T<S_ptr,S_var>::interceptor_param (
-    Dynamic::Parameter & p
-  )
+TAO::Inout_Object_SArgument_T<S_ptr,S_var>::interceptor_value (
+  CORBA::Any *any) const
 {
-  p.argument <<= this->x_.in ();
-  p.mode = CORBA::PARAM_INOUT;
+  (*any) <<= this->x_.in ();
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -78,12 +70,10 @@ TAO::Out_Object_SArgument_T<S_ptr,S_var,S_out>::marshal (TAO_OutputCDR &cdr)
 
 template<typename S_ptr, typename S_var, typename S_out>
 void
-TAO::Out_Object_SArgument_T<S_ptr,S_var,S_out>::interceptor_param (
-    Dynamic::Parameter & p
-  )
+TAO::Out_Object_SArgument_T<S_ptr,S_var,S_out>::interceptor_value (
+  CORBA::Any *any) const
 {
-  p.argument <<= this->x_.in ();
-  p.mode = CORBA::PARAM_OUT;
+  (*any) <<= this->x_.in ();
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -92,7 +82,7 @@ TAO::Out_Object_SArgument_T<S_ptr,S_var,S_out>::interceptor_param (
 
 template<typename S_ptr, typename S_var>
 CORBA::Boolean
-TAO::Ret_Object_SArgument_T<S_ptr,S_var>::marshal (TAO_OutputCDR & cdr)
+TAO::Ret_Object_SArgument_T<S_ptr,S_var>::marshal (TAO_OutputCDR &cdr)
 {
   return cdr << this->x_.in ();
 }
@@ -101,9 +91,8 @@ TAO::Ret_Object_SArgument_T<S_ptr,S_var>::marshal (TAO_OutputCDR & cdr)
 
 template<typename S_ptr, typename S_var>
 void
-TAO::Ret_Object_SArgument_T<S_ptr,S_var>::interceptor_result (
-    CORBA::Any * any
-  )
+TAO::Ret_Object_SArgument_T<S_ptr,S_var>::interceptor_value (
+  CORBA::Any *any) const
 {
   (*any) <<= this->x_.in ();
 }

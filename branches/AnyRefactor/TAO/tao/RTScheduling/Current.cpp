@@ -251,7 +251,7 @@ TAO_RTScheduler_Current_i*
 TAO_RTScheduler_Current::implementation (TAO_RTScheduler_Current_i* new_current)
 {
   TAO_TSS_Resources *tss =
-    TAO_TSS_RESOURCES::instance ();
+    TAO_TSS_Resources::instance ();
 
   TAO_RTScheduler_Current_i *old =
     static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
@@ -264,7 +264,7 @@ TAO_RTScheduler_Current_i*
 TAO_RTScheduler_Current::implementation (void)
 {
   TAO_TSS_Resources *tss =
-    TAO_TSS_RESOURCES::instance ();
+    TAO_TSS_Resources::instance ();
 
   TAO_RTScheduler_Current_i* impl =
     static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
@@ -407,9 +407,9 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(
       ACE_CHECK;
 
       TAO_TSS_Resources *tss =
-        TAO_TSS_RESOURCES::instance ();
+        TAO_TSS_Resources::instance ();
 
-      TAO_RTScheduler_Current_i* new_current;
+      TAO_RTScheduler_Current_i* new_current = 0;
         ACE_NEW_THROW_EX (new_current,
                           TAO_RTScheduler_Current_i (this->orb_,
                                                      this->dt_hash_,
@@ -640,7 +640,7 @@ DTTask::svc (void)
     {
 
       TAO_TSS_Resources *tss =
-        TAO_TSS_RESOURCES::instance ();
+        TAO_TSS_Resources::instance ();
 
       tss->rtscheduler_current_impl_ = this->current_;
 
@@ -765,7 +765,7 @@ void
 TAO_RTScheduler_Current_i::cleanup_current (void)
 {
   TAO_TSS_Resources *tss =
-    TAO_TSS_RESOURCES::instance ();
+    TAO_TSS_Resources::instance ();
 
   tss->rtscheduler_current_impl_ = this->previous_current_;
 
@@ -786,7 +786,7 @@ TAO_RTScheduler_Current_i::delete_all_currents (void)
     }
 
   TAO_TSS_Resources *tss =
-    TAO_TSS_RESOURCES::instance ();
+    TAO_TSS_Resources::instance ();
 
   tss->rtscheduler_current_impl_ = tss->rtscheduler_previous_current_impl_;
 }

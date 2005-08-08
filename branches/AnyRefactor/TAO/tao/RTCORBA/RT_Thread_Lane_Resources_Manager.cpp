@@ -110,7 +110,7 @@ TAO_RT_Thread_Lane_Resources_Manager::lane_resources (void)
 
   // Get the lane for this thread.
   TAO_Thread_Lane *lane =
-    (TAO_Thread_Lane *) tss.lane_;
+    static_cast <TAO_Thread_Lane *> (tss.lane_);
 
   // If we have a valid lane, use that lane's resources.
   if (lane)

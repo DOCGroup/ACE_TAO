@@ -110,7 +110,9 @@ TAO::ServerRequestInfo::arguments (ACE_ENV_SINGLE_ARG_DECL)
     {
       // Insert the operation parameters into the
       // Dynamic::ParameterList.
-      (*i)->interceptor_param ((*parameter_list)[p]);
+      Dynamic::Parameter& parameter = (*parameter_list)[p];
+      parameter.mode = (*i)->mode ();
+      (*i)->interceptor_value (&parameter.argument);
     }
 
   return safe_parameter_list._retn ();
@@ -194,7 +196,7 @@ TAO::ServerRequestInfo::result (ACE_ENV_SINGLE_ARG_DECL)
   // Result is always first element in TAO::Argument array.
   TAO::Argument * const r = this->args_[0];
 
-  r->interceptor_result (result_any);
+  r->interceptor_value (result_any);
 
   return safe_result_any._retn ();
 }
@@ -253,8 +255,11 @@ TAO::ServerRequestInfo::get_slot (PortableInterceptor::SlotId id
 {
   // Retrieve the total number of assigned slots from the PICurrent.
   // No TSS access is incurred.
-  TAO::PICurrent * pi_current =
+  CORBA::Object_ptr pi_current_obj =
     this->server_request_.orb_core ()->pi_current ();
+
+  TAO::PICurrent *pi_current =
+    dynamic_cast <TAO::PICurrent*> (pi_current_obj);
 
   if (pi_current == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
@@ -520,8 +525,11 @@ TAO::ServerRequestInfo::set_slot (PortableInterceptor::SlotId id,
 {
   // Retrieve the total number of assigned slots from the PICurrent
   // object.  No TSS access is incurred.
-  TAO::PICurrent * pi_current =
+  CORBA::Object_ptr pi_current_obj =
     this->server_request_.orb_core ()->pi_current ();
+
+  TAO::PICurrent *pi_current =
+    dynamic_cast <TAO::PICurrent*> (pi_current_obj);
 
   if (pi_current == 0)
     ACE_THROW (CORBA::INTERNAL ());

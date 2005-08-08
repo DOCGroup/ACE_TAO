@@ -54,6 +54,7 @@
 #include "tao/IFR_Client_Adapter.h"
 #include "tao/Object_T.h"
 #include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/Any.h"
 #include "tao/CDR.h"
 #include "tao/operation_details.h"
 #include "tao/PortableInterceptor.h"
@@ -1080,49 +1081,6 @@ POA_CORBA::Policy::_this (ACE_ENV_SINGLE_ARG_DECL)
         CORBA__TAO_Policy_Proxy_Broker_Factory_function_pointer
       );
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1582
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#if !defined (_CORBA_POLICY__SARG_TRAITS_TMPLINST_SS_)
-#define _CORBA_POLICY__SARG_TRAITS_TMPLINST_SS_
-
-  template class TAO::SArg_Traits<CORBA::Policy>;
-
-  template class
-    TAO::Object_SArg_Traits_T<
-        CORBA::Policy_ptr,
-        CORBA::Policy_var,
-        CORBA::Policy_out,
-      >;
-
-#endif /* end #if !defined */
-
-  template class
-    TAO::Ret_Object_SArgument_T<
-        CORBA::Policy_ptr,
-        CORBA::Policy_var
-      >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#if !defined (_CORBA_POLICY__SARG_TRAITS_TMPLINST_SS_)
-#define _CORBA_POLICY__SARG_TRAITS_TMPLINST_SS_
-
-# pragma instantiate TAO::SArg_Traits<CORBA::Policy>
-
-# pragma instantiate \
-    TAO::Object_SArg_Traits_T< \
-        CORBA::Policy_ptr, \
-        CORBA::Policy_var, \
-        CORBA::Policy_out, \
-      >
-
-#endif /* end #if !defined */
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* ifndef */
 

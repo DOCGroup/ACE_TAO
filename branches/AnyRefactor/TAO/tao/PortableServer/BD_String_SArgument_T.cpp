@@ -4,7 +4,6 @@
 #define TAO_BD_STRING_SARGUMENT_T_CPP
 
 #include "tao/PortableServer/BD_String_SArgument_T.h"
-#include "tao/AnyTypeCode/Dynamic_ParameterC.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/PortableServer/BD_String_SArgument_T.inl"
@@ -32,12 +31,10 @@ template<typename S,
          typename from_S,
          size_t BOUND>
 void
-TAO::In_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::interceptor_param (
-    Dynamic::Parameter & p
-  )
+TAO::In_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::interceptor_value (
+  CORBA::Any *any) const
 {
-  p.argument <<= from_S (this->x_.in (), BOUND);
-  p.mode = CORBA::PARAM_IN;
+  (*any) <<= from_S (this->x_.in (), BOUND);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -79,10 +76,9 @@ template<typename S,
          size_t BOUND>
 void
 TAO::Inout_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::
-interceptor_param (Dynamic::Parameter & p)
+interceptor_value (CORBA::Any *any) const
 {
-  p.argument <<= from_S (this->x_.in (), BOUND);
-  p.mode = CORBA::PARAM_INOUT;
+  (*any) <<= from_S (this->x_.in (), BOUND);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -113,10 +109,9 @@ template<typename S,
          size_t BOUND>
 void
 TAO::Out_BD_String_SArgument_T<S,S_var,S_out,to_S,from_S,BOUND>::
-interceptor_param (Dynamic::Parameter & p)
+interceptor_value (CORBA::Any *any) const
 {
-  p.argument <<= from_S (this->x_.in (), BOUND);
-  p.mode = CORBA::PARAM_OUT;
+  (*any) <<= from_S (this->x_.in (), BOUND);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -145,7 +140,7 @@ template<typename S,
          size_t BOUND>
 void
 TAO::Ret_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::
-interceptor_result (CORBA::Any * any)
+interceptor_value (CORBA::Any *any) const
 {
   (*any) <<= from_S (this->x_.in (), BOUND);
 }
