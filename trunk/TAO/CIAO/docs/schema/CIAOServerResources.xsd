@@ -92,10 +92,10 @@
   </xsd:complexType>
 
   <xsd:simpleType name="Priority">
-    <restriction base="xsd:int">
-      <minInclusive value="0"/>
-      <maxInclusive value="32767"/>
-    </restriction>
+    <xsd:restriction base="xsd:int">
+      <xsd:minInclusive value="0"/>
+      <xsd:maxInclusive value="32767"/>
+    </xsd:restriction>
   </xsd:simpleType>
 
   <xsd:complexType name="ThreadpoolDef">
