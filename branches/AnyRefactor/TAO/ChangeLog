@@ -1,3 +1,17 @@
+Mon Aug  8 19:55:07 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        
+          Moved generation of the _tao_type() method for user exceptions
+          to the *A.cpp file if we are using the -GA option.
+
+Fri Aug  5 18:56:14 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cp:
+        
+          Added code generation of *A.h includes from the AnyTypeCode
+          library corresponding to included .pidl files.
+
 Thu Aug  4 18:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Cache_Entries.{h,inl}:
