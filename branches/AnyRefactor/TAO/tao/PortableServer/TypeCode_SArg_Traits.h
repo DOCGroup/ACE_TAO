@@ -46,7 +46,11 @@ namespace TAO
   class TAO_PortableServer_Export SArg_Traits<CORBA::TypeCode>
     : public Object_SArg_Traits_T<CORBA::TypeCode_ptr,
                                   CORBA::TypeCode_var,
-                                  CORBA::TypeCode_out>
+                                  CORBA::TypeCode_out,
+                                  TAO::Any_Insert_Policy_Stream <
+                                    CORBA::TypeCode_ptr
+                                  >
+                                 >
   {
   };
 }

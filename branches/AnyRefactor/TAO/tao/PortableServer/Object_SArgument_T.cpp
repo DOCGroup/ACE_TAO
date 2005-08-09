@@ -10,91 +10,111 @@
 #endif /* __ACE_INLINE__ */
 
 
-template<typename S_ptr, typename S_var>
+template<typename S_ptr,
+         typename S_var,
+         typename Insert_Policy>
 CORBA::Boolean
-TAO::In_Object_SArgument_T<S_ptr,S_var>::demarshal (TAO_InputCDR &cdr)
+TAO::In_Object_SArgument_T<S_ptr,S_var,Insert_Policy>::demarshal (TAO_InputCDR &cdr)
 {
   return cdr >> this->x_.out ();
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-template<typename S_ptr, typename S_var>
+template<typename S_ptr,
+         typename S_var,
+         typename Insert_Policy>
 void
-TAO::In_Object_SArgument_T<S_ptr,S_var>::interceptor_value (
+TAO::In_Object_SArgument_T<S_ptr,S_var,Insert_Policy>::interceptor_value (
   CORBA::Any *any) const
 {
-  (*any) <<= this->x_.in ();
+  this->Insert_Policy::any_insert (any, this->x_.in ());
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
 // ===========================================================
 
-template<typename S_ptr, typename S_var>
+template<typename S_ptr,
+         typename S_var,
+         typename Insert_Policy>
 CORBA::Boolean
-TAO::Inout_Object_SArgument_T<S_ptr,S_var>::marshal (TAO_OutputCDR &cdr)
+TAO::Inout_Object_SArgument_T<S_ptr,S_var,Insert_Policy>::marshal (TAO_OutputCDR &cdr)
 {
   return cdr << this->x_.in ();
 }
 
-template<typename S_ptr, typename S_var>
+template<typename S_ptr,
+         typename S_var,
+         typename Insert_Policy>
 CORBA::Boolean
-TAO::Inout_Object_SArgument_T<S_ptr,S_var>::demarshal (TAO_InputCDR & cdr)
+TAO::Inout_Object_SArgument_T<S_ptr,S_var,Insert_Policy>::demarshal (TAO_InputCDR & cdr)
 {
   return cdr >> this->x_.out ();
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-template<typename S_ptr, typename S_var>
+template<typename S_ptr,
+         typename S_var,
+         typename Insert_Policy>
 void
-TAO::Inout_Object_SArgument_T<S_ptr,S_var>::interceptor_value (
+TAO::Inout_Object_SArgument_T<S_ptr,S_var,Insert_Policy>::interceptor_value (
   CORBA::Any *any) const
 {
-  (*any) <<= this->x_.in ();
+  this->Insert_Policy::any_insert (any, this->x_.in ());
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
 // ==============================================================
 
-template<typename S_ptr, typename S_var, typename S_out>
+template<typename S_ptr,
+         typename S_var,
+         typename S_out,
+         typename Insert_Policy>
 CORBA::Boolean
-TAO::Out_Object_SArgument_T<S_ptr,S_var,S_out>::marshal (TAO_OutputCDR &cdr)
+TAO::Out_Object_SArgument_T<S_ptr,S_var,S_out,Insert_Policy>::marshal (TAO_OutputCDR &cdr)
 {
   return cdr << this->x_.in ();
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-template<typename S_ptr, typename S_var, typename S_out>
+template<typename S_ptr,
+         typename S_var,
+         typename S_out,
+         typename Insert_Policy>
 void
-TAO::Out_Object_SArgument_T<S_ptr,S_var,S_out>::interceptor_value (
+TAO::Out_Object_SArgument_T<S_ptr,S_var,S_out,Insert_Policy>::interceptor_value (
   CORBA::Any *any) const
 {
-  (*any) <<= this->x_.in ();
+  this->Insert_Policy::any_insert (any, this->x_.in ());
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
 // ============================================================
 
-template<typename S_ptr, typename S_var>
+template<typename S_ptr,
+         typename S_var,
+         typename Insert_Policy>
 CORBA::Boolean
-TAO::Ret_Object_SArgument_T<S_ptr,S_var>::marshal (TAO_OutputCDR &cdr)
+TAO::Ret_Object_SArgument_T<S_ptr,S_var,Insert_Policy>::marshal (TAO_OutputCDR &cdr)
 {
   return cdr << this->x_.in ();
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-template<typename S_ptr, typename S_var>
+template<typename S_ptr,
+         typename S_var,
+         typename Insert_Policy>
 void
-TAO::Ret_Object_SArgument_T<S_ptr,S_var>::interceptor_value (
+TAO::Ret_Object_SArgument_T<S_ptr,S_var,Insert_Policy>::interceptor_value (
   CORBA::Any *any) const
 {
-  (*any) <<= this->x_.in ();
+  this->Insert_Policy::any_insert (any, this->x_.in ());
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */

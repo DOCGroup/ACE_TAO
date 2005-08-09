@@ -14,9 +14,10 @@ template<typename S,
          typename S_var,
          typename to_S,
          typename from_S,
-         size_t BOUND>
+         size_t BOUND,
+         typename Insert_Policy>
 CORBA::Boolean
-TAO::In_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::demarshal (
+TAO::In_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr
   )
 {
@@ -29,12 +30,13 @@ template<typename S,
          typename S_var,
          typename to_S,
          typename from_S,
-         size_t BOUND>
+         size_t BOUND,
+         typename Insert_Policy>
 void
-TAO::In_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::interceptor_value (
+TAO::In_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND,Insert_Policy>::interceptor_value (
   CORBA::Any *any) const
 {
-  (*any) <<= from_S (this->x_.in (), BOUND);
+  this->Insert_Policy::any_insert (any, from_S (this->x_.in (), BOUND));
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -45,9 +47,10 @@ template<typename S,
          typename S_var,
          typename to_S,
          typename from_S,
-         size_t BOUND>
+         size_t BOUND,
+         typename Insert_Policy>
 CORBA::Boolean
-TAO::Inout_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::marshal (
+TAO::Inout_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND,Insert_Policy>::marshal (
     TAO_OutputCDR & cdr
   )
 {
@@ -58,9 +61,10 @@ template<typename S,
          typename S_var,
          typename to_S,
          typename from_S,
-         size_t BOUND>
+         size_t BOUND,
+         typename Insert_Policy>
 CORBA::Boolean
-TAO::Inout_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::demarshal (
+TAO::Inout_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr
   )
 {
@@ -73,12 +77,13 @@ template<typename S,
          typename S_var,
          typename to_S,
          typename from_S,
-         size_t BOUND>
+         size_t BOUND,
+         typename Insert_Policy>
 void
-TAO::Inout_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::
+TAO::Inout_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND,Insert_Policy>::
 interceptor_value (CORBA::Any *any) const
 {
-  (*any) <<= from_S (this->x_.in (), BOUND);
+  this->Insert_Policy::any_insert (any, from_S (this->x_.in (), BOUND));
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -90,9 +95,10 @@ template<typename S,
          typename S_out,
          typename to_S,
          typename from_S,
-         size_t BOUND>
+         size_t BOUND,
+         typename Insert_Policy>
 CORBA::Boolean
-TAO::Out_BD_String_SArgument_T<S,S_var,S_out,to_S,from_S,BOUND>::marshal (
+TAO::Out_BD_String_SArgument_T<S,S_var,S_out,to_S,from_S,BOUND,Insert_Policy>::marshal (
     TAO_OutputCDR &cdr
   )
 {
@@ -106,12 +112,13 @@ template<typename S,
          typename S_out,
          typename to_S,
          typename from_S,
-         size_t BOUND>
+         size_t BOUND,
+         typename Insert_Policy>
 void
-TAO::Out_BD_String_SArgument_T<S,S_var,S_out,to_S,from_S,BOUND>::
+TAO::Out_BD_String_SArgument_T<S,S_var,S_out,to_S,from_S,BOUND,Insert_Policy>::
 interceptor_value (CORBA::Any *any) const
 {
-  (*any) <<= from_S (this->x_.in (), BOUND);
+  this->Insert_Policy::any_insert (any, from_S (this->x_.in (), BOUND));
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -122,9 +129,10 @@ template<typename S,
          typename S_var,
          typename to_S,
          typename from_S,
-         size_t BOUND>
+         size_t BOUND,
+         typename Insert_Policy>
 CORBA::Boolean
-TAO::Ret_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::marshal (
+TAO::Ret_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND,Insert_Policy>::marshal (
     TAO_OutputCDR & cdr
   )
 {
@@ -137,12 +145,13 @@ template<typename S,
          typename S_var,
          typename to_S,
          typename from_S,
-         size_t BOUND>
+         size_t BOUND,
+         typename Insert_Policy>
 void
-TAO::Ret_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::
+TAO::Ret_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND,Insert_Policy>::
 interceptor_value (CORBA::Any *any) const
 {
-  (*any) <<= from_S (this->x_.in (), BOUND);
+  this->Insert_Policy::any_insert (any, from_S (this->x_.in (), BOUND));
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */

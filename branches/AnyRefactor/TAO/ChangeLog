@@ -1,3 +1,31 @@
+Tue Aug  9 13:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Any_SArg_Traits.h
+        * tao/PortableServer/BD_String_SArgument_T.cpp
+        * tao/PortableServer/BD_String_SArgument_T.h
+        * tao/PortableServer/BD_String_SArgument_T.inl
+        * tao/PortableServer/Basic_SArgument_T.cpp
+        * tao/PortableServer/Basic_SArgument_T.h
+        * tao/PortableServer/Basic_SArgument_T.inl
+        * tao/PortableServer/Basic_SArguments.h
+        * tao/PortableServer/Fixed_Array_SArgument_T.cpp
+        * tao/PortableServer/Fixed_Array_SArgument_T.h
+        * tao/PortableServer/Fixed_Array_SArgument_T.inl
+        * tao/PortableServer/Fixed_Size_SArgument_T.cpp
+        * tao/PortableServer/Fixed_Size_SArgument_T.h
+        * tao/PortableServer/Fixed_Size_SArgument_T.inl
+        * tao/PortableServer/Object_SArg_Traits.h
+        * tao/PortableServer/Object_SArgument_T.cpp
+        * tao/PortableServer/Object_SArgument_T.h
+        * tao/PortableServer/Object_SArgument_T.inl
+        * tao/PortableServer/PolicyS.cpp
+        * tao/PortableServer/Special_Basic_SArgument_T.cpp
+        * tao/PortableServer/Special_Basic_SArgument_T.h
+        * tao/PortableServer/Special_Basic_SArgument_T.inl
+        * tao/PortableServer/Special_Basic_SArguments.h
+        * tao/PortableServer/TypeCode_SArg_Traits.h
+          Updated also all SArg_Traits templates
+
 Tue Aug  9 12:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_arg_traits.cpp:

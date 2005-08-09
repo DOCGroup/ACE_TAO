@@ -30,8 +30,11 @@ namespace TAO
    * @brief IN skeleton argument of fixed size element array.
    *
    */
-  template<typename S, typename S_slice, typename S_forany>
-  class In_Fixed_Array_SArgument_T : public InArgument
+  template<typename S,
+           typename S_slice,
+           typename S_forany,
+           typename Insert_Policy>
+  class In_Fixed_Array_SArgument_T : public InArgument, private Insert_Policy
   {
   public:
     In_Fixed_Array_SArgument_T (void);
@@ -52,8 +55,11 @@ namespace TAO
    * @brief INOUT skeleton argument of fixed size element array.
    *
    */
-  template<typename S, typename S_slice, typename S_forany>
-  class Inout_Fixed_Array_SArgument_T : public InoutArgument
+  template<typename S,
+           typename S_slice,
+           typename S_forany,
+           typename Insert_Policy>
+  class Inout_Fixed_Array_SArgument_T : public InoutArgument, private Insert_Policy
   {
   public:
     Inout_Fixed_Array_SArgument_T (void);
@@ -75,8 +81,11 @@ namespace TAO
    * @brief OUT skeleton argument of fixed size element array.
    *
    */
-  template<typename S, typename S_slice, typename S_forany>
-  class Out_Fixed_Array_SArgument_T : public OutArgument
+  template<typename S,
+           typename S_slice,
+           typename S_forany,
+           typename Insert_Policy>
+  class Out_Fixed_Array_SArgument_T : public OutArgument, private Insert_Policy
   {
   public:
     Out_Fixed_Array_SArgument_T (void);
@@ -97,8 +106,11 @@ namespace TAO
    * @brief Skeleton value of fixed size element array.
    *
    */
-  template<typename S_slice, typename S_var, typename S_forany>
-  class Ret_Fixed_Array_SArgument_T : public RetArgument
+  template<typename S_slice,
+           typename S_var,
+           typename S_forany,
+           typename Insert_Policy>
+  class Ret_Fixed_Array_SArgument_T : public RetArgument, private Insert_Policy
   {
   public:
     Ret_Fixed_Array_SArgument_T (void);
@@ -122,33 +134,38 @@ namespace TAO
   template<typename T,
            typename T_slice,
            typename T_var,
-           typename T_forany>
+           typename T_forany,
+           typename Insert_Policy>
   struct Fixed_Array_SArg_Traits_T
   {
-    typedef T_slice *                                   ret_type;
-    typedef const T                                     in_type;
-    typedef T                                           inout_type;
-    typedef T                                           out_type;
+    typedef T_slice *                                    ret_type;
+    typedef const T                                      in_type;
+    typedef T                                            inout_type;
+    typedef T                                            out_type;
 
     typedef In_Fixed_Array_SArgument_T<T,
                                        T_slice,
-                                       T_forany>        in_arg_val;
+                                       T_forany,
+                                       Insert_Policy>    in_arg_val;
     typedef Inout_Fixed_Array_SArgument_T<T,
                                           T_slice,
-                                          T_forany>     inout_arg_val;
+                                          T_forany,
+                                          Insert_Policy> inout_arg_val;
     typedef Out_Fixed_Array_SArgument_T<T,
                                         T_slice,
-                                        T_forany>       out_arg_val;
+                                        T_forany,
+                                        Insert_Policy>   out_arg_val;
     typedef Ret_Fixed_Array_SArgument_T<T_slice,
                                         T_var,
-                                        T_forany>       ret_val;
+                                        T_forany,
+                                        Insert_Policy>   ret_val;
 
     // Typedefs corresponding to return value of arg() method in both
     // the client and server side argument class templates.
-    typedef T_slice const *                             in_arg_type;
-    typedef ret_type                                    inout_arg_type;
-    typedef ret_type                                    out_arg_type;
-    typedef ret_type &                                  ret_arg_type;
+    typedef T_slice const *                              in_arg_type;
+    typedef ret_type                                     inout_arg_type;
+    typedef ret_type                                     out_arg_type;
+    typedef ret_type &                                   ret_arg_type;
 
   };
 }
