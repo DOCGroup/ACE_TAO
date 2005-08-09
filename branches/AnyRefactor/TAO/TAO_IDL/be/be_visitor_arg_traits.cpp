@@ -853,7 +853,7 @@ be_visitor_arg_traits::visit_structure (be_structure *node)
     }
 
   *os << "," << be_nl << "TAO::Any_Insert_Policy_Stream <"
-      << node->name () << "_ptr>" << be_uidt_nl
+      << node->name () << ">" << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
