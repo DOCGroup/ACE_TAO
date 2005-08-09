@@ -1,3 +1,8 @@
+Tue Aug  9 10:48:39 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/OS_NS_stdio.cpp (snprintf): Added a wchar_t version of
+	  snprintf().  Thanks to Simon Massey for reporting this.
+
 Tue Aug  9 13:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/make_release:
