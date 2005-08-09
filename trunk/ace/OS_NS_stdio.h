@@ -405,6 +405,9 @@ namespace ACE_OS {
 # if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   int vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int vsnprintf (wchar_t *buffer, size_t maxlen, const wchar_t *format, va_list argptr);
 # endif /* ACE_HAS_WCHAR */
 
 } /* namespace ACE_OS */
