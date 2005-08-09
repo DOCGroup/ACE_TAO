@@ -1,5 +1,5 @@
 // -*- MPC -*-
 // $Id$
 
-project : taoexe, rtportableserver, rtcorba {
+project : taoexe, negotiate_codesets, rtportableserver, rtcorba {
 }

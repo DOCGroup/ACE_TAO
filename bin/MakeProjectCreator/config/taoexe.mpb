@@ -2,6 +2,6 @@
 // $Id$
 
 project : aceexe, taodefaults, taoidldefaults {
-  after += TAO
+  after += TAO Codeset
   libs  += TAO
 }

@@ -2,7 +2,6 @@
 // $Id$
 
 feature(negotiate_codesets) {
-  after  += TAO
+  after += Codeset
   libs   += TAO_Codeset
-  macros += TAO_NEGOTIATE_CODESET
 }
