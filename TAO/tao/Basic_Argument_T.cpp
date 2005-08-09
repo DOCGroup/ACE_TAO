@@ -53,7 +53,7 @@ template<typename S, typename Insert_Policy>
 void
 TAO::Inout_Basic_Argument_T<S, Insert_Policy>::interceptor_value (CORBA::Any *any) const
 {
-  this->Insert_Policy::any_insert (any, this->x_)
+  this->Insert_Policy::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */

@@ -40,6 +40,7 @@
 
 #include "tao/ORB_Core.h"
 #include "tao/IFR_Client_Adapter.h"
+#include "tao/Any_Insert_Policy_T.h"
 #include "ace/Dynamic_Service.h"
 
 #if defined (__BORLANDC__)

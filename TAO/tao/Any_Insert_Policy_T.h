@@ -27,6 +27,7 @@
 
 #include "ace/Dynamic_Service.h"
 #include "tao/debug.h"
+#include "tao/IFR_Client_Adapter.h"
 
 namespace TAO
 {
