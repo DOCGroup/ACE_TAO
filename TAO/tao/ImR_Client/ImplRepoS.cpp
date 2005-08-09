@@ -87,7 +87,8 @@ namespace TAO
         Object_SArg_Traits_T<
             ImplementationRepository::ServerObject_ptr,
             ImplementationRepository::ServerObject_var,
-            ImplementationRepository::ServerObject_out
+            ImplementationRepository::ServerObject_out,
+            TAO::Any_Insert_Policy_Stream <ImplementationRepository::ServerObject_ptr>
           >
   {
   };
@@ -106,7 +107,8 @@ namespace TAO
         Var_Size_SArg_Traits_T<
             ImplementationRepository::StartupOptions,
             ImplementationRepository::StartupOptions_var,
-            ImplementationRepository::StartupOptions_out
+            ImplementationRepository::StartupOptions_out,
+            TAO::Any_Insert_Policy_Stream <ImplementationRepository::StartupOptions>
           >
   {
   };
@@ -125,7 +127,8 @@ namespace TAO
         Var_Size_SArg_Traits_T<
             ImplementationRepository::ServerInformation,
             ImplementationRepository::ServerInformation_var,
-            ImplementationRepository::ServerInformation_out
+            ImplementationRepository::ServerInformation_out,
+            TAO::Any_Insert_Policy_Stream <ImplementationRepository::ServerInformation>
           >
   {
   };
@@ -144,7 +147,8 @@ namespace TAO
         Var_Size_SArg_Traits_T<
             ImplementationRepository::ServerInformationList,
             ImplementationRepository::ServerInformationList_var,
-            ImplementationRepository::ServerInformationList_out
+            ImplementationRepository::ServerInformationList_out,
+            TAO::Any_Insert_Policy_Stream <ImplementationRepository::ServerInformationList>
           >
   {
   };
@@ -160,7 +164,8 @@ namespace TAO
         Object_SArg_Traits_T<
             ImplementationRepository::ServerInformationIterator_ptr,
             ImplementationRepository::ServerInformationIterator_var,
-            ImplementationRepository::ServerInformationIterator_out
+            ImplementationRepository::ServerInformationIterator_out,
+            TAO::Any_Insert_Policy_Stream <ImplementationRepository::ServerInformationIterator_ptr>
           >
   {
   };

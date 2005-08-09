@@ -28,8 +28,8 @@
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:153
 
-#ifndef _TAO_IDL_ORIG_LONGLONGSEQC_H_
-#define _TAO_IDL_ORIG_LONGLONGSEQC_H_
+#ifndef _TAO_IDL_ORIG_LONGLONGSEQA_H_
+#define _TAO_IDL_ORIG_LONGLONGSEQA_H_
 
 #include /**/ "ace/pre.h"
 
@@ -41,11 +41,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
-#include "tao/ORB.h"
-#include "tao/Environment.h"
-#include "tao/Sequence_T.h"
-#include "tao/Seq_Var_T.h"
-#include "tao/Seq_Out_T.h"
+#include "tao/LongLongSeqC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -66,55 +62,6 @@
 
 namespace CORBA
 {
-
-  // TAO_IDL - Generated from
-  // be\be_visitor_sequence/sequence_ch.cpp:101
-
-#if !defined (_CORBA_LONGLONGSEQ_CH_)
-#define _CORBA_LONGLONGSEQ_CH_
-
-  class LongLongSeq;
-
-  typedef
-    TAO_FixedSeq_Var_T<
-        LongLongSeq,
-        CORBA::LongLong
-      >
-    LongLongSeq_var;
-
-  typedef
-    TAO_Seq_Out_T<
-        LongLongSeq,
-        LongLongSeq_var,
-        CORBA::LongLong
-      >
-    LongLongSeq_out;
-
-  class TAO_AnyTypeCode_Export LongLongSeq
-    : public
-        TAO_Unbounded_Sequence<
-            CORBA::LongLong
-          >
-  {
-  public:
-    LongLongSeq (void);
-    LongLongSeq (CORBA::ULong max);
-    LongLongSeq (
-        CORBA::ULong max,
-        CORBA::ULong length,
-        CORBA::LongLong* buffer,
-        CORBA::Boolean release = 0
-      );
-    LongLongSeq (const LongLongSeq &);
-    ~LongLongSeq (void);
-
-    static void _tao_any_destructor (void *);
-
-    typedef LongLongSeq_var _var_type;
-  };
-
-#endif /* end #if !defined */
-
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
 
@@ -140,23 +87,6 @@ TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const CORBA::LongLongSeq 
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::LongLongSeq*); // noncopying version
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::LongLongSeq *&); // deprecated
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::LongLongSeq *&);
-
-// TAO_IDL - Generated from
-// be\be_visitor_sequence/cdr_op_ch.cpp:71
-
-#if !defined _TAO_CDR_OP_CORBA_LongLongSeq_H_
-#define _TAO_CDR_OP_CORBA_LongLongSeq_H_
-
-TAO_AnyTypeCode_Export CORBA::Boolean operator<< (
-    TAO_OutputCDR &,
-    const CORBA::LongLongSeq &
-  );
-TAO_AnyTypeCode_Export CORBA::Boolean operator>> (
-    TAO_InputCDR &,
-    CORBA::LongLongSeq &
-  );
-
-#endif /* _TAO_CDR_OP_CORBA_LongLongSeq_H_ */
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:955
