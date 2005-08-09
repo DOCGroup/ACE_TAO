@@ -1,3 +1,20 @@
+Tue Aug  9 11:11:50 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/MakeProjectCreator/config/negotiate_codesets.mpb:
+          Removed unused compiler macro.
+
+        * bin/MakeProjectCreator/config/orbsvcsexe.mpb:
+        * bin/MakeProjectCreator/config/rt_client.mpb:
+        * bin/MakeProjectCreator/config/rt_server.mpb:
+          Added dependency on negotiate_codesets feature so that the
+          TAO_Codeset library will be added in the correct order,
+          if desired.
+
+        * bin/MakeProjectCreator/config/taoexe.mpb:
+          Added Codeset project to the After list to ensure that the
+          Codeset library is available for dynamic linking for those
+          applications that require it.
+
 Tue Aug  9 10:48:39 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/OS_NS_stdio.cpp (snprintf): Added a wchar_t version of
