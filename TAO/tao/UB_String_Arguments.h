@@ -22,24 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Arg_Traits_T.h"
-
-template<>
-void
-TAO::In_UB_String_Argument_T<char>::interceptor_value (CORBA::Any *) const
-{
-  //p.argument <<= this->x_;
-  //p.mode = CORBA::PARAM_IN;
-}
-
-template<>
-void
-TAO::Ret_UB_String_Argument_T<char, CORBA::String_var>::interceptor_value (CORBA::Any *) const
-{
-  //(*any) <<= this->x_.in ();
-}
-
-
-
+#include "tao/Any_Insert_Policy_T.h"
 
 namespace TAO
 {
@@ -53,7 +36,8 @@ namespace TAO
   class TAO_Export Arg_Traits<CORBA::Char *>
     : public UB_String_Arg_Traits_T<CORBA::Char,
                                     CORBA::String_var,
-                                    CORBA::String_out>
+                                    CORBA::String_out,
+                                    TAO::Any_Insert_Policy_AnyTypeCode_Adapter <CORBA::Char const *> >
   {
   };
 
@@ -61,7 +45,8 @@ namespace TAO
   class TAO_Export Arg_Traits<CORBA::WChar *>
     : public UB_String_Arg_Traits_T<CORBA::WChar,
                                     CORBA::WString_var,
-                                    CORBA::WString_out>
+                                    CORBA::WString_out,
+                                    TAO::Any_Insert_Policy_AnyTypeCode_Adapter <CORBA::WChar const *> >
   {
   };
 }

@@ -81,11 +81,6 @@ public:
   /// cleanup functions for the TSS objects stored in the TSS object
   /// array in this class.
   TAO_ORB_Core *orb_core_;
-
-#if TAO_HAS_INTERCEPTORS == 1
-  /// The thread-specific portion of the PICurrent object.
-//  TAO::PICurrent_Impl pi_current_;
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 };
 
 

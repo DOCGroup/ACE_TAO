@@ -29,9 +29,16 @@ namespace TAO
    *
    * @brief Template class for IN stub argument of basic IDL types.
    *
+   * @todo
+   * We really would have liked to write the code as following but MSVC6 chokes
+   * on this, so we can only do this after x.5.1 has been dropped.
+   *
+   * template <typename S, template <typename T> class Insert_Policy>
+   * class In_Basic_Argument_T : public InArgument, private Insert_Policy <S>
+   * { .. };
    */
-  template<typename S>
-  class In_Basic_Argument_T : public InArgument
+  template<typename S, typename Insert_Policy>
+  class In_Basic_Argument_T : public InArgument, private Insert_Policy
   {
   public:
     In_Basic_Argument_T (S const & x);
@@ -52,8 +59,8 @@ namespace TAO
    * @brief Template class for INOUT stub argument of basic IDL types.
    *
    */
-  template<typename S>
-  class Inout_Basic_Argument_T : public InoutArgument
+  template<typename S, typename Insert_Policy>
+  class Inout_Basic_Argument_T : public InoutArgument, private Insert_Policy
   {
   public:
     Inout_Basic_Argument_T (S & x);
@@ -75,8 +82,8 @@ namespace TAO
    * @brief Template class for OUT stub argument of basic IDL types.
    *
    */
-  template<typename S>
-  class Out_Basic_Argument_T : public OutArgument
+  template<typename S, typename Insert_Policy>
+  class Out_Basic_Argument_T : public OutArgument, private Insert_Policy
   {
   public:
     Out_Basic_Argument_T (S & x);
@@ -97,8 +104,8 @@ namespace TAO
    * @brief Template class for return stub value of basic IDL types.
    *
    */
-  template<typename S>
-  class Ret_Basic_Argument_T : public RetArgument
+  template<typename S, typename Insert_Policy>
+  class Ret_Basic_Argument_T : public RetArgument, private Insert_Policy
   {
   public:
     Ret_Basic_Argument_T (void);
@@ -130,20 +137,20 @@ namespace TAO
    * @brief Template class for stub argument traits of basic IDL types.
    *
    */
-  template<typename T>
+  template<typename T, typename Insert_Policy>
   struct Basic_Arg_Traits_T
   {
-    typedef T                           ret_type;
-    typedef T                           in_type;
-    typedef T &                         inout_type;
-    typedef T &                         out_type;
+    typedef T                                          ret_type;
+    typedef T                                          in_type;
+    typedef T &                                        inout_type;
+    typedef T &                                        out_type;
 
-    typedef In_Basic_Argument_T<T>      in_arg_val;
-    typedef Inout_Basic_Argument_T<T>   inout_arg_val;
-    typedef Out_Basic_Argument_T<T>     out_arg_val;
-    typedef Ret_Basic_Argument_T<T>     ret_val;
+    typedef In_Basic_Argument_T<T, Insert_Policy>      in_arg_val;
+    typedef Inout_Basic_Argument_T<T, Insert_Policy>   inout_arg_val;
+    typedef Out_Basic_Argument_T<T, Insert_Policy>     out_arg_val;
+    typedef Ret_Basic_Argument_T<T, Insert_Policy>     ret_val;
 
-    typedef Basic_Tag                   idl_tag;
+    typedef Basic_Tag                                  idl_tag;
   };
 }
 

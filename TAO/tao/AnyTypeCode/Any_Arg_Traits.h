@@ -40,7 +40,8 @@ namespace TAO
         Var_Size_Arg_Traits_T<
             CORBA::Any,
             CORBA::Any_var,
-            CORBA::Any_out
+            CORBA::Any_out,
+            TAO::Any_Insert_Policy_Stream <CORBA::Any>
           >
   {
   };

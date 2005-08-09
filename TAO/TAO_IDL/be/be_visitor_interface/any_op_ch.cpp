@@ -52,11 +52,11 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  *os << macro << "void operator<<= (CORBA::Any &, " << node->name ()
+  *os << macro << " void operator<<= (CORBA::Any &, " << node->name ()
       << "_ptr); // copying" << be_nl;
-  *os << macro << "void operator<<= (CORBA::Any &, " << node->name ()
+  *os << macro << " void operator<<= (CORBA::Any &, " << node->name ()
       << "_ptr *); // non-copying" << be_nl;
-  *os << macro << "CORBA::Boolean operator>>= (const CORBA::Any &, "
+  *os << macro << " CORBA::Boolean operator>>= (const CORBA::Any &, "
       << node->name () << "_ptr &);";
 
   // All we have to do is to visit the scope and generate code.

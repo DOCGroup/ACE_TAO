@@ -30,6 +30,7 @@
 #include "tao/AnyTypeCode/ValueModifierC.h"
 #include "tao/AnyTypeCode/VisibilityC.h"
 #include "tao/Typecode_typesC.h"
+#include "tao/Any_Insert_Policy_T.h"
 #include "tao/CORBA_methods.h"
 #include "tao/Pseudo_VarOut_T.h"
 #include "tao/Object_Argument_T.h"
@@ -559,7 +560,9 @@ namespace TAO
     : public Object_Arg_Traits_T<CORBA::TypeCode_ptr,
                                  CORBA::TypeCode_var,
                                  CORBA::TypeCode_out,
-                                 TAO::Objref_Traits<CORBA::TypeCode> >
+                                 TAO::Objref_Traits<CORBA::TypeCode>,
+                                 TAO::Any_Insert_Policy_Stream<CORBA::TypeCode_ptr>
+                                 >
   {
   };
 

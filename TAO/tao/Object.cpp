@@ -1007,49 +1007,6 @@ namespace TAO
   {
     return p->marshal (cdr);
   }
-
-//============================================================================
-  using namespace CORBA;
-
-  CORBA::Boolean
-  Ret_Object_Argument_T<Object_ptr,Object_var>::demarshal (TAO_InputCDR &cdr)
-  {
-    return cdr >> this->x_.out ();
-  }
-
-  void
-  Ret_Object_Argument_T<Object_ptr,Object_var>::
-    interceptor_value (CORBA::Any *) const
-  {
-    if (TAO_debug_level > 2)
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - Cannot insert a vanilla CORBA Object"
-                    " into an Any for returning the return argument \n"));
-      }
-  }
-
-  Ret_Object_Argument_T<Object_ptr,Object_var>::Ret_Object_Argument_T (void)
-  {
-  }
-
-  Object_ptr &
-  Ret_Object_Argument_T<Object_ptr,Object_var>::arg (void)
-  {
-    return this->x_.out ();
-  }
-
-  Object_ptr
-  Ret_Object_Argument_T<Object_ptr,Object_var>::excp (void)
-  {
-    return this->x_.ptr ();
-  }
-
-  Object_ptr
-  Ret_Object_Argument_T<Object_ptr,Object_var>::retn (void)
-  {
-    return this->x_._retn ();
-  }
 } // close TAO namespace
 
 
