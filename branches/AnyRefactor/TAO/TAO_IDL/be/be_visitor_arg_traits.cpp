@@ -114,6 +114,9 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
     {
       TAO_OutStream *os = this->ctx_->stream ();
 
+      *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+          << "// " << __FILE__ << ":" << __LINE__;
+
       std::string guard_suffix =
         std::string (this->S_) + std::string ("arg_traits");
 
@@ -138,7 +141,8 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
             << "TAO::Objref_Traits<" << node->name () << ">";
         }
 
-      *os << be_uidt_nl
+      *os << "," << be_nl << "TAO::Any_Insert_Policy_Stream <"
+          << node->name () << "_ptr>" << be_uidt_nl
           << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
           << "{" << be_nl
           << "};";
@@ -554,7 +558,8 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
       << "Var_Size_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
       << alias->name () << "," << be_nl
       << alias->name () << "_var," << be_nl
-      << alias->name () << "_out" << be_uidt_nl
+      << alias->name () << "_out," << be_nl
+      << "TAO::Any_Insert_Policy_Stream <" << alias->name () << ">" << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
@@ -594,14 +599,14 @@ be_visitor_arg_traits::visit_string (be_string *node)
 
   // This should be generated even for imported nodes. The ifdef
   // guard prevents multiple declarations.
-    
+
   if (alias == 0)
     {
       os->gen_ifdef_macro (node->flat_name(), guard_suffix.c_str (), false);
     }
   else
     {
-      // Form a unique macro name using the local name and the bound.     
+      // Form a unique macro name using the local name and the bound.
       unsigned long l = bound;
       int num_digits = 0;
       while (l > 0)
@@ -613,17 +618,17 @@ be_visitor_arg_traits::visit_string (be_string *node)
       char* bound_string = 0;
       ACE_NEW_RETURN (bound_string, char[bound_length], -1) ;
       ACE_OS::sprintf (bound_string, "%lu", bound);
-    
+
       size_t cat_length = ACE_OS::strlen (alias->local_name ()->get_string ()) +
                           ACE_OS::strlen (bound_string) +
                           1;
       char* cat_string = 0;
-      ACE_NEW_RETURN (cat_string, char[cat_length], -1) ; 
+      ACE_NEW_RETURN (cat_string, char[cat_length], -1) ;
       ACE_OS::strcpy (cat_string, alias->local_name ()->get_string ()) ;
       ACE_OS::strcat (cat_string, bound_string);
 
       os->gen_ifdef_macro (cat_string, guard_suffix.c_str (), false);
-       
+
       delete [] cat_string;
       delete [] bound_string;
     }
@@ -795,7 +800,8 @@ be_visitor_arg_traits::visit_enum (be_enum *node)
       << ": public" << be_idt << be_idt_nl;
 
   *os << "Basic_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
-      << node->name () << be_uidt_nl
+      << node->name () << "," << be_nl
+      << "TAO::Any_Insert_Policy_Stream <" << node->name () << ">" << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
@@ -846,7 +852,8 @@ be_visitor_arg_traits::visit_structure (be_structure *node)
           << node->name () << "_out";
     }
 
-  *os << be_uidt_nl
+  *os << "," << be_nl << "TAO::Any_Insert_Policy_Stream <"
+      << node->name () << "_ptr>" << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
