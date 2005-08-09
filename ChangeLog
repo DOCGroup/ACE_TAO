@@ -1,7 +1,12 @@
+Tue Aug  9 13:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/make_release:
+          Added sxd to files that should not get crlf conversion
+
 Tue Aug  9 13:18:43 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Global_Macros.h:
-        
+
           Added missing '#' before a 'define'.
 
 Tue Aug  9 11:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
