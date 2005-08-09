@@ -1,3 +1,10 @@
+Tue Aug  9 10:02:13 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* DAnCE/ComponentPackager/README.html: Improved the
+	  documentation to point to the right directory for the Quoter
+ 	  example.  Thanks to Aldo Texier <aldo.texier@oktal.fr> for
+ 	  reporting this.
+
 Tue Aug  9 13:11:04 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/RepositoryManager/RepositoryManager.mpc:
