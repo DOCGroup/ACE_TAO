@@ -29,8 +29,11 @@ namespace TAO
    * @brief IN skeleton argument of variable size element array.
    *
    */
-  template<typename S, typename S_slice, typename S_forany>
-  class In_Var_Array_SArgument_T : public InArgument
+  template<typename S,
+           typename S_slice,
+           typename S_forany,
+           typename Insert_Policy>
+  class In_Var_Array_SArgument_T : public InArgument, private Insert_Policy
   {
   public:
 
@@ -52,8 +55,11 @@ namespace TAO
    * @brief INOUT skeleton argument of variable size element array.
    *
    */
-  template<typename S, typename S_slice, typename S_forany>
-  class Inout_Var_Array_SArgument_T : public InoutArgument
+  template<typename S,
+           typename S_slice,
+           typename S_forany,
+           typename Insert_Policy>
+  class Inout_Var_Array_SArgument_T : public InoutArgument, private Insert_Policy
   {
   public:
     Inout_Var_Array_SArgument_T (void);
@@ -75,8 +81,11 @@ namespace TAO
    * @brief OUT skeleton argument of variable size element array.
    *
    */
-  template<typename S_slice, typename S_var, typename S_forany>
-  class Out_Var_Array_SArgument_T : public OutArgument
+  template<typename S_slice,
+           typename S_var,
+           typename S_forany,
+           typename Insert_Policy>
+  class Out_Var_Array_SArgument_T : public OutArgument, private Insert_Policy
   {
   public:
     Out_Var_Array_SArgument_T (void);
@@ -97,8 +106,11 @@ namespace TAO
    * @brief Skeleton value of variable size element array.
    *
    */
-  template<typename S_slice, typename S_var, typename S_forany>
-  class Ret_Var_Array_SArgument_T : public RetArgument
+  template<typename S_slice,
+           typename S_var,
+           typename S_forany,
+           typename Insert_Policy>
+  class Ret_Var_Array_SArgument_T : public RetArgument, private Insert_Policy
   {
   public:
     Ret_Var_Array_SArgument_T (void);
@@ -123,7 +135,8 @@ namespace TAO
            typename T_slice,
            typename T_var,
            typename T_out,
-           typename T_forany>
+           typename T_forany,
+           typename Insert_Policy>
   struct Var_Array_SArg_Traits_T
   {
     typedef T_slice *                                   ret_type;
@@ -133,16 +146,20 @@ namespace TAO
 
     typedef In_Var_Array_SArgument_T<T,
                                      T_slice,
-                                     T_forany>          in_arg_val;
+                                     T_forany,
+                                     Insert_Policy>          in_arg_val;
     typedef Inout_Var_Array_SArgument_T<T,
                                         T_slice,
-                                        T_forany>       inout_arg_val;
+                                        T_forany,
+                                        Insert_Policy>       inout_arg_val;
     typedef Out_Var_Array_SArgument_T<T_slice,
                                       T_var,
-                                      T_forany>         out_arg_val;
+                                      T_forany,
+                                      Insert_Policy>         out_arg_val;
     typedef Ret_Var_Array_SArgument_T<T_slice,
                                       T_var,
-                                      T_forany>         ret_val;
+                                      T_forany,
+                                      Insert_Policy>         ret_val;
 
     // Typedefs corresponding to return value of arg() method in both
     // the client and server side argument class templates.

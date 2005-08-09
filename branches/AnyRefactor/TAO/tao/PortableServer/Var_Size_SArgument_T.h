@@ -28,8 +28,9 @@ namespace TAO
    * @brief Template class for IN skeleton argument of fixed size IDL types.
    *
    */
-  template<typename S>
-  class In_Var_Size_SArgument_T : public InArgument
+  template<typename S,
+           typename Insert_Policy>
+  class In_Var_Size_SArgument_T : public InArgument, private Insert_Policy
   {
   public:
 
@@ -49,8 +50,9 @@ namespace TAO
    * @brief Template class for INOUT skeleton arg of fixed size IDL types.
    *
    */
-  template<typename S>
-  class Inout_Var_Size_SArgument_T : public InoutArgument
+  template<typename S,
+           typename Insert_Policy>
+  class Inout_Var_Size_SArgument_T : public InoutArgument, private Insert_Policy
   {
   public:
     Inout_Var_Size_SArgument_T (void);
@@ -72,8 +74,10 @@ namespace TAO
    * @brief Template class for OUT skeleton argument of fixed size IDL types.
    *
    */
-  template<typename S, typename S_var>
-  class Out_Var_Size_SArgument_T : public OutArgument
+  template<typename S,
+           typename S_var,
+           typename Insert_Policy>
+  class Out_Var_Size_SArgument_T : public OutArgument, private Insert_Policy
   {
   public:
     Out_Var_Size_SArgument_T (void);
@@ -94,8 +98,10 @@ namespace TAO
    * @brief Template class for return skeleton value of fixed size IDL types.
    *
    */
-  template<typename S, typename S_var>
-  class Ret_Var_Size_SArgument_T : public RetArgument
+  template<typename S,
+           typename S_var,
+           typename Insert_Policy>
+  class Ret_Var_Size_SArgument_T : public RetArgument, private Insert_Policy
   {
   public:
     Ret_Var_Size_SArgument_T (void);
@@ -111,13 +117,16 @@ namespace TAO
   };
 
   /**
-   * @struct Basic_SArg_Traits_T
+   * @struct Var_Size_SArg_Traits_T
    *
    * @brief Template class for skeleton argument traits of
    *  variable size IDL types.
    *
    */
-  template<typename T, typename T_var, typename T_out>
+  template<typename T,
+           typename T_var,
+           typename T_out,
+           typename Insert_Policy>
   struct Var_Size_SArg_Traits_T
   {
     typedef T *                                         ret_type;
@@ -125,10 +134,10 @@ namespace TAO
     typedef T &                                         inout_type;
     typedef T_out                                       out_type;
 
-    typedef In_Var_Size_SArgument_T<T>                  in_arg_val;
-    typedef Inout_Var_Size_SArgument_T<T>               inout_arg_val;
-    typedef Out_Var_Size_SArgument_T<T,T_var>           out_arg_val;
-    typedef Ret_Var_Size_SArgument_T<T,T_var>           ret_val;
+    typedef In_Var_Size_SArgument_T<T,typename Insert_Policy>        in_arg_val;
+    typedef Inout_Var_Size_SArgument_T<T,typename Insert_Policy>     inout_arg_val;
+    typedef Out_Var_Size_SArgument_T<T,T_var,typename Insert_Policy> out_arg_val;
+    typedef Ret_Var_Size_SArgument_T<T,T_var,typename Insert_Policy> ret_val;
 
     // Typedefs corresponding to return value of arg() method in both
     // the client and server side argument class templates.
