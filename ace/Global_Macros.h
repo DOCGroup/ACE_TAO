@@ -112,7 +112,7 @@ private:
 #   define ACE_THROW_SPEC(X)
 # else
 #  if defined (ACE_HAS_EXCEPTIONS)
-     define ACE_THROW_SPEC(X) throw X
+#    define ACE_THROW_SPEC(X) throw X
 #  else  /* ! ACE_HAS_EXCEPTIONS */
 #    define ACE_THROW_SPEC(X)
 #  endif /* ! ACE_HAS_EXCEPTIONS */
