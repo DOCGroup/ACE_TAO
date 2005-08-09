@@ -1,3 +1,14 @@
+Tue Aug  9 16:57:09 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/MakeProjectCreator/config/taolib.mpb:
+          Added the codeset project to the "after" list to ensure the
+          codeset library is built for any project that also depends on
+          TAO. This is necessary because there are some executables that
+          depend on libTAO and may therefore depend on libTAO_Codeset, but
+          do not include taoexe in the MPC base project list. For example
+          some of the CIAO executables have no need for the build elements
+          brought in by taoidldefaults base project.
+
 Tue Aug  9 11:11:50 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/MakeProjectCreator/config/negotiate_codesets.mpb:
