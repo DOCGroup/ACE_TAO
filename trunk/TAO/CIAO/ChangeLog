@@ -1,3 +1,16 @@
+Mon  Aug 08 22:02:43 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+        * docs/EnvVars.html
+        * docs/index.html
+        * docs/Trace.html
+        * docs/imgs/DAnCE-Dynamic.png
+        * docs/imgs/DAnCE-Dynamic.sxd
+
+	  Beefed up the CIAO documentation page. These files are
+	  checked in on behalf of Ming. Thanks Friedhelm Wolf
+	  <Friedhelm.wolf at gmx.de> for contributing the DAnCE
+	  interaction diagram.
+
 Mon Aug  8 18:50:36 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/DomainApplicationManager/DomainApplicationManager.mpc
@@ -75,7 +88,7 @@ Mon Aug 01 14:55:43 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
 
         * DAnCE/new_RepositoryManager/RepositoryManager_Impl.cpp
 
-        Fixed a C4715 warning under MSVC7.1
+          Fixed a C4715 warning under MSVC7.1
 
 Mon Aug  1 19:39:30 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
