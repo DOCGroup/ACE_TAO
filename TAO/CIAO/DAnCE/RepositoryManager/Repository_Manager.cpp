@@ -4,7 +4,7 @@
 #include "Update_Plan.h"
 #include "ExecutionManager/ExecutionManagerC.h"
 #include "Config_Handlers/DnC_Dump.h"
-#include "NodeManager/NodeDaemonC.h"
+#include "NodeManager/NodeManagerC.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/streams.h"
 #include "ace/Auto_Ptr.h"
@@ -183,7 +183,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         }
 
-      CIAO::NodeDaemon_var node_mgr;
+      CIAO::NodeManager_var node_mgr;
       if (node_daemon_ior != 0)
       {
         CORBA::Object_var node_mgr_obj = 
@@ -192,7 +192,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_TRY_CHECK;
 
         node_mgr =
-          CIAO::NodeDaemon::_narrow (node_mgr_obj.in ()
+          CIAO::NodeManager::_narrow (node_mgr_obj.in ()
                                      ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
