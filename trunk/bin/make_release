@@ -883,7 +883,7 @@ sub create_kit () {
   # These files don't get LF->CRLF conversions done when making the zip.
   my $bin_files =
     "\"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.ide|\\.exe\|\\.ico\|\\.gz\|\\.zip\|\\.xls\|" .
-    "\\.gif|\\.vcp|\\.vcproj|\\.vcw|\\.sln\|\\.dfm\|\\.jpg\|\\.png\|\\.vsd\|\\.bz2\"";
+    "\\.sxd|\\.gif|\\.vcp|\\.vcproj|\\.vcw|\\.sln\|\\.dfm\|\\.jpg\|\\.png\|\\.vsd\|\\.bz2\"";
 
   my $build_command;
   my $archives;
