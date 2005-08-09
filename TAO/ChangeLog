@@ -1,5 +1,9 @@
-Tue Aug  9 11:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Aug  9 12:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+          Updated Arg traits generation
+
+Tue Aug  9 11:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * AnyTypeCode_Adapter.h
         * BD_String_Argument_T.cpp
