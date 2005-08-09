@@ -40,7 +40,8 @@ namespace TAO
   class TAO_PortableServer_Export SArg_Traits<ACE_InputCDR::to_char>
     : public Special_Basic_SArg_Traits_T<CORBA::Char,
                                          ACE_InputCDR::to_char,
-                                         ACE_OutputCDR::from_char>
+                                         ACE_OutputCDR::from_char,
+                                         TAO::Any_Insert_Policy_Stream <ACE_OutputCDR::from_char> >
   {
   };
 
@@ -48,7 +49,8 @@ namespace TAO
   class TAO_PortableServer_Export SArg_Traits<ACE_InputCDR::to_wchar>
     : public Special_Basic_SArg_Traits_T<CORBA::WChar,
                                          ACE_InputCDR::to_wchar,
-                                         ACE_OutputCDR::from_wchar>
+                                         ACE_OutputCDR::from_wchar,
+                                         TAO::Any_Insert_Policy_Stream <ACE_OutputCDR::from_wchar> >
   {
   };
 
@@ -56,7 +58,8 @@ namespace TAO
   class TAO_PortableServer_Export SArg_Traits<ACE_InputCDR::to_octet>
     : public Special_Basic_SArg_Traits_T<CORBA::Octet,
                                          ACE_InputCDR::to_octet,
-                                         ACE_OutputCDR::from_octet>
+                                         ACE_OutputCDR::from_octet,
+                                         TAO::Any_Insert_Policy_Stream <ACE_OutputCDR::from_octet> >
   {
   };
 
@@ -64,7 +67,9 @@ namespace TAO
   class TAO_PortableServer_Export SArg_Traits<ACE_InputCDR::to_boolean>
     : public Special_Basic_SArg_Traits_T<CORBA::Boolean,
                                          ACE_InputCDR::to_boolean,
-                                         ACE_OutputCDR::from_boolean>
+                                         ACE_OutputCDR::from_boolean,
+                                         TAO::Any_Insert_Policy_Stream <ACE_OutputCDR::from_boolean> >
+
   {
   };
 }

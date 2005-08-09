@@ -35,8 +35,8 @@ namespace TAO
    * Skeleton class template for operation "IN" arguments of fixed
    * size IDL types.
    */
-  template<typename S>
-  class In_Fixed_Size_SArgument_T : public InArgument
+  template<typename S, typename Insert_Policy>
+  class In_Fixed_Size_SArgument_T : public InArgument, private Insert_Policy
   {
   public:
 
@@ -74,8 +74,8 @@ namespace TAO
    * @brief Template class for INOUT skeleton arg of fixed size IDL types.
    *
    */
-  template<typename S>
-  class Inout_Fixed_Size_SArgument_T : public InoutArgument
+  template<typename S, typename Insert_Policy>
+  class Inout_Fixed_Size_SArgument_T : public InoutArgument, private Insert_Policy
   {
   public:
 
@@ -113,8 +113,8 @@ namespace TAO
    * @brief Template class for OUT skeleton argument of fixed size IDL types.
    *
    */
-  template<typename S>
-  class Out_Fixed_Size_SArgument_T : public OutArgument
+  template<typename S, typename Insert_Policy>
+  class Out_Fixed_Size_SArgument_T : public OutArgument, private Insert_Policy
   {
   public:
 
@@ -152,8 +152,8 @@ namespace TAO
    * @brief Template class for return skeleton value of fixed size IDL types.
    *
    */
-  template<typename S>
-  class Ret_Fixed_Size_SArgument_T : public RetArgument
+  template<typename S, typename Insert_Policy>
+  class Ret_Fixed_Size_SArgument_T : public RetArgument, private Insert_Policy
   {
   public:
 
@@ -191,25 +191,25 @@ namespace TAO
    * @brief Template class for argument traits of fixed size IDL types.
    *
    */
-  template<typename T>
+  template<typename T, typename Insert_Policy>
   struct Fixed_Size_SArg_Traits_T
   {
-    typedef T                                 ret_type;
-    typedef T const &                         in_type;
-    typedef T &                               inout_type;
-    typedef T &                               out_type;
+    typedef T                                               ret_type;
+    typedef T const &                                       in_type;
+    typedef T &                                             inout_type;
+    typedef T &                                             out_type;
 
-    typedef In_Fixed_Size_SArgument_T<T>      in_arg_val;
-    typedef Inout_Fixed_Size_SArgument_T<T>   inout_arg_val;
-    typedef Out_Fixed_Size_SArgument_T<T>     out_arg_val;
-    typedef Ret_Fixed_Size_SArgument_T<T>     ret_val;
+    typedef In_Fixed_Size_SArgument_T<T,Insert_Policy>      in_arg_val;
+    typedef Inout_Fixed_Size_SArgument_T<T,Insert_Policy>   inout_arg_val;
+    typedef Out_Fixed_Size_SArgument_T<T,Insert_Policy>     out_arg_val;
+    typedef Ret_Fixed_Size_SArgument_T<T,Insert_Policy>     ret_val;
 
     // Typedefs corresponding to return value of arg() method in both
     // the client and server side argument class templates.
-    typedef in_type                           in_arg_type;
-    typedef inout_type                        inout_arg_type;
-    typedef out_type                          out_arg_type;
-    typedef out_type                          ret_arg_type;
+    typedef in_type                                         in_arg_type;
+    typedef inout_type                                      inout_arg_type;
+    typedef out_type                                        out_arg_type;
+    typedef out_type                                        ret_arg_type;
 
   };
 

@@ -30,8 +30,11 @@ namespace TAO
    * @brief Template class for IN skeleton argument of (w)char/boolean/octet.
    *
    */
-  template<typename S, typename to_S, typename from_S>
-  class In_Special_Basic_SArgument_T : public InArgument
+  template<typename S,
+           typename to_S,
+           typename from_S,
+           typename Insert_Policy>
+  class In_Special_Basic_SArgument_T : public InArgument, private Insert_Policy
   {
   public:
     In_Special_Basic_SArgument_T (void);
@@ -52,8 +55,11 @@ namespace TAO
    * @brief Template class for INOUT (w)char/boolean/octet skeleton argument.
    *
    */
-  template<typename S, typename to_S, typename from_S>
-  class Inout_Special_Basic_SArgument_T : public InoutArgument
+  template<typename S,
+           typename to_S,
+           typename from_S,
+           typename Insert_Policy>
+  class Inout_Special_Basic_SArgument_T : public InoutArgument, private Insert_Policy
   {
   public:
     Inout_Special_Basic_SArgument_T (void);
@@ -75,8 +81,11 @@ namespace TAO
    * @brief Template class for OUT skeleton argument of (w)char/boolean/octet.
    *
    */
-  template<typename S, typename to_S, typename from_S>
-  class Out_Special_Basic_SArgument_T : public OutArgument
+  template<typename S,
+           typename to_S,
+           typename from_S,
+           typename Insert_Policy>
+  class Out_Special_Basic_SArgument_T : public OutArgument, private Insert_Policy
   {
   public:
     Out_Special_Basic_SArgument_T (void);
@@ -97,8 +106,11 @@ namespace TAO
    * @brief Template class for return skeleton value of (w)char/boolean/octet.
    *
    */
-  template<typename S, typename to_S, typename from_S>
-  class Ret_Special_Basic_SArgument_T : public RetArgument
+  template<typename S,
+           typename to_S,
+           typename from_S,
+           typename Insert_Policy>
+  class Ret_Special_Basic_SArgument_T : public RetArgument, private Insert_Policy
   {
   public:
     Ret_Special_Basic_SArgument_T (void);
@@ -114,13 +126,13 @@ namespace TAO
   };
 
   /**
-   * @struct Special_Basic_Traits_T
+   * @struct Special_Basic_SArg_Traits_T
    *
    * @brief Template class for skeleton argument traits
    *  of (w)char/boolean/octet.
    *
    */
-  template<typename T, typename to_T, typename from_T>
+  template<typename T, typename to_T, typename from_T, typename Insert_Policy>
   struct Special_Basic_SArg_Traits_T
   {
     typedef T                                               ret_type;
@@ -128,10 +140,10 @@ namespace TAO
     typedef T &                                             inout_type;
     typedef T &                                             out_type;
 
-    typedef In_Special_Basic_SArgument_T<T,to_T,from_T>     in_arg_val;
-    typedef Inout_Special_Basic_SArgument_T<T,to_T,from_T>  inout_arg_val;
-    typedef Out_Special_Basic_SArgument_T<T,to_T,from_T>    out_arg_val;
-    typedef Ret_Special_Basic_SArgument_T<T,to_T,from_T>    ret_val;
+    typedef In_Special_Basic_SArgument_T<T,to_T,from_T,Insert_Policy>     in_arg_val;
+    typedef Inout_Special_Basic_SArgument_T<T,to_T,from_T,Insert_Policy>  inout_arg_val;
+    typedef Out_Special_Basic_SArgument_T<T,to_T,from_T,Insert_Policy>    out_arg_val;
+    typedef Ret_Special_Basic_SArgument_T<T,to_T,from_T,Insert_Policy>    ret_val;
 
     // Typedefs corresponding to return value of arg() method in both
     // the client and server side argument class templates.

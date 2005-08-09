@@ -12,9 +12,12 @@
 
 // ============================================================
 
-template<typename S, typename to_S, typename from_S>
+template<typename S,
+         typename to_S,
+         typename from_S,
+         typename Insert_Policy>
 CORBA::Boolean
-TAO::In_Special_Basic_SArgument_T<S,to_S,from_S>::demarshal (
+TAO::In_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr
   )
 {
@@ -23,30 +26,39 @@ TAO::In_Special_Basic_SArgument_T<S,to_S,from_S>::demarshal (
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-template<typename S, typename to_S, typename from_S>
+template<typename S,
+         typename to_S,
+         typename from_S,
+         typename Insert_Policy>
 void
-TAO::In_Special_Basic_SArgument_T<S,to_S,from_S>::interceptor_value (
-  CORBA::Any *any) const
+TAO::In_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::
+interceptor_value (CORBA::Any *any) const
 {
-  (*any) <<= from_S (this->x_);
+  this->Insert_Policy::any_insert (any, from_S (this->x_));
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
 // ===========================================================
 
-template<typename S, typename to_S, typename from_S>
+template<typename S,
+         typename to_S,
+         typename from_S,
+         typename Insert_Policy>
 CORBA::Boolean
-TAO::Inout_Special_Basic_SArgument_T<S,to_S,from_S>::marshal (
+TAO::Inout_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::marshal (
     TAO_OutputCDR & cdr
   )
 {
   return cdr << from_S (this->x_);
 }
 
-template<typename S, typename to_S, typename from_S>
+template<typename S,
+         typename to_S,
+         typename from_S,
+         typename Insert_Policy>
 CORBA::Boolean
-TAO::Inout_Special_Basic_SArgument_T<S,to_S,from_S>::demarshal (
+TAO::Inout_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr
   )
 {
@@ -55,21 +67,27 @@ TAO::Inout_Special_Basic_SArgument_T<S,to_S,from_S>::demarshal (
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-template<typename S, typename to_S, typename from_S>
+template<typename S,
+         typename to_S,
+         typename from_S,
+         typename Insert_Policy>
 void
-TAO::Inout_Special_Basic_SArgument_T<S,to_S,from_S>::interceptor_value (
-  CORBA::Any *any) const
+TAO::Inout_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::
+interceptor_value (CORBA::Any *any) const
 {
-  (*any) <<= from_S (this->x_);
+  this->Insert_Policy::any_insert (any, from_S (this->x_));
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
 // ==============================================================
 
-template<typename S, typename to_S, typename from_S>
+template<typename S,
+         typename to_S,
+         typename from_S,
+         typename Insert_Policy>
 CORBA::Boolean
-TAO::Out_Special_Basic_SArgument_T<S,to_S,from_S>::marshal (
+TAO::Out_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::marshal (
     TAO_OutputCDR & cdr
   )
 {
@@ -78,21 +96,27 @@ TAO::Out_Special_Basic_SArgument_T<S,to_S,from_S>::marshal (
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-template<typename S, typename to_S, typename from_S>
+template<typename S,
+         typename to_S,
+         typename from_S,
+         typename Insert_Policy>
 void
-TAO::Out_Special_Basic_SArgument_T<S,to_S,from_S>::interceptor_value (
-  CORBA::Any *any) const
+TAO::Out_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::
+interceptor_value (CORBA::Any *any) const
 {
-  (*any) <<= from_S (this->x_);
+  this->Insert_Policy::any_insert (any, from_S (this->x_));
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
 // ==============================================================
 
-template<typename S, typename to_S, typename from_S>
+template<typename S,
+         typename to_S,
+         typename from_S,
+         typename Insert_Policy>
 CORBA::Boolean
-TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S>::marshal (
+TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::marshal (
     TAO_OutputCDR & cdr
   )
 {
@@ -101,12 +125,15 @@ TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S>::marshal (
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-template<typename S, typename to_S, typename from_S>
+template<typename S,
+         typename to_S,
+         typename from_S,
+         typename Insert_Policy>
 void
-TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S>::interceptor_value (
-  CORBA::Any *any) const
+TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::
+interceptor_value (CORBA::Any *any) const
 {
-  (*any) <<= from_S (this->x_);
+  this->Insert_Policy::any_insert (any, from_S (this->x_));
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */

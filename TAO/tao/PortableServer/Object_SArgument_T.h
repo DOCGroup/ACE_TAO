@@ -35,8 +35,10 @@ namespace TAO
    * @brief Template class for IN skeleton object argument.
    *
    */
-  template<typename S_ptr, typename S_var>
-  class In_Object_SArgument_T : public InArgument
+  template<typename S_ptr,
+           typename S_var,
+           typename Insert_Policy>
+  class In_Object_SArgument_T : public InArgument, private Insert_Policy
   {
   public:
 
@@ -56,8 +58,10 @@ namespace TAO
    * @brief Template class for INOUT skeleton object argument.
    *
    */
-  template<typename S_ptr, typename S_var>
-  class Inout_Object_SArgument_T : public InoutArgument
+  template<typename S_ptr,
+           typename S_var,
+           typename Insert_Policy>
+  class Inout_Object_SArgument_T : public InoutArgument, private Insert_Policy
   {
   public:
     Inout_Object_SArgument_T (void);
@@ -79,8 +83,11 @@ namespace TAO
    * @brief Template class for INOUT skeleton object argument.
    *
    */
-  template<typename S_ptr, typename S_var, typename S_out>
-  class Out_Object_SArgument_T : public OutArgument
+  template<typename S_ptr,
+           typename S_var,
+           typename S_out,
+           typename Insert_Policy>
+  class Out_Object_SArgument_T : public OutArgument, private Insert_Policy
   {
   public:
     Out_Object_SArgument_T (void);
@@ -101,8 +108,10 @@ namespace TAO
    * @brief Template class for return skeleton value of object.
    *
    */
-  template<typename S_ptr, typename S_var>
-  class Ret_Object_SArgument_T : public RetArgument
+  template<typename S_ptr,
+           typename S_var,
+           typename Insert_Policy>
+  class Ret_Object_SArgument_T : public RetArgument, private Insert_Policy
   {
   public:
     Ret_Object_SArgument_T (void);
@@ -123,7 +132,10 @@ namespace TAO
    * @brief Template class for skeleton argument traits of objects.
    *
    */
-  template<typename T_ptr, typename T_var, typename T_out>
+  template<typename T_ptr,
+           typename T_var,
+           typename T_out,
+           typename Insert_Policy>
   struct Object_SArg_Traits_T
   {
     typedef T_ptr                                         ret_type;
@@ -131,10 +143,10 @@ namespace TAO
     typedef T_ptr &                                       inout_type;
     typedef T_out                                         out_type;
 
-    typedef In_Object_SArgument_T<T_ptr,T_var>            in_arg_val;
-    typedef Inout_Object_SArgument_T<T_ptr,T_var>         inout_arg_val;
-    typedef Out_Object_SArgument_T<T_ptr,T_var,T_out>     out_arg_val;
-    typedef Ret_Object_SArgument_T<T_ptr,T_var>           ret_val;
+    typedef In_Object_SArgument_T<T_ptr,T_var,Insert_Policy>        in_arg_val;
+    typedef Inout_Object_SArgument_T<T_ptr,T_var,Insert_Policy>     inout_arg_val;
+    typedef Out_Object_SArgument_T<T_ptr,T_var,T_out,Insert_Policy> out_arg_val;
+    typedef Ret_Object_SArgument_T<T_ptr,T_var,Insert_Policy>       ret_val;
 
     // Typedefs corresponding to return value of arg() method in both
     // the client and server side argument class templates.
