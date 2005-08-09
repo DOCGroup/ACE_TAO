@@ -1,3 +1,12 @@
+Tue Aug  9 10:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Svc_Conf_l.cpp:
+          Forced a commit of this file, will probably solve the regeneration
+          errors
+
+        * apps/JAWS2/JAWS/Waiter.h:
+          Added missing include
+
 Mon Aug  8 12:54:51 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/Log_Msg.cpp (open): Reverted these changes:
@@ -37,18 +46,18 @@ Mon Aug  8 10:44:16 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* ace/OS_NS_stdio.inl
 	* ace/Process.cpp
-	
+
 	Fixed a compilation problem from:
 
 	Fri Jul 22 13:29:32 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
-	
+
 Mon Aug  8 09:57:15 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* ace/config-macosx-tiger.h
 	* include/makeinclude/platform_macosx_tiger_gcc4.GNU
 
 	Adding preliminary support for OS X 10.4
-	
+
 Mon Aug  8 13:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/JAWS2/JAWS/IO.cpp:
