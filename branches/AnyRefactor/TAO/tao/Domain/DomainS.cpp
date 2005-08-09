@@ -88,7 +88,8 @@ namespace TAO
         Object_SArg_Traits_T<
             CORBA::Policy_ptr,
             CORBA::Policy_var,
-            CORBA::Policy_out
+            CORBA::Policy_out,
+            TAO::Any_Insert_Policy_AnyTypeCode_Adapter <CORBA::Policy_ptr>
           >
   {
   };
@@ -104,7 +105,8 @@ namespace TAO
         Object_SArg_Traits_T<
             CORBA::InterfaceDef_ptr,
             CORBA::InterfaceDef_var,
-            CORBA::InterfaceDef_out
+            CORBA::InterfaceDef_out,
+            TAO::Any_Insert_Policy_IFR_Client_Adapter <CORBA::InterfaceDef_ptr>
           >
   {
   };
