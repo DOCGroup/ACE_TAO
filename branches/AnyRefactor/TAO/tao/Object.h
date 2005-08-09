@@ -31,6 +31,7 @@
 #include "tao/Pseudo_VarOut_T.h"
 #include "tao/Object_Argument_T.h"
 #include "tao/Arg_Traits_T.h"
+#include "tao/Any_Insert_Policy_T.h"
 
 #if defined (HPUX) && defined (IOR)
    /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
@@ -427,7 +428,8 @@ namespace TAO
     : public Object_Arg_Traits_T<CORBA::Object_ptr,
                                  CORBA::Object_var,
                                  CORBA::Object_out,
-                                 TAO::Objref_Traits<CORBA::Object> >
+                                 TAO::Objref_Traits<CORBA::Object>,
+                                 TAO::Any_Insert_Policy_CORBA_Object <CORBA::Object_ptr> >
   {
   };
 
@@ -440,34 +442,7 @@ namespace TAO
     static CORBA::Boolean marshal (CORBA::Object_ptr p,
                                    TAO_OutputCDR & cdr);
   };
-
-  /**
-   * @class Ret_Object_Argument_T
-   *
-   * @brief Specialization for CORBA::Object, necessitated since we
-   *  don't have an Any insertion operator for Object.
-   */
-  template<>
-  class TAO_Export Ret_Object_Argument_T <CORBA::Object_ptr, CORBA::Object_var>
-    : public RetArgument
-  {
-  public:
-    Ret_Object_Argument_T (void);
-
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
-
-    virtual void interceptor_value (CORBA::Any *any) const;
-
-    CORBA::Object_ptr & arg (void);
-
-    CORBA::Object_ptr excp (void);
-    CORBA::Object_ptr retn (void);
-
-  private:
-    CORBA::Object_var x_;
-  };
 }
-
 
 /// This function pointer is set only when the Portable server
 /// library is present.

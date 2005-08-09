@@ -130,7 +130,8 @@ namespace TAO
             CORBA::Policy_ptr,
             CORBA::Policy_var,
             CORBA::Policy_out,
-            TAO::Objref_Traits<CORBA::Policy>
+            TAO::Objref_Traits<CORBA::Policy>,
+            TAO::Any_Insert_Policy_Stream <CORBA::Policy_ptr>
           >
   {
   };
@@ -147,7 +148,8 @@ namespace TAO
             CORBA::InterfaceDef_ptr,
             CORBA::InterfaceDef_var,
             CORBA::InterfaceDef_out,
-            TAO::Objref_Traits<CORBA::InterfaceDef>
+            TAO::Objref_Traits<CORBA::InterfaceDef>,
+            TAO::Any_Insert_Policy_Stream <CORBA::InterfaceDef_ptr>
           >
   {
   };

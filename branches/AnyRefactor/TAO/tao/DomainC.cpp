@@ -56,24 +56,6 @@
 // TAO specific stuff.
 namespace CORBA
 {
-  class Policy;
-  typedef Policy *Policy_ptr;
-  typedef TAO_Objref_Var_T<Policy> Policy_var;
-  typedef TAO_Objref_Out_T<Policy> Policy_out;
-}
-
-namespace TAO
-{
-
-#if TAO_HAS_INTERCEPTORS == 1
-
-#endif /* TAO_HAS_INTERCEPTORS */
-
-}
-
-// TAO specific stuff.
-namespace CORBA
-{
   class InterfaceDef;
   typedef InterfaceDef *InterfaceDef_ptr;
   typedef TAO_Objref_Var_T<InterfaceDef> InterfaceDef_var;
@@ -85,23 +67,12 @@ namespace TAO
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-  template<>
-  void
-  In_Object_Argument_T<CORBA::InterfaceDef_ptr>::interceptor_value (CORBA::Any *any) const
-  {
-    TAO_IFR_Client_Adapter *adapter =
-      ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
-          TAO_ORB_Core::ifr_client_adapter_name ()
-        );
-
-    adapter->interfacedef_any_insert (any, this->x_);
-  }
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
   template<>
   CORBA::Boolean
-  In_Object_Argument_T<CORBA::InterfaceDef_ptr>::marshal (TAO_OutputCDR &cdr)
+  In_Object_Argument_T<CORBA::InterfaceDef_ptr, TAO::Any_Insert_Policy_IFR_Client_Adapter <CORBA::InterfaceDef_ptr> >::marshal (TAO_OutputCDR &cdr)
   {
     TAO_IFR_Client_Adapter *adapter =
       ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
@@ -126,7 +97,8 @@ namespace TAO
             CORBA::Policy_ptr,
             CORBA::Policy_var,
             CORBA::Policy_out,
-            TAO::Objref_Traits<CORBA::Policy>
+            TAO::Objref_Traits<CORBA::Policy>,
+            TAO::Any_Insert_Policy_AnyTypeCode_Adapter <CORBA::Policy_ptr>
           >
   {
   };
@@ -143,7 +115,8 @@ namespace TAO
             CORBA::InterfaceDef_ptr,
             CORBA::InterfaceDef_var,
             CORBA::InterfaceDef_out,
-            TAO::Objref_Traits<CORBA::InterfaceDef>
+            TAO::Objref_Traits<CORBA::InterfaceDef>,
+            TAO::Any_Insert_Policy_IFR_Client_Adapter <CORBA::InterfaceDef_ptr>
           >
   {
   };

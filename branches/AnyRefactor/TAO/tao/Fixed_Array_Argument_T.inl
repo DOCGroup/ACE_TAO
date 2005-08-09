@@ -4,9 +4,10 @@
 
 template<typename S,
          typename S_slice,
-         typename S_forany>
+         typename S_forany,
+         typename Insert_Policy>
 ACE_INLINE
-TAO::In_Fixed_Array_Argument_T<S,S_slice,S_forany>::
+TAO::In_Fixed_Array_Argument_T<S,S_slice,S_forany,Insert_Policy>::
 In_Fixed_Array_Argument_T (const S_slice * x)
   : x_ (
 #if (defined (_MSC_VER) && _MSC_VER <= 1200) || (defined (__IBMCPP__) && (__IBMCPP__ <= 600))
@@ -26,10 +27,11 @@ In_Fixed_Array_Argument_T (const S_slice * x)
 
 template<typename S,
          typename S_slice,
-         typename S_forany>
+         typename S_forany,
+         typename Insert_Policy>
 ACE_INLINE
 const S_slice *
-TAO::In_Fixed_Array_Argument_T<S,S_slice,S_forany>::arg (void) const
+TAO::In_Fixed_Array_Argument_T<S,S_slice,S_forany,Insert_Policy>::arg (void) const
 {
   return this->x_.in ();
 }
@@ -38,19 +40,21 @@ TAO::In_Fixed_Array_Argument_T<S,S_slice,S_forany>::arg (void) const
 
 template<typename S,
          typename S_slice,
-         typename S_forany>
+         typename S_forany,
+         typename Insert_Policy>
 ACE_INLINE
-TAO::Inout_Fixed_Array_Argument_T<S,S_slice,S_forany>::
+TAO::Inout_Fixed_Array_Argument_T<S,S_slice,S_forany,Insert_Policy>::
 Inout_Fixed_Array_Argument_T (S_slice *& x)
   : x_ (x)
 {}
 
 template<typename S,
          typename S_slice,
-         typename S_forany>
+         typename S_forany,
+         typename Insert_Policy>
 ACE_INLINE
 S_slice *
-TAO::Inout_Fixed_Array_Argument_T<S,S_slice,S_forany>::arg (void)
+TAO::Inout_Fixed_Array_Argument_T<S,S_slice,S_forany,Insert_Policy>::arg (void)
 {
   return this->x_.inout ();
 }
@@ -59,18 +63,20 @@ TAO::Inout_Fixed_Array_Argument_T<S,S_slice,S_forany>::arg (void)
 
 template<typename S,
          typename S_slice,
-         typename S_forany>
+         typename S_forany,
+         typename Insert_Policy>
 ACE_INLINE
-TAO::Out_Fixed_Array_Argument_T<S,S_slice,S_forany>::Out_Fixed_Array_Argument_T (S_slice *&x)
+TAO::Out_Fixed_Array_Argument_T<S,S_slice,S_forany,Insert_Policy>::Out_Fixed_Array_Argument_T (S_slice *&x)
   : x_ (x)
 {}
 
 template<typename S,
          typename S_slice,
-         typename S_forany>
+         typename S_forany,
+         typename Insert_Policy>
 ACE_INLINE
 S_slice *&
-TAO::Out_Fixed_Array_Argument_T<S,S_slice,S_forany>::arg (void)
+TAO::Out_Fixed_Array_Argument_T<S,S_slice,S_forany,Insert_Policy>::arg (void)
 {
   return this->x_.out ();
 }
@@ -81,9 +87,10 @@ template<typename S,
          typename S_slice,
          typename S_var,
          typename S_forany,
-         typename S_tag>
+         typename S_tag,
+         typename Insert_Policy>
 ACE_INLINE
-TAO::Ret_Fixed_Array_Argument_T<S,S_slice,S_var,S_forany,S_tag>::
+TAO::Ret_Fixed_Array_Argument_T<S,S_slice,S_var,S_forany,S_tag,Insert_Policy>::
 Ret_Fixed_Array_Argument_T (void)
 {}
 
@@ -91,10 +98,11 @@ template<typename S,
          typename S_slice,
          typename S_var,
          typename S_forany,
-         typename S_tag>
+         typename S_tag,
+         typename Insert_Policy>
 ACE_INLINE
 S_slice *&
-TAO::Ret_Fixed_Array_Argument_T<S,S_slice,S_var,S_forany,S_tag>::arg (void)
+TAO::Ret_Fixed_Array_Argument_T<S,S_slice,S_var,S_forany,S_tag,Insert_Policy>::arg (void)
 {
   return this->x_._retn_arg ();
 }
@@ -103,10 +111,11 @@ template<typename S,
          typename S_slice,
          typename S_var,
          typename S_forany,
-         typename S_tag>
+         typename S_tag,
+         typename Insert_Policy>
 ACE_INLINE
 S_slice *
-TAO::Ret_Fixed_Array_Argument_T<S,S_slice,S_var,S_forany,S_tag>::excp (void)
+TAO::Ret_Fixed_Array_Argument_T<S,S_slice,S_var,S_forany,S_tag,Insert_Policy>::excp (void)
 {
   return this->x_.ptr ();
 }
@@ -115,10 +124,11 @@ template<typename S,
          typename S_slice,
          typename S_var,
          typename S_forany,
-         typename S_tag>
+         typename S_tag,
+         typename Insert_Policy>
 ACE_INLINE
 S_slice *
-TAO::Ret_Fixed_Array_Argument_T<S,S_slice,S_var,S_forany,S_tag>::retn (void)
+TAO::Ret_Fixed_Array_Argument_T<S,S_slice,S_var,S_forany,S_tag,Insert_Policy>::retn (void)
 {
   return this->x_._retn ();
 }

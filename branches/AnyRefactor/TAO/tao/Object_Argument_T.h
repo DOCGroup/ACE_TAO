@@ -30,8 +30,8 @@ namespace TAO
    * @brief Template class for IN object argument.
    *
    */
-  template<typename S_ptr>
-  class In_Object_Argument_T : public InArgument
+  template<typename S_ptr, typename Insert_Policy>
+  class In_Object_Argument_T : public InArgument, private Insert_Policy
   {
   public:
     In_Object_Argument_T (S_ptr x);
@@ -52,8 +52,8 @@ namespace TAO
    * @brief Template class for INOUT object argument.
    *
    */
-  template<typename S_ptr, typename S_traits>
-  class Inout_Object_Argument_T : public InoutArgument
+  template<typename S_ptr, typename S_traits, typename Insert_Policy>
+  class Inout_Object_Argument_T : public InoutArgument, private Insert_Policy
   {
   public:
     Inout_Object_Argument_T (S_ptr & x);
@@ -75,8 +75,8 @@ namespace TAO
    * @brief Template class for OUT object argument.
    *
    */
-  template<typename S_ptr, typename S_out>
-  class Out_Object_Argument_T : public OutArgument
+  template<typename S_ptr, typename S_out, typename Insert_Policy>
+  class Out_Object_Argument_T : public OutArgument, private Insert_Policy
   {
   public:
     Out_Object_Argument_T (S_out & x);
@@ -97,8 +97,8 @@ namespace TAO
    * @brief Template class for return stub value of object argument.
    *
    */
-  template<typename S_ptr, typename S_var>
-  class Ret_Object_Argument_T : public RetArgument
+  template<typename S_ptr, typename S_var, typename Insert_Policy>
+  class Ret_Object_Argument_T : public RetArgument, private Insert_Policy
   {
   public:
 
@@ -130,7 +130,7 @@ namespace TAO
    *
    * @brief Template class for stub argument traits of objects.
    */
-  template<typename T_ptr, typename T_var, typename T_out, typename T_traits>
+  template<typename T_ptr, typename T_var, typename T_out, typename T_traits, typename Insert_Policy>
   struct Object_Arg_Traits_T
   {
     typedef T_ptr                                         ret_type;
@@ -138,34 +138,18 @@ namespace TAO
     typedef T_ptr &                                       inout_type;
     typedef T_out                                         out_type;
 
-    typedef In_Object_Argument_T<T_ptr>                   in_arg_val;
-    typedef Inout_Object_Argument_T<T_ptr, T_traits>      inout_arg_val;
-    typedef Out_Object_Argument_T<T_ptr,T_out>            out_arg_val;
-    typedef Ret_Object_Argument_T<T_ptr,T_var>            ret_val;
+    typedef In_Object_Argument_T<T_ptr, Insert_Policy>
+      in_arg_val;
+    typedef Inout_Object_Argument_T<T_ptr, T_traits, Insert_Policy>
+      inout_arg_val;
+    typedef Out_Object_Argument_T<T_ptr,T_out, Insert_Policy>
+      out_arg_val;
+    typedef Ret_Object_Argument_T<T_ptr,T_var, Insert_Policy>
+      ret_val;
 
     typedef Object_Tag                                    idl_tag;
   };
 }
-
-// This set of classes is also used by valuetype arguments. If the
-// specialization is done using S * for the parameter, the semantics
-// are the same as for interfaces, so there's no need for another
-// set of classes.
-
-  template<>
-  void
-  TAO::Ret_Object_Argument_T<CORBA::Policy_ptr,CORBA::Policy_var>::interceptor_value (CORBA::Any *) const
-  {
-//    TAO_IFR_Client_Adapter *adapter =
-//      ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
-//          TAO_ORB_Core::ifr_client_adapter_name ()
-//        );
-//
-//    adapter->interfacedef_any_insert (p, this->x_);
-  }
-
-
-
 
 #if defined (__ACE_INLINE__)
 #include "tao/Object_Argument_T.inl"

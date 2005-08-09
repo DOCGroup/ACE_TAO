@@ -1,18 +1,148 @@
+Tue Aug  9 11:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+
+        * AnyTypeCode_Adapter.h
+        * BD_String_Argument_T.cpp
+        * BD_String_Argument_T.h
+        * BD_String_Argument_T.inl
+        * Basic_Argument_T.cpp
+        * Basic_Argument_T.h
+        * Basic_Argument_T.inl
+        * Basic_Arguments.h
+        * DomainC.cpp
+        * Fixed_Array_Argument_T.cpp
+        * Fixed_Array_Argument_T.h
+        * Fixed_Array_Argument_T.inl
+        * ORB_Core_TSS_Resources.cpp
+        * ORB_Core_TSS_Resources.h
+        * Object.cpp
+        * Object.h
+        * Object_Argument_T.cpp
+        * Object_Argument_T.h
+        * Object_Argument_T.inl
+        * PolicyC.cpp
+        * Special_Basic_Argument_T.cpp
+        * Special_Basic_Argument_T.h
+        * Special_Basic_Argument_T.inl
+        * Special_Basic_Arguments.h
+        * UB_String_Argument_T.cpp
+        * UB_String_Argument_T.h
+        * UB_String_Argument_T.inl
+        * UB_String_Arguments.h
+        * Var_Array_Argument_T.cpp
+        * Var_Array_Argument_T.h
+        * Var_Array_Argument_T.inl
+        * Var_Size_Argument_T.cpp
+        * Var_Size_Argument_T.h
+        * Var_Size_Argument_T.inl
+        * AnyTypeCode/AnyTypeCode_Adapter_Impl.h
+        * AnyTypeCode/Any_Arg_Traits.h
+        * AnyTypeCode/TypeCode.h
+        * Domain/DomainS.cpp
+        * IFR_Client/IFR_BaseC.cpp
+        * IORInterceptor/IORInfoC.cpp
+        * ImR_Client/ImplRepoC.cpp
+        * ImR_Client/ImplRepoS.cpp
+        * ObjRefTemplate/ObjectReferenceTemplateC.cpp
+        * PortableServer/PolicyS.cpp
+        * PortableServer/PortableServerC.cpp
+        * RTScheduling/RTSchedulerC.cpp
+        * Valuetype/AbstractBase.h
+        * Valuetype/ValueBase.h
+          Updated Argument classes to use new Any Insert Policy  template
+
+Mon Aug  8 09:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB.cpp:
+        * tao/ORB_Core.{h,cpp,i}:
+        * tao/PI/ClientRequestInfo.cpp:
+        * tao/PI_Server/POA_Current.cpp:
+        * tao/PI_Server/ServerRequestInfo.cpp:
+          Updated partly for PI changes. Idea is now to store PICurrent in the
+          ORB Core as Object_ptr, a dynamic cast can then be done in the PI libs
+
+        * tao/Argument.cpp
+        * tao/Argument.h
+        * tao/BD_String_Argument_T.cpp
+        * tao/BD_String_Argument_T.h
+        * tao/Basic_Argument_T.cpp
+        * tao/Basic_Argument_T.h
+        * tao/Basic_Arguments.h
+        * tao/DomainC.cpp
+        * tao/Fixed_Array_Argument_T.cpp
+        * tao/Fixed_Array_Argument_T.h
+        * tao/Fixed_Size_Argument_T.cpp
+        * tao/Fixed_Size_Argument_T.h
+        * tao/IFR_Client_Adapter.h
+        * tao/Object.cpp
+        * tao/Object.h
+        * tao/Object_Argument_T.cpp
+        * tao/Object_Argument_T.h
+        * tao/PolicyC.cpp
+        * tao/Special_Basic_Argument_T.cpp
+        * tao/Special_Basic_Argument_T.h
+        * tao/UB_String_Argument_T.cpp
+        * tao/UB_String_Argument_T.h
+        * tao/Var_Array_Argument_T.cpp
+        * tao/Var_Array_Argument_T.h
+        * tao/Var_Size_Argument_T.cpp
+        * tao/Var_Size_Argument_T.h
+        * tao/DynamicInterface/DII_Arguments.cpp
+        * tao/DynamicInterface/DII_Arguments.h
+        * tao/IFR_Client/IFR_BaseC.cpp
+        * tao/IFR_Client/IFR_BasicC.cpp
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.cpp
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.h
+        * tao/IFR_Client/IFR_ComponentsC.cpp
+        * tao/IFR_Client/IFR_ExtendedC.cpp
+        * tao/ImR_Client/ImplRepoC.cpp
+        * tao/ImR_Client/ServerObjectC.cpp
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp
+        * tao/PI/ClientRequestInfo.cpp
+        * tao/PI_Server/ServerRequestInfo.cpp
+        * tao/PortableServer/BD_String_SArgument_T.cpp
+        * tao/PortableServer/BD_String_SArgument_T.h
+        * tao/PortableServer/Basic_SArgument_T.cpp
+        * tao/PortableServer/Basic_SArgument_T.h
+        * tao/PortableServer/Basic_SArguments.h
+        * tao/PortableServer/Fixed_Array_SArgument_T.cpp
+        * tao/PortableServer/Fixed_Array_SArgument_T.h
+        * tao/PortableServer/Fixed_Size_SArgument_T.cpp
+        * tao/PortableServer/Fixed_Size_SArgument_T.h
+        * tao/PortableServer/Object_SArgument_T.cpp
+        * tao/PortableServer/Object_SArgument_T.h
+        * tao/PortableServer/PolicyS.cpp
+        * tao/PortableServer/Special_Basic_SArgument_T.cpp
+        * tao/PortableServer/Special_Basic_SArgument_T.h
+        * tao/PortableServer/UB_String_SArgument_T.cpp
+        * tao/PortableServer/UB_String_SArgument_T.h
+        * tao/PortableServer/Var_Array_SArgument_T.cpp
+        * tao/PortableServer/Var_Array_SArgument_T.h
+        * tao/PortableServer/Var_Size_SArgument_T.cpp
+        * tao/PortableServer/Var_Size_SArgument_T.h
+          Changed the interface of TAO::Argument. Instead of using
+          Dynamic::Parameter as argument, use the method interceptor_
+          value that gets an Any* argument and a separate mode argument
+          to get the mode of the argument (in/out/inout). Instead of
+          duplicating this mode method, added InArgument, InoutArgument,
+          OutArgument and RetArgument class that implement this method.
+          All templates are then derived from the correct base method.
+
 Mon Aug  8 20:26:22 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/AnyTypeCode/NVList_Adapter_Impl.h:
-        
+
           Corrected the export macro.
 
 Mon Aug  8 19:55:07 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
-        
+
           Moved generation of the _tao_type() method for user exceptions
           to the *A.cpp file if we are using the -GA option.
 
         * TAO_IDL/be/be_codegen.cp:
-        
+
           Added code generation of *A.h includes from the AnyTypeCode
           library corresponding to included .pidl files.
 

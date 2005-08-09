@@ -58,7 +58,7 @@ namespace TAO
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT__ARG_TRAITS_CS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT__ARG_TRAITS_CS_
- 
+
   template<>
   class  Arg_Traits<ImplementationRepository::ServerObject>
     : public
@@ -66,64 +66,68 @@ namespace TAO
             ImplementationRepository::ServerObject_ptr,
             ImplementationRepository::ServerObject_var,
             ImplementationRepository::ServerObject_out,
-            TAO::Objref_Traits<ImplementationRepository::ServerObject>
+            TAO::Objref_Traits<ImplementationRepository::ServerObject>,
+            TAO::Any_Insert_Policy_Stream <ImplementationRepository::ServerObject_ptr>
           >
   {
   };
 
 #endif /* end #if !defined */
- 
+
   // TAO_IDL - Generated from
   // .\be\be_visitor_arg_traits.cpp:772
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_STARTUPOPTIONS__ARG_TRAITS_CS_)
 #define _IMPLEMENTATIONREPOSITORY_STARTUPOPTIONS__ARG_TRAITS_CS_
- 
+
   template<>
   class Arg_Traits<ImplementationRepository::StartupOptions>
     : public
         Var_Size_Arg_Traits_T<
             ImplementationRepository::StartupOptions,
             ImplementationRepository::StartupOptions_var,
-            ImplementationRepository::StartupOptions_out
+            ImplementationRepository::StartupOptions_out,
+            TAO::Any_Insert_Policy_Stream <ImplementationRepository::StartupOptions>
           >
   {
   };
 
 #endif /* end #if !defined */
- 
+
   // TAO_IDL - Generated from
   // .\be\be_visitor_arg_traits.cpp:772
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATION__ARG_TRAITS_CS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATION__ARG_TRAITS_CS_
- 
+
   template<>
   class Arg_Traits<ImplementationRepository::ServerInformation>
     : public
         Var_Size_Arg_Traits_T<
             ImplementationRepository::ServerInformation,
             ImplementationRepository::ServerInformation_var,
-            ImplementationRepository::ServerInformation_out
+            ImplementationRepository::ServerInformation_out,
+            TAO::Any_Insert_Policy_Stream <ImplementationRepository::ServerInformation>
           >
   {
   };
 
 #endif /* end #if !defined */
- 
+
   // TAO_IDL - Generated from
   // .\be\be_visitor_arg_traits.cpp:489
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST__ARG_TRAITS_CS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONLIST__ARG_TRAITS_CS_
- 
+
   template<>
   class Arg_Traits<ImplementationRepository::ServerInformationList>
     : public
         Var_Size_Arg_Traits_T<
             ImplementationRepository::ServerInformationList,
             ImplementationRepository::ServerInformationList_var,
-            ImplementationRepository::ServerInformationList_out
+            ImplementationRepository::ServerInformationList_out,
+            TAO::Any_Insert_Policy_Stream <ImplementationRepository::ServerInformationList>
           >
   {
   };
@@ -132,7 +136,7 @@ namespace TAO
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__ARG_TRAITS_CS_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__ARG_TRAITS_CS_
- 
+
   template<>
   class  Arg_Traits<ImplementationRepository::ServerInformationIterator>
     : public
@@ -140,7 +144,8 @@ namespace TAO
             ImplementationRepository::ServerInformationIterator_ptr,
             ImplementationRepository::ServerInformationIterator_var,
             ImplementationRepository::ServerInformationIterator_out,
-            TAO::Objref_Traits<ImplementationRepository::ServerInformationIterator>
+            TAO::Objref_Traits<ImplementationRepository::ServerInformationIterator>,
+            TAO::Any_Insert_Policy_Stream <ImplementationRepository::ServerInformationIterator_ptr>
           >
   {
   };

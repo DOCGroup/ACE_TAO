@@ -15,6 +15,7 @@
 #define TAO_SPECIAL_BASIC_ARGUMENTS_H
 
 #include /**/ "ace/pre.h"
+
 #include "ace/CDR_Stream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -26,24 +27,6 @@
 
 namespace TAO
 {
-
-template<>
-void
-TAO::In_Special_Basic_Argument_T<bool, ACE_InputCDR::to_boolean, ACE_OutputCDR::from_boolean>::
-  interceptor_value (CORBA::Any *) const
-{
-//  p.argument <<= from_S (this->x_);
-}
-
-template<>
-void
-TAO::Ret_Special_Basic_Argument_T<bool, ACE_InputCDR::to_boolean, ACE_OutputCDR::from_boolean>::interceptor_value (CORBA::Any *) const
-{
-  //(*any) <<= from_S (this->x_);
-}
-
-
-
   /**
    *
    * @brief Specializations for (w)char, octet and boolean.
@@ -54,7 +37,8 @@ TAO::Ret_Special_Basic_Argument_T<bool, ACE_InputCDR::to_boolean, ACE_OutputCDR:
   class TAO_Export Arg_Traits<ACE_InputCDR::to_char>
     : public Special_Basic_Arg_Traits_T<CORBA::Char,
                                         ACE_InputCDR::to_char,
-                                        ACE_OutputCDR::from_char>
+                                        ACE_OutputCDR::from_char,
+                                        TAO::Any_Insert_Policy_AnyTypeCode_Adapter <ACE_OutputCDR::from_char> >
   {
   };
 
@@ -62,7 +46,8 @@ TAO::Ret_Special_Basic_Argument_T<bool, ACE_InputCDR::to_boolean, ACE_OutputCDR:
   class TAO_Export Arg_Traits<ACE_InputCDR::to_wchar>
     : public Special_Basic_Arg_Traits_T<CORBA::WChar,
                                         ACE_InputCDR::to_wchar,
-                                        ACE_OutputCDR::from_wchar>
+                                        ACE_OutputCDR::from_wchar,
+                                        TAO::Any_Insert_Policy_AnyTypeCode_Adapter <ACE_OutputCDR::from_wchar> >
   {
   };
 
@@ -70,7 +55,8 @@ TAO::Ret_Special_Basic_Argument_T<bool, ACE_InputCDR::to_boolean, ACE_OutputCDR:
   class TAO_Export Arg_Traits<ACE_InputCDR::to_octet>
     : public Special_Basic_Arg_Traits_T<CORBA::Octet,
                                         ACE_InputCDR::to_octet,
-                                        ACE_OutputCDR::from_octet>
+                                        ACE_OutputCDR::from_octet,
+                                        TAO::Any_Insert_Policy_AnyTypeCode_Adapter <ACE_OutputCDR::from_octet> >
   {
   };
 
@@ -78,7 +64,8 @@ TAO::Ret_Special_Basic_Argument_T<bool, ACE_InputCDR::to_boolean, ACE_OutputCDR:
   class TAO_Export Arg_Traits<ACE_InputCDR::to_boolean>
     : public Special_Basic_Arg_Traits_T<CORBA::Boolean,
                                         ACE_InputCDR::to_boolean,
-                                        ACE_OutputCDR::from_boolean>
+                                        ACE_OutputCDR::from_boolean,
+                                        TAO::Any_Insert_Policy_AnyTypeCode_Adapter <ACE_OutputCDR::from_boolean> >
   {
   };
 }

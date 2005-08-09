@@ -23,12 +23,21 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Object.h"
+#include "ace/CDR_Stream.h"
+
+#include "tao/Basic_Types.h"
 
 namespace CORBA
 {
   class TypeCode;
   typedef TypeCode *TypeCode_ptr;
+
+  class Any;
+
+  class Policy;
+  typedef Policy *Policy_ptr;
 }
+
 
 /**
  * @class TAO_AnyTypeCode_Adapter
@@ -86,6 +95,22 @@ public:
 
 ANYTYPECODE__EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
+
+  virtual void insert_into_any (CORBA::Any * any, CORBA::Char const * mychar) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, CORBA::Policy_ptr policy) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, CORBA::Policy_ptr * policy) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, CORBA::ULong value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_wchar value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_char value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_octet value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_boolean value) = 0;
 };
 
 #include /**/ "ace/post.h"

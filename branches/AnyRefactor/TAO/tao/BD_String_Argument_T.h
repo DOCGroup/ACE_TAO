@@ -32,8 +32,12 @@ namespace TAO
    * @brief Template class for IN bounded (w)string argument.
    *
    */
-  template<typename S, typename to_S, typename from_S, size_t BOUND>
-  class In_BD_String_Argument_T : public InArgument
+  template<typename S,
+           typename to_S,
+           typename from_S,
+           size_t BOUND,
+           typename Insert_Policy>
+  class In_BD_String_Argument_T : public InArgument, private Insert_Policy
   {
   public:
     In_BD_String_Argument_T (const S * x);
@@ -58,8 +62,12 @@ namespace TAO
    * @brief Template class for INOUT bounded (w)string argument.
    *
    */
-  template<typename S, typename to_S, typename from_S, size_t BOUND>
-  class Inout_BD_String_Argument_T : public InoutArgument
+  template<typename S,
+           typename to_S,
+           typename from_S,
+           size_t BOUND,
+           typename Insert_Policy>
+  class Inout_BD_String_Argument_T : public InoutArgument, private Insert_Policy
   {
   public:
     Inout_BD_String_Argument_T (S *& x);
@@ -85,8 +93,9 @@ namespace TAO
            typename S_out,
            typename to_S,
            typename from_S,
-           size_t BOUND>
-  class Out_BD_String_Argument_T : public OutArgument
+           size_t BOUND,
+           typename Insert_Policy>
+  class Out_BD_String_Argument_T : public OutArgument, private Insert_Policy
   {
   public:
     Out_BD_String_Argument_T (S_out x);
@@ -111,8 +120,9 @@ namespace TAO
            typename S_var,
            typename to_S,
            typename from_S,
-           size_t BOUND>
-  class Ret_BD_String_Argument_T : public RetArgument
+           size_t BOUND,
+           typename Insert_Policy>
+  class Ret_BD_String_Argument_T : public RetArgument, private Insert_Policy
   {
   public:
     Ret_BD_String_Argument_T (void);
@@ -151,7 +161,8 @@ namespace TAO
            typename T_out,
            typename to_T,
            typename from_T,
-           size_t BOUND>
+           size_t BOUND,
+           typename Insert_Policy>
   struct BD_String_Arg_Traits_T
   {
     typedef T *                                   ret_type;
@@ -162,21 +173,25 @@ namespace TAO
     typedef In_BD_String_Argument_T<T,
                                     to_T,
                                     from_T,
-                                    BOUND>        in_arg_val;
+                                    BOUND,
+                                    Insert_Policy>        in_arg_val;
     typedef Inout_BD_String_Argument_T<T,
                                        to_T,
                                        from_T,
-                                       BOUND>     inout_arg_val;
+                                       BOUND,
+                                       Insert_Policy>     inout_arg_val;
     typedef Out_BD_String_Argument_T<T,
                                      T_out,
                                      to_T,
                                      from_T,
-                                     BOUND>       out_arg_val;
+                                     BOUND,
+                                     Insert_Policy>       out_arg_val;
     typedef Ret_BD_String_Argument_T<T,
                                      T_var,
                                      to_T,
                                      from_T,
-                                     BOUND>       ret_val;
+                                     BOUND,
+                                     Insert_Policy>       ret_val;
 
     typedef BD_String_Tag                         idl_tag;
   };

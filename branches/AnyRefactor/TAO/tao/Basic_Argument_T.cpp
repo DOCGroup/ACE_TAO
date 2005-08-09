@@ -13,87 +13,87 @@ ACE_RCSID (tao,
            Basic_Argument_T,
            "$Id$")
 
-template<typename S>
+template<typename S, typename Insert_Policy>
 CORBA::Boolean
-TAO::In_Basic_Argument_T<S>::marshal (TAO_OutputCDR &cdr)
+TAO::In_Basic_Argument_T<S, Insert_Policy>::marshal (TAO_OutputCDR &cdr)
 {
   return cdr << this->x_;
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-template<typename S>
+template<typename S, typename Insert_Policy>
 void
-TAO::In_Basic_Argument_T<S>::interceptor_value (CORBA::Any *any) const
+TAO::In_Basic_Argument_T<S, Insert_Policy>::interceptor_value (CORBA::Any *any) const
 {
-  (*any) <<= this->x_;
+  this->Insert_Policy::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
 // ===========================================================
 
-template<typename S>
+template<typename S, typename Insert_Policy>
 CORBA::Boolean
-TAO::Inout_Basic_Argument_T<S>::marshal (TAO_OutputCDR &cdr)
+TAO::Inout_Basic_Argument_T<S, Insert_Policy>::marshal (TAO_OutputCDR &cdr)
 {
   return cdr << this->x_;
 }
 
-template<typename S>
+template<typename S, typename Insert_Policy>
 CORBA::Boolean
-TAO::Inout_Basic_Argument_T<S>::demarshal (TAO_InputCDR & cdr)
+TAO::Inout_Basic_Argument_T<S, Insert_Policy>::demarshal (TAO_InputCDR & cdr)
 {
   return cdr >> this->x_;
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-template<typename S>
+template<typename S, typename Insert_Policy>
 void
-TAO::Inout_Basic_Argument_T<S>::interceptor_value (CORBA::Any *any) const
+TAO::Inout_Basic_Argument_T<S, Insert_Policy>::interceptor_value (CORBA::Any *any) const
 {
-  (*any) <<= this->x_;
+  this->Insert_Policy::any_insert (any, this->x_)
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
 // ==============================================================
 
-template<typename S>
+template<typename S, typename Insert_Policy>
 CORBA::Boolean
-TAO::Out_Basic_Argument_T<S>::demarshal (TAO_InputCDR & cdr)
+TAO::Out_Basic_Argument_T<S, Insert_Policy>::demarshal (TAO_InputCDR & cdr)
 {
   return cdr >> this->x_;
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-template<typename S>
+template<typename S, typename Insert_Policy>
 void
-TAO::Out_Basic_Argument_T<S>::interceptor_value (CORBA::Any *any) const
+TAO::Out_Basic_Argument_T<S, Insert_Policy>::interceptor_value (CORBA::Any *any) const
 {
-  (*any) <<= this->x_;
+  this->Insert_Policy::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
 // ============================================================
 
-template<typename S>
+template<typename S, typename Insert_Policy>
 CORBA::Boolean
-TAO::Ret_Basic_Argument_T<S>::demarshal (TAO_InputCDR & cdr)
+TAO::Ret_Basic_Argument_T<S, Insert_Policy>::demarshal (TAO_InputCDR & cdr)
 {
   return cdr >> this->x_;
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-template<typename S>
+template<typename S, typename Insert_Policy>
 void
-TAO::Ret_Basic_Argument_T<S>::interceptor_value (CORBA::Any *any) const
+TAO::Ret_Basic_Argument_T<S, Insert_Policy>::interceptor_value (CORBA::Any *any) const
 {
-  (*any) <<= this->x_;
+  this->Insert_Policy::any_insert (any, this->x_);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
