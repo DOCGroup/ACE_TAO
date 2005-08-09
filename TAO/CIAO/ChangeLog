@@ -4,6 +4,11 @@ Tue Aug  9 13:11:04 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         
           Updated dependencies to reflect the recent name change from
           NodeDaemon_stub to NodeManager_stub.
+          
+        * DAnCE/RepositoryManager/Repository_Manager.cpp:
+        
+          Updated identifier names to match the change from NodeDaemon
+          to ModeManager.
 
 Mon  Aug 08 22:02:43 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
