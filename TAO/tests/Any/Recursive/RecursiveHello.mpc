@@ -12,7 +12,6 @@ project(*Server): taoserver, valuetype {
 project(*Client): taoclient, valuetype, typecodefactory, ifr_client {
   Source_Files {
     TestC.cpp
-    TestA.cpp
     client.cpp
   }
 }
