@@ -28,8 +28,8 @@
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:153
 
-#ifndef _TAO_IDL_ORIG_TYPECODE_TYPESA_H_
-#define _TAO_IDL_ORIG_TYPECODE_TYPESA_H_
+#ifndef _TAO_IDL_ORIG_IOPA_H_
+#define _TAO_IDL_ORIG_IOPA_H_
 
 #include /**/ "ace/pre.h"
 
