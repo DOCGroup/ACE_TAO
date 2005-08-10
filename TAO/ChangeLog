@@ -1,3 +1,12 @@
+Tue Aug  9 19:28:15 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	From J H Choi <jhchoi at sqisoft dot com>
+	* tao/TypeCode.cpp (equivalent):
+
+	  Equivalence of two TypeCodes must be done between their
+	  unaliased counterparts.  The code was incorrectly leaving one of
+	  the TypeCodes aliased in the comparison.
+
 Mon Aug  8 18:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/advanced_resource.cpp:

@@ -139,8 +139,8 @@ CORBA::TypeCode::equivalent (TypeCode_ptr tc
       if (ACE_OS::strlen (this_id) == 0
           || ACE_OS::strlen (tc_id) == 0)
         {
-          return this->equivalent_i (unaliased_tc.in ()
-                                     ACE_ENV_ARG_PARAMETER);
+          return unaliased_this->equivalent_i (unaliased_tc.in ()
+                                               ACE_ENV_ARG_PARAMETER);
         }
       else if (ACE_OS::strcmp (this_id, tc_id) != 0)
         {
@@ -152,8 +152,8 @@ CORBA::TypeCode::equivalent (TypeCode_ptr tc
       // Some TypeCodes do not support the id() operation.  Ignore the
       // failure, and continue equivalence verification using TypeCode
       // subclass-specific techniques.
-      return this->equivalent_i (unaliased_tc.in ()
-                                 ACE_ENV_ARG_PARAMETER);
+      return unaliased_this->equivalent_i (unaliased_tc.in ()
+                                           ACE_ENV_ARG_PARAMETER);
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (false);
