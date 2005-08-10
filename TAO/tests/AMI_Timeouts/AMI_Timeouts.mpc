@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoserver, messaging, ami {
+project(*Server): taoserver, ami {
   Source_Files {
     timeout_i.cpp
     timeout_client.cpp
@@ -9,7 +9,8 @@ project(*Server): taoserver, messaging, ami {
   }
 }
 
-project(*Client): messaging, taoexe, portableserver, ami {
+project(*Client): taoserver, ami {
+  exename = client
   Source_Files {
     timeout_i.cpp
     timeout_client.cpp

@@ -224,7 +224,8 @@ be_visitor_arg_traits::visit_valuebox (be_valuebox *node)
              << "TAO::Value_Traits<" << node->name () << ">";
         }
 
-      os << be_uidt_nl
+      os << "," << be_nl << "TAO::Any_Insert_Policy_Stream <"
+         << node->name () << "*>" << be_uidt_nl
          << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
          << "{" << be_nl
          << "};";
@@ -273,7 +274,8 @@ be_visitor_arg_traits::visit_valuetype (be_valuetype *node)
              << "TAO::Value_Traits<" << node->name () << ">";
         }
 
-      os << be_uidt_nl
+      os << "," << be_nl << "TAO::Any_Insert_Policy_Stream <"
+         << node->name () << "*>" << be_uidt_nl
          << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
          << "{" << be_nl
          << "};";

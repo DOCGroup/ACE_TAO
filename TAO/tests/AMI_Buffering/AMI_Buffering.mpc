@@ -1,14 +1,15 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoserver, messaging, ami {
+project(*Server): taoserver, ami {
   Source_Files {
     AMI_Buffering.cpp
     server.cpp
   }
 }
 
-project(*Client): messaging, taoexe, portableserver, ami {
+project(*Client): taoserver, ami {
+  exename = client
   Source_Files {
     Client_Task.cpp
     Reply_Handler.cpp
@@ -16,7 +17,8 @@ project(*Client): messaging, taoexe, portableserver, ami {
   }
 }
 
-project(*Admin): messaging, taoexe, portableserver, ami {
+project(*Admin): taoserver, ami {
+  exename = admin
   Source_Files {
     AMI_Buffering_Admin.cpp
     admin.cpp
