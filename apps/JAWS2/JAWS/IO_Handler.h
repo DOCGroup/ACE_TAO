@@ -40,6 +40,8 @@ class JAWS_Data_Block;
 class JAWS_Pipeline_Handler;
 class JAWS_Waiter;
 
+class ACE_Message_Block;
+
 class JAWS_Export JAWS_Abstract_IO_Handler
   // = TITLE
   //

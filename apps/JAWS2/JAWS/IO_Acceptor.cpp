@@ -3,6 +3,8 @@
 #include "JAWS/Data_Block.h"
 #include "JAWS/IO_Acceptor.h"
 
+#include "ace/OS_NS_sys_socket.h"
+
 ACE_RCSID(JAWS, IO_Acceptor, "$Id$")
 
 JAWS_IO_Acceptor::JAWS_IO_Acceptor (void)
