@@ -1,4 +1,13 @@
-Wed Aug 10 13:27:06 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+Wed Aug 10 13:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/PortableInterceptors/Benchmark/client_interceptors.cpp
+        * tests/PortableInterceptors/Benchmark/server_interceptors.cpp
+        * tests/PortableInterceptors/Collocated/Dynamic/interceptors.cpp
+        * tests/PortableInterceptors/Dynamic/client_interceptor.cpp
+        * tests/PortableInterceptors/Dynamic/server_interceptor.cpp
+        * tests/PortableInterceptors/PolicyFactory/PolicyFactory.cpp
+
+Wed Aug 10 13:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Buffered_AMI/client.cpp
         * examples/Buffered_Oneways/client.cpp
