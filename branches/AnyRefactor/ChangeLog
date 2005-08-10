@@ -1,3 +1,9 @@
+Wed Aug 10 11:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/orbsvcslib.mpb:
+          Added AnyTypeCode as base project, just to get things building,
+          will have to remove this later and derive the correct projects
+
 Wed Aug 10 09:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/valuetype.mpb:
