@@ -1,3 +1,73 @@
+Wed Aug 10 11:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/MProfile_Forwarding/MProfile_Forwarding.mpc
+        * tests/MT_Client/MT_Client.mpc
+        * tests/MT_Server/MT_Server.mpc
+        * tests/DLL_ORB/DLL_ORB.mpc
+        * tests/CDR/CDR.mpc:
+        * tests/AMI_Buffering/AMI_Buffering.mpc:
+        * tests/AMI_Timeouts/AMI_Timeouts.mpc:
+        * tests/BiDirectional/BiDirectional.mpc:
+        * tests/BiDirectional_MultipleORB/destroy.mpc:
+        * tests/Collocation/Collocation.mpc:
+        * CDR/CDR.mpc
+          Simplified this MPC file
+
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEvent.h
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.h
+        * orbsvcs/orbsvcs/Security/SL3_PolicyFactory.cpp
+        * tests/MProfile_Connection_Timeout/client.cpp
+        * tests/MT_BiDir/client.cpp
+        * tests/MT_BiDir/server.cpp
+        * tests/MT_Timeout/Client_Task.cpp
+        * tests/CDR/tc.cpp:
+        * tests/AMI_Buffering/client.cpp:
+        * tests/AMI_Timeouts/timeout_client.cpp:
+        * tests/BiDirectional/client.cpp:
+        * tests/BiDirectional/server.cpp:
+        * tests/BiDirectional_MultipleORB/destroy.cpp:
+        * tests/BiDirectional_NestedUpcall/client.cpp:
+        * tests/BiDirectional_NestedUpcall/server.cpp:
+        * tests/Big_Request_Muxing/Client_Task.cpp:
+        * Blocking_Sync_None/client.cpp
+        * Bug_1020_Basic_Regression/client.cpp
+        * Bug_1020_Regression/client.cpp
+        * Bug_1269_Regression/client.cpp
+        * Bug_1270_Regression/client.cpp
+        * Bug_1361_Regression/client.cpp
+        * Bug_1476_Regression/Client_Task.cpp
+        * Bug_1476_Regression/client.cpp
+        * Bug_1482_Regression/client.cpp
+        * Bug_1551_Regression/client.cpp
+        * CDR/basic_types.cpp
+        * tests/Connection_Timeout/client.cpp
+        * tests/Crashed_Callback/client.cpp
+        * tests/Crashed_Callback/server.cpp
+        * tests/DynAny_Test/data.cpp
+        * tests/DynAny_Test/data.h
+          Added missing includes that are needed because of file moves
+
+        * tests/Any/Recursive/RecursiveHello.mpc:
+          Don't use -GA, causes problems with the recursive structs
+
+        * tao/corba.h:
+          Removed AnySeqC, file moved to a seperate library
+
+        * tao/BD_String_Argument_T.h:
+        * tao/PortableServer/BD_String_SArgument_T.{h,inl}:
+          Fixed some errors in these files
+
+        * tao/Fixed_Size_Argument_T.cpp
+        * tao/Fixed_Size_Argument_T.h
+        * tao/Fixed_Size_Argument_T.inl
+        * tao/PortableServer/Fixed_Size_SArgument_T.h
+        * tao/PortableServer/Fixed_Size_SArgument_T.inl
+          Updated
+
+        * tao/orb.idl
+          Removed moved files
+
 Wed Aug 10 08:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
