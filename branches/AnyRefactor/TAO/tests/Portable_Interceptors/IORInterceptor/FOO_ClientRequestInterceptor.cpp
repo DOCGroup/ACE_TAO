@@ -3,7 +3,7 @@
 
 #include "ace/Log_Msg.h"
 
-#include "tao/TC_Constants_Forward.h"
+#include "tao/AnyTypeCode/TC_Constants_Forward.h"
 
 ACE_RCSID (IORInterceptor,
            FOO_ClientRequestInterceptor,
