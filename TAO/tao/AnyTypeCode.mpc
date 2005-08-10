@@ -71,6 +71,7 @@ project : taolib, core {
     AnyTypeCode/UShortSeqA.cpp
     AnyTypeCode/Value_TypeCode_Static.cpp
     AnyTypeCode/ValueModifierC.cpp
+    AnyTypeCode/ValueModifierA.cpp
     AnyTypeCode/VisibilityA.cpp
     AnyTypeCode/VisibilityC.cpp
     AnyTypeCode/WCharSeqA.cpp
