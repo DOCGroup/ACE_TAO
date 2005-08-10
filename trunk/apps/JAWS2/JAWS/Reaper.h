@@ -19,7 +19,7 @@
 
 class JAWS_Concurrency_Base;
 
-class JAWS_Export JAWS_Reaper : public ACE_Task<ACE_MT_SYNCH>
+class JAWS_Export JAWS_Reaper : public ACE_Task<ACE_SYNCH>
 {
   // = TITLE
   //   Reap threads for the concurrency strategies
