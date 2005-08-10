@@ -90,9 +90,13 @@ TAO_CORBANAME_Parser::parse_string (const char *ior,
       pos_seperator = corbaname_str.find ("#", 0);
 
       // Get the Key String
-      ACE_CString key_string =
-        corbaname_str.substring (pos_seperator + 1,
-                                 -1);
+      ACE_CString key_string;
+
+      if (pos_seperator != ACE_CString::npos)
+        {
+          key_string = corbaname_str.substring (pos_seperator + 1,
+                                                -1);
+        }
 
       // Prepare a suitable corbaloc string for the name service.
       // CORBALOC assumes "NameService" for the object key if none
@@ -126,11 +130,20 @@ TAO_CORBANAME_Parser::parse_string (const char *ior,
                             0);
         }
 
-      // Make a dynamic request for resolve_str in this naming context
-      obj = this->parse_string_dynamic_request_helper (name_context.in (),
-                                                       key_string
+      if (key_string.length () != 0)
+        {
+
+          // Make a dynamic request for resolve_str in this naming context
+          obj = this->parse_string_dynamic_request_helper (name_context.in (),
+                                                           key_string
                                                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+          ACE_TRY_CHECK;
+        }
+      else
+        { // There was no key string which implies that the caller wants
+          // the object reference of the naming service.
+          obj = name_context._retn ();
+        }
     }
   ACE_CATCH (CORBA::SystemException, ex)
     {
