@@ -1,62 +1,57 @@
-//
-// $Id$
-//
-// ================================================================
-//
-// = LIBRARY
-//   TAO_IFR_Client
-//
-// = FILENAME
-//   IFR_Extended.pidl
-//
-// = DESCRIPTION
-//   This file was used to generate the code in IFR_ExtendedC.{h,i,cpp}.
-//   The original file Interface.idl was split into four pieces, to
-//   keep the generated files to a manageable size and reduce build
-//   time. This IDL file contains all the interfaces and other data
-//   types related to fixed types and valuetypes.
-//
-//   The command used to generate code from this IDL file is:
-//
-//     tao_idl -Ge 1 -Sc -I../.. -GA \
-//          -Wb,export_macro=TAO_IFR_Client_Export \
-//          -Wb,export_include=ifr_client_export.h \
-//          -Wb,pre_include="ace/pre.h" \
-//          -Wb,post_include="ace/post.h" \
-//          IFR_Extended.pidl
-//
-//   Only the stub files are used in the TAO_IFR_Client library. The
-//   skeleton files can be deleted from this directory.
-//
-//   No patching of the generated stub files is necessary.
-//
-//   To generate the skeleton files for the IFR Service, the command is:
-//
-//     tao_idl -o ../../orbsvcs/orbsvcs/IFRService -Ge 1 \
-//          -Wb,pre_include="ace/pre.h" \
-//          -Wb,post_include="ace/post.h" \
-//          IFR_Extended.pidl
-//
-//   The only modification necessary to the skelton files is to
-//   change
-//
-//   #include "IFR_ExtendedC.h"
-//
-//   to
-//
-//   #include "tao/IFR_Client/IFR_ExtendedC.h"
-//
-//   in IFR_ExtendedS.h. The stub files may be deleted from the IFRService
-//   directory.
-//
-// ================================================================
+// -*- IDL -*-
+
+/**
+ * @file IFR_Extended.pidl
+ *
+ * $Id$
+ *
+ *   This file was used to generate the code in IFR_ExtendedC.{h,i,cpp}.
+ *   The original file Interface.idl was split into four pieces, to
+ *   keep the generated files to a manageable size and reduce build
+ *   time. This IDL file contains all the interfaces and other data
+ *   types related to fixed types and valuetypes.
+ *
+ *   The command used to generate code from this IDL file is:
+ *
+ *     tao_idl -Ge 1 -Sc -I../.. -GA \
+ *          -Wb,export_macro=TAO_IFR_Client_Export \
+ *          -Wb,export_include=ifr_client_export.h \
+ *          -Wb,pre_include="ace/pre.h" \
+ *          -Wb,post_include="ace/post.h" \
+ *          IFR_Extended.pidl
+ *
+ *   Only the stub files are used in the TAO_IFR_Client library. The
+ *   skeleton files can be deleted from this directory.
+ *
+ *   No patching of the generated stub files is necessary.
+ *
+ *   To generate the skeleton files for the IFR Service, the command is:
+ *
+ *     tao_idl -o ../../orbsvcs/orbsvcs/IFRService -Ge 1 \
+ *          -Wb,pre_include="ace/pre.h" \
+ *          -Wb,post_include="ace/post.h" \
+ *          IFR_Extended.pidl
+ *
+ *   The only modification necessary to the skelton files is to
+ *   change
+ *
+ *   #include "IFR_ExtendedC.h"
+ *
+ *   to
+ *
+ *   #include "tao/IFR_Client/IFR_ExtendedC.h"
+ *
+ *   in IFR_ExtendedS.h. The stub files may be deleted from the IFRService
+ *   directory.
+ *
+ */
 
 #ifndef _IFR_EXTENDED_IDL_
 #define _IFR_EXTENDED_IDL_
 
 #include "tao/IFR_Client/IFR_Basic.pidl"
-#include <Visibility.pidl>
-#include <ValueModifier.pidl>
+#include "tao/AnyTypeCode/Visibility.pidl"
+#include "tao/AnyTypeCode/ValueModifier.pidl"
 
 module CORBA
 {
