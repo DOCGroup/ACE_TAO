@@ -176,7 +176,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       << "_ptr> (0);" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  if (be_global->any_support ())
+  if (be_global->any_support () && !node->is_local ())
     {
       *os << "static void _tao_any_destructor (void *);";
     }
