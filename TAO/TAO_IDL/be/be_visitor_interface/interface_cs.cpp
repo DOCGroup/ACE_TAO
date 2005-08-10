@@ -266,7 +266,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << " (void)" << be_nl;
   *os << "{}" << be_nl << be_nl;
 
-  if (be_global->any_support ())
+  if (be_global->any_support () && !node->is_local ())
     {
       *os << "void " << be_nl
           << node->name ()
