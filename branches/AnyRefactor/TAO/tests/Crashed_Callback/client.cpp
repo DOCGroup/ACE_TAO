@@ -3,6 +3,7 @@
 #include "Crashed_Callback.h"
 
 #include "tao/Messaging/Messaging.h"
+#include "tao/AnyTypeCode/Any.h"
 #include "ace/Get_Opt.h"
 
 ACE_RCSID(Crashed_Callback, client, "$Id$")

@@ -18,9 +18,12 @@ template<typename S,
 ACE_INLINE
 TAO::Inout_Fixed_Size_SArgument_T<S,Insert_Policy>::
 Inout_Fixed_Size_SArgument_T (void)
-{}
+{
+}
 
-template<typename S>
+template<typename S,
+         typename Insert_Policy>
+ACE_INLINE
 S &
 TAO::Inout_Fixed_Size_SArgument_T<S,Insert_Policy>::arg (void)
 {
@@ -37,7 +40,9 @@ TAO::Out_Fixed_Size_SArgument_T<S,
 Out_Fixed_Size_SArgument_T (void)
 {}
 
-template<typename S>
+template<typename S,
+         typename Insert_Policy>
+ACE_INLINE
 S &
 TAO::Out_Fixed_Size_SArgument_T<S,Insert_Policy>::arg (void)
 {

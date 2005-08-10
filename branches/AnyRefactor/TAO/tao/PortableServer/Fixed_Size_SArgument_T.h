@@ -52,7 +52,7 @@ namespace TAO
     virtual CORBA::Boolean demarshal (TAO_InputCDR & cdr);
 
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_value (CORBA::Any *any) const
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     //@}
 
