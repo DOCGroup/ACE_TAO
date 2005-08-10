@@ -5,7 +5,8 @@
 #include "xercesc/util/XMLUniDefs.hpp"
 #include "xercesc/dom/DOM.hpp"
 #include "XML_Error_Handler.h"
-
+#include "xercesc/framework/LocalFileFormatTarget.hpp"
+#include "XercesString.h"
 
 namespace CIAO
 {
@@ -68,6 +69,16 @@ namespace CIAO
           return;
         }
 
+      // Instantiate the DOM parser.
+      static const XMLCh gLS[] = { xercesc::chLatin_L,
+				   xercesc::chLatin_S,
+				   xercesc::chNull };
+      
+      // Get an implementation of the Load-Store (LS) interface
+      // and cache it for later use
+      impl_ =
+	  DOMImplementationRegistry::getDOMImplementation(gLS);
+      
       this->initialized_ = true;
       return;
     }
@@ -77,22 +88,17 @@ namespace CIAO
     {
 
       if (url == 0)
-        throw;
+	  return impl_->createDocument(
+	      XStr ("http://www.omg.org/DeploymentPlan"),
+	      XStr ("deploymentPlan"),
+	      0);
 
       try
         {
-          // Instantiate the DOM parser.
-          static const XMLCh gLS[] = { xercesc::chLatin_L,
-                                       xercesc::chLatin_S,
-                                       xercesc::chNull };
-
-          // Get an implementation of the Load-Store (LS) interface
-          DOMImplementation* impl =
-            DOMImplementationRegistry::getDOMImplementation(gLS);
 
           // Create a DOMBuilder
           DOMBuilder* parser =
-            impl->createDOMBuilder (DOMImplementationLS::MODE_SYNCHRONOUS,
+            impl_->createDOMBuilder (DOMImplementationLS::MODE_SYNCHRONOUS,
                                     0);
 
           // Discard comment nodes in the document
@@ -190,5 +196,18 @@ namespace CIAO
       this->initialized_ = false;
       return;
     }
+
+      bool XML_Helper::write_DOM (XERCES_CPP_NAMESPACE::DOMDocument *doc,
+				 ACE_TCHAR *file)
+      {
+	  bool retn;
+	  XERCES_CPP_NAMESPACE::DOMWriter *writer = impl_->createDOMWriter();
+	  xercesc::XMLFormatTarget* ft (new xercesc::LocalFileFormatTarget(file));
+	  retn = writer->writeNode(ft, *doc);
+	  delete writer;
+	  delete ft;
+	  return retn;
+      }
+	  
   }
 }

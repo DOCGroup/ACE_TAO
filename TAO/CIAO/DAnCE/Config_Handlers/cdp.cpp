@@ -10,6 +10,7 @@
  */
  
 #include "cdp.hpp"
+#include "ace/Log_Msg.h"
 
 namespace CIAO
 {

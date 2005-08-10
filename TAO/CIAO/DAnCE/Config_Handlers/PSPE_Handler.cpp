@@ -71,7 +71,7 @@ namespace CIAO
       if (src.kind () == CCMComponentPortKind::EventConsumer)
         dest.kind = Deployment::EventConsumer;
     }
-/*
+
     PlanSubcomponentPortEndpoint
     PSPE_Handler::sub_component_port_endpoint (
       const Deployment::PlanSubcomponentPortEndpoint &src)
@@ -79,11 +79,16 @@ namespace CIAO
       XMLSchema::string< char > pname ((src.portName));
       XMLSchema::string< char > tval  ("true");
       XMLSchema::string< char > prov  ("");
-
+      ACE_CString id;
+      IDD_Handler::IDREF.find_ref(src.instanceRef, id);
+      XMLSchema::IDREF < ACE_TCHAR > idref(id.c_str()); 
+      
       if (src.provider)
         prov = tval;
 
-      PlanSubcomponentPortEndpoint pspe (pname,CCMComponentPortKind::Facet);
+      PlanSubcomponentPortEndpoint pspe (pname,
+					 CCMComponentPortKind::Facet,
+					 idref);
       pspe.provider (prov);
       
       if (src.kind == ::Deployment::Facet)
@@ -91,7 +96,7 @@ namespace CIAO
       if (src.kind == ::Deployment::SimplexReceptacle)
         pspe.kind (CCMComponentPortKind::SimplexReceptacle);
       if (src.kind == ::Deployment::MultiplexReceptacle)
-        cpd.kind (CCMComponentPortKind::MultiplexReceptacle);
+        pspe.kind (CCMComponentPortKind::MultiplexReceptacle);
       if (src.kind == ::Deployment::EventEmitter)
         pspe.kind (CCMComponentPortKind::EventEmitter);
       if (src.kind == ::Deployment::EventPublisher)
@@ -100,6 +105,6 @@ namespace CIAO
         pspe.kind (CCMComponentPortKind::EventConsumer);
 
       return pspe;
-    } */
+    }
   }
 }

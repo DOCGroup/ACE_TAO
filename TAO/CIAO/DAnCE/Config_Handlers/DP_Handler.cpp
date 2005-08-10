@@ -6,6 +6,7 @@
 #include "MDD_Handler.h"
 #include "IDD_Handler.h"
 #include "ID_Handler.h"
+#include "Property_Handler.h"
 #include "cdp.hpp"
 
 #include "DP_PCD_Handler.h"
@@ -28,7 +29,7 @@ namespace CIAO
     }
     
     DP_Handler::DP_Handler (const ::Deployment::DeploymentPlan &plan)
-      : xsc_dp_ (0),
+      : xsc_dp_ (new DeploymentPlan),
         idl_dp_ (0),
         retval_ (0)
     {
@@ -47,7 +48,7 @@ namespace CIAO
     {
       if (this->retval_ && this->xsc_dp_.get () != 0)
         return this->xsc_dp_.get ();
-      
+
       throw NoPlan ();
     }
     
@@ -106,19 +107,16 @@ namespace CIAO
 
       // Similar thing for dependsOn
       for (DeploymentPlan::dependsOn_const_iterator dstart = xsc_dp.begin_dependsOn ();
-	         dstart != xsc_dp.end_dependsOn ();
-	         ++dstart)
-	    {
-	      CORBA::ULong len =
-	        this->idl_dp_->dependsOn.length ();
-
-	      this->idl_dp_->dependsOn.length (len + 1);
-
-	      ID_Handler::get_ImplementationDependency (
-                this->idl_dp_->dependsOn [len],
+	   dstart != xsc_dp.end_dependsOn ();
+	   ++dstart)
+      {
+	CORBA::ULong len = this->idl_dp_->dependsOn.length ();
+	this->idl_dp_->dependsOn.length (len + 1);
+	ID_Handler::get_ImplementationDependency (
+				   this->idl_dp_->dependsOn [len],
                 *dstart);
 
-	    }
+      }
 
       /* @@ Not needed at this time...
 
@@ -196,16 +194,111 @@ namespace CIAO
         }
 
       DP_PCD_Handler::plan_connection_descrs (xsc_dp, this->idl_dp_->connection);
-
       return this->retval_;
     }
     
     bool
     DP_Handler::build_xsc (const ::Deployment::DeploymentPlan &plan)
     {
-      // @@Lucas: Fill in the implementation here. 
-    }
-    
+      size_t len; //Used for checking the length of struct data members
+      
+      // Read in the label, if present, since minoccurs = 0
+      if (plan.label != 0)
+      {
+	  XMLSchema::string< char > i((plan.label));
+	  this->xsc_dp_->label(i);
+      }
 
+      // Read in the UUID, if present
+      if (plan.UUID != 0)
+      {
+	  XMLSchema::string< char > j((plan.UUID));
+	  this->xsc_dp_->UUID(j);
+      }
+
+      // Similar thing for dependsOn
+      len = plan.dependsOn.length();
+      for (size_t j = 0;
+	   j < len;
+	   ++j)
+      {
+	  this->xsc_dp_->add_dependsOn(
+	      ID_Handler::impl_dependency(
+		  plan.dependsOn[j]));	
+      }
+      
+
+      /* @@ Not needed at this time for the forward handler, so I assume not for the reverse handlers either...
+      // This should be functional if we want to activate it at a later point	 
+      // ... And the property stuff
+      len = plan.infoProperty.length();
+      for (size_t q = 0;
+	   q < len;
+	   q++)
+      {
+	  this->xsc_dp_->add_infoProperty (
+	      Property_Handler::get_property (
+	          plan.infoProperty[q]));
+      }
+      */
+
+      // We are assuming there is a realizes for the moment
+      // @@ We may want to change this at a later date by creating a sequence of
+      // @@ ComponentInterfaceDescriptions in the DeploymentPlan in ../ciao/Deployment_Data.idl
+      // @@ so we can check for length
+      this->xsc_dp_->realizes(CCD_Handler::component_interface_descr(plan.realizes));
+      if (!this->xsc_dp_->realizes_p())
+      {
+	  ACE_DEBUG ((LM_ERROR,
+		      "(%P|%t) DP_Handler: "
+		      "Error parsing Component Interface Descriptor."));
+	  return false;
+      }
+
+      //Take care of the artifact(s) if they exist
+      len = plan.artifact.length();
+      for(size_t k = 0;
+	  k < len;
+	  k++)
+      {
+	  this->xsc_dp_->add_artifact (
+	      ADD_Handler::artifact_deployment_descr (
+		  plan.artifact[k]));
+      }
+      
+      //Take care of the implementation(s) if they exist
+      len = plan.implementation.length();
+      for(size_t l = 0;
+	  l < len;
+	  l++)
+      {
+	  this->xsc_dp_->add_implementation (
+	      MDD_Handler::mono_deployment_description (
+		  plan.implementation[l]));
+      }
+    
+      //Ditto for the instance(s)
+      len = plan.instance.length();
+      for(size_t m = 0;
+	  m < len;
+	  m++)
+      {
+	  this->xsc_dp_->add_instance (
+	      IDD_Handler::instance_deployment_descr (
+		  plan.instance[m]));
+      }
+
+      //Finally, take care of the Connection Planning
+      len = plan.connection.length();
+      for(size_t n = 0; n < len; n++)
+      {
+	  this->xsc_dp_->add_connection (
+	      DP_PCD_Handler::plan_connection_descr (
+		  plan.connection[n]));
+      }
+      
+      retval_ = true;
+      return true;
+    }
   }
 }

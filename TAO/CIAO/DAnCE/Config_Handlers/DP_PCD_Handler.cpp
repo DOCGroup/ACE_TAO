@@ -5,6 +5,7 @@
 #include "PSPE_Handler.h"
 #include "ERE_Handler.h"
 #include "CRDD_Handler.h"
+#include "PCD_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "cdp.hpp"
 #include "ciao/Deployment_DataC.h"
@@ -41,6 +42,14 @@ namespace CIAO
         }
 
       return true;
+    }
+    
+    PlanConnectionDescription
+    DP_PCD_Handler::plan_connection_descr (
+	const Deployment::PlanConnectionDescription &src)
+    {
+	PlanConnectionDescription pcd = PCD_Handler::get_PlanConnectionDescription(src);
+	return pcd;
     }
 
     bool

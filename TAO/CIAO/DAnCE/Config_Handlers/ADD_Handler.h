@@ -54,8 +54,8 @@ namespace CIAO
           ::Deployment::ArtifactDeploymentDescriptions &dest);
 
       static ArtifactDeploymentDescription
-      artifact_deployment_descr (
-        const Deployment::ArtifactDeploymentDescription &src);
+	  artifact_deployment_descr (
+	      const Deployment::ArtifactDeploymentDescription &src);
 
       ///  The IDREF Table associated with this class
       static IDREF_Base IDREF;
