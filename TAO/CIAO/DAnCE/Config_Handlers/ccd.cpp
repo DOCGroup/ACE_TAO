@@ -21,6 +21,7 @@ namespace CIAO
     ComponentInterfaceDescription::
     ComponentInterfaceDescription ()
     : 
+    ::XSCRT::Type (), 
     regulator__ ()
     {
     }
@@ -28,7 +29,7 @@ namespace CIAO
     ComponentInterfaceDescription::
     ComponentInterfaceDescription (::CIAO::Config_Handlers::ComponentInterfaceDescription const& s)
     :
-    ::XSCRT::Type (), 
+    ::XSCRT::Type (),
     label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
     UUID_ (s.UUID_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.UUID_) : 0),
     specificType_ (s.specificType_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.specificType_) : 0),
@@ -306,6 +307,12 @@ namespace CIAO
       supportedType_.back ().container (this);
     }
 
+    size_t ComponentInterfaceDescription::
+    count_supportedType(void)
+    {
+      return supportedType_.size ();
+    }
+
     // ComponentInterfaceDescription
     // 
     ComponentInterfaceDescription::idlFile_iterator ComponentInterfaceDescription::
@@ -355,6 +362,12 @@ namespace CIAO
 
       idlFile_.push_back (e);
       idlFile_.back ().container (this);
+    }
+
+    size_t ComponentInterfaceDescription::
+    count_idlFile(void)
+    {
+      return idlFile_.size ();
     }
 
     // ComponentInterfaceDescription
@@ -408,6 +421,12 @@ namespace CIAO
       configProperty_.back ().container (this);
     }
 
+    size_t ComponentInterfaceDescription::
+    count_configProperty(void)
+    {
+      return configProperty_.size ();
+    }
+
     // ComponentInterfaceDescription
     // 
     ComponentInterfaceDescription::port_iterator ComponentInterfaceDescription::
@@ -457,6 +476,12 @@ namespace CIAO
 
       port_.push_back (e);
       port_.back ().container (this);
+    }
+
+    size_t ComponentInterfaceDescription::
+    count_port(void)
+    {
+      return port_.size ();
     }
 
     // ComponentInterfaceDescription
@@ -510,6 +535,12 @@ namespace CIAO
       property_.back ().container (this);
     }
 
+    size_t ComponentInterfaceDescription::
+    count_property(void)
+    {
+      return property_.size ();
+    }
+
     // ComponentInterfaceDescription
     // 
     ComponentInterfaceDescription::infoProperty_iterator ComponentInterfaceDescription::
@@ -559,6 +590,12 @@ namespace CIAO
 
       infoProperty_.push_back (e);
       infoProperty_.back ().container (this);
+    }
+
+    size_t ComponentInterfaceDescription::
+    count_infoProperty(void)
+    {
+      return infoProperty_.size ();
     }
 
     // ComponentInterfaceDescription
@@ -680,6 +717,907 @@ namespace CIAO
         else 
         {
         }
+      }
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+  }
+}
+
+#include "XMLSchema/TypeInfo.hpp"
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace
+    {
+      ::XMLSchema::TypeInfoInitializer < ACE_TCHAR > XMLSchemaTypeInfoInitializer_ (::XSCRT::extended_type_info_map ());
+
+      struct ComponentInterfaceDescriptionTypeInfoInitializer
+      {
+        ComponentInterfaceDescriptionTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (ComponentInterfaceDescription));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      ComponentInterfaceDescriptionTypeInfoInitializer ComponentInterfaceDescriptionTypeInfoInitializer_;
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Traversal
+    {
+      // ComponentInterfaceDescription
+      //
+      //
+
+      void ComponentInterfaceDescription::
+      traverse (Type& o)
+      {
+        pre (o);
+        if (o.label_p ()) label (o);
+        else label_none (o);
+        if (o.UUID_p ()) UUID (o);
+        else UUID_none (o);
+        if (o.specificType_p ()) specificType (o);
+        else specificType_none (o);
+        supportedType (o);
+        idlFile (o);
+        configProperty (o);
+        port (o);
+        property (o);
+        infoProperty (o);
+        if (o.contentLocation_p ()) contentLocation (o);
+        else contentLocation_none (o);
+        post (o);
+      }
+
+      void ComponentInterfaceDescription::
+      traverse (Type const& o)
+      {
+        pre (o);
+        if (o.label_p ()) label (o);
+        else label_none (o);
+        if (o.UUID_p ()) UUID (o);
+        else UUID_none (o);
+        if (o.specificType_p ()) specificType (o);
+        else specificType_none (o);
+        supportedType (o);
+        idlFile (o);
+        configProperty (o);
+        port (o);
+        property (o);
+        infoProperty (o);
+        if (o.contentLocation_p ()) contentLocation (o);
+        else contentLocation_none (o);
+        post (o);
+      }
+
+      void ComponentInterfaceDescription::
+      pre (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      pre (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      label (Type& o)
+      {
+        dispatch (o.label ());
+      }
+
+      void ComponentInterfaceDescription::
+      label (Type const& o)
+      {
+        dispatch (o.label ());
+      }
+
+      void ComponentInterfaceDescription::
+      label_none (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      label_none (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      UUID (Type& o)
+      {
+        dispatch (o.UUID ());
+      }
+
+      void ComponentInterfaceDescription::
+      UUID (Type const& o)
+      {
+        dispatch (o.UUID ());
+      }
+
+      void ComponentInterfaceDescription::
+      UUID_none (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      UUID_none (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      specificType (Type& o)
+      {
+        dispatch (o.specificType ());
+      }
+
+      void ComponentInterfaceDescription::
+      specificType (Type const& o)
+      {
+        dispatch (o.specificType ());
+      }
+
+      void ComponentInterfaceDescription::
+      specificType_none (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      specificType_none (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      supportedType (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ComponentInterfaceDescription::Type::supportedType_iterator b (o.begin_supportedType()), e (o.end_supportedType());
+
+        if (b != e)
+        {
+          supportedType_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) supportedType_next (o);
+          }
+
+          supportedType_post (o);
+        }
+
+        else supportedType_none (o);
+      }
+
+      void ComponentInterfaceDescription::
+      supportedType (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ComponentInterfaceDescription::Type::supportedType_const_iterator b (o.begin_supportedType()), e (o.end_supportedType());
+
+        if (b != e)
+        {
+          supportedType_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) supportedType_next (o);
+          }
+
+          supportedType_post (o);
+        }
+
+        else supportedType_none (o);
+      }
+
+      void ComponentInterfaceDescription::
+      supportedType_pre (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      supportedType_pre (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      supportedType_next (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      supportedType_next (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      supportedType_post (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      supportedType_post (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      supportedType_none (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      supportedType_none (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      idlFile (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ComponentInterfaceDescription::Type::idlFile_iterator b (o.begin_idlFile()), e (o.end_idlFile());
+
+        if (b != e)
+        {
+          idlFile_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) idlFile_next (o);
+          }
+
+          idlFile_post (o);
+        }
+
+        else idlFile_none (o);
+      }
+
+      void ComponentInterfaceDescription::
+      idlFile (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ComponentInterfaceDescription::Type::idlFile_const_iterator b (o.begin_idlFile()), e (o.end_idlFile());
+
+        if (b != e)
+        {
+          idlFile_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) idlFile_next (o);
+          }
+
+          idlFile_post (o);
+        }
+
+        else idlFile_none (o);
+      }
+
+      void ComponentInterfaceDescription::
+      idlFile_pre (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      idlFile_pre (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      idlFile_next (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      idlFile_next (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      idlFile_post (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      idlFile_post (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      idlFile_none (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      idlFile_none (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      configProperty (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ComponentInterfaceDescription::Type::configProperty_iterator b (o.begin_configProperty()), e (o.end_configProperty());
+
+        if (b != e)
+        {
+          configProperty_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) configProperty_next (o);
+          }
+
+          configProperty_post (o);
+        }
+
+        else configProperty_none (o);
+      }
+
+      void ComponentInterfaceDescription::
+      configProperty (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ComponentInterfaceDescription::Type::configProperty_const_iterator b (o.begin_configProperty()), e (o.end_configProperty());
+
+        if (b != e)
+        {
+          configProperty_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) configProperty_next (o);
+          }
+
+          configProperty_post (o);
+        }
+
+        else configProperty_none (o);
+      }
+
+      void ComponentInterfaceDescription::
+      configProperty_pre (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      configProperty_pre (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      configProperty_next (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      configProperty_next (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      configProperty_post (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      configProperty_post (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      configProperty_none (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      configProperty_none (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      port (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ComponentInterfaceDescription::Type::port_iterator b (o.begin_port()), e (o.end_port());
+
+        if (b != e)
+        {
+          port_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) port_next (o);
+          }
+
+          port_post (o);
+        }
+
+        else port_none (o);
+      }
+
+      void ComponentInterfaceDescription::
+      port (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ComponentInterfaceDescription::Type::port_const_iterator b (o.begin_port()), e (o.end_port());
+
+        if (b != e)
+        {
+          port_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) port_next (o);
+          }
+
+          port_post (o);
+        }
+
+        else port_none (o);
+      }
+
+      void ComponentInterfaceDescription::
+      port_pre (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      port_pre (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      port_next (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      port_next (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      port_post (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      port_post (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      port_none (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      port_none (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      property (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ComponentInterfaceDescription::Type::property_iterator b (o.begin_property()), e (o.end_property());
+
+        if (b != e)
+        {
+          property_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) property_next (o);
+          }
+
+          property_post (o);
+        }
+
+        else property_none (o);
+      }
+
+      void ComponentInterfaceDescription::
+      property (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ComponentInterfaceDescription::Type::property_const_iterator b (o.begin_property()), e (o.end_property());
+
+        if (b != e)
+        {
+          property_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) property_next (o);
+          }
+
+          property_post (o);
+        }
+
+        else property_none (o);
+      }
+
+      void ComponentInterfaceDescription::
+      property_pre (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      property_pre (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      property_next (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      property_next (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      property_post (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      property_post (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      property_none (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      property_none (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      infoProperty (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ComponentInterfaceDescription::Type::infoProperty_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
+
+        if (b != e)
+        {
+          infoProperty_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) infoProperty_next (o);
+          }
+
+          infoProperty_post (o);
+        }
+
+        else infoProperty_none (o);
+      }
+
+      void ComponentInterfaceDescription::
+      infoProperty (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ComponentInterfaceDescription::Type::infoProperty_const_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
+
+        if (b != e)
+        {
+          infoProperty_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) infoProperty_next (o);
+          }
+
+          infoProperty_post (o);
+        }
+
+        else infoProperty_none (o);
+      }
+
+      void ComponentInterfaceDescription::
+      infoProperty_pre (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      infoProperty_pre (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      infoProperty_next (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      infoProperty_next (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      infoProperty_post (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      infoProperty_post (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      infoProperty_none (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      infoProperty_none (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      contentLocation (Type& o)
+      {
+        dispatch (o.contentLocation ());
+      }
+
+      void ComponentInterfaceDescription::
+      contentLocation (Type const& o)
+      {
+        dispatch (o.contentLocation ());
+      }
+
+      void ComponentInterfaceDescription::
+      contentLocation_none (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      contentLocation_none (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      post (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      post (Type const&)
+      {
+      }
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Writer
+    {
+      // ComponentInterfaceDescription
+      //
+      //
+
+      ComponentInterfaceDescription::
+      ComponentInterfaceDescription (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      ComponentInterfaceDescription::
+      ComponentInterfaceDescription ()
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      traverse (Type const& o)
+      {
+        Traversal::ComponentInterfaceDescription::traverse (o);
+      }
+
+      void ComponentInterfaceDescription::
+      label (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("label", top_ ()));
+        Traversal::ComponentInterfaceDescription::label (o);
+        pop_ ();
+      }
+
+      void ComponentInterfaceDescription::
+      UUID (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("UUID", top_ ()));
+        Traversal::ComponentInterfaceDescription::UUID (o);
+        pop_ ();
+      }
+
+      void ComponentInterfaceDescription::
+      specificType (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("specificType", top_ ()));
+        Traversal::ComponentInterfaceDescription::specificType (o);
+        pop_ ();
+      }
+
+      void ComponentInterfaceDescription::
+      supportedType_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("supportedType", top_ ()));
+      }
+
+      void ComponentInterfaceDescription::
+      supportedType_next (Type const& o)
+      {
+        supportedType_post (o);
+        supportedType_pre (o);
+      }
+
+      void ComponentInterfaceDescription::
+      supportedType_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void ComponentInterfaceDescription::
+      idlFile_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("idlFile", top_ ()));
+      }
+
+      void ComponentInterfaceDescription::
+      idlFile_next (Type const& o)
+      {
+        idlFile_post (o);
+        idlFile_pre (o);
+      }
+
+      void ComponentInterfaceDescription::
+      idlFile_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void ComponentInterfaceDescription::
+      configProperty_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("configProperty", top_ ()));
+      }
+
+      void ComponentInterfaceDescription::
+      configProperty_next (Type const& o)
+      {
+        configProperty_post (o);
+        configProperty_pre (o);
+      }
+
+      void ComponentInterfaceDescription::
+      configProperty_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void ComponentInterfaceDescription::
+      port_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("port", top_ ()));
+      }
+
+      void ComponentInterfaceDescription::
+      port_next (Type const& o)
+      {
+        port_post (o);
+        port_pre (o);
+      }
+
+      void ComponentInterfaceDescription::
+      port_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void ComponentInterfaceDescription::
+      property_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("property", top_ ()));
+      }
+
+      void ComponentInterfaceDescription::
+      property_next (Type const& o)
+      {
+        property_post (o);
+        property_pre (o);
+      }
+
+      void ComponentInterfaceDescription::
+      property_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void ComponentInterfaceDescription::
+      infoProperty_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("infoProperty", top_ ()));
+      }
+
+      void ComponentInterfaceDescription::
+      infoProperty_next (Type const& o)
+      {
+        infoProperty_post (o);
+        infoProperty_pre (o);
+      }
+
+      void ComponentInterfaceDescription::
+      infoProperty_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void ComponentInterfaceDescription::
+      contentLocation (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("contentLocation", top_ ()));
+        Traversal::ComponentInterfaceDescription::contentLocation (o);
+        pop_ ();
       }
     }
   }

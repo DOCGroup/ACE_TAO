@@ -21,6 +21,7 @@ namespace CIAO
     DeploymentPlan::
     DeploymentPlan ()
     : 
+    ::XSCRT::Type (), 
     regulator__ ()
     {
     }
@@ -28,7 +29,7 @@ namespace CIAO
     DeploymentPlan::
     DeploymentPlan (::CIAO::Config_Handlers::DeploymentPlan const& s)
     :
-    ::XSCRT::Type (), 
+    ::XSCRT::Type (),
     label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
     UUID_ (s.UUID_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.UUID_) : 0),
     realizes_ (s.realizes_.get () ? new ::CIAO::Config_Handlers::ComponentInterfaceDescription (*s.realizes_) : 0),
@@ -300,6 +301,12 @@ namespace CIAO
       implementation_.back ().container (this);
     }
 
+    size_t DeploymentPlan::
+    count_implementation(void)
+    {
+      return implementation_.size ();
+    }
+
     // DeploymentPlan
     // 
     DeploymentPlan::instance_iterator DeploymentPlan::
@@ -349,6 +356,12 @@ namespace CIAO
 
       instance_.push_back (e);
       instance_.back ().container (this);
+    }
+
+    size_t DeploymentPlan::
+    count_instance(void)
+    {
+      return instance_.size ();
     }
 
     // DeploymentPlan
@@ -402,6 +415,12 @@ namespace CIAO
       connection_.back ().container (this);
     }
 
+    size_t DeploymentPlan::
+    count_connection(void)
+    {
+      return connection_.size ();
+    }
+
     // DeploymentPlan
     // 
     DeploymentPlan::dependsOn_iterator DeploymentPlan::
@@ -451,6 +470,12 @@ namespace CIAO
 
       dependsOn_.push_back (e);
       dependsOn_.back ().container (this);
+    }
+
+    size_t DeploymentPlan::
+    count_dependsOn(void)
+    {
+      return dependsOn_.size ();
     }
 
     // DeploymentPlan
@@ -504,6 +529,12 @@ namespace CIAO
       artifact_.back ().container (this);
     }
 
+    size_t DeploymentPlan::
+    count_artifact(void)
+    {
+      return artifact_.size ();
+    }
+
     // DeploymentPlan
     // 
     DeploymentPlan::infoProperty_iterator DeploymentPlan::
@@ -553,6 +584,12 @@ namespace CIAO
 
       infoProperty_.push_back (e);
       infoProperty_.back ().container (this);
+    }
+
+    size_t DeploymentPlan::
+    count_infoProperty(void)
+    {
+      return infoProperty_.size ();
     }
   }
 }
@@ -633,6 +670,859 @@ namespace CIAO
         else 
         {
         }
+      }
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+  }
+}
+
+#include "XMLSchema/TypeInfo.hpp"
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace
+    {
+      ::XMLSchema::TypeInfoInitializer < ACE_TCHAR > XMLSchemaTypeInfoInitializer_ (::XSCRT::extended_type_info_map ());
+
+      struct DeploymentPlanTypeInfoInitializer
+      {
+        DeploymentPlanTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (DeploymentPlan));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      DeploymentPlanTypeInfoInitializer DeploymentPlanTypeInfoInitializer_;
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Traversal
+    {
+      // DeploymentPlan
+      //
+      //
+
+      void DeploymentPlan::
+      traverse (Type& o)
+      {
+        pre (o);
+        if (o.label_p ()) label (o);
+        else label_none (o);
+        if (o.UUID_p ()) UUID (o);
+        else UUID_none (o);
+        if (o.realizes_p ()) realizes (o);
+        else realizes_none (o);
+        implementation (o);
+        instance (o);
+        connection (o);
+        dependsOn (o);
+        artifact (o);
+        infoProperty (o);
+        post (o);
+      }
+
+      void DeploymentPlan::
+      traverse (Type const& o)
+      {
+        pre (o);
+        if (o.label_p ()) label (o);
+        else label_none (o);
+        if (o.UUID_p ()) UUID (o);
+        else UUID_none (o);
+        if (o.realizes_p ()) realizes (o);
+        else realizes_none (o);
+        implementation (o);
+        instance (o);
+        connection (o);
+        dependsOn (o);
+        artifact (o);
+        infoProperty (o);
+        post (o);
+      }
+
+      void DeploymentPlan::
+      pre (Type&)
+      {
+      }
+
+      void DeploymentPlan::
+      pre (Type const&)
+      {
+      }
+
+      void DeploymentPlan::
+      label (Type& o)
+      {
+        dispatch (o.label ());
+      }
+
+      void DeploymentPlan::
+      label (Type const& o)
+      {
+        dispatch (o.label ());
+      }
+
+      void DeploymentPlan::
+      label_none (Type&)
+      {
+      }
+
+      void DeploymentPlan::
+      label_none (Type const&)
+      {
+      }
+
+      void DeploymentPlan::
+      UUID (Type& o)
+      {
+        dispatch (o.UUID ());
+      }
+
+      void DeploymentPlan::
+      UUID (Type const& o)
+      {
+        dispatch (o.UUID ());
+      }
+
+      void DeploymentPlan::
+      UUID_none (Type&)
+      {
+      }
+
+      void DeploymentPlan::
+      UUID_none (Type const&)
+      {
+      }
+
+      void DeploymentPlan::
+      realizes (Type& o)
+      {
+        dispatch (o.realizes ());
+      }
+
+      void DeploymentPlan::
+      realizes (Type const& o)
+      {
+        dispatch (o.realizes ());
+      }
+
+      void DeploymentPlan::
+      realizes_none (Type&)
+      {
+      }
+
+      void DeploymentPlan::
+      realizes_none (Type const&)
+      {
+      }
+
+      void DeploymentPlan::
+      implementation (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        DeploymentPlan::Type::implementation_iterator b (o.begin_implementation()), e (o.end_implementation());
+
+        if (b != e)
+        {
+          implementation_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) implementation_next (o);
+          }
+
+          implementation_post (o);
+        }
+      }
+
+      void DeploymentPlan::
+      implementation (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        DeploymentPlan::Type::implementation_const_iterator b (o.begin_implementation()), e (o.end_implementation());
+
+        if (b != e)
+        {
+          implementation_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) implementation_next (o);
+          }
+
+          implementation_post (o);
+        }
+      }
+
+      void DeploymentPlan::
+      implementation_pre (Type&)
+      {
+      }
+
+      void DeploymentPlan::
+      implementation_pre (Type const&)
+      {
+      }
+
+      void DeploymentPlan::
+      implementation_next (Type&)
+      {
+      }
+
+      void DeploymentPlan::
+      implementation_next (Type const&)
+      {
+      }
+
+      void DeploymentPlan::
+      implementation_post (Type&)
+      {
+      }
+
+      void DeploymentPlan::
+      implementation_post (Type const&)
+      {
+      }
+
+      void DeploymentPlan::
+      instance (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        DeploymentPlan::Type::instance_iterator b (o.begin_instance()), e (o.end_instance());
+
+        if (b != e)
+        {
+          instance_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) instance_next (o);
+          }
+
+          instance_post (o);
+        }
+
+        else instance_none (o);
+      }
+
+      void DeploymentPlan::
+      instance (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        DeploymentPlan::Type::instance_const_iterator b (o.begin_instance()), e (o.end_instance());
+
+        if (b != e)
+        {
+          instance_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) instance_next (o);
+          }
+
+          instance_post (o);
+        }
+
+        else instance_none (o);
+      }
+
+      void DeploymentPlan::
+      instance_pre (Type&)
+      {
+      }
+
+      void DeploymentPlan::
+      instance_pre (Type const&)
+      {
+      }
+
+      void DeploymentPlan::
+      instance_next (Type&)
+      {
+      }
+
+      void DeploymentPlan::
+      instance_next (Type const&)
+      {
+      }
+
+      void DeploymentPlan::
+      instance_post (Type&)
+      {
+      }
+
+      void DeploymentPlan::
+      instance_post (Type const&)
+      {
+      }
+
+      void DeploymentPlan::
+      instance_none (Type&)
+      {
+      }
+
+      void DeploymentPlan::
+      instance_none (Type const&)
+      {
+      }
+
+      void DeploymentPlan::
+      connection (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        DeploymentPlan::Type::connection_iterator b (o.begin_connection()), e (o.end_connection());
+
+        if (b != e)
+        {
+          connection_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) connection_next (o);
+          }
+
+          connection_post (o);
+        }
+
+        else connection_none (o);
+      }
+
+      void DeploymentPlan::
+      connection (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        DeploymentPlan::Type::connection_const_iterator b (o.begin_connection()), e (o.end_connection());
+
+        if (b != e)
+        {
+          connection_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) connection_next (o);
+          }
+
+          connection_post (o);
+        }
+
+        else connection_none (o);
+      }
+
+      void DeploymentPlan::
+      connection_pre (Type&)
+      {
+      }
+
+      void DeploymentPlan::
+      connection_pre (Type const&)
+      {
+      }
+
+      void DeploymentPlan::
+      connection_next (Type&)
+      {
+      }
+
+      void DeploymentPlan::
+      connection_next (Type const&)
+      {
+      }
+
+      void DeploymentPlan::
+      connection_post (Type&)
+      {
+      }
+
+      void DeploymentPlan::
+      connection_post (Type const&)
+      {
+      }
+
+      void DeploymentPlan::
+      connection_none (Type&)
+      {
+      }
+
+      void DeploymentPlan::
+      connection_none (Type const&)
+      {
+      }
+
+      void DeploymentPlan::
+      dependsOn (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        DeploymentPlan::Type::dependsOn_iterator b (o.begin_dependsOn()), e (o.end_dependsOn());
+
+        if (b != e)
+        {
+          dependsOn_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) dependsOn_next (o);
+          }
+
+          dependsOn_post (o);
+        }
+
+        else dependsOn_none (o);
+      }
+
+      void DeploymentPlan::
+      dependsOn (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        DeploymentPlan::Type::dependsOn_const_iterator b (o.begin_dependsOn()), e (o.end_dependsOn());
+
+        if (b != e)
+        {
+          dependsOn_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) dependsOn_next (o);
+          }
+
+          dependsOn_post (o);
+        }
+
+        else dependsOn_none (o);
+      }
+
+      void DeploymentPlan::
+      dependsOn_pre (Type&)
+      {
+      }
+
+      void DeploymentPlan::
+      dependsOn_pre (Type const&)
+      {
+      }
+
+      void DeploymentPlan::
+      dependsOn_next (Type&)
+      {
+      }
+
+      void DeploymentPlan::
+      dependsOn_next (Type const&)
+      {
+      }
+
+      void DeploymentPlan::
+      dependsOn_post (Type&)
+      {
+      }
+
+      void DeploymentPlan::
+      dependsOn_post (Type const&)
+      {
+      }
+
+      void DeploymentPlan::
+      dependsOn_none (Type&)
+      {
+      }
+
+      void DeploymentPlan::
+      dependsOn_none (Type const&)
+      {
+      }
+
+      void DeploymentPlan::
+      artifact (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        DeploymentPlan::Type::artifact_iterator b (o.begin_artifact()), e (o.end_artifact());
+
+        if (b != e)
+        {
+          artifact_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) artifact_next (o);
+          }
+
+          artifact_post (o);
+        }
+
+        else artifact_none (o);
+      }
+
+      void DeploymentPlan::
+      artifact (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        DeploymentPlan::Type::artifact_const_iterator b (o.begin_artifact()), e (o.end_artifact());
+
+        if (b != e)
+        {
+          artifact_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) artifact_next (o);
+          }
+
+          artifact_post (o);
+        }
+
+        else artifact_none (o);
+      }
+
+      void DeploymentPlan::
+      artifact_pre (Type&)
+      {
+      }
+
+      void DeploymentPlan::
+      artifact_pre (Type const&)
+      {
+      }
+
+      void DeploymentPlan::
+      artifact_next (Type&)
+      {
+      }
+
+      void DeploymentPlan::
+      artifact_next (Type const&)
+      {
+      }
+
+      void DeploymentPlan::
+      artifact_post (Type&)
+      {
+      }
+
+      void DeploymentPlan::
+      artifact_post (Type const&)
+      {
+      }
+
+      void DeploymentPlan::
+      artifact_none (Type&)
+      {
+      }
+
+      void DeploymentPlan::
+      artifact_none (Type const&)
+      {
+      }
+
+      void DeploymentPlan::
+      infoProperty (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        DeploymentPlan::Type::infoProperty_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
+
+        if (b != e)
+        {
+          infoProperty_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) infoProperty_next (o);
+          }
+
+          infoProperty_post (o);
+        }
+
+        else infoProperty_none (o);
+      }
+
+      void DeploymentPlan::
+      infoProperty (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        DeploymentPlan::Type::infoProperty_const_iterator b (o.begin_infoProperty()), e (o.end_infoProperty());
+
+        if (b != e)
+        {
+          infoProperty_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) infoProperty_next (o);
+          }
+
+          infoProperty_post (o);
+        }
+
+        else infoProperty_none (o);
+      }
+
+      void DeploymentPlan::
+      infoProperty_pre (Type&)
+      {
+      }
+
+      void DeploymentPlan::
+      infoProperty_pre (Type const&)
+      {
+      }
+
+      void DeploymentPlan::
+      infoProperty_next (Type&)
+      {
+      }
+
+      void DeploymentPlan::
+      infoProperty_next (Type const&)
+      {
+      }
+
+      void DeploymentPlan::
+      infoProperty_post (Type&)
+      {
+      }
+
+      void DeploymentPlan::
+      infoProperty_post (Type const&)
+      {
+      }
+
+      void DeploymentPlan::
+      infoProperty_none (Type&)
+      {
+      }
+
+      void DeploymentPlan::
+      infoProperty_none (Type const&)
+      {
+      }
+
+      void DeploymentPlan::
+      post (Type&)
+      {
+      }
+
+      void DeploymentPlan::
+      post (Type const&)
+      {
+      }
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Writer
+    {
+      // DeploymentPlan
+      //
+      //
+
+      DeploymentPlan::
+      DeploymentPlan (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      DeploymentPlan::
+      DeploymentPlan ()
+      {
+      }
+
+      void DeploymentPlan::
+      traverse (Type const& o)
+      {
+        Traversal::DeploymentPlan::traverse (o);
+      }
+
+      void DeploymentPlan::
+      label (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("label", top_ ()));
+        Traversal::DeploymentPlan::label (o);
+        pop_ ();
+      }
+
+      void DeploymentPlan::
+      UUID (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("UUID", top_ ()));
+        Traversal::DeploymentPlan::UUID (o);
+        pop_ ();
+      }
+
+      void DeploymentPlan::
+      realizes (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("realizes", top_ ()));
+        Traversal::DeploymentPlan::realizes (o);
+        pop_ ();
+      }
+
+      void DeploymentPlan::
+      implementation_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("implementation", top_ ()));
+      }
+
+      void DeploymentPlan::
+      implementation_next (Type const& o)
+      {
+        implementation_post (o);
+        implementation_pre (o);
+      }
+
+      void DeploymentPlan::
+      implementation_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void DeploymentPlan::
+      instance_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("instance", top_ ()));
+      }
+
+      void DeploymentPlan::
+      instance_next (Type const& o)
+      {
+        instance_post (o);
+        instance_pre (o);
+      }
+
+      void DeploymentPlan::
+      instance_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void DeploymentPlan::
+      connection_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("connection", top_ ()));
+      }
+
+      void DeploymentPlan::
+      connection_next (Type const& o)
+      {
+        connection_post (o);
+        connection_pre (o);
+      }
+
+      void DeploymentPlan::
+      connection_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void DeploymentPlan::
+      dependsOn_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("dependsOn", top_ ()));
+      }
+
+      void DeploymentPlan::
+      dependsOn_next (Type const& o)
+      {
+        dependsOn_post (o);
+        dependsOn_pre (o);
+      }
+
+      void DeploymentPlan::
+      dependsOn_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void DeploymentPlan::
+      artifact_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("artifact", top_ ()));
+      }
+
+      void DeploymentPlan::
+      artifact_next (Type const& o)
+      {
+        artifact_post (o);
+        artifact_pre (o);
+      }
+
+      void DeploymentPlan::
+      artifact_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void DeploymentPlan::
+      infoProperty_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("infoProperty", top_ ()));
+      }
+
+      void DeploymentPlan::
+      infoProperty_next (Type const& o)
+      {
+        infoProperty_post (o);
+        infoProperty_pre (o);
+      }
+
+      void DeploymentPlan::
+      infoProperty_post (Type const&)
+      {
+        pop_ ();
       }
     }
   }

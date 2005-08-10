@@ -149,4 +149,172 @@ namespace CIAO
   }
 }
 
+#include "XMLSchema/Traversal.hpp"
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Traversal
+    {
+      struct Config_Handlers_Export PackageConfiguration : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::PackageConfiguration >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        label (Type&);
+
+        virtual void
+        label (Type const&);
+
+        virtual void
+        label_none (Type&);
+
+        virtual void
+        label_none (Type const&);
+
+        virtual void
+        UUID (Type&);
+
+        virtual void
+        UUID (Type const&);
+
+        virtual void
+        UUID_none (Type&);
+
+        virtual void
+        UUID_none (Type const&);
+
+        virtual void
+        basePackage (Type&);
+
+        virtual void
+        basePackage (Type const&);
+
+        virtual void
+        basePackage_none (Type&);
+
+        virtual void
+        basePackage_none (Type const&);
+
+        virtual void
+        reference (Type&);
+
+        virtual void
+        reference (Type const&);
+
+        virtual void
+        reference_none (Type&);
+
+        virtual void
+        reference_none (Type const&);
+
+        virtual void
+        selectRequirement (Type&);
+
+        virtual void
+        selectRequirement (Type const&);
+
+        virtual void
+        selectRequirement_none (Type&);
+
+        virtual void
+        selectRequirement_none (Type const&);
+
+        virtual void
+        configProperty (Type&);
+
+        virtual void
+        configProperty (Type const&);
+
+        virtual void
+        configProperty_none (Type&);
+
+        virtual void
+        configProperty_none (Type const&);
+
+        virtual void
+        contentLocation (Type&);
+
+        virtual void
+        contentLocation (Type const&);
+
+        virtual void
+        contentLocation_none (Type&);
+
+        virtual void
+        contentLocation_none (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+    }
+  }
+}
+
+#include "XMLSchema/Writer.hpp"
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Writer
+    {
+      struct Config_Handlers_Export PackageConfiguration : Traversal::PackageConfiguration, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::PackageConfiguration Type;
+        PackageConfiguration (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        label (Type const&);
+
+        virtual void
+        UUID (Type const&);
+
+        virtual void
+        basePackage (Type const&);
+
+        virtual void
+        reference (Type const&);
+
+        virtual void
+        selectRequirement (Type const&);
+
+        virtual void
+        configProperty (Type const&);
+
+        virtual void
+        contentLocation (Type const&);
+
+        protected:
+        PackageConfiguration ();
+      };
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+  }
+}
+
 #endif // PCD_HPP
