@@ -4,6 +4,7 @@
 #include "Receiver_i.h"
 #include "SenderC.h"
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
+#include "tao/AnyTypeCode/Any.h"
 #include "Client_Task.h"
 
 ACE_RCSID(BiDirectional, client, "client.cpp,v 1.6 2001/03/30 20:11:05 bala Exp")

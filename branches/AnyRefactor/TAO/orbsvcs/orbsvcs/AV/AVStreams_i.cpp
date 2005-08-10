@@ -21,7 +21,7 @@
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
-#include "tao/Any.h"
+#include "tao/AnyTypeCode/Any.h"
 #include "ace/OS_NS_arpa_inet.h"
 
 #if !defined (__ACE_INLINE__)
