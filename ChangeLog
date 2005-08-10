@@ -1,3 +1,8 @@
+Wed Aug 10 07:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/JAWS2/JAWS/Reaper.h:
+          Fixed compile error in single threaded builds
+
 Tue Aug  9 16:57:09 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/MakeProjectCreator/config/taolib.mpb:
