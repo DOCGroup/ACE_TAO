@@ -26,6 +26,7 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
+#include "tao/AnyTypeCode/Any.h"
 
 class hello_i : public virtual POA_hello
 {

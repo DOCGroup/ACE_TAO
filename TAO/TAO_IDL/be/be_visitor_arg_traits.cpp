@@ -384,8 +384,7 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
               << ": public" << be_idt << be_idt_nl
               << "BD_" << (wide ? "W" : "")
               << "String_" << this->S_ << "Arg_Traits<" << bound
-              << "," << be_nl << "TAO::Any_Insert_Policy_Stream <"
-              << bound << ">" << be_uidt_nl
+              << be_uidt_nl
               << ">"
               << be_uidt << be_uidt << be_uidt_nl
               << "{" << be_nl
@@ -767,7 +766,7 @@ be_visitor_arg_traits::visit_array (be_array *node)
     }
 
   *os << "," << be_nl << "TAO::Any_Insert_Policy_Stream <" << node->name ()
-      << ">";
+      << "_forany" << ">";
 
   *os << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
