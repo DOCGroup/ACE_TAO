@@ -41,7 +41,7 @@ project(*Octet Sequence) : taoexe {
   }
 }
 
-project(*Tc) : taoexe {
+project(*Tc) : taoexe, anytypecode {
   exename  = tc
 
   Source_Files {

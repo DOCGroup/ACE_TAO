@@ -106,6 +106,10 @@ ANYTYPECODE__EXCEPTION_LIST
 
   virtual void insert_into_any (CORBA::Any * any, CORBA::ULong value) = 0;
 
+  virtual void insert_into_any (CORBA::Any * any, CORBA::Long value) = 0;
+
+  virtual void insert_into_any (CORBA::Any * any, CORBA::Short value) = 0;
+
   virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_wchar value) = 0;
 
   virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_char value) = 0;

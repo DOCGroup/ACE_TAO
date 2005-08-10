@@ -91,6 +91,14 @@ ANYTYPECODE__EXCEPTION_LIST
   {
   };
 
+  virtual void insert_into_any (CORBA::Any * any, CORBA::Long value)
+  {
+  };
+
+  virtual void insert_into_any (CORBA::Any * any, CORBA::Short value)
+  {
+  };
+
   virtual void insert_into_any (CORBA::Any * any, CORBA::Policy_ptr policy)
   {
   };

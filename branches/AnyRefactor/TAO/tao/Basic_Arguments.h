@@ -52,13 +52,13 @@ namespace TAO
 
   template<>
   class TAO_Export Arg_Traits<CORBA::Short>
-    : public Basic_Arg_Traits_T<CORBA::Short, TAO::Any_Insert_Policy_Stream <CORBA::Short> >
+    : public Basic_Arg_Traits_T<CORBA::Short, TAO::Any_Insert_Policy_AnyTypeCode_Adapter <CORBA::Short> >
   {
   };
 
   template<>
   class TAO_Export Arg_Traits<CORBA::Long>
-    : public Basic_Arg_Traits_T<CORBA::Long, TAO::Any_Insert_Policy_Stream <CORBA::Long> >
+    : public Basic_Arg_Traits_T<CORBA::Long, TAO::Any_Insert_Policy_AnyTypeCode_Adapter <CORBA::Long> >
   {
   };
 
