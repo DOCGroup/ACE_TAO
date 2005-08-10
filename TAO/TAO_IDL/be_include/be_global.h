@@ -427,9 +427,6 @@ public:
   idl_bool gen_dcps_type_support (void) const;
   // Return the flag.
 
-  void gen_tmplinst (idl_bool value);
-  // Set the flag.
-
   idl_bool gen_tmplinst (void) const;
   // Return the flag.
 
@@ -635,11 +632,6 @@ private:
   idl_bool gen_dcps_type_support_;
   // Flag to indicate whether we are supporting DDS DCPS type definitions.
   // Includes Serializer operators (like TAO_Input/OutuptCDR).
-
-
-  idl_bool gen_tmplinst_;
-  // Flag to indicate if we are generating explicit template instantiations
-  // or not.
 
   LOOKUP_STRATEGY lookup_strategy_;
   // The enumerated value indicating the lookup strategy.

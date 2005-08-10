@@ -84,7 +84,6 @@ BE_GlobalData::BE_GlobalData (void)
     gen_smart_proxies_ (I_FALSE),
     gen_inline_constants_ (I_TRUE),
     gen_dcps_type_support_ (I_FALSE),
-    gen_tmplinst_ (I_FALSE),
     lookup_strategy_ (TAO_PERFECT_HASH),
     void_type_ (0),
     ccmobject_ (0),
@@ -988,18 +987,6 @@ BE_GlobalData::gen_dcps_type_support (void) const
 }
 
 void
-BE_GlobalData::gen_tmplinst (idl_bool val)
-{
-  this->gen_tmplinst_ = val;
-}
-
-idl_bool
-BE_GlobalData::gen_tmplinst (void) const
-{
-  return this->gen_tmplinst_;
-}
-
-void
 BE_GlobalData::lookup_strategy (LOOKUP_STRATEGY s)
 {
   this->lookup_strategy_ = s;
@@ -1668,10 +1655,6 @@ BE_GlobalData::parse_args (long &i, char **av)
                   }
               }
           }
-        else if (av[i][2] == 'T')
-          {
-            be_global->gen_tmplinst (I_TRUE);
-          }
         else
           {
             ACE_ERROR ((
@@ -2019,11 +2002,6 @@ BE_GlobalData::usage (void) const
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT ("    \t\t\tNo effect if TypeCode generation is suppressed\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -GT\t\t\tgenerate explicit template instantiations")
-      ACE_TEXT (" (off by default)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
