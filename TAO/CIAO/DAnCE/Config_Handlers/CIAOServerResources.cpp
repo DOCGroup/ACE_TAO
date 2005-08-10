@@ -239,6 +239,12 @@ namespace CIAO
       arg_.back ().container (this);
     }
 
+    size_t ServerCmdlineOptions::
+    count_arg(void)
+    {
+      return arg_.size ();
+    }
+
 
     // ACESvcConf
     // 
@@ -438,6 +444,12 @@ namespace CIAO
       policySet_.back ().container (this);
     }
 
+    size_t ORBConfigs::
+    count_policySet(void)
+    {
+      return policySet_.size ();
+    }
+
 
     // ORBResources
     // 
@@ -560,6 +572,12 @@ namespace CIAO
       threadpool_.back ().container (this);
     }
 
+    size_t ORBResources::
+    count_threadpool(void)
+    {
+      return threadpool_.size ();
+    }
+
     // ORBResources
     // 
     ORBResources::threadpoolWithLanes_iterator ORBResources::
@@ -611,6 +629,12 @@ namespace CIAO
       threadpoolWithLanes_.back ().container (this);
     }
 
+    size_t ORBResources::
+    count_threadpoolWithLanes(void)
+    {
+      return threadpoolWithLanes_.size ();
+    }
+
     // ORBResources
     // 
     ORBResources::connectionBands_iterator ORBResources::
@@ -660,6 +684,12 @@ namespace CIAO
 
       connectionBands_.push_back (e);
       connectionBands_.back ().container (this);
+    }
+
+    size_t ORBResources::
+    count_connectionBands(void)
+    {
+      return connectionBands_.size ();
     }
 
 
@@ -1159,6 +1189,12 @@ namespace CIAO
       threadpoolLane_.back ().container (this);
     }
 
+    size_t ThreadpoolWithLanesDef::
+    count_threadpoolLane(void)
+    {
+      return threadpoolLane_.size ();
+    }
+
     // ThreadpoolWithLanesDef
     // 
     bool ThreadpoolWithLanesDef::
@@ -1612,6 +1648,12 @@ namespace CIAO
       band_.back ().container (this);
     }
 
+    size_t ConnectionBandsDef::
+    count_band(void)
+    {
+      return band_.size ();
+    }
+
     // ConnectionBandsDef
     // 
     bool ConnectionBandsDef::
@@ -1880,6 +1922,12 @@ namespace CIAO
       priorityModel_.back ().container (this);
     }
 
+    size_t PolicySet::
+    count_priorityModel(void)
+    {
+      return priorityModel_.size ();
+    }
+
     // PolicySet
     // 
     PolicySet::threadpool_iterator PolicySet::
@@ -1931,6 +1979,12 @@ namespace CIAO
       threadpool_.back ().container (this);
     }
 
+    size_t PolicySet::
+    count_threadpool(void)
+    {
+      return threadpool_.size ();
+    }
+
     // PolicySet
     // 
     PolicySet::priorityBandedConnection_iterator PolicySet::
@@ -1980,6 +2034,12 @@ namespace CIAO
 
       priorityBandedConnection_.push_back (e);
       priorityBandedConnection_.back ().container (this);
+    }
+
+    size_t PolicySet::
+    count_priorityBandedConnection(void)
+    {
+      return priorityBandedConnection_.size ();
     }
 
     // PolicySet

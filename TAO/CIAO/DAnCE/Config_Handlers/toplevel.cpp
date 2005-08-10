@@ -21,6 +21,7 @@ namespace CIAO
     TopLevelPackageDescription::
     TopLevelPackageDescription ()
     : 
+    ::XSCRT::Type (), 
     regulator__ ()
     {
     }
@@ -28,7 +29,7 @@ namespace CIAO
     TopLevelPackageDescription::
     TopLevelPackageDescription (::CIAO::Config_Handlers::TopLevelPackageDescription const& s)
     :
-    ::XSCRT::Type (), 
+    ::XSCRT::Type (),
     regulator__ ()
     {
       package_.reserve (s.package_.size ());
@@ -104,6 +105,12 @@ namespace CIAO
       package_.push_back (e);
       package_.back ().container (this);
     }
+
+    size_t TopLevelPackageDescription::
+    count_package(void)
+    {
+      return package_.size ();
+    }
   }
 }
 
@@ -135,6 +142,212 @@ namespace CIAO
         else 
         {
         }
+      }
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+  }
+}
+
+#include "XMLSchema/TypeInfo.hpp"
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace
+    {
+      ::XMLSchema::TypeInfoInitializer < ACE_TCHAR > XMLSchemaTypeInfoInitializer_ (::XSCRT::extended_type_info_map ());
+
+      struct TopLevelPackageDescriptionTypeInfoInitializer
+      {
+        TopLevelPackageDescriptionTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (TopLevelPackageDescription));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      TopLevelPackageDescriptionTypeInfoInitializer TopLevelPackageDescriptionTypeInfoInitializer_;
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Traversal
+    {
+      // TopLevelPackageDescription
+      //
+      //
+
+      void TopLevelPackageDescription::
+      traverse (Type& o)
+      {
+        pre (o);
+        package (o);
+        post (o);
+      }
+
+      void TopLevelPackageDescription::
+      traverse (Type const& o)
+      {
+        pre (o);
+        package (o);
+        post (o);
+      }
+
+      void TopLevelPackageDescription::
+      pre (Type&)
+      {
+      }
+
+      void TopLevelPackageDescription::
+      pre (Type const&)
+      {
+      }
+
+      void TopLevelPackageDescription::
+      package (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        TopLevelPackageDescription::Type::package_iterator b (o.begin_package()), e (o.end_package());
+
+        if (b != e)
+        {
+          package_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) package_next (o);
+          }
+
+          package_post (o);
+        }
+      }
+
+      void TopLevelPackageDescription::
+      package (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        TopLevelPackageDescription::Type::package_const_iterator b (o.begin_package()), e (o.end_package());
+
+        if (b != e)
+        {
+          package_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) package_next (o);
+          }
+
+          package_post (o);
+        }
+      }
+
+      void TopLevelPackageDescription::
+      package_pre (Type&)
+      {
+      }
+
+      void TopLevelPackageDescription::
+      package_pre (Type const&)
+      {
+      }
+
+      void TopLevelPackageDescription::
+      package_next (Type&)
+      {
+      }
+
+      void TopLevelPackageDescription::
+      package_next (Type const&)
+      {
+      }
+
+      void TopLevelPackageDescription::
+      package_post (Type&)
+      {
+      }
+
+      void TopLevelPackageDescription::
+      package_post (Type const&)
+      {
+      }
+
+      void TopLevelPackageDescription::
+      post (Type&)
+      {
+      }
+
+      void TopLevelPackageDescription::
+      post (Type const&)
+      {
+      }
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Writer
+    {
+      // TopLevelPackageDescription
+      //
+      //
+
+      TopLevelPackageDescription::
+      TopLevelPackageDescription (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      TopLevelPackageDescription::
+      TopLevelPackageDescription ()
+      {
+      }
+
+      void TopLevelPackageDescription::
+      traverse (Type const& o)
+      {
+        Traversal::TopLevelPackageDescription::traverse (o);
+      }
+
+      void TopLevelPackageDescription::
+      package_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("package", top_ ()));
+      }
+
+      void TopLevelPackageDescription::
+      package_next (Type const& o)
+      {
+        package_post (o);
+        package_pre (o);
+      }
+
+      void TopLevelPackageDescription::
+      package_post (Type const&)
+      {
+        pop_ ();
       }
     }
   }
