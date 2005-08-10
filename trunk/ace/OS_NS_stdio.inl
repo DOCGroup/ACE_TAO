@@ -1023,17 +1023,18 @@ ACE_INLINE int
 ACE_OS::vsnprintf (char *buffer, size_t maxlen, const char *format, va_list ap)
 {
 #if defined (ACE_HAS_SNPRINTF)
-  int result = 0;
   
-#  if !defined (ACE_WIN32) || (defined (__BORLANDC__) && (__BORLANDC__ >= 0x600))
-  ACE_OSCALL (ACE_SPRINTF_ADAPTER (::vsnprintf (buffer, maxlen, format, ap)),
-              int, -1, result);
+#  if !defined (ACE_WIN32) \
+   || (defined (__BORLANDC__) && (__BORLANDC__ >= 0x600))
+  return ACE_SPRINTF_ADAPTER (::vsnprintf (buffer, maxlen, format, ap));
 #  else
-  ACE_OSCALL (ACE_SPRINTF_ADAPTER (::_vsnprintf (buffer, maxlen, format, ap)),
-              int, -1, result);
+
+  int result =
+    ACE_SPRINTF_ADAPTER (::_vsnprintf (buffer, maxlen, format, ap));
+
   // Win32 doesn't regard a full buffer with no 0-terminate as an
   // overrun.
-  if (result == static_cast <int> (maxlen))
+  if (result == static_cast<int> (maxlen))
     result = -1;
 
   // Win32 doesn't 0-terminate the string if it overruns maxlen.
@@ -1041,7 +1042,8 @@ ACE_OS::vsnprintf (char *buffer, size_t maxlen, const char *format, va_list ap)
     buffer[maxlen-1] = '\0';
 
   return result;
-#endif
+
+# endif
 #else
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (maxlen);
