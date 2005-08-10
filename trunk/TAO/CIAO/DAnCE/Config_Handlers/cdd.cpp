@@ -22,6 +22,7 @@ namespace CIAO
     Domain (::XMLSchema::string< ACE_TCHAR > const& label__,
     ::XMLSchema::string< ACE_TCHAR > const& UUID__)
     : 
+    ::XSCRT::Type (), 
     label_ (new ::XMLSchema::string< ACE_TCHAR > (label__)),
     UUID_ (new ::XMLSchema::string< ACE_TCHAR > (UUID__)),
     regulator__ ()
@@ -33,7 +34,7 @@ namespace CIAO
     Domain::
     Domain (::CIAO::Config_Handlers::Domain const& s)
     :
-    ::XSCRT::Type (), 
+    ::XSCRT::Type (),
     label_ (new ::XMLSchema::string< ACE_TCHAR > (*s.label_)),
     UUID_ (new ::XMLSchema::string< ACE_TCHAR > (*s.UUID_)),
     sharedResource_ (s.sharedResource_.get () ? new ::CIAO::Config_Handlers::SharedResource (*s.sharedResource_) : 0),
@@ -204,6 +205,12 @@ namespace CIAO
       node_.back ().container (this);
     }
 
+    size_t Domain::
+    count_node(void)
+    {
+      return node_.size ();
+    }
+
     // Domain
     // 
     bool Domain::
@@ -293,6 +300,324 @@ namespace CIAO
         else 
         {
         }
+      }
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+  }
+}
+
+#include "XMLSchema/TypeInfo.hpp"
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace
+    {
+      ::XMLSchema::TypeInfoInitializer < ACE_TCHAR > XMLSchemaTypeInfoInitializer_ (::XSCRT::extended_type_info_map ());
+
+      struct DomainTypeInfoInitializer
+      {
+        DomainTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (Domain));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      DomainTypeInfoInitializer DomainTypeInfoInitializer_;
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Traversal
+    {
+      // Domain
+      //
+      //
+
+      void Domain::
+      traverse (Type& o)
+      {
+        pre (o);
+        label (o);
+        UUID (o);
+        if (o.sharedResource_p ()) sharedResource (o);
+        else sharedResource_none (o);
+        node (o);
+        if (o.infoProperty_p ()) infoProperty (o);
+        else infoProperty_none (o);
+        post (o);
+      }
+
+      void Domain::
+      traverse (Type const& o)
+      {
+        pre (o);
+        label (o);
+        UUID (o);
+        if (o.sharedResource_p ()) sharedResource (o);
+        else sharedResource_none (o);
+        node (o);
+        if (o.infoProperty_p ()) infoProperty (o);
+        else infoProperty_none (o);
+        post (o);
+      }
+
+      void Domain::
+      pre (Type&)
+      {
+      }
+
+      void Domain::
+      pre (Type const&)
+      {
+      }
+
+      void Domain::
+      label (Type& o)
+      {
+        dispatch (o.label ());
+      }
+
+      void Domain::
+      label (Type const& o)
+      {
+        dispatch (o.label ());
+      }
+
+      void Domain::
+      UUID (Type& o)
+      {
+        dispatch (o.UUID ());
+      }
+
+      void Domain::
+      UUID (Type const& o)
+      {
+        dispatch (o.UUID ());
+      }
+
+      void Domain::
+      sharedResource (Type& o)
+      {
+        dispatch (o.sharedResource ());
+      }
+
+      void Domain::
+      sharedResource (Type const& o)
+      {
+        dispatch (o.sharedResource ());
+      }
+
+      void Domain::
+      sharedResource_none (Type&)
+      {
+      }
+
+      void Domain::
+      sharedResource_none (Type const&)
+      {
+      }
+
+      void Domain::
+      node (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        Domain::Type::node_iterator b (o.begin_node()), e (o.end_node());
+
+        if (b != e)
+        {
+          node_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) node_next (o);
+          }
+
+          node_post (o);
+        }
+      }
+
+      void Domain::
+      node (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        Domain::Type::node_const_iterator b (o.begin_node()), e (o.end_node());
+
+        if (b != e)
+        {
+          node_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) node_next (o);
+          }
+
+          node_post (o);
+        }
+      }
+
+      void Domain::
+      node_pre (Type&)
+      {
+      }
+
+      void Domain::
+      node_pre (Type const&)
+      {
+      }
+
+      void Domain::
+      node_next (Type&)
+      {
+      }
+
+      void Domain::
+      node_next (Type const&)
+      {
+      }
+
+      void Domain::
+      node_post (Type&)
+      {
+      }
+
+      void Domain::
+      node_post (Type const&)
+      {
+      }
+
+      void Domain::
+      infoProperty (Type& o)
+      {
+        dispatch (o.infoProperty ());
+      }
+
+      void Domain::
+      infoProperty (Type const& o)
+      {
+        dispatch (o.infoProperty ());
+      }
+
+      void Domain::
+      infoProperty_none (Type&)
+      {
+      }
+
+      void Domain::
+      infoProperty_none (Type const&)
+      {
+      }
+
+      void Domain::
+      post (Type&)
+      {
+      }
+
+      void Domain::
+      post (Type const&)
+      {
+      }
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Writer
+    {
+      // Domain
+      //
+      //
+
+      Domain::
+      Domain (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      Domain::
+      Domain ()
+      {
+      }
+
+      void Domain::
+      traverse (Type const& o)
+      {
+        Traversal::Domain::traverse (o);
+      }
+
+      void Domain::
+      label (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("label", top_ ()));
+        Traversal::Domain::label (o);
+        pop_ ();
+      }
+
+      void Domain::
+      UUID (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("UUID", top_ ()));
+        Traversal::Domain::UUID (o);
+        pop_ ();
+      }
+
+      void Domain::
+      sharedResource (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("sharedResource", top_ ()));
+        Traversal::Domain::sharedResource (o);
+        pop_ ();
+      }
+
+      void Domain::
+      node_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("node", top_ ()));
+      }
+
+      void Domain::
+      node_next (Type const& o)
+      {
+        node_post (o);
+        node_pre (o);
+      }
+
+      void Domain::
+      node_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void Domain::
+      infoProperty (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("infoProperty", top_ ()));
+        Traversal::Domain::infoProperty (o);
+        pop_ ();
       }
     }
   }

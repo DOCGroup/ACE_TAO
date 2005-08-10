@@ -1,3 +1,32 @@
+Wed Aug 10 09:39:41 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/Config_Handlers/Basic_Deployment_Data.cpp
+	* DAnCE/Config_Handlers/Basic_Deployment_Data.hpp
+	* DAnCE/Config_Handlers/CIAOServerResources.cpp
+	* DAnCE/Config_Handlers/CIAOServerResources.hpp
+	* DAnCE/Config_Handlers/Deployment.cpp
+	* DAnCE/Config_Handlers/Deployment.hpp
+	* DAnCE/Config_Handlers/ccd.cpp
+	* DAnCE/Config_Handlers/ccd.hpp
+	* DAnCE/Config_Handlers/cdd.cpp
+	* DAnCE/Config_Handlers/cdd.hpp
+	* DAnCE/Config_Handlers/cdp.cpp
+	* DAnCE/Config_Handlers/cdp.hpp
+	* DAnCE/Config_Handlers/cid.cpp
+	* DAnCE/Config_Handlers/cid.hpp
+	* DAnCE/Config_Handlers/cpd.cpp
+	* DAnCE/Config_Handlers/cpd.hpp
+	* DAnCE/Config_Handlers/iad.cpp
+	* DAnCE/Config_Handlers/iad.hpp
+	* DAnCE/Config_Handlers/pcd.cpp
+	* DAnCE/Config_Handlers/pcd.hpp
+	* DAnCE/Config_Handlers/toplevel.cpp
+	* DAnCE/Config_Handlers/toplevel.hpp
+
+	Regenerated with the latest CVS-head version of XSC. These support
+	a couple improvements that will aid in optimizing the config
+	handlers. 
+	
 Tue Aug  9 11:55:13 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
 
         * docs/imgs/component-basic.png

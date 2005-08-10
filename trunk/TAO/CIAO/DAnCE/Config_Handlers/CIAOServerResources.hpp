@@ -120,6 +120,7 @@ namespace CIAO
       arg_const_iterator begin_arg () const;
       arg_const_iterator end_arg () const;
       void add_arg (::XMLSchema::string< ACE_TCHAR > const& );
+      size_t count_arg (void);
 
       protected:
       ::std::vector< ::XMLSchema::string< ACE_TCHAR > > arg_;
@@ -194,6 +195,7 @@ namespace CIAO
       policySet_const_iterator begin_policySet () const;
       policySet_const_iterator end_policySet () const;
       void add_policySet (::CIAO::Config_Handlers::PolicySet const& );
+      size_t count_policySet (void);
 
       protected:
       ::std::vector< ::CIAO::Config_Handlers::PolicySet > policySet_;
@@ -227,6 +229,7 @@ namespace CIAO
       threadpool_const_iterator begin_threadpool () const;
       threadpool_const_iterator end_threadpool () const;
       void add_threadpool (::CIAO::Config_Handlers::ThreadpoolDef const& );
+      size_t count_threadpool (void);
 
       protected:
       ::std::vector< ::CIAO::Config_Handlers::ThreadpoolDef > threadpool_;
@@ -241,6 +244,7 @@ namespace CIAO
       threadpoolWithLanes_const_iterator begin_threadpoolWithLanes () const;
       threadpoolWithLanes_const_iterator end_threadpoolWithLanes () const;
       void add_threadpoolWithLanes (::CIAO::Config_Handlers::ThreadpoolWithLanesDef const& );
+      size_t count_threadpoolWithLanes (void);
 
       protected:
       ::std::vector< ::CIAO::Config_Handlers::ThreadpoolWithLanesDef > threadpoolWithLanes_;
@@ -255,6 +259,7 @@ namespace CIAO
       connectionBands_const_iterator begin_connectionBands () const;
       connectionBands_const_iterator end_connectionBands () const;
       void add_connectionBands (::CIAO::Config_Handlers::ConnectionBandsDef const& );
+      size_t count_connectionBands (void);
 
       protected:
       ::std::vector< ::CIAO::Config_Handlers::ConnectionBandsDef > connectionBands_;
@@ -414,6 +419,7 @@ namespace CIAO
       threadpoolLane_const_iterator begin_threadpoolLane () const;
       threadpoolLane_const_iterator end_threadpoolLane () const;
       void add_threadpoolLane (::CIAO::Config_Handlers::ThreadpoolLaneDef const& );
+      size_t count_threadpoolLane (void);
 
       protected:
       ::std::vector< ::CIAO::Config_Handlers::ThreadpoolLaneDef > threadpoolLane_;
@@ -565,6 +571,7 @@ namespace CIAO
       band_const_iterator begin_band () const;
       band_const_iterator end_band () const;
       void add_band (::CIAO::Config_Handlers::PriorityBandDef const& );
+      size_t count_band (void);
 
       protected:
       ::std::vector< ::CIAO::Config_Handlers::PriorityBandDef > band_;
@@ -650,6 +657,7 @@ namespace CIAO
       priorityModel_const_iterator begin_priorityModel () const;
       priorityModel_const_iterator end_priorityModel () const;
       void add_priorityModel (::CIAO::Config_Handlers::PriorityModelPolicyDef const& );
+      size_t count_priorityModel (void);
 
       protected:
       ::std::vector< ::CIAO::Config_Handlers::PriorityModelPolicyDef > priorityModel_;
@@ -664,6 +672,7 @@ namespace CIAO
       threadpool_const_iterator begin_threadpool () const;
       threadpool_const_iterator end_threadpool () const;
       void add_threadpool (::XMLSchema::IDREF< ACE_TCHAR > const& );
+      size_t count_threadpool (void);
 
       protected:
       ::std::vector< ::XMLSchema::IDREF< ACE_TCHAR > > threadpool_;
@@ -678,6 +687,7 @@ namespace CIAO
       priorityBandedConnection_const_iterator begin_priorityBandedConnection () const;
       priorityBandedConnection_const_iterator end_priorityBandedConnection () const;
       void add_priorityBandedConnection (::XMLSchema::IDREF< ACE_TCHAR > const& );
+      size_t count_priorityBandedConnection (void);
 
       protected:
       ::std::vector< ::XMLSchema::IDREF< ACE_TCHAR > > priorityBandedConnection_;

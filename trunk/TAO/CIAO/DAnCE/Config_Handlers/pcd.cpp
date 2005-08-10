@@ -21,6 +21,7 @@ namespace CIAO
     PackageConfiguration::
     PackageConfiguration ()
     : 
+    ::XSCRT::Type (), 
     regulator__ ()
     {
     }
@@ -28,7 +29,7 @@ namespace CIAO
     PackageConfiguration::
     PackageConfiguration (::CIAO::Config_Handlers::PackageConfiguration const& s)
     :
-    ::XSCRT::Type (), 
+    ::XSCRT::Type (),
     label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
     UUID_ (s.UUID_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.UUID_) : 0),
     basePackage_ (s.basePackage_.get () ? new ::CIAO::Config_Handlers::ComponentPackageDescription (*s.basePackage_) : 0),
@@ -386,6 +387,355 @@ namespace CIAO
         else 
         {
         }
+      }
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+  }
+}
+
+#include "XMLSchema/TypeInfo.hpp"
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace
+    {
+      ::XMLSchema::TypeInfoInitializer < ACE_TCHAR > XMLSchemaTypeInfoInitializer_ (::XSCRT::extended_type_info_map ());
+
+      struct PackageConfigurationTypeInfoInitializer
+      {
+        PackageConfigurationTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (PackageConfiguration));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      PackageConfigurationTypeInfoInitializer PackageConfigurationTypeInfoInitializer_;
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Traversal
+    {
+      // PackageConfiguration
+      //
+      //
+
+      void PackageConfiguration::
+      traverse (Type& o)
+      {
+        pre (o);
+        if (o.label_p ()) label (o);
+        else label_none (o);
+        if (o.UUID_p ()) UUID (o);
+        else UUID_none (o);
+        if (o.basePackage_p ()) basePackage (o);
+        else basePackage_none (o);
+        if (o.reference_p ()) reference (o);
+        else reference_none (o);
+        if (o.selectRequirement_p ()) selectRequirement (o);
+        else selectRequirement_none (o);
+        if (o.configProperty_p ()) configProperty (o);
+        else configProperty_none (o);
+        if (o.contentLocation_p ()) contentLocation (o);
+        else contentLocation_none (o);
+        post (o);
+      }
+
+      void PackageConfiguration::
+      traverse (Type const& o)
+      {
+        pre (o);
+        if (o.label_p ()) label (o);
+        else label_none (o);
+        if (o.UUID_p ()) UUID (o);
+        else UUID_none (o);
+        if (o.basePackage_p ()) basePackage (o);
+        else basePackage_none (o);
+        if (o.reference_p ()) reference (o);
+        else reference_none (o);
+        if (o.selectRequirement_p ()) selectRequirement (o);
+        else selectRequirement_none (o);
+        if (o.configProperty_p ()) configProperty (o);
+        else configProperty_none (o);
+        if (o.contentLocation_p ()) contentLocation (o);
+        else contentLocation_none (o);
+        post (o);
+      }
+
+      void PackageConfiguration::
+      pre (Type&)
+      {
+      }
+
+      void PackageConfiguration::
+      pre (Type const&)
+      {
+      }
+
+      void PackageConfiguration::
+      label (Type& o)
+      {
+        dispatch (o.label ());
+      }
+
+      void PackageConfiguration::
+      label (Type const& o)
+      {
+        dispatch (o.label ());
+      }
+
+      void PackageConfiguration::
+      label_none (Type&)
+      {
+      }
+
+      void PackageConfiguration::
+      label_none (Type const&)
+      {
+      }
+
+      void PackageConfiguration::
+      UUID (Type& o)
+      {
+        dispatch (o.UUID ());
+      }
+
+      void PackageConfiguration::
+      UUID (Type const& o)
+      {
+        dispatch (o.UUID ());
+      }
+
+      void PackageConfiguration::
+      UUID_none (Type&)
+      {
+      }
+
+      void PackageConfiguration::
+      UUID_none (Type const&)
+      {
+      }
+
+      void PackageConfiguration::
+      basePackage (Type& o)
+      {
+        dispatch (o.basePackage ());
+      }
+
+      void PackageConfiguration::
+      basePackage (Type const& o)
+      {
+        dispatch (o.basePackage ());
+      }
+
+      void PackageConfiguration::
+      basePackage_none (Type&)
+      {
+      }
+
+      void PackageConfiguration::
+      basePackage_none (Type const&)
+      {
+      }
+
+      void PackageConfiguration::
+      reference (Type& o)
+      {
+        dispatch (o.reference ());
+      }
+
+      void PackageConfiguration::
+      reference (Type const& o)
+      {
+        dispatch (o.reference ());
+      }
+
+      void PackageConfiguration::
+      reference_none (Type&)
+      {
+      }
+
+      void PackageConfiguration::
+      reference_none (Type const&)
+      {
+      }
+
+      void PackageConfiguration::
+      selectRequirement (Type& o)
+      {
+        dispatch (o.selectRequirement ());
+      }
+
+      void PackageConfiguration::
+      selectRequirement (Type const& o)
+      {
+        dispatch (o.selectRequirement ());
+      }
+
+      void PackageConfiguration::
+      selectRequirement_none (Type&)
+      {
+      }
+
+      void PackageConfiguration::
+      selectRequirement_none (Type const&)
+      {
+      }
+
+      void PackageConfiguration::
+      configProperty (Type& o)
+      {
+        dispatch (o.configProperty ());
+      }
+
+      void PackageConfiguration::
+      configProperty (Type const& o)
+      {
+        dispatch (o.configProperty ());
+      }
+
+      void PackageConfiguration::
+      configProperty_none (Type&)
+      {
+      }
+
+      void PackageConfiguration::
+      configProperty_none (Type const&)
+      {
+      }
+
+      void PackageConfiguration::
+      contentLocation (Type& o)
+      {
+        dispatch (o.contentLocation ());
+      }
+
+      void PackageConfiguration::
+      contentLocation (Type const& o)
+      {
+        dispatch (o.contentLocation ());
+      }
+
+      void PackageConfiguration::
+      contentLocation_none (Type&)
+      {
+      }
+
+      void PackageConfiguration::
+      contentLocation_none (Type const&)
+      {
+      }
+
+      void PackageConfiguration::
+      post (Type&)
+      {
+      }
+
+      void PackageConfiguration::
+      post (Type const&)
+      {
+      }
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Writer
+    {
+      // PackageConfiguration
+      //
+      //
+
+      PackageConfiguration::
+      PackageConfiguration (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      PackageConfiguration::
+      PackageConfiguration ()
+      {
+      }
+
+      void PackageConfiguration::
+      traverse (Type const& o)
+      {
+        Traversal::PackageConfiguration::traverse (o);
+      }
+
+      void PackageConfiguration::
+      label (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("label", top_ ()));
+        Traversal::PackageConfiguration::label (o);
+        pop_ ();
+      }
+
+      void PackageConfiguration::
+      UUID (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("UUID", top_ ()));
+        Traversal::PackageConfiguration::UUID (o);
+        pop_ ();
+      }
+
+      void PackageConfiguration::
+      basePackage (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("basePackage", top_ ()));
+        Traversal::PackageConfiguration::basePackage (o);
+        pop_ ();
+      }
+
+      void PackageConfiguration::
+      reference (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("reference", top_ ()));
+        Traversal::PackageConfiguration::reference (o);
+        pop_ ();
+      }
+
+      void PackageConfiguration::
+      selectRequirement (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("selectRequirement", top_ ()));
+        Traversal::PackageConfiguration::selectRequirement (o);
+        pop_ ();
+      }
+
+      void PackageConfiguration::
+      configProperty (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("configProperty", top_ ()));
+        Traversal::PackageConfiguration::configProperty (o);
+        pop_ ();
+      }
+
+      void PackageConfiguration::
+      contentLocation (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("contentLocation", top_ ()));
+        Traversal::PackageConfiguration::contentLocation (o);
+        pop_ ();
       }
     }
   }

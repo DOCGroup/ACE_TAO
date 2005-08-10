@@ -3,26 +3,26 @@
  *
  * Changes made to this code will most likely be overwritten
  * when the handlers are recompiled.
- *
+ * 
  * If you find errors or feel that there are bugfixes to be made,
  * please contact the current XSC maintainer:
  *             Will Otte <wotte@dre.vanderbilt.edu>
  */
-
+ 
 #include "cpd.hpp"
 
 namespace CIAO
 {
   namespace Config_Handlers
   {
-
     // PackagedComponentImplementation
-    //
+    // 
 
     PackagedComponentImplementation::
     PackagedComponentImplementation (::XMLSchema::string< ACE_TCHAR > const& name__,
     ::CIAO::Config_Handlers::ComponentImplementationDescription const& referencedImplementation__)
-    :
+    : 
+    ::XSCRT::Type (), 
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
     referencedImplementation_ (new ::CIAO::Config_Handlers::ComponentImplementationDescription (referencedImplementation__)),
     regulator__ ()
@@ -55,7 +55,7 @@ namespace CIAO
 
 
     // PackagedComponentImplementation
-    //
+    // 
     ::XMLSchema::string< ACE_TCHAR > const& PackagedComponentImplementation::
     name () const
     {
@@ -75,7 +75,7 @@ namespace CIAO
     }
 
     // PackagedComponentImplementation
-    //
+    // 
     ::CIAO::Config_Handlers::ComponentImplementationDescription const& PackagedComponentImplementation::
     referencedImplementation () const
     {
@@ -96,11 +96,12 @@ namespace CIAO
 
 
     // ComponentPackageDescription
-    //
+    // 
 
     ComponentPackageDescription::
     ComponentPackageDescription ()
-    :
+    : 
+    ::XSCRT::Type (), 
     regulator__ ()
     {
     }
@@ -161,7 +162,7 @@ namespace CIAO
 
 
     // ComponentPackageDescription
-    //
+    // 
     bool ComponentPackageDescription::
     label_p () const
     {
@@ -196,7 +197,7 @@ namespace CIAO
     }
 
     // ComponentPackageDescription
-    //
+    // 
     bool ComponentPackageDescription::
     UUID_p () const
     {
@@ -231,7 +232,7 @@ namespace CIAO
     }
 
     // ComponentPackageDescription
-    //
+    // 
     bool ComponentPackageDescription::
     realizes_p () const
     {
@@ -266,7 +267,7 @@ namespace CIAO
     }
 
     // ComponentPackageDescription
-    //
+    // 
     bool ComponentPackageDescription::
     configProperty_p () const
     {
@@ -301,7 +302,7 @@ namespace CIAO
     }
 
     // ComponentPackageDescription
-    //
+    // 
     bool ComponentPackageDescription::
     implementation_p () const
     {
@@ -336,7 +337,7 @@ namespace CIAO
     }
 
     // ComponentPackageDescription
-    //
+    // 
     bool ComponentPackageDescription::
     infoProperty_p () const
     {
@@ -371,7 +372,7 @@ namespace CIAO
     }
 
     // ComponentPackageDescription
-    //
+    // 
     bool ComponentPackageDescription::
     contentLocation_p () const
     {
@@ -406,7 +407,7 @@ namespace CIAO
     }
 
     // ComponentPackageDescription
-    //
+    // 
     bool ComponentPackageDescription::
     href_p () const
     {
@@ -446,7 +447,6 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-
     // PackagedComponentImplementation
     //
 
@@ -474,7 +474,7 @@ namespace CIAO
           referencedImplementation_->container (this);
         }
 
-        else
+        else 
         {
         }
       }
@@ -537,7 +537,7 @@ namespace CIAO
           contentLocation (t);
         }
 
-        else
+        else 
         {
         }
       }
@@ -552,7 +552,7 @@ namespace CIAO
           href (t);
         }
 
-        else
+        else 
         {
         }
       }
@@ -566,3 +566,505 @@ namespace CIAO
   {
   }
 }
+
+#include "XMLSchema/TypeInfo.hpp"
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace
+    {
+      ::XMLSchema::TypeInfoInitializer < ACE_TCHAR > XMLSchemaTypeInfoInitializer_ (::XSCRT::extended_type_info_map ());
+
+      struct PackagedComponentImplementationTypeInfoInitializer
+      {
+        PackagedComponentImplementationTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (PackagedComponentImplementation));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      PackagedComponentImplementationTypeInfoInitializer PackagedComponentImplementationTypeInfoInitializer_;
+
+      struct ComponentPackageDescriptionTypeInfoInitializer
+      {
+        ComponentPackageDescriptionTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (ComponentPackageDescription));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      ComponentPackageDescriptionTypeInfoInitializer ComponentPackageDescriptionTypeInfoInitializer_;
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Traversal
+    {
+      // PackagedComponentImplementation
+      //
+      //
+
+      void PackagedComponentImplementation::
+      traverse (Type& o)
+      {
+        pre (o);
+        name (o);
+        referencedImplementation (o);
+        post (o);
+      }
+
+      void PackagedComponentImplementation::
+      traverse (Type const& o)
+      {
+        pre (o);
+        name (o);
+        referencedImplementation (o);
+        post (o);
+      }
+
+      void PackagedComponentImplementation::
+      pre (Type&)
+      {
+      }
+
+      void PackagedComponentImplementation::
+      pre (Type const&)
+      {
+      }
+
+      void PackagedComponentImplementation::
+      name (Type& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void PackagedComponentImplementation::
+      name (Type const& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void PackagedComponentImplementation::
+      referencedImplementation (Type& o)
+      {
+        dispatch (o.referencedImplementation ());
+      }
+
+      void PackagedComponentImplementation::
+      referencedImplementation (Type const& o)
+      {
+        dispatch (o.referencedImplementation ());
+      }
+
+      void PackagedComponentImplementation::
+      post (Type&)
+      {
+      }
+
+      void PackagedComponentImplementation::
+      post (Type const&)
+      {
+      }
+
+      // ComponentPackageDescription
+      //
+      //
+
+      void ComponentPackageDescription::
+      traverse (Type& o)
+      {
+        pre (o);
+        if (o.label_p ()) label (o);
+        else label_none (o);
+        if (o.UUID_p ()) UUID (o);
+        else UUID_none (o);
+        if (o.realizes_p ()) realizes (o);
+        else realizes_none (o);
+        if (o.configProperty_p ()) configProperty (o);
+        else configProperty_none (o);
+        if (o.implementation_p ()) implementation (o);
+        else implementation_none (o);
+        if (o.infoProperty_p ()) infoProperty (o);
+        else infoProperty_none (o);
+        if (o.contentLocation_p ()) contentLocation (o);
+        else contentLocation_none (o);
+        if (o.href_p ()) href (o);
+        else href_none (o);
+        post (o);
+      }
+
+      void ComponentPackageDescription::
+      traverse (Type const& o)
+      {
+        pre (o);
+        if (o.label_p ()) label (o);
+        else label_none (o);
+        if (o.UUID_p ()) UUID (o);
+        else UUID_none (o);
+        if (o.realizes_p ()) realizes (o);
+        else realizes_none (o);
+        if (o.configProperty_p ()) configProperty (o);
+        else configProperty_none (o);
+        if (o.implementation_p ()) implementation (o);
+        else implementation_none (o);
+        if (o.infoProperty_p ()) infoProperty (o);
+        else infoProperty_none (o);
+        if (o.contentLocation_p ()) contentLocation (o);
+        else contentLocation_none (o);
+        if (o.href_p ()) href (o);
+        else href_none (o);
+        post (o);
+      }
+
+      void ComponentPackageDescription::
+      pre (Type&)
+      {
+      }
+
+      void ComponentPackageDescription::
+      pre (Type const&)
+      {
+      }
+
+      void ComponentPackageDescription::
+      label (Type& o)
+      {
+        dispatch (o.label ());
+      }
+
+      void ComponentPackageDescription::
+      label (Type const& o)
+      {
+        dispatch (o.label ());
+      }
+
+      void ComponentPackageDescription::
+      label_none (Type&)
+      {
+      }
+
+      void ComponentPackageDescription::
+      label_none (Type const&)
+      {
+      }
+
+      void ComponentPackageDescription::
+      UUID (Type& o)
+      {
+        dispatch (o.UUID ());
+      }
+
+      void ComponentPackageDescription::
+      UUID (Type const& o)
+      {
+        dispatch (o.UUID ());
+      }
+
+      void ComponentPackageDescription::
+      UUID_none (Type&)
+      {
+      }
+
+      void ComponentPackageDescription::
+      UUID_none (Type const&)
+      {
+      }
+
+      void ComponentPackageDescription::
+      realizes (Type& o)
+      {
+        dispatch (o.realizes ());
+      }
+
+      void ComponentPackageDescription::
+      realizes (Type const& o)
+      {
+        dispatch (o.realizes ());
+      }
+
+      void ComponentPackageDescription::
+      realizes_none (Type&)
+      {
+      }
+
+      void ComponentPackageDescription::
+      realizes_none (Type const&)
+      {
+      }
+
+      void ComponentPackageDescription::
+      configProperty (Type& o)
+      {
+        dispatch (o.configProperty ());
+      }
+
+      void ComponentPackageDescription::
+      configProperty (Type const& o)
+      {
+        dispatch (o.configProperty ());
+      }
+
+      void ComponentPackageDescription::
+      configProperty_none (Type&)
+      {
+      }
+
+      void ComponentPackageDescription::
+      configProperty_none (Type const&)
+      {
+      }
+
+      void ComponentPackageDescription::
+      implementation (Type& o)
+      {
+        dispatch (o.implementation ());
+      }
+
+      void ComponentPackageDescription::
+      implementation (Type const& o)
+      {
+        dispatch (o.implementation ());
+      }
+
+      void ComponentPackageDescription::
+      implementation_none (Type&)
+      {
+      }
+
+      void ComponentPackageDescription::
+      implementation_none (Type const&)
+      {
+      }
+
+      void ComponentPackageDescription::
+      infoProperty (Type& o)
+      {
+        dispatch (o.infoProperty ());
+      }
+
+      void ComponentPackageDescription::
+      infoProperty (Type const& o)
+      {
+        dispatch (o.infoProperty ());
+      }
+
+      void ComponentPackageDescription::
+      infoProperty_none (Type&)
+      {
+      }
+
+      void ComponentPackageDescription::
+      infoProperty_none (Type const&)
+      {
+      }
+
+      void ComponentPackageDescription::
+      contentLocation (Type& o)
+      {
+        dispatch (o.contentLocation ());
+      }
+
+      void ComponentPackageDescription::
+      contentLocation (Type const& o)
+      {
+        dispatch (o.contentLocation ());
+      }
+
+      void ComponentPackageDescription::
+      contentLocation_none (Type&)
+      {
+      }
+
+      void ComponentPackageDescription::
+      contentLocation_none (Type const&)
+      {
+      }
+
+      void ComponentPackageDescription::
+      href (Type& o)
+      {
+        dispatch (o.href ());
+      }
+
+      void ComponentPackageDescription::
+      href (Type const& o)
+      {
+        dispatch (o.href ());
+      }
+
+      void ComponentPackageDescription::
+      href_none (Type&)
+      {
+      }
+
+      void ComponentPackageDescription::
+      href_none (Type const&)
+      {
+      }
+
+      void ComponentPackageDescription::
+      post (Type&)
+      {
+      }
+
+      void ComponentPackageDescription::
+      post (Type const&)
+      {
+      }
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+    namespace Writer
+    {
+      // PackagedComponentImplementation
+      //
+      //
+
+      PackagedComponentImplementation::
+      PackagedComponentImplementation (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      PackagedComponentImplementation::
+      PackagedComponentImplementation ()
+      {
+      }
+
+      void PackagedComponentImplementation::
+      traverse (Type const& o)
+      {
+        Traversal::PackagedComponentImplementation::traverse (o);
+      }
+
+      void PackagedComponentImplementation::
+      name (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("name", top_ ()));
+        Traversal::PackagedComponentImplementation::name (o);
+        pop_ ();
+      }
+
+      void PackagedComponentImplementation::
+      referencedImplementation (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("referencedImplementation", top_ ()));
+        Traversal::PackagedComponentImplementation::referencedImplementation (o);
+        pop_ ();
+      }
+
+      // ComponentPackageDescription
+      //
+      //
+
+      ComponentPackageDescription::
+      ComponentPackageDescription (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      ComponentPackageDescription::
+      ComponentPackageDescription ()
+      {
+      }
+
+      void ComponentPackageDescription::
+      traverse (Type const& o)
+      {
+        Traversal::ComponentPackageDescription::traverse (o);
+      }
+
+      void ComponentPackageDescription::
+      label (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("label", top_ ()));
+        Traversal::ComponentPackageDescription::label (o);
+        pop_ ();
+      }
+
+      void ComponentPackageDescription::
+      UUID (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("UUID", top_ ()));
+        Traversal::ComponentPackageDescription::UUID (o);
+        pop_ ();
+      }
+
+      void ComponentPackageDescription::
+      realizes (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("realizes", top_ ()));
+        Traversal::ComponentPackageDescription::realizes (o);
+        pop_ ();
+      }
+
+      void ComponentPackageDescription::
+      configProperty (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("configProperty", top_ ()));
+        Traversal::ComponentPackageDescription::configProperty (o);
+        pop_ ();
+      }
+
+      void ComponentPackageDescription::
+      implementation (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("implementation", top_ ()));
+        Traversal::ComponentPackageDescription::implementation (o);
+        pop_ ();
+      }
+
+      void ComponentPackageDescription::
+      infoProperty (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("infoProperty", top_ ()));
+        Traversal::ComponentPackageDescription::infoProperty (o);
+        pop_ ();
+      }
+
+      void ComponentPackageDescription::
+      contentLocation (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("contentLocation", top_ ()));
+        Traversal::ComponentPackageDescription::contentLocation (o);
+        pop_ ();
+      }
+
+      void ComponentPackageDescription::
+      href (Type const& o)
+      {
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("href", "", top_ ());
+        attr_ (&a);
+        Traversal::ComponentPackageDescription::href (o);
+        attr_ (0);
+      }
+    }
+  }
+}
+
+namespace CIAO
+{
+  namespace Config_Handlers
+  {
+  }
+}
+
