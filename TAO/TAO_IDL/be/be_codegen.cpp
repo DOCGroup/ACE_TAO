@@ -1738,7 +1738,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
 
   // Conditional includes.
 
-  if (idl_global->exception_seen_)
+   if (idl_global->non_local_op_seen_)
     {
       this->gen_standard_include (this->client_stubs_,
                                   "tao/Exception_Data.h");

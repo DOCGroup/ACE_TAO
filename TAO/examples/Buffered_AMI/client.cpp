@@ -15,7 +15,8 @@
 
 #include "testS.h"
 #include "tao/Messaging/Messaging.h"
-#include "tao/TAOC.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "tao/AnyTypeCode/TAOA.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 

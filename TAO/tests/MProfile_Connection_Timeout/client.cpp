@@ -6,6 +6,7 @@
 #include "testC.h"
 #include "tao/TimeBaseC.h"
 #include "tao/Messaging/Messaging.h"
+#include "tao/AnyTypeCode/Any.h"
 
 ACE_RCSID(MProfile_Connection_Timeout,
           client,
