@@ -2,8 +2,8 @@
 
 #include "client_interceptors.h"
 
-#include "tao/DynamicC.h"
-#include "tao/TypeCode.h"
+#include "tao/AnyTypeCode/DynamicC.h"
+#include "tao/AnyTypeCode/TypeCode.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
 
