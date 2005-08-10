@@ -14,7 +14,7 @@
 
 #include "data.h"
 #include "ace/Log_Msg.h"
-#include "tao/TypeCode.h"
+#include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/PortableServer/PortableServer.h"
 
 Data::Data (CORBA::ORB_var orb)

@@ -1,14 +1,14 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Test Client Module): taolib_with_idl {
+project(*Test Client Module): taolib_with_idl, anytypecode {
   sharedname    = Test_Client_Module
   dynamicflags  = TEST_CLIENT_MODULE_BUILD_DLL
 
   Source_Files {
     TestC.cpp
     Test_Client_Module.cpp
-  }  
+  }
 }
 
 project(*Test Server Module) : taolib_with_idl, portableserver {
