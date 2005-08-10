@@ -72,7 +72,7 @@ namespace TAO
     S_slice * arg (void);
 
   private:
-    S x_;
+    mutable S x_;
   };
 
   /**
