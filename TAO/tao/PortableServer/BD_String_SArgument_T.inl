@@ -59,7 +59,8 @@ template<typename S,
          typename S_out,
          typename to_S,
          typename from_S,
-         size_t BOUND>
+         size_t BOUND,
+         typename Insert_Policy>
 ACE_INLINE
 TAO::Out_BD_String_SArgument_T<S,S_var,S_out,to_S,from_S,BOUND,Insert_Policy>::
 Out_BD_String_SArgument_T (void)
