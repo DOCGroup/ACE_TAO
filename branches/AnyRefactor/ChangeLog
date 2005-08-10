@@ -1,3 +1,8 @@
+Wed Aug 10 09:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/valuetype.mpb:
+          Added AnyTypeCode as base project
+
 Wed Aug 10 08:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/taoclient.mpb:
