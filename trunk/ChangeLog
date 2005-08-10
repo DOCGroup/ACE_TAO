@@ -1,3 +1,12 @@
+Wed Aug 10 10:03:40 2005  Gary Maxey <gary.maxey@hp.com>
+
+	* ace/OS_NS_stdio.inl:
+	* ace/Process.cpp
+
+	  Regarding change:
+          Fri Jul 22 13:29:32 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+	  use vsnprintf only if the platform supports it.
+
 Wed Aug 10 07:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/JAWS2/JAWS/IO.cpp:
