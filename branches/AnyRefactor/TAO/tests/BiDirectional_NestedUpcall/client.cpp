@@ -4,6 +4,7 @@
 #include "test_i.h"
 #include "ace/High_Res_Timer.h"
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
+#include "tao/AnyTypeCode/Any.h"
 
 ACE_RCSID(BiDirectional, client, "$Id$")
 

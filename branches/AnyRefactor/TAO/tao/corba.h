@@ -53,7 +53,6 @@
 
 #include "tao/ObjectIdListC.h"
 
-#include "tao/AnySeqC.h"
 #include "tao/BooleanSeqC.h"
 #include "tao/CharSeqC.h"
 #include "tao/DoubleSeqC.h"
