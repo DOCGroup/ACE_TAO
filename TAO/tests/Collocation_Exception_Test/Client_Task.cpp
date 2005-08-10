@@ -2,7 +2,6 @@
 // $Id$
 //
 
-#include "tao/Messaging/Messaging.h"
 #include "Client_Task.h"
 
 ACE_RCSID(Collocation_Oneway_Tests, Client_Task, "$Id$")
