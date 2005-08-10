@@ -766,6 +766,9 @@ be_visitor_arg_traits::visit_array (be_array *node)
           << node->name () << "_tag";
     }
 
+  *os << "," << be_nl << "TAO::Any_Insert_Policy_Stream <" << node->name ()
+      << ">";
+
   *os << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
@@ -971,6 +974,9 @@ be_visitor_arg_traits::visit_union (be_union *node)
           << node->name () << "_var," << be_nl
           << node->name () << "_out";
     }
+
+  *os << "," << be_nl << "TAO::Any_Insert_Policy_Stream <"
+      << node->name () << ">";
 
   *os << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl

@@ -114,7 +114,7 @@ namespace TAO
            typename S_forany,
            typename S_tag,
            typename Insert_Policy>
-  class Ret_Var_Array_Argument_T : public RetArgument, private InsertPolicy
+  class Ret_Var_Array_Argument_T : public RetArgument, private Insert_Policy
   {
   public:
     Ret_Var_Array_Argument_T (void);
