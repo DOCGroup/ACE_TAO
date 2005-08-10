@@ -650,20 +650,13 @@ also receives other options that are specific to it.<p>
     <td>&nbsp;</td>
   </tr>
 
-  <tr><a name="GT">
-    <td><tt>-GT</tt></td>
-
-    <td>Generate explicit template instantiations</td>
-    <td>&nbsp;</td>
-  </tr>
-
   <tr><a name="GA">
     <td><tt>-GA</tt></td>
 
-    <td>Generate type code and Any operator bodies in *A.cpp</td>
+    <td>Generate type codes and Any operators in *A.h and *A.cpp</td>
     <td>Decouples client and server decisions to compile and link
         TypeCode- and Any-related code, which is generated in
-        *C.cpp by default.</td>
+        *C.h and *C.cpp by default.</td>
   </tr>
 
   <tr><a name="Guc">

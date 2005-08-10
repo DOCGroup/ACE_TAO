@@ -1369,10 +1369,7 @@ TAO_CodeGen::end_anyop_header (void)
 int
 TAO_CodeGen::end_anyop_source (void)
 {
-  if (!be_global->gen_tmplinst ())
-    {
-      *this->anyop_source_ << "\n";
-    }
+  *this->anyop_source_ << "\n";
 
   return 0;
 }
