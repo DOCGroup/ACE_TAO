@@ -1,5 +1,5 @@
 // $Id$
-project: taoexe {
+project: taoexe, anytypecode {
   Source_Files {
     testC.cpp
     anyop.cpp
