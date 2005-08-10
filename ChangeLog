@@ -1,3 +1,12 @@
+Wed Aug 10 11:27:01 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/OS_NS_stdio.inl (vsnprintf):
+
+	  Fixed "no return statement in function returning non-void"
+	  warning.
+
+	  Removed uses of deprecated ACE_OSCALL macro.
+
 Wed Aug 10 10:03:40 2005  Gary Maxey <gary.maxey@hp.com>
 
 	* ace/OS_NS_stdio.inl:
