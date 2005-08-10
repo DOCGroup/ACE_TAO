@@ -9,6 +9,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/PortableServer/PortableServer.h"
+#include "tao/AnyTypeCode/Any.h"
 
 ACE_RCSID(Bug_1476_Regression, client, "$Id$")
 

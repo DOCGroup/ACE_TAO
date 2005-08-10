@@ -3,6 +3,7 @@
 #include "TestS.h"
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"
+#include "tao/AnyTypeCode/Any.h"
 
 ACE_RCSID(Hello, client, "$Id$")
 

@@ -20,7 +20,7 @@
 #include "tao/ORB.h"
 #include "tao/debug.h"
 #include "tao/CDR.h"
-#include "tao/Any.h"
+#include "tao/AnyTypeCode/Any.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"

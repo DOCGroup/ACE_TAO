@@ -23,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Argument.h"
+#include "tao/Any_Insert_Policy_T.h"
 
 namespace TAO
 {
@@ -209,7 +210,9 @@ namespace TAO
                                     CORBA::String_out,
                                     ACE_InputCDR::to_string,
                                     ACE_OutputCDR::from_string,
-                                    BOUND>
+                                    BOUND,
+                                    TAO::Any_Insert_Policy_Stream <ACE_OutputCDR::from_string>
+                                   >
   {
   };
 
@@ -220,7 +223,9 @@ namespace TAO
                                     CORBA::WString_out,
                                     ACE_InputCDR::to_wstring,
                                     ACE_OutputCDR::from_wstring,
-                                    BOUND>
+                                    BOUND,
+                                    TAO::Any_Insert_Policy_Stream <ACE_OutputCDR::from_wstring>
+                                   >
   {
   };
 }
