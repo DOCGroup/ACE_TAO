@@ -1,3 +1,8 @@
+Wed Aug 10 15:43:37 2005  Gary Maxey <gary.maxey@hp.com>
+
+	* tests/run_test.lst:
+	  Excluded tests inappropriate for HP-NSK platform
+
 Wed Aug 10 11:27:01 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/OS_NS_stdio.inl (vsnprintf):
