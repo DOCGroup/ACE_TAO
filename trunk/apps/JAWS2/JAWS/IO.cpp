@@ -5,6 +5,7 @@
 #include "ace/Filecache.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_uio.h"
+#include "ace/OS_NS_sys_socket.h"
 
 #include "JAWS/JAWS.h"
 #include "JAWS/Data_Block.h"
