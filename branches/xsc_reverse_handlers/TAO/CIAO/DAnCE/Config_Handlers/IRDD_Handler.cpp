@@ -45,7 +45,7 @@ namespace CIAO
          toconfig.resourceUsage = Deployment::PortUsesResource;
       if (desc.resourceUsage () ==
          ResourceUsageKind::ResourceUsesPort)        
-         toconfig.resourceUsage asdfasdf = Deployment::ResourceUsesPosdfrt;
+         toconfig.resourceUsage = Deployment::ResourceUsesPort;
       
       toconfig.requirementName=
            CORBA::string_dup (desc.requirementName ().c_str ());
@@ -68,24 +68,25 @@ namespace CIAO
       Any resval (Any_Handler::get_any (src.resourceValue));
       
       InstanceResourceDeploymentDescription irdd (
-                                            reqname,
-                                            resname,
-                                            ResourceUsageKind::None);  
+	  ResourceUsageKind::None,
+	  reqname,
+	  resname,
+	  resval);  
       
       if (src.resourceUsage == Deployment::None)
          irdd.resourceUsage (ResourceUsageKind::None);
-      if (desc.resourceUsage  ==
+      if (src.resourceUsage  ==
          Deployment::InstanceUsesResource)
-         toconfig.resourceUsage = (ResourceUsageKind::InstanceUsesResource);
-      if (desc.resourceUsage  ==
+         irdd.resourceUsage (ResourceUsageKind::InstanceUsesResource);
+      if (src.resourceUsage  ==
          Deployment::ResourceUsesInstance)
-         toconfig.resourceUsage = (ResourceUsageKind::ResourceUsesInstance);
-      if (desc.resourceUsage  ==
+         irdd.resourceUsage (ResourceUsageKind::ResourceUsesInstance);
+      if (src.resourceUsage  ==
          Deployment::PortUsesResource)
-         toconfig.resourceUsage = (ResourceUsageKind::PortUsesResource);
-      if (desc.resourceUsage  ==
+         irdd.resourceUsage (ResourceUsageKind::PortUsesResource);
+      if (src.resourceUsage  ==
          Deployment::ResourceUsesPort)
-         toconfig.resourceUsage (ResourceUsageKind::ResourceUsesPort);
+         irdd.resourceUsage (ResourceUsageKind::ResourceUsesPort);
          
       return irdd;
     }

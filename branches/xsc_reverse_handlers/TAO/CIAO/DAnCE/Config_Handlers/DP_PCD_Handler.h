@@ -52,6 +52,9 @@ namespace CIAO
           const DeploymentPlan &src,
           Deployment::PlanConnectionDescriptions& toconfig);
 
+      static PlanConnectionDescription plan_connection_descr(
+	  const Deployment::PlanConnectionDescription &src);
+
     private:
       static bool plan_connection_descr (
           const PlanConnectionDescription& desc,

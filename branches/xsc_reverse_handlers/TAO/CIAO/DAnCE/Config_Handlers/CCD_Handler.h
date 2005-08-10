@@ -48,8 +48,8 @@ namespace CIAO
          const ComponentInterfaceDescription &src,
          ::Deployment::ComponentInterfaceDescription& dest);
        static ComponentInterfaceDescription
-       component_interface_descr (
-         const ::Deployment::ComponentInterfaceDescription&  src);
+	   component_interface_descr (
+	       const ::Deployment::ComponentInterfaceDescription&  src);
 
     };
   }

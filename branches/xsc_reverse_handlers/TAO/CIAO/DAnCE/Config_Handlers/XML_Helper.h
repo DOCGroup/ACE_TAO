@@ -23,6 +23,8 @@
 namespace XERCES_CPP_NAMESPACE
 {
   class DOMDocument;
+  class DOMWriter;
+  class DOMImplementation;
 }
 
 
@@ -46,6 +48,10 @@ namespace CIAO
       XERCES_CPP_NAMESPACE::DOMDocument *
       create_dom (const ACE_TCHAR *uri);
 
+      //Writes out a DOMDocument to an XML file
+      bool write_DOM (XERCES_CPP_NAMESPACE::DOMDocument *doc,
+		      ACE_TCHAR *file);
+      
       bool is_initialized (void) const;
 
     protected:
@@ -57,6 +63,7 @@ namespace CIAO
 
     private:
       bool initialized_;
+      XERCES_CPP_NAMESPACE::DOMImplementation *impl_;
     };
   }
 }

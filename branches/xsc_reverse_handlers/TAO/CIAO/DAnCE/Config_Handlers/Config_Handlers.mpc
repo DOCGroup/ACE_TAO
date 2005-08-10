@@ -29,6 +29,7 @@ project (XSC_Config_Handlers) : acelib, ciao_deployment_stub,xerces {
     Req_Handler.cpp
     CPD_Handler.cpp
     Any_Handler.cpp
+    XercesString.cpp
     ComponentPropertyDescription_Handler.cpp
     DataType_Handler.cpp
     MDD_Handler.cpp
@@ -37,6 +38,8 @@ project (XSC_Config_Handlers) : acelib, ciao_deployment_stub,xerces {
     PSPE_Handler.cpp
     ERE_Handler.cpp
     CRDD_Handler.cpp
+    PCD_Handler.cpp
+    IRDD_Handler.cpp
     IDD_Handler.cpp
     ADD_Handler.cpp
     ComponentPropertyDescription_Handler.cpp
@@ -57,14 +60,13 @@ project (XSC_Config_Handlers) : acelib, ciao_deployment_stub,xerces {
 
 project (XSC_Config_Handlers_Tests) : ciao_deployment_stub,xerces {
   
-  requires += dummy_label
   exename = test
   after    += XSC_Config_Handlers
   dynamicflags   = CONFIG_HANDLERS_BUILD_DLL
   macros   += XML_USE_PTHREADS
   requires += exceptions
   libs     += CIAO_DnC_Server TAO_IFR_Client XSC_Config_Handlers
-                                                                                
+    includes += $(CIAO_ROOT)/DAnCE/Config_Handlers                                                                                
   Source_Files {
     test.cpp
   }

@@ -10,6 +10,7 @@
  */
  
 #include "Deployment.hpp"
+#include "ace/Log_Msg.h"
 
 namespace CIAO
 {
@@ -246,7 +247,6 @@ namespace CIAO
       {
         throw 1;
       }
-
       struct W : virtual ::CIAO::Config_Handlers::Writer::DeploymentPlan,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::string< ACE_TCHAR >, ACE_TCHAR >,
       virtual ::CIAO::Config_Handlers::Writer::ComponentInterfaceDescription,
@@ -290,7 +290,6 @@ namespace CIAO
         {
         }
       };
-
       W w (e);
       w.dispatch (s);
     }

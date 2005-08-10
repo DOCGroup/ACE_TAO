@@ -154,38 +154,42 @@ namespace CIAO
       return true;
     }
     
-    ArtifactDeploymentDescription
-    ADD_Handler::artifact_deployment_descr (
-        const Deployment::ArtifactDeploymentDescription &src)
-    {
-      XMLSchema::string< char > name ((src.name));
-      XMLSchema::string< char > node ((src.node));
-      
-      ArtifactDeploymentDescription add (name,node);
-      
-      size_t total = src.location.length ();
-      for (size_t i = 0; i < total; ++i)
-        {
-          XMLSchema::string< char > curr ((src.location[i]));
-          add.add_location (curr);
-        }
+      ArtifactDeploymentDescription
+      ADD_Handler::artifact_deployment_descr (
+	  const Deployment::ArtifactDeploymentDescription &src)
+      {
+	  //Get the name and node and store them in the add
+	  XMLSchema::string< char > name ((src.name));
+	  XMLSchema::string< char > node ((src.node));
+	  
+	  ArtifactDeploymentDescription add (name,node);
+
+	  //Get the location(s) and store it/them in the add
+	  size_t total = src.location.length ();
+	  for (size_t i = 0; i < total; ++i)
+	  {
+	      XMLSchema::string< char > curr ((src.location[i]));
+	      add.add_location (curr);
+	  }
+
+	  //As above, for the source(s)
+	  total = src.source.length ();
+	  for (size_t j = 0; j < total; ++j)
+	  {
+	      XMLSchema::string< char > curr ((src.source[j]));
+	      add.add_source (curr);
+	  }  
+
+	  //As above for the execParameter(s)
+	  total = src.execParameter.length ();
+	  for (size_t k = 0; k < total; ++k)
+	  {
+	      add.add_execParameter (
+		  Property_Handler::get_property (
+		      src.execParameter[k]));
+	  }
         
-      total = src.source.length ();
-      for (size_t j = 0; j < total; ++j)
-        {
-          XMLSchema::string< char > curr ((src.source[j]));
-          add.add_source (curr);
-        }  
-      
-      total = src.execParameter.length ();
-      for (size_t k = 0; k < total; ++k)
-        {
-          add.add_execParameter (
-            Property_Handler::get_property (src.execParameter[k])
-          );
-        }
-        
-      return add;       
+	  return add;       
     }
 
     
