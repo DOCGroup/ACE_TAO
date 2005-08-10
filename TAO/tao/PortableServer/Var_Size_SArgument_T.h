@@ -129,22 +129,22 @@ namespace TAO
            typename Insert_Policy>
   struct Var_Size_SArg_Traits_T
   {
-    typedef T *                                         ret_type;
-    typedef const T &                                   in_type;
-    typedef T &                                         inout_type;
-    typedef T_out                                       out_type;
+    typedef T *                                             ret_type;
+    typedef const T &                                       in_type;
+    typedef T &                                             inout_type;
+    typedef T_out                                           out_type;
 
-    typedef In_Var_Size_SArgument_T<T,typename Insert_Policy>        in_arg_val;
-    typedef Inout_Var_Size_SArgument_T<T,typename Insert_Policy>     inout_arg_val;
-    typedef Out_Var_Size_SArgument_T<T,T_var,typename Insert_Policy> out_arg_val;
-    typedef Ret_Var_Size_SArgument_T<T,T_var,typename Insert_Policy> ret_val;
+    typedef In_Var_Size_SArgument_T<T,Insert_Policy>        in_arg_val;
+    typedef Inout_Var_Size_SArgument_T<T,Insert_Policy>     inout_arg_val;
+    typedef Out_Var_Size_SArgument_T<T,T_var,Insert_Policy> out_arg_val;
+    typedef Ret_Var_Size_SArgument_T<T,T_var,Insert_Policy> ret_val;
 
     // Typedefs corresponding to return value of arg() method in both
     // the client and server side argument class templates.
-    typedef in_type                                     in_arg_type;
-    typedef inout_type                                  inout_arg_type;
-    typedef ret_type &                                  out_arg_type;
-    typedef ret_type &                                  ret_arg_type;
+    typedef in_type                                         in_arg_type;
+    typedef inout_type                                      inout_arg_type;
+    typedef ret_type &                                      out_arg_type;
+    typedef ret_type &                                      ret_arg_type;
 
   };
 }

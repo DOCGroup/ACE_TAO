@@ -1,3 +1,8 @@
+Wed Aug 10 08:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Added AnyTypeCode to include path of Any_Arg_Traits.h
+
 Wed Aug 10 08:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IFR_Client/*:
