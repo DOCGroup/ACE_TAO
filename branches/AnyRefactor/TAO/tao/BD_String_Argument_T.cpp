@@ -149,7 +149,6 @@ TAO::Ret_BD_String_Argument_T<S,S_var,to_S,from_S,BOUND,Insert_Policy>::intercep
   CORBA::Any *any) const
 {
   this->Insert_Policy::any_insert (any, from_S (this->x_.in (), BOUND));
-  (*any) <<= from_S (this->x_.in (), BOUND);
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
