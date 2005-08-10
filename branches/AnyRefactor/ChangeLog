@@ -1,3 +1,9 @@
+Wed Aug 10 08:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/taoclient.mpb:
+          Just for short, added anytypecode to the client. This should really be
+          dependent on the idl compiler flags
+
 Fri Jul 29 18:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/codecfactory.mpb
