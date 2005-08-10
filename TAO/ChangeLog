@@ -1,3 +1,10 @@
+Wed Aug 10 08:46:55 2005  Gary Maxey <gary.maxey@hp.com>
+
+	* tao/CORBANAME_Parser.cpp:
+	  Fixed problem where the following legal syntax was not allowed:
+             "corbaname:rir"
+	  which should produce the object reference of the naming service.
+
 Wed Aug 10 11:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Collocation_Exception_Test/Client_Task.cpp:
