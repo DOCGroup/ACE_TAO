@@ -3,8 +3,6 @@
 // $Id$
 
 project(*Server): taoserver, valuetype {
-  idlflags += -GA
-
   Source_Files {
     Hello.cpp
     server.cpp
@@ -12,8 +10,6 @@ project(*Server): taoserver, valuetype {
 }
 
 project(*Client): taoclient, valuetype, typecodefactory, ifr_client {
-  idlflags += -GA
-
   Source_Files {
     TestC.cpp
     TestA.cpp

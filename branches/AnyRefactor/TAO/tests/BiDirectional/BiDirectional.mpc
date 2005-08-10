@@ -8,7 +8,8 @@ project(*Server): taoserver, minimum_corba, bidir_giop {
   }
 }
 
-project(*Client): taoexe, portableserver, minimum_corba, bidir_giop {
+project(*Client): taoserver, anytypecode, minimum_corba, bidir_giop {
+  exename = client
   Source_Files {
     test_i.cpp
     client.cpp
