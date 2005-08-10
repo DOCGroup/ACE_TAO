@@ -1,4 +1,5 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "ace/OS_NS_unistd.h"
@@ -1023,7 +1024,7 @@ ACE_INLINE int
 ACE_OS::vsnprintf (char *buffer, size_t maxlen, const char *format, va_list ap)
 {
 #if defined (ACE_HAS_SNPRINTF)
-  
+
 #  if !defined (ACE_WIN32) \
    || (defined (__BORLANDC__) && (__BORLANDC__ >= 0x600))
   return ACE_SPRINTF_ADAPTER (::vsnprintf (buffer, maxlen, format, ap));
@@ -1142,7 +1143,7 @@ ACE_OS::default_win32_security_attributes_r (LPSECURITY_ATTRIBUTES sa,
           sa_buffer->nLength = sizeof(SECURITY_ATTRIBUTES);
           sa_buffer->lpSecurityDescriptor = sd_buffer;
           sa_buffer->bInheritHandle       = TRUE;
-    	  sa = sa_buffer;
+          sa = sa_buffer;
         }
     }
   return sa;
