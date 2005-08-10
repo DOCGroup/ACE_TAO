@@ -1,3 +1,10 @@
+Wed Aug 10 07:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/JAWS2/JAWS/IO.cpp:
+        * apps/JAWS2/JAWS/IO_Acceptor.cpp:
+        * apps/JAWS2/JAWS/IO_Handler.h:
+          Fixed compile errors in Cygwin build
+
 Wed Aug 10 07:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/JAWS2/JAWS/Reaper.h:
