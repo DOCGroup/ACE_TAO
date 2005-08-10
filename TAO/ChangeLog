@@ -1,3 +1,9 @@
+Wed Aug 10 11:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Collocation_Exception_Test/Client_Task.cpp:
+        * tests/Collocation_Exception_Test/Collocation_Excep_Test.mpc:
+          No need to use messaging
+
 Tue Aug  9 19:28:15 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	From J H Choi <jhchoi at sqisoft dot com>
