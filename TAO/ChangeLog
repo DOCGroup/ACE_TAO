@@ -1,3 +1,13 @@
+Wed Aug 10 08:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IFR_Client/*:
+          Removed -GA in the generation options and removed all *A.cpp
+          files. The IFR_Client has a struct defined in an interface, then
+          the generation of seperate *A.h file will not work.
+
+        * tao/AnyTypeCode/ValueModifier*.*:
+          Added A.{h,cpp} file.
+
 Tue Aug  9 13:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Any_SArg_Traits.h

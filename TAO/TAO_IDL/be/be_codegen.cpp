@@ -199,7 +199,7 @@ TAO_CodeGen::start_client_header (const char *fname)
     {
       *this->client_header_ << "\n";
     }
-   
+
   // We must include all the client headers corresponding to
   // IDL files included by the current IDL file.
   // We will use the included IDL file names as they appeared
@@ -898,7 +898,7 @@ TAO_CodeGen::start_anyop_source (const char *fname)
           ACE_CString pidl_checker (idl_name);
           bool got_pidl =
             (pidl_checker.find (".pidl") != ACE_SString::npos);
-          
+
           // If we're here and we have a .pidl file, we need to generate
           // the *A.h include from the AnyTypeCode library.
           if (got_pidl)
@@ -908,17 +908,17 @@ TAO_CodeGen::start_anyop_source (const char *fname)
 
               const char *anyop_hdr =
                 BE_GlobalData::be_get_anyop_header (&idl_name_str, 1);
-                
+
               // Stripped off any scope in the name and add the
-              // AnyTypeCode prefix.  
+              // AnyTypeCode prefix.
               ACE_CString work_hdr (anyop_hdr);
               int pos = work_hdr.rfind ('/');
-              
+
               if (pos != ACE_SString::npos)
                 {
                   work_hdr = work_hdr.substr (pos + 1);
                 }
-                
+
               ACE_CString final_hdr ("tao/AnyTypeCode/");
               final_hdr += work_hdr;
 
@@ -956,7 +956,7 @@ TAO_CodeGen::start_anyop_source (const char *fname)
           ACE_CString pidl_checker (idl_name);
           bool got_pidl =
             (pidl_checker.find (".pidl") != ACE_SString::npos);
-          
+
           // If we're here and we have a .pidl file, we need to generate
           // the *A.h include from the AnyTypeCode library.
           if (got_pidl)
@@ -966,17 +966,17 @@ TAO_CodeGen::start_anyop_source (const char *fname)
 
               const char *anyop_hdr =
                 BE_GlobalData::be_get_anyop_header (&idl_name_str, 1);
-                
+
               // Stripped off any scope in the name and add the
-              // AnyTypeCode prefix.  
+              // AnyTypeCode prefix.
               ACE_CString work_hdr (anyop_hdr);
               int pos = work_hdr.rfind ('/');
-              
+
               if (pos != ACE_SString::npos)
                 {
                   work_hdr = work_hdr.substr (pos + 1);
                 }
-                
+
               ACE_CString final_hdr ("tao/AnyTypeCode/");
               final_hdr += work_hdr;
 
@@ -995,7 +995,7 @@ TAO_CodeGen::start_anyop_source (const char *fname)
                              ACE_TEXT ("\nERROR, invalid file '%s' included"),
                              idl_name),
                             -1);
-        }       
+        }
     }
 
   *this->anyop_source_ << "\n";
@@ -1706,7 +1706,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
           ACE_CString pidl_checker (idl_name);
           bool got_pidl =
             (pidl_checker.find (".pidl") != ACE_SString::npos);
-          
+
           // If we're here and we have a .pidl file, we need to generate
           // the *A.h include from the AnyTypeCode library.
           if (got_pidl)
@@ -1716,17 +1716,17 @@ TAO_CodeGen::gen_stub_src_includes (void)
 
               const char *anyop_hdr =
                 BE_GlobalData::be_get_anyop_header (&idl_name_str, 1);
-                
+
               // Stripped off any scope in the name and add the
-              // AnyTypeCode prefix.  
+              // AnyTypeCode prefix.
               ACE_CString work_hdr (anyop_hdr);
               int pos = work_hdr.rfind ('/');
-              
+
               if (pos != ACE_SString::npos)
                 {
                   work_hdr = work_hdr.substr (pos + 1);
                 }
-                
+
               ACE_CString final_hdr ("tao/AnyTypeCode/");
               final_hdr += work_hdr;
 
@@ -2122,7 +2122,7 @@ TAO_CodeGen::gen_stub_arg_file_includes (TAO_OutStream * stream)
 
   this->gen_cond_file_include (
       idl_global->any_arg_seen_,
-      "tao/Any_Arg_Traits.h",
+      "tao/AnyTypeCode/Any_Arg_Traits.h",
       stream
     );
 }
