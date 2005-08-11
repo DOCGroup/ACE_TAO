@@ -1,3 +1,46 @@
+Thu Aug 11 09:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI/PI.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.cpp
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicy_i.cpp
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.h
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp
+        * orbsvcs/orbsvcs/IFRService/ConstantDef_i.cpp
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS.cpp
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS.cpp
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.cpp
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.cpp
+        * orbsvcs/orbsvcs/IFRService/UnionDef_i.cpp
+        * orbsvcs/orbsvcs/Log/Hash_LogRecordStore.cpp
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h
+        * orbsvcs/orbsvcs/Log/PersistStore.cpp
+        * orbsvcs/orbsvcs/Log/PersistStore.h
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h
+        * orbsvcs/orbsvcs/Security/SL3_PolicyFactory.cpp
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp
+        * orbsvcs/orbsvcs/Trader/Interpreter_Utils.h
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp
+        * examples/POA/DSI/Database_i.cpp
+        * examples/POA/POA_BiDir/POA_BiDir.cpp
+        * examples/Simulator/Event_Supplier/Event_Con.cpp
+        * orbsvcs/PSS/PSDL_Code_Gen.cpp
+        * orbsvcs/examples/ORT/Gateway_i.cpp
+        * orbsvcs/tests/Notify/Reconnecting/Consumer.cpp
+        * tao/IFR_Client.mpc
+        * tao/tao.mpc
+        * tests/Nested_Upcall_Crash/client.cpp
+        * tests/Nested_Upcall_Crash/scavenger.cpp
+        * tests/Nested_Upcall_Crash/server.cpp
+        * tests/Oneway_Buffering/client.cpp
+        * tests/POA/Policies/Policies.cpp
+        * tests/Portable_Interceptors/PICurrent/client.cpp
+
 Wed Aug 10 19:47:30 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
@@ -11,7 +54,7 @@ Wed Aug 10 19:47:30 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
           below that have been removed, and removed the -GT
           command line option and the associated usage message.
           The IDL compiler now generates no explicit template
-          instantiations, and has no command line option to 
+          instantiations, and has no command line option to
           do so.
 
         * TAO_IDL/be_include/be_visitor_tmplinst/arg_tmplinst.h:
@@ -32,9 +75,9 @@ Wed Aug 10 19:47:30 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * docs/compiler.html:
 
           Removed the -GT command line option from the table.
-          
+
         * docs/releasenotes/index.html:
-        
+
           Updated documentation of the IDL compiler to reflect
           the above changes.
 
