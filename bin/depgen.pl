@@ -36,6 +36,7 @@ my($version)  = '0.9';
 my($os)       = ($^O eq 'MSWin32' ? 'Windows' : 'UNIX');
 my(%types)    = ('gnu'   => 1,
                  'nmake' => 1,
+                 'make'  => 1,
                 );
 my(%defaults) = ('UNIX'    => ['gnu'],
                  'Windows' => ['nmake'],
