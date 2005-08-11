@@ -8,7 +8,7 @@
 
 #include "tao/PortableServer/Servant_Base.h"
 #include "tao/Any_Impl.h"
-#include "tao/DynamicC.h"
+#include "tao/AnyTypeCode/DynamicC.h"
 
 #include "orbsvcs/FT_CORBA_ORBC.h"
 

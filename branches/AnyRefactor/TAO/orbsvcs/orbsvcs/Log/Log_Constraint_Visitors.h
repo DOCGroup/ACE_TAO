@@ -28,8 +28,6 @@
 #include "orbsvcs/ETCL/ETCL_Constraint_Visitor.h"
 #include "orbsvcs/DsLogAdminC.h"
 
-#include "tao/TypeCode.h"
-
 #include "log_serv_export.h"
 
 class TAO_ETCL_Constraint;
