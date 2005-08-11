@@ -1,14 +1,22 @@
+Thu Aug 11 13:48:57 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/orbconf.h:
+
+          Removed an unused and deprecated macro,
+          TAO_CONNECTION_CACHING_STRATEGY.  The macro that is used is
+          TAO_CONNECTION_PURGING_STRATEGY.
+
 Thu Aug 11 08:02:32 2005  Gary Maxey <gary.maxey@hp.com>
 
-	* tao/CORBANAME_Parser.cpp:
-	  Change variable type because of warnings by some compilers.
+        * tao/CORBANAME_Parser.cpp:
+          Change variable type because of warnings by some compilers.
 
 Wed Aug 10 08:46:55 2005  Gary Maxey <gary.maxey@hp.com>
 
-	* tao/CORBANAME_Parser.cpp:
-	  Fixed problem where the following legal syntax was not allowed:
+        * tao/CORBANAME_Parser.cpp:
+          Fixed problem where the following legal syntax was not allowed:
              "corbaname:rir"
-	  which should produce the object reference of the naming service.
+          which should produce the object reference of the naming service.
 
 Wed Aug 10 11:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -18,12 +26,12 @@ Wed Aug 10 11:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Aug  9 19:28:15 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	From J H Choi <jhchoi at sqisoft dot com>
-	* tao/TypeCode.cpp (equivalent):
+        From J H Choi <jhchoi at sqisoft dot com>
+        * tao/TypeCode.cpp (equivalent):
 
-	  Equivalence of two TypeCodes must be done between their
-	  unaliased counterparts.  The code was incorrectly leaving one of
-	  the TypeCodes aliased in the comparison.
+          Equivalence of two TypeCodes must be done between their
+          unaliased counterparts.  The code was incorrectly leaving one of
+          the TypeCodes aliased in the comparison.
 
 Mon Aug  8 18:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -160,92 +168,92 @@ Thu Jul 28 10:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jul 28 00:43:34 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/CORBA_String.h:
-	* tao/CORBA_String.inl:
+        * tao/CORBA_String.h:
+        * tao/CORBA_String.inl:
 
-	  Removed operator==({W}String_var,{W}String_var) from the CORBA
-	  namespace.  It was TAO-specific, only existed so that
-	  {W}String_var could be used as map key, and polluted the CORBA
-	  namespace.  Replaced with TAO::String_Var_Equal_To equality
-	  functor.
+          Removed operator==({W}String_var,{W}String_var) from the CORBA
+          namespace.  It was TAO-specific, only existed so that
+          {W}String_var could be used as map key, and polluted the CORBA
+          namespace.  Replaced with TAO::String_Var_Equal_To equality
+          functor.
 
-	* tao/ORB.cpp (_downcast):
+        * tao/ORB.cpp (_downcast):
 
-	  Removed redundant/unnecessary repository ID string comparison
-	  from ORB::InvalidName::_downcast() method.  A simple
-	  dynamic_cast<>-based check is sufficient.
+          Removed redundant/unnecessary repository ID string comparison
+          from ORB::InvalidName::_downcast() method.  A simple
+          dynamic_cast<>-based check is sufficient.
 
-	  (ORB_init):
+          (ORB_init):
 
-	  Removed ORB shutdown check.  The goal of the check was to cause
-	  the CORBA::BAD_INV_ORDER system exception to be thrown if the
-	  ORB was shutdown.  However, that only applies to ORB methods,
-	  not CORBA::ORB_init().  Just return the ORB.  ORB methods
-	  already check for ORB shutdown.
+          Removed ORB shutdown check.  The goal of the check was to cause
+          the CORBA::BAD_INV_ORDER system exception to be thrown if the
+          ORB was shutdown.  However, that only applies to ORB methods,
+          not CORBA::ORB_init().  Just return the ORB.  ORB methods
+          already check for ORB shutdown.
 
-	* tao/ORB_Table.cpp (bind):
+        * tao/ORB_Table.cpp (bind):
 
-	  Moved pair creation before the lock acquisition.  Pair creation
-	  in this case need not be synchronized across threads.
+          Moved pair creation before the lock acquisition.  Pair creation
+          in this case need not be synchronized across threads.
 
-	  (unbind):
+          (unbind):
 
-	  Pass the iterator returned from the underlaying map's find()
-	  call to erase().  Saves us a duplicate element search found in
-	  the erase() overload that accepts a key_type instead of an
-	  iterator.
+          Pass the iterator returned from the underlaying map's find()
+          call to erase().  Saves us a duplicate element search found in
+          the erase() overload that accepts a key_type instead of an
+          iterator.
 
-	  Removed work around described here in ChangeLog entry "Fri Jul
-	  22 10:07:12 UTC 2005  Johnny Willemsen
-	  <jwillemsen@remedy.nl>".  It is no longer necessary due to
-	  changes in the ACE_Array_Map implementation.  Also addresses
-	  missing key object destruction in the workaround.
+          Removed work around described here in ChangeLog entry "Fri Jul
+          22 10:07:12 UTC 2005  Johnny Willemsen
+          <jwillemsen@remedy.nl>".  It is no longer necessary due to
+          changes in the ACE_Array_Map implementation.  Also addresses
+          missing key object destruction in the workaround.
 
-	* tao/ORB_Table.h:
-	* tao/ORB_Table.inl:
+        * tao/ORB_Table.h:
+        * tao/ORB_Table.inl:
 
-	  Removed the ORB_Core_Ref_Counter equality operator.  It is a
-	  vestige of a transitional ORB_Table and ORB_Core_Ref_Counter
-	  implementation, and is no longer needed.
+          Removed the ORB_Core_Ref_Counter equality operator.  It is a
+          vestige of a transitional ORB_Table and ORB_Core_Ref_Counter
+          implementation, and is no longer needed.
 
-	  Set the ACE_Array_Map equality functor template parameter to
-	  TAO::String_Var_Equal_To.  See changes to CORBA_String.h above
-	  for details.
+          Set the ACE_Array_Map equality functor template parameter to
+          TAO::String_Var_Equal_To.  See changes to CORBA_String.h above
+          for details.
 
-	* tao/Object_Ref_Table.h:
+        * tao/Object_Ref_Table.h:
 
-	  Set the ACE_Array_Map equality functor template parameter to
-	  TAO::String_Var_Equal_To.  See changes to CORBA_String.h above
-	  for details.
+          Set the ACE_Array_Map equality functor template parameter to
+          TAO::String_Var_Equal_To.  See changes to CORBA_String.h above
+          for details.
 
-	* tao/Object_Ref_Table.cpp (bind):
+        * tao/Object_Ref_Table.cpp (bind):
 
-	  Moved pair creation before the lock acquisition.  Pair creation
-	  in this case need not be synchronized across threads.
+          Moved pair creation before the lock acquisition.  Pair creation
+          in this case need not be synchronized across threads.
 
-	* tao/PortableServer/Servant_Base.cpp:
-	* tao/PortableServer/Servant_Base.h:
-	* tao/PortableServer/Servant_Base.i:
+        * tao/PortableServer/Servant_Base.cpp:
+        * tao/PortableServer/Servant_Base.h:
+        * tao/PortableServer/Servant_Base.i:
 
-	  Inlined one-liners.  Reduces footprint.
+          Inlined one-liners.  Reduces footprint.
 
-	  Use the ACE_Atomic_Op<long> specialization as the underlying
-	  synchronized reference counting mechanism instead of
-	  ACE_Atomic_Op<CORBA::ULong>.  Improves performance and reduces
-	  footprint.
+          Use the ACE_Atomic_Op<long> specialization as the underlying
+          synchronized reference counting mechanism instead of
+          ACE_Atomic_Op<CORBA::ULong>.  Improves performance and reduces
+          footprint.
 
 Wed Jul 27 21:35:20 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/TCP_Baseline/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/lib/Makefile.am:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/TCP_Baseline/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/lib/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
 Wed Jul 27 15:59:54 2005  Gary Maxey <gary.maxey@hp.com>
 
@@ -258,14 +266,14 @@ Wed Jul 27 15:59:54 2005  Gary Maxey <gary.maxey@hp.com>
         * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp
         * TAO_IDL/be/be_visitor_valuetype_fwd/any_op_ch.cpp
 
-	  When generating Any insertion and extraction operators
-	  conditionally put them in a namespace that corresponds to their
-	  enclosing module (if any).  Addresses problem reported in
-	  Bugzilla report #2071.  Since some compilers do not implement
-	  symbol lookup correctly the changed code is controlled by the
-	  ACE_ANY_OPS_USE_NAMESPACE macro.  Use this macro in config*.h if
-	  your compiler implements symbol lookup correctly.  Without the
-	  macro the IDL generated code is as it was.
+          When generating Any insertion and extraction operators
+          conditionally put them in a namespace that corresponds to their
+          enclosing module (if any).  Addresses problem reported in
+          Bugzilla report #2071.  Since some compilers do not implement
+          symbol lookup correctly the changed code is controlled by the
+          ACE_ANY_OPS_USE_NAMESPACE macro.  Use this macro in config*.h if
+          your compiler implements symbol lookup correctly.  Without the
+          macro the IDL generated code is as it was.
 
 Wed Jul 27 10:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
