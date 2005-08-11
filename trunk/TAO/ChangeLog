@@ -1,3 +1,8 @@
+Thu Aug 11 08:02:32 2005  Gary Maxey <gary.maxey@hp.com>
+
+	* tao/CORBANAME_Parser.cpp:
+	  Change variable type because of warnings by some compilers.
+
 Wed Aug 10 08:46:55 2005  Gary Maxey <gary.maxey@hp.com>
 
 	* tao/CORBANAME_Parser.cpp:
