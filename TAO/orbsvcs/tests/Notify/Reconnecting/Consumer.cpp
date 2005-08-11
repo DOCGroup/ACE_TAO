@@ -6,7 +6,7 @@
 #include "tao/TimeBaseC.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_stdio.h"
-#include "tao/Any.h"
+#include "tao/AnyTypeCode/Any.h"
 
 ACE_RCSID (Notify_Tests, Consumer_Main, "$Id$")
 
