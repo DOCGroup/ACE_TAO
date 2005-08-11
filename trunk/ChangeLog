@@ -1,3 +1,9 @@
+Thu Aug 11 09:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.inl:
+          Made the wchar vsnprintf a notsup, linux doesn't support this and
+          I don't have time to fix this.
+
 Thu Aug 11 07:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/JAWS2/JAWS/Concurrency.cpp:
