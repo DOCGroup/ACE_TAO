@@ -20,7 +20,7 @@
 
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 
-#include "tao/Any.h"
+#include "tao/AnyTypeCode/Any.h"
 #include "tao/ORB.h"
 
 #include "ace/SString.h"
