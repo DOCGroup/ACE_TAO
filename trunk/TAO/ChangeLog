@@ -1,3 +1,24 @@
+Thu Aug 11 16:16:00 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * orbsvcs/Notify_Service/Notify_Service.h:
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+
+          Reverted Mon Dec  6 23:08:12 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        The code requires use of to_name() to support creation of CosNaming::Name with
+        length > 1. For example :
+               CosNaming::Name_var n = to_name("a/b");
+          is basically equivalent to :
+               CosNaming::Name n(2);
+               n.length(2);
+               n[0].id = "a";
+               n[1].id = "b";
+
+          Thanks to Mike Chartier <mikec at compgen dot com> for
+        spotting this problem. 
+	Rather than reverting the code to support both styles, I just made
+	the new code always use to_name().
+
 Thu Aug 11 13:48:57 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/orbconf.h:
