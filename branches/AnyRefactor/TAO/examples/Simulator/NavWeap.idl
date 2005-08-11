@@ -2,7 +2,7 @@
 
 // =========================================================================================================
 //
-// = FILE  
+// = FILE
 //     NavWeap.idl
 //
 // = DESCRIPTION
@@ -12,9 +12,9 @@
 //     Michael Kircher <mk1@cec.wustl.edu>
 //     Modified by
 //     Chris Gill <cdgill@cs.wustl.edu>
-// ========================================================================================================= 
+// =========================================================================================================
 
-#include "TimeBase.idl"
+#include "tao/TimeBase.idl"
 
 struct Navigation {
 	long position_latitude;
@@ -28,7 +28,7 @@ struct Navigation {
 	double overhead;
 	TimeBase::TimeT arrival_time;
 	TimeBase::TimeT deadline_time;
-	TimeBase::TimeT completion_time;	
+	TimeBase::TimeT completion_time;
 	TimeBase::TimeT computation_time;
         unsigned long criticality;
         unsigned long update_data;
@@ -54,17 +54,17 @@ struct Weapons {
 	double overhead;
 	TimeBase::TimeT arrival_time;
 	TimeBase::TimeT deadline_time;
-	TimeBase::TimeT completion_time;	
+	TimeBase::TimeT completion_time;
 	TimeBase::TimeT computation_time;
         unsigned long criticality;
         unsigned long update_data;
-}; 
+};
 
 interface NavWeapTerminator
     // = DESCRIPTION
     // This interface specifies a single operation, used
     // to shut down the orb.  This allows the orb to
-    // be shut down cleanly, from within a synchronously 
+    // be shut down cleanly, from within a synchronously
     // servant dispatched servant, but with the request
     // originating from another thread.
 {
