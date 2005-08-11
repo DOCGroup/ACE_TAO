@@ -861,7 +861,7 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len)
 # endif /* defined (ACE_PSOS_LACKS_PHILE */
 #else
 
-  int result;
+  ssize_t result;
 
 # if defined (ACE_HAS_CHARPTR_SOCKOPT)
   ACE_OSCALL (::read (handle, (char *) buf, len), ssize_t, -1, result);

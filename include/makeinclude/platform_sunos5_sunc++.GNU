@@ -20,8 +20,8 @@
 # the target CPU.  The /opt/SUNWspro/ Sun C++ installation directory
 # is site-specific.
 #
-# To build 64-bit binaries with Forte 6, build with the "buildbits=64"
-# option (make buildbits=64).
+# To build 64-bit binaries with Forte 6 and later, build with the
+# "buildbits=64" option (make buildbits=64).
 #
 # With slight modification, this file could be used with Sun C++ 4.1.
 # However, it's likely that you won't be able to build all of ACE
