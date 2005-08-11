@@ -1,3 +1,23 @@
+Thu Aug 11 12:29:39 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/Time_Value.inl (msec): When moving tv_sec to ACE_UINT64,
+	  static cast it to the desired ACE_UINT64, not ACE_UINT32.
+
+	* ace/ace_wchar.inl (convert):
+	* ace/OS_NS_unistd.inl (read):
+	* ace/OS_NS_stdio.inl (fread, fwrite):
+	* ace/OS_NS_sys_socket.inl (sendto): Use proper types portable to
+	  64 bits.
+
+	* ace/Functor.inl (ACE_Hash<ACE_UINT64>): If unsigned long is
+	  not 4 bytes, don't try to cast 64 bits down to 4 bytes.
+
+	* ace/OS_NS_stdio.inl (ACE_HAS_WCHAR vsnprintf): This is the same
+	  situation as ACE_OS::vsprintf - the X/Open/XPG folks got it right
+	  and added the maxlen argument when defining wide-char *printf
+	  functions, so just use vswprintf() - there's no such thing as
+	  vswnprintf().
+
 Thu Aug 11 06:44:44 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/depgen.pl:
@@ -291,8 +311,9 @@ Fri Jul 29 09:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Global_Macros.h:
           When ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS is defined, define
-          a special version of ACE_DES_FREE_TEMPLATE3 and ACE_DES_FREE_TEMPLATE4
-          just as we do for ACE_DES_FREE_TEMPLATE and ACE_DES_FREE_TEMPLATE2.
+          a special version of ACE_DES_FREE_TEMPLATE3 and
+	  ACE_DES_FREE_TEMPLATE4 just as we do for ACE_DES_FREE_TEMPLATE and
+	  ACE_DES_FREE_TEMPLATE2.
 
           Thanks to Olivier Gu�in <guerin35 at hotmail dot com>
           for reporting this.

@@ -721,7 +721,7 @@ ACE_OS::sendto (ACE_HANDLE handle,
                                 addrlen);
        if (result == -1)
          break;
-       number_of_bytes_sent += result;
+       number_of_bytes_sent += static_cast<size_t> (result);
     }
 
   return result;

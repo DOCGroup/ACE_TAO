@@ -133,7 +133,7 @@ ACE_INLINE void
 ACE_Time_Value::msec (ACE_UINT64 &ms) const
 {
   // ACE_OS_TRACE ("ACE_Time_Value::msec");
-  ms = static_cast<ACE_UINT32> (this->tv_.tv_sec);
+  ms = static_cast<ACE_UINT64> (this->tv_.tv_sec);
   ms *= 1000;
   ms += (this->tv_.tv_usec / 1000);
 }

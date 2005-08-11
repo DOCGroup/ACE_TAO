@@ -88,7 +88,7 @@ ACE_Hash<ACE_UINT16>::operator () (ACE_UINT16 t) const
 ACE_INLINE unsigned long
 ACE_Hash<ACE_INT32>::operator () (ACE_INT32 t) const
 {
-  return t;
+  return static_cast<unsigned long> (t);
 }
 
 ACE_INLINE unsigned long
@@ -100,7 +100,11 @@ ACE_Hash<ACE_UINT32>::operator () (ACE_UINT32 t) const
 ACE_INLINE unsigned long
 ACE_Hash<ACE_UINT64>::operator () (ACE_UINT64 t) const
 {
+#if (ACE_SIZEOF_LONG == 4)
   return ACE_U64_TO_U32 (t);
+#else
+  return static_cast<unsigned long> (t);
+#endif /* ACE_SIZEOF_LONG */
 }
 
 
