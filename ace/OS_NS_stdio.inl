@@ -762,7 +762,9 @@ ACE_INLINE size_t
 ACE_OS::fread (void *ptr, size_t size, size_t nelems, FILE *fp)
 {
   ACE_OS_TRACE ("ACE_OS::fread");
-  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fread (ptr, size, nelems, fp), int, 0);
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fread (ptr, size, nelems, fp),
+                     size_t,
+                     0);
 }
 
 ACE_INLINE FILE *
@@ -822,7 +824,9 @@ ACE_INLINE size_t
 ACE_OS::fwrite (const void *ptr, size_t size, size_t nitems, FILE *fp)
 {
   ACE_OS_TRACE ("ACE_OS::fwrite");
-  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fwrite (ptr, size, nitems, fp), int, 0);
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fwrite (ptr, size, nitems, fp),
+                     size_t,
+                     0);
 }
 
 ACE_INLINE void
@@ -1089,11 +1093,21 @@ ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
 ACE_INLINE int
 ACE_OS::vsnprintf (wchar_t *buffer, size_t maxlen, const wchar_t *format, va_list ap)
 {
+# if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
+     (defined (sun) && !(defined(_XOPEN_SOURCE) && (_XOPEN_VERSION-0==4))) || \
+     (defined (ACE_HAS_DINKUM_STL) || defined (__DMC__))
+
+  return vswprintf (buffer, maxlen, format, argptr);
+
+# else
+
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (maxlen);
   ACE_UNUSED_ARG (format);
   ACE_UNUSED_ARG (ap);
   ACE_NOTSUP_RETURN (-1);
+
+# endif /* platforms with a variant of vswprintf */
 }
 #endif /* ACE_HAS_WCHAR */
 
