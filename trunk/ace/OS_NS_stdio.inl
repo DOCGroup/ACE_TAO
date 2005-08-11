@@ -1085,6 +1085,42 @@ ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
 }
 #endif /* ACE_HAS_WCHAR */
 
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE int
+ACE_OS::vsnprintf (wchar_t *buffer, size_t maxlen, const wchar_t *format, va_list ap)
+{
+#if defined (ACE_HAS_SNPRINTF)
+
+#  if !defined (ACE_WIN32) \
+   || (defined (__BORLANDC__) && (__BORLANDC__ >= 0x600))
+  return ACE_SPRINTF_ADAPTER (::vsnwprintf (buffer, maxlen, format, ap));
+#  else
+
+  int result =
+    ACE_SPRINTF_ADAPTER (::_vsnwprintf (buffer, maxlen, format, ap));
+
+  // Win32 doesn't regard a full buffer with no 0-terminate as an
+  // overrun.
+  if (result == static_cast<int> (maxlen))
+    result = -1;
+
+  // Win32 doesn't 0-terminate the string if it overruns maxlen.
+  if (result == -1)
+    buffer[maxlen-1] = '\0';
+
+  return result;
+
+# endif
+#else
+  ACE_UNUSED_ARG (buffer);
+  ACE_UNUSED_ARG (maxlen);
+  ACE_UNUSED_ARG (format);
+  ACE_UNUSED_ARG (ap);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_SNPRINTF */
+}
+#endif /* ACE_HAS_WCHAR */
+
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #if defined (ACE_WIN32)
 ACE_INLINE const OSVERSIONINFO &
