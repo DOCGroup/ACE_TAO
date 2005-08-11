@@ -1,3 +1,10 @@
+Thu Aug 11 16:04:30 2005  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * ace/OS_NS_stdio.inl (ACE_HAS_WCHAR vsnprintf): This is an
+	  actively edited file today!  Fixed the name of the last
+	  argument in the call so that it actually matches the name
+	  of the argument in the arg list.
+
 Thu Aug 11 14:13:22 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * include/makeinclude/platform_sunos5_sunc++.GNU:
