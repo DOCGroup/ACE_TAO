@@ -67,8 +67,12 @@ CXX             = CC
 
 CC_VERSION = $(shell $(CXX) -V 2>&1)
 
-ifeq (C++ 5.7,$(findstring C++ 5.7,$(CC_VERSION)))
-PLATFORM_STLPORT_CPPFLAGS = -library=stlport4
+ifeq (C++ 5.6,$(findstring C++ 5.6,$(CC_VERSION)))
+  PLATFORM_STLPORT_CPPFLAGS = -library=stlport4
+else
+  ifeq (C++ 5.7,$(findstring C++ 5.7,$(CC_VERSION)))
+    PLATFORM_STLPORT_CPPFLAGS = -library=stlport4
+  endif
 endif
 
 #### The following macro overrides enable creation of fast executables.
@@ -215,6 +219,13 @@ CPPFLAGS       += -DSUN_CC_HAS_PVFC_BUG
 #### add "exceptions=1" to your "make" invocation.
 ifeq (0,$(exceptions))
   CCFLAGS += -noex
+  ifeq (C++ 5.6,$(findstring C++ 5.6,$(CC_VERSION)))
+    override stlport = 1
+  else
+    ifeq (C++ 5.7,$(findstring C++ 5.7,$(CC_VERSION)))
+      override stlport = 1
+    endif
+  endif
 endif # ! exceptions
 
 LD              = $(CXX)
