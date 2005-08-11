@@ -46,6 +46,7 @@ TAO_Requires_PI_Initializer =
 #include "InterceptorC.h"
 #include "ClientRequestInfoC.h"
 #include "ClientRequestInterceptorC.h"
+#include "PICurrentC.h"
 #undef TAO_PI_SAFE_INCLUDE
 
 #endif  /* TAO_PI_H */
