@@ -1,3 +1,8 @@
+Thu Aug 11 07:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.inl:
+          Added wchar vsnprintf version, was declared but not implemented
+
 Wed Aug 10 15:43:37 2005  Gary Maxey <gary.maxey@hp.com>
 
 	* tests/run_test.lst:
