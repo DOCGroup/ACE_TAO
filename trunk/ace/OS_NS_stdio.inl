@@ -1097,7 +1097,7 @@ ACE_OS::vsnprintf (wchar_t *buffer, size_t maxlen, const wchar_t *format, va_lis
      (defined (sun) && !(defined(_XOPEN_SOURCE) && (_XOPEN_VERSION-0==4))) || \
      (defined (ACE_HAS_DINKUM_STL) || defined (__DMC__))
 
-  return vswprintf (buffer, maxlen, format, argptr);
+  return vswprintf (buffer, maxlen, format, ap);
 
 # else
 
