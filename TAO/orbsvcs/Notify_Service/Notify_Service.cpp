@@ -174,14 +174,13 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
       ACE_ASSERT (!CORBA::is_nil (this->naming_.in ()));
 
 
-      CosNaming::Name name (1);
-      name.length (1);
-      name[0].id =
-        CORBA::string_dup (this->notify_factory_name_.c_str ());
+      CosNaming::Name_var name =
+        this->naming_->to_name (this->notify_factory_name_.c_str ()
+                                ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
 
-      this->naming_->rebind (name,
+      this->naming_->rebind (name.in (),
                             this->notify_factory_.in ()
                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
@@ -203,12 +202,12 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
                                                   initial_admin,
                                                   id
                                                   ACE_ENV_ARG_PARAMETER);
-
-          name[0].id =
-            CORBA::string_dup (this->notify_channel_name_.c_str ());
+          name = this->naming_->to_name (
+            this->notify_channel_name_.c_str ()
+            ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
-          this->naming_->rebind (name,
+          this->naming_->rebind (name.in (),
                                 ec.in ()
                                 ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
@@ -257,7 +256,7 @@ TAO_Notify_Service_Driver::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
                       -1);
 
   this->naming_ =
-    CosNaming::NamingContext::_narrow (naming_obj.in ()
+    CosNaming::NamingContextExt::_narrow (naming_obj.in ()
                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
@@ -290,13 +289,12 @@ TAO_Notify_Service_Driver::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   if (this->use_name_svc_)
   {
     // Unbind from the naming service.
-    CosNaming::Name name (1);
-    name.length (1);
-    name[0].id =
-      CORBA::string_dup (this->notify_factory_name_.c_str ());
+    CosNaming::Name_var name =
+      this->naming_->to_name (this->notify_factory_name_.c_str ()
+                              ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
-    this->naming_->unbind (name
+    this->naming_->unbind (name.in ()
                            ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
   }
