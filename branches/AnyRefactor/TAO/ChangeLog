@@ -1,3 +1,15 @@
+Thu Aug 11 15:56:51 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        
+          Fixed the logic of generating a *A.h include associated
+          with an included .pidl file to determine whether the
+          .pidl file is located in $TAO_ROOT/tao or in a subdirectory,
+          and thus whether to include the *A.h file from the
+          AnyTypeCode library or not. Only .pidl files in the
+          $TAO_ROOT/tao directory itself have their associated
+          *A.* files moved to the AnyTypeCode library.
+
 Thu Aug 11 09:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI/PI.h:
