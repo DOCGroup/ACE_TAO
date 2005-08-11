@@ -884,12 +884,18 @@ TAO_CodeGen::start_anyop_source (const char *fname)
   // If we have not suppressed Any operator generation and also
   // are not generating the operators in a separate file, we
   // need to include the *A.h file from all .pidl files here.
-  if (be_global->any_support () && !be_global->gen_anyop_files ())
+  if (be_global->any_support ())
     {
       for (size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
         {
           char* idl_name = idl_global->included_idl_files ()[j];
 
+          // Make a String out of it.
+          UTL_String idl_name_str = idl_name;
+
+          const char *anyop_hdr =
+            BE_GlobalData::be_get_anyop_header (&idl_name_str, 1);
+
           ACE_CString pidl_checker (idl_name);
           bool got_pidl =
             (pidl_checker.find (".pidl") != ACE_SString::npos);
@@ -898,82 +904,34 @@ TAO_CodeGen::start_anyop_source (const char *fname)
           // the *A.h include from the AnyTypeCode library.
           if (got_pidl)
             {
-              // Make a String out of it.
-              UTL_String idl_name_str = idl_name;
-
-              const char *anyop_hdr =
-                BE_GlobalData::be_get_anyop_header (&idl_name_str, 1);
-
               // Stripped off any scope in the name and add the
               // AnyTypeCode prefix.
               ACE_CString work_hdr (anyop_hdr);
+              ACE_CString final_hdr = "tao/AnyTypeCode/";
               int pos = work_hdr.rfind ('/');
 
               if (pos != ACE_SString::npos)
                 {
-                  work_hdr = work_hdr.substr (pos + 1);
+                  ACE_CString scope (work_hdr.substr (0, pos - 1));
+                  
+                  // If we find a '/' in the containing scope name, it
+                  // means we are including a .pidl file from a
+                  // subdirectory of $TAO_ROOT/tao, and so we should
+                  // include the anyop_hdr string as is, and not strip
+                  // off the scope name and prepend "tao/AnyTypeCode/".
+                  // Only .pidl files in $TAO_ROOT/tao itself have
+                  // their generated *A.* files moved to the AnyTypeCode
+                  // library.    
+                  if (scope.find ('/') == ACE_SString::npos)
+                    {
+                      work_hdr = work_hdr.substr (pos + 1);
+                      final_hdr += work_hdr;
+                    }
+                  else
+                    {
+                      final_hdr = work_hdr;
+                    }
                 }
-
-              ACE_CString final_hdr ("tao/AnyTypeCode/");
-              final_hdr += work_hdr;
-
-              this->client_stubs_->print ("\n#include \"%s\"",
-                                          final_hdr.c_str ());
-            }
-        }
-    }
-
-  size_t nfiles = idl_global->n_included_idl_files ();
-
-  // We must include all the client headers corresponding to
-  // IDL files included by the current IDL file.
-  // We will use the included IDL file names as they appeared
-  // in the original main IDL file, not the one which went
-  // thru CC preprocessor.
-  for (size_t j = 0; j < nfiles; ++j)
-    {
-      char* idl_name = idl_global->included_idl_files ()[j];
-
-      // Make a String out of it.
-      UTL_String idl_name_str = idl_name;
-
-      // Make sure this file was actually got included, not
-      // ignored by some #if defined compiler directive.
-
-
-      // Get the clnt header from the IDL file name.
-      const char* anyop_hdr_name =
-        BE_GlobalData::be_get_anyop_header (&idl_name_str, 1);
-
-      // Sanity check and then print.
-      if (anyop_hdr_name != 0)
-        {
-          ACE_CString pidl_checker (idl_name);
-          bool got_pidl =
-            (pidl_checker.find (".pidl") != ACE_SString::npos);
-
-          // If we're here and we have a .pidl file, we need to generate
-          // the *A.h include from the AnyTypeCode library.
-          if (got_pidl)
-            {
-              // Make a String out of it.
-              UTL_String idl_name_str = idl_name;
-
-              const char *anyop_hdr =
-                BE_GlobalData::be_get_anyop_header (&idl_name_str, 1);
-
-              // Stripped off any scope in the name and add the
-              // AnyTypeCode prefix.
-              ACE_CString work_hdr (anyop_hdr);
-              int pos = work_hdr.rfind ('/');
-
-              if (pos != ACE_SString::npos)
-                {
-                  work_hdr = work_hdr.substr (pos + 1);
-                }
-
-              ACE_CString final_hdr ("tao/AnyTypeCode/");
-              final_hdr += work_hdr;
 
               this->anyop_source_->print ("\n#include \"%s\"",
                                           final_hdr.c_str ());
@@ -981,18 +939,10 @@ TAO_CodeGen::start_anyop_source (const char *fname)
           else
             {
               this->anyop_source_->print ("\n#include \"%s\"",
-                                          anyop_hdr_name);
+                                          anyop_hdr);
             }
         }
-      else
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("\nERROR, invalid file '%s' included"),
-                             idl_name),
-                            -1);
-        }
     }
-
   *this->anyop_source_ << "\n";
 
   this->gen_typecode_includes (this->anyop_source_);
@@ -1708,15 +1658,31 @@ TAO_CodeGen::gen_stub_src_includes (void)
               // Stripped off any scope in the name and add the
               // AnyTypeCode prefix.
               ACE_CString work_hdr (anyop_hdr);
+              ACE_CString final_hdr = "tao/AnyTypeCode/";
               int pos = work_hdr.rfind ('/');
 
               if (pos != ACE_SString::npos)
                 {
-                  work_hdr = work_hdr.substr (pos + 1);
+                  ACE_CString scope (work_hdr.substr (0, pos));
+              
+                  // If we find a '/' in the containing scope name, it
+                  // means we are including a .pidl file from a
+                  // subdirectory of $TAO_ROOT/tao, and so we should
+                  // include the anyop_hdr string as is, and not strip
+                  // off the scope name and prepend "tao/AnyTypeCode/".
+                  // Only .pidl files in $TAO_ROOT/tao itself have
+                  // their generated *A.* files moved to the AnyTypeCode
+                  // library.    
+                  if (scope.find ('/') == ACE_SString::npos)
+                    {
+                      work_hdr = work_hdr.substr (pos + 1);
+                      final_hdr += work_hdr;
+                    }
+                  else
+                    {
+                      final_hdr = work_hdr;
+                    }
                 }
-
-              ACE_CString final_hdr ("tao/AnyTypeCode/");
-              final_hdr += work_hdr;
 
               this->client_stubs_->print ("\n#include \"%s\"",
                                           final_hdr.c_str ());
