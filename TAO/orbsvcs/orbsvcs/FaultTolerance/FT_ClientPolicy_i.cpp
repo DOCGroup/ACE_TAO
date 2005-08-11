@@ -4,6 +4,7 @@
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
 #include "tao/ORB_Constants.h"
+#include "tao/AnyTypeCode/Any.h"
 
 #if !defined (__ACE_INLINE__)
 #include "FT_ClientPolicy_i.inl"
@@ -34,7 +35,7 @@ TAO_FT_Request_Duration_Policy::create (const CORBA::Any& val
     ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
                       CORBA::Policy::_nil ());
 
-  TAO_FT_Request_Duration_Policy *tmp;
+  TAO_FT_Request_Duration_Policy *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     TAO_FT_Request_Duration_Policy (value),
                     CORBA::NO_MEMORY (TAO::VMCID,

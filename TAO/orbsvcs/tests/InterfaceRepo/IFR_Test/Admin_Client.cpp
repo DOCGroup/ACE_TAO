@@ -3,7 +3,7 @@
 
 #include "Admin_Client.h"
 
-#include "tao/Any_Unknown_IDL_Type.h"
+#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/CDR.h"
 
 #include "ace/Get_Opt.h"
