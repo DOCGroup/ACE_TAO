@@ -31,7 +31,7 @@ JAWS_Concurrency_Base::singleton_mb (void)
 {
   if (this->mb_acquired_ == 0)
     {
-      ACE_Guard<ACE_Thread_Mutex> g(this->lock_);
+      ACE_Guard<ACE_SYNCH_MUTEX> g(this->lock_);
 
       if (this->mb_acquired_ == 0)
         {
@@ -121,10 +121,10 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
 
   int result = 0;
 
-  JAWS_Dispatch_Policy *policy;  // Contains task policies
-  JAWS_IO_Handler *handler;      // Keeps the state of the task
-  JAWS_Pipeline_Handler *task;   // The task itself
-  JAWS_Data_Block *mb;     // The task message block
+  JAWS_Dispatch_Policy *policy = 0;  // Contains task policies
+  JAWS_IO_Handler *handler = 0;      // Keeps the state of the task
+  JAWS_Pipeline_Handler *task = 0;   // The task itself
+  JAWS_Data_Block *mb = 0;     // The task message block
 
   policy = ts_db->policy ();
   task = ts_db->task ();
