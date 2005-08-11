@@ -2,7 +2,7 @@
 // $Id$
 //
 
-#include "tao/NVList.h"
+#include "tao/AnyTypeCode/NVList.h"
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "ace/OS_NS_string.h"
 
@@ -120,8 +120,8 @@ int main (int argc, char* argv[])
 
       ACE_DEBUG((LM_DEBUG, "About to call create_operation_list\n"));
 
-      orb->create_operation_list(operation.in (), 
-		                 opList.out() 
+      orb->create_operation_list(operation.in (),
+		                 opList.out()
 				 ACE_ENV_ARG_PARAMETER) ;
       ACE_TRY_CHECK;
 

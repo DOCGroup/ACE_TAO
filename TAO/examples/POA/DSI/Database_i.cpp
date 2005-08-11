@@ -4,7 +4,7 @@
 
 #include "tao/DynamicInterface/Server_Request.h"
 
-#include "tao/NVList.h"
+#include "tao/AnyTypeCode/NVList.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "ace/Null_Mutex.h"
 

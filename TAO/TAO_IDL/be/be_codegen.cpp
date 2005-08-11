@@ -842,11 +842,6 @@ TAO_CodeGen::start_anyop_header (const char *fname)
                        << be_global->be_get_client_hdr_fname ()
                        << "\"";
 
-  *this->anyop_header_
-      << "\n\n#if defined (__BORLANDC__)\n"
-      << "#pragma option push -w-rvl -w-rch -w-ccc -w-inl\n"
-      << "#endif /* __BORLANDC__ */";
-
   return 0;
 }
 
@@ -1349,10 +1344,6 @@ TAO_CodeGen::end_server_skeletons (void)
 int
 TAO_CodeGen::end_anyop_header (void)
 {
-  *this->anyop_header_ << "\n\n#if defined (__BORLANDC__)\n"
-                       << "#pragma option pop\n"
-                       << "#endif /* __BORLANDC__ */";
-
   if (be_global->post_include () != 0)
     {
       *this->anyop_header_ << "\n\n#include /**/ \""
