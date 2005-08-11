@@ -591,11 +591,16 @@ endif
 <%if(exename)%>
 
 ifneq ($(VXWORKSLINK),true)
+<%if(libs && libpaths)%>
+ifeq ($(static_libs_only), 1)
+  DEPLIBS = $(foreach lib, <%libs%> <%lit_libs%>, $(foreach libpath, <%libpaths%>, $(wildcard $(libpath)/lib$(lib).a)))
+endif
+
+<%endif%>
+$(BIN): $(addprefix $(VDIR), $(OBJS)) $(DEPLIBS)
 ifndef kylix
-$(BIN): $(addprefix $(VDIR), $(OBJS))
 	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $^ $(VLDLIBS) $(POSTLINK)
 else
-$(BIN): $(addprefix $(VDIR), $(OBJS))
 	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $(VLDLIBS) $(BORINITEXEOBJ) $(POSTLINK) $^, $@,,
 endif
 endif

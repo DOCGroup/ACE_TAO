@@ -22,17 +22,27 @@ use vars qw(@ISA);
 # Data Section
 # ************************************************************
 
-my(%vals)  = ('ACE_ROOT'     => '$(top_srcdir)',
-              'TAO_ROOT'     => '$(top_srcdir)',
-              'ACE_BUILDDIR' => '$(top_builddir)',
-              'TAO_BUILDDIR' => '$(top_builddir)',
-              'TAO_IDL'      => 'ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl' . "\n" .
-                                'TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf',
+my(%vals)  = ('ACE_ROOT'      => '$(top_srcdir)',
+              'TAO_ROOT'      => '$(top_srcdir)',
+              'CIAO_ROOT'     => '$(top_srcdir)',
+              'ACE_BUILDDIR'  => '$(top_builddir)',
+              'TAO_BUILDDIR'  => '$(top_builddir)',
+              'CIAO_BUILDDIR' => '$(top_builddir)',
+              'TAO_IDL'       => 'ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl' . "\n" .
+                                 'TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf',
              );
-my(%addon) = ('ACE_ROOT'     => {'TAO_ROOT'     => '/..',
-                                 'TAO_BUILDDIR' => '/..'},
-              'ACE_BUILDDIR' => {'TAO_ROOT'     => '/..',
-                                 'TAO_BUILDDIR' => '/..'},
+my(%addon) = ('ACE_ROOT'     => {'CIAO_ROOT'     => '/../..',
+                                 'TAO_ROOT'      => '/..',
+                                 'CIAO_BUILDDIR' => '/../..',
+                                 'TAO_BUILDDIR'  => '/..'},
+              'ACE_BUILDDIR' => {'CIAO_ROOT'     => '/../..',
+                                 'TAO_ROOT'      => '/..',
+                                 'CIAO_BUILDDIR' => '/../..',
+                                 'TAO_BUILDDIR'  => '/..'},
+              'TAO_ROOT'     => {'CIAO_ROOT'     => '/..',
+                                 'CIAO_BUILDDIR' => '/..'},
+              'TAO_BUILDDIR' => {'CIAO_ROOT'     => '/..',
+                                 'CIAO_BUILDDIR' => '/..'},
              );
 
 # ************************************************************
@@ -55,6 +65,30 @@ sub modify_value {
   }
 
   return $value;
+}
+
+sub modify_libpath {
+  my($self)    = shift;
+  my($str)     = shift;
+  my($reldir)  = shift;
+  my($libname) = shift;
+
+  if ($libname =~ /libace/i) {
+    $str =~ s!$libname!\$(ACE_BUILDDIR)/$reldir/$libname!;
+    return $str;
+  }
+  elsif ($libname =~ /libtao/i) {
+    $reldir =~ s!TAO/!!;
+    $str =~ s!$libname!\$(TAO_BUILDDIR)/$reldir/$libname!;
+    return $str;
+  }
+  elsif ($libname =~ /libciao/i) {
+    $reldir =~ s!TAO/CIAO/!!;
+    $str =~ s!$libname!\$(CIAO_BUILDDIR)/$reldir/$libname!;
+    return $str;
+  }
+
+  return undef;
 }
 
 sub write_settings {
@@ -89,7 +123,9 @@ sub write_settings {
   foreach my $key (sort keys %seen) {
     print $fh "$key = $seen{$key}";
     if (defined $addon{$key}) {
-      foreach my $add (keys %{$addon{$key}}) {
+      foreach my $add (
+        sort { length($addon{$key}->{$b}) <=>
+               length($addon{$key}->{$a}) } keys %{$addon{$key}}) {
         if ($seen{$add}) {
           print $fh $addon{$key}->{$add};
           last;
