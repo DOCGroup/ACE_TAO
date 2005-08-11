@@ -83,7 +83,7 @@ TAO_CORBANAME_Parser::parse_string (const char *ior,
     {
       // The position of the seperator between the obj_addr and key
       // string
-      CORBA::ULong pos_seperator = 0;
+      ssize_t pos_seperator = 0;
 
       ACE_CString corbaname_str (corbaname, 0, 1);
 
