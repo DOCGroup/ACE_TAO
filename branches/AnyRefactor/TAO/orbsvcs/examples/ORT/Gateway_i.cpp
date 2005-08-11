@@ -10,7 +10,7 @@
 #include "tao/ORB.h"
 #include "tao/LocalObject.h"
 #include "tao/AnyTypeCode/Any.h"
-#include "tao/NVList.h"
+#include "tao/AnyTypeCode/NVList.h"
 
 
 ACE_RCSID (ORT,
