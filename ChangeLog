@@ -1,3 +1,8 @@
+Thu Aug 11 10:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/orbsvcsexe.mpb:
+          Added AnyTypeCode
+
 Wed Aug 10 11:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/orbsvcslib.mpb:
