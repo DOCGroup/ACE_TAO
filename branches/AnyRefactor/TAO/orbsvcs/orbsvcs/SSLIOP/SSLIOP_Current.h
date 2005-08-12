@@ -25,6 +25,7 @@
 
 #include "orbsvcs/SSLIOPC.h"
 #include "tao/ORB_Core.h"
+#include "tao/LocalObject.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -144,7 +145,7 @@ namespace TAO
       ACE_UNIMPLEMENTED_FUNC (void operator= (const Current &))
       //@}
 
-        private:
+    private:
 
       /// TSS slot assigned to this object.
       size_t tss_slot_;
