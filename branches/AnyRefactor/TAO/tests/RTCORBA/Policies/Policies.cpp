@@ -20,6 +20,7 @@
 
 #include "tao/ORB.h"
 #include "tao/RTCORBA/RTCORBA.h"
+#include "tao/AnyTypeCode/Any.h"
 
 #include "ace/Log_Msg.h"
 
