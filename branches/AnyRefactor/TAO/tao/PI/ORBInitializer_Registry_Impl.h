@@ -70,7 +70,7 @@ namespace TAO
         TAO_ORB_Core *orb_core,
         int argc,
         char *argv[],
-        PortableInterceptor::SlotId &slotid
+        PortableInterceptor::SlotId slotid
         ACE_ENV_ARG_DECL);
 
   private:
