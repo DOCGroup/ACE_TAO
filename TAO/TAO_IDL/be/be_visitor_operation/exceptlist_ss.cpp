@@ -47,7 +47,7 @@ be_visitor_operation_exceptlist_ss::visit_operation (be_operation * node)
   // Don't do anything if the exception list is empty.
   if (node->exceptions ())
     {
-      *os << "static CORBA::TypeCode_ptr const exceptions[] = " << be_idt_nl;
+      *os << "static ::CORBA::TypeCode_ptr const exceptions[] = " << be_idt_nl;
       *os << "{" << be_idt_nl;
 
       // Initialize an iterator to iterate thru the exception list.
@@ -74,7 +74,7 @@ be_visitor_operation_exceptlist_ss::visit_operation (be_operation * node)
     }
   else
     {
-      *os << "static CORBA::TypeCode_ptr const * const exceptions = 0;"
+      *os << "static ::CORBA::TypeCode_ptr const * const exceptions = 0;"
           << be_nl
           << "static size_t const nexceptions = 0;";
     }

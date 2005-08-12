@@ -96,7 +96,7 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
       *os << "ACE_THROW_SPEC ((";
     }
 
-  *os << "CORBA::SystemException";
+  *os << " ::CORBA::SystemException";
 
   if (be_global->use_raw_throw ())
     {
@@ -126,7 +126,7 @@ be_visitor_amh_operation_sh::visit_attribute (be_attribute *node)
 
   *os << be_uidt_nl 
       << ")" << be_uidt_nl
-      << "ACE_THROW_SPEC ((CORBA::SystemException)) = 0;" << be_nl;
+      << "ACE_THROW_SPEC (( ::CORBA::SystemException)) = 0;" << be_nl;
 
   if (node->readonly ())
     {
@@ -154,7 +154,7 @@ be_visitor_amh_operation_sh::visit_attribute (be_attribute *node)
     }
 
   *os << be_uidt_nl << ")" << be_uidt_nl
-      << "ACE_THROW_SPEC ((CORBA::SystemException)) = 0;" << be_nl;
+      << "ACE_THROW_SPEC (( ::CORBA::SystemException)) = 0;" << be_nl;
 
   return 0;
 }

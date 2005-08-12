@@ -54,22 +54,22 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
   // Generate the Any <<= and >>= operators.
   *os << be_global->stub_export_macro ();
   *os << " void"
-      << " operator<<= (CORBA::Any &, const ";
+      << " operator<<= ( ::CORBA::Any &, const ";
   *os << node->name ();
   *os << " &); // copying version" << be_nl;
   *os << be_global->stub_export_macro ();
   *os << " void"
-      << " operator<<= (CORBA::Any &, ";
+      << " operator<<= ( ::CORBA::Any &, ";
   *os << node->name ();
   *os << "*); // noncopying version" << be_nl;
   *os << be_global->stub_export_macro ();
-  *os << " CORBA::Boolean"
-      << " operator>>= (const CORBA::Any &, ";
+  *os << " ::CORBA::Boolean"
+      << " operator>>= (const ::CORBA::Any &, ";
   *os << node->name ();
   *os << " *&); // deprecated" << be_nl;
   *os << be_global->stub_export_macro ();
-  *os << " CORBA::Boolean"
-      << " operator>>= (const CORBA::Any &, const ";
+  *os << " ::CORBA::Boolean"
+      << " operator>>= (const ::CORBA::Any &, const ";
   *os << node->name ();
   *os << " *&);";
 

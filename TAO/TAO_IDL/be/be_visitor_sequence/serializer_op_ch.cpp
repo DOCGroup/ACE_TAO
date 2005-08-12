@@ -82,7 +82,7 @@ be_visitor_sequence_serializer_op_ch::visit_sequence (be_sequence *node)
   *os << be_nl << be_nl;
 
   *os << be_global->stub_export_macro () 
-      << " CORBA::Boolean _tao_is_bounded_size (" << be_idt << be_idt_nl
+      << " ::CORBA::Boolean _tao_is_bounded_size (" << be_idt << be_idt_nl
       << "const " << node->name () << " &" << be_uidt_nl
       << ");" << be_uidt_nl;
   *os << be_global->stub_export_macro () 
@@ -95,12 +95,12 @@ be_visitor_sequence_serializer_op_ch::visit_sequence (be_sequence *node)
       << ");" << be_uidt_nl;
 
   *os << be_nl << be_nl 
-      << be_global->stub_export_macro () << " CORBA::Boolean"
+      << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator<< (" << be_idt << be_idt_nl
       << "TAO::DCPS::Serializer &," << be_nl
       << "const " << node->name () << " &" << be_uidt_nl
       << ");" << be_uidt_nl;
-  *os << be_global->stub_export_macro () << " CORBA::Boolean"
+  *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator>> (" << be_idt << be_idt_nl
       << "TAO::DCPS::Serializer &," << be_nl
       << node->name () << " &" << be_uidt_nl

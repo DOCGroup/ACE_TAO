@@ -386,7 +386,8 @@ be_visitor_union_branch_private_ch::visit_predefined_type (
   *os << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  *os << be_nl;
+  *os << be_nl
+      << "::";
 
   if (node->pt () == AST_PredefinedType::PT_object)
     {
@@ -395,13 +396,13 @@ be_visitor_union_branch_private_ch::visit_predefined_type (
     }
   else if (node->pt () == AST_PredefinedType::PT_pseudo)
     {
-      *os << bt->nested_type_name (bu, "_ptr") << " " << ub->local_name ()
-          << "_;";
+      *os << bt->nested_type_name (bu, "_ptr") 
+          << " " << ub->local_name () << "_;";
     }
   else if (node->pt () == AST_PredefinedType::PT_value)
     {
-      *os << bt->nested_type_name (bu, " *") << " " << ub->local_name ()
-          << "_;";
+      *os << bt->nested_type_name (bu, " *")
+          << " " << ub->local_name () << "_;";
     }
   else if (node->pt () == AST_PredefinedType::PT_any)
     {
@@ -488,7 +489,7 @@ be_visitor_union_branch_private_ch::visit_string (be_string *node)
     }
   else
     {
-      *os << "CORBA::WChar *" << ub->local_name () << "_;";
+      *os << "::CORBA::WChar *" << ub->local_name () << "_;";
     }
 
   return 0;

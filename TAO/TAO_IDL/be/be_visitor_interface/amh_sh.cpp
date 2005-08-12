@@ -120,7 +120,7 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
       << "& rhs);" << be_nl
       << "virtual ~" << class_name.c_str () << " (void);\n\n"
       << be_nl
-      << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
+      << "virtual ::CORBA::Boolean _is_a (" << be_idt << be_idt_nl
       << "const char* logical_type_id" << be_nl
       << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;

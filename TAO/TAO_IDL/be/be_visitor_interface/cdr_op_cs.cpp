@@ -65,7 +65,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
   //  Set the sub state as generating code for the output operator.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
 
-  *os << "CORBA::Boolean operator<< (" << be_idt << be_idt_nl
+  *os << "::CORBA::Boolean operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &strm," << be_nl
       << "const " << node->full_name () << "_ptr _tao_objref" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -73,7 +73,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
 
   if (node->is_abstract ())
     {
-      *os << "CORBA::AbstractBase_ptr";
+      *os << "::CORBA::AbstractBase_ptr";
     }
   else if (node->node_type () == AST_Decl::NT_component)
     {
@@ -81,7 +81,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
     }
   else
     {
-      *os << "CORBA::Object_ptr";
+      *os << "::CORBA::Object_ptr";
     }
 
   *os << " _tao_corba_obj = _tao_objref;" << be_nl;
@@ -91,7 +91,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
   // Set the substate as generating code for the input operator.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_INPUT);
 
-  *os << "CORBA::Boolean operator>> (" << be_idt << be_idt_nl
+  *os << "::CORBA::Boolean operator>> (" << be_idt << be_idt_nl
       << "TAO_InputCDR &strm," << be_nl
       << node->full_name () << "_ptr &_tao_objref" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -99,7 +99,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
 
   if (node->is_abstract ())
     {
-      *os << "CORBA::AbstractBase_var obj;";
+      *os << "::CORBA::AbstractBase_var obj;";
     }
   else if (node->node_type () == AST_Decl::NT_component)
     {
@@ -107,7 +107,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
     }
   else
     {
-      *os << "CORBA::Object_var obj;";
+      *os << "::CORBA::Object_var obj;";
     }
 
   *os << be_nl << be_nl

@@ -64,16 +64,16 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
 
   // The _downcast method.
   *os << be_nl << node->name () << " *" << be_nl
-      << node->name () << "::_downcast (CORBA::ValueBase *v)" << be_nl
+      << node->name () << "::_downcast ( ::CORBA::ValueBase *v)" << be_nl
       << "{" << be_idt_nl
       << "return dynamic_cast< ::" << node->name () << " * > (v);"
       << be_uidt_nl << "}" << be_nl << be_nl;
 
   // _copy_value method
-  *os << be_nl << "CORBA::ValueBase *" << be_nl
+  *os << be_nl << "::CORBA::ValueBase *" << be_nl
       << node->name () << "::_copy_value (void)" << be_nl
       << "{" << be_idt_nl
-      << "CORBA::ValueBase *result = 0;" << be_nl
+      << "::CORBA::ValueBase *result = 0;" << be_nl
       << "ACE_NEW_RETURN (" << be_idt_nl
       << "result," << be_nl
       << node->local_name () << " (*this)," << be_nl
@@ -99,19 +99,19 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
       switch (bpt->pt())
         {
         case AST_PredefinedType::PT_boolean:
-          unmarshal_arg = "CORBA::Any::to_boolean (vb_object->_pd_value)";
+          unmarshal_arg = "::CORBA::Any::to_boolean (vb_object->_pd_value)";
           break;
 
         case AST_PredefinedType::PT_char:
-          unmarshal_arg = "CORBA::Any::to_char (vb_object->_pd_value)";
+          unmarshal_arg = "::CORBA::Any::to_char (vb_object->_pd_value)";
           break;
 
         case AST_PredefinedType::PT_wchar:
-          unmarshal_arg = "CORBA::Any::to_wchar (vb_object->_pd_value)";
+          unmarshal_arg = "::CORBA::Any::to_wchar (vb_object->_pd_value)";
           break;
 
         case AST_PredefinedType::PT_octet:
-          unmarshal_arg = "CORBA::Any::to_octet (vb_object->_pd_value)";
+          unmarshal_arg = "::CORBA::Any::to_octet (vb_object->_pd_value)";
           break;
 
         case AST_PredefinedType::PT_any:
@@ -135,14 +135,14 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
     }
 
   // The _tao_unmarshal method.
-  *os << "CORBA::Boolean " << be_nl
+  *os << "::CORBA::Boolean " << be_nl
       << node->name () << "::_tao_unmarshal (" << be_idt << be_idt_nl
       << "TAO_InputCDR &strm," << be_nl
       << node->local_name () << " *&vb_object" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "CORBA::Boolean is_null_object;" << be_nl
-      << "if (CORBA::ValueBase::_tao_validate_box_type (" << be_idt
+      << "::CORBA::Boolean is_null_object;" << be_nl
+      << "if ( ::CORBA::ValueBase::_tao_validate_box_type (" << be_idt
       << be_idt << be_idt_nl
       << "strm," << be_nl
       << node->local_name () << "::_tao_obv_static_repository_id ()," << be_nl
@@ -261,7 +261,7 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
     {
       // Public constructor with one argument of type ULong
       *os << vb_node->name () << "::" << vb_node->local_name ()
-          << " (CORBA::ULong max)" << be_nl
+          << " ( ::CORBA::ULong max)" << be_nl
           << "{" << be_idt_nl
           << node->full_name () << "* p;" << be_nl
           << "ACE_NEW (" << be_idt_nl
@@ -277,10 +277,10 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
 
   if (node->unbounded ())
     {
-      *os << be_nl << "CORBA::ULong max,";
+      *os << be_nl << "::CORBA::ULong max,";
     }
 
-  *os << be_nl << "CORBA::ULong length, " << be_nl;
+  *os << be_nl << "::CORBA::ULong length, " << be_nl;
 
 
   if (bt->accept (&bt_visitor) == -1)
@@ -293,7 +293,7 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
     }
 
   *os << " * buf," << be_nl
-      << "CORBA::Boolean release)" << be_uidt_nl
+      << "::CORBA::Boolean release)" << be_uidt_nl
       << "{" << be_idt_nl
       << node->full_name () << "* p;" << be_nl
       << "ACE_NEW (" << be_idt_nl
@@ -322,7 +322,7 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
     }
 
   *os << " & " << be_nl
-      << vb_node->name () << "::operator[] (CORBA::ULong index)" << be_nl
+      << vb_node->name () << "::operator[] ( ::CORBA::ULong index)" << be_nl
       << "{" << be_idt_nl
       << "return (";
 
@@ -350,7 +350,7 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
     }
   *os << " &" << be_nl;
   *os << vb_node->name ()
-      << "::operator[] (CORBA::ULong index) const" << be_nl
+      << "::operator[] ( ::CORBA::ULong index) const" << be_nl
       << "{" << be_idt_nl;
 
   switch (bt->node_type())

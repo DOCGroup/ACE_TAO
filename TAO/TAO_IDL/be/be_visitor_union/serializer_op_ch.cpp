@@ -59,7 +59,7 @@ be_visitor_union_serializer_op_ch::visit_union (be_union *node)
       << node->name() << "& _tao_union);" << be_nl;
   //- _tao_is_bounded_size(type) method 
   *os << be_global->stub_export_macro () 
-      << " CORBA::Boolean _tao_is_bounded_size (const " 
+      << " ::CORBA::Boolean _tao_is_bounded_size (const " 
       << node->name() << "& _tao_union);" << be_nl;
   //- _dcps_find_size(type) method 
   *os << be_global->stub_export_macro () 
@@ -67,10 +67,10 @@ be_visitor_union_serializer_op_ch::visit_union (be_union *node)
       << node->name() << "& _tao_union);" << be_nl;
 
 
-  *os << be_global->stub_export_macro () << " CORBA::Boolean"
+  *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator<< (TAO::DCPS::Serializer &, const " << node->name ()
       << " &);" << be_nl;
-  *os << be_global->stub_export_macro () << " CORBA::Boolean"
+  *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator>> (TAO::DCPS::Serializer &, "
       << node->name () << " &);";
 

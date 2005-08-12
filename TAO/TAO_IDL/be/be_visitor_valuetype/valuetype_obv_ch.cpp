@@ -133,7 +133,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
           *os << "," << be_nl;
 
           // dump the scoped name.
-          *os << "  public virtual CORBA::DefaultValueRefCountBase";
+          *os << "  public virtual ::CORBA::DefaultValueRefCountBase";
         }
 
       *os << be_uidt_nl;
@@ -220,17 +220,17 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
         {
           *os << be_nl << be_uidt_nl << "protected:" << be_idt_nl;
 
-          *os << "virtual CORBA::Boolean" << be_nl
+          *os << "virtual ::CORBA::Boolean" << be_nl
               << "_tao_marshal__" << node->flat_name ()
               << " (TAO_OutputCDR &) const;" << be_nl << be_nl;
 
-          *os << "virtual CORBA::Boolean" << be_nl
+          *os << "virtual ::CORBA::Boolean" << be_nl
               << "_tao_unmarshal__" << node->flat_name ()
               << " (TAO_InputCDR &);" << be_nl << be_nl;
 
-          *os << "CORBA::Boolean "
+          *os << "::CORBA::Boolean "
               << "_tao_marshal_state (TAO_OutputCDR &) const;" << be_nl
-              << "CORBA::Boolean "
+              << "::CORBA::Boolean "
               << "_tao_unmarshal_state (TAO_InputCDR &);"
               << be_uidt_nl << be_nl;
 

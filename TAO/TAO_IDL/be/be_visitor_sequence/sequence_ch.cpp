@@ -140,7 +140,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   if (node->unbounded ())
     {
       *os << be_nl
-          << node->local_name () << " (CORBA::ULong max);";
+          << node->local_name () << " ( ::CORBA::ULong max);";
     }
 
   *os << be_nl
@@ -149,11 +149,11 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   if (node->unbounded ())
     {
       *os << be_nl
-          << "CORBA::ULong max,";
+          << "::CORBA::ULong max,";
     }
 
   *os << be_nl
-      << "CORBA::ULong length," << be_nl;
+      << "::CORBA::ULong length," << be_nl;
 
   // Generate the base type for the buffer.
   be_visitor_context ctx (*this->ctx_);
@@ -170,7 +170,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
     }
 
   *os << "* buffer, " << be_nl
-      << "CORBA::Boolean release = 0" << be_uidt_nl
+      << "::CORBA::Boolean release = 0" << be_uidt_nl
       << ");" << be_uidt_nl;
   *os << node->local_name () << " (const " << node->local_name ()
       << " &);" << be_nl;
@@ -217,10 +217,10 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
     {
       *os << "\n\n#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)" << be_nl
                 << node->local_name () << " (" << be_idt << be_idt_nl
-                << "CORBA::ULong length," << be_nl
+                << "::CORBA::ULong length," << be_nl
                 << "const ACE_Message_Block* mb" << be_uidt_nl
                 << ")" << be_uidt_nl
-                << "  : TAO_Unbounded_Sequence<CORBA::Octet>"
+                << "  : TAO_Unbounded_Sequence< ::CORBA::Octet>"
                 << " (length, mb) {}" << "\n"
                 << "#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */";
     }

@@ -115,9 +115,9 @@ be_visitor_union_discriminant_ch::visit_predefined_type (be_predefined_type
 
   // The set method.
   *os << be_nl << be_nl 
-      << "void _d (" << bt->nested_type_name (bu) << ");" << be_nl;
+      << "void _d ( ::" << bt->nested_type_name (bu) << ");" << be_nl;
   // The get method.
-  *os << bt->nested_type_name (bu) << " _d (void) const;";
+  *os << "::" << bt->nested_type_name (bu) << " _d (void) const;";
 
   return 0;
 }

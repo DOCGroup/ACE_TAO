@@ -145,13 +145,13 @@ int be_visitor_args_paramlist::visit_argument (be_argument *node)
   switch (node->direction ())
     {
     case AST_Argument::dir_IN:
-      *os << "(*parameter_list)[len].mode = CORBA::PARAM_IN;" << be_nl;
+      *os << "(*parameter_list)[len].mode = ::CORBA::PARAM_IN;" << be_nl;
       break;
     case AST_Argument::dir_INOUT:
-      *os << "(*parameter_list)[len].mode = CORBA::PARAM_INOUT;" << be_nl;
+      *os << "(*parameter_list)[len].mode = ::CORBA::PARAM_INOUT;" << be_nl;
       break;
     case AST_Argument::dir_OUT:
-      *os << "(*parameter_list)[len].mode = CORBA::PARAM_OUT;" << be_nl;
+      *os << "(*parameter_list)[len].mode = ::CORBA::PARAM_OUT;" << be_nl;
       break;
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -182,11 +182,11 @@ be_visitor_args_paramlist::visit_string (be_string *node)
       // Bounded strings.
       if (node->width () == (long) sizeof (char))
         {
-          *os << "CORBA::Any::from_string ((char *)";
+          *os << "::CORBA::Any::from_string ((char *)";
         }
       else
         {
-          *os << "CORBA::Any::from_wstring ((CORBA::WChar *)";
+          *os << "::CORBA::Any::from_wstring ((CORBA::WChar *)";
         }
 
       *os << arg->local_name () << "_, "
@@ -213,19 +213,19 @@ be_visitor_args_paramlist::visit_predefined_type (be_predefined_type *node)
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_boolean:
-      *os << "CORBA::Any::from_boolean (this->";
+      *os << "::CORBA::Any::from_boolean (this->";
       *os << arg->local_name () << "_);";
       break;
     case AST_PredefinedType::PT_char:
-      *os << "CORBA::Any::from_char (this->";
+      *os << "::CORBA::Any::from_char (this->";
       *os << arg->local_name () << "_);";
       break;
     case AST_PredefinedType::PT_wchar:
-      *os << "CORBA::Any::from_wchar (this->";
+      *os << "::CORBA::Any::from_wchar (this->";
       *os << arg->local_name () << "_);";
       break;
     case AST_PredefinedType::PT_octet:
-      *os << "CORBA::Any::from_octet (this->";
+      *os << "::CORBA::Any::from_octet (this->";
       *os << arg->local_name () << "_);";
       break;
     default:

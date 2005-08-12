@@ -72,7 +72,7 @@ be_visitor_amh_interface_ch::visit_interface (be_interface *node)
     {
       // We do not inherit from anybody, hence we do so from the base
       // CORBA::Object class.
-      *os << "public virtual CORBA::Object" << be_uidt_nl;
+      *os << "public virtual ::CORBA::Object" << be_uidt_nl;
     }
 
   // Generate the body.

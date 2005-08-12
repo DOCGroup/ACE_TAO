@@ -97,7 +97,7 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
   // The _downcast method.
   *os << be_nl << be_nl
       << node->name () << "_init *" << be_nl << node->name ()
-      << "_init::_downcast (CORBA::ValueFactoryBase *v)" << be_nl
+      << "_init::_downcast ( ::CORBA::ValueFactoryBase *v)" << be_nl
       << "{" << be_idt_nl
       << "return dynamic_cast< ::" << node->name () 
       << "_init * > (v);" << be_uidt_nl
@@ -117,15 +117,15 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
     {
       // generate create_for_unmarshal()
       *os << be_nl << be_nl
-          << "CORBA::ValueBase *" << be_nl
+          << "::CORBA::ValueBase *" << be_nl
           << fname << "::create_for_unmarshal" << " "
           << "(ACE_ENV_SINGLE_ARG_DECL)" << be_nl
           << "{" << be_idt_nl
-          << "CORBA::ValueBase *ret_val = 0;" << be_nl
+          << "::CORBA::ValueBase *ret_val = 0;" << be_nl
           << "ACE_NEW_THROW_EX (" << be_idt << be_idt_nl
           << "ret_val," << be_nl
           << "OBV_" << node->full_name () << "," << be_nl
-          << "CORBA::NO_MEMORY ()" << be_uidt_nl
+          << "::CORBA::NO_MEMORY ()" << be_uidt_nl
           << ");" << be_uidt_nl
           << "return ret_val;"
           << be_uidt_nl << "}";
@@ -133,14 +133,14 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
         if (node->supports_abstract ())
           {
             *os << be_nl << be_nl
-                << "CORBA::AbstractBase_ptr" << be_nl
+                << "::CORBA::AbstractBase_ptr" << be_nl
                 << fname << "::create_for_unmarshal_abstract (ACE_ENV_SINGLE_ARG_DECL)" << be_nl
                 << "{" << be_idt_nl
-                << "CORBA::AbstractBase *ret_val = 0;" << be_nl
+                << "::CORBA::AbstractBase *ret_val = 0;" << be_nl
                 << "ACE_NEW_THROW_EX (" << be_idt << be_idt_nl
                 << "ret_val," << be_nl
                 << "OBV_" << node->full_name () << "," << be_nl
-                << "CORBA::NO_MEMORY ()" << be_uidt_nl
+                << "::CORBA::NO_MEMORY ()" << be_uidt_nl
                 << ");" << be_uidt_nl
                 << "return ret_val;"
                 << be_uidt_nl << "}";

@@ -487,7 +487,7 @@ be_valuetype::gen_helper_stubs (char* ,
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "void" << be_nl
-      << "CORBA::add_ref (" << this->full_name () << " * vt)" << be_nl
+      << "::CORBA::add_ref (" << this->full_name () << " * vt)" << be_nl
       << "{" << be_idt_nl
       << "if (vt != 0)" << be_idt_nl
       << "{" << be_idt_nl
@@ -496,7 +496,7 @@ be_valuetype::gen_helper_stubs (char* ,
       << "}" << be_nl << be_nl;
 
   *os << "void" << be_nl
-      << "CORBA::remove_ref (" << this->full_name () << " * vt)" << be_nl
+      << "::CORBA::remove_ref (" << this->full_name () << " * vt)" << be_nl
       << "{" << be_idt_nl
       << "if (vt != 0)" << be_idt_nl
       << "{" << be_idt_nl

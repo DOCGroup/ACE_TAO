@@ -222,7 +222,7 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
       << "// Accessor to set the discriminant." << be_nl
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
-      << bu->name () << "::_d (" << bt->name ()
+      << bu->name () << "::_d ( ::" << bt->name ()
       << " discval)" << be_nl
       << "{" << be_idt_nl
       << "this->disc_ = discval;" << be_uidt_nl
@@ -231,7 +231,7 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
   // The get method.
   *os << "// Accessor to get the discriminant." << be_nl
       << "ACE_INLINE" << be_nl
-      << bt->name () << be_nl
+      << "::" << bt->name () << be_nl
       << bu->name () << "::_d (void) const" << be_nl
       << "{" << be_idt_nl
       << "return this->disc_;" << be_uidt_nl

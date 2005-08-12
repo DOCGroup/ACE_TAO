@@ -74,7 +74,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << node->name () << " * p" << be_uidt_nl
           << ")" << be_uidt_nl
           << "{" << be_idt_nl
-          << "CORBA::add_ref (p);" << be_uidt_nl
+          << "::CORBA::add_ref (p);" << be_uidt_nl
           << "}";
 
       *os << be_nl << be_nl
@@ -84,7 +84,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << node->name () << " * p" << be_uidt_nl
           << ")" << be_uidt_nl
           << "{" << be_idt_nl
-          << "CORBA::remove_ref (p);" << be_uidt_nl
+          << "::CORBA::remove_ref (p);" << be_uidt_nl
           << "}";
 
       *os << be_nl << be_nl
@@ -94,14 +94,14 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << node->name () << " * p" << be_uidt_nl
           << ")" << be_uidt_nl
           << "{" << be_idt_nl
-          << "CORBA::remove_ref (p);" << be_uidt_nl
+          << "::CORBA::remove_ref (p);" << be_uidt_nl
           << "}";
     }
 
   // The _downcast method.
   *os << be_nl << be_nl
       << node->name () << " *" << be_nl << node->name ()
-      << "::_downcast (CORBA::ValueBase *v)" << be_nl
+      << "::_downcast ( ::CORBA::ValueBase *v)" << be_nl
       << "{" << be_idt_nl
       << "return dynamic_cast< ::" << node->name ()
       << " * > (v);" << be_uidt_nl
@@ -124,7 +124,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "static_cast<" << be_idt
           << node->local_name () << " *> ("
           << "_tao_void_pointer);" << be_uidt << be_uidt_nl
-          << "CORBA::remove_ref (_tao_tmp_pointer);" << be_uidt_nl
+          << "::CORBA::remove_ref (_tao_tmp_pointer);" << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
 
@@ -144,7 +144,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   if (!node->is_abstract () && !is_an_amh_exception_holder)
     {
       // The virtual _tao_marshal_v method.
-      *os << "CORBA::Boolean " << node->name ()
+      *os << "::CORBA::Boolean " << node->name ()
           << "::_tao_marshal_v (TAO_OutputCDR & strm) const"
           << be_nl
           << "{" << be_idt_nl
@@ -169,7 +169,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       *os << "}" << be_nl << be_nl;
 
       // The virtual _tao_unmarshal_v method.
-      *os << "CORBA::Boolean " << node->name ()
+      *os << "::CORBA::Boolean " << node->name ()
           << "::_tao_unmarshal_v (TAO_InputCDR & strm)"
           << be_nl
           << "{" << be_idt_nl
@@ -201,7 +201,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       // "-fvisibility-inlines-hidden" command line option is used.
 
       // The virtual _tao_marshal_v method.
-      *os << "CORBA::Boolean" << be_nl
+      *os << "::CORBA::Boolean" << be_nl
           << node->name () << "::_tao_marshal_v (TAO_OutputCDR &) const"
           << be_nl
           << "{" << be_idt_nl
@@ -209,7 +209,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "}" << be_nl << be_nl;
 
       // The virtual _tao_unmarshal_v method.
-      *os << "CORBA::Boolean" << be_nl
+      *os << "::CORBA::Boolean" << be_nl
           << node->name () << "::_tao_unmarshal_v (TAO_InputCDR &)"
           << be_nl
           << "{" << be_idt_nl
@@ -219,14 +219,14 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 
       if (!node->opt_accessor () && !node->is_abstract ())
         {
-          *os << "CORBA::Boolean" << be_nl
+          *os << "::CORBA::Boolean" << be_nl
               << node->name () << "::_tao_marshal__" << node->flat_name ()
               << " (TAO_OutputCDR &) const" << be_nl
               << "{" << be_idt_nl
               << "return 1;" << be_uidt_nl
               << "}" << be_nl << be_nl;
 
-          *os << "CORBA::Boolean" << be_nl
+          *os << "::CORBA::Boolean" << be_nl
               << node->name () << "::_tao_unmarshal__" << node->flat_name ()
               << " (TAO_InputCDR &)" << be_nl
               << "{" << be_idt_nl
@@ -237,16 +237,16 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 
   // The static T::_tao_unmarshal method
 
-  *os << "CORBA::Boolean " << node->name()
+  *os << "::CORBA::Boolean " << node->name()
       << "::_tao_unmarshal (" << be_idt << be_idt_nl
       << "TAO_InputCDR &strm," << be_nl
       << node->local_name () << " *&new_object" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "CORBA::ValueBase *base = 0;" << be_nl
-      << "CORBA::ValueFactory_var factory;" << be_nl
-      << "CORBA::Boolean retval =" << be_idt_nl
-      << "CORBA::ValueBase::_tao_unmarshal_pre (" << be_idt << be_idt_nl
+      << "::CORBA::ValueBase *base = 0;" << be_nl
+      << "::CORBA::ValueFactory_var factory;" << be_nl
+      << "::CORBA::Boolean retval =" << be_idt_nl
+      << "::CORBA::ValueBase::_tao_unmarshal_pre (" << be_idt << be_idt_nl
       << "strm," << be_nl
       << "factory.out ()," << be_nl
       << "base," << be_nl
@@ -281,7 +281,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   if (node->n_supports () > 0)
     {
       *os << be_nl << be_nl
-          << "CORBA::ValueBase *" << be_nl
+          << "::CORBA::ValueBase *" << be_nl
           << node->name () << "::_tao_to_value (void)" << be_nl
           << "{" << be_idt_nl
           << "return this;" << be_uidt_nl
@@ -396,7 +396,7 @@ be_visitor_valuetype_cs::visit_operation (be_operation *node)
   *os << be_nl
       << "{" << be_nl
       << "#if defined (TAO_HAS_EXCEPTIONS)" << be_idt_nl
-      << "auto_ptr<CORBA::Exception> safety (this->exception);" << be_nl
+      << "auto_ptr< ::CORBA::Exception> safety (this->exception);" << be_nl
       << "// Direct throw because we don't have the ACE_TRY_ENV." << be_nl
       << "this->exception->_raise ();" << be_uidt_nl
       << "#else" << be_idt_nl

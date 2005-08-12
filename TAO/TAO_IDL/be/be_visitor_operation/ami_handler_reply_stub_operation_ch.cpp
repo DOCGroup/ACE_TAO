@@ -74,7 +74,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_ch::visit_operation (
 
       *os << "TAO_InputCDR &_tao_reply_cdr," << be_nl
           << "Messaging::ReplyHandler_ptr _tao_reply_handler," << be_nl
-          << "CORBA::ULong reply_status";
+          << "::CORBA::ULong reply_status";
 
       *os << be_nl
           << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl

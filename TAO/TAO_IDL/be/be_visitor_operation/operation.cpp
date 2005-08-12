@@ -151,7 +151,7 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
       if (nt != AST_Decl::NT_valuetype || is_amh_exception_holder)
         {
           *os << be_nl << throw_spec_open;
-          *os << be_idt_nl << "CORBA::SystemException";
+          *os << be_idt_nl << "::CORBA::SystemException";
 
           if (node->exceptions ())
             {
@@ -399,7 +399,7 @@ be_visitor_operation::gen_stub_operation_body (
   if (node->has_native ()) // native exists => no stub
     {
       if (this->gen_raise_exception (return_type,
-                                     "CORBA::MARSHAL",
+                                     "::CORBA::MARSHAL",
                                      "") == -1)
         {
           ACE_ERROR_RETURN ((
@@ -423,7 +423,7 @@ be_visitor_operation::gen_stub_operation_body (
       // be null.  Initialize it now.
       *os << "if (!this->is_evaluated ())" << be_idt_nl
           << "{" << be_idt_nl
-          << "ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);"
+          << "ACE_NESTED_CLASS ( ::CORBA, Object)::tao_object_initialize (this);"
           << be_uidt_nl
           << "}" << be_uidt_nl << be_nl
           << "if (this->the" << intf->base_proxy_broker_name () << "_ == 0)"

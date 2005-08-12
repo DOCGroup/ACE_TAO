@@ -99,12 +99,12 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   if (node->is_abstract () && nparents == 0)
     {
-      *os << "public virtual CORBA::AbstractBase" << be_uidt_nl;
+      *os << "public virtual ::CORBA::AbstractBase" << be_uidt_nl;
     }
 
   if (has_concrete_parent == 0 && ! node->is_abstract ())
     {
-      *os << "public virtual CORBA::Object";
+      *os << "public virtual ::CORBA::Object";
 
       if (nparents > 0)
         {
@@ -217,37 +217,18 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
           << ")" << be_nl
           << "ACE_THROW_SPEC ((" << be_idt_nl
-          << "CORBA::SystemException," << be_nl
+          << "::CORBA::SystemException," << be_nl
           << "::Components::CCMException" << be_uidt_nl
           << "));" << be_uidt_nl << be_nl
           << "virtual void ciao_postactivate (" << be_idt << be_idt_nl
           << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
           << ")" << be_nl
           << "ACE_THROW_SPEC ((" << be_idt_nl
-          << "CORBA::SystemException," << be_nl
+          << "::CORBA::SystemException," << be_nl
           << "::Components::CCMException" << be_uidt_nl
           << "));" << be_uidt_nl << be_nl;
     }
-/*    
-  if (node->n_inherits () > 0)
-    {
-      const char *id = node->inherits ()[0]->repoID ();
-      const char *ecb_id = "IDL:omg.org/Components/EventConsumerBase:1.0";
-      
-      if (ACE_OS::strcmp (id, ecb_id) == 0)
-        {
-          *os << "// Check that enables substitution of base class events."
-              << be_nl
-              << "virtual CORBA::Boolean tao_is_substitutable ("
-              << be_idt << be_idt_nl
-              << "const char *repo_id" << be_nl
-              << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
-              << ")" << be_nl
-              << "ACE_THROW_SPEC ((CORBA::SystemException));"
-              << be_uidt_nl << be_nl;
-        }
-    }
-*/
+
   if (! node->is_abstract ())
     {
       node->analyze_parentage ();
@@ -261,7 +242,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
     }
 
   // The _is_a method
-  *os << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
+  *os << "virtual ::CORBA::Boolean _is_a (" << be_idt << be_idt_nl
       << "const char *type_id" << be_nl
       << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
@@ -270,7 +251,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   *os << "virtual const char* _interface_repository_id (void) const;";
 
   // The virtual marshal method, to prevent marshal of local iterfaces.
-  *os << be_nl << "virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);";
+  *os << be_nl << "virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);";
 
   if (! node->is_local ())
     {
@@ -336,7 +317,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       *os << "// Non-local interface only." << be_nl
           << node->local_name () << " (" << be_idt << be_idt_nl
           << "TAO_Stub *objref," << be_nl
-          << "CORBA::Boolean _tao_collocated = 0," << be_nl
+          << "::CORBA::Boolean _tao_collocated = 0," << be_nl
           << "TAO_Abstract_ServantBase *servant = 0," <<  be_nl
           << "TAO_ORB_Core *orb_core = 0" << be_uidt_nl
           << ");" << be_uidt_nl << be_nl;
@@ -476,11 +457,11 @@ be_visitor_interface_ch::gen_xxx_narrow (const char *nar,
 
   if (node->is_abstract ())
     {
-      *os << "CORBA::AbstractBase_ptr obj" << be_nl;
+      *os << "::CORBA::AbstractBase_ptr obj" << be_nl;
     }
   else
     {
-      *os << "CORBA::Object_ptr obj" << be_nl;
+      *os << "::CORBA::Object_ptr obj" << be_nl;
     }
 
   *os << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl

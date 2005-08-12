@@ -164,7 +164,7 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
           << " (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_nl
           << "ACE_TRY_CHECK;" << be_uidt_nl
           << "}" << be_nl
-          << "ACE_CATCH (CORBA::Exception, ex)" << be_nl
+          << "ACE_CATCH ( ::CORBA::Exception, ex)" << be_nl
           << "{" << be_nl
           << "  this->_tao_rh_send_exception (ex ACE_ENV_ARG_PARAMETER);" 
           << be_nl
@@ -227,7 +227,7 @@ be_visitor_amh_rh_operation_ss::marshal_params (be_operation *node)
 
       // If marshaling fails, raise exception.
       if (this->gen_raise_exception (0,
-                                     "CORBA::MARSHAL",
+                                     "::CORBA::MARSHAL",
                                      "") == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,

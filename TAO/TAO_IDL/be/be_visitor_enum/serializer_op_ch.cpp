@@ -50,10 +50,10 @@ be_visitor_enum_serializer_op_ch::visit_enum (be_enum *node)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // generate the Serializer << and >> operators
-  *os << be_global->stub_export_macro () << " CORBA::Boolean"
+  *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator<< (TAO::DCPS::Serializer &, const " << node->name ()
       << " &);" << be_nl;
-  *os << be_global->stub_export_macro () << " CORBA::Boolean"
+  *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator>> (TAO::DCPS::Serializer &, "
       << node->name () << " &);";
 

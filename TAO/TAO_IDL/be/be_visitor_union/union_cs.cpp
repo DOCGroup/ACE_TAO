@@ -252,7 +252,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
   os->indent ();
   *os << "// Reset method to reset old values of a union." << be_nl;
   *os << "void " << node->name () << "::_reset (" << bt->name ()
-      << ", CORBA::Boolean /*finalize*/)" << be_nl;
+      << ", ::CORBA::Boolean /*finalize*/)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "switch (this->disc_)" << be_nl;
   *os << "{" << be_idt_nl;

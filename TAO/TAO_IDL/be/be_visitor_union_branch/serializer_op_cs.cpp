@@ -372,7 +372,7 @@ be_visitor_union_branch_serializer_op_cs::visit_interface (be_interface *node)
             }
           else
             {
-              *os << "CORBA::Object::marshal (" << be_idt << be_idt_nl
+              *os << "::CORBA::Object::marshal (" << be_idt << be_idt_nl
                   << "_tao_union." << f->local_name () << " ()," << be_nl
                   << "strm" << be_uidt_nl
                   << ");" << be_uidt;
@@ -618,7 +618,7 @@ be_visitor_union_branch_serializer_op_cs::visit_predefined_type (be_predefined_t
       else if (pt == AST_PredefinedType::PT_char)
         {
           *os << "size_t " << tmp_name << " = _dcps_max_marshaled_size ("
-              << "CORBA::Any::from_char (_tao_union."
+              << "::CORBA::Any::from_char (_tao_union."
               << f->local_name () << " ()));" << be_nl
               << "if (" << tmp_name << " > max_size) max_size = " 
               << tmp_name << ";" << be_nl;
@@ -626,7 +626,7 @@ be_visitor_union_branch_serializer_op_cs::visit_predefined_type (be_predefined_t
       else if (pt == AST_PredefinedType::PT_wchar)
         {
           *os << "size_t " << tmp_name << " = _dcps_max_marshaled_size ("
-              << "CORBA::Any::from_wchar (_tao_union."
+              << "::CORBA::Any::from_wchar (_tao_union."
               << f->local_name () << " ()));" << be_nl
               << "if (" << tmp_name << " > max_size) max_size = " 
               << tmp_name << ";" << be_nl;
@@ -634,7 +634,7 @@ be_visitor_union_branch_serializer_op_cs::visit_predefined_type (be_predefined_t
       else if (pt == AST_PredefinedType::PT_octet)
         {
           *os << "size_t " << tmp_name << " = _dcps_max_marshaled_size ("
-              << "CORBA::Any::from_octet (_tao_union."
+              << "::CORBA::Any::from_octet (_tao_union."
               << f->local_name () << " ()));" << be_nl
               << "if (" << tmp_name << " > max_size) max_size = " 
               << tmp_name << ";" << be_nl;
@@ -642,7 +642,7 @@ be_visitor_union_branch_serializer_op_cs::visit_predefined_type (be_predefined_t
       else if (pt == AST_PredefinedType::PT_boolean)
         {
           *os << "size_t " << tmp_name << " = _dcps_max_marshaled_size ("
-              << "CORBA::Any::from_boolean (_tao_union."
+              << "::CORBA::Any::from_boolean (_tao_union."
               << f->local_name () << " ()));" << be_nl
               << "if (" << tmp_name << " > max_size) max_size = " 
               << tmp_name << ";" << be_nl;
@@ -686,22 +686,22 @@ be_visitor_union_branch_serializer_op_cs::visit_predefined_type (be_predefined_t
         }
       else if (pt == AST_PredefinedType::PT_char)
         {
-          *os << "_dcps_max_marshaled_size (CORBA::Any::from_char (_tao_union."
+          *os << "_dcps_max_marshaled_size ( ::CORBA::Any::from_char (_tao_union."
               << f->local_name () << " ()));";
         }
       else if (pt == AST_PredefinedType::PT_wchar)
         {
-          *os << "_dcps_max_marshaled_size (CORBA::Any::from_wchar (_tao_union."
+          *os << "_dcps_max_marshaled_size ( ::CORBA::Any::from_wchar (_tao_union."
               << f->local_name () << " ()));";
         }
       else if (pt == AST_PredefinedType::PT_octet)
         {
-          *os << "_dcps_max_marshaled_size (CORBA::Any::from_octet (_tao_union."
+          *os << "_dcps_max_marshaled_size ( ::CORBA::Any::from_octet (_tao_union."
               << f->local_name () << " ()));";
         }
       else if (pt == AST_PredefinedType::PT_boolean)
         {
-          *os << "_dcps_max_marshaled_size (CORBA::Any::from_boolean (_tao_union."
+          *os << "_dcps_max_marshaled_size ( ::CORBA::Any::from_boolean (_tao_union."
               << f->local_name () << " ()));";
         }
       else
@@ -715,7 +715,7 @@ be_visitor_union_branch_serializer_op_cs::visit_predefined_type (be_predefined_t
     case TAO_CodeGen::TAO_CDR_INPUT:
       if (pt == AST_PredefinedType::PT_object)
         {
-          *os << "CORBA::Object_var _tao_union_tmp;" << be_nl;
+          *os << "::CORBA::Object_var _tao_union_tmp;" << be_nl;
 
           *os << "result = strm >> _tao_union_tmp.out ();" << be_nl << be_nl
               << "if (result)" << be_idt_nl
@@ -725,7 +725,7 @@ be_visitor_union_branch_serializer_op_cs::visit_predefined_type (be_predefined_t
         }
       else if (pt == AST_PredefinedType::PT_pseudo)
         {
-          *os << "CORBA::TypeCode_var _tao_union_tmp;" << be_nl
+          *os << "::CORBA::TypeCode_var _tao_union_tmp;" << be_nl
               << "result = strm >> _tao_union_tmp.out ();" << be_nl << be_nl
               << "if (result)" << be_idt_nl
               << "{" << be_idt_nl
@@ -734,7 +734,7 @@ be_visitor_union_branch_serializer_op_cs::visit_predefined_type (be_predefined_t
         }
       else if (pt == AST_PredefinedType::PT_value)
         {
-          *os << "CORBA::ValueBase * _tao_union_tmp;" << be_nl
+          *os << "::CORBA::ValueBase * _tao_union_tmp;" << be_nl
               << "result = strm >> _tao_union_tmp;" << be_nl << be_nl
               << "if (result)" << be_idt_nl
               << "{" << be_idt_nl
@@ -743,8 +743,8 @@ be_visitor_union_branch_serializer_op_cs::visit_predefined_type (be_predefined_t
         }
       else if (pt == AST_PredefinedType::PT_char)
         {
-          *os << "CORBA::Char _tao_union_tmp;" << be_nl
-              << "CORBA::Any::to_char _tao_union_helper "
+          *os << "::CORBA::Char _tao_union_tmp;" << be_nl
+              << "::CORBA::Any::to_char _tao_union_helper "
               << "(_tao_union_tmp);" << be_nl
               << "result = strm >> _tao_union_helper;" << be_nl << be_nl
               << "if (result)" << be_idt_nl
@@ -754,8 +754,8 @@ be_visitor_union_branch_serializer_op_cs::visit_predefined_type (be_predefined_t
         }
       else if (pt == AST_PredefinedType::PT_wchar)
         {
-          *os << "CORBA::WChar _tao_union_tmp;" << be_nl
-              << "CORBA::Any::to_wchar _tao_union_helper "
+          *os << "::CORBA::WChar _tao_union_tmp;" << be_nl
+              << "::CORBA::Any::to_wchar _tao_union_helper "
               << "(_tao_union_tmp);" << be_nl
               << "result = strm >> _tao_union_helper;" << be_nl << be_nl
               << "if (result)" << be_idt_nl
@@ -765,8 +765,8 @@ be_visitor_union_branch_serializer_op_cs::visit_predefined_type (be_predefined_t
         }
       else if (pt == AST_PredefinedType::PT_octet)
         {
-          *os << "CORBA::Octet _tao_union_tmp;" << be_nl
-              << "CORBA::Any::to_octet _tao_union_helper "
+          *os << "::CORBA::Octet _tao_union_tmp;" << be_nl
+              << "::CORBA::Any::to_octet _tao_union_helper "
               << "(_tao_union_tmp);" << be_nl
               << "result = strm >> _tao_union_helper;" << be_nl << be_nl
               << "if (result)" << be_idt_nl
@@ -776,8 +776,8 @@ be_visitor_union_branch_serializer_op_cs::visit_predefined_type (be_predefined_t
         }
       else if (pt == AST_PredefinedType::PT_boolean)
         {
-          *os << "CORBA::Boolean _tao_union_tmp;" << be_nl
-              << "CORBA::Any::to_boolean _tao_union_helper "
+          *os << "::CORBA::Boolean _tao_union_tmp;" << be_nl
+              << "::CORBA::Any::to_boolean _tao_union_helper "
               << "(_tao_union_tmp);" << be_nl
               << "result = strm >> _tao_union_helper;" << be_nl << be_nl
               << "if (result)" << be_idt_nl
@@ -812,22 +812,22 @@ be_visitor_union_branch_serializer_op_cs::visit_predefined_type (be_predefined_t
         }
       else if (pt == AST_PredefinedType::PT_char)
         {
-          *os << "strm << CORBA::Any::from_char (_tao_union."
+          *os << "strm << ::CORBA::Any::from_char (_tao_union."
               << f->local_name () << " ());";
         }
       else if (pt == AST_PredefinedType::PT_wchar)
         {
-          *os << "strm << CORBA::Any::from_wchar (_tao_union."
+          *os << "strm << ::CORBA::Any::from_wchar (_tao_union."
               << f->local_name () << " ());";
         }
       else if (pt == AST_PredefinedType::PT_octet)
         {
-          *os << "strm << CORBA::Any::from_octet (_tao_union."
+          *os << "strm << ::CORBA::Any::from_octet (_tao_union."
               << f->local_name () << " ());";
         }
       else if (pt == AST_PredefinedType::PT_boolean)
         {
-          *os << "strm << CORBA::Any::from_boolean (_tao_union."
+          *os << "strm << ::CORBA::Any::from_boolean (_tao_union."
               << f->local_name () << " ());";
         }
       else
@@ -1031,11 +1031,11 @@ be_visitor_union_branch_serializer_op_cs::visit_string (be_string *node)
     case TAO_CodeGen::TAO_CDR_INPUT:
       if (node->width () == (long) sizeof (char))
         {
-          *os << "CORBA::String_var _tao_union_tmp;" << be_nl;
+          *os << "::CORBA::String_var _tao_union_tmp;" << be_nl;
         }
       else
         {
-          *os << "CORBA::WString_var _tao_union_tmp;" << be_nl;
+          *os << "::CORBA::WString_var _tao_union_tmp;" << be_nl;
         }
 
       *os << "result = strm >> _tao_union_tmp.out ();" << be_nl << be_nl

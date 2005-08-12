@@ -489,22 +489,22 @@ be_visitor_valuetype_field_cdr_cs::visit_predefined_type (be_predefined_type *no
         }
       else if (pt == AST_PredefinedType::PT_char)
         {
-          *os << "(strm >> CORBA::Any::to_char ("
+          *os << "(strm >> ::CORBA::Any::to_char ("
               << this->pre_ << f->local_name () << this->post_ << "))";
         }
       else if (pt == AST_PredefinedType::PT_wchar)
         {
-          *os << "(strm >> CORBA::Any::to_wchar ("
+          *os << "(strm >> ::CORBA::Any::to_wchar ("
               << this->pre_ << f->local_name () << this->post_ << "))";
             }
       else if (pt == AST_PredefinedType::PT_octet)
         {
-          *os << "(strm >> CORBA::Any::to_octet ("
+          *os << "(strm >> ::CORBA::Any::to_octet ("
               << this->pre_ << f->local_name () << this->post_ << "))";
         }
       else if (pt == AST_PredefinedType::PT_boolean)
         {
-          *os << "(strm >> CORBA::Any::to_boolean ("
+          *os << "(strm >> ::CORBA::Any::to_boolean ("
               << this->pre_ << f->local_name () << this->post_ << "))";
         }
       else
@@ -522,22 +522,22 @@ be_visitor_valuetype_field_cdr_cs::visit_predefined_type (be_predefined_type *no
         }
       else if (pt == AST_PredefinedType::PT_char)
         {
-          *os << "(strm << CORBA::Any::from_char ("
+          *os << "(strm << ::CORBA::Any::from_char ("
               << this->pre_ << f->local_name () << this->post_ << "))";
         }
       else if (pt == AST_PredefinedType::PT_wchar)
         {
-          *os << "(strm << CORBA::Any::from_wchar ("
+          *os << "(strm << ::CORBA::Any::from_wchar ("
               << this->pre_ << f->local_name () << this->post_ << "))";
         }
       else if (pt == AST_PredefinedType::PT_octet)
         {
-          *os << "(strm << CORBA::Any::from_octet ("
+          *os << "(strm << ::CORBA::Any::from_octet ("
               << this->pre_ << f->local_name () << this->post_ << "))";
         }
       else if (pt == AST_PredefinedType::PT_boolean)
         {
-          *os << "(strm << CORBA::Any::from_boolean ("
+          *os << "(strm << ::CORBA::Any::from_boolean ("
               << this->pre_ << f->local_name () << this->post_ << "))";
         }
       else

@@ -473,25 +473,25 @@ be_visitor_valuetype_field_ch::visit_predefined_type (be_predefined_type *node)
     case AST_PredefinedType::PT_pseudo:
     case AST_PredefinedType::PT_object:
       // Set method.
-      *os << pre_op () << "void " << ub->local_name () << " ("
+      *os << pre_op () << "void " << ub->local_name () << " ( ::"
           << bt->name () << "_ptr)"
           << post_op () << be_nl;
       // Get method.
       *os << pre_op ()
-          << bt->name () << "_ptr " << ub->local_name ()
+          << "::" << bt->name () << "_ptr " << ub->local_name ()
           << " (void) const" << post_op ();
       break;
     case AST_PredefinedType::PT_any:
       // Set method.
-      *os << pre_op () << "void " << ub->local_name () << " ("
+      *os << pre_op () << "void " << ub->local_name () << " ( ::"
           << bt->name () << " &)"
           << post_op () << be_nl;
       // Get method (read-only).
-      *os << pre_op () << "const " << bt->name () << " &"
+      *os << pre_op () << "const ::" << bt->name () << " &"
           << ub->local_name () << " (void) const"
           << post_op () << be_nl;
       // Get method (read/write).
-      *os << pre_op () << bt->name () << " &"
+      *os << pre_op () << "::" << bt->name () << " &"
           << ub->local_name () << " (void)"
           << post_op ();
       break;
@@ -499,11 +499,11 @@ be_visitor_valuetype_field_ch::visit_predefined_type (be_predefined_type *node)
       break;
     default:
       // Set method.
-      *os << pre_op () << "void " << ub->local_name () << " ("
+      *os << pre_op () << "void " << ub->local_name () << " (::"
           << bt->name () << ")"
           << post_op () << be_nl;
       // Get method.
-      *os << pre_op () << bt->name () << " " << ub->local_name ()
+      *os << pre_op () << "::" << bt->name () << " " << ub->local_name ()
           << " (void) const" << post_op ();
     }
 
@@ -625,7 +625,7 @@ be_visitor_valuetype_field_ch::visit_string (be_string *node)
           << "void " << ub->local_name () << " (const char *)"
           << post_op () << be_nl;
       *os << pre_op ()
-          << "void " << ub->local_name () << " (const CORBA::String_var&)"
+          << "void " << ub->local_name () << " (const ::CORBA::String_var&)"
           << post_op () << be_nl;
       // Get method.
       *os << pre_op () << "const char *" << ub->local_name ()
@@ -634,16 +634,16 @@ be_visitor_valuetype_field_ch::visit_string (be_string *node)
   else
     {
       *os << pre_op ()
-          << "void " << ub->local_name () << " (CORBA::WChar *)"
+          << "void " << ub->local_name () << " ( ::CORBA::WChar *)"
           << post_op () << be_nl;
       *os << pre_op ()
-          << "void " << ub->local_name () << " (const CORBA::WChar *)"
+          << "void " << ub->local_name () << " (const ::CORBA::WChar *)"
           << post_op () << be_nl;
       *os << pre_op ()
-          << "void " << ub->local_name () << " (const CORBA::WString_var&)"
+          << "void " << ub->local_name () << " (const ::CORBA::WString_var&)"
           << post_op () << be_nl;
       // Get method.
-      *os << pre_op() << "const CORBA::WChar *" << ub->local_name ()
+      *os << pre_op() << "const ::CORBA::WChar *" << ub->local_name ()
           << " (void) const" << post_op();
     }
 

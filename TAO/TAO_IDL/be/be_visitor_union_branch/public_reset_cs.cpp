@@ -356,7 +356,7 @@ be_visitor_union_branch_public_reset_cs::visit_predefined_type (
 
       break;
     case AST_PredefinedType::PT_pseudo:
-      *os << "CORBA::release (this->u_."
+      *os << "::CORBA::release (this->u_."
 	        << ub->local_name () << "_);" << be_nl;
       *os << "this->u_." << ub->local_name ()
           << "_ = 0;" << be_nl
@@ -432,11 +432,11 @@ be_visitor_union_branch_public_reset_cs::visit_string (be_string *node)
 
   if (node->width () == (long) sizeof (char))
     {
-      *os << "CORBA::string_free (this->u_.";
+      *os << "::CORBA::string_free (this->u_.";
     }
   else
     {
-      *os << "CORBA::wstring_free (this->u_.";
+      *os << "::CORBA::wstring_free (this->u_.";
     }
 
   *os << ub->local_name () << "_);" << be_nl

@@ -42,7 +42,7 @@ be_visitor_sequence_base::visit_predefined_type (be_predefined_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << node->name ();
+  *os << "::" << node->name ();
 
   return 0;
 }
@@ -283,12 +283,12 @@ be_visitor_sequence_base_template_args::visit_predefined_type (
   )
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  *os << node->name ();
+  *os << "::" << node->name ();
 
   if (beseq_->managed_type () == be_sequence::MNG_PSEUDO
       || beseq_->managed_type () == be_sequence::MNG_OBJREF)
     {
-      *os << "," << node->name () << "_var";
+      *os << ", ::" << node->name () << "_var";
     }
 
   return 0;
