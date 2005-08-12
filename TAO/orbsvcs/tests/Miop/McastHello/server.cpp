@@ -127,7 +127,7 @@ main (int argc, char *argv[])
       // Validate that our servants got the right requests.
       if (server_impl.get_status () == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Multicast Servant did not receive expected requests!"),
+                           "Multicast Servant did not receive expected requests!\n"),
                           1);
       else
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - Success!\n"));
