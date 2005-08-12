@@ -62,7 +62,7 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
       *os << "namespace TAO" << be_nl
           << "{" << be_idt_nl
           << "template<>" << be_nl
-          << "CORBA::Boolean" << be_nl
+          << "::CORBA::Boolean" << be_nl
           << "Any_Basic_Impl_T<" << node->name ()
           << ">::marshal_value (TAO_OutputCDR &)" << be_nl
           << "{" << be_idt_nl
@@ -71,7 +71,7 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
 
       *os << be_nl << be_nl
           << "template<>" << be_nl
-          << "CORBA::Boolean" << be_nl
+          << "::CORBA::Boolean" << be_nl
           << "Any_Basic_Impl_T<" << node->name ()
           << ">::demarshal_value (TAO_InputCDR &)" << be_nl
           << "{" << be_idt_nl
@@ -83,7 +83,7 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
   // Generate the Any <<= and >>= operator declarations
   // Any <<= and >>= operators.
   *os << "void operator<<= (" << be_idt << be_idt_nl
-      << "CORBA::Any &_tao_any," << be_nl
+      << "::CORBA::Any &_tao_any," << be_nl
       << node->name () << " _tao_elem" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
@@ -95,8 +95,8 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
       << ");" << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  *os << "CORBA::Boolean operator>>= (" << be_idt << be_idt_nl
-      << "const CORBA::Any &_tao_any," << be_nl
+  *os << "::CORBA::Boolean operator>>= (" << be_idt << be_idt_nl
+      << "const ::CORBA::Any &_tao_any," << be_nl
       << node->name () << " &_tao_elem" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl

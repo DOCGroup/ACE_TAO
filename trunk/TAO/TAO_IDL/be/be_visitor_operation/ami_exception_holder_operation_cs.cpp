@@ -180,7 +180,7 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (
       *os << be_uidt_nl << "};\n\n";
 
       os->indent ();
-      *os << "CORBA::ULong exceptions_count = "
+      *os << "::CORBA::ULong exceptions_count = "
           << excep_count << ";\n" << be_nl;
 
       exception_data_arg = "exceptions_data";

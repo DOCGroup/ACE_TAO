@@ -106,13 +106,13 @@ be_visitor_operation_ss::visit_argument (be_argument *node)
   switch (node->direction ())
     {
     case AST_Argument::dir_IN:
-      *os << "CORBA::ARG_IN, ";
+      *os << "::CORBA::ARG_IN, ";
       break;
     case AST_Argument::dir_INOUT:
-      *os << "CORBA::ARG_INOUT, ";
+      *os << "::CORBA::ARG_INOUT, ";
       break;
     case AST_Argument::dir_OUT:
-      *os << "CORBA::ARG_OUT, ";
+      *os << "::CORBA::ARG_OUT, ";
       break;
     }
   *os << "0}";

@@ -110,7 +110,7 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
                                      + node->flat_name ());
 
       // Generate array containing value field characteristics.
-      os << "static TAO::TypeCode::Value_Field<char const *, CORBA::TypeCode_ptr const *> const ";
+      os << "static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> const ";
 
       if (count == 0)
         {
@@ -131,10 +131,10 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
       // Generate the TypeCode instantiation.
 
       static char const StringType[]      = "char const *";
-      static char const TypeCodeType[]    = "CORBA::TypeCode_ptr const *";
+      static char const TypeCodeType[]    = "::CORBA::TypeCode_ptr const *";
       static char const MemberArrayType[] =
         "TAO::TypeCode::Value_Field<char const *, "
-        "CORBA::TypeCode_ptr const *> const *";
+        "::CORBA::TypeCode_ptr const *> const *";
 
       os << "static ";
 
@@ -159,7 +159,7 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
 
       os << be_idt_nl
          << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl
-         << "CORBA::tk_"
+         << "::CORBA::tk_"
          << (dynamic_cast<be_eventtype *> (node) ? "event" : "value")
          << "," << be_nl
          << "\"" << node->repoID () << "\"," << be_nl
@@ -169,7 +169,7 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
       //
       // TAO doesn't support CUSTOM or TRUNCATABLE valuetypes.  Go
       // with VM_NONE or VM_ABSTRACT.
-      os << "CORBA::"
+      os << "::CORBA::"
          << (node->is_abstract () ? "VM_ABSTRACT" : "VM_NONE") << "," << be_nl;
 
       // Concrete base type.
@@ -188,7 +188,7 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
       else
         {
           // No concrete base.
-          os << "&CORBA::_tc_null," << be_nl;
+          os << "&::CORBA::_tc_null," << be_nl;
         }
 
       // Fields
@@ -289,11 +289,11 @@ TAO::be_visitor_value_typecode::visit_members (be_valuetype * node)
       switch (vis)
         {
         case AST_Field::vis_PUBLIC:
-          os << "CORBA::PUBLIC_MEMBER";
+          os << "::CORBA::PUBLIC_MEMBER";
           break;
 
         case AST_Field::vis_PRIVATE:
-          os << "CORBA::PRIVATE_MEMBER";
+          os << "::CORBA::PRIVATE_MEMBER";
           break;
 
         default:

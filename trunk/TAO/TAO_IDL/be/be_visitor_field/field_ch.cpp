@@ -280,6 +280,8 @@ be_visitor_field_ch::visit_predefined_type (be_predefined_type *node)
     {
       bt = node;
     }
+    
+  *os << "::";
 
   if (node->pt () == AST_PredefinedType::PT_object)
     {
@@ -324,6 +326,8 @@ be_visitor_field_ch::visit_predefined_type (be_predefined_type *node)
         }
       else
         {
+          // All the predefined types are in the CORBA namespace,
+          // so we go ahead and add the global :: qualifier.
           *os << bt->name ();
         }
     }

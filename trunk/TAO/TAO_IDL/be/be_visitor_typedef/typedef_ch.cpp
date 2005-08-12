@@ -417,19 +417,19 @@ be_visitor_typedef_ch::visit_string (be_string *node)
       *os << "typedef char *"
           << " " << tdef->nested_type_name (scope) << ";" << be_nl;
       // Typedef the _var and _out types.
-      *os << "typedef CORBA::String_var"
+      *os << "typedef ::CORBA::String_var"
           << " " << tdef->nested_type_name (scope, "_var") << ";" << be_nl;
-      *os << "typedef CORBA::String_out"
+      *os << "typedef ::CORBA::String_out"
           << " " << tdef->nested_type_name (scope, "_out") << ";";
     }
   else
     {
-      *os << "typedef CORBA::WChar *"
+      *os << "typedef ::CORBA::WChar *"
           << " " << tdef->nested_type_name (scope) << ";" << be_nl;
       // Typedef the _var and _out types.
-      *os << "typedef CORBA::WString_var"
+      *os << "typedef ::CORBA::WString_var"
           << " " << tdef->nested_type_name (scope, "_var") << ";" << be_nl;
-      *os << "typedef CORBA::WString_out"
+      *os << "typedef ::CORBA::WString_out"
           << " " << tdef->nested_type_name (scope, "_out") << ";";
     }
 

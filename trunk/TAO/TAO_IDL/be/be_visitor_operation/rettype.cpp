@@ -158,8 +158,15 @@ be_visitor_operation_rettype::visit_predefined_type (be_predefined_type *node)
     {
       bt = node;
     }
+  
+  AST_PredefinedType::PredefinedType pt = node->pt ();
+  
+  if (pt != AST_PredefinedType::PT_void)
+    {
+      *os << "::";
+    }
 
-  switch (node->pt ())
+  switch (pt)
     {
     case AST_PredefinedType::PT_pseudo:
     case AST_PredefinedType::PT_object:
@@ -224,7 +231,7 @@ be_visitor_operation_rettype::visit_string (be_string *node)
     }
   else
     {
-      *os << "CORBA::WChar *";
+      *os << "::CORBA::WChar *";
     }
 
   return 0;

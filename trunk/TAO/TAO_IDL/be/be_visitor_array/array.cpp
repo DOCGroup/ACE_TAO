@@ -83,6 +83,8 @@ be_visitor_array::visit_predefined_type (be_predefined_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   AST_PredefinedType::PredefinedType pt = node->pt ();
+  
+  *os << "::";
 
   if (pt == AST_PredefinedType::PT_pseudo
       || pt == AST_PredefinedType::PT_object)

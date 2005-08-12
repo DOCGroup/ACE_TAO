@@ -66,7 +66,7 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
           << "namespace TAO" << be_nl
           << "{" << be_idt_nl
           << "template<>" << be_nl
-          << "CORBA::Boolean" << be_nl
+          << "::CORBA::Boolean" << be_nl
           << "Any_Array_Impl_T<" << be_idt << be_idt_nl
           << node->name () << "_slice," << be_nl
           << node->name () << "_forany" << be_uidt_nl
@@ -77,7 +77,7 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
 
       *os << be_nl << be_nl
           << "template<>" << be_nl
-          << "CORBA::Boolean" << be_nl
+          << "::CORBA::Boolean" << be_nl
           << "Any_Array_Impl_T<" << be_idt << be_idt_nl
           << node->name () << "_slice," << be_nl
           << node->name () << "_forany" << be_uidt_nl
@@ -89,7 +89,7 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
     }
 
   *os << "void operator<<= (" << be_idt << be_idt_nl
-      << "CORBA::Any &_tao_any," << be_nl
+      << "::CORBA::Any &_tao_any," << be_nl
       << "const " << node->name () << "_forany &_tao_elem" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
@@ -108,8 +108,8 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  *os << "CORBA::Boolean operator>>= (" << be_idt << be_idt_nl
-      << "const CORBA::Any &_tao_any," << be_nl
+  *os << "::CORBA::Boolean operator>>= (" << be_idt << be_idt_nl
+      << "const ::CORBA::Any &_tao_any," << be_nl
       << node->name () << "_forany &_tao_elem" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl

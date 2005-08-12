@@ -95,12 +95,12 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << "// the T& ctor" << be_nl
       << tiename << " (T &t, PortableServer::POA_ptr poa);" << be_nl
       << "// ctor taking a POA" << be_nl
-      << tiename << " (T *tp, CORBA::Boolean release = 1);" << be_nl
+      << tiename << " (T *tp, ::CORBA::Boolean release = 1);" << be_nl
       << "// ctor taking pointer and an ownership flag" << be_nl
       << tiename << " (" << be_idt << be_idt_nl
       << "T *tp," << be_nl
       << "PortableServer::POA_ptr poa," << be_nl
-      << "CORBA::Boolean release = 1" << be_uidt_nl
+      << "::CORBA::Boolean release = 1" << be_uidt_nl
       << ");" << be_uidt_nl
       << "// ctor with T*, ownership flag and a POA" << be_nl
       << "~" << tiename << " (void);" << be_nl
@@ -110,11 +110,11 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << "// return the underlying object" << be_nl
       << "void _tied_object (T &obj);" << be_nl
       << "// set the underlying object" << be_nl
-      << "void _tied_object (T *obj, CORBA::Boolean release = 1);" << be_nl
+      << "void _tied_object (T *obj, ::CORBA::Boolean release = 1);" << be_nl
       << "// set the underlying object and the ownership flag" << be_nl
-      << "CORBA::Boolean _is_owner (void);" << be_nl
+      << "::CORBA::Boolean _is_owner (void);" << be_nl
       << "// do we own it" << be_nl
-      << "void _is_owner (CORBA::Boolean b);" << be_nl
+      << "void _is_owner ( ::CORBA::Boolean b);" << be_nl
       << "// set the ownership" << be_nl << be_nl
       << "// overridden ServantBase operations" << be_nl
       << "PortableServer::POA_ptr _default_POA (" << be_idt << be_idt_nl
@@ -140,7 +140,7 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << "private:" << be_idt_nl
       << "T *ptr_;" << be_nl
       << "PortableServer::POA_var poa_;" << be_nl
-      << "CORBA::Boolean rel_;" << be_nl << be_nl
+      << "::CORBA::Boolean rel_;" << be_nl << be_nl
       << "// copy and assignment are not allowed" << be_nl
       << tiename << " (const " << tiename << " &);" << be_nl
       << "void operator= (const " << tiename << " &);" << be_uidt_nl

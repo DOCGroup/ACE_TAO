@@ -56,7 +56,7 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
 
   *os << be_nl << be_nl << "class " << be_global->stub_export_macro ()
             << " " << node->local_name ()
-            << " : public CORBA::UserException" << be_nl;
+            << " : public ::CORBA::UserException" << be_nl;
   *os << "{" << be_nl
       << "public:" << be_idt_nl;
 
@@ -89,13 +89,13 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
 
 
   *os << "static " << node->local_name ()
-      << " *_downcast (CORBA::Exception *);" << be_nl
+      << " *_downcast ( ::CORBA::Exception *);" << be_nl
       << "static const " << node->local_name ()
-      << " *_downcast (CORBA::Exception const *);" << be_nl << be_nl;
+      << " *_downcast ( ::CORBA::Exception const *);" << be_nl << be_nl;
 
-  *os << "static CORBA::Exception *_alloc (void);" << be_nl << be_nl;
+  *os << "static ::CORBA::Exception *_alloc (void);" << be_nl << be_nl;
 
-  *os << "virtual CORBA::Exception *"
+  *os << "virtual ::CORBA::Exception *"
       << "_tao_duplicate (void) const;\n" << be_nl
       << "virtual void _raise (void) const;\n" << be_nl
       << "virtual void _tao_encode (" << be_idt << be_idt_nl
@@ -133,7 +133,7 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
   // exception. We have already output a warning message when
   // launching the stub header typecode visitor.
   *os << be_nl << be_nl
-      << "virtual CORBA::TypeCode_ptr _tao_type (void) const;";
+      << "virtual ::CORBA::TypeCode_ptr _tao_type (void) const;";
 
   *os << be_uidt_nl << "};";
 

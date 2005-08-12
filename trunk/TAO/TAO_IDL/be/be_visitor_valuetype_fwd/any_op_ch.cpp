@@ -90,13 +90,13 @@ be_visitor_valuetype_fwd_any_op_ch::visit_valuetype_fwd (
 
       // emit  nested variation of any operators
       *os << be_global->stub_export_macro () << " void"
-          << " operator<<= (CORBA::Any &, " << node->local_name ()
+          << " operator<<= ( ::CORBA::Any &, " << node->local_name ()
           << " *); // copying" << be_nl;
       *os << be_global->stub_export_macro () << " void"
-          << " operator<<= (CORBA::Any &, " << node->local_name ()
+          << " operator<<= ( ::CORBA::Any &, " << node->local_name ()
           << " **); // non-copying" << be_nl;
-      *os << be_global->stub_export_macro () << " CORBA::Boolean"
-          << " operator>>= (const CORBA::Any &, "
+      *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
+          << " operator>>= (const ::CORBA::Any &, "
           << node->local_name () << " *&);";
 
       be_util::gen_nested_namespace_end (os, module);
@@ -106,13 +106,13 @@ be_visitor_valuetype_fwd_any_op_ch::visit_valuetype_fwd (
     }
 
   *os << be_global->stub_export_macro () << " void"
-      << " operator<<= (CORBA::Any &, " << node->name ()
+      << " operator<<= ( ::CORBA::Any &, " << node->name ()
       << " *); // copying" << be_nl;
   *os << be_global->stub_export_macro () << " void"
-      << " operator<<= (CORBA::Any &, " << node->name ()
+      << " operator<<= ( ::CORBA::Any &, " << node->name ()
       << " **); // non-copying" << be_nl;
-  *os << be_global->stub_export_macro () << " CORBA::Boolean"
-      << " operator>>= (const CORBA::Any &, "
+  *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
+      << " operator>>= (const ::CORBA::Any &, "
       << node->name () << " *&);";
 
   if (module != 0)

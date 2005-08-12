@@ -150,7 +150,7 @@ int be_visitor_root::visit_root (be_root *node)
               << i->base_proxy_broker_name ()
               << "_Factory_function_pointer) ("
               << be_idt << be_idt_nl
-              << "CORBA::Object_ptr obj" << be_uidt_nl
+              << "::CORBA::Object_ptr obj" << be_uidt_nl
               << ");" << be_uidt;
         }
 
@@ -212,7 +212,7 @@ int be_visitor_root::visit_root (be_root *node)
           *os << be_nl
               << "TAO_NAMESPACE_STORAGE_CLASS void release ("
               << i->name () << "_ptr);" << be_nl
-              << "TAO_NAMESPACE_STORAGE_CLASS CORBA::Boolean is_nil ("
+              << "TAO_NAMESPACE_STORAGE_CLASS ::CORBA::Boolean is_nil ("
               << i->name () << "_ptr);";
         }
 

@@ -133,7 +133,7 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
       *os << node->name () << "_forany &);" << be_nl;
     }
 
-  *os << be_global->stub_export_macro () << " CORBA::Boolean"
+  *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator>> (TAO_InputCDR &, ";
 
   if (!this->ctx_->tdef ())

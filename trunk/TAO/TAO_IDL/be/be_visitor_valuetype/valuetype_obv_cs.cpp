@@ -82,7 +82,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
   // or the valuetype is abstract.
   if (!node->opt_accessor ())
     {
-      *os << be_nl << be_nl << "CORBA::Boolean" << be_nl
+      *os << be_nl << be_nl << "::CORBA::Boolean" << be_nl
           << node->full_obv_skel_name ()
           << "::_tao_marshal__" << node->flat_name ()
           <<    " (TAO_OutputCDR &strm) const" << be_nl
@@ -90,7 +90,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
           << "return _tao_marshal_state (strm);" << be_uidt_nl
           << "}" << be_nl << be_nl;
 
-      *os << "CORBA::Boolean" << be_nl
+      *os << "::CORBA::Boolean" << be_nl
           << node->full_obv_skel_name ()
           << "::_tao_unmarshal__" << node->flat_name ()
           << " (TAO_InputCDR &strm)" << be_nl
@@ -116,7 +116,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
               << node->full_obv_skel_name ()
               << "::_add_ref (void)" << be_nl
               << "{" << be_idt_nl
-              << "this->ACE_NESTED_CLASS (CORBA,DefaultValueRefCountBase)::_add_ref ();"
+              << "this->ACE_NESTED_CLASS ( ::CORBA,DefaultValueRefCountBase)::_add_ref ();"
               << be_uidt_nl
               << "}" << be_nl;
 
@@ -124,7 +124,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
               << node->full_obv_skel_name ()
               << "::_remove_ref (void)" << be_nl
               << "{" << be_idt_nl
-              << "this->ACE_NESTED_CLASS (CORBA,DefaultValueRefCountBase)::_remove_ref ();"
+              << "this->ACE_NESTED_CLASS ( ::CORBA,DefaultValueRefCountBase)::_remove_ref ();"
               << be_uidt_nl
               << "}";
         }

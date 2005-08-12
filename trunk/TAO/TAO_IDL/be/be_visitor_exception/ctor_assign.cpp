@@ -301,13 +301,13 @@ int be_visitor_exception_ctor_assign::visit_string (be_string *node)
       if (node->width () == (long) sizeof (char))
         {
           *os << "this->" << bd->local_name ()
-              << " = CORBA::string_dup (_tao_"
+              << " = ::CORBA::string_dup (_tao_"
               << bd->local_name () << ");";
         }
       else
         {
           *os << "this->" << bd->local_name ()
-              << " = CORBA::wstring_dup (_tao_"
+              << " = ::CORBA::wstring_dup (_tao_"
               << bd->local_name () << ");";
         }
     }
@@ -316,13 +316,13 @@ int be_visitor_exception_ctor_assign::visit_string (be_string *node)
       if (node->width () == (long) sizeof (char))
         {
           *os << "this->" << bd->local_name ()
-              << " = CORBA::string_dup (_tao_excp."
+              << " = ::CORBA::string_dup (_tao_excp."
               << bd->local_name () << ".in ());";
         }
       else
         {
           *os << "this->" << bd->local_name ()
-              << " = CORBA::wstring_dup (_tao_excp."
+              << " = ::CORBA::wstring_dup (_tao_excp."
               << bd->local_name () << ".in ());";
         }
     }
@@ -399,7 +399,7 @@ be_visitor_exception_ctor_assign::emit_valuetype_common (be_type *node)
 
   if (this->ctx_->exception ()) // Special constructor.
     {
-      *os << "CORBA::add_ref (" << be_idt << be_idt_nl
+      *os << "::CORBA::add_ref (" << be_idt << be_idt_nl
           << "const_cast<" << be_idt << be_idt_nl
           << node->name () << " *> (" << be_nl
           << "_tao_" << bd->local_name () << be_uidt_nl
@@ -410,7 +410,7 @@ be_visitor_exception_ctor_assign::emit_valuetype_common (be_type *node)
     }
   else
     {
-      *os << "CORBA::add_ref (" << be_idt << be_idt_nl
+      *os << "::CORBA::add_ref (" << be_idt << be_idt_nl
           << "const_cast<" << be_idt << be_idt_nl
           << node->name () << " *> (" << be_nl
           << "_tao_excp." << bd->local_name () << ".in ()" << be_uidt_nl

@@ -126,7 +126,7 @@ be_visitor_union_serializer_op_cs::visit_union (be_union *node)
   //---------------------------------------------------------------
   //  Set the sub state as generating code for _tao_is_bounded_size.
   this->ctx_->sub_state(TAO_CodeGen::TAO_IS_BOUNDED_SIZE);
-  *os << "CORBA::Boolean _tao_is_bounded_size (" << be_idt << be_idt_nl
+  *os << "::CORBA::Boolean _tao_is_bounded_size (" << be_idt << be_idt_nl
       << "const " << node->name () << " &" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
@@ -173,13 +173,13 @@ be_visitor_union_serializer_op_cs::visit_union (be_union *node)
   switch (node->udisc_type ())
     {
       case AST_Expression::EV_bool:
-        *os << "_dcps_max_marshaled_size  (CORBA::Any::from_boolean (_tao_union._d ()));" << be_nl;
+        *os << "_dcps_max_marshaled_size  ( ::CORBA::Any::from_boolean (_tao_union._d ()));" << be_nl;
         break;
       case AST_Expression::EV_char:
-        *os << "_dcps_max_marshaled_size  (CORBA::Any::from_char (_tao_union._d ()));" << be_nl;
+        *os << "_dcps_max_marshaled_size  ( ::CORBA::Any::from_char (_tao_union._d ()));" << be_nl;
         break;
       case AST_Expression::EV_wchar:
-        *os << "_dcps_max_marshaled_size  (CORBA::Any::from_wchar (_tao_union._d ()));" << be_nl;
+        *os << "_dcps_max_marshaled_size  ( ::CORBA::Any::from_wchar (_tao_union._d ()));" << be_nl;
         break;
       default:
         *os << "_dcps_max_marshaled_size (_tao_union._d ());" << be_nl;
@@ -219,7 +219,7 @@ be_visitor_union_serializer_op_cs::visit_union (be_union *node)
   //  Set the sub state as generating code for the output operator.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);
 
-  *os << "CORBA::Boolean operator<< (" << be_idt << be_idt_nl
+  *os << "::CORBA::Boolean operator<< (" << be_idt << be_idt_nl
       << "TAO::DCPS::Serializer &strm," << be_nl
       << "const " << node->name () << " &_tao_union" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -228,17 +228,17 @@ be_visitor_union_serializer_op_cs::visit_union (be_union *node)
   switch (node->udisc_type ())
     {
       case AST_Expression::EV_bool:
-        *os << "CORBA::Any::from_boolean tmp (_tao_union._d ());" << be_nl
+        *os << "::CORBA::Any::from_boolean tmp (_tao_union._d ());" << be_nl
             << "if ( !(strm << tmp) )" << be_idt_nl;
 
         break;
       case AST_Expression::EV_char:
-        *os << "CORBA::Any::from_char tmp (_tao_union._d ());" << be_nl
+        *os << "::CORBA::Any::from_char tmp (_tao_union._d ());" << be_nl
             << "if ( !(strm << tmp) )" << be_idt_nl;
 
         break;
       case AST_Expression::EV_wchar:
-        *os << "CORBA::Any::from_wchar tmp (_tao_union._d ());" << be_nl
+        *os << "::CORBA::Any::from_wchar tmp (_tao_union._d ());" << be_nl
             << "if ( !(strm << tmp) )" << be_idt_nl;
 
         break;
@@ -251,7 +251,7 @@ be_visitor_union_serializer_op_cs::visit_union (be_union *node)
   *os << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "CORBA::Boolean result = 1;" << be_nl << be_nl
+      << "::CORBA::Boolean result = 1;" << be_nl << be_nl
       << "switch (_tao_union._d ())" << be_nl
       << "{" << be_idt;
 
@@ -283,7 +283,7 @@ be_visitor_union_serializer_op_cs::visit_union (be_union *node)
   //---------------------------------------------------------------
   // Set the substate as generating code for the input operator.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
-  *os << "CORBA::Boolean operator>> (" << be_idt << be_idt_nl
+  *os << "::CORBA::Boolean operator>> (" << be_idt << be_idt_nl
       << "TAO::DCPS::Serializer &strm," << be_nl
       << node->name () << " &_tao_union" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -299,17 +299,17 @@ be_visitor_union_serializer_op_cs::visit_union (be_union *node)
   switch (node->udisc_type ())
     {
       case AST_Expression::EV_bool:
-        *os << "CORBA::Any::to_boolean tmp (_tao_discriminant);" << be_nl
+        *os << "::CORBA::Any::to_boolean tmp (_tao_discriminant);" << be_nl
             << "if ( !(strm >> tmp) )" << be_idt_nl;
 
         break;
       case AST_Expression::EV_char:
-        *os << "CORBA::Any::to_char tmp (_tao_discriminant);" << be_nl
+        *os << "::CORBA::Any::to_char tmp (_tao_discriminant);" << be_nl
             << "if ( !(strm >> tmp) )" << be_idt_nl;
 
         break;
       case AST_Expression::EV_wchar:
-        *os << "CORBA::Any::to_wchar tmp (_tao_discriminant);" << be_nl
+        *os << "::CORBA::Any::to_wchar tmp (_tao_discriminant);" << be_nl
             << "if ( !(strm >> tmp) )" << be_idt_nl;
 
         break;
@@ -322,7 +322,7 @@ be_visitor_union_serializer_op_cs::visit_union (be_union *node)
   *os << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "CORBA::Boolean result = 1;" << be_nl << be_nl
+      << "::CORBA::Boolean result = 1;" << be_nl << be_nl
       << "switch (_tao_discriminant)" << be_nl
       << "{" << be_idt;
 

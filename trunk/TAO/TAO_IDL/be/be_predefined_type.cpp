@@ -71,11 +71,11 @@ be_predefined_type::be_predefined_type (AST_PredefinedType::PredefinedType t,
 
   if (t == AST_PredefinedType::PT_object)
     {
-      this->fwd_helper_name_ = "CORBA::tao_Object";
+      this->fwd_helper_name_ = "::CORBA::tao_Object";
     }
   else if (t == AST_PredefinedType::PT_value)
     {
-      this->fwd_helper_name_ = "CORBA::tao_ValueBase";
+      this->fwd_helper_name_ = "::CORBA::tao_ValueBase";
     }
 
   switch (t)

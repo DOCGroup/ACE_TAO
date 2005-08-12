@@ -80,12 +80,12 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
     }
 
   *os << be_nl << be_nl 
-      << be_global->stub_export_macro () << " CORBA::Boolean"
+      << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &," << be_nl
       << "const " << node->name () << " &" << be_uidt_nl
       << ");" << be_uidt_nl;
-  *os << be_global->stub_export_macro () << " CORBA::Boolean"
+  *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator>> (" << be_idt << be_idt_nl
       << "TAO_InputCDR &," << be_nl
       << node->name () << " &" << be_uidt_nl

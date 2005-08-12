@@ -87,13 +87,13 @@ be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (be_interface_fwd *node)
       be_util::gen_nested_namespace_begin (os, module);
 
       *os << be_global->stub_export_macro () << " void"
-          << " operator<<= (CORBA::Any &, " << node->local_name ()
+          << " operator<<= ( ::CORBA::Any &, " << node->local_name ()
           << "_ptr); // copying" << be_nl;
       *os << be_global->stub_export_macro () << " void"
-          << " operator<<= (CORBA::Any &, " << node->local_name ()
+          << " operator<<= ( ::CORBA::Any &, " << node->local_name ()
           << "_ptr *); // non-copying" << be_nl;
-      *os << be_global->stub_export_macro () << " CORBA::Boolean"
-          << " operator>>= (const CORBA::Any &, "
+      *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
+          << " operator>>= (const ::CORBA::Any &, "
           << node->local_name () << " *&);";
 
       be_util::gen_nested_namespace_end (os, module);
@@ -103,13 +103,13 @@ be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (be_interface_fwd *node)
     }
 
   *os << be_global->stub_export_macro () << " void"
-      << " operator<<= (CORBA::Any &, " << node->name ()
+      << " operator<<= ( ::CORBA::Any &, " << node->name ()
       << "_ptr); // copying" << be_nl;
   *os << be_global->stub_export_macro () << " void"
-      << " operator<<= (CORBA::Any &, " << node->name ()
+      << " operator<<= ( ::CORBA::Any &, " << node->name ()
       << "_ptr *); // non-copying" << be_nl;
-  *os << be_global->stub_export_macro () << " CORBA::Boolean"
-      << " operator>>= (const CORBA::Any &, "
+  *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
+      << " operator>>= (const ::CORBA::Any &, "
       << node->name () << " *&);";
 
   if (module != 0)

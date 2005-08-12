@@ -68,7 +68,7 @@ be_visitor_valuebox_ci::visit_valuebox (be_valuebox *node)
   // _tao_unmarshal_v method.  Generated because ValueBase interface
   // requires it.  But there is nothing for it to do in the valuebox
   // case.
-  *os << "ACE_INLINE CORBA::Boolean " << be_nl
+  *os << "ACE_INLINE ::CORBA::Boolean " << be_nl
       << node->name ()
       << "::_tao_unmarshal_v (TAO_InputCDR &)" << be_nl
       << "{" << be_idt_nl  
@@ -119,8 +119,8 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
   *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name () << " (const "
       << vb_node->local_name () << "& val)" << be_idt_nl
-      << ": ACE_NESTED_CLASS (CORBA, ValueBase) (val)," << be_nl
-      << "  ACE_NESTED_CLASS (CORBA, DefaultValueRefCountBase) (val)"
+      << ": ACE_NESTED_CLASS ( ::CORBA, ValueBase) (val)," << be_nl
+      << "  ACE_NESTED_CLASS ( ::CORBA, DefaultValueRefCountBase) (val)"
       << be_uidt_nl
       << "{" << be_idt_nl
       << "this->_pd_value = " << node->full_name ()
@@ -160,14 +160,14 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
 
   // Overloaded subscript operators
   *os << "ACE_INLINE const " << node->full_name () << "_slice &" << be_nl
-      << vb_node->name () << "::operator[] (CORBA::ULong index) const"
+      << vb_node->name () << "::operator[] ( ::CORBA::ULong index) const"
       << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value[index];" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   *os << "ACE_INLINE "<< node->full_name () << "_slice &" << be_nl
-      << vb_node->name () << "::operator[] (CORBA::ULong index)" << be_nl
+      << vb_node->name () << "::operator[] ( ::CORBA::ULong index)" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value[index];" << be_uidt_nl
       << "}" << be_nl << be_nl;
@@ -192,7 +192,7 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
       << "}" << be_nl << be_nl;
 
   // _tao_marshal_v method
-  *os << "ACE_INLINE CORBA::Boolean " << be_nl
+  *os << "ACE_INLINE ::CORBA::Boolean " << be_nl
       << vb_node->name ()
       << "::_tao_marshal_v (TAO_OutputCDR & strm) const" << be_nl
       << "{" << be_idt_nl
@@ -226,19 +226,19 @@ be_visitor_valuebox_ci::visit_predefined_type (be_predefined_type *node)
   switch (node->pt())
     {
     case AST_PredefinedType::PT_boolean:
-      marshal_arg = "CORBA::Any::from_boolean (this->_pd_value)";
+      marshal_arg = "::CORBA::Any::from_boolean (this->_pd_value)";
       break;
 
     case AST_PredefinedType::PT_char:
-      marshal_arg = "CORBA::Any::from_char (this->_pd_value)";
+      marshal_arg = "::CORBA::Any::from_char (this->_pd_value)";
       break;
 
     case AST_PredefinedType::PT_wchar:
-      marshal_arg = "CORBA::Any::from_wchar (this->_pd_value)";
+      marshal_arg = "::CORBA::Any::from_wchar (this->_pd_value)";
       break;
 
     case AST_PredefinedType::PT_octet:
-      marshal_arg = "CORBA::Any::from_octet (this->_pd_value)";
+      marshal_arg = "::CORBA::Any::from_octet (this->_pd_value)";
       break;
 
     case AST_PredefinedType::PT_any:
@@ -272,14 +272,14 @@ be_visitor_valuebox_ci::visit_sequence (be_sequence *node)
   this->emit_boxed_access(node, "*");
 
   // Generate maximum() accessor
-  *os << "ACE_INLINE CORBA::ULong " << be_nl
+  *os << "ACE_INLINE ::CORBA::ULong " << be_nl
       << vb_node->name () << "::maximum (void) const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value->maximum ();" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // Generate length() accessor
-  *os << "ACE_INLINE CORBA::ULong " << be_nl
+  *os << "ACE_INLINE ::CORBA::ULong " << be_nl
       << vb_node->name () << "::length (void) const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value->length ();" << be_uidt_nl
@@ -287,13 +287,13 @@ be_visitor_valuebox_ci::visit_sequence (be_sequence *node)
 
   // Generate length() setter
   *os << "ACE_INLINE void " << be_nl
-      << vb_node->name () << "::length (CORBA::ULong length)" << be_nl
+      << vb_node->name () << "::length ( ::CORBA::ULong length)" << be_nl
       << "{" << be_idt_nl
       << "this->_pd_value->length (length);" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // _tao_marshal_v method
-  *os << "ACE_INLINE CORBA::Boolean " << be_nl
+  *os << "ACE_INLINE ::CORBA::Boolean " << be_nl
       << vb_node->name ()
       << "::_tao_marshal_v (TAO_OutputCDR & strm) const" << be_nl
       << "{" << be_idt_nl  
@@ -318,7 +318,7 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
   else if (node->node_type () == AST_Decl::NT_wstring)
     {
       string_type = "WString";
-      char_type = "CORBA::WChar";
+      char_type = "::CORBA::WChar";
     }
   else
     {
@@ -352,7 +352,7 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
   // Public constructor with one argument of type const CORBA::String_var&
   *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name ()
-      << " (const CORBA::" << string_type << "_var& var)" << be_nl
+      << " (const ::CORBA::" << string_type << "_var& var)" << be_nl
       << "{" << be_idt_nl
       << "this->_pd_value = var;" << be_uidt_nl
       << "}" << be_nl << be_nl;
@@ -369,7 +369,7 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
   // Public assignment operator with one argument of type
   // const CORBA::String_var&
   *os << "ACE_INLINE " << vb_node->name () << " &" << be_nl
-      << vb_node->name () << "::operator= (const CORBA::"
+      << vb_node->name () << "::operator= (const ::CORBA::"
       << string_type << "_var& var)"
       << be_nl
       << "{" << be_idt_nl
@@ -402,7 +402,7 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
 
   // Modifier function with one argument of type const CORBA::String_var&
   *os << "ACE_INLINE void" << be_nl 
-      << vb_node->name () << "::_value (const CORBA::" << string_type
+      << vb_node->name () << "::_value (const ::CORBA::" << string_type
       << "_var& var)" << be_nl
       << "{" << be_idt_nl
       << "this->_pd_value = var;" << be_uidt_nl
@@ -429,20 +429,20 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
 
   // Overloaded subscript operators
   *os << "ACE_INLINE " << char_type << " &" << be_nl
-      << vb_node->name () << "::operator[] (CORBA::ULong slot)" << be_nl
+      << vb_node->name () << "::operator[] ( ::CORBA::ULong slot)" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value[slot];" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   *os << "ACE_INLINE " << char_type << be_nl
-      << vb_node->name () << "::operator[] (CORBA::ULong slot) const" << be_nl
+      << vb_node->name () << "::operator[] ( ::CORBA::ULong slot) const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value[slot];" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
 
   // _tao_marshal_v method
-  *os << "ACE_INLINE CORBA::Boolean " << be_nl
+  *os << "ACE_INLINE ::CORBA::Boolean " << be_nl
       << vb_node->name ()
       << "::_tao_marshal_v (TAO_OutputCDR & strm) const" << be_nl
       << "{" << be_idt_nl  
@@ -514,7 +514,7 @@ be_visitor_valuebox_ci::visit_structure (be_structure *node)
     }
 
   // _tao_marshal_v method
-  *os << "ACE_INLINE CORBA::Boolean " << be_nl
+  *os << "ACE_INLINE ::CORBA::Boolean " << be_nl
       << vb_node->name ()
       << "::_tao_marshal_v (TAO_OutputCDR & strm) const" << be_nl
       << "{" << be_idt_nl  
@@ -631,7 +631,7 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
 
 
   // _tao_marshal_v method
-  *os << "ACE_INLINE CORBA::Boolean " << be_nl
+  *os << "ACE_INLINE ::CORBA::Boolean " << be_nl
       << vb_node->name ()
       << "::_tao_marshal_v (TAO_OutputCDR & strm) const" << be_nl
       << "{" << be_idt_nl  
@@ -713,7 +713,7 @@ be_visitor_valuebox_ci::emit_for_predef_enum (be_type *node,
     }
 
   // _tao_marshal_v method
-  *os << "ACE_INLINE CORBA::Boolean " << be_nl
+  *os << "ACE_INLINE ::CORBA::Boolean " << be_nl
       << vb_node->name ()
       << "::_tao_marshal_v (TAO_OutputCDR & strm) const" << be_nl
       << "{" << be_idt_nl  
@@ -825,8 +825,8 @@ be_visitor_valuebox_ci::emit_copy_constructor (void)
   *os << "ACE_INLINE " << be_nl
       << vb_node->name () << "::" << vb_node->local_name ()
       << " (const " << vb_node->full_name () << "& val)" << be_idt_nl
-      << ": ACE_NESTED_CLASS (CORBA, ValueBase) (val)," << be_nl
-      << "  ACE_NESTED_CLASS (CORBA, DefaultValueRefCountBase) (val)"
+      << ": ACE_NESTED_CLASS ( ::CORBA, ValueBase) (val)," << be_nl
+      << "  ACE_NESTED_CLASS ( ::CORBA, DefaultValueRefCountBase) (val)"
       << be_uidt_nl
       << "{" << be_idt_nl
       << "this->_pd_value = val._pd_value;" << be_uidt_nl
@@ -845,8 +845,8 @@ be_visitor_valuebox_ci::emit_copy_constructor_alloc (be_decl *node)
   *os << "ACE_INLINE " << be_nl
       << vb_node->name () << "::" << vb_node->local_name () << " (const "
       << vb_node->full_name () << "& val)" << be_idt_nl
-      << ": ACE_NESTED_CLASS (CORBA, ValueBase) (val)," << be_nl
-      << "  ACE_NESTED_CLASS (CORBA, DefaultValueRefCountBase) (val)"
+      << ": ACE_NESTED_CLASS ( ::CORBA, ValueBase) (val)," << be_nl
+      << "  ACE_NESTED_CLASS ( ::CORBA, DefaultValueRefCountBase) (val)"
       << be_uidt_nl
       << "{" << be_idt_nl
       << node->full_name () << "* p;" << be_nl

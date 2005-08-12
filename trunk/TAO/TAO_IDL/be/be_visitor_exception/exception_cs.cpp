@@ -65,7 +65,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   // Default constructor.
   *os << node->name () << "::" << node->local_name ()
       << " (void)" << be_idt_nl;
-  *os << ": CORBA::UserException (" << be_idt << be_idt << be_idt_nl
+  *os << ": ::CORBA::UserException (" << be_idt << be_idt << be_idt_nl
       << "\"" << node->repoID () << "\"," << be_nl
       << "\"" << node->local_name () << "\"" << be_uidt_nl
       << ")" << be_uidt << be_uidt << be_uidt_nl;
@@ -81,7 +81,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   // Copy constructor.
   *os << node->name () << "::" << node->local_name () << " (const ::"
       << node->name () << " &_tao_excp)" << be_idt_nl;
-  *os << ": CORBA::UserException (" << be_idt << be_idt << be_idt_nl
+  *os << ": ::CORBA::UserException (" << be_idt << be_idt << be_idt_nl
       << "_tao_excp._rep_id ()," << be_nl
       << "_tao_excp._name ()" << be_uidt_nl
       << ")" << be_uidt << be_uidt << be_uidt_nl;
@@ -114,7 +114,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   *os << node->name () << "::operator= (const ::"
       << node->name () << " &_tao_excp)" << be_nl
       << "{" << be_idt_nl
-      << "this->ACE_NESTED_CLASS (CORBA, UserException)::operator= "
+      << "this->ACE_NESTED_CLASS ( ::CORBA, UserException)::operator= "
       << "(_tao_excp);";
 
   // Assign each individual member.
@@ -149,7 +149,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
   // Non-const downcast method.
   *os << node->name () << " *" << be_nl;
-  *os << node->name () << "::_downcast (CORBA::Exception *_tao_excp)" << be_nl;
+  *os << node->name () << "::_downcast ( ::CORBA::Exception *_tao_excp)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return dynamic_cast<" << node->local_name ()
       << " *> (_tao_excp);" << be_uidt_nl;
@@ -157,7 +157,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
   // Const downcast method.
   *os << "const " << node->name () << " *" << be_nl;
-  *os << node->name () << "::_downcast (CORBA::Exception const *_tao_excp)"
+  *os << node->name () << "::_downcast ( ::CORBA::Exception const *_tao_excp)"
       << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return dynamic_cast<const " << node->local_name ()
@@ -165,19 +165,19 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   *os << "}" << be_nl << be_nl;
 
   // Generate the _alloc method.
-  *os << "CORBA::Exception *" << node->name ()
+  *os << "::CORBA::Exception *" << node->name ()
       << "::_alloc (void)" << be_nl;
   *os << "{" << be_idt_nl;
-  *os << "CORBA::Exception *retval = 0;" << be_nl
+  *os << "::CORBA::Exception *retval = 0;" << be_nl
       << "ACE_NEW_RETURN (retval, ::" << node->name ()
       << ", 0);" << be_nl
       << "return retval;" << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
 
-  *os << "CORBA::Exception *" << be_nl
+  *os << "::CORBA::Exception *" << be_nl
       << node->name () << "::_tao_duplicate (void) const" << be_nl
       << "{" << be_idt_nl
-      << "CORBA::Exception *result = 0;" << be_nl
+      << "::CORBA::Exception *result = 0;" << be_nl
       << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
       << "result," << be_nl
       << "::" << node->name () << " (*this)," << be_nl
@@ -207,11 +207,11 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
       if (be_global->use_raw_throw ())
         {
-          *os << "throw CORBA::MARSHAL ();" << be_uidt_nl;
+          *os << "throw ::CORBA::MARSHAL ();" << be_uidt_nl;
         }
       else
         {
-          *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl;
+          *os << "ACE_THROW ( ::CORBA::MARSHAL ());" << be_uidt_nl;
         }
 
       *os << "}" << be_nl << be_nl;
@@ -225,11 +225,11 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
       if (be_global->use_raw_throw ())
         {
-          *os << "throw CORBA::MARSHAL ();" << be_uidt_nl;
+          *os << "throw ::CORBA::MARSHAL ();" << be_uidt_nl;
         }
       else
         {
-          *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl;
+          *os << "ACE_THROW ( ::CORBA::MARSHAL ());" << be_uidt_nl;
         }
 
       *os << "}" << be_nl << be_nl;
@@ -251,11 +251,11 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
       if (be_global->use_raw_throw ())
         {
-          *os << "throw CORBA::MARSHAL ();" << be_uidt_nl;
+          *os << "throw ::CORBA::MARSHAL ();" << be_uidt_nl;
         }
       else
         {
-          *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl;
+          *os << "ACE_THROW ( ::CORBA::MARSHAL ());" << be_uidt_nl;
         }
 
       *os << "}" << be_nl << be_nl;
@@ -269,11 +269,11 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
       if (be_global->use_raw_throw ())
         {
-          *os << "throw CORBA::MARSHAL ();" << be_uidt_nl;
+          *os << "throw ::CORBA::MARSHAL ();" << be_uidt_nl;
         }
       else
         {
-          *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl;
+          *os << "ACE_THROW ( ::CORBA::MARSHAL ());" << be_uidt_nl;
         }
 
       *os << "}" << be_nl << be_nl;
@@ -298,7 +298,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
         }
 
       *os << be_idt_nl
-          << ": CORBA::UserException ("
+          << ": ::CORBA::UserException ("
           << be_idt << be_idt << be_idt_nl
           << "\"" << node->repoID () << "\"," << be_nl
           << "\"" << node->local_name () << "\"" << be_uidt_nl
@@ -330,7 +330,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   // exception. We have already output a warning message when
   // launching the stub header typecode visitor.
   *os << "// TAO extension - the virtual _type method." << be_nl;
-  *os << "CORBA::TypeCode_ptr " << node->name ()
+  *os << "::CORBA::TypeCode_ptr " << node->name ()
       << "::_tao_type (void) const" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return ::" << node->tc_name () << ";" << be_uidt_nl;

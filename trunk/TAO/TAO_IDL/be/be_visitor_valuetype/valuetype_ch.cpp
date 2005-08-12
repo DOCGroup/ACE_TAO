@@ -149,7 +149,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
           *os << "," << be_nl;
         }
 
-      *os << "public virtual CORBA::DefaultValueRefCountBase";
+      *os << "public virtual ::CORBA::DefaultValueRefCountBase";
     }
 
   if (node->node_type () == AST_Decl::NT_eventtype)
@@ -171,7 +171,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
           *os << "," << be_nl;
         }
 
-      *os << "public virtual CORBA::ValueBase";
+      *os << "public virtual ::CORBA::ValueBase";
     }
 
   // Generate the supported interfaces.
@@ -192,7 +192,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   if (is_an_amh_exception_holder)
     {
       // Generate the constructor and destructor.
-      *os << node->local_name () << " (CORBA::Exception *ex)" << be_idt_nl
+      *os << node->local_name () << " ( ::CORBA::Exception *ex)" << be_idt_nl
           << ": exception (ex)" << be_uidt_nl
           << "{}" << be_nl << be_nl
           << "virtual ~" << node->local_name () << " (void);"
@@ -200,10 +200,10 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
     }
 
   *os << "static " << node->local_name () << "* "
-      << "_downcast (CORBA::ValueBase *);" << be_nl
+      << "_downcast ( ::CORBA::ValueBase *);" << be_nl
       << be_nl
       << "// (TAO extensions or internals)" << be_nl
-      << "static CORBA::Boolean _tao_unmarshal (" << be_idt << be_idt_nl
+      << "static ::CORBA::Boolean _tao_unmarshal (" << be_idt << be_idt_nl
       << "TAO_InputCDR &," << be_nl
       << node->local_name () << " *&" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl
@@ -258,7 +258,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       *os << be_uidt_nl << be_nl << "public:" << be_idt_nl;
       *os << be_nl << "virtual void _add_ref (void) = 0;" << be_nl;
       *os << "virtual void _remove_ref (void) = 0;" << be_nl;
-      *os << "virtual CORBA::ValueBase *_tao_to_value (void);";
+      *os << "virtual ::CORBA::ValueBase *_tao_to_value (void);";
     }
 
   // Generate the "protected" constructor so that users cannot
@@ -276,9 +276,9 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   // Support for marshalling.
   if (!node->is_abstract () || is_an_amh_exception_holder)
     {
-      *os << "virtual CORBA::Boolean "
+      *os << "virtual ::CORBA::Boolean "
           << "_tao_marshal_v (TAO_OutputCDR &) const;" << be_nl;
-      *os << "virtual CORBA::Boolean "
+      *os << "virtual ::CORBA::Boolean "
           << "_tao_unmarshal_v (TAO_InputCDR &);" << be_nl;
     }
 
@@ -297,7 +297,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   if (is_an_amh_exception_holder)
     {
       *os << be_nl
-          << "CORBA::Exception *exception;"
+          << "::CORBA::Exception *exception;"
           << be_nl;
     }
   /*********************************************************/
@@ -307,9 +307,9 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   if (node->opt_accessor ())
     {
       *os << be_uidt_nl << "protected:" << be_idt_nl;
-      *os << "CORBA::Boolean "
+      *os << "::CORBA::Boolean "
           << "_tao_marshal_state (TAO_OutputCDR &) const;" << be_nl
-          << "CORBA::Boolean "
+          << "::CORBA::Boolean "
           << "_tao_unmarshal_state (TAO_InputCDR &);"
           << be_uidt_nl << be_nl;
       *os << "private:" << be_idt_nl;
@@ -324,21 +324,21 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 
           if (is_an_amh_exception_holder)
             {
-              *os << "virtual CORBA::Boolean" << be_nl
+              *os << "virtual ::CORBA::Boolean" << be_nl
                   << "_tao_marshal__" << node->flat_name ()
                   << " (TAO_OutputCDR &) const;"
                   << be_nl << be_nl;
-              *os << "virtual CORBA::Boolean" << be_nl
+              *os << "virtual ::CORBA::Boolean" << be_nl
                   << "_tao_unmarshal__" << node->flat_name ()
                   << " (TAO_InputCDR &);";
             }
           else
             {
-              *os << "virtual CORBA::Boolean" << be_nl
+              *os << "virtual ::CORBA::Boolean" << be_nl
                   << "_tao_marshal__" << node->flat_name ()
                   << " (TAO_OutputCDR &) const = 0;"
                   << be_nl << be_nl;
-              *os << "virtual CORBA::Boolean" << be_nl
+              *os << "virtual ::CORBA::Boolean" << be_nl
                   << "_tao_unmarshal__" << node->flat_name ()
                   << " (TAO_InputCDR &) = 0;";
             }

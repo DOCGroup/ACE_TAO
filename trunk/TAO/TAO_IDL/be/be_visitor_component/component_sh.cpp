@@ -160,15 +160,10 @@ be_visitor_component_sh::visit_component (be_component *node)
       << "virtual ~" << class_name.c_str () << " (void);" << be_nl << be_nl;
 
   // _is_a
-  *os << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
+  *os << "virtual ::CORBA::Boolean _is_a (" << be_idt << be_idt_nl
       << "const char* logical_type_id" << be_nl
       << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
-
-  // _downcast
-//  *os << "virtual void* _downcast (" << be_idt << be_idt_nl
-//      << "const char* logical_type_id" << be_uidt_nl
-//      << ");" << be_uidt_nl << be_nl;
 
   // Add a skeleton for our _is_a method.
   *os << "static void _is_a_skel (" << be_idt << be_idt_nl

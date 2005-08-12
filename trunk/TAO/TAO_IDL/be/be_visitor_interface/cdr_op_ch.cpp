@@ -55,10 +55,10 @@ be_visitor_interface_cdr_op_ch::visit_interface (be_interface *node)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Generate the CDR << and >> operator declarations.
-  *os << be_global->stub_export_macro () << " CORBA::Boolean "
+  *os << be_global->stub_export_macro () << " ::CORBA::Boolean "
       << "operator<< (TAO_OutputCDR &, const " << node->full_name ()
       << "_ptr );" << be_nl;
-  *os << be_global->stub_export_macro () << " CORBA::Boolean "
+  *os << be_global->stub_export_macro () << " ::CORBA::Boolean "
       << "operator>> (TAO_InputCDR &, "
       << node->full_name () << "_ptr &);";
 

@@ -61,13 +61,13 @@ be_visitor_valuebox_any_op_cs::visit_valuebox (be_valuebox *node)
       << "namespace TAO" << be_nl
       << "{" << be_idt_nl
       << "template<>" << be_nl
-      << "CORBA::Boolean" << be_nl
+      << "::CORBA::Boolean" << be_nl
       << "Any_Impl_T<" << node->name () << ">::to_value ("
       << be_idt <<  be_idt_nl
-      << "CORBA::ValueBase *&_tao_elem" << be_uidt_nl
+      << "::CORBA::ValueBase *&_tao_elem" << be_uidt_nl
       << ") const" << be_uidt_nl
       << "{" << be_idt_nl
-      << "CORBA::add_ref (this->value_);" << be_nl
+      << "::CORBA::add_ref (this->value_);" << be_nl
       << "_tao_elem = this->value_;" << be_nl
       << "return 1;" << be_uidt_nl
       << "}" << be_uidt_nl
@@ -100,18 +100,18 @@ be_visitor_valuebox_any_op_cs::visit_valuebox (be_valuebox *node)
       *os << "// Copying insertion." << be_nl
           << "void" << be_nl
           << "operator<<= (" << be_idt << be_idt_nl
-          << "CORBA::Any &_tao_any," << be_nl
+          << "::CORBA::Any &_tao_any," << be_nl
           << node->local_name () << " *_tao_elem" << be_uidt_nl
           << ")" << be_uidt_nl
           << "{" << be_idt_nl
-          << "CORBA::add_ref (_tao_elem);" << be_nl
+          << "::CORBA::add_ref (_tao_elem);" << be_nl
           << "_tao_any <<= &_tao_elem;" << be_uidt_nl
           << "}" << be_nl << be_nl;
 
       *os << "// Non-copying insertion." << be_nl
           << "void" << be_nl
           << "operator<<= (" << be_idt << be_idt_nl
-          << "CORBA::Any &_tao_any," << be_nl
+          << "::CORBA::Any &_tao_any," << be_nl
           << node->local_name () << " **_tao_elem" << be_uidt_nl
           << ")" << be_uidt_nl
           << "{" << be_idt_nl
@@ -124,9 +124,9 @@ be_visitor_valuebox_any_op_cs::visit_valuebox (be_valuebox *node)
           << ");" << be_uidt << be_uidt_nl
           << "}" << be_nl << be_nl;
 
-      *os << "CORBA::Boolean" << be_nl
+      *os << "::CORBA::Boolean" << be_nl
           << "operator>>= (" << be_idt << be_idt_nl
-          << "const CORBA::Any &_tao_any," << be_nl
+          << "const ::CORBA::Any &_tao_any," << be_nl
           << node->local_name () << " *&_tao_elem" << be_uidt_nl
           << ")" << be_uidt_nl
           << "{" << be_idt_nl
@@ -149,18 +149,18 @@ be_visitor_valuebox_any_op_cs::visit_valuebox (be_valuebox *node)
   *os << "// Copying insertion." << be_nl
       << "void" << be_nl
       << "operator<<= (" << be_idt << be_idt_nl
-      << "CORBA::Any &_tao_any," << be_nl
+      << "::CORBA::Any &_tao_any," << be_nl
       << node->full_name () << " *_tao_elem" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "CORBA::add_ref (_tao_elem);" << be_nl
+      << "::CORBA::add_ref (_tao_elem);" << be_nl
       << "_tao_any <<= &_tao_elem;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   *os << "// Non-copying insertion." << be_nl
       << "void" << be_nl
       << "operator<<= (" << be_idt << be_idt_nl
-      << "CORBA::Any &_tao_any," << be_nl
+      << "::CORBA::Any &_tao_any," << be_nl
       << node->full_name () << " **_tao_elem" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
@@ -173,9 +173,9 @@ be_visitor_valuebox_any_op_cs::visit_valuebox (be_valuebox *node)
       << ");" << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  *os << "CORBA::Boolean" << be_nl
+  *os << "::CORBA::Boolean" << be_nl
       << "operator>>= (" << be_idt << be_idt_nl
-      << "const CORBA::Any &_tao_any," << be_nl
+      << "const ::CORBA::Any &_tao_any," << be_nl
       << node->full_name () << " *&_tao_elem" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl

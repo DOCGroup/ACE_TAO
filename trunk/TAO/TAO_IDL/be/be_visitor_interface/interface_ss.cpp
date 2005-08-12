@@ -516,8 +516,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << ");" << be_uidt_nl << be_uidt_nl;
   *os << "if (_tao_adapter == 0)" << be_idt_nl
       << "{" << be_idt_nl
-      << "ACE_THROW (CORBA::INTF_REPOS (CORBA::OMGVMCID | 1," << be_nl
-      << "                              CORBA::COMPLETED_NO));" << be_uidt_nl
+      << "ACE_THROW ( ::CORBA::INTF_REPOS ( ::CORBA::OMGVMCID | 1," << be_nl
+      << "                                  ::CORBA::COMPLETED_NO));" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
 
   // Get the right object implementation.
@@ -526,14 +526,14 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << full_skel_name << " *> (servant);"
       << be_uidt_nl;
 
-  *os << "CORBA::InterfaceDef_ptr _tao_retval = " << be_idt_nl
+  *os << "::CORBA::InterfaceDef_ptr _tao_retval = " << be_idt_nl
       << "impl->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);"
       << be_uidt_nl
       << "ACE_CHECK;" << be_nl << be_nl
       << "server_request.init_reply ();" << be_nl
       << "TAO_OutputCDR &_tao_out = *server_request.outgoing ();"
       << be_nl << be_nl
-      << "CORBA::Boolean const _tao_result =" << be_idt_nl
+      << "::CORBA::Boolean const _tao_result =" << be_idt_nl
       << "_tao_adapter->interfacedef_cdr_insert (" << be_idt << be_idt_nl
       << "_tao_out," << be_nl
       << "_tao_retval" << be_uidt_nl
@@ -542,7 +542,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   *os << "if (_tao_result == 0)" << be_idt_nl
       << "{" << be_idt_nl
-      << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl
+      << "ACE_THROW ( ::CORBA::MARSHAL ());" << be_uidt_nl
       << "}" << be_uidt;
 
   this->generate_send_reply (os);
@@ -656,7 +656,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   // Generate code for the _is_a override.
 
-  *os << "CORBA::Boolean " << full_skel_name
+  *os << "::CORBA::Boolean " << full_skel_name
       << "::_is_a (" << be_idt << be_idt_nl
       << "const char* value" << be_nl
       << "ACE_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
@@ -702,12 +702,12 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   if (node->is_event_consumer ())
     {
       *os << be_nl << be_nl
-          << "CORBA::Boolean " << full_skel_name
+          << "::CORBA::Boolean " << full_skel_name
           << "::ciao_is_substitutable (" << be_idt << be_idt_nl
           << "const char * /* event_repo_id */" << be_nl
           << "ACE_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
           << ")" << be_nl
-          << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
+          << "ACE_THROW_SPEC (( ::CORBA::SystemException))" << be_uidt_nl
           << "{" << be_idt_nl
           << "return true;" << be_uidt_nl
           << "}";
@@ -822,18 +822,18 @@ be_visitor_interface_ss::this_method (be_interface *node)
       << "ACE_CHECK_RETURN (0);" << be_nl << be_nl
       << "TAO_Stub_Auto_Ptr safe_stub (stub);" << be_nl;
 
-  *os << "CORBA::Object_ptr tmp = CORBA::Object::_nil ();"
+  *os << "::CORBA::Object_ptr tmp = CORBA::Object::_nil ();"
       << be_nl << be_nl
-      << "CORBA::Boolean _tao_opt_colloc =" << be_idt_nl
+      << "::CORBA::Boolean _tao_opt_colloc =" << be_idt_nl
       << "stub->servant_orb_var ()->orb_core ()->"
       << "optimize_collocation_objects ();" << be_uidt_nl << be_nl
       << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
       << "tmp," << be_nl
-      << "CORBA::Object (stub, _tao_opt_colloc, this)," << be_nl
+      << "::CORBA::Object (stub, _tao_opt_colloc, this)," << be_nl
       << "0" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
-  *os << "CORBA::Object_var obj = tmp;" << be_nl
+  *os << "::CORBA::Object_var obj = tmp;" << be_nl
       << "(void) safe_stub.release ();" << be_nl << be_nl
       << "typedef ::" << node->name () << " STUB_SCOPED_NAME;" << be_nl
       << "return" << be_idt_nl
@@ -925,7 +925,7 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
           << "TAO::Collocation_Proxy_Broker *" << be_nl
           << node->flat_client_enclosing_scope ()
           << node->base_proxy_broker_name ()
-          << "_Factory_function (CORBA::Object_ptr)" << be_nl
+          << "_Factory_function ( ::CORBA::Object_ptr)" << be_nl
           << "{" << be_idt_nl
           << "return";
 

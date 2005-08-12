@@ -75,7 +75,7 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
   //  Set the sub state as generating code for the output operator.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);
 
-  *os << "CORBA::Boolean" << be_nl
+  *os << "::CORBA::Boolean" << be_nl
       << "operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &strm," << be_nl
       << "const " << node->full_name ()
@@ -83,7 +83,7 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
   *os << "return" << be_idt_nl
-      << "CORBA::ValueBase::_tao_marshal (" << be_idt << be_idt_nl
+      << "::CORBA::ValueBase::_tao_marshal (" << be_idt << be_idt_nl
       << "strm," << be_nl
       << "_tao_valuetype," << be_nl
       << "reinterpret_cast<ptrdiff_t> (&"
@@ -92,7 +92,7 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
       << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  *os << "CORBA::Boolean" << be_nl
+  *os << "::CORBA::Boolean" << be_nl
       << "operator>> (" << be_idt << be_idt_nl
       << "TAO_InputCDR &strm," << be_nl
       << node->full_name ()

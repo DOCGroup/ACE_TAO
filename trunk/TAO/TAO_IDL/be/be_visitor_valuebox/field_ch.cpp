@@ -301,20 +301,20 @@ be_visitor_valuebox_field_ch::visit_predefined_type (be_predefined_type *node)
     {
     case AST_PredefinedType::PT_pseudo:
     case AST_PredefinedType::PT_object:
-      this->emit_member_set (field, bt, "", "_ptr");
-      this->emit_member_get (field, bt, "", "_ptr", "const");
+      this->emit_member_set (field, bt, " ::", "_ptr");
+      this->emit_member_get (field, bt, " ::", "_ptr", "const");
 
       break;
     case AST_PredefinedType::PT_any:
-      this->emit_member_set (field, bt, "const ", " &");
-      this->emit_member_get (field, bt, "const ", " &", "const");
-      this->emit_member_get (field, bt, "", " &", "");
+      this->emit_member_set (field, bt, "const ::", " &");
+      this->emit_member_get (field, bt, "const ::", " &", "const");
+      this->emit_member_get (field, bt, " ::", " &", "");
       break;
     case AST_PredefinedType::PT_void:
       break;
     default:
-      this->emit_member_set (field, bt, "", "");
-      this->emit_member_get (field, bt, "", "", "const");
+      this->emit_member_set (field, bt, " ::", "");
+      this->emit_member_get (field, bt, " ::", "", "const");
     }
 
   return 0;
@@ -402,7 +402,7 @@ be_visitor_valuebox_field_ch::visit_string (be_string *node)
     }
 
   *os << "void " << field->local_name ()
-      << " (const CORBA::" << string_type << "_var &);" << be_nl;
+      << " (const ::CORBA::" << string_type << "_var &);" << be_nl;
 
   this->emit_member_get (field, bt, "const ", "", "const");
 
