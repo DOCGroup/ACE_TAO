@@ -22,6 +22,7 @@ ACE_RCSID (tao,
 
 TAO::PICurrent::PICurrent (TAO_ORB_Core &orb_core)
   : orb_core_ (orb_core),
+    tss_slot_ (-1),
     slot_count_ (0)
 {
 }
@@ -72,12 +73,11 @@ TAO::PICurrent::set_slot (PortableInterceptor::SlotId identifier,
 TAO::PICurrent_Impl *
 TAO::PICurrent::tsc (void)
 {
-  TAO_ORB_Core_TSS_Resources *tss =
-    this->orb_core_.get_tss_resources ();
+  TAO::PICurrent_Impl *impl =
+    static_cast<TAO::PICurrent_Impl *> (
+      this->orb_core_.get_tss_resource (this->tss_slot_));
 
-// todo
-//  return &tss->pi_current_;
-    return 0;
+  return impl;
 }
 
 void
@@ -95,5 +95,29 @@ TAO::PICurrent::_get_orb (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return CORBA::ORB::_duplicate (this->orb_core_.orb ());
 }
+
+int
+TAO::PICurrent::initialize (PortableInterceptor::SlotId sc
+                            ACE_ENV_ARG_DECL_NOT_USED)
+{
+  this->slot_count_ = sc;
+
+  if (this->tsc () == 0 && tss_slot_ == -1)
+    {
+      TAO::PICurrent_Impl *impl = 0;
+      ACE_NEW_RETURN (impl,
+                      TAO::PICurrent_Impl,
+                      0);
+
+      const int result = this->orb_core_.add_tss_cleanup_func (0,
+                                                               tss_slot_);
+
+      if (result != 0)
+        return 0;
+
+      this->orb_core_.set_tss_resource (tss_slot_, impl);
+    }
+}
+
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

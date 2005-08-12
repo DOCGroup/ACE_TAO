@@ -101,7 +101,7 @@ namespace TAO
                          ACE_ENV_ARG_DECL);
 
     /// Initialize the PICurrent object.
-    void initialize (PortableInterceptor::SlotId sc);
+    int initialize (PortableInterceptor::SlotId sc ACE_ENV_ARG_DECL);
 
   protected:
 
@@ -125,6 +125,9 @@ namespace TAO
   private:
     /// Reference to the orb core.
     TAO_ORB_Core &orb_core_;
+
+    /// TSS slot assigned to this object.
+    size_t tss_slot_;
 
     /// The number of allocated slots.
     PortableInterceptor::SlotId slot_count_;
