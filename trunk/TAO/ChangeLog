@@ -1,3 +1,9 @@
+Fri Aug 12 08:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Collocation_Oneway_Tests/Client_Task.{h,cpp}:
+        * tests/Collocation_Oneway_Tests/Collocated_Test.cpp:
+          Changed the Client_Task enum, NONE is a macro on VxWorks
+
 Thu Aug 11 16:16:00 2005  Justin Michel  <michel_j@ociweb.com>
 
         * orbsvcs/Notify_Service/Notify_Service.h:
@@ -15,7 +21,7 @@ Thu Aug 11 16:16:00 2005  Justin Michel  <michel_j@ociweb.com>
                n[1].id = "b";
 
           Thanks to Mike Chartier <mikec at compgen dot com> for
-        spotting this problem. 
+        spotting this problem.
 	Rather than reverting the code to support both styles, I just made
 	the new code always use to_name().
 
