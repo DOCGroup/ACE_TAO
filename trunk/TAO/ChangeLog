@@ -1,3 +1,10 @@
+Fri Aug 12 22:15:14 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/nested_scope.idl:
+        
+          Added the IDL test file sent in by Nikolay Metchev
+          <n.metchev@teamphone.com> to the test suite.
+
 Fri Aug 12 22:13:15 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp:
