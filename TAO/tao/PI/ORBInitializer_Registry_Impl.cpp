@@ -161,8 +161,12 @@ TAO::ORBInitializer_Registry::post_init (
       if (!CORBA::is_nil (picurrent_ptr))
         {
           TAO::PICurrent *pi = dynamic_cast <TAO::PICurrent*> (picurrent_ptr);
+
           if (pi)
-            pi->initialize (orb_init_info_->slot_count ());
+            {
+              pi->initialize (orb_init_info_->slot_count (ACE_ENV_SINGLE_ARG_PARAMETER));
+              ACE_CHECK;
+            }
         }
 
       // Invalidate the ORBInitInfo instance to prevent future
