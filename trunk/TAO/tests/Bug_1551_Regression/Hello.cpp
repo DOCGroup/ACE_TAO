@@ -28,7 +28,7 @@ Hello::short_sleep (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 #endif /* 0 */
   if(simulate_crashes_ && count == 0)
   {
-    ACE_DEBUG((LM_DEBUG, "Aborting!"));
+    ACE_DEBUG((LM_DEBUG, "Aborting!\n"));
     ACE_Time_Value tv(5, 0);
     ACE_OS::sleep(tv);
     ACE_OS::abort();

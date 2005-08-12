@@ -32,8 +32,8 @@ if (PerlACE::waitforfile_timed ($file, 15) == -1) {
 
 $collocated = $SV->WaitKill (5);
 
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
+if ($collocated != 0) {
+    print STDERR "ERROR: Collocated_Test returned $collocated\n";
     $status = 1;
 }
 

@@ -20,6 +20,7 @@
 #include "testC.h"
 #include "Smart_Proxy_Impl.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(Smart_Proxy, client, "$Id$")
 
@@ -97,10 +98,19 @@ main (int argc, char *argv[])
                            ior),
                           1);
 
-      server->method (0);
+      server->method (0 ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
+      // The following sleep is a hack to make sure the above oneway
+      // request gets sent before we exit. Otherwise, at least on
+      // Windows XP, the server may not even get the request.
+      ACE_Time_Value tv (0, 100000);
+      ACE_OS::sleep(tv);
+
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
