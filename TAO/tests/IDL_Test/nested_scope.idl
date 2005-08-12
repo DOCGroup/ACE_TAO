@@ -173,3 +173,20 @@ module Wow
     };
   };
 };
+
+// This will ensure that we always put the '::'
+// before the 'CORBA' on predefined types.
+module Company
+{
+  module CORBA
+  {
+    module Inner
+    {
+      struct Foo
+      {
+        boolean x;
+      };
+    };
+  };
+};
+
