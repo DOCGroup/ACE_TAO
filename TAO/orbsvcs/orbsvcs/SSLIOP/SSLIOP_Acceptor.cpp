@@ -1,6 +1,5 @@
 #include "SSLIOP_Acceptor.h"
 #include "SSLIOP_Profile.h"
-#include "SSLIOP_Current.h"
 
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
