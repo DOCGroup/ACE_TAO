@@ -21,6 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/TAO_Export.h"
+
 class ACE_Time_Value;
 class TAO_ORB_Core;
 class TAO_Transport;
@@ -32,7 +34,7 @@ class TAO_Synch_Reply_Dispatcher;
  * @brief Strategy for waiting for the reply.
  *
  */
-class TAO_Wait_Strategy
+class TAO_Export TAO_Wait_Strategy
 {
 
 public:
