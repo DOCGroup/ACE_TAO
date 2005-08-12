@@ -49,7 +49,7 @@ if ($client != 0) {
 
 $server = $SV1->WaitKill (10);
 
-if ($server == -1) {
+if ($server != 0) {
     print STDERR "ERROR: server 1 returned $server\n";
     $status = 1;
 }
@@ -58,7 +58,7 @@ unlink $iorfile1;
 
 $server = $SV2->WaitKill (10);
 
-if ($server == -1) {
+if ($server != 0) {
     print STDERR "ERROR: server 2 returned $server\n";
     $status = 1;
 }
@@ -97,7 +97,7 @@ if ($client != 0) {
 
 $server = $SV1->WaitKill (10);
 
-if ($server == -1) {
+if ($server != 0) {
     print STDERR "ERROR: server 1 returned $server\n";
     $status = 1;
 }
@@ -106,7 +106,7 @@ unlink $iorfile1;
 
 $server = $SV2->WaitKill (10);
 
-if ($server == -1) {
+if ($server != 0) {
     print STDERR "ERROR: server 2 returned $server\n";
     $status = 1;
 }

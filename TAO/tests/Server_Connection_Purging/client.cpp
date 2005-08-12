@@ -99,7 +99,8 @@ main (int argc, char *argv[])
       if (connector[i].connect (stream[i],
                                 addr) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Error while connecting: %p\n"),
+                           "Error while connecting: %p\n",
+                           "client"),
                           -1);
 
       if (stream[i].get_handle () == ACE_INVALID_HANDLE)
@@ -118,7 +119,14 @@ main (int argc, char *argv[])
       while (singleton->handle_events (&tv) >= 1);
     }
 
-  ACE_INET_Addr remote_addr;
+  // Remove the handlers to avoid the possibility of the reactor
+  // using any of them after they leave the scope (those that haven't
+  // been closed and removed already, that is).
+  for (int j = 0; j != iter; ++j)
+    {
+      singleton->remove_handler (stream[j].get_handle (),
+                                 ACE_Event_Handler::READ_MASK);
+    }
 
   if ((iter - purged_handles) > 20)
     ACE_ERROR_RETURN ((LM_ERROR,

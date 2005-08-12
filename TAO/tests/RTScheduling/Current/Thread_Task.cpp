@@ -2,6 +2,7 @@
 
 #include "Thread_Task.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_unistd.h"
 
 int
 Thread_Task::activate_task (CORBA::ORB_ptr orb,
@@ -175,7 +176,14 @@ Thread_Task::svc (void)
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, *shutdown_lock_,-1);
         --active_thread_count_;
         if (active_thread_count_ == 0)
-          orb_->shutdown ();
+          {
+            // Without this sleep, we will occasionally get BAD_INV_ORDER
+            // exceptions on fast dual processor machines.
+            ACE_OS::sleep (1);
+
+            orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+            ACE_TRY_CHECK;
+          }
       }
     }
   ACE_CATCHANY

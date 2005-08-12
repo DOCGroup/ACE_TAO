@@ -93,7 +93,17 @@ main (int argc, char *argv[])
           ACE_ERROR ((LM_ERROR, "Error activating client task\n"));
         }
 
+      // Wait for the client and server to finish
       ACE_Thread_Manager::instance ()->wait ();
+
+      // Now that all threads have completed we can destroy the ORB
+      sorb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      if (server_orb != client_orb)
+        {
+          corb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
     }
   ACE_CATCHANY
     {

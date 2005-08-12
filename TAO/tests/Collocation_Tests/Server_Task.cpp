@@ -86,12 +86,6 @@ Server_Task::svc (void)
      ACE_TRY_CHECK;
 
      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
-
-     root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-     ACE_TRY_CHECK;
-
-     this->sorb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-     ACE_TRY_CHECK;
    }
  ACE_CATCHANY
    {

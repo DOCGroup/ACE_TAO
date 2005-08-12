@@ -1,3 +1,85 @@
+Fri Aug 12 07:55:08 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Bug_1551_Regression/Hello.cpp:
+
+          Added a line feed to the aborting message.
+
+        * tests/Collocation_Tests/Collocated_Test.cpp:
+        * tests/Collocation_Tests/Server_Task.cpp:
+
+          Destroy the server (and client) orb only after all threads have
+          finished.
+
+        * tests/Collocation_Tests/Hello.cpp:
+
+          Added a sleep of 1 second before the orb shutdown to avoid
+          BAD_INV_ORDER exceptions on fast dual processor machines.
+
+        * tests/OBV/Collocated/Forward/Client_Task.cpp:
+        * tests/OBV/Collocated/Forward/run_test.pl:
+
+          Changed this test to use if statements instead of ACE_ASSERT so
+          that the test runs the same on release builds as it does on debug
+          builds.
+
+        * tests/Portable_Interceptors/Collocated/Dynamic/run_test.pl:
+
+          Check the correct variable to accurately display the test result.
+
+        * tests/RTScheduling/Current/Thread_Task.cpp:
+
+          Added a sleep of 1 second before the orb shutdown to avoid
+          BAD_INV_ORDER exceptions on fast dual processor machines.
+
+        * tests/Server_Connection_Purging/client.cpp:
+
+          Remove event handlers after finishing with the reactor loop to
+          avoid the possibility of using the handlers after they go out of
+          scope.  Also, added a parameter to an ACE_ERROR_RETURN that
+          expected one (by %p).
+
+
+        Committing the following changes from OCI.
+
+        Fri Sep 17 10:01:21 2004  Yan Dai   <dai_y@ociweb.com>
+
+        * tests/Bug_1361_Regression/Echo.h:
+
+          Make the abort_counter_ to be atomic. This would resolve the
+          problem of client timeout causes test failure.
+
+        Wed Sep  8 16:43:37 MST 2004  Yan Dai   <dai_y@ociweb.com>
+
+        * tests/Bug_1361_Regression/run_test.pl:
+
+          Made it wait longer for server shutdown since the server shutdown
+          needs more time on some platforms and corrected one syntex error
+          which uses undefined $client1.
+
+        Mon Apr 28 17:19:32 2003  Steve Totten  <totten_s@ociweb.com>
+
+        * tests/Stack_Recursion/run_test.pl:
+
+          Fixed typo in variable name used to print client status.
+
+        Wed Apr 23 13:05:48 2003  Steve Totten  <totten_s@ociweb.com>
+
+        * tests/Smart_Proxies/client.cpp:
+        * tests/Smart_Proxies/server.cpp:
+
+          Cleaned up some poor usage of ACE exception macros in client
+          and server.  Added a short sleep in client after it invokes
+          shutdown on server to make sure the request is written (this was
+          causing a problem on Windows XP).
+
+        * tests/Smart_Proxies/Policy/run_test.pl:
+
+          Fixed return-code checking.
+
+        * tests/Strategies/run_test.pl:
+
+          Fixed return-code checking.
+
 Fri Aug 12 08:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Collocation_Oneway_Tests/Client_Task.{h,cpp}:
@@ -22,8 +104,8 @@ Thu Aug 11 16:16:00 2005  Justin Michel  <michel_j@ociweb.com>
 
           Thanks to Mike Chartier <mikec at compgen dot com> for
         spotting this problem.
-	Rather than reverting the code to support both styles, I just made
-	the new code always use to_name().
+        Rather than reverting the code to support both styles, I just made
+        the new code always use to_name().
 
 Thu Aug 11 13:48:57 2005  Chad Elliott  <elliott_c@ociweb.com>
 

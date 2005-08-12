@@ -62,7 +62,7 @@ if (!$server_died) {
   my $shutdown = $SH->Spawn();
   $SH->WaitKill(10) unless $shutdown < 0;
 
-  $server = $SV->WaitKill (30);
+  $server = $SV->WaitKill (100);
 }
 
 if ($server != 0) {
