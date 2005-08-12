@@ -62,13 +62,13 @@ JAWS_Parse_Headers::parse_headers (JAWS_Header_Info *info,
       // connection needs to be closed and the client has to
       // reinitiate the connection.
 
-      info->status (JAWS_Header_Info::TOO_LONG);
+      info->status (JAWS_Header_Info::STATUS_CODE_TOO_LONG);
       return 1;
     }
   else if (mb.length () > mb.size ())
     {
       ACE_DEBUG ((LM_DEBUG, "JAWS_Parse_Headers: buffer overrun!!\n"));
-      info->status (JAWS_Header_Info::TOO_LONG);
+      info->status (JAWS_Header_Info::STATUS_CODE_TOO_LONG);
       return 1;
     }
 
@@ -376,7 +376,7 @@ JAWS_Header_Info::create_next_header_value (char *ht)
 
   this->finish_last_header_value ();
 
-  if (this->status () == JAWS_Header_Info::OK)
+  if (this->status () == JAWS_Header_Info::STATUS_CODE_OK)
     {
       // create a new last_header_data_ node
 
@@ -385,7 +385,7 @@ JAWS_Header_Info::create_next_header_value (char *ht)
 
       if (this->last_header_data_ == 0 || this->last_header_name () == 0)
         {
-          this->status (JAWS_Header_Info::NO_MEMORY);
+          this->status (JAWS_Header_Info::STATUS_CODE_NO_MEMORY);
           delete this->last_header_data_;
           this->last_header_data_ = 0;
         }
@@ -404,7 +404,7 @@ JAWS_Header_Info::finish_last_header_value (void)
       this->last_header_data_->header_value (this->header_buf ());
       // The above performs a strdup.
 
-      if (this->status () == JAWS_Header_Info::OK)
+      if (this->status () == JAWS_Header_Info::STATUS_CODE_OK)
         this->table_.insert (this->last_header_data_);
       else
         delete this->last_header_data_;

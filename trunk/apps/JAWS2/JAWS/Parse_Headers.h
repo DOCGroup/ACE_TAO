@@ -58,9 +58,9 @@ public:
 
   enum STATUS_CODE
   {
-    OK = 0,
-    NO_MEMORY,
-    TOO_LONG
+    STATUS_CODE_OK = 0,
+    STATUS_CODE_NO_MEMORY,
+    STATUS_CODE_TOO_LONG
   };
 
   enum
