@@ -79,11 +79,11 @@ be_visitor_valuetype_fwd_cdr_op_ch::visit_valuetype_fwd (
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << be_global->stub_export_macro ()
-      << " CORBA::Boolean operator<< (TAO_OutputCDR &, const "
+      << " ::CORBA::Boolean operator<< (TAO_OutputCDR &, const "
       << node->full_name () << " *);" << be_nl;
 
   *os << be_global->stub_export_macro ()
-      << " CORBA::Boolean operator>> (TAO_InputCDR &, "
+      << " ::CORBA::Boolean operator>> (TAO_InputCDR &, "
       << node->full_name () << " *&);" << be_nl;
 
   node->cli_hdr_cdr_op_gen (I_TRUE);

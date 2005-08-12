@@ -131,7 +131,7 @@ be_visitor_valuetype_init_arglist_ch::gen_throw_spec (be_factory *node)
     }
 
   *os << be_nl << throw_spec_open;
-  *os << be_idt_nl << "CORBA::SystemException";
+  *os << be_idt_nl << "::CORBA::SystemException";
 
   if (node->exceptions ())
     {

@@ -67,11 +67,11 @@ TAO::be_visitor_alias_typecode::common (be_type * node,
   // Generate the alias TypeCode instantiation.
   os
     << "static TAO::TypeCode::Alias<char const *," << be_nl
-    << "                            CORBA::TypeCode_ptr const *," << be_nl
+    << "                            ::CORBA::TypeCode_ptr const *," << be_nl
     << "                            TAO::Null_RefCount_Policy>"
     << be_idt_nl
     << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl
-    << "CORBA::" << tctype << "," << be_nl
+    << "::CORBA::" << tctype << "," << be_nl
     << "\"" << node->repoID () << "\"," << be_nl
     << "\"" << node->original_local_name () << "\"," << be_nl
     << "&";

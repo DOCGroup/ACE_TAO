@@ -74,7 +74,7 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
   //@@ If I'm generating concrete class I need a RefCounter.
   os << "class " << be_global->stub_export_macro ()
      << " " << node->local_name ()
-     << "_init : public virtual CORBA::ValueFactoryBase" << be_nl;
+     << "_init : public virtual ::CORBA::ValueFactoryBase" << be_nl;
 
   // Generate the body.
   os << "{" << be_nl
@@ -99,14 +99,14 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
   // Generate _downcast method.
   os << be_nl << be_nl
      << "static " << node->local_name () << "_init* "
-     << "_downcast (CORBA::ValueFactoryBase *);";
+     << "_downcast ( ::CORBA::ValueFactoryBase *);";
 
   if (factory_style == be_valuetype::FS_CONCRETE_FACTORY)
     {
       //@@ Boris: create_for_unmarshal is still public...
       // generate create_for_unmarshal
       os << be_nl << be_nl
-         << "virtual CORBA::ValueBase *" << be_nl
+         << "virtual ::CORBA::ValueBase *" << be_nl
          << "create_for_unmarshal ("
          << be_idt << be_idt_nl
          << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
@@ -115,7 +115,7 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
       if (node->supports_abstract ())
         {
           os << be_nl << be_nl
-             << "virtual CORBA::AbstractBase_ptr" << be_nl
+             << "virtual ::CORBA::AbstractBase_ptr" << be_nl
              << "create_for_unmarshal_abstract (" << be_idt << be_idt_nl
              << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
              << ");" << be_uidt;

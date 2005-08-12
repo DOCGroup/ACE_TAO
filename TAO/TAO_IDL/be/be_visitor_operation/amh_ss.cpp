@@ -126,7 +126,7 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
 
       // If marshaling fails, raise exception.
       if (this->gen_raise_exception (0,
-                                     "CORBA::MARSHAL",
+                                     "::CORBA::MARSHAL",
                                      "") == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -255,7 +255,7 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
 
   // If marshaling fails, raise exception.
   if (this->gen_raise_exception (0,
-                                 "CORBA::MARSHAL",
+                                 "::CORBA::MARSHAL",
                                  "") == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -366,18 +366,22 @@ be_visitor_amh_operation_ss::generate_shared_section (be_decl *node,
   buf = 0;
 
   *os << be_nl
+      << "TAO_ORB_Core *orb_core =" << be_idt_nl
+      << "_tao_server_request.orb ()->orb_core ();" << be_uidt_nl << be_nl
       << "TAO_AMH_BUFFER_ALLOCATOR* amh_allocator =" << be_idt_nl
-      << "_tao_server_request.orb()->orb_core ()->lane_resources().amh_response_handler_allocator();" << be_uidt_nl << be_nl
-      << "TAO::TAO_Buffer_Allocator<"
-      << response_handler_implementation_name.c_str ()
-      << ", TAO_AMH_BUFFER_ALLOCATOR> buffer_allocator (amh_allocator);"
-      << be_nl << be_nl
+      << "orb_core->lane_resources ().amh_response_handler_allocator ();"
+      << be_uidt_nl << be_nl
+      << "TAO::TAO_Buffer_Allocator<" << be_idt << be_idt_nl
+      << response_handler_implementation_name.c_str () << "," << be_nl
+      << "TAO_AMH_BUFFER_ALLOCATOR" << be_uidt_nl
+      << "> buffer_allocator (amh_allocator);"
+      << be_uidt_nl << be_nl
       << response_handler_implementation_name.c_str ()
       << "_ptr _tao_rh_ptr = "
       << be_idt_nl
       << "buffer_allocator.allocate();"
       << be_uidt_nl << be_nl
-      << "if (!_tao_rh_ptr) " << be_idt_nl << "ACE_THROW (CORBA::NO_MEMORY ());"
+      << "if (!_tao_rh_ptr) " << be_idt_nl << "ACE_THROW ( ::CORBA::NO_MEMORY ());"
       << be_uidt_nl;
 
   // Initialize amh rh

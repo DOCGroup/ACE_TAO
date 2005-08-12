@@ -446,7 +446,7 @@ be_visitor_valuetype_field_cs::valuetype_common (be_type *node)
       << "* val)" << be_nl
       << "{" << be_idt_nl;
 
-  *os << "CORBA::add_ref (val);" << be_nl
+  *os << "::CORBA::add_ref (val);" << be_nl
       << "this->"
       << bu->field_pd_prefix () << ub->local_name () 
       << bu->field_pd_postfix ()
@@ -526,7 +526,7 @@ be_visitor_valuetype_field_cs::visit_valuetype_fwd (be_valuetype_fwd *node)
       << "* val)" << be_nl
       << "{" << be_idt_nl;
 
-  *os << "CORBA::add_ref (val);" << be_nl
+  *os << "::CORBA::add_ref (val);" << be_nl
       << "this->"
       << bu->field_pd_prefix () << ub->local_name () 
       << bu->field_pd_postfix ()
@@ -594,8 +594,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
   *os << "// Accessor to set the member." << be_nl
       << this->pre_op () << "void" << be_nl;
 
-  this->op_name (bu,
-                 os);
+  this->op_name (bu, os);
 
   *os << "::" << ub->local_name ()
       << " (" << bt->name ();
@@ -620,7 +619,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
     case AST_PredefinedType::PT_pseudo:
     case AST_PredefinedType::PT_object:
       *os << "this->" << bu->field_pd_prefix () << ub->local_name ()
-          << bu->field_pd_postfix () << " = "
+          << bu->field_pd_postfix () << " = ::"
           << bt->name () << "::_duplicate (val);" << be_uidt_nl;
 
       break;
@@ -647,7 +646,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
     case AST_PredefinedType::PT_pseudo:
     case AST_PredefinedType::PT_object:
       *os << "// Retrieve the member" << be_nl
-          << this->pre_op () << bt->name () << "_ptr" << be_nl;
+          << this->pre_op () << "::" << bt->name () << "_ptr" << be_nl;
 
       this->op_name (bu,
                      os);
@@ -664,10 +663,9 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
       break;
     case AST_PredefinedType::PT_any:
       *os << "// Retrieve the member." << be_nl
-          << this->pre_op () << "const " << bt->name () << " &" << be_nl;
+          << this->pre_op () << "const ::" << bt->name () << " &" << be_nl;
 
-      this->op_name (bu,
-                     os);
+      this->op_name (bu, os);
 
       *os << "::" << ub->local_name ()
           << " (void) const" << be_nl
@@ -679,10 +677,9 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
           << "}" << be_nl << be_nl;
 
       *os << "// Retrieve the member" << be_nl
-          << this->pre_op () << bt->name () << " &" << be_nl;
+          << this->pre_op () << "::" << bt->name () << " &" << be_nl;
 
-      this->op_name (bu,
-                     os);
+      this->op_name (bu, os);
 
       *os << "::" << ub->local_name ()
           << " (void)" << be_nl
@@ -698,10 +695,9 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
       break;
     default:
       *os << "// Retrieve the member" << be_nl
-          << this->pre_op () << bt->name () << be_nl;
+          << this->pre_op () << "::" << bt->name () << be_nl;
 
-      this->op_name (bu,
-                     os);
+      this->op_name (bu, os);
 
       *os << "::" << ub->local_name ()
           << " (void) const" << be_nl
@@ -849,7 +845,7 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
     }
   else
     {
-      *os << "::" << ub->local_name () << " (CORBA::WChar *val)";
+      *os << "::" << ub->local_name () << " ( ::CORBA::WChar *val)";
     }
 
   *os << be_nl
@@ -874,7 +870,7 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
     }
   else
     {
-      *os << " (const CORBA::WChar *val)" << be_nl;
+      *os << " (const ::CORBA::WChar *val)" << be_nl;
     }
 
   *os << "{" << be_idt_nl;
@@ -887,11 +883,11 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
 
   if (node->width () == (long) sizeof (char))
     {
-      *os << "CORBA::string_dup (val);" << be_uidt_nl;
+      *os << "::CORBA::string_dup (val);" << be_uidt_nl;
     }
   else
     {
-      *os << "CORBA::wstring_dup (val);" << be_uidt_nl;
+      *os << "::CORBA::wstring_dup (val);" << be_uidt_nl;
     }
 
   *os << "}" << be_nl << be_nl;
@@ -907,22 +903,22 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
 
   if (node->width () == (long) sizeof (char))
     {
-      *os << " (const CORBA::String_var &val)" << be_nl;
+      *os << " (const ::CORBA::String_var &val)" << be_nl;
     }
   else
     {
-      *os << " (const CORBA::WString_var &val)" << be_nl;
+      *os << " (const ::CORBA::WString_var &val)" << be_nl;
     }
 
   *os << "{" << be_idt_nl;
 
   if (node->width () == (long) sizeof (char))
     {
-      *os << "CORBA::String_var " << ub->local_name ();
+      *os << "::CORBA::String_var " << ub->local_name ();
     }
   else
     {
-      *os << "CORBA::WString_var " << ub->local_name ();
+      *os << "::CORBA::WString_var " << ub->local_name ();
     }
 
   *os << "_var = val;" << be_nl
@@ -939,7 +935,7 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
     }
   else
     {
-      *os << this->pre_op () << "const CORBA::WChar *" << be_nl;
+      *os << this->pre_op () << "const ::CORBA::WChar *" << be_nl;
     }
 
   this->op_name (bu,

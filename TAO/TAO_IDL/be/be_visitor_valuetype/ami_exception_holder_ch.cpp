@@ -56,7 +56,7 @@ be_visitor_valuetype_ami_exception_holder_ch::visit_valuetype (
 
   *os << node->local_name () << "," << be_nl
       << "  public virtual OBV_Messaging::ExceptionHolder," << be_nl
-      << "  public virtual CORBA::DefaultValueRefCountBase" << be_uidt_nl
+      << "  public virtual ::CORBA::DefaultValueRefCountBase" << be_uidt_nl
       << "{" << be_nl;
   *os << "public:" << be_idt_nl;
   *os << "_tao_" << node->local_name () << " ();" << be_nl << be_nl;

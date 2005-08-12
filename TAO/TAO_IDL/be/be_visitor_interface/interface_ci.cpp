@@ -82,7 +82,7 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
       *os << "ACE_INLINE" << be_nl
           << node->name () << "::" << node->local_name ()
           << " (const " << node->local_name () << " &rhs)" << be_idt_nl
-          << ": ACE_NESTED_CLASS (CORBA, AbstractBase) (rhs)" << be_uidt_nl
+          << ": ACE_NESTED_CLASS ( ::CORBA, AbstractBase) (rhs)" << be_uidt_nl
           << "{}";
     }
 
@@ -99,7 +99,7 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
           << "IOP::IOR *ior," << be_nl
           << "TAO_ORB_Core *oc" << be_uidt_nl
           << ")" << be_nl;
-      *os << ": ACE_NESTED_CLASS (CORBA, Object) (ior, oc)," << be_idt_nl
+      *os << ": ACE_NESTED_CLASS ( ::CORBA, Object) (ior, oc)," << be_idt_nl
           << "the"<< node->base_proxy_broker_name () << "_ (0)" 
           << be_uidt << be_uidt_nl
           << "{" << be_nl

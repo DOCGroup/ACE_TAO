@@ -197,7 +197,7 @@ be_visitor_array_serializer_op_cs::visit_array (be_array *node)
 
   //  Set the sub state as generating code for the size method
   this->ctx_->sub_state (TAO_CodeGen::TAO_IS_BOUNDED_SIZE);
-  *os << "CORBA::Boolean _tao_is_bounded_size (" << be_idt << be_idt_nl
+  *os << "::CORBA::Boolean _tao_is_bounded_size (" << be_idt << be_idt_nl
       << "const " << fname << "_forany &_tao_array" << be_uidt_nl
       <<")" << be_uidt_nl 
       << "{" << be_idt_nl;
@@ -234,7 +234,7 @@ be_visitor_array_serializer_op_cs::visit_array (be_array *node)
 
   //  Set the sub state as generating code for the output operator.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
-  *os << "CORBA::Boolean operator<< (" << be_idt << be_idt_nl
+  *os << "::CORBA::Boolean operator<< (" << be_idt << be_idt_nl
       << "TAO::DCPS::Serializer &strm," << be_nl
       << "const " << fname << "_forany &_tao_array" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -252,7 +252,7 @@ be_visitor_array_serializer_op_cs::visit_array (be_array *node)
   *os << "}" << be_nl << be_nl;
 
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_INPUT);
-  *os << "CORBA::Boolean operator>> (" << be_idt << be_idt_nl
+  *os << "::CORBA::Boolean operator>> (" << be_idt << be_idt_nl
       << "TAO::DCPS::Serializer &strm," << be_nl
       << fname << "_forany &_tao_array" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -299,14 +299,14 @@ be_visitor_array_serializer_op_cs::visit_enum (be_enum *node)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_IS_BOUNDED_SIZE:
-      *os << "ACE_UNUSED_ARG(_tao_array);" << be_nl
+      *os << "ACE_UNUSED_ARG (_tao_array);" << be_nl
           << "return true; // array of enum" << be_uidt_nl;
       break;
     case TAO_CodeGen::TAO_FIND_SIZE: 
     case TAO_CodeGen::TAO_MAX_MARSHALED_SIZE:
       {
-        *os << "ACE_UNUSED_ARG(_tao_array);" << be_nl;
-        *os << "// array of enum = sizeof(CORBA::ULong) * array size" << be_nl
+        *os << "ACE_UNUSED_ARG (_tao_array);" << be_nl;
+        *os << "// array of enum = sizeof ( ::CORBA::ULong) * array size" << be_nl
             << "return _dcps_max_marshaled_size_ulong () * ";
 
         unsigned long ndims = array->n_dims ();
@@ -383,7 +383,9 @@ be_visitor_array_serializer_op_cs::visit_valuetype_fwd (be_valuetype_fwd *node)
 }
 
 int
-be_visitor_array_serializer_op_cs::visit_predefined_type (be_predefined_type *node)
+be_visitor_array_serializer_op_cs::visit_predefined_type (
+    be_predefined_type *node
+  )
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -794,7 +796,7 @@ be_visitor_array_serializer_op_cs::visit_node (be_type *bt)
             break;
           case AST_Decl::NT_array:
               *os << "// use ULong instead of literal to avoid overload ambiguity"
-                  << be_nl << "CORBA::ULong first = 0;" << be_nl
+                  << be_nl << "::CORBA::ULong first = 0;" << be_nl
                   << "// must use forany instead of a slice to avoid overload ambiguity"
                   << be_nl
                   << bt->name () << "_var tmp_var ("
@@ -841,7 +843,7 @@ be_visitor_array_serializer_op_cs::visit_node (be_type *bt)
             break;
           case AST_Decl::NT_array:
               *os << "// use ULong instead of literal to avoid overload ambiguity"
-                  << be_nl << "CORBA::ULong first = 0;" << be_nl
+                  << be_nl << "::CORBA::ULong first = 0;" << be_nl
                   << "// must use forany instead of a slice to avoid overload ambiguity"
                   << be_nl
                   << bt->name () << "_var tmp_var ("
@@ -918,7 +920,7 @@ be_visitor_array_serializer_op_cs::visit_node (be_type *bt)
           else
             {
               // Initialize a boolean variable.
-              *os << "CORBA::Boolean _tao_marshal_flag = 1;" << be_nl;
+              *os << "::CORBA::Boolean _tao_marshal_flag = 1;" << be_nl;
             }
 
     unsigned long ndims = node->n_dims ();
@@ -945,7 +947,7 @@ be_visitor_array_serializer_op_cs::visit_node (be_type *bt)
         if (expr->ev ()->et == AST_Expression::EV_ulong)
           {
             // Generate a loop for each dimension.
-            *os << be_nl << "for (CORBA::ULong i" << i 
+            *os << be_nl << "for ( ::CORBA::ULong i" << i 
                 << " = 0; i" << i << " < "
                 << expr->ev ()->u.ulval;
 

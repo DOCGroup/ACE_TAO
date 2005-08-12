@@ -103,7 +103,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
   //  Set the sub state as generating code for the output operator.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
 
-  *os << "CORBA::Boolean operator<< (" << be_idt << be_idt_nl
+  *os << "::CORBA::Boolean operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &strm," << be_nl
       << "const " << node->name ()
       << " &_tao_sequence" << be_uidt_nl
@@ -111,7 +111,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       << "{" << be_idt_nl;
 
   // First encode the sequence length.
-  *os << "const CORBA::ULong _tao_seq_len = _tao_sequence.length ();"
+  *os << "const ::CORBA::ULong _tao_seq_len = _tao_sequence.length ();"
       << be_nl << be_nl;
   *os << "if (strm << _tao_seq_len)" << be_idt_nl
       << "{" << be_idt_nl;
@@ -143,7 +143,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
   //  Set the sub state as generating code for the input operator.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
 
-  *os << "CORBA::Boolean operator>> (" << be_idt << be_idt_nl
+  *os << "::CORBA::Boolean operator>> (" << be_idt << be_idt_nl
       << "TAO_InputCDR &";
 
   if (! bt->is_local ())
@@ -166,7 +166,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
   if (! bt->is_local ())
     {
       // First retrieve the length and adjust the sequence length accordingly.
-      *os << "CORBA::ULong _tao_seq_len;" << be_nl << be_nl;
+      *os << "::CORBA::ULong _tao_seq_len;" << be_nl << be_nl;
       *os << "if (strm >> _tao_seq_len)" << be_idt_nl
           << "{" << be_idt_nl;
 
@@ -392,8 +392,8 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (
                 << "strm.orb_core ()->resource_factory ()->" << be_nl
                 << "input_cdr_allocator_type_locked () == 1)" << be_nl
                 << "{" << be_idt_nl
-                << "TAO_Unbounded_Sequence<CORBA::Octet> *oseq = " << be_nl
-                << "  static_cast<TAO_Unbounded_Sequence<CORBA::Octet> *> ("
+                << "TAO_Unbounded_Sequence< ::CORBA::Octet> *oseq = " << be_nl
+                << "  static_cast<TAO_Unbounded_Sequence< ::CORBA::Octet> *> ("
                 << "&_tao_sequence);" << be_nl
                 << "oseq->replace (_tao_seq_len, strm.start ());"
                 << be_nl
@@ -410,8 +410,8 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (
         case TAO_CodeGen::TAO_CDR_OUTPUT:
           {
             *os << "{" << be_idt_nl
-                << "TAO_Unbounded_Sequence<CORBA::Octet> *_tao_octet_seq = " << be_nl
-                << "  static_cast<TAO_Unbounded_Sequence<CORBA::Octet> *> "
+                << "TAO_Unbounded_Sequence< ::CORBA::Octet> *_tao_octet_seq = " << be_nl
+                << "  static_cast<TAO_Unbounded_Sequence< ::CORBA::Octet> *> "
                 << "(const_cast<" << sequence->name () << " *> (&_tao_sequence));" << be_nl
                 << "if (_tao_octet_seq->mb ())" << be_idt_nl
                 << "return strm.write_octet_array_mb (_tao_octet_seq->mb ());"
@@ -597,7 +597,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
   be_visitor_sequence_base visitor (&ctx);
 
   // Initialize a boolean variable.
-  *os << "CORBA::Boolean _tao_marshal_flag = true;" << be_nl << be_nl;
+  *os << "::CORBA::Boolean _tao_marshal_flag = true;" << be_nl << be_nl;
 
   // We get here if the "type" of individual elements of the sequence is not a
   // primitive type. In this case, we are left with no other alternative but
@@ -616,7 +616,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
 
   if (expr->ev ()->et == AST_Expression::EV_ulong)
     {
-      *os << "for (CORBA::ULong i = 0; i < _tao_seq_len"
+      *os << "for ( ::CORBA::ULong i = 0; i < _tao_seq_len"
           << " && _tao_marshal_flag; "
           << "++i)" << be_idt_nl
           << "{" << be_idt_nl;
@@ -719,12 +719,12 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                 if (str->width () == (long) sizeof (char))
                   {
                     *os << "_tao_marshal_flag = (strm >> "
-                        << "CORBA::Any::to_string (_tao_sequence[i].out (), ";
+                        << "::CORBA::Any::to_string (_tao_sequence[i].out (), ";
                   }
                 else
                   {
                     *os << "_tao_marshal_flag = (strm >> "
-                        << "CORBA::Any::to_wstring (_tao_sequence[i].out (), ";
+                        << "::CORBA::Any::to_wstring (_tao_sequence[i].out (), ";
                   }
 
                 *os << str->max_size ()->ev ()->u.ulval << "));"
@@ -767,22 +767,22 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                   break;
                 case AST_PredefinedType::PT_char:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm >> CORBA::Any::to_char (_tao_sequence[i]));"
+                      << "(strm >> ::CORBA::Any::to_char (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 case AST_PredefinedType::PT_wchar:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm >> CORBA::Any::to_wchar (_tao_sequence[i]));"
+                      << "(strm >> ::CORBA::Any::to_wchar (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 case AST_PredefinedType::PT_boolean:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm >> CORBA::Any::to_boolean (_tao_sequence[i]));"
+                      << "(strm >> ::CORBA::Any::to_boolean (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 case AST_PredefinedType::PT_octet:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm >> CORBA::Any::to_octet (_tao_sequence[i]));"
+                      << "(strm >> ::CORBA::Any::to_octet (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 default:
@@ -884,22 +884,22 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                   break;
                 case AST_PredefinedType::PT_char:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm << CORBA::Any::from_char (_tao_sequence[i]));"
+                      << "(strm << ::CORBA::Any::from_char (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 case AST_PredefinedType::PT_wchar:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm << CORBA::Any::from_wchar (_tao_sequence[i]));"
+                      << "(strm << ::CORBA::Any::from_wchar (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 case AST_PredefinedType::PT_boolean:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm << CORBA::Any::from_boolean (_tao_sequence[i]));"
+                      << "(strm << ::CORBA::Any::from_boolean (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 case AST_PredefinedType::PT_octet:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm << CORBA::Any::from_octet (_tao_sequence[i]));"
+                      << "(strm << ::CORBA::Any::from_octet (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 default:

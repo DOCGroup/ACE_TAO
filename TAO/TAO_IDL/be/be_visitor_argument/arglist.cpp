@@ -220,7 +220,7 @@ int be_visitor_args_arglist::visit_predefined_type (be_predefined_type *node)
       // The only PT_pseudo that doesn't take a _ptr suffix.
       idl_bool is_tckind =
         (ACE_OS::strcmp (node->local_name ()->get_string (), "TCKind") == 0);
-
+        
       switch (this->direction ())
         {
         case AST_Argument::dir_IN:
@@ -304,7 +304,7 @@ int be_visitor_args_arglist::visit_string (be_string *node)
           *os << "char *&";
           break;
         case AST_Argument::dir_OUT:
-          *os << "CORBA::String_out";
+          *os << "::CORBA::String_out";
           break;
         }
     }
@@ -313,13 +313,13 @@ int be_visitor_args_arglist::visit_string (be_string *node)
       switch (this->direction ())
         {
         case AST_Argument::dir_IN:
-          *os << "const CORBA::WChar *";
+          *os << "const ::CORBA::WChar *";
           break;
         case AST_Argument::dir_INOUT:
-          *os << "CORBA::WChar *&";
+          *os << "::CORBA::WChar *&";
           break;
         case AST_Argument::dir_OUT:
-          *os << "CORBA::WString_out";
+          *os << "::CORBA::WString_out";
           break;
         }
     }

@@ -71,7 +71,7 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
 
   *os << be_nl << be_nl << "class " << be_global->stub_export_macro ()
       << " " << node->local_name ();
-  *os << be_idt_nl <<": public virtual CORBA::DefaultValueRefCountBase";
+  *os << be_idt_nl <<": public virtual ::CORBA::DefaultValueRefCountBase";
 
   *os << be_uidt << be_nl 
       << "{" << be_nl
@@ -80,10 +80,10 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
 
   // _downcast method
   *os << "static " << node->local_name () << "* "
-      << "_downcast (CORBA::ValueBase *);" << be_nl;
+      << "_downcast ( ::CORBA::ValueBase *);" << be_nl;
 
   // _copy_value method
-  *os << "CORBA::ValueBase * _copy_value (void);" << be_nl << be_nl;
+  *os << "::CORBA::ValueBase * _copy_value (void);" << be_nl << be_nl;
 
   // repository id methods
   *os << "virtual const char* "
@@ -93,7 +93,7 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
       << "_tao_obv_static_repository_id (void);" << be_nl << be_nl;
 
   // unmarshal method
-  *os << "static CORBA::Boolean _tao_unmarshal (" << be_idt << be_idt_nl
+  *os << "static ::CORBA::Boolean _tao_unmarshal (" << be_idt << be_idt_nl
       << "TAO_InputCDR &," << be_nl
       << node->local_name () << " *&" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
@@ -121,9 +121,9 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
   *os << "virtual ~" << node->local_name () << " (void);" << be_nl;
 
   // Methods for marshalling and unmarshalling the value
-  *os << "virtual CORBA::Boolean "
+  *os << "virtual ::CORBA::Boolean "
       << "_tao_marshal_v (TAO_OutputCDR &) const;" << be_nl;
-  *os << "virtual CORBA::Boolean "
+  *os << "virtual ::CORBA::Boolean "
       << "_tao_unmarshal_v (TAO_InputCDR &);" << be_nl;
 
   // Private unimplemented default assignment operator
@@ -193,10 +193,10 @@ be_visitor_valuebox_ch::visit_array (be_array *node)
 
   // Overloaded subscript operators
   *os << "const " << node->full_name ()
-      << "_slice & operator[] (CORBA::ULong index) const;" << be_nl;
+      << "_slice & operator[] ( ::CORBA::ULong index) const;" << be_nl;
   
   *os << node->full_name ()
-      << "_slice &  operator[] (CORBA::ULong index);" << be_nl << be_nl;
+      << "_slice &  operator[] ( ::CORBA::ULong index);" << be_nl << be_nl;
 
   // Explicit conversion functions
   *os << "const " << node->full_name () << "_slice * _boxed_in (void) const;" 
@@ -286,7 +286,7 @@ be_visitor_valuebox_ch::visit_sequence (be_sequence *node)
   if (node->unbounded ())
     {
       // Public constructor with one argument of type ULong
-      *os << vb_node->local_name () << " (CORBA::ULong max);" << be_nl;
+      *os << vb_node->local_name () << " ( ::CORBA::ULong max);" << be_nl;
     }
 
   // Public constructor for sequence with supplied buffer
@@ -294,10 +294,10 @@ be_visitor_valuebox_ch::visit_sequence (be_sequence *node)
 
   if (node->unbounded ())
     {
-      *os << be_nl << "CORBA::ULong max,";
+      *os << be_nl << "::CORBA::ULong max,";
     }
 
-  *os << be_nl << "CORBA::ULong length," << be_nl;
+  *os << be_nl << "::CORBA::ULong length," << be_nl;
 
   // Generate the base type for the buffer.
   be_visitor_context ctx (*this->ctx_);
@@ -312,7 +312,7 @@ be_visitor_valuebox_ch::visit_sequence (be_sequence *node)
     }
   
   *os << " * buf," << be_nl
-      << "CORBA::Boolean release = 0" << be_uidt_nl << ");" << be_uidt_nl;
+      << "::CORBA::Boolean release = 0" << be_uidt_nl << ");" << be_uidt_nl;
 
   // Public constructor with single argument of type const T&
   this->emit_constructor_one_arg (node, "", "const ", "&");
@@ -342,7 +342,7 @@ be_visitor_valuebox_ch::visit_sequence (be_sequence *node)
                        "base type visit failed\n"),
                        -1);
     }
-  *os << "& operator[] (CORBA::ULong index);" << be_nl;
+  *os << "& operator[] ( ::CORBA::ULong index);" << be_nl;
 
   // Generate base type for sequence then remainder of operator []
   *os << "const ";
@@ -354,14 +354,14 @@ be_visitor_valuebox_ch::visit_sequence (be_sequence *node)
                        "base type visit failed\n"),
                        -1);
     }
-  *os << "& operator[] (CORBA::ULong index) const;" << be_nl << be_nl;
+  *os << "& operator[] ( ::CORBA::ULong index) const;" << be_nl << be_nl;
 
 
-  *os << "CORBA::ULong maximum (void) const;" << be_nl;
+  *os << "::CORBA::ULong maximum (void) const;" << be_nl;
  
-  *os << "CORBA::ULong length (void) const;" << be_nl;
+  *os << "::CORBA::ULong length (void) const;" << be_nl;
  
-  *os << "void length (CORBA::ULong len);" << be_nl << be_nl;
+  *os << "void length ( ::CORBA::ULong len);" << be_nl << be_nl;
 
   // Member variable of underlying type;
   this->emit_boxed_member_var (node, "_var");
@@ -386,7 +386,7 @@ be_visitor_valuebox_ch::visit_string (be_string *node)
   else if (node->node_type () == AST_Decl::NT_wstring)
     {
       string_type = "WString";
-      char_type = "CORBA::WChar";
+      char_type = "::CORBA::WChar";
     }
   else
     {
@@ -410,7 +410,7 @@ be_visitor_valuebox_ch::visit_string (be_string *node)
   this->emit_constructor_one_arg (node, "", "const ", "");
 
   // Public constructor with one argument of type const CORBA::String_var&
-  *os << vb_node->local_name () << " (const CORBA::" << string_type
+  *os << vb_node->local_name () << " (const ::CORBA::" << string_type
       << "_var& var);" << be_nl;
 
   // Public copy constructor
@@ -426,7 +426,7 @@ be_visitor_valuebox_ch::visit_string (be_string *node)
 
   // Public assignment operator with one argument of type
   // const CORBA::String_var&
-  *os << vb_node->local_name () << "& operator= (const CORBA::"
+  *os << vb_node->local_name () << "& operator= (const ::CORBA::"
       << string_type << "_var& var);" << be_nl << be_nl;
 
   *os << "// accessor" << be_nl;
@@ -445,7 +445,7 @@ be_visitor_valuebox_ch::visit_string (be_string *node)
       << be_nl;
 
   // Modifier function with one argument of type const CORBA::String_var&
-  *os << "void" << " _value (const CORBA::" << string_type << "_var& var);"
+  *os << "void" << " _value (const ::CORBA::" << string_type << "_var& var);"
       << be_nl << be_nl;
 
   // Access to the boxed value for method signatures
@@ -453,16 +453,16 @@ be_visitor_valuebox_ch::visit_string (be_string *node)
 
   // Overloaded subscript operators
   *os << "// allows access and modification using a slot." << be_nl;
-  *os << char_type << " & operator[] (CORBA::ULong slot);" << be_nl << be_nl;
+  *os << char_type << " & operator[] ( ::CORBA::ULong slot);" << be_nl << be_nl;
 
   *os << "// allows only accessing thru a slot." << be_nl;
-  *os << char_type << " operator[] (CORBA::ULong slot) const;" << be_nl;
+  *os << char_type << " operator[] ( ::CORBA::ULong slot) const;" << be_nl;
 
 
   // Member variable of underlying type;
   *os << be_uidt_nl << "private:" << be_idt_nl;
 
-  *os << "CORBA::" << string_type << "_var" << " _pd_value;" << be_nl;
+  *os << "::CORBA::" << string_type << "_var" << " _pd_value;" << be_nl;
 
   return 0;
 }
@@ -704,12 +704,12 @@ be_visitor_valuebox_ch::emit_for_predef_enum(be_type *node,
 
   if (is_any)
     { // Public assignment operator with one argument of type const T&
-      this->emit_assignment (node, "", "const ", "&");
+      this->emit_assignment (node, "", "const ::", "&");
 
       this->emit_accessor_modifier (node);
 
       // Access to the boxed value for method signatures
-      this->emit_boxed_access (node, "", "const ", "&", "*");
+      this->emit_boxed_access (node, "", "const ::", "&", "*");
 
       // Member variable of underlying type;
       this->emit_boxed_member_var (node, "_var");

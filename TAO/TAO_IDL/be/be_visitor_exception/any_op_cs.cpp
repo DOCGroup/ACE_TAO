@@ -55,13 +55,13 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
           << "namespace TAO" << be_nl
           << "{" << be_idt_nl
           << "template<>" << be_nl
-          << "CORBA::Boolean" << be_nl
+          << "::CORBA::Boolean" << be_nl
           << "Any_Dual_Impl_T<" << node->name ()
           << ">::demarshal_value (" << be_idt << be_idt_nl
           << "TAO_InputCDR & cdr" << be_uidt_nl
           << ")" << be_uidt_nl
           << "{" << be_idt_nl
-          << "CORBA::String_var id;" << be_nl << be_nl
+          << "::CORBA::String_var id;" << be_nl << be_nl
           << "if (!(cdr >> id.out ()))" << be_idt_nl
           << "{" << be_idt_nl
           << "return false;" << be_uidt_nl
@@ -92,7 +92,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
           << "namespace TAO" << be_nl
           << "{" << be_idt_nl
           << "template<>" << be_nl
-          << "CORBA::Boolean" << be_nl
+          << "::CORBA::Boolean" << be_nl
           << "Any_Dual_Impl_T<" << node->name ()
           << ">::marshal_value (TAO_OutputCDR &)" << be_nl
           << "{" << be_idt_nl
@@ -101,7 +101,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
 
       *os << be_nl << be_nl
           << "template<>" << be_nl
-          << "CORBA::Boolean" << be_nl
+          << "::CORBA::Boolean" << be_nl
           << "Any_Dual_Impl_T<" << node->name ()
           << ">::demarshal_value (TAO_InputCDR &)" << be_nl
           << "{" << be_idt_nl
@@ -115,7 +115,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
   *os << be_nl << be_nl
       << "// Copying insertion." << be_nl
       << "void operator<<= (" << be_idt << be_idt_nl
-      << "CORBA::Any &_tao_any," << be_nl
+      << "::CORBA::Any &_tao_any," << be_nl
       << "const " << node->name () << " &_tao_elem" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
@@ -131,7 +131,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
   // Non-copying insertion operator."
   *os << "// Non-copying insertion." << be_nl
       << "void operator<<= (" << be_idt << be_idt_nl
-      << "CORBA::Any &_tao_any," << be_nl
+      << "::CORBA::Any &_tao_any," << be_nl
       << node->name () << " *_tao_elem" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
@@ -146,8 +146,8 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
 
   // Extraction to non-const pointer operator.
   *os << "// Extraction to non-const pointer (deprecated)." << be_nl
-      << "CORBA::Boolean operator>>= (" << be_idt << be_idt_nl
-      << "const CORBA::Any &_tao_any," << be_nl
+      << "::CORBA::Boolean operator>>= (" << be_idt << be_idt_nl
+      << "const ::CORBA::Any &_tao_any," << be_nl
       << node->name () << " *&_tao_elem" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
@@ -159,8 +159,8 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
 
   // Extraction to const pointer operator.
   *os << "// Extraction to const pointer." << be_nl
-      << "CORBA::Boolean operator>>= (" << be_idt << be_idt_nl
-      << "const CORBA::Any &_tao_any," << be_nl
+      << "::CORBA::Boolean operator>>= (" << be_idt << be_idt_nl
+      << "const ::CORBA::Any &_tao_any," << be_nl
       << "const " << node->name () << " *&_tao_elem" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl

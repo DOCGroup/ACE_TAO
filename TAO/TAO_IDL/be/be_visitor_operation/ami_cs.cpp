@@ -143,7 +143,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
                               0);
 
       int status = this->gen_raise_exception (&bpt,
-                                              "CORBA::MARSHAL",
+                                              "::CORBA::MARSHAL",
                                               "");
 
       if (status == -1)
@@ -160,7 +160,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
       *os << be_nl
           << "if (!this->is_evaluated ())" << be_idt_nl
           << "{" << be_idt_nl
-          << "ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);"
+          << "ACE_NESTED_CLASS ( ::CORBA, Object)::tao_object_initialize (this);"
           << be_uidt_nl
           << "}" << be_uidt_nl << be_nl;
 

@@ -116,7 +116,7 @@ be_visitor_component_ch::visit_component (be_component *node)
       << node->local_name () << "_ptr obj);" << be_nl << be_nl
       << "static " << node->local_name () << "_ptr "
       << "_narrow (" << be_idt << be_idt_nl
-      << "CORBA::Object_ptr obj" << be_nl
+      << "::CORBA::Object_ptr obj" << be_nl
       << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
@@ -165,7 +165,7 @@ be_visitor_component_ch::visit_component (be_component *node)
     }
 
   *os << be_nl << be_nl
-      << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
+      << "virtual ::CORBA::Boolean _is_a (" << be_idt << be_idt_nl
       << "const char *type_id" << be_nl
       << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
       << ");" << be_uidt;
@@ -175,7 +175,7 @@ be_visitor_component_ch::visit_component (be_component *node)
       << "virtual const char* _interface_repository_id (void) const;";
 
   // The virtual marshal method, to prevent marshal of local iterfaces.
-  *os << be_nl << "virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);";
+  *os << be_nl << "virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);";
 
   // Add the Proxy Broker member variable.
   *os << be_uidt_nl << be_nl
@@ -210,7 +210,7 @@ be_visitor_component_ch::visit_component (be_component *node)
   *os << be_nl << be_nl
       << node->local_name ()
       << " (" << be_idt << be_idt_nl << "TAO_Stub *objref, " << be_nl
-      << "CORBA::Boolean _tao_collocated = 0," << be_nl
+      << "::CORBA::Boolean _tao_collocated = 0," << be_nl
       << "TAO_Abstract_ServantBase *servant = 0," << be_nl
       << "TAO_ORB_Core *oc = 0" << be_uidt_nl
       << ");" << be_uidt;

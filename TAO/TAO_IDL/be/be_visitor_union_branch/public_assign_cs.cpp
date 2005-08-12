@@ -457,7 +457,7 @@ be_visitor_union_branch_public_assign_cs::emit_valuetype_common (be_type *node)
   // So the template will work with the macro.
   *os << "typedef "
       << bt->name () << "_var OBJECT_FIELD;" << be_nl;
-  *os << "CORBA::add_ref (u.u_." << ub->local_name ()
+  *os << "::CORBA::add_ref (u.u_." << ub->local_name ()
       << "_->ptr ());" << be_nl;
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
@@ -522,14 +522,14 @@ be_visitor_union_branch_public_assign_cs::visit_predefined_type (
     {
     case AST_PredefinedType::PT_object:
       // So the template will work with the macro.
-      *os << "typedef CORBA::Object_var OBJECT_FIELD;" << be_nl;
+      *os << "typedef ::CORBA::Object_var OBJECT_FIELD;" << be_nl;
 
       if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
         {
           // We are generating the copy constructor.
           *os << "ACE_NEW (" << be_idt << be_idt_nl
               << "this->u_." << ub->local_name () << "_," << be_nl
-              << "OBJECT_FIELD (CORBA::Object"
+              << "OBJECT_FIELD ( ::CORBA::Object"
               << "::_duplicate (u.u_." << ub->local_name ()
               << "_->ptr ()))" << be_uidt_nl
               << ");" << be_uidt << be_uidt_nl;
@@ -539,7 +539,7 @@ be_visitor_union_branch_public_assign_cs::visit_predefined_type (
           // We are generating the assignment operator.
           *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
               << "this->u_." << ub->local_name () << "_," << be_nl
-              << "OBJECT_FIELD (CORBA::Object"
+              << "OBJECT_FIELD ( ::CORBA::Object"
               << "::_duplicate (u.u_." << ub->local_name ()
               << "_->ptr ()))," << be_nl
               << "*this" << be_uidt_nl
@@ -688,11 +688,11 @@ be_visitor_union_branch_public_assign_cs::visit_string (be_string *node)
 
   if (node->width () == (long) sizeof (char))
     {
-      *os << "CORBA::string_dup (u.u_.";
+      *os << "::CORBA::string_dup (u.u_.";
     }
   else
     {
-      *os << "CORBA::wstring_dup (u.u_.";
+      *os << "::CORBA::wstring_dup (u.u_.";
     }
 
   *os << ub->local_name () << "_);" << be_uidt_nl;

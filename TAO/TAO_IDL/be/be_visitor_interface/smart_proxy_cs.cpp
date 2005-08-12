@@ -329,7 +329,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
 
       *os << "{" << be_idt_nl
           << "// Obtain the real proxy stored in <base_proxy_>" << be_nl
-          << "if (CORBA::is_nil (this->proxy_.in ()))" << be_idt_nl
+          << "if ( ::CORBA::is_nil (this->proxy_.in ()))" << be_idt_nl
           << "{" << be_idt_nl
           << " // Verify whether factory is one-shot, if so disable"<<be_nl
           << " // factory temporarily or not else remove."<<be_nl

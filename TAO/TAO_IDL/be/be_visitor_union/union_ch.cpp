@@ -182,7 +182,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
   *os << be_nl << be_nl
       << "// TAO extension - frees any allocated storage." << be_nl;
   *os << "void _reset (" << bt->nested_type_name (node)
-      << ", CORBA::Boolean /* finalize */);";
+      << ", ::CORBA::Boolean /* finalize */);";
 
   *os << be_uidt_nl << "};";
 

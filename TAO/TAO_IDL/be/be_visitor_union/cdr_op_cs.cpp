@@ -69,7 +69,7 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
   //  Set the sub state as generating code for the output operator.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);
 
-  *os << "CORBA::Boolean operator<< (" << be_idt << be_idt_nl
+  *os << "::CORBA::Boolean operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &strm," << be_nl
       << "const " << node->name () << " &_tao_union" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -78,17 +78,17 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
   switch (node->udisc_type ())
     {
       case AST_Expression::EV_bool:
-        *os << "CORBA::Any::from_boolean tmp (_tao_union._d ());" << be_nl
+        *os << "::CORBA::Any::from_boolean tmp (_tao_union._d ());" << be_nl
             << "if ( !(strm << tmp) )" << be_idt_nl;
 
         break;
       case AST_Expression::EV_char:
-        *os << "CORBA::Any::from_char tmp (_tao_union._d ());" << be_nl
+        *os << "::CORBA::Any::from_char tmp (_tao_union._d ());" << be_nl
             << "if ( !(strm << tmp) )" << be_idt_nl;
 
         break;
       case AST_Expression::EV_wchar:
-        *os << "CORBA::Any::from_wchar tmp (_tao_union._d ());" << be_nl
+        *os << "::CORBA::Any::from_wchar tmp (_tao_union._d ());" << be_nl
             << "if ( !(strm << tmp) )" << be_idt_nl;
 
         break;
@@ -101,7 +101,7 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
   *os << "{" << be_idt_nl
       << "return false;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "CORBA::Boolean result = true;" << be_nl << be_nl
+      << "::CORBA::Boolean result = true;" << be_nl << be_nl
       << "switch (_tao_union._d ())" << be_nl
       << "{" << be_idt;
 
@@ -132,7 +132,7 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
 
   // Set the substate as generating code for the input operator.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
-  *os << "CORBA::Boolean operator>> (" << be_idt << be_idt_nl
+  *os << "::CORBA::Boolean operator>> (" << be_idt << be_idt_nl
       << "TAO_InputCDR &strm," << be_nl
       << node->name () << " &_tao_union" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -148,17 +148,17 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
   switch (node->udisc_type ())
     {
       case AST_Expression::EV_bool:
-        *os << "CORBA::Any::to_boolean tmp (_tao_discriminant);" << be_nl
+        *os << "::CORBA::Any::to_boolean tmp (_tao_discriminant);" << be_nl
             << "if ( !(strm >> tmp) )" << be_idt_nl;
 
         break;
       case AST_Expression::EV_char:
-        *os << "CORBA::Any::to_char tmp (_tao_discriminant);" << be_nl
+        *os << "::CORBA::Any::to_char tmp (_tao_discriminant);" << be_nl
             << "if ( !(strm >> tmp) )" << be_idt_nl;
 
         break;
       case AST_Expression::EV_wchar:
-        *os << "CORBA::Any::to_wchar tmp (_tao_discriminant);" << be_nl
+        *os << "::CORBA::Any::to_wchar tmp (_tao_discriminant);" << be_nl
             << "if ( !(strm >> tmp) )" << be_idt_nl;
 
         break;
@@ -171,7 +171,7 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
   *os << "{" << be_idt_nl
       << "return false;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "CORBA::Boolean result = true;" << be_nl << be_nl
+      << "::CORBA::Boolean result = true;" << be_nl << be_nl
       << "switch (_tao_discriminant)" << be_nl
       << "{" << be_idt;
 

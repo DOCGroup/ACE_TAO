@@ -52,16 +52,16 @@ be_visitor_structure_any_op_ch::visit_structure (be_structure *node)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << be_global->stub_export_macro () << " void"
-      << " operator<<= (CORBA::Any &, const " << node->name ()
+      << " operator<<= ( ::CORBA::Any &, const " << node->name ()
       << " &); // copying version" << be_nl;
   *os << be_global->stub_export_macro () << " void"
-      << " operator<<= (CORBA::Any &, " << node->name ()
+      << " operator<<= ( ::CORBA::Any &, " << node->name ()
       << "*); // noncopying version" << be_nl;
-  *os << be_global->stub_export_macro () << " CORBA::Boolean"
-      << " operator>>= (const CORBA::Any &, "
+  *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
+      << " operator>>= (const ::CORBA::Any &, "
       << node->name () << " *&); // deprecated\n";
-  *os << be_global->stub_export_macro () << " CORBA::Boolean"
-      << " operator>>= (const CORBA::Any &, const "
+  *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
+      << " operator>>= (const ::CORBA::Any &, const "
       << node->name () << " *&);";
 
 

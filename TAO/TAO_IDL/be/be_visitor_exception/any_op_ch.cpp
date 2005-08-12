@@ -53,16 +53,16 @@ be_visitor_exception_any_op_ch::visit_exception (be_exception *node)
 
   *os << be_nl << be_nl
       << be_global->stub_export_macro () << " void"
-      << " operator<<= (CORBA::Any &, const " << node->name ()
+      << " operator<<= ( ::CORBA::Any &, const " << node->name ()
       << " &); // copying version" << be_nl;
   *os << be_global->stub_export_macro () << " void"
-      << " operator<<= (CORBA::Any &, " << node->name ()
+      << " operator<<= ( ::CORBA::Any &, " << node->name ()
       << "*); // noncopying version" << be_nl;
-  *os << be_global->stub_export_macro () << " CORBA::Boolean"
-      << " operator>>= (const CORBA::Any &, "
+  *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
+      << " operator>>= (const ::CORBA::Any &, "
       << node->name () << " *&); // deprecated\n";
-  *os << be_global->stub_export_macro () << " CORBA::Boolean"
-      << " operator>>= (const CORBA::Any &, const "
+  *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
+      << " operator>>= (const ::CORBA::Any &, const "
       << node->name () << " *&);";
 
 

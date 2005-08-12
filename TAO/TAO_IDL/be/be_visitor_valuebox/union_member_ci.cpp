@@ -313,19 +313,19 @@ be_visitor_valuebox_union_member_ci::visit_predefined_type (be_predefined_type *
   {
     case AST_PredefinedType::PT_pseudo:
     case AST_PredefinedType::PT_object:
-      this->emit_member_set (vb_node, field, bt, "", "_ptr");
-      this->emit_member_get (vb_node, field, bt, "", "_ptr", "const");
+      this->emit_member_set (vb_node, field, bt, " ::", "_ptr");
+      this->emit_member_get (vb_node, field, bt, " ::", "_ptr", "const");
       break;
     case AST_PredefinedType::PT_any:
-      this->emit_member_set (vb_node, field, bt, "const ", " &");
-      this->emit_member_get (vb_node, field, bt, "const ", " &", "const");
-      this->emit_member_get (vb_node, field, bt, "", " &", "");
+      this->emit_member_set (vb_node, field, bt, "const ::", " &");
+      this->emit_member_get (vb_node, field, bt, "const ::", " &", "const");
+      this->emit_member_get (vb_node, field, bt, "::", " &", "");
       break;
     case AST_PredefinedType::PT_void:
       break;
     default:
-      this->emit_member_set (vb_node, field, bt, "", "");
-      this->emit_member_get (vb_node, field, bt, "", "", "const");
+      this->emit_member_set (vb_node, field, bt, " ::", "");
+      this->emit_member_get (vb_node, field, bt, " ::", "", "const");
       break;
   }
 
@@ -418,7 +418,7 @@ be_visitor_valuebox_union_member_ci::visit_string (be_string *node)
 
   *os << "ACE_INLINE void" << be_nl
       << vb_node->name () << "::" << field->local_name ()
-      << " (const CORBA::" << string_type << "_var & val)"
+      << " (const ::CORBA::" << string_type << "_var & val)"
       << be_nl << "{" << be_idt_nl
       << "this->_pd_value->" << field->local_name ()
       << " (val);" << be_uidt_nl

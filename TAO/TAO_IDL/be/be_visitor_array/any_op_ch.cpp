@@ -52,10 +52,10 @@ be_visitor_array_any_op_ch::visit_array (be_array *node)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << be_global->stub_export_macro () << " void"
-      << " operator<<= (CORBA::Any &, const " << node->name ()
+      << " operator<<= ( ::CORBA::Any &, const " << node->name ()
       << "_forany &);" << be_nl;
-  *os << be_global->stub_export_macro () << " CORBA::Boolean"
-      << " operator>>= (const CORBA::Any &, "
+  *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
+      << " operator>>= (const ::CORBA::Any &, "
       << node->name () << "_forany &);";
 
   node->cli_hdr_any_op_gen (1);

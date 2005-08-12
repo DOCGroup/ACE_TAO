@@ -59,7 +59,7 @@ be_visitor_structure_serializer_op_ch::visit_structure (be_structure *node)
   if (0 != (info =  idl_global->is_dcps_type(node->name())))
     {
       *os << be_global->stub_export_macro () 
-          << " CORBA::Boolean _dcps_has_key(const " 
+          << " ::CORBA::Boolean _dcps_has_key(const " 
           << node->name() << "& val);" << be_nl;
 
       *os << "// This structure supports use of std::map with a key" << be_nl
@@ -107,17 +107,17 @@ be_visitor_structure_serializer_op_ch::visit_structure (be_structure *node)
       << node->name() << "& _tao_aggregate);" << be_nl;
   //- _tao_is_bounded_size(type) method 
   *os << be_global->stub_export_macro () 
-      << " CORBA::Boolean _tao_is_bounded_size (const " 
+      << " ::CORBA::Boolean _tao_is_bounded_size (const " 
       << node->name() << "& _tao_aggregate);" << be_nl;
   //- _dcps_find_size(type) method 
   *os << be_global->stub_export_macro () 
       << " size_t _dcps_find_size (const " 
       << node->name() << "& _tao_aggregate);" << be_nl;
 
-  *os << be_global->stub_export_macro () << " CORBA::Boolean"
+  *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator<< (TAO::DCPS::Serializer &, const " << node->name ()
       << " &);" << be_nl;
-  *os << be_global->stub_export_macro () << " CORBA::Boolean"
+  *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator>> (TAO::DCPS::Serializer &, "
       << node->name () << " &);";
 

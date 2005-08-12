@@ -143,7 +143,7 @@ be_visitor_array_serializer_op_ch::visit_array (be_array *node)
   this->gen_arg_ref(node);
 
   *os << be_global->stub_export_macro () 
-      << " CORBA::Boolean _tao_is_bounded_size (" 
+      << " ::CORBA::Boolean _tao_is_bounded_size (" 
       << "const ";
   this->gen_arg_ref(node);
 
@@ -153,11 +153,11 @@ be_visitor_array_serializer_op_ch::visit_array (be_array *node)
   this->gen_arg_ref(node);
 
   // Generate the Serializer << and >> operator declarations.
-  *os << be_global->stub_export_macro () << " CORBA::Boolean"
+  *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator<< (TAO::DCPS::Serializer &, const ";
   this->gen_arg_ref(node);
 
-  *os << be_global->stub_export_macro () << " CORBA::Boolean"
+  *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator>> (TAO::DCPS::Serializer &, ";
   this->gen_arg_ref(node);
 

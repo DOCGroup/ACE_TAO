@@ -67,10 +67,10 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
   *os << "TAO::Collocation_Strategy" << be_nl
       <<node->full_strategized_proxy_broker_name () << "::"
       << "get_strategy (" << be_idt << be_idt_nl
-      << "CORBA::Object_ptr obj" << be_nl
+      << "::CORBA::Object_ptr obj" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_nl
-      << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
+      << "ACE_THROW_SPEC (( ::CORBA::SystemException))" << be_uidt_nl
       << "{" << be_idt_nl
       << "TAO::Collocation_Strategy strategy =" << be_idt_nl
       << "TAO_ORB_Core::collocation_strategy (obj ACE_ENV_ARG_PARAMETER);"
@@ -83,8 +83,8 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
   *os << "void" << be_nl
       << node->full_strategized_proxy_broker_name () << "::"
       << "dispatch (" << be_idt << be_idt_nl
-      << "CORBA::Object_ptr obj," << be_nl
-      << "CORBA::Object_out forward_obj," << be_nl
+      << "::CORBA::Object_ptr obj," << be_nl
+      << "::CORBA::Object_out forward_obj," << be_nl
       << "TAO::Argument ** args," << be_nl
       << "int num_args," << be_nl
       << "const char * op," << be_nl
@@ -92,7 +92,7 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
       << "TAO::Collocation_Strategy strategy" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_nl
-      << "ACE_THROW_SPEC ((CORBA::Exception))" << be_uidt_nl
+      << "ACE_THROW_SPEC (( ::CORBA::Exception))" << be_uidt_nl
       << "{" << be_idt_nl
       << "TAO::Direct_Collocation_Upcall_Wrapper collocation_upcall_wrapper;" << be_nl
       << "collocation_upcall_wrapper.upcall (" << be_idt_nl

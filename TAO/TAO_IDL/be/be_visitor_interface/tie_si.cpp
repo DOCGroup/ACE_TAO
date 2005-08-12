@@ -112,7 +112,7 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
 
   *os << "template <class T> ACE_INLINE" << be_nl
       << fulltiename << "<T>::" << localtiename
-      << " (T *tp, CORBA::Boolean release)" << be_nl
+      << " (T *tp, ::CORBA::Boolean release)" << be_nl
       << "\t: ptr_ (tp)," << be_nl
       << "\t  poa_ (PortableServer::POA::_nil ())," << be_nl
       << "\t  rel_ (release)" << be_nl
@@ -120,7 +120,7 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
 
   *os << "template <class T> ACE_INLINE" << be_nl
       << fulltiename << "<T>::" << localtiename
-      << " (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)"
+      << " (T *tp, PortableServer::POA_ptr poa, ::CORBA::Boolean release)"
       << be_nl
       << "\t: ptr_ (tp)," << be_nl
       << "\t  poa_ (PortableServer::POA::_duplicate (poa))," << be_nl
@@ -155,7 +155,7 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
 
   *os << "template <class T> ACE_INLINE void" << be_nl
       << fulltiename << "<T>::_tied_object (T *obj, "
-      << "CORBA::Boolean release)" << be_nl
+      << "::CORBA::Boolean release)" << be_nl
       << "{" << be_idt_nl
       << "if (this->rel_)" << be_idt_nl
       << "{" << be_idt_nl
@@ -165,14 +165,14 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
       << "this->rel_ = release;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  *os << "template <class T> ACE_INLINE CORBA::Boolean" << be_nl
+  *os << "template <class T> ACE_INLINE ::CORBA::Boolean" << be_nl
       << fulltiename << "<T>::_is_owner (void)" << be_nl
       << "{" << be_idt_nl
       << "return this->rel_;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   *os << "template <class T> ACE_INLINE void" << be_nl
-      << fulltiename << "<T>::_is_owner (CORBA::Boolean b)" << be_nl
+      << fulltiename << "<T>::_is_owner ( ::CORBA::Boolean b)" << be_nl
       << "{" << be_idt_nl
       << "this->rel_ = b;" << be_uidt_nl
       << "}" << be_nl << be_nl;
@@ -182,7 +182,7 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
       << fulltiename
       << "<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)" << be_nl
       << "{" << be_idt_nl
-      << "if (!CORBA::is_nil (this->poa_.in ()))" << be_idt_nl
+      << "if (! ::CORBA::is_nil (this->poa_.in ()))" << be_idt_nl
       << "{" << be_idt_nl
       << "return PortableServer::POA::_duplicate (this->poa_.in ());" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl

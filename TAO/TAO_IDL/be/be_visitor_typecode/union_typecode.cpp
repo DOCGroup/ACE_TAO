@@ -74,10 +74,10 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
     return -1;
 
   static char const StringType[]      = "char const *";
-  static char const TypeCodeType[]    = "CORBA::TypeCode_ptr const *";
+  static char const TypeCodeType[]    = "::CORBA::TypeCode_ptr const *";
   static char const MemberArrayType[] =
     "TAO::TypeCode::Case<char const *, "
-    "CORBA::TypeCode_ptr const *> const * const *";
+    "::CORBA::TypeCode_ptr const *> const * const *";
 
   // Generate the TypeCode instantiation.
   os << "static ";
@@ -169,7 +169,7 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
 
       os << "static TAO::TypeCode::Case_T<"
          << discriminant_type->full_name () << ", "
-         << "char const *, CORBA::TypeCode_ptr const *> const "
+         << "char const *, ::CORBA::TypeCode_ptr const *> const "
          << fields_name.c_str () << "_" << i <<" (";
 
       if (branch->label ()->label_kind () == AST_UnionLabel::UL_label)
@@ -198,7 +198,7 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
 
   // Now generate the TAO::TypeCode::Case array.
   os << be_nl
-     << "static TAO::TypeCode::Case<char const *, CORBA::TypeCode_ptr const *> const * const "
+     << "static TAO::TypeCode::Case<char const *, ::CORBA::TypeCode_ptr const *> const * const "
      << fields_name.c_str ()
      << "[] =" << be_idt_nl
      << "{" << be_idt_nl;

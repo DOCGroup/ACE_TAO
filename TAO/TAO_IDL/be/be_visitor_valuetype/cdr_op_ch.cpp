@@ -61,11 +61,11 @@ be_visitor_valuetype_cdr_op_ch::visit_valuetype (be_valuetype *node)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << be_global->stub_export_macro () << " "
-      << "CORBA::Boolean operator<< (TAO_OutputCDR &, const "
+      << "::CORBA::Boolean operator<< (TAO_OutputCDR &, const "
       << node->full_name () << " *);" << be_nl;
 
   *os << be_global->stub_export_macro () << " "
-      << "CORBA::Boolean operator>> (TAO_InputCDR &, "
+      << "::CORBA::Boolean operator>> (TAO_InputCDR &, "
       << node->full_name () << " *&);";
 
   // Set the substate as generating code for the types defined in our scope.

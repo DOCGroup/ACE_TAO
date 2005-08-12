@@ -77,7 +77,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       *os << be_nl << be_nl
           << node->name () << "::" << node->local_name () << " ("
           << be_idt << be_idt_nl
-          << "CORBA::ULong max" << be_uidt_nl
+          << "::CORBA::ULong max" << be_uidt_nl
           << ")" << be_nl
           << ": " << be_idt;
 
@@ -104,10 +104,10 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
   if (node->unbounded ())
     {
       // Unbounded seq takes this extra parameter.
-      *os << "CORBA::ULong max," << be_nl;
+      *os << "::CORBA::ULong max," << be_nl;
     }
 
-  *os << "CORBA::ULong length," << be_nl;
+  *os << "::CORBA::ULong length," << be_nl;
 
   // generate the base type for the buffer
   be_visitor_context ctx (*this->ctx_);
@@ -123,7 +123,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
     }
 
   *os << " * buffer," << be_nl
-      << "CORBA::Boolean release" << be_uidt_nl
+      << "::CORBA::Boolean release" << be_uidt_nl
       << ")" << be_uidt_nl
       << "  : " << be_idt << be_idt;
 

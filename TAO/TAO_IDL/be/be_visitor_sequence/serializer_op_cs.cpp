@@ -103,7 +103,7 @@ be_visitor_sequence_serializer_op_cs::visit_sequence (be_sequence *node)
   // --- _tao_is_bounded_size ---
   this->ctx_->sub_state (TAO_CodeGen::TAO_IS_BOUNDED_SIZE);
 
-  *os << "CORBA::Boolean _tao_is_bounded_size (" << be_idt << be_idt_nl
+  *os << "::CORBA::Boolean _tao_is_bounded_size (" << be_idt << be_idt_nl
       << "const " << node->name ()
       << " &_tao_sequence" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -191,7 +191,7 @@ be_visitor_sequence_serializer_op_cs::visit_sequence (be_sequence *node)
   //  Set the sub state as generating code for the output operator.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
 
-  *os << "CORBA::Boolean operator<< (" << be_idt << be_idt_nl
+  *os << "::CORBA::Boolean operator<< (" << be_idt << be_idt_nl
       << "TAO::DCPS::Serializer &strm," << be_nl
       << "const " << node->name ()
       << " &_tao_sequence" << be_uidt_nl
@@ -199,7 +199,7 @@ be_visitor_sequence_serializer_op_cs::visit_sequence (be_sequence *node)
       << "{" << be_idt_nl;
 
   // First encode the sequence length.
-  *os << "const CORBA::ULong _tao_seq_len = _tao_sequence.length ();"
+  *os << "const ::CORBA::ULong _tao_seq_len = _tao_sequence.length ();"
       << be_nl << be_nl;
   *os << "if (strm << _tao_seq_len)" << be_idt_nl
       << "{" << be_idt_nl;
@@ -233,7 +233,7 @@ be_visitor_sequence_serializer_op_cs::visit_sequence (be_sequence *node)
   //  Set the sub state as generating code for the input operator.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
 
-  *os << "CORBA::Boolean operator>> (" << be_idt << be_idt_nl
+  *os << "::CORBA::Boolean operator>> (" << be_idt << be_idt_nl
       << "TAO::DCPS::Serializer &";
 
   if (! bt->is_local ())
@@ -256,7 +256,7 @@ be_visitor_sequence_serializer_op_cs::visit_sequence (be_sequence *node)
   if (! bt->is_local ())
     {
       // First retrieve the length and adjust the sequence length accordingly.
-      *os << "CORBA::ULong _tao_seq_len;" << be_nl << be_nl;
+      *os << "::CORBA::ULong _tao_seq_len;" << be_nl << be_nl;
       *os << "if (strm >> _tao_seq_len)" << be_idt_nl
           << "{" << be_idt_nl;
 
@@ -933,7 +933,7 @@ switch (this->ctx_->sub_state ())
       {
         *os << "//iterate over the sequence to find the current size" << be_nl
             << "size_t the_length = _dcps_max_marshaled_size_ulong ();" << be_nl
-            << "for (CORBA::ULong i = 0; i < _tao_sequence.length(); "
+            << "for ( ::CORBA::ULong i = 0; i < _tao_sequence.length(); "
             << "++i)" << be_idt_nl
             << "{" << be_idt_nl;
 
@@ -1011,12 +1011,12 @@ switch (this->ctx_->sub_state ())
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       {
     // Initialize a boolean variable.
-  *os << "CORBA::Boolean _tao_marshal_flag = 1;" << be_nl << be_nl;
+  *os << "::CORBA::Boolean _tao_marshal_flag = 1;" << be_nl << be_nl;
 
 
   if (expr->ev ()->et == AST_Expression::EV_ulong)
     {
-      *os << "for (CORBA::ULong i = 0; i < _tao_seq_len"
+      *os << "for ( ::CORBA::ULong i = 0; i < _tao_seq_len"
           << " && _tao_marshal_flag; "
           << "++i)" << be_idt_nl
           << "{" << be_idt_nl;
@@ -1110,12 +1110,12 @@ switch (this->ctx_->sub_state ())
                 if (str->width () == (long) sizeof (char))
                   {
                     *os << "_tao_marshal_flag = (strm >> "
-                        << "CORBA::Any::to_string (_tao_sequence[i].out (), ";
+                        << "::CORBA::Any::to_string (_tao_sequence[i].out (), ";
                   }
                 else
                   {
                     *os << "_tao_marshal_flag = (strm >> "
-                        << "CORBA::Any::to_wstring (_tao_sequence[i].out (), ";
+                        << "::CORBA::Any::to_wstring (_tao_sequence[i].out (), ";
                   }
 
                 *os << str->max_size ()->ev ()->u.ulval << "));"
@@ -1157,22 +1157,22 @@ switch (this->ctx_->sub_state ())
                   break;
                 case AST_PredefinedType::PT_char:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm >> CORBA::Any::to_char (_tao_sequence[i]));"
+                      << "(strm >> ::CORBA::Any::to_char (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 case AST_PredefinedType::PT_wchar:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm >> CORBA::Any::to_wchar (_tao_sequence[i]));"
+                      << "(strm >> ::CORBA::Any::to_wchar (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 case AST_PredefinedType::PT_boolean:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm >> CORBA::Any::to_boolean (_tao_sequence[i]));"
+                      << "(strm >> ::CORBA::Any::to_boolean (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 case AST_PredefinedType::PT_octet:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm >> CORBA::Any::to_octet (_tao_sequence[i]));"
+                      << "(strm >> ::CORBA::Any::to_octet (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 default:
@@ -1271,22 +1271,22 @@ switch (this->ctx_->sub_state ())
                   break;
                 case AST_PredefinedType::PT_char:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm << CORBA::Any::from_char (_tao_sequence[i]));"
+                      << "(strm << ::CORBA::Any::from_char (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 case AST_PredefinedType::PT_wchar:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm << CORBA::Any::from_wchar (_tao_sequence[i]));"
+                      << "(strm << ::CORBA::Any::from_wchar (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 case AST_PredefinedType::PT_boolean:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm << CORBA::Any::from_boolean (_tao_sequence[i]));"
+                      << "(strm << ::CORBA::Any::from_boolean (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 case AST_PredefinedType::PT_octet:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm << CORBA::Any::from_octet (_tao_sequence[i]));"
+                      << "(strm << ::CORBA::Any::from_octet (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 default:

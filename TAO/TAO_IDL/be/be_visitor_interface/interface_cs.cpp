@@ -65,7 +65,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "// Traits specializations for " << node->name () << ".";
 
       *os << be_nl << be_nl
-//           << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
           << node->name () << "_ptr" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::duplicate ("
           << be_idt << be_idt_nl
@@ -76,18 +75,16 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}";
 
       *os << be_nl << be_nl
-//           << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
           << "void" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::release ("
           << be_idt << be_idt_nl
           << node->name () << "_ptr p" << be_uidt_nl
           << ")" << be_uidt_nl
           << "{" << be_idt_nl
-          << "CORBA::release (p);" << be_uidt_nl
+          << "::CORBA::release (p);" << be_uidt_nl
           << "}";
 
       *os << be_nl << be_nl
-//           << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
           << node->name () << "_ptr" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::nil (void)"
           << be_nl
@@ -96,8 +93,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}";
 
       *os << be_nl << be_nl
-//           << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION" << be_nl
-          << "CORBA::Boolean" << be_nl
+          << "::CORBA::Boolean" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::marshal ("
           << be_idt << be_idt_nl
           << node->name () << "_ptr p," << be_nl
@@ -112,7 +108,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
             }
           else
             {
-              *os << "CORBA::Object::marshal (p, cdr);";
+              *os << "::CORBA::Object::marshal (p, cdr);";
             }
 
       *os << be_uidt_nl
@@ -123,22 +119,22 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     {
       *os << be_nl << be_nl
           << "void" << be_nl
-          << "CORBA::release ("
+          << "::CORBA::release ("
           << node->name ()
           << "_ptr p)" << be_nl
           << "{" << be_idt_nl
-          << "CORBA::AbstractBase_ptr abs = p;" << be_nl
-          << "CORBA::release (abs);" << be_uidt_nl
+          << "::CORBA::AbstractBase_ptr abs = p;" << be_nl
+          << "::CORBA::release (abs);" << be_uidt_nl
           << "}";
 
       *os << be_nl << be_nl
-          << "CORBA::Boolean" << be_nl
-          << "CORBA::is_nil ("
+          << "::CORBA::Boolean" << be_nl
+          << "::CORBA::is_nil ("
           << node->name ()
           << "_ptr p)" << be_nl
           << "{" << be_idt_nl
-          << "CORBA::Object_ptr obj = p;" << be_nl
-          << "return CORBA::is_nil (obj);" << be_uidt_nl
+          << "::CORBA::Object_ptr obj = p;" << be_nl
+          << "return ::CORBA::is_nil (obj);" << be_uidt_nl
           << "}";
     }
 
@@ -153,7 +149,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << node->base_proxy_broker_name ()
           << "_Factory_function_pointer) ("
           << be_idt << be_idt_nl
-          << "CORBA::Object_ptr obj" << be_uidt_nl
+          << "::CORBA::Object_ptr obj" << be_uidt_nl
           << ") = 0;" << be_uidt;
     }
 
@@ -275,7 +271,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << node->local_name () << " *_tao_tmp_pointer =" << be_idt_nl
           << "static_cast<"
           << node->local_name () << " *> (_tao_void_pointer);" << be_uidt_nl
-          << "CORBA::release (_tao_tmp_pointer);" << be_uidt_nl
+          << "::CORBA::release (_tao_tmp_pointer);" << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
 
@@ -284,7 +280,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << "void" << be_nl
           << node->name () << "::_add_ref (void)" << be_nl
           << "{" << be_idt_nl
-          << "this->ACE_NESTED_CLASS (CORBA, Object)::_add_ref ();"
+          << "this->ACE_NESTED_CLASS ( ::CORBA, Object)::_add_ref ();"
           << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
@@ -319,7 +315,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << bt->local_name ()
       << "_ptr obj)" << be_nl
       << "{" << be_idt_nl
-      << "if (! CORBA::is_nil (obj))" << be_idt_nl
+      << "if (! ::CORBA::is_nil (obj))" << be_idt_nl
       << "{" << be_idt_nl
       << "obj->_add_ref ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
@@ -332,7 +328,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << bt->local_name ()
       << "_ptr obj)" << be_nl
       << "{" << be_idt_nl
-      << "CORBA::release (obj);" << be_uidt_nl
+      << "::CORBA::release (obj);" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
 
@@ -346,7 +342,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << be_idt << be_idt_nl
           << "ACE_ENV_SINGLE_ARG_DECL_NOT_USED" << be_uidt_nl
           << ")" << be_uidt_nl
-          << "ACE_THROW_SPEC ((CORBA::SystemException," << be_nl
+          << "ACE_THROW_SPEC (( ::CORBA::SystemException," << be_nl
           << "                 ::Components::CCMException))" << be_uidt_nl
           << "{" << be_nl
           << "}" << be_nl << be_nl
@@ -355,59 +351,13 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << be_idt << be_idt_nl
           << "ACE_ENV_SINGLE_ARG_DECL_NOT_USED" << be_uidt_nl
           << ")" << be_uidt_nl
-          << "ACE_THROW_SPEC ((CORBA::SystemException," << be_nl
+          << "ACE_THROW_SPEC (( ::CORBA::SystemException," << be_nl
           << "                 ::Components::CCMException))" << be_uidt_nl
           << "{" << be_nl
           << "}" << be_nl << be_nl;
     }
-/*
-  if (node->n_inherits () > 0)
-    {
-      const char *id = node->inherits ()[0]->repoID ();
-      const char *ecb_id = "IDL:omg.org/Components/EventConsumerBase:1.0";
-      
-      if (ACE_OS::strcmp (id, ecb_id) == 0)
-        {
-          *os << "// Check that enables substitution of base class events."
-              << be_nl
-              << "CORBA::Boolean" << be_nl
-              << node->full_name () << "::tao_is_substitutable ("
-              << be_idt << be_idt_nl
-              << "const char *repo_id" << be_nl
-              << "ACE_ENV_ARG_DECL" << be_uidt_nl
-              << ")" << be_nl
-              << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
-              << "{" << be_idt_nl
-              << "if (repo_id == 0)" << be_idt_nl
-              << "{" << be_idt_nl
-              << "ACE_THROW_RETURN (CORBA::BAD_PARAM (), FALSE);"
-              << be_uidt_nl
-              << "}" << be_uidt_nl << be_nl
-              << "CORBA::ValueFactory_var f =" << be_idt_nl
-              << "this->_stubobj ()->servant_orb_var ()->lookup_value_factory ("
-              << be_idt << be_idt_nl
-              << "repo_id" << be_nl
-              << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
-              << ");" << be_uidt << be_uidt_nl
-              << "ACE_CHECK_RETURN (FALSE);" << be_nl << be_nl
-              << "if (f.ptr () == 0)" << be_idt_nl
-              << "{" << be_idt_nl
-              << "return FALSE;" << be_uidt_nl
-              << "}" << be_uidt_nl << be_nl
-              << "CORBA::ValueBase_var v = f->create_for_unmarshal ();"
-              << be_nl;
-          
-          // To get the event name, chop "Consumer" from node name.
-          size_t len = ACE_OS::strlen (node->full_name ());    
-          ACE_CString event_name (node->full_name (), len - 8);
-           
-          *os << "return dynamic_cast<" << event_name.c_str ()
-              << " const*> (v.in ()) != 0;" << be_uidt_nl
-              << "}" << be_nl << be_nl;
-        }
-    }
-*/
-  *os << "CORBA::Boolean" << be_nl
+
+  *os << "::CORBA::Boolean" << be_nl
       << node->full_name () << "::_is_a (" << be_idt << be_idt_nl
       << "const char *value" << be_nl;
 
@@ -478,7 +428,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     }
   else
     {
-      *os << "return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a ("
+      *os << "return this->ACE_NESTED_CLASS ( ::CORBA, Object)::_is_a ("
           << be_idt << be_idt_nl
           << "value" << be_nl
           << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
@@ -497,7 +447,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "}";
 
   *os << be_nl << be_nl
-      << "CORBA::Boolean" << be_nl;
+      << "::CORBA::Boolean" << be_nl;
 
   if (node->is_local ())
     {
@@ -567,11 +517,11 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
 
   if (node->is_abstract ())
     {
-      *os << "CORBA::AbstractBase_ptr";
+      *os << "::CORBA::AbstractBase_ptr";
     }
   else
     {
-      *os << "CORBA::Object_ptr";
+      *os << "::CORBA::Object_ptr";
     }
 
   *os << " _tao_objref" << be_nl

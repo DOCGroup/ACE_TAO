@@ -70,6 +70,8 @@ be_visitor_sequence_buffer_type::visit_predefined_type (be_predefined_type *node
 {
   TAO_OutStream *os = this->ctx_->stream ();
   AST_PredefinedType::PredefinedType pt = node->pt ();
+  
+  *os << "::";
 
   if (pt == AST_PredefinedType::PT_pseudo
       || pt == AST_PredefinedType::PT_object)
@@ -214,7 +216,7 @@ be_visitor_sequence_buffer_type::visit_string (be_string *node)
     }
   else
     {
-      *os << "CORBA::WChar *";
+      *os << "::CORBA::WChar *";
     }
 
   return 0;

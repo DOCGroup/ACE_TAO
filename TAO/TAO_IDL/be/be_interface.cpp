@@ -511,7 +511,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
           << this->local_name () << " ("
           << be_idt << be_idt_nl
           << "TAO_Stub *objref," << be_nl
-          << "CORBA::Boolean _tao_collocated," << be_nl
+          << "::CORBA::Boolean _tao_collocated," << be_nl
           << "TAO_Abstract_ServantBase *servant," << be_nl
           << "TAO_ORB_Core *oc" << be_uidt_nl
           << ")" << be_nl
@@ -519,7 +519,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
 
       if (this->has_mixed_parentage_)
         {
-          *os << "ACE_NESTED_CLASS (CORBA, AbstractBase) ("
+          *os << "ACE_NESTED_CLASS (::CORBA, AbstractBase) ("
               << be_idt << be_idt << be_idt_nl
               << "objref," << be_nl
               << "_tao_collocated," << be_nl
@@ -813,7 +813,7 @@ be_interface::gen_operation_table (const char *flat_name,
         this->skel_count_++;
 
         *os << "};" << be_nl << be_nl;
-        *os << "static const CORBA::Long _tao_" << flat_name
+        *os << "static const ::CORBA::Long _tao_" << flat_name
             << "_optable_size = sizeof (ACE_Hash_Map_Entry<const char *,"
             << " TAO::Operation_Skeletons>) * (" << (3 * this->skel_count_)
             << ");" << be_nl;
@@ -2331,7 +2331,7 @@ be_interface::gen_throw_spec (UTL_ExceptList *list,
     }
 
   *os << be_nl << throw_spec_open;
-  *os << be_idt_nl << "CORBA::SystemException";
+  *os << be_idt_nl << "::CORBA::SystemException";
 
   // Initialize an iterator to iterate thru the exception list.
   for (UTL_ExceptlistActiveIterator ei (list);

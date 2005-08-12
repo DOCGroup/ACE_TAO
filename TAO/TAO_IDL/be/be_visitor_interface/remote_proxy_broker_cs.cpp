@@ -55,7 +55,7 @@ be_visitor_interface_remote_proxy_broker_cs::visit_interface (
       << node->base_proxy_broker_name ()
             << "_Factory_function_pointer) ("
       << be_idt << be_idt_nl
-      << "CORBA::Object_ptr obj" << be_uidt_nl
+      << "::CORBA::Object_ptr obj" << be_uidt_nl
       << ") = 0;" << be_uidt_nl << be_nl;
 
   *os << "// Factory Member function Implementation." << be_nl

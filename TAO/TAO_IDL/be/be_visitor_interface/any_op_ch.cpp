@@ -75,13 +75,13 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
 
       // emit  nested variation of any operators
       *os << be_global->stub_export_macro () << " void"
-          << " operator<<= (CORBA::Any &, " << node->local_name ()
+          << " operator<<= ( ::CORBA::Any &, " << node->local_name ()
           << "_ptr); // copying" << be_nl;
       *os << be_global->stub_export_macro () << " void"
-          << " operator<<= (CORBA::Any &, " << node->local_name ()
+          << " operator<<= ( ::CORBA::Any &, " << node->local_name ()
           << "_ptr *); // non-copying" << be_nl;
-      *os << be_global->stub_export_macro () << " CORBA::Boolean"
-          << " operator>>= (const CORBA::Any &, "
+      *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
+          << " operator>>= (const ::CORBA::Any &, "
           << node->local_name () << "_ptr &);";
 
       be_util::gen_nested_namespace_end (os, module);
@@ -91,13 +91,13 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
     }
 
   *os << be_global->stub_export_macro () << " void"
-      << " operator<<= (CORBA::Any &, " << node->name ()
+      << " operator<<= ( ::CORBA::Any &, " << node->name ()
       << "_ptr); // copying" << be_nl;
   *os << be_global->stub_export_macro () << " void"
-      << " operator<<= (CORBA::Any &, " << node->name ()
+      << " operator<<= ( ::CORBA::Any &, " << node->name ()
       << "_ptr *); // non-copying" << be_nl;
-  *os << be_global->stub_export_macro () << " CORBA::Boolean"
-      << " operator>>= (const CORBA::Any &, "
+  *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
+      << " operator>>= (const ::CORBA::Any &, "
       << node->name () << "_ptr &);";
 
   if (module != 0)

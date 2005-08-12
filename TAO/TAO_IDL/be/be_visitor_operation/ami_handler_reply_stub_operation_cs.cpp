@@ -129,7 +129,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
   // Generate the argument list.
   *os << "TAO_InputCDR &_tao_in, " << be_nl
       << "Messaging::ReplyHandler_ptr _tao_reply_handler," << be_nl
-      << "CORBA::ULong reply_status";
+      << "::CORBA::ULong reply_status";
 
   *os << be_nl
       << "ACE_ENV_ARG_DECL";
@@ -243,7 +243,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
   *os << " ()" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
-  *os << "CORBA::OctetSeq "
+  *os << "::CORBA::OctetSeq "
       << "_tao_marshaled_exception (" << be_idt << be_idt_nl
       << "cdr->length ()," << be_nl
       << "cdr->length ()," << be_nl
@@ -400,11 +400,11 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::gen_marshal_and_invoke
 
       if (be_global->use_raw_throw ())
         {
-          *os << "throw CORBA::MARSHAL ();" << be_uidt_nl << be_nl;
+          *os << "throw ::CORBA::MARSHAL ();" << be_uidt_nl << be_nl;
         }
       else
         {
-          *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl << be_nl;
+          *os << "ACE_THROW ( ::CORBA::MARSHAL ());" << be_uidt_nl << be_nl;
         }
     }
 

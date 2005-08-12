@@ -564,7 +564,7 @@ be_visitor_union_branch_public_ci::emit_valuetype_common  (be_type *node)
     }
 
   *os << ";" << be_nl
-      << "CORBA::add_ref (val);" << be_nl
+      << "::CORBA::add_ref (val);" << be_nl
       << "typedef "
       << bt->nested_type_name (bu, "_var")
       << " OBJECT_FIELD;" << be_nl
@@ -631,20 +631,15 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
   if (pt == AST_PredefinedType::PT_pseudo
       || pt == AST_PredefinedType::PT_object)
     {
-      *os << "const "
-          << bt->name ()
-          << "_ptr";
+      *os << "const ::" << bt->name () << "_ptr";
     }
   else if (pt == AST_PredefinedType::PT_value)
     {
-      *os << bt->name ()
-          << " *";
+      *os << "::" << bt->name () << " *";
     }
   else if (pt == AST_PredefinedType::PT_any)
     {
-      *os << "const "
-          << bt->name ()
-          << " &";
+      *os << "const ::" << bt->name () << " &";
     }
   else
     {
@@ -681,21 +676,21 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
   switch (pt)
     {
       case AST_PredefinedType::PT_object:
-        *os << "typedef CORBA::Object_var OBJECT_FIELD;" << be_nl
+        *os << "typedef ::CORBA::Object_var OBJECT_FIELD;" << be_nl
             << "ACE_NEW (" << be_idt << be_idt_nl
             << "this->u_." << ub->local_name () << "_," << be_nl
-            << "OBJECT_FIELD (CORBA::Object::_duplicate (val))"
+            << "OBJECT_FIELD ( ::CORBA::Object::_duplicate (val))"
             << be_uidt_nl
             << ");" << be_uidt << be_uidt_nl;
 
         break;
       case AST_PredefinedType::PT_pseudo:
-        *os << "this->u_." << ub->local_name () << "_ = "
+        *os << "this->u_." << ub->local_name () << "_ = ::"
             << bt->name () << "::_duplicate (val);" << be_uidt_nl;
 
         break;
       case AST_PredefinedType::PT_value:
-        *os << "CORBA::add_ref (val);" << be_nl
+        *os << "::CORBA::add_ref (val);" << be_nl
             << "this->u_." << ub->local_name ()
             << "_ = val;" << be_uidt_nl;
 
@@ -704,7 +699,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
         *os << "ACE_NEW (" << be_idt << be_idt_nl
             << "this->u_." << ub->local_name ()
             << "_," << be_nl
-            << bt->name () << " (val)" << be_uidt_nl
+            << "::" << bt->name () << " (val)" << be_uidt_nl
             << ");" << be_uidt << be_uidt_nl;
 
         break;
@@ -726,7 +721,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
       // Get method.
       *os << "// Retrieve the member." << be_nl
           << "ACE_INLINE" << be_nl
-          << bt->name () << "_ptr" << be_nl
+          << "::" << bt->name () << "_ptr" << be_nl
           << bu->name () << "::" << ub->local_name ()
           << " (void) const" << be_nl
           << "{" << be_idt_nl;
@@ -739,7 +734,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
       // Get method.
       *os << "// Retrieve the member." << be_nl
           << "ACE_INLINE" << be_nl
-          << bt->name () << "_ptr" << be_nl
+          << "::" << bt->name () << "_ptr" << be_nl
           << bu->name () << "::" << ub->local_name ()
           << " (void) const" << be_nl
           << "{" << be_idt_nl;
@@ -752,7 +747,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
       // Get method.
       *os << "// Retrieve the member." << be_nl
           << "ACE_INLINE" << be_nl
-          << bt->name () << " *" << be_nl
+          << "::" << bt->name () << " *" << be_nl
           << bu->name () << "::" << ub->local_name ()
           << " (void) const" << be_nl
           << "{" << be_idt_nl;
@@ -765,7 +760,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
       // Get method with read-only access.
       *os << "// Retrieve the member." << be_nl
           << "ACE_INLINE" << be_nl
-          << "const " << bt->name () << " &" << be_nl
+          << "const ::" << bt->name () << " &" << be_nl
           << bu->name () << "::" << ub->local_name ()
           << " (void) const" << be_nl
           << "{" << be_idt_nl
@@ -775,7 +770,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
       // Get method with read/write access
       *os << "// Retrieve the member." << be_nl
           << "ACE_INLINE" << be_nl
-          << bt->name () << " &" << be_nl
+          << "::" << bt->name () << " &" << be_nl
           << bu->name () << "::" << ub->local_name ()
           << " (void)" << be_nl
           << "{" << be_idt_nl
@@ -788,7 +783,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
       // Get method.
       *os << "// Retrieve the member." << be_nl
           << "ACE_INLINE" << be_nl
-          << bt->name () << be_nl
+          << "::" << bt->name () << be_nl
           << bu->name () << "::" << ub->local_name ()
           << " (void) const" << be_nl
           << "{" << be_idt_nl
@@ -924,7 +919,7 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
   else
     {
       *os << bu->name () << "::" << ub->local_name ()
-          << " (CORBA::WChar *val)";
+          << " ( ::CORBA::WChar *val)";
     }
 
   *os << be_nl
@@ -968,7 +963,7 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
     }
   else
     {
-      *os << " (const CORBA::WChar *val)" << be_nl << "{" << be_idt_nl;
+      *os << " (const ::CORBA::WChar *val)" << be_nl << "{" << be_idt_nl;
     }
 
   *os << "// Set the discriminant value." << be_nl
@@ -1000,12 +995,12 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
 
   if (node->width () == (long) sizeof (char))
     {
-      *os << "CORBA::string_dup (val);" << be_uidt_nl
+      *os << "::CORBA::string_dup (val);" << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
   else
     {
-      *os << "CORBA::wstring_dup (val);" << be_uidt_nl
+      *os << "::CORBA::wstring_dup (val);" << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
 
@@ -1017,11 +1012,11 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
 
   if (node->width () == (long) sizeof (char))
     {
-      *os << " (const CORBA::String_var &val)" << be_nl;
+      *os << " (const ::CORBA::String_var &val)" << be_nl;
     }
   else
     {
-      *os << " (const CORBA::WString_var &val)" << be_nl;
+      *os << " (const ::CORBA::WString_var &val)" << be_nl;
     }
 
   *os << "{" << be_idt_nl
@@ -1053,11 +1048,11 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
 
   if (node->width () == (long) sizeof (char))
     {
-      *os << "CORBA::String_var " << ub->local_name ();
+      *os << "::CORBA::String_var " << ub->local_name ();
     }
   else
     {
-      *os << "CORBA::WString_var " << ub->local_name ();
+      *os << "::CORBA::WString_var " << ub->local_name ();
     }
 
   *os << "_var = val;" << be_nl
@@ -1074,7 +1069,7 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
     }
   else
     {
-      *os << "const CORBA::WChar *" << be_nl;
+      *os << "const ::CORBA::WChar *" << be_nl;
     }
 
   *os << bu->name () << "::" << ub->local_name ()

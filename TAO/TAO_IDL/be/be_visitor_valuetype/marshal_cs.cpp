@@ -43,7 +43,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
   *os << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  *os << "CORBA::Boolean" << be_nl;
+  *os << "::CORBA::Boolean" << be_nl;
 
   this->class_name (node, os);
 
@@ -103,7 +103,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
   // Set the substate as generating code for the input operator.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_INPUT);
 
-  *os << "CORBA::Boolean" << be_nl;
+  *os << "::CORBA::Boolean" << be_nl;
 
   this->class_name (node, os);
 
