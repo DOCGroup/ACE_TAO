@@ -5,7 +5,7 @@
 #include "Any_Handler.h"
 #include "DataType_Handler.h"
 #include "Basic_Deployment_Data.hpp"
-#include "tao/Any.h"
+#include "tao/AnyTypeCode/Any.h"
 
 
 namespace CIAO
@@ -32,9 +32,9 @@ namespace CIAO
 
       if (value.short_p ())
         {
-          toconfig <<= 
+          toconfig <<=
             CORBA::Short (static_cast < ::XMLSchema::short_ const & > (value.short_ ()));
-          
+
           //  static_cast<CORBA::Short> (value.short_ ());
         }
       else if (value.ushort_p ())
@@ -56,12 +56,12 @@ namespace CIAO
         }
       else if (value.boolean_p ())
         {
-          toconfig <<= 
+          toconfig <<=
 	    CORBA::Any::from_boolean (static_cast < ::XMLSchema::boolean const& > (value.boolean ()));
         }
       else if (value.double_p ())
         {
-          toconfig <<= 
+          toconfig <<=
 #ifdef __BORLANDC__
             CORBA::Double (static_cast < double &> (value.double_ ()));
 #else
@@ -70,7 +70,7 @@ namespace CIAO
         }
       else if (value.float_p ())
         {
-          toconfig <<= 
+          toconfig <<=
 #ifdef __BORLANDC__
             CORBA::Float (static_cast < float & > (value.float_ ()));
 #else
