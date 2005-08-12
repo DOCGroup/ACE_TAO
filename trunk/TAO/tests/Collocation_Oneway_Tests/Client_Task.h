@@ -19,10 +19,10 @@ class Client_Task : public ACE_Task_Base
 public:
 
 enum ClientSyncModeEnum {
-   NONE,
-   TRANSPORT,
-   SERVER,
-   TARGET
+   MODE_NONE,
+   MODE_TRANSPORT,
+   MODE_SERVER,
+   MODE_TARGET
 };
 
   /// Constructor
