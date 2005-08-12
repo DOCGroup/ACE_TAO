@@ -30,7 +30,7 @@ if (PerlACE::waitforfile_timed ($iorfile,
 $result = $CO->WaitKill (10);
 
 if ($result != 0) {
-    print STDERR "ERROR: server returned $result\n";
+    print STDERR "ERROR: collocated returned $result\n";
     $result = 1;
 }
 

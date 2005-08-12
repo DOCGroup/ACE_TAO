@@ -35,7 +35,7 @@ $CL->Spawn (60);
 $client = $CL->WaitKill (480);
 
 if ($client != 0) {
-    print STDERR "ERROR: client returned $client1\n";
+    print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 

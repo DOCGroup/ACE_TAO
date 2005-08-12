@@ -154,15 +154,30 @@ Client_Task::svc (void)
         }
       }
 
-      ACE_ASSERT (is_equal_tree (tc.in (), tc_copy.in ()));
+      if (!is_equal_tree (tc.in (), tc_copy.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "ERROR: tc != tc_copy\n"),
+                            1);
+        }
 
       TreeController_var tc_result =
         test->reflect (tc.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       
-      // The following two assertions will fail until bug 1390 is fixed.
-      ACE_ASSERT (!is_equal_tree (tc.in (), tc_result.in ()));
-      ACE_ASSERT (is_equal_tree (tc.in (), tc_copy.in ()));
+      // The following two ifs will fail until bug 1390 is fixed.
+      if (is_equal_tree (tc.in (), tc_result.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "ERROR: tc == tc_result\n"),
+                            1);
+        }
+      if (!is_equal_tree (tc.in (), tc_copy.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "ERROR: tc != tc_copy\n"),
+                            1);
+        }
 
       test->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;

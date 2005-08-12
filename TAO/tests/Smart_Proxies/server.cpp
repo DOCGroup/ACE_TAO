@@ -63,10 +63,10 @@ Test_i :: method (CORBA::Short boo
 }
 
 void
-Test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+Test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown ();
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }
 
 static const char *ior_output_file = 0;
@@ -103,20 +103,21 @@ main (int argc, char *argv[])
 
   ACE_TRY
     {
-      if (parse_args (argc, argv) != 0)
-        return 1;
-
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             ""
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      if (parse_args (argc, argv) != 0)
+        return 1;
+
       Test_i servant (orb.in ());
       // Obtain RootPOA.
       CORBA::Object_var object =
         orb->resolve_initial_references ("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (object.in ()
@@ -167,12 +168,15 @@ main (int argc, char *argv[])
                          1
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Exception in setting up server");
-      ACE_ASSERT (0);
+      return 1;
     }
   ACE_ENDTRY;
   return 0;
