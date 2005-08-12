@@ -3,6 +3,7 @@
 #include "ace/Get_Opt.h"
 #include "test_i.h"
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
+#include "tao/AnyTypeCode/Any.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/Transport_Cache_Manager.h"
@@ -131,17 +132,17 @@ main (int argc, char *argv[])
                                           &callback_impl
                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       CORBA::Object_var callback_object =
         child_poa->id_to_reference (id.in ()
                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       Callback_var callback =
         Callback::_narrow (callback_object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
-      
+
+
       CORBA::String_var ior =
         orb->object_to_string (callback.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -155,9 +156,9 @@ main (int argc, char *argv[])
 
       // This is a non-portable, but the only currently available way of
       // determining the number of currently open connections.
-      int pre_call_connections = 
+      int pre_call_connections =
         orb->orb_core ()->lane_resources ().transport_cache ().current_size ();
-      
+
       // A  method to kickstart callbacks from the server
       CORBA::Long r =
         server->test_method (1 ACE_ENV_ARG_PARAMETER);
@@ -175,9 +176,9 @@ main (int argc, char *argv[])
 
       // This is a non-portable, but the only currently available way of
       // determining the number of currently open connections.
-      int cur_connections = 
+      int cur_connections =
         orb->orb_core()->lane_resources().transport_cache().current_size ();
-      
+
       if (cur_connections > pre_call_connections)
         {
           ACE_ERROR ((LM_ERROR,
