@@ -47,19 +47,19 @@ Client_Task::svc (void)
 
       Messaging::SyncScope selectedScope = Messaging::SYNC_NONE; // default
 
-      if(syncMode_ == Client_Task::TRANSPORT) {
+      if(syncMode_ == Client_Task::MODE_TRANSPORT) {
           selectedScope = Messaging::SYNC_WITH_TRANSPORT;
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - SYNC_WITH_TRANSPORT collocated oneway test\n"));
       }
-      else if(syncMode_ == Client_Task::SERVER) {
+      else if(syncMode_ == Client_Task::MODE_SERVER) {
           selectedScope = Messaging::SYNC_WITH_SERVER;
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - SYNC_WITH_SERVER collocated oneway test\n"));
       }
-      else if(syncMode_ == Client_Task::TARGET) {
+      else if(syncMode_ == Client_Task::MODE_TARGET) {
           selectedScope = Messaging::SYNC_WITH_TARGET;
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - SYNC_WITH_TARGET collocated oneway test\n"));
       }
-      else if(syncMode_ == Client_Task::NONE) {
+      else if(syncMode_ == Client_Task::MODE_NONE) {
           selectedScope = Messaging::SYNC_NONE;
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - SYNC_NONE collocated oneway test\n"));
       }

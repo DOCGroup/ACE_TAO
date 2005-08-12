@@ -10,7 +10,7 @@ const char *output = "test.ior";
 const char *input = "file://test.ior";
 const char *mode = "SYNC_NONE";
 
-Client_Task::ClientSyncModeEnum syncMode = Client_Task::NONE;
+Client_Task::ClientSyncModeEnum syncMode = Client_Task::MODE_NONE;
 
 // static int named_orbs = 0;
 ACE_CString server_orb;
@@ -41,16 +41,16 @@ parse_args (int argc, char *argv[])
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) - mode set to <%C> for collocated oneway test\n", mode));
         if(mode) {
              if(!strcmp("none", mode)) {
-                syncMode = Client_Task::NONE;
+                syncMode = Client_Task::MODE_NONE;
              }
              else if (!strcmp("transport", mode)) {
-                syncMode = Client_Task::TRANSPORT;
+                syncMode = Client_Task::MODE_TRANSPORT;
              }
              else if (!strcmp("server", mode)) {
-                syncMode = Client_Task::SERVER;
+                syncMode = Client_Task::MODE_SERVER;
              }
              else if (!strcmp("target", mode)) {
-                syncMode = Client_Task::TARGET;
+                syncMode = Client_Task::MODE_TARGET;
              }
           }
           else {
