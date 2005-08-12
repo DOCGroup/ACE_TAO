@@ -1,3 +1,12 @@
+Fri Aug 12 12:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI/ORBInitializer_Registry_Impl.cpp:
+        * tao/PI/PICurrent.{h,cpp,inl}:
+          Made PICurrent on the client side working again. When PICurrent is
+          requested and used, then we allocate a key in the orb tss resources
+          and create the PICurrent_Impl at that moment. The server side of
+          PICurrent is now the next todo.
+
 Fri Aug 12 09:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB.cpp:
