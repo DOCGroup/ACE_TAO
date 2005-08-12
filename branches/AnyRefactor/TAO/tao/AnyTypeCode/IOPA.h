@@ -40,6 +40,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/AnyTypeCode/IOP_IORA.h"
+
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
