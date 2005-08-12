@@ -4,6 +4,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "test_i.h"
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
+#include "tao/AnyTypeCode/Any.h"
 
 ACE_RCSID(BiDirectional, server, "$Id$")
 

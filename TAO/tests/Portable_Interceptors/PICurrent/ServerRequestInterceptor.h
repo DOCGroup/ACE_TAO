@@ -23,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PI_Server/PI_Server.h"
+#include "tao/PI/PI.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
 

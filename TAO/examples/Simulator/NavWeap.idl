@@ -14,7 +14,7 @@
 //     Chris Gill <cdgill@cs.wustl.edu>
 // =========================================================================================================
 
-#include "tao/TimeBase.idl"
+#include "tao/TimeBase.pidl"
 
 struct Navigation {
 	long position_latitude;

@@ -3,6 +3,7 @@
 
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
+#include "tao/AnyTypeCode/Any.h"
 
 #if !defined (__ACE_INLINE__)
 #include "FT_ServerPolicy_i.inl"
