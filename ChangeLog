@@ -1,3 +1,8 @@
+Fri Aug 12 12:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/JAWS2/JAWS/Parse_Headers.{h,cpp}:
+          Changed STATUS_CODE enum to fix compile errors with VxWorks
+
 Thu Aug 11 16:04:30 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * ace/OS_NS_stdio.inl (ACE_HAS_WCHAR vsnprintf): This is an
