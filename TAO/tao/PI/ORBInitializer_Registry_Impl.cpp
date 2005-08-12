@@ -1,7 +1,8 @@
 #include "ORBInitializer_Registry_Impl.h"
 #include "ORBInitInfo.h"
+#include "PICurrent.h"
 
-#include "tao/ORB.h"
+#include "tao/ORB_Core.h"
 #include "tao/ORB_Constants.h"
 #include "tao/SystemException.h"
 
@@ -123,7 +124,7 @@ TAO::ORBInitializer_Registry::post_init (
   TAO_ORB_Core *orb_core,
   int argc,
   char *argv[],
-  PortableInterceptor::SlotId &slotid
+  PortableInterceptor::SlotId slotid
   ACE_ENV_ARG_DECL)
 {
   if (pre_init_count > 0)
@@ -155,7 +156,14 @@ TAO::ORBInitializer_Registry::post_init (
           ACE_CHECK;
         }
 
-      slotid = orb_init_info_->slot_count ();
+      CORBA::Object_ptr picurrent_ptr = orb_core->pi_current ();
+
+      if (!CORBA::is_nil (picurrent_ptr))
+        {
+          TAO::PICurrent *pi = dynamic_cast <TAO::PICurrent*> (picurrent_ptr);
+          if (pi)
+            pi->initialize (orb_init_info_->slot_count ());
+        }
 
       // Invalidate the ORBInitInfo instance to prevent future
       // modifications to the ORB.  This behavior complies with the

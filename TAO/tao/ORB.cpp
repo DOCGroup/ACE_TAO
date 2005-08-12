@@ -30,11 +30,6 @@ ACE_RCSID (tao,
 #include "SystemException.h"
 #include "default_environment.h"
 
-#if TAO_HAS_INTERCEPTORS == 1
-//# include "PICurrent_Loader.h"  /* @@ This should go away! */
-//# include "PICurrent.h"  /* @@ This should go away! */
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
 #if !defined (__ACE_INLINE__)
 # include "ORB.i"
 #endif /* ! __ACE_INLINE__ */
@@ -1618,14 +1613,6 @@ CORBA::ORB_init (int &argc,
                                           slotid
                                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::ORB::_nil ());
-
-#if TAO_HAS_INTERCEPTORS == 1
-      //TAO::PICurrent *pi = oc->pi_current ();
-// use PI adapter
-
-    //  if (pi != 0)
-  //      pi->initialize (slotid);
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
     }
 
   if (TAO_debug_level > 2)
