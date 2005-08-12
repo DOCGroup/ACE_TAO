@@ -8,11 +8,6 @@
 
 #include "TestS.h"
 
-#if defined (_MSC_VER)
-# pragma warning(push)
-# pragma warning (disable:4250)
-#endif /* _MSC_VER */
-
 /// Implement the Test::McastHello interface
 class McastHello
   : public virtual POA_Test::McastHello
@@ -51,10 +46,6 @@ private:
   /// Track the success/failure of the large request.
   CORBA::Boolean large_request_status_;
 };
-
-#if defined(_MSC_VER)
-# pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* MCASTHELLO_H */
