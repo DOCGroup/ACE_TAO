@@ -35,10 +35,17 @@ using std::endl;
 class ErrorDetector : public std::streambuf
 {
 public:
-  ErrorDetector (std::streambuf* prev)
+  ErrorDetector (std::ostream& os)
     : error_ (false),
-      prev_ (*prev)
+      os_ (os),
+      prev_ (*os_.rdbuf ())
   {
+    os_.rdbuf (this);
+  }
+
+  ~ErrorDetector ()
+  {
+    os_.rdbuf (&prev_);
   }
 
   virtual int_type
@@ -62,6 +69,7 @@ public:
 
 private:
   bool error_;
+  std::ostream& os_;
   std::streambuf& prev_;
 };
 
@@ -196,8 +204,7 @@ main (int argc, char* argv[])
     }
 
     Diagnostic::Stream dout;
-    ErrorDetector detector (cerr.rdbuf ());
-    cerr.rdbuf (&detector);
+    ErrorDetector detector (cerr);
 
     LexicalAnalyzer lexer (pp);
 

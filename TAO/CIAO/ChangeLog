@@ -1,3 +1,9 @@
+Mon Aug 15 00:01:01 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* CIDLC/cidlc.cpp: Made ErrorHandler auto-detach itself
+	from the stream when it is destroyed. This fixes the
+	segmentation fault on Solaris in libstdc++ termination code.
+
 Wed Aug 10 09:39:41 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/Config_Handlers/Basic_Deployment_Data.cpp
@@ -25,8 +31,8 @@ Wed Aug 10 09:39:41 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	Regenerated with the latest CVS-head version of XSC. These support
 	a couple improvements that will aid in optimizing the config
-	handlers. 
-	
+	handlers.
+
 Tue Aug  9 11:55:13 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
 
         * docs/imgs/component-basic.png
