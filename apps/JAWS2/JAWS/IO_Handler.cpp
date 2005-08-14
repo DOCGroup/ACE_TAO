@@ -467,7 +467,7 @@ JAWS_Asynch_Handler::handle_transmit_file (const
   result.header_and_trailer ()->header ()->release ();
   result.header_and_trailer ()->trailer ()->release ();
   delete result.header_and_trailer ();
-  delete (ACE_Filecache_Handle *) result.act ();
+  delete (JAWS_Cached_FILE *) result.act ();
 }
 
 void

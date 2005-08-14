@@ -1,3 +1,17 @@
+Sun Aug 14 11:27:54 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* apps/JAWS2/JAWS/IO_Handler.cpp (handle_transmit_file): Fixed
+	  a bug where 
+	  
+	    delete (ACE_Filecache_Handle *) result.act ();  
+  
+          should have been
+  
+	    delete (JAWS_Cached_FILE *) result.act ();
+  
+          Thanks to Anand Rathi <anandprathi@yahoo.co.in> for reporting
+ 	  this.
+
 Fri Aug 12 12:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/JAWS2/JAWS/Parse_Headers.{h,cpp}:
