@@ -168,14 +168,9 @@ public:
   virtual int close (DATA *);
 
 private:
-
   JAWS_Cache_Object *object_;
   Cache_Manager *manager_;
-
-
 };
-
-
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "JAWS/Cache_Manager_T.cpp"
