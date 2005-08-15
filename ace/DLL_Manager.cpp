@@ -342,11 +342,18 @@ ACE_DLL_Handle::get_dll_names (const ACE_TCHAR *dll_name,
 
   // 3. Build the combinations to try for this platform.
   // Try these combinations:
-  //   - name as originally given
   //   - name with decorator and platform's suffix appended (if not supplied)
   //   - name with platform's suffix appended (if not supplied)
   //   - name with platform's dll prefix (if it has one) and suffix
   //   - name with platform's dll prefix, decorator, and suffix.
+  //   - name as originally given
+  // We first try to find the file using the decorator so that when a
+  // filename with and without decorator is used, we get the file with
+  // the same decorator as the ACE dll has and then as last resort
+  // the one without. For example with msvc, the debug build has a "d"
+  // decorator, but the release build has none and we really want to get
+  // the debug version of the library in a debug application instead
+  // of the release one.
   // So we need room for 5 entries in try_names.
   try_names.size (0);
   if ((try_names.max_size () - try_names.size ()) < 5)
@@ -363,23 +370,19 @@ ACE_DLL_Handle::get_dll_names (const ACE_TCHAR *dll_name,
       size_t j = try_names.size ();
       switch (i)
         {
-        case 0:
-          try_this = dll_name;
-          break;
-
-        case 1:        // Name + decorator + suffix
-        case 2:        // Name + suffix
-        case 3:        // Prefix + name + decorator + suffix
-        case 4:        // Prefix + name + suffix
+        case 0:        // Name + decorator + suffix
+        case 1:        // Name + suffix
+        case 2:        // Prefix + name + decorator + suffix
+        case 3:        // Prefix + name + suffix
           if (
               base_suffix.length () > 0
 #if !(defined(ACE_WIN32) && defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK))
-              || (i == 2 || i == 4)    // No decorator desired; skip
+              || (i == 1 || i == 3)    // No decorator desired; skip
 #endif
               )
             break;
           try_this = base_dir;
-          if (i > 2)
+          if (i > 1)
             try_this += prefix;
           try_this += base_file;
           if (base_suffix.length () > 0)
@@ -391,6 +394,9 @@ ACE_DLL_Handle::get_dll_names (const ACE_TCHAR *dll_name,
 #endif
               try_this += suffix;
             }
+          break;
+        case 4:
+          try_this = dll_name;
           break;
         }
 
