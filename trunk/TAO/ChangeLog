@@ -1,3 +1,13 @@
+Mon Aug 15 16:25:23 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/tie_si.cpp:
+        
+          Removed incorrect generation of '::' before CORBA::is_nil()
+          and CORBA::release().
+
 Mon Aug 15 16:08:15 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_valuetype.cpp:
