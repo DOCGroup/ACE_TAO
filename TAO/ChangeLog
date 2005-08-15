@@ -1,3 +1,13 @@
+Mon Aug 15 19:56:10 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_nodule/module_ch.cpp:
+        
+          Where namespace openings and closings are generated, add
+          generation of the same openings and closings in the *A.h
+          file, if the -GA option is being used. This change ensures
+          that typecode declarations for types nested in one or more
+          modules will themselves appear in the same scope.
+
 Mon Aug 15 19:52:50 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/PI/PICurrent_Loader.cpp:
