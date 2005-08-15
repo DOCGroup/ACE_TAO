@@ -53,6 +53,9 @@ namespace CIAO
           const DeploymentPlan &src,
           ::Deployment::InstanceDeploymentDescriptions& dest);
 
+      static InstanceDeploymentDescription instance_deployment_descr (
+	  const Deployment::InstanceDeploymentDescription &src);
+      
       static IDREF_Base IDREF;
 
     private:

@@ -41,11 +41,28 @@ namespace CIAO
     public:
       class NoPlan {};
 
+      /// Use this constructor if you want to use
+      /// the XSC->IDL mapping
       DP_Handler (DeploymentPlan &dp);
-
+      
+      /// Use this constructor if you want to use
+      /// the IDL->XSC mapping
+      DP_Handler (const ::Deployment::DeploymentPlan &plan);
+      
       ~DP_Handler (void)
         throw ();
-
+      
+      /// Generates the IDL->XSC mapping.  returns
+      /// null if the method fails or if the class was
+      /// constructed with the wrong source.
+      DeploymentPlan const *xsc (void) const
+        throw (NoPlan);
+      
+      DeploymentPlan *xsc (void)
+        throw (NoPlan);
+      
+      /// Generates the XSC->IDL mapping.  returns null
+      /// if the method fails or the class was constructed
       ::Deployment::DeploymentPlan const *plan (void) const
         throw (NoPlan);
 
@@ -54,13 +71,14 @@ namespace CIAO
 
     private:
 
-      bool resolve_plan (void);
-
+      bool resolve_plan (DeploymentPlan &dp);
+      
+      bool build_xsc (const ::Deployment::DeploymentPlan &plan);
+      
     private:
-
-      ACE_Auto_Ptr< ::Deployment::DeploymentPlan> idl_dp_;
-
-      DeploymentPlan &dp_;
+      auto_ptr< DeploymentPlan > xsc_dp_;
+      
+      auto_ptr< ::Deployment::DeploymentPlan> idl_dp_;
 
       bool retval_;
     };

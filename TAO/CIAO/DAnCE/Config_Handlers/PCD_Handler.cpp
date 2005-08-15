@@ -43,8 +43,10 @@ namespace CIAO
             CORBA::string_dup (desc.source ().c_str ());
         }
 
-
-      if (desc.deployRequirement_p ())
+      for(PlanConnectionDescription::deployRequirement_iterator 
+	      req (desc.begin_deployRequirement());
+	  req != desc.end_deployRequirement();
+	  req++)
         {
 #if 0
           // @@ MAJO:
@@ -62,69 +64,100 @@ namespace CIAO
         }
 
       //Create the ComponentExternalPortEndpoint handler.
-      CEPE_Handler cepehandler;
-
-      //Iterate through and configure each port in the
-      //externalEndpoint sequence.
-      for (PlanConnectionDescription::externalEndpoint_iterator
-           port (desc.begin_externalEndpoint ());
-           port != desc.end_externalEndpoint ();
-           ++port)
-        {
-          toconfig.externalEndpoint.length (
-            toconfig.externalEndpoint.length () + 1);
-
-          cepehandler.get_ComponentExternalPortEndpoint (
-            toconfig.externalEndpoint [toconfig.externalEndpoint.length () - 1],
-            *port);
-        }
-
+      CEPE_Handler::external_port_endpoints (
+	  desc,
+	  toconfig.externalEndpoint);
+      
       //Configure the PlanSubcomponentPortEndpoint's.
-      PSPE_Handler pspehandler;
 
-      for (PlanConnectionDescription::internalEndpoint_iterator
-           ipoint (desc.begin_internalEndpoint ());
-           ipoint != desc.end_internalEndpoint ();
-           ++ipoint)
-        {
-          toconfig.internalEndpoint.length (
-            toconfig.internalEndpoint.length () + 1);
-
-          pspehandler.get_PlanSubcomponentPortEndpoint (
-            toconfig.internalEndpoint [toconfig.internalEndpoint.length () - 1],
-            *ipoint);
-        }
+      PSPE_Handler::sub_component_port_endpoints (
+	  desc,
+	  toconfig.internalEndpoint);
 
       //Configure the ExternalReferenceEndpoint's.
-      ERE_Handler erehandler;
+      ERE_Handler::external_ref_endpoints (
+	  desc,
+	  toconfig.externalReference);
 
-      for (PlanConnectionDescription::externalReference_iterator
-           ipoint (desc.begin_externalReference ());
-           ipoint != desc.end_externalReference ();
-           ++ipoint)
-        {
-          toconfig.externalReference.length (
-            toconfig.externalReference.length () + 1);
-
-          erehandler.get_ExternalReferenceEndpoint (
-            toconfig.externalReference [toconfig.externalReference.length () - 1],
-            *ipoint);
-        }
-
+      
       //Configure the resource value.
-      if (desc.deployedResource_p ())
-        {
-          CRDD_Handler crddhandler;
-
-          toconfig.deployedResource.length (
+      CRDD_Handler crddhandler;
+      for(PlanConnectionDescription::deployedResource_iterator res =
+	      desc.begin_deployedResource();
+	  res != desc.end_deployedResource();
+	  res++)
+      {
+         
+	  toconfig.deployedResource.length (
             toconfig.deployedResource.length () + 1);
 
           crddhandler.get_ConnectionResourceDeploymentDescription (
             toconfig.deployedResource[toconfig.deployedResource.length () - 1],
-            desc.deployedResource ());
-        }
+            *res);
+      }
 
     }
+      
+      PlanConnectionDescription PCD_Handler::get_PlanConnectionDescription (
+	  const Deployment::PlanConnectionDescription &src)
+      {
+	  XMLSchema::string< char > name ((src.name));
 
+	  PlanConnectionDescription pcd(name);
+
+	  //Get the source if it exists
+	  if(src.source.length() != 0)
+	  {
+	      XMLSchema::string< char > source((src.source[0]));
+	      pcd.source(source);
+	  }
+
+	  //Get any externalEndpoint(s) and store them
+	  size_t total = src.externalEndpoint.length();
+	  for(size_t i = 0; i < total; i++)
+	  {
+	      pcd.add_externalEndpoint(
+		  CEPE_Handler::external_port_endpoint(
+		      src.externalEndpoint[i]));
+	  }
+
+	  //Get any externalReference(s) and store them
+	  total = src.externalReference.length();
+	  for(size_t j = 0; j < total; j++)
+	  {
+	      pcd.add_externalReference(
+		  ERE_Handler::external_ref_endpoint(
+		      src.externalReference[j]));
+	  }
+
+	  //Get any internalEndpoint(s) and store them
+	  total = src.internalEndpoint.length();
+	  for(size_t k = 0; k < total; k++)
+	  {
+	      pcd.add_internalEndpoint(
+		  PSPE_Handler::sub_component_port_endpoint(
+		      src.internalEndpoint[k]));
+	  }
+	  
+	  //Get any deployedResource(s) and store them
+	  total = src.deployedResource.length();
+	  for(size_t l = 0; l < total; l++)
+	  {
+	      pcd.add_deployedResource(
+		  CRDD_Handler::connection_resource_depl_desc(
+		      src.deployedResource[l]));
+	  }
+
+	  //Get any deployRequirement(s) and store them
+	  total = src.deployRequirement.length();
+	  for(size_t m = 0; m < total; m++)
+	  {
+	      pcd.add_deployRequirement(
+		  Req_Handler::get_requirement(
+		      src.deployRequirement[m]));
+	  }
+
+	  return pcd;
+      }
   }
 }

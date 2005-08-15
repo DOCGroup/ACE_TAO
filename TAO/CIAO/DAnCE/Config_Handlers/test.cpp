@@ -1,4 +1,5 @@
 // $Id$
+
 #include <iostream>
 
 #include "Deployment.hpp"
@@ -48,19 +49,38 @@ int main (int argc, char *argv[])
 
   // Initialize an ORB so Any will work
   CORBA::ORB_ptr orb = CORBA::ORB_init (argc, argv, "");
-  
+
+  //Create an XML_Helper for all the file work
   XML_Helper the_helper;
   
   if (xercesc::DOMDocument *doc = the_helper.create_dom (input_file))
-    {
+  {
+      //Read in the XSC type structure from the DOMDocument
       DeploymentPlan dp = deploymentPlan (doc);
-      
+
+      //Convert the XSC to an IDL datatype
+
       DP_Handler dp_handler (dp);
       
-      std::cout << "Instance document import succeeded.  Dumping contents....\n";
-      
-      Deployment::DnC_Dump::dump (*dp_handler.plan ());
-      
+      std::cout << "Instance document import succeeded.  Dumping contents to file\n";
+
+      //Retrieve the newly created IDL structure
+      Deployment::DeploymentPlan *idl = dp_handler.plan();
+
+      //Convert it back to an XSC structure with a new DP_Handler
+      DP_Handler reverse_handler(*idl);
+
+      //Create a new DOMDocument for writing the XSC into XML
+      xercesc::DOMDocument* the_xsc (the_helper.create_dom(0));
+
+      //Serialize the XSC into a DOMDocument
+      deploymentPlan(*reverse_handler.xsc(), the_xsc);
+
+      //Write it to test.xml
+      the_helper.write_DOM(doc, "test.xml");
+
+      //Cleanliness is next to Godliness
+      delete doc;
     }
   
   std::cout << "Test completed!\n";

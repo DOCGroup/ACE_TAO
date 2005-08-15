@@ -56,6 +56,11 @@ namespace CIAO
                     Deployment::PlanConnectionDescription& toconfig,
                     PlanConnectionDescription& desc);          
 
+	//This method takes a <Deployment::PlanConnectionDescription>
+	//converts it into a <Config_Handler::PlanConnectionDescription>
+	//and returns the value
+	static PlanConnectionDescription get_PlanConnectionDescription (
+	    const Deployment::PlanConnectionDescription &src);
     };
   }
 }
