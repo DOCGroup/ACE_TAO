@@ -3,7 +3,6 @@
 
 project(*server): taoexe, utils, portableserver, strategies {
   Source_Files {
-    tmplinst.cpp
     Timer.cpp
     Cubit_Task.cpp
     Globals.cpp
@@ -14,7 +13,6 @@ project(*server): taoexe, utils, portableserver, strategies {
 
 project(*client): taoexe, utils, portableserver, strategies {
   Source_Files {
-    tmplinst.cpp
     Timer.cpp
     Globals.cpp
     cubit_i.cpp

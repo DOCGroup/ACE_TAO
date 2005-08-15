@@ -5,7 +5,6 @@ project(*Server): taoexe, utils, portableserver, strategies {
   idlflags += -Gd
 
   Source_Files {
-    tmplinst.cpp
     RTI_IO.cpp
     Cubit_i.cpp
     Cubit_Client.cpp
@@ -18,7 +17,6 @@ project(*client): taoexe, portableserver, strategies {
   idlflags += -Gd
 
   Source_Files {
-    tmplinst.cpp
     RTI_IO.cpp
     Cubit_Client.cpp
     client.cpp
@@ -33,7 +31,6 @@ project(*collocation): taoexe, utils, portableserver, strategies {
   idlflags += -Gd
 
   Source_Files {
-    tmplinst.cpp
     RTI_IO.cpp
     collocation_test.cpp
     Cubit_i.cpp
