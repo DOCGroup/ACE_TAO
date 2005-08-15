@@ -1,3 +1,11 @@
+Mon Aug 15 19:10:43 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/PortableGroup.mpc:
+        
+          Removed the extra subgroup labeled OBRSVCS_COMPONENTS. This is
+          not used on any platform and it creates an extra subdirectory
+          in the MSVC 7.1 solution browser.
+
 Mon Aug 15 09:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
