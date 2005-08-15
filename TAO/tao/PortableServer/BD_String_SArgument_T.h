@@ -219,7 +219,7 @@ namespace TAO
                                      ACE_InputCDR::to_wstring,
                                      ACE_OutputCDR::from_wstring,
                                      BOUND,
-                                     TAO::Any_Insert_Policy_Stream <ACE_OutputCDR::from_string>
+                                     TAO::Any_Insert_Policy_Stream <ACE_OutputCDR::from_wstring>
                                    >
   {
   };
