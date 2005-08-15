@@ -93,7 +93,7 @@ project(DsLogAdmin_Skel) : orbsvcslib, core, dslogadmin, portableserver {
 }
 
 
-project(DsLogAdmin_Serv) : orbsvcslib, core, dslogadmin_skel, dynamicany, etcl, svc_utils {
+project(DsLogAdmin_Serv) : orbsvcslib, core, dslogadmin_skel, dynamicany, etcl, utils, svc_utils {
   sharedname   = TAO_DsLogAdmin_Serv
   dynamicflags = TAO_LOG_SERV_BUILD_DLL
   tagchecks   += Log

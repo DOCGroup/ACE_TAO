@@ -1,26 +1,47 @@
+Mon Aug 15 10:56:28 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Makefile.am:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Regenerated.
+
+	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
+
+	  Changed to inherit from utils.
+
+	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp (init):
+
+	  Use TAO::Utils::PolicyList_Destroyer instead of plain
+	  CORBA::PolicyList and an explicit loop to destroy the policies.
+	  This ensures all policies will be destroyed if an exception is
+	  thrown.
+
 Mon Aug 15 16:25:23 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/component_cs.cpp:
         * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
         * TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp:
         * TAO_IDL/be/be_visitor_interface/tie_si.cpp:
-        
+
           Removed incorrect generation of '::' before CORBA::is_nil()
           and CORBA::release().
 
 Mon Aug 15 16:08:15 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_valuetype.cpp:
-        
+
           Removed incorrect generation of '::' before generation of
           CORBA::add_ref() and CORBA::remove_ref() declarations.
 
 Mon Aug 15 15:45:32 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
-        
+
           Modified changes in
-          
+
           Fri Aug 12 22:13:15 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           slightly to omit the generation of the leading double colon
