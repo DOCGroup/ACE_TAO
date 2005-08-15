@@ -47,7 +47,7 @@ public:
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_PICurrent_Loader)
-ACE_FACTORY_DECLARE (TAO, TAO_PICurrent_Loader)
+ACE_FACTORY_DECLARE (TAO_PI, TAO_PICurrent_Loader)
 
 static int
 TAO_Requires_PICurrent_Initializer = TAO_PICurrent_Loader::Initializer ();
