@@ -42,6 +42,7 @@
 
 #include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
 #include "tao/GIOPC.h"
+#include "tao/AnyTypeCode/OctetSeqA.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
