@@ -1,3 +1,9 @@
+Mon Aug 15 11:03:42 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/MakeProjectCreator/config/dslogadmin_serv.mpb:
+
+	  Changed to inherit from utils.
+
 Mon Aug 15 09:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/DLL_Manager.cpp:
