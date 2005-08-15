@@ -1,3 +1,14 @@
+Mon Aug 15 10:15:40 CDT 2005  Steve Totten  <totten_s@ociweb.com>
+
+        Committed the following change that came originally from
+        Dave Giovannini of OCI in OCI's TAO 1.4a.
+
+        Mon Jul 18 14:04:58 2005  David Giovannini  <giovannd@ociweb.com>
+
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+
+          Add forward invocation to DII adaptor.
+
 Mon Aug 15 10:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Cubit/TAO/MT_Cubit/tmplinst.cpp:
