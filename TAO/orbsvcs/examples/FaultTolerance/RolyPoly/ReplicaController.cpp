@@ -7,8 +7,9 @@
 #include "ace/TMCast/Group.hpp"
 
 #include "tao/PortableServer/Servant_Base.h"
-#include "tao/Any_Impl.h"
+#include "tao/AnyTypeCode/Any_Impl.h"
 #include "tao/AnyTypeCode/DynamicC.h"
+#include "tao/PI/PI.h"
 
 #include "orbsvcs/FT_CORBA_ORBC.h"
 
