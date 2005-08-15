@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:546
+// be\be_codegen.cpp:538
 
 #ifndef _TAO_IDL_ORIG_IFR_BASES_T_H_
 #define _TAO_IDL_ORIG_IFR_BASES_T_H_
@@ -907,7 +907,7 @@ namespace POA_CORBA
 } // module CORBA
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:1094
+// be\be_codegen.cpp:1221
 
 #if defined (__ACE_INLINE__)
 #include "IFR_BaseS_T.inl"
