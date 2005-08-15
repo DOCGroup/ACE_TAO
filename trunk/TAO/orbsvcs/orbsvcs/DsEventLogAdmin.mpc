@@ -86,13 +86,15 @@ project(DsEventLogAdmin_Serv) : orbsvcslib, core, dseventlogadmin_skel, dslogadm
   IDL_Files {
   }
 
-  Source_Files(ORBSVCS_COMPONENTS) {
-    DsEventLogAdmin {
-      Log/EventLogConsumer.cpp
-      Log/EventLogFactory_i.cpp
-      Log/EventLogNotification.cpp
-      Log/EventLog_i.cpp
-    }
+  Source_Files {
+    Log/EventLogConsumer.cpp
+    Log/EventLogFactory_i.cpp
+    Log/EventLogNotification.cpp
+    Log/EventLog_i.cpp
+  }
+
+  Header_Files {
+    Log/eventlog_serv_export.h
   }
 
   Inline_Files {

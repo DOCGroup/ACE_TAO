@@ -87,7 +87,7 @@ public:
   /// @return object id
   ///
   virtual PortableServer::ObjectId* 
-    create_objectid (DsLogAdmin::LogId id)			= 0;
+    create_objectid (DsLogAdmin::LogId id);
 
   /// @brief Create log reference
   ///
@@ -111,7 +111,7 @@ public:
   ///
   virtual DsLogAdmin::Log_ptr 
     create_log_object (DsLogAdmin::LogId id
-		       ACE_ENV_ARG_DECL)			= 0;
+		       ACE_ENV_ARG_DECL);
 
   /// @brief Create log servant
   ///

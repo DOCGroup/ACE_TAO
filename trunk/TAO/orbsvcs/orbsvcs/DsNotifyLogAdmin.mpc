@@ -88,13 +88,15 @@ project(DsNotifyLogAdmin_Serv) : orbsvcslib, core, dsnotifylogadmin_skel, dsloga
   IDL_Files {
   }
 
-  Source_Files(ORBSVCS_COMPONENTS) {
-    DsNotifyLogAdmin {
-      Log/NotifyLogConsumer.cpp
-      Log/NotifyLogFactory_i.cpp
-      Log/NotifyLogNotification.cpp
-      Log/NotifyLog_i.cpp
-    }
+  Source_Files {
+    Log/NotifyLogConsumer.cpp
+    Log/NotifyLogFactory_i.cpp
+    Log/NotifyLogNotification.cpp
+    Log/NotifyLog_i.cpp
+  }
+
+  Header_Files {
+    Log/notifylog_serv_export.h
   }
 
   Inline_Files {
