@@ -81,7 +81,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << node->name () << "_ptr p" << be_uidt_nl
           << ")" << be_uidt_nl
           << "{" << be_idt_nl
-          << "::CORBA::release (p);" << be_uidt_nl
+          << "CORBA::release (p);" << be_uidt_nl
           << "}";
 
       *os << be_nl << be_nl
@@ -119,22 +119,22 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     {
       *os << be_nl << be_nl
           << "void" << be_nl
-          << "::CORBA::release ("
+          << "CORBA::release ("
           << node->name ()
           << "_ptr p)" << be_nl
           << "{" << be_idt_nl
           << "::CORBA::AbstractBase_ptr abs = p;" << be_nl
-          << "::CORBA::release (abs);" << be_uidt_nl
+          << "CORBA::release (abs);" << be_uidt_nl
           << "}";
 
       *os << be_nl << be_nl
           << "::CORBA::Boolean" << be_nl
-          << "::CORBA::is_nil ("
+          << "CORBA::is_nil ("
           << node->name ()
           << "_ptr p)" << be_nl
           << "{" << be_idt_nl
           << "::CORBA::Object_ptr obj = p;" << be_nl
-          << "return ::CORBA::is_nil (obj);" << be_uidt_nl
+          << "return CORBA::is_nil (obj);" << be_uidt_nl
           << "}";
     }
 
@@ -271,7 +271,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << node->local_name () << " *_tao_tmp_pointer =" << be_idt_nl
           << "static_cast<"
           << node->local_name () << " *> (_tao_void_pointer);" << be_uidt_nl
-          << "::CORBA::release (_tao_tmp_pointer);" << be_uidt_nl
+          << "CORBA::release (_tao_tmp_pointer);" << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
 
@@ -315,7 +315,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << bt->local_name ()
       << "_ptr obj)" << be_nl
       << "{" << be_idt_nl
-      << "if (! ::CORBA::is_nil (obj))" << be_idt_nl
+      << "if (! CORBA::is_nil (obj))" << be_idt_nl
       << "{" << be_idt_nl
       << "obj->_add_ref ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
@@ -328,7 +328,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << bt->local_name ()
       << "_ptr obj)" << be_nl
       << "{" << be_idt_nl
-      << "::CORBA::release (obj);" << be_uidt_nl
+      << "CORBA::release (obj);" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
 

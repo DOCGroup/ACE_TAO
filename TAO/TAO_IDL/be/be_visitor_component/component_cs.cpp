@@ -109,7 +109,7 @@ be_visitor_component_cs::visit_component (be_component *node)
     {
       *os << be_nl << be_nl
           << "void" << be_nl
-          << "::CORBA::release ("
+          << "CORBA::release ("
           << node->name ()
           << "_ptr p)" << be_nl
           << "{" << be_idt_nl
@@ -119,12 +119,12 @@ be_visitor_component_cs::visit_component (be_component *node)
 
       *os << be_nl << be_nl
           << "::CORBA::Boolean" << be_nl
-          << "::CORBA::is_nil ("
+          << "CORBA::is_nil ("
           << node->name ()
           << "_ptr p)" << be_nl
           << "{" << be_idt_nl
           << "::CORBA::Object_ptr obj = p;" << be_nl
-          << "return ::CORBA::is_nil (obj);" << be_uidt_nl
+          << "return CORBA::is_nil (obj);" << be_uidt_nl
           << "}";
     }
 
@@ -230,7 +230,7 @@ be_visitor_component_cs::visit_component (be_component *node)
       << bt->nested_type_name (this->ctx_->scope ())
       << "_ptr obj)" << be_nl
       << "{" << be_idt_nl
-      << "if (! ::CORBA::is_nil (obj))" << be_idt_nl
+      << "if (! CORBA::is_nil (obj))" << be_idt_nl
       << "{" << be_idt_nl
       << "obj->_add_ref ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
