@@ -63,7 +63,6 @@ project(*Anyop): taoserver, minimum_corba {
 
   Source_Files {
     param_testC.cpp
-    param_testA.cpp
     anyop.cpp
   }
 }
