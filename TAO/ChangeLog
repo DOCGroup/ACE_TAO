@@ -1,3 +1,11 @@
+Mon Aug 15 09:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Generate the A.h includes in the header file instead of the cpp file.
+          When A.idl includes B.pidl which includes C.pidl, when we generate
+          the includes in the header file, then in AC.h we don't have the types
+          from CC.h.
+
 Fri Aug 12 12:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI/ORBInitializer_Registry_Impl.cpp:
