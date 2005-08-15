@@ -1,3 +1,34 @@
+Mon Aug 15 12:03:43 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/Config_Handlers/ADD_Handler.cpp
+	* DAnCE/Config_Handlers/ADD_Handler.h
+	* DAnCE/Config_Handlers/CCD_Handler.cpp
+	* DAnCE/Config_Handlers/CCD_Handler.h
+	* DAnCE/Config_Handlers/CRDD_Handler.h
+	* DAnCE/Config_Handlers/DP_Handler.cpp
+	* DAnCE/Config_Handlers/DP_Handler.h
+	* DAnCE/Config_Handlers/DP_PCD_Handler.cpp
+	* DAnCE/Config_Handlers/DP_PCD_Handler.h
+	* DAnCE/Config_Handlers/IDD_Handler.cpp
+	* DAnCE/Config_Handlers/IDD_Handler.h
+	* DAnCE/Config_Handlers/IDREF_Base.cpp
+	* DAnCE/Config_Handlers/ID_Handler.h
+	* DAnCE/Config_Handlers/IRDD_Handler.cpp
+	* DAnCE/Config_Handlers/MDD_Handler.cpp
+	* DAnCE/Config_Handlers/MDD_Handler.h
+	* DAnCE/Config_Handlers/PCD_Handler.cpp
+	* DAnCE/Config_Handlers/PCD_Handler.h
+	* DAnCE/Config_Handlers/PSPE_Handler.cpp
+	* DAnCE/Config_Handlers/Req_Handler.cpp
+	* DAnCE/Config_Handlers/XML_Helper.cpp
+	* DAnCE/Config_Handlers/XML_Helper.h
+	* DAnCE/Config_Handlers/XercesString.cpp
+	* DAnCE/Config_Handlers/XercesString.h
+	* DAnCE/Config_Handlers/test.cpp
+
+	Checked in support for IDL->XSC->XML mapping.  Thanks to Lucas
+	Seibert <heynonynony at yahoo dot com> for completing this work. 
+	
 Mon Aug 15 00:01:01 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* CIDLC/cidlc.cpp: Made ErrorHandler auto-detach itself

@@ -58,7 +58,7 @@ namespace CIAO
           Deployment::ImplementationDependency& toconfig,
           const ImplementationDependency& desc);
 
-      ImplementationDependency impl_dependency (
+      static ImplementationDependency impl_dependency (
           const ::Deployment::ImplementationDependency& src);
     };
   }

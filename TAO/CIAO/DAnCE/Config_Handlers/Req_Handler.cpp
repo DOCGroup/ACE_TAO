@@ -38,17 +38,23 @@ namespace CIAO
         toconfig.property[toconfig.property.length () - 1]);
     }
     
-    Requirement
-    Req_Handler::get_requirement (
-                         const Deployment::Requirement& src)
-    {
-      XMLSchema::string< char > name ((src.name));
-      XMLSchema::string< char > res ((src.resourceType));
-      Property prop (
-          Property_Handler::get_property (src.property[0]));
-      Requirement req (name,res,prop);
+      Requirement
+      Req_Handler::get_requirement (
+	  const Deployment::Requirement& src)
+      {
+	  //Get the values for name and res
+	  XMLSchema::string< char > name ((src.name));
+	  XMLSchema::string< char > res ((src.resourceType));
 
-      return req;
-    }
+	  //Get the Property
+	  Property prop (
+	      Property_Handler::get_property (
+		  src.property[0]));
+
+	  //Instantiate the Requirement
+	  Requirement req (name,res,prop);
+	  
+	  return req;
+      }
   }
 }

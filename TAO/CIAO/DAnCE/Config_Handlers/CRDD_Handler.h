@@ -56,7 +56,7 @@ namespace CIAO
                     Deployment::ConnectionResourceDeploymentDescription& toconfig,
                     ConnectionResourceDeploymentDescription& desc);   
                     
-        ConnectionResourceDeploymentDescription
+        static ConnectionResourceDeploymentDescription
         connection_resource_depl_desc (
           const ::Deployment::ConnectionResourceDeploymentDescription& src);       
 

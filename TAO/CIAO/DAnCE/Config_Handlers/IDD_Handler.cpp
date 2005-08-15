@@ -1,6 +1,7 @@
 // $Id$
 
 #include "IDD_Handler.h"
+#include "IRDD_Handler.h"
 #include "MDD_Handler.h"
 #include "Property_Handler.h"
 #include "Any_Handler.h"
@@ -182,6 +183,50 @@ namespace CIAO
                                      dest.resourceValue);
 
     }
+
+    InstanceDeploymentDescription
+    IDD_Handler::instance_deployment_descr (
+	const Deployment::InstanceDeploymentDescription& src)
+    {
+	
+	//Get all the string/IDREFs
+	XMLSchema::string < char > name ((src.name));
+	XMLSchema::string < char > node ((src.node));
+	XMLSchema::string < char > source ((src.source[0]));
+	ACE_CString temp;
+	MDD_Handler::IDREF.find_ref(src.implementationRef, temp);
+	XMLSchema::IDREF< ACE_TCHAR > implementation ((temp.c_str()));
+
+	//Instantiate the IDD
+	InstanceDeploymentDescription idd (name, node, source, implementation);
+
+	//Get and store the configProperty(s)
+	size_t total = src.configProperty.length();
+	for(size_t j = 0; j < total; j++)
+	{
+	    idd.add_configProperty(
+		Property_Handler::get_property (
+		    src.configProperty[j]));
+	}
+
+	//Check if there is a deployedResource, if so store
+	if(src.deployedResource.length() != 0)
+	    idd.deployedResource(
+		IRDD_Handler::instance_resource_deployment_descr(
+		    src.deployedResource[0]));
+
+	//Check if there is a deployedSharedResource, if so store it
+	if(src.deployedSharedResource.length() != 0)
+	    idd. deployedSharedResource(
+		IRDD_Handler::instance_resource_deployment_descr(
+		    src.deployedSharedResource[0]));
+
+	// @@ LDS: There is no variable id in src, is this correct, does it need to be added?
+	// XMLSchema::ID < char > id ((src.id));
+	// idd.id(id);
+
+	return idd;
+    }	
 
   }
 }

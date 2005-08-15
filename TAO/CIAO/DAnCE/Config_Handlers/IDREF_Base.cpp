@@ -44,7 +44,7 @@ namespace CIAO
     IDREF_Base::find_ref (const size_t id, ACE_CString& val)
     {
       int retval =
-        pos_map_.find (id,val);
+        pos_map_.find (id, val);
 
       if (retval < 0)
         return false;
