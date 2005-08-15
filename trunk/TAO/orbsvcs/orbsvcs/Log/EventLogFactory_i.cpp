@@ -226,29 +226,13 @@ DsLogAdmin::Log_ptr
 TAO_EventLogFactory_i::create_log_object (DsLogAdmin::LogId id
 				          ACE_ENV_ARG_DECL)
 {
-  TAO_EventLog_i* event_log_i;
+  PortableServer::ServantBase* servant;
 
-  ACE_NEW_THROW_EX (event_log_i,
-                    TAO_EventLog_i (this->orb_.in (),
-				    this->log_poa_.in (),
-                                    *this,
-                                    this->log_mgr_.in (),
-                                    this->notifier_,
-                                    id
-                                    ),
-                    CORBA::NO_MEMORY ());
+  servant = create_log_servant (id ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());
 
-  PortableServer::ServantBase_var safe_event_log_i = event_log_i;
+  PortableServer::ServantBase_var safe_servant = servant;
   //Transfer ownership to the POA.
-
-  event_log_i->init (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());
-
-  //dhanvey
-  //initialise the LogConsumer object
-  event_log_i->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());
 
   // Obtain ObjectId
   PortableServer::ObjectId_var oid =
@@ -256,7 +240,7 @@ TAO_EventLogFactory_i::create_log_object (DsLogAdmin::LogId id
 
   // Register with the poa
   this->log_poa_->activate_object_with_id (oid.in (),
-					   event_log_i
+					   servant 
 					   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());
 
@@ -272,6 +256,34 @@ TAO_EventLogFactory_i::create_log_object (DsLogAdmin::LogId id
   ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());
 
   return event_log._retn ();
+}
+
+PortableServer::ServantBase*
+TAO_EventLogFactory_i::create_log_servant (DsLogAdmin::LogId id
+					   ACE_ENV_ARG_DECL)
+{
+  TAO_EventLog_i* event_log_i;
+
+  ACE_NEW_THROW_EX (event_log_i,
+                    TAO_EventLog_i (this->orb_.in (),
+				    this->log_poa_.in (),
+                                    *this,
+                                    this->log_mgr_.in (),
+                                    this->notifier_,
+                                    id
+                                    ),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
+
+  event_log_i->init (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  //dhanvey
+  //initialise the LogConsumer object
+  event_log_i->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return event_log_i;
 }
 
 CosEventChannelAdmin::ProxyPushSupplier_ptr

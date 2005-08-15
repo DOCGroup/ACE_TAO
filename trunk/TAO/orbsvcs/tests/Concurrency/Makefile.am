@@ -25,7 +25,6 @@ CC_client_SOURCES = \
   CC_test_utils.cpp \
   CC_tests.cpp \
   lex.CC_command.cpp \
-  tmplinst.cpp \
   CC_client.h \
   CC_command.h \
   CC_command.tab.h \

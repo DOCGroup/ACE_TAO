@@ -143,7 +143,32 @@ DsLogAdmin::Log_ptr
 TAO_BasicLogFactory_i::create_log_object (DsLogAdmin::LogId id
 				          ACE_ENV_ARG_DECL)
 {
-  TAO_BasicLog_i* basic_log_i = 0;
+  PortableServer::ServantBase* servant;
+
+  servant = create_log_servant (id ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
+
+  PortableServer::ServantBase_var safe_servant = servant;
+  // Transfer ownership to the POA.
+
+  // Obtain ObjectId
+  PortableServer::ObjectId_var oid = this->create_objectid (id);
+
+  // Register with the poa
+  this->log_poa_->activate_object_with_id (oid.in (),
+					   servant
+					   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
+
+  return create_log_reference (id ACE_ENV_ARG_PARAMETER);
+}
+
+
+PortableServer::ServantBase*
+TAO_BasicLogFactory_i::create_log_servant (DsLogAdmin::LogId id
+					   ACE_ENV_ARG_DECL)
+{
+  TAO_BasicLog_i* basic_log_i;
 
   ACE_NEW_THROW_EX (basic_log_i,
                     TAO_BasicLog_i (this->orb_.in (),
@@ -152,22 +177,10 @@ TAO_BasicLogFactory_i::create_log_object (DsLogAdmin::LogId id
                                     this->log_mgr_.in (),
                                     id),
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
+  ACE_CHECK_RETURN (0);
 
   basic_log_i->init (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
+  ACE_CHECK_RETURN (0);
 
-  PortableServer::ServantBase_var safe_basic_log_i = basic_log_i;
-  // Transfer ownership to the POA.
-
-  // Obtain ObjectId
-  PortableServer::ObjectId_var oid = this->create_objectid (id);
-
-  // Register with the poa
-  this->log_poa_->activate_object_with_id (oid.in (),
-					   basic_log_i
-					   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
-
-  return create_log_reference (id ACE_ENV_ARG_PARAMETER);
+  return basic_log_i;
 }
