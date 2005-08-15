@@ -842,6 +842,70 @@ TAO_CodeGen::start_anyop_header (const char *fname)
                        << be_global->be_get_client_hdr_fname ()
                        << "\"";
 
+  // If we have not suppressed Any operator generation and also
+  // are not generating the operators in a separate file, we
+  // need to include the *A.h file from all .pidl files here.
+  if (be_global->any_support ())
+    {
+      for (size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
+        {
+          char* idl_name = idl_global->included_idl_files ()[j];
+
+          // Make a String out of it.
+          UTL_String idl_name_str = idl_name;
+
+          const char *anyop_hdr =
+            BE_GlobalData::be_get_anyop_header (&idl_name_str, 1);
+
+          ACE_CString pidl_checker (idl_name);
+          bool got_pidl =
+            (pidl_checker.find (".pidl") != ACE_SString::npos);
+
+          // If we're here and we have a .pidl file, we need to generate
+          // the *A.h include from the AnyTypeCode library.
+          if (got_pidl)
+            {
+              // Stripped off any scope in the name and add the
+              // AnyTypeCode prefix.
+              ACE_CString work_hdr (anyop_hdr);
+              ACE_CString final_hdr = "tao/AnyTypeCode/";
+              int pos = work_hdr.rfind ('/');
+
+              if (pos != ACE_SString::npos)
+                {
+                  ACE_CString scope (work_hdr.substr (0, pos - 1));
+
+                  // If we find a '/' in the containing scope name, it
+                  // means we are including a .pidl file from a
+                  // subdirectory of $TAO_ROOT/tao, and so we should
+                  // include the anyop_hdr string as is, and not strip
+                  // off the scope name and prepend "tao/AnyTypeCode/".
+                  // Only .pidl files in $TAO_ROOT/tao itself have
+                  // their generated *A.* files moved to the AnyTypeCode
+                  // library.
+                  if (scope.find ('/') == ACE_SString::npos)
+                    {
+                      work_hdr = work_hdr.substr (pos + 1);
+                      final_hdr += work_hdr;
+                    }
+                  else
+                    {
+                      final_hdr = work_hdr;
+                    }
+                }
+
+              this->anyop_header_->print ("\n#include \"%s\"",
+                                          final_hdr.c_str ());
+            }
+          else
+            {
+              this->anyop_header_->print ("\n#include \"%s\"",
+                                          anyop_hdr);
+            }
+        }
+    }
+  *this->anyop_source_ << "\n";
+
   return 0;
 }
 
@@ -879,71 +943,6 @@ TAO_CodeGen::start_anyop_source (const char *fname)
   *this->anyop_source_ << "\n#include \""
                        << be_global->be_get_anyop_header_fname (1)
                        << "\"";
-
-
-  // If we have not suppressed Any operator generation and also
-  // are not generating the operators in a separate file, we
-  // need to include the *A.h file from all .pidl files here.
-  if (be_global->any_support ())
-    {
-      for (size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
-        {
-          char* idl_name = idl_global->included_idl_files ()[j];
-
-          // Make a String out of it.
-          UTL_String idl_name_str = idl_name;
-
-          const char *anyop_hdr =
-            BE_GlobalData::be_get_anyop_header (&idl_name_str, 1);
-
-          ACE_CString pidl_checker (idl_name);
-          bool got_pidl =
-            (pidl_checker.find (".pidl") != ACE_SString::npos);
-
-          // If we're here and we have a .pidl file, we need to generate
-          // the *A.h include from the AnyTypeCode library.
-          if (got_pidl)
-            {
-              // Stripped off any scope in the name and add the
-              // AnyTypeCode prefix.
-              ACE_CString work_hdr (anyop_hdr);
-              ACE_CString final_hdr = "tao/AnyTypeCode/";
-              int pos = work_hdr.rfind ('/');
-
-              if (pos != ACE_SString::npos)
-                {
-                  ACE_CString scope (work_hdr.substr (0, pos - 1));
-                  
-                  // If we find a '/' in the containing scope name, it
-                  // means we are including a .pidl file from a
-                  // subdirectory of $TAO_ROOT/tao, and so we should
-                  // include the anyop_hdr string as is, and not strip
-                  // off the scope name and prepend "tao/AnyTypeCode/".
-                  // Only .pidl files in $TAO_ROOT/tao itself have
-                  // their generated *A.* files moved to the AnyTypeCode
-                  // library.    
-                  if (scope.find ('/') == ACE_SString::npos)
-                    {
-                      work_hdr = work_hdr.substr (pos + 1);
-                      final_hdr += work_hdr;
-                    }
-                  else
-                    {
-                      final_hdr = work_hdr;
-                    }
-                }
-
-              this->anyop_source_->print ("\n#include \"%s\"",
-                                          final_hdr.c_str ());
-            }
-          else
-            {
-              this->anyop_source_->print ("\n#include \"%s\"",
-                                          anyop_hdr);
-            }
-        }
-    }
-  *this->anyop_source_ << "\n";
 
   this->gen_typecode_includes (this->anyop_source_);
 
@@ -1604,34 +1603,6 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
                                   "tao/SmartProxies/Smart_Proxies.h");
     }
 
-  // Must have knowledge of the base class.
-  this->gen_seq_file_includes ();
-
-  // _vars and _outs are typedefs of template class instantiations.
-  this->gen_var_file_includes ();
-}
-
-void
-TAO_CodeGen::gen_stub_src_includes (void)
-{
-  // Generate the include statement for the precompiled header file.
-  if (be_global->pch_include ())
-    {
-      *this->client_stubs_ << "#include \""
-                           << be_global->pch_include ()
-                           << "\"";
-    }
-
-  // Generate the include statement for the client header. We just
-  // need to put only the base names. Path info is not required.
-  *this->client_stubs_ << "\n#include \""
-                       << be_global->be_get_client_hdr_fname (1)
-                       << "\"";
-
-  // Always generated.
-  this->gen_standard_include (this->client_stubs_,
-                              "tao/CDR.h");
-
   // If we have not suppressed Any operator generation and also
   // are not generating the operators in a separate file, we
   // need to include the *A.h file from all .pidl files here.
@@ -1664,7 +1635,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
               if (pos != ACE_SString::npos)
                 {
                   ACE_CString scope (work_hdr.substr (0, pos));
-              
+
                   // If we find a '/' in the containing scope name, it
                   // means we are including a .pidl file from a
                   // subdirectory of $TAO_ROOT/tao, and so we should
@@ -1672,7 +1643,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
                   // off the scope name and prepend "tao/AnyTypeCode/".
                   // Only .pidl files in $TAO_ROOT/tao itself have
                   // their generated *A.* files moved to the AnyTypeCode
-                  // library.    
+                  // library.
                   if (scope.find ('/') == ACE_SString::npos)
                     {
                       work_hdr = work_hdr.substr (pos + 1);
@@ -1684,11 +1655,40 @@ TAO_CodeGen::gen_stub_src_includes (void)
                     }
                 }
 
-              this->client_stubs_->print ("\n#include \"%s\"",
-                                          final_hdr.c_str ());
+              this->client_header_->print ("\n#include \"%s\"",
+                                           final_hdr.c_str ());
             }
         }
     }
+
+
+  // Must have knowledge of the base class.
+  this->gen_seq_file_includes ();
+
+  // _vars and _outs are typedefs of template class instantiations.
+  this->gen_var_file_includes ();
+}
+
+void
+TAO_CodeGen::gen_stub_src_includes (void)
+{
+  // Generate the include statement for the precompiled header file.
+  if (be_global->pch_include ())
+    {
+      *this->client_stubs_ << "#include \""
+                           << be_global->pch_include ()
+                           << "\"";
+    }
+
+  // Generate the include statement for the client header. We just
+  // need to put only the base names. Path info is not required.
+  *this->client_stubs_ << "\n#include \""
+                       << be_global->be_get_client_hdr_fname (1)
+                       << "\"";
+
+  // Always generated.
+  this->gen_standard_include (this->client_stubs_,
+                              "tao/CDR.h");
 
   // Conditional includes.
 
