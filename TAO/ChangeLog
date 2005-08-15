@@ -1,3 +1,16 @@
+Mon Aug 15 15:45:32 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+        
+          Modified changes in
+          
+          Fri Aug 12 22:13:15 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          slightly to omit the generation of the leading double colon
+          if a field is a typedef of a basic type. In some of these
+          cases, the ACE_NESTED_MACRO will be generated, and the
+          leading double colon would be incorrect.
+
 Mon Aug 15 10:15:40 CDT 2005  Steve Totten  <totten_s@ociweb.com>
 
         Committed the following change that came originally from
