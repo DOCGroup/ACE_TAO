@@ -1,3 +1,26 @@
+Mon Aug 15 15:13:10 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/tests/Concurrency/Makefile.am:
+
+	  Remove bogus source file from list.
+
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.h:
+	* orbsvcs/orbsvcs/Log/LogMgr_i.h:
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h:
+	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.h:
+
+	  Create new virtual method create_log_servant() and factor out
+	  implementation from create_log_object().  This change enables
+	  making create_log_object() into a template method in the base
+	  class and using a Servant Activator to avoid creating the log
+	  servants until they're actually used.  I hope to make these
+	  changes soon.
+
 Mon Aug 15 10:56:28 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:

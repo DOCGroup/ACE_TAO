@@ -213,29 +213,13 @@ DsLogAdmin::Log_ptr
 TAO_NotifyLogFactory_i::create_log_object (DsLogAdmin::LogId id
 				           ACE_ENV_ARG_DECL)
 {
-  TAO_NotifyLog_i* notify_log_i;
+  PortableServer::ServantBase* servant;
 
-  ACE_NEW_THROW_EX (notify_log_i,
-                    TAO_NotifyLog_i (this->orb_.in (),
-				     this->log_poa_.in (),
-                                     *this,
-                                     this->log_mgr_.in (),
-                                     this->notify_factory_.in (),
-                                     this->notifier_,
-                                     id
-                                     ),
-                    CORBA::NO_MEMORY ());
-
+  servant = create_log_servant (id ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsNotifyLogAdmin::NotifyLog::_nil ());
 
-  PortableServer::ServantBase_var safe_notify_log_i = notify_log_i;
+  PortableServer::ServantBase_var safe_servant = servant;
   // Transfer ownership to the POA.
-
-  notify_log_i->init (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsNotifyLogAdmin::NotifyLog::_nil ());
-
-  //initialise the LogConsumer object
-  notify_log_i->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   // Obtain ObjectId
   PortableServer::ObjectId_var oid =
@@ -243,7 +227,7 @@ TAO_NotifyLogFactory_i::create_log_object (DsLogAdmin::LogId id
 
   // Register with the poa
   this->log_poa_->activate_object_with_id (oid.in (),
-					   notify_log_i
+					   servant 
 					   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsNotifyLogAdmin::NotifyLog::_nil ());
 
@@ -259,6 +243,35 @@ TAO_NotifyLogFactory_i::create_log_object (DsLogAdmin::LogId id
   ACE_CHECK_RETURN (DsNotifyLogAdmin::NotifyLog::_nil ());
 
   return notify_log._retn();
+}
+
+PortableServer::ServantBase*
+TAO_NotifyLogFactory_i::create_log_servant (DsLogAdmin::LogId id
+					    ACE_ENV_ARG_DECL)
+{
+  TAO_NotifyLog_i* notify_log_i;
+
+  ACE_NEW_THROW_EX (notify_log_i,
+                    TAO_NotifyLog_i (this->orb_.in (),
+				     this->log_poa_.in (),
+                                     *this,
+                                     this->log_mgr_.in (),
+                                     this->notify_factory_.in (),
+                                     this->notifier_,
+                                     id
+                                     ),
+                    CORBA::NO_MEMORY ());
+
+  ACE_CHECK_RETURN (0);
+
+  notify_log_i->init (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  //initialise the LogConsumer object
+  notify_log_i->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return notify_log_i;
 }
 
 CosNotifyChannelAdmin::AdminID

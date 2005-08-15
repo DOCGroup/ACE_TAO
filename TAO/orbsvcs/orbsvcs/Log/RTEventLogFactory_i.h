@@ -107,13 +107,20 @@ public:
       ));
 
 protected:
-  virtual PortableServer::ObjectId* create_objectid (DsLogAdmin::LogId id);
-
-  virtual DsLogAdmin::Log_ptr create_log_object (DsLogAdmin::LogId id
-						 ACE_ENV_ARG_DECL);
-
-  virtual DsLogAdmin::Log_ptr create_log_reference (DsLogAdmin::LogId id
-						    ACE_ENV_ARG_DECL);
+  virtual PortableServer::ObjectId*
+    create_objectid (DsLogAdmin::LogId id);
+	
+  virtual DsLogAdmin::Log_ptr
+    create_log_object (DsLogAdmin::LogId id
+		       ACE_ENV_ARG_DECL);
+	
+  virtual DsLogAdmin::Log_ptr
+    create_log_reference (DsLogAdmin::LogId id
+			  ACE_ENV_ARG_DECL);
+	
+  virtual PortableServer::ServantBase*
+    create_log_servant (DsLogAdmin::LogId id
+			ACE_ENV_ARG_DECL);
 
   /// Our object ref. after <active>ation.
   DsLogAdmin::LogMgr_var log_mgr_;
