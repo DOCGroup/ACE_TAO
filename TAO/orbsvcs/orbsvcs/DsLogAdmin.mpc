@@ -121,6 +121,7 @@ project(DsLogAdmin_Serv) : orbsvcslib, core, dslogadmin_skel, dynamicany, etcl, 
 
   Header_Files {
     Log/Log_Persistence_Strategy.h
+    Log/log_serv_export.h
   }
 
   Inline_Files {

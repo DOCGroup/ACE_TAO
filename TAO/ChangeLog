@@ -1,8 +1,39 @@
+Mon Aug 15 16:41:57 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+
+	  Add eventlog_serv_export.h to Header_Files section.
+
+	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
+
+	  Add log_serv_export.h to Header_Files section.
+
+	* orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+
+	  Add notifylog_serv_export.h to Header_Files section.
+
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.h:
+	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
+	* orbsvcs/orbsvcs/Log/LogMgr_i.h:
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h:
+	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.h:
+
+	  Combine identical create_log_objectid() implementations from the
+	  derived factory classes into a single one in the base class.
+
+	  Refactor separate create_log_object() implementations to
+	  a single template method in the base class.
+
 Mon Aug 15 15:13:10 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/tests/Concurrency/Makefile.am:
 
-	  Remove bogus source file from list.
+	  Remove tmplinst.cpp from list of files.
 
 	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
 	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:

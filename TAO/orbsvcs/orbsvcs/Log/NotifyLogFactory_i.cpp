@@ -174,18 +174,6 @@ TAO_NotifyLogFactory_i::create_with_id (
   return DsNotifyLogAdmin::NotifyLog::_nil ();
 }
 
-PortableServer::ObjectId*
-TAO_NotifyLogFactory_i::create_objectid (DsLogAdmin::LogId id)
-{
-  char buf[32];
-  ACE_OS::sprintf(buf, "%lu", static_cast<unsigned long>(id));
-
-  PortableServer::ObjectId_var oid =
-        PortableServer::string_to_ObjectId(buf);
-
-  return oid._retn ();
-}
-
 DsLogAdmin::Log_ptr
 TAO_NotifyLogFactory_i::create_log_reference (DsLogAdmin::LogId id
 					      ACE_ENV_ARG_DECL)
@@ -207,42 +195,6 @@ TAO_NotifyLogFactory_i::create_log_reference (DsLogAdmin::LogId id
   ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   return event_log._retn();
-}
-
-DsLogAdmin::Log_ptr
-TAO_NotifyLogFactory_i::create_log_object (DsLogAdmin::LogId id
-				           ACE_ENV_ARG_DECL)
-{
-  PortableServer::ServantBase* servant;
-
-  servant = create_log_servant (id ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsNotifyLogAdmin::NotifyLog::_nil ());
-
-  PortableServer::ServantBase_var safe_servant = servant;
-  // Transfer ownership to the POA.
-
-  // Obtain ObjectId
-  PortableServer::ObjectId_var oid =
-    this->create_objectid (id);
-
-  // Register with the poa
-  this->log_poa_->activate_object_with_id (oid.in (),
-					   servant 
-					   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsNotifyLogAdmin::NotifyLog::_nil ());
-
-  CORBA::Object_var obj =
-    this->log_poa_->id_to_reference (oid.in ()
-				     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsNotifyLogAdmin::NotifyLog::_nil ());
-
-  // Narrow
-  DsNotifyLogAdmin::NotifyLog_var notify_log =
-    DsNotifyLogAdmin::NotifyLog::_narrow(obj.in ()
-					 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsNotifyLogAdmin::NotifyLog::_nil ());
-
-  return notify_log._retn();
 }
 
 PortableServer::ServantBase*

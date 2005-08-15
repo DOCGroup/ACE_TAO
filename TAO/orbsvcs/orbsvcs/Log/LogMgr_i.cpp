@@ -3,6 +3,7 @@
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "orbsvcs/Log/Hash_Persistence_Strategy.h"
 #include "orbsvcs/Log/LogStore.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (Log,
            LogMgr_i,
@@ -93,6 +94,41 @@ TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
   logstore_ = strategy_->create_log_store (orb, this);
 }
 
+PortableServer::ObjectId*
+TAO_LogMgr_i::create_objectid (DsLogAdmin::LogId id)
+{
+  char buf[32];
+  ACE_OS::sprintf(buf, "%lu", static_cast<unsigned long>(id));
+
+  PortableServer::ObjectId_var oid =
+        PortableServer::string_to_ObjectId(buf);
+
+  return oid._retn ();
+}
+
+DsLogAdmin::Log_ptr
+TAO_LogMgr_i::create_log_object (DsLogAdmin::LogId id
+				 ACE_ENV_ARG_DECL)
+{
+  PortableServer::ServantBase* servant;
+
+  servant = create_log_servant (id ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
+
+  PortableServer::ServantBase_var safe_servant = servant;
+  // Transfer ownership to the POA.
+
+  // Obtain ObjectId
+  PortableServer::ObjectId_var oid = this->create_objectid (id);
+
+  // Register with the poa
+  this->log_poa_->activate_object_with_id (oid.in (),
+					   servant
+					   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
+
+  return create_log_reference (id ACE_ENV_ARG_PARAMETER);
+}
 
 DsLogAdmin::LogList*
 TAO_LogMgr_i::list_logs (ACE_ENV_SINGLE_ARG_DECL)
