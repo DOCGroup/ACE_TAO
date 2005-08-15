@@ -1,14 +1,29 @@
+Mon Aug 15 09:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/DLL_Manager.cpp:
+          We first try to find the file using the decorator so that when a
+          filename with and without decorator is used, we get the file with
+          the same decorator as the ACE dll has and then as last resort
+          the one without. For example with msvc, the debug build has a "d"
+          decorator, but the release build has none and we really want to get
+          the debug version of the library in a debug application instead
+          of the release one.
+
+          Thanks to Vitaly Belekhov <vitaly at megasignal dot com> for
+          reporting this and supply the patches. This fixed bugzilla
+          2210
+
 Sun Aug 14 11:27:54 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* apps/JAWS2/JAWS/IO_Handler.cpp (handle_transmit_file): Fixed
-	  a bug where 
-	  
-	    delete (ACE_Filecache_Handle *) result.act ();  
-  
+	  a bug where
+
+	    delete (ACE_Filecache_Handle *) result.act ();
+
           should have been
-  
+
 	    delete (JAWS_Cached_FILE *) result.act ();
-  
+
           Thanks to Anand Rathi <anandprathi@yahoo.co.in> for reporting
  	  this.
 
