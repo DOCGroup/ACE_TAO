@@ -254,11 +254,6 @@ TAO_CodeGen::start_client_header (const char *fname)
 
   *this->client_header_ << "\n#endif /* _MSC_VER */";
 
-  *this->client_header_
-      << "\n\n#if defined (__BORLANDC__)\n"
-      << "#pragma option push -w-rvl -w-rch -w-ccc -w-inl\n"
-      << "#endif /* __BORLANDC__ */";
-
   return 0;
 }
 
@@ -297,10 +292,6 @@ TAO_CodeGen::start_client_stubs (const char *fname)
 
   // Generate the ident string, if any.
   this->gen_ident_string (this->client_stubs_);
-
-  *this->client_stubs_ << "\n\n#if defined (__BORLANDC__)\n"
-                       << "#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig\n"
-                       << "#endif /* __BORLANDC__ */";
 
   // Only when we generate a client inline file generate the include
   if (be_global->gen_client_inline ())
@@ -482,11 +473,6 @@ TAO_CodeGen::start_server_header (const char *fname)
 
   *this->server_header_ << "\n#endif /* _MSC_VER */";
 
-  *this->server_header_
-      << "\n\n#if defined (__BORLANDC__)\n"
-      << "#pragma option push -w-rvl -w-rch -w-ccc -w-inl\n"
-      << "#endif /* __BORLANDC__ */";
-
   if (be_global->skel_export_include () != 0)
     {
       *this->server_header_ << "\n\n#include \""
@@ -625,10 +611,6 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
     << "\"";
 
   this->gen_skel_src_includes ();
-
-  *this->server_skeletons_ << "\n\n#if defined (__BORLANDC__)\n"
-                           << "#pragma option -w-rvl -w-rch -w-ccc -w-aus\n"
-                           << "#endif /* __BORLANDC__ */";
 
   // Only when we generate a server inline file generate the include
   if (be_global->gen_server_inline ())
@@ -904,7 +886,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
             }
         }
     }
-  *this->anyop_source_ << "\n";
+  *this->anyop_header_ << "\n";
 
   return 0;
 }
@@ -1094,10 +1076,6 @@ TAO_CodeGen::end_client_header (void)
                         << "#pragma warning(pop)\n"
                         << "#endif /* _MSC_VER */";
 
-  *this->client_header_ << "\n\n#if defined (__BORLANDC__)\n"
-                        << "#pragma option pop\n"
-                        << "#endif /* __BORLANDC__ */";
-
   // Code to put the last #endif.
   *this->client_header_ << "\n\n";
 
@@ -1142,10 +1120,6 @@ TAO_CodeGen::end_server_header (void)
   *this->server_header_ << "\n\n#if defined(_MSC_VER)\n"
                         << "#pragma warning(pop)\n"
                         << "#endif /* _MSC_VER */";
-
-  *this->server_header_ << "\n\n#if defined (__BORLANDC__)\n"
-                        << "#pragma option pop\n"
-                        << "#endif /* __BORLANDC__ */";
 
   // Code to put the last #endif.
   *this->server_header_ << "\n\n";
