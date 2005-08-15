@@ -76,12 +76,18 @@ namespace TAO
                                ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
-    if (status == TAO_INVOKE_RESTART)
+
+    if (status == TAO_INVOKE_RESTART &&
+        synch.is_forwarded ())
       {
         effective_target =
           synch.steal_forwarded_reference ();
-      }
 
+        this->object_forwarded (effective_target,
+                                r.stub ()
+                                ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+      }
     return status;
   }
 
