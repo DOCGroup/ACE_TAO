@@ -31,13 +31,13 @@
 
 #include "htiop_endpointsC.h"
 #include "tao/CDR.h"
-#include "tao/Null_RefCount_Policy.h"
-#include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode_Static.h"
-#include "tao/Sequence_TypeCode_Static.h"
-#include "tao/String_TypeCode_Static.h"
-#include "tao/Struct_TypeCode_Static.h"
-#include "tao/TypeCode_Struct_Field.h"
+#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Sequence_TypeCode_Static.h"
+#include "tao/AnyTypeCode/String_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
+#include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -60,7 +60,7 @@ static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> co
     { "host", &CORBA::_tc_string },
     { "port", &CORBA::_tc_short },
     { "htid", &CORBA::_tc_string }
-    
+
   };
 static TAO::TypeCode::Struct<char const *,
                              CORBA::TypeCode_ptr const *,
@@ -73,16 +73,16 @@ static TAO::TypeCode::Struct<char const *,
     "HTIOP_Endpoint_Info",
     _tao_fields_HTIOP_Endpoint_Info,
     3);
-  
+
 ::CORBA::TypeCode_ptr const _tc_HTIOP_Endpoint_Info =
   &_tao_tc_HTIOP_Endpoint_Info;
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_HTIOPENDPOINTSEQUENCE_CS_)
@@ -147,10 +147,10 @@ namespace TAO
         CORBA::tk_sequence,
         &_tc_HTIOP_Endpoint_Info,
         0U);
-      
+
     ::CORBA::TypeCode_ptr const tc_HTIOPEndpointSequence_0 =
       &HTIOPEndpointSequence_0;
-    
+
   }
 }
 
@@ -164,7 +164,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:HTIOPEndpointSequence:1.0",
     "HTIOPEndpointSequence",
     &TAO::TypeCode::tc_HTIOPEndpointSequence_0);
-  
+
 ::CORBA::TypeCode_ptr const _tc_HTIOPEndpointSequence =
   &_tao_tc_HTIOPEndpointSequence;
 
