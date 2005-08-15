@@ -2947,6 +2947,7 @@ libTAO_DsLogAdmin_Serv_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_DsLogAdmin_Serv_la_LIBADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
   libTAO_Svc_Utils.la \
   libTAO_ETCL.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
