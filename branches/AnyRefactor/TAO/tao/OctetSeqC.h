@@ -26,10 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:153
+// be\be_codegen.cpp:154
 
-#ifndef _TAO_IDL_ORIG_OCTETSEQC_H_
-#define _TAO_IDL_ORIG_OCTETSEQC_H_
+#ifndef _TAO_IDL_OCTETSEQC_H_
+#define _TAO_IDL_OCTETSEQC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -66,22 +66,22 @@
 
 namespace CORBA
 {
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_CORBA_OCTETSEQ_CH_)
 #define _CORBA_OCTETSEQ_CH_
-
+  
   class OctetSeq;
-
+  
   typedef
     TAO_FixedSeq_Var_T<
         OctetSeq,
         CORBA::Octet
       >
     OctetSeq_var;
-
+  
   typedef
     TAO_Seq_Out_T<
         OctetSeq,
@@ -89,7 +89,7 @@ namespace CORBA
         CORBA::Octet
       >
     OctetSeq_out;
-
+  
   class TAO_Export OctetSeq
     : public
         TAO_Unbounded_Sequence<
@@ -102,14 +102,14 @@ namespace CORBA
     OctetSeq (
         CORBA::ULong max,
         CORBA::ULong length,
-        CORBA::Octet* buffer,
+        CORBA::Octet* buffer, 
         CORBA::Boolean release = 0
       );
     OctetSeq (const OctetSeq &);
     ~OctetSeq (void);
-
+    
     static void _tao_any_destructor (void *);
-
+    
     typedef OctetSeq_var _var_type;
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
@@ -166,7 +166,7 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_CORBA_OctetSeq_H_ */
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:955
+// be\be_codegen.cpp:1080
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

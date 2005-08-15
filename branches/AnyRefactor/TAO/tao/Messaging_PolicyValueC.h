@@ -26,10 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:153
+// be\be_codegen.cpp:154
 
-#ifndef _TAO_IDL_ORIG_MESSAGING_POLICYVALUEC_H_
-#define _TAO_IDL_ORIG_MESSAGING_POLICYVALUEC_H_
+#ifndef _TAO_IDL_MESSAGING_POLICYVALUEC_H_
+#define _TAO_IDL_MESSAGING_POLICYVALUEC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -61,61 +61,57 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
-
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:48
 
 namespace Messaging
 {
-
+  
   // TAO_IDL - Generated from
   // be\be_type.cpp:258
-
+  
   struct PolicyValue;
-
+  
   typedef
     TAO_Var_Var_T<
         PolicyValue
       >
     PolicyValue_var;
-
+  
   typedef
     TAO_Out_T<
         PolicyValue,
         PolicyValue_var
       >
     PolicyValue_out;
-
+  
   // TAO_IDL - Generated from
-  // be\be_visitor_structure/structure_ch.cpp:52
-
+  // be\be_visitor_structure/structure_ch.cpp:57
+  
   struct TAO_Export PolicyValue
   {
     typedef PolicyValue_var _var_type;
-
+    
     static void _tao_any_destructor (void *);
     CORBA::PolicyType ptype;
     CORBA::OctetSeq pvalue;
   };
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_MESSAGING_POLICYVALUESEQ_CH_)
 #define _MESSAGING_POLICYVALUESEQ_CH_
-
+  
   class PolicyValueSeq;
-
+  
   typedef
     TAO_VarSeq_Var_T<
         PolicyValueSeq,
         PolicyValue
       >
     PolicyValueSeq_var;
-
+  
   typedef
     TAO_Seq_Out_T<
         PolicyValueSeq,
@@ -123,7 +119,7 @@ namespace Messaging
         PolicyValue
       >
     PolicyValueSeq_out;
-
+  
   class TAO_Export PolicyValueSeq
     : public
         TAO_Unbounded_Sequence<
@@ -136,27 +132,27 @@ namespace Messaging
     PolicyValueSeq (
         CORBA::ULong max,
         CORBA::ULong length,
-        PolicyValue* buffer,
+        PolicyValue* buffer, 
         CORBA::Boolean release = 0
       );
     PolicyValueSeq (const PolicyValueSeq &);
     ~PolicyValueSeq (void);
-
+    
     static void _tao_any_destructor (void *);
-
+    
     typedef PolicyValueSeq_var _var_type;
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const IOP::ComponentId TAG_POLICIES = 2U;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const IOP::ServiceId INVOCATION_POLICIES = 7U;
 
 // TAO_IDL - Generated from
@@ -196,15 +192,11 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_Messaging_PolicyValueSeq_H_ */
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:955
+// be\be_codegen.cpp:1062
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
 
 #include /**/ "ace/post.h"
 
