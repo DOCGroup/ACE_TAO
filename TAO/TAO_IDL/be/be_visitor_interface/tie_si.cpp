@@ -182,7 +182,7 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
       << fulltiename
       << "<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)" << be_nl
       << "{" << be_idt_nl
-      << "if (! ::CORBA::is_nil (this->poa_.in ()))" << be_idt_nl
+      << "if (! CORBA::is_nil (this->poa_.in ()))" << be_idt_nl
       << "{" << be_idt_nl
       << "return PortableServer::POA::_duplicate (this->poa_.in ());" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
