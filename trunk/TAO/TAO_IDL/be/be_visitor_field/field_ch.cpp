@@ -271,17 +271,24 @@ be_visitor_field_ch::visit_predefined_type (be_predefined_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_type *bt;
+  be_typedef *td = this->ctx_->alias ();
 
-  if (this->ctx_->alias ())
+  if (td != 0)
     {
-      bt = this->ctx_->alias ();
+      bt = td;
     }
   else
     {
       bt = node;
     }
-    
-  *os << "::";
+  
+  // If we are a typedef of a basic type, ACE_NESTED_CLASS might
+  // be emitted as part of the type name, in which case the '::'
+  // would be incorrect for certain expansions of the macro. 
+  if (td == 0)
+    {  
+      *os << "::";
+    }
 
   if (node->pt () == AST_PredefinedType::PT_object)
     {
