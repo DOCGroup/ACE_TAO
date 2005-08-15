@@ -103,7 +103,7 @@ public:
 
   /// @brief Create log object
   ///
-  /// Create and activate Log object for log channel @a id.
+  /// Create Log object for log channel @a id.
   ///
   /// @param id log id
   ///
@@ -113,6 +113,17 @@ public:
     create_log_object (DsLogAdmin::LogId id
 		       ACE_ENV_ARG_DECL)			= 0;
 
+  /// @brief Create log servant
+  ///
+  /// Create Log servant for log channel @a id.
+  ///
+  /// @param id log id
+  ///
+  /// @return pointer to servant
+  virtual PortableServer::ServantBase*
+    create_log_servant (DsLogAdmin::LogId id
+			ACE_ENV_ARG_DECL)			= 0;
+  
   /// @brief Get log record store 
   ///
   /// Get/Create a log record store for log channel @a id.
