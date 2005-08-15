@@ -38,6 +38,7 @@
 
 #include "tao/RTScheduling/RTScheduler_include.pidl"
 #include "tao/RTCORBA/RTCORBA_include.pidl"
+#include "tao/TimeBase.pidl"
 
 module MUF_Scheduling
 {

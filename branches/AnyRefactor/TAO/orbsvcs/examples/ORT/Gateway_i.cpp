@@ -11,7 +11,7 @@
 #include "tao/LocalObject.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/NVList.h"
-
+#include "tao/AnyTypeCode/ExceptionA.h"
 
 ACE_RCSID (ORT,
            Gateway_i,
