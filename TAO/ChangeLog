@@ -1,7 +1,18 @@
+Mon Aug 15 10:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Cubit/TAO/MT_Cubit/tmplinst.cpp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/tmplinst.cpp:
+        * orbsvcs/tests/Concurrency/tmplinst.cpp:
+          Removed these files
+
+        * performance-tests/Cubit/TAO/MT_Cubit/MT_Cubit.mpc:
+        * performance-tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.mpc:
+          Removed the files above
+
 Fri Aug 12 22:15:14 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/nested_scope.idl:
-        
+
           Added the IDL test file sent in by Nikolay Metchev
           <n.metchev@teamphone.com> to the test suite.
 
