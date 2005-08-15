@@ -5,7 +5,9 @@
 #include "XercesString.h"
 using xercesc::XMLString;
 
-namespace Config_Handler
+namespace CIAO
+{
+namespace Config_Handlers
 {
 
   XStr::XStr (const char* str)
@@ -137,4 +139,5 @@ namespace Config_Handler
     return o;
   }
 
+}
 }

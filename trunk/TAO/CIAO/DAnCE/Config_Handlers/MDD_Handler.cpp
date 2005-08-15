@@ -48,8 +48,8 @@ namespace CIAO
           
         }
       return true;
-    }
-
+    }  
+    
     bool
     MDD_Handler::mono_deployment_description (
         const MonolithicDeploymentDescription& desc,
@@ -152,8 +152,57 @@ namespace CIAO
         }
       
       return true;
-    }
+    }  
+
+
+      MonolithicDeploymentDescription
+      MDD_Handler::mono_deployment_description(
+	  const Deployment::MonolithicDeploymentDescription &src)
+      {
+	  //Get the name and instantiate the mdd
+	  XMLSchema::string < char > name ((src.name));
+	  MonolithicDeploymentDescription mdd (name);
+
+	  //Get the source(s) from the IDL and store them
+	  size_t total = src.source.length();
+	  for(size_t i = 0; i < total; i++)
+	  {
+	      XMLSchema::string< char > curr ((src.source[i]));
+	      mdd.add_source(curr);
+	  }
+
+	  //Get the artifactRef(s) from the IDL and store them
+	  total = src.artifactRef.length();
+	  for(size_t j = 0; j < total; j++)
+	  {
+	      ACE_CString tmp;
+	      ADD_Handler::IDREF.find_ref(src.artifactRef[j], tmp);
+	      XMLSchema::IDREF< ACE_TCHAR > curr(tmp.c_str());
+	      mdd.add_artifact (curr);
+	  }
+
+	  //Get the execParameter(s) from the IDL and store them
+	  total = src.execParameter.length();
+	  for(size_t k = 0; k < total; k++)
+	  {
+	      mdd.add_execParameter (
+		  Property_Handler::get_property (
+		      src.execParameter[k]));
+	  }
+
+	  //Get the deployRequirement(s) from the IDL and store them
+	  total = src.deployRequirement.length();
+	  for(size_t l = 0; l < total; l++)
+	  {
+	      mdd.add_deployRequirement(
+		  Req_Handler::get_requirement (
+		      src.deployRequirement[l]));
+	  }
+
+	  return mdd;
+      }
 
   }
 
 }
+      

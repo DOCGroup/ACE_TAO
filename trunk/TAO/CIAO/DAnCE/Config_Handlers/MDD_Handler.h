@@ -52,6 +52,9 @@ namespace CIAO
       static bool mono_deployment_descriptions (
           const DeploymentPlan &src,
           Deployment::MonolithicDeploymentDescriptions &dest);
+      
+      static MonolithicDeploymentDescription mono_deployment_description(
+	  const Deployment::MonolithicDeploymentDescription &src);
 
       static IDREF_Base IDREF;
       

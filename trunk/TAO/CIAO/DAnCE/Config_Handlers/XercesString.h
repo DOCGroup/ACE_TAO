@@ -18,7 +18,9 @@
 // Utility class that provides a std::string like facade to XMLString.
 // Doesn't implement all of the methods of std::string.
 
-namespace Config_Handler
+namespace CIAO
+{
+namespace Config_Handlers
 {
 
   class XStr
@@ -67,7 +69,7 @@ namespace Config_Handler
   operator<< (std::ostream& o, XStr const& str);
   
 }
-
+}
 #include /**/ "ace/post.h"
 
 #endif /* _XERCESSTRING_H */
