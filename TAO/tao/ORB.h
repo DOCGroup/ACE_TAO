@@ -85,6 +85,8 @@ namespace CORBA
   class Policy;
   typedef Policy *Policy_ptr;
 
+  typedef CORBA::ULong PolicyType;
+
   // TODO - implement OMG's 'ORBid CORBA::ORB::id (void)'.
 
   typedef
