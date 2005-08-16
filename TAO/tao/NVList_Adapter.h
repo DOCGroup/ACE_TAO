@@ -55,6 +55,5 @@ public:
 
 };
 
-
 #include /**/ "ace/post.h"
 #endif /* TAO_NVLIST_ADAPTER_H */

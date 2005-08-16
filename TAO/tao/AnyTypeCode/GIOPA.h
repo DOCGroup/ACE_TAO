@@ -36,6 +36,7 @@
 #include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
 #include "tao/GIOPC.h"
 #include "tao/AnyTypeCode/IOP_IORA.h"
+#include "tao/AnyTypeCode/OctetSeqA.h"
 
 
 // TAO_IDL - Generated from

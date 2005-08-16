@@ -203,15 +203,15 @@ namespace GIOP
     void ior (const ACE_NESTED_CLASS (GIOP, IORAddressingInfo) &);
     const ACE_NESTED_CLASS (GIOP, IORAddressingInfo) &ior (void) const;
     ACE_NESTED_CLASS (GIOP, IORAddressingInfo) &ior (void);
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_union/union_ch.cpp:147
-    
+
     void _default (void);
   private:
     CORBA::Short disc_;
     CORBA::Short holder_;
-    
+
     union
     {
       // TAO_IDL - Generated from
@@ -224,7 +224,7 @@ namespace GIOP
       // be\be_visitor_union_branch/private_ch.cpp:526
       ACE_NESTED_CLASS (GIOP, IORAddressingInfo) *ior_;
     } u_;
-    
+
     // TAO extension - frees any allocated storage.
     void _reset (CORBA::Short, CORBA::Boolean /* finalize */);
   };
@@ -264,6 +264,10 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, GIOP::TargetAddress &);
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:1062
+
+#if defined (__ACE_INLINE__)
+#include "GIOPC.inl"
+#endif /* defined INLINE */
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
