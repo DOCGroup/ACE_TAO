@@ -9,6 +9,7 @@
  */
 
 #include "tao/RTCORBA/RTCORBA_include.pidl"
+#include "tao/Policy_Forward.pidl"
 
 module CIAO
 {
