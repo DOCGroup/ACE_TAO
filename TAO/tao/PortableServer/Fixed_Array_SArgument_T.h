@@ -65,7 +65,7 @@ namespace TAO
     Inout_Fixed_Array_SArgument_T (void);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
+    virtual CORBA::Boolean demarshal (TAO_InputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
