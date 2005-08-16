@@ -21,7 +21,6 @@
 #include "ace/Task.h"
 #include "ace/Auto_Event.h"
 #include "tao/PortableServer/ServantLocatorC.h"
-#include "tao/AnyTypeCode/Any.h"
 #include "tao/CDR.h"
 
 class test_i :
@@ -246,39 +245,6 @@ overwrite_servant_manager (PortableServer::POA_ptr poa)
   return succeed;
 }
 
-bool
-test_any_insertion (PortableServer::ServantLocator_ptr locator)
-{
-  bool succeed = false;
-  ACE_TRY_NEW_ENV
-    {
-      CORBA::Any any;
-      any <<= locator;
-
-      TAO_OutputCDR stream;
-      CORBA::Boolean result = stream << any;
-    }
-  ACE_CATCH (CORBA::MARSHAL, ex)
-    {
-      if ((ex.minor() & 0xFFFU) == 4)
-        {
-          succeed = true;
-        }
-    }
-  ACE_CATCHANY
-    {
-    }
-  ACE_ENDTRY;
-
-  if (!succeed)
-  {
-    ACE_ERROR ((LM_ERROR,
-                "(%t) ERROR, insert of local interface did not fail correctly\n"));
-  }
-
-  return succeed;
-}
-
 int
 main (int argc, char **argv)
 {
@@ -345,9 +311,6 @@ main (int argc, char **argv)
       child_poa->set_servant_manager (&servant_locator
                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
-      if (!test_any_insertion (&servant_locator))
-        retval = -1;
 
       if (!overwrite_servant_manager (child_poa.in()))
         retval = -1;
