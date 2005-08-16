@@ -51,6 +51,9 @@ project {
     optional(header_pre_extension) {
       commandflags(!-Sc && !-SS) += S_T
     }
+    optional(header_pre_extension) {
+      commandflags(-GA) += A
+    }
   }
 
   after    += TAO_IDL_EXE
