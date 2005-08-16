@@ -11,6 +11,7 @@
 #include "JAWS/Data_Block.h"
 #include "JAWS/Policy.h"
 #include "JAWS/Waiter.h"
+#include "JAWS/Filecache.h"
 
 ACE_RCSID(JAWS, IO_Handler, "$Id$")
 
