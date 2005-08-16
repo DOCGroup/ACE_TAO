@@ -118,9 +118,8 @@ public:
       ));
 
 protected:
-  virtual DsLogAdmin::Log_ptr
-    create_log_reference (DsLogAdmin::LogId id
-			  ACE_ENV_ARG_DECL);
+  virtual CORBA::RepositoryId
+    create_repositoryid ();
 	
   virtual PortableServer::ServantBase*
     create_log_servant (DsLogAdmin::LogId id

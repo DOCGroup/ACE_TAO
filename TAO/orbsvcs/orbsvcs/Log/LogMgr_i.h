@@ -99,7 +99,7 @@ public:
   ///
   virtual DsLogAdmin::Log_ptr 
     create_log_reference (DsLogAdmin::LogId id
-			  ACE_ENV_ARG_DECL)			= 0;
+			  ACE_ENV_ARG_DECL);
 
   /// @brief Create log object
   ///
@@ -112,6 +112,15 @@ public:
   virtual DsLogAdmin::Log_ptr 
     create_log_object (DsLogAdmin::LogId id
 		       ACE_ENV_ARG_DECL);
+
+  /// @brief Create log repository id
+  ///
+  /// Return repository id for log
+  ///
+  /// @return repository id
+  ///
+  virtual CORBA::RepositoryId
+    create_repositoryid  ()					= 0;
 
   /// @brief Create log servant
   ///
