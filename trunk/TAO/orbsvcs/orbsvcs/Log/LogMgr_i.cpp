@@ -107,6 +107,28 @@ TAO_LogMgr_i::create_objectid (DsLogAdmin::LogId id)
 }
 
 DsLogAdmin::Log_ptr
+TAO_LogMgr_i::create_log_reference (DsLogAdmin::LogId id
+				    ACE_ENV_ARG_DECL)
+{
+  PortableServer::ObjectId_var oid =
+    this->create_objectid (id);
+  const char *intf =
+    this->create_repositoryid ();
+
+  CORBA::Object_var obj =
+    this->log_poa_->create_reference_with_id (oid.in (),
+					      intf
+					      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
+
+  DsLogAdmin::Log_var log =
+    DsLogAdmin::Log::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
+
+  return log._retn();
+}
+
+DsLogAdmin::Log_ptr
 TAO_LogMgr_i::create_log_object (DsLogAdmin::LogId id
 				 ACE_ENV_ARG_DECL)
 {

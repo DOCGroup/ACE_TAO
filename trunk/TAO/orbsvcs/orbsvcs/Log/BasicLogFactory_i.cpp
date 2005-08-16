@@ -103,27 +103,10 @@ TAO_BasicLogFactory_i::create_with_id (DsLogAdmin::LogId id,
   return basic_log._retn ();
 }
 
-DsLogAdmin::Log_ptr
-TAO_BasicLogFactory_i::create_log_reference (DsLogAdmin::LogId id
-					     ACE_ENV_ARG_DECL)
+CORBA::RepositoryId
+TAO_BasicLogFactory_i::create_repositoryid ()
 {
-  PortableServer::ObjectId_var oid =
-    this->create_objectid (id);
-  const char *intf =
-	"IDL:omg.org/DsLogAdmin:BasicLog:1.0";
-
-  CORBA::Object_var obj =
-    this->log_poa_->create_reference_with_id (oid.in (),
-					      intf
-					      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
-
-  DsLogAdmin::BasicLog_var basic_log =
-    DsLogAdmin::BasicLog::_narrow (obj.in ()
-				   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
-
-  return basic_log._retn();
+  return "IDL:omg.org/DsLogAdmin:BasicLog:1.0";
 }
 
 PortableServer::ServantBase*

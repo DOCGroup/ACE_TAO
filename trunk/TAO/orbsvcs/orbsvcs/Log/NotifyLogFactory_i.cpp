@@ -174,27 +174,10 @@ TAO_NotifyLogFactory_i::create_with_id (
   return DsNotifyLogAdmin::NotifyLog::_nil ();
 }
 
-DsLogAdmin::Log_ptr
-TAO_NotifyLogFactory_i::create_log_reference (DsLogAdmin::LogId id
-					      ACE_ENV_ARG_DECL)
+CORBA::RepositoryId
+TAO_NotifyLogFactory_i::create_repositoryid ()
 {
-  PortableServer::ObjectId_var oid =
-    this->create_objectid (id);
-  const char *intf =
-    "IDL:omg.org/DsNotifyLogAdmin:NotifyLog:1.0";
-
-  CORBA::Object_var obj =
-    this->log_poa_->create_reference_with_id (oid.in (),
-					      intf
-					      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
-
-  DsEventLogAdmin::EventLog_var event_log =
-    DsEventLogAdmin::EventLog::_narrow (obj.in ()
-					ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
-
-  return event_log._retn();
+  return "IDL:omg.org/DsNotifyLogAdmin:NotifyLog:1.0";
 }
 
 PortableServer::ServantBase*
@@ -213,7 +196,6 @@ TAO_NotifyLogFactory_i::create_log_servant (DsLogAdmin::LogId id
                                      id
                                      ),
                     CORBA::NO_MEMORY ());
-
   ACE_CHECK_RETURN (0);
 
   notify_log_i->init (ACE_ENV_SINGLE_ARG_PARAMETER);
