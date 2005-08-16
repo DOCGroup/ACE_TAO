@@ -243,17 +243,6 @@ TAO_CodeGen::start_client_header (const char *fname)
   *this->client_header_ << "#define TAO_EXPORT_MACRO "
                         << be_global->stub_export_macro ();
 
-  *this->client_header_ << "\n\n#if defined(_MSC_VER)\n"
-                        << "#pragma warning(push)\n"
-                        << "#pragma warning(disable:4250)";
-
-  if (be_global->use_raw_throw ())
-    {
-      *this->client_header_ << "\n#pragma warning(disable:4290)";
-    }
-
-  *this->client_header_ << "\n#endif /* _MSC_VER */";
-
   return 0;
 }
 
@@ -461,18 +450,6 @@ TAO_CodeGen::start_server_header (const char *fname)
         }
     }
 
-  *this->server_header_ << be_nl << be_nl
-                        << "#if defined(_MSC_VER)\n"
-                        << "#pragma warning(push)\n"
-                        << "#pragma warning(disable:4250)";
-
-  if (be_global->use_raw_throw ())
-    {
-      *this->server_header_ << "\n#pragma warning(disable:4290)";
-    }
-
-  *this->server_header_ << "\n#endif /* _MSC_VER */";
-
   if (be_global->skel_export_include () != 0)
     {
       *this->server_header_ << "\n\n#include \""
@@ -539,17 +516,6 @@ TAO_CodeGen::start_server_template_header (const char *fname)
                                      << be_global->pre_include ()
                                      << "\"";
     }
-
-  *this->server_template_header_ << "\n\n#if defined(_MSC_VER)\n"
-                                 << "#pragma warning(push)\n"
-                                 << "#pragma warning(disable:4250)\n";
-
-  if (be_global->use_raw_throw ())
-    {
-      *this->server_template_header_ << "#pragma warning(disable:4290)\n";
-    }
-
-  *this->server_template_header_ << "#endif /* _MSC_VER */\n";
 
   return 0;
 }
@@ -1072,10 +1038,6 @@ TAO_CodeGen::end_client_header (void)
       *this->client_header_ << "#endif /* defined INLINE */";
     }
 
-  *this->client_header_ << "\n\n#if defined(_MSC_VER)\n"
-                        << "#pragma warning(pop)\n"
-                        << "#endif /* _MSC_VER */";
-
   // Code to put the last #endif.
   *this->client_header_ << "\n\n";
 
@@ -1116,10 +1078,6 @@ TAO_CodeGen::end_server_header (void)
                             << "\"\n";
       *this->server_header_ << "#endif /* defined INLINE */";
     }
-
-  *this->server_header_ << "\n\n#if defined(_MSC_VER)\n"
-                        << "#pragma warning(pop)\n"
-                        << "#endif /* _MSC_VER */";
 
   // Code to put the last #endif.
   *this->server_header_ << "\n\n";
@@ -1219,10 +1177,6 @@ TAO_CodeGen::end_server_template_header (void)
       << be_global->be_get_server_template_skeleton_fname (1)
       << "\")";
   *this->server_template_header_ << "\n#endif /* defined REQUIRED PRAGMA */";
-
-  *this->server_template_header_ << "\n\n#if defined(_MSC_VER)\n"
-                                 << "#pragma warning(pop)\n"
-                                 << "#endif /* _MSC_VER */";
 
   // Code to put the last #endif.
   *this->server_template_header_ << "\n\n";

@@ -1,7 +1,17 @@
+Tue Aug 16 18:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp:
+          Removed pragma push/pop for msvs, those warnings are already
+          disabled in general
+
+        * tao/Array_VarOut_T.{h,inl}:
+          In the TAO_Array_Forany_T make the pointer in the constructor
+          const to get things compiling with the new any insertion
+
 Mon Aug 15 19:56:10 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_nodule/module_ch.cpp:
-        
+
           Where namespace openings and closings are generated, add
           generation of the same openings and closings in the *A.h
           file, if the -GA option is being used. This change ensures
@@ -12,20 +22,20 @@ Mon Aug 15 19:52:50 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/PI/PICurrent_Loader.cpp:
         * tao/PI/PICurrent_Loader.h:
-        
+
           Change library name in ACE_FACTORY_DEFINE and ACE_FACTORY_DECLARE
           to TAO_PI (where the modified files are located) instad of TAO.
 
 Mon Aug 15 19:14:16 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/tests/BiDir_CORBALOC/TimeServer.cpp:
-        
+
           Added #include of "tao/AnyTypeCode/Any.h".
 
 Mon Aug 15 19:10:43 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/PortableGroup.mpc:
-        
+
           Removed the extra subgroup labeled OBRSVCS_COMPONENTS. This is
           not used on any platform and it creates an extra subdirectory
           in the MSVC 7.1 solution browser.
