@@ -26,90 +26,54 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:153
+// be\be_codegen.cpp:754
 
-#ifndef _TAO_IDL_ORIG_TAOA_H_
-#define _TAO_IDL_ORIG_TAOA_H_
+#ifndef _TAO_IDL_ANYTYPECODE_TAOA_H_
+#define _TAO_IDL_ANYTYPECODE_TAOA_H_
 
 #include /**/ "ace/pre.h"
 
-
-#include "ace/config-all.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
 #include "tao/TAOC.h"
+#include "tao/AnyTypeCode/PolicyA.h"
+#include "tao/AnyTypeCode/TimeBaseA.h"
+#include "tao/AnyTypeCode/Messaging_SyncScopeA.h"
 
-#if defined (TAO_EXPORT_MACRO)
-#undef TAO_EXPORT_MACRO
-#endif
-#define TAO_EXPORT_MACRO TAO_AnyTypeCode_Export
-
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:59
 
 namespace TAO
 {
+
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
 
   extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_BufferingConstraintMode;
 
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
 
   extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_BufferingConstraint;
 
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
 
   extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_BufferingConstraintPolicy;
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:86
 
 } // module TAO
 
 // TAO_IDL - Generated from
-// be\be_visitor_structure/any_op_ch.cpp:52
+// be\be_visitor_structure/any_op_ch.cpp:53
 
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const TAO::BufferingConstraint &); // copying version
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, TAO::BufferingConstraint*); // noncopying version
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, TAO::BufferingConstraint *&); // deprecated
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, const TAO::BufferingConstraint *&);
 
-// TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
-
-TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, TAO::BufferingConstraintPolicy_ptr); // copying
-TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, TAO::BufferingConstraintPolicy_ptr *); // non-copying
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, TAO::BufferingConstraintPolicy_ptr &);
-
-// TAO_IDL - Generated from
-// be\be_codegen.cpp:955
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
-
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
-
-

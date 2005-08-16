@@ -26,10 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:153
+// be\be_codegen.cpp:154
 
-#ifndef _TAO_IDL_ORIG_PORTABLEINTERCEPTORC_H_
-#define _TAO_IDL_ORIG_PORTABLEINTERCEPTORC_H_
+#ifndef _TAO_IDL_PORTABLEINTERCEPTORC_H_
+#define _TAO_IDL_PORTABLEINTERCEPTORC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -52,78 +52,69 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_Export
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
-
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:49
 
 namespace PortableInterceptor
 {
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const PortableInterceptor::AdapterState HOLDING = 0;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const PortableInterceptor::AdapterState ACTIVE = 1;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const PortableInterceptor::AdapterState DISCARDING = 2;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const PortableInterceptor::AdapterState INACTIVE = 3;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const PortableInterceptor::AdapterState NON_EXISTENT = 4;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const PortableInterceptor::ReplyStatus SUCCESSFUL = 0;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const PortableInterceptor::ReplyStatus SYSTEM_EXCEPTION = 1;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const PortableInterceptor::ReplyStatus USER_EXCEPTION = 2;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const PortableInterceptor::ReplyStatus LOCATION_FORWARD = 3;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const PortableInterceptor::ReplyStatus TRANSPORT_RETRY = 4;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const PortableInterceptor::ReplyStatus UNKNOWN = 5;
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:78
 
 } // module PortableInterceptor
 
@@ -136,15 +127,7 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:955
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
+// be\be_codegen.cpp:1028
 
 #include /**/ "ace/post.h"
 

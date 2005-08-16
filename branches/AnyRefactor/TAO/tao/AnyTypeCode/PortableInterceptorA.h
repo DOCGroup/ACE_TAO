@@ -26,69 +26,30 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:153
+// be\be_codegen.cpp:754
 
-#ifndef _TAO_IDL_ORIG_PORTABLEINTERCEPTORA_H_
-#define _TAO_IDL_ORIG_PORTABLEINTERCEPTORA_H_
+#ifndef _TAO_IDL_ANYTYPECODE_PORTABLEINTERCEPTORA_H_
+#define _TAO_IDL_ANYTYPECODE_PORTABLEINTERCEPTORA_H_
 
 #include /**/ "ace/pre.h"
 
-
-#include "ace/config-all.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
 #include "tao/PortableInterceptorC.h"
+#include "tao/AnyTypeCode/PI_ForwardA.h"
+#include "tao/AnyTypeCode/Messaging_SyncScopeA.h"
 
-#if defined (TAO_EXPORT_MACRO)
-#undef TAO_EXPORT_MACRO
-#endif
-#define TAO_EXPORT_MACRO TAO_AnyTypeCode_Export
-
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:59
 
 namespace PortableInterceptor
 {
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:86
 
 } // module PortableInterceptor
-
-// TAO_IDL - Generated from
-// be\be_visitor_traits.cpp:61
-
-// Traits specializations.
-namespace TAO
-{
-}
-
-// TAO_IDL - Generated from
-// be\be_codegen.cpp:955
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
 
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
-
-

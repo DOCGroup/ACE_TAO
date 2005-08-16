@@ -30,6 +30,8 @@
 #include "Policy_ForwardC.h"
 #include "CORBA_methods.h"
 #include "VarOut_T.h"
+#include "Seq_Var_T.h"
+#include "Seq_Out_T.h"
 
 #include "ace/Thread_Mutex.h"
 #include "ace/Guard_T.h"

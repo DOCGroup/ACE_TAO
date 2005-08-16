@@ -32,13 +32,10 @@
 #include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
 #include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
 #include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
-#include "tao/AnyTypeCode/Recursive_Type_TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Impl_T.h"
 #include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
-
-#include "tao/AnyTypeCode/TimeBaseA.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/alias_typecode.cpp:50
@@ -51,7 +48,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:tao/TAO/BufferingConstraintMode:1.0",
     "BufferingConstraintMode",
     &CORBA::_tc_ushort);
-
+  
 namespace TAO
 {
   ::CORBA::TypeCode_ptr const _tc_BufferingConstraintMode =
@@ -69,7 +66,7 @@ static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> co
     { "timeout", &TimeBase::_tc_TimeT },
     { "message_count", &CORBA::_tc_ulong },
     { "message_bytes", &CORBA::_tc_ulong }
-
+    
   };
 static TAO::TypeCode::Struct<char const *,
                       CORBA::TypeCode_ptr const *,
@@ -81,7 +78,7 @@ static TAO::TypeCode::Struct<char const *,
     "BufferingConstraint",
     _tao_fields_TAO_BufferingConstraint,
     4);
-
+  
 namespace TAO
 {
   ::CORBA::TypeCode_ptr const _tc_BufferingConstraint =
@@ -99,7 +96,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:tao/TAO/BufferingConstraintPolicy:1.0",
     "BufferingConstraintPolicy");
-
+  
 namespace TAO
 {
   ::CORBA::TypeCode_ptr const _tc_BufferingConstraintPolicy =
@@ -108,7 +105,7 @@ namespace TAO
 
 
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -162,81 +159,6 @@ CORBA::Boolean operator>>= (
         _tao_any,
         TAO::BufferingConstraint::_tao_any_destructor,
         TAO::_tc_BufferingConstraint,
-        _tao_elem
-      );
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<TAO::BufferingConstraintPolicy>::to_object (
-      CORBA::Object_ptr &_tao_elem
-    ) const
-  {
-    _tao_elem = CORBA::Object::_duplicate (this->value_);
-    return true;
-  }
-}
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<TAO::BufferingConstraintPolicy>::marshal_value (TAO_OutputCDR &)
-  {
-    return false;
-  }
-
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<TAO::BufferingConstraintPolicy>::demarshal_value (TAO_InputCDR &)
-  {
-    return false;
-  }
-}
-
-// Copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    TAO::BufferingConstraintPolicy_ptr _tao_elem
-  )
-{
-  TAO::BufferingConstraintPolicy_ptr _tao_objptr =
-    TAO::BufferingConstraintPolicy::_duplicate (_tao_elem);
-  _tao_any <<= &_tao_objptr;
-}
-
-// Non-copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    TAO::BufferingConstraintPolicy_ptr *_tao_elem
-  )
-{
-  TAO::Any_Impl_T<TAO::BufferingConstraintPolicy>::insert (
-      _tao_any,
-      TAO::BufferingConstraintPolicy::_tao_any_destructor,
-      TAO::_tc_BufferingConstraintPolicy,
-      *_tao_elem
-    );
-}
-
-CORBA::Boolean
-operator>>= (
-    const CORBA::Any &_tao_any,
-    TAO::BufferingConstraintPolicy_ptr &_tao_elem
-  )
-{
-  return
-    TAO::Any_Impl_T<TAO::BufferingConstraintPolicy>::extract (
-        _tao_any,
-        TAO::BufferingConstraintPolicy::_tao_any_destructor,
-        TAO::_tc_BufferingConstraintPolicy,
         _tao_elem
       );
 }
