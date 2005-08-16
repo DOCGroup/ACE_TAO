@@ -1,9 +1,9 @@
-Wed Aug 17 11:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Aug 16 11:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/JAWS2/JAWS/Pipeline_Handler_T.cpp:
           Replaced c-style cast with reinterpret cast
 
-Wed Aug 17 11:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Aug 16 11:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-hpux-11.00.h:
           Added ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
