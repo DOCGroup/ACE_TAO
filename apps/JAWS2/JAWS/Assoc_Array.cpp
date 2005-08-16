@@ -4,11 +4,6 @@
 #define JAWS_ASSOC_ARRAY_CPP
 
 #include "ace/config-all.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "JAWS/Assoc_Array.h"
 
 ACE_RCSID(JAWS, Assoc_Array, "$Id$")
