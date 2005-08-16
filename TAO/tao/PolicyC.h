@@ -577,8 +577,8 @@ TAO::Collocation_Proxy_Broker *
 namespace TAO
 {
 
-#if !defined (_CORBA_POLICY__TRAITS_CH_)
-#define _CORBA_POLICY__TRAITS_CH_
+#if !defined (_CORBA_POLICY__TRAITS_)
+#define _CORBA_POLICY__TRAITS_
 
   template<>
   struct TAO_Export Objref_Traits< ::CORBA::Policy>
@@ -619,8 +619,8 @@ namespace TAO
 
 #endif /* end #if !defined */
 
-#if !defined (_CORBA_POLICYCURRENT__TRAITS_CH_)
-#define _CORBA_POLICYCURRENT__TRAITS_CH_
+#if !defined (_CORBA_POLICYCURRENT__TRAITS_)
+#define _CORBA_POLICYCURRENT__TRAITS_
 
   template<>
   struct TAO_Export Objref_Traits< ::CORBA::PolicyCurrent>

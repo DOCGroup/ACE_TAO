@@ -56,10 +56,10 @@ namespace TAO
         CORBA::tk_sequence,
         &CORBA::_tc_string,
         0U);
-
+      
     ::CORBA::TypeCode_ptr const tc_CORBA_StringSeq_0 =
       &CORBA_StringSeq_0;
-
+    
   }
 }
 
@@ -74,7 +74,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/CORBA/StringSeq:1.0",
     "StringSeq",
     &TAO::TypeCode::tc_CORBA_StringSeq_0);
-
+  
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_StringSeq =
@@ -83,7 +83,7 @@ namespace CORBA
 
 
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_sequence/any_op_cs.cpp:54
 
 

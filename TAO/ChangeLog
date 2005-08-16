@@ -1,3 +1,8 @@
+Tue Aug 16 20:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_interface_fwd/any_op_ch.cpp:
+          Generate the correct export macro
+
 Tue Aug 16 19:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/*:
