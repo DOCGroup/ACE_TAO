@@ -54,6 +54,9 @@ project (XSC_Config_Handlers) : acelib, ciao_deployment_stub, xerces {
     STD_IAD_Handler.cpp
     STD_PC_Intf.cpp
     STD_PCD_Handler.cpp
+    XercesString.cpp
+    PCD_Handler.cpp
+    IRDD_Handler.cpp
   }
 
   Header_Files {
