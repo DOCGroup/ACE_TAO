@@ -1,3 +1,10 @@
+Tue Aug 16 15:16:10 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
+
+	* docs/schema/CIAOServerResources.xsd: Changed to define most of
+	  the RT policy details with "element"s instead of "attribute"s
+	  since "attribute"s  can be optional.  Thanks to Will Otte for
+	  pointing this out.
+
 Tue Aug 16 09:46:45 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/Config_Handlers/Config_Handlers.mpc
