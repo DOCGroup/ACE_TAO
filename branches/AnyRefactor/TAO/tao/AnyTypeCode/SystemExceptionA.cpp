@@ -65,8 +65,6 @@ ACE_RCSID (tao,
     TAO_SYSTEM_EXCEPTION (ACTIVITY_REQUIRED) \
     TAO_SYSTEM_EXCEPTION (THREAD_CANCELLED)
 
-    /**
-     * todo JW
 #define TAO_SYSTEM_EXCEPTION(name) \
 CORBA::TypeCode_ptr \
 CORBA::name ::_tao_type (void) const \
@@ -74,8 +72,7 @@ CORBA::name ::_tao_type (void) const \
   return CORBA::_tc_ ## name; \
 }
 
-
-STANDARD_EXCEPTION_LIST*/
+STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
 namespace TAO

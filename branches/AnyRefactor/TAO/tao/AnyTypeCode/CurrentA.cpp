@@ -25,12 +25,14 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "tao/AnyTypeCode/CurrentA.h"
-
+#include "CurrentA.h"
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
 #include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
+#include "tao/CDR.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "tao/AnyTypeCode/Any_Impl_T.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/objref_typecode.cpp:76
@@ -41,7 +43,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/CORBA/Current:1.0",
     "Current");
-
+  
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_Current =

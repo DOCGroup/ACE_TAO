@@ -28,8 +28,8 @@
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:154
 
-#ifndef _TAO_IDL_ORIG_CURRENTC_H_
-#define _TAO_IDL_ORIG_CURRENTC_H_
+#ifndef _TAO_IDL_CURRENTC_H_
+#define _TAO_IDL_CURRENTC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -56,12 +56,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
-
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:49
 
 namespace CORBA
 {
@@ -151,7 +147,7 @@ namespace CORBA
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:78
 
 } // module CORBA
 
@@ -185,15 +181,11 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:1136
+// be\be_codegen.cpp:1062
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
 
 #include /**/ "ace/post.h"
 
