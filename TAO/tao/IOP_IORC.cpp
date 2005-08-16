@@ -26,16 +26,12 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:291
+// be\be_codegen.cpp:288
 
 
 #include "IOP_IORC.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
-
-#if defined (__BORLANDC__)
-#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
-#endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
@@ -72,7 +68,7 @@ IOP::TaggedProfileSeq::TaggedProfileSeq (
     CORBA::ULong max
   )
   : TAO_Unbounded_Sequence<
-        IOP::TaggedProfile
+        TaggedProfile
       >
     (max)
 {}
@@ -84,7 +80,7 @@ IOP::TaggedProfileSeq::TaggedProfileSeq (
     CORBA::Boolean release
   )
   : TAO_Unbounded_Sequence<
-        IOP::TaggedProfile
+        TaggedProfile
       >
     (max, length, buffer, release)
 {}
@@ -93,7 +89,7 @@ IOP::TaggedProfileSeq::TaggedProfileSeq (
     const TaggedProfileSeq &seq
   )
   : TAO_Unbounded_Sequence<
-        IOP::TaggedProfile
+        TaggedProfile
       >
     (seq)
 {}
@@ -151,7 +147,7 @@ IOP::MultipleComponentProfile::MultipleComponentProfile (
     CORBA::ULong max
   )
   : TAO_Unbounded_Sequence<
-        IOP::TaggedComponent
+        TaggedComponent
       >
     (max)
 {}
@@ -163,7 +159,7 @@ IOP::MultipleComponentProfile::MultipleComponentProfile (
     CORBA::Boolean release
   )
   : TAO_Unbounded_Sequence<
-        IOP::TaggedComponent
+        TaggedComponent
       >
     (max, length, buffer, release)
 {}
@@ -172,7 +168,7 @@ IOP::MultipleComponentProfile::MultipleComponentProfile (
     const MultipleComponentProfile &seq
   )
   : TAO_Unbounded_Sequence<
-        IOP::TaggedComponent
+        TaggedComponent
       >
     (seq)
 {}
@@ -204,7 +200,7 @@ IOP::TaggedComponentList::TaggedComponentList (
     CORBA::ULong max
   )
   : TAO_Unbounded_Sequence<
-        IOP::TaggedComponent
+        TaggedComponent
       >
     (max)
 {}
@@ -216,7 +212,7 @@ IOP::TaggedComponentList::TaggedComponentList (
     CORBA::Boolean release
   )
   : TAO_Unbounded_Sequence<
-        IOP::TaggedComponent
+        TaggedComponent
       >
     (max, length, buffer, release)
 {}
@@ -225,7 +221,7 @@ IOP::TaggedComponentList::TaggedComponentList (
     const TaggedComponentList &seq
   )
   : TAO_Unbounded_Sequence<
-        IOP::TaggedComponent
+        TaggedComponent
       >
     (seq)
 {}
@@ -257,7 +253,7 @@ IOP::TaggedComponentSeq::TaggedComponentSeq (
     CORBA::ULong max
   )
   : TAO_Unbounded_Sequence<
-        IOP::TaggedComponent
+        TaggedComponent
       >
     (max)
 {}
@@ -269,7 +265,7 @@ IOP::TaggedComponentSeq::TaggedComponentSeq (
     CORBA::Boolean release
   )
   : TAO_Unbounded_Sequence<
-        IOP::TaggedComponent
+        TaggedComponent
       >
     (max, length, buffer, release)
 {}
@@ -278,7 +274,7 @@ IOP::TaggedComponentSeq::TaggedComponentSeq (
     const TaggedComponentSeq &seq
   )
   : TAO_Unbounded_Sequence<
-        IOP::TaggedComponent
+        TaggedComponent
       >
     (seq)
 {}
@@ -323,7 +319,7 @@ IOP::ServiceContextList::ServiceContextList (
     CORBA::ULong max
   )
   : TAO_Unbounded_Sequence<
-        IOP::ServiceContext
+        ServiceContext
       >
     (max)
 {}
@@ -335,7 +331,7 @@ IOP::ServiceContextList::ServiceContextList (
     CORBA::Boolean release
   )
   : TAO_Unbounded_Sequence<
-        IOP::ServiceContext
+        ServiceContext
       >
     (max, length, buffer, release)
 {}
@@ -344,7 +340,7 @@ IOP::ServiceContextList::ServiceContextList (
     const ServiceContextList &seq
   )
   : TAO_Unbounded_Sequence<
-        IOP::ServiceContext
+        ServiceContext
       >
     (seq)
 {}
