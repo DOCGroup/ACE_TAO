@@ -25,13 +25,12 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "PS_ForwardC.h"
+#include "PS_ForwardA.h"
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/Any.h"
-#include "tao/AnyTypeCode/OctetSeqA.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/alias_typecode.cpp:50
@@ -44,7 +43,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/PortableServer/ObjectId:2.3",
     "ObjectId",
     &CORBA::_tc_OctetSeq);
-
+  
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_ObjectId =

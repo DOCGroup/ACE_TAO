@@ -26,10 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:153
+// be\be_codegen.cpp:154
 
-#ifndef _TAO_IDL_ORIG_PS_FORWARDC_H_
-#define _TAO_IDL_ORIG_PS_FORWARDC_H_
+#ifndef _TAO_IDL_PS_FORWARDC_H_
+#define _TAO_IDL_PS_FORWARDC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -52,15 +52,6 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_PortableServer_Export
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
-
 class TAO_ServantBase;
 class TAO_ServantBase_var;
 class TAO_Local_ServantBase;
@@ -68,7 +59,7 @@ class TAO_Root_POA;
 class TAO_DynamicImplementation;
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:49
 
 namespace PortableServer
 {
@@ -79,34 +70,29 @@ namespace PortableServer
 
     typedef TAO_Local_ServantBase LocalServantBase;
     typedef TAO_DynamicImplementation DynamicImplementation;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:472
-  
+
   typedef CORBA::OctetSeq ObjectId;
   typedef CORBA::OctetSeq_var ObjectId_var;
   typedef CORBA::OctetSeq_out ObjectId_out;
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_PortableServer_Export ::CORBA::TypeCode_ptr const _tc_ObjectId;
-  
+
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
 
 #if !defined (_PORTABLESERVER_POA__VAR_OUT_CH_)
 #define _PORTABLESERVER_POA__VAR_OUT_CH_
-  
+
   class POA;
   typedef POA *POA_ptr;
-  
+
   typedef
     TAO_Objref_Var_T<
         POA
       >
     POA_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         POA
@@ -116,7 +102,7 @@ namespace PortableServer
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:78
 
 } // module PortableServer
 
@@ -129,15 +115,7 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:955
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
+// be\be_codegen.cpp:1028
 
 #include /**/ "ace/post.h"
 

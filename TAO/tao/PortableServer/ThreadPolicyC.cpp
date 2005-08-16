@@ -26,16 +26,12 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:291
+// be\be_codegen.cpp:277
 
 
 #include "ThreadPolicyC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
-
-#if defined (__BORLANDC__)
-#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
-#endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
@@ -89,14 +85,6 @@ PortableServer::ThreadPolicy::ThreadPolicy (void)
 
 PortableServer::ThreadPolicy::~ThreadPolicy (void)
 {}
-
-void 
-PortableServer::ThreadPolicy::_tao_any_destructor (void *_tao_void_pointer)
-{
-  ThreadPolicy *_tao_tmp_pointer =
-    static_cast<ThreadPolicy *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
 
 PortableServer::ThreadPolicy_ptr
 PortableServer::ThreadPolicy::_narrow (

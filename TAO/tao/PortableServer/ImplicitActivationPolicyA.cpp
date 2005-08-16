@@ -25,7 +25,7 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "ImplicitActivationPolicyC.h"
+#include "ImplicitActivationPolicyA.h"
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
@@ -45,7 +45,7 @@ static char const * const _tao_enumerators_PortableServer_ImplicitActivationPoli
   {
     "IMPLICIT_ACTIVATION",
     "NO_IMPLICIT_ACTIVATION"
-
+    
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -56,7 +56,7 @@ static TAO::TypeCode::Enum<char const *,
     "ImplicitActivationPolicyValue",
     _tao_enumerators_PortableServer_ImplicitActivationPolicyValue,
     2);
-
+  
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_ImplicitActivationPolicyValue =
@@ -74,7 +74,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/PortableServer/ImplicitActivationPolicy:2.3",
     "ImplicitActivationPolicy");
-
+  
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_ImplicitActivationPolicy =
@@ -107,82 +107,7 @@ CORBA::Boolean operator>>= (
     TAO::Any_Basic_Impl_T<PortableServer::ImplicitActivationPolicyValue>::extract (
         _tao_any,
         PortableServer::_tc_ImplicitActivationPolicyValue,
-        _tao_elem
-      );
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<PortableServer::ImplicitActivationPolicy>::to_object (
-      CORBA::Object_ptr &_tao_elem
-    ) const
-  {
-    _tao_elem = CORBA::Object::_duplicate (this->value_);
-    return true;
-  }
-}
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<PortableServer::ImplicitActivationPolicy>::marshal_value (TAO_OutputCDR &)
-  {
-    return false;
-  }
-
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<PortableServer::ImplicitActivationPolicy>::demarshal_value (TAO_InputCDR &)
-  {
-    return false;
-  }
-}
-
-// Copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    PortableServer::ImplicitActivationPolicy_ptr _tao_elem
-  )
-{
-  PortableServer::ImplicitActivationPolicy_ptr _tao_objptr =
-    PortableServer::ImplicitActivationPolicy::_duplicate (_tao_elem);
-  _tao_any <<= &_tao_objptr;
-}
-
-// Non-copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    PortableServer::ImplicitActivationPolicy_ptr *_tao_elem
-  )
-{
-  TAO::Any_Impl_T<PortableServer::ImplicitActivationPolicy>::insert (
-      _tao_any,
-      PortableServer::ImplicitActivationPolicy::_tao_any_destructor,
-      PortableServer::_tc_ImplicitActivationPolicy,
-      *_tao_elem
-    );
-}
-
-CORBA::Boolean
-operator>>= (
-    const CORBA::Any &_tao_any,
-    PortableServer::ImplicitActivationPolicy_ptr &_tao_elem
-  )
-{
-  return
-    TAO::Any_Impl_T<PortableServer::ImplicitActivationPolicy>::extract (
-        _tao_any,
-        PortableServer::ImplicitActivationPolicy::_tao_any_destructor,
-        PortableServer::_tc_ImplicitActivationPolicy,
-        _tao_elem
+        _tao_elem 
       );
 }
 

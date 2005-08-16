@@ -26,16 +26,12 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:291
+// be\be_codegen.cpp:277
 
 
 #include "PS_ForwardC.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
-
-#if defined (__BORLANDC__)
-#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
-#endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
