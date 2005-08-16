@@ -169,7 +169,7 @@ class TAO_Array_Forany_T
 {
 public:
   TAO_Array_Forany_T (void);
-  TAO_Array_Forany_T (T_slice *,
+  TAO_Array_Forany_T (const T_slice *,
                       CORBA::Boolean nocopy = 0);
   TAO_Array_Forany_T (const TAO_Array_Forany_T<T,T_slice,TAG> &);
   ~TAO_Array_Forany_T (void);
