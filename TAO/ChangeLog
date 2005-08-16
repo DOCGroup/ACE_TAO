@@ -1,3 +1,8 @@
+Tue Aug 16 19:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/*:
+          Regenerated
+
 Tue Aug 16 18:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:

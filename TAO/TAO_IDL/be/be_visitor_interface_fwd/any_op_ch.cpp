@@ -19,8 +19,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_interface_fwd, 
-           any_op_ch, 
+ACE_RCSID (be_visitor_interface_fwd,
+           any_op_ch,
            "$Id$")
 
 // ***************************************************************************
@@ -58,17 +58,18 @@ be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (be_interface_fwd *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
+  const char *macro = this->ctx_->export_macro ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  *os << be_global->stub_export_macro () << " void"
+  *os << macro << " void"
       << " operator<<= (CORBA::Any &, " << node->name ()
       << "_ptr); // copying" << be_nl;
-  *os << be_global->stub_export_macro () << " void"
+  *os << macro << " void"
       << " operator<<= (CORBA::Any &, " << node->name ()
       << "_ptr *); // non-copying" << be_nl;
-  *os << be_global->stub_export_macro () << " CORBA::Boolean"
+  *os << macro << " CORBA::Boolean"
       << " operator>>= (const CORBA::Any &, "
       << node->name () << " *&);";
 
