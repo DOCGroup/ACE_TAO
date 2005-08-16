@@ -1,3 +1,14 @@
+Tue Aug 16 19:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-msvc-7.h:
+        * ace/config-win32-msvc-8.h:
+          Removed disabling of warning 4290
+
+        * ace/CORBA_macros.h:
+          Removed special ACE_THROW_RETURN for win32 and HP aCC, this
+          is not needed and only gives a lot of warnings at level 4
+          with msvc
+
 Thu Aug 11 10:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/orbsvcsexe.mpb:
