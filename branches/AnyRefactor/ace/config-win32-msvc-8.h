@@ -99,15 +99,15 @@
 
 // There are too many instances of this warning to fix it right now.
 // Maybe in the future.
+
 // 'this' : used in base member initializer list
 #pragma warning(disable:4355)
+
 // 'class1' : inherits 'class2::member' via dominance
 #pragma warning(disable:4250)
-// C++ Exception Specification ignored
-#pragma warning(disable:4290)
 
-# pragma warning(disable:4231)
 // Disable warning of using Microsoft Extension.
+# pragma warning(disable:4231)
 
 // Disable deprecation warnings, because setting _CRT_SECURE_NO_DEPRECATE
 // did not prevent the warnings.
