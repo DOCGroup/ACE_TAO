@@ -34,7 +34,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
-#include "CurrentC.h"
+#include "tao/CurrentC.h"
 
 
 // TAO_IDL - Generated from
@@ -42,10 +42,10 @@
 
 namespace CORBA
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:49
-  
+
   extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_Current;
 
 // TAO_IDL - Generated from
