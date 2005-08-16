@@ -44,7 +44,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/CORBA/ORBid:1.0",
     "ORBid",
     &CORBA::_tc_string);
-
+  
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ORBid =
@@ -64,7 +64,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/CORBA/Flags:1.0",
     "Flags",
     &CORBA::_tc_ulong);
-
+  
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_Flags =
@@ -84,7 +84,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/CORBA/Identifier:1.0",
     "Identifier",
     &CORBA::_tc_string);
-
+  
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_Identifier =
@@ -104,7 +104,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/CORBA/RepositoryId:1.0",
     "RepositoryId",
     &CORBA::_tc_string);
-
+  
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_RepositoryId =

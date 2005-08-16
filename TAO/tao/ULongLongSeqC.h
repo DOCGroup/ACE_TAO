@@ -26,10 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:153
+// be\be_codegen.cpp:154
 
-#ifndef _TAO_IDL_ORIG_ULONGLONGSEQC_H_
-#define _TAO_IDL_ORIG_ULONGLONGSEQC_H_
+#ifndef _TAO_IDL_ULONGLONGSEQC_H_
+#define _TAO_IDL_ULONGLONGSEQC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -57,31 +57,27 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
-
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:49
 
 namespace CORBA
 {
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_CORBA_ULONGLONGSEQ_CH_)
 #define _CORBA_ULONGLONGSEQ_CH_
-
+  
   class ULongLongSeq;
-
+  
   typedef
     TAO_FixedSeq_Var_T<
         ULongLongSeq,
         CORBA::ULongLong
       >
     ULongLongSeq_var;
-
+  
   typedef
     TAO_Seq_Out_T<
         ULongLongSeq,
@@ -89,7 +85,7 @@ namespace CORBA
         CORBA::ULongLong
       >
     ULongLongSeq_out;
-
+  
   class TAO_Export ULongLongSeq
     : public
         TAO_Unbounded_Sequence<
@@ -102,21 +98,21 @@ namespace CORBA
     ULongLongSeq (
         CORBA::ULong max,
         CORBA::ULong length,
-        CORBA::ULongLong* buffer,
+        CORBA::ULongLong* buffer, 
         CORBA::Boolean release = 0
       );
     ULongLongSeq (const ULongLongSeq &);
     ~ULongLongSeq (void);
-
+    
     static void _tao_any_destructor (void *);
-
+    
     typedef ULongLongSeq_var _var_type;
   };
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:78
 
 } // module CORBA
 
@@ -146,15 +142,11 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_CORBA_ULongLongSeq_H_ */
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:955
+// be\be_codegen.cpp:1062
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
 
 #include /**/ "ace/post.h"
 
