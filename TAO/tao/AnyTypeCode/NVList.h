@@ -29,6 +29,7 @@
 #include "tao/Environment.h"
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/AnyTypeCode/Any.h"
+#include "tao/AnyTypeCode/NVList_Adapter_Impl.h"
 
 class TAO_ORB_Core;
 class TAO_InputCDR;
