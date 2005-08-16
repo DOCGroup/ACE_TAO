@@ -62,3 +62,18 @@ TAO_NVList_Adapter_Impl::create_named_value (
                       CORBA::COMPLETED_NO));
 }
 
+int
+TAO_NVList_Adapter_Impl::Initializer (void)
+{
+  return ACE_Service_Config::process_directive (ace_svc_desc_TAO_NVList_Adapter_Impl);
+}
+
+ACE_STATIC_SVC_DEFINE (TAO_NVList_Adapter_Impl,
+                       ACE_TEXT ("TAO_NVList_Adapter"),
+                       ACE_SVC_OBJ_T,
+                       &ACE_SVC_NAME (TAO_NVList_Adapter_Impl),
+                       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+                       0)
+ACE_FACTORY_DEFINE (TAO_AnyTypeCode, TAO_NVList_Adapter_Impl)
+
+

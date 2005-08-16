@@ -291,6 +291,10 @@ CORBA::ORB::create_list (CORBA::Long count,
 
   if (adapter == 0)
     {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("ORB unable to find the ")
+                  ACE_TEXT ("NVList Adapter instance")));
       ACE_THROW (CORBA::INTERNAL ());
     }
 
@@ -356,6 +360,11 @@ CORBA::ORB::create_named_value (CORBA::NamedValue_ptr &nv
 
   if (adapter == 0)
     {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("ORB unable to find the ")
+                  ACE_TEXT ("NVList Adapter instance")));
+                  
       ACE_THROW (CORBA::INTERNAL ());
     }
 
