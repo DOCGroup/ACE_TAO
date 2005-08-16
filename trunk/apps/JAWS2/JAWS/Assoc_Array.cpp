@@ -65,7 +65,7 @@ JAWS_Assoc_Array<KEY,DATA>::find (const KEY &k)
 }
 
 template <class KEY, class DATA> DATA *
-JAWS_Assoc_Array<KEY,DATA>::find (int i)
+JAWS_Assoc_Array<KEY,DATA>::find_by_index (int i)
 {
   return ((0 <= i) && (i < this->maxsize_)) ? this->d_array_[i] : 0;
 }

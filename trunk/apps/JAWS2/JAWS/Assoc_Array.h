@@ -23,7 +23,7 @@ public:
   DATA * find (const KEY &k);
   // Returns the data associated with key k.  0 if not found.
 
-  DATA * find (int i);
+  DATA * find_by_index (int i);
   // Returns the data associated with array index i.  Returns 0 if the
   // index is invalid.
 
