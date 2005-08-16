@@ -1,6 +1,11 @@
+Tue Aug 16 06:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/JAWS2/JAWS/Assoc_Array.cpp:
+          Removed pragma once
+
 Mon Aug 15 21:55:00 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* apps/JAWS2/JAWS/IO_Handler.cpp: #include "JAWS/Filecach.h" 
+	* apps/JAWS2/JAWS/IO_Handler.cpp: #include "JAWS/Filecach.h"
 	  to get the definition of JAWS_Cached_FILE.  Thanks to
 	  Simon Massey and Steve Huston for reporting this.
 
