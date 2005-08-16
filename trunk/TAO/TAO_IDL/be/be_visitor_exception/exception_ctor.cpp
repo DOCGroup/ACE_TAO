@@ -260,10 +260,11 @@ int be_visitor_exception_ctor::visit_predefined_type (be_predefined_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_type *bt;
+  be_typedef *td = this->ctx_->alias ();
 
-  if (this->ctx_->alias ())
+  if (td != 0)
     {
-      bt = this->ctx_->alias ();
+      bt = td;
     }
   else
     {
@@ -304,7 +305,12 @@ int be_visitor_exception_ctor::visit_predefined_type (be_predefined_type *node)
     {
       if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
         {
-          *os << "::" << bt->nested_type_name (this->ctx_->scope ());
+          if (td == 0)
+            {
+              *os << "::";
+            }
+            
+          *os << bt->nested_type_name (this->ctx_->scope ());
         }
       else
         {
