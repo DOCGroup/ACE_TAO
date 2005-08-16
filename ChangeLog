@@ -1,3 +1,9 @@
+Mon Aug 15 21:55:00 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* apps/JAWS2/JAWS/IO_Handler.cpp: #include "JAWS/Filecach.h" 
+	  to get the definition of JAWS_Cached_FILE.  Thanks to
+	  Simon Massey and Steve Huston for reporting this.
+
 Mon Aug 15 11:03:42 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/MakeProjectCreator/config/dslogadmin_serv.mpb:
