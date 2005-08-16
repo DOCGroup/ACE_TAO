@@ -34,8 +34,8 @@
         line used to start up the NodeApplication.
       </xsd:documentation>
     </xsd:annotation>
-    <xsd:sequence maxOccurs="unbounded">
-      <xsd:element name="arg" type="xsd:string"/>
+    <xsd:sequence>
+      <xsd:element name="arg" type="xsd:string" maxOccurs="unbounded"/>
     </xsd:sequence>
   </xsd:complexType>
 
@@ -99,37 +99,39 @@
   </xsd:simpleType>
 
   <xsd:complexType name="ThreadpoolDef">
+    <xsd:sequence>
+      <xsd:element name="stacksize" type="xsd:unsignedLong"/>
+      <xsd:element name="static_threads" type="xsd:unsignedLong"/>
+      <xsd:element name="dynamic_threads" type="xsd:unsignedLong"/>
+      <xsd:element name="default_priority" type="CIAO:Priority"/>
+      <xsd:element name="allow_request_buffering" type="xsd:boolean"/>
+      <xsd:element name="max_buffered_requests" type="xsd:unsignedLong"/>
+      <xsd:element name="max_request_buffered_size" type="xsd:unsignedLong"/>
+    </xsd:sequence>
     <xsd:attribute name="id" type="xsd:ID"/>
-    <xsd:attribute name="stacksize" type="xsd:unsignedLong"/>
-    <xsd:attribute name="static_threads" type="xsd:unsignedLong"/>
-    <xsd:attribute name="dynamic_threads" type="xsd:unsignedLong"/>
-    <xsd:attribute name="default_priority" type="CIAO:Priority"/>
-    <xsd:attribute name="allow_request_buffering" type="xsd:boolean"/>
-    <xsd:attribute name="max_buffered_requests" type="xsd:unsignedLong"/>
-    <xsd:attribute name="max_request_buffered_size" type="xsd:unsignedLong"/>
-    <!-- empty subelement -->
   </xsd:complexType>
 
   <xsd:complexType name="ThreadpoolWithLanesDef">
     <xsd:sequence>
       <xsd:element name="threadpoolLane" type="CIAO:ThreadpoolLaneDef" 
                    maxOccurs="unbounded"/>
+      <xsd:element name="stacksize" type="xsd:unsignedLong"/>
+      <xsd:element name="allow_borrowing" type="xsd:boolean"/>
+      <xsd:element name="allow_request_buffering" type="xsd:boolean"/>
+      <xsd:element name="max_buffered_requests" type="xsd:unsignedLong"/>
+      <xsd:element name="max_request_buffered_size" type="xsd:unsignedLong"/>
     </xsd:sequence>
     <xsd:attribute name="id" type="xsd:ID"/>  <!-- Threadpool ID should be 
                                                    referenced by individual policies
                                                    in the policysets below -->
-    <xsd:attribute name="stacksize" type="xsd:unsignedLong"/>
-    <xsd:attribute name="allow_borrowing" type="xsd:boolean"/>
-    <xsd:attribute name="allow_request_buffering" type="xsd:boolean"/>
-    <xsd:attribute name="max_buffered_requests" type="xsd:unsignedLong"/>
-    <xsd:attribute name="max_request_buffered_size" type="xsd:unsignedLong"/>
   </xsd:complexType>
 
   <xsd:complexType name="ThreadpoolLaneDef">
-    <xsd:attribute name="static_threads" type="xsd:unsignedLong"/>
-    <xsd:attribute name="dynamic_threads" type="xsd:unsignedLong"/>
-    <xsd:attribute name="priority" type="CIAO:Priority"/>
-    <!-- empty subelement -->
+    <xsd:sequence>
+      <xsd:element name="static_threads" type="xsd:unsignedLong"/>
+      <xsd:element name="dynamic_threads" type="xsd:unsignedLong"/>
+      <xsd:element name="priority" type="CIAO:Priority"/>
+    </xsd:sequence>
   </xsd:complexType>
 
   <xsd:complexType name="ConnectionBandsDef">
@@ -139,16 +141,17 @@
       The ORB doesn't really need to "create" this resource.
     </xsd:documentation>
     </xsd:annotation>
-    <xsd:sequence maxOccurs="unbounded">
-      <xsd:element name="band" type="CIAO:PriorityBandDef"/>
+    <xsd:sequence>
+      <xsd:element name="band" type="CIAO:PriorityBandDef" maxOccurs="unbounded"/>
     </xsd:sequence>
     <xsd:attribute name="id" type="xsd:ID"/>
   </xsd:complexType>
 
   <xsd:complexType name="PriorityBandDef">
-    <xsd:attribute name="low" type="xsd:int"/>
-    <xsd:attribute name="high" type="xsd:int"/>
-    <!-- Empty sub element -->
+    <xsd:sequence>
+      <xsd:element name="low" type="xsd:int"/>
+      <xsd:element name="high" type="xsd:int"/>
+    </xsd:sequence>
   </xsd:complexType>
 
 <!-- ========================================================================= -->
