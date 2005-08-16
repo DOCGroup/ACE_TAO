@@ -164,7 +164,7 @@ TAO::ORBInitializer_Registry::post_init (
 
           if (pi)
             {
-              pi->initialize (orb_init_info_->slot_count (ACE_ENV_SINGLE_ARG_PARAMETER));
+              pi->initialize (orb_init_info_->slot_count ());
               ACE_CHECK;
             }
         }
