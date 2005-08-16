@@ -1,3 +1,10 @@
+Tue Aug 16 09:46:45 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/Config_Handlers/Config_Handlers.mpc
+
+	Moved some changes in from the branch to correct errors from:
+	Mon Aug 15 12:03:43 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
 Mon Aug 15 12:03:43 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/Config_Handlers/ADD_Handler.cpp
