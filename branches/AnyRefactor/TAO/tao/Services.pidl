@@ -22,7 +22,7 @@
 #ifndef TAO_CORBA_SERVICES_IDL
 #define TAO_CORBA_SERVICES_IDL
 
-#include "OctetSeq.pidl"
+#include "tao/OctetSeq.pidl"
 
 #pragma prefix "omg.org"
 
