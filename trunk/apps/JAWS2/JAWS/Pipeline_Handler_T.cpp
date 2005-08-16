@@ -21,7 +21,7 @@ template <class TYPE> int
 JAWS_Pipeline_Abstract_Handler<TYPE>::put (ACE_Message_Block *mb,
                                            ACE_Time_Value *tv)
 {
-  TYPE *data = (TYPE *) mb->data_block ();
+  TYPE *data = reinterpret_cast <TYPE *> (mb->data_block ());
 
   int status = this->handle_put (data, tv);
 

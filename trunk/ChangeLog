@@ -1,3 +1,8 @@
+Wed Aug 17 11:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-hpux-11.00.h:
+          Added ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
+
 Tue Aug 16 06:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/JAWS2/JAWS/Assoc_Array.cpp:
