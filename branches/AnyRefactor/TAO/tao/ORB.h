@@ -82,6 +82,9 @@ namespace CORBA
   class NamedValue;
   typedef NamedValue *NamedValue_ptr;
 
+  class Policy;
+  typedef Policy *Policy_ptr;
+
   // TODO - implement OMG's 'ORBid CORBA::ORB::id (void)'.
 
   typedef
