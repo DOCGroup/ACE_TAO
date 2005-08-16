@@ -1,3 +1,10 @@
+Tue Aug 16 19:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/JAWS2/JAWS/Assoc_Array.{h,cpp}:
+        * apps/JAWS2/JAWS/Concurrency.cpp:
+          Changed find(int) to find_by_index (int), to resolve
+          ambiguity warnings of the HP aCC compiler
+
 Tue Aug 16 11:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/JAWS2/JAWS/Pipeline_Handler_T.cpp:
