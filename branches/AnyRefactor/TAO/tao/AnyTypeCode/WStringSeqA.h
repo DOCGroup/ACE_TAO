@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:788
+// be\be_codegen.cpp:754
 
 #ifndef _TAO_IDL_ANYTYPECODE_WSTRINGSEQA_H_
 #define _TAO_IDL_ANYTYPECODE_WSTRINGSEQA_H_

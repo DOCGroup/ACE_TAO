@@ -52,11 +52,6 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_Export
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:49
 
@@ -140,11 +135,7 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_CORBA_WStringSeq_H_ */
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:1062
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
+// be\be_codegen.cpp:1028
 
 #include /**/ "ace/post.h"
 
