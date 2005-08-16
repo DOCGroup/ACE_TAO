@@ -146,7 +146,7 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
           if (handler)
             handler->done ();
           handler = 0;
-          JAWS_IO_Handler **ioh = waiter->find (waiter_index);
+          JAWS_IO_Handler **ioh = waiter->find_by_index (waiter_index);
           *ioh = 0;
           break;
         }
@@ -187,7 +187,7 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
           handler = 0;
           if (result == -2)
             {
-              JAWS_IO_Handler **ioh = waiter->find (waiter_index);
+              JAWS_IO_Handler **ioh = waiter->find_by_index (waiter_index);
               *ioh = 0;
               result = 0;
             }
