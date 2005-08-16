@@ -29,7 +29,7 @@ namespace CORBA
 namespace TAO
 {
   /**
-   * @class Any_Exception
+   * @class Any_SystemException
    *
    * @brief Template Any class for IDL types with 2 modes of insertion
    *

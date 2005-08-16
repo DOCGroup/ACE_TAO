@@ -2,6 +2,7 @@
 
 #include "tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.h"
 #include "tao/AnyTypeCode/SystemExceptionA.h"
+#include "tao/AnyTypeCode/WrongTransactionA.h"
 
 ACE_RCSID (tao,
            TAO_AnyTypeCode_Adapter,
@@ -47,7 +48,8 @@ ACE_RCSID (tao,
     TAO_SYSTEM_EXCEPTION (INVALID_ACTIVITY) \
     TAO_SYSTEM_EXCEPTION (ACTIVITY_COMPLETED) \
     TAO_SYSTEM_EXCEPTION (ACTIVITY_REQUIRED) \
-    TAO_SYSTEM_EXCEPTION (THREAD_CANCELLED)
+    TAO_SYSTEM_EXCEPTION (THREAD_CANCELLED) \
+    TAO_SYSTEM_EXCEPTION (WrongTransaction)
 
 
 #define TAO_SYSTEM_EXCEPTION(name) \

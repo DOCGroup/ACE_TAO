@@ -26,28 +26,32 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:806
+// be\be_codegen.cpp:788
 
-#ifndef _TAO_IDL_ORIG_CURRENTA_H_
-#define _TAO_IDL_ORIG_CURRENTA_H_
+#ifndef _TAO_IDL_ANYTYPECODE_CURRENTA_H_
+#define _TAO_IDL_ANYTYPECODE_CURRENTA_H_
 
 #include /**/ "ace/pre.h"
 
 #include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
-#include "tao/CurrentC.h"
+#include "CurrentC.h"
 
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_decl.cpp:49
+// be\be_visitor_module/module_ch.cpp:59
 
-extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_Current;
+namespace CORBA
+{
+  
+  // TAO_IDL - Generated from
+  // be\be_visitor_typecode/typecode_decl.cpp:49
+  
+  extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_Current;
 
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
+// TAO_IDL - Generated from
+// be\be_visitor_module/module_ch.cpp:86
+
+} // module CORBA
 
 #include /**/ "ace/post.h"
 
