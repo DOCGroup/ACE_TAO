@@ -47,7 +47,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/CORBA/PolicyType:1.0",
     "PolicyType",
     &CORBA::_tc_ulong);
-
+  
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_PolicyType =
@@ -82,10 +82,10 @@ namespace TAO
         CORBA::tk_sequence,
         &CORBA::_tc_Policy,
         0U);
-
+      
     ::CORBA::TypeCode_ptr const tc_CORBA_PolicyList_0 =
       &CORBA_PolicyList_0;
-
+    
   }
 }
 
@@ -100,7 +100,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/CORBA/PolicyList:1.0",
     "PolicyList",
     &TAO::TypeCode::tc_CORBA_PolicyList_0);
-
+  
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_PolicyList =
@@ -130,10 +130,10 @@ namespace TAO
         CORBA::tk_sequence,
         &CORBA::_tc_PolicyType,
         0U);
-
+      
     ::CORBA::TypeCode_ptr const tc_CORBA_PolicyTypeSeq_0 =
       &CORBA_PolicyTypeSeq_0;
-
+    
   }
 }
 
@@ -148,7 +148,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/CORBA/PolicyTypeSeq:1.0",
     "PolicyTypeSeq",
     &TAO::TypeCode::tc_CORBA_PolicyTypeSeq_0);
-
+  
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_PolicyTypeSeq =
@@ -164,7 +164,7 @@ static char const * const _tao_enumerators_CORBA_SetOverrideType[] =
   {
     "SET_OVERRIDE",
     "ADD_OVERRIDE"
-
+    
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -175,7 +175,7 @@ static TAO::TypeCode::Enum<char const *,
     "SetOverrideType",
     _tao_enumerators_CORBA_SetOverrideType,
     2);
-
+  
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_SetOverrideType =
@@ -184,7 +184,7 @@ namespace CORBA
 
 
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_sequence/any_op_cs.cpp:54
 
 
@@ -243,7 +243,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_sequence/any_op_cs.cpp:54
 
 
@@ -326,6 +326,6 @@ CORBA::Boolean operator>>= (
     TAO::Any_Basic_Impl_T<CORBA::SetOverrideType>::extract (
         _tao_any,
         CORBA::_tc_SetOverrideType,
-        _tao_elem
+        _tao_elem 
       );
 }
