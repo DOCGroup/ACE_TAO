@@ -34,7 +34,7 @@
 #include /**/ "ace/pre.h"
 
 #include "imr_client_export.h"
-#include "tao/ImplRepoC.h"
+#include "tao/ImR_Client/ImplRepoC.h"
 
 #if defined (__BORLANDC__)
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl

@@ -3,6 +3,8 @@
 #include "tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.h"
 #include "tao/AnyTypeCode/SystemExceptionA.h"
 #include "tao/AnyTypeCode/WrongTransactionA.h"
+#include "tao/AnyTypeCode/PolicyA.h"
+#include "tao/AnyTypeCode/Any.h"
 
 ACE_RCSID (tao,
            TAO_AnyTypeCode_Adapter,
@@ -61,6 +63,84 @@ TAO_AnyTypeCode_Adapter_Impl::_tao_type_ ## name (void) const \
 
 STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::Char const * mychar)
+{
+  (*any) <<= mychar;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::WChar const * mywchar)
+{
+  (*any) <<= mywchar;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::Long value)
+{
+  (*any) <<= value;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::Short value)
+{
+  (*any) <<= value;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::Policy_ptr policy)
+{
+  (*any) <<= policy;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::Policy_ptr * policy)
+{
+  (*any) <<= policy;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::ULong value)
+{
+  (*any) <<= value;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_wchar value)
+{
+  (*any) <<= value;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_char value)
+{
+  (*any) <<= value;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_octet value)
+{
+  (*any) <<= value;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_boolean value)
+{
+  (*any) <<= value;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_string value)
+{
+  (*any) <<= value;
+}
+
+void
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_wstring value)
+{
+  (*any) <<= value;
+}
 
 int
 TAO_AnyTypeCode_Adapter_Impl::Initializer (void)

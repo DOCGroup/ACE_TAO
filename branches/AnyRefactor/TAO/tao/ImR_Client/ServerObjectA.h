@@ -34,7 +34,7 @@
 #include /**/ "ace/pre.h"
 
 #include "imr_client_export.h"
-#include "tao/ServerObjectC.h"
+#include "tao/ImR_Client/ServerObjectC.h"
 
 #if defined (__BORLANDC__)
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl

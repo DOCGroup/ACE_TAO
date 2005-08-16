@@ -84,57 +84,31 @@ public:
 ANYTYPECODE__EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
 
-  virtual void insert_into_any (CORBA::Any * any, CORBA::Char const * mychar)
-  {
-  };
+  virtual void insert_into_any (CORBA::Any * any, CORBA::Char const * mychar);
 
-  virtual void insert_into_any (CORBA::Any * any, CORBA::WChar const * mywchar)
-  {
-  };
+  virtual void insert_into_any (CORBA::Any * any, CORBA::WChar const * mywchar);
 
-  virtual void insert_into_any (CORBA::Any * any, CORBA::Long value)
-  {
-  };
+  virtual void insert_into_any (CORBA::Any * any, CORBA::Long value);
 
-  virtual void insert_into_any (CORBA::Any * any, CORBA::Short value)
-  {
-  };
+  virtual void insert_into_any (CORBA::Any * any, CORBA::Short value);
 
-  virtual void insert_into_any (CORBA::Any * any, CORBA::Policy_ptr policy)
-  {
-  };
+  virtual void insert_into_any (CORBA::Any * any, CORBA::Policy_ptr policy);
 
-  virtual void insert_into_any (CORBA::Any * any, CORBA::Policy_ptr * policy)
-  {
-  };
+  virtual void insert_into_any (CORBA::Any * any, CORBA::Policy_ptr * policy);
 
-  virtual void insert_into_any (CORBA::Any * any, CORBA::ULong value)
-  {
-  };
+  virtual void insert_into_any (CORBA::Any * any, CORBA::ULong value);
 
-  virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_wchar value)
-  {
-  };
+  virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_wchar value);
 
-  virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_char value)
-  {
-  };
+  virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_char value);
 
-  virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_octet value)
-  {
-  };
+  virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_octet value);
 
-  virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_boolean value)
-  {
-  };
+  virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_boolean value);
 
-  virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_string value)
-  {
-  };
+  virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_string value);
 
-  virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_wstring value)
-  {
-  };
+  virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_wstring value);
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_AnyTypeCode_Adapter_Impl)
