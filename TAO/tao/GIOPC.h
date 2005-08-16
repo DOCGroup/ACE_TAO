@@ -26,10 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:153
+// be\be_codegen.cpp:154
 
-#ifndef _TAO_IDL_ORIG_GIOPC_H_
-#define _TAO_IDL_ORIG_GIOPC_H_
+#ifndef _TAO_IDL_GIOPC_H_
+#define _TAO_IDL_GIOPC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -57,12 +57,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
-
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:49
 
 namespace GIOP
 {
@@ -104,7 +100,7 @@ namespace GIOP
     Version_out;
 
   // TAO_IDL - Generated from
-  // be\be_visitor_structure/structure_ch.cpp:52
+  // be\be_visitor_structure/structure_ch.cpp:57
 
   struct TAO_Export Version
   {
@@ -134,7 +130,7 @@ namespace GIOP
     IORAddressingInfo_out;
 
   // TAO_IDL - Generated from
-  // be\be_visitor_structure/structure_ch.cpp:52
+  // be\be_visitor_structure/structure_ch.cpp:57
 
   struct TAO_Export IORAddressingInfo
   {
@@ -183,7 +179,7 @@ namespace GIOP
     CORBA::Short _d (void) const;
 
     // TAO_IDL - Generated from
-    // be\be_visitor_union/union_ch.cpp:108
+    // be\be_visitor_union/union_ch.cpp:113
 
     typedef TargetAddress_var _var_type;
 
@@ -207,15 +203,15 @@ namespace GIOP
     void ior (const ACE_NESTED_CLASS (GIOP, IORAddressingInfo) &);
     const ACE_NESTED_CLASS (GIOP, IORAddressingInfo) &ior (void) const;
     ACE_NESTED_CLASS (GIOP, IORAddressingInfo) &ior (void);
-
+    
     // TAO_IDL - Generated from
-    // be\be_visitor_union/union_ch.cpp:142
-
+    // be\be_visitor_union/union_ch.cpp:147
+    
     void _default (void);
   private:
     CORBA::Short disc_;
     CORBA::Short holder_;
-
+    
     union
     {
       // TAO_IDL - Generated from
@@ -228,7 +224,7 @@ namespace GIOP
       // be\be_visitor_union_branch/private_ch.cpp:526
       ACE_NESTED_CLASS (GIOP, IORAddressingInfo) *ior_;
     } u_;
-
+    
     // TAO extension - frees any allocated storage.
     void _reset (CORBA::Short, CORBA::Boolean /* finalize */);
   };
@@ -236,7 +232,7 @@ namespace GIOP
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:78
 
 } // module GIOP
 
@@ -267,19 +263,11 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const GIOP::TargetAddress
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, GIOP::TargetAddress &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:955
-
-#if defined (__ACE_INLINE__)
-#include "GIOPC.inl"
-#endif /* defined INLINE */
+// be\be_codegen.cpp:1062
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
 
 #include /**/ "ace/post.h"
 

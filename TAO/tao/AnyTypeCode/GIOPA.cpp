@@ -34,11 +34,9 @@
 #include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
 #include "tao/AnyTypeCode/TypeCode_Case_T.h"
 #include "tao/AnyTypeCode/Union_TypeCode_Static.h"
-#include "tao/AnyTypeCode/Recursive_Type_TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
-#include "tao/AnyTypeCode/IOP_IORA.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/alias_typecode.cpp:50
@@ -51,7 +49,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/GIOP/AddressingDisposition:1.0",
     "AddressingDisposition",
     &CORBA::_tc_short);
-
+  
 namespace GIOP
 {
   ::CORBA::TypeCode_ptr const _tc_AddressingDisposition =
@@ -67,7 +65,7 @@ static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> co
   {
     { "major", &CORBA::_tc_octet },
     { "minor", &CORBA::_tc_octet }
-
+    
   };
 static TAO::TypeCode::Struct<char const *,
                       CORBA::TypeCode_ptr const *,
@@ -79,7 +77,7 @@ static TAO::TypeCode::Struct<char const *,
     "Version",
     _tao_fields_GIOP_Version,
     2);
-
+  
 namespace GIOP
 {
   ::CORBA::TypeCode_ptr const _tc_Version =
@@ -95,7 +93,7 @@ static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> co
   {
     { "selected_profile_index", &CORBA::_tc_ulong },
     { "ior", &IOP::_tc_IOR }
-
+    
   };
 static TAO::TypeCode::Struct<char const *,
                       CORBA::TypeCode_ptr const *,
@@ -107,7 +105,7 @@ static TAO::TypeCode::Struct<char const *,
     "IORAddressingInfo",
     _tao_fields_GIOP_IORAddressingInfo,
     2);
-
+  
 namespace GIOP
 {
   ::CORBA::TypeCode_ptr const _tc_IORAddressingInfo =
@@ -133,7 +131,7 @@ static TAO::TypeCode::Case<char const *, CORBA::TypeCode_ptr const *> const * co
     &_tao_cases_GIOP_TargetAddress_0,
     &_tao_cases_GIOP_TargetAddress_1,
     &_tao_cases_GIOP_TargetAddress_2
-
+    
   };
 
 static TAO::TypeCode::Union<char const *,
@@ -146,7 +144,7 @@ static TAO::TypeCode::Union<char const *,
     &CORBA::_tc_short,
     _tao_cases_GIOP_TargetAddress,
     3, -1);
-
+  
 namespace GIOP
 {
   ::CORBA::TypeCode_ptr const _tc_TargetAddress =
@@ -155,7 +153,7 @@ namespace GIOP
 
 
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -213,7 +211,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -271,7 +269,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_union/any_op_cs.cpp:54
 
 // Copying insertion.
