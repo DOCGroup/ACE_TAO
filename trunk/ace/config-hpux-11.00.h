@@ -117,6 +117,8 @@
 // This is legit for A.03.05 - not sure A.03.04, but it should be.
 #    define ACE_HAS_USING_KEYWORD
 
+#    define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
+
 // Platform lacks streambuf "linebuffered ()".
 #    define ACE_LACKS_LINEBUFFERED_STREAMBUF 1
 
