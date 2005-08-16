@@ -33,11 +33,9 @@
 #include "tao/AnyTypeCode/String_TypeCode_Static.h"
 #include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
 #include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
-#include "tao/AnyTypeCode/Recursive_Type_TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
-#include "tao/AnyTypeCode/OctetSeqA.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/alias_typecode.cpp:50
@@ -50,7 +48,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/IOP/ProfileId:1.0",
     "ProfileId",
     &CORBA::_tc_ulong);
-
+  
 namespace IOP
 {
   ::CORBA::TypeCode_ptr const _tc_ProfileId =
@@ -71,7 +69,7 @@ static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> co
   {
     { "tag", &IOP::_tc_ProfileId },
     { "profile_data", &CORBA::_tc_OctetSeq }
-
+    
   };
 static TAO::TypeCode::Struct<char const *,
                       CORBA::TypeCode_ptr const *,
@@ -83,7 +81,7 @@ static TAO::TypeCode::Struct<char const *,
     "TaggedProfile",
     _tao_fields_IOP_TaggedProfile,
     2);
-
+  
 namespace IOP
 {
   ::CORBA::TypeCode_ptr const _tc_TaggedProfile =
@@ -113,10 +111,10 @@ namespace TAO
         CORBA::tk_sequence,
         &IOP::_tc_TaggedProfile,
         0U);
-
+      
     ::CORBA::TypeCode_ptr const tc_IOP_TaggedProfileSeq_0 =
       &IOP_TaggedProfileSeq_0;
-
+    
   }
 }
 
@@ -131,7 +129,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/IOP/TaggedProfileSeq:1.0",
     "TaggedProfileSeq",
     &TAO::TypeCode::tc_IOP_TaggedProfileSeq_0);
-
+  
 namespace IOP
 {
   ::CORBA::TypeCode_ptr const _tc_TaggedProfileSeq =
@@ -152,7 +150,7 @@ static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> co
   {
     { "type_id", &CORBA::_tc_string },
     { "profiles", &IOP::_tc_TaggedProfileSeq }
-
+    
   };
 static TAO::TypeCode::Struct<char const *,
                       CORBA::TypeCode_ptr const *,
@@ -164,7 +162,7 @@ static TAO::TypeCode::Struct<char const *,
     "IOR",
     _tao_fields_IOP_IOR,
     2);
-
+  
 namespace IOP
 {
   ::CORBA::TypeCode_ptr const _tc_IOR =
@@ -184,7 +182,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/IOP/ComponentId:1.0",
     "ComponentId",
     &CORBA::_tc_ulong);
-
+  
 namespace IOP
 {
   ::CORBA::TypeCode_ptr const _tc_ComponentId =
@@ -205,7 +203,7 @@ static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> co
   {
     { "tag", &IOP::_tc_ComponentId },
     { "component_data", &CORBA::_tc_OctetSeq }
-
+    
   };
 static TAO::TypeCode::Struct<char const *,
                       CORBA::TypeCode_ptr const *,
@@ -217,7 +215,7 @@ static TAO::TypeCode::Struct<char const *,
     "TaggedComponent",
     _tao_fields_IOP_TaggedComponent,
     2);
-
+  
 namespace IOP
 {
   ::CORBA::TypeCode_ptr const _tc_TaggedComponent =
@@ -247,10 +245,10 @@ namespace TAO
         CORBA::tk_sequence,
         &IOP::_tc_TaggedComponent,
         0U);
-
+      
     ::CORBA::TypeCode_ptr const tc_IOP_MultipleComponentProfile_0 =
       &IOP_MultipleComponentProfile_0;
-
+    
   }
 }
 
@@ -265,7 +263,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/IOP/MultipleComponentProfile:1.0",
     "MultipleComponentProfile",
     &TAO::TypeCode::tc_IOP_MultipleComponentProfile_0);
-
+  
 namespace IOP
 {
   ::CORBA::TypeCode_ptr const _tc_MultipleComponentProfile =
@@ -295,10 +293,10 @@ namespace TAO
         CORBA::tk_sequence,
         &IOP::_tc_TaggedComponent,
         0U);
-
+      
     ::CORBA::TypeCode_ptr const tc_IOP_TaggedComponentList_0 =
       &IOP_TaggedComponentList_0;
-
+    
   }
 }
 
@@ -313,7 +311,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/IOP/TaggedComponentList:1.0",
     "TaggedComponentList",
     &TAO::TypeCode::tc_IOP_TaggedComponentList_0);
-
+  
 namespace IOP
 {
   ::CORBA::TypeCode_ptr const _tc_TaggedComponentList =
@@ -343,10 +341,10 @@ namespace TAO
         CORBA::tk_sequence,
         &IOP::_tc_TaggedComponent,
         0U);
-
+      
     ::CORBA::TypeCode_ptr const tc_IOP_TaggedComponentSeq_0 =
       &IOP_TaggedComponentSeq_0;
-
+    
   }
 }
 
@@ -361,7 +359,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/IOP/TaggedComponentSeq:1.0",
     "TaggedComponentSeq",
     &TAO::TypeCode::tc_IOP_TaggedComponentSeq_0);
-
+  
 namespace IOP
 {
   ::CORBA::TypeCode_ptr const _tc_TaggedComponentSeq =
@@ -381,7 +379,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/IOP/ServiceId:1.0",
     "ServiceId",
     &CORBA::_tc_ulong);
-
+  
 namespace IOP
 {
   ::CORBA::TypeCode_ptr const _tc_ServiceId =
@@ -402,7 +400,7 @@ static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> co
   {
     { "context_id", &IOP::_tc_ServiceId },
     { "context_data", &CORBA::_tc_OctetSeq }
-
+    
   };
 static TAO::TypeCode::Struct<char const *,
                       CORBA::TypeCode_ptr const *,
@@ -414,7 +412,7 @@ static TAO::TypeCode::Struct<char const *,
     "ServiceContext",
     _tao_fields_IOP_ServiceContext,
     2);
-
+  
 namespace IOP
 {
   ::CORBA::TypeCode_ptr const _tc_ServiceContext =
@@ -444,10 +442,10 @@ namespace TAO
         CORBA::tk_sequence,
         &IOP::_tc_ServiceContext,
         0U);
-
+      
     ::CORBA::TypeCode_ptr const tc_IOP_ServiceContextList_0 =
       &IOP_ServiceContextList_0;
-
+    
   }
 }
 
@@ -462,7 +460,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/IOP/ServiceContextList:1.0",
     "ServiceContextList",
     &TAO::TypeCode::tc_IOP_ServiceContextList_0);
-
+  
 namespace IOP
 {
   ::CORBA::TypeCode_ptr const _tc_ServiceContextList =
@@ -471,7 +469,7 @@ namespace IOP
 
 
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -529,7 +527,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_sequence/any_op_cs.cpp:54
 
 
@@ -588,7 +586,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -646,7 +644,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -704,7 +702,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_sequence/any_op_cs.cpp:54
 
 
@@ -763,7 +761,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_sequence/any_op_cs.cpp:54
 
 
@@ -822,7 +820,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_sequence/any_op_cs.cpp:54
 
 
@@ -881,7 +879,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -939,7 +937,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_sequence/any_op_cs.cpp:54
 
 

@@ -25,19 +25,10 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-// TAO_IDL - Generated from
-// be\be_codegen.cpp:788
-
-#ifndef _TAO_IDL_ANYTYPECODE_IOPA_H_
-#define _TAO_IDL_ANYTYPECODE_IOPA_H_
-
-#include /**/ "ace/pre.h"
-
-#include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
-#include "tao/IOPC.h"
-#include "tao/AnyTypeCode/IOP_IORA.h"
-
-
-#include /**/ "ace/post.h"
-
-#endif /* ifndef */
+#include "IOPA.h"
+#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
+#include "tao/AnyTypeCode/String_TypeCode_Static.h"
+#include "tao/CDR.h"
+#include "tao/AnyTypeCode/Any.h"

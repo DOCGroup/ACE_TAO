@@ -26,116 +26,91 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:153
+// be\be_codegen.cpp:788
 
-#ifndef _TAO_IDL_ORIG_IOP_IORA_H_
-#define _TAO_IDL_ORIG_IOP_IORA_H_
+#ifndef _TAO_IDL_ANYTYPECODE_IOP_IORA_H_
+#define _TAO_IDL_ANYTYPECODE_IOP_IORA_H_
 
 #include /**/ "ace/pre.h"
 
-
-#include "ace/config-all.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
 #include "tao/IOP_IORC.h"
+#include "tao/AnyTypeCode/OctetSeqA.h"
 
-#if defined (TAO_EXPORT_MACRO)
-#undef TAO_EXPORT_MACRO
-#endif
-#define TAO_EXPORT_MACRO TAO_AnyTypeCode_Export
-
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:59
 
 namespace IOP
 {
 
+  // TAO_IDL - Generated from
+  // be\be_visitor_typecode/typecode_decl.cpp:49
+
   extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_ProfileId;
+
+  // TAO_IDL - Generated from
+  // be\be_visitor_typecode/typecode_decl.cpp:49
 
   extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_TaggedProfile;
 
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
 
   extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_TaggedProfileSeq;
 
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
 
   extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_IOR;
 
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
 
   extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_ComponentId;
 
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
 
   extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_TaggedComponent;
 
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
 
   extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_MultipleComponentProfile;
 
   // TAO_IDL - Generated from
-  // be\be_visitor_sequence/sequence_ch.cpp:101
-
+  // be\be_visitor_typecode/typecode_decl.cpp:49
 
   extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_TaggedComponentList;
 
-
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
 
   extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_TaggedComponentSeq;
 
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
 
   extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_ServiceId;
 
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
 
   extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_ServiceContext;
 
-
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
 
   extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_ServiceContextList;
 
-
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:86
 
 } // module IOP
 
 // TAO_IDL - Generated from
-// be\be_visitor_traits.cpp:61
-
-// Traits specializations.
-namespace TAO
-{
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_structure/any_op_ch.cpp:52
+// be\be_visitor_structure/any_op_ch.cpp:53
 
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const IOP::TaggedProfile &); // copying version
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, IOP::TaggedProfile*); // noncopying version
@@ -143,7 +118,7 @@ TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::Tagg
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::TaggedProfile *&);
 
 // TAO_IDL - Generated from
-// be\be_visitor_sequence/any_op_ch.cpp:52
+// be\be_visitor_sequence/any_op_ch.cpp:53
 
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const IOP::TaggedProfileSeq &); // copying version
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, IOP::TaggedProfileSeq*); // noncopying version
@@ -151,7 +126,7 @@ TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::Tagg
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::TaggedProfileSeq *&);
 
 // TAO_IDL - Generated from
-// be\be_visitor_structure/any_op_ch.cpp:52
+// be\be_visitor_structure/any_op_ch.cpp:53
 
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const IOP::IOR &); // copying version
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, IOP::IOR*); // noncopying version
@@ -159,7 +134,7 @@ TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::IOR 
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::IOR *&);
 
 // TAO_IDL - Generated from
-// be\be_visitor_structure/any_op_ch.cpp:52
+// be\be_visitor_structure/any_op_ch.cpp:53
 
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const IOP::TaggedComponent &); // copying version
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, IOP::TaggedComponent*); // noncopying version
@@ -167,7 +142,7 @@ TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::Tagg
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::TaggedComponent *&);
 
 // TAO_IDL - Generated from
-// be\be_visitor_sequence/any_op_ch.cpp:52
+// be\be_visitor_sequence/any_op_ch.cpp:53
 
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const IOP::MultipleComponentProfile &); // copying version
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, IOP::MultipleComponentProfile*); // noncopying version
@@ -175,7 +150,7 @@ TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::Mult
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::MultipleComponentProfile *&);
 
 // TAO_IDL - Generated from
-// be\be_visitor_sequence/any_op_ch.cpp:52
+// be\be_visitor_sequence/any_op_ch.cpp:53
 
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const IOP::TaggedComponentList &); // copying version
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, IOP::TaggedComponentList*); // noncopying version
@@ -183,7 +158,7 @@ TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::Tagg
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::TaggedComponentList *&);
 
 // TAO_IDL - Generated from
-// be\be_visitor_sequence/any_op_ch.cpp:52
+// be\be_visitor_sequence/any_op_ch.cpp:53
 
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const IOP::TaggedComponentSeq &); // copying version
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, IOP::TaggedComponentSeq*); // noncopying version
@@ -191,7 +166,7 @@ TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::Tagg
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::TaggedComponentSeq *&);
 
 // TAO_IDL - Generated from
-// be\be_visitor_structure/any_op_ch.cpp:52
+// be\be_visitor_structure/any_op_ch.cpp:53
 
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const IOP::ServiceContext &); // copying version
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, IOP::ServiceContext*); // noncopying version
@@ -199,26 +174,13 @@ TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::Serv
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::ServiceContext *&);
 
 // TAO_IDL - Generated from
-// be\be_visitor_sequence/any_op_ch.cpp:52
+// be\be_visitor_sequence/any_op_ch.cpp:53
 
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const IOP::ServiceContextList &); // copying version
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, IOP::ServiceContextList*); // noncopying version
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, IOP::ServiceContextList *&); // deprecated
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IOP::ServiceContextList *&);
 
-// TAO_IDL - Generated from
-// be\be_codegen.cpp:955
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
-
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
-
-
