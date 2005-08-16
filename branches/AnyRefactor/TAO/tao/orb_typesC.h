@@ -26,10 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:153
+// be\be_codegen.cpp:154
 
-#ifndef _TAO_IDL_ORIG_ORB_TYPESC_H_
-#define _TAO_IDL_ORIG_ORB_TYPESC_H_
+#ifndef _TAO_IDL_ORB_TYPESC_H_
+#define _TAO_IDL_ORB_TYPESC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -54,45 +54,41 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
-
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:49
 
 namespace CORBA
 {
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:413
-
+  
   typedef char * ORBid;
   typedef CORBA::String_var ORBid_var;
   typedef CORBA::String_out ORBid_out;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:379
-
+  
   typedef CORBA::ULong Flags;
   typedef CORBA::ULong_out Flags_out;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:413
-
+  
   typedef char * Identifier;
   typedef CORBA::String_var Identifier_var;
   typedef CORBA::String_out Identifier_out;
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:413
-
+  
   typedef char * RepositoryId;
   typedef CORBA::String_var RepositoryId_var;
   typedef CORBA::String_out RepositoryId_out;
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:78
 
 } // module CORBA
 
@@ -105,15 +101,11 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:955
+// be\be_codegen.cpp:1062
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
 
 #include /**/ "ace/post.h"
 

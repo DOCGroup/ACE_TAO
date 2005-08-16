@@ -55,10 +55,10 @@ namespace TAO
         CORBA::tk_sequence,
         &CORBA::_tc_ulonglong,
         0U);
-
+      
     ::CORBA::TypeCode_ptr const tc_CORBA_ULongLongSeq_0 =
       &CORBA_ULongLongSeq_0;
-
+    
   }
 }
 
@@ -73,7 +73,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/CORBA/ULongLongSeq:1.0",
     "ULongLongSeq",
     &TAO::TypeCode::tc_CORBA_ULongLongSeq_0);
-
+  
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_ULongLongSeq =
@@ -82,7 +82,7 @@ namespace CORBA
 
 
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_sequence/any_op_cs.cpp:54
 
 
