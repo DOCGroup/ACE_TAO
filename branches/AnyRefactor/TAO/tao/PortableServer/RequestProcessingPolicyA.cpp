@@ -25,7 +25,7 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "RequestProcessingPolicyC.h"
+#include "RequestProcessingPolicyA.h"
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
@@ -46,7 +46,7 @@ static char const * const _tao_enumerators_PortableServer_RequestProcessingPolic
     "USE_ACTIVE_OBJECT_MAP_ONLY",
     "USE_DEFAULT_SERVANT",
     "USE_SERVANT_MANAGER"
-
+    
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -57,7 +57,7 @@ static TAO::TypeCode::Enum<char const *,
     "RequestProcessingPolicyValue",
     _tao_enumerators_PortableServer_RequestProcessingPolicyValue,
     3);
-
+  
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_RequestProcessingPolicyValue =
@@ -75,7 +75,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/PortableServer/RequestProcessingPolicy:2.3",
     "RequestProcessingPolicy");
-
+  
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_RequestProcessingPolicy =
@@ -108,82 +108,7 @@ CORBA::Boolean operator>>= (
     TAO::Any_Basic_Impl_T<PortableServer::RequestProcessingPolicyValue>::extract (
         _tao_any,
         PortableServer::_tc_RequestProcessingPolicyValue,
-        _tao_elem
-      );
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<PortableServer::RequestProcessingPolicy>::to_object (
-      CORBA::Object_ptr &_tao_elem
-    ) const
-  {
-    _tao_elem = CORBA::Object::_duplicate (this->value_);
-    return true;
-  }
-}
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<PortableServer::RequestProcessingPolicy>::marshal_value (TAO_OutputCDR &)
-  {
-    return false;
-  }
-
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<PortableServer::RequestProcessingPolicy>::demarshal_value (TAO_InputCDR &)
-  {
-    return false;
-  }
-}
-
-// Copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    PortableServer::RequestProcessingPolicy_ptr _tao_elem
-  )
-{
-  PortableServer::RequestProcessingPolicy_ptr _tao_objptr =
-    PortableServer::RequestProcessingPolicy::_duplicate (_tao_elem);
-  _tao_any <<= &_tao_objptr;
-}
-
-// Non-copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    PortableServer::RequestProcessingPolicy_ptr *_tao_elem
-  )
-{
-  TAO::Any_Impl_T<PortableServer::RequestProcessingPolicy>::insert (
-      _tao_any,
-      PortableServer::RequestProcessingPolicy::_tao_any_destructor,
-      PortableServer::_tc_RequestProcessingPolicy,
-      *_tao_elem
-    );
-}
-
-CORBA::Boolean
-operator>>= (
-    const CORBA::Any &_tao_any,
-    PortableServer::RequestProcessingPolicy_ptr &_tao_elem
-  )
-{
-  return
-    TAO::Any_Impl_T<PortableServer::RequestProcessingPolicy>::extract (
-        _tao_any,
-        PortableServer::RequestProcessingPolicy::_tao_any_destructor,
-        PortableServer::_tc_RequestProcessingPolicy,
-        _tao_elem
+        _tao_elem 
       );
 }
 

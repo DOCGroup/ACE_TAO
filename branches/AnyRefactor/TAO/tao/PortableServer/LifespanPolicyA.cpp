@@ -25,7 +25,7 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "LifespanPolicyC.h"
+#include "LifespanPolicyA.h"
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
@@ -43,7 +43,7 @@ static char const * const _tao_enumerators_PortableServer_LifespanPolicyValue[] 
   {
     "TRANSIENT",
     "PERSISTENT"
-
+    
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -54,7 +54,7 @@ static TAO::TypeCode::Enum<char const *,
     "LifespanPolicyValue",
     _tao_enumerators_PortableServer_LifespanPolicyValue,
     2);
-
+  
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_LifespanPolicyValue =
@@ -72,7 +72,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/PortableServer/LifespanPolicy:2.3",
     "LifespanPolicy");
-
+  
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_LifespanPolicy =
@@ -105,81 +105,6 @@ CORBA::Boolean operator>>= (
     TAO::Any_Basic_Impl_T<PortableServer::LifespanPolicyValue>::extract (
         _tao_any,
         PortableServer::_tc_LifespanPolicyValue,
-        _tao_elem
-      );
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<PortableServer::LifespanPolicy>::to_object (
-      CORBA::Object_ptr &_tao_elem
-    ) const
-  {
-    _tao_elem = CORBA::Object::_duplicate (this->value_);
-    return true;
-  }
-}
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<PortableServer::LifespanPolicy>::marshal_value (TAO_OutputCDR &)
-  {
-    return false;
-  }
-
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<PortableServer::LifespanPolicy>::demarshal_value (TAO_InputCDR &)
-  {
-    return false;
-  }
-}
-
-// Copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    PortableServer::LifespanPolicy_ptr _tao_elem
-  )
-{
-  PortableServer::LifespanPolicy_ptr _tao_objptr =
-    PortableServer::LifespanPolicy::_duplicate (_tao_elem);
-  _tao_any <<= &_tao_objptr;
-}
-
-// Non-copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    PortableServer::LifespanPolicy_ptr *_tao_elem
-  )
-{
-  TAO::Any_Impl_T<PortableServer::LifespanPolicy>::insert (
-      _tao_any,
-      PortableServer::LifespanPolicy::_tao_any_destructor,
-      PortableServer::_tc_LifespanPolicy,
-      *_tao_elem
-    );
-}
-
-CORBA::Boolean
-operator>>= (
-    const CORBA::Any &_tao_any,
-    PortableServer::LifespanPolicy_ptr &_tao_elem
-  )
-{
-  return
-    TAO::Any_Impl_T<PortableServer::LifespanPolicy>::extract (
-        _tao_any,
-        PortableServer::LifespanPolicy::_tao_any_destructor,
-        PortableServer::_tc_LifespanPolicy,
-        _tao_elem
+        _tao_elem 
       );
 }

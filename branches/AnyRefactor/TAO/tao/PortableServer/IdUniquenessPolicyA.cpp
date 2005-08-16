@@ -25,7 +25,7 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "IdUniquenessPolicyC.h"
+#include "IdUniquenessPolicyA.h"
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
@@ -43,7 +43,7 @@ static char const * const _tao_enumerators_PortableServer_IdUniquenessPolicyValu
   {
     "UNIQUE_ID",
     "MULTIPLE_ID"
-
+    
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -54,7 +54,7 @@ static TAO::TypeCode::Enum<char const *,
     "IdUniquenessPolicyValue",
     _tao_enumerators_PortableServer_IdUniquenessPolicyValue,
     2);
-
+  
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_IdUniquenessPolicyValue =
@@ -72,7 +72,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/PortableServer/IdUniquenessPolicy:2.3",
     "IdUniquenessPolicy");
-
+  
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_IdUniquenessPolicy =
@@ -105,81 +105,6 @@ CORBA::Boolean operator>>= (
     TAO::Any_Basic_Impl_T<PortableServer::IdUniquenessPolicyValue>::extract (
         _tao_any,
         PortableServer::_tc_IdUniquenessPolicyValue,
-        _tao_elem
-      );
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<PortableServer::IdUniquenessPolicy>::to_object (
-      CORBA::Object_ptr &_tao_elem
-    ) const
-  {
-    _tao_elem = CORBA::Object::_duplicate (this->value_);
-    return true;
-  }
-}
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<PortableServer::IdUniquenessPolicy>::marshal_value (TAO_OutputCDR &)
-  {
-    return false;
-  }
-
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<PortableServer::IdUniquenessPolicy>::demarshal_value (TAO_InputCDR &)
-  {
-    return false;
-  }
-}
-
-// Copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    PortableServer::IdUniquenessPolicy_ptr _tao_elem
-  )
-{
-  PortableServer::IdUniquenessPolicy_ptr _tao_objptr =
-    PortableServer::IdUniquenessPolicy::_duplicate (_tao_elem);
-  _tao_any <<= &_tao_objptr;
-}
-
-// Non-copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    PortableServer::IdUniquenessPolicy_ptr *_tao_elem
-  )
-{
-  TAO::Any_Impl_T<PortableServer::IdUniquenessPolicy>::insert (
-      _tao_any,
-      PortableServer::IdUniquenessPolicy::_tao_any_destructor,
-      PortableServer::_tc_IdUniquenessPolicy,
-      *_tao_elem
-    );
-}
-
-CORBA::Boolean
-operator>>= (
-    const CORBA::Any &_tao_any,
-    PortableServer::IdUniquenessPolicy_ptr &_tao_elem
-  )
-{
-  return
-    TAO::Any_Impl_T<PortableServer::IdUniquenessPolicy>::extract (
-        _tao_any,
-        PortableServer::IdUniquenessPolicy::_tao_any_destructor,
-        PortableServer::_tc_IdUniquenessPolicy,
-        _tao_elem
+        _tao_elem 
       );
 }

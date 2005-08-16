@@ -26,10 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:153
+// be\be_codegen.cpp:154
 
-#ifndef _TAO_IDL_ORIG_POAMANAGERC_H_
-#define _TAO_IDL_ORIG_POAMANAGERC_H_
+#ifndef _TAO_IDL_POAMANAGERC_H_
+#define _TAO_IDL_POAMANAGERC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -52,17 +52,8 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_PortableServer_Export
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
-
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:49
 
 namespace PortableServer
 {
@@ -123,10 +114,10 @@ namespace PortableServer
       return static_cast<POAManager_ptr> (0);
     }
     
-    static void _tao_any_destructor (void *);
+    
     
     // TAO_IDL - Generated from
-    // be\be_visitor_exception/exception_ch.cpp:51
+    // be\be_visitor_exception/exception_ch.cpp:53
 
 #if !defined (_PORTABLESERVER_POAMANAGER_ADAPTERINACTIVE_CH_)
 #define _PORTABLESERVER_POAMANAGER_ADAPTERINACTIVE_CH_
@@ -163,13 +154,13 @@ namespace PortableServer
         );
       
       // TAO_IDL - Generated from
-      // be\be_visitor_exception/exception_ch.cpp:127
+      // be\be_visitor_exception/exception_ch.cpp:129
       
       virtual CORBA::TypeCode_ptr _tao_type (void) const;
     };
     
     // TAO_IDL - Generated from
-    // be\be_visitor_typecode/typecode_decl.cpp:44
+    // be\be_visitor_typecode/typecode_decl.cpp:49
     
     static ::CORBA::TypeCode_ptr const _tc_AdapterInactive;
 
@@ -189,7 +180,7 @@ namespace PortableServer
     typedef State &State_out;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_typecode/typecode_decl.cpp:44
+    // be\be_visitor_typecode/typecode_decl.cpp:49
     
     static ::CORBA::TypeCode_ptr const _tc_State;
     
@@ -207,8 +198,6 @@ namespace PortableServer
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
-#if (TAO_HAS_MINIMUM_POA == 0)
-
     virtual void hold_requests (
         ::CORBA::Boolean wait_for_completion
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -243,8 +232,6 @@ namespace PortableServer
         ::PortableServer::POAManager::AdapterInactive
       )) = 0;
     
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
@@ -282,12 +269,12 @@ namespace PortableServer
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_PortableServer_Export ::CORBA::TypeCode_ptr const _tc_POAManager;
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:78
 
 } // module PortableServer
 
@@ -298,8 +285,8 @@ namespace PortableServer
 namespace TAO
 {
 
-#if !defined (_PORTABLESERVER_POAMANAGER__TRAITS_CH_)
-#define _PORTABLESERVER_POAMANAGER__TRAITS_CH_
+#if !defined (_PORTABLESERVER_POAMANAGER__TRAITS_)
+#define _PORTABLESERVER_POAMANAGER__TRAITS_
   
   template<>
   struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::POAManager>
@@ -321,36 +308,7 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
-
-TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::POAManager_ptr); // copying
-TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::POAManager_ptr *); // non-copying
-TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::POAManager_ptr &);
-
-// TAO_IDL - Generated from
-// be\be_visitor_exception/any_op_ch.cpp:52
-
-TAO_PortableServer_Export void operator<<= (CORBA::Any &, const PortableServer::POAManager::AdapterInactive &); // copying version
-TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::POAManager::AdapterInactive*); // noncopying version
-TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::POAManager::AdapterInactive *&); // deprecated
-TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, const PortableServer::POAManager::AdapterInactive *&);
-
-// TAO_IDL - Generated from
-// be\be_visitor_enum/any_op_ch.cpp:51
-
-TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::POAManager::State);
-TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::POAManager::State &);
-
-// TAO_IDL - Generated from
-// be\be_codegen.cpp:955
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
+// be\be_codegen.cpp:1028
 
 #include /**/ "ace/post.h"
 

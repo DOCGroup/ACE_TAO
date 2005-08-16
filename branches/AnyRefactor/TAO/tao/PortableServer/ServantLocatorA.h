@@ -26,45 +26,37 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:154
+// be\be_codegen.cpp:754
 
-#ifndef _TAO_IDL_PORTABLESERVER_INCLUDEC_H_
-#define _TAO_IDL_PORTABLESERVER_INCLUDEC_H_
+#ifndef _TAO_IDL_SERVANTLOCATORA_H_
+#define _TAO_IDL_SERVANTLOCATORA_H_
 
 #include /**/ "ace/pre.h"
 
-
-#include "ace/config-all.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "portableserver_export.h"
-#include "tao/ORB.h"
-#include "tao/SystemException.h"
-#include "tao/Environment.h"
+#include "ServantLocatorC.h"
+#include "tao/AnyTypeCode/orb_typesA.h"
+#include "tao/PortableServer/PS_ForwardA.h"
+#include "tao/PortableServer/ServantManagerA.h"
+#include "tao/PortableServer/ForwardRequestA.h"
 
-#include "tao/PortableServer/PortableServer.h"
-
-#if defined (TAO_EXPORT_MACRO)
-#undef TAO_EXPORT_MACRO
-#endif
-#define TAO_EXPORT_MACRO TAO_PortableServer_Export
 
 // TAO_IDL - Generated from
-// be\be_visitor_traits.cpp:61
+// be\be_visitor_module/module_ch.cpp:59
 
-// Traits specializations.
-namespace TAO
+namespace PortableServer
 {
-}
+  
+  // TAO_IDL - Generated from
+  // be\be_visitor_typecode/typecode_decl.cpp:49
+  
+  extern TAO_PortableServer_Export ::CORBA::TypeCode_ptr const _tc_ServantLocator;
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:1028
+// be\be_visitor_module/module_ch.cpp:86
+
+} // module PortableServer
 
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
-
-

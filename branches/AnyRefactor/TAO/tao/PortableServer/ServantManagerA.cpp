@@ -25,7 +25,7 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "ServantManagerC.h"
+#include "ServantManagerA.h"
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
@@ -50,83 +50,6 @@ namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_ServantManager =
     &_tao_tc_PortableServer_ServantManager;
-}
-
-
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<PortableServer::ServantManager>::to_object (
-      CORBA::Object_ptr &_tao_elem
-    ) const
-  {
-    _tao_elem = CORBA::Object::_duplicate (this->value_);
-    return true;
-  }
-}
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<PortableServer::ServantManager>::marshal_value (TAO_OutputCDR &)
-  {
-    return false;
-  }
-
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<PortableServer::ServantManager>::demarshal_value (TAO_InputCDR &)
-  {
-    return false;
-  }
-}
-
-// Copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    PortableServer::ServantManager_ptr _tao_elem
-  )
-{
-  PortableServer::ServantManager_ptr _tao_objptr =
-    PortableServer::ServantManager::_duplicate (_tao_elem);
-  _tao_any <<= &_tao_objptr;
-}
-
-// Non-copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    PortableServer::ServantManager_ptr *_tao_elem
-  )
-{
-  TAO::Any_Impl_T<PortableServer::ServantManager>::insert (
-      _tao_any,
-      PortableServer::ServantManager::_tao_any_destructor,
-      PortableServer::_tc_ServantManager,
-      *_tao_elem
-    );
-}
-
-CORBA::Boolean
-operator>>= (
-    const CORBA::Any &_tao_any,
-    PortableServer::ServantManager_ptr &_tao_elem
-  )
-{
-  return
-    TAO::Any_Impl_T<PortableServer::ServantManager>::extract (
-        _tao_any,
-        PortableServer::ServantManager::_tao_any_destructor,
-        PortableServer::_tc_ServantManager,
-        _tao_elem
-      );
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
