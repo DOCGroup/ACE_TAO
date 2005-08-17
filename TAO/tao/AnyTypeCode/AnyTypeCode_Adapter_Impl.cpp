@@ -130,18 +130,6 @@ TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, ACE_OutputCDR::
   (*any) <<= value;
 }
 
-void
-TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_string value)
-{
-  (*any) <<= value;
-}
-
-void
-TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_wstring value)
-{
-  (*any) <<= value;
-}
-
 int
 TAO_AnyTypeCode_Adapter_Impl::Initializer (void)
 {

@@ -191,38 +191,6 @@ namespace TAO
     typedef inout_type                            ret_arg_type;
 
   };
-
-  /**
-   *
-   * @brief Specializations for bounded (w)strings
-   *
-   */
-
-  template<size_t BOUND>
-  class BD_String_SArg_Traits
-    : public BD_String_SArg_Traits_T<CORBA::Char,
-                                     CORBA::String_var,
-                                     CORBA::String_out,
-                                     ACE_InputCDR::to_string,
-                                     ACE_OutputCDR::from_string,
-                                     BOUND,
-                                     TAO::Any_Insert_Policy_Stream <ACE_OutputCDR::from_string>
-                                    >
-  {
-  };
-
-  template<size_t BOUND>
-  class BD_WString_SArg_Traits
-    : public BD_String_SArg_Traits_T<CORBA::WChar,
-                                     CORBA::WString_var,
-                                     CORBA::WString_out,
-                                     ACE_InputCDR::to_wstring,
-                                     ACE_OutputCDR::from_wstring,
-                                     BOUND,
-                                     TAO::Any_Insert_Policy_Stream <ACE_OutputCDR::from_wstring>
-                                   >
-  {
-  };
 }
 
 #if defined (__ACE_INLINE__)
