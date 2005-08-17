@@ -1,3 +1,11 @@
+Wed Aug 17 13:27:16 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        
+          In generating the include of *C.h in *A.h, added generation
+          of the prefix "tao/" if we are processing a .pidl file, since
+          in that case, the *A.h file will not be in the same directory.
+
 Wed Aug 17 12:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
