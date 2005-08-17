@@ -647,7 +647,7 @@ protected:
   /// Return if we have any missing data in the queue of messages
   /// or determine if we have more information left out in the
   /// presently read message to make it complete.
-  size_t missing_data (ACE_Message_Block &message_block);
+  ssize_t missing_data (ACE_Message_Block &message_block);
 
   /// Consolidate the currently read message or consolidate the last
   /// message in the queue. The consolidation of the last message in

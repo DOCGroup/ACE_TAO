@@ -258,7 +258,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
 
   CORBA::Boolean hdr_status = (CORBA::Boolean) input.good_bit ();
 
-  CORBA::ULong req_id;
+  CORBA::ULong req_id = 0;
   // Get the rest of the request header ...
   hdr_status = hdr_status && input.read_ulong (req_id);
 
