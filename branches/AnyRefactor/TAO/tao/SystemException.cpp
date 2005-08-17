@@ -897,7 +897,13 @@ CORBA::name ::_tao_type (void) const \
   if (adapter != 0) \
     return adapter->_tao_type_ ## name (); \
   else \
-    return 0; \
+    { \
+      ACE_ERROR ((LM_ERROR, \
+                  ACE_TEXT ("(%P|%t) %p\n"), \
+                  ACE_TEXT ("Unable to find the ") \
+                  ACE_TEXT ("AnyTypeCode Adapter instance"))); \
+      return 0; \
+    } \
 }
 
 STANDARD_EXCEPTION_LIST
