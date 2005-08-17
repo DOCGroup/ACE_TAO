@@ -1,7 +1,12 @@
+Wed Aug 17 14:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Event_Service/Event_Service.cpp:
+          Removed explicit template instantiations
+
 Tue Aug 16 18:19:13 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_exception/exception_ctor.cpp:
-        
+
           Removed generation of the leading double colon for typedef'd
           basic type names in the exception constructor, since the
           ACE_NESTED_CLASS macro could be used, and the double colon
