@@ -49,7 +49,7 @@ namespace TAO
     ~PICurrent_Copy_Callback (void);
 
     /// Perform the copy.
-    virtual int execute (void * arg = 0);
+    int execute (void);
 
     /// Set the source and destination PICurrent_Impl objects.
     void src_and_dst (PICurrent_Impl * src, PICurrent_Impl * dst);

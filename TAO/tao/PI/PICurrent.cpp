@@ -11,7 +11,6 @@ ACE_RCSID (tao,
 # include "PICurrent.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "PICurrent_Copy_Callback.h"
 #include "PICurrent_Impl.h"
 
 #include "tao/ORB_Core.h"
