@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoserver, iorinterceptor, codecfactory, interceptors {
+project(*Server): taoserver, iorinterceptor, interceptors {
   Source_Files {
     test_i.cpp
     FOO_IORInterceptor_ORBInitializer.cpp
@@ -10,7 +10,7 @@ project(*Server): taoserver, iorinterceptor, codecfactory, interceptors {
   }
 }
 
-project(*Client): taoclient, pi, codecfactory, interceptors {
+project(*Client): taoclient, pi, interceptors {
   Source_Files {
     testC.cpp
     FOO_Client_ORBInitializer.cpp

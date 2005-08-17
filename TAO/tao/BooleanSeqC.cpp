@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:288
+// be\be_codegen.cpp:277
 
 
 #include "BooleanSeqC.h"
