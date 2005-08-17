@@ -394,7 +394,7 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
               << "ACE_InputCDR::to_" << (wide ? "w" : "") << "string," << be_nl
               << "ACE_OutputCDR::from_" << (wide ? "w" : "") << "string," << be_nl
               << bound << "," << be_nl
-              << "TAO::Any_Insert_Policy_AnyTypeCode_Adapter <" << be_idt_nl
+              << "TAO::Any_Insert_Policy_Stream <" << be_idt_nl
               << "ACE_OutputCDR::from_" << (wide ? "w" : "") << "string" << be_uidt_nl
               << ">"
               << be_uidt_nl
@@ -482,7 +482,7 @@ be_visitor_arg_traits::visit_attribute (be_attribute *node)
       << "ACE_InputCDR::to_" << (wide ? "w" : "") << "string," << be_nl
       << "ACE_OutputCDR::from_" << (wide ? "w" : "") << "string," << be_nl
       << bound << "," << be_nl
-      << "TAO::Any_Insert_Policy_AnyTypeCode_Adapter <" << be_idt_nl
+      << "TAO::Any_Insert_Policy_Stream <" << be_idt_nl
       << "ACE_OutputCDR::from_" << (wide ? "w" : "") << "string" << be_uidt_nl
       << ">"
       << be_uidt_nl
@@ -562,7 +562,7 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
       << "ACE_InputCDR::to_" << (wide ? "w" : "") << "string," << be_nl
       << "ACE_OutputCDR::from_" << (wide ? "w" : "") << "string," << be_nl
       << bound << "," << be_nl
-      << "TAO::Any_Insert_Policy_AnyTypeCode_Adapter <" << be_idt_nl
+      << "TAO::Any_Insert_Policy_Stream <" << be_idt_nl
       << "ACE_OutputCDR::from_" << (wide ? "w" : "") << "string" << be_uidt_nl
       << ">"
       << be_uidt_nl
@@ -728,7 +728,7 @@ be_visitor_arg_traits::visit_string (be_string *node)
       << "ACE_InputCDR::to_" << (wide ? "w" : "") << "string," << be_nl
       << "ACE_OutputCDR::from_" << (wide ? "w" : "") << "string," << be_nl
       << bound << "," << be_nl
-      << "TAO::Any_Insert_Policy_AnyTypeCode_Adapter <" << be_idt_nl
+      << "TAO::Any_Insert_Policy_Stream <" << be_idt_nl
       << "ACE_OutputCDR::from_" << (wide ? "w" : "") << "string" << be_uidt_nl
       << ">"
       << be_uidt_nl
