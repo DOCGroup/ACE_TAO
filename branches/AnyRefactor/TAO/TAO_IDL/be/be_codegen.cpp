@@ -784,9 +784,21 @@ TAO_CodeGen::start_anyop_header (const char *fname)
                            << "\"";
     }
 
+  char *tao_prefix = "";
+  ACE_CString pidl_checker (idl_global->filename ()->get_string ());
+  bool got_pidl =
+    (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl");
+
+  // If we're here and we have a .pidl file, we need to generate
+  // the *A.h include from the AnyTypeCode library.
+  if (got_pidl)
+    {
+      tao_prefix = "tao/";
+    }
+
   // Generate the include statement for the client header. We just
   // need to put only the base names. Path info is not required.
-  *this->anyop_header_ << "\n#include \""
+  *this->anyop_header_ << "\n#include \"" << tao_prefix
                        << be_global->be_get_client_hdr_fname ()
                        << "\"";
 
@@ -807,7 +819,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
 
           ACE_CString pidl_checker (idl_name);
           bool got_pidl =
-            (pidl_checker.find (".pidl") != ACE_SString::npos);
+            (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl");
 
           // If we're here and we have a .pidl file, we need to generate
           // the *A.h include from the AnyTypeCode library.
@@ -1542,7 +1554,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
 
           ACE_CString pidl_checker (idl_name);
           bool got_pidl =
-            (pidl_checker.find (".pidl") != ACE_SString::npos);
+            (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl");
 
           // If we're here and we have a .pidl file, we need to generate
           // the *A.h include from the AnyTypeCode library.
