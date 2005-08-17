@@ -27,6 +27,9 @@ project : valuetype, portableserver, core {
     ObjRefTemplate
   }
 
+  IDL_Files {
+  }
+
   Pkgconfig_Files {
     ObjRefTemplate/TAO_ObjRefTemplate.pc.in
   }

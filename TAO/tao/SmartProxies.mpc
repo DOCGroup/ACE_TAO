@@ -26,6 +26,9 @@ project : taolib, core {
   PIDL_Files {
   }
 
+  IDL_Files {
+  }
+
   Pkgconfig_Files {
     SmartProxies/TAO_SmartProxies.pc.in
   }
