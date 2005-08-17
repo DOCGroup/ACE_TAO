@@ -529,7 +529,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::execute_command (
 
   // The actual upcall.
   command.execute (ACE_ENV_SINGLE_ARG_PARAMETER);
-  TAO_INTERCEPTOR_CHECK;
+  ACE_CHECK;
 }
 
 
