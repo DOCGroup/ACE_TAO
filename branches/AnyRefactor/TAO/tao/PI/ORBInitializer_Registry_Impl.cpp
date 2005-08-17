@@ -156,6 +156,7 @@ TAO::ORBInitializer_Registry::post_init (
           ACE_CHECK;
         }
 
+#if TAO_HAS_INTERCEPTORS == 1
       CORBA::Object_ptr picurrent_ptr = orb_core->pi_current ();
 
       if (!CORBA::is_nil (picurrent_ptr))
@@ -168,6 +169,7 @@ TAO::ORBInitializer_Registry::post_init (
               ACE_CHECK;
             }
         }
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
 
       // Invalidate the ORBInitInfo instance to prevent future
       // modifications to the ORB.  This behavior complies with the
