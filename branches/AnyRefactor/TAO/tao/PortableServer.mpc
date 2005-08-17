@@ -27,6 +27,10 @@ project : taolib, core, anytypecode {
     PortableServer
   }
 
+  IDL_Files {
+    PortableServer
+  }
+
   Pkgconfig_Files {
     PortableServer/TAO_PortableServer.pc.in
   }

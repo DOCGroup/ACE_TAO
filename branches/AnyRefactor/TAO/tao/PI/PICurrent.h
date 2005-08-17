@@ -33,7 +33,6 @@
 #if defined(_MSC_VER)
 # pragma warning(push)
 # pragma warning(disable:4250)
-# pragma warning(disable:4251)
 #endif /* _MSC_VER */
 
 /// Forward declarations.
