@@ -27,6 +27,9 @@ project : taolib, pi, portableserver, core {
     PI_Server
   }
 
+  IDL_Files {
+  }
+
   Pkgconfig_Files {
     PI_Server/TAO_PI_Server.pc.in
   }

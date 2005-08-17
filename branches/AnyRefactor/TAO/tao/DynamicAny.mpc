@@ -27,6 +27,9 @@ project : taolib, core, anytypecode {
     DynamicAny
   }
 
+  IDL_Files {
+  }
+
   Pkgconfig_Files {
     DynamicAny/TAO_DynamicAny.pc.in
   }

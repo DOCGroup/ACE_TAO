@@ -27,6 +27,9 @@ project : taolib, core, anytypecode {
     IFR_Client
   }
 
+  IDL_Files {
+  }
+
   Pkgconfig_Files {
     IFR_Client/TAO_IFR_Client.pc.in
   }

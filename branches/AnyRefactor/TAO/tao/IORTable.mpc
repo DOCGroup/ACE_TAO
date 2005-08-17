@@ -4,7 +4,7 @@ project : taolib, core {
   dynamicflags = TAO_IORTABLE_BUILD_DLL
 
   Source_Files {
-    IORTable 
+    IORTable
   }
 
   Header_Files {
@@ -25,6 +25,9 @@ project : taolib, core {
 
   PIDL_Files {
     IORTable
+  }
+
+  IDL_Files {
   }
 
   Pkgconfig_Files {
