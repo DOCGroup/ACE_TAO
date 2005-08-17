@@ -2941,7 +2941,8 @@ libTAO_DsLogAdmin_Serv_la_SOURCES = \
   Log/Log_Constraint_Interpreter.cpp \
   Log/Log_Constraint_Visitors.cpp \
   Log/Log_Flush_Handler.cpp \
-  Log/Log_i.cpp
+  Log/Log_i.cpp \
+  Log/LogActivator.cpp
 
 libTAO_DsLogAdmin_Serv_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -2973,7 +2974,8 @@ nobase_include_HEADERS += \
   Log/Log_Constraint_Visitors.h \
   Log/Log_Flush_Handler.h \
   Log/Log_Persistence_Strategy.h \
-  Log/Log_i.h
+  Log/Log_i.h \
+  Log/LogActivator.h
 
 pkgconfig_DATA += \
   TAO_DsLogAdmin_Serv.pc

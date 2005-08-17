@@ -63,9 +63,15 @@ TAO_BasicLogFactory_i::create (DsLogAdmin::LogFullActionType full_action,
   ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
   DsLogAdmin::LogId id = id_out;
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+  DsLogAdmin::Log_var log =
+    this->create_log_reference (id ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
+#else
   DsLogAdmin::Log_var log =
     this->create_log_object (id ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
+#endif
 
   // narrow to BasicLog
   DsLogAdmin::BasicLog_var basic_log =
@@ -92,9 +98,15 @@ TAO_BasicLogFactory_i::create_with_id (DsLogAdmin::LogId id,
 			  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+  DsLogAdmin::Log_var log =
+    this->create_log_reference (id ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
+#else
   DsLogAdmin::Log_var log =
     this->create_log_object (id ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
+#endif
 
   // narrow to BasicLog
   DsLogAdmin::BasicLog_var basic_log =
