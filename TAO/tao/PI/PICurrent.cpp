@@ -112,10 +112,12 @@ TAO::PICurrent::initialize (PortableInterceptor::SlotId sc
                                                                tss_slot_);
 
       if (result != 0)
-        return 0;
+        return result;
 
       this->orb_core_.set_tss_resource (tss_slot_, impl);
     }
+
+  return 0;
 }
 
 
