@@ -102,8 +102,7 @@ class ACE_Export ACE_Condition_Recursive_Thread_Mutex
 {
 public:
   /// Initialize the condition variable with a recursive mutex.
-  ACE_Condition_Recursive_Thread_Mutex (ACE_Recursive_Thread_Mutex &m):
-    ACE_Condition<ACE_Recursive_Thread_Mutex> (m) {}
+  ACE_Condition_Recursive_Thread_Mutex (ACE_Recursive_Thread_Mutex &m);
 };
 
 #endif /* !ACE_HAS_THREADS */
