@@ -136,10 +136,15 @@ TAO_EventLogFactory_i::create (
   ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());
   DsLogAdmin::LogId id = id_out;
 
+#if (TAO_HAS_MINIMUM_POA == 0)
   DsLogAdmin::Log_var log =
-    this->create_log_object (id
-			     ACE_ENV_ARG_PARAMETER);
+    this->create_log_reference (id ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());
+#else
+  DsLogAdmin::Log_var log =
+    this->create_log_object (id ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());
+#endif
 
   // narrow to EventLog
   DsEventLogAdmin::EventLog_var event_log =
@@ -171,10 +176,15 @@ TAO_EventLogFactory_i::create_with_id (
 			  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());
 
+#if (TAO_HAS_MINIMUM_POA == 0)
   DsLogAdmin::Log_var log =
-    this->create_log_object (id
-			     ACE_ENV_ARG_PARAMETER);
+    this->create_log_reference (id ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());
+#else
+  DsLogAdmin::Log_var log =
+    this->create_log_object (id ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsEventLogAdmin::EventLog::_nil ());
+#endif
 
   // narrow to EventLog
   DsEventLogAdmin::EventLog_var event_log =

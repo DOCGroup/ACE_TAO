@@ -102,13 +102,14 @@ project(DsLogAdmin_Serv) : orbsvcslib, core, dslogadmin_skel, dynamicany, etcl, 
   }
 
   Source_Files {
-    Log/Hash_Persistence_Strategy.cpp
-    Log/Hash_LogRecordStore.cpp
-    Log/Hash_LogStore.cpp
-    Log/Hash_Iterator_i.cpp
     Log/BasicLogFactory_i.cpp
     Log/BasicLog_i.cpp
+    Log/Hash_Iterator_i.cpp
+    Log/Hash_LogRecordStore.cpp
+    Log/Hash_LogStore.cpp
+    Log/Hash_Persistence_Strategy.cpp
     Log/Iterator_i.cpp
+    Log/LogActivator.cpp
     Log/LogMgr_i.cpp
     Log/LogNotification.cpp
     Log/LogRecordStore.cpp

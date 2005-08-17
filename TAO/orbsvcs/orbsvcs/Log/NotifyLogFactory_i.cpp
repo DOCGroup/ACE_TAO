@@ -113,10 +113,15 @@ TAO_NotifyLogFactory_i::create (
   ACE_CHECK_RETURN (DsNotifyLogAdmin::NotifyLog::_nil ());
   DsLogAdmin::LogId id = id_out;
 
+#if (TAO_HAS_MINIMUM_POA == 0)
   DsLogAdmin::Log_var log =
-    this->create_log_object (id
-			     ACE_ENV_ARG_PARAMETER);
+    this->create_log_reference (id ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsNotifyLogAdmin::NotifyLog::_nil ());
+#else
+  DsLogAdmin::Log_var log =
+    this->create_log_object (id ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsNotifyLogAdmin::NotifyLog::_nil ());
+#endif
 
   // narrow to NotifyLog
   DsNotifyLogAdmin::NotifyLog_var notify_log =
@@ -158,10 +163,15 @@ TAO_NotifyLogFactory_i::create_with_id (
 			  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsNotifyLogAdmin::NotifyLog::_nil ());
 
+#if (TAO_HAS_MINIMUM_POA == 0)
   DsLogAdmin::Log_var log =
-    this->create_log_object (id
-			     ACE_ENV_ARG_PARAMETER);
+    this->create_log_reference (id ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsNotifyLogAdmin::NotifyLog::_nil ());
+#else
+  DsLogAdmin::Log_var log =
+    this->create_log_object (id ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsNotifyLogAdmin::NotifyLog::_nil ());
+#endif
 
   // narrow to NotifyLog
   DsNotifyLogAdmin::NotifyLog_var notify_log =
@@ -171,7 +181,7 @@ TAO_NotifyLogFactory_i::create_with_id (
   notifier_->object_creation (id ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsNotifyLogAdmin::NotifyLog::_nil ());
 
-  return DsNotifyLogAdmin::NotifyLog::_nil ();
+  return notify_log._retn();
 }
 
 CORBA::RepositoryId

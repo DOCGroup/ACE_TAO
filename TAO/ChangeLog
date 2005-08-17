@@ -1,3 +1,43 @@
+Wed Aug 17 11:30:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp (create_with_id):
+
+	  Fix bug where _nil() was returned instead of new object
+	  reference.
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Regenerated.
+
+	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
+
+	  Add LogActivator.cpp to Source_Files in the DsLogAdmin_Serv
+	  project.
+
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+
+	  Changed create() and create_with_id() methods to invoke
+	  create_log_reference() instead of create_log_object().  This is
+	  not absolutely necessary, since a log is very likely to be used
+	  after it is created.  However, it helps to ensure the servant
+	  activator code path is exercised so it will work when a dynamic
+	  logging strategy that needs it is loaded.
+
+	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp
+
+	  Added USE_SERVANT_MANAGER request processing policy to the
+	  log POA.
+
+	* orbsvcs/orbsvcs/Log/LogActivator.cpp:
+	* orbsvcs/orbsvcs/Log/LogActivator.h:
+
+	  New files, servant activator class for creating new logs.  This
+	  is useful for persistent log strategies so that servants can be
+	  created when they are first accessed instead of at startup.
+
 Wed Aug 17 14:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Event_Service/Event_Service.cpp:
