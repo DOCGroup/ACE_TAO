@@ -60,7 +60,7 @@ namespace TAO
           {
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) %p\n"),
-                        ACE_TEXT ("ERROR: nable to find AnyTypeCode Adapter ")));
+                        ACE_TEXT ("ERROR: unable to find AnyTypeCode Adapter ")));
           }
       }
   };
