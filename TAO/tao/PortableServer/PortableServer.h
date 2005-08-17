@@ -37,6 +37,14 @@ TAO_Requires_POA_Initializer = TAO_POA_Initializer::init ();
 #include "POAManagerC.h"
 #include "PortableServer_Functions.h"
 #include "PortableServer_WFunctions.h"
+#include "PS_ForwardA.h"
+#include "IdAssignmentPolicyA.h"
+#include "IdUniquenessPolicyA.h"
+#include "ImplicitActivationPolicyA.h"
+#include "LifespanPolicyA.h"
+#include "RequestProcessingPolicyA.h"
+#include "ServantRetentionPolicyA.h"
+#include "ThreadPolicyA.h"
 
 #include /**/ "ace/post.h"
 
