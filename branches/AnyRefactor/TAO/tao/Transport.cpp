@@ -822,7 +822,11 @@ TAO_Transport::drain_queue_i (void)
   // the loop because after the loop there may still be data to be
   // sent
   int iovcnt = 0;
+#if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
+  iovec iov[ACE_IOV_MAX] = { 0 };
+#else
   iovec iov[ACE_IOV_MAX];
+#endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
 
   // We loop over all the elements in the queue ...
   TAO_Queued_Message *i = this->head_;
