@@ -1,3 +1,16 @@
+Wed Aug 17 08:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_arg_traits.cpp
+        * tao/AnyTypeCode_Adapter.h
+        * tao/BD_String_Argument_T.h
+        * tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.cpp
+        * tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.h
+        * tao/PortableServer/BD_String_SArgument_T.h
+          Removed the specialization for bound (w)string from the TAO
+          lib and just generate the full Arg_Trait in the IDL compiler,
+          this makes it not needed anymore to have an insertion
+          method for the bound (w)string in the AnyTypeCode adapter
+
 Tue Aug 16 20:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_interface_fwd/any_op_ch.cpp:
