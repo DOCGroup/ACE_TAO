@@ -432,10 +432,3 @@ Event_Service::remove_observer (RtecEventChannelAdmin::Observer_Handle handle
   this->ec_impl_->remove_observer (handle ACE_ENV_ARG_PARAMETER);
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Auto_Basic_Ptr<POA_RtecScheduler::Scheduler>;
-template class auto_ptr<POA_RtecScheduler::Scheduler>;
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Auto_Basic_Ptr<POA_RtecScheduler::Scheduler>
-#pragma instantiate auto_ptr<POA_RtecScheduler::Scheduler>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
