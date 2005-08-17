@@ -89,7 +89,9 @@ public:
     TAO_SYSTEM_EXCEPTION (ACTIVITY_COMPLETED) \
     TAO_SYSTEM_EXCEPTION (ACTIVITY_REQUIRED) \
     TAO_SYSTEM_EXCEPTION (THREAD_CANCELLED) \
-    TAO_SYSTEM_EXCEPTION (WrongTransaction)
+    TAO_SYSTEM_EXCEPTION (WrongTransaction) \
+    TAO_SYSTEM_EXCEPTION (PolicyError) \
+    TAO_SYSTEM_EXCEPTION (InvalidPolicies)
 
 #define TAO_SYSTEM_EXCEPTION(name) \
   virtual CORBA::TypeCode_ptr _tao_type_ ## name (void) const = 0;

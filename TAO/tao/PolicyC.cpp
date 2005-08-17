@@ -36,6 +36,8 @@
 #include "tao/Basic_Arguments.h"
 #include "tao/Object_Argument_T.h"
 #include "ace/OS_NS_string.h"
+#include "tao/AnyTypeCode_Adapter.h"
+#include "ace/Dynamic_Service.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -210,9 +212,20 @@ CORBA::PolicyError::PolicyError (
 // TAO extension - the virtual _type method.
 CORBA::TypeCode_ptr CORBA::PolicyError::_tao_type (void) const
 {
-/// @todo use adapter
-  return 0;
-//  return ::CORBA::_tc_PolicyError;
+  TAO_AnyTypeCode_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_AnyTypeCode_Adapter>::instance (
+        "AnyTypeCode_Adapter"
+      );
+  if (adapter != 0)
+    return adapter->_tao_type_PolicyError ();
+  else
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("Unable to find the ")
+                  ACE_TEXT ("AnyTypeCode Adapter instance")));
+      return 0;
+    }
 }
 
 // TAO_IDL - Generated from
@@ -335,9 +348,20 @@ CORBA::InvalidPolicies::InvalidPolicies (
 // TAO extension - the virtual _type method.
 CORBA::TypeCode_ptr CORBA::InvalidPolicies::_tao_type (void) const
 {
-  // todo
-  //return ::CORBA::_tc_InvalidPolicies;
-  return 0;
+  TAO_AnyTypeCode_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_AnyTypeCode_Adapter>::instance (
+        "AnyTypeCode_Adapter"
+      );
+  if (adapter != 0)
+    return adapter->_tao_type_InvalidPolicies ();
+  else
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("Unable to find the ")
+                  ACE_TEXT ("AnyTypeCode Adapter instance")));
+      return 0;
+    }
 }
 
 // TAO_IDL - Generated from
