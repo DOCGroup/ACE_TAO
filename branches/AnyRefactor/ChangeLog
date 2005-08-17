@@ -1,3 +1,13 @@
+Wed Aug 17 07:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/anytypecode.mpb:
+        * bin/MakeProjectCreator/config/taoclient.mpb:
+        * bin/MakeProjectCreator/config/taoidldefaults.mpb:
+          By default we now suppress Any and Typecode generation with -Sa
+          and -St but when the AnyTypeCode library is used, then these
+          options are removed from the idl flags. This way simple apps
+          don't get this lib by default
+
 Tue Aug 16 19:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-msvc-7.h:
