@@ -111,9 +111,6 @@ project : taolib, core {
   PIDL_Files {
   }
 
-  IDL_Files {
-  }
-
   Pkgconfig_Files {
     AnyTypeCode/TAO_AnyTypeCode.pc.in
   }

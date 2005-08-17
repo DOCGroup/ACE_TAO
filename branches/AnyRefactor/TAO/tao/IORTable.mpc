@@ -27,9 +27,6 @@ project : taolib, core {
     IORTable
   }
 
-  IDL_Files {
-  }
-
   Pkgconfig_Files {
     IORTable/TAO_IORTable.pc.in
   }
