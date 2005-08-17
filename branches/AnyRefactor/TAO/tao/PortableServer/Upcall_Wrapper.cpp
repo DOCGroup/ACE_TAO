@@ -53,10 +53,6 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
   ACE_TRY
     {
       {
-// @todo, PICurrent_Guard makes PortableServer dependent on PI, use the adapter with an auto_ptr.
-//        TAO::PICurrent_Guard pi_guard (server_request,
-//                                       true  /* Copy TSC to RSC */);
-
         if (interceptor_adapter != 0)
           {
             // Invoke intermediate server side interception points.
