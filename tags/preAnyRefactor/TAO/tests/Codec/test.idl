@@ -1,0 +1,26 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ * @file test.idl
+ *
+ * $Id$
+ *
+ * "test" IDL interface for the Codec test.
+ *
+ * @author Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
+
+module Foo
+{
+
+  struct Bar
+  {
+    long A;
+    long B;
+    unsigned long long C;
+    string D;
+  };
+
+};

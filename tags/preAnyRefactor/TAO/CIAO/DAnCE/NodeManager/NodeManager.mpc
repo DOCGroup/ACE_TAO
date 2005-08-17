@@ -1,0 +1,32 @@
+// -*- MPC -*-
+// $Id$
+
+project (NodeManager_stub): ciao_deployment_stub, ciao_server_dnc, ifr_client {
+  sharedname = NodeManager_stub
+  idlflags += -Wb,stub_export_macro=NodeManager_stub_Export -Wb,stub_export_include=NodeManager_stub_export.h
+  dynamicflags = NODEMANAGER_STUB_BUILD_DLL
+
+  IDL_Files {
+   NodeManager.idl
+  }
+
+  Source_Files {
+   NodeManagerC.cpp
+  }
+}
+
+project(NodeManager): ciao_deployment_stub, ciao_deployment_svnt, ciao_server_dnc, iortable, ifr_client, naming {
+  after += NodeApplicationManager NodeManager_stub
+  libs += NodeManager_stub NodeApplicationManager
+  exename = NodeManager
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    NodeManagerS.cpp
+    NodeManager_Impl.cpp
+    Node_Manager.cpp
+    NAM_Map.cpp
+  }
+}

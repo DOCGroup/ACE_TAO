@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+// Many existing MPC builds rely on this workspace.  It is not
+// necessary other than that.
+workspace {
+}

@@ -1,0 +1,287 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                      "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+  <HEAD>
+    <!-- $Id$ -->
+    <TITLE>Footprint Metrics Detailed Results</TITLE>
+    <LINK href="Stats.css" rel="stylesheet" type="text/css">
+  </HEAD>
+  <BODY>
+
+    <!--#include file="navigation.html"-->
+    
+    <DIV align="center">
+      <P>
+	<TABLE BORDER="2">
+	<THEAD>
+	  <TR>
+	    <TH>Component Name</TH>
+	    <TH>Chart</TH>
+	    <TH>Recent results</TH>
+	    <TH>Complete History</TH>
+	  </TR>
+	</THEAD>
+        <TBODY>
+	<TR>
+	  <TD>ORB_init</TD>
+	    <TD><A HREF="images/ORB_init_size.png">
+		<IMG ALT="ORB_init_size" SRC="images/thumbnails/ORB_init_size.png">
+		</A>
+	    </TD>
+	  <TD>
+	      <PRE>
+<!--#include file="data/LAST_ORB_init_size.txt" -->
+	      </PRE>
+	  </TD>
+	  <TD>
+	    <A HREF="data/ORB_init_size.txt">[Download]</A>
+	  </TD>
+	</TR>
+	<TR>
+	  <TD>ORB_destroy</TD>
+	    <TD><A HREF="images/ORB_destroy_size.png">
+		<IMG ALT="ORB_destroy_size" SRC="images/thumbnails/ORB_destroy_size.png">
+		</A>
+	    </TD>
+	  <TD>
+	      <PRE>
+<!--#include file="data/LAST_ORB_destroy_size.txt" -->
+	      </PRE>
+	  </TD>
+	  <TD>
+	    <A HREF="data/ORB_destroy_size.txt">[Download]</A>
+	  </TD>
+	</TR>
+	<TR>
+	  <TD>libACE</TD>
+	    <TD><A HREF="images/libACE.a_size.png">
+		<IMG ALT="libACE.a_size" SRC="images/thumbnails/libACE.a_size.png">
+		</A>
+	    </TD>
+	  <TD>
+	      <PRE>
+<!--#include file="data/LAST_libACE.a_size.txt" -->
+	      </PRE>
+	  </TD>
+	  <TD>
+	    <A HREF="data/libACE.a_size.txt">[Download]</A>
+	  </TD>
+	</TR>
+	<TR>
+	  <TD>libTAO</TD>
+	    <TD><A HREF="images/libTAO.a_size.png">
+		<IMG ALT="libTAO.a_size" SRC="images/thumbnails/libTAO.a_size.png">
+		</A>
+	    </TD>
+	  <TD>
+	      <PRE>
+<!--#include file="data/LAST_libTAO.a_size.txt" -->
+	      </PRE>
+	  </TD>
+	  <TD>
+	    <A HREF="data/libTAO.a_size.txt">[Download]</A>
+	  </TD>
+	</TR>
+	<TR>
+	  <TD>libTAO_PortableServer</TD>
+	    <TD><A HREF="images/libTAO_PortableServer.a_size.png">
+		<IMG ALT="libTAO_PortableServer.a_size" SRC="images/thumbnails/libTAO_PortableServer.a_size.png">
+		</A>
+	    </TD>
+	  <TD>
+	      <PRE>
+<!--#include file="data/LAST_libTAO_PortableServer.a_size.txt" -->
+	      </PRE>
+	  </TD>
+	  <TD>
+	    <A HREF="data/libTAO_PortableServer.a_size.txt">[Download]</A>
+	  </TD>
+	</TR>
+	<TR>
+	  <TD>libTAO_Strategies</TD>
+	    <TD><A HREF="images/libTAO_Strategies.a_size.png">
+		<IMG ALT="libTAO_Strategies.a_size" SRC="images/thumbnails/libTAO_Strategies.a_size.png">
+		</A>
+	    </TD>
+	  <TD>
+	      <PRE>
+<!--#include file="data/LAST_libTAO_Strategies.a_size.txt" -->
+	      </PRE>
+	  </TD>
+	  <TD>
+	    <A HREF="data/libTAO_Strategies.a_size.txt">[Download]</A>
+	  </TD>
+	</TR>
+	<TR>
+	  <TD>libTAO_DynamicAny</TD>
+	    <TD><A HREF="images/libTAO_DynamicAny.a_size.png">
+		<IMG ALT="libTAO_DynamicAny.a_size" SRC="images/thumbnails/libTAO_DynamicAny.a_size.png">
+		</A>
+	    </TD>
+	  <TD>
+	      <PRE>
+<!--#include file="data/LAST_libTAO_DynamicAny.a_size.txt" -->
+	      </PRE>
+	  </TD>
+	  <TD>
+	    <A HREF="data/libTAO_DynamicAny.a_size.txt">[Download]</A>
+	  </TD>
+	</TR>
+	<TR>
+	  <TD>libTAO_DynamicInterface</TD>
+	    <TD><A HREF="images/libTAO_DynamicInterface.a_size.png">
+		<IMG ALT="libTAO_DynamicInterface.a_size" SRC="images/thumbnails/libTAO_DynamicInterface.a_size.png">
+		</A>
+	    </TD>
+	  <TD>
+	      <PRE>
+<!--#include file="data/LAST_libTAO_DynamicInterface.a_size.txt" -->
+	      </PRE>
+	  </TD>
+	  <TD>
+	    <A HREF="data/libTAO_DynamicInterface.a_size.txt">[Download]</A>
+	  </TD>
+	</TR>
+	<TR>
+	  <TD>libTAO_IFR_Client</TD>
+	    <TD><A HREF="images/libTAO_IFR_Client.a_size.png">
+		<IMG ALT="libTAO_IFR_Client.a_size" SRC="images/thumbnails/libTAO_IFR_Client.a_size.png">
+		</A>
+	    </TD>
+	  <TD>
+	      <PRE>
+<!--#include file="data/LAST_libTAO_IFR_Client.a_size.txt" -->
+	      </PRE>
+	  </TD>
+	  <TD>
+	    <A HREF="data/libTAO_IFR_Client.a_size.txt">[Download]</A>
+	  </TD>
+	</TR>
+	<TR>
+	  <TD>libTAO_BiDirGIOP</TD>
+	    <TD><A HREF="images/libTAO_BiDirGIOP.a_size.png">
+		<IMG ALT="libTAO_BiDirGIOP.a_size" SRC="images/thumbnails/libTAO_BiDirGIOP.a_size.png">
+		</A>
+	    </TD>
+	  <TD>
+	      <PRE>
+<!--#include file="data/LAST_libTAO_BiDirGIOP.a_size.txt" -->
+	      </PRE>
+	  </TD>
+	  <TD>
+	    <A HREF="data/libTAO_BiDirGIOP.a_size.txt">[Download]</A>
+	  </TD>
+	</TR>
+	<TR>
+	  <TD>libTAO_Domain</TD>
+	    <TD><A HREF="images/libTAO_Domain.a_size.png">
+		<IMG ALT="libTAO_Domain.a_size" SRC="images/thumbnails/libTAO_Domain.a_size.png">
+		</A>
+	    </TD>
+	  <TD>
+	      <PRE>
+<!--#include file="data/LAST_libTAO_Domain.a_size.txt" -->
+	      </PRE>
+	  </TD>
+	  <TD>
+	    <A HREF="data/libTAO_Domain.a_size.txt">[Download]</A>
+	  </TD>
+	</TR>
+	<TR>
+	  <TD>libTAO_IORManip</TD>
+	    <TD><A HREF="images/libTAO_IORManip.a_size.png">
+		<IMG ALT="libTAO_IORManip.a_size" SRC="images/thumbnails/libTAO_IORManip.a_size.png">
+		</A>
+	    </TD>
+	  <TD>
+	      <PRE>
+<!--#include file="data/LAST_libTAO_IORManip.a_size.txt" -->
+	      </PRE>
+	  </TD>
+	  <TD>
+	    <A HREF="data/libTAO_IORManip.a_size.txt">[Download]</A>
+	  </TD>
+	</TR>
+	<TR>
+	  <TD>libTAO_IORTable</TD>
+	    <TD><A HREF="images/libTAO_IORTable.a_size.png">
+		<IMG ALT="libTAO_IORTable.a_size" SRC="images/thumbnails/libTAO_IORTable.a_size.png">
+		</A>
+	    </TD>
+	  <TD>
+	      <PRE>
+<!--#include file="data/LAST_libTAO_IORTable.a_size.txt" -->
+	      </PRE>
+	  </TD>
+	  <TD>
+	    <A HREF="data/libTAO_IORTable.a_size.txt">[Download]</A>
+	  </TD>
+	</TR>
+	<TR>
+	  <TD>libTAO_TypeCodeFactory</TD>
+	    <TD><A HREF="images/libTAO_TypeCodeFactory.a_size.png">
+		<IMG ALT="libTAO_TypeCodeFactory.a_size" SRC="images/thumbnails/libTAO_TypeCodeFactory.a_size.png">
+		</A>
+	    </TD>
+	  <TD>
+	      <PRE>
+<!--#include file="data/LAST_libTAO_TypeCodeFactory.a_size.txt" -->
+	      </PRE>
+	  </TD>
+	  <TD>
+	    <A HREF="data/libTAO_TypeCodeFactory.a_size.txt">[Download]</A>
+	  </TD>
+	</TR>
+	<TR>
+	  <TD>libTAO_SmartProxies</TD>
+	    <TD><A HREF="images/libTAO_SmartProxies.a_size.png">
+		<IMG ALT="libTAO_SmartProxies.a_size" SRC="images/thumbnails/libTAO_SmartProxies.a_size.png">
+		</A>
+	    </TD>
+	  <TD>
+	      <PRE>
+<!--#include file="data/LAST_libTAO_SmartProxies.a_size.txt" -->
+	      </PRE>
+	  </TD>
+	  <TD>
+	    <A HREF="data/libTAO_SmartProxies.a_size.txt">[Download]</A>
+	  </TD>
+	</TR>
+	<TR>
+	  <TD>libTAO_RTCORBA</TD>
+	    <TD><A HREF="images/libTAO_RTCORBA.a_size.png">
+		<IMG ALT="libTAO_RTCORBA.a_size" SRC="images/thumbnails/libTAO_RTCORBA.a_size.png">
+		</A>
+	    </TD>
+	  <TD>
+	      <PRE>
+<!--#include file="data/LAST_libTAO_RTCORBA.a_size.txt" -->
+	      </PRE>
+	  </TD>
+	  <TD>
+	    <A HREF="data/libTAO_RTCORBA.a_size.txt">[Download]</A>
+	  </TD>
+	</TR>
+	<TR>
+	  <TD>libTAO_RTPortableServer</TD>
+	    <TD><A HREF="images/libTAO_RTPortableServer.a_size.png">
+		<IMG ALT="libTAO_RTPortableServer.a_size" SRC="images/thumbnails/libTAO_RTPortableServer.a_size.png">
+		</A>
+	    </TD>
+	  <TD>
+	      <PRE>
+<!--#include file="data/LAST_libTAO_RTPortableServer.a_size.txt" -->
+	      </PRE>
+	  </TD>
+	  <TD>
+	    <A HREF="data/libTAO_RTPortableServer.a_size.txt">[Download]</A>
+	  </TD>
+	</TR>
+	</TBODY>
+      </TABLE>
+    </DIV>
+
+<!--#include file="footer.html"-->
+
+  </BODY>
+</HTML>
