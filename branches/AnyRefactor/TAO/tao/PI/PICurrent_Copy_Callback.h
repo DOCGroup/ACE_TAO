@@ -25,8 +25,6 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "ace/Functor.h"
-
 namespace TAO
 {
   class PICurrent_Impl;
@@ -41,7 +39,6 @@ namespace TAO
    * slot table.
    */
   class TAO_PI_Export PICurrent_Copy_Callback
-    : public ACE_Command_Base
   {
   public:
 
