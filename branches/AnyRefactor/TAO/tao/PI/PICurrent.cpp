@@ -21,7 +21,7 @@ ACE_RCSID (tao,
 
 TAO::PICurrent::PICurrent (TAO_ORB_Core &orb_core)
   : orb_core_ (orb_core),
-    tss_slot_ (-1),
+    tss_slot_ (0),
     slot_count_ (0)
 {
 }
@@ -101,7 +101,7 @@ TAO::PICurrent::initialize (PortableInterceptor::SlotId sc
 {
   this->slot_count_ = sc;
 
-  if (this->tsc () == 0 && tss_slot_ == -1)
+  if (this->tsc () == 0 && tss_slot_ == 0)
     {
       TAO::PICurrent_Impl *impl = 0;
       ACE_NEW_RETURN (impl,
