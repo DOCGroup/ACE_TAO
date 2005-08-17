@@ -1,3 +1,9 @@
+Wed Aug 17 15:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Condition_Recursive_Thread_Mutex.{h,cpp}:
+          Moved ACE_Condition_Recursive_Thread_Mutex constructor
+          implementation from header to cpp file
+
 Wed Aug 17 15:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/JAWS2/JAWS/Waiter.cpp:
