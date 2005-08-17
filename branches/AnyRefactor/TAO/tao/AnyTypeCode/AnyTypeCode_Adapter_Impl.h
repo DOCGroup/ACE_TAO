@@ -105,10 +105,6 @@ ANYTYPECODE__EXCEPTION_LIST
   virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_octet value);
 
   virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_boolean value);
-
-  virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_string value);
-
-  virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_wstring value);
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_AnyTypeCode_Adapter_Impl)

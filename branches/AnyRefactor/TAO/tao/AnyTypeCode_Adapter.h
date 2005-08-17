@@ -118,10 +118,6 @@ ANYTYPECODE__EXCEPTION_LIST
   virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_octet value) = 0;
 
   virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_boolean value) = 0;
-
-  virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_string value) = 0;
-
-  virtual void insert_into_any (CORBA::Any * any, ACE_OutputCDR::from_wstring value) = 0;
 };
 
 #include /**/ "ace/post.h"
