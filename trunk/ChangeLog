@@ -1,3 +1,14 @@
+Wed Aug 17 18:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Message_Block.{h,cpp,inl}:
+          In case a locking strategy is used, also make sure we use the
+          lock when accessing the reference count of the ACE_Data_Block.
+          Thanks to Viktor Chernenko
+          <viktor dot chernenko at med dot ge dot com> for reporting this
+          and supplying some patches to start with. This should fix
+          according to Viktor some crashes in the notificaion service
+          under high load.
+
 Wed Aug 17 15:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Condition_Recursive_Thread_Mutex.{h,cpp}:

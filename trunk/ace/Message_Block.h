@@ -791,6 +791,9 @@ protected:
   /// Internal release implementation
   ACE_Data_Block *release_i (void);
 
+  /// Internal get the current reference count.
+  int reference_count_i (void) const;
+
   /**
    * Decrease the reference count, but don't delete the object.
    * Returns 0 if the object should be removed.

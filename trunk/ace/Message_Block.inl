@@ -35,11 +35,8 @@ ACE_Message_Block::self_flags (void) const
   return this->flags_;
 }
 
-
-// This function must comes before ACE_Message_Block::reference_count
-// to avoid a g++ warning.
 ACE_INLINE int
-ACE_Data_Block::reference_count (void) const
+ACE_Data_Block::reference_count_i (void) const
 {
   return reference_count_;
 }

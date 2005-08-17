@@ -189,6 +189,20 @@ ACE_Message_Block::dump (void) const
 }
 
 int
+ACE_Data_Block::reference_count (void) const
+{
+  if (this->locking_strategy_)
+    {
+      // We need to acquire the lock before retrieving the count
+      ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->locking_strategy_, 0);
+
+      return this->reference_count_i ();
+    }
+
+  return this->reference_count_i ();
+}
+
+int
 ACE_Data_Block::size (size_t length)
 {
   ACE_TRACE ("ACE_Data_Block::size");
@@ -198,7 +212,7 @@ ACE_Data_Block::size (size_t length)
   else
     {
       // We need to resize!
-      char *buf;
+      char *buf = 0;
       ACE_ALLOCATOR_RETURN (buf,
                             (char *) this->allocator_strategy_->malloc (length),
                             -1);
@@ -851,7 +865,7 @@ ACE_Message_Block::release_i (ACE_Lock *lock)
   if (this->cont_)
     {
       ACE_Message_Block *mb = this->cont_;
-      ACE_Message_Block *tmp;
+      ACE_Message_Block *tmp = 0;
 
       do
         {
@@ -955,7 +969,7 @@ ACE_Message_Block::duplicate (void) const
 {
   ACE_TRACE ("ACE_Message_Block::duplicate");
 
-  ACE_Message_Block *nb;
+  ACE_Message_Block *nb = 0;
 
   // Create a new <ACE_Message_Block> that contains unique copies of
   // the message block fields, but a reference counted duplicate of
@@ -1072,7 +1086,7 @@ ACE_Data_Block::clone_nocopy (ACE_Message_Block::Message_Flags mask) const
   const ACE_Message_Block::Message_Flags always_clear =
     ACE_Message_Block::DONT_DELETE;
 
-  ACE_Data_Block *nb;
+  ACE_Data_Block *nb = 0;
 
   ACE_NEW_MALLOC_RETURN (nb,
                          static_cast<ACE_Data_Block*> (
@@ -1104,7 +1118,7 @@ ACE_Message_Block::clone (Message_Flags mask) const
   if (db == 0)
     return 0;
 
-  ACE_Message_Block *nb;
+  ACE_Message_Block *nb = 0;
 
   if(message_block_allocator_ == 0)
     {
