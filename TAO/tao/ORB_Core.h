@@ -44,7 +44,6 @@ namespace TAO
 {
   class ClientRequestInterceptor_Adapter;
   class ServerRequestInterceptor_Adapter;
-  class PICurrent;
 }
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1  */
