@@ -1,4 +1,5 @@
 #include "LogMgr_i.h"
+#include "LogActivator.h"
 #include "ace/Dynamic_Service.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "orbsvcs/Log/Hash_Persistence_Strategy.h"
@@ -67,10 +68,15 @@ TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
     ACE_CHECK;
 
 #if (TAO_HAS_MINIMUM_POA == 0)
-    policies.length(3);
+    policies.length(4);
     policies[2] = 
       this->poa_->create_servant_retention_policy (PortableServer::RETAIN
 						   ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+
+    policies[3] = 
+      this->poa_->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER
+						    ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 #endif
 
@@ -80,6 +86,18 @@ TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
 						     ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
   }
+
+#if (TAO_HAS_MINIMUM_POA == 0)
+  PortableServer::ServantActivator* servant_activator;
+
+  ACE_NEW_THROW_EX (servant_activator,
+		    TAO_LogActivator (*this),
+		    CORBA::NO_MEMORY ());
+  
+  this->log_poa_->set_servant_manager(servant_activator
+				      ACE_ENV_ARG_PARAMETER)
+  ACE_CHECK;
+#endif
 
   // Load Log Strategy
   TAO_Log_Persistence_Strategy* strategy_;
