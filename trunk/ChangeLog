@@ -1,3 +1,8 @@
+Wed Aug 17 15:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/JAWS2/JAWS/Waiter.cpp:
+          Call find_by_index instead of find
+
 Tue Aug 16 19:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/JAWS2/JAWS/Assoc_Array.{h,cpp}:

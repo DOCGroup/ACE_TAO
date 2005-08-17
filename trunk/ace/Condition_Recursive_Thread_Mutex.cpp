@@ -115,4 +115,10 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::mutex (void)
   return this->mutex_;
 }
 
+ACE_Condition_Recursive_Thread_Mutex::ACE_Condition_Recursive_Thread_Mutex (
+  ACE_Recursive_Thread_Mutex &m) :
+    ACE_Condition<ACE_Recursive_Thread_Mutex> (m)
+{
+}
+
 #endif /* ACD_HAS_THREADS */
