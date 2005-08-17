@@ -1,3 +1,11 @@
+Wed Aug 17 10:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Upcall_Wrapper.cpp:
+        * tao/ServerRequestInterceptor_Adapter.h:
+        * tao/TAO_Server_Request.{h,cpp,i}:
+        * tao/PI_Server/ServerInterceptorAdapter.{h,cpp}:
+          Made PICurrent working again
+
 Wed Aug 17 08:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_arg_traits.cpp

@@ -14,7 +14,10 @@ ACE_RCSID (PortableServer,
 #include "tao/ServerRequestInterceptor_Adapter.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/ORB_Core.h"
-
+#include "tao/PI/PICurrent_Impl.h"
+#include "tao/PI/PICurrent_Copy_Callback.h"
+#include "tao/PortableServer/Upcall_Command.h"
+#include "tao/PortableInterceptor.h"
 
 TAO::ServerRequestInterceptor_Adapter_Impl::ServerRequestInterceptor_Adapter_Impl (void)
 {
@@ -230,6 +233,9 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request (
                                        servant_upcall,
                                        exceptions,
                                        nexceptions);
+
+  TAO::PICurrent_Guard pi_guard (server_request,
+                                 true  /* Copy TSC to RSC */);
 
   ACE_TRY
     {
@@ -477,5 +483,54 @@ TAO::ServerRequestInterceptor_Adapter_Impl::destroy_interceptors (
 {
   this->interceptor_list_.destroy_interceptors (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
+
+TAO::PICurrent_Impl *
+TAO::ServerRequestInterceptor_Adapter_Impl::allocate_pi_current (void)
+{
+  TAO::PICurrent_Impl *pi = 0;
+  ACE_NEW_RETURN (pi,
+                  TAO::PICurrent_Impl,
+                  0);
+  return pi;
+}
+
+TAO::PICurrent_Copy_Callback *
+TAO::ServerRequestInterceptor_Adapter_Impl::allocate_pi_current_callback (void)
+{
+  TAO::PICurrent_Copy_Callback *pi = 0;
+  ACE_NEW_RETURN (pi,
+                  TAO::PICurrent_Copy_Callback,
+                  0);
+  return pi;
+}
+
+void
+TAO::ServerRequestInterceptor_Adapter_Impl::deallocate_pi_current (
+        TAO::PICurrent_Impl *picurrent)
+{
+  delete picurrent;
+}
+
+void
+TAO::ServerRequestInterceptor_Adapter_Impl::deallocate_pi_current_callback (
+  TAO::PICurrent_Copy_Callback *callback)
+{
+  delete callback;
+}
+
+void
+TAO::ServerRequestInterceptor_Adapter_Impl::execute_command (
+  TAO_ServerRequest &server_request,
+  TAO::Upcall_Command &command
+  ACE_ENV_ARG_DECL)
+{
+  TAO::PICurrent_Guard pi_guard (server_request,
+                                 true  /* Copy TSC to RSC */);
+
+  // The actual upcall.
+  command.execute (ACE_ENV_SINGLE_ARG_PARAMETER);
+  TAO_INTERCEPTOR_CHECK;
+}
+
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

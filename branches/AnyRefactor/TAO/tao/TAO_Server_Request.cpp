@@ -14,6 +14,7 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "PortableInterceptorC.h"
+#include "ServerRequestInterceptor_Adapter.h"
 #endif
 
 #if !defined (__ACE_INLINE__)
@@ -182,11 +183,29 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_ORB_Core * orb_core,
 TAO_ServerRequest::~TAO_ServerRequest (void)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  delete pi_current_copy_callback_;
-  pi_current_copy_callback_ = 0;
+  if (this->pi_current_copy_callback_)
+    {
+      TAO::ServerRequestInterceptor_Adapter *interceptor_adapter =
+        this->orb_core_->serverrequestinterceptor_adapter ();
 
-  delete rs_pi_current_;
-  rs_pi_current_ = 0;
+      if (interceptor_adapter)
+        {
+          interceptor_adapter->deallocate_pi_current_callback (
+            this->pi_current_copy_callback_);
+        }
+    }
+
+  if (this->rs_pi_current_)
+    {
+      TAO::ServerRequestInterceptor_Adapter *interceptor_adapter =
+        this->orb_core_->serverrequestinterceptor_adapter ();
+
+      if (interceptor_adapter)
+        {
+          interceptor_adapter->deallocate_pi_current (
+            this->rs_pi_current_);
+        }
+    }
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 }
 
@@ -506,6 +525,41 @@ TAO_ServerRequest::caught_exception (CORBA::Exception *exception)
     this->reply_status_ = PortableInterceptor::USER_EXCEPTION;
 
   this->caught_exception_ = exception;
+}
+
+ACE_INLINE TAO::PICurrent_Impl *
+TAO_ServerRequest::rs_pi_current (void)
+{
+  if (!this->rs_pi_current_)
+    {
+      TAO::ServerRequestInterceptor_Adapter *interceptor_adapter =
+        this->orb_core_->serverrequestinterceptor_adapter ();
+
+      if (interceptor_adapter)
+        {
+          this->rs_pi_current_ = interceptor_adapter->allocate_pi_current ();
+        }
+    }
+
+  return this->rs_pi_current_;
+}
+
+ACE_INLINE TAO::PICurrent_Copy_Callback *
+TAO_ServerRequest::pi_current_copy_callback (void)
+{
+  if (!this->pi_current_copy_callback_)
+    {
+      TAO::ServerRequestInterceptor_Adapter *interceptor_adapter =
+        this->orb_core_->serverrequestinterceptor_adapter ();
+
+      if (interceptor_adapter)
+        {
+          this->pi_current_copy_callback_ =
+            interceptor_adapter->allocate_pi_current_callback ();
+        }
+    }
+
+  return this->pi_current_copy_callback_;
 }
 
 #endif /*TAO_HAS_INTERCEPTORS*/

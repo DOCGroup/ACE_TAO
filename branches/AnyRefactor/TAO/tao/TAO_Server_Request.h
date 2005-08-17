@@ -38,7 +38,6 @@ namespace TAO
   class PICurrent_Copy_Callback;
 }
 #include "PortableInterceptorC.h"
-//#include "PICurrent_Copy_Callback.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 class TAO_Pluggable_Messaging;
