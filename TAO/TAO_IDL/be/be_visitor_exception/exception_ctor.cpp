@@ -272,12 +272,14 @@ int be_visitor_exception_ctor::visit_predefined_type (be_predefined_type *node)
     }
 
   AST_PredefinedType::PredefinedType pt = node->pt ();
+  const char *no_td_global = (td == 0 ? "::" : "");
 
   if (pt == AST_PredefinedType::PT_any)
     {
       if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
         {
-          *os << "const ::" << bt->nested_type_name (this->ctx_->scope ());
+          *os << "const " << no_td_global
+              << bt->nested_type_name (this->ctx_->scope ());
         }
       else
         {
@@ -293,8 +295,8 @@ int be_visitor_exception_ctor::visit_predefined_type (be_predefined_type *node)
     {
       if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
         {
-          *os << "const ::" << bt->nested_type_name (this->ctx_->scope (), 
-                                                     "_ptr ");
+          *os << "const " << no_td_global
+              << bt->nested_type_name (this->ctx_->scope (), "_ptr ");
         }
       else
         {
@@ -305,12 +307,7 @@ int be_visitor_exception_ctor::visit_predefined_type (be_predefined_type *node)
     {
       if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
         {
-          if (td == 0)
-            {
-              *os << "::";
-            }
-            
-          *os << bt->nested_type_name (this->ctx_->scope ());
+          *os << no_td_global << bt->nested_type_name (this->ctx_->scope ());
         }
       else
         {
