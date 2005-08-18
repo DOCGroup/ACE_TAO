@@ -2,6 +2,7 @@
 // $Id$
 
 project(Bug_1627_Server): taoserver, iortable {
+  idlflags += -Sa -St
   Source_Files {
     Test_i.cpp
     server.cpp
