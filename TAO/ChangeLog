@@ -1,7 +1,15 @@
+Thu Aug 18 07:43:16 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+        * TAO_IDL/be_include/be_visitor_arg_traits.h:
+          When Any generation is not enabled, generate Any_Insert_Policy_Noop
+          as insert policy for the any, that way we don't get dependent
+          on the AnyTypeCode library
+
 Wed Aug 17 13:27:16 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
-        
+
           In generating the include of *C.h in *A.h, added generation
           of the prefix "tao/" if we are processing a .pidl file, since
           in that case, the *A.h file will not be in the same directory.
