@@ -433,11 +433,12 @@ be_visitor_union_branch_public_ch::visit_predefined_type (be_predefined_type *no
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ();
   be_type *bt;
+  be_typedef *td = this->ctx_->alias ();
 
   // Check if we are visiting this via a visit to a typedef node.
-  if (this->ctx_->alias ())
+  if (td != 0)
     {
-      bt = this->ctx_->alias ();
+      bt = td;
     }
   else
     {
@@ -457,40 +458,42 @@ be_visitor_union_branch_public_ch::visit_predefined_type (be_predefined_type *no
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
+      
+  const char *no_td_global = (td == 0 ? "::" : "");
 
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
     case AST_PredefinedType::PT_object:
       *os << be_nl << be_nl 
-          << "void " << ub->local_name () << " (const ::"
+          << "void " << ub->local_name () << " (const " << no_td_global
           << bt->nested_type_name (bu, "_ptr") << ");" << be_nl;
-      *os << "::" << bt->nested_type_name (bu, "_ptr") << " "
+      *os << no_td_global << bt->nested_type_name (bu, "_ptr") << " "
           << ub->local_name () << " (void) const;";
       break;
     case AST_PredefinedType::PT_value:
       *os << be_nl << be_nl 
-          << "void " << ub->local_name () << " ( ::"
+          << "void " << ub->local_name () << " ( " << no_td_global
           << bt->nested_type_name (bu, " *") << ");" << be_nl;
-      *os << "::" << bt->nested_type_name (bu, " *") << " "
+      *os << no_td_global << bt->nested_type_name (bu, " *") << " "
           << ub->local_name () << " (void) const;";
       break;
     case AST_PredefinedType::PT_any:
       *os << be_nl << be_nl 
-          << "void " << ub->local_name () << " (const ::"
+          << "void " << ub->local_name () << " (const " << no_td_global
           << bt->nested_type_name (bu) << " &);" << be_nl;
-      *os << "const ::" << bt->nested_type_name (bu) << " &"
+      *os << "const " << no_td_global<< bt->nested_type_name (bu) << " &"
           << ub->local_name () << " (void) const;" << be_nl;
-      *os << "::" << bt->nested_type_name (bu) << " &"
+      *os << no_td_global << bt->nested_type_name (bu) << " &"
           << ub->local_name () << " (void);";
       break;
     case AST_PredefinedType::PT_void:
       break;
     default:
       *os << be_nl << be_nl 
-          << "void " << ub->local_name () << " ( ::"
+          << "void " << ub->local_name () << " ( " << no_td_global
           << bt->nested_type_name (bu) << ");" << be_nl;
-      *os << "::" << bt->nested_type_name (bu) << " "
+      *os << no_td_global << bt->nested_type_name (bu) << " "
           << ub->local_name () << " (void) const;";
     }
 
