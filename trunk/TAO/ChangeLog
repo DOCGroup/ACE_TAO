@@ -1,3 +1,9 @@
+Thu Aug 18 13:59:52 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/LogActivator.cpp:
+
+	  Fixed emulated exception build failures.
+
 Thu Aug 18 13:46:38 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/LogActivator.cpp:
