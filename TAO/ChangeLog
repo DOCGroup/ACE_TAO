@@ -1,9 +1,28 @@
+Thu Aug 18 13:46:38 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/LogActivator.cpp:
+
+	  Changed to omit identifier name for unused parameters.
+
+	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
+
+	  Changed to use CORBA::RepositoryId_var for the return value of
+	  create_log_repositoryid() so results will be freed on exit.
+
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+
+	  Changed create_log_repositoryid() to duplicate string rather
+	  than returning a string literal.
+
 Thu Aug 18 15:19:40 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_exception/exception_ctor.cpp:
         * TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
         * TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
-        
+
           Removed more instances of generating a leading '::'
           in front of ACE_NESTED_CLASS.
 
