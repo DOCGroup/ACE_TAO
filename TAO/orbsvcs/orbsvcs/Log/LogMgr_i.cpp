@@ -130,7 +130,7 @@ TAO_LogMgr_i::create_log_reference (DsLogAdmin::LogId id
 {
   PortableServer::ObjectId_var oid =
     this->create_objectid (id);
-  const char *intf =
+  CORBA::RepositoryId_var intf = 
     this->create_repositoryid ();
 
   CORBA::Object_var obj =
