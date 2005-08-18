@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Server): taoserver {
+  idflags += -Sa -St
   Source_Files {
     Big_Reply_i.cpp
     server.cpp
