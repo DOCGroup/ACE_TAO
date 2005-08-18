@@ -2,14 +2,13 @@
 // $Id$
 
 project(Bug_1627_Server): taoserver, iortable {
-  idlflags += -Sa -St
   Source_Files {
     Test_i.cpp
     server.cpp
   }
 }
 
-project(Bug_1627_Client): taoclient {
+project(Bug_1627_Client): taoclient, anytypecode {
   Source_Files {
     TestC.cpp
     client.cpp
