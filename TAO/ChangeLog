@@ -1,3 +1,12 @@
+Thu Aug 18 15:19:40 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_exception/exception_ctor.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
+        
+          Removed more instances of generating a leading '::'
+          in front of ACE_NESTED_CLASS.
+
 Wed Aug 17 11:30:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp (create_with_id):

@@ -361,11 +361,12 @@ be_visitor_union_branch_private_ch::visit_predefined_type (
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ();
   be_type *bt;
+  be_typedef *td = this->ctx_->alias ();
 
   // Check if we are visiting this node via a visit to a typedef node
-  if (this->ctx_->alias ())
+  if (td != 0)
     {
-      bt = this->ctx_->alias ();
+      bt = td;
     }
   else
     {
@@ -387,7 +388,7 @@ be_visitor_union_branch_private_ch::visit_predefined_type (
       << "// " << __FILE__ << ":" << __LINE__;
 
   *os << be_nl
-      << "::";
+      << (td == 0 ? "::" : "");
 
   if (node->pt () == AST_PredefinedType::PT_object)
     {
