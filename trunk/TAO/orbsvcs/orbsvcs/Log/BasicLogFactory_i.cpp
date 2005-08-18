@@ -118,7 +118,7 @@ TAO_BasicLogFactory_i::create_with_id (DsLogAdmin::LogId id,
 CORBA::RepositoryId
 TAO_BasicLogFactory_i::create_repositoryid ()
 {
-  return "IDL:omg.org/DsLogAdmin:BasicLog:1.0";
+  return CORBA::string_dup("IDL:omg.org/DsLogAdmin:BasicLog:1.0");
 }
 
 PortableServer::ServantBase*

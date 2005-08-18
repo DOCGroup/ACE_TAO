@@ -18,7 +18,7 @@ TAO_LogActivator::~TAO_LogActivator ()
 
 PortableServer::Servant
 TAO_LogActivator::incarnate (const PortableServer::ObjectId& oid,
-			     PortableServer::POA_ptr poa
+			     PortableServer::POA_ptr
 			     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   PortableServer::ForwardRequest
