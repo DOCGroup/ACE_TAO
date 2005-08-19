@@ -1,3 +1,12 @@
+Fri Aug 19 09:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/Empty_Param_TypeCode.h:
+        * tao/AnyTypeCode/NVList.h:
+        * tao/AnyTypeCode/Objref_TypeCode_Static.h:
+        * tao/AnyTypeCode/Union_TypeCode_Static.h:
+        * tao/AnyTypeCode/Value_TypeCode_Static.h:
+          Fixed include of inline file.
+
 Fri Aug 19 08:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/TypeCode.h:
