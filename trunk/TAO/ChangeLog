@@ -1,3 +1,10 @@
+Fri Aug 19 08:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/TypeCode.h:
+        * tao/AnyTypeCode/Alias_TypeCode_Static.h:
+        * tao/AnyTypeCode/Any.h:
+          Fixed include of inline file.
+
 Fri Aug 19 08:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
