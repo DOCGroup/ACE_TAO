@@ -1,3 +1,17 @@
+Fri Aug 19 13:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/DLL_Manager.cpp
+        * ace/Log_Msg.cpp
+        * ace/MEM_Acceptor.cpp
+        * ace/MEM_IO.inl
+        * ace/Select_Reactor_Base.cpp
+        * ace/SV_Semaphore_Complex.cpp
+        * ace/UUID.cpp
+        * ace/WIN32_Asynch_IO.cpp
+          Fixed conversion warnings given by Visual C++ 2003 at warning
+          level 4. Used the correct types for intermediate variables, no
+          casts are needed.
+
 Fri Aug 19 12:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CORBA_macros.h:
