@@ -33,6 +33,8 @@
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
 #include "ace/OS_NS_string.h"
+#include "tao/AnyTypeCode_Adapter.h"
+#include "ace/Dynamic_Service.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -47,7 +49,7 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 CORBA::WrongTransaction::WrongTransaction (void)
@@ -129,7 +131,7 @@ void CORBA::WrongTransaction::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -142,14 +144,27 @@ void CORBA::WrongTransaction::_tao_decode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
 // TAO extension - the virtual _type method.
 CORBA::TypeCode_ptr CORBA::WrongTransaction::_tao_type (void) const
 {
-  return ::CORBA::_tc_WrongTransaction;
+  TAO_AnyTypeCode_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_AnyTypeCode_Adapter>::instance (
+        "AnyTypeCode_Adapter"
+      );
+  if (adapter != 0)
+    return adapter->_tao_type_WrongTransaction ();
+  else
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("Unable to find the ")
+                  ACE_TEXT ("AnyTypeCode Adapter instance")));
+      return 0;
+    }
 }
 
 // TAO_IDL - Generated from

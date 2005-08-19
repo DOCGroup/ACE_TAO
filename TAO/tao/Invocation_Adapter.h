@@ -29,8 +29,6 @@
 #include "tao/CORBA_methods.h"
 #include "tao/Pseudo_VarOut_T.h"
 
-
-struct TAO_Exception_Data;
 class TAO_Operation_Details;
 class TAO_Stub;
 class ACE_Time_Value;
@@ -267,7 +265,7 @@ namespace TAO
 
     /// String length of the operation name.
     int const op_len_;
-    
+
     /// Collocation proxy broker for this operation.
     Collocation_Proxy_Broker * const cpb_;
 

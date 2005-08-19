@@ -4,8 +4,9 @@
 #include "ace/Get_Opt.h"
 #include "ace/Profile_Timer.h"
 #include "tao/Messaging/Messaging.h"
+#include "tao/AnyTypeCode/Any.h"
 
-ACE_RCSID(Hello, client, "$Id$")
+ACE_RCSID(Connection_Timeout, client, "$Id$")
 
 const char *ior =
   "corbaloc:iiop:192.3.47/10007/RandomObject";

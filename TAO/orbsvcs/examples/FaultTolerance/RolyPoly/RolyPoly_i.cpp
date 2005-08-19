@@ -4,6 +4,7 @@
 
 #include "RolyPoly_i.h"
 #include "StateUpdate.h"
+#include "tao/AnyTypeCode/Any.h"
 
 RolyPoly_i::RolyPoly_i (CORBA::ORB_ptr orb)
   : number_ (0)

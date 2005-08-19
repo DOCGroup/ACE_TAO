@@ -3,8 +3,8 @@
 
 #include "DynArray_i.h"
 #include "DynAnyFactory.h"
-#include "tao/Marshal.h"
-#include "tao/Any_Unknown_IDL_Type.h"
+#include "tao/AnyTypeCode/Marshal.h"
+#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/CDR.h"
 
 ACE_RCSID (DynamicAny,
@@ -65,7 +65,7 @@ TAO_DynArray_i::init (const CORBA::Any & any
     {
       TAO::Unknown_IDL_Type *unk =
         dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
-        
+
       cdr = unk->_tao_get_cdr ();
     }
   else
@@ -268,7 +268,7 @@ TAO_DynArray_i::set_elements (const DynamicAny::AnySeq & value
     }
 
   CORBA::TypeCode_var value_tc;
-  CORBA::TypeCode_var element_type = 
+  CORBA::TypeCode_var element_type =
     this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -276,7 +276,7 @@ TAO_DynArray_i::set_elements (const DynamicAny::AnySeq & value
     {
       // Check each arg element for type match.
       value_tc = value[i].type ();
-      CORBA::Boolean equivalent = 
+      CORBA::Boolean equivalent =
         value_tc->equivalent (element_type.in ()
                               ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -359,7 +359,7 @@ TAO_DynArray_i::set_elements_as_dyn_any (
       ACE_THROW (DynamicAny::DynAny::InvalidValue ());
     }
 
-  CORBA::TypeCode_var element_type = 
+  CORBA::TypeCode_var element_type =
     this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -378,7 +378,7 @@ TAO_DynArray_i::set_elements_as_dyn_any (
 
       if (equivalent)
         {
-          this->da_members_[i] = 
+          this->da_members_[i] =
             values[i]->copy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
         }
@@ -406,7 +406,7 @@ TAO_DynArray_i::from_any (const CORBA::Any& any
     }
 
   CORBA::TypeCode_var tc = any.type ();
-  CORBA::Boolean equivalent = 
+  CORBA::Boolean equivalent =
     this->type_.in ()->equivalent (tc.in ()
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -422,7 +422,7 @@ TAO_DynArray_i::from_any (const CORBA::Any& any
         {
           TAO::Unknown_IDL_Type *unk =
             dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
-            
+
           cdr = unk->_tao_get_cdr ();
         }
       else
@@ -442,7 +442,7 @@ TAO_DynArray_i::from_any (const CORBA::Any& any
           ACE_THROW (DynamicAny::DynAny::TypeMismatch ());
         }
 
-      CORBA::TypeCode_var field_tc = 
+      CORBA::TypeCode_var field_tc =
         this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
@@ -491,7 +491,7 @@ TAO_DynArray_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
                         0);
     }
 
-  CORBA::TypeCode_var field_tc = 
+  CORBA::TypeCode_var field_tc =
     this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
@@ -502,7 +502,7 @@ TAO_DynArray_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
   for (size_t i = 0; i < length; ++i)
     {
       // Recursive step.
-      field_any = 
+      field_any =
         this->da_members_[i]->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
@@ -514,7 +514,7 @@ TAO_DynArray_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
         {
           TAO::Unknown_IDL_Type *field_unk =
             dynamic_cast<TAO::Unknown_IDL_Type *> (field_impl);
-            
+
           field_cdr = field_unk->_tao_get_cdr ();
         }
       else

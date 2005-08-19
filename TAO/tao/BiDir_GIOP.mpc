@@ -27,6 +27,9 @@ project : taolib, core, pi {
     BiDir_GIOP
   }
 
+  IDL_Files {
+  }
+
   Pkgconfig_Files {
     BiDir_GIOP/TAO_BiDirGIOP.pc.in
   }

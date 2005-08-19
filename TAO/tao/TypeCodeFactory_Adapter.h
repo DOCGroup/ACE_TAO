@@ -22,9 +22,7 @@
 
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
-#include "tao/ValueModifierC.h"
 #include "tao/Typecode_typesC.h"
-
 
 template<class T> class ACE_Array_Base;
 
@@ -37,6 +35,8 @@ namespace CORBA
 
   typedef TAO_Pseudo_Var_T<TypeCode> TypeCode_var;
   typedef TAO_Pseudo_Out_T<TypeCode, TypeCode_var> TypeCode_out;
+
+  typedef CORBA::Short ValueModifier;
 }
 
 namespace TAO

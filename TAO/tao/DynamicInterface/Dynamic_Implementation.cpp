@@ -98,7 +98,7 @@ TAO_DynamicImplementation::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
   // exception. See the CORBA C++ mapping, section 1.38.3.
   TAO::Portable_Server::POA_Current_Impl *poa_current_impl =
     static_cast <TAO::Portable_Server::POA_Current_Impl *>
-                     (TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
+                     (TAO_TSS_Resources::instance ()->poa_current_impl_);
 
   if (poa_current_impl == 0
       || this != poa_current_impl->servant ())
@@ -199,7 +199,7 @@ TAO_DynamicImplementation::get_id_from_primary_interface (
   // exception. See the CORBA C++ mapping, section 1.38.3.
   TAO::Portable_Server::POA_Current_Impl *poa_current_impl =
     static_cast <TAO::Portable_Server::POA_Current_Impl *>
-                     (TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
+                     (TAO_TSS_Resources::instance ()->poa_current_impl_);
 
   if (poa_current_impl == 0
       || this != poa_current_impl->servant ())

@@ -31,14 +31,14 @@
 
 #include "PollableC.h"
 #include "tao/CDR.h"
-#include "tao/Null_RefCount_Policy.h"
-#include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode_Static.h"
-#include "tao/Objref_TypeCode_Static.h"
-#include "tao/Struct_TypeCode_Static.h"
-#include "tao/TypeCode_Struct_Field.h"
-#include "tao/Any_Impl_T.h"
-#include "tao/Any_Dual_Impl_T.h"
+#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
+#include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
+#include "tao/AnyTypeCode/Any_Impl_T.h"
+#include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
 #include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
@@ -96,7 +96,7 @@ CORBA::Pollable::Pollable (void)
 CORBA::Pollable::~Pollable (void)
 {}
 
-void 
+void
 CORBA::Pollable::_tao_any_destructor (void *_tao_void_pointer)
 {
   Pollable *_tao_tmp_pointer =
@@ -133,7 +133,7 @@ CORBA::Pollable::_duplicate (Pollable_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -192,7 +192,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/CORBA/Pollable:1.0",
     "Pollable");
-  
+
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_Pollable =
@@ -243,7 +243,7 @@ CORBA::DIIPollable::DIIPollable (void)
 CORBA::DIIPollable::~DIIPollable (void)
 {}
 
-void 
+void
 CORBA::DIIPollable::_tao_any_destructor (void *_tao_void_pointer)
 {
   DIIPollable *_tao_tmp_pointer =
@@ -280,7 +280,7 @@ CORBA::DIIPollable::_duplicate (DIIPollable_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -343,7 +343,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/CORBA/DIIPollable:1.0",
     "DIIPollable");
-  
+
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_DIIPollable =
@@ -388,7 +388,7 @@ TAO::Objref_Traits<CORBA::PollableSet>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 CORBA::PollableSet::NoPossiblePollable::NoPossiblePollable (void)
@@ -497,11 +497,11 @@ static TAO::TypeCode::Struct<char const *,
     "NoPossiblePollable",
     _tao_fields_CORBA_PollableSet_NoPossiblePollable,
     0);
-  
+
 ::CORBA::TypeCode_ptr const CORBA::PollableSet::_tc_NoPossiblePollable =
   &_tao_tc_CORBA_PollableSet_NoPossiblePollable;
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 CORBA::PollableSet::UnknownPollable::UnknownPollable (void)
@@ -610,7 +610,7 @@ static TAO::TypeCode::Struct<char const *,
     "UnknownPollable",
     _tao_fields_CORBA_PollableSet_UnknownPollable,
     0);
-  
+
 ::CORBA::TypeCode_ptr const CORBA::PollableSet::_tc_UnknownPollable =
   &_tao_tc_CORBA_PollableSet_UnknownPollable;
 
@@ -620,7 +620,7 @@ CORBA::PollableSet::PollableSet (void)
 CORBA::PollableSet::~PollableSet (void)
 {}
 
-void 
+void
 CORBA::PollableSet::_tao_any_destructor (void *_tao_void_pointer)
 {
   PollableSet *_tao_tmp_pointer =
@@ -657,7 +657,7 @@ CORBA::PollableSet::_duplicate (PollableSet_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -716,7 +716,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/CORBA/PollableSet:1.0",
     "PollableSet");
-  
+
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_PollableSet =
@@ -749,7 +749,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Impl_T<CORBA::Pollable>::demarshal_value (TAO_InputCDR &)
@@ -824,7 +824,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Impl_T<CORBA::DIIPollable>::demarshal_value (TAO_InputCDR &)
@@ -899,7 +899,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Impl_T<CORBA::PollableSet>::demarshal_value (TAO_InputCDR &)
@@ -950,7 +950,7 @@ operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/any_op_cs.cpp:50
 
 namespace TAO
@@ -961,7 +961,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Dual_Impl_T<CORBA::PollableSet::NoPossiblePollable>::demarshal_value (TAO_InputCDR &)
@@ -1025,7 +1025,7 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/any_op_cs.cpp:50
 
 namespace TAO
@@ -1036,7 +1036,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Dual_Impl_T<CORBA::PollableSet::UnknownPollable>::demarshal_value (TAO_InputCDR &)

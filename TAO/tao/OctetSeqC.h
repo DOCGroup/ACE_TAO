@@ -26,10 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:153
+// be\be_codegen.cpp:154
 
-#ifndef _TAO_IDL_ORIG_OCTETSEQC_H_
-#define _TAO_IDL_ORIG_OCTETSEQC_H_
+#ifndef _TAO_IDL_OCTETSEQC_H_
+#define _TAO_IDL_OCTETSEQC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -57,31 +57,27 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
-
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:49
 
 namespace CORBA
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_CORBA_OCTETSEQ_CH_)
 #define _CORBA_OCTETSEQ_CH_
-  
+
   class OctetSeq;
-  
+
   typedef
     TAO_FixedSeq_Var_T<
         OctetSeq,
         CORBA::Octet
       >
     OctetSeq_var;
-  
+
   typedef
     TAO_Seq_Out_T<
         OctetSeq,
@@ -89,7 +85,7 @@ namespace CORBA
         CORBA::Octet
       >
     OctetSeq_out;
-  
+
   class TAO_Export OctetSeq
     : public
         TAO_Unbounded_Sequence<
@@ -102,14 +98,14 @@ namespace CORBA
     OctetSeq (
         CORBA::ULong max,
         CORBA::ULong length,
-        CORBA::Octet* buffer, 
+        CORBA::Octet* buffer,
         CORBA::Boolean release = 0
       );
     OctetSeq (const OctetSeq &);
     ~OctetSeq (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     typedef OctetSeq_var _var_type;
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
@@ -122,14 +118,9 @@ namespace CORBA
   };
 
 #endif /* end #if !defined */
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_OctetSeq;
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:78
 
 } // module CORBA
 
@@ -153,13 +144,6 @@ namespace TAO
   template class TAO_Export TAO_Unbounded_Sequence<CORBA::OctetSeq>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
-// TAO_IDL - Generated from
-// be\be_visitor_sequence/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const CORBA::OctetSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, CORBA::OctetSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::OctetSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::OctetSeq *&);
 
 // TAO_IDL - Generated from
 // be\be_visitor_sequence/cdr_op_ch.cpp:71
@@ -179,15 +163,11 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_CORBA_OctetSeq_H_ */
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:955
+// be\be_codegen.cpp:1062
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
 
 #include /**/ "ace/post.h"
 

@@ -8,13 +8,14 @@
 
 #include "SyncScope_Setup.h"
 #include "RIR_Narrow.h"
+#include "tao/AnyTypeCode/Any.h"
 
 #if !defined(__ACE_INLINE__)
 #include "SyncScope_Setup.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (TAO_PERF_RTEC, 
-           SyncScope_Setup, 
+ACE_RCSID (TAO_PERF_RTEC,
+           SyncScope_Setup,
            "$Id$")
 
 SyncScope_Setup::SyncScope_Setup (CORBA::ORB_ptr orb,

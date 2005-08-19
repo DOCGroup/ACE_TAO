@@ -4,7 +4,6 @@
 #include "Upcall_Command.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-# include "PICurrent_Guard.h"
 # include "tao/ServerRequestInterceptor_Adapter.h"
 # include "tao/PortableInterceptorC.h"
 # include "tao/ORB_Core.h"
@@ -54,9 +53,6 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
   ACE_TRY
     {
       {
-        TAO::PICurrent_Guard pi_guard (server_request,
-                                       true  /* Copy TSC to RSC */);
-
         if (interceptor_adapter != 0)
           {
             // Invoke intermediate server side interception points.
@@ -75,11 +71,20 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
         CORBA::Object_var forward_to = server_request.forward_location ();
         if (CORBA::is_nil (forward_to.in ()))
           {
+            if (interceptor_adapter != 0)
+              {
+                interceptor_adapter->execute_command (server_request,
+                                                      command
+                                                      ACE_ENV_ARG_PARAMETER);
+                ACE_TRY_CHECK;
+              }
+            else
 #endif /* TAO_HAS_INTERCEPTORS */
-
-            // The actual upcall.
-            command.execute (ACE_ENV_SINGLE_ARG_PARAMETER);
-            TAO_INTERCEPTOR_CHECK;
+              {
+                // The actual upcall.
+                command.execute (ACE_ENV_SINGLE_ARG_PARAMETER);
+                TAO_INTERCEPTOR_CHECK;
+              }
 
 #if TAO_HAS_INTERCEPTORS == 1
           }

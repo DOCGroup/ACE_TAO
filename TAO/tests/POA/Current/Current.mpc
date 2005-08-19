@@ -1,5 +1,6 @@
 // -*- MPC -*-
 // $Id$
 
-project(POA*): taoexe, portableserver, pi_server {
+project(POA*): taoserver, pi_server {
+  exename = Current
 }

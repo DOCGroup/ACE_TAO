@@ -26,10 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:153
+// be\be_codegen.cpp:154
 
-#ifndef _TAO_IDL_ORIG_IIOPC_H_
-#define _TAO_IDL_ORIG_IIOPC_H_
+#ifndef _TAO_IDL_IIOPC_H_
+#define _TAO_IDL_IIOPC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -58,12 +58,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
-
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:49
 
 namespace IIOP
 {
@@ -87,7 +83,7 @@ namespace IIOP
     ListenPoint_out;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_structure/structure_ch.cpp:52
+  // be\be_visitor_structure/structure_ch.cpp:57
   
   struct TAO_Export ListenPoint
   {
@@ -97,11 +93,6 @@ namespace IIOP
     TAO_String_Manager host;
     CORBA::UShort port;
   };
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ListenPoint;
   
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
@@ -152,11 +143,6 @@ namespace IIOP
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ListenPointList;
-  
-  // TAO_IDL - Generated from
   // be\be_type.cpp:258
   
   struct BiDirIIOPServiceContext;
@@ -175,7 +161,7 @@ namespace IIOP
     BiDirIIOPServiceContext_out;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_structure/structure_ch.cpp:52
+  // be\be_visitor_structure/structure_ch.cpp:57
   
   struct TAO_Export BiDirIIOPServiceContext
   {
@@ -184,14 +170,9 @@ namespace IIOP
     static void _tao_any_destructor (void *);
     IIOP::ListenPointList listen_points;
   };
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_BiDirIIOPServiceContext;
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:78
 
 } // module IIOP
 
@@ -202,30 +183,6 @@ namespace IIOP
 namespace TAO
 {
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_structure/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const IIOP::ListenPoint &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IIOP::ListenPoint*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IIOP::ListenPoint *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IIOP::ListenPoint *&);
-
-// TAO_IDL - Generated from
-// be\be_visitor_sequence/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const IIOP::ListenPointList &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IIOP::ListenPointList*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IIOP::ListenPointList *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IIOP::ListenPointList *&);
-
-// TAO_IDL - Generated from
-// be\be_visitor_structure/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const IIOP::BiDirIIOPServiceContext &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, IIOP::BiDirIIOPServiceContext*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, IIOP::BiDirIIOPServiceContext *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IIOP::BiDirIIOPServiceContext *&);
 
 // TAO_IDL - Generated from
 // be\be_visitor_structure/cdr_op_ch.cpp:54
@@ -257,15 +214,11 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const IIOP::BiDirIIOPServ
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IIOP::BiDirIIOPServiceContext &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:955
+// be\be_codegen.cpp:1062
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
 
 #include /**/ "ace/post.h"
 

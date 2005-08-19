@@ -58,7 +58,7 @@ ACE_INLINE
 const T_slice *
 TAO_Array_Var_Base_T<T,T_slice,TAG>::in (void) const
 {
-  return (const T_slice *) this->ptr_;
+  return const_cast <const T_slice *> (this->ptr_);
 }
 
 template<typename T, typename T_slice, typename TAG>
@@ -247,10 +247,10 @@ TAO_Array_Forany_T<T,T_slice,TAG>::TAO_Array_Forany_T (void)
 template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
 TAO_Array_Forany_T<T,T_slice,TAG>::TAO_Array_Forany_T (
-    T_slice * p,
+    const T_slice * p,
     CORBA::Boolean nocopy
   )
-  : ptr_ (p),
+  : ptr_ (const_cast <T_slice *>(p)),
     nocopy_ (nocopy)
 {}
 

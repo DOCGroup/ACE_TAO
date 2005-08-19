@@ -21,7 +21,7 @@ TAO::SL3::PolicyFactory::create_policy (CORBA::PolicyType type,
 
   if (type == SecurityLevel3::ContextEstablishmentPolicyType)
     {
-      SecurityLevel3::ContextEstablishmentPolicyArgument * arg;
+      SecurityLevel3::ContextEstablishmentPolicyArgument * arg = 0;
       if (!(value >>= arg))
         ACE_THROW_RETURN (CORBA::INTERNAL (),
                           policy);
@@ -39,7 +39,7 @@ TAO::SL3::PolicyFactory::create_policy (CORBA::PolicyType type,
     }
   else if (type == SecurityLevel3::ObjectCredentialsPolicyType)
     {
-      SecurityLevel3::ObjectCredentialsPolicyArgument * creds;
+      SecurityLevel3::ObjectCredentialsPolicyArgument * creds = 0;
       if (!(value >>= creds))
         ACE_THROW_RETURN (CORBA::INTERNAL (),
                           policy);

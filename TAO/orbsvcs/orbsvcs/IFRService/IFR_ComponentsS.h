@@ -26,15 +26,15 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:390
+// be\be_codegen.cpp:393
 
 #ifndef _TAO_IDL_ORIG_IFR_COMPONENTSS_H_
 #define _TAO_IDL_ORIG_IFR_COMPONENTSS_H_
 
 #include /**/ "ace/pre.h"
 
-#include "IFR_ExtendedS.h"
 #include "tao/IFR_Client/IFR_ComponentsC.h"
+#include "IFR_ExtendedS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -58,82 +58,89 @@
 
 namespace POA_CORBA
 {
-  
-  
+
+
   // TAO_IDL - Generated from
   // be\be_visitor_module/module_sh.cpp:49
-  
+
   namespace ComponentIR
   {
-    
-    
+
+
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_sh.cpp:87
-    
+
     class EventDef;
     typedef EventDef *EventDef_ptr;
-    
-    
+
+
     class  EventDef
       : public virtual POA_CORBA::ExtValueDef
     {
     protected:
       EventDef (void);
-    
+
     public:
       // Useful for template programming.
       typedef ::CORBA::ComponentIR::EventDef _stub_type;
       typedef ::CORBA::ComponentIR::EventDef_ptr _stub_ptr_type;
       typedef ::CORBA::ComponentIR::EventDef_var _stub_var_type;
-      
+
       EventDef (const EventDef& rhs);
       virtual ~EventDef (void);
-      
+
       virtual CORBA::Boolean _is_a (
           const char* logical_type_id
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
         );
-      
+
       static void _is_a_skel (
           TAO_ServerRequest & req,
           void * servant_upcall,
           void * servant
           ACE_ENV_ARG_DECL
         );
-      
+
       static void _non_existent_skel (
           TAO_ServerRequest & req,
           void * servant_upcall,
           void * servant
           ACE_ENV_ARG_DECL
         );
-      
+
       static void _interface_skel (
           TAO_ServerRequest & req,
           void * servant_upcall,
           void * servant
           ACE_ENV_ARG_DECL
         );
-      
+
       static void _component_skel (
           TAO_ServerRequest & req,
           void * servant_upcall,
           void * servant
           ACE_ENV_ARG_DECL
         );
-      
+
+      static void _repository_id_skel (
+          TAO_ServerRequest & req,
+          void * servant_upcall,
+          void * servant
+          ACE_ENV_ARG_DECL
+        );
+
       virtual void _dispatch (
           TAO_ServerRequest & req,
           void * servant_upcall
           ACE_ENV_ARG_DECL
         );
-      
+
       ::CORBA::ComponentIR::EventDef *_this (
           ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
         );
-      
+
       virtual const char* _interface_repository_id (void) const;
-      
+
       static void
       _get_def_kind_skel (
           TAO_ServerRequest & server_request,
@@ -141,54 +148,54 @@ namespace POA_CORBA
           void * servant
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
         );
-      
+
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
-      
+      // be\be_interface.cpp:1869
+
       static void
       destroy_skel (
-          TAO_ServerRequest & server_request, 
+          TAO_ServerRequest & server_request,
           void * servant_upcall,
           void * servant
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
         );
-      
+
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
-      
+      // be\be_interface.cpp:1869
+
       static void
       lookup_skel (
-          TAO_ServerRequest & server_request, 
+          TAO_ServerRequest & server_request,
           void * servant_upcall,
           void * servant
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
         );
-      
+
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
-      
+      // be\be_interface.cpp:1869
+
       static void
       contents_skel (
-          TAO_ServerRequest & server_request, 
+          TAO_ServerRequest & server_request,
           void * servant_upcall,
           void * servant
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
         );
-      
+
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
-      
+      // be\be_interface.cpp:1869
+
       static void
       lookup_name_skel (
-          TAO_ServerRequest & server_request, 
+          TAO_ServerRequest & server_request,
           void * servant_upcall,
           void * servant
           ACE_ENV_ARG_DECL_WITH_DEFAULTS
         );
-      
+
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
-      
+      // be\be_interface.cpp:1869
+
       static void
       describe_contents_skel (
           TAO_ServerRequest & server_request, 
@@ -198,7 +205,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_module_skel (
@@ -209,7 +216,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_constant_skel (
@@ -220,7 +227,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_struct_skel (
@@ -231,7 +238,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_union_skel (
@@ -242,7 +249,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_enum_skel (
@@ -253,7 +260,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_alias_skel (
@@ -264,7 +271,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_interface_skel (
@@ -275,7 +282,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_value_skel (
@@ -286,7 +293,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_value_box_skel (
@@ -297,7 +304,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_exception_skel (
@@ -308,7 +315,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_native_skel (
@@ -319,7 +326,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_abstract_interface_skel (
@@ -330,7 +337,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_local_interface_skel (
@@ -341,7 +348,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_ext_value_skel (
@@ -424,7 +431,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       describe_skel (
@@ -435,7 +442,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       move_skel (
@@ -566,7 +573,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       is_a_skel (
@@ -577,7 +584,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       describe_value_skel (
@@ -588,7 +595,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_value_member_skel (
@@ -599,7 +606,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_attribute_skel (
@@ -610,7 +617,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_operation_skel (
@@ -637,7 +644,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       describe_ext_value_skel (
@@ -648,7 +655,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_ext_attribute_skel (
@@ -708,6 +715,13 @@ namespace POA_CORBA
         );
       
       static void _component_skel (
+          TAO_ServerRequest & req,
+          void * servant_upcall,
+          void * servant
+          ACE_ENV_ARG_DECL
+        );
+      
+      static void _repository_id_skel (
           TAO_ServerRequest & req,
           void * servant_upcall,
           void * servant
@@ -808,7 +822,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       destroy_skel (
@@ -819,7 +833,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       lookup_skel (
@@ -830,7 +844,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       contents_skel (
@@ -841,7 +855,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       lookup_name_skel (
@@ -852,7 +866,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       describe_contents_skel (
@@ -863,7 +877,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_module_skel (
@@ -874,7 +888,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_constant_skel (
@@ -885,7 +899,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_struct_skel (
@@ -896,7 +910,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_union_skel (
@@ -907,7 +921,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_enum_skel (
@@ -918,7 +932,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_alias_skel (
@@ -929,7 +943,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_interface_skel (
@@ -940,7 +954,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_value_skel (
@@ -951,7 +965,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_value_box_skel (
@@ -962,7 +976,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_exception_skel (
@@ -973,7 +987,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_native_skel (
@@ -984,7 +998,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_abstract_interface_skel (
@@ -995,7 +1009,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_local_interface_skel (
@@ -1006,7 +1020,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_ext_value_skel (
@@ -1073,6 +1087,13 @@ namespace POA_CORBA
           ACE_ENV_ARG_DECL
         );
       
+      static void _repository_id_skel (
+          TAO_ServerRequest & req,
+          void * servant_upcall,
+          void * servant
+          ACE_ENV_ARG_DECL
+        );
+      
       virtual void _dispatch (
           TAO_ServerRequest & req,
           void * servant_upcall
@@ -1094,7 +1115,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       destroy_skel (
@@ -1105,7 +1126,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       lookup_skel (
@@ -1116,7 +1137,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       contents_skel (
@@ -1127,7 +1148,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       lookup_name_skel (
@@ -1138,7 +1159,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       describe_contents_skel (
@@ -1149,7 +1170,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_module_skel (
@@ -1160,7 +1181,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_constant_skel (
@@ -1171,7 +1192,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_struct_skel (
@@ -1182,7 +1203,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_union_skel (
@@ -1193,7 +1214,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_enum_skel (
@@ -1204,7 +1225,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_alias_skel (
@@ -1215,7 +1236,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_interface_skel (
@@ -1226,7 +1247,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_value_skel (
@@ -1237,7 +1258,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_value_box_skel (
@@ -1248,7 +1269,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_exception_skel (
@@ -1259,7 +1280,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_native_skel (
@@ -1270,7 +1291,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_abstract_interface_skel (
@@ -1281,7 +1302,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_local_interface_skel (
@@ -1292,7 +1313,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_ext_value_skel (
@@ -1375,7 +1396,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       describe_skel (
@@ -1386,7 +1407,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       move_skel (
@@ -1397,7 +1418,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_component_skel (
@@ -1408,7 +1429,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_home_skel (
@@ -1419,7 +1440,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_event_skel (
@@ -1486,6 +1507,13 @@ namespace POA_CORBA
           ACE_ENV_ARG_DECL
         );
       
+      static void _repository_id_skel (
+          TAO_ServerRequest & req,
+          void * servant_upcall,
+          void * servant
+          ACE_ENV_ARG_DECL
+        );
+      
       virtual void _dispatch (
           TAO_ServerRequest & req,
           void * servant_upcall
@@ -1507,7 +1535,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       destroy_skel (
@@ -1518,7 +1546,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       lookup_skel (
@@ -1529,7 +1557,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       contents_skel (
@@ -1540,7 +1568,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       lookup_name_skel (
@@ -1551,7 +1579,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       describe_contents_skel (
@@ -1562,7 +1590,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_module_skel (
@@ -1573,7 +1601,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_constant_skel (
@@ -1584,7 +1612,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_struct_skel (
@@ -1595,7 +1623,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_union_skel (
@@ -1606,7 +1634,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_enum_skel (
@@ -1617,7 +1645,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_alias_skel (
@@ -1628,7 +1656,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_interface_skel (
@@ -1639,7 +1667,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_value_skel (
@@ -1650,7 +1678,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_value_box_skel (
@@ -1661,7 +1689,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_exception_skel (
@@ -1672,7 +1700,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_native_skel (
@@ -1683,7 +1711,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_abstract_interface_skel (
@@ -1694,7 +1722,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_local_interface_skel (
@@ -1705,7 +1733,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_ext_value_skel (
@@ -1716,7 +1744,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       lookup_id_skel (
@@ -1727,7 +1755,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       get_canonical_typecode_skel (
@@ -1738,7 +1766,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       get_primitive_skel (
@@ -1749,7 +1777,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_string_skel (
@@ -1760,7 +1788,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_wstring_skel (
@@ -1771,7 +1799,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_sequence_skel (
@@ -1782,7 +1810,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_array_skel (
@@ -1793,7 +1821,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_fixed_skel (
@@ -1804,7 +1832,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_component_skel (
@@ -1815,7 +1843,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_home_skel (
@@ -1826,7 +1854,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_event_skel (
@@ -1892,6 +1920,13 @@ namespace POA_CORBA
           ACE_ENV_ARG_DECL
         );
       
+      static void _repository_id_skel (
+          TAO_ServerRequest & req,
+          void * servant_upcall,
+          void * servant
+          ACE_ENV_ARG_DECL
+        );
+      
       virtual void _dispatch (
           TAO_ServerRequest & req,
           void * servant_upcall
@@ -1948,7 +1983,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       destroy_skel (
@@ -2031,7 +2066,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       describe_skel (
@@ -2042,7 +2077,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       move_skel (
@@ -2102,6 +2137,13 @@ namespace POA_CORBA
         );
       
       static void _component_skel (
+          TAO_ServerRequest & req,
+          void * servant_upcall,
+          void * servant
+          ACE_ENV_ARG_DECL
+        );
+      
+      static void _repository_id_skel (
           TAO_ServerRequest & req,
           void * servant_upcall,
           void * servant
@@ -2199,7 +2241,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       destroy_skel (
@@ -2282,7 +2324,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       describe_skel (
@@ -2293,7 +2335,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       move_skel (
@@ -2353,6 +2395,13 @@ namespace POA_CORBA
         );
       
       static void _component_skel (
+          TAO_ServerRequest & req,
+          void * servant_upcall,
+          void * servant
+          ACE_ENV_ARG_DECL
+        );
+      
+      static void _repository_id_skel (
           TAO_ServerRequest & req,
           void * servant_upcall,
           void * servant
@@ -2433,7 +2482,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       destroy_skel (
@@ -2516,7 +2565,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       describe_skel (
@@ -2527,7 +2576,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       move_skel (
@@ -2593,6 +2642,13 @@ namespace POA_CORBA
           ACE_ENV_ARG_DECL
         );
       
+      static void _repository_id_skel (
+          TAO_ServerRequest & req,
+          void * servant_upcall,
+          void * servant
+          ACE_ENV_ARG_DECL
+        );
+      
       virtual void _dispatch (
           TAO_ServerRequest & req,
           void * servant_upcall
@@ -2614,7 +2670,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       destroy_skel (
@@ -2697,7 +2753,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       describe_skel (
@@ -2708,7 +2764,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       move_skel (
@@ -2735,7 +2791,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       is_a_skel (
@@ -2801,6 +2857,13 @@ namespace POA_CORBA
           ACE_ENV_ARG_DECL
         );
       
+      static void _repository_id_skel (
+          TAO_ServerRequest & req,
+          void * servant_upcall,
+          void * servant
+          ACE_ENV_ARG_DECL
+        );
+      
       virtual void _dispatch (
           TAO_ServerRequest & req,
           void * servant_upcall
@@ -2822,7 +2885,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       destroy_skel (
@@ -2905,7 +2968,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       describe_skel (
@@ -2916,7 +2979,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       move_skel (
@@ -2943,7 +3006,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       is_a_skel (
@@ -3009,6 +3072,13 @@ namespace POA_CORBA
           ACE_ENV_ARG_DECL
         );
       
+      static void _repository_id_skel (
+          TAO_ServerRequest & req,
+          void * servant_upcall,
+          void * servant
+          ACE_ENV_ARG_DECL
+        );
+      
       virtual void _dispatch (
           TAO_ServerRequest & req,
           void * servant_upcall
@@ -3030,7 +3100,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       destroy_skel (
@@ -3113,7 +3183,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       describe_skel (
@@ -3124,7 +3194,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       move_skel (
@@ -3151,7 +3221,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       is_a_skel (
@@ -3211,6 +3281,13 @@ namespace POA_CORBA
         );
       
       static void _component_skel (
+          TAO_ServerRequest & req,
+          void * servant_upcall,
+          void * servant
+          ACE_ENV_ARG_DECL
+        );
+      
+      static void _repository_id_skel (
           TAO_ServerRequest & req,
           void * servant_upcall,
           void * servant
@@ -3414,7 +3491,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       destroy_skel (
@@ -3425,7 +3502,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       lookup_skel (
@@ -3436,7 +3513,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       contents_skel (
@@ -3447,7 +3524,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       lookup_name_skel (
@@ -3458,7 +3535,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       describe_contents_skel (
@@ -3469,7 +3546,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_module_skel (
@@ -3480,7 +3557,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_constant_skel (
@@ -3491,7 +3568,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_struct_skel (
@@ -3502,7 +3579,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_union_skel (
@@ -3513,7 +3590,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_enum_skel (
@@ -3524,7 +3601,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_alias_skel (
@@ -3535,7 +3612,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_interface_skel (
@@ -3546,7 +3623,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_value_skel (
@@ -3557,7 +3634,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_value_box_skel (
@@ -3568,7 +3645,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_exception_skel (
@@ -3579,7 +3656,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_native_skel (
@@ -3590,7 +3667,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_abstract_interface_skel (
@@ -3601,7 +3678,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_local_interface_skel (
@@ -3612,7 +3689,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_ext_value_skel (
@@ -3695,7 +3772,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       describe_skel (
@@ -3706,7 +3783,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       move_skel (
@@ -3741,7 +3818,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       is_a_skel (
@@ -3752,7 +3829,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       describe_interface_skel (
@@ -3763,7 +3840,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_attribute_skel (
@@ -3774,7 +3851,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_operation_skel (
@@ -3785,7 +3862,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       describe_ext_interface_skel (
@@ -3796,7 +3873,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_ext_attribute_skel (
@@ -3862,6 +3939,13 @@ namespace POA_CORBA
           ACE_ENV_ARG_DECL
         );
       
+      static void _repository_id_skel (
+          TAO_ServerRequest & req,
+          void * servant_upcall,
+          void * servant
+          ACE_ENV_ARG_DECL
+        );
+      
       virtual void _dispatch (
           TAO_ServerRequest & req,
           void * servant_upcall
@@ -3883,7 +3967,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       destroy_skel (
@@ -3966,7 +4050,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       describe_skel (
@@ -3977,7 +4061,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       move_skel (
@@ -4131,6 +4215,13 @@ namespace POA_CORBA
           ACE_ENV_ARG_DECL
         );
       
+      static void _repository_id_skel (
+          TAO_ServerRequest & req,
+          void * servant_upcall,
+          void * servant
+          ACE_ENV_ARG_DECL
+        );
+      
       virtual void _dispatch (
           TAO_ServerRequest & req,
           void * servant_upcall
@@ -4152,7 +4243,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       destroy_skel (
@@ -4235,7 +4326,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       describe_skel (
@@ -4246,7 +4337,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       move_skel (
@@ -4394,6 +4485,13 @@ namespace POA_CORBA
         );
       
       static void _component_skel (
+          TAO_ServerRequest & req,
+          void * servant_upcall,
+          void * servant
+          ACE_ENV_ARG_DECL
+        );
+      
+      static void _repository_id_skel (
           TAO_ServerRequest & req,
           void * servant_upcall,
           void * servant
@@ -4605,7 +4703,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       destroy_skel (
@@ -4616,7 +4714,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       lookup_skel (
@@ -4627,7 +4725,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       contents_skel (
@@ -4638,7 +4736,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       lookup_name_skel (
@@ -4649,7 +4747,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       describe_contents_skel (
@@ -4660,7 +4758,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_module_skel (
@@ -4671,7 +4769,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_constant_skel (
@@ -4682,7 +4780,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_struct_skel (
@@ -4693,7 +4791,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_union_skel (
@@ -4704,7 +4802,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_enum_skel (
@@ -4715,7 +4813,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_alias_skel (
@@ -4726,7 +4824,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_interface_skel (
@@ -4737,7 +4835,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_value_skel (
@@ -4748,7 +4846,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_value_box_skel (
@@ -4759,7 +4857,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_exception_skel (
@@ -4770,7 +4868,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_native_skel (
@@ -4781,7 +4879,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_abstract_interface_skel (
@@ -4792,7 +4890,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_local_interface_skel (
@@ -4803,7 +4901,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_ext_value_skel (
@@ -4886,7 +4984,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       describe_skel (
@@ -4897,7 +4995,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       move_skel (
@@ -4932,7 +5030,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       is_a_skel (
@@ -4943,7 +5041,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       describe_interface_skel (
@@ -4954,7 +5052,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_attribute_skel (
@@ -4965,7 +5063,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_operation_skel (
@@ -4976,7 +5074,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       describe_ext_interface_skel (
@@ -4987,7 +5085,7 @@ namespace POA_CORBA
         );
       
       // TAO_IDL - Generated from
-      // be\be_interface.cpp:1859
+      // be\be_interface.cpp:1869
       
       static void
       create_ext_attribute_skel (
@@ -5009,7 +5107,7 @@ namespace POA_CORBA
 } // module CORBA
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:997
+// be\be_codegen.cpp:1120
 
 #include "IFR_ComponentsS_T.h"
 

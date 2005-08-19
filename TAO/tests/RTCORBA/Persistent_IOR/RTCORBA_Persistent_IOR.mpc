@@ -7,8 +7,7 @@ project(*Server): rt_server, minimum_corba {
   }
 }
 
-project(*Client): taoexe, minimum_corba {
-  requires += rt_corba
+project(*Client): rt_client, minimum_corba {
   Source_Files {
     testC.cpp
     client.cpp

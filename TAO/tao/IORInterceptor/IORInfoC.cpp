@@ -47,7 +47,7 @@ namespace TAO
 
 #if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY__ARG_TRAITS_CS_)
 #define _PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY__ARG_TRAITS_CS_
-  
+
   template<>
   class Arg_Traits<PortableInterceptor::ObjectReferenceFactory>
     : public
@@ -55,7 +55,8 @@ namespace TAO
             PortableInterceptor::ObjectReferenceFactory *,
             PortableInterceptor::ObjectReferenceFactory_var,
             PortableInterceptor::ObjectReferenceFactory_out,
-            TAO::Value_Traits<PortableInterceptor::ObjectReferenceFactory>
+            TAO::Value_Traits<PortableInterceptor::ObjectReferenceFactory>,
+            TAO::Any_Insert_Policy_Stream <PortableInterceptor::ObjectReferenceFactory *>
           >
   {
   };
@@ -135,7 +136,7 @@ PortableInterceptor::IORInfo::_duplicate (IORInfo_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 

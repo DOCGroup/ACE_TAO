@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_union, 
-           serializer_op_cs, 
+ACE_RCSID (be_visitor_union,
+           serializer_op_cs,
            "$Id$")
 
 // ***************************************************************************
@@ -42,8 +42,8 @@ int
 be_visitor_union_serializer_op_cs::visit_union (be_union *node)
 {
   // already generated and/or we are imported. Don't do anything.
-  if (node->cli_stub_serializer_op_gen () 
-      || node->imported () 
+  if (node->cli_stub_serializer_op_gen ()
+      || node->imported ()
       || node->is_local ())
     {
       return 0;
@@ -57,7 +57,7 @@ be_visitor_union_serializer_op_cs::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_serializer_op_cs"
                          "::visit_union - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 
@@ -98,16 +98,16 @@ be_visitor_union_serializer_op_cs::visit_union (be_union *node)
     {
       case AST_Expression::EV_bool:
         *os << "max_size += _dcps_max_marshaled_size ("
-            << "CORBA::Any::from_boolean (_tao_union._d ()));" << be_nl;
+            << "ACE_OutputCDR::from_boolean (_tao_union._d ()));" << be_nl;
         break;
       case AST_Expression::EV_char:
         *os << "max_size += _dcps_max_marshaled_size ("
-            << "CORBA::Any::from_char (_tao_union._d ()));" << be_nl;
+            << "ACE_OutputCDR::from_char (_tao_union._d ()));" << be_nl;
 
         break;
       case AST_Expression::EV_wchar:
         *os << "max_size += _dcps_max_marshaled_size ("
-            << "CORBA::Any::from_wchar (_tao_union._d ()));" << be_nl;
+            << "ACE_OutputCDR::from_wchar (_tao_union._d ()));" << be_nl;
 
         break;
       default:
@@ -137,7 +137,7 @@ be_visitor_union_serializer_op_cs::visit_union (be_union *node)
       << "return false;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 /*
-      << "CORBA::Boolean is_bounded = true;" 
+      << "CORBA::Boolean is_bounded = true;"
       << " // all discrimenent types are bounded" << be_nl << be_nl;
 
   *os << "// bounded if all branches are bounded." << be_nl;
@@ -158,28 +158,28 @@ be_visitor_union_serializer_op_cs::visit_union (be_union *node)
   //---------------------------------------------------------------
   //  Set the sub state as generating code for _dcps_find_size.
   this->ctx_->sub_state(TAO_CodeGen::TAO_FIND_SIZE);
-  *os << be_global->stub_export_macro () 
-      << " size_t _dcps_find_size (const " 
+  *os << be_global->stub_export_macro ()
+      << " size_t _dcps_find_size (const "
       << node->name() << "& _tao_union);" << be_nl;
 
   *os << "size_t _dcps_find_size (" << be_idt << be_idt_nl
       << "const " << node->name () << " &_tao_union" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "// all union discriminents are fixed size" 
+      << "// all union discriminents are fixed size"
       <<     "so OK to use _dcps_max_marshaled_size" << be_nl
       << "size_t result = ";
 
   switch (node->udisc_type ())
     {
       case AST_Expression::EV_bool:
-        *os << "_dcps_max_marshaled_size  ( ::CORBA::Any::from_boolean (_tao_union._d ()));" << be_nl;
+        *os << "_dcps_max_marshaled_size (::ACE_OutputCDR::from_boolean (_tao_union._d ()));" << be_nl;
         break;
       case AST_Expression::EV_char:
-        *os << "_dcps_max_marshaled_size  ( ::CORBA::Any::from_char (_tao_union._d ()));" << be_nl;
+        *os << "_dcps_max_marshaled_size (::ACE_OutputCDR::from_char (_tao_union._d ()));" << be_nl;
         break;
       case AST_Expression::EV_wchar:
-        *os << "_dcps_max_marshaled_size  ( ::CORBA::Any::from_wchar (_tao_union._d ()));" << be_nl;
+        *os << "_dcps_max_marshaled_size (::ACE_OutputCDR::from_wchar (_tao_union._d ()));" << be_nl;
         break;
       default:
         *os << "_dcps_max_marshaled_size (_tao_union._d ());" << be_nl;
@@ -228,17 +228,17 @@ be_visitor_union_serializer_op_cs::visit_union (be_union *node)
   switch (node->udisc_type ())
     {
       case AST_Expression::EV_bool:
-        *os << "::CORBA::Any::from_boolean tmp (_tao_union._d ());" << be_nl
+        *os << "::ACE_OutputCDR::from_boolean tmp (_tao_union._d ());" << be_nl
             << "if ( !(strm << tmp) )" << be_idt_nl;
 
         break;
       case AST_Expression::EV_char:
-        *os << "::CORBA::Any::from_char tmp (_tao_union._d ());" << be_nl
+        *os << "::ACE_OutputCDR::from_char tmp (_tao_union._d ());" << be_nl
             << "if ( !(strm << tmp) )" << be_idt_nl;
 
         break;
       case AST_Expression::EV_wchar:
-        *os << "::CORBA::Any::from_wchar tmp (_tao_union._d ());" << be_nl
+        *os << "::ACE_OutputCDR::from_wchar tmp (_tao_union._d ());" << be_nl
             << "if ( !(strm << tmp) )" << be_idt_nl;
 
         break;
@@ -299,17 +299,17 @@ be_visitor_union_serializer_op_cs::visit_union (be_union *node)
   switch (node->udisc_type ())
     {
       case AST_Expression::EV_bool:
-        *os << "::CORBA::Any::to_boolean tmp (_tao_discriminant);" << be_nl
+        *os << "::ACE_InputCDR::to_boolean tmp (_tao_discriminant);" << be_nl
             << "if ( !(strm >> tmp) )" << be_idt_nl;
 
         break;
       case AST_Expression::EV_char:
-        *os << "::CORBA::Any::to_char tmp (_tao_discriminant);" << be_nl
+        *os << "::ACE_InputCDR::to_char tmp (_tao_discriminant);" << be_nl
             << "if ( !(strm >> tmp) )" << be_idt_nl;
 
         break;
       case AST_Expression::EV_wchar:
-        *os << "::CORBA::Any::to_wchar tmp (_tao_discriminant);" << be_nl
+        *os << "::ACE_InputCDR::to_wchar tmp (_tao_discriminant);" << be_nl
             << "if ( !(strm >> tmp) )" << be_idt_nl;
 
         break;

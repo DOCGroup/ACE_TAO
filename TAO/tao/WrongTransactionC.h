@@ -63,30 +63,30 @@
 
 namespace CORBA
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_exception/exception_ch.cpp:53
 
 #if !defined (_CORBA_WRONGTRANSACTION_CH_)
 #define _CORBA_WRONGTRANSACTION_CH_
-  
+
   class TAO_Export WrongTransaction : public CORBA::UserException
   {
   public:
-    
+
     WrongTransaction (void);
     WrongTransaction (const WrongTransaction &);
     ~WrongTransaction (void);
 
     WrongTransaction &operator= (const WrongTransaction &);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     static WrongTransaction *_downcast (CORBA::Exception *);
     static const WrongTransaction *_downcast (CORBA::Exception const *);
-    
+
     static CORBA::Exception *_alloc (void);
-    
+
     virtual CORBA::Exception *_tao_duplicate (void) const;
 
     virtual void _raise (void) const;
@@ -95,22 +95,17 @@ namespace CORBA
         TAO_OutputCDR &
         ACE_ENV_ARG_DECL
       ) const;
-    
+
     virtual void _tao_decode (
         TAO_InputCDR &
         ACE_ENV_ARG_DECL
       );
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:129
-    
+
     virtual CORBA::TypeCode_ptr _tao_type (void) const;
   };
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_WrongTransaction;
 
 #endif /* end #if !defined */
 
@@ -126,14 +121,6 @@ namespace CORBA
 namespace TAO
 {
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_exception/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const CORBA::WrongTransaction &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, CORBA::WrongTransaction*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::WrongTransaction *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::WrongTransaction *&);
 
 // TAO_IDL - Generated from
 // be\be_visitor_exception/cdr_op_ch.cpp:52

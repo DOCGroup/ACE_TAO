@@ -262,7 +262,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << " (void)" << be_nl;
   *os << "{}" << be_nl << be_nl;
 
-  if (be_global->any_support ())
+  if (be_global->any_support () && !node->is_local ())
     {
       *os << "void " << be_nl
           << node->name ()
@@ -539,7 +539,7 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
           << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl
           << "}" << be_nl << be_nl;
-          
+
       return true;
     }
   else if (be_global->gen_smart_proxies () &&

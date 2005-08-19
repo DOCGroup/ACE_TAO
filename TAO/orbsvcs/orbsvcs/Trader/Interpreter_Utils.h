@@ -5,8 +5,6 @@
  * @file   Interpreter_Utils.h
  *
  * $Id$
- *
- * @author
  */
 //=============================================================================
 
@@ -18,7 +16,7 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
 
-#include "tao/TypeCode.h"
+#include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/CORBA_String.h"
 #include "tao/SystemException.h"
 
@@ -26,11 +24,12 @@
 
 // =  Classes to deal with the ACE_Hash_Map_Manager.
 
+/**
+ * Key for the Hash Table. The EXT_ID of the
+ * ACE_Hash_Map_Manager.
+ */
 class TAO_Trading_Serv_Export TAO_String_Hash_Key : public CORBA::String_var
 {
-  // = TITLE
-  //     Key for the Hash Table. The EXT_ID of the
-  //     ACE_Hash_Map_Manager.
 public:
   // = Initialization and termination methods.
   TAO_String_Hash_Key (void);

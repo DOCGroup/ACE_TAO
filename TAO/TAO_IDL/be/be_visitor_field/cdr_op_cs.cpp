@@ -500,22 +500,22 @@ be_visitor_field_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
         }
       else if (pt == AST_PredefinedType::PT_char)
         {
-          *os << "(strm >> ::CORBA::Any::to_char (_tao_aggregate."
+          *os << "(strm >> ::ACE_InputCDR::to_char (_tao_aggregate."
               << f->local_name () << "))";
         }
       else if (pt == AST_PredefinedType::PT_wchar)
         {
-          *os << "(strm >> ::CORBA::Any::to_wchar (_tao_aggregate."
+          *os << "(strm >> ::ACE_InputCDR::to_wchar (_tao_aggregate."
               << f->local_name () << "))";
         }
       else if (pt == AST_PredefinedType::PT_octet)
         {
-          *os << "(strm >> ::CORBA::Any::to_octet (_tao_aggregate."
+          *os << "(strm >> ::ACE_InputCDR::to_octet (_tao_aggregate."
               << f->local_name () << "))";
         }
       else if (pt == AST_PredefinedType::PT_boolean)
         {
-          *os << "(strm >> ::CORBA::Any::to_boolean (_tao_aggregate."
+          *os << "(strm >> ::ACE_InputCDR::to_boolean (_tao_aggregate."
               << f->local_name () << "))";
         }
       else
@@ -531,22 +531,22 @@ be_visitor_field_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
         }
       else if (pt == AST_PredefinedType::PT_char)
         {
-          *os << "(strm << ::CORBA::Any::from_char (_tao_aggregate."
+          *os << "(strm << ::ACE_OutputCDR::from_char (_tao_aggregate."
               << f->local_name () << "))";
         }
       else if (pt == AST_PredefinedType::PT_wchar)
         {
-          *os << "(strm << ::CORBA::Any::from_wchar (_tao_aggregate."
+          *os << "(strm << ::ACE_OutputCDR::from_wchar (_tao_aggregate."
               << f->local_name () << "))";
         }
       else if (pt == AST_PredefinedType::PT_octet)
         {
-          *os << "(strm << ::CORBA::Any::from_octet (_tao_aggregate."
+          *os << "(strm << ::ACE_OutputCDR::from_octet (_tao_aggregate."
               << f->local_name () << "))";
         }
       else if (pt == AST_PredefinedType::PT_boolean)
         {
-          *os << "(strm << ::CORBA::Any::from_boolean (_tao_aggregate."
+          *os << "(strm << ::ACE_OutputCDR::from_boolean (_tao_aggregate."
               << f->local_name () << "))";
         }
       else

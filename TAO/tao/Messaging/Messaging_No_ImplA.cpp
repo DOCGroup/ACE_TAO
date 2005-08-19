@@ -26,17 +26,17 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "Messaging_No_ImplC.h"
-#include "tao/Null_RefCount_Policy.h"
-#include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode_Static.h"
-#include "tao/Objref_TypeCode_Static.h"
-#include "tao/Struct_TypeCode_Static.h"
-#include "tao/TypeCode_Struct_Field.h"
-#include "tao/Recursive_Type_TypeCode.h"
+#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
+#include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
+#include "tao/AnyTypeCode/Recursive_Type_TypeCode.h"
 #include "tao/CDR.h"
-#include "tao/Any.h"
-#include "tao/Any_Impl_T.h"
-#include "tao/Any_Dual_Impl_T.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "tao/AnyTypeCode/Any_Impl_T.h"
+#include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/alias_typecode.cpp:50
@@ -49,7 +49,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/Messaging/Priority:1.0",
     "Priority",
     &CORBA::_tc_short);
-  
+
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_Priority =
@@ -69,7 +69,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/Messaging/RebindMode:1.0",
     "RebindMode",
     &CORBA::_tc_short);
-  
+
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_RebindMode =
@@ -89,7 +89,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/Messaging/RoutingType:1.0",
     "RoutingType",
     &CORBA::_tc_short);
-  
+
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_RoutingType =
@@ -109,7 +109,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/Messaging/Ordering:1.0",
     "Ordering",
     &CORBA::_tc_ushort);
-  
+
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_Ordering =
@@ -127,7 +127,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/RebindPolicy:1.0",
     "RebindPolicy");
-  
+
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_RebindPolicy =
@@ -143,7 +143,7 @@ static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> co
   {
     { "min", &Messaging::_tc_Priority },
     { "max", &Messaging::_tc_Priority }
-    
+
   };
 static TAO::TypeCode::Struct<char const *,
                       CORBA::TypeCode_ptr const *,
@@ -155,7 +155,7 @@ static TAO::TypeCode::Struct<char const *,
     "PriorityRange",
     _tao_fields_Messaging_PriorityRange,
     2);
-  
+
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_PriorityRange =
@@ -173,7 +173,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/RequestPriorityPolicy:1.0",
     "RequestPriorityPolicy");
-  
+
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_RequestPriorityPolicy =
@@ -191,7 +191,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/ReplyPriorityPolicy:1.0",
     "ReplyPriorityPolicy");
-  
+
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_ReplyPriorityPolicy =
@@ -209,7 +209,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/RequestStartTimePolicy:1.0",
     "RequestStartTimePolicy");
-  
+
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_RequestStartTimePolicy =
@@ -227,7 +227,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/RequestEndTimePolicy:1.0",
     "RequestEndTimePolicy");
-  
+
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_RequestEndTimePolicy =
@@ -245,7 +245,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/ReplyStartTimePolicy:1.0",
     "ReplyStartTimePolicy");
-  
+
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_ReplyStartTimePolicy =
@@ -263,7 +263,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/ReplyEndTimePolicy:1.0",
     "ReplyEndTimePolicy");
-  
+
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_ReplyEndTimePolicy =
@@ -281,7 +281,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/RelativeRequestTimeoutPolicy:1.0",
     "RelativeRequestTimeoutPolicy");
-  
+
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_RelativeRequestTimeoutPolicy =
@@ -297,7 +297,7 @@ static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> co
   {
     { "min", &Messaging::_tc_RoutingType },
     { "max", &Messaging::_tc_RoutingType }
-    
+
   };
 static TAO::TypeCode::Struct<char const *,
                       CORBA::TypeCode_ptr const *,
@@ -309,7 +309,7 @@ static TAO::TypeCode::Struct<char const *,
     "RoutingTypeRange",
     _tao_fields_Messaging_RoutingTypeRange,
     2);
-  
+
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_RoutingTypeRange =
@@ -327,7 +327,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/RoutingPolicy:1.0",
     "RoutingPolicy");
-  
+
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_RoutingPolicy =
@@ -345,7 +345,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/MaxHopsPolicy:1.0",
     "MaxHopsPolicy");
-  
+
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_MaxHopsPolicy =
@@ -363,7 +363,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/QueueOrderPolicy:1.0",
     "QueueOrderPolicy");
-  
+
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_QueueOrderPolicy =
@@ -396,7 +396,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Impl_T<Messaging::RebindPolicy>::demarshal_value (TAO_InputCDR &)
@@ -447,7 +447,7 @@ operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -529,7 +529,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Impl_T<Messaging::RequestPriorityPolicy>::demarshal_value (TAO_InputCDR &)
@@ -604,7 +604,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Impl_T<Messaging::ReplyPriorityPolicy>::demarshal_value (TAO_InputCDR &)
@@ -679,7 +679,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Impl_T<Messaging::RequestStartTimePolicy>::demarshal_value (TAO_InputCDR &)
@@ -754,7 +754,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Impl_T<Messaging::RequestEndTimePolicy>::demarshal_value (TAO_InputCDR &)
@@ -829,7 +829,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Impl_T<Messaging::ReplyStartTimePolicy>::demarshal_value (TAO_InputCDR &)
@@ -904,7 +904,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Impl_T<Messaging::ReplyEndTimePolicy>::demarshal_value (TAO_InputCDR &)
@@ -979,7 +979,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::demarshal_value (TAO_InputCDR &)
@@ -1030,7 +1030,7 @@ operator>>= (
       );
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
@@ -1112,7 +1112,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Impl_T<Messaging::RoutingPolicy>::demarshal_value (TAO_InputCDR &)
@@ -1187,7 +1187,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Impl_T<Messaging::MaxHopsPolicy>::demarshal_value (TAO_InputCDR &)
@@ -1262,7 +1262,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)

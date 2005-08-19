@@ -27,6 +27,9 @@ project : taolib, core, portableserver, pi, valuetype {
     Messaging
   }
 
+  IDL_Files {
+  }
+
   Pkgconfig_Files {
     Messaging/TAO_Messaging.pc.in
   }

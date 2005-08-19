@@ -33,10 +33,10 @@
 
 #include "ClientRequestInfoC.h"
 #include "PIForwardRequestC.h"
+#include "PICurrent_Impl.h"
+#include "PICurrent_Copy_Callback.h"
 #include "tao/ORB_Constants.h"
 #include "tao/Invocation_Utils.h"
-#include "tao/PICurrent_Impl.h"
-#include "tao/PICurrent_Copy_Callback.h"
 
 class TAO_Service_Context;
 
@@ -218,6 +218,12 @@ public:
      ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
+
+  bool parameter_list (Dynamic::ParameterList &param_list);
+
+  bool exception_list (Dynamic::ExceptionList &exception_list);
+
+  bool result (CORBA::Any *any);
 
   /// Check if this ClientRequestInfo object is called within the
   /// context of a request.

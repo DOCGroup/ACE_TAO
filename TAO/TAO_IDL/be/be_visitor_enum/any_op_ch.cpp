@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_enum, 
-           any_op_ch, 
+ACE_RCSID (be_visitor_enum,
+           any_op_ch,
            "$Id$")
 
 // ***************************************************************************
@@ -46,17 +46,16 @@ be_visitor_enum_any_op_ch::visit_enum (be_enum *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
+  const char *macro = this->ctx_->export_macro ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   // Generate the Any <<= and >>= operators.
-  *os << be_nl << be_nl 
-      << be_global->stub_export_macro () << " void"
-      << " operator<<= ( ::CORBA::Any &, " << node->name ()
+  *os << be_nl << be_nl
+      << macro << " void operator<<= (::CORBA::Any &, " << node->name ()
       << ");" << be_nl;
-  *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
-      << " operator>>= (const ::CORBA::Any &, "
+  *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, "
       << node->name () << " &);";
 
   node->cli_hdr_any_op_gen (1);

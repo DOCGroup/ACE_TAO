@@ -196,16 +196,13 @@ private:
   int parse_and_add_endpoints (const ACE_CString &endpoints,
                                TAO_EndpointSet &endpoint_set);
 
-  /// List of endpoints used to pre-establish connections.
-  // TAO_EndpointSet preconnects_list_;
-
   /// Map of endpoints this server is willing to accept requests on.
   endpoints_map_type endpoints_map_;
 
   /// Port numbers of the configured services.
   CORBA::UShort service_port_[TAO_NO_OF_MCAST_SERVICES];
 
-  /// address:port for Multicast Discovery Protocol for the Naming
+  /// Address:port for Multicast Discovery Protocol for the Naming
   /// Service.
   CORBA::String_var mcast_discovery_endpoint_;
 

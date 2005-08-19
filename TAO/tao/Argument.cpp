@@ -10,26 +10,46 @@ TAO::Argument::~Argument (void)
 CORBA::Boolean
 TAO::Argument::marshal (TAO_OutputCDR &)
 {
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
 TAO::Argument::demarshal (TAO_InputCDR &)
 {
-  return 1;
+  return true;
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
 
 void
-TAO::Argument::interceptor_param (Dynamic::Parameter &)
+TAO::Argument::interceptor_value (CORBA::Any *) const
 {
 }
 
-void
-TAO::Argument::interceptor_result (CORBA::Any *)
+CORBA::ParameterMode
+TAO::InArgument::mode (void) const
 {
+  return CORBA::PARAM_IN;
+}
+
+CORBA::ParameterMode
+TAO::InoutArgument::mode (void) const
+{
+  return CORBA::PARAM_INOUT;
+}
+
+CORBA::ParameterMode
+TAO::OutArgument::mode (void) const
+{
+  return CORBA::PARAM_OUT;
+}
+
+CORBA::ParameterMode
+TAO::RetArgument::mode (void) const
+{
+  return CORBA::PARAM_OUT;
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
+
 

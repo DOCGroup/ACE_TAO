@@ -33,6 +33,7 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
 
   const CORBA::Octet response_flags = opdetails.response_flags ();
 
+
   // Here are the Octet values for different policies
   // '00000000' for SYNC_NONE
   // '00000000' for SYNC_WITH_TRANSPORT
@@ -43,7 +44,7 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
   //
   // We have not implemented the policy INV_NO_RESPONSE for DII.
   if (response_flags == TAO_TWOWAY_RESPONSE_FLAG)
-    msg << CORBA::Any::from_octet (3);
+    msg << ACE_OutputCDR::from_octet (3);
   // Second the response flags
   // Sync scope - ignored by server if request is not oneway.
   else if (response_flags == CORBA::Octet (Messaging::SYNC_NONE)
@@ -51,15 +52,15 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
            || response_flags == CORBA::Octet (TAO::SYNC_EAGER_BUFFERING)
            || response_flags == CORBA::Octet (TAO::SYNC_DELAYED_BUFFERING))
     // No response required.
-    msg << CORBA::Any::from_octet (0);
+    msg << ACE_OutputCDR::from_octet (0);
 
   else if (response_flags == CORBA::Octet (Messaging::SYNC_WITH_SERVER))
     // Return before dispatching to the servant
-    msg << CORBA::Any::from_octet (1);
+    msg << ACE_OutputCDR::from_octet (1);
 
   else if (response_flags == CORBA::Octet (Messaging::SYNC_WITH_TARGET))
     // Return after dispatching servant.
-    msg << CORBA::Any::from_octet (3);
+    msg << ACE_OutputCDR::from_octet (3);
   else
     // Until more flags are defined by the OMG.
     return 0;
@@ -257,7 +258,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
 
   CORBA::Boolean hdr_status = (CORBA::Boolean) input.good_bit ();
 
-  CORBA::ULong req_id;
+  CORBA::ULong req_id = 0;
   // Get the rest of the request header ...
   hdr_status = hdr_status && input.read_ulong (req_id);
 

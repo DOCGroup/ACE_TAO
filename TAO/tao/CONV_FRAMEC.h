@@ -26,10 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:153
+// be\be_codegen.cpp:154
 
-#ifndef _TAO_IDL_ORIG_CONV_FRAMEC_H_
-#define _TAO_IDL_ORIG_CONV_FRAMEC_H_
+#ifndef _TAO_IDL_CONV_FRAMEC_H_
+#define _TAO_IDL_CONV_FRAMEC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -58,12 +58,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
-
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:49
 
 namespace CONV_FRAME
 {
@@ -73,11 +69,6 @@ namespace CONV_FRAME
   
   typedef CORBA::ULong CodeSetId;
   typedef CORBA::ULong_out CodeSetId_out;
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_CodeSetId;
   
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
@@ -128,11 +119,6 @@ namespace CONV_FRAME
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_CodeSetIdSeq;
-  
-  // TAO_IDL - Generated from
   // be\be_type.cpp:258
   
   struct CodeSetComponent;
@@ -151,7 +137,7 @@ namespace CONV_FRAME
     CodeSetComponent_out;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_structure/structure_ch.cpp:52
+  // be\be_visitor_structure/structure_ch.cpp:57
   
   struct TAO_Export CodeSetComponent
   {
@@ -161,11 +147,6 @@ namespace CONV_FRAME
     CONV_FRAME::CodeSetId native_code_set;
     CONV_FRAME::CodeSetIdSeq conversion_code_sets;
   };
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_CodeSetComponent;
   
   // TAO_IDL - Generated from
   // be\be_type.cpp:258
@@ -186,7 +167,7 @@ namespace CONV_FRAME
     CodeSetComponentInfo_out;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_structure/structure_ch.cpp:52
+  // be\be_visitor_structure/structure_ch.cpp:57
   
   struct TAO_Export CodeSetComponentInfo
   {
@@ -196,11 +177,6 @@ namespace CONV_FRAME
     CONV_FRAME::CodeSetComponent ForCharData;
     CONV_FRAME::CodeSetComponent ForWcharData;
   };
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_CodeSetComponentInfo;
   
   // TAO_IDL - Generated from
   // be\be_type.cpp:258
@@ -218,7 +194,7 @@ namespace CONV_FRAME
     CodeSetContext_out;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_structure/structure_ch.cpp:52
+  // be\be_visitor_structure/structure_ch.cpp:57
   
   struct TAO_Export CodeSetContext
   {
@@ -228,14 +204,9 @@ namespace CONV_FRAME
     CONV_FRAME::CodeSetId char_data;
     CONV_FRAME::CodeSetId wchar_data;
   };
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_CodeSetContext;
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:78
 
 } // module CONV_FRAME
 
@@ -246,38 +217,6 @@ namespace CONV_FRAME
 namespace TAO
 {
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_sequence/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const CONV_FRAME::CodeSetIdSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, CONV_FRAME::CodeSetIdSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CONV_FRAME::CodeSetIdSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CONV_FRAME::CodeSetIdSeq *&);
-
-// TAO_IDL - Generated from
-// be\be_visitor_structure/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const CONV_FRAME::CodeSetComponent &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, CONV_FRAME::CodeSetComponent*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CONV_FRAME::CodeSetComponent *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CONV_FRAME::CodeSetComponent *&);
-
-// TAO_IDL - Generated from
-// be\be_visitor_structure/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const CONV_FRAME::CodeSetComponentInfo &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, CONV_FRAME::CodeSetComponentInfo*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CONV_FRAME::CodeSetComponentInfo *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CONV_FRAME::CodeSetComponentInfo *&);
-
-// TAO_IDL - Generated from
-// be\be_visitor_structure/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const CONV_FRAME::CodeSetContext &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, CONV_FRAME::CodeSetContext*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CONV_FRAME::CodeSetContext *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CONV_FRAME::CodeSetContext *&);
 
 // TAO_IDL - Generated from
 // be\be_visitor_sequence/cdr_op_ch.cpp:71
@@ -315,15 +254,11 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CONV_FRAME::CodeSet
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CONV_FRAME::CodeSetContext &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:955
+// be\be_codegen.cpp:1062
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
 
 #include /**/ "ace/post.h"
 

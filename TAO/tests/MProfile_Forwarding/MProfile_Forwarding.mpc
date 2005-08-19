@@ -1,21 +1,23 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoexe, portableserver, minimum_corba {
+project(*Server): taoserver, minimum_corba {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project(*Client): taoexe, minimum_corba {
+project(*Client): taoclient, anytypecode, minimum_corba {
+  exename = client
   Source_Files {
     testC.cpp
     client.cpp
   }
 }
 
-project(*Manager): taoexe, portableserver, minimum_corba, iormanip {
+project(*Manager): taoserver, minimum_corba, iormanip {
+  exename = manager
   Source_Files {
     testC.cpp
     Servant_Locator.cpp

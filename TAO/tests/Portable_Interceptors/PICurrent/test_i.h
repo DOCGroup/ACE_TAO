@@ -19,6 +19,7 @@
 #include "testS.h"
 
 #include "tao/PortableInterceptorC.h"
+#include "tao/PI/PI.h"
 
 /**
  * @class test_i

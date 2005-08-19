@@ -3,8 +3,9 @@
 //
 
 #include "TestC.h"
-#include "tao/TC_Constants_Forward.h"
-#include "tao/NVList.h"
+#include "tao/AnyTypeCode/TC_Constants_Forward.h"
+#include "tao/AnyTypeCode/NVList.h"
+#include "tao/AnyTypeCode/SystemExceptionA.h"
 #include "Roundtrip.h"
 #include "tao/DynamicInterface/Server_Request.h"
 
@@ -68,14 +69,14 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request
       CORBA::NVList_ptr list;
       this->orb_->create_list (0, list ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
-		
+
 		  // Set up the argument list
 
 	    CORBA::Any octet_load;
       octet_load._tao_set_typecode (Test::_tc_octet_load);
 	    list->add_value ("octet_load", octet_load, CORBA::ARG_IN
 					     ACE_ENV_ARG_PARAMETER);
-		  
+
 	    CORBA::Any send_time;
       send_time._tao_set_typecode (CORBA::_tc_ulonglong);
       list->add_value ("send_time", send_time, CORBA::ARG_IN
@@ -101,7 +102,7 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request
       CORBA::NVList_ptr list;
       this->orb_->create_list (0, list ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
-		
+
 		  // Set up the argument list
 
 	    CORBA::Any long_load;
@@ -109,7 +110,7 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request
 	    list->add_value ("long_load", long_load, CORBA::ARG_IN
 					     ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
-		  
+
 	    CORBA::Any send_time;
       send_time._tao_set_typecode (CORBA::_tc_ulonglong);
       list->add_value ("send_time", send_time, CORBA::ARG_IN
@@ -135,7 +136,7 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request
       CORBA::NVList_ptr list;
       this->orb_->create_list (0, list ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
-		
+
 		  // Set up the argument list
 
 	    CORBA::Any short_load;
@@ -143,7 +144,7 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request
 	    list->add_value ("short_load", short_load, CORBA::ARG_IN
 					     ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
-		  
+
 	    CORBA::Any send_time;
       send_time._tao_set_typecode (CORBA::_tc_ulonglong);
       list->add_value ("send_time", send_time, CORBA::ARG_IN
@@ -169,7 +170,7 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request
       CORBA::NVList_ptr list;
       this->orb_->create_list (0, list ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
-		
+
 		  // Set up the argument list
 
 	    CORBA::Any char_load;
@@ -177,7 +178,7 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request
 	    list->add_value ("char_load", char_load, CORBA::ARG_IN
 					     ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
-		  
+
 	    CORBA::Any send_time;
       send_time._tao_set_typecode (CORBA::_tc_ulonglong);
       list->add_value ("send_time", send_time, CORBA::ARG_IN

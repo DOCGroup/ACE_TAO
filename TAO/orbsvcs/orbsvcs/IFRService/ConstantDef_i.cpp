@@ -5,7 +5,7 @@
 #include "IFR_Service_Utils.h"
 #include "IDLType_i.h"
 
-#include "tao/Any_Unknown_IDL_Type.h"
+#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"

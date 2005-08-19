@@ -13,12 +13,12 @@ ACE_RCSID (tao,
 #include "ORB_Core.h"
 #include "ORB_Core_TSS_Resources.h"
 #include "TAO_Internal.h"
-#include "NVList.h"
 #include "Dynamic_Adapter.h"
 #include "Profile.h"
 #include "default_ports.h"
 #include "ORBInitializer_Registry_Adapter.h"
 #include "PolicyFactory_Registry_Adapter.h"
+#include "NVList_Adapter.h"
 #include "TAO_Singleton_Manager.h"
 #include "Policy_Current.h"
 #include "Policy_Manager.h"
@@ -29,11 +29,6 @@ ACE_RCSID (tao,
 #include "CDR.h"
 #include "SystemException.h"
 #include "default_environment.h"
-
-#if TAO_HAS_INTERCEPTORS == 1
-# include "PICurrent_Loader.h"  /* @@ This should go away! */
-# include "PICurrent.h"  /* @@ This should go away! */
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #if !defined (__ACE_INLINE__)
 # include "ORB.i"
@@ -111,7 +106,7 @@ CORBA::Exception *CORBA::ORB::InvalidName::_alloc (void)
 CORBA::Exception *
 CORBA::ORB::InvalidName::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::CORBA::ORB::InvalidName (*this),
@@ -289,38 +284,21 @@ CORBA::ORB::create_list (CORBA::Long count,
                          CORBA::NVList_ptr &new_list
                          ACE_ENV_ARG_DECL)
 {
-  ACE_ASSERT (CORBA::ULong (count) <= UINT_MAX);
+  TAO_NVList_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_NVList_Adapter>::instance (
+        "TAO_NVList_Adapter"
+      );
 
-  // Create an empty list
-  ACE_NEW_THROW_EX (new_list,
-                    CORBA::NVList,
-                    CORBA::NO_MEMORY (
-                      CORBA::SystemException::_tao_minor_code (
-                        0,
-                        ENOMEM),
-                      CORBA::COMPLETED_NO));
-  ACE_CHECK;
-
-  // If count is greater than 0, create a list of NamedValues.
-  if (count != 0)
+  if (adapter == 0)
     {
-      new_list->max_ = (CORBA::ULong) count;
-
-      for (CORBA::Long i = 0; i < count; ++i)
-        {
-          CORBA::NamedValue_ptr nv = 0;
-          ACE_NEW_THROW_EX (nv,
-                            CORBA::NamedValue,
-                            CORBA::NO_MEMORY (
-                              CORBA::SystemException::_tao_minor_code (
-                                0,
-                                ENOMEM),
-                              CORBA::COMPLETED_NO));
-          ACE_CHECK;
-
-          new_list->values_.enqueue_tail (nv);
-        }
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("ORB unable to find the ")
+                  ACE_TEXT ("NVList Adapter instance")));
+      ACE_THROW (CORBA::INTERNAL ());
     }
+
+  adapter->create_list (count, new_list ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -375,13 +353,22 @@ void
 CORBA::ORB::create_named_value (CORBA::NamedValue_ptr &nv
                                 ACE_ENV_ARG_DECL)
 {
-  ACE_NEW_THROW_EX (nv,
-                    CORBA::NamedValue,
-                    CORBA::NO_MEMORY (
-                      CORBA::SystemException::_tao_minor_code (
-                        0,
-                        ENOMEM),
-                      CORBA::COMPLETED_NO));
+  TAO_NVList_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_NVList_Adapter>::instance (
+        "TAO_NVList_Adapter"
+      );
+
+  if (adapter == 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("ORB unable to find the ")
+                  ACE_TEXT ("NVList Adapter instance")));
+
+      ACE_THROW (CORBA::INTERNAL ());
+    }
+
+  adapter->create_named_value (nv ACE_ENV_ARG_PARAMETER);
 }
 
 // The following functions are not implemented - they just throw
@@ -1614,13 +1601,6 @@ CORBA::ORB_init (int &argc,
                                           slotid
                                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::ORB::_nil ());
-
-#if TAO_HAS_INTERCEPTORS == 1
-      TAO::PICurrent *pi = oc->pi_current ();
-
-      if (pi != 0)
-        pi->initialize (slotid);
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
     }
 
   if (TAO_debug_level > 2)

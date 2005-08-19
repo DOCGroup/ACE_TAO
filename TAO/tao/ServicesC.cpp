@@ -26,16 +26,12 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:291
+// be\be_codegen.cpp:288
 
 
 #include "ServicesC.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
-
-#if defined (__BORLANDC__)
-#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
-#endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
@@ -59,7 +55,7 @@ CORBA::ServiceOptionSeq::ServiceOptionSeq (
     CORBA::ULong max
   )
   : TAO_Unbounded_Sequence<
-        CORBA::ServiceOption
+        ServiceOption
       >
     (max)
 {}
@@ -71,7 +67,7 @@ CORBA::ServiceOptionSeq::ServiceOptionSeq (
     CORBA::Boolean release
   )
   : TAO_Unbounded_Sequence<
-        CORBA::ServiceOption
+        ServiceOption
       >
     (max, length, buffer, release)
 {}
@@ -80,7 +76,7 @@ CORBA::ServiceOptionSeq::ServiceOptionSeq (
     const ServiceOptionSeq &seq
   )
   : TAO_Unbounded_Sequence<
-        CORBA::ServiceOption
+        ServiceOption
       >
     (seq)
 {}
@@ -125,7 +121,7 @@ CORBA::ServiceDetailSeq::ServiceDetailSeq (
     CORBA::ULong max
   )
   : TAO_Unbounded_Sequence<
-        CORBA::ServiceDetail
+        ServiceDetail
       >
     (max)
 {}
@@ -137,7 +133,7 @@ CORBA::ServiceDetailSeq::ServiceDetailSeq (
     CORBA::Boolean release
   )
   : TAO_Unbounded_Sequence<
-        CORBA::ServiceDetail
+        ServiceDetail
       >
     (max, length, buffer, release)
 {}
@@ -146,7 +142,7 @@ CORBA::ServiceDetailSeq::ServiceDetailSeq (
     const ServiceDetailSeq &seq
   )
   : TAO_Unbounded_Sequence<
-        CORBA::ServiceDetail
+        ServiceDetail
       >
     (seq)
 {}

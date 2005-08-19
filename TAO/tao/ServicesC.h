@@ -26,10 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:153
+// be\be_codegen.cpp:154
 
-#ifndef _TAO_IDL_ORIG_SERVICESC_H_
-#define _TAO_IDL_ORIG_SERVICESC_H_
+#ifndef _TAO_IDL_SERVICESC_H_
+#define _TAO_IDL_SERVICESC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -60,12 +60,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
-
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:49
 
 namespace CORBA
 {
@@ -77,20 +73,10 @@ namespace CORBA
   typedef CORBA::UShort_out ServiceType_out;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ServiceType;
-  
-  // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:379
   
   typedef CORBA::ULong ServiceOption;
   typedef CORBA::ULong_out ServiceOption_out;
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ServiceOption;
   
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:379
@@ -99,21 +85,11 @@ namespace CORBA
   typedef CORBA::ULong_out ServiceDetailType_out;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ServiceDetailType;
-  
-  // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:472
   
   typedef OctetSeq ServiceDetailData;
   typedef OctetSeq_var ServiceDetailData_var;
   typedef OctetSeq_out ServiceDetailData_out;
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ServiceDetailData;
   
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
@@ -164,11 +140,6 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ServiceOptionSeq;
-  
-  // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
   
   const CORBA::ServiceType Security = 1U;
@@ -192,7 +163,7 @@ namespace CORBA
     ServiceDetail_out;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_structure/structure_ch.cpp:52
+  // be\be_visitor_structure/structure_ch.cpp:57
   
   struct TAO_Export ServiceDetail
   {
@@ -202,11 +173,6 @@ namespace CORBA
     CORBA::ServiceDetailType service_detail_type;
     CORBA::ServiceDetailData service_detail;
   };
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ServiceDetail;
   
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
@@ -257,11 +223,6 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ServiceDetailSeq;
-  
-  // TAO_IDL - Generated from
   // be\be_type.cpp:258
   
   struct ServiceInformation;
@@ -280,7 +241,7 @@ namespace CORBA
     ServiceInformation_out;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_structure/structure_ch.cpp:52
+  // be\be_visitor_structure/structure_ch.cpp:57
   
   struct TAO_Export ServiceInformation
   {
@@ -290,14 +251,9 @@ namespace CORBA
     CORBA::ServiceOptionSeq service_options;
     CORBA::ServiceDetailSeq service_details;
   };
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_ServiceInformation;
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:78
 
 } // module CORBA
 
@@ -308,38 +264,6 @@ namespace CORBA
 namespace TAO
 {
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_sequence/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const CORBA::ServiceOptionSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, CORBA::ServiceOptionSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ServiceOptionSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::ServiceOptionSeq *&);
-
-// TAO_IDL - Generated from
-// be\be_visitor_structure/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const CORBA::ServiceDetail &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, CORBA::ServiceDetail*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ServiceDetail *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::ServiceDetail *&);
-
-// TAO_IDL - Generated from
-// be\be_visitor_sequence/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const CORBA::ServiceDetailSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, CORBA::ServiceDetailSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ServiceDetailSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::ServiceDetailSeq *&);
-
-// TAO_IDL - Generated from
-// be\be_visitor_structure/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const CORBA::ServiceInformation &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, CORBA::ServiceInformation*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ServiceInformation *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::ServiceInformation *&);
 
 // TAO_IDL - Generated from
 // be\be_visitor_sequence/cdr_op_ch.cpp:71
@@ -388,15 +312,11 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::ServiceInfor
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::ServiceInformation &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:955
+// be\be_codegen.cpp:1062
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
 
 #include /**/ "ace/post.h"
 

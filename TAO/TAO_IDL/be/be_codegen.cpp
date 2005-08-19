@@ -44,6 +44,7 @@ TAO_CodeGen::TAO_CodeGen (void)
     server_template_skeletons_ (0),
     server_inline_ (0),
     server_template_inline_ (0),
+    anyop_header_ (0),
     anyop_source_ (0),
     gperf_input_stream_ (0),
     gperf_input_filename_ (0),
@@ -202,7 +203,7 @@ TAO_CodeGen::start_client_header (const char *fname)
   // We must include all the client headers corresponding to
   // IDL files included by the current IDL file.
   // We will use the included IDL file names as they appeared
-  // in the original main IDL file, not the one  which went
+  // in the original main IDL file, not the one which went
   // thru CC preprocessor.
   for (size_t j = 0; j < nfiles; ++j)
     {
@@ -228,9 +229,10 @@ TAO_CodeGen::start_client_header (const char *fname)
         }
       else
         {
-          ACE_ERROR ((LM_WARNING,
-                      ACE_TEXT ("\nWARNING, invalid file '%s' included"),
-                      idl_name));
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("\nERROR, invalid file '%s' included"),
+                             idl_name),
+                            -1);
         }
     }
 
@@ -240,22 +242,6 @@ TAO_CodeGen::start_client_header (const char *fname)
   *this->client_header_ << "#endif\n";
   *this->client_header_ << "#define TAO_EXPORT_MACRO "
                         << be_global->stub_export_macro ();
-
-  *this->client_header_ << "\n\n#if defined(_MSC_VER)\n"
-                        << "#pragma warning(push)\n"
-                        << "#pragma warning(disable:4250)";
-
-  if (be_global->use_raw_throw ())
-    {
-      *this->client_header_ << "\n#pragma warning(disable:4290)";
-    }
-
-  *this->client_header_ << "\n#endif /* _MSC_VER */";
-
-  *this->client_header_
-      << "\n\n#if defined (__BORLANDC__)\n"
-      << "#pragma option push -w-rvl -w-rch -w-ccc -w-inl\n"
-      << "#endif /* __BORLANDC__ */";
 
   return 0;
 }
@@ -291,14 +277,10 @@ TAO_CodeGen::start_client_stubs (const char *fname)
                        << "// " << __FILE__ << ":" << __LINE__
                        << be_nl << be_nl;
 
-  // Generate the ident string, if any.
-  this->gen_ident_string (this->client_stubs_);
-
   this->gen_stub_src_includes ();
 
-  *this->client_stubs_ << "\n\n#if defined (__BORLANDC__)\n"
-                       << "#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig\n"
-                       << "#endif /* __BORLANDC__ */";
+  // Generate the ident string, if any.
+  this->gen_ident_string (this->client_stubs_);
 
   // Only when we generate a client inline file generate the include
   if (be_global->gen_client_inline ())
@@ -311,7 +293,7 @@ TAO_CodeGen::start_client_stubs (const char *fname)
                            << "\"";
       *this->client_stubs_ << "\n#endif /* !defined INLINE */";
     }
-    
+
   return 0;
 }
 
@@ -468,23 +450,6 @@ TAO_CodeGen::start_server_header (const char *fname)
         }
     }
 
-  *this->server_header_ << be_nl << be_nl
-                        << "#if defined(_MSC_VER)\n"
-                        << "#pragma warning(push)\n"
-                        << "#pragma warning(disable:4250)";
-
-  if (be_global->use_raw_throw ())
-    {
-      *this->server_header_ << "\n#pragma warning(disable:4290)";
-    }
-
-  *this->server_header_ << "\n#endif /* _MSC_VER */";
-
-  *this->server_header_
-      << "\n\n#if defined (__BORLANDC__)\n"
-      << "#pragma option push -w-rvl -w-rch -w-ccc -w-inl\n"
-      << "#endif /* __BORLANDC__ */";
-
   if (be_global->skel_export_include () != 0)
     {
       *this->server_header_ << "\n\n#include \""
@@ -552,17 +517,6 @@ TAO_CodeGen::start_server_template_header (const char *fname)
                                      << "\"";
     }
 
-  *this->server_template_header_ << "\n\n#if defined(_MSC_VER)\n"
-                                 << "#pragma warning(push)\n"
-                                 << "#pragma warning(disable:4250)\n";
-
-  if (be_global->use_raw_throw ())
-    {
-      *this->server_template_header_ << "#pragma warning(disable:4290)\n";
-    }
-
-  *this->server_template_header_ << "#endif /* _MSC_VER */\n";
-
   return 0;
 }
 
@@ -623,10 +577,6 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
     << "\"";
 
   this->gen_skel_src_includes ();
-
-  *this->server_skeletons_ << "\n\n#if defined (__BORLANDC__)\n"
-                           << "#pragma option -w-rvl -w-rch -w-ccc -w-aus\n"
-                           << "#endif /* __BORLANDC__ */";
 
   // Only when we generate a server inline file generate the include
   if (be_global->gen_server_inline ())
@@ -780,6 +730,146 @@ TAO_CodeGen::server_template_inline (void)
 }
 
 int
+TAO_CodeGen::start_anyop_header (const char *fname)
+{
+  // Retrieve the singleton instance to the outstream factory.
+  TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
+
+  // Retrieve a specialized instance.
+  this->anyop_header_ = factory->make_outstream ();
+
+  if (!this->anyop_header_)
+    {
+      return -1;
+    }
+
+  if (this->anyop_header_->open (fname,
+                                 TAO_OutStream::TAO_CLI_HDR)
+       == -1)
+    {
+      return -1;
+    }
+
+  *this->anyop_header_ << be_nl << "// TAO_IDL - Generated from" << be_nl
+                       << "// " << __FILE__ << ":" << __LINE__
+                       << be_nl << be_nl;
+
+  // Generate the #ident string, if any.
+  this->gen_ident_string (this->anyop_header_);
+
+  // Generate the #ifndef clause.
+  this->gen_ifndef_string (fname,
+                           this->anyop_header_,
+                           "_TAO_IDL_",
+                           "_H_");
+
+  if (be_global->pre_include () != 0)
+    {
+      *this->anyop_header_ << "#include /**/ \""
+                           << be_global->pre_include ()
+                           << "\"\n";
+    }
+
+  // If anyop macro hasn't been set, default to stub macro.
+  if (be_global->anyop_export_include () != 0)
+    {
+      *this->anyop_header_ << "\n#include \""
+                           << be_global->anyop_export_include ()
+                           << "\"";
+    }
+  else if (be_global->stub_export_include () != 0)
+    {
+      *this->anyop_header_ << "\n#include \""
+                           << be_global->stub_export_include ()
+                           << "\"";
+    }
+
+  char *tao_prefix = "";
+  ACE_CString pidl_checker (idl_global->filename ()->get_string ());
+  bool got_pidl =
+    (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl");
+
+  // If we're here and we have a .pidl file, we need to generate
+  // the *A.h include from the AnyTypeCode library.
+  if (got_pidl)
+    {
+      tao_prefix = "tao/";
+    }
+
+  // Generate the include statement for the client header. We just
+  // need to put only the base names. Path info is not required.
+  *this->anyop_header_ << "\n#include \"" << tao_prefix
+                       << be_global->be_get_client_hdr_fname ()
+                       << "\"";
+
+  // If we have not suppressed Any operator generation and also
+  // are not generating the operators in a separate file, we
+  // need to include the *A.h file from all .pidl files here.
+  if (be_global->any_support ())
+    {
+      for (size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
+        {
+          char* idl_name = idl_global->included_idl_files ()[j];
+
+          // Make a String out of it.
+          UTL_String idl_name_str = idl_name;
+
+          const char *anyop_hdr =
+            BE_GlobalData::be_get_anyop_header (&idl_name_str, 1);
+
+          ACE_CString pidl_checker (idl_name);
+          bool got_pidl =
+            (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl");
+
+          // If we're here and we have a .pidl file, we need to generate
+          // the *A.h include from the AnyTypeCode library.
+          if (got_pidl)
+            {
+              // Stripped off any scope in the name and add the
+              // AnyTypeCode prefix.
+              ACE_CString work_hdr (anyop_hdr);
+              ACE_CString final_hdr = "tao/AnyTypeCode/";
+              int pos = work_hdr.rfind ('/');
+
+              if (pos != ACE_SString::npos)
+                {
+                  ACE_CString scope (work_hdr.substr (0, pos - 1));
+
+                  // If we find a '/' in the containing scope name, it
+                  // means we are including a .pidl file from a
+                  // subdirectory of $TAO_ROOT/tao, and so we should
+                  // include the anyop_hdr string as is, and not strip
+                  // off the scope name and prepend "tao/AnyTypeCode/".
+                  // Only .pidl files in $TAO_ROOT/tao itself have
+                  // their generated *A.* files moved to the AnyTypeCode
+                  // library.
+                  if (scope.find ('/') == ACE_SString::npos)
+                    {
+                      work_hdr = work_hdr.substr (pos + 1);
+                      final_hdr += work_hdr;
+                    }
+                  else
+                    {
+                      final_hdr = work_hdr;
+                    }
+                }
+
+              this->anyop_header_->print ("\n#include \"%s\"",
+                                          final_hdr.c_str ());
+            }
+          else
+            {
+              this->anyop_header_->print ("\n#include \"%s\"",
+                                          anyop_hdr);
+            }
+        }
+    }
+  *this->anyop_header_ << "\n";
+
+  return 0;
+}
+
+int
 TAO_CodeGen::start_anyop_source (const char *fname)
 {
   // Retrieve the singleton instance to the outstream factory.
@@ -811,13 +901,18 @@ TAO_CodeGen::start_anyop_source (const char *fname)
   // Generate the include statement for the client header. We just
   // need to put only the base names. Path info is not required.
   *this->anyop_source_ << "\n#include \""
-                       << be_global->be_get_client_hdr_fname (1)
+                       << be_global->be_get_anyop_header_fname (1)
                        << "\"";
-
 
   this->gen_typecode_includes (this->anyop_source_);
 
   return 0;
+}
+
+TAO_OutStream *
+TAO_CodeGen::anyop_header (void)
+{
+  return this->anyop_header_;
 }
 
 TAO_OutStream *
@@ -830,12 +925,6 @@ TAO_CodeGen::anyop_source (void)
 int
 TAO_CodeGen::start_implementation_header (const char *fname)
 {
-  // @@ We are making use of "included_idl_files" that is in the
-  // idl_global. We need to make sure the validity of those files.
-
-
-  idl_global->validate_included_idl_files ();
-
   // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
@@ -898,10 +987,6 @@ TAO_CodeGen::implementation_header (void)
 int
 TAO_CodeGen::start_implementation_skeleton (const char *fname)
 {
-  // @@ We are making use of "included_idl_files" that is in the
-  // idl_global. We need to make sure the validity of those files.
-  idl_global->validate_included_idl_files ();
-
   // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
@@ -965,14 +1050,6 @@ TAO_CodeGen::end_client_header (void)
       *this->client_header_ << "#endif /* defined INLINE */";
     }
 
-  *this->client_header_ << "\n\n#if defined(_MSC_VER)\n"
-                        << "#pragma warning(pop)\n"
-                        << "#endif /* _MSC_VER */";
-
-  *this->client_header_ << "\n\n#if defined (__BORLANDC__)\n"
-                        << "#pragma option pop\n"
-                        << "#endif /* __BORLANDC__ */";
-
   // Code to put the last #endif.
   *this->client_header_ << "\n\n";
 
@@ -1013,14 +1090,6 @@ TAO_CodeGen::end_server_header (void)
                             << "\"\n";
       *this->server_header_ << "#endif /* defined INLINE */";
     }
-
-  *this->server_header_ << "\n\n#if defined(_MSC_VER)\n"
-                        << "#pragma warning(pop)\n"
-                        << "#endif /* _MSC_VER */";
-
-  *this->server_header_ << "\n\n#if defined (__BORLANDC__)\n"
-                        << "#pragma option pop\n"
-                        << "#endif /* __BORLANDC__ */";
 
   // Code to put the last #endif.
   *this->server_header_ << "\n\n";
@@ -1121,10 +1190,6 @@ TAO_CodeGen::end_server_template_header (void)
       << "\")";
   *this->server_template_header_ << "\n#endif /* defined REQUIRED PRAGMA */";
 
-  *this->server_template_header_ << "\n\n#if defined(_MSC_VER)\n"
-                                 << "#pragma warning(pop)\n"
-                                 << "#endif /* _MSC_VER */";
-
   // Code to put the last #endif.
   *this->server_template_header_ << "\n\n";
 
@@ -1166,12 +1231,25 @@ TAO_CodeGen::end_server_skeletons (void)
 }
 
 int
+TAO_CodeGen::end_anyop_header (void)
+{
+  if (be_global->post_include () != 0)
+    {
+      *this->anyop_header_ << "\n\n#include /**/ \""
+                           << be_global->post_include ()
+                           << "\"";
+    }
+
+  // Code to put the last #endif.
+  *this->anyop_header_ << "\n\n#endif /* ifndef */\n";
+
+  return 0;
+}
+
+int
 TAO_CodeGen::end_anyop_source (void)
 {
-  if (!be_global->gen_tmplinst ())
-    {
-      *this->anyop_source_ << "\n";
-    }
+  *this->anyop_source_ << "\n";
 
   return 0;
 }
@@ -1426,27 +1504,27 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
   // If not included here, it will appear in *C.cpp, if TCs not suppressed.
   this->gen_cond_file_include (
       idl_global->typecode_seen_,
-      "tao/TypeCode.h",
+      "tao/AnyTypeCode/TypeCode.h",
       this->client_header_
     );
 
   this->gen_cond_file_include (
       idl_global->any_seen_
       | idl_global->typecode_seen_,
-      "tao/TypeCode_Constants.h",
+      "tao/AnyTypeCode/TypeCode_Constants.h",
       this->client_header_);
 
   // This is true if we have an 'any' in the IDL file.
   // If not included here, it will appear in *C.cpp, if Anys not suppressed.
   this->gen_cond_file_include (
       idl_global->any_seen_,
-      "tao/Any.h",
+      "tao/AnyTypeCode/Any.h",
       this->client_header_
     );
 
   this->gen_cond_file_include (
       idl_global->any_seen_,
-      "tao/TypeCode.h",
+      "tao/AnyTypeCode/TypeCode.h",
       this->client_header_
     );
 
@@ -1464,6 +1542,65 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
       this->gen_standard_include (this->client_header_,
                                   "tao/SmartProxies/Smart_Proxies.h");
     }
+
+  // If we have not suppressed Any operator generation and also
+  // are not generating the operators in a separate file, we
+  // need to include the *A.h file from all .pidl files here.
+  if (be_global->any_support () && !be_global->gen_anyop_files ())
+    {
+      for (size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
+        {
+          char* idl_name = idl_global->included_idl_files ()[j];
+
+          ACE_CString pidl_checker (idl_name);
+          bool got_pidl =
+            (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl");
+
+          // If we're here and we have a .pidl file, we need to generate
+          // the *A.h include from the AnyTypeCode library.
+          if (got_pidl)
+            {
+              // Make a String out of it.
+              UTL_String idl_name_str = idl_name;
+
+              const char *anyop_hdr =
+                BE_GlobalData::be_get_anyop_header (&idl_name_str, 1);
+
+              // Stripped off any scope in the name and add the
+              // AnyTypeCode prefix.
+              ACE_CString work_hdr (anyop_hdr);
+              ACE_CString final_hdr = "tao/AnyTypeCode/";
+              int pos = work_hdr.rfind ('/');
+
+              if (pos != ACE_SString::npos)
+                {
+                  ACE_CString scope (work_hdr.substr (0, pos));
+
+                  // If we find a '/' in the containing scope name, it
+                  // means we are including a .pidl file from a
+                  // subdirectory of $TAO_ROOT/tao, and so we should
+                  // include the anyop_hdr string as is, and not strip
+                  // off the scope name and prepend "tao/AnyTypeCode/".
+                  // Only .pidl files in $TAO_ROOT/tao itself have
+                  // their generated *A.* files moved to the AnyTypeCode
+                  // library.
+                  if (scope.find ('/') == ACE_SString::npos)
+                    {
+                      work_hdr = work_hdr.substr (pos + 1);
+                      final_hdr += work_hdr;
+                    }
+                  else
+                    {
+                      final_hdr = work_hdr;
+                    }
+                }
+
+              this->client_header_->print ("\n#include \"%s\"",
+                                           final_hdr.c_str ());
+            }
+        }
+    }
+
 
   // Must have knowledge of the base class.
   this->gen_seq_file_includes ();
@@ -1495,11 +1632,15 @@ TAO_CodeGen::gen_stub_src_includes (void)
 
   // Conditional includes.
 
-  // Operations for local interfaces are pure virtual.
-  if (idl_global->non_local_op_seen_)
+   if (idl_global->non_local_op_seen_)
     {
       this->gen_standard_include (this->client_stubs_,
                                   "tao/Exception_Data.h");
+    }
+
+  // Operations for local interfaces are pure virtual.
+  if (idl_global->non_local_op_seen_)
+    {
       this->gen_standard_include (this->client_stubs_,
                                   "tao/Invocation_Adapter.h");
     }
@@ -1591,7 +1732,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
   // strlen() for DCPS marshaling or
   // strcmp() is used with interfaces and exceptions.
   if ((be_global->gen_dcps_type_support ()
-	  && (idl_global->string_seen_ 
+	  && (idl_global->string_seen_
 	      || idl_global->string_seq_seen_
 		  || idl_global->wstring_seq_seen_) )
 	  || idl_global->interface_seen_
@@ -1673,9 +1814,9 @@ TAO_CodeGen::gen_skel_src_includes (void)
   this->gen_standard_include (this->server_skeletons_,
                               "tao/Object_T.h");
   this->gen_standard_include (this->server_skeletons_,
-                              "tao/TypeCode.h");
+                              "tao/AnyTypeCode/TypeCode.h");
   this->gen_standard_include (this->server_skeletons_,
-                              "tao/DynamicC.h");
+                              "tao/AnyTypeCode/DynamicC.h");
   this->gen_standard_include (this->server_skeletons_,
                               "tao/CDR.h");
   this->gen_standard_include (this->server_skeletons_,
@@ -1742,13 +1883,13 @@ TAO_CodeGen::gen_any_file_includes (void)
           this->gen_standard_include (stream,
                                       "tao/CDR.h");
           this->gen_standard_include (stream,
-                                      "tao/Any.h");
+                                      "tao/AnyTypeCode/Any.h");
         }
 
       this->gen_cond_file_include (
           idl_global->interface_seen_
           | idl_global->valuetype_seen_,
-          "tao/Any_Impl_T.h",
+          "tao/AnyTypeCode/Any_Impl_T.h",
           stream
         );
 
@@ -1756,19 +1897,19 @@ TAO_CodeGen::gen_any_file_includes (void)
           idl_global->aggregate_seen_
           | idl_global->seq_seen_
           | idl_global->exception_seen_,
-          "tao/Any_Dual_Impl_T.h",
+          "tao/AnyTypeCode/Any_Dual_Impl_T.h",
           stream
         );
 
       this->gen_cond_file_include (
           idl_global->array_seen_,
-          "tao/Any_Array_Impl_T.h",
+          "tao/AnyTypeCode/Any_Array_Impl_T.h",
           stream
         );
 
       this->gen_cond_file_include (
           idl_global->enum_seen_,
-          "tao/Any_Basic_Impl_T.h",
+          "tao/AnyTypeCode/Any_Basic_Impl_T.h",
           stream
         );
     }
@@ -1831,6 +1972,14 @@ TAO_CodeGen::gen_stub_arg_file_includes (TAO_OutStream * stream)
       stream
     );
 
+  // If we have a bound string and we have any generation enabled we must
+  // include Any.h to get the <<= operator for BD_String
+  this->gen_cond_file_include (
+      idl_global->bd_string_arg_seen_ && be_global->any_support (),
+      "tao/AnyTypeCode/Any.h",
+      stream
+    );
+
   this->gen_cond_file_include (
       idl_global->fixed_array_arg_seen_,
       "tao/Fixed_Array_Argument_T.h",
@@ -1875,7 +2024,7 @@ TAO_CodeGen::gen_stub_arg_file_includes (TAO_OutStream * stream)
 
   this->gen_cond_file_include (
       idl_global->any_arg_seen_,
-      "tao/Any_Arg_Traits.h",
+      "tao/AnyTypeCode/Any_Arg_Traits.h",
       stream
     );
 }
@@ -1893,6 +2042,14 @@ TAO_CodeGen::gen_skel_arg_file_includes (TAO_OutStream * stream)
   this->gen_cond_file_include (
       idl_global->bd_string_arg_seen_,
       "tao/PortableServer/BD_String_SArgument_T.h",
+      stream
+    );
+
+  // If we have a bound string and we have any generation enabled we must
+  // include Any.h to get the <<= operator for BD_String
+  this->gen_cond_file_include (
+      idl_global->bd_string_arg_seen_ && be_global->any_support (),
+      "tao/AnyTypeCode/Any.h",
       stream
     );
 
@@ -1999,62 +2156,62 @@ void
 TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
 {
   this->gen_standard_include (stream,
-                              "tao/Null_RefCount_Policy.h");
+                              "tao/AnyTypeCode/Null_RefCount_Policy.h");
 
   this->gen_standard_include (stream,
-                              "tao/TypeCode_Constants.h");
+                              "tao/AnyTypeCode/TypeCode_Constants.h");
 
   // Just assume we're going to need alias TypeCodes since there is
   // currently no alias_seen_ or typedef_seen_ flag in idl_global.
   this->gen_standard_include (stream,
-                              "tao/Alias_TypeCode_Static.h");
+                              "tao/AnyTypeCode/Alias_TypeCode_Static.h");
 
   this->gen_cond_file_include (idl_global->enum_seen_,
-                               "tao/Enum_TypeCode_Static.h",
+                               "tao/AnyTypeCode/Enum_TypeCode_Static.h",
                                stream);
 
   this->gen_cond_file_include (idl_global->interface_seen_,
-                               "tao/Objref_TypeCode_Static.h",
+                               "tao/AnyTypeCode/Objref_TypeCode_Static.h",
                                stream);
 
   this->gen_cond_file_include (idl_global->seq_seen_
                                | idl_global->array_seen_,
-                               "tao/Sequence_TypeCode_Static.h",
+                               "tao/AnyTypeCode/Sequence_TypeCode_Static.h",
                                stream);
 
   this->gen_cond_file_include (idl_global->string_seen_,
-                               "tao/String_TypeCode_Static.h",
+                               "tao/AnyTypeCode/String_TypeCode_Static.h",
                                stream);
 
   this->gen_cond_file_include (
       idl_global->exception_seen_
       | idl_global->aggregate_seen_,
-      "tao/Struct_TypeCode_Static.h",
+      "tao/AnyTypeCode/Struct_TypeCode_Static.h",
       stream);
 
   this->gen_cond_file_include (
       idl_global->exception_seen_
       | idl_global->aggregate_seen_,
-      "tao/TypeCode_Struct_Field.h",
+      "tao/AnyTypeCode/TypeCode_Struct_Field.h",
       stream);
 
   this->gen_cond_file_include (idl_global->union_seen_,
-                               "tao/TypeCode_Case_T.h",
+                               "tao/AnyTypeCode/TypeCode_Case_T.h",
                                stream);
 
   this->gen_cond_file_include (idl_global->union_seen_,
-                               "tao/Union_TypeCode_Static.h",
+                               "tao/AnyTypeCode/Union_TypeCode_Static.h",
                                stream);
 
   this->gen_cond_file_include (idl_global->valuetype_seen_,
-                               "tao/Value_TypeCode_Static.h",
+                               "tao/AnyTypeCode/Value_TypeCode_Static.h",
                                stream);
 
   this->gen_cond_file_include (idl_global->valuetype_seen_,
-                               "tao/TypeCode_Value_Field.h",
+                               "tao/AnyTypeCode/TypeCode_Value_Field.h",
                                stream);
 
   this->gen_cond_file_include (idl_global->recursive_type_seen_,
-                               "tao/Recursive_Type_TypeCode.h",
+                               "tao/AnyTypeCode/Recursive_Type_TypeCode.h",
                                stream);
 }

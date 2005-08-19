@@ -3,6 +3,8 @@
 #include "testC.h"
 
 #include "tao/Messaging/Messaging.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "tao/AnyTypeCode/TAOA.h"
 #include "tao/TAOC.h"
 #include "tao/Object_T.h"
 #include "ace/Get_Opt.h"

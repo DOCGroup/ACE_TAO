@@ -27,6 +27,9 @@ project : taolib, portableserver, objreftemplate, pi, core {
     IORInterceptor
   }
 
+  IDL_Files {
+  }
+
   Pkgconfig_Files {
     IORInterceptor/TAO_IORInterceptor.pc.in
   }

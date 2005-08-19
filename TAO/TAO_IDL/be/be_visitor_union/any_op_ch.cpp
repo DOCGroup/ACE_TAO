@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_union, 
-           any_op_ch, 
+ACE_RCSID (be_visitor_union,
+           any_op_ch,
            "$Id$")
 
 // ***************************************************************************
@@ -47,28 +47,25 @@ be_visitor_union_any_op_ch::visit_union (be_union *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
+  const char *macro = this->ctx_->export_macro ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  *os << be_global->stub_export_macro () << " void"
-      << " operator<<= ( ::CORBA::Any &, const " << node->name ()
+  *os << macro << " void operator<<= (::CORBA::Any &, const " << node->name ()
       << " &); // copying version" << be_nl;
-  *os << be_global->stub_export_macro () << " void"
-      << " operator<<= ( ::CORBA::Any &, " << node->name ()
+  *os << macro << " void operator<<= (::CORBA::Any &, " << node->name ()
       << "*); // noncopying version" << be_nl;
-  *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
-      << " operator>>= (const ::CORBA::Any &, "
+  *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, "
       << node->name () << " *&); // deprecated\n";
-  *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
-      << " operator>>= (const ::CORBA::Any &, const "
+  *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const "
       << node->name () << " *&);";
 
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union::visit_union - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 
@@ -87,7 +84,7 @@ be_visitor_union_any_op_ch::visit_union_branch (be_union_branch *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_any_op_ch::"
                          "visit_union_branch - "
-                         "Bad field type\n"), 
+                         "Bad field type\n"),
                         -1);
     }
 
@@ -96,7 +93,7 @@ be_visitor_union_any_op_ch::visit_union_branch (be_union_branch *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_any_op_ch::"
                          "visit_field - "
-                         "codegen for field type failed\n"), 
+                         "codegen for field type failed\n"),
                         -1);
     }
 
@@ -119,7 +116,7 @@ be_visitor_union_any_op_ch::visit_enum (be_enum *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_any_op_ch::"
                          "visit_enum - "
-                         "codegen for field type failed\n"), 
+                         "codegen for field type failed\n"),
                         -1);
     }
 
@@ -142,7 +139,7 @@ be_visitor_union_any_op_ch::visit_structure (be_structure *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_any_op_ch::"
                          "visit_structure - "
-                         "codegen for field type failed\n"), 
+                         "codegen for field type failed\n"),
                         -1);
     }
 

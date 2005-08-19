@@ -5,6 +5,7 @@
 #include "tao/Messaging/Messaging.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/Strategies/advanced_resource.h"
+#include "tao/AnyTypeCode/Any.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Get_Opt.h"
 #include "ace/Basic_Stats.h"

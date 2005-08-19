@@ -1,24 +1,21 @@
 //$Id$
+
 #include "operation_details.h"
 #include "Stub.h"
-#include "TypeCode.h"
 #include "ORB_Constants.h"
-#include "DynamicC.h"
 #include "Exception_Data.h"
 #include "SystemException.h"
+#include "Argument.h"
 
 #include "ace/OS_NS_string.h"
-
 
 #if !defined (__ACE_INLINE__)
 # include "tao/operation_details.i"
 #endif /* ! __ACE_INLINE__ */
 
-
 ACE_RCSID (tao,
            operation_details,
            "$Id$")
-
 
 CORBA::Exception *
 TAO_Operation_Details::corba_exception (const char *id
@@ -78,54 +75,3 @@ TAO_Operation_Details::demarshal_args (TAO_InputCDR &cdr)
   return true;
 }
 
-#if TAO_HAS_INTERCEPTORS == 1
-
-bool
-TAO_Operation_Details::parameter_list (Dynamic::ParameterList &param_list)
-{
-  // Account for the return type that could be in the argument list.
-  param_list.length (this->num_args_ - 1);
-
-   for (CORBA::ULong i = 1; i != this->num_args_; ++i)
-     this->args_[i]->interceptor_param (param_list[i - 1]);
-
-   return true;
-}
-
-#endif /* TAO_HAS_INTERCEPTORS == 1 */
-
-#if TAO_HAS_INTERCEPTORS == 1
-
-bool
-TAO_Operation_Details::exception_list (Dynamic::ExceptionList &exception_list)
-{
-  if (this->ex_count_)
-    {
-      exception_list.length (this->ex_count_);
-
-      for (CORBA::ULong i = 0;
-           i != this->ex_count_;
-           ++i)
-        {
-          CORBA::TypeCode_ptr tcp = this->ex_data_[i].tc_ptr;
-          TAO_Pseudo_Object_Manager<CORBA::TypeCode> tcp_object (&tcp, 1);
-          exception_list[i] = tcp_object;
-        }
-    }
-  return true;
-}
-
-#endif /* TAO_HAS_INTERCEPTORS == 1 */
-
-#if TAO_HAS_INTERCEPTORS == 1
-
-bool
-TAO_Operation_Details::result (CORBA::Any *any)
-{
-  for (CORBA::ULong i = 0; i != this->num_args_; ++i)
-    (*this->args_[i]).interceptor_result (any);
-
-  return true;
-}
-
-#endif /* TAO_HAS_INTERCEPTORS == 1 */

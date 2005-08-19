@@ -157,7 +157,7 @@ TAO::ObjectKey::decode_string_to_sequence (TAO_Unbounded_Sequence<CORBA::Octet> 
       return;
     }
 
-  u_int length = ACE_OS::strlen (str);
+  size_t length = ACE_OS::strlen (str);
   const char *eos = str + length;
   const char *cp = str;
 

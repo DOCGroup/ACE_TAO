@@ -41,6 +41,9 @@ namespace TAO
 {
   class ServerRequestInfo;
   class Argument;
+  class PICurrent_Impl;
+  class PICurrent_Copy_Callback;
+  class Upcall_Command;
 
   /**
    * @class ServerRequestInterceptor_Adapter
@@ -139,7 +142,23 @@ namespace TAO
       ACE_ENV_ARG_DECL) = 0;
 
     virtual void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL) = 0;
-  };
+
+    virtual TAO::PICurrent_Impl *allocate_pi_current (void) = 0;
+
+    virtual TAO::PICurrent_Copy_Callback *
+        allocate_pi_current_callback (void) = 0;
+
+    virtual void deallocate_pi_current (
+        TAO::PICurrent_Impl *picurrent) = 0;
+
+    virtual void deallocate_pi_current_callback (
+        TAO::PICurrent_Copy_Callback *callback) = 0;
+
+    virtual void execute_command (
+        TAO_ServerRequest &server_request,
+        TAO::Upcall_Command &command
+        ACE_ENV_ARG_DECL) = 0;
+};
 
 }
 #include /**/ "ace/post.h"
