@@ -1,3 +1,8 @@
+Fri Aug 19 10:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
+          Fixed implicit conversion warning
+
 Fri Aug 19 09:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/PolicyA.h:
