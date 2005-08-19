@@ -62,19 +62,19 @@ TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
 					  ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
-    policies[1] = 
+    policies[1] =
       this->poa_->create_id_assignment_policy (PortableServer::USER_ID
 					       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
 #if (TAO_HAS_MINIMUM_POA == 0)
     policies.length(4);
-    policies[2] = 
+    policies[2] =
       this->poa_->create_servant_retention_policy (PortableServer::RETAIN
 						   ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
-    policies[3] = 
+    policies[3] =
       this->poa_->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER
 						    ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
@@ -88,26 +88,26 @@ TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
   }
 
 #if (TAO_HAS_MINIMUM_POA == 0)
-  PortableServer::ServantActivator* servant_activator;
+  PortableServer::ServantActivator* servant_activator = 0;
 
   ACE_NEW_THROW_EX (servant_activator,
 		    TAO_LogActivator (*this),
 		    CORBA::NO_MEMORY ());
-  
+
   this->log_poa_->set_servant_manager(servant_activator
-				      ACE_ENV_ARG_PARAMETER)
+              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 #endif
 
   // Load Log Strategy
-  TAO_Log_Persistence_Strategy* strategy_;
+  TAO_Log_Persistence_Strategy* strategy_ = 0;
 
-  strategy_ = 
+  strategy_ =
     ACE_Dynamic_Service<TAO_Log_Persistence_Strategy>::instance ("Log_Persistence");
-  if (strategy_ == 0) 
+  if (strategy_ == 0)
     {
       strategy_ = new TAO_Hash_Persistence_Strategy;
-    } 
+    }
 
   logstore_ = strategy_->create_log_store (orb, this);
 }
@@ -130,7 +130,7 @@ TAO_LogMgr_i::create_log_reference (DsLogAdmin::LogId id
 {
   PortableServer::ObjectId_var oid =
     this->create_objectid (id);
-  CORBA::RepositoryId_var intf = 
+  CORBA::RepositoryId_var intf =
     this->create_repositoryid ();
 
   CORBA::Object_var obj =
@@ -150,7 +150,7 @@ DsLogAdmin::Log_ptr
 TAO_LogMgr_i::create_log_object (DsLogAdmin::LogId id
 				 ACE_ENV_ARG_DECL)
 {
-  PortableServer::ServantBase* servant;
+  PortableServer::ServantBase* servant = 0;
 
   servant = create_log_servant (id ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
