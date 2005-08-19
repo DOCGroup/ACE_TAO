@@ -784,7 +784,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
                            << "\"";
     }
 
-  char *tao_prefix = "";
+  const char *tao_prefix = "";
   ACE_CString pidl_checker (idl_global->filename ()->get_string ());
   bool got_pidl =
     (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl");
