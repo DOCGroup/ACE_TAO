@@ -1,3 +1,13 @@
+Fri Aug 19 18:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/HTIOP/Hello/HTIOP_Hello.mpc:
+        * performance-tests/POA/Implicit_Activation/Implicit_Activation.mpc:
+        * tests/Crash_On_Write/Crash_On_Write.mpc:
+        * tests/MT_Client/MT_Client.mpc:
+        * tests/Server_Connection_Purging/Server_Connection_Purging.mpc:
+        * tests/Single_Read/Single_Read.mpc:
+          Updated to resolve link errors
+
 Fri Aug 19 18:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/Messaging_PolicyFactory.{h,cpp}:
