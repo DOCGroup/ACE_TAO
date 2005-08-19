@@ -1,3 +1,4 @@
+Fri Aug 19 10:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 // This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
@@ -74,7 +75,7 @@ namespace TAO
       {
         TAO_IFR_Client_Adapter *adapter =
           ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
-              TAO_ORB_Core::ifr_client_adapter_name ()
+              "Concrete_IFR_Client_Adapter"
             );
 
         adapter->interfacedef_any_insert (p, x);
