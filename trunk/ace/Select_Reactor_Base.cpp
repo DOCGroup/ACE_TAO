@@ -216,7 +216,7 @@ ACE_Select_Reactor_Handler_Repository::bind (ACE_HANDLE handle,
 
 #if defined (ACE_WIN32)
 
-  int assigned_slot = -1;
+  ssize_t assigned_slot = -1;
 
   for (ssize_t i = 0; i < this->max_handlep1_; ++i)
     {

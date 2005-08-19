@@ -96,7 +96,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
       sockaddr *addr = 0;
       struct sockaddr_in inet_addr;
       int *len_ptr = 0;
-      int len;
+      int len = 0;
 
       if (remote_sap != 0)
         {

@@ -207,7 +207,7 @@ namespace ACE_Utils
             return;
           }
         ACE_CString thr_pid_str (thr_pid_buf);
-        int pos = thr_pid_str.find ('-');
+        ssize_t pos = thr_pid_str.find ('-');
         if (pos == -1)
           ACE_DEBUG ((LM_DEBUG,
                       "ACE_UUID::ACE_UUID - "
