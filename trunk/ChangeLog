@@ -1,3 +1,9 @@
+Fri Aug 19 08:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-msvc-7.h:
+          Disable 4290 again, a scoreboard build showed that we need to
+          disable it, but didn't had that problem on my local systme
+
 Fri Aug 19 08:33:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/Socket_Connect.cpp:
