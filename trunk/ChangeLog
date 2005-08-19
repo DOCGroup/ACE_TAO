@@ -1,3 +1,9 @@
+Fri Aug 19 08:33:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Socket_Connect.cpp:
+          Added include of OS_NS_stdio.h since some builds otherwise miss out
+          on things like ACE_OS::fopen() and such.
+
 Fri Aug 19 07:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Merged changes from the AnyRefactor branch as below
