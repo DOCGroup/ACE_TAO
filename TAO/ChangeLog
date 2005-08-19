@@ -1,3 +1,11 @@
+Fri Aug 19 18:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Kokyu_dsrt_schedulers/EDF_Scheduling.idl:
+          Added missing include
+
+        * examples/Kokyu_dsrt_schedulers/Kokyu_DSRT_Schedulers.mpc:
+          Added EDF_SchedulingC.cpp
+
 Fri Aug 19 18:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/Union_TypeCode.cpp:
