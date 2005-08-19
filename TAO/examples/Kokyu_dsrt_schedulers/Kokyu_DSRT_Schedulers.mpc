@@ -16,9 +16,10 @@ project(Kokyu_DSRT_Schedulers) : orbsvcslib, kokyu, rtscheduling, rtcorba, codec
         FP_SchedulingC.cpp
         MUF_SchedulingC.cpp
         MIF_SchedulingC.cpp
+        EDF_SchedulingC.cpp
   }
 
   Header_Files {
-		Kokyu_dsrt_schedulers_export.h
+        Kokyu_dsrt_schedulers_export.h
   }
 }
