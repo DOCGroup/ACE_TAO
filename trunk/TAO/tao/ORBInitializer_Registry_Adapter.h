@@ -82,13 +82,15 @@ namespace TAO
        * @param argc Number of arguments
        * @param argv Argv array
        * @param slotid The slot id
+       * @param picurrent PI Current, if this is not null, the concrete
+       * implementation will update the slot id
        */
       virtual void post_init (
         size_t pre_init_count,
         TAO_ORB_Core *orb_core,
         int argc,
         char *argv[],
-        PortableInterceptor::SlotId &slotid
+        PortableInterceptor::SlotId slotid
         ACE_ENV_ARG_DECL) = 0;
   };
 }

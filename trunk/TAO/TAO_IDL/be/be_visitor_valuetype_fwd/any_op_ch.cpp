@@ -19,8 +19,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuetype_fwd, 
-           any_op_ch, 
+ACE_RCSID (be_visitor_valuetype_fwd,
+           any_op_ch,
            "$Id$")
 
 // ***************************************************************************
@@ -60,14 +60,13 @@ be_visitor_valuetype_fwd_any_op_ch::visit_valuetype_fwd (
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
+  const char *macro = this->ctx_->export_macro ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-
-
   be_module *module = 0;
- 
+
   if (node->is_nested () &&
       node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
     {
@@ -89,13 +88,13 @@ be_visitor_valuetype_fwd_any_op_ch::visit_valuetype_fwd (
       be_util::gen_nested_namespace_begin (os, module);
 
       // emit  nested variation of any operators
-      *os << be_global->stub_export_macro () << " void"
+      *os << macro << " void"
           << " operator<<= ( ::CORBA::Any &, " << node->local_name ()
           << " *); // copying" << be_nl;
-      *os << be_global->stub_export_macro () << " void"
+      *os << macro << " void"
           << " operator<<= ( ::CORBA::Any &, " << node->local_name ()
           << " **); // non-copying" << be_nl;
-      *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
+      *os << macro << " ::CORBA::Boolean"
           << " operator>>= (const ::CORBA::Any &, "
           << node->local_name () << " *&);";
 
@@ -105,13 +104,13 @@ be_visitor_valuetype_fwd_any_op_ch::visit_valuetype_fwd (
       *os << "#else\n\n";
     }
 
-  *os << be_global->stub_export_macro () << " void"
+  *os << macro << " void"
       << " operator<<= ( ::CORBA::Any &, " << node->name ()
       << " *); // copying" << be_nl;
-  *os << be_global->stub_export_macro () << " void"
+  *os << macro << " void"
       << " operator<<= ( ::CORBA::Any &, " << node->name ()
       << " **); // non-copying" << be_nl;
-  *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
+  *os << macro << " ::CORBA::Boolean"
       << " operator>>= (const ::CORBA::Any &, "
       << node->name () << " *&);";
 

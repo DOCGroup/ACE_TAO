@@ -39,7 +39,7 @@
 
 #include "tao/CDR.h"
 #include "tao/Environment.h"
-#include "tao/TypeCode.h"
+#include "tao/AnyTypeCode/TypeCode.h"
 
 #include "CCM_ContainerC.h"
 

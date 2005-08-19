@@ -26,15 +26,11 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:291
+// be\be_codegen.cpp:288
 
 
 #include "IIOPC.h"
 #include "tao/CDR.h"
-
-#if defined (__BORLANDC__)
-#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
-#endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
@@ -71,7 +67,7 @@ IIOP::ListenPointList::ListenPointList (
     CORBA::ULong max
   )
   : TAO_Unbounded_Sequence<
-        IIOP::ListenPoint
+        ListenPoint
       >
     (max)
 {}
@@ -83,7 +79,7 @@ IIOP::ListenPointList::ListenPointList (
     CORBA::Boolean release
   )
   : TAO_Unbounded_Sequence<
-        IIOP::ListenPoint
+        ListenPoint
       >
     (max, length, buffer, release)
 {}
@@ -92,7 +88,7 @@ IIOP::ListenPointList::ListenPointList (
     const ListenPointList &seq
   )
   : TAO_Unbounded_Sequence<
-        IIOP::ListenPoint
+        ListenPoint
       >
     (seq)
 {}

@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_sequence, 
-           any_op_ch, 
+ACE_RCSID (be_visitor_sequence,
+           any_op_ch,
            "$Id$")
 
 // ***************************************************************************
@@ -47,27 +47,28 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
+  const char *macro = this->ctx_->export_macro ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Generate the Any <<= and >>= operators.
-  *os << be_global->stub_export_macro ();
+  *os << macro;
   *os << " void"
       << " operator<<= ( ::CORBA::Any &, const ";
   *os << node->name ();
   *os << " &); // copying version" << be_nl;
-  *os << be_global->stub_export_macro ();
+  *os << macro;
   *os << " void"
       << " operator<<= ( ::CORBA::Any &, ";
   *os << node->name ();
   *os << "*); // noncopying version" << be_nl;
-  *os << be_global->stub_export_macro ();
+  *os << macro;
   *os << " ::CORBA::Boolean"
       << " operator>>= (const ::CORBA::Any &, ";
   *os << node->name ();
   *os << " *&); // deprecated" << be_nl;
-  *os << be_global->stub_export_macro ();
+  *os << macro;
   *os << " ::CORBA::Boolean"
       << " operator>>= (const ::CORBA::Any &, const ";
   *os << node->name ();

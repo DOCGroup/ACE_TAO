@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:153
+// be\be_codegen.cpp:154
 
 #ifndef _TAO_IDL_ORIG_IFR_BASICC_H_
 #define _TAO_IDL_ORIG_IFR_BASICC_H_
@@ -45,9 +45,10 @@
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/Object.h"
-#include "tao/TypeCode.h"
-#include "tao/TypeCode_Constants.h"
-#include "tao/Any.h"
+#include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/Sequence_T.h"
 #include "tao/Objref_VarOut_T.h"
 #include "tao/Seq_Var_T.h"
@@ -256,7 +257,7 @@ namespace CORBA
   typedef PrimitiveKind &PrimitiveKind_out;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_PrimitiveKind;
   
@@ -457,7 +458,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_Repository;
   
@@ -568,7 +569,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_ModuleDef;
   
@@ -591,7 +592,7 @@ namespace CORBA
     ModuleDescription_out;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_structure/structure_ch.cpp:52
+  // be\be_visitor_structure/structure_ch.cpp:57
   
   struct TAO_IFR_Client_Export ModuleDescription
   {
@@ -605,7 +606,7 @@ namespace CORBA
   };
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_ModuleDescription;
   
@@ -767,7 +768,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_ConstantDef;
   
@@ -790,7 +791,7 @@ namespace CORBA
     ConstantDescription_out;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_structure/structure_ch.cpp:52
+  // be\be_visitor_structure/structure_ch.cpp:57
   
   struct TAO_IFR_Client_Export ConstantDescription
   {
@@ -806,7 +807,7 @@ namespace CORBA
   };
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_ConstantDescription;
   
@@ -938,7 +939,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_StructDef;
   
@@ -1101,7 +1102,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_UnionDef;
   
@@ -1232,7 +1233,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_EnumDef;
   
@@ -1363,7 +1364,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_AliasDef;
   
@@ -1473,7 +1474,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_NativeDef;
   
@@ -1570,7 +1571,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_PrimitiveDef;
   
@@ -1678,7 +1679,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_StringDef;
   
@@ -1786,7 +1787,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_WstringDef;
   
@@ -1925,7 +1926,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_SequenceDef;
   
@@ -2064,7 +2065,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_ArrayDef;
   
@@ -2206,7 +2207,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_ExceptionDef;
   
@@ -2266,7 +2267,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_ExceptionDefSeq;
   
@@ -2282,7 +2283,7 @@ namespace CORBA
   typedef AttributeMode &AttributeMode_out;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_AttributeMode;
   
@@ -2444,7 +2445,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_AttributeDef;
   
@@ -2467,7 +2468,7 @@ namespace CORBA
     AttributeDescription_out;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_structure/structure_ch.cpp:52
+  // be\be_visitor_structure/structure_ch.cpp:57
   
   struct TAO_IFR_Client_Export AttributeDescription
   {
@@ -2483,7 +2484,7 @@ namespace CORBA
   };
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_AttributeDescription;
   
@@ -2506,7 +2507,7 @@ namespace CORBA
     ExtAttributeDescription_out;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_structure/structure_ch.cpp:52
+  // be\be_visitor_structure/structure_ch.cpp:57
   
   struct TAO_IFR_Client_Export ExtAttributeDescription
   {
@@ -2524,7 +2525,7 @@ namespace CORBA
   };
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_ExtAttributeDescription;
   
@@ -2686,7 +2687,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_ExtAttributeDef;
   
@@ -2702,7 +2703,7 @@ namespace CORBA
   typedef OperationMode &OperationMode_out;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_OperationMode;
   
@@ -2725,7 +2726,7 @@ namespace CORBA
     ParameterDescription_out;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_structure/structure_ch.cpp:52
+  // be\be_visitor_structure/structure_ch.cpp:57
   
   struct TAO_IFR_Client_Export ParameterDescription
   {
@@ -2739,7 +2740,7 @@ namespace CORBA
   };
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_ParameterDescription;
   
@@ -2792,7 +2793,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_ParDescriptionSeq;
   
@@ -2804,7 +2805,7 @@ namespace CORBA
   typedef CORBA::String_out ContextIdentifier_out;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_ContextIdentifier;
   
@@ -2855,7 +2856,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_ContextIdSeq;
   
@@ -3080,7 +3081,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_OperationDef;
   
@@ -3103,7 +3104,7 @@ namespace CORBA
     OperationDescription_out;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_structure/structure_ch.cpp:52
+  // be\be_visitor_structure/structure_ch.cpp:57
   
   struct TAO_IFR_Client_Export OperationDescription
   {
@@ -3122,7 +3123,7 @@ namespace CORBA
   };
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_OperationDescription;
   
@@ -3173,7 +3174,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_RepositoryIdSeq;
   
@@ -3226,7 +3227,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_OpDescriptionSeq;
   
@@ -3279,7 +3280,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_AttrDescriptionSeq;
   
@@ -3332,7 +3333,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_ExtAttrDescriptionSeq;
   
@@ -3448,7 +3449,7 @@ namespace CORBA
       FullInterfaceDescription_out;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_structure/structure_ch.cpp:52
+    // be\be_visitor_structure/structure_ch.cpp:57
     
     struct TAO_IFR_Client_Export FullInterfaceDescription
     {
@@ -3466,7 +3467,7 @@ namespace CORBA
     };
     
     // TAO_IDL - Generated from
-    // be\be_visitor_typecode/typecode_decl.cpp:44
+    // be\be_visitor_typecode/typecode_decl.cpp:49
     
     static ::CORBA::TypeCode_ptr const _tc_FullInterfaceDescription;
     
@@ -3560,7 +3561,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_InterfaceDef;
   
@@ -3583,7 +3584,7 @@ namespace CORBA
     InterfaceDescription_out;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_structure/structure_ch.cpp:52
+  // be\be_visitor_structure/structure_ch.cpp:57
   
   struct TAO_IFR_Client_Export InterfaceDescription
   {
@@ -3598,7 +3599,7 @@ namespace CORBA
   };
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_InterfaceDescription;
   
@@ -3680,7 +3681,7 @@ namespace CORBA
       ExtFullInterfaceDescription_out;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_structure/structure_ch.cpp:52
+    // be\be_visitor_structure/structure_ch.cpp:57
     
     struct TAO_IFR_Client_Export ExtFullInterfaceDescription
     {
@@ -3698,7 +3699,7 @@ namespace CORBA
     };
     
     // TAO_IDL - Generated from
-    // be\be_visitor_typecode/typecode_decl.cpp:44
+    // be\be_visitor_typecode/typecode_decl.cpp:49
     
     static ::CORBA::TypeCode_ptr const _tc_ExtFullInterfaceDescription;
     
@@ -3776,7 +3777,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_InterfaceAttrExtension;
   
@@ -3887,7 +3888,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_ExtInterfaceDef;
   
@@ -3997,7 +3998,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_AbstractInterfaceDef;
   
@@ -4108,7 +4109,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_ExtAbstractInterfaceDef;
   
@@ -4218,7 +4219,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_LocalInterfaceDef;
   
@@ -4329,7 +4330,7 @@ namespace CORBA
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_IFR_Client_Export ::CORBA::TypeCode_ptr const _tc_ExtLocalInterfaceDef;
 
@@ -4494,8 +4495,29 @@ TAO::Collocation_Proxy_Broker *
 namespace TAO
 {
 
-#if !defined (_CORBA_REPOSITORY__TRAITS_CH_)
-#define _CORBA_REPOSITORY__TRAITS_CH_
+#if !defined (_CORBA_FIXEDDEF__TRAITS_)
+#define _CORBA_FIXEDDEF__TRAITS_
+  
+  template<>
+  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::FixedDef>
+  {
+    static ::CORBA::FixedDef_ptr duplicate (
+        ::CORBA::FixedDef_ptr
+      );
+    static void release (
+        ::CORBA::FixedDef_ptr
+      );
+    static ::CORBA::FixedDef_ptr nil (void);
+    static CORBA::Boolean marshal (
+        ::CORBA::FixedDef_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_CORBA_REPOSITORY__TRAITS_)
+#define _CORBA_REPOSITORY__TRAITS_
   
   template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::Repository>
@@ -4515,8 +4537,8 @@ namespace TAO
 
 #endif /* end #if !defined */
 
-#if !defined (_CORBA_MODULEDEF__TRAITS_CH_)
-#define _CORBA_MODULEDEF__TRAITS_CH_
+#if !defined (_CORBA_MODULEDEF__TRAITS_)
+#define _CORBA_MODULEDEF__TRAITS_
   
   template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ModuleDef>
@@ -4536,8 +4558,8 @@ namespace TAO
 
 #endif /* end #if !defined */
 
-#if !defined (_CORBA_CONSTANTDEF__TRAITS_CH_)
-#define _CORBA_CONSTANTDEF__TRAITS_CH_
+#if !defined (_CORBA_CONSTANTDEF__TRAITS_)
+#define _CORBA_CONSTANTDEF__TRAITS_
   
   template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ConstantDef>
@@ -4557,8 +4579,8 @@ namespace TAO
 
 #endif /* end #if !defined */
 
-#if !defined (_CORBA_STRUCTDEF__TRAITS_CH_)
-#define _CORBA_STRUCTDEF__TRAITS_CH_
+#if !defined (_CORBA_STRUCTDEF__TRAITS_)
+#define _CORBA_STRUCTDEF__TRAITS_
   
   template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::StructDef>
@@ -4578,8 +4600,8 @@ namespace TAO
 
 #endif /* end #if !defined */
 
-#if !defined (_CORBA_UNIONDEF__TRAITS_CH_)
-#define _CORBA_UNIONDEF__TRAITS_CH_
+#if !defined (_CORBA_UNIONDEF__TRAITS_)
+#define _CORBA_UNIONDEF__TRAITS_
   
   template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::UnionDef>
@@ -4599,8 +4621,8 @@ namespace TAO
 
 #endif /* end #if !defined */
 
-#if !defined (_CORBA_ENUMDEF__TRAITS_CH_)
-#define _CORBA_ENUMDEF__TRAITS_CH_
+#if !defined (_CORBA_ENUMDEF__TRAITS_)
+#define _CORBA_ENUMDEF__TRAITS_
   
   template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::EnumDef>
@@ -4620,8 +4642,8 @@ namespace TAO
 
 #endif /* end #if !defined */
 
-#if !defined (_CORBA_ALIASDEF__TRAITS_CH_)
-#define _CORBA_ALIASDEF__TRAITS_CH_
+#if !defined (_CORBA_ALIASDEF__TRAITS_)
+#define _CORBA_ALIASDEF__TRAITS_
   
   template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::AliasDef>
@@ -4641,50 +4663,8 @@ namespace TAO
 
 #endif /* end #if !defined */
 
-#if !defined (_CORBA_INTERFACEDEF__TRAITS_CH_)
-#define _CORBA_INTERFACEDEF__TRAITS_CH_
-  
-  template<>
-  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::InterfaceDef>
-  {
-    static ::CORBA::InterfaceDef_ptr duplicate (
-        ::CORBA::InterfaceDef_ptr
-      );
-    static void release (
-        ::CORBA::InterfaceDef_ptr
-      );
-    static ::CORBA::InterfaceDef_ptr nil (void);
-    static CORBA::Boolean marshal (
-        ::CORBA::InterfaceDef_ptr p,
-        TAO_OutputCDR & cdr
-      );
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_EXCEPTIONDEF__TRAITS_CH_)
-#define _CORBA_EXCEPTIONDEF__TRAITS_CH_
-  
-  template<>
-  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ExceptionDef>
-  {
-    static ::CORBA::ExceptionDef_ptr duplicate (
-        ::CORBA::ExceptionDef_ptr
-      );
-    static void release (
-        ::CORBA::ExceptionDef_ptr
-      );
-    static ::CORBA::ExceptionDef_ptr nil (void);
-    static CORBA::Boolean marshal (
-        ::CORBA::ExceptionDef_ptr p,
-        TAO_OutputCDR & cdr
-      );
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_NATIVEDEF__TRAITS_CH_)
-#define _CORBA_NATIVEDEF__TRAITS_CH_
+#if !defined (_CORBA_NATIVEDEF__TRAITS_)
+#define _CORBA_NATIVEDEF__TRAITS_
   
   template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::NativeDef>
@@ -4704,113 +4684,8 @@ namespace TAO
 
 #endif /* end #if !defined */
 
-#if !defined (_CORBA_ABSTRACTINTERFACEDEF__TRAITS_CH_)
-#define _CORBA_ABSTRACTINTERFACEDEF__TRAITS_CH_
-  
-  template<>
-  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::AbstractInterfaceDef>
-  {
-    static ::CORBA::AbstractInterfaceDef_ptr duplicate (
-        ::CORBA::AbstractInterfaceDef_ptr
-      );
-    static void release (
-        ::CORBA::AbstractInterfaceDef_ptr
-      );
-    static ::CORBA::AbstractInterfaceDef_ptr nil (void);
-    static CORBA::Boolean marshal (
-        ::CORBA::AbstractInterfaceDef_ptr p,
-        TAO_OutputCDR & cdr
-      );
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_LOCALINTERFACEDEF__TRAITS_CH_)
-#define _CORBA_LOCALINTERFACEDEF__TRAITS_CH_
-  
-  template<>
-  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::LocalInterfaceDef>
-  {
-    static ::CORBA::LocalInterfaceDef_ptr duplicate (
-        ::CORBA::LocalInterfaceDef_ptr
-      );
-    static void release (
-        ::CORBA::LocalInterfaceDef_ptr
-      );
-    static ::CORBA::LocalInterfaceDef_ptr nil (void);
-    static CORBA::Boolean marshal (
-        ::CORBA::LocalInterfaceDef_ptr p,
-        TAO_OutputCDR & cdr
-      );
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_EXTINTERFACEDEF__TRAITS_CH_)
-#define _CORBA_EXTINTERFACEDEF__TRAITS_CH_
-  
-  template<>
-  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ExtInterfaceDef>
-  {
-    static ::CORBA::ExtInterfaceDef_ptr duplicate (
-        ::CORBA::ExtInterfaceDef_ptr
-      );
-    static void release (
-        ::CORBA::ExtInterfaceDef_ptr
-      );
-    static ::CORBA::ExtInterfaceDef_ptr nil (void);
-    static CORBA::Boolean marshal (
-        ::CORBA::ExtInterfaceDef_ptr p,
-        TAO_OutputCDR & cdr
-      );
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_EXTABSTRACTINTERFACEDEF__TRAITS_CH_)
-#define _CORBA_EXTABSTRACTINTERFACEDEF__TRAITS_CH_
-  
-  template<>
-  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ExtAbstractInterfaceDef>
-  {
-    static ::CORBA::ExtAbstractInterfaceDef_ptr duplicate (
-        ::CORBA::ExtAbstractInterfaceDef_ptr
-      );
-    static void release (
-        ::CORBA::ExtAbstractInterfaceDef_ptr
-      );
-    static ::CORBA::ExtAbstractInterfaceDef_ptr nil (void);
-    static CORBA::Boolean marshal (
-        ::CORBA::ExtAbstractInterfaceDef_ptr p,
-        TAO_OutputCDR & cdr
-      );
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_EXTLOCALINTERFACEDEF__TRAITS_CH_)
-#define _CORBA_EXTLOCALINTERFACEDEF__TRAITS_CH_
-  
-  template<>
-  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ExtLocalInterfaceDef>
-  {
-    static ::CORBA::ExtLocalInterfaceDef_ptr duplicate (
-        ::CORBA::ExtLocalInterfaceDef_ptr
-      );
-    static void release (
-        ::CORBA::ExtLocalInterfaceDef_ptr
-      );
-    static ::CORBA::ExtLocalInterfaceDef_ptr nil (void);
-    static CORBA::Boolean marshal (
-        ::CORBA::ExtLocalInterfaceDef_ptr p,
-        TAO_OutputCDR & cdr
-      );
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_PRIMITIVEDEF__TRAITS_CH_)
-#define _CORBA_PRIMITIVEDEF__TRAITS_CH_
+#if !defined (_CORBA_PRIMITIVEDEF__TRAITS_)
+#define _CORBA_PRIMITIVEDEF__TRAITS_
   
   template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::PrimitiveDef>
@@ -4830,8 +4705,8 @@ namespace TAO
 
 #endif /* end #if !defined */
 
-#if !defined (_CORBA_STRINGDEF__TRAITS_CH_)
-#define _CORBA_STRINGDEF__TRAITS_CH_
+#if !defined (_CORBA_STRINGDEF__TRAITS_)
+#define _CORBA_STRINGDEF__TRAITS_
   
   template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::StringDef>
@@ -4851,50 +4726,8 @@ namespace TAO
 
 #endif /* end #if !defined */
 
-#if !defined (_CORBA_SEQUENCEDEF__TRAITS_CH_)
-#define _CORBA_SEQUENCEDEF__TRAITS_CH_
-  
-  template<>
-  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::SequenceDef>
-  {
-    static ::CORBA::SequenceDef_ptr duplicate (
-        ::CORBA::SequenceDef_ptr
-      );
-    static void release (
-        ::CORBA::SequenceDef_ptr
-      );
-    static ::CORBA::SequenceDef_ptr nil (void);
-    static CORBA::Boolean marshal (
-        ::CORBA::SequenceDef_ptr p,
-        TAO_OutputCDR & cdr
-      );
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_ARRAYDEF__TRAITS_CH_)
-#define _CORBA_ARRAYDEF__TRAITS_CH_
-  
-  template<>
-  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ArrayDef>
-  {
-    static ::CORBA::ArrayDef_ptr duplicate (
-        ::CORBA::ArrayDef_ptr
-      );
-    static void release (
-        ::CORBA::ArrayDef_ptr
-      );
-    static ::CORBA::ArrayDef_ptr nil (void);
-    static CORBA::Boolean marshal (
-        ::CORBA::ArrayDef_ptr p,
-        TAO_OutputCDR & cdr
-      );
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_WSTRINGDEF__TRAITS_CH_)
-#define _CORBA_WSTRINGDEF__TRAITS_CH_
+#if !defined (_CORBA_WSTRINGDEF__TRAITS_)
+#define _CORBA_WSTRINGDEF__TRAITS_
   
   template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::WstringDef>
@@ -4914,8 +4747,71 @@ namespace TAO
 
 #endif /* end #if !defined */
 
-#if !defined (_CORBA_ATTRIBUTEDEF__TRAITS_CH_)
-#define _CORBA_ATTRIBUTEDEF__TRAITS_CH_
+#if !defined (_CORBA_SEQUENCEDEF__TRAITS_)
+#define _CORBA_SEQUENCEDEF__TRAITS_
+  
+  template<>
+  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::SequenceDef>
+  {
+    static ::CORBA::SequenceDef_ptr duplicate (
+        ::CORBA::SequenceDef_ptr
+      );
+    static void release (
+        ::CORBA::SequenceDef_ptr
+      );
+    static ::CORBA::SequenceDef_ptr nil (void);
+    static CORBA::Boolean marshal (
+        ::CORBA::SequenceDef_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_CORBA_ARRAYDEF__TRAITS_)
+#define _CORBA_ARRAYDEF__TRAITS_
+  
+  template<>
+  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ArrayDef>
+  {
+    static ::CORBA::ArrayDef_ptr duplicate (
+        ::CORBA::ArrayDef_ptr
+      );
+    static void release (
+        ::CORBA::ArrayDef_ptr
+      );
+    static ::CORBA::ArrayDef_ptr nil (void);
+    static CORBA::Boolean marshal (
+        ::CORBA::ArrayDef_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_CORBA_EXCEPTIONDEF__TRAITS_)
+#define _CORBA_EXCEPTIONDEF__TRAITS_
+  
+  template<>
+  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ExceptionDef>
+  {
+    static ::CORBA::ExceptionDef_ptr duplicate (
+        ::CORBA::ExceptionDef_ptr
+      );
+    static void release (
+        ::CORBA::ExceptionDef_ptr
+      );
+    static ::CORBA::ExceptionDef_ptr nil (void);
+    static CORBA::Boolean marshal (
+        ::CORBA::ExceptionDef_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_CORBA_ATTRIBUTEDEF__TRAITS_)
+#define _CORBA_ATTRIBUTEDEF__TRAITS_
   
   template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::AttributeDef>
@@ -4935,8 +4831,8 @@ namespace TAO
 
 #endif /* end #if !defined */
 
-#if !defined (_CORBA_EXTATTRIBUTEDEF__TRAITS_CH_)
-#define _CORBA_EXTATTRIBUTEDEF__TRAITS_CH_
+#if !defined (_CORBA_EXTATTRIBUTEDEF__TRAITS_)
+#define _CORBA_EXTATTRIBUTEDEF__TRAITS_
   
   template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ExtAttributeDef>
@@ -4956,8 +4852,8 @@ namespace TAO
 
 #endif /* end #if !defined */
 
-#if !defined (_CORBA_OPERATIONDEF__TRAITS_CH_)
-#define _CORBA_OPERATIONDEF__TRAITS_CH_
+#if !defined (_CORBA_OPERATIONDEF__TRAITS_)
+#define _CORBA_OPERATIONDEF__TRAITS_
   
   template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::OperationDef>
@@ -4977,8 +4873,29 @@ namespace TAO
 
 #endif /* end #if !defined */
 
-#if !defined (_CORBA_INTERFACEATTREXTENSION__TRAITS_CH_)
-#define _CORBA_INTERFACEATTREXTENSION__TRAITS_CH_
+#if !defined (_CORBA_INTERFACEDEF__TRAITS_)
+#define _CORBA_INTERFACEDEF__TRAITS_
+  
+  template<>
+  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::InterfaceDef>
+  {
+    static ::CORBA::InterfaceDef_ptr duplicate (
+        ::CORBA::InterfaceDef_ptr
+      );
+    static void release (
+        ::CORBA::InterfaceDef_ptr
+      );
+    static ::CORBA::InterfaceDef_ptr nil (void);
+    static CORBA::Boolean marshal (
+        ::CORBA::InterfaceDef_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_CORBA_INTERFACEATTREXTENSION__TRAITS_)
+#define _CORBA_INTERFACEATTREXTENSION__TRAITS_
   
   template<>
   struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::InterfaceAttrExtension>
@@ -4997,6 +4914,111 @@ namespace TAO
   };
 
 #endif /* end #if !defined */
+
+#if !defined (_CORBA_EXTINTERFACEDEF__TRAITS_)
+#define _CORBA_EXTINTERFACEDEF__TRAITS_
+  
+  template<>
+  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ExtInterfaceDef>
+  {
+    static ::CORBA::ExtInterfaceDef_ptr duplicate (
+        ::CORBA::ExtInterfaceDef_ptr
+      );
+    static void release (
+        ::CORBA::ExtInterfaceDef_ptr
+      );
+    static ::CORBA::ExtInterfaceDef_ptr nil (void);
+    static CORBA::Boolean marshal (
+        ::CORBA::ExtInterfaceDef_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_CORBA_ABSTRACTINTERFACEDEF__TRAITS_)
+#define _CORBA_ABSTRACTINTERFACEDEF__TRAITS_
+  
+  template<>
+  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::AbstractInterfaceDef>
+  {
+    static ::CORBA::AbstractInterfaceDef_ptr duplicate (
+        ::CORBA::AbstractInterfaceDef_ptr
+      );
+    static void release (
+        ::CORBA::AbstractInterfaceDef_ptr
+      );
+    static ::CORBA::AbstractInterfaceDef_ptr nil (void);
+    static CORBA::Boolean marshal (
+        ::CORBA::AbstractInterfaceDef_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_CORBA_EXTABSTRACTINTERFACEDEF__TRAITS_)
+#define _CORBA_EXTABSTRACTINTERFACEDEF__TRAITS_
+  
+  template<>
+  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ExtAbstractInterfaceDef>
+  {
+    static ::CORBA::ExtAbstractInterfaceDef_ptr duplicate (
+        ::CORBA::ExtAbstractInterfaceDef_ptr
+      );
+    static void release (
+        ::CORBA::ExtAbstractInterfaceDef_ptr
+      );
+    static ::CORBA::ExtAbstractInterfaceDef_ptr nil (void);
+    static CORBA::Boolean marshal (
+        ::CORBA::ExtAbstractInterfaceDef_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_CORBA_LOCALINTERFACEDEF__TRAITS_)
+#define _CORBA_LOCALINTERFACEDEF__TRAITS_
+  
+  template<>
+  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::LocalInterfaceDef>
+  {
+    static ::CORBA::LocalInterfaceDef_ptr duplicate (
+        ::CORBA::LocalInterfaceDef_ptr
+      );
+    static void release (
+        ::CORBA::LocalInterfaceDef_ptr
+      );
+    static ::CORBA::LocalInterfaceDef_ptr nil (void);
+    static CORBA::Boolean marshal (
+        ::CORBA::LocalInterfaceDef_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_CORBA_EXTLOCALINTERFACEDEF__TRAITS_)
+#define _CORBA_EXTLOCALINTERFACEDEF__TRAITS_
+  
+  template<>
+  struct TAO_IFR_Client_Export Objref_Traits< ::CORBA::ExtLocalInterfaceDef>
+  {
+    static ::CORBA::ExtLocalInterfaceDef_ptr duplicate (
+        ::CORBA::ExtLocalInterfaceDef_ptr
+      );
+    static void release (
+        ::CORBA::ExtLocalInterfaceDef_ptr
+      );
+    static ::CORBA::ExtLocalInterfaceDef_ptr nil (void);
+    static CORBA::Boolean marshal (
+        ::CORBA::ExtLocalInterfaceDef_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
 }
 
 // TAO_IDL - Generated from
@@ -5007,27 +5029,27 @@ TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::FixedDef_ptr *); //
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::FixedDef *&);
 
 // TAO_IDL - Generated from
-// be\be_visitor_enum/any_op_ch.cpp:51
+// be\be_visitor_enum/any_op_ch.cpp:52
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::PrimitiveKind);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::PrimitiveKind &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be\be_visitor_interface/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::Repository_ptr); // copying
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::Repository_ptr *); // non-copying
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::Repository_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be\be_visitor_interface/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ModuleDef_ptr); // copying
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ModuleDef_ptr *); // non-copying
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ModuleDef_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_structure/any_op_ch.cpp:52
+// be\be_visitor_structure/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::ModuleDescription &); // copying version
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ModuleDescription*); // noncopying version
@@ -5035,14 +5057,14 @@ TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::Mod
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::ModuleDescription *&);
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be\be_visitor_interface/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ConstantDef_ptr); // copying
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ConstantDef_ptr *); // non-copying
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ConstantDef_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_structure/any_op_ch.cpp:52
+// be\be_visitor_structure/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::ConstantDescription &); // copying version
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ConstantDescription*); // noncopying version
@@ -5050,84 +5072,84 @@ TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::Con
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::ConstantDescription *&);
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be\be_visitor_interface/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::StructDef_ptr); // copying
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::StructDef_ptr *); // non-copying
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::StructDef_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be\be_visitor_interface/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::UnionDef_ptr); // copying
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::UnionDef_ptr *); // non-copying
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::UnionDef_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be\be_visitor_interface/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::EnumDef_ptr); // copying
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::EnumDef_ptr *); // non-copying
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::EnumDef_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be\be_visitor_interface/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::AliasDef_ptr); // copying
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::AliasDef_ptr *); // non-copying
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::AliasDef_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be\be_visitor_interface/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::NativeDef_ptr); // copying
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::NativeDef_ptr *); // non-copying
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::NativeDef_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be\be_visitor_interface/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::PrimitiveDef_ptr); // copying
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::PrimitiveDef_ptr *); // non-copying
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::PrimitiveDef_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be\be_visitor_interface/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::StringDef_ptr); // copying
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::StringDef_ptr *); // non-copying
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::StringDef_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be\be_visitor_interface/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::WstringDef_ptr); // copying
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::WstringDef_ptr *); // non-copying
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::WstringDef_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be\be_visitor_interface/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::SequenceDef_ptr); // copying
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::SequenceDef_ptr *); // non-copying
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::SequenceDef_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be\be_visitor_interface/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ArrayDef_ptr); // copying
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ArrayDef_ptr *); // non-copying
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ArrayDef_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be\be_visitor_interface/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ExceptionDef_ptr); // copying
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ExceptionDef_ptr *); // non-copying
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ExceptionDef_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_sequence/any_op_ch.cpp:52
+// be\be_visitor_sequence/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::ExceptionDefSeq &); // copying version
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ExceptionDefSeq*); // noncopying version
@@ -5135,20 +5157,20 @@ TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::Exc
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::ExceptionDefSeq *&);
 
 // TAO_IDL - Generated from
-// be\be_visitor_enum/any_op_ch.cpp:51
+// be\be_visitor_enum/any_op_ch.cpp:52
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::AttributeMode);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::AttributeMode &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be\be_visitor_interface/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::AttributeDef_ptr); // copying
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::AttributeDef_ptr *); // non-copying
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::AttributeDef_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_structure/any_op_ch.cpp:52
+// be\be_visitor_structure/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::AttributeDescription &); // copying version
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::AttributeDescription*); // noncopying version
@@ -5156,7 +5178,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::Att
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::AttributeDescription *&);
 
 // TAO_IDL - Generated from
-// be\be_visitor_structure/any_op_ch.cpp:52
+// be\be_visitor_structure/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::ExtAttributeDescription &); // copying version
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ExtAttributeDescription*); // noncopying version
@@ -5164,20 +5186,20 @@ TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::Ext
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::ExtAttributeDescription *&);
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be\be_visitor_interface/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ExtAttributeDef_ptr); // copying
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ExtAttributeDef_ptr *); // non-copying
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ExtAttributeDef_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_enum/any_op_ch.cpp:51
+// be\be_visitor_enum/any_op_ch.cpp:52
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::OperationMode);
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::OperationMode &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_structure/any_op_ch.cpp:52
+// be\be_visitor_structure/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::ParameterDescription &); // copying version
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ParameterDescription*); // noncopying version
@@ -5185,7 +5207,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::Par
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::ParameterDescription *&);
 
 // TAO_IDL - Generated from
-// be\be_visitor_sequence/any_op_ch.cpp:52
+// be\be_visitor_sequence/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::ParDescriptionSeq &); // copying version
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ParDescriptionSeq*); // noncopying version
@@ -5193,7 +5215,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::Par
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::ParDescriptionSeq *&);
 
 // TAO_IDL - Generated from
-// be\be_visitor_sequence/any_op_ch.cpp:52
+// be\be_visitor_sequence/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::ContextIdSeq &); // copying version
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ContextIdSeq*); // noncopying version
@@ -5201,14 +5223,14 @@ TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::Con
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::ContextIdSeq *&);
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be\be_visitor_interface/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::OperationDef_ptr); // copying
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::OperationDef_ptr *); // non-copying
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::OperationDef_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_structure/any_op_ch.cpp:52
+// be\be_visitor_structure/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::OperationDescription &); // copying version
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::OperationDescription*); // noncopying version
@@ -5216,7 +5238,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::Ope
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::OperationDescription *&);
 
 // TAO_IDL - Generated from
-// be\be_visitor_sequence/any_op_ch.cpp:52
+// be\be_visitor_sequence/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::RepositoryIdSeq &); // copying version
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::RepositoryIdSeq*); // noncopying version
@@ -5224,7 +5246,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::Rep
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::RepositoryIdSeq *&);
 
 // TAO_IDL - Generated from
-// be\be_visitor_sequence/any_op_ch.cpp:52
+// be\be_visitor_sequence/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::OpDescriptionSeq &); // copying version
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::OpDescriptionSeq*); // noncopying version
@@ -5232,7 +5254,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::OpD
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::OpDescriptionSeq *&);
 
 // TAO_IDL - Generated from
-// be\be_visitor_sequence/any_op_ch.cpp:52
+// be\be_visitor_sequence/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::AttrDescriptionSeq &); // copying version
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::AttrDescriptionSeq*); // noncopying version
@@ -5240,7 +5262,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::Att
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::AttrDescriptionSeq *&);
 
 // TAO_IDL - Generated from
-// be\be_visitor_sequence/any_op_ch.cpp:52
+// be\be_visitor_sequence/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::ExtAttrDescriptionSeq &); // copying version
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ExtAttrDescriptionSeq*); // noncopying version
@@ -5248,14 +5270,14 @@ TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::Ext
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::ExtAttrDescriptionSeq *&);
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be\be_visitor_interface/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::InterfaceDef_ptr); // copying
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::InterfaceDef_ptr *); // non-copying
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::InterfaceDef_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_structure/any_op_ch.cpp:52
+// be\be_visitor_structure/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::InterfaceDef::FullInterfaceDescription &); // copying version
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::InterfaceDef::FullInterfaceDescription*); // noncopying version
@@ -5263,7 +5285,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::Int
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::InterfaceDef::FullInterfaceDescription *&);
 
 // TAO_IDL - Generated from
-// be\be_visitor_structure/any_op_ch.cpp:52
+// be\be_visitor_structure/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::InterfaceDescription &); // copying version
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::InterfaceDescription*); // noncopying version
@@ -5271,14 +5293,14 @@ TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::Int
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::InterfaceDescription *&);
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be\be_visitor_interface/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::InterfaceAttrExtension_ptr); // copying
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::InterfaceAttrExtension_ptr *); // non-copying
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::InterfaceAttrExtension_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_structure/any_op_ch.cpp:52
+// be\be_visitor_structure/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, const CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription &); // copying version
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription*); // noncopying version
@@ -5286,35 +5308,35 @@ TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::Int
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *&);
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be\be_visitor_interface/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ExtInterfaceDef_ptr); // copying
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ExtInterfaceDef_ptr *); // non-copying
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ExtInterfaceDef_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be\be_visitor_interface/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::AbstractInterfaceDef_ptr); // copying
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::AbstractInterfaceDef_ptr *); // non-copying
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::AbstractInterfaceDef_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be\be_visitor_interface/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ExtAbstractInterfaceDef_ptr); // copying
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ExtAbstractInterfaceDef_ptr *); // non-copying
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::ExtAbstractInterfaceDef_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be\be_visitor_interface/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::LocalInterfaceDef_ptr); // copying
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::LocalInterfaceDef_ptr *); // non-copying
 TAO_IFR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::LocalInterfaceDef_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
+// be\be_visitor_interface/any_op_ch.cpp:53
 
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ExtLocalInterfaceDef_ptr); // copying
 TAO_IFR_Client_Export void operator<<= (CORBA::Any &, CORBA::ExtLocalInterfaceDef_ptr *); // non-copying
@@ -5663,7 +5685,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::E
 TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::ExtLocalInterfaceDef_ptr &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:955
+// be\be_codegen.cpp:1136
 
 #if defined (__ACE_INLINE__)
 #include "IFR_BasicC.inl"

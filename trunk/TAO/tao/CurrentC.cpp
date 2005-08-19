@@ -26,16 +26,12 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:291
+// be\be_codegen.cpp:288
 
 
 #include "CurrentC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
-
-#if defined (__BORLANDC__)
-#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
-#endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
@@ -87,14 +83,6 @@ CORBA::Current::Current (void)
 
 CORBA::Current::~Current (void)
 {}
-
-void 
-CORBA::Current::_tao_any_destructor (void *_tao_void_pointer)
-{
-  Current *_tao_tmp_pointer =
-    static_cast<Current *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
 
 CORBA::Current_ptr
 CORBA::Current::_narrow (

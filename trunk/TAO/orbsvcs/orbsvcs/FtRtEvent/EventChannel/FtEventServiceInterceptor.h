@@ -19,6 +19,7 @@
 #include "tao/ORB.h"
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
 #include "tao/PI_Server/PI_Server.h"
+#include "tao/PI/PI.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

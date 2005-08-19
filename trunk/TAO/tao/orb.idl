@@ -8,7 +8,6 @@
 #define TAO_ORB_IDL
 
 ///FUZZ: disable check_for_include/
-#include <tao/AnySeq.pidl>
 #include <tao/BooleanSeq.pidl>
 #include <tao/CharSeq.pidl>
 #include <tao/DoubleSeq.pidl>
@@ -36,8 +35,6 @@
 #include <tao/ParameterMode.pidl>
 #include <tao/orb_types.pidl>
 #include <tao/Typecode_types.pidl>
-#include <tao/Visibility.pidl>
-#include <tao/ValueModifier.pidl>
 
 #pragma prefix "omg.org"
 

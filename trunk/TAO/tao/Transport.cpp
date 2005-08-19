@@ -822,7 +822,11 @@ TAO_Transport::drain_queue_i (void)
   // the loop because after the loop there may still be data to be
   // sent
   int iovcnt = 0;
+#if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
+  iovec iov[ACE_IOV_MAX] = { 0 };
+#else
   iovec iov[ACE_IOV_MAX];
+#endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
 
   // We loop over all the elements in the queue ...
   TAO_Queued_Message *i = this->head_;
@@ -1452,7 +1456,6 @@ TAO_Transport::parse_consolidate_messages (ACE_Message_Block &block,
   // Check whether we have a complete message for processing
   const ssize_t missing_data = this->missing_data (block);
 
-
   if (missing_data < 0)
     {
       // If we have more than one message
@@ -1501,7 +1504,7 @@ TAO_Transport::parse_incoming_messages (ACE_Message_Block &block)
 }
 
 
-size_t
+ssize_t
 TAO_Transport::missing_data (ACE_Message_Block &incoming)
 {
   // If we have a incomplete message in the queue then find out how

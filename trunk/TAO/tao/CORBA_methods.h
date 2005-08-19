@@ -38,20 +38,11 @@ namespace CORBA
   class Environment;
   typedef Environment *Environment_ptr;
 
-  class NamedValue;
-  typedef NamedValue *NamedValue_ptr;
-
-  class NVList;
-  typedef NVList *NVList_ptr;
-
   class Object;
   typedef Object *Object_ptr;
 
   class Principal;
   typedef Principal *Principal_ptr;
-
-  class TypeCode;
-  typedef TypeCode *TypeCode_ptr;
 
   class OperationDef;
   typedef OperationDef *OperationDef_ptr;
@@ -76,12 +67,6 @@ namespace CORBA
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Environment_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION void release (Environment_ptr);
 
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (NamedValue_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (NamedValue_ptr);
-
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (NVList_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (NVList_ptr);
-
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ORB_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION void release (ORB_ptr);
 
@@ -90,9 +75,6 @@ namespace CORBA
 
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Principal_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION void release (Principal_ptr);
-
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (TypeCode_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (TypeCode_ptr);
 }
 
 #include /**/ "ace/post.h"

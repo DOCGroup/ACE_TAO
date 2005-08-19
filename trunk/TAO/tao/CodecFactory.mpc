@@ -1,5 +1,5 @@
 //$Id$
-project : taolib, core {
+project : taolib, core, anytypecode {
   sharedname    = TAO_CodecFactory
   dynamicflags  = TAO_CODECFACTORY_BUILD_DLL
 
@@ -25,6 +25,9 @@ project : taolib, core {
 
   PIDL_Files {
     CodecFactory
+  }
+
+  IDL_Files {
   }
 
   Pkgconfig_Files {

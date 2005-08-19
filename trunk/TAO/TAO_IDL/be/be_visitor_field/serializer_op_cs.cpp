@@ -11,7 +11,7 @@
 //    field_serializer_op_cs.cpp
 //
 // = DESCRIPTION
-//    Visitor generating TAO::DCPS::Serializer operators code for Field in 
+//    Visitor generating TAO::DCPS::Serializer operators code for Field in
 //    the client stubs file.
 //
 // = AUTHOR
@@ -163,7 +163,7 @@ be_visitor_field_serializer_op_cs::visit_array (be_array *node)
       *os << "_dcps_max_marshaled_size (_tao_aggregate_" << f->local_name ()
           << ")";
       break;
-    case TAO_CodeGen::TAO_FIND_SIZE: 
+    case TAO_CodeGen::TAO_FIND_SIZE:
       // get the size of an array typedef
       *os << "_dcps_find_size (_tao_aggregate_" << f->local_name ()
           << ")";
@@ -236,7 +236,7 @@ be_visitor_field_serializer_op_cs::visit_enum (be_enum *node)
     case TAO_CodeGen::TAO_IS_BOUNDED_SIZE:
       *os << " true /* enum */";
       break;
-    case TAO_CodeGen::TAO_FIND_SIZE: 
+    case TAO_CodeGen::TAO_FIND_SIZE:
     case TAO_CodeGen::TAO_MAX_MARSHALED_SIZE:
       // enums are serialized as CORBA::ULong
       *os << "_dcps_max_marshaled_size_ulong () /* enum */";
@@ -569,22 +569,22 @@ be_visitor_field_serializer_op_cs::visit_predefined_type (be_predefined_type *no
         }
       else if (pt == AST_PredefinedType::PT_char)
         {
-          *os << "_dcps_max_marshaled_size ( ::CORBA::Any::from_char (_tao_aggregate."
+          *os << "_dcps_max_marshaled_size (::ACE_OutputCDR::from_char (_tao_aggregate."
               << f->local_name () << "))";
         }
       else if (pt == AST_PredefinedType::PT_wchar)
         {
-          *os << "_dcps_max_marshaled_size ( ::CORBA::Any::from_wchar (_tao_aggregate."
+          *os << "_dcps_max_marshaled_size (::ACE_OutputCDR::from_wchar (_tao_aggregate."
               << f->local_name () << "))";
         }
       else if (pt == AST_PredefinedType::PT_octet)
         {
-          *os << "_dcps_max_marshaled_size ( ::CORBA::Any::from_octet (_tao_aggregate."
+          *os << "_dcps_max_marshaled_size (::ACE_OutputCDR::from_octet (_tao_aggregate."
               << f->local_name () << "))";
         }
       else if (pt == AST_PredefinedType::PT_boolean)
         {
-          *os << "_dcps_max_marshaled_size ( ::CORBA::Any::from_boolean (_tao_aggregate."
+          *os << "_dcps_max_marshaled_size (::ACE_OutputCDR::from_boolean (_tao_aggregate."
               << f->local_name () << "))";
         }
       else
@@ -601,22 +601,22 @@ be_visitor_field_serializer_op_cs::visit_predefined_type (be_predefined_type *no
         }
       else if (pt == AST_PredefinedType::PT_char)
         {
-          *os << "(strm >> ::CORBA::Any::to_char (_tao_aggregate."
+          *os << "(strm >> ::ACE_InputCDR::to_char (_tao_aggregate."
               << f->local_name () << "))";
         }
       else if (pt == AST_PredefinedType::PT_wchar)
         {
-          *os << "(strm >> ::CORBA::Any::to_wchar (_tao_aggregate."
+          *os << "(strm >> ::ACE_InputCDR::to_wchar (_tao_aggregate."
               << f->local_name () << "))";
         }
       else if (pt == AST_PredefinedType::PT_octet)
         {
-          *os << "(strm >> ::CORBA::Any::to_octet (_tao_aggregate."
+          *os << "(strm >> ::ACE_InputCDR::to_octet (_tao_aggregate."
               << f->local_name () << "))";
         }
       else if (pt == AST_PredefinedType::PT_boolean)
         {
-          *os << "(strm >> ::CORBA::Any::to_boolean (_tao_aggregate."
+          *os << "(strm >> ::ACE_InputCDR::to_boolean (_tao_aggregate."
               << f->local_name () << "))";
         }
       else
@@ -632,22 +632,22 @@ be_visitor_field_serializer_op_cs::visit_predefined_type (be_predefined_type *no
         }
       else if (pt == AST_PredefinedType::PT_char)
         {
-          *os << "(strm << ::CORBA::Any::from_char (_tao_aggregate."
+          *os << "(strm << ::ACE_OutputCDR::from_char (_tao_aggregate."
               << f->local_name () << "))";
         }
       else if (pt == AST_PredefinedType::PT_wchar)
         {
-          *os << "(strm << ::CORBA::Any::from_wchar (_tao_aggregate."
+          *os << "(strm << ::ACE_OutputCDR::from_wchar (_tao_aggregate."
               << f->local_name () << "))";
         }
       else if (pt == AST_PredefinedType::PT_octet)
         {
-          *os << "(strm << ::CORBA::Any::from_octet (_tao_aggregate."
+          *os << "(strm << ::ACE_OutputCDR::from_octet (_tao_aggregate."
               << f->local_name () << "))";
         }
       else if (pt == AST_PredefinedType::PT_boolean)
         {
-          *os << "(strm << ::CORBA::Any::from_boolean (_tao_aggregate."
+          *os << "(strm << ::ACE_OutputCDR::from_boolean (_tao_aggregate."
               << f->local_name () << "))";
         }
       else
@@ -720,7 +720,7 @@ be_visitor_field_serializer_op_cs::visit_sequence (be_sequence *node)
       *os << "_dcps_max_marshaled_size (_tao_aggregate." << f->local_name ()
           << ")";
       break;
-    case TAO_CodeGen::TAO_FIND_SIZE: 
+    case TAO_CodeGen::TAO_FIND_SIZE:
       *os << "_dcps_find_size (_tao_aggregate." << f->local_name ()
           << ")";
       break;
@@ -779,7 +779,7 @@ be_visitor_field_serializer_op_cs::visit_string (be_string *node)
       ACE_OS::sprintf(buff, "%ld", node->max_size ()->ev ()->u.ulval);
       *os << "_dcps_max_marshaled_size_ulong () + " << buff;
       break;
-    case TAO_CodeGen::TAO_FIND_SIZE: 
+    case TAO_CodeGen::TAO_FIND_SIZE:
       *os << "_dcps_max_marshaled_size_ulong() + "
           << "ACE_OS::strlen(_tao_aggregate."
           << f->local_name () << ".in ())";
@@ -857,7 +857,7 @@ be_visitor_field_serializer_op_cs::visit_structure (be_structure *node)
       *os << "_dcps_max_marshaled_size (_tao_aggregate." << f->local_name ()
           << ")";
       break;
-    case TAO_CodeGen::TAO_FIND_SIZE: 
+    case TAO_CodeGen::TAO_FIND_SIZE:
       *os << "_dcps_find_size (_tao_aggregate." << f->local_name ()
           << ")";
       break;
@@ -953,7 +953,7 @@ be_visitor_field_serializer_op_cs::visit_union (be_union *node)
       *os << "_dcps_max_marshaled_size (_tao_aggregate." << f->local_name ()
           << ")";
       break;
-    case TAO_CodeGen::TAO_FIND_SIZE: 
+    case TAO_CodeGen::TAO_FIND_SIZE:
       *os << "_dcps_find_size (_tao_aggregate." << f->local_name ()
           << ")";
       break;
@@ -1088,7 +1088,7 @@ be_visitor_serializer_op_field_decl::visit_array (be_array *node)
     {
     case TAO_CodeGen::TAO_IS_BOUNDED_SIZE:
     case TAO_CodeGen::TAO_MAX_MARSHALED_SIZE:
-    case TAO_CodeGen::TAO_FIND_SIZE: 
+    case TAO_CodeGen::TAO_FIND_SIZE:
     case TAO_CodeGen::TAO_CDR_INPUT:
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       *os << fname << "_forany "

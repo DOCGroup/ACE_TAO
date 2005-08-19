@@ -21,7 +21,7 @@ project(Test_ORT_Server): taoserver, objreftemplate, iorinterceptor, pi_server, 
 }
 
 
-project(Test_ORT_Client): taoclient, interceptors {
+project(Test_ORT_Client): taoclient, anytypecode, interceptors {
   after += Test_ORT_Server
 
   IDL_Files {

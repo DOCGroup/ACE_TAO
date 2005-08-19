@@ -30,6 +30,9 @@
 #include "Policy_ForwardC.h"
 #include "CORBA_methods.h"
 #include "VarOut_T.h"
+#include "Seq_Var_T.h"
+#include "Seq_Out_T.h"
+#include "Sequence_T.h"
 
 #include "ace/Thread_Mutex.h"
 #include "ace/Guard_T.h"
@@ -75,6 +78,14 @@ namespace CORBA
 
   class NVList;
   typedef NVList *NVList_ptr;
+
+  class NamedValue;
+  typedef NamedValue *NamedValue_ptr;
+
+  class Policy;
+  typedef Policy *Policy_ptr;
+
+  typedef CORBA::ULong PolicyType;
 
   // TODO - implement OMG's 'ORBid CORBA::ORB::id (void)'.
 

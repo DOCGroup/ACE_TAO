@@ -56,6 +56,12 @@ namespace TAO
     return this->target_;
   }
 
+  ACE_INLINE TAO_Operation_Details &
+  Invocation_Base::operation_details (void)
+  {
+    return this->details_;
+  }
+
 #if TAO_HAS_INTERCEPTORS == 1
   ACE_INLINE size_t &
   Invocation_Base::stack_size  (void)

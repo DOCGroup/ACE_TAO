@@ -8,7 +8,7 @@ project(Bug_1627_Server): taoserver, iortable {
   }
 }
 
-project(Bug_1627_Client): taoclient {
+project(Bug_1627_Client): taoclient, anytypecode {
   Source_Files {
     TestC.cpp
     client.cpp

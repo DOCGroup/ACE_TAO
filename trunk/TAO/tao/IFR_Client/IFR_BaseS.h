@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:398
+// be\be_codegen.cpp:393
 
 #ifndef _TAO_IDL_ORIG_IFR_BASES_H_
 #define _TAO_IDL_ORIG_IFR_BASES_H_
@@ -55,20 +55,20 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be/be_visitor_module/module_sh.cpp:49
+// be\be_visitor_module/module_sh.cpp:49
 
 namespace POA_CORBA
 {
 
 
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_sh.cpp:87
+  // be\be_visitor_interface/interface_sh.cpp:87
 
   class IRObject;
   typedef IRObject *IRObject_ptr;
 
 
-  class TAO_IFR_Client_Export IRObject
+  class  IRObject
     : public virtual PortableServer::ServantBase
   {
   protected:
@@ -116,6 +116,13 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL
       );
 
+    static void _repository_id_skel (
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
+        ACE_ENV_ARG_DECL
+      );
+
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
@@ -129,7 +136,7 @@ namespace POA_CORBA
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::DefinitionKind def_kind (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -146,7 +153,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual void destroy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -164,13 +171,13 @@ namespace POA_CORBA
   };
 
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_sh.cpp:87
+  // be\be_visitor_interface/interface_sh.cpp:87
 
   class Contained;
   typedef Contained *Contained_ptr;
 
 
-  class TAO_IFR_Client_Export Contained
+  class  Contained
     : public virtual POA_CORBA::IRObject
   {
   protected:
@@ -218,6 +225,13 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL
       );
 
+    static void _repository_id_skel (
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
+        ACE_ENV_ARG_DECL
+      );
+
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
@@ -231,7 +245,7 @@ namespace POA_CORBA
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual char * id (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -248,7 +262,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual void id (
         const char * id
@@ -266,7 +280,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual char * name (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -283,7 +297,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual void name (
         const char * name
@@ -301,7 +315,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual char * version (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -318,7 +332,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual void version (
         const char * version
@@ -336,7 +350,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::Container_ptr defined_in (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -353,7 +367,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual char * absolute_name (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -370,7 +384,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::Repository_ptr containing_repository (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -387,7 +401,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::Contained::Description * describe (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -404,7 +418,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual void move (
         ::CORBA::Container_ptr new_container,
@@ -432,7 +446,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_interface.cpp:1859
+    // be\be_interface.cpp:1869
 
     static void
     destroy_skel (
@@ -444,13 +458,13 @@ namespace POA_CORBA
   };
 
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_sh.cpp:87
+  // be\be_visitor_interface/interface_sh.cpp:87
 
   class Container;
   typedef Container *Container_ptr;
 
 
-  class TAO_IFR_Client_Export Container
+  class  Container
     : public virtual POA_CORBA::IRObject
   {
   protected:
@@ -498,6 +512,13 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL
       );
 
+    static void _repository_id_skel (
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
+        ACE_ENV_ARG_DECL
+      );
+
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
@@ -511,7 +532,7 @@ namespace POA_CORBA
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::Contained_ptr lookup (
         const char * search_name
@@ -529,7 +550,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::ContainedSeq * contents (
         ::CORBA::DefinitionKind limit_type,
@@ -548,7 +569,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::ContainedSeq * lookup_name (
         const char * search_name,
@@ -569,7 +590,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::Container::DescriptionSeq * describe_contents (
         ::CORBA::DefinitionKind limit_type,
@@ -589,7 +610,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::ModuleDef_ptr create_module (
         const char * id,
@@ -609,7 +630,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::ConstantDef_ptr create_constant (
         const char * id,
@@ -631,7 +652,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::StructDef_ptr create_struct (
         const char * id,
@@ -652,7 +673,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::UnionDef_ptr create_union (
         const char * id,
@@ -674,7 +695,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::EnumDef_ptr create_enum (
         const char * id,
@@ -695,7 +716,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::AliasDef_ptr create_alias (
         const char * id,
@@ -716,7 +737,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::InterfaceDef_ptr create_interface (
         const char * id,
@@ -737,7 +758,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::ValueDef_ptr create_value (
         const char * id,
@@ -764,7 +785,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::ValueBoxDef_ptr create_value_box (
         const char * id,
@@ -785,7 +806,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::ExceptionDef_ptr create_exception (
         const char * id,
@@ -806,7 +827,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::NativeDef_ptr create_native (
         const char * id,
@@ -826,7 +847,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::AbstractInterfaceDef_ptr create_abstract_interface (
         const char * id,
@@ -847,7 +868,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::LocalInterfaceDef_ptr create_local_interface (
         const char * id,
@@ -868,7 +889,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual ::CORBA::ExtValueDef_ptr create_ext_value (
         const char * id,
@@ -903,7 +924,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_interface.cpp:1859
+    // be\be_interface.cpp:1869
 
     static void
     destroy_skel (
@@ -915,13 +936,13 @@ namespace POA_CORBA
   };
 
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_sh.cpp:87
+  // be\be_visitor_interface/interface_sh.cpp:87
 
   class IDLType;
   typedef IDLType *IDLType_ptr;
 
 
-  class TAO_IFR_Client_Export IDLType
+  class  IDLType
     : public virtual POA_CORBA::IRObject
   {
   protected:
@@ -969,6 +990,13 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL
       );
 
+    static void _repository_id_skel (
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
+        ACE_ENV_ARG_DECL
+      );
+
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
@@ -982,7 +1010,7 @@ namespace POA_CORBA
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
 
     virtual CORBA::TypeCode_ptr type (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -1007,7 +1035,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_interface.cpp:1859
+    // be\be_interface.cpp:1869
 
     static void
     destroy_skel (
@@ -1019,13 +1047,13 @@ namespace POA_CORBA
   };
 
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_sh.cpp:87
+  // be\be_visitor_interface/interface_sh.cpp:87
 
   class TypedefDef;
   typedef TypedefDef *TypedefDef_ptr;
 
 
-  class TAO_IFR_Client_Export TypedefDef
+  class  TypedefDef
     : public virtual POA_CORBA::Contained,
       public virtual POA_CORBA::IDLType
   {
@@ -1074,6 +1102,13 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL
       );
 
+    static void _repository_id_skel (
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
+        ACE_ENV_ARG_DECL
+      );
+
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
@@ -1095,7 +1130,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_interface.cpp:1859
+    // be\be_interface.cpp:1869
 
     static void
     destroy_skel (
@@ -1178,7 +1213,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_interface.cpp:1859
+    // be\be_interface.cpp:1869
 
     static void
     describe_skel (
@@ -1189,7 +1224,7 @@ namespace POA_CORBA
       );
 
     // TAO_IDL - Generated from
-    // be/be_interface.cpp:1859
+    // be\be_interface.cpp:1869
 
     static void
     move_skel (
@@ -1209,13 +1244,9 @@ namespace POA_CORBA
   };
 
 // TAO_IDL - Generated from
-// be/be_visitor_module/module_sh.cpp:80
+// be\be_visitor_module/module_sh.cpp:80
 
 } // module CORBA
-
-// TAO_IDL - Generated from
-// be/be_codegen.cpp:1005
-
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

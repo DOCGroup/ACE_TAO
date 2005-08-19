@@ -2,7 +2,7 @@
 
 #include "DynEnum_i.h"
 #include "DynAnyFactory.h"
-#include "tao/Any_Unknown_IDL_Type.h"
+#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/CDR.h"
 
 #include "ace/OS_NS_string.h"
@@ -56,7 +56,7 @@ TAO_DynEnum_i::init (const CORBA::Any &any
     {
       TAO::Unknown_IDL_Type *unk =
         dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
-        
+
       // We don't want unk's rd_ptr to move, in case we are shared by
       // another Any, so we use this to copy the state, not the buffer.
       TAO_InputCDR for_reading (unk->_tao_get_cdr ());
@@ -217,7 +217,7 @@ TAO_DynEnum_i::from_any (const CORBA::Any& any
         {
           TAO::Unknown_IDL_Type *unk =
             dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
-            
+
           // We don't want unk's rd_ptr to move, in case we are shared by
           // another Any, so we use this to copy the state, not the buffer.
           TAO_InputCDR for_reading (unk->_tao_get_cdr ());
@@ -294,7 +294,7 @@ TAO_DynEnum_i::equal (DynamicAny::DynAny_ptr rhs
     {
       TAO::Unknown_IDL_Type *unk =
         dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
-        
+
       // We don't want unk's rd_ptr to move, in case we are shared by
       // another Any, so we use this to copy the state, not the buffer.
       TAO_InputCDR for_reading (unk->_tao_get_cdr ());

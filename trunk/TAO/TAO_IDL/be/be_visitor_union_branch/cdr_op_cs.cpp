@@ -297,9 +297,9 @@ be_visitor_union_branch_cdr_op_cs::visit_interface (be_interface *node)
       break;
 
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-    
+
       *os << "result =" << be_idt_nl;
-      
+
       if (f->is_abstract ())
         {
           *os << "(strm << _tao_union."
@@ -313,7 +313,7 @@ be_visitor_union_branch_cdr_op_cs::visit_interface (be_interface *node)
               << "strm" << be_uidt_nl
               << ");" << be_uidt;
         }
-        
+
       *os << be_uidt;
 
       break;
@@ -531,7 +531,7 @@ be_visitor_union_branch_cdr_op_cs::visit_predefined_type (
       else if (pt == AST_PredefinedType::PT_char)
         {
           *os << "::CORBA::Char _tao_union_tmp;" << be_nl
-              << "::CORBA::Any::to_char _tao_union_helper "
+              << "::ACE_InputCDR::to_char _tao_union_helper "
               << "(_tao_union_tmp);" << be_nl
               << "result = strm >> _tao_union_helper;" << be_nl << be_nl
               << "if (result)" << be_idt_nl
@@ -542,7 +542,7 @@ be_visitor_union_branch_cdr_op_cs::visit_predefined_type (
       else if (pt == AST_PredefinedType::PT_wchar)
         {
           *os << "::CORBA::WChar _tao_union_tmp;" << be_nl
-              << "::CORBA::Any::to_wchar _tao_union_helper "
+              << "::ACE_InputCDR::to_wchar _tao_union_helper "
               << "(_tao_union_tmp);" << be_nl
               << "result = strm >> _tao_union_helper;" << be_nl << be_nl
               << "if (result)" << be_idt_nl
@@ -553,7 +553,7 @@ be_visitor_union_branch_cdr_op_cs::visit_predefined_type (
       else if (pt == AST_PredefinedType::PT_octet)
         {
           *os << "::CORBA::Octet _tao_union_tmp;" << be_nl
-              << "::CORBA::Any::to_octet _tao_union_helper "
+              << "::ACE_InputCDR::to_octet _tao_union_helper "
               << "(_tao_union_tmp);" << be_nl
               << "result = strm >> _tao_union_helper;" << be_nl << be_nl
               << "if (result)" << be_idt_nl
@@ -564,7 +564,7 @@ be_visitor_union_branch_cdr_op_cs::visit_predefined_type (
       else if (pt == AST_PredefinedType::PT_boolean)
         {
           *os << "::CORBA::Boolean _tao_union_tmp;" << be_nl
-              << "::CORBA::Any::to_boolean _tao_union_helper "
+              << "::ACE_InputCDR::to_boolean _tao_union_helper "
               << "(_tao_union_tmp);" << be_nl
               << "result = strm >> _tao_union_helper;" << be_nl << be_nl
               << "if (result)" << be_idt_nl
@@ -599,22 +599,22 @@ be_visitor_union_branch_cdr_op_cs::visit_predefined_type (
         }
       else if (pt == AST_PredefinedType::PT_char)
         {
-          *os << "strm << ::CORBA::Any::from_char (_tao_union."
+          *os << "strm << ::ACE_OutputCDR::from_char (_tao_union."
               << f->local_name () << " ());";
         }
       else if (pt == AST_PredefinedType::PT_wchar)
         {
-          *os << "strm << ::CORBA::Any::from_wchar (_tao_union."
+          *os << "strm << ::ACE_OutputCDR::from_wchar (_tao_union."
               << f->local_name () << " ());";
         }
       else if (pt == AST_PredefinedType::PT_octet)
         {
-          *os << "strm << ::CORBA::Any::from_octet (_tao_union."
+          *os << "strm << ::ACE_OutputCDR::from_octet (_tao_union."
               << f->local_name () << " ());";
         }
       else if (pt == AST_PredefinedType::PT_boolean)
         {
-          *os << "strm << ::CORBA::Any::from_boolean (_tao_union."
+          *os << "strm << ::ACE_OutputCDR::from_boolean (_tao_union."
               << f->local_name () << " ());";
         }
       else

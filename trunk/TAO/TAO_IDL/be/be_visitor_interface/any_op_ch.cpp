@@ -19,8 +19,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_interface, 
-           any_op_ch, 
+ACE_RCSID (be_visitor_interface,
+           any_op_ch,
            "$Id$")
 
 // ***************************************************************************
@@ -41,18 +41,20 @@ int
 be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
 {
   if (node->cli_hdr_any_op_gen ()
-      || node->imported ())
+      || node->imported ()
+      || node->is_local ())
     {
       return 0;
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
+  const char *macro = this->ctx_->export_macro ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   be_module *module = 0;
- 
+
   if (node->is_nested () &&
       node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
     {
@@ -74,13 +76,13 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
       be_util::gen_nested_namespace_begin (os, module);
 
       // emit  nested variation of any operators
-      *os << be_global->stub_export_macro () << " void"
+      *os << macro << " void"
           << " operator<<= ( ::CORBA::Any &, " << node->local_name ()
           << "_ptr); // copying" << be_nl;
-      *os << be_global->stub_export_macro () << " void"
+      *os << macro << " void"
           << " operator<<= ( ::CORBA::Any &, " << node->local_name ()
           << "_ptr *); // non-copying" << be_nl;
-      *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
+      *os << macro << " ::CORBA::Boolean"
           << " operator>>= (const ::CORBA::Any &, "
           << node->local_name () << "_ptr &);";
 
@@ -90,14 +92,11 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
       *os << "#else\n\n";
     }
 
-  *os << be_global->stub_export_macro () << " void"
-      << " operator<<= ( ::CORBA::Any &, " << node->name ()
+  *os << macro << " void operator<<= (::CORBA::Any &, " << node->name ()
       << "_ptr); // copying" << be_nl;
-  *os << be_global->stub_export_macro () << " void"
-      << " operator<<= ( ::CORBA::Any &, " << node->name ()
+  *os << macro << " void operator<<= (::CORBA::Any &, " << node->name ()
       << "_ptr *); // non-copying" << be_nl;
-  *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
-      << " operator>>= (const ::CORBA::Any &, "
+  *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, "
       << node->name () << "_ptr &);";
 
   if (module != 0)
@@ -111,7 +110,7 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface_any_op_ch::"
                          "visit_interface - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 

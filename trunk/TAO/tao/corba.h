@@ -34,13 +34,11 @@
 
 // The definitions are included in the same order as they are declared
 // in corbafwd.h
-#include "tao/TypeCode.h"
+#include "tao/AnyTypeCode/TypeCode.h"
 
 #include "tao/Environment.h"
 #include "tao/SystemException.h"
 #include "tao/UserException.h"
-
-#include "tao/NVList.h"
 
 #include "tao/Object.h"
 #include "tao/LocalObject.h"
@@ -48,7 +46,6 @@
 #include "tao/ORB.h"
 
 #include "tao/CurrentC.h"
-#include "tao/BoundsC.h"
 #include "tao/PolicyC.h"
 #include "tao/ServicesC.h"
 #include "tao/DomainC.h"
@@ -56,7 +53,6 @@
 
 #include "tao/ObjectIdListC.h"
 
-#include "tao/AnySeqC.h"
 #include "tao/BooleanSeqC.h"
 #include "tao/CharSeqC.h"
 #include "tao/DoubleSeqC.h"

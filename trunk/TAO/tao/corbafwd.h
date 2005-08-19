@@ -31,7 +31,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TC_Constants_Forward.h"
 #include "tao/CORBA_methods.h"
 
 #include /**/ "ace/post.h"

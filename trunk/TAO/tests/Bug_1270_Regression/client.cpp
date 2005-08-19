@@ -3,6 +3,7 @@
 #include "Echo.h"
 #include "ORB_Task.h"
 #include "tao/Messaging/Messaging.h"
+#include "tao/AnyTypeCode/Any.h"
 #include "tao/Utils/Servant_Var.h"
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"

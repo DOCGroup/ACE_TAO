@@ -45,20 +45,21 @@
 // Arg traits specializations.
 namespace TAO
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_arg_traits.cpp:539
 
 #if !defined (_CORBA_POLICYLIST__ARG_TRAITS_CS_)
 #define _CORBA_POLICYLIST__ARG_TRAITS_CS_
-  
+
   template<>
   class Arg_Traits<CORBA::PolicyList>
     : public
         Var_Size_Arg_Traits_T<
             CORBA::PolicyList,
             CORBA::PolicyList_var,
-            CORBA::PolicyList_out
+            CORBA::PolicyList_out,
+            TAO::Any_Insert_Policy_Stream <CORBA::PolicyList>
           >
   {
   };
@@ -138,7 +139,7 @@ RTScheduling::ThreadAction::_duplicate (ThreadAction_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 

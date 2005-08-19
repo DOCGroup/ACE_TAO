@@ -26,17 +26,13 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:291
+// be\be_codegen.cpp:277
 
 
 #include "ForwardRequestC.h"
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
 #include "ace/OS_NS_string.h"
-
-#if defined (__BORLANDC__)
-#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
-#endif /* __BORLANDC__ */
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -166,11 +162,7 @@ PortableServer::ForwardRequest::ForwardRequest (
   this->forward_reference = CORBA::Object::_duplicate (_tao_forward_reference);
 }
 
-// TAO extension - the virtual _type method.
-CORBA::TypeCode_ptr PortableServer::ForwardRequest::_tao_type (void) const
-{
-  return ::PortableServer::_tc_ForwardRequest;
-}
+
 
 // TAO_IDL - Generated from
 // be\be_visitor_exception/cdr_op_cs.cpp:60

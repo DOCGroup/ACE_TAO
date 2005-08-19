@@ -1,3 +1,10 @@
+
+        * DAnCE/Config_Handlers/Any_Handler.cpp:
+        * DAnCE/Config_Handlers/DataType_Handler.cpp:
+        * DAnCE/Old_Config_Handlers/DT_Handler.cpp:
+        * DAnCE/ciao/ComponentsC.h:
+        * ciao/ComponentsC.h:
+          Updated for AnyTypeCode refactoring
 Tue Aug 16 15:16:10 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
 	* docs/schema/CIAOServerResources.xsd: Changed to define most of
@@ -41,8 +48,8 @@ Mon Aug 15 12:03:43 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* DAnCE/Config_Handlers/test.cpp
 
 	Checked in support for IDL->XSC->XML mapping.  Thanks to Lucas
-	Seibert <heynonynony at yahoo dot com> for completing this work. 
-	
+	Seibert <heynonynony at yahoo dot com> for completing this work.
+
 Mon Aug 15 00:01:01 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* CIDLC/cidlc.cpp: Made ErrorHandler auto-detach itself

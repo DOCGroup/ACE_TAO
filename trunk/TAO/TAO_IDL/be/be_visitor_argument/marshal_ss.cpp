@@ -280,16 +280,16 @@ int be_visitor_args_marshal_ss::visit_predefined_type (
               *os << arg->local_name ();
               break;
             case AST_PredefinedType::PT_char:
-              *os << "::CORBA::Any::to_char (" << arg->local_name () << ")";
+              *os << "::ACE_InputCDR::to_char (" << arg->local_name () << ")";
               break;
             case AST_PredefinedType::PT_wchar:
-              *os << "::CORBA::Any::to_wchar (" << arg->local_name () << ")";
+              *os << "::ACE_InputCDR::to_wchar (" << arg->local_name () << ")";
               break;
             case AST_PredefinedType::PT_boolean:
-              *os << "::CORBA::Any::to_boolean (" << arg->local_name () << ")";
+              *os << "::ACE_InputCDR::to_boolean (" << arg->local_name () << ")";
               break;
             case AST_PredefinedType::PT_octet:
-              *os << "::CORBA::Any::to_octet (" << arg->local_name () << ")";
+              *os << "::ACE_InputCDR::to_octet (" << arg->local_name () << ")";
               break;
             default:
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -331,16 +331,16 @@ int be_visitor_args_marshal_ss::visit_predefined_type (
               *os << arg->local_name ();
               break;
             case AST_PredefinedType::PT_char:
-              *os << "::CORBA::Any::from_char (" << arg->local_name () << ")";
+              *os << "::ACE_OutputCDR::from_char (" << arg->local_name () << ")";
               break;
             case AST_PredefinedType::PT_wchar:
-              *os << "::CORBA::Any::from_wchar (" << arg->local_name () << ")";
+              *os << "::ACE_OutputCDR::from_wchar (" << arg->local_name () << ")";
               break;
             case AST_PredefinedType::PT_boolean:
-              *os << "::CORBA::Any::from_boolean (" << arg->local_name () << ")";
+              *os << "::ACE_OutputCDR::from_boolean (" << arg->local_name () << ")";
               break;
             case AST_PredefinedType::PT_octet:
-              *os << "::CORBA::Any::from_octet (" << arg->local_name () << ")";
+              *os << "::ACE_OutputCDR::from_octet (" << arg->local_name () << ")";
               break;
             default:
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -372,16 +372,16 @@ int be_visitor_args_marshal_ss::visit_predefined_type (
               *os << arg->local_name ();
               break;
             case AST_PredefinedType::PT_char:
-              *os << "::CORBA::Any::from_char (" << arg->local_name () << ")";
+              *os << "::ACE_OutputCDR::from_char (" << arg->local_name () << ")";
               break;
             case AST_PredefinedType::PT_wchar:
-              *os << "::CORBA::Any::from_wchar (" << arg->local_name () << ")";
+              *os << "::ACE_OutputCDR::from_wchar (" << arg->local_name () << ")";
               break;
             case AST_PredefinedType::PT_boolean:
-              *os << "::CORBA::Any::from_boolean (" << arg->local_name () << ")";
+              *os << "::ACE_OutputCDR::from_boolean (" << arg->local_name () << ")";
               break;
             case AST_PredefinedType::PT_octet:
-              *os << "::CORBA::Any::from_octet (" << arg->local_name () << ")";
+              *os << "::ACE_OutputCDR::from_octet (" << arg->local_name () << ")";
               break;
             default:
               ACE_ERROR_RETURN ((
@@ -471,11 +471,11 @@ int be_visitor_args_marshal_ss::visit_string (be_string *node)
             {
               if (node->width () == (long) sizeof (char))
                 {
-                  *os << "::CORBA::Any::to_string (";
+                  *os << "::ACE_InputCDR::to_string (";
                 }
               else
                 {
-                  *os << "::CORBA::Any::to_wstring (";
+                  *os << "::ACE_InputCDR::to_wstring (";
                 }
 
               *os << arg->local_name () << ".out (), "
@@ -514,11 +514,11 @@ int be_visitor_args_marshal_ss::visit_string (be_string *node)
             case AST_Argument::dir_OUT:
               if (node->width () == (long) sizeof (char))
                 {
-                  *os << "::CORBA::Any::from_string ((char *)";
+                  *os << "::ACE_OutputCDR::from_string ((char *)";
                 }
               else
                 {
-                  *os << "::CORBA::Any::from_wstring ((CORBA::WChar *)";
+                  *os << "::ACE_OutputCDR::from_wstring ((CORBA::WChar *)";
                 }
 
               *os << arg->local_name () << ".in (), "

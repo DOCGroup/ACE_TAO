@@ -27,6 +27,9 @@ project : taolib, rtcorba, pi, pi_server, portableserver, core, corba_messaging 
     RTScheduling
   }
 
+  IDL_Files {
+  }
+
   Pkgconfig_Files {
     RTScheduling/TAO_RTScheduler.pc.in
   }

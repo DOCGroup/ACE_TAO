@@ -61,7 +61,7 @@ public:
 
   const ACE_Message_Block *current_block (void) const;
 
-  /** Implement the Template Methods from TAO_Queued_Message
+  /** @name Implement the Template Methods from TAO_Queued_Message
    */
   //@{
   virtual size_t message_length (void) const;

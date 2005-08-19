@@ -45,13 +45,17 @@ class TAO_InputCDR;
 
 namespace CORBA
 {
-  class TypeCode;
-  typedef TypeCode *TypeCode_ptr;
+  class SystemException;
+}
 
+namespace TAO
+{
+  typedef CORBA::SystemException* (*excp_factory)(void);
+}
+
+namespace CORBA
+{
   class Environment;
-
-  class Any;
-  typedef Any *Any_ptr;
 
   /**
    * @enum CompletionStatus
@@ -84,7 +88,7 @@ namespace CORBA
     SystemException (const SystemException & src);
 
     /// Destructor.
-    ~SystemException (void);
+    virtual ~SystemException (void);
 
     /// Get the minor status.
     ULong minor (void) const;
@@ -101,31 +105,26 @@ namespace CORBA
     /// Narrow to a SystemException.
     static SystemException *_downcast (CORBA::Exception *exception);
 
-        /// The const version of narrow operation to a SystemException
+    /// The const version of narrow operation to a SystemException
     static const SystemException *_downcast(const CORBA::Exception *exception);
 
     virtual void _raise (void) const = 0;
 
     // = TAO-specific extension.
 
-    /// Helper for the _downcast operation.
-    virtual int _is_a (const char *type_id) const;
-
     /// Print the system exception @c ex to output determined by @c f.
     /// This function is not CORBA compliant.
     void _tao_print_system_exception (FILE *f = stdout) const;
-
-    /// Create an exception from the available exception
-    /// virtual CORBA::Exception *_tao_duplicate (void) const;
 
     /// Returns a string containing information about the exception. This
     /// function is not CORBA compliant.
     virtual ACE_CString _info (void) const;
 
     virtual void _tao_encode (TAO_OutputCDR &cdr
-                              ACE_ENV_ARG_DECL_NOT_USED) const;
+                              ACE_ENV_ARG_DECL) const;
+
     virtual void _tao_decode (TAO_InputCDR &cdr
-                              ACE_ENV_ARG_DECL_NOT_USED);
+                              ACE_ENV_ARG_DECL);
 
     /// Helper to create a minor status value.
     static CORBA::ULong _tao_minor_code (u_int location,
@@ -135,8 +134,7 @@ namespace CORBA
     /// value.
     static CORBA::ULong _tao_errno (int errno_value);
 
-    /// Overridden base class method to help compilers that use
-    /// explicit template instantiations get going.
+    /// Deep copy
     virtual CORBA::Exception *_tao_duplicate (void) const;
 
   protected:
@@ -192,11 +190,6 @@ namespace CORBA
       virtual CORBA::Exception *_tao_duplicate (void) const; \
       static CORBA::SystemException *_tao_create (void); \
     }; \
-  TAO_Export void operator<<= (CORBA::Any &, const CORBA::name &); \
-  TAO_Export void operator<<= (CORBA::Any &, CORBA::name *); \
-  TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, \
-                                         const CORBA::name *&); \
-  extern TAO_Export TypeCode_ptr const _tc_ ## name
 
   TAO_SYSTEM_EXCEPTION(UNKNOWN);          // the unknown exception
   TAO_SYSTEM_EXCEPTION(BAD_PARAM);        // an invalid parameter was passed

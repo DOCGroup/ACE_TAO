@@ -7,7 +7,7 @@
 //    serializer_op_cs.cpp
 //
 // = DESCRIPTION
-//    Visitor for code generation of Sequences for the 
+//    Visitor for code generation of Sequences for the
 //    TAO::DCPS::Serializer operators in the client stubs.
 //
 // = AUTHOR
@@ -125,7 +125,7 @@ be_visitor_sequence_serializer_op_cs::visit_sequence (be_sequence *node)
         }
     }
 
-  *os << be_uidt_nl 
+  *os << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // --- _dcps_max_marshaled_size ---
@@ -378,7 +378,7 @@ be_visitor_sequence_serializer_op_cs::visit_enum (be_enum *node)
         else
           *os << "return true; /* bounded enum sequence */";
         break;
-    case TAO_CodeGen::TAO_FIND_SIZE: 
+    case TAO_CodeGen::TAO_FIND_SIZE:
       *os << "//enum types are fixed size so OK to call max_marshaled_size"
           << be_nl;
     case TAO_CodeGen::TAO_MAX_MARSHALED_SIZE:
@@ -389,7 +389,7 @@ be_visitor_sequence_serializer_op_cs::visit_enum (be_enum *node)
           << be_idt << be_idt_nl;
       switch (this->ctx_->sub_state ())
         {
-        case TAO_CodeGen::TAO_FIND_SIZE: 
+        case TAO_CodeGen::TAO_FIND_SIZE:
           *os << "_tao_sequence.length();" << be_uidt << be_uidt;
           break;
         case TAO_CodeGen::TAO_MAX_MARSHALED_SIZE:
@@ -513,7 +513,7 @@ be_visitor_sequence_serializer_op_cs::visit_predefined_type (
         else
           *os << "return true; /* seq<predef'd,N> */";
         break;
-    case TAO_CodeGen::TAO_FIND_SIZE: 
+    case TAO_CodeGen::TAO_FIND_SIZE:
       *os << "//primitive types are fixed size so OK to call max_marshaled_size"
           << be_nl;
     case TAO_CodeGen::TAO_MAX_MARSHALED_SIZE:
@@ -521,12 +521,12 @@ be_visitor_sequence_serializer_op_cs::visit_predefined_type (
         {
         case AST_PredefinedType::PT_octet:
           *os << "return _dcps_max_marshaled_size_ulong () + "
-              << "_dcps_max_marshaled_size_octet ()" 
+              << "_dcps_max_marshaled_size_octet ()"
               << be_idt << be_idt_nl;
           break;
         case AST_PredefinedType::PT_char:
           *os << "return _dcps_max_marshaled_size_ulong () + "
-              << "_dcps_max_marshaled_size_char ()" 
+              << "_dcps_max_marshaled_size_char ()"
               << be_idt << be_idt_nl;
           break;
         case AST_PredefinedType::PT_wchar:
@@ -543,11 +543,11 @@ be_visitor_sequence_serializer_op_cs::visit_predefined_type (
         case AST_PredefinedType::PT_longlong:
         case AST_PredefinedType::PT_ulonglong:
         case AST_PredefinedType::PT_longdouble:
-          *os << "//sequence is of a fixed sized predefined type = " 
+          *os << "//sequence is of a fixed sized predefined type = "
               << "sizeof(ULong) + type size * length" << be_nl;
           *os << node->name () << " a_base_value;" << be_nl;
           *os << "return _dcps_max_marshaled_size_ulong () + "
-              << "_dcps_max_marshaled_size (a_base_value)" 
+              << "_dcps_max_marshaled_size (a_base_value)"
               << be_idt << be_idt_nl;
           break;
           break;
@@ -566,7 +566,7 @@ be_visitor_sequence_serializer_op_cs::visit_predefined_type (
 
       switch (this->ctx_->sub_state ())
         {
-        case TAO_CodeGen::TAO_FIND_SIZE: 
+        case TAO_CodeGen::TAO_FIND_SIZE:
           *os << " * _tao_sequence.length();" << be_uidt << be_uidt;
           break;
         case TAO_CodeGen::TAO_MAX_MARSHALED_SIZE:
@@ -584,7 +584,7 @@ be_visitor_sequence_serializer_op_cs::visit_predefined_type (
       case TAO_CodeGen::TAO_CDR_OUTPUT:
         {
   /*
-   * Avoiding the work to make TAO::DCPS::Serializer handle the 
+   * Avoiding the work to make TAO::DCPS::Serializer handle the
    * TAO_NO_COPY_OCTET_SEQUENCES optimization.
    * TBD - support this optimization -- see corresponding CDR code.
    */
@@ -861,7 +861,7 @@ switch (this->ctx_->sub_state ())
           *os << "// sequence of enums" << be_nl
               << "return _dcps_max_marshaled_size_ulong () + " << be_idt_nl
               << "_tao_sequence.maximum() * " << be_nl
-              << "_dcps_max_marshaled_size_ulong ();" << be_uidt; 
+              << "_dcps_max_marshaled_size_ulong ();" << be_uidt;
           break;
         case AST_Decl::NT_union:
           *os << "ACE_UNUSED_ARG(_tao_sequence);" << be_nl;
@@ -875,7 +875,7 @@ switch (this->ctx_->sub_state ())
           *os << bt->name () << " a_base_value;" << be_nl
               << "return _dcps_max_marshaled_size_ulong () + " << be_idt_nl
               << "_tao_sequence.maximum() * " << be_nl
-              << "_dcps_max_marshaled_size (a_base_value);" << be_uidt; 
+              << "_dcps_max_marshaled_size (a_base_value);" << be_uidt;
           break;
         case AST_Decl::NT_array:
           *os << bt->name () << " a_base_value;" << be_nl;
@@ -919,7 +919,7 @@ switch (this->ctx_->sub_state ())
         case AST_Decl::NT_interface:
           *os << "//DCPS - Sequence of interfaces is not supported" << be_nl;
           *os << "return 77777;" << be_nl;
-          break; 
+          break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
                               "(%N:%l) be_visitor_sequence_serializer_op_cs::"
@@ -929,7 +929,7 @@ switch (this->ctx_->sub_state ())
           break;
         }
       break;
-    case TAO_CodeGen::TAO_FIND_SIZE: 
+    case TAO_CodeGen::TAO_FIND_SIZE:
       {
         *os << "//iterate over the sequence to find the current size" << be_nl
             << "size_t the_length = _dcps_max_marshaled_size_ulong ();" << be_nl
@@ -987,12 +987,12 @@ switch (this->ctx_->sub_state ())
           break;
         case AST_Decl::NT_string:
         case AST_Decl::NT_wstring:
-          *os << "the_length += _dcps_max_marshaled_size_ulong () + " 
+          *os << "the_length += _dcps_max_marshaled_size_ulong () + "
               << "ACE_OS::strlen (_tao_sequence[i]);" << be_uidt_nl;
           break;
         case AST_Decl::NT_interface:
           *os << "//DCPS - Sequence of interfaces is not supported" << be_nl;
-          break; 
+          break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
                               "(%N:%l) be_visitor_sequence_serializer_op_cs::"
@@ -1110,12 +1110,12 @@ switch (this->ctx_->sub_state ())
                 if (str->width () == (long) sizeof (char))
                   {
                     *os << "_tao_marshal_flag = (strm >> "
-                        << "::CORBA::Any::to_string (_tao_sequence[i].out (), ";
+                        << "::ACE_InputCDR::to_string (_tao_sequence[i].out (), ";
                   }
                 else
                   {
                     *os << "_tao_marshal_flag = (strm >> "
-                        << "::CORBA::Any::to_wstring (_tao_sequence[i].out (), ";
+                        << "::ACE_InputCDR::to_wstring (_tao_sequence[i].out (), ";
                   }
 
                 *os << str->max_size ()->ev ()->u.ulval << "));"
@@ -1157,22 +1157,22 @@ switch (this->ctx_->sub_state ())
                   break;
                 case AST_PredefinedType::PT_char:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm >> ::CORBA::Any::to_char (_tao_sequence[i]));"
+                      << "(strm >> ::ACE_InputCDR::to_char (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 case AST_PredefinedType::PT_wchar:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm >> ::CORBA::Any::to_wchar (_tao_sequence[i]));"
+                      << "(strm >> ::ACE_InputCDR::to_wchar (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 case AST_PredefinedType::PT_boolean:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm >> ::CORBA::Any::to_boolean (_tao_sequence[i]));"
+                      << "(strm >> ::ACE_InputCDR::to_boolean (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 case AST_PredefinedType::PT_octet:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm >> ::CORBA::Any::to_octet (_tao_sequence[i]));"
+                      << "(strm >> ::ACE_InputCDR::to_octet (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 default:
@@ -1271,22 +1271,22 @@ switch (this->ctx_->sub_state ())
                   break;
                 case AST_PredefinedType::PT_char:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm << ::CORBA::Any::from_char (_tao_sequence[i]));"
+                      << "(strm << ::ACE_OutputCDR::from_char (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 case AST_PredefinedType::PT_wchar:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm << ::CORBA::Any::from_wchar (_tao_sequence[i]));"
+                      << "(strm << ::ACE_OutputCDR::from_wchar (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 case AST_PredefinedType::PT_boolean:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm << ::CORBA::Any::from_boolean (_tao_sequence[i]));"
+                      << "(strm << ::ACE_OutputCDR::from_boolean (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 case AST_PredefinedType::PT_octet:
                   *os << "_tao_marshal_flag =" << be_idt_nl
-                      << "(strm << ::CORBA::Any::from_octet (_tao_sequence[i]));"
+                      << "(strm << ::ACE_OutputCDR::from_octet (_tao_sequence[i]));"
                       << be_uidt;
                   break;
                 default:

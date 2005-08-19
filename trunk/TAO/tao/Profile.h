@@ -60,7 +60,6 @@ public:
   /**
    * @name Non virtual methods for the profile classes.
   */
-
   //@{
   /// The tag, each concrete class will have a specific tag value.
   CORBA::ULong tag (void) const;

@@ -2,12 +2,12 @@
 
 #include "Unknown_User_Exception.h"
 
-#include "tao/Any.h"
+#include "tao/AnyTypeCode/Any.h"
 #include "tao/Environment.h"
-#include "tao/TypeCode_Constants.h"
-#include "tao/Null_RefCount_Policy.h"
-#include "tao/TypeCode_Struct_Field.h"
-#include "tao/Struct_TypeCode_Static.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
+#include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
+#include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
 #include "tao/SystemException.h"
 
 #include "ace/OS_NS_string.h"
@@ -53,16 +53,6 @@ CORBA::Any &
 CORBA::UnknownUserException::exception (void)
 {
   return *this->exception_;
-}
-
-int
-CORBA::UnknownUserException::_is_a (const char *interface_id) const
-{
-  return
-    ((ACE_OS::strcmp (interface_id,
-                      "IDL:omg.org/CORBA/UnknownUserException:1.0")
-        == 0)
-      || UserException::_is_a (interface_id));
 }
 
 CORBA::UnknownUserException *

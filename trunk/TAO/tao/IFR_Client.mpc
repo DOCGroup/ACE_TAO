@@ -1,5 +1,5 @@
 //$Id$
-project : taolib, core {
+project : taolib, core, anytypecode {
   sharedname   = TAO_IFR_Client
   dynamicflags = TAO_IFR_CLIENT_BUILD_DLL
 
@@ -25,6 +25,9 @@ project : taolib, core {
 
   PIDL_Files {
     IFR_Client
+  }
+
+  IDL_Files {
   }
 
   Pkgconfig_Files {

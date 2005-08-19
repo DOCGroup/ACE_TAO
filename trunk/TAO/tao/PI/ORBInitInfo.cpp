@@ -11,7 +11,7 @@
 #include "ace/Service_Config.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-#include "tao/PICurrent.h"
+#include "PICurrent.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 ACE_RCSID (TAO,

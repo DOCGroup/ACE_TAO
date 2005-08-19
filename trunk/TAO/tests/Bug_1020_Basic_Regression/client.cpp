@@ -5,7 +5,7 @@
 #include "tao/Utils/Servant_Var.h"
 #include "ace/Get_Opt.h"
 #include "tao/Messaging/Messaging.h"
-
+#include "tao/AnyTypeCode/Any.h"
 
 ACE_RCSID (Bug_1020_Basic_Regression,
            client,

@@ -9,9 +9,6 @@ TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
   , ts_objects_ ()
   , upcalls_temporarily_suspended_on_this_thread_ (false)
   , orb_core_ (0)
-#if TAO_HAS_INTERCEPTORS == 1
-    , pi_current_ ()
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 {
 }
 

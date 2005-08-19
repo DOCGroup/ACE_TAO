@@ -40,8 +40,6 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "tao/PICurrent.h"
-
 namespace TAO
 {
   class ClientRequestInterceptor_Adapter;
@@ -55,6 +53,8 @@ namespace TAO
 #include "ace/TSS_T.h"
 
 // Forward declarations
+class ACE_Data_Block;
+
 class TAO_Adapter;
 class TAO_Acceptor;
 class TAO_Connector;
@@ -190,10 +190,10 @@ public:
   void poa_current (CORBA::Object_ptr poa_current);
   //@}
 
-  ///Get the connector registry
+  /// Get the connector registry
   TAO_Connector_Registry *connector_registry (ACE_ENV_SINGLE_ARG_DECL);
 
-  ///Get the IOR parser registry
+  /// Get the IOR parser registry
   TAO_Parser_Registry *parser_registry (void);
 
   /// Return pointer to the policy factory registry associated with
@@ -412,7 +412,6 @@ public:
   /// The Message Blocks used for input CDRs must have appropiate
   /// locking strategies.
   ACE_Data_Block *create_input_cdr_data_block (size_t size);
-
 
   /// Return the locking strategy used for the data blocks.
   ACE_Lock *locking_strategy (void);
@@ -787,10 +786,10 @@ public:
 #if TAO_HAS_INTERCEPTORS == 1
 
   /// Return a pointer to the cached TAO::PICurrent object.
-  TAO::PICurrent *pi_current (void);
+  CORBA::Object_ptr pi_current (void);
 
   /// Set the pointer to the cached TAO::PICurrent object.
-  void pi_current (TAO::PICurrent *current);
+  void pi_current (CORBA::Object_ptr current);
 
   /// Register a client request interceptor.
   void add_interceptor (
@@ -1166,7 +1165,7 @@ protected:
    * invocation path).  Caching it prevents additional overhead to due
    * object resolution from occurring.
    */
-  TAO::PICurrent *pi_current_;
+  CORBA::Object_ptr pi_current_;
 
   /// The adapter for handling client request interceptors
   TAO::ClientRequestInterceptor_Adapter *client_request_interceptor_adapter_;

@@ -47,7 +47,7 @@ namespace TAO
 {
 #if !defined (_PORTABLESERVER_ADAPTERACTIVATOR__ARG_TRAITS_CS_)
 #define _PORTABLESERVER_ADAPTERACTIVATOR__ARG_TRAITS_CS_
-  
+
   template<>
   class  Arg_Traits<PortableServer::AdapterActivator>
     : public
@@ -55,7 +55,8 @@ namespace TAO
             PortableServer::AdapterActivator_ptr,
             PortableServer::AdapterActivator_var,
             PortableServer::AdapterActivator_out,
-            TAO::Objref_Traits<PortableServer::AdapterActivator>
+            TAO::Objref_Traits<PortableServer::AdapterActivator>,
+            TAO::Any_Insert_Policy_Stream <PortableServer::AdapterActivator_ptr>
           >
   {
   };
@@ -63,7 +64,7 @@ namespace TAO
 #endif /* end #if !defined */
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_PORTABLESERVER_POALIST_CS_)
@@ -155,7 +156,7 @@ TAO::Objref_Traits<PortableServer::POA>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 PortableServer::POA::AdapterAlreadyExists::AdapterAlreadyExists (void)
@@ -250,7 +251,7 @@ CORBA::TypeCode_ptr PortableServer::POA::AdapterAlreadyExists::_tao_type (void) 
   return ::PortableServer::POA::_tc_AdapterAlreadyExists;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 PortableServer::POA::AdapterNonExistent::AdapterNonExistent (void)
@@ -345,7 +346,7 @@ CORBA::TypeCode_ptr PortableServer::POA::AdapterNonExistent::_tao_type (void) co
   return ::PortableServer::POA::_tc_AdapterNonExistent;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 PortableServer::POA::InvalidPolicy::InvalidPolicy (void)
@@ -458,7 +459,7 @@ CORBA::TypeCode_ptr PortableServer::POA::InvalidPolicy::_tao_type (void) const
   return ::PortableServer::POA::_tc_InvalidPolicy;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -557,7 +558,7 @@ CORBA::TypeCode_ptr PortableServer::POA::NoServant::_tao_type (void) const
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 PortableServer::POA::ObjectAlreadyActive::ObjectAlreadyActive (void)
@@ -652,7 +653,7 @@ CORBA::TypeCode_ptr PortableServer::POA::ObjectAlreadyActive::_tao_type (void) c
   return ::PortableServer::POA::_tc_ObjectAlreadyActive;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 PortableServer::POA::ObjectNotActive::ObjectNotActive (void)
@@ -747,7 +748,7 @@ CORBA::TypeCode_ptr PortableServer::POA::ObjectNotActive::_tao_type (void) const
   return ::PortableServer::POA::_tc_ObjectNotActive;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 PortableServer::POA::ServantAlreadyActive::ServantAlreadyActive (void)
@@ -842,7 +843,7 @@ CORBA::TypeCode_ptr PortableServer::POA::ServantAlreadyActive::_tao_type (void) 
   return ::PortableServer::POA::_tc_ServantAlreadyActive;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 PortableServer::POA::ServantNotActive::ServantNotActive (void)
@@ -937,7 +938,7 @@ CORBA::TypeCode_ptr PortableServer::POA::ServantNotActive::_tao_type (void) cons
   return ::PortableServer::POA::_tc_ServantNotActive;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 PortableServer::POA::WrongAdapter::WrongAdapter (void)
@@ -1032,7 +1033,7 @@ CORBA::TypeCode_ptr PortableServer::POA::WrongAdapter::_tao_type (void) const
   return ::PortableServer::POA::_tc_WrongAdapter;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 PortableServer::POA::WrongPolicy::WrongPolicy (void)
@@ -1133,7 +1134,7 @@ PortableServer::POA::POA (void)
 PortableServer::POA::~POA (void)
 {}
 
-void 
+void
 PortableServer::POA::_tao_any_destructor (void *_tao_void_pointer)
 {
   POA *_tao_tmp_pointer =
@@ -1170,7 +1171,7 @@ PortableServer::POA::_duplicate (POA_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 

@@ -29,7 +29,7 @@
 #include "orbsvcs/Scheduler_Factory.h"
 
 #include "tao/ORB_Core.h"
-#include "tao/TypeCode.h"
+#include "tao/AnyTypeCode/TypeCode.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
@@ -191,21 +191,28 @@ Demo_Consumer::push (const RtecEventComm::EventSet &events
               ACE_TRY_CHECK;
               ACE_DEBUG ((LM_DEBUG, "TCKind: %d\n", kind));
 
-              int ret = _tc_Navigation->equal (events[i].data.any_value.type() ACE_ENV_ARG_PARAMETER);
+              CORBA::Boolean ret =
+                _tc_Navigation->equal (events[i].data.any_value.type() ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
+
               if (ret)
                 {
-                  Navigation *navigation_ = (Navigation*) events[i].data.any_value.value ();
+                  const Navigation *navigation_ = 0;
+                  events[i].data.any_value >>= navigation_;
                   ACE_DEBUG ((LM_DEBUG, "Found a Navigation struct in the any: pos_lat = %d\n", navigation_->position_latitude));
                 }
-              else {
-                ret = (_tc_Weapons->equal (events[i].data.any_value.type() ACE_ENV_ARG_PARAMETER));
-                ACE_TRY_CHECK;
-                if (ret) {
-                  Weapons *weapons_ = (Weapons*) events[i].data.any_value.value ();
-                  ACE_DEBUG ((LM_DEBUG, "Found a Weapons struct in the any: nr_of_weapons = %u\n", weapons_->number_of_weapons));
+              else
+                {
+                  ret = _tc_Weapons->equal (events[i].data.any_value.type() ACE_ENV_ARG_PARAMETER);
+                  ACE_TRY_CHECK;
+
+                  if (ret)
+                    {
+                      const Weapons *weapons_ = 0;
+                      events[i].data.any_value >>= weapons_;
+                      ACE_DEBUG ((LM_DEBUG, "Found a Weapons struct in the any: nr_of_weapons = %u\n", weapons_->number_of_weapons));
+                    }
                 }
-              }
             }
           ACE_CATCHANY
             {

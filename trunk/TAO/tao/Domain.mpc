@@ -26,6 +26,9 @@ project : taolib, core, ifr_client, portableserver {
   PIDL_Files {
   }
 
+  IDL_Files {
+  }
+
   Pkgconfig_Files {
     Domain/TAO_Domain.pc.in
   }

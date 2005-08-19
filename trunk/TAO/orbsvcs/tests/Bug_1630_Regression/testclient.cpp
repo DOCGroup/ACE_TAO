@@ -2,7 +2,7 @@
 // $Id$
 //
 
-#include "tao/NVList.h"
+#include "tao/AnyTypeCode/NVList.h"
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/IFR_Client/IFR_Client_Adapter_Impl.h"
 #include "ace/OS_NS_string.h"

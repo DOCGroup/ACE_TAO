@@ -2,8 +2,6 @@
 // $Id$
 
 project(*Server): taoserver, minimum_corba {
-  idlflags += -GA
-
   Source_Files {
     param_test_i.cpp
     server.cpp
@@ -12,7 +10,6 @@ project(*Server): taoserver, minimum_corba {
 
 project(*Client): taoserver, minimum_corba, dynamicinterface {
   exename  = client
-  idlflags += -GA
   after += Param_Test_Server
 
   Source_Files {
@@ -62,12 +59,10 @@ project(*Client): taoserver, minimum_corba, dynamicinterface {
 
 project(*Anyop): taoserver, minimum_corba {
   exename = anyop
-  idlflags += -GA
   after += Param_Test_Client
 
   Source_Files {
     param_testC.cpp
-    param_testA.cpp
     anyop.cpp
   }
 }

@@ -325,6 +325,13 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << be_uidt_nl << "}" << be_nl << be_nl;
     }
 
+  // Switch streams to the *A.cpp file if we are using this option.
+  if (be_global->gen_anyop_files ())
+    {
+      os = tao_cg->anyop_source ();
+      *os << be_nl << be_nl;
+    }
+
   // No check for typecode suppression here, since the typecode is
   // required in generated code for an operation that raises the
   // exception. We have already output a warning message when
@@ -334,8 +341,11 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       << "::_tao_type (void) const" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return ::" << node->tc_name () << ";" << be_uidt_nl;
-      *os << "}";
-      
+  *os << "}";
+
+  // Make sure we are generating to *C.cpp regardless of the above.
+  os = tao_cg->client_stubs ();
+
   // No check for typecode suppression here, since the typecode is
   // required in generated code for an operation that raises the
   // exception. We have already output a warning message when

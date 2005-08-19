@@ -45,9 +45,9 @@
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/Object.h"
-#include "tao/TypeCode_Constants.h"
-#include "tao/Any.h"
-#include "tao/TypeCode.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/Objref_VarOut_T.h"
 
 #include "tao/PI/RequestInfoC.h"
@@ -201,10 +201,10 @@ namespace PortableInterceptor
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual ::CORBA::Policy_ptr get_server_policy (
         ::CORBA::PolicyType type
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -212,10 +212,10 @@ namespace PortableInterceptor
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void set_slot (
         ::PortableInterceptor::SlotId id,
         const ::CORBA::Any & data
@@ -225,10 +225,10 @@ namespace PortableInterceptor
         CORBA::SystemException,
         ::PortableInterceptor::InvalidSlot
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual CORBA::Boolean target_is_a (
         const char * id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -236,10 +236,10 @@ namespace PortableInterceptor
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void add_reply_service_context (
         const ::IOP::ServiceContext & service_context,
         ::CORBA::Boolean replace
@@ -248,36 +248,36 @@ namespace PortableInterceptor
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
-    
+
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Abstract or local interface only.
     ServerRequestInfo (void);
-    
+
     virtual ~ServerRequestInfo (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     ServerRequestInfo (const ServerRequestInfo &);
-    
+
     void operator= (const ServerRequestInfo &);
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   extern TAO_PI_Server_Export ::CORBA::TypeCode_ptr const _tc_ServerRequestInfo;
 
 // TAO_IDL - Generated from
@@ -294,7 +294,7 @@ namespace TAO
 
 #if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINFO__TRAITS_CH_)
 #define _PORTABLEINTERCEPTOR_SERVERREQUESTINFO__TRAITS_CH_
-  
+
   template<>
   struct TAO_PI_Server_Export Objref_Traits< ::PortableInterceptor::ServerRequestInfo>
   {

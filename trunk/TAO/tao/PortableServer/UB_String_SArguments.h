@@ -22,7 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/UB_String_SArgument_T.h"
-#include "tao/Arg_Traits_T.h"
+#include "tao/PortableServer/SArg_Traits_T.h"
 
 namespace TAO
 {

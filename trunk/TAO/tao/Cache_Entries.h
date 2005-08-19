@@ -165,11 +165,8 @@ namespace TAO
     /// Make a deep copy of the underlying pointer
     void duplicate (void);
 
-    //@{
     /// Return the index value
-    CORBA::ULong index (void);
     CORBA::ULong index (void) const;
-    //@}
 
     /// Set the index value. This calls should not be used by any users
     /// but for the TAO_Transport_Cache_Manager class.

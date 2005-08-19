@@ -2,7 +2,7 @@
 
 #include "DT_Handler.h"
 #include "Utils.h"
-#include "tao/TypeCode.h"
+#include "tao/AnyTypeCode/TypeCode.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
 

@@ -43,12 +43,24 @@ be_visitor_module_ch::visit_module (be_module *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream *aos = 0;
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "namespace " << node->local_name () << be_nl
       << "{" << be_idt;
+      
+  if (be_global->gen_anyop_files ())
+    {
+      aos = tao_cg->anyop_header ();
+
+      *aos << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+           << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
+      *aos << "namespace " << node->local_name () << be_nl
+           << "{" << be_idt;
+    }
 
   // Generate code for the module definition by traversing thru the
   // elements of its scope. We depend on the front-end to have made sure
@@ -67,6 +79,15 @@ be_visitor_module_ch::visit_module (be_module *node)
 
   *os << be_nl
       << "} // module " << node->name ();
+
+  if (be_global->gen_anyop_files ())
+    {
+      *aos << be_uidt_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+           << "// " << __FILE__ << ":" << __LINE__ << be_nl;
+
+      *aos << be_nl
+           << "} // module " << node->name ();
+    }
 
   return 0;
 }

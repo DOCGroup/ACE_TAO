@@ -10,7 +10,7 @@ project(*Server): taoserver {
   }
 }
 
-project(*Client): taoclient {
+project(*Client): taoclient, anytypecode {
   Source_Files {
     TestC.cpp
     Client_Task.cpp
@@ -18,7 +18,8 @@ project(*Client): taoclient {
   }
 }
 
-project(*Child): taoexe, portableserver {
+project(*Child): taoserver {
+  exename = child
   Source_Files {
     Process.cpp
     child.cpp

@@ -4,21 +4,25 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-
 ACE_RCSID (tao,
            ClientRequestInfo,
            "$Id$")
 
-#include "tao/Any.h"
+#include "PICurrent.h"
+#include "RequestInfo_Util.h"
+
+#include "tao/AnyTypeCode/Any.h"
+#include "tao/AnyTypeCode/ExceptionA.h"
 #include "tao/PolicyC.h"
 #include "tao/PortableInterceptorC.h"
-#include "tao/PICurrent.h"
 #include "tao/Invocation_Base.h"
+#include "tao/operation_details.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 #include "tao/Profile.h"
 #include "tao/debug.h"
 #include "tao/Service_Context.h"
+#include "tao/Exception_Data.h"
 
 TAO_ClientRequestInfo::TAO_ClientRequestInfo (TAO::Invocation_Base *inv)
   : invocation_ (inv),
@@ -32,8 +36,11 @@ void
 TAO_ClientRequestInfo::setup_picurrent (void)
 {
   // Retrieve the thread scope current (no TSS access incurred yet).
-  TAO::PICurrent *pi_current =
+  CORBA::Object_ptr pi_current_obj =
     this->invocation_->orb_core ()->pi_current ();
+
+  TAO::PICurrent *pi_current =
+    dynamic_cast <TAO::PICurrent*> (pi_current_obj);
 
   // If the slot count is zero, then there is nothing to copy.
   // Prevent any copying (and hence TSS accesses) from occurring.
@@ -456,7 +463,8 @@ TAO_ClientRequestInfo::operation (ACE_ENV_SINGLE_ARG_DECL)
   this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  return CORBA::string_dup (this->invocation_->operation_name ());
+  return CORBA::string_dup (
+    this->invocation_->operation_details ().opname  ());
 }
 
 Dynamic::ParameterList *
@@ -466,7 +474,38 @@ TAO_ClientRequestInfo::arguments (ACE_ENV_SINGLE_ARG_DECL)
   this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  return this->invocation_->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
+  // Generate the argument list on demand.
+  Dynamic::ParameterList *parameter_list =
+    TAO_RequestInfo_Util::make_parameter_list (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  Dynamic::ParameterList_var safe_parameter_list = parameter_list;
+
+  if (this->parameter_list (*parameter_list) == false)
+    ACE_THROW_RETURN (CORBA::MARSHAL (),
+                      0);
+
+  return safe_parameter_list._retn ();
+
+  //return this->invocation_->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+bool
+TAO_ClientRequestInfo::parameter_list (Dynamic::ParameterList &param_list)
+{
+  // Account for the return type that could be in the argument list.
+  param_list.length (this->invocation_->operation_details ().args_num () - 1);
+
+  for (CORBA::ULong i = 1; i != this->invocation_->operation_details ().args_num (); ++i)
+    {
+      TAO::Argument *argument =
+        this->invocation_->operation_details ().args ()[i];
+      Dynamic::Parameter &p = param_list[i - 1];
+      p.mode = argument->mode ();
+      argument->interceptor_value (&p.argument);
+    }
+
+  return true;
 }
 
 Dynamic::ExceptionList *
@@ -476,7 +515,37 @@ TAO_ClientRequestInfo::exceptions (ACE_ENV_SINGLE_ARG_DECL)
   this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  return this->invocation_->exceptions (ACE_ENV_SINGLE_ARG_PARAMETER);
+  Dynamic::ExceptionList *exception_list =
+    TAO_RequestInfo_Util::make_exception_list (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  Dynamic::ExceptionList_var safe_exception_list = exception_list;
+
+  if (this->exception_list (*exception_list) == false)
+    ACE_THROW_RETURN (CORBA::MARSHAL (),
+                      0);
+
+  return safe_exception_list._retn ();
+}
+
+bool
+TAO_ClientRequestInfo::exception_list (Dynamic::ExceptionList &exception_list)
+{
+
+  if (this->invocation_->operation_details ().ex_count ())
+    {
+      exception_list.length (this->invocation_->operation_details ().ex_count ());
+
+      for (CORBA::ULong i = 0;
+           i != this->invocation_->operation_details ().ex_count ();
+           ++i)
+        {
+          CORBA::TypeCode_ptr tcp = this->invocation_->operation_details ().ex_data ()[i].tc_ptr;
+          TAO_Pseudo_Object_Manager<CORBA::TypeCode> tcp_object (&tcp, 1);
+          exception_list[i] = tcp_object;
+        }
+    }
+  return true;
 }
 
 Dynamic::ContextList *
@@ -510,7 +579,28 @@ TAO_ClientRequestInfo::result (ACE_ENV_SINGLE_ARG_DECL)
   this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  return this->invocation_->result (ACE_ENV_SINGLE_ARG_PARAMETER);
+  // Generate the result on demand.
+  static const CORBA::Boolean tk_void_any = 0;
+  CORBA::Any *result_any =
+    TAO_RequestInfo_Util::make_any (tk_void_any ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  CORBA::Any_var safe_result_any = result_any;
+
+  if (this->result (result_any) == false)
+    ACE_THROW_RETURN (CORBA::MARSHAL (),
+                      0);
+
+  return safe_result_any._retn ();
+}
+
+bool
+TAO_ClientRequestInfo::result (CORBA::Any *any)
+{
+  for (CORBA::ULong i = 0; i != this->invocation_->operation_details ().args_num (); ++i)
+    (*this->invocation_->operation_details ().args ()[i]).interceptor_value (any);
+
+  return true;
 }
 
 CORBA::Boolean
@@ -530,7 +620,7 @@ TAO_ClientRequestInfo::sync_scope (ACE_ENV_SINGLE_ARG_DECL)
   this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  return this->invocation_->sync_scope ();
+  return this->invocation_->operation_details ().response_flags ();
 }
 
 PortableInterceptor::ReplyStatus

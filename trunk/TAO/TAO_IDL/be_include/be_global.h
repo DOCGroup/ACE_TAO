@@ -100,6 +100,9 @@ public:
   static const char *be_get_anyop_source_fname (
       int base_name_only = 0
     );
+  static const char *be_get_anyop_header_fname (
+      int base_name_only = 0
+    );
 
   // Helper functions: obtain the names of each generated file given
   // the IDL file name.
@@ -160,6 +163,21 @@ public:
   // side export macro definition.
 
   void stub_export_include (const char* s);
+  // set the name of the include file that contains the client side
+  // export macro definition.
+
+  const char* anyop_export_macro (void) const;
+  // returns the macro name for exporting client side classes in Win32
+  // DLL.
+
+  void anyop_export_macro (const char* s);
+  // set the macro name for export client side classes in Win32 DLL.
+
+  const char* anyop_export_include (void) const;
+  // returns the name of the include file that contains the client
+  // side export macro definition.
+
+  void anyop_export_include (const char* s);
   // set the name of the include file that contains the client side
   // export macro definition.
 
@@ -267,9 +285,17 @@ public:
   const char* server_template_inline_ending (void) const;
   // Get the server_template_inline_ending.
 
+  void anyop_header_ending (const char* s);
+  // Set the anyop_header_ending.
+  
   const char* anyop_header_ending (void) const;
+  // Get the anyop_header_ending.
+  
+  void anyop_source_ending (const char* s);
+  // Set the anyop_source_ending.
+    
   const char* anyop_source_ending (void) const;
-  // TAO developers only.
+  // Get the anyop_source_ending.
 
   void output_dir (const char* s);
   // Set the directory where all the IDL-Compiler-Generated files are
@@ -278,6 +304,16 @@ public:
 
   const char* output_dir (void) const;
   // Get the directory where all the IDL-Compiler-Generated files are
+  // to be kept. Default  is current directory from which the
+  // <tao_idl> is called.
+
+  void anyop_output_dir (const char* s);
+  // Set the directory where all the *A.* files are
+  // to be kept. Default  is current directory from which the
+  // <tao_idl> is called.
+
+  const char* anyop_output_dir (void) const;
+  // Get the directory where all the *A.* files are
   // to be kept. Default  is current directory from which the
   // <tao_idl> is called.
 
@@ -391,9 +427,6 @@ public:
   idl_bool gen_dcps_type_support (void) const;
   // Return the flag.
 
-  void gen_tmplinst (idl_bool value);
-  // Set the flag.
-
   idl_bool gen_tmplinst (void) const;
   // Return the flag.
 
@@ -474,6 +507,11 @@ private:
   char* skel_export_include_;
   char* stub_export_macro_;
   char* stub_export_include_;
+  
+  // Macro and include used on ORB .pidl files generating to the
+  // AnyTypeCode library.
+  char* anyop_export_macro_;
+  char* anyop_export_include_;
 
   char* pch_include_;
   char* pre_include_;
@@ -519,12 +557,19 @@ private:
   // Server's template inline file name ending. Default is "S_T.i".
   char* server_template_inline_ending_;
 
-  // Any operator file name endings.
+  // Anyop header file name ending. Default is "A.h".
   char* anyop_hdr_ending_;
+  
+  // Anyop source file name ending. Default is "A.cpp".
   char* anyop_src_ending_;
 
   char* output_dir_;
   // Directory where all the IDL-Compiler-Generated files are to be
+  // kept. Default value is 0 for this string which means the current
+  // directory from which the <tao_idl> is called.
+
+  char* anyop_output_dir_;
+  // Directory where all the *A.* files are to be
   // kept. Default value is 0 for this string which means the current
   // directory from which the <tao_idl> is called.
 
@@ -587,11 +632,6 @@ private:
   idl_bool gen_dcps_type_support_;
   // Flag to indicate whether we are supporting DDS DCPS type definitions.
   // Includes Serializer operators (like TAO_Input/OutuptCDR).
-
-
-  idl_bool gen_tmplinst_;
-  // Flag to indicate if we are generating explicit template instantiations
-  // or not.
 
   LOOKUP_STRATEGY lookup_strategy_;
   // The enumerated value indicating the lookup strategy.

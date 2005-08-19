@@ -75,7 +75,7 @@ be_visitor_typecode_defn::be_visitor_typecode_defn (be_visitor_context * ctx)
 {
   if (be_global->gen_anyop_files ())
     {
-      // Switch streams.  (ctx better be a copy!)
+      // The context is always a copy, so this is ok.
       this->ctx_->stream (tao_cg->anyop_source ());
     }
 }

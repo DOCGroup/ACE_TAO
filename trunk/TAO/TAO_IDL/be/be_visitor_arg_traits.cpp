@@ -114,6 +114,9 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
     {
       TAO_OutStream *os = this->ctx_->stream ();
 
+      *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+          << "// " << __FILE__ << ":" << __LINE__;
+
       std::string guard_suffix =
         std::string (this->S_) + std::string ("arg_traits");
 
@@ -138,7 +141,8 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
             << "TAO::Objref_Traits<" << node->name () << ">";
         }
 
-      *os << be_uidt_nl
+      *os << "," << be_nl << this->insert_policy() << " <"
+          << node->name () << "_ptr>" << be_uidt_nl
           << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
           << "{" << be_nl
           << "};";
@@ -220,7 +224,8 @@ be_visitor_arg_traits::visit_valuebox (be_valuebox *node)
              << "TAO::Value_Traits<" << node->name () << ">";
         }
 
-      os << be_uidt_nl
+      os << "," << be_nl << this->insert_policy() << " <"
+         << node->name () << "*>" << be_uidt_nl
          << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
          << "{" << be_nl
          << "};";
@@ -269,7 +274,8 @@ be_visitor_arg_traits::visit_valuetype (be_valuetype *node)
              << "TAO::Value_Traits<" << node->name () << ">";
         }
 
-      os << be_uidt_nl
+      os << "," << be_nl << this->insert_policy() << " <"
+         << node->name () << "*>" << be_uidt_nl
          << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
          << "{" << be_nl
          << "};";
@@ -354,6 +360,10 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
       if (bound > 0)
         {
           TAO_OutStream *os = this->ctx_->stream ();
+
+          *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+              << "// " << __FILE__ << ":" << __LINE__;
+
           idl_bool wide = (str->width () != 1);
 
           *os << be_nl << be_nl;
@@ -373,11 +383,22 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
 
           *os << "template<>" << be_nl
               << "class "
-              << this->S_ << "Arg_Traits<" << node->flat_name ()
+              << this->S_ << "Arg_Traits<"
+              << node->flat_name ()
               << ">" << be_idt_nl
               << ": public" << be_idt << be_idt_nl
-              << "BD_" << (wide ? "W" : "")
-              << "String_" << this->S_ << "Arg_Traits<" << bound << ">"
+              << "BD_String_" << this->S_ << "Arg_Traits_T<" << be_nl
+              << "CORBA::" << (wide ? "W" : "") << "Char," << be_nl
+              << "CORBA::" << (wide ? "W" : "") << "String_var," << be_nl
+              << "CORBA::" << (wide ? "W" : "") << "String_out," << be_nl
+              << "ACE_InputCDR::to_" << (wide ? "w" : "") << "string," << be_nl
+              << "ACE_OutputCDR::from_" << (wide ? "w" : "") << "string," << be_nl
+              << bound << "," << be_nl
+              << this->insert_policy() << " <" << be_idt_nl
+              << "ACE_OutputCDR::from_" << (wide ? "w" : "") << "string" << be_uidt_nl
+              << ">"
+              << be_uidt_nl
+              << ">"
               << be_uidt << be_uidt << be_uidt_nl
               << "{" << be_nl
               << "};";
@@ -421,6 +442,10 @@ be_visitor_arg_traits::visit_attribute (be_attribute *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
+
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
   idl_bool wide = (st->width () != 1);
 
   // It is legal IDL to declare a bounded (w)string as an operation
@@ -446,11 +471,22 @@ be_visitor_arg_traits::visit_attribute (be_attribute *node)
 
   *os << "template<>" << be_nl
       << "class "
-      << this->S_ << "Arg_Traits<" << node->flat_name ()
+      << this->S_ << "Arg_Traits<"
+      << node->flat_name ()
       << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl
-      << "BD_" << (wide ? "W" : "")
-      << "String_" << this->S_ << "Arg_Traits<" << bound << ">"
+      << "BD_String_" << this->S_ << "Arg_Traits_T<" << be_nl
+      << "CORBA::" << (wide ? "W" : "") << "Char," << be_nl
+      << "CORBA::" << (wide ? "W" : "") << "String_var," << be_nl
+      << "CORBA::" << (wide ? "W" : "") << "String_out," << be_nl
+      << "ACE_InputCDR::to_" << (wide ? "w" : "") << "string," << be_nl
+      << "ACE_OutputCDR::from_" << (wide ? "w" : "") << "string," << be_nl
+      << bound << "," << be_nl
+      << this->insert_policy() << " <" << be_idt_nl
+      << "ACE_OutputCDR::from_" << (wide ? "w" : "") << "string" << be_uidt_nl
+      << ">"
+      << be_uidt_nl
+      << ">"
       << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
@@ -487,6 +523,10 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
+
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
   idl_bool wide = (st->width () != 1);
 
   // It is legal IDL to declare a bounded (w)string as an operation
@@ -511,11 +551,22 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
 
   *os << "template<>" << be_nl
       << "class "
-      << this->S_ << "Arg_Traits<" << node->flat_name ()
+      << this->S_ << "Arg_Traits<"
+      << node->flat_name ()
       << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl
-      << "BD_" << (wide ? "W" : "")
-      << "String_" << this->S_ << "Arg_Traits<" << bound << ">"
+      << "BD_String_" << this->S_ << "Arg_Traits_T<" << be_nl
+      << "CORBA::" << (wide ? "W" : "") << "Char," << be_nl
+      << "CORBA::" << (wide ? "W" : "") << "String_var," << be_nl
+      << "CORBA::" << (wide ? "W" : "") << "String_out," << be_nl
+      << "ACE_InputCDR::to_" << (wide ? "w" : "") << "string," << be_nl
+      << "ACE_OutputCDR::from_" << (wide ? "w" : "") << "string," << be_nl
+      << bound << "," << be_nl
+      << this->insert_policy() << " <" << be_idt_nl
+      << "ACE_OutputCDR::from_" << (wide ? "w" : "") << "string" << be_uidt_nl
+      << ">"
+      << be_uidt_nl
+      << ">"
       << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
@@ -554,7 +605,8 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
       << "Var_Size_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
       << alias->name () << "," << be_nl
       << alias->name () << "_var," << be_nl
-      << alias->name () << "_out" << be_uidt_nl
+      << alias->name () << "_out," << be_nl
+      << this->insert_policy() << " <" << alias->name () << ">" << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
@@ -594,14 +646,14 @@ be_visitor_arg_traits::visit_string (be_string *node)
 
   // This should be generated even for imported nodes. The ifdef
   // guard prevents multiple declarations.
-    
+
   if (alias == 0)
     {
       os->gen_ifdef_macro (node->flat_name(), guard_suffix.c_str (), false);
     }
   else
     {
-      // Form a unique macro name using the local name and the bound.     
+      // Form a unique macro name using the local name and the bound.
       unsigned long l = bound;
       int num_digits = 0;
       while (l > 0)
@@ -613,17 +665,17 @@ be_visitor_arg_traits::visit_string (be_string *node)
       char* bound_string = 0;
       ACE_NEW_RETURN (bound_string, char[bound_length], -1) ;
       ACE_OS::sprintf (bound_string, "%lu", bound);
-    
+
       size_t cat_length = ACE_OS::strlen (alias->local_name ()->get_string ()) +
                           ACE_OS::strlen (bound_string) +
                           1;
       char* cat_string = 0;
-      ACE_NEW_RETURN (cat_string, char[cat_length], -1) ; 
+      ACE_NEW_RETURN (cat_string, char[cat_length], -1) ;
       ACE_OS::strcpy (cat_string, alias->local_name ()->get_string ()) ;
       ACE_OS::strcat (cat_string, bound_string);
 
       os->gen_ifdef_macro (cat_string, guard_suffix.c_str (), false);
-       
+
       delete [] cat_string;
       delete [] bound_string;
     }
@@ -669,8 +721,18 @@ be_visitor_arg_traits::visit_string (be_string *node)
 
   *os << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl
-      << "BD_" << (wide ? "W" : "")
-      << "String_" << this->S_ << "Arg_Traits<" << bound << ">"
+      << "BD_String_" << this->S_ << "Arg_Traits_T<" << be_nl
+      << "CORBA::" << (wide ? "W" : "") << "Char," << be_nl
+      << "CORBA::" << (wide ? "W" : "") << "String_var," << be_nl
+      << "CORBA::" << (wide ? "W" : "") << "String_out," << be_nl
+      << "ACE_InputCDR::to_" << (wide ? "w" : "") << "string," << be_nl
+      << "ACE_OutputCDR::from_" << (wide ? "w" : "") << "string," << be_nl
+      << bound << "," << be_nl
+      << this->insert_policy() << " <" << be_idt_nl
+      << "ACE_OutputCDR::from_" << (wide ? "w" : "") << "string" << be_uidt_nl
+      << ">"
+      << be_uidt_nl
+      << ">"
       << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
@@ -756,6 +818,9 @@ be_visitor_arg_traits::visit_array (be_array *node)
           << node->name () << "_tag";
     }
 
+  *os << "," << be_nl << this->insert_policy() << " <" << node->name ()
+      << "_forany" << ">";
+
   *os << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
@@ -795,7 +860,8 @@ be_visitor_arg_traits::visit_enum (be_enum *node)
       << ": public" << be_idt << be_idt_nl;
 
   *os << "Basic_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
-      << node->name () << be_uidt_nl
+      << node->name () << "," << be_nl
+      << this->insert_policy() << " <" << node->name () << ">" << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
@@ -846,7 +912,8 @@ be_visitor_arg_traits::visit_structure (be_structure *node)
           << node->name () << "_out";
     }
 
-  *os << be_uidt_nl
+  *os << "," << be_nl << this->insert_policy() << " <"
+      << node->name () << ">" << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
@@ -959,6 +1026,9 @@ be_visitor_arg_traits::visit_union (be_union *node)
           << node->name () << "_var," << be_nl
           << node->name () << "_out";
     }
+
+  *os << "," << be_nl << this->insert_policy() << " <"
+      << node->name () << ">";
 
   *os << be_uidt_nl
       << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
@@ -1104,4 +1174,17 @@ int
 be_visitor_arg_traits::visit_home (be_home *node)
 {
   return this->visit_interface (node);
+}
+
+const char *
+be_visitor_arg_traits::insert_policy (void)
+{
+  if (be_global->any_support ())
+    {
+      return "TAO::Any_Insert_Policy_Stream";
+    }
+  else
+    {
+      return "TAO::Any_Insert_Policy_Noop";
+    }
 }

@@ -45,7 +45,7 @@ POA_CORBA::Contained::_get_def_kind_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1859
+// be\be_interface.cpp:1869
 
 ACE_INLINE
 void
@@ -84,7 +84,7 @@ POA_CORBA::Container::_get_def_kind_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1859
+// be\be_interface.cpp:1869
 
 ACE_INLINE
 void
@@ -123,7 +123,7 @@ POA_CORBA::IDLType::_get_def_kind_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1859
+// be\be_interface.cpp:1869
 
 ACE_INLINE
 void
@@ -162,7 +162,7 @@ POA_CORBA::TypedefDef::_get_def_kind_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1859
+// be\be_interface.cpp:1869
 
 ACE_INLINE
 void
@@ -345,7 +345,7 @@ POA_CORBA::TypedefDef::_get_containing_repository_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1859
+// be\be_interface.cpp:1869
 
 ACE_INLINE
 void
@@ -366,7 +366,7 @@ POA_CORBA::TypedefDef::describe_skel (
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1859
+// be\be_interface.cpp:1869
 
 ACE_INLINE
 void

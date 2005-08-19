@@ -2,8 +2,6 @@
 #include "Stub.h"
 #include "operation_details.h"
 #include "ORB_Core.h"
-#include "TypeCode.h"
-#include "DynamicC.h"
 #include "SystemException.h"
 #include "PortableInterceptor.h"  /* Must always be visible. */
 
@@ -11,7 +9,6 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "PortableInterceptorC.h"
-# include "RequestInfo_Util.h"
 # include "ClientRequestInterceptor_Adapter_Factory.h"
 #endif /* TAO_HAS_INTERCEPTORS == 1*/
 
@@ -74,73 +71,6 @@ namespace TAO
   }
 
 #if TAO_HAS_INTERCEPTORS == 1
-
-  char *
-  Invocation_Base::operation_name (void)
-  {
-    return const_cast<char *> (this->details_.opname ());
-  }
-
-  Dynamic::ParameterList *
-  Invocation_Base::arguments (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-  {
-    // Generate the argument list on demand.
-    Dynamic::ParameterList *parameter_list =
-      TAO_RequestInfo_Util::make_parameter_list (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
-
-    Dynamic::ParameterList_var safe_parameter_list = parameter_list;
-
-    if (this->details_.parameter_list (*parameter_list) == false)
-      ACE_THROW_RETURN (CORBA::MARSHAL (),
-                        0);
-
-    return safe_parameter_list._retn ();
-  }
-
-  Dynamic::ExceptionList *
-  Invocation_Base::exceptions (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-  {
-    // Generate the argument list on demand.
-    Dynamic::ExceptionList *exception_list =
-      TAO_RequestInfo_Util::make_exception_list (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
-
-    Dynamic::ExceptionList_var safe_exception_list = exception_list;
-
-    if (this->details_.exception_list (*exception_list) == false)
-      ACE_THROW_RETURN (CORBA::MARSHAL (),
-                        0);
-
-    return safe_exception_list._retn ();
-  }
-
-  CORBA::Any *
-  Invocation_Base::result (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-  {
-    // Generate the result on demand.
-    static const CORBA::Boolean tk_void_any = 0;
-    CORBA::Any *result_any =
-      TAO_RequestInfo_Util::make_any (tk_void_any ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
-
-    CORBA::Any_var safe_result_any = result_any;
-
-    if (this->details_.result (result_any) == false)
-      ACE_THROW_RETURN (CORBA::MARSHAL (),
-                        0);
-
-    return safe_result_any._retn ();
-  }
-
-  CORBA::Octet
-  Invocation_Base::sync_scope (void) const
-  {
-    return this->details_.response_flags ();
-  }
 
   Invocation_Status
   Invocation_Base::send_request_interception (ACE_ENV_SINGLE_ARG_DECL)

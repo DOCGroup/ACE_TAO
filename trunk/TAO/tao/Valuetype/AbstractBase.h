@@ -158,7 +158,9 @@ namespace TAO
     : public Object_Arg_Traits_T<CORBA::AbstractBase_ptr,
                                  CORBA::AbstractBase_var,
                                  CORBA::AbstractBase_out,
-                                 TAO::Objref_Traits<CORBA::AbstractBase> >
+                                 TAO::Objref_Traits<CORBA::AbstractBase>,
+                                 TAO::Any_Insert_Policy_Stream <CORBA::AbstractBase_ptr>
+                                >
   {
   };
 }

@@ -47,7 +47,7 @@ TAO_IRObject_i::update_key (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO::Portable_Server::POA_Current_Impl *pc_impl =
     static_cast <TAO::Portable_Server::POA_Current_Impl *>
-                     (TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
+                     (TAO_TSS_Resources::instance ()->poa_current_impl_);
 
   PortableServer::ObjectId object_id;
   int status = TAO_Root_POA::parse_ir_object_key (pc_impl->object_key (),

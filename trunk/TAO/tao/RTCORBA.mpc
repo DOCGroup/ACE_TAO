@@ -28,6 +28,9 @@ project : taolib, core, pi {
     RTCORBA
   }
 
+  IDL_Files {
+  }
+
   Pkgconfig_Files {
     RTCORBA/TAO_RTCORBA.pc.in
   }

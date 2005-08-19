@@ -6,9 +6,10 @@
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
-#include "tao/Null_RefCount_Policy.h"
-#include "tao/Alias_TypeCode_Static.h"
-#include "tao/Value_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
+#include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Value_TypeCode_Static.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 

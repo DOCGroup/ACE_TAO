@@ -31,12 +31,13 @@
 
 #include "PolicyC.h"
 #include "tao/CDR.h"
-#include "tao/Exception_Data.h"
 #include "tao/Invocation_Adapter.h"
 #include "tao/Object_T.h"
 #include "tao/Basic_Arguments.h"
 #include "tao/Object_Argument_T.h"
 #include "ace/OS_NS_string.h"
+#include "tao/AnyTypeCode_Adapter.h"
+#include "ace/Dynamic_Service.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -49,13 +50,31 @@
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
 
+// TAO specific stuff.
+namespace CORBA
+{
+  class Policy;
+  typedef Policy *Policy_ptr;
+  typedef TAO_Objref_Var_T<Policy> Policy_var;
+  typedef TAO_Objref_Out_T<Policy> Policy_out;
+}
+
+namespace TAO
+{
+
+#if TAO_HAS_INTERCEPTORS == 1
+
+#endif /* TAO_HAS_INTERCEPTORS */
+
+}
+
 // Arg traits specializations.
 namespace TAO
 {
 
 #if !defined (_CORBA_POLICY__ARG_TRAITS_CS_)
 #define _CORBA_POLICY__ARG_TRAITS_CS_
-  
+
   template<>
   class  Arg_Traits<CORBA::Policy>
     : public
@@ -63,7 +82,8 @@ namespace TAO
             CORBA::Policy_ptr,
             CORBA::Policy_var,
             CORBA::Policy_out,
-            TAO::Objref_Traits<CORBA::Policy>
+            TAO::Objref_Traits<CORBA::Policy>,
+            TAO::Any_Insert_Policy_AnyTypeCode_Adapter <CORBA::Policy_ptr>
           >
   {
   };
@@ -72,7 +92,7 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 CORBA::PolicyError::PolicyError (void)
@@ -156,7 +176,7 @@ void CORBA::PolicyError::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -169,7 +189,7 @@ void CORBA::PolicyError::_tao_decode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -192,10 +212,23 @@ CORBA::PolicyError::PolicyError (
 // TAO extension - the virtual _type method.
 CORBA::TypeCode_ptr CORBA::PolicyError::_tao_type (void) const
 {
-  return ::CORBA::_tc_PolicyError;
+  TAO_AnyTypeCode_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_AnyTypeCode_Adapter>::instance (
+        "AnyTypeCode_Adapter"
+      );
+  if (adapter != 0)
+    return adapter->_tao_type_PolicyError ();
+  else
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("Unable to find the ")
+                  ACE_TEXT ("AnyTypeCode Adapter instance")));
+      return 0;
+    }
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 CORBA::InvalidPolicies::InvalidPolicies (void)
@@ -279,7 +312,7 @@ void CORBA::InvalidPolicies::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -292,7 +325,7 @@ void CORBA::InvalidPolicies::_tao_decode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -315,7 +348,20 @@ CORBA::InvalidPolicies::InvalidPolicies (
 // TAO extension - the virtual _type method.
 CORBA::TypeCode_ptr CORBA::InvalidPolicies::_tao_type (void) const
 {
-  return ::CORBA::_tc_InvalidPolicies;
+  TAO_AnyTypeCode_Adapter *adapter =
+    ACE_Dynamic_Service<TAO_AnyTypeCode_Adapter>::instance (
+        "AnyTypeCode_Adapter"
+      );
+  if (adapter != 0)
+    return adapter->_tao_type_InvalidPolicies ();
+  else
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("Unable to find the ")
+                  ACE_TEXT ("AnyTypeCode Adapter instance")));
+      return 0;
+    }
 }
 
 // TAO_IDL - Generated from
@@ -355,7 +401,7 @@ TAO::Objref_Traits<CORBA::Policy>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*CORBA__TAO_Policy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -374,19 +420,19 @@ CORBA::PolicyType CORBA::Policy::policy_type (
     {
       ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
     }
-  
+
   if (this->the_TAO_Policy_Proxy_Broker_ == 0)
     {
       CORBA_Policy_setup_collocation ();
     }
-  
+
   TAO::Arg_Traits< ::CORBA::PolicyType>::ret_val _tao_retval;
-  
+
   TAO::Argument *_the_tao_operation_signature [] =
     {
       &_tao_retval
     };
-  
+
   TAO::Invocation_Adapter _tao_call (
       this,
       _the_tao_operation_signature,
@@ -395,10 +441,10 @@ CORBA::PolicyType CORBA::Policy::policy_type (
       16,
       this->the_TAO_Policy_Proxy_Broker_
     );
-  
+
   _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (_tao_retval.excp ());
-  
+
   return _tao_retval.retn ();
 }
 
@@ -416,19 +462,19 @@ CORBA::PolicyType CORBA::Policy::policy_type (
     {
       ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
     }
-  
+
   if (this->the_TAO_Policy_Proxy_Broker_ == 0)
     {
       CORBA_Policy_setup_collocation ();
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Policy>::ret_val _tao_retval;
-  
+
   TAO::Argument *_the_tao_operation_signature [] =
     {
       &_tao_retval
     };
-  
+
   TAO::Invocation_Adapter _tao_call (
       this,
       _the_tao_operation_signature,
@@ -437,10 +483,10 @@ CORBA::PolicyType CORBA::Policy::policy_type (
       4,
       this->the_TAO_Policy_Proxy_Broker_
     );
-  
+
   _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (_tao_retval.excp ());
-  
+
   return _tao_retval.retn ();
 }
 
@@ -458,19 +504,19 @@ void CORBA::Policy::destroy (
     {
       ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
     }
-  
+
   if (this->the_TAO_Policy_Proxy_Broker_ == 0)
     {
       CORBA_Policy_setup_collocation ();
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
-  
+
   TAO::Argument *_the_tao_operation_signature [] =
     {
       &_tao_retval
     };
-  
+
   TAO::Invocation_Adapter _tao_call (
       this,
       _the_tao_operation_signature,
@@ -479,7 +525,7 @@ void CORBA::Policy::destroy (
       7,
       this->the_TAO_Policy_Proxy_Broker_
     );
-  
+
   _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
@@ -503,7 +549,7 @@ CORBA::Policy::CORBA_Policy_setup_collocation ()
 CORBA::Policy::~Policy (void)
 {}
 
-void 
+void
 CORBA::Policy::_tao_any_destructor (void *_tao_void_pointer)
 {
   Policy *_tao_tmp_pointer =
@@ -548,7 +594,7 @@ CORBA::Policy::_duplicate (Policy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -639,7 +685,7 @@ CORBA::PolicyManager::PolicyManager (void)
 CORBA::PolicyManager::~PolicyManager (void)
 {}
 
-void 
+void
 CORBA::PolicyManager::_tao_any_destructor (void *_tao_void_pointer)
 {
   PolicyManager *_tao_tmp_pointer =
@@ -676,7 +722,7 @@ CORBA::PolicyManager::_duplicate (PolicyManager_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -768,7 +814,7 @@ CORBA::PolicyCurrent::PolicyCurrent (void)
 CORBA::PolicyCurrent::~PolicyCurrent (void)
 {}
 
-void 
+void
 CORBA::PolicyCurrent::_tao_any_destructor (void *_tao_void_pointer)
 {
   PolicyCurrent *_tao_tmp_pointer =
@@ -805,7 +851,7 @@ CORBA::PolicyCurrent::_duplicate (PolicyCurrent_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -975,20 +1021,20 @@ CORBA::Boolean operator>> (
   )
 {
   CORBA::Object_var obj;
-  
+
   if (!(strm >> obj.inout ()))
     {
       return false;
     }
-  
+
   typedef ::CORBA::Policy RHS_SCOPED_NAME;
-  
+
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (
         obj.in (),
         CORBA__TAO_Policy_Proxy_Broker_Factory_function_pointer
       );
-    
+
   return 1;
 }
