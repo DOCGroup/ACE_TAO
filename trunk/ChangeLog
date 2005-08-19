@@ -1,3 +1,10 @@
+Fri Aug 19 14:15:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Sock_Connect.cpp:
+          Reverted IPv6 related to accomodate some TAO builds which have
+          ACE_HAS_IPV6 but do not have my TAO IPv6 changes yet.
+          Will commit all at a later moment.
+
 Fri Aug 19 13:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Name_Request_Reply.cpp:
@@ -41,7 +48,7 @@ Fri Aug 19 09:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Aug 19 09:04:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
-        * ace/Socket_Connect.cpp:
+        * ace/Sock_Connect.cpp:
           Added include of OS_NS_stdio.h since some builds otherwise miss out
           on things like ACE_OS::fopen() and such (now for real).
 
@@ -56,7 +63,7 @@ Fri Aug 19 08:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Aug 19 08:33:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
-        * ace/Socket_Connect.cpp:
+        * ace/Sock_Connect.cpp:
           Added include of OS_NS_stdio.h since some builds otherwise miss out
           on things like ACE_OS::fopen() and such.
 
@@ -122,7 +129,7 @@ Fri Aug 19 07:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Aug 18 09:34:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
-        * ace/Socket_Connect.cpp:
+        * ace/Sock_Connect.cpp:
           Added support for retrieval of IPv6 local interfaces to
           ACE::get_ip_interfaces().
           Supported for Windows XP (and newer) and Linux (possibly other
