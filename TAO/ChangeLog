@@ -1,3 +1,8 @@
+Fri Aug 19 08:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
+          Fixed compile error
+
 Fri Aug 19 07:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Merged AnyRefactor branch, a lot of files where moved to the
