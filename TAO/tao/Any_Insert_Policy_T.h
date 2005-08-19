@@ -1,4 +1,3 @@
-Fri Aug 19 10:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 // This may look like C, but it's really -*- C++ -*-
 
 //=============================================================================
@@ -27,7 +26,6 @@ Fri Aug 19 10:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 #include "tao/AnyTypeCode_Adapter.h"
 
 #include "ace/Dynamic_Service.h"
-#include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/IFR_Client_Adapter.h"
 
