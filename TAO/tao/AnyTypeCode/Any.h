@@ -323,7 +323,7 @@ TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        const CORBA::WChar *&);
 
 #if defined (__ACE_INLINE__)
-# include "tao/Any.i"
+# include "tao/AnyTypeCode/Any.inl"
 #else
 
 /// Copying versions of insertion operators for basic types
