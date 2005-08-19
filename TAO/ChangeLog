@@ -1,3 +1,9 @@
+Fri Aug 19 12:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Profile.cpp:
+          Fixed 64bit conversion warnings by using the correct type or
+          using an explicit cast
+
 Fri Aug 19 12:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/SystemException.h:
