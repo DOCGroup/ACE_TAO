@@ -579,7 +579,7 @@ namespace TAO
 
 
 #if defined (__ACE_INLINE__)
-# include "tao/TypeCode.inl"
+# include "tao/AnyTypeCode/TypeCode.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
