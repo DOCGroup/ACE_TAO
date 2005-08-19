@@ -7,7 +7,7 @@ project(*Server): taoserver {
   }
 }
 
-project(*Client): taoclient {
+project(*Client): taoclient, anytypecode {
   Source_Files {
     timeC.cpp
     client.cpp
