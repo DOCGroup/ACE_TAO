@@ -26,6 +26,7 @@
 #include "tao/AnyTypeCode_Adapter.h"
 
 #include "ace/Dynamic_Service.h"
+#include "ace/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/IFR_Client_Adapter.h"
 
