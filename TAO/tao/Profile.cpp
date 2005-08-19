@@ -170,7 +170,7 @@ TAO_Profile::encode (TAO_OutputCDR &stream) const
 int
 TAO_Profile::decode (TAO_InputCDR& cdr)
 {
-  CORBA::ULong encap_len = cdr.length ();
+  size_t encap_len = cdr.length ();
 
   // Read and verify major, minor versions, ignoring profiles
   // whose versions we don't understand.
@@ -313,7 +313,7 @@ TAO_Profile::create_tagged_profile (void)
 void
 TAO_Profile::set_tagged_components (TAO_OutputCDR &out_cdr)
 {
-  CORBA::ULong length = out_cdr.total_length ();
+  CORBA::ULong length = static_cast <CORBA::ULong> (out_cdr.total_length ());
 
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = TAO_TAG_ENDPOINTS;
@@ -325,7 +325,7 @@ TAO_Profile::set_tagged_components (TAO_OutputCDR &out_cdr)
        iterator != 0;
        iterator = iterator->cont ())
     {
-      CORBA::ULong i_length = iterator->length ();
+      size_t i_length = iterator->length ();
       ACE_OS::memcpy (buf, iterator->rd_ptr (), i_length);
 
       buf += i_length;
