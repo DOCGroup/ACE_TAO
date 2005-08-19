@@ -99,7 +99,6 @@ project : taolib, core {
     AnyTypecode/String_TypeCode.cpp
     AnyTypecode/Struct_TypeCode.cpp
     AnyTypecode/TypeCode_Base_Attributes.cpp
-    AnyTypecode/TypeCode_Case.cpp
     AnyTypecode/Union_TypeCode.cpp
     AnyTypecode/Value_TypeCode.cpp
   }
