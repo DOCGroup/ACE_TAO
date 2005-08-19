@@ -1,3 +1,12 @@
+Fri Aug 19 09:04:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Socket_Connect.cpp:
+          Added include of OS_NS_stdio.h since some builds otherwise miss out
+          on things like ACE_OS::fopen() and such (now for real).
+
+        * ace/SOCK_Connector.cpp:
+          Reverted change which was meant for Sock_Connect.cpp:-(
+
 Fri Aug 19 08:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-msvc-7.h:
