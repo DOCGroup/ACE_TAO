@@ -511,12 +511,13 @@ namespace CORBA
 }  // End namespace CORBA
 
 
-TAO_NAMESPACE_INLINE_FUNCTION
+TAO_AnyTypeCode_Export
 bool operator<< (TAO_OutputCDR & cdr,
                  CORBA::TypeCode_ptr tc);
 
-TAO_AnyTypeCode_Export bool operator>> (TAO_InputCDR & cdr,
-                            CORBA::TypeCode_ptr & tc);
+TAO_AnyTypeCode_Export
+bool operator>> (TAO_InputCDR & cdr,
+                 CORBA::TypeCode_ptr & tc);
 
 namespace TAO
 {

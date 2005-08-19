@@ -161,15 +161,6 @@ CORBA::TypeCode::_tao_any_destructor (void * x)
 
 // --------------------------------------------------------------
 
-ACE_INLINE bool
-operator<< (TAO_OutputCDR & cdr,
-            CORBA::TypeCode_ptr tc)
-{
-  return TAO::TypeCode::marshal (cdr, tc, 0);
-}
-
-// ---------------------------------------------------------------
-
 ACE_INLINE CORBA::TCKind
 TAO::unaliased_kind (CORBA::TypeCode_ptr tc
                      ACE_ENV_ARG_DECL)

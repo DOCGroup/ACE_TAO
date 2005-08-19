@@ -394,6 +394,15 @@ TAO::TypeCode::aligned_offset (CORBA::ULong offset)
 
 // ---------------------------------------------------------------
 
+bool
+operator<< (TAO_OutputCDR & cdr,
+            CORBA::TypeCode_ptr tc)
+{
+  return TAO::TypeCode::marshal (cdr, tc, 0);
+}
+
+// ---------------------------------------------------------------
+
 CORBA::TypeCode_ptr
 TAO::unaliased_typecode (CORBA::TypeCode_ptr tc
                          ACE_ENV_ARG_DECL)
