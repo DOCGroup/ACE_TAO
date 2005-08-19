@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Server): taoserver {
+  idlflags += -Sa -St
   Source_Files {
     test_i.cpp
     server.cpp

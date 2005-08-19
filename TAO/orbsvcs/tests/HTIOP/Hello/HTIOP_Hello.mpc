@@ -3,6 +3,7 @@
 // $Id$
 
 project(*Server): taoserver, naming, iortable {
+  idlflags += -Sa -St
   macros += TEST_OUTPUT_HAS_DLL=0
   Source_Files {
     Test_Output.cpp

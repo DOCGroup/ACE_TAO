@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Server): taoserver {
+  idlflags += -Sa -St
   Source_Files {
     Oneway_Receiver.cpp
     Crash_Task.cpp
