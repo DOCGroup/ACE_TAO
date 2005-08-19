@@ -1,3 +1,16 @@
+Fri Aug 19 11:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode.mpc:
+          Removed not existent file
+
+Fri Aug 19 11:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/DomainA.h:
+          Removed include of inline file.
+
+        * tao/AnyTypeCode/TypeCode.{h,cpp,inl}:
+          Moved operator << to cpp file
+
 Fri Aug 19 11:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Any_Insert_Policy_T.h:
