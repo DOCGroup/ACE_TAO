@@ -7,7 +7,6 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 #include "ace/OS_Memory.h"
-#include "ace/OS_NS_stdio.h"
 
 #if defined (sparc) && ! defined (CHORUS)
 #  include "ace/OS_NS_fcntl.h"
@@ -576,55 +575,9 @@ ACE::get_ip_interfaces (size_t &count,
   if (n_interfaces == 0)
     return 0;
 
-  // SIO_GET_INTERFACE_LIST does not work for IPv6
-  // Instead recent versions of Winsock2 add the new opcode SIO_ADDRESS_LIST_QUERY.
-  // If this is not available forget about IPv6 local interfaces:-/
-# if defined (ACE_HAS_IPV6) && defined (SIO_ADDRESS_LIST_QUERY)
-  int n_v6_interfaces = 0;
-
-  LPSOCKET_ADDRESS_LIST v6info;
-  char *buffer;
-  DWORD buflen = sizeof (SOCKET_ADDRESS_LIST) + (63 * sizeof (SOCKET_ADDRESS));
-  ACE_NEW_RETURN (buffer,
-                  char[buflen],
-                  -1);
-  v6info = reinterpret_cast<LPSOCKET_ADDRESS_LIST> (buffer);
-
-  // Get an (overlapped) DGRAM socket to test with.
-  // If it fails only return IPv4 interfaces.
-  sock = socket (AF_INET6, SOCK_DGRAM, IPPROTO_UDP);
-  if (sock == INVALID_SOCKET)
-    {
-      delete [] buffer;
-      return -1;
-    }
-
-  status = WSAIoctl(sock,
-                    SIO_ADDRESS_LIST_QUERY,
-                    0,
-                    0,
-                    v6info,
-                    buflen,
-                    &bytes,
-                    0,
-                    0);
-  closesocket (sock);
-  if (status == SOCKET_ERROR)
-  {
-      delete [] buffer; // clean up
-      return -1;
-  }
-
-  n_v6_interfaces = v6info->iAddressCount;
-
-  ACE_NEW_RETURN (addrs,
-                  ACE_INET_Addr[n_interfaces + n_v6_interfaces],
-                  -1);
-# else
   ACE_NEW_RETURN (addrs,
                   ACE_INET_Addr[n_interfaces],
                   -1);
-# endif
 
   // Now go through the list and transfer the good ones to the list of
   // because they're down or don't have an IP address.
@@ -638,7 +591,7 @@ ACE::get_ip_interfaces (size_t &count,
         continue;
 
       // We assume IPv4 addresses here
-      addrp = reinterpret_cast<struct sockaddr_in *> (&lpii->iiAddress.AddressIn);
+      addrp = reinterpret_cast<struct sockaddr_in *> (&(lpii->iiAddress));
       if (addrp->sin_addr.s_addr == INADDR_ANY)
         continue;
 
@@ -646,28 +599,6 @@ ACE::get_ip_interfaces (size_t &count,
       addrs[count].set(addrp, sizeof(sockaddr_in));
       ++count;
     }
-
-# if defined (ACE_HAS_IPV6)
-  // Now go through the list and transfer the good ones to the list of
-  // because they're down or don't have an IP address.
-  for (i = 0; i < n_v6_interfaces; i++)
-    {
-      struct sockaddr_in6 *addr6p;
-
-      if (v6info->Address[i].lpSockaddr->sa_family != AF_INET6)
-        continue;
-
-      addr6p = reinterpret_cast<struct sockaddr_in6 *> (v6info->Address[i].lpSockaddr);
-      if (IN6_IS_ADDR_UNSPECIFIED(&addr6p->sin6_addr))  // IN6ADDR_ANY?
-        continue;
-
-      // Set the address for the caller.
-      addrs[count].set(reinterpret_cast<struct sockaddr_in *> (addr6p), sizeof(sockaddr_in6));
-      ++count;
-    }
-
-  delete [] buffer; // Clean up
-# endif
 
   if (count == 0)
     {
@@ -1074,7 +1005,7 @@ ACE::get_ip_interfaces (size_t &count,
 
           // Sometimes the kernel returns 0.0.0.0 as the interface
           // address, skip those...
-          if (addr->sin_addr.s_addr != INADDR_ANY)
+          if (addr->sin_addr.s_addr != 0)
             {
               addrs[count].set ((u_short) 0,
                                 addr->sin_addr.s_addr,
@@ -1082,22 +1013,6 @@ ACE::get_ip_interfaces (size_t &count,
               count++;
             }
         }
-# if defined (ACE_HAS_IPV6)
-      else if (p_if->ifa_addr &&
-               p_if->ifa_addr->sa_family == AF_INET6)
-        {
-          struct sockaddr_in6 *addr =
-            reinterpret_cast<sockaddr_in6 *> (p_if->ifa_addr);
-
-          // Skip the ANY address
-          if (!IN6_IS_ADDR_UNSPECIFIED(&addr->sin6_addr))
-            {
-              addrs[count].set(reinterpret_cast<struct sockaddr_in *> (addr),
-                               sizeof(sockaddr_in6));
-              count++;
-            }
-        }
-# endif
     }
 
   ::freeifaddrs (ifap);
@@ -1107,7 +1022,7 @@ ACE::get_ip_interfaces (size_t &count,
 #elif defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (_AIX)
   // COMMON (SVR4 and BSD) UNIX CODE
 
-  size_t num_ifs, num_ifs_found;
+  size_t num_ifs;
 
   // Call specific routine as necessary.
   ACE_HANDLE handle = get_handle();
@@ -1173,8 +1088,6 @@ ACE::get_ip_interfaces (size_t &count,
                   -1); // caller must free
 
   struct ifreq *pcur = p_ifs.get ();
-  num_ifs_found = ifcfg.ifc_len / sizeof (struct ifreq); // get the number of returned ifs
-
   // Pull the address out of each INET interface.  Not every interface
   // is for IP, so be careful to count properly.  When setting the
   // INET_Addr, note that the 3rd arg (0) says to leave the byte order
@@ -1182,7 +1095,7 @@ ACE::get_ip_interfaces (size_t &count,
   count = 0;
 
   for (size_t i = 0;
-       i < num_ifs_found;
+       i < num_ifs;
        i++)
     {
       if (pcur->ifr_addr.sa_family == AF_INET)
@@ -1233,53 +1146,6 @@ ACE::get_ip_interfaces (size_t &count,
         }
 #endif /* !defined(CHORUS_4) && !defined(AIX) && !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) */
     }
-
-# if defined (ACE_HAS_IPV6)
-  // Retrieve IPv6 local interfaces by scanning /proc/net/if_inet6 if it exists.
-  // If we cannot open it then ignore possible IPv6 interfaces, we did our best;-)
-  FILE* fp;
-  char s_addr[8][5];
-  char s_ipaddr[64];
-  int scopeid;
-  struct addrinfo hints, *res0;
-  int error;
-
-  ACE_OS::memset (&hints, 0, sizeof (hints));
-  hints.ai_flags = AI_NUMERICHOST;
-  hints.ai_family = AF_INET6;
-
-  if ((fp = ACE_OS::fopen ("/proc/net/if_inet6", "r")) != NULL)
-    {
-      while (fscanf (fp,
-                     "%4s%4s%4s%4s%4s%4s%4s%4s %02x %*02x %*02x %*02x %*8s\n",
-                     s_addr[0], s_addr[1], s_addr[2], s_addr[3],
-                     s_addr[4], s_addr[5], s_addr[6], s_addr[7], &scopeid) != EOF)
-        {
-          // Format the address intoa proper IPv6 decimal address specification and
-          // resolve the resulting text using getaddrinfo().
-
-          ACE_OS::sprintf (s_ipaddr,
-                           "%s:%s:%s:%s:%s:%s:%s:%s%%%d",
-                           s_addr[0], s_addr[1], s_addr[2], s_addr[3],
-                           s_addr[4], s_addr[5], s_addr[6], s_addr[7], scopeid);
-
-          error = getaddrinfo (s_ipaddr, 0, &hints, &res0);
-          if (error)
-            continue;
-
-          if (res0->ai_family == AF_INET6 &&
-                !IN6_IS_ADDR_UNSPECIFIED (&reinterpret_cast<sockaddr_in6 *> (res0->ai_addr)->sin6_addr))
-            {
-              addrs[count].set(reinterpret_cast<sockaddr_in *> (res0->ai_addr), res0->ai_addrlen);
-              count++;
-            }
-          freeaddrinfo (res0);
-
-        }
-      ACE_OS::fclose (fp);
-    }
-# endif
-
   return 0;
 #elif defined (VXWORKS)
   count = 0;
@@ -1448,21 +1314,6 @@ ACE::count_interfaces (ACE_HANDLE handle, size_t &how_many)
     }
 
   ACE_OS::free (ifcfg.ifc_req);
-
-# if defined (ACE_HAS_IPV6)
-  FILE* fp;
-
-  if ((fp = ACE_OS::fopen ("/proc/net/if_inet6", "r")) != NULL)
-    {
-      // Scan the lines according to the expected format but don't really read any input
-      while (fscanf (fp, "%*32s %*02x %*02x %*02x %*02x %*8s\n") != EOF)
-        {
-          if_count++;
-        }
-      ACE_OS::fclose (fp);
-    }
-# endif
-
   how_many = if_count;
   return 0;
 #else
