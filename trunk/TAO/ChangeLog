@@ -1,3 +1,8 @@
+Fri Aug 19 18:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/Union_TypeCode.cpp:
+          Fixed no return warning
+
 Fri Aug 19 18:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Explicit_Event_Loop/Explicit_Event_Loop.mpc:
