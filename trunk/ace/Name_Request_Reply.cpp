@@ -260,7 +260,7 @@ ACE_Name_Request::encode (void *&buf)
   ACE_TRACE ("ACE_Name_Request::encode");
   // Compute the length *before* doing the marshaling.
 
-  ssize_t len = this->length ();
+  ACE_UINT32 len = this->length ();
 
   size_t nv_data_len =
     (this->transfer_.name_len_ + this->transfer_.value_len_)
