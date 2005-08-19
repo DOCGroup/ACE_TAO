@@ -110,7 +110,7 @@ namespace TAO
 
 
 #ifdef __ACE_INLINE__
-# include "tao/Objref_TypeCode_Static.inl"
+# include "tao/AnyTypeCode/Objref_TypeCode_Static.inl"
 #endif  /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
