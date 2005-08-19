@@ -76,7 +76,7 @@ namespace CORBA
    */
   class TAO_AnyTypeCode_Export NamedValue
   {
-    friend class TAO_NVList_Adapter_Impl;
+    friend class ::TAO_NVList_Adapter_Impl;
     friend class NVList;
     friend class Request;
 
@@ -155,7 +155,7 @@ namespace CORBA
    */
   class TAO_AnyTypeCode_Export NVList
   {
-    friend class TAO_NVList_Adapter_Impl;
+    friend class ::TAO_NVList_Adapter_Impl;
     friend class Request;
 
   public:
