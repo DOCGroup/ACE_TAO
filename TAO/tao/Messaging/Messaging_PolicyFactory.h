@@ -46,9 +46,11 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CORBA::PolicyError));
 private:
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
   CORBA::Policy_ptr
   create_buffering_constraint_policy (const CORBA::Any& val
                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 };
 
 

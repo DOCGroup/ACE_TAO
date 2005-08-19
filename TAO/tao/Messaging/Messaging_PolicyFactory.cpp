@@ -12,6 +12,8 @@ ACE_RCSID (Messaging,
 #include "tao/AnyTypeCode/TAOA.h"
 #include "tao/AnyTypeCode/Any.h"
 
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
+
 CORBA::Policy_ptr
 TAO_Messaging_PolicyFactory::create_buffering_constraint_policy (
     const CORBA::Any& val
@@ -30,6 +32,8 @@ TAO_Messaging_PolicyFactory::create_buffering_constraint_policy (
 
   return servant;
 }
+
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
 CORBA::Policy_ptr
 TAO_Messaging_PolicyFactory::create_policy (
