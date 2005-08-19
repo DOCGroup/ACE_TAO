@@ -22,8 +22,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/Object_SArgument_T.h"
+#include "tao/PortableServer/SArg_Traits_T.h"
 #include "tao/Pseudo_VarOut_T.h"
-
+#include "tao/Any_Insert_Policy_T.h"
 
 namespace CORBA
 {
@@ -38,15 +39,14 @@ namespace CORBA
 
 namespace TAO
 {
-  template <typename T> class SArg_Traits;
-
   /// Used in generated code if CORBA::Object is an argument or
   /// return type.
   template<>
   class TAO_PortableServer_Export SArg_Traits<CORBA::Object>
     : public Object_SArg_Traits_T<CORBA::Object_ptr,
                                   CORBA::Object_var,
-                                  CORBA::Object_out>
+                                  CORBA::Object_out,
+                                  TAO::Any_Insert_Policy_Stream <CORBA::Object_ptr> >
   {
   };
 }

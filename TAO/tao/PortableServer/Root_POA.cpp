@@ -1295,7 +1295,7 @@ TAO_Root_POA::check_for_valid_wait_for_completions (const TAO_ORB_Core &orb_core
     {
       TAO::Portable_Server::POA_Current_Impl *poa_current_impl =
         static_cast <TAO::Portable_Server::POA_Current_Impl *>
-                    (TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
+                    (TAO_TSS_Resources::instance ()->poa_current_impl_);
 
       while (1)
         {

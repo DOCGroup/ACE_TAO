@@ -25,16 +25,16 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "ThreadPolicyC.h"
-#include "tao/Null_RefCount_Policy.h"
-#include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode_Static.h"
-#include "tao/Enum_TypeCode_Static.h"
-#include "tao/Objref_TypeCode_Static.h"
+#include "ThreadPolicyA.h"
+#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Enum_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
 #include "tao/CDR.h"
-#include "tao/Any.h"
-#include "tao/Any_Impl_T.h"
-#include "tao/Any_Basic_Impl_T.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "tao/AnyTypeCode/Any_Impl_T.h"
+#include "tao/AnyTypeCode/Any_Basic_Impl_T.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -108,81 +108,6 @@ CORBA::Boolean operator>>= (
         _tao_any,
         PortableServer::_tc_ThreadPolicyValue,
         _tao_elem 
-      );
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<PortableServer::ThreadPolicy>::to_object (
-      CORBA::Object_ptr &_tao_elem
-    ) const
-  {
-    _tao_elem = CORBA::Object::_duplicate (this->value_);
-    return true;
-  }
-}
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<PortableServer::ThreadPolicy>::marshal_value (TAO_OutputCDR &)
-  {
-    return false;
-  }
-  
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<PortableServer::ThreadPolicy>::demarshal_value (TAO_InputCDR &)
-  {
-    return false;
-  }
-}
-
-// Copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    PortableServer::ThreadPolicy_ptr _tao_elem
-  )
-{
-  PortableServer::ThreadPolicy_ptr _tao_objptr =
-    PortableServer::ThreadPolicy::_duplicate (_tao_elem);
-  _tao_any <<= &_tao_objptr;
-}
-
-// Non-copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    PortableServer::ThreadPolicy_ptr *_tao_elem
-  )
-{
-  TAO::Any_Impl_T<PortableServer::ThreadPolicy>::insert (
-      _tao_any,
-      PortableServer::ThreadPolicy::_tao_any_destructor,
-      PortableServer::_tc_ThreadPolicy,
-      *_tao_elem
-    );
-}
-
-CORBA::Boolean
-operator>>= (
-    const CORBA::Any &_tao_any,
-    PortableServer::ThreadPolicy_ptr &_tao_elem
-  )
-{
-  return
-    TAO::Any_Impl_T<PortableServer::ThreadPolicy>::extract (
-        _tao_any,
-        PortableServer::ThreadPolicy::_tao_any_destructor,
-        PortableServer::_tc_ThreadPolicy,
-        _tao_elem
       );
 }
 

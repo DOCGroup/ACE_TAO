@@ -26,14 +26,28 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:291
+// be\be_codegen.cpp:293
 
 
 #include "IFR_ExtendedC.h"
 #include "tao/CDR.h"
-#include "tao/Exception_Data.h"
+#include "tao/IFR_Client/IFR_BasicC.h"
+#include "tao/AnyTypeCode/VisibilityA.h"
+#include "tao/AnyTypeCode/ValueModifierA.h"
+#include "tao/AnyTypeCode/orb_typesA.h"
 #include "tao/Invocation_Adapter.h"
 #include "tao/Object_T.h"
+#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Sequence_TypeCode_Static.h"
+#include "tao/AnyTypeCode/String_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
+#include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
+#include "tao/AnyTypeCode/Recursive_Type_TypeCode.h"
+#include "tao/AnyTypeCode/Any_Impl_T.h"
+#include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
 #include "tao/Basic_Arguments.h"
 #include "tao/Object_Argument_T.h"
 #include "tao/Special_Basic_Arguments.h"
@@ -50,15 +64,18 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:69
+// be\be_visitor_arg_traits.cpp:70
 
 // Arg traits specializations.
 namespace TAO
 {
 
-#if !defined (_CORBA_IDLTYPE__ARG_TRAITS_CS_)
-#define _CORBA_IDLTYPE__ARG_TRAITS_CS_
-  
+  // TAO_IDL - Generated from
+  // be\be_visitor_arg_traits.cpp:118
+
+#if !defined (_CORBA_IDLTYPE__ARG_TRAITS_)
+#define _CORBA_IDLTYPE__ARG_TRAITS_
+
   template<>
   class  Arg_Traits<CORBA::IDLType>
     : public
@@ -66,35 +83,40 @@ namespace TAO
             CORBA::IDLType_ptr,
             CORBA::IDLType_var,
             CORBA::IDLType_out,
-            TAO::Objref_Traits<CORBA::IDLType>
+            TAO::Objref_Traits<CORBA::IDLType>,
+            TAO::Any_Insert_Policy_Stream <CORBA::IDLType_ptr>
           >
   {
   };
 
 #endif /* end #if !defined */
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:496
 
-#if !defined (_CORBA_INTERFACEDEFSEQ__ARG_TRAITS_CS_)
-#define _CORBA_INTERFACEDEFSEQ__ARG_TRAITS_CS_
-  
+  // TAO_IDL - Generated from
+  // be\be_visitor_arg_traits.cpp:543
+
+#if !defined (_CORBA_INTERFACEDEFSEQ__ARG_TRAITS_)
+#define _CORBA_INTERFACEDEFSEQ__ARG_TRAITS_
+
   template<>
   class Arg_Traits<CORBA::InterfaceDefSeq>
     : public
         Var_Size_Arg_Traits_T<
             CORBA::InterfaceDefSeq,
             CORBA::InterfaceDefSeq_var,
-            CORBA::InterfaceDefSeq_out
+            CORBA::InterfaceDefSeq_out,
+            TAO::Any_Insert_Policy_Stream <CORBA::InterfaceDefSeq>
           >
   {
   };
 
 #endif /* end #if !defined */
 
-#if !defined (_CORBA_VALUEDEF__ARG_TRAITS_CS_)
-#define _CORBA_VALUEDEF__ARG_TRAITS_CS_
-  
+  // TAO_IDL - Generated from
+  // be\be_visitor_arg_traits.cpp:118
+
+#if !defined (_CORBA_VALUEDEF__ARG_TRAITS_)
+#define _CORBA_VALUEDEF__ARG_TRAITS_
+
   template<>
   class  Arg_Traits<CORBA::ValueDef>
     : public
@@ -102,83 +124,88 @@ namespace TAO
             CORBA::ValueDef_ptr,
             CORBA::ValueDef_var,
             CORBA::ValueDef_out,
-            TAO::Objref_Traits<CORBA::ValueDef>
+            TAO::Objref_Traits<CORBA::ValueDef>,
+            TAO::Any_Insert_Policy_Stream <CORBA::ValueDef_ptr>
           >
   {
   };
 
 #endif /* end #if !defined */
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:751
 
-#if !defined (_CORBA_VALUEDEF_FULLVALUEDESCRIPTION__ARG_TRAITS_CS_)
-#define _CORBA_VALUEDEF_FULLVALUEDESCRIPTION__ARG_TRAITS_CS_
-  
+  // TAO_IDL - Generated from
+  // be\be_visitor_arg_traits.cpp:828
+
+#if !defined (_CORBA_VALUEDEF_FULLVALUEDESCRIPTION__ARG_TRAITS_)
+#define _CORBA_VALUEDEF_FULLVALUEDESCRIPTION__ARG_TRAITS_
+
   template<>
   class Arg_Traits<CORBA::ValueDef::FullValueDescription>
     : public
         Var_Size_Arg_Traits_T<
             CORBA::ValueDef::FullValueDescription,
             CORBA::ValueDef::FullValueDescription_var,
-            CORBA::ValueDef::FullValueDescription_out
+            CORBA::ValueDef::FullValueDescription_out,
+            TAO::Any_Insert_Policy_Stream <CORBA::ValueDef::FullValueDescription>
           >
   {
   };
 
 #endif /* end #if !defined */
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:496
 
-#if !defined (_CORBA_INITIALIZERSEQ__ARG_TRAITS_CS_)
-#define _CORBA_INITIALIZERSEQ__ARG_TRAITS_CS_
-  
+  // TAO_IDL - Generated from
+  // be\be_visitor_arg_traits.cpp:543
+
+#if !defined (_CORBA_INITIALIZERSEQ__ARG_TRAITS_)
+#define _CORBA_INITIALIZERSEQ__ARG_TRAITS_
+
   template<>
   class Arg_Traits<CORBA::InitializerSeq>
     : public
         Var_Size_Arg_Traits_T<
             CORBA::InitializerSeq,
             CORBA::InitializerSeq_var,
-            CORBA::InitializerSeq_out
+            CORBA::InitializerSeq_out,
+            TAO::Any_Insert_Policy_Stream <CORBA::InitializerSeq>
           >
   {
   };
 
 #endif /* end #if !defined */
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:496
 
-#if !defined (_CORBA_VALUEDEFSEQ__ARG_TRAITS_CS_)
-#define _CORBA_VALUEDEFSEQ__ARG_TRAITS_CS_
-  
+  // TAO_IDL - Generated from
+  // be\be_visitor_arg_traits.cpp:543
+
+#if !defined (_CORBA_VALUEDEFSEQ__ARG_TRAITS_)
+#define _CORBA_VALUEDEFSEQ__ARG_TRAITS_
+
   template<>
   class Arg_Traits<CORBA::ValueDefSeq>
     : public
         Var_Size_Arg_Traits_T<
             CORBA::ValueDefSeq,
             CORBA::ValueDefSeq_var,
-            CORBA::ValueDefSeq_out
+            CORBA::ValueDefSeq_out,
+            TAO::Any_Insert_Policy_Stream <CORBA::ValueDefSeq>
           >
   {
   };
 
 #endif /* end #if !defined */
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:751
 
-#if !defined (_CORBA_EXTVALUEDEF_EXTFULLVALUEDESCRIPTION__ARG_TRAITS_CS_)
-#define _CORBA_EXTVALUEDEF_EXTFULLVALUEDESCRIPTION__ARG_TRAITS_CS_
-  
+  // TAO_IDL - Generated from
+  // be\be_visitor_arg_traits.cpp:828
+
+#if !defined (_CORBA_EXTVALUEDEF_EXTFULLVALUEDESCRIPTION__ARG_TRAITS_)
+#define _CORBA_EXTVALUEDEF_EXTFULLVALUEDESCRIPTION__ARG_TRAITS_
+
   template<>
   class Arg_Traits<CORBA::ExtValueDef::ExtFullValueDescription>
     : public
         Var_Size_Arg_Traits_T<
             CORBA::ExtValueDef::ExtFullValueDescription,
             CORBA::ExtValueDef::ExtFullValueDescription_var,
-            CORBA::ExtValueDef::ExtFullValueDescription_out
+            CORBA::ExtValueDef::ExtFullValueDescription_out,
+            TAO::Any_Insert_Policy_Stream <CORBA::ExtValueDef::ExtFullValueDescription>
           >
   {
   };
@@ -186,10 +213,10 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:496
+  // be\be_visitor_arg_traits.cpp:543
 
-#if !defined (_CORBA_EXTINITIALIZERSEQ__ARG_TRAITS_CS_)
-#define _CORBA_EXTINITIALIZERSEQ__ARG_TRAITS_CS_
+#if !defined (_CORBA_EXTINITIALIZERSEQ__ARG_TRAITS_)
+#define _CORBA_EXTINITIALIZERSEQ__ARG_TRAITS_
   
   template<>
   class Arg_Traits<CORBA::ExtInitializerSeq>
@@ -197,7 +224,8 @@ namespace TAO
         Var_Size_Arg_Traits_T<
             CORBA::ExtInitializerSeq,
             CORBA::ExtInitializerSeq_var,
-            CORBA::ExtInitializerSeq_out
+            CORBA::ExtInitializerSeq_out,
+            TAO::Any_Insert_Policy_Stream <CORBA::ExtInitializerSeq>
           >
   {
   };
@@ -205,10 +233,10 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:496
+  // be\be_visitor_arg_traits.cpp:543
 
-#if !defined (_CORBA_EXCEPTIONDEFSEQ__ARG_TRAITS_CS_)
-#define _CORBA_EXCEPTIONDEFSEQ__ARG_TRAITS_CS_
+#if !defined (_CORBA_EXCEPTIONDEFSEQ__ARG_TRAITS_)
+#define _CORBA_EXCEPTIONDEFSEQ__ARG_TRAITS_
   
   template<>
   class Arg_Traits<CORBA::ExceptionDefSeq>
@@ -216,7 +244,8 @@ namespace TAO
         Var_Size_Arg_Traits_T<
             CORBA::ExceptionDefSeq,
             CORBA::ExceptionDefSeq_var,
-            CORBA::ExceptionDefSeq_out
+            CORBA::ExceptionDefSeq_out,
+            TAO::Any_Insert_Policy_Stream <CORBA::ExceptionDefSeq>
           >
   {
   };
@@ -224,24 +253,28 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:709
+  // be\be_visitor_arg_traits.cpp:786
 
-#if !defined (_CORBA_ATTRIBUTEMODE__ARG_TRAITS_CS_)
-#define _CORBA_ATTRIBUTEMODE__ARG_TRAITS_CS_
+#if !defined (_CORBA_ATTRIBUTEMODE__ARG_TRAITS_)
+#define _CORBA_ATTRIBUTEMODE__ARG_TRAITS_
   
   template<>
   class Arg_Traits<CORBA::AttributeMode>
     : public
         Basic_Arg_Traits_T<
-            CORBA::AttributeMode
+            CORBA::AttributeMode,
+            TAO::Any_Insert_Policy_Stream <CORBA::AttributeMode>
           >
   {
   };
 
 #endif /* end #if !defined */
+  
+  // TAO_IDL - Generated from
+  // be\be_visitor_arg_traits.cpp:118
 
-#if !defined (_CORBA_ATTRIBUTEDEF__ARG_TRAITS_CS_)
-#define _CORBA_ATTRIBUTEDEF__ARG_TRAITS_CS_
+#if !defined (_CORBA_ATTRIBUTEDEF__ARG_TRAITS_)
+#define _CORBA_ATTRIBUTEDEF__ARG_TRAITS_
   
   template<>
   class  Arg_Traits<CORBA::AttributeDef>
@@ -250,15 +283,19 @@ namespace TAO
             CORBA::AttributeDef_ptr,
             CORBA::AttributeDef_var,
             CORBA::AttributeDef_out,
-            TAO::Objref_Traits<CORBA::AttributeDef>
+            TAO::Objref_Traits<CORBA::AttributeDef>,
+            TAO::Any_Insert_Policy_Stream <CORBA::AttributeDef_ptr>
           >
   {
   };
 
 #endif /* end #if !defined */
+  
+  // TAO_IDL - Generated from
+  // be\be_visitor_arg_traits.cpp:118
 
-#if !defined (_CORBA_EXTATTRIBUTEDEF__ARG_TRAITS_CS_)
-#define _CORBA_EXTATTRIBUTEDEF__ARG_TRAITS_CS_
+#if !defined (_CORBA_EXTATTRIBUTEDEF__ARG_TRAITS_)
+#define _CORBA_EXTATTRIBUTEDEF__ARG_TRAITS_
   
   template<>
   class  Arg_Traits<CORBA::ExtAttributeDef>
@@ -267,7 +304,8 @@ namespace TAO
             CORBA::ExtAttributeDef_ptr,
             CORBA::ExtAttributeDef_var,
             CORBA::ExtAttributeDef_out,
-            TAO::Objref_Traits<CORBA::ExtAttributeDef>
+            TAO::Objref_Traits<CORBA::ExtAttributeDef>,
+            TAO::Any_Insert_Policy_Stream <CORBA::ExtAttributeDef_ptr>
           >
   {
   };
@@ -275,16 +313,17 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:709
+  // be\be_visitor_arg_traits.cpp:786
 
-#if !defined (_CORBA_OPERATIONMODE__ARG_TRAITS_CS_)
-#define _CORBA_OPERATIONMODE__ARG_TRAITS_CS_
+#if !defined (_CORBA_OPERATIONMODE__ARG_TRAITS_)
+#define _CORBA_OPERATIONMODE__ARG_TRAITS_
   
   template<>
   class Arg_Traits<CORBA::OperationMode>
     : public
         Basic_Arg_Traits_T<
-            CORBA::OperationMode
+            CORBA::OperationMode,
+            TAO::Any_Insert_Policy_Stream <CORBA::OperationMode>
           >
   {
   };
@@ -292,10 +331,10 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:496
+  // be\be_visitor_arg_traits.cpp:543
 
-#if !defined (_CORBA_PARDESCRIPTIONSEQ__ARG_TRAITS_CS_)
-#define _CORBA_PARDESCRIPTIONSEQ__ARG_TRAITS_CS_
+#if !defined (_CORBA_PARDESCRIPTIONSEQ__ARG_TRAITS_)
+#define _CORBA_PARDESCRIPTIONSEQ__ARG_TRAITS_
   
   template<>
   class Arg_Traits<CORBA::ParDescriptionSeq>
@@ -303,7 +342,8 @@ namespace TAO
         Var_Size_Arg_Traits_T<
             CORBA::ParDescriptionSeq,
             CORBA::ParDescriptionSeq_var,
-            CORBA::ParDescriptionSeq_out
+            CORBA::ParDescriptionSeq_out,
+            TAO::Any_Insert_Policy_Stream <CORBA::ParDescriptionSeq>
           >
   {
   };
@@ -311,10 +351,10 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_arg_traits.cpp:496
+  // be\be_visitor_arg_traits.cpp:543
 
-#if !defined (_CORBA_CONTEXTIDSEQ__ARG_TRAITS_CS_)
-#define _CORBA_CONTEXTIDSEQ__ARG_TRAITS_CS_
+#if !defined (_CORBA_CONTEXTIDSEQ__ARG_TRAITS_)
+#define _CORBA_CONTEXTIDSEQ__ARG_TRAITS_
   
   template<>
   class Arg_Traits<CORBA::ContextIdSeq>
@@ -322,15 +362,19 @@ namespace TAO
         Var_Size_Arg_Traits_T<
             CORBA::ContextIdSeq,
             CORBA::ContextIdSeq_var,
-            CORBA::ContextIdSeq_out
+            CORBA::ContextIdSeq_out,
+            TAO::Any_Insert_Policy_Stream <CORBA::ContextIdSeq>
           >
   {
   };
 
 #endif /* end #if !defined */
+  
+  // TAO_IDL - Generated from
+  // be\be_visitor_arg_traits.cpp:118
 
-#if !defined (_CORBA_OPERATIONDEF__ARG_TRAITS_CS_)
-#define _CORBA_OPERATIONDEF__ARG_TRAITS_CS_
+#if !defined (_CORBA_OPERATIONDEF__ARG_TRAITS_)
+#define _CORBA_OPERATIONDEF__ARG_TRAITS_
   
   template<>
   class  Arg_Traits<CORBA::OperationDef>
@@ -339,15 +383,19 @@ namespace TAO
             CORBA::OperationDef_ptr,
             CORBA::OperationDef_var,
             CORBA::OperationDef_out,
-            TAO::Objref_Traits<CORBA::OperationDef>
+            TAO::Objref_Traits<CORBA::OperationDef>,
+            TAO::Any_Insert_Policy_Stream <CORBA::OperationDef_ptr>
           >
   {
   };
 
 #endif /* end #if !defined */
+  
+  // TAO_IDL - Generated from
+  // be\be_visitor_arg_traits.cpp:118
 
-#if !defined (_CORBA_VALUEMEMBERDEF__ARG_TRAITS_CS_)
-#define _CORBA_VALUEMEMBERDEF__ARG_TRAITS_CS_
+#if !defined (_CORBA_VALUEMEMBERDEF__ARG_TRAITS_)
+#define _CORBA_VALUEMEMBERDEF__ARG_TRAITS_
   
   template<>
   class  Arg_Traits<CORBA::ValueMemberDef>
@@ -356,7 +404,8 @@ namespace TAO
             CORBA::ValueMemberDef_ptr,
             CORBA::ValueMemberDef_var,
             CORBA::ValueMemberDef_out,
-            TAO::Objref_Traits<CORBA::ValueMemberDef>
+            TAO::Objref_Traits<CORBA::ValueMemberDef>,
+            TAO::Any_Insert_Policy_Stream <CORBA::ValueMemberDef_ptr>
           >
   {
   };
@@ -700,6 +749,57 @@ CORBA::FixedDef::marshal (TAO_OutputCDR &cdr)
   return (cdr << this);
 }
 
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/objref_typecode.cpp:76
+
+static TAO::TypeCode::Objref<char const *,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_FixedDef (
+    CORBA::tk_objref,
+    "IDL:omg.org/CORBA/FixedDef:1.0",
+    "FixedDef");
+  
+namespace CORBA
+{
+  ::CORBA::TypeCode_ptr const _tc_FixedDef =
+    &_tao_tc_CORBA_FixedDef;
+}
+
+
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/struct_typecode.cpp:87
+
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_CORBA_ValueMember[] =
+  {
+    { "name", &CORBA::_tc_Identifier },
+    { "id", &CORBA::_tc_RepositoryId },
+    { "defined_in", &CORBA::_tc_RepositoryId },
+    { "version", &CORBA::_tc_VersionSpec },
+    { "type", &CORBA::_tc_TypeCode },
+    { "type_def", &CORBA::_tc_IDLType },
+    { "access", &CORBA::_tc_Visibility }
+    
+  };
+static TAO::TypeCode::Struct<char const *,
+                      CORBA::TypeCode_ptr const *,
+                      TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const *,
+                      TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_ValueMember (
+    CORBA::tk_struct,
+    "IDL:omg.org/CORBA/ValueMember:1.0",
+    "ValueMember",
+    _tao_fields_CORBA_ValueMember,
+    7);
+  
+namespace CORBA
+{
+  ::CORBA::TypeCode_ptr const _tc_ValueMember =
+    &_tao_tc_CORBA_ValueMember;
+}
+
+
+
 // TAO_IDL - Generated from 
 // be\be_visitor_structure/structure_cs.cpp:66
 
@@ -726,7 +826,7 @@ CORBA::ValueMemberSeq::ValueMemberSeq (
     CORBA::ULong max
   )
   : TAO_Unbounded_Sequence<
-        CORBA::ValueMember
+        ValueMember
       >
     (max)
 {}
@@ -738,7 +838,7 @@ CORBA::ValueMemberSeq::ValueMemberSeq (
     CORBA::Boolean release
   )
   : TAO_Unbounded_Sequence<
-        CORBA::ValueMember
+        ValueMember
       >
     (max, length, buffer, release)
 {}
@@ -747,7 +847,7 @@ CORBA::ValueMemberSeq::ValueMemberSeq (
     const ValueMemberSeq &seq
   )
   : TAO_Unbounded_Sequence<
-        CORBA::ValueMember
+        ValueMember
       >
     (seq)
 {}
@@ -765,6 +865,54 @@ void CORBA::ValueMemberSeq::_tao_any_destructor (
 }
 
 #endif /* end #if !defined */
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/alias_typecode.cpp:50
+
+
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:937
+
+
+#ifndef _TAO_TYPECODE_CORBA_ValueMemberSeq_GUARD
+#define _TAO_TYPECODE_CORBA_ValueMemberSeq_GUARD
+namespace TAO
+{
+  namespace TypeCode
+  {
+    TAO::TypeCode::Sequence< ::CORBA::TypeCode_ptr const *,
+                            TAO::Null_RefCount_Policy>
+      CORBA_ValueMemberSeq_0 (
+        CORBA::tk_sequence,
+        &CORBA::_tc_ValueMember,
+        0U);
+      
+    ::CORBA::TypeCode_ptr const tc_CORBA_ValueMemberSeq_0 =
+      &CORBA_ValueMemberSeq_0;
+    
+  }
+}
+
+
+#endif /* _TAO_TYPECODE_CORBA_ValueMemberSeq_GUARD */
+
+static TAO::TypeCode::Alias<char const *,
+                            CORBA::TypeCode_ptr const *,
+                            TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_ValueMemberSeq (
+    CORBA::tk_alias,
+    "IDL:omg.org/CORBA/ValueMemberSeq:1.0",
+    "ValueMemberSeq",
+    &TAO::TypeCode::tc_CORBA_ValueMemberSeq_0);
+  
+namespace CORBA
+{
+  ::CORBA::TypeCode_ptr const _tc_ValueMemberSeq =
+    &_tao_tc_CORBA_ValueMemberSeq;
+}
+
+
 
 // TAO_IDL - Generated from
 // be\be_visitor_interface/interface_cs.cpp:60
@@ -870,7 +1018,7 @@ CORBA::TypeCode_ptr CORBA::ValueMemberDef::type (
       CORBA_ValueMemberDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits< CORBA::IDLType>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::IDLType>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -914,7 +1062,7 @@ void CORBA::ValueMemberDef::type_def (
     }
   
   TAO::Arg_Traits< void>::ret_val _tao_retval;
-  TAO::Arg_Traits< CORBA::IDLType>::in_arg_val _tao_type_def (type_def);
+  TAO::Arg_Traits< ::CORBA::IDLType>::in_arg_val _tao_type_def (type_def);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -1144,6 +1292,24 @@ CORBA::ValueMemberDef::marshal (TAO_OutputCDR &cdr)
 }
 
 // TAO_IDL - Generated from
+// be\be_visitor_typecode/objref_typecode.cpp:76
+
+static TAO::TypeCode::Objref<char const *,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_ValueMemberDef (
+    CORBA::tk_objref,
+    "IDL:omg.org/CORBA/ValueMemberDef:1.0",
+    "ValueMemberDef");
+  
+namespace CORBA
+{
+  ::CORBA::TypeCode_ptr const _tc_ValueMemberDef =
+    &_tao_tc_CORBA_ValueMemberDef;
+}
+
+
+
+// TAO_IDL - Generated from
 // be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for CORBA::ValueDef.
@@ -1205,7 +1371,7 @@ TAO::Collocation_Proxy_Broker *
       CORBA_ValueDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits< CORBA::InterfaceDefSeq>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::InterfaceDefSeq>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -1249,7 +1415,7 @@ void CORBA::ValueDef::supported_interfaces (
     }
   
   TAO::Arg_Traits< void>::ret_val _tao_retval;
-  TAO::Arg_Traits< CORBA::InterfaceDefSeq>::in_arg_val _tao_supported_interfaces (supported_interfaces);
+  TAO::Arg_Traits< ::CORBA::InterfaceDefSeq>::in_arg_val _tao_supported_interfaces (supported_interfaces);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -1290,7 +1456,7 @@ void CORBA::ValueDef::supported_interfaces (
       CORBA_ValueDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits< CORBA::InitializerSeq>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::InitializerSeq>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -1334,7 +1500,7 @@ void CORBA::ValueDef::initializers (
     }
   
   TAO::Arg_Traits< void>::ret_val _tao_retval;
-  TAO::Arg_Traits< CORBA::InitializerSeq>::in_arg_val _tao_initializers (initializers);
+  TAO::Arg_Traits< ::CORBA::InitializerSeq>::in_arg_val _tao_initializers (initializers);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -1375,7 +1541,7 @@ void CORBA::ValueDef::initializers (
       CORBA_ValueDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits< CORBA::ValueDef>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::ValueDef>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -1419,7 +1585,7 @@ void CORBA::ValueDef::base_value (
     }
   
   TAO::Arg_Traits< void>::ret_val _tao_retval;
-  TAO::Arg_Traits< CORBA::ValueDef>::in_arg_val _tao_base_value (base_value);
+  TAO::Arg_Traits< ::CORBA::ValueDef>::in_arg_val _tao_base_value (base_value);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -1460,7 +1626,7 @@ void CORBA::ValueDef::base_value (
       CORBA_ValueDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits< CORBA::ValueDefSeq>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::ValueDefSeq>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -1504,7 +1670,7 @@ void CORBA::ValueDef::abstract_base_values (
     }
   
   TAO::Arg_Traits< void>::ret_val _tao_retval;
-  TAO::Arg_Traits< CORBA::ValueDefSeq>::in_arg_val _tao_abstract_base_values (abstract_base_values);
+  TAO::Arg_Traits< ::CORBA::ValueDefSeq>::in_arg_val _tao_abstract_base_values (abstract_base_values);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -1802,7 +1968,7 @@ CORBA::Boolean CORBA::ValueDef::is_a (
     }
   
   TAO::Arg_Traits< ::ACE_InputCDR::to_boolean>::ret_val _tao_retval;
-  TAO::Arg_Traits< CORBA::RepositoryId>::in_arg_val _tao_id (id);
+  TAO::Arg_Traits< ::CORBA::RepositoryId>::in_arg_val _tao_id (id);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -1824,6 +1990,72 @@ CORBA::Boolean CORBA::ValueDef::is_a (
   
   return _tao_retval.retn ();
 }
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/struct_typecode.cpp:87
+
+
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:937
+
+
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:937
+
+
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:937
+
+
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:937
+
+
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:937
+
+
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:937
+
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_CORBA_ValueDef_FullValueDescription[] =
+  {
+    { "name", &CORBA::_tc_Identifier },
+    { "id", &CORBA::_tc_RepositoryId },
+    { "is_abstract", &CORBA::_tc_boolean },
+    { "is_custom", &CORBA::_tc_boolean },
+    { "defined_in", &CORBA::_tc_RepositoryId },
+    { "version", &CORBA::_tc_VersionSpec },
+    { "operations", &CORBA::_tc_OpDescriptionSeq },
+    { "attributes", &CORBA::_tc_AttrDescriptionSeq },
+    { "members", &CORBA::_tc_ValueMemberSeq },
+    { "initializers", &CORBA::_tc_InitializerSeq },
+    { "supported_interfaces", &CORBA::_tc_RepositoryIdSeq },
+    { "abstract_base_values", &CORBA::_tc_RepositoryIdSeq },
+    { "is_truncatable", &CORBA::_tc_boolean },
+    { "base_value", &CORBA::_tc_RepositoryId },
+    { "type", &CORBA::_tc_TypeCode }
+    
+  };
+static TAO::TypeCode::Struct<char const *,
+                      CORBA::TypeCode_ptr const *,
+                      TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const *,
+                      TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_ValueDef_FullValueDescription (
+    CORBA::tk_struct,
+    "IDL:omg.org/CORBA/ValueDef/FullValueDescription:1.0",
+    "FullValueDescription",
+    _tao_fields_CORBA_ValueDef_FullValueDescription,
+    15);
+  
+::CORBA::TypeCode_ptr const CORBA::ValueDef::_tc_FullValueDescription =
+  &_tao_tc_CORBA_ValueDef_FullValueDescription;
 
 // TAO_IDL - Generated from 
 // be\be_visitor_structure/structure_cs.cpp:66
@@ -1858,7 +2090,7 @@ CORBA::ValueDef::FullValueDescription::_tao_any_destructor (
       CORBA_ValueDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits< CORBA::ValueDef::FullValueDescription>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::ValueDef::FullValueDescription>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -1905,11 +2137,11 @@ CORBA::ValueDef::FullValueDescription::_tao_any_destructor (
       CORBA_ValueDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits< CORBA::ValueMemberDef>::ret_val _tao_retval;
-  TAO::Arg_Traits< CORBA::RepositoryId>::in_arg_val _tao_id (id);
-  TAO::Arg_Traits< CORBA::Identifier>::in_arg_val _tao_name (name);
-  TAO::Arg_Traits< CORBA::VersionSpec>::in_arg_val _tao_version (version);
-  TAO::Arg_Traits< CORBA::IDLType>::in_arg_val _tao_type (type);
+  TAO::Arg_Traits< ::CORBA::ValueMemberDef>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::RepositoryId>::in_arg_val _tao_id (id);
+  TAO::Arg_Traits< ::CORBA::Identifier>::in_arg_val _tao_name (name);
+  TAO::Arg_Traits< ::CORBA::VersionSpec>::in_arg_val _tao_version (version);
+  TAO::Arg_Traits< ::CORBA::IDLType>::in_arg_val _tao_type (type);
   TAO::Arg_Traits< ::CORBA::Visibility>::in_arg_val _tao_access (access);
   
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1962,12 +2194,12 @@ CORBA::ValueDef::FullValueDescription::_tao_any_destructor (
       CORBA_ValueDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits< CORBA::AttributeDef>::ret_val _tao_retval;
-  TAO::Arg_Traits< CORBA::RepositoryId>::in_arg_val _tao_id (id);
-  TAO::Arg_Traits< CORBA::Identifier>::in_arg_val _tao_name (name);
-  TAO::Arg_Traits< CORBA::VersionSpec>::in_arg_val _tao_version (version);
-  TAO::Arg_Traits< CORBA::IDLType>::in_arg_val _tao_type (type);
-  TAO::Arg_Traits< CORBA::AttributeMode>::in_arg_val _tao_mode (mode);
+  TAO::Arg_Traits< ::CORBA::AttributeDef>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::RepositoryId>::in_arg_val _tao_id (id);
+  TAO::Arg_Traits< ::CORBA::Identifier>::in_arg_val _tao_name (name);
+  TAO::Arg_Traits< ::CORBA::VersionSpec>::in_arg_val _tao_version (version);
+  TAO::Arg_Traits< ::CORBA::IDLType>::in_arg_val _tao_type (type);
+  TAO::Arg_Traits< ::CORBA::AttributeMode>::in_arg_val _tao_mode (mode);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -2022,15 +2254,15 @@ CORBA::ValueDef::FullValueDescription::_tao_any_destructor (
       CORBA_ValueDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits< CORBA::OperationDef>::ret_val _tao_retval;
-  TAO::Arg_Traits< CORBA::RepositoryId>::in_arg_val _tao_id (id);
-  TAO::Arg_Traits< CORBA::Identifier>::in_arg_val _tao_name (name);
-  TAO::Arg_Traits< CORBA::VersionSpec>::in_arg_val _tao_version (version);
-  TAO::Arg_Traits< CORBA::IDLType>::in_arg_val _tao_result (result);
-  TAO::Arg_Traits< CORBA::OperationMode>::in_arg_val _tao_mode (mode);
-  TAO::Arg_Traits< CORBA::ParDescriptionSeq>::in_arg_val _tao_params (params);
-  TAO::Arg_Traits< CORBA::ExceptionDefSeq>::in_arg_val _tao_exceptions (exceptions);
-  TAO::Arg_Traits< CORBA::ContextIdSeq>::in_arg_val _tao_contexts (contexts);
+  TAO::Arg_Traits< ::CORBA::OperationDef>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::RepositoryId>::in_arg_val _tao_id (id);
+  TAO::Arg_Traits< ::CORBA::Identifier>::in_arg_val _tao_name (name);
+  TAO::Arg_Traits< ::CORBA::VersionSpec>::in_arg_val _tao_version (version);
+  TAO::Arg_Traits< ::CORBA::IDLType>::in_arg_val _tao_result (result);
+  TAO::Arg_Traits< ::CORBA::OperationMode>::in_arg_val _tao_mode (mode);
+  TAO::Arg_Traits< ::CORBA::ParDescriptionSeq>::in_arg_val _tao_params (params);
+  TAO::Arg_Traits< ::CORBA::ExceptionDefSeq>::in_arg_val _tao_exceptions (exceptions);
+  TAO::Arg_Traits< ::CORBA::ContextIdSeq>::in_arg_val _tao_contexts (contexts);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -2193,6 +2425,70 @@ CORBA::ValueDef::marshal (TAO_OutputCDR &cdr)
   return (cdr << this);
 }
 
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/objref_typecode.cpp:76
+
+static TAO::TypeCode::Objref<char const *,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_ValueDef (
+    CORBA::tk_objref,
+    "IDL:omg.org/CORBA/ValueDef:1.0",
+    "ValueDef");
+  
+namespace CORBA
+{
+  ::CORBA::TypeCode_ptr const _tc_ValueDef =
+    &_tao_tc_CORBA_ValueDef;
+}
+
+
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/struct_typecode.cpp:87
+
+
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:937
+
+
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:937
+
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_CORBA_ValueDescription[] =
+  {
+    { "name", &CORBA::_tc_Identifier },
+    { "id", &CORBA::_tc_RepositoryId },
+    { "is_abstract", &CORBA::_tc_boolean },
+    { "is_custom", &CORBA::_tc_boolean },
+    { "defined_in", &CORBA::_tc_RepositoryId },
+    { "version", &CORBA::_tc_VersionSpec },
+    { "supported_interfaces", &CORBA::_tc_RepositoryIdSeq },
+    { "abstract_base_values", &CORBA::_tc_RepositoryIdSeq },
+    { "is_truncatable", &CORBA::_tc_boolean },
+    { "base_value", &CORBA::_tc_RepositoryId }
+    
+  };
+static TAO::TypeCode::Struct<char const *,
+                      CORBA::TypeCode_ptr const *,
+                      TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const *,
+                      TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_ValueDescription (
+    CORBA::tk_struct,
+    "IDL:omg.org/CORBA/ValueDescription:1.0",
+    "ValueDescription",
+    _tao_fields_CORBA_ValueDescription,
+    10);
+  
+namespace CORBA
+{
+  ::CORBA::TypeCode_ptr const _tc_ValueDescription =
+    &_tao_tc_CORBA_ValueDescription;
+}
+
+
+
 // TAO_IDL - Generated from 
 // be\be_visitor_structure/structure_cs.cpp:66
 
@@ -2268,7 +2564,7 @@ TAO::Collocation_Proxy_Broker *
       CORBA_ExtValueDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits< CORBA::ExtInitializerSeq>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::ExtInitializerSeq>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -2312,7 +2608,7 @@ void CORBA::ExtValueDef::ext_initializers (
     }
   
   TAO::Arg_Traits< void>::ret_val _tao_retval;
-  TAO::Arg_Traits< CORBA::ExtInitializerSeq>::in_arg_val _tao_ext_initializers (ext_initializers);
+  TAO::Arg_Traits< ::CORBA::ExtInitializerSeq>::in_arg_val _tao_ext_initializers (ext_initializers);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -2332,6 +2628,72 @@ void CORBA::ExtValueDef::ext_initializers (
   _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/struct_typecode.cpp:87
+
+
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:937
+
+
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:937
+
+
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:937
+
+
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:937
+
+
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:937
+
+
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:937
+
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_CORBA_ExtValueDef_ExtFullValueDescription[] =
+  {
+    { "name", &CORBA::_tc_Identifier },
+    { "id", &CORBA::_tc_RepositoryId },
+    { "is_abstract", &CORBA::_tc_boolean },
+    { "is_custom", &CORBA::_tc_boolean },
+    { "defined_in", &CORBA::_tc_RepositoryId },
+    { "version", &CORBA::_tc_VersionSpec },
+    { "operations", &CORBA::_tc_OpDescriptionSeq },
+    { "attributes", &CORBA::_tc_ExtAttrDescriptionSeq },
+    { "members", &CORBA::_tc_ValueMemberSeq },
+    { "initializers", &CORBA::_tc_ExtInitializerSeq },
+    { "supported_interfaces", &CORBA::_tc_RepositoryIdSeq },
+    { "abstract_base_values", &CORBA::_tc_RepositoryIdSeq },
+    { "is_truncatable", &CORBA::_tc_boolean },
+    { "base_value", &CORBA::_tc_RepositoryId },
+    { "type", &CORBA::_tc_TypeCode }
+    
+  };
+static TAO::TypeCode::Struct<char const *,
+                      CORBA::TypeCode_ptr const *,
+                      TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const *,
+                      TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_ExtValueDef_ExtFullValueDescription (
+    CORBA::tk_struct,
+    "IDL:omg.org/CORBA/ExtValueDef/ExtFullValueDescription:1.0",
+    "ExtFullValueDescription",
+    _tao_fields_CORBA_ExtValueDef_ExtFullValueDescription,
+    15);
+  
+::CORBA::TypeCode_ptr const CORBA::ExtValueDef::_tc_ExtFullValueDescription =
+  &_tao_tc_CORBA_ExtValueDef_ExtFullValueDescription;
 
 // TAO_IDL - Generated from 
 // be\be_visitor_structure/structure_cs.cpp:66
@@ -2366,7 +2728,7 @@ CORBA::ExtValueDef::ExtFullValueDescription::_tao_any_destructor (
       CORBA_ExtValueDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits< CORBA::ExtValueDef::ExtFullValueDescription>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::ExtValueDef::ExtFullValueDescription>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -2415,14 +2777,14 @@ CORBA::ExtValueDef::ExtFullValueDescription::_tao_any_destructor (
       CORBA_ExtValueDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits< CORBA::ExtAttributeDef>::ret_val _tao_retval;
-  TAO::Arg_Traits< CORBA::RepositoryId>::in_arg_val _tao_id (id);
-  TAO::Arg_Traits< CORBA::Identifier>::in_arg_val _tao_name (name);
-  TAO::Arg_Traits< CORBA::VersionSpec>::in_arg_val _tao_version (version);
-  TAO::Arg_Traits< CORBA::IDLType>::in_arg_val _tao_type (type);
-  TAO::Arg_Traits< CORBA::AttributeMode>::in_arg_val _tao_mode (mode);
-  TAO::Arg_Traits< CORBA::ExceptionDefSeq>::in_arg_val _tao_get_exceptions (get_exceptions);
-  TAO::Arg_Traits< CORBA::ExceptionDefSeq>::in_arg_val _tao_set_exceptions (set_exceptions);
+  TAO::Arg_Traits< ::CORBA::ExtAttributeDef>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::RepositoryId>::in_arg_val _tao_id (id);
+  TAO::Arg_Traits< ::CORBA::Identifier>::in_arg_val _tao_name (name);
+  TAO::Arg_Traits< ::CORBA::VersionSpec>::in_arg_val _tao_version (version);
+  TAO::Arg_Traits< ::CORBA::IDLType>::in_arg_val _tao_type (type);
+  TAO::Arg_Traits< ::CORBA::AttributeMode>::in_arg_val _tao_mode (mode);
+  TAO::Arg_Traits< ::CORBA::ExceptionDefSeq>::in_arg_val _tao_get_exceptions (get_exceptions);
+  TAO::Arg_Traits< ::CORBA::ExceptionDefSeq>::in_arg_val _tao_set_exceptions (set_exceptions);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -2587,6 +2949,24 @@ CORBA::ExtValueDef::marshal (TAO_OutputCDR &cdr)
 }
 
 // TAO_IDL - Generated from
+// be\be_visitor_typecode/objref_typecode.cpp:76
+
+static TAO::TypeCode::Objref<char const *,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_ExtValueDef (
+    CORBA::tk_objref,
+    "IDL:omg.org/CORBA/ExtValueDef:1.0",
+    "ExtValueDef");
+  
+namespace CORBA
+{
+  ::CORBA::TypeCode_ptr const _tc_ExtValueDef =
+    &_tao_tc_CORBA_ExtValueDef;
+}
+
+
+
+// TAO_IDL - Generated from
 // be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for CORBA::ValueBoxDef.
@@ -2648,7 +3028,7 @@ TAO::Collocation_Proxy_Broker *
       CORBA_ValueBoxDef_setup_collocation ();
     }
   
-  TAO::Arg_Traits< CORBA::IDLType>::ret_val _tao_retval;
+  TAO::Arg_Traits< ::CORBA::IDLType>::ret_val _tao_retval;
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -2692,7 +3072,7 @@ void CORBA::ValueBoxDef::original_type_def (
     }
   
   TAO::Arg_Traits< void>::ret_val _tao_retval;
-  TAO::Arg_Traits< CORBA::IDLType>::in_arg_val _tao_original_type_def (original_type_def);
+  TAO::Arg_Traits< ::CORBA::IDLType>::in_arg_val _tao_original_type_def (original_type_def);
   
   TAO::Argument *_the_tao_operation_signature [] =
     {
@@ -2842,6 +3222,605 @@ CORBA::Boolean
 CORBA::ValueBoxDef::marshal (TAO_OutputCDR &cdr)
 {
   return (cdr << this);
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/objref_typecode.cpp:76
+
+static TAO::TypeCode::Objref<char const *,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_CORBA_ValueBoxDef (
+    CORBA::tk_objref,
+    "IDL:omg.org/CORBA/ValueBoxDef:1.0",
+    "ValueBoxDef");
+  
+namespace CORBA
+{
+  ::CORBA::TypeCode_ptr const _tc_ValueBoxDef =
+    &_tao_tc_CORBA_ValueBoxDef;
+}
+
+
+
+// TAO_IDL - Generated from
+// be\be_visitor_interface/any_op_cs.cpp:50
+
+namespace TAO
+{
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<CORBA::FixedDef>::to_object (
+      CORBA::Object_ptr &_tao_elem
+    ) const
+  {
+    _tao_elem = CORBA::Object::_duplicate (this->value_);
+    return true;
+  }
+}
+
+// Copying insertion.
+void
+operator<<= (
+    CORBA::Any &_tao_any,
+    CORBA::FixedDef_ptr _tao_elem
+  )
+{
+  CORBA::FixedDef_ptr _tao_objptr =
+    CORBA::FixedDef::_duplicate (_tao_elem);
+  _tao_any <<= &_tao_objptr;
+}
+
+// Non-copying insertion.
+void
+operator<<= (
+    CORBA::Any &_tao_any,
+    CORBA::FixedDef_ptr *_tao_elem
+  )
+{
+  TAO::Any_Impl_T<CORBA::FixedDef>::insert (
+      _tao_any,
+      CORBA::FixedDef::_tao_any_destructor,
+      CORBA::_tc_FixedDef,
+      *_tao_elem
+    );
+}
+
+CORBA::Boolean
+operator>>= (
+    const CORBA::Any &_tao_any,
+    CORBA::FixedDef_ptr &_tao_elem
+  )
+{
+  return
+    TAO::Any_Impl_T<CORBA::FixedDef>::extract (
+        _tao_any,
+        CORBA::FixedDef::_tao_any_destructor,
+        CORBA::_tc_FixedDef,
+        _tao_elem
+      );
+}
+
+// TAO_IDL - Generated from 
+// be\be_visitor_structure/any_op_cs.cpp:54
+
+// Copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const CORBA::ValueMember &_tao_elem
+  )
+{
+  TAO::Any_Dual_Impl_T<CORBA::ValueMember>::insert_copy (
+      _tao_any,
+      CORBA::ValueMember::_tao_any_destructor,
+      CORBA::_tc_ValueMember,
+      _tao_elem
+    );
+}
+
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    CORBA::ValueMember *_tao_elem
+  )
+{
+  TAO::Any_Dual_Impl_T<CORBA::ValueMember>::insert (
+      _tao_any,
+      CORBA::ValueMember::_tao_any_destructor,
+      CORBA::_tc_ValueMember,
+      _tao_elem
+    );
+}
+
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    CORBA::ValueMember *&_tao_elem
+  )
+{
+  return _tao_any >>= const_cast<
+      const CORBA::ValueMember *&> (
+      _tao_elem
+    );
+}
+
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const CORBA::ValueMember *&_tao_elem
+  )
+{
+  return
+    TAO::Any_Dual_Impl_T<CORBA::ValueMember>::extract (
+        _tao_any,
+        CORBA::ValueMember::_tao_any_destructor,
+        CORBA::_tc_ValueMember,
+        _tao_elem
+      );
+}
+
+// TAO_IDL - Generated from 
+// be\be_visitor_sequence/any_op_cs.cpp:54
+
+
+// Copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const CORBA::ValueMemberSeq &_tao_elem
+  )
+{
+  TAO::Any_Dual_Impl_T<CORBA::ValueMemberSeq>::insert_copy (
+      _tao_any,
+      CORBA::ValueMemberSeq::_tao_any_destructor,
+      TAO::TypeCode::tc_CORBA_ValueMemberSeq_0,
+      _tao_elem
+    );
+}
+
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    CORBA::ValueMemberSeq *_tao_elem
+  )
+{
+  TAO::Any_Dual_Impl_T<CORBA::ValueMemberSeq>::insert (
+      _tao_any,
+      CORBA::ValueMemberSeq::_tao_any_destructor,
+      TAO::TypeCode::tc_CORBA_ValueMemberSeq_0,
+      _tao_elem
+    );
+}
+
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    CORBA::ValueMemberSeq *&_tao_elem
+  )
+{
+  return _tao_any >>= const_cast<
+      const CORBA::ValueMemberSeq *&> (
+      _tao_elem
+    );
+}
+
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const CORBA::ValueMemberSeq *&_tao_elem
+  )
+{
+  return
+    TAO::Any_Dual_Impl_T<CORBA::ValueMemberSeq>::extract (
+        _tao_any,
+        CORBA::ValueMemberSeq::_tao_any_destructor,
+        TAO::TypeCode::tc_CORBA_ValueMemberSeq_0,
+        _tao_elem
+      );
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_interface/any_op_cs.cpp:50
+
+namespace TAO
+{
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<CORBA::ValueMemberDef>::to_object (
+      CORBA::Object_ptr &_tao_elem
+    ) const
+  {
+    _tao_elem = CORBA::Object::_duplicate (this->value_);
+    return true;
+  }
+}
+
+// Copying insertion.
+void
+operator<<= (
+    CORBA::Any &_tao_any,
+    CORBA::ValueMemberDef_ptr _tao_elem
+  )
+{
+  CORBA::ValueMemberDef_ptr _tao_objptr =
+    CORBA::ValueMemberDef::_duplicate (_tao_elem);
+  _tao_any <<= &_tao_objptr;
+}
+
+// Non-copying insertion.
+void
+operator<<= (
+    CORBA::Any &_tao_any,
+    CORBA::ValueMemberDef_ptr *_tao_elem
+  )
+{
+  TAO::Any_Impl_T<CORBA::ValueMemberDef>::insert (
+      _tao_any,
+      CORBA::ValueMemberDef::_tao_any_destructor,
+      CORBA::_tc_ValueMemberDef,
+      *_tao_elem
+    );
+}
+
+CORBA::Boolean
+operator>>= (
+    const CORBA::Any &_tao_any,
+    CORBA::ValueMemberDef_ptr &_tao_elem
+  )
+{
+  return
+    TAO::Any_Impl_T<CORBA::ValueMemberDef>::extract (
+        _tao_any,
+        CORBA::ValueMemberDef::_tao_any_destructor,
+        CORBA::_tc_ValueMemberDef,
+        _tao_elem
+      );
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_interface/any_op_cs.cpp:50
+
+namespace TAO
+{
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<CORBA::ValueDef>::to_object (
+      CORBA::Object_ptr &_tao_elem
+    ) const
+  {
+    _tao_elem = CORBA::Object::_duplicate (this->value_);
+    return true;
+  }
+}
+
+// Copying insertion.
+void
+operator<<= (
+    CORBA::Any &_tao_any,
+    CORBA::ValueDef_ptr _tao_elem
+  )
+{
+  CORBA::ValueDef_ptr _tao_objptr =
+    CORBA::ValueDef::_duplicate (_tao_elem);
+  _tao_any <<= &_tao_objptr;
+}
+
+// Non-copying insertion.
+void
+operator<<= (
+    CORBA::Any &_tao_any,
+    CORBA::ValueDef_ptr *_tao_elem
+  )
+{
+  TAO::Any_Impl_T<CORBA::ValueDef>::insert (
+      _tao_any,
+      CORBA::ValueDef::_tao_any_destructor,
+      CORBA::_tc_ValueDef,
+      *_tao_elem
+    );
+}
+
+CORBA::Boolean
+operator>>= (
+    const CORBA::Any &_tao_any,
+    CORBA::ValueDef_ptr &_tao_elem
+  )
+{
+  return
+    TAO::Any_Impl_T<CORBA::ValueDef>::extract (
+        _tao_any,
+        CORBA::ValueDef::_tao_any_destructor,
+        CORBA::_tc_ValueDef,
+        _tao_elem
+      );
+}
+
+// TAO_IDL - Generated from 
+// be\be_visitor_structure/any_op_cs.cpp:54
+
+// Copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const CORBA::ValueDef::FullValueDescription &_tao_elem
+  )
+{
+  TAO::Any_Dual_Impl_T<CORBA::ValueDef::FullValueDescription>::insert_copy (
+      _tao_any,
+      CORBA::ValueDef::FullValueDescription::_tao_any_destructor,
+      CORBA::ValueDef::_tc_FullValueDescription,
+      _tao_elem
+    );
+}
+
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    CORBA::ValueDef::FullValueDescription *_tao_elem
+  )
+{
+  TAO::Any_Dual_Impl_T<CORBA::ValueDef::FullValueDescription>::insert (
+      _tao_any,
+      CORBA::ValueDef::FullValueDescription::_tao_any_destructor,
+      CORBA::ValueDef::_tc_FullValueDescription,
+      _tao_elem
+    );
+}
+
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    CORBA::ValueDef::FullValueDescription *&_tao_elem
+  )
+{
+  return _tao_any >>= const_cast<
+      const CORBA::ValueDef::FullValueDescription *&> (
+      _tao_elem
+    );
+}
+
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const CORBA::ValueDef::FullValueDescription *&_tao_elem
+  )
+{
+  return
+    TAO::Any_Dual_Impl_T<CORBA::ValueDef::FullValueDescription>::extract (
+        _tao_any,
+        CORBA::ValueDef::FullValueDescription::_tao_any_destructor,
+        CORBA::ValueDef::_tc_FullValueDescription,
+        _tao_elem
+      );
+}
+
+// TAO_IDL - Generated from 
+// be\be_visitor_structure/any_op_cs.cpp:54
+
+// Copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const CORBA::ValueDescription &_tao_elem
+  )
+{
+  TAO::Any_Dual_Impl_T<CORBA::ValueDescription>::insert_copy (
+      _tao_any,
+      CORBA::ValueDescription::_tao_any_destructor,
+      CORBA::_tc_ValueDescription,
+      _tao_elem
+    );
+}
+
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    CORBA::ValueDescription *_tao_elem
+  )
+{
+  TAO::Any_Dual_Impl_T<CORBA::ValueDescription>::insert (
+      _tao_any,
+      CORBA::ValueDescription::_tao_any_destructor,
+      CORBA::_tc_ValueDescription,
+      _tao_elem
+    );
+}
+
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    CORBA::ValueDescription *&_tao_elem
+  )
+{
+  return _tao_any >>= const_cast<
+      const CORBA::ValueDescription *&> (
+      _tao_elem
+    );
+}
+
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const CORBA::ValueDescription *&_tao_elem
+  )
+{
+  return
+    TAO::Any_Dual_Impl_T<CORBA::ValueDescription>::extract (
+        _tao_any,
+        CORBA::ValueDescription::_tao_any_destructor,
+        CORBA::_tc_ValueDescription,
+        _tao_elem
+      );
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_interface/any_op_cs.cpp:50
+
+namespace TAO
+{
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<CORBA::ExtValueDef>::to_object (
+      CORBA::Object_ptr &_tao_elem
+    ) const
+  {
+    _tao_elem = CORBA::Object::_duplicate (this->value_);
+    return true;
+  }
+}
+
+// Copying insertion.
+void
+operator<<= (
+    CORBA::Any &_tao_any,
+    CORBA::ExtValueDef_ptr _tao_elem
+  )
+{
+  CORBA::ExtValueDef_ptr _tao_objptr =
+    CORBA::ExtValueDef::_duplicate (_tao_elem);
+  _tao_any <<= &_tao_objptr;
+}
+
+// Non-copying insertion.
+void
+operator<<= (
+    CORBA::Any &_tao_any,
+    CORBA::ExtValueDef_ptr *_tao_elem
+  )
+{
+  TAO::Any_Impl_T<CORBA::ExtValueDef>::insert (
+      _tao_any,
+      CORBA::ExtValueDef::_tao_any_destructor,
+      CORBA::_tc_ExtValueDef,
+      *_tao_elem
+    );
+}
+
+CORBA::Boolean
+operator>>= (
+    const CORBA::Any &_tao_any,
+    CORBA::ExtValueDef_ptr &_tao_elem
+  )
+{
+  return
+    TAO::Any_Impl_T<CORBA::ExtValueDef>::extract (
+        _tao_any,
+        CORBA::ExtValueDef::_tao_any_destructor,
+        CORBA::_tc_ExtValueDef,
+        _tao_elem
+      );
+}
+
+// TAO_IDL - Generated from 
+// be\be_visitor_structure/any_op_cs.cpp:54
+
+// Copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const CORBA::ExtValueDef::ExtFullValueDescription &_tao_elem
+  )
+{
+  TAO::Any_Dual_Impl_T<CORBA::ExtValueDef::ExtFullValueDescription>::insert_copy (
+      _tao_any,
+      CORBA::ExtValueDef::ExtFullValueDescription::_tao_any_destructor,
+      CORBA::ExtValueDef::_tc_ExtFullValueDescription,
+      _tao_elem
+    );
+}
+
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    CORBA::ExtValueDef::ExtFullValueDescription *_tao_elem
+  )
+{
+  TAO::Any_Dual_Impl_T<CORBA::ExtValueDef::ExtFullValueDescription>::insert (
+      _tao_any,
+      CORBA::ExtValueDef::ExtFullValueDescription::_tao_any_destructor,
+      CORBA::ExtValueDef::_tc_ExtFullValueDescription,
+      _tao_elem
+    );
+}
+
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    CORBA::ExtValueDef::ExtFullValueDescription *&_tao_elem
+  )
+{
+  return _tao_any >>= const_cast<
+      const CORBA::ExtValueDef::ExtFullValueDescription *&> (
+      _tao_elem
+    );
+}
+
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const CORBA::ExtValueDef::ExtFullValueDescription *&_tao_elem
+  )
+{
+  return
+    TAO::Any_Dual_Impl_T<CORBA::ExtValueDef::ExtFullValueDescription>::extract (
+        _tao_any,
+        CORBA::ExtValueDef::ExtFullValueDescription::_tao_any_destructor,
+        CORBA::ExtValueDef::_tc_ExtFullValueDescription,
+        _tao_elem
+      );
+}
+
+// TAO_IDL - Generated from
+// be\be_visitor_interface/any_op_cs.cpp:50
+
+namespace TAO
+{
+  template<>
+  CORBA::Boolean
+  Any_Impl_T<CORBA::ValueBoxDef>::to_object (
+      CORBA::Object_ptr &_tao_elem
+    ) const
+  {
+    _tao_elem = CORBA::Object::_duplicate (this->value_);
+    return true;
+  }
+}
+
+// Copying insertion.
+void
+operator<<= (
+    CORBA::Any &_tao_any,
+    CORBA::ValueBoxDef_ptr _tao_elem
+  )
+{
+  CORBA::ValueBoxDef_ptr _tao_objptr =
+    CORBA::ValueBoxDef::_duplicate (_tao_elem);
+  _tao_any <<= &_tao_objptr;
+}
+
+// Non-copying insertion.
+void
+operator<<= (
+    CORBA::Any &_tao_any,
+    CORBA::ValueBoxDef_ptr *_tao_elem
+  )
+{
+  TAO::Any_Impl_T<CORBA::ValueBoxDef>::insert (
+      _tao_any,
+      CORBA::ValueBoxDef::_tao_any_destructor,
+      CORBA::_tc_ValueBoxDef,
+      *_tao_elem
+    );
+}
+
+CORBA::Boolean
+operator>>= (
+    const CORBA::Any &_tao_any,
+    CORBA::ValueBoxDef_ptr &_tao_elem
+  )
+{
+  return
+    TAO::Any_Impl_T<CORBA::ValueBoxDef>::extract (
+        _tao_any,
+        CORBA::ValueBoxDef::_tao_any_destructor,
+        CORBA::_tc_ValueBoxDef,
+        _tao_elem
+      );
 }
 
 // TAO_IDL - Generated from
@@ -3035,8 +4014,8 @@ CORBA::Boolean operator<< (
   return
     (strm << _tao_aggregate.name.in ()) &&
     (strm << _tao_aggregate.id.in ()) &&
-    (strm << CORBA::Any::from_boolean (_tao_aggregate.is_abstract)) &&
-    (strm << CORBA::Any::from_boolean (_tao_aggregate.is_custom)) &&
+    (strm << ACE_OutputCDR::from_boolean (_tao_aggregate.is_abstract)) &&
+    (strm << ACE_OutputCDR::from_boolean (_tao_aggregate.is_custom)) &&
     (strm << _tao_aggregate.defined_in.in ()) &&
     (strm << _tao_aggregate.version.in ()) &&
     (strm << _tao_aggregate.operations) &&
@@ -3045,7 +4024,7 @@ CORBA::Boolean operator<< (
     (strm << _tao_aggregate.initializers) &&
     (strm << _tao_aggregate.supported_interfaces) &&
     (strm << _tao_aggregate.abstract_base_values) &&
-    (strm << CORBA::Any::from_boolean (_tao_aggregate.is_truncatable)) &&
+    (strm << ACE_OutputCDR::from_boolean (_tao_aggregate.is_truncatable)) &&
     (strm << _tao_aggregate.base_value.in ()) &&
     (strm << _tao_aggregate.type.in ());
 }
@@ -3058,8 +4037,8 @@ CORBA::Boolean operator>> (
   return
     (strm >> _tao_aggregate.name.out ()) &&
     (strm >> _tao_aggregate.id.out ()) &&
-    (strm >> CORBA::Any::to_boolean (_tao_aggregate.is_abstract)) &&
-    (strm >> CORBA::Any::to_boolean (_tao_aggregate.is_custom)) &&
+    (strm >> ACE_InputCDR::to_boolean (_tao_aggregate.is_abstract)) &&
+    (strm >> ACE_InputCDR::to_boolean (_tao_aggregate.is_custom)) &&
     (strm >> _tao_aggregate.defined_in.out ()) &&
     (strm >> _tao_aggregate.version.out ()) &&
     (strm >> _tao_aggregate.operations) &&
@@ -3068,7 +4047,7 @@ CORBA::Boolean operator>> (
     (strm >> _tao_aggregate.initializers) &&
     (strm >> _tao_aggregate.supported_interfaces) &&
     (strm >> _tao_aggregate.abstract_base_values) &&
-    (strm >> CORBA::Any::to_boolean (_tao_aggregate.is_truncatable)) &&
+    (strm >> ACE_InputCDR::to_boolean (_tao_aggregate.is_truncatable)) &&
     (strm >> _tao_aggregate.base_value.out ()) &&
     (strm >> _tao_aggregate.type.out ());
 }
@@ -3120,13 +4099,13 @@ CORBA::Boolean operator<< (
   return
     (strm << _tao_aggregate.name.in ()) &&
     (strm << _tao_aggregate.id.in ()) &&
-    (strm << CORBA::Any::from_boolean (_tao_aggregate.is_abstract)) &&
-    (strm << CORBA::Any::from_boolean (_tao_aggregate.is_custom)) &&
+    (strm << ACE_OutputCDR::from_boolean (_tao_aggregate.is_abstract)) &&
+    (strm << ACE_OutputCDR::from_boolean (_tao_aggregate.is_custom)) &&
     (strm << _tao_aggregate.defined_in.in ()) &&
     (strm << _tao_aggregate.version.in ()) &&
     (strm << _tao_aggregate.supported_interfaces) &&
     (strm << _tao_aggregate.abstract_base_values) &&
-    (strm << CORBA::Any::from_boolean (_tao_aggregate.is_truncatable)) &&
+    (strm << ACE_OutputCDR::from_boolean (_tao_aggregate.is_truncatable)) &&
     (strm << _tao_aggregate.base_value.in ());
 }
 
@@ -3138,13 +4117,13 @@ CORBA::Boolean operator>> (
   return
     (strm >> _tao_aggregate.name.out ()) &&
     (strm >> _tao_aggregate.id.out ()) &&
-    (strm >> CORBA::Any::to_boolean (_tao_aggregate.is_abstract)) &&
-    (strm >> CORBA::Any::to_boolean (_tao_aggregate.is_custom)) &&
+    (strm >> ACE_InputCDR::to_boolean (_tao_aggregate.is_abstract)) &&
+    (strm >> ACE_InputCDR::to_boolean (_tao_aggregate.is_custom)) &&
     (strm >> _tao_aggregate.defined_in.out ()) &&
     (strm >> _tao_aggregate.version.out ()) &&
     (strm >> _tao_aggregate.supported_interfaces) &&
     (strm >> _tao_aggregate.abstract_base_values) &&
-    (strm >> CORBA::Any::to_boolean (_tao_aggregate.is_truncatable)) &&
+    (strm >> ACE_InputCDR::to_boolean (_tao_aggregate.is_truncatable)) &&
     (strm >> _tao_aggregate.base_value.out ());
 }
 
@@ -3159,8 +4138,8 @@ CORBA::Boolean operator<< (
   return
     (strm << _tao_aggregate.name.in ()) &&
     (strm << _tao_aggregate.id.in ()) &&
-    (strm << CORBA::Any::from_boolean (_tao_aggregate.is_abstract)) &&
-    (strm << CORBA::Any::from_boolean (_tao_aggregate.is_custom)) &&
+    (strm << ACE_OutputCDR::from_boolean (_tao_aggregate.is_abstract)) &&
+    (strm << ACE_OutputCDR::from_boolean (_tao_aggregate.is_custom)) &&
     (strm << _tao_aggregate.defined_in.in ()) &&
     (strm << _tao_aggregate.version.in ()) &&
     (strm << _tao_aggregate.operations) &&
@@ -3169,7 +4148,7 @@ CORBA::Boolean operator<< (
     (strm << _tao_aggregate.initializers) &&
     (strm << _tao_aggregate.supported_interfaces) &&
     (strm << _tao_aggregate.abstract_base_values) &&
-    (strm << CORBA::Any::from_boolean (_tao_aggregate.is_truncatable)) &&
+    (strm << ACE_OutputCDR::from_boolean (_tao_aggregate.is_truncatable)) &&
     (strm << _tao_aggregate.base_value.in ()) &&
     (strm << _tao_aggregate.type.in ());
 }
@@ -3182,8 +4161,8 @@ CORBA::Boolean operator>> (
   return
     (strm >> _tao_aggregate.name.out ()) &&
     (strm >> _tao_aggregate.id.out ()) &&
-    (strm >> CORBA::Any::to_boolean (_tao_aggregate.is_abstract)) &&
-    (strm >> CORBA::Any::to_boolean (_tao_aggregate.is_custom)) &&
+    (strm >> ACE_InputCDR::to_boolean (_tao_aggregate.is_abstract)) &&
+    (strm >> ACE_InputCDR::to_boolean (_tao_aggregate.is_custom)) &&
     (strm >> _tao_aggregate.defined_in.out ()) &&
     (strm >> _tao_aggregate.version.out ()) &&
     (strm >> _tao_aggregate.operations) &&
@@ -3192,7 +4171,7 @@ CORBA::Boolean operator>> (
     (strm >> _tao_aggregate.initializers) &&
     (strm >> _tao_aggregate.supported_interfaces) &&
     (strm >> _tao_aggregate.abstract_base_values) &&
-    (strm >> CORBA::Any::to_boolean (_tao_aggregate.is_truncatable)) &&
+    (strm >> ACE_InputCDR::to_boolean (_tao_aggregate.is_truncatable)) &&
     (strm >> _tao_aggregate.base_value.out ()) &&
     (strm >> _tao_aggregate.type.out ());
 }

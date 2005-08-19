@@ -9,7 +9,7 @@
 
 #include "tao/IFR_Client/IFR_ComponentsC.h"
 
-#include "tao/Any_Unknown_IDL_Type.h"
+#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"

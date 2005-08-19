@@ -26,15 +26,11 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:291
+// be\be_codegen.cpp:288
 
 
 #include "CONV_FRAMEC.h"
 #include "tao/CDR.h"
-
-#if defined (__BORLANDC__)
-#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
-#endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
@@ -58,7 +54,7 @@ CONV_FRAME::CodeSetIdSeq::CodeSetIdSeq (
     CORBA::ULong max
   )
   : TAO_Unbounded_Sequence<
-        CONV_FRAME::CodeSetId
+        CodeSetId
       >
     (max)
 {}
@@ -70,7 +66,7 @@ CONV_FRAME::CodeSetIdSeq::CodeSetIdSeq (
     CORBA::Boolean release
   )
   : TAO_Unbounded_Sequence<
-        CONV_FRAME::CodeSetId
+        CodeSetId
       >
     (max, length, buffer, release)
 {}
@@ -79,7 +75,7 @@ CONV_FRAME::CodeSetIdSeq::CodeSetIdSeq (
     const CodeSetIdSeq &seq
   )
   : TAO_Unbounded_Sequence<
-        CONV_FRAME::CodeSetId
+        CodeSetId
       >
     (seq)
 {}

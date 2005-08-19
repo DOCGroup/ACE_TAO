@@ -248,16 +248,3 @@ main (int argc, char **argv)
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#if defined (ACE_HAS_USING_KEYWORD)
-template class POA_A_tie<Tie_i>;
-template class POA_Outer::B_tie <Tie_i>;
-template class POA_Outer::Inner::C_tie <Tie_i>;
-#endif /* ACE_HAS_USING_KEYWORD */
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate POA_A_tie<Tie_i>
-#if defined (ACE_HAS_USING_KEYWORD)
-#pragma instantiate POA_Outer::B_tie <Tie_i>
-#pragma instantiate POA_Outer::Inner::C_tie <Tie_i>
-#endif /* ACE_HAS_USING_KEYWORD */
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

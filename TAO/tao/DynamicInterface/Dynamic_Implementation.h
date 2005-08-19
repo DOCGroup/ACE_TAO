@@ -39,17 +39,19 @@ namespace CORBA
   typedef ServerRequest *ServerRequest_ptr;
 }
 
+/**
+ * @class TAO_DynamicImplementation
+ *
+ * @brief Base class for DSI.
+ *
+ * It is expected that the <invoke> and <_primary_interface>
+ * methods will be only invoked by the POA in the context of
+ * serving a CORBA request. Invoking this method in other
+ * circumstances may lead to unpredictable results.
+ */
 class TAO_DynamicInterface_Export TAO_DynamicImplementation
   : public virtual TAO_ServantBase
 {
-  // = TITLE
-  //    Base class for DSI.
-  //
-  // = DESCRIPTION
-  //    It is expected that the <invoke> and <_primary_interface>
-  //    methods will be only invoked by the POA in the context of
-  //    serving a CORBA request. Invoking this method in other
-  //    circumstances may lead to unpredictable results.
 public:
   /// The invoke() method receives requests issued to any CORBA object
   /// incarnated by the DSI servant and performs the processing

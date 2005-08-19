@@ -245,9 +245,9 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
 
   *os << "::CORBA::OctetSeq "
       << "_tao_marshaled_exception (" << be_idt << be_idt_nl
-      << "cdr->length ()," << be_nl
-      << "cdr->length ()," << be_nl
-      << "(unsigned char*) cdr->rd_ptr ()," << be_nl
+      << "static_cast <CORBA::ULong> (cdr->length ())," << be_nl
+      << "static_cast <CORBA::ULong> (cdr->length ())," << be_nl
+      << "reinterpret_cast <unsigned char*> (cdr->rd_ptr ())," << be_nl
       << "0" << be_uidt_nl
       << ");" << be_uidt_nl
       << "exception_holder_var->marshaled_exception (_tao_marshaled_exception);"

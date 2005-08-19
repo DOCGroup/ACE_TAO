@@ -259,7 +259,7 @@ be_visitor_valuetype_field_cdr_cs::visit_interface (be_interface *node)
           << this->post_ << ".out ())";
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "TAO::Objref_Traits< ::" << node->name () 
+      *os << "TAO::Objref_Traits< ::" << node->name ()
           << ">::marshal (" << be_idt << be_idt_nl
           << this->pre_ << f->local_name ()
           << this->post_ << ".in (), " << be_nl
@@ -308,7 +308,7 @@ be_visitor_valuetype_field_cdr_cs::visit_interface_fwd (be_interface_fwd *node)
           << this->post_ << ").out ()";
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "TAO::Objref_Traits< ::" << node->name () 
+      *os << "TAO::Objref_Traits< ::" << node->name ()
           << ">::marshal (" << be_idt << be_idt_nl
           << this->pre_ << f->local_name ()
           << this->post_ << ".in (), " << be_nl
@@ -489,22 +489,22 @@ be_visitor_valuetype_field_cdr_cs::visit_predefined_type (be_predefined_type *no
         }
       else if (pt == AST_PredefinedType::PT_char)
         {
-          *os << "(strm >> ::CORBA::Any::to_char ("
+          *os << "(strm >> ::ACE_InputCDR::to_char ("
               << this->pre_ << f->local_name () << this->post_ << "))";
         }
       else if (pt == AST_PredefinedType::PT_wchar)
         {
-          *os << "(strm >> ::CORBA::Any::to_wchar ("
+          *os << "(strm >> ::ACE_InputCDR::to_wchar ("
               << this->pre_ << f->local_name () << this->post_ << "))";
             }
       else if (pt == AST_PredefinedType::PT_octet)
         {
-          *os << "(strm >> ::CORBA::Any::to_octet ("
+          *os << "(strm >> ::ACE_InputCDR::to_octet ("
               << this->pre_ << f->local_name () << this->post_ << "))";
         }
       else if (pt == AST_PredefinedType::PT_boolean)
         {
-          *os << "(strm >> ::CORBA::Any::to_boolean ("
+          *os << "(strm >> ::ACE_InputCDR::to_boolean ("
               << this->pre_ << f->local_name () << this->post_ << "))";
         }
       else
@@ -522,22 +522,22 @@ be_visitor_valuetype_field_cdr_cs::visit_predefined_type (be_predefined_type *no
         }
       else if (pt == AST_PredefinedType::PT_char)
         {
-          *os << "(strm << ::CORBA::Any::from_char ("
+          *os << "(strm << ::ACE_OutputCDR::from_char ("
               << this->pre_ << f->local_name () << this->post_ << "))";
         }
       else if (pt == AST_PredefinedType::PT_wchar)
         {
-          *os << "(strm << ::CORBA::Any::from_wchar ("
+          *os << "(strm << ::ACE_OutputCDR::from_wchar ("
               << this->pre_ << f->local_name () << this->post_ << "))";
         }
       else if (pt == AST_PredefinedType::PT_octet)
         {
-          *os << "(strm << ::CORBA::Any::from_octet ("
+          *os << "(strm << ::ACE_OutputCDR::from_octet ("
               << this->pre_ << f->local_name () << this->post_ << "))";
         }
       else if (pt == AST_PredefinedType::PT_boolean)
         {
-          *os << "(strm << ::CORBA::Any::from_boolean ("
+          *os << "(strm << ::ACE_OutputCDR::from_boolean ("
               << this->pre_ << f->local_name () << this->post_ << "))";
         }
       else

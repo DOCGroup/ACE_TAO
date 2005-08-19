@@ -176,7 +176,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       << "_ptr> (0);" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  if (be_global->any_support ())
+  if (be_global->any_support () && !node->is_local ())
     {
       *os << "static void _tao_any_destructor (void *);";
     }
@@ -211,7 +211,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   if (node->session_component_child () == 1)
     {
-      *os << "// These two are inherited from SessionComponent." 
+      *os << "// These two are inherited from SessionComponent."
           << be_nl << be_nl
           << "virtual void ciao_preactivate (" << be_idt << be_idt_nl
           << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
@@ -233,7 +233,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
     {
       node->analyze_parentage ();
     }
-    
+
   // If we inherit from both CORBA::Object and CORBA::AbstractBase,
   // we have to override _add_ref() to avoid ambiguity.
   if (node->has_mixed_parentage ())

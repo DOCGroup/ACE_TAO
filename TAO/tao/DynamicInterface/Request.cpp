@@ -10,10 +10,10 @@ ACE_RCSID (DynamicInterface,
 #include "DII_Arguments.h"
 #include "Context.h"
 
-#include "tao/NVList.h"
+#include "tao/AnyTypeCode/NVList.h"
 #include "tao/Object.h"
 #include "tao/Pluggable_Messaging_Utils.h"
-#include "tao/Any_Unknown_IDL_Type.h"
+#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"

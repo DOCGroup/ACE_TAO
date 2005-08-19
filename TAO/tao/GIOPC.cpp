@@ -26,17 +26,13 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:291
+// be\be_codegen.cpp:288
 
 
 #include "GIOPC.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_string.h"
-
-#if defined (__BORLANDC__)
-#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
-#endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
 #include "GIOPC.inl"
@@ -51,10 +47,10 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 GIOP::Version::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -64,10 +60,10 @@ GIOP::Version::_tao_any_destructor (
   delete _tao_tmp_pointer;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 GIOP::IORAddressingInfo::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -162,10 +158,10 @@ GIOP::TargetAddress::operator= (const ::GIOP::TargetAddress &u)
     {
       return *this;
     }
-  
+
   this->_reset (u.disc_, 0);
   this->disc_ = u.disc_;
-  
+
   switch (this->disc_)
   {
     case 0:
@@ -219,7 +215,7 @@ GIOP::TargetAddress::operator= (const ::GIOP::TargetAddress &u)
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -228,7 +224,7 @@ void GIOP::TargetAddress::_reset (CORBA::Short, CORBA::Boolean /*finalize*/)
 {
   switch (this->disc_)
   {
-    
+
     case 0:
       delete this->u_.object_key_;
       this->u_.object_key_ = 0;
@@ -255,8 +251,8 @@ CORBA::Boolean operator<< (
   )
 {
   return
-    (strm << CORBA::Any::from_octet (_tao_aggregate.major)) &&
-    (strm << CORBA::Any::from_octet (_tao_aggregate.minor));
+    (strm << ACE_OutputCDR::from_octet (_tao_aggregate.major)) &&
+    (strm << ACE_OutputCDR::from_octet (_tao_aggregate.minor));
 }
 
 CORBA::Boolean operator>> (
@@ -265,8 +261,8 @@ CORBA::Boolean operator>> (
   )
 {
   return
-    (strm >> CORBA::Any::to_octet (_tao_aggregate.major)) &&
-    (strm >> CORBA::Any::to_octet (_tao_aggregate.minor));
+    (strm >> ACE_InputCDR::to_octet (_tao_aggregate.major)) &&
+    (strm >> ACE_InputCDR::to_octet (_tao_aggregate.minor));
 }
 
 // TAO_IDL - Generated from
@@ -304,9 +300,9 @@ CORBA::Boolean operator<< (
     {
       return false;
     }
-  
+
   CORBA::Boolean result = true;
-  
+
   switch (_tao_union._d ())
   {
     case 0:
@@ -327,7 +323,7 @@ CORBA::Boolean operator<< (
     default:
       break;
   }
-  
+
   return result;
 }
 
@@ -341,16 +337,16 @@ CORBA::Boolean operator>> (
     {
       return false;
     }
-  
+
   CORBA::Boolean result = true;
-  
+
   switch (_tao_discriminant)
   {
     case 0:
       {
         CORBA::OctetSeq _tao_union_tmp;
         result = strm >> _tao_union_tmp;
-        
+
         if (result)
           {
             _tao_union.object_key (_tao_union_tmp);
@@ -362,7 +358,7 @@ CORBA::Boolean operator>> (
       {
         IOP::TaggedProfile _tao_union_tmp;
         result = strm >> _tao_union_tmp;
-        
+
         if (result)
           {
             _tao_union.profile (_tao_union_tmp);
@@ -374,7 +370,7 @@ CORBA::Boolean operator>> (
       {
         GIOP::IORAddressingInfo _tao_union_tmp;
         result = strm >> _tao_union_tmp;
-        
+
         if (result)
           {
             _tao_union.ior (_tao_union_tmp);
@@ -386,6 +382,6 @@ CORBA::Boolean operator>> (
       _tao_union._d (_tao_discriminant);
       break;
   }
-  
+
   return result;
 }

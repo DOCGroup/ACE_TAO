@@ -174,7 +174,7 @@ public:
                                                int &in_range) = 0;
 
   /**
-   * Accessor and modifier to the current thread priority, used to
+   * @name Accessor and modifier to the current thread priority, used to
    * implement the RTCORBA::Current interface, but it is faster for
    * some critical components.  If the RTCORBA library isn't used,
    * these operations are no-ops.

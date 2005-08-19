@@ -26,18 +26,18 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "PortableServer.h"
-#include "tao/Null_RefCount_Policy.h"
-#include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode_Static.h"
-#include "tao/Objref_TypeCode_Static.h"
-#include "tao/Sequence_TypeCode_Static.h"
-#include "tao/String_TypeCode_Static.h"
-#include "tao/Struct_TypeCode_Static.h"
-#include "tao/TypeCode_Struct_Field.h"
+#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Sequence_TypeCode_Static.h"
+#include "tao/AnyTypeCode/String_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
+#include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
 #include "tao/CDR.h"
-#include "tao/Any.h"
-#include "tao/Any_Impl_T.h"
-#include "tao/Any_Dual_Impl_T.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "tao/AnyTypeCode/Any_Impl_T.h"
+#include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/alias_typecode.cpp:50

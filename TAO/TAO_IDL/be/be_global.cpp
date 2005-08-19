@@ -40,6 +40,8 @@ BE_GlobalData::BE_GlobalData (void)
     skel_export_include_ (0),
     stub_export_macro_ (0),
     stub_export_include_ (0),
+    anyop_export_macro_ (0),
+    anyop_export_include_ (0),
     pch_include_ (0),
     pre_include_ (0),
     post_include_ (0),
@@ -59,6 +61,7 @@ BE_GlobalData::BE_GlobalData (void)
     anyop_hdr_ending_ (ACE::strnew ("A.h")),
     anyop_src_ending_ (ACE::strnew ("A.cpp")),
     output_dir_ (0),
+    anyop_output_dir_ (0),
     any_support_ (I_TRUE),
     tc_support_ (I_TRUE),
     obv_opt_accessor_ (0),
@@ -81,7 +84,6 @@ BE_GlobalData::BE_GlobalData (void)
     gen_smart_proxies_ (I_FALSE),
     gen_inline_constants_ (I_TRUE),
     gen_dcps_type_support_ (I_FALSE),
-    gen_tmplinst_ (I_FALSE),
     lookup_strategy_ (TAO_PERFECT_HASH),
     void_type_ (0),
     ccmobject_ (0),
@@ -116,7 +118,8 @@ BE_GlobalData::changing_standard_include_files (void)
 static const char*
 be_change_idl_file_extension (UTL_String* idl_file,
                               const char *new_extension,
-                              int base_name_only = 0)
+                              int base_name_only = 0,
+                              bool for_anyop = false)
 {
   // @@ This shouldn't happen anyway; but a better error handling
   // mechanism is needed.
@@ -158,13 +161,20 @@ be_change_idl_file_extension (UTL_String* idl_file,
     {
       return 0;
     }
+    
+  // Anyop file output defaults to general output dir if not set.  
+  const char *output_path = (for_anyop 
+                             ? (be_global->anyop_output_dir () == 0
+                                ? be_global->output_dir ()
+                                : be_global->anyop_output_dir ())
+                             : be_global->output_dir ());
 
-  if ((!base_name_only) && (be_global->output_dir () != 0))
+  if (!base_name_only && output_path != 0)
     {
       // Path info should also be added to fname.
 
       // Add path and "/".
-      ACE_OS::sprintf (fname, "%s/", be_global->output_dir ());
+      ACE_OS::sprintf (fname, "%s/", output_path);
 
       // Append the base part to fname.
       ACE_OS::strncpy (fname + strlen (fname), string, base - string);
@@ -305,7 +315,8 @@ BE_GlobalData::be_get_anyop_header (UTL_String *idl_file_name,
 {
   return be_change_idl_file_extension (idl_file_name,
                                        be_global->anyop_header_ending (),
-                                       base_name_only);
+                                       base_name_only,
+                                       true);
 }
 
 const char *
@@ -314,7 +325,8 @@ BE_GlobalData::be_get_anyop_source (UTL_String *idl_file_name,
 {
   return be_change_idl_file_extension (idl_file_name,
                                        be_global->anyop_source_ending (),
-                                       base_name_only);
+                                       base_name_only,
+                                       true);
 }
 
 const char *
@@ -405,11 +417,21 @@ BE_GlobalData::be_get_anyop_source_fname (int base_name_only)
                               base_name_only);
 }
 
+const char *
+BE_GlobalData::be_get_anyop_header_fname (int base_name_only)
+{
+  return be_get_anyop_header (idl_global->stripped_filename (),
+                              base_name_only);
+}
+
 const char*
 BE_GlobalData::skel_export_macro (void) const
 {
   if (this->skel_export_macro_ == 0)
-    return "";
+    {
+      return "";
+    }
+    
   return this->skel_export_macro_;
 }
 
@@ -435,7 +457,10 @@ const char*
 BE_GlobalData::stub_export_macro (void) const
 {
   if (this->stub_export_macro_ == 0)
-    return "";
+    {
+      return "";
+    }
+    
   return this->stub_export_macro_;
 }
 
@@ -455,6 +480,35 @@ void
 BE_GlobalData::stub_export_include (const char *s)
 {
   this->stub_export_include_ = ACE_OS::strdup (s);
+}
+
+const char*
+BE_GlobalData::anyop_export_macro (void) const
+{
+  if (this->anyop_export_macro_ == 0)
+    {
+      return "";
+    }
+    
+  return this->anyop_export_macro_;
+}
+
+void
+BE_GlobalData::anyop_export_macro (const char *s)
+{
+  this->anyop_export_macro_ = ACE_OS::strdup (s);
+}
+
+const char*
+BE_GlobalData::anyop_export_include (void) const
+{
+  return this->anyop_export_include_;
+}
+
+void
+BE_GlobalData::anyop_export_include (const char *s)
+{
+  this->anyop_export_include_ = ACE_OS::strdup (s);
 }
 
 const char*
@@ -665,10 +719,24 @@ BE_GlobalData::server_template_inline_ending (void) const
   return this->server_template_inline_ending_;
 }
 
+void
+BE_GlobalData::anyop_header_ending (const char* s)
+{
+  delete [] this->anyop_hdr_ending_;
+  this->anyop_hdr_ending_ = ACE::strnew (s);
+}
+
 const char*
 BE_GlobalData::anyop_header_ending (void) const
 {
   return this->anyop_hdr_ending_;
+}
+
+void
+BE_GlobalData::anyop_source_ending (const char* s)
+{
+  delete [] this->anyop_src_ending_;
+  this->anyop_src_ending_ = ACE::strnew (s);
 }
 
 const char*
@@ -688,6 +756,19 @@ const char*
 BE_GlobalData::output_dir (void) const
 {
   return this->output_dir_;
+}
+
+void
+BE_GlobalData::anyop_output_dir (const char* s)
+{
+  delete [] this->anyop_output_dir_;
+  this->anyop_output_dir_ = ACE::strnew (s);
+}
+
+const char*
+BE_GlobalData::anyop_output_dir (void) const
+{
+  return this->anyop_output_dir_;
 }
 
 void
@@ -906,18 +987,6 @@ BE_GlobalData::gen_dcps_type_support (void) const
 }
 
 void
-BE_GlobalData::gen_tmplinst (idl_bool val)
-{
-  this->gen_tmplinst_ = val;
-}
-
-idl_bool
-BE_GlobalData::gen_tmplinst (void) const
-{
-  return this->gen_tmplinst_;
-}
-
-void
 BE_GlobalData::lookup_strategy (LOOKUP_STRATEGY s)
 {
   this->lookup_strategy_ = s;
@@ -988,6 +1057,9 @@ BE_GlobalData::destroy (void)
 
   delete [] this->output_dir_;
   this->output_dir_ = 0;
+
+  delete [] this->anyop_output_dir_;
+  this->anyop_output_dir_ = 0;
 }
 
 AST_PredefinedType *
@@ -1346,6 +1418,47 @@ BE_GlobalData::parse_args (long &i, char **av)
             be_global->output_dir (av [i + 1]);
             i++;
           }
+        else if (av[i][2] == 'A')
+          {
+            if (av[i][3] == '\0')
+              {
+                idl_global->append_idl_flag (av[i + 1]);
+
+                int result = ACE_OS::mkdir (av[i + 1]);
+
+                #if !defined (__BORLANDC__)
+                  if (result != 0 && errno != EEXIST)
+                #else
+                  // The Borland RTL doesn't give EEXIST back, only EACCES in case
+                  // the directory exists, reported to Borland as QC 9495
+                  if (result != 0 && errno != EEXIST && errno != EACCES)
+                #endif
+                  {
+                    ACE_ERROR ((
+                        LM_ERROR,
+                        ACE_TEXT ("IDL: unable to create directory %s")
+                        ACE_TEXT (" specified by -oA option\n"),
+                        av[i + 1]
+                      ));
+
+                    ACE_OS::exit (99);
+                  }
+
+                be_global->anyop_output_dir (av [i + 1]);
+                i++;
+              }
+            else
+              {
+                ACE_ERROR ((
+                    LM_ERROR,
+                    ACE_TEXT ("IDL: I don't understand")
+                    ACE_TEXT (" the '%s' option\n"),
+                    av[i]
+                  ));
+
+                ACE_OS::exit (99);
+              }
+          }
         else
           {
             ACE_ERROR ((
@@ -1542,10 +1655,6 @@ BE_GlobalData::parse_args (long &i, char **av)
                   }
               }
           }
-        else if (av[i][2] == 'T')
-          {
-            be_global->gen_tmplinst (I_TRUE);
-          }
         else
           {
             ACE_ERROR ((
@@ -1654,6 +1763,8 @@ BE_GlobalData::prep_be_arg (char *s)
   const char skel_arg_include[] = "skel_export_include=";
   const char stub_arg_macro[] = "stub_export_macro=";
   const char stub_arg_include[] = "stub_export_include=";
+  const char anyop_arg_macro[] = "anyop_export_macro=";
+  const char anyop_arg_include[] = "anyop_export_include=";
   const char arg_pch_include[] = "pch_include=";
   const char arg_pre_include[] = "pre_include=";
   const char arg_post_include[] = "post_include=";
@@ -1670,6 +1781,7 @@ BE_GlobalData::prep_be_arg (char *s)
           char* val = arg + sizeof (arg_macro) - 1;
           be_global->skel_export_macro (val);
           be_global->stub_export_macro (val);
+          be_global->anyop_export_macro (val);
         }
       else if (ACE_OS::strstr (arg, arg_include) == arg)
         {
@@ -1695,6 +1807,16 @@ BE_GlobalData::prep_be_arg (char *s)
         {
           char* val = arg + sizeof (stub_arg_include) - 1;
           be_global->stub_export_include (val);
+        }
+      else if (ACE_OS::strstr (arg, anyop_arg_macro) == arg)
+        {
+          char* val = arg + sizeof (anyop_arg_macro) - 1;
+          be_global->anyop_export_macro (val);
+        }
+      else if (ACE_OS::strstr (arg, anyop_arg_include) == arg)
+        {
+          char* val = arg + sizeof (anyop_arg_include) - 1;
+          be_global->anyop_export_include (val);
         }
       else if (ACE_OS::strstr (arg, arg_pch_include) == arg)
         {
@@ -1822,7 +1944,7 @@ BE_GlobalData::usage (void) const
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -Ge 2\t\t\tUse raw throw instead of ACE_THROW macro")
-      ACE_TEXT (" (disabled by default\n")
+      ACE_TEXT (" (disabled by default)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
@@ -1880,11 +2002,6 @@ BE_GlobalData::usage (void) const
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT ("    \t\t\tNo effect if TypeCode generation is suppressed\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -GT\t\t\tgenerate explicit template instantiations")
-      ACE_TEXT (" (off by default)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
@@ -1946,6 +2063,11 @@ BE_GlobalData::usage (void) const
       LM_DEBUG,
       ACE_TEXT (" -o <output_dir>\tOutput directory for the generated files.")
       ACE_TEXT (" Default is current directory\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -oA <output_dir>\tOutput directory for the generated anyop")
+      ACE_TEXT ("files. Default is current directory\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,

@@ -27,8 +27,6 @@
 #include "orbsvcs/ETCL/ETCL_Constraint.h"
 #include "orbsvcs/CosNotificationC.h"
 
-#include "tao/TypeCode.h"
-
 #include "notify_serv_export.h"
 
 class TAO_Notify_Property_Constraint;

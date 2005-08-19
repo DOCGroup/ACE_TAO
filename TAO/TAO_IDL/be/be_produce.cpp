@@ -173,6 +173,25 @@ BE_produce (void)
   // Get a root visitor.
   be_visitor_root_ch root_ch_visitor (&ctx);
 
+  // Initialize the anyop header stream, if the option is set.
+  if (be_global->gen_anyop_files ())
+    {
+      int status = 0;
+
+      status =
+        tao_cg->start_anyop_header (
+                  be_global->be_get_anyop_header_fname ()
+                );
+
+      if (status == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                            "(%N:%l) TAO_CodeGen::"
+                            "TAO_CodeGen - "
+                            "Error opening anyop header file\n"));
+        }
+    }
+        
   // Generate code for the client header
   if (root->accept (&root_ch_visitor) == -1)
     {
@@ -182,7 +201,7 @@ BE_produce (void)
       BE_abort ();
     }
 
-  // (2) Initialize the anyop streams, if the option is set.
+  // Initialize the anyop source stream, if the option is set.
   // It has to be done after the stub header file generation,
   // where checks for recursive types are done,
   // and before stub source file generation,

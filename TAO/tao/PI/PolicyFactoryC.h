@@ -45,9 +45,9 @@
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/Object.h"
-#include "tao/TypeCode_Constants.h"
-#include "tao/Any.h"
-#include "tao/TypeCode.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/Objref_VarOut_T.h"
 
 #include "tao/PolicyC.h"
@@ -71,22 +71,22 @@
 
 namespace PortableInterceptor
 {
-  
+
   // TAO_IDL - Generated from
   // .\be\be_interface.cpp:598
 
 #if !defined (_PORTABLEINTERCEPTOR_POLICYFACTORY__VAR_OUT_CH_)
 #define _PORTABLEINTERCEPTOR_POLICYFACTORY__VAR_OUT_CH_
-  
+
   class PolicyFactory;
   typedef PolicyFactory *PolicyFactory_ptr;
-  
+
   typedef
     TAO_Objref_Var_T<
         PolicyFactory
       >
     PolicyFactory_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         PolicyFactory
@@ -94,45 +94,45 @@ namespace PortableInterceptor
     PolicyFactory_out;
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_PORTABLEINTERCEPTOR_POLICYFACTORY_CH_)
 #define _PORTABLEINTERCEPTOR_POLICYFACTORY_CH_
-  
+
   class TAO_PI_Export PolicyFactory
     : public virtual CORBA::Object
   {
   public:
     typedef PolicyFactory_ptr _ptr_type;
     typedef PolicyFactory_var _var_type;
-    
+
     // The static operations.
     static PolicyFactory_ptr _duplicate (PolicyFactory_ptr obj);
-    
+
     static void _tao_release (PolicyFactory_ptr obj);
-    
+
     static PolicyFactory_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static PolicyFactory_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static PolicyFactory_ptr _nil (void)
     {
       return static_cast<PolicyFactory_ptr> (0);
     }
-    
+
     static void _tao_any_destructor (void *);
-    
+
     // TAO_IDL - Generated from
     // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual ::CORBA::Policy_ptr create_policy (
         ::CORBA::PolicyType type,
         const ::CORBA::Any & value
@@ -142,7 +142,7 @@ namespace PortableInterceptor
         CORBA::SystemException,
         ::CORBA::PolicyError
       )) = 0;
-    
+
     // Hand-crafted addition.
     virtual ::CORBA::Policy_ptr _create_policy (
         CORBA::PolicyType type
@@ -155,33 +155,33 @@ namespace PortableInterceptor
 
     // TAO_IDL - Generated from
     // c:\ace\latest\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ch.cpp:210
-    
+
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Abstract or local interface only.
     PolicyFactory (void);
-    
+
     virtual ~PolicyFactory (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     PolicyFactory (const PolicyFactory &);
-    
+
     void operator= (const PolicyFactory &);
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   extern TAO_PI_Export ::CORBA::TypeCode_ptr const _tc_PolicyFactory;
 
 // TAO_IDL - Generated from
@@ -198,7 +198,7 @@ namespace TAO
 
 #if !defined (_PORTABLEINTERCEPTOR_POLICYFACTORY__TRAITS_CH_)
 #define _PORTABLEINTERCEPTOR_POLICYFACTORY__TRAITS_CH_
-  
+
   template<>
   struct TAO_PI_Export Objref_Traits< ::PortableInterceptor::PolicyFactory>
   {

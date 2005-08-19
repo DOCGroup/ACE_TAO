@@ -21,6 +21,7 @@
 #include "ace/Task.h"
 #include "ace/Auto_Event.h"
 #include "tao/PortableServer/ServantLocatorC.h"
+#include "tao/CDR.h"
 
 class test_i :
   public virtual POA_test
@@ -176,7 +177,7 @@ Servant_Locator::postinvoke (const PortableServer::ObjectId &oid,
               name.in ()));
 }
 
-void
+bool
 set_nil_servant_manager (PortableServer::POA_ptr poa)
 {
   bool succeed = false;
@@ -205,9 +206,11 @@ set_nil_servant_manager (PortableServer::POA_ptr poa)
     ACE_ERROR ((LM_ERROR,
                 "(%t) ERROR, set nil servant manager failed\n"));
   }
+
+  return succeed;
 }
 
-void
+bool
 overwrite_servant_manager (PortableServer::POA_ptr poa)
 {
   bool succeed = false;
@@ -238,11 +241,15 @@ overwrite_servant_manager (PortableServer::POA_ptr poa)
     ACE_ERROR ((LM_ERROR,
                 "(%t) ERROR, overwrite servant manager failed\n"));
   }
+
+  return succeed;
 }
 
 int
 main (int argc, char **argv)
 {
+  int retval = 0;
+
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
@@ -297,14 +304,16 @@ main (int argc, char **argv)
                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      set_nil_servant_manager (child_poa.in());
+      if (!set_nil_servant_manager (child_poa.in()))
+        retval = -1;
 
       Servant_Locator servant_locator (child_poa.in ());
       child_poa->set_servant_manager (&servant_locator
                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      overwrite_servant_manager (child_poa.in());
+      if (!overwrite_servant_manager (child_poa.in()))
+        retval = -1;
 
       PortableServer::ObjectId_var first_oid =
         PortableServer::string_to_ObjectId ("first");
@@ -355,9 +364,9 @@ main (int argc, char **argv)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught");
-      return -1;
+      retval = -1;
     }
   ACE_ENDTRY;
 
-  return 0;
+  return retval;
 }

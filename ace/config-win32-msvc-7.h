@@ -105,11 +105,12 @@
 #pragma warning(disable:4355)
 // 'class1' : inherits 'class2::member' via dominance
 #pragma warning(disable:4250)
-// C++ Exception Specification ignored
-#pragma warning(disable:4290)
 
-# pragma warning(disable:4231)
 // Disable warning of using Microsoft Extension.
+# pragma warning(disable:4231)
+
+// 'function' : unreferenced local function has been removed
+# pragma warning(disable:4505)
 
 #define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
 

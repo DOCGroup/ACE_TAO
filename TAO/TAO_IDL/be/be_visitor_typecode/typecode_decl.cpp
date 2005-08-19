@@ -29,6 +29,11 @@ ACE_RCSID (be_visitor_typecode,
 be_visitor_typecode_decl::be_visitor_typecode_decl (be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
+  if (be_global->gen_anyop_files ())
+    {
+      // The context is always a copy, so this is ok.
+      this->ctx_->stream (tao_cg->anyop_header ());
+    }
 }
 
 be_visitor_typecode_decl::~be_visitor_typecode_decl (void)
@@ -42,6 +47,11 @@ be_visitor_typecode_decl::visit_type (be_type *node)
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  
+  // If -GA is used but anyop macro isn't set, defaults to stub macro.    
+  const char *export_macro = (be_global->gen_anyop_files ()
+                              ? this->ctx_->non_null_export_macro ()
+                              : be_global->stub_export_macro ());
 
   if (node->is_nested ())
     {
@@ -51,7 +61,7 @@ be_visitor_typecode_decl::visit_type (be_type *node)
       // declared extern.
       if (node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
         {
-          *os << "extern " << be_global->stub_export_macro () << " ";
+          *os << "extern " << export_macro << " ";
         }
       else
         {
@@ -65,7 +75,7 @@ be_visitor_typecode_decl::visit_type (be_type *node)
   else
     {
       // We are in the ROOT scope.
-      *os << "extern " << be_global->stub_export_macro ()
+      *os << "extern " << export_macro
           << " ::CORBA::TypeCode_ptr const "
           << node->tc_name ()->last_component ()
           << ";";

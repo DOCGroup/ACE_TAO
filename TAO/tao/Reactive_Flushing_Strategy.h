@@ -26,7 +26,7 @@
  *
  * @brief Implement a flushing strategy that uses the reactor.
  */
-class TAO_Export TAO_Reactive_Flushing_Strategy : public TAO_Flushing_Strategy
+class TAO_Reactive_Flushing_Strategy : public TAO_Flushing_Strategy
 {
 public:
   virtual int schedule_output (TAO_Transport *transport);

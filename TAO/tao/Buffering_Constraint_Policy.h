@@ -48,10 +48,6 @@ public:
   /// Copy constructor.
   TAO_Buffering_Constraint_Policy (const TAO_Buffering_Constraint_Policy &rhs);
 
-  /// Helper method for the implementation of CORBA::ORB::create_policy.
-  static CORBA::Policy_ptr create (const CORBA::Any& val
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
   /// Returns a copy of <this>.
   virtual TAO_Buffering_Constraint_Policy *clone (void) const;
 

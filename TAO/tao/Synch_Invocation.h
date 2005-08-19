@@ -38,7 +38,7 @@ namespace TAO
    * @brief All the action for a synchronous twoway invocation happen
    * here.
    *
-   * An object of this is type is created by TAO::Invocation_Adapter
+   * An object of this type is created by TAO::Invocation_Adapter
    * and invokes a method on this class. The method takes care of
    * creating and sending a request, waiting for a reply and
    * demarshalling the reply for the client.

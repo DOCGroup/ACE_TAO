@@ -14,6 +14,7 @@
 
 #include "tao/IORTable/IORTable.h"
 #include "tao/Messaging/Messaging.h"
+#include "tao/AnyTypeCode/Any.h"
 
 #include "ace/Arg_Shifter.h"
 #include "ace/Auto_Ptr.h"

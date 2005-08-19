@@ -118,22 +118,22 @@ TAO_Operation_Details::response_flags (CORBA::Octet flags)
   this->response_flags_ = flags;
 }
 
-ACE_INLINE CORBA::Octet
-TAO_Operation_Details::response_flags (void)
+ACE_INLINE CORBA::ULong
+TAO_Operation_Details::ex_count (void) const
 {
-  return this->response_flags_;
+  return this->ex_count_;
+}
+
+ACE_INLINE TAO::Exception_Data const *
+TAO_Operation_Details::ex_data (void) const
+{
+  return this->ex_data_;
 }
 
 ACE_INLINE CORBA::Octet
 TAO_Operation_Details::response_flags (void) const
 {
   return this->response_flags_;
-}
-
-ACE_INLINE TAO_Target_Specification::TAO_Target_Address
-TAO_Operation_Details::addressing_mode (void)
-{
-  return this->addressing_mode_;
 }
 
 ACE_INLINE TAO_Target_Specification::TAO_Target_Address

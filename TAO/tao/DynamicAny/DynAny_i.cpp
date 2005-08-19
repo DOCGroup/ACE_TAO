@@ -3,7 +3,7 @@
 
 #include "DynAny_i.h"
 #include "DynAnyFactory.h"
-#include "tao/Any_Unknown_IDL_Type.h"
+#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_NS_string.h"

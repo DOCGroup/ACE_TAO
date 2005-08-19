@@ -7,8 +7,8 @@
 #include "tao/ORB.h"
 #include "tao/Invocation_Adapter.h"
 #include "tao/Stub.h"
-#include "tao/NVList.h"
-#include "tao/Any_Unknown_IDL_Type.h"
+#include "tao/AnyTypeCode/NVList.h"
+#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 
 ACE_RCSID (IFR_Client,
            IFR_Client_Adapter_Impl,
@@ -23,7 +23,8 @@ namespace TAO
             CORBA::InterfaceDef_ptr,
             CORBA::InterfaceDef_var,
             CORBA::InterfaceDef_out,
-            TAO::Objref_Traits<CORBA::InterfaceDef>
+            TAO::Objref_Traits<CORBA::InterfaceDef>,
+            TAO::Any_Insert_Policy_Stream <CORBA::InterfaceDef_ptr>
           >
   {
   };
@@ -44,11 +45,11 @@ TAO_IFR_Client_Adapter_Impl::interfacedef_cdr_insert (
 
 void
 TAO_IFR_Client_Adapter_Impl::interfacedef_any_insert (
-    CORBA::Any &any,
+    CORBA::Any *any,
     CORBA::InterfaceDef_ptr object_type
   )
 {
-  any <<= object_type;
+  (*any) <<= object_type;
 }
 
 void

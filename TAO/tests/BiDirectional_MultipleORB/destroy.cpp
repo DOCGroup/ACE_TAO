@@ -19,6 +19,7 @@
 
 #include "tao/corba.h"
 #include "tao/PortableServer/PortableServer.h"
+#include "tao/AnyTypeCode/Any.h"
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 
 ACE_RCSID(BiDir_Multiple_ORB, destroy, "$Id$")
@@ -109,7 +110,7 @@ int
 main (int argc, char **argv)
 {
   int result = 0;
-  
+
   for (int i=0; i<10; i++)
   {
     result = test_with_bidir_poa (argc, argv, "poa_1", 1);

@@ -8,6 +8,7 @@
 #include "tao/Policy_Manager.h"
 #include "tao/debug.h"
 #include "tao/CDR.h"
+#include "tao/AnyTypeCode/Any.h"
 
 #include "ace/OS_NS_string.h"
 

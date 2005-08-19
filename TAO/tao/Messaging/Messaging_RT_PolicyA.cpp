@@ -26,13 +26,14 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "Messaging_RT_PolicyC.h"
-#include "tao/Null_RefCount_Policy.h"
-#include "tao/TypeCode_Constants.h"
-#include "tao/Alias_TypeCode_Static.h"
-#include "tao/Objref_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
 #include "tao/CDR.h"
-#include "tao/Any.h"
-#include "tao/Any_Impl_T.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "tao/AnyTypeCode/Any_Impl_T.h"
+#include "tao/AnyTypeCode/TimeBaseA.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/alias_typecode.cpp:50
@@ -45,7 +46,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/Messaging/Timeout:1.0",
     "Timeout",
     &TimeBase::_tc_TimeT);
-  
+
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_Timeout =
@@ -63,7 +64,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/RelativeRoundtripTimeoutPolicy:1.0",
     "RelativeRoundtripTimeoutPolicy");
-  
+
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_RelativeRoundtripTimeoutPolicy =
@@ -96,7 +97,7 @@ namespace TAO
   {
     return false;
   }
-  
+
   template<>
   CORBA::Boolean
   Any_Impl_T<Messaging::RelativeRoundtripTimeoutPolicy>::demarshal_value (TAO_InputCDR &)

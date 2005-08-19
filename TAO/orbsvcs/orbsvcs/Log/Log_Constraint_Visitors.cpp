@@ -10,7 +10,7 @@
 #include "tao/DynamicAny/DynEnum_i.h"
 #include "tao/DynamicAny/DynAnyFactory.h"
 
-#include "tao/Any_Unknown_IDL_Type.h"
+#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/CDR.h"
 
 ACE_RCSID (Log,
@@ -66,14 +66,14 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (
 
   // Bind an entry for each item in the record's attribute list.
   CORBA::Long len = this->rec_.attr_list.length();
-  for (CORBA::Long i = 0; i < len; ++i) 
+  for (CORBA::Long i = 0; i < len; ++i)
     {
       const char* name = this->rec_.attr_list[i].name;
- 
+
       CORBA::Any* value;
       ACE_NEW(value, CORBA::Any);
- 
-      if (value != 0) 
+
+      if (value != 0)
 	{
 	  *value = this->rec_.attr_list[i].value;
 	  this->property_lookup_.bind (name, value);

@@ -2,11 +2,11 @@
 
 #include "DII_Arguments.h"
 
-#include "tao/NVList.h"
-#include "tao/Any_Impl.h"
+#include "tao/AnyTypeCode/NVList.h"
+#include "tao/AnyTypeCode/Any_Impl.h"
 #include "tao/Exception.h"
 #include "tao/CDR.h"
-#include "tao/DynamicC.h"
+#include "tao/AnyTypeCode/DynamicC.h"
 
 ACE_RCSID (DynamicInterface,
            DII_Arguments,
@@ -44,7 +44,7 @@ namespace TAO
   }
 
   void
-  NamedValue_Argument::interceptor_result (CORBA::Any *any)
+  NamedValue_Argument::interceptor_value (CORBA::Any *any) const
   {
     (*any) <<= *this->x_->value ();
   }

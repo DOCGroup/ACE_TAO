@@ -26,10 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:153
+// be\be_codegen.cpp:154
 
-#ifndef _TAO_IDL_ORIG_PORTABLESERVER_INCLUDEC_H_
-#define _TAO_IDL_ORIG_PORTABLESERVER_INCLUDEC_H_
+#ifndef _TAO_IDL_PORTABLESERVER_INCLUDEC_H_
+#define _TAO_IDL_PORTABLESERVER_INCLUDEC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -52,15 +52,6 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_PortableServer_Export
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
-
 // TAO_IDL - Generated from
 // be\be_visitor_traits.cpp:61
 
@@ -70,15 +61,7 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:955
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
+// be\be_codegen.cpp:1028
 
 #include /**/ "ace/post.h"
 

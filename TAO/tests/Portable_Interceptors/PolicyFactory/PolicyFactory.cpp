@@ -26,7 +26,7 @@ PolicyFactory::create_policy (CORBA::PolicyType type,
     ACE_THROW_RETURN (CORBA::INTERNAL (),
                       CORBA::Policy::_nil ());
 
-  Policy * p;
+  Policy * p = 0;
   ACE_NEW_THROW_EX (p,
                     Policy (val),
                     CORBA::NO_MEMORY ());

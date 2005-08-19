@@ -10,7 +10,7 @@ project(*Server): taoserver, utils, iortable {
   }
 }
 
-project(*Client): taoclient {
+project(*Client): taoclient, anytypecode {
   exename = INS_test_client
   Source_Files {
     INSC.cpp

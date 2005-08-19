@@ -169,15 +169,15 @@ be_visitor_union_branch_serializer_op_cs::visit_array (be_array *node)
         char tmp_val_name[30];
         ACE_OS::sprintf(tmp_size_name, "tmp_array_size%d", tmp_counter);
         ACE_OS::sprintf(tmp_val_name, "tmp_array_val%d", tmp_counter++);
-        *os << f->field_type ()->name() << "_forany " << tmp_val_name 
+        *os << f->field_type ()->name() << "_forany " << tmp_val_name
             << "; // is type of " << f->local_name () << be_nl;
-        *os << "size_t " << tmp_size_name 
+        *os << "size_t " << tmp_size_name
             << " = _dcps_max_marshaled_size (" << tmp_val_name << ");" << be_nl
             << "if (" << tmp_size_name << " > max_size) " << be_idt_nl
             << "max_size = " << tmp_size_name << ";" << be_uidt_nl << be_nl;
       }
       break;
-    case TAO_CodeGen::TAO_FIND_SIZE: 
+    case TAO_CodeGen::TAO_FIND_SIZE:
       *os << fname << "_forany _tao_union_tmp (" << be_idt << be_idt_nl
           << "_tao_union."
           << f->local_name () << " ()" << be_uidt_nl
@@ -243,11 +243,11 @@ be_visitor_union_branch_serializer_op_cs::visit_enum (be_enum *node)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_IS_BOUNDED_SIZE:
-      *os << "// " << f->local_name () 
+      *os << "// " << f->local_name ()
           << " is of an enum type; hence is bounded" << be_nl;
       return 0; // all done
       break;
-    case TAO_CodeGen::TAO_FIND_SIZE: 
+    case TAO_CodeGen::TAO_FIND_SIZE:
       // enums are serialized as CORBA::ULong
       *os << "result +=  _dcps_max_marshaled_size_ulong (); /* enum */"
           << be_nl;
@@ -298,7 +298,7 @@ be_visitor_union_branch_serializer_op_cs::visit_enum (be_enum *node)
                         -1);
     }
 
-  // Not a typedef and node is defined inside the union. Otherwise the 
+  // Not a typedef and node is defined inside the union. Otherwise the
   // Serializer operator is generated elsewhere.
   if (node->node_type () != AST_Decl::NT_typedef
       && node->is_child (this->ctx_->scope ()))
@@ -618,39 +618,39 @@ be_visitor_union_branch_serializer_op_cs::visit_predefined_type (be_predefined_t
       else if (pt == AST_PredefinedType::PT_char)
         {
           *os << "size_t " << tmp_name << " = _dcps_max_marshaled_size ("
-              << "::CORBA::Any::from_char (_tao_union."
+              << "::ACE_OutputCDR::from_char (_tao_union."
               << f->local_name () << " ()));" << be_nl
-              << "if (" << tmp_name << " > max_size) max_size = " 
+              << "if (" << tmp_name << " > max_size) max_size = "
               << tmp_name << ";" << be_nl;
         }
       else if (pt == AST_PredefinedType::PT_wchar)
         {
           *os << "size_t " << tmp_name << " = _dcps_max_marshaled_size ("
-              << "::CORBA::Any::from_wchar (_tao_union."
+              << "::ACE_OutputCDR::from_wchar (_tao_union."
               << f->local_name () << " ()));" << be_nl
-              << "if (" << tmp_name << " > max_size) max_size = " 
+              << "if (" << tmp_name << " > max_size) max_size = "
               << tmp_name << ";" << be_nl;
         }
       else if (pt == AST_PredefinedType::PT_octet)
         {
           *os << "size_t " << tmp_name << " = _dcps_max_marshaled_size ("
-              << "::CORBA::Any::from_octet (_tao_union."
+              << "::ACE_OutputCDR::from_octet (_tao_union."
               << f->local_name () << " ()));" << be_nl
-              << "if (" << tmp_name << " > max_size) max_size = " 
+              << "if (" << tmp_name << " > max_size) max_size = "
               << tmp_name << ";" << be_nl;
         }
       else if (pt == AST_PredefinedType::PT_boolean)
         {
           *os << "size_t " << tmp_name << " = _dcps_max_marshaled_size ("
-              << "::CORBA::Any::from_boolean (_tao_union."
+              << "::ACE_OutputCDR::from_boolean (_tao_union."
               << f->local_name () << " ()));" << be_nl
-              << "if (" << tmp_name << " > max_size) max_size = " 
+              << "if (" << tmp_name << " > max_size) max_size = "
               << tmp_name << ";" << be_nl;
         }
       else
         {
-          *os << "size_t " << tmp_name 
-              << " = _dcps_max_marshaled_size (_tao_union." 
+          *os << "size_t " << tmp_name
+              << " = _dcps_max_marshaled_size (_tao_union."
               << f->local_name () << " ());" << be_nl
               << "if (" << tmp_name << " > max_size)" << be_idt_nl
               << "max_size = "<< tmp_name << ";" << be_uidt_nl << be_nl;
@@ -668,7 +668,7 @@ be_visitor_union_branch_serializer_op_cs::visit_predefined_type (be_predefined_t
         }
       else
         {
-          *os << "// " << f->local_name () 
+          *os << "// " << f->local_name ()
               << " is of a predefined type; hence is bounded" << be_nl;
         }
       break;
@@ -686,22 +686,22 @@ be_visitor_union_branch_serializer_op_cs::visit_predefined_type (be_predefined_t
         }
       else if (pt == AST_PredefinedType::PT_char)
         {
-          *os << "_dcps_max_marshaled_size ( ::CORBA::Any::from_char (_tao_union."
+          *os << "_dcps_max_marshaled_size (::ACE_OutputCDR::from_char (_tao_union."
               << f->local_name () << " ()));";
         }
       else if (pt == AST_PredefinedType::PT_wchar)
         {
-          *os << "_dcps_max_marshaled_size ( ::CORBA::Any::from_wchar (_tao_union."
+          *os << "_dcps_max_marshaled_size (::ACE_OutputCDR::from_wchar (_tao_union."
               << f->local_name () << " ()));";
         }
       else if (pt == AST_PredefinedType::PT_octet)
         {
-          *os << "_dcps_max_marshaled_size ( ::CORBA::Any::from_octet (_tao_union."
+          *os << "_dcps_max_marshaled_size (::ACE_OutputCDR::from_octet (_tao_union."
               << f->local_name () << " ()));";
         }
       else if (pt == AST_PredefinedType::PT_boolean)
         {
-          *os << "_dcps_max_marshaled_size ( ::CORBA::Any::from_boolean (_tao_union."
+          *os << "_dcps_max_marshaled_size (::ACE_OutputCDR::from_boolean (_tao_union."
               << f->local_name () << " ()));";
         }
       else
@@ -744,7 +744,7 @@ be_visitor_union_branch_serializer_op_cs::visit_predefined_type (be_predefined_t
       else if (pt == AST_PredefinedType::PT_char)
         {
           *os << "::CORBA::Char _tao_union_tmp;" << be_nl
-              << "::CORBA::Any::to_char _tao_union_helper "
+              << "::ACE_InputCDR::to_char _tao_union_helper "
               << "(_tao_union_tmp);" << be_nl
               << "result = strm >> _tao_union_helper;" << be_nl << be_nl
               << "if (result)" << be_idt_nl
@@ -755,7 +755,7 @@ be_visitor_union_branch_serializer_op_cs::visit_predefined_type (be_predefined_t
       else if (pt == AST_PredefinedType::PT_wchar)
         {
           *os << "::CORBA::WChar _tao_union_tmp;" << be_nl
-              << "::CORBA::Any::to_wchar _tao_union_helper "
+              << "::ACE_InputCDR::to_wchar _tao_union_helper "
               << "(_tao_union_tmp);" << be_nl
               << "result = strm >> _tao_union_helper;" << be_nl << be_nl
               << "if (result)" << be_idt_nl
@@ -766,7 +766,7 @@ be_visitor_union_branch_serializer_op_cs::visit_predefined_type (be_predefined_t
       else if (pt == AST_PredefinedType::PT_octet)
         {
           *os << "::CORBA::Octet _tao_union_tmp;" << be_nl
-              << "::CORBA::Any::to_octet _tao_union_helper "
+              << "::ACE_InputCDR::to_octet _tao_union_helper "
               << "(_tao_union_tmp);" << be_nl
               << "result = strm >> _tao_union_helper;" << be_nl << be_nl
               << "if (result)" << be_idt_nl
@@ -777,7 +777,7 @@ be_visitor_union_branch_serializer_op_cs::visit_predefined_type (be_predefined_t
       else if (pt == AST_PredefinedType::PT_boolean)
         {
           *os << "::CORBA::Boolean _tao_union_tmp;" << be_nl
-              << "::CORBA::Any::to_boolean _tao_union_helper "
+              << "::ACE_InputCDR::to_boolean _tao_union_helper "
               << "(_tao_union_tmp);" << be_nl
               << "result = strm >> _tao_union_helper;" << be_nl << be_nl
               << "if (result)" << be_idt_nl
@@ -812,22 +812,22 @@ be_visitor_union_branch_serializer_op_cs::visit_predefined_type (be_predefined_t
         }
       else if (pt == AST_PredefinedType::PT_char)
         {
-          *os << "strm << ::CORBA::Any::from_char (_tao_union."
+          *os << "strm << ::ACE_OutputCDR::from_char (_tao_union."
               << f->local_name () << " ());";
         }
       else if (pt == AST_PredefinedType::PT_wchar)
         {
-          *os << "strm << ::CORBA::Any::from_wchar (_tao_union."
+          *os << "strm << ::ACE_OutputCDR::from_wchar (_tao_union."
               << f->local_name () << " ());";
         }
       else if (pt == AST_PredefinedType::PT_octet)
         {
-          *os << "strm << ::CORBA::Any::from_octet (_tao_union."
+          *os << "strm << ::ACE_OutputCDR::from_octet (_tao_union."
               << f->local_name () << " ());";
         }
       else if (pt == AST_PredefinedType::PT_boolean)
         {
-          *os << "strm << ::CORBA::Any::from_boolean (_tao_union."
+          *os << "strm << ::ACE_OutputCDR::from_boolean (_tao_union."
               << f->local_name () << " ());";
         }
       else
@@ -900,7 +900,7 @@ be_visitor_union_branch_serializer_op_cs::visit_sequence (be_sequence *node)
         static int tmp_counter = 0;
         char tmp_val_name[30];
         ACE_OS::sprintf(tmp_val_name, "tmp_seq_val%d", tmp_counter++);
-        *os << f->field_type ()->name() << " " << tmp_val_name 
+        *os << f->field_type ()->name() << " " << tmp_val_name
             << "; // is type of " << f->local_name () << be_nl;
         *os << "is_bounded = is_bounded && "
             << "_tao_is_bounded_size (" << tmp_val_name << ");"
@@ -914,21 +914,21 @@ be_visitor_union_branch_serializer_op_cs::visit_sequence (be_sequence *node)
         char tmp_val_name[30];
         ACE_OS::sprintf(tmp_size_name, "tmp_seq_size%d", tmp_counter);
         ACE_OS::sprintf(tmp_val_name,  "tmp_seq_val%d", tmp_counter++);
-        *os << f->field_type ()->name() << " " << tmp_val_name 
+        *os << f->field_type ()->name() << " " << tmp_val_name
             << "; // is type of " << f->local_name () << be_nl;
-        *os << "size_t " << tmp_size_name 
+        *os << "size_t " << tmp_size_name
             << " = _dcps_max_marshaled_size (" << tmp_val_name << ");" << be_nl
             << "if (" << tmp_size_name << " > max_size) " << be_idt_nl
             << "max_size = " << tmp_size_name << ";" << be_uidt_nl << be_nl;
       }
       break;
-    case TAO_CodeGen::TAO_FIND_SIZE: 
+    case TAO_CodeGen::TAO_FIND_SIZE:
       //SHH - TBD - make sure this is a shallow copy.
       //     But this code is currently dead anyway because
       //     unions always return false for _dcps_is_bounded and a large
       //     number for _dcsp_max_marshaled_size.
       //     This note applies to multiple locations in this file.
-      *os << f->field_type ()->name() << " tmp (_tao_union." 
+      *os << f->field_type ()->name() << " tmp (_tao_union."
           << f->local_name () << " ());" << be_nl;
       *os << "result += _dcps_find_size (tmp);" << be_nl;
       break;
@@ -1003,7 +1003,7 @@ be_visitor_union_branch_serializer_op_cs::visit_string (be_string *node)
     {
     case TAO_CodeGen::TAO_IS_BOUNDED_SIZE:
        if (0 == node->max_size ()->ev ()->u.ulval)
-         *os << "is_bounded = is_bounded && false; /* unbounded string */" 
+         *os << "is_bounded = is_bounded && false; /* unbounded string */"
              << be_nl;
        else
          *os << "// bounded string " << f->local_name ()
@@ -1017,13 +1017,13 @@ be_visitor_union_branch_serializer_op_cs::visit_string (be_string *node)
 
         char buff[15];
         ACE_OS::sprintf(buff, "%ld", node->max_size ()->ev ()->u.ulval);
-        *os << "size_t " << tmp_size_name 
+        *os << "size_t " << tmp_size_name
             << " = _dcps_max_marshaled_size_ulong () + " << buff << ";" << be_nl
             << "if (" << tmp_size_name << ")" << be_idt_nl
             << "max_size = " << tmp_size_name << ";" << be_uidt_nl;
       }
       break;
-    case TAO_CodeGen::TAO_FIND_SIZE: 
+    case TAO_CodeGen::TAO_FIND_SIZE:
       *os << "result += _dcps_max_marshaled_size_ulong() + " << be_idt_nl
           << "ACE_OS::strlen(_tao_union."
           << f->local_name () << " ());" << be_uidt_nl;
@@ -1119,9 +1119,9 @@ be_visitor_union_branch_serializer_op_cs::visit_structure (be_structure *node)
         ACE_OS::sprintf(tmp_size_name, "tmp_struct_size%d", tmp_counter);
         ACE_OS::sprintf(tmp_val_name, "tmp_struct_val%d", tmp_counter++);
 
-        *os << f->field_type ()->name() << " " << tmp_val_name 
+        *os << f->field_type ()->name() << " " << tmp_val_name
             << "; // is type of " << f->local_name () << be_nl;
-        *os << "size_t " << tmp_size_name 
+        *os << "size_t " << tmp_size_name
             << " = _dcps_max_marshaled_size (" << tmp_val_name << ");" << be_nl
             << "if (" << tmp_size_name << " > max_size) " << be_idt_nl
             << "max_size = " << tmp_size_name << ";" << be_uidt_nl << be_nl;
@@ -1136,7 +1136,7 @@ be_visitor_union_branch_serializer_op_cs::visit_structure (be_structure *node)
         ACE_OS::sprintf(tmp_size_name, "tmp_struct_size%d", tmp_counter);
         ACE_OS::sprintf(tmp_val_name, "tmp_struct_val%d", tmp_counter++);
 
-        *os << f->field_type ()->name() << " " << tmp_val_name 
+        *os << f->field_type ()->name() << " " << tmp_val_name
             << "; // is type of " << f->local_name () << be_nl;
         *os << "is_bounded = is_bounded && _tao_is_bounded_size ("
             << tmp_val_name << ");" << be_nl;
@@ -1144,7 +1144,7 @@ be_visitor_union_branch_serializer_op_cs::visit_structure (be_structure *node)
       break;
 
     case TAO_CodeGen::TAO_FIND_SIZE:
-      *os << "result += _dcps_find_size (_tao_union." 
+      *os << "result += _dcps_find_size (_tao_union."
           << f->local_name () << " ());" << be_nl;
       break;
 

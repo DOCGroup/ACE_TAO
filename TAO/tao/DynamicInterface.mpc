@@ -8,7 +8,7 @@ project : taolib, core, messaging, minimum_corba {
   }
 
   Header_Files {
-    DynamicInterface 
+    DynamicInterface
   }
 
   Inline_Files {
@@ -24,6 +24,9 @@ project : taolib, core, messaging, minimum_corba {
   }
 
   PIDL_Files {
+  }
+
+  IDL_Files {
   }
 
   Pkgconfig_Files {

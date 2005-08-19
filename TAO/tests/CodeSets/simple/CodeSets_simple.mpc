@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*client) : taoclient {
+project(*client) : taoclient, anytypecode {
   IDL_Files {
     simple.idl
   }

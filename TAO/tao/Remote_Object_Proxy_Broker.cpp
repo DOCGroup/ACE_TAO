@@ -1,4 +1,5 @@
 #include "Remote_Object_Proxy_Broker.h"
+#include "CORBA_String.h"
 #include "UB_String_Arguments.h"
 #include "Special_Basic_Arguments.h"
 #include "Invocation_Adapter.h"

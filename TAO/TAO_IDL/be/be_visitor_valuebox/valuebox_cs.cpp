@@ -99,19 +99,19 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
       switch (bpt->pt())
         {
         case AST_PredefinedType::PT_boolean:
-          unmarshal_arg = "::CORBA::Any::to_boolean (vb_object->_pd_value)";
+          unmarshal_arg = "::ACE_InputCDR::to_boolean (vb_object->_pd_value)";
           break;
 
         case AST_PredefinedType::PT_char:
-          unmarshal_arg = "::CORBA::Any::to_char (vb_object->_pd_value)";
+          unmarshal_arg = "::ACE_InputCDR::to_char (vb_object->_pd_value)";
           break;
 
         case AST_PredefinedType::PT_wchar:
-          unmarshal_arg = "::CORBA::Any::to_wchar (vb_object->_pd_value)";
+          unmarshal_arg = "::ACE_InputCDR::to_wchar (vb_object->_pd_value)";
           break;
 
         case AST_PredefinedType::PT_octet:
-          unmarshal_arg = "::CORBA::Any::to_octet (vb_object->_pd_value)";
+          unmarshal_arg = "::ACE_InputCDR::to_octet (vb_object->_pd_value)";
           break;
 
         case AST_PredefinedType::PT_any:

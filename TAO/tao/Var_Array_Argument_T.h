@@ -29,15 +29,18 @@ namespace TAO
    * @brief IN stub argument of variable size element array.
    *
    */
-  template<typename S, typename S_slice, typename S_forany>
-  class In_Var_Array_Argument_T : public Argument
+  template<typename S,
+           typename S_slice,
+           typename S_forany,
+           typename Insert_Policy>
+  class In_Var_Array_Argument_T : public InArgument, private Insert_Policy
   {
   public:
     In_Var_Array_Argument_T (const S_slice * x);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S_slice const * arg (void) const;
 
@@ -51,16 +54,19 @@ namespace TAO
    * @brief INOUT stub argument of variable size element array.
    *
    */
-  template<typename S, typename S_slice, typename S_forany>
-  class Inout_Var_Array_Argument_T : public Argument
+  template<typename S,
+           typename S_slice,
+           typename S_forany,
+           typename Insert_Policy>
+  class Inout_Var_Array_Argument_T : public InoutArgument, private Insert_Policy
   {
   public:
     Inout_Var_Array_Argument_T (S_slice *&x);
 
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S_slice * arg (void);
 
@@ -79,15 +85,16 @@ namespace TAO
            typename S_var,
            typename S_out,
            typename S_forany,
-           typename S_tag>
-  class Out_Var_Array_Argument_T : public Argument
+           typename S_tag,
+           typename Insert_Policy>
+  class Out_Var_Array_Argument_T : public OutArgument, private Insert_Policy
   {
   public:
     Out_Var_Array_Argument_T (S_out x);
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_param (Dynamic::Parameter &);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S_slice *& arg (void);
 
@@ -105,15 +112,16 @@ namespace TAO
            typename S_slice,
            typename S_var,
            typename S_forany,
-           typename S_tag>
-  class Ret_Var_Array_Argument_T : public Argument
+           typename S_tag,
+           typename Insert_Policy>
+  class Ret_Var_Array_Argument_T : public RetArgument, private Insert_Policy
   {
   public:
     Ret_Var_Array_Argument_T (void);
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
-    virtual void interceptor_result (CORBA::Any *);
+    virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     S_slice *& arg (void);
 
@@ -143,7 +151,8 @@ namespace TAO
            typename T_var,
            typename T_out,
            typename T_forany,
-           typename T_tag>
+           typename T_tag,
+           typename Insert_Policy>
   struct Var_Array_Arg_Traits_T
   {
     typedef T_slice *                                   ret_type;
@@ -153,21 +162,25 @@ namespace TAO
 
     typedef In_Var_Array_Argument_T<T,
                                     T_slice,
-                                    T_forany>           in_arg_val;
+                                    T_forany,
+                                    Insert_Policy>           in_arg_val;
     typedef Inout_Var_Array_Argument_T<T,
                                        T_slice,
-                                       T_forany>        inout_arg_val;
+                                       T_forany,
+                                       Insert_Policy>        inout_arg_val;
     typedef Out_Var_Array_Argument_T<T,
                                      T_slice,
                                      T_var,
                                      T_out,
                                      T_forany,
-                                     T_tag>             out_arg_val;
+                                     T_tag,
+                                     Insert_Policy>             out_arg_val;
     typedef Ret_Var_Array_Argument_T<T,
                                      T_slice,
                                      T_var,
                                      T_forany,
-                                     T_tag>             ret_val;
+                                     T_tag,
+                                     Insert_Policy>             ret_val;
 
     typedef Var_Array_Tag                               idl_tag;
   };

@@ -26,10 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:153
+// be\be_codegen.cpp:154
 
-#ifndef _TAO_IDL_ORIG_SERVANTMANAGERC_H_
-#define _TAO_IDL_ORIG_SERVANTMANAGERC_H_
+#ifndef _TAO_IDL_SERVANTMANAGERC_H_
+#define _TAO_IDL_SERVANTMANAGERC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -51,17 +51,8 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_PortableServer_Export
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
-
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:49
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -124,7 +115,7 @@ namespace PortableServer
       return static_cast<ServantManager_ptr> (0);
     }
     
-    static void _tao_any_destructor (void *);
+    
     
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
@@ -151,14 +142,9 @@ namespace PortableServer
   };
 
 #endif /* end #if !defined */
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_PortableServer_Export ::CORBA::TypeCode_ptr const _tc_ServantManager;
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:78
 
 } // module PortableServer
 
@@ -169,8 +155,8 @@ namespace PortableServer
 namespace TAO
 {
 
-#if !defined (_PORTABLESERVER_SERVANTMANAGER__TRAITS_CH_)
-#define _PORTABLESERVER_SERVANTMANAGER__TRAITS_CH_
+#if !defined (_PORTABLESERVER_SERVANTMANAGER__TRAITS_)
+#define _PORTABLESERVER_SERVANTMANAGER__TRAITS_
   
   template<>
   struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::ServantManager>
@@ -191,25 +177,10 @@ namespace TAO
 #endif /* end #if !defined */
 }
 
-// TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
-
-TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::ServantManager_ptr); // copying
-TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::ServantManager_ptr *); // non-copying
-TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::ServantManager_ptr &);
-
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:955
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
+// be\be_codegen.cpp:1028
 
 #include /**/ "ace/post.h"
 

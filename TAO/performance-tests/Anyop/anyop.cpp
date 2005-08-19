@@ -20,7 +20,7 @@
 
 #include "testC.h"
 #include "tao/debug.h"
-#include "tao/Any.h"
+#include "tao/AnyTypeCode/Any.h"
 #include "tao/Stub.h"
 #include "tao/Object_T.h"
 #include "ace/Get_Opt.h"

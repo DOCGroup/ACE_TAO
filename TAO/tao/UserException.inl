@@ -19,3 +19,9 @@ CORBA::UserException::_downcast (CORBA::Exception const * exception)
 {
   return dynamic_cast<const CORBA::UserException *> (exception);
 }
+
+ACE_INLINE CORBA::TypeCode_ptr
+CORBA::UserException::_tao_type (void) const
+{
+  return 0;
+}

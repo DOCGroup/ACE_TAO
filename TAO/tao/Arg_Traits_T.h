@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_ARG_TRAITS_T_H
 #define TAO_ARG_TRAITS_T_H
 
@@ -29,16 +28,6 @@ namespace TAO
    */
   template<typename T>
   class Arg_Traits
-  {
-  };
-
-  /**
-   *
-   * @brief Base class for all skeleton arg traits specializations.
-   *
-   */
-  template<typename T>
-  class SArg_Traits
   {
   };
 }

@@ -279,7 +279,7 @@ WFMO_Reactor_Test, Timer_Cancellation_Test</ul>
 <h3>
 <a NAME="idl"></a>IDL Compiler</h3>
 Point of contact: <a href="mailto:j.parsons@vanderbilt.edu">Jeff Parsons</a>
-<p>Current status: (As of October 25, 2004.)
+<p>Current status: (As of August 10, 2005.)
 <ul>
 <li>
 Generated code closely follows the C++ Mapping specified in the latest
@@ -643,6 +643,19 @@ if it does not already exist. Only one level of directory can be created
 with this option (any path prefix included must already exist).
 If the specified directory already exists, no action is taken.
 </li>
+
+<li>
+As part of the subsetting in TAO of Anys and TypeCodes, the generation of
+these things in the IDL compiler has been further decoupled from other
+code generation. Now the -GA option generates not only a *A.cpp file but
+also a *A.h file, and in addition, the -oA option will create these files
+in a directory different from that where the other generated files are
+created.</li>
+
+<li>
+Generation of explicit template instantiations has been completely 
+removed, it is no longer available via the command line option -GT.</li>
+
 </ul>
 
 <h4>

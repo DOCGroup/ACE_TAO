@@ -33,7 +33,9 @@ class TAO_Export TAO_ORB_Core_Auto_Ptr
 {
 public:
 
-  /// Initialization and termination methods
+  /**
+   * @name Initialization and termination methods
+   */
   //@{
   explicit TAO_ORB_Core_Auto_Ptr (TAO_ORB_Core *p = 0);
   TAO_ORB_Core_Auto_Ptr (TAO_ORB_Core_Auto_Ptr &ap);
@@ -41,7 +43,9 @@ public:
   ~TAO_ORB_Core_Auto_Ptr (void);
   //@}
 
-  /// Accessor methods.
+  /**
+   * @name Accessor methods.
+   */
   //@{
   TAO_ORB_Core &operator *() const;
   TAO_ORB_Core *get (void) const;

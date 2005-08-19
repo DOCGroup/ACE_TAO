@@ -228,16 +228,3 @@ main (int argc, char **argv)
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class Test<A, A_var>;
-template class Test<Outer::B, Outer::B_var>;
-template class Test<Outer::Inner::C, Outer::Inner::C_var>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate Test<A, A_var>
-#pragma instantiate Test<Outer::B, Outer::B_var>
-#pragma instantiate Test<Outer::Inner::C, Outer::Inner::C_var>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

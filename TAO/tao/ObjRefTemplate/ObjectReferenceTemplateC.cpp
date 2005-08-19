@@ -53,20 +53,21 @@
 // Arg traits specializations.
 namespace TAO
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_arg_traits.cpp:489
 
 #if !defined (_CORBA_STRINGSEQ__ARG_TRAITS_CS_)
 #define _CORBA_STRINGSEQ__ARG_TRAITS_CS_
-  
+
   template<>
   class Arg_Traits<CORBA::StringSeq>
     : public
         Var_Size_Arg_Traits_T<
             CORBA::StringSeq,
             CORBA::StringSeq_var,
-            CORBA::StringSeq_out
+            CORBA::StringSeq_out,
+            TAO::Any_Insert_Policy_Stream <CORBA::StringSeq>
           >
   {
   };
@@ -139,29 +140,29 @@ CORBA::Boolean PortableInterceptor::ObjectReferenceFactory::_tao_unmarshal (
         base,
         ObjectReferenceFactory::_tao_obv_static_repository_id ()
       );
-  
+
   if (retval == 0)
     {
       return 0;
     }
-  
+
   if (factory.in () != 0)
     {
       base = factory->create_for_unmarshal ();
-      
+
       if (base == 0)
         {
           return 0;  // %! except.?
         }
-      
+
       retval = base->_tao_unmarshal_v (strm);
-      
+
       if (retval == 0)
         {
           return 0;
         }
     }
-  
+
   // Now base must be null or point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = ObjectReferenceFactory::_downcast (base);

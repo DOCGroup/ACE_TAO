@@ -136,10 +136,7 @@ namespace CORBA
     // = These are TAO-specific extensions.
 
     /// Will be overridden in the concrete derived classes.
-    virtual CORBA::TypeCode_ptr _tao_type (void) const;
-
-    // = To implement the narrow method.
-    virtual int _is_a (const char* repository_id) const;
+    virtual CORBA::TypeCode_ptr _tao_type (void) const = 0;
 
     /// Print the exception to output determined by @a f.
     /**
@@ -150,6 +147,9 @@ namespace CORBA
 
 #if defined (ACE_USES_WCHAR)
     /// ACE_WCHAR_T version of _tao_print_exception.
+    /**
+     * @note This method is TAO-specific.
+     */
     void _tao_print_exception (const ACE_WCHAR_T *info,
                                FILE *f = stdout) const;
 #endif  // ACE_USES_WCHAR
@@ -159,9 +159,10 @@ namespace CORBA
     virtual ACE_CString _info (void) const = 0;
 
     virtual void _tao_encode (TAO_OutputCDR &cdr
-                              ACE_ENV_ARG_DECL_NOT_USED) const = 0;
+                              ACE_ENV_ARG_DECL) const = 0;
+
     virtual void _tao_decode (TAO_InputCDR &cdr
-                              ACE_ENV_ARG_DECL_NOT_USED) = 0;
+                              ACE_ENV_ARG_DECL) = 0;
 
     /// Used in the non-copying Any insertion operator.
     static void _tao_any_destructor (void *);
@@ -178,7 +179,13 @@ namespace CORBA
      * public:
      *   virtual CORBA::Exception *_tao_duplicate (void) const
      *   {
-     *     return new SomeException (*this);
+     *     CORBA::Exception *result = 0;
+     *     ACE_NEW_RETURN (
+     *         result,
+     *         SomeException (*this),
+     *         0
+     *       );
+     *     return result;
      *   }
      * };
      * </PRE>
@@ -223,31 +230,8 @@ class TAO_Export TAO_Exceptions
 public:
 
   /// Create a CORBA::SystemException given the interface repository ID.
-  static CORBA::SystemException *create_system_exception (
-      const char *id
-      ACE_ENV_ARG_DECL
-    );
-
+  static CORBA::SystemException *create_system_exception (const char *id);
 };
-
-#if defined (TAO_DONT_CATCH_DOT_DOT_DOT)
-/**
- * @class TAO_DONT_CATCH
- *
- * @brief This class is only used internally in TAO as an exception
- * that never gets thrown.  Never use this class anywhere.
- *
- * @internal
- */
-class TAO_Export TAO_DONT_CATCH
-{
-public:
-  TAO_DONT_CATCH (void);
-};
-#endif /* TAO_DONT_CATCH_DOT_DOT_DOT */
-
-TAO_Export void operator<<= (CORBA::Any &, const CORBA::Exception &);
-TAO_Export void operator<<= (CORBA::Any &, CORBA::Exception *);
 
 #if defined (__ACE_INLINE__)
 # include "tao/Exception.i"

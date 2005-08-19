@@ -153,7 +153,7 @@ TAO_ServantBase::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
 
   TAO::Portable_Server::POA_Current_Impl *poa_current_impl =
     static_cast<TAO::Portable_Server::POA_Current_Impl *>
-                    (TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
+                    (TAO_TSS_Resources::instance ()->poa_current_impl_);
 
   CORBA::ORB_ptr servant_orb = 0;
 

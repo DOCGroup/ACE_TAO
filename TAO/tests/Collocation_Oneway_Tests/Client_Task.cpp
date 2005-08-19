@@ -3,6 +3,7 @@
 //
 
 #include "tao/Messaging/Messaging.h"
+#include "tao/AnyTypeCode/Any.h"
 #include "Client_Task.h"
 #include "TestC.h"
 

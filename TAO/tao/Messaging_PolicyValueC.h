@@ -26,10 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:153
+// be\be_codegen.cpp:154
 
-#ifndef _TAO_IDL_ORIG_MESSAGING_POLICYVALUEC_H_
-#define _TAO_IDL_ORIG_MESSAGING_POLICYVALUEC_H_
+#ifndef _TAO_IDL_MESSAGING_POLICYVALUEC_H_
+#define _TAO_IDL_MESSAGING_POLICYVALUEC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -61,10 +61,6 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
-
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:48
 
@@ -90,7 +86,7 @@ namespace Messaging
     PolicyValue_out;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_structure/structure_ch.cpp:52
+  // be\be_visitor_structure/structure_ch.cpp:57
   
   struct TAO_Export PolicyValue
   {
@@ -100,11 +96,6 @@ namespace Messaging
     CORBA::PolicyType ptype;
     CORBA::OctetSeq pvalue;
   };
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_PolicyValue;
   
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
@@ -155,11 +146,6 @@ namespace Messaging
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Export ::CORBA::TypeCode_ptr const _tc_PolicyValueSeq;
-  
-  // TAO_IDL - Generated from
   // be\be_visitor_constant/constant_ch.cpp:52
   
   const IOP::ComponentId TAG_POLICIES = 2U;
@@ -181,22 +167,6 @@ namespace Messaging
 namespace TAO
 {
 }
-
-// TAO_IDL - Generated from
-// be\be_visitor_structure/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const Messaging::PolicyValue &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, Messaging::PolicyValue*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::PolicyValue *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const Messaging::PolicyValue *&);
-
-// TAO_IDL - Generated from
-// be\be_visitor_sequence/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const Messaging::PolicyValueSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, Messaging::PolicyValueSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::PolicyValueSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const Messaging::PolicyValueSeq *&);
 
 // TAO_IDL - Generated from
 // be\be_visitor_structure/cdr_op_ch.cpp:54
@@ -222,15 +192,11 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_Messaging_PolicyValueSeq_H_ */
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:955
+// be\be_codegen.cpp:1062
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
 
 #include /**/ "ace/post.h"
 

@@ -89,9 +89,6 @@ namespace CORBA
 
     // = TAO specific extension.
 
-    /// Helper method to implement _downcast.
-    virtual int _is_a (const char *type_id) const;
-
     /// This class has a specific typecode.
     virtual CORBA::TypeCode_ptr _tao_type (void) const;
 
