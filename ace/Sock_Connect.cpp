@@ -7,6 +7,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 #include "ace/OS_Memory.h"
+#include "ace/OS_NS_stdio.h"
 
 #if defined (sparc) && ! defined (CHORUS)
 #  include "ace/OS_NS_fcntl.h"
