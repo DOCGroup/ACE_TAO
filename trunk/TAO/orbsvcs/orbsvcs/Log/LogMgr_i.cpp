@@ -135,7 +135,7 @@ TAO_LogMgr_i::create_log_reference (DsLogAdmin::LogId id
 
   CORBA::Object_var obj =
     this->log_poa_->create_reference_with_id (oid.in (),
-					      intf
+                intf.in ()
 					      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
