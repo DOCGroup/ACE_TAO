@@ -2,6 +2,7 @@
 // $Id$
 
 project(*server): taoserver {
+  idlflags += -Sa -St
   Source_Files {
     Factory.cpp
     Simple.cpp
@@ -16,7 +17,9 @@ project(*client): taoclient {
   }
 }
 
-project(*collocated): taoexe, portableserver {
+project(*collocated): taoserver {
+  idlflags += -Sa -St
+  exename = collocated
   Source_Files {
     Simple.cpp
     collocated.cpp
