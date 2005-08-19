@@ -3,7 +3,7 @@
 # $Id$
 #
 
-PROJECT_NAME          = TAO_PortableServer
+PROJECT_NAME          = TAO_PI_Server
 PROJECT_NUMBER        = Snapshot
 OUTPUT_DIRECTORY      = .
 OUTPUT_LANGUAGE       = English
@@ -48,7 +48,7 @@ WARN_FORMAT           = "$file:$line: $text"
 # configuration options related to the input files
 #---------------------------------------------------------------------------
 
-INPUT                 = TAO/tao/PortableServer
+INPUT                 = TAO/tao/PI_Server
 FILE_PATTERNS         = *.cpp *.h *.i *.inl *.pidl
 RECURSIVE             =
 EXCLUDE               =
@@ -71,7 +71,7 @@ IGNORE_PREFIX         =
 #---------------------------------------------------------------------------
 
 GENERATE_HTML         = YES
-HTML_OUTPUT           = html/tao/portableserver
+HTML_OUTPUT           = html/tao/pi_server
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
@@ -131,7 +131,7 @@ EXPAND_AS_DEFINED     = ACE_RCSID \
 
 TAGFILES              = html/ace/ACE.tag=../../ace \
 			html/tao/TAO.tag=..
-GENERATE_TAGFILE      = html/tao/portableserver/TAO_PortableServer.tag
+GENERATE_TAGFILE      = html/tao/pi_server/TAO_PI_Server.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 
