@@ -411,7 +411,7 @@ ACE_WIN32_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
                   -1);
 
   // Shared read
-  ssize_t return_val = this->shared_read (result);
+  int return_val = this->shared_read (result);
 
   // Upon errors
   if (return_val == -1)
@@ -839,7 +839,7 @@ ACE_WIN32_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
                   -1);
 
   // Shared write
-  ssize_t return_val = this->shared_write (result);
+  int return_val = this->shared_write (result);
 
   // Upon errors
   if (return_val == -1)
@@ -1277,7 +1277,7 @@ ACE_WIN32_Asynch_Read_File::read (ACE_Message_Block &message_block,
                   -1);
 
   // Shared read
-  ssize_t return_val = this->shared_read (result);
+  int return_val = this->shared_read (result);
 
   // Upon errors
   if (return_val == -1)
@@ -1677,7 +1677,7 @@ ACE_WIN32_Asynch_Write_File::write (ACE_Message_Block &message_block,
                   -1);
 
   // Shared write
-  ssize_t return_val = this->shared_write (result);
+  int return_val = this->shared_write (result);
 
   // Upon errors
   if (return_val == -1)

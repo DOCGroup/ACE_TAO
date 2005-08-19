@@ -323,11 +323,11 @@ ACE_DLL_Handle::get_dll_names (const ACE_TCHAR *dll_name,
 
   // 1. Separate the dll_name into the dir part and the file part. We
   // only decorate the file part to determine the names to try loading.
-  int pos = base.rfind (ACE_DIRECTORY_SEPARATOR_CHAR);
+  ssize_t pos = base.rfind (ACE_DIRECTORY_SEPARATOR_CHAR);
   if (pos != ACE_TString::npos)
     {
-      base_dir = base.substr (0, static_cast<ssize_t>(pos) + 1);
-      base_file = base.substr (static_cast<size_t>(pos) + 1);
+      base_dir = base.substr (0, pos + 1);
+      base_file = base.substr (pos + 1);
     }
   else
     base_file = base;
@@ -336,8 +336,8 @@ ACE_DLL_Handle::get_dll_names (const ACE_TCHAR *dll_name,
   // suffix to base_suffix.
   if ((pos = base_file.rfind (ACE_LIB_TEXT ('.'))) != ACE_TString::npos)
     {
-      base_suffix = base_file.substr (static_cast<size_t>(pos));
-      base_file = base_file.substr (0, static_cast<ssize_t>(pos));
+      base_suffix = base_file.substr (pos);
+      base_file = base_file.substr (0, pos);
     }
 
   // 3. Build the combinations to try for this platform.

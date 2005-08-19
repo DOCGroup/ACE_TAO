@@ -907,9 +907,9 @@ ACE_Log_Msg::log (ACE_Log_Priority log_priority,
 
   va_start (argp, format_str);
 
-  int result = this->log (format_str,
-                          log_priority,
-                          argp);
+  ssize_t result = this->log (format_str,
+                              log_priority,
+                              argp);
   va_end (argp);
 
   return result;
@@ -931,9 +931,9 @@ ACE_Log_Msg::log (ACE_Log_Priority log_priority,
 
   va_start (argp, format_str);
 
-  int result = this->log (ACE_TEXT_ANTI_TO_TCHAR (format_str),
-                          log_priority,
-                          argp);
+  ssize_t result = this->log (ACE_TEXT_ANTI_TO_TCHAR (format_str),
+                              log_priority,
+                              argp);
   va_end (argp);
 
   return result;

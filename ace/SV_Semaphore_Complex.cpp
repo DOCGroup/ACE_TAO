@@ -132,7 +132,7 @@ ACE_SV_Semaphore_Complex::open (key_t k,
 						1) == -1)
 	    return -1;
 	  else
-	    for (int i = 0; i < nsems; i++)
+	    for (u_short i = 0; i < nsems; i++)
 	      if (this->control (SETVAL, initial_value, i) == -1)
 		return -1;
 	}
