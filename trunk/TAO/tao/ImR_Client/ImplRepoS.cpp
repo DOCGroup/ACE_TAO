@@ -192,7 +192,7 @@ namespace TAO
             ImplementationRepository::ServerObject_var,
             ImplementationRepository::ServerObject_out,
             TAO::Objref_Traits<ImplementationRepository::ServerObject>,
-            TAO::Any_Insert_Policy_Stream <ImplementationRepository::ServerObject>
+            TAO::Any_Insert_Policy_Stream <ImplementationRepository::ServerObject_ptr>
           >
   {
   };
@@ -252,7 +252,7 @@ namespace TAO
             ImplementationRepository::ServerInformationList,
             ImplementationRepository::ServerInformationList_var,
             ImplementationRepository::ServerInformationList_out,
-            TAO::Any_Insert_Policy_Stream <ImplementationRepository::ServerInformation>
+            TAO::Any_Insert_Policy_Stream <ImplementationRepository::ServerInformationList>
           >
   {
   };
