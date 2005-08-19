@@ -300,7 +300,7 @@ namespace CORBA
 }
 
 #if defined (__ACE_INLINE__)
-# include "tao/NVList.inl"
+# include "tao/AnyTypeCode/NVList.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

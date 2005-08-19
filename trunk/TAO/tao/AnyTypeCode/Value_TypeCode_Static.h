@@ -160,7 +160,7 @@ namespace TAO
 
 
 #ifdef __ACE_INLINE__
-# include "tao/Value_TypeCode_Static.inl"
+# include "tao/AnyTypeCode/Value_TypeCode_Static.inl"
 #endif  /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

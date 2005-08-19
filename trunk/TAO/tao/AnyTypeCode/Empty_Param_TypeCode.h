@@ -90,7 +90,7 @@ namespace TAO
 
 
 #ifdef __ACE_INLINE__
-# include "tao/Empty_Param_TypeCode.inl"
+# include "tao/AnyTypeCode/Empty_Param_TypeCode.inl"
 #endif  /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
