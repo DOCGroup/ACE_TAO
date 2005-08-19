@@ -1,3 +1,19 @@
+Fri Aug 19 09:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/tao_pi.doxygen:
+        * etc/tao_pi_server.doxygen:
+        * etc/tao_anytypecode.doxygen:
+          New config files
+
+        * etc/tao_portableserver.doxygen:
+          Cleanup
+
+        * html/index.html:
+          Added new libs
+
+        * bin/generate_doxygen.pl:
+          Also generate documentation for the new projects
+
 Fri Aug 19 09:04:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/Socket_Connect.cpp:
