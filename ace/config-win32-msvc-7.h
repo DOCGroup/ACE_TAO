@@ -103,11 +103,15 @@
 // Maybe in the future.
 // 'this' : used in base member initializer list
 #pragma warning(disable:4355)
+
 // 'class1' : inherits 'class2::member' via dominance
 #pragma warning(disable:4250)
 
+// C++ Exception Specification ignored
+#pragma warning(disable:4290)
+
 // Disable warning of using Microsoft Extension.
-# pragma warning(disable:4231)
+#pragma warning(disable:4231)
 
 // 'function' : unreferenced local function has been removed
 # pragma warning(disable:4505)
