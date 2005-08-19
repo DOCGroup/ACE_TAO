@@ -1,3 +1,8 @@
+Fri Aug 19 13:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Name_Request_Reply.cpp:
+          Fixed conversion warning
+
 Fri Aug 19 13:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/DLL_Manager.cpp
