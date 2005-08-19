@@ -116,10 +116,6 @@ TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, const COR
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:955
 
-#if defined (__ACE_INLINE__)
-#include "DomainC.inl"
-#endif /* defined INLINE */
-
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
