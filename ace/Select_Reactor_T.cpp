@@ -1533,7 +1533,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::check_handles (void)
       rd_mask.set_bit (h);
 
       int select_width;
-#  if defined (ACE_WIN64)
+#  if defined (ACE_WIN32)
       // This arg is ignored on Windows and causes pointer truncation
       // warnings on 64-bit compiles.
       select_width = 0;
@@ -1549,7 +1549,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::check_handles (void)
           this->remove_handler_i (h, ACE_Event_Handler::ALL_EVENTS_MASK);
         }
       rd_mask.clr_bit (h);
-#else /* !ACE_WIN32 && !MVS && !ACE_PSOS */
+#else /* !ACE_WIN32 && !MVS && !ACE_PSOS && !VXWORKS */
       struct stat temp;
 
       if (ACE_OS::fstat (h, &temp) == -1)
