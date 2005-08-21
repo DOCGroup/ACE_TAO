@@ -394,7 +394,7 @@ TAO::TypeCode::aligned_offset (CORBA::ULong offset)
 
 // ---------------------------------------------------------------
 
-bool
+CORBA::Boolean
 operator<< (TAO_OutputCDR & cdr,
             CORBA::TypeCode_ptr tc)
 {

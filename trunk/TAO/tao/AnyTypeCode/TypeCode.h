@@ -512,12 +512,12 @@ namespace CORBA
 
 
 TAO_AnyTypeCode_Export
-bool operator<< (TAO_OutputCDR & cdr,
-                 CORBA::TypeCode_ptr tc);
+CORBA::Boolean operator<< (TAO_OutputCDR & cdr,
+                           CORBA::TypeCode_ptr tc);
 
 TAO_AnyTypeCode_Export
-bool operator>> (TAO_InputCDR & cdr,
-                 CORBA::TypeCode_ptr & tc);
+CORBA::Boolean operator>> (TAO_InputCDR & cdr,
+                           CORBA::TypeCode_ptr & tc);
 
 namespace TAO
 {
@@ -530,8 +530,8 @@ namespace TAO
      */
 
     TAO_AnyTypeCode_Export bool marshal (TAO_OutputCDR & cdr,
-                             CORBA::TypeCode_ptr tc,
-                             CORBA::ULong offset);
+                                         CORBA::TypeCode_ptr tc,
+                                         CORBA::ULong offset);
 
     /// Return @a offset aligned on the appropriate CDR boundary.
     TAO_AnyTypeCode_Export CORBA::ULong aligned_offset (CORBA::ULong offset);
@@ -539,8 +539,9 @@ namespace TAO
 
   /// Return the unaliased content @c TypeCode of the given
   /// @c TypeCode.
-  TAO_AnyTypeCode_Export CORBA::TypeCode_ptr unaliased_typecode (CORBA::TypeCode_ptr tc
-                                                     ACE_ENV_ARG_DECL);
+  TAO_AnyTypeCode_Export CORBA::TypeCode_ptr unaliased_typecode (
+    CORBA::TypeCode_ptr tc
+    ACE_ENV_ARG_DECL);
 
   /// Return the unaliased @c TCKind of the given @c TypeCode.
   /**
