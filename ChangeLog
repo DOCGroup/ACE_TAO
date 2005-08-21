@@ -1,3 +1,8 @@
+Sun Aug 21 11:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/msvc_static_order.lst:
+          Added the new core libs
+
 Fri Aug 19 14:15:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/Sock_Connect.cpp:
