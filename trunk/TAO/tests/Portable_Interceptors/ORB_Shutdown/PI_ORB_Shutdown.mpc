@@ -11,7 +11,7 @@ project(*Server): taoserver, pi_server, interceptors {
   }
 }
 
-project(*Client): taoclient {
+project(*Client): taoclient, anytypecode {
 
   Source_Files {
     testC.cpp
