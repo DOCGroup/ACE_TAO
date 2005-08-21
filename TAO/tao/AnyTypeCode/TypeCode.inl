@@ -2,10 +2,8 @@
 //
 // $Id$
 
-
-#include "tao/CORBA_methods.h"
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/Environment.h"
-
 
 ACE_INLINE CORBA::Boolean
 CORBA::is_nil (CORBA::TypeCode_ptr obj)
