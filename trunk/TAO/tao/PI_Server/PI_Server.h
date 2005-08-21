@@ -22,7 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 /**
- * @class TAO_PI_Init
+ * @class TAO_PI_Server_Init
  *
  */
 class TAO_PI_Server_Export TAO_PI_Server_Init
