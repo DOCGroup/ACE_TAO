@@ -1,3 +1,8 @@
+Fri Aug 19 11:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/TAO_AnyTypeCode_Export.h:
+          Fixed vc71 static compile warnings
+
 Fri Aug 19 18:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Kokyu_dsrt_schedulers/EDF_Scheduling.idl:
