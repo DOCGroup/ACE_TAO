@@ -9,7 +9,7 @@
 
 #include "ace/config-all.h"
 
-#if defined (TAO_ANYTYPECODE_AS_STATIC_LIBS)
+#if defined (TAO_AS_STATIC_LIBS)
 #  if !defined (TAO_ANYTYPECODE_HAS_DLL)
 #    define TAO_ANYTYPECODE_HAS_DLL 0
 #  endif /* ! TAO_ANYTYPECODE_HAS_DLL */
