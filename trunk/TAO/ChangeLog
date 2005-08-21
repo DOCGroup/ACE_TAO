@@ -1,4 +1,14 @@
-Fri Aug 19 11:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+Sun Aug 21 11:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/ORB_Shutdown/PI_ORB_Shutdown.mpc:
+        * tests/MT_Server/MT_Server.mpc:
+        * tests/Hello/Hello.mpc:
+        * tests/Hang_Shutdown/Hang.mpc:
+        * tests/Connect_Strategy_Test/Connect_Strategy_Test.mpc:
+        * tests/Bug_1330_Regression/Bug_1330_Regression.mpc:
+          Updated to resolve link errors
+
+Sun Aug 21 11:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/TAO_AnyTypeCode_Export.h:
           Fixed vc71 static compile warnings
