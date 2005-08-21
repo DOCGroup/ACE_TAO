@@ -1,3 +1,8 @@
+Sun Aug 21 11:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/TypeCode.{h,cpp}:
+          Fixed compile errors with msvc6
+
 Sun Aug 21 11:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.cpp:
