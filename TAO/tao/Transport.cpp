@@ -823,7 +823,7 @@ TAO_Transport::drain_queue_i (void)
   // sent
   int iovcnt = 0;
 #if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
-  iovec iov[ACE_IOV_MAX] = { 0 };
+  iovec iov[ACE_IOV_MAX] = { 0 , 0 };
 #else
   iovec iov[ACE_IOV_MAX];
 #endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
