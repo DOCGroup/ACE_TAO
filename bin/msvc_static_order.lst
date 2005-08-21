@@ -12,6 +12,11 @@ TAO/TAO_IDL/TAO_IDL_BE
 TAO/TAO_IDL/TAO_IDL_FE
 TAO/TAO_IDL/TAO_IDL_EXE
 TAO/tao/TAO
+TAO/tao/AnyTypeCode
+TAO/tao/CodecFactory
+TAO/tao/Codeset
+TAO/tao/PI
+TAO/tao/PI_Server
 TAO/tao/Valuetype
 TAO/tao/IORInterceptor
 TAO/tao/ObjRefTemplate
