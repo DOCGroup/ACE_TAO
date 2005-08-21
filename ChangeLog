@@ -1,3 +1,10 @@
+Sun Aug 21 13:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Select_Reactor_T.cpp (check_handles):
+          Pass select_handles as 0 on Win32, this was now just done for
+          Win64, but it is not needed on Win32 and also causes conversion
+          warnings when 64bit checks are enabled on win32.
+
 Sun Aug 21 11:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_static_order.lst:
