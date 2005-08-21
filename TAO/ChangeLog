@@ -1,3 +1,8 @@
+Sun Aug 21 11:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport.cpp:
+          Fixed warning in valgrind build
+
 Sun Aug 21 11:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/ORB_Shutdown/PI_ORB_Shutdown.mpc:
