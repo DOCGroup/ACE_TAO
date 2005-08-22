@@ -32,8 +32,8 @@ template<typename S,
          typename S_forany,
          typename Insert_Policy>
 void
-TAO::In_Fixed_Array_Argument_T<S,S_slice,S_forany,Insert_Policy>::interceptor_value (
-  CORBA::Any *any) const
+TAO::In_Fixed_Array_Argument_T<S,S_slice,S_forany,Insert_Policy>::
+  interceptor_value (CORBA::Any *any) const
 {
   this->Insert_Policy::any_insert (any, this->x_);
 }
@@ -73,8 +73,8 @@ template<typename S,
          typename S_forany,
          typename Insert_Policy>
 void
-TAO::Inout_Fixed_Array_Argument_T<S,S_slice,S_forany,Insert_Policy>::interceptor_value (
-  CORBA::Any *any) const
+TAO::Inout_Fixed_Array_Argument_T<S,S_slice,S_forany,Insert_Policy>::
+  interceptor_value (CORBA::Any *any) const
 {
   this->Insert_Policy::any_insert (any, this->x_);
 }
@@ -89,8 +89,7 @@ template<typename S,
          typename Insert_Policy>
 CORBA::Boolean
 TAO::Out_Fixed_Array_Argument_T<S,S_slice,S_forany,Insert_Policy>::demarshal (
-    TAO_InputCDR & cdr
-  )
+    TAO_InputCDR & cdr)
 {
   return cdr >> this->x_;
 }
@@ -102,8 +101,8 @@ template<typename S,
          typename S_forany,
          typename Insert_Policy>
 void
-TAO::Out_Fixed_Array_Argument_T<S,S_slice,S_forany,Insert_Policy>::interceptor_value (
-  CORBA::Any *any) const
+TAO::Out_Fixed_Array_Argument_T<S,S_slice,S_forany,Insert_Policy>::
+  interceptor_value (CORBA::Any *any) const
 {
   this->Insert_Policy::any_insert (any, this->x_);
 }
@@ -119,9 +118,8 @@ template<typename S,
          typename S_tag,
          typename Insert_Policy>
 CORBA::Boolean
-TAO::Ret_Fixed_Array_Argument_T<S,S_slice,S_var,S_forany,S_tag,Insert_Policy>::demarshal (
-    TAO_InputCDR & cdr
-  )
+TAO::Ret_Fixed_Array_Argument_T<S,S_slice,S_var,S_forany,S_tag,Insert_Policy>::
+  demarshal (TAO_InputCDR & cdr)
 {
   typedef TAO::Array_Traits<S,S_slice,S_tag> ARRAY_TRAITS;
   S_slice * tmp_ptr = 0;
