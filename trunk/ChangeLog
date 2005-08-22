@@ -1,3 +1,21 @@
+Mon Aug 22 09:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/bmake.features
+        * bin/MakeProjectCreator/config/borland.features
+        * bin/MakeProjectCreator/config/em3.features
+        * bin/MakeProjectCreator/config/gnuace.features
+        * bin/MakeProjectCreator/config/vc6.features
+        * bin/MakeProjectCreator/config/vc71.features
+        * bin/MakeProjectCreator/config/vc8.features
+          New features file for each project type we ship in the release.
+          This files are read by MPC for the correct type when generating
+          makefiles.
+
+        * bin/make_release:
+          No need to generate multiple default.features file in the
+          release proces, this is now handled in the features file
+          per project type
+
 Mon Aug 22 08:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-unixware-7.1.0.udk.h:
