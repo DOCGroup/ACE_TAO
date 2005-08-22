@@ -53,6 +53,7 @@ namespace CORBA
 
   class ValueBase;
   class Exception;
+  class Environment;
 
   /**
    * @class Any
