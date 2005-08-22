@@ -86,6 +86,7 @@ optimize ?= 1
 debug ?= 1
 pipes ?= 1
 threads ?= 1
+exceptions ?= 1
 
 PLATFORM_XT_CPPFLAGS=
 PLATFORM_XT_LIBS=-lXm -lXt
@@ -105,9 +106,17 @@ ifeq ($(LYNXOS_MAJOR),4)
   PLATFORM_TK_LDFLAGS=
 endif
 
+ifeq ($(threads),1)
+  CFLAGS += -mthreads
+endif
+
+ifeq ($(shared_libs),1)
+  CFLAGS  += -mshared
+endif
+
 CC              = gcc
 CXX             = g++
-CFLAGS          += -mthreads -Wpointer-arith -Wall
+CFLAGS          += -Wpointer-arith -Wall
 CFLAGS          += -DACE_LYNXOS_MAJOR=$(LYNXOS_MAJOR) -DACE_LYNXOS_MINOR=$(LYNXOS_MINOR)
 DCFLAGS         += -g
 PIC             = -fPIC
