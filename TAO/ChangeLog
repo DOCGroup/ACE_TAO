@@ -1,3 +1,10 @@
+Mon Aug 22 18:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Pluggable/Pluggable.mpc:
+        * performance-tests/Memory/Single_Threaded/Memory_Growth.mpc:
+        * examples/Advanced/ch_3/Advanced_ch_3.mpc:
+          Updated to resolve link errors
+
 Mon Aug 22 18:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Array_VarOut_T.{h,inl}:
