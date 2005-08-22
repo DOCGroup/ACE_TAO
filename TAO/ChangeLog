@@ -1,3 +1,10 @@
+Mon Aug 22 15:46:29 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/ORB.h:
+
+	  Reordered include directives to work around g++ 4.0.x internal
+	  compiler error.
+
 Mon Aug 22 12:58:11 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/Concurrency_Service/Makefile.am:
