@@ -84,7 +84,7 @@ TAO::Inout_Fixed_Array_SArgument_T<S,
                                    Insert_Policy>::interceptor_value (
     CORBA::Any *any) const
 {
-  this->Insert_Policy::any_insert (any, S_forany (this->x_));
+  this->Insert_Policy::any_insert (any, S_forany (const_cast <S_slice *> (this->x_)));
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -117,7 +117,7 @@ TAO::Out_Fixed_Array_SArgument_T<S,
                                  Insert_Policy>::interceptor_value (
     CORBA::Any *any) const
 {
-  this->Insert_Policy::any_insert (any, S_forany (this->x_));
+  this->Insert_Policy::any_insert (any, S_forany (const_cast <S_slice *> (this->x_)));
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
