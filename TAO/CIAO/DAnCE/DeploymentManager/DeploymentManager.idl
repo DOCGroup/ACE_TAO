@@ -1,0 +1,30 @@
+/**
+ * @file DeploymentManager.idl
+ * @author Will Otte <wotte@dre.vanderbilt.edu>
+ * @author Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
+ *
+ * $Id$
+ */
+
+#include "Components.idl"
+#include "Deployment_Data.idl"
+
+module CIAO
+{
+  module RACE
+  {
+    interface Dynamic_Deployment
+    {
+      void generate_deployment (in ::Deployment::DeploymentPlan plan);
+    };
+    
+    component AllocationManager supports Dynamic_Deployment
+    {
+      attribute string em_ior;
+    };
+    
+    home AllocationManagerHome manages AllocationManager
+    {
+    };
+  };
+};

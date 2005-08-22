@@ -1,3 +1,16 @@
+Mon Aug 22 10:59:18 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/DeploymentManager/DeploymentManager.cidl
+	* DAnCE/DeploymentManager/DeploymentManager.idl
+	* DAnCE/DeploymentManager/DeploymentManager.mpc
+	* DAnCE/DeploymentManager/DeploymentManager_Impl.cpp
+	* DAnCE/DeploymentManager/DeploymentManager_Impl.h
+	* DAnCE/DeploymentManager/DeploymentManager_exec_export.h
+	* DAnCE/DeploymentManager/DeploymentManager_stub_export.h
+	* DAnCE/DeploymentManager/DeploymentManager_svnt_export.h
+
+	Preliminary skeleton for the DeploymentManager.
+	
 Fri Aug 19 07:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Config_Handlers/Any_Handler.cpp:
