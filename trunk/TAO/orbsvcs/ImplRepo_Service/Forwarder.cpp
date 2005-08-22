@@ -18,7 +18,7 @@
 #include "tao/Object_KeyC.h"
 #include "tao/ORB_Constants.h"
 
-#include "tao/PortableServer/POA_Current_Impl.h"
+#include "tao/PortableServer/PortableServer.h"
 
 /**
 * This constructor takes in orb and ImR_Locator_i pointers to store for later
