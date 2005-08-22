@@ -100,6 +100,9 @@
 // There are too many instances of this warning to fix it right now.
 // Maybe in the future.
 
+// C++ Exception Specification ignored
+#pragma warning(disable:4290)
+
 // 'this' : used in base member initializer list
 #pragma warning(disable:4355)
 
