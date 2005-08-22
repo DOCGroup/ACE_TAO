@@ -2,6 +2,7 @@
 // $Id$
 
 project(*server): taoserver {
+  idlflags += -Sa -St
   Source_Files {
     Memory_Growth.cpp
     server.cpp
