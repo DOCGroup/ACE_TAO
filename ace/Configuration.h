@@ -385,7 +385,7 @@ public:
    * contents of the object on the right hand side.
    * Returns 0 (False) if they are equal and 1 (True) if they are not equal
    */
-  bool operator!=(const ACE_Configuration& rhs) const {return !(*this == rhs);}
+  bool operator!=(const ACE_Configuration& rhs) const;
 
   /**
    *    *  Represents the "NULL" string to simplify the internal logic.

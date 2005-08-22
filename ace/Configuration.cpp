@@ -486,6 +486,11 @@ ACE_Configuration::operator== (const ACE_Configuration& rhs) const
   return rc;
 }
 
+bool
+ACE_Configuration::operator!= (const ACE_Configuration& rhs) const
+{
+  return !(*this == rhs);
+}
 
 //////////////////////////////////////////////////////////////////////////////
 
