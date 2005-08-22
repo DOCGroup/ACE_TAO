@@ -7,7 +7,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/DynamicInterface/Dynamic_Implementation.h"
-#include "tao/PI_Server/PI_Server.h"
+#include "tao/PortableServer/PortableServer.h"
 #include "ace/Singleton.h"
 #include "ace/Malloc.h"
 

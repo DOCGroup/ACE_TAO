@@ -3,7 +3,6 @@
 #include "ace/OS_NS_sys_time.h"
 #include "PushConsumer.h"
 #include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
-#include "tao/PI_Server/PI_Server.h"
 #include <stdio.h>
 
 ACE_RCSID (FtRtEvent,

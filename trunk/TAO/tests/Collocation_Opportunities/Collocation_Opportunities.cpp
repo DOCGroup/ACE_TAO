@@ -3,8 +3,7 @@
 #include "testS.h"
 #include "ace/Task.h"
 #include "tao/PortableServer/Object_Adapter.h"
-#include "tao/PI_Server/PI_Server.h"
-#include "tao/PI_Server/POA_Current.h"
+#include "tao/PortableServer/POA_Current.h"
 #include "tao/PortableServer/POA_Current_Impl.h"
 
 ACE_RCSID(Collocation_Opportunities, Collocation_Opportunities, "$Id$")

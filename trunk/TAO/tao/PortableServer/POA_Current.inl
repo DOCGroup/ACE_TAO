@@ -2,8 +2,6 @@
 //
 // $Id$
 
-#include "tao/SystemException.h"
-
 namespace TAO
 {
   namespace Portable_Server

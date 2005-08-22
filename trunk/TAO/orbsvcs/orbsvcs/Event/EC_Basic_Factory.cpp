@@ -257,8 +257,3 @@ TAO_EC_Basic_Factory::destroy_supplier_control (TAO_EC_SupplierControl* x)
   delete x;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

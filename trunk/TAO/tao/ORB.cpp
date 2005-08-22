@@ -941,18 +941,6 @@ CORBA::ORB::create_event_tc (
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 CORBA::Object_ptr
-CORBA::ORB::resolve_root_poa (ACE_ENV_SINGLE_ARG_DECL)
-{
-  return this->orb_core_->root_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
-}
-
-CORBA::Object_ptr
-CORBA::ORB::resolve_poa_current (void)
-{
-  return this->orb_core_->poa_current ();
-}
-
-CORBA::Object_ptr
 CORBA::ORB::resolve_policy_manager (void)
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
@@ -1094,12 +1082,13 @@ CORBA::ORB::resolve_initial_references (const char *name,
 
   if (ACE_OS::strcmp (name, TAO_OBJID_ROOTPOA) == 0)
     {
-      result = this->resolve_root_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
+      result = this->orb_core ()->root_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
   else if (ACE_OS::strcmp (name, TAO_OBJID_POACURRENT) == 0)
     {
-      result = this->resolve_poa_current ();
+      result = this->orb_core ()->resolve_poa_current (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
   else if (ACE_OS::strcmp (name, TAO_OBJID_POLICYMANAGER) == 0)
     {
