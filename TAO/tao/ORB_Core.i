@@ -559,17 +559,16 @@ TAO_ORB_Core::policy_current (void)
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::poa_current (void)
+TAO_ORB_Core::resolve_poa_current (ACE_ENV_SINGLE_ARG_DECL)
 {
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
+                    CORBA::Object::_nil ());
+  if (CORBA::is_nil (this->poa_current_.in ()))
+    {
+      this->resolve_poa_current_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    }
   return CORBA::Object::_duplicate (this->poa_current_.in ());
-}
-
-ACE_INLINE void
-TAO_ORB_Core::poa_current (CORBA::Object_ptr current)
-{
-  ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
-  this->poa_current_ =
-    CORBA::Object::_duplicate (current);
 }
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)

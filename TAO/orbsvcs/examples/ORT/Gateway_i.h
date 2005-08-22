@@ -21,7 +21,6 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/DynamicInterface/Dynamic_Implementation.h"
 #include "tao/IFR_Client/IFR_Client_Adapter_Impl.h"
-#include "tao/PI_Server/PI_Server.h"
 
 class Gateway_i
   : public virtual PortableServer::DynamicImplementation

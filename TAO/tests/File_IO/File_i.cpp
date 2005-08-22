@@ -18,7 +18,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
-#include "tao/PI_Server/PI_Server.h"
 
 ACE_RCSID(Default_Servant, File_i, "File_i.cpp,v 1.14 2001/03/04 19:27:53 irfan Exp")
 

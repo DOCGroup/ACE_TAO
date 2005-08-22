@@ -65,7 +65,7 @@ project(ImR_Activator) : orbsvcslib, conv_lib, acexml, minimum_corba, valuetype,
   }
 }
 
-project(ImR_Locator) : orbsvcslib, conv_lib, minimum_corba, iortable, portableserver, messaging, svc_utils, acexml, pi_server, imr_client {
+project(ImR_Locator) : orbsvcslib, conv_lib, minimum_corba, iortable, portableserver, messaging, svc_utils, acexml, imr_client {
   sharedname   = TAO_ImR_Locator
   dynamicflags = LOCATOR_BUILD_DLL
   after       += ImR_Locator_IDL ImR_Activator_IDL

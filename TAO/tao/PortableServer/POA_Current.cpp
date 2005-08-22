@@ -2,7 +2,7 @@
 
 // -- PortableServer Include --
 #include "POA_Current.h"
-#include "tao/PortableServer/POA_Current_Impl.h"
+#include "POA_Current_Impl.h"
 
 // -- TAO Include --
 #include "tao/TSS_Resources.h"
@@ -11,7 +11,7 @@
 # include "POA_Current.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (PI_Server,
+ACE_RCSID (PortableServer,
            POA_Current,
            "$Id$")
 

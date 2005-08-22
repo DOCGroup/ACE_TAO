@@ -572,7 +572,7 @@ operator<< (TAO_OutputCDR &strm,
   return CORBA::ValueBase::_tao_marshal (
              strm,
              const_cast<CORBA::ValueBase *> (_tao_valuetype),
-             (ptrdiff_t) &CORBA::ValueBase::_downcast
+             reinterpret_cast<ptrdiff_t> (&CORBA::ValueBase::_downcast)
            );
 }
 

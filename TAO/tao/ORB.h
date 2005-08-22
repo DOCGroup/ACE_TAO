@@ -560,9 +560,6 @@ namespace CORBA
     CORBA::Policy_ptr _create_policy (CORBA::PolicyType type
                                       ACE_ENV_ARG_DECL);
 
-    /// Resolve the POA.
-    CORBA::Object_ptr resolve_root_poa (ACE_ENV_SINGLE_ARG_DECL);
-
     // Reference counting...
     CORBA::ULong _incr_refcnt (void);
     CORBA::ULong _decr_refcnt (void);
@@ -606,9 +603,6 @@ namespace CORBA
      * through the reference counting mechanism.
      */
     ~ORB (void);
-
-    /// Resolve the POA current.
-    CORBA::Object_ptr resolve_poa_current (void);
 
     /// Resolve the Policy Manager for this ORB.
     CORBA::Object_ptr resolve_policy_manager (void);
