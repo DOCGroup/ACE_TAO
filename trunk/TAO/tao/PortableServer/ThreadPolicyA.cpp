@@ -26,6 +26,9 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "ThreadPolicyA.h"
+
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
@@ -36,8 +39,6 @@
 #include "tao/AnyTypeCode/Any_Impl_T.h"
 #include "tao/AnyTypeCode/Any_Basic_Impl_T.h"
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/enum_typecode.cpp:34
 
@@ -45,7 +46,7 @@ static char const * const _tao_enumerators_PortableServer_ThreadPolicyValue[] =
   {
     "ORB_CTRL_MODEL",
     "SINGLE_THREAD_MODEL"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -56,7 +57,7 @@ static TAO::TypeCode::Enum<char const *,
     "ThreadPolicyValue",
     _tao_enumerators_PortableServer_ThreadPolicyValue,
     2);
-  
+
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_ThreadPolicyValue =
@@ -74,7 +75,7 @@ static TAO::TypeCode::Objref<char const *,
     CORBA::tk_local_interface,
     "IDL:omg.org/PortableServer/ThreadPolicy:2.3",
     "ThreadPolicy");
-  
+
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_ThreadPolicy =
@@ -107,7 +108,7 @@ CORBA::Boolean operator>>= (
     TAO::Any_Basic_Impl_T<PortableServer::ThreadPolicyValue>::extract (
         _tao_any,
         PortableServer::_tc_ThreadPolicyValue,
-        _tao_elem 
+        _tao_elem
       );
 }
 

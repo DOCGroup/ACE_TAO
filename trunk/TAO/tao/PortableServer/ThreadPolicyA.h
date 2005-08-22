@@ -35,9 +35,10 @@
 
 #include "portableserver_export.h"
 #include "ThreadPolicyC.h"
-#include "tao/AnyTypeCode/PolicyA.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)
+
+#include "tao/AnyTypeCode/PolicyA.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:59
