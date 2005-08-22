@@ -61,10 +61,10 @@
 #include "tao/PortableServer/IdAssignmentPolicyC.h"
 #include "tao/PortableServer/IdUniquenessPolicyC.h"
 #include "tao/PortableServer/ImplicitActivationPolicyC.h"
-#include "tao/PortableServer/LifespanPolicyC.h"
 #include "tao/PortableServer/RequestProcessingPolicyC.h"
 #include "tao/PortableServer/ServantRetentionPolicyC.h"
 #include "tao/PortableServer/ThreadPolicyC.h"
+#include "tao/PortableServer/LifespanPolicyC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

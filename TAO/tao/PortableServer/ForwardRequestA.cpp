@@ -35,6 +35,8 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 // TAO extension - the virtual _type method.
 CORBA::TypeCode_ptr PortableServer::ForwardRequest::_tao_type (void) const
 {
@@ -47,7 +49,7 @@ CORBA::TypeCode_ptr PortableServer::ForwardRequest::_tao_type (void) const
 static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_PortableServer_ForwardRequest[] =
   {
     { "forward_reference", &CORBA::_tc_Object }
-    
+
   };
 static TAO::TypeCode::Struct<char const *,
                       CORBA::TypeCode_ptr const *,
@@ -59,18 +61,14 @@ static TAO::TypeCode::Struct<char const *,
     "ForwardRequest",
     _tao_fields_PortableServer_ForwardRequest,
     1);
-  
+
 namespace PortableServer
 {
   ::CORBA::TypeCode_ptr const _tc_ForwardRequest =
     &_tao_tc_PortableServer_ForwardRequest;
 }
 
-
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/any_op_cs.cpp:50
 
 namespace TAO
@@ -82,12 +80,12 @@ namespace TAO
     )
   {
     CORBA::String_var id;
-    
+
     if (!(cdr >> id.out ()))
       {
         return false;
       }
-    
+
     ACE_TRY_NEW_ENV
       {
         this->value_->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);
@@ -98,7 +96,7 @@ namespace TAO
         return false;
       }
     ACE_ENDTRY;
-    
+
     return true;
   }
 }
