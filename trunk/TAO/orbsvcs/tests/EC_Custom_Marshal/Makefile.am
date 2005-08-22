@@ -6,56 +6,51 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake TAO.mwc
+## ../bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
-TAO_ROOT = $(top_srcdir)
-
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
+TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
 CLEANFILES =
 BUILT_SOURCES =
 
+## Makefile.ECM_Consumer.am
+
 if BUILD_CORBA_MESSAGING
 
 BUILT_SOURCES += \
-  dataS_T.inl \
-  dataC.inl \
-  dataS.inl \
-  dataC.h \
-  dataS.h \
-  dataS_T.h \
   dataC.cpp \
+  dataC.h \
+  dataC.inl \
   dataS.cpp \
-  dataS_T.cpp
+  dataS.h \
+  dataS.inl \
+  dataS_T.cpp \
+  dataS_T.h \
+  dataS_T.inl
 
 CLEANFILES += \
   data-stamp \
-  dataS_T.inl \
-  dataC.inl \
-  dataS.inl \
-  dataC.h \
-  dataS.h \
-  dataS_T.h \
   dataC.cpp \
+  dataC.h \
+  dataC.inl \
   dataS.cpp \
-  dataS_T.cpp
+  dataS.h \
+  dataS.inl \
+  dataS_T.cpp \
+  dataS_T.h \
+  dataS_T.inl
 
-dataS_T.inl dataC.inl dataS.inl dataC.h dataS.h dataS_T.h dataC.cpp dataS.cpp dataS_T.cpp: data-stamp
+dataC.cpp dataC.h dataC.inl dataS.cpp dataS.h dataS.inl dataS_T.cpp dataS_T.h dataS_T.inl: data-stamp
 
 data-stamp: $(srcdir)/data.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/data.idl
 	@touch $@
-
-endif
-
-## Makefile.ECM_Consumer.am
-
-if BUILD_CORBA_MESSAGING
 
 noinst_PROGRAMS += ECM_Consumer
 
@@ -75,9 +70,9 @@ ECM_Consumer_SOURCES = \
   ECM_Consumer.h \
   ECM_Data.h \
   dataC.h \
+  dataC.inl \
   dataS.h \
   dataS_T.h \
-  dataC.inl \
   dataS_T.inl
 
 ECM_Consumer_LDADD = \
@@ -88,8 +83,11 @@ ECM_Consumer_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -98,6 +96,35 @@ endif BUILD_CORBA_MESSAGING
 ## Makefile.ECM_Supplier.am
 
 if BUILD_CORBA_MESSAGING
+
+BUILT_SOURCES += \
+  dataC.cpp \
+  dataC.h \
+  dataC.inl \
+  dataS.cpp \
+  dataS.h \
+  dataS.inl \
+  dataS_T.cpp \
+  dataS_T.h \
+  dataS_T.inl
+
+CLEANFILES += \
+  data-stamp \
+  dataC.cpp \
+  dataC.h \
+  dataC.inl \
+  dataS.cpp \
+  dataS.h \
+  dataS.inl \
+  dataS_T.cpp \
+  dataS_T.h \
+  dataS_T.inl
+
+dataC.cpp dataC.h dataC.inl dataS.cpp dataS.h dataS.inl dataS_T.cpp dataS_T.h dataS_T.inl: data-stamp
+
+data-stamp: $(srcdir)/data.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/data.idl
+	@touch $@
 
 noinst_PROGRAMS += ECM_Supplier
 
@@ -117,9 +144,9 @@ ECM_Supplier_SOURCES = \
   ECM_Data.h \
   ECM_Supplier.h \
   dataC.h \
+  dataC.inl \
   dataS.h \
   dataS_T.h \
-  dataC.inl \
   dataS_T.inl
 
 ECM_Supplier_LDADD = \
@@ -130,8 +157,11 @@ ECM_Supplier_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 

@@ -1,3 +1,48 @@
+Mon Aug 22 12:32:42 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile.am:
+	* orbsvcs/tests/AVStreams/Bidirectional_Flows/Makefile.am:
+	* orbsvcs/tests/AVStreams/Component_Switching/Makefile.am:
+	* orbsvcs/tests/AVStreams/Full_Profile/Makefile.am:
+	* orbsvcs/tests/AVStreams/Latency/Makefile.am:
+	* orbsvcs/tests/AVStreams/Modify_QoS/Makefile.am:
+	* orbsvcs/tests/AVStreams/Multicast/Makefile.am:
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile.am:
+	* orbsvcs/tests/AVStreams/Multiple_Flows/Makefile.am:
+	* orbsvcs/tests/AVStreams/Pluggable/Makefile.am:
+	* orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/Makefile.am:
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile.am:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile.am:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile.am:
+	* orbsvcs/tests/BiDir_CORBALOC/Makefile.am:
+	* orbsvcs/tests/Bug_1334_Regression/Makefile.am:
+	* orbsvcs/tests/Bug_1393_Regression/Makefile.am:
+	* orbsvcs/tests/Bug_1395_Regression/Makefile.am:
+	* orbsvcs/tests/Bug_1630_Regression/Makefile.am:
+	* orbsvcs/tests/Concurrency/Makefile.am:
+	* orbsvcs/tests/CosEvent/Basic/Makefile.am:
+	* orbsvcs/tests/CosEvent/lib/Makefile.am:
+	* orbsvcs/tests/EC_Custom_Marshal/Makefile.am:
+	* orbsvcs/tests/EC_MT_Mcast/Makefile.am:
+	* orbsvcs/tests/EC_Mcast/Makefile.am:
+	* orbsvcs/tests/EC_Multiple/Makefile.am:
+	* orbsvcs/tests/EC_Throughput/Makefile.am:
+	* orbsvcs/tests/Event/Basic/Makefile.am:
+	* orbsvcs/tests/Event/Mcast/Common/Makefile.am:
+	* orbsvcs/tests/Event/Mcast/Complex/Makefile.am:
+	* orbsvcs/tests/Event/Mcast/Simple/Makefile.am:
+	* orbsvcs/tests/Event/Mcast/Two_Way/Makefile.am:
+	* orbsvcs/tests/Event/Performance/Makefile.am:
+	* orbsvcs/tests/Event/lib/Makefile.am:
+
+	  Regenerated.
+
+	* orbsvcs/tests/EC_Custom_Marshal/EC_Custom_Marshal.mpc:
+
+          Add *_IDL projects for compiling *.idl files.  This eliminates
+          duplicate rules that would otherwise result when Makefile.am's
+          are aggregated in the automake build.
+
 Mon Aug 22 18:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Pluggable/Pluggable.mpc:
