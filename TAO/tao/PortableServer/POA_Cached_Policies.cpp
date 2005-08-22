@@ -23,13 +23,13 @@ namespace TAO
   namespace Portable_Server
   {
     Cached_Policies::Cached_Policies () :
-        thread_ (PortableServer::ORB_CTRL_MODEL),
-        lifespan_ (PortableServer::TRANSIENT),
-        id_uniqueness_ (PortableServer::UNIQUE_ID),
-        id_assignment_ (PortableServer::SYSTEM_ID),
-        implicit_activation_ (PortableServer::NO_IMPLICIT_ACTIVATION),
-        servant_retention_ (PortableServer::RETAIN),
-        request_processing_ (PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY),
+        thread_ (::PortableServer::ORB_CTRL_MODEL),
+        lifespan_ (::PortableServer::TRANSIENT),
+        id_uniqueness_ (::PortableServer::UNIQUE_ID),
+        id_assignment_ (::PortableServer::SYSTEM_ID),
+        implicit_activation_ (::PortableServer::NO_IMPLICIT_ACTIVATION),
+        servant_retention_ (::PortableServer::RETAIN),
+        request_processing_ (::PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY),
         priority_model_ (Cached_Policies::NOT_SPECIFIED),
         server_priority_ (TAO_INVALID_PRIORITY)
     {
@@ -61,9 +61,9 @@ namespace TAO
 
     #if (TAO_HAS_MINIMUM_POA == 0)
 
-      PortableServer::ThreadPolicy_var thread
-        = PortableServer::ThreadPolicy::_narrow (policy
-                                                 ACE_ENV_ARG_PARAMETER);
+      ::PortableServer::ThreadPolicy_var thread
+        = ::PortableServer::ThreadPolicy::_narrow (policy
+                                                   ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (!CORBA::is_nil (thread.in ()))
@@ -76,9 +76,9 @@ namespace TAO
 
     #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-      PortableServer::LifespanPolicy_var lifespan
-        = PortableServer::LifespanPolicy::_narrow (policy
-                                                   ACE_ENV_ARG_PARAMETER);
+      ::PortableServer::LifespanPolicy_var lifespan
+        = ::PortableServer::LifespanPolicy::_narrow (policy
+                                                     ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (!CORBA::is_nil (lifespan.in ()))
@@ -89,9 +89,9 @@ namespace TAO
           return;
         }
 
-      PortableServer::IdUniquenessPolicy_var id_uniqueness
-        = PortableServer::IdUniquenessPolicy::_narrow (policy
-                                                       ACE_ENV_ARG_PARAMETER);
+      ::PortableServer::IdUniquenessPolicy_var id_uniqueness
+        = ::PortableServer::IdUniquenessPolicy::_narrow (policy
+                                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (!CORBA::is_nil (id_uniqueness.in ()))
@@ -102,9 +102,9 @@ namespace TAO
           return;
         }
 
-      PortableServer::IdAssignmentPolicy_var id_assignment
-        = PortableServer::IdAssignmentPolicy::_narrow (policy
-                                                       ACE_ENV_ARG_PARAMETER);
+      ::PortableServer::IdAssignmentPolicy_var id_assignment
+        = ::PortableServer::IdAssignmentPolicy::_narrow (policy
+                                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (!CORBA::is_nil (id_assignment.in ()))
@@ -117,9 +117,9 @@ namespace TAO
 
     #if (TAO_HAS_MINIMUM_POA == 0)
 
-      PortableServer::ImplicitActivationPolicy_var implicit_activation
-        = PortableServer::ImplicitActivationPolicy::_narrow (policy
-                                                             ACE_ENV_ARG_PARAMETER);
+      ::PortableServer::ImplicitActivationPolicy_var implicit_activation
+        = ::PortableServer::ImplicitActivationPolicy::_narrow (policy
+                                                               ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (!CORBA::is_nil (implicit_activation.in ()))
@@ -130,9 +130,9 @@ namespace TAO
           return;
         }
 
-      PortableServer::ServantRetentionPolicy_var servant_retention
-        = PortableServer::ServantRetentionPolicy::_narrow (policy
-                                                           ACE_ENV_ARG_PARAMETER);
+      ::PortableServer::ServantRetentionPolicy_var servant_retention
+        = ::PortableServer::ServantRetentionPolicy::_narrow (policy
+                                                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (!CORBA::is_nil (servant_retention.in ()))
@@ -143,9 +143,9 @@ namespace TAO
           return;
         }
 
-      PortableServer::RequestProcessingPolicy_var request_processing
-        = PortableServer::RequestProcessingPolicy::_narrow (policy
-                                                            ACE_ENV_ARG_PARAMETER);
+      ::PortableServer::RequestProcessingPolicy_var request_processing
+        = ::PortableServer::RequestProcessingPolicy::_narrow (policy
+                                                              ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (!CORBA::is_nil (request_processing.in ()))

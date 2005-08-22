@@ -2,14 +2,6 @@
 
 #include "Active_Policy_Strategies.h"
 #include "POA_Cached_Policies.h"
-#include "IdAssignmentPolicyC.h"
-#include "IdUniquenessPolicyC.h"
-#include "ImplicitActivationPolicyC.h"
-#include "LifespanPolicyC.h"
-#include "RequestProcessingPolicyC.h"
-#include "ServantRetentionPolicyC.h"
-#include "ThreadPolicyC.h"
-#include "ServantRetentionPolicyC.h"
 
 #include "ThreadStrategy.h"
 #include "ThreadStrategyFactory.h"
@@ -25,6 +17,15 @@
 #include "ImplicitActivationStrategyFactory.h"
 #include "ServantRetentionStrategy.h"
 #include "ServantRetentionStrategyFactory.h"
+
+#include "IdAssignmentPolicyC.h"
+#include "IdUniquenessPolicyC.h"
+#include "ImplicitActivationPolicyC.h"
+#include "LifespanPolicyC.h"
+#include "RequestProcessingPolicyC.h"
+#include "ServantRetentionPolicyC.h"
+#include "ThreadPolicyC.h"
+#include "ServantRetentionPolicyC.h"
 
 #include "ace/Dynamic_Service.h"
 
