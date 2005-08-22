@@ -1315,7 +1315,7 @@ namespace
 
 // ----------------------------------------------------------------
 
-bool
+CORBA::Boolean
 operator>> (TAO_InputCDR & cdr,
             CORBA::TypeCode_ptr & tc)
 {
