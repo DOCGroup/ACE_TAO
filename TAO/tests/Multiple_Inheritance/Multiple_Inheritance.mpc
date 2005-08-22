@@ -1,13 +1,13 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoserver,utils {
+project(*Server): taoserver, utils {
   Source_Files {
     server.cpp
   }
 }
 
-project(*Client): taoclient {
+project(*Client): taoclient, anytypecode {
   Source_Files {
     Multiple_InheritanceC.cpp
     client.cpp
