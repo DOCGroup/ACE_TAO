@@ -91,16 +91,16 @@ project : taolib, core {
   Template_Files {
     AnyTypeCode/*_T.cpp
     AnyTypeCode/Alias_TypeCode.cpp
-    AnyTypecode/Enum_TypeCode.cpp
-    AnyTypecode/Fixed_TypeCode.cpp
-    AnyTypecode/Objref_TypeCode.cpp
-    AnyTypecode/Recursive_Type_TypeCode.cpp
-    AnyTypecode/Sequence_TypeCode.cpp
-    AnyTypecode/String_TypeCode.cpp
-    AnyTypecode/Struct_TypeCode.cpp
-    AnyTypecode/TypeCode_Base_Attributes.cpp
-    AnyTypecode/Union_TypeCode.cpp
-    AnyTypecode/Value_TypeCode.cpp
+    AnyTypeCode/Enum_TypeCode.cpp
+    AnyTypeCode/Fixed_TypeCode.cpp
+    AnyTypeCode/Objref_TypeCode.cpp
+    AnyTypeCode/Recursive_Type_TypeCode.cpp
+    AnyTypeCode/Sequence_TypeCode.cpp
+    AnyTypeCode/String_TypeCode.cpp
+    AnyTypeCode/Struct_TypeCode.cpp
+    AnyTypeCode/TypeCode_Base_Attributes.cpp
+    AnyTypeCode/Union_TypeCode.cpp
+    AnyTypeCode/Value_TypeCode.cpp
   }
 
   Resource_Files {

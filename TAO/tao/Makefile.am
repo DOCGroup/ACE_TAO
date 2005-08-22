@@ -35,14 +35,7 @@ libTAO_la_SOURCES = \
   Adapter.cpp \
   Adapter_Factory.cpp \
   Adapter_Registry.cpp \
-  Alias_TypeCode_Static.cpp \
-  Any.cpp \
-  AnySeqA.cpp \
-  AnySeqC.cpp \
-  Any_Basic_Impl.cpp \
-  Any_Impl.cpp \
-  Any_SystemException.cpp \
-  Any_Unknown_IDL_Type.cpp \
+  AnyTypeCode_Adapter.cpp \
   Argument.cpp \
   Asynch_Queued_Message.cpp \
   Asynch_Reply_Dispatcher_Base.cpp \
@@ -51,19 +44,14 @@ libTAO_la_SOURCES = \
   Bind_Dispatcher_Guard.cpp \
   Block_Flushing_Strategy.cpp \
   Blocked_Connect_Strategy.cpp \
-  BooleanSeqA.cpp \
   BooleanSeqC.cpp \
-  BoundsA.cpp \
-  BoundsC.cpp \
   Buffering_Constraint_Policy.cpp \
   CDR.cpp \
-  CONV_FRAMEA.cpp \
   CONV_FRAMEC.cpp \
   CORBALOC_Parser.cpp \
   CORBANAME_Parser.cpp \
   CORBA_String.cpp \
   Cache_Entries.cpp \
-  CharSeqA.cpp \
   CharSeqC.cpp \
   Cleanup_Func_Registry.cpp \
   ClientRequestInterceptor_Adapter.cpp \
@@ -79,7 +67,6 @@ libTAO_la_SOURCES = \
   Connection_Handler.cpp \
   Connection_Purging_Strategy.cpp \
   Connector_Registry.cpp \
-  CurrentA.cpp \
   CurrentC.cpp \
   DLL_Parser.cpp \
   Default_Collocation_Resolver.cpp \
@@ -87,28 +74,18 @@ libTAO_la_SOURCES = \
   Default_Protocols_Hooks.cpp \
   Default_Stub_Factory.cpp \
   Default_Thread_Lane_Resources_Manager.cpp \
-  DomainA.cpp \
   DomainC.cpp \
-  DoubleSeqA.cpp \
   DoubleSeqC.cpp \
-  DynamicA.cpp \
-  DynamicC.cpp \
   Dynamic_Adapter.cpp \
-  Dynamic_ParameterA.cpp \
-  Dynamic_ParameterC.cpp \
-  Empty_Param_TypeCode.cpp \
   Endpoint.cpp \
   Endpoint_Selector_Factory.cpp \
-  Enum_TypeCode_Static.cpp \
   Environment.cpp \
   Exception.cpp \
   Exclusive_TMS.cpp \
   FILE_Parser.cpp \
   Fault_Tolerance_Service.cpp \
-  FloatSeqA.cpp \
   FloatSeqC.cpp \
   Flushing_Strategy.cpp \
-  GIOPA.cpp \
   GIOPC.cpp \
   GIOP_Message_Base.cpp \
   GIOP_Message_Generator_Parser.cpp \
@@ -123,27 +100,22 @@ libTAO_la_SOURCES = \
   GIOP_Utils.cpp \
   GUIResource_Factory.cpp \
   IFR_Client_Adapter.cpp \
-  IIOPA.cpp \
   IIOPC.cpp \
   IIOP_Acceptor.cpp \
   IIOP_Connection_Handler.cpp \
   IIOP_Connector.cpp \
   IIOP_Endpoint.cpp \
-  IIOP_EndpointsA.cpp \
   IIOP_EndpointsC.cpp \
   IIOP_Factory.cpp \
   IIOP_Lite_Factory.cpp \
   IIOP_Profile.cpp \
   IIOP_Transport.cpp \
   IOPC.cpp \
-  IOP_IORA.cpp \
   IOP_IORC.cpp \
   IORInterceptor_Adapter.cpp \
   IORInterceptor_Adapter_Factory.cpp \
   IOR_Parser.cpp \
   Incoming_Message_Queue.cpp \
-  InvalidSlotA.cpp \
-  InvalidSlotC.cpp \
   Invocation_Adapter.cpp \
   Invocation_Base.cpp \
   Invocation_Endpoint_Selectors.cpp \
@@ -164,21 +136,16 @@ libTAO_la_SOURCES = \
   LocalObject.cpp \
   LocateRequest_Invocation.cpp \
   LocateRequest_Invocation_Adapter.cpp \
-  LongDoubleSeqA.cpp \
   LongDoubleSeqC.cpp \
-  LongLongSeqA.cpp \
   LongLongSeqC.cpp \
-  LongSeqA.cpp \
   LongSeqC.cpp \
   MCAST_Parser.cpp \
   MProfile.cpp \
   Managed_Types.cpp \
-  Marshal.cpp \
-  Messaging_PolicyValueA.cpp \
   Messaging_PolicyValueC.cpp \
   Messaging_SyncScopeC.cpp \
   Muxed_TMS.cpp \
-  NVList.cpp \
+  NVList_Adapter.cpp \
   New_Leader_Generator.cpp \
   ORB.cpp \
   ORBInitializer_Registry.cpp \
@@ -188,35 +155,23 @@ libTAO_la_SOURCES = \
   ORB_Core_TSS_Resources.cpp \
   ORB_Table.cpp \
   Object.cpp \
-  ObjectIdListA.cpp \
   ObjectIdListC.cpp \
   ObjectKey_Table.cpp \
   Object_KeyC.cpp \
   Object_Loader.cpp \
   Object_Proxy_Broker.cpp \
   Object_Ref_Table.cpp \
-  Objref_TypeCode_Static.cpp \
-  OctetSeqA.cpp \
   OctetSeqC.cpp \
-  PICurrent.cpp \
-  PICurrentA.cpp \
-  PICurrentC.cpp \
-  PICurrent_Copy_Callback.cpp \
-  PICurrent_Impl.cpp \
-  PICurrent_Loader.cpp \
   PI_ForwardC.cpp \
-  ParameterModeA.cpp \
   ParameterModeC.cpp \
   Parser_Registry.cpp \
   Pluggable_Messaging.cpp \
   Pluggable_Messaging_Utils.cpp \
-  PolicyA.cpp \
   PolicyC.cpp \
   PolicyFactory_Registry_Adapter.cpp \
   PolicyFactory_Registry_Factory.cpp \
   Policy_Current.cpp \
   Policy_Current_Impl.cpp \
-  Policy_ForwardA.cpp \
   Policy_ForwardC.cpp \
   Policy_Manager.cpp \
   Policy_Set.cpp \
@@ -234,12 +189,10 @@ libTAO_la_SOURCES = \
   Remote_Invocation.cpp \
   Remote_Object_Proxy_Broker.cpp \
   Reply_Dispatcher.cpp \
-  RequestInfo_Util.cpp \
   Request_Dispatcher.cpp \
   Resource_Factory.cpp \
   Resume_Handle.cpp \
   Sequence.cpp \
-  Sequence_TypeCode_Static.cpp \
   ServerRequestInterceptor_Adapter.cpp \
   ServerRequestInterceptor_Adapter_Factory.cpp \
   Server_Strategy_Factory.cpp \
@@ -247,12 +200,8 @@ libTAO_la_SOURCES = \
   Service_Context.cpp \
   ServicesC.cpp \
   Services_Activate.cpp \
-  ShortSeqA.cpp \
   ShortSeqC.cpp \
-  StringSeqA.cpp \
   StringSeqC.cpp \
-  String_TypeCode_Static.cpp \
-  Struct_TypeCode_Static.cpp \
   Stub.cpp \
   Stub_Factory.cpp \
   Sync_Strategies.cpp \
@@ -260,8 +209,6 @@ libTAO_la_SOURCES = \
   Synch_Queued_Message.cpp \
   Synch_Reply_Dispatcher.cpp \
   SystemException.cpp \
-  SystemExceptionA.cpp \
-  TAOA.cpp \
   TAOC.cpp \
   TAO_Internal.cpp \
   TAO_Server_Request.cpp \
@@ -272,7 +219,6 @@ libTAO_la_SOURCES = \
   Thread_Lane_Resources.cpp \
   Thread_Lane_Resources_Manager.cpp \
   Thread_Per_Connection_Handler.cpp \
-  TimeBaseA.cpp \
   TimeBaseC.cpp \
   Transport.cpp \
   Transport_Acceptor.cpp \
@@ -281,37 +227,21 @@ libTAO_la_SOURCES = \
   Transport_Descriptor_Interface.cpp \
   Transport_Mux_Strategy.cpp \
   Transport_Timer.cpp \
-  True_RefCount_Policy.cpp \
-  TypeCode.cpp \
-  TypeCodeA.cpp \
   TypeCodeFactory_Adapter.cpp \
-  TypeCode_CDR_Extraction.cpp \
-  TypeCode_Constants.cpp \
   Typecode_typesC.cpp \
-  ULongLongSeqA.cpp \
   ULongLongSeqC.cpp \
-  ULongSeqA.cpp \
   ULongSeqC.cpp \
-  UShortSeqA.cpp \
   UShortSeqC.cpp \
-  Union_TypeCode_Static.cpp \
   UserException.cpp \
-  ValueModifierC.cpp \
-  Value_TypeCode_Static.cpp \
   Valuetype_Adapter.cpp \
-  VisibilityC.cpp \
-  WCharSeqA.cpp \
   WCharSeqC.cpp \
-  WStringSeqA.cpp \
   WStringSeqC.cpp \
   Wait_On_LF_No_Upcall.cpp \
   Wait_On_Leader_Follower.cpp \
   Wait_On_Reactor.cpp \
   Wait_On_Read.cpp \
   Wait_Strategy.cpp \
-  WrongTransactionA.cpp \
   WrongTransactionC.cpp \
-  append.cpp \
   debug.cpp \
   default_client.cpp \
   default_resource.cpp \
@@ -319,7 +249,6 @@ libTAO_la_SOURCES = \
   operation_details.cpp \
   orb_typesC.cpp \
   params.cpp \
-  skip.cpp \
   target_specification.cpp
 
 libTAO_la_LDFLAGS = \
@@ -338,37 +267,8 @@ nobase_include_HEADERS = \
   Adapter.h \
   Adapter_Factory.h \
   Adapter_Registry.h \
-  Alias_TypeCode.cpp \
-  Alias_TypeCode.h \
-  Alias_TypeCode.inl \
-  Alias_TypeCode_Static.h \
-  Alias_TypeCode_Static.inl \
   Allocator.h \
-  Any.h \
-  Any.i \
-  AnySeq.pidl \
-  AnySeqC.h \
-  AnySeqS.h \
-  Any_Arg_Traits.h \
-  Any_Array_Impl_T.cpp \
-  Any_Array_Impl_T.h \
-  Any_Array_Impl_T.inl \
-  Any_Basic_Impl.h \
-  Any_Basic_Impl_T.cpp \
-  Any_Basic_Impl_T.h \
-  Any_Basic_Impl_T.inl \
-  Any_Dual_Impl_T.cpp \
-  Any_Dual_Impl_T.h \
-  Any_Dual_Impl_T.inl \
-  Any_Impl.h \
-  Any_Impl_T.cpp \
-  Any_Impl_T.h \
-  Any_Impl_T.inl \
-  Any_Special_Impl_T.cpp \
-  Any_Special_Impl_T.h \
-  Any_Special_Impl_T.inl \
-  Any_SystemException.h \
-  Any_Unknown_IDL_Type.h \
+  AnyTypeCode_Adapter.h \
   Arg_Traits_T.h \
   Argument.h \
   Array_VarOut_T.cpp \
@@ -396,8 +296,6 @@ nobase_include_HEADERS = \
   BooleanSeq.pidl \
   BooleanSeqC.h \
   BooleanSeqS.h \
-  Bounds.pidl \
-  BoundsC.h \
   Buffer_Allocator_T.cpp \
   Buffer_Allocator_T.h \
   Buffering_Constraint_Policy.h \
@@ -460,22 +358,10 @@ nobase_include_HEADERS = \
   DoubleSeq.pidl \
   DoubleSeqC.h \
   DoubleSeqS.h \
-  Dynamic.pidl \
-  DynamicC.h \
-  DynamicS.h \
   Dynamic_Adapter.h \
-  Dynamic_Parameter.pidl \
-  Dynamic_ParameterC.h \
-  Empty_Param_TypeCode.h \
-  Empty_Param_TypeCode.inl \
   Endpoint.h \
   Endpoint.i \
   Endpoint_Selector_Factory.h \
-  Enum_TypeCode.cpp \
-  Enum_TypeCode.h \
-  Enum_TypeCode.inl \
-  Enum_TypeCode_Static.h \
-  Enum_TypeCode_Static.inl \
   Environment.h \
   Environment.i \
   Exception.h \
@@ -492,9 +378,6 @@ nobase_include_HEADERS = \
   Fixed_Size_Argument_T.cpp \
   Fixed_Size_Argument_T.h \
   Fixed_Size_Argument_T.inl \
-  Fixed_TypeCode.cpp \
-  Fixed_TypeCode.h \
-  Fixed_TypeCode.inl \
   FloatSeq.pidl \
   FloatSeqC.h \
   FloatSeqS.h \
@@ -546,9 +429,6 @@ nobase_include_HEADERS = \
   Incoming_Message_Queue.inl \
   InterfaceDef.pidl \
   InvalidName.pidl \
-  InvalidSlot.pidl \
-  InvalidSlotC.h \
-  InvalidSlotS.h \
   Invocation_Adapter.h \
   Invocation_Adapter.inl \
   Invocation_Base.h \
@@ -596,17 +476,13 @@ nobase_include_HEADERS = \
   MProfile.i \
   Managed_Types.h \
   Managed_Types.i \
-  Marshal.h \
-  Marshal.i \
   Messaging_PolicyValue.pidl \
   Messaging_PolicyValueC.h \
   Messaging_SyncScope.pidl \
   Messaging_SyncScopeC.h \
   Muxed_TMS.h \
-  NVList.h \
-  NVList.i \
+  NVList_Adapter.h \
   New_Leader_Generator.h \
-  Null_RefCount_Policy.h \
   ORB.h \
   ORB.i \
   ORBInitializer_Registry.h \
@@ -635,25 +511,11 @@ nobase_include_HEADERS = \
   Object_Ref_Table.inl \
   Object_T.cpp \
   Object_T.h \
-  Objref_TypeCode.cpp \
-  Objref_TypeCode.h \
-  Objref_TypeCode.inl \
-  Objref_TypeCode_Static.h \
-  Objref_TypeCode_Static.inl \
   Objref_VarOut_T.cpp \
   Objref_VarOut_T.h \
   OctetSeq.pidl \
   OctetSeqC.h \
   OctetSeqS.h \
-  PICurrent.h \
-  PICurrent.inl \
-  PICurrent.pidl \
-  PICurrentC.h \
-  PICurrentS.h \
-  PICurrent_Copy_Callback.h \
-  PICurrent_Impl.h \
-  PICurrent_Impl.inl \
-  PICurrent_Loader.h \
   PI_Forward.pidl \
   PI_ForwardC.h \
   ParameterMode.pidl \
@@ -700,17 +562,12 @@ nobase_include_HEADERS = \
   Queued_Message.h \
   Reactive_Connect_Strategy.h \
   Reactive_Flushing_Strategy.h \
-  Recursive_Type_TypeCode.cpp \
-  Recursive_Type_TypeCode.h \
-  Recursive_Type_TypeCode.inl \
-  RefCount_Policy_Traits.h \
   Refcounted_ObjectKey.h \
   Refcounted_ObjectKey.inl \
   Remote_Invocation.h \
   Remote_Object_Proxy_Broker.h \
   Reply_Dispatcher.h \
   Reply_Dispatcher.i \
-  RequestInfo_Util.h \
   Request_Dispatcher.h \
   Resource_Factory.h \
   Resume_Handle.h \
@@ -726,11 +583,6 @@ nobase_include_HEADERS = \
   Sequence_T.cpp \
   Sequence_T.h \
   Sequence_T.i \
-  Sequence_TypeCode.cpp \
-  Sequence_TypeCode.h \
-  Sequence_TypeCode.inl \
-  Sequence_TypeCode_Static.h \
-  Sequence_TypeCode_Static.inl \
   ServerRequestInterceptor_Adapter.h \
   ServerRequestInterceptor_Adapter_Factory.h \
   Server_Strategy_Factory.h \
@@ -751,17 +603,6 @@ nobase_include_HEADERS = \
   StringSeq.pidl \
   StringSeqC.h \
   StringSeqS.h \
-  String_TypeCode.cpp \
-  String_TypeCode.h \
-  String_TypeCode.inl \
-  String_TypeCode_Static.h \
-  String_TypeCode_Static.inl \
-  String_TypeCode_Traits.h \
-  Struct_TypeCode.cpp \
-  Struct_TypeCode.h \
-  Struct_TypeCode.inl \
-  Struct_TypeCode_Static.h \
-  Struct_TypeCode_Static.inl \
   Stub.h \
   Stub.i \
   Stub_Factory.h \
@@ -784,7 +625,6 @@ nobase_include_HEADERS = \
   TAO_Singleton.inl \
   TAO_Singleton_Manager.h \
   TAO_Singleton_Manager.inl \
-  TC_Constants_Forward.h \
   TSS_Resources.h \
   Tagged_Components.h \
   Tagged_Components.i \
@@ -809,25 +649,7 @@ nobase_include_HEADERS = \
   Transport_Descriptor_Interface.inl \
   Transport_Mux_Strategy.h \
   Transport_Timer.h \
-  True_RefCount_Policy.h \
-  True_RefCount_Policy.inl \
-  TypeCode.h \
-  TypeCode.inl \
   TypeCodeFactory_Adapter.h \
-  TypeCode_Base_Attributes.cpp \
-  TypeCode_Base_Attributes.h \
-  TypeCode_Base_Attributes.inl \
-  TypeCode_CDR_Extraction.h \
-  TypeCode_Case.cpp \
-  TypeCode_Case.h \
-  TypeCode_Case.inl \
-  TypeCode_Case_T.cpp \
-  TypeCode_Case_T.h \
-  TypeCode_Case_T.inl \
-  TypeCode_Constants.h \
-  TypeCode_Struct_Field.h \
-  TypeCode_Traits.h \
-  TypeCode_Value_Field.h \
   Typecode_types.pidl \
   Typecode_typesC.h \
   Typecode_typesS.h \
@@ -844,21 +666,8 @@ nobase_include_HEADERS = \
   UShortSeq.pidl \
   UShortSeqC.h \
   UShortSeqS.h \
-  Union_TypeCode.cpp \
-  Union_TypeCode.h \
-  Union_TypeCode.inl \
-  Union_TypeCode_Static.h \
-  Union_TypeCode_Static.inl \
   UserException.h \
   UserException.inl \
-  ValueModifier.pidl \
-  ValueModifierC.h \
-  ValueModifierS.h \
-  Value_TypeCode.cpp \
-  Value_TypeCode.h \
-  Value_TypeCode.inl \
-  Value_TypeCode_Static.h \
-  Value_TypeCode_Static.inl \
   Valuetype_Adapter.h \
   VarOut_T.cpp \
   VarOut_T.h \
@@ -870,9 +679,6 @@ nobase_include_HEADERS = \
   Var_Size_Argument_T.h \
   Var_Size_Argument_T.inl \
   Version.h \
-  Visibility.pidl \
-  VisibilityC.h \
-  VisibilityS.h \
   WCharSeq.pidl \
   WCharSeqC.h \
   WCharSeqS.h \
@@ -923,6 +729,312 @@ EXTRA_DIST = \
   tao.rc
 
 
+## Makefile.Codeset.am
+
+lib_LTLIBRARIES += libTAO_Codeset.la
+
+libTAO_Codeset_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -DTAO_CODESET_BUILD_DLL
+
+libTAO_Codeset_la_SOURCES = \
+  Codeset/Codeset.cpp \
+  Codeset/Codeset_Descriptor.cpp \
+  Codeset/Codeset_Manager_Factory.cpp \
+  Codeset/Codeset_Manager_i.cpp \
+  Codeset/Codeset_Translator_Factory.cpp \
+  Codeset/UTF16_BOM_Factory.cpp \
+  Codeset/UTF16_BOM_Translator.cpp \
+  Codeset/UTF8_Latin1_Factory.cpp \
+  Codeset/UTF8_Latin1_Translator.cpp
+
+libTAO_Codeset_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_Codeset_la_LIBADD = \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  Codeset/Codeset.h \
+  Codeset/Codeset_Descriptor.h \
+  Codeset/Codeset_Manager_Factory.h \
+  Codeset/Codeset_Manager_i.h \
+  Codeset/Codeset_Translator_Factory.h \
+  Codeset/Codeset_Translator_Factory_T.cpp \
+  Codeset/Codeset_Translator_Factory_T.h \
+  Codeset/UTF16_BOM_Factory.h \
+  Codeset/UTF16_BOM_Translator.h \
+  Codeset/UTF8_Latin1_Factory.h \
+  Codeset/UTF8_Latin1_Translator.h \
+  Codeset/codeset_export.h
+
+## Makefile.AnyTypeCode.am
+
+lib_LTLIBRARIES += libTAO_AnyTypeCode.la
+
+libTAO_AnyTypeCode_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -DTAO_ANYTYPECODE_BUILD_DLL
+
+libTAO_AnyTypeCode_la_SOURCES = \
+  AnyTypeCode/Alias_TypeCode_Static.cpp \
+  AnyTypeCode/Any.cpp \
+  AnyTypeCode/AnySeqA.cpp \
+  AnyTypeCode/AnySeqC.cpp \
+  AnyTypeCode/AnyTypeCode_Adapter_Impl.cpp \
+  AnyTypeCode/Any_Basic_Impl.cpp \
+  AnyTypeCode/Any_Impl.cpp \
+  AnyTypeCode/Any_SystemException.cpp \
+  AnyTypeCode/Any_Unknown_IDL_Type.cpp \
+  AnyTypeCode/BooleanSeqA.cpp \
+  AnyTypeCode/BoundsA.cpp \
+  AnyTypeCode/BoundsC.cpp \
+  AnyTypeCode/CONV_FRAMEA.cpp \
+  AnyTypeCode/CharSeqA.cpp \
+  AnyTypeCode/CurrentA.cpp \
+  AnyTypeCode/DomainA.cpp \
+  AnyTypeCode/DoubleSeqA.cpp \
+  AnyTypeCode/DynamicA.cpp \
+  AnyTypeCode/DynamicC.cpp \
+  AnyTypeCode/Dynamic_ParameterA.cpp \
+  AnyTypeCode/Dynamic_ParameterC.cpp \
+  AnyTypeCode/Empty_Param_TypeCode.cpp \
+  AnyTypeCode/Enum_TypeCode_Static.cpp \
+  AnyTypeCode/ExceptionA.cpp \
+  AnyTypeCode/FloatSeqA.cpp \
+  AnyTypeCode/GIOPA.cpp \
+  AnyTypeCode/IIOPA.cpp \
+  AnyTypeCode/IIOP_EndpointsA.cpp \
+  AnyTypeCode/IOP_IORA.cpp \
+  AnyTypeCode/LongDoubleSeqA.cpp \
+  AnyTypeCode/LongLongSeqA.cpp \
+  AnyTypeCode/LongSeqA.cpp \
+  AnyTypeCode/Marshal.cpp \
+  AnyTypeCode/Messaging_PolicyValueA.cpp \
+  AnyTypeCode/NVList.cpp \
+  AnyTypeCode/NVList_Adapter_Impl.cpp \
+  AnyTypeCode/ObjectIdListA.cpp \
+  AnyTypeCode/Objref_TypeCode_Static.cpp \
+  AnyTypeCode/OctetSeqA.cpp \
+  AnyTypeCode/PI_ForwardA.cpp \
+  AnyTypeCode/ParameterModeA.cpp \
+  AnyTypeCode/PolicyA.cpp \
+  AnyTypeCode/Policy_ForwardA.cpp \
+  AnyTypeCode/PortableInterceptorA.cpp \
+  AnyTypeCode/Sequence_TypeCode_Static.cpp \
+  AnyTypeCode/ServicesA.cpp \
+  AnyTypeCode/ShortSeqA.cpp \
+  AnyTypeCode/StringSeqA.cpp \
+  AnyTypeCode/String_TypeCode_Static.cpp \
+  AnyTypeCode/Struct_TypeCode_Static.cpp \
+  AnyTypeCode/SystemExceptionA.cpp \
+  AnyTypeCode/TAOA.cpp \
+  AnyTypeCode/TimeBaseA.cpp \
+  AnyTypeCode/True_RefCount_Policy.cpp \
+  AnyTypeCode/TypeCode.cpp \
+  AnyTypeCode/TypeCodeA.cpp \
+  AnyTypeCode/TypeCode_CDR_Extraction.cpp \
+  AnyTypeCode/TypeCode_Constants.cpp \
+  AnyTypeCode/ULongLongSeqA.cpp \
+  AnyTypeCode/ULongSeqA.cpp \
+  AnyTypeCode/UShortSeqA.cpp \
+  AnyTypeCode/Union_TypeCode_Static.cpp \
+  AnyTypeCode/ValueModifierA.cpp \
+  AnyTypeCode/ValueModifierC.cpp \
+  AnyTypeCode/Value_TypeCode_Static.cpp \
+  AnyTypeCode/VisibilityA.cpp \
+  AnyTypeCode/VisibilityC.cpp \
+  AnyTypeCode/WCharSeqA.cpp \
+  AnyTypeCode/WStringSeqA.cpp \
+  AnyTypeCode/WrongTransactionA.cpp \
+  AnyTypeCode/append.cpp \
+  AnyTypeCode/orb_typesA.cpp \
+  AnyTypeCode/skip.cpp
+
+libTAO_AnyTypeCode_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_AnyTypeCode_la_LIBADD = \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  AnyTypeCode/Alias_TypeCode.cpp \
+  AnyTypeCode/Alias_TypeCode.h \
+  AnyTypeCode/Alias_TypeCode.inl \
+  AnyTypeCode/Alias_TypeCode_Static.h \
+  AnyTypeCode/Alias_TypeCode_Static.inl \
+  AnyTypeCode/Any.h \
+  AnyTypeCode/Any.inl \
+  AnyTypeCode/AnySeqA.h \
+  AnyTypeCode/AnySeqC.h \
+  AnyTypeCode/AnySeqS.h \
+  AnyTypeCode/AnyTypeCode_Adapter_Impl.h \
+  AnyTypeCode/AnyTypeCode_methods.h \
+  AnyTypeCode/Any_Arg_Traits.h \
+  AnyTypeCode/Any_Array_Impl_T.cpp \
+  AnyTypeCode/Any_Array_Impl_T.h \
+  AnyTypeCode/Any_Array_Impl_T.inl \
+  AnyTypeCode/Any_Basic_Impl.h \
+  AnyTypeCode/Any_Basic_Impl_T.cpp \
+  AnyTypeCode/Any_Basic_Impl_T.h \
+  AnyTypeCode/Any_Basic_Impl_T.inl \
+  AnyTypeCode/Any_Dual_Impl_T.cpp \
+  AnyTypeCode/Any_Dual_Impl_T.h \
+  AnyTypeCode/Any_Dual_Impl_T.inl \
+  AnyTypeCode/Any_Impl.h \
+  AnyTypeCode/Any_Impl_T.cpp \
+  AnyTypeCode/Any_Impl_T.h \
+  AnyTypeCode/Any_Impl_T.inl \
+  AnyTypeCode/Any_Special_Impl_T.cpp \
+  AnyTypeCode/Any_Special_Impl_T.h \
+  AnyTypeCode/Any_Special_Impl_T.inl \
+  AnyTypeCode/Any_SystemException.h \
+  AnyTypeCode/Any_Unknown_IDL_Type.h \
+  AnyTypeCode/BooleanSeqA.h \
+  AnyTypeCode/BoundsA.h \
+  AnyTypeCode/BoundsC.h \
+  AnyTypeCode/CONV_FRAMEA.h \
+  AnyTypeCode/CharSeqA.h \
+  AnyTypeCode/CurrentA.h \
+  AnyTypeCode/DomainA.h \
+  AnyTypeCode/DoubleSeqA.h \
+  AnyTypeCode/DynamicA.h \
+  AnyTypeCode/DynamicC.h \
+  AnyTypeCode/DynamicS.h \
+  AnyTypeCode/Dynamic_ParameterA.h \
+  AnyTypeCode/Dynamic_ParameterC.h \
+  AnyTypeCode/Empty_Param_TypeCode.h \
+  AnyTypeCode/Empty_Param_TypeCode.inl \
+  AnyTypeCode/Enum_TypeCode.h \
+  AnyTypeCode/Enum_TypeCode.inl \
+  AnyTypeCode/Enum_TypeCode_Static.h \
+  AnyTypeCode/Enum_TypeCode_Static.inl \
+  AnyTypeCode/ExceptionA.h \
+  AnyTypeCode/Fixed_TypeCode.h \
+  AnyTypeCode/Fixed_TypeCode.inl \
+  AnyTypeCode/FloatSeqA.h \
+  AnyTypeCode/GIOPA.h \
+  AnyTypeCode/IIOPA.h \
+  AnyTypeCode/IIOP_EndpointsA.h \
+  AnyTypeCode/IOPA.h \
+  AnyTypeCode/IOP_IORA.h \
+  AnyTypeCode/LongDoubleSeqA.h \
+  AnyTypeCode/LongLongSeqA.h \
+  AnyTypeCode/LongSeqA.h \
+  AnyTypeCode/Marshal.h \
+  AnyTypeCode/Marshal.inl \
+  AnyTypeCode/Messaging_PolicyValueA.h \
+  AnyTypeCode/Messaging_SyncScopeA.h \
+  AnyTypeCode/NVList.h \
+  AnyTypeCode/NVList.inl \
+  AnyTypeCode/NVList_Adapter_Impl.h \
+  AnyTypeCode/Null_RefCount_Policy.h \
+  AnyTypeCode/ObjectIdListA.h \
+  AnyTypeCode/Objref_TypeCode.h \
+  AnyTypeCode/Objref_TypeCode.inl \
+  AnyTypeCode/Objref_TypeCode_Static.h \
+  AnyTypeCode/Objref_TypeCode_Static.inl \
+  AnyTypeCode/OctetSeqA.h \
+  AnyTypeCode/PI_ForwardA.h \
+  AnyTypeCode/ParameterModeA.h \
+  AnyTypeCode/PolicyA.h \
+  AnyTypeCode/Policy_ForwardA.h \
+  AnyTypeCode/PortableInterceptorA.h \
+  AnyTypeCode/Recursive_Type_TypeCode.h \
+  AnyTypeCode/Recursive_Type_TypeCode.inl \
+  AnyTypeCode/RefCount_Policy_Traits.h \
+  AnyTypeCode/Sequence_TypeCode.h \
+  AnyTypeCode/Sequence_TypeCode.inl \
+  AnyTypeCode/Sequence_TypeCode_Static.h \
+  AnyTypeCode/Sequence_TypeCode_Static.inl \
+  AnyTypeCode/ServicesA.h \
+  AnyTypeCode/ShortSeqA.h \
+  AnyTypeCode/StringSeqA.h \
+  AnyTypeCode/String_TypeCode.h \
+  AnyTypeCode/String_TypeCode.inl \
+  AnyTypeCode/String_TypeCode_Static.h \
+  AnyTypeCode/String_TypeCode_Static.inl \
+  AnyTypeCode/String_TypeCode_Traits.h \
+  AnyTypeCode/Struct_TypeCode.h \
+  AnyTypeCode/Struct_TypeCode.inl \
+  AnyTypeCode/Struct_TypeCode_Static.h \
+  AnyTypeCode/Struct_TypeCode_Static.inl \
+  AnyTypeCode/SystemExceptionA.h \
+  AnyTypeCode/TAOA.h \
+  AnyTypeCode/TAO_AnyTypeCode_Export.h \
+  AnyTypeCode/TC_Constants_Forward.h \
+  AnyTypeCode/TimeBaseA.h \
+  AnyTypeCode/True_RefCount_Policy.h \
+  AnyTypeCode/True_RefCount_Policy.inl \
+  AnyTypeCode/TypeCode.h \
+  AnyTypeCode/TypeCode.inl \
+  AnyTypeCode/TypeCode_Base_Attributes.h \
+  AnyTypeCode/TypeCode_Base_Attributes.inl \
+  AnyTypeCode/TypeCode_CDR_Extraction.h \
+  AnyTypeCode/TypeCode_Case_Base_T.cpp \
+  AnyTypeCode/TypeCode_Case_Base_T.h \
+  AnyTypeCode/TypeCode_Case_Base_T.inl \
+  AnyTypeCode/TypeCode_Case_T.cpp \
+  AnyTypeCode/TypeCode_Case_T.h \
+  AnyTypeCode/TypeCode_Case_T.inl \
+  AnyTypeCode/TypeCode_Constants.h \
+  AnyTypeCode/TypeCode_Struct_Field.h \
+  AnyTypeCode/TypeCode_Traits.h \
+  AnyTypeCode/TypeCode_Value_Field.h \
+  AnyTypeCode/Typecode_typesA.h \
+  AnyTypeCode/ULongLongSeqA.h \
+  AnyTypeCode/ULongSeqA.h \
+  AnyTypeCode/UShortSeqA.h \
+  AnyTypeCode/Union_TypeCode.h \
+  AnyTypeCode/Union_TypeCode.inl \
+  AnyTypeCode/Union_TypeCode_Static.h \
+  AnyTypeCode/Union_TypeCode_Static.inl \
+  AnyTypeCode/ValueModifierA.h \
+  AnyTypeCode/ValueModifierC.h \
+  AnyTypeCode/ValueModifierS.h \
+  AnyTypeCode/Value_TypeCode.h \
+  AnyTypeCode/Value_TypeCode.inl \
+  AnyTypeCode/Value_TypeCode_Static.h \
+  AnyTypeCode/Value_TypeCode_Static.inl \
+  AnyTypeCode/VisibilityA.h \
+  AnyTypeCode/VisibilityC.h \
+  AnyTypeCode/VisibilityS.h \
+  AnyTypeCode/WCharSeqA.h \
+  AnyTypeCode/WStringSeqA.h \
+  AnyTypeCode/WrongTransactionA.h \
+  AnyTypeCode/orb_typesA.h \
+  AnyTypeCode/Enum_TypeCode.cpp \
+  AnyTypeCode/Fixed_TypeCode.cpp \
+  AnyTypeCode/Objref_TypeCode.cpp \
+  AnyTypeCode/Recursive_Type_TypeCode.cpp \
+  AnyTypeCode/Sequence_TypeCode.cpp \
+  AnyTypeCode/String_TypeCode.cpp \
+  AnyTypeCode/Struct_TypeCode.cpp \
+  AnyTypeCode/TypeCode_Base_Attributes.cpp \
+  AnyTypeCode/Union_TypeCode.cpp \
+  AnyTypeCode/Value_TypeCode.cpp
+
+pkgconfig_DATA += \
+  TAO_AnyTypeCode.pc
+
+CLEANFILES += \
+  TAO_AnyTypeCode.pc
+
+TAO_AnyTypeCode.pc: ${top_builddir}/config.status ${srcdir}/AnyTypeCode/TAO_AnyTypeCode.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/AnyTypeCode/TAO_AnyTypeCode.pc.in
+
+EXTRA_DIST += \
+  AnyTypeCode/TAO_AnyTypeCode.pc.in
+
+
 ## Makefile.CodecFactory.am
 
 lib_LTLIBRARIES += libTAO_CodecFactory.la
@@ -945,6 +1057,7 @@ libTAO_CodecFactory_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_CodecFactory_la_LIBADD = \
+  libTAO_AnyTypeCode.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -995,6 +1108,8 @@ libTAO_PI_la_SOURCES = \
   PI/ClientRequestInterceptor_Factory_Impl.cpp \
   PI/InterceptorA.cpp \
   PI/InterceptorC.cpp \
+  PI/InvalidSlotA.cpp \
+  PI/InvalidSlotC.cpp \
   PI/ORBInitInfo.cpp \
   PI/ORBInitInfoA.cpp \
   PI/ORBInitInfoC.cpp \
@@ -1002,6 +1117,12 @@ libTAO_PI_la_SOURCES = \
   PI/ORBInitializerC.cpp \
   PI/ORBInitializer_Registry_Impl.cpp \
   PI/PI.cpp \
+  PI/PICurrent.cpp \
+  PI/PICurrentA.cpp \
+  PI/PICurrentC.cpp \
+  PI/PICurrent_Copy_Callback.cpp \
+  PI/PICurrent_Impl.cpp \
+  PI/PICurrent_Loader.cpp \
   PI/PIForwardRequestA.cpp \
   PI/PIForwardRequestC.cpp \
   PI/PolicyFactoryA.cpp \
@@ -1009,13 +1130,15 @@ libTAO_PI_la_SOURCES = \
   PI/PolicyFactory_Loader.cpp \
   PI/PolicyFactory_Registry.cpp \
   PI/RequestInfoA.cpp \
-  PI/RequestInfoC.cpp
+  PI/RequestInfoC.cpp \
+  PI/RequestInfo_Util.cpp
 
 libTAO_PI_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_PI_la_LIBADD = \
   libTAO_CodecFactory.la \
+  libTAO_AnyTypeCode.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -1035,6 +1158,10 @@ nobase_include_HEADERS += \
   PI/InterceptorS.h \
   PI/Interceptor_List_T.cpp \
   PI/Interceptor_List_T.h \
+  PI/InvalidSlot.pidl \
+  PI/InvalidSlotA.h \
+  PI/InvalidSlotC.h \
+  PI/InvalidSlotS.h \
   PI/ORBInitInfo.h \
   PI/ORBInitInfo.inl \
   PI/ORBInitInfo.pidl \
@@ -1045,6 +1172,16 @@ nobase_include_HEADERS += \
   PI/ORBInitializerS.h \
   PI/ORBInitializer_Registry_Impl.h \
   PI/PI.h \
+  PI/PICurrent.h \
+  PI/PICurrent.inl \
+  PI/PICurrent.pidl \
+  PI/PICurrentA.h \
+  PI/PICurrentC.h \
+  PI/PICurrentS.h \
+  PI/PICurrent_Copy_Callback.h \
+  PI/PICurrent_Impl.h \
+  PI/PICurrent_Impl.inl \
+  PI/PICurrent_Loader.h \
   PI/PIForwardRequest.pidl \
   PI/PIForwardRequestC.h \
   PI/PIForwardRequestS.h \
@@ -1056,6 +1193,7 @@ nobase_include_HEADERS += \
   PI/RequestInfo.pidl \
   PI/RequestInfoC.h \
   PI/RequestInfoS.h \
+  PI/RequestInfo_Util.h \
   PI/pi_export.h
 
 pkgconfig_DATA += \
@@ -1096,6 +1234,7 @@ libTAO_BiDirGIOP_la_LDFLAGS = \
 libTAO_BiDirGIOP_la_LIBADD = \
   libTAO_PI.la \
   libTAO_CodecFactory.la \
+  libTAO_AnyTypeCode.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -1122,49 +1261,6 @@ EXTRA_DIST += \
   BiDir_GIOP/TAO_BiDirGIOP.pc.in \
   BiDir_GIOP/TAO_BiDir_GIOP.rc
 
-
-## Makefile.Codeset.am
-
-lib_LTLIBRARIES += libTAO_Codeset.la
-
-libTAO_Codeset_la_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -DTAO_CODESET_BUILD_DLL
-
-libTAO_Codeset_la_SOURCES = \
-  Codeset/Codeset.cpp \
-  Codeset/Codeset_Descriptor.cpp \
-  Codeset/Codeset_Manager_Factory.cpp \
-  Codeset/Codeset_Manager_i.cpp \
-  Codeset/Codeset_Translator_Factory.cpp \
-  Codeset/UTF16_BOM_Factory.cpp \
-  Codeset/UTF16_BOM_Translator.cpp \
-  Codeset/UTF8_Latin1_Factory.cpp \
-  Codeset/UTF8_Latin1_Translator.cpp
-
-libTAO_Codeset_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
-
-libTAO_Codeset_la_LIBADD = \
-  libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-nobase_include_HEADERS += \
-  Codeset/Codeset.h \
-  Codeset/Codeset_Descriptor.h \
-  Codeset/Codeset_Manager_Factory.h \
-  Codeset/Codeset_Manager_i.h \
-  Codeset/Codeset_Translator_Factory.h \
-  Codeset/Codeset_Translator_Factory_T.cpp \
-  Codeset/Codeset_Translator_Factory_T.h \
-  Codeset/UTF16_BOM_Factory.h \
-  Codeset/UTF16_BOM_Translator.h \
-  Codeset/UTF8_Latin1_Factory.h \
-  Codeset/UTF8_Latin1_Translator.h \
-  Codeset/codeset_export.h
 
 ## Makefile.PortableServer.am
 
@@ -1235,14 +1331,16 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/Operation_Table_Dynamic_Hash.cpp \
   PortableServer/Operation_Table_Linear_Search.cpp \
   PortableServer/Operation_Table_Perfect_Hash.cpp \
-  PortableServer/PICurrent_Guard.cpp \
   PortableServer/POAManager.cpp \
-  PortableServer/POAManagerA.cpp \
   PortableServer/POAManagerC.cpp \
   PortableServer/POA_Cached_Policies.cpp \
+  PortableServer/POA_Current.cpp \
+  PortableServer/POA_Current_Factory.cpp \
   PortableServer/POA_Current_Impl.cpp \
   PortableServer/POA_Guard.cpp \
   PortableServer/POA_Policy_Set.cpp \
+  PortableServer/PS_CurrentA.cpp \
+  PortableServer/PS_CurrentC.cpp \
   PortableServer/PS_ForwardA.cpp \
   PortableServer/PS_ForwardC.cpp \
   PortableServer/PolicyS.cpp \
@@ -1300,6 +1398,7 @@ libTAO_PortableServer_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_PortableServer_la_LIBADD = \
+  libTAO_AnyTypeCode.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -1310,6 +1409,7 @@ nobase_include_HEADERS += \
   PortableServer/Active_Policy_Strategies.h \
   PortableServer/Active_Policy_Strategies.inl \
   PortableServer/AdapterActivator.pidl \
+  PortableServer/AdapterActivatorA.h \
   PortableServer/AdapterActivatorC.h \
   PortableServer/Adapter_Activator.h \
   PortableServer/Any_SArg_Traits.h \
@@ -1334,9 +1434,11 @@ nobase_include_HEADERS += \
   PortableServer/Fixed_Size_SArgument_T.h \
   PortableServer/Fixed_Size_SArgument_T.inl \
   PortableServer/ForwardRequest.pidl \
+  PortableServer/ForwardRequestA.h \
   PortableServer/ForwardRequestC.h \
   PortableServer/IdAssignmentPolicy.h \
   PortableServer/IdAssignmentPolicy.pidl \
+  PortableServer/IdAssignmentPolicyA.h \
   PortableServer/IdAssignmentPolicyC.h \
   PortableServer/IdAssignmentStrategy.h \
   PortableServer/IdAssignmentStrategyFactory.h \
@@ -1345,6 +1447,7 @@ nobase_include_HEADERS += \
   PortableServer/IdAssignmentStrategyUser.h \
   PortableServer/IdUniquenessPolicy.h \
   PortableServer/IdUniquenessPolicy.pidl \
+  PortableServer/IdUniquenessPolicyA.h \
   PortableServer/IdUniquenessPolicyC.h \
   PortableServer/IdUniquenessStrategy.h \
   PortableServer/IdUniquenessStrategyFactory.h \
@@ -1355,6 +1458,7 @@ nobase_include_HEADERS += \
   PortableServer/ImR_Client_Adapter.h \
   PortableServer/ImplicitActivationPolicy.h \
   PortableServer/ImplicitActivationPolicy.pidl \
+  PortableServer/ImplicitActivationPolicyA.h \
   PortableServer/ImplicitActivationPolicyC.h \
   PortableServer/ImplicitActivationStrategy.h \
   PortableServer/ImplicitActivationStrategyExplicit.h \
@@ -1364,6 +1468,7 @@ nobase_include_HEADERS += \
   PortableServer/Key_Adapters.h \
   PortableServer/LifespanPolicy.h \
   PortableServer/LifespanPolicy.pidl \
+  PortableServer/LifespanPolicyA.h \
   PortableServer/LifespanPolicyC.h \
   PortableServer/LifespanStrategy.h \
   PortableServer/LifespanStrategyFactory.h \
@@ -1390,19 +1495,24 @@ nobase_include_HEADERS += \
   PortableServer/Operation_Table_Dynamic_Hash.h \
   PortableServer/Operation_Table_Linear_Search.h \
   PortableServer/Operation_Table_Perfect_Hash.h \
-  PortableServer/PICurrent_Guard.h \
   PortableServer/POAManager.h \
   PortableServer/POAManager.i \
   PortableServer/POAManager.pidl \
   PortableServer/POAManagerC.h \
   PortableServer/POA_Cached_Policies.h \
   PortableServer/POA_Cached_Policies.i \
+  PortableServer/POA_Current.h \
+  PortableServer/POA_Current.inl \
+  PortableServer/POA_Current_Factory.h \
   PortableServer/POA_Current_Impl.h \
   PortableServer/POA_Current_Impl.inl \
   PortableServer/POA_Guard.h \
   PortableServer/POA_Policy_Set.h \
   PortableServer/POA_Policy_Set.i \
+  PortableServer/PS_Current.pidl \
+  PortableServer/PS_CurrentC.h \
   PortableServer/PS_Forward.pidl \
+  PortableServer/PS_ForwardA.h \
   PortableServer/PS_ForwardC.h \
   PortableServer/PolicyS.h \
   PortableServer/PolicyS_T.cpp \
@@ -1416,12 +1526,14 @@ nobase_include_HEADERS += \
   PortableServer/PortableServer_Functions.h \
   PortableServer/PortableServer_WFunctions.h \
   PortableServer/PortableServer_include.pidl \
+  PortableServer/PortableServer_includeA.h \
   PortableServer/PortableServer_includeC.h \
   PortableServer/PortableServer_includeS.h \
   PortableServer/Regular_POA.h \
   PortableServer/Regular_POA.inl \
   PortableServer/RequestProcessingPolicy.h \
   PortableServer/RequestProcessingPolicy.pidl \
+  PortableServer/RequestProcessingPolicyA.h \
   PortableServer/RequestProcessingPolicyC.h \
   PortableServer/RequestProcessingStrategy.h \
   PortableServer/RequestProcessingStrategyAOMOnly.h \
@@ -1437,14 +1549,19 @@ nobase_include_HEADERS += \
   PortableServer/RequestProcessingStrategyServantManager.h \
   PortableServer/Root_POA.h \
   PortableServer/Root_POA.inl \
+  PortableServer/SArg_Traits_T.h \
   PortableServer/ServantActivator.pidl \
+  PortableServer/ServantActivatorA.h \
   PortableServer/ServantActivatorC.h \
   PortableServer/ServantLocator.pidl \
+  PortableServer/ServantLocatorA.h \
   PortableServer/ServantLocatorC.h \
   PortableServer/ServantManager.pidl \
+  PortableServer/ServantManagerA.h \
   PortableServer/ServantManagerC.h \
   PortableServer/ServantRetentionPolicy.h \
   PortableServer/ServantRetentionPolicy.pidl \
+  PortableServer/ServantRetentionPolicyA.h \
   PortableServer/ServantRetentionPolicyC.h \
   PortableServer/ServantRetentionStrategy.h \
   PortableServer/ServantRetentionStrategyFactory.h \
@@ -1466,6 +1583,7 @@ nobase_include_HEADERS += \
   PortableServer/StrategyFactory.h \
   PortableServer/ThreadPolicy.h \
   PortableServer/ThreadPolicy.pidl \
+  PortableServer/ThreadPolicyA.h \
   PortableServer/ThreadPolicyC.h \
   PortableServer/ThreadStrategy.h \
   PortableServer/ThreadStrategyFactory.h \
@@ -1516,36 +1634,37 @@ libTAO_IFR_Client_la_CPPFLAGS = \
   -DTAO_IFR_CLIENT_BUILD_DLL
 
 libTAO_IFR_Client_la_SOURCES = \
-  IFR_Client/IFR_BaseA.cpp \
   IFR_Client/IFR_BaseC.cpp \
-  IFR_Client/IFR_BasicA.cpp \
   IFR_Client/IFR_BasicC.cpp \
   IFR_Client/IFR_Client_Adapter_Impl.cpp \
-  IFR_Client/IFR_ComponentsA.cpp \
   IFR_Client/IFR_ComponentsC.cpp \
-  IFR_Client/IFR_ExtendedA.cpp \
   IFR_Client/IFR_ExtendedC.cpp
 
 libTAO_IFR_Client_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_IFR_Client_la_LIBADD = \
+  libTAO_AnyTypeCode.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
   IFR_Client/IFR_Base.pidl \
+  IFR_Client/IFR_BaseA.h \
   IFR_Client/IFR_BaseC.h \
   IFR_Client/IFR_BaseC.inl \
   IFR_Client/IFR_BaseS.h \
   IFR_Client/IFR_Basic.pidl \
+  IFR_Client/IFR_BasicA.h \
   IFR_Client/IFR_BasicC.h \
   IFR_Client/IFR_BasicC.inl \
   IFR_Client/IFR_Client_Adapter_Impl.h \
   IFR_Client/IFR_Components.pidl \
+  IFR_Client/IFR_ComponentsA.h \
   IFR_Client/IFR_ComponentsC.h \
   IFR_Client/IFR_ComponentsC.inl \
   IFR_Client/IFR_Extended.pidl \
+  IFR_Client/IFR_ExtendedA.h \
   IFR_Client/IFR_ExtendedC.h \
   IFR_Client/IFR_ExtendedC.inl \
   IFR_Client/ifr_client_export.h
@@ -1584,6 +1703,7 @@ libTAO_Domain_la_LDFLAGS = \
 libTAO_Domain_la_LIBADD = \
   libTAO_PortableServer.la \
   libTAO_IFR_Client.la \
+  libTAO_AnyTypeCode.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -1636,6 +1756,7 @@ libTAO_DynamicAny_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_DynamicAny_la_LIBADD = \
+  libTAO_AnyTypeCode.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -1681,7 +1802,6 @@ libTAO_Valuetype_la_CPPFLAGS = \
 libTAO_Valuetype_la_SOURCES = \
   Valuetype/AbstractBase.cpp \
   Valuetype/AbstractBase_Invocation_Adapter.cpp \
-  Valuetype/Seq_Tmplinst.cpp \
   Valuetype/StringValueC.cpp \
   Valuetype/ValueBase.cpp \
   Valuetype/ValueFactory.cpp \
@@ -1692,6 +1812,7 @@ libTAO_Valuetype_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_Valuetype_la_LIBADD = \
+  libTAO_AnyTypeCode.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -1774,6 +1895,7 @@ libTAO_Messaging_la_LIBADD = \
   libTAO_PI.la \
   libTAO_CodecFactory.la \
   libTAO_PortableServer.la \
+  libTAO_AnyTypeCode.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -1860,6 +1982,7 @@ libTAO_DynamicInterface_la_LIBADD = \
   libTAO_CodecFactory.la \
   libTAO_PortableServer.la \
   libTAO_Valuetype.la \
+  libTAO_AnyTypeCode.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -1926,6 +2049,7 @@ libTAO_ObjRefTemplate_la_LDFLAGS = \
 libTAO_ObjRefTemplate_la_LIBADD = \
   libTAO_PortableServer.la \
   libTAO_Valuetype.la \
+  libTAO_AnyTypeCode.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -1941,6 +2065,7 @@ nobase_include_HEADERS += \
   ObjRefTemplate/ObjectReferenceTemplateC.inl \
   ObjRefTemplate/ObjectReferenceTemplate_i.h \
   ObjRefTemplate/ObjectReferenceTemplate_include.pidl \
+  ObjRefTemplate/ObjectReferenceTemplate_includeA.h \
   ObjRefTemplate/ObjectReferenceTemplate_includeC.h \
   ObjRefTemplate/ObjectReferenceTemplate_includeS.h \
   ObjRefTemplate/ort_export.h
@@ -1986,6 +2111,7 @@ libTAO_IORInterceptor_la_LIBADD = \
   libTAO_ObjRefTemplate.la \
   libTAO_Valuetype.la \
   libTAO_PortableServer.la \
+  libTAO_AnyTypeCode.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -2036,6 +2162,7 @@ libTAO_IORManip_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_IORManip_la_LIBADD = \
+  libTAO_AnyTypeCode.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -2132,16 +2259,19 @@ libTAO_ImR_Client_la_LDFLAGS = \
 
 libTAO_ImR_Client_la_LIBADD = \
   libTAO_PortableServer.la \
+  libTAO_AnyTypeCode.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
   ImR_Client/ImR_Client.h \
   ImR_Client/ImplRepo.pidl \
+  ImR_Client/ImplRepoA.h \
   ImR_Client/ImplRepoC.h \
   ImR_Client/ImplRepoC.inl \
   ImR_Client/ImplRepoS.h \
   ImR_Client/ServerObject.pidl \
+  ImR_Client/ServerObjectA.h \
   ImR_Client/ServerObjectC.h \
   ImR_Client/ServerObjectC.inl \
   ImR_Client/ServerObjectS.h \
@@ -2174,11 +2304,9 @@ libTAO_PI_Server_la_CPPFLAGS = \
   -DTAO_PI_SERVER_BUILD_DLL
 
 libTAO_PI_Server_la_SOURCES = \
+  PI_Server/PICurrent_Guard.cpp \
   PI_Server/PI_Server.cpp \
   PI_Server/PI_Server_Loader.cpp \
-  PI_Server/POA_Current.cpp \
-  PI_Server/PS_CurrentA.cpp \
-  PI_Server/PS_CurrentC.cpp \
   PI_Server/PortableServer_ORBInitializer.cpp \
   PI_Server/PortableServer_PolicyFactory.cpp \
   PI_Server/ServerInterceptorAdapter.cpp \
@@ -2196,16 +2324,18 @@ libTAO_PI_Server_la_LIBADD = \
   libTAO_PortableServer.la \
   libTAO_PI.la \
   libTAO_CodecFactory.la \
+  libTAO_AnyTypeCode.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
+  PI_Server/PICurrent_Guard.h \
   PI_Server/PI_Server.h \
   PI_Server/PI_Server_Loader.h \
-  PI_Server/POA_Current.h \
-  PI_Server/POA_Current.inl \
-  PI_Server/PS_Current.pidl \
-  PI_Server/PS_CurrentC.h \
+  PI_Server/PI_Server_include.pidl \
+  PI_Server/PI_Server_includeA.h \
+  PI_Server/PI_Server_includeC.h \
+  PI_Server/PI_Server_includeS.h \
   PI_Server/Policy_Creator_T.h \
   PI_Server/PortableServer_ORBInitializer.h \
   PI_Server/PortableServer_PolicyFactory.h \
@@ -2284,6 +2414,7 @@ libTAO_RTCORBA_la_LDFLAGS = \
 libTAO_RTCORBA_la_LIBADD = \
   libTAO_PI.la \
   libTAO_CodecFactory.la \
+  libTAO_AnyTypeCode.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -2303,6 +2434,7 @@ nobase_include_HEADERS += \
   RTCORBA/RTCORBA.pidl \
   RTCORBA/RTCORBAC.h \
   RTCORBA/RTCORBA_include.pidl \
+  RTCORBA/RTCORBA_includeA.h \
   RTCORBA/RTCORBA_includeC.h \
   RTCORBA/RTCORBA_includeS.h \
   RTCORBA/RT_Current.h \
@@ -2375,6 +2507,7 @@ libTAO_RTPortableServer_la_LIBADD = \
   libTAO_RTCORBA.la \
   libTAO_PI.la \
   libTAO_CodecFactory.la \
+  libTAO_AnyTypeCode.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -2445,6 +2578,7 @@ libTAO_RTScheduler_la_LIBADD = \
   libTAO_RTCORBA.la \
   libTAO_PI.la \
   libTAO_CodecFactory.la \
+  libTAO_AnyTypeCode.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -2459,6 +2593,7 @@ nobase_include_HEADERS += \
   RTScheduling/RTScheduler_Manager.h \
   RTScheduling/RTScheduler_Manager.i \
   RTScheduling/RTScheduler_include.pidl \
+  RTScheduling/RTScheduler_includeA.h \
   RTScheduling/RTScheduler_includeC.h \
   RTScheduling/Request_Interceptor.h \
   RTScheduling/ThreadAction.h \
@@ -2575,6 +2710,7 @@ libTAO_Strategies_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_Strategies_la_LIBADD = \
+  libTAO_AnyTypeCode.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -2810,6 +2946,7 @@ libTAO_TypeCodeFactory_la_LDFLAGS = \
 
 libTAO_TypeCodeFactory_la_LIBADD = \
   libTAO_IFR_Client.la \
+  libTAO_AnyTypeCode.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -2866,6 +3003,7 @@ libTAO_Utils_la_LIBADD = \
   libTAO_PI.la \
   libTAO_CodecFactory.la \
   libTAO_PortableServer.la \
+  libTAO_AnyTypeCode.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 

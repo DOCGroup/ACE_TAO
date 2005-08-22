@@ -303,9 +303,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     DoubleSeqC.h
     DoubleSeqS.h
     Dynamic_Adapter.h
-    DynamicC.h
-    DynamicS.h
-    Dynamic_ParameterC.h
     Endpoint.h
     Endpoint_Selector_Factory.h
     Environment.h
@@ -379,7 +376,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     LongSeqS.h
     LRU_Connection_Purging_Strategy.h
     Managed_Types.h
-    Marshal.h
     MCAST_Parser.h
     Messaging_PolicyValueC.h
     Messaging_SyncScopeC.h
@@ -440,7 +436,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Queued_Message.h
     Reactive_Connect_Strategy.h
     Reactive_Flushing_Strategy.h
-    RefCount_Policy_Traits.h
     Refcounted_ObjectKey.h
     Remote_Invocation.h
     Remote_Object_Proxy_Broker.h
@@ -451,8 +446,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Seq_Out_T.h
     Sequence.h
     Sequence_T.h
-    Sequence_TypeCode.h
-    Sequence_TypeCode_Static.h
     Seq_Var_T.h
     Server_Strategy_Factory.h
     Service_Callbacks.h
@@ -483,7 +476,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     TAO_Singleton.h
     TAO_Singleton_Manager.h
     target_specification.h
-    TC_Constants_Forward.h
     Thread_Lane_Resources.h
     Thread_Lane_Resources_Manager.h
     Thread_Per_Connection_Handler.h
