@@ -41,6 +41,7 @@ LoadManager_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosLoadBalancing.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
   $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
@@ -50,6 +51,7 @@ LoadManager_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -77,17 +79,18 @@ LoadMonitor_CPPFLAGS = \
 
 LoadMonitor_SOURCES = \
   LoadMonitor.cpp \
-  Push_Handler.cpp \
   Monitor_Signal_Handler.cpp \
+  Push_Handler.cpp \
   Signal_Handler.cpp \
   Monitor_Signal_Handler.h \
-  Signal_Handler.h \
-  Push_Handler.h
+  Push_Handler.h \
+  Signal_Handler.h
 
 LoadMonitor_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosLoadBalancing.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
   $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
@@ -96,6 +99,7 @@ LoadMonitor_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
