@@ -1,3 +1,10 @@
+Mon Aug 22 18:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Array_VarOut_T.{h,inl}:
+        * tao/PortableServer/Fixed_Array_SArgument_T.cpp:
+        * tao/PortableServer/Var_Array_SArgument_T.{h,cpp}:
+          Changes to make msvc6 happy
+
 Mon Aug 22 10:43:11 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* TAO_IDL/Makefile.am:

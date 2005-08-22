@@ -9,7 +9,7 @@ project(*server): taoserver, utils {
   }
 }
 
-project(*client) : taoclient {
+project(*client) : taoclient, anytypecode {
   Source_Files {
     PP_TestC.cpp
     PP_Test_Client.cpp
