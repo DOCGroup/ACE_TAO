@@ -41,17 +41,19 @@
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:59
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 namespace PortableServer
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:49
-  
+
   extern TAO_PortableServer_Export ::CORBA::TypeCode_ptr const _tc_ServantRetentionPolicyValue;
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:49
-  
+
   extern TAO_PortableServer_Export ::CORBA::TypeCode_ptr const _tc_ServantRetentionPolicy;
 
 // TAO_IDL - Generated from
@@ -64,6 +66,8 @@ namespace PortableServer
 
 TAO_PortableServer_Export void operator<<= (CORBA::Any &, PortableServer::ServantRetentionPolicyValue);
 TAO_PortableServer_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableServer::ServantRetentionPolicyValue &);
+
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
 #include /**/ "ace/post.h"
 

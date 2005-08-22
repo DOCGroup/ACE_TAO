@@ -59,34 +59,34 @@
 
 namespace PortableServer
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_enum/enum_ch.cpp:57
-  
+
   enum ImplicitActivationPolicyValue
   {
     IMPLICIT_ACTIVATION,
     NO_IMPLICIT_ACTIVATION
   };
-  
+
 #if (TAO_HAS_MINIMUM_POA == 0)
   typedef ImplicitActivationPolicyValue &ImplicitActivationPolicyValue_out;
-  
+
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
 
 #if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY__VAR_OUT_CH_)
 #define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY__VAR_OUT_CH_
-  
+
   class ImplicitActivationPolicy;
   typedef ImplicitActivationPolicy *ImplicitActivationPolicy_ptr;
-  
+
   typedef
     TAO_Objref_Var_T<
         ImplicitActivationPolicy
       >
     ImplicitActivationPolicy_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         ImplicitActivationPolicy
@@ -94,93 +94,93 @@ namespace PortableServer
     ImplicitActivationPolicy_out;
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY_CH_)
 #define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY_CH_
-  
+
   class TAO_PortableServer_Export ImplicitActivationPolicy
     : public virtual ::CORBA::Policy
   {
   public:
     typedef ImplicitActivationPolicy_ptr _ptr_type;
     typedef ImplicitActivationPolicy_var _var_type;
-    
+
     // The static operations.
     static ImplicitActivationPolicy_ptr _duplicate (ImplicitActivationPolicy_ptr obj);
-    
+
     static void _tao_release (ImplicitActivationPolicy_ptr obj);
-    
+
     static ImplicitActivationPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static ImplicitActivationPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static ImplicitActivationPolicy_ptr _nil (void)
     {
       return static_cast<ImplicitActivationPolicy_ptr> (0);
     }
-    
-    
-    
+
+
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual ::PortableServer::ImplicitActivationPolicyValue value (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual ::CORBA::Policy_ptr copy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void destroy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
-    
+
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Abstract or local interface only.
     ImplicitActivationPolicy (void);
-    
+
     virtual ~ImplicitActivationPolicy (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     ImplicitActivationPolicy (const ImplicitActivationPolicy &);
-    
+
     void operator= (const ImplicitActivationPolicy &);
   };
 
@@ -189,21 +189,22 @@ namespace PortableServer
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:78
 
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 } // module PortableServer
 
 // TAO_IDL - Generated from
 // be\be_visitor_traits.cpp:61
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
 // Traits specializations.
 namespace TAO
 {
-#if (TAO_HAS_MINIMUM_POA == 0)
 
 #if !defined (_PORTABLESERVER_IMPLICITACTIVATIONPOLICY__TRAITS_)
 #define _PORTABLESERVER_IMPLICITACTIVATIONPOLICY__TRAITS_
-  
+
   template<>
   struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::ImplicitActivationPolicy>
   {

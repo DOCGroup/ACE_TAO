@@ -59,33 +59,33 @@
 
 namespace PortableServer
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_enum/enum_ch.cpp:57
-  
+
   enum LifespanPolicyValue
   {
     TRANSIENT,
     PERSISTENT
   };
-  
+
   typedef LifespanPolicyValue &LifespanPolicyValue_out;
-  
+
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
 
 #if !defined (_PORTABLESERVER_LIFESPANPOLICY__VAR_OUT_CH_)
 #define _PORTABLESERVER_LIFESPANPOLICY__VAR_OUT_CH_
-  
+
   class LifespanPolicy;
   typedef LifespanPolicy *LifespanPolicy_ptr;
-  
+
   typedef
     TAO_Objref_Var_T<
         LifespanPolicy
       >
     LifespanPolicy_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         LifespanPolicy
@@ -93,93 +93,93 @@ namespace PortableServer
     LifespanPolicy_out;
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_PORTABLESERVER_LIFESPANPOLICY_CH_)
 #define _PORTABLESERVER_LIFESPANPOLICY_CH_
-  
+
   class TAO_PortableServer_Export LifespanPolicy
     : public virtual ::CORBA::Policy
   {
   public:
     typedef LifespanPolicy_ptr _ptr_type;
     typedef LifespanPolicy_var _var_type;
-    
+
     // The static operations.
     static LifespanPolicy_ptr _duplicate (LifespanPolicy_ptr obj);
-    
+
     static void _tao_release (LifespanPolicy_ptr obj);
-    
+
     static LifespanPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static LifespanPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static LifespanPolicy_ptr _nil (void)
     {
       return static_cast<LifespanPolicy_ptr> (0);
     }
-    
-    
-    
+
+
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual ::PortableServer::LifespanPolicyValue value (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual ::CORBA::Policy_ptr copy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void destroy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
-    
+
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Abstract or local interface only.
     LifespanPolicy (void);
-    
+
     virtual ~LifespanPolicy (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     LifespanPolicy (const LifespanPolicy &);
-    
+
     void operator= (const LifespanPolicy &);
   };
 
@@ -199,7 +199,7 @@ namespace TAO
 
 #if !defined (_PORTABLESERVER_LIFESPANPOLICY__TRAITS_)
 #define _PORTABLESERVER_LIFESPANPOLICY__TRAITS_
-  
+
   template<>
   struct TAO_PortableServer_Export Objref_Traits< ::PortableServer::LifespanPolicy>
   {

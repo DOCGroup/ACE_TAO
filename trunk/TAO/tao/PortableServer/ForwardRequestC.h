@@ -130,7 +130,7 @@ namespace TAO
 TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableServer::ForwardRequest &);
 TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::ForwardRequest &);
 
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:1028

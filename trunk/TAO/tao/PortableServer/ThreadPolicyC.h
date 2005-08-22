@@ -189,9 +189,10 @@ namespace PortableServer
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:78
 
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
 } // module PortableServer
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 // TAO_IDL - Generated from
 // be\be_visitor_traits.cpp:61

@@ -4,43 +4,43 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    ACE_INLINE PortableServer::ThreadPolicyValue
+    ACE_INLINE ::PortableServer::ThreadPolicyValue
     Cached_Policies::thread (void) const
     {
       return this->thread_;
     }
 
-    ACE_INLINE PortableServer::LifespanPolicyValue
+    ACE_INLINE ::PortableServer::LifespanPolicyValue
     Cached_Policies::lifespan (void) const
     {
       return this->lifespan_;
     }
 
-    ACE_INLINE PortableServer::IdUniquenessPolicyValue
+    ACE_INLINE ::PortableServer::IdUniquenessPolicyValue
     Cached_Policies::id_uniqueness (void) const
     {
       return this->id_uniqueness_;
     }
 
-    ACE_INLINE PortableServer::IdAssignmentPolicyValue
+    ACE_INLINE ::PortableServer::IdAssignmentPolicyValue
     Cached_Policies::id_assignment (void) const
     {
       return this->id_assignment_;
     }
 
-    ACE_INLINE PortableServer::ImplicitActivationPolicyValue
+    ACE_INLINE ::PortableServer::ImplicitActivationPolicyValue
     Cached_Policies::implicit_activation (void) const
     {
       return this->implicit_activation_;
     }
 
-    ACE_INLINE PortableServer::ServantRetentionPolicyValue
+    ACE_INLINE ::PortableServer::ServantRetentionPolicyValue
     Cached_Policies::servant_retention (void) const
     {
       return this->servant_retention_;
     }
 
-    ACE_INLINE PortableServer::RequestProcessingPolicyValue
+    ACE_INLINE ::PortableServer::RequestProcessingPolicyValue
     Cached_Policies::request_processing (void) const
     {
       return this->request_processing_;

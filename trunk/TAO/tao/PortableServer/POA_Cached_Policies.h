@@ -60,19 +60,19 @@ namespace TAO
        * @name Accessor methods to cached values.
        */
       //@{
-      PortableServer::ThreadPolicyValue thread (void) const;
-      PortableServer::LifespanPolicyValue lifespan (void) const;
-      PortableServer::IdUniquenessPolicyValue id_uniqueness (void) const;
-      PortableServer::IdAssignmentPolicyValue id_assignment (void) const;
-      PortableServer::ImplicitActivationPolicyValue implicit_activation (void) const;
-      PortableServer::ServantRetentionPolicyValue servant_retention (void) const;
-      PortableServer::RequestProcessingPolicyValue request_processing (void) const;
+      ::PortableServer::ThreadPolicyValue thread (void) const;
+      ::PortableServer::LifespanPolicyValue lifespan (void) const;
+      ::PortableServer::IdUniquenessPolicyValue id_uniqueness (void) const;
+      ::PortableServer::IdAssignmentPolicyValue id_assignment (void) const;
+      ::PortableServer::ImplicitActivationPolicyValue implicit_activation (void) const;
+      ::PortableServer::ServantRetentionPolicyValue servant_retention (void) const;
+      ::PortableServer::RequestProcessingPolicyValue request_processing (void) const;
       PriorityModel priority_model (void) const;
       CORBA::Short server_priority (void) const;
 
       void priority_model (PriorityModel priority_model);
       void server_priority (CORBA::Short priority);
-      void implicit_activation (PortableServer::ImplicitActivationPolicyValue value);
+      void implicit_activation (::PortableServer::ImplicitActivationPolicyValue value);
       //@}
 
     protected:
@@ -81,19 +81,19 @@ namespace TAO
       void update_policy (const CORBA::Policy_ptr policy
                           ACE_ENV_ARG_DECL);
 
-      PortableServer::ThreadPolicyValue thread_;
+      ::PortableServer::ThreadPolicyValue thread_;
 
-      PortableServer::LifespanPolicyValue lifespan_;
+      ::PortableServer::LifespanPolicyValue lifespan_;
 
-      PortableServer::IdUniquenessPolicyValue id_uniqueness_;
+      ::PortableServer::IdUniquenessPolicyValue id_uniqueness_;
 
-      PortableServer::IdAssignmentPolicyValue id_assignment_;
+      ::PortableServer::IdAssignmentPolicyValue id_assignment_;
 
-      PortableServer::ImplicitActivationPolicyValue implicit_activation_;
+      ::PortableServer::ImplicitActivationPolicyValue implicit_activation_;
 
-      PortableServer::ServantRetentionPolicyValue servant_retention_;
+      ::PortableServer::ServantRetentionPolicyValue servant_retention_;
 
-      PortableServer::RequestProcessingPolicyValue request_processing_;
+      ::PortableServer::RequestProcessingPolicyValue request_processing_;
 
       PriorityModel priority_model_;
 
