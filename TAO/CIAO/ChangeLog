@@ -1,3 +1,4 @@
+Fri Aug 19 07:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Config_Handlers/Any_Handler.cpp:
         * DAnCE/Config_Handlers/DataType_Handler.cpp:
@@ -5,6 +6,7 @@
         * DAnCE/ciao/ComponentsC.h:
         * ciao/ComponentsC.h:
           Updated for AnyTypeCode refactoring
+
 Tue Aug 16 15:16:10 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
 	* docs/schema/CIAOServerResources.xsd: Changed to define most of
