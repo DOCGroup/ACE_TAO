@@ -19,7 +19,6 @@ TAO_ROOT = $(top_srcdir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 
-
 ## Makefile.CosNaming_IDL.am
 
 BUILT_SOURCES = \
@@ -73,6 +72,7 @@ libTAO_CosNaming_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_CosNaming_la_LIBADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -179,6 +179,7 @@ libTAO_CosProperty_la_LDFLAGS = \
 
 libTAO_CosProperty_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -349,6 +350,7 @@ libTAO_AV_la_LIBADD = \
   libTAO_CosNaming.la \
   libTAO_CosProperty.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -474,6 +476,7 @@ libTAO_CosConcurrency_la_LDFLAGS = \
 
 libTAO_CosConcurrency_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -608,6 +611,7 @@ libTAO_CosEvent_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_CosEvent_la_LIBADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -723,6 +727,7 @@ libTAO_Svc_Utils_la_LDFLAGS = \
 
 libTAO_Svc_Utils_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -787,6 +792,7 @@ libTAO_CosEvent_Skel_la_LDFLAGS = \
 libTAO_CosEvent_Skel_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   libTAO_CosEvent.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -891,6 +897,7 @@ libTAO_CosEvent_Serv_la_LIBADD = \
   libTAO_CosEvent_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   libTAO_CosEvent.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -1042,6 +1049,7 @@ libTAO_CosLifeCycle_la_LDFLAGS = \
 libTAO_CosLifeCycle_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -1157,12 +1165,18 @@ PortableGroup-stamp: $(srcdir)/PortableGroup.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_PortableGroup_Export -Wb,export_include=orbsvcs/PortableGroup/portablegroup_export.h -GC $(srcdir)/PortableGroup.idl
 	@touch $@
 
-PortableGroup = \
-  miopC.cpp \
-  miopS.cpp \
-  PortableGroupC.cpp \
-  PortableGroupS.cpp \
-  PortableGroup_Simple_DSC.cpp \
+lib_LTLIBRARIES += libTAO_PortableGroup.la
+
+libTAO_PortableGroup_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_PORTABLEGROUP_BUILD_DLL
+
+libTAO_PortableGroup_la_SOURCES = \
   PortableGroup/GOA.cpp \
   PortableGroup/MIOP.cpp \
   PortableGroup/PG_Default_Property_Validator.cpp \
@@ -1203,21 +1217,12 @@ PortableGroup = \
   PortableGroup/UIPMC_Message_Block_Data_Iterator.cpp \
   PortableGroup/UIPMC_Profile.cpp \
   PortableGroup/UIPMC_Transport.cpp \
-  PortableGroup/UIPMC_Wait_Never.cpp
-
-lib_LTLIBRARIES += libTAO_PortableGroup.la
-
-libTAO_PortableGroup_la_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs \
-  -DTAO_PORTABLEGROUP_BUILD_DLL
-
-libTAO_PortableGroup_la_SOURCES = \
-  $(PortableGroup)
+  PortableGroup/UIPMC_Wait_Never.cpp \
+  PortableGroupC.cpp \
+  PortableGroupS.cpp \
+  PortableGroup_Simple_DSC.cpp \
+  miopC.cpp \
+  miopS.cpp
 
 libTAO_PortableGroup_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -1230,6 +1235,7 @@ libTAO_PortableGroup_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
   libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -1287,7 +1293,6 @@ nobase_include_HEADERS += \
   PortableGroupS.h \
   PortableGroupS_T.cpp \
   PortableGroupS_T.inl \
-  PortableGroupS_T.inl \
   PortableGroup_Simple_DS.idl \
   PortableGroup_Simple_DSC.h \
   PortableGroup_Simple_DSC.inl \
@@ -1297,7 +1302,6 @@ nobase_include_HEADERS += \
   miopC.inl \
   miopS.h \
   miopS_T.cpp \
-  miopS_T.inl \
   miopS_T.inl
 
 pkgconfig_DATA += \
@@ -1437,6 +1441,7 @@ libTAO_CosLoadBalancing_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
   libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -1526,6 +1531,7 @@ libTAO_CosNaming_Skel_la_LDFLAGS = \
 libTAO_CosNaming_Skel_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -1597,6 +1603,7 @@ libTAO_CosNaming_Serv_la_LIBADD = \
   libTAO_CosNaming_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -1844,6 +1851,7 @@ libTAO_CosNotification_la_LDFLAGS = \
 
 libTAO_CosNotification_la_LIBADD = \
   libTAO_CosEvent.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -1902,6 +1910,7 @@ libTAO_ETCL_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_ETCL_la_LIBADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -1960,6 +1969,7 @@ libTAO_CosNotification_Skel_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   libTAO_CosNotification.la \
   libTAO_CosEvent.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -2126,6 +2136,7 @@ libTAO_CosNotification_Serv_la_LIBADD = \
   libTAO_CosEvent.la \
   libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -2290,6 +2301,7 @@ libTAO_CosNotification_Persist_la_LIBADD = \
   libTAO_CosEvent.la \
   libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -2361,6 +2373,7 @@ libTAO_CosTime_la_LDFLAGS = \
 libTAO_CosTime_la_LIBADD = \
   libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -2505,6 +2518,7 @@ libTAO_CosTrading_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_CosTrading_la_LIBADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -2555,6 +2569,7 @@ libTAO_CosTrading_Skel_la_LDFLAGS = \
 libTAO_CosTrading_Skel_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   libTAO_CosTrading.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -2635,6 +2650,7 @@ libTAO_CosTrading_Serv_la_LIBADD = \
   libTAO_CosTrading_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   libTAO_CosTrading.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -2752,6 +2768,7 @@ libTAO_DsLogAdmin_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_DsLogAdmin_la_LIBADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -2837,6 +2854,7 @@ libTAO_DsEventLogAdmin_la_LDFLAGS = \
 libTAO_DsEventLogAdmin_la_LIBADD = \
   libTAO_CosEvent.la \
   libTAO_DsLogAdmin.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -2884,6 +2902,7 @@ libTAO_DsLogAdmin_Skel_la_LDFLAGS = \
 libTAO_DsLogAdmin_Skel_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   libTAO_DsLogAdmin.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -2934,6 +2953,7 @@ libTAO_DsLogAdmin_Serv_la_SOURCES = \
   Log/Hash_LogStore.cpp \
   Log/Hash_Persistence_Strategy.cpp \
   Log/Iterator_i.cpp \
+  Log/LogActivator.cpp \
   Log/LogMgr_i.cpp \
   Log/LogNotification.cpp \
   Log/LogRecordStore.cpp \
@@ -2941,20 +2961,22 @@ libTAO_DsLogAdmin_Serv_la_SOURCES = \
   Log/Log_Constraint_Interpreter.cpp \
   Log/Log_Constraint_Visitors.cpp \
   Log/Log_Flush_Handler.cpp \
-  Log/Log_i.cpp \
-  Log/LogActivator.cpp
+  Log/Log_i.cpp
 
 libTAO_DsLogAdmin_Serv_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_DsLogAdmin_Serv_la_LIBADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
   libTAO_Svc_Utils.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   libTAO_ETCL.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
   libTAO_DsLogAdmin_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   libTAO_DsLogAdmin.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -2966,6 +2988,7 @@ nobase_include_HEADERS += \
   Log/Hash_LogStore.h \
   Log/Hash_Persistence_Strategy.h \
   Log/Iterator_i.h \
+  Log/LogActivator.h \
   Log/LogMgr_i.h \
   Log/LogNotification.h \
   Log/LogRecordStore.h \
@@ -2975,7 +2998,7 @@ nobase_include_HEADERS += \
   Log/Log_Flush_Handler.h \
   Log/Log_Persistence_Strategy.h \
   Log/Log_i.h \
-  Log/LogActivator.h
+  Log/log_serv_export.h
 
 pkgconfig_DATA += \
   TAO_DsLogAdmin_Serv.pc
@@ -3019,6 +3042,7 @@ libTAO_DsEventLogAdmin_Skel_la_LIBADD = \
   libTAO_DsEventLogAdmin.la \
   libTAO_CosEvent.la \
   libTAO_DsLogAdmin.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -3050,12 +3074,6 @@ EXTRA_DIST += \
 if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
 
-DsEventLogAdmin = \
-  Log/EventLogConsumer.cpp \
-  Log/EventLogFactory_i.cpp \
-  Log/EventLogNotification.cpp \
-  Log/EventLog_i.cpp
-
 lib_LTLIBRARIES += libTAO_DsEventLogAdmin_Serv.la
 
 libTAO_DsEventLogAdmin_Serv_la_CPPFLAGS = \
@@ -3069,7 +3087,10 @@ libTAO_DsEventLogAdmin_Serv_la_CPPFLAGS = \
   -DTAO_EVENTLOG_SERV_BUILD_DLL
 
 libTAO_DsEventLogAdmin_Serv_la_SOURCES = \
-  $(DsEventLogAdmin)
+  Log/EventLogConsumer.cpp \
+  Log/EventLogFactory_i.cpp \
+  Log/EventLogNotification.cpp \
+  Log/EventLog_i.cpp
 
 libTAO_DsEventLogAdmin_Serv_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -3080,10 +3101,11 @@ libTAO_DsEventLogAdmin_Serv_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   libTAO_DsLogAdmin_Serv.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   libTAO_Svc_Utils.la \
   libTAO_ETCL.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
@@ -3094,6 +3116,7 @@ libTAO_DsEventLogAdmin_Serv_la_LIBADD = \
   libTAO_DsEventLogAdmin.la \
   libTAO_CosEvent.la \
   libTAO_DsLogAdmin.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -3101,7 +3124,8 @@ nobase_include_HEADERS += \
   Log/EventLogConsumer.h \
   Log/EventLogFactory_i.h \
   Log/EventLogNotification.h \
-  Log/EventLog_i.h
+  Log/EventLog_i.h \
+  Log/eventlog_serv_export.h
 
 pkgconfig_DATA += \
   TAO_DsEventLogAdmin_Serv.pc
@@ -3182,6 +3206,7 @@ libTAO_DsNotifyLogAdmin_la_LIBADD = \
   libTAO_DsEventLogAdmin.la \
   libTAO_CosEvent.la \
   libTAO_DsLogAdmin.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -3239,6 +3264,7 @@ libTAO_DsNotifyLogAdmin_Skel_la_LIBADD = \
   libTAO_DsEventLogAdmin.la \
   libTAO_CosEvent.la \
   libTAO_DsLogAdmin.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -3269,12 +3295,6 @@ EXTRA_DIST += \
 
 if !BUILD_MINIMUM_CORBA
 
-DsNotifyLogAdmin = \
-  Log/NotifyLogConsumer.cpp \
-  Log/NotifyLogFactory_i.cpp \
-  Log/NotifyLogNotification.cpp \
-  Log/NotifyLog_i.cpp
-
 lib_LTLIBRARIES += libTAO_DsNotifyLogAdmin_Serv.la
 
 libTAO_DsNotifyLogAdmin_Serv_la_CPPFLAGS = \
@@ -3288,13 +3308,19 @@ libTAO_DsNotifyLogAdmin_Serv_la_CPPFLAGS = \
   -DTAO_NOTIFYLOG_SERV_BUILD_DLL
 
 libTAO_DsNotifyLogAdmin_Serv_la_SOURCES = \
-  $(DsNotifyLogAdmin)
+  Log/NotifyLogConsumer.cpp \
+  Log/NotifyLogFactory_i.cpp \
+  Log/NotifyLogNotification.cpp \
+  Log/NotifyLog_i.cpp
 
 libTAO_DsNotifyLogAdmin_Serv_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_DsNotifyLogAdmin_Serv_la_LIBADD = \
   libTAO_DsLogAdmin_Serv.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   libTAO_Svc_Utils.la \
   libTAO_ETCL.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
@@ -3309,6 +3335,7 @@ libTAO_DsNotifyLogAdmin_Serv_la_LIBADD = \
   libTAO_DsEventLogAdmin.la \
   libTAO_CosEvent.la \
   libTAO_DsLogAdmin.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -3316,7 +3343,8 @@ nobase_include_HEADERS += \
   Log/NotifyLogConsumer.h \
   Log/NotifyLogFactory_i.h \
   Log/NotifyLogNotification.h \
-  Log/NotifyLog_i.h
+  Log/NotifyLog_i.h \
+  Log/notifylog_serv_export.h
 
 pkgconfig_DATA += \
   TAO_DsNotifyLogAdmin_Serv.pc
@@ -3398,6 +3426,7 @@ libTAO_FTORB_Utils_la_LIBADD = \
   libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -3463,6 +3492,7 @@ libTAO_FTRT_ClientORB_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -3575,6 +3605,7 @@ libTAO_RTEvent_la_LDFLAGS = \
 libTAO_RTEvent_la_LIBADD = \
   libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -3630,6 +3661,7 @@ libTAO_RTEvent_Skel_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -3744,6 +3776,7 @@ libTAO_RTEvent_Serv_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -4028,6 +4061,7 @@ libTAO_FtRtEvent_la_LIBADD = \
   libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -4152,6 +4186,7 @@ libTAO_FTRT_EventChannel_la_LIBADD = \
   libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -4245,6 +4280,7 @@ libTAO_FT_ClientORB_la_LIBADD = \
   libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -4318,6 +4354,7 @@ libTAO_FT_ServerORB_la_LIBADD = \
   libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -4533,6 +4570,7 @@ libTAO_FaultTolerance_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -4655,6 +4693,7 @@ libTAO_HTIOP_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_HTIOP_la_LIBADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/protocols/ace/HTBP/libACE_HTBP.la \
   $(ACE_BUILDDIR)/ace/libACE.la
@@ -4741,8 +4780,7 @@ IFRService = \
   IFRService/ValueBoxDef_i.cpp \
   IFRService/ValueDef_i.cpp \
   IFRService/ValueMemberDef_i.cpp \
-  IFRService/WstringDef_i.cpp \
-  IFRService/tmplinst.cpp
+  IFRService/WstringDef_i.cpp
 
 lib_LTLIBRARIES += libTAO_IFRService.la
 
@@ -4770,6 +4808,7 @@ libTAO_IFRService_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_TypeCodeFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -4884,6 +4923,7 @@ libTAO_RTCORBAEvent_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -4961,6 +5001,7 @@ libTAO_RTSched_la_LIBADD = \
   libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -5055,6 +5096,7 @@ libTAO_RTEventLogAdmin_la_LDFLAGS = \
 
 libTAO_RTEventLogAdmin_la_LIBADD = \
   libTAO_DsLogAdmin_Serv.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
   libTAO_ETCL.la \
   $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
   libTAO_DsLogAdmin_Skel.la \
@@ -5070,6 +5112,7 @@ libTAO_RTEventLogAdmin_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -5131,6 +5174,7 @@ libTAO_RTKokyuEvent_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -5188,6 +5232,7 @@ libTAO_RTSchedEvent_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -5252,6 +5297,7 @@ libTAO_RT_Notification_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_RTCORBA.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -5490,6 +5536,7 @@ libTAO_Security_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -5641,6 +5688,7 @@ libTAO_SSLIOP_la_LIBADD = \
   libTAO_Security.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la \
   -lssl \

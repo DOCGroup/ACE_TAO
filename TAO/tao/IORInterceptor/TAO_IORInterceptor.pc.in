@@ -5,7 +5,7 @@ includedir=@includedir@
 
 Name: TAO_IORInterceptor 
 Description: TAO IOR Interceptor Library
-Requires: TAO_PortableServer, TAO_ObjRefTemplate, TAO
+Requires: TAO_PI, TAO_CodecFactory, TAO_ObjRefTemplate, TAO_Valuetype, TAO_PortableServer, TAO_AnyTypeCode, TAO
 Version: @VERSION@
 Libs: -L${libdir} -lTAO_IORInterceptor
 Cflags: -I${includedir}

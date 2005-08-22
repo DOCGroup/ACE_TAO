@@ -5,7 +5,7 @@ includedir=@includedir@
 
 Name: TAO_IFR_Client
 Description: TAO Interface Repository Client Library
-Requires: TAO
+Requires: TAO_AnyTypeCode, TAO
 Version: @VERSION@
 Libs: -L${libdir} -lTAO_IFR_Client
 Cflags: -I${includedir}
