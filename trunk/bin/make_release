@@ -795,35 +795,9 @@ sub generate_makefiles () {
 
     my $static_option = $tmp_static_option.$mpc_option;
 
-    open (FEATURES, "> ACE_wrappers/bin/MakeProjectCreator/config/default.features")  ||
-        die "$0: unable to open default.features\n";
-
-    print FEATURES
-        "// \$Id\$\n" .
-        "// This is an automatically generated file.\n\n" .
-        "ssl=1\n" .
-        "qt=1\n" .
-        "fl=1\n" .
-        "tk=1\n" .
-        "xt=1\n" .
-        "cidl=1\n" .
-        "sctp=1\n";
-
     &ex ("cd ACE_wrappers; \
           bin/mwc.pl $exclude_option $mpc_option; \
           find ./ -name 'GNUmake*' | /usr/bin/xargs chmod 0644");
-
-    open (FEATURES_1, "> ACE_wrappers/bin/MakeProjectCreator/config/default.features")  ||
-        die "$0: unable to open default.features\n";
-
-    print FEATURES_1
-        "// \$Id\$\n" .
-        "// This is an automatically generated file.\n\n" .
-        "ssl=0\n" .
-        "qos=1\n" .
-        "cidl=0\n" .
-        "rwho=0\n" .
-        "sctp=0\n";
 
     &ex ("cd ACE_wrappers; \
           bin/mwc.pl -type vc71 $mpc_option $exclude_option; \
