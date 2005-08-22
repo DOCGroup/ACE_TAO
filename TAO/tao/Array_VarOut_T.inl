@@ -247,10 +247,10 @@ TAO_Array_Forany_T<T,T_slice,TAG>::TAO_Array_Forany_T (void)
 template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
 TAO_Array_Forany_T<T,T_slice,TAG>::TAO_Array_Forany_T (
-    const T_slice * p,
+    T_slice * p,
     CORBA::Boolean nocopy
   )
-  : ptr_ (const_cast <T_slice *>(p)),
+  : ptr_ (p),
     nocopy_ (nocopy)
 {}
 
