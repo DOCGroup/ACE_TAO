@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/CORBA_methods.h"
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/Pseudo_VarOut_T.h"
 #include "tao/Arg_Traits_T.h"
 
