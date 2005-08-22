@@ -5,7 +5,7 @@ includedir=@includedir@
 
 Name: TAO_Domain
 Description: TAO Domain Library
-Requires: TAO_IFR_Client, TAO_PortableServer
+Requires: TAO_PortableServer, TAO_IFR_Client, TAO_AnyTypeCode, TAO
 Version: @VERSION@
 Libs: -L${libdir} -lTAO_Domain
 Cflags: -I${includedir}

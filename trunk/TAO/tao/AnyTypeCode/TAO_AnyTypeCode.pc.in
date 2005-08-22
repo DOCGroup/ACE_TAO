@@ -3,9 +3,9 @@ exec_prefix=@exec_prefix@
 libdir=@libdir@
 includedir=@includedir@
 
-Name: TAO_Valuetype
-Description: TAO Valuetype Library
-Requires: TAO_AnyTypeCode, TAO
+Name: TAO_AnyTypeCode
+Description: TAO AnyTypeCode Library
+Requires: TAO
 Version: @VERSION@
-Libs: -L${libdir} -lTAO_Valuetype
+Libs: -L${libdir} -lTAO_AnyTypeCode
 Cflags: -I${includedir}

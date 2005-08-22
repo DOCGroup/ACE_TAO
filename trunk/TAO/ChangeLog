@@ -1,3 +1,49 @@
+Mon Aug 22 10:43:11 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* TAO_IDL/Makefile.am:
+	* orbsvcs/orbsvcs/Makefile.am:
+	* tao/Makefile.am:
+
+	  Regenerated.
+
+	* tao/AnyTypeCode.mpc:
+
+	  Changed AnyTypecode to AnyTypeCode so generated project
+	  files work with case sensitive filesystems.
+
+	* tao/tao.mpc:
+
+	  Removed a few more headers that have been moved to the
+	  AnyTypeCode library.
+
+	* tao/BiDir_GIOP/TAO_BiDirGIOP.pc.in:
+	* tao/CodecFactory/TAO_CodecFactory.pc.in:
+	* tao/Domain/TAO_Domain.pc.in:
+	* tao/DynamicAny/TAO_DynamicAny.pc.in:
+	* tao/DynamicInterface/TAO_DynamicInterface.pc.in:
+	* tao/IFR_Client/TAO_IFR_Client.pc.in:
+	* tao/IORInterceptor/TAO_IORInterceptor.pc.in:
+	* tao/IORManipulation/TAO_IORManip.pc.in:
+	* tao/ImR_Client/TAO_ImR_Client.pc.in:
+	* tao/Messaging/TAO_Messaging.pc.in:
+	* tao/ObjRefTemplate/TAO_ObjRefTemplate.pc.in:
+	* tao/PI/TAO_PI.pc.in:
+	* tao/PI_Server/TAO_PI_Server.pc.in:
+	* tao/PortableServer/TAO_PortableServer.pc.in:
+	* tao/RTCORBA/TAO_RTCORBA.pc.in:
+	* tao/RTPortableServer/TAO_RTPortableServer.pc.in:
+	* tao/RTScheduling/TAO_RTScheduler.pc.in:
+	* tao/Strategies/TAO_Strategies.pc.in:
+	* tao/TypeCodeFactory/TAO_TypeCodeFactory.pc.in:
+	* tao/Valuetype/TAO_Valuetype.pc.in:
+	* tao/TAO_Utils.pc.in
+
+	  Update to add TAO_AnyTypeCode to "Requires:" as needed.
+
+	* tao/AnyTypeCode/TAO_AnyTypeCode.pc.in:
+
+          New file, pkg-config *.pc template for TAO_AnyTypeCode library.
+
 Mon Aug 22 13:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/*:
