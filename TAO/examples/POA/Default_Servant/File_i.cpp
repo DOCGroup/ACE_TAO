@@ -18,7 +18,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
-#include "tao/PI_Server/PI_Server.h"
+#include "tao/PortableServer/PortableServer.h"
 
 ACE_RCSID(Default_Servant, File_i, "$Id$")
 

@@ -54,10 +54,6 @@ private:
   /// Register PortableServer policy factories.
   void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info
                                   ACE_ENV_ARG_DECL);
-
-  /// Register POA Current.
-  void register_poa_current (PortableInterceptor::ORBInitInfo_ptr info
-                             ACE_ENV_ARG_DECL);
 };
 
 #include /**/ "ace/post.h"

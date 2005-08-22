@@ -19,7 +19,6 @@
 #include "tao/ORB_Constants.h"
 
 #include "tao/PortableServer/POA_Current_Impl.h"
-#include "tao/PI_Server/POA_Current.h"
 
 /**
 * This constructor takes in orb and ImR_Locator_i pointers to store for later

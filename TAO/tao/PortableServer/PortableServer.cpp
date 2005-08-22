@@ -2,6 +2,7 @@
 #include "PortableServer.h"
 #include "Object_Adapter.h"
 #include "Object_Adapter_Factory.h"
+#include "POA_Current_Factory.h"
 
 #include "ThreadStrategyFactoryImpl.h"
 #include "LifespanStrategyFactoryImpl.h"
@@ -159,6 +160,10 @@ TAO_POA_Initializer::init (void)
       TAO::Portable_Server::ace_svc_desc_ThreadStrategySingle
     );
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
+
+  ACE_Service_Config::process_directive (
+      ace_svc_desc_TAO_POA_Current_Factory
+    );
 
   return
     ACE_Service_Config::process_directive (

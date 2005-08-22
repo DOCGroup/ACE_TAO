@@ -2246,6 +2246,28 @@ TAO_ORB_Core::resolve_codecfactory_i (ACE_ENV_SINGLE_ARG_DECL)
     }
 }
 
+void
+TAO_ORB_Core::resolve_poa_current_i (ACE_ENV_SINGLE_ARG_DECL)
+{
+  TAO_Object_Loader *loader =
+    ACE_Dynamic_Service<TAO_Object_Loader>::instance ("TAO_POA_Current_Factory");
+  if (loader == 0)
+    {
+      ACE_Service_Config::process_directive (
+        ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_POA_Current_Factory",
+                                      "TAO_PortableServer",
+                                      "_make_TAO_POA_Current_Factory",
+                                      ""));
+      loader =
+        ACE_Dynamic_Service<TAO_Object_Loader>::instance ("TAO_POA_Current_Factory");
+    }
+  if (loader != 0)
+    {
+      this->poa_current_ =
+        loader->create_object (this->orb_, 0, 0 ACE_ENV_ARG_PARAMETER);
+    }
+}
+
 #if TAO_HAS_INTERCEPTORS == 1
 
 void

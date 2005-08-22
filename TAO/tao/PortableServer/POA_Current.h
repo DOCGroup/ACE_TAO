@@ -15,14 +15,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "pi_server_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
-#include "PI_Server.h"
+#include "tao/PortableServer/PS_CurrentC.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -35,7 +35,7 @@ namespace TAO
   {
     class POA_Current_Impl;
 
-    class TAO_PI_Server_Export POA_Current
+    class TAO_PortableServer_Export POA_Current
       : public PortableServer::Current,
         public TAO_Local_RefCounted_Object
     {

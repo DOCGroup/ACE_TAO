@@ -187,7 +187,6 @@ public:
   /// Accessor to the POA current.
   //@{
   CORBA::Object_ptr poa_current(void);
-  void poa_current (CORBA::Object_ptr poa_current);
   //@}
 
   /// Get the connector registry
@@ -650,6 +649,9 @@ public:
   CORBA::Object_ptr resolve_picurrent (ACE_ENV_SINGLE_ARG_DECL);
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
+  /// Resolve POA Current.
+  CORBA::Object_ptr resolve_poa_current (ACE_ENV_SINGLE_ARG_DECL);
+
   /// Resolve the CodecFactory DLL.
   CORBA::Object_ptr resolve_codecfactory (ACE_ENV_SINGLE_ARG_DECL);
 
@@ -900,6 +902,9 @@ protected:
   /// Obtain and cache the typecode factory object reference.
   void resolve_typecodefactory_i (ACE_ENV_SINGLE_ARG_DECL);
 
+  /// Obtain and cache the poa current.
+  void resolve_poa_current_i (ACE_ENV_SINGLE_ARG_DECL);
+
 #if TAO_HAS_INTERCEPTORS == 1
   /// Obtain and cache the picurrent factory object reference.
   void resolve_picurrent_i (ACE_ENV_SINGLE_ARG_DECL);
@@ -1092,10 +1097,6 @@ protected:
 
   /**
    * POA current.
-   *
-   * @note
-   * This is a pointer in order to reduce the include file
-   * dependencies.
    */
   CORBA::Object_var poa_current_;
 
