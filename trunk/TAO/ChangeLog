@@ -1,3 +1,9 @@
+Mon Aug 22 08:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Muxed_GIOP_Versions/Muxed_GIOP_Versions.mpc:
+        * tests/Multiple_Inheritance/Multiple_Inheritance.mpc:
+          Updated to resolve link errors
+
 Mon Aug 22 07:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp:
