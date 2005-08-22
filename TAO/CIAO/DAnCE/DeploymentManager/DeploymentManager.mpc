@@ -2,7 +2,7 @@
 // This file is generated with "generate_component_mpc.pl DeploymentManager"
 
 project(DeploymentManager_stub): ciao_client_dnc {
-  
+  requires += dummy_label  
   sharedname = DeploymentManager_stub
   idlflags += -Wb,stub_export_macro=DEPLOYMENTMANAGER_STUB_Export -Wb,stub_export_include=DeploymentManager_stub_export.h -Wb,skel_export_macro=DEPLOYMENTMANAGER_SVNT_Export -Wb,skel_export_include=DeploymentManager_svnt_export.h
   dynamicflags   = DEPLOYMENTMANAGER_STUB_BUILD_DLL
