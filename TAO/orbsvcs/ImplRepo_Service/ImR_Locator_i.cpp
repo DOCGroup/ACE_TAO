@@ -12,6 +12,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/default_ports.h"
 #include "tao/Messaging/Messaging.h"
+#include "tao/AnyTypeCode/Any.h"
 
 #include "ace/ARGV.h"
 #include "ace/OS_NS_sys_time.h"
