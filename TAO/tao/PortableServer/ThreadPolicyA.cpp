@@ -113,3 +113,4 @@ CORBA::Boolean operator>>= (
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
+
