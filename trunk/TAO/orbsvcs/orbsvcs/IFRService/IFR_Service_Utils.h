@@ -24,10 +24,10 @@
 
 #include /**/ "ace/pre.h"
 
+#include "ifr_service_export.h"
+#include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/ORB.h"
-#include "tao/IFR_Client/IFR_BasicC.h"
-#include "ifr_service_export.h"
 
 #include "ace/Configuration.h"
 
