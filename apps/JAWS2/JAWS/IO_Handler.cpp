@@ -243,7 +243,7 @@ JAWS_Asynch_IO_Handler_Factory::create_io_handler (void)
 {
   JAWS_TRACE ("JAWS_Asynch_IO_Handler_Factory::create");
 
-  JAWS_Asynch_IO_Handler *handler;
+  JAWS_Asynch_IO_Handler *handler = 0;
   handler = new JAWS_Asynch_IO_Handler (this);
 
   return handler;
