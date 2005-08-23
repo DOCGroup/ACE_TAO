@@ -1,3 +1,15 @@
+Mon Aug 22 23:03:02 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.h:
+
+	  Changed the event_log_factory_ member variable from a
+	  TAO_EventLogFactory_i to a pointer to a TAO_EventLogFactory_i.
+	  This delays execution of the constructor, which avoids the ORB
+	  being constructed implicitly, which in turn allows any -ORB...
+	  command line arguments to be parsed and removed from the argc/
+	  argv vector in Event_Logging_Service::init_ORB().
+
 Mon Aug 22 21:33:37 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Typecode_typesC.h:

@@ -63,7 +63,7 @@ protected:
   // Resolve the naming service.
 
   // = Data members
-  TAO_EventLogFactory_i event_log_factory_;
+  TAO_EventLogFactory_i *event_log_factory_;
   // The Event Log Factory.
 
   CORBA::ORB_var orb_;
