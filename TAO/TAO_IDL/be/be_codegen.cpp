@@ -1727,10 +1727,10 @@ TAO_CodeGen::gen_stub_src_includes (void)
   // strlen() for DCPS marshaling or
   // strcmp() is used with interfaces and exceptions.
   if ((be_global->gen_dcps_type_support ()
-	  && (idl_global->string_seen_
-	      || idl_global->string_seq_seen_
-		  || idl_global->wstring_seq_seen_) )
-	  || idl_global->interface_seen_
+          && (idl_global->string_seen_
+              || idl_global->string_seq_seen_
+                  || idl_global->wstring_seq_seen_) )
+          || idl_global->interface_seen_
       || idl_global->exception_seen_
       || idl_global->union_seen_)
     {
