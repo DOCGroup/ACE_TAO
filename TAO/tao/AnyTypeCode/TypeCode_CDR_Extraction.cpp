@@ -2,8 +2,6 @@
 
 #include "TypeCode_CDR_Extraction.h"
 
-#include "tao/CDR.h"
-
 #include "TypeCode_Constants.h"
 #include "True_RefCount_Policy.h"
 
@@ -22,6 +20,8 @@
 #include "TypeCode_Case_T.h"
 #include "TypeCode_Struct_Field.h"
 #include "TypeCode_Value_Field.h"
+
+#include "tao/CDR.h"
 
 #include "ace/Array_Base.h"
 

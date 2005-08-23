@@ -17,6 +17,7 @@
 
 #include /**/ "ace/pre.h"
 #include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/SystemException.h"
 
 namespace CORBA

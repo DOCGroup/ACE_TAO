@@ -1,3 +1,62 @@
+Mon Aug 22 21:33:37 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Typecode_typesC.h:
+
+	  Removed unnecessary include directives.  They were causing
+	  headers to be included that prematurely caused some templates to
+	  be parsed before all non-dependent names were parsed.  Addresses
+	  g++ 3.4.x or better compile-time errors.
+
+	* tao/AnyTypeCode/BooleanSeqA.h:
+	* tao/AnyTypeCode/BoundsA.h:
+	* tao/AnyTypeCode/CONV_FRAMEA.h:
+	* tao/AnyTypeCode/CharSeqA.h:
+	* tao/AnyTypeCode/CurrentA.h:
+	* tao/AnyTypeCode/DomainA.h:
+	* tao/AnyTypeCode/DoubleSeqA.h:
+	* tao/AnyTypeCode/DynamicC.h:
+	* tao/AnyTypeCode/Dynamic_ParameterC.h:
+	* tao/AnyTypeCode/FloatSeqA.h:
+	* tao/AnyTypeCode/GIOPA.h:
+	* tao/AnyTypeCode/IIOPA.h:
+	* tao/AnyTypeCode/IIOP_EndpointsA.h:
+	* tao/AnyTypeCode/IOPA.h:
+	* tao/AnyTypeCode/IOP_IORA.h:
+	* tao/AnyTypeCode/LongDoubleSeqA.h:
+	* tao/AnyTypeCode/LongLongSeqA.h:
+	* tao/AnyTypeCode/LongSeqA.h:
+	* tao/AnyTypeCode/Messaging_PolicyValueA.h:
+	* tao/AnyTypeCode/NVList.h:
+	* tao/AnyTypeCode/ObjectIdListA.h:
+	* tao/AnyTypeCode/OctetSeqA.h:
+	* tao/AnyTypeCode/PI_ForwardA.h:
+	* tao/AnyTypeCode/ParameterModeA.h:
+	* tao/AnyTypeCode/PolicyA.h:
+	* tao/AnyTypeCode/Policy_ForwardA.h:
+	* tao/AnyTypeCode/PortableInterceptorA.h:
+	* tao/AnyTypeCode/ServicesA.h:
+	* tao/AnyTypeCode/ShortSeqA.h:
+	* tao/AnyTypeCode/StringSeqA.h:
+	* tao/AnyTypeCode/SystemExceptionA.h:
+	* tao/AnyTypeCode/TAOA.h:
+	* tao/AnyTypeCode/TimeBaseA.h:
+	* tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp:
+	* tao/AnyTypeCode/ULongLongSeqA.h:
+	* tao/AnyTypeCode/ULongSeqA.h:
+	* tao/AnyTypeCode/UShortSeqA.h:
+	* tao/AnyTypeCode/ValueModifierA.h:
+	* tao/AnyTypeCode/VisibilityA.h:
+	* tao/AnyTypeCode/WCharSeqA.h:
+	* tao/AnyTypeCode/WStringSeqA.h:
+	* tao/AnyTypeCode/WrongTransactionA.h:
+	* tao/AnyTypeCode/orb_typesA.h:
+
+	  Reordered include directives to make sure all necessary
+	  non-dependent names are parsed before the templates that use
+	  them.  In the case of the "*A.h" files, this is a temporary
+	  work-around until TAO_IDL is updated.  Addresses g++ 3.4.x or
+	  better compile-time errors.
+
 Mon Aug 22 21:05:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_codegen.cpp (gen_stub_hdr_includes):
