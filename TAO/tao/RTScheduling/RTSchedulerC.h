@@ -41,6 +41,15 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "rtscheduler_export.h"
+
+#include "tao/PI_Server/ServerRequestInfoC.h"
+#include "tao/PI/ClientRequestInfoC.h"
+#include "tao/PI/PIForwardRequestC.h"
+
+#include "tao/RTCORBA/RTCORBA_includeC.h"
+
+#include "tao/PortableServer/PortableServer_includeC.h"
+
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
@@ -49,13 +58,7 @@
 #include "tao/Objref_VarOut_T.h"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
-
-#include "tao/RTCORBA/RTCORBA_includeC.h"
-#include "tao/PortableServer/PortableServer_includeC.h"
-#include "tao/PI/ClientRequestInfoC.h"
 #include "tao/PortableInterceptorC.h"
-#include "tao/PI/PIForwardRequestC.h"
-#include "tao/PI_Server/ServerRequestInfoC.h"
 
 #ifndef TAO_RTSCHEDULER_SAFE_INCLUDE
 #error "You should not include RTSchedulerC.h directly, use RTScheduler.h"
