@@ -1,3 +1,8 @@
+Tue Aug 23 14:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Strategies/SHMIOP_Acceptor.cpp:
+          Fixed possible unitialized warning
+
 Tue Aug 23 13:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.cpp:
