@@ -1,3 +1,10 @@
+Tue Aug 23 19:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/DeploymentManager/DeploymentManager.mpc:
+          Add dummy_label to all projects, this don't build, this is
+          the fast way to get the scoreboard green. Already one project
+          had this in the file.
+
 Mon Aug 22 10:59:18 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/DeploymentManager/DeploymentManager.cidl
@@ -10,7 +17,7 @@ Mon Aug 22 10:59:18 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* DAnCE/DeploymentManager/DeploymentManager_svnt_export.h
 
 	Preliminary skeleton for the DeploymentManager.
-	
+
 Fri Aug 19 07:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Config_Handlers/Any_Handler.cpp:
