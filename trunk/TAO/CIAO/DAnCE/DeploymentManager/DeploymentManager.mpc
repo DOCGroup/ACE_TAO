@@ -2,6 +2,7 @@
 // This file is generated with "generate_component_mpc.pl DeploymentManager"
 
 project(DeploymentManager_stub): ciao_client_dnc {
+  requires += dummy_label
   sharedname = DeploymentManager_stub
   idlflags += -Wb,stub_export_macro=DEPLOYMENTMANAGER_STUB_Export -Wb,stub_export_include=DeploymentManager_stub_export.h -Wb,skel_export_macro=DEPLOYMENTMANAGER_SVNT_Export -Wb,skel_export_include=DeploymentManager_svnt_export.h
   dynamicflags   = DEPLOYMENTMANAGER_STUB_BUILD_DLL
@@ -19,8 +20,8 @@ project(DeploymentManager_svnt) : ciao_servant_dnc {
   requires += dummy_label
   after +=  DeploymentManager_stub
   sharedname  = DeploymentManager_svnt
-  libs    += DeploymentManager_stub 
-  
+  libs    += DeploymentManager_stub
+
   idlflags  +=  -Wb,export_macro=DEPLOYMENTMANAGER_SVNT_Export -Wb,export_include=DeploymentManager_svnt_export.h
   dynamicflags = DEPLOYMENTMANAGER_SVNT_BUILD_DLL
 
@@ -41,19 +42,20 @@ project(DeploymentManager_svnt) : ciao_servant_dnc {
 
 
 project(DeploymentManager_exec) : ciao_component_dnc {
+  requires += dummy_label
   after   += DeploymentManager_svnt
   sharedname = DeploymentManager_exec
-  libs      += DeploymentManager_stub DeploymentManager_svnt 
-  
+  libs      += DeploymentManager_stub DeploymentManager_svnt
+
   idlflags  +=  -Wb,export_macro=DEPLOYMENTMANAGER_EXEC_Export -Wb,export_include=DeploymentManager_exec_export.h
   dynamicflags   = DEPLOYMENTMANAGER_EXEC_BUILD_DLL
 
   IDL_Files {
-    
+
   }
 
   Source_Files {
-    
+
     DeploymentManager_Impl.cpp
   }
 }
