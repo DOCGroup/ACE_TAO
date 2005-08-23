@@ -267,6 +267,19 @@ typedef ACE_Singleton<JAWS_Synch_IO_Handler_Factory, ACE_SYNCH_MUTEX>
 
 #if defined(ACE_WIN32) || defined(ACE_HAS_AIO_CALLS)
 
+class JAWS_Export JAWS_Asynch_IO_Handler_Factory : public JAWS_IO_Handler_Factory
+{
+public:
+  virtual ~JAWS_Asynch_IO_Handler_Factory (void);
+  // Destructor
+
+  virtual JAWS_IO_Handler *create_io_handler (void);
+  // This creates a new JAWS_IO_Handler
+
+  virtual void destroy_io_handler (JAWS_IO_Handler *handler);
+  // This deletes a JAWS_IO_Handler
+};
+
 class JAWS_Export JAWS_Asynch_IO_Handler : public JAWS_IO_Handler
 {
 friend class JAWS_Asynch_Handler;
@@ -275,7 +288,7 @@ friend class JAWS_Waiter;
 
   // Provide implementations for the common functions.
 public:
-  JAWS_Asynch_IO_Handler (JAWS_Asynch_IO_Handler_Factory *factory);
+  explicit JAWS_Asynch_IO_Handler (JAWS_Asynch_IO_Handler_Factory *factory);
   virtual ~JAWS_Asynch_IO_Handler (void);
 
   virtual ACE_Handler *handler (void);
@@ -288,20 +301,6 @@ protected:
 
   JAWS_Asynch_Handler *handler_;
   ACE_SYNCH_RW_MUTEX count_;
-};
-
-
-class JAWS_Export JAWS_Asynch_IO_Handler_Factory : public JAWS_IO_Handler_Factory
-{
-public:
-  virtual ~JAWS_Asynch_IO_Handler_Factory (void);
-  // Destructor
-
-  virtual JAWS_IO_Handler *create_io_handler (void);
-  // This creates a new JAWS_IO_Handler
-
-  virtual void destroy_io_handler (JAWS_IO_Handler *handler);
-  // This deletes a JAWS_IO_Handler
 };
 
 #else
