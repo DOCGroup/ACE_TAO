@@ -1,3 +1,36 @@
+Tue Aug 23 12:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_operation/exceptlist_ss.cpp:
+        * tao/Abstract_Servant_Base.h
+        * tao/CORBA_String.cpp
+        * tao/Invocation_Adapter.h
+        * tao/Invocation_Adapter.inl
+        * tao/ORB.cpp
+        * tao/ServerRequestInterceptor_Adapter.h
+        * tao/operation_details.h
+        * tao/operation_details.i
+        * tao/Domain/DomainS.cpp
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp
+        * tao/DynamicInterface/DII_Invocation_Adapter.h
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.cpp
+        * tao/ImR_Client/ImplRepoS.cpp
+        * tao/ImR_Client/ServerObjectS.cpp
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp
+        * tao/Messaging/Asynch_Invocation_Adapter.h
+        * tao/Messaging/MessagingS.cpp
+        * tao/PI_Server/ServerInterceptorAdapter.cpp
+        * tao/PI_Server/ServerInterceptorAdapter.h
+        * tao/PI_Server/ServerRequestInfo.h
+        * tao/PI_Server/ServerRequestInfo.inl
+        * tao/PortableServer/PolicyS.cpp
+        * tao/PortableServer/Upcall_Wrapper.cpp
+        * tao/PortableServer/Upcall_Wrapper.h
+        * tao/Valuetype/AbstractBase_Invocation_Adapter.cpp
+        * tao/Valuetype/AbstractBase_Invocation_Adapter.h
+          Fixed several 64bit conversion warnings. The size of the
+          exception list is now a CORBA::ULong, the length of the operation
+          name is size_t.
+
 Tue Aug 23 10:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicInterface/Request.cpp:
