@@ -10,6 +10,7 @@
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/Any.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "ETCL_Constraint.inl"
