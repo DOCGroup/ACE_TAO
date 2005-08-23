@@ -1,3 +1,8 @@
+Tue Aug 23 19:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/JAWS2/JAWS/IO_Handler.{h,cpp}:
+          Tried to fix gcc4 errors
+
 Tue Aug 23 18:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Configuration.cpp:
