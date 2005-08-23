@@ -1,3 +1,9 @@
+Tue Aug 23 10:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DynamicInterface/Request.cpp:
+          Fixed 64bit conversion warnings and removed some not needed
+          const casts
+
 Tue Aug 23 10:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Fixed_Array_SArgument_T.{h,cpp}:
