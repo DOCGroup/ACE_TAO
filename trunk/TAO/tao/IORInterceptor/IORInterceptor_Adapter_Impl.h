@@ -22,9 +22,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/IORInterceptor_Adapter.h"
-#include "tao/IORInterceptor/IORInterceptor.h"
 #include "tao/PI/Interceptor_List_T.h"
+#include "tao/IORInterceptor/IORInterceptor.h"
+#include "tao/IORInterceptor_Adapter.h"
 
 namespace TAO
 {

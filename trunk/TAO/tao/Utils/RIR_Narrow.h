@@ -8,18 +8,20 @@
  * @author Carlos O'Ryan <coryan@atdesk.com>
  */
 //=============================================================================
+
 #ifndef TAO_UTILS_RIR_NARROW_H
 #define TAO_UTILS_RIR_NARROW_H
+
 #include /**/ "ace/pre.h"
 
-#include "tao/ORB.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PI/PI.h"
-
+#include "tao/ORB.h"
 
 namespace TAO
 {
@@ -63,4 +65,5 @@ namespace TAO
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #include /**/ "ace/post.h"
+
 #endif /*TAO_UTILS_RIR_NARROW_H*/

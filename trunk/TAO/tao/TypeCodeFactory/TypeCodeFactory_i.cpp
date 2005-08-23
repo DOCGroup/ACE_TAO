@@ -1,14 +1,10 @@
 // $Id$
 
-#include "TypeCodeFactory_i.h"
 #include "Recursive_TypeCode.h"
+#include "TypeCodeFactory_i.h"
 
-#include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/AnyTypeCode/Marshal.h"
-#include "tao/ORB_Constants.h"
-#include "tao/CDR.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
-#include "tao/SystemException.h"
 
 #include "tao/AnyTypeCode/Alias_TypeCode.h"
 #include "tao/AnyTypeCode/Enum_TypeCode.h"
@@ -28,6 +24,11 @@
 
 #include "tao/AnyTypeCode/True_RefCount_Policy.h"
 
+#include "tao/IFR_Client/IFR_BasicC.h"
+
+#include "tao/ORB_Constants.h"
+#include "tao/CDR.h"
+#include "tao/SystemException.h"
 
 #include "ace/SString.h"
 #include "ace/Containers_T.h"

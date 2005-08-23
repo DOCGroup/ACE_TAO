@@ -1,3 +1,35 @@
+Tue Aug 23 10:43:07 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/IORInterceptor/IORInterceptor_Adapter_Factory_Impl.cpp:
+	* tao/IORInterceptor/IORInterceptor_Adapter_Factory_Impl.h:
+	* tao/IORInterceptor/IORInterceptor_Adapter_Impl.h:
+	* tao/IORManipulation/IORA.cpp:
+	* tao/ImR_Client/ImplRepoA.cpp:
+	* tao/ImR_Client/ImplRepoS.cpp:
+	* tao/ImR_Client/ServerObjectA.cpp:
+	* tao/ImR_Client/ServerObjectS.cpp:
+	* tao/ObjRefTemplate/Default_ORTA.cpp:
+	* tao/ObjRefTemplate/ObjectReferenceTemplateA.cpp:
+	* tao/RTCORBA/RTCORBAA.cpp:
+	* tao/RTCORBA/RT_ORBInitializer.h:
+	* tao/RTCORBA/rtcorba_export.h:
+	* tao/RTCORBA/rtcorba_typedefs.h:
+	* tao/RTPortableServer/RTPortableServerA.cpp:
+	* tao/RTScheduling/RTSchedulerC.h:
+	* tao/Strategies/sciop_endpointsC.cpp:
+	* tao/Strategies/uiop_endpointsC.cpp:
+	* tao/TypeCodeFactory/TypeCodeFactoryA.cpp:
+	* tao/TypeCodeFactory/TypeCodeFactoryC.h:
+	* tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.cpp:
+	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+	* tao/Utils/RIR_Narrow.h:
+
+	  Reordered include directives to make sure all necessary
+	  non-dependent names are parsed before the templates that use
+	  them.  In the case of the "*A.h" files, this is a temporary
+	  work-around until TAO_IDL is updated.  Addresses g++ 3.4.x or
+	  better compile-time errors.
+
 Tue Aug 23 14:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/SHMIOP_Acceptor.cpp:

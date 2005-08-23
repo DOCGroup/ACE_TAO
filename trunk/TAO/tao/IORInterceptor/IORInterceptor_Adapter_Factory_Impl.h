@@ -21,8 +21,9 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-#include "ace/Service_Config.h"
+
 #include "tao/IORInterceptor_Adapter_Factory.h"
+#include "ace/Service_Config.h"
 
 
 class TAO_IORInterceptor_Adapter;

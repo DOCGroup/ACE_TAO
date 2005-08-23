@@ -22,6 +22,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Basic_Types.h"
+
+
 // Forward references.
 class TAO_Priority_Mapping_Manager;
 class TAO_Priority_Mapping_Manager_var;
