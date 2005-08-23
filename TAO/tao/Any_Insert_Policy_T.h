@@ -46,7 +46,7 @@ namespace TAO
   class Any_Insert_Policy_AnyTypeCode_Adapter
   {
   public:
-  
+
     void any_insert (CORBA::Any* p, S const & x) const
       {
         TAO_AnyTypeCode_Adapter *adapter =
@@ -97,7 +97,7 @@ namespace TAO
   class Any_Insert_Policy_CORBA_Object
   {
   public:
-  
+
     void any_insert (CORBA::Any* , S const &) const
       {
         if (TAO_debug_level > 2)
