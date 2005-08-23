@@ -110,12 +110,12 @@ public:
   /// details.
   virtual int _find (const char *opname,
                      TAO_Skeleton &skelfunc,
-                     const unsigned int length = 0);
+                     const size_t length = 0);
 
   virtual int _find (const char *opname,
                      TAO_Collocated_Skeleton &skelfunc,
                      TAO::Collocation_Strategy st,
-                     const unsigned int length = 0);
+                     const size_t length = 0);
 
   /// Get this interface's repository id (TAO specific).
   virtual const char *_interface_repository_id (void) const = 0;
