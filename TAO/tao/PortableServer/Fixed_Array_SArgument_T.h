@@ -54,12 +54,15 @@ namespace TAO
    *
    * @brief INOUT skeleton argument of fixed size element array.
    *
+   * @todo The mutable for x_ can be removed when vc6 has been dropped
    */
   template<typename S,
            typename S_slice,
            typename S_forany,
            typename Insert_Policy>
-  class Inout_Fixed_Array_SArgument_T : public InoutArgument, private Insert_Policy
+  class Inout_Fixed_Array_SArgument_T :
+    public InoutArgument,
+    private Insert_Policy
   {
   public:
     Inout_Fixed_Array_SArgument_T (void);
@@ -72,7 +75,7 @@ namespace TAO
     S_slice * arg (void);
 
   private:
-    S x_;
+    mutable S x_;
   };
 
   /**
@@ -80,6 +83,7 @@ namespace TAO
    *
    * @brief OUT skeleton argument of fixed size element array.
    *
+   * @todo The mutable for x_ can be removed when vc6 has been dropped
    */
   template<typename S,
            typename S_slice,
@@ -97,7 +101,7 @@ namespace TAO
     S_slice * arg (void);
 
   private:
-    S x_;
+    mutable S x_;
   };
 
   /**
