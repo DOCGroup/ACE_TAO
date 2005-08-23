@@ -1454,28 +1454,11 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
         );
     }
 
-  // This is true if we have a typecode or TCKind in the IDL file.
-  // If not included here, it will appear in *C.cpp, if TCs not suppressed.
-  this->gen_cond_file_include (
-      idl_global->typecode_seen_
-      | idl_global->any_seen_,
-      "tao/AnyTypeCode/TypeCode.h",
-      this->client_header_
-    );
-
-  this->gen_cond_file_include (
-      idl_global->any_seen_
-      | idl_global->typecode_seen_,
-      "tao/AnyTypeCode/TypeCode_Constants.h",
-      this->client_header_);
-
-  // This is true if we have an 'any' in the IDL file.
-  // If not included here, it will appear in *C.cpp, if Anys not suppressed.
-  this->gen_cond_file_include (
-      idl_global->any_seen_,
-      "tao/AnyTypeCode/Any.h",
-      this->client_header_
-    );
+  this->gen_cond_file_include ((be_global->tc_support ()
+                                || idl_global->exception_seen_)
+                               && !be_global->gen_anyop_files (),
+                               "tao/AnyTypeCode/AnyTypeCode_methods.h",
+                               this->client_header_);
 
   // @note This header should not go first.  See the discussion above
   //       regarding non-dependent template names.
@@ -1520,6 +1503,29 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
       | idl_global->local_iface_seen_
       | idl_global->base_object_seen_,
       "tao/Object.h",
+      this->client_header_
+    );
+
+  // This is true if we have a typecode or TCKind in the IDL file.
+  // If not included here, it will appear in *C.cpp, if TCs not suppressed.
+  this->gen_cond_file_include (
+      idl_global->typecode_seen_
+      | idl_global->any_seen_,
+      "tao/AnyTypeCode/TypeCode.h",
+      this->client_header_
+    );
+
+  this->gen_cond_file_include (
+      idl_global->any_seen_
+      | idl_global->typecode_seen_,
+      "tao/AnyTypeCode/TypeCode_Constants.h",
+      this->client_header_);
+
+  // This is true if we have an 'any' in the IDL file.
+  // If not included here, it will appear in *C.cpp, if Anys not suppressed.
+  this->gen_cond_file_include (
+      idl_global->any_seen_,
+      "tao/AnyTypeCode/Any.h",
       this->client_header_
     );
 
@@ -1615,6 +1621,12 @@ TAO_CodeGen::gen_stub_src_includes (void)
                            << "\"";
     }
 
+  if ((be_global->tc_support () || idl_global->exception_seen_)
+      && !be_global->gen_anyop_files ())
+    {
+      this->gen_typecode_includes (this->client_stubs_);
+    }
+
   // Generate the include statement for the client header. We just
   // need to put only the base names. Path info is not required.
   *this->client_stubs_ << "\n#include \""
@@ -1697,12 +1709,6 @@ TAO_CodeGen::gen_stub_src_includes (void)
       // it is preferable to just refer to CORBA::OctetSeq in the IDL file.
       this->gen_standard_include (this->client_stubs_,
                                   "tao/ORB_Core.h");
-    }
-
-  if ((be_global->tc_support () || idl_global->exception_seen_)
-      && !be_global->gen_anyop_files ())
-    {
-      this->gen_typecode_includes (this->client_stubs_);
     }
 
   // The UserException::_tao_{en,de}code() methods can throw a
@@ -1876,10 +1882,18 @@ TAO_CodeGen::gen_any_file_includes (void)
           stream = this->anyop_source_;
 
           this->gen_standard_include (stream,
-                                      "tao/CDR.h");
-          this->gen_standard_include (stream,
                                       "tao/AnyTypeCode/Any.h");
+          this->gen_standard_include (stream,
+                                      "tao/CDR.h");
         }
+
+      // Any_Impl_T.cpp needs the full CORBA::Any type.
+      this->gen_cond_file_include (
+          idl_global->interface_seen_
+          | idl_global->valuetype_seen_,
+          "tao/AnyTypeCode/Any.h",
+          stream
+        );
 
       this->gen_cond_file_include (
           idl_global->interface_seen_

@@ -41,14 +41,14 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ifr_client_export.h"
-#include "tao/ORB.h"
-#include "tao/SystemException.h"
-#include "tao/Environment.h"
-#include "tao/Object.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/ORB.h"
+#include "tao/SystemException.h"
+#include "tao/Environment.h"
+#include "tao/Object.h"
 #include "tao/Sequence_T.h"
 #include "tao/Objref_VarOut_T.h"
 #include "tao/Seq_Var_T.h"

@@ -17,12 +17,17 @@
 #include /**/ "ace/pre.h"
 
 #include "dynamicany_export.h"
-#include "tao/Object_Loader.h"
-#include "ace/Service_Config.h"
+
+#define TAO_DYNAMICANY_SAFE_INCLUDE
+#include "DynamicAnyC.h"
+#undef TAO_DYNAMICANY_SAFE_INCLUDE
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Object_Loader.h"
+#include "ace/Service_Config.h"
 
 class TAO_DynamicAny_Export TAO_DynamicAny_Loader : public TAO_Object_Loader
 {
@@ -46,10 +51,6 @@ ACE_FACTORY_DECLARE (TAO_DynamicAny, TAO_DynamicAny_Loader)
 
 static int
 TAO_Requires_DynamicAny_Initializer = TAO_DynamicAny_Loader::Initializer ();
-
-#define TAO_DYNAMICANY_SAFE_INCLUDE
-#include "DynamicAnyC.h"
-#undef TAO_DYNAMICANY_SAFE_INCLUDE
 
 #include /**/ "ace/post.h"
 #endif /* TAO_DYNAMICANY_H */

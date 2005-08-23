@@ -7,7 +7,7 @@
 #include "tao/SystemException.h"
 #include "tao/ORB_Constants.h"
 
-ACE_RCSID (TAO_CodecFactory,
+ACE_RCSID (CodecFactory_impl,
            CodecFactory,
            "$Id$")
 

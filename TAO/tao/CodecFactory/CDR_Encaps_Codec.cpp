@@ -11,9 +11,9 @@
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/Marshal.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/SystemException.h"
 #include "tao/ORB_Constants.h"
-#include "tao/AnyTypeCode/TypeCode_Constants.h"
 
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"

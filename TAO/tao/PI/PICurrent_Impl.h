@@ -25,9 +25,10 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "ace/Array_Base.h"
-#include "tao/AnyTypeCode/Any.h"
 #include "PICurrentC.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "ace/Array_Base.h"
+
 
 /// Forward declarations.
 class TAO_ORB_Core;

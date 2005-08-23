@@ -1,5 +1,5 @@
-#include "BiDirGIOP.h"
 #include "BiDir_ORBInitializer.h"
+#include "BiDirGIOP.h"
 #include "BiDirPolicy_Validator.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"

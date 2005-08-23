@@ -27,8 +27,8 @@
 
 #include "PICurrentC.h"
 
-#include "ace/Array_Base.h"
 #include "tao/LocalObject.h"
+#include "ace/Array_Base.h"
 
 #if defined(_MSC_VER)
 # pragma warning(push)

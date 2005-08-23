@@ -1,7 +1,7 @@
 // $Id$
 
-#include "InterceptorC.h"
 #include "ORBInitInfoC.h"
+#include "InterceptorC.h"
 #include "tao/SystemException.h"
 #include "tao/ORB_Constants.h"
 #include "tao/debug.h"
