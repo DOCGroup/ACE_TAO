@@ -18,7 +18,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/LocalObject.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,12 +31,15 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+#include "tao/CORBA_methods.h"
 #include "ClientRequestInfoC.h"
 #include "PIForwardRequestC.h"
 #include "PICurrent_Impl.h"
 #include "PICurrent_Copy_Callback.h"
 #include "tao/ORB_Constants.h"
+#include "tao/LocalObject.h"
 #include "tao/Invocation_Utils.h"
+
 
 class TAO_Service_Context;
 

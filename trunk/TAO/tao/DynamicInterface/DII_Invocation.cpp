@@ -1,5 +1,8 @@
 // $Id$
 
+#include "tao/AnyTypeCode/DynamicC.h"
+#include "tao/AnyTypeCode/TypeCode.h"
+
 #include "DII_Invocation.h"
 #include "Unknown_User_Exception.h"
 #include "DII_Arguments.h"
@@ -7,8 +10,6 @@
 #include "Request.h"
 #include "DII_Reply_Dispatcher.h"
 
-#include "tao/AnyTypeCode/DynamicC.h"
-#include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/operation_details.h"
 #include "tao/Invocation_Utils.h"
 #include "tao/debug.h"

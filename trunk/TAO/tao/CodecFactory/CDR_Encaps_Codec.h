@@ -15,13 +15,12 @@
 
 #include /**/ "ace/pre.h"
 
-#include "codecfactory_export.h"
+#include "IOP_Codec_includeC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "IOP_Codec_includeC.h"
 #include "tao/LocalObject.h"
 
 /**
@@ -40,7 +39,7 @@
  * ORB core since it uses interpretive marshaling rather than compiled
  * marshaling.
  */
-class TAO_CodecFactory_Export TAO_CDR_Encaps_Codec
+class TAO_CDR_Encaps_Codec
   : public virtual IOP::Codec,
     public virtual TAO_Local_RefCounted_Object
 {
@@ -88,7 +87,7 @@ protected:
    * Only allow this class to be instantiated on the heap since it is
    * reference counted.
    */
-  ~TAO_CDR_Encaps_Codec (void);
+  virtual ~TAO_CDR_Encaps_Codec (void);
 
   /// Verify that it is possible to encode the given data using this
   /// Codec.
@@ -111,14 +110,14 @@ private:
 private:
 
   /// The major GIOP version associated with this Codec.
-  CORBA::Octet major_;
+  CORBA::Octet const major_;
 
   /// The minor GIOP version associated with this Codec.
-  CORBA::Octet minor_;
+  CORBA::Octet const minor_;
 
   /// The ORB Core to be used when decoding values from a CDR
   /// encapsulation.
-  TAO_ORB_Core * orb_core_;
+  TAO_ORB_Core * const orb_core_;
 
 };
 

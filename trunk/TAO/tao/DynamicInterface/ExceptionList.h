@@ -31,10 +31,11 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "DII_CORBA_methods.h"
-#include "tao/Pseudo_VarOut_T.h"
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/orbconf.h"
 #include "tao/Basic_Types.h"
 #include "tao/default_environment.h"
+#include "tao/Pseudo_VarOut_T.h"
 
 #include "ace/Unbounded_Queue.h"
 #include "ace/Atomic_Op.h"

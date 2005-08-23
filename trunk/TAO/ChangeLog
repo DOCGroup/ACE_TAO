@@ -17,7 +17,13 @@ Mon Aug 22 23:03:02 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 Mon Aug 22 21:33:37 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
+	* TAO_IDL/be/be_codegen.cpp:
+
+	  Another round of generated include directive reording to address
+	  template related order of parsing issues in g++ 3.4.x or better.
+
 	* tao/Typecode_typesC.h:
+	* tao/ParameterModeC.h
 
 	  Removed unnecessary include directives.  They were causing
 	  headers to be included that prematurely caused some templates to
@@ -66,7 +72,74 @@ Mon Aug 22 21:33:37 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* tao/AnyTypeCode/WCharSeqA.h:
 	* tao/AnyTypeCode/WStringSeqA.h:
 	* tao/AnyTypeCode/WrongTransactionA.h:
-	* tao/AnyTypeCode/orb_typesA.h:
+	* tao/AnyTypeCode/orb_typesA.h
+	* tao/BiDir_GIOP/BiDirGIOP.cpp:
+	* tao/CodecFactory/CDR_Encaps_Codec.cpp:
+	* tao/CodecFactory/CDR_Encaps_Codec.h:
+	* tao/CodecFactory/CodecFactory.h:
+	* tao/CodecFactory/CodecFactory_impl.cpp:
+	* tao/CodecFactory/CodecFactory_impl.h:
+	* tao/CodecFactory/IOP_CodecC.h:
+	* tao/CodecFactory/IOP_Codec_includeC.h:
+	* tao/Domain/DomainS.h:
+	* tao/DynamicAny/DynamicAny.h:
+	* tao/DynamicAny/DynamicAnyC.h:
+	* tao/DynamicInterface/Context.h:
+	* tao/DynamicInterface/DII_Arguments.cpp:
+	* tao/DynamicInterface/DII_Invocation.cpp:
+	* tao/DynamicInterface/ExceptionList.h:
+	* tao/IFR_Client/IFR_BaseC.h:
+	* tao/IFR_Client/IFR_BasicC.h:
+	* tao/IFR_Client/IFR_Client_Adapter_Impl.cpp:
+	* tao/IFR_Client/IFR_ComponentsC.cpp:
+	* tao/IFR_Client/IFR_ExtendedC.cpp:
+	* tao/IFR_Client/IFR_ExtendedC.h:
+	* tao/Messaging/MessagingA.cpp:
+	* tao/Messaging/MessagingS.cpp:
+	* tao/Messaging/Messaging_No_ImplA.cpp:
+	* tao/Messaging/Messaging_RT_PolicyA.cpp:
+	* tao/Messaging/Messaging_SyncScope_PolicyA.cpp:
+	* tao/Messaging/PollableC.cpp:
+	* tao/Messaging/TAO_ExtA.cpp:
+	* tao/PI/ClientRequestInfo.h:
+	* tao/PI/ClientRequestInfoC.h:
+	* tao/PI/ClientRequestInterceptorA.cpp:
+	* tao/PI/ClientRequestInterceptor_Adapter_Impl.h:
+	* tao/PI/InterceptorA.cpp:
+	* tao/PI/Interceptor_List_T.cpp:
+	* tao/PI/InvalidSlotA.cpp:
+	* tao/PI/ORBInitInfoC.h:
+	* tao/PI/ORBInitializerA.cpp:
+	* tao/PI/ORBInitializer_Registry_Impl.h:
+	* tao/PI/PI.h:
+	* tao/PI/PICurrent.h:
+	* tao/PI/PICurrentA.cpp:
+	* tao/PI/PICurrent_Impl.h:
+	* tao/PI/PIForwardRequestA.cpp:
+	* tao/PI/PolicyFactoryC.h:
+	* tao/PI/RequestInfoC.h:
+	* tao/PI_Server/ServerInterceptorAdapter.h:
+	* tao/PI_Server/ServerRequestInfoC.h:
+	* tao/PI_Server/ServerRequestInterceptorC.h:
+	* tao/PortableServer/AdapterActivatorA.cpp:
+	* tao/PortableServer/ForwardRequestA.cpp:
+	* tao/PortableServer/IdAssignmentPolicyA.cpp:
+	* tao/PortableServer/IdUniquenessPolicyA.cpp:
+	* tao/PortableServer/ImplicitActivationPolicyA.cpp:
+	* tao/PortableServer/LifespanPolicyA.cpp:
+	* tao/PortableServer/POAManagerC.cpp:
+	* tao/PortableServer/PS_CurrentA.cpp:
+	* tao/PortableServer/PS_ForwardA.cpp:
+	* tao/PortableServer/PolicyS.cpp:
+	* tao/PortableServer/PortableServerA.cpp:
+	* tao/PortableServer/RequestProcessingPolicyA.cpp:
+	* tao/PortableServer/ServantActivatorA.cpp:
+	* tao/PortableServer/ServantLocatorA.cpp:
+	* tao/PortableServer/ServantManagerA.cpp:
+	* tao/PortableServer/ServantRetentionPolicyA.cpp:
+	* tao/PortableServer/ThreadPolicyA.cpp:
+	* tao/Valuetype/StringValueC.cpp:
+	* tao/Valuetype/ValueBase.cpp:
 
 	  Reordered include directives to make sure all necessary
 	  non-dependent names are parsed before the templates that use

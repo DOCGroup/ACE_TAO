@@ -23,6 +23,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#define TAO_CODECFACTORY_SAFE_INCLUDE
+#include "IOP_CodecC.h"
+#undef TAO_CODECFACTORY_SAFE_INCLUDE
+
 #include "tao/Object_Loader.h"
 #include "ace/Service_Config.h"
 
@@ -46,10 +50,6 @@ ACE_FACTORY_DECLARE (TAO_CodecFactory, TAO_CodecFactory_Loader)
 
 static int
 TAO_Requires_CodecFactory_Initializer = TAO_CodecFactory_Loader::Initializer ();
-
-#define TAO_CODECFACTORY_SAFE_INCLUDE
-#include "IOP_CodecC.h"
-#undef TAO_CODECFACTORY_SAFE_INCLUDE
 
 #include /**/ "ace/post.h"
 

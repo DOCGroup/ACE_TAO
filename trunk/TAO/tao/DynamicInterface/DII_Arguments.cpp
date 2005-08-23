@@ -4,9 +4,10 @@
 
 #include "tao/AnyTypeCode/NVList.h"
 #include "tao/AnyTypeCode/Any_Impl.h"
+#include "tao/AnyTypeCode/DynamicC.h"
 #include "tao/Exception.h"
 #include "tao/CDR.h"
-#include "tao/AnyTypeCode/DynamicC.h"
+
 
 ACE_RCSID (DynamicInterface,
            DII_Arguments,

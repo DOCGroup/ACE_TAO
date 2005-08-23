@@ -41,6 +41,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PI/pi_export.h"
+#include "tao/CodecFactory/IOP_Codec_includeC.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
@@ -48,7 +49,6 @@
 #include "tao/Objref_VarOut_T.h"
 
 #include "tao/StringSeqC.h"
-#include "tao/CodecFactory/IOP_Codec_includeC.h"
 #include "tao/PI_ForwardC.h"
 #include "tao/PolicyC.h"
 
