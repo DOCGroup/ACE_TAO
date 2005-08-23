@@ -1,3 +1,8 @@
+Tue Aug 23 07:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_1395_Regression/Bug_1395_Regression.mpc:
+          Added anytypecode
+
 Mon Aug 22 23:03:02 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
