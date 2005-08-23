@@ -34,13 +34,13 @@
 #include /**/ "ace/pre.h"
 
 
-#include "ace/config-all.h"
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
+#include "tao/Basic_Types.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -58,6 +58,9 @@
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:48
+
+class TAO_InputCDR;
+class TAO_OutputCDR;
 
 namespace CORBA
 {
