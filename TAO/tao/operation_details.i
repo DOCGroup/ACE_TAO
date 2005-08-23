@@ -9,7 +9,7 @@ TAO_Operation_Details::TAO_Operation_Details (const char *name,
                                               TAO::Argument **args,
                                               CORBA::ULong num,
                                               TAO::Exception_Data *data,
-                                              CORBA::Long count)
+                                              CORBA::ULong count)
   : opname_ (name)
     , opname_len_ (len)
     , request_id_ (0)

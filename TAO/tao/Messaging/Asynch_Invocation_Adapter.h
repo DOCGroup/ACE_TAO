@@ -64,7 +64,7 @@ namespace TAO
         Argument **args,
         int arg_number,
         const char *operation,
-        int op_len,
+        size_t op_len,
         Collocation_Proxy_Broker *b,
         TAO::Invocation_Mode mode = TAO_ASYNCHRONOUS_CALLBACK_INVOCATION);
 

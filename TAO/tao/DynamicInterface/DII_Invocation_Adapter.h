@@ -84,7 +84,7 @@ namespace TAO
                             Argument **args,
                             int arg_number,
                             const char *operation,
-                            int op_len,
+                            size_t op_len,
                             CORBA::ExceptionList *exception,
                             CORBA::Request *r,
                             Invocation_Mode m = TAO_DII_INVOCATION);
@@ -127,7 +127,7 @@ namespace TAO
         Argument **args,
         int arg_number,
         const char *operation,
-        int op_len,
+        size_t op_len,
         Collocation_Proxy_Broker *b,
         TAO_ORB_Core *oc,
         CORBA::Request *req,

@@ -74,7 +74,8 @@ CORBA::wstring_dup (const WChar *const str)
       return 0;
     }
 
-  CORBA::WChar* retval = CORBA::wstring_alloc (ACE_OS::strlen (str));
+  CORBA::WChar* retval = 
+    CORBA::wstring_alloc (static_cast <CORBA::ULong> (ACE_OS::strlen (str)));
 
   // The wscpy() below assumes that the destination is a valid buffer.
   if (retval == 0)
@@ -272,7 +273,8 @@ operator>> (istream &is, CORBA::String_out &so)
 ostream &
 operator<< (ostream &os, const CORBA::WString_var &wsv)
 {
-  const CORBA::ULong len = ACE_OS::strlen (wsv.in ());
+  const CORBA::ULong len = 
+    static_cast <CORBA::ULong> (ACE_OS::strlen (wsv.in ()));
 
   for (CORBA::ULong i = 0; i < len; ++i)
     {
@@ -311,9 +313,9 @@ ostream &
 operator<< (ostream &os, CORBA::WString_out &wso)
 {
   CORBA::WChar *tmp = wso.ptr ();
-  const CORBA::ULong len = ACE_OS::strlen (tmp);
+  const size_t len = ACE_OS::strlen (tmp);
 
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (size_t i = 0; i < len; ++i)
     {
       os << tmp[i];
     }

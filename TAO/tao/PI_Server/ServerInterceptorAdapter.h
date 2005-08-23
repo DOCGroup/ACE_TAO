@@ -82,7 +82,7 @@ namespace TAO
         size_t nargs,
         void * servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        size_t nexceptions,
+        CORBA::ULong nexceptions,
         CORBA::OctetSeq_out oc
         ACE_ENV_ARG_DECL);
 #endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
@@ -100,7 +100,7 @@ namespace TAO
         size_t nargs,
         void * servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        size_t nexceptions
+        CORBA::ULong nexceptions
         ACE_ENV_ARG_DECL);
 
     /// This method an "intermediate" server side interception point.
@@ -110,7 +110,7 @@ namespace TAO
         size_t nargs,
         void * servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        size_t nexceptions
+        CORBA::ULong nexceptions
         ACE_ENV_ARG_DECL);
 
     /// This method implements one of the "ending" server side
@@ -121,7 +121,7 @@ namespace TAO
         size_t nargs,
         void * servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        size_t nexceptions
+        CORBA::ULong nexceptions
         ACE_ENV_ARG_DECL);
 
     /// This method implements one of the "ending" server side
@@ -132,7 +132,7 @@ namespace TAO
         size_t nargs,
         void * servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        size_t nexceptions
+        CORBA::ULong nexceptions
         ACE_ENV_ARG_DECL);
 
     /// This method implements one of the "ending" server side
@@ -143,7 +143,7 @@ namespace TAO
         size_t nargs,
         void * servant_upcall,
         CORBA::TypeCode_ptr const * exceptions,
-        size_t nexceptions
+        CORBA::ULong nexceptions
         ACE_ENV_ARG_DECL);
     //@}
 
