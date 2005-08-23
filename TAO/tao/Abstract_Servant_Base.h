@@ -127,7 +127,7 @@ public:
   /// TAO_Skeleton which can be used to make upcalls
   virtual int _find (const char *opname,
                      TAO_Skeleton &skelfunc,
-                     const unsigned int length = 0) = 0;
+                     const size_t length = 0) = 0;
 
   /// Find an operation in the operation table and return a
   /// TAO_Collocated_Skeleton which can be used to make upcalls onto
@@ -135,7 +135,7 @@ public:
   virtual int _find (const char *opname,
                      TAO_Collocated_Skeleton &skelfunc,
                      TAO::Collocation_Strategy s,
-                     const unsigned int length = 0) = 0;
+                     const size_t length = 0) = 0;
 
 protected:
 
