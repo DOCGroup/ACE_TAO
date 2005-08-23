@@ -40,9 +40,9 @@ TAO_Requires_PI_Initializer =
 #include /**/ "ace/post.h"
 
 #define TAO_PI_SAFE_INCLUDE
-#include "ORBInitializerC.h"
-#include "PolicyFactoryC.h"
 #include "ORBInitInfoC.h"
+#include "PolicyFactoryC.h"
+#include "ORBInitializerC.h"
 #include "InterceptorC.h"
 #include "ClientRequestInfoC.h"
 #include "ClientRequestInterceptorC.h"

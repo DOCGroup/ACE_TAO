@@ -33,17 +33,17 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/DomainC.h"
+#include "tao/IFR_Client/IFR_ExtendedC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/PolicyS.h"
-#include "tao/Collocation_Proxy_Broker.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
-#include "tao/IFR_Client/IFR_ExtendedC.h"
+#include "tao/Collocation_Proxy_Broker.h"
+#include "tao/DomainC.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

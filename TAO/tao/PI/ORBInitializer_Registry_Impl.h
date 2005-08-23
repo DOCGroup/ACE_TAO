@@ -21,14 +21,15 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Array_Base.h"
-#include "ace/Service_Config.h"
+#include "PI.h"
+
 #include "tao/CORBA_methods.h"
 #include "tao/Objref_VarOut_T.h"
-#include "ace/Recursive_Thread_Mutex.h"
 #include "tao/ORBInitializer_Registry_Adapter.h"
 
-#include "PI.h"
+#include "ace/Array_Base.h"
+#include "ace/Service_Config.h"
+#include "ace/Recursive_Thread_Mutex.h"
 
 namespace TAO
 {

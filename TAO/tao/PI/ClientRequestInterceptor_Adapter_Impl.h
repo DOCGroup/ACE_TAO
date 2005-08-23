@@ -31,10 +31,10 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
+#include "Interceptor_List_T.h"
 #include "ClientRequestInterceptorC.h"
 #include "tao/ClientRequestInterceptor_Adapter.h"
 
-#include "Interceptor_List_T.h"
 
 namespace TAO
 {

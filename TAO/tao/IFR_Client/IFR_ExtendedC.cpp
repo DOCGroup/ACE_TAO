@@ -29,12 +29,12 @@
 // be\be_codegen.cpp:293
 
 
-#include "IFR_ExtendedC.h"
-#include "tao/CDR.h"
-#include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/AnyTypeCode/VisibilityA.h"
 #include "tao/AnyTypeCode/ValueModifierA.h"
 #include "tao/AnyTypeCode/orb_typesA.h"
+#include "IFR_ExtendedC.h"
+#include "tao/CDR.h"
+#include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/Invocation_Adapter.h"
 #include "tao/Object_T.h"
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"

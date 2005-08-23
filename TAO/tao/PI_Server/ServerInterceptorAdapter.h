@@ -32,9 +32,9 @@
 
 #include "ServerRequestInterceptorC.h"
 
-#include "tao/Basic_Types.h"
-#include "tao/ServerRequestInterceptor_Adapter.h"
 #include "tao/PI/Interceptor_List_T.h"
+#include "tao/ServerRequestInterceptor_Adapter.h"
+#include "tao/Basic_Types.h"
 
 namespace TAO
 {
