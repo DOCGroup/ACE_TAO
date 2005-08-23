@@ -130,7 +130,7 @@ TAO_ServantBase::_repository_id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 int
 TAO_ServantBase::_find (const char *opname,
                         TAO_Skeleton& skelfunc,
-                        const unsigned int length)
+                        const size_t length)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_BASE_FIND_START);
   return this->optable_->find (opname, skelfunc, length);
@@ -140,7 +140,7 @@ int
 TAO_ServantBase::_find (const char *opname,
                         TAO_Collocated_Skeleton& skelfunc,
                         TAO::Collocation_Strategy st,
-                        const unsigned int length)
+                        const size_t length)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_BASE_FIND_START);
   return this->optable_->find (opname, skelfunc, st, length);
