@@ -24,7 +24,7 @@ project(*Server): taoserver, imr_client {
   }
 }
 
-project(*Client): taoclient {
+project(*Client): taoclient, anytypecode {
   after += *IDL
 
   Source_Files {
