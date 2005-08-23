@@ -33,6 +33,8 @@
 #define _TAO_IDL_SERVEROBJECTS_CPP_
 
 
+#include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/DynamicC.h"
 #include "ServerObjectS.h"
 #include "tao/PortableServer/Operation_Table_Perfect_Hash.h"
 #include "tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h"
@@ -53,8 +55,6 @@
 #include "tao/Stub.h"
 #include "tao/IFR_Client_Adapter.h"
 #include "tao/Object_T.h"
-#include "tao/AnyTypeCode/TypeCode.h"
-#include "tao/AnyTypeCode/DynamicC.h"
 #include "tao/CDR.h"
 #include "tao/operation_details.h"
 #include "tao/PortableInterceptor.h"
