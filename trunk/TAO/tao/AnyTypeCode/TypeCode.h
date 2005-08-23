@@ -25,17 +25,17 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/UserException.h"
-#include "tao/Basic_Types.h"
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/AnyTypeCode/ValueModifierC.h"
 #include "tao/AnyTypeCode/VisibilityC.h"
+#include "tao/UserException.h"
+#include "tao/Basic_Types.h"
 #include "tao/Typecode_typesC.h"
 #include "tao/Any_Insert_Policy_T.h"
 #include "tao/CORBA_methods.h"
 #include "tao/Pseudo_VarOut_T.h"
 #include "tao/Object_Argument_T.h"
 #include "tao/Arg_Traits_T.h"
-#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

@@ -1406,8 +1406,8 @@ TAO_CodeGen::gen_standard_include (TAO_OutStream *stream,
 void
 TAO_CodeGen::gen_stub_hdr_includes (void)
 {
-  // Include valuetype headers before ORB core headers to make sure
-  // some things are parsed before some templates
+  // Include valuetype and Any/TypeCode headers before ORB core
+  // headers to make sure some things are parsed before some templates
   // (e.g. TAO_Pseudo_{Var,Out}_T).  Addresses issues with compilers
   // that require all necessary non-dependent names be parsed prior to
   // parsing templates that may use them (e.g. GNU g++ 3.4.x).
@@ -1454,6 +1454,29 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
         );
     }
 
+  // This is true if we have a typecode or TCKind in the IDL file.
+  // If not included here, it will appear in *C.cpp, if TCs not suppressed.
+  this->gen_cond_file_include (
+      idl_global->typecode_seen_
+      | idl_global->any_seen_,
+      "tao/AnyTypeCode/TypeCode.h",
+      this->client_header_
+    );
+
+  this->gen_cond_file_include (
+      idl_global->any_seen_
+      | idl_global->typecode_seen_,
+      "tao/AnyTypeCode/TypeCode_Constants.h",
+      this->client_header_);
+
+  // This is true if we have an 'any' in the IDL file.
+  // If not included here, it will appear in *C.cpp, if Anys not suppressed.
+  this->gen_cond_file_include (
+      idl_global->any_seen_,
+      "tao/AnyTypeCode/Any.h",
+      this->client_header_
+    );
+
   // @note This header should not go first.  See the discussion above
   //       regarding non-dependent template names.
   this->gen_standard_include (this->client_header_,
@@ -1497,34 +1520,6 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
       | idl_global->local_iface_seen_
       | idl_global->base_object_seen_,
       "tao/Object.h",
-      this->client_header_
-    );
-
-  // This is true if we have a typecode or TCKind in the IDL file.
-  // If not included here, it will appear in *C.cpp, if TCs not suppressed.
-  this->gen_cond_file_include (
-      idl_global->typecode_seen_,
-      "tao/AnyTypeCode/TypeCode.h",
-      this->client_header_
-    );
-
-  this->gen_cond_file_include (
-      idl_global->any_seen_
-      | idl_global->typecode_seen_,
-      "tao/AnyTypeCode/TypeCode_Constants.h",
-      this->client_header_);
-
-  // This is true if we have an 'any' in the IDL file.
-  // If not included here, it will appear in *C.cpp, if Anys not suppressed.
-  this->gen_cond_file_include (
-      idl_global->any_seen_,
-      "tao/AnyTypeCode/Any.h",
-      this->client_header_
-    );
-
-  this->gen_cond_file_include (
-      idl_global->any_seen_,
-      "tao/AnyTypeCode/TypeCode.h",
       this->client_header_
     );
 
