@@ -1164,7 +1164,7 @@ CORBA::ORB::resolve_initial_references (const char *name,
   // Look for an environment variable called "<name>IOR".
   //
   CORBA::String_var ior_env_var_name =
-    CORBA::string_alloc (ACE_OS::strlen (name) + 3);
+    CORBA::string_alloc (static_cast <CORBA::ULong> (ACE_OS::strlen (name) + 3));
 
   ACE_OS::strcpy (ior_env_var_name.inout (),
                   name);

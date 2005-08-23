@@ -123,7 +123,7 @@ public:
   /// This is an auxiliary method for _this() and _narrow().
   virtual TAO_Stub *_create_stub (ACE_ENV_SINGLE_ARG_DECL) = 0;
 
-    /// Find an operation in the operation table and return a
+  /// Find an operation in the operation table and return a
   /// TAO_Skeleton which can be used to make upcalls
   virtual int _find (const char *opname,
                      TAO_Skeleton &skelfunc,

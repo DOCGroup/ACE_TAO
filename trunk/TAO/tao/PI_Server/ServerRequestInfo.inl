@@ -12,7 +12,7 @@ TAO::ServerRequestInfo::ServerRequestInfo (
   size_t nargs,
   void * servant_upcall,
   CORBA::TypeCode_ptr const * exceptions,
-  size_t nexceptions)
+  CORBA::ULong nexceptions)
   : server_request_ (server_request)
   , args_ (args)
   , nargs_ (nargs)

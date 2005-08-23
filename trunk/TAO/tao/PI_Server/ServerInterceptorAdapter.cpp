@@ -31,7 +31,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::tao_ft_interception_point (
   size_t nargs,
   void * servant_upcall,
   CORBA::TypeCode_ptr const * exceptions,
-  size_t nexceptions,
+  CORBA::ULong nexceptions,
   CORBA::OctetSeq_out oc
   ACE_ENV_ARG_DECL)
 {
@@ -91,7 +91,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
   size_t nargs,
   void * servant_upcall,
   CORBA::TypeCode_ptr const * exceptions,
-  size_t nexceptions
+  CORBA::ULong nexceptions
   ACE_ENV_ARG_DECL)
 {
   // This method implements one of the "intermediate" server side
@@ -144,7 +144,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
   size_t nargs,
   void * servant_upcall,
   CORBA::TypeCode_ptr const * exceptions,
-  size_t nexceptions
+  CORBA::ULong nexceptions
   ACE_ENV_ARG_DECL)
 {
 
@@ -207,7 +207,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request (
   size_t nargs,
   void * servant_upcall,
   CORBA::TypeCode_ptr const * exceptions,
-  size_t nexceptions
+  CORBA::ULong nexceptions
   ACE_ENV_ARG_DECL)
 {
   // This method implements an "intermediate" server side interception
@@ -276,7 +276,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_reply (
   size_t nargs,
   void * servant_upcall,
   CORBA::TypeCode_ptr const * exceptions,
-  size_t nexceptions
+  CORBA::ULong nexceptions
   ACE_ENV_ARG_DECL)
 {
   // This is an "ending" interception point so we only process the
@@ -322,7 +322,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_exception (
   size_t nargs,
   void * servant_upcall,
   CORBA::TypeCode_ptr const * exceptions,
-  size_t nexceptions
+  CORBA::ULong nexceptions
   ACE_ENV_ARG_DECL)
 {
   // This is an "ending" server side interception point so we only
@@ -415,7 +415,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_other (
   size_t nargs,
   void * servant_upcall,
   CORBA::TypeCode_ptr const * exceptions,
-  size_t nexceptions
+  CORBA::ULong nexceptions
   ACE_ENV_ARG_DECL)
 {
   // This is an "ending" server side interception point so we only

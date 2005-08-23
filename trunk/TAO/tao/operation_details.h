@@ -60,7 +60,7 @@ public:
                          TAO::Argument **args = 0,
                          CORBA::ULong num_args = 0,
                          TAO::Exception_Data *ex_data = 0,
-                         CORBA::Long ex_count = 0);
+                         CORBA::ULong ex_count = 0);
 
   /// Operation name
   const char* opname (void) const;

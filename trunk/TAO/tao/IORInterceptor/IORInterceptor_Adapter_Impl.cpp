@@ -164,7 +164,8 @@ TAO_IORInterceptor_Adapter_Impl::adapter_state_changed (
 
   PortableInterceptor::ObjectReferenceTemplateSeq seq_obj_ref_template;
 
-  seq_obj_ref_template.length (array_obj_ref_template.size());
+  seq_obj_ref_template.length (
+    static_cast <CORBA::ULong> (array_obj_ref_template.size()));
 
   for (size_t counter = 0; counter < array_obj_ref_template.size(); ++counter)
     {

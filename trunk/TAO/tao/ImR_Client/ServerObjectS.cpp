@@ -409,7 +409,7 @@ void POA_ImplementationRepository::ServerObject::ping_skel (
 
 #if TAO_HAS_INTERCEPTORS == 1
   static CORBA::TypeCode_ptr const * const exceptions = 0;
-  static size_t const nexceptions = 0;
+  static CORBA::ULong const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
 
   TAO::SArg_Traits< void>::ret_val retval;
@@ -486,7 +486,7 @@ void POA_ImplementationRepository::ServerObject::shutdown_skel (
 
 #if TAO_HAS_INTERCEPTORS == 1
   static CORBA::TypeCode_ptr const * const exceptions = 0;
-  static size_t const nexceptions = 0;
+  static CORBA::ULong const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
 
   TAO::SArg_Traits< void>::ret_val retval;
@@ -582,7 +582,7 @@ void POA_ImplementationRepository::ServerObject::_is_a_skel (
 
 #if TAO_HAS_INTERCEPTORS == 1
   static CORBA::TypeCode_ptr const * const exceptions = 0;
-  static size_t const nexceptions = 0;
+  static CORBA::ULong const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
 
   TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val retval;
@@ -672,7 +672,7 @@ void POA_ImplementationRepository::ServerObject::_non_existent_skel (
 
 #if TAO_HAS_INTERCEPTORS == 1
   static CORBA::TypeCode_ptr const * const exceptions = 0;
-  static size_t const nexceptions = 0;
+  static CORBA::ULong const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
 
   TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val retval;
@@ -808,7 +808,7 @@ void POA_ImplementationRepository::ServerObject::_component_skel (
 
 #if TAO_HAS_INTERCEPTORS == 1
   static CORBA::TypeCode_ptr const * const exceptions = 0;
-  static size_t const nexceptions = 0;
+  static CORBA::ULong const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
 
   TAO::SArg_Traits< ::CORBA::Object>::ret_val retval;
