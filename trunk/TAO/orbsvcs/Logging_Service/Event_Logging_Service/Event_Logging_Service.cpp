@@ -110,11 +110,15 @@ Event_Logging_Service::startup (int argc, char *argv[]
     return -1;
 
   // Activate the event log factory
+  ACE_NEW_THROW_EX (this->event_log_factory_,
+		    TAO_EventLogFactory_i (),
+		    CORBA::NO_MEMORY ());
+		    
   // CORBA::Object_var obj =
   DsEventLogAdmin::EventLogFactory_var obj =
-    this->event_log_factory_.activate (this->orb_.in (),
-                                       this->poa_.in ()
-                                       ACE_ENV_ARG_PARAMETER);
+    this->event_log_factory_->activate (this->orb_.in (),
+                                        this->poa_.in ()
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
   ACE_ASSERT (!CORBA::is_nil (obj.in ()));
 
@@ -226,7 +230,7 @@ Event_Logging_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Deactivate.
   PortableServer::ObjectId_var oid =
-    this->poa_->servant_to_id (&this->event_log_factory_
+    this->poa_->servant_to_id (this->event_log_factory_
                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
