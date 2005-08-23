@@ -22,14 +22,16 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
+#include "tao/AnyTypeCode/Any.h"
+#include "tao/AnyTypeCode/NVList_Adapter_Impl.h"
+
+#include "tao/Environment.h"
+
 #include "ace/Unbounded_Queue.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Atomic_Op.h"
 
-#include "tao/Environment.h"
-#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
-#include "tao/AnyTypeCode/Any.h"
-#include "tao/AnyTypeCode/NVList_Adapter_Impl.h"
 
 class TAO_ORB_Core;
 class TAO_InputCDR;

@@ -41,6 +41,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/DomainC.h"
 
 #if defined (TAO_EXPORT_MACRO)

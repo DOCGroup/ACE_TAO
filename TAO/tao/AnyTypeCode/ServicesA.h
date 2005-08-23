@@ -34,8 +34,8 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
-#include "tao/ServicesC.h"
 #include "tao/AnyTypeCode/OctetSeqA.h"
+#include "tao/ServicesC.h"
 
 
 // TAO_IDL - Generated from

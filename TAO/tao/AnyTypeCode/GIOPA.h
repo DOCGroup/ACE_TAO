@@ -34,6 +34,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/GIOPC.h"
 #include "tao/AnyTypeCode/IOP_IORA.h"
 #include "tao/AnyTypeCode/OctetSeqA.h"

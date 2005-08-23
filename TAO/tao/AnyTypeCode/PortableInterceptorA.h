@@ -34,9 +34,9 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
-#include "tao/PortableInterceptorC.h"
 #include "tao/AnyTypeCode/PI_ForwardA.h"
 #include "tao/AnyTypeCode/Messaging_SyncScopeA.h"
+#include "tao/PortableInterceptorC.h"
 
 
 // TAO_IDL - Generated from
