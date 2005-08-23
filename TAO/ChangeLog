@@ -1,3 +1,8 @@
+Tue Aug 23 13:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.cpp:
+          Added include of Any.h
+
 Tue Aug 23 13:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Abstract_Servant_Base.h:
