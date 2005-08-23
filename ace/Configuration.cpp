@@ -357,7 +357,8 @@ ACE_Configuration::operator== (const ACE_Configuration& rhs) const
                     }
                   else if (valueType == INTEGER)
                     {
-                      u_int thisInt, rhsInt;
+                      u_int thisInt = 0;
+                      u_int rhsInt = 0;
                       if (nonconst_this->get_integer_value (
                             thisSection,
                             valueName.c_str (),
@@ -380,7 +381,8 @@ ACE_Configuration::operator== (const ACE_Configuration& rhs) const
                     {
                       void* thisData = 0;
                       void* rhsData = 0;
-                      size_t thisLength, rhsLength;
+                      size_t thisLength = 0;
+                      size_t rhsLength = 0;
                       if (nonconst_this->get_binary_value (thisSection,
                                                            valueName.c_str (),
                                                            thisData,
