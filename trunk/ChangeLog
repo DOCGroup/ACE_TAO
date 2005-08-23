@@ -1,3 +1,11 @@
+Tue Aug 23 18:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Configuration.cpp:
+          Explicitly initialize local variables
+
+        * ace/OS_NS_sys_socket.inl:
+          Removed not needed c-style casts that caused 64bit warnings
+
 Mon Aug 22 09:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/bmake.features
