@@ -145,8 +145,6 @@ CORBA::Request::invoke (ACE_ENV_SINGLE_ARG_DECL)
   const CORBA::Boolean argument_flag =
     this->args_->_lazy_has_arguments ();
 
-  size_t number_args = 0;
-
   TAO::NamedValue_Argument _tao_retval (this->result_);
 
 
@@ -158,6 +156,8 @@ CORBA::Request::invoke (ACE_ENV_SINGLE_ARG_DECL)
     &_tao_in_list
   };
 
+  int number_args = 0;
+
   if (argument_flag)
     number_args = 2;
   else
@@ -167,7 +167,7 @@ CORBA::Request::invoke (ACE_ENV_SINGLE_ARG_DECL)
        this->target_,
        _tao_arg_list,
        number_args,
-       const_cast<char *> (this->opname_),
+       this->opname_,
        static_cast<CORBA::ULong> (ACE_OS::strlen (this->opname_)),
        this->exceptions_.in (),
        this);
@@ -190,8 +190,6 @@ CORBA::Request::send_oneway (ACE_ENV_SINGLE_ARG_DECL)
   const CORBA::Boolean argument_flag =
     this->args_->_lazy_has_arguments ();
 
-  size_t number_args = 0;
-
   TAO::NamedValue_Argument _tao_retval (this->result_);
 
 
@@ -203,6 +201,8 @@ CORBA::Request::send_oneway (ACE_ENV_SINGLE_ARG_DECL)
     &_tao_in_list
   };
 
+  int number_args = 0;
+
   if (argument_flag)
     number_args = 2;
   else
@@ -212,7 +212,7 @@ CORBA::Request::send_oneway (ACE_ENV_SINGLE_ARG_DECL)
       this->target_,
       _tao_arg_list,
       number_args,
-      const_cast<char *> (this->opname_),
+      this->opname_,
       static_cast<CORBA::ULong> (ACE_OS::strlen (this->opname_)),
       0,
       TAO::TAO_ONEWAY_INVOCATION);
@@ -246,7 +246,7 @@ CORBA::Request::send_deferred (ACE_ENV_SINGLE_ARG_DECL)
     &_tao_in_list
   };
 
-  size_t number_args = 0;
+  int number_args = 0;
 
   if (argument_flag)
     number_args = 2;
@@ -257,7 +257,7 @@ CORBA::Request::send_deferred (ACE_ENV_SINGLE_ARG_DECL)
       this->target_,
       _tao_arg_list,
       number_args,
-      const_cast<char *> (this->opname_),
+      this->opname_,
       static_cast<CORBA::ULong> (ACE_OS::strlen (this->opname_)),
       0,
       this->orb_->orb_core (),
