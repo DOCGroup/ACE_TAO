@@ -33,17 +33,13 @@
 
 #include /**/ "ace/pre.h"
 
-
-#include "ace/config-all.h"
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
-#include "tao/ORB.h"
-#include "tao/Environment.h"
-#include "tao/Objref_VarOut_T.h"
+#include "tao/Basic_Types.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

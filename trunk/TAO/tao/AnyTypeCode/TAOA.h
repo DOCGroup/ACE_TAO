@@ -34,10 +34,10 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
-#include "tao/TAOC.h"
 #include "tao/AnyTypeCode/PolicyA.h"
 #include "tao/AnyTypeCode/TimeBaseA.h"
 #include "tao/AnyTypeCode/Messaging_SyncScopeA.h"
+#include "tao/TAOC.h"
 
 
 // TAO_IDL - Generated from
