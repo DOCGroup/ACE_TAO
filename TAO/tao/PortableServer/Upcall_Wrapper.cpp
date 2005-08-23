@@ -30,7 +30,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
 #if TAO_HAS_INTERCEPTORS == 1
                              , void * servant_upcall
                              , CORBA::TypeCode_ptr const * exceptions
-                             , size_t nexceptions
+                             , CORBA::ULong nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
                              ACE_ENV_ARG_DECL

@@ -77,7 +77,7 @@ namespace TAO
                        size_t nargs,
                        void * servant_upcall,
                        CORBA::TypeCode_ptr const * exceptions,
-                       size_t nexceptions);
+                       CORBA::ULong nexceptions);
 
     /// Return an ID unique to the current request.  This request ID may
     /// or may not be the same as the GIOP request ID.
@@ -293,7 +293,7 @@ namespace TAO
     CORBA::TypeCode_ptr const * const exceptions_;
 
     /// The number of elements in the @c exceptions_ array.
-    size_t const nexceptions_;
+    CORBA::ULong const nexceptions_;
   };
 
 }  // End namespace TAO

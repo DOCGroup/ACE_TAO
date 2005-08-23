@@ -109,7 +109,7 @@ namespace TAO
                         Argument **args,
                         int arg_number,
                         const char *operation,
-                        int op_len,
+                        size_t op_len,
                         Collocation_Proxy_Broker *cpb,
                         TAO::Invocation_Type type = TAO_TWOWAY_INVOCATION,
                         TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION);
@@ -264,7 +264,7 @@ namespace TAO
     char const * operation_;
 
     /// String length of the operation name.
-    int const op_len_;
+    size_t const op_len_;
 
     /// Collocation proxy broker for this operation.
     Collocation_Proxy_Broker * const cpb_;
