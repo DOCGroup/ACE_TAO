@@ -467,7 +467,7 @@ ACE_OS::recvmsg (ACE_HANDLE handle, struct msghdr *msg, int flags)
       return -1;
     }
   else
-    return (ssize_t) bytes_received;
+    return bytes_received;
 # else /* ACE_HAS_WINSOCK2 */
   ACE_SOCKCALL_RETURN (::recvmsg (handle, msg, flags), int, -1);
 # endif /* ACE_HAS_WINSOCK2 */
@@ -609,7 +609,7 @@ ACE_OS::sendmsg (ACE_HANDLE handle,
       return -1;
     }
   else
-    return (ssize_t) bytes_sent;
+    return bytes_sent;
 # elif defined (ACE_HAS_NONCONST_SENDMSG)
   ACE_SOCKCALL_RETURN (::sendmsg (handle,
                                   const_cast<struct msghdr *>(msg),
