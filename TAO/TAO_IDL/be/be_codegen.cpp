@@ -1412,6 +1412,12 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
   // that require all necessary non-dependent names be parsed prior to
   // parsing templates that may use them (e.g. GNU g++ 3.4.x).
 
+  this->gen_cond_file_include ((be_global->tc_support ()
+                                || idl_global->exception_seen_)
+                               && !be_global->gen_anyop_files (),
+                               "tao/AnyTypeCode/AnyTypeCode_methods.h",
+                               this->client_header_);
+
   if (idl_global->abstract_iface_seen_)
     {
       // Include the AbstractBase file from the Valuetype library.
@@ -1453,12 +1459,6 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
           this->client_header_
         );
     }
-
-  this->gen_cond_file_include ((be_global->tc_support ()
-                                || idl_global->exception_seen_)
-                               && !be_global->gen_anyop_files (),
-                               "tao/AnyTypeCode/AnyTypeCode_methods.h",
-                               this->client_header_);
 
   // @note This header should not go first.  See the discussion above
   //       regarding non-dependent template names.

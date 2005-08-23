@@ -1,3 +1,23 @@
+Tue Aug 23 15:54:52 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_codegen.cpp (gen_stub_hdr_includes):
+
+	  Another round of generated include directive reording to address
+	  template related order of parsing issues in g++ 3.4.x or better.
+
+	* tao/Any_Insert_Policy_T.h (any_insert):
+
+	  Made these methods non-virtual.  All binding is done at
+	  compile-time so there is no need make them virtual.  Also
+	  addresses "class with virtual funtions but no virtual
+	  destructor" g++ 4.0 warnings.
+
+	* tao/IFR_Client/IFR_ComponentsC.h:
+	* orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h:
+
+	  More g++ 3.4.x or better order of parsing related template
+	  error fixes.
+
 Tue Aug 23 10:43:07 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/IORInterceptor/IORInterceptor_Adapter_Factory_Impl.cpp:
