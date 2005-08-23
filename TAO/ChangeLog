@@ -1,3 +1,8 @@
+Tue Aug 23 10:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Fixed_Array_SArgument_T.{h,cpp}:
+          Fixed compilation issues with vc6
+
 Tue Aug 23 07:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_1395_Regression/Bug_1395_Regression.mpc:
