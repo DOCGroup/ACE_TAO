@@ -1,3 +1,33 @@
+Mon Aug 22 21:05:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_codegen.cpp (gen_stub_hdr_includes):
+
+	  Reordered generated include directives so that Any/TypeCode
+	  include directives are placed before ones from the ORB core to
+	  make sure some things are parsed before some templates
+	  (e.g. TAO_Pseudo_{Var,Out}_T).  Addresses issues with compilers
+	  that require all necessary non-dependent names be parsed prior
+	  to parsing templates that may use them (e.g. GNU g++ 3.4.x or
+	  better).
+
+	  Removed duplicate "TypeCode.h" include directive generation.
+
+	* tao/AnyTypeCode/AnySeqC.h:
+	* tao/AnyTypeCode/Any_Unknown_IDL_Type.cpp:
+	* tao/AnyTypeCode/BooleanSeqA.h:
+	* tao/AnyTypeCode/TypeCode.h:
+	* tao/AnyTypeCode/append.cpp:
+
+	  Reordered include directives to force non-dependent names used
+	  as template arguments to be parsed before the templates in
+	  question.  Addresses issues with compilers that require all
+	  necessary non-dependent names be parsed prior to parsing
+	  templates that may use them (e.g. GNU g++ 3.4.x or  better).
+
+	* tao/AnyTypeCode/Any_Impl.h:
+
+	  Removed unnecessary "Any.h" include directive.
+
 Mon Aug 22 15:46:29 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/ORB.h:
