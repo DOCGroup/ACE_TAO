@@ -1,3 +1,48 @@
+Wed Aug 24 09:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        On the client side we passed the typecode of the user exceptions to the
+        invocation adapter, but this is only needed when interceptors are being
+        used.
+
+        * TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/exceptlist_cs.cpp:
+          Generate a TAO_HAS_INTERCEPTORS==1 around the passing of the typecode
+          of the user exception
+
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+          Removed generation of an environment variable in the client side
+          code which was not needed
+
+        * tao/Exception_Data.h
+        * tao/PI/ClientRequestInfo.cpp
+          Only store and use the typecode of an user exception when
+          interceptors are enabled
+
+        * TAO/tao/ImR_Client/ImplRepo.pidl:
+        * TAO/tao/ImR_Client/ServerObject.pidl:
+          Updated regeneration instructions to not use -GA
+
+        * tao/ImR_Client/ImplRepoA.h
+        * tao/ImR_Client/ImplRepoC.cpp
+        * tao/ImR_Client/ImplRepoC.h
+        * tao/ImR_Client/ImplRepoC.inl
+        * tao/ImR_Client/ImplRepoS.cpp
+        * tao/ImR_Client/ImplRepoS.h
+        * tao/ImR_Client/ServerObjectA.h
+        * tao/ImR_Client/ServerObjectC.cpp
+        * tao/ImR_Client/ServerObjectC.h
+        * tao/ImR_Client/ServerObjectC.inl
+        * tao/ImR_Client/ServerObjectS.cpp
+        * tao/ImR_Client/ServerObjectS.h
+          Regenerated
+
+        * TAO/tao/ImR_Client/ImplRepoA.cpp
+        * TAO/tao/ImR_Client/ServerObjectA.cpp
+          Removed
+
+        * tao/Makefile.am:
+          Updated
+
 Tue Aug 23 18:09:07 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/tests/Bug_1395_Regression/Makefile.am:

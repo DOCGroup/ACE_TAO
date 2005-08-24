@@ -434,15 +434,7 @@ be_visitor_operation::gen_stub_operation_body (
           << "}" << be_uidt_nl << be_nl;
     }
 
-  const char *env = this->gen_environment_var ();
-
-  if (ACE_OS::strcmp ("", env) != 0)
-    {
-      *os << env << be_nl;
-    }
-
   // Declare return type helper class.
-
   *os << "TAO::Arg_Traits< ";
 
   this->gen_arg_template_param_name (node,
