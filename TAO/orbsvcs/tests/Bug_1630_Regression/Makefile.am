@@ -29,10 +29,10 @@ testclient_SOURCES = \
   testclient.cpp
 
 testclient_LDADD = \
-  -lTAO_IFR_Client \
-  -lTAO_AnyTypeCode \
-  -lTAO \
-  -lACE
+  $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
 
