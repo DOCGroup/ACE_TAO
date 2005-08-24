@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// .\be\be_codegen.cpp:391
+// be\be_codegen.cpp:373
 
 #ifndef _TAO_IDL_SERVEROBJECTS_H_
 #define _TAO_IDL_SERVEROBJECTS_H_
@@ -43,24 +43,15 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
-
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_module/module_sh.cpp:49
+// be\be_visitor_module/module_sh.cpp:49
 
 namespace POA_ImplementationRepository
 {
   
   
   // TAO_IDL - Generated from
-  // c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_sh.cpp:87
+  // be\be_visitor_interface/interface_sh.cpp:87
   
   class ServerObject;
   typedef ServerObject *ServerObject_ptr;
@@ -83,7 +74,7 @@ namespace POA_ImplementationRepository
     ServerObject (const ServerObject& rhs);
     virtual ~ServerObject (void);
     
-    virtual CORBA::Boolean _is_a (
+    virtual ::CORBA::Boolean _is_a (
         const char* logical_type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
@@ -116,6 +107,13 @@ namespace POA_ImplementationRepository
         ACE_ENV_ARG_DECL
       );
     
+    static void _repository_id_skel (
+        TAO_ServerRequest & req,
+        void * servant_upcall,
+        void * servant
+        ACE_ENV_ARG_DECL
+      );
+    
     virtual void _dispatch (
         TAO_ServerRequest & req,
         void * servant_upcall
@@ -129,13 +127,13 @@ namespace POA_ImplementationRepository
     virtual const char* _interface_repository_id (void) const;
     
     // TAO_IDL - Generated from
-    // c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
     
     virtual void ping (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       )) = 0;
     
     static void ping_skel (
@@ -146,13 +144,13 @@ namespace POA_ImplementationRepository
       );
     
     // TAO_IDL - Generated from
-    // c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_sh.cpp:45
+    // be\be_visitor_operation/operation_sh.cpp:45
     
     virtual void shutdown (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       )) = 0;
     
     static void shutdown_skel (
@@ -168,7 +166,7 @@ namespace POA_ImplementationRepository
   //
   
   // TAO_IDL - Generated from
-  // c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:36
+  // be\be_visitor_interface/strategized_proxy_broker_sh.cpp:36
   
   class TAO_IMR_Client_Export _TAO_ServerObject_Strategized_Proxy_Broker
     : public virtual TAO::Collocation_Proxy_Broker
@@ -180,15 +178,15 @@ namespace POA_ImplementationRepository
     
     TAO::Collocation_Strategy
     get_strategy (
-        CORBA::Object_ptr obj
+        ::CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL
       )
-      ACE_THROW_SPEC ((CORBA::SystemException));
+      ACE_THROW_SPEC (( ::CORBA::SystemException));
     
     void
     dispatch (
-        CORBA::Object_ptr obj,
-        CORBA::Object_out forward_obj,
+        ::CORBA::Object_ptr obj,
+        ::CORBA::Object_out forward_obj,
         TAO::Argument ** args,
         int num_args,
         const char * op,
@@ -196,7 +194,7 @@ namespace POA_ImplementationRepository
         TAO::Collocation_Strategy strategy
         ACE_ENV_ARG_DECL
       )
-      ACE_THROW_SPEC ((CORBA::Exception));
+      ACE_THROW_SPEC (( ::CORBA::Exception));
     
     static _TAO_ServerObject_Strategized_Proxy_Broker *
     the_TAO_ServerObject_Strategized_Proxy_Broker (void);
@@ -209,7 +207,7 @@ namespace POA_ImplementationRepository
   
   
   // TAO_IDL - Generated from 
-  // c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_interface/direct_proxy_impl_sh.cpp:31
+  // be\be_visitor_interface/direct_proxy_impl_sh.cpp:31
   
   ///////////////////////////////////////////////////////////////////////
   //                    Direct  Impl. Declaration
@@ -220,10 +218,10 @@ namespace POA_ImplementationRepository
   public:
     _TAO_ServerObject_Direct_Proxy_Impl (void);
     
-    virtual ~_TAO_ServerObject_Direct_Proxy_Impl (void) {}
+    virtual ~_TAO_ServerObject_Direct_Proxy_Impl (void);
     
     // TAO_IDL - Generated from
-    // c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/proxy_impl_xh.cpp:24
+    // be\be_visitor_operation/proxy_impl_xh.cpp:24
     
     static void
     ping (
@@ -233,11 +231,11 @@ namespace POA_ImplementationRepository
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
-    // c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/proxy_impl_xh.cpp:24
+    // be\be_visitor_operation/proxy_impl_xh.cpp:24
     
     static void
     shutdown (
@@ -247,7 +245,7 @@ namespace POA_ImplementationRepository
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
   };
   
@@ -258,22 +256,14 @@ namespace POA_ImplementationRepository
   
 
 // TAO_IDL - Generated from
-// c:\cvsdoc\ace_wrappers\tao\tao_idl\be\be_visitor_module/module_sh.cpp:80
+// be\be_visitor_module/module_sh.cpp:80
 
 } // module ImplementationRepository
 
 // TAO_IDL - Generated from 
-// .\be\be_codegen.cpp:995
+// be\be_codegen.cpp:1072
 
 
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
 
 #include /**/ "ace/post.h"
 #endif /* ifndef */

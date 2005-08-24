@@ -26,36 +26,19 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:805
+// be\be_codegen.cpp:390
 
-#ifndef _TAO_IDL_ORIG_SERVEROBJECTA_H_
-#define _TAO_IDL_ORIG_SERVEROBJECTA_H_
+#ifndef _TAO_IDL_ORIG_SERVER_OBJECTA_H_
+#define _TAO_IDL_ORIG_SERVER_OBJECTA_H_
 
 #include /**/ "ace/pre.h"
 
-#include "imr_client_export.h"
 #include "tao/ImR_Client/ServerObjectC.h"
 
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
-
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_decl.cpp:49
-
-extern TAO_IMR_Client_Export ::CORBA::TypeCode_ptr const _tc_ServerObject;
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:53
-
-TAO_IMR_Client_Export void operator<<= (CORBA::Any &, ImplementationRepository::ServerObject_ptr); // copying
-TAO_IMR_Client_Export void operator<<= (CORBA::Any &, ImplementationRepository::ServerObject_ptr *); // non-copying
-TAO_IMR_Client_Export CORBA::Boolean operator>>= (const CORBA::Any &, ImplementationRepository::ServerObject_ptr &);
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include /**/ "ace/post.h"
-
 #endif /* ifndef */
+

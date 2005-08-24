@@ -13,13 +13,14 @@
 #ifndef TAO_EXCEPTION_DATA_H
 #define TAO_EXCEPTION_DATA_H
 #include /**/ "ace/pre.h"
-#include "ace/config-all.h"
 
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/orbconf.h"
 
 namespace TAO
 {
@@ -46,8 +47,10 @@ namespace TAO
     /// The allocator for this exception.
     TAO_Exception_Alloc alloc;
 
+#if TAO_HAS_INTERCEPTORS == 1
     /// The typecode pointer for this exception.
     CORBA::TypeCode_ptr tc_ptr;
+#endif /* TAO_HAS_INTERCEPTORS */
   };
 }
 
