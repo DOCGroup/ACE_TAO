@@ -1,3 +1,10 @@
+Wed Aug 24 18:12:16 2005  Simon McQueen  <sm@prismtech.com>
+
+        * TAO_IDL/util/utl_global.cpp:
+
+          Avoid recording duplicate file names in ::add_to_included_idl_files.
+          This fixes bug #2221.
+
 Wed Aug 24 11:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.cpp:
