@@ -4,6 +4,7 @@
 #include "testC.h"
 
 #include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.h"
 #include "ace/OS_NS_string.h"
 
 ACE_RCSID (Request_Interceptor_Flow,

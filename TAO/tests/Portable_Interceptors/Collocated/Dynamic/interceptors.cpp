@@ -5,13 +5,12 @@
 #include "ace/OS_NS_string.h"
 #include "tao/AnyTypeCode/DynamicC.h"
 #include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.h"
 
 ACE_RCSID (Dynamic,
            interceptors,
            "$Id$")
 
-  //const CORBA::ULong request_ctx_id = 0xdead;
-  //const CORBA::ULong reply_ctx_id = 0xbeef;
 const char *request_msg = "The Echo_Request_Interceptor request message";
 const char *reply_msg = "The Echo_Request_Interceptor reply message";
 CORBA::ULong Echo_Client_Request_Interceptor::client_interceptor_check_ = 0;

@@ -6,6 +6,7 @@
 #include "ServerORBInitializer.h"
 
 #include "tao/ORBInitializer_Registry.h"
+#include "tao/PI/PI.h"
 #include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (PICurrent,
