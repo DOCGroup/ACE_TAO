@@ -966,16 +966,15 @@ ACE_Dev_Poll_Reactor::close (void)
 
   int result = 0;
 
+  if (this->poll_fd_ != ACE_INVALID_HANDLE)
+    {
+      result = ACE_OS::close (this->poll_fd_);
+    }
+
 #if defined (ACE_HAS_EVENT_POLL)
 
-  if( this->events_ != 0 )
-    {
-      ACE_OS::memset (this->events_,
-                      0,
-                      this->size_ * sizeof (struct epoll_event));
-      delete [] this->events_;
-      this->events_        = 0;
-    }
+  delete [] this->events_;
+  this->events_ = 0;
 
 #else
 
@@ -983,11 +982,6 @@ ACE_Dev_Poll_Reactor::close (void)
   this->dp_fds_ = 0;
 
 #endif  /* ACE_HAS_EVENT_POLL */
-
-  if (this->poll_fd_ != ACE_INVALID_HANDLE)
-    {
-      result = ACE_OS::close (this->poll_fd_);
-    }
 
   if (this->delete_signal_handler_)
     {
