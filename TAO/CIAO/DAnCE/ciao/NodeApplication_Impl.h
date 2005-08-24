@@ -20,16 +20,16 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/ORB.h"
-#include "ace/Synch.h"
-#include "ace/Synch_Traits.h"
-#include "ace/SString.h"
-#include "ace/Hash_Map_Manager_T.h"
 #include "Container_Base.h"
 #include "Deployment_CoreS.h"
 #include "Server_init.h"
 #include "CIAO_common.h"
 #include "Object_Set_T.h"
+#include "tao/ORB.h"
+#include "ace/Synch.h"
+#include "ace/Synch_Traits.h"
+#include "ace/SString.h"
+#include "ace/Hash_Map_Manager_T.h"
 
 using CIAO::Utility::write_IOR;
 

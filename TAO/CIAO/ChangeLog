@@ -1,3 +1,15 @@
+Tue Aug 23 20:09:59 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* DAnCE/Old_Config_Handlers/DT_Handler.h:
+	* DAnCE/RTNodeApplication/RTServer_Impl.h:
+	* DAnCE/ciao/Container_Base.h:
+	* DAnCE/ciao/Context_Impl_Base.h:
+	* DAnCE/ciao/NodeApplication_Impl.h:
+
+	  Reordered include directives to make sure all necessary
+	  non-dependent names are parsed before the templates that use
+	  them.  Addresses g++ 3.4.x or better compile-time errors.
+
 Tue Aug 23 19:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/DeploymentManager/DeploymentManager.mpc:

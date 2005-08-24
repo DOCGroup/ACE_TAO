@@ -31,10 +31,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/RTCORBA/RTCORBA.h"
 #include "ciao/NodeApplication_Impl.h"
-//#include "ciao/Container_Impl.h"
 #include "ciao/Container_Base.h"
+#include "tao/RTCORBA/RTCORBA.h"
 
 namespace CIAO
 {
