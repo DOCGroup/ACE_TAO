@@ -64,6 +64,7 @@ client_SOURCES = \
   Test_i.h
 
 client_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
