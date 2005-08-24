@@ -96,7 +96,7 @@ public:
 /* C++ code produced by gperf version 2.8 (ACE version) */
 /* Command-line: c:\ACE\latest\ACE_wrappers\bin\gperf.exe -m -M -J -c -C -D -E -T -f 0 -F 0,0 -a -o -t -p -K opname -L C++ -Z TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable -N lookup  */
 unsigned int
-TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable::hash (const char *str, size_t len)
+TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
   static const unsigned char asso_values[] =
     {
@@ -147,7 +147,7 @@ TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable::hash (const char
 }
 
 const TAO_operation_db_entry *
-TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable::lookup (const char *str, size_t len)
+TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
 {
   enum
     {
