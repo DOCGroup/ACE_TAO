@@ -713,12 +713,6 @@ namespace
          << STRS[EXCP_CE] << "))" << endl
          << "{"
          << "this->context_ =" << endl
-/*
-         << "CIAO_GLUE"
-         << regex::perl_s (t.scoped_name ().scope_name ().str (),
-                           "/::/_/")
-         << "::"
-*/
          << t.name () << "_Context::_narrow (" << endl
          << "ctx" << endl
          << STRS[ENV_ARG] <<");"
