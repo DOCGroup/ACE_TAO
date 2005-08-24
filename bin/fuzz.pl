@@ -1041,19 +1041,19 @@ sub check_for_ace_check ()
                 next if m/^\s*$/;
 
                 if ($disable == 0) {
-                    if (m/[,\(]\s*ACE_TRY_ENV[,\)]/) {
+                    if (m/[,\(]\s*ACE_ENV_(SINGLE_)?ARG_PARAMETER[,\)]/) {
                         $found_env = 1;
                         $in_func = 1;
                         $env_line = $line;
                     }
 
-                    # ignore quoted ACE_TRY_ENV's
-                    if (m/^[^\"]*\"[^\"]*ACE_TRY_ENV[^\"]*\"[^\"]*$/) {
+                    # ignore quoted ACE_ENV_ARG_PARAMETERS's
+                    if (m/^[^\"]*\"[^\"]*ACE_ENV_(SINGLE_)?ARG_PARAMETER[^\"]*\"[^\"]*$/) {
                         $found_env = 0;
                     }
 
-                    if (m/ACE_TRY_ENV.*ACE_TRY_ENV/) {
-                        print_error ("Multiple ACE_TRY_ENV in $file ($line)");
+                    if (m/ACE_ENV_(SINGLE_)?ARG_PARAMETER.*ACE_ENV_(SINGLE_)?ARG_PARAMETER/) {
+                        print_error ("Multiple ACE_ENV_ARG_PARAMETER in $file ($line)");
                     }
 
                     if ($in_func && m/\)/) {

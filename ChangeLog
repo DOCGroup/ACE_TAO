@@ -1,3 +1,11 @@
+Wed Aug 24 12:39:04 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/fuzz.pl:
+
+          Fixed this script to work with the ACE_ENV_ARG_PARAMTER and
+          ACE_ENV_SINGLE_ARG_PARAMETER macros.  This will begin to check all
+          of the missing ACE_CHECK/ACE_TRY_CHECK's again.
+
 Wed Aug 24 08:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Select_Reactor_Base.cpp:
@@ -5,45 +13,45 @@ Wed Aug 24 08:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Aug 23 22:56:33 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Dev_Poll_Reactor.cpp (close):
+        * ace/Dev_Poll_Reactor.cpp (close):
 
-	  Removed unnecessary zeroing of underlying epoll data structure
-	  array.
+          Removed unnecessary zeroing of underlying epoll data structure
+          array.
 
-	  Deallocate epoll event data structure array and /dev/poll event
-	  handler file descriptor array after closing the epoll and
-	  /dev/poll file descriptor, respectively, to ensure consistent
-	  finalization of resources, to prevent potential destruction of
-	  event resources while waiting for events in another thread.
-	  It's not clear whether such a scenario will occur since a lock
-	  is currently held but better to be consistent.
+          Deallocate epoll event data structure array and /dev/poll event
+          handler file descriptor array after closing the epoll and
+          /dev/poll file descriptor, respectively, to ensure consistent
+          finalization of resources, to prevent potential destruction of
+          event resources while waiting for events in another thread.
+          It's not clear whether such a scenario will occur since a lock
+          is currently held but better to be consistent.
 
 Tue Aug 23 22:35:00 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/Array_Map_Test.cpp (reference_count_test):
+        * tests/Array_Map_Test.cpp (reference_count_test):
 
-	  Added some assertions to further verify correct ACE_Array_Map
-	  operation.
+          Added some assertions to further verify correct ACE_Array_Map
+          operation.
 
-	* tests/Dev_Poll_Reactor_Test.cpp (handle_input):
+        * tests/Dev_Poll_Reactor_Test.cpp (handle_input):
 
-	  Fixed loop variable increment.  A for-scope variable was
-	  shadowing the "bytes_read" value, preventing the loop variable
-	  from being updated correctly.
+          Fixed loop variable increment.  A for-scope variable was
+          shadowing the "bytes_read" value, preventing the loop variable
+          from being updated correctly.
 
 Tue Aug 23 22:24:16 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Atomic_Op_T.cpp:
-	* ace/Atomic_Op_T.inl:
+        * ace/Atomic_Op_T.cpp:
+        * ace/Atomic_Op_T.inl:
 
-	  Moved inlined constructor to the ".inl" inline source file.
+          Moved inlined constructor to the ".inl" inline source file.
 
 Tue Aug 23 22:17:29 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* apps/JAWS2/JAWS/JAWS.h:
+        * apps/JAWS2/JAWS/JAWS.h:
 
-	  Fixed '"JAWS_NTRACE" is not defined' g++ 4.0 preprocessor symbol
-	  warning.
+          Fixed '"JAWS_NTRACE" is not defined' g++ 4.0 preprocessor symbol
+          warning.
 
 Tue Aug 23 19:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
