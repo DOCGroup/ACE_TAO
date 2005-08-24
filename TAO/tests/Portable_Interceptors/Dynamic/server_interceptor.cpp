@@ -5,6 +5,7 @@
 
 #include "tao/AnyTypeCode/DynamicC.h"
 #include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.h.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
