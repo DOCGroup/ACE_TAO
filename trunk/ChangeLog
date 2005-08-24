@@ -1,3 +1,10 @@
+Tue Aug 23 22:24:16 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Atomic_Op_T.cpp:
+	* ace/Atomic_Op_T.inl:
+
+	  Moved inlined constructor to the ".inl" inline source file.
+
 Tue Aug 23 22:17:29 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* apps/JAWS2/JAWS/JAWS.h:
