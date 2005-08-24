@@ -326,7 +326,7 @@ ACE_Select_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_Select_Reactor_Handler_Repository::unbind");
 
-  size_t slot;
+  size_t slot = 0;
   ACE_Event_Handler *event_handler = this->find (handle, &slot);
 
   if (event_handler == 0)
