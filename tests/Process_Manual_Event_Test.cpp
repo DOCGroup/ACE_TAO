@@ -10,7 +10,7 @@
 //
 // = DESCRIPTION
 //    This test verifies the functionality of the <ACE_Manual_Event>
-//    processshared implementation.
+//    process-shared implementation.
 //
 // = AUTHOR
 //    Martin Corino <mcorino@remedy.nl>
@@ -36,8 +36,8 @@
    (defined (ACE_HAS_POSIX_SEM) && defined (ACE_HAS_POSIX_SEM_TIMEOUT) && !defined (ACE_LACKS_NAMED_POSIX_SEM)))
 static int iterations = 10;
 static int child_process = 0;
-static const char *event_ping_name = "ACE_Ping_Event";
-static const char *event_pong_name = "ACE_Pong_Event";
+static const ACE_TCHAR *event_ping_name = ACE_TEXT ("ACE_Ping_Event");
+static const ACE_TCHAR *event_pong_name = ACE_TEXT ("ACE_Pong_Event");
 
 // Explain usage and exit.
 static void
@@ -58,24 +58,24 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
   while ((c = get_opt ()) != -1)
     switch (c)
-    {
-    case 'i':
-      iterations = ACE_OS::atoi (get_opt.opt_arg ());
-      break;
-    case 'c':
-      child_process = 1;
-      break;
-    default:
-      print_usage_and_die ();
-      break;
-  }
+      {
+      case 'i':
+        iterations = ACE_OS::atoi (get_opt.opt_arg ());
+        break;
+      case 'c':
+        child_process = 1;
+        break;
+      default:
+        print_usage_and_die ();
+        break;
+      }
 }
 
 static void
 acquire_release (void)
 {
-  ACE_Manual_Event event_ping (0, USYNC_PROCESS, ACE_TEXT_CHAR_TO_TCHAR (event_ping_name));
-  ACE_Manual_Event event_pong (0, USYNC_PROCESS, ACE_TEXT_CHAR_TO_TCHAR (event_pong_name));
+  ACE_Manual_Event event_ping (0, USYNC_PROCESS, event_ping_name);
+  ACE_Manual_Event event_pong (0, USYNC_PROCESS, event_pong_name);
 
   // Make sure the constructor succeeded
   ACE_ASSERT (ACE_LOG_MSG->op_status () == 0);
@@ -83,76 +83,82 @@ acquire_release (void)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P) Begin ping-pong\n")));
 
+  int i;
   if (child_process)
-  {
-    for (int i=0; i<iterations ;++i)
     {
-      event_ping.signal ();
+      for (i = 0; i < iterations; ++i)
+        {
+          event_ping.signal ();
 
-      if (event_pong.wait ())
-        ACE_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("(%P) Failed acquiring pong (%p)\n")));
+          if (event_pong.wait ())
+            ACE_DEBUG ((LM_ERROR,
+                        ACE_TEXT ("(%P) %p\n"),
+                        ACE_TEXT ("Failed acquiring pong")));
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P) Pong\n")));
+              event_pong.reset ();
+            }
+        }
+
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P) Testing timeouts\n")));
+
+      // test timed wait
+      ACE_Time_Value wait = ACE_OS::gettimeofday ();
+      wait.sec (wait.sec () + 3); // timeout in 3 secs
+
+      if (event_pong.wait (&wait))
+        if (errno != ETIME)
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P) %p, but expected ETIME\n"),
+                      ACE_TEXT ("event_pong.wait()")));
       else
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P) Pong\n")));
-        event_pong.reset ();
-      }
-    }
-
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P) Testing timeouts\n")));
-
-    // test timed wait
-    ACE_Time_Value wait = ACE_OS::gettimeofday ();
-    wait.sec (wait.sec () + 3); // timeout in 3 secs
-
-    if (event_pong.wait (&wait))
-        ACE_ASSERT(errno == ETIME);
-    else
         ACE_DEBUG ((LM_ERROR,
                     ACE_TEXT ("(%P) Acquired pong without release()\n")));
 
-    event_ping.signal ();   // release waiting parent before timeout
-  }
+      event_ping.signal ();   // release waiting parent before timeout
+    }
   else
-  {
-    for (int i=0; i<iterations ;++i)
     {
-      if (event_ping.wait ())
-        ACE_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("(%P) Failed acquiring ping (%p)\n")));
-      else
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P) Ping\n")));
-        event_ping.reset ();
-      }
+      for (i = 0; i < iterations; ++i)
+        {
+          if (event_ping.wait ())
+            ACE_DEBUG ((LM_ERROR,
+                        ACE_TEXT ("(%P) %p\n"),
+                        ACE_TEXT ("Failed acquiring ping")));
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P) Ping\n")));
+              event_ping.reset ();
+            }
 
-      event_pong.signal ();
+          event_pong.signal ();
+        }
+
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P) Testing timeouts\n")));
+
+      // test timed wait
+      ACE_Time_Value wait = ACE_OS::gettimeofday ();
+      wait.sec (wait.sec () + 10); // timeout in 10 secs
+
+      if (event_ping.wait (&wait))
+        {
+          if (errno != ETIME)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P) %p but should be ETIME\n"),
+                        ACE_TEXT ("Acquire pong")));
+          else
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P) Acquire pong timed out\n")));
+        }
     }
-
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P) Testing timeouts\n")));
-
-    // test timed wait
-    ACE_Time_Value wait = ACE_OS::gettimeofday ();
-    wait.sec (wait.sec () + 10); // timeout in 10 secs
-
-    if (event_ping.wait (&wait))
-    {
-      ACE_ASSERT(errno == ETIME);
-      ACE_DEBUG ((LM_ERROR,
-                  ACE_TEXT ("(%P) Acquiring pong timed out\n")));
-    }
-  }
 }
 #endif /* ! ACE_LACKS_FORK */
 
 int
 run_main (int argc, ACE_TCHAR *argv[])
 {
-#if defined (ACE_LACKS_FORK)
+#if defined (ACE_LACKS_FORK) && !defined (ACE_WIN32)
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
 
@@ -178,7 +184,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   else
     {
       ACE_START_TEST (ACE_TEXT ("Process_Manual_Event_Test"));
-
+#if 0
       ACE_Process_Options options;
       options.command_line (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
                             ACE_TEXT ("Process_Manual_Event_Test")
@@ -211,7 +217,10 @@ run_main (int argc, ACE_TCHAR *argv[])
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("Child %d finished with status %d\n"),
                     child.getpid (), child_status));
-
+#else
+      // start test
+      acquire_release ();
+#endif
       ACE_END_TEST;
     }
 #else /* !ACE_LACKS_FORK */

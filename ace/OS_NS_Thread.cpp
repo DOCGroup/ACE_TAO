@@ -2808,56 +2808,159 @@ ACE_OS::event_init (ACE_event_t *event,
   ACE_eventdata_t* evtdata;
 
   if (type == USYNC_PROCESS)
-  {
-    int owner = 0;
-    // Let's see if the shared memory entity already exists.
-    ACE_HANDLE fd = ACE_OS::shm_open (ACE_TEXT_CHAR_TO_TCHAR(name),
-                                      O_RDWR | O_CREAT | O_EXCL,
-                                      ACE_DEFAULT_FILE_PERMS);
-    if (fd == ACE_INVALID_HANDLE)
     {
-      if (errno == EEXIST)
-        fd = ACE_OS::shm_open (ACE_TEXT_CHAR_TO_TCHAR(name),
-                               O_RDWR | O_CREAT,
-                               ACE_DEFAULT_FILE_PERMS);
+      int owner = 0;
+      // Let's see if the shared memory entity already exists.
+      ACE_HANDLE fd = ACE_OS::shm_open (ACE_TEXT_CHAR_TO_TCHAR (name),
+                                        O_RDWR | O_CREAT | O_EXCL,
+                                        ACE_DEFAULT_FILE_PERMS);
+      if (fd == ACE_INVALID_HANDLE)
+        {
+          if (errno == EEXIST)
+            fd = ACE_OS::shm_open (ACE_TEXT_CHAR_TO_TCHAR (name),
+                                   O_RDWR | O_CREAT,
+                                   ACE_DEFAULT_FILE_PERMS);
+          if (fd == ACE_INVALID_HANDLE)   // Still can't get it.
+            return -1;
+        }
       else
-        return(-1);
-    }
-    else
-    {
+        {
           // We own this shared memory object!  Let's set its size.
-      if (ACE_OS::ftruncate (fd,
-                             sizeof (ACE_eventdata_t)) == -1)
-      {
-        ACE_OS::close (fd);
-        return(-1);
-      }
-      owner = 1;
-    }
+          if (ACE_OS::ftruncate (fd, sizeof (ACE_eventdata_t)) == -1)
+            {
+              ACE_OS::close (fd);
+              return -1;
+            }
+          owner = 1;
+        }
 
-    evtdata =
+      evtdata =
         (ACE_eventdata_t *) ACE_OS::mmap (0,
                                           sizeof (ACE_eventdata_t),
                                           PROT_RDWR,
                                           MAP_SHARED,
                                           fd,
                                           0);
-    ACE_OS::close (fd);
-    if (evtdata == MAP_FAILED)
-    {
-      if (owner)
-        ACE_OS::shm_unlink (ACE_TEXT_CHAR_TO_TCHAR(name));
-      return(-1);
-    }
+      ACE_OS::close (fd);
+      if (evtdata == MAP_FAILED)
+        {
+          if (owner)
+            ACE_OS::shm_unlink (ACE_TEXT_CHAR_TO_TCHAR (name));
+          return -1;
+        }
 
-    if (owner)
+      if (owner)
+        {
+          event->name_ = ACE_OS::strdup (name);
+          if (event->name_ == 0)
+            {
+              ACE_OS::shm_unlink (ACE_TEXT_CHAR_TO_TCHAR (name));
+              return -1;
+            }
+          event->eventdata_ = evtdata;
+          event->eventdata_->type_ = type;
+          event->eventdata_->manual_reset_ = manual_reset;
+          event->eventdata_->is_signaled_ = initial_state;
+          event->eventdata_->auto_event_signaled_ = false;
+          event->eventdata_->waiting_threads_ = 0;
+          event->eventdata_->signal_count_ = 0;
+
+# if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)) || \
+    (!defined (ACE_USES_FIFO_SEM) && \
+      (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
+          int result = ACE_OS::cond_init (&event->eventdata_->condition_,
+                                          static_cast<short> (type),
+                                          name,
+                                          arg);
+# else
+          char   sem_name[128];
+          ACE_OS::strncpy (sem_name,
+                           name,
+                           sizeof (sem_name) - (1 + sizeof ("._ACE_EVTSEM_")));
+          ACE_OS::strcat (sem_name, "._ACE_EVTSEM_");
+          int result = ACE_OS::sema_init (&event->semaphore_,
+                                          0,
+                                          type,
+                                          sem_name,
+                                          arg);
+# endif
+          if (result == 0)
+# if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && \
+        (!defined (ACE_LACKS_MUTEXATTR_PSHARED) || !defined (ACE_LACKS_CONDATTR_PSHARED))) || \
+     (!defined (ACE_USES_FIFO_SEM) && \
+        (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
+            result = ACE_OS::mutex_init (&event->eventdata_->lock_,
+                                         type,
+                                         name,
+                                         (ACE_mutexattr_t *) arg);
+# else
+          {
+            char   lck_name[128];
+            ACE_OS::strncpy
+              (lck_name,
+               name,
+               sizeof (lck_name) - (1 + sizeof ("._ACE_EVTLCK_")));
+            ACE_OS::strcat (lck_name, "._ACE_EVTLCK_");
+            result = ACE_OS::sema_init (&event->lock_,
+                                        0,
+                                        type,
+                                        lck_name,
+                                        arg);
+            if (result == 0)
+              result = ACE_OS::sema_post (&event->lock_); /* Initially unlock */
+          }
+# endif
+          return result;
+        }
+      else
+        {
+          int result = 0;
+
+          event->name_ = 0;
+          event->eventdata_ = evtdata;
+#if (!defined (ACE_HAS_PTHREADS) || !defined (_POSIX_THREAD_PROCESS_SHARED) || defined (ACE_LACKS_CONDATTR_PSHARED)) && \
+  (defined (ACE_USES_FIFO_SEM) || \
+    (defined (ACE_HAS_POSIX_SEM) && defined (ACE_HAS_POSIX_SEM_TIMEOUT) && !defined (ACE_LACKS_NAMED_POSIX_SEM)))
+          char   sem_name[128];
+          ACE_OS::strncpy (sem_name,
+                           name,
+                           sizeof (sem_name) - (1 + sizeof ("._ACE_EVTSEM_")));
+          ACE_OS::strcat (sem_name, "._ACE_EVTSEM_");
+          result = ACE_OS::sema_init(&event->semaphore_,
+                                     0,
+                                     type,
+                                     sem_name,
+                                     arg);
+# endif
+
+# if (!defined (ACE_HAS_PTHREADS) || !defined (_POSIX_THREAD_PROCESS_SHARED) || \
+        (defined (ACE_LACKS_MUTEXATTR_PSHARED) && defined (ACE_LACKS_CONDATTR_PSHARED))) && \
+     (defined (ACE_USES_FIFO_SEM) || \
+        (defined (ACE_HAS_POSIX_SEM) && defined (ACE_HAS_POSIX_TIMEOUT) && defined (ACE_LACKS_NAMED_POSIX_SEM)))
+          if (result == 0)
+            {
+              char   lck_name[128];
+              ACE_OS::strncpy
+                (lck_name,
+                 name,
+                 sizeof (lck_name) - (1 + sizeof ("._ACE_EVTLCK_")));
+              ACE_OS::strcat (lck_name, "._ACE_EVTLCK_");
+              result = ACE_OS::sema_init (&event->lock_,
+                                          0,
+                                          type,
+                                          lck_name,
+                                          arg);
+            }
+# endif
+          return result;
+        }
+
+      return 0;
+    }
+  else
     {
-      event->name_ = ACE_OS::strdup (name);
-      if (event->name_ == 0)
-      {
-        ACE_OS::shm_unlink (ACE_TEXT_CHAR_TO_TCHAR(name));
-        return(-1);
-      }
+      ACE_NEW_RETURN (evtdata, ACE_eventdata_t, -1);
+      event->name_ = 0;
       event->eventdata_ = evtdata;
       event->eventdata_->type_ = type;
       event->eventdata_->manual_reset_ = manual_reset;
@@ -2870,17 +2973,14 @@ ACE_OS::event_init (ACE_event_t *event,
     (!defined (ACE_USES_FIFO_SEM) && \
       (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
       int result = ACE_OS::cond_init (&event->eventdata_->condition_,
-                                       static_cast<short> (type),
-                                       name,
-                                       arg);
+                                      static_cast<short> (type),
+                                      name,
+                                      arg);
 # else
-      char   sem_name[128];
-      ACE_OS::strncpy (sem_name, name, sizeof(sem_name)-(1+sizeof("._ACE_EVTSEM_")));
-      ACE_OS::strcat (sem_name, "._ACE_EVTSEM_");
       int result = ACE_OS::sema_init (&event->semaphore_,
                                       0,
                                       type,
-                                      sem_name,
+                                      name,
                                       arg);
 # endif
       if (result == 0)
@@ -2889,112 +2989,21 @@ ACE_OS::event_init (ACE_event_t *event,
      (!defined (ACE_USES_FIFO_SEM) && \
         (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
         result = ACE_OS::mutex_init (&event->eventdata_->lock_,
-                                      type,
-                                      name,
-                                      (ACE_mutexattr_t *) arg);
-# else
-        {
-          char   lck_name[128];
-          ACE_OS::strncpy (lck_name, name, sizeof(lck_name)-(1+sizeof("._ACE_EVTLCK_")));
-          ACE_OS::strcat (lck_name, "._ACE_EVTLCK_");
-          result = ACE_OS::sema_init (&event->lock_,
-                                      0,
-                                      type,
-                                      lck_name,
-                                      arg);
-          if (result == 0)
-            result = ACE_OS::sema_post(&event->lock_);    /* initially unlock */
-        }
-# endif
-      return result;
-    }
-    else
-    {
-      int result = 0;
-
-      event->name_ = 0;
-      event->eventdata_ = evtdata;
-#if (!defined (ACE_HAS_PTHREADS) || !defined (_POSIX_THREAD_PROCESS_SHARED) || defined (ACE_LACKS_CONDATTR_PSHARED)) && \
-  (defined (ACE_USES_FIFO_SEM) || \
-    (defined (ACE_HAS_POSIX_SEM) && defined (ACE_HAS_POSIX_SEM_TIMEOUT) && !defined (ACE_LACKS_NAMED_POSIX_SEM)))
-      char   sem_name[128];
-      ACE_OS::strncpy (sem_name, name, sizeof(sem_name)-(1+sizeof("._ACE_EVTSEM_")));
-      ACE_OS::strcat (sem_name, "._ACE_EVTSEM_");
-      result = ACE_OS::sema_init(&event->semaphore_,
-                                  0,
-                                  type,
-                                  sem_name,
-                                  arg);
-# endif
-
-# if (!defined (ACE_HAS_PTHREADS) || !defined (_POSIX_THREAD_PROCESS_SHARED) || \
-        (defined (ACE_LACKS_MUTEXATTR_PSHARED) && defined (ACE_LACKS_CONDATTR_PSHARED))) && \
-     (defined (ACE_USES_FIFO_SEM) || \
-        (defined (ACE_HAS_POSIX_SEM) && defined (ACE_HAS_POSIX_TIMEOUT) && defined (ACE_LACKS_NAMED_POSIX_SEM)))
-      if (result == 0)
-      {
-        char   lck_name[128];
-        ACE_OS::strncpy (lck_name, name, sizeof(lck_name)-(1+sizeof("._ACE_EVTLCK_")));
-        ACE_OS::strcat (lck_name, "._ACE_EVTLCK_");
-        result = ACE_OS::sema_init (&event->lock_,
-                                    0,
-                                    type,
-                                    lck_name,
-                                    arg);
-      }
-# endif
-      return result;
-    }
-  }
-  else
-  {
-    ACE_NEW_RETURN (evtdata,
-                    ACE_eventdata_t,
-                    -1);
-    event->name_ = 0;
-    event->eventdata_ = evtdata;
-    event->eventdata_->type_ = type;
-    event->eventdata_->manual_reset_ = manual_reset;
-    event->eventdata_->is_signaled_ = initial_state;
-    event->eventdata_->auto_event_signaled_ = false;
-    event->eventdata_->waiting_threads_ = 0;
-    event->eventdata_->signal_count_ = 0;
-
-# if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)) || \
-    (!defined (ACE_USES_FIFO_SEM) && \
-      (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
-    int result = ACE_OS::cond_init (&event->eventdata_->condition_,
-                                     static_cast<short> (type),
+                                     type,
                                      name,
-                                     arg);
-# else
-    int result = ACE_OS::sema_init(&event->semaphore_,
-                                    0,
-                                    type,
-                                    name,
-                                    arg);
-# endif
-    if (result == 0)
-# if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && \
-        (!defined (ACE_LACKS_MUTEXATTR_PSHARED) || !defined (ACE_LACKS_CONDATTR_PSHARED))) || \
-     (!defined (ACE_USES_FIFO_SEM) && \
-        (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
-      result = ACE_OS::mutex_init (&event->eventdata_->lock_,
-                                    type,
-                                    name,
-                                    (ACE_mutexattr_t *) arg);
+                                     (ACE_mutexattr_t *) arg);
 # else
       result = ACE_OS::sema_init (&event->lock_,
                                   0,
                                   type,
                                   name,
                                   arg);
-    if (result == 0)
-      result = ACE_OS::sema_post(&event->lock_);    /* initially unlock */
+      if (result == 0)
+        result = ACE_OS::sema_post(&event->lock_);    /* initially unlock */
 # endif
 
-    return result;
-  }
+      return result;
+    }
 #else
   ACE_UNUSED_ARG (event);
   ACE_UNUSED_ARG (manual_reset);
