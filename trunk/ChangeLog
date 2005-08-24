@@ -16,7 +16,7 @@ Tue Aug 23 22:56:33 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  finalization of resources, to prevent potential destruction of
 	  event resources while waiting for events in another thread.
 	  It's not clear whether such a scenario will occur since a lock
-	  is current held but better to be consistent.
+	  is currently held but better to be consistent.
 
 Tue Aug 23 22:35:00 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
