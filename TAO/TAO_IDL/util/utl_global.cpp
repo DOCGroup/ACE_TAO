@@ -605,6 +605,15 @@ IDL_GlobalData::n_include_file_names (void)
 void
 IDL_GlobalData::add_to_included_idl_files (char* file_name)
 {
+  // Let's avoid duplicates.
+  for (size_t index = 0; index < this->n_included_idl_files_; ++index)
+    {
+      if (!ACE_OS::strcmp (file_name, this->included_idl_files_[index]))
+        {
+          return;
+        }
+    }
+
   // Is there enough space there to store one more file.
   if (this->n_included_idl_files_ == this->n_allocated_idl_files_)
     {
@@ -1138,7 +1147,7 @@ IDL_GlobalData::string_to_scoped_name (char *s)
   // a space.
   char *test = ACE_OS::strchr (start, ' ');
   char *end = ACE_OS::strstr (start, "::");
-  
+
   if (test != 0 && test - end < 0)
     {
       end = test;
@@ -1182,7 +1191,7 @@ IDL_GlobalData::string_to_scoped_name (char *s)
 
       start = end + 2;
       end = (end[0] == ' ' ? 0 : ACE_OS::strstr (start, "::"));
-  
+
       if (test != 0 && test - end < 0)
         {
           end = 0;
@@ -1192,7 +1201,7 @@ IDL_GlobalData::string_to_scoped_name (char *s)
   len = test - start;
 
   // This means we've already dealt with the space between the target
-  // name and the id string (above) and we're done.  
+  // name and the id string (above) and we're done.
   if (test == 0 || len <= 0)
     {
       return retval;
@@ -1549,7 +1558,7 @@ IDL_GlobalData::path_cmp (const char *s, const char *t)
 #endif /* defined (WIN32) */
 }
 
-void 
+void
 IDL_GlobalData::add_dcps_data_type(const char* id)
 {
   // Check if the type already exists.
@@ -1562,7 +1571,7 @@ IDL_GlobalData::add_dcps_data_type(const char* id)
       char* foo_type;
       ACE_NEW (foo_type, char [ACE_OS::strlen (id) + 2]);
       ACE_OS::sprintf (foo_type, "%s ", id);
-      
+
       UTL_ScopedName* t1 = idl_global->string_to_scoped_name(foo_type);
       // chained with null Identifier required!!
       UTL_ScopedName* target = new UTL_ScopedName(new Identifier(""),t1);
@@ -1587,7 +1596,7 @@ IDL_GlobalData::add_dcps_data_type(const char* id)
 
 }
 
-idl_bool 
+idl_bool
 IDL_GlobalData::add_dcps_data_key(const char* id, const char* key)
 {
   // Search the map for the type.
@@ -1606,7 +1615,7 @@ IDL_GlobalData::add_dcps_data_key(const char* id, const char* key)
   return false;
 }
 
-IDL_GlobalData::DCPS_Data_Type_Info* 
+IDL_GlobalData::DCPS_Data_Type_Info*
 IDL_GlobalData::is_dcps_type(UTL_ScopedName* target)
 {
   // Traverse the entire map.
