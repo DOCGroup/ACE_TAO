@@ -64,8 +64,11 @@ be_visitor_operation_exceptlist_cs::visit_operation (be_operation *node)
 
           *os << "{" << be_idt_nl
               << "\"" << ex->repoID () << "\"," << be_nl
-              << ex->name () << "::_alloc," << be_nl
-              << ex->tc_name () << be_uidt_nl
+              << ex->name () << "::_alloc"
+              << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl
+              << ", " << ex->tc_name ()
+              << "\n#endif /* TAO_HAS_INTERCEPTORS */" << be_uidt_nl
+
               << "}";
 
           ei.next ();

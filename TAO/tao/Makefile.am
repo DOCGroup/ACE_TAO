@@ -2246,10 +2246,8 @@ libTAO_ImR_Client_la_CPPFLAGS = \
 
 libTAO_ImR_Client_la_SOURCES = \
   ImR_Client/ImR_Client.cpp \
-  ImR_Client/ImplRepoA.cpp \
   ImR_Client/ImplRepoC.cpp \
   ImR_Client/ImplRepoS.cpp \
-  ImR_Client/ServerObjectA.cpp \
   ImR_Client/ServerObjectC.cpp \
   ImR_Client/ServerObjectS.cpp \
   ImR_Client/ServerObject_i.cpp

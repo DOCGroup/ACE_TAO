@@ -163,8 +163,10 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (
           *os << "{" << be_idt_nl
               << "\"" << ex->repoID () << "\"," << be_nl;
           // Allocator method.
-          *os << ex->name () << "::_alloc," << be_nl
-              << ex->tc_name () << be_uidt_nl
+          *os << ex->name () << "::_alloc,"
+              << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl
+              << ", " << ex->tc_name ()
+              << "\n#endif /* TAO_HAS_INTERCEPTORS */" << be_uidt_nl
               << "}";
 
           ++excep_count;
