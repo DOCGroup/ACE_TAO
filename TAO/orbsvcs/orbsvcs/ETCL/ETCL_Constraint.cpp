@@ -5,12 +5,12 @@
 #include "ETCL_Constraint_Visitor.h"
 #include "ETCL_y.h"
 
-#include "tao/Managed_Types.h"
-#include "tao/Environment.h"
-#include "tao/CDR.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/Any.h"
+#include "tao/Managed_Types.h"
+#include "tao/Environment.h"
+#include "tao/CDR.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "ETCL_Constraint.inl"
