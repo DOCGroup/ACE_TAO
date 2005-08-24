@@ -24,7 +24,26 @@
 /**
  * @class ACE_Stream_Head
  *
- * @brief Standard module that acts as the head of a stream.
+ * @brief Standard task that acts as reader or writer at the head of
+ *        an ACE_Stream.
+ *
+ * A ACE_Message_Block sent to this task (via its put() hook) triggers
+ * actions depending on the block type and whether the task is acting as
+ * a reader or a writer. If the block is of type ACE_Message_Block::MB_IOCTL,
+ * the block's is assumed to contain (beginning at its rd_ptr()) an
+ * ACE_IO_Cntl_Msg object and is processed accordingly. This is usually
+ * used to set the task's message queue high water and/or low water marks.
+ *
+ * When the block is not ACE_Message_Block::MB_IOCTL, processing depends on
+ * the ACE_Stream_Head's role in the module:
+ *
+ * - Reader: If the block is of type ACE_Message_Block::MB_FLUSH, the
+ *           canonical_flush() method is called.
+ *           (@see ACE_Stream::canonical_flush().) If the block is any other
+ *           type, it is queued on this task's message queue. It would thus
+ *           be available to caller's reading blocks from the containing
+ *           stream.
+ * - Writer: The block is passed to the next module in the stream.
  */
 template <ACE_SYNCH_DECL>
 class ACE_Stream_Head : public ACE_Task<ACE_SYNCH_USE>

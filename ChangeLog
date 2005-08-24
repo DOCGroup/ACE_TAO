@@ -1,3 +1,8 @@
+Wed Aug 24 17:15:28 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/Stream_Modules.h: Added some info about ACE_Stream_Head so
+	  I don't have to keep looking it up ;-)
+
 Wed Aug 24 12:39:04 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/fuzz.pl:
