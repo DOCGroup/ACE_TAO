@@ -13,7 +13,7 @@
 #include /**/ "ace/pre.h"
 
 #include "Config_Handler_export.h"
-#include "tao/ORB.h"
+#include "tao/Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -29,6 +29,12 @@ using xercesc::DOMImplementation;
 using xercesc::DOMText;
 using xercesc::DOMNodeIterator;
 using xercesc::DOMNode;
+
+namespace CORBA
+{
+  class ORB;
+  typedef ORB* ORB_ptr;
+}
 
 namespace CIAO
 {

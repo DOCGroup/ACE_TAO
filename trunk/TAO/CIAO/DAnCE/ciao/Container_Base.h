@@ -15,15 +15,20 @@
 
 #ifndef CIAO_CONTAINER_BASE_H
 #define CIAO_CONTAINER_BASE_H
+
 #include /**/ "ace/pre.h"
 
-#include "ace/Hash_Map_Manager_T.h"
-#include "tao/ORB.h"
-#include "tao/PortableServer/PortableServer.h"
-#include "tao/PortableServer/Servant_Base.h"
 #include "ciao/CCM_ContainerC.h"
 #include "ciao/Deployment_CoreC.h"
 #include "ciao/CIAO_Server_Export.h"
+
+#include "tao/PortableServer/PortableServer.h"
+#include "tao/PortableServer/Servant_Base.h"
+
+#include "tao/ORB.h"
+
+#include "ace/Hash_Map_Manager_T.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
