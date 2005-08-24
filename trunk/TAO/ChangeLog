@@ -1,3 +1,24 @@
+Wed Aug 24 10:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Dynamic/server_interceptor.cpp:
+        * tests/Portable_Interceptors/Dynamic/client_interceptor.cpp:
+        * tests/Portable_Interceptors/Collocated/Dynamic/interceptors.cpp:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Client_Request_Interceptor.cpp:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Server_Request_Interceptor.cpp:
+          Explicitly include the AnyTypeCode_Adapter_Impl.h. These tests
+          use the functionality to get the method arguments as Any and
+          for this we now need the AnyTypeCode adapter. Fixes test failures
+          in the static builds.
+
+        * tao/PI/PI.cpp:
+          Also do the process directive for the PICurrent Loader
+
+        * tao/PI/PICurrent_Loader.{h,cpp}:
+          No static initializer needed here, this is in the PI file
+
+        * tests/Portable_Interceptors/PICurrent/server.cpp:
+          Fixed static runtime error
+
 Wed Aug 24 09:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         On the client side we passed the typecode of the user exceptions to the
