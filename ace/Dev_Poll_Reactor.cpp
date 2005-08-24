@@ -1073,17 +1073,19 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value * max_wait_time)
          && *this_timeout != *max_wait_time) ? 1 : 0);
 
   const long timeout =
-    (this_timeout == 0 ? -1 /* Infinity */ : static_cast<long> (this_timeout->msec ()));
+    (this_timeout == 0
+     ? -1 /* Infinity */
+     : static_cast<long> (this_timeout->msec ()));
 
 #if defined (ACE_HAS_EVENT_POLL)
 
-   // Waiting for events...
+   // Wait for events.
    const int nfds = ::epoll_wait (this->poll_fd_,
                                   this->events_,
                                   this->size_,
                                   static_cast<int> (timeout));
 
-  // all detected events are put in this->events_:
+   // all detected events are put in this->events_:
    this->start_pevents_ = this->events_;
 
    // If nfds == 0 then end_pevents_ == start_pevents_ meaning that there is
