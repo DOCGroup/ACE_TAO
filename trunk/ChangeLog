@@ -1,3 +1,12 @@
+Wed Aug 24 19:09:31 2005  Steve Huston  <shuston@riverace.com>
+
+	* configure.ac: Copied in updated copyright paragraph from COPYING.
+
+	* ace/OS_NS_Thread.cpp: Formatting fixes.
+
+	* tests/Process_Manual_Event_Test.cpp: ACE_ERROR formatting
+	  corrections (%p needs a string); code format fixes.
+
 Wed Aug 24 17:15:28 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/Stream_Modules.h: Added some info about ACE_Stream_Head so
