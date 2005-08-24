@@ -582,9 +582,6 @@ namespace
          << i.name () << "_Servant_T<int> "
          << i.name () << "_Servant;";
 
-      // Close the CIAO_GLUE namespace.
-//      os << "}";
-
       i.context ().set ("facet_hdr_gen", true);
     }
   };
@@ -1043,9 +1040,6 @@ namespace
     {
       // Component context class closer.
       os << "};";
-
-      // Namespace closer.
-//      os << "}";
     }
 
   private:
@@ -1694,9 +1688,6 @@ namespace
     {
       // Component servant class closer.
       os << "};";
-
-      // Namespace closer.
-//      os << "}";
     }
   };
 
@@ -2214,12 +2205,6 @@ namespace
          << "CIAO::Session_Container *c," << endl
          << "const char *ins_name" << endl
          << STRS[ENV_HDR] << ");" << endl;
-    }
-
-    virtual void post (Type&)
-    {
-      // Namespace closer.
-//      os << "}";
     }
 
   private:
