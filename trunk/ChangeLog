@@ -1,3 +1,10 @@
+Tue Aug 23 22:17:29 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* apps/JAWS2/JAWS/JAWS.h:
+
+	  Fixed '"JAWS_NTRACE" is not defined' g++ 4.0 preprocessor symbol
+	  warning.
+
 Tue Aug 23 19:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/JAWS2/JAWS/IO_Handler.{h,cpp}:
