@@ -1058,9 +1058,6 @@ namespace
          << STRS[ACE_TR] << " (CORBA::INTERNAL (), 0);" << endl
          << "}" << endl;
 
-      // Close the CIAO_GLUE namespace.
-//      os << "}";
-
       i.context ().set ("facet_src_gen", true);
     }
   };
@@ -1789,13 +1786,6 @@ namespace
          << endl
          << "}";
     }
-
-    virtual void
-    post (Type&)
-    {
-      // Namespace closer.
-//      os << "}";
-    }
   };
 
   struct ServantEmitter : Traversal::Component, EmitterBase
@@ -2351,21 +2341,7 @@ namespace
       virtual void
       traverse (SemanticGraph::Type& t)
       {
-/*
-        os << "CIAO_GLUE";
-
-        ScopedName scope (t.scoped_name ().scope_name ());
-
-        if (!scope.simple ())
-        {
-          for (Name::Iterator i (scope.begin () + 1); i != scope.end (); ++i)
-          {
-            os << "_" << i->str ();
-          }
-        }
-*/
-        os //<< "::" 
-           << t.name () << "_Servant";
+        os << t.name () << "_Servant";
       }
 
     private:
@@ -3757,13 +3733,6 @@ namespace
 
       os << "}";
     }
-
-    virtual void
-    post (Type&)
-    {
-      // Namespace closer.
-//      os << "}";
-    }
   };
 
   struct HomeEmitter : Traversal::Home, EmitterBase
@@ -4304,9 +4273,6 @@ namespace
     virtual void
     post (Type& t)
     {
-      // Namespace closer.
-//      os << "}";
-
       os << "extern \"C\" " << ctx.export_macro ()
          << " ::PortableServer::Servant"
          << endl
@@ -4333,10 +4299,7 @@ namespace
          << "}"
          << "return new" << endl;
 
-      os //<< "CIAO_GLUE"
-         //<< regex::perl_s (t.scoped_name ().scope_name ().str (), "/::/_/")
-         //<< "::" 
-         << t.name () << "_Servant (" << endl
+      os << t.name () << "_Servant (" << endl
          << "x.in ()," << endl
          << "ins_name," << endl
          << "c);" << endl

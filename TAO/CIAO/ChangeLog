@@ -1,3 +1,12 @@
+Wed Aug 24 20:41:59 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ExecImplHeaderGenerator.cpp:
+        * CIDLC/ExecImplSourceGenerator.cpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        
+          Removed commented-out code.
+
 Tue Aug 23 20:09:59 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* DAnCE/Old_Config_Handlers/DT_Handler.h:
