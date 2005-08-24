@@ -34,8 +34,7 @@ libECMcastTests_la_SOURCES = \
 
 noinst_HEADERS = \
   EC_Wrapper.h \
-  Gateway_EC.h \
-  ectest_export.h
+  Gateway_EC.h
 
 endif BUILD_CORBA_MESSAGING
 

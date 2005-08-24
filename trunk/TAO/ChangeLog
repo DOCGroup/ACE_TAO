@@ -1,3 +1,16 @@
+Tue Aug 23 18:09:07 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/tests/Bug_1395_Regression/Makefile.am:
+	* orbsvcs/tests/Bug_1630_Regression/Makefile.am:
+	* orbsvcs/tests/Event/Mcast/Common/Makefile.am:
+
+	  Regenerated.
+
+	* orbsvcs/tests/Event/Mcast/Common/ECMcastTests_lib.mpc:
+
+	  Removed nonexistant ectest_export.h file from Header_Files
+	  section.
+
 Tue Aug 23 15:54:52 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_codegen.cpp (gen_stub_hdr_includes):
