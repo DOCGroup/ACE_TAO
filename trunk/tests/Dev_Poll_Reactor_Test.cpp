@@ -201,16 +201,18 @@ Server::handle_input (ACE_HANDLE /* handle */)
 
   ssize_t bytes_read = 0;
 
-  for (char * buf = buffer; buf < buffer + BUFSIZ; buf += bytes_read)
+  char * const begin = buffer;
+  char * const end   = buffer + BUFSIZ;
+
+  for (char * buf = begin; buf != end; buf += bytes_read)
     {
       // Keep reading until it is no longer possible to do so.
       //
       // This is done since the underlying event demultiplexing
-      // mechanism may be "state change" interface (as opposed to
+      // mechanism may have a "state change" interface (as opposed to
       // "state monitoring"), in which case a "speculative" read is
       // done.
-      ssize_t bytes_read =
-        this->peer ().recv (buf, BUFSIZ);
+      bytes_read = this->peer ().recv (buf, BUFSIZ - bytes_read);
 
       ACE_DEBUG ((LM_DEBUG,
                   "****** bytes_read = %d\n",
@@ -472,6 +474,7 @@ server_worker (void *p)
   if (reactor.run_reactor_event_loop () != 0)
     {
       ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
                   ACE_TEXT ("Error when running server ")
                   ACE_TEXT ("reactor event loop\n")));
 

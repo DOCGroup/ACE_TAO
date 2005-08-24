@@ -1,3 +1,16 @@
+Tue Aug 23 22:35:00 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/Array_Map_Test.cpp (reference_count_test):
+
+	  Added some assertions to further verify correct ACE_Array_Map
+	  operation.
+
+	* tests/Dev_Poll_Reactor_Test.cpp (handle_input):
+
+	  Fixed loop variable increment.  A for-scope variable was
+	  shadowing the "bytes_read" value, preventing the loop variable
+	  from being updated correctly.
+
 Tue Aug 23 22:24:16 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Atomic_Op_T.cpp:
