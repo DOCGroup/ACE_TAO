@@ -1,3 +1,8 @@
+Wed Aug 24 08:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Select_Reactor_Base.cpp:
+          Fixed possible unitialized used warning
+
 Tue Aug 23 22:56:33 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Dev_Poll_Reactor.cpp (close):
