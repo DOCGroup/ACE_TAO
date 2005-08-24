@@ -21,11 +21,9 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 
-
-ACE_RCSID (tao,
+ACE_RCSID (PI,
            PICurrent_Loader,
            "$Id$")
-
 
 CORBA::Object_ptr
 TAO_PICurrent_Loader::create_object (
@@ -40,12 +38,6 @@ TAO_PICurrent_Loader::create_object (
                   TAO::PICurrent (*orb->orb_core ()),
                   CORBA::Object::_nil ());
   return obj;
-}
-
-int
-TAO_PICurrent_Loader::Initializer (void)
-{
-  return ACE_Service_Config::process_directive (ace_svc_desc_TAO_PICurrent_Loader);
 }
 
 ACE_STATIC_SVC_DEFINE (TAO_PICurrent_Loader,
