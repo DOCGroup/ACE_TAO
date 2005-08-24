@@ -156,6 +156,15 @@ ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator= (const TYPE &rhs)
 // ACE_Atomic_Op inline functions
 //
 
+template <class ACE_LOCK, class TYPE> ACE_INLINE
+ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op
+  (const ACE_Atomic_Op<ACE_LOCK, TYPE> &rhs)
+  : impl_ (this->own_mutex_, rhs.value ())
+{
+// ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op");
+}
+
+
 template <class ACE_LOCK, class TYPE> ACE_INLINE ACE_Atomic_Op<ACE_LOCK, TYPE> &
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator= (const TYPE &i)
 {
