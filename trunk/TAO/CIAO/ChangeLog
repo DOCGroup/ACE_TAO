@@ -1,3 +1,9 @@
+Thu Aug 25 15:26:25 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
+
+	* DAnCE/ciao/ServerResources.idl: Added the missing <stacksize>
+	  attribute to ORS_ThreadpoolWithLanes struct.  Thanks to Will
+	  Otte for catching this.
+
 Wed Aug 24 20:41:59 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ExecImplHeaderGenerator.cpp:
