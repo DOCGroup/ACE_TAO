@@ -1,3 +1,11 @@
+Thu Aug 25 18:53:31 2005  Steve Huston  <shuston@riverace.com>
+
+	* tests/Array_Map_Test.cpp: Don't attempt to build this test if
+	  using explicit template instantiation. It's hopeless trying STL
+	  code with explicit templates, especially portably.
+
+	* tests/Time_Value_Test.cpp: Fixed typo.
+
 Thu Aug 25 11:40:36 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * ace/Task.cpp (activate): Corrected misuse of the argument
