@@ -13,12 +13,23 @@ TAO_EC_Queue::
 
 /// @todo The high water mark and low water mark shouldn't be
 /// hardcoded, check http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=565
+#ifndef TAO_EC_QUEUE_HWM
+#define TAO_EC_QUEUE_HWM 16384
+//#define TAO_EC_QUEUE_HWM 2
+#endif
+
+#ifndef TAO_EC_QUEUE_LWM
+#define TAO_EC_QUEUE_LWM 16
+//#define TAO_EC_QUEUE_LWM 1
+#endif
+
 ACE_INLINE
 TAO_EC_Dispatching_Task::
-TAO_EC_Dispatching_Task (ACE_Thread_Manager* thr_manager)
+TAO_EC_Dispatching_Task (ACE_Thread_Manager* thr_manager, TAO_EC_Queue_Full_Service_Object* so)
   :  ACE_Task<ACE_SYNCH> (thr_manager),
      allocator_ (0),
-     the_queue_ (16384, 16) // @@
+     the_queue_ (TAO_EC_QUEUE_HWM, TAO_EC_QUEUE_LWM),
+     queue_full_service_object_ (so)
 {
   this->msg_queue (&this->the_queue_);
 }
