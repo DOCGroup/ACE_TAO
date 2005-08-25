@@ -21,13 +21,17 @@ AC_INIT([TAO],
 
 AC_REVISION([$Id$])
 
-AC_COPYRIGHT([ACE(TM) and TAO(TM) are copyrighted by Douglas C. Schmidt and
-his research group at Washington University, University of California,
-Irvine, and Vanderbilt University Copyright (c) 1993-2004, all rights
-reserved.  Since ACE and TAO are open-source, free software, you are
-free to use, modify, and distribute the ACE and TAO source code and
-object code produced from the source, as long as you include this
-copyright statement along with code built using ACE and TAO.
+AC_COPYRIGHT([ACE(TM), TAO(TM), CIAO(TM), and CoSMIC(TM) (henceforth
+referred to as "DOC software") are copyrighted by Douglas C.
+Schmidt and his research group at Washington University,
+University of California, Irvine, and Vanderbilt University,
+Copyright (c) 1993-2005, all rights reserved. Since DOC software is
+open-source, free software, you are free to use, modify, copy, and
+distribute--perpetually and irrevocably--the DOC software source code
+and object code produced from the source, as well as copy and
+distribute modified versions of this software. You must, however,
+include this copyright statement along with code built using DOC
+software.
 
 Please see the file `COPYING' in the top level ACE directory for
 additional details.])
