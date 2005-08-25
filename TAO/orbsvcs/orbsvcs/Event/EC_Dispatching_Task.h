@@ -29,6 +29,52 @@
 #include "ace/Task.h"
 #include "ace/Message_Block.h"
 #include "ace/Lock_Adapter_T.h"
+#include "ace/Service_Config.h"
+#include "ace/Global_Macros.h"
+
+// Forward decl
+class TAO_EC_Dispatching_Task;
+
+class TAO_RTEvent_Serv_Export TAO_EC_Queue_Full_Service_Object : public ACE_Service_Object
+{
+public:
+  enum QueueFullActionReturnValue
+  {
+    WAIT_TO_EMPTY = 0,
+    SILENTLY_DISCARD = -1
+  };
+
+  // Called when
+  virtual int queue_full_action (TAO_EC_Dispatching_Task *task,
+                                 TAO_EC_ProxyPushSupplier *proxy,
+                                 RtecEventComm::PushConsumer_ptr consumer,
+                                 RtecEventComm::EventSet& event
+                                 ACE_ENV_ARG_DECL) = 0;
+};
+
+class TAO_RTEvent_Serv_Export TAO_EC_Simple_Queue_Full_Action :
+  public TAO_EC_Queue_Full_Service_Object
+{
+public:
+  TAO_EC_Simple_Queue_Full_Action ();
+  
+  /// Helper function to register the default action into the service
+  /// configurator.
+  static int init_svcs (void);
+
+  // = The Service_Object entry points
+  virtual int init (int argc, char* argv[]);
+  virtual int fini (void);
+
+  virtual int queue_full_action (TAO_EC_Dispatching_Task *task,
+                                 TAO_EC_ProxyPushSupplier *proxy,
+                                 RtecEventComm::PushConsumer_ptr consumer,
+                                 RtecEventComm::EventSet& event
+                                 ACE_ENV_ARG_DECL);
+
+protected:
+  int queue_full_action_return_value_;
+};
 
 class TAO_RTEvent_Serv_Export TAO_EC_Queue : public ACE_Message_Queue<ACE_SYNCH>
 {
@@ -54,7 +100,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Dispatching_Task : public ACE_Task<ACE_SYNC
 {
 public:
   /// Constructor
-  TAO_EC_Dispatching_Task (ACE_Thread_Manager* thr_manager = 0);
+  TAO_EC_Dispatching_Task (ACE_Thread_Manager* thr_manager = 0, TAO_EC_Queue_Full_Service_Object* queue_full_service_object = 0);
 
   /// Process the events in the queue.
   virtual int svc (void);
@@ -73,6 +119,8 @@ private:
 
   /// The queue
   TAO_EC_Queue the_queue_;
+
+  TAO_EC_Queue_Full_Service_Object* queue_full_service_object_;
 };
 
 // ****************************************************************
@@ -138,6 +186,9 @@ private:
 #if defined (__ACE_INLINE__)
 #include "EC_Dispatching_Task.i"
 #endif /* __ACE_INLINE__ */
+
+ACE_STATIC_SVC_DECLARE (TAO_EC_Simple_Queue_Full_Action)
+ACE_FACTORY_DECLARE (TAO_RTEvent, TAO_EC_Simple_Queue_Full_Action)
 
 #include /**/ "ace/post.h"
 

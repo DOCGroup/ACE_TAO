@@ -7,14 +7,16 @@ ACE_RCSID(Event, EC_MT_Dispatching, "$Id$")
 TAO_EC_MT_Dispatching::TAO_EC_MT_Dispatching (int nthreads,
                                               int thread_creation_flags,
                                               int thread_priority,
-                                              int force_activate)
+                                              int force_activate,
+                                              TAO_EC_Queue_Full_Service_Object* service_object)
   :  nthreads_ (nthreads),
      thread_creation_flags_ (thread_creation_flags),
      thread_priority_ (thread_priority),
      force_activate_ (force_activate),
-     task_ (&this->thread_manager_),
-     active_ (0)
+     active_ (0),
+     queue_full_service_object_ (service_object)
 {
+  this->task_.open (&this->thread_manager_);
 }
 
 void
@@ -83,3 +85,4 @@ TAO_EC_MT_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
 
   this->task_.push (proxy, consumer, event ACE_ENV_ARG_PARAMETER);
 }
+

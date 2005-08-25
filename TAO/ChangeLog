@@ -1,3 +1,109 @@
+Thu Aug 25 11:00:47 2005  Chris Cleeland  <cleeland_c@ociweb.com>
+
+          This does two things in the Real Time Event Service:
+
+          1. Added a new dispatching strategy--Thread Per Consumer.  This
+          strategy is similar to the MT dispatching strategy in that it
+          separates the thread that receives the push() from a supplier
+          from the thread that does the eventual push() to the
+          consumer(s), but it differs from MT in that MT has a pool of
+          threads pulling from a single queue and ultimately potentially
+          servicing every consumer, whereas TPC has a queue for *each*
+          consumer and, thus, a single thread dedicated to pushing to that
+          consumer.  This insures that a badly-behaved consumer CANNOT
+          have an adverse effect on the channel or supplier.
+
+          2. It adds a means by which an application can specify what the
+          RTEC should do if the TAO_EC_Queue fills up.  This behavior is
+          encapsulated in a derivation of an ACE_Service_Object, called
+          TAO_EC_Queue_Full_Service_Object.  The RTEC looks for a service
+          object of a particular name (default in macro
+          TAO_EC_DEFAULT_QUEUE_FULL_SERVICE_OBJECT_NAME)
+
+        * orbsvcs/orbsvcs/RTEvent_Serv.mpc:
+
+          Updated to build new files that are part of the TPC strategy.
+
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+
+          Added new data member to hold the name of the service object
+          used for queue full behavior.
+
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.i:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+
+          Added new option, -ECQueueFullServiceObject, that can be used to
+          specify the name/tag in the svc.conf file through which the RTEC
+          should look for a queue full service object.
+
+        * orbsvcs/orbsvcs/Event/EC_Defaults.h:
+
+          Added default service object name/tag,
+          TAO_EC_DEFAULT_QUEUE_FULL_SERVICE_OBJECT_NAME.
+
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.h:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.i:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
+
+          Added the TAO_EC_Simple_Queue_Full_Action service object
+          implementation into here, since only the TAO_EC_Dispatching_Task
+          needs to know about it.  This default implementation has only
+          two choices of behavior: "wait" for not-full condition (the default) or
+          "discard" silently.  Specification of the desired behavior is by
+          putting the word "wait" or "discard" as the first argument in this
+          object's svc.conf arg vector.
+
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.i:
+
+          Created new macros, TAO_EC_QUEUE_LWM and TAO_EC_QUEUE_HWM, that
+          can be used to specify the low-water and high-water marks for
+          the TAO_EC_Queue.  Previously, these were hard-coded values.
+
+        * orbsvcs/orbsvcs/Event/EC_MT_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_MT_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching_Task.h:
+        * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching_Task.cpp:
+
+          Modifications to CTORs to allow passing of a service object
+          pointer from the factory down through the dispatching strategy
+          down to the dispatching task itself.
+
+        * orbsvcs/orbsvcs/Event/EC_TPC_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_TPC_Factory.cpp:
+
+          Minor modifications to pass the service object to the
+          dispatching strategy.
+
+        * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.i:
+        * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching_Task.h:
+        * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching_Task.cpp:
+        * orbsvcs/orbsvcs/Event/EC_TPC_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_TPC_Factory.i:
+        * orbsvcs/orbsvcs/Event/EC_TPC_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_TPC_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Event/EC_TPC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_TPC_ProxySupplier.h:
+        * orbsvcs/orbsvcs/Event/EC_TPC_ProxySupplier.i:
+        * orbsvcs/orbsvcs/Event/EC_TPC_ProxySupplier.cpp:
+
+          Rather than cluttering the EC_Default_Factory with yet another
+          dispatch strategy, this derives from the EC_Default_Factory and
+          replaces certain behaviors with its own.  Thus, in order to use
+          this new strategy you will have to replace the call in your code
+          for TAO_EC_Default_Factory::init_svcs() with
+          TAO_EC_TPC_Factory::init_svcs().
+
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h: Moved event_channel_,
+          consumer_, and refcount_ into "protected" section so subclasses
+          can have access.
+
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h: Moved event_channel_
+          into "protected" section so subclasses can have access.
+
 Thu Aug 25 07:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
@@ -87,68 +193,68 @@ Wed Aug 24 09:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Aug 23 18:09:07 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/tests/Bug_1395_Regression/Makefile.am:
-	* orbsvcs/tests/Bug_1630_Regression/Makefile.am:
-	* orbsvcs/tests/Event/Mcast/Common/Makefile.am:
+        * orbsvcs/tests/Bug_1395_Regression/Makefile.am:
+        * orbsvcs/tests/Bug_1630_Regression/Makefile.am:
+        * orbsvcs/tests/Event/Mcast/Common/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* orbsvcs/tests/Event/Mcast/Common/ECMcastTests_lib.mpc:
+        * orbsvcs/tests/Event/Mcast/Common/ECMcastTests_lib.mpc:
 
-	  Removed nonexistant ectest_export.h file from Header_Files
-	  section.
+          Removed nonexistant ectest_export.h file from Header_Files
+          section.
 
 Tue Aug 23 15:54:52 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_codegen.cpp (gen_stub_hdr_includes):
+        * TAO_IDL/be/be_codegen.cpp (gen_stub_hdr_includes):
 
-	  Another round of generated include directive reording to address
-	  template related order of parsing issues in g++ 3.4.x or better.
+          Another round of generated include directive reording to address
+          template related order of parsing issues in g++ 3.4.x or better.
 
-	* tao/Any_Insert_Policy_T.h (any_insert):
+        * tao/Any_Insert_Policy_T.h (any_insert):
 
-	  Made these methods non-virtual.  All binding is done at
-	  compile-time so there is no need make them virtual.  Also
-	  addresses "class with virtual funtions but no virtual
-	  destructor" g++ 4.0 warnings.
+          Made these methods non-virtual.  All binding is done at
+          compile-time so there is no need make them virtual.  Also
+          addresses "class with virtual funtions but no virtual
+          destructor" g++ 4.0 warnings.
 
-	* tao/IFR_Client/IFR_ComponentsC.h:
-	* orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h:
+        * tao/IFR_Client/IFR_ComponentsC.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h:
 
-	  More g++ 3.4.x or better order of parsing related template
-	  error fixes.
+          More g++ 3.4.x or better order of parsing related template
+          error fixes.
 
 Tue Aug 23 10:43:07 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/IORInterceptor/IORInterceptor_Adapter_Factory_Impl.cpp:
-	* tao/IORInterceptor/IORInterceptor_Adapter_Factory_Impl.h:
-	* tao/IORInterceptor/IORInterceptor_Adapter_Impl.h:
-	* tao/IORManipulation/IORA.cpp:
-	* tao/ImR_Client/ImplRepoA.cpp:
-	* tao/ImR_Client/ImplRepoS.cpp:
-	* tao/ImR_Client/ServerObjectA.cpp:
-	* tao/ImR_Client/ServerObjectS.cpp:
-	* tao/ObjRefTemplate/Default_ORTA.cpp:
-	* tao/ObjRefTemplate/ObjectReferenceTemplateA.cpp:
-	* tao/RTCORBA/RTCORBAA.cpp:
-	* tao/RTCORBA/RT_ORBInitializer.h:
-	* tao/RTCORBA/rtcorba_export.h:
-	* tao/RTCORBA/rtcorba_typedefs.h:
-	* tao/RTPortableServer/RTPortableServerA.cpp:
-	* tao/RTScheduling/RTSchedulerC.h:
-	* tao/Strategies/sciop_endpointsC.cpp:
-	* tao/Strategies/uiop_endpointsC.cpp:
-	* tao/TypeCodeFactory/TypeCodeFactoryA.cpp:
-	* tao/TypeCodeFactory/TypeCodeFactoryC.h:
-	* tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.cpp:
-	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
-	* tao/Utils/RIR_Narrow.h:
+        * tao/IORInterceptor/IORInterceptor_Adapter_Factory_Impl.cpp:
+        * tao/IORInterceptor/IORInterceptor_Adapter_Factory_Impl.h:
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.h:
+        * tao/IORManipulation/IORA.cpp:
+        * tao/ImR_Client/ImplRepoA.cpp:
+        * tao/ImR_Client/ImplRepoS.cpp:
+        * tao/ImR_Client/ServerObjectA.cpp:
+        * tao/ImR_Client/ServerObjectS.cpp:
+        * tao/ObjRefTemplate/Default_ORTA.cpp:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateA.cpp:
+        * tao/RTCORBA/RTCORBAA.cpp:
+        * tao/RTCORBA/RT_ORBInitializer.h:
+        * tao/RTCORBA/rtcorba_export.h:
+        * tao/RTCORBA/rtcorba_typedefs.h:
+        * tao/RTPortableServer/RTPortableServerA.cpp:
+        * tao/RTScheduling/RTSchedulerC.h:
+        * tao/Strategies/sciop_endpointsC.cpp:
+        * tao/Strategies/uiop_endpointsC.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactoryA.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.h:
+        * tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+        * tao/Utils/RIR_Narrow.h:
 
-	  Reordered include directives to make sure all necessary
-	  non-dependent names are parsed before the templates that use
-	  them.  In the case of the "*A.h" files, this is a temporary
-	  work-around until TAO_IDL is updated.  Addresses g++ 3.4.x or
-	  better compile-time errors.
+          Reordered include directives to make sure all necessary
+          non-dependent names are parsed before the templates that use
+          them.  In the case of the "*A.h" files, this is a temporary
+          work-around until TAO_IDL is updated.  Addresses g++ 3.4.x or
+          better compile-time errors.
 
 Tue Aug 23 14:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -210,253 +316,253 @@ Tue Aug 23 07:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Aug 22 23:03:02 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.h:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.h:
 
-	  Changed the event_log_factory_ member variable from a
-	  TAO_EventLogFactory_i to a pointer to a TAO_EventLogFactory_i.
-	  This delays execution of the constructor, which avoids the ORB
-	  being constructed implicitly, which in turn allows any -ORB...
-	  command line arguments to be parsed and removed from the argc/
-	  argv vector in Event_Logging_Service::init_ORB().
+          Changed the event_log_factory_ member variable from a
+          TAO_EventLogFactory_i to a pointer to a TAO_EventLogFactory_i.
+          This delays execution of the constructor, which avoids the ORB
+          being constructed implicitly, which in turn allows any -ORB...
+          command line arguments to be parsed and removed from the argc/
+          argv vector in Event_Logging_Service::init_ORB().
 
 Mon Aug 22 21:33:37 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
 
-	  Another round of generated include directive reording to address
-	  template related order of parsing issues in g++ 3.4.x or better.
+          Another round of generated include directive reording to address
+          template related order of parsing issues in g++ 3.4.x or better.
 
-	* tao/Typecode_typesC.h:
-	* tao/ParameterModeC.h
+        * tao/Typecode_typesC.h:
+        * tao/ParameterModeC.h
 
-	  Removed unnecessary include directives.  They were causing
-	  headers to be included that prematurely caused some templates to
-	  be parsed before all non-dependent names were parsed.  Addresses
-	  g++ 3.4.x or better compile-time errors.
+          Removed unnecessary include directives.  They were causing
+          headers to be included that prematurely caused some templates to
+          be parsed before all non-dependent names were parsed.  Addresses
+          g++ 3.4.x or better compile-time errors.
 
-	* tao/AnyTypeCode/BooleanSeqA.h:
-	* tao/AnyTypeCode/BoundsA.h:
-	* tao/AnyTypeCode/CONV_FRAMEA.h:
-	* tao/AnyTypeCode/CharSeqA.h:
-	* tao/AnyTypeCode/CurrentA.h:
-	* tao/AnyTypeCode/DomainA.h:
-	* tao/AnyTypeCode/DoubleSeqA.h:
-	* tao/AnyTypeCode/DynamicC.h:
-	* tao/AnyTypeCode/Dynamic_ParameterC.h:
-	* tao/AnyTypeCode/FloatSeqA.h:
-	* tao/AnyTypeCode/GIOPA.h:
-	* tao/AnyTypeCode/IIOPA.h:
-	* tao/AnyTypeCode/IIOP_EndpointsA.h:
-	* tao/AnyTypeCode/IOPA.h:
-	* tao/AnyTypeCode/IOP_IORA.h:
-	* tao/AnyTypeCode/LongDoubleSeqA.h:
-	* tao/AnyTypeCode/LongLongSeqA.h:
-	* tao/AnyTypeCode/LongSeqA.h:
-	* tao/AnyTypeCode/Messaging_PolicyValueA.h:
-	* tao/AnyTypeCode/NVList.h:
-	* tao/AnyTypeCode/ObjectIdListA.h:
-	* tao/AnyTypeCode/OctetSeqA.h:
-	* tao/AnyTypeCode/PI_ForwardA.h:
-	* tao/AnyTypeCode/ParameterModeA.h:
-	* tao/AnyTypeCode/PolicyA.h:
-	* tao/AnyTypeCode/Policy_ForwardA.h:
-	* tao/AnyTypeCode/PortableInterceptorA.h:
-	* tao/AnyTypeCode/ServicesA.h:
-	* tao/AnyTypeCode/ShortSeqA.h:
-	* tao/AnyTypeCode/StringSeqA.h:
-	* tao/AnyTypeCode/SystemExceptionA.h:
-	* tao/AnyTypeCode/TAOA.h:
-	* tao/AnyTypeCode/TimeBaseA.h:
-	* tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp:
-	* tao/AnyTypeCode/ULongLongSeqA.h:
-	* tao/AnyTypeCode/ULongSeqA.h:
-	* tao/AnyTypeCode/UShortSeqA.h:
-	* tao/AnyTypeCode/ValueModifierA.h:
-	* tao/AnyTypeCode/VisibilityA.h:
-	* tao/AnyTypeCode/WCharSeqA.h:
-	* tao/AnyTypeCode/WStringSeqA.h:
-	* tao/AnyTypeCode/WrongTransactionA.h:
-	* tao/AnyTypeCode/orb_typesA.h
-	* tao/BiDir_GIOP/BiDirGIOP.cpp:
-	* tao/CodecFactory/CDR_Encaps_Codec.cpp:
-	* tao/CodecFactory/CDR_Encaps_Codec.h:
-	* tao/CodecFactory/CodecFactory.h:
-	* tao/CodecFactory/CodecFactory_impl.cpp:
-	* tao/CodecFactory/CodecFactory_impl.h:
-	* tao/CodecFactory/IOP_CodecC.h:
-	* tao/CodecFactory/IOP_Codec_includeC.h:
-	* tao/Domain/DomainS.h:
-	* tao/DynamicAny/DynamicAny.h:
-	* tao/DynamicAny/DynamicAnyC.h:
-	* tao/DynamicInterface/Context.h:
-	* tao/DynamicInterface/DII_Arguments.cpp:
-	* tao/DynamicInterface/DII_Invocation.cpp:
-	* tao/DynamicInterface/ExceptionList.h:
-	* tao/IFR_Client/IFR_BaseC.h:
-	* tao/IFR_Client/IFR_BasicC.h:
-	* tao/IFR_Client/IFR_Client_Adapter_Impl.cpp:
-	* tao/IFR_Client/IFR_ComponentsC.cpp:
-	* tao/IFR_Client/IFR_ExtendedC.cpp:
-	* tao/IFR_Client/IFR_ExtendedC.h:
-	* tao/Messaging/MessagingA.cpp:
-	* tao/Messaging/MessagingS.cpp:
-	* tao/Messaging/Messaging_No_ImplA.cpp:
-	* tao/Messaging/Messaging_RT_PolicyA.cpp:
-	* tao/Messaging/Messaging_SyncScope_PolicyA.cpp:
-	* tao/Messaging/PollableC.cpp:
-	* tao/Messaging/TAO_ExtA.cpp:
-	* tao/PI/ClientRequestInfo.h:
-	* tao/PI/ClientRequestInfoC.h:
-	* tao/PI/ClientRequestInterceptorA.cpp:
-	* tao/PI/ClientRequestInterceptor_Adapter_Impl.h:
-	* tao/PI/InterceptorA.cpp:
-	* tao/PI/Interceptor_List_T.cpp:
-	* tao/PI/InvalidSlotA.cpp:
-	* tao/PI/ORBInitInfoC.h:
-	* tao/PI/ORBInitializerA.cpp:
-	* tao/PI/ORBInitializer_Registry_Impl.h:
-	* tao/PI/PI.h:
-	* tao/PI/PICurrent.h:
-	* tao/PI/PICurrentA.cpp:
-	* tao/PI/PICurrent_Impl.h:
-	* tao/PI/PIForwardRequestA.cpp:
-	* tao/PI/PolicyFactoryC.h:
-	* tao/PI/RequestInfoC.h:
-	* tao/PI_Server/ServerInterceptorAdapter.h:
-	* tao/PI_Server/ServerRequestInfoC.h:
-	* tao/PI_Server/ServerRequestInterceptorC.h:
-	* tao/PortableServer/AdapterActivatorA.cpp:
-	* tao/PortableServer/ForwardRequestA.cpp:
-	* tao/PortableServer/IdAssignmentPolicyA.cpp:
-	* tao/PortableServer/IdUniquenessPolicyA.cpp:
-	* tao/PortableServer/ImplicitActivationPolicyA.cpp:
-	* tao/PortableServer/LifespanPolicyA.cpp:
-	* tao/PortableServer/POAManagerC.cpp:
-	* tao/PortableServer/PS_CurrentA.cpp:
-	* tao/PortableServer/PS_ForwardA.cpp:
-	* tao/PortableServer/PolicyS.cpp:
-	* tao/PortableServer/PortableServerA.cpp:
-	* tao/PortableServer/RequestProcessingPolicyA.cpp:
-	* tao/PortableServer/ServantActivatorA.cpp:
-	* tao/PortableServer/ServantLocatorA.cpp:
-	* tao/PortableServer/ServantManagerA.cpp:
-	* tao/PortableServer/ServantRetentionPolicyA.cpp:
-	* tao/PortableServer/ThreadPolicyA.cpp:
-	* tao/Valuetype/StringValueC.cpp:
-	* tao/Valuetype/ValueBase.cpp:
+        * tao/AnyTypeCode/BooleanSeqA.h:
+        * tao/AnyTypeCode/BoundsA.h:
+        * tao/AnyTypeCode/CONV_FRAMEA.h:
+        * tao/AnyTypeCode/CharSeqA.h:
+        * tao/AnyTypeCode/CurrentA.h:
+        * tao/AnyTypeCode/DomainA.h:
+        * tao/AnyTypeCode/DoubleSeqA.h:
+        * tao/AnyTypeCode/DynamicC.h:
+        * tao/AnyTypeCode/Dynamic_ParameterC.h:
+        * tao/AnyTypeCode/FloatSeqA.h:
+        * tao/AnyTypeCode/GIOPA.h:
+        * tao/AnyTypeCode/IIOPA.h:
+        * tao/AnyTypeCode/IIOP_EndpointsA.h:
+        * tao/AnyTypeCode/IOPA.h:
+        * tao/AnyTypeCode/IOP_IORA.h:
+        * tao/AnyTypeCode/LongDoubleSeqA.h:
+        * tao/AnyTypeCode/LongLongSeqA.h:
+        * tao/AnyTypeCode/LongSeqA.h:
+        * tao/AnyTypeCode/Messaging_PolicyValueA.h:
+        * tao/AnyTypeCode/NVList.h:
+        * tao/AnyTypeCode/ObjectIdListA.h:
+        * tao/AnyTypeCode/OctetSeqA.h:
+        * tao/AnyTypeCode/PI_ForwardA.h:
+        * tao/AnyTypeCode/ParameterModeA.h:
+        * tao/AnyTypeCode/PolicyA.h:
+        * tao/AnyTypeCode/Policy_ForwardA.h:
+        * tao/AnyTypeCode/PortableInterceptorA.h:
+        * tao/AnyTypeCode/ServicesA.h:
+        * tao/AnyTypeCode/ShortSeqA.h:
+        * tao/AnyTypeCode/StringSeqA.h:
+        * tao/AnyTypeCode/SystemExceptionA.h:
+        * tao/AnyTypeCode/TAOA.h:
+        * tao/AnyTypeCode/TimeBaseA.h:
+        * tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp:
+        * tao/AnyTypeCode/ULongLongSeqA.h:
+        * tao/AnyTypeCode/ULongSeqA.h:
+        * tao/AnyTypeCode/UShortSeqA.h:
+        * tao/AnyTypeCode/ValueModifierA.h:
+        * tao/AnyTypeCode/VisibilityA.h:
+        * tao/AnyTypeCode/WCharSeqA.h:
+        * tao/AnyTypeCode/WStringSeqA.h:
+        * tao/AnyTypeCode/WrongTransactionA.h:
+        * tao/AnyTypeCode/orb_typesA.h
+        * tao/BiDir_GIOP/BiDirGIOP.cpp:
+        * tao/CodecFactory/CDR_Encaps_Codec.cpp:
+        * tao/CodecFactory/CDR_Encaps_Codec.h:
+        * tao/CodecFactory/CodecFactory.h:
+        * tao/CodecFactory/CodecFactory_impl.cpp:
+        * tao/CodecFactory/CodecFactory_impl.h:
+        * tao/CodecFactory/IOP_CodecC.h:
+        * tao/CodecFactory/IOP_Codec_includeC.h:
+        * tao/Domain/DomainS.h:
+        * tao/DynamicAny/DynamicAny.h:
+        * tao/DynamicAny/DynamicAnyC.h:
+        * tao/DynamicInterface/Context.h:
+        * tao/DynamicInterface/DII_Arguments.cpp:
+        * tao/DynamicInterface/DII_Invocation.cpp:
+        * tao/DynamicInterface/ExceptionList.h:
+        * tao/IFR_Client/IFR_BaseC.h:
+        * tao/IFR_Client/IFR_BasicC.h:
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.cpp:
+        * tao/IFR_Client/IFR_ComponentsC.cpp:
+        * tao/IFR_Client/IFR_ExtendedC.cpp:
+        * tao/IFR_Client/IFR_ExtendedC.h:
+        * tao/Messaging/MessagingA.cpp:
+        * tao/Messaging/MessagingS.cpp:
+        * tao/Messaging/Messaging_No_ImplA.cpp:
+        * tao/Messaging/Messaging_RT_PolicyA.cpp:
+        * tao/Messaging/Messaging_SyncScope_PolicyA.cpp:
+        * tao/Messaging/PollableC.cpp:
+        * tao/Messaging/TAO_ExtA.cpp:
+        * tao/PI/ClientRequestInfo.h:
+        * tao/PI/ClientRequestInfoC.h:
+        * tao/PI/ClientRequestInterceptorA.cpp:
+        * tao/PI/ClientRequestInterceptor_Adapter_Impl.h:
+        * tao/PI/InterceptorA.cpp:
+        * tao/PI/Interceptor_List_T.cpp:
+        * tao/PI/InvalidSlotA.cpp:
+        * tao/PI/ORBInitInfoC.h:
+        * tao/PI/ORBInitializerA.cpp:
+        * tao/PI/ORBInitializer_Registry_Impl.h:
+        * tao/PI/PI.h:
+        * tao/PI/PICurrent.h:
+        * tao/PI/PICurrentA.cpp:
+        * tao/PI/PICurrent_Impl.h:
+        * tao/PI/PIForwardRequestA.cpp:
+        * tao/PI/PolicyFactoryC.h:
+        * tao/PI/RequestInfoC.h:
+        * tao/PI_Server/ServerInterceptorAdapter.h:
+        * tao/PI_Server/ServerRequestInfoC.h:
+        * tao/PI_Server/ServerRequestInterceptorC.h:
+        * tao/PortableServer/AdapterActivatorA.cpp:
+        * tao/PortableServer/ForwardRequestA.cpp:
+        * tao/PortableServer/IdAssignmentPolicyA.cpp:
+        * tao/PortableServer/IdUniquenessPolicyA.cpp:
+        * tao/PortableServer/ImplicitActivationPolicyA.cpp:
+        * tao/PortableServer/LifespanPolicyA.cpp:
+        * tao/PortableServer/POAManagerC.cpp:
+        * tao/PortableServer/PS_CurrentA.cpp:
+        * tao/PortableServer/PS_ForwardA.cpp:
+        * tao/PortableServer/PolicyS.cpp:
+        * tao/PortableServer/PortableServerA.cpp:
+        * tao/PortableServer/RequestProcessingPolicyA.cpp:
+        * tao/PortableServer/ServantActivatorA.cpp:
+        * tao/PortableServer/ServantLocatorA.cpp:
+        * tao/PortableServer/ServantManagerA.cpp:
+        * tao/PortableServer/ServantRetentionPolicyA.cpp:
+        * tao/PortableServer/ThreadPolicyA.cpp:
+        * tao/Valuetype/StringValueC.cpp:
+        * tao/Valuetype/ValueBase.cpp:
 
-	  Reordered include directives to make sure all necessary
-	  non-dependent names are parsed before the templates that use
-	  them.  In the case of the "*A.h" files, this is a temporary
-	  work-around until TAO_IDL is updated.  Addresses g++ 3.4.x or
-	  better compile-time errors.
+          Reordered include directives to make sure all necessary
+          non-dependent names are parsed before the templates that use
+          them.  In the case of the "*A.h" files, this is a temporary
+          work-around until TAO_IDL is updated.  Addresses g++ 3.4.x or
+          better compile-time errors.
 
 Mon Aug 22 21:05:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_codegen.cpp (gen_stub_hdr_includes):
+        * TAO_IDL/be/be_codegen.cpp (gen_stub_hdr_includes):
 
-	  Reordered generated include directives so that Any/TypeCode
-	  include directives are placed before ones from the ORB core to
-	  make sure some things are parsed before some templates
-	  (e.g. TAO_Pseudo_{Var,Out}_T).  Addresses issues with compilers
-	  that require all necessary non-dependent names be parsed prior
-	  to parsing templates that may use them (e.g. GNU g++ 3.4.x or
-	  better).
+          Reordered generated include directives so that Any/TypeCode
+          include directives are placed before ones from the ORB core to
+          make sure some things are parsed before some templates
+          (e.g. TAO_Pseudo_{Var,Out}_T).  Addresses issues with compilers
+          that require all necessary non-dependent names be parsed prior
+          to parsing templates that may use them (e.g. GNU g++ 3.4.x or
+          better).
 
-	  Removed duplicate "TypeCode.h" include directive generation.
+          Removed duplicate "TypeCode.h" include directive generation.
 
-	* tao/AnyTypeCode/AnySeqC.h:
-	* tao/AnyTypeCode/Any_Unknown_IDL_Type.cpp:
-	* tao/AnyTypeCode/BooleanSeqA.h:
-	* tao/AnyTypeCode/TypeCode.h:
-	* tao/AnyTypeCode/append.cpp:
+        * tao/AnyTypeCode/AnySeqC.h:
+        * tao/AnyTypeCode/Any_Unknown_IDL_Type.cpp:
+        * tao/AnyTypeCode/BooleanSeqA.h:
+        * tao/AnyTypeCode/TypeCode.h:
+        * tao/AnyTypeCode/append.cpp:
 
-	  Reordered include directives to force non-dependent names used
-	  as template arguments to be parsed before the templates in
-	  question.  Addresses issues with compilers that require all
-	  necessary non-dependent names be parsed prior to parsing
-	  templates that may use them (e.g. GNU g++ 3.4.x or  better).
+          Reordered include directives to force non-dependent names used
+          as template arguments to be parsed before the templates in
+          question.  Addresses issues with compilers that require all
+          necessary non-dependent names be parsed prior to parsing
+          templates that may use them (e.g. GNU g++ 3.4.x or  better).
 
-	* tao/AnyTypeCode/Any_Impl.h:
+        * tao/AnyTypeCode/Any_Impl.h:
 
-	  Removed unnecessary "Any.h" include directive.
+          Removed unnecessary "Any.h" include directive.
 
 Mon Aug 22 15:46:29 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/ORB.h:
+        * tao/ORB.h:
 
-	  Reordered include directives to work around g++ 4.0.x internal
-	  compiler error.
+          Reordered include directives to work around g++ 4.0.x internal
+          compiler error.
 
 Mon Aug 22 12:58:11 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/Concurrency_Service/Makefile.am:
-	* orbsvcs/CosEvent_Service/Makefile.am:
-	* orbsvcs/Dump_Schedule/Makefile.am:
-	* orbsvcs/FTRT_Event_Service/Makefile.am:
-	* orbsvcs/FTRT_Event_Service/Event_Service/Makefile.am:
-	* orbsvcs/FTRT_Event_Service/Factory_Service/Makefile.am:
-	* orbsvcs/FTRT_Event_Service/Gateway_Service/Makefile.am:
-	* orbsvcs/FT_ReplicationManager/Makefile.am:
-	* orbsvcs/Fault_Detector/Makefile.am:
-	* orbsvcs/Fault_Notifier/Makefile.am:
-	* orbsvcs/IFR_Service/Makefile.am:
-	* orbsvcs/ImplRepo_Service/Makefile.am:
-	* orbsvcs/LifeCycle_Service/Makefile.am:
-	* orbsvcs/LoadBalancer/Makefile.am:
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Makefile.am:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
-	* orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
-	* orbsvcs/Naming_Service/Makefile.am:
-	* orbsvcs/Notify_Service/Makefile.am:
-	* orbsvcs/Scheduling_Service/Makefile.am:
-	* orbsvcs/Time_Service/Makefile.am:
-	* orbsvcs/Trading_Service/Makefile.am:
+        * orbsvcs/Concurrency_Service/Makefile.am:
+        * orbsvcs/CosEvent_Service/Makefile.am:
+        * orbsvcs/Dump_Schedule/Makefile.am:
+        * orbsvcs/FTRT_Event_Service/Makefile.am:
+        * orbsvcs/FTRT_Event_Service/Event_Service/Makefile.am:
+        * orbsvcs/FTRT_Event_Service/Factory_Service/Makefile.am:
+        * orbsvcs/FTRT_Event_Service/Gateway_Service/Makefile.am:
+        * orbsvcs/FT_ReplicationManager/Makefile.am:
+        * orbsvcs/Fault_Detector/Makefile.am:
+        * orbsvcs/Fault_Notifier/Makefile.am:
+        * orbsvcs/IFR_Service/Makefile.am:
+        * orbsvcs/ImplRepo_Service/Makefile.am:
+        * orbsvcs/LifeCycle_Service/Makefile.am:
+        * orbsvcs/LoadBalancer/Makefile.am:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
+        * orbsvcs/Naming_Service/Makefile.am:
+        * orbsvcs/Notify_Service/Makefile.am:
+        * orbsvcs/Scheduling_Service/Makefile.am:
+        * orbsvcs/Time_Service/Makefile.am:
+        * orbsvcs/Trading_Service/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
 Mon Aug 22 12:32:42 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile.am:
-	* orbsvcs/tests/AVStreams/Bidirectional_Flows/Makefile.am:
-	* orbsvcs/tests/AVStreams/Component_Switching/Makefile.am:
-	* orbsvcs/tests/AVStreams/Full_Profile/Makefile.am:
-	* orbsvcs/tests/AVStreams/Latency/Makefile.am:
-	* orbsvcs/tests/AVStreams/Modify_QoS/Makefile.am:
-	* orbsvcs/tests/AVStreams/Multicast/Makefile.am:
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile.am:
-	* orbsvcs/tests/AVStreams/Multiple_Flows/Makefile.am:
-	* orbsvcs/tests/AVStreams/Pluggable/Makefile.am:
-	* orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/Makefile.am:
-	* orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile.am:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile.am:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile.am:
-	* orbsvcs/tests/BiDir_CORBALOC/Makefile.am:
-	* orbsvcs/tests/Bug_1334_Regression/Makefile.am:
-	* orbsvcs/tests/Bug_1393_Regression/Makefile.am:
-	* orbsvcs/tests/Bug_1395_Regression/Makefile.am:
-	* orbsvcs/tests/Bug_1630_Regression/Makefile.am:
-	* orbsvcs/tests/Concurrency/Makefile.am:
-	* orbsvcs/tests/CosEvent/Basic/Makefile.am:
-	* orbsvcs/tests/CosEvent/lib/Makefile.am:
-	* orbsvcs/tests/EC_Custom_Marshal/Makefile.am:
-	* orbsvcs/tests/EC_MT_Mcast/Makefile.am:
-	* orbsvcs/tests/EC_Mcast/Makefile.am:
-	* orbsvcs/tests/EC_Multiple/Makefile.am:
-	* orbsvcs/tests/EC_Throughput/Makefile.am:
-	* orbsvcs/tests/Event/Basic/Makefile.am:
-	* orbsvcs/tests/Event/Mcast/Common/Makefile.am:
-	* orbsvcs/tests/Event/Mcast/Complex/Makefile.am:
-	* orbsvcs/tests/Event/Mcast/Simple/Makefile.am:
-	* orbsvcs/tests/Event/Mcast/Two_Way/Makefile.am:
-	* orbsvcs/tests/Event/Performance/Makefile.am:
-	* orbsvcs/tests/Event/lib/Makefile.am:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile.am:
+        * orbsvcs/tests/AVStreams/Bidirectional_Flows/Makefile.am:
+        * orbsvcs/tests/AVStreams/Component_Switching/Makefile.am:
+        * orbsvcs/tests/AVStreams/Full_Profile/Makefile.am:
+        * orbsvcs/tests/AVStreams/Latency/Makefile.am:
+        * orbsvcs/tests/AVStreams/Modify_QoS/Makefile.am:
+        * orbsvcs/tests/AVStreams/Multicast/Makefile.am:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile.am:
+        * orbsvcs/tests/AVStreams/Multiple_Flows/Makefile.am:
+        * orbsvcs/tests/AVStreams/Pluggable/Makefile.am:
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/Makefile.am:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile.am:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile.am:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile.am:
+        * orbsvcs/tests/BiDir_CORBALOC/Makefile.am:
+        * orbsvcs/tests/Bug_1334_Regression/Makefile.am:
+        * orbsvcs/tests/Bug_1393_Regression/Makefile.am:
+        * orbsvcs/tests/Bug_1395_Regression/Makefile.am:
+        * orbsvcs/tests/Bug_1630_Regression/Makefile.am:
+        * orbsvcs/tests/Concurrency/Makefile.am:
+        * orbsvcs/tests/CosEvent/Basic/Makefile.am:
+        * orbsvcs/tests/CosEvent/lib/Makefile.am:
+        * orbsvcs/tests/EC_Custom_Marshal/Makefile.am:
+        * orbsvcs/tests/EC_MT_Mcast/Makefile.am:
+        * orbsvcs/tests/EC_Mcast/Makefile.am:
+        * orbsvcs/tests/EC_Multiple/Makefile.am:
+        * orbsvcs/tests/EC_Throughput/Makefile.am:
+        * orbsvcs/tests/Event/Basic/Makefile.am:
+        * orbsvcs/tests/Event/Mcast/Common/Makefile.am:
+        * orbsvcs/tests/Event/Mcast/Complex/Makefile.am:
+        * orbsvcs/tests/Event/Mcast/Simple/Makefile.am:
+        * orbsvcs/tests/Event/Mcast/Two_Way/Makefile.am:
+        * orbsvcs/tests/Event/Performance/Makefile.am:
+        * orbsvcs/tests/Event/lib/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* orbsvcs/tests/EC_Custom_Marshal/EC_Custom_Marshal.mpc:
+        * orbsvcs/tests/EC_Custom_Marshal/EC_Custom_Marshal.mpc:
 
           Add *_IDL projects for compiling *.idl files.  This eliminates
           duplicate rules that would otherwise result when Makefile.am's
@@ -478,47 +584,47 @@ Mon Aug 22 18:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Aug 22 10:43:11 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* TAO_IDL/Makefile.am:
-	* orbsvcs/orbsvcs/Makefile.am:
-	* tao/Makefile.am:
+        * TAO_IDL/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
+        * tao/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* tao/AnyTypeCode.mpc:
+        * tao/AnyTypeCode.mpc:
 
-	  Changed AnyTypecode to AnyTypeCode so generated project
-	  files work with case sensitive filesystems.
+          Changed AnyTypecode to AnyTypeCode so generated project
+          files work with case sensitive filesystems.
 
-	* tao/tao.mpc:
+        * tao/tao.mpc:
 
-	  Removed a few more headers that have been moved to the
-	  AnyTypeCode library.
+          Removed a few more headers that have been moved to the
+          AnyTypeCode library.
 
-	* tao/BiDir_GIOP/TAO_BiDirGIOP.pc.in:
-	* tao/CodecFactory/TAO_CodecFactory.pc.in:
-	* tao/Domain/TAO_Domain.pc.in:
-	* tao/DynamicAny/TAO_DynamicAny.pc.in:
-	* tao/DynamicInterface/TAO_DynamicInterface.pc.in:
-	* tao/IFR_Client/TAO_IFR_Client.pc.in:
-	* tao/IORInterceptor/TAO_IORInterceptor.pc.in:
-	* tao/IORManipulation/TAO_IORManip.pc.in:
-	* tao/ImR_Client/TAO_ImR_Client.pc.in:
-	* tao/Messaging/TAO_Messaging.pc.in:
-	* tao/ObjRefTemplate/TAO_ObjRefTemplate.pc.in:
-	* tao/PI/TAO_PI.pc.in:
-	* tao/PI_Server/TAO_PI_Server.pc.in:
-	* tao/PortableServer/TAO_PortableServer.pc.in:
-	* tao/RTCORBA/TAO_RTCORBA.pc.in:
-	* tao/RTPortableServer/TAO_RTPortableServer.pc.in:
-	* tao/RTScheduling/TAO_RTScheduler.pc.in:
-	* tao/Strategies/TAO_Strategies.pc.in:
-	* tao/TypeCodeFactory/TAO_TypeCodeFactory.pc.in:
-	* tao/Valuetype/TAO_Valuetype.pc.in:
-	* tao/TAO_Utils.pc.in
+        * tao/BiDir_GIOP/TAO_BiDirGIOP.pc.in:
+        * tao/CodecFactory/TAO_CodecFactory.pc.in:
+        * tao/Domain/TAO_Domain.pc.in:
+        * tao/DynamicAny/TAO_DynamicAny.pc.in:
+        * tao/DynamicInterface/TAO_DynamicInterface.pc.in:
+        * tao/IFR_Client/TAO_IFR_Client.pc.in:
+        * tao/IORInterceptor/TAO_IORInterceptor.pc.in:
+        * tao/IORManipulation/TAO_IORManip.pc.in:
+        * tao/ImR_Client/TAO_ImR_Client.pc.in:
+        * tao/Messaging/TAO_Messaging.pc.in:
+        * tao/ObjRefTemplate/TAO_ObjRefTemplate.pc.in:
+        * tao/PI/TAO_PI.pc.in:
+        * tao/PI_Server/TAO_PI_Server.pc.in:
+        * tao/PortableServer/TAO_PortableServer.pc.in:
+        * tao/RTCORBA/TAO_RTCORBA.pc.in:
+        * tao/RTPortableServer/TAO_RTPortableServer.pc.in:
+        * tao/RTScheduling/TAO_RTScheduler.pc.in:
+        * tao/Strategies/TAO_Strategies.pc.in:
+        * tao/TypeCodeFactory/TAO_TypeCodeFactory.pc.in:
+        * tao/Valuetype/TAO_Valuetype.pc.in:
+        * tao/TAO_Utils.pc.in
 
-	  Update to add TAO_AnyTypeCode to "Requires:" as needed.
+          Update to add TAO_AnyTypeCode to "Requires:" as needed.
 
-	* tao/AnyTypeCode/TAO_AnyTypeCode.pc.in:
+        * tao/AnyTypeCode/TAO_AnyTypeCode.pc.in:
 
           New file, pkg-config *.pc template for TAO_AnyTypeCode library.
 
@@ -3328,28 +3434,28 @@ Fri Aug 19 07:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Aug 18 13:59:52 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/LogActivator.cpp:
+        * orbsvcs/orbsvcs/Log/LogActivator.cpp:
 
-	  Fixed emulated exception build failures.
+          Fixed emulated exception build failures.
 
 Thu Aug 18 13:46:38 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/LogActivator.cpp:
+        * orbsvcs/orbsvcs/Log/LogActivator.cpp:
 
-	  Changed to omit identifier name for unused parameters.
+          Changed to omit identifier name for unused parameters.
 
-	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
+        * orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
 
-	  Changed to use CORBA::RepositoryId_var for the return value of
-	  create_log_repositoryid() so results will be freed on exit.
+          Changed to use CORBA::RepositoryId_var for the return value of
+          create_log_repositoryid() so results will be freed on exit.
 
-	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
-	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
-	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
-	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
 
-	  Changed create_log_repositoryid() to duplicate string rather
-	  than returning a string literal.
+          Changed create_log_repositoryid() to duplicate string rather
+          than returning a string literal.
 
 Thu Aug 18 15:19:40 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -3362,43 +3468,43 @@ Thu Aug 18 15:19:40 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Aug 17 11:30:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp (create_with_id):
+        * orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp (create_with_id):
 
-	  Fix bug where _nil() was returned instead of new object
-	  reference.
+          Fix bug where _nil() was returned instead of new object
+          reference.
 
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsLogAdmin.mpc:
 
-	  Add LogActivator.cpp to Source_Files in the DsLogAdmin_Serv
-	  project.
+          Add LogActivator.cpp to Source_Files in the DsLogAdmin_Serv
+          project.
 
-	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
-	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
-	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
-	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
 
-	  Changed create() and create_with_id() methods to invoke
-	  create_log_reference() instead of create_log_object().  This is
-	  not absolutely necessary, since a log is very likely to be used
-	  after it is created.  However, it helps to ensure the servant
-	  activator code path is exercised so it will work when a dynamic
-	  logging strategy that needs it is loaded.
+          Changed create() and create_with_id() methods to invoke
+          create_log_reference() instead of create_log_object().  This is
+          not absolutely necessary, since a log is very likely to be used
+          after it is created.  However, it helps to ensure the servant
+          activator code path is exercised so it will work when a dynamic
+          logging strategy that needs it is loaded.
 
-	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp
+        * orbsvcs/orbsvcs/Log/LogMgr_i.cpp
 
-	  Added USE_SERVANT_MANAGER request processing policy to the
-	  log POA.
+          Added USE_SERVANT_MANAGER request processing policy to the
+          log POA.
 
-	* orbsvcs/orbsvcs/Log/LogActivator.cpp:
-	* orbsvcs/orbsvcs/Log/LogActivator.h:
+        * orbsvcs/orbsvcs/Log/LogActivator.cpp:
+        * orbsvcs/orbsvcs/Log/LogActivator.h:
 
-	  New files, servant activator class for creating new logs.  This
-	  is useful for persistent log strategies so that servants can be
-	  created when they are first accessed instead of at startup.
+          New files, servant activator class for creating new logs.  This
+          is useful for persistent log strategies so that servants can be
+          created when they are first accessed instead of at startup.
 
 Wed Aug 17 14:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -3416,98 +3522,98 @@ Tue Aug 16 18:19:13 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Aug 15 20:28:14 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
-	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
-	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
-	* orbsvcs/orbsvcs/Log/EventLogFactory_i.h:
-	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
-	* orbsvcs/orbsvcs/Log/LogMgr_i.h:
-	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
-	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h:
-	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
-	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.h:
+        * orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
+        * orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/EventLogFactory_i.h:
+        * orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
+        * orbsvcs/orbsvcs/Log/LogMgr_i.h:
+        * orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h:
+        * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.h:
 
-	  Refactor separate create_log_reference() implementations from
-	  the derived factory classes into a single template method in the
-	  base class.
+          Refactor separate create_log_reference() implementations from
+          the derived factory classes into a single template method in the
+          base class.
 
-	  Added new create_repositoryid() virtual method to return
-	  the repository id for the specific log type.
+          Added new create_repositoryid() virtual method to return
+          the repository id for the specific log type.
 
 Mon Aug 15 16:41:57 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
 
-	  Add eventlog_serv_export.h to Header_Files section.
+          Add eventlog_serv_export.h to Header_Files section.
 
-	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsLogAdmin.mpc:
 
-	  Add log_serv_export.h to Header_Files section.
+          Add log_serv_export.h to Header_Files section.
 
-	* orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
 
-	  Add notifylog_serv_export.h to Header_Files section.
+          Add notifylog_serv_export.h to Header_Files section.
 
-	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
-	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
-	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
-	* orbsvcs/orbsvcs/Log/EventLogFactory_i.h:
-	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
-	* orbsvcs/orbsvcs/Log/LogMgr_i.h:
-	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
-	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h:
-	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
-	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.h:
+        * orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
+        * orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/EventLogFactory_i.h:
+        * orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
+        * orbsvcs/orbsvcs/Log/LogMgr_i.h:
+        * orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h:
+        * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.h:
 
-	  Combine identical create_log_objectid() implementations from the
-	  derived factory classes into a single one in the base class.
+          Combine identical create_log_objectid() implementations from the
+          derived factory classes into a single one in the base class.
 
-	  Refactor separate create_log_object() implementations to
-	  a single template method in the base class.
+          Refactor separate create_log_object() implementations to
+          a single template method in the base class.
 
 Mon Aug 15 15:13:10 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/tests/Concurrency/Makefile.am:
+        * orbsvcs/tests/Concurrency/Makefile.am:
 
-	  Remove tmplinst.cpp from list of files.
+          Remove tmplinst.cpp from list of files.
 
-	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
-	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
-	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
-	* orbsvcs/orbsvcs/Log/EventLogFactory_i.h:
-	* orbsvcs/orbsvcs/Log/LogMgr_i.h:
-	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
-	* orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h:
-	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
-	* orbsvcs/orbsvcs/Log/RTEventLogFactory_i.h:
+        * orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
+        * orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/EventLogFactory_i.h:
+        * orbsvcs/orbsvcs/Log/LogMgr_i.h:
+        * orbsvcs/orbsvcs/Log/NotifyLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/NotifyLogFactory_i.h:
+        * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/RTEventLogFactory_i.h:
 
-	  Create new virtual method create_log_servant() and factor out
-	  implementation from create_log_object().  This change enables
-	  making create_log_object() into a template method in the base
-	  class and using a Servant Activator to avoid creating the log
-	  servants until they're actually used.  I hope to make these
-	  changes soon.
+          Create new virtual method create_log_servant() and factor out
+          implementation from create_log_object().  This change enables
+          making create_log_object() into a template method in the base
+          class and using a Servant Activator to avoid creating the log
+          servants until they're actually used.  I hope to make these
+          changes soon.
 
 Mon Aug 15 10:56:28 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Makefile.am:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
-	* orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsLogAdmin.mpc:
 
-	  Changed to inherit from utils.
+          Changed to inherit from utils.
 
-	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp (init):
+        * orbsvcs/orbsvcs/Log/LogMgr_i.cpp (init):
 
-	  Use TAO::Utils::PolicyList_Destroyer instead of plain
-	  CORBA::PolicyList and an explicit loop to destroy the policies.
-	  This ensures all policies will be destroyed if an exception is
-	  thrown.
+          Use TAO::Utils::PolicyList_Destroyer instead of plain
+          CORBA::PolicyList and an explicit loop to destroy the policies.
+          This ensures all policies will be destroyed if an exception is
+          thrown.
 
 Mon Aug 15 16:25:23 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 

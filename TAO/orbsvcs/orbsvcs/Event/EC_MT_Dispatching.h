@@ -41,7 +41,8 @@ public:
   TAO_EC_MT_Dispatching (int nthreads,
                          int thread_creation_flags,
                          int thread_priority,
-                         int force_activate);
+                         int force_activate,
+                         TAO_EC_Queue_Full_Service_Object* queue_full_service_object_name);
 
   // = The EC_Dispatching methods.
   virtual void activate (void);
@@ -83,6 +84,9 @@ private:
 
   /// Are the threads running?
   int active_;
+
+  /// Service Object information
+  TAO_EC_Queue_Full_Service_Object* queue_full_service_object_;
 };
 
 #include /**/ "ace/post.h"
