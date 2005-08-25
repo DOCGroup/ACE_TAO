@@ -28,7 +28,8 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/os_include/os_dirent.h"
 
-#if !defined (ACE_LACKS_FORK) && \
+
+#if (!defined (ACE_LACKS_FORK) || defined (ACE_WIN32)) && \
   (defined (ACE_WIN32) || \
    (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && \
       !defined (ACE_LACKS_MUTEXATTR_PSHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)) || \
@@ -184,7 +185,6 @@ run_main (int argc, ACE_TCHAR *argv[])
   else
     {
       ACE_START_TEST (ACE_TEXT ("Process_Manual_Event_Test"));
-#if 0
       ACE_Process_Options options;
       options.command_line (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
                             ACE_TEXT ("Process_Manual_Event_Test")
@@ -217,10 +217,6 @@ run_main (int argc, ACE_TCHAR *argv[])
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("Child %d finished with status %d\n"),
                     child.getpid (), child_status));
-#else
-      // start test
-      acquire_release ();
-#endif
       ACE_END_TEST;
     }
 #else /* !ACE_LACKS_FORK */
