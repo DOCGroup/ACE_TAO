@@ -1,3 +1,10 @@
+Thu Aug 25 11:40:36 2005  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * ace/Task.cpp (activate): Corrected misuse of the argument
+	  'grp_id' rather than the data member 'grp_id_'.  This prevented
+	  activate() from being able to join existing group.  Thanks to
+	  Kevin Heifner <heifner_k at ociweb dot com> for catching this.
+
 Thu Aug 25 12:32:18 2005  Steve Huston  <shuston@riverace.com>
 
 	* tests/Process_Manual_Event_Test.cpp: Removed #if0 block put in
@@ -5,17 +12,17 @@ Thu Aug 25 12:32:18 2005  Steve Huston  <shuston@riverace.com>
 
 Wed Aug 24 19:09:31 2005  Steve Huston  <shuston@riverace.com>
 
-	* configure.ac: Copied in updated copyright paragraph from COPYING.
+        * configure.ac: Copied in updated copyright paragraph from COPYING.
 
-	* ace/OS_NS_Thread.cpp: Formatting fixes.
+        * ace/OS_NS_Thread.cpp: Formatting fixes.
 
-	* tests/Process_Manual_Event_Test.cpp: ACE_ERROR formatting
-	  corrections (%p needs a string); code format fixes.
+        * tests/Process_Manual_Event_Test.cpp: ACE_ERROR formatting
+          corrections (%p needs a string); code format fixes.
 
 Wed Aug 24 17:15:28 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/Stream_Modules.h: Added some info about ACE_Stream_Head so
-	  I don't have to keep looking it up ;-)
+        * ace/Stream_Modules.h: Added some info about ACE_Stream_Head so
+          I don't have to keep looking it up ;-)
 
 Wed Aug 24 12:39:04 2005  Chad Elliott  <elliott_c@ociweb.com>
 
