@@ -76,6 +76,11 @@ project(RTEvent_Serv) : orbsvcslib, core, rtevent_skel, svc_utils, messaging {
     Event/EC_Trivial_Supplier_Filter.cpp
     Event/EC_Type_Filter.cpp
     Event/EC_UDP_Admin.cpp
+    Event/EC_TPC_Dispatching.cpp
+    Event/EC_TPC_Dispatching_Task.cpp
+    Event/EC_TPC_Factory.cpp
+    Event/EC_TPC_ProxyConsumer.cpp
+    Event/EC_TPC_ProxySupplier.cpp
   }
 
   Template_Files {
@@ -88,3 +93,4 @@ project(RTEvent_Serv) : orbsvcslib, core, rtevent_skel, svc_utils, messaging {
     RTEvent_Serv.rc
   }
 }
+

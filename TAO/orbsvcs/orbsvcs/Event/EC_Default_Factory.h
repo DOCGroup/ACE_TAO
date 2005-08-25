@@ -29,6 +29,8 @@
 #include "ace/SString.h"
 #include "ace/Time_Value.h"
 
+class TAO_EC_Queue_Full_Service_Object;
+
 /**
  * @class TAO_EC_Default_Factory
  *
@@ -158,6 +160,9 @@ protected:
   int dispatching_threads_flags_;
   int dispatching_threads_priority_;
   int dispatching_threads_force_active_;
+  ACE_CString queue_full_service_object_name_;
+  TAO_EC_Queue_Full_Service_Object* find_service_object (const char* wanted,
+                                                         const char* fallback);
 
   /// Use this ORB to locate global resources.
   ACE_CString orbid_;
