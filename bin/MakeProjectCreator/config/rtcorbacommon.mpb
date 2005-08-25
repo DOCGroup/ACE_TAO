@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : portableserver, minimum_corba {
-  after    += RTCORBA_Common
-  libs     += RTCORBA_Common
-  includes += ../Common
-}
