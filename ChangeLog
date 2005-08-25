@@ -1,3 +1,8 @@
+Thu Aug 25 12:32:18 2005  Steve Huston  <shuston@riverace.com>
+
+	* tests/Process_Manual_Event_Test.cpp: Removed #if0 block put in
+	  for testing and fixed compile error.
+
 Wed Aug 24 19:09:31 2005  Steve Huston  <shuston@riverace.com>
 
 	* configure.ac: Copied in updated copyright paragraph from COPYING.
