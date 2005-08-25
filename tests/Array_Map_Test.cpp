@@ -13,6 +13,21 @@
 
 #include "test_config.h"
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
+    defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+int
+run_main (int, ACE_TCHAR *[])
+{
+  ACE_START_TEST (ACE_TEXT ("Array_Map_Test"));
+  ACE_DEBUG ((LM_INFO, ACE_TEXT ("This test requires implicit templates\n")));
+  ACE_END_TEST;
+
+  return 0;
+}
+
+#else
+
 #include "ace/SString.h"
 #include "ace/Array_Map.h"
 
@@ -482,3 +497,5 @@ run_main (int, ACE_TCHAR *[])
 
   return (success ? 0 : -1);
 }
+
+#endif /* Requires explicit instantiation */
