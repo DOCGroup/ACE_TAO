@@ -1,0 +1,13 @@
+// $Id$
+
+#include "Sender.idl"
+
+composition session SenderImpl
+{
+  home executor SenderHomeExec
+  {
+    implements Protocols::SenderHome;
+    manages SenderExec;
+  };
+};
+

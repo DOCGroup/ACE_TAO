@@ -1,0 +1,8 @@
+// -*- MPC -*-
+// $Id$
+
+workspace {
+  ciao
+  tools
+  DAnCE
+}

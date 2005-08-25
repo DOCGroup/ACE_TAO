@@ -1,0 +1,18 @@
+// -*- MPC -*-
+// $Id$
+
+project (DomainApplicationManager): ciao_deployment_svnt {
+  after += Config_Handlers NodeManager                           
+
+  sharedname = DomainApplicationManager
+
+  dynamicflags   = DOMAINAPPLICATIONMANAGER_BUILD_DLL
+
+  libs += CIAO_DnC_Client
+  
+  Source_Files {
+    DomainApplicationManager_Impl.cpp
+    Deployment_Configuration.cpp
+  }
+}
+
