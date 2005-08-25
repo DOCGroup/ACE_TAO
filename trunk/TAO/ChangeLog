@@ -1,3 +1,7 @@
+Wed Aug 24 21:57:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac: Copied in updated copyright paragraph from COPYING.
+
 Wed Aug 24 18:12:16 2005  Simon McQueen  <sm@prismtech.com>
 
         * TAO_IDL/util/utl_global.cpp:
