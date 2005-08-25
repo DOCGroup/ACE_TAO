@@ -100,6 +100,7 @@ module CIAO
     struct ORS_ThreadpoolWithLanes
     {
       string Id;
+      unsigned long stacksize;
       ORS_ThreadpoolLanes threadpool_lanes;
       boolean allow_borrowing;
       boolean allow_request_buffering;
