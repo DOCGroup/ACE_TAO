@@ -1,9 +1,9 @@
 //$Id$
-project : taolib, core {
+project : taolib, core, extra_anytypecode {
   sharedname   = TAO_AnyTypeCode
   dynamicflags = TAO_ANYTYPECODE_BUILD_DLL
 
-  Source_Files {
+  Source_Files(TAO_ANYTYPECODE_COMPONENTS) {
     AnyTypeCode/Alias_TypeCode_Static.cpp
     AnyTypeCode/Any.cpp
     AnyTypeCode/AnySeqA.cpp
@@ -51,7 +51,6 @@ project : taolib, core {
     AnyTypeCode/Policy_ForwardA.cpp
     AnyTypeCode/PortableInterceptorA.cpp
     AnyTypeCode/Sequence_TypeCode_Static.cpp
-    AnyTypeCode/ServicesA.cpp
     AnyTypeCode/ShortSeqA.cpp
     AnyTypeCode/skip.cpp
     AnyTypeCode/StringSeqA.cpp
