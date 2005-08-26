@@ -69,7 +69,7 @@ protected:
   int activate_server_connections_;
 
   /// Default thread flags passed to thr_create().
-  u_long thread_flags_;
+  int thread_flags_;
 
   enum Lock_Type
   {

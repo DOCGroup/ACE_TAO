@@ -150,7 +150,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
 
       // IOP://address1,address2
       //    ^ slot
-      const int slot = iop.find ("://", 0);
+      const ssize_t slot = iop.find ("://", 0);
 
       if (slot == iop.npos)
         {
@@ -211,7 +211,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
 
       // IOP://address1,address2
       //    ^ slot
-      const int slot = iop.find ("://", 0);
+      const ssize_t slot = iop.find ("://", 0);
 
       if (slot == iop.npos)
         {
@@ -449,10 +449,10 @@ TAO_Acceptor_Registry::extract_endpoint_options (ACE_CString &addrs,
                                                  ACE_CString &options,
                                                  TAO_Protocol_Factory *factory)
 {
-  const int options_index =
+  const ssize_t options_index =
     addrs.find (factory->options_delimiter ());
 
-  if (options_index == static_cast<int> (addrs.length () - 1))
+  if (options_index == static_cast<ssize_t> (addrs.length () - 1))
     {
       // Get rid of trailing option delimiter.
       addrs = addrs.substring (0, addrs.length () - 1);
