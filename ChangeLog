@@ -1,3 +1,11 @@
+Fri Aug 26 09:06:32 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/fuzz.pl:
+
+          Fixed the detection of missing ACE_CHECK/ACE_TRY_CHECK.  It was
+          missing most ACE_ENV_ARG_PARAMETER's due to a fouled up regular
+          expression.
+
 Fri Aug 26 13:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Reactor.cpp (schedule_timer):
@@ -9,23 +17,23 @@ Fri Aug 26 13:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Aug 25 18:53:31 2005  Steve Huston  <shuston@riverace.com>
 
-	* tests/Array_Map_Test.cpp: Don't attempt to build this test if
-	  using explicit template instantiation. It's hopeless trying STL
-	  code with explicit templates, especially portably.
+        * tests/Array_Map_Test.cpp: Don't attempt to build this test if
+          using explicit template instantiation. It's hopeless trying STL
+          code with explicit templates, especially portably.
 
-	* tests/Time_Value_Test.cpp: Fixed typo.
+        * tests/Time_Value_Test.cpp: Fixed typo.
 
 Thu Aug 25 11:40:36 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * ace/Task.cpp (activate): Corrected misuse of the argument
-	  'grp_id' rather than the data member 'grp_id_'.  This prevented
-	  activate() from being able to join existing group.  Thanks to
-	  Kevin Heifner <heifner_k at ociweb dot com> for catching this.
+          'grp_id' rather than the data member 'grp_id_'.  This prevented
+          activate() from being able to join existing group.  Thanks to
+          Kevin Heifner <heifner_k at ociweb dot com> for catching this.
 
 Thu Aug 25 12:32:18 2005  Steve Huston  <shuston@riverace.com>
 
-	* tests/Process_Manual_Event_Test.cpp: Removed #if0 block put in
-	  for testing and fixed compile error.
+        * tests/Process_Manual_Event_Test.cpp: Removed #if0 block put in
+          for testing and fixed compile error.
 
 Wed Aug 24 19:09:31 2005  Steve Huston  <shuston@riverace.com>
 
