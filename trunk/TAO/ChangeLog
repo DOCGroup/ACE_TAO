@@ -1,3 +1,16 @@
+Fri Aug 26 13:45:10 2005  Simon McQueen  <sm@prismtech.com>
+
+        * tests/Portable_Interceptors/PolicyFactory/server.cpp:
+        * tests/OBV/Supports/Supports_Test_impl.cpp:
+        * tests/OBV/Supports/client.cpp:
+        * tests/Big_Twoways/Session.cpp:
+        * tests/NestedUpcall/Triangle_Test/server_B.cpp:
+        * tests/NestedUpcall/MT_Client_Test/server.cpp:
+        * tests/Bug_1551_Regression/Reply_Handler.cpp:
+        * tests/InterOp-Naming/Server_i.cpp:
+
+          Chipping away at the fuzz errors.
+
 Fri Aug 26 13:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Acceptor_Registry.cpp:

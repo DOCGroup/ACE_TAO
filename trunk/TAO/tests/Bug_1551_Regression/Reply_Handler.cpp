@@ -19,6 +19,7 @@ Reply_Handler::short_sleep (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   check_counter(ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 
   Test::AMI_HelloHandler_var current =
     _this(ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -35,6 +36,7 @@ Reply_Handler::short_sleep_excep (
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   check_counter(ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 
   ACE_TRY
     {
