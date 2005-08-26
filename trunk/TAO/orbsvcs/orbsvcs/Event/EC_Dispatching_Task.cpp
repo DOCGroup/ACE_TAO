@@ -70,7 +70,7 @@ TAO_EC_Simple_Queue_Full_Action::queue_full_action (TAO_EC_Dispatching_Task */*t
                                                     TAO_EC_ProxyPushSupplier */*proxy*/,
                                                     RtecEventComm::PushConsumer_ptr /*consumer*/,
                                                     RtecEventComm::EventSet& /*event*/
-                                                    ACE_ENV_ARG_DECL)
+                                                    ACE_ENV_ARG_DECL_NOT_USED)
 {
   return this->queue_full_action_return_value_;
 }
@@ -81,7 +81,7 @@ ACE_STATIC_SVC_DEFINE (TAO_EC_Simple_Queue_Full_Action,
                        &ACE_SVC_NAME (TAO_EC_Simple_Queue_Full_Action),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
-ACE_FACTORY_DEFINE (TAO_RTEvent, TAO_EC_Simple_Queue_Full_Action)
+ACE_FACTORY_DEFINE (TAO_RTEvent_Serv, TAO_EC_Simple_Queue_Full_Action)
 
 
 

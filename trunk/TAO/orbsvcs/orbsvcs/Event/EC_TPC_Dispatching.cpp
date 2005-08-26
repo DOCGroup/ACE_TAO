@@ -34,7 +34,7 @@ TAO_EC_TPC_Dispatching::~TAO_EC_TPC_Dispatching ()
 
 int
 TAO_EC_TPC_Dispatching::add_consumer (RtecEventComm::PushConsumer_ptr consumer
-                                      ACE_ENV_ARG_DECL)
+                                      ACE_ENV_ARG_DECL_NOT_USED)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
@@ -46,7 +46,8 @@ TAO_EC_TPC_Dispatching::add_consumer (RtecEventComm::PushConsumer_ptr consumer
     ACE_DEBUG ((LM_DEBUG, "EC (%P|%t) TPC_Dispatching::add_consumer(%@)\n", pc.in()));
 
   TAO_EC_Dispatching_Task* dtask =
-    new TAO_EC_TPC_Dispatching_Task (&this->thread_manager_, this->queue_full_service_object_);
+    new TAO_EC_TPC_Dispatching_Task (&this->thread_manager_,
+                                     this->queue_full_service_object_);
 
   if (EC_TPC_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "EC (%P|%t) TPC_Dispatching::add_consumer(%@): new task %@\n", pc.in(), dtask));
@@ -90,7 +91,7 @@ TAO_EC_TPC_Dispatching::add_consumer (RtecEventComm::PushConsumer_ptr consumer
 
 int
 TAO_EC_TPC_Dispatching::remove_consumer (RtecEventComm::PushConsumer_ptr consumer
-                                         ACE_ENV_ARG_DECL)
+                                         ACE_ENV_ARG_DECL_NOT_USED)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
