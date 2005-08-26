@@ -2,6 +2,7 @@ Fri Aug 26 13:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Acceptor_Registry.cpp:
         * tao/default_server.h:
+        * tao/PortableServer/PortableServer_WFunctions.cpp:
           Fixed 64bit conversion warnings
 
 Fri Aug 26 12:30:47 2005  Simon McQueen  <sm@prismtech.com>
