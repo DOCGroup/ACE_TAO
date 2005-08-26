@@ -487,6 +487,21 @@ protected:
   static int wchar_maxbytes_;
 };
 
+/**
+* @class OutputCDR_Auto_Reset
+*
+* @brief This class will call the reset() method on an
+* output CDR when it goes out of scope.
+*/
+class OutputCDR_Auto_Reset {
+public:
+  OutputCDR_Auto_Reset (ACE_OutputCDR& cdr);
+  ~OutputCDR_Auto_Reset (void);
+private:
+  ACE_OutputCDR& cdr_;
+};
+
+
 // ****************************************************************
 
 /**
@@ -546,10 +561,9 @@ public:
    */
   ACE_InputCDR (const ACE_Message_Block *data,
                 int byte_order = ACE_CDR_BYTE_ORDER,
-                ACE_CDR::Octet major_version =
-                ACE_CDR_GIOP_MAJOR_VERSION,
-                ACE_CDR::Octet minor_version =
-                ACE_CDR_GIOP_MINOR_VERSION);
+                ACE_CDR::Octet major_version = ACE_CDR_GIOP_MAJOR_VERSION,
+                ACE_CDR::Octet minor_version = ACE_CDR_GIOP_MINOR_VERSION,
+                ACE_Lock* lock = 0);
 
   /// Create an input stream from an ACE_Data_Block. The <flag>
   /// indicates whether the <data> can be deleted by the CDR stream

@@ -652,8 +652,9 @@ ACE_InputCDR::ACE_InputCDR (size_t bufsiz,
 ACE_InputCDR::ACE_InputCDR (const ACE_Message_Block *data,
                             int byte_order,
                             ACE_CDR::Octet major_version,
-                            ACE_CDR::Octet minor_version)
-  : start_ (),
+                            ACE_CDR::Octet minor_version,
+                            ACE_Lock* lock)
+: start_ (0, ACE_Message_Block::MB_DATA, 0, 0, 0, lock),
     good_bit_ (1),
     major_version_ (major_version),
     minor_version_ (minor_version),

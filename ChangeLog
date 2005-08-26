@@ -1,3 +1,17 @@
+Fri Aug 26 11:43:01 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * ace/CDR_Stream.h:
+        * ace/CDR_Stream.inl:
+        * ace/CDR_Stream.cpp:
+
+	  Add a new simple class using RAII to call reset on an output CDR when
+	it goes out of scope. This is used to implement a new TAO option that will
+	reset() output CDRs after sending each request.
+
+	  Add an optional ACE_Lock* to one of the input CDR constructors. This
+	is used by one of the TAO Any_Impl derived classes to provide thread safety
+	for its internal CDR.
+
 Fri Aug 26 11:02:21 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/fuzz.pl:
