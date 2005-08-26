@@ -96,7 +96,7 @@ TAO_Codeset_Manager_i::set_codeset (TAO_Tagged_Components& tc) const
 
 void
 TAO_Codeset_Manager_i::set_tcs (TAO_Profile &theProfile,
-                              TAO_Transport &trans)
+                                TAO_Transport &trans)
 {
   /// If tcs is already set on the transport then donot process,
   /// use existing transport as CDR have translators set.
@@ -167,8 +167,8 @@ TAO_Codeset_Manager_i::process_service_context (TAO_ServerRequest &request)
   IOP::ServiceContext context;
   context.context_id = IOP::CodeSets;
 
-  // These are the "fallback" codeset ids for use if no context is
-  // available
+  // These are the "fallback" codeset ids for use if no other codeset
+  // can be computed based on our local set and those in the context
   CONV_FRAME::CodeSetId tcs_c = TAO_CODESET_ID_XOPEN_UTF_8;
   CONV_FRAME::CodeSetId tcs_w = TAO_CODESET_ID_UNICODE;
 
@@ -194,8 +194,12 @@ TAO_Codeset_Manager_i::process_service_context (TAO_ServerRequest &request)
         return;
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("TAO (%P|%t) - Codeset_Manager_i::process_service_context ")
-                    ACE_TEXT("no codeset context in request, inferring TAO backwards compatibility\n")));
+                    ACE_TEXT("TAO (%P|%t) - ")
+                    ACE_TEXT("Codeset_Manager_i::process_service_context ")
+                    ACE_TEXT("no codeset context in request, using defaults\n")
+                    ));
+      tcs_c = TAO_Codeset_Manager_i::default_char_codeset;
+      tcs_w = TAO_Codeset_Manager_i::default_wchar_codeset;
     }
   if (TAO_debug_level > 2)
     {
