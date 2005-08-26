@@ -1,3 +1,8 @@
+Fri Aug 26 18:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DynamicInterface/Server_Request.cpp:
+          Fixed fuzz error
+
 Fri Aug 26 18:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/CORBALOC_Parser.cpp:
