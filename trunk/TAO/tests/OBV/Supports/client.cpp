@@ -152,14 +152,18 @@ main (int argc, char *argv[])
 
           // At this point, test_vt_graph and test_graph refer to the same object.
           ACE_ASSERT (test_vt_graph->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 3);
+          ACE_TRY_CHECK;
           my_test->pass_vt_graph_in (test_vt_graph.in () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           ACE_ASSERT (test_vt_graph->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 3);
+          ACE_TRY_CHECK;
 
           ACE_ASSERT (test_graph->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 3);
+          ACE_TRY_CHECK;
           my_test->pass_obj_graph_in (test_graph.in () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           ACE_ASSERT (test_graph->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 4);
+          ACE_TRY_CHECK;
 
           test_vt_graph->add_node ("NEW2" ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -170,17 +174,21 @@ main (int argc, char *argv[])
           // After the 'pass_vt_graph_out' call returns, test_vt_graph will refer to
           // a new object.
           ACE_ASSERT (test_vt_graph->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 6);
+          ACE_TRY_CHECK;
           my_test->pass_vt_graph_out (test_vt_graph.out () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           ACE_ASSERT (test_vt_graph->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 5);
+          ACE_TRY_CHECK;
 
           // 'test_graph' still refers to the original object, but after the
           // 'pass_obj_graph_out' call returns, it will refer to a new object,
           // residing on the server.
           ACE_ASSERT (test_graph->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 6);
+          ACE_TRY_CHECK;
           my_test->pass_obj_graph_out (test_graph.out () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           ACE_ASSERT (test_graph->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 5);
+          ACE_TRY_CHECK;
 
           // test_vt_graph and test_graph now refer to different objects.
           test_vt_graph->add_node ("NEW2" ACE_ENV_ARG_PARAMETER);
@@ -190,14 +198,18 @@ main (int argc, char *argv[])
           ACE_TRY_CHECK;
 
           ACE_ASSERT (test_vt_graph->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 6);
+          ACE_TRY_CHECK;
           my_test->pass_vt_graph_inout (test_vt_graph.inout () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           ACE_ASSERT (test_vt_graph->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 7);
+          ACE_TRY_CHECK;
 
           ACE_ASSERT (test_graph->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 6);
+          ACE_TRY_CHECK;
           my_test->pass_obj_graph_inout (test_graph.inout () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           ACE_ASSERT (test_graph->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 7);
+          ACE_TRY_CHECK;
 
         }
 
