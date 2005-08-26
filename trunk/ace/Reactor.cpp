@@ -660,10 +660,10 @@ ACE_Reactor::schedule_timer (ACE_Event_Handler *event_handler,
   // Assign *this* <Reactor> to the <Event_Handler>.
   event_handler->reactor (this);
 
-  int result = this->implementation ()->schedule_timer (event_handler,
-                                                        arg,
-                                                        delta,
-                                                        interval);
+  long result = this->implementation ()->schedule_timer (event_handler,
+                                                         arg,
+                                                         delta,
+                                                         interval);
   if (result == -1)
     // Reset the old reactor in case of failures.
     event_handler->reactor (old_reactor);
