@@ -1041,7 +1041,7 @@ sub check_for_ace_check ()
                 next if m/^\s*$/;
 
                 if ($disable == 0) {
-                    if (m/[,\(]\s*ACE_ENV_(SINGLE_)?ARG_PARAMETER[,\)]/) {
+                    if (m/\s*ACE_ENV_(SINGLE_)?ARG_PARAMETER[,\)]/) {
                         $found_env = 1;
                         $in_func = 1;
                         $env_line = $line;
