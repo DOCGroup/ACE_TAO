@@ -4,6 +4,9 @@ Fri Aug 26 13:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
           Fixed implicit conversion from long to int to long, found
           by 64bit warnings
 
+        * ace/POSIX_Asynch_IO.cpp:
+          Fixed 64bit bit conversion warning
+
 Thu Aug 25 18:53:31 2005  Steve Huston  <shuston@riverace.com>
 
 	* tests/Array_Map_Test.cpp: Don't attempt to build this test if
