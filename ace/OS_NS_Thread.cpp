@@ -4095,9 +4095,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   int result;
   pthread_attr_t attr;
 #   if defined (ACE_HAS_PTHREADS_DRAFT4)
-  if (::pthread_attr_create (&attr) != 0)
+  if (ACE_ADAPT_RETVAL(::pthread_attr_create (&attr), result) != 0)
 #   else /* ACE_HAS_PTHREADS_DRAFT4 */
-    if (::pthread_attr_init (&attr) != 0)
+  if (ACE_ADAPT_RETVAL(::pthread_attr_init(&attr), result) != 0)
 #   endif /* ACE_HAS_PTHREADS_DRAFT4 */
       return -1;
 
@@ -4153,7 +4153,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #     if !defined (ACE_LACKS_THREAD_STACK_ADDR)
   if (stack != 0)
     {
-      if (::pthread_attr_setstackaddr (&attr, stack) != 0)
+      if (ACE_ADAPT_RETVAL(::pthread_attr_setstackaddr (&attr, stack), result) != 0)
         {
 #       if defined (ACE_HAS_PTHREADS_DRAFT4)
           ::pthread_attr_delete (&attr);
@@ -4396,7 +4396,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #     endif /* ACE_HAS_PTHREADS_DRAFT4 */
           if (ACE_BIT_ENABLED (flags, THR_INHERIT_SCHED))
             sched = PTHREAD_INHERIT_SCHED;
-          if (::pthread_attr_setinheritsched (&attr, sched) != 0)
+          if (ACE_ADAPT_RETVAL(::pthread_attr_setinheritsched (&attr, sched), result) != 0)
             {
 #     if defined (ACE_HAS_PTHREADS_DRAFT4)
               ::pthread_attr_delete (&attr);
@@ -4425,7 +4425,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           if (ACE_BIT_ENABLED (flags, THR_SCOPE_SYSTEM))
             scope = PTHREAD_SCOPE_SYSTEM;
 
-          if (::pthread_attr_setscope (&attr, scope) != 0)
+          if (ACE_ADAPT_RETVAL(::pthread_attr_setscope (&attr, scope), result) != 0)
             {
 #     if defined (ACE_HAS_PTHREADS_DRAFT4)
               ::pthread_attr_delete (&attr);
