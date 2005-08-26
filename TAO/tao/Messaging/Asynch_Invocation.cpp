@@ -67,11 +67,11 @@ namespace TAO
         this->write_header (tspec,
                             cdr
                             ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (s);
+        ACE_TRY_CHECK;
 
         this->marshal_data (cdr
                             ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (s);
+        ACE_TRY_CHECK;
 
         // Register a reply dispatcher for this invocation. Use the
         // preallocated reply dispatcher.

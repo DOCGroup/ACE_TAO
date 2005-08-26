@@ -2213,6 +2213,7 @@ TAO_ORB_Core::resolve_codecfactory_i (ACE_ENV_SINGLE_ARG_DECL)
     {
       this->codec_factory_ =
         loader->create_object (this->orb_, 0, 0 ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
     }
 }
 
@@ -2235,6 +2236,7 @@ TAO_ORB_Core::resolve_poa_current_i (ACE_ENV_SINGLE_ARG_DECL)
     {
       this->poa_current_ =
         loader->create_object (this->orb_, 0, 0 ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK
     }
 }
 
@@ -2289,6 +2291,7 @@ TAO_ORB_Core::resolve_dynanyfactory_i (ACE_ENV_SINGLE_ARG_DECL)
     {
       this->dynany_factory_ =
         loader->create_object (this->orb_, 0, 0 ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
     }
 }
 
@@ -2312,6 +2315,7 @@ TAO_ORB_Core::resolve_iormanipulation_i (ACE_ENV_SINGLE_ARG_DECL)
     {
       this->ior_manip_factory_ =
         loader->create_object (this->orb_, 0, 0 ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
     }
 }
 
