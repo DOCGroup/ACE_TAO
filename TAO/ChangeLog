@@ -1,3 +1,15 @@
+Fri Aug 26 12:30:47 2005  Simon McQueen  <sm@prismtech.com>
+
+        * tao/AnyTypeCode.mpc:
+
+          Removed ServicesA.cpp from unconditional compilation list.
+          ServicesC.cpp does not get built in min corba builds.
+
+        * tao/extra_anytypecode.mpb:
+
+          Create feature template to include ServicesA.cpp only if not
+          a min corba build.
+
 Fri Aug 26 10:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.cpp:
