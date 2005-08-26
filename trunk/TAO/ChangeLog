@@ -1,7 +1,13 @@
+Thu Aug 25 17:15:27 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Regenerated.
+
 Thu Aug 25 16:43:15 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/AnyTypeCode/Any_Array_Impl_T.cpp:
-        
+
           Added include of Any.h, similar to Any_Dual_Impl_T.cpp, needed
           when compiling code generated for arrays and not passing -Sa
           or -St to the IDL compiler.
