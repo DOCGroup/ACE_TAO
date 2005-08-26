@@ -817,6 +817,8 @@ nobase_include_HEADERS = \
   Reactor_Notification_Strategy.h \
   Reactor_Notification_Strategy.inl \
   Reactor_Timer_Interface.h \
+  Reactor_Token_T.cpp \
+  Reactor_Token_T.h \
   Read_Buffer.h \
   Read_Buffer.inl \
   Recursive_Thread_Mutex.h \

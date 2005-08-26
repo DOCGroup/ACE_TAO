@@ -21,81 +21,13 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Lock_Adapter_T.h"
+#include "ace/Token.h"
 
-/**
- * @class ACE_Select_Reactor_Token_T
- *
- * @brief Used as a synchronization mechanism to coordinate concurrent
- * access to a Select_Reactor object.
- *
- * This class is used to make the <ACE_Select_Reactor>
- * thread-safe.  By default, the thread that runs the
- * <handle_events> loop holds the token, even when it is blocked
- * in the <select> call.  Whenever another thread wants to
- * access the <ACE_Reactor> via its <register_handler>,
- * <remove_handler>, etc. methods) it must ask the token owner
- * for temporary release of the token.  To accomplish this, the
- * owner of a token must define a <sleep_hook> through which it
- * can be notified to temporarily release the token if the
- * current situation permits this.
- * The owner of the token is responsible for deciding which
- * request for the token can be granted.  By using the
- * <ACE_Token::renew> API, the thread that releases the token
- * temporarily can specify to get the token back right after the
- * other thread has completed using the token.  Thus, there is a
- * dedicated thread that owns the token ``by default.''  This
- * thread grants other threads access to the token by ensuring
- * that whenever somebody else has finished using the token the
- * ``default owner'' first holds the token again, i.e., the
- * owner has the chance to schedule other threads.
- * The thread that most likely needs the token most of the time
- * is the thread running the dispatch loop.  Typically the token
- * gets released prior to entering the <select> call and gets
- * ``re-acquired'' as soon as the <select> call returns, which
- * results probably in many calls to <release>/<acquire> that
- * are not really needed since no other thread would need the
- * token in the meantime.  That's why the dispatcher thread is
- * chosen to be the owner of the token.
- * In case the token would have been released while in <select>
- * there would be a good chance that the <fd_set> could have
- * been modified while the <select> returns from blocking and
- * trying to re-acquire the lock.  Through the token mechanism
- * it is ensured that while another thread is holding the token,
- * the dispatcher thread is blocked in the <renew> call and not
- * in <select>.  Thus, it is not critical to change the
- * <fd_set>.  The implementation of the <sleep_hook> mechanism
- * provided by the <ACE_Select_Reactor_Token> enables the
- * default owner to be the thread that executes the dispatch
- * loop.
- */
-template <class ACE_SELECT_REACTOR_MUTEX>
-class ACE_Select_Reactor_Token_T : public ACE_SELECT_REACTOR_MUTEX
-{
-public:
-
-  ACE_Select_Reactor_Token_T (ACE_Select_Reactor_Impl &r,
-                              int s_queue = ACE_SELECT_TOKEN::FIFO);
-  ACE_Select_Reactor_Token_T (int s_queue = ACE_SELECT_TOKEN::FIFO);
-  virtual ~ACE_Select_Reactor_Token_T (void);
-
-  /// Called just before the ACE_Event_Handler goes to sleep.
-  virtual void sleep_hook (void);
-
-  /// Get the select_reactor implementation
-  ACE_Select_Reactor_Impl &select_reactor (void);
-
-  /// Set the select_reactor implementation
-  void select_reactor (ACE_Select_Reactor_Impl &);
-
-  /// Dump the state of an object.
-  virtual void dump (void) const;
-
-  /// Declare the dynamic allocation hooks.
-  ACE_ALLOC_HOOK_DECLARE;
-
-private:
-  ACE_Select_Reactor_Impl *select_reactor_;
-};
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+typedef ACE_Token ACE_SELECT_TOKEN;
+#else
+typedef ACE_Noop_Token ACE_SELECT_TOKEN;
+#endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 
 /**
  * @class ACE_Select_Reactor_T
@@ -103,11 +35,11 @@ private:
  * @brief An object oriented event demultiplexor and event handler
  * dispatcher.
  *
- * The <ACE_Select_Reactor> is an object-oriented event
+ * The ACE_Select_Reactor is an object-oriented event
  * demultiplexor and event handler dispatcher.  The sources of
- * events that the <ACE_Select_Reactor> waits for and dispatches
+ * events that the ACE_Select_Reactor waits for and dispatches
  * includes I/O events, signals, and timer events.  All public
- * methods acquire the main <ACE_Select_Reactor_Token> lock and
+ * methods acquire the main ACE_Reactor_Token lock and
  * call down to private or protected methods, which assume that
  * the lock is held and so therefore don't (re)acquire the lock.
  */
@@ -589,10 +521,10 @@ public:
   virtual size_t size (void) const;
 
   /**
-   * Returns a reference to the <ACE_Select_Reactor_Token> that is
-   * used to serialize the internal Select_Reactor's processing logic.
+   * Returns a reference to the ACE_Reactor_Token that is
+   * used to serialize the internal processing logic.
    * This can be useful for situations where you need to avoid
-   * deadlock efficiently when <ACE_Event_Handlers> are used in
+   * deadlock efficiently when ACE_Event_Handlers are used in
    * multiple threads.
    */
   virtual ACE_Lock &lock (void);
@@ -606,7 +538,7 @@ public:
 protected:
   // = Internal methods that do the actual work.
 
-  // All of these methods assume that the <Select_Reactor>'s token
+  // All of these methods assume that the token
   // lock is held by the public methods that call down to them.
 
   /// Do the work of actually binding the <handle> and <eh> with the

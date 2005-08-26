@@ -261,7 +261,7 @@ Sender::Sender (ACE_HANDLE handle,
 
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                "Reference count in Sender::Sender() is %d\n",
+                ACE_TEXT ("Reference count in Sender::Sender() is %d\n"),
                 this->reference_count_.value ()));
 }
 
@@ -269,7 +269,7 @@ Sender::~Sender (void)
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                "Reference count in ~Sender::Sender() is %d\n",
+                ACE_TEXT ("Reference count in ~Sender::Sender() is %d\n"),
                 this->reference_count_.value ()));
 
   // Close the socket that we are responsible for.
@@ -281,7 +281,7 @@ Sender::handle_input (ACE_HANDLE)
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                "Reference count in Sender::handle_input() is %d\n",
+                ACE_TEXT ("Reference count in Sender::handle_input() is %d\n"),
                 this->reference_count_.value ()));
 
   //
@@ -290,7 +290,8 @@ Sender::handle_input (ACE_HANDLE)
   //
 
   ACE_DEBUG ((LM_DEBUG,
-              "Event loop thread calling Sender::close() for handle %d\n",
+              ACE_TEXT ("Event loop thread calling Sender::close() ")
+              ACE_TEXT ("for handle %d\n"),
               this->handle_));
 
   this->close ();
@@ -375,7 +376,7 @@ Receiver::Receiver (ACE_Thread_Manager &thread_manager,
 
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                "Reference count in Receiver::Receiver() is %d\n",
+                ACE_TEXT ("Reference count in Receiver::Receiver() is %d\n"),
                 this->reference_count_.value ()));
 }
 
@@ -383,7 +384,7 @@ Receiver::~Receiver (void)
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                "Reference count in ~Receiver::Receiver() is %d\n",
+                ACE_TEXT ("Reference count in ~Receiver::Receiver() is %d\n"),
                 this->reference_count_.value ()));
 
   // Close the socket that we are responsible for.
@@ -427,7 +428,7 @@ Receiver::handle_input (ACE_HANDLE handle)
     {
       if (debug)
         ACE_DEBUG ((LM_DEBUG,
-                    "Message %d received on handle %d\n",
+                    ACE_TEXT ("Message %d received on handle %d\n"),
                     this->counter_++,
                     handle));
 
@@ -438,7 +439,7 @@ Receiver::handle_input (ACE_HANDLE handle)
 
           if (debug)
             ACE_DEBUG ((LM_DEBUG,
-                        "Nesting level %d\n",
+                        ACE_TEXT ("Nesting level %d\n"),
                         this->nested_upcalls_level_));
 
           if ((this->nested_upcalls_level_ != max_nested_upcall_level) &&
@@ -455,7 +456,8 @@ Receiver::handle_input (ACE_HANDLE handle)
     {
       if (debug)
         ACE_DEBUG ((LM_DEBUG,
-                    "/*** Problem in receiving message %d on handle %d: shutting down receiving thread ***/\n",
+                    ACE_TEXT ("/*** Problem in receiving message %d on handle")
+                    ACE_TEXT (" %d: shutting down receiving thread ***/\n"),
                     this->counter_,
                     handle));
 
@@ -569,7 +571,8 @@ Connector::connect (ACE_HANDLE &client_handle,
 
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                "New connection: client handle = %d, server handle = %d\n",
+                ACE_TEXT ("New connection: client handle = %d, ")
+                ACE_TEXT ("server handle = %d\n"),
                 client_handle, server_handle));
 
   return 0;
@@ -793,9 +796,15 @@ Invocation_Thread::create_connection (void)
     this->reactor_.register_handler (client_handle,
                                      sender,
                                      ACE_Event_Handler::READ_MASK);
+#if 0
   ACE_ASSERT (result == 0);
   ACE_UNUSED_ARG (result);
-
+#else
+  if (result != 0)
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) create_connection h %d, %p\n"),
+                client_handle,
+                ACE_TEXT ("register_handler")));
+#endif
   return sender;
 }
 
@@ -856,7 +865,7 @@ Invocation_Thread::svc (void)
             {
               if (debug)
                 ACE_DEBUG ((LM_DEBUG,
-                            "Message %d:%d delivered on handle %d\n",
+                            ACE_TEXT ("Message %d:%d delivered on handle %d\n"),
                             connection_counter,
                             message_counter,
                             sender->handle_));
@@ -868,13 +877,16 @@ Invocation_Thread::svc (void)
               // If failure in making invocation, close the sender.
               if (debug)
                 ACE_DEBUG ((LM_DEBUG,
-                            "/*** Problem in delivering message %d:%d on handle %d: shutting down invocation thread ***/\n",
+                            ACE_TEXT ("/*** Problem in delivering message ")
+                            ACE_TEXT ("%d:%d on handle %d: shutting down ")
+                            ACE_TEXT ("invocation thread ***/\n"),
                             connection_counter,
                             message_counter,
                             sender->handle_));
 
               ACE_DEBUG ((LM_DEBUG,
-                          "Invocation thread calling Sender::close() for handle %d\n",
+                          ACE_TEXT ("Invocation thread calling ")
+                          ACE_TEXT ("Sender::close() for handle %d\n"),
                           sender->handle_));
 
               sender->close ();
@@ -967,7 +979,8 @@ Close_Socket_Thread::svc (void)
           // Close the client socket.
           if (debug)
             ACE_DEBUG ((LM_DEBUG,
-                        "Close socket thread closing client handle %d\n",
+                        ACE_TEXT ("Close socket thread closing client ")
+                        ACE_TEXT ("handle %d\n"),
                         client_handle));
 
           ACE_OS::shutdown (client_handle, ACE_SHUTDOWN_BOTH);
@@ -978,7 +991,8 @@ Close_Socket_Thread::svc (void)
           // Close the server socket.
           if (debug)
             ACE_DEBUG ((LM_DEBUG,
-                        "Close socket thread closing server handle %d\n",
+                        ACE_TEXT ("Close socket thread closing server ")
+                        ACE_TEXT ("handle %d\n"),
                         server_handle));
           ACE_OS::shutdown (server_handle, ACE_SHUTDOWN_BOTH);
           ACE_OS::closesocket (server_handle);
@@ -1054,7 +1068,8 @@ Purger_Thread::svc (void)
 
           // Actively close the connection.
           ACE_DEBUG ((LM_DEBUG,
-                      "Purger thread calling Sender::close() for handle %d\n",
+                      ACE_TEXT ("Purger thread calling Sender::close() ")
+                      ACE_TEXT ("for handle %d\n"),
                       sender->handle_));
 
           sender->close ();
@@ -1073,12 +1088,12 @@ testing (ACE_Reactor *reactor,
          int nested_upcalls)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "\nConfiguration: \n"
-              "\tInvocation thread = %d\n"
-              "\tEvent Loop thread = %d\n"
-              "\tPurger thread     = %d\n"
-              "\tReceiver thread   = %d\n"
-              "\tNested Upcalls    = %d\n\n",
+              ACE_TEXT ("\nConfiguration: \n")
+              ACE_TEXT ("\tInvocation thread = %d\n")
+              ACE_TEXT ("\tEvent Loop thread = %d\n")
+              ACE_TEXT ("\tPurger thread     = %d\n")
+              ACE_TEXT ("\tReceiver thread   = %d\n")
+              ACE_TEXT ("\tNested Upcalls    = %d\n\n"),
               make_invocations,
               run_event_loop_thread,
               run_purger_thread,
@@ -1337,7 +1352,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (test_select_reactor)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "\n\nTesting Select Reactor....\n\n"));
+                  ACE_TEXT ("\n\nTesting Select Reactor....\n\n")));
 
       test<ACE_Select_Reactor> test (ignore_nested_upcalls,
                                      event_loop_thread_not_required);
@@ -1347,7 +1362,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (test_tp_reactor)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "\n\nTesting TP Reactor....\n\n"));
+                  ACE_TEXT ("\n\nTesting TP Reactor....\n\n")));
 
       test<ACE_TP_Reactor> test (perform_nested_upcalls,
                                  event_loop_thread_not_required);
@@ -1359,7 +1374,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (test_dev_poll_reactor)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "\n\nTesting Dev Poll Reactor....\n\n"));
+                  ACE_TEXT ("\n\nTesting Dev Poll Reactor....\n\n")));
 
       test<ACE_Dev_Poll_Reactor> test (perform_nested_upcalls,
                                        event_loop_thread_not_required);
@@ -1373,7 +1388,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (test_wfmo_reactor)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "\n\nTesting WFMO Reactor....\n\n"));
+                  ACE_TEXT ("\n\nTesting WFMO Reactor....\n\n")));
 
       test<ACE_WFMO_Reactor> test (ignore_nested_upcalls,
                                    event_loop_thread_required);
