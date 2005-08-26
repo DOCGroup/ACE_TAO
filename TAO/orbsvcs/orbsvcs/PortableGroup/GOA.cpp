@@ -133,7 +133,7 @@ TAO_GOA::new_POA (const String &name,
                      TAO_Object_Adapter *object_adapter
                      ACE_ENV_ARG_DECL)
 {
-  TAO_GOA *poa;
+  TAO_GOA *poa = 0;
 
   ACE_NEW_THROW_EX (poa,
                     TAO_GOA (name,
