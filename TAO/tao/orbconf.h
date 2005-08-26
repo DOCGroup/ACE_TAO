@@ -861,6 +861,10 @@ enum TAO_Policy_Scope
 #  define TAO_USE_LOCAL_MEMORY_POOL 1
 #endif /* TAO_USE_LOCAL_MEMORY_POOL */
 
+#if !defined (TAO_RESET_OUTPUT_CDR_AFTER_SEND)
+#define TAO_RESET_OUTPUT_CDR_AFTER_SEND 0
+#endif /* TAO_RESET_OUTPUT_CDR_AFTER_SEND */
+
 #include /**/ "ace/post.h"
 
 #endif  /* TAO_ORBCONF_H */

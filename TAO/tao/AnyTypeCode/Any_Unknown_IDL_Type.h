@@ -17,6 +17,8 @@
 #include "tao/AnyTypeCode/Any_Impl.h"
 #include "tao/CDR.h"
 
+#include "ace/Auto_Ptr.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -58,6 +60,10 @@ namespace TAO
     virtual CORBA::Boolean to_abstract_base (CORBA::AbstractBase_ptr &) const;
 
   private:
+    // We make the lock global, so that it won't  be deleted when shared.
+    // For instance, see Any_Basic_Impl::extract() which copies the insides
+    // from an Unknown_IDL_Type to an Any_Basic_Impl.
+    static ACE_Auto_Ptr<ACE_Lock> lock_;
     mutable TAO_InputCDR cdr_;
   };
 }

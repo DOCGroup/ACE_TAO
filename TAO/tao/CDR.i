@@ -52,6 +52,22 @@ TAO_InputCDR::TAO_InputCDR (const ACE_Message_Block *data,
 }
 
 ACE_INLINE
+TAO_InputCDR::TAO_InputCDR (const ACE_Message_Block *data,
+                            ACE_Lock* lock,
+                            int byte_order,
+                            ACE_CDR::Octet major_version,
+                            ACE_CDR::Octet minor_version,
+                            TAO_ORB_Core* orb_core)
+  : ACE_InputCDR (data,
+                  byte_order,
+                  major_version,
+                  minor_version,
+                  lock),
+    orb_core_ (orb_core)
+{
+}
+
+ACE_INLINE
 TAO_InputCDR::TAO_InputCDR (ACE_Data_Block *data,
                             ACE_Message_Block::Message_Flags flag,
                             int byte_order,
