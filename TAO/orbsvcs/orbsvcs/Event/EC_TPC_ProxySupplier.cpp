@@ -19,15 +19,16 @@ TAO_EC_TPC_ProxyPushSupplier::~TAO_EC_TPC_ProxyPushSupplier (void)
 }
 
 void
-TAO_EC_TPC_ProxyPushSupplier:: disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_EC_TPC_ProxyPushSupplier:: disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (EC_TPC_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "EC (%P|%t): enter EC_TPC_ProxySupplier::disconnect_push_supplier (%@): refcount=%u,consumer=%@\n", this, this->refcount_, this->consumer_.in()));
 
   if (this->is_connected_i ())
-    this->tpc_dispatching ()->remove_consumer (this->consumer_.in());
-  BASECLASS::disconnect_push_supplier ();
+    this->tpc_dispatching ()->remove_consumer (this->consumer_.in()
+                                               ACE_ENV_ARG_PARAMETER);
+  BASECLASS::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   if (EC_TPC_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "EC (%P|%t): leave EC_TPC_ProxySupplier::disconnect_push_supplier (%@)\n", this));
@@ -61,6 +62,6 @@ TAO_EC_TPC_ProxyPushSupplier::connect_push_consumer (
   TAO_EC_TPC_Dispatching* tpcdispatcher = this->tpc_dispatching ();
 
   // the new dispatching task gets automatically created
-  tpcdispatcher->add_consumer (push_consumer);
+  tpcdispatcher->add_consumer (push_consumer ACE_ENV_ARG_PARAMETER);
 }
 
