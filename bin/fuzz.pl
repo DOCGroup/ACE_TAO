@@ -1021,6 +1021,7 @@ sub check_for_ace_check ()
             my $disable = 0;
             my $in_func = 0;
             my $in_return = 0;
+            my $in_ace_try = 0;
             my $found_env = 0;
 
             print "Looking at file $file\n" if $opt_d;
@@ -1040,11 +1041,26 @@ sub check_for_ace_check ()
                 next if m/^\s*\/\//;
                 next if m/^\s*$/;
 
+                if (m/ACE_TRY\s*$/ || m/ACE_TRY_EX/ || m/ACE_TRY\s*{/) {
+                  $in_ace_try = 1;
+                }
+                if (m/ACE_CATCH/) {
+                  $in_ace_try = 0;
+                }
+
                 if ($disable == 0) {
                     if (m/\s*ACE_ENV_(SINGLE_)?ARG_PARAMETER[,\)]/) {
                         $found_env = 1;
                         $in_func = 1;
                         $env_line = $line;
+                    }
+
+                    if (m/^\s*return/) {
+                      $in_return = 1;
+                    }
+                    if ($in_return && m/;/) {
+                      $in_return = 0;
+                      $found_env = 0;
                     }
 
                     # ignore quoted ACE_ENV_ARG_PARAMETERS's
@@ -1059,19 +1075,14 @@ sub check_for_ace_check ()
                     if ($in_func && m/\)/) {
                       $in_func = 0;
                     }
-                    elsif ($in_return && m/\)\s*;/) {
-                      $in_return = 0;
-                      $found_env = 0;
-                    }
                     elsif (!$in_func && $found_env) {
-                        if (!m/_CHECK/ && !m/^\}/ && !$in_return) {
+                        if (m/ACE_CHECK/ && $in_ace_try) {
+                            print_error ("ACE_CHECK/ACE_CHECK_RETURN used inside of an ACE_TRY for $file ($line)");
+                        }
+                        elsif (!m/_CHECK/ && !m/^\}/ && !$in_return) {
                             print_error ("Missing ACE_CHECK/ACE_TRY_CHECK for $file ($env_line)");
                         }
                         $found_env = 0;
-                    }
-
-                    if (m/^\s*return/) {
-                        $in_return = 1;
                     }
                 }
             }
