@@ -144,6 +144,7 @@ Session::start (const Test::Session_List &other_sessions
   }
 
   this->validate_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 
   this->barrier_.wait ();
 
@@ -153,6 +154,7 @@ Session::start (const Test::Session_List &other_sessions
   /// None of the threads are running, this session is useless at
   /// this point, report the problem and destroy the local objects
   this->terminate (0 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 Test::Payload *
