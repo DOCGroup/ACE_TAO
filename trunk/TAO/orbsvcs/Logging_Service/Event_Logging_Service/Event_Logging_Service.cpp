@@ -3,7 +3,6 @@
 #include "orbsvcs/Log/EventLogFactory_i.h"
 #include "orbsvcs/CosEvent/CEC_Default_Factory.h"
 #include "tao/IORTable/IORTable.h"
-#include "ace/OS_main.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
@@ -16,7 +15,8 @@ Event_Logging_Service::Event_Logging_Service (void)
   : service_name_ ("EventLogFactory"),
     ior_file_name_ (0),
     pid_file_name_ (0),
-    bind_to_naming_service_ (1)
+    bind_to_naming_service_ (1),
+    nthreads_ (0)
 {
   // No-Op.
 }
@@ -28,7 +28,7 @@ Event_Logging_Service::~Event_Logging_Service (void)
 
 void
 Event_Logging_Service::init_ORB  (int& argc, char *argv []
-				  ACE_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
 {
   this->orb_ = CORBA::ORB_init (argc,
                                 argv,
@@ -57,7 +57,7 @@ Event_Logging_Service::init_ORB  (int& argc, char *argv []
 int
 Event_Logging_Service::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("n:o:p:x"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("n:o:p:t:x"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -76,6 +76,10 @@ Event_Logging_Service::parse_args (int argc, char *argv[])
           pid_file_name_ = get_opt.opt_arg();
           break;
 
+        case 't':
+          nthreads_ = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+
         case 'x':
           bind_to_naming_service_ = 0;
           break;
@@ -87,6 +91,7 @@ Event_Logging_Service::parse_args (int argc, char *argv[])
                       "-n service_name "
                       "-o ior_file_name "
                       "-p pid_file_name "
+                      "-t threads "
                       "-x [disable naming service bind] "
                       "\n",
                       argv[0]));
@@ -98,8 +103,7 @@ Event_Logging_Service::parse_args (int argc, char *argv[])
 }
 
 int
-Event_Logging_Service::startup (int argc, char *argv[]
-                          ACE_ENV_ARG_DECL)
+Event_Logging_Service::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
 {
   // initalize the ORB.
   this->init_ORB (argc, argv
@@ -111,9 +115,9 @@ Event_Logging_Service::startup (int argc, char *argv[]
 
   // Activate the event log factory
   ACE_NEW_THROW_EX (this->event_log_factory_,
-		    TAO_EventLogFactory_i (),
-		    CORBA::NO_MEMORY ());
-		    
+                    TAO_EventLogFactory_i (),
+                    CORBA::NO_MEMORY ());
+
   // CORBA::Object_var obj =
   DsEventLogAdmin::EventLogFactory_var obj =
     this->event_log_factory_->activate (this->orb_.in (),
@@ -208,7 +212,25 @@ Event_Logging_Service::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-Event_Logging_Service::run (void)
+Event_Logging_Service::run (ACE_ENV_SINGLE_ARG_DECL)
+{
+  if (this->nthreads_ > 0)
+    {
+      if (this->activate ((THR_NEW_LWP | THR_JOINABLE), this->nthreads_) != 0)
+        return -1;
+
+      this->thr_mgr ()->wait ();
+      return 0;
+    }
+
+  this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  return 0;
+}
+
+int
+Event_Logging_Service::svc (void)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -228,6 +250,8 @@ Event_Logging_Service::run (void)
 void
 Event_Logging_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
+  // @@ JTC - factory object isn't activated on root poa.
+#if 0
   // Deactivate.
   PortableServer::ObjectId_var oid =
     this->poa_->servant_to_id (this->event_log_factory_
@@ -238,6 +262,7 @@ Event_Logging_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   this->poa_->deactivate_object (oid.in ()
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+#endif
 
   if (bind_to_naming_service_)
     {
@@ -253,44 +278,4 @@ Event_Logging_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   // shutdown the ORB.
   if (!CORBA::is_nil (this->orb_.in ()))
     this->orb_->shutdown ();
-}
-
-int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
-{
-  TAO_CEC_Default_Factory::init_svcs ();
-
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
-    {
-      Event_Logging_Service service;
-
-      service.startup (argc,
-                       argv
-                       ACE_ENV_ARG_PARAMETER);
-
-      ACE_TRY_CHECK;
-
-      if (service.run () == -1)
-        {
-          service.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Failed to run the Telecom Log Service.\n"),
-                            1);
-
-          ACE_TRY_CHECK;
-        }
-
-      service.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      // no -op
-    }
-  ACE_ENDTRY;
-
-  return 0;
 }

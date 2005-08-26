@@ -1,11 +1,11 @@
-//$Id$
-#include "Notify_Logging_Service.h"
+#include "Event_Logging_Service.h"
 #include "ace/OS_main.h"
+
 #include "orbsvcs/Shutdown_Utilities.h"
 #include "tao/debug.h"
 
-ACE_RCSID (Notify_Logging_Service,
-           Notify_Logging_Server,
+ACE_RCSID (Event_Logging_Service,
+           Event_Logging_Server,
            "$Id$")
 
 
@@ -13,15 +13,15 @@ class Logging_Svc_Shutdown
   : public Shutdown_Functor
 {
 public:
-  Logging_Svc_Shutdown (Notify_Logging_Service& svc);
+  Logging_Svc_Shutdown (Event_Logging_Service& svc);
 
   void operator() (int which_signal);
 
 private:
-  Notify_Logging_Service&       svc_;
+  Event_Logging_Service&        svc_;
 };
 
-Logging_Svc_Shutdown::Logging_Svc_Shutdown (Notify_Logging_Service& svc)
+Logging_Svc_Shutdown::Logging_Svc_Shutdown (Event_Logging_Service& svc)
   : svc_ (svc)
 {
 }
@@ -31,17 +31,19 @@ Logging_Svc_Shutdown::operator() (int which_signal)
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "Notify_Logging_Service: shutting down on signal %d\n",
+                "Event_Logging_Service: shutting down on signal %d\n",
                 which_signal));
   (void) this->svc_.shutdown ();
 }
 
-// Driver function for the Notify_Logging_Service.
+// Driver function for the Event_Logging_Service
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  Notify_Logging_Service service;
+  TAO_CEC_Default_Factory::init_svcs ();
+
+  Event_Logging_Service service;
 
   Logging_Svc_Shutdown killer (service);
   Service_Shutdown kill_contractor (killer);

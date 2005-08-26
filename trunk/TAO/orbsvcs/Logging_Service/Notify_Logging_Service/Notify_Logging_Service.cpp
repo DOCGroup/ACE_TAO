@@ -1,7 +1,6 @@
 #include "Notify_Logging_Service.h"
 #include "ace/Get_Opt.h"
 #include "ace/Dynamic_Service.h"
-//#include "ace/Arg_Shifter.h"
 #include "tao/debug.h"
 #include "tao/IORTable/IORTable.h"
 #include "orbsvcs/Notify/Service.h"
@@ -17,7 +16,8 @@ Notify_Logging_Service::Notify_Logging_Service (void)
   : service_name_ (NOTIFY_KEY),
     ior_file_name_ (0),
     pid_file_name_ (0),
-    bind_to_naming_service_ (1)
+    bind_to_naming_service_ (1),
+    nthreads_ (0)
 {
   // No-Op.
 }
@@ -29,7 +29,7 @@ Notify_Logging_Service::~Notify_Logging_Service (void)
 
 int
 Notify_Logging_Service::init_ORB (int& argc, char *argv []
-                              ACE_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
 {
   this->orb_ = CORBA::ORB_init (argc,
                                 argv,
@@ -73,7 +73,7 @@ Notify_Logging_Service::init_ORB (int& argc, char *argv []
 int
 Notify_Logging_Service::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("n:o:p:x"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("n:o:p:t::x"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -90,6 +90,10 @@ Notify_Logging_Service::parse_args (int argc, char *argv[])
 
         case 'p':
           pid_file_name_ = get_opt.opt_arg();
+          break;
+
+        case 't':
+          nthreads_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case 'x':
@@ -120,7 +124,7 @@ Notify_Logging_Service::init (int argc, char *argv[]
   // initalize the ORB.
   if (this->init_ORB (argc, argv
                       ACE_ENV_ARG_PARAMETER) != 0)
-  return -1;
+    return -1;
 
   if (this->parse_args (argc, argv) == -1)
     return -1;
@@ -232,7 +236,25 @@ Notify_Logging_Service::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-Notify_Logging_Service::run ()
+Notify_Logging_Service::run (ACE_ENV_SINGLE_ARG_DECL)
+{
+  if (this->nthreads_ > 0)
+    {
+      if (this->activate ((THR_NEW_LWP | THR_JOINABLE), this->nthreads_) != 0)
+        return -1;
+
+      this->thr_mgr ()->wait ();
+      return 0;
+    }
+
+  this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  return 0;
+}
+
+int
+Notify_Logging_Service::svc ()
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -242,7 +264,7 @@ Notify_Logging_Service::run ()
     }
   ACE_CATCHANY
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), -1);
+      return -1;
     }
   ACE_ENDTRY;
 
@@ -252,9 +274,11 @@ Notify_Logging_Service::run ()
 void
 Notify_Logging_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
+  // @@ JTC - factory object isn't activated on root poa.
+#if 0
   // Deactivate.
   PortableServer::ObjectId_var oid =
-    this->poa_->reference_to_id (this->notify_factory_.in ()
+    this->poa_->reference_to_id (this->notify_log_factory_.in ()
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -262,6 +286,7 @@ Notify_Logging_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   this->poa_->deactivate_object (oid.in ()
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+#endif
 
   if (bind_to_naming_service_)
     {
@@ -278,5 +303,4 @@ Notify_Logging_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   // shutdown the ORB.
   if (!CORBA::is_nil (this->orb_.in ()))
     this->orb_->shutdown ();
-
 }
