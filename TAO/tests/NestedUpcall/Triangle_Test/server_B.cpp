@@ -106,6 +106,7 @@ Object_B_Server::run (ACE_ENV_SINGLE_ARG_DECL)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Object_B_Server::run"),
                       -1);
+  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
