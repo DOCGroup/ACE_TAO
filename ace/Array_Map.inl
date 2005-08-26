@@ -115,5 +115,6 @@ ACE_INLINE typename ACE_Array_Map<Key, Value, EqualTo>::data_type &
 ACE_Array_Map<Key, Value, EqualTo>::operator[] (
   typename ACE_Array_Map<Key, Value, EqualTo>::key_type const & k)
 {
-  return (*((this->insert (value_type (k, data_type ()))).first)).second;
+  iterator i = (this->insert (value_type (k, data_type ()))).first;
+  return (*i).second;
 }
