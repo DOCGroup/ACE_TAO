@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  Front End of the Telecom Log Service 
+ *  Front End of the Telecom Log Service
  *  Event_Logging_Service
  *
  *
@@ -17,18 +17,20 @@
 #ifndef EVENT_LOGGING_SERVICE_H
 #define EVENT_LOGGING_SERVICE_H
 
+#include "ace/Task.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/DsLogAdminC.h"
 #include "orbsvcs/DsEventLogAdminC.h"
 #include "orbsvcs/Log/EventLogFactory_i.h"
 
 class Event_Logging_Service
+  : public ACE_Task_Base
 {
   // = TITLE
   //   Event_Logging_Service
   //
   // = DESCRIPTION
-  //   Implementation of the Telecom EventLog Service
+  //   Implementation of the Telecom Log Service
 
  public:
   // = Initialization and termination methods.
@@ -38,13 +40,12 @@ class Event_Logging_Service
   virtual ~Event_Logging_Service (void);
   // Destructor.
 
-  int startup (int argc, char *argv[]
-               ACE_ENV_ARG_DECL);
-  // Initializes the Telecom EventLog Service.
+  int init (int argc, char *argv[] ACE_ENV_ARG_DECL);
+  // Initializes the Telecom Log Service.
   // Returns 0 on success, -1 on error.
 
-  int run (void);
-  // run the Telecom EventLog Service.
+  int run (ACE_ENV_SINGLE_ARG_DECL);
+  // Run the Telecom Log Service.
   // Returns 0 on success, -1 on error.
 
   void shutdown (ACE_ENV_SINGLE_ARG_DECL);
@@ -62,6 +63,9 @@ protected:
   void resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
   // Resolve the naming service.
 
+  int svc ();
+  // Run worker threads.
+
   // = Data members
   TAO_EventLogFactory_i *event_log_factory_;
   // The Event Log Factory.
@@ -74,17 +78,20 @@ protected:
 
   CosNaming::NamingContext_var naming_;
   // A naming context.
-	
+
   const char* service_name_;
   // The name we use to bind with the NameService
 
   const char* ior_file_name_;
-  // The name of the file were we output the Event_Service IOR.
+  // The name of the file where we output the factory IOR.
 
   const char* pid_file_name_;
-  // The name of a file where the process stores its pid
+  // The name of the file where we output the process id.
 
   int bind_to_naming_service_;
   // If true, bind to naming service
+
+  int nthreads_;
+  // Number of worker threads.
 };
 #endif /* EVENT_LOGGING_SERVICE_H */

@@ -30,6 +30,7 @@ Event_Logging_Service_CPPFLAGS = \
   -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 Event_Logging_Service_SOURCES = \
+  Event_Logging_Server.cpp \
   Event_Logging_Service.cpp \
   Event_Logging_Service.h
 

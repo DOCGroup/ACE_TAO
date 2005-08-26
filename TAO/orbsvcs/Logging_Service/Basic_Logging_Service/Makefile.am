@@ -25,6 +25,7 @@ Basic_Logging_Service_CPPFLAGS = \
   -I$(TAO_BUILDDIR)/orbsvcs
 
 Basic_Logging_Service_SOURCES = \
+  Basic_Logging_Server.cpp \
   Basic_Logging_Service.cpp \
   Basic_Logging_Service.h
 
