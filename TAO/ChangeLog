@@ -1,3 +1,17 @@
+Fri Aug 26 14:07:57 2005  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
+
+	  Fix the "export" class used in the ACE_FACTORY_DEFINE for the
+	  TAO_EC_Simple_Queue_Full_Action.  Hopefully this fixes the
+	  internal compiler error on mingw compilers.
+	
+        * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Event/EC_TPC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_TPC_ProxySupplier.cpp:
+
+	  Fix problems for no-exception builds.
+
 Fri Aug 26 18:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicInterface/Server_Request.cpp:
@@ -45,47 +59,47 @@ Fri Aug 26 11:33:07 2005  Justin Michel  <michel_j@ociweb.com>
 
           Add a new constructor for input CDR that allows specifying a ACE_Lock* which
         will be used to protect the ACE_Data_Block used in the CDR. This will be
-	used by the Any impl above. The current implementation uses a global mutex
-	to protect all instances, because the internals of the Any impl will
-	be copied around, and there's no way to give ownership of the lock to the
-	actual ACE_Data_Block that uses it.
+        used by the Any impl above. The current implementation uses a global mutex
+        to protect all instances, because the internals of the Any impl will
+        be copied around, and there's no way to give ownership of the lock to the
+        actual ACE_Data_Block that uses it.
 
 Fri Aug 26 06:33:04 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.h:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.h:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.h:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.h:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.h:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.h:
 
-	  Changed to add support for the thread pool concurrency model.  A
-	  new "-t" command line parameter is used to specify the number of
-	  threads in the pool.
+          Changed to add support for the thread pool concurrency model.  A
+          new "-t" command line parameter is used to specify the number of
+          threads in the pool.
 
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Server.cpp:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Server.cpp:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Server.cpp:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Server.cpp:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Server.cpp:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Server.cpp:
 
-	  Changed to add support for clean shutdown with SIGINT/SIGTERM
-	  using the Service_Shutdown class from the Svc_Utils library.
+          Changed to add support for clean shutdown with SIGINT/SIGTERM
+          using the Service_Shutdown class from the Svc_Utils library.
 
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Server.cpp:
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.h:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Server.cpp:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.h:
 
-	  Split main() out into new file Basic_Logging_Server.cpp.
+          Split main() out into new file Basic_Logging_Server.cpp.
 
-	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Server.cpp:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.h:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Server.cpp:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.h:
 
-	  Split main() out into new file Event_Logging_Server.cpp.
+          Split main() out into new file Event_Logging_Server.cpp.
 
 Fri Aug 26 13:45:10 2005  Simon McQueen  <sm@prismtech.com>
 
@@ -215,9 +229,9 @@ Fri Aug 26 09:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Aug 25 17:15:27 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
 Thu Aug 25 16:43:15 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -340,7 +354,7 @@ Thu Aug 25 07:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Aug 24 21:57:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac: Copied in updated copyright paragraph from COPYING.
+        * configure.ac: Copied in updated copyright paragraph from COPYING.
 
 Wed Aug 24 18:12:16 2005  Simon McQueen  <sm@prismtech.com>
 
