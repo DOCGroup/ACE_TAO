@@ -41,7 +41,10 @@ ACE_INLINE PortableInterceptor::ObjectReferenceTemplate *
 TAO_Root_POA::get_adapter_template (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (this->ORT_adapter (ACE_ENV_SINGLE_ARG_PARAMETER))
+  TAO::ORT_Adapter *adapter = this->ORT_adapter (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  if (adapter)
     {
       return this->ort_adapter_->get_adapter_template();
     }

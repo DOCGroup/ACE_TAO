@@ -1080,24 +1080,3 @@ ACE_STATIC_SVC_DEFINE (TAO_Default_Resource_Factory,
                        0)
 ACE_FACTORY_DEFINE (TAO, TAO_Default_Resource_Factory)
 
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class auto_ptr<TAO_Protocol_Factory>;
-#  if defined (ACE_LACKS_AUTO_PTR) \
-      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
-           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
-template class ACE_Auto_Basic_Ptr<TAO_Protocol_Factory>;
-#  endif  /* ACE_LACKS_AUTO_PTR */
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate auto_ptr<TAO_Protocol_Factory>
-#  if defined (ACE_LACKS_AUTO_PTR) \
-      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
-           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
-#    pragma instantiate ACE_Auto_Basic_Ptr<TAO_Protocol_Factory>
-#  endif  /* ACE_LACKS_AUTO_PTR */
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

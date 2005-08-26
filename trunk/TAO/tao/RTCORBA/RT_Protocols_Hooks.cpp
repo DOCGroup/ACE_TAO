@@ -814,16 +814,6 @@ ACE_STATIC_SVC_DEFINE (TAO_RT_Protocols_Hooks,
                        ACE_Service_Type::DELETE_THIS
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
-  ACE_FACTORY_DEFINE (TAO_RTCORBA, TAO_RT_Protocols_Hooks)
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Dynamic_Service<TAO_RT_Protocols_Hooks>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Dynamic_Service<TAO_RT_Protocols_Hooks>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+ACE_FACTORY_DEFINE (TAO_RTCORBA, TAO_RT_Protocols_Hooks)
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

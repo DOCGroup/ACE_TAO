@@ -1412,8 +1412,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
   // that require all necessary non-dependent names be parsed prior to
   // parsing templates that may use them (e.g. GNU g++ 3.4.x).
 
-  this->gen_cond_file_include ((be_global->tc_support ()
-                                || idl_global->exception_seen_)
+  this->gen_cond_file_include (be_global->tc_support ()
                                && !be_global->gen_anyop_files (),
                                "tao/AnyTypeCode/AnyTypeCode_methods.h",
                                this->client_header_);
@@ -1621,7 +1620,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
                            << "\"";
     }
 
-  if ((be_global->tc_support () || idl_global->exception_seen_)
+  if (be_global->tc_support ()
       && !be_global->gen_anyop_files ())
     {
       this->gen_typecode_includes (this->client_stubs_);

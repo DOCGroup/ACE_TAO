@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_exception, 
-           exception_ctor, 
+ACE_RCSID (be_visitor_exception,
+           exception_ctor,
            "$Id$")
 
 
@@ -40,7 +40,7 @@ int
 be_visitor_exception_ctor::post_process (be_decl *bd)
 {
   // This checks for members of an enum 'non-scope' declared inside
-  // the exception. If an enum val is actually a member, it will 
+  // the exception. If an enum val is actually a member, it will
   // have node type NT_field.
   if (bd->node_type () == AST_Decl::NT_enum_val)
     {
@@ -303,7 +303,7 @@ int be_visitor_exception_ctor::visit_predefined_type (be_predefined_type *node)
           *os << "const ::" << bt->name () << "_ptr ";
         }
     }
-  else 
+  else
     {
       if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
         {

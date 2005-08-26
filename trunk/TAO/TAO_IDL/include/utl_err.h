@@ -324,20 +324,18 @@ public:
   // Report back-end error
   void back_end (long lineno,
                  UTL_String *s);
-                 
+
   // Report illegal infix operator error (they can be used
   // only with integer, floating point or fixed point expressions.
   void illegal_infix (void);
-  
+
   // Report local type used in remote operation.
   void local_remote_mismatch (AST_Decl *l,
                               UTL_Scope *s);
-                              
+
   // Improper use of -Sm option.
   void ignore_idl3_error (AST_Decl *d);
-  
-  // Improper use of -St option.
-  void tc_suppression_warning (AST_Decl *d);
+
 };
 
 #endif           // _UTL_ERR_UTL_ERR_HH

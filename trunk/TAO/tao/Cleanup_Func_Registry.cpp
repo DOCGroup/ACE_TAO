@@ -56,12 +56,3 @@ TAO_Cleanup_Func_Registry::cleanup (ACE_Array_Base<void *> &ts_objects)
     }
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Array_Base<ACE_CLEANUP_FUNC>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Array_Base<ACE_CLEANUP_FUNC>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

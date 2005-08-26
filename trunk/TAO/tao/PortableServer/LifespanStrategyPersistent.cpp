@@ -135,6 +135,7 @@ namespace TAO
     LifespanStrategyPersistent::check_state (ACE_ENV_SINGLE_ARG_DECL)
     {
       this->poa_->tao_poa_manager().check_state (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
 
     ::PortableServer::LifespanPolicyValue

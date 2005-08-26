@@ -425,14 +425,3 @@ CORBA::AbstractBase::equivalent_objref (void)
   return this->equivalent_obj_.in ();
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#if 0
-template class TAO::Any_Impl_T<CORBA::AbstractBase>;
-template class TAO::Any_Impl_T<CORBA::ValueBase>;
-#endif
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO::Any_Impl_T<CORBA::AbstractBase>
-#pragma instantiate TAO::Any_Impl_T<CORBA::ValueBase>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

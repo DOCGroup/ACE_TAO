@@ -44,8 +44,9 @@ be_visitor_operation_exceptlist_ss::visit_operation (be_operation * node)
   *os << be_nl
       << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl;
 
-  // Don't do anything if the exception list is empty.
-  if (node->exceptions ())
+  // When there are exceptions and typecode support is enabled, then generate
+  // the typecodes of the user exceptions this operation can throw.
+  if (node->exceptions () && be_global->tc_support ())
     {
       *os << "static ::CORBA::TypeCode_ptr const exceptions[] = " << be_idt_nl;
       *os << "{" << be_idt_nl;

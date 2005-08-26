@@ -183,7 +183,10 @@ TAO_Root_POA::set_obj_ref_factory (
   PortableInterceptor::ObjectReferenceFactory *current_factory
   ACE_ENV_ARG_DECL)
 {
-  if (this->ORT_adapter (ACE_ENV_SINGLE_ARG_PARAMETER))
+  TAO::ORT_Adapter *adapter = this->ORT_adapter (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  if (adapter)
     {
       // Activate a different factory
       this->ort_adapter_->set_obj_ref_factory (current_factory
@@ -2888,38 +2891,3 @@ TAO_POA_Static_Resources::TAO_POA_Static_Resources (void)
 {
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Array_Base<TAO_Active_Object_Map::Map_Entry *>;
-
-template class ACE_Map_Entry<TAO_Unbounded_Sequence<unsigned char>, TAO_ServantBase *>;
-template class ACE_Hash_Map_Entry<ACE_CString, TAO_Root_POA *>;
-template class ACE_Hash_Map_Manager<ACE_CString, TAO_Root_POA *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_Root_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<ACE_CString, TAO_Root_POA *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_Root_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, TAO_Root_POA *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_Root_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_Root_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Write_Guard<ACE_Lock>;
-template class ACE_Read_Guard<ACE_Lock>;
-template class ACE_Array_Base <IOP::ProfileId>;
-template class ACE_Node<TAO_Root_POA *>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Array_Base<TAO_Active_Object_Map::Map_Entry *>
-
-#pragma instantiate ACE_Map_Entry<TAO_Unbounded_Sequence<unsigned char>, TAO_ServantBase *>
-#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, TAO_Root_POA *>
-#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, TAO_Root_POA *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_Root_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString, TAO_Root_POA *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_Root_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString, TAO_Root_POA *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_Root_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_Root_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Write_Guard<ACE_Lock>
-#pragma instantiate ACE_Read_Guard<ACE_Lock>
-#pragma instantiate ACE_Array_Base <IOP::ProfileId>
-#pragma instantiate ACE_Node<TAO_Root_POA *>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

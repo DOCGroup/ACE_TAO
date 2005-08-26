@@ -81,8 +81,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-ACE_RCSID (util, 
-           utl_err, 
+ACE_RCSID (util,
+           utl_err,
            "$Id$")
 
 // Convert an error code into a const char *
@@ -277,7 +277,7 @@ exprtype_to_string (AST_Expression::ExprType t)
 static const char *
 parse_state_to_error_message (IDL_GlobalData::ParseState ps)
 {
-  switch (ps) 
+  switch (ps)
   {
   case IDL_GlobalData::PS_NoState:
     return "Statement cannot be parsed";
@@ -1043,7 +1043,7 @@ UTL_Error::constant_expected (UTL_ScopedName *n,
 // Report a situation where an interface was expected but we got
 // something else instead. This most likely is a case in a supports
 // or inheritance list.
-void 
+void
 UTL_Error::interface_expected (AST_Decl *d)
 {
   idl_error_header (EIDL_INTERFACE_EXPECTED,
@@ -1058,7 +1058,7 @@ UTL_Error::interface_expected (AST_Decl *d)
 // Report a situation where an value type was expected but we got
 // something else instead. This most likely is a case in a primary
 // key, emits, publishes or consumes declaration.
-void 
+void
 UTL_Error::valuetype_expected (AST_Decl *d)
 {
   idl_error_header (EIDL_VALUETYPE_EXPECTED,
@@ -1073,7 +1073,7 @@ UTL_Error::valuetype_expected (AST_Decl *d)
 // Report a situation where a concrete value type was expected but we got
 // something else instead. This most likely is a case where a valuetype
 // inherits from something other than a concrete valuetype.
-void 
+void
 UTL_Error::concrete_valuetype_expected (AST_Decl *d)
 {
   idl_error_header (EIDL_CONCRETE_VT_EXPECTED,
@@ -1089,7 +1089,7 @@ UTL_Error::concrete_valuetype_expected (AST_Decl *d)
 // something else instead. This is the case in an inheritance
 // list where a concrete type appears after an abstract type, or
 // where a valuetype inherits more than one concrete valuetype.
-void 
+void
 UTL_Error::abstract_expected (AST_Decl *d)
 {
   idl_error_header (EIDL_ABSTRACT_EXPECTED,
@@ -1105,7 +1105,7 @@ UTL_Error::abstract_expected (AST_Decl *d)
 // something else instead. This is the case in an inheritance
 // list where a concrete type appears after an abstract type, or
 // where a valuetype inherits more than one concrete valuetype.
-void 
+void
 UTL_Error::eventtype_expected (AST_Decl *d)
 {
   idl_error_header (EIDL_EVENTTYPE_EXPECTED,
@@ -1120,7 +1120,7 @@ UTL_Error::eventtype_expected (AST_Decl *d)
 // Report a situation where a valuetype used as a primary key for a
 // component home does not inherit directly or indirectly from
 // Components::primaryKeyBase.
-void 
+void
 UTL_Error::primary_key_error (AST_Decl *d)
 {
   idl_error_header (EIDL_PRIMARY_KEY_ERROR,
@@ -1396,16 +1396,4 @@ UTL_Error::ignore_idl3_error (AST_Decl *d)
               "\n"));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
-
-void
-UTL_Error::tc_suppression_warning (AST_Decl *d)
-{
-  this->warning1 (EIDL_TC_SUPPRESSION_WARNING, d);
-  ACE_ERROR ((LM_ERROR,
-              "-St option ignored for "));
-  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
-  ACE_ERROR ((LM_ERROR,
-              ". Type code required to raise IDL exception.\n"));
-}
-
 

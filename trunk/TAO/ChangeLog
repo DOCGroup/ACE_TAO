@@ -1,3 +1,89 @@
+Fri Aug 26 09:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_codegen.cpp
+        * TAO_IDL/be/be_visitor_exception/exception_ch.cpp
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp
+        * TAO_IDL/be/be_visitor_exception/exception_ctor.cpp
+        * TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp
+        * TAO_IDL/be/be_visitor_operation/exceptlist_cs.cpp
+        * TAO_IDL/be/be_visitor_operation/exceptlist_ss.cpp
+        * TAO_IDL/include/utl_err.h
+        * TAO_IDL/util/utl_err.cpp
+        * docs/compiler.html
+          When the -St option is used to suppress typecodes, we now
+          also suppress the type codes of user exceptions. There is no
+          requirement for this from the orb, the only functionality the
+          user looses is the ability to retrieve which exceptions an
+          operation throws using interceptors.
+
+        * tao/Adapter_Factory.cpp
+        * tao/BiDir_Adapter.cpp
+        * tao/CORBALOC_Parser.cpp
+        * tao/Cleanup_Func_Registry.cpp
+        * tao/DLL_Parser.cpp
+        * tao/Endpoint_Selector_Factory.cpp
+        * tao/Environment.cpp
+        * tao/Exclusive_TMS.cpp
+        * tao/FILE_Parser.cpp
+        * tao/IFR_Client_Adapter.cpp
+        * tao/IOR_Parser.cpp
+        * tao/LF_Follower.cpp
+        * tao/Leader_Follower.cpp
+        * tao/MCAST_Parser.cpp
+        * tao/Muxed_TMS.cpp
+        * tao/ORB.cpp
+        * tao/ORB_Core.cpp
+        * tao/ORB_Table.cpp
+        * tao/Resource_Factory.cpp
+        * tao/Stub.cpp
+        * tao/Stub_Factory.cpp
+        * tao/TSS_Resources.cpp
+        * tao/Transport_Cache_Manager.cpp
+        * tao/default_resource.cpp
+        * tao/Codeset/Codeset_Manager_i.cpp
+        * tao/Codeset/UTF16_BOM_Factory.cpp
+        * tao/Codeset/UTF8_Latin1_Factory.cpp
+        * tao/DynamicAny/DynAnyFactory.cpp
+        * tao/DynamicAny/DynUnion_i.cpp
+        * tao/DynamicInterface/ExceptionList.cpp
+        * tao/DynamicInterface/Request.cpp
+        * tao/IORManipulation/IORManipulation.cpp
+        * tao/Messaging/Asynch_Invocation.cpp
+        * tao/PI/ClientRequestInterceptor_Adapter_Impl.cpp
+        * tao/PortableServer/Active_Object_Map.cpp
+        * tao/PortableServer/ImR_Client_Adapter.cpp
+        * tao/PortableServer/LifespanStrategyPersistent.cpp
+        * tao/PortableServer/LifespanStrategyTransient.cpp
+        * tao/PortableServer/Object_Adapter.cpp
+        * tao/PortableServer/Operation_Table_Dynamic_Hash.cpp
+        * tao/PortableServer/RequestProcessingStrategyServantActivator.cpp
+        * tao/PortableServer/RequestProcessingStrategyServantLocator.cpp
+        * tao/PortableServer/Root_POA.cpp
+        * tao/PortableServer/Root_POA.inl
+        * tao/RTCORBA/RT_Mutex.cpp
+        * tao/RTCORBA/RT_ORB.cpp
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp
+        * tao/RTCORBA/Thread_Pool.cpp
+        * tao/RTScheduling/Current.cpp
+        * tao/Strategies/DIOP_Connection_Handler.cpp
+        * tao/Strategies/DIOP_Connector.cpp
+        * tao/Strategies/SCIOP_Acceptor.cpp
+        * tao/Strategies/SCIOP_Connection_Handler.cpp
+        * tao/Strategies/SCIOP_Connector.cpp
+        * tao/Strategies/SHMIOP_Acceptor.cpp
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp
+        * tao/Strategies/SHMIOP_Connector.cpp
+        * tao/Strategies/UIOP_Acceptor.cpp
+        * tao/Strategies/UIOP_Connection_Handler.cpp
+        * tao/Strategies/UIOP_Connector.cpp
+        * tao/Strategies/advanced_resource.cpp
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp
+        * tao/Valuetype/AbstractBase.cpp
+        * tao/Valuetype/StringValueC.cpp
+        * tao/Valuetype/ValueFactory_Map.cpp
+          Fixed emulated exception fuzz errors and removed explicit
+          template instantiations
+
 Thu Aug 25 17:15:27 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:
