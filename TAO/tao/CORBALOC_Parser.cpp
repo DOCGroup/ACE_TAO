@@ -165,7 +165,8 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
               (*conn_iter)->object_key_delimiter();
             uiop_compatible = (endpoints[ndx].obj_key_sep_ == '|');
             this->make_canonical (ior,len,endpoints[ndx].prot_addr_
-                                   ACE_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
+            ACE_CHECK_RETURN (CORBA::Object::_nil ());
             ior += len;
             break;
           }
@@ -229,6 +230,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
         obj_key;
       const char * str = full_ep.c_str();
       endpoints[i].profile_->parse_string (str ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
       if (mprofile.give_profile(endpoints[i].profile_) != -1)
         endpoints[i].profile_ = 0;
       else
