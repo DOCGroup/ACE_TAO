@@ -3758,6 +3758,11 @@ libTAO_RTEvent_Serv_la_SOURCES = \
   Event/EC_SupplierControl.cpp \
   Event/EC_Supplier_Filter.cpp \
   Event/EC_Supplier_Filter_Builder.cpp \
+  Event/EC_TPC_Dispatching.cpp \
+  Event/EC_TPC_Dispatching_Task.cpp \
+  Event/EC_TPC_Factory.cpp \
+  Event/EC_TPC_ProxyConsumer.cpp \
+  Event/EC_TPC_ProxySupplier.cpp \
   Event/EC_Timeout_Filter.cpp \
   Event/EC_Timeout_Generator.cpp \
   Event/EC_Trivial_Supplier_Filter.cpp \
@@ -3880,6 +3885,14 @@ nobase_include_HEADERS += \
   Event/EC_Supplier_Filter.h \
   Event/EC_Supplier_Filter.i \
   Event/EC_Supplier_Filter_Builder.h \
+  Event/EC_TPC_Dispatching.h \
+  Event/EC_TPC_Dispatching.i \
+  Event/EC_TPC_Dispatching_Task.h \
+  Event/EC_TPC_Factory.h \
+  Event/EC_TPC_Factory.i \
+  Event/EC_TPC_ProxyConsumer.h \
+  Event/EC_TPC_ProxySupplier.h \
+  Event/EC_TPC_ProxySupplier.i \
   Event/EC_Timeout_Filter.h \
   Event/EC_Timeout_Filter.i \
   Event/EC_Timeout_Generator.h \
@@ -4800,9 +4813,6 @@ libTAO_IFRService_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_IFRService_la_LIBADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
