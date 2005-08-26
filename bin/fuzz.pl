@@ -1057,7 +1057,11 @@ sub check_for_ace_check ()
                     }
 
                     if ($in_func && m/\)/) {
-                        $in_func = 0;
+                      $in_func = 0;
+                    }
+                    elsif ($in_return && m/\)\s*;/) {
+                      $in_return = 0;
+                      $found_env = 0;
                     }
                     elsif (!$in_func && $found_env) {
                         if (!m/_CHECK/ && !m/^\}/ && !$in_return) {
@@ -1068,9 +1072,6 @@ sub check_for_ace_check ()
 
                     if (m/^\s*return/) {
                         $in_return = 1;
-                    }
-                    else {
-                        $in_return = 0;
                     }
                 }
             }
