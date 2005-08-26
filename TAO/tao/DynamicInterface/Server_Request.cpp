@@ -96,6 +96,7 @@ CORBA::ServerRequest::arguments (CORBA::NVList_ptr &list
                                     CORBA::ARG_IN | CORBA::ARG_INOUT,
                                     this->lazy_evaluation_
                                     ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   // Pass this alignment back to the TAO_ServerRequest.
   this->orb_server_request_.dsi_nvlist_align (
