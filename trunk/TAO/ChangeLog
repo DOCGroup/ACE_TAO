@@ -1,3 +1,16 @@
+Fri Aug 26 11:42:29 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Codeset/Codeset_Manager_i.cpp:
+          The codeset manager was doing the wrong thing when no codeset
+          information was available. The "default" codeset should be used
+          in that case, not the "fallback" codeset, which is only to be
+          used when codeset information is available, but no other codeset
+          will do.
+
+        * tao/Codeset/UTF8_Latin1_Translator.cpp:
+          This translator was not correctly appending the NUL to the end
+          of outbound strings.
+
 Fri Aug 26 11:33:07 2005  Justin Michel  <michel_j@ociweb.com>
 
         * tao/AnyTypeCode/Any_Unknown_IDL_Type.h:
