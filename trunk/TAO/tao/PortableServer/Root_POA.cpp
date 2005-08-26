@@ -191,6 +191,7 @@ TAO_Root_POA::set_obj_ref_factory (
       // Activate a different factory
       this->ort_adapter_->set_obj_ref_factory (current_factory
                                                ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
     }
 }
 
