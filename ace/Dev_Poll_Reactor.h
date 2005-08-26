@@ -19,8 +19,6 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Reactor_Impl.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -49,6 +47,9 @@
 
 #include "ace/Pipe.h"
 #include "ace/Lock_Adapter_T.h"
+#include "ace/Reactor_Impl.h"
+#include "ace/Reactor_Token_T.h"
+#include "ace/Token.h"
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
 # include "ace/Unbounded_Queue.h"
@@ -61,6 +62,7 @@ class ACE_Dev_Poll_Reactor;
 #if defined (ACE_HAS_DEV_POLL)
 struct pollfd;
 #endif
+
 
 /**
  * @class ACE_Dev_Poll_Event_Tuple
@@ -288,14 +290,13 @@ protected:
    */
   //@{
 
-  /// Keeps track of allocated arrays of type
-  /// ACE_Notification_Buffer.
+  /// ACE_Notification_Buffers are allocated in chunks. Each time a chunk is
+  /// allocated, the chunk is added to alloc_queue_ so it can be freed later.
+  /// Each individual ACE_Notification_Buffer is added to the free_queue_
+  /// when it's free. Those in use for queued notifications are placed on the
+  /// notify_queue_.
   ACE_Unbounded_Queue <ACE_Notification_Buffer *> alloc_queue_;
-
-  /// Keeps track of all pending notifications.
   ACE_Unbounded_Queue <ACE_Notification_Buffer *> notify_queue_;
-
-  /// Keeps track of all free buffers.
   ACE_Unbounded_Queue <ACE_Notification_Buffer *> free_queue_;
 
   /// Synchronization for handling of queues.
@@ -456,6 +457,14 @@ private:
  *       sub-millisecond timeout resolutions for timers but that is
  *       entirely platform dependent.
  */
+
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+typedef ACE_Token ACE_DEV_POLL_TOKEN;
+#else
+typedef ACE_Noop_Token ACE_DEV_POLL_TOKEN;
+#endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
+typedef ACE_Reactor_Token_T<ACE_DEV_POLL_TOKEN> ACE_Dev_Poll_Reactor_Token;
+
 class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
 {
 public:
@@ -469,7 +478,8 @@ public:
                         ACE_Timer_Queue * = 0,
                         int disable_notify_pipe = 0,
                         ACE_Reactor_Notify *notify = 0,
-                        int mask_signals = 1);
+                        int mask_signals = 1,
+                        int s_queue = ACE_DEV_POLL_TOKEN::FIFO);
 
   /// Initialize ACE_Dev_Poll_Reactor with size @a size.
   /**
@@ -489,7 +499,8 @@ public:
                         ACE_Timer_Queue * = 0,
                         int disable_notify_pipe = 0,
                         ACE_Reactor_Notify *notify = 0,
-                        int mask_signals = 1);
+                        int mask_signals = 1,
+                        int s_queue = ACE_DEV_POLL_TOKEN::FIFO);
 
   /// Close down and release all resources.
   virtual ~ACE_Dev_Poll_Reactor (void);
@@ -970,6 +981,8 @@ public:
 
 protected:
 
+  class Token_Guard;
+
   /// Non-locking version of wait_pending().
   /**
    * Returns non-zero if there are I/O events "ready" for dispatching,
@@ -986,7 +999,7 @@ protected:
   /**
    * This is a helper method called by all handle_events() methods.
    */
-  int handle_events_i (ACE_Time_Value *max_wait_time);
+  int handle_events_i (ACE_Time_Value *max_wait_time, Token_Guard &guard);
 
   /// Perform the upcall with the given event handler method.
   int upcall (ACE_Event_Handler *event_handler,
@@ -998,14 +1011,19 @@ protected:
    * signal events.  Returns the total number of ACE_Event_Handlers
    * that were dispatched or -1 if something goes wrong.
    */
-  int dispatch (void);
+  int dispatch (Token_Guard &guard);
 
-  ///
-  int dispatch_timer_handlers (int &number_of_handlers_dispatched);
+  /// Dispatch a single timer, if ready.
+  /// Returns: 0 if no timers ready (token still held),
+  ///          1 if a timer was expired (token released),
+  ///         -1 on error (token still held).
+  int dispatch_timer_handler (Token_Guard &guard);
 
-  /// Dispatch all IO related events to their corresponding event
-  /// handlers.
-  int dispatch_io_events (int &io_handlers_dispatched);
+  /// Dispatch an IO event to the corresponding event handler. Returns
+  /// Returns: 0 if no events ready (token still held),
+  ///          1 if an event was expired (token released),
+  ///         -1 on error (token still held).
+  int dispatch_io_event (Token_Guard &guard);
 
   /// Register the given event handler with the reactor.
   int register_handler_i (ACE_HANDLE handle,
@@ -1094,10 +1112,10 @@ protected:
   sig_atomic_t deactivated_;
 
   /// Lock used for synchronization of reactor state.
-  ACE_SYNCH_MUTEX lock_;
+  ACE_Dev_Poll_Reactor_Token token_;
 
   /// Adapter used to return internal lock to outside world.
-  ACE_Lock_Adapter<ACE_SYNCH_MUTEX> lock_adapter_;
+  ACE_Lock_Adapter<ACE_Dev_Poll_Reactor_Token> lock_adapter_;
 
   /// The repository that contains all registered event handlers.
   ACE_Dev_Poll_Reactor_Handler_Repository handler_rep_;
@@ -1138,6 +1156,59 @@ protected:
   /// polling function in use (ioctl() in this case) is interrupted
   /// via an EINTR signal.
   int restart_;
+
+protected:
+  
+  /**
+   * @class Token_Guard
+   *
+   * @brief A helper class that helps grabbing, releasing and waiting
+   * on tokens for a thread that needs access to the reactor's token.
+   */
+  class Token_Guard
+  {
+  public:
+
+    /// Constructor that will grab the token for us
+    Token_Guard (ACE_Dev_Poll_Reactor_Token &token);
+
+    /// Destructor. This will release the token if it hasnt been
+    /// released till this point
+    ~Token_Guard (void);
+
+    /// Release the token ..
+    void release_token (void);
+
+    /// Returns whether the thread that created this object ownes the
+    /// token or not.
+    int is_owner (void);
+
+    /// A helper method that acquires the token 1) at a low priority, and
+    /// 2) wait quietly for the token, not waking another thread. This
+    /// is appropriate for cases where a thread wants to wait for and
+    /// dispatch an event, not causing an existing waiter to relinquish the
+    /// token, and also queueing up behind other threads waiting to modify
+    /// event records.
+    int acquire_quietly (ACE_Time_Value *max_wait = 0);
+
+    /// A helper method that acquires the token at a high priority, and
+    /// does wake the current token holder.
+    int acquire (ACE_Time_Value *max_wait = 0);
+
+  private:
+    /// The Reactor token.
+    ACE_Dev_Poll_Reactor_Token &token_;
+
+    /// Flag that indicate whether the thread that created this object
+    /// owns the token or not. A value of 0 indicates that this class
+    /// hasnt got the token (and hence the thread) and a value of 1
+    /// vice-versa.
+    int owner_;
+
+  private:
+
+    ACE_UNIMPLEMENTED_FUNC (Token_Guard (void))
+  };
 
 };
 

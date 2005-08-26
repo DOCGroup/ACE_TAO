@@ -1883,24 +1883,26 @@ ACE_POSIX_SIG_Proactor::handle_events_i (const ACE_Time_Value *timeout)
   int result_sigwait = 0;
   siginfo_t sig_info;
 
-  // Wait for the signals.
-  if (timeout == 0)
+  do
     {
-      result_sigwait = ACE_OS::sigwaitinfo (&this->RT_completion_signals_,
-                                            &sig_info);
+      // Wait for the signals.
+      if (timeout == 0)
+        {
+          result_sigwait = ACE_OS::sigwaitinfo (&this->RT_completion_signals_,
+                                                &sig_info);
+        }
+      else
+        {
+          result_sigwait = ACE_OS::sigtimedwait (&this->RT_completion_signals_,
+                                                 &sig_info,
+                                                 timeout);
+          if (result_sigwait == -1 && errno == EAGAIN)
+            return 0;
+        }
     }
-  else
-    {
-      result_sigwait = ACE_OS::sigtimedwait (&this->RT_completion_signals_,
-                                             &sig_info,
-                                             timeout);
-      if (result_sigwait == -1 && errno == EAGAIN)
-        return 0;
-    }
+  while (result_sigwait == -1 && errno == EINTR);
 
-  // We should not get EINTR since ACE_OS methods restart the system call
-  // on EINTR. So -1 here is bad.
-  if (result_sigwait == -1)
+  if (result_sigwait == -1)  // Not a timeout, not EINTR: tell caller of error
     return -1;
 
   // Decide what to do. We always check the completion queue since it's an

@@ -917,6 +917,9 @@ run_main (int argc, ACE_TCHAR *argv[])
             ACE_OS::perror (ACE_TEXT ("wait"));
 
           ++error;
+
+          // This should exit now that we ended the reactor loop.
+          task->wait ();
         }
     }
 

@@ -331,6 +331,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Obstack_T.cpp
     Pair_T.cpp
     RB_Tree.cpp
+    Reactor_Token_T.cpp
     Refcounted_Auto_Ptr.cpp
     Reverse_Lock_T.cpp
     Select_Reactor_T.cpp

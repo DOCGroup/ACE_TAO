@@ -5,6 +5,7 @@
 #define JAWS_EVENT_DISPATCHER_H
 
 #include "ace/Reactor.h"
+#include "ace/Reactor_Token_T.h"
 #include "ace/Select_Reactor.h"
 
 #include "jaws3/Export.h"
@@ -13,7 +14,7 @@
 // so if we are using the Select Reactor, get rid of the
 // big reactor lock.
 
-typedef ACE_Select_Reactor_Token_T<ACE_Noop_Token>
+typedef ACE_Reactor_Token_T<ACE_Noop_Token>
         ACE_Select_Reactor_Noop_Token;
 
 typedef ACE_Select_Reactor_T<ACE_Select_Reactor_Noop_Token>
