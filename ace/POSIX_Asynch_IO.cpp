@@ -1935,7 +1935,7 @@ ACE_POSIX_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_Write_S
   // Write stream successful.
 
   // Partial write to socket.
-  int unsent_data = result.bytes_to_write () - result.bytes_transferred ();
+  size_t unsent_data = result.bytes_to_write () - result.bytes_transferred ();
   if (unsent_data != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
