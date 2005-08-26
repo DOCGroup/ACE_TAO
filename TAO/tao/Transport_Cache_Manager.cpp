@@ -689,38 +689,3 @@ namespace TAO
 
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  // Instantiations for the Hash Map
-template class ACE_Equal_To<Cache_ExtId>;
-template class ACE_Hash<Cache_ExtId>;
-template class ACE_Hash_Map_Entry<Cache_ExtId, Cache_IntId>;
-template class ACE_Hash_Map_Manager_Ex<Cache_ExtId, Cache_IntId, ACE_Hash<Cache_ExtId>, ACE_Equal_To<Cache_ExtId>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<Cache_ExtId, Cache_IntId, ACE_Hash<Cache_ExtId>, ACE_Equal_To<Cache_ExtId>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<Cache_ExtId, Cache_IntId, ACE_Hash<Cache_ExtId>, ACE_Equal_To<Cache_ExtId>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<Cache_ExtId, Cache_IntId, ACE_Hash<Cache_ExtId>, ACE_Equal_To<Cache_ExtId>, ACE_Null_Mutex>;
-template class ACE_Unbounded_Set<TAO_Connection_Handler*>;
-template class ACE_Unbounded_Set_Iterator<TAO_Connection_Handler*>;
-template class ACE_Node<TAO_Connection_Handler*>;
-template class ACE_Unbounded_Stack<TAO_Transport*>;
-template class ACE_Node <TAO_Transport *>;
-
-template class TAO_Condition<ACE_SYNCH_MUTEX>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-  // Instantiations for the Hash Map
-#pragma instantiate ACE_Equal_To<Cache_ExtId>
-#pragma instantiate ACE_Hash<Cache_ExtId>
-#pragma instantiate ACE_Hash_Map_Entry<Cache_ExtId, Cache_IntId>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<Cache_ExtId, Cache_IntId, ACE_Hash<Cache_ExtId>, ACE_Equal_To<Cache_ExtId>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<Cache_ExtId, Cache_IntId, ACE_Hash<Cache_ExtId>, ACE_Equal_To<Cache_ExtId>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<Cache_ExtId, Cache_IntId, ACE_Hash<Cache_ExtId>, ACE_Equal_To<Cache_ExtId>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<Cache_ExtId, Cache_IntId, ACE_Hash<Cache_ExtId>, ACE_Equal_To<Cache_ExtId>, ACE_Null_Mutex>
-#pragma instantiate ACE_Unbounded_Set<TAO_Connection_Handler*>
-#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_Connection_Handler*>
-#pragma instantiate ACE_Node<TAO_Connection_Handler*>
-#pragma instantiate ACE_Unbounded_Stack<TAO_Transport*>
-#pragma instantiate ACE_Node <TAO_Transport *>
-
-#pragma instantiate TAO_Condition<ACE_SYNCH_MUTEX>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

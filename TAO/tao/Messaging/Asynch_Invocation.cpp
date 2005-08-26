@@ -184,12 +184,3 @@ namespace TAO
   }
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#  if TAO_HAS_INTERCEPTORS == 1
-     template class TAO::Utils::Auto_Functor <TAO_Asynch_Reply_Dispatcher_Base, TAO::ARDB_Refcount_Functor>;
-#  endif
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  if TAO_HAS_INTERCEPTORS == 1
-#    pragma instantiate TAO::Utils::Auto_Functor <TAO_Asynch_Reply_Dispatcher_Base, TAO::ARDB_Refcount_Functor>
-#  endif
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

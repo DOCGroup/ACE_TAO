@@ -494,13 +494,3 @@ TAO_Codeset_Manager_i::get_translator_i (TAO_Codeset_Descriptor& cd,
   return 0;
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Dynamic_Service<TAO_Codeset_Translator_Factory>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Dynamic_Service<TAO_Codeset_Translator_Factory>
-
-#  endif

@@ -4,9 +4,7 @@
 #include "Protocol_Factory.h"
 #include "orbconf.h"
 
-#include "ace/Dynamic_Service.h"
 #include "ace/ACE.h"
-
 
 ACE_RCSID (tao,
            Resource_Factory,
@@ -59,15 +57,6 @@ TAO_Resource_Factory::TAO_Resource_Factory (void)
 TAO_Resource_Factory::~TAO_Resource_Factory (void)
 {
 }
-
-#if 0
-// @@todo: Need to go at a later date!
-int
-TAO_Resource_Factory::use_tss_resources (void) const
-{
-  return 0;
-}
-#endif /*if 0*/
 
 int
 TAO_Resource_Factory::use_locked_data_blocks (void) const
@@ -227,20 +216,3 @@ TAO_Resource_Factory::load_default_protocols (void)
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Dynamic_Service<TAO_Resource_Factory>;
-template class ACE_Node<TAO_Protocol_Item*>;
-///
-template class ACE_Unbounded_Set<TAO_Protocol_Item*>;
-template class ACE_Unbounded_Set_Iterator<TAO_Protocol_Item*>;
-///
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Dynamic_Service<TAO_Resource_Factory>
-#pragma instantiate ACE_Node<TAO_Protocol_Item*>
-///
-#pragma instantiate ACE_Unbounded_Set<TAO_Protocol_Item*>
-#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_Protocol_Item*>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

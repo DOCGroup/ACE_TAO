@@ -377,26 +377,3 @@ TAO_DynAnyFactory::make_dyn_any (CORBA::TypeCode_ptr tc
   return DynamicAny::DynAny::_nil ();
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Array_Base<DynamicAny::DynAny_var>;
-
-template class ACE_Auto_Basic_Ptr<TAO_DynAny_i>;
-template class ACE_Auto_Basic_Ptr<TAO_DynArray_i>;
-template class ACE_Auto_Basic_Ptr<TAO_DynEnum_i>;
-template class ACE_Auto_Basic_Ptr<TAO_DynSequence_i>;
-template class ACE_Auto_Basic_Ptr<TAO_DynStruct_i>;
-template class ACE_Auto_Basic_Ptr<TAO_DynUnion_i>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Array_Base<DynamicAny::DynAny_var>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_DynAny_i>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_DynArray_i>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_DynEnum_i>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_DynSequence_i>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_DynStruct_i>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_DynUnion_i>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

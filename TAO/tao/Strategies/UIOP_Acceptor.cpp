@@ -19,34 +19,6 @@ ACE_RCSID (Strategies,
            UIOP_Acceptor,
            "$Id$")
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Acceptor<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR>;
-template class ACE_Strategy_Acceptor<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR>;
-template class ACE_Accept_Strategy<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR>;
-template class ACE_Creation_Strategy<TAO_UIOP_Connection_Handler>;
-template class ACE_Concurrency_Strategy<TAO_UIOP_Connection_Handler>;
-template class ACE_Scheduling_Strategy<TAO_UIOP_Connection_Handler>;
-template class TAO_Creation_Strategy<TAO_UIOP_Connection_Handler>;
-template class TAO_Concurrency_Strategy<TAO_UIOP_Connection_Handler>;
-template class TAO_Accept_Strategy<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Acceptor<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR>
-#pragma instantiate ACE_Strategy_Acceptor<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR>
-#pragma instantiate ACE_Accept_Strategy<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR>
-#pragma instantiate ACE_Creation_Strategy<TAO_UIOP_Connection_Handler>
-#pragma instantiate ACE_Concurrency_Strategy<TAO_UIOP_Connection_Handler>
-#pragma instantiate ACE_Scheduling_Strategy<TAO_UIOP_Connection_Handler>
-#pragma instantiate TAO_Creation_Strategy<TAO_UIOP_Connection_Handler>
-#pragma instantiate TAO_Concurrency_Strategy<TAO_UIOP_Connection_Handler>
-#pragma instantiate TAO_Accept_Strategy<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-
 TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (CORBA::Boolean flag)
   : TAO_Acceptor (TAO_TAG_UIOP_PROFILE),
     base_acceptor_ (),

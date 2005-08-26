@@ -95,6 +95,7 @@ namespace TAO
       else
       {
         this->poa_->tao_poa_manager().check_state (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_CHECK;
       }
     }
 

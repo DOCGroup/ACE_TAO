@@ -485,12 +485,3 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
   return result;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Intrusive_List<TAO_LF_Follower>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Intrusive_List<TAO_LF_Follower>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

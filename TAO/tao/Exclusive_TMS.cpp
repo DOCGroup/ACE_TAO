@@ -5,8 +5,8 @@
 #include "tao/debug.h"
 #include "Transport.h"
 
-ACE_RCSID (tao, 
-           Exclusive_TMS, 
+ACE_RCSID (tao,
+           Exclusive_TMS,
            "$Id$")
 
 TAO_Exclusive_TMS::TAO_Exclusive_TMS (TAO_Transport *transport)
@@ -126,8 +126,3 @@ TAO_Exclusive_TMS::connection_closed (void)
     this->rd_->connection_closed ();
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

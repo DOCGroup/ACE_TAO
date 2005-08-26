@@ -22,18 +22,6 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
 
-// Instantiate templates that allow discovery of this factory
-// via the Service Manager.
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Dynamic_Service<TAO_UTF16_BOM_Factory>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Dynamic_Service<TAO_UTF16_BOM_Factory>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 ACE_STATIC_SVC_DEFINE (TAO_UTF16_BOM_Factory,
                        ACE_TEXT ("UTF16_BOM_Factory"),
                        ACE_SVC_OBJ_T,

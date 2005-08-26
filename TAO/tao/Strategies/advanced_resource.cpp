@@ -883,20 +883,3 @@ ACE_FACTORY_DEFINE (TAO_Strategies, TAO_Advanced_Resource_Factory)
 
 // ****************************************************************
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Dynamic_Service<TAO_Advanced_Resource_Factory>;
-
-template class ACE_Select_Reactor_Token_T<ACE_Noop_Token>;
-template class ACE_Lock_Adapter<ACE_Select_Reactor_Token_T<ACE_Noop_Token> >;
-template class ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Dynamic_Service<TAO_Advanced_Resource_Factory>
-
-#pragma instantiate ACE_Select_Reactor_Token_T<ACE_Noop_Token>
-#pragma instantiate ACE_Lock_Adapter< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >
-#pragma instantiate ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

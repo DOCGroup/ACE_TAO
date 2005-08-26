@@ -125,36 +125,27 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
         }
     }
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
-
-  // No check for typecode suppression here, since the typecode is
-  // required in generated code for an operation that raises the
-  // exception. We have already output a warning message when
-  // launching the stub header typecode visitor.
-  *os << be_nl << be_nl
-      << "virtual ::CORBA::TypeCode_ptr _tao_type (void) const;";
+  if (be_global->tc_support ())
+    {
+      *os << be_nl << be_nl
+          << "virtual ::CORBA::TypeCode_ptr _tao_type (void) const;";
+    }
 
   *os << be_uidt_nl << "};";
 
-  // If typecode generation is suppressed, we just output a warning
-  // and generate the typecode anyway, since the typecode is required
-  // if an operation raises the exception.
-  if (!be_global->tc_support ())
+  if (be_global->tc_support ())
     {
-      idl_global->err ()->tc_suppression_warning (node);
-    }
-    
-  be_visitor_context ctx (*this->ctx_);
-  be_visitor_typecode_decl visitor (&ctx);
+      be_visitor_context ctx (*this->ctx_);
+      be_visitor_typecode_decl visitor (&ctx);
 
-  if (node->accept (&visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                          "(%N:%l) be_visitor_exception_ch::"
-                          "visit_exception - "
-                          "TypeCode declaration failed\n"),
-                        -1);
+      if (node->accept (&visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                              "(%N:%l) be_visitor_exception_ch::"
+                              "visit_exception - "
+                              "TypeCode declaration failed\n"),
+                            -1);
+        }
     }
 
   os->gen_endif ();

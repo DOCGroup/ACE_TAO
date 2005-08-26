@@ -115,25 +115,7 @@ TAO_ValueFactory_Map::instance (void)
     TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX>::instance ();
 }
 
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Iterator_Base_Ex<const char *, CORBA::ValueFactoryBase *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<const char *, CORBA::ValueFactoryBase *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<const char *, CORBA::ValueFactoryBase *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Manager_Ex<const char *, CORBA::ValueFactoryBase *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Entry<const char *, CORBA::ValueFactoryBase *>;
-template class TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<const char *, CORBA::ValueFactoryBase *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<const char *, CORBA::ValueFactoryBase *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<const char *, CORBA::ValueFactoryBase *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<const char *, CORBA::ValueFactoryBase *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Entry<const char *, CORBA::ValueFactoryBase *>
-#pragma instantiate TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX>
-
-#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX> * TAO_Singleton<TAO_ValueFactory_Map, TAO_SYNCH_MUTEX>::singleton_;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

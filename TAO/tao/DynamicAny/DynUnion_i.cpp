@@ -266,6 +266,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any,
       if (default_index == -1)
         {
            set_to_no_active_member (ACE_ENV_SINGLE_ARG_PARAMETER);
+           ACE_CHECK;
         }
       else
         {

@@ -297,18 +297,4 @@ TAO_DIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_prio
   return 0;
 }
 
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Concurrency_Strategy<TAO_DIOP_Connection_Handler>;
-template class ACE_Creation_Strategy<TAO_DIOP_Connection_Handler>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Concurrency_Strategy<TAO_DIOP_Connection_Handler>
-#pragma instantiate ACE_Creation_Strategy<TAO_DIOP_Connection_Handler>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */
