@@ -1,3 +1,10 @@
+Fri Aug 26 09:40:08 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * ace/OS_NS_Thread.cpp:
+
+	  Add missing ACE_ADAPT_RETVAL functions for calls to ::pthread* routines.
+	This allows the caller to check the errno to find out what went wrong.
+
 Fri Aug 26 09:06:32 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/fuzz.pl:
