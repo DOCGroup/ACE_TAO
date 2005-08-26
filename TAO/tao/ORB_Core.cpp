@@ -400,7 +400,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           // Specify the port number for the NameService.
           // Unrelated to ORB Protocols, this is used for multicast.
 
-          ns_port = (CORBA::UShort) ACE_OS::atoi (current_arg);
+          ns_port = static_cast <CORBA::UShort> (ACE_OS::atoi (current_arg));
 
           arg_shifter.consume_arg ();
         }
@@ -412,7 +412,8 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           // If there is no colon, its only the port no.
           // If there is a '@' also, it means that the network
           // interface name is specified.
-          this->orb_params ()->mcast_discovery_endpoint (ACE_TEXT_ALWAYS_CHAR(current_arg));
+          this->orb_params ()->mcast_discovery_endpoint (
+            ACE_TEXT_ALWAYS_CHAR(current_arg));
 
           arg_shifter.consume_arg ();
         }
@@ -428,9 +429,9 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
       else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBTradingServicePort"))))
         {
-          // Specify the port number for the NameService.
+          // Specify the port number for the TradingService.
 
-          ts_port = (CORBA::UShort) ACE_OS::atoi (current_arg);
+          ts_port = static_cast <CORBA::UShort> (ACE_OS::atoi (current_arg));
 
           arg_shifter.consume_arg ();
         }
@@ -439,7 +440,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
         {
           // Specify the multicast port number for the Implementation
           // Repository.
-          ir_port = (CORBA::UShort) ACE_OS::atoi (current_arg);
+          ir_port = static_cast <CORBA::UShort> (ACE_OS::atoi (current_arg));
 
           arg_shifter.consume_arg ();
         }
@@ -514,23 +515,11 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                 (ACE_TEXT("-ORBCollocation"))))
         {
           // Specify whether we want to optimize against collocation
-          // objects.  Valid arguments are: "yes" and "no".
-          // Default is yes.
-
-          int yes_implies_global = 0;
+          // objects.  Valid arguments are: "global", "no", and "per-orb".
+          // Default is global.
 
           const ACE_TCHAR *opt = current_arg;
-          if (ACE_OS::strcasecmp (opt, ACE_TEXT("YES")) == 0)
-            {
-              yes_implies_global = 1;
-              ACE_DEBUG ((LM_WARNING,
-                          ACE_TEXT ("WARNING: using '-ORBCollocation YES' is obsolete ")
-                          ACE_TEXT ("and implies '-ORBCollocation global'")
-                          ACE_TEXT ("  Please use '-ORBCollocation global' instead.\n")));
-            }
-
-          if (yes_implies_global ||
-              ACE_OS::strcasecmp (opt, ACE_TEXT("global")) == 0)
+          if (ACE_OS::strcasecmp (opt, ACE_TEXT("global")) == 0)
             {
               this->opt_for_collocation_ = 1;
               this->use_global_collocation_ = 1;
@@ -551,25 +540,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                           ACE_TEXT ("WARNING: Unknown option to ")
                           ACE_TEXT ("'-ORBCollocation': %s\n"), opt));
             }
-
-          arg_shifter.consume_arg ();
-        }
-      else if ((current_arg = arg_shifter.get_the_parameter
-                (ACE_TEXT("-ORBGlobalCollocation"))))
-        // Specify whether we want to use collocation across ORBs;
-        // i.e. all the ORBs in the same address space use collocated
-        // calls.
-        {
-          ACE_DEBUG ((LM_WARNING,
-                      ACE_TEXT ("WARNING: -ORBGlobalCollocation option is obsolete.")
-                      ACE_TEXT ("  Please use '-ORBCollocation global/per-orb/no'")
-                      ACE_TEXT ("instead.\n")));
-
-          const ACE_TCHAR *opt = current_arg;
-          if (ACE_OS::strcasecmp (opt, ACE_TEXT("YES")) == 0)
-            this->use_global_collocation_ = 1;
-          else if (ACE_OS::strcasecmp (opt, ACE_TEXT("NO")) == 0)
-            this->use_global_collocation_ = 0;
 
           arg_shifter.consume_arg ();
         }
