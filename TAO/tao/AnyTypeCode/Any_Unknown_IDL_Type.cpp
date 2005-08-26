@@ -16,13 +16,14 @@ ACE_RCSID (tao,
            Any_Unknown_IDL_Type,
            "$Id$")
 
+ACE_Auto_Ptr<ACE_Lock> TAO::Unknown_IDL_Type::lock_(new ACE_Lock_Adapter<TAO_SYNCH_MUTEX>());
 
 TAO::Unknown_IDL_Type::Unknown_IDL_Type (
     CORBA::TypeCode_ptr tc,
     TAO_InputCDR &cdr
   )
-  : TAO::Any_Impl (0, tc, true),
-    cdr_ (static_cast<ACE_Message_Block *> (0))
+  : TAO::Any_Impl (0, tc, true)
+  , cdr_ (static_cast<ACE_Message_Block*>(0), lock_.get())
 {
   ACE_TRY_NEW_ENV
     {
@@ -38,8 +39,8 @@ TAO::Unknown_IDL_Type::Unknown_IDL_Type (
 TAO::Unknown_IDL_Type::Unknown_IDL_Type (
     CORBA::TypeCode_ptr tc
   )
-  : TAO::Any_Impl (0, tc, true),
-    cdr_ (static_cast<ACE_Message_Block *> (0))
+  : TAO::Any_Impl (0, tc, true)
+  , cdr_ (static_cast<ACE_Message_Block*>(0), lock_.get())
 {
 }
 

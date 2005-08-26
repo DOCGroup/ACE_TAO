@@ -199,6 +199,16 @@ public:
                   TAO_DEF_GIOP_MINOR,
                 TAO_ORB_Core* orb_core = 0);
 
+  /// Create an input stream from an ACE_Message_Block with an optional lock
+  /// used to protect the data.
+  TAO_InputCDR (const ACE_Message_Block *data, 
+                ACE_Lock* lock,
+                int byte_order = ACE_CDR_BYTE_ORDER,
+                ACE_CDR::Octet major_version = TAO_DEF_GIOP_MAJOR,
+                ACE_CDR::Octet minor_version = TAO_DEF_GIOP_MINOR,
+                TAO_ORB_Core* orb_core = 0);
+
+
   /// Create an input stream from an ACE_Data_Block
   TAO_InputCDR (ACE_Data_Block *data,
                 ACE_Message_Block::Message_Flags flag = 0,

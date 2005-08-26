@@ -1,3 +1,29 @@
+Fri Aug 26 11:33:07 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * tao/AnyTypeCode/Any_Unknown_IDL_Type.h:
+        * tao/AnyTypeCode/Any_Unknown_IDL_Type.cpp:
+
+        * tao/CDR.h:
+        * tao/CDR.i:
+        * tao/LocateRequest_Invocation.cpp:
+        * tao/Synch_Invocation.cpp:
+        * tao/orbconf.h:
+
+          Add a new compile-time setting to TAO that controls whether output
+        CDRs are reset() after a request is sent. Enabling this feature greatly
+        reduces memory usage in some situations such as event services that
+        occasionally send large messages. However, it also currently exposes
+        (or introduces) a multi-threading bug introducing deadlocks or infinite
+        loops. One (of several) test that can show the problem is
+        TAO/orbsvcs/tests/Notify/Basic/run_test.pl notify.mt.conf.
+
+          Add a new constructor for input CDR that allows specifying a ACE_Lock* which
+        will be used to protect the ACE_Data_Block used in the CDR. This will be
+	used by the Any impl above. The current implementation uses a global mutex
+	to protect all instances, because the internals of the Any impl will
+	be copied around, and there's no way to give ownership of the lock to the
+	actual ACE_Data_Block that uses it.
+
 Fri Aug 26 06:33:04 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
