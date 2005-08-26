@@ -207,14 +207,3 @@ CORBA::Environment::print_exception (const char *info,
                 ACE_TEXT ("TAO: (%P|%t) no exception, %s\n"), ACE_TEXT_CHAR_TO_TCHAR (info)));
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class TAO_Pseudo_Var_T<CORBA::Environment>;
-  template class TAO_Pseudo_Out_T<CORBA::Environment, CORBA::Environment_var>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate TAO_Pseudo_Var_T<CORBA::Environment>
-# pragma instantiate TAO_Pseudo_Out_T<CORBA::Environment, CORBA::Environment_var>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

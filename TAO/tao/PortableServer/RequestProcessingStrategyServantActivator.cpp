@@ -36,6 +36,7 @@ namespace TAO
       }
 
       RequestProcessingStrategy::strategy_cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
 
     PortableServer::ServantManager_ptr

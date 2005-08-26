@@ -332,34 +332,32 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << be_nl << be_nl;
     }
 
-  // No check for typecode suppression here, since the typecode is
-  // required in generated code for an operation that raises the
-  // exception. We have already output a warning message when
-  // launching the stub header typecode visitor.
-  *os << "// TAO extension - the virtual _type method." << be_nl;
-  *os << "::CORBA::TypeCode_ptr " << node->name ()
-      << "::_tao_type (void) const" << be_nl;
-  *os << "{" << be_idt_nl;
-  *os << "return ::" << node->tc_name () << ";" << be_uidt_nl;
-  *os << "}";
+  if (be_global->tc_support ())
+    {
+      *os << "// TAO extension - the virtual _type method." << be_nl;
+      *os << "::CORBA::TypeCode_ptr " << node->name ()
+          << "::_tao_type (void) const" << be_nl;
+      *os << "{" << be_idt_nl;
+      *os << "return ::" << node->tc_name () << ";" << be_uidt_nl;
+      *os << "}";
+    }
 
   // Make sure we are generating to *C.cpp regardless of the above.
   os = tao_cg->client_stubs ();
 
-  // No check for typecode suppression here, since the typecode is
-  // required in generated code for an operation that raises the
-  // exception. We have already output a warning message when
-  // launching the stub header typecode visitor.
-  ctx = *this->ctx_;
-  TAO::be_visitor_struct_typecode tc_visitor (&ctx);
-
-  if (tc_visitor.visit_exception (node) == -1)
+  if (be_global->tc_support ())
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                          "(%N:%l) be_visitor_exception_cs::"
-                          "visit_exception - "
-                          "TypeCode definition failed\n"),
-                        -1);
+      ctx = *this->ctx_;
+      TAO::be_visitor_struct_typecode tc_visitor (&ctx);
+
+      if (tc_visitor.visit_exception (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                              "(%N:%l) be_visitor_exception_cs::"
+                              "visit_exception - "
+                              "TypeCode definition failed\n"),
+                            -1);
+        }
     }
 
   node->cli_stub_gen (I_TRUE);

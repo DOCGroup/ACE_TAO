@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "tao/Muxed_TMS.h"
 #include "tao/Reply_Dispatcher.h"
 #include "tao/debug.h"
@@ -228,51 +227,3 @@ TAO_Muxed_TMS::clear_cache (void)
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Manager_Ex <CORBA::ULong,
-                                        TAO_Reply_Dispatcher *,
-                                        ACE_Hash <CORBA::ULong>,
-                                        ACE_Equal_To <CORBA::ULong>,
-                                        ACE_Null_Mutex>;
-
-template class ACE_Hash_Map_Entry<CORBA::ULong,
-                                  TAO_Reply_Dispatcher *>;
-
-template class ACE_Hash_Map_Iterator_Base_Ex<CORBA::ULong,
-                                             TAO_Reply_Dispatcher *,
-                                             ACE_Hash<unsigned int>,
-                                             ACE_Equal_To<unsigned int>,
-                                             ACE_Null_Mutex>;
-
-template class ACE_Hash_Map_Iterator_Ex<CORBA::ULong,
-                                        TAO_Reply_Dispatcher*,
-                                        ACE_Hash<CORBA::ULong>,
-                                        ACE_Equal_To<CORBA::ULong>,
-                                        ACE_Null_Mutex>;
-
-template class ACE_Hash_Map_Reverse_Iterator_Ex<CORBA::ULong,
-                                                TAO_Reply_Dispatcher*,
-                                                ACE_Hash<CORBA::ULong>,
-                                                ACE_Equal_To<CORBA::ULong>,
-                                                ACE_Null_Mutex>;
-
-template class ACE_Unbounded_Stack<TAO_Reply_Dispatcher*>;
-template class ACE_Node<TAO_Reply_Dispatcher*>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Manager_Ex <CORBA::ULong, TAO_Reply_Dispatcher *, ACE_Hash <CORBA::ULong>, ACE_Equal_To <CORBA::ULong>, ACE_Null_Mutex>
-
-#pragma instantiate ACE_Hash_Map_Entry<CORBA::ULong, TAO_Reply_Dispatcher *>
-
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<unsigned int, TAO_Reply_Dispatcher *, ACE_Hash<unsigned int>, ACE_Equal_To<unsigned int>, ACE_Null_Mutex>
-
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<CORBA::ULong, TAO_Reply_Dispatcher*, ACE_Hash<CORBA::ULong>, ACE_Equal_To<CORBA::ULong>, ACE_Null_Mutex>
-
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<CORBA::ULong, TAO_Reply_Dispatcher*, ACE_Hash<CORBA::ULong>, ACE_Equal_To<CORBA::ULong>, ACE_Null_Mutex>
-
-
-#pragma instantiate ACE_Unbounded_Stack<TAO_Reply_Dispatcher*>
-
-#pragma instantiate ACE_Node<TAO_Reply_Dispatcher*>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

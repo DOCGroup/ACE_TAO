@@ -4,7 +4,6 @@
 #include "GUIResource_Factory.h"
 #include "TAO_Singleton.h"
 
-
 ACE_RCSID (tao,
            TSS_Resources,
            "$Id$")
@@ -41,22 +40,10 @@ TAO_TSS_Resources::instance (void)
     TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX>::instance ();
 }
 
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX>;
-template class ACE_TSS<TAO_TSS_Resources>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_TSS<TAO_TSS_Resources>
-
-#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 
 template
   TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX> *
   TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX>::singleton_;
 
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */

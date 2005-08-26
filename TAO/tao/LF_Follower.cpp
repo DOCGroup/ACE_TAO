@@ -8,8 +8,8 @@
 # include "tao/LF_Follower.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao, 
-           LF_Follower, 
+ACE_RCSID (tao,
+           LF_Follower,
            "$Id$")
 
 TAO_LF_Follower::TAO_LF_Follower (TAO_Leader_Follower &leader_follower)
@@ -37,12 +37,3 @@ TAO_LF_Follower::signal (void)
   return this->condition_.signal ();
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Intrusive_List_Node<TAO_LF_Follower>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Intrusive_List_Node<TAO_LF_Follower>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -141,6 +141,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior,
   // Get the Connector Registry from the ORB.
   TAO_Connector_Registry *conn_reg =
     orb->orb_core ()->connector_registry(ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   while (1) { // will loop on comma only.
     size_t len = 0;
@@ -352,8 +353,3 @@ ACE_STATIC_SVC_DEFINE (TAO_CORBALOC_Parser,
 
 ACE_FACTORY_DEFINE (TAO, TAO_CORBALOC_Parser)
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Array_Base<TAO_CORBALOC_Parser::parsed_endpoint>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Array_Base<TAO_CORBALOC_Parser::parsed_endpoint>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
