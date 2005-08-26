@@ -87,9 +87,6 @@ TAO_UTF8_Latin1_Translator::read_string (ACE_InputCDR &cdr,
   ACE_CDR::ULong len;
   if (!cdr.read_ulong (len))
     return 0;
-  if (static_cast<ACE_CDR::Short>(this->major_version(cdr)) == 1
-      && static_cast<ACE_CDR::Short>(this->minor_version(cdr)) == 2)
-    len--;
 
   // A check for the length being too great is done later in the
   // call to read_char_array but we want to have it done before
@@ -97,7 +94,7 @@ TAO_UTF8_Latin1_Translator::read_string (ACE_InputCDR &cdr,
   if (len > 0 && len <= cdr.length())
     {
       ACE_NEW_RETURN (x,
-                      ACE_CDR::Char [len+1],
+                      ACE_CDR::Char [len],
                       0);
       // pos keeps track of the character position, it will never be
       // greater than len
@@ -108,10 +105,7 @@ TAO_UTF8_Latin1_Translator::read_string (ACE_InputCDR &cdr,
           incr = this->read_char_i(cdr,x[pos++]);
         }
       if (incr > 0)
-        {
-          x[pos] = '\x00';
-          return 1;
-        }
+        return 1;
       delete [] x;
     }
   else if (len == 0)
