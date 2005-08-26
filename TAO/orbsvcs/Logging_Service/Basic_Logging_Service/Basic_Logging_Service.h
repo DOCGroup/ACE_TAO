@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  Front End of the Telecom Log Service 
+ *  Front End of the Telecom Log Service
  *  Basic_Logging_Service
  *
  *
@@ -17,14 +17,16 @@
 #ifndef BASIC_LOGGING_SERVICE_H
 #define BASIC_LOGGING_SERVICE_H
 
+#include "ace/Task.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/DsLogAdminC.h"
 #include "orbsvcs/Log/BasicLogFactory_i.h"
 
 class Basic_Logging_Service
+  : public ACE_Task_Base
 {
   // = TITLE
-  //   Logging_Service
+  //   Basic_Logging_Service
   //
   // = DESCRIPTION
   //   Implementation of the Telecom Log Service
@@ -37,16 +39,15 @@ class Basic_Logging_Service
   virtual ~Basic_Logging_Service (void);
   // Destructor.
 
-  int startup (int argc, char *argv[]
-               ACE_ENV_ARG_DECL);
+  int init (int argc, char *argv[] ACE_ENV_ARG_DECL);
   // Initializes the Telecom Log Service.
   // Returns 0 on success, -1 on error.
 
-  int run (void);
-  // run the Telecom Log Service.
+  int run (ACE_ENV_SINGLE_ARG_DECL);
+  // Run the Telecom Log Service.
   // Returns 0 on success, -1 on error.
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
   // Shutdown the Telecom Log Service.
   // Returns 0 on success, -1 on error.
 
@@ -60,6 +61,9 @@ protected:
 
   void resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
   // Resolve the naming service.
+
+  int svc ();
+  // Run worker threads.
 
   // = Data members
   TAO_BasicLogFactory_i basic_log_factory_;
@@ -78,12 +82,15 @@ protected:
   // The name we use to bind with the NameService
 
   const char* ior_file_name_;
-  // The name of the file were we output the Event_Service IOR.
+  // The name of the file where we output the factory IOR.
 
   const char* pid_file_name_;
-  // The name of a file where the process stores its pid
+  // The name of the file where we output the process id.
 
   int bind_to_naming_service_;
   // If true, bind to naming service
+
+  int nthreads_;
+  // Number of worker threads.
 };
 #endif /* BASIC_LOGGING_SERVICE_H */

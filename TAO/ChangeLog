@@ -1,3 +1,40 @@
+Fri Aug 26 06:33:04 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Makefile.am:
+
+	  Regenerated.
+
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.h:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.h:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.h:
+
+	  Changed to add support for the thread pool concurrency model.  A
+	  new "-t" command line parameter is used to specify the number of
+	  threads in the pool.
+
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Server.cpp:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Server.cpp:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Server.cpp:
+
+	  Changed to add support for clean shutdown with SIGINT/SIGTERM
+	  using the Service_Shutdown class from the Svc_Utils library.
+
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Server.cpp:
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.h:
+
+	  Split main() out into new file Basic_Logging_Server.cpp.
+
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Server.cpp:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.h:
+
+	  Split main() out into new file Event_Logging_Server.cpp.
+
 Fri Aug 26 13:45:10 2005  Simon McQueen  <sm@prismtech.com>
 
         * tests/Portable_Interceptors/PolicyFactory/server.cpp:
