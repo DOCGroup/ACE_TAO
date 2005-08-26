@@ -100,9 +100,11 @@ test_impl::pass_obj_graph_in (
     CORBA::SystemException))
 {
   ACE_ASSERT (graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 3);
+  ACE_CHECK;
   graph_param->add_node ("NEW1" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   ACE_ASSERT (graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 4);
+  ACE_CHECK;
 }
 
 void
@@ -113,9 +115,11 @@ test_impl::pass_vt_graph_in (
     CORBA::SystemException))
 {
   ACE_ASSERT (vt_graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 3);
+  ACE_CHECK;
   vt_graph_param->add_node ("NEW1" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   ACE_ASSERT (vt_graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 4);
+  ACE_CHECK;
 }
 
 void
@@ -127,13 +131,16 @@ test_impl::pass_obj_graph_out (
 {
   vt_graph_impl * the_vt_graph = 0;
   ACE_NEW (the_vt_graph, vt_graph_impl (4 ACE_ENV_ARG_PARAMETER));
+  ACE_CHECK;
   graph_param = the_vt_graph->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ASSERT (graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 4);
+  ACE_CHECK;
   graph_param->add_node ("NEW1" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   ACE_ASSERT (graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 5);
+  ACE_CHECK;
 }
 
 void
@@ -146,12 +153,15 @@ test_impl::pass_vt_graph_out (
 
   vt_graph_impl * the_vt_graph = 0;
   ACE_NEW (the_vt_graph, vt_graph_impl (4 ACE_ENV_ARG_PARAMETER));
+  ACE_CHECK;
   vt_graph_param = the_vt_graph;
 
   ACE_ASSERT (vt_graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 4);
+  ACE_CHECK;
   vt_graph_param->add_node ("NEW1" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   ACE_ASSERT (vt_graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 5);
+  ACE_CHECK;
 
 }
 
@@ -164,10 +174,11 @@ test_impl::pass_obj_graph_inout (
 {
 
   ACE_ASSERT (graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 6);
+  ACE_CHECK;
   graph_param->add_node ("NEW3" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   ACE_ASSERT (graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 7);
-
+  ACE_CHECK;
 }
 
 void
@@ -179,9 +190,11 @@ test_impl::pass_vt_graph_inout (
 {
 
   ACE_ASSERT (vt_graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 6);
+  ACE_CHECK;
   vt_graph_param->add_node ("NEW3" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   ACE_ASSERT (vt_graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 7);
+  ACE_CHECK;
 
 }
 
