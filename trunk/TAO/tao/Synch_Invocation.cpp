@@ -78,8 +78,10 @@ namespace TAO
     // try block is to do just this.
     ACE_TRY
       {
-        TAO_OutputCDR &cdr =
-          this->resolver_.transport ()->out_stream ();
+        TAO_OutputCDR &cdr = this->resolver_.transport ()->out_stream ();
+#if TAO_RESET_OUTPUT_CDR_AFTER_SEND == 1
+        OutputCDR_Auto_Reset cdr_reset(cdr);
+#endif /* TAO_RESET_OUTPUT_CDR_AFTER_SEND */
 
         this->write_header (tspec,
                             cdr
@@ -692,8 +694,10 @@ namespace TAO
     TAO_Transport* transport =
       this->resolver_.transport ();
 
-    TAO_OutputCDR &cdr =
-      transport->out_stream ();
+    TAO_OutputCDR &cdr = transport->out_stream ();
+#if TAO_RESET_OUTPUT_CDR_AFTER_SEND == 1
+    OutputCDR_Auto_Reset cdr_reset(cdr);
+#endif /* TAO_RESET_OUTPUT_CDR_AFTER_SEND */
 
     ACE_TRY
       {
