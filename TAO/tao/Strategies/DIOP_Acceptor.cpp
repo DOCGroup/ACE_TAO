@@ -691,8 +691,8 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
   //    `option1=foo'
   //    `option2=bar'
 
-  int begin = 0;
-  int end = -1;
+  ssize_t begin = 0;
+  ssize_t end = -1;
 
   for (CORBA::ULong j = 0; j < option_count; ++j)
     {
@@ -701,7 +701,7 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
       if (j < option_count - 1)
         end = options.find (option_delimiter, begin);
       else
-        end = static_cast<int> (len - begin); // Handle last endpoint differently
+        end = (len - begin); // Handle last endpoint differently
 
       if (end == begin)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -711,9 +711,9 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
         {
           ACE_CString opt = options.substring (begin, end);
 
-          int slot = opt.find ("=");
+          ssize_t slot = opt.find ("=");
 
-          if (slot == static_cast<int> (len - 1)
+          if (slot == static_cast<ssize_t> (len - 1)
               || slot == ACE_CString::npos)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) DIOP option <%s> is ")
