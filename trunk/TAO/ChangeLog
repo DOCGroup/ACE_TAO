@@ -1,3 +1,11 @@
+Fri Aug 26 18:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CORBALOC_Parser.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/Messaging/Asynch_Invocation.cpp:
+        * tao/PortableServer/Root_POA.cpp:
+          Fixed fuzz errors
+
 Fri Aug 26 11:42:29 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Codeset/Codeset_Manager_i.cpp:
