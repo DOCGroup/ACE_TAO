@@ -1,3 +1,10 @@
+Fri Aug 26 10:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+          Removed handling of ORBGlobalCollocation, it is deprecated for some
+          time. Also removed handling of ORBCollocation==YES, this is now
+          ORBCollocation==global.
+
 Fri Aug 26 09:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp
