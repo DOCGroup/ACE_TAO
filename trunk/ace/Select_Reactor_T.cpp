@@ -201,69 +201,6 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::renew (void)
 #endif /* defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) */
 }
 
-template <class ACE_SELECT_REACTOR_MUTEX> void
-ACE_Select_Reactor_Token_T<ACE_SELECT_REACTOR_MUTEX>::dump (void) const
-{
-#if defined (ACE_HAS_DUMP)
-  ACE_TRACE ("ACE_Select_Reactor_Token_T::dump");
-
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
-}
-
-template <class ACE_SELECT_REACTOR_MUTEX>
-ACE_Select_Reactor_Token_T<ACE_SELECT_REACTOR_MUTEX>::ACE_Select_Reactor_Token_T
-  (ACE_Select_Reactor_Impl &r,
-   int s_queue)
-    : select_reactor_ (&r)
-{
-  ACE_TRACE ("ACE_Select_Reactor_Token_T::ACE_Select_Reactor_Token");
-
-  this->queueing_strategy (s_queue);
-}
-
-template <class ACE_SELECT_REACTOR_MUTEX>
-ACE_Select_Reactor_Token_T<ACE_SELECT_REACTOR_MUTEX>::ACE_Select_Reactor_Token_T (int s_queue)
-  : select_reactor_ (0)
-{
-  ACE_TRACE ("ACE_Select_Reactor_Token_T::ACE_Select_Reactor_Token");
-
-  this->queueing_strategy (s_queue);
-}
-
-template <class ACE_SELECT_REACTOR_MUTEX>
-ACE_Select_Reactor_Token_T<ACE_SELECT_REACTOR_MUTEX>::~ACE_Select_Reactor_Token_T (void)
-{
-  ACE_TRACE ("ACE_Select_Reactor_Token_T::~ACE_Select_Reactor_Token_T");
-}
-
-template <class ACE_SELECT_REACTOR_MUTEX> ACE_Select_Reactor_Impl &
-ACE_Select_Reactor_Token_T<ACE_SELECT_REACTOR_MUTEX>::select_reactor (void)
-{
-  return *this->select_reactor_;
-}
-
-template <class ACE_SELECT_REACTOR_MUTEX> void
-ACE_Select_Reactor_Token_T<ACE_SELECT_REACTOR_MUTEX>::select_reactor
-  (ACE_Select_Reactor_Impl &select_reactor)
-{
-  this->select_reactor_ = &select_reactor;
-}
-
-// Used to wakeup the Select_Reactor.
-
-template <class ACE_SELECT_REACTOR_MUTEX> void
-ACE_Select_Reactor_Token_T<ACE_SELECT_REACTOR_MUTEX>::sleep_hook (void)
-{
-  ACE_TRACE ("ACE_Select_Reactor_Token_T::sleep_hook");
-  if (this->select_reactor_->notify () == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("sleep_hook failed")));
-}
-
 template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::notify (ACE_Event_Handler *eh,
                                                         ACE_Reactor_Mask mask,

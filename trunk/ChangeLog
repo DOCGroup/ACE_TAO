@@ -1,3 +1,43 @@
+Fri Aug 26 18:01:31 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/Select_Reactor.cpp:
+	* ace/Select_Reactor_Base.h:
+	* ace/Select_Reactor_T.(h cpp):
+	* ace/Reactor_Token_T.(h cpp): Moved the definition/implementation of
+	  ACE_Select_Reactor_Token_T and its associated token-type selection
+	  macros to new file Reactor_Token_T.(h cpp); retargeted
+	  ACE_Select_Reactor_Token_T to call the ACE_Reactor_Impl interface
+	  rather than ACE_Select_Reactor. Renamed the class
+	  ACE_Reactor_Token_T to reflect this refactoring. This allows the
+	  token to be used in reactor implementations that are not derived
+	  from ACE_Select_Reactor.
+
+	* ace/ace.mpc:
+	* ace/Makefile.am: Added the new files Reactor_Token_T.cpp and .h.
+
+	* ace/Dev_Poll_Reactor.(h cpp): Replace the use of ACE_SYNCH_MUTEX with
+	  ACE_Reactor_Token_T for the reactor's internal-protecting lock.
+	  Allows threads wishing to twiddle with the registrations or run the
+	  event loop to properly notify and synchronize with another thread
+	  that's already running the event loop.
+	  Also Clarified documentation on the queue-type members of
+	  ACE_Dev_Poll_Reactor_Notify.
+
+	* ace/POSIX_Proactor.cpp (ACE_POSIX_SIG_Proactor::handle_events_i):
+	  Retry the wait on EINTR. Previous comments said this automatically
+	  happened because ACE_OSCALL_RETURN did it; it no longer does that,
+	  so explicit EINTR check code was added here.
+
+	* apps/JAWS3/jaws3/Event_Dispatcher.h: Correct for the new reactor
+	  token type defined, above.
+
+	* tests/MT_Reference_Counted_Event_Handler_Test.cpp: Added ACE_TEXT
+	  where needed for ACE_DEBUG statements.
+
+	* tests/Multicast_Test.cpp: After stopping the reactor loop on test
+	  timeout, wait for the task's thread(s) to exit or there's a race
+	  between thread exit and deleting the task's memory.
+
 Fri Aug 26 10:52:38 2005  Gary Maxey <gary.maxey@hp.com>
 
 	* ace/Array_Map.inl:

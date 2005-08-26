@@ -108,7 +108,7 @@ Client::open (void *)
            this,
            ACE_Event_Handler::WRITE_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("(%t) %p\n"),
                        ACE_TEXT ("unable to register client handler")),
                       -1);
 
@@ -131,18 +131,24 @@ Client::handle_output (ACE_HANDLE)
         {
           if (errno == EWOULDBLOCK)
             return 0;  // Flow control kicked in.
+          else if (errno == EPIPE)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%t) Client::handle_output; server ")
+                          ACE_TEXT ("closed handle %d\n"),
+                          this->peer ().get_handle ()));
+              return -1;
+            }
           else
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("%p\n"),
+                               ACE_TEXT ("(%t) %p\n"),
                                ACE_TEXT ("Client::handle_output")),
                               -1);
         }
       else if (bytes_sent == 0)
         return -1;
       else
-        ACE_DEBUG ((LM_INFO,
-                    "Sent %s",
-                    buffer));
+        ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%t) Sent %s"), buffer));
     }
 
   return 0;
@@ -152,7 +158,7 @@ int
 Client::handle_timeout (const ACE_Time_Value &, const void *)
 {
   ACE_DEBUG ((LM_INFO,
-              ACE_TEXT ("(%P|%t) Expected client timeout occured at: %T\n")));
+              ACE_TEXT ("(%t) Expected client timeout occured at: %T\n")));
 
   this->call_count_++;
 
@@ -161,11 +167,11 @@ Client::handle_timeout (const ACE_Time_Value &, const void *)
     {
       if (this->reactor ()->end_reactor_event_loop () == 0)
         ACE_DEBUG ((LM_INFO,
-                    ACE_TEXT ("(%P|%t) Successful client ")
-                    ACE_TEXT ("reactor shutdown.\n")));
+                    ACE_TEXT ("(%t) Successful client reactor shutdown.\n")));
       else
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Failed client reactor shutdown.\n")));
+                    ACE_TEXT ("(%t) %p\n"),
+                    ACE_TEXT ("Failed client reactor shutdown")));
 
       // Force this service handler to be closed in either case.
       return -1;
@@ -179,8 +185,8 @@ Client::handle_close (ACE_HANDLE handle,
                       ACE_Reactor_Mask mask)
 {
   ACE_DEBUG ((LM_INFO,
-              ACE_TEXT ("(%P|%t) Client Svc_Handler closed ")
-              ACE_TEXT ("handle <%d> with reactor mask <%d>.\n"),
+              ACE_TEXT ("(%t) Client Svc_Handler closed ")
+              ACE_TEXT ("handle <%d> with reactor mask <0x%x>.\n"),
               handle,
               mask));
 
@@ -215,7 +221,7 @@ Server::handle_input (ACE_HANDLE /* handle */)
       bytes_read = this->peer ().recv (buf, BUFSIZ - bytes_read);
 
       ACE_DEBUG ((LM_DEBUG,
-                  "****** bytes_read = %d\n",
+                  ACE_TEXT ("****** bytes_read = %d\n"),
                   bytes_read));
 
       if (bytes_read == -1)
@@ -234,7 +240,7 @@ Server::handle_input (ACE_HANDLE /* handle */)
             }
           else
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("%p\n"),
+                               ACE_TEXT ("(%t) %p\n"),
                                ACE_TEXT ("Server::handle_input")),
                               -1);
         }
@@ -242,9 +248,7 @@ Server::handle_input (ACE_HANDLE /* handle */)
         return -1;
     }
 
-  ACE_DEBUG ((LM_INFO,
-              "(%P|%t) Message received: %s\n",
-              buffer));
+  ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%t) Message received: %s\n"), buffer));
 
   return 0;
 }
@@ -254,7 +258,7 @@ Server::handle_timeout (const ACE_Time_Value &,
                         const void *)
 {
   ACE_DEBUG ((LM_INFO,
-              ACE_TEXT ("(%P|%t) Expected server timeout occured at: %T\n")));
+              ACE_TEXT ("(%t) Expected server timeout occured at: %T\n")));
 
 //   if (this->call_count_ == 0
 //       && this->handle_input (this->get_handle ()) != 0
@@ -272,11 +276,11 @@ Server::handle_timeout (const ACE_Time_Value &,
     {
       if (this->reactor ()->end_reactor_event_loop () == 0)
         ACE_DEBUG ((LM_INFO,
-                    ACE_TEXT ("(%P|%t) Successful server ")
-                    ACE_TEXT ("reactor shutdown.\n")));
+                    ACE_TEXT ("(%t) Successful server reactor shutdown.\n")));
       else
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Failed server reactor shutdown.\n")));
+                    ACE_TEXT ("(%t) %p\n"),
+                    ACE_TEXT ("Failed server reactor shutdown")));
 
       // Force this service handler to be closed in either case.
       return -1;
@@ -292,8 +296,8 @@ Server::handle_close (ACE_HANDLE handle,
   if (this->call_count_ > 4)
     {
       ACE_DEBUG ((LM_INFO,
-                  ACE_TEXT ("(%P|%t) Server Svc_Handler closed ")
-                  ACE_TEXT ("handle <%d,%d> with reactor mask <%d>.\n"),
+                  ACE_TEXT ("(%t) Server Svc_Handler closing ")
+                  ACE_TEXT ("handle <%d,%d> with reactor mask <0x%x>.\n"),
                   handle,
                   this->get_handle (),
                   mask));
@@ -323,14 +327,14 @@ public:
       {
         if (errno != EWOULDBLOCK)
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) %p\n"),
+                      ACE_TEXT ("(%t) %p\n"),
                       ACE_TEXT ("Unable to accept connection")));
 
         return result;
       }
 
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Accepted connection.  ")
+                ACE_TEXT ("(%t) Accepted connection.  ")
                 ACE_TEXT ("Stream handle: <%d>\n"),
                 handler->get_handle ()));
 
@@ -347,7 +351,7 @@ public:
                                              restart) == -1)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("(%t) %p\n"),
                            ACE_TEXT ("Unable to schedule server side ")
                            ACE_TEXT ("timer in ACE_Dev_Poll_Reactor")),
                           -1);
@@ -390,13 +394,13 @@ public:
                                    sizeof (hostname)) != 0)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("(%t) %p\n"),
                            ACE_TEXT ("Unable to retrieve hostname")),
                           -1);
       }
 
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Connected to <%s:%d>.\n"),
+                ACE_TEXT ("(%t) Connected to <%s:%d>.\n"),
                 hostname,
                 (int) remote_addr.get_port_number ()));
 
@@ -409,7 +413,7 @@ public:
                                              restart) == -1)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("(%t) %p\n"),
                            ACE_TEXT ("Unable to schedule client side ")
                            ACE_TEXT ("timer in ACE_Dev_Poll_Reactor")),
                           -1);
@@ -447,13 +451,14 @@ server_worker (void *p)
   if (addr.set (port, INADDR_LOOPBACK) != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("(%t) %p\n"),
                   ACE_TEXT ("server_worker - ACE_INET_Addr::set")));
 
       return (void *) -1;
     }
 
   ACE_Dev_Poll_Reactor dp_reactor;
+  dp_reactor.restart (1);     // Restart on EINTR
   ACE_Reactor reactor (&dp_reactor);
 
   TestAcceptor server;
@@ -465,7 +470,7 @@ server_worker (void *p)
   if (server.open (addr, &reactor, flags) != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("(%t) %p\n"),
                   ACE_TEXT ("Unable to open server service handler")));
 
       return (void *) -1;
@@ -474,15 +479,15 @@ server_worker (void *p)
   if (reactor.run_reactor_event_loop () != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("(%t) %p\n"),
                   ACE_TEXT ("Error when running server ")
-                  ACE_TEXT ("reactor event loop\n")));
+                  ACE_TEXT ("reactor event loop")));
 
       return (void *) -1;
     }
 
   ACE_DEBUG ((LM_INFO,
-              ACE_TEXT ("(%P|%t) Reactor event loop finished ")
+              ACE_TEXT ("(%t) Reactor event loop finished ")
               ACE_TEXT ("successfully.\n")));
 
   return 0;
@@ -512,6 +517,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_OS::sigprocmask (SIG_BLOCK, sigsetNew, sigsetOld);
 
   ACE_Dev_Poll_Reactor dp_reactor;
+  dp_reactor.restart (1);          // Restart on EINTR
   ACE_Reactor reactor (&dp_reactor);
 
   TestConnector client;
@@ -522,7 +528,7 @@ run_main (int, ACE_TCHAR *[])
 
   if (client.open (&reactor, flags) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("(%t) %p\n"),
                        ACE_TEXT ("Unable to open client service handler")),
                       -1);
 
@@ -537,7 +543,7 @@ run_main (int, ACE_TCHAR *[])
 
   if (ACE_Thread_Manager::instance ()->spawn (server_worker, &port) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("(%t) %p\n"),
                        ACE_TEXT ("Unable to spawn server thread")),
                       -1);
 
@@ -546,7 +552,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_INET_Addr addr;
   if (addr.set (port, INADDR_LOOPBACK) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("(%t) %p\n"),
                        ACE_TEXT ("ACE_INET_Addr::set")),
                       -1);
 
@@ -554,19 +560,20 @@ run_main (int, ACE_TCHAR *[])
 
   if (client.connect (client_handler, addr) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("(%t) %p\n"),
                        ACE_TEXT ("Unable to connect to server")),
                       -1);
 
   if (reactor.run_reactor_event_loop () != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("(%t) %p\n"),
                        ACE_TEXT ("Error when running client ")
-                       ACE_TEXT ("reactor event loop\n")),
+                       ACE_TEXT ("reactor event loop")),
                       -1);
 
   if (ACE_Thread_Manager::instance ()->wait () != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("(%t) %p\n"),
                        ACE_TEXT ("Error waiting for threads to complete")),
                       -1);
 

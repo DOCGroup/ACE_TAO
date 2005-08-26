@@ -181,3 +181,44 @@ ACE_Dev_Poll_Reactor::upcall (ACE_Event_Handler *event_handler,
 
   return status;
 }
+
+
+/************************************************************************/
+// Methods for ACE_Dev_Poll_Reactor::Token_Guard
+/************************************************************************/
+
+ACE_INLINE
+ACE_Dev_Poll_Reactor::Token_Guard::Token_Guard (ACE_Dev_Poll_Reactor_Token &token)
+
+  : token_ (token),
+    owner_ (0)
+{
+}
+
+ACE_INLINE
+ACE_Dev_Poll_Reactor::Token_Guard::~Token_Guard (void)
+{
+  if (this->owner_ == 1)
+    {
+      ACE_MT (this->token_.release ());
+      this->owner_ = 0;
+    }
+}
+
+ACE_INLINE void
+ACE_Dev_Poll_Reactor::Token_Guard::release_token (void)
+{
+  if (this->owner_)
+    {
+      ACE_MT (this->token_.release ());
+
+      // We are not the owner anymore..
+      this->owner_ = 0;
+    }
+}
+
+ACE_INLINE int
+ACE_Dev_Poll_Reactor::Token_Guard::is_owner (void)
+{
+  return this->owner_;
+}

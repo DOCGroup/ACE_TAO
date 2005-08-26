@@ -23,7 +23,6 @@
 
 #include "ace/Event_Handler.h"
 #include "ace/Handle_Set.h"
-#include "ace/Token.h"
 #include "ace/Pipe.h"
 #include "ace/Reactor_Impl.h"
 
@@ -34,12 +33,6 @@
 // Add useful typedefs to simplify the following code.
 typedef void (ACE_Handle_Set::*ACE_FDS_PTMF) (ACE_HANDLE);
 typedef int (ACE_Event_Handler::*ACE_EH_PTMF) (ACE_HANDLE);
-
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-typedef ACE_Token ACE_SELECT_TOKEN;
-#else
-typedef ACE_Noop_Token ACE_SELECT_TOKEN;
-#endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 
 // Forward declaration.
 class ACE_Select_Reactor_Impl;
