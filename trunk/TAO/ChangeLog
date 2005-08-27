@@ -1,3 +1,13 @@
+Sat Aug 27 11:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.cpp
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp
+        * orbsvcs/orbsvcs/Event/EC_Kokyu_Filter_Builder.cpp
+        * orbsvcs/orbsvcs/Event/EC_RTCORBA_Factory.cpp
+          Fixed emulated exception errors
+
 Sat Aug 27 10:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.cpp:
