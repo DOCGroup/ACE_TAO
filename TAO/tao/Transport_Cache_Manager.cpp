@@ -1,16 +1,18 @@
 //$Id$
-#include "tao/Transport_Cache_Manager.h"
-#include "tao/Transport.h"
-#include "tao/debug.h"
-#include "tao/ORB_Core.h"
-#include "tao/Connection_Purging_Strategy.h"
-#include "tao/Condition.h"
+#include "Transport_Cache_Manager.h"
+#include "Transport.h"
+#include "debug.h"
+#include "ORB_Core.h"
+#include "Connection_Purging_Strategy.h"
+#include "Condition.h"
+#include "Wait_Strategy.h"
+#include "ace/ACE.h"
+#include "ace/Reactor.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Transport_Cache_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/ACE.h"
 
 
 ACE_RCSID (tao,
@@ -167,6 +169,30 @@ namespace TAO
     if (retval == 0)
       {
         transport = int_id.relinquish_transport ();
+
+        if (transport->wait_strategy ()->non_blocking () == 0)
+          {
+            ACE_Event_Handler *eh =
+                         transport->event_handler_i ();
+
+            ACE_Reactor *r =
+              transport->orb_core ()->reactor ();
+
+            if (r->remove_handler (eh,
+                                   ACE_Event_Handler::READ_MASK |
+                                   ACE_Event_Handler::DONT_CALL) == -1)
+              {
+                if (TAO_debug_level > 0)
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_TEXT ("TAO (%P|%t) - TAO_Transport_Cache_Manager[%d]")
+                              ACE_TEXT ("::find_transport, remove_handler failed \n"),
+                              transport->id ()));
+              }
+            else
+              {
+                transport->wait_strategy ()->is_registered (0);
+              }
+          }
       }
 
     return retval;
