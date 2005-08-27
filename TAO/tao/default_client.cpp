@@ -25,8 +25,12 @@ ACE_RCSID (tao,
 
 TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
   : profile_lock_type_ (TAO_THREAD_LOCK)
-    , rd_table_size_ (TAO_RD_TABLE_SIZE)
-    , muxed_strategy_lock_type_ (TAO_THREAD_LOCK)
+  , rd_table_size_ (TAO_RD_TABLE_SIZE)
+  , muxed_strategy_lock_type_ (TAO_THREAD_LOCK)
+  , transport_mux_strategy_ (TAO_MUXED_TMS)
+  , wait_strategy_ (TAO_WAIT_ON_LEADER_FOLLOWER)
+  , connect_strategy_ (TAO_LEADER_FOLLOWER_CONNECT)
+  , use_cleanup_options_ (true)
 {
   // Use single thread client connection handler
 #if defined (TAO_USE_ST_CLIENT_CONNECTION_HANDLER)
@@ -196,6 +200,19 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
               this->rd_table_size_ = ACE_OS::atoi (argv[curarg]);
             }
         }
+      else if (ACE_OS::strcmp (argv[curarg],
+                               ACE_LIB_TEXT("-ORBConnectionHandlerCleanup")) == 0)
+         {
+           curarg++;
+           if (curarg < argc)
+             {
+               ACE_TCHAR* name = argv[curarg];
+
+               if (ACE_OS::strcasecmp (name,
+                                       ACE_TEXT("false")) == 0)
+                 this->use_cleanup_options_ = false;
+             }
+         }
       else if (ACE_OS::strncmp (argv[curarg], ACE_TEXT("-ORB"), 4) == 0)
         {
           // Can we assume there is an argument after the option?
@@ -358,6 +375,12 @@ TAO_Default_Client_Strategy_Factory::report_option_value_error (
              ACE_TEXT ("Client_Strategy_Factory - unknown argument")
              ACE_TEXT (" <%s> for <%s>\n"),
              option_value, option_name));
+}
+
+bool
+TAO_Default_Client_Strategy_Factory::use_cleanup_options (void) const
+{
+  return this->use_cleanup_options_;
 }
 
 // ****************************************************************

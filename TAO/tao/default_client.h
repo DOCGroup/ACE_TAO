@@ -59,6 +59,7 @@ public:
   virtual TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport);
   virtual TAO_Connect_Strategy *create_connect_strategy (TAO_ORB_Core *);
   virtual ACE_Lock *create_ft_service_retention_id_lock (void);
+  virtual bool use_cleanup_options (void) const;
 
 protected:
   void report_option_value_error (const ACE_TCHAR* option_name,
@@ -109,6 +110,9 @@ private:
 
   /// Type of lock for the muxed_strategy
   Lock_Type muxed_strategy_lock_type_;
+
+  /// Cleanupoptions for RW strategy
+  bool use_cleanup_options_;
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Client_Strategy_Factory)

@@ -1,10 +1,12 @@
 // $Id$
 
-#include "tao/Wait_On_Read.h"
-#include "tao/Transport.h"
-#include "tao/Resume_Handle.h"
-#include "tao/Synch_Reply_Dispatcher.h"
-
+#include "Wait_On_Read.h"
+#include "Transport.h"
+#include "Resume_Handle.h"
+#include "Synch_Reply_Dispatcher.h"
+#include "Client_Strategy_Factory.h"
+#include "ORB_Core.h"
+#include "ace/Reactor.h"
 #include "ace/Countdown_Time.h"
 
 ACE_RCSID (tao,
@@ -62,7 +64,39 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
     }
 
   if (rd.successful ())
-    return 0;
+     {
+       TAO_ORB_Core *oc =
+         this->transport_->orb_core ();
+
+       if (!oc->client_factory ()->use_cleanup_options ())
+         return 0;
+
+       if (TAO_debug_level > 0)
+         ACE_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("TAO (%P|%t) - TAO_Wait_On_Read[%d]::wait (), ")
+                     ACE_TEXT ("registering handle for cleanup \n"),
+                     this->transport_->id ()));
+
+       ACE_Event_Handler *eh =
+         this->transport_->event_handler_i ();
+
+       ACE_Reactor *r =
+         this->transport_->orb_core ()->reactor ();
+
+       if (r->register_handler (eh,
+                                ACE_Event_Handler::READ_MASK) == -1)
+         {
+           if (TAO_debug_level > 0)
+             ACE_ERROR ((LM_ERROR,
+                         ACE_TEXT ("TAO (%P|%t) - TAO_Wait_On_Read[%d]::wait (), ")
+                        ACE_TEXT ("registration with reactor returned an error \n"),
+                         this->transport_->id ()));
+        }
+
+       this->is_registered_ = 1;
+
+       return 0;
+     }
 
   if (rd.error_detected ())
     return -1;

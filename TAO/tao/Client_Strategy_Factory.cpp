@@ -59,3 +59,9 @@ TAO_Client_Strategy_Factory::create_ft_service_retention_id_lock (void)
 {
   return 0;
 }
+
+bool
+TAO_Client_Strategy_Factory::use_cleanup_options (void) const
+{
+  return false;
+}
