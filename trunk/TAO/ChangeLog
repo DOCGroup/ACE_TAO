@@ -1,3 +1,20 @@
+Sat Aug 27 13:32:55 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+        
+          Fixed the command line parsing to preserve the literal
+          quotes if they are used in an include path that has a space,
+          so the path is passed to the preprocessor with the literal
+          quotes following '-I'. Since the string is also added to
+          the IDL compiler's list of include paths this way, the
+          literal quotes must also be stripped off when using the
+          include path to form a full path for validation of 
+          included files. This fix closes [BUGID:2219]. Thanks to
+          Dorian Hileaga <hdorianh@hotmail.com> for reporting the
+          problem.
+
 Sat Aug 27 11:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/Forwarder.cpp
@@ -276,6 +293,7 @@ Thu Aug 25 17:15:27 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
           Regenerated.
 
+>>>>>>> 1.6723
 Thu Aug 25 16:43:15 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/AnyTypeCode/Any_Array_Impl_T.cpp:

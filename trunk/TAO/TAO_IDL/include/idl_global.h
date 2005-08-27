@@ -571,6 +571,9 @@ public:
 
   int path_cmp (const char *s, const char *t);
   // Case insensitive for Windows, otherwise not.
+  
+  bool hasspace (const char *s);
+  // To tell if we have to handle a Windows path with spaces.
 
 private:
   // Data
