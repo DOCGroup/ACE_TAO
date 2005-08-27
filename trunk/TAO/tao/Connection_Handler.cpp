@@ -339,7 +339,17 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
                        handle));
         }
 
-      eh_reactor->remove_handler (handle,
+      // Use id instead of handle. Why? "handle" may be invalid for RW
+      // cases  when drop_reply_on_shutdown is on, and when the
+      // orb_core is shutting down. This means that the handler will
+      // be left behind in the reactor which would create problems
+      // later. Just forcefully remove them. If none exists reactor
+      // will make things safer.
+      ACE_HANDLE tmp_handle = handle;
+      if (this->orb_core_->has_shutdown ())
+        tmp_handle = (ACE_HANDLE) id;
+
+      eh_reactor->remove_handler (tmp_handle,
                                   ACE_Event_Handler::ALL_EVENTS_MASK |
                                   ACE_Event_Handler::DONT_CALL);
 

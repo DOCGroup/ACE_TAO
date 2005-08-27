@@ -72,6 +72,12 @@ public:
   /// Create a lock to be used by the TAO_Fault_Tolerant_Service class
   /// to generate unique retention ids
   virtual ACE_Lock *create_ft_service_retention_id_lock (void);
+
+  /// Cleanup options for wait strategy.
+  /**
+    * Only applicable to RW wait strategy
+  */
+  virtual bool use_cleanup_options (void) const;
 };
 
 #include /**/ "ace/post.h"

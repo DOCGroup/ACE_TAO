@@ -1,3 +1,31 @@
+Fri Aug 26 23:48:25 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	Fix for bug 
+
+	http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2224
+
+ 	* tao/Client_Strategy_Factory.cpp:
+	* tao/Client_Strategy_Factory.h:
+	* tao/default_client.cpp:
+	* tao/default_client.h:
+
+	  New strategy ORBCOnnectionHandlerCleanup . 
+	
+	* tao/Connection_Handler.cpp:
+
+	  Use the id for deregistration instead of the handle. 
+	
+	* tao/Transport_Cache_Manager.cpp:
+	* tao/Wait_On_Read.cpp:
+
+	  Do the registration and deregistration. One could possibly think
+	  of doing a suspend and resume instead of
+	  registration/deregistration. Our reactor interfaces do not
+	  provide a way to add a handler in a suspended mode. Doing a
+	  registration and then calling suspend () could provide a window
+	  of time where a thread could be dispatched. Hence the decision to
+	  use registration/deregistration combo. 
+
 Fri Aug 26 14:07:57 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
