@@ -744,9 +744,19 @@ IDL_GlobalData::validate_included_idl_files (void)
             {
               iter.next (path_tmp);
               ACE_CString pre_partial (*path_tmp);
+              
+              // If the include path has literal "s (because of an include
+              // of a Windows path with spaces), we must remove them here.
+              if (this->hasspace (pre_partial.c_str ()))
+                {
+                  pre_partial =
+                    pre_partial.substr (1, pre_partial.length () - 2);
+                }
+                
               pre_partial += ACE_DIRECTORY_SEPARATOR_STR;
               pre_partial += pre_preproc_includes[j];
-              full_path = ACE_OS::realpath (pre_partial.c_str (), pre_abspath);
+              full_path =
+                ACE_OS::realpath (pre_partial.c_str (), pre_abspath);
 
               if (full_path != 0)
                 {
@@ -1556,6 +1566,21 @@ IDL_GlobalData::path_cmp (const char *s, const char *t)
 #else
   return ACE_OS::strcmp (s, t);
 #endif /* defined (WIN32) */
+}
+
+bool
+IDL_GlobalData::hasspace (const char *s)
+{
+  // We don't need to check the first or last slot.
+  for (size_t i = 1; i < ACE_OS::strlen (s) - 2; ++i)
+    {
+      if (isspace (s[i]))
+        {
+          return true;
+        }
+    }
+    
+  return false;
 }
 
 void
