@@ -713,7 +713,7 @@ TAO_CEC_ProxyPushSupplier::invoke_to_consumer (const TAO_CEC_TypedEvent &typed_e
                                             target_request.inout(),
                                             0
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       // Call the DII invoke for the operation on the target object
       target_request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -796,7 +796,7 @@ TAO_CEC_ProxyPushSupplier::reactive_invoke_to_consumer (
                                             target_request.inout(),
                                             0
                                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       // Call the DII invoke for the operation on the target object
       target_request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);

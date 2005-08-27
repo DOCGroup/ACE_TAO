@@ -146,13 +146,15 @@ TAO_EC_Dispatching_Task::push (TAO_EC_ProxyPushSupplier *proxy,
     {
       int action =
         this->queue_full_service_object_->queue_full_action (this, proxy,
-                                                               consumer, event
-                                                               ACE_ENV_ARG_PARAMETER);
+                                                             consumer, event
+                                                             ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
       if (action == TAO_EC_Queue_Full_Service_Object::SILENTLY_DISCARD)
         return;
       // if action == WAIT_TO_EMPTY then we just go ahead and queue it
     }
-      
+
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Allocator::instance ();
 
@@ -205,12 +207,3 @@ TAO_EC_Push_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Locked_Data_Block<ACE_Lock_Adapter<TAO_SYNCH_MUTEX> >;
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Locked_Data_Block<ACE_Lock_Adapter<TAO_SYNCH_MUTEX> >
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

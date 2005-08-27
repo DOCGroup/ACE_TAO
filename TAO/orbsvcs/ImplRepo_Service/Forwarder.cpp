@@ -116,7 +116,7 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
 
     forward_obj =
       this->orb_->string_to_object (ior.c_str () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
+    ACE_TRY_CHECK;
   }
   ACE_CATCH (ImplementationRepository::CannotActivate, ex)
   {
