@@ -64,6 +64,8 @@ TAO_EC_RTCORBA_Factory::create_dispatching (TAO_EC_Event_Channel_Base *)
       obj =
         orb->resolve_initial_references ("RTCurrent"
                                          ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       RTCORBA::Current_var current =
         RTCORBA::Current::_narrow (obj.in ()
                                    ACE_ENV_ARG_PARAMETER);
