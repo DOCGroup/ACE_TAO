@@ -1,6 +1,11 @@
+Sat Aug 27 10:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+          Added missing semi colon
+
 Fri Aug 26 23:48:25 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	Fix for bug 
+	Fix for bug
 
 	http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2224
 
@@ -9,12 +14,12 @@ Fri Aug 26 23:48:25 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/default_client.cpp:
 	* tao/default_client.h:
 
-	  New strategy ORBCOnnectionHandlerCleanup . 
-	
+	  New strategy ORBCOnnectionHandlerCleanup .
+
 	* tao/Connection_Handler.cpp:
 
-	  Use the id for deregistration instead of the handle. 
-	
+	  Use the id for deregistration instead of the handle.
+
 	* tao/Transport_Cache_Manager.cpp:
 	* tao/Wait_On_Read.cpp:
 
@@ -24,7 +29,7 @@ Fri Aug 26 23:48:25 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  provide a way to add a handler in a suspended mode. Doing a
 	  registration and then calling suspend () could provide a window
 	  of time where a thread could be dispatched. Hence the decision to
-	  use registration/deregistration combo. 
+	  use registration/deregistration combo.
 
 Fri Aug 26 14:07:57 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
@@ -33,7 +38,7 @@ Fri Aug 26 14:07:57 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 	  Fix the "export" class used in the ACE_FACTORY_DEFINE for the
 	  TAO_EC_Simple_Queue_Full_Action.  Hopefully this fixes the
 	  internal compiler error on mingw compilers.
-	
+
         * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.cpp:
         * orbsvcs/orbsvcs/Event/EC_TPC_ProxyConsumer.cpp:
         * orbsvcs/orbsvcs/Event/EC_TPC_ProxySupplier.cpp:
