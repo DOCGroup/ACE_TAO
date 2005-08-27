@@ -262,9 +262,10 @@ DRV_usage (void)
 void
 DRV_parse_args (long ac, char **av)
 {
-  char *buffer;
+  ACE_CString buffer;
   char *s = 0;
   long i;
+  bool has_space = false;
 
   FE_store_env_include_paths ();
   DRV_cpp_init ();
@@ -336,19 +337,18 @@ DRV_parse_args (long ac, char **av)
                   if (i < ac - 1)
                     {
                       idl_global->append_idl_flag (av[i + 1]);
-
-                      ACE_NEW (buffer,
-                               char[ACE_OS::strlen (av[i])
-                                    + ACE_OS::strlen (av[i + 1])
-                                    + 2]);
-
-                      ACE_OS::sprintf (buffer,
-                                       "%s%s",
-                                       av[i],
-                                       av[i + 1]);
-
-                      DRV_cpp_putarg (buffer);
-                      idl_global->add_include_path (buffer + 2);
+                      
+                      has_space = idl_global->hasspace (av[i + 1]);
+                      
+                      // If the include path has a space, we need to
+                      // add literal "s.
+                      ACE_CString arg = av[i];
+                      arg += (has_space ? "\"" : "");
+                      arg += av[i + 1];
+                      arg += (has_space ? "\"" : "");
+                      
+                      DRV_cpp_putarg (arg.c_str ());
+                      idl_global->add_include_path (arg.substr (2).c_str ());
                       i++;
                     }
                   else
@@ -365,8 +365,17 @@ DRV_parse_args (long ac, char **av)
                 }
               else
                 {
-                  idl_global->add_include_path (av[i] + 2);
-                  DRV_cpp_putarg (av[i]);
+                  has_space = idl_global->hasspace (av[i]);
+                  
+                  // If the include path has a space, we need to
+                  // add literal "s.
+                  ACE_CString arg (av[i], 2);
+                  arg += (has_space ? "\"" : "");
+                  arg += av[i] + 2;
+                  arg += (has_space? "\"" : "");
+                  
+                  idl_global->add_include_path (arg.substr (2).c_str ());
+                  DRV_cpp_putarg (arg.c_str ());
                 }
               break;
             case 'E':
