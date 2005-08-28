@@ -23,6 +23,12 @@
 #include "ace/Lock_Adapter_T.h"
 #include "ace/Token.h"
 
+/*
+ * Hook for specializing the reactor with the concrete 
+ * type, for example, select, or thread pool. 
+ */
+//@@ REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
+
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 typedef ACE_Token ACE_SELECT_TOKEN;
 #else

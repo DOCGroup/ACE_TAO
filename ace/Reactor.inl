@@ -5,6 +5,12 @@
 // Run the event loop until the <ACE_Reactor::handle_events> method
 // returns -1 or the <end_event_loop> method is invoked.
 
+/*
+ * Hook to specialize the Reactor with the concrete implementation
+ * known at compile time. 
+ */
+//@@ REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
+
 ACE_INLINE int
 ACE_Reactor::run_event_loop (void)
 {

@@ -1,12 +1,22 @@
 // $Id$
 
 #include "ace/Reactor.h"
+
+
 //#if !defined (ACE_HAS_WINCE)
 #  if !defined (ACE_LACKS_ACE_SVCCONF)
 #    include "ace/Service_Config.h"
 #  endif /* !ACE_LACKS_ACE_SVCCONF */
 //#endif /* ! ACE_HAS_WINCE */
 
+/*
+ * Hook to specialize the includes directly with the concrete
+ * Reactor type, e.g., select, thread pool reactor
+ * known at compile time. This hook results in all the
+ * #defines being commented
+ * out and the concrete header file directly included.
+ */
+//@@ REACTOR_SPL_COMMENT_INCLUDE_START_HOOK
 // Only include the headers needed to compile.
 #if !defined (ACE_WIN32) \
       || !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0) \
@@ -29,6 +39,11 @@
 #    include "ace/WFMO_Reactor.h"
 #  endif /* ACE_USE_MSG_WFMO_REACTOR_FOR_REACTOR_IMPL */
 #endif /* !defined (ACE_WIN32) || !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0) || defined (ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL) */
+
+/*
+ * End comment hook.
+ */
+//@@ REACTOR_SPL_COMMENT_INCLUDE_END_HOOK
 
 #include "ace/Static_Object_Lock.h"
 #include "ace/Framework_Component.h"
@@ -56,6 +71,13 @@ ACE_Reactor::ACE_Reactor (ACE_Reactor_Impl *impl,
 
   if (this->implementation () == 0)
     {
+/*
+ * Hook to specialize the reactor implementation with the concrete
+ * Reactor implementation known at compile time. This hook will
+ * cause the conditionally defined code to be commented out and
+ * the concrete Reactor directly created.
+ */
+//@@ REACTOR_SPL_CONSTRUCTOR_COMMENT_HOOK_START
 #if !defined (ACE_WIN32) \
       || !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0) \
       || defined (ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL) \
@@ -82,6 +104,12 @@ ACE_Reactor::ACE_Reactor (ACE_Reactor_Impl *impl,
                ACE_WFMO_Reactor);
   #endif /* ACE_USE_MSG_WFMO_REACTOR_FOR_REACTOR_IMPL */
 #endif /* !defined (ACE_WIN32) || !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0) || defined (ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL) */
+
+/*
+ * End hook.
+ */
+//@@ REACTOR_SPL_CONSTRUCTOR_COMMENT_HOOK_END
+
       this->implementation (impl);
       this->delete_implementation_ = 1;
     }

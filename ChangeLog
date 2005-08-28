@@ -1,3 +1,45 @@
+Sun Aug 28 14:25:07 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * ace/Reactor.h:
+        * ace/Reactor.cpp:
+        * ace/Reactor.inl:
+        * ace/Select_Reactor.h:
+        * ace/Select_Reactor_Base.h:
+        * ace/Select_Reactor_T.cpp:
+        * ace/Select_Reactor_T.h:
+        * ace/TP_Reactor.cpp:
+
+          The reactor framework in ACE allows plug and play of different
+          reactors such as Select, TP, Devpoll etc. The TAO middleware
+          implementation and applications that run atop TAO typically use
+          one particular implementation of the Reactor. For example, a
+          single-threaded application might use select_* reactors. The
+          Reactor framework uses the bridge pattern to transparently
+          invoke operations on the right reactors. When the concrete
+          Reactor is known, it should be possible to specialize the
+          framework to use the concrete reactor directly rather than use
+          the bridge.
+
+          As a part of the Feature Oriented Customizer (FOCUS) tool being
+          developed in my research, we are trying to specialize frameworks
+          when the concrete implementation type is known a priori. FOCUS
+          provides an XML based transformation engine, where the
+          specialization transformations are captured in XML file and a
+          weaver specializes the code.
+
+          To help in this transformation process, this commit adds markers
+          within the source code. These markers are added as special
+          comments. For example, //@@
+          REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK represents a hook
+          where forward declarations and include files are added by the
+          weaver. As these markers are comments therefore should not
+          affect normal applications in *any* manner. Additionally,
+          applications that use multiple reactor implementations not be
+          affected/do not need any change. Currently, these
+          specializations are targeted for TAO middleware, where
+          applications know the target reactor a priori and want to
+          leverage the specialization to improve performance.
+
 Sun Aug 28 14:13:25 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * ace/Object_Manager.cpp:
