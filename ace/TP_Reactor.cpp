@@ -172,6 +172,10 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
                            guard);
 }
 
+/*
+ * Hook to specialize the register_handler method.
+ */
+//@@ REACTOR_SPL_COMMENT_HOOK_START
 int
 ACE_TP_Reactor::register_handler (int,
                                   ACE_Event_Handler *,
@@ -181,6 +185,7 @@ ACE_TP_Reactor::register_handler (int,
 {
   ACE_NOTSUP_RETURN (-1);
 }
+//@@ REACTOR_SPL_COMMENT_HOOK_END
 
 int
 ACE_TP_Reactor::register_handler (const ACE_Sig_Set &,

@@ -21,9 +21,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+//@@ TAO_REACTOR_SPL_COMMENT_HOOK_START
 typedef ACE_Reactor_Token_T<ACE_SELECT_TOKEN> ACE_Select_Reactor_Token;
 
 typedef ACE_Select_Reactor_T<ACE_Select_Reactor_Token> ACE_Select_Reactor;
+//@@ TAO_REACTOR_SPL_COMMENT_HOOK_END
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE == 0)
 /**

@@ -37,6 +37,13 @@ typedef int (ACE_Event_Handler::*ACE_EH_PTMF) (ACE_HANDLE);
 // Forward declaration.
 class ACE_Select_Reactor_Impl;
 
+/*
+ * Hook to specialize the Select_Reactor_Base implementation
+ * with the concrete reactor, e.g., select or tp reactor 
+ * specified at build/compilation time.
+ */
+//@@ REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
+
 /**
  * @class ACE_Select_Reactor_Handle_Set
  *
@@ -443,6 +450,13 @@ public:
   /// resumed by the  application. So return 0;
   virtual int resumable_handler (void);
 
+  /*
+   * Hook to add concrete methods required to specialize the 
+   * implementation with concrete methods required for the concrete
+   * reactor implementation, for example, select, tp reactors.
+   */
+  //@@ REACTOR_SPL_PUBLIC_METHODS_ADD_HOOK
+
 protected:
   /// Allow manipulation of the <wait_set_> mask and <ready_set_> mask.
   virtual int bit_ops (ACE_HANDLE handle,
@@ -541,6 +555,7 @@ protected:
   /// Select_Reactor's token or not.
   int supress_notify_renew (void);
   void supress_notify_renew (int sr);
+
 
 private:
   /// Determine whether we should renew Select_Reactor's token after handling
