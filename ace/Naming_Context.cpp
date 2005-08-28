@@ -11,6 +11,7 @@
 #include "ace/OS_NS_unistd.h"
 #if defined (ACE_HAS_TRACE)
 # include "ace/OS_NS_strings.h"
+# include "ace/Trace.h"
 #endif /* ACE_HAS_TRACE */
 
 ACE_RCSID(ace, Naming_Context, "$Id$")

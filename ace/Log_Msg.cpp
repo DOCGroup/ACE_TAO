@@ -29,6 +29,10 @@
 # include "ace/streams.h"
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
+#if defined (ACE_HAS_TRACE)
+# include "ace/Trace.h"
+#endif /* ACE_HAS_TRACE */
+
 #include "ace/Log_Msg.h"
 #include "ace/Log_Msg_Callback.h"
 #include "ace/Log_Msg_IPC.h"
