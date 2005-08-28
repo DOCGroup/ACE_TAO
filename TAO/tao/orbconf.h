@@ -36,7 +36,7 @@
 #endif /* TAO_REACTOR */
 
 #if !defined (TAO_NULL_LOCK_REACTOR)
-#define TAO_NULL_LOCK_REACTOR ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >
+#define TAO_NULL_LOCK_REACTOR ACE_Select_Reactor_T< ACE_Reactor_Token_T<ACE_Noop_Token> >
 #endif /* TAO_NULL_LOCK_REACTOR */
 
 // Define this to modify the default mutex type used throughout TAO.
