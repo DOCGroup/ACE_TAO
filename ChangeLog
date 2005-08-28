@@ -1,3 +1,13 @@
+Sun Aug 28 14:13:25 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * ace/Object_Manager.cpp:
+        * ace/Naming_Context.cpp:
+        * ace/Log_Msg.cpp:
+
+          When ACE_HAS_TRACE flag is defined, the aforementioned files did
+          not include the Trace.h include. This commit fixes the
+          resulting compilation problems.
+
 Fri Aug 26 18:01:31 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/Select_Reactor.cpp:

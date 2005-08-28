@@ -18,6 +18,10 @@
 #include "ace/Atomic_Op.h"
 #include "ace/OS_NS_sys_time.h"
 
+#if defined (ACE_HAS_TRACE)
+#include "ace/Trace.h"
+#endif /* ACE_HAS_TRACE */
+
 #if !defined (__ACE_INLINE__)
 # include "ace/Object_Manager.inl"
 #endif /* __ACE_INLINE__ */
