@@ -23,6 +23,7 @@ Atomic_Op_Test
 Auto_Event_Test
 Auto_IncDec_Test
 Barrier_Test
+Based_Pointer_Test
 Basic_Types_Test
 Bound_Ptr_Test
 Buffer_Stream_Test

@@ -75,6 +75,9 @@ private:
 typedef ACE_Singleton<ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX>
         ACE_BASED_POINTER_REPOSITORY;
 
+/// Declare a process wide singleton
+ACE_SINGLETON_DECLARE(ACE_Singleton, ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX)
+
 #include /**/ "ace/post.h"
 
 #endif /* ACE_BASED_POINTER_REPOSITORY_H */
