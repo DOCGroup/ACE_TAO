@@ -29,6 +29,12 @@ TAO_UIOP_Transport::TAO_UIOP_Transport (TAO_UIOP_Connection_Handler *handler,
   , connection_handler_ (handler)
   , messaging_object_ (0)
 {
+
+/*
+ * Hook to customize the messaging object when the concrete messaging
+ * object is known a priori. In this case, the flag is ignored.
+ */
+//@@ MESSAGING_SPL_COMMENT_HOOK_START
   if (flag)
     {
       // Use the lite version of the protocol
@@ -41,6 +47,7 @@ TAO_UIOP_Transport::TAO_UIOP_Transport (TAO_UIOP_Connection_Handler *handler,
       ACE_NEW (this->messaging_object_,
                TAO_GIOP_Message_Base (orb_core));
     }
+//@@ MESSAGING_SPL_COMMENT_HOOK_END
 }
 
 TAO_UIOP_Transport::~TAO_UIOP_Transport (void)

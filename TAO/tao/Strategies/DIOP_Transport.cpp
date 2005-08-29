@@ -32,6 +32,12 @@ TAO_DIOP_Transport::TAO_DIOP_Transport (TAO_DIOP_Connection_Handler *handler,
   , connection_handler_ (handler)
   , messaging_object_ (0)
 {
+/*
+ * Hook to customize the messaging object when the concrete messaging
+ * object is known a priori. In this case, the flag is ignored.
+ */
+//@@ MESSAGING_SPL_COMMENT_HOOK_START
+
   // @@ Michael: Set the input CDR size to ACE_MAX_DGRAM_SIZE so that
   //             we read the whole UDP packet on a single read.
   if (flag)
@@ -48,6 +54,9 @@ TAO_DIOP_Transport::TAO_DIOP_Transport (TAO_DIOP_Connection_Handler *handler,
                TAO_GIOP_Message_Base (orb_core,
                                       ACE_MAX_DGRAM_SIZE));
     }
+
+//@@ MESSAGING_SPL_COMMENT_HOOK_END
+
 }
 
 TAO_DIOP_Transport::~TAO_DIOP_Transport (void)
