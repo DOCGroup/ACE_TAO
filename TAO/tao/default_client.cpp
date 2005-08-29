@@ -25,11 +25,11 @@ ACE_RCSID (tao,
 
 TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
   : profile_lock_type_ (TAO_THREAD_LOCK)
-  , rd_table_size_ (TAO_RD_TABLE_SIZE)
-  , muxed_strategy_lock_type_ (TAO_THREAD_LOCK)
   , transport_mux_strategy_ (TAO_MUXED_TMS)
   , wait_strategy_ (TAO_WAIT_ON_LEADER_FOLLOWER)
   , connect_strategy_ (TAO_LEADER_FOLLOWER_CONNECT)
+  , rd_table_size_ (TAO_RD_TABLE_SIZE)
+  , muxed_strategy_lock_type_ (TAO_THREAD_LOCK)
   , use_cleanup_options_ (true)
 {
   // Use single thread client connection handler
