@@ -95,9 +95,10 @@ int singleton_test (void)
 
     void* foo = dll.symbol (ACE_TEXT ("get_based_pointer_repository_instance"));
 
-    // Cast the void* to function* .
+    // Cast the void* to function* with a long as intermediate.
+    ptrdiff_t tmp = reinterpret_cast<ptrdiff_t> (foo);
     Get_Bp_Repository_Inst get_bp_repository_inst =
-       reinterpret_cast<Get_Bp_Repository_Inst> (foo);
+       reinterpret_cast<Get_Bp_Repository_Inst> (tmp);
     if (get_bp_repository_inst == 0)
        ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
