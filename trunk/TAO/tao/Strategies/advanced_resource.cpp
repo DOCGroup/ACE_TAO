@@ -630,6 +630,11 @@ ACE_Reactor_Impl *
 TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
 {
   ACE_Reactor_Impl *impl = 0;
+
+  /*
+   * Hook for specializing the Reactor implementation in TAO.
+   */
+//@@ TAO_ADVANCED_RESOURCE_REACTOR_SPL_COMMENT_HOOK_START
   switch (this->reactor_type_)
     {
     case TAO_REACTOR_SELECT_MT:
@@ -675,6 +680,8 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
                       0);
       break;
     }
+
+//@@ TAO_ADVANCED_RESOURCE_REACTOR_SPL_COMMENT_HOOK_END
 
   return impl;
 }
@@ -882,4 +889,3 @@ ACE_STATIC_SVC_DEFINE (TAO_Advanced_Resource_Factory,
 ACE_FACTORY_DEFINE (TAO_Strategies, TAO_Advanced_Resource_Factory)
 
 // ****************************************************************
-
