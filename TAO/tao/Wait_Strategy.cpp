@@ -29,3 +29,8 @@ TAO_Wait_Strategy::sending_request (TAO_ORB_Core * /* orb_core */,
 {
   return 0;
 }
+
+/*
+ * Hook to specialize the Wait Strategy
+ */
+//@@ TAO_WAIT_STRATEGY_SPL_ADD_HOOK

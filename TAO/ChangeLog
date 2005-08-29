@@ -1,3 +1,11 @@
+Mon Aug 29 18:45:49 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * tao/Wait_On_Read.cpp:
+        * tao/Wait_Strategy.cpp:
+
+          Added makers that aid in specializing the wait strategy
+          implementation in TAO.
+
 Mon Aug 29 14:08:42 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * tao/GIOP_Message_Base.h:
