@@ -1,3 +1,11 @@
+Mon Aug 29 17:26:49 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/Reactor_Token_T.h: Set the default queueing policy to
+	  ACE_Token::FIFO, instead of ACE_TOKEN_TYPE::FIFO to work around
+	  MSVC 6's inability to deal with the definition inside a
+	  template class argument. This hack can be removed after
+	  ACE 5.5 is released.
+
 Mon Aug 29 19:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Based_Pointer_Test.cpp:

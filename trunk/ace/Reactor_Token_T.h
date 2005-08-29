@@ -53,9 +53,11 @@ template <class ACE_TOKEN_TYPE>
 class ACE_Reactor_Token_T : public ACE_TOKEN_TYPE
 {
 public:
+  // *** After ACE 5.5.1, change ACE_Token::FIFO to ACE_TOKEN_TYPE::FIFO.
+  // **** This is only like this to work around MSVC 6 problems.
   ACE_Reactor_Token_T (ACE_Reactor_Impl &r,
-		       int s_queue = ACE_TOKEN_TYPE::FIFO);
-  ACE_Reactor_Token_T (int s_queue = ACE_TOKEN_TYPE::FIFO);
+		       int s_queue = ACE_Token::FIFO);
+  ACE_Reactor_Token_T (int s_queue = ACE_Token::FIFO);
   virtual ~ACE_Reactor_Token_T (void);
 
   /// Called just before a token waiter goes to sleep.
