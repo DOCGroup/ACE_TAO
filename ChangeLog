@@ -1,3 +1,20 @@
+Mon Aug 29 09:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Based_Pointer_Repository.h:
+          Export the based pointer repository from the dll as singleton.
+          Fixes bugzilla bug 1919.
+
+        * tests/Based_Pointer_Test.cpp:
+        * tests/Based_Pointer_Test_Lib.cpp:
+          New test for bugzilla bug 1919. Thanks to Steve Williams
+          <steve at telxio dot com> for creating this test
+
+        * tests/run_test.lst:
+          Added Based_Pointer_Test
+
+        * tests/tests.mpc:
+          Added Based_Pointer_Test
+
 Sun Aug 28 14:25:07 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * ace/Reactor.h:

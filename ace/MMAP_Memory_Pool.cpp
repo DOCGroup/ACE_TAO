@@ -348,6 +348,12 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
                            ACE_LIB_TEXT ("MMAP_Memory_Pool::init_acquire, EEXIST")),
                           0);
 
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
+      // Update the mapped segment information
+      ACE_BASED_POINTER_REPOSITORY::instance ()->bind (this->mmap_.addr(),
+                                                       this->mmap_.size());
+#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
+
       return this->mmap_.addr ();
     }
   else
