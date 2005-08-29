@@ -48,6 +48,17 @@ project(DLL Test Lib) : acelib {
   }
 }
 
+project(Based Pointer Test Lib) : acelib {
+  sharedname   = Based_Pointer_Test
+  dynamicflags = ACE_BUILD_SVC_DLL
+
+  Source_Files {
+    Based_Pointer_Test_Lib.cpp
+  }
+  Resource_Files {
+  }
+}
+
 project(Service Config DLL) : acelib {
   sharedname   = Service_Config_DLL
   dynamicflags = SERVICE_CONFIG_DLL_BUILD_DLL
@@ -1193,5 +1204,12 @@ project(QtReactor Test) : acetest, ace_qtreactor {
   Source_Files {
     QtReactor_Test_moc.cpp
     QtReactor_Test.cpp
+  }
+}
+
+project(Based Pointer Test) : acetest {
+  exename = Based_Pointer_Test
+  Source_Files {
+    Based_Pointer_Test.cpp
   }
 }
