@@ -103,11 +103,10 @@ Server_i::create_server (void)
       CORBA::Object_var server_ref =
         this->orb_manager_.child_poa ()->id_to_reference (id.in ()
                                                           ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       this->time_service_server_ = CosTime::TimeService::_narrow (server_ref.in ()
                                                                   ACE_ENV_ARG_PARAMETER);
-
-
       ACE_TRY_CHECK;
 
       // All this !! just to register a servant with the child poa.
@@ -118,6 +117,7 @@ Server_i::create_server (void)
       CORBA::String_var objref_server =
         this->orb_->object_to_string (server_ref.in ()
                                       ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       // Print the server IOR on the console.
       ACE_DEBUG ((LM_DEBUG,
@@ -163,7 +163,7 @@ Server_i::register_server (void)
       ACE_DECLARE_NEW_CORBA_ENV;
       ACE_TRY_EX(bind_new_context)
         {
-          CosNaming::NamingContext_var server_context = 
+          CosNaming::NamingContext_var server_context =
 	    this->naming_client_->bind_new_context(server_context_name);
           ACE_TRY_CHECK_EX(bind_new_context);
         }
@@ -172,7 +172,7 @@ Server_i::register_server (void)
 	  // OK, naming context already exists.
 	}
       ACE_ENDTRY;
-     
+
       char host_name[MAXHOSTNAMELEN];
       char server_mc_name[MAXHOSTNAMELEN];
       ACE_OS::hostname (host_name,MAXHOSTNAMELEN);
@@ -224,15 +224,18 @@ Server_i::init (int argc,
       // Call the init of <TAO_ORB_Manager> to initialize the ORB and
       // create a child POA under the root POA.
 
-      if (this->orb_manager_.init_child_poa (command.get_argc(),
-                                             command.get_ASCII_argv(),
-                                             "time_server"
-                                             ACE_ENV_ARG_PARAMETER) == -1)
+      int retval = this->orb_manager_.init_child_poa (
+                      command.get_argc(),
+                      command.get_ASCII_argv(),
+                      "time_server"
+                      ACE_ENV_ARG_PARAMETER)
+      ACE_TRY_CHECK;
+
+      if (retval == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_LIB_TEXT("%p\n"),
                            ACE_LIB_TEXT("init_child_poa")),
                            -1);
-      ACE_TRY_CHECK;
 
       // Activate the POA Manager.
       this->orb_manager_.activate_poa_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -248,8 +251,6 @@ Server_i::init (int argc,
 
       // Initialize Naming Service.
       this->init_naming_service ();
-
-      ACE_TRY_CHECK;
 
       // Create the server object.
       this->create_server ();
