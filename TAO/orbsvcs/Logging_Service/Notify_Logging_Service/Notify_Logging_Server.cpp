@@ -55,7 +55,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_CHECK;
       if (rc == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Failed to start the Telecom Log Service.\n"),
+                           "Failed to initialize the Telecom Log Service.\n"),
                           1);
 
       rc = service.run (ACE_ENV_SINGLE_ARG_PARAMETER);
