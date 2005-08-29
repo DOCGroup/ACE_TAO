@@ -1,3 +1,14 @@
+Mon Aug 29 14:08:42 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * tao/GIOP_Message_Base.h:
+        * tao/Strategies/UIOP_Transport.cpp:
+        * tao/Strategies/DIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+
+          Added markers that aid in specializing TAO's pluggable messaging
+          implementation with either GIOP or GIOP_Lite when the type of
+          messaging object is known a priori.
+
 Mon Aug 29 12:08:16 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Server.cpp:
