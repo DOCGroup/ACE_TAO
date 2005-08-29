@@ -78,9 +78,9 @@ int singleton_test (void)
     // with the ACE_Object_manager will no longer be valid,
     // at exit time if the library is unloaded. Override
     // the default close on destruct.
-    int retval = dll.open (ACE_TEXT (OBJ_PREFIX)
+    int retval = dll.open (OBJ_PREFIX
                            ACE_TEXT ("Based_Pointer_Test")
-                           ACE_TEXT (OBJ_SUFFIX),
+                           OBJ_SUFFIX,
                            ACE_DEFAULT_SHLIB_MODE,
                            0);
 
@@ -130,10 +130,10 @@ mmap_map_test(void)
 
     ACE_OS::unlink("foo");
       {
-        ACE_NEW_RETURN (alloc, MMAP_Allocator ("foo", "foo"), -1);
+        ACE_NEW_RETURN (alloc, MMAP_Allocator (ACE_TEXT ("foo"), ACE+TEXT ("foo")), -1);
 
-       void* addr = alloc->base_addr();
-       if(addr == 0)
+        void* addr = alloc->base_addr();
+        if(addr == 0)
          {
            ACE_ERROR((LM_ERROR,
                ACE_TEXT ("Unable to get base to MMAP Memory Pool\n")));
