@@ -249,7 +249,20 @@ protected:
 
   /// Buffer where the request is placed.
   TAO_OutputCDR out_stream_;
+
+  /*
+   * Hook in the GIOP_Message class to add data member. This hook used in
+   * speeding up the dispatch within TAO.
+   */
+//@@ GIOP_MESSAGE_BASE_DATA_MEMBER_ADD_HOOK
+
 };
+
+/*
+ * Hook to specialize the Messaging implementation in TAO with either
+ * GIOP or GIOP_Lite protocol.
+ */
+//@@ MESSAGING_SPL_EXTERN_ADD_HOOK
 
 #include /**/ "ace/post.h"
 #endif /*TAO_GIOP_MESSAGE_BASE_H*/
