@@ -1,3 +1,35 @@
+Mon Aug 29 09:03:55 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * tao/default_resource.cpp:
+        * tao/Strategies/advanced_resource.cpp:
+
+          Added markers within the code to specialize TAO components with
+          concrete implementations. This commit relates to the commit on
+          Sun Aug 28 14:25:07 2005 Arvind S. Krishna
+          <arvindk@dre.vanderbilt.edu> on specializing middleware
+          components. The motivation here is added for sake of clarity.
+
+          As a part of the Feature Oriented Customizer (FOCUS) tool being
+          developed in my research, we are trying to specialize framework
+          implementation and strategies within middleware with concrete
+          counterparts when their implementation/type is known a priori.
+          FOCUS provides an XML based transformation engine, where the
+          specialization transformations are captured in XML file and a
+          weaver specializes the code.
+
+          To help in this transformation process, this commit adds markers
+          within the source code. These markers are added as special
+          comments. For example, //@@
+          REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK represents a hook
+          where forward declarations and include files are added by the
+          weaver. As these markers are comments therefore should not
+          affect normal applications in *any* manner. Additionally,
+          applications that use multiple reactor implementations not be
+          affected/do not need any change. Currently, these
+          specializations are targeted for TAO middleware, where
+          applications know the target reactor a priori and want to
+          leverage the specialization to improve performance.
+
 Mon Aug 29 13:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Time_Service/Server_i.cpp:
