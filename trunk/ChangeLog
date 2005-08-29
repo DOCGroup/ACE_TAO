@@ -1,3 +1,14 @@
+Mon Aug 29 09:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/MMAP_Memory_Pool.cpp:
+          Fixed bugzilla bug 2218, when an ACE_MMAP_Memory_Pool memory
+          segment base address is moved due to a remapping operation,
+          the ACE_Based_Pointer_Repository is updated with the new
+          base address, but the old mapping was not removed.
+
+          Thanks to Steve Williams <steve at telxio dot com> for reporting
+          this and supplying the fix and regression test below.
+
 Mon Aug 29 09:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/MMAP_Memory_Pool.cpp:

@@ -231,6 +231,9 @@ int
 ACE_MMAP_Memory_Pool::map_file (off_t map_size)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::map_file");
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
+    void* obase_addr = this->base_addr_;
+#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
   // Unmap the existing mapping.
   this->mmap_.unmap ();
@@ -268,6 +271,8 @@ ACE_MMAP_Memory_Pool::map_file (off_t map_size)
     {
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
       this->base_addr_ = this->mmap_.addr ();
+      if(obase_addr && this->base_addr_ != obase_addr)
+         ACE_BASED_POINTER_REPOSITORY::instance ()->unbind (obase_addr);
       ACE_BASED_POINTER_REPOSITORY::instance ()->bind (this->base_addr_,
                                                        map_size);
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
