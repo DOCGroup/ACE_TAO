@@ -1,3 +1,8 @@
+Mon Aug 29 10:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/nmake.features:
+          New features file for the nmake project type
+
 Mon Aug 29 09:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/MMAP_Memory_Pool.cpp:
