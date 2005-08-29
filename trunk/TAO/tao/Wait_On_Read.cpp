@@ -24,6 +24,14 @@ TAO_Wait_On_Read::~TAO_Wait_On_Read (void)
 {
 }
 
+/*
+ * Hook to specialize the wait strategy when the concrete strategy is
+ * a simple "rw" strategy. Add all public/protected/private methods
+ * within the *COPY* hooks. 
+ */
+
+//@@ WAIT_STRATEGY_SPL_COPY_HOOK_START
+
 // Wait on the read operation.
 int
 TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
@@ -122,3 +130,8 @@ TAO_Wait_On_Read::can_process_upcalls (void) const
 {
   return true;
 }
+
+//@@ WAIT_STRATEGY_SPL_COPY_HOOK_END
+/*
+ * End copy hook. 
+ */
