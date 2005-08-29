@@ -1,3 +1,13 @@
+Mon Aug 29 09:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/MMAP_Memory_Pool.cpp:
+          Fixed bugzilla bug 2216, when an ACE_MMAP_Memory_Pool is created
+          using an existing backing store, the ACE_Based_Pointer_repository
+          was not updated with the mapped segment information.
+
+          Thanks to Steve Williams <steve at telxio dot com> for reporting
+          this and supplying the fix and regression test below.
+
 Mon Aug 29 09:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Based_Pointer_Repository.h:
