@@ -1,3 +1,12 @@
+Mon Aug 29 12:08:16 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Server.cpp:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Server.cpp:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Server.cpp:
+
+	  Changed to clarify error message output when service
+	  initialization fails.
+
 Mon Aug 29 09:03:55 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * tao/default_resource.cpp:
