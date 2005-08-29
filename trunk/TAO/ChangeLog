@@ -1,3 +1,8 @@
+Mon Aug 29 13:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/LoadBalancer/LoadManager.cpp:
+          Fixed emulated exception fuzz errors
+
 Mon Aug 29 13:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/default_client.cpp:
