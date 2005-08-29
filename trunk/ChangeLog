@@ -1,3 +1,8 @@
+Mon Aug 29 14:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Based_Pointer_Test.cpp:
+          Fixed GCC compile error
+
 Mon Aug 29 14:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Object_Manager.cpp:
