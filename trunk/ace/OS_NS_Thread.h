@@ -759,19 +759,19 @@ public:
   ACE_Thread_ID (const ACE_Thread_ID &rhs);
 
   /// Get the thread id.
-  ACE_thread_t id (void);
+  ACE_thread_t id (void) const;
 
   /// Set the thread id.
   void id (ACE_thread_t);
 
   /// Get the thread handle.
-  ACE_hthread_t handle (void);
+  ACE_hthread_t handle (void) const;
 
   /// Set the thread handle.
   void handle (ACE_hthread_t);
 
   // Create a string representation of the thread id.
-  void to_string (char *thr_string);
+  void to_string (char *thr_string) const;
 
   /// Equality operator.
   bool operator== (const ACE_Thread_ID &) const;
