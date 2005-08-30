@@ -674,6 +674,35 @@ is set. The default is true. </td>
           This options is enabled by default.
         </td>
       </tr>
+      <tr>
+        <td><code>-ORBPreferIPV6Interfaces</code> <em>Yes/No</em></td>
+        <td><a name="-ORBPreferIPV6Interfaces"></a>
+          This option directs the default endpoint selector for client connections
+          to first attempt to connect any IIOP endpoints from a provided IOR specifying
+          IPv6 interfaces.
+          Only when none of these can be found or sucessfully connected IPv4
+          interfaces will be tried.
+          <p>
+          This option is only available for IPv6 enabled builds of TAO (ACE_HAS_IPV6).
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBConnectIPV6Only</code> <em>Yes/No</em></td>
+        <td><a name="-ORBConnectIPV6Only"></a>
+          This option directs a server ORB to:<br><p>
+          <li>allow only IPv6 interfaces as listening endpoints</li>
+          <li>encode only IPv6 interfaces in the IOR profile</li>
+          <li>prevent (depending on availability of IPV6_V6ONLY socket option)
+          or block IPv6 to IPv4 connections</li>
+          <p>
+          This option directs the default endpoint selector for client connections
+          to only attempt to connect any IIOP endpoints from a provided IOR specifying
+          IPv6 interfaces.
+          Any available IPv4 interfaces will be ignored.
+          <p>
+          This option is only available for IPv6 enabled builds of TAO (ACE_HAS_IPV6).
+        </td>
+      </tr>
     </tbody>
   </table>
   </p>
