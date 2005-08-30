@@ -291,6 +291,20 @@ public:
   /// order.
   ACE_UINT32 get_ip_address (void) const;
 
+  /// Return @c true if the IP address is INADDR_ANY or IN6ADDR_ANY.
+  bool is_any (void) const;
+
+  /// Return @c true if the IP address is IPv4/IPv6 loopback address.
+  bool is_loopback (void) const;
+
+#if defined (ACE_HAS_IPV6)
+  /// Return @c true if the IP address is IPv6 linklocal address.
+  bool is_linklocal (void) const;
+
+  /// Return @c true if the IP address is IPv4 mapped IPv6 address.
+  bool is_ipv4_mapped_ipv6 (void) const;
+#endif /* ACE_HAS_IPV6 */
+
   /**
    * Returns @c true if @c this is less than @a rhs.  In this context,
    * "less than" is defined in terms of IP address and TCP port

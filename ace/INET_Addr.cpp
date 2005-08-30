@@ -154,6 +154,25 @@ ACE_INET_Addr::string_to_addr (const char s[])
                         -1);
   // We use strrchr because of IPv6 addresses.
   char *port_p = ACE_OS::strrchr (ip_addr, ':');
+#if defined (ACE_HAS_IPV6)
+  // Check for extended IPv6 format : '[' <ipv6 address> ']' ':' <port>
+  if (ip_addr[0] == '[')
+    {
+      // find closing bracket
+      char *cp_pos = ACE_OS::strchr (ip_addr, ']');
+      // check for port separator after closing bracket
+      // if not found leave it, error will come later
+      if (cp_pos)
+        {
+          *cp_pos = '\0'; // blank out ']'
+          ++ip_addr; // skip over '['
+          if (cp_pos[1] == ':')
+            port_p = cp_pos + 1;
+          else
+            port_p = cp_pos; // leads to error on missing port
+        }
+    }
+#endif /* ACE_HAS_IPV6 */
 
   if (port_p == 0) // Assume it's a port number.
     {
@@ -950,13 +969,19 @@ ACE_INET_Addr::get_host_addr (char *dst, int size) const
 #if defined (ACE_HAS_IPV6)
   if (this->get_type () == AF_INET6)
     {
-      if (IN6_IS_ADDR_V4MAPPED (&this->inet_addr_.in6_.sin6_addr))
-        {
-          ACE_UINT32 addr;
-          addr = this->get_ip_address();
-          addr = ACE_HTONL (addr);
-          return ACE_OS::inet_ntop (AF_INET, &addr, dst, size);
-        }
+      // mcorino@remedy.nl - Aug-26, 2005
+      // I don't think this should be done because it results in a decimal address
+      // representation which is not distinguishable from the IPv4 form which makes
+      // it impossible to resolve back to an IPv6 INET_Addr without prior knowledge
+      // that this was such an address to begin with.
+
+      //if (IN6_IS_ADDR_V4MAPPED (&this->inet_addr_.in6_.sin6_addr))
+      //{
+      //  ACE_UINT32 addr;
+      //  addr = this->get_ip_address();
+      //  addr = ACE_HTONL (addr);
+      //  return ACE_OS::inet_ntop (AF_INET, &addr, dst, size);
+      //}
 
 #  if defined (ACE_WIN32)
       if (0 == ::getnameinfo (reinterpret_cast<const sockaddr*> (&this->inet_addr_.in6_),
@@ -1019,7 +1044,7 @@ ACE_INET_Addr::get_host_addr (void) const
 #if defined (ACE_HAS_IPV6)
   static char buf[INET6_ADDRSTRLEN];
   return this->get_host_addr (buf, INET6_ADDRSTRLEN);
-#else
+#else /* ACE_HAS_IPV6 */
 #  if defined (VXWORKS)
   // It would be nice to be able to encapsulate this into
   // ACE_OS::inet_ntoa(), but that would lead to either inefficiencies
@@ -1032,7 +1057,7 @@ ACE_INET_Addr::get_host_addr (void) const
 #  else /* VXWORKS */
   return ACE_OS::inet_ntoa (this->inet_addr_.in4_.sin_addr);
 #  endif /* !VXWORKS */
-#endif
+#endif /* !ACE_HAS_IPV6 */
 }
 
 // Return the 4-byte IP address, converting it into host byte order.
