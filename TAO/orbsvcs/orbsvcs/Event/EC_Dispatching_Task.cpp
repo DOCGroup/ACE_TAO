@@ -16,7 +16,7 @@ ACE_RCSID (Event,
            EC_Dispatching,
            "$Id$")
 
-TAO_EC_Simple_Queue_Full_Action::TAO_EC_Simple_Queue_Full_Action()
+TAO_EC_Simple_Queue_Full_Action::TAO_EC_Simple_Queue_Full_Action (void)
   : queue_full_action_return_value_ (WAIT_TO_EMPTY)
 {
 }
@@ -66,8 +66,8 @@ TAO_EC_Simple_Queue_Full_Action::fini (void)
 }
 
 int
-TAO_EC_Simple_Queue_Full_Action::queue_full_action (TAO_EC_Dispatching_Task */*task*/,
-                                                    TAO_EC_ProxyPushSupplier */*proxy*/,
+TAO_EC_Simple_Queue_Full_Action::queue_full_action (TAO_EC_Dispatching_Task * /*task*/,
+                                                    TAO_EC_ProxyPushSupplier * /*proxy*/,
                                                     RtecEventComm::PushConsumer_ptr /*consumer*/,
                                                     RtecEventComm::EventSet& /*event*/
                                                     ACE_ENV_ARG_DECL_NOT_USED)
