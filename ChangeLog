@@ -1,3 +1,18 @@
+Tue Aug 30 12:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Array_Map.h:
+          The 64bit version of the Intel C++ compiler can only work together
+          with the latest Platform SDK (June 2005). This SDK ships with an
+          old version of the system header files, this is not the same as
+          shipped with Visual C++ 2003. This SDK has the old STL implementation
+          as shipped with VC6, so we need the workaround for the VC6 compiler
+          also with the latest SDK. It seems newer system header files define
+          _CPPLIB_VER, when this is not defined we have old header file, so
+          made another check, when _MSC_VER is defined, but not _CPPLIB_VER
+          we assume older header files and use the vc6 way of reverse
+          iterator usage. Hopefully Microsoft ships a platform SDK soon which
+          has updated header files
+
 Tue Aug 30 12:22:17 2005  Simon McQueen  <sm@prismtech.com>
 
         * apps/JAWS2/JAWS/IO.cpp:
