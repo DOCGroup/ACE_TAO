@@ -70,6 +70,11 @@ endif
 ifeq (8.1,$(findstring 8.1,$(CXX_VERSION)))
   CFLAGS += -wd1476,1505,1572 -no-gcc
 endif
+ifeq (9.0,$(findstring 9.0,$(CXX_VERSION)))
+  ifeq ($(inline),0)
+    CPPFLAGS += -fno-inline
+  endif
+endif
 
 CFLAGS  += -w1
 ifeq ($(threads),1)
