@@ -308,7 +308,7 @@ namespace CIAO
     }
 
     size_t ImplementationArtifactDescription::
-    count_location(void)
+    count_location(void) const
     {
       return location_.size ();
     }
@@ -365,7 +365,7 @@ namespace CIAO
     }
 
     size_t ImplementationArtifactDescription::
-    count_dependsOn(void)
+    count_dependsOn(void) const
     {
       return dependsOn_.size ();
     }

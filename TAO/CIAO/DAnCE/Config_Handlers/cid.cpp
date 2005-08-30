@@ -555,7 +555,7 @@ namespace CIAO
     }
 
     size_t ComponentAssemblyDescription::
-    count_instance(void)
+    count_instance(void) const
     {
       return instance_.size ();
     }
@@ -612,7 +612,7 @@ namespace CIAO
     }
 
     size_t ComponentAssemblyDescription::
-    count_connection(void)
+    count_connection(void) const
     {
       return connection_.size ();
     }
@@ -791,7 +791,7 @@ namespace CIAO
     }
 
     size_t MonolithicImplementationDescription::
-    count_primaryArtifact(void)
+    count_primaryArtifact(void) const
     {
       return primaryArtifact_.size ();
     }

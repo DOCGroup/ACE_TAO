@@ -91,7 +91,7 @@ namespace CIAO
       supportedType_const_iterator begin_supportedType () const;
       supportedType_const_iterator end_supportedType () const;
       void add_supportedType (::XMLSchema::string< ACE_TCHAR > const& );
-      size_t count_supportedType (void);
+      size_t count_supportedType (void) const;
 
       protected:
       ::std::vector< ::XMLSchema::string< ACE_TCHAR > > supportedType_;
@@ -106,7 +106,7 @@ namespace CIAO
       idlFile_const_iterator begin_idlFile () const;
       idlFile_const_iterator end_idlFile () const;
       void add_idlFile (::XMLSchema::string< ACE_TCHAR > const& );
-      size_t count_idlFile (void);
+      size_t count_idlFile (void) const;
 
       protected:
       ::std::vector< ::XMLSchema::string< ACE_TCHAR > > idlFile_;
@@ -121,7 +121,7 @@ namespace CIAO
       configProperty_const_iterator begin_configProperty () const;
       configProperty_const_iterator end_configProperty () const;
       void add_configProperty (::CIAO::Config_Handlers::Property const& );
-      size_t count_configProperty (void);
+      size_t count_configProperty (void) const;
 
       protected:
       ::std::vector< ::CIAO::Config_Handlers::Property > configProperty_;
@@ -136,7 +136,7 @@ namespace CIAO
       port_const_iterator begin_port () const;
       port_const_iterator end_port () const;
       void add_port (::CIAO::Config_Handlers::ComponentPortDescription const& );
-      size_t count_port (void);
+      size_t count_port (void) const;
 
       protected:
       ::std::vector< ::CIAO::Config_Handlers::ComponentPortDescription > port_;
@@ -151,7 +151,7 @@ namespace CIAO
       property_const_iterator begin_property () const;
       property_const_iterator end_property () const;
       void add_property (::CIAO::Config_Handlers::ComponentPropertyDescription const& );
-      size_t count_property (void);
+      size_t count_property (void) const;
 
       protected:
       ::std::vector< ::CIAO::Config_Handlers::ComponentPropertyDescription > property_;
@@ -166,7 +166,7 @@ namespace CIAO
       infoProperty_const_iterator begin_infoProperty () const;
       infoProperty_const_iterator end_infoProperty () const;
       void add_infoProperty (::CIAO::Config_Handlers::Property const& );
-      size_t count_infoProperty (void);
+      size_t count_infoProperty (void) const;
 
       protected:
       ::std::vector< ::CIAO::Config_Handlers::Property > infoProperty_;
@@ -478,72 +478,324 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::ComponentInterfaceDescription Type;
         ComponentInterfaceDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
+        #ifdef __BORLANDC__
+        virtual void 
+        traverse (Type &o)
+        {
+
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        label (Type &o)
+        {
+
+          this->label (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         label (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        UUID (Type &o)
+        {
+
+          this->UUID (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         UUID (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        specificType (Type &o)
+        {
+
+          this->specificType (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         specificType (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        supportedType_pre (Type &o)
+        {
+
+          this->supportedType_pre (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         supportedType_pre (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        supportedType_next (Type &o)
+        {
+
+          this->supportedType_next (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         supportedType_next (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        supportedType_post (Type &o)
+        {
+
+          this->supportedType_post (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         supportedType_post (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        idlFile_pre (Type &o)
+        {
+
+          this->idlFile_pre (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         idlFile_pre (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        idlFile_next (Type &o)
+        {
+
+          this->idlFile_next (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         idlFile_next (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        idlFile_post (Type &o)
+        {
+
+          this->idlFile_post (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         idlFile_post (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        configProperty_pre (Type &o)
+        {
+
+          this->configProperty_pre (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         configProperty_pre (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        configProperty_next (Type &o)
+        {
+
+          this->configProperty_next (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         configProperty_next (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        configProperty_post (Type &o)
+        {
+
+          this->configProperty_post (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         configProperty_post (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        port_pre (Type &o)
+        {
+
+          this->port_pre (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         port_pre (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        port_next (Type &o)
+        {
+
+          this->port_next (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         port_next (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        port_post (Type &o)
+        {
+
+          this->port_post (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         port_post (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        property_pre (Type &o)
+        {
+
+          this->property_pre (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         property_pre (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        property_next (Type &o)
+        {
+
+          this->property_next (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         property_next (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        property_post (Type &o)
+        {
+
+          this->property_post (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         property_post (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        infoProperty_pre (Type &o)
+        {
+
+          this->infoProperty_pre (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         infoProperty_pre (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        infoProperty_next (Type &o)
+        {
+
+          this->infoProperty_next (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         infoProperty_next (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        infoProperty_post (Type &o)
+        {
+
+          this->infoProperty_post (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         infoProperty_post (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        contentLocation (Type &o)
+        {
+
+          this->contentLocation (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         contentLocation (Type const&);
 

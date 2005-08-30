@@ -308,7 +308,7 @@ namespace CIAO
     }
 
     size_t ComponentInterfaceDescription::
-    count_supportedType(void)
+    count_supportedType(void) const
     {
       return supportedType_.size ();
     }
@@ -365,7 +365,7 @@ namespace CIAO
     }
 
     size_t ComponentInterfaceDescription::
-    count_idlFile(void)
+    count_idlFile(void) const
     {
       return idlFile_.size ();
     }
@@ -422,7 +422,7 @@ namespace CIAO
     }
 
     size_t ComponentInterfaceDescription::
-    count_configProperty(void)
+    count_configProperty(void) const
     {
       return configProperty_.size ();
     }
@@ -479,7 +479,7 @@ namespace CIAO
     }
 
     size_t ComponentInterfaceDescription::
-    count_port(void)
+    count_port(void) const
     {
       return port_.size ();
     }
@@ -536,7 +536,7 @@ namespace CIAO
     }
 
     size_t ComponentInterfaceDescription::
-    count_property(void)
+    count_property(void) const
     {
       return property_.size ();
     }
@@ -593,7 +593,7 @@ namespace CIAO
     }
 
     size_t ComponentInterfaceDescription::
-    count_infoProperty(void)
+    count_infoProperty(void) const
     {
       return infoProperty_.size ();
     }
