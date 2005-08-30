@@ -20,10 +20,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Copy_Disabled.h"
+#include "ID_Factory.h"
 
 #include "tao/PortableServer/PortableServer.h"
-#include "ID_Factory.h"
+
+#include "ace/Copy_Disabled.h"
 
 /**
  * @class TAO_Notify_POA_Helper

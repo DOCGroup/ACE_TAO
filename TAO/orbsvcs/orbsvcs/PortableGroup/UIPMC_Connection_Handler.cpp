@@ -4,6 +4,8 @@
 
 
 #include "UIPMC_Connection_Handler.h"
+#include "UIPMC_Transport.h"
+#include "UIPMC_Endpoint.h"
 
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
@@ -16,12 +18,11 @@
 #include "tao/Base_Transport_Property.h"
 #include "tao/Resume_Handle.h"
 
-#include "UIPMC_Transport.h"
-#include "UIPMC_Endpoint.h"
 
 ACE_RCSID(PortableGroup,
-          UIPMC_Connect,
+          UIPMC_Connection_Handler,
           "$Id$")
+
 
 TAO_UIPMC_Connection_Handler::TAO_UIPMC_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_UIPMC_SVC_HANDLER (t, 0 , 0),

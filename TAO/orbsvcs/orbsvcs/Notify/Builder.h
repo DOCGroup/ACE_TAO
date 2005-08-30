@@ -20,13 +20,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/PortableServer.h"
-
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "orbsvcs/NotifyExtC.h"
 
 #include "AdminProperties.h"
 #include "Topology_Object.h"
+
+#include "tao/PortableServer/PortableServer.h"
+
 
 class TAO_Notify_EventChannelFactory;
 class TAO_Notify_EventChannel;

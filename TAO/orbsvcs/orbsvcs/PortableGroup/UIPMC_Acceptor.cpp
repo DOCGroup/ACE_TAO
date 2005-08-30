@@ -2,8 +2,8 @@
 //
 // $Id$
 
-#include "UIPMC_Acceptor.h"
 #include "UIPMC_Profile.h"
+#include "UIPMC_Acceptor.h"
 
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"

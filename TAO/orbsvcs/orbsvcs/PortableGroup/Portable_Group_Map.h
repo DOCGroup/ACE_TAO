@@ -14,18 +14,20 @@
 #define TAO_PORTABLE_GROUP_MAP_H
 
 #include /**/ "ace/pre.h"
-#include "ace/Null_Mutex.h"
+
+#include "portablegroup_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Hash_Map_Manager_T.h"
-
-#include "portablegroup_export.h"
 #include "orbsvcs/PortableGroupC.h"
 
 #include "tao/Object_KeyC.h"
+
+#include "ace/Null_Mutex.h"
+#include "ace/Hash_Map_Manager_T.h"
+
 
 class TAO_ServerRequest;
 

@@ -14,16 +14,16 @@
 #define TAO_UIPMC_TRANSPORT_H
 #include /**/ "ace/pre.h"
 
-#include "tao/Transport.h"
+#include "portablegroup_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Transport.h"
 
 #include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
-#include "portablegroup_export.h"
 
 // Forward decls.
 class TAO_UIPMC_Connection_Handler;

@@ -23,8 +23,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/Regular_POA.h"
 #include "orbsvcs/PortableGroupC.h"
+#include "tao/PortableServer/Regular_POA.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
