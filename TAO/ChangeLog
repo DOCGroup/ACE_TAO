@@ -1,3 +1,8 @@
+Tue Aug 30 14:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.h:
+          Fixed export macro
+
 Tue Aug 30 06:42:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Server.cpp:
