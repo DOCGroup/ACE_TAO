@@ -33,11 +33,7 @@
 #define _TAO_IDL_ORIG_POLICYS_CPP_
 
 
-#include "tao/AnyTypeCode/TypeCode.h"
-#include "tao/AnyTypeCode/Any.h"
-
 #include "PolicyS.h"
-
 #include "tao/PortableServer/Operation_Table_Perfect_Hash.h"
 #include "tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h"
 #include "tao/PortableServer/Upcall_Command.h"
@@ -57,6 +53,8 @@
 #include "tao/Stub.h"
 #include "tao/IFR_Client_Adapter.h"
 #include "tao/Object_T.h"
+#include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/DynamicC.h"
 #include "tao/CDR.h"
 #include "tao/operation_details.h"
 #include "tao/PortableInterceptor.h"
@@ -64,10 +62,6 @@
 #include "tao/Object_Argument_T.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Malloc_Allocator.h"
-
-#if defined (__BORLANDC__)
-#pragma option -w-rvl -w-rch -w-ccc -w-aus
-#endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:69
