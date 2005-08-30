@@ -1,3 +1,10 @@
+Tue Aug 30 06:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_icc.GNU:
+          When inlining is disabled, add -fno-inline to the compiler flags.
+          This should fix the assembler errors the Intel 9 compiler on
+          linux gives
+
 Mon Aug 29 17:26:49 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/Reactor_Token_T.h: Set the default queueing policy to
