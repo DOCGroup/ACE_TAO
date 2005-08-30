@@ -29,6 +29,8 @@ Callback_i::shutdown (CORBA::Boolean is_clean
       return;
     }
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
   ACE_DEBUG ((LM_DEBUG, "Shutdown: Performed clean shutdown\n"));
 }
 
