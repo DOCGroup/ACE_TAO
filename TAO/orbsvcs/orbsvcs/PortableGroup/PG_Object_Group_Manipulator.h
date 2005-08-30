@@ -15,13 +15,15 @@
 #define TAO_PG_OBJECT_GROUP_MANIPULATOR_H
 
 #include /**/ "ace/pre.h"
-#include "orbsvcs/PortableGroupS.h"
+
+#include "portablegroup_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroupS.h"
+
 #include "tao/IORManipulation/IORManip_Loader.h"
 
 namespace TAO

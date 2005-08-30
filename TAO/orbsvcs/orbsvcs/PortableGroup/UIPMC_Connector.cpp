@@ -2,9 +2,8 @@
 //
 // $Id$
 
+#include "UIPMC_Profile.h"
 #include "UIPMC_Connector.h"
-
-#include "ace/Connector.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
@@ -12,7 +11,7 @@
 #include "tao/Base_Transport_Property.h"
 #include "tao/Protocols_Hooks.h"
 
-#include "UIPMC_Profile.h"
+#include "ace/Connector.h"
 #include "ace/OS_NS_strings.h"
 
 ACE_RCSID (tao,

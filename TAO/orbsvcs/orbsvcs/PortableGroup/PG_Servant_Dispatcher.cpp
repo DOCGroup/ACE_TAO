@@ -1,7 +1,7 @@
 // @(#) $Id$
 
-#include "PG_Servant_Dispatcher.h"
 #include "GOA.h"
+#include "PG_Servant_Dispatcher.h"
 
 ACE_RCSID(PortableGroup,
           PG_Servant_Dispatcher,

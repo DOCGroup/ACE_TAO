@@ -1,3 +1,37 @@
+Mon Aug 29 18:39:29 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Initializer.h:
+	* orbsvcs/orbsvcs/HTIOP/htiop_endpointsC.cpp:
+	* orbsvcs/orbsvcs/Notify/Builder.h:
+	* orbsvcs/orbsvcs/Notify/POA_Helper.h:
+	* orbsvcs/orbsvcs/Notify/Properties.h:
+	* orbsvcs/orbsvcs/Notify/Timer.h:
+	* orbsvcs/orbsvcs/Notify/Timer_Reactor.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/GOA.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/GOA.h:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Manipulator.h:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Servant_Dispatcher.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Request_Dispatcher.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.h:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.h:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.h:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.h:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.h:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/ssl_endpointsC.cpp:
+	* orbsvcs/orbsvcs/Trader/Trading_Loader.h:
+
+          Reordered include directives to make sure all necessary
+          non-dependent names are parsed before the templates that use
+          them.  Addresses g++ 3.4.x or better compile-time errors.
+
 Mon Aug 29 18:45:49 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * tao/Wait_On_Read.cpp:

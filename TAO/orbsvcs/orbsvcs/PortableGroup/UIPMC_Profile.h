@@ -17,19 +17,19 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Profile.h"
+#include "portablegroup_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Object_KeyC.h"
-#include "tao/target_specification.h"
+#include "UIPMC_Endpoint.h"
 
 #include "orbsvcs/PortableGroupC.h"
 
-#include "UIPMC_Endpoint.h"
-#include "portablegroup_export.h"
+#include "tao/Object_KeyC.h"
+#include "tao/target_specification.h"
+#include "tao/Profile.h"
 
 #include "ace/SString.h"
 

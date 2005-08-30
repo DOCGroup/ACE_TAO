@@ -1,13 +1,13 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+#include "UIPMC_Profile.h"
 #include "UIPMC_Transport.h"
-
 #include "UIPMC_Connection_Handler.h"
 #include "UIPMC_Message_Block_Data_Iterator.h"
 #include "UIPMC_Acceptor.h"
-#include "UIPMC_Profile.h"
 #include "UIPMC_Wait_Never.h"
+
 #include "tao/Acceptor_Registry.h"
 #include "tao/operation_details.h"
 #include "tao/Timeprobe.h"

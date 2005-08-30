@@ -17,15 +17,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Transport_Connector.h"
+#include "portablegroup_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 #include "UIPMC_Connection_Handler.h"
-#include "portablegroup_export.h"
+
+#include "tao/Transport_Connector.h"
 #include "ace/Null_Mutex.h"
 
 // ****************************************************************

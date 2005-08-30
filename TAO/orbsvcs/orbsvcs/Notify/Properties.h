@@ -20,11 +20,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Singleton.h"
-#include "tao/ORB.h"
+#include "orbsvcs/CosNotificationC.h"
+
 #include "tao/PortableServer/PortableServer.h"
 
-#include "orbsvcs/CosNotificationC.h"
+#include "tao/TAO_Singleton.h"
+#include "tao/ORB.h"
 
 class TAO_Notify_Factory;
 class TAO_Notify_Builder;

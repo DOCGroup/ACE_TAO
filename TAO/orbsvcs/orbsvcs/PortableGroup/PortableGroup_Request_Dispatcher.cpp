@@ -2,9 +2,9 @@
 //
 // $Id$
 
+#include "UIPMC_Profile.h"
 #include "PortableGroup_Request_Dispatcher.h"
 #include "PortableGroup_Loader.h"
-#include "UIPMC_Profile.h"
 
 #include "tao/TAO_Server_Request.h"
 #include "tao/ORB_Core.h"

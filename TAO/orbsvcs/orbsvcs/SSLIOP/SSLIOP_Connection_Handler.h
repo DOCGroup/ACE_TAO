@@ -23,8 +23,8 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "SSLIOP_Transport.h"
 #include "SSLIOP_Current.h"
+#include "SSLIOP_Transport.h"
 
 #include "tao/Connection_Handler.h"
 #include "tao/IIOPC.h"
