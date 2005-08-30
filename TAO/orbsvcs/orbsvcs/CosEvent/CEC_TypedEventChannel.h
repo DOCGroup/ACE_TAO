@@ -16,13 +16,13 @@
 #define TAO_CEC_TYPEDEVENTCHANNEL_H_
 #include /**/ "ace/pre.h"
 
-#include "event_serv_export.h"
+#include "CEC_Defaults.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "CEC_Defaults.h"
+#include "event_serv_export.h"
 
 #include "orbsvcs/CosTypedEventChannelAdminS.h"
 
