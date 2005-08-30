@@ -1,8 +1,8 @@
 // $Id$
 
+#include "EC_SupplierAdmin.h"
 #include "EC_Reactive_SupplierControl.h"
 #include "EC_Event_Channel_Base.h"
-#include "EC_SupplierAdmin.h"
 #include "EC_ProxyConsumer.h"
 #include "EC_ProxySupplier.h" // @@ MSVC 6 bug
 

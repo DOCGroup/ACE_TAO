@@ -15,13 +15,12 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Objref_VarOut_T.h"
+#include "orbsvcs/CosEvent/event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosEvent/event_serv_export.h"
 #include "tao/PortableServer/PortableServer.h"
 
 class TAO_CEC_EventChannel;

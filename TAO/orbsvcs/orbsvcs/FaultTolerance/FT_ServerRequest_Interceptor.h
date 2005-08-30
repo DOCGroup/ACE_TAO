@@ -15,15 +15,16 @@
 #ifndef TAO_FT_SERVER_REQUEST_INTERCEPTOR_H
 #define TAO_FT_SERVER_REQUEST_INTERCEPTOR_H
 
-#include "ace/config-all.h"
+#include "FT_ServerORB_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-#include "FT_ServerORB_export.h"
+
+#include "tao/PI_Server/PI_Server.h"
+
 #include "tao/LocalObject.h"
 #include "tao/PortableInterceptorC.h"
-#include "tao/PI_Server/PI_Server.h"
 #include "tao/ORB.h"
 
 #if defined(_MSC_VER)

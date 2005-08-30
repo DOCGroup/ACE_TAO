@@ -1,10 +1,10 @@
 // $Id$
 
-#include "CEC_Reactive_Pulling_Strategy.h"
 #include "CEC_ProxyPullConsumer.h"
 #include "CEC_EventChannel.h"
 #include "CEC_SupplierAdmin.h"
 #include "CEC_ConsumerAdmin.h"
+#include "CEC_Reactive_Pulling_Strategy.h"
 
 #include "orbsvcs/Time_Utilities.h"
 

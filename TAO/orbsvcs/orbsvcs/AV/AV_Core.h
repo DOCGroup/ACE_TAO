@@ -14,9 +14,10 @@
 #define TAO_AV_CORE_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/PortableServer.h"
-#include "orbsvcs/AVStreamsC.h"
 #include "orbsvcs/AV/AV_export.h"
+#include "orbsvcs/AVStreamsC.h"
+
+#include "tao/PortableServer/PortableServer.h"
 
 #include "ace/Singleton.h"
 #include "ace/Unbounded_Set.h"

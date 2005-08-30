@@ -1,9 +1,9 @@
 // $Id$
 
-#include "CEC_Reactive_SupplierControl.h"
 #include "CEC_EventChannel.h"
 #include "CEC_SupplierAdmin.h"
 #include "CEC_ProxyPushConsumer.h"
+#include "CEC_Reactive_SupplierControl.h"
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 #include "CEC_TypedEventChannel.h"

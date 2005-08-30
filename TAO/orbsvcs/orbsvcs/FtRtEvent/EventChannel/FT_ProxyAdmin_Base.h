@@ -13,13 +13,15 @@
 #define FT_PROXYADMIN_BASE_H
 
 #include /**/ "ace/pre.h"
-#include "tao/corba.h"
-#include "tao/PortableServer/Servant_Base.h"
+
 #include "orbsvcs/FtRtecEventCommC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/PortableServer/Servant_Base.h"
+
 
 class FT_ProxyAdmin_Base
 {
