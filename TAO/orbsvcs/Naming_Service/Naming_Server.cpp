@@ -44,7 +44,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (naming_service.init (argc, argv) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT("Failed to start the Naming Service.\n")),
+                       ACE_TEXT("Failed to start the Naming Service.\n")),
                       1);
 
   ACE_DECLARE_NEW_CORBA_ENV;

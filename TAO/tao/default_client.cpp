@@ -201,7 +201,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
             }
         }
       else if (ACE_OS::strcmp (argv[curarg],
-                               ACE_LIB_TEXT("-ORBConnectionHandlerCleanup")) == 0)
+                               ACE_TEXT("-ORBConnectionHandlerCleanup")) == 0)
          {
            curarg++;
            if (curarg < argc)

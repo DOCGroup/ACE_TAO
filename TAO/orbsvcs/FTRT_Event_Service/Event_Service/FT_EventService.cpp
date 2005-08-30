@@ -143,7 +143,7 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
   if (n_threads)
     this->num_threads_ = ACE_OS::atoi(n_threads);
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("d:jn:ps:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("d:jn:ps:"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -167,19 +167,19 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
       // argument, but this is consistent with the EC_Multiple
       // test and also allows for a runtime scheduling service.
 
-      if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_LIB_TEXT("global")) == 0)
+      if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT("global")) == 0)
       {
         this->global_scheduler_ = 1;
       }
-      else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_LIB_TEXT("local")) == 0)
+      else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT("local")) == 0)
       {
         this->global_scheduler_ = 0;
       }
       else
       {
         ACE_DEBUG ((LM_DEBUG,
-          ACE_LIB_TEXT("Unknown scheduling type <%s> ")
-          ACE_LIB_TEXT("defaulting to local\n"),
+          ACE_TEXT("Unknown scheduling type <%s> ")
+          ACE_TEXT("defaulting to local\n"),
           get_opt.opt_arg ()));
         this->global_scheduler_ = 0;
       }
@@ -188,11 +188,11 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
     case '?':
     default:
       ACE_DEBUG ((LM_DEBUG,
-        ACE_LIB_TEXT("Usage: %s \n")
-        ACE_LIB_TEXT("  -j join the object group\n")
-        ACE_LIB_TEXT("  -p set as primary\n")
-        ACE_LIB_TEXT("  -s <global|local> \n")
-        ACE_LIB_TEXT("\n"),
+        ACE_TEXT("Usage: %s \n")
+        ACE_TEXT("  -j join the object group\n")
+        ACE_TEXT("  -p set as primary\n")
+        ACE_TEXT("  -s <global|local> \n")
+        ACE_TEXT("\n"),
         argv[0]));
       return -1;
     }

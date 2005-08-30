@@ -12,15 +12,15 @@ Trading_Shutdown::Trading_Shutdown (Trading_Service& trader)
   if (this->shutdown_.register_handler (SIGINT,
                                         this) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT("%p\n"),
-                ACE_LIB_TEXT("register_handler")));
+                ACE_TEXT("%p\n"),
+                ACE_TEXT("register_handler")));
 
 #ifndef ACE_HAS_WINCE
   if (this->shutdown_.register_handler (SIGTERM,
                                         this) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT("%p\n"),
-                ACE_LIB_TEXT("register_handler")));
+                ACE_TEXT("%p\n"),
+                ACE_TEXT("register_handler")));
 #endif  // ACE_HAS_WINCE
 }
 

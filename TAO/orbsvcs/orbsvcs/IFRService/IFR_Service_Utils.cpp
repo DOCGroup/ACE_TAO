@@ -75,7 +75,7 @@ TAO_IFR_Server::init_with_orb (int argc,
         {
           ACE_ERROR_RETURN ((
               LM_ERROR,
-              ACE_LIB_TEXT ("(%P|%t) Unable to initialize the POA.\n")
+              ACE_TEXT ("(%P|%t) Unable to initialize the POA.\n")
             ),
             -1
           );

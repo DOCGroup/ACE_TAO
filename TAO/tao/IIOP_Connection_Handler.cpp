@@ -238,8 +238,8 @@ TAO_IIOP_Connection_Handler::close_connection (void)
           if (TAO_debug_level)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_LIB_TEXT ("TAO (%P|%t) Unable to set ")
-                          ACE_LIB_TEXT ("SO_LINGER on %d\n"),
+                          ACE_TEXT ("TAO (%P|%t) Unable to set ")
+                          ACE_TEXT ("SO_LINGER on %d\n"),
                           this->peer ().get_handle ()));
             }
         }

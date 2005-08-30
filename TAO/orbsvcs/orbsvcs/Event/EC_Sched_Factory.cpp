@@ -30,83 +30,83 @@ TAO_EC_Sched_Factory::init (int argc, ACE_TCHAR* argv[])
     {
       const ACE_TCHAR* arg = arg_shifter.get_current ();
 
-      if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECDispatching")) == 0)
+      if (ACE_OS::strcasecmp (arg, ACE_TEXT("-ECDispatching")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
               const ACE_TCHAR* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("reactive")) == 0)
+              if (ACE_OS::strcasecmp (opt, ACE_TEXT("reactive")) == 0)
                 {
                   this->dispatching_ = 0;
                 }
-              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("mt")) == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT("mt")) == 0)
                 {
                   this->dispatching_ = 1;
                 }
-              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("priority")) == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT("priority")) == 0)
                 {
                   this->dispatching_ = 2;
                 }
               else
                 {
                   ACE_ERROR ((LM_ERROR,
-                              ACE_LIB_TEXT("EC_Sched_Factory - ")
-                              ACE_LIB_TEXT("unsupported dispatching <%s>\n"),
+                              ACE_TEXT("EC_Sched_Factory - ")
+                              ACE_TEXT("unsupported dispatching <%s>\n"),
                               opt));
                 }
               arg_shifter.consume_arg ();
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECFiltering")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-ECFiltering")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
               const ACE_TCHAR* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("null")) == 0)
+              if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
                 {
                   this->filtering_ = 0;
                 }
-              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("basic")) == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT("basic")) == 0)
                 {
                   this->filtering_ = 1;
                 }
-              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("prefix")) == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT("prefix")) == 0)
                 {
                   this->filtering_ = 2;
                 }
-              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("priority")) == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT("priority")) == 0)
                 {
                   this->filtering_ = 3;
                 }
               else
                 {
                   ACE_ERROR ((LM_ERROR,
-                              ACE_LIB_TEXT("EC_Sched_Factory - ")
-                              ACE_LIB_TEXT("unsupported filtering <%s>\n"),
+                              ACE_TEXT("EC_Sched_Factory - ")
+                              ACE_TEXT("unsupported filtering <%s>\n"),
                               opt));
                 }
               arg_shifter.consume_arg ();
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECTimeout")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-ECTimeout")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
               const ACE_TCHAR* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("reactive")) == 0)
+              if (ACE_OS::strcasecmp (opt, ACE_TEXT("reactive")) == 0)
                 {
                   this->timeout_ = 0;
                 }
 #if 0
-              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("priority")) == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT("priority")) == 0)
                 {
                   this->timeout_ = 1;
                 }
@@ -114,38 +114,38 @@ TAO_EC_Sched_Factory::init (int argc, ACE_TCHAR* argv[])
               else
                 {
                   ACE_ERROR ((LM_ERROR,
-                              ACE_LIB_TEXT("EC_Sched_Factory - ")
-                              ACE_LIB_TEXT("unsupported timeout <%s>\n"),
+                              ACE_TEXT("EC_Sched_Factory - ")
+                              ACE_TEXT("unsupported timeout <%s>\n"),
                               opt));
                 }
               arg_shifter.consume_arg ();
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECScheduling")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-ECScheduling")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
               const ACE_TCHAR* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("null")) == 0)
+              if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
                 {
                   this->scheduling_ = 0;
                 }
-              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("group")) == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT("group")) == 0)
                 {
                   this->scheduling_ = 1;
                 }
-              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("priority")) == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT("priority")) == 0)
                 {
                   this->scheduling_ = 2;
                 }
               else
                 {
                   ACE_ERROR ((LM_ERROR,
-                              ACE_LIB_TEXT("EC_Sched_Factory - ")
-                              ACE_LIB_TEXT("unsupported scheduling <%s>\n"),
+                              ACE_TEXT("EC_Sched_Factory - ")
+                              ACE_TEXT("unsupported scheduling <%s>\n"),
                               opt));
                 }
               arg_shifter.consume_arg ();

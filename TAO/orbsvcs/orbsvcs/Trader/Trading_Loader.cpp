@@ -448,13 +448,13 @@ TAO_Trading_Loader::parse_args (int &argc, ACE_TCHAR *argv [])
       const ACE_TCHAR *current_arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcmp (current_arg,
-                          ACE_LIB_TEXT("-TSfederate")) == 0)
+                          ACE_TEXT("-TSfederate")) == 0)
         {
           arg_shifter.consume_arg ();
           this->federate_ = 1;
         }
       if (ACE_OS::strcmp (current_arg,
-                          ACE_LIB_TEXT("-TSdumpior")) == 0)
+                          ACE_TEXT("-TSdumpior")) == 0)
         {
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
@@ -462,7 +462,7 @@ TAO_Trading_Loader::parse_args (int &argc, ACE_TCHAR *argv [])
               const ACE_TCHAR *file_name =
                 arg_shifter.get_current ();
               this->ior_output_file_ =
-                ACE_OS::fopen (file_name, ACE_LIB_TEXT("w"));
+                ACE_OS::fopen (file_name, ACE_TEXT("w"));
 
               if (this->ior_output_file_ == 0)
                 ACE_ERROR_RETURN ((LM_ERROR,
@@ -473,7 +473,7 @@ TAO_Trading_Loader::parse_args (int &argc, ACE_TCHAR *argv [])
           else
             this->ior_output_file_ =
               ACE_OS::fdopen (ACE_STDOUT,
-                              ACE_LIB_TEXT("w"));
+                              ACE_TEXT("w"));
         }
 
       else

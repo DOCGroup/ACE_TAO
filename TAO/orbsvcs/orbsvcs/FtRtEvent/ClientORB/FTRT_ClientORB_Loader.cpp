@@ -41,7 +41,7 @@ namespace TAO_FTRT {
     // Parse any service configurator parameters.
     for (curarg = 0; curarg < argc; curarg++)
       if (ACE_OS::strcasecmp (argv[curarg],
-        ACE_LIB_TEXT("-ORBTransactionDepth")) == 0)
+        ACE_TEXT("-ORBTransactionDepth")) == 0)
       {
         curarg++;
         if (curarg < argc)

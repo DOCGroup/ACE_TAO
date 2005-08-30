@@ -1,3 +1,78 @@
+Tue Aug 30 14:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Kokyu_dsrt_schedulers/EDF_Scheduler.cpp
+        * examples/Kokyu_dsrt_schedulers/FP_Scheduler.cpp
+        * examples/Kokyu_dsrt_schedulers/MIF_Scheduler.cpp
+        * examples/Kokyu_dsrt_schedulers/MUF_Scheduler.cpp
+        * examples/RTCORBA/Activity/Activity.cpp
+        * examples/RTCORBA/Activity/Task_Stats.cpp
+        * orbsvcs/Concurrency_Service/Concurrency_Service.cpp
+        * orbsvcs/Event_Service/Event_Service.cpp
+        * orbsvcs/FTRT_Event_Service/Event_Service/FT_EventService.cpp
+        * orbsvcs/FTRT_Event_Service/Factory_Service/FTRTEC_Factory_Service.cpp
+        * orbsvcs/FTRT_Event_Service/Gateway_Service/FTRTEC_Gateway_Service.cpp
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.cpp
+        P orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Server.cpp
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp
+        P orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Server.cpp
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp
+        P orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Server.cpp
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp
+        * orbsvcs/Naming_Service/Naming_Server.cpp
+        * orbsvcs/Naming_Service/Naming_Service.cpp
+        * orbsvcs/Notify_Service/Notify_Server.cpp
+        * orbsvcs/Notify_Service/Notify_Service.cpp
+        * orbsvcs/Scheduling_Service/Scheduling_Service.cpp
+        * orbsvcs/Time_Service/Clerk_i.cpp
+        * orbsvcs/Time_Service/Server_i.cpp
+        * orbsvcs/Trading_Service/Trading_Service.cpp
+        * orbsvcs/examples/Notify/Lanes/Consumer_Client.cpp
+        * orbsvcs/examples/Notify/Lanes/Supplier_Client.cpp
+        * orbsvcs/examples/Notify/ThreadPool/Consumer_Client.cpp
+        * orbsvcs/examples/Notify/ThreadPool/Supplier_Client.cpp
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp
+        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP_Factory.cpp
+        * orbsvcs/orbsvcs/Event/EC_Kokyu_Factory.cpp
+        * orbsvcs/orbsvcs/Event/EC_Sched_Factory.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Identification_Service.cpp
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Replication_Service.cpp
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.cpp
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor_Impl.cpp
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Completion_Handler.cpp
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connection_Handler.cpp
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.cpp
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp
+        * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp
+        * orbsvcs/orbsvcs/Sched/Scheduler.cpp
+        * orbsvcs/orbsvcs/Trader/Trader.cpp
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.cpp
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/Receiver_Stats.cpp
+        * orbsvcs/tests/FtRtEvent/consumer.cpp
+        * orbsvcs/tests/FtRtEvent/supplier.cpp
+        * orbsvcs/tests/Notify/Destroy/main.cpp
+        * orbsvcs/tests/Notify/Driver/main.cpp
+        * orbsvcs/tests/Notify/lib/Activation_Manager.cpp
+        * orbsvcs/tests/Notify/lib/Command.cpp
+        * orbsvcs/tests/Notify/lib/Driver.cpp
+        * orbsvcs/tests/Redundant_Naming/client.cpp
+        * tao/CORBALOC_Parser.cpp
+        * tao/IIOP_Connection_Handler.cpp
+        * tao/IIOP_Profile.cpp
+        * tao/MCAST_Parser.cpp
+        * tao/ORB_Core.cpp
+        * tao/default_client.cpp
+        * tests/MProfile_Connection_Timeout/client.cpp
+          Replaced ACE_LIB_TEXT with ACE_TEXT. ACE_LIB_TEXT is only for in the
+          ACE lib itself.
+
 Tue Aug 30 14:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.h:

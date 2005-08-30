@@ -49,7 +49,7 @@ TAO_Notify_Tests_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
       ACE_CATCHANY
         {
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-            ACE_LIB_TEXT("Error: Exception running command\n"));
+            ACE_TEXT("Error: Exception running command\n"));
         }
       ACE_ENDTRY;
     }

@@ -31,7 +31,7 @@ int
 Server_i::parse_args (int argc,
                       ACE_TCHAR* argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_LIB_TEXT("do:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("do:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -42,21 +42,21 @@ Server_i::parse_args (int argc,
         break;
       case 'o':  // output the IOR to a file.
         this->ior_output_file_ =
-          ACE_OS::fopen (get_opts.opt_arg (), ACE_LIB_TEXT("a"));
+          ACE_OS::fopen (get_opts.opt_arg (), ACE_TEXT("a"));
 
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT("[SERVER] Process/Thread Id : (%P/%t)Unable to open %s for writing: %p\n"),
+                             ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t)Unable to open %s for writing: %p\n"),
                              get_opts.opt_arg ()), -1);
         break;
       case '?':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT("[SERVER] Process/Thread Id : (%P/%t)")
-                           ACE_LIB_TEXT("usage:  %s")
-                           ACE_LIB_TEXT(" [-d]")
-                           ACE_LIB_TEXT(" [-o] <ior_output_file>")
-                           ACE_LIB_TEXT("\n"),
+                           ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t)")
+                           ACE_TEXT("usage:  %s")
+                           ACE_TEXT(" [-d]")
+                           ACE_TEXT(" [-o] <ior_output_file>")
+                           ACE_TEXT("\n"),
                            argv[0]),
                           1);
       }
@@ -121,8 +121,8 @@ Server_i::create_server (void)
 
       // Print the server IOR on the console.
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT("[SERVER] Process/Thread Id : (%P/%t) The Time Service ")
-                  ACE_LIB_TEXT("SERVER IOR: <%s>\n"),
+                  ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t) The Time Service ")
+                  ACE_TEXT("SERVER IOR: <%s>\n"),
                   ACE_TEXT_CHAR_TO_TCHAR(objref_server.in ())));
 
       // Print the IOR to a file.
@@ -139,7 +139,7 @@ Server_i::create_server (void)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_LIB_TEXT("Exception in Server_i::create_server ()"));
+                           ACE_TEXT("Exception in Server_i::create_server ()"));
       return -1;
     }
   ACE_ENDTRY;
@@ -193,13 +193,13 @@ Server_i::register_server (void)
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT("Binding ServerContext -> %s\n"),
+                  ACE_TEXT("Binding ServerContext -> %s\n"),
                   ACE_TEXT_CHAR_TO_TCHAR(server_name[1].id.in ())));
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_LIB_TEXT("(%P|%t) Exception from Register Server ()\n"));
+                           ACE_TEXT("(%P|%t) Exception from Register Server ()\n"));
       return -1;
     }
   ACE_ENDTRY;
@@ -233,8 +233,8 @@ Server_i::init (int argc,
 
       if (retval == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT("%p\n"),
-                           ACE_LIB_TEXT("init_child_poa")),
+                           ACE_TEXT("%p\n"),
+                           ACE_TEXT("init_child_poa")),
                            -1);
 
       // Activate the POA Manager.
@@ -261,7 +261,7 @@ Server_i::init (int argc,
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, ACE_LIB_TEXT("Exception:"));
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, ACE_TEXT("Exception:"));
       return -1;
     }
   ACE_ENDTRY;
@@ -280,7 +280,7 @@ Server_i::run (ACE_ENV_SINGLE_ARG_DECL)
 
   if (retval == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT("[SERVER] Process/Thread Id : (%P/%t) Server_i::run")),
+                       ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t) Server_i::run")),
                       -1);
   return 0;
 }

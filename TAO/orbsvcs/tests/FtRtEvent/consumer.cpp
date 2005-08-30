@@ -26,7 +26,7 @@ RtecEventChannelAdmin::EventChannel_ptr
 get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
 {
     FtRtecEventChannelAdmin::EventChannel_var channel;
-    ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("hi:n"));
+    ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("hi:n"));
     int opt;
     int use_gateway = 1;
 
@@ -50,10 +50,10 @@ get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
       case 'h':
       case '?':
         ACE_DEBUG((LM_DEBUG,
-                   ACE_LIB_TEXT("Usage: %s ")
-                   ACE_LIB_TEXT("-i ftrt_eventchannel_ior\n")
-                   ACE_LIB_TEXT("-n       do not use gateway\n")
-                   ACE_LIB_TEXT("\n"),
+                   ACE_TEXT("Usage: %s ")
+                   ACE_TEXT("-i ftrt_eventchannel_ior\n")
+                   ACE_TEXT("-n       do not use gateway\n")
+                   ACE_TEXT("\n"),
                       argv[0]));
         return 0;
       }

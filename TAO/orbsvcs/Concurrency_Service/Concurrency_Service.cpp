@@ -36,7 +36,7 @@ Concurrency_Service::Concurrency_Service (void)
     pid_file_name_ (0)
 {
   ACE_DEBUG ((LM_DEBUG,
-             ACE_LIB_TEXT("Concurrency_Service::Concurrency_Service (void)\n")));
+             ACE_TEXT("Concurrency_Service::Concurrency_Service (void)\n")));
 }
 
 // Constructor taking command-line arguments.
@@ -46,7 +46,7 @@ Concurrency_Service::Concurrency_Service (int argc,
                                           ACE_ENV_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT("Concurrency_Service::Concurrency_Service (...)\n")));
+              ACE_TEXT("Concurrency_Service::Concurrency_Service (...)\n")));
   this->init (argc, argv ACE_ENV_ARG_PARAMETER);
 }
 
@@ -54,9 +54,9 @@ int
 Concurrency_Service::parse_args (int argc, ACE_TCHAR** argv)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT("Concurrency_Service::parse_args\n")));
+              ACE_TEXT("Concurrency_Service::parse_args\n")));
 
-  ACE_Get_Opt get_opts (argc, argv, ACE_LIB_TEXT("do:p:s"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("do:p:s"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -76,10 +76,10 @@ Concurrency_Service::parse_args (int argc, ACE_TCHAR** argv)
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT("usage:  %s")
-                           ACE_LIB_TEXT(" [-d]")
-                           ACE_LIB_TEXT(" [-o] <ior_output_file>")
-                           ACE_LIB_TEXT("\n"),
+                           ACE_TEXT("usage:  %s")
+                           ACE_TEXT(" [-d]")
+                           ACE_TEXT(" [-o] <ior_output_file>")
+                           ACE_TEXT("\n"),
                            argv[0]),
                            1);
       }
@@ -105,14 +105,14 @@ Concurrency_Service::init (int argc,
                                          "child_poa"
                                           ACE_ENV_ARG_PARAMETER) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT("%p\n"),
-                       ACE_LIB_TEXT("init_child_poa")),
+                       ACE_TEXT("%p\n"),
+                       ACE_TEXT("init_child_poa")),
                       -1);
   ACE_CHECK_RETURN (-1);
 
   if (this->parse_args (command_line.get_argc(), command_line.get_TCHAR_argv())!=0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT("Could not parse command line\n")),
+                       ACE_TEXT("Could not parse command line\n")),
                      -1);
   CORBA::String_var str =
     this->orb_manager_.activate (this->my_concurrency_server_.GetLockSetFactory ()
@@ -123,7 +123,7 @@ Concurrency_Service::init (int argc,
 
   if (this->ior_file_name_ != 0)
     {
-      FILE* iorf = ACE_OS::fopen (ior_file_name_, ACE_LIB_TEXT("w"));
+      FILE* iorf = ACE_OS::fopen (ior_file_name_, ACE_TEXT("w"));
       if (iorf == 0)
         {
 	  ACE_ERROR_RETURN ((LM_ERROR,
@@ -138,7 +138,7 @@ Concurrency_Service::init (int argc,
 
   if (this->pid_file_name_ != 0)
     {
-      FILE* pidf = ACE_OS::fopen (pid_file_name_, ACE_LIB_TEXT("w"));
+      FILE* pidf = ACE_OS::fopen (pid_file_name_, ACE_TEXT("w"));
       if (pidf != 0)
         {
 	  ACE_OS::fprintf (pidf,

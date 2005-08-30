@@ -308,8 +308,8 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
           if (TAO_debug_level > 0)
             {
               ACE_DEBUG ((LM_ERROR,
-                         ACE_LIB_TEXT ("\nTAO (%P|%t) TAO_CORBALOC_Parser: ")
-                         ACE_LIB_TEXT ("Invalid IPv6 decimal address specified.\n")));
+                         ACE_TEXT ("\nTAO (%P|%t) TAO_CORBALOC_Parser: ")
+                         ACE_TEXT ("Invalid IPv6 decimal address specified.\n")));
             }
           separator = 0;
         }

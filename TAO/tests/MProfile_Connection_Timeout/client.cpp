@@ -155,11 +155,11 @@ main (int argc, char *argv[])
 
       if (freq != 919263)
         ACE_ERROR ((LM_ERROR,
-                    ACE_LIB_TEXT ("(%P|%t) ERROR in the test \n")));
+                    ACE_TEXT ("(%P|%t) ERROR in the test \n")));
 
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("(%P|%t) Shutting server down \n")));
+                  ACE_TEXT ("(%P|%t) Shutting server down \n")));
 
       server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;

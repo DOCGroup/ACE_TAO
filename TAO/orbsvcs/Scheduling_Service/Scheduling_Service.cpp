@@ -10,8 +10,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID (Scheduling_Service, 
-           Scheduling_Service, 
+ACE_RCSID (Scheduling_Service,
+           Scheduling_Service,
            "$Id$")
 
 // Default Constructor.
@@ -128,7 +128,7 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
         orb->object_to_string (scheduler.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("The scheduler IOR is <%s>\n"),
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("The scheduler IOR is <%s>\n"),
                             ACE_TEXT_CHAR_TO_TCHAR(scheduler_ior_string.in ())));
 
       // Register the servant with the Naming Context....
@@ -144,7 +144,7 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
           if (iorf != 0)
             {
               ACE_OS::fprintf (iorf,
-                               ACE_LIB_TEXT("%s\n"),
+                               ACE_TEXT("%s\n"),
                                ACE_TEXT_CHAR_TO_TCHAR(scheduler_ior_string.in ()));
               ACE_OS::fclose (iorf);
             }
@@ -156,7 +156,7 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
           if (pidf != 0)
             {
               ACE_OS::fprintf (pidf,
-                               ACE_LIB_TEXT("%ld\n"),
+                               ACE_TEXT("%ld\n"),
                                static_cast<long> (ACE_OS::getpid ()));
               ACE_OS::fclose (pidf);
             }
@@ -188,7 +188,7 @@ TAO_Scheduling_Service::run (ACE_ENV_SINGLE_ARG_DECL)
 int
 TAO_Scheduling_Service::parse_args (int argc, ACE_TCHAR* argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("n:p:o:s:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:p:o:s:"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -213,11 +213,11 @@ TAO_Scheduling_Service::parse_args (int argc, ACE_TCHAR* argv[])
 (__GNUC__ == 2 && defined (__GNUC_MINOR__) && __GNUC_MINOR__ >= 8)
 
         case 's':
-          if (ACE_OS::strcasecmp (ACE_LIB_TEXT("CONFIG"), get_opt.optarg) == 0)
+          if (ACE_OS::strcasecmp (ACE_TEXT("CONFIG"), get_opt.optarg) == 0)
             {
               this->scheduler_type_ = CONFIG;
             }
-          else if (ACE_OS::strcasecmp (ACE_LIB_TEXT("RECONFIG"), get_opt.optarg) == 0)
+          else if (ACE_OS::strcasecmp (ACE_TEXT("RECONFIG"), get_opt.optarg) == 0)
             {
               this->scheduler_type_ = RECONFIG;
             }

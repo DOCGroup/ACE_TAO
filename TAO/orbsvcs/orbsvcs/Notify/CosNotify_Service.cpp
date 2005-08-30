@@ -43,38 +43,38 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-MTDispatching")) == 0)
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-MTDispatching")) == 0)
         {
           // If Dispatching Threads are initalized, the option is implicit.
           arg_shifter.consume_arg ();
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) The -MTDispatching option has been deprecated, use -DispatchingThreads \n")));
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-DispatchingThreads"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-DispatchingThreads"))))
         {
           dispatching_threads = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-MTSourceEval")) == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-MTSourceEval")) == 0)
         {
           // If Source Threads are initalized, the option is implicit.
           arg_shifter.consume_arg ();
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) The -MTSourceEval option has been deprecated, use -SourceThreads \n")));
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-SourceThreads"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-SourceThreads"))))
         {
           source_threads = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-MTLookup")) == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-MTLookup")) == 0)
         {
           // If Lookup Threads are initalized, the option is implicit.
           arg_shifter.consume_arg ();
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) The -MTLookup option has been deprecated, use -SourceThreads \n")));
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-LookupThreads"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-LookupThreads"))))
         {
           // Since this option is always either added to source_threads
           // or ignored, we'll deprecate it in favor of that option.
@@ -83,14 +83,14 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) The -LookupThreads option has been deprecated, use -SourceThreads \n")));
         }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-MTListenerEval")) == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-MTListenerEval")) == 0)
         {
           // If Listener Threads are initalized, the option is implicit.
           arg_shifter.consume_arg ();
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) The -MTListenerEval option has been deprecated, use -DispatchingThreads \n")));
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-ListenerThreads"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ListenerThreads"))))
         {
           // Since this option is always added to dispatching_threads, we'll
           // deprecate it in favor of that option.
@@ -99,24 +99,24 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
           listener_threads = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-AsynchUpdates")) == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-AsynchUpdates")) == 0)
         {
           arg_shifter.consume_arg ();
 
           properties->asynch_updates (1);
         }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-NoUpdates")) == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-NoUpdates")) == 0)
         {
           arg_shifter.consume_arg ();
 
           properties->updates (0);
         }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-AllocateTaskperProxy")) == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-AllocateTaskperProxy")) == 0)
         {
           task_per_proxy = 1;
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-AllowReconnect")) == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-AllowReconnect")) == 0)
       {
         arg_shifter.consume_arg ();
         TAO_Notify_PROPERTIES::instance()->allow_reconnect (true);
