@@ -1,3 +1,21 @@
+Tue Aug 30 09:00:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Default_Constants.h:
+          Added some new default macros for IPv6.
+
+        * ace/INET_Addr{.cpp .h .inl}:
+          Added more (IPv6 specific) functionality (is_xxx methods).
+          Changed get_host_addr() to return IPv6 formatted string for
+          IPv4 mapped IPv6 addresses (argumentation inside:).
+          Changed string_to_addr() to recognize and handle extended
+          IPv6 textual address format, i.e. '[' <ipv6> ']'.
+
+        * ace/Sock_Connect.cpp:
+          Added support for retrieval of IPv6 local interfaces to
+          ACE::get_ip_interfaces().
+          Supported for Windows XP (and newer) and Linux (possibly other
+          *nixes as well).
+
 Tue Aug 30 06:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_icc.GNU:
@@ -7,11 +25,11 @@ Tue Aug 30 06:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Aug 29 17:26:49 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/Reactor_Token_T.h: Set the default queueing policy to
-	  ACE_Token::FIFO, instead of ACE_TOKEN_TYPE::FIFO to work around
-	  MSVC 6's inability to deal with the definition inside a
-	  template class argument. This hack can be removed after
-	  ACE 5.5 is released.
+        * ace/Reactor_Token_T.h: Set the default queueing policy to
+          ACE_Token::FIFO, instead of ACE_TOKEN_TYPE::FIFO to work around
+          MSVC 6's inability to deal with the definition inside a
+          template class argument. This hack can be removed after
+          ACE 5.5 is released.
 
 Mon Aug 29 19:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 

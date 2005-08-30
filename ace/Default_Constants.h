@@ -93,6 +93,14 @@
 #   define ACE_DEFAULT_MULTICAST_ADDR "224.9.9.2"
 # endif /* ACE_DEFAULT_MULTICAST_ADDR */
 
+# if defined (ACE_HAS_IPV6)
+# if !defined (ACE_DEFAULT_MULTICASTV6_ADDR)
+// This address should be within the range for site-local addresses:
+// ff05::0/16 .
+#   define ACE_DEFAULT_MULTICASTV6_ADDR "ff05:0::ff01:1"
+# endif /* ACE_DEFAULT_MULTICASTV6_ADDR */
+# endif
+
 // Default port number for HTTP.
 # if !defined (ACE_DEFAULT_HTTP_SERVER_PORT)
 #   define ACE_DEFAULT_HTTP_SERVER_PORT 80
@@ -221,6 +229,13 @@
 #   endif /* ACE_IPV6_LOCALHOST*/
 #endif /* ACE_HAS_IPV6 */
 
+// This specification for an IPv6 ANY address should work on all platforms
+// supporting IPv6
+# if defined (ACE_HAS_IPV6)
+#   if !defined (ACE_IPV6_ANY)
+#     define ACE_IPV6_ANY ACE_LIB_TEXT ("::")
+#   endif /* ACE_IPV6_ANY*/
+#endif /* ACE_HAS_IPV6 */
 
 # if !defined (ACE_DEFAULT_SERVER_HOST)
 #   if defined (ACE_HAS_IPV6)

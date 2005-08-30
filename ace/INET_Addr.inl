@@ -148,3 +148,50 @@ ACE_INET_Addr::set (const wchar_t addr[])
 }
 
 #endif /* ACE_HAS_WCHAR */
+
+// Return @c true if the IP address is INADDR_ANY or IN6ADDR_ANY.
+ACE_INLINE bool
+ACE_INET_Addr::is_any (void) const
+{
+#if defined (ACE_HAS_IPV6)
+  if (this->get_type () == AF_INET6)
+      return IN6_IS_ADDR_UNSPECIFIED (&this->inet_addr_.in6_.sin6_addr);
+#endif /* ACE_HAS_IPV6 */
+
+  return (this->inet_addr_.in4_.sin_addr.s_addr == INADDR_ANY);
+}
+
+// Return @c true if the IP address is IPv4/IPv6 loopback address.
+ACE_INLINE bool
+ACE_INET_Addr::is_loopback (void) const
+{
+#if defined (ACE_HAS_IPV6)
+  if (this->get_type () == AF_INET6)
+      return IN6_IS_ADDR_LOOPBACK (&this->inet_addr_.in6_.sin6_addr);
+#endif /* ACE_HAS_IPV6 */
+
+  return (this->get_ip_address () == INADDR_LOOPBACK);
+}
+
+#if defined (ACE_HAS_IPV6)
+// Return @c true if the IP address is IPv6 linklocal address.
+ACE_INLINE bool
+ACE_INET_Addr::is_linklocal (void) const
+{
+  if (this->get_type () == AF_INET6)
+      return IN6_IS_ADDR_LINKLOCAL (&this->inet_addr_.in6_.sin6_addr);
+
+  return false;
+}
+
+// Return @c true if the IP address is IPv4 mapped IPv6 address.
+ACE_INLINE bool
+ACE_INET_Addr::is_ipv4_mapped_ipv6 (void) const
+{
+  if (this->get_type () == AF_INET6)
+      return IN6_IS_ADDR_V4MAPPED (&this->inet_addr_.in6_.sin6_addr);
+
+  return false;
+}
+#endif /* ACE_HAS_IPV6 */
+
