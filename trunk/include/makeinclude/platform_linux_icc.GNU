@@ -10,10 +10,6 @@ debug ?= 1
 optimize ?= 0
 threads ?= 1
 
-ifeq ($(exceptions),1)
-  CPPFLAGS += -Kc++eh
-endif # exceptions
-
 PLATFORM_XT_CPPFLAGS=
 PLATFORM_XT_LIBS=-lXt
 LATFORM_XT_LDFLAGS=
@@ -57,7 +53,7 @@ ifeq ($(insure),1)
   CXX = insure
 else
   CC  = icc
-  CXX = icc
+  CXX = icpc
 endif
 
 ifndef CXX_VERSION
