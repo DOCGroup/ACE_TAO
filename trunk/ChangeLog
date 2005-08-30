@@ -1,3 +1,9 @@
+Tue Aug 30 10:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Process_Manager.cpp:
+        * ace/WFMO_Reactor.cpp:
+          Fixed incorrect checks for MSC_VER, it should be _MSC_VER
+
 Tue Aug 30 10:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Based_Pointer_Test.cpp:
