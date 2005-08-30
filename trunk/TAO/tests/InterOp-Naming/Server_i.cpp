@@ -106,16 +106,17 @@ Server_i::init (int argc,
 {
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create a child POA under the root POA.
-  if (this->orb_manager_.init_child_poa (argc,
-                                         argv,
-                                         "child_poa"
-                                         ACE_ENV_ARG_PARAMETER) == -1)
+  int result = this->orb_manager_.init_child_poa (argc,
+                                                  argv,
+                                                  "child_poa"
+                                                  ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "init_child_poa"),
                       -1);
-
-  ACE_CHECK_RETURN (-1);
 
   this->argc_ = argc;
   this->argv_ = argv;
@@ -171,11 +172,13 @@ int
 Server_i::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Run the main event loop for the ORB.
-  if (this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER) == -1)
+  int result = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Server_i::run"),
                       -1);
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }

@@ -65,6 +65,8 @@ main (int argc, char *argv[])
       policies[0] =
         root_poa->create_lifespan_policy(PortableServer::PERSISTENT
                                          ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       policies[1] =
         root_poa->create_implicit_activation_policy(PortableServer::IMPLICIT_ACTIVATION
                                                     ACE_ENV_ARG_PARAMETER);

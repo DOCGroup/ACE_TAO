@@ -174,13 +174,14 @@ TimeoutClient::send (CORBA::Boolean async,
           timeoutObject_->sendc_sendTimeToWait (replyHandlerObject_.in (),
                                                 remote_sleep
                                                 ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK_EX (normal);
         }
       else // synch
         {
           timeoutObject_->sendTimeToWait (remote_sleep
                                           ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK_EX (normal);
         }
-      ACE_TRY_CHECK_EX (normal);
     }
   ACE_CATCH (CORBA::TIMEOUT, timeout)
     {

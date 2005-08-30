@@ -114,7 +114,10 @@ Session::validate_connections (ACE_ENV_SINGLE_ARG_DECL)
               this->other_sessions_[j]->ping (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
-          ACE_CATCHANY {} ACE_ENDTRY;
+          ACE_CATCHANY
+            {
+            }
+          ACE_ENDTRY;
         }
     }
 }
@@ -170,6 +173,7 @@ Session::start (const Test::Session_List &other_sessions
   }
 
   this->validate_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 
   this->barrier_.wait ();
 

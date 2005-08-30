@@ -19,8 +19,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_RCSID (Param_Test, 
-           server, 
+ACE_RCSID (Param_Test,
+           server,
            "$Id$")
 
 // Parses the command line arguments and returns an error status.
@@ -95,9 +95,12 @@ main (int argc, char *argv[])
       policies[0] =
         oa_ptr->create_id_assignment_policy (PortableServer::USER_ID
                                              ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       policies[1] =
         oa_ptr->create_lifespan_policy (PortableServer::PERSISTENT
                                         ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       // We use a different POA, otherwise the user would have to
       // change the object key each time it invokes the server.
@@ -141,8 +144,8 @@ main (int argc, char *argv[])
 
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG, 
-                      "(%P|%t) The IOR is <%s>\n", 
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) The IOR is <%s>\n",
                       str.in ()));
         }
 
@@ -152,12 +155,12 @@ main (int argc, char *argv[])
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
-                             ior_output_filename), 
+                             ior_output_filename),
                             -1);
         }
 
-      ACE_OS::fprintf (ior_output_file, 
-                       "%s", 
+      ACE_OS::fprintf (ior_output_file,
+                       "%s",
                        str.in ());
       ACE_OS::fclose (ior_output_file);
 
