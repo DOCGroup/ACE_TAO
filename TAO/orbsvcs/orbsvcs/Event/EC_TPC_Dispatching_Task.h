@@ -9,7 +9,7 @@
 
 #ifndef TAO_EC_TPC_DISPATCHING_TASK_H
 #define TAO_EC_TPC_DISPATCHING_TASK_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "EC_Dispatching_Task.h"
 
@@ -25,5 +25,5 @@ public:
   virtual int close (u_long flags = 0);
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_TPC_DISPATCHING_TASK_H */

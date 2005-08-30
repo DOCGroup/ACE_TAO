@@ -1,3 +1,20 @@
+Tue Aug 30 10:03:24 2005  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching_Task.h:
+        * orbsvcs/orbsvcs/Event/EC_TPC_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_TPC_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Event/EC_TPC_ProxySupplier.h:
+        * orbsvcs/orbsvcs/Event/EC_TPC_ProxySupplier.cpp:
+
+	  Fixed errors in Fuzz build and use of deprecated ACE cast macros
+
+        * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.i:
+	* orbsvcs/orbsvcs/Event/EC_TPC_Factory.i:
+	
+	  Removed these b/c they're empty and fix a fuzz build.
+
 Tue Aug 30 14:43:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * docs/Options.html:
@@ -87,7 +104,7 @@ Tue Aug 30 06:42:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
         * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Server.cpp:
         * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Server.cpp:
 
-	  Fix emulated exception builds.
+          Fix emulated exception builds.
 
 Tue Aug 30 13:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -331,45 +348,45 @@ Sat Aug 27 10:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Aug 26 23:48:25 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	Fix for bug
+        Fix for bug
 
-	http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2224
+        http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2224
 
- 	* tao/Client_Strategy_Factory.cpp:
-	* tao/Client_Strategy_Factory.h:
-	* tao/default_client.cpp:
-	* tao/default_client.h:
+        * tao/Client_Strategy_Factory.cpp:
+        * tao/Client_Strategy_Factory.h:
+        * tao/default_client.cpp:
+        * tao/default_client.h:
 
-	  New strategy ORBCOnnectionHandlerCleanup .
+          New strategy ORBCOnnectionHandlerCleanup .
 
-	* tao/Connection_Handler.cpp:
+        * tao/Connection_Handler.cpp:
 
-	  Use the id for deregistration instead of the handle.
+          Use the id for deregistration instead of the handle.
 
-	* tao/Transport_Cache_Manager.cpp:
-	* tao/Wait_On_Read.cpp:
+        * tao/Transport_Cache_Manager.cpp:
+        * tao/Wait_On_Read.cpp:
 
-	  Do the registration and deregistration. One could possibly think
-	  of doing a suspend and resume instead of
-	  registration/deregistration. Our reactor interfaces do not
-	  provide a way to add a handler in a suspended mode. Doing a
-	  registration and then calling suspend () could provide a window
-	  of time where a thread could be dispatched. Hence the decision to
-	  use registration/deregistration combo.
+          Do the registration and deregistration. One could possibly think
+          of doing a suspend and resume instead of
+          registration/deregistration. Our reactor interfaces do not
+          provide a way to add a handler in a suspended mode. Doing a
+          registration and then calling suspend () could provide a window
+          of time where a thread could be dispatched. Hence the decision to
+          use registration/deregistration combo.
 
 Fri Aug 26 14:07:57 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
 
-	  Fix the "export" class used in the ACE_FACTORY_DEFINE for the
-	  TAO_EC_Simple_Queue_Full_Action.  Hopefully this fixes the
-	  internal compiler error on mingw compilers.
+          Fix the "export" class used in the ACE_FACTORY_DEFINE for the
+          TAO_EC_Simple_Queue_Full_Action.  Hopefully this fixes the
+          internal compiler error on mingw compilers.
 
         * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.cpp:
         * orbsvcs/orbsvcs/Event/EC_TPC_ProxyConsumer.cpp:
         * orbsvcs/orbsvcs/Event/EC_TPC_ProxySupplier.cpp:
 
-	  Fix problems for no-exception builds.
+          Fix problems for no-exception builds.
 
 Fri Aug 26 18:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
