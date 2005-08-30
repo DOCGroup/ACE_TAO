@@ -1,8 +1,8 @@
 // $Id$
 
-#include "CEC_Reactive_ConsumerControl.h"
 #include "CEC_EventChannel.h"
 #include "CEC_ConsumerAdmin.h"
+#include "CEC_Reactive_ConsumerControl.h"
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 #include "CEC_TypedEventChannel.h"

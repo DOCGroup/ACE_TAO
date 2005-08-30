@@ -1,7 +1,7 @@
 // $Id$
 
-#include "ECG_Reactive_ConsumerEC_Control.h"
 #include "EC_Gateway_IIOP.h"
+#include "ECG_Reactive_ConsumerEC_Control.h"
 #include "tao/Messaging/Messaging.h"
 #include "tao/ORB_Core.h"
 

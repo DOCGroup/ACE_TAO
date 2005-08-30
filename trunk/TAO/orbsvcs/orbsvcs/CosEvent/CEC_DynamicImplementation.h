@@ -13,11 +13,11 @@
 #ifndef TAO_CEC_DYNAMICIMPLEMENTATION_H
 #define TAO_CEC_DYNAMICIMPLEMENTATION_H
 
-#include "tao/ORB.h"
-#include "tao/DynamicInterface/Server_Request.h"
-#include "tao/DynamicInterface/Dynamic_Implementation.h"
 #include "CEC_TypedProxyPushConsumer.h"
 #include "CEC_TypedEventChannel.h"
+#include "tao/DynamicInterface/Server_Request.h"
+#include "tao/DynamicInterface/Dynamic_Implementation.h"
+#include "tao/ORB.h"
 
 class TAO_CEC_DynamicImplementationServer : public TAO_DynamicImplementation
 {

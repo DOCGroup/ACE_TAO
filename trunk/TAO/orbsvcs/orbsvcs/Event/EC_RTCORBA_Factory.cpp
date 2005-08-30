@@ -1,7 +1,7 @@
 // $Id$
 
-#include "EC_RTCORBA_Factory.h"
 #include "EC_RTCORBA_Dispatching.h"
+#include "EC_RTCORBA_Factory.h"
 
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 

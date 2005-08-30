@@ -16,18 +16,23 @@
 #define TAO_TLS_PERSISTENCE_STRATEGY_H
 
 #include /**/ "ace/pre.h"
-#include /**/ "ace/config-all.h"
+
+#include "log_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/ORB.h"
 #include "ace/Service_Object.h"
-#include "log_serv_export.h"
 
 class TAO_LogStore;
 class TAO_LogMgr_i;
+
+namespace CORBA
+{
+  class ORB;
+  typedef ORB* ORB_ptr;
+}
 
 /**
  * @class TAO_Log_Persistence_Strategy
