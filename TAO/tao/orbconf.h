@@ -821,6 +821,15 @@ enum TAO_Policy_Scope
 #define TAO_DEF_GIOP_MINOR 2
 #endif /* TAO_DEF_GIOP_MINOR */
 
+// Control the minimum required IIOP version for IPv6 support
+#if defined (ACE_HAS_IPV6)
+# if !defined (TAO_MIN_IPV6_IIOP_MAJOR)
+#   define TAO_MIN_IPV6_IIOP_MAJOR 1
+# endif /* TAO_MIN_IPV6_IIOP_MAJOR */
+# if !defined (TAO_MIN_IPV6_IIOP_MINOR)
+#   define TAO_MIN_IPV6_IIOP_MINOR 2
+# endif /* TAO_MIN_IPV6_IIOP_MINOR */
+#endif /* ACE_HAS_IPV6 */
 
 // @@todo this needs to be deprecated. Use TAO_MAXBUFSIZE instead.
 #if !defined (TAO_CONNECTION_HANDLER_STACK_BUF_SIZE)
