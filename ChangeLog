@@ -1,3 +1,8 @@
+Tue Aug 30 14:49:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/README:
+          Added description for new ACE_HAS_IPV6_V6ONLY macro.
+
 Tue Aug 30 13:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_win32_icc.GNU:
