@@ -1,3 +1,10 @@
+Tue Aug 30 12:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/util/utl_global.cpp:
+          Fixed hasspace implementation, if an empty string was passed the
+          function would loop forever. Also a space as second last character
+          in the string wasn't detected
+
 Tue Aug 30 10:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Time_Service/Server_i.cpp:
