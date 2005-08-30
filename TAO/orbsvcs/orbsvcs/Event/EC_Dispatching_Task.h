@@ -57,7 +57,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Simple_Queue_Full_Action :
 {
 public:
   TAO_EC_Simple_Queue_Full_Action ();
-  
+
   /// Helper function to register the default action into the service
   /// configurator.
   static int init_svcs (void);
@@ -188,7 +188,7 @@ private:
 #endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE (TAO_EC_Simple_Queue_Full_Action)
-ACE_FACTORY_DECLARE (TAO_RTEvent, TAO_EC_Simple_Queue_Full_Action)
+ACE_FACTORY_DECLARE (TAO_RTEvent_Serv, TAO_EC_Simple_Queue_Full_Action)
 
 #include /**/ "ace/post.h"
 
