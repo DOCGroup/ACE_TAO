@@ -367,6 +367,8 @@ ACE_HAS_IPV6                            Platform supports IPv6.
 ACE_USES_IPV4_IPV6_MIGRATION            Enable IPv6 support in ACE on
                                         platforms that don't have IPv6
                                         turned on by default.
+ACE_HAS_IPV6_V6ONLY                     Platform supports the IPPROTO_IPV6
+                                        level IPV6_V6ONLY socket option.
 ACE_HAS_IRIX62_THREADS                  Platform supports the very odd
                                         IRIX 6.2 threads...
 ACE_HAS_NONSTATIC_OBJECT_MANAGER        Causes the ACE_Object_Manager
