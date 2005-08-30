@@ -121,8 +121,8 @@ TAO_IIOP_Connection_Handler::open (void*)
     return -1;
 #endif /* ! ACE_LACKS_TCP_NODELAY */
 
-  if (this->transport ()->wait_strategy ()->non_blocking ()
-      || this->transport ()->opened_as () == TAO::TAO_SERVER_ROLE)
+  if (!client ||
+      this->transport ()->wait_strategy ()->non_blocking ())
     {
       if (this->peer ().enable (ACE_NONBLOCK) == -1)
         return -1;
@@ -145,8 +145,7 @@ TAO_IIOP_Connection_Handler::open (void*)
                 ACE_TEXT("The local addr is <%s> \n"),
                 local_addr. get_host_addr ()));
 
-  if (local_addr.get_ip_address () == remote_addr.get_ip_address ()
-      && local_addr.get_port_number () == remote_addr.get_port_number ())
+  if (local_addr == remote_addr)
     {
       if (TAO_debug_level > 0)
         {
@@ -166,18 +165,40 @@ TAO_IIOP_Connection_Handler::open (void*)
       return -1;
     }
 
+#if defined (ACE_HAS_IPV6) && !defined (ACE_HAS_IPV6_V6ONLY)
+  // Check if we need to invalidate accepted connections
+  // from IPv4 mapped IPv6 addresses
+  if (this->orb_core ()->orb_params ()->connect_ipv6_only () &&
+      remote_addr.is_ipv4_mapped_ipv6 ())
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_TCHAR remote_as_string[MAXHOSTNAMELEN + 16];
+
+          (void) remote_addr.addr_to_string (remote_as_string,
+                                             sizeof(remote_as_string));
+
+          ACE_ERROR ((LM_WARNING,
+                      ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler::open, ")
+                      ACE_TEXT("invalid connection from IPv4 mapped IPv6 interface <%s>!\n"),
+                      remote_as_string));
+        }
+      return -1;
+    }
+#endif /* ACE_HAS_IPV6 && ACE_HAS_IPV6_V6ONLY */
+
   if (TAO_debug_level > 0)
     {
-      ACE_TCHAR client[MAXHOSTNAMELEN + 16];
+      ACE_TCHAR client_addr[MAXHOSTNAMELEN + 16];
 
       // Verify that we can resolve the peer hostname.
-      if (remote_addr.addr_to_string (client, sizeof (client)) == -1)
+      if (remote_addr.addr_to_string (client_addr, sizeof (client_addr)) == -1)
         return -1;
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - IIOP_Connection_Handler::open, IIOP ")
                   ACE_TEXT ("connection to peer <%s> on %d\n"),
-                  client, this->peer ().get_handle ()));
+                  client_addr, this->peer ().get_handle ()));
     }
 
   // Set that the transport is now connected, if fails we return -1
@@ -380,10 +401,36 @@ TAO_IIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_prio
 
   if (tos != this->dscp_codepoint_)
     {
-      int result = this->peer ().set_option (IPPROTO_IP,
-                                             IP_TOS,
-                                             (int *) &tos ,
-                                             (int) sizeof (tos));
+      int result = 0;
+#if defined (ACE_HAS_IPV6)
+      ACE_INET_Addr local_addr;
+      if (this->peer ().get_local_addr (local_addr) == -1)
+        return -1;
+      else if (local_addr.get_type () == AF_INET6)
+# if !defined (IPV6_TCLASS)
+      // IPv6 defines option IPV6_TCLASS for specifying traffic class/priority
+      // but not many implementations yet (very new;-).
+        {
+          if (TAO_debug_level)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "TAO (%P|%t) - IIOP_Connection_Handler::"
+                          "set_dscp_codepoint -> IPV6_TCLASS not supported yet\n"));
+            }
+          return 0;
+        }
+# else /* !IPV6_TCLASS */
+        result = this->peer ().set_option (IPPROTO_IPV6,
+                                           IPV6_TCLASS,
+                                           (int *) &tos ,
+                                           (int) sizeof (tos));
+      else
+# endif /* IPV6_TCLASS */
+#endif /* ACE_HAS_IPV6 */
+      result = this->peer ().set_option (IPPROTO_IP,
+                                         IP_TOS,
+                                         (int *) &tos ,
+                                         (int) sizeof (tos));
 
       if (TAO_debug_level)
         {
@@ -403,15 +450,3 @@ TAO_IIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_prio
 
   return 0;
 }
-
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

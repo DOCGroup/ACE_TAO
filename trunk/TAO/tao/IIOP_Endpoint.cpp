@@ -29,6 +29,9 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const ACE_INET_Addr &addr,
   : TAO_Endpoint (IOP::TAG_INTERNET_IOP)
   , host_ ()
   , port_ (683) // default port (IANA assigned)
+#if defined (ACE_HAS_IPV6)
+  , is_ipv6_decimal_ (false)
+#endif /* ACE_HAS_IPV6 */
   , is_encodable_ (true)
   , object_addr_set_ (false)
   , object_addr_ (addr)
@@ -44,20 +47,27 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const char *host,
                                       CORBA::Short priority)
   : TAO_Endpoint (IOP::TAG_INTERNET_IOP,
                   priority)
-  , host_ (host)
+  , host_ ()
   , port_ (port)
+#if defined (ACE_HAS_IPV6)
+  , is_ipv6_decimal_ (false)
+#endif /* ACE_HAS_IPV6 */
   , is_encodable_ (true)
   , object_addr_set_ (false)
   , object_addr_ (addr)
   , preferred_path_ ()
   , next_ (0)
 {
+  this->host(host); // With IPv6 performs check for decimal address
 }
 
 TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (void)
   : TAO_Endpoint (IOP::TAG_INTERNET_IOP)
   , host_ ()
   , port_ (683)  // default port (IANA assigned)
+#if defined (ACE_HAS_IPV6)
+  , is_ipv6_decimal_ (false)
+#endif /* ACE_HAS_IPV6 */
   , is_encodable_ (true)
   , object_addr_set_ (false)
   , object_addr_ ()
@@ -70,14 +80,18 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const char *host,
                                       CORBA::UShort port,
                                       CORBA::Short priority)
   : TAO_Endpoint (IOP::TAG_INTERNET_IOP, priority)
-  , host_ (host)
+  , host_ ()
   , port_ (port)
+#if defined (ACE_HAS_IPV6)
+  , is_ipv6_decimal_ (false)
+#endif /* ACE_HAS_IPV6 */
   , is_encodable_ (true)
   , object_addr_set_ (false)
   , object_addr_ ()
   , preferred_path_ ()
   , next_ (0)
 {
+  this->host(host); // With IPv6 performs check for decimal address
 }
 
 TAO_IIOP_Endpoint::~TAO_IIOP_Endpoint (void)
@@ -88,6 +102,9 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const TAO_IIOP_Endpoint &rhs)
   : TAO_Endpoint (rhs.tag_, rhs.priority_)
   , host_ (rhs.host_)
   , port_ (rhs.port_)
+#if defined (ACE_HAS_IPV6)
+  , is_ipv6_decimal_ (rhs.is_ipv6_decimal_)
+#endif /* ACE_HAS_IPV6 */
   , is_encodable_ (rhs.is_encodable_)
   , object_addr_set_ (rhs.object_addr_set_)
   , object_addr_ (rhs.object_addr_)
@@ -102,6 +119,10 @@ TAO_IIOP_Endpoint::set (const ACE_INET_Addr &addr,
 {
   char tmp_host[MAXHOSTNAMELEN + 1];
 
+#if defined (ACE_HAS_IPV6)
+  this->is_ipv6_decimal_ = false; // Reset
+#endif /* ACE_HAS_IPV6 */
+
   if (use_dotted_decimal_addresses
       || addr.get_host_name (tmp_host, sizeof (tmp_host)) != 0)
     {
@@ -109,7 +130,8 @@ TAO_IIOP_Endpoint::set (const ACE_INET_Addr &addr,
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - IIOP_Endpoint::set, ")
-                      ACE_TEXT ("- %p cannot determine hostname\n")));
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("cannot determine hostname")));
         }
 
       const char *tmp = addr.get_host_addr ();
@@ -119,13 +141,19 @@ TAO_IIOP_Endpoint::set (const ACE_INET_Addr &addr,
             {
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) - IIOP_Endpoint::set, ")
-                          ACE_TEXT ("- %p "),
-                          ACE_TEXT ("cannot determine hostname and hostaddr\n")));
+                          ACE_TEXT ("%p\n"),
+                          ACE_TEXT ("cannot determine hostname and hostaddr")));
             }
           return -1;
         }
       else
-        this->host_ = tmp;
+        {
+          this->host_ = tmp;
+#if defined (ACE_HAS_IPV6)
+          if (addr.get_type () == PF_INET6)
+            this->is_ipv6_decimal_ = true;
+#endif /* ACE_HAS_IPV6 */
+        }
     }
   else
     this->host_ = CORBA::string_dup (tmp_host);
@@ -144,9 +172,20 @@ TAO_IIOP_Endpoint::addr_to_string (char *buffer, size_t length)
     + ACE_OS::strlen ("65536")         // max port
     + sizeof ('\0');
 
+#if defined (ACE_HAS_IPV6)
+  if (this->is_ipv6_decimal_)
+    actual_len += 2; // '[' + ']'
+#endif /* ACE_HAS_IPV6 */
+
   if (length < actual_len)
     return -1;
 
+#if defined (ACE_HAS_IPV6)
+  if (this->is_ipv6_decimal_)
+    ACE_OS::sprintf (buffer, "[%s]:%d",
+                     this->host_.in (), this->port_);
+  else
+#endif /* ACE_HAS_IPV6 */
   ACE_OS::sprintf (buffer, "%s:%d",
                    this->host_.in (), this->port_);
 
@@ -157,6 +196,10 @@ const char *
 TAO_IIOP_Endpoint::host (const char *h)
 {
   this->host_ = h;
+#if defined (ACE_HAS_IPV6)
+  if (ACE_OS::strchr (h, ':') != 0)
+    this->is_ipv6_decimal_ = true;
+#endif /* ACE_HAS_IPV6 */
 
   return this->host_.in ();
 }
@@ -258,17 +301,20 @@ get_ip_interfaces(ACE_Vector<ACE_CString>& local_ips)
   int err = ACE::get_ip_interfaces (cnt, tmp);
   if (err != 0)
     return;
-  // @@ Do we need to worry about IPv6 here?
+#if defined (ACE_HAS_IPV6)
+  ACE_TCHAR buf[64];
+#else /* ACE_HAS_IPV6 */
   ACE_TCHAR buf[32];
+#endif /* !ACE_HAS_IPV6 */
   for (size_t i = 0; i < cnt; ++i)
   {
-    int err = tmp[i].addr_to_string(buf, 32);
-    ACE_ASSERT(err == 0);
-    ACE_UNUSED_ARG(err);
-    ACE_CString tmp(ACE_TEXT_ALWAYS_CHAR(buf));
-    ssize_t pos = tmp.find(':');
-    if (pos != ACE_CString::npos)
-      tmp = tmp.substr(0, pos);
+    const char *s_if = tmp[i].get_host_addr(buf, sizeof (buf));
+    ACE_ASSERT(s_if != 0);
+    ACE_UNUSED_ARG(s_if);
+    ACE_CString tmp(ACE_TEXT_ALWAYS_CHAR(s_if));
+    //ssize_t pos = tmp.find(':');
+    //if (pos != ACE_CString::npos)
+    //  tmp = tmp.substr(0, pos);
     local_ips.push_back(tmp);
   }
   delete[] tmp;
@@ -412,8 +458,7 @@ TAO_IIOP_Endpoint::hash (void)
         (void) this->object_addr_i ();
       }
 
-    this->hash_val_ =
-      this->object_addr_.get_ip_address () + this->port ();
+    this->hash_val_ = this->object_addr_.hash ();
   }
 
   return this->hash_val_;

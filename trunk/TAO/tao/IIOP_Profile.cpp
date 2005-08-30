@@ -133,6 +133,45 @@ TAO_IIOP_Profile::parse_string_i (const char *ior
   CORBA::ULong length_host = 0;
 
   const char *cp_pos = ACE_OS::strchr (ior, ':');  // Look for a port
+#if defined (ACE_HAS_IPV6)
+  // IPv6 numeric address in host string?
+  bool ipv6_in_host = false;
+
+  // Check if this is a (possibly) IPv6 supporting profile containing a
+  // decimal IPv6 address representation.
+  if ((this->version().major > TAO_MIN_IPV6_IIOP_MAJOR ||
+        this->version().minor >= TAO_MIN_IPV6_IIOP_MINOR) &&
+      ior[0] == '[')
+    {
+      // In this case we have to find the end of the numeric address and
+      // start looking for the port separator from there.
+      const char *cp_pos_a = ACE_OS::strchr(ior, ']');
+      if (cp_pos_a == 0)
+        {
+          // No valid IPv6 address specified.
+          if (TAO_debug_level > 0)
+            {
+              ACE_DEBUG ((LM_ERROR,
+                       ACE_LIB_TEXT ("\nTAO (%P|%t) IIOP_Profile: ")
+                       ACE_LIB_TEXT ("Invalid IPv6 decimal address specified.\n")));
+            }
+
+          ACE_THROW (CORBA::INV_OBJREF (
+                       CORBA::SystemException::_tao_minor_code (
+                         0,
+                         EINVAL),
+                       CORBA::COMPLETED_NO));
+        }
+      else
+        {
+          if (cp_pos_a[1] == ':')    // Look for a port
+            cp_pos = cp_pos_a + 1;
+          else
+            cp_pos = 0;
+          ipv6_in_host = true; // host string contains full IPv6 numeric address
+        }
+    }
+#endif /* ACE_HAS_IPV6 */
 
   if (cp_pos == ior)
     {
@@ -187,13 +226,26 @@ TAO_IIOP_Profile::parse_string_i (const char *ior
   else
     length_host = okd - ior;
 
+#if defined (ACE_HAS_IPV6)
+  if (ipv6_in_host)
+    length_host -= 2; // don't store '[' and ']'
+#endif /* ACE_HAS_IPV6 */
+
   CORBA::String_var tmp = CORBA::string_alloc (length_host);
 
+#if defined (ACE_HAS_IPV6)
+  if (ipv6_in_host)
+    ACE_OS::strncpy (tmp.inout (), ior + 1, length_host);
+  else
+#endif /* ACE_HAS_IPV6 */
   // Skip the trailing '/'
   ACE_OS::strncpy (tmp.inout (), ior, length_host);
   tmp[length_host] = '\0';
 
   this->endpoint_.host_ = tmp._retn ();
+#if defined (ACE_HAS_IPV6)
+  this->endpoint_.is_ipv6_decimal_ = ipv6_in_host;
+#endif /* ACE_HAS_IPV6 */
 
   if (ACE_OS::strcmp (this->endpoint_.host_.in (), "") == 0)
     {
@@ -332,11 +384,38 @@ TAO_IIOP_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                    5 /* port number */ +
                    1 /* object key separator */ +
                    ACE_OS::strlen (key.in ()));
+#if defined (ACE_HAS_IPV6)
+  if (this->endpoint_.is_ipv6_decimal_)
+    buflen += 2; // room for '[' and ']'
+#endif /* ACE_HAS_IPV6 */
 
   char * buf = CORBA::string_alloc (static_cast<CORBA::ULong> (buflen));
 
   static const char digits [] = "0123456789";
 
+#if defined (ACE_HAS_IPV6)
+  if (this->endpoint_.is_ipv6_decimal_)
+    {
+      // Don't publish scopeid if included.
+      ACE_CString tmp(this->endpoint_.host ());
+      ssize_t pos = tmp.find('%');
+      if (pos != ACE_CString::npos)
+        {
+          tmp = tmp.substr(0, pos + 1);
+          tmp[pos] = '\0';
+        }
+      ACE_OS::sprintf (buf,
+                       "corbaloc:%s:%c.%c@[%s]:%d%c%s",
+                       ::prefix_,
+                       digits [this->version_.major],
+                       digits [this->version_.minor],
+                       tmp.c_str (),
+                       this->endpoint_.port (),
+                       this->object_key_delimiter_,
+                       key.in ());
+    }
+  else
+#endif /* ACE_HAS_IPV6 */
   ACE_OS::sprintf (buf,
                    "corbaloc:%s:%c.%c@%s:%d%c%s",
                    ::prefix_,
@@ -366,7 +445,23 @@ TAO_IIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
   encap.write_octet (this->version_.minor);
 
   // STRING hostname from profile
+#if defined (ACE_HAS_IPV6)
+  // For IPv6 decimal addresses make sure the possibly included scopeid
+  // is not published as this has only local meaning.
+  const char* host;
+  const char* pos;
+  if (this->endpoint_.is_ipv6_decimal_ &&
+      (pos = ACE_OS::strchr (host = this->endpoint_.host (), '%')) != 0)
+    {
+      ACE_CString tmp;
+      size_t len = pos - host;
+      tmp.set (this->endpoint_.host (), len, 1);
+      encap.write_string (tmp.c_str ());
+    }
+  else
+#endif /* ACE_HAS_IPV6 */
   encap.write_string (this->endpoint_.host ());
+
 
   // UNSIGNED SHORT port number
   encap.write_ushort (this->endpoint_.port ());
@@ -409,11 +504,29 @@ TAO_IIOP_Profile::encode_alternate_endpoints (void)
       // it is encoded as host first, then port.
       TAO_OutputCDR out_cdr;
 
-      if ((out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)
-	   == 0)
-	  || (out_cdr << endpoint->host() == 0)
-          || (out_cdr << endpoint->port() == 0))
-	return -1;
+#if defined (ACE_HAS_IPV6)
+      // For IPv6 decimal addresses make sure the possibly included scopeid
+      // is not published as this has only local meaning.
+      const char* host;
+      const char* pos;
+      if (endpoint->is_ipv6_decimal_ &&
+          (pos = ACE_OS::strchr (host = endpoint->host (), '%')) != 0)
+        {
+          ACE_CString tmp;
+          size_t len = pos - host;
+          tmp.set (endpoint->host (), len, 1);
+          if ((out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
+              || (out_cdr << tmp.c_str () == 0)
+              || (out_cdr << endpoint->port () == 0))
+            return -1;
+          out_cdr.write_string (len, endpoint->host ());
+        }
+      else
+#endif /* ACE_HAS_IPV6 */
+      if ((out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
+	        || (out_cdr << endpoint->host () == 0)
+          || (out_cdr << endpoint->port () == 0))
+        return -1;
 
       IOP::TaggedComponent tagged_component;
       tagged_component.tag = IOP::TAG_ALTERNATE_IIOP_ADDRESS;
@@ -422,17 +535,17 @@ TAO_IIOP_Profile::encode_alternate_endpoints (void)
       tagged_component.component_data.length
         (static_cast<CORBA::ULong>(length));
       CORBA::Octet *buf =
-	tagged_component.component_data.get_buffer ();
+        tagged_component.component_data.get_buffer ();
 
       for (const ACE_Message_Block *iterator = out_cdr.begin ();
-	   iterator != 0;
-	   iterator = iterator->cont ())
-	{
-	  size_t i_length = iterator->length ();
-	  ACE_OS::memcpy (buf, iterator->rd_ptr (), i_length);
+	         iterator != 0;
+           iterator = iterator->cont ())
+        {
+          size_t i_length = iterator->length ();
+          ACE_OS::memcpy (buf, iterator->rd_ptr (), i_length);
 
-	  buf += i_length;
-	}
+          buf += i_length;
+        }
 
       // Add component with encoded endpoint data to this profile's
       // TaggedComponents.
@@ -477,6 +590,23 @@ TAO_IIOP_Profile::encode_endpoints (void)
     {
       if (endpoint->is_encodable_)
         {
+#if defined (ACE_HAS_IPV6)
+          if (endpoint->is_ipv6_decimal_)
+            {
+              // Don't publish scopeid if included.
+              ACE_CString tmp(endpoint->host ());
+              ssize_t pos = tmp.find('%');
+              if (pos != ACE_CString::npos)
+                {
+                  tmp = tmp.substr (0, pos + 1);
+                  tmp[pos] = '\0';
+                  endpoints[i].host = tmp.c_str();
+                }
+              else
+                endpoints[i].host = tmp.c_str();
+            }
+          else
+#endif /* ACE_HAS_IPV6 */
           endpoints[i].host = endpoint->host ();
           endpoints[i].port = endpoint->port ();
           endpoints[i].priority = endpoint->priority ();

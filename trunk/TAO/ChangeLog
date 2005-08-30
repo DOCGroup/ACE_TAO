@@ -1,3 +1,21 @@
+Tue Aug 30 09:12:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/CORBALOC_Parser.cpp:
+        * IIOP_Acceptor.cpp:
+        * IIOP_Connection_Handler.cpp:
+        * IIOP_Connector.cpp:
+        * IIOP_Endpoint{.h .cpp. i}:
+        * IIOP_Profile.cpp:
+        * IIOP_Transport.cpp:
+        * Invocation_Endpoint_Selectors.cpp:
+        * MCAST_Parser.cpp:
+        * orbconf.h:
+        * ORB_Core.cpp:
+        * params{ .h .cpp}:
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp:
+
+          Added IPv6 support for TAO.
+
 Tue Aug 30 06:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.h:
@@ -5,68 +23,68 @@ Tue Aug 30 06:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Aug 30 01:20:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp (queue_full_action):
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp (queue_full_action):
 
-	  Fixed "'*/' found outside of comment" warning.
+          Fixed "'*/' found outside of comment" warning.
 
 Mon Aug 29 18:39:29 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/AV/AV_Core.h:
-	* orbsvcs/orbsvcs/AV/Policy.cpp::
-	* orbsvcs/orbsvcs/AV/Protocol_Factory.h::
-	* orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.h::
-	* orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.h::
-	* orbsvcs/orbsvcs/CosEvent/CEC_DynamicImplementation.h::
-	* orbsvcs/orbsvcs/CosEvent/CEC_Factory.h::
-	* orbsvcs/orbsvcs/CosEvent/CEC_Pulling_Strategy.h::
-	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.cpp::
-	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.h::
-	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.cpp::
-	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.cpp::
-	* orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.h::
-	* orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.h::
-	* orbsvcs/orbsvcs/Event/ECG_Reactive_ConsumerEC_Control.cpp::
-	* orbsvcs/orbsvcs/Event/ECG_Reconnect_ConsumerEC_Control.cpp::
-	* orbsvcs/orbsvcs/Event/EC_RTCORBA_Factory.cpp::
-	* orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.h:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Replication_Strategy.h:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_Base.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_Base.h:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.h:
-	* orbsvcs/orbsvcs/LoadBalancing/LB_ClientORBInitializer.h:
-	* orbsvcs/orbsvcs/LoadBalancing/LB_MemberLocator.cpp:
-	* orbsvcs/orbsvcs/Log/LogActivator.h:
-	* orbsvcs/orbsvcs/Log/Log_Persistence_Strategy.h:
-	* orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Initializer.h:
-	* orbsvcs/orbsvcs/HTIOP/htiop_endpointsC.cpp:
-	* orbsvcs/orbsvcs/Notify/Builder.h:
-	* orbsvcs/orbsvcs/Notify/POA_Helper.h:
-	* orbsvcs/orbsvcs/Notify/Properties.h:
-	* orbsvcs/orbsvcs/Notify/Timer.h:
-	* orbsvcs/orbsvcs/Notify/Timer_Reactor.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/GOA.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/GOA.h:
-	* orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
-	* orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Manipulator.h:
-	* orbsvcs/orbsvcs/PortableGroup/PG_Servant_Dispatcher.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Request_Dispatcher.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.h:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.h:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.h:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.h:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.h:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/ssl_endpointsC.cpp:
-	* orbsvcs/orbsvcs/Trader/Trading_Loader.h:
+        * orbsvcs/orbsvcs/AV/AV_Core.h:
+        * orbsvcs/orbsvcs/AV/Policy.cpp::
+        * orbsvcs/orbsvcs/AV/Protocol_Factory.h::
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.h::
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.h::
+        * orbsvcs/orbsvcs/CosEvent/CEC_DynamicImplementation.h::
+        * orbsvcs/orbsvcs/CosEvent/CEC_Factory.h::
+        * orbsvcs/orbsvcs/CosEvent/CEC_Pulling_Strategy.h::
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.cpp::
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.h::
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.cpp::
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.cpp::
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.h::
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.h::
+        * orbsvcs/orbsvcs/Event/ECG_Reactive_ConsumerEC_Control.cpp::
+        * orbsvcs/orbsvcs/Event/ECG_Reconnect_ConsumerEC_Control.cpp::
+        * orbsvcs/orbsvcs/Event/EC_RTCORBA_Factory.cpp::
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Replication_Strategy.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_Base.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_Base.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_ClientORBInitializer.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_MemberLocator.cpp:
+        * orbsvcs/orbsvcs/Log/LogActivator.h:
+        * orbsvcs/orbsvcs/Log/Log_Persistence_Strategy.h:
+        * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Initializer.h:
+        * orbsvcs/orbsvcs/HTIOP/htiop_endpointsC.cpp:
+        * orbsvcs/orbsvcs/Notify/Builder.h:
+        * orbsvcs/orbsvcs/Notify/POA_Helper.h:
+        * orbsvcs/orbsvcs/Notify/Properties.h:
+        * orbsvcs/orbsvcs/Notify/Timer.h:
+        * orbsvcs/orbsvcs/Notify/Timer_Reactor.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/GOA.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/GOA.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Factory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Manipulator.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Servant_Dispatcher.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PortableGroup_Request_Dispatcher.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/ssl_endpointsC.cpp:
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.h:
 
           Reordered include directives to make sure all necessary
           non-dependent names are parsed before the templates that use
@@ -93,12 +111,12 @@ Mon Aug 29 14:08:42 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
 Mon Aug 29 12:08:16 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Server.cpp:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Server.cpp:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Server.cpp:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Server.cpp:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Server.cpp:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Server.cpp:
 
-	  Changed to clarify error message output when service
-	  initialization fails.
+          Changed to clarify error message output when service
+          initialization fails.
 
 Mon Aug 29 09:03:55 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 

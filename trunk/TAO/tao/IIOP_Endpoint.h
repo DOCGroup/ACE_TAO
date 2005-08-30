@@ -111,6 +111,11 @@ public:
   /// Return the preferred network if any.
   const char *preferred_network (void) const;
 
+#if defined (ACE_HAS_IPV6)
+  /// Does the host string represent an IPv6 decimal address.
+  bool is_ipv6_decimal (void) const;
+#endif /* ACE_HAS_IPV6 */
+
 private:
 
   /// Helper method for setting INET_Addr.
@@ -143,6 +148,11 @@ private:
 
   /// TCP port number.
   CORBA::UShort port_;
+
+#if defined (ACE_HAS_IPV6)
+  /// Does the host string represent an IPv6 decimal address.
+  bool is_ipv6_decimal_;
+#endif /* ACE_HAS_IPV6 */
 
   /// Is this endpoint created encodable as part of the IOR?
   bool is_encodable_;
