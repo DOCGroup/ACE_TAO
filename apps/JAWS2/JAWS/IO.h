@@ -218,8 +218,7 @@ public:
 
   enum Message_Types
   {
-    CONFORMATION,
-    CONFIRMATION = CONFORMATION,
+    CONFIRMATION,
     ERROR_MESSAGE
   };
 
