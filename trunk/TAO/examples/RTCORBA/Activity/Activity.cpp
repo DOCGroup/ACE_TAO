@@ -408,9 +408,9 @@ Activity::create_started_flag_file (int argc, char *argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-Started_Flag"))))
+      if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Started_Flag"))))
         {
-          FILE *file = ACE_OS::fopen (current_arg, ACE_LIB_TEXT("w"));
+          FILE *file = ACE_OS::fopen (current_arg, ACE_TEXT("w"));
 
           if (file == 0)
             ACE_ERROR ((LM_ERROR,

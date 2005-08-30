@@ -73,7 +73,7 @@ Notify_Logging_Service::init_ORB (int& argc, char *argv []
 int
 Notify_Logging_Service::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("n:o:p:t::x"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:o:p:t::x"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -169,7 +169,7 @@ Notify_Logging_Service::init (int argc, char *argv[]
 
   if (ior_file_name_ != 0)
     {
-      FILE* iorf = ACE_OS::fopen (ior_file_name_, ACE_LIB_TEXT("w"));
+      FILE* iorf = ACE_OS::fopen (ior_file_name_, ACE_TEXT("w"));
       if (iorf == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -184,7 +184,7 @@ Notify_Logging_Service::init (int argc, char *argv[]
 
   if (pid_file_name_ != 0)
     {
-      FILE* pidf = ACE_OS::fopen (pid_file_name_, ACE_LIB_TEXT("w"));
+      FILE* pidf = ACE_OS::fopen (pid_file_name_, ACE_TEXT("w"));
       if (pidf != 0)
         {
           ACE_OS::fprintf (pidf,

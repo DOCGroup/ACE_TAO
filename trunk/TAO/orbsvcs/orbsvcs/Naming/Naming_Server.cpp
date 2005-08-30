@@ -165,7 +165,7 @@ int
 TAO_Naming_Server::parse_args (int argc,
                                ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_LIB_TEXT("b:do:p:s:f:m:u:r:z:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:do:p:s:f:m:u:r:z:"));
 
   int c;
   int size, result;
@@ -240,26 +240,26 @@ TAO_Naming_Server::parse_args (int argc,
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT ("usage:  %s ")
-                           ACE_LIB_TEXT ("-d ")
-                           ACE_LIB_TEXT ("-o <ior_output_file> ")
-                           ACE_LIB_TEXT ("-p <pid_file_name> ")
-                           ACE_LIB_TEXT ("-s <context_size> ")
-                           ACE_LIB_TEXT ("-b <base_address> ")
-                           ACE_LIB_TEXT ("-m <1=enable multicast, 0=disable multicast(default) ")
-                           ACE_LIB_TEXT ("-f <persistence_file_name> ")
-                           ACE_LIB_TEXT ("-u <storable_persistence_directory (not used with -f)> ")
-                           ACE_LIB_TEXT ("-r <redundant_persistence_directory> ")
-                           ACE_LIB_TEXT ("-z <relative round trip timeout> ")
-                           ACE_LIB_TEXT ("\n"),
+                           ACE_TEXT ("usage:  %s ")
+                           ACE_TEXT ("-d ")
+                           ACE_TEXT ("-o <ior_output_file> ")
+                           ACE_TEXT ("-p <pid_file_name> ")
+                           ACE_TEXT ("-s <context_size> ")
+                           ACE_TEXT ("-b <base_address> ")
+                           ACE_TEXT ("-m <1=enable multicast, 0=disable multicast(default) ")
+                           ACE_TEXT ("-f <persistence_file_name> ")
+                           ACE_TEXT ("-u <storable_persistence_directory (not used with -f)> ")
+                           ACE_TEXT ("-r <redundant_persistence_directory> ")
+                           ACE_TEXT ("-z <relative round trip timeout> ")
+                           ACE_TEXT ("\n"),
                            argv [0]),
                           -1);
       }
 
   if (f_opt_used + u_opt_used + r_opt_used > 1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("Only one persistence option can be passed")
-                       ACE_LIB_TEXT ("\n")),
+                       ACE_TEXT ("Only one persistence option can be passed")
+                       ACE_TEXT ("\n")),
                       -1);
 
   return 0;
@@ -286,7 +286,7 @@ TAO_Naming_Server::init_with_orb (int argc,
       if (CORBA::is_nil (poa_object.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT(" (%P|%t) Unable to initialize the POA.\n")),
+                             ACE_TEXT(" (%P|%t) Unable to initialize the POA.\n")),
                             -1);
         }
 
@@ -397,14 +397,14 @@ TAO_Naming_Server::init_with_orb (int argc,
 
   if (this->ior_file_name_ != 0)
     {
-      FILE *iorf = ACE_OS::fopen (this->ior_file_name_, ACE_LIB_TEXT("w"));
+      FILE *iorf = ACE_OS::fopen (this->ior_file_name_, ACE_TEXT("w"));
       if (iorf == 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT("Unable to open %s for writing:(%u) %p\n"),
+                             ACE_TEXT("Unable to open %s for writing:(%u) %p\n"),
                              this->ior_file_name_,
                              errno,
-                             ACE_LIB_TEXT("TAO_Naming_Server::init_with_orb")),
+                             ACE_TEXT("TAO_Naming_Server::init_with_orb")),
                             -1);
         }
 
@@ -416,7 +416,7 @@ TAO_Naming_Server::init_with_orb (int argc,
 
   if (this->pid_file_name_ != 0)
     {
-      FILE *pidf = ACE_OS::fopen (this->pid_file_name_, ACE_LIB_TEXT("w"));
+      FILE *pidf = ACE_OS::fopen (this->pid_file_name_, ACE_TEXT("w"));
       if (pidf != 0)
         {
           ACE_OS::fprintf (pidf,
@@ -459,7 +459,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           if (persistence_location == 0)
             {
               // No, assign the default location "NameService"
-              persistence_location = ACE_LIB_TEXT("NameService");
+              persistence_location = ACE_TEXT("NameService");
             }
 
           // Now make sure this directory exists

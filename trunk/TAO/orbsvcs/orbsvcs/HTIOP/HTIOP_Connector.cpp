@@ -101,10 +101,10 @@ TAO::HTIOP::Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
        if (TAO_debug_level > 0)
          {
            ACE_DEBUG ((LM_DEBUG,
-                       ACE_LIB_TEXT ("TAO (%P|%t) TAO_HTIOP connection failed.\n")
-                       ACE_LIB_TEXT ("TAO (%P|%t) This is most likely ")
-                       ACE_LIB_TEXT ("due to a hostname lookup ")
-                       ACE_LIB_TEXT ("failure.\n")));
+                       ACE_TEXT ("TAO (%P|%t) TAO_HTIOP connection failed.\n")
+                       ACE_TEXT ("TAO (%P|%t) This is most likely ")
+                       ACE_TEXT ("due to a hostname lookup ")
+                       ACE_TEXT ("failure.\n")));
          }
 
        return -1;

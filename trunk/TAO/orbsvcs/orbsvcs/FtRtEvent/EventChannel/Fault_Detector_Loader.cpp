@@ -44,7 +44,7 @@ namespace FTRTEC {
     Fault_Detector* detector = 0;
 
     // Parse any service configurator parameters.
-    if (argc > 0 && ACE_OS::strcasecmp (argv[0], ACE_LIB_TEXT("sctp")) == 0)
+    if (argc > 0 && ACE_OS::strcasecmp (argv[0], ACE_TEXT("sctp")) == 0)
     {
 #if (TAO_HAS_SCIOP == 1)
       ACE_AUTO_PTR_RESET(detector_, detector, Fault_Detector);

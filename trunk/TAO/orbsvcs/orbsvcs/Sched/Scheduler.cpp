@@ -213,13 +213,13 @@ void ACE_Scheduler::export_to_file (RT_Info& info, FILE* file)
 {
   // The divide-by-1 is for ACE_U_LongLong support.
   (void) ACE_OS::fprintf (file,
-                          ACE_LIB_TEXT("%s\n%d\n")
-                          ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT("\n")
-                          ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT("\n")
-                          ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT("\n")
-                          ACE_LIB_TEXT("%d\n%d\n")
-                          ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT("\n")
-                          ACE_LIB_TEXT("%u\n# begin dependencies\n%d\n"),
+                          ACE_TEXT("%s\n%d\n")
+                          ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT("\n")
+                          ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT("\n")
+                          ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT("\n")
+                          ACE_TEXT("%d\n%d\n")
+                          ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT("\n")
+                          ACE_TEXT("%u\n# begin dependencies\n%d\n"),
                           (const char*)info.entry_point,
                           info.handle,
                           ORBSVCS_Time::to_hrtime (info.worst_case_execution_time) / 1,

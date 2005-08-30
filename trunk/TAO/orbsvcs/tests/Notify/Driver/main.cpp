@@ -12,7 +12,7 @@ ACE_TMAIN (int argc, char *argv[])
     {
       if (driver.init (argc, argv ACE_ENV_ARG_PARAMETER) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT("Failed to initialize the Notify Testing Driver.\n")),
+                             ACE_TEXT("Failed to initialize the Notify Testing Driver.\n")),
                             1);
 
       driver.run (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -20,7 +20,7 @@ ACE_TMAIN (int argc, char *argv[])
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, ACE_LIB_TEXT("Error: \n"));
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, ACE_TEXT("Error: \n"));
       return 1;
     }
   ACE_ENDTRY;

@@ -36,7 +36,7 @@ TAO_Notify_Tests_Activation_Manager::~TAO_Notify_Tests_Activation_Manager ()
 int
 TAO_Notify_Tests_Activation_Manager::ior_output_file (const ACE_TCHAR *file_name)
 {
-  this->ior_output_file_ = ACE_OS::fopen (file_name, ACE_LIB_TEXT("w"));
+  this->ior_output_file_ = ACE_OS::fopen (file_name, ACE_TEXT("w"));
 
   if (this->ior_output_file_ == 0)
     return -1;

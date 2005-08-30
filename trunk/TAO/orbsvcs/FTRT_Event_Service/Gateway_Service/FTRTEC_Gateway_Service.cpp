@@ -24,7 +24,7 @@ namespace {
 int parse_args(int argc, ACE_TCHAR** argv)
 {
   ACE_TRY_NEW_ENV {
-    ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("i:n:o:"));
+    ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("i:n:o:"));
     int opt;
     CosNaming::Name name(1);
     name.length(1);
@@ -116,7 +116,7 @@ int main(int argc,  ACE_TCHAR** argv)
 
       FILE *output_file=
         ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(ior_file_name.c_str()),
-        ACE_LIB_TEXT("w"));
+        ACE_TEXT("w"));
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
         "Cannot open output file for writing IOR: %s",

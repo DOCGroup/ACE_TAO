@@ -350,8 +350,8 @@ Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_p
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("(%t|%T): send_request : ")
-              ACE_LIB_TEXT ("about to call scheduler to inform block\n")
+              ACE_TEXT ("(%t|%T): send_request : ")
+              ACE_TEXT ("about to call scheduler to inform block\n")
               ));
 #endif
 
@@ -360,7 +360,7 @@ Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_p
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("(%t|%T): send_request interceptor done\n")));
+              ACE_TEXT ("(%t|%T): send_request interceptor done\n")));
 #endif
 }
 

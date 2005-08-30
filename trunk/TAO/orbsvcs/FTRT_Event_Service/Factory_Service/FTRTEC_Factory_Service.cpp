@@ -15,7 +15,7 @@ namespace {
 
 int parse_args(int argc, char* argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("i:k:o:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("i:k:o:"));
   int opt;
 
   int result = 0;
@@ -41,11 +41,11 @@ int parse_args(int argc, char* argv[])
   if (result == -1 || (id.length() == 0 && output.length() == 0))
   {
     ACE_DEBUG ((LM_DEBUG,
-      ACE_LIB_TEXT("Usage: %s \n")
-      ACE_LIB_TEXT("  [-i id]  set the id that is used to register to the naming service\n")
-      ACE_LIB_TEXT("  [-k kind] set the kind that is used to register to the naming service\n")
-      ACE_LIB_TEXT("  [-o filename] set the output file name for the IOR\n")
-      ACE_LIB_TEXT("\n"),
+      ACE_TEXT("Usage: %s \n")
+      ACE_TEXT("  [-i id]  set the id that is used to register to the naming service\n")
+      ACE_TEXT("  [-k kind] set the kind that is used to register to the naming service\n")
+      ACE_TEXT("  [-o filename] set the output file name for the IOR\n")
+      ACE_TEXT("\n"),
       argv[0]));
     return -1;
   }
@@ -126,7 +126,7 @@ int main(int argc, ACE_TCHAR* argv[])
       {
         FILE *output_file=
           ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(output.c_str()),
-          ACE_LIB_TEXT("w"));
+          ACE_TEXT("w"));
         if (output_file == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
           "Cannot open output file for writing IOR: %s",
