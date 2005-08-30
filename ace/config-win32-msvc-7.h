@@ -50,7 +50,7 @@
 #define ACE_STRNCASECMP_EQUIVALENT ::_strnicmp
 #define ACE_WCSDUP_EQUIVALENT ::_wcsdup
 
-#if !defined (ACE_HAS_WINCE)
+#if !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_EXCEPTIONS)
 #define ACE_HAS_EXCEPTIONS
 #endif /* ACE_HAS_WINCE */
 
