@@ -5,7 +5,6 @@
 
 #include "orbsvcs/Shutdown_Utilities.h"
 #include "tao/debug.h"
-#include "ace/Log_Msg.h"
 
 
 class Notify_Service_Shutdown_Functor
@@ -62,8 +61,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return 1;
     }
   ACE_ENDTRY;
-
-  ACE_DEBUG ((LM_ERROR, "Exiting\n"));
 
   return 0;
 }
