@@ -56,10 +56,6 @@ public:
 
 extern unsigned long EC_TPC_debug_level;
 
-#if defined (__ACE_INLINE__)
-#include "EC_TPC_Factory.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_STATIC_SVC_DECLARE (TAO_EC_TPC_Factory)
 ACE_FACTORY_DECLARE (TAO_RTEvent_Serv, TAO_EC_TPC_Factory)
 
