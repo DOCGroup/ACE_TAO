@@ -1,3 +1,30 @@
+Tue Aug 30 11:51:32 CDT 2005  William Otte <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/Config_Handlers/Basic_Deployment_Data.cpp
+	* DAnCE/Config_Handlers/Basic_Deployment_Data.hpp
+	* DAnCE/Config_Handlers/CIAOServerResources.cpp
+	* DAnCE/Config_Handlers/CIAOServerResources.hpp
+	* DAnCE/Config_Handlers/Deployment.cpp
+	* DAnCE/Config_Handlers/Deployment.hpp
+	* DAnCE/Config_Handlers/ccd.cpp
+	* DAnCE/Config_Handlers/ccd.hpp
+	* DAnCE/Config_Handlers/cdd.cpp
+	* DAnCE/Config_Handlers/cdd.hpp
+	* DAnCE/Config_Handlers/cdp.cpp
+	* DAnCE/Config_Handlers/cdp.hpp
+	* DAnCE/Config_Handlers/cid.cpp
+	* DAnCE/Config_Handlers/cid.hpp
+	* DAnCE/Config_Handlers/cpd.cpp
+	* DAnCE/Config_Handlers/cpd.hpp
+	* DAnCE/Config_Handlers/iad.cpp
+	* DAnCE/Config_Handlers/iad.hpp
+	* DAnCE/Config_Handlers/pcd.cpp
+	* DAnCE/Config_Handlers/pcd.hpp
+	* DAnCE/Config_Handlers/toplevel.cpp
+	* DAnCE/Config_Handlers/toplevel.hpp
+
+	Fixes a large number of compiler warnings in Borland. 
+
 Thu Aug 25 15:26:25 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
 	* DAnCE/ciao/ServerResources.idl: Added the missing <stacksize>

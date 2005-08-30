@@ -279,27 +279,114 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::PackageConfiguration Type;
         PackageConfiguration (::XSCRT::XML::Element< ACE_TCHAR >&);
 
+        #ifdef __BORLANDC__
+        virtual void 
+        traverse (Type &o)
+        {
+
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        label (Type &o)
+        {
+
+          this->label (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         label (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        UUID (Type &o)
+        {
+
+          this->UUID (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         UUID (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        basePackage (Type &o)
+        {
+
+          this->basePackage (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         basePackage (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        reference (Type &o)
+        {
+
+          this->reference (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         reference (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        selectRequirement (Type &o)
+        {
+
+          this->selectRequirement (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         selectRequirement (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        configProperty (Type &o)
+        {
+
+          this->configProperty (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         configProperty (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        contentLocation (Type &o)
+        {
+
+          this->contentLocation (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         contentLocation (Type const&);
 

@@ -206,7 +206,7 @@ namespace CIAO
     }
 
     size_t Domain::
-    count_node(void)
+    count_node(void) const
     {
       return node_.size ();
     }

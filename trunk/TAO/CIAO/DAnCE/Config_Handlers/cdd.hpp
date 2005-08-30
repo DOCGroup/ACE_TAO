@@ -89,7 +89,7 @@ namespace CIAO
       node_const_iterator begin_node () const;
       node_const_iterator end_node () const;
       void add_node (::CIAO::Config_Handlers::Node const& );
-      size_t count_node (void);
+      size_t count_node (void) const;
 
       protected:
       ::std::vector< ::CIAO::Config_Handlers::Node > node_;
@@ -234,27 +234,114 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::Domain Type;
         Domain (::XSCRT::XML::Element< ACE_TCHAR >&);
 
+        #ifdef __BORLANDC__
+        virtual void 
+        traverse (Type &o)
+        {
+
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        label (Type &o)
+        {
+
+          this->label (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         label (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        UUID (Type &o)
+        {
+
+          this->UUID (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         UUID (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        sharedResource (Type &o)
+        {
+
+          this->sharedResource (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         sharedResource (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        node_pre (Type &o)
+        {
+
+          this->node_pre (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         node_pre (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        node_next (Type &o)
+        {
+
+          this->node_next (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         node_next (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        node_post (Type &o)
+        {
+
+          this->node_post (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         node_post (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        infoProperty (Type &o)
+        {
+
+          this->infoProperty (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         infoProperty (Type const&);
 

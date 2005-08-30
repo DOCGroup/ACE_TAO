@@ -107,7 +107,7 @@ namespace CIAO
     }
 
     size_t TopLevelPackageDescription::
-    count_package(void)
+    count_package(void) const
     {
       return package_.size ();
     }
