@@ -1,3 +1,9 @@
+Tue Aug 30 16:09:53 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/Notify_Service/Notify_Server.cpp:
+
+	  Removed extraneous ACE_DEBUG().
+
 Tue Aug 30 15:56:49 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/Notify_Service/Notify_Server.cpp:
