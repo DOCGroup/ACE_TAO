@@ -12,11 +12,8 @@ Tue Aug 30 14:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
         * orbsvcs/FTRT_Event_Service/Factory_Service/FTRTEC_Factory_Service.cpp
         * orbsvcs/FTRT_Event_Service/Gateway_Service/FTRTEC_Gateway_Service.cpp
         * orbsvcs/LifeCycle_Service/LifeCycle_Service.cpp
-        P orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Server.cpp
         * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp
-        P orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Server.cpp
         * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp
-        P orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Server.cpp
         * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp
         * orbsvcs/Naming_Service/Naming_Server.cpp
         * orbsvcs/Naming_Service/Naming_Service.cpp
