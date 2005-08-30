@@ -10,7 +10,7 @@
 
 #ifndef TAO_EC_TPC_DISPATCHING_H
 #define TAO_EC_TPC_DISPATCHING_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Hash_Map_Manager_T.h"
 
@@ -79,5 +79,5 @@ private:
 #include "EC_TPC_Dispatching.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_TPC_DISPATCHING_H */

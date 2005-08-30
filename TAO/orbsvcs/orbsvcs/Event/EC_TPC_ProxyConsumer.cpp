@@ -19,7 +19,7 @@ TAO_EC_TPC_ProxyPushConsumer::tpc_dispatching ()
 {
   TAO_EC_Dispatching* dispatcher = this->event_channel_->dispatching ();
   TAO_EC_TPC_Dispatching* tpcdispatcher =
-    ACE_dynamic_cast (TAO_EC_TPC_Dispatching*, dispatcher);
+    dynamic_cast<TAO_EC_TPC_Dispatching*>(dispatcher);
   return tpcdispatcher;  
 }
 

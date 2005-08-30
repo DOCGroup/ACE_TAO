@@ -10,7 +10,7 @@
 
 #ifndef TAO_EC_TPC_PROXYCONSUMER_H
 #define TAO_EC_TPC_PROXYCONSUMER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "EC_Default_ProxyConsumer.h"
 
@@ -40,6 +40,6 @@ private:
   TAO_EC_TPC_Dispatching* tpc_dispatching ();
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif
