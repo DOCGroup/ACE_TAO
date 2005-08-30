@@ -1,3 +1,9 @@
+Tue Aug 30 13:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/PolicyS.cpp:
+          Regenerated this file and merged some of the changes caused by that,
+          especially the include order
+
 Tue Aug 30 12:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/util/utl_global.cpp:

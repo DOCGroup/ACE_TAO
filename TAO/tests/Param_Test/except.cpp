@@ -22,8 +22,8 @@
 
 #include "tao/DynamicInterface/Unknown_User_Exception.h"
 
-ACE_RCSID (Param_Test, 
-           except, 
+ACE_RCSID (Param_Test,
+           except,
            "$Id$")
 
 // ************************************************************************
@@ -72,12 +72,14 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req
 
       CORBA::NamedValue_ptr o2 =
         req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
+
       *o2->value () >>= this->inout_;
 
       CORBA::NamedValue_ptr o3 =
         req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
+
       *o3->value () >>= this->out_;
     }
   ACE_CATCH (CORBA::UnknownUserException, user_ex)
