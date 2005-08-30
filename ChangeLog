@@ -1,5 +1,8 @@
+Tue Aug 30 18:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_icc.GNU:
+          Use -fPIC instead -KPIC
+
 Tue Aug 30 18:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Based_Pointer_Test.cpp:
