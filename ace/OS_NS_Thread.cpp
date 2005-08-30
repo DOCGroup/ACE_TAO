@@ -107,7 +107,7 @@ ACE_Thread_ID::ACE_Thread_ID (void)
 }
 
 ACE_thread_t
-ACE_Thread_ID::id (void)
+ACE_Thread_ID::id (void) const
 {
   return this->thread_id_;
 }
@@ -119,7 +119,7 @@ ACE_Thread_ID::id (ACE_thread_t thread_id)
 }
 
 ACE_hthread_t
-ACE_Thread_ID::handle (void)
+ACE_Thread_ID::handle (void) const
 {
   return this->thread_handle_;
 }
@@ -131,10 +131,10 @@ ACE_Thread_ID::handle (ACE_hthread_t thread_handle)
 }
 
 void
-ACE_Thread_ID::to_string (char *thr_string)
+ACE_Thread_ID::to_string (char *thr_string) const
 {
   char format[128]; // Converted format string
-  char *fp;         // Current format pointer
+  char *fp = 0;     // Current format pointer
   fp = format;
   *fp++ = '%';   // Copy in the %
 
