@@ -1,3 +1,10 @@
+Tue Aug 30 11:59:14 CDT 2005  William Otte <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/Config_Handlers/IRDD_Handler.h
+	* DAnCE/Config_Handlers/PCD_Handler.h
+	
+	Fixed a class/struct mismatch.
+
 Tue Aug 30 11:51:32 CDT 2005  William Otte <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/Config_Handlers/Basic_Deployment_Data.cpp

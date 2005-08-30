@@ -29,7 +29,7 @@ namespace CIAO
   namespace Config_Handlers
   {
     
-   struct PlanConnectionDescription;
+   class PlanConnectionDescription;
    
    /*
     * @class PCD_Handler
