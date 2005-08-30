@@ -105,7 +105,7 @@ ifeq ($(SYSARCH),ia64)
   CPPFLAGS += -mp
 endif
 
-PIC     = -KPIC
+PIC     = -fPIC
 AR      = ar
 ARFLAGS = rsuv
 RANLIB  = @true
