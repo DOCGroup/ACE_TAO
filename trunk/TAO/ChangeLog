@@ -1,3 +1,9 @@
+Tue Aug 30 01:20:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp (queue_full_action):
+
+	  Fixed "'*/' found outside of comment" warning.
+
 Mon Aug 29 18:39:29 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/AV/AV_Core.h:
