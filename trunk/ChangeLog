@@ -1,3 +1,10 @@
+Tue Aug 30 12:22:17 2005  Simon McQueen  <sm@prismtech.com>
+
+        * apps/JAWS2/JAWS/IO.cpp:
+        * apps/JAWS2/JAWS/IO.h:
+
+          Removed mispelled message type 'CONFORMATION'.
+
 Tue Aug 30 10:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Process_Manager.cpp:

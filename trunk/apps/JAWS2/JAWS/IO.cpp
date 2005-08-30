@@ -574,7 +574,7 @@ JAWS_Asynch_IO::send_message (JAWS_IO_Handler *ioh,
     {
       mb->release ();
 
-      if (act == CONFORMATION)
+      if (act == CONFIRMATION)
         ioh->confirmation_message_complete ();
       else
         ioh->error_message_complete ();
