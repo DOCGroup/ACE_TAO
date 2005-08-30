@@ -308,7 +308,7 @@ mmap_remap_test(void)
          delete alloc;
          return -1;
       }
-    if(ba)
+    if(ba == oba)
       {
         ACE_ERROR ((LM_ERROR,
             ACE_TEXT ("Old base address not removed after MMAP remap\n")));
