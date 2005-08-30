@@ -36,6 +36,10 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
   , pref_network_ ()
   , disable_rt_collocation_resolver_ (false)
   , enforce_preferred_interfaces_ (false)
+#if defined (ACE_HAS_IPV6)
+  , prefer_ipv6_interfaces_ (false)
+  , connect_ipv6_only_ (false)
+#endif /* ACE_HAS_IPV6 */
   , negotiate_codesets_ (true)
 {
   for (int i = 0; i != TAO_NO_OF_MCAST_SERVICES; ++i)
@@ -204,7 +208,11 @@ TAO_ORB_Parameters::preferred_interfaces (const char *s)
   {
     switch (*p)
     {
+#if !defined (ACE_HAS_IPV6)
+    // Can't use this as assignment operator when IPv6 decimal
+    // addresses may be involved.
     case ':':
+#endif /* ACE_HAS_IPV6 */
     case '=':
       if (! expect_assign)
         return false;
@@ -268,3 +276,29 @@ TAO_ORB_Parameters::enforce_pref_interfaces (void) const
 {
   return this->enforce_preferred_interfaces_;
 }
+
+#if defined (ACE_HAS_IPV6)
+void
+TAO_ORB_Parameters::prefer_ipv6_interfaces (bool p)
+{
+  this->prefer_ipv6_interfaces_ = p;
+}
+
+bool
+TAO_ORB_Parameters::prefer_ipv6_interfaces (void) const
+{
+  return this->prefer_ipv6_interfaces_;
+}
+
+void
+TAO_ORB_Parameters::connect_ipv6_only (bool p)
+{
+  this->connect_ipv6_only_ = p;
+}
+
+bool
+TAO_ORB_Parameters::connect_ipv6_only (void) const
+{
+  return this->connect_ipv6_only_;
+}
+#endif /* ACE_HAS_IPV6 */

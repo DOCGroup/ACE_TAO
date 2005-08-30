@@ -293,11 +293,40 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
   ACE_CString raw_host;
   ACE_CString raw_port;
   separator = ACE_OS::strchr (addr_base,':');
+#if defined (ACE_HAS_IPV6)
+  // IPv6 numeric address in host string?
+
+  // Check if this is an address containing a decimal IPv6 address representation.
+  if (addr_base < addr_tail && addr_base[0] == '[')
+    {
+      // In this case we have to find the end of the numeric address and
+      // start looking for the port separator from there.
+      const char *cp_pos = ACE_OS::strchr(addr_base, ']');
+      if (cp_pos == 0 || cp_pos >= addr_tail)
+        {
+          // No valid IPv6 address specified but that will come out later.
+          if (TAO_debug_level > 0)
+            {
+              ACE_DEBUG ((LM_ERROR,
+                         ACE_LIB_TEXT ("\nTAO (%P|%t) TAO_CORBALOC_Parser: ")
+                         ACE_LIB_TEXT ("Invalid IPv6 decimal address specified.\n")));
+            }
+          separator = 0;
+        }
+      else
+        {
+          if (cp_pos[1] == ':')    // Look for a port
+            separator = cp_pos + 1;
+          else
+            separator = 0;
+        }
+    }
+#endif /* ACE_HAS_IPV6 */
+
   if (separator != 0 && separator < addr_tail)
     {
       // we have a port number
-      if (separator - addr_base > 0)
-        raw_host.set (addr_base, (separator - addr_base),1);
+      raw_host.set (addr_base, (separator - addr_base), 1);
       raw_port.set (separator, (addr_tail - separator), 1);
     }
   else

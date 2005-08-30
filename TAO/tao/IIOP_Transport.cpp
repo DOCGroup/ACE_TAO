@@ -272,7 +272,7 @@ TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
        acceptor != end;
        ++acceptor)
     {
-      // Check whether it is a IIOP acceptor
+      // Check whether it is an IIOP acceptor
       if ((*acceptor)->tag () == IOP::TAG_INTERNET_IOP)
         {
           if (this->get_listen_point (listen_point_list, *acceptor) == -1)
@@ -360,13 +360,27 @@ TAO_IIOP_Transport::get_listen_point (
                          ACE_TEXT ("could not resolve local host name\n")),
                         -1);
     }
+#if defined (ACE_HAS_IPV6)
+  // If this is an IPv6 decimal linklocal address containing a scopeid than
+  // remove the scopeid from the information being sent.
+  const char *cp_scope;
+  if (local_addr.get_type () == PF_INET6 &&
+        (cp_scope = ACE_OS::strchr (local_interface.in (), '%')) != 0)
+    {
+      CORBA::ULong len = cp_scope - local_interface.in ();
+      local_interface[len] = '\0';
+    }
+#endif /* ACE_HAS_IPV6 */
 
   for (size_t index = 0;
        index < count;
        ++index)
     {
-      if (local_addr.get_ip_address ()
-          == endpoint_addr[index].get_ip_address ())
+      // Make sure port numbers are equal so the following comparison
+      // only concerns the IP(v4/v6) address.
+      local_addr.set_port_number (endpoint_addr[index].get_port_number ());
+
+      if (local_addr == endpoint_addr[index])
         {
           // Get the count of the number of elements
           const CORBA::ULong len = listen_point_list.length ();
@@ -382,12 +396,12 @@ TAO_IIOP_Transport::get_listen_point (
 
           if (TAO_debug_level >= 5)
           {
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT("TAO (%P:%t) Listen_Point_List[%d] = <%s:%d>"), 
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT("TAO (%P:%t) Listen_Point_List[%d] = <%s:%d>"),
                         len,
                         point.host.in (),
                         point.port));
           }
-          
+
         }
     }
 

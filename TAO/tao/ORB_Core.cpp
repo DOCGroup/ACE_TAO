@@ -569,6 +569,32 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 
           arg_shifter.consume_arg ();
         }
+#if defined (ACE_HAS_IPV6)
+      else if ((current_arg = arg_shifter.get_the_parameter
+                (ACE_TEXT("-ORBPreferIPV6Interfaces"))))
+        {
+          if (ACE_OS::strcasecmp (current_arg,
+                                  ACE_TEXT("YES")) == 0)
+            this->orb_params ()->prefer_ipv6_interfaces (true);
+          else if (ACE_OS::strcasecmp (current_arg,
+                                       ACE_TEXT("NO")) == 0)
+            this->orb_params ()->prefer_ipv6_interfaces (false);
+
+          arg_shifter.consume_arg ();
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter
+                (ACE_TEXT("-ORBConnectIPV6Only"))))
+        {
+          if (ACE_OS::strcasecmp (current_arg,
+                                  ACE_TEXT("YES")) == 0)
+            this->orb_params ()->connect_ipv6_only (true);
+          else if (ACE_OS::strcasecmp (current_arg,
+                                       ACE_TEXT("NO")) == 0)
+            this->orb_params ()->connect_ipv6_only (false);
+
+          arg_shifter.consume_arg ();
+        }
+#endif /* ACE_HAS_IPV6 */
       else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBCDRTradeoff"))))
         {

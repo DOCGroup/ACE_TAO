@@ -196,12 +196,17 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
                       0);
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) Received multicast.\n"
-                "Service Name received : %s\n"
-                "Port received : %u\n",
-                service_name,
-                ACE_NTOHS (remote_port)));
+    {
+      ACE_TCHAR addr[64];
+      remote_addr.addr_to_string (addr, sizeof(addr));
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) Received multicast from %s.\n"
+                  "Service Name received : %s\n"
+                  "Port received : %u\n",
+                  addr,
+                  service_name,
+                  ACE_NTOHS (remote_port)));
+    }
 
   if (ACE_OS::strcmp (service_name,
                       "NameService") != 0
@@ -220,9 +225,53 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
 
   // Reply to the multicast message.
   ACE_SOCK_Connector connector;
-  ACE_INET_Addr peer_addr (ACE_NTOHS (remote_port),
-                           remote_addr.get_host_addr ());
+  ACE_INET_Addr peer_addr;
   ACE_SOCK_Stream stream;
+
+  peer_addr.set (remote_addr);
+  peer_addr.set_port_number (ACE_NTOHS (remote_port));
+
+#if defined (ACE_HAS_IPV6)
+  if (peer_addr.is_linklocal ())
+    {
+      // If this is one of our local linklocal interfaces this is not going
+      // to work.
+      // Creating a connection using such interface to the client listening
+      // at the IPv6 ANY address is not going to work (I'm not quite sure why
+      // but it probably has to do with the rather restrictive routing rules
+      // for linklocal interfaces).
+      // So we see if this is one of our local interfaces and if so create the
+      // connection using the IPv6 loopback address instead.
+      ACE_INET_Addr  peer_tmp(peer_addr);
+      peer_tmp.set_port_number (static_cast<u_short> (0));
+      ACE_INET_Addr* tmp = 0;
+      size_t cnt = 0;
+      int err = ACE::get_ip_interfaces (cnt, tmp);
+      if (err == 0)
+        {
+          for (size_t i = 0; i < cnt; ++i)
+          {
+            if (peer_tmp == tmp[i])
+              {
+                peer_addr.set (ACE_NTOHS (remote_port),
+                               ACE_IPV6_LOCALHOST);
+                break;
+              }
+          }
+
+          delete[] tmp;
+        }
+    }
+#endif /* ACE_HAS_IPV6 */
+
+  if (TAO_debug_level > 0)
+    {
+      ACE_TCHAR addr[64];
+      peer_addr.addr_to_string (addr, sizeof(addr));
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) Replying to peer %s.\n",
+                  addr));
+    }
 
   // Connect.
   if (connector.connect (stream, peer_addr) == -1)
@@ -252,7 +301,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
 
   // Check for error.
   if (result == -1)
-    return 0;
+    ACE_ERROR_RETURN ((LM_ERROR, "IOR_Multicast::send failed\n"), 0);
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,

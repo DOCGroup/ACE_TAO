@@ -173,6 +173,14 @@ public:
   void enforce_pref_interfaces (bool p);
   bool enforce_pref_interfaces (void) const;
 
+#if defined (ACE_HAS_IPV6)
+  void prefer_ipv6_interfaces (bool p);
+  bool prefer_ipv6_interfaces (void) const;
+
+  void connect_ipv6_only (bool p);
+  bool connect_ipv6_only (void) const;
+#endif /* ACE_HAS_IPV6 */
+
   void negotiate_codesets (bool c);
   bool negotiate_codesets (void) const;
 
@@ -289,6 +297,17 @@ private:
   bool disable_rt_collocation_resolver_;
 
   bool enforce_preferred_interfaces_;
+
+#if defined (ACE_HAS_IPV6)
+  /// Prefer to connect IPv6 over IPv4 Yes or No.
+  bool prefer_ipv6_interfaces_;
+
+  /**
+   * Only connect to (client) or listen on and accept from (server)
+   * IPv6 interfaces Yes or No.
+   */
+  bool connect_ipv6_only_;
+#endif /* ACE_HAS_IPV6 */
 
   /// Enable the use of codeset negotiation
   bool negotiate_codesets_;

@@ -52,8 +52,8 @@ TAO_MCAST_Parser::parse_string (const char *ior,
    */
   CORBA::Object_ptr object = CORBA::Object::_nil ();
 
-  CORBA::UShort port = (CORBA::UShort) ACE_OS::atoi (this->mcast_port_.in
-                                                     ());
+  CORBA::UShort port =
+    (CORBA::UShort) ACE_OS::atoi (this->mcast_port_.in ());
 
   ACE_Time_Value *timeout = orb->get_timeout ();
 
@@ -134,7 +134,11 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
   ssize_t result = 0;
 
   // Bind listener to any port and then find out what the port was.
+#if defined (ACE_HAS_IPV6)
+  if (acceptor.open (ACE_Addr::sap_any, 0, AF_INET6) == -1
+#else /* ACE_HAS_IPV6 */
   if (acceptor.open (ACE_Addr::sap_any) == -1
+#endif /* !ACE_HAS_IPV6 */
       || acceptor.get_local_addr (my_addr) == -1)
     {
       ACE_ERROR ((LM_ERROR,
@@ -144,6 +148,15 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
     }
   else
     {
+      if (TAO_debug_level > 0)
+        {
+          ACE_TCHAR addr[64];
+          my_addr.addr_to_string (addr, sizeof(addr));
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) TAO_MCAST_Parser: acceptor local address %s.\n",
+                      addr));
+        }
+
       ACE_INET_Addr multicast_addr (port,
                                     mcast_address);
 
@@ -178,15 +191,21 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
           dgram.set_nic (mcast_nic);
 
           // Set TTL
-#if defined (ACE_WIN32)
-          // MS Windows expects an int.
           int mcast_ttl_optval = ACE_OS::atoi (mcast_ttl);
-#else
-          // Apparently all other platforms expect an unsigned char
-          // (0-255).
-          unsigned char mcast_ttl_optval = ACE_OS::atoi (mcast_ttl);
-#endif  /* ACE_WIN32 */
-          if (dgram.ACE_SOCK::set_option (
+
+#if defined (ACE_HAS_IPV6)
+          if (multicast_addr.get_type () == AF_INET6)
+            {
+              if (dgram.set_option (
+                    IPPROTO_IPV6,
+                    IPV6_MULTICAST_HOPS,
+                    &mcast_ttl_optval,
+                    sizeof (mcast_ttl_optval)) != 0)
+                return -1;
+            }
+          else
+#endif  /* ACE_HAS_IPV6 */
+          if (dgram.set_option (
                 IPPROTO_IP,
                 IP_MULTICAST_TTL,
                 &mcast_ttl_optval,
@@ -347,14 +366,58 @@ TAO_MCAST_Parser::assign_to_variables (const char * &mcast_name)
   ACE_CString mcast_name_cstring (mcast_name);
 
   int pos_colon1 = mcast_name_cstring.find (':', 0);
+#if defined (ACE_HAS_IPV6)
+  // IPv6 numeric address in host string?
+  bool ipv6_in_host = false;
+
+  // Check if this is an mcast address containing a
+  // decimal IPv6 address representation.
+  if (mcast_name_cstring[0] == '[')
+    {
+      // In this case we have to find the end of the numeric address and
+      // start looking for the port separator from there.
+      int cp_pos = mcast_name_cstring.find (']', 0);
+      if (cp_pos == 0)
+        {
+          // No valid IPv6 address specified.
+          if (TAO_debug_level > 0)
+            {
+              ACE_DEBUG ((LM_ERROR,
+                          ACE_LIB_TEXT ("\nTAO (%P|%t) MCAST_Parser: ")
+                          ACE_LIB_TEXT ("Invalid IPv6 decimal address specified.\n")));
+            }
+
+          return;
+        }
+      else
+        {
+          if (mcast_name_cstring[cp_pos + 1] == ':')    // Look for a port
+            pos_colon1 = cp_pos + 1;
+          else
+            pos_colon1 = cp_pos;
+          ipv6_in_host = true; // host string contains full IPv6 numeric address
+        }
+    }
+#endif  /* ACE_HAS_IPV6 */
 
   if (pos_colon1 == 0)
     {
+#if defined (ACE_HAS_IPV6)
+      const char *default_addr = ACE_DEFAULT_MULTICASTV6_ADDR;
+#else /* ACE_HAS_IPV6 */
       const char *default_addr = ACE_DEFAULT_MULTICAST_ADDR;
+#endif  /* !ACE_HAS_IPV6 */
       this->mcast_address_ = default_addr;
     }
   else
     {
+#if defined (ACE_HAS_IPV6)
+      if (ipv6_in_host)
+        this->mcast_address_ =
+          mcast_name_cstring.substring (1,
+                                        pos_colon1 - 2).c_str ();
+      else
+#endif  /* ACE_HAS_IPV6 */
       this->mcast_address_ =
         mcast_name_cstring.substring (0,
                                       pos_colon1).c_str ();

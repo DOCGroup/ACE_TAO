@@ -19,27 +19,6 @@ ACE_RCSID (tao,
            "$Id$")
 
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class TAO_Connect_Concurrency_Strategy<TAO_IIOP_Connection_Handler>;
-template class TAO_Connect_Creation_Strategy<TAO_IIOP_Connection_Handler>;
-template class ACE_Strategy_Connector<TAO_IIOP_Connection_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Connect_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Connector_Base<TAO_IIOP_Connection_Handler>;
-template class ACE_Connector<TAO_IIOP_Connection_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_NonBlocking_Connect_Handler<TAO_IIOP_Connection_Handler>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_Connect_Concurrency_Strategy<TAO_IIOP_Connection_Handler>
-#pragma instantiate TAO_Connect_Creation_Strategy<TAO_IIOP_Connection_Handler>
-#pragma instantiate ACE_Strategy_Connector<TAO_IIOP_Connection_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Connect_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Connector_Base<TAO_IIOP_Connection_Handler>
-#pragma instantiate ACE_Connector<TAO_IIOP_Connection_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_NonBlocking_Connect_Handler<TAO_IIOP_Connection_Handler>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 TAO_IIOP_Connector::TAO_IIOP_Connector (CORBA::Boolean flag)
   : TAO_Connector (IOP::TAG_INTERNET_IOP)
   , lite_flag_ (flag)
@@ -112,7 +91,12 @@ TAO_IIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
    // Verify that the remote ACE_INET_Addr was initialized properly.
    // Failure can occur if hostname lookup failed when initializing the
    // remote ACE_INET_Addr.
+#if defined (ACE_HAS_IPV6)
+   if (remote_address.get_type () != AF_INET &&
+       remote_address.get_type () != AF_INET6)
+#else /* ACE_HAS_IPV6 */
    if (remote_address.get_type () != AF_INET)
+#endif /* !ACE_HAS_IPV6 */
      {
        if (TAO_debug_level > 0)
          {
@@ -148,7 +132,13 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   ACE_INET_Addr local_addr(port, ia_any);
 
   if (iiop_endpoint->is_preferred_network ())
-    local_addr.set (port, iiop_endpoint->preferred_network ());
+    local_addr.set (port,
+                    iiop_endpoint->preferred_network ());
+#if defined (ACE_HAS_IPV6)
+  else if (remote_address.get_type () == AF_INET6)
+    local_addr.set (port,
+                    ACE_IPV6_ANY);
+#endif /* ACE_HAS_IPV6 */
 
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
