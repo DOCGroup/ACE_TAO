@@ -2,11 +2,14 @@
 
 #include "Timer_Reactor.h"
 
-ACE_RCSID(Notify, TAO_Notify_Timer_Reactor, "$Id$")
+ACE_RCSID (Notify,
+	   Timer_Reactor,
+	   "$Id$")
 
-#include "ace/Reactor.h"
-#include "tao/ORB_Core.h"
 #include "Properties.h"
+#include "tao/ORB_Core.h"
+#include "ace/Reactor.h"
+
 
 TAO_Notify_Timer_Reactor::TAO_Notify_Timer_Reactor (void)
   :reactor_ (0)

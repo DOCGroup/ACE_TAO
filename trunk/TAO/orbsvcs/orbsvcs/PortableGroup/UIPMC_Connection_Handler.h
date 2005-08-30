@@ -15,20 +15,19 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Reactor.h"
+#include "portablegroup_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Acceptor.h"
+#include "UIPMC_Transport.h"
 
 #include "tao/Wait_Strategy.h"
 #include "tao/Connection_Handler.h"
 
-#include "UIPMC_Transport.h"
-#include "portablegroup_export.h"
-
+#include "ace/Acceptor.h"
+#include "ace/Reactor.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/SOCK_Dgram.h"
 

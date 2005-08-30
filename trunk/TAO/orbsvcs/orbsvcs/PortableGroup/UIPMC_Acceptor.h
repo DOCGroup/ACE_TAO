@@ -17,14 +17,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Transport_Acceptor.h"
+#include "UIPMC_Connection_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "UIPMC_Connection_Handler.h"
-
+#include "tao/Transport_Acceptor.h"
 #include "tao/Acceptor_Impl.h"
 #include "tao/GIOP_Message_State.h"
 

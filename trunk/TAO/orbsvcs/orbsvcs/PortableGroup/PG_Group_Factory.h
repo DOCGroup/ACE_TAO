@@ -15,17 +15,20 @@
 
 #include /**/ "ace/pre.h"
 
-#include <ace/ACE.h>
+#include "portablegroup_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Hash_Map_Manager.h"
-#include "portablegroup_export.h"
-#include "tao/PortableServer/PortableServer.h"
-#include "orbsvcs/PortableGroupC.h"
 #include "PG_Object_Group_Manipulator.h"
+
+#include "orbsvcs/PortableGroupC.h"
+
+#include "tao/PortableServer/PortableServer.h"
+
+#include "ace/ACE.h"
+#include "ace/Hash_Map_Manager.h"
 
 //////////////////
 // Forward reference

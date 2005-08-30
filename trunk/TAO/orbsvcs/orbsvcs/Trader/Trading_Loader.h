@@ -1,6 +1,6 @@
 // $Id$
 
-// ===========================================================================================
+// ===========================================================================
 // FILENAME
 //   Trading_Loader.h
 //
@@ -11,22 +11,23 @@
 // AUTHORS
 //   Priyanka Gontla <pgontla@ece.uci.edu>
 //
-// ==========================================================================================
+// ==========================================================================
 
 #ifndef TAO_TRADING_LOADER_H
 #define TAO_TRADING_LOADER_H
 
-#include "tao/Object_Loader.h"
-#include "tao/Utils/ORB_Manager.h"
-#include "ace/Auto_Ptr.h"
+#include "orbsvcs/Trader/Trader.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/IOR_Multicast.h"
-#include "orbsvcs/Trader/Trader.h"
 #include "orbsvcs/Trader/Service_Type_Repository.h"
+
+#include "tao/Object_Loader.h"
+#include "tao/Utils/ORB_Manager.h"
+#include "ace/Auto_Ptr.h"
 
 class TAO_Trading_Serv_Export TAO_Trading_Loader : public TAO_Object_Loader
 {

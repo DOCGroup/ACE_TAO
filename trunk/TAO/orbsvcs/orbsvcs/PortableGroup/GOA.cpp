@@ -1,8 +1,13 @@
 #include "GOA.h"
 
+
 ACE_RCSID (PortableGroup,
            GOA,
            "$Id$")
+
+
+#include "PortableGroup_Acceptor_Registry.h"
+#include "PortableGroup_Request_Dispatcher.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
@@ -12,9 +17,6 @@ ACE_RCSID (PortableGroup,
 #include "tao/CDR.h"
 
 #include "ace/Auto_Ptr.h"
-
-#include "PortableGroup_Acceptor_Registry.h"
-#include "PortableGroup_Request_Dispatcher.h"
 
 PortableServer::ObjectId *
 TAO_GOA::create_id_for_reference (CORBA::Object_ptr the_ref
