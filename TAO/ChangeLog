@@ -1,3 +1,13 @@
+Tue Aug 30 16:30:30 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/Notify_Service/Notify_Service.cpp (shutdown):
+
+	  Removed code that abuses ._retn() to release orb, poa,
+          naming context, etc.  This may have been done because
+	  the driver class was previously a file-scope static,
+	  but now that it's allocated on the stack within main()
+	  we can let the destructor release these variables.
+
 Tue Aug 30 16:09:53 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/Notify_Service/Notify_Server.cpp:
