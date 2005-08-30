@@ -3694,4 +3694,69 @@ ACE_OS_Recursive_Thread_Mutex_Guard::~ACE_OS_Recursive_Thread_Mutex_Guard ()
 {
   release ();
 }
+
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
+
+
+/*****************************************************************************/
+
+ACE_INLINE
+ACE_Thread_ID::ACE_Thread_ID (ACE_thread_t thread_id,
+                              ACE_hthread_t thread_handle)
+  : thread_id_ (thread_id),
+    thread_handle_ (thread_handle)
+{
+}
+
+ACE_INLINE
+ACE_Thread_ID::ACE_Thread_ID (const ACE_Thread_ID &id)
+  : thread_id_ (id.thread_id_),
+    thread_handle_ (id.thread_handle_)
+{
+}
+
+ACE_INLINE
+ACE_Thread_ID::ACE_Thread_ID (void)
+{
+  thread_id_ = ACE_OS::thr_self ();
+  ACE_OS::thr_self (thread_handle_);
+}
+
+ACE_INLINE
+ACE_thread_t
+ACE_Thread_ID::id (void) const
+{
+  return this->thread_id_;
+}
+
+ACE_INLINE void
+ACE_Thread_ID::id (ACE_thread_t thread_id)
+{
+  this->thread_id_ = thread_id;
+}
+
+ACE_INLINE ACE_hthread_t
+ACE_Thread_ID::handle (void) const
+{
+  return this->thread_handle_;
+}
+
+ACE_INLINE void
+ACE_Thread_ID::handle (ACE_hthread_t thread_handle)
+{
+  this->thread_handle_ = thread_handle;
+}
+
+ACE_INLINE bool
+ACE_Thread_ID::operator== (const ACE_Thread_ID &rhs) const
+{
+  return
+    ACE_OS::thr_cmp (this->thread_handle_, rhs.thread_handle_)
+    && ACE_OS::thr_equal (this->thread_id_, rhs.thread_id_);
+}
+
+ACE_INLINE bool
+ACE_Thread_ID::operator!= (const ACE_Thread_ID &rhs) const
+{
+  return !(*this == rhs);
+}
