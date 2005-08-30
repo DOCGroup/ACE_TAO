@@ -1,3 +1,10 @@
+Tue Aug 30 18:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.{h,cpp}:
+          Made the methods id, handle and to_string of the ACE_Thread_Id
+          class const. Thanks to Felix Wyss <FelixW at inin dot com>
+          for reporting this.
+
 Tue Aug 30 18:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_icc.GNU:

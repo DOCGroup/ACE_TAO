@@ -194,7 +194,9 @@ mmap_persistent_map_test(void)
 
     ACE_OS::unlink("foo");
       {
-        ACE_NEW_RETURN (alloc, MMAP_Allocator ("foo", "foo"), -1);
+        ACE_NEW_RETURN (alloc,
+                        MMAP_Allocator (ACE_TEXT ("foo"), ACE_TEXT ("foo")),
+                        -1);
         alloc->sync();
 
         // Delete Malloc and the memory pool, but do not remove
@@ -205,7 +207,9 @@ mmap_persistent_map_test(void)
     //
     // Recreate segment with existing backing store
     //
-    ACE_NEW_RETURN (alloc, MMAP_Allocator ("foo", "foo"), -1);
+    ACE_NEW_RETURN (alloc,
+                    MMAP_Allocator (ACE_TEXT ("foo"), ACE_TEXT("foo")),
+                    -1);
 
     void* addr = alloc->base_addr();
     if(addr == 0)
@@ -258,7 +262,9 @@ mmap_remap_test(void)
                ACE_MMAP_Memory_Pool_Options::NEVER_FIXED);
 
     ACE_OS::unlink("foo");
-    ACE_NEW_RETURN (alloc, MMAP_Allocator ("foo", "foo", &data_opts), -1);
+    ACE_NEW_RETURN (alloc,
+                    MMAP_Allocator (ACE_TEXT ("foo"), ACE_TEXT("foo"), &data_opts),
+                    -1);
 
     // cause memory segment to grow until it is forced
     // to be remapped at different base address
