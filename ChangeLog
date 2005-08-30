@@ -1,3 +1,11 @@
+Tue Aug 30 13:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_win32_icc.GNU:
+          First version of Intel C++ compiler on Windows using GNU make
+
+        * ace/config-win32-msvc-7.h:
+          Only define ACE_HAS_EXCEPTIONS when it is not defined yet
+
 Tue Aug 30 12:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Array_Map.h:
