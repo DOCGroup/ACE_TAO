@@ -1,3 +1,9 @@
+Tue Aug 30 14:33:08 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/Config_Handlers/Basic_Deployment_Data.hpp
+
+	Slight handcrafting to remove commas from the end of enumerator lists.
+
 Tue Aug 30 11:59:14 CDT 2005  William Otte <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/Config_Handlers/IRDD_Handler.h
