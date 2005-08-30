@@ -240,7 +240,7 @@ namespace CIAO
     }
 
     size_t ServerCmdlineOptions::
-    count_arg(void)
+    count_arg(void) const
     {
       return arg_.size ();
     }
@@ -445,7 +445,7 @@ namespace CIAO
     }
 
     size_t ORBConfigs::
-    count_policySet(void)
+    count_policySet(void) const
     {
       return policySet_.size ();
     }
@@ -573,7 +573,7 @@ namespace CIAO
     }
 
     size_t ORBResources::
-    count_threadpool(void)
+    count_threadpool(void) const
     {
       return threadpool_.size ();
     }
@@ -630,7 +630,7 @@ namespace CIAO
     }
 
     size_t ORBResources::
-    count_threadpoolWithLanes(void)
+    count_threadpoolWithLanes(void) const
     {
       return threadpoolWithLanes_.size ();
     }
@@ -687,7 +687,7 @@ namespace CIAO
     }
 
     size_t ORBResources::
-    count_connectionBands(void)
+    count_connectionBands(void) const
     {
       return connectionBands_.size ();
     }
@@ -726,65 +726,220 @@ namespace CIAO
     // 
 
     ThreadpoolDef::
-    ThreadpoolDef ()
+    ThreadpoolDef (::XMLSchema::unsignedLong const& stacksize__,
+    ::XMLSchema::unsignedLong const& static_threads__,
+    ::XMLSchema::unsignedLong const& dynamic_threads__,
+    ::CIAO::Config_Handlers::Priority const& default_priority__,
+    ::XMLSchema::boolean const& allow_request_buffering__,
+    ::XMLSchema::unsignedLong const& max_buffered_requests__,
+    ::XMLSchema::unsignedLong const& max_request_buffered_size__)
     : 
+    ::XSCRT::Type (), 
+    stacksize_ (new ::XMLSchema::unsignedLong (stacksize__)),
+    static_threads_ (new ::XMLSchema::unsignedLong (static_threads__)),
+    dynamic_threads_ (new ::XMLSchema::unsignedLong (dynamic_threads__)),
+    default_priority_ (new ::CIAO::Config_Handlers::Priority (default_priority__)),
+    allow_request_buffering_ (new ::XMLSchema::boolean (allow_request_buffering__)),
+    max_buffered_requests_ (new ::XMLSchema::unsignedLong (max_buffered_requests__)),
+    max_request_buffered_size_ (new ::XMLSchema::unsignedLong (max_request_buffered_size__)),
     regulator__ ()
     {
+      stacksize_->container (this);
+      static_threads_->container (this);
+      dynamic_threads_->container (this);
+      default_priority_->container (this);
+      allow_request_buffering_->container (this);
+      max_buffered_requests_->container (this);
+      max_request_buffered_size_->container (this);
     }
 
     ThreadpoolDef::
     ThreadpoolDef (::CIAO::Config_Handlers::ThreadpoolDef const& s)
     :
+    ::XSCRT::Type (),
+    stacksize_ (new ::XMLSchema::unsignedLong (*s.stacksize_)),
+    static_threads_ (new ::XMLSchema::unsignedLong (*s.static_threads_)),
+    dynamic_threads_ (new ::XMLSchema::unsignedLong (*s.dynamic_threads_)),
+    default_priority_ (new ::CIAO::Config_Handlers::Priority (*s.default_priority_)),
+    allow_request_buffering_ (new ::XMLSchema::boolean (*s.allow_request_buffering_)),
+    max_buffered_requests_ (new ::XMLSchema::unsignedLong (*s.max_buffered_requests_)),
+    max_request_buffered_size_ (new ::XMLSchema::unsignedLong (*s.max_request_buffered_size_)),
     id_ (s.id_.get () ? new ::XMLSchema::ID< ACE_TCHAR > (*s.id_) : 0),
-    stacksize_ (s.stacksize_.get () ? new ::XMLSchema::unsignedLong (*s.stacksize_) : 0),
-    static_threads_ (s.static_threads_.get () ? new ::XMLSchema::unsignedLong (*s.static_threads_) : 0),
-    dynamic_threads_ (s.dynamic_threads_.get () ? new ::XMLSchema::unsignedLong (*s.dynamic_threads_) : 0),
-    default_priority_ (s.default_priority_.get () ? new ::CIAO::Config_Handlers::Priority (*s.default_priority_) : 0),
-    allow_request_buffering_ (s.allow_request_buffering_.get () ? new ::XMLSchema::boolean (*s.allow_request_buffering_) : 0),
-    max_buffered_requests_ (s.max_buffered_requests_.get () ? new ::XMLSchema::unsignedLong (*s.max_buffered_requests_) : 0),
-    max_request_buffered_size_ (s.max_request_buffered_size_.get () ? new ::XMLSchema::unsignedLong (*s.max_request_buffered_size_) : 0),
     regulator__ ()
     {
+      stacksize_->container (this);
+      static_threads_->container (this);
+      dynamic_threads_->container (this);
+      default_priority_->container (this);
+      allow_request_buffering_->container (this);
+      max_buffered_requests_->container (this);
+      max_request_buffered_size_->container (this);
       if (id_.get ()) id_->container (this);
-      if (stacksize_.get ()) stacksize_->container (this);
-      if (static_threads_.get ()) static_threads_->container (this);
-      if (dynamic_threads_.get ()) dynamic_threads_->container (this);
-      if (default_priority_.get ()) default_priority_->container (this);
-      if (allow_request_buffering_.get ()) allow_request_buffering_->container (this);
-      if (max_buffered_requests_.get ()) max_buffered_requests_->container (this);
-      if (max_request_buffered_size_.get ()) max_request_buffered_size_->container (this);
     }
 
     ::CIAO::Config_Handlers::ThreadpoolDef& ThreadpoolDef::
     operator= (::CIAO::Config_Handlers::ThreadpoolDef const& s)
     {
+      stacksize (s.stacksize ());
+
+      static_threads (s.static_threads ());
+
+      dynamic_threads (s.dynamic_threads ());
+
+      default_priority (s.default_priority ());
+
+      allow_request_buffering (s.allow_request_buffering ());
+
+      max_buffered_requests (s.max_buffered_requests ());
+
+      max_request_buffered_size (s.max_request_buffered_size ());
+
       if (s.id_.get ()) id (*(s.id_));
       else id_ = ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > (0);
-
-      if (s.stacksize_.get ()) stacksize (*(s.stacksize_));
-      else stacksize_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (0);
-
-      if (s.static_threads_.get ()) static_threads (*(s.static_threads_));
-      else static_threads_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (0);
-
-      if (s.dynamic_threads_.get ()) dynamic_threads (*(s.dynamic_threads_));
-      else dynamic_threads_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (0);
-
-      if (s.default_priority_.get ()) default_priority (*(s.default_priority_));
-      else default_priority_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Priority > (0);
-
-      if (s.allow_request_buffering_.get ()) allow_request_buffering (*(s.allow_request_buffering_));
-      else allow_request_buffering_ = ::std::auto_ptr< ::XMLSchema::boolean > (0);
-
-      if (s.max_buffered_requests_.get ()) max_buffered_requests (*(s.max_buffered_requests_));
-      else max_buffered_requests_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (0);
-
-      if (s.max_request_buffered_size_.get ()) max_request_buffered_size (*(s.max_request_buffered_size_));
-      else max_request_buffered_size_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (0);
 
       return *this;
     }
 
+
+    // ThreadpoolDef
+    // 
+    ::XMLSchema::unsignedLong const& ThreadpoolDef::
+    stacksize () const
+    {
+      return *stacksize_;
+    }
+
+    ::XMLSchema::unsignedLong& ThreadpoolDef::
+    stacksize ()
+    {
+      return *stacksize_;
+    }
+
+    void ThreadpoolDef::
+    stacksize (::XMLSchema::unsignedLong const& e)
+    {
+      *stacksize_ = e;
+    }
+
+    // ThreadpoolDef
+    // 
+    ::XMLSchema::unsignedLong const& ThreadpoolDef::
+    static_threads () const
+    {
+      return *static_threads_;
+    }
+
+    ::XMLSchema::unsignedLong& ThreadpoolDef::
+    static_threads ()
+    {
+      return *static_threads_;
+    }
+
+    void ThreadpoolDef::
+    static_threads (::XMLSchema::unsignedLong const& e)
+    {
+      *static_threads_ = e;
+    }
+
+    // ThreadpoolDef
+    // 
+    ::XMLSchema::unsignedLong const& ThreadpoolDef::
+    dynamic_threads () const
+    {
+      return *dynamic_threads_;
+    }
+
+    ::XMLSchema::unsignedLong& ThreadpoolDef::
+    dynamic_threads ()
+    {
+      return *dynamic_threads_;
+    }
+
+    void ThreadpoolDef::
+    dynamic_threads (::XMLSchema::unsignedLong const& e)
+    {
+      *dynamic_threads_ = e;
+    }
+
+    // ThreadpoolDef
+    // 
+    ::CIAO::Config_Handlers::Priority const& ThreadpoolDef::
+    default_priority () const
+    {
+      return *default_priority_;
+    }
+
+    ::CIAO::Config_Handlers::Priority& ThreadpoolDef::
+    default_priority ()
+    {
+      return *default_priority_;
+    }
+
+    void ThreadpoolDef::
+    default_priority (::CIAO::Config_Handlers::Priority const& e)
+    {
+      *default_priority_ = e;
+    }
+
+    // ThreadpoolDef
+    // 
+    ::XMLSchema::boolean const& ThreadpoolDef::
+    allow_request_buffering () const
+    {
+      return *allow_request_buffering_;
+    }
+
+    ::XMLSchema::boolean& ThreadpoolDef::
+    allow_request_buffering ()
+    {
+      return *allow_request_buffering_;
+    }
+
+    void ThreadpoolDef::
+    allow_request_buffering (::XMLSchema::boolean const& e)
+    {
+      *allow_request_buffering_ = e;
+    }
+
+    // ThreadpoolDef
+    // 
+    ::XMLSchema::unsignedLong const& ThreadpoolDef::
+    max_buffered_requests () const
+    {
+      return *max_buffered_requests_;
+    }
+
+    ::XMLSchema::unsignedLong& ThreadpoolDef::
+    max_buffered_requests ()
+    {
+      return *max_buffered_requests_;
+    }
+
+    void ThreadpoolDef::
+    max_buffered_requests (::XMLSchema::unsignedLong const& e)
+    {
+      *max_buffered_requests_ = e;
+    }
+
+    // ThreadpoolDef
+    // 
+    ::XMLSchema::unsignedLong const& ThreadpoolDef::
+    max_request_buffered_size () const
+    {
+      return *max_request_buffered_size_;
+    }
+
+    ::XMLSchema::unsignedLong& ThreadpoolDef::
+    max_request_buffered_size ()
+    {
+      return *max_request_buffered_size_;
+    }
+
+    void ThreadpoolDef::
+    max_request_buffered_size (::XMLSchema::unsignedLong const& e)
+    {
+      *max_request_buffered_size_ = e;
+    }
 
     // ThreadpoolDef
     // 
@@ -821,273 +976,42 @@ namespace CIAO
       }
     }
 
-    // ThreadpoolDef
-    // 
-    bool ThreadpoolDef::
-    stacksize_p () const
-    {
-      return stacksize_.get () != 0;
-    }
-
-    ::XMLSchema::unsignedLong const& ThreadpoolDef::
-    stacksize () const
-    {
-      return *stacksize_;
-    }
-
-    ::XMLSchema::unsignedLong& ThreadpoolDef::
-    stacksize ()
-    {
-      return *stacksize_;
-    }
-
-    void ThreadpoolDef::
-    stacksize (::XMLSchema::unsignedLong const& e)
-    {
-      if (stacksize_.get ())
-      {
-        *stacksize_ = e;
-      }
-
-      else
-      {
-        stacksize_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
-        stacksize_->container (this);
-      }
-    }
-
-    // ThreadpoolDef
-    // 
-    bool ThreadpoolDef::
-    static_threads_p () const
-    {
-      return static_threads_.get () != 0;
-    }
-
-    ::XMLSchema::unsignedLong const& ThreadpoolDef::
-    static_threads () const
-    {
-      return *static_threads_;
-    }
-
-    ::XMLSchema::unsignedLong& ThreadpoolDef::
-    static_threads ()
-    {
-      return *static_threads_;
-    }
-
-    void ThreadpoolDef::
-    static_threads (::XMLSchema::unsignedLong const& e)
-    {
-      if (static_threads_.get ())
-      {
-        *static_threads_ = e;
-      }
-
-      else
-      {
-        static_threads_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
-        static_threads_->container (this);
-      }
-    }
-
-    // ThreadpoolDef
-    // 
-    bool ThreadpoolDef::
-    dynamic_threads_p () const
-    {
-      return dynamic_threads_.get () != 0;
-    }
-
-    ::XMLSchema::unsignedLong const& ThreadpoolDef::
-    dynamic_threads () const
-    {
-      return *dynamic_threads_;
-    }
-
-    ::XMLSchema::unsignedLong& ThreadpoolDef::
-    dynamic_threads ()
-    {
-      return *dynamic_threads_;
-    }
-
-    void ThreadpoolDef::
-    dynamic_threads (::XMLSchema::unsignedLong const& e)
-    {
-      if (dynamic_threads_.get ())
-      {
-        *dynamic_threads_ = e;
-      }
-
-      else
-      {
-        dynamic_threads_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
-        dynamic_threads_->container (this);
-      }
-    }
-
-    // ThreadpoolDef
-    // 
-    bool ThreadpoolDef::
-    default_priority_p () const
-    {
-      return default_priority_.get () != 0;
-    }
-
-    ::CIAO::Config_Handlers::Priority const& ThreadpoolDef::
-    default_priority () const
-    {
-      return *default_priority_;
-    }
-
-    ::CIAO::Config_Handlers::Priority& ThreadpoolDef::
-    default_priority ()
-    {
-      return *default_priority_;
-    }
-
-    void ThreadpoolDef::
-    default_priority (::CIAO::Config_Handlers::Priority const& e)
-    {
-      if (default_priority_.get ())
-      {
-        *default_priority_ = e;
-      }
-
-      else
-      {
-        default_priority_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Priority > (new ::CIAO::Config_Handlers::Priority (e));
-        default_priority_->container (this);
-      }
-    }
-
-    // ThreadpoolDef
-    // 
-    bool ThreadpoolDef::
-    allow_request_buffering_p () const
-    {
-      return allow_request_buffering_.get () != 0;
-    }
-
-    ::XMLSchema::boolean const& ThreadpoolDef::
-    allow_request_buffering () const
-    {
-      return *allow_request_buffering_;
-    }
-
-    ::XMLSchema::boolean& ThreadpoolDef::
-    allow_request_buffering ()
-    {
-      return *allow_request_buffering_;
-    }
-
-    void ThreadpoolDef::
-    allow_request_buffering (::XMLSchema::boolean const& e)
-    {
-      if (allow_request_buffering_.get ())
-      {
-        *allow_request_buffering_ = e;
-      }
-
-      else
-      {
-        allow_request_buffering_ = ::std::auto_ptr< ::XMLSchema::boolean > (new ::XMLSchema::boolean (e));
-        allow_request_buffering_->container (this);
-      }
-    }
-
-    // ThreadpoolDef
-    // 
-    bool ThreadpoolDef::
-    max_buffered_requests_p () const
-    {
-      return max_buffered_requests_.get () != 0;
-    }
-
-    ::XMLSchema::unsignedLong const& ThreadpoolDef::
-    max_buffered_requests () const
-    {
-      return *max_buffered_requests_;
-    }
-
-    ::XMLSchema::unsignedLong& ThreadpoolDef::
-    max_buffered_requests ()
-    {
-      return *max_buffered_requests_;
-    }
-
-    void ThreadpoolDef::
-    max_buffered_requests (::XMLSchema::unsignedLong const& e)
-    {
-      if (max_buffered_requests_.get ())
-      {
-        *max_buffered_requests_ = e;
-      }
-
-      else
-      {
-        max_buffered_requests_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
-        max_buffered_requests_->container (this);
-      }
-    }
-
-    // ThreadpoolDef
-    // 
-    bool ThreadpoolDef::
-    max_request_buffered_size_p () const
-    {
-      return max_request_buffered_size_.get () != 0;
-    }
-
-    ::XMLSchema::unsignedLong const& ThreadpoolDef::
-    max_request_buffered_size () const
-    {
-      return *max_request_buffered_size_;
-    }
-
-    ::XMLSchema::unsignedLong& ThreadpoolDef::
-    max_request_buffered_size ()
-    {
-      return *max_request_buffered_size_;
-    }
-
-    void ThreadpoolDef::
-    max_request_buffered_size (::XMLSchema::unsignedLong const& e)
-    {
-      if (max_request_buffered_size_.get ())
-      {
-        *max_request_buffered_size_ = e;
-      }
-
-      else
-      {
-        max_request_buffered_size_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
-        max_request_buffered_size_->container (this);
-      }
-    }
-
 
     // ThreadpoolWithLanesDef
     // 
 
     ThreadpoolWithLanesDef::
-    ThreadpoolWithLanesDef ()
+    ThreadpoolWithLanesDef (::XMLSchema::unsignedLong const& stacksize__,
+    ::XMLSchema::boolean const& allow_borrowing__,
+    ::XMLSchema::boolean const& allow_request_buffering__,
+    ::XMLSchema::unsignedLong const& max_buffered_requests__,
+    ::XMLSchema::unsignedLong const& max_request_buffered_size__)
     : 
     ::XSCRT::Type (), 
+    stacksize_ (new ::XMLSchema::unsignedLong (stacksize__)),
+    allow_borrowing_ (new ::XMLSchema::boolean (allow_borrowing__)),
+    allow_request_buffering_ (new ::XMLSchema::boolean (allow_request_buffering__)),
+    max_buffered_requests_ (new ::XMLSchema::unsignedLong (max_buffered_requests__)),
+    max_request_buffered_size_ (new ::XMLSchema::unsignedLong (max_request_buffered_size__)),
     regulator__ ()
     {
+      stacksize_->container (this);
+      allow_borrowing_->container (this);
+      allow_request_buffering_->container (this);
+      max_buffered_requests_->container (this);
+      max_request_buffered_size_->container (this);
     }
 
     ThreadpoolWithLanesDef::
     ThreadpoolWithLanesDef (::CIAO::Config_Handlers::ThreadpoolWithLanesDef const& s)
     :
     ::XSCRT::Type (),
+    stacksize_ (new ::XMLSchema::unsignedLong (*s.stacksize_)),
+    allow_borrowing_ (new ::XMLSchema::boolean (*s.allow_borrowing_)),
+    allow_request_buffering_ (new ::XMLSchema::boolean (*s.allow_request_buffering_)),
+    max_buffered_requests_ (new ::XMLSchema::unsignedLong (*s.max_buffered_requests_)),
+    max_request_buffered_size_ (new ::XMLSchema::unsignedLong (*s.max_request_buffered_size_)),
     id_ (s.id_.get () ? new ::XMLSchema::ID< ACE_TCHAR > (*s.id_) : 0),
-    stacksize_ (s.stacksize_.get () ? new ::XMLSchema::unsignedLong (*s.stacksize_) : 0),
-    allow_borrowing_ (s.allow_borrowing_.get () ? new ::XMLSchema::boolean (*s.allow_borrowing_) : 0),
-    allow_request_buffering_ (s.allow_request_buffering_.get () ? new ::XMLSchema::boolean (*s.allow_request_buffering_) : 0),
-    max_buffered_requests_ (s.max_buffered_requests_.get () ? new ::XMLSchema::unsignedLong (*s.max_buffered_requests_) : 0),
-    max_request_buffered_size_ (s.max_request_buffered_size_.get () ? new ::XMLSchema::unsignedLong (*s.max_request_buffered_size_) : 0),
     regulator__ ()
     {
       threadpoolLane_.reserve (s.threadpoolLane_.size ());
@@ -1097,12 +1021,12 @@ namespace CIAO
         ++i) add_threadpoolLane (*i);
       }
 
+      stacksize_->container (this);
+      allow_borrowing_->container (this);
+      allow_request_buffering_->container (this);
+      max_buffered_requests_->container (this);
+      max_request_buffered_size_->container (this);
       if (id_.get ()) id_->container (this);
-      if (stacksize_.get ()) stacksize_->container (this);
-      if (allow_borrowing_.get ()) allow_borrowing_->container (this);
-      if (allow_request_buffering_.get ()) allow_request_buffering_->container (this);
-      if (max_buffered_requests_.get ()) max_buffered_requests_->container (this);
-      if (max_request_buffered_size_.get ()) max_request_buffered_size_->container (this);
     }
 
     ::CIAO::Config_Handlers::ThreadpoolWithLanesDef& ThreadpoolWithLanesDef::
@@ -1116,23 +1040,18 @@ namespace CIAO
         ++i) add_threadpoolLane (*i);
       }
 
+      stacksize (s.stacksize ());
+
+      allow_borrowing (s.allow_borrowing ());
+
+      allow_request_buffering (s.allow_request_buffering ());
+
+      max_buffered_requests (s.max_buffered_requests ());
+
+      max_request_buffered_size (s.max_request_buffered_size ());
+
       if (s.id_.get ()) id (*(s.id_));
       else id_ = ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > (0);
-
-      if (s.stacksize_.get ()) stacksize (*(s.stacksize_));
-      else stacksize_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (0);
-
-      if (s.allow_borrowing_.get ()) allow_borrowing (*(s.allow_borrowing_));
-      else allow_borrowing_ = ::std::auto_ptr< ::XMLSchema::boolean > (0);
-
-      if (s.allow_request_buffering_.get ()) allow_request_buffering (*(s.allow_request_buffering_));
-      else allow_request_buffering_ = ::std::auto_ptr< ::XMLSchema::boolean > (0);
-
-      if (s.max_buffered_requests_.get ()) max_buffered_requests (*(s.max_buffered_requests_));
-      else max_buffered_requests_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (0);
-
-      if (s.max_request_buffered_size_.get ()) max_request_buffered_size (*(s.max_request_buffered_size_));
-      else max_request_buffered_size_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (0);
 
       return *this;
     }
@@ -1190,9 +1109,109 @@ namespace CIAO
     }
 
     size_t ThreadpoolWithLanesDef::
-    count_threadpoolLane(void)
+    count_threadpoolLane(void) const
     {
       return threadpoolLane_.size ();
+    }
+
+    // ThreadpoolWithLanesDef
+    // 
+    ::XMLSchema::unsignedLong const& ThreadpoolWithLanesDef::
+    stacksize () const
+    {
+      return *stacksize_;
+    }
+
+    ::XMLSchema::unsignedLong& ThreadpoolWithLanesDef::
+    stacksize ()
+    {
+      return *stacksize_;
+    }
+
+    void ThreadpoolWithLanesDef::
+    stacksize (::XMLSchema::unsignedLong const& e)
+    {
+      *stacksize_ = e;
+    }
+
+    // ThreadpoolWithLanesDef
+    // 
+    ::XMLSchema::boolean const& ThreadpoolWithLanesDef::
+    allow_borrowing () const
+    {
+      return *allow_borrowing_;
+    }
+
+    ::XMLSchema::boolean& ThreadpoolWithLanesDef::
+    allow_borrowing ()
+    {
+      return *allow_borrowing_;
+    }
+
+    void ThreadpoolWithLanesDef::
+    allow_borrowing (::XMLSchema::boolean const& e)
+    {
+      *allow_borrowing_ = e;
+    }
+
+    // ThreadpoolWithLanesDef
+    // 
+    ::XMLSchema::boolean const& ThreadpoolWithLanesDef::
+    allow_request_buffering () const
+    {
+      return *allow_request_buffering_;
+    }
+
+    ::XMLSchema::boolean& ThreadpoolWithLanesDef::
+    allow_request_buffering ()
+    {
+      return *allow_request_buffering_;
+    }
+
+    void ThreadpoolWithLanesDef::
+    allow_request_buffering (::XMLSchema::boolean const& e)
+    {
+      *allow_request_buffering_ = e;
+    }
+
+    // ThreadpoolWithLanesDef
+    // 
+    ::XMLSchema::unsignedLong const& ThreadpoolWithLanesDef::
+    max_buffered_requests () const
+    {
+      return *max_buffered_requests_;
+    }
+
+    ::XMLSchema::unsignedLong& ThreadpoolWithLanesDef::
+    max_buffered_requests ()
+    {
+      return *max_buffered_requests_;
+    }
+
+    void ThreadpoolWithLanesDef::
+    max_buffered_requests (::XMLSchema::unsignedLong const& e)
+    {
+      *max_buffered_requests_ = e;
+    }
+
+    // ThreadpoolWithLanesDef
+    // 
+    ::XMLSchema::unsignedLong const& ThreadpoolWithLanesDef::
+    max_request_buffered_size () const
+    {
+      return *max_request_buffered_size_;
+    }
+
+    ::XMLSchema::unsignedLong& ThreadpoolWithLanesDef::
+    max_request_buffered_size ()
+    {
+      return *max_request_buffered_size_;
+    }
+
+    void ThreadpoolWithLanesDef::
+    max_request_buffered_size (::XMLSchema::unsignedLong const& e)
+    {
+      *max_request_buffered_size_ = e;
     }
 
     // ThreadpoolWithLanesDef
@@ -1230,216 +1249,48 @@ namespace CIAO
       }
     }
 
-    // ThreadpoolWithLanesDef
-    // 
-    bool ThreadpoolWithLanesDef::
-    stacksize_p () const
-    {
-      return stacksize_.get () != 0;
-    }
-
-    ::XMLSchema::unsignedLong const& ThreadpoolWithLanesDef::
-    stacksize () const
-    {
-      return *stacksize_;
-    }
-
-    ::XMLSchema::unsignedLong& ThreadpoolWithLanesDef::
-    stacksize ()
-    {
-      return *stacksize_;
-    }
-
-    void ThreadpoolWithLanesDef::
-    stacksize (::XMLSchema::unsignedLong const& e)
-    {
-      if (stacksize_.get ())
-      {
-        *stacksize_ = e;
-      }
-
-      else
-      {
-        stacksize_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
-        stacksize_->container (this);
-      }
-    }
-
-    // ThreadpoolWithLanesDef
-    // 
-    bool ThreadpoolWithLanesDef::
-    allow_borrowing_p () const
-    {
-      return allow_borrowing_.get () != 0;
-    }
-
-    ::XMLSchema::boolean const& ThreadpoolWithLanesDef::
-    allow_borrowing () const
-    {
-      return *allow_borrowing_;
-    }
-
-    ::XMLSchema::boolean& ThreadpoolWithLanesDef::
-    allow_borrowing ()
-    {
-      return *allow_borrowing_;
-    }
-
-    void ThreadpoolWithLanesDef::
-    allow_borrowing (::XMLSchema::boolean const& e)
-    {
-      if (allow_borrowing_.get ())
-      {
-        *allow_borrowing_ = e;
-      }
-
-      else
-      {
-        allow_borrowing_ = ::std::auto_ptr< ::XMLSchema::boolean > (new ::XMLSchema::boolean (e));
-        allow_borrowing_->container (this);
-      }
-    }
-
-    // ThreadpoolWithLanesDef
-    // 
-    bool ThreadpoolWithLanesDef::
-    allow_request_buffering_p () const
-    {
-      return allow_request_buffering_.get () != 0;
-    }
-
-    ::XMLSchema::boolean const& ThreadpoolWithLanesDef::
-    allow_request_buffering () const
-    {
-      return *allow_request_buffering_;
-    }
-
-    ::XMLSchema::boolean& ThreadpoolWithLanesDef::
-    allow_request_buffering ()
-    {
-      return *allow_request_buffering_;
-    }
-
-    void ThreadpoolWithLanesDef::
-    allow_request_buffering (::XMLSchema::boolean const& e)
-    {
-      if (allow_request_buffering_.get ())
-      {
-        *allow_request_buffering_ = e;
-      }
-
-      else
-      {
-        allow_request_buffering_ = ::std::auto_ptr< ::XMLSchema::boolean > (new ::XMLSchema::boolean (e));
-        allow_request_buffering_->container (this);
-      }
-    }
-
-    // ThreadpoolWithLanesDef
-    // 
-    bool ThreadpoolWithLanesDef::
-    max_buffered_requests_p () const
-    {
-      return max_buffered_requests_.get () != 0;
-    }
-
-    ::XMLSchema::unsignedLong const& ThreadpoolWithLanesDef::
-    max_buffered_requests () const
-    {
-      return *max_buffered_requests_;
-    }
-
-    ::XMLSchema::unsignedLong& ThreadpoolWithLanesDef::
-    max_buffered_requests ()
-    {
-      return *max_buffered_requests_;
-    }
-
-    void ThreadpoolWithLanesDef::
-    max_buffered_requests (::XMLSchema::unsignedLong const& e)
-    {
-      if (max_buffered_requests_.get ())
-      {
-        *max_buffered_requests_ = e;
-      }
-
-      else
-      {
-        max_buffered_requests_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
-        max_buffered_requests_->container (this);
-      }
-    }
-
-    // ThreadpoolWithLanesDef
-    // 
-    bool ThreadpoolWithLanesDef::
-    max_request_buffered_size_p () const
-    {
-      return max_request_buffered_size_.get () != 0;
-    }
-
-    ::XMLSchema::unsignedLong const& ThreadpoolWithLanesDef::
-    max_request_buffered_size () const
-    {
-      return *max_request_buffered_size_;
-    }
-
-    ::XMLSchema::unsignedLong& ThreadpoolWithLanesDef::
-    max_request_buffered_size ()
-    {
-      return *max_request_buffered_size_;
-    }
-
-    void ThreadpoolWithLanesDef::
-    max_request_buffered_size (::XMLSchema::unsignedLong const& e)
-    {
-      if (max_request_buffered_size_.get ())
-      {
-        *max_request_buffered_size_ = e;
-      }
-
-      else
-      {
-        max_request_buffered_size_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
-        max_request_buffered_size_->container (this);
-      }
-    }
-
 
     // ThreadpoolLaneDef
     // 
 
     ThreadpoolLaneDef::
-    ThreadpoolLaneDef ()
+    ThreadpoolLaneDef (::XMLSchema::unsignedLong const& static_threads__,
+    ::XMLSchema::unsignedLong const& dynamic_threads__,
+    ::CIAO::Config_Handlers::Priority const& priority__)
     : 
+    ::XSCRT::Type (), 
+    static_threads_ (new ::XMLSchema::unsignedLong (static_threads__)),
+    dynamic_threads_ (new ::XMLSchema::unsignedLong (dynamic_threads__)),
+    priority_ (new ::CIAO::Config_Handlers::Priority (priority__)),
     regulator__ ()
     {
+      static_threads_->container (this);
+      dynamic_threads_->container (this);
+      priority_->container (this);
     }
 
     ThreadpoolLaneDef::
     ThreadpoolLaneDef (::CIAO::Config_Handlers::ThreadpoolLaneDef const& s)
     :
-    static_threads_ (s.static_threads_.get () ? new ::XMLSchema::unsignedLong (*s.static_threads_) : 0),
-    dynamic_threads_ (s.dynamic_threads_.get () ? new ::XMLSchema::unsignedLong (*s.dynamic_threads_) : 0),
-    priority_ (s.priority_.get () ? new ::CIAO::Config_Handlers::Priority (*s.priority_) : 0),
+    ::XSCRT::Type (),
+    static_threads_ (new ::XMLSchema::unsignedLong (*s.static_threads_)),
+    dynamic_threads_ (new ::XMLSchema::unsignedLong (*s.dynamic_threads_)),
+    priority_ (new ::CIAO::Config_Handlers::Priority (*s.priority_)),
     regulator__ ()
     {
-      if (static_threads_.get ()) static_threads_->container (this);
-      if (dynamic_threads_.get ()) dynamic_threads_->container (this);
-      if (priority_.get ()) priority_->container (this);
+      static_threads_->container (this);
+      dynamic_threads_->container (this);
+      priority_->container (this);
     }
 
     ::CIAO::Config_Handlers::ThreadpoolLaneDef& ThreadpoolLaneDef::
     operator= (::CIAO::Config_Handlers::ThreadpoolLaneDef const& s)
     {
-      if (s.static_threads_.get ()) static_threads (*(s.static_threads_));
-      else static_threads_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (0);
+      static_threads (s.static_threads ());
 
-      if (s.dynamic_threads_.get ()) dynamic_threads (*(s.dynamic_threads_));
-      else dynamic_threads_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (0);
+      dynamic_threads (s.dynamic_threads ());
 
-      if (s.priority_.get ()) priority (*(s.priority_));
-      else priority_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Priority > (0);
+      priority (s.priority ());
 
       return *this;
     }
@@ -1447,12 +1298,6 @@ namespace CIAO
 
     // ThreadpoolLaneDef
     // 
-    bool ThreadpoolLaneDef::
-    static_threads_p () const
-    {
-      return static_threads_.get () != 0;
-    }
-
     ::XMLSchema::unsignedLong const& ThreadpoolLaneDef::
     static_threads () const
     {
@@ -1468,26 +1313,11 @@ namespace CIAO
     void ThreadpoolLaneDef::
     static_threads (::XMLSchema::unsignedLong const& e)
     {
-      if (static_threads_.get ())
-      {
-        *static_threads_ = e;
-      }
-
-      else
-      {
-        static_threads_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
-        static_threads_->container (this);
-      }
+      *static_threads_ = e;
     }
 
     // ThreadpoolLaneDef
     // 
-    bool ThreadpoolLaneDef::
-    dynamic_threads_p () const
-    {
-      return dynamic_threads_.get () != 0;
-    }
-
     ::XMLSchema::unsignedLong const& ThreadpoolLaneDef::
     dynamic_threads () const
     {
@@ -1503,26 +1333,11 @@ namespace CIAO
     void ThreadpoolLaneDef::
     dynamic_threads (::XMLSchema::unsignedLong const& e)
     {
-      if (dynamic_threads_.get ())
-      {
-        *dynamic_threads_ = e;
-      }
-
-      else
-      {
-        dynamic_threads_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
-        dynamic_threads_->container (this);
-      }
+      *dynamic_threads_ = e;
     }
 
     // ThreadpoolLaneDef
     // 
-    bool ThreadpoolLaneDef::
-    priority_p () const
-    {
-      return priority_.get () != 0;
-    }
-
     ::CIAO::Config_Handlers::Priority const& ThreadpoolLaneDef::
     priority () const
     {
@@ -1538,16 +1353,7 @@ namespace CIAO
     void ThreadpoolLaneDef::
     priority (::CIAO::Config_Handlers::Priority const& e)
     {
-      if (priority_.get ())
-      {
-        *priority_ = e;
-      }
-
-      else
-      {
-        priority_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Priority > (new ::CIAO::Config_Handlers::Priority (e));
-        priority_->container (this);
-      }
+      *priority_ = e;
     }
 
 
@@ -1649,7 +1455,7 @@ namespace CIAO
     }
 
     size_t ConnectionBandsDef::
-    count_band(void)
+    count_band(void) const
     {
       return band_.size ();
     }
@@ -1694,31 +1500,36 @@ namespace CIAO
     // 
 
     PriorityBandDef::
-    PriorityBandDef ()
+    PriorityBandDef (::XMLSchema::int_ const& low__,
+    ::XMLSchema::int_ const& high__)
     : 
+    ::XSCRT::Type (), 
+    low_ (new ::XMLSchema::int_ (low__)),
+    high_ (new ::XMLSchema::int_ (high__)),
     regulator__ ()
     {
+      low_->container (this);
+      high_->container (this);
     }
 
     PriorityBandDef::
     PriorityBandDef (::CIAO::Config_Handlers::PriorityBandDef const& s)
     :
-    low_ (s.low_.get () ? new ::XMLSchema::int_ (*s.low_) : 0),
-    high_ (s.high_.get () ? new ::XMLSchema::int_ (*s.high_) : 0),
+    ::XSCRT::Type (),
+    low_ (new ::XMLSchema::int_ (*s.low_)),
+    high_ (new ::XMLSchema::int_ (*s.high_)),
     regulator__ ()
     {
-      if (low_.get ()) low_->container (this);
-      if (high_.get ()) high_->container (this);
+      low_->container (this);
+      high_->container (this);
     }
 
     ::CIAO::Config_Handlers::PriorityBandDef& PriorityBandDef::
     operator= (::CIAO::Config_Handlers::PriorityBandDef const& s)
     {
-      if (s.low_.get ()) low (*(s.low_));
-      else low_ = ::std::auto_ptr< ::XMLSchema::int_ > (0);
+      low (s.low ());
 
-      if (s.high_.get ()) high (*(s.high_));
-      else high_ = ::std::auto_ptr< ::XMLSchema::int_ > (0);
+      high (s.high ());
 
       return *this;
     }
@@ -1726,12 +1537,6 @@ namespace CIAO
 
     // PriorityBandDef
     // 
-    bool PriorityBandDef::
-    low_p () const
-    {
-      return low_.get () != 0;
-    }
-
     ::XMLSchema::int_ const& PriorityBandDef::
     low () const
     {
@@ -1747,26 +1552,11 @@ namespace CIAO
     void PriorityBandDef::
     low (::XMLSchema::int_ const& e)
     {
-      if (low_.get ())
-      {
-        *low_ = e;
-      }
-
-      else
-      {
-        low_ = ::std::auto_ptr< ::XMLSchema::int_ > (new ::XMLSchema::int_ (e));
-        low_->container (this);
-      }
+      *low_ = e;
     }
 
     // PriorityBandDef
     // 
-    bool PriorityBandDef::
-    high_p () const
-    {
-      return high_.get () != 0;
-    }
-
     ::XMLSchema::int_ const& PriorityBandDef::
     high () const
     {
@@ -1782,16 +1572,7 @@ namespace CIAO
     void PriorityBandDef::
     high (::XMLSchema::int_ const& e)
     {
-      if (high_.get ())
-      {
-        *high_ = e;
-      }
-
-      else
-      {
-        high_ = ::std::auto_ptr< ::XMLSchema::int_ > (new ::XMLSchema::int_ (e));
-        high_->container (this);
-      }
+      *high_ = e;
     }
 
 
@@ -1923,7 +1704,7 @@ namespace CIAO
     }
 
     size_t PolicySet::
-    count_priorityModel(void)
+    count_priorityModel(void) const
     {
       return priorityModel_.size ();
     }
@@ -1980,7 +1761,7 @@ namespace CIAO
     }
 
     size_t PolicySet::
-    count_threadpool(void)
+    count_threadpool(void) const
     {
       return threadpool_.size ();
     }
@@ -2037,7 +1818,7 @@ namespace CIAO
     }
 
     size_t PolicySet::
-    count_priorityBandedConnection(void)
+    count_priorityBandedConnection(void) const
     {
       return priorityBandedConnection_.size ();
     }
@@ -2395,6 +2176,58 @@ namespace CIAO
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
 
+      while (p.more_elements ())
+      {
+        ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
+        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
+
+        if (n == "stacksize")
+        {
+          stacksize_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
+          stacksize_->container (this);
+        }
+
+        else if (n == "static_threads")
+        {
+          static_threads_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
+          static_threads_->container (this);
+        }
+
+        else if (n == "dynamic_threads")
+        {
+          dynamic_threads_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
+          dynamic_threads_->container (this);
+        }
+
+        else if (n == "default_priority")
+        {
+          default_priority_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Priority > (new ::CIAO::Config_Handlers::Priority (e));
+          default_priority_->container (this);
+        }
+
+        else if (n == "allow_request_buffering")
+        {
+          allow_request_buffering_ = ::std::auto_ptr< ::XMLSchema::boolean > (new ::XMLSchema::boolean (e));
+          allow_request_buffering_->container (this);
+        }
+
+        else if (n == "max_buffered_requests")
+        {
+          max_buffered_requests_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
+          max_buffered_requests_->container (this);
+        }
+
+        else if (n == "max_request_buffered_size")
+        {
+          max_request_buffered_size_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
+          max_request_buffered_size_->container (this);
+        }
+
+        else 
+        {
+        }
+      }
+
       while (p.more_attributes ())
       {
         ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
@@ -2403,48 +2236,6 @@ namespace CIAO
         {
           ::XMLSchema::ID< ACE_TCHAR > t (a);
           id (t);
-        }
-
-        else if (n == "stacksize")
-        {
-          ::XMLSchema::unsignedLong t (a);
-          stacksize (t);
-        }
-
-        else if (n == "static_threads")
-        {
-          ::XMLSchema::unsignedLong t (a);
-          static_threads (t);
-        }
-
-        else if (n == "dynamic_threads")
-        {
-          ::XMLSchema::unsignedLong t (a);
-          dynamic_threads (t);
-        }
-
-        else if (n == "default_priority")
-        {
-          ::CIAO::Config_Handlers::Priority t (a);
-          default_priority (t);
-        }
-
-        else if (n == "allow_request_buffering")
-        {
-          ::XMLSchema::boolean t (a);
-          allow_request_buffering (t);
-        }
-
-        else if (n == "max_buffered_requests")
-        {
-          ::XMLSchema::unsignedLong t (a);
-          max_buffered_requests (t);
-        }
-
-        else if (n == "max_request_buffered_size")
-        {
-          ::XMLSchema::unsignedLong t (a);
-          max_request_buffered_size (t);
         }
 
         else 
@@ -2474,6 +2265,36 @@ namespace CIAO
           add_threadpoolLane (t);
         }
 
+        else if (n == "stacksize")
+        {
+          stacksize_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
+          stacksize_->container (this);
+        }
+
+        else if (n == "allow_borrowing")
+        {
+          allow_borrowing_ = ::std::auto_ptr< ::XMLSchema::boolean > (new ::XMLSchema::boolean (e));
+          allow_borrowing_->container (this);
+        }
+
+        else if (n == "allow_request_buffering")
+        {
+          allow_request_buffering_ = ::std::auto_ptr< ::XMLSchema::boolean > (new ::XMLSchema::boolean (e));
+          allow_request_buffering_->container (this);
+        }
+
+        else if (n == "max_buffered_requests")
+        {
+          max_buffered_requests_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
+          max_buffered_requests_->container (this);
+        }
+
+        else if (n == "max_request_buffered_size")
+        {
+          max_request_buffered_size_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
+          max_request_buffered_size_->container (this);
+        }
+
         else 
         {
         }
@@ -2487,36 +2308,6 @@ namespace CIAO
         {
           ::XMLSchema::ID< ACE_TCHAR > t (a);
           id (t);
-        }
-
-        else if (n == "stacksize")
-        {
-          ::XMLSchema::unsignedLong t (a);
-          stacksize (t);
-        }
-
-        else if (n == "allow_borrowing")
-        {
-          ::XMLSchema::boolean t (a);
-          allow_borrowing (t);
-        }
-
-        else if (n == "allow_request_buffering")
-        {
-          ::XMLSchema::boolean t (a);
-          allow_request_buffering (t);
-        }
-
-        else if (n == "max_buffered_requests")
-        {
-          ::XMLSchema::unsignedLong t (a);
-          max_buffered_requests (t);
-        }
-
-        else if (n == "max_request_buffered_size")
-        {
-          ::XMLSchema::unsignedLong t (a);
-          max_request_buffered_size (t);
         }
 
         else 
@@ -2535,26 +2326,27 @@ namespace CIAO
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
 
-      while (p.more_attributes ())
+      while (p.more_elements ())
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
-        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
+        ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
+        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
+
         if (n == "static_threads")
         {
-          ::XMLSchema::unsignedLong t (a);
-          static_threads (t);
+          static_threads_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
+          static_threads_->container (this);
         }
 
         else if (n == "dynamic_threads")
         {
-          ::XMLSchema::unsignedLong t (a);
-          dynamic_threads (t);
+          dynamic_threads_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
+          dynamic_threads_->container (this);
         }
 
         else if (n == "priority")
         {
-          ::CIAO::Config_Handlers::Priority t (a);
-          priority (t);
+          priority_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Priority > (new ::CIAO::Config_Handlers::Priority (e));
+          priority_->container (this);
         }
 
         else 
@@ -2615,20 +2407,21 @@ namespace CIAO
 
       ::XSCRT::Parser< ACE_TCHAR > p (e);
 
-      while (p.more_attributes ())
+      while (p.more_elements ())
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
-        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
+        ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
+        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
+
         if (n == "low")
         {
-          ::XMLSchema::int_ t (a);
-          low (t);
+          low_ = ::std::auto_ptr< ::XMLSchema::int_ > (new ::XMLSchema::int_ (e));
+          low_->container (this);
         }
 
         else if (n == "high")
         {
-          ::XMLSchema::int_ t (a);
-          high (t);
+          high_ = ::std::auto_ptr< ::XMLSchema::int_ > (new ::XMLSchema::int_ (e));
+          high_->container (this);
         }
 
         else 
@@ -3781,22 +3574,15 @@ namespace CIAO
       traverse (Type& o)
       {
         pre (o);
+        stacksize (o);
+        static_threads (o);
+        dynamic_threads (o);
+        default_priority (o);
+        allow_request_buffering (o);
+        max_buffered_requests (o);
+        max_request_buffered_size (o);
         if (o.id_p ()) id (o);
         else id_none (o);
-        if (o.stacksize_p ()) stacksize (o);
-        else stacksize_none (o);
-        if (o.static_threads_p ()) static_threads (o);
-        else static_threads_none (o);
-        if (o.dynamic_threads_p ()) dynamic_threads (o);
-        else dynamic_threads_none (o);
-        if (o.default_priority_p ()) default_priority (o);
-        else default_priority_none (o);
-        if (o.allow_request_buffering_p ()) allow_request_buffering (o);
-        else allow_request_buffering_none (o);
-        if (o.max_buffered_requests_p ()) max_buffered_requests (o);
-        else max_buffered_requests_none (o);
-        if (o.max_request_buffered_size_p ()) max_request_buffered_size (o);
-        else max_request_buffered_size_none (o);
         post (o);
       }
 
@@ -3804,22 +3590,15 @@ namespace CIAO
       traverse (Type const& o)
       {
         pre (o);
+        stacksize (o);
+        static_threads (o);
+        dynamic_threads (o);
+        default_priority (o);
+        allow_request_buffering (o);
+        max_buffered_requests (o);
+        max_request_buffered_size (o);
         if (o.id_p ()) id (o);
         else id_none (o);
-        if (o.stacksize_p ()) stacksize (o);
-        else stacksize_none (o);
-        if (o.static_threads_p ()) static_threads (o);
-        else static_threads_none (o);
-        if (o.dynamic_threads_p ()) dynamic_threads (o);
-        else dynamic_threads_none (o);
-        if (o.default_priority_p ()) default_priority (o);
-        else default_priority_none (o);
-        if (o.allow_request_buffering_p ()) allow_request_buffering (o);
-        else allow_request_buffering_none (o);
-        if (o.max_buffered_requests_p ()) max_buffered_requests (o);
-        else max_buffered_requests_none (o);
-        if (o.max_request_buffered_size_p ()) max_request_buffered_size (o);
-        else max_request_buffered_size_none (o);
         post (o);
       }
 
@@ -3831,6 +3610,90 @@ namespace CIAO
       void ThreadpoolDef::
       pre (Type const&)
       {
+      }
+
+      void ThreadpoolDef::
+      stacksize (Type& o)
+      {
+        dispatch (o.stacksize ());
+      }
+
+      void ThreadpoolDef::
+      stacksize (Type const& o)
+      {
+        dispatch (o.stacksize ());
+      }
+
+      void ThreadpoolDef::
+      static_threads (Type& o)
+      {
+        dispatch (o.static_threads ());
+      }
+
+      void ThreadpoolDef::
+      static_threads (Type const& o)
+      {
+        dispatch (o.static_threads ());
+      }
+
+      void ThreadpoolDef::
+      dynamic_threads (Type& o)
+      {
+        dispatch (o.dynamic_threads ());
+      }
+
+      void ThreadpoolDef::
+      dynamic_threads (Type const& o)
+      {
+        dispatch (o.dynamic_threads ());
+      }
+
+      void ThreadpoolDef::
+      default_priority (Type& o)
+      {
+        dispatch (o.default_priority ());
+      }
+
+      void ThreadpoolDef::
+      default_priority (Type const& o)
+      {
+        dispatch (o.default_priority ());
+      }
+
+      void ThreadpoolDef::
+      allow_request_buffering (Type& o)
+      {
+        dispatch (o.allow_request_buffering ());
+      }
+
+      void ThreadpoolDef::
+      allow_request_buffering (Type const& o)
+      {
+        dispatch (o.allow_request_buffering ());
+      }
+
+      void ThreadpoolDef::
+      max_buffered_requests (Type& o)
+      {
+        dispatch (o.max_buffered_requests ());
+      }
+
+      void ThreadpoolDef::
+      max_buffered_requests (Type const& o)
+      {
+        dispatch (o.max_buffered_requests ());
+      }
+
+      void ThreadpoolDef::
+      max_request_buffered_size (Type& o)
+      {
+        dispatch (o.max_request_buffered_size ());
+      }
+
+      void ThreadpoolDef::
+      max_request_buffered_size (Type const& o)
+      {
+        dispatch (o.max_request_buffered_size ());
       }
 
       void ThreadpoolDef::
@@ -3856,160 +3719,6 @@ namespace CIAO
       }
 
       void ThreadpoolDef::
-      stacksize (Type& o)
-      {
-        dispatch (o.stacksize ());
-      }
-
-      void ThreadpoolDef::
-      stacksize (Type const& o)
-      {
-        dispatch (o.stacksize ());
-      }
-
-      void ThreadpoolDef::
-      stacksize_none (Type&)
-      {
-      }
-
-      void ThreadpoolDef::
-      stacksize_none (Type const&)
-      {
-      }
-
-      void ThreadpoolDef::
-      static_threads (Type& o)
-      {
-        dispatch (o.static_threads ());
-      }
-
-      void ThreadpoolDef::
-      static_threads (Type const& o)
-      {
-        dispatch (o.static_threads ());
-      }
-
-      void ThreadpoolDef::
-      static_threads_none (Type&)
-      {
-      }
-
-      void ThreadpoolDef::
-      static_threads_none (Type const&)
-      {
-      }
-
-      void ThreadpoolDef::
-      dynamic_threads (Type& o)
-      {
-        dispatch (o.dynamic_threads ());
-      }
-
-      void ThreadpoolDef::
-      dynamic_threads (Type const& o)
-      {
-        dispatch (o.dynamic_threads ());
-      }
-
-      void ThreadpoolDef::
-      dynamic_threads_none (Type&)
-      {
-      }
-
-      void ThreadpoolDef::
-      dynamic_threads_none (Type const&)
-      {
-      }
-
-      void ThreadpoolDef::
-      default_priority (Type& o)
-      {
-        dispatch (o.default_priority ());
-      }
-
-      void ThreadpoolDef::
-      default_priority (Type const& o)
-      {
-        dispatch (o.default_priority ());
-      }
-
-      void ThreadpoolDef::
-      default_priority_none (Type&)
-      {
-      }
-
-      void ThreadpoolDef::
-      default_priority_none (Type const&)
-      {
-      }
-
-      void ThreadpoolDef::
-      allow_request_buffering (Type& o)
-      {
-        dispatch (o.allow_request_buffering ());
-      }
-
-      void ThreadpoolDef::
-      allow_request_buffering (Type const& o)
-      {
-        dispatch (o.allow_request_buffering ());
-      }
-
-      void ThreadpoolDef::
-      allow_request_buffering_none (Type&)
-      {
-      }
-
-      void ThreadpoolDef::
-      allow_request_buffering_none (Type const&)
-      {
-      }
-
-      void ThreadpoolDef::
-      max_buffered_requests (Type& o)
-      {
-        dispatch (o.max_buffered_requests ());
-      }
-
-      void ThreadpoolDef::
-      max_buffered_requests (Type const& o)
-      {
-        dispatch (o.max_buffered_requests ());
-      }
-
-      void ThreadpoolDef::
-      max_buffered_requests_none (Type&)
-      {
-      }
-
-      void ThreadpoolDef::
-      max_buffered_requests_none (Type const&)
-      {
-      }
-
-      void ThreadpoolDef::
-      max_request_buffered_size (Type& o)
-      {
-        dispatch (o.max_request_buffered_size ());
-      }
-
-      void ThreadpoolDef::
-      max_request_buffered_size (Type const& o)
-      {
-        dispatch (o.max_request_buffered_size ());
-      }
-
-      void ThreadpoolDef::
-      max_request_buffered_size_none (Type&)
-      {
-      }
-
-      void ThreadpoolDef::
-      max_request_buffered_size_none (Type const&)
-      {
-      }
-
-      void ThreadpoolDef::
       post (Type&)
       {
       }
@@ -4028,18 +3737,13 @@ namespace CIAO
       {
         pre (o);
         threadpoolLane (o);
+        stacksize (o);
+        allow_borrowing (o);
+        allow_request_buffering (o);
+        max_buffered_requests (o);
+        max_request_buffered_size (o);
         if (o.id_p ()) id (o);
         else id_none (o);
-        if (o.stacksize_p ()) stacksize (o);
-        else stacksize_none (o);
-        if (o.allow_borrowing_p ()) allow_borrowing (o);
-        else allow_borrowing_none (o);
-        if (o.allow_request_buffering_p ()) allow_request_buffering (o);
-        else allow_request_buffering_none (o);
-        if (o.max_buffered_requests_p ()) max_buffered_requests (o);
-        else max_buffered_requests_none (o);
-        if (o.max_request_buffered_size_p ()) max_request_buffered_size (o);
-        else max_request_buffered_size_none (o);
         post (o);
       }
 
@@ -4048,18 +3752,13 @@ namespace CIAO
       {
         pre (o);
         threadpoolLane (o);
+        stacksize (o);
+        allow_borrowing (o);
+        allow_request_buffering (o);
+        max_buffered_requests (o);
+        max_request_buffered_size (o);
         if (o.id_p ()) id (o);
         else id_none (o);
-        if (o.stacksize_p ()) stacksize (o);
-        else stacksize_none (o);
-        if (o.allow_borrowing_p ()) allow_borrowing (o);
-        else allow_borrowing_none (o);
-        if (o.allow_request_buffering_p ()) allow_request_buffering (o);
-        else allow_request_buffering_none (o);
-        if (o.max_buffered_requests_p ()) max_buffered_requests (o);
-        else max_buffered_requests_none (o);
-        if (o.max_request_buffered_size_p ()) max_request_buffered_size (o);
-        else max_request_buffered_size_none (o);
         post (o);
       }
 
@@ -4148,6 +3847,66 @@ namespace CIAO
       }
 
       void ThreadpoolWithLanesDef::
+      stacksize (Type& o)
+      {
+        dispatch (o.stacksize ());
+      }
+
+      void ThreadpoolWithLanesDef::
+      stacksize (Type const& o)
+      {
+        dispatch (o.stacksize ());
+      }
+
+      void ThreadpoolWithLanesDef::
+      allow_borrowing (Type& o)
+      {
+        dispatch (o.allow_borrowing ());
+      }
+
+      void ThreadpoolWithLanesDef::
+      allow_borrowing (Type const& o)
+      {
+        dispatch (o.allow_borrowing ());
+      }
+
+      void ThreadpoolWithLanesDef::
+      allow_request_buffering (Type& o)
+      {
+        dispatch (o.allow_request_buffering ());
+      }
+
+      void ThreadpoolWithLanesDef::
+      allow_request_buffering (Type const& o)
+      {
+        dispatch (o.allow_request_buffering ());
+      }
+
+      void ThreadpoolWithLanesDef::
+      max_buffered_requests (Type& o)
+      {
+        dispatch (o.max_buffered_requests ());
+      }
+
+      void ThreadpoolWithLanesDef::
+      max_buffered_requests (Type const& o)
+      {
+        dispatch (o.max_buffered_requests ());
+      }
+
+      void ThreadpoolWithLanesDef::
+      max_request_buffered_size (Type& o)
+      {
+        dispatch (o.max_request_buffered_size ());
+      }
+
+      void ThreadpoolWithLanesDef::
+      max_request_buffered_size (Type const& o)
+      {
+        dispatch (o.max_request_buffered_size ());
+      }
+
+      void ThreadpoolWithLanesDef::
       id (Type& o)
       {
         dispatch (o.id ());
@@ -4170,116 +3929,6 @@ namespace CIAO
       }
 
       void ThreadpoolWithLanesDef::
-      stacksize (Type& o)
-      {
-        dispatch (o.stacksize ());
-      }
-
-      void ThreadpoolWithLanesDef::
-      stacksize (Type const& o)
-      {
-        dispatch (o.stacksize ());
-      }
-
-      void ThreadpoolWithLanesDef::
-      stacksize_none (Type&)
-      {
-      }
-
-      void ThreadpoolWithLanesDef::
-      stacksize_none (Type const&)
-      {
-      }
-
-      void ThreadpoolWithLanesDef::
-      allow_borrowing (Type& o)
-      {
-        dispatch (o.allow_borrowing ());
-      }
-
-      void ThreadpoolWithLanesDef::
-      allow_borrowing (Type const& o)
-      {
-        dispatch (o.allow_borrowing ());
-      }
-
-      void ThreadpoolWithLanesDef::
-      allow_borrowing_none (Type&)
-      {
-      }
-
-      void ThreadpoolWithLanesDef::
-      allow_borrowing_none (Type const&)
-      {
-      }
-
-      void ThreadpoolWithLanesDef::
-      allow_request_buffering (Type& o)
-      {
-        dispatch (o.allow_request_buffering ());
-      }
-
-      void ThreadpoolWithLanesDef::
-      allow_request_buffering (Type const& o)
-      {
-        dispatch (o.allow_request_buffering ());
-      }
-
-      void ThreadpoolWithLanesDef::
-      allow_request_buffering_none (Type&)
-      {
-      }
-
-      void ThreadpoolWithLanesDef::
-      allow_request_buffering_none (Type const&)
-      {
-      }
-
-      void ThreadpoolWithLanesDef::
-      max_buffered_requests (Type& o)
-      {
-        dispatch (o.max_buffered_requests ());
-      }
-
-      void ThreadpoolWithLanesDef::
-      max_buffered_requests (Type const& o)
-      {
-        dispatch (o.max_buffered_requests ());
-      }
-
-      void ThreadpoolWithLanesDef::
-      max_buffered_requests_none (Type&)
-      {
-      }
-
-      void ThreadpoolWithLanesDef::
-      max_buffered_requests_none (Type const&)
-      {
-      }
-
-      void ThreadpoolWithLanesDef::
-      max_request_buffered_size (Type& o)
-      {
-        dispatch (o.max_request_buffered_size ());
-      }
-
-      void ThreadpoolWithLanesDef::
-      max_request_buffered_size (Type const& o)
-      {
-        dispatch (o.max_request_buffered_size ());
-      }
-
-      void ThreadpoolWithLanesDef::
-      max_request_buffered_size_none (Type&)
-      {
-      }
-
-      void ThreadpoolWithLanesDef::
-      max_request_buffered_size_none (Type const&)
-      {
-      }
-
-      void ThreadpoolWithLanesDef::
       post (Type&)
       {
       }
@@ -4297,12 +3946,9 @@ namespace CIAO
       traverse (Type& o)
       {
         pre (o);
-        if (o.static_threads_p ()) static_threads (o);
-        else static_threads_none (o);
-        if (o.dynamic_threads_p ()) dynamic_threads (o);
-        else dynamic_threads_none (o);
-        if (o.priority_p ()) priority (o);
-        else priority_none (o);
+        static_threads (o);
+        dynamic_threads (o);
+        priority (o);
         post (o);
       }
 
@@ -4310,12 +3956,9 @@ namespace CIAO
       traverse (Type const& o)
       {
         pre (o);
-        if (o.static_threads_p ()) static_threads (o);
-        else static_threads_none (o);
-        if (o.dynamic_threads_p ()) dynamic_threads (o);
-        else dynamic_threads_none (o);
-        if (o.priority_p ()) priority (o);
-        else priority_none (o);
+        static_threads (o);
+        dynamic_threads (o);
+        priority (o);
         post (o);
       }
 
@@ -4342,16 +3985,6 @@ namespace CIAO
       }
 
       void ThreadpoolLaneDef::
-      static_threads_none (Type&)
-      {
-      }
-
-      void ThreadpoolLaneDef::
-      static_threads_none (Type const&)
-      {
-      }
-
-      void ThreadpoolLaneDef::
       dynamic_threads (Type& o)
       {
         dispatch (o.dynamic_threads ());
@@ -4364,16 +3997,6 @@ namespace CIAO
       }
 
       void ThreadpoolLaneDef::
-      dynamic_threads_none (Type&)
-      {
-      }
-
-      void ThreadpoolLaneDef::
-      dynamic_threads_none (Type const&)
-      {
-      }
-
-      void ThreadpoolLaneDef::
       priority (Type& o)
       {
         dispatch (o.priority ());
@@ -4383,16 +4006,6 @@ namespace CIAO
       priority (Type const& o)
       {
         dispatch (o.priority ());
-      }
-
-      void ThreadpoolLaneDef::
-      priority_none (Type&)
-      {
-      }
-
-      void ThreadpoolLaneDef::
-      priority_none (Type const&)
-      {
       }
 
       void ThreadpoolLaneDef::
@@ -4553,10 +4166,8 @@ namespace CIAO
       traverse (Type& o)
       {
         pre (o);
-        if (o.low_p ()) low (o);
-        else low_none (o);
-        if (o.high_p ()) high (o);
-        else high_none (o);
+        low (o);
+        high (o);
         post (o);
       }
 
@@ -4564,10 +4175,8 @@ namespace CIAO
       traverse (Type const& o)
       {
         pre (o);
-        if (o.low_p ()) low (o);
-        else low_none (o);
-        if (o.high_p ()) high (o);
-        else high_none (o);
+        low (o);
+        high (o);
         post (o);
       }
 
@@ -4594,16 +4203,6 @@ namespace CIAO
       }
 
       void PriorityBandDef::
-      low_none (Type&)
-      {
-      }
-
-      void PriorityBandDef::
-      low_none (Type const&)
-      {
-      }
-
-      void PriorityBandDef::
       high (Type& o)
       {
         dispatch (o.high ());
@@ -4613,16 +4212,6 @@ namespace CIAO
       high (Type const& o)
       {
         dispatch (o.high ());
-      }
-
-      void PriorityBandDef::
-      high_none (Type&)
-      {
-      }
-
-      void PriorityBandDef::
-      high_none (Type const&)
-      {
       }
 
       void PriorityBandDef::
@@ -5080,7 +4669,7 @@ namespace CIAO
       void ServerResourcesDef::
       cmdline (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("cmdline", "www.dre.vanderbilt.edu", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("cmdline", top_ ()));
         Traversal::ServerResourcesDef::cmdline (o);
         pop_ ();
       }
@@ -5088,7 +4677,7 @@ namespace CIAO
       void ServerResourcesDef::
       svcconf (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("svcconf", "www.dre.vanderbilt.edu", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("svcconf", top_ ()));
         Traversal::ServerResourcesDef::svcconf (o);
         pop_ ();
       }
@@ -5096,7 +4685,7 @@ namespace CIAO
       void ServerResourcesDef::
       orbConfigs (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("orbConfigs", "www.dre.vanderbilt.edu", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("orbConfigs", top_ ()));
         Traversal::ServerResourcesDef::orbConfigs (o);
         pop_ ();
       }
@@ -5125,7 +4714,7 @@ namespace CIAO
       void ServerCmdlineOptions::
       arg_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("arg", "www.dre.vanderbilt.edu", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("arg", top_ ()));
       }
 
       void ServerCmdlineOptions::
@@ -5165,7 +4754,7 @@ namespace CIAO
       void ACESvcConf::
       uri (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("uri", "www.dre.vanderbilt.edu", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("uri", top_ ()));
         Traversal::ACESvcConf::uri (o);
         pop_ ();
       }
@@ -5194,7 +4783,7 @@ namespace CIAO
       void ORBConfigs::
       resources (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("resources", "www.dre.vanderbilt.edu", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("resources", top_ ()));
         Traversal::ORBConfigs::resources (o);
         pop_ ();
       }
@@ -5202,7 +4791,7 @@ namespace CIAO
       void ORBConfigs::
       policySet_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("policySet", "www.dre.vanderbilt.edu", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("policySet", top_ ()));
       }
 
       void ORBConfigs::
@@ -5242,7 +4831,7 @@ namespace CIAO
       void ORBResources::
       threadpool_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("threadpool", "www.dre.vanderbilt.edu", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("threadpool", top_ ()));
       }
 
       void ORBResources::
@@ -5261,7 +4850,7 @@ namespace CIAO
       void ORBResources::
       threadpoolWithLanes_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("threadpoolWithLanes", "www.dre.vanderbilt.edu", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("threadpoolWithLanes", top_ ()));
       }
 
       void ORBResources::
@@ -5280,7 +4869,7 @@ namespace CIAO
       void ORBResources::
       connectionBands_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("connectionBands", "www.dre.vanderbilt.edu", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("connectionBands", top_ ()));
       }
 
       void ORBResources::
@@ -5340,74 +4929,67 @@ namespace CIAO
       }
 
       void ThreadpoolDef::
-      id (Type const& o)
-      {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("id", "", top_ ());
-        attr_ (&a);
-        Traversal::ThreadpoolDef::id (o);
-        attr_ (0);
-      }
-
-      void ThreadpoolDef::
       stacksize (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("stacksize", "", top_ ());
-        attr_ (&a);
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("stacksize", top_ ()));
         Traversal::ThreadpoolDef::stacksize (o);
-        attr_ (0);
+        pop_ ();
       }
 
       void ThreadpoolDef::
       static_threads (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("static_threads", "", top_ ());
-        attr_ (&a);
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("static_threads", top_ ()));
         Traversal::ThreadpoolDef::static_threads (o);
-        attr_ (0);
+        pop_ ();
       }
 
       void ThreadpoolDef::
       dynamic_threads (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("dynamic_threads", "", top_ ());
-        attr_ (&a);
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("dynamic_threads", top_ ()));
         Traversal::ThreadpoolDef::dynamic_threads (o);
-        attr_ (0);
+        pop_ ();
       }
 
       void ThreadpoolDef::
       default_priority (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("default_priority", "", top_ ());
-        attr_ (&a);
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("default_priority", top_ ()));
         Traversal::ThreadpoolDef::default_priority (o);
-        attr_ (0);
+        pop_ ();
       }
 
       void ThreadpoolDef::
       allow_request_buffering (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("allow_request_buffering", "", top_ ());
-        attr_ (&a);
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("allow_request_buffering", top_ ()));
         Traversal::ThreadpoolDef::allow_request_buffering (o);
-        attr_ (0);
+        pop_ ();
       }
 
       void ThreadpoolDef::
       max_buffered_requests (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("max_buffered_requests", "", top_ ());
-        attr_ (&a);
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("max_buffered_requests", top_ ()));
         Traversal::ThreadpoolDef::max_buffered_requests (o);
-        attr_ (0);
+        pop_ ();
       }
 
       void ThreadpoolDef::
       max_request_buffered_size (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("max_request_buffered_size", "", top_ ());
-        attr_ (&a);
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("max_request_buffered_size", top_ ()));
         Traversal::ThreadpoolDef::max_request_buffered_size (o);
+        pop_ ();
+      }
+
+      void ThreadpoolDef::
+      id (Type const& o)
+      {
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("id", "", top_ ());
+        attr_ (&a);
+        Traversal::ThreadpoolDef::id (o);
         attr_ (0);
       }
 
@@ -5435,7 +5017,7 @@ namespace CIAO
       void ThreadpoolWithLanesDef::
       threadpoolLane_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("threadpoolLane", "www.dre.vanderbilt.edu", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("threadpoolLane", top_ ()));
       }
 
       void ThreadpoolWithLanesDef::
@@ -5452,56 +5034,51 @@ namespace CIAO
       }
 
       void ThreadpoolWithLanesDef::
-      id (Type const& o)
-      {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("id", "", top_ ());
-        attr_ (&a);
-        Traversal::ThreadpoolWithLanesDef::id (o);
-        attr_ (0);
-      }
-
-      void ThreadpoolWithLanesDef::
       stacksize (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("stacksize", "", top_ ());
-        attr_ (&a);
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("stacksize", top_ ()));
         Traversal::ThreadpoolWithLanesDef::stacksize (o);
-        attr_ (0);
+        pop_ ();
       }
 
       void ThreadpoolWithLanesDef::
       allow_borrowing (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("allow_borrowing", "", top_ ());
-        attr_ (&a);
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("allow_borrowing", top_ ()));
         Traversal::ThreadpoolWithLanesDef::allow_borrowing (o);
-        attr_ (0);
+        pop_ ();
       }
 
       void ThreadpoolWithLanesDef::
       allow_request_buffering (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("allow_request_buffering", "", top_ ());
-        attr_ (&a);
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("allow_request_buffering", top_ ()));
         Traversal::ThreadpoolWithLanesDef::allow_request_buffering (o);
-        attr_ (0);
+        pop_ ();
       }
 
       void ThreadpoolWithLanesDef::
       max_buffered_requests (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("max_buffered_requests", "", top_ ());
-        attr_ (&a);
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("max_buffered_requests", top_ ()));
         Traversal::ThreadpoolWithLanesDef::max_buffered_requests (o);
-        attr_ (0);
+        pop_ ();
       }
 
       void ThreadpoolWithLanesDef::
       max_request_buffered_size (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("max_request_buffered_size", "", top_ ());
-        attr_ (&a);
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("max_request_buffered_size", top_ ()));
         Traversal::ThreadpoolWithLanesDef::max_request_buffered_size (o);
+        pop_ ();
+      }
+
+      void ThreadpoolWithLanesDef::
+      id (Type const& o)
+      {
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("id", "", top_ ());
+        attr_ (&a);
+        Traversal::ThreadpoolWithLanesDef::id (o);
         attr_ (0);
       }
 
@@ -5529,28 +5106,25 @@ namespace CIAO
       void ThreadpoolLaneDef::
       static_threads (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("static_threads", "", top_ ());
-        attr_ (&a);
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("static_threads", top_ ()));
         Traversal::ThreadpoolLaneDef::static_threads (o);
-        attr_ (0);
+        pop_ ();
       }
 
       void ThreadpoolLaneDef::
       dynamic_threads (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("dynamic_threads", "", top_ ());
-        attr_ (&a);
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("dynamic_threads", top_ ()));
         Traversal::ThreadpoolLaneDef::dynamic_threads (o);
-        attr_ (0);
+        pop_ ();
       }
 
       void ThreadpoolLaneDef::
       priority (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("priority", "", top_ ());
-        attr_ (&a);
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("priority", top_ ()));
         Traversal::ThreadpoolLaneDef::priority (o);
-        attr_ (0);
+        pop_ ();
       }
 
       // ConnectionBandsDef
@@ -5577,7 +5151,7 @@ namespace CIAO
       void ConnectionBandsDef::
       band_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("band", "www.dre.vanderbilt.edu", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("band", top_ ()));
       }
 
       void ConnectionBandsDef::
@@ -5626,19 +5200,17 @@ namespace CIAO
       void PriorityBandDef::
       low (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("low", "", top_ ());
-        attr_ (&a);
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("low", top_ ()));
         Traversal::PriorityBandDef::low (o);
-        attr_ (0);
+        pop_ ();
       }
 
       void PriorityBandDef::
       high (Type const& o)
       {
-        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("high", "", top_ ());
-        attr_ (&a);
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("high", top_ ()));
         Traversal::PriorityBandDef::high (o);
-        attr_ (0);
+        pop_ ();
       }
 
       // PolicySet
@@ -5665,7 +5237,7 @@ namespace CIAO
       void PolicySet::
       priorityModel_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("priorityModel", "www.dre.vanderbilt.edu", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("priorityModel", top_ ()));
       }
 
       void PolicySet::
@@ -5684,7 +5256,7 @@ namespace CIAO
       void PolicySet::
       threadpool_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("threadpool", "www.dre.vanderbilt.edu", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("threadpool", top_ ()));
       }
 
       void PolicySet::
@@ -5703,7 +5275,7 @@ namespace CIAO
       void PolicySet::
       priorityBandedConnection_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("priorityBandedConnection", "www.dre.vanderbilt.edu", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("priorityBandedConnection", top_ ()));
       }
 
       void PolicySet::
@@ -5789,7 +5361,7 @@ namespace CIAO
       void PriorityModelPolicyDef::
       priority_model (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("priority_model", "www.dre.vanderbilt.edu", top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("priority_model", top_ ()));
         Traversal::PriorityModelPolicyDef::priority_model (o);
         pop_ ();
       }
@@ -5826,10 +5398,10 @@ namespace CIAO
       virtual ::CIAO::Config_Handlers::Writer::ORBConfigs,
       virtual ::CIAO::Config_Handlers::Writer::ORBResources,
       virtual ::CIAO::Config_Handlers::Writer::ThreadpoolDef,
-      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedLong, ACE_TCHAR >,
       virtual ::CIAO::Config_Handlers::Writer::Priority,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::boolean, ACE_TCHAR >,
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::ID< ACE_TCHAR >, ACE_TCHAR >,
       virtual ::CIAO::Config_Handlers::Writer::ThreadpoolWithLanesDef,
       virtual ::CIAO::Config_Handlers::Writer::ThreadpoolLaneDef,
       virtual ::CIAO::Config_Handlers::Writer::ConnectionBandsDef,

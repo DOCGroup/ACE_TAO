@@ -1796,7 +1796,7 @@ namespace CIAO
     }
 
     size_t ArtifactDeploymentDescription::
-    count_source(void)
+    count_source(void) const
     {
       return source_.size ();
     }
@@ -1873,7 +1873,7 @@ namespace CIAO
     }
 
     size_t ArtifactDeploymentDescription::
-    count_location(void)
+    count_location(void) const
     {
       return location_.size ();
     }
@@ -1930,7 +1930,7 @@ namespace CIAO
     }
 
     size_t ArtifactDeploymentDescription::
-    count_execParameter(void)
+    count_execParameter(void) const
     {
       return execParameter_.size ();
     }
@@ -1987,7 +1987,7 @@ namespace CIAO
     }
 
     size_t ArtifactDeploymentDescription::
-    count_deployRequirement(void)
+    count_deployRequirement(void) const
     {
       return deployRequirement_.size ();
     }
@@ -2044,7 +2044,7 @@ namespace CIAO
     }
 
     size_t ArtifactDeploymentDescription::
-    count_deployedResource(void)
+    count_deployedResource(void) const
     {
       return deployedResource_.size ();
     }
@@ -2254,7 +2254,7 @@ namespace CIAO
     }
 
     size_t MonolithicDeploymentDescription::
-    count_source(void)
+    count_source(void) const
     {
       return source_.size ();
     }
@@ -2311,7 +2311,7 @@ namespace CIAO
     }
 
     size_t MonolithicDeploymentDescription::
-    count_artifact(void)
+    count_artifact(void) const
     {
       return artifact_.size ();
     }
@@ -2368,7 +2368,7 @@ namespace CIAO
     }
 
     size_t MonolithicDeploymentDescription::
-    count_execParameter(void)
+    count_execParameter(void) const
     {
       return execParameter_.size ();
     }
@@ -2425,7 +2425,7 @@ namespace CIAO
     }
 
     size_t MonolithicDeploymentDescription::
-    count_deployRequirement(void)
+    count_deployRequirement(void) const
     {
       return deployRequirement_.size ();
     }
@@ -2842,7 +2842,7 @@ namespace CIAO
     }
 
     size_t InstanceDeploymentDescription::
-    count_configProperty(void)
+    count_configProperty(void) const
     {
       return configProperty_.size ();
     }
@@ -3907,7 +3907,7 @@ namespace CIAO
     }
 
     size_t PlanConnectionDescription::
-    count_deployRequirement(void)
+    count_deployRequirement(void) const
     {
       return deployRequirement_.size ();
     }
@@ -3964,7 +3964,7 @@ namespace CIAO
     }
 
     size_t PlanConnectionDescription::
-    count_externalEndpoint(void)
+    count_externalEndpoint(void) const
     {
       return externalEndpoint_.size ();
     }
@@ -4021,7 +4021,7 @@ namespace CIAO
     }
 
     size_t PlanConnectionDescription::
-    count_internalEndpoint(void)
+    count_internalEndpoint(void) const
     {
       return internalEndpoint_.size ();
     }
@@ -4078,7 +4078,7 @@ namespace CIAO
     }
 
     size_t PlanConnectionDescription::
-    count_externalReference(void)
+    count_externalReference(void) const
     {
       return externalReference_.size ();
     }
@@ -4135,7 +4135,7 @@ namespace CIAO
     }
 
     size_t PlanConnectionDescription::
-    count_deployedResource(void)
+    count_deployedResource(void) const
     {
       return deployedResource_.size ();
     }
@@ -4864,7 +4864,7 @@ namespace CIAO
     }
 
     size_t AssemblyConnectionDescription::
-    count_externalEndpoint(void)
+    count_externalEndpoint(void) const
     {
       return externalEndpoint_.size ();
     }
@@ -4921,7 +4921,7 @@ namespace CIAO
     }
 
     size_t AssemblyConnectionDescription::
-    count_internalEndpoint(void)
+    count_internalEndpoint(void) const
     {
       return internalEndpoint_.size ();
     }
@@ -4978,7 +4978,7 @@ namespace CIAO
     }
 
     size_t AssemblyConnectionDescription::
-    count_externalReference(void)
+    count_externalReference(void) const
     {
       return externalReference_.size ();
     }

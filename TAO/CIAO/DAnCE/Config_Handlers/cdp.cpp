@@ -302,7 +302,7 @@ namespace CIAO
     }
 
     size_t DeploymentPlan::
-    count_implementation(void)
+    count_implementation(void) const
     {
       return implementation_.size ();
     }
@@ -359,7 +359,7 @@ namespace CIAO
     }
 
     size_t DeploymentPlan::
-    count_instance(void)
+    count_instance(void) const
     {
       return instance_.size ();
     }
@@ -416,7 +416,7 @@ namespace CIAO
     }
 
     size_t DeploymentPlan::
-    count_connection(void)
+    count_connection(void) const
     {
       return connection_.size ();
     }
@@ -473,7 +473,7 @@ namespace CIAO
     }
 
     size_t DeploymentPlan::
-    count_dependsOn(void)
+    count_dependsOn(void) const
     {
       return dependsOn_.size ();
     }
@@ -530,7 +530,7 @@ namespace CIAO
     }
 
     size_t DeploymentPlan::
-    count_artifact(void)
+    count_artifact(void) const
     {
       return artifact_.size ();
     }
@@ -587,7 +587,7 @@ namespace CIAO
     }
 
     size_t DeploymentPlan::
-    count_infoProperty(void)
+    count_infoProperty(void) const
     {
       return infoProperty_.size ();
     }

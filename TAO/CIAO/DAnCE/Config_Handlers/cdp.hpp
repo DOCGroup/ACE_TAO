@@ -91,7 +91,7 @@ namespace CIAO
       implementation_const_iterator begin_implementation () const;
       implementation_const_iterator end_implementation () const;
       void add_implementation (::CIAO::Config_Handlers::MonolithicDeploymentDescription const& );
-      size_t count_implementation (void);
+      size_t count_implementation (void) const;
 
       protected:
       ::std::vector< ::CIAO::Config_Handlers::MonolithicDeploymentDescription > implementation_;
@@ -106,7 +106,7 @@ namespace CIAO
       instance_const_iterator begin_instance () const;
       instance_const_iterator end_instance () const;
       void add_instance (::CIAO::Config_Handlers::InstanceDeploymentDescription const& );
-      size_t count_instance (void);
+      size_t count_instance (void) const;
 
       protected:
       ::std::vector< ::CIAO::Config_Handlers::InstanceDeploymentDescription > instance_;
@@ -121,7 +121,7 @@ namespace CIAO
       connection_const_iterator begin_connection () const;
       connection_const_iterator end_connection () const;
       void add_connection (::CIAO::Config_Handlers::PlanConnectionDescription const& );
-      size_t count_connection (void);
+      size_t count_connection (void) const;
 
       protected:
       ::std::vector< ::CIAO::Config_Handlers::PlanConnectionDescription > connection_;
@@ -136,7 +136,7 @@ namespace CIAO
       dependsOn_const_iterator begin_dependsOn () const;
       dependsOn_const_iterator end_dependsOn () const;
       void add_dependsOn (::CIAO::Config_Handlers::ImplementationDependency const& );
-      size_t count_dependsOn (void);
+      size_t count_dependsOn (void) const;
 
       protected:
       ::std::vector< ::CIAO::Config_Handlers::ImplementationDependency > dependsOn_;
@@ -151,7 +151,7 @@ namespace CIAO
       artifact_const_iterator begin_artifact () const;
       artifact_const_iterator end_artifact () const;
       void add_artifact (::CIAO::Config_Handlers::ArtifactDeploymentDescription const& );
-      size_t count_artifact (void);
+      size_t count_artifact (void) const;
 
       protected:
       ::std::vector< ::CIAO::Config_Handlers::ArtifactDeploymentDescription > artifact_;
@@ -166,7 +166,7 @@ namespace CIAO
       infoProperty_const_iterator begin_infoProperty () const;
       infoProperty_const_iterator end_infoProperty () const;
       void add_infoProperty (::CIAO::Config_Handlers::Property const& );
-      size_t count_infoProperty (void);
+      size_t count_infoProperty (void) const;
 
       protected:
       ::std::vector< ::CIAO::Config_Handlers::Property > infoProperty_;
@@ -449,69 +449,310 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::DeploymentPlan Type;
         DeploymentPlan (::XSCRT::XML::Element< ACE_TCHAR >&);
 
+        #ifdef __BORLANDC__
+        virtual void 
+        traverse (Type &o)
+        {
+
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        label (Type &o)
+        {
+
+          this->label (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         label (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        UUID (Type &o)
+        {
+
+          this->UUID (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         UUID (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        realizes (Type &o)
+        {
+
+          this->realizes (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         realizes (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        implementation_pre (Type &o)
+        {
+
+          this->implementation_pre (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         implementation_pre (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        implementation_next (Type &o)
+        {
+
+          this->implementation_next (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         implementation_next (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        implementation_post (Type &o)
+        {
+
+          this->implementation_post (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         implementation_post (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        instance_pre (Type &o)
+        {
+
+          this->instance_pre (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         instance_pre (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        instance_next (Type &o)
+        {
+
+          this->instance_next (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         instance_next (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        instance_post (Type &o)
+        {
+
+          this->instance_post (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         instance_post (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        connection_pre (Type &o)
+        {
+
+          this->connection_pre (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         connection_pre (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        connection_next (Type &o)
+        {
+
+          this->connection_next (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         connection_next (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        connection_post (Type &o)
+        {
+
+          this->connection_post (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         connection_post (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        dependsOn_pre (Type &o)
+        {
+
+          this->dependsOn_pre (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         dependsOn_pre (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        dependsOn_next (Type &o)
+        {
+
+          this->dependsOn_next (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         dependsOn_next (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        dependsOn_post (Type &o)
+        {
+
+          this->dependsOn_post (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         dependsOn_post (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        artifact_pre (Type &o)
+        {
+
+          this->artifact_pre (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         artifact_pre (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        artifact_next (Type &o)
+        {
+
+          this->artifact_next (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         artifact_next (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        artifact_post (Type &o)
+        {
+
+          this->artifact_post (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         artifact_post (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        infoProperty_pre (Type &o)
+        {
+
+          this->infoProperty_pre (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         infoProperty_pre (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        infoProperty_next (Type &o)
+        {
+
+          this->infoProperty_next (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         infoProperty_next (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        infoProperty_post (Type &o)
+        {
+
+          this->infoProperty_post (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         infoProperty_post (Type const&);
 

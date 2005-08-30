@@ -58,7 +58,7 @@ namespace CIAO
       package_const_iterator begin_package () const;
       package_const_iterator end_package () const;
       void add_package (::CIAO::Config_Handlers::PackageConfiguration const& );
-      size_t count_package (void);
+      size_t count_package (void) const;
 
       protected:
       ::std::vector< ::CIAO::Config_Handlers::PackageConfiguration > package_;
@@ -155,15 +155,58 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::TopLevelPackageDescription Type;
         TopLevelPackageDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
+        #ifdef __BORLANDC__
+        virtual void 
+        traverse (Type &o)
+        {
+
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        package_pre (Type &o)
+        {
+
+          this->package_pre (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         package_pre (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        package_next (Type &o)
+        {
+
+          this->package_next (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         package_next (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        package_post (Type &o)
+        {
+
+          this->package_post (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
         virtual void
         package_post (Type const&);
 
