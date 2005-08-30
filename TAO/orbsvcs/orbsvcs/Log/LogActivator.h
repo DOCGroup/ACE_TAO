@@ -13,13 +13,15 @@
 #define TAO_TLS_BASICLOGACTIVATOR_H
 
 #include /**/ "ace/pre.h"
-#include "tao/PortableServer/PortableServer.h"
-#include "tao/PortableServer/ServantActivatorC.h"
+
 #include "orbsvcs/DsLogAdminC.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
 #include "log_serv_export.h"
+
+#include "tao/PortableServer/PortableServer.h"
+#include "tao/PortableServer/ServantActivatorC.h"
 
 // forward declarations
 class TAO_LogMgr_i;

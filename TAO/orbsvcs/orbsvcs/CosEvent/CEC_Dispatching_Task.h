@@ -16,21 +16,20 @@
 #define TAO_CEC_DISPATCHING_TASK_H
 
 #include /**/ "ace/pre.h"
-#include "ace/Task.h"
+
+#include "orbsvcs/CosEvent/event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Message_Block.h"
-#include "ace/Lock_Adapter_T.h"
+#include "CEC_ProxyPushSupplier.h"
 
 #include "tao/Basic_Types.h"
-#include "tao/Objref_VarOut_T.h"
 
-#include "orbsvcs/CosEvent/event_serv_export.h"
-
-#include "CEC_ProxyPushSupplier.h"
+#include "ace/Message_Block.h"
+#include "ace/Lock_Adapter_T.h"
+#include "ace/Task.h"
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 #include "CEC_TypedEvent.h"

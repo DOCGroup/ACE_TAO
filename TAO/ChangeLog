@@ -1,5 +1,34 @@
 Mon Aug 29 18:39:29 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
+	* orbsvcs/orbsvcs/AV/AV_Core.h:
+	* orbsvcs/orbsvcs/AV/Policy.cpp::
+	* orbsvcs/orbsvcs/AV/Protocol_Factory.h::
+	* orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.h::
+	* orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.h::
+	* orbsvcs/orbsvcs/CosEvent/CEC_DynamicImplementation.h::
+	* orbsvcs/orbsvcs/CosEvent/CEC_Factory.h::
+	* orbsvcs/orbsvcs/CosEvent/CEC_Pulling_Strategy.h::
+	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.cpp::
+	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.h::
+	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.cpp::
+	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.cpp::
+	* orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.h::
+	* orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.h::
+	* orbsvcs/orbsvcs/Event/ECG_Reactive_ConsumerEC_Control.cpp::
+	* orbsvcs/orbsvcs/Event/ECG_Reconnect_ConsumerEC_Control.cpp::
+	* orbsvcs/orbsvcs/Event/EC_RTCORBA_Factory.cpp::
+	* orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.h:
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Replication_Strategy.h:
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_Base.cpp:
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_Base.h:
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.cpp:
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_ClientORBInitializer.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_MemberLocator.cpp:
+	* orbsvcs/orbsvcs/Log/LogActivator.h:
+	* orbsvcs/orbsvcs/Log/Log_Persistence_Strategy.h:
 	* orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Initializer.h:
 	* orbsvcs/orbsvcs/HTIOP/htiop_endpointsC.cpp:
 	* orbsvcs/orbsvcs/Notify/Builder.h:

@@ -16,8 +16,6 @@
 #define TAO_CEC_TYPEDEVENTCHANNEL_H_
 #include /**/ "ace/pre.h"
 
-#include "CEC_Factory.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -26,6 +24,8 @@
 #include "event_serv_export.h"
 
 #include "orbsvcs/CosTypedEventChannelAdminS.h"
+
+#include "CEC_Factory.h"
 
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/AnyTypeCode/NVList.h"

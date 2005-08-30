@@ -12,8 +12,8 @@
 #ifndef FORWARDCTRLSERVERINTERCEPTOR_H
 #define FORWARDCTRLSERVERINTERCEPTOR_H
 
-#include "tao/PortableInterceptorC.h"
 #include "tao/PI_Server/PI_Server.h"
+#include "tao/PortableInterceptorC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -1,8 +1,8 @@
 // $Id$
 
+#include "EC_ConsumerAdmin.h"
 #include "EC_Reactive_ConsumerControl.h"
 #include "EC_Event_Channel_Base.h"
-#include "EC_ConsumerAdmin.h"
 #include "EC_ProxySupplier.h"
 #include "EC_ProxyConsumer.h" // @@ MSVC 6 bug
 

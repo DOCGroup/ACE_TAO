@@ -13,14 +13,16 @@
 #ifndef AMI_REPLICATION_STRATEGY_H
 #define AMI_REPLICATION_STRATEGY_H
 
-#include "ace/Task.h"
-#include "tao/PortableServer/PortableServer.h"
-#include "orbsvcs/FTRT_GroupManagerC.h"
 #include "Replication_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "orbsvcs/FTRT_GroupManagerC.h"
+#include "tao/PortableServer/PortableServer.h"
+#include "ace/Task.h"
+
 
 /**
  * @class  AMI_Replication_Strategy.

@@ -1,8 +1,10 @@
 // $Id$
 
+#include "FT_ProxyAdmin_Base.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
-#include "FT_ProxyAdmin_T.h"
+#include "tao/PortableServer/PortableServer.h"
+
 
 ACE_RCSID (EventChannel,
            FT_ProxyAdmin_Base,
