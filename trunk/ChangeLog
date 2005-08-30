@@ -1,3 +1,5 @@
+
+        * include/makeinclude/platform_linux_icc.GNU:
 Tue Aug 30 18:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Based_Pointer_Test.cpp:
