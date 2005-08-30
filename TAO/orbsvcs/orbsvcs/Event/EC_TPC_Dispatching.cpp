@@ -7,10 +7,6 @@ extern unsigned long EC_TPC_debug_level;
 
 #include <ace/Dynamic_Service.h>
 
-#if ! defined (__ACE_INLINE__)
-#include "EC_TPC_Dispatching.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Event, EC_TPC_Dispatching, "$Id$")
 
 #if !defined(TAO_EC_TPC_DISPATCHING_DEFAULT_MAP_SIZE)

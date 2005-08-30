@@ -1,3 +1,12 @@
+Tue Aug 30 12:42:18 2005  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Event/EC_TPC_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_TPC_Factory.cpp:
+
+	  Removed inclusion of .i files to complete my earlier commit.
+
 Tue Aug 30 11:22:51 2005  Steve Totten  <totten_s@ociweb.com>
 
         * tests/IDL_Test/IDL_Test.mpc:
@@ -17,12 +26,12 @@ Tue Aug 30 10:03:24 2005  Chris Cleeland  <cleeland_c@ociweb.com>
         * orbsvcs/orbsvcs/Event/EC_TPC_ProxySupplier.h:
         * orbsvcs/orbsvcs/Event/EC_TPC_ProxySupplier.cpp:
 
-	  Fixed errors in Fuzz build and use of deprecated ACE cast macros
+          Fixed errors in Fuzz build and use of deprecated ACE cast macros
 
         * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.i:
-	* orbsvcs/orbsvcs/Event/EC_TPC_Factory.i:
-	
-	  Removed these b/c they're empty and fix a fuzz build.
+        * orbsvcs/orbsvcs/Event/EC_TPC_Factory.i:
+
+          Removed these b/c they're empty and fix a fuzz build.
 
 Tue Aug 30 14:43:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
