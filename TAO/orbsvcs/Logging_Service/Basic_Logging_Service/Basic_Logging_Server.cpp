@@ -33,7 +33,9 @@ Logging_Svc_Shutdown::operator() (int which_signal)
     ACE_DEBUG ((LM_DEBUG,
                 "Basic_Logging_Service: shutting down on signal %d\n",
                 which_signal));
-  (void) this->svc_.shutdown ();
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+  (void) this->svc_.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 // Driver function for the Basic_Logging_Service
@@ -52,14 +54,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int rc;
 
       rc = service.init (argc, argv ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
       if (rc == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Failed to initialize the Telecom Log Service.\n"),
                           1);
 
       rc = service.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
       if (rc == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Failed to start the Telecom Log Service.\n"),
