@@ -130,7 +130,7 @@ mmap_map_test(void)
 
     ACE_OS::unlink("foo");
       {
-        ACE_NEW_RETURN (alloc, MMAP_Allocator (ACE_TEXT ("foo"), ACE+TEXT ("foo")), -1);
+        ACE_NEW_RETURN (alloc, MMAP_Allocator (ACE_TEXT ("foo"), ACE_TEXT ("foo")), -1);
 
         void* addr = alloc->base_addr();
         if(addr == 0)
