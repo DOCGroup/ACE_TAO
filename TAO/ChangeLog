@@ -1,3 +1,12 @@
+Tue Aug 30 11:22:51 2005  Steve Totten  <totten_s@ociweb.com>
+
+        * tests/IDL_Test/IDL_Test.mpc:
+        * tests/IDL_Test/array_only.idl:
+          Added a test for the IDL compiler to make sure code generated for
+          an IDL file that contains nothing but an array definition will
+          compile correctly.  Thanks to Yevgen Galchenko for supplying the
+          test case.
+
 Tue Aug 30 10:03:24 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.h:
