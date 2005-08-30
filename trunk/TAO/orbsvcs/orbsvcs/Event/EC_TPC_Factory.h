@@ -8,7 +8,7 @@
 
 #ifndef TAO_EC_TPC_FACTORY_H
 #define TAO_EC_TPC_FACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "EC_Default_Factory.h"
 
@@ -63,5 +63,5 @@ extern unsigned long EC_TPC_debug_level;
 ACE_STATIC_SVC_DECLARE (TAO_EC_TPC_Factory)
 ACE_FACTORY_DECLARE (TAO_RTEvent_Serv, TAO_EC_TPC_Factory)
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_TPC_FACTORY_H */

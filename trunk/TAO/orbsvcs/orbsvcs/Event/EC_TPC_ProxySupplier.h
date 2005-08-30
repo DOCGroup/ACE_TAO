@@ -10,7 +10,7 @@
 
 #ifndef TAO_EC_TPC_PROXYSUPPLIER_H
 #define TAO_EC_TPC_PROXYSUPPLIER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "EC_Default_ProxySupplier.h"
 
@@ -55,6 +55,6 @@ private:
 #include "EC_TPC_ProxySupplier.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif
