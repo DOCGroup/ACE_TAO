@@ -94,9 +94,9 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
 
       // Parse the options, check if we should bind with the naming
       // service and under what name...
-      ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("n:o:p:xrtd"));
+      ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:o:p:xrtd"));
       int opt;
-      const ACE_TCHAR *service_name = ACE_LIB_TEXT("CosEventService");
+      const ACE_TCHAR *service_name = ACE_TEXT("CosEventService");
       const ACE_TCHAR *ior_file = 0;
       const ACE_TCHAR *pid_file = 0;
       this->bind_to_naming_service_ = 1;
@@ -220,7 +220,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
             orb->object_to_string (event_channel.in () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          FILE *iorf = ACE_OS::fopen (ior_file, ACE_LIB_TEXT("w"));
+          FILE *iorf = ACE_OS::fopen (ior_file, ACE_TEXT("w"));
           if (iorf != 0)
             {
               ACE_OS::fprintf (iorf, "%s\n", ior.in ());

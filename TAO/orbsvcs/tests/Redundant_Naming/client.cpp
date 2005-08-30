@@ -91,7 +91,7 @@ main (int argc, ACE_TCHAR **argv)
   ACE_TCHAR *ns1ref = 0;
   ACE_TCHAR *ns2ref = 0;
 
-  ACE_Get_Opt get_opts (argc, argv, ACE_LIB_TEXT ("b:d:o:p:q:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("b:d:o:p:q:"));
   int c;
   int i;
 
@@ -103,7 +103,7 @@ main (int argc, ACE_TCHAR **argv)
         if (i<2)
         {
           ACE_ERROR((LM_ERROR,
-                     ACE_LIB_TEXT ("Invalid breath, must be 2 or more\n")));
+                     ACE_TEXT ("Invalid breath, must be 2 or more\n")));
           exit(1);
         }
         c_breath = i;
@@ -113,7 +113,7 @@ main (int argc, ACE_TCHAR **argv)
         if (i<2)
         {
           ACE_ERROR((LM_ERROR,
-                     ACE_LIB_TEXT ("Invalid depth, must be 2 or more\n")));
+                     ACE_TEXT ("Invalid depth, must be 2 or more\n")));
           exit(1);
         }
         c_depth = i;
@@ -123,7 +123,7 @@ main (int argc, ACE_TCHAR **argv)
         if (i<2)
         {
           ACE_ERROR((LM_ERROR,
-                     ACE_LIB_TEXT ("Invalid breath, must be 2 or more\n")));
+                     ACE_TEXT ("Invalid breath, must be 2 or more\n")));
           exit(1);
         }
         o_breath = i;
@@ -136,13 +136,13 @@ main (int argc, ACE_TCHAR **argv)
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT ("Argument %c \n usage:  %s")
-                           ACE_LIB_TEXT (" [-b <breath of context tree>]")
-                           ACE_LIB_TEXT (" [-d <depth of context tree>]")
-                           ACE_LIB_TEXT (" [-o <breath of object tree>]")
-                           ACE_LIB_TEXT (" -p <ior of first name server>")
-                           ACE_LIB_TEXT (" -q <ior of second name server>")
-                           ACE_LIB_TEXT ("\n")),
+                           ACE_TEXT ("Argument %c \n usage:  %s")
+                           ACE_TEXT (" [-b <breath of context tree>]")
+                           ACE_TEXT (" [-d <depth of context tree>]")
+                           ACE_TEXT (" [-o <breath of object tree>]")
+                           ACE_TEXT (" -p <ior of first name server>")
+                           ACE_TEXT (" -q <ior of second name server>")
+                           ACE_TEXT ("\n")),
                           -1);
       }
 
@@ -166,7 +166,7 @@ main (int argc, ACE_TCHAR **argv)
 
     if (CORBA::is_nil (ns1obj.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_LIB_TEXT ("invalid ior <%s>\n"),
+                               ACE_TEXT ("invalid ior <%s>\n"),
                                ns1ref),
                               -1);
     root_context_1 = CosNaming::NamingContext::_narrow (ns1obj.in ()
@@ -182,7 +182,7 @@ main (int argc, ACE_TCHAR **argv)
 
     if (CORBA::is_nil (ns2obj.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_LIB_TEXT ("invalid ior <%s>\n"),
+                               ACE_TEXT ("invalid ior <%s>\n"),
                                ns2ref),
                               -1);
     root_context_2 = CosNaming::NamingContext::_narrow (ns2obj.in ()
@@ -193,7 +193,7 @@ main (int argc, ACE_TCHAR **argv)
   ACE_CATCHANY
   {
     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                         ACE_LIB_TEXT ("Unable to resolve name servers"));
+                         ACE_TEXT ("Unable to resolve name servers"));
     return -1;
   }
   ACE_ENDTRY;
@@ -234,7 +234,7 @@ main (int argc, ACE_TCHAR **argv)
   ACE_CATCHANY
   {
     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                         ACE_LIB_TEXT ("Unable to create a lot of objects"));
+                         ACE_TEXT ("Unable to create a lot of objects"));
     return -1;
   }
   ACE_ENDTRY;
@@ -262,7 +262,7 @@ main (int argc, ACE_TCHAR **argv)
   ACE_CATCHANY
   {
     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                         ACE_LIB_TEXT ("Unable to create deep context"));
+                         ACE_TEXT ("Unable to create deep context"));
     return -1;
   }
   ACE_ENDTRY;
@@ -288,7 +288,7 @@ main (int argc, ACE_TCHAR **argv)
   ACE_CATCHANY
   {
     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                         ACE_LIB_TEXT ("Unable to create wide context"));
+                         ACE_TEXT ("Unable to create wide context"));
     return -1;
   }
   ACE_ENDTRY;
@@ -321,8 +321,8 @@ main (int argc, ACE_TCHAR **argv)
     ACE_TRY_CHECK_EX(bl_e);
     if (CORBA::is_nil (result_object.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_LIB_TEXT ("Problems with resolving wide context ")
-                         ACE_LIB_TEXT ("- nil object ref.\n")),
+                         ACE_TEXT ("Problems with resolving wide context ")
+                         ACE_TEXT ("- nil object ref.\n")),
                          -1);
     result_object->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK_EX(bl_e);
@@ -346,8 +346,8 @@ main (int argc, ACE_TCHAR **argv)
     ACE_TRY_CHECK_EX(bl_e);
     if (CORBA::is_nil (result_object.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_LIB_TEXT ("Problems with resolving deep context ")
-                         ACE_LIB_TEXT ("- nil object ref.\n")),
+                         ACE_TEXT ("Problems with resolving deep context ")
+                         ACE_TEXT ("- nil object ref.\n")),
                          -1);
     result_object->destroy(ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK_EX(bl_e);
@@ -358,7 +358,7 @@ main (int argc, ACE_TCHAR **argv)
   ACE_CATCHANY
   {
     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                         ACE_LIB_TEXT ("Unable to delete objects"));
+                         ACE_TEXT ("Unable to delete objects"));
     return -1;
   }
   ACE_ENDTRY;
@@ -383,15 +383,15 @@ main (int argc, ACE_TCHAR **argv)
     ACE_TRY_CHECK_EX(bl_f);
     if (CORBA::is_nil (result_object.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_LIB_TEXT ("Problems with resolving object from ")
-                         ACE_LIB_TEXT ("redundant server - nil object ref.\n")),
+                         ACE_TEXT ("Problems with resolving object from ")
+                         ACE_TEXT ("redundant server - nil object ref.\n")),
                          -1);
     ACE_TRY_CHECK_EX(bl_f);
   }
   ACE_CATCHANY
   {
     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-      ACE_LIB_TEXT ("Unable to resolve object from redundant server"));
+      ACE_TEXT ("Unable to resolve object from redundant server"));
     return -1;
   }
   ACE_ENDTRY;
@@ -410,8 +410,8 @@ main (int argc, ACE_TCHAR **argv)
                                                           ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK_EX(bl_g);
     ACE_ERROR_RETURN ((LM_ERROR,
-                    ACE_LIB_TEXT ("Problems with resolving object from ")
-                    ACE_LIB_TEXT ("redundant server - deleted object found.\n")),
+                    ACE_TEXT ("Problems with resolving object from ")
+                    ACE_TEXT ("redundant server - deleted object found.\n")),
                     -1);
   }
   ACE_CATCHANY
@@ -437,15 +437,15 @@ main (int argc, ACE_TCHAR **argv)
     ACE_TRY_CHECK_EX(bl_h);
     if (CORBA::is_nil (result_object.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
-                      ACE_LIB_TEXT ("Problems with resolving wide context from ")
-                      ACE_LIB_TEXT ("redundant server - nil object ref.\n")),
+                      ACE_TEXT ("Problems with resolving wide context from ")
+                      ACE_TEXT ("redundant server - nil object ref.\n")),
                       -1);
     ACE_TRY_CHECK_EX(bl_h);
   }
   ACE_CATCHANY
   {
     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-      ACE_LIB_TEXT ("Unable to resolve wide context from redundant server"));
+      ACE_TEXT ("Unable to resolve wide context from redundant server"));
     return -1;
   }
   ACE_ENDTRY;
@@ -463,8 +463,8 @@ main (int argc, ACE_TCHAR **argv)
                                                           ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK_EX(bl_i);
     ACE_ERROR_RETURN ((LM_ERROR,
-                    ACE_LIB_TEXT ("Problems with resolving wide context from ")
-                    ACE_LIB_TEXT ("redundant server - deleted object found.\n")),
+                    ACE_TEXT ("Problems with resolving wide context from ")
+                    ACE_TEXT ("redundant server - deleted object found.\n")),
                     -1);
   }
   ACE_CATCHANY
@@ -488,8 +488,8 @@ main (int argc, ACE_TCHAR **argv)
                                                           ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK_EX(bl_j);
     ACE_ERROR_RETURN ((LM_ERROR,
-                    ACE_LIB_TEXT ("Problems with resolving deep context from ")
-                    ACE_LIB_TEXT ("redundant server - deleted object found.\n")),
+                    ACE_TEXT ("Problems with resolving deep context from ")
+                    ACE_TEXT ("redundant server - deleted object found.\n")),
                     -1);
   }
   ACE_CATCHANY
@@ -518,8 +518,8 @@ main (int argc, ACE_TCHAR **argv)
     ACE_TRY_CHECK_EX(bl_k);
     if (CORBA::is_nil (result_object.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
-                      ACE_LIB_TEXT ("Problems with resolving deep context from ")
-                      ACE_LIB_TEXT ("redundant server - nil object ref.\n")),
+                      ACE_TEXT ("Problems with resolving deep context from ")
+                      ACE_TEXT ("redundant server - nil object ref.\n")),
                       -1);
 
     ACE_TRY_CHECK_EX(bl_k);
@@ -528,13 +528,13 @@ main (int argc, ACE_TCHAR **argv)
   ACE_CATCHANY
   {
     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-      ACE_LIB_TEXT ("Unable to resolve deep context from redundant server"));
+      ACE_TEXT ("Unable to resolve deep context from redundant server"));
     return -1;
   }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("Redundancy test OK\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Redundancy test OK\n")));
   return 0;
 
 }

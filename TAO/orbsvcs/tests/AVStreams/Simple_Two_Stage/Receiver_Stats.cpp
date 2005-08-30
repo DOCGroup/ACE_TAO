@@ -46,7 +46,7 @@ Receiver_Stats::dump_results (const ACE_TCHAR *msg,
   if (this->samples_count () == 0u)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("%s : no data collected\n"), msg));
+                  ACE_TEXT ("%s : no data collected\n"), msg));
       return;
     }
 
@@ -65,7 +65,7 @@ Receiver_Stats::dump_results (const ACE_TCHAR *msg,
   double l_dev = ACE_CU64_TO_CU32 (dev) / (sf * sf);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("%s latency   : %.2f[%d]/%.2f/%.2f[%d]/%.2f (min/avg/max/var^2)\n"),
+              ACE_TEXT ("%s latency   : %.2f[%d]/%.2f/%.2f[%d]/%.2f (min/avg/max/var^2)\n"),
               msg,
               l_min, this->min_at_,
               l_avg,
@@ -73,7 +73,7 @@ Receiver_Stats::dump_results (const ACE_TCHAR *msg,
               l_dev));
 
   ACE_OS::fprintf (file,
-		   ACE_LIB_TEXT ("Inter Frame Arrival Time Statistics in msecs  : %.2f[%d]/%.2f/%.2f[%d]/%.2f (min/avg/max/var^2)\n"),
+       ACE_TEXT ("Inter Frame Arrival Time Statistics in msecs  : %.2f[%d]/%.2f/%.2f[%d]/%.2f (min/avg/max/var^2)\n"),
 		   l_min, this->min_at_,
 		   l_avg,
 		   l_max, this->max_at_,

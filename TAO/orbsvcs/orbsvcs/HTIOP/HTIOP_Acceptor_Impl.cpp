@@ -243,7 +243,7 @@ TAO::HTIOP::Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::close ()
       // Shut down the listen socket to recycle the handles.
       if (this->accept_strategy_->acceptor ().close () == -1)
         ACE_ERROR ((LM_ERROR,
-                    ACE_LIB_TEXT ("close\n")));
+                    ACE_TEXT ("close\n")));
       // Set the Reactor to 0 so that we don't try to close down
       // again.
       this->reactor (0);

@@ -60,18 +60,18 @@ TAO_EC_Gateway_IIOP_Factory::init (int argc, char* argv[])
     {
       const char *arg = arg_shifter.get_current ();
 
-      if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECGIIOPConsumerECControl")) == 0)
+      if (ACE_OS::strcasecmp (arg, ACE_TEXT("-ECGIIOPConsumerECControl")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
               const ACE_TCHAR* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("null")) == 0)
+              if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
                 this->consumer_ec_control_ = 0;
-              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("reactive")) == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT("reactive")) == 0)
                 this->consumer_ec_control_ = 1;
-              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("reconnect")) == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT("reconnect")) == 0)
                 this->consumer_ec_control_ = 2;
               else
                 this->unsupported_option_value ("-ECGIIOPConsumerECControl", opt);
@@ -79,7 +79,7 @@ TAO_EC_Gateway_IIOP_Factory::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECGIIOPConsumerECControlPeriod")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-ECGIIOPConsumerECControlPeriod")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -91,7 +91,7 @@ TAO_EC_Gateway_IIOP_Factory::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECGIIOPConsumerECControlTimeout")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-ECGIIOPConsumerECControlTimeout")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -104,7 +104,7 @@ TAO_EC_Gateway_IIOP_Factory::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECGIIOPUseORBId")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-ECGIIOPUseORBId")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -116,7 +116,7 @@ TAO_EC_Gateway_IIOP_Factory::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECGIIOPUseTTL")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-ECGIIOPUseTTL")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -128,7 +128,7 @@ TAO_EC_Gateway_IIOP_Factory::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-ECGIIOPUseConsumerProxyMap")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-ECGIIOPUseConsumerProxyMap")) == 0)
         {
           arg_shifter.consume_arg ();
 

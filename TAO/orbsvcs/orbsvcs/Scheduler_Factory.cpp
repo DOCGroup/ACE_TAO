@@ -131,8 +131,8 @@ int ACE_Scheduler_Factory::use_runtime (int cc,
 {
   if (server_ != 0 || TAO_SF_entry_count != -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT("ACE_Scheduler_Factory::use_runtime - ")
-                       ACE_LIB_TEXT("server already configured\n")),
+                       ACE_TEXT("ACE_Scheduler_Factory::use_runtime - ")
+                       ACE_TEXT("server already configured\n")),
                       -1);
   TAO_SF_config_count = cc;
   TAO_SF_config_info = cfgi;
@@ -165,13 +165,13 @@ static_server (void)
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT("ACE_Scheduler_Factory - configured static server\n")));
+                  ACE_TEXT("ACE_Scheduler_Factory - configured static server\n")));
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_LIB_TEXT("ACE_Scheduler_Factory::config_runtime - ")
-                           ACE_LIB_TEXT("cannot allocate server\n"));
+                           ACE_TEXT("ACE_Scheduler_Factory::config_runtime - ")
+                           ACE_TEXT("cannot allocate server\n"));
     }
   ACE_ENDTRY;
 
@@ -214,8 +214,8 @@ ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming,
     {
       server_ = 0;
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_LIB_TEXT("ACE_Scheduler_Factory::use_config - ")
-                           ACE_LIB_TEXT(" exception while resolving server\n"));
+                           ACE_TEXT("ACE_Scheduler_Factory::use_config - ")
+                           ACE_TEXT(" exception while resolving server\n"));
     }
   ACE_ENDTRY;
 
@@ -241,8 +241,8 @@ ACE_Scheduler_Factory::server (void)
 
   if (server_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT("ACE_Scheduler_Factor::server - ")
-                       ACE_LIB_TEXT("no scheduling service configured\n")),
+                       ACE_TEXT("ACE_Scheduler_Factor::server - ")
+                       ACE_TEXT("no scheduling service configured\n")),
                       0);
   return server_;
 }
@@ -350,7 +350,7 @@ int ACE_Scheduler_Factory::dump_schedule
   FILE* file = stdout;
   if (file_name != 0)
     {
-      file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(file_name), ACE_LIB_TEXT("w"));
+      file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(file_name), ACE_TEXT("w"));
       if (file == 0)
           return -1;
     }

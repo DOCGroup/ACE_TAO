@@ -152,8 +152,8 @@ TAO_IIOP_Profile::parse_string_i (const char *ior
           if (TAO_debug_level > 0)
             {
               ACE_DEBUG ((LM_ERROR,
-                       ACE_LIB_TEXT ("\nTAO (%P|%t) IIOP_Profile: ")
-                       ACE_LIB_TEXT ("Invalid IPv6 decimal address specified.\n")));
+                       ACE_TEXT ("\nTAO (%P|%t) IIOP_Profile: ")
+                       ACE_TEXT ("Invalid IPv6 decimal address specified.\n")));
             }
 
           ACE_THROW (CORBA::INV_OBJREF (
@@ -180,8 +180,8 @@ TAO_IIOP_Profile::parse_string_i (const char *ior
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_ERROR,
-                   ACE_LIB_TEXT ("\nTAO (%P|%t) IIOP_Profile: ")
-                   ACE_LIB_TEXT ("Host address may be omited only when no port has been specified.\n")));
+                   ACE_TEXT ("\nTAO (%P|%t) IIOP_Profile: ")
+                   ACE_TEXT ("Host address may be omited only when no port has been specified.\n")));
         }
 
       ACE_THROW (CORBA::INV_OBJREF (

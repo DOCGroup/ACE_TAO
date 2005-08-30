@@ -18,8 +18,8 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_main.h"
 
-ACE_RCSID (LifeCycle_Service, 
-           LifeCycle_Service, 
+ACE_RCSID (LifeCycle_Service,
+           LifeCycle_Service,
            "$Id$")
 
 Life_Cycle_Service_Server::Life_Cycle_Service_Server (void)
@@ -62,8 +62,8 @@ Life_Cycle_Service_Server::init (int argc,
 
   if (retval == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT("%p\n"),
-                       ACE_LIB_TEXT("init")),
+                       ACE_TEXT("%p\n"),
+                       ACE_TEXT("init")),
                       -1);
 
   // Activate the POA manager
@@ -95,7 +95,7 @@ Life_Cycle_Service_Server::init (int argc,
     {
       if (this->debug_level_ >= 2)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT("LifeCycle_Service: Trying to get a reference to the Naming Service.\n")));
+                    ACE_TEXT("LifeCycle_Service: Trying to get a reference to the Naming Service.\n")));
 
       // Get the Naming Service object reference.
       CORBA::Object_var namingObj_var =
@@ -118,7 +118,7 @@ Life_Cycle_Service_Server::init (int argc,
 
       if (this->debug_level_ >= 2)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT("LifeCycle_Service: Have a proper reference to the Naming Service.\n")));
+                    ACE_TEXT("LifeCycle_Service: Have a proper reference to the Naming Service.\n")));
 
       CosNaming::Name life_Cycle_Service_Name (1);
       life_Cycle_Service_Name.length (1);
@@ -134,7 +134,7 @@ Life_Cycle_Service_Server::init (int argc,
 
       if (this->debug_level_ >= 2)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT("LifeCycle_Service: Bound the LifeCycle Service to the Naming Context.\n")));
+                    ACE_TEXT("LifeCycle_Service: Bound the LifeCycle Service to the Naming Context.\n")));
     }
   ACE_CATCHANY
     {
@@ -151,7 +151,7 @@ Life_Cycle_Service_Server::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->debug_level_ >= 1)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT("\nLifeCycle Service: Life_Cycle_Service_Server is running\n")));
+                ACE_TEXT("\nLifeCycle Service: Life_Cycle_Service_Server is running\n")));
 
   orb_manager_.orb()->run (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
@@ -166,7 +166,7 @@ u_int
 Life_Cycle_Service_Server::parse_args (int argc,
                                        ACE_TCHAR* argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("?d:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("?d:"));
   int opt;
   int exit_code = 0;
 
@@ -183,10 +183,10 @@ Life_Cycle_Service_Server::parse_args (int argc,
                     argv[0], char(opt)));
       case '?':
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT("usage:  %s")
-                    ACE_LIB_TEXT(" [-d] <debug level> - Set the debug level\n")
-                    ACE_LIB_TEXT(" [-?]               - Prints this message\n")
-                    ACE_LIB_TEXT("\n"),
+                    ACE_TEXT("usage:  %s")
+                    ACE_TEXT(" [-d] <debug level> - Set the debug level\n")
+                    ACE_TEXT(" [-?]               - Prints this message\n")
+                    ACE_TEXT("\n"),
                     argv[0]));
         ACE_OS::exit (exit_code);
         break;

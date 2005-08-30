@@ -197,15 +197,15 @@ TAO_NS_FlatFileStream::operator <<(
   ACE_OS::fprintf(this->fl_, "%d\n", type);
 
   ACE_CString id = record.id();
-  ACE_OS::fprintf(this->fl_, ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT("\n%s\n"),
+  ACE_OS::fprintf(this->fl_, ACE_SIZE_T_FORMAT_SPECIFIER ACE_TEXT("\n%s\n"),
                   id.length(), id.c_str());
 
   ACE_CString kind = record.kind();
-  ACE_OS::fprintf(this->fl_, ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("\n%s\n"),
+  ACE_OS::fprintf(this->fl_, ACE_SIZE_T_FORMAT_SPECIFIER ACE_TEXT ("\n%s\n"),
                   kind.length(), kind.c_str());
 
   ACE_CString ref = record.ref();
-  ACE_OS::fprintf(this->fl_, ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("\n%s\n"),
+  ACE_OS::fprintf(this->fl_, ACE_SIZE_T_FORMAT_SPECIFIER ACE_TEXT ("\n%s\n"),
                   ref.length(), ref.c_str());
 
   ACE_OS::fflush(this->fl_);

@@ -386,7 +386,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
-                (ACE_LIB_TEXT("-ORBNoServerSideNameLookups"))))
+                (ACE_TEXT("-ORBNoServerSideNameLookups"))))
         {
           // Don't look up the host name for incoming connections
           no_server_side_name_lookups =
@@ -753,7 +753,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
-                (ACE_LIB_TEXT("-ORBIMREndpointsInIOR"))))
+                (ACE_TEXT("-ORBIMREndpointsInIOR"))))
         {
           this->imr_endpoints_in_ior_ = ACE_OS::atoi (current_arg);
 
@@ -789,7 +789,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
-               (ACE_LIB_TEXT("-ORBLingerTimeout"))))
+               (ACE_TEXT("-ORBLingerTimeout"))))
         {
           linger = ACE_OS::atoi (current_arg);
 
@@ -878,7 +878,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), -1);
         }
        else if ((current_arg = arg_shifter.get_the_parameter
-                 (ACE_LIB_TEXT("-ORBUseSharedProfile"))))
+                 (ACE_TEXT("-ORBUseSharedProfile"))))
          {
            this->orb_params ()->shared_profile
              (ACE_OS::atoi (current_arg));
@@ -886,7 +886,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
            arg_shifter.consume_arg ();
          }
        else if ((current_arg = arg_shifter.get_the_parameter
-                 (ACE_LIB_TEXT("-ORBNegotiateCodesets"))))
+                 (ACE_TEXT("-ORBNegotiateCodesets"))))
          {
            negotiate_codesets =
              (ACE_OS::atoi (current_arg));

@@ -104,8 +104,8 @@ TAO::HTIOP::Completion_Handler::handle_input (ACE_HANDLE h)
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_LIB_TEXT ("TAO::HTIOP::Completion_Handler %p\n"),
-                        ACE_LIB_TEXT ("make_svc_handler")));
+                        ACE_TEXT ("TAO::HTIOP::Completion_Handler %p\n"),
+                        ACE_TEXT ("make_svc_handler")));
           return -1;
         }
 
@@ -130,8 +130,8 @@ TAO::HTIOP::Completion_Handler::handle_input (ACE_HANDLE h)
 
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_LIB_TEXT ("%p\n"),
-                        ACE_LIB_TEXT ("activate_svc_handler")));
+                        ACE_TEXT ("%p\n"),
+                        ACE_TEXT ("activate_svc_handler")));
           return -1;
         }
 #endif /* 0 */

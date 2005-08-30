@@ -104,7 +104,7 @@ Task_Stats::dump_latency_stats (ACE_TCHAR *out_msg, ACE_UINT32 sf)
   if (this->samples_count_ == 0u)
     {
       ACE_OS::sprintf (out_msg,
-                       ACE_LIB_TEXT ("# no data collected\n"));
+                       ACE_TEXT ("# no data collected\n"));
       return;
     }
 
@@ -141,7 +141,7 @@ Task_Stats::dump_latency_stats (ACE_TCHAR *out_msg, ACE_UINT32 sf)
     ACE_UINT32 tmax = ACE_CU64_TO_CU32 (tmax_);
 
     ACE_OS::sprintf(out_msg,
-                  ACE_LIB_TEXT ("#latency   : %u[%d]/%.2f/%u[%d]/%.2f (min/avg/max/var^2)\n #first invocation time = %u, last invocation time = %u\n"),
+                  ACE_TEXT ("#latency   : %u[%d]/%.2f/%u[%d]/%.2f (min/avg/max/var^2)\n #first invocation time = %u, last invocation time = %u\n"),
                   l_min, this->exec_time_min_at_,
                   l_avg,
                   l_max, this->exec_time_max_at_,
@@ -157,7 +157,7 @@ Task_Stats::dump_latency_stats (ACE_TCHAR *out_msg, ACE_UINT32 sf)
   double tmax = ACE_CU64_TO_CU32 (this->time_inv_[samples_count_-1])/sf;
 
   ACE_OS::sprintf(out_msg,
-                  ACE_LIB_TEXT ("#latency   : %.2f[%d]/%.2f/%.2f[%d]/%.2f (min/avg/max/var^2)\n #first invocation time = %.0f, last invocation time = %.0f\n"),
+                  ACE_TEXT ("#latency   : %.2f[%d]/%.2f/%.2f[%d]/%.2f (min/avg/max/var^2)\n #first invocation time = %.0f, last invocation time = %.0f\n"),
                   l_min, this->exec_time_min_at_,
                   l_avg,
                   l_max, this->exec_time_max_at_,
@@ -166,13 +166,13 @@ Task_Stats::dump_latency_stats (ACE_TCHAR *out_msg, ACE_UINT32 sf)
 
 
   ACE_OS::sprintf(out_msg,
-                  ACE_LIB_TEXT ("#latency   : %.2f[%d]/%.2f/%.2f[%d]/%.2f (min/avg/max/var^2)\n"),
+                  ACE_TEXT ("#latency   : %.2f[%d]/%.2f/%.2f[%d]/%.2f (min/avg/max/var^2)\n"),
                   l_min, this->exec_time_min_at_,
                   l_avg,
                   l_max, this->exec_time_max_at_,
                   l_dev);
 
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("#latency   : %.2f[%d]/%.2f/%.2f[%d]/%.2f (min/avg/max/var^2)\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("#latency   : %.2f[%d]/%.2f/%.2f[%d]/%.2f (min/avg/max/var^2)\n"),
                   l_min, this->exec_time_min_at_,
                   l_avg,
                   l_max, this->exec_time_max_at_,

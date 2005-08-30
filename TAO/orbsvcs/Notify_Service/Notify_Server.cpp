@@ -27,7 +27,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       if (notify_service.init (argc, argv ACE_ENV_ARG_PARAMETER) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT("Failed to initialize the Notification Service.\n")),
+                           ACE_TEXT("Failed to initialize the Notification Service.\n")),
                           1);
 
       notify_service.run (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -36,7 +36,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_LIB_TEXT("Failed to run the Notification Service\n"));
+                           ACE_TEXT("Failed to run the Notification Service\n"));
       return 1;
     }
   ACE_ENDTRY;

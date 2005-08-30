@@ -383,8 +383,8 @@ TAO_MCAST_Parser::assign_to_variables (const char * &mcast_name)
           if (TAO_debug_level > 0)
             {
               ACE_DEBUG ((LM_ERROR,
-                          ACE_LIB_TEXT ("\nTAO (%P|%t) MCAST_Parser: ")
-                          ACE_LIB_TEXT ("Invalid IPv6 decimal address specified.\n")));
+                          ACE_TEXT ("\nTAO (%P|%t) MCAST_Parser: ")
+                          ACE_TEXT ("Invalid IPv6 decimal address specified.\n")));
             }
 
           return;

@@ -63,25 +63,25 @@ TAO_CEC_Default_Factory::parse_collection_arg (ACE_TCHAR* opt)
   int iteration_type = 0;
 
   ACE_TCHAR* aux = 0;
-  for (ACE_TCHAR* arg = ACE_OS::strtok_r (opt, ACE_LIB_TEXT(":"), &aux);
+  for (ACE_TCHAR* arg = ACE_OS::strtok_r (opt, ACE_TEXT(":"), &aux);
        arg != 0;
-       arg = ACE_OS::strtok_r (0, ACE_LIB_TEXT(":"), &aux))
+       arg = ACE_OS::strtok_r (0, ACE_TEXT(":"), &aux))
     {
-      if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("mt")) == 0)
+      if (ACE_OS::strcasecmp (arg, ACE_TEXT("mt")) == 0)
         synch_type = 0;
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("st")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("st")) == 0)
         synch_type = 1;
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("list")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("list")) == 0)
         collection_type = 0;
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("rb_tree")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("rb_tree")) == 0)
         collection_type = 1;
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("immediate")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("immediate")) == 0)
         iteration_type = 0;
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("copy_on_read")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("copy_on_read")) == 0)
         iteration_type = 1;
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("copy_on_write")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("copy_on_write")) == 0)
         iteration_type = 2;
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("delayed")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("delayed")) == 0)
         iteration_type = 3;
       else
         ACE_ERROR ((LM_ERROR,
@@ -106,18 +106,18 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
     {
       const ACE_TCHAR *arg = arg_shifter.get_current ();
 
-      if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-CECDispatching")) == 0)
+      if (ACE_OS::strcasecmp (arg, ACE_TEXT("-CECDispatching")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
               const ACE_TCHAR* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("reactive")) == 0)
+              if (ACE_OS::strcasecmp (opt, ACE_TEXT("reactive")) == 0)
                 {
                   this->dispatching_ = 0;
                 }
-              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("mt")) == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT("mt")) == 0)
                 {
                   this->dispatching_ = 1;
                 }
@@ -132,7 +132,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-CECDispatchingThreads")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-CECDispatchingThreads")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -144,7 +144,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-CECProxyConsumerCollection")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-CECProxyConsumerCollection")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -158,7 +158,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-CECProxySupplierCollection")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-CECProxySupplierCollection")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -173,22 +173,22 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-CECProxyConsumerLock")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-CECProxyConsumerLock")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
               const ACE_TCHAR* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("null")) == 0)
+              if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
                 {
                   this->consumer_lock_ = 0;
                 }
-              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("thread")) == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT("thread")) == 0)
                 {
                   this->consumer_lock_ = 1;
                 }
-              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("recursive")) == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT("recursive")) == 0)
                 {
                   this->consumer_lock_ = 2;
                 }
@@ -203,22 +203,22 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-CECProxySupplierLock")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-CECProxySupplierLock")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
               const ACE_TCHAR* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("null")) == 0)
+              if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
                 {
                   this->supplier_lock_ = 0;
                 }
-              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("thread")) == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT("thread")) == 0)
                 {
                   this->supplier_lock_ = 1;
                 }
-              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("recursive")) == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT("recursive")) == 0)
                 {
                   this->supplier_lock_ = 2;
                 }
@@ -233,7 +233,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-CECReactivePullingPeriod")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-CECReactivePullingPeriod")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -245,7 +245,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-CECUseORBId")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-CECUseORBId")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -258,18 +258,18 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-CECConsumerControl")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-CECConsumerControl")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
               const ACE_TCHAR* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("null")) == 0)
+              if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
                 {
                   this->consumer_control_ = 0;
                 }
-              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("reactive")) == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT("reactive")) == 0)
                 {
                   this->consumer_control_ = 1;
                 }
@@ -284,18 +284,18 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-CECSupplierControl")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-CECSupplierControl")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
               const ACE_TCHAR* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("null")) == 0)
+              if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
                 {
                   this->supplier_control_ = 0;
                 }
-              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("reactive")) == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT("reactive")) == 0)
                 {
                   this->supplier_control_ = 1;
                 }
@@ -310,7 +310,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-CECConsumerControlPeriod")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-CECConsumerControlPeriod")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -322,7 +322,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-CECSupplierControlPeriod")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-CECSupplierControlPeriod")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -334,8 +334,8 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-CECConsumerControlTimeout")) == 0 ||
-               ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-CECConsumerControlRoundtripTimeout")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-CECConsumerControlTimeout")) == 0 ||
+               ACE_OS::strcasecmp (arg, ACE_TEXT("-CECConsumerControlRoundtripTimeout")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -348,8 +348,8 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-CECSupplierControlTimeout")) == 0 ||
-               ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-CECSupplierControlRoundtripTimeout")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-CECSupplierControlTimeout")) == 0 ||
+               ACE_OS::strcasecmp (arg, ACE_TEXT("-CECSupplierControlRoundtripTimeout")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -362,7 +362,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, ACE_LIB_TEXT("-CECProxyDisconnectRetries")) == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-CECProxyDisconnectRetries")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -374,7 +374,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             }
         }
 
-      else if (ACE_OS::strncmp (arg, ACE_LIB_TEXT("-CEC"), 3) == 0)
+      else if (ACE_OS::strncmp (arg, ACE_TEXT("-CEC"), 3) == 0)
         {
           arg_shifter.consume_arg ();
           ACE_ERROR ((LM_ERROR,

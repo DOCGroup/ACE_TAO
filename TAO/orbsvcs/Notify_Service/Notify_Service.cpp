@@ -318,66 +318,66 @@ TAO_Notify_Service_Driver::parse_args (int &argc, ACE_TCHAR *argv[])
     const ACE_TCHAR* current_arg = 0;
     while (arg_shifter.is_anything_left ())
     {
-      if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-Factory"))))
+      if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Factory"))))
         {
           this->notify_factory_name_.set (ACE_TEXT_ALWAYS_CHAR(current_arg));
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-Boot")) == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Boot")) == 0)
         {
           this->bootstrap_ = 1;
           // Make it bootstrappable
 
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-NameSvc")) == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-NameSvc")) == 0)
         {
           this->use_name_svc_ = 1;
           // Register ref with the name service
 
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-NoNameSvc")) == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-NoNameSvc")) == 0)
         {
           this->use_name_svc_ = 0;
           // Don't Register ref with the name service
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-IORoutput"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORoutput"))))
         {
-          this->ior_output_file_ = ACE_OS::fopen (current_arg, ACE_LIB_TEXT("w"));
+          this->ior_output_file_ = ACE_OS::fopen (current_arg, ACE_TEXT("w"));
           if (this->ior_output_file_ == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Unable to open %s for writing: %p\n",
                                current_arg), -1);
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-ChannelName"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ChannelName"))))
         {
           this->notify_channel_name_.set(ACE_TEXT_ALWAYS_CHAR(current_arg));
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-Channel")) == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Channel")) == 0)
         {
           this->register_event_channel_ = 1;
           // Register one EC with naming.
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-Notify_TPReactor"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Notify_TPReactor"))))
         {
           ACE_DEBUG((LM_DEBUG, "-Notify_TPReactor option is deprecated, use -ORBRunThreads option\n"));
 
           this->nthreads_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-ORBRunThreads"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ORBRunThreads"))))
         {
           this->nthreads_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-?")) == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-?")) == 0)
         {
           ACE_DEBUG((LM_DEBUG,
                      "usage: %s -Factory factory_name "

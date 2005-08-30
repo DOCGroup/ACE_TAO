@@ -37,7 +37,7 @@ namespace FTRTEC {
     name_[0].id = CORBA::string_dup("FT_EventService");
 
     while (argc > 1) {
-      if ( ACE_OS::strcasecmp (argv[0], ACE_LIB_TEXT("-Object_ID")) == 0) {
+      if ( ACE_OS::strcasecmp (argv[0], ACE_TEXT("-Object_ID")) == 0) {
         --argc; ++argv;
         if (argv[0][0] == '-') continue;
         else if (argv[0][0] != '$') {
@@ -49,7 +49,7 @@ namespace FTRTEC {
         }
         --argc; ++argv;
       }
-      else if (ACE_OS::strcasecmp (argv[0], ACE_LIB_TEXT("-Name")) ==0) {
+      else if (ACE_OS::strcasecmp (argv[0], ACE_TEXT("-Name")) ==0) {
         --argc; ++argv;
         if (argv[0][0] == '-') continue;
         else if (argv[0][0] != '$') {
