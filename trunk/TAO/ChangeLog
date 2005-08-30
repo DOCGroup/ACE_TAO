@@ -1,3 +1,11 @@
+Tue Aug 30 06:42:46 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Server.cpp:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Server.cpp:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Server.cpp:
+
+	  Fix emulated exception builds.
+
 Tue Aug 30 13:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Param_Test/server.cpp:
