@@ -228,7 +228,7 @@ Server_i::init (int argc,
                       command.get_argc(),
                       command.get_ASCII_argv(),
                       "time_server"
-                      ACE_ENV_ARG_PARAMETER)
+                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (retval == -1)
