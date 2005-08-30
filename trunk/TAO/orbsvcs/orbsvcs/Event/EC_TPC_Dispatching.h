@@ -75,9 +75,5 @@ private:
                                 // @@ check to see how the factory gets released...
 };
 
-#if defined (__ACE_INLINE__)
-#include "EC_TPC_Dispatching.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_TPC_DISPATCHING_H */
