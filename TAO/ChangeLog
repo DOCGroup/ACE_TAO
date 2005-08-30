@@ -1,3 +1,8 @@
+Tue Aug 30 06:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.h:
+          Fixed pragma once is obsolete warning
+
 Tue Aug 30 01:20:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp (queue_full_action):
