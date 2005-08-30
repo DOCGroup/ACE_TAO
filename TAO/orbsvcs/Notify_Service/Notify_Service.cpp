@@ -302,12 +302,6 @@ TAO_Notify_Service_Driver::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   // shutdown the ORB.
   if (!CORBA::is_nil (this->orb_.in ()))
     this->orb_->shutdown ();
-
-  /// Release all the _vars as the ORB is gone now.
-  notify_factory_._retn ();
-  orb_._retn ();
-  poa_._retn ();
-  naming_._retn ();
 }
 
 int
