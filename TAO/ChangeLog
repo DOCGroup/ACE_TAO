@@ -1,3 +1,16 @@
+Tue Aug 30 13:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Param_Test/server.cpp:
+        * tests/Param_Test/except.cpp:
+        * tests/Faults/test_i.cpp:
+        * tests/Faults/ping.cpp:
+        * tests/AMI_Timeouts/timeout_client.cpp:
+        * tests/InterOp-Naming/Server_i.cpp:
+        * tests/Bug_1476_Regression/Client_Task.cpp:
+        * tests/Bug_1482_Regression/Reply_Handler.cpp:
+        * tests/Big_Oneways/Session.cpp:
+          Fixed emulated exception fuzz errors
+
 Tue Aug 30 13:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/PolicyS.cpp:
