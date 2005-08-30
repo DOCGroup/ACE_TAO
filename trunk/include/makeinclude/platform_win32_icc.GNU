@@ -15,7 +15,7 @@ inline ?= 0
 ifeq ($(debug),0)
 CFLAGS += -DNDEBUG /MD
 else
-CFLAGS += -DNDEBUG /MDd
+CFLAGS += /MDd
 endif
 
 ifeq ($(buildbits),64)
@@ -40,6 +40,7 @@ AR         = ar
 ARFLAGS    = rsuv
 RANLIB     = ranlib
 SOEXT      = dll
+OBJEXT     = obj
 SOFLAGS    += $(MODEL_FLAGS) $(CPPFLAGS)
 SOBUILD    = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 
