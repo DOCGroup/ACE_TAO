@@ -1,3 +1,10 @@
+Tue Aug 30 15:56:49 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/Notify_Service/Notify_Server.cpp:
+
+          Changed to add support for clean shutdown with SIGINT/SIGTERM
+          using the Service_Shutdown class from the Svc_Utils library.
+
 Tue Aug 30 12:42:18 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.h:

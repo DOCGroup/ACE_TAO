@@ -3,16 +3,35 @@
 #include "Notify_Service.h"
 #include "ace/OS_main.h"
 
-TAO_Notify_Service_Driver notify_service;
+#include "orbsvcs/Shutdown_Utilities.h"
+#include "tao/debug.h"
+#include "ace/Log_Msg.h"
 
-extern "C" void handler (int signum)
+
+class Notify_Service_Shutdown_Functor
+  : public Shutdown_Functor
 {
-  // check of sigint
-  if (signum == SIGINT)
-    {
-      ACE_DECLARE_NEW_CORBA_ENV;
-      notify_service.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-    }
+public:
+  Notify_Service_Shutdown_Functor (TAO_Notify_Service_Driver& svc);
+
+  void operator() (int which_signal);
+
+private:
+  TAO_Notify_Service_Driver&        svc_;
+};
+
+Notify_Service_Shutdown_Functor::Notify_Service_Shutdown_Functor (TAO_Notify_Service_Driver& svc)
+  : svc_ (svc)
+{
+}
+
+void
+Notify_Service_Shutdown_Functor::operator() (int which_signal)
+{
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "shutting down on signal %d\n", which_signal));
+  (void) this->svc_.shutdown ();
 }
 
 // Driver function for the TAO Notify Service.
@@ -20,9 +39,12 @@ extern "C" void handler (int signum)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  // ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
-  // Not handling signals. the shutdown code and event handler is maintained in case we want to address this in the future.
+  TAO_Notify_Service_Driver notify_service;
 
+  Notify_Service_Shutdown_Functor killer (notify_service);
+  Service_Shutdown kill_contractor (killer);
+  
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY_NEW_ENV
     {
       if (notify_service.init (argc, argv ACE_ENV_ARG_PARAMETER) == -1)
@@ -40,6 +62,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return 1;
     }
   ACE_ENDTRY;
+
+  ACE_DEBUG ((LM_ERROR, "Exiting\n"));
 
   return 0;
 }
