@@ -1,3 +1,8 @@
+Tue Aug 30 10:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Based_Pointer_Test.cpp:
+          Fixed compile error
+
 Tue Aug 30 09:00:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/Default_Constants.h:
