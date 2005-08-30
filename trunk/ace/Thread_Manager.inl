@@ -79,10 +79,12 @@ ACE_Thread_Descriptor_Base::~ACE_Thread_Descriptor_Base (void)
 }
 
 ACE_INLINE bool
-ACE_Thread_Descriptor_Base::operator==(const ACE_Thread_Descriptor_Base &rhs) const
+ACE_Thread_Descriptor_Base::operator== (
+  const ACE_Thread_Descriptor_Base &rhs) const
 {
-  return ACE_OS::thr_cmp (this->thr_handle_, rhs.thr_handle_) == 0
-    && ACE_OS::thr_equal (this->thr_id_, rhs.thr_id_) == 0;
+  return
+    ACE_OS::thr_cmp (this->thr_handle_, rhs.thr_handle_)
+    && ACE_OS::thr_equal (this->thr_id_, rhs.thr_id_);
 }
 
 ACE_INLINE bool
