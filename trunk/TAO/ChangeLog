@@ -1,3 +1,17 @@
+Wed Aug 31 12:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/corba.h:
+          Removed include of AnyTypeCode/TypeCode.h
+
+        * tao/Exception.h:
+          Removed _tc_exception_type
+
+        * tao/Exception_Data.h:
+          Added forward declaration CORBA::TypeCode_ptr
+
+        * tao/Profile.h:
+          Removed not needed forward declarations
+
 Wed Aug 31 11:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/IFR_Service/be_global.h:
