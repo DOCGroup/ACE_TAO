@@ -51,17 +51,17 @@ CORBA::WStringSeq::WStringSeq (void)
 {}
 
 CORBA::WStringSeq::WStringSeq (
-    CORBA::ULong max
+    ::CORBA::ULong max
   )
   : TAO_Unbounded_WString_Sequence
     (max)
 {}
 
 CORBA::WStringSeq::WStringSeq (
-    CORBA::ULong max,
-    CORBA::ULong length,
-    CORBA::WChar * * buffer,
-    CORBA::Boolean release
+    ::CORBA::ULong max,
+    ::CORBA::ULong length,
+    ::CORBA::WChar * * buffer,
+    ::CORBA::Boolean release
   )
   : TAO_Unbounded_WString_Sequence
     (max, length, buffer, release)
@@ -94,19 +94,19 @@ void CORBA::WStringSeq::_tao_any_destructor (
 #if !defined _TAO_CDR_OP_CORBA_WStringSeq_CPP_
 #define _TAO_CDR_OP_CORBA_WStringSeq_CPP_
 
-CORBA::Boolean operator<< (
+::CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
     const CORBA::WStringSeq &_tao_sequence
   )
 {
-  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
+  const ::CORBA::ULong _tao_seq_len = _tao_sequence.length ();
   
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = true;
+      ::CORBA::Boolean _tao_marshal_flag = true;
       
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
+      for ( ::CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag = (strm << _tao_sequence[i].in ());
         }
@@ -117,12 +117,12 @@ CORBA::Boolean operator<< (
   return false;
 }
 
-CORBA::Boolean operator>> (
+::CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
     CORBA::WStringSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len;
+  ::CORBA::ULong _tao_seq_len;
   
   if (strm >> _tao_seq_len)
     {
@@ -144,9 +144,9 @@ CORBA::Boolean operator>> (
         }
       
       // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = true;
+      ::CORBA::Boolean _tao_marshal_flag = true;
       
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
+      for ( ::CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag = (strm >> _tao_sequence[i].out ());
         

@@ -87,12 +87,12 @@ namespace CORBA
   {
   public:
     WStringSeq (void);
-    WStringSeq (CORBA::ULong max);
+    WStringSeq ( ::CORBA::ULong max);
     WStringSeq (
-        CORBA::ULong max,
-        CORBA::ULong length,
-        CORBA::WChar ** buffer, 
-        CORBA::Boolean release = 0
+        ::CORBA::ULong max,
+        ::CORBA::ULong length,
+        ::CORBA::WChar ** buffer, 
+        ::CORBA::Boolean release = 0
       );
     WStringSeq (const WStringSeq &);
     ~WStringSeq (void);
@@ -123,11 +123,11 @@ namespace TAO
 #if !defined _TAO_CDR_OP_CORBA_WStringSeq_H_
 #define _TAO_CDR_OP_CORBA_WStringSeq_H_
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_Export ::CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const CORBA::WStringSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_Export ::CORBA::Boolean operator>> (
     TAO_InputCDR &,
     CORBA::WStringSeq &
   );
@@ -135,7 +135,7 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_CORBA_WStringSeq_H_ */
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:1028
+// be\be_codegen.cpp:1040
 
 #include /**/ "ace/post.h"
 

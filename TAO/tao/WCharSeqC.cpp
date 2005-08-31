@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:288
+// be\be_codegen.cpp:277
 
 
 #include "WCharSeqC.h"
@@ -51,7 +51,7 @@ CORBA::WCharSeq::WCharSeq (void)
 {}
 
 CORBA::WCharSeq::WCharSeq (
-    CORBA::ULong max
+    ::CORBA::ULong max
   )
   : TAO_Unbounded_Sequence<
         CORBA::WChar
@@ -60,10 +60,10 @@ CORBA::WCharSeq::WCharSeq (
 {}
 
 CORBA::WCharSeq::WCharSeq (
-    CORBA::ULong max,
-    CORBA::ULong length,
-    CORBA::WChar * buffer,
-    CORBA::Boolean release
+    ::CORBA::ULong max,
+    ::CORBA::ULong length,
+    ::CORBA::WChar * buffer,
+    ::CORBA::Boolean release
   )
   : TAO_Unbounded_Sequence<
         CORBA::WChar
@@ -100,12 +100,12 @@ void CORBA::WCharSeq::_tao_any_destructor (
 #if !defined _TAO_CDR_OP_CORBA_WCharSeq_CPP_
 #define _TAO_CDR_OP_CORBA_WCharSeq_CPP_
 
-CORBA::Boolean operator<< (
+::CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
     const CORBA::WCharSeq &_tao_sequence
   )
 {
-  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
+  const ::CORBA::ULong _tao_seq_len = _tao_sequence.length ();
   
   if (strm << _tao_seq_len)
     {
@@ -116,12 +116,12 @@ CORBA::Boolean operator<< (
   return false;
 }
 
-CORBA::Boolean operator>> (
+::CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
     CORBA::WCharSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len;
+  ::CORBA::ULong _tao_seq_len;
   
   if (strm >> _tao_seq_len)
     {

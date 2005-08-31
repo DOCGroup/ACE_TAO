@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:788
+// be\be_codegen.cpp:754
 
 #ifndef _TAO_IDL_ANYTYPECODE_WCHARSEQA_H_
 #define _TAO_IDL_ANYTYPECODE_WCHARSEQA_H_
@@ -34,7 +34,6 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
-#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/WCharSeqC.h"
 
 
@@ -43,10 +42,10 @@
 
 namespace CORBA
 {
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:49
-
+  
   extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_WCharSeq;
 
 // TAO_IDL - Generated from
@@ -57,10 +56,10 @@ namespace CORBA
 // TAO_IDL - Generated from
 // be\be_visitor_sequence/any_op_ch.cpp:53
 
-TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const CORBA::WCharSeq &); // copying version
-TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::WCharSeq*); // noncopying version
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::WCharSeq *&); // deprecated
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::WCharSeq *&);
+TAO_AnyTypeCode_Export void operator<<= ( ::CORBA::Any &, const CORBA::WCharSeq &); // copying version
+TAO_AnyTypeCode_Export void operator<<= ( ::CORBA::Any &, CORBA::WCharSeq*); // noncopying version
+TAO_AnyTypeCode_Export ::CORBA::Boolean operator>>= (const ::CORBA::Any &, CORBA::WCharSeq *&); // deprecated
+TAO_AnyTypeCode_Export ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const CORBA::WCharSeq *&);
 
 #include /**/ "ace/post.h"
 

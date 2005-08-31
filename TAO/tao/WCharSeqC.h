@@ -52,11 +52,6 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_Export
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:49
 
@@ -94,12 +89,12 @@ namespace CORBA
   {
   public:
     WCharSeq (void);
-    WCharSeq (CORBA::ULong max);
+    WCharSeq ( ::CORBA::ULong max);
     WCharSeq (
-        CORBA::ULong max,
-        CORBA::ULong length,
-        CORBA::WChar* buffer, 
-        CORBA::Boolean release = 0
+        ::CORBA::ULong max,
+        ::CORBA::ULong length,
+        ::CORBA::WChar* buffer, 
+        ::CORBA::Boolean release = 0
       );
     WCharSeq (const WCharSeq &);
     ~WCharSeq (void);
@@ -130,11 +125,11 @@ namespace TAO
 #if !defined _TAO_CDR_OP_CORBA_WCharSeq_H_
 #define _TAO_CDR_OP_CORBA_WCharSeq_H_
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_Export ::CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const CORBA::WCharSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_Export ::CORBA::Boolean operator>> (
     TAO_InputCDR &,
     CORBA::WCharSeq &
   );
@@ -142,11 +137,7 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_CORBA_WCharSeq_H_ */
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:1062
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
+// be\be_codegen.cpp:1040
 
 #include /**/ "ace/post.h"
 

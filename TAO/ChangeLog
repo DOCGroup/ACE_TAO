@@ -1,3 +1,15 @@
+Wed Aug 31 10:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/WStringSeq.pidl:
+        * tao/WCharSeq.pidl:
+          Updated regeneration instructions
+
+        * tao/WStringSeqC.{h,cpp}:
+        * tao/WCharSeqC.{h,cpp}:
+        * tao/AnyTypeCode/WStringSeqA.{h,cpp}:
+        * tao/AnyTypeCode/WCharSeqA.{h,cpp}:
+          Regenerated without patching.
+
 Wed Aug 31 10:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Notify_Service/Notify_Server.cpp

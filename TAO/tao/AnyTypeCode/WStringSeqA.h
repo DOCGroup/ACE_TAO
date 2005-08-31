@@ -34,7 +34,6 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
-#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/WStringSeqC.h"
 
 
@@ -43,10 +42,10 @@
 
 namespace CORBA
 {
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:49
-
+  
   extern TAO_AnyTypeCode_Export ::CORBA::TypeCode_ptr const _tc_WStringSeq;
 
 // TAO_IDL - Generated from
@@ -57,10 +56,10 @@ namespace CORBA
 // TAO_IDL - Generated from
 // be\be_visitor_sequence/any_op_ch.cpp:53
 
-TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const CORBA::WStringSeq &); // copying version
-TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::WStringSeq*); // noncopying version
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::WStringSeq *&); // deprecated
-TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::WStringSeq *&);
+TAO_AnyTypeCode_Export void operator<<= ( ::CORBA::Any &, const CORBA::WStringSeq &); // copying version
+TAO_AnyTypeCode_Export void operator<<= ( ::CORBA::Any &, CORBA::WStringSeq*); // noncopying version
+TAO_AnyTypeCode_Export ::CORBA::Boolean operator>>= (const ::CORBA::Any &, CORBA::WStringSeq *&); // deprecated
+TAO_AnyTypeCode_Export ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const CORBA::WStringSeq *&);
 
 #include /**/ "ace/post.h"
 
