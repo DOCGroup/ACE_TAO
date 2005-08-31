@@ -3886,10 +3886,8 @@ nobase_include_HEADERS += \
   Event/EC_Supplier_Filter.i \
   Event/EC_Supplier_Filter_Builder.h \
   Event/EC_TPC_Dispatching.h \
-  Event/EC_TPC_Dispatching.i \
   Event/EC_TPC_Dispatching_Task.h \
   Event/EC_TPC_Factory.h \
-  Event/EC_TPC_Factory.i \
   Event/EC_TPC_ProxyConsumer.h \
   Event/EC_TPC_ProxySupplier.h \
   Event/EC_TPC_ProxySupplier.i \
