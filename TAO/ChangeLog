@@ -1,3 +1,12 @@
+Wed Aug 31 21:49:41 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/fwd.idl:
+        
+          Added simple test case to reproduce the situation described
+          below in
+          
+          Wed Aug 31 21:19:41 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>.
+
 Wed Aug 31 21:19:41 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
