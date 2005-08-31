@@ -16,8 +16,8 @@
 #ifndef IFR_SERVICE_H
 #define IFR_SERVICE_H
 
-#include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/IFRService/IFR_Service_Utils.h"
+#include "tao/PortableServer/PortableServer.h"
 #include "tao/ORB.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
