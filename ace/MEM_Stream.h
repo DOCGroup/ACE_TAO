@@ -68,14 +68,14 @@ public:
   //= The following two methods use write and read system calls.
   /// Send n bytes, keep trying until n are sent.
   /// Recv n bytes, keep trying until n are received.
-  ssize_t send_n (const void *buf, int n);
-  ssize_t recv_n (void *buf, int n);
+  ssize_t send_n (const void *buf, size_t n);
+  ssize_t recv_n (void *buf, size_t n);
 
   // = The following two methods use the send and recv system calls.
   /// Send n bytes, keep trying until n are sent.
   /// Recv n bytes, keep trying until n are received.
-  ssize_t send_n (const void *buf, int n, int flags);
-  ssize_t recv_n (void *buf, int n, int flags);
+  ssize_t send_n (const void *buf, size_t n, int flags);
+  ssize_t recv_n (void *buf, size_t n, int flags);
 
 #if 0
   /**
