@@ -441,6 +441,7 @@ TAO_DynStruct_i::get_members_as_dyn_any (ACE_ENV_SINGLE_ARG_DECL)
       safe_retval[i].id =
         CORBA::string_dup (unaliased_tc->member_name (i
                                                       ACE_ENV_ARG_PARAMETER));
+      ACE_CHECK_RETURN (0);
 
       // A deep copy is made only by copy() (CORBA 2.4.2 section 9.2.3.6).
       // Set the flag so the caller can't destroy.

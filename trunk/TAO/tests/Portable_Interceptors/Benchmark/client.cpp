@@ -137,6 +137,7 @@ run_test (Test_Interceptors::Secure_Vault_ptr server
       server->update_records (id,
                               record
                               ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
 
       // Grab timestamp again.
       ACE_hrtime_t now = ACE_OS::gethrtime ();

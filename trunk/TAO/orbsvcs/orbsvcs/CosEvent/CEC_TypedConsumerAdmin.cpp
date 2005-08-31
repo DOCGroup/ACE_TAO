@@ -73,7 +73,6 @@ TAO_CEC_TypedConsumerAdmin::obtain_typed_pull_supplier (
     CORBA::SystemException,
     CosTypedEventChannelAdmin::InterfaceNotSupported
   ))
-
 {
   ACE_THROW_RETURN (CosTypedEventChannelAdmin::InterfaceNotSupported (), 0);
 }
@@ -91,6 +90,7 @@ TAO_CEC_TypedConsumerAdmin::obtain_typed_push_supplier (
 {
   // Register the consumer uses_interface with the EC
   int result = this->typed_event_channel_->consumer_register_uses_interace (uses_interface ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
 
   if (result == -1)
     {

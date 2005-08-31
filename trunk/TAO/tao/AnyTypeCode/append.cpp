@@ -1165,6 +1165,7 @@ TAO_Marshal_Except::append (CORBA::TypeCode_ptr  tc,
                                                    src,
                                                    dest
                                                    ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
     }
 
   if (retval == TAO::TRAVERSE_CONTINUE

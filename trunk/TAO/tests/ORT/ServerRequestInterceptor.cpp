@@ -62,7 +62,7 @@ ServerRequestInterceptor::receive_request (
   ACE_TRY
     {
       poa = this->poa_current_->get_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
     }
   ACE_CATCH (PortableServer::Current::NoContext, ex)
     {

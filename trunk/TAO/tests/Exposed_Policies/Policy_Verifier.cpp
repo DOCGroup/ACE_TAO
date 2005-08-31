@@ -179,6 +179,8 @@ Policy_Verifier::verify_reference (Counter_ptr object,
 
       policy_var = object->_get_policy (RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE
                                         ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       if (Policy_Verifier::check_reference (policy_var.in (),
                                           "Unable to get Priority Banded Policy\n"))
         {
@@ -223,6 +225,8 @@ Policy_Verifier::verify_reference (Counter_ptr object,
         }
       policy_var = object->_get_policy (RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE
                                         ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       if (Policy_Verifier::check_reference (policy_var.in (),
                                             "Unable to get Client Protocol Policy\n"))
         {

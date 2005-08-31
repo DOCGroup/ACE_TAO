@@ -426,6 +426,7 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
 
         // Notify the event channel...
         this->typed_event_channel_->connected (this ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
 
       } /* this->is_typed_ec */
     else
@@ -477,6 +478,7 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
 
   // Notify the event channel...
   this->event_channel_->connected (this ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
       } /* ! this->is_typed_ec */

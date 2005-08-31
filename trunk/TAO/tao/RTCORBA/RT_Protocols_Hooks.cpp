@@ -584,6 +584,8 @@ TAO_RT_Protocols_Hooks::rt_service_context (
           int status =
             this->get_thread_CORBA_priority (client_priority
                                              ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+
           if (status == -1)
             ACE_THROW (CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO));
 
@@ -747,6 +749,8 @@ TAO_RT_Protocols_Hooks::get_thread_CORBA_and_native_priority (
   int result =
     this->get_thread_native_priority (native_priority
                                       ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
   if (result == -1)
     {
       return result;
