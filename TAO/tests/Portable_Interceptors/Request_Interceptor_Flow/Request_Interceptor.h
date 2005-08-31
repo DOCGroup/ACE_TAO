@@ -22,12 +22,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Atomic_Op.h"
-
-#include "tao/PortableInterceptorC.h"
 #include "tao/PI/PI.h"
+#include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
 #include "tao/CORBA_String.h"
+
+#include "ace/Atomic_Op.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

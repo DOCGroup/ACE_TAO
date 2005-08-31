@@ -13,8 +13,8 @@
 #include "test_dynunion.h"
 #include "da_testsC.h"
 #include "data.h"
-#include "tao/DynamicAny/DynamicAny.h"
 #include "analyzer.h"
+#include "tao/DynamicAny/DynamicAny.h"
 #include "ace/OS_NS_string.h"
 
 Test_DynUnion::Test_DynUnion (CORBA::ORB_var orb, int debug)

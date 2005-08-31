@@ -7,13 +7,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Task.h"
+#include "tao/ORB.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/ORB.h"
+#include "ace/Task.h"
 
 class ACE_Manual_Event;
 
