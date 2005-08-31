@@ -1,4 +1,4 @@
-Wed Aug 31 07:39:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+﻿Wed Aug 31 07:39:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/Sock_Connect.cpp:
           Fixed WChar problem.
@@ -10,17 +10,17 @@ Wed Aug 31 06:10:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Aug 30 14:50:18 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	      * ace/OS_NS_Thread.inl (ACE_Thread_ID):
+        * ace/OS_NS_Thread.inl (ACE_Thread_ID):
 
           Moved small functions out-of-line.  Reduces footprint and
           improves performance slightly.
 
-	      From Patrick Bennett <Patrick.Bennett@inin.com>
-	      * ace/OS_NS_Thread.cpp (operator==):
-	      * ace/Thread_Manager.inl (operator=-):
-
-	        Corrected thread id/handle equality logic.  It was previously
-	        inversed.
+        From Patrick Bennett <Patrick.Bennett@inin.com>
+        * ace/OS_NS_Thread.cpp (operator==):
+        * ace/Thread_Manager.inl (operator=-):
+	
+        Corrected thread id/handle equality logic.  It was previously
+        inversed.
 
 Tue Aug 30 18:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
