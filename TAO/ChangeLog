@@ -1,3 +1,8 @@
+Wed Aug 31 09:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_TPC_ProxySupplier.cpp:
+          Replaced deprecated ACE cast macro
+
 Wed Aug 31 09:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tao/IORInterceptor/IORInterceptor_Adapter_Impl.h:
