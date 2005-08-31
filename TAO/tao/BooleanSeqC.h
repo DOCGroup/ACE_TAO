@@ -89,12 +89,12 @@ namespace CORBA
   {
   public:
     BooleanSeq (void);
-    BooleanSeq (CORBA::ULong max);
+    BooleanSeq ( ::CORBA::ULong max);
     BooleanSeq (
-        CORBA::ULong max,
-        CORBA::ULong length,
-        CORBA::Boolean* buffer, 
-        CORBA::Boolean release = 0
+        ::CORBA::ULong max,
+        ::CORBA::ULong length,
+        ::CORBA::Boolean* buffer, 
+        ::CORBA::Boolean release = 0
       );
     BooleanSeq (const BooleanSeq &);
     ~BooleanSeq (void);
@@ -125,11 +125,11 @@ namespace TAO
 #if !defined _TAO_CDR_OP_CORBA_BooleanSeq_H_
 #define _TAO_CDR_OP_CORBA_BooleanSeq_H_
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_Export ::CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const CORBA::BooleanSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_Export ::CORBA::Boolean operator>> (
     TAO_InputCDR &,
     CORBA::BooleanSeq &
   );
@@ -137,7 +137,7 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_CORBA_BooleanSeq_H_ */
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:1028
+// be\be_codegen.cpp:1040
 
 #include /**/ "ace/post.h"
 
