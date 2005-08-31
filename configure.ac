@@ -5,7 +5,7 @@ dnl Process this file with autoconf to produce a configure script.
 
 dnl Statically (i.e. at autoconf-time) determine the version of ACE.
 dnl This is necessary since the version argument to AC_INIT is
-dnl supposed to be a static value, not a dynamic (e.g. a shell
+dnl supposed to be a static value, not a dynamic one (e.g. a shell
 dnl variable).
 dnl
 dnl Note that this macro removes the newline output by the M4
@@ -6373,6 +6373,99 @@ ACE_CACHE_CHECK([for SO_SNDBUF/SO_RCVBUF socket options],
        ace_cv_feature_so_sndbuf_rcvbuf=no
       ])
   ], , [AC_DEFINE([ACE_LACKS_SOCKET_BUFSIZ])])
+
+dnl Check if memcpy is faster or loop unrolling is faster on a given
+dnl platform
+ACE_CACHE_CHECK([if ACE memcpy needs loop unrolling], [ace_cv_memcpy_loop_unroll],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[#include <stdio.h>
+#include <string.h>
+
+void*
+smemcpy (void* dest, const void* src, const size_t n)
+{
+ unsigned char* to = static_cast<unsigned char*>( dest) ;
+ const unsigned char* from = static_cast<const unsigned char*>( src) ;
+ // Unroll the loop...
+ switch (n)
+ {
+   case 16: to[15] = from[15] ;
+   case 15: to[14] = from[14] ;
+   case 14: to[13] = from[13] ;
+   case 13: to[12] = from[12] ;
+   case 12: to[11] = from[11] ;
+   case 11: to[10] = from[10] ;
+   case 10: to[9] = from[9] ;
+   case  9: to[8] = from[8] ;
+   case  8: to[7] = from[7] ;
+   case  7: to[6] = from[6] ;
+   case  6: to[5] = from[5] ;
+   case  5: to[4] = from[4] ;
+   case  4: to[3] = from[3] ;
+   case  3: to[2] = from[2] ;
+   case  2: to[1] = from[1] ;
+   case  1: to[0] = from[0] ;
+   case  0: break;
+   default: memcpy (dest, src, n);
+ }
+}
+
+void
+testit (int type)
+{
+ char buffer[16] ;
+ size_t size = 16 ;
+ size = 4 ;
+
+ switch (type)
+ {
+   case 0: smemcpy ((void*)buffer, (void*)" THIS IS A TEST", size) ;
+break ;
+   case 1: memcpy ((void*)buffer, (void*)" THIS IS A TEST", size) ; break ;
+ }
+}
+
+namespace { enum { ITERATIONS = 1000000 }; }
+
+#include <sys/time.h>
+#include <time.h>
+
+int
+main(int argc, char* argv[])
+{
+ struct timeval start, now;
+ double value;
+
+ // Warm up
+ for (int i = ITERATIONS ; i > 0 ; --i)
+   testit (0);
+
+ gettimeofday (&start, 0) ;
+ for( int i = ITERATIONS ; i > 0 ; --i)
+   testit (0);
+
+ gettimeofday (&now, 0);
+ double fast = 1000000 * (now.tv_sec - start.tv_sec) +
+               now.tv_usec - start.tv_usec ;
+
+ gettimeofday (&start, 0) ;
+ for (int i = ITERATIONS ; i > 0 ; --i)
+ testit (1) ;
+
+ gettimeofday( &now, 0) ;
+ double slow = 1000000 * (now.tv_sec-start.tv_sec) +
+   now.tv_usec - start.tv_usec ;
+
+ if (fast > slow)
+   return 0; // Value of 1 indicates that the test succeeded
+ else
+   return 1; // Value of 0 indicates that the test failed
+}]])], [ace_cv_memcpy_loop_unroll="yes"], [ace_cv_memcpy_loop_unroll="no"], [:])])
+
+if test "$ace_cv_memcpy_loop_unroll" = yes; then
+ echo "loop unrolling of memcpy necessary"
+else
+ echo "loop unrolling un-necessary"
+fi
 
 dnl TODO: We only check for ACE_HAS_AUTOMATIC_INIT_FINI on platforms that
 dnl have SVR4 dynamic linking since ACE doesn't support it otherwise.
