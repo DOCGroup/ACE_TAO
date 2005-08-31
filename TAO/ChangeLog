@@ -1,3 +1,35 @@
+Wed Aug 31 10:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Notify_Service/Notify_Server.cpp
+        * orbsvcs/Notify_Service/Notify_Service.cpp
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedConsumerAdmin.cpp
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedSupplierAdmin.cpp
+        * orbsvcs/orbsvcs/IFRService/HomeDef_i.cpp
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp
+        * orbsvcs/tests/Notify/Driver/main.cpp
+        * orbsvcs/tests/Time/Client_i.cpp
+        * tao/AnyTypeCode/append.cpp
+        * tao/DynamicAny/DynStruct_i.cpp
+        * tao/DynamicAny/DynUnion_i.cpp
+        * tao/PI/ClientRequestInterceptor_Adapter_Impl.cpp
+        * tao/PortableServer/Default_Servant_Dispatcher.cpp
+        * tao/PortableServer/LifespanStrategyPersistent.cpp
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp
+        * tao/RTCORBA/RT_Endpoint_Utils.cpp
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp
+        * tests/Exposed_Policies/Policy_Verifier.cpp
+        * tests/MProfile_Connection_Timeout/client.cpp
+        * tests/NestedUpcall/MT_Client_Test/server.cpp
+        * tests/NestedUpcall/Triangle_Test/server_B.cpp
+        * tests/ORT/ServerRequestInterceptor.cpp
+        * tests/Policies/Manipulation.cpp
+        * tests/Portable_Interceptors/Benchmark/client.cpp
+          Fixed emulated exception fuzz errors
+
 Wed Aug 31 09:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/EC_TPC_ProxySupplier.cpp:
