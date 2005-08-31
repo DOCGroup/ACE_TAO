@@ -1,3 +1,12 @@
+Wed Aug 31 14:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/MEM_Stream.{h,inl}:
+        * ace/OS_NS_sys_msg.{h,inl}:
+          64bit fixes
+
+        * ace/Framework_Component.cpp:
+          Initialize pointer to zero
+
 Wed Aug 31 08:48:19 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * configure.ac:
