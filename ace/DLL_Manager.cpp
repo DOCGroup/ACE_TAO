@@ -569,7 +569,7 @@ ACE_DLL_Manager::open (int size)
 {
   ACE_TRACE ("ACE_DLL_Manager::open");
 
-  ACE_DLL_Handle **temp;
+  ACE_DLL_Handle **temp = 0;
 
   ACE_NEW_RETURN (temp,
                   ACE_DLL_Handle *[size],
