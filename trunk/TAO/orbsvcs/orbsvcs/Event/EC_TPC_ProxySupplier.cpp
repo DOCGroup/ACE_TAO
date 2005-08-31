@@ -23,7 +23,10 @@ TAO_EC_TPC_ProxyPushSupplier:: disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (EC_TPC_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "EC (%P|%t): enter EC_TPC_ProxySupplier::disconnect_push_supplier (%@): refcount=%u,consumer=%@\n", this, this->refcount_, this->consumer_.in()));
+    ACE_DEBUG ((LM_DEBUG, "EC (%P|%t): enter EC_TPC_ProxySupplier::disconnect_push_supplier (%@): refcount=%u,consumer=%@\n",
+				this,
+				this->refcount_,
+				this->consumer_.in()));
 
   if (this->is_connected_i ())
     this->tpc_dispatching ()->remove_consumer (this->consumer_.in()
@@ -39,9 +42,8 @@ TAO_EC_TPC_Dispatching*
 TAO_EC_TPC_ProxyPushSupplier::tpc_dispatching ()
 {
   TAO_EC_Dispatching* dispatcher = this->event_channel_->dispatching ();
-  TAO_EC_TPC_Dispatching* tpcdispatcher =
-    ACE_dynamic_cast (TAO_EC_TPC_Dispatching*, dispatcher);
-  return tpcdispatcher;  
+
+  return dynamic_cast <TAO_EC_TPC_Dispatching*> (dispatcher);
 }
 
 void
