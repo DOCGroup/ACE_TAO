@@ -325,6 +325,7 @@ TAO_Port_Utils<T>::create_entry (const char *id,
                                           version,
                                           sub_section
                                           ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (T::_nil ());
 
   const char *tmp =
     TAO_IFR_Service_Utils::reference_to_path (port_base_type);

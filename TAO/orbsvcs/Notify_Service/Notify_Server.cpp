@@ -42,11 +42,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   Notify_Service_Shutdown_Functor killer (notify_service);
   Service_Shutdown kill_contractor (killer);
-  
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY_NEW_ENV
     {
-      if (notify_service.init (argc, argv ACE_ENV_ARG_PARAMETER) == -1)
+      int result = notify_service.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+       if (result == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("Failed to initialize the Notification Service.\n")),
                           1);

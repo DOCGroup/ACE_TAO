@@ -70,6 +70,7 @@ TAO_CEC_TypedSupplierAdmin::obtain_typed_push_consumer (
 
 {
   int result = this->typed_event_channel_->supplier_register_supported_interface (supported_interface ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
 
   if (result == -1)
     {

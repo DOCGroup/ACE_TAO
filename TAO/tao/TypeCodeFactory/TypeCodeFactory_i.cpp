@@ -1545,6 +1545,7 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
       CORBA::Boolean const valid_member =
         this->valid_content_type (member_tc
                                   ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (tc);
 
       if (!valid_member)
         {

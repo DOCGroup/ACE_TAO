@@ -82,6 +82,8 @@ TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc
   CORBA::TypeCode_var unaliased_tc =
   TAO_DynAnyFactory::strip_alias (this->type_.in ()
                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
   CORBA::Any_var first_label =
     unaliased_tc->member_label (this->current_position_
                                 ACE_ENV_ARG_PARAMETER);

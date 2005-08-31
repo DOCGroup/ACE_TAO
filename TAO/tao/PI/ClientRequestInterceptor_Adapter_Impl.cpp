@@ -223,6 +223,7 @@ namespace TAO
     ACE_ENV_ARG_DECL)
   {
     this->interceptor_list_.add_interceptor (interceptor ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
   }
 
   void

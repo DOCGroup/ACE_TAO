@@ -102,7 +102,7 @@ main (int argc, char *argv[])
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("PolicyCurrent" ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      ACE_TRY_CHECK;
 
       CORBA::PolicyCurrent_var policy_current =
         CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);

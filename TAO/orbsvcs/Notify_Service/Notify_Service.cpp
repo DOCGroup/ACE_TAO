@@ -202,6 +202,8 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
                                                   initial_admin,
                                                   id
                                                   ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (-1);
+
           name = this->naming_->to_name (
             this->notify_channel_name_.c_str ()
             ACE_ENV_ARG_PARAMETER);

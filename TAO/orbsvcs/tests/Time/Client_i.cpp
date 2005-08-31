@@ -156,6 +156,7 @@ Client_i::test_for_uto_from_utc (void)
     {
       CosTime::UTO_var UTO_server = this->clerk_->uto_from_utc (utc_struct
                                                                 ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       TimeBase::InaccuracyT inaccuracy = utc_struct.inacchi;
       inaccuracy <<= 32;
@@ -424,6 +425,7 @@ Client_i::init (int argc, char **argv)
           this->clerk_ =
             CosTime::TimeService::_narrow (server_object.in ()
                                            ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG,
                       "[CLIENT] Process/Thread Id : (%P/%t) Using the IOR provided\n"));

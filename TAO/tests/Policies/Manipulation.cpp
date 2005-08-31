@@ -338,6 +338,7 @@ Manipulation::svc (void)
                                    policy_manager.in (),
                                    policy_current.in ()
                                    ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY

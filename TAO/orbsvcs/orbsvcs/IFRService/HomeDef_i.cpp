@@ -100,6 +100,8 @@ TAO_HomeDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
                                                       this->repo_,
                                                       this->section_key_
                                                       ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
   ACE_TString holder;
   int status =
     this->repo_->config ()->get_string_value (this->section_key_,
