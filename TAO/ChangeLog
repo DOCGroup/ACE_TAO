@@ -1,3 +1,9 @@
+Tue Aug 30 17:05:11 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Regenerated.
+
 Tue Aug 30 16:30:30 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/Notify_Service/Notify_Service.cpp (shutdown):
