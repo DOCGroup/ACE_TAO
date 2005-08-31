@@ -1,3 +1,9 @@
+Wed Aug 31 10:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/LSOCK.{h,cpp} (recv_handle):
+          Changed the type of the len argument from int to ssize_t to
+          fix 64bit conversion problems
+
 Wed Aug 31 10:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg_UNIX_Syslog.{h,cpp}:

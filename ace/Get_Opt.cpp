@@ -641,9 +641,10 @@ ACE_Get_Opt::permute_args (void)
 {
   ACE_TRACE ("ACE_Get_Opt::permute_args");
 
-  int cstart, cyclelen, i, j, ncycle, nnonopts, nopts, pos;
-  ACE_TCHAR *swap;
-  int opt_end = this->optind;
+  u_long cyclelen, i, j, ncycle, nnonopts, nopts;
+  u_long opt_end = this->optind;
+  int cstart, pos = 0;
+  ACE_TCHAR *swap = 0;
 
   nnonopts = this->nonopt_end_ - this->nonopt_start_;
   nopts = opt_end - this->nonopt_end_;
