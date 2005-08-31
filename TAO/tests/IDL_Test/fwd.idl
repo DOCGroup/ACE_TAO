@@ -59,3 +59,18 @@ module mod2
   interface fwd;
 };
 
+// Tests a bug where code generation for an interface
+// which was forward declared, then fully defined with
+// both concrete and abstract parents caused the IDL
+// compiler to crash.
+module fwd_mixed_intf
+{
+  interface mixed_parents;
+  
+  interface concrete_parent {};
+  
+  abstract interface abstract_parent {};
+  
+  interface mixed_parents : concrete_parent, abstract_parent {};
+};
+
