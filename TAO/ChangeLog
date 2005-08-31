@@ -1,3 +1,23 @@
+Wed Aug 31 11:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/IFR_Service/be_global.h:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Client_Request_Interceptor.h:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Request_Interceptor.h:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Server_Request_Interceptor.h:
+          Fixed GCC4 error
+
+        * tao/TypeCode.cpp:
+          Removed this file, it shouldn't be in the archive anymore
+
+        * tao/Environment.i (_nil):
+          Use a static cast instead of a c-style cast
+
+        * tao/Object.{cpp,i} (is_nil):
+          Use true/false instead of 1/0
+
+        * tao/AnyTypeCode/TC_Constants_Forward.h:
+          Added forward declaration of TypeCode
+
 Wed Aug 31 11:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/IFR_Service/IFR_Service.h:
