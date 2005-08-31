@@ -51,7 +51,7 @@ CORBA::BooleanSeq::BooleanSeq (void)
 {}
 
 CORBA::BooleanSeq::BooleanSeq (
-    CORBA::ULong max
+    ::CORBA::ULong max
   )
   : TAO_Unbounded_Sequence<
         CORBA::Boolean
@@ -60,10 +60,10 @@ CORBA::BooleanSeq::BooleanSeq (
 {}
 
 CORBA::BooleanSeq::BooleanSeq (
-    CORBA::ULong max,
-    CORBA::ULong length,
-    CORBA::Boolean * buffer,
-    CORBA::Boolean release
+    ::CORBA::ULong max,
+    ::CORBA::ULong length,
+    ::CORBA::Boolean * buffer,
+    ::CORBA::Boolean release
   )
   : TAO_Unbounded_Sequence<
         CORBA::Boolean
@@ -100,12 +100,12 @@ void CORBA::BooleanSeq::_tao_any_destructor (
 #if !defined _TAO_CDR_OP_CORBA_BooleanSeq_CPP_
 #define _TAO_CDR_OP_CORBA_BooleanSeq_CPP_
 
-CORBA::Boolean operator<< (
+::CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
     const CORBA::BooleanSeq &_tao_sequence
   )
 {
-  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
+  const ::CORBA::ULong _tao_seq_len = _tao_sequence.length ();
   
   if (strm << _tao_seq_len)
     {
@@ -116,12 +116,12 @@ CORBA::Boolean operator<< (
   return false;
 }
 
-CORBA::Boolean operator>> (
+::CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
     CORBA::BooleanSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len;
+  ::CORBA::ULong _tao_seq_len;
   
   if (strm >> _tao_seq_len)
     {

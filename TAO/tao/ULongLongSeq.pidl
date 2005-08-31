@@ -15,7 +15,7 @@
  *          -Wb,export_include=tao/TAO_Export.h
  *          -Wb,anyop_export_macro=TAO_AnyTypeCode_Export
  *          -Wb,anyop_export_include=tao/AnyTypeCode/TAO_AnyTypeCode_Export.h
- *          WStringSeq.pidl
+ *          ULongLongSeq.pidl
  */
 
 #ifndef TAO_CORBA_ULONGLONG_SEQ_IDL

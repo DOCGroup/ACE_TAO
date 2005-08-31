@@ -26,10 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:153
+// be\be_codegen.cpp:154
 
-#ifndef _TAO_IDL_ORIG_CHARSEQC_H_
-#define _TAO_IDL_ORIG_CHARSEQC_H_
+#ifndef _TAO_IDL_CHARSEQC_H_
+#define _TAO_IDL_CHARSEQC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -52,36 +52,27 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_Export
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
-
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:49
 
 namespace CORBA
 {
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_CORBA_CHARSEQ_CH_)
 #define _CORBA_CHARSEQ_CH_
-
+  
   class CharSeq;
-
+  
   typedef
     TAO_FixedSeq_Var_T<
         CharSeq,
         CORBA::Char
       >
     CharSeq_var;
-
+  
   typedef
     TAO_Seq_Out_T<
         CharSeq,
@@ -89,7 +80,7 @@ namespace CORBA
         CORBA::Char
       >
     CharSeq_out;
-
+  
   class TAO_Export CharSeq
     : public
         TAO_Unbounded_Sequence<
@@ -98,25 +89,25 @@ namespace CORBA
   {
   public:
     CharSeq (void);
-    CharSeq (CORBA::ULong max);
+    CharSeq ( ::CORBA::ULong max);
     CharSeq (
-        CORBA::ULong max,
-        CORBA::ULong length,
-        CORBA::Char* buffer,
-        CORBA::Boolean release = 0
+        ::CORBA::ULong max,
+        ::CORBA::ULong length,
+        ::CORBA::Char* buffer, 
+        ::CORBA::Boolean release = 0
       );
     CharSeq (const CharSeq &);
     ~CharSeq (void);
-
+    
     static void _tao_any_destructor (void *);
-
+    
     typedef CharSeq_var _var_type;
   };
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:78
 
 } // module CORBA
 
@@ -134,11 +125,11 @@ namespace TAO
 #if !defined _TAO_CDR_OP_CORBA_CharSeq_H_
 #define _TAO_CDR_OP_CORBA_CharSeq_H_
 
-TAO_Export CORBA::Boolean operator<< (
+TAO_Export ::CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const CORBA::CharSeq &
   );
-TAO_Export CORBA::Boolean operator>> (
+TAO_Export ::CORBA::Boolean operator>> (
     TAO_InputCDR &,
     CORBA::CharSeq &
   );
@@ -146,15 +137,7 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_CORBA_CharSeq_H_ */
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:955
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
+// be\be_codegen.cpp:1040
 
 #include /**/ "ace/post.h"
 
