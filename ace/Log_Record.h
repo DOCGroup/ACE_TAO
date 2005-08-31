@@ -114,10 +114,10 @@ public:
   // = Set/get methods
 
   /// Get the type of the <Log_Record>.
-  long type (void) const;
+  ACE_UINT32 type (void) const;
 
   /// Set the type of the <Log_Record>.
-  void type (long);
+  void type (ACE_UINT32);
 
   /**
    * Get the priority of the <Log_Record> <type_>.  This is computed

@@ -81,7 +81,7 @@ int
 ACE_Log_Msg_UNIX_Syslog::log (ACE_Log_Record &log_record)
 {
   int syslog_priority = this->convert_log_priority (log_record.type ());
-  int flags = ACE_LOG_MSG->flags ();
+  u_long flags = ACE_LOG_MSG->flags ();
 
   // The UNIX syslog() facility does not support multi-line messages.
   // Break up the message data into separate lines and send each line
@@ -89,7 +89,7 @@ ACE_Log_Msg_UNIX_Syslog::log (ACE_Log_Record &log_record)
 
   ACE_TCHAR message[ACE_Log_Record::MAXVERBOSELOGMSGLEN];
   ACE_OS::strcpy (message, log_record.msg_data ());
-  ACE_TCHAR *strtokp;
+  ACE_TCHAR *strtokp = 0;
 
   for (ACE_TCHAR *line = ACE_OS::strtok_r (message,
                                            ACE_LIB_TEXT ("\n"),
@@ -127,7 +127,7 @@ ACE_Log_Msg_UNIX_Syslog::log (ACE_Log_Record &log_record)
 }
 
 int
-ACE_Log_Msg_UNIX_Syslog::convert_log_priority (int lm_priority)
+ACE_Log_Msg_UNIX_Syslog::convert_log_priority (ACE_UINT32 lm_priority)
 {
   int syslog_priority;
   switch (lm_priority)
