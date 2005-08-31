@@ -60,7 +60,7 @@ public:
 
 private:
   /// Convert an ACE_Log_Priority value to the corresponding syslog priority.
-  int convert_log_priority (int lm_priority);
+  int convert_log_priority (ACE_UINT32 lm_priority);
 
   /// Convert an ACE_Log_Priority mask to the corresponding syslog mask value.
   int convert_log_mask (int lm_mask);
