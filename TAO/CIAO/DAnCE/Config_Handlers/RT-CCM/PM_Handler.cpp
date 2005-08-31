@@ -30,7 +30,7 @@ namespace CIAO
         }
       
       if (src.server_priority_p ())
-        dest.server_priority = src.server_priority ();
+        dest.server_priority = static_cast < ACE_INT32 > (src.server_priority ());
       else
         dest.server_priority = 0;
       

@@ -3,6 +3,7 @@
 #include "CB_Handler.h"
 #include "ciao/ServerResourcesC.h"
 #include "CIAOServerResources.hpp"
+#include "ace/Basic_Types.h"
 
 namespace CIAO
 {
@@ -22,8 +23,8 @@ namespace CIAO
            i != src.end_band ();
            ++i)
         {
-          dest.bands[num].low = i->low ();
-          dest.bands[num].high = i->high ();
+          dest.bands[num].low = static_cast <ACE_INT32> ((i->low ()));
+          dest.bands[num].high = static_cast < ACE_INT32 > (i->high ());
         }
       
       if (src.id_p ())
