@@ -32,10 +32,6 @@
 
 #include "tao/corbafwd.h"
 
-// The definitions are included in the same order as they are declared
-// in corbafwd.h
-#include "tao/AnyTypeCode/TypeCode.h"
-
 #include "tao/Environment.h"
 #include "tao/SystemException.h"
 #include "tao/UserException.h"
