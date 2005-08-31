@@ -22,6 +22,12 @@
 
 #include "tao/orbconf.h"
 
+namespace CORBA
+{
+  class TypeCode;
+  typedef TypeCode *TypeCode_ptr;
+}
+
 namespace TAO
 {
   // Function pointer returning a pointer to CORBA::Exception. This is used to

@@ -35,9 +35,6 @@ namespace CORBA
 {
   /// Forward declaration of PolicyList
   class PolicyList;
-
-  class TypeCode;
-  typedef TypeCode *TypeCode_ptr;
 }
 
 /**

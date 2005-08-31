@@ -83,8 +83,6 @@ namespace CORBA
     SYSTEM_EXCEPTION
   };
 
-  extern TAO_Export TypeCode_ptr _tc_exception_type;
-
   /**
    * @class Exception
    *
