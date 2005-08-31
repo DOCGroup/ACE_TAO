@@ -1,3 +1,8 @@
+Wed Aug 31 11:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/IFR_Service/IFR_Service.h:
+          Fixed GCC4 error
+
 Wed Aug 31 10:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/WStringSeq.pidl:
