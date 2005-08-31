@@ -2,7 +2,6 @@
 //
 // $Id$
 
-#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/Environment.h"
 
 ACE_INLINE CORBA::Boolean
@@ -157,16 +156,3 @@ CORBA::TypeCode::_tao_any_destructor (void * x)
   CORBA::release (static_cast <CORBA::TypeCode_ptr> (x));
 }
 
-// --------------------------------------------------------------
-
-ACE_INLINE CORBA::TCKind
-TAO::unaliased_kind (CORBA::TypeCode_ptr tc
-                     ACE_ENV_ARG_DECL)
-{
-  CORBA::TypeCode_var unaliased_tc =
-    TAO::unaliased_typecode (tc
-                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::TAO_TC_KIND_COUNT);
-
-  return unaliased_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-}
