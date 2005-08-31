@@ -1,0 +1,11 @@
+// $Id$
+
+#include <Components.idl>
+
+module DiffServ
+{
+  interface test
+  {
+    oneway void method ();
+  };
+};
