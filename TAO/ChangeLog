@@ -1,3 +1,13 @@
+Wed Aug 31 10:53:06 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_typecode/struct_typecode.cpp:
+	* TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:
+	* TAO_IDL/be/be_visitor_typecode/value_typecode.cpp:
+
+	  Fixed false positive recursion detection by using Jeff's existing
+	  type-specific in_recursion() method.  Thanks to Jeff for
+	  explaining how to use that method.
+
 Wed Aug 31 13:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/TypeCode.h:

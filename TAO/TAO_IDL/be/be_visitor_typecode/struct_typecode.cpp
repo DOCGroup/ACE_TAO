@@ -34,7 +34,9 @@ TAO::be_visitor_struct_typecode::visit_structure (be_structure * node)
   be_visitor_typecode_defn::QNode const * const qnode =
     this->queue_lookup (this->tc_queue_, node);
 
-  if (qnode)
+  ACE_Unbounded_Queue<AST_Type *> recursion_queue;
+  if (qnode
+      && node->in_recursion (recursion_queue))
     {
       this->is_recursive_ = true;
 
