@@ -3,6 +3,13 @@ Wed Aug 31 11:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
         * orbsvcs/IFR_Service/IFR_Service.h:
           Fixed GCC4 error
 
+        * tao/ULongSeq.pidl:
+          Updated regeneration instructions
+
+        * tao/ULongSeqC.{h,cpp}:
+        * tao/AnyTypeCode/ULongSeqA.{h,cpp}:
+          Regenerated without patching.
+
 Wed Aug 31 10:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/WStringSeq.pidl:
