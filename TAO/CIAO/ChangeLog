@@ -1,3 +1,9 @@
+Wed Aug 31 09:49:28 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/Config_Handlers/XMLSchema/TypeInfo.tpp
+
+	Workaround for a buggy Borland compiler.
+
 Tue Aug 30 14:33:08 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/Config_Handlers/Basic_Deployment_Data.hpp
