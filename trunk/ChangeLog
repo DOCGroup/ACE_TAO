@@ -1,3 +1,8 @@
+Wed Aug 31 14:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/DLL_Manager.cpp:
+          Initialize pointer to zero
+
 Wed Aug 31 14:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/MEM_Stream.{h,inl}:
