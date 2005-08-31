@@ -549,7 +549,6 @@ namespace TAO
    *       on the unaliased @c TypeCode returned from
    *       @c unaliased_typecode().
    */
-  TAO_NAMESPACE_INLINE_FUNCTION
   CORBA::TCKind unaliased_kind (CORBA::TypeCode_ptr tc
                                 ACE_ENV_ARG_DECL);
 
