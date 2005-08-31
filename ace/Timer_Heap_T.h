@@ -251,13 +251,13 @@ private:
    * timer id returned from this method will never == -1 to avoid
    * conflicts with other failure return values.
    */
-  int timer_id (void);
+  long timer_id (void);
 
   /// Pops and returns a new timer id from the freelist.
-  int pop_freelist (void);
+  long pop_freelist (void);
 
   /// Pushes <old_id> onto the freelist.
-  void push_freelist (int old_id);
+  void push_freelist (long old_id);
 
   /// Maximum size of the heap.
   size_t max_size_;

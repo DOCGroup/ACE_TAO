@@ -208,7 +208,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::~ACE_Timer_Heap_T (void)
     }
 }
 
-template <class TYPE, class FUNCTOR, class ACE_LOCK> int
+template <class TYPE, class FUNCTOR, class ACE_LOCK> long
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::pop_freelist (void)
 {
   ACE_TRACE ("ACE_Timer_Heap_T::pop_freelist");
@@ -237,13 +237,11 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::pop_freelist (void)
       this->timer_ids_min_free_ = this->max_size_;
     }
 
-  // We need to truncate this to <int> for backwards compatibility.
-  int new_id = static_cast<int> (this->timer_ids_curr_);
-  return new_id;
+  return this->timer_ids_curr_;
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> void
-ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::push_freelist (int old_id)
+ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::push_freelist (long old_id)
 {
   ACE_TRACE ("ACE_Timer_Heap_T::push_freelist");
 
@@ -266,7 +264,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::push_freelist (int old_id)
   return;
 }
 
-template <class TYPE, class FUNCTOR, class ACE_LOCK> int
+template <class TYPE, class FUNCTOR, class ACE_LOCK> long
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::timer_id (void)
 {
   ACE_TRACE ("ACE_Timer_Heap_T::timer_id");
