@@ -13,9 +13,9 @@
 
 
 #include "data.h"
-#include "ace/Log_Msg.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/PortableServer/PortableServer.h"
+#include "ace/Log_Msg.h"
 
 Data::Data (CORBA::ORB_var orb)
   : m_bool1 (1),                                m_bool2 (0),

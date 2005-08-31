@@ -49,7 +49,7 @@ CORBA::is_nil (CORBA::Object_ptr obj)
 {
   if (obj == 0)
     {
-      return 1;
+      return true;
     }
 
   return CORBA::Object::is_nil_i (obj);

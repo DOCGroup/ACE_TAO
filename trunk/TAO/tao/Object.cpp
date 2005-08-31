@@ -335,7 +335,7 @@ CORBA::Object::is_nil_i (CORBA::Object_ptr obj)
   // null-object.
   if ((!obj->is_evaluated ()) &&
       obj->ior ().profiles.length () == 0)
-  return 1;
+  return true;
 
   // To accomodate new definitions.
   if (obj->orb_core_)
@@ -343,7 +343,7 @@ CORBA::Object::is_nil_i (CORBA::Object_ptr obj)
       return obj->orb_core_->object_is_nil (obj);
     }
 
-  return 0;
+  return false;
 }
 
 

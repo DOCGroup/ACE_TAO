@@ -6,14 +6,14 @@
 #define TAO_INTERCEPTORS_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableInterceptorC.h"
+#include "tao/PI/PI.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PI/PI.h"
 #include "tao/PI_Server/PI_Server.h"
+#include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)
