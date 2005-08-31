@@ -41,7 +41,7 @@ public:
   /// Recv an open FD from another process.
   int recv_handle (ACE_HANDLE &handles,
                    char *pbuf = 0,
-                   int *len = 0) const;
+                   ssize_t *len = 0) const;
 #endif /* ACE_HAS_MSG */
 
   /// Dump the state of an object.

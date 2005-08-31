@@ -72,7 +72,7 @@ ACE_LSOCK::send_handle (const ACE_HANDLE handle) const
 // message that does not have file descriptor in it, and 1 otherwise.
 
 int
-ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, int *len) const
+ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, ssize_t *len) const
 {
   ACE_TRACE ("ACE_LSOCK::recv_handle");
   u_char a[2];

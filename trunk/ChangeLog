@@ -1,3 +1,9 @@
+Wed Aug 31 10:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg_UNIX_Syslog.{h,cpp}:
+        * ace/Log_Record.{h,inl}:
+          Fixed 64bit conversion problems
+
 Wed Aug 31 10:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Timer_Heap_T.{h,cpp}:
