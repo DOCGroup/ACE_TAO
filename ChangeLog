@@ -1,3 +1,8 @@
+Wed Aug 31 10:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Get_Opt.cpp:
+          Fixed 64bit conversion warning
+
 Wed Aug 31 10:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/LSOCK.{h,cpp} (recv_handle):
