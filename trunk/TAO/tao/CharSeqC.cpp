@@ -26,15 +26,11 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:291
+// be\be_codegen.cpp:277
 
 
 #include "CharSeqC.h"
 #include "tao/CDR.h"
-
-#if defined (__BORLANDC__)
-#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
-#endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
@@ -55,7 +51,7 @@ CORBA::CharSeq::CharSeq (void)
 {}
 
 CORBA::CharSeq::CharSeq (
-    CORBA::ULong max
+    ::CORBA::ULong max
   )
   : TAO_Unbounded_Sequence<
         CORBA::Char
@@ -64,10 +60,10 @@ CORBA::CharSeq::CharSeq (
 {}
 
 CORBA::CharSeq::CharSeq (
-    CORBA::ULong max,
-    CORBA::ULong length,
-    CORBA::Char * buffer,
-    CORBA::Boolean release
+    ::CORBA::ULong max,
+    ::CORBA::ULong length,
+    ::CORBA::Char * buffer,
+    ::CORBA::Boolean release
   )
   : TAO_Unbounded_Sequence<
         CORBA::Char
@@ -104,12 +100,12 @@ void CORBA::CharSeq::_tao_any_destructor (
 #if !defined _TAO_CDR_OP_CORBA_CharSeq_CPP_
 #define _TAO_CDR_OP_CORBA_CharSeq_CPP_
 
-CORBA::Boolean operator<< (
+::CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
     const CORBA::CharSeq &_tao_sequence
   )
 {
-  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
+  const ::CORBA::ULong _tao_seq_len = _tao_sequence.length ();
   
   if (strm << _tao_seq_len)
     {
@@ -120,12 +116,12 @@ CORBA::Boolean operator<< (
   return false;
 }
 
-CORBA::Boolean operator>> (
+::CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
     CORBA::CharSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len;
+  ::CORBA::ULong _tao_seq_len;
   
   if (strm >> _tao_seq_len)
     {
