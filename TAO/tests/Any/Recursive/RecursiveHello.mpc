@@ -10,8 +10,10 @@ project(*Server): taoserver, valuetype {
 }
 
 project(*Client): taoclient, valuetype, typecodefactory, ifr_client {
+
   Source_Files {
     TestC.cpp
+    NonRecursiveC.cpp
     client.cpp
   }
 }
