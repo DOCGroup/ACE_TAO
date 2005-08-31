@@ -2,15 +2,15 @@
 
 #include "Gateway_i.h"
 
+#include "tao/AnyTypeCode/Any.h"
+#include "tao/AnyTypeCode/NVList.h"
+#include "tao/AnyTypeCode/ExceptionA.h"
+
 #include "tao/IFR_Client/IFR_BasicC.h"
 
 #include "tao/DynamicInterface/Server_Request.h"
 #include "tao/DynamicInterface/Request.h"
 #include "tao/DynamicInterface/Unknown_User_Exception.h"
-
-#include "tao/AnyTypeCode/Any.h"
-#include "tao/AnyTypeCode/NVList.h"
-#include "tao/AnyTypeCode/ExceptionA.h"
 
 #include "tao/ORB.h"
 #include "tao/LocalObject.h"
