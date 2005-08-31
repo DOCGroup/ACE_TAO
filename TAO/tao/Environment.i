@@ -39,6 +39,6 @@ ACE_INLINE
 CORBA::Environment_ptr
 CORBA::Environment::_nil (void)
 {
-  return (CORBA::Environment_ptr) 0;
+  return static_cast <CORBA::Environment_ptr> (0);
 }
 
