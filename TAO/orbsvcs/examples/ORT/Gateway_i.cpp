@@ -7,11 +7,12 @@
 #include "tao/DynamicInterface/Unknown_User_Exception.h"
 #include "tao/IFR_Client/IFR_BasicC.h"
 
-#include "tao/ORB.h"
-#include "tao/LocalObject.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/NVList.h"
 #include "tao/AnyTypeCode/ExceptionA.h"
+
+#include "tao/ORB.h"
+#include "tao/LocalObject.h"
 
 ACE_RCSID (ORT,
            Gateway_i,
