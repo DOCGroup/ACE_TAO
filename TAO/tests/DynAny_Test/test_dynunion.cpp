@@ -11,9 +11,9 @@
 //=============================================================================
 
 #include "test_dynunion.h"
-#include "da_testsC.h"
 #include "data.h"
 #include "analyzer.h"
+#include "da_testsC.h"
 #include "tao/DynamicAny/DynamicAny.h"
 #include "ace/OS_NS_string.h"
 
