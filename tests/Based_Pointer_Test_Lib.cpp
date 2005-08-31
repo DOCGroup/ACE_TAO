@@ -22,10 +22,7 @@
 
 ACE_RCSID (tests,
            Based_Pointer_Repository_DLL_Test,
-           "$Id$");
-
-
-
+           "$Id$")
 
 extern "C" ACE_Svc_Export void *
 get_based_pointer_repository_instance (void)
