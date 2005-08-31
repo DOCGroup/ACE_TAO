@@ -1,3 +1,59 @@
+Wed Aug 31 13:28:46 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/Config_Handlers/ADD_Handler.cpp
+	* DAnCE/Config_Handlers/ADD_Handler.h
+	* DAnCE/Config_Handlers/IDD_Handler.cpp
+	* DAnCE/Config_Handlers/IDD_Handler.h
+	* DAnCE/Config_Handlers/IDREF_Base.cpp
+	* DAnCE/Config_Handlers/IDREF_Base.h
+	* DAnCE/Config_Handlers/MDD_Handler.cpp
+	* DAnCE/Config_Handlers/MDD_Handler.h
+	* DAnCE/Config_Handlers/STD_CID_Handler.cpp
+	* DAnCE/Config_Handlers/STD_CID_Handler.h
+
+	Simple refactoring to make the IDREF interface more generic. 
+	
+	* DAnCE/Config_Handlers/XML_Helper.cpp
+	* DAnCE/Config_Handlers/XML_Helper.h
+
+	Made empty document creation more generic. 
+	
+	* DAnCE/Config_Handlers/RT-CCM/CB_Handler.cpp
+	* DAnCE/Config_Handlers/RT-CCM/CB_Handler.h
+	* DAnCE/Config_Handlers/RT-CCM/CIAOServerResources.cpp
+	* DAnCE/Config_Handlers/RT-CCM/CIAOServerResources.hpp
+	* DAnCE/Config_Handlers/RT-CCM/CLA_Handler.cpp
+	* DAnCE/Config_Handlers/RT-CCM/CLA_Handler.h
+	* DAnCE/Config_Handlers/RT-CCM/OC_Handler.cpp
+	* DAnCE/Config_Handlers/RT-CCM/OC_Handler.h
+	* DAnCE/Config_Handlers/RT-CCM/OR_Handler.cpp
+	* DAnCE/Config_Handlers/RT-CCM/OR_Handler.h
+	* DAnCE/Config_Handlers/RT-CCM/PM_Handler.cpp
+	* DAnCE/Config_Handlers/RT-CCM/PM_Handler.h
+	* DAnCE/Config_Handlers/RT-CCM/PS_Handler.cpp
+	* DAnCE/Config_Handlers/RT-CCM/PS_Handler.h
+	* DAnCE/Config_Handlers/RT-CCM/RT-CCM-Handlers.mpc
+	* DAnCE/Config_Handlers/RT-CCM/SRD_Handler.cpp
+	* DAnCE/Config_Handlers/RT-CCM/SRD_Handler.h
+	* DAnCE/Config_Handlers/RT-CCM/TPL_Handler.cpp
+	* DAnCE/Config_Handlers/RT-CCM/TPL_Handler.h
+	* DAnCE/Config_Handlers/RT-CCM/TP_Handler.cpp
+	* DAnCE/Config_Handlers/RT-CCM/TP_Handler.h
+	* DAnCE/Config_Handlers/RT-CCM/input.csr
+	* DAnCE/Config_Handlers/RT-CCM/test.cpp
+
+	The new RT-CCM handlers.  These have yet to be integrated into the
+	main config_handler path. 
+	
+	* DAnCE/ciao/CCM_Core.mpc
+	* DAnCE/ciao/ServerResources.idl
+
+	Updates to the support the RT-CCM Handlers. 
+	
+	* docs/schema/CIAOServerResources.xsd
+
+	Corrected a few oversights. 
+	
 Wed Aug 31 09:49:28 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/Config_Handlers/XMLSchema/TypeInfo.tpp

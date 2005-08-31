@@ -56,7 +56,7 @@ namespace CIAO
       static MonolithicDeploymentDescription mono_deployment_description(
 	  const Deployment::MonolithicDeploymentDescription &src);
 
-      static IDREF_Base IDREF;
+      static IDREF_Base<CORBA::ULong> IDREF;
       
     private:
       static bool mono_deployment_description (

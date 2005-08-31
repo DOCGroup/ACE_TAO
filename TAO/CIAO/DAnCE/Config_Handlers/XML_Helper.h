@@ -47,7 +47,11 @@ namespace CIAO
       /// Create a DOM tree
       XERCES_CPP_NAMESPACE::DOMDocument *
       create_dom (const ACE_TCHAR *uri);
-
+      
+      XERCES_CPP_NAMESPACE::DOMDocument *
+      create_dom (const ACE_TCHAR *root,
+                  const ACE_TCHAR *ns);
+      
       //Writes out a DOMDocument to an XML file
       bool write_DOM (XERCES_CPP_NAMESPACE::DOMDocument *doc,
 		      ACE_TCHAR *file);

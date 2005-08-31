@@ -56,7 +56,7 @@ namespace CIAO
       static InstanceDeploymentDescription instance_deployment_descr (
 	  const Deployment::InstanceDeploymentDescription &src);
       
-      static IDREF_Base IDREF;
+      static IDREF_Base<CORBA::ULong> IDREF;
 
     private:
       static bool instance_deployment_descr (

@@ -82,6 +82,18 @@ namespace CIAO
       this->initialized_ = true;
       return;
     }
+    
+    XERCES_CPP_NAMESPACE::DOMDocument *
+    XML_Helper::create_dom (const ACE_TCHAR *root,
+                            const ACE_TCHAR *ns)
+    {
+      if (root == 0 || ns == 0)
+        return 0;
+      
+      return this->impl_->createDocument (XStr (ns),
+                                          XStr (root),
+                                          0);
+    }
 
     XERCES_CPP_NAMESPACE::DOMDocument *
     XML_Helper::create_dom (const ACE_TCHAR *url)
@@ -202,6 +214,11 @@ namespace CIAO
       {
 	  bool retn;
 	  XERCES_CPP_NAMESPACE::DOMWriter *writer = impl_->createDOMWriter();
+          
+          if (writer->canSetFeature (XMLUni::fgDOMWRTFormatPrettyPrint,
+                                      true))
+            writer->setFeature (XMLUni::fgDOMWRTFormatPrettyPrint, true);
+          
 	  xercesc::XMLFormatTarget* ft (new xercesc::LocalFileFormatTarget(file));
 	  retn = writer->writeNode(ft, *doc);
 	  delete writer;

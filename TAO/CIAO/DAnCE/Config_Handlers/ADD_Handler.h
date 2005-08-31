@@ -58,7 +58,7 @@ namespace CIAO
 	      const Deployment::ArtifactDeploymentDescription &src);
 
       ///  The IDREF Table associated with this class
-      static IDREF_Base IDREF;
+      static IDREF_Base<CORBA::ULong> IDREF;
       
     private:
       static bool artifact_deployment_descr (

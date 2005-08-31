@@ -12,7 +12,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    IDREF_Base STD_CID_Handler::IDREF;
+    IDREF_Base<CORBA::ULong> STD_CID_Handler::IDREF;
 
     bool
     STD_CID_Handler::component_impl_descr (
