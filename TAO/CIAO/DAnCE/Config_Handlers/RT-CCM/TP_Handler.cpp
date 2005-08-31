@@ -15,19 +15,19 @@ namespace CIAO
 	{
           dest.Id = CORBA::String_var (src.id().c_str ());
 	    
-          dest.stacksize = src.stacksize();
+          dest.stacksize = static_cast <ACE_UINT64> (src.stacksize());
 	    
-          dest.static_threads = src.static_threads();
+          dest.static_threads = static_cast <ACE_UINT64> (src.static_threads());
 	    
-          dest.dynamic_threads = src.dynamic_threads();
+          dest.dynamic_threads = static_cast <ACE_UINT64> (src.dynamic_threads());
           
-          dest.default_priority = src.default_priority ();
+          dest.default_priority = static_cast <ACE_INT32> (src.default_priority ());
                       
           dest.allow_request_buffering = src.allow_request_buffering();
 	    
-          dest.max_buffered_requests = src.max_buffered_requests ();
+          dest.max_buffered_requests = static_cast <ACE_UINT64> (src.max_buffered_requests ());
 	    
-          dest.max_request_buffer_size = src.max_request_buffered_size();
+          dest.max_request_buffer_size = static_cast <ACE_UINT64> (src.max_request_buffered_size());
           
           return true;
 	}

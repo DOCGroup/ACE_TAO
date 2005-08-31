@@ -22,20 +22,20 @@ namespace CIAO
 
 		dest.threadpool_lanes.length(len+1);
                 
-                dest.threadpool_lanes[len].lane_priority = loc->priority ();
+    dest.threadpool_lanes[len].lane_priority = static_cast <ACE_INT32> (loc->priority ());
 
-		dest.threadpool_lanes[len].static_threads = CORBA::ULong (loc->static_threads ());
+		dest.threadpool_lanes[len].static_threads = static_cast <ACE_UINT64> (loc->static_threads ());
 
-		dest.threadpool_lanes[len].dynamic_threads = loc->dynamic_threads ();
+		dest.threadpool_lanes[len].dynamic_threads = static_cast <ACE_UINT64> (loc->dynamic_threads ());
 	    }
 
             dest.allow_borrowing = src.allow_borrowing();
 	    
             dest.allow_request_buffering = src.allow_request_buffering();
 
-            dest.max_buffered_requests = src.max_buffered_requests();
+            dest.max_buffered_requests = static_cast <ACE_UINT64> (src.max_buffered_requests());
 
-            dest.max_request_buffer_size = src.max_request_buffered_size();
+            dest.max_request_buffer_size = static_cast <ACE_UINT64> (src.max_request_buffered_size());
             
             return true;
 	}
