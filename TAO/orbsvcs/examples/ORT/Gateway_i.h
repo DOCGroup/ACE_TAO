@@ -17,10 +17,10 @@
 #ifndef GATEWAY_I_H
 #define GATEWAY_I_H
 
-#include "tao/DynamicInterface/DII_CORBA_methods.h"
-#include "tao/PortableServer/PortableServer.h"
-#include "tao/DynamicInterface/Dynamic_Implementation.h"
 #include "tao/IFR_Client/IFR_Client_Adapter_Impl.h"
+#include "tao/PortableServer/PortableServer.h"
+#include "tao/DynamicInterface/DII_CORBA_methods.h"
+#include "tao/DynamicInterface/Dynamic_Implementation.h"
 
 class Gateway_i
   : public virtual PortableServer::DynamicImplementation
