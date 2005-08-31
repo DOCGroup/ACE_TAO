@@ -12,9 +12,9 @@
 //=============================================================================
 
 
+#include "tao/AnyTypeCode/TC_Constants_Forward.h"
 #include "tao/ORB.h"
 #include "tao/Object.h"
-#include "tao/AnyTypeCode/TC_Constants_Forward.h"
 
 class Data
 {
