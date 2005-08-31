@@ -38,18 +38,18 @@ ACE_Log_Record::decode (void)
   this->length_ = ntohl (this->length_);
 }
 
-ACE_INLINE long
+ACE_INLINE ACE_UINT32
 ACE_Log_Record::type (void) const
 {
   ACE_TRACE ("ACE_Log_Record::type");
-  return (long) this->type_;
+  return this->type_;
 }
 
 ACE_INLINE void
-ACE_Log_Record::type (long t)
+ACE_Log_Record::type (ACE_UINT32 t)
 {
   ACE_TRACE ("ACE_Log_Record::type");
-  this->type_ = (ACE_UINT32) t;
+  this->type_ = t;
 }
 
 ACE_INLINE long
