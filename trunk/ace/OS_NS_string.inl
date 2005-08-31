@@ -35,7 +35,40 @@ ACE_OS::memcmp (const void *t, const void *s, size_t len)
 ACE_INLINE void *
 ACE_OS::memcpy (void *t, const void *s, size_t len)
 {
+
+/*
+ * If it is determined that unrolling the memcpy loop
+ * is faster than using ::memcpy then use it. This 
+ * feature is test/set via autoconf.
+ */
+#if defined (ACE_HAS_MEMCPY_LOOP_UNROLL)
+  unsigned char*   to = static_cast<unsigned char*> (t) ;
+  const unsigned char* from = static_cast<const unsigned char*> (s) ;
+  // Unroll the loop...
+  switch (len)
+  {
+  case 16: to[15] = from[15];
+  case 15: to[14] = from[14];
+  case 14: to[13] = from[13];
+  case 13: to[12] = from[12];
+  case 12: to[11] = from[11];
+  case 11: to[10] = from[10];
+  case 10: to[9] = from[9];
+  case  9: to[8] = from[8];
+  case  8: to[7] = from[7];
+  case  7: to[6] = from[6];
+  case  6: to[5] = from[5];
+  case  5: to[4] = from[4];
+  case  4: to[3] = from[3];
+  case  3: to[2] = from[2];
+  case  2: to[1] = from[1];
+  case  1: to[0] = from[0];
+  case  0: return t;
+  default: return ::memcpy (t, s, len);
+  }
+#else 
   return ::memcpy (t, s, len);
+#endif /* ACE_HAS_MEMCPY_LOOP_UNROLL */
 }
 
 ACE_INLINE void *

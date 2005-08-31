@@ -1,3 +1,14 @@
+Wed Aug 31 08:48:19 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * configure.ac:
+          Added a test to see if memcpy unrolling improves performance as
+          opposted to a vanilla memcpy. This optimization is thanks to
+          Mike Martinez martinez_m at oci dot com.
+
+        * OS_NS_string.inl:
+          Updated ACE_OS::memcpy to use the corresponding loop unrolling
+          based on a flag set by configure.
+
 Wed Aug 31 10:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Get_Opt.cpp:
