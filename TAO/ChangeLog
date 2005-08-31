@@ -1,3 +1,23 @@
+Wed Aug 31 21:19:41 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        
+          Removed some unnecessary code.
+          
+        * TAO_IDL/be/be_interface.cpp (redefine):
+        
+          Changed the method to handle the use case where an interface
+          with one or more abstract parents has been forward declared,
+          then fully defined. The IDL compiler maintains an internal
+          queue of interfaces with mixed (abstract and concrete)
+          parentage, in order to generate overloads of CORBA::release()
+          and CORBA::is_nil(). The process of full definition after
+          forward declaration ends up deleting the node that has
+          been put in the queue (just after redefine() returns), so
+          we now update the queue inside the redefine() method. Thanks
+          to Paul Friberg <p.friberg@isti.com> for providing the
+          sample IDL that uncovered the bug.
+
 Wed Aug 31 18:24:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * docs/Options.html:
