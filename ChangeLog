@@ -20,7 +20,7 @@ Wed Aug 31 10:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ace/Timer_Heap_T.{h,cpp}:
           Fixed 64bit conversion problems
 
-﻿Wed Aug 31 07:39:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+Wed Aug 31 07:39:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/Sock_Connect.cpp:
           Fixed WChar problem.
