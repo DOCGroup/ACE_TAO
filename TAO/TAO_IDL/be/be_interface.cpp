@@ -450,6 +450,31 @@ be_interface::redefine (AST_Interface *from)
 {
   be_interface *bi = be_interface::narrow_from_decl (from);
   this->var_out_seq_decls_gen_ = bi->var_out_seq_decls_gen_;
+  this->has_mixed_parentage_ = bi->has_mixed_parentage_;
+  
+  if (bi->has_mixed_parentage_)
+    {
+      ACE_Unbounded_Queue<be_interface *> &q =
+        be_global->mixed_parentage_interfaces;
+      size_t slot = 0;
+      be_interface **t = 0;
+     
+      // The queue of interfaces with mixed parentage must
+      // replace each interface that has been forward
+      // declared, since the pointer existing in the queue
+      // will be deleted after redefine() returns. 
+      for (size_t slot = 0; slot < q.size (); ++slot)
+        {
+          (void) q.get (t, slot);
+          
+          if (*t == bi)
+            {
+              (void) q.set (this, slot);
+              break;
+            }
+        } 
+    }
+    
   AST_Interface::redefine (from);
 }
 
@@ -1307,7 +1332,7 @@ be_interface::analyze_parentage (void)
                           || nt == AST_Decl::NT_component
                           || nt == AST_Decl::NT_home;
 
-  if (this->has_mixed_parentage_ == 1 && can_be_mixed)
+  if (this->has_mixed_parentage_ == 1 && can_be_mixed && this->is_defined ())
     {
       be_global->mixed_parentage_interfaces.enqueue_tail (this);
     }

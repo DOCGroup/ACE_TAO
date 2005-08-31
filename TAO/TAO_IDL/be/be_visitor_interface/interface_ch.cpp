@@ -229,11 +229,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << "));" << be_uidt_nl << be_nl;
     }
 
-  if (! node->is_abstract ())
-    {
-      node->analyze_parentage ();
-    }
-
   // If we inherit from both CORBA::Object and CORBA::AbstractBase,
   // we have to override _add_ref() to avoid ambiguity.
   if (node->has_mixed_parentage ())
