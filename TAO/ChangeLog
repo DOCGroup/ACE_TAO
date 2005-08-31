@@ -1,3 +1,10 @@
+Wed Aug 31 12:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/TypeCode.{h,cpp,inl}:
+          Moved unaliased_kind to the cpp file, it uses a TypeCode_var
+          which requires again the TypeCode_methods which causes issues
+          with GCC4
+
 Wed Aug 31 12:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/corba.h:
