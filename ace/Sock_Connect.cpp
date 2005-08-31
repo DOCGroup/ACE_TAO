@@ -1248,7 +1248,7 @@ ACE::get_ip_interfaces (size_t &count,
   hints.ai_flags = AI_NUMERICHOST;
   hints.ai_family = AF_INET6;
 
-  if ((fp = ACE_OS::fopen ("/proc/net/if_inet6", "r")) != NULL)
+  if ((fp = ACE_OS::fopen (ACE_LIB_TEXT ("/proc/net/if_inet6"), ACE_LIB_TEXT ("r"))) != NULL)
     {
       while (fscanf (fp,
                      "%4s%4s%4s%4s%4s%4s%4s%4s %02x %*02x %*02x %*02x %*8s\n",
@@ -1258,8 +1258,9 @@ ACE::get_ip_interfaces (size_t &count,
           // Format the address intoa proper IPv6 decimal address specification and
           // resolve the resulting text using getaddrinfo().
 
+          const char* ip_fmt = "%s:%s:%s:%s:%s:%s:%s:%s%%%d";
           ACE_OS::sprintf (s_ipaddr,
-                           "%s:%s:%s:%s:%s:%s:%s:%s%%%d",
+                           ip_fmt,
                            s_addr[0], s_addr[1], s_addr[2], s_addr[3],
                            s_addr[4], s_addr[5], s_addr[6], s_addr[7], scopeid);
 
@@ -1452,7 +1453,7 @@ ACE::count_interfaces (ACE_HANDLE handle, size_t &how_many)
 # if defined (ACE_HAS_IPV6)
   FILE* fp;
 
-  if ((fp = ACE_OS::fopen ("/proc/net/if_inet6", "r")) != NULL)
+  if ((fp = ACE_OS::fopen (ACE_LIB_TEXT ("/proc/net/if_inet6"), ACE_LIB_TEXT ("r"))) != NULL)
     {
       // Scan the lines according to the expected format but don't really read any input
       while (fscanf (fp, "%*32s %*02x %*02x %*02x %*02x %*8s\n") != EOF)
