@@ -1,3 +1,8 @@
+Wed Aug 31 09:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tao/IORInterceptor/IORInterceptor_Adapter_Impl.h:
+	  Reordered includes to fix vc71 link warnings
+
 Tue Aug 30 17:05:11 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:
