@@ -662,8 +662,8 @@ listen endpoints should be encoded into IORs when <code>-ORBUseIMR</code>
 is set. The default is true. </td>
       </tr>
       <tr>
-        <td><code>-ORBUseSharedProfiles</code> <em>boolean (0|1)</em></td>
-        <td><a name="-ORBUseSharedProfiles"></a>
+        <td><code>-ORBUseSharedProfile</code> <em>boolean (0|1)</em></td>
+        <td><a name="-ORBUseSharedProfile"></a>
           This option allows multiple implicit or explicit endpoints to be
           combined into a single profile for a given protocol rather than using
           multiple profiles. For IIOP in non RTCORBA environments, the CORBA
@@ -671,7 +671,7 @@ is set. The default is true. </td>
           used to encode the combined endpoints. Processses using RTCORBA and
           priority banded connections will continue to generate Profiles with
           <code>TAO_TAG_IIOP_ENDPOINT</code> components.
-          This options is enabled by default.
+          This options is disabled by default.
         </td>
       </tr>
       <tr>
