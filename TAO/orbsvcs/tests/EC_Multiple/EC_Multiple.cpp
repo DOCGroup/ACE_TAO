@@ -1476,11 +1476,10 @@ Test_Supplier::push (const RtecEventComm::EventSet& events
 
       if (this->message_count_ < 0)
         {
-          //this->supplier_proxy_->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
-          //if (ACE_ENV_SINGLE_ARG_PARAMETER.exception () != 0) return;
           this->test_->shutdown_supplier (this->cookie_,
                                           this->consumer_proxy_.in ()
                                           ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
         }
       if (this->message_count_ % 2 == 0)
         {

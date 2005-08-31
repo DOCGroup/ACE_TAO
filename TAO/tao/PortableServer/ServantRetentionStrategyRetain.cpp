@@ -49,8 +49,8 @@ namespace TAO
                                                !poa->allow_multiple_activations (),
                                                poa->is_persistent (),
                                                poa->orb_core().server_factory ()->active_object_map_creation_parameters ()
-                                               ACE_ENV_ARG_PARAMETER),
-                    CORBA::NO_MEMORY ());
+                                               ACE_ENV_ARG_PARAMETER), CORBA::NO_MEMORY ());
+      ACE_CHECK;
 
       // Give ownership of the new map to the auto pointer.  Note, that it
       // is important for the auto pointer to take ownership before

@@ -38,6 +38,7 @@ TAO_RT_Endpoint_Utils::policy (TAO_Cached_Policy_Type type,
           p->length (1);
           (*p)[0u] = rt_stub->TAO_Stub::get_cached_policy (type
                                                            ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
         }
 
       ACE_RE_THROW;

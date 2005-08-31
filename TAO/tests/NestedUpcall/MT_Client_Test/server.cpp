@@ -109,11 +109,13 @@ MT_Object_Server::init (int argc,
 int
 MT_Object_Server::run (ACE_ENV_SINGLE_ARG_DECL)
 {
-  if (this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER) == -1)
+  int result = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "NestedUpCalls_Server::run"),
                       -1);
-  ACE_CHECK_RETURN (-1);
   return 0;
 }
 

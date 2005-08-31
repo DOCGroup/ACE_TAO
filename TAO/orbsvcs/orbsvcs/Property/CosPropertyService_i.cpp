@@ -133,8 +133,7 @@ TAO_PropertySetFactory::create_constrained_propertyset (const CosPropertyService
       ACE_NEW_RETURN (new_set,
                       TAO_PropertySet (allowed_property_types,
                                        allowed_properties
-                                       ACE_ENV_ARG_PARAMETER),
-                      0);
+                                       ACE_ENV_ARG_PARAMETER), 0);
       ACE_TRY_CHECK;
 
       // Successful, store this in the products sequence.
@@ -185,8 +184,7 @@ TAO_PropertySetFactory::create_initial_propertyset (const CosPropertyService::Pr
       // New a TAO_PropertySet.
       ACE_NEW_RETURN (new_set,
                       TAO_PropertySet (initial_properties
-                                       ACE_ENV_ARG_PARAMETER),
-                      0);
+                                       ACE_ENV_ARG_PARAMETER), 0);
       ACE_TRY_CHECK;
 
       // Successful, store this in the products sequence.
@@ -278,8 +276,7 @@ TAO_PropertySetDefFactory::create_constrained_propertysetdef (const CosPropertyS
       ACE_NEW_RETURN (new_set,
                       TAO_PropertySetDef (allowed_property_types,
                                           allowed_property_defs
-                                          ACE_ENV_ARG_PARAMETER),
-                      0);
+                                          ACE_ENV_ARG_PARAMETER), 0);
       ACE_TRY_CHECK;
 
       // Successful, store this in the products sequence.
@@ -330,8 +327,7 @@ TAO_PropertySetDefFactory::create_initial_propertysetdef (const CosPropertyServi
       // New a TAO_PropertySet using these lengths.
       ACE_NEW_RETURN (new_set,
                       TAO_PropertySetDef (initial_property_defs
-                                          ACE_ENV_ARG_PARAMETER),
-                      0);
+                                          ACE_ENV_ARG_PARAMETER), 0);
       ACE_TRY_CHECK;
 
       // Successful, store this in the products sequence.

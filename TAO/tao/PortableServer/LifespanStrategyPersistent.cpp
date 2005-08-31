@@ -123,6 +123,7 @@ namespace TAO
       if (adapter != 0)
         {
           adapter->imr_notify_shutdown (this->poa_ ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
         }
     }
 
