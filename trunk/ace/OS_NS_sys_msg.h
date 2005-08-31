@@ -46,11 +46,11 @@ namespace ACE_OS {
               int msgflg);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int msgrcv (int int_id,
-              void *buf,
-              size_t len,
-              long type,
-              int flags);
+  ssize_t msgrcv (int int_id,
+                 void *buf,
+                 size_t len,
+                 long type,
+                 int flags);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int msgsnd (int int_id,

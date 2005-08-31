@@ -43,7 +43,7 @@ ACE_Framework_Repository::open (int size)
 {
   ACE_TRACE ("ACE_Framework_Repository::open");
 
-  ACE_Framework_Component **temp;
+  ACE_Framework_Component **temp = 0;
 
   ACE_NEW_RETURN (temp,
                   ACE_Framework_Component *[size],

@@ -32,7 +32,7 @@ ACE_OS::msgget (key_t key, int msgflg)
 #endif /* ACE_HAS_SYSV_IPC */
 }
 
-ACE_INLINE int
+ACE_INLINE ssize_t
 ACE_OS::msgrcv (int int_id, void *buf, size_t len,
                 long type, int flags)
 {
