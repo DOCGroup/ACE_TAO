@@ -1,6 +1,7 @@
 Wed Aug 31 11:53:51 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Any/Recursive/NonRecursive.idl:
+	* tests/Any/Recursive/RecursiveHello.mpc:
 
 	  New IDL containing non-recursive structures that triggered the
 	  TAO_IDL recursive type false positive problem described in bug
