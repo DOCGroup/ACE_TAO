@@ -1,7 +1,0 @@
-// $Id$
-project: taoexe, anytypecode {
-  Source_Files {
-    testC.cpp
-    anyop.cpp
-  }
-}

@@ -1,9 +1,0 @@
-// $Id$
-
-project (TypeCode_Creation_Test) : taoclient, typecodefactory, ifr_client, minimum_corba {
-  exename  = create_tc
-  Source_Files {
-    testC.cpp
-    main.cpp
-  }
-}

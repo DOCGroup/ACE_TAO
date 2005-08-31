@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-conditional_include "common"
-
-type_is_binary  = 1
-common_defines  = WIN32
