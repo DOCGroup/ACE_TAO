@@ -52,6 +52,7 @@ project (CIAO_DnC_Container) : orbsvcslib, portableserver, security, valuetype, 
     CCM_Container_Ex.idl
     SwapExec.idl
     UpgradeableContext.idl
+    ServerResources.idl
   }
 
   Source_Files {
@@ -65,6 +66,8 @@ project (CIAO_DnC_Container) : orbsvcslib, portableserver, security, valuetype, 
     SwapExecC.cpp
     UpgradeableContextC.cpp
     Cookies.cpp
+    ServerResourcesS.cpp
+    ServerResourcesC.cpp
   }
 
 }

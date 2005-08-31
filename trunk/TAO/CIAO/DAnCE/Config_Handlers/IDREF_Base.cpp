@@ -1,4 +1,6 @@
 // $Id$
+#ifndef IDREF_BASE_CPP
+#define IDREF_BASE_CPP
 
 #include "IDREF_Base.h"
 #include <iostream>
@@ -13,14 +15,14 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-
+    template <typename T>
     bool
-    IDREF_Base::bind_ref (ACE_CString& id, size_t index)
+    IDREF_Base<T>::bind_ref (ACE_CString& id, T value)
     {
       int retval =
-        idref_map_.bind (id, index);
+        idref_map_.bind (id, value);
 
-      pos_map_.bind (index,id);
+      pos_map_.bind (value,id);
 
       if (retval < 0)
         return false;
@@ -28,8 +30,9 @@ namespace CIAO
       return true;
     }
 
+    template <typename T>
     bool
-    IDREF_Base::find_ref (const ACE_CString& id, size_t& val)
+    IDREF_Base<T>::find_ref (const ACE_CString& id, T& val)
     {
       int retval =
         idref_map_.find (id, val);
@@ -39,12 +42,13 @@ namespace CIAO
 
       return true;
     }
-    
+
+    template <typename T>
     bool
-    IDREF_Base::find_ref (const size_t id, ACE_CString& val)
+    IDREF_Base<T>::find_ref (const T& value, ACE_CString& id)
     {
       int retval =
-        pos_map_.find (id, val);
+        pos_map_.find (value, id);
 
       if (retval < 0)
         return false;
@@ -52,8 +56,9 @@ namespace CIAO
       return true;
     }
 
+    template <typename T>
     bool
-    IDREF_Base::unbind_refs (void)
+    IDREF_Base<T>::unbind_refs (void)
     {
       int retval =
         idref_map_.unbind_all ();
@@ -69,3 +74,4 @@ namespace CIAO
 
 }
 
+#endif /* IDREF_BASE_CPP */

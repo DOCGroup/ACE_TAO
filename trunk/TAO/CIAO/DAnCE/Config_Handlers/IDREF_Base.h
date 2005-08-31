@@ -30,31 +30,32 @@ namespace CIAO
      * @brief Base class for any handler that must process idrefs.
      *
      */
+    template <typename T>
     class Config_Handlers_Export IDREF_Base
     {
     public:
       /// Bind an IDREF to an index
       bool
-      bind_ref (ACE_CString& id, size_t index);
+      bind_ref (ACE_CString& id, T value);
   
       /// Get the index associated with an IDREF
       bool
-      find_ref (const ACE_CString& id, size_t& val);
+      find_ref (const ACE_CString& id, T& value);
       
       /// get the IDREF associated with an index
       bool
-      find_ref (const size_t id, ACE_CString& val);
+      find_ref (const T &value, ACE_CString& id);
   
       /// Unbind all IDREFS
       bool
       unbind_refs (void);
 
       typedef ACE_Hash_Map_Manager<ACE_CString,
-                                   size_t,
+                                   T,
                                    ACE_Null_Mutex> IDREF_MAP;
 
           
-      typedef ACE_Hash_Map_Manager<size_t,
+      typedef ACE_Hash_Map_Manager<T,
                                    ACE_CString,
                                    ACE_Null_Mutex> POS_MAP;
     protected:
@@ -69,6 +70,8 @@ namespace CIAO
   }
   
 }
+
+#include "IDREF_Base.cpp"
 
 #include /**/ "ace/post.h"
 #endif /* CIAO_CONFIG_HANDLERS_IDREF_BASE_H */
