@@ -14,7 +14,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    IDREF_Base ADD_Handler::IDREF;
+    IDREF_Base<CORBA::ULong> ADD_Handler::IDREF;
     
     bool
     ADD_Handler::artifact_deployment_descrs (

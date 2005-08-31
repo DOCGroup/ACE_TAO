@@ -11,7 +11,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    IDREF_Base MDD_Handler::IDREF;
+    IDREF_Base<CORBA::ULong> MDD_Handler::IDREF;
     
     bool
     MDD_Handler::mono_deployment_descriptions (

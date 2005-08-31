@@ -16,15 +16,12 @@
 #include "XML_Helper.h"
 #include "IDREF_Base.h"
 #include "Config_Handlers/Config_Handlers_Export.h"
+#include "ciao/DeploymentC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-namespace Deployment
-{
-  struct ComponentImplementationDescription;
-}
 
 namespace CIAO
 {
@@ -59,7 +56,7 @@ namespace CIAO
             const ComponentImplementationDescription &desc,
             ::Deployment::ComponentImplementationDescription &toconfig);
 
-      static IDREF_Base IDREF;
+      static IDREF_Base<CORBA::ULong> IDREF;
 
 //@@Note: This part has yet to be added in the future
 //    ComponentImplementationDescription

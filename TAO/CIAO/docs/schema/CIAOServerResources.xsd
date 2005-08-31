@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsd:schema targetNamespace="www.dre.vanderbilt.edu"
-            xmlns:CIAO="www.dre.vanderbilt.edu"
+<xsd:schema targetNamespace="http://www.dre.vanderbilt.edu/ServerResources"
+            xmlns:CIAO="http://www.dre.vanderbilt.edu/ServerResources"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-            elementFormDefault="qualified"
             attributeFormDefault="unqualified">
 
   <xsd:element name="ServerResources" type="CIAO:ServerResourcesDef">
@@ -115,7 +114,7 @@
     <xsd:sequence>
       <xsd:element name="threadpoolLane" type="CIAO:ThreadpoolLaneDef" 
                    maxOccurs="unbounded"/>
-      <xsd:element name="stacksize" type="xsd:unsignedLong"/>
+      <xsd:element name="stacksize" type="xsd:unsignedLong" />
       <xsd:element name="allow_borrowing" type="xsd:boolean"/>
       <xsd:element name="allow_request_buffering" type="xsd:boolean"/>
       <xsd:element name="max_buffered_requests" type="xsd:unsignedLong"/>

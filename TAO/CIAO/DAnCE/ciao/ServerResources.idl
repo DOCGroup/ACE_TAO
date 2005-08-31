@@ -146,6 +146,8 @@ module CIAO
       sequence<ORS_ConnectionBands> connection_bands_list;
     };
 
+    typedef sequence<ORBResource, 1> ORBResources;
+    
     // =================================================================
 
     /**
@@ -216,6 +218,19 @@ module CIAO
      * @brief A list of all policy sets.
      */
     typedef sequence<PolicySet> PolicySets;
+    
+    struct ORBConfigs
+    {
+      ORBResources orb_resources;
+      PolicySets policy_set;
+    };
+    
+    struct ServerResource
+    {
+      CommandlineArgs args;
+      SvcconfURI svcconf;
+      ORBConfigs orb_config;
+    };      
   };
 };
 

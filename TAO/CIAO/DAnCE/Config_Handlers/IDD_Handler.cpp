@@ -13,7 +13,8 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    IDREF_Base IDD_Handler::IDREF;
+    IDREF_Base<CORBA::ULong> IDD_Handler::IDREF;
+
     bool
     IDD_Handler::instance_deployment_descrs (
         const DeploymentPlan &src,
@@ -190,9 +191,9 @@ namespace CIAO
     {
 	
 	//Get all the string/IDREFs
-	XMLSchema::string < char > name ((src.name));
-	XMLSchema::string < char > node ((src.node));
-	XMLSchema::string < char > source ((src.source[0]));
+	XMLSchema::string < ACE_TCHAR > name ((src.name));
+	XMLSchema::string < ACE_TCHAR > node ((src.node));
+	XMLSchema::string < ACE_TCHAR > source ((src.source[0]));
 	ACE_CString temp;
 	MDD_Handler::IDREF.find_ref(src.implementationRef, temp);
 	XMLSchema::IDREF< ACE_TCHAR > implementation ((temp.c_str()));
