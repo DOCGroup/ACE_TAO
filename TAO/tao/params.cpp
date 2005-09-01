@@ -143,7 +143,7 @@ TAO_ORB_Parameters::parse_and_add_endpoints (const ACE_CString &endpoints,
         }
 
       int begin = 0;
-      int end = endpoints.find (endpoints_delimiter);
+      ssize_t end = endpoints.find (endpoints_delimiter);
 
       for (int i = 0; i < endpoints_count; ++i)
         {
@@ -164,7 +164,7 @@ TAO_ORB_Parameters::parse_and_add_endpoints (const ACE_CString &endpoints,
           // from the offset `begin' to the end of the string.
 
           // Check for a valid URL style endpoint set
-          int const check_offset = endpt.find ("://");
+          ssize_t const check_offset = endpt.find ("://");
 
           if (check_offset > 0 &&
               check_offset != endpt.npos)

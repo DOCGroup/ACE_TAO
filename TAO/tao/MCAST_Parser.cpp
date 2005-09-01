@@ -365,7 +365,7 @@ TAO_MCAST_Parser::assign_to_variables (const char * &mcast_name)
    */
   ACE_CString mcast_name_cstring (mcast_name);
 
-  int pos_colon1 = mcast_name_cstring.find (':', 0);
+  ssize_t pos_colon1 = mcast_name_cstring.find (':', 0);
 #if defined (ACE_HAS_IPV6)
   // IPv6 numeric address in host string?
   bool ipv6_in_host = false;
@@ -427,7 +427,7 @@ TAO_MCAST_Parser::assign_to_variables (const char * &mcast_name)
                                   mcast_name_cstring.length() -
                                   pos_colon1);
 
-  int pos_colon2 = mcast_name_cstring.find (':', 0);
+  ssize_t pos_colon2 = mcast_name_cstring.find (':', 0);
 
   if (pos_colon2 == 0)
     {
@@ -473,7 +473,7 @@ TAO_MCAST_Parser::assign_to_variables (const char * &mcast_name)
                                   mcast_name_cstring.length() - pos_colon2);
 
 
-  int pos_colon3 = mcast_name_cstring.find (':', 0);
+  ssize_t pos_colon3 = mcast_name_cstring.find (':', 0);
 
   this->mcast_nic_ =
     mcast_name_cstring.substring (0,
@@ -483,7 +483,7 @@ TAO_MCAST_Parser::assign_to_variables (const char * &mcast_name)
     mcast_name_cstring.substring (pos_colon3 + 1,
                                   mcast_name_cstring.length() - pos_colon3);
 
-  int pos_colon4 = mcast_name_cstring.find ('/', 0);
+  ssize_t pos_colon4 = mcast_name_cstring.find ('/', 0);
 
   if (pos_colon4 == 0)
     {

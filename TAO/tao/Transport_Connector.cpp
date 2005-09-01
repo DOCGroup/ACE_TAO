@@ -108,7 +108,7 @@ TAO_Connector::make_mprofile (const char *string,
   ior.set (string, ACE_OS::strlen (string), 1);
 
   // Find out where the protocol ends
-  int ior_index = ior.find ("://");
+  ssize_t ior_index = ior.find ("://");
 
   if (ior_index == ACE_CString::npos)
     {
@@ -123,7 +123,7 @@ TAO_Connector::make_mprofile (const char *string,
     }
 
   // Find the object key
-  const int objkey_index =
+  const ssize_t objkey_index =
     ior.find (this->object_key_delimiter (), ior_index);
 
   if (objkey_index == 0 || objkey_index == ACE_CString::npos)
@@ -143,7 +143,7 @@ TAO_Connector::make_mprofile (const char *string,
 
   // Only check for endpoints after the protocol specification and
   // before the object key.
-  for (int i = ior_index; i < objkey_index; ++i)
+  for (ssize_t i = ior_index; i < objkey_index; ++i)
     {
       if (ior[i] == endpoint_delimiter)
         ++profile_count;
