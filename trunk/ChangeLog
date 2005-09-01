@@ -1,3 +1,12 @@
+Thu Sep  1 19:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+          For MPC projects that are custom_only and only have IDL
+          build rules the install target didn't work anymore. If the project
+          is not an dll or exe, we generate an include of install.bor
+          and set the install types to includes. This way the install
+          target works for the generate borland makefiles
+
 Thu Sep  1 11:55:39 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/OS_NS_unistd.cpp (num_processors, num_processors_online):
