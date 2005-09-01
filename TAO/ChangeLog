@@ -1,3 +1,17 @@
+Thu Sep  1 14:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Event_Service/Event_Service.{h,cpp}:
+          Made it possible to just pass -n to indicate that no service
+          name should be used. At that moment the Event_Service will not
+          register itself with the naming service. If also the default
+          scheduling service option (none) is used, then the naming
+          service is not used at all. This is usefull for systems where
+          the Event_Service is with the option to write the IOR to file,
+          then the user doesn't need the naming service.
+
+        * docs/ec_options.html:
+          Documentated the commandline options of the Event_Service executable
+
 Thu Sep  1 10:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/MCAST_Parser.cpp:
