@@ -18,6 +18,11 @@ ACE_RCSID(ace, OS_NS_unistd, "$Id$")
 #include "ace/Object_Manager_Base.h"
 #include "ace/os_include/sys/os_pstat.h"
 
+#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__APPLE__)
+// for sysctl(), used by ACE_OS::num_processors()
+#include <sys/sysctl.h>
+#endif
+
 #if defined (ACE_NEEDS_FTRUNCATE)
 extern "C" int
 ftruncate (ACE_HANDLE handle, long len)
@@ -302,6 +307,13 @@ ACE_OS::num_processors (void)
   return sys_info.dwNumberOfProcessors;
 #elif defined (linux) || defined (sun) || defined (DIGITAL_UNIX) || defined (CYGWIN32)
   return ::sysconf (_SC_NPROCESSORS_CONF);
+#elif defined(__FreeBSD__) || defined (__NetBSD__) || defined(__OpenBSD__) || defined(__APPLE__)
+  int num_processors;
+  int mib[2] = { CTL_HW, HW_NCPU };
+  size_t len = sizeof (num_processors);
+  
+  sysctl(mib, 2, &num_processors, &len, NULL, 0);
+  return num_processors;
 #else
   ACE_NOTSUP_RETURN (-1);
 #endif
@@ -326,6 +338,13 @@ ACE_OS::num_processors_online (void)
     return psd.psd_proc_cnt;
   else
     return -1;
+#elif defined(__FreeBSD__) || defined (__NetBSD__) || defined(__OpenBSD__) || defined(__APPLE__)
+  int num_processors;
+  int mib[2] = { CTL_HW, HW_NCPU };
+  size_t len = sizeof (num_processors);
+  
+  sysctl(mib, 2, &num_processors, &len, NULL, 0);
+  return num_processors;
 #else
   ACE_NOTSUP_RETURN (-1);
 #endif
