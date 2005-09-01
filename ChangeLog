@@ -82,7 +82,7 @@ Tue Aug 30 18:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tests/Based_Pointer_Test.cpp:
           Corrected remap test, some platforms grow the mmap area
           downwards. This fixes bugzilla bug 2226. Thanks to
-          <jmegq at radiance dot com> for reporting this and
+          James Megquier <jmegquier at gmail dot com> for reporting this and
           Steve Williams <steve at telxio dot com> for validating this.
 
 Tue Aug 30 18:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
