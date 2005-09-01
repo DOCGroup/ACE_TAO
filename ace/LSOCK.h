@@ -36,12 +36,12 @@ class ACE_Export ACE_LSOCK
 public:
 #if defined (ACE_HAS_MSG)
   /// Send an open FD to another process.
-  int send_handle (const ACE_HANDLE handle) const;
+  ssize_t send_handle (const ACE_HANDLE handle) const;
 
   /// Recv an open FD from another process.
-  int recv_handle (ACE_HANDLE &handles,
-                   char *pbuf = 0,
-                   ssize_t *len = 0) const;
+  ssize_t recv_handle (ACE_HANDLE &handles,
+                       char *pbuf = 0,
+                       ssize_t *len = 0) const;
 #endif /* ACE_HAS_MSG */
 
   /// Dump the state of an object.
