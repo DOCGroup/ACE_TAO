@@ -182,6 +182,10 @@ BINDIR = <%if(dllout)%><%dllout%><%else%><%libout%><%endif%>
 
 !include <$(ACE_ROOT)\include\makeinclude\build_library.bor>
 <%else%>
+INSTALL_TYPES = includes
+
+!include <$(ACE_ROOT)\include\makeinclude\install.bor>
+
 all:
 	@-rem
 <%endif%>

@@ -1,27 +1,39 @@
+Thu Sep  1 19:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Event_Service/Event_Service.{h,cpp}:
+          Restored -n to the original behaviour, it is the name that will
+          be used to register to the naming service. With the new option
+          -x we can indicate that the event service shouldn't register
+          with the naming service. This is just as the other orbsvcs,
+          thanks to JT for indicating this.
+
+        * docs/ec_options.html:
+          Updated
+
 Thu Sep  1 16:54:53 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface_strategy.cpp:
-        
+
           Fixed typo in comment.
-          
+
         * TAO_IDL/be/be_interface.cpp (gen_stub_ctor):
-        
+
           Fixed order of generated base class stub constructor calls
           when the interface has both concrete and abstract parents.
-          
+
         * TAO_IDL/be/be_visitor_amh_pre_proc.cpp (visit_interface):
         * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
         * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
-        
+
           Disabled all AMH-related code generation for interfaces that
           have an abstract ancestor. The AMH_-prefixed
           classes have an inheritance structure that reflects that of
           the corresponding IDL interfaces. This poses a problem
           when the interface has an abstract ancestor, since no skeleton
           code is generated for abstract interfaces.
-          
+
         * tests/IDL_Test/fwd.idl:
-        
+
           Just after an interface with a concrete and an abstract parent,
           added another interface with the same parents in reverse order.
           This change is to test the order of generated base class stub
