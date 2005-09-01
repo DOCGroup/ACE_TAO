@@ -1,3 +1,10 @@
+Thu Sep  1 10:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_icc.GNU:
+          Suppress warning 1684 with Intel 9. This is:
+          Conversion from pointer to same-sized integral type
+          (potential portability problem)
+
 Thu Sep  1 09:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_sys_socket.{h,inl}:
