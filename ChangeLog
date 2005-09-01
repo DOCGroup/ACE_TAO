@@ -1,3 +1,9 @@
+Thu Sep  1 17:38:10 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* bin/ciao_tests.lst
+
+	Corrected the path to the hello test. 
+	
 Thu Sep  1 18:00:31 2005  Steve Huston  <shuston@riverace.com>
 
 	* tests/Based_Pointer_Test.cpp: Corrected to build on MSVC 6,
