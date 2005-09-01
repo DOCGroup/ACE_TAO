@@ -204,7 +204,7 @@ ifeq ("$(VXWORKSLINK)","true")
 else
   ace_lib_prelink := 1
   LINK.cc          = override
-  LINK.cc.override = $(LD_PARTIAL) -frepo -L$(ACE_ROOT)/ace -L./ $(LDLIBPATH) $(LD_LINK_PATH)
+  LINK.cc.override = $(LD_PARTIAL) -frepo -L$(ACE_ROOT)/ace -L$(INSLIB) -L./ $(LDLIBPATH) $(LD_LINK_PATH)
   LDFLAGS          = $(ACE_SHLIBS)
 endif
 else
