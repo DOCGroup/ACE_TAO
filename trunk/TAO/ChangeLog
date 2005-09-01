@@ -1,20 +1,27 @@
+Thu Sep  1 07:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/default_resource.cpp:
+          Use the new ACE_REMOVE_SERVICE_DIRECTIVE macro to remove the
+          TAO_CodeSet. Thanks to Lothar Werzinger <lothar at xcerla dot com>
+          for reporting this. This fixes bugzilla bug 2227
+
 Wed Aug 31 21:49:41 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/fwd.idl:
-        
+
           Added simple test case to reproduce the situation described
           below in
-          
+
           Wed Aug 31 21:19:41 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>.
 
 Wed Aug 31 21:19:41 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
-        
+
           Removed some unnecessary code.
-          
+
         * TAO_IDL/be/be_interface.cpp (redefine):
-        
+
           Changed the method to handle the use case where an interface
           with one or more abstract parents has been forward declared,
           then fully defined. The IDL compiler maintains an internal
