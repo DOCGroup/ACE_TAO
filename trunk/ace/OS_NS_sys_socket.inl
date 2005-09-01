@@ -312,7 +312,7 @@ ACE_OS::listen (ACE_HANDLE handle, int backlog)
   ACE_SOCKCALL_RETURN (::listen ((ACE_SOCKET) handle, backlog), int, -1);
 }
 
-ACE_INLINE int
+ACE_INLINE ssize_t
 ACE_OS::recv (ACE_HANDLE handle, char *buf, size_t len, int flags)
 {
   ACE_OS_TRACE ("ACE_OS::recv");
@@ -328,9 +328,9 @@ ACE_OS::recv (ACE_HANDLE handle, char *buf, size_t len, int flags)
   // can be used, as this is not an issue.
 #if defined (ACE_WIN32)
   ACE_SOCKCALL_RETURN (::recv ((ACE_SOCKET) handle, buf,
-                               static_cast<int> (len), flags), int, -1);
+                               static_cast<int> (len), flags), ssize_t, -1);
 #else
-  int ace_result_;
+  ssize_t ace_result_;
   ace_result_ = ::recv ((ACE_SOCKET) handle, buf, len, flags);
 
 # if !(defined (EAGAIN) && defined (EWOULDBLOCK) && EAGAIN == EWOULDBLOCK)
@@ -353,7 +353,7 @@ ACE_OS::recv (ACE_HANDLE handle, char *buf, size_t len, int flags)
 #endif /* defined (ACE_WIN32) */
 }
 
-ACE_INLINE int
+ACE_INLINE ssize_t
 ACE_OS::recvfrom (ACE_HANDLE handle,
                   char *buf,
                   size_t len,
@@ -366,11 +366,11 @@ ACE_OS::recvfrom (ACE_HANDLE handle,
 #  if !defined ACE_PSOS_DIAB_PPC
   ACE_SOCKCALL_RETURN (::recvfrom ((ACE_SOCKET) handle, buf, len, flags,
                                    (struct sockaddr_in *) addr, (ACE_SOCKET_LEN *) addrlen),
-                       int, -1);
+                       ssize_t, -1);
 #  else
   ACE_SOCKCALL_RETURN (::recvfrom ((ACE_SOCKET) handle, buf, len, flags,
                                    (struct sockaddr *) addr, (ACE_SOCKET_LEN *) addrlen),
-                       int, -1);
+                       ssize_t, -1);
 #  endif /* defined ACE_PSOS_DIAB_PPC */
 #elif defined (ACE_WIN32)
   int shortened_len = static_cast<int> (len);
@@ -394,11 +394,11 @@ ACE_OS::recvfrom (ACE_HANDLE handle,
 #else /* non Win32 and non PSOS */
   ACE_SOCKCALL_RETURN (::recvfrom ((ACE_SOCKET) handle, buf, len, flags,
                                    addr, (ACE_SOCKET_LEN *) addrlen),
-                       int, -1);
+                       ssize_t, -1);
 #endif /* defined (ACE_PSOS) */
 }
 
-ACE_INLINE int
+ACE_INLINE ssize_t
 ACE_OS::recvfrom (ACE_HANDLE handle,
                   iovec *buffers,
                   int buffer_count,
@@ -443,7 +443,7 @@ ACE_OS::recvfrom (ACE_HANDLE handle,
 #endif /* defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
 }
 
-ACE_INLINE int
+ACE_INLINE ssize_t
 ACE_OS::recvmsg (ACE_HANDLE handle, struct msghdr *msg, int flags)
 {
   ACE_OS_TRACE ("ACE_OS::recvmsg");
@@ -469,7 +469,7 @@ ACE_OS::recvmsg (ACE_HANDLE handle, struct msghdr *msg, int flags)
   else
     return bytes_received;
 # else /* ACE_HAS_WINSOCK2 */
-  ACE_SOCKCALL_RETURN (::recvmsg (handle, msg, flags), int, -1);
+  ACE_SOCKCALL_RETURN (::recvmsg (handle, msg, flags), ssize_t, -1);
 # endif /* ACE_HAS_WINSOCK2 */
 #else
   ACE_UNUSED_ARG (flags);
@@ -537,7 +537,7 @@ ACE_OS::recvv (ACE_HANDLE handle,
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
-ACE_INLINE int
+ACE_INLINE ssize_t
 ACE_OS::send (ACE_HANDLE handle, const char *buf, size_t len, int flags)
 {
   ACE_OS_TRACE ("ACE_OS::send");
@@ -555,9 +555,9 @@ ACE_OS::send (ACE_HANDLE handle, const char *buf, size_t len, int flags)
   ACE_SOCKCALL_RETURN (::send ((ACE_SOCKET) handle,
                                buf,
                                static_cast<int> (len),
-                               flags), int, -1);
+                               flags), ssize_t, -1);
 #else
-  int ace_result_;
+  ssize_t ace_result_;
 #  if defined (ACE_PSOS)
   ace_result_ = ::send ((ACE_SOCKET) handle, const_cast <char *> (buf), len, flags);
 #  else
@@ -584,7 +584,7 @@ ACE_OS::send (ACE_HANDLE handle, const char *buf, size_t len, int flags)
 #endif /* defined (ACE_WIN32) */
 }
 
-ACE_INLINE int
+ACE_INLINE ssize_t
 ACE_OS::sendmsg (ACE_HANDLE handle,
                  const struct msghdr *msg,
                  int flags)
@@ -609,13 +609,13 @@ ACE_OS::sendmsg (ACE_HANDLE handle,
       return -1;
     }
   else
-    return bytes_sent;
+    return (ssize_t) bytes_sent;
 # elif defined (ACE_HAS_NONCONST_SENDMSG)
   ACE_SOCKCALL_RETURN (::sendmsg (handle,
                                   const_cast<struct msghdr *>(msg),
-                                  flags), int, -1);
+                                  flags), ssize_t, -1);
 # else
-  ACE_SOCKCALL_RETURN (::sendmsg (handle, msg, flags), int, -1);
+  ACE_SOCKCALL_RETURN (::sendmsg (handle, msg, flags), ssize_t, -1);
 # endif
 #else
   ACE_UNUSED_ARG (flags);
@@ -626,7 +626,7 @@ ACE_OS::sendmsg (ACE_HANDLE handle,
 #endif /* ACE_LACKS_SENDMSG */
 }
 
-ACE_INLINE int
+ACE_INLINE ssize_t
 ACE_OS::sendto (ACE_HANDLE handle,
                 const char *buf,
                 size_t len,
@@ -642,16 +642,16 @@ ACE_OS::sendto (ACE_HANDLE handle,
                                  flags,
                                  const_cast<struct sockaddr *> (addr),
                                  addrlen),
-                       int, -1);
+                       ssize_t, -1);
 #elif defined (ACE_PSOS)
 #  if !defined (ACE_PSOS_DIAB_PPC)
   ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle, (char *) buf, len, flags,
                                  (struct sockaddr_in *) addr, addrlen),
-                       int, -1);
+                       ssize_t, -1);
 #  else
   ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle, (char *) buf, len, flags,
                                  (struct sockaddr *) addr, addrlen),
-                       int, -1);
+                       ssize_t, -1);
 #  endif /*defined ACE_PSOS_DIAB_PPC */
 #else
 #  if defined (ACE_WIN32)
@@ -661,7 +661,7 @@ ACE_OS::sendto (ACE_HANDLE handle,
                                  flags,
                                  const_cast<struct sockaddr *> (addr),
                                  addrlen),
-                       int, -1);
+                       ssize_t, -1);
 #  else
   ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle,
                                  buf,
@@ -669,12 +669,12 @@ ACE_OS::sendto (ACE_HANDLE handle,
                                  flags,
                                  const_cast<struct sockaddr *> (addr),
                                  addrlen),
-                       int, -1);
+                       ssize_t, -1);
 #  endif /* ACE_WIN32 */
 #endif /* VXWORKS */
 }
 
-ACE_INLINE int
+ACE_INLINE ssize_t
 ACE_OS::sendto (ACE_HANDLE handle,
                 const iovec *buffers,
                 int buffer_count,
@@ -701,14 +701,14 @@ ACE_OS::sendto (ACE_HANDLE handle,
     ACE_OS::set_errno_to_wsa_last_error ();
   }
   number_of_bytes_sent = static_cast<size_t> (bytes_sent);
-  return result;
+  return (ssize_t) result;
 #else
   ACE_UNUSED_ARG (overlapped);
   ACE_UNUSED_ARG (func);
 
   number_of_bytes_sent = 0;
 
-  int result = 0;
+  ssize_t result = 0;
 
   for (int i = 0; i < buffer_count; ++i)
     {
@@ -735,7 +735,7 @@ ACE_OS::sendv (ACE_HANDLE handle,
 {
 #if defined (ACE_HAS_WINSOCK2)
   DWORD bytes_sent = 0;
-  int result = 0;
+  ssize_t result = 0;
 
   // Winsock 2 has WSASend and can do this directly, but Winsock 1
   // needs to do the sends one-by-one.
@@ -795,7 +795,7 @@ ACE_OS::sendv (ACE_HANDLE handle,
   // iovec, if necessary, to obey the limit.
   iovec local_iov[ACE_IOV_MAX];
   long total = 0;
-  long new_total;
+  long new_total = 0;
   for (int i = 0; i < n; i++)
     {
       local_iov[i].iov_base = buffers[i].iov_base;
