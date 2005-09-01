@@ -71,6 +71,7 @@ module fwd_mixed_intf
   
   abstract interface abstract_parent {};
   
-  interface mixed_parents : concrete_parent, abstract_parent {};
+  interface mixed_abs_first : abstract_parent, concrete_parent {};
+  interface mixed_conc_first : concrete_parent, abstract_parent {};
 };
 

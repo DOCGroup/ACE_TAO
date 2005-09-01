@@ -19,6 +19,13 @@ Thu Sep  1 16:54:53 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
           the corresponding IDL interfaces. This poses a problem
           when the interface has an abstract ancestor, since no skeleton
           code is generated for abstract interfaces.
+          
+        * tests/IDL_Test/fwd.idl:
+        
+          Just after an interface with a concrete and an abstract parent,
+          added another interface with the same parents in reverse order.
+          This change is to test the order of generated base class stub
+          constructor calls in the stub inline file.
 
 Thu Sep 01 08:30:31 2005  Gary Maxey  <gary.maxey@hp.com>
 
