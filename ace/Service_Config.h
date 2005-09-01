@@ -41,12 +41,14 @@ class ACE_DLL;
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
 #define ACE_DYNAMIC_SERVICE_DIRECTIVE(ident, libpathname, objectclass, parameters) \
   "dynamic " ident " Service_Object * " libpathname ":" objectclass "() \"" parameters "\""
+#define ACE_REMOVE_SERVICE_DIRECTIVE(ident) "remove " ident
 class ACE_Svc_Conf_Param;
 #else
 #define ACE_DYNAMIC_SERVICE_DIRECTIVE(ident, libpathname, objectclass, parameters) \
   "<ACE_Svc_Conf><dynamic id=\"" ident "\" type=\"Service_Object\">" \
   "<initializer path=\"" libpathname "\" init=\"" objectclass "\"" \
   " params=\"" parameters "\"/></dynamic></ACE_Svc_Conf>"
+#define ACE_REMOVE_SERVICE_DIRECTIVE(ident) "<ACE_Svc_Conf><remove id=\"" ident "\"></remove></ACE_Svc_Conf>"
 class ACE_XML_Svc_Conf;
 #endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
 
