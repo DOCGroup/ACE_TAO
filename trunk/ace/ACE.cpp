@@ -474,7 +474,8 @@ ACE::recv (ACE_HANDLE handle,
         return -1;
       else
         {
-          ssize_t bytes_transferred = ACE_OS::recv (handle, (char *) buf, len, flags);
+          ssize_t bytes_transferred =
+            ACE_OS::recv (handle, (char *) buf, len, flags);
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
         }
@@ -500,7 +501,8 @@ ACE::t_rcv (ACE_HANDLE handle,
         return -1;
       else
         {
-          ssize_t bytes_transferred = ACE_OS::t_rcv (handle, (char *) buf, len, flags);
+          ssize_t bytes_transferred =
+            ACE_OS::t_rcv (handle, (char *) buf, len, flags);
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
         }
@@ -559,7 +561,7 @@ ACE::recvmsg (ACE_HANDLE handle,
         return -1;
       else
         {
-          int bytes_transferred = ACE_OS::recvmsg (handle, msg, flags);
+          ssize_t bytes_transferred = ACE_OS::recvmsg (handle, msg, flags);
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
         }
@@ -591,7 +593,8 @@ ACE::recvfrom (ACE_HANDLE handle,
         return -1;
       else
         {
-          int bytes_transferred = ACE_OS::recvfrom (handle, buf, len, flags, addr, addrlen);
+          ssize_t bytes_transferred =
+            ACE_OS::recvfrom (handle, buf, len, flags, addr, addrlen);
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
         }
@@ -1366,7 +1369,7 @@ ACE::sendmsg (ACE_HANDLE handle,
         return -1;
       else
         {
-          int bytes_transferred = ACE_OS::sendmsg (handle, msg, flags);
+          ssize_t bytes_transferred = ACE_OS::sendmsg (handle, msg, flags);
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
         }
@@ -1398,7 +1401,8 @@ ACE::sendto (ACE_HANDLE handle,
         return -1;
       else
         {
-          int bytes_transferred = ACE_OS::sendto (handle, buf, len, flags, addr, addrlen);
+          ssize_t bytes_transferred =
+            ACE_OS::sendto (handle, buf, len, flags, addr, addrlen);
           ACE::restore_non_blocking_mode (handle, val);
           return bytes_transferred;
         }
