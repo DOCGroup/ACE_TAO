@@ -15,4 +15,5 @@ workspace {
   ciao
   tools
   tests
+  examples
 }

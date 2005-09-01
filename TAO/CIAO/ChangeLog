@@ -1,3 +1,8 @@
+Thu Sep  1 10:20:48 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	CIAO Reorganization.  Plese see tag before_ciao_reorg
+	to obtain the old version. 
+
 Wed Aug 31 15:16:23 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* DAnCE/Config_Handlers/RT-CCM/CB_Handler.cpp
 	* DAnCE/Config_Handlers/RT-CCM/PM_Handler.cpp

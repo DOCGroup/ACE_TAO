@@ -2,7 +2,7 @@
 // $Id$
 
 project(Plan_Launcher_Impl) : naming, ciao_server_dnc, xerces {
-
+  includes += $(CIAO_ROOT)/tools
   sharedname = Plan_Launcher_Impl
   requires += exceptions
   after += XSC_Config_Handlers ExecutionManager_stub NodeDaemon_stub
