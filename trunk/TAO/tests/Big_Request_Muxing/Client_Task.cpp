@@ -3,7 +3,6 @@
 //
 
 #include "Client_Task.h"
-#include "tao/AnyTypeCode/Any.h"
 
 ACE_RCSID(Big_Request_Muxing, Client_Task, "$Id$")
 
@@ -19,7 +18,14 @@ Client_Task::Client_Task (ACE_Thread_Manager *thr_mgr,
   , event_size_ (event_size)
   , orb_ (CORBA::ORB::_duplicate (orb))
   , sync_scope_ (sync_scope)
+  , done_(false)
 {
+}
+
+bool
+Client_Task::done(void) const
+{
+  return done_;
 }
 
 int
@@ -70,9 +76,13 @@ Client_Task::svc (void)
     }
   ACE_CATCHANY
     {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Client_Task: ");
+      done_ = true;
       return -1;
     }
   ACE_ENDTRY;
+  ACE_DEBUG((LM_DEBUG, "Client_Task finished.\n"));
+  done_ = true;
   return 0;
 }
 
@@ -81,9 +91,10 @@ Client_Task::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
+      Test::Payload payload(0);
       for (int i = 0; i != 100; ++i)
         {
-          (void) this->payload_receiver_->get_message_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+          (void) this->payload_receiver_->more_data (payload ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
