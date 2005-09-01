@@ -621,7 +621,7 @@ static EC_Gateway_IIOP_Factory "-ECGIIOPConsumerECControl null ....."
     <P>All the IIOP Gateway factory options start with
       <CODE>-ECGIIOP</CODE></P>
 
-	    <P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0">
+    <P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0">
         <TR>
           <TH>Option</TH>
           <TH>Description</TH>
@@ -708,6 +708,77 @@ static EC_Gateway_IIOP_Factory "-ECGIIOPConsumerECControl null ....."
       </TABLE>
     </P>
 
+    <H3>The commandline arguments</H3>
+
+    The Event_Service executable has several commandline arguments you can use. 
+    The following arguments are available.
+
+    <P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0">
+        <TR>
+          <TH>Option</TH>
+          <TH>Description</TH>
+        </TR>
+
+        <!-- <TR NAME="-d"> -->
+        <TR>
+          <TD><CODE>-n</CODE>
+            <EM>[service_name]</EM>
+          </TD>
+          <TD>The name with which the Event Service registers itself in the
+	  Naming Service. When no name is passed the Event Service will not
+          register itself with the Naming Service.
+          </TD>
+        </TR>
+        <!-- <TR NAME="-o"> -->
+        <TR>
+          <TD><CODE>-o</CODE>
+            <EM>ior_file_name</EM>
+          </TD>
+          <TD>The file to which the IOR of the Event Service will be written.
+          </TD>
+        </TR>
+
+        <!-- <TR NAME="-p"> -->
+        <TR>
+          <TD><CODE>-p</CODE>
+            <EM>pid_file_name</EM>
+          </TD>
+          <TD>The process id of the Event Service will be written to this
+          file
+          </TD>
+        </TR>
+
+        <!-- <TR NAME="-q"> -->
+        <TR>
+          <TD><CODE>-q</CODE>
+            <EM>servant_name</EM>
+          </TD>
+          <TD>The servant name for the Event Channel that will be used
+          when a Persistent IOR is generated
+          </TD>
+        </TR>
+
+        <!-- <TR NAME="-b"> -->
+        <TR>
+          <TD><CODE>-b</CODE>
+            <EM></EM>
+          </TD>
+          <TD>Use BiDIR GIOP
+          </TD>
+        </TR>
+
+        <!-- <TR NAME="-s"> -->
+        <TR>
+          <TD><CODE>-s</CODE>
+            <EM>global|local|none</EM>
+          </TD>
+          <TD>Which scheduler should be used. The default is <CODE>none</CODE>. 
+          With <CODE>local</CODE> an in process scheduler is created. With
+          <CODE>global</CODE> a scheduler is retrieved from the Naming Service
+          </TD>
+        </TR>
+      </TABLE>
+    </P>
 
     <P><HR><P>
 

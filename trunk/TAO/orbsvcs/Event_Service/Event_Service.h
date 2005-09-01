@@ -75,7 +75,8 @@ private:
   /// The Event Channel implementation.
   POA_RtecEventChannelAdmin::EventChannel *ec_impl_;
 
-  /// The name we use to bind with the NameService
+  /// The name we use to bind with the NameService, if this is empty, we don't
+  /// bind to the NameService
   ACE_CString service_name_;
 
   /// The name of the file were we output the Event_Service IOR.
