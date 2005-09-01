@@ -63,10 +63,10 @@ public:
   int remove (void);
 
   // = Message transfer methods.
-  int recv (ACE_SV_Message &mb,
-            int length,
-            long mtype = 0,
-            int mflags = 0);
+  int ssize_t (ACE_SV_Message &mb,
+               int length,
+               long mtype = 0,
+               int mflags = 0);
 
   int send (const ACE_SV_Message &mb,
             int length,
