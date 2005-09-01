@@ -1028,7 +1028,8 @@ TAO_Default_Resource_Factory::codeset_manager(void)
 #if !defined (TAO_AS_STATIC_LIBS)
       // only for dynamic libs, check to see if default factory and if so,
       // remove it
-      ACE_Service_Config::process_directive("remove TAO_Codeset");
+      ACE_Service_Config::process_directive
+        (ACE_REMOVE_SERVICE_DIRECTIVE("TAO_Codeset"));
       ACE_Service_Config::process_directive
         (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Codeset",
                                        "TAO_Codeset",
