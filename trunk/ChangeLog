@@ -1,3 +1,9 @@
+Thu Sep  1 18:00:31 2005  Steve Huston  <shuston@riverace.com>
+
+	* tests/Based_Pointer_Test.cpp: Corrected to build on MSVC 6,
+	  lacking template typedefs. Thanks to Johnny Willemsen for
+	  this fix.
+
 Thu Sep  1 15:05:55 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/ciao_client_dnc.mpb
