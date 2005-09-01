@@ -399,11 +399,14 @@ be_visitor_interface_sh::this_method (be_interface *node)
 int
 be_visitor_interface_sh::generate_amh_classes (be_interface *node)
 {
-   if (be_global->gen_amh_classes ())
-    {
-      be_visitor_amh_interface_sh amh_intf (this->ctx_);
-      return amh_intf.visit_interface (node);
-    }
+  // We have to check for any abstract ancestor until AMH is integrated
+  // with abstract interfaces. If the node itself is abstract, this 
+  // visitor would not be created.
+  if (be_global->gen_amh_classes () && !node->has_mixed_parentage ())
+  {
+    be_visitor_amh_interface_sh amh_intf (this->ctx_);
+    return amh_intf.visit_interface (node);
+  }
 
   return 0;
 }

@@ -83,7 +83,19 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
   // interfaces, not because we want to generate code for them, but
   // because the (imported-AMH-) node could be needed to generate a
   // non-imported, AMH node, for example, for a derived interface.
-  if (node->imported () || node->is_local () || node->is_abstract ())
+  
+  // (JP) Havinq AMH_* nodes inherit directly from AMH_* base classes
+  // is also a problem if the base interface is abstract, since at
+  // the moment, no AMH code is generated for such interfaces. It 
+  // would be desirable to mimic the AMI design, where all AMI-related
+  // classes inherit from a single base class, no matter what the
+  // parentage of the IDL interface. Until we solve the problem of
+  // AMH for abstract interfaces, I'm disabling all AMH generation
+  // for interfaces having an abstract ancestor.
+  if (node->imported ()
+      || node->is_local ()
+      || node->is_abstract ()
+      || node->has_mixed_parentage ())
     {
       return 0;
     }
