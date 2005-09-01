@@ -5,7 +5,7 @@
 //compleint with the D&C spec
 
 project (spec_RepositoryManager) : ciao_server_dnc,ciao_deployment_svnt, ciao_deployment_stub, taoexe, xerces, exceptions, zzip, zlib {
-
+  includes += $(CIAO_ROOT)/tools
   exename = RepositoryManagerDeamon
   after    += XSC_Config_Handlers
   libs     += XSC_Config_Handlers
@@ -29,6 +29,7 @@ project (spec_RepositoryManager) : ciao_server_dnc,ciao_deployment_svnt, ciao_de
 // RMadmin project: a sample client for the RM.
 
 project (spec_RMAdmin) : ciao_client_dnc, ciao_deployment_stub, exceptions {
+  includes += $(CIAO_ROOT)/tools
   exename = RMadmin
   after    += RepositoryManager
   after    += XSC_Config_Handlers

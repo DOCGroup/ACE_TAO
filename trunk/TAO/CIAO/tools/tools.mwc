@@ -2,4 +2,5 @@
 // $Id$
 
 workspace {
+        Config_Handlers
 }
