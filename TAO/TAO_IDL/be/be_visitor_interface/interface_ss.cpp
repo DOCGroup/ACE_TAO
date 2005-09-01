@@ -879,7 +879,10 @@ be_visitor_interface_ss::dispatch_method (be_interface *node)
 int
 be_visitor_interface_ss::generate_amh_classes (be_interface *node)
 {
-   if (be_global->gen_amh_classes ())
+  // We have to check for any abstract ancestor until AMH is integrated
+  // with abstract interfaces. If the node itself is abstract, this 
+  // visitor would not be created.
+  if (be_global->gen_amh_classes () && !node->has_mixed_parentage ())
     {
       be_visitor_amh_interface_ss amh_intf (this->ctx_);
       return amh_intf.visit_interface (node);
@@ -1006,14 +1009,6 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
 
   return 0;
 }
-
-// int
-// be_visitor_interface_ss::generate_downcast_implementation (be_interface *node,
-//                                                            TAO_OutStream *os)
-// {
-//   return node->traverse_inheritance_graph (be_interface::downcast_helper,
-//                                            os);
-// }
 
 int
 be_visitor_interface_ss::generate_copy_ctor (be_interface *node,

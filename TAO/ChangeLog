@@ -1,3 +1,25 @@
+Thu Sep  1 16:54:53 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface_strategy.cpp:
+        
+          Fixed typo in comment.
+          
+        * TAO_IDL/be/be_interface.cpp (gen_stub_ctor):
+        
+          Fixed order of generated base class stub constructor calls
+          when the interface has both concrete and abstract parents.
+          
+        * TAO_IDL/be/be_visitor_amh_pre_proc.cpp (visit_interface):
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        
+          Disabled all AMH-related code generation for interfaces that
+          have an abstract ancestor. The AMH_-prefixed
+          classes have an inheritance structure that reflects that of
+          the corresponding IDL interfaces. This poses a problem
+          when the interface has an abstract ancestor, since no skeleton
+          code is generated for abstract interfaces.
+
 Thu Sep 01 08:30:31 2005  Gary Maxey  <gary.maxey@hp.com>
 
         * TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:

@@ -354,7 +354,7 @@ be_interface_strategy::replacement (void)
 
 
 // ****************************************************************
-// AMI Hander Strategy
+// AMI Handler Strategy
 
 be_interface_ami_handler_strategy::be_interface_ami_handler_strategy (
     be_interface *node
