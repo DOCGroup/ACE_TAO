@@ -75,8 +75,7 @@ private:
   /// The Event Channel implementation.
   POA_RtecEventChannelAdmin::EventChannel *ec_impl_;
 
-  /// The name we use to bind with the NameService, if this is empty, we don't
-  /// bind to the NameService
+  /// The name we use to bind with the NameService
   ACE_CString service_name_;
 
   /// The name of the file were we output the Event_Service IOR.
@@ -95,7 +94,10 @@ private:
   CORBA::ORB_var orb_;
 
   /// Use BiDirectional GIOP
-  int use_bidir_giop_;
+  bool use_bidir_giop_;
+
+  /// Should we bind to the naming service
+  bool bind_to_naming_service_;
 };
 
 #include /**/ "ace/post.h"
