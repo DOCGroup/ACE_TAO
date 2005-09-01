@@ -1,3 +1,9 @@
+Thu Sep 01 08:30:31 2005  Gary Maxey  <gary.maxey@hp.com>
+
+        * TAO_IDL/be/be_visitor_typecode/union_typecode.cpp:
+          Add extra underscore in generated names to help reduce conflicts
+          with user supplied names.
+
 Thu Sep  1 14:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Event_Service/Event_Service.{h,cpp}:
