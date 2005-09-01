@@ -132,7 +132,7 @@ mmap_map_test(void)
       {
         // The 'options' are only here to quiet MSVC 6. It can be removed
         // when MSVC 6 support is removed.
-        void *options = 0;
+        MMAP_Allocator::MEMORY_POOL_OPTIONS *options = 0;
         ACE_NEW_RETURN
           (alloc,
            MMAP_Allocator (ACE_TEXT ("foo"), ACE_TEXT ("foo"), options),
@@ -200,7 +200,7 @@ mmap_persistent_map_test(void)
 
     // The 'options' are only here to quiet MSVC 6. It can be removed
     // when MSVC 6 support is removed.
-    void *options = 0;
+    MMAP_Allocator::MEMORY_POOL_OPTIONS *options = 0;
     ACE_OS::unlink("foo");
       {
         ACE_NEW_RETURN
