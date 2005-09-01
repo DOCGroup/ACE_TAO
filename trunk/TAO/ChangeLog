@@ -1,3 +1,8 @@
+Thu Sep  1 09:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.{h,cpp}:
+          Fixed gcc4 compile errors
+
 Thu Sep  1 08:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_interface.cpp:
