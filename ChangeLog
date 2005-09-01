@@ -1,3 +1,8 @@
+Thu Sep  1 14:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Timer_Heap_T.cpp:
+          Fixed 64bit conversion error
+
 Thu Sep  1 10:10:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ACE.cpp:
