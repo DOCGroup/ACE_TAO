@@ -30,7 +30,7 @@ ACE_LSOCK::dump (void) const
 #if defined (ACE_HAS_MSG)
 // This routine sends an open file descriptor to <this->handle_>.
 
-int
+ssize_t
 ACE_LSOCK::send_handle (const ACE_HANDLE handle) const
 {
   ACE_TRACE ("ACE_LSOCK::send_handle");
@@ -71,7 +71,7 @@ ACE_LSOCK::send_handle (const ACE_HANDLE handle) const
 // Note, this routine returns -1 if problems occur, 0 if we recv a
 // message that does not have file descriptor in it, and 1 otherwise.
 
-int
+ssize_t
 ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, ssize_t *len) const
 {
   ACE_TRACE ("ACE_LSOCK::recv_handle");
