@@ -251,6 +251,10 @@ typedef enum CMA_T_SCHED_POLICY {
 // Use larger default buffer size for ease of interoperability
 #define ACE_DEFAULT_CDR_BUFSIZE 4096
 
+// Size of a wchar
+#define ACE_SIZEOF_WCHAR 2
+
+
 //=========================================================================
 // Threads specific parts
 //=========================================================================
