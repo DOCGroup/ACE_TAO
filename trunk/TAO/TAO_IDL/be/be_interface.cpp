@@ -541,15 +541,37 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
           << "TAO_ORB_Core *oc" << be_uidt_nl
           << ")" << be_nl
           << ": ";
+          
+      bool the_check =
+        (this->has_mixed_parentage_
+         && !this->is_abstract_
+         && this->pd_n_inherits > 0
+         && this->pd_inherits[0]->is_abstract ())
+        || this->is_abstract_;
 
       if (this->has_mixed_parentage_)
         {
-          *os << "ACE_NESTED_CLASS (::CORBA, AbstractBase) ("
+          *os << "ACE_NESTED_CLASS (::CORBA, "
+              << (the_check ? "AbstractBase" : "Object")
+              << ") ("
               << be_idt << be_idt << be_idt_nl
               << "objref," << be_nl
               << "_tao_collocated," << be_nl
-              << "servant" << be_uidt_nl
+              << "servant"
+              << (the_check ? "" : ", oc") << be_uidt_nl
               << ")" << be_uidt;
+              
+          if (!the_check)
+            {
+              *os << "," << be_nl
+                  << "ACE_NESTED_CLASS (CORBA, AbstractBase) ("
+                  << be_idt << be_idt_nl
+                  << "objref," << be_nl
+                  << "_tao_collocated," << be_nl
+                  << "servant"
+                  << (the_check ? ", oc" : "") << be_uidt_nl
+                  << ")" << be_uidt;
+            }
 
           int status =
             this->traverse_inheritance_graph (
@@ -565,17 +587,18 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
                           "inheritance graph traversal failed\n"));
             }
         }
-
-      if (this->has_mixed_parentage_ && ! this->is_abstract ())
-        {
-          *os << "," << be_nl;
-        }
       else
         {
           *os << be_idt;
         }
+        
+      if (the_check && !this->is_abstract_)
+        {
+          *os << "," << be_uidt_nl;
+        }
 
-      if (!is_abstract_)
+      if (!this->is_abstract_
+          && (!this->has_mixed_parentage_ || the_check))
         {
           *os << "ACE_NESTED_CLASS (CORBA, Object) ("
               << be_idt << be_idt_nl
