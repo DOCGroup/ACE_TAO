@@ -920,7 +920,8 @@ ACE_OS::readlink (const char *path, char *buf, size_t bufsiz)
 #   if !defined(ACE_HAS_NONCONST_READLINK)
       ACE_OSCALL_RETURN (::readlink (path, buf, bufsiz), int, -1);
 #   else
-      ACE_OSCALL_RETURN (::readlink ((char *)path, buf, bufsiz), int, -1);
+      ACE_OSCALL_RETURN (
+        ::readlink (const_cast <char *>(path), buf, bufsiz), int, -1);
 #   endif
 # endif /* ACE_LACKS_READLINK */
 }
