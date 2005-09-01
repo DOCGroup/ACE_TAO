@@ -54,7 +54,7 @@ ACE_SV_Message_Queue::set_id (int id)
   this->internal_id_ = id;
 }
 
-ACE_INLINE int
+ACE_INLINE ssize_t
 ACE_SV_Message_Queue::recv (ACE_SV_Message &mb,
 			    int length,
 			    long type,

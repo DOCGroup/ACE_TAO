@@ -594,7 +594,7 @@ ACE_POSIX_Proactor::Proactor_Type
 ACE_POSIX_Proactor::get_impl_type (void)
 {
   return PROACTOR_POSIX;
-} 
+}
 
 
 /**
@@ -730,9 +730,9 @@ ACE_AIOCB_Notify_Pipe_Manager::notify ()
 {
   // Send the result pointer through the pipe.
   char char_send = 0;
-  int ret_val = ACE::send (this->pipe_.write_handle (),
-                           &char_send,
-                           sizeof (char_send));
+  ssize_t ret_val = ACE::send (this->pipe_.write_handle (),
+                               &char_send,
+                               sizeof (char_send));
 
   if (ret_val < 0)
     {
@@ -831,7 +831,7 @@ ACE_POSIX_Proactor::Proactor_Type
 ACE_POSIX_AIOCB_Proactor::get_impl_type (void)
 {
   return PROACTOR_AIOCB;
-} 
+}
 
 
 int
