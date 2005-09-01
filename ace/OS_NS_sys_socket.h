@@ -155,34 +155,34 @@ namespace ACE_OS {
               int backlog);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int recv (ACE_HANDLE handle,
-            char *buf,
-            size_t len,
-            int flags = 0);
-
-  ACE_NAMESPACE_INLINE_FUNCTION
-  int recvfrom (ACE_HANDLE handle,
+  ssize_t recv (ACE_HANDLE handle,
                 char *buf,
                 size_t len,
-                int flags,
-                struct sockaddr *addr,
-                int *addrlen);
+                int flags = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int recvfrom (ACE_HANDLE handle,
-                iovec *buffers,
-                int buffer_count,
-                size_t &number_of_bytes_recvd,
-                int &flags,
-                struct sockaddr *addr,
-                int *addrlen,
-                ACE_OVERLAPPED *overlapped,
-                ACE_OVERLAPPED_COMPLETION_FUNC func);
+  ssize_t recvfrom (ACE_HANDLE handle,
+                    char *buf,
+                    size_t len,
+                    int flags,
+                    struct sockaddr *addr,
+                    int *addrlen);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int recvmsg (ACE_HANDLE handle,
-               struct msghdr *msg,
-               int flags);
+  ssize_t recvfrom (ACE_HANDLE handle,
+                    iovec *buffers,
+                    int buffer_count,
+                    size_t &number_of_bytes_recvd,
+                    int &flags,
+                    struct sockaddr *addr,
+                    int *addrlen,
+                    ACE_OVERLAPPED *overlapped,
+                    ACE_OVERLAPPED_COMPLETION_FUNC func);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  ssize_t recvmsg (ACE_HANDLE handle,
+                   struct msghdr *msg,
+                   int flags);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t recvv (ACE_HANDLE handle,
@@ -190,34 +190,34 @@ namespace ACE_OS {
                  int iovlen);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int send (ACE_HANDLE handle,
-            const char *buf,
-            size_t len,
-            int flags = 0);
+  ssize_t send (ACE_HANDLE handle,
+                const char *buf,
+                size_t len,
+                int flags = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int sendmsg (ACE_HANDLE handle,
-               const struct msghdr *msg,
-               int flags);
+  ssize_t sendmsg (ACE_HANDLE handle,
+                   const struct msghdr *msg,
+                   int flags);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int sendto (ACE_HANDLE handle,
-              const char *buf,
-              size_t len,
-              int flags,
-              const struct sockaddr *addr,
-              int addrlen);
+  ssize_t sendto (ACE_HANDLE handle,
+                  const char *buf,
+                  size_t len,
+                  int flags,
+                  const struct sockaddr *addr,
+                  int addrlen);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int sendto (ACE_HANDLE handle,
-              const iovec *buffers,
-              int buffer_count,
-              size_t &number_of_bytes_sent,
-              int flags,
-              const struct sockaddr *addr,
-              int addrlen,
-              ACE_OVERLAPPED *overlapped,
-              ACE_OVERLAPPED_COMPLETION_FUNC func);
+  ssize_t sendto (ACE_HANDLE handle,
+                  const iovec *buffers,
+                  int buffer_count,
+                  size_t &number_of_bytes_sent,
+                  int flags,
+                  const struct sockaddr *addr,
+                  int addrlen,
+                  ACE_OVERLAPPED *overlapped,
+                  ACE_OVERLAPPED_COMPLETION_FUNC func);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t sendv (ACE_HANDLE handle,
