@@ -83,19 +83,32 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CORBA::Object_var naming_obj =
-        this->orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      if (CORBA::is_nil (naming_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the Naming Service.\n"),
-                          1);
+      // When we have a service name or a non local scheduler we must use the
+      // naming service.
 
-      CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      bool use_name_service = this->service_name_.length () > 0 ||
+                              this->scheduler_type_ != ES_SCHED_NONE;
 
+      CORBA::Object_var naming_obj;
       RtecScheduler::Scheduler_var scheduler;
+      CosNaming::NamingContext_var naming_context;
+
+      if (use_name_service)
+        {
+          naming_obj=
+            this->orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          if (CORBA::is_nil (naming_obj.in ()))
+            ACE_ERROR_RETURN ((LM_ERROR,
+                                " (%P|%t) Unable to initialize the Naming Service.\n"),
+                              1);
+
+          naming_context =
+            CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+
       // This is the name we (potentially) register the Scheduling
       // Service in the Naming Service.
       CosNaming::Name schedule_name (1);
@@ -115,9 +128,12 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
           ACE_TRY_CHECK;
 
           // Register the servant with the Naming Context....
-          naming_context->rebind (schedule_name, scheduler.in ()
-                                  ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          if (!CORBA::is_nil (naming_context.in ()))
+            {
+              naming_context->rebind (schedule_name, scheduler.in ()
+                                      ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
         }
       else if (this->scheduler_type_ == ES_SCHED_GLOBAL)
         {
@@ -127,12 +143,12 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
           ACE_TRY_CHECK;
 
           scheduler = RtecScheduler::Scheduler::_narrow (tmp.in ()
-                                                         ACE_ENV_ARG_PARAMETER);
+                                                          ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (CORBA::is_nil (scheduler.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
-                               " (%P|%t) Unable to resolve the Scheduling Service.\n"),
+                                " (%P|%t) Unable to resolve the Scheduling Service.\n"),
                               1);
         }
 
@@ -144,11 +160,12 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
           attr.scheduler = scheduler.in ();
         }
 
-      TAO_EC_Event_Channel* ec_impl;
+      TAO_EC_Event_Channel* ec_impl = 0;
       ACE_NEW_RETURN (ec_impl,
                       TAO_EC_Event_Channel (attr),
                       1);
       this->ec_impl_ = ec_impl;
+
       ec_impl->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -276,22 +293,35 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
                   ACE_TEXT("The EC IOR is <%s>\n"),
                   ACE_TEXT_CHAR_TO_TCHAR(str.in ())));
 
-      CosNaming::Name channel_name (1);
-      channel_name.length (1);
-      channel_name[0].id = CORBA::string_dup (this->service_name_.c_str());
-      naming_context->rebind (channel_name, ec.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      if ((this->service_name_.length () > 0) &&
+          !CORBA::is_nil (naming_context.in ()))
+        {
+          CosNaming::Name channel_name (1);
+          channel_name.length (1);
+          channel_name[0].id = CORBA::string_dup (this->service_name_.c_str());
+          naming_context->rebind (channel_name, ec.in () ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("%s; running event service\n"),
                   ACE_TEXT_CHAR_TO_TCHAR(__FILE__)));
+
       this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      naming_context->unbind (channel_name ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      if ((this->service_name_.length () > 0) &&
+          !CORBA::is_nil (naming_context.in ()))
+        {
+          CosNaming::Name channel_name (1);
+          channel_name.length (1);
+          channel_name[0].id = CORBA::string_dup (this->service_name_.c_str());
+          naming_context->unbind (channel_name ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
 
-      if (!CORBA::is_nil (scheduler.in ()))
+      if (!CORBA::is_nil (scheduler.in ()) &&
+          !CORBA::is_nil (naming_context.in ()))
         {
           naming_context->unbind (schedule_name ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -314,7 +344,7 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
   // default values...
   this->service_name_ = "EventService";
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:o:p:s:q:b"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:::o:p:s:q:b"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -322,7 +352,10 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
       switch (opt)
         {
         case 'n':
-          this->service_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+          if (get_opt.opt_arg ())
+            this->service_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+          else
+            this->service_name_ = "";
           break;
 
         case 'o':
@@ -372,7 +405,7 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
         default:
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT("Usage: %s ")
-                      ACE_TEXT("-n service_name ")
+                      ACE_TEXT("-n [service_name] ")
                       ACE_TEXT("-o ior_file_name ")
                       ACE_TEXT("-p pid_file_name ")
                       ACE_TEXT("-s <global|local|none> ")
