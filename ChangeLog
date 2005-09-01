@@ -1,3 +1,8 @@
+Thu Sep 01 10:42:17 2005  Gary Maxey <gary.maxey@hp.com>
+
+        * ace/config-tandem-nsk-mips-v3.h: 
+          Defined ACE_SIZEOF_WCHAR
+
 Thu Sep  1 15:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SV_Message_Queue.h:
