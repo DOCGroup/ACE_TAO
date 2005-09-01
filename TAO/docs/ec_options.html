@@ -722,11 +722,10 @@ static EC_Gateway_IIOP_Factory "-ECGIIOPConsumerECControl null ....."
         <!-- <TR NAME="-d"> -->
         <TR>
           <TD><CODE>-n</CODE>
-            <EM>[service_name]</EM>
+            <EM>service_name</EM>
           </TD>
           <TD>The name with which the Event Service registers itself in the
-	  Naming Service. When no name is passed the Event Service will not
-          register itself with the Naming Service.
+	  Naming Service.
           </TD>
         </TR>
         <!-- <TR NAME="-o"> -->
@@ -764,6 +763,15 @@ static EC_Gateway_IIOP_Factory "-ECGIIOPConsumerECControl null ....."
             <EM></EM>
           </TD>
           <TD>Use BiDIR GIOP
+          </TD>
+        </TR>
+
+        <!-- <TR NAME="-x"> -->
+        <TR>
+          <TD><CODE>-x</CODE>
+            <EM></EM>
+          </TD>
+          <TD>Don't register the Event Service to the Naming Service
           </TD>
         </TR>
 

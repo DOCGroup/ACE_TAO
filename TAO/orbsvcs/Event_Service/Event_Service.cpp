@@ -35,7 +35,8 @@ Event_Service::Event_Service (void)
   : sched_impl_ (0),
     ec_impl_ (0),
     scheduler_type_ (ES_SCHED_NONE),
-    use_bidir_giop_ (0)
+    use_bidir_giop_ (false),
+    bind_to_naming_service_ (true)
 {
 }
 
@@ -86,7 +87,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
       // When we have a service name or a non local scheduler we must use the
       // naming service.
 
-      bool use_name_service = this->service_name_.length () > 0 ||
+      bool use_name_service = bind_to_naming_service_ ||
                               this->scheduler_type_ != ES_SCHED_NONE;
 
       CORBA::Object_var naming_obj;
@@ -175,7 +176,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
       // servant under the default POA, else create a new child POA with persistent policies
       // the needed policies
       int persistent = ACE_OS::strcmp(this->servant_name_.c_str(), "");
-      if ((persistent == 0) && (this->use_bidir_giop_ == 0))
+      if ((persistent == 0) && (this->use_bidir_giop_ == false))
         {
           // Notice that we activate *this* object with the POA, but we
           // forward all the requests to the underlying EC
@@ -203,7 +204,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
               ACE_TRY_CHECK;
             }
 
-          if (this->use_bidir_giop_ == 1)
+          if (this->use_bidir_giop_ == true)
             {
               CORBA::Any pol;
               pol <<= BiDirPolicy::BOTH;
@@ -293,8 +294,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
                   ACE_TEXT("The EC IOR is <%s>\n"),
                   ACE_TEXT_CHAR_TO_TCHAR(str.in ())));
 
-      if ((this->service_name_.length () > 0) &&
-          !CORBA::is_nil (naming_context.in ()))
+      if (bind_to_naming_service_ && !CORBA::is_nil (naming_context.in ()))
         {
           CosNaming::Name channel_name (1);
           channel_name.length (1);
@@ -310,8 +310,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
       this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if ((this->service_name_.length () > 0) &&
-          !CORBA::is_nil (naming_context.in ()))
+      if (bind_to_naming_service_ && !CORBA::is_nil (naming_context.in ()))
         {
           CosNaming::Name channel_name (1);
           channel_name.length (1);
@@ -344,7 +343,7 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
   // default values...
   this->service_name_ = "EventService";
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:::o:p:s:q:b"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:o:p:s:q:bx"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -352,11 +351,7 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
       switch (opt)
         {
         case 'n':
-          if (get_opt.opt_arg ())
-            this->service_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
-          else
-            this->service_name_ = "";
-          break;
+          this->service_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
 
         case 'o':
           this->ior_file_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
@@ -371,7 +366,11 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
           break;
 
         case 'b':
-          this->use_bidir_giop_ = 1;
+          this->use_bidir_giop_ = true;
+          break;
+
+        case 'x':
+          this->bind_to_naming_service_ = false;
           break;
 
         case 's':
@@ -405,12 +404,13 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
         default:
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT("Usage: %s ")
-                      ACE_TEXT("-n [service_name] ")
+                      ACE_TEXT("-n service_name ")
                       ACE_TEXT("-o ior_file_name ")
                       ACE_TEXT("-p pid_file_name ")
                       ACE_TEXT("-s <global|local|none> ")
                       ACE_TEXT("-q servant_name for persistent IOR ")
-                      ACE_TEXT("-b use bidir giop ")
+                      ACE_TEXT("-x [disable naming service bind] ")
+                      ACE_TEXT("-b [use bidir giop] ")
                       ACE_TEXT("\n"),
                       argv[0]));
           return -1;
