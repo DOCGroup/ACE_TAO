@@ -3,15 +3,17 @@
 #include "Payload_Receiver.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_sys_time.h"
 
 ACE_RCSID(Big_Request_Muxing, server, "$Id$")
 
 const char *ior_output_file = "test.ior";
+static int expected = 600;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Opt get_opts (argc, argv, "o:e:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -20,11 +22,14 @@ parse_args (int argc, char *argv[])
       case 'o':
         ior_output_file = get_opts.opt_arg ();
         break;
+      case 'e':
+        expected = ACE_OS::atoi(get_opts.opt_arg());
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-                           "-o <iorfile>"
+                           "-o <iorfile> [-e <expected>]"
                            "\n",
                            argv [0]),
                           -1);
@@ -66,7 +71,7 @@ main (int argc, char *argv[])
 
       Payload_Receiver *payload_receiver_impl;
       ACE_NEW_RETURN (payload_receiver_impl,
-                      Payload_Receiver,
+                      Payload_Receiver(expected),
                       1);
       PortableServer::ServantBase_var receiver_owner_transfer(payload_receiver_impl);
 
@@ -91,32 +96,54 @@ main (int argc, char *argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ACE_Time_Value tv (180, 0);
-      orb->run (tv ACE_ENV_ARG_PARAMETER);
+      ACE_DEBUG((LM_DEBUG, "Server waiting for messages...\n"));
+
+      ACE_Time_Value end_time = ACE_OS::gettimeofday() + ACE_Time_Value(25);
+
+      while (payload_receiver_impl->count() < expected)
+      {
+        ACE_Time_Value tv(0, 100 * 1000);
+        orb->run (tv ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+        if (ACE_OS::gettimeofday() > end_time)
+          break;
+      }
+
+      ACE_DEBUG((LM_DEBUG, "Server waiting for extra messages...\n"));
+
+      ACE_Time_Value tv(1);
+      orb->run(tv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CORBA::Long count =
-        payload_receiver->get_message_count (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      int count = payload_receiver_impl->count();
 
-      ACE_DEBUG ((LM_DEBUG, "(%P) - Payload_Receiver on server got %d messages\n",
-                  count));
+      int result = 0;
+
+      if (count != expected)
+      {
+        // Even though 200 events were sent with SYNC_NONE, we still don't
+        // expect TAO to drop any events.
+        ACE_ERROR((LM_ERROR, "Error: "));
+        result = 1;
+      }
+
+      ACE_DEBUG ((LM_DEBUG, "(%P) - Server got %d messages\n", count));
 
       root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      return result;
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
-      return 1;
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception caught:");
     }
   ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG, "Ending server\n"));
 
-  return 0;
+  return 1;
 }

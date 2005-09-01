@@ -10,8 +10,5 @@ module Test
   {
     /// Send the data using a twoway operat
     oneway void more_data (in Payload the_payload);
-
-    /// Return the number of messages received so far
-    long get_message_count ();
   };
 };

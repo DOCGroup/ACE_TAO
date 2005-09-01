@@ -5,24 +5,24 @@
 
 ACE_RCSID(Big_Request_Muxing, Payload_Receiver, "$Id$")
 
-Payload_Receiver::Payload_Receiver (void)
-  :  message_count_ (0)
-  ,  byte_count_ (0)
+Payload_Receiver::Payload_Receiver (int expected)
+  : message_count_ (0)
+  , expected_(expected)
 {
 }
 
 void
-Payload_Receiver::more_data (const Test::Payload &payload
-                             ACE_ENV_ARG_DECL_NOT_USED)
+Payload_Receiver::more_data (const Test::Payload& payload ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->message_count_++;
-  this->byte_count_ += payload.length ();
+  if (payload.length() > 0)
+  {
+    this->message_count_++;
+  }
 }
 
-CORBA::Long
-Payload_Receiver::get_message_count (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+int
+Payload_Receiver::count() const
 {
-  return this->message_count_;
+  return message_count_;
 }

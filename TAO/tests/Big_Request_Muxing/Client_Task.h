@@ -29,6 +29,8 @@ public:
   /// Thread entry point
   int svc (void);
 
+  bool done(void) const;
+
 private:
   /// Make sure that all threads have connections available to
   /// workaround bug 189
@@ -50,6 +52,8 @@ private:
 
   /// The SyncScope used in this Task
   Messaging::SyncScope sync_scope_;
+
+  bool done_;
 };
 
 #include /**/ "ace/post.h"

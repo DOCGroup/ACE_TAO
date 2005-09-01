@@ -9,50 +9,47 @@ use lib '../../../bin';
 use PerlACE::Run_Test;
 
 $iorfile = PerlACE::LocalFile ("server.ior");
-unlink $iorfile;
-$status = 0;
 
-if (PerlACE::is_vxworks_test()) {
-    $SV = new PerlACE::ProcessVX ("server", "-o server.ior");
-}
-else {
-    $SV = new PerlACE::Process ("server", "-o $iorfile");    
-}
+$SV  = new PerlACE::Process ("server", "-o $iorfile -e 1200");
 $CL1 = new PerlACE::Process ("client", " -k file://$iorfile");
 $CL2 = new PerlACE::Process ("client", " -k file://$iorfile");
 
-$SV->Spawn ();
+for ($n = 0; $n < 10; ++$n) {
+  print "=================================================================\n";
+  unlink $iorfile;
 
-if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
+  $SV->Spawn ();
+  if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
+      print STDERR "ERROR: cannot find file <$iorfile>\n";
+      $SV->Kill (); 
+      exit 1;
+  }
 
-$CL1->Spawn (60);
-$CL2->Spawn (60);
+  $CL1->Spawn();
+  $CL2->Spawn();
 
-$client1 = $CL1->WaitKill (300);
+  $client1 = $CL1->WaitKill (30);
+  if ($client1 != 0) {
+      print STDERR "ERROR: client 1 returned $client1\n";
+      $CL2->Kill();
+      $SV->Kill();
+      exit 1;
+  }
 
-if ($client1 != 0) {
-    print STDERR "ERROR: client 1 returned $client1\n";
-    $status = 1;
-}
+  $client2 = $CL2->WaitKill (30);
+  if ($client2 != 0) {
+      print STDERR "ERROR: client 2 returned $client2\n";
+      $SV->Kill();
+      exit 1;
+  }
 
-$client2 = $CL2->WaitKill (300);
-
-if ($client2 != 0) {
-    print STDERR "ERROR: client 2 returned $client2\n";
-    $status = 1;
-}
-
-$server = $SV->WaitKill (300);
-
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
-    $status = 1;
+  $server = $SV->WaitKill (30);
+  if ($server != 0) {
+      print STDERR "ERROR: server returned $server\n";
+      exit 1;
+  }
 }
 
 unlink $iorfile;
 
-exit $status;
+exit 0;
