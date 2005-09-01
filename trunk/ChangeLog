@@ -1,6 +1,12 @@
+Thu Sep  1 11:55:39 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/OS_NS_unistd.cpp (num_processors, num_processors_online):
+
+	  Provide implementation for *BSD and MacOSX.
+
 Thu Sep 01 10:42:17 2005  Gary Maxey <gary.maxey@hp.com>
 
-        * ace/config-tandem-nsk-mips-v3.h: 
+        * ace/config-tandem-nsk-mips-v3.h:
           Defined ACE_SIZEOF_WCHAR
 
 Thu Sep  1 15:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
