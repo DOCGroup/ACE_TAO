@@ -2,16 +2,16 @@
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
-#include "ace/UUID.h"
-#include "ace/Thread_Manager.h"
-#include "ace/TMCast/Group.hpp"
-
-#include "tao/PortableServer/Servant_Base.h"
 #include "tao/AnyTypeCode/Any_Impl.h"
 #include "tao/AnyTypeCode/DynamicC.h"
+#include "tao/PortableServer/Servant_Base.h"
 #include "tao/PI/PI.h"
 
 #include "orbsvcs/FT_CORBA_ORBC.h"
+
+#include "ace/UUID.h"
+#include "ace/Thread_Manager.h"
+#include "ace/TMCast/Group.hpp"
 
 #include "CrashPoint.h"
 #include "StateUpdate.h"
