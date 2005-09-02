@@ -96,7 +96,7 @@ test_octet_seq (const CORBA::Object_var object ACE_ENV_ARG_DECL)
   ACE_hrtime_t test_start = ACE_OS::gethrtime ();
   for (int i = 0; i < niterations; ++i)
     {
-      CORBA::ULongLong start = ACE_OS::gethrtime ();
+      ACE_hrtime_t start = ACE_OS::gethrtime ();
 
       CORBA::Request_var request =
         object->_request ("test_octet_method" ACE_ENV_ARG_PARAMETER);
@@ -146,7 +146,7 @@ test_long_seq (const CORBA::Object_var object ACE_ENV_ARG_DECL)
   ACE_hrtime_t test_start = ACE_OS::gethrtime ();
   for (int i = 0; i < niterations; ++i)
     {
-      CORBA::ULongLong start = ACE_OS::gethrtime ();
+      ACE_hrtime_t start = ACE_OS::gethrtime ();
 
       CORBA::Request_var request =
         object->_request ("test_long_method" ACE_ENV_ARG_PARAMETER);
@@ -196,7 +196,7 @@ test_short_seq (const CORBA::Object_var object ACE_ENV_ARG_DECL)
   ACE_hrtime_t test_start = ACE_OS::gethrtime ();
   for (int i = 0; i < niterations; ++i)
     {
-      CORBA::ULongLong start = ACE_OS::gethrtime ();
+      ACE_hrtime_t start = ACE_OS::gethrtime ();
 
       CORBA::Request_var request =
         object->_request ("test_short_method" ACE_ENV_ARG_PARAMETER);
@@ -246,7 +246,7 @@ test_char_seq (const CORBA::Object_var object ACE_ENV_ARG_DECL)
   ACE_hrtime_t test_start = ACE_OS::gethrtime ();
   for (int i = 0; i < niterations; ++i)
     {
-      CORBA::ULongLong start = ACE_OS::gethrtime ();
+      ACE_hrtime_t start = ACE_OS::gethrtime ();
 
       CORBA::Request_var request =
         object->_request ("test_char_method" ACE_ENV_ARG_PARAMETER);
@@ -296,7 +296,7 @@ test_double_seq (const CORBA::Object_var object ACE_ENV_ARG_DECL)
   ACE_hrtime_t test_start = ACE_OS::gethrtime ();
   for (int i = 0; i < niterations; ++i)
     {
-      CORBA::ULongLong start = ACE_OS::gethrtime ();
+      ACE_hrtime_t start = ACE_OS::gethrtime ();
 
       CORBA::Request_var request =
         object->_request ("test_double_method" ACE_ENV_ARG_PARAMETER);
@@ -346,7 +346,7 @@ test_longlong_seq (const CORBA::Object_var object ACE_ENV_ARG_DECL)
   ACE_hrtime_t test_start = ACE_OS::gethrtime ();
   for (int i = 0; i < niterations; ++i)
     {
-      CORBA::ULongLong start = ACE_OS::gethrtime ();
+      ACE_hrtime_t start = ACE_OS::gethrtime ();
 
       CORBA::Request_var request =
         object->_request ("test_longlong_method" ACE_ENV_ARG_PARAMETER);

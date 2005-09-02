@@ -138,7 +138,7 @@ test_octet_seq (Test::Roundtrip_ptr roundtrip ACE_ENV_ARG_DECL)
           if ((request[j]->return_value () >>= retval) == 1)
             {
               ACE_hrtime_t now = ACE_OS::gethrtime ();
-              history.sample (now - retval);
+              history.sample (ACE_HRTIME_TO_U64(now) - retval);
             }
         }
     }
@@ -211,7 +211,7 @@ test_long_seq (Test::Roundtrip_ptr roundtrip ACE_ENV_ARG_DECL)
           if ((request[j]->return_value () >>= retval) == 1)
             {
               ACE_hrtime_t now = ACE_OS::gethrtime ();
-              history.sample (now - retval);
+              history.sample (ACE_HRTIME_TO_U64(now) - retval);
             }
         }
     }
@@ -284,7 +284,7 @@ test_short_seq (Test::Roundtrip_ptr roundtrip ACE_ENV_ARG_DECL)
           if ((request[j]->return_value () >>= retval) == 1)
             {
               ACE_hrtime_t now = ACE_OS::gethrtime ();
-              history.sample (now - retval);
+              history.sample (ACE_HRTIME_TO_U64(now) - retval);
             }
         }
     }
@@ -357,7 +357,7 @@ test_char_seq (Test::Roundtrip_ptr roundtrip ACE_ENV_ARG_DECL)
           if ((request[j]->return_value () >>= retval) == 1)
             {
               ACE_hrtime_t now = ACE_OS::gethrtime ();
-              history.sample (now - retval);
+              history.sample (ACE_HRTIME_TO_U64(now) - retval);
             }
         }
     }
@@ -430,7 +430,7 @@ test_longlong_seq (Test::Roundtrip_ptr roundtrip ACE_ENV_ARG_DECL)
           if ((request[j]->return_value () >>= retval) == 1)
             {
               ACE_hrtime_t now = ACE_OS::gethrtime ();
-              history.sample (now - retval);
+              history.sample (ACE_HRTIME_TO_U64(now) - retval);
             }
         }
     }
@@ -503,7 +503,7 @@ test_double_seq (Test::Roundtrip_ptr roundtrip ACE_ENV_ARG_DECL)
           if ((request[j]->return_value () >>= retval) == 1)
             {
               ACE_hrtime_t now = ACE_OS::gethrtime ();
-              history.sample (now - retval);
+              history.sample (ACE_HRTIME_TO_U64(now) - retval);
             }
         }
     }
