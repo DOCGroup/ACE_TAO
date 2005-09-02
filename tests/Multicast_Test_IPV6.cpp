@@ -784,7 +784,7 @@ int producer (MCT_Config &config)
       else
         ACE_DEBUG ((LM_INFO, ACE_TEXT ("set IP_MULTICAST_TTL = %d\n"), ttl));
     }
-#if defined (__linux__) && defined (ACE_HAS_IPV6)
+#if defined (ACE_HAS_IPV6)
   else
     {
       // for IPv6, a hop limit is used instead of TTL
@@ -801,7 +801,7 @@ int producer (MCT_Config &config)
         ACE_DEBUG ((LM_INFO, ACE_TEXT ("set IPV6_MULTICAST_HOPS = %d\n"),
                     hops));
     }
-#endif /* __linux__ && ACE_HAS_IPV6 */
+#endif /* ACE_HAS_IPV6 */
 
 
   int iterations = config.iterations ();
@@ -869,7 +869,7 @@ int advance_addr (ACE_INET_Addr &addr)
       addr.set (buf);
       return 0;
     }
-#if defined (__linux__) && defined (ACE_HAS_IPV6)
+#if defined (ACE_HAS_IPV6)
   else  // assume AF_INET6
     {
       sockaddr_in6 *saddr = reinterpret_cast<sockaddr_in6 *> (addr.get_addr ());
@@ -900,7 +900,7 @@ int advance_addr (ACE_INET_Addr &addr)
 
       return 0;
     }
-#endif /* __linux__ && ACE_HAS_IPV6 */
+#endif /* ACE_HAS_IPV6 */
 
   return 0;
 }
@@ -930,9 +930,12 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Start test only if options are valid.
   ACE_START_TEST (test.c_str ());
 
-#if defined (__linux__) && defined (ACE_HAS_IPV6)
+#if defined (ACE_HAS_IPV6)
+
+# if !defined (ACE_LACKS_UNIX_SIGNALS)
   // Register a signal handler to close down application gracefully.
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+# endif
 
   // Dump the configuration info to the log if caller passed debug option.
   if (config.debug ())
@@ -979,7 +982,7 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
 
   delete task;
-#endif /* __linux__ && ACE_HAS_IPV6 */
+#endif /* ACE_HAS_IPV6 */
   ACE_END_TEST;
   return (retval == 0 && error == 0) ? 0 : 1;
 }

@@ -1,30 +1,49 @@
+Fri Sep  2 10:44:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/SOCK_Dgram{.h .cpp}:
+        * ace/SOCK_Dgram_Mcast{.h .cpp}:
+          Added IPv6 multicast support for Win32 (>= XP Pro/Server 2003).
+
+        * tests/Multicast_Test_IPV6.cpp:
+          Changed to do IPv6 multicast for non-linux systems as well.
+
+        * bin/MakeProjectCreator/config/ipv6.mpb:
+          Added new feature config for IPv6 support.
+          Adds additional link library Iphlpapi.lib for windows projects
+          (MPC types vc6, vc7, vc71, vc8, nmake, borland and bmake)
+          and sets macro ACE_HAS_IPV6.
+
+        * bin/MakeProjectCreator/config/global.features:
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+          Introduced 'ipv6' feature.
+
 Thu Sep  1 17:28:25 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Atomic_Op.cpp:
-	* ace/Atomic_Op.h:
+        * ace/Atomic_Op.cpp:
+        * ace/Atomic_Op.h:
 
-	  Add ACE_Atomic_Op<ACE_Thread_Mutex, long> template
-	  specialization for AMD64 when compiled with GCC.
+          Add ACE_Atomic_Op<ACE_Thread_Mutex, long> template
+          specialization for AMD64 when compiled with GCC.
 
 Thu Sep  1 17:38:10 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* bin/ciao_tests.lst
+        * bin/ciao_tests.lst
 
-	Corrected the path to the hello test. 
-	
+        Corrected the path to the hello test.
+
 Thu Sep  1 18:00:31 2005  Steve Huston  <shuston@riverace.com>
 
-	* tests/Based_Pointer_Test.cpp: Corrected to build on MSVC 6,
-	  lacking template typedefs. Thanks to Johnny Willemsen for
-	  this fix.
+        * tests/Based_Pointer_Test.cpp: Corrected to build on MSVC 6,
+          lacking template typedefs. Thanks to Johnny Willemsen for
+          this fix.
 
 Thu Sep  1 15:05:55 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/ciao_client_dnc.mpb
-	* bin/MakeProjectCreator/config/ciao_servant_dnc.mpb
+        * bin/MakeProjectCreator/config/ciao_client_dnc.mpb
+        * bin/MakeProjectCreator/config/ciao_servant_dnc.mpb
 
-	Updates to support the CIAO reorganization. 
-	
+        Updates to support the CIAO reorganization.
+
 Thu Sep  1 19:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/templates/bor.mpd:
@@ -36,9 +55,9 @@ Thu Sep  1 19:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Sep  1 11:55:39 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/OS_NS_unistd.cpp (num_processors, num_processors_online):
+        * ace/OS_NS_unistd.cpp (num_processors, num_processors_online):
 
-	  Provide implementation for *BSD and MacOSX.
+          Provide implementation for *BSD and MacOSX.
 
 Thu Sep 01 10:42:17 2005  Gary Maxey <gary.maxey@hp.com>
 
