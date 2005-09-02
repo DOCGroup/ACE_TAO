@@ -99,7 +99,7 @@ Client_Task::test_octet_seq (ACE_ENV_SINGLE_ARG_DECL)
 
   for (int i = 0; i != this->niterations_; ++i)
     {
-      CORBA::ULongLong start = ACE_OS::gethrtime ();
+      ACE_hrtime_t start = ACE_OS::gethrtime ();
 
       (void) this->roundtrip_->test_octet_method (ol, start ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -118,7 +118,7 @@ Client_Task::test_long_seq (ACE_ENV_SINGLE_ARG_DECL)
 
   for (int i = 0; i != this->niterations_; ++i)
     {
-      CORBA::ULongLong start = ACE_OS::gethrtime ();
+      ACE_hrtime_t start = ACE_OS::gethrtime ();
 
       (void) this->roundtrip_->test_long_method (ll, start ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -138,7 +138,7 @@ Client_Task::test_short_seq (ACE_ENV_SINGLE_ARG_DECL)
 
   for (int i = 0; i != this->niterations_; ++i)
     {
-      CORBA::ULongLong start = ACE_OS::gethrtime ();
+      ACE_hrtime_t start = ACE_OS::gethrtime ();
 
       (void) this->roundtrip_->test_short_method (sl, start ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -157,7 +157,7 @@ Client_Task::test_char_seq (ACE_ENV_SINGLE_ARG_DECL)
 
   for (int i = 0; i != this->niterations_; ++i)
     {
-      CORBA::ULongLong start = ACE_OS::gethrtime ();
+      ACE_hrtime_t start = ACE_OS::gethrtime ();
 
       (void) this->roundtrip_->test_char_method (cl, start ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -176,7 +176,7 @@ Client_Task::test_longlong_seq (ACE_ENV_SINGLE_ARG_DECL)
 
   for (int i = 0; i != this->niterations_; ++i)
     {
-      CORBA::ULongLong start = ACE_OS::gethrtime ();
+      ACE_hrtime_t start = ACE_OS::gethrtime ();
 
       (void) this->roundtrip_->test_longlong_method (ll, start ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -195,7 +195,7 @@ Client_Task::test_double_seq (ACE_ENV_SINGLE_ARG_DECL)
 
   for (int i = 0; i != this->niterations_; ++i)
     {
-      CORBA::ULongLong start = ACE_OS::gethrtime ();
+      ACE_hrtime_t start = ACE_OS::gethrtime ();
 
       (void) this->roundtrip_->test_double_method (dl, start ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;

@@ -123,7 +123,7 @@ main (int argc, char *argv[])
       ACE_hrtime_t test_start = ACE_OS::gethrtime ();
       for (int i = 0; i < niterations; ++i)
         {
-          CORBA::ULongLong start = ACE_OS::gethrtime ();
+          ACE_hrtime_t start = ACE_OS::gethrtime ();
 
           CORBA::Request_var request =
             object->_request ("test_method" ACE_ENV_ARG_PARAMETER);
