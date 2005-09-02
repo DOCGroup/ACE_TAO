@@ -1,3 +1,9 @@
+Fri Sep  2 15:10:43 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* docs/tutorial
+
+	Removed the obsolete hello tutorial.
+
 Fri Sep  2 15:04:00 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* tests/tests.mwc
