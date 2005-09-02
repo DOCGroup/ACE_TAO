@@ -587,5 +587,9 @@
 #  endif
 # endif /* !ACE_HAS_WINCE */
 
+#if !defined (ACE_DEFAULT_BACKLOG)
+#  define ACE_DEFAULT_BACKLOG SOMAXCONN
+#endif /* ACE_DEFAULT_BACKLOG */
+
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_COMMON_H */
