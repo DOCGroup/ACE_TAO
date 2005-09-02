@@ -1,6 +1,6 @@
 // $Id$
 
-project(CIDL_Basic_stub): ciao_client {
+project(CIDL_Basic_stub): ciao_client_dnc {
 
   sharedname = CIDL_Basic_stub
   idlflags += -Wb,stub_export_macro=BASIC_STUB_Export -Wb,stub_export_include=Basic_stub_export.h -Wb,skel_export_macro=BASIC_SVNT_Export -Wb,skel_export_include=Basic_svnt_export.h
@@ -20,7 +20,7 @@ project(CIDL_Basic_stub): ciao_client {
   }
 }
 
-project(CIDL_Basic_svnt) : ciao_servant {
+project(CIDL_Basic_svnt) : ciao_servant_dnc {
   after +=  CIDL_Basic_stub
   sharedname = CIDL_Basic_svnt
   libs    += CIDL_Basic_stub
@@ -42,7 +42,7 @@ project(CIDL_Basic_svnt) : ciao_servant {
   }
 }
 
-project(CodeGen_stub): ciao_client {
+project(CodeGen_stub): ciao_client_dnc {
   after += CIDL_Basic_stub
   libs    += CIDL_Basic_stub
   sharedname = CodeGen_stub
@@ -63,7 +63,7 @@ project(CodeGen_stub): ciao_client {
   }
 }
 
-project(CodeGen_svnt) : ciao_servant {
+project(CodeGen_svnt) : ciao_servant_dnc {
   after += CIDL_Basic_svnt CodeGen_stub
   sharedname  = CodeGen_svnt
   libs    += CodeGen_stub CIDL_Basic_stub CIDL_Basic_svnt
@@ -95,7 +95,7 @@ project(CodeGen_svnt) : ciao_servant {
 }
 
 
-project(CodeGen_exec) : ciao_component {
+project(CodeGen_exec) : ciao_component_dnc {
   after   += CodeGen_svnt CodeGen_stub
   sharedname = CodeGen_exec
   libs      += CodeGen_stub CodeGen_svnt CIDL_Basic_stub CIDL_Basic_svnt
