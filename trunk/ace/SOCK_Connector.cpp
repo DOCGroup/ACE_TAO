@@ -222,30 +222,31 @@ ACE_SOCK_Connector::complete (ACE_SOCK_Stream &new_stream,
                               const ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_SOCK_Connector::complete");
-  ACE_HANDLE h = ACE::handle_timed_complete (new_stream.get_handle (),
-                                             tv);
+  ACE_HANDLE h = ACE::handle_timed_complete (new_stream.get_handle (), tv);
   // We failed to get connected.
   if (h == ACE_INVALID_HANDLE)
     {
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_NON_BLOCKING_BUG)
       // Win32 has a timing problem - if you check to see if the
       // connection has completed too fast, it will fail - so wait
       // <ACE_NON_BLOCKING_BUG_DELAY> microseconds to let it catch up
       // then retry to see if it's a real failure.
-      ACE_Time_Value time (0, ACE_NON_BLOCKING_BUG_DELAY);
-      ACE_OS::sleep (time);
-      h = ACE::handle_timed_complete (new_stream.get_handle (),
-                                      tv);
+      if (errno != ETIME)
+        {
+          ACE_Time_Value time (0, ACE_NON_BLOCKING_BUG_DELAY);
+          ACE_OS::sleep (time);
+          h = ACE::handle_timed_complete (new_stream.get_handle (), tv);
+        }
       if (h == ACE_INVALID_HANDLE)
         {
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_NON_BLOCKING_BUG */
       // Save/restore errno.
       ACE_Errno_Guard error (errno);
       new_stream.close ();
       return -1;
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_NON_BLOCKING_BUG)
         }
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_NON_BLOCKING_BUG */
     }
 
   if (remote_sap != 0)
