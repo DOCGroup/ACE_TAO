@@ -1,20 +1,17 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoexe, portableserver, messaging {
+project(*Server): taoserver, messaging {
   Source_Files {
     Payload_Receiver.cpp
     server.cpp
   }
 }
 
-project(*Client): taoexe, messaging {
-  exename = client
-
+project(*Client): taoclient, messaging {
   Source_Files {
     TestC.cpp
     Client_Task.cpp
     client.cpp
   }
 }
-

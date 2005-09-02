@@ -10,7 +10,12 @@ use PerlACE::Run_Test;
 
 $iorfile = PerlACE::LocalFile ("server.ior");
 
-$SV  = new PerlACE::Process ("server", "-o $iorfile -e 1200");
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server", "-o server.ior -e 1200");
+}
+else {
+    $SV  = new PerlACE::Process ("server", "-o $iorfile -e 1200");
+}
 $CL1 = new PerlACE::Process ("client", " -k file://$iorfile");
 $CL2 = new PerlACE::Process ("client", " -k file://$iorfile");
 
@@ -21,7 +26,7 @@ for ($n = 0; $n < 10; ++$n) {
   $SV->Spawn ();
   if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
       print STDERR "ERROR: cannot find file <$iorfile>\n";
-      $SV->Kill (); 
+      $SV->Kill ();
       exit 1;
   }
 
