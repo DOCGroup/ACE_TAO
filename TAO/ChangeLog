@@ -1,3 +1,10 @@
+Fri Sep  2 09:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Array_VarOut_T.inl:
+          Reverted a C++ cast back to a c-style cast, vc6 can't handle
+          the C++ cast. Added a remark that we can use a C++ cast when
+          vc6 has been dropped
+
 Thu Sep  1 16:56:12 2005  Ciju John  <john_c@ociweb.com>
 
         * tests/Big_Request_Muxing/*
@@ -37,7 +44,7 @@ Thu Sep  1 16:56:12 2005  Ciju John  <john_c@ociweb.com>
                 * tests/Big_Request_Muxing/run_test.pl:
                 * tests/Big_Request_Muxing/server.cpp:
 
-                  Changed the way the test works so that it prints an
+          Changed the way the test works so that it prints an
           error if too many messages are received. Added a -e parameter
           when starting the server in the run_test.pl to expect the
           correct number of events when running multiple clients. Added
@@ -46,28 +53,26 @@ Thu Sep  1 16:56:12 2005  Ciju John  <john_c@ociweb.com>
 
         Mon Jun 27 12:15:31 2005  Chad Elliott  <elliott_c@ociweb.com>
 
-                * tests/Big_Request_Muxing/client.cpp:
+          * tests/Big_Request_Muxing/client.cpp:
 
-                  This test was changed a while back to decrease the
+          This test was changed a while back to decrease the
           amount of time it takes to run.  However, a time value of 2
           miniutes was overlooked (and was causing problems during test
           shutdown).  I have changed it to be 10 seconds.
 
-Sat Jun 25 14:30:34 2005  Justin Michel  <michel_j@ociweb.com>
+        Sat Jun 25 14:30:34 2005  Justin Michel  <michel_j@ociweb.com>
 
-                * tests/Big_Request_Muxing/Client_Task.h:
-                * tests/Big_Request_Muxing/Client_Task.cpp:
-                * tests/Big_Request_Muxing/Payload_Receiver.h:
-                * tests/Big_Request_Muxing/Payload_Receiver.cpp:
-                * tests/Big_Request_Muxing/Test.idl:
-                * tests/Big_Request_Muxing/client.cpp:
-                * tests/Big_Request_Muxing/run_test.pl:
-                * tests/Big_Request_Muxing/server.cpp:
+        * tests/Big_Request_Muxing/Client_Task.h:
+        * tests/Big_Request_Muxing/Client_Task.cpp:
+        * tests/Big_Request_Muxing/Payload_Receiver.h:
+        * tests/Big_Request_Muxing/Payload_Receiver.cpp:
+        * tests/Big_Request_Muxing/Test.idl:
+        * tests/Big_Request_Muxing/client.cpp:
+        * tests/Big_Request_Muxing/run_test.pl:
+        * tests/Big_Request_Muxing/server.cpp:
 
-                  Changed the processes in this test to actually wait for
+          Changed the processes in this test to actually wait for
           the test to complete instead of simply running for two minutes.
-
-
 
 Thu Sep  1 19:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
