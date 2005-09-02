@@ -7,15 +7,26 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_sys_select.h"
+#include "ace/OS_NS_ctype.h"
 #include "ace/os_include/net/os_if.h"
 
 #if !defined (__ACE_INLINE__)
 #  include "ace/SOCK_Dgram.inl"
 #endif /* __ACE_INLINE__ */
 
+#if defined (ACE_HAS_IPV6) && defined (ACE_WIN32)
+#include /**/ <Iphlpapi.h>
+#endif
+
 ACE_RCSID (ace,
            SOCK_Dgram,
            "$Id$")
+
+// This is a workaround for platforms with non-standard
+// definitions of the ip_mreq structure
+#if ! defined (IMR_MULTIADDR)
+#define IMR_MULTIADDR imr_multiaddr
+#endif /* ! defined (IMR_MULTIADDR) */
 
 ACE_ALLOC_HOOK_DEFINE (ACE_SOCK_Dgram)
 
@@ -502,48 +513,224 @@ ACE_SOCK_Dgram::send (const void *buf,
 }
 
 int
-ACE_SOCK_Dgram::set_nic (const char *option_value)
+ACE_SOCK_Dgram::set_nic (const ACE_TCHAR *net_if,
+                         int addr_family)
 {
-  /* The first step would be to get the interface address for the
-     nic_name specified */
-  ip_mreq multicast_address;
-  ACE_INET_Addr mcast_addr;
-#if defined (ACE_WIN32) || defined(__INTERIX)
-  // This port number is not necessary, just convenient
-  ACE_INET_Addr interface_addr;
-  if (interface_addr.set (mcast_addr.get_port_number (),
-                          option_value) == -1)
+#if defined (IP_MULTICAST_IF) && (IP_MULTICAST_IF != 0)
+# if defined (ACE_HAS_IPV6)
+  bool ipv6_mif_set = false;
+  if (addr_family == AF_INET6 || addr_family == AF_UNSPEC)
+    {
+      ACE_INET_Addr addr;
+      addr.set (static_cast<u_short> (0), ACE_IPV6_ANY);
+      ipv6_mreq send_mreq;
+      if (this->make_multicast_ifaddr6 (&send_mreq,
+                                        addr,
+                                        net_if) == -1)
+        return -1;
+
+      // Only let this attempt to set unknown interface when INET6 is
+      // specifically requested. Otherwise we will just try INET.
+      if (send_mreq.ipv6mr_interface != 0 || addr_family == AF_INET6)
+        {
+          if (this->ACE_SOCK::set_option
+                              (IPPROTO_IPV6, IPV6_MULTICAST_IF,
+                               &(send_mreq.ipv6mr_interface),
+                               sizeof send_mreq.ipv6mr_interface) == -1)
+            return -1;
+        }
+      ipv6_mif_set = send_mreq.ipv6mr_interface != 0;
+    }
+
+#   if defined (ACE_WIN32)
+  // For Win32 net_if is distintly different between INET6 and INET
+  // so it is always either an INET6 if or an INET if.
+  if (!ipv6_mif_set && (addr_family == AF_INET || addr_family == AF_UNSPEC))
+#   else
+  if (addr_family == AF_INET || addr_family == AF_UNSPEC)
+#   endif
+    {
+      ACE_INET_Addr addr (static_cast<u_short> (0));
+      ip_mreq  send_mreq;
+      if (this->make_multicast_ifaddr (&send_mreq,
+                                       addr,
+                                       net_if) == -1)
+        {
+          if (!ipv6_mif_set)
+            return -1;
+        }
+      else if (this->ACE_SOCK::set_option (IPPROTO_IP,
+                                      IP_MULTICAST_IF,
+                                      &(send_mreq.imr_interface),
+                                      sizeof send_mreq.imr_interface) == -1)
+        {
+          if (!ipv6_mif_set)
+            return -1;
+        }
+    }
+# else /* ACE_HAS_IPV6 */
+  ACE_UNUSED_ARG (addr_family);
+  ACE_INET_Addr addr (static_cast<u_short> (0));
+  ip_mreq  send_mreq;
+  if (this->make_multicast_ifaddr (&send_mreq,
+                                   addr,
+                                   net_if) == -1)
     return -1;
-  multicast_address.imr_interface.s_addr =
-    htonl (interface_addr.get_ip_address ());
+  if (this->ACE_SOCK::set_option (IPPROTO_IP,
+                                  IP_MULTICAST_IF,
+                                  &(send_mreq.imr_interface),
+                                  sizeof send_mreq.imr_interface) == -1)
+    return -1;
+# endif /* !ACE_HAS_IPV6 */
+#else /* IP_MULTICAST_IF */
+  // Send interface option not supported - ignore it.
+  // (We may have been invoked by ::subscribe, so we have to allow
+  // a non-null interface parameter in this function.)
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("Send interface specification not ")
+              ACE_LIB_TEXT ("supported - IGNORED.\n")));
+#endif /* !IP_MULTICAST_IF */
+
+  return 0;
+}
+
+int
+ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
+                                       const ACE_INET_Addr &mcast_addr,
+                                       const ACE_TCHAR *net_if)
+{
+  ACE_TRACE ("ACE_SOCK_Dgram_Mcast::make_multicast_ifaddr");
+  ip_mreq  lmreq;       // Scratch copy.
+  if (net_if != 0)
+    {
+#if defined (ACE_WIN32) || defined(__INTERIX)
+      // This port number is not necessary, just convenient
+      ACE_INET_Addr interface_addr;
+      if (interface_addr.set (mcast_addr.get_port_number (), net_if) == -1)
+        return -1;
+      lmreq.imr_interface.s_addr =
+        ACE_HTONL (interface_addr.get_ip_address ());
 #else
-  ifreq if_address;
+      ifreq if_address;
 
 #if defined (ACE_PSOS)
-  // Look up the interface by number, not name.
-  if_address.ifr_ifno = ACE_OS::atoi (option_value);
+      // Look up the interface by number, not name.
+      if_address.ifr_ifno = ACE_OS::atoi (net_if);
 #else
-  ACE_OS::strcpy (if_address.ifr_name, option_value);
+      ACE_OS::strcpy (if_address.ifr_name, ACE_TEXT_ALWAYS_CHAR (net_if));
 #endif /* defined (ACE_PSOS) */
 
-  if (ACE_OS::ioctl (this->get_handle (),
-                     SIOCGIFADDR,
-                     &if_address) == -1)
-    return -1;
+      if (ACE_OS::ioctl (this->get_handle (),
+                         SIOCGIFADDR,
+                         &if_address) == -1)
+        return -1;
 
-  /* Cast this into the required format */
-  sockaddr_in *socket_address;
-  socket_address = reinterpret_cast<sockaddr_in *> (&if_address.ifr_addr);
-  multicast_address.imr_interface.s_addr = socket_address->sin_addr.s_addr;
+      sockaddr_in *socket_address;
+      socket_address = reinterpret_cast<sockaddr_in*> (&if_address.ifr_addr);
+      lmreq.imr_interface.s_addr = socket_address->sin_addr.s_addr;
 #endif /* ACE_WIN32 || __INTERIX */
+    }
+  else
+    lmreq.imr_interface.s_addr = INADDR_ANY;
 
-  /*
-   * Now. I got the interface address for the 'nic' specified.
-   * Use that to set the nic option.
-   */
+  lmreq.IMR_MULTIADDR.s_addr = ACE_HTONL (mcast_addr.get_ip_address ());
 
-  return this->ACE_SOCK::set_option (IPPROTO_IP,
-                                     IP_MULTICAST_IF,
-                                     &multicast_address.imr_interface.s_addr,
-                                     sizeof (struct in_addr));
+  // Set return info, if requested.
+  if (ret_mreq)
+    *ret_mreq = lmreq;
+
+  return 0;
 }
+
+#if defined (ACE_HAS_IPV6)
+// XXX: This will not work on any operating systems that do not support
+//      if_nametoindex or that is not Win32 >= Windows XP/Server 2003
+int
+ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
+                                        const ACE_INET_Addr &mcast_addr,
+                                        const ACE_TCHAR *net_if)
+{
+  ACE_TRACE ("ACE_SOCK_Dgram_Mcast::make_multicast_ifaddr6");
+  ipv6_mreq  lmreq;       // Scratch copy.
+
+  ACE_OS::memset (&lmreq,
+                  0,
+                  sizeof (lmreq));
+
+#if defined(__linux__)
+  if (net_if != 0)
+    {
+      lmreq.ipv6mr_interface = ACE_OS::if_nametoindex (ACE_TEXT_ALWAYS_CHAR(net_if));
+    }
+  else
+#elif defined (ACE_WIN32)
+  if (net_if != 0)
+    {
+      int if_ix = 0;
+      bool num_if =
+        ACE_OS::ace_isdigit (net_if[0]) &&
+        (if_ix = ACE_OS::atoi (net_if)) > 0;
+
+      IP_ADAPTER_ADDRESSES tmp_addrs;
+      // Initial call to determine actual memory size needed
+      DWORD dwRetVal;
+      ULONG bufLen = 0;
+      if ((dwRetVal = ::GetAdaptersAddresses (AF_INET6,
+                                              0,
+                                              NULL,
+                                              &tmp_addrs,
+                                              &bufLen)) != ERROR_BUFFER_OVERFLOW)
+        return -1; // With output bufferlength 0 this can't be right.
+
+      // Get required output buffer and retrieve info for real.
+      PIP_ADAPTER_ADDRESSES pAddrs;
+      char *buf;
+      ACE_NEW_RETURN (buf,
+                      char[bufLen],
+                      -1);
+      pAddrs = reinterpret_cast<PIP_ADAPTER_ADDRESSES> (buf);
+      if ((dwRetVal = ::GetAdaptersAddresses (AF_INET6,
+                                              0,
+                                              NULL,
+                                              pAddrs,
+                                              &bufLen)) != NO_ERROR)
+        {
+          delete[] buf; // clean up
+          return -1;
+        }
+
+      lmreq.ipv6mr_interface = 0; // initialize
+      while (pAddrs)
+        {
+          if ((num_if && pAddrs->Ipv6IfIndex == static_cast<unsigned int>(if_ix))
+              || (!num_if &&
+                  (ACE_OS::strcmp (ACE_TEXT_ALWAYS_CHAR (net_if),
+                                   pAddrs->AdapterName) == 0
+                   || ACE_OS::strcmp (ACE_TEXT_ALWAYS_CHAR (net_if),
+                                      ACE_Wide_To_Ascii (pAddrs->FriendlyName).char_rep()) == 0)))
+            {
+              lmreq.ipv6mr_interface = pAddrs->Ipv6IfIndex;
+              break;
+            }
+
+          pAddrs = pAddrs->Next;
+        }
+
+      delete[] buf; // clean up
+    }
+  else
+#endif /* ACE_WIN32 */
+    lmreq.ipv6mr_interface = 0;
+
+  // now set the multicast address
+  ACE_OS::memcpy (&lmreq.ipv6mr_multiaddr,
+                  &((sockaddr_in6 *) mcast_addr.get_addr ())->sin6_addr,
+                  sizeof (in6_addr));
+
+  // Set return info, if requested.
+  if (ret_mreq)
+    *ret_mreq = lmreq;
+
+  return 0;
+}
+#endif /* __linux__ && ACE_HAS_IPV6 */
