@@ -1,3 +1,14 @@
+Fri Sep  2 08:29:38 2005  Arvind S. Krishna  <arvindk@tango.dre.vanderbilt.edu>
+
+	* ace/OS_NS_string.h:
+	* ace/OS_NS_string.cpp:
+	* ace/OS_NS_string.inl:
+
+	  Updated the ACE_OS::memcpy optimization to factor out the loop
+	  unrolled code into a separate function. This should enable
+	  memcpy function itself to be inlined. Thanks to JT jtc at
+	  crontoolworks dot com.
+
 Fri Sep  2 10:44:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/SOCK_Dgram{.h .cpp}:
