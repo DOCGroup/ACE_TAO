@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -l .. -p Benchmark -i -c RoundTrip"
 
-project(RoundTrip_stub): ciao_client {
+project(RoundTrip_stub): ciao_client_dnc {
   after += Benchmark_stub
   sharedname = RoundTrip_stub
 
@@ -23,7 +23,7 @@ project(RoundTrip_stub): ciao_client {
   }
 }
 
-project(RoundTrip_svnt) : ciao_servant {
+project(RoundTrip_svnt) : ciao_servant_dnc {
   after += Benchmark_svnt RoundTrip_stub
   sharedname  = RoundTrip_svnt
 
@@ -52,7 +52,7 @@ project(RoundTrip_svnt) : ciao_servant {
 }
 
 
-project(RoundTrip_exec) : ciao_component {
+project(RoundTrip_exec) : ciao_component_dnc {
   after += RoundTrip_svnt
   sharedname = RoundTrip_exec
 
@@ -76,7 +76,7 @@ project(RoundTrip_exec) : ciao_component {
 
 
 
-project (RoundTrip_client) : ciao_client, valuetype, strategies{
+project (RoundTrip_client) : ciao_client_dnc, valuetype, strategies{
   exename = client
   after += RoundTrip_stub
   libs += RoundTrip_stub Benchmark_stub
