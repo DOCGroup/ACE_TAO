@@ -58,7 +58,9 @@ ACE_INLINE
 const T_slice *
 TAO_Array_Var_Base_T<T,T_slice,TAG>::in (void) const
 {
-  return const_cast <const T_slice *> (this->ptr_);
+  // @todo Replace with C++ cast after vc6 has been dropped,
+  // vc6 can't handle this as const cast
+  return (const T_slice *) this->ptr_;
 }
 
 template<typename T, typename T_slice, typename TAG>
