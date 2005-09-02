@@ -24,7 +24,7 @@ Client_Task::svc (void)
 
       for (int i = 0; i != this->niterations_; ++i)
         {
-          CORBA::ULongLong start = ACE_OS::gethrtime ();
+          ACE_hrtime_t start = ACE_OS::gethrtime ();
 
           (void) this->roundtrip_->test_method (start ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;

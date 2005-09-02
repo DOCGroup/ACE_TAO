@@ -164,7 +164,7 @@ main (int argc, char *argv[])
               if ((request[j]->return_value () >>= retval) == 1)
                 {
                   ACE_hrtime_t now = ACE_OS::gethrtime ();
-                  history.sample (now - retval);
+                  history.sample (ACE_HRTIME_TO_U64(now) - retval);
                 }
             }
         }

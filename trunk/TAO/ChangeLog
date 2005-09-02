@@ -1,3 +1,17 @@
+Fri Sep 02 13:21:30 2005  Gary Maxey  <gary.maxey@hp.com>
+
+        * performance-tests/Callback/Callback_i.cpp:
+        * performance-tests/Latency/DII/client.cpp:
+        * performance-tests/Latency/Deferred/client.cpp:
+        * performance-tests/Latency/Thread_Per_Connection/Client_Task.cpp:
+        * performance-tests/Latency/Thread_Pool/Client_Task.cpp:
+        * performance-tests/POA/Demux/demux_test_client.cpp:
+        * performance-tests/Sequence_Latency/DII/client.cpp:
+        * performance-tests/Sequence_Latency/Deferred/client.cpp:
+        * performance-tests/Sequence_Latency/Thread_Pool/Client_Task.cpp:
+          Used ACE_hrtime_t and ACE_HRTIME_TO_U64 macro for platform
+          independence.
+
 Fri Sep  2 12:51:23 2005  Ciju John  <john_c@ociweb.com>
 
         * tests/Big_Request_Muxing/Payload_Receiver.h:
