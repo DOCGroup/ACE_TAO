@@ -1,6 +1,6 @@
 // $Id$ 
 
-project(Benchmark_stub): ciao_client {
+project(Benchmark_stub): ciao_client_dnc {
 
   sharedname = Benchmark_stub
   idlflags += -Wb,stub_export_macro=BENCHMARK_STUB_Export -Wb,stub_export_include=Benchmark_stub_export.h -Wb,skel_export_macro=BENCHMARK_SVNT_Export -Wb,skel_export_include=Benchmark_svnt_export.h
@@ -15,7 +15,7 @@ project(Benchmark_stub): ciao_client {
   }
 }
 
-project(Benchmark_svnt) : ciao_server {
+project(Benchmark_svnt) : ciao_server_dnc {
   after +=  Benchmark_stub
   sharedname = Benchmark_svnt
   libs    += Benchmark_stub
@@ -28,7 +28,7 @@ project(Benchmark_svnt) : ciao_server {
   }
 }
 
-project (*server) : taoserver, strategies,ciao_server {
+project (*server) : taoserver, strategies,ciao_server_dnc {
   after += Benchmark_svnt
   libs += Benchmark_svnt Benchmark_stub 
 

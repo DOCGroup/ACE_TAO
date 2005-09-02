@@ -1,3 +1,13 @@
+Fri Sep  2 16:41:08 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* performance-tests/Benchmark/Benchmark.mpc
+	* performance-tests/Benchmark/Multi_Threaded/Multi_Threaded.mpc
+	* performance-tests/Benchmark/RoundTrip/RoundTrip.mpc
+	* performance-tests/Benchmark/RoundTripClient/RoundTripClient.mpc
+	* performance-tests/Benchmark/RoundTripServer/RoundTripServer.mpc
+
+	Migrated to modern CIAO projects. 
+	
 Fri Sep  2 15:10:43 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* docs/tutorial
