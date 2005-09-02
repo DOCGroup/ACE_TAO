@@ -188,7 +188,8 @@ TAO_MCAST_Parser::multicast_query (char *&buf,
       else
         {
           // Set NIC
-          dgram.set_nic (mcast_nic);
+          dgram.set_nic (mcast_nic,
+                         multicast_addr.get_type ());
 
           // Set TTL
           int mcast_ttl_optval = ACE_OS::atoi (mcast_ttl);
