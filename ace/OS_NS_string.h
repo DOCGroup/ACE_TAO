@@ -67,6 +67,14 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   void *memcpy (void *t, const void *s, size_t len);
 
+#if defined (ACE_HAS_MEMCPY_LOOP_UNROLL)
+/*
+ * Version of memcpy where the copy loop is unrolled.
+ * This is determined and set via autoconf.
+ */
+  void *smemcpy (void *t, const void *s, size_t len);
+#endif
+
   /// Moves one buffer to another.
   ACE_NAMESPACE_INLINE_FUNCTION
   void *memmove (void *t, const void *s, size_t len);
