@@ -6,6 +6,13 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.8
 ====================================================
 
+USER VISIBLE CHANGES BETWEEN ACE-5.4.7 and ACE-5.4.8
+====================================================
+
+. Improved IPv6 support
+
+. Improved 64bit portability
+
 USER VISIBLE CHANGES BETWEEN ACE-5.4.6 and ACE-5.4.7
 ====================================================
 
