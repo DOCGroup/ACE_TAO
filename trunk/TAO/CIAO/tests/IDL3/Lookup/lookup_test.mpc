@@ -1,6 +1,6 @@
 // $Id$
 
-project(LookupTest_stub): ciao_client {
+project(LookupTest_stub): ciao_client_dnc {
   
   sharedname = LookupTest_stub
   idlflags += -Sc

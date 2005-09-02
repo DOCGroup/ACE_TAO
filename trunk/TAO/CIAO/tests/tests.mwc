@@ -2,4 +2,8 @@
 // $Id$
 
 workspace {
+        exclude {
+                RTCCM
+        }
+
 }
