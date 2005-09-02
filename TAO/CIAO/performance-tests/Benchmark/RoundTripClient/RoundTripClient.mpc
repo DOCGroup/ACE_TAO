@@ -1,7 +1,7 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -l .. -p Benchmark -i -c RoundTripClient"
 
-project(RoundTripClient_stub): ciao_client {
+project(RoundTripClient_stub): ciao_client_dnc {
   after += Benchmark_stub
   sharedname = RoundTripClient_stub
 
@@ -23,7 +23,7 @@ project(RoundTripClient_stub): ciao_client {
   }
 }
 
-project(RoundTripClient_svnt) : ciao_servant {
+project(RoundTripClient_svnt) : ciao_servant_dnc {
   after += Benchmark_svnt RoundTripClient_stub
   sharedname  = RoundTripClient_svnt
   libs    += RoundTripClient_stub Benchmark_stub Benchmark_svnt
@@ -50,7 +50,7 @@ project(RoundTripClient_svnt) : ciao_servant {
 }
 
 
-project(RoundTripClient_exec) : ciao_component {
+project(RoundTripClient_exec) : ciao_component_dnc {
   after += RoundTripClient_svnt
 
   sharedname = RoundTripClient_exec
@@ -75,7 +75,7 @@ project(RoundTripClient_exec) : ciao_component {
 }
 
 
-project (*client) : ciao_client {
+project (*client) : ciao_client_dnc {
   exename = client
   after += RoundTripClient_stub
   libs += RoundTripClient_stub Benchmark_stub
@@ -90,7 +90,7 @@ project (*client) : ciao_client {
 }
 
 
-//project (RoundTripClient_controller) : ciao_client {
+//project (RoundTripClient_controller) : ciao_client_dnc {
 //  exename = controller
 //  after += RoundTripClient_stub
 //  libs += RoundTripClient_stub Benchmark_stub
