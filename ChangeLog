@@ -1,3 +1,11 @@
+Thu Sep  1 17:28:25 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Atomic_Op.cpp:
+	* ace/Atomic_Op.h:
+
+	  Add ACE_Atomic_Op<ACE_Thread_Mutex, long> template
+	  specialization for AMD64 when compiled with GCC.
+
 Thu Sep  1 17:38:10 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* bin/ciao_tests.lst
