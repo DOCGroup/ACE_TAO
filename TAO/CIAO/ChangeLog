@@ -1,3 +1,33 @@
+Fri Sep  2 15:04:00 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* tests/tests.mwc
+	* tests/IDL3/Components/ComplexComponent/Attributes/Attributes.mpc
+	* tests/IDL3/Components/ComplexComponent/EventSink/EventSink.mpc
+	* tests/IDL3/Components/ComplexComponent/EventSource/EventSource.mpc
+	* tests/IDL3/Components/ComplexComponent/Facets/Facets.mpc
+	* tests/IDL3/Components/ComplexComponent/Receptacles/Receptacles.mpc
+	* tests/IDL3/Components/SimpleComponent/SimpleComponent.mpc
+	* tests/IDL3/Events/Abstract/Abstract.mpc
+	* tests/IDL3/Events/Regular/Regular.mpc
+	* tests/IDL3/Homes/Attributes/HomeAttributes.mpc
+	* tests/IDL3/Homes/Basic/Basic.mpc
+	* tests/IDL3/Homes/Factory/Factory.mpc
+	* tests/IDL3/Homes/Finder/Finder.mpc
+	* tests/IDL3/Homes/Inheritance/Inheritance.mpc
+	* tests/IDL3/ImpliedIDL/Components/Basic/ICBasic.mpc
+	* tests/IDL3/ImpliedIDL/Components/EventSink/ICEventSink.mpc
+	* tests/IDL3/ImpliedIDL/Components/EventSource/ICEventSource.mpc
+	* tests/IDL3/ImpliedIDL/Components/Receptacles/ICReceptacles.mpc
+	* tests/IDL3/ImpliedIDL/Events/Events.mpc
+	* tests/IDL3/ImpliedIDL/Homes/Homes.mpc
+	* tests/IDL3/Lookup/lookup_test.mpc
+
+	Updated to use dnc ciao base project. 
+
+	* tests/RTCCM
+
+	Removed this test. 
+	
 Thu Sep  1 10:20:48 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	CIAO Reorganization.  Plese see tag before_ciao_reorg
