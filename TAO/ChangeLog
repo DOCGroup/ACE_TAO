@@ -1,3 +1,8 @@
+Fri Sep  2 11:05:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/MCAST_Parser.cpp:
+          Small change concerning IPv6 multicast support.
+
 Fri Sep  2 09:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Array_VarOut_T.inl:
@@ -8,27 +13,27 @@ Fri Sep  2 09:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 Thu Sep  1 16:56:12 2005  Ciju John  <john_c@ociweb.com>
 
         * tests/Big_Request_Muxing/*
-        Brought in OCI modified tests.
+          Brought in OCI modified tests.
 
         Wed Jul 13 09:57:17 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Big_Request_Muxing/run_test.pl:
 
-                  Added a separator between tests to aid in debugging.
+          Added a separator between tests to aid in debugging.
 
         Tue Jul  5 07:31:33 2005  Chad Elliott  <elliott_c@ociweb.com>
 
-                * tests/Big_Request_Muxing/server.cpp:
+        * tests/Big_Request_Muxing/server.cpp:
 
-                  Added includes for inline=0 builds.
+          Added includes for inline=0 builds.
 
         Wed Jun 29 14:35:36 2005  Justin Michel  <michel_j@ociweb.com>
 
-                * tests/Big_Request_Muxing/client.cpp:
-                * tests/Big_Request_Muxing/run_test.pl:
-                * tests/Big_Request_Muxing/server.cpp:
+        * tests/Big_Request_Muxing/client.cpp:
+        * tests/Big_Request_Muxing/run_test.pl:
+        * tests/Big_Request_Muxing/server.cpp:
 
-                  This test was destroying the orb before the orb was
+          This test was destroying the orb before the orb was
           finished sending requests. The test still fails intermittently,
           because sometimes events are lost. I tried changing SYNC_NONE to
           SYNC_WITH_TRANSPORT, but this didn't help. This may be a real
@@ -37,12 +42,12 @@ Thu Sep  1 16:56:12 2005  Ciju John  <john_c@ociweb.com>
 
         Tue Jun 28 08:46:29 2005  Justin Michel  <michel_j@ociweb.com>
 
-                * tests/Big_Request_Muxing/Client_Task.cpp:
-                * tests/Big_Request_Muxing/Payload_Receiver.h:
-                * tests/Big_Request_Muxing/Payload_Receiver.cpp:
-                * tests/Big_Request_Muxing/client.cpp:
-                * tests/Big_Request_Muxing/run_test.pl:
-                * tests/Big_Request_Muxing/server.cpp:
+        * tests/Big_Request_Muxing/Client_Task.cpp:
+        * tests/Big_Request_Muxing/Payload_Receiver.h:
+        * tests/Big_Request_Muxing/Payload_Receiver.cpp:
+        * tests/Big_Request_Muxing/client.cpp:
+        * tests/Big_Request_Muxing/run_test.pl:
+        * tests/Big_Request_Muxing/server.cpp:
 
           Changed the way the test works so that it prints an
           error if too many messages are received. Added a -e parameter
@@ -53,7 +58,7 @@ Thu Sep  1 16:56:12 2005  Ciju John  <john_c@ociweb.com>
 
         Mon Jun 27 12:15:31 2005  Chad Elliott  <elliott_c@ociweb.com>
 
-          * tests/Big_Request_Muxing/client.cpp:
+        * tests/Big_Request_Muxing/client.cpp:
 
           This test was changed a while back to decrease the
           amount of time it takes to run.  However, a time value of 2
