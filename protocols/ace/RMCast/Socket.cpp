@@ -44,13 +44,16 @@ namespace ACE_RMCast
     send_ (void const* buf, size_t s);
 
     ssize_t
-    recv_ (void* buf, size_t s, ACE_Time_Value const* timeout);
+    recv_ (void* buf,
+           size_t s,
+           ACE_Time_Value const* timeout,
+           ACE_INET_Addr* from);
 
     ssize_t
     size_ (ACE_Time_Value const* timeout);
 
     ACE_HANDLE
-    get_handle_ () const;
+    get_handle_ ();
 
   private:
     virtual void
@@ -82,8 +85,6 @@ namespace ACE_RMCast
         params_ (params),
         cond_ (mutex_)
   {
-    signal_pipe_.open ();
-
     fragment_.reset (new Fragment (params_));
     reassemble_.reset (new Reassemble (params_));
     acknowledge_.reset (new Acknowledge (params_));
@@ -150,7 +151,10 @@ namespace ACE_RMCast
   }
 
   ssize_t Socket_Impl::
-  recv_ (void* buf, size_t s, ACE_Time_Value const* timeout)
+  recv_ (void* buf,
+         size_t s,
+         ACE_Time_Value const* timeout,
+         ACE_INET_Addr* from)
   {
     ACE_Time_Value abs_time;
 
@@ -186,15 +190,20 @@ namespace ACE_RMCast
     {
       // Remove data from the pipe.
       //
-      char c;
-
-      if (ACE_OS::read (signal_pipe_.read_handle (), &c, 1) != 1)
+      if (signal_pipe_.read_handle () != ACE_INVALID_HANDLE)
       {
-        perror ("read: ");
-        abort ();
+        char c;
+
+        if (ACE::recv_n (signal_pipe_.read_handle (), &c, 1) != 1)
+        {
+          perror ("read: ");
+          abort ();
+        }
       }
     }
 
+    if (from)
+      *from = static_cast<From const*> (m->find (From::id))->address ();
 
     if (m->find (NoData::id) != 0)
     {
@@ -260,8 +269,13 @@ namespace ACE_RMCast
   }
 
   ACE_HANDLE Socket_Impl::
-  get_handle_ () const
+  get_handle_ ()
   {
+    if (signal_pipe_.read_handle () == ACE_INVALID_HANDLE)
+    {
+      signal_pipe_.open ();
+    }
+
     return signal_pipe_.read_handle ();
   }
 
@@ -295,12 +309,15 @@ namespace ACE_RMCast
       {
         // Also write to the pipe.
         //
-        char c;
-
-        if (ACE_OS::write (signal_pipe_.write_handle (), &c, 1) != 1)
+        if (signal_pipe_.write_handle () != ACE_INVALID_HANDLE)
         {
-          // perror ("write: ");
-          abort ();
+          char c;
+
+          if (ACE::send_n (signal_pipe_.write_handle (), &c, 1) != 1)
+          {
+            // perror ("write: ");
+            abort ();
+          }
         }
 
         cond_.signal ();
@@ -332,13 +349,28 @@ namespace ACE_RMCast
   ssize_t Socket::
   recv (void* buf, size_t s)
   {
-    return impl_->recv_ (buf, s, 0);
+    return impl_->recv_ (buf, s, 0, 0);
+  }
+
+  ssize_t Socket::
+  recv (void* buf, size_t s, ACE_INET_Addr& from)
+  {
+    return impl_->recv_ (buf, s, 0, &from);
   }
 
   ssize_t Socket::
   recv (void* buf, size_t s, ACE_Time_Value const& timeout)
   {
-    return impl_->recv_ (buf, s, &timeout);
+    return impl_->recv_ (buf, s, &timeout, 0);
+  }
+
+  ssize_t Socket::
+  recv (void* buf,
+        size_t s,
+        ACE_Time_Value const& timeout,
+        ACE_INET_Addr& from)
+  {
+    return impl_->recv_ (buf, s, &timeout, &from);
   }
 
   ssize_t Socket::
@@ -354,7 +386,7 @@ namespace ACE_RMCast
   }
 
   ACE_HANDLE Socket::
-  get_handle () const
+  get_handle ()
   {
     return impl_->get_handle_ ();
   }
