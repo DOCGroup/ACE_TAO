@@ -45,6 +45,9 @@ namespace ACE_RMCast
     virtual ssize_t
     recv (void* buf, size_t s);
 
+    virtual ssize_t
+    recv (void* buf, size_t s, ACE_INET_Addr& from);
+
 
     // Block for up to <timeout> until message is available. Upon
     // successful completion return the next message. Otherwise
@@ -54,6 +57,12 @@ namespace ACE_RMCast
     //
     virtual ssize_t
     recv (void* buf, size_t s, ACE_Time_Value const& timeout);
+
+    virtual ssize_t
+    recv (void* buf,
+          size_t s,
+          ACE_Time_Value const& timeout,
+          ACE_INET_Addr& from);
 
 
     // Block if message is not available. Upon successful completion
@@ -79,7 +88,7 @@ namespace ACE_RMCast
     // is for signalling purposes only.
     //
     ACE_HANDLE
-    get_handle () const;
+    get_handle ();
 
   private:
     ACE_Auto_Ptr<Socket_Impl> impl_;

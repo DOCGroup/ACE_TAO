@@ -178,13 +178,17 @@ namespace ACE_RMCast
   void Link::
   recv ()
   {
-    // I could have used ACE_Data_Block but it does not support
-    // resizing...
-    //
-    size_t size (0), capacity (8192);
-    char* data = reinterpret_cast<char*> (operator new (capacity));
+    size_t max_packet_size (params_.max_packet_size ());
 
-    ACE_Auto_Ptr<char> holder (data); // This is wicked.
+    // This is wicked.
+    //
+    ACE_Auto_Ptr<char> holder (
+      reinterpret_cast<char*> (
+        operator new (max_packet_size + ACE_CDR::MAX_ALIGNMENT)));
+
+    char* data = ACE_ptr_align_binary (holder.get (), ACE_CDR::MAX_ALIGNMENT);
+
+    size_t size (0);
 
     while (true)
     {
@@ -237,7 +241,7 @@ namespace ACE_RMCast
         is >> msg_size;
       }
 
-      if (msg_size <= 4)
+      if (msg_size <= 4 || msg_size > max_packet_size)
       {
         // Bad message.
         //
@@ -245,14 +249,7 @@ namespace ACE_RMCast
         continue;
       }
 
-      if (capacity < msg_size)
-      {
-        capacity = msg_size;
-        data = reinterpret_cast<char*> (operator new (capacity));
-        holder.reset (data);
-      }
-
-      size = rsock_.recv (data, capacity, addr);
+      size = rsock_.recv (data, max_packet_size, addr);
 
       if (msg_size != size)
       {
