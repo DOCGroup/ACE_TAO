@@ -169,7 +169,7 @@ be_visitor_typedef_ci::visit_array (be_array *node)
     }
   else
     {
-      if (bt->imported () || bt->cli_inline_gen())
+      if ((bt->imported () && tdef->imported ()) || bt->cli_inline_gen())
         {
           // Code below is generated in another file.
           return 0;
