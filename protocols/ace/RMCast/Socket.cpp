@@ -194,7 +194,7 @@ namespace ACE_RMCast
       {
         char c;
 
-        if (ACE::recv_n (signal_pipe_.read_handle (), &c, 1) != 1)
+        if (ACE_OS::read (signal_pipe_.read_handle (), &c, 1) != 1)
         {
           perror ("read: ");
           abort ();
@@ -313,7 +313,7 @@ namespace ACE_RMCast
         {
           char c;
 
-          if (ACE::send_n (signal_pipe_.write_handle (), &c, 1) != 1)
+          if (ACE_OS::write (signal_pipe_.write_handle (), &c, 1) != 1)
           {
             // perror ("write: ");
             abort ();
