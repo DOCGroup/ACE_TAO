@@ -1,3 +1,17 @@
+Mon Sep  5 12:11:28 2005  Simon McQueen  <sm@prismtech.com>
+
+        * TAO_IDL/be/be_visitor_typedef/typedef_ci.cpp:
+
+          Only omit generating the copy, dup, alloc & free operations
+          if the typedef is imported. This fixes bugzilla #2222.
+
+        * tests/Bug_2222_Regression/Bug_2222_Regression.mpc:
+        * tests/Bug_2222_Regression/TestCase.idl:
+        * tests/Bug_2222_Regression/TestType.idl:
+        * tests/Bug_2222_Regression/test.cpp:
+
+          Regression test for the above.
+
 Fri Sep 02 13:21:30 2005  Gary Maxey  <gary.maxey@hp.com>
 
         * performance-tests/Callback/Callback_i.cpp:
