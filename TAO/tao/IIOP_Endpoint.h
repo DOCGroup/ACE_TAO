@@ -180,7 +180,7 @@ private:
   /// endpoint in the list, if any.
   TAO_IIOP_Endpoint *next_;
 
-  //@@ TAO_ENDPOINT_SPL_PRIVATE_DATA_COPY_HOOK_START
+  //@@ TAO_ENDPOINT_SPL_PRIVATE_DATA_COPY_HOOK_END
 };
 
 

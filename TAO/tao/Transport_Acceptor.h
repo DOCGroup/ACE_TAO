@@ -135,7 +135,7 @@ public:
    * Hook to add public methods from derived acceptor classes onto
    * this class.
    */
-  //@@ TAO_ACCEPTOR_PUBLIC_METHODS_ADD_HOOK
+  //@@ TAO_ACCEPTOR_SPL_PUBLIC_METHODS_ADD_HOOK
 
 private:
   /// IOP protocol tag.

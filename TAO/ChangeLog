@@ -1,3 +1,13 @@
+Tue Sep  6 13:29:04 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * tao/IIOP_Endpoint.h:
+        * tao/IIOP_Profile.h:
+        * tao/Transport_Acceptor.h:
+        * tao/Profile.h:
+
+          Updated marker names as there was a mismatch in the code based
+          and the specialization files.
+
 Tue Sep  6 10:33:09 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/examples/ORT/Gateway_i.h:
