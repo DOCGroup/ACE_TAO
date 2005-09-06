@@ -1,3 +1,9 @@
+/*
+ * Add all include files within the following
+ * two markers.
+ */
+//@@ TAO_ENDPOINT_SPL_COPY_HOOK_START
+
 #include "IIOP_Endpoint.h"
 #include "IOP_IORC.h"
 #include "debug.h"
@@ -24,6 +30,9 @@ ACE_RCSID (tao,
 #include "ace/INET_Addr.h"
 #include "ace/Sock_Connect.h"
 
+//@@ TAO_ENDPOINT_SPL_COPY_HOOK_END
+
+//@@ TAO_ENDPOINT_SPL_COPY_HOOK_START
 TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const ACE_INET_Addr &addr,
                                       int use_dotted_decimal_addresses)
   : TAO_Endpoint (IOP::TAG_INTERNET_IOP)
@@ -476,3 +485,5 @@ TAO_IIOP_Endpoint::preferred_network (void) const
 {
   return this->preferred_path_.host.in ();
 }
+
+//@@ TAO_ENDPOINT_SPL_COPY_HOOK_END
