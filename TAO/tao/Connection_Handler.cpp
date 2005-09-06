@@ -49,6 +49,8 @@ TAO_Connection_Handler::~TAO_Connection_Handler (void)
 
   // @@ TODO Use auto_ptr<>
   delete this->lock_;
+
+  //@@ CONNECTION_HANDLER_DESTRUCTOR_ADD_HOOK
 }
 
 

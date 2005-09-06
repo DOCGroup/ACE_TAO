@@ -52,16 +52,17 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core
 {
 }
 
+TAO_IIOP_Connection_Handler::~TAO_IIOP_Connection_Handler (void)
+{
+  delete this->transport ();
+}
+
 /* Copy hook that copies over the concrete methods from this class
  * to the base Connection_Handler class as a part of the specialization
  * process. Add all concrete and virtual
  * methods implemented in this class within this hook.
  */
 //@@ CONNECTION_HANDLER_SPL_COPY_HOOK_START
-TAO_IIOP_Connection_Handler::~TAO_IIOP_Connection_Handler (void)
-{
-  delete this->transport ();
-}
 
 int
 TAO_IIOP_Connection_Handler::open_handler (void *v)

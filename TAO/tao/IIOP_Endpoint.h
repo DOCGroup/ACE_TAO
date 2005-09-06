@@ -72,7 +72,6 @@ public:
   /// Destructor.
   ~TAO_IIOP_Endpoint (void);
 
-  //@@ TAO_ENDPOINT_SPL_PUBLIC_METHODS_COPY_HOOK_START
 
   // = Implementation of abstract TAO_Endpoint methods.  See
   // Endpoint.h for their documentation.
@@ -92,6 +91,12 @@ public:
   virtual CORBA::ULong hash (void);
 
   // = IIOP_Endpoint-specific methods.
+
+  /*
+   * Hook to copy only the non virtual concrete methods implemented
+   * in this class to the derived class in the specialization.
+   */
+  //@@ TAO_ENDPOINT_SPL_PUBLIC_METHODS_COPY_HOOK_START
 
   /// Return a reference to the <object_addr>.
   const ACE_INET_Addr &object_addr (void) const;

@@ -44,9 +44,6 @@ TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (CORBA::Boolean flag)
 {
 }
 
-
-//@@ TAO_ACCEPTOR_SPL_COPY_HOOK_START
-
 TAO_IIOP_Acceptor::~TAO_IIOP_Acceptor (void)
 {
   // Make sure we are closed before we start destroying the
@@ -64,6 +61,8 @@ TAO_IIOP_Acceptor::~TAO_IIOP_Acceptor (void)
 
   delete [] this->hosts_;
 }
+
+//@@ TAO_ACCEPTOR_SPL_COPY_HOOK_START
 
 // TODO =
 //    2) For V1.[1,2] there are tagged components
