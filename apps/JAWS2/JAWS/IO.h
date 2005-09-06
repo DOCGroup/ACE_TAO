@@ -216,6 +216,12 @@ public:
                                    const char *buffer,
                                    unsigned int length);
 
+#ifdef ACE_LYNXOS_MAJOR
+#ifdef ERROR_MESSAGE
+#undef ERROR_MESSAGE
+#endif /* ERROR_MESSAGE */
+#endif /* ACE_LYNXOS_MAJOR */
+
   enum Message_Types
   {
     CONFIRMATION,
