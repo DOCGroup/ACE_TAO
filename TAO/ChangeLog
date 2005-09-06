@@ -1,3 +1,11 @@
+Tue Sep  6 15:40:17 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_codegen.cpp (gen_stub_src_includes):
+
+	  Reordered include directives to address CORBA::AbstractBase
+	  order of parsing related template compile-time errors with g++
+	  3.4 or better and some HP compilers.
+
 Tue Sep  6 17:26:39 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * tao/Endpoint.h
