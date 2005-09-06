@@ -1,3 +1,10 @@
+Tue Sep  6 10:32:23 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Change the position of the use of custom 'output_option' setting.
+          Ensure that the input file is the last thing on the command line.
+
 Tue Sep  6 12:51:19 UTC 2005  Don Sharp  <Donald.Sharp@prismtech.com>
 
         * apps/JAWS2/JAWS/IO.h
