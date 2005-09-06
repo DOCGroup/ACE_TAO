@@ -205,7 +205,7 @@ module Deployment {
 
   struct SubcomponentInstantiationDescription {
     string name;
-    ComponentPackageDescriptions package;
+    //    ComponentPackageDescriptions package;
     Properties configProperty;
     Requirements selectRequirement;
     ComponentPackageReferences reference;
@@ -263,7 +263,7 @@ module Deployment {
     ::CORBA::StringSeq location;
     Properties execParameter;
     Requirements deployRequirement;
-    NamedImplementationArtifacts dependsOn;
+    //NamedImplementationArtifacts dependsOn;
     Properties infoProperty;
   };
 

@@ -1,0 +1,18 @@
+//$Id$
+#ifndef RACE_OUTPUT_MANAGER_IDL
+#define RACE_OUTPUT_MANAGER_IDL
+
+#include <Components.idl>
+
+module CIAO
+{
+  module RACE
+  {
+    component Output_Manager
+    {
+      provides PlanEgress output;
+      uses multiple PlanEgress adapters;
+    };
+    
+  };
+};

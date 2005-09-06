@@ -1,0 +1,15 @@
+//$Id$
+#ifndef RACE_COMMON_IDL
+#define RACE_COMMON_IDL
+
+module CIAO
+{  
+  module RACE
+    {
+      typedef string RACE_Classification;
+      typedef sequence <RACE_Classification> RACE_Classifications;
+      typedef sequence <string> PlannerFlow;
+    };
+};
+
+#endif /* RACE_COMMON_IDL */
