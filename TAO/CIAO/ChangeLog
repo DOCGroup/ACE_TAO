@@ -1,3 +1,13 @@
+Tue Sep  6 11:39:15 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* ciao/Deployment_Data.idl
+
+	Commented out IDL that is unsupported by CIDLC.
+
+	* RACE
+
+	Added IDL for RACE.
+
 Tue Sep  6 09:58:12 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* examples/Hello/descriptors/run_test.pl
