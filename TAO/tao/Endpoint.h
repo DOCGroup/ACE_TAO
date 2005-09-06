@@ -36,7 +36,7 @@
 
 #include "tao/IIOP_EndpointsC.h"
 #include "ace/INET_Addr.h"
-  
+
 // END Code woven by FOCUS
 
 /**
@@ -217,7 +217,7 @@ protected:
 private:
 
   /// Endpoints should not be copied.
-  
+
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Endpoint&))
 
   /*
