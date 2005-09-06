@@ -31,8 +31,8 @@ class ACE_Lock;
 class ACE_Event_Handler;
 
 /*
- * Hook to specialize the connection handler with the 
- * concrete connection handler implementation. 
+ * Hook to specialize the connection handler with the
+ * concrete connection handler implementation.
  */
 //@@ CONNECTION_HANDLER_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
 
@@ -184,7 +184,7 @@ private:
   ACE_Lock * lock_;
 
   /*
-   * Hook to add instance members from derived class 
+   * Hook to add instance members from derived class
    * onto base Connection_Handler class. Any further
    * additions to this class should go before this
    * hook.
