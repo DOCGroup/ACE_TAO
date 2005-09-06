@@ -396,8 +396,8 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
 
 /*
  * Comment hook to comment the base class implementations
- * that do nothing. Specialized versions from derived 
- * class will directly override these methods. Add 
+ * that do nothing. Specialized versions from derived
+ * class will directly override these methods. Add
  * all methods that are virtual, have do nothing implementations
  * within this hook for later specialization.
  */
