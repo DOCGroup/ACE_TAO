@@ -1,3 +1,8 @@
+Tue Sep  6 12:51:19 UTC 2005  Don Sharp  <Donald.Sharp@prismtech.com>
+
+        * apps/JAWS2/JAWS/IO.h
+          Small fix to counter LynxOS' defining ERROR_MESSAGE
+
 Tue Sep  6 08:46:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * include/makeinclude/platform_vxworks5.5.x.GNU:
@@ -457,51 +462,51 @@ Sun Aug 28 14:13:25 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
 Fri Aug 26 18:01:31 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/Select_Reactor.cpp:
-	* ace/Select_Reactor_Base.h:
-	* ace/Select_Reactor_T.(h cpp):
-	* ace/Reactor_Token_T.(h cpp): Moved the definition/implementation of
-	  ACE_Select_Reactor_Token_T and its associated token-type selection
-	  macros to new file Reactor_Token_T.(h cpp); retargeted
-	  ACE_Select_Reactor_Token_T to call the ACE_Reactor_Impl interface
-	  rather than ACE_Select_Reactor. Renamed the class
-	  ACE_Reactor_Token_T to reflect this refactoring. This allows the
-	  token to be used in reactor implementations that are not derived
-	  from ACE_Select_Reactor.
+        * ace/Select_Reactor.cpp:
+        * ace/Select_Reactor_Base.h:
+        * ace/Select_Reactor_T.(h cpp):
+        * ace/Reactor_Token_T.(h cpp): Moved the definition/implementation of
+          ACE_Select_Reactor_Token_T and its associated token-type selection
+          macros to new file Reactor_Token_T.(h cpp); retargeted
+          ACE_Select_Reactor_Token_T to call the ACE_Reactor_Impl interface
+          rather than ACE_Select_Reactor. Renamed the class
+          ACE_Reactor_Token_T to reflect this refactoring. This allows the
+          token to be used in reactor implementations that are not derived
+          from ACE_Select_Reactor.
 
-	* ace/ace.mpc:
-	* ace/Makefile.am: Added the new files Reactor_Token_T.cpp and .h.
+        * ace/ace.mpc:
+        * ace/Makefile.am: Added the new files Reactor_Token_T.cpp and .h.
 
-	* ace/Dev_Poll_Reactor.(h cpp): Replace the use of ACE_SYNCH_MUTEX with
-	  ACE_Reactor_Token_T for the reactor's internal-protecting lock.
-	  Allows threads wishing to twiddle with the registrations or run the
-	  event loop to properly notify and synchronize with another thread
-	  that's already running the event loop.
-	  Also Clarified documentation on the queue-type members of
-	  ACE_Dev_Poll_Reactor_Notify.
+        * ace/Dev_Poll_Reactor.(h cpp): Replace the use of ACE_SYNCH_MUTEX with
+          ACE_Reactor_Token_T for the reactor's internal-protecting lock.
+          Allows threads wishing to twiddle with the registrations or run the
+          event loop to properly notify and synchronize with another thread
+          that's already running the event loop.
+          Also Clarified documentation on the queue-type members of
+          ACE_Dev_Poll_Reactor_Notify.
 
-	* ace/POSIX_Proactor.cpp (ACE_POSIX_SIG_Proactor::handle_events_i):
-	  Retry the wait on EINTR. Previous comments said this automatically
-	  happened because ACE_OSCALL_RETURN did it; it no longer does that,
-	  so explicit EINTR check code was added here.
+        * ace/POSIX_Proactor.cpp (ACE_POSIX_SIG_Proactor::handle_events_i):
+          Retry the wait on EINTR. Previous comments said this automatically
+          happened because ACE_OSCALL_RETURN did it; it no longer does that,
+          so explicit EINTR check code was added here.
 
-	* apps/JAWS3/jaws3/Event_Dispatcher.h: Correct for the new reactor
-	  token type defined, above.
+        * apps/JAWS3/jaws3/Event_Dispatcher.h: Correct for the new reactor
+          token type defined, above.
 
-	* tests/MT_Reference_Counted_Event_Handler_Test.cpp: Added ACE_TEXT
-	  where needed for ACE_DEBUG statements.
+        * tests/MT_Reference_Counted_Event_Handler_Test.cpp: Added ACE_TEXT
+          where needed for ACE_DEBUG statements.
 
-	* tests/Multicast_Test.cpp: After stopping the reactor loop on test
-	  timeout, wait for the task's thread(s) to exit or there's a race
-	  between thread exit and deleting the task's memory.
+        * tests/Multicast_Test.cpp: After stopping the reactor loop on test
+          timeout, wait for the task's thread(s) to exit or there's a race
+          between thread exit and deleting the task's memory.
 
 Fri Aug 26 10:52:38 2005  Gary Maxey <gary.maxey@hp.com>
 
-	* ace/Array_Map.inl:
+        * ace/Array_Map.inl:
 
-	  In operator[], broke complex statement into two statements.
-	  Compiler got confused by the original statement and generated
-	  incorrect code.
+          In operator[], broke complex statement into two statements.
+          Compiler got confused by the original statement and generated
+          incorrect code.
 
 Fri Aug 26 11:43:01 2005  Justin Michel  <michel_j@ociweb.com>
 
@@ -509,13 +514,13 @@ Fri Aug 26 11:43:01 2005  Justin Michel  <michel_j@ociweb.com>
         * ace/CDR_Stream.inl:
         * ace/CDR_Stream.cpp:
 
-	  Add a new simple class using RAII to call reset on an output CDR when
-	it goes out of scope. This is used to implement a new TAO option that will
-	reset() output CDRs after sending each request.
+          Add a new simple class using RAII to call reset on an output CDR when
+        it goes out of scope. This is used to implement a new TAO option that will
+        reset() output CDRs after sending each request.
 
-	  Add an optional ACE_Lock* to one of the input CDR constructors. This
-	is used by one of the TAO Any_Impl derived classes to provide thread safety
-	for its internal CDR.
+          Add an optional ACE_Lock* to one of the input CDR constructors. This
+        is used by one of the TAO Any_Impl derived classes to provide thread safety
+        for its internal CDR.
 
 Fri Aug 26 11:02:21 2005  Chad Elliott  <elliott_c@ociweb.com>
 
