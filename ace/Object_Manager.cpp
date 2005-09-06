@@ -196,6 +196,7 @@ ACE_Object_Manager::init (void)
 
 #     if defined (ACE_HAS_BUILTIN_ATOMIC_OP)
           ACE_Atomic_Op<ACE_Thread_Mutex, long>::init_functions ();
+          ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::init_functions ();
 #     endif /* ACE_HAS_BUILTIN_ATOMIC_OP */
 
 #     if !defined (ACE_LACKS_ACE_SVCCONF)

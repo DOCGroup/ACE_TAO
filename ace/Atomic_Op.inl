@@ -149,4 +149,150 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::value_i (void)
   return this->value_;
 }
 
+
+
+ACE_INLINE
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::ACE_Atomic_Op (void)
+  : value_ (0)
+{
+}
+
+ACE_INLINE
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::ACE_Atomic_Op (unsigned long c)
+  : value_ (c)
+{
+}
+
+ACE_INLINE
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::ACE_Atomic_Op (
+  const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &rhs)
+  : value_ (rhs.value_)
+{
+}
+
+ACE_INLINE unsigned long
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator++ (void)
+{
+#if defined (WIN32)
+  return static_cast<unsigned long> (::InterlockedIncrement (const_cast<long *> (reinterpret_cast<volatile long *>(&this->value_))));
+#else /* WIN32 */
+  return static_cast<unsigned long> ((*increment_fn_) (reinterpret_cast<volatile long *> (&this->value_)));
+#endif /* WIN32 */
+}
+
+ACE_INLINE unsigned long
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator++ (int)
+{
+  return ++*this - 1;
+}
+
+ACE_INLINE unsigned long
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator-- (void)
+{
+#if defined (WIN32)
+  return static_cast<unsigned long> (::InterlockedDecrement (const_cast<long *> (reinterpret_cast<volatile long *>(&this->value_))));
+#else /* WIN32 */
+  return static_cast<unsigned long> ((*decrement_fn_) (reinterpret_cast<volatile long *> (&this->value_)));
+#endif /* WIN32 */
+}
+
+ACE_INLINE unsigned long
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator-- (int)
+{
+  return --*this + 1;
+}
+
+ACE_INLINE unsigned long
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator+= (unsigned long rhs)
+{
+#if defined (WIN32) && defined (ACE_HAS_INTERLOCKED_EXCHANGEADD)
+  return static_cast<unsigned long> (::InterlockedExchangeAdd (const_cast<long *> (reinterpret_cast <volatile long *>(&this->value_)),
+                                   rhs)) + rhs;
+#else /* WIN32 && ACE_HAS_INTERLOCKED_EXCHANGEADD */
+  return static_cast<unsigned long> ((*exchange_add_fn_) (reinterpret_cast<volatile long *> (&this->value_), rhs)) + rhs;
+#endif /* WIN32 && ACE_HAS_INTERLOCKED_EXCHANGEADD */
+}
+
+ACE_INLINE unsigned long
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator-= (unsigned long rhs)
+{
+#if defined (WIN32) && defined (ACE_HAS_INTERLOCKED_EXCHANGEADD)
+  return static_cast<unsigned long> (::InterlockedExchangeAdd (const_cast<long *> (reinterpret_cast<volatile long *>(&this->value_)),
+                                   -rhs)) - rhs;
+#else /* WIN32 && ACE_HAS_INTERLOCKED_EXCHANGEADD */
+  return static_cast<unsigned long> ((*exchange_add_fn_) (reinterpret_cast<volatile long *> (&this->value_), -rhs)) - rhs;
+#endif /* WIN32 && ACE_HAS_INTERLOCKED_EXCHANGEADD */
+}
+
+ACE_INLINE bool
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator== (unsigned long rhs) const
+{
+  return (this->value_ == rhs);
+}
+
+ACE_INLINE bool
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator!= (unsigned long rhs) const
+{
+  return (this->value_ != rhs);
+}
+
+ACE_INLINE bool
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator>= (unsigned long rhs) const
+{
+  return (this->value_ >= rhs);
+}
+
+ACE_INLINE bool
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator> (unsigned long rhs) const
+{
+  return (this->value_ > rhs);
+}
+
+ACE_INLINE bool
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator<= (unsigned long rhs) const
+{
+  return (this->value_ <= rhs);
+}
+
+ACE_INLINE bool
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator< (unsigned long rhs) const
+{
+  return (this->value_ < rhs);
+}
+
+ACE_INLINE ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator= (unsigned long rhs)
+{
+#if defined (WIN32)
+  ::InterlockedExchange (const_cast<long *> (reinterpret_cast<volatile long*> (&this->value_)), rhs);
+#else /* WIN32 */
+  (*exchange_fn_) (reinterpret_cast<volatile long *> (&this->value_), rhs);
+#endif /* WIN32 */
+  return *this;
+}
+
+ACE_INLINE ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator= (
+   const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &rhs)
+{
+#if defined (WIN32)
+  ::InterlockedExchange (const_cast<long *> (reinterpret_cast<volatile long*> (&this->value_)), rhs.value_);
+#else /* WIN32 */
+  (*exchange_fn_) (reinterpret_cast<volatile long *> (&this->value_), rhs.value_);
+#endif /* WIN32 */
+  return *this;
+}
+
+ACE_INLINE unsigned long
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::value (void) const
+{
+  return this->value_;
+}
+
+ACE_INLINE volatile unsigned long &
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::value_i (void)
+{
+  return this->value_;
+}
+
 #endif /* ACE_HAS_BUILTIN_ATOMIC_OP */
