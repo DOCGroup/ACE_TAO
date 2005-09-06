@@ -13,38 +13,7 @@ ACE_RCSID (ace,
 
 #if defined (ACE_HAS_BUILTIN_ATOMIC_OP)
 
-long (*ACE_Atomic_Op<ACE_Thread_Mutex, long>::increment_fn_) (volatile long *) = 0;
-long (*ACE_Atomic_Op<ACE_Thread_Mutex, long>::decrement_fn_) (volatile long *) = 0;
-long (*ACE_Atomic_Op<ACE_Thread_Mutex, long>::exchange_fn_) (volatile long *, long) = 0;
-long (*ACE_Atomic_Op<ACE_Thread_Mutex, long>::exchange_add_fn_) (volatile long *, long) = 0;
-
-void
-ACE_Atomic_Op<ACE_Thread_Mutex, long>::init_functions (void)
-{
-  if (ACE_OS::num_processors () == 1)
-    {
-      increment_fn_ = single_cpu_increment;
-      decrement_fn_ = single_cpu_decrement;
-      exchange_fn_ = single_cpu_exchange;
-      exchange_add_fn_ = single_cpu_exchange_add;
-    }
-  else
-    {
-      increment_fn_ = multi_cpu_increment;
-      decrement_fn_ = multi_cpu_decrement;
-      exchange_fn_ = multi_cpu_exchange;
-      exchange_add_fn_ = multi_cpu_exchange_add;
-    }
-}
-
-void
-ACE_Atomic_Op<ACE_Thread_Mutex, long>::dump (void) const
-{
-#if defined (ACE_HAS_DUMP)
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
-}
+namespace {
 
 #if defined (_MSC_VER)
 // Disable "no return value" warning, as we will be putting
@@ -54,7 +23,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::dump (void) const
 #endif /* _MSC_VER */
 
 long
-ACE_Atomic_Op<ACE_Thread_Mutex, long>::single_cpu_increment (volatile long *value)
+single_cpu_increment (volatile long *value)
 {
 #if defined (__GNUC__) && (defined (ACE_HAS_PENTIUM) || defined (__amd64__))
   long tmp = 1;
@@ -68,7 +37,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::single_cpu_increment (volatile long *valu
 }
 
 long
-ACE_Atomic_Op<ACE_Thread_Mutex, long>::single_cpu_decrement (volatile long *value)
+single_cpu_decrement (volatile long *value)
 {
 #if defined (__GNUC__) && (defined (ACE_HAS_PENTIUM) || defined (__amd64__))
   long tmp = -1;
@@ -82,9 +51,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::single_cpu_decrement (volatile long *valu
 }
 
 long
-ACE_Atomic_Op<ACE_Thread_Mutex, long>::single_cpu_exchange (
-  volatile long *value,
-  long rhs)
+single_cpu_exchange (volatile long *value, long rhs)
 {
 #if defined (__GNUC__) && (defined (ACE_HAS_PENTIUM) || defined (__amd64__))
   unsigned long addr = reinterpret_cast<unsigned long> (value);
@@ -98,8 +65,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::single_cpu_exchange (
 }
 
 long
-ACE_Atomic_Op<ACE_Thread_Mutex, long>::single_cpu_exchange_add (volatile long *value,
-                                                                long rhs)
+single_cpu_exchange_add (volatile long *value, long rhs)
 {
 #if defined (__GNUC__) && (defined (ACE_HAS_PENTIUM) || defined (__amd64__))
   unsigned long addr = reinterpret_cast<unsigned long> (value);
@@ -132,7 +98,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::single_cpu_exchange_add (volatile long *v
 }
 
 long
-ACE_Atomic_Op<ACE_Thread_Mutex, long>::multi_cpu_increment (volatile long *value)
+multi_cpu_increment (volatile long *value)
 {
 #if defined (__GNUC__) && (defined (ACE_HAS_PENTIUM) || defined (__amd64__))
   long tmp = 1;
@@ -146,7 +112,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::multi_cpu_increment (volatile long *value
 }
 
 long
-ACE_Atomic_Op<ACE_Thread_Mutex, long>::multi_cpu_decrement (volatile long *value)
+multi_cpu_decrement (volatile long *value)
 {
 #if defined (__GNUC__) && (defined (ACE_HAS_PENTIUM) || defined (__amd64__))
   long tmp = -1;
@@ -160,9 +126,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::multi_cpu_decrement (volatile long *value
 }
 
 long
-ACE_Atomic_Op<ACE_Thread_Mutex, long>::multi_cpu_exchange (
-  volatile long *value,
-  long rhs)
+multi_cpu_exchange (volatile long *value, long rhs)
 {
 #if defined (__GNUC__) && (defined (ACE_HAS_PENTIUM) || defined (__amd64__))
   unsigned long addr = reinterpret_cast<unsigned long> (value);
@@ -177,8 +141,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::multi_cpu_exchange (
 }
 
 long
-ACE_Atomic_Op<ACE_Thread_Mutex, long>::multi_cpu_exchange_add (volatile long *value,
-                                                               long rhs)
+multi_cpu_exchange_add (volatile long *value, long rhs)
 {
 #if defined (__GNUC__) && (defined (ACE_HAS_PENTIUM) || defined (__amd64__))
   unsigned long addr = reinterpret_cast<unsigned long> (value);
@@ -214,18 +177,74 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::multi_cpu_exchange_add (volatile long *va
 #pragma warning (pop)
 #endif /* _MSC_VER */
 
-#endif /* ACE_HAS_BUILTIN_ATOMIC_OP */
+} // end namespace
 
-#if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#  if !defined (ACE_HAS_BUILTIN_ATOMIC_OP)
-template class ACE_Atomic_Op<ACE_Thread_Mutex, long>;
-#  endif /* !ACE_HAS_BUILTIN_ATOMIC_OP */
-template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, long>;
-# elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  if !defined (ACE_HAS_BUILTIN_ATOMIC_OP)
-#   pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, long>
-#  endif /* !ACE_HAS_BUILTIN_ATOMIC_OP */
-#  pragma instantiate ACE_Atomic_Op_Ex<ACE_Thread_Mutex, long>
-# endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-#endif /* ACE_HAS_THREADS */
+  
+long (*ACE_Atomic_Op<ACE_Thread_Mutex, long>::increment_fn_) (volatile long *) = 0;
+long (*ACE_Atomic_Op<ACE_Thread_Mutex, long>::decrement_fn_) (volatile long *) = 0;
+long (*ACE_Atomic_Op<ACE_Thread_Mutex, long>::exchange_fn_) (volatile long *, long) = 0;
+long (*ACE_Atomic_Op<ACE_Thread_Mutex, long>::exchange_add_fn_) (volatile long *, long) = 0;
+
+void
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::init_functions (void)
+{
+  if (ACE_OS::num_processors () == 1)
+    {
+      increment_fn_ = single_cpu_increment;
+      decrement_fn_ = single_cpu_decrement;
+      exchange_fn_ = single_cpu_exchange;
+      exchange_add_fn_ = single_cpu_exchange_add;
+    }
+  else
+    {
+      increment_fn_ = multi_cpu_increment;
+      decrement_fn_ = multi_cpu_decrement;
+      exchange_fn_ = multi_cpu_exchange;
+      exchange_add_fn_ = multi_cpu_exchange_add;
+    }
+}
+
+void
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::dump (void) const
+{
+#if defined (ACE_HAS_DUMP)
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
+}
+
+
+long (*ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::increment_fn_) (volatile long *) = 0;
+long (*ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::decrement_fn_) (volatile long *) = 0;
+long (*ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::exchange_fn_) (volatile long *, long) = 0;
+long (*ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::exchange_add_fn_) (volatile long *, long) = 0;
+
+void
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::init_functions (void)
+{
+  if (ACE_OS::num_processors () == 1)
+    {
+      increment_fn_ = single_cpu_increment;
+      decrement_fn_ = single_cpu_decrement;
+      exchange_fn_ = single_cpu_exchange;
+      exchange_add_fn_ = single_cpu_exchange_add;
+    }
+  else
+    {
+      increment_fn_ = multi_cpu_increment;
+      decrement_fn_ = multi_cpu_decrement;
+      exchange_fn_ = multi_cpu_exchange;
+      exchange_add_fn_ = multi_cpu_exchange_add;
+    }
+}
+
+void
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::dump (void) const
+{
+#if defined (ACE_HAS_DUMP)
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+#endif /* ACE_HAS_DUMP */
+}
+
+#endif /* ACE_HAS_BUILTIN_ATOMIC_OP */
