@@ -1,3 +1,17 @@
+Tue Sep  6 16:12:04 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * tao/Connection_Handler.cpp:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Connector.h:
+        * tao/IIOP_Endpoint.h:
+        * tao/IIOP_Endpoint.cpp:
+        * tao/IIOP_Profile.h:
+        * tao/Transport.h:
+        * tao/Transport_Acceptor.h:
+
+          The markers in these files accidentally includes the destructor
+          which conflicts with the base class.
+
 Tue Sep  6 13:29:04 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * tao/IIOP_Endpoint.h:
