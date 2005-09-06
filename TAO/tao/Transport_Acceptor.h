@@ -44,6 +44,8 @@ namespace TAO
   class ObjectKey;
 }
 
+//@@ TAO_ACCEPTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
+
 // ****************************************************************
 
 /// The TAO-specific OMG assigned value for the TAG_ORB_TYPE tagged
@@ -129,10 +131,24 @@ public:
   virtual int object_key (IOP::TaggedProfile &profile,
                           TAO::ObjectKey &key) = 0;
 
+  /*
+   * Hook to add public methods from derived acceptor classes onto
+   * this class.
+   */
+  //@@ TAO_ACCEPTOR_PUBLIC_METHODS_ADD_HOOK
+
 private:
   /// IOP protocol tag.
   CORBA::ULong tag_;
+
+  /*
+   * Hook to add data members from concrete acceptor implementations onto
+   * the base class.
+   */
+  //@@ TAO_ACCEPTOR_SPL_DATA_MEMBERS_ADD_HOOK
 };
+
+//@@ TAO_ACCEPTOR_EXTERN_ADD_HOOK
 
 #if defined (__ACE_INLINE__)
 # include "Transport_Acceptor.inl"

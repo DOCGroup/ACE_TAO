@@ -227,6 +227,8 @@ public:
                              ACE_ENV_ARG_DECL) = 0;
   //@}
 
+  //@@ TAO_PROFILE_SPL_PUBLIC_METHODS_ADD_HOOK
+
 protected:
   /// If you have a virtual method you need a virtual dtor.
   virtual ~TAO_Profile (void);
@@ -300,6 +302,8 @@ private:
   ACE_UNIMPLEMENTED_FUNC (TAO_Profile (const TAO_Profile&))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Profile&))
 
+  //@@ TAO_PROFILE_SPL_PROTECTED_METHODS_ADD_HOOK
+
 protected:
 
   /// IIOP version number.
@@ -339,7 +343,11 @@ private:
 
   /// Number of outstanding references to this object.
   CORBA::ULong refcount_;
+
+  //@@ TAO_ENDPOINT_SPL_PRIVATE_DATA_ADD_HOOK
 };
+
+//@@ TAO_ENDPOINT_SPL_EXTERN_ADD_HOOK
 
 // A helper class to handle the various kinds of octet sequences used
 // inside the ORB.
@@ -404,6 +412,8 @@ private:
 private:
   TAO_opaque body_;
 };
+
+//@@ TAO_PROFILE_SPL_EXTERN_HOOK
 
 #if defined (__ACE_INLINE__)
 # include "Profile.i"

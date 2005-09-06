@@ -27,6 +27,11 @@
 #include "ace/Reactor.h"
 #include "ace/os_include/sys/os_uio.h"
 
+/*
+ * Specialization hook to add include files from 
+ * concrete transport implementation.
+ */
+//@@ TAO_TRANSPORT_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
 
 #if !defined (__ACE_INLINE__)
 # include "Transport.inl"
@@ -140,6 +145,14 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
 
   // Create TMS now.
   this->tms_ = cf->create_transport_mux_strategy (this);
+
+  /*
+   * Hook to add code that initializes components that
+   * belong to the concrete protocol implementation.
+   * Further additions to this Transport class will
+   * need to add code *before* this hook.
+   */
+  //@@ TAO_TRANSPORT_SPL_CONSTRUCTOR_ADD_HOOK
 }
 
 TAO_Transport::~TAO_Transport (void)
@@ -168,6 +181,14 @@ TAO_Transport::~TAO_Transport (void)
   // *must* have been cleaned up.
   ACE_ASSERT (this->head_ == 0);
   ACE_ASSERT (this->cache_map_entry_ == 0);
+
+  /*
+   * Hook to add code that cleans up components
+   * belong to the concrete protocol implementation.
+   * Further additions to this Transport class will
+   * need to add code *before* this hook.
+   */
+  //@@ TAO_TRANSPORT_SPL_DESTRUCTOR_ADD_HOOK
 }
 
 void
@@ -204,11 +225,47 @@ TAO_Transport::idle_after_reply (void)
   return this->tms ()->idle_after_reply ();
 }
 
+/*
+ * A concrete transport class specializes this
+ * method. This hook allows commenting this function
+ * when TAO's transport is specialized. Note: All
+ * functions that have an implementation that does 
+ * nothing should be added within this hook to 
+ * enable specialization.
+ */
+//@@ TAO_TRANSPORT_SPL_COMMENT_HOOK_START
+
 int
 TAO_Transport::tear_listen_point_list (TAO_InputCDR &)
 {
   ACE_NOTSUP_RETURN (-1);
 }
+
+int
+TAO_Transport::send_message_shared (TAO_Stub *stub,
+                                    int message_semantics,
+                                    const ACE_Message_Block *message_block,
+                                    ACE_Time_Value *max_wait_time)
+{
+  int result;
+                                                                                              
+  {
+    ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
+                                                                                              
+    result =
+      this->send_message_shared_i (stub, message_semantics,
+                                   message_block, max_wait_time);
+  }
+                                                                                              
+  if (result == -1)
+    {
+      this->close_connection ();
+    }
+                                                                                              
+  return result;
+}
+
+//@@ TAO_TRANSPORT_SPL_COMMENT_HOOK_END
 
 bool
 TAO_Transport::post_connect_hook (void)
@@ -446,30 +503,6 @@ TAO_Transport::send_message_block_chain_i (const ACE_Message_Block *mb,
     total_length - synch_message.message_length ();
 
   return 0;
-}
-
-int
-TAO_Transport::send_message_shared (TAO_Stub *stub,
-                                    int message_semantics,
-                                    const ACE_Message_Block *message_block,
-                                    ACE_Time_Value *max_wait_time)
-{
-  int result;
-
-  {
-    ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
-
-    result =
-      this->send_message_shared_i (stub, message_semantics,
-                                   message_block, max_wait_time);
-  }
-
-  if (result == -1)
-    {
-      this->close_connection ();
-    }
-
-  return result;
 }
 
 int
@@ -2461,3 +2494,9 @@ TAO_Transport::allocate_partial_message_block (void)
     }
 }
 
+/*
+ * Hook to add concrete implementations from the derived class onto
+ * TAO's transport. 
+ */
+
+//@@ TAO_TRANSPORT_SPL_METHODS_ADD_HOOK

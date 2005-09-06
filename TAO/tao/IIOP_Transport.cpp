@@ -33,6 +33,16 @@ TAO_IIOP_Transport::~TAO_IIOP_Transport (void)
   delete this->messaging_object_;
 }
 
+/*
+ * Hook to copy over all concrete implementations
+ * of Transport class from this class to the base
+ * class as a part of the specialization.
+ * All enhancements to the IIOP_Transport
+ * class, i.e., addition of new concrete non virtual
+ * methods should be added within this hook.
+ */
+
+//@@ TAO_TRANSPORT_SPL_COPY_HOOK_START
 ACE_Event_Handler *
 TAO_IIOP_Transport::event_handler_i (void)
 {
@@ -407,3 +417,7 @@ TAO_IIOP_Transport::get_listen_point (
 
   return 1;
 }
+//@@ TAO_TRANSPORT_SPL_COPY_HOOK_END
+/*
+ * End of copy hook.
+ */
