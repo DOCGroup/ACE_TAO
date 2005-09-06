@@ -1620,17 +1620,17 @@ TAO_CodeGen::gen_stub_src_includes (void)
                            << "\"";
     }
 
-  if (be_global->tc_support ()
-      && !be_global->gen_anyop_files ())
-    {
-      this->gen_typecode_includes (this->client_stubs_);
-    }
-
   // Generate the include statement for the client header. We just
   // need to put only the base names. Path info is not required.
   *this->client_stubs_ << "\n#include \""
                        << be_global->be_get_client_hdr_fname (1)
                        << "\"";
+
+  if (be_global->tc_support ()
+      && !be_global->gen_anyop_files ())
+    {
+      this->gen_typecode_includes (this->client_stubs_);
+    }
 
   // Always generated.
   this->gen_standard_include (this->client_stubs_,
