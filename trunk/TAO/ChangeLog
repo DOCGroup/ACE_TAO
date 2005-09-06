@@ -1,3 +1,32 @@
+Tue Sep  6 11:32:31 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * tao/Connection_Handler.h:
+        * tao/Connection_Handler.cpp:
+        * tao/IIOP_Connection_Handler.h:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+        * tao/IIOP_Transport.h:
+        * tao/IIOP_Transport.cpp:
+        * tao/Endpoint.h:
+        * tao/IIOP_Endpoint.cpp:
+        * tao/IIOP_Endpoint.h:
+        * tao/Profile.h:
+        * tao/IIOP_Profile.h:
+        * tao/Profile.cpp:
+        * tao/IIOP_Profile.h:
+        * tao/Transport_Acceptor.h:
+        * tao/Traport_Acceptor.cpp:
+        * tao/IIOP_Acceptor.h:
+        * tao/IIOP_Connector.h:
+        * tao/IIOP_Connector.cpp:
+        * tao/Transport_Connector.h:
+        * tao/Transport_Connector.cpp:
+
+          Added markers within the Pluggable protocols frameworks for
+          specializing the implementation with a concrete protocol
+          implementation, e.g., iiop.
+
 Mon Sep  5 12:11:28 2005  Simon McQueen  <sm@prismtech.com>
 
         * TAO_IDL/be/be_visitor_typedef/typedef_ci.cpp:
