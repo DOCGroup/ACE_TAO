@@ -19,4 +19,8 @@ TAO_Acceptor::TAO_Acceptor (CORBA::ULong tag)
 
 TAO_Acceptor::~TAO_Acceptor (void)
 {
+
+  //@@ TAO_ACCEPTOR_DESTRUCTOR_ADD_HOOK
 }
+
+//@@ TAO_ACCEPTOR_SPL_METHODS_ADD_HOOK
