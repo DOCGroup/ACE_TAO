@@ -10,10 +10,10 @@
  */
 //=============================================================================
 
+#include "tao/DynamicAny/DynamicAny.h"
 
 #include "test_dynany.h"
 #include "data.h"
-#include "tao/DynamicAny/DynamicAny.h"
 #include "analyzer.h"
 
 Test_DynAny::Test_DynAny (CORBA::ORB_var orb, int debug)

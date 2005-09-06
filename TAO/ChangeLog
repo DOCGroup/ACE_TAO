@@ -1,3 +1,15 @@
+Tue Sep  6 15:54:57 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/Bug_2222_Regression/test.cpp:
+
+	  Fixed unused argument warnings.
+
+	* tests/DynAny_Test/test_dynany.cpp:
+	* tests/DynAny_Test/test_dynunion.cpp:
+
+	  More include directive reordering to address g++ 3.4 order of
+	  parsing template related errors.
+
 Tue Sep  6 15:40:17 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_codegen.cpp (gen_stub_src_includes):
