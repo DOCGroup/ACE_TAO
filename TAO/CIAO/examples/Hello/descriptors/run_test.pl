@@ -10,6 +10,7 @@ use PerlACE::Run_Test;
 
 $DAnCE = "$ENV{'ACE_ROOT'}/TAO/CIAO/DAnCE";
 $CIAO_ROOT = "$ENV{'CIAO_ROOT'}";
+$TAO_ROOT = "$ENV{'TAO_ROOT'}";
 $daemons_running = 0;
 $em_running = 0;
 $ns_running = 0;
@@ -97,7 +98,7 @@ delete_ior_files ();
 
 # Invoke naming service
 
-$NS = new PerlACE::Process ("../../../../../orbsvcs/Naming_Service/Naming_Service", "-m 1 -o $nsior");
+$NS = new PerlACE::Process ("$TAO_ROOT/orbsvcs/Naming_Service/Naming_Service", "-m 1 -o $nsior");
 
 $NS->Spawn ();
 
