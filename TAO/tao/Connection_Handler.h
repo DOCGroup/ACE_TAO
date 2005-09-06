@@ -30,6 +30,12 @@ class ACE_SOCK;
 class ACE_Lock;
 class ACE_Event_Handler;
 
+/*
+ * Hook to specialize the connection handler with the 
+ * concrete connection handler implementation. 
+ */
+//@@ CONNECTION_HANDLER_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
+
 /**
  * @class TAO_Connection_Handler
  *
@@ -107,6 +113,13 @@ public:
   /// Release the OS resources related to this handler.
   virtual int release_os_resources (void);
 
+  /*
+   * Hook to add public methods from concrete connection handler
+   * implementation onto the base connection handler.
+   */
+
+   //@@ CONNECTION_HANDLER_SPL_PUBLIC_METHODS_ADD_HOOK
+
 protected:
 
   /// Return our TAO_ORB_Core pointer
@@ -169,7 +182,17 @@ private:
   /// Internal state lock, needs to be separate from the reference
   /// count / pending upcalls lock because they interleave.
   ACE_Lock * lock_;
+
+  /*
+   * Hook to add instance members from derived class 
+   * onto base Connection_Handler class. Any further
+   * additions to this class should go before this
+   * hook.
+   */
+  //@@ CONNECTION_HANDLER_SPL_PRIVATE_DATA_ADD_HOOK
 };
+
+//@@ CONNECTION_HANDLER_SPL_EXTERN_ADD_HOOK
 
 #if defined (__ACE_INLINE__)
 #include "tao/Connection_Handler.inl"

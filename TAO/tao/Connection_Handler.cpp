@@ -11,6 +11,8 @@
 #include "ace/Reactor.h"
 #include "ace/os_include/sys/os_socket.h"
 
+//@@ CONNECTION_HANDLER_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
+
 #if !defined (__ACE_INLINE__)
 #include "tao/Connection_Handler.inl"
 #endif /* __ACE_INLINE__ */
@@ -390,6 +392,15 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
   return 1;
 }
 
+/*
+ * Comment hook to comment the base class implementations
+ * that do nothing. Specialized versions from derived 
+ * class will directly override these methods. Add 
+ * all methods that are virtual, have do nothing implementations
+ * within this hook for later specialization.
+ */
+//@@ CONNECTION_HANDLER_SPL_COMMENT_HOOK_START
+
 int
 TAO_Connection_Handler::set_dscp_codepoint (CORBA::Boolean)
 {
@@ -401,6 +412,8 @@ TAO_Connection_Handler::release_os_resources (void)
 {
   return 0;
 }
+
+//@@ CONNECTION_HANDLER_SPL_COMMENT_HOOK_END
 
 void
 TAO_Connection_Handler::pre_io_hook (int &)
@@ -419,3 +432,5 @@ TAO_Connection_Handler::close_handler (void)
   this->transport ()->remove_reference ();
   return 0;
 }
+
+//@@ CONNECTION_HANDLER_SPL_METHODS_ADD_HOOK
