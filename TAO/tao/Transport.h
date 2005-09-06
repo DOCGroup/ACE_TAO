@@ -515,7 +515,7 @@ public:
   TAO_OutputCDR &out_stream (void);
 
   /*
-   * Specialization hook to add public methods from 
+   * Specialization hook to add public methods from
    * concrete transport implementations to TAO's transport
    * class
    */
@@ -1044,7 +1044,7 @@ private:
   ACE_Message_Block* partial_message_;
 
   /*
-   * specialization hook to add class members from concrete 
+   * specialization hook to add class members from concrete
    * transport class onto the base transport class. Please
    * add any private members to this class *before* this hook.
    */
@@ -1052,7 +1052,7 @@ private:
 };
 
 /*
- * Hook to add external typedefs and specializations to 
+ * Hook to add external typedefs and specializations to
  * TAO's transport implementation.
  */
 
