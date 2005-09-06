@@ -915,7 +915,7 @@ private:
    * TAO's protocol implementation onto the base Transport class
    */
 
-  //@@ TAO_TRANSPORT_PRIVATE_METHODS_ADD_HOOK
+  //@@ TAO_TRANSPORT_SPL_PRIVATE_METHODS_ADD_HOOK
 
 protected:
 
@@ -1056,7 +1056,7 @@ private:
  * TAO's transport implementation.
  */
 
-//@@ TAO_TRANSPORT_EXTERN_ADD_HOOK
+//@@ TAO_TRANSPORT_SPL_EXTERN_ADD_HOOK
 
 #if defined (__ACE_INLINE__)
 # include "Transport.inl"

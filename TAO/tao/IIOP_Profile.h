@@ -41,8 +41,6 @@
 class TAO_Export TAO_IIOP_Profile : public TAO_Profile
 {
 public:
-  /// The object key delimiter that IIOP uses or expects.
-  virtual char object_key_delimiter (void) const;
 
   //@@ TAO_PROFILE_SPL_PUBLIC_METHODS_COPY_HOOK_START
   static const char object_key_delimiter_;
@@ -69,6 +67,18 @@ public:
   /// Profile constructor, default.
   TAO_IIOP_Profile (TAO_ORB_Core *orb_core);
 
+  /**
+   * Add @a endp to this profile's list of endpoints (it is inserted
+   * next to the head of the list).  This profiles takes ownership of
+   * @a endp.
+   */
+  void add_endpoint (TAO_IIOP_Endpoint *endp);
+
+  //@@ TAO_PROFILE_SPL_PUBLIC_METHODS_COPY_HOOK_END
+
+  /// The object key delimiter that IIOP uses or expects.
+  virtual char object_key_delimiter (void) const;
+
   /// Template methods. Please see Profile.h for documentation.
   virtual char * to_string (ACE_ENV_SINGLE_ARG_DECL);
 
@@ -83,14 +93,6 @@ public:
   virtual CORBA::ULong endpoint_count (void) const;
   virtual CORBA::ULong hash (CORBA::ULong max
                              ACE_ENV_ARG_DECL);
-  /**
-   * Add @a endp to this profile's list of endpoints (it is inserted
-   * next to the head of the list).  This profiles takes ownership of
-   * @a endp.
-   */
-  void add_endpoint (TAO_IIOP_Endpoint *endp);
-
-  //@@ TAO_PROFILE_SPL_PUBLIC_METHODS_COPY_HOOK_END
 
 protected:
   /// Destructor is to be called only through <_decr_refcnt>.

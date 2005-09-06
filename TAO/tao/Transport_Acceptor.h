@@ -148,7 +148,7 @@ private:
   //@@ TAO_ACCEPTOR_SPL_DATA_MEMBERS_ADD_HOOK
 };
 
-//@@ TAO_ACCEPTOR_EXTERN_ADD_HOOK
+//@@ TAO_ACCEPTOR_SPL_EXTERN_ADD_HOOK
 
 #if defined (__ACE_INLINE__)
 # include "Transport_Acceptor.inl"

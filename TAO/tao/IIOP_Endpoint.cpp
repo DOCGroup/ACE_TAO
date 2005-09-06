@@ -54,8 +54,7 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const char *host,
                                       CORBA::UShort port,
                                       const ACE_INET_Addr &addr,
                                       CORBA::Short priority)
-  : TAO_Endpoint (IOP::TAG_INTERNET_IOP,
-                  priority)
+  : TAO_Endpoint (IOP::TAG_INTERNET_IOP, priority)
   , host_ ()
   , port_ (port)
 #if defined (ACE_HAS_IPV6)
@@ -102,10 +101,14 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const char *host,
 {
   this->host(host); // With IPv6 performs check for decimal address
 }
+//@@ TAO_ENDPOINT_SPL_COPY_HOOK_END
+
 
 TAO_IIOP_Endpoint::~TAO_IIOP_Endpoint (void)
 {
 }
+
+//@@ TAO_ENDPOINT_SPL_COPY_HOOK_START
 
 TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const TAO_IIOP_Endpoint &rhs)
   : TAO_Endpoint (rhs.tag_, rhs.priority_)
