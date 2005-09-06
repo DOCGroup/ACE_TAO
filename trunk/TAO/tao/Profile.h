@@ -344,10 +344,10 @@ private:
   /// Number of outstanding references to this object.
   CORBA::ULong refcount_;
 
-  //@@ TAO_ENDPOINT_SPL_PRIVATE_DATA_ADD_HOOK
+  //@@ TAO_PROFILE_SPL_PRIVATE_DATA_ADD_HOOK
 };
 
-//@@ TAO_ENDPOINT_SPL_EXTERN_ADD_HOOK
+//@@ TAO_PROFILE_SPL_EXTERN_ADD_HOOK
 
 // A helper class to handle the various kinds of octet sequences used
 // inside the ORB.

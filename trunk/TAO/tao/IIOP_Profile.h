@@ -164,7 +164,7 @@ protected:
   /// Number of endpoints in the list headed by <endpoint_>.
   CORBA::ULong count_;
 
-  //@@ TAO_PROFILE_SPL_PRIVATE_DATA_COPY_HOOK_START
+  //@@ TAO_PROFILE_SPL_PRIVATE_DATA_COPY_HOOK_END
 };
 
 #include /**/ "ace/post.h"
