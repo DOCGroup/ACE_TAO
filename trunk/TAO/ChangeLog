@@ -1,3 +1,11 @@
+Tue Sep  6 10:33:09 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/examples/ORT/Gateway_i.h:
+
+	  Added "AnyTypeCode_methods.h" include directive as a temporary
+	  work around for g++ 3.4 or better and some HP compiler order of
+	  parsing template related issues.
+
 Tue Sep  6 11:32:31 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * tao/Connection_Handler.h:
