@@ -55,8 +55,6 @@ public:
   /// Destructor.
   ~TAO_IIOP_Connector (void);
 
-  //@@ TAO_CONNECTOR_SPL_PUBLIC_METHODS_COPY_HOOK_START
-
   // = The TAO_Connector methods, please check the documentation on
   // Transport_Connector.h
   int open (TAO_ORB_Core *orb_core);
@@ -68,6 +66,8 @@ public:
   virtual char object_key_delimiter (void) const;
 
 public:
+
+  //@@ TAO_CONNECTOR_SPL_PUBLIC_METHODS_COPY_HOOK_START
 
   typedef TAO_Connect_Concurrency_Strategy<TAO_IIOP_Connection_Handler>
           TAO_IIOP_CONNECT_CONCURRENCY_STRATEGY;
