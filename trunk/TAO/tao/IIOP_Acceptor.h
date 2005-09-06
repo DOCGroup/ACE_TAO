@@ -42,6 +42,13 @@
 class TAO_Export TAO_IIOP_Acceptor : public TAO_Acceptor
 {
 public:
+
+  /*
+   * Hook that marks begining of all concrete i.e. non virtual 
+   * methods implemented in IIOP_Acceptor class.
+   */
+  //@@ TAO_ACCEPTOR_SPL_CONCRETE_METHODS_COPY_HOOK_START
+
   /// Constructor.
   TAO_IIOP_Acceptor (CORBA::Boolean flag = 0);
 
@@ -59,6 +66,8 @@ public:
   typedef TAO_Creation_Strategy<TAO_IIOP_Connection_Handler> CREATION_STRATEGY;
   typedef TAO_Concurrency_Strategy<TAO_IIOP_Connection_Handler> CONCURRENCY_STRATEGY;
   typedef TAO_Accept_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR> ACCEPT_STRATEGY;
+
+  //@@ TAO_ACCEPTOR_SPL_CONCRETE_METHODS_COPY_HOOK_END
 
   /**
    * The TAO_Acceptor methods, check the documentation in
@@ -85,6 +94,7 @@ public:
   virtual int object_key (IOP::TaggedProfile &profile,
                           TAO::ObjectKey &key);
 
+  //@@ TAO_ACCEPTOR_SPL_CONCRETE_METHODS_COPY_HOOK_START
   /**
    * Set the host name for the given addr.
    * A hostname may be forced by using specified_hostname.  This
@@ -169,7 +179,9 @@ protected:
   int create_shared_profile (const TAO::ObjectKey &object_key,
                              TAO_MProfile &mprofile,
                              CORBA::Short priority);
+  //@@ TAO_ACCEPTOR_SPL_CONCRETE_METHODS_COPY_HOOK_END
 
+  //@@ TAO_ACCEPTOR_SPL_DATA_MEMBERS_COPY_HOOK_START
 protected:
 
   /// Array of ACE_INET_Addr instances, each one corresponding to a
@@ -224,6 +236,7 @@ private:
   CONCURRENCY_STRATEGY *concurrency_strategy_;
   ACCEPT_STRATEGY *accept_strategy_;
 
+  //@@ TAO_ACCEPTOR_SPL_DATA_MEMBERS_COPY_HOOK_END
 };
 
 #if defined(__ACE_INLINE__)

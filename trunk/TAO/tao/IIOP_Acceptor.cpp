@@ -1,3 +1,7 @@
+/*
+ * Hook to copy all include and forward declarations.
+ */
+//@@ TAO_ACCEPTOR_SPL_COPY_HOOK_START
 #include "tao/IIOP_Acceptor.h"
 #include "tao/IIOP_Profile.h"
 #include "tao/MProfile.h"
@@ -16,6 +20,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
 
+//@@ TAO_ACCEPTOR_SPL_COPY_HOOK_END
 
 ACE_RCSID (tao,
            IIOP_Acceptor,
@@ -38,6 +43,9 @@ TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (CORBA::Boolean flag)
     accept_strategy_ (0)
 {
 }
+
+
+//@@ TAO_ACCEPTOR_SPL_COPY_HOOK_START
 
 TAO_IIOP_Acceptor::~TAO_IIOP_Acceptor (void)
 {
@@ -1162,3 +1170,5 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
     }
   return 0;
 }
+
+//@@ TAO_ACCEPTOR_SPL_COPY_HOOK_END

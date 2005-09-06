@@ -18,16 +18,16 @@ ACE_RCSID (tao,
            IIOP_Connector,
            "$Id$")
 
+TAO_IIOP_Connector::~TAO_IIOP_Connector (void)
+{
+}
 
+//@@ TAO_TRANSPORT_SPL_COPY_HOOK_START
 TAO_IIOP_Connector::TAO_IIOP_Connector (CORBA::Boolean flag)
   : TAO_Connector (IOP::TAG_INTERNET_IOP)
   , lite_flag_ (flag)
   , connect_strategy_ ()
   , base_connector_ ()
-{
-}
-
-TAO_IIOP_Connector::~TAO_IIOP_Connector (void)
 {
 }
 
@@ -395,3 +395,4 @@ TAO_IIOP_Connector::cancel_svc_handler (
 
   return -1;
 }
+//@@ TAO_TRANSPORT_SPL_COPY_HOOK_END
