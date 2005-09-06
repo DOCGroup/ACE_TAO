@@ -57,6 +57,11 @@ namespace TAO
     };
 }
 
+/*
+ * Specialization hook for the TAO's transport implementation.
+ */
+//@@ TAO_TRANSPORT_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
+
 /**
  * @class TAO_Transport
  *
@@ -509,6 +514,13 @@ public:
   /// Accessor for the output CDR stream
   TAO_OutputCDR &out_stream (void);
 
+  /*
+   * Specialization hook to add public methods from 
+   * concrete transport implementations to TAO's transport
+   * class
+   */
+  //@@ TAO_TRANSPORT_SPL_PUBLIC_METHODS_ADD_HOOK
+
 protected:
 
   virtual TAO_Connection_Handler * connection_handler_i (void) = 0;
@@ -898,6 +910,13 @@ private:
   ACE_UNIMPLEMENTED_FUNC (TAO_Transport (const TAO_Transport&))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Transport&))
 
+  /*
+   * Specialization hook to add concrete private methods from
+   * TAO's protocol implementation onto the base Transport class
+   */
+
+  //@@ TAO_TRANSPORT_PRIVATE_METHODS_ADD_HOOK
+
 protected:
 
   /// IOP protocol tag.
@@ -1023,7 +1042,21 @@ private:
 
   /// Holds the partial GIOP message (if there is one)
   ACE_Message_Block* partial_message_;
+
+  /*
+   * specialization hook to add class members from concrete 
+   * transport class onto the base transport class. Please
+   * add any private members to this class *before* this hook.
+   */
+  //@@ TAO_TRANSPORT_SPL_DATA_MEMBERS_ADD_HOOK
 };
+
+/*
+ * Hook to add external typedefs and specializations to 
+ * TAO's transport implementation.
+ */
+
+//@@ TAO_TRANSPORT_EXTERN_ADD_HOOK
 
 #if defined (__ACE_INLINE__)
 # include "Transport.inl"
