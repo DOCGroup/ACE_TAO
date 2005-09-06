@@ -39,6 +39,8 @@ class TAO_Export TAO_IIOP_Endpoint : public TAO_Endpoint
 {
 public:
 
+  //@@ TAO_ENDPOINT_SPL_PUBLIC_METHODS_COPY_HOOK_START
+
   // @todo Lose these friends!
   friend class TAO_IIOP_Profile;
   friend class TAO_SSLIOP_Profile;
@@ -65,9 +67,12 @@ public:
                      CORBA::Short priority);
 
 
+  //@@ TAO_ENDPOINT_SPL_PUBLIC_METHODS_COPY_HOOK_END
 
   /// Destructor.
   ~TAO_IIOP_Endpoint (void);
+
+  //@@ TAO_ENDPOINT_SPL_PUBLIC_METHODS_COPY_HOOK_START
 
   // = Implementation of abstract TAO_Endpoint methods.  See
   // Endpoint.h for their documentation.
@@ -116,7 +121,11 @@ public:
   bool is_ipv6_decimal (void) const;
 #endif /* ACE_HAS_IPV6 */
 
+  //@@ TAO_ENDPOINT_SPL_PUBLIC_METHODS_COPY_HOOK_END
+
 private:
+
+  //@@ TAO_ENDPOINT_SPL_PRIVATE_DATA_COPY_HOOK_START 
 
   /// Helper method for setting INET_Addr.
   int set (const ACE_INET_Addr &addr,
@@ -170,6 +179,8 @@ private:
   /// IIOP Endpoints can be stringed into a list.  Return the next
   /// endpoint in the list, if any.
   TAO_IIOP_Endpoint *next_;
+
+  //@@ TAO_ENDPOINT_SPL_PRIVATE_DATA_COPY_HOOK_START 
 };
 
 

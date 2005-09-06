@@ -15,6 +15,23 @@ ACE_RCSID (tao,
 
 #include "ace/os_include/os_netdb.h"
 
+TAO_IIOP_Profile::~TAO_IIOP_Profile (void)
+{
+  // Clean up the list of endpoints since we own it.
+  // Skip the head, since it is not dynamically allocated.
+  TAO_Endpoint *tmp = 0;
+                                                                                              
+  for (TAO_Endpoint *next = this->endpoint ()->next ();
+       next != 0;
+       next = tmp)
+    {
+      tmp = next->next ();
+      delete next;
+    }
+}
+
+//@@ TAO_PROFILE_SPL_COPY_HOOK_START
+
 static const char prefix_[] = "iiop";
 
 const char TAO_IIOP_Profile::object_key_delimiter_ = '/';
@@ -25,7 +42,7 @@ TAO_IIOP_Profile::object_key_delimiter (void) const
   return TAO_IIOP_Profile::object_key_delimiter_;
 }
 
-
+//@@ TAO_PROFILE_SPL_COPY_HOOK_END
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr &addr,
                                     const TAO::ObjectKey &object_key,
@@ -66,21 +83,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (TAO_ORB_Core *orb_core)
 {
 }
 
-TAO_IIOP_Profile::~TAO_IIOP_Profile (void)
-{
-  // Clean up the list of endpoints since we own it.
-  // Skip the head, since it is not dynamically allocated.
-  TAO_Endpoint *tmp = 0;
-
-  for (TAO_Endpoint *next = this->endpoint ()->next ();
-       next != 0;
-       next = tmp)
-    {
-      tmp = next->next ();
-      delete next;
-    }
-}
-
+//@@ TAO_PROFILE_SPL_COPY_HOOK_START
 int
 TAO_IIOP_Profile::decode_profile (TAO_InputCDR& cdr)
 {
@@ -719,3 +722,4 @@ TAO_IIOP_Profile::decode_endpoints (void)
 
   return 0;
 }
+//@@ TAO_PROFILE_SPL_COPY_HOOK_END
