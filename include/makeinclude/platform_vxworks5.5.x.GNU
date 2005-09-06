@@ -264,7 +264,10 @@ PIC              =
 ifeq ("$(VXWORKSLINK)","true")
 
   ifdef repo
-	POST_BUILD_RULE = if exist $(VDIR)/.rpobak/*.rpo mv $(VDIR)/.rpobak/*.rpo $(VDIR)/.
+    ifeq ($(SHARED_LIBS),1)
+      BACKUP_RPO_RULE = for %f in ($(basename $(addprefix $(VDIR), $(OBJS)) $(VSHOBJS))) do if exist %f.rpo mv %f.rpo %f.rpobak $(ACE_NUL_STDERR)
+      POST_BUILD_RULE = for %f in ($(basename $(addprefix $(VDIR), $(OBJS)) $(VSHOBJS))) do if exist %f.rpobak mv %f.rpobak %f.rpo $(ACE_NUL_STDERR)
+    endif
   endif
 
 .PHONY: $(PRJ_DIR)/$(PRJ_FILE)
@@ -277,8 +280,9 @@ $(PRJ_DIR)/$(PRJ_FILE):
     #### this step holds for both .SO as well as 'app' images so use both VSHOBJS and OBJS
 	-$(LD_PARTIAL) -frepo -L$(ACE_ROOT)/ace -L./ $(LDLIBPATH) $(LD_LINK_PATH)$(LINK_OUTPUT_FLAG) ace-templ_inst $? $(ACE_SHLIBS) $(addprefix $(VDIR), $(OBJS)) $(VSHOBJS)
 	-$(RM) ace-templ_inst
-	@if not exist $(VDIR)/.rpobak $(MKDIR) $(VDIR)/.rpobak $(ACE_NUL_STDERR)
-	-if exist $(VDIR)/*.rpo mv $(VDIR)/*.rpo $(VDIR)/.rpobak
+    #### We need to backup the .RPO files or otherwise the link step of the final image will
+    #### start instantiating templates again even if we do not specify '-frepo'!
+	-$(BACKUP_RPO_RULE)
       ifeq ($(VX_SO_BUILD),1)
     #### build library of objects in .SO to use as a sort of import library for VxWorks
 	echo $(filter %.o, $(VSHOBJS)) | xargs $(AR) $(ARFLAGS) $(VLIB) $(AREXTRA)
