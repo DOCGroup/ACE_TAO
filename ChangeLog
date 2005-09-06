@@ -1,3 +1,21 @@
+Tue Sep  6 12:20:22 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Object_Manager.cpp:
+
+	  Changed to invoke ACE_Atomic_Op<ACE_Thread_Mutex, unsigned
+	  long>::init_functions () to initialize function pointers.
+
+	* ace/Atomic_Op.cpp:
+	* ace/Atomic_Op.h:
+	* ace/Atomic_Op.inl:
+
+	  Added ACE_Atomic_Op<ACE_Thread_mutex, unsigned long> template
+	  specialization using the existing atomic operations for longs
+	  with judicious use of casts.  The implementation isn't ideal,
+	  since two sets of function pointers need to be set.  This can
+	  be revisited when we add specializations for int and unsigned
+	  int.
+
 Tue Sep  6 10:32:23 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
@@ -78,7 +96,7 @@ Thu Sep  1 17:28:25 2005  J.T. Conklin  <jtc@acorntoolworks.com>
         * ace/Atomic_Op.cpp:
         * ace/Atomic_Op.h:
 
-          Add ACE_Atomic_Op<ACE_Thread_Mutex, long> template
+          Added ACE_Atomic_Op<ACE_Thread_Mutex, long> template
           specialization for AMD64 when compiled with GCC.
 
 Thu Sep  1 17:38:10 2005  William Otte  <wotte@dre.vanderbilt.edu>

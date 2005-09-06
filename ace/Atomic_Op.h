@@ -133,17 +133,102 @@ private:
   /// Current object decorated by the atomic op.
   volatile long value_;
 
-  // Single-cpu atomic op implementations.
-  static long single_cpu_increment (volatile long *value);
-  static long single_cpu_decrement (volatile long *value);
-  static long single_cpu_exchange (volatile long *value, long rhs);
-  static long single_cpu_exchange_add (volatile long *value, long rhs);
+  // Pointers to selected atomic op implementations.
+  static long (*increment_fn_) (volatile long *);
+  static long (*decrement_fn_) (volatile long *);
+  static long (*exchange_fn_) (volatile long *, long);
+  static long (*exchange_add_fn_) (volatile long *, long);
+};
 
-  // Multi-cpu atomic op implementations.
-  static long multi_cpu_increment (volatile long *value);
-  static long multi_cpu_decrement (volatile long *value);
-  static long multi_cpu_exchange (volatile long *value, long rhs);
-  static long multi_cpu_exchange_add (volatile long *value, long rhs);
+
+/**
+ * @class ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>
+ *
+ * @brief Specialization of ACE_Atomic_Op for platforms that
+ *        support atomic integer operations.
+ *
+ * Specialization of ACE_Atomic_Op for platforms that support atomic
+ * integer operations.
+ */
+template<>
+class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>
+{
+public:
+  /// Initialize <value_> to 0.
+  ACE_Atomic_Op (void);
+
+  /// Initialize <value_> to c.
+  ACE_Atomic_Op (unsigned long c);
+
+  /// Manage copying...
+  ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &c);
+
+  /// Atomically pre-increment <value_>.
+  unsigned long operator++ (void);
+
+  /// Atomically post-increment <value_>.
+  unsigned long operator++ (int);
+
+  /// Atomically increment <value_> by rhs.
+  unsigned long operator+= (unsigned long rhs);
+
+  /// Atomically pre-decrement <value_>.
+  unsigned long operator-- (void);
+
+  /// Atomically post-decrement <value_>.
+  unsigned long operator-- (int);
+
+  /// Atomically decrement <value_> by rhs.
+  unsigned long operator-= (unsigned long rhs);
+
+  /// Atomically compare <value_> with rhs.
+  bool operator== (unsigned long rhs) const;
+
+  /// Atomically compare <value_> with rhs.
+  bool operator!= (unsigned long rhs) const;
+
+  /// Atomically check if <value_> greater than or equal to rhs.
+  bool operator>= (unsigned long rhs) const;
+
+  /// Atomically check if <value_> greater than rhs.
+  bool operator> (unsigned long rhs) const;
+
+  /// Atomically check if <value_> less than or equal to rhs.
+  bool operator<= (unsigned long rhs) const;
+
+  /// Atomically check if <value_> less than rhs.
+  bool operator< (unsigned long rhs) const;
+
+  /// Atomically assign rhs to <value_>.
+  ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &operator= (unsigned long rhs);
+
+  /// Atomically assign <rhs> to <value_>.
+  ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &rhs);
+
+  /// Explicitly return <value_>.
+  unsigned long value (void) const;
+
+  /// Dump the state of an object.
+  void dump (void) const;
+
+  /// Explicitly return <value_> (by reference).
+  volatile unsigned long &value_i (void);
+
+  // ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+  /// Used during ACE object manager initialization to optimize the fast
+  /// atomic op implementation according to the number of CPUs.
+  static void init_functions (void);
+
+private:
+  // This function cannot be supported by this template specialization.
+  // If you need access to an underlying lock, use the ACE_Atomic_Op_Ex
+  // template instead.
+  ACE_UNIMPLEMENTED_FUNC (ACE_Thread_Mutex &mutex (void))
+
+  /// Current object decorated by the atomic op.
+  volatile unsigned long value_;
 
   // Pointers to selected atomic op implementations.
   static long (*increment_fn_) (volatile long *);
@@ -151,6 +236,7 @@ private:
   static long (*exchange_fn_) (volatile long *, long);
   static long (*exchange_add_fn_) (volatile long *, long);
 };
+
 #endif /* ACE_HAS_BUILTIN_ATOMIC_OP */
 
 #if defined (__ACE_INLINE__)
