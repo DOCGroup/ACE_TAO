@@ -6,7 +6,7 @@
 * This test does not run - successful compile and link == successful test.
 */
 int
-main (int argc, char *argv[])
+main (int, char *[])
 {
   ACE_TRY_NEW_ENV
     {
