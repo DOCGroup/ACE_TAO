@@ -14,3 +14,5 @@ ACE_RCSID (tao,
 TAO_Endpoint::~TAO_Endpoint (void)
 {
 }
+
+//@@ TAO_ENDPOINT_SPL_METHODS_ADD_HOOK
