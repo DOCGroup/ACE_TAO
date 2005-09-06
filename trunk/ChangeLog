@@ -1,41 +1,46 @@
+Tue Sep  6 08:46:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+          Small fix for '-frepo' builds with shared libs.
+
 Mon Sep  5 14:56:53 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* protocols/ace/RMCast/Socket.cpp:
+        * protocols/ace/RMCast/Socket.cpp:
 
-	Reverted this change: "Replaced calls to read/write with
-	recv_n/send_n to make things work with BCB on Windows".
-	It breaks VC6.
+        Reverted this change: "Replaced calls to read/write with
+        recv_n/send_n to make things work with BCB on Windows".
+        It breaks VC6.
 
 Sun Sep  4 22:27:19 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* protocols/ace/RMCast/Link.cpp:
+        * protocols/ace/RMCast/Link.cpp:
 
-	Aligned receiving buffer manually. This is necessary because
-	some of the broken compilers (like BCB) do not adhere to the
-	standard when it some to the alignment of the buffers returned
-	by operator new. Thanks to Vladislav Zverev <vladislav at gtss
-	dot spb dot ru> for reporting this.
+        Aligned receiving buffer manually. This is necessary because
+        some of the broken compilers (like BCB) do not adhere to the
+        standard when it some to the alignment of the buffers returned
+        by operator new. Thanks to Vladislav Zverev <vladislav at gtss
+        dot spb dot ru> for reporting this.
 
-	* protocols/ace/RMCast/Socket.cpp:
-	* protocols/ace/RMCast/Socket.h:
+        * protocols/ace/RMCast/Socket.cpp:
+        * protocols/ace/RMCast/Socket.h:
 
-	Added the from argument to the recv() function. Made the Reactor
-	interface code executed only when it is actually used. Replaced
-	calls to read/write with recv_n/send_n to make things work with
-	BCB on Windows. Thanks to Vladislav Zverev <vladislav at gtss
-	dot spb dot ru> for suggestions.
+        Added the from argument to the recv() function. Made the Reactor
+        interface code executed only when it is actually used. Replaced
+        calls to read/write with recv_n/send_n to make things work with
+        BCB on Windows. Thanks to Vladislav Zverev <vladislav at gtss
+        dot spb dot ru> for suggestions.
 
 
 Fri Sep  2 08:29:38 2005  Arvind S. Krishna  <arvindk@tango.dre.vanderbilt.edu>
 
-	* ace/OS_NS_string.h:
-	* ace/OS_NS_string.cpp:
-	* ace/OS_NS_string.inl:
+        * ace/OS_NS_string.h:
+        * ace/OS_NS_string.cpp:
+        * ace/OS_NS_string.inl:
 
-	  Updated the ACE_OS::memcpy optimization to factor out the loop
-	  unrolled code into a separate function. This should enable
-	  memcpy function itself to be inlined. Thanks to JT jtc at
-	  crontoolworks dot com.
+          Updated the ACE_OS::memcpy optimization to factor out the loop
+          unrolled code into a separate function. This should enable
+          memcpy function itself to be inlined. Thanks to JT jtc at
+          crontoolworks dot com.
 
 Fri Sep  2 10:44:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
