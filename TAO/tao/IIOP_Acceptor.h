@@ -44,7 +44,7 @@ class TAO_Export TAO_IIOP_Acceptor : public TAO_Acceptor
 public:
 
   /*
-   * Hook that marks begining of all concrete i.e. non virtual 
+   * Hook that marks begining of all concrete i.e. non virtual
    * methods implemented in IIOP_Acceptor class.
    */
   //@@ TAO_ACCEPTOR_SPL_CONCRETE_METHODS_COPY_HOOK_START
@@ -100,7 +100,7 @@ public:
    * A hostname may be forced by using specified_hostname.  This
    * is useful if the given address corresponds to more than one
    * hostname and the desired one cannot be determined in any
-   * other way. 
+   * other way.
    * This method is used both when constructing IOR endpoints and LPL
    * (listen point lists).
    *

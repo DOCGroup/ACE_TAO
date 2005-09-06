@@ -42,8 +42,10 @@ class TAO_Export TAO_IIOP_Profile : public TAO_Profile
 {
 public:
   /// The object key delimiter that IIOP uses or expects.
-  static const char object_key_delimiter_;
   virtual char object_key_delimiter (void) const;
+
+  //@@ TAO_PROFILE_SPL_PUBLIC_METHODS_COPY_HOOK_START
+  static const char object_key_delimiter_;
 
   /// Return the char string prefix.
   static const char *prefix (void);
@@ -88,6 +90,8 @@ public:
    */
   void add_endpoint (TAO_IIOP_Endpoint *endp);
 
+  //@@ TAO_PROFILE_SPL_PUBLIC_METHODS_COPY_HOOK_END
+
 protected:
   /// Destructor is to be called only through <_decr_refcnt>.
   ~TAO_IIOP_Profile (void);
@@ -105,7 +109,12 @@ protected:
    * encapsulation of a sequence of structs, each representing a
    * single endpoint.  Data format is specified in iiop_endpoins.pidl.
    */
+
+  //@@ TAO_PROFILE_SPL_PROTECTED_METHODS_COPY_HOOK_START
+
   int encode_endpoints_for_rt (void);
+
+  //@@ TAO_PROFILE_SPL_PROTECTED_METHODS_COPY_HOOK_END
 
   /// Template methods. Please see Profile.h for the documentation.
   virtual int decode_profile (TAO_InputCDR &cdr);
@@ -147,10 +156,15 @@ protected:
    * <encode_endpoints> method documentation above for how the rest of
    * the endpoint list is transmitted.
    */
+
+  //@@ TAO_PROFILE_SPL_PRIVATE_DATA_COPY_HOOK_START
+
   TAO_IIOP_Endpoint endpoint_;
 
   /// Number of endpoints in the list headed by <endpoint_>.
   CORBA::ULong count_;
+
+  //@@ TAO_PROFILE_SPL_PRIVATE_DATA_COPY_HOOK_START
 };
 
 #include /**/ "ace/post.h"
