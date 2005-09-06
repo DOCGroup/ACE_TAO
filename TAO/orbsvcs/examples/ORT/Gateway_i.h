@@ -1,3 +1,5 @@
+// -*- C++ -*-
+//
 // $Id$
 
 //=============================================================================
@@ -18,9 +20,10 @@
 #define GATEWAY_I_H
 
 #include "tao/IFR_Client/IFR_Client_Adapter_Impl.h"
-#include "tao/PortableServer/PortableServer.h"
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/DynamicInterface/DII_CORBA_methods.h"
 #include "tao/DynamicInterface/Dynamic_Implementation.h"
+#include "tao/PortableServer/PortableServer.h"
 
 class Gateway_i
   : public virtual PortableServer::DynamicImplementation
