@@ -28,7 +28,7 @@
 #include "ace/os_include/sys/os_uio.h"
 
 /*
- * Specialization hook to add include files from 
+ * Specialization hook to add include files from
  * concrete transport implementation.
  */
 //@@ TAO_TRANSPORT_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
@@ -229,8 +229,8 @@ TAO_Transport::idle_after_reply (void)
  * A concrete transport class specializes this
  * method. This hook allows commenting this function
  * when TAO's transport is specialized. Note: All
- * functions that have an implementation that does 
- * nothing should be added within this hook to 
+ * functions that have an implementation that does
+ * nothing should be added within this hook to
  * enable specialization.
  */
 //@@ TAO_TRANSPORT_SPL_COMMENT_HOOK_START
@@ -248,20 +248,20 @@ TAO_Transport::send_message_shared (TAO_Stub *stub,
                                     ACE_Time_Value *max_wait_time)
 {
   int result;
-                                                                                              
+
   {
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
-                                                                                              
+
     result =
       this->send_message_shared_i (stub, message_semantics,
                                    message_block, max_wait_time);
   }
-                                                                                              
+
   if (result == -1)
     {
       this->close_connection ();
     }
-                                                                                              
+
   return result;
 }
 
@@ -2496,7 +2496,7 @@ TAO_Transport::allocate_partial_message_block (void)
 
 /*
  * Hook to add concrete implementations from the derived class onto
- * TAO's transport. 
+ * TAO's transport.
  */
 
 //@@ TAO_TRANSPORT_SPL_METHODS_ADD_HOOK
