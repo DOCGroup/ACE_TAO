@@ -1,3 +1,9 @@
+Wed Sep  7 15:54:08 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Regenerated.
+
 Wed Sep  7 11:47:35 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * tao/IIOP_Acceptor.cpp:
