@@ -1,3 +1,9 @@
+Tue Sep  6 19:43:47 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/MakeProjectCreator/config/automake.features.
+
+	  New features file for automake build.
+
 Tue Sep  6 17:37:15 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/MakeProjectCreator/config/ssl.mpb:
