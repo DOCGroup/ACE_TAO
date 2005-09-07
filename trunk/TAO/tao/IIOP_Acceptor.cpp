@@ -20,8 +20,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
 
-//@@ TAO_ACCEPTOR_SPL_COPY_HOOK_END
-
 ACE_RCSID (tao,
            IIOP_Acceptor,
            "$Id$")
@@ -43,6 +41,8 @@ TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (CORBA::Boolean flag)
     accept_strategy_ (0)
 {
 }
+
+//@@ TAO_ACCEPTOR_SPL_COPY_HOOK_END
 
 TAO_IIOP_Acceptor::~TAO_IIOP_Acceptor (void)
 {

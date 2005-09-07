@@ -1,3 +1,9 @@
+Wed Sep  7 11:47:35 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * tao/IIOP_Acceptor.cpp:
+
+          Marker modified for the specializations to work properly.
+
 Tue Sep  6 15:54:57 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Bug_2222_Regression/test.cpp:
