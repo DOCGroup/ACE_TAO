@@ -578,8 +578,7 @@ namespace
          << "::Components::CCMContext_var ctx_;" << endl
          << "};";
 
-      os << "typedef " << ctx.export_macro () << " "
-         << i.name () << "_Servant_T<int> "
+      os << "typedef " << i.name () << "_Servant_T<int> "
          << i.name () << "_Servant;";
 
       i.context ().set ("facet_hdr_gen", true);
