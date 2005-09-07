@@ -5677,16 +5677,16 @@ libTAO_SSLIOP_la_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(SSL_ROOT)/include \
-  -I/usr/kerberos/include \
   -DACE_HAS_SSL=1 \
+  @ACE_TLS_CPPFLAGS@ \
   -DTAO_SSLIOP_BUILD_DLL
 
 libTAO_SSLIOP_la_SOURCES = \
   $(SSLIOP)
 
 libTAO_SSLIOP_la_LDFLAGS = \
- -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ \
+  @ACE_TLS_LDFLAGS@
 
 libTAO_SSLIOP_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
@@ -5699,8 +5699,7 @@ libTAO_SSLIOP_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la \
-  -lssl \
-  -lcrypto
+  @ACE_TLS_LIBS@
 
 nobase_include_HEADERS += \
   SSLIOP.idl \
