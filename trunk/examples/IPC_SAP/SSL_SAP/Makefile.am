@@ -6,65 +6,76 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
+## ./bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake -noreldefs ACE.mwc
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-## Makefile.SSL_SAP_Client.am 
+
+## Makefile.SSL_SAP_Client.am
 
 if BUILD_SSL
+
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  -I$(SSL_ROOT)/include \
-  -I/usr/kerberos/include \
-  -DACE_HAS_SSL=1
+  -DACE_HAS_SSL=1 \
+  @ACE_TLS_CPPFLAGS@
 
 client_SOURCES = \
   SSL-client.cpp \
   SSL-client.h
 
+client_LDFLAGS = \
+  @ACE_TLS_LDFLAGS@
+
 client_LDADD = \
- $(top_builddir)/ace/SSL/libACE_SSL.la $(top_builddir)/ace/libACE.la -lssl -lcrypto
+  $(ACE_BUILDDIR)/ace/SSL/libACE_SSL.la \
+  $(ACE_BUILDDIR)/ace/libACE.la \
+  @ACE_TLS_LIBS@
 
 endif BUILD_SSL
 
-## Makefile.SSL_SAP_Client_Simple.am 
+## Makefile.SSL_SAP_Client_Simple.am
 
 if BUILD_SSL
+
 noinst_PROGRAMS += client-simple
 
 client_simple_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  -I$(SSL_ROOT)/include \
-  -I/usr/kerberos/include \
-  -DACE_HAS_SSL=1
+  -DACE_HAS_SSL=1 \
+  @ACE_TLS_CPPFLAGS@
 
 client_simple_SOURCES = \
   SSL-client-simple.cpp \
   SSL-client-simple.h
 
+client_simple_LDFLAGS = \
+  @ACE_TLS_LDFLAGS@
+
 client_simple_LDADD = \
- $(top_builddir)/ace/SSL/libACE_SSL.la $(top_builddir)/ace/libACE.la -lssl -lcrypto
+  $(ACE_BUILDDIR)/ace/SSL/libACE_SSL.la \
+  $(ACE_BUILDDIR)/ace/libACE.la \
+  @ACE_TLS_LIBS@
 
 endif BUILD_SSL
 
-## Makefile.SSL_SAP_Server.am 
+## Makefile.SSL_SAP_Server.am
 
 if BUILD_SSL
+
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  -I$(SSL_ROOT)/include \
-  -I/usr/kerberos/include \
-  -DACE_HAS_SSL=1
+  -DACE_HAS_SSL=1 \
+  @ACE_TLS_CPPFLAGS@
 
 server_SOURCES = \
   SSL-server.cpp \
@@ -72,43 +83,53 @@ server_SOURCES = \
   SSL-client.h \
   SSL-server-fancy.h
 
+server_LDFLAGS = \
+  @ACE_TLS_LDFLAGS@
+
 server_LDADD = \
- $(top_builddir)/ace/SSL/libACE_SSL.la $(top_builddir)/ace/libACE.la -lssl -lcrypto
+  $(ACE_BUILDDIR)/ace/SSL/libACE_SSL.la \
+  $(ACE_BUILDDIR)/ace/libACE.la \
+  @ACE_TLS_LIBS@
 
 endif BUILD_SSL
 
-## Makefile.SSL_SAP_Server_Fancy.am 
+## Makefile.SSL_SAP_Server_Fancy.am
 
 if BUILD_SSL
+
 noinst_PROGRAMS += server-fancy
 
 server_fancy_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  -I$(SSL_ROOT)/include \
-  -I/usr/kerberos/include \
-  -DACE_HAS_SSL=1
+  -DACE_HAS_SSL=1 \
+  @ACE_TLS_CPPFLAGS@
 
 server_fancy_SOURCES = \
   SSL-server-fancy.cpp \
   SSL-server-fancy.h
 
+server_fancy_LDFLAGS = \
+  @ACE_TLS_LDFLAGS@
+
 server_fancy_LDADD = \
- $(top_builddir)/ace/SSL/libACE_SSL.la $(top_builddir)/ace/libACE.la -lssl -lcrypto
+  $(ACE_BUILDDIR)/ace/SSL/libACE_SSL.la \
+  $(ACE_BUILDDIR)/ace/libACE.la \
+  @ACE_TLS_LIBS@
 
 endif BUILD_SSL
 
-## Makefile.SSL_SAP_Server_Poll.am 
+## Makefile.SSL_SAP_Server_Poll.am
 
 if BUILD_SSL
+
 noinst_PROGRAMS += server-poll
 
 server_poll_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  -I$(SSL_ROOT)/include \
-  -I/usr/kerberos/include \
-  -DACE_HAS_SSL=1
+  -DACE_HAS_SSL=1 \
+  @ACE_TLS_CPPFLAGS@
 
 server_poll_SOURCES = \
   SSL-server-poll.cpp \
@@ -116,22 +137,27 @@ server_poll_SOURCES = \
   SSL-client.h \
   SSL-server-fancy.h
 
+server_poll_LDFLAGS = \
+  @ACE_TLS_LDFLAGS@
+
 server_poll_LDADD = \
- $(top_builddir)/ace/SSL/libACE_SSL.la $(top_builddir)/ace/libACE.la -lssl -lcrypto
+  $(ACE_BUILDDIR)/ace/SSL/libACE_SSL.la \
+  $(ACE_BUILDDIR)/ace/libACE.la \
+  @ACE_TLS_LIBS@
 
 endif BUILD_SSL
 
-## Makefile.SSL_SAP_Server_Simple.am 
+## Makefile.SSL_SAP_Server_Simple.am
 
 if BUILD_SSL
+
 noinst_PROGRAMS += server-simple
 
 server_simple_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  -I$(SSL_ROOT)/include \
-  -I/usr/kerberos/include \
-  -DACE_HAS_SSL=1
+  -DACE_HAS_SSL=1 \
+  @ACE_TLS_CPPFLAGS@
 
 server_simple_SOURCES = \
   SSL-server-simple.cpp \
@@ -139,8 +165,13 @@ server_simple_SOURCES = \
   SSL-client.h \
   SSL-server-fancy.h
 
+server_simple_LDFLAGS = \
+  @ACE_TLS_LDFLAGS@
+
 server_simple_LDADD = \
- $(top_builddir)/ace/SSL/libACE_SSL.la $(top_builddir)/ace/libACE.la -lssl -lcrypto
+  $(ACE_BUILDDIR)/ace/SSL/libACE_SSL.la \
+  $(ACE_BUILDDIR)/ace/libACE.la \
+  @ACE_TLS_LIBS@
 
 endif BUILD_SSL
 
