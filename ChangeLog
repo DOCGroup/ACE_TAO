@@ -1,3 +1,18 @@
+Wed Sep  7 14:44:58 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/SSL/Makefile.am:
+	* examples/C++NPv2/Makefile.am:
+	* examples/IPC_SAP/SSL_SAP/Makefile.am:
+
+	  Regenerated.
+
+	* bin/MakeProjectCreator/config/ace_openssl.mpb:
+
+	  Use 'compile_flags' instead of 'includes' to set compile flags
+	  to @ACE_TLS_CPPFLAGS@.  Thanks to Chad Elliot for this hint.
+
+	  Uncomment automake "specific" block.
+
 Tue Sep  6 22:02:16 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/MakeProjectCreator/config/ace_openssl.mpb:

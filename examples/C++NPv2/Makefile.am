@@ -6,34 +6,38 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
+## ./bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake -noreldefs ACE.mwc
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-noinst_PROGRAMS =
 noinst_HEADERS =
 noinst_LTLIBRARIES =
-## Makefile.C++NPv2_AC_CLD.am 
+noinst_PROGRAMS =
+
+## Makefile.C++NPv2_AC_CLD.am
 
 if BUILD_SSL
 if !BUILD_USES_WCHAR
+
 noinst_LTLIBRARIES += libAC_CLD.la
 
 libAC_CLD_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  -I$(SSL_ROOT)/include \
-  -I/usr/kerberos/include \
   -DACE_HAS_SSL=1 \
+  @ACE_TLS_CPPFLAGS@ \
   -DAC_CLD_BUILD_DLL
 
 libAC_CLD_la_SOURCES = \
   AC_Client_Logging_Daemon.cpp \
   Logging_Handler.cpp
 
+libAC_CLD_la_LDFLAGS = \
+  @ACE_TLS_LDFLAGS@
+
 libAC_CLD_la_LIBADD = \
- $(top_builddir)/ace/SSL/libACE_SSL.la $(top_builddir)/ace/libACE.la -lssl -lcrypto
+  @ACE_TLS_LIBS@
 
 noinst_HEADERS += \
   AC_Client_Logging_Daemon.h \
@@ -43,24 +47,27 @@ noinst_HEADERS += \
 endif !BUILD_USES_WCHAR
 endif BUILD_SSL
 
-## Makefile.C++NPv2_AIO_CLD.am 
+## Makefile.C++NPv2_AIO_CLD.am
 
 if BUILD_SSL
+
 noinst_LTLIBRARIES += libAIO_CLD.la
 
 libAIO_CLD_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  -I$(SSL_ROOT)/include \
-  -I/usr/kerberos/include \
   -DACE_HAS_SSL=1 \
+  @ACE_TLS_CPPFLAGS@ \
   -DAIO_CLD_BUILD_DLL
 
 libAIO_CLD_la_SOURCES = \
   AIO_Client_Logging_Daemon.cpp
 
+libAIO_CLD_la_LDFLAGS = \
+  @ACE_TLS_LDFLAGS@
+
 libAIO_CLD_la_LIBADD = \
- $(top_builddir)/ace/SSL/libACE_SSL.la $(top_builddir)/ace/libACE.la -lssl -lcrypto
+  @ACE_TLS_LIBS@
 
 noinst_HEADERS += \
   AIO_Client_Logging_Daemon.h \
@@ -68,9 +75,10 @@ noinst_HEADERS += \
 
 endif BUILD_SSL
 
-## Makefile.C++NPv2_CLD.am 
+## Makefile.C++NPv2_CLD.am
 
 if !BUILD_USES_WCHAR
+
 noinst_LTLIBRARIES += libCLD.la
 
 libCLD_la_CPPFLAGS = \
@@ -84,9 +92,6 @@ libCLD_la_SOURCES = \
   Logging_Event_Handler.cpp \
   Logging_Handler.cpp
 
-libCLD_la_LIBADD = \
- $(top_builddir)/ace/libACE.la
-
 noinst_HEADERS += \
   Logging_Acceptor.h \
   Logging_Event_Handler.h \
@@ -95,7 +100,9 @@ noinst_HEADERS += \
 
 endif !BUILD_USES_WCHAR
 
-## Makefile.C++NPv2_Configurable_Log_Server.am 
+## Makefile.C++NPv2_Configurable_Log_Server.am
+
+if !BUILD_USES_WCHAR
 noinst_PROGRAMS += configurable_logging_server
 
 configurable_logging_server_CPPFLAGS = \
@@ -108,9 +115,11 @@ configurable_logging_server_SOURCES = \
   Service_Reporter.h
 
 configurable_logging_server_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.C++NPv2_Display_Logfile.am 
+endif !BUILD_USES_WCHAR
+
+## Makefile.C++NPv2_Display_Logfile.am
 noinst_PROGRAMS += display_logfile
 
 display_logfile_CPPFLAGS = \
@@ -140,9 +149,9 @@ display_logfile_SOURCES = \
   TP_Logging_Server.h
 
 display_logfile_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.C++NPv2_Reactor_Log_Server.am 
+## Makefile.C++NPv2_Reactor_Log_Server.am
 
 if !BUILD_USES_WCHAR
 noinst_PROGRAMS += reactor_logging_server
@@ -164,13 +173,14 @@ reactor_logging_server_SOURCES = \
   Reactor_Logging_Server.h
 
 reactor_logging_server_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_USES_WCHAR
 
-## Makefile.C++NPv2_SLD.am 
+## Makefile.C++NPv2_SLD.am
 
 if !BUILD_USES_WCHAR
+
 noinst_LTLIBRARIES += libSLD.la
 
 libSLD_la_CPPFLAGS = \
@@ -184,9 +194,6 @@ libSLD_la_SOURCES = \
   Logging_Handler.cpp \
   SLD.cpp
 
-libSLD_la_LIBADD = \
- $(top_builddir)/ace/libACE.la
-
 noinst_HEADERS += \
   Logging_Acceptor.h \
   Logging_Event_Handler.h \
@@ -195,9 +202,10 @@ noinst_HEADERS += \
 
 endif !BUILD_USES_WCHAR
 
-## Makefile.C++NPv2_SLDex.am 
+## Makefile.C++NPv2_SLDex.am
 
 if !BUILD_USES_WCHAR
+
 noinst_LTLIBRARIES += libSLDex.la
 
 libSLDex_la_CPPFLAGS = \
@@ -214,9 +222,6 @@ libSLDex_la_SOURCES = \
   SLDex.cpp \
   Server_Shutdown.cpp
 
-libSLDex_la_LIBADD = \
- $(top_builddir)/ace/libACE.la
-
 noinst_HEADERS += \
   Logging_Acceptor.h \
   Logging_Event_Handler.h \
@@ -227,7 +232,7 @@ noinst_HEADERS += \
 
 endif !BUILD_USES_WCHAR
 
-## Makefile.C++NPv2_SR_Configurable_Log_Server.am 
+## Makefile.C++NPv2_SR_Configurable_Log_Server.am
 noinst_PROGRAMS += sr_configurable_logging_server
 
 sr_configurable_logging_server_CPPFLAGS = \
@@ -257,18 +262,18 @@ sr_configurable_logging_server_SOURCES = \
   TP_Logging_Server.h
 
 sr_configurable_logging_server_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.C++NPv2_Select_Reactor_Log_Server.am 
+## Makefile.C++NPv2_Select_Reactor_Log_Server.am
 
 if !BUILD_USES_WCHAR
-noinst_PROGRAMS += select_reactor_loggin_server
+noinst_PROGRAMS += select_reactor_logging_server
 
-select_reactor_loggin_server_CPPFLAGS = \
+select_reactor_logging_server_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR)
 
-select_reactor_loggin_server_SOURCES = \
+select_reactor_logging_server_SOURCES = \
   Logging_Acceptor.cpp \
   Logging_Event_Handler.cpp \
   Logging_Event_Handler_Ex.cpp \
@@ -279,43 +284,47 @@ select_reactor_loggin_server_SOURCES = \
   Logging_Event_Handler_Ex.h \
   Logging_Handler.h
 
-select_reactor_loggin_server_LDADD = \
- $(top_builddir)/ace/libACE.la
+select_reactor_logging_server_LDADD = \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_USES_WCHAR
 
-## Makefile.C++NPv2_TPCLS.am 
+## Makefile.C++NPv2_TPCLS.am
 
 if BUILD_SSL
 if !BUILD_USES_WCHAR
+
 noinst_LTLIBRARIES += libTPCLS.la
 
 libTPCLS_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
-  -I$(SSL_ROOT)/include \
-  -I/usr/kerberos/include \
   -DACE_HAS_SSL=1 \
+  @ACE_TLS_CPPFLAGS@ \
   -DTPCLS_BUILD_DLL
 
 libTPCLS_la_SOURCES = \
   Logging_Handler.cpp \
   TPC_Logging_Server.cpp
 
+libTPCLS_la_LDFLAGS = \
+  @ACE_TLS_LDFLAGS@
+
 libTPCLS_la_LIBADD = \
- $(top_builddir)/ace/SSL/libACE_SSL.la $(top_builddir)/ace/libACE.la -lssl -lcrypto
+  @ACE_TLS_LIBS@
 
 noinst_HEADERS += \
   Logging_Handler.h \
-  TPC_Logging_Server.h \
-  Reactor_Logging_Server_T.cpp
+  Reactor_Logging_Server_T.cpp \
+  TPC_Logging_Server.h
 
 endif !BUILD_USES_WCHAR
 endif BUILD_SSL
 
-## Makefile.C++NPv2_TPLS.am 
+## Makefile.C++NPv2_TPLS.am
 
 if !BUILD_USES_WCHAR
+
 noinst_LTLIBRARIES += libTPLS.la
 
 libTPLS_la_CPPFLAGS = \
@@ -329,19 +338,16 @@ libTPLS_la_SOURCES = \
   Logging_Handler.cpp \
   TP_Logging_Server.cpp
 
-libTPLS_la_LIBADD = \
- $(top_builddir)/ace/libACE.la
-
 noinst_HEADERS += \
   Logging_Acceptor.h \
   Logging_Event_Handler.h \
   Logging_Handler.h \
-  TP_Logging_Server.h \
-  Reactor_Logging_Server_T.cpp
+  Reactor_Logging_Server_T.cpp \
+  TP_Logging_Server.h
 
 endif !BUILD_USES_WCHAR
 
-## Makefile.C++NPv2_TP_Reactor_Log_Server.am 
+## Makefile.C++NPv2_TP_Reactor_Log_Server.am
 
 if !BUILD_USES_WCHAR
 noinst_PROGRAMS += tp_reactor_logging_server
@@ -362,11 +368,11 @@ tp_reactor_logging_server_SOURCES = \
   Logging_Handler.h
 
 tp_reactor_logging_server_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_USES_WCHAR
 
-## Makefile.C++NPv2_WFMO_Reactor_Log_Server.am 
+## Makefile.C++NPv2_WFMO_Reactor_Log_Server.am
 
 if BUILD_WFMO
 if !BUILD_USES_WCHAR
@@ -388,7 +394,7 @@ wfmo_reactor_logging_server_SOURCES = \
   Logging_Handler.h
 
 wfmo_reactor_logging_server_LDADD = \
- $(top_builddir)/ace/libACE.la
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_USES_WCHAR
 endif BUILD_WFMO
