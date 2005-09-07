@@ -1,6 +1,13 @@
+Tue Sep  6 21:56:43 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* m4/tls.m4:
+
+	  Changed to substitute ACE_TLS_CPPFLAGS and ACE_TLS_LDFLAGS like
+	  was done with ACE_TLS_LIBS.
+
 Tue Sep  6 19:43:47 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* bin/MakeProjectCreator/config/automake.features.
+	* bin/MakeProjectCreator/config/automake.features:
 
 	  New features file for automake build.
 
