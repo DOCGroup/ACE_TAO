@@ -175,7 +175,11 @@ SSL_shutdown (ssl);
  ])
 
  AS_IF([test $ac_cv_openssl_libs != no],
-       [AC_SUBST([ACE_TLS_LIBS],[$ace_TLS_LIBS])],
+       [
+AC_SUBST([ACE_TLS_CPPFLAGS],[$ace_TLS_CPPFLAGS])
+AC_SUBST([ACE_TLS_LDFLAGS],[$ace_TLS_LDFLAGS])
+AC_SUBST([ACE_TLS_LIBS],[$ace_TLS_LIBS])
+       ],
        [])
 
  dnl Restore the original library list and preprocessor flags.
