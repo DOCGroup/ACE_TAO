@@ -1,7 +1,7 @@
 //  -*- MPC -*-
 // $Id$
 
-project(SSL) : acelib, core, openssl {
+project(SSL) : acelib, core, ace_openssl {
   requires    += ssl
   sharedname   = ACE_SSL
   dynamicflags = ACE_SSL_BUILD_DLL

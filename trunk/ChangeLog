@@ -1,3 +1,15 @@
+Tue Sep  6 17:37:15 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/MakeProjectCreator/config/ssl.mpb:
+	* ace/SSL/ssl.mpc:
+
+	  Changed to inherit from ace_openssl.mpb instead of openssl.mpb.
+
+	* bin/MakeProjectCreator/config/ace_openssl.mpb:
+
+	  New file, similar to other ace_*.mpb files, so we can
+	  override values inherited from MPC's openssl.mpb.
+
 Tue Sep  6 12:20:22 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/Object_Manager.cpp:
