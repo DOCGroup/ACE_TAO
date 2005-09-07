@@ -1,3 +1,12 @@
+Wed Sep  7 16:31:12 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ServantHeaderGenerator.cpp:
+        
+          Removed generation of export macro in the typedef of the 
+          template class instantiation that defines a facet servant.
+          Thanks to Ossama Othman <ossama@dre.vanderbilt.edu> for
+          pointing out that typedefs need not be exported.
+
 Tue Sep  6 11:39:15 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* ciao/Deployment_Data.idl
