@@ -277,16 +277,23 @@ mmap_remap_test(void)
                     MMAP_Allocator (ACE_TEXT ("foo"), ACE_TEXT("foo"), &data_opts),
                     -1);
 
-    // cause memory segment to grow until it is forced
-    // to be remapped at different base address
-
+    // Cause memory segment to grow until it is forced
+    // to be remapped at different base address.
+    // I've seen this scheme absorb all available memory on a machine before
+    // remapping on AIX... so this will abort if memory runs out.
     size_t size = 4096;
     void* bar = 0;
     void* oba = alloc->base_addr();
     while(oba == alloc->base_addr())
     {
-        bar = alloc->malloc(size);
-        size += size;
+      if ((bar = alloc->malloc(size)) == 0)
+        {
+          ACE_ERROR ((LM_WARNING, ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("malloc remap failed before seeing different ")
+                      ACE_TEXT ("base; test not completed")));
+          break;
+        }
+      size += size;
     }
     void* nba = alloc->base_addr();
 
