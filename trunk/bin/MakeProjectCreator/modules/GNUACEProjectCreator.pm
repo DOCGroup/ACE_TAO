@@ -65,7 +65,7 @@ sub fill_value {
       foreach my $key (keys %$comps) {
         foreach my $item (@{$$comps{$key}}) {
           my($dname) = $self->relative($self->mpc_dirname($item));
-          if ($dname ne '.' && $dname !~ /^\.\.\//) {
+          if ($dname ne '.') {
             $vpath{$dname} = 1;
           }
         }
