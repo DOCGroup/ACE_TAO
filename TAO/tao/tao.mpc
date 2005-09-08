@@ -231,10 +231,12 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Acceptor_Filter.h
     Acceptor_Impl.h
     Acceptor_Registry.h
-    Adapter_Factory.h
     Adapter.h
+    Adapter_Factory.h
     Adapter_Registry.h
     Allocator.h
+    AnyTypeCode_Adapter.h
+    Any_Insert_Policy_T.h
     Arg_Traits_T.h
     Argument.h
     Array_VarOut_T.h
