@@ -1,70 +1,76 @@
+Thu Sep  8 06:47:11 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/GNUACEProjectCreator.pm:
+
+          Allow files with .. in the path to count in the VPATH setting.
+
 Wed Sep  7 14:44:58 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/SSL/Makefile.am:
-	* examples/C++NPv2/Makefile.am:
-	* examples/IPC_SAP/SSL_SAP/Makefile.am:
+        * ace/SSL/Makefile.am:
+        * examples/C++NPv2/Makefile.am:
+        * examples/IPC_SAP/SSL_SAP/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* bin/MakeProjectCreator/config/ace_openssl.mpb:
+        * bin/MakeProjectCreator/config/ace_openssl.mpb:
 
-	  Use 'compile_flags' instead of 'includes' to set compile flags
-	  to @ACE_TLS_CPPFLAGS@.  Thanks to Chad Elliot for this hint.
+          Use 'compile_flags' instead of 'includes' to set compile flags
+          to @ACE_TLS_CPPFLAGS@.  Thanks to Chad Elliot for this hint.
 
-	  Uncomment automake "specific" block.
+          Uncomment automake "specific" block.
 
 Tue Sep  6 22:02:16 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* bin/MakeProjectCreator/config/ace_openssl.mpb:
+        * bin/MakeProjectCreator/config/ace_openssl.mpb:
 
-	  Subtract /usr/kerberos/includes from includes for automake
-	  builds.
+          Subtract /usr/kerberos/includes from includes for automake
+          builds.
 
-	  Changed ${ACE_TLS_FOO} to @ACE_TLS_FOO@ so variables will be
-	  substituted by the values obtained by the configure script.
+          Changed ${ACE_TLS_FOO} to @ACE_TLS_FOO@ so variables will be
+          substituted by the values obtained by the configure script.
 
 Tue Sep  6 21:56:43 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* m4/tls.m4:
+        * m4/tls.m4:
 
-	  Changed to substitute ACE_TLS_CPPFLAGS and ACE_TLS_LDFLAGS like
-	  was done with ACE_TLS_LIBS.
+          Changed to substitute ACE_TLS_CPPFLAGS and ACE_TLS_LDFLAGS like
+          was done with ACE_TLS_LIBS.
 
 Tue Sep  6 19:43:47 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* bin/MakeProjectCreator/config/automake.features:
+        * bin/MakeProjectCreator/config/automake.features:
 
-	  New features file for automake build.
+          New features file for automake build.
 
 Tue Sep  6 17:37:15 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* bin/MakeProjectCreator/config/ssl.mpb:
-	* ace/SSL/ssl.mpc:
+        * bin/MakeProjectCreator/config/ssl.mpb:
+        * ace/SSL/ssl.mpc:
 
-	  Changed to inherit from ace_openssl.mpb instead of openssl.mpb.
+          Changed to inherit from ace_openssl.mpb instead of openssl.mpb.
 
-	* bin/MakeProjectCreator/config/ace_openssl.mpb:
+        * bin/MakeProjectCreator/config/ace_openssl.mpb:
 
-	  New file, similar to other ace_*.mpb files, so we can
-	  override values inherited from MPC's openssl.mpb.
+          New file, similar to other ace_*.mpb files, so we can
+          override values inherited from MPC's openssl.mpb.
 
 Tue Sep  6 12:20:22 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Object_Manager.cpp:
+        * ace/Object_Manager.cpp:
 
-	  Changed to invoke ACE_Atomic_Op<ACE_Thread_Mutex, unsigned
-	  long>::init_functions () to initialize function pointers.
+          Changed to invoke ACE_Atomic_Op<ACE_Thread_Mutex, unsigned
+          long>::init_functions () to initialize function pointers.
 
-	* ace/Atomic_Op.cpp:
-	* ace/Atomic_Op.h:
-	* ace/Atomic_Op.inl:
+        * ace/Atomic_Op.cpp:
+        * ace/Atomic_Op.h:
+        * ace/Atomic_Op.inl:
 
-	  Added ACE_Atomic_Op<ACE_Thread_mutex, unsigned long> template
-	  specialization using the existing atomic operations for longs
-	  with judicious use of casts.  The implementation isn't ideal,
-	  since two sets of function pointers need to be set.  This can
-	  be revisited when we add specializations for int and unsigned
-	  int.
+          Added ACE_Atomic_Op<ACE_Thread_mutex, unsigned long> template
+          specialization using the existing atomic operations for longs
+          with judicious use of casts.  The implementation isn't ideal,
+          since two sets of function pointers need to be set.  This can
+          be revisited when we add specializations for int and unsigned
+          int.
 
 Tue Sep  6 10:32:23 2005  Chad Elliott  <elliott_c@ociweb.com>
 
