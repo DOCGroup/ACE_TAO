@@ -30,6 +30,38 @@ AC_DEFUN([ACE_CHECK_TLS],
  AC_LANG([C++])
  AC_REQUIRE([AC_LANG])
 
+ ace_TLS_CPPFLAGS=""
+ ace_TLS_LDFLAGS=""
+
+ AC_ARG_WITH([openssl],
+   AS_HELP_STRING([--with-openssl@<:@=DIR@:>@],
+	          [root directory of openssl installation]),
+   [
+   ace_with_openssl="${withval}"
+   if test "${ace_with_openssl}" != yes; then
+	ace_openssl_include="${ace_with_openssl}/include"
+	ace_openssl_libdir="${ace_with_openssl}/lib"
+   fi
+   ])
+
+ AC_ARG_WITH([openssl_include],
+   AS_HELP_STRING([--with-openssl-include=DIR],
+                  [specify exact include dir for openssl headers]),
+   [ace_openssl_include="$withval"])
+
+ AC_ARG_WITH([openssl_libdir],
+   AS_HELP_STRING([--with-openssl-libdir=DIR],
+                  [specify exact include dir for openssl libraries]),
+   [ace_openssl_libdir="$withval"])
+
+ if test "${ace_openssl_include}"; then
+   ace_TLS_CPPFLAGS="-I${ace_openssl_include}"
+ fi
+
+ if test "${ace_openssl_libdir}"; then
+   ace_TLS_LDFLAGS="-L${ace_openssl_libdir}"
+ fi
+
  dnl Save the current library and preprocessor flagslist.  We do not
  dnl want to add the SSL/TLS-specific ones to the general library link
  dnl and preprocessor flags list since they should only be used when
@@ -40,9 +72,6 @@ AC_DEFUN([ACE_CHECK_TLS],
  ace_save_LDFLAGS="$LDFLAGS"
 
  dnl ---------------------------------------------------------
-
- ace_TLS_CPPFLAGS=""
- ace_TLS_LDFLAGS=""
 
  dnl Check if OpenSSL requires the Kerberos include directory to be
  dnl added to the header search path.
@@ -137,7 +166,7 @@ SSL_shutdown (ssl);
  ace_TLS_LIBS="-lssl -lcrypto"
 
  LIBS="$ace_TLS_LIBS $LIBS"
- LDFLAGS="$ACE_TLS_LDFLAGS $LDFLAGS"
+ LDFLAGS="$ace_TLS_LDFLAGS $LDFLAGS"
 
  AC_CACHE_CHECK([for OpenSSL libraries],
  [ac_cv_openssl_libs],
