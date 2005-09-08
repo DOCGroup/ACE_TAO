@@ -1,3 +1,10 @@
+Thu Sep  8 16:39:10 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/tao.mpc:
+
+	  Added AnyTypeCode_Adapter.h and Any_Insert_Policy_T.h
+	  to list of Header_Files.
+
 Wed Sep  7 15:54:08 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:
