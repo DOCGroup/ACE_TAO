@@ -20,6 +20,7 @@
  * and then:
  *
  * cp orig/WrongTransactionC.{h,inl,cpp} .
+ * cp orig/WrongTransactionS.{h.inl} .
  *
  */
 #ifndef TAO_CORBA_WRONGTRANSACTION_PIDL
