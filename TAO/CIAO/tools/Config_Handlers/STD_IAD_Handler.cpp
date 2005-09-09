@@ -1,7 +1,7 @@
 // $Id$
 #include "STD_IAD_Handler.h"
 #include "Basic_Deployment_Data.hpp"
-#include "ciao/Deployment_DataC.h"
+#include "ciao/Packaging_DataC.h"
 #include "Property_Handler.h"
 
 #include "iad.hpp"
