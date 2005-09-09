@@ -1,5 +1,5 @@
 // $Id$
-#include "Deployment_Data.idl"
+#include "Packaging_Data.idl"
 
 module Deployment {
 

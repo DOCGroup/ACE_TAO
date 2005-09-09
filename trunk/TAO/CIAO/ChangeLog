@@ -1,3 +1,15 @@
+Fri Sep  9 12:32:14 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* ciao/CCM_Core.mpc
+	* ciao/Container_Base.cpp
+	* ciao/Deployment.idl
+	* ciao/Deployment_Core.idl
+	* ciao/Deployment_Data.idl
+	* ciao/Packaging_Data.idl
+	
+	Refactoring to support cidl compilation of deployment structures. 
+	This refactoring should solve compilation errors in the config handlers. 
+	
 Wed Sep  7 16:31:12 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantHeaderGenerator.cpp:
