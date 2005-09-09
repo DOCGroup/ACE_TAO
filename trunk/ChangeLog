@@ -1,3 +1,9 @@
+Fri Sep  9 18:57:31 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/Sock_Connect.cpp (bind_port): Replace variable s_addr with
+	  addr_p. s_addr is a macro on some systems (in this case, Solaris 8)
+	  and caused problems.
+
 Fri Sep  9 11:05:27 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/config-lynxos4.0.0.h:
