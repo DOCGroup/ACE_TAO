@@ -278,9 +278,7 @@ get_windows_version()
 // Bind socket to an unused port.
 
 int
-ACE::bind_port (ACE_HANDLE handle,
-                             ACE_UINT32 ip_addr,
-                             int address_family)
+ACE::bind_port (ACE_HANDLE handle, ACE_UINT32 ip_addr, int address_family)
 {
   ACE_TRACE ("ACE::bind_port");
 
@@ -1238,7 +1236,7 @@ ACE::get_ip_interfaces (size_t &count,
   // Retrieve IPv6 local interfaces by scanning /proc/net/if_inet6 if it exists.
   // If we cannot open it then ignore possible IPv6 interfaces, we did our best;-)
   FILE* fp;
-  char s_addr[8][5];
+  char addr_p[8][5];
   char s_ipaddr[64];
   int scopeid;
   struct addrinfo hints, *res0;
@@ -1252,8 +1250,8 @@ ACE::get_ip_interfaces (size_t &count,
     {
       while (fscanf (fp,
                      "%4s%4s%4s%4s%4s%4s%4s%4s %02x %*02x %*02x %*02x %*8s\n",
-                     s_addr[0], s_addr[1], s_addr[2], s_addr[3],
-                     s_addr[4], s_addr[5], s_addr[6], s_addr[7], &scopeid) != EOF)
+                     addr_p[0], addr_p[1], addr_p[2], addr_p[3],
+                     addr_p[4], addr_p[5], addr_p[6], addr_p[7], &scopeid) != EOF)
         {
           // Format the address intoa proper IPv6 decimal address specification and
           // resolve the resulting text using getaddrinfo().
@@ -1261,8 +1259,8 @@ ACE::get_ip_interfaces (size_t &count,
           const char* ip_fmt = "%s:%s:%s:%s:%s:%s:%s:%s%%%d";
           ACE_OS::sprintf (s_ipaddr,
                            ip_fmt,
-                           s_addr[0], s_addr[1], s_addr[2], s_addr[3],
-                           s_addr[4], s_addr[5], s_addr[6], s_addr[7], scopeid);
+                           addr_p[0], addr_p[1], addr_p[2], addr_p[3],
+                           addr_p[4], addr_p[5], addr_p[6], addr_p[7], scopeid);
 
           error = getaddrinfo (s_ipaddr, 0, &hints, &res0);
           if (error)
