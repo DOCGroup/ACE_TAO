@@ -1,6 +1,24 @@
 Fri Sep  9 11:08:40 2005  Simon McQueen  <sm@prismtech.com>
 
-	* 
+        * tao/orb.idl:
+
+          Add include of WrongTransaction.pidl.
+
+        * tao/WrongTransaction.pidl:
+
+          Update generation instructions.
+
+        * tao/WrongTransactionS.h:
+        * tao/WrongTransactionS.inl:
+
+          Add these new 'handcrafted' files. These changes fix
+          bug #1813.
+
+        * tests/Bug_1813_Regression/Bug_1813_Regession.mpc:
+        * tests/Bug_1813_Regression/Test.idl:
+        * tests/Bug_1813_Regression/test.cpp:
+
+          Regression test for the above.
 
 Fri Sep  9 10:28:11 2005  Simon McQueen  <sm@prismtech.com>
 
