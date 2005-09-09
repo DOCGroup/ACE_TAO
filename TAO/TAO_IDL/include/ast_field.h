@@ -108,7 +108,7 @@ public:
   virtual ~AST_Field (void);
 
   // Data Accessors.
-  AST_Type *field_type (void);
+  AST_Type *field_type (void) const;
 
   Visibility visibility (void);
 

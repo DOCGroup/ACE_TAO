@@ -252,6 +252,12 @@ AST_Type::unaliased_type (void)
   return t;
 }
 
+bool
+AST_Type::legal_for_primary_key (void) const
+{
+  return true;
+}
+
 // This is the real thing used by the method above.
 const char *
 AST_Type::nested_name (const char* local_name,

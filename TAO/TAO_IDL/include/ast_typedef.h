@@ -87,12 +87,17 @@ public:
 
   virtual ~AST_Typedef (void);
 
-  AST_Type *primitive_base_type (void);
+  AST_Type *primitive_base_type (void) const;
   // Return the most primitive base type by traversing the chain of typedefed
   // base types.
 
   // Data Accessors.
-  AST_Type *base_type (void);
+  AST_Type *base_type (void) const;
+  
+  virtual bool legal_for_primary_key (void) const;
+  // Recursively called on valuetype to check for legal use as
+  // a primary key. Overridden for valuetype, struct, sequence,
+  // union, array, typedef, and interface.
 
   // Narrowing.
   DEF_NARROW_METHODS1(AST_Typedef, AST_Type);

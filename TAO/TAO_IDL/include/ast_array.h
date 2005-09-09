@@ -102,8 +102,13 @@ public:
   void set_dims (AST_Expression **,
                  unsigned long);
 
-  AST_Type *base_type (void);
+  AST_Type *base_type (void) const;
   void set_base_type (AST_Type *nbt);
+
+  // Recursively called on valuetype to check for legal use as
+  // a primary key. Overridden for valuetype, struct, sequence,
+  // union, array, typedef, and interface.
+  virtual bool legal_for_primary_key (void) const;
 
   // Narrowing.
   DEF_NARROW_METHODS1(AST_Array, AST_ConcreteType);

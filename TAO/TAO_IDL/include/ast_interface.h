@@ -133,6 +133,12 @@ public:
   // Look through inherited interfaces.
   virtual AST_Decl *look_in_inherited (UTL_ScopedName *e,
                                        idl_bool treat_as_ref);
+                                       
+  // Recursively called on valuetype to check for legal use as
+  // a primary key. Overridden for valuetype, struct, sequence,
+  // union, array, typedef, and interface.
+  virtual bool legal_for_primary_key (void) const;
+
   // Cleanup function.
   virtual void destroy (void);
 
