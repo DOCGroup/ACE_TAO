@@ -54,6 +54,8 @@ module CORBA
     USER_EXCEPTION,
     SYSTEM_EXCEPTION
   };
+  
+  native ValueFactory;
 };
 
 #endif /* TAO_ORB_IDL */
