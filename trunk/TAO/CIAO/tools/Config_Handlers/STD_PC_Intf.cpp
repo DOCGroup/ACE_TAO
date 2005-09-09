@@ -10,7 +10,7 @@
 #include "XML_Helper.h"
 #include "Deployment.hpp"
 #include "STD_PCD_Handler.h"
-#include "ciao/Deployment_DataC.h"
+#include "ciao/Packaging_DataC.h"
 
 
 namespace CIAO
