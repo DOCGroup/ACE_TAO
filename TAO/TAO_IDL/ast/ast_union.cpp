@@ -1237,6 +1237,28 @@ AST_Union::compute_size_type (void)
   return 0;
 }
 
+bool
+AST_Union::legal_for_primary_key (void) const
+{
+  for (UTL_ScopeActiveIterator si (const_cast<AST_Union *> (this),
+                                   UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
+    {
+      AST_Field *f = AST_Field::narrow_from_decl (si.item ());
+    
+      if (f != 0)
+        {
+          if (!f->field_type ()->legal_for_primary_key ())
+            {
+              return false;
+            }
+        }
+    }
+    
+  return true;
+}
+
 int
 AST_Union::ast_accept (ast_visitor *visitor)
 {

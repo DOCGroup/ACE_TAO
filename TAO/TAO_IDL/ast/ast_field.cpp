@@ -150,7 +150,7 @@ AST_Field::ast_accept (ast_visitor *visitor)
 }
 
 AST_Type *
-AST_Field::field_type (void)
+AST_Field::field_type (void) const
 {
   return this->pd_field_type;
 }

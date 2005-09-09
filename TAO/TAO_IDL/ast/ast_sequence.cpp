@@ -218,7 +218,7 @@ AST_Sequence::max_size (void)
 }
 
 AST_Type *
-AST_Sequence::base_type (void)
+AST_Sequence::base_type (void) const
 {
   return this->pd_base_type;
 }
@@ -227,6 +227,12 @@ idl_bool
 AST_Sequence::unbounded (void) const
 {
   return this->unbounded_;
+}
+
+bool
+AST_Sequence::legal_for_primary_key (void) const
+{
+  return this->base_type ()->legal_for_primary_key ();
 }
 
 // Narrowing.

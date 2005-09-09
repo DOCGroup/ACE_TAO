@@ -109,9 +109,9 @@ AST_Typedef::~AST_Typedef (void)
 // Given a typedef node, traverse the chain of base types until they are no
 // more typedefs, and return that most primitive base type.
 AST_Type *
-AST_Typedef::primitive_base_type (void)
+AST_Typedef::primitive_base_type (void) const
 {
-  AST_Type *d = this;
+  AST_Type *d = const_cast<AST_Typedef *> (this);
   AST_Typedef *temp = 0;
 
   while (d && d->node_type () == AST_Decl::NT_typedef)
@@ -124,6 +124,18 @@ AST_Typedef::primitive_base_type (void)
 }
 
 // Redefinition of inherited virtual operations.
+
+AST_Type *
+AST_Typedef::base_type (void) const
+{
+  return this->pd_base_type;
+}
+
+bool
+AST_Typedef::legal_for_primary_key (void) const
+{
+  return this->primitive_base_type ()->legal_for_primary_key ();
+}
 
 // Dump this AST_Typedef node to the ostream o.
 void
@@ -179,12 +191,6 @@ AST_Typedef::destroy (void)
 }
 
 // Data accessors.
-
-AST_Type *
-AST_Typedef::base_type (void)
-{
-  return this->pd_base_type;
-}
 
 // Narrowing.
 IMPL_NARROW_METHODS1(AST_Typedef, AST_Type)

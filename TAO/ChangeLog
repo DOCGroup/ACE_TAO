@@ -1,3 +1,38 @@
+Fri Sep  9 22:00:24 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_array.cpp:
+        * TAO_IDL/ast/ast_field.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_sequence.cpp:
+        * TAO_IDL/ast/ast_structure.cpp:
+        * TAO_IDL/ast/ast_type.cpp:
+        * TAO_IDL/ast/ast_typedef.cpp:
+        * TAO_IDL/ast/ast_union.cpp:
+        * TAO_IDL/ast/ast_valuetype.cpp:
+        * TAO_IDL/include/ast_array.h:
+        * TAO_IDL/include/ast_field.h:
+        * TAO_IDL/include/ast_interface.h:
+        * TAO_IDL/include/ast_sequence.h:
+        * TAO_IDL/include/ast_structure.h:
+        * TAO_IDL/include/ast_type.h:
+        * TAO_IDL/include/ast_typedef.h:
+        * TAO_IDL/include/ast_union.h:
+        * TAO_IDL/include/ast_valuetype.h:
+        
+          - Added virtual legal_for_primary_key() method to AST_Type
+            plus overrides for derived node classes AST_Sruct,
+            AST_Union, AST_Array, AST_Sequence, AST_Typedef,
+            AST_Interface, and AST_Valuetype. The override in
+            AST_Valuetype is empty at this time, but when finished,
+            the method will be called on a valuetype when it is used
+            as a primary key of a component. The method will check
+            the various constraints put on valuetypes used as 
+            primary keys by the CCM spec. It will, among other
+            things, be called recursively on the valuetype's members.
+            
+          - Made some accessor methods, such as base_type() and
+            field_type(), const.
+
 Fri Sep  9 11:08:40 2005  Simon McQueen  <sm@prismtech.com>
 
         * tao/orb.idl:

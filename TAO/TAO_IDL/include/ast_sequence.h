@@ -94,10 +94,15 @@ public:
   // Data Accessors.
   AST_Expression *max_size (void);
 
-  AST_Type *base_type (void);
+  AST_Type *base_type (void) const;
 
   virtual idl_bool unbounded (void) const;
   // Is this sequence bounded or not.
+
+  // Recursively called on valuetype to check for legal use as
+  // a primary key. Overridden for valuetype, struct, sequence,
+  // union, array, typedef, and interface.
+  virtual bool legal_for_primary_key (void) const;
 
   // Narrowing.
   DEF_NARROW_METHODS1(AST_Sequence, AST_ConcreteType);

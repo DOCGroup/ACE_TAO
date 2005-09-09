@@ -133,6 +133,11 @@ public:
   
   AST_Type *unaliased_type (void);
   // Utility function to make sure we are using the unaliased type.
+  
+  virtual bool legal_for_primary_key (void) const;
+  // Recursively called on valuetype to check for legal use as
+  // a primary key. Overridden for valuetype, struct, sequence,
+  // union, array, typedef, and interface.
 
   // Narrowing.
   DEF_NARROW_METHODS1(AST_Type, AST_Decl);
