@@ -1,3 +1,8 @@
+Fri Sep  9 11:05:27 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/config-lynxos4.0.0.h:
+          Added new config file to accomodate new version of LynxOS.
+
 Thu Sep  8 16:33:38 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* m4/tls.m4:
