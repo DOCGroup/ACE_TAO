@@ -11,10 +11,25 @@ module Deployment
   // Typeprefix Components "omg.org";
   // OMG threw these things away, didn't it.
 
-  exception UnknownImplId {};
+  exception UnknownImplId 
+  {
+    string name;
+    string reason;
+  };
+
   exception InvalidLocation {};
-  exception InstallationFailure {/*Do we still need a reason? --Tao*/};
-  exception ImplEntryPointNotFound {};
+  exception InstallationFailure 
+  {
+    /*Do we still need a reason? --Tao
+     *Yes -- will */
+    string name;
+    string reason;
+  };
+  exception ImplEntryPointNotFound 
+  {
+    string name;
+    string reason;
+  };
 
   //Below are from the OMG Deployment.idl
 
