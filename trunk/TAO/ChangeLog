@@ -1,3 +1,15 @@
+Fri Sep  9 10:28:11 2005  Simon McQueen  <sm@prismtech.com>
+
+        * tao/orb.idl:
+
+          Add ValueFactory to CORBA module. Fixes bug #1812.
+
+        * tests/Bug_1812_Regression/Bug_1812_Regession.mpc:
+        * tests/Bug_1812_Regression/Test.idl:
+        * tests/Bug_1812_Regression/test.cpp:
+
+          Regression test for the above.
+
 Thu Sep  8 16:39:10 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/tao.mpc:
