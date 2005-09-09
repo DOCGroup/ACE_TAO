@@ -1619,6 +1619,12 @@ AST_Interface::lookup_for_add (AST_Decl *d,
   return 0;
 }
 
+bool
+AST_Interface::legal_for_primary_key (void) const
+{
+  return false;
+}
+
 void
 AST_Interface::destroy (void)
 {

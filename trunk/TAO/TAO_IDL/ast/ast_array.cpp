@@ -214,7 +214,7 @@ AST_Array::dims (void)
 }
 
 AST_Type *
-AST_Array::base_type (void)
+AST_Array::base_type (void) const
 {
   return this->pd_base_type;
 }
@@ -225,6 +225,12 @@ AST_Array::set_base_type (AST_Type *nbt)
   this->pd_base_type = nbt;
 
   this->is_local_ = nbt->is_local ();
+}
+
+bool
+AST_Array::legal_for_primary_key (void) const
+{
+  return this->base_type ()->legal_for_primary_key ();
 }
 
 void

@@ -204,6 +204,14 @@ AST_ValueType::look_in_supported (UTL_ScopedName *e,
   return d_before;
 }
 
+bool
+AST_ValueType::legal_for_primary_key (void) const
+{
+  // TODO - add checks and error message.
+
+  return true;
+}
+
 void
 AST_ValueType::destroy (void)
 {
