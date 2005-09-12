@@ -1,3 +1,24 @@
+Mon Sep 12 17:34:47 CDT 2005 Stoyan Paunov <spaunov@isis.vanderbilt.edu>
+
+	* tools/Config_Handlers/XMLSchema/Traversal.hpp
+	* tools/Config_Handlers/XMLSchema/TypeInfo.hpp
+	* tools/Config_Handlers/XMLSchema/Types.hpp
+	* tools/Config_Handlers/XMLSchema/Writer.hpp
+	* tools/Config_Handlers/XSCRT/Elements.hpp
+	* tools/Config_Handlers/XSCRT/ExtendedTypeInfo.hpp
+	* tools/Config_Handlers/XSCRT/Parser.hpp
+	* tools/Config_Handlers/XSCRT/Traversal.hpp
+	* tools/Config_Handlers/XSCRT/Writer.hpp
+	* tools/Config_Handlers/XSCRT/XML.hpp
+	* tools/Config_Handlers/XSCRT/XMLSchema.hpp
+
+	Fixed a number of problems related to Will's changes. The XSC_Config_Handler_Tests
+	project was not compiling. I had the same problem in RepositoryManager. Will had 
+	changed the directory structure, but did not update any of the include paths. 
+	Needless to say there were like 30-40 of those in the XSCRT and XMLSchema directories
+	
+
+
 Fri Sep  9 12:32:14 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* ciao/CCM_Core.mpc

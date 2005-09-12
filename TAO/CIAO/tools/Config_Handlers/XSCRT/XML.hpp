@@ -465,7 +465,7 @@ namespace XSCRT
   }
 }
 
-#include "XSCRT/XML.ipp"
-#include "XSCRT/XML.tpp"
+#include "ciao/tools/Config_Handlers/XSCRT/XML.ipp"
+#include "ciao/tools/Config_Handlers/XSCRT/XML.tpp"
 
 #endif  // XSCRT_XML_HPP

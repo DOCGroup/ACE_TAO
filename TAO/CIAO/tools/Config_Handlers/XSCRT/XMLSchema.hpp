@@ -8,7 +8,7 @@
 #include <string>
 // #include <iostream> //@@ tmp
 
-#include "XSCRT/Elements.hpp"
+#include "ciao/tools/Config_Handlers/XSCRT/Elements.hpp"
 
 namespace XMLSchema
 {
@@ -558,7 +558,7 @@ namespace XMLSchema
   };
 }
 
-#include "XSCRT/XMLSchema.ipp"
-#include "XSCRT/XMLSchema.tpp"
+#include "ciao/tools/Config_Handlers/XSCRT/XMLSchema.ipp"
+#include "ciao/tools/Config_Handlers/XSCRT/XMLSchema.tpp"
 
 #endif  // XSCRT_XMLSCHEMA_HPP
