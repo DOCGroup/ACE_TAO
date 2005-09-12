@@ -1,3 +1,9 @@
+Mon Sep 12 11:52:22 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Regenerate.
+
 Mon Sep 12 11:34:13 2005  Simon McQueen  <sm@prismtech.com>
 
         * tao/orb.idl:
