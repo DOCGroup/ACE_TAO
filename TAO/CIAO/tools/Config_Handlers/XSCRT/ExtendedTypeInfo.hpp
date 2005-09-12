@@ -177,6 +177,6 @@ namespace XSCRT
   }
 }
 
-#include <XSCRT/ExtendedTypeInfo.ipp>
+#include <ciao/tools/Config_Handlers/XSCRT/ExtendedTypeInfo.ipp>
 
 #endif  // XSCRT_EXTENDED_TYPE_INFO_HPP
