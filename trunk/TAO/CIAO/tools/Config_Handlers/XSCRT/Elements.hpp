@@ -10,7 +10,7 @@
 #include <sstream>
 // #include <iostream> //@@ tmp
 
-#include "XSCRT/Parser.hpp"
+#include "ciao/tools/Config_Handlers/XSCRT/Parser.hpp"
 
 #if defined (_MSC_VER) && (_MSC_VER < 1300)
 
@@ -646,7 +646,7 @@ namespace XSCRT
 
 }
 
-#include "XSCRT/Elements.ipp"
-#include "XSCRT/Elements.tpp"
+#include "ciao/tools/Config_Handlers/XSCRT/Elements.ipp"
+#include "ciao/tools/Config_Handlers/XSCRT/Elements.tpp"
 
 #endif  // XSCRT_ELEMENTS_HPP
