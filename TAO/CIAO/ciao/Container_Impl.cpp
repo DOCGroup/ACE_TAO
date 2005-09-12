@@ -147,7 +147,7 @@ CIAO::Container_Impl::install (
                    }
                }
 
-             // Set up the ComponentIOR attribute
+             // Set up the naming service attribute
              if (ACE_OS::strcmp (impl_infos[i].component_config[prop_len].name.in (),
                                  "RegisterNaming") == 0)
                {
