@@ -8,16 +8,16 @@
 ## MPC Command:
 ## ../bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake -noreldefs TAO.mwc
 
-includedir = @includedir@/orbsvcs
+includedir = @includedir@/orbsvcs/orbsvcs
 pkgconfigdir = @libdir@/pkgconfig
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
-TAO_ROOT = $(top_srcdir)
-
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
+TAO_ROOT = $(top_srcdir)
+
 
 ## Makefile.CosNaming_IDL.am
 
@@ -300,35 +300,6 @@ sfp-stamp: $(srcdir)/sfp.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_AV_Export -Wb,export_include=orbsvcs/AV/AV_export.h $(srcdir)/sfp.idl
 	@touch $@
 
-AV = \
-  AVStreamsC.cpp \
-  AVStreamsS.cpp \
-  Null_MediaCtrlC.cpp \
-  Null_MediaCtrlS.cpp \
-  sfpC.cpp \
-  sfpS.cpp \
-  AV/AVStreams_i.cpp \
-  AV/AV_Core.cpp \
-  AV/Endpoint_Strategy.cpp \
-  AV/Fill_ACE_QoS.cpp \
-  AV/FlowSpec_Entry.cpp \
-  AV/MCast.cpp \
-  AV/md5c.cpp \
-  AV/Policy.cpp \
-  AV/Protocol_Factory.cpp \
-  AV/QoS_UDP.cpp \
-  AV/RTCP.cpp \
-  AV/RTCP_Channel.cpp \
-  AV/RTCP_Packet.cpp \
-  AV/RTP.cpp \
-  AV/TCP.cpp \
-  AV/Transport.cpp \
-  AV/UDP.cpp \
-  AV/default_resource.cpp \
-  AV/media_timer.cpp \
-  AV/sfp.cpp \
-  AV/SCTP_SEQ.cpp
-
 lib_LTLIBRARIES += libTAO_AV.la
 
 libTAO_AV_la_CPPFLAGS = \
@@ -341,7 +312,33 @@ libTAO_AV_la_CPPFLAGS = \
   -DTAO_AV_BUILD_DLL
 
 libTAO_AV_la_SOURCES = \
-  $(AV)
+  AV/AVStreams_i.cpp \
+  AV/AV_Core.cpp \
+  AV/Endpoint_Strategy.cpp \
+  AV/Fill_ACE_QoS.cpp \
+  AV/FlowSpec_Entry.cpp \
+  AV/MCast.cpp \
+  AV/Policy.cpp \
+  AV/Protocol_Factory.cpp \
+  AV/QoS_UDP.cpp \
+  AV/RTCP.cpp \
+  AV/RTCP_Channel.cpp \
+  AV/RTCP_Packet.cpp \
+  AV/RTP.cpp \
+  AV/SCTP_SEQ.cpp \
+  AV/TCP.cpp \
+  AV/Transport.cpp \
+  AV/UDP.cpp \
+  AV/default_resource.cpp \
+  AV/md5c.cpp \
+  AV/media_timer.cpp \
+  AV/sfp.cpp \
+  AVStreamsC.cpp \
+  AVStreamsS.cpp \
+  Null_MediaCtrlC.cpp \
+  Null_MediaCtrlS.cpp \
+  sfpC.cpp \
+  sfpS.cpp
 
 libTAO_AV_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -448,15 +445,6 @@ CosConcurrencyControl-stamp: $(srcdir)/CosConcurrencyControl.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Concurrency_Export -Wb,export_include=orbsvcs/Concurrency/concurrency_export.h $(srcdir)/CosConcurrencyControl.idl
 	@touch $@
 
-Concurrency = \
-  CosConcurrencyControlC.cpp \
-  CosConcurrencyControlS.cpp \
-  Concurrency/CC_Lock.cpp \
-  Concurrency/CC_LockSet.cpp \
-  Concurrency/CC_LockSetFactory.cpp \
-  Concurrency/Concurrency_Loader.cpp \
-  Concurrency/Concurrency_Utils.cpp
-
 lib_LTLIBRARIES += libTAO_CosConcurrency.la
 
 libTAO_CosConcurrency_la_CPPFLAGS = \
@@ -469,7 +457,13 @@ libTAO_CosConcurrency_la_CPPFLAGS = \
   -DTAO_CONCURRENCY_BUILD_DLL
 
 libTAO_CosConcurrency_la_SOURCES = \
-  $(Concurrency)
+  Concurrency/CC_Lock.cpp \
+  Concurrency/CC_LockSet.cpp \
+  Concurrency/CC_LockSetFactory.cpp \
+  Concurrency/Concurrency_Loader.cpp \
+  Concurrency/Concurrency_Utils.cpp \
+  CosConcurrencyControlC.cpp \
+  CosConcurrencyControlS.cpp
 
 libTAO_CosConcurrency_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -840,33 +834,6 @@ EXTRA_DIST += \
 if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
 
-CosEvent = \
-  CosEvent/CEC_TypedEvent.cpp \
-  CosEvent/CEC_TypedEventChannel.cpp \
-  CosEvent/CEC_TypedProxyPushConsumer.cpp \
-  CosEvent/CEC_TypedConsumerAdmin.cpp \
-  CosEvent/CEC_TypedSupplierAdmin.cpp \
-  CosEvent/CEC_DynamicImplementation.cpp \
-  CosEvent/CEC_ConsumerAdmin.cpp \
-  CosEvent/CEC_ConsumerControl.cpp \
-  CosEvent/CEC_Default_Factory.cpp \
-  CosEvent/CEC_Dispatching.cpp \
-  CosEvent/CEC_Dispatching_Task.cpp \
-  CosEvent/CEC_EventChannel.cpp \
-  CosEvent/CEC_Event_Loader.cpp \
-  CosEvent/CEC_Factory.cpp \
-  CosEvent/CEC_MT_Dispatching.cpp \
-  CosEvent/CEC_ProxyPullConsumer.cpp \
-  CosEvent/CEC_ProxyPullSupplier.cpp \
-  CosEvent/CEC_ProxyPushConsumer.cpp \
-  CosEvent/CEC_ProxyPushSupplier.cpp \
-  CosEvent/CEC_Pulling_Strategy.cpp \
-  CosEvent/CEC_Reactive_ConsumerControl.cpp \
-  CosEvent/CEC_Reactive_Pulling_Strategy.cpp \
-  CosEvent/CEC_Reactive_SupplierControl.cpp \
-  CosEvent/CEC_SupplierAdmin.cpp \
-  CosEvent/CEC_SupplierControl.cpp
-
 lib_LTLIBRARIES += libTAO_CosEvent_Serv.la
 
 libTAO_CosEvent_Serv_la_CPPFLAGS = \
@@ -880,7 +847,31 @@ libTAO_CosEvent_Serv_la_CPPFLAGS = \
   -DTAO_EVENT_SERV_BUILD_DLL
 
 libTAO_CosEvent_Serv_la_SOURCES = \
-  $(CosEvent)
+  CosEvent/CEC_ConsumerAdmin.cpp \
+  CosEvent/CEC_ConsumerControl.cpp \
+  CosEvent/CEC_Default_Factory.cpp \
+  CosEvent/CEC_Dispatching.cpp \
+  CosEvent/CEC_Dispatching_Task.cpp \
+  CosEvent/CEC_DynamicImplementation.cpp \
+  CosEvent/CEC_EventChannel.cpp \
+  CosEvent/CEC_Event_Loader.cpp \
+  CosEvent/CEC_Factory.cpp \
+  CosEvent/CEC_MT_Dispatching.cpp \
+  CosEvent/CEC_ProxyPullConsumer.cpp \
+  CosEvent/CEC_ProxyPullSupplier.cpp \
+  CosEvent/CEC_ProxyPushConsumer.cpp \
+  CosEvent/CEC_ProxyPushSupplier.cpp \
+  CosEvent/CEC_Pulling_Strategy.cpp \
+  CosEvent/CEC_Reactive_ConsumerControl.cpp \
+  CosEvent/CEC_Reactive_Pulling_Strategy.cpp \
+  CosEvent/CEC_Reactive_SupplierControl.cpp \
+  CosEvent/CEC_SupplierAdmin.cpp \
+  CosEvent/CEC_SupplierControl.cpp \
+  CosEvent/CEC_TypedConsumerAdmin.cpp \
+  CosEvent/CEC_TypedEvent.cpp \
+  CosEvent/CEC_TypedEventChannel.cpp \
+  CosEvent/CEC_TypedProxyPushConsumer.cpp \
+  CosEvent/CEC_TypedSupplierAdmin.cpp
 
 libTAO_CosEvent_Serv_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -1023,12 +1014,6 @@ LifeCycleService-stamp: $(srcdir)/LifeCycleService.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=orbsvcs/LifeCycle/lifecycle_export.h $(srcdir)/LifeCycleService.idl
 	@touch $@
 
-LifeCycle = \
-  CosLifeCycleC.cpp \
-  CosLifeCycleS.cpp \
-  LifeCycleServiceC.cpp \
-  LifeCycleServiceS.cpp
-
 lib_LTLIBRARIES += libTAO_CosLifeCycle.la
 
 libTAO_CosLifeCycle_la_CPPFLAGS = \
@@ -1041,7 +1026,10 @@ libTAO_CosLifeCycle_la_CPPFLAGS = \
   -DTAO_LIFECYCLE_BUILD_DLL
 
 libTAO_CosLifeCycle_la_SOURCES = \
-  $(LifeCycle)
+  CosLifeCycleC.cpp \
+  CosLifeCycleS.cpp \
+  LifeCycleServiceC.cpp \
+  LifeCycleServiceS.cpp
 
 libTAO_CosLifeCycle_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -1381,37 +1369,6 @@ LB_ORT-stamp: $(srcdir)/LB_ORT.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GC -Wb,export_macro=TAO_LoadBalancing_Export -Wb,export_include=orbsvcs/LoadBalancing/LoadBalancing_export.h $(srcdir)/LB_ORT.idl
 	@touch $@
 
-CosLoadBalancing = \
-  CosLoadBalancingC.cpp \
-  CosLoadBalancingS.cpp \
-  LB_ORTC.cpp \
-  LoadBalancing/LB_LeastLoaded.cpp \
-  LoadBalancing/LB_LoadMinimum.cpp \
-  LoadBalancing/LB_LoadAverage.cpp \
-  LoadBalancing/LB_LoadAlert.cpp \
-  LoadBalancing/LB_LoadAlertInfo.cpp \
-  LoadBalancing/LB_LoadAlertMap.cpp \
-  LoadBalancing/LB_LoadAlert_Handler.cpp \
-  LoadBalancing/LB_LoadListMap.cpp \
-  LoadBalancing/LB_LoadManager.cpp \
-  LoadBalancing/LB_LoadMap.cpp \
-  LoadBalancing/LB_Location_Index_Map.cpp \
-  LoadBalancing/LB_MemberLocator.cpp \
-  LoadBalancing/LB_MonitorMap.cpp \
-  LoadBalancing/LB_Pull_Handler.cpp \
-  LoadBalancing/LB_Random.cpp \
-  LoadBalancing/LB_RoundRobin.cpp \
-  LoadBalancing/LB_ClientComponent.cpp \
-  LoadBalancing/LB_ClientORBInitializer.cpp \
-  LoadBalancing/LB_ClientRequestInterceptor.cpp \
-  LoadBalancing/LB_ServerRequestInterceptor.cpp \
-  LoadBalancing/LB_IORInterceptor.cpp \
-  LoadBalancing/LB_ObjectReferenceFactory.cpp \
-  LoadBalancing/LB_ORBInitializer.cpp \
-  LoadBalancing/LB_Component.cpp \
-  LoadBalancing/LB_CPU_Utilization_Monitor.cpp \
-  LoadBalancing/LB_CPU_Load_Average_Monitor.cpp
-
 lib_LTLIBRARIES += libTAO_CosLoadBalancing.la
 
 libTAO_CosLoadBalancing_la_CPPFLAGS = \
@@ -1424,7 +1381,35 @@ libTAO_CosLoadBalancing_la_CPPFLAGS = \
   -DTAO_LOADBALANCING_BUILD_DLL
 
 libTAO_CosLoadBalancing_la_SOURCES = \
-  $(CosLoadBalancing)
+  CosLoadBalancingC.cpp \
+  CosLoadBalancingS.cpp \
+  LB_ORTC.cpp \
+  LoadBalancing/LB_CPU_Load_Average_Monitor.cpp \
+  LoadBalancing/LB_CPU_Utilization_Monitor.cpp \
+  LoadBalancing/LB_ClientComponent.cpp \
+  LoadBalancing/LB_ClientORBInitializer.cpp \
+  LoadBalancing/LB_ClientRequestInterceptor.cpp \
+  LoadBalancing/LB_Component.cpp \
+  LoadBalancing/LB_IORInterceptor.cpp \
+  LoadBalancing/LB_LeastLoaded.cpp \
+  LoadBalancing/LB_LoadAlert.cpp \
+  LoadBalancing/LB_LoadAlertInfo.cpp \
+  LoadBalancing/LB_LoadAlertMap.cpp \
+  LoadBalancing/LB_LoadAlert_Handler.cpp \
+  LoadBalancing/LB_LoadAverage.cpp \
+  LoadBalancing/LB_LoadListMap.cpp \
+  LoadBalancing/LB_LoadManager.cpp \
+  LoadBalancing/LB_LoadMap.cpp \
+  LoadBalancing/LB_LoadMinimum.cpp \
+  LoadBalancing/LB_Location_Index_Map.cpp \
+  LoadBalancing/LB_MemberLocator.cpp \
+  LoadBalancing/LB_MonitorMap.cpp \
+  LoadBalancing/LB_ORBInitializer.cpp \
+  LoadBalancing/LB_ObjectReferenceFactory.cpp \
+  LoadBalancing/LB_Pull_Handler.cpp \
+  LoadBalancing/LB_Random.cpp \
+  LoadBalancing/LB_RoundRobin.cpp \
+  LoadBalancing/LB_ServerRequestInterceptor.cpp
 
 libTAO_CosLoadBalancing_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -1561,7 +1546,18 @@ EXTRA_DIST += \
 
 if BUILD_CORBA_MESSAGING
 
-Naming = \
+lib_LTLIBRARIES += libTAO_CosNaming_Serv.la
+
+libTAO_CosNaming_Serv_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_NAMING_SERV_BUILD_DLL
+
+libTAO_CosNaming_Serv_la_SOURCES = \
   Naming/Entries.cpp \
   Naming/Flat_File_Persistence.cpp \
   Naming/Hash_Naming_Context.cpp \
@@ -1575,20 +1571,6 @@ Naming = \
   Naming/Storable_Naming_Context.cpp \
   Naming/Storable_Naming_Context_Activator.cpp \
   Naming/Transient_Naming_Context.cpp
-
-lib_LTLIBRARIES += libTAO_CosNaming_Serv.la
-
-libTAO_CosNaming_Serv_la_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs \
-  -DTAO_NAMING_SERV_BUILD_DLL
-
-libTAO_CosNaming_Serv_la_SOURCES = \
-  $(Naming)
 
 libTAO_CosNaming_Serv_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -2026,9 +2008,28 @@ EXTRA_DIST += \
 
 if !BUILD_MINIMUM_CORBA
 
-Notify = \
+lib_LTLIBRARIES += libTAO_CosNotification_Serv.la
+
+libTAO_CosNotification_Serv_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_HAS_TYPED_EVENT_CHANNEL \
+  -DTAO_NOTIFY_SERV_BUILD_DLL
+
+libTAO_CosNotification_Serv_la_SOURCES = \
   Notify/Admin.cpp \
   Notify/AdminProperties.cpp \
+  Notify/Any/AnyEvent.cpp \
+  Notify/Any/CosEC_ProxyPushConsumer.cpp \
+  Notify/Any/CosEC_ProxyPushSupplier.cpp \
+  Notify/Any/ProxyPushConsumer.cpp \
+  Notify/Any/ProxyPushSupplier.cpp \
+  Notify/Any/PushConsumer.cpp \
+  Notify/Any/PushSupplier.cpp \
   Notify/Bit_Vector.cpp \
   Notify/Buffering_Strategy.cpp \
   Notify/Builder.cpp \
@@ -2058,15 +2059,15 @@ Notify = \
   Notify/Name_Value_Pair.cpp \
   Notify/Notify_Constraint_Interpreter.cpp \
   Notify/Notify_Constraint_Visitors.cpp \
-  Notify/Notify_Default_Collection_Factory.cpp \
   Notify/Notify_Default_CO_Factory.cpp \
+  Notify/Notify_Default_Collection_Factory.cpp \
   Notify/Notify_Default_EMO_Factory.cpp \
   Notify/Notify_Default_POA_Factory.cpp \
   Notify/Notify_EventChannelFactory_i.cpp \
   Notify/Object.cpp \
+  Notify/POA_Helper.cpp \
   Notify/Peer.cpp \
   Notify/Persistent_File_Allocator.cpp \
-  Notify/POA_Helper.cpp \
   Notify/Properties.cpp \
   Notify/PropertySeq.cpp \
   Notify/Property_Boolean.cpp \
@@ -2076,53 +2077,31 @@ Notify = \
   Notify/QoSProperties.cpp \
   Notify/Random_File.cpp \
   Notify/Reactive_Task.cpp \
-  Notify/Refcountable.cpp \
   Notify/Reconnection_Registry.cpp \
+  Notify/Refcountable.cpp \
   Notify/Routing_Slip.cpp \
   Notify/Routing_Slip_Persistence_Manager.cpp \
   Notify/Routing_Slip_Queue.cpp \
+  Notify/Sequence/SequenceProxyPushConsumer.cpp \
+  Notify/Sequence/SequenceProxyPushSupplier.cpp \
+  Notify/Sequence/SequencePushConsumer.cpp \
+  Notify/Sequence/SequencePushSupplier.cpp \
+  Notify/Standard_Event_Persistence.cpp \
+  Notify/Structured/StructuredEvent.cpp \
+  Notify/Structured/StructuredProxyPushConsumer.cpp \
+  Notify/Structured/StructuredProxyPushSupplier.cpp \
+  Notify/Structured/StructuredPushConsumer.cpp \
+  Notify/Structured/StructuredPushSupplier.cpp \
   Notify/Subscription_Change_Worker.cpp \
   Notify/Supplier.cpp \
   Notify/SupplierAdmin.cpp \
-  Notify/Standard_Event_Persistence.cpp \
   Notify/ThreadPool_Task.cpp \
   Notify/Timer_Queue.cpp \
   Notify/Timer_Reactor.cpp \
   Notify/Topology_Loader.cpp \
   Notify/Topology_Object.cpp \
   Notify/Topology_Saver.cpp \
-  Notify/Worker_Task.cpp \
-  Notify/Any/AnyEvent.cpp \
-  Notify/Any/CosEC_ProxyPushConsumer.cpp \
-  Notify/Any/CosEC_ProxyPushSupplier.cpp \
-  Notify/Any/ProxyPushConsumer.cpp \
-  Notify/Any/ProxyPushSupplier.cpp \
-  Notify/Any/PushConsumer.cpp \
-  Notify/Any/PushSupplier.cpp \
-  Notify/Sequence/SequenceProxyPushConsumer.cpp \
-  Notify/Sequence/SequenceProxyPushSupplier.cpp \
-  Notify/Sequence/SequencePushConsumer.cpp \
-  Notify/Sequence/SequencePushSupplier.cpp \
-  Notify/Structured/StructuredEvent.cpp \
-  Notify/Structured/StructuredProxyPushConsumer.cpp \
-  Notify/Structured/StructuredProxyPushSupplier.cpp \
-  Notify/Structured/StructuredPushConsumer.cpp \
-  Notify/Structured/StructuredPushSupplier.cpp
-
-lib_LTLIBRARIES += libTAO_CosNotification_Serv.la
-
-libTAO_CosNotification_Serv_la_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs \
-  -DTAO_HAS_TYPED_EVENT_CHANNEL \
-  -DTAO_NOTIFY_SERV_BUILD_DLL
-
-libTAO_CosNotification_Serv_la_SOURCES = \
-  $(Notify)
+  Notify/Worker_Task.cpp
 
 libTAO_CosNotification_Serv_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -2344,15 +2323,6 @@ TimeService-stamp: $(srcdir)/TimeService.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Time_Export -Wb,export_include=orbsvcs/Time/time_export.h $(srcdir)/TimeService.idl
 	@touch $@
 
-Time = \
-  TimeServiceC.cpp \
-  TimeServiceS.cpp \
-  Time/TAO_TIO.cpp \
-  Time/TAO_Time_Service_Clerk.cpp \
-  Time/TAO_Time_Service_Server.cpp \
-  Time/TAO_UTO.cpp \
-  Time/Timer_Helper.cpp
-
 lib_LTLIBRARIES += libTAO_CosTime.la
 
 libTAO_CosTime_la_CPPFLAGS = \
@@ -2365,7 +2335,13 @@ libTAO_CosTime_la_CPPFLAGS = \
   -DTAO_TIME_BUILD_DLL
 
 libTAO_CosTime_la_SOURCES = \
-  $(Time)
+  Time/TAO_TIO.cpp \
+  Time/TAO_Time_Service_Clerk.cpp \
+  Time/TAO_Time_Service_Server.cpp \
+  Time/TAO_UTO.cpp \
+  Time/Timer_Helper.cpp \
+  TimeServiceC.cpp \
+  TimeServiceS.cpp
 
 libTAO_CosTime_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -2607,7 +2583,18 @@ EXTRA_DIST += \
 
 ## Makefile.CosTrading_Serv.am
 
-Trader = \
+lib_LTLIBRARIES += libTAO_CosTrading_Serv.la
+
+libTAO_CosTrading_Serv_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_TRADING_SERV_BUILD_DLL
+
+libTAO_CosTrading_Serv_la_SOURCES = \
   Trader/Constraint_Interpreter.cpp \
   Trader/Constraint_Nodes.cpp \
   Trader/Constraint_Visitors.cpp \
@@ -2623,20 +2610,6 @@ Trader = \
   Trader/Trader_Interfaces.cpp \
   Trader/Trader_Utils.cpp \
   Trader/Trading_Loader.cpp
-
-lib_LTLIBRARIES += libTAO_CosTrading_Serv.la
-
-libTAO_CosTrading_Serv_la_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs \
-  -DTAO_TRADING_SERV_BUILD_DLL
-
-libTAO_CosTrading_Serv_la_SOURCES = \
-  $(Trader)
 
 libTAO_CosTrading_Serv_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -3395,11 +3368,6 @@ FT_CORBA_ORB-stamp: $(srcdir)/FT_CORBA_ORB.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,skel_export_include=tao/PortableServer/PolicyS.h -Wb,export_macro=TAO_FT_ORB_Utils_Export -Wb,export_include=orbsvcs/FaultTolerance/FT_ORB_Utils_export.h $(srcdir)/FT_CORBA_ORB.idl
 	@touch $@
 
-FTORB_Utils = \
-  FT_CORBA_ORBC.cpp \
-  FT_CORBA_ORBS.cpp \
-  FaultTolerance/FT_IOGR_Property.cpp
-
 lib_LTLIBRARIES += libTAO_FTORB_Utils.la
 
 libTAO_FTORB_Utils_la_CPPFLAGS = \
@@ -3412,7 +3380,9 @@ libTAO_FTORB_Utils_la_CPPFLAGS = \
   -DTAO_FT_ORB_UTILS_BUILD_DLL
 
 libTAO_FTORB_Utils_la_SOURCES = \
-  $(FTORB_Utils)
+  FT_CORBA_ORBC.cpp \
+  FT_CORBA_ORBS.cpp \
+  FaultTolerance/FT_IOGR_Property.cpp
 
 libTAO_FTORB_Utils_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -3463,11 +3433,6 @@ EXTRA_DIST += \
 
 if BUILD_CORBA_MESSAGING
 
-FTRT_ClientORB = \
-  FtRtEvent/ClientORB/FTRT_ClientORB_Initializer.cpp \
-  FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.cpp \
-  FtRtEvent/ClientORB/FTRT_ClientORB_Loader.cpp
-
 lib_LTLIBRARIES += libTAO_FTRT_ClientORB.la
 
 libTAO_FTRT_ClientORB_la_CPPFLAGS = \
@@ -3481,7 +3446,9 @@ libTAO_FTRT_ClientORB_la_CPPFLAGS = \
   -DTAO_FTRT_BUILD_DLL
 
 libTAO_FTRT_ClientORB_la_SOURCES = \
-  $(FTRT_ClientORB)
+  FtRtEvent/ClientORB/FTRT_ClientORB_Initializer.cpp \
+  FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.cpp \
+  FtRtEvent/ClientORB/FTRT_ClientORB_Loader.cpp
 
 libTAO_FTRT_ClientORB_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -4026,20 +3993,6 @@ FtRtecEventChannelAdmin-stamp: $(srcdir)/FtRtecEventChannelAdmin.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=orbsvcs/FtRtEvent/Utils/ftrtevent_export.h $(srcdir)/FtRtecEventChannelAdmin.idl
 	@touch $@
 
-FtRtEvent = \
-  FTRTC.cpp \
-  FTRTS.cpp \
-  FtRtecEventCommC.cpp \
-  FtRtecEventCommS.cpp \
-  FTRT_GroupManagerC.cpp \
-  FTRT_GroupManagerS.cpp \
-  FtRtecEventChannelAdminC.cpp \
-  FtRtecEventChannelAdminS.cpp \
-  FtRtEvent/Utils/FTEC_Gateway.cpp \
-  FtRtEvent/Utils/Log.cpp \
-  FtRtEvent/Utils/Safe_InputCDR.cpp \
-  FtRtEvent/Utils/UUID.cpp
-
 lib_LTLIBRARIES += libTAO_FtRtEvent.la
 
 libTAO_FtRtEvent_la_CPPFLAGS = \
@@ -4052,7 +4005,18 @@ libTAO_FtRtEvent_la_CPPFLAGS = \
   -DTAO_FTRTEVENT_BUILD_DLL
 
 libTAO_FtRtEvent_la_SOURCES = \
-  $(FtRtEvent)
+  FTRTC.cpp \
+  FTRTS.cpp \
+  FTRT_GroupManagerC.cpp \
+  FTRT_GroupManagerS.cpp \
+  FtRtEvent/Utils/FTEC_Gateway.cpp \
+  FtRtEvent/Utils/Log.cpp \
+  FtRtEvent/Utils/Safe_InputCDR.cpp \
+  FtRtEvent/Utils/UUID.cpp \
+  FtRtecEventChannelAdminC.cpp \
+  FtRtecEventChannelAdminS.cpp \
+  FtRtecEventCommC.cpp \
+  FtRtecEventCommS.cpp
 
 libTAO_FtRtEvent_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -4126,7 +4090,19 @@ endif BUILD_CORBA_MESSAGING
 if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
 
-FTRT_EventChannel = \
+lib_LTLIBRARIES += libTAO_FTRT_EventChannel.la
+
+libTAO_FTRT_EventChannel_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs/orbsvcs/FtRtEvent/EventChannel \
+  -DTAO_FTRTEC_BUILD_DLL
+
+libTAO_FTRT_EventChannel_la_SOURCES = \
   FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.cpp \
   FtRtEvent/EventChannel/AMI_Replication_Strategy.cpp \
   FtRtEvent/EventChannel/Basic_Replication_Strategy.cpp \
@@ -4161,21 +4137,6 @@ FTRT_EventChannel = \
   FtRtEvent/EventChannel/UpdateableHandler.cpp \
   FtRtEvent/EventChannel/create_persistent_poa.cpp \
   FtRtEvent/EventChannel/replace_key.cpp
-
-lib_LTLIBRARIES += libTAO_FTRT_EventChannel.la
-
-libTAO_FTRT_EventChannel_la_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs/FtRtEvent/EventChannel \
-  -DTAO_FTRTEC_BUILD_DLL
-
-libTAO_FTRT_EventChannel_la_SOURCES = \
-  $(FTRT_EventChannel)
 
 libTAO_FTRT_EventChannel_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -4254,16 +4215,6 @@ if BUILD_CORBA_MESSAGING
 if BUILD_INTERCEPTORS
 if !BUILD_MINIMUM_CORBA
 
-FT_ClientORB = \
-  FaultTolerance/FT_ClientRequest_Interceptor.cpp \
-  FaultTolerance/FT_ClientORBInitializer.cpp \
-  FaultTolerance/FT_ClientPolicyFactory.cpp \
-  FaultTolerance/FT_ClientPolicy_i.cpp \
-  FaultTolerance/FT_ClientService_Activate.cpp \
-  FaultTolerance/FT_Endpoint_Selector_Factory.cpp \
-  FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp \
-  FaultTolerance/FT_Service_Callbacks.cpp
-
 lib_LTLIBRARIES += libTAO_FT_ClientORB.la
 
 libTAO_FT_ClientORB_la_CPPFLAGS = \
@@ -4276,7 +4227,14 @@ libTAO_FT_ClientORB_la_CPPFLAGS = \
   -DTAO_FT_CLIENTORB_BUILD_DLL
 
 libTAO_FT_ClientORB_la_SOURCES = \
-  $(FT_ClientORB)
+  FaultTolerance/FT_ClientORBInitializer.cpp \
+  FaultTolerance/FT_ClientPolicyFactory.cpp \
+  FaultTolerance/FT_ClientPolicy_i.cpp \
+  FaultTolerance/FT_ClientRequest_Interceptor.cpp \
+  FaultTolerance/FT_ClientService_Activate.cpp \
+  FaultTolerance/FT_Endpoint_Selector_Factory.cpp \
+  FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp \
+  FaultTolerance/FT_Service_Callbacks.cpp
 
 libTAO_FT_ClientORB_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -4330,13 +4288,6 @@ if BUILD_CORBA_MESSAGING
 if BUILD_INTERCEPTORS
 if !BUILD_MINIMUM_CORBA
 
-FT_ServerORB = \
-  FaultTolerance/FT_ServerORBInitializer.cpp \
-  FaultTolerance/FT_ServerPolicyFactory.cpp \
-  FaultTolerance/FT_ServerPolicy_i.cpp \
-  FaultTolerance/FT_ServerRequest_Interceptor.cpp \
-  FaultTolerance/FT_ServerService_Activate.cpp
-
 lib_LTLIBRARIES += libTAO_FT_ServerORB.la
 
 libTAO_FT_ServerORB_la_CPPFLAGS = \
@@ -4349,7 +4300,11 @@ libTAO_FT_ServerORB_la_CPPFLAGS = \
   -DTAO_FT_SERVERORB_BUILD_DLL
 
 libTAO_FT_ServerORB_la_SOURCES = \
-  $(FT_ServerORB)
+  FaultTolerance/FT_ServerORBInitializer.cpp \
+  FaultTolerance/FT_ServerPolicyFactory.cpp \
+  FaultTolerance/FT_ServerPolicy_i.cpp \
+  FaultTolerance/FT_ServerRequest_Interceptor.cpp \
+  FaultTolerance/FT_ServerService_Activate.cpp
 
 libTAO_FT_ServerORB_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -4536,18 +4491,6 @@ FT_ReplicationManager-stamp: $(srcdir)/FT_ReplicationManager.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_FT_Export -Wb,export_include=orbsvcs/FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h $(srcdir)/FT_ReplicationManager.idl
 	@touch $@
 
-FaultTolerance = \
-  FT_CORBAS.cpp \
-  FT_CORBAC.cpp \
-  FT_ReplicaS.cpp \
-  FT_ReplicaC.cpp \
-  FT_NotifierS.cpp \
-  FT_NotifierC.cpp \
-  FT_FaultDetectorFactoryS.cpp \
-  FT_FaultDetectorFactoryC.cpp \
-  FT_ReplicationManagerS.cpp \
-  FT_ReplicationManagerC.cpp
-
 lib_LTLIBRARIES += libTAO_FaultTolerance.la
 
 libTAO_FaultTolerance_la_CPPFLAGS = \
@@ -4561,7 +4504,16 @@ libTAO_FaultTolerance_la_CPPFLAGS = \
   -DTAO_FT_BUILD_DLL
 
 libTAO_FaultTolerance_la_SOURCES = \
-  $(FaultTolerance)
+  FT_CORBAC.cpp \
+  FT_CORBAS.cpp \
+  FT_FaultDetectorFactoryC.cpp \
+  FT_FaultDetectorFactoryS.cpp \
+  FT_NotifierC.cpp \
+  FT_NotifierS.cpp \
+  FT_ReplicaC.cpp \
+  FT_ReplicaS.cpp \
+  FT_ReplicationManagerC.cpp \
+  FT_ReplicationManagerS.cpp
 
 libTAO_FaultTolerance_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -4671,20 +4623,6 @@ HTIOP-stamp: $(srcdir)/HTIOP.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=HTIOP_Export -Wb,export_include=orbsvcs/HTIOP/HTIOP_Export.h $(srcdir)/HTIOP.idl
 	@touch $@
 
-HTIOP = \
-  HTIOPC.cpp \
-  HTIOP/HTIOP_Acceptor.cpp \
-  HTIOP/HTIOP_Acceptor_Impl.cpp \
-  HTIOP/HTIOP_Completion_Handler.cpp \
-  HTIOP/HTIOP_Connection_Handler.cpp \
-  HTIOP/HTIOP_Connector.cpp \
-  HTIOP/HTIOP_Connector_Impl.cpp \
-  HTIOP/HTIOP_Endpoint.cpp \
-  HTIOP/HTIOP_Factory.cpp \
-  HTIOP/HTIOP_Profile.cpp \
-  HTIOP/HTIOP_Transport.cpp \
-  HTIOP/htiop_endpointsC.cpp
-
 lib_LTLIBRARIES += libTAO_HTIOP.la
 
 libTAO_HTIOP_la_CPPFLAGS = \
@@ -4698,7 +4636,18 @@ libTAO_HTIOP_la_CPPFLAGS = \
   -DHTIOP_BUILD_DLL
 
 libTAO_HTIOP_la_SOURCES = \
-  $(HTIOP)
+  HTIOP/HTIOP_Acceptor.cpp \
+  HTIOP/HTIOP_Acceptor_Impl.cpp \
+  HTIOP/HTIOP_Completion_Handler.cpp \
+  HTIOP/HTIOP_Connection_Handler.cpp \
+  HTIOP/HTIOP_Connector.cpp \
+  HTIOP/HTIOP_Connector_Impl.cpp \
+  HTIOP/HTIOP_Endpoint.cpp \
+  HTIOP/HTIOP_Factory.cpp \
+  HTIOP/HTIOP_Profile.cpp \
+  HTIOP/HTIOP_Transport.cpp \
+  HTIOP/htiop_endpointsC.cpp \
+  HTIOPC.cpp
 
 libTAO_HTIOP_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -4735,7 +4684,18 @@ nobase_include_HEADERS += \
 
 if !BUILD_MINIMUM_CORBA
 
-IFRService = \
+lib_LTLIBRARIES += libTAO_IFRService.la
+
+libTAO_IFRService_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_IFRSERVICE_BUILD_DLL
+
+libTAO_IFRService_la_SOURCES = \
   IFRService/AbstractInterfaceDef_i.cpp \
   IFRService/AliasDef_i.cpp \
   IFRService/ArrayDef_i.cpp \
@@ -4792,20 +4752,6 @@ IFRService = \
   IFRService/ValueDef_i.cpp \
   IFRService/ValueMemberDef_i.cpp \
   IFRService/WstringDef_i.cpp
-
-lib_LTLIBRARIES += libTAO_IFRService.la
-
-libTAO_IFRService_la_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs \
-  -DTAO_IFRSERVICE_BUILD_DLL
-
-libTAO_IFRService_la_SOURCES = \
-  $(IFRService)
 
 libTAO_IFRService_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -4898,10 +4844,6 @@ EXTRA_DIST += \
 if BUILD_CORBA_MESSAGING
 if BUILD_RT_CORBA
 
-RTCORBAEvent = \
-  Event/EC_RTCORBA_Dispatching.cpp \
-  Event/EC_RTCORBA_Factory.cpp
-
 lib_LTLIBRARIES += libTAO_RTCORBAEvent.la
 
 libTAO_RTCORBAEvent_la_CPPFLAGS = \
@@ -4914,7 +4856,8 @@ libTAO_RTCORBAEvent_la_CPPFLAGS = \
   -DTAO_RTCORBAEVENT_BUILD_DLL
 
 libTAO_RTCORBAEvent_la_SOURCES = \
-  $(RTCORBAEvent)
+  Event/EC_RTCORBA_Dispatching.cpp \
+  Event/EC_RTCORBA_Factory.cpp
 
 libTAO_RTCORBAEvent_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -4973,21 +4916,6 @@ RtecScheduler-stamp: $(srcdir)/RtecScheduler.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_RTSched_Export -Wb,export_include=orbsvcs/Sched/sched_export.h $(srcdir)/RtecScheduler.idl
 	@touch $@
 
-Sched = \
-  RtecSchedulerC.cpp \
-  RtecSchedulerS.cpp \
-  Scheduler_Factory.cpp \
-  Runtime_Scheduler.cpp \
-  Scheduler_Utilities.cpp \
-  Sched/Config_Scheduler.cpp \
-  Sched/DynSched.cpp \
-  Sched/Reconfig_Sched_Utils.cpp \
-  Sched/Reconfig_Scheduler.cpp \
-  Sched/SchedEntry.cpp \
-  Sched/Scheduler.cpp \
-  Sched/Scheduler_Generic.cpp \
-  Sched/Strategy_Scheduler.cpp
-
 lib_LTLIBRARIES += libTAO_RTSched.la
 
 libTAO_RTSched_la_CPPFLAGS = \
@@ -5000,7 +4928,19 @@ libTAO_RTSched_la_CPPFLAGS = \
   -DTAO_RTSCHED_BUILD_DLL
 
 libTAO_RTSched_la_SOURCES = \
-  $(Sched)
+  RtecSchedulerC.cpp \
+  RtecSchedulerS.cpp \
+  Runtime_Scheduler.cpp \
+  Sched/Config_Scheduler.cpp \
+  Sched/DynSched.cpp \
+  Sched/Reconfig_Sched_Utils.cpp \
+  Sched/Reconfig_Scheduler.cpp \
+  Sched/SchedEntry.cpp \
+  Sched/Scheduler.cpp \
+  Sched/Scheduler_Generic.cpp \
+  Sched/Strategy_Scheduler.cpp \
+  Scheduler_Factory.cpp \
+  Scheduler_Utilities.cpp
 
 libTAO_RTSched_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -5077,14 +5017,6 @@ RTEventLogAdmin-stamp: $(srcdir)/RTEventLogAdmin.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_RTEventLog_Export -Wb,export_include=orbsvcs/Log/rteventlog_export.h $(srcdir)/RTEventLogAdmin.idl
 	@touch $@
 
-RTEventLog = \
-  RTEventLogAdminC.cpp \
-  RTEventLogAdminS.cpp \
-  Log/RTEventLogFactory_i.cpp \
-  Log/RTEventLog_i.cpp \
-  Log/RTEventLogConsumer.cpp \
-  Log/RTEventLogNotification.cpp
-
 lib_LTLIBRARIES += libTAO_RTEventLogAdmin.la
 
 libTAO_RTEventLogAdmin_la_CPPFLAGS = \
@@ -5097,7 +5029,12 @@ libTAO_RTEventLogAdmin_la_CPPFLAGS = \
   -DTAO_RTEVENTLOG_BUILD_DLL
 
 libTAO_RTEventLogAdmin_la_SOURCES = \
-  $(RTEventLog)
+  Log/RTEventLogConsumer.cpp \
+  Log/RTEventLogFactory_i.cpp \
+  Log/RTEventLogNotification.cpp \
+  Log/RTEventLog_i.cpp \
+  RTEventLogAdminC.cpp \
+  RTEventLogAdminS.cpp
 
 libTAO_RTEventLogAdmin_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -5144,13 +5081,6 @@ endif BUILD_CORBA_MESSAGING
 
 if BUILD_CORBA_MESSAGING
 
-RTKokyuEvent = \
-  Event/EC_Kokyu_Dispatching.cpp \
-  Event/EC_Kokyu_Factory.cpp \
-  Event/EC_Kokyu_Filter.cpp \
-  Event/EC_Kokyu_Filter_Builder.cpp \
-  Event/EC_Kokyu_Scheduling.cpp
-
 lib_LTLIBRARIES += libTAO_RTKokyuEvent.la
 
 libTAO_RTKokyuEvent_la_CPPFLAGS = \
@@ -5164,7 +5094,11 @@ libTAO_RTKokyuEvent_la_CPPFLAGS = \
   -DTAO_RTKOKYUEVENT_BUILD_DLL
 
 libTAO_RTKokyuEvent_la_SOURCES = \
-  $(RTKokyuEvent)
+  Event/EC_Kokyu_Dispatching.cpp \
+  Event/EC_Kokyu_Factory.cpp \
+  Event/EC_Kokyu_Filter.cpp \
+  Event/EC_Kokyu_Filter_Builder.cpp \
+  Event/EC_Kokyu_Scheduling.cpp
 
 libTAO_RTKokyuEvent_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -5203,14 +5137,6 @@ endif BUILD_CORBA_MESSAGING
 
 if BUILD_CORBA_MESSAGING
 
-RTSchedEvent = \
-  Event/EC_Gateway_Sched.cpp \
-  Event/EC_Priority_Dispatching.cpp \
-  Event/EC_Priority_Scheduling.cpp \
-  Event/EC_Sched_Factory.cpp \
-  Event/EC_Sched_Filter.cpp \
-  Event/EC_Sched_Filter_Builder.cpp
-
 lib_LTLIBRARIES += libTAO_RTSchedEvent.la
 
 libTAO_RTSchedEvent_la_CPPFLAGS = \
@@ -5223,7 +5149,12 @@ libTAO_RTSchedEvent_la_CPPFLAGS = \
   -DTAO_RTSCHEDEVENT_BUILD_DLL
 
 libTAO_RTSchedEvent_la_SOURCES = \
-  $(RTSchedEvent)
+  Event/EC_Gateway_Sched.cpp \
+  Event/EC_Priority_Dispatching.cpp \
+  Event/EC_Priority_Scheduling.cpp \
+  Event/EC_Sched_Factory.cpp \
+  Event/EC_Sched_Filter.cpp \
+  Event/EC_Sched_Filter_Builder.cpp
 
 libTAO_RTSchedEvent_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -5266,14 +5197,6 @@ EXTRA_DIST += \
 if BUILD_RT_CORBA
 if !BUILD_MINIMUM_CORBA
 
-RT_Notify = \
-  Notify/RT_Builder.cpp \
-  Notify/RT_Factory.cpp \
-  Notify/RT_Notify_Service.cpp \
-  Notify/RT_POA_Helper.cpp \
-  Notify/RT_Properties.cpp \
-  Notify/Structured/RT_StructuredProxyPushSupplier.cpp
-
 lib_LTLIBRARIES += libTAO_RT_Notification.la
 
 libTAO_RT_Notification_la_CPPFLAGS = \
@@ -5287,7 +5210,12 @@ libTAO_RT_Notification_la_CPPFLAGS = \
   -DTAO_RT_NOTIFY_BUILD_DLL
 
 libTAO_RT_Notification_la_SOURCES = \
-  $(RT_Notify)
+  Notify/RT_Builder.cpp \
+  Notify/RT_Factory.cpp \
+  Notify/RT_Notify_Service.cpp \
+  Notify/RT_POA_Helper.cpp \
+  Notify/RT_Properties.cpp \
+  Notify/Structured/RT_StructuredProxyPushSupplier.cpp
 
 libTAO_RT_Notification_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -5495,33 +5423,6 @@ SecurityLevel3-stamp: $(srcdir)/SecurityLevel3.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/SecurityLevel3.idl
 	@touch $@
 
-Security = \
-  CSIC.cpp \
-  CSIIOPC.cpp \
-  GSSUPC.cpp \
-  SecurityC.cpp \
-  SecurityS.cpp \
-  SecurityLevel1C.cpp \
-  SecurityLevel1S.cpp \
-  SecurityLevel2C.cpp \
-  SecurityLevel2S.cpp \
-  SecurityLevel3C.cpp \
-  Security/CSI_Utils.cpp \
-  Security/SL2_EstablishTrustPolicy.cpp \
-  Security/SL2_QOPPolicy.cpp \
-  Security/SL3_ContextEstablishmentPolicy.cpp \
-  Security/SL3_CredentialsAcquirerFactory.cpp \
-  Security/SL3_CredentialsCurator.cpp \
-  Security/SL3_PolicyFactory.cpp \
-  Security/SL3_ObjectCredentialsPolicy.cpp \
-  Security/SL3_SecurityCurrent.cpp \
-  Security/SL3_SecurityCurrent_Impl.cpp \
-  Security/SL3_SecurityManager.cpp \
-  Security/Security_Current.cpp \
-  Security/Security_Current_Impl.cpp \
-  Security/Security_ORBInitializer.cpp \
-  Security/Security_PolicyFactory.cpp
-
 lib_LTLIBRARIES += libTAO_Security.la
 
 libTAO_Security_la_CPPFLAGS = \
@@ -5534,7 +5435,31 @@ libTAO_Security_la_CPPFLAGS = \
   -DTAO_SECURITY_BUILD_DLL
 
 libTAO_Security_la_SOURCES = \
-  $(Security)
+  CSIC.cpp \
+  CSIIOPC.cpp \
+  GSSUPC.cpp \
+  Security/CSI_Utils.cpp \
+  Security/SL2_EstablishTrustPolicy.cpp \
+  Security/SL2_QOPPolicy.cpp \
+  Security/SL3_ContextEstablishmentPolicy.cpp \
+  Security/SL3_CredentialsAcquirerFactory.cpp \
+  Security/SL3_CredentialsCurator.cpp \
+  Security/SL3_ObjectCredentialsPolicy.cpp \
+  Security/SL3_PolicyFactory.cpp \
+  Security/SL3_SecurityCurrent.cpp \
+  Security/SL3_SecurityCurrent_Impl.cpp \
+  Security/SL3_SecurityManager.cpp \
+  Security/Security_Current.cpp \
+  Security/Security_Current_Impl.cpp \
+  Security/Security_ORBInitializer.cpp \
+  Security/Security_PolicyFactory.cpp \
+  SecurityC.cpp \
+  SecurityLevel1C.cpp \
+  SecurityLevel1S.cpp \
+  SecurityLevel2C.cpp \
+  SecurityLevel2S.cpp \
+  SecurityLevel3C.cpp \
+  SecurityS.cpp
 
 libTAO_Security_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -5637,8 +5562,20 @@ SSLIOP-stamp: $(srcdir)/SSLIOP.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_SSLIOP_Export -Wb,export_include=orbsvcs/SSLIOP/SSLIOP_Export.h $(srcdir)/SSLIOP.idl
 	@touch $@
 
-SSLIOP = \
-  SSLIOPC.cpp \
+lib_LTLIBRARIES += libTAO_SSLIOP.la
+
+libTAO_SSLIOP_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DACE_HAS_SSL=1 \
+  @ACE_TLS_CPPFLAGS@ \
+  -DTAO_SSLIOP_BUILD_DLL
+
+libTAO_SSLIOP_la_SOURCES = \
   SSLIOP/IIOP_SSL_Acceptor.cpp \
   SSLIOP/IIOP_SSL_Connection_Handler.cpp \
   SSLIOP/IIOP_SSL_Connector.cpp \
@@ -5657,36 +5594,20 @@ SSLIOP = \
   SSLIOP/SSLIOP_Endpoint.cpp \
   SSLIOP/SSLIOP_Factory.cpp \
   SSLIOP/SSLIOP_Invocation_Interceptor.cpp \
-  SSLIOP/SSLIOP_SSL.cpp \
   SSLIOP/SSLIOP_ORBInitializer.cpp \
   SSLIOP/SSLIOP_OwnCredentials.cpp \
   SSLIOP/SSLIOP_Profile.cpp \
+  SSLIOP/SSLIOP_SSL.cpp \
   SSLIOP/SSLIOP_TargetCredentials.cpp \
   SSLIOP/SSLIOP_Transport.cpp \
   SSLIOP/SSLIOP_Util.cpp \
   SSLIOP/SSLIOP_X509.cpp \
   SSLIOP/params_dup.c \
-  SSLIOP/ssl_endpointsC.cpp
-
-lib_LTLIBRARIES += libTAO_SSLIOP.la
-
-libTAO_SSLIOP_la_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs \
-  -DACE_HAS_SSL=1 \
-  @ACE_TLS_CPPFLAGS@ \
-  -DTAO_SSLIOP_BUILD_DLL
-
-libTAO_SSLIOP_la_SOURCES = \
-  $(SSLIOP)
+  SSLIOP/ssl_endpointsC.cpp \
+  SSLIOPC.cpp
 
 libTAO_SSLIOP_la_LDFLAGS = \
-  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ \
-  @ACE_TLS_LDFLAGS@
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@ @ACE_TLS_LDFLAGS@
 
 libTAO_SSLIOP_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
