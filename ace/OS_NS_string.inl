@@ -34,14 +34,8 @@ ACE_OS::memcmp (const void *t, const void *s, size_t len)
 ACE_INLINE void *
 ACE_OS::memcpy (void *t, const void *s, size_t len)
 {
-
-/*
- * If it is determined that unrolling the memcpy loop
- * is faster than using ::memcpy then use it. This 
- * feature is test/set via autoconf.
- */
 #if defined (ACE_HAS_MEMCPY_LOOP_UNROLL)
-  return smemcpy (t, s, len);
+  return fast_memcpy (t, s, len);
 #else 
   return ::memcpy (t, s, len);
 #endif /* ACE_HAS_MEMCPY_LOOP_UNROLL */

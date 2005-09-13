@@ -215,7 +215,7 @@ ACE_OS::strnstr (const ACE_WCHAR_T *s1, const ACE_WCHAR_T *s2, size_t len2)
 
 #if defined (ACE_HAS_MEMCPY_LOOP_UNROLL)
 void *
-ACE_OS::smemcpy (void *t, const void *s, size_t len)
+ACE_OS::fast_memcpy (void *t, const void *s, size_t len)
 {
   unsigned char*   to = static_cast<unsigned char*> (t) ;
   const unsigned char* from = static_cast<const unsigned char*> (s) ;
