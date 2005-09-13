@@ -1,3 +1,26 @@
+Tue Sep 13 16:01:35 CEST 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* tools/Config_Handlers/XMLSchema/Traversal.hpp
+	* tools/Config_Handlers/XMLSchema/TypeInfo.hpp
+	* tools/Config_Handlers/XMLSchema/Types.hpp
+	* tools/Config_Handlers/XMLSchema/Writer.hpp
+	* tools/Config_Handlers/XSCRT/Elements.hpp
+	* tools/Config_Handlers/XSCRT/ExtendedTypeInfo.hpp
+	* tools/Config_Handlers/XSCRT/Parser.hpp
+	* tools/Config_Handlers/XSCRT/Traversal.hpp
+	* tools/Config_Handlers/XSCRT/Writer.hpp
+	* tools/Config_Handlers/XSCRT/XML.hpp
+	* tools/Config_Handlers/XSCRT/XMLSchema.hpp
+
+	Rolled back Stoyan's changes from the previous commit.  The proper
+	fix for this problem would be to update the include paths in the
+	affected MPC files, which has the virtue of not breaking
+	builds on platforms with case-sensitive filesystems. 
+
+	* DAnCE/new_RepositoryManager/new_RepositoryManager.mpc
+
+	Updated the include path to include the new config handlers directory.
+
 Mon Sep 12 17:34:47 CDT 2005 Stoyan Paunov <spaunov@isis.vanderbilt.edu>
 
 	* tools/Config_Handlers/XMLSchema/Traversal.hpp
@@ -17,7 +40,13 @@ Mon Sep 12 17:34:47 CDT 2005 Stoyan Paunov <spaunov@isis.vanderbilt.edu>
 	changed the directory structure, but did not update any of the include paths. 
 	Needless to say there were like 30-40 of those in the XSCRT and XMLSchema directories
 	
+Fri Sep  9 12:35:20 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
+	* tools/Config_Handlers/STD_IAD_Handler.cpp
+	* tools/Config_Handlers/STD_PCD_Handler.cpp
+	* tools/Config_Handlers/STD_PC_Intf.cpp
+
+	Changed to comform with new refactoring. 
 
 Fri Sep  9 12:32:14 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
