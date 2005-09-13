@@ -79,9 +79,9 @@ namespace CIAO
       // this later.
       // ACE_DEBUG ((LM_DEBUG, "string is %s\n", 
       //            src.implementation ().id ().c_str ()));
-      size_t tmp = 0;
+      CORBA::ULong tmp = 0;
       bool r = MDD_Handler::IDREF.find_ref 
-          (src.implementation ().id ().c_str (), tmp);
+          (ACE_CString (src.implementation ().id ().c_str ()), tmp);
       
       ACE_UNUSED_ARG (r);
       

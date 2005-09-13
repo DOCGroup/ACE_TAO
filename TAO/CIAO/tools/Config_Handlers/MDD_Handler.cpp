@@ -84,10 +84,10 @@ namespace CIAO
            ae != ab;
            ++ab)
         {
-          size_t tmp = 0;
+          CORBA::ULong tmp = 0;
 
           bool r =
-            ADD_Handler::IDREF.find_ref (ab->id ().c_str (),
+            ADD_Handler::IDREF.find_ref (ACE_CString (ab->id ().c_str ()),
                                          tmp);
 
           if (!r)
