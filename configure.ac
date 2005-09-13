@@ -6409,23 +6409,11 @@ smemcpy (void* dest, const void* src, const size_t n)
  }
 }
 
-void
-testit (int type)
-{
- char buffer[16] ;
- size_t size = 16 ;
- size = 4 ;
-
- switch (type)
- {
-   case 0: smemcpy ((void*)buffer, (void*)" THIS IS A TEST", size) ;
-break ;
-   case 1: memcpy ((void*)buffer, (void*)" THIS IS A TEST", size) ; break ;
- }
-}
-
-namespace { enum { ITERATIONS = 1000000 }; }
-
+// Function pointer
+void* (* test_func) (void *dst, const void* src, size_t);
+                                                                                
+namespace { enum { ITERATIONS = 100000 }; }
+                                                                                
 #include <sys/time.h>
 #include <time.h>
 
@@ -6434,38 +6422,55 @@ main(int argc, char* argv[])
 {
  struct timeval start, now;
  double value;
+                                                                                
+ // Test buffer
+ char dest [16];
+ const void* src = " THIS IS A TEST";
+                                                                                
+ // We want to test if the loop unrolling is faster for sizes
+ // from 1..16
+ for (size_t counter = 16; counter >=1; counter--)
+ {
+   test_func = smemcpy;
+                                                                                
+   // Warm up
+   for (int i = ITERATIONS ; i > 0 ; --i)
+     test_func ((void *)dest, src, counter);
+                                                                                
+   gettimeofday (&start, 0) ;
+   for (int j = ITERATIONS ; j > 0 ; --j)
+     test_func ((void *)dest, src, counter);
+   gettimeofday (&now, 0);
+                                                                                
+   double fast = 1000000 * (now.tv_sec - start.tv_sec) +
+                            now.tv_usec - start.tv_usec ;
+                                                                                
+   test_func = memcpy;
+                                                                                
+   // Warm up
+   for (int k = ITERATIONS ; k > 0 ; --k)
+     test_func ((void *)dest, src, counter);
+                                                                                
+  gettimeofday (&start, 0) ;
+  for (int l = ITERATIONS ; l > 0 ; --l)
+     test_func ((void *)dest, src, counter);
+  gettimeofday (&now, 0) ;
 
- // Warm up
- for (int i = ITERATIONS ; i > 0 ; --i)
-   testit (0);
-
- gettimeofday (&start, 0) ;
- for( int i = ITERATIONS ; i > 0 ; --i)
-   testit (0);
-
- gettimeofday (&now, 0);
- double fast = 1000000 * (now.tv_sec - start.tv_sec) +
-               now.tv_usec - start.tv_usec ;
-
- gettimeofday (&start, 0) ;
- for (int i = ITERATIONS ; i > 0 ; --i)
- testit (1) ;
-
- gettimeofday( &now, 0) ;
- double slow = 1000000 * (now.tv_sec-start.tv_sec) +
-   now.tv_usec - start.tv_usec ;
-
- if (fast > slow)
-   return 0; // Value of 1 indicates that the test succeeded
- else
-   return 1; // Value of 0 indicates that the test failed
-}]])], [ace_cv_memcpy_loop_unroll="yes"], [ace_cv_memcpy_loop_unroll="no"], [:])])
-
-if test "$ace_cv_memcpy_loop_unroll" = yes; then
- echo "loop unrolling of memcpy necessary"
-else
- echo "loop unrolling un-necessary"
-fi
+    double slow = 1000000 * (now.tv_sec-start.tv_sec) +
+                           now.tv_usec - start.tv_usec ;
+  if (fast > slow)
+    return 1; // Unrolling was slower than actual memcpy
+                                                                                
+  if (1.10*fast > slow)
+    return 1; // Unrolling was not faster by 10%
+ }
+ return 0; // Unrolling was faster -- success
+}]])], [ace_cv_memcpy_loop_unroll=yes],
+       [ace_cv_memcpy_loop_unroll=no],
+       dnl Cross compilation case
+       [ace_cv_memcpy_loop_unroll=no])],
+       dnl only if the test succeeds set the macro
+       [AC_DEFINE([ACE_HAS_MEMCPY_LOOP_UNROLL])],)
 
 dnl TODO: We only check for ACE_HAS_AUTOMATIC_INIT_FINI on platforms that
 dnl have SVR4 dynamic linking since ACE doesn't support it otherwise.
