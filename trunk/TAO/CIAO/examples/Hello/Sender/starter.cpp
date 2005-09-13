@@ -30,7 +30,7 @@ parse_args (int argc, char *argv[])
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
                             "Usage:  %s\n"
-			                      "-k <Sender IOR> (default is file://sender.ior)\n",
+			                      "-k <Sender IOR> (default is file://Sender.ior)\n",
 			                      "-m <Message>\n",
                             argv [0]),
                             -1);
@@ -40,7 +40,7 @@ parse_args (int argc, char *argv[])
 
   if (ior  == 0)
     {
-      ior = "file://sender.ior";
+      ior = "file://Sender.ior";
     }
     
   return 0;
