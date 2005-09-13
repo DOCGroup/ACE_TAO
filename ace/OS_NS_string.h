@@ -70,9 +70,10 @@ namespace ACE_OS {
 #if defined (ACE_HAS_MEMCPY_LOOP_UNROLL)
 /*
  * Version of memcpy where the copy loop is unrolled.
+ * On certain platforms this results in better performance.
  * This is determined and set via autoconf.
  */
-  void *smemcpy (void *t, const void *s, size_t len);
+  void *fast_memcpy (void *t, const void *s, size_t len);
 #endif
 
   /// Moves one buffer to another.
