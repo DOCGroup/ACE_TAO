@@ -18,7 +18,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   */
   // Listing 2 code/ch03
   ACE_OSTREAM_TYPE *output =
-    (ACE_OSTREAM_TYPE *) new std::ofstream ("ostream.output.test");
+    (ACE_OSTREAM_TYPE *) new ofstream ("ostream.output.test");
   ACE_LOG_MSG->msg_ostream (output, 1);
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR);

@@ -394,7 +394,7 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 
     {
       // Don't bother to cache this.
-      cerr << "*** " << size << " is too small to cache" << endl;
+      cerr << "*** " << static_cast<unsigned int>(size) << " is too small to cache" << endl;
       return -1;
     }
 
