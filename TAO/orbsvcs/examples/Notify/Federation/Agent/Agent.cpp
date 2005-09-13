@@ -2,8 +2,12 @@
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
-#include <iostream>
-#include <sstream>
+#include <ace/streams.h>
+#if defined(ACE_USES_OLD_IOSTREAMS)
+# include <strstrea.h>
+#else
+# include <sstream>
+#endif
 
 #include "ace/OS.h"
 
@@ -22,9 +26,6 @@
 
 
 #include "Gate/Gate.h"
-
-using std::cerr;
-using std::endl;
 
 using namespace CORBA;
 using namespace CosNotifyComm;
@@ -97,10 +98,18 @@ private:
       // Make a unique "event id" by combining space_craft_name, agent_name,
       // and counter. This can be handy for debugging.
       //
-      std::ostringstream ostr;
+#if defined(ACE_USES_OLD_IOSTREAMS)
+      ostrstream ostr;
+#else
+      ostringstream ostr;
+#endif
       ostr << space_craft_name_ << ":" << agent_name_ << ":" << counter_++;
 
+#if defined(ACE_USES_OLD_IOSTREAMS)
+      e.header.fixed_header.event_name = ostr.str ();
+#else
       e.header.fixed_header.event_name = ostr.str ().c_str ();
+#endif
 
       // Also add space_craft_name and agent_name fields separately
       // into variable_header. This will make filtering easier.

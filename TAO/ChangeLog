@@ -1,3 +1,14 @@
+Tue Sep 13 11:43:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * examples/Advanced/ch_3/client.cpp:
+        * examples/Advanced/ch_3/server.cpp:
+        * orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
+        * tests/Bug_1639_Regression/struct_client.cpp:
+
+        Fixed for environments defining ACE_USES_OLD_IOSTREAMS
+        (which unfortunately is the case for Windows x64 at the
+        moment due to shortcomings in the Platform SDK).
+
 Tue Sep 13 10:30:00 UTC 2005  Simon Massey  <sma@prismtech.com>
 
         * tao/AnyTypeCode/Any.cpp
