@@ -13,7 +13,7 @@ int ACE_TMAIN (int, ACE_TCHAR *argv[])
   ACE_TRACE ("main");
 
   ACE_OSTREAM_TYPE *output =
-        (ACE_OSTREAM_TYPE *) new std::ofstream ("ostream.output.test");
+        (ACE_OSTREAM_TYPE *) new ofstream ("ostream.output.test");
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%IThis will go to STDERR\n")));
 

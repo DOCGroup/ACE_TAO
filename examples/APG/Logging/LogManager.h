@@ -31,7 +31,7 @@ public:
 
   // Exclude 1
 private:
-  std::ofstream *log_stream_;
+  ofstream *log_stream_;
   ACE_OSTREAM_TYPE *output_stream_;
   // Exclude 1
 };
@@ -71,7 +71,7 @@ void LogManager::redirectToOStream (ACE_OSTREAM_TYPE *output)
 
 void LogManager::redirectToFile (const char *filename)
 {
-  log_stream_ = new std::ofstream ();
+  log_stream_ = new ofstream ();
   log_stream_->open (filename, ios::out | ios::app);
   this->redirectToOStream ((ACE_OSTREAM_TYPE *)log_stream_);
 }

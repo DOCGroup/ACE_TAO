@@ -17,7 +17,8 @@
 #include "ace/streams.h"
 
 #if defined (ACE_WIN32) && (!defined (ACE_HAS_STANDARD_CPP_LIBRARY) || \
-                            (ACE_HAS_STANDARD_CPP_LIBRARY == 0))
+                            (ACE_HAS_STANDARD_CPP_LIBRARY == 0) || \
+                            defined (ACE_USES_OLD_IOSTREAMS))
 #  include <stdio.h>
 #else
 #  include <string>
@@ -115,7 +116,8 @@ int main (int argc, char *argv[])
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "connect()"), 1);
 
 #if defined (ACE_WIN32) && (!defined (ACE_HAS_STANDARD_CPP_LIBRARY) || \
-                            (ACE_HAS_STANDARD_CPP_LIBRARY == 0))
+                            (ACE_HAS_STANDARD_CPP_LIBRARY == 0) || \
+                            defined (ACE_USES_OLD_IOSTREAMS))
   for (;;) {
     char user_input[ACE_Log_Record::MAXLOGMSGLEN];
     if (!gets (user_input))
