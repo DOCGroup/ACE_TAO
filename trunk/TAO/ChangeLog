@@ -1,3 +1,27 @@
+Tue Sep 13 10:30:00 UTC 2005  Simon Massey  <sma@prismtech.com>
+
+        * tao/AnyTypeCode/Any.cpp
+
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp
+
+        * tests/Bug_2234_Regression/Bug_2234_Regression.mpc
+        * tests/Bug_2234_Regression/Test.idl
+        * tests/Bug_2234_Regression/client.cpp
+        * tests/Bug_2234_Regression/run_test.pl
+        * tests/Bug_2234_Regression/server.cpp
+
+        This fixes bug 2234.
+        The Portiable Interception call to arguments() attempts to create
+        a read-only copy of all arguments passed into the current method.
+        Unfortunatly during the call to receive_request() the "out" args
+        of variable length types have not yet been allocated by the server
+        and so are NULL pointers. A deep copy was being attempted which
+        de-referenced these NULLs causing a crash. Explicit NULL checks
+        are now performed for these types and a NULL pointer to the type
+        is placed into the arg list instead.
+
 Tue Sep 13 10:18:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Portable_Interceptors/Bug_1559/run_test.pl:

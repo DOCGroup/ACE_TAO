@@ -449,12 +449,15 @@ operator<<= (CORBA::Any &any, CORBA::LongDouble ld)
 void
 operator<<= (CORBA::Any &any, const CORBA::Any &a)
 {
-  TAO::Any_Dual_Impl_T<CORBA::Any>::insert_copy (
-      any,
-      CORBA::Any::_tao_any_destructor,
-      CORBA::_tc_any,
-      a
-    );
+  if (0 == &a) // Trying to de-reference NULL Any
+    any <<= static_cast<CORBA::Any *>( 0 ); // Use non-copying insertion of a NULL
+  else
+    TAO::Any_Dual_Impl_T<CORBA::Any>::insert_copy (
+        any,
+        CORBA::Any::_tao_any_destructor,
+        CORBA::_tc_any,
+        a
+      );
 }
 
 // Insertion of Any - non-copying.
