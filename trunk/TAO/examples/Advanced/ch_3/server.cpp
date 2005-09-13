@@ -19,10 +19,8 @@
 //
 // ============================================================================
 
-#include <iostream>
 #include "server.h"
-
-using namespace std;
+#include <ace/streams.h>
 
 // The following headers are #included automatically by ACE+TAO.
 // Therefore, they don't need to be included explicitly.
