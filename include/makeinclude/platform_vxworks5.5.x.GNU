@@ -253,6 +253,10 @@ endif
 endif
 endif
 
+ifeq ($(CPU),SIMNT)
+override MUNCH_FLAGS := -asm $(TOOLENV)
+endif
+
 ifneq ($(optimize),1)
   CC_OPTIM_NORMAL =
 endif

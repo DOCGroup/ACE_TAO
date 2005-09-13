@@ -127,7 +127,12 @@ endif
 ifeq (1,$(ace_lib_prelink))
         #### Attempt a link (which will fail), to add template instantiations
         #### to lib files, for example.
+  ifeq (1,$(VXWORKS))
+        #### In VxWorks builds we would like to see the output here.
+	-$(LINK.cc) $(LINK_OUTPUT_FLAG) ace-templ_inst $? $(LDFLAGS)
+  else
 	-$(LINK.cc) $(LINK_OUTPUT_FLAG) ace-templ_inst $? $(LDFLAGS) $(ACE_NUL_STDERR)
+  endif
 endif # ace_lib_prelink
 	echo $(TMPINCDIR:%=%/*.o) $(filter %.o, $?) | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
 ifdef ibmcxx_build
