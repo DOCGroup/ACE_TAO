@@ -106,9 +106,9 @@ namespace CIAO
             idl_cad.connection [conn_len].internalEndpoint [endp_len].portName =
               (*ep_iter).portName ().c_str ();
 
-            size_t tmp = 0;
+            CORBA::ULong tmp = 0;
             bool retval =
-              STD_CID_Handler::IDREF.find_ref ((((*ep_iter).instance ()).id ()).c_str (),
+              STD_CID_Handler::IDREF.find_ref (ACE_CString ((((*ep_iter).instance ()).id ()).c_str ()),
                                                tmp);
             if (!retval)
               return retval;
