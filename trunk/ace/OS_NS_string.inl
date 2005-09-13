@@ -36,7 +36,7 @@ ACE_OS::memcpy (void *t, const void *s, size_t len)
 {
 #if defined (ACE_HAS_MEMCPY_LOOP_UNROLL)
   return fast_memcpy (t, s, len);
-#else 
+#else
   return ::memcpy (t, s, len);
 #endif /* ACE_HAS_MEMCPY_LOOP_UNROLL */
 }
