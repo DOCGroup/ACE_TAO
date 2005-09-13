@@ -23,8 +23,8 @@ module Hello
   {
     provides ReadMessage push_message;
     publishes TimeOut click_out;
-    readonly attribute string local_message;
-    attribute long hertz;
+    attribute string local_message;
+    readonly attribute long hertz;
     
     //attribute COLOR_SELECTION color;
     // A test attribute to test setting attributes through XML

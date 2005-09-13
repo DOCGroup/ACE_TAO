@@ -8,7 +8,7 @@ namespace CIDL_Sender_Impl
   Message_Impl::get_message (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    ACE_DEBUG ((LM_DEBUG, "Sender sending out message. \n"));
+    ACE_DEBUG ((LM_DEBUG, "Sender sending out message: %s\n", component_.message_.in ()));
     return CORBA::string_dup (component_.message_.in ());
   }
 
@@ -28,7 +28,7 @@ namespace CIDL_Sender_Impl
   Sender_exec_i::local_message (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    return CORBA::string_dup(message_);
+    return CORBA::string_dup (message_);
   }
 
   void
