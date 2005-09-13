@@ -5,13 +5,13 @@
 
 //IOR file of the Sender
 const char * ior = 0;
-const char * message = "starters message";
+const char * message = 0;
 
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:m");
+  ACE_Get_Opt get_opts (argc, argv, "k:m:");
   int c = 0;
   
   while ((c = get_opts ()) != -1)
@@ -29,10 +29,9 @@ parse_args (int argc, char *argv[])
         case '?':  // display help for use of the server.
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
-                            "usage:  %s\n"
-			    "-k <Sender IOR> (default is file://sender.ior)\n",
-			    "-m <Message> (default is starters message)\n"
-			    "\n",
+                            "Usage:  %s\n"
+			                      "-k <Sender IOR> (default is file://sender.ior)\n",
+			                      "-m <Message>\n",
                             argv [0]),
                             -1);
           break;
@@ -79,7 +78,10 @@ main (int argc, char *argv[])
                             -1);
         }
 
-      //sender->local_message (message);
+      if (message)
+      {
+        sender->local_message (message);
+      }
 
       sender->start (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
