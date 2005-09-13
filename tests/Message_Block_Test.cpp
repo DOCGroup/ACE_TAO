@@ -275,7 +275,7 @@ alloc_struct_type alloc_struct[ACE_ALLOC_STRATEGY_NO] =
 };
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
+    (defined (ACE_HAS_GNU_REPO) && !defined (ACE_VXWORKS))
   // The explicit instantiations are necessary with g++ 2.91.66
   // with -frepo, because it misses some of them.
 template class ACE_Cached_Allocator<MEMORY_CHUNK, ACE_SYNCH_MUTEX>;
