@@ -142,7 +142,7 @@ namespace TAO
 
             // Just wait for the main thread to start sening out
             // messages
-            ACE_OS::sleep (1);
+            ACE_OS::sleep (4);
 
             // Start the timer
             profile_timer.start ();
