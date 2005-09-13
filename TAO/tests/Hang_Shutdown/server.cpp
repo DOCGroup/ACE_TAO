@@ -70,7 +70,7 @@ namespace TAO
           poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          ACE_Time_Value tv (5);
+          ACE_Time_Value tv (10);
 
           orb->run (&tv);
 
