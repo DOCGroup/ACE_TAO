@@ -39,6 +39,7 @@ TAO/tests/Bug_1482_Regression/run_test.pl: !VxWorks !MINIMUM !ST
 TAO/tests/Bug_1551_Regression/run_test.pl: !VxWorks !MINIMUM !ST !IRIX
 TAO/tests/Bug_2174_Regression/run_test.pl: !MINIMUM
 TAO/tests/Bug_2183_Regression/run_test.pl:
+TAO/tests/Bug_2234_Regression/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/RTCORBA/Banded_Connections/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Client_Propagated/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Client_Protocol/run_test.pl: !MINIMUM !IPV6
