@@ -152,9 +152,9 @@ Finally you are ready to test the application you have made.
 <br><br>
 
 <UL>
-  <LI> If you specify that you want to register one or more component
-      instances with naming service, please start your naming service
-      first. <P>
+  <LI> If you wish to register one or more of your component
+      instances with CORBA <em> naming service</em>, then please start your naming service
+      first with multicast mode first ("-m 1" option). <P>
 
   <LI> Go into the <em> descriptors </em> directory Start NodeManagers
       (NodeDameon) by running <code> run_NodeDaemons.pl </code> <P>
@@ -168,10 +168,15 @@ Finally you are ready to test the application you have made.
        component(s) will be deployed, so this is non-standard. We plan to use Naming Service to do this in the future.
   </ul><P>
 
-  <LI> Start the executor:
+  <LI> Start the plan launcher:
   <code> $CIAO_ROOT/DAnCE/Plan_Launcher/plan_launcher -p flattened_deploymentplan.cdp -k file://EM.ior </code>
   
-  After this, components should be deployed successfully. <P>
+  <ul type="square"> <li> If you don't want to register component(s) with CORBA naming service, then you don't have to start
+  your naming service, and you can use the below code to start the executor:
+  
+  <code> $CIAO_ROOT/DAnCE/Plan_Launcher/plan_launcher -p flattened_deploymentplan_without_ns.cdp -k file://EM.ior </code><P>
+  
+  After this, components should be deployed successfully. </ul><P>
   
   <LI> You can go into the <em>
       $CIAO_ROOT/DAnCE/examples/Hello/descriptor </em> directory and
