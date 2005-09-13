@@ -1,8 +1,24 @@
+Tue Sep 13 10:18:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Portable_Interceptors/Bug_1559/run_test.pl:
+        * tests/Portable_Interceptors/Dynamic/run_test.pl:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/run_test.pl:
+        * tests/RTCORBA/Persistent_IOR/run_test.pl:
+
+        Removed '-ORBObjRefStyle url' switch because it causes problems with IPv6
+        builds and is not essential to the tests.
+        
+        * tests/Hang_Shutdown/server.cpp:
+        * tests/Hang_Shutdown/client.cpp:
+        
+        Adjusted test timeouts because they were a little too tight for
+        Windows/IPv6 environment.
+
 Mon Sep 12 11:52:22 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
-
-	  Regenerate.
+      	* orbsvcs/orbsvcs/Makefile.am:
+      
+      	  Regenerate.
 
 Mon Sep 12 11:34:13 2005  Simon McQueen  <sm@prismtech.com>
 
