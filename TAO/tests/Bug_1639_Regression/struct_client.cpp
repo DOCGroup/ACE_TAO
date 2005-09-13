@@ -3,11 +3,11 @@
 //
 #include "tao/DynamicAny/DynAnyFactory.h"
 #include "structC.h"
-#include <iostream>
+#include <ace/streams.h>
 
 using namespace StructTest;
 using namespace DynamicAny;
-using namespace std;
+
 //--------------------------------------------------------------------
 int main (int argc, char * argv[])
 //--------------------------------------------------------------------
