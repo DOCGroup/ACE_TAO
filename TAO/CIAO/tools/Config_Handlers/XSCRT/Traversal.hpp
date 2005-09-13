@@ -13,7 +13,7 @@
 // using std::wcerr;
 // using std::endl;
 
-#include "ciao/tools/Config_Handlers/XSCRT/ExtendedTypeInfo.hpp"
+#include "XSCRT/ExtendedTypeInfo.hpp"
 
 namespace XSCRT
 {
@@ -269,7 +269,7 @@ namespace XSCRT
   }
 }
 
-#include <ciao/tools/Config_Handlers/XSCRT/Traversal.ipp>
-#include <ciao/tools/Config_Handlers/XSCRT/Traversal.tpp>
+#include <XSCRT/Traversal.ipp>
+#include <XSCRT/Traversal.tpp>
 
 #endif  // XSCRT_TRAVERSAL_HPP

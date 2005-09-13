@@ -7,10 +7,10 @@
 
 #include <sstream>
 
-#include <ciao/tools/Config_Handlers/XSCRT/Writer.hpp>
+#include <XSCRT/Writer.hpp>
 
-#include <ciao/tools/Config_Handlers/XMLSchema/Types.hpp>
-#include <ciao/tools/Config_Handlers/XMLSchema/Traversal.hpp>
+#include <XMLSchema/Types.hpp>
+#include <XMLSchema/Traversal.hpp>
 
 namespace XMLSchema
 {
@@ -90,7 +90,7 @@ namespace XMLSchema
   }
 }
 
-#include <ciao/tools/Config_Handlers/XMLSchema/Writer.ipp>
-#include <ciao/tools/Config_Handlers/XMLSchema/Writer.tpp>
+#include <XMLSchema/Writer.ipp>
+#include <XMLSchema/Writer.tpp>
 
 #endif  // XMLSCHEMA_WRITER_HPP

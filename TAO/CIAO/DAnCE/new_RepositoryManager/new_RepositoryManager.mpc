@@ -5,7 +5,7 @@
 //compleint with the D&C spec
 
 project (spec_RepositoryManager) : ciao_server_dnc,ciao_deployment_svnt, ciao_deployment_stub, taoexe, xerces, exceptions, zzip, zlib {
-  includes += $(CIAO_ROOT)/tools
+  includes += $(CIAO_ROOT)/tools $(CIAO_ROOT)/tools/Config_Handlers
   exename = RepositoryManagerDeamon
   after    += XSC_Config_Handlers
   libs     += XSC_Config_Handlers
