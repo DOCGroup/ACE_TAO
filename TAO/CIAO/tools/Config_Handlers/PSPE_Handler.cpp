@@ -50,9 +50,9 @@ namespace CIAO
           dest.provider = 0;
         }
 
-      size_t tmp = 0;
-      bool r = IDD_Handler::IDREF.find_ref
-        (src.instance ().id ().c_str (), tmp);
+      CORBA::ULong tmp = 0;
+      bool r = IDD_Handler::IDREF.find_ref (ACE_CString (src.instance ().id ().c_str ()), 
+					    tmp);
       ACE_UNUSED_ARG (r);
       
       // @@ MAJO:  What should we do if find_ref fails??
