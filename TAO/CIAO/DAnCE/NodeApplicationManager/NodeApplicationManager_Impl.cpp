@@ -16,6 +16,7 @@ CIAO::NodeApplicationManager_Impl::~NodeApplicationManager_Impl (void)
 PortableServer::ObjectId
 CIAO::NodeApplicationManager_Impl::init (
     const char *nodeapp_location,
+    const char *nodeapp_op,
     const CORBA::ULong delay,
     const Deployment::DeploymentPlan & plan,
     const PortableServer::POA_ptr callback_poa
@@ -35,7 +36,9 @@ CIAO::NodeApplicationManager_Impl::init (
 
       this->nodeapp_path_.set (nodeapp_location);
       this->spawn_delay_ = delay;
-
+      
+      this->nodeapp_command_op_ = CORBA::string_dup (nodeapp_op);
+      
       // Make a copy of the plan for later usage.
       this->plan_ =  plan;
 
@@ -151,7 +154,11 @@ create_node_application (const ACE_CString & options
         {
           if (CIAO::debug_level () > 1)
             ACE_DEBUG ((LM_ERROR, "Fail to spawn a NodeApplication process\n"));
-          ACE_TRY_THROW (Deployment::ResourceNotAvailable ());
+          ACE_TRY_THROW (Deployment::ResourceNotAvailable ("Failed to spawn process",
+                                                           "NodeApplication",
+                                                           "",
+                                                           "",
+                                                           ""));
         }
 
       // wait for nodeApp to pass back its object reference. with a
@@ -279,83 +286,116 @@ startLaunch (const Deployment::Properties & configProperty,
                    Deployment::StartError,
                    Deployment::InvalidProperty))
 {
-  CIAO_TRACE("CIAO::NodeApplicationManager_Impl::startLaunch");
-  ACE_UNUSED_ARG (configProperty);
-  ACE_UNUSED_ARG (start);
-  /**
-   *  1. First Map properties to TAO/CIAO specific property/configurations
-   *  2. Necessary property checking (needed?)
-   *  3. Call create_nade_application to spawn new process.
-   *  4. Initialize the NodeApplication.
-   *  5. get the provided connection endpoints back and return them.
-   */
-
-  Deployment::NodeImplementationInfo node_info;
-
-  if (!(node_info << (this->plan_)))
-  {
-    if (CIAO::debug_level () > 1)
-      ACE_DEBUG ((LM_DEBUG, "Failed to create Node Implementation Infos!\n"));
-
-    ACE_THROW_RETURN (Deployment::StartError (),
-                      Deployment::Application::_nil());
-  } //@@ I am not sure about which exception to throw. I will come back to this.
-
-  // Now spawn the NodeApplication process.
-  ACE_CString cmd_option ("");
-  Deployment::NodeApplication_var tmp =
-    create_node_application (cmd_option.c_str () ACE_ENV_ARG_PARAMETER);
-
-  ACE_CHECK_RETURN (Deployment::Application::_nil());
-
-  // This is what we will get back, a sequence of compoent object refs.
-  Deployment::ComponentInfos_var comp_info;
-
-  // For debugging.
-  if (true) //(CIAO::debug_level () > 1)
-  {
-    Deployment::ComponentImplementationInfos infos = node_info[0].impl_infos;
-
-    const CORBA::ULong info_len = infos.length ();
-    for (CORBA::ULong i = 0; i < info_len; ++i)
+  ACE_TRY
     {
-      ACE_DEBUG ((LM_DEBUG, "The info for installation: \n\t%s\n\t%s\n\t%s\n\t%s\n\t%s\n",
-                  infos[i].component_instance_name.in (),
-                  infos[i].executor_dll.in (),
-                  infos[i].executor_entrypt.in (),
-                  infos[i].servant_dll.in (),
-                  infos[i].servant_entrypt.in () ));
+      
+      CIAO_TRACE("CIAO::NodeApplicationManager_Impl::startLaunch");
+      ACE_UNUSED_ARG (configProperty);
+      ACE_UNUSED_ARG (start);
+      /**
+       *  1. First Map properties to TAO/CIAO specific property/configurations
+       *  2. Necessary property checking (needed?)
+       *  3. Call create_nade_application to spawn new process.
+       *  4. Initialize the NodeApplication.
+       *  5. get the provided connection endpoints back and return them.
+       */
+      
+      Deployment::NodeImplementationInfo node_info;
+  
+      /*
+       * What does the << mean here?!?  We need to clean this up! -Will
+       */
+      if (!(node_info << (this->plan_)))
+        {
+          if (CIAO::debug_level () > 1)
+            ACE_DEBUG ((LM_DEBUG, "Failed to create Node Implementation Infos!\n"));
+
+          ACE_THROW_RETURN (Deployment::StartError ("NodeApplicationManager_Imp::startLaunch",
+                                                    "Unable to populate node level plan"),
+                            Deployment::Application::_nil());
+        } //@@ I am not sure about which exception to throw. I will come back to this.
+
+      // Now spawn the NodeApplication process.
+      // @@TODO: we need to pass arguments to the nodeapplication, ie naming service endpoints, if necessary
+      // (will)
+      ACE_CString cmd_option (this->nodeapp_command_op_.in ());
+      Deployment::NodeApplication_var tmp =
+        create_node_application (cmd_option.c_str () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      // This is what we will get back, a sequence of compoent object refs.
+      Deployment::ComponentInfos_var comp_info;
+
+      // For debugging.
+      if (true) //(CIAO::debug_level () > 1)
+        {
+          Deployment::ComponentImplementationInfos infos = node_info[0].impl_infos;
+
+          const CORBA::ULong info_len = infos.length ();
+          for (CORBA::ULong i = 0; i < info_len; ++i)
+            {
+              ACE_DEBUG ((LM_DEBUG, "The info for installation: \n\t%s\n\t%s\n\t%s\n\t%s\n\t%s\n",
+                          infos[i].component_instance_name.in (),
+                          infos[i].executor_dll.in (),
+                          infos[i].executor_entrypt.in (),
+                          infos[i].servant_dll.in (),
+                          infos[i].servant_entrypt.in () ));
+            }
+        }
+  
+  
+      // This will install all homes and components.
+      comp_info = this->nodeapp_->install (node_info ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      // Now fill in the map we have for the components.
+      const CORBA::ULong comp_len = comp_info->length ();
+      for (CORBA::ULong len = 0;
+           len < comp_len;
+           ++len)
+        {
+          //Since we know the type ahead of time...narrow is omitted here.
+          if (this->component_map_.
+              bind (comp_info[len].component_instance_name.in(),
+                    Components::CCMObject::_duplicate (comp_info[len].component_ref.in())))
+            {
+              ACE_CString error ("Duplicate component instance name ");
+              error += comp_info[len].component_instance_name.in();
+        
+              ACE_THROW_RETURN (Deployment::StartError ("NodeApplicationManager_Impl::startLaunch",
+                                                        error.c_str ()), 0);
+            }
+        }
+
+      providedReference = this->create_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (providedReference == 0)
+        ACE_THROW_RETURN (Deployment::StartError () ,
+                          Deployment::Application::_nil());
+
+      
     }
-  }
-
-  // This will install all homes and components.
-  comp_info = this->nodeapp_->install (node_info ACE_ENV_ARG_PARAMETER);
-
+  ACE_CATCH (Deployment::UnknownImplId, e)
+    {
+      ACE_THROW (Deployment::StartError (e.name.in (),
+                                         e.reason.in ()));
+    }
+  ACE_CATCH (Deployment::ImplEntryPointNotFound, e)
+    {
+      ACE_THROW (Deployment::StartError (e.name.in (),
+                                         e.reason.in ()));
+    }
+  ACE_CATCH (Deployment::InstallationFailure,e)
+    {
+      ACE_THROW (Deployment::StartError (e.name.in (),
+                                         e.reason.in ()));
+    }
+  ACE_ENDTRY;
   ACE_CHECK_RETURN (Deployment::Application::_nil());
-
-  // Now fill in the map we have for the components.
-  const CORBA::ULong comp_len = comp_info->length ();
-  for (CORBA::ULong len = 0;
-       len < comp_len;
-       ++len)
-  {
-    //Since we know the type ahead of time...narrow is omitted here.
-    if (this->component_map_.
-        bind (comp_info[len].component_instance_name.in(),
-              Components::CCMObject::_duplicate (comp_info[len].component_ref.in())))
-      ACE_THROW_RETURN (Deployment::StartError (), 0);
-  }
-
-  providedReference = this->create_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (Deployment::Application::_nil());
-
-  if (providedReference == 0)
-    ACE_THROW_RETURN (Deployment::StartError () ,
-                      Deployment::Application::_nil());
 
   return Deployment::NodeApplication::_duplicate (this->nodeapp_.in ());
 }
-
 
 void
 CIAO::NodeApplicationManager_Impl::

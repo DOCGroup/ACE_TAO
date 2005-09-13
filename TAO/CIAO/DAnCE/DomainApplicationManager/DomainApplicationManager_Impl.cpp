@@ -111,9 +111,12 @@ init (ACE_ENV_SINGLE_ARG_DECL)
 
           if (CORBA::is_nil (app_manager.in ()))
             {
-              ACE_DEBUG ((LM_DEBUG, "DomainAppMgr::init () received a nil\
-                                     reference for NodeApplicationManager\n"));
-              ACE_THROW (Deployment::StartError ());
+              ACE_CString error ("DomainAppMgr::init () received a nil \
+                                 reference for NodeApplicationManager\n");
+              
+              ACE_DEBUG ((LM_DEBUG, error.c_str ()));
+              ACE_THROW (Deployment::StartError ("DomainApplicationManager_Impl:init",
+                                                 error.c_str ()));
             }
           ACE_TRY_CHECK;
 
@@ -371,17 +374,27 @@ startLaunch (const ::Deployment::Properties & configProperty,
           
           if (this->artifact_map_.find (this->node_manager_names_[i],
                                         entry) != 0)
-            ACE_THROW (Deployment::StartError ()); // Should never happen!
+            {
+              ACE_CString error ("Unable to resolve a reference to node manager: ");
+              error += this->node_manager_names_[i];
+              
+              ACE_THROW (Deployment::StartError ("DomainApplicationManager_Impl:startLaunch",
+                                                 error.c_str ())); // Should never happen!
+            }
           
           ::Deployment::NodeApplicationManager_ptr my_nam =
             (entry->int_id_).node_application_manager_.in ();
           
           if (CORBA::is_nil (my_nam))
             {
-              ACE_DEBUG ((LM_DEBUG, "While starting launch, the DomainApplicationManager\
-                                     has a nil reference for NodeApplicationManager\n"));
-              ACE_THROW (Deployment::StartError ());
+              ACE_CString error ("While starting launch, the DomainApplicationManager\
+                                 has a nil reference for NodeApplicationManager\n");
+              ACE_DEBUG ((LM_DEBUG, error.c_str ()));
+                                     
+              ACE_THROW (Deployment::StartError ("DomainApplicationManager_Impl::startLaunch",
+                                                 error.c_str ()));
             }
+
           ACE_TRY_CHECK;
 
           ::Deployment::Connections_var retn_connections;
@@ -401,10 +414,13 @@ startLaunch (const ::Deployment::Properties & configProperty,
 
           if (CORBA::is_nil (my_na.in ()))
             {
-              ACE_DEBUG ((LM_DEBUG, "The DomainApplicationManager receives a nil\
+              ACE_CString error ( "The DomainApplicationManager receives a nil\
                                      reference of NodeApplication after calling\
-                                     startLaunch on NodeApplicationManager.\n"));
-              ACE_THROW (Deployment::StartError ());
+                                     startLaunch on NodeApplicationManager.\n");
+              ACE_ERROR ((LM_ERROR, error.c_str ()));
+              
+              ACE_THROW (Deployment::StartError ("DomainApplicationManager_Impl::startLaunch",
+                                                 error.c_str ()));
             }
           ACE_TRY_CHECK;
 
@@ -446,7 +462,14 @@ finishLaunch (::CORBA::Boolean start
 
           if (this->artifact_map_.find (this->node_manager_names_[i],
                                         entry) != 0)
-            ACE_THROW (Deployment::StartError ()); // Should never happen!
+            {
+              ACE_CString error ("Unable to resolve a reference to NodeManager: ");
+              error += this->node_manager_names_[i];
+              
+              ACE_THROW (Deployment::StartError ("DomainApplicationManager_Impl::finishLaunch",
+                                                 error.c_str ())); // Should never happen!
+            }
+          
 
           //@@ Note: Don't delete the below debugging helpers.
           // Dump the connections for debug purpose.
@@ -463,7 +486,8 @@ finishLaunch (::CORBA::Boolean start
             this->get_outgoing_connections ((entry->int_id_).child_plan_.in ());
 
           if (my_connections == 0)
-            ACE_THROW (Deployment::StartError ());
+            ACE_THROW (Deployment::StartError ("DomainApplicationManager_Impl::finish_launch",
+                                               "There was some error establishing connections."));
 
           Deployment::Connections_var safe (my_connections);
 
@@ -519,7 +543,13 @@ start (ACE_ENV_SINGLE_ARG_DECL)
 
           if (this->artifact_map_.find (this->node_manager_names_[i],
                                         entry) != 0)
-            ACE_THROW (Deployment::StartError ()); // Should never happen!
+            {
+              ACE_CString error ("Unable to resolve a reference to node manager: ");
+              error += this->node_manager_names_[i];
+              
+              ACE_THROW (Deployment::StartError ("DomainApplicationManager_Impl:startLaunch",
+                                                 error.c_str ())); // Should never happen!
+            }
 
           ::Deployment::NodeApplication_ptr my_na =
             (entry->int_id_).node_application_.in ();
@@ -544,7 +574,7 @@ start (ACE_ENV_SINGLE_ARG_DECL)
             ACE_THROW (Deployment::StartError ()); // Should never happen!
 
           ::Deployment::NodeApplication_ptr my_na =
-            (entry->int_id_).node_application_.in ();
+           (entry->int_id_).node_application_.in ();
 
           my_na->start (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -563,7 +593,13 @@ start (ACE_ENV_SINGLE_ARG_DECL)
 
           if (this->artifact_map_.find (this->node_manager_names_[i],
                                         entry) != 0)
-            ACE_THROW (Deployment::StartError ()); // Should never happen!
+            {
+              ACE_CString error ("Unable to resolve a reference to node manager: ");
+              error += this->node_manager_names_[i];
+              
+              ACE_THROW (Deployment::StartError ("DomainApplicationManager_Impl:startLaunch",
+                                                 error.c_str ())); // Should never happen!
+            }
 
           ::Deployment::NodeApplication_ptr my_na =
             (entry->int_id_).node_application_.in ();
@@ -726,7 +762,7 @@ get_outgoing_connections (const Deployment::DeploymentPlan &plan)
     // Get the component instance name
     if (!get_outgoing_connections_i (plan.instance[i].name.in (),
                                      connections.inout ()))
-    return 0;
+      return 0;
   }
   return connections._retn ();
 }
@@ -735,6 +771,7 @@ bool
 CIAO::DomainApplicationManager_Impl::
 get_outgoing_connections_i (const char * instname,
                             Deployment::Connections & retv)
+  ACE_THROW_SPEC ((Deployment::StartError))
 {
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::get_outoing_connections_i");
   // Search in all the connections in the plan.
@@ -775,7 +812,11 @@ get_outgoing_connections_i (const char * instname,
             //Cache the name of the port from the other component for searching later.
             ACE_CString port_name =
               curr_conn.internalEndpoint[index].portName.in ();
-
+            
+            ACE_DEBUG ((LM_ERROR, "Looking: %s,%s \n",
+                        name.c_str (),
+                        port_name.c_str ()));
+            
             bool found = false;
 
             // Now we have to search in the received connections to get the objRef.
@@ -809,7 +850,16 @@ get_outgoing_connections_i (const char * instname,
               }
 
               // We didnt find the counter part connection even we are sure there must be 1.
-              if (!found) return false;
+              if (!found) 
+                {
+                  ACE_CString error ("Creating connections for ");
+                  error += instname;
+                  error += ": unable to find object reference for connection ";
+                  error += curr_conn.name.in ();
+                  ACE_THROW (Deployment::StartError ("DomainApplicationManager_Impl::create_connections_i",
+                                                     error.c_str ()));
+                }
+                  
               break; // We know we have found the connection so even we are still on
                      // internalpoint 0 we can skip internalpoint 1.
           }

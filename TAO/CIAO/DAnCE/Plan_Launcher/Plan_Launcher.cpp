@@ -201,6 +201,11 @@ namespace CIAO
           orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
+      ACE_CATCH (Plan_Launcher_i::Deployment_Failure, ex)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "Deployment failed.  Plan_Launcher exiting.\n"));
+        }
       ACE_CATCHANY
         {
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
