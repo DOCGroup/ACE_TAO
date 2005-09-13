@@ -41,10 +41,10 @@ TAO/tests/Bug_2174_Regression/run_test.pl: !MINIMUM
 TAO/tests/Bug_2183_Regression/run_test.pl:
 TAO/tests/RTCORBA/Banded_Connections/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Client_Propagated/run_test.pl: !MINIMUM !ST
-TAO/tests/RTCORBA/Client_Protocol/run_test.pl: !MINIMUM
+TAO/tests/RTCORBA/Client_Protocol/run_test.pl: !MINIMUM !IPV6
 TAO/tests/RTCORBA/Collocation/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Destroy_Thread_Pool/run_test.pl: !MINIMUM !ST
-TAO/tests/RTCORBA/Explicit_Binding/run_test.pl: !VxWorks !MINIMUM
+TAO/tests/RTCORBA/Explicit_Binding/run_test.pl: !VxWorks !MINIMUM !IPV6
 TAO/tests/RTCORBA/Linear_Priority/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/ORB_init/run_test.pl: !MINIMUM
@@ -53,10 +53,10 @@ TAO/tests/RTCORBA/Policies/run_test.pl: !MINIMUM  !ST
 TAO/tests/RTCORBA/Policy_Combinations/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Priority_Inversion_With_Bands/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Private_Connection/run_test.pl: !MINIMUM
-TAO/tests/RTCORBA/Profile_And_Endpoint_Selection/run_test.pl: !VxWorks  !MINIMUM !ST
+TAO/tests/RTCORBA/Profile_And_Endpoint_Selection/run_test.pl: !VxWorks  !MINIMUM !ST !IPV6
 TAO/tests/RTCORBA/RTMutex/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Server_Declared/run_test.pl: !MINIMUM !ST
-TAO/tests/RTCORBA/Server_Protocol/run_test.pl: !VxWorks !MINIMUM
+TAO/tests/RTCORBA/Server_Protocol/run_test.pl: !VxWorks !MINIMUM !IPV6
 TAO/tests/RTCORBA/Thread_Pool/run_test.pl: !MINIMUM !ST
 TAO/tests/RTScheduling/VoidData/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/RTScheduling/Thread_Cancel/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS !ST
