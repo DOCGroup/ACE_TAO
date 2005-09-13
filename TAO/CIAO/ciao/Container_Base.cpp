@@ -294,23 +294,25 @@ namespace CIAO
 
         if (exe_dll_name == 0 || sv_dll_name == 0)
           {
-            if (CIAO::debug_level () > 10)
+            Deployment::UnknownImplId exception ("Session_Container::ciao_install_home", 0);
+            
+            if (exe_dll_name == 0)
               {
-                if (exe_dll_name == 0)
-                  {
-                    ACE_DEBUG ((LM_DEBUG,
-                                "ERROR (install_home): Null component "
-                                "executor DLL name\n"));
-                  }
-                if (sv_dll_name == 0)
-                  {
-                    ACE_DEBUG ((LM_DEBUG,
-                                "ERROR (install_home): Null component "
-                                "servant DLL name\n"));
-                  }
+                exception.reason = CORBA::string_dup ("Null component executor DLL name");
               }
 
-            ACE_THROW_RETURN (Deployment::UnknownImplId (),
+            if (sv_dll_name == 0)
+              {
+                exception.reason = CORBA::string_dup ("Null component servant DLL name");
+              }
+            
+            if (CIAO::debug_level () > 10)
+              ACE_DEBUG ((LM_ERROR,
+                          "ERROR: %s %s\n",
+                          exception.name.in (),
+                          exception.reason.in ()));
+
+            ACE_THROW_RETURN (exception,
                               Components::CCMHome::_nil ());
           }
 
@@ -318,14 +320,18 @@ namespace CIAO
                                ACE_DEFAULT_SHLIB_MODE,
                                0) != 0)
           {
+            ACE_CString error ("Failed to open executor DLL: ");
+            error += exe_dll_name;
+            
             if (CIAO::debug_level () > 10)
               {
                 ACE_DEBUG ((LM_ERROR,
-                            "ERROR (install_home): Failed to open executor DLL: %s\n",
-                            exe_dll_name));
+                            "ERROR (install_home): &s",
+                            error.c_str ()));
               }
               
-            ACE_THROW_RETURN (Deployment::UnknownImplId (),
+            ACE_THROW_RETURN (Deployment::UnknownImplId ("Session_Container::ciao_install_home",
+                                                         error.c_str ()),
                               Components::CCMHome::_nil ());
           }
 
@@ -333,20 +339,32 @@ namespace CIAO
                               ACE_DEFAULT_SHLIB_MODE,
                               0) != 0)
           {
+            ACE_CString error ("Failed to open executor DLL: ");
+            error += sv_dll_name;
+
             if (CIAO::debug_level () > 10)
               {
                 ACE_DEBUG ((LM_ERROR,
-                            "ERROR (install_home): Failed to open servant DLL: %s\n",
-                            sv_dll_name));
+                            "ERROR (install_home): %s\n",
+                            error.c_str ()));
               }
               
-            ACE_THROW_RETURN (Deployment::UnknownImplId (),
+            ACE_THROW_RETURN (Deployment::UnknownImplId ("Session_Container::ciao_install_home",
+                                                         error.c_str ()),
                               Components::CCMHome::_nil ());
           }
 
         if (exe_entrypt == 0 || sv_entrypt == 0)
           {
-            ACE_THROW_RETURN (Deployment::ImplEntryPointNotFound (),
+            ACE_CString error ("Entry point is null for ");
+            
+            if (exe_entrypt == 0)
+              error += exe_dll_name;
+            else
+              error += sv_dll_name;  
+              
+            ACE_THROW_RETURN (Deployment::ImplEntryPointNotFound ("Session_Container::ciao_install_home",
+                                                                  error.c_str ()),
                               Components::CCMHome::_nil ());
           }
 
@@ -381,7 +399,23 @@ namespace CIAO
 
     if (hcreator == 0 || screator == 0)
       {
-        ACE_THROW_RETURN (Deployment::ImplEntryPointNotFound (),
+        ACE_CString error ("Entry point ");
+        
+        if (hcreator == 0)
+          {
+            error += exe_entrypt;
+            error += " invalid in dll ";
+            error += exe_dll_name;
+          }
+        else
+          {
+            error += sv_entrypt;
+            error += " invalid in dll ";
+            error += sv_dll_name;
+          }
+        
+        ACE_THROW_RETURN (Deployment::ImplEntryPointNotFound ("SessionContainer::ciao_install_home",
+                                                              error.c_str ()),
                           Components::CCMHome::_nil ());
       }
 
@@ -389,7 +423,8 @@ namespace CIAO
     
     if (CORBA::is_nil (home_executor.in ()))
       {
-        ACE_THROW_RETURN (Deployment::InstallationFailure (),
+        ACE_THROW_RETURN (Deployment::InstallationFailure ("SessionContainer::ciao_install_home",
+                                                           "Executor entrypoint failed to create a home."),
                           Components::CCMHome::_nil ());
       }
 
@@ -401,7 +436,8 @@ namespace CIAO
 
     if (home_servant == 0)
       {
-        ACE_THROW_RETURN (Deployment::InstallationFailure (),
+        ACE_THROW_RETURN (Deployment::InstallationFailure ("SessionContainer::ciao_install_home",
+                                                           "Servant entrypoing failed to create a home."),
                           Components::CCMHome::_nil ());
       }
 

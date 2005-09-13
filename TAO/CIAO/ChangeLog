@@ -1,3 +1,22 @@
+Tue Sep 13 17:05:31 2005 CEST William Otte  <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h
+	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h
+	* DAnCE/NodeManager/NodeManager_Impl.cpp
+	* DAnCE/NodeManager/NodeManager_Impl.h
+	* DAnCE/NodeManager/Node_Manager.cpp
+	* DAnCE/Plan_Launcher/Plan_Launcher.cpp
+	* DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
+	* DAnCE/Plan_Launcher/Plan_Launcher_Impl.h
+	* ciao/Container_Base.cpp
+	* ciao/NodeApplication_Impl.cpp
+
+	Folding in some of the error reporting work that I have been
+	working on for the past couple weeks. Most common deployment
+	errors are now reported through the plan_launcher. 
+	
 Tue Sep 13 16:55:15 CEST 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* tools/Config_Handlers/IDD_Handler.cpp

@@ -93,7 +93,7 @@ CIAO::NodeApplication_Impl::finishLaunch (
 
               if (CORBA::is_nil (consumer.in ()))
                 {
-                  ACE_THROW (Deployment::InvalidConnection ());
+                  ACE_TRY_THROW (Deployment::InvalidConnection ());
                 }
 
               comp->connect_consumer (providedReference[i].portName.in (),
@@ -121,6 +121,13 @@ CIAO::NodeApplication_Impl::finishLaunch (
             }
         }
     }
+  /*
+  ACE_CATCH (Components::InvalidName, ex)
+    {
+      // @@TODO: translate this into an exception that can be thrown from here.
+      ACE_RE_THROW;
+    }
+  */
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
@@ -248,7 +255,8 @@ CIAO::NodeApplication_Impl::install (
         if (this->component_map_.
             bind (retv[len].component_instance_name.in(),
                   Components::CCMObject::_duplicate (retv[len].component_ref.in())))
-          ACE_THROW_RETURN (Deployment::InstallationFailure (), 0);
+          ACE_THROW_RETURN (Deployment::InstallationFailure ("NodeApplication_Imp::install",
+                                                             "Duplicate component instance name"), 0);
       }
     }
   ACE_CATCHANY

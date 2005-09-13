@@ -82,6 +82,7 @@ namespace CIAO
     
     const char * 
     Plan_Launcher_i::launch_plan (const char *plan_uri ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((Plan_Launcher_i::Deployment_Failure))
     {
       CIAO::Config_Handlers::XML_File_Intf intf (plan_uri);
       
@@ -93,7 +94,9 @@ namespace CIAO
     
     const char * 
     Plan_Launcher_i::launch_plan (const ::Deployment::DeploymentPlan &plan ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((Plan_Launcher_i::Deployment_Failure))
     {
+          
       if (CORBA::is_nil (this->em_.in ()))
         {
           ACE_ERROR ((LM_ERROR, 
@@ -128,41 +131,87 @@ namespace CIAO
       // Dont not start the Application immediately since it vialtes
       // the semantics of component activation sequence
       int start = 0;
+      ACE_TRY
+        {
 
-      dam->startLaunch (properties.in (), 0);
+          dam->startLaunch (properties.in (), 0);
       
-      if (CIAO::debug_level ())
-        ACE_DEBUG ((LM_DEBUG, "[success]\n"));
+          if (CIAO::debug_level ())
+            ACE_DEBUG ((LM_DEBUG, "[success]\n"));
       
-      // Call finish Launch to complete the connections
-      if (CIAO::debug_level ())
-        ACE_DEBUG ((LM_DEBUG,
-                    "CIAO_PlanLauncher: finish Launch application..."));
-      dam->finishLaunch (start);
+          // Call finish Launch to complete the connections
+          if (CIAO::debug_level ())
+            ACE_DEBUG ((LM_DEBUG,
+                        "CIAO_PlanLauncher: finish Launch application..."));
+          dam->finishLaunch (start);
       
-      if (CIAO::debug_level ())
-        ACE_DEBUG ((LM_DEBUG, "[success]\n"));
+          if (CIAO::debug_level ())
+            ACE_DEBUG ((LM_DEBUG, "[success]\n"));
       
-      // Call start to activate components
-      if (CIAO::debug_level ())
-        ACE_DEBUG ((LM_DEBUG,
-                    "CIAO_PlanLauncher: start activating components..."));
-      dam->start ();
+          // Call start to activate components
+          if (CIAO::debug_level ())
+            ACE_DEBUG ((LM_DEBUG,
+                        "CIAO_PlanLauncher: start activating components..."));
+          dam->start ();
       
-      if (CIAO::debug_level ())
-        ACE_DEBUG ((LM_DEBUG, "[success]\n"));
+          if (CIAO::debug_level ())
+            ACE_DEBUG ((LM_DEBUG, "[success]\n"));
       
-      if (CIAO::debug_level ())
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("CIAO_PlanLauncher: ")
-                    ACE_TEXT ("Application Deployed successfully\n")));
+          if (CIAO::debug_level ())
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("CIAO_PlanLauncher: ")
+                        ACE_TEXT ("Application Deployed successfully\n")));
       
-      map_.bind_dam_reference (plan.UUID.in (),
-                               Deployment::DomainApplicationManager::_duplicate (dam.in ()));
+          map_.bind_dam_reference (plan.UUID.in (),
+                                   Deployment::DomainApplicationManager::_duplicate (dam.in ()));
 
+
+        }
+      ACE_CATCH (Deployment::ResourceNotAvailable, ex)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "EXCEPTION: ResourceNotAvaiable exception caught: %s,\n"
+                      "Type: %s\n"
+                      "Property: %s\n"
+                      "Element: %s\n"
+                      "Resource: %s\n",
+                      ex.name.in (),
+                      ex.resourceType.in (),
+                      ex.propertyName.in (),
+                      ex.elementName.in (),
+                      ex.resourceName.in ()));             
+          ACE_THROW (Deployment_Failure ());
+        }
+      ACE_CATCH (Deployment::StartError, ex)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "EXCEPTION: StartError exception caught: %s, %s\n",
+                      ex.name.in (),
+                      ex.reason.in ()));
+          ACE_THROW (Deployment_Failure ());
+        }
+      ACE_CATCH (Deployment::InvalidProperty, ex)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "EXCEPTION: InvalidProperty exception caught: %s, %s\n",
+                      ex.name.in (),
+                      ex.reason.in ()));
+          ACE_THROW (Deployment_Failure ());
+        }
+      ACE_CATCH (Deployment::InvalidConnection, ex)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "EXCEPTION: InvalidConnection exception caught: %s, %s\n",
+                      ex.name.in (),
+                      ex.reason.in ()));
+          ACE_THROW (Deployment_Failure  ());
+        }
+      ACE_ENDTRY;
+      ACE_CHECK_RETURN (0);
+      
       std::string * retv = new std::string (plan.UUID.in ());
-
-      return (*retv).c_str ();
+      
+      return (*retv).c_str ();      
     }
     
     ::Deployment::DomainApplicationManager_ptr 

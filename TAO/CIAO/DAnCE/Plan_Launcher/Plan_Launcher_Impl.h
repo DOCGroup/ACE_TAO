@@ -27,7 +27,10 @@ namespace CIAO
     class Plan_Launcher_Impl_Export Plan_Launcher_i
     {
     public:
+      class Deployment_Failure {};
+      
       Plan_Launcher_i ();
+      
       
       bool init (const char *em_ior, 
                  CORBA::ORB_ptr orb
@@ -40,7 +43,8 @@ namespace CIAO
        * @returns a string containing the UUID of the plan. Null indicates failure.
        */
       const char * launch_plan (const char *plan_uri
-                                ACE_ENV_ARG_DECL);
+                                ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((Deployment_Failure));
       
       /**
        * @fn launch_plan
@@ -49,7 +53,8 @@ namespace CIAO
        * @returns a string containing the UUID of the plan. Null indicates failure.
        */
       const char * launch_plan (const ::Deployment::DeploymentPlan &plan
-                                ACE_ENV_ARG_DECL);
+                                ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((Deployment_Failure));
       
       /// Returns the DAM associated with a given plan URI
       ::Deployment::DomainApplicationManager_ptr get_dam (const char *uuid

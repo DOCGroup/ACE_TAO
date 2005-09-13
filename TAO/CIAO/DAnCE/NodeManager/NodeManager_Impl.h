@@ -52,10 +52,11 @@ namespace CIAO
 
     /// Constructor
     NodeManager_Impl (const char *name,
-                     CORBA::ORB_ptr orb,
-                     PortableServer::POA_ptr p,
-                     const char * nodeapp_loc,
-                     int spawn_delay)
+                      CORBA::ORB_ptr orb,
+                      PortableServer::POA_ptr p,
+                      const char * nodeapp_loc,
+                      const char* nodeapp_options,
+                      int spawn_delay)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Initializes the NodeManager.
@@ -115,7 +116,10 @@ namespace CIAO
 
     /// NodeApplication location
     CORBA::String_var nodeapp_location_;
-
+    
+    /// NodeApplication options
+    CORBA::String_var nodeapp_options_;
+    
     /// Cached callback POA.
     PortableServer::POA_var callback_poa_;
 

@@ -220,7 +220,8 @@ namespace CIAO
     /// This is a helper function to find the connection for a component.
     bool
     get_outgoing_connections_i (const char * instname,
-                                Deployment::Connections & retv);
+                                Deployment::Connections & retv)
+      ACE_THROW_SPEC ((Deployment::StartError));
 
     /// Dump connections, a static method
     void dump_connections (const ::Deployment::Connections & connections);

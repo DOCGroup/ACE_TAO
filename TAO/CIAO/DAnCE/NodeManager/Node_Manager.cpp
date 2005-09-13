@@ -16,7 +16,7 @@ const char *ior_file_name_ = "nodedaemon.ior";
 char *default_svcconf_ = 0;
 char *svcconf_config_ = 0;
 char *nodeapp_location_ = 0;
-
+char *nodeapp_options_ = 0;
 int write_to_ior_ = 0;
 int register_with_ns_ = 0;
 int nodeapp_loc_ = 0;
@@ -48,7 +48,11 @@ parse_args (int argc, char *argv[])
         nodeapp_location_ = get_opts.opt_arg ();
         nodeapp_loc_ = 1;
       break;
-
+      
+      case 'a': // Nodeapplication arguments
+        nodeapp_options_ = get_opts.opt_arg ();
+        break;
+        
       case 'd': //get the spawn delay argument
         spawn_delay = ACE_OS::atoi (get_opts.opt_arg ());
       break;
@@ -171,10 +175,11 @@ main (int argc, char *argv[])
       CIAO::NodeManager_Impl *daemon_servant = 0;
       ACE_NEW_RETURN (daemon_servant,
                       CIAO::NodeManager_Impl("NodeManager",
-                      orb.in (),
-                      poa.in (),
-                      nodeapp_location_,
-                      spawn_delay),
+                                             orb.in (),
+                                             poa.in (),
+                                             nodeapp_location_,
+                                             nodeapp_options_,
+                                             spawn_delay),
                       -1);
       PortableServer::ServantBase_var safe_daemon (daemon_servant);
       
