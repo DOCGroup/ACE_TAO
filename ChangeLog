@@ -1,3 +1,19 @@
+Tue Sep 13 11:52:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * apps/JAWS2/JAWS/Cache_Manager_T.cpp:
+        * examples/APG/Logging/LogManager.h:
+        * examples/APG/Logging/Use_Multiple_Sinks.cpp:
+        * examples/APG/Logging/Use_Ostream.cpp:
+        * examples/C++NPv1/Logging_Client.cpp:
+        * examples/C++NPv2/Select_Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/Server_Shutdown.cpp:
+        * examples/C++NPv2/TP_Reactor_Logging_Server.cpp:
+        * examples/Export/test.cpp:
+
+        Fixed for environments defining ACE_USES_OLD_IOSTREAMS
+        (which unfortunately is the case for Windows x64 at the
+        moment due to shortcomings in the Platform SDK).
+
 Tue Sep 13 10:30:00 UTC 2005  Simon Massey  <sma@prismtech.com>
 
         * bin/tao_orb_tests.lst:
