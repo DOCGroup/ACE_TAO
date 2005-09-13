@@ -724,7 +724,6 @@ namespace CIAO
 
       enum Value
       {
-        ,
         SERVER_DECLARED_l,
         CLIENT_PROPAGATED_l
       };
@@ -1591,7 +1590,7 @@ namespace CIAO
   {
     namespace Writer
     {
-      struct Config_Handlers_Export ServerResourcesDef : Traversal::ServerResourcesDef, 
+      struct  ServerResourcesDef : Traversal::ServerResourcesDef, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ServerResourcesDef Type;
@@ -1620,7 +1619,7 @@ namespace CIAO
         ServerResourcesDef ();
       };
 
-      struct Config_Handlers_Export ServerCmdlineOptions : Traversal::ServerCmdlineOptions, 
+      struct  ServerCmdlineOptions : Traversal::ServerCmdlineOptions, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ServerCmdlineOptions Type;
@@ -1649,7 +1648,7 @@ namespace CIAO
         ServerCmdlineOptions ();
       };
 
-      struct Config_Handlers_Export ACESvcConf : Traversal::ACESvcConf, 
+      struct  ACESvcConf : Traversal::ACESvcConf, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ACESvcConf Type;
@@ -1672,7 +1671,7 @@ namespace CIAO
         ACESvcConf ();
       };
 
-      struct Config_Handlers_Export ORBConfigs : Traversal::ORBConfigs, 
+      struct  ORBConfigs : Traversal::ORBConfigs, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ORBConfigs Type;
@@ -1704,7 +1703,7 @@ namespace CIAO
         ORBConfigs ();
       };
 
-      struct Config_Handlers_Export ORBResources : Traversal::ORBResources, 
+      struct  ORBResources : Traversal::ORBResources, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ORBResources Type;
@@ -1751,7 +1750,7 @@ namespace CIAO
         ORBResources ();
       };
 
-      struct Config_Handlers_Export Priority : Traversal::Priority, 
+      struct  Priority : Traversal::Priority, 
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
@@ -1772,7 +1771,7 @@ namespace CIAO
         Priority ();
       };
 
-      struct Config_Handlers_Export ThreadpoolDef : Traversal::ThreadpoolDef, 
+      struct  ThreadpoolDef : Traversal::ThreadpoolDef, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ThreadpoolDef Type;
@@ -1816,7 +1815,7 @@ namespace CIAO
         ThreadpoolDef ();
       };
 
-      struct Config_Handlers_Export ThreadpoolWithLanesDef : Traversal::ThreadpoolWithLanesDef, 
+      struct  ThreadpoolWithLanesDef : Traversal::ThreadpoolWithLanesDef, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ThreadpoolWithLanesDef Type;
@@ -1863,7 +1862,7 @@ namespace CIAO
         ThreadpoolWithLanesDef ();
       };
 
-      struct Config_Handlers_Export ThreadpoolLaneDef : Traversal::ThreadpoolLaneDef, 
+      struct  ThreadpoolLaneDef : Traversal::ThreadpoolLaneDef, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ThreadpoolLaneDef Type;
@@ -1892,7 +1891,7 @@ namespace CIAO
         ThreadpoolLaneDef ();
       };
 
-      struct Config_Handlers_Export ConnectionBandsDef : Traversal::ConnectionBandsDef, 
+      struct  ConnectionBandsDef : Traversal::ConnectionBandsDef, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ConnectionBandsDef Type;
@@ -1924,7 +1923,7 @@ namespace CIAO
         ConnectionBandsDef ();
       };
 
-      struct Config_Handlers_Export PriorityBandDef : Traversal::PriorityBandDef, 
+      struct  PriorityBandDef : Traversal::PriorityBandDef, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::PriorityBandDef Type;
@@ -1950,7 +1949,7 @@ namespace CIAO
         PriorityBandDef ();
       };
 
-      struct Config_Handlers_Export PolicySet : Traversal::PolicySet, 
+      struct  PolicySet : Traversal::PolicySet, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::PolicySet Type;
@@ -2000,7 +1999,7 @@ namespace CIAO
         PolicySet ();
       };
 
-      struct Config_Handlers_Export PriorityModel : Traversal::PriorityModel, 
+      struct  PriorityModel : Traversal::PriorityModel, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         PriorityModel (::XSCRT::XML::Element< ACE_TCHAR >&);
@@ -2019,7 +2018,7 @@ namespace CIAO
         PriorityModel ();
       };
 
-      struct Config_Handlers_Export PriorityModelPolicyDef : Traversal::PriorityModelPolicyDef, 
+      struct  PriorityModelPolicyDef : Traversal::PriorityModelPolicyDef, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::PriorityModelPolicyDef Type;

@@ -1,3 +1,11 @@
+Tue Sep 13 17:18:12 2005  William Otte  <wotte@william-ottes-powerbook-g4-15.local>
+
+	* tools/Config_Handlers/CIAOServerResources.hpp
+
+	Fixes for compile errors in:
+	.  Especially strict C++ compilers
+	.  Windows VC71 (hopefully)
+	
 Tue Sep 13 17:05:31 2005 CEST William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
