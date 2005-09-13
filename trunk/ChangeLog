@@ -1,3 +1,12 @@
+Tue Sep 13 14:10:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Cached_Accept_Conn_Test.cpp:
+        * tests/Cached_Conn_Test.cpp:
+        * tests/Message_Block_Test.cpp:
+
+	Fixed problems with explicit template instantiations and
+	VxWorks builds.
+
 Tue Sep 13 11:52:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * apps/JAWS2/JAWS/Cache_Manager_T.cpp:
