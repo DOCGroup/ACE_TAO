@@ -1,3 +1,8 @@
+Tue Sep 13 10:30:00 UTC 2005  Simon Massey  <sma@prismtech.com>
+
+        * bin/tao_orb_tests.lst:
+          Added Bug_2234_Regression test.
+
 Tue Sep 13 10:11:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * bin/tao_orb_tests.lst:
