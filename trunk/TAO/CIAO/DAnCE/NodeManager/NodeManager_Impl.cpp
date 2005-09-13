@@ -4,15 +4,17 @@
 #include "../NodeApplicationManager/NodeApplicationManager_Impl.h"
 
 CIAO::NodeManager_Impl::NodeManager_Impl (const char *name,
-                                        CORBA::ORB_ptr orb,
-                                        PortableServer::POA_ptr poa,
-                                        const char * nodapp_loc,
+                                          CORBA::ORB_ptr orb,
+                                          PortableServer::POA_ptr poa,
+                                          const char * nodeapp_loc,
+                                          const char * nodeapp_options,
                                         int spawn_delay)
   ACE_THROW_SPEC ((CORBA::SystemException))
   : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
     name_ (CORBA::string_dup (name)),
-    nodeapp_location_ (CORBA::string_dup (nodapp_loc)),
+    nodeapp_location_ (CORBA::string_dup (nodeapp_loc)),
+    nodeapp_options_ (CORBA::string_dup (nodeapp_options)),
     callback_poa_ (PortableServer::POA::_nil ()),
     spawn_delay_ (spawn_delay)
 {
@@ -127,6 +129,7 @@ CIAO::NodeManager_Impl::preparePlan (const Deployment::DeploymentPlan &plan
           //   dead. Also note that I added
           PortableServer::ObjectId_var oid  =
             app_mgr->init (this->nodeapp_location_,
+                           this->nodeapp_options_.in (),
                            this->spawn_delay_,
                            plan,
                            this->callback_poa_.in ()

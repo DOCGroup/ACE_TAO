@@ -79,6 +79,10 @@ namespace CIAO
      * @param nodeapp_location A null-termiated char * string pointing
      *    to the pathname of a NodeApplication executable.
      *
+     * @param nodeapp_options A null-terminated char * string
+     * containing command line options to be passed to the
+     * NodeApplication. 
+     *
      * @param delay instructs how long (in second) a CIAO_NodeApplicationManager
      *   should wait for a newly spawned NodeApplication to pass back
      *   its IOR.
@@ -93,6 +97,7 @@ namespace CIAO
      **/
     virtual PortableServer::ObjectId
     init (const char *nodeapp_location,
+          const char *nodeapp_options,
           const CORBA::ULong delay,
           const Deployment::DeploymentPlan & plan,
           const PortableServer::POA_ptr callback_poa
