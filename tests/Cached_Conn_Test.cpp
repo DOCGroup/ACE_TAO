@@ -107,7 +107,7 @@ typedef ACE_Cached_Connect_Strategy_Ex<Svc_Handler, ACE_SOCK_CONNECTOR, CACHING_
         CACHED_CONNECT_STRATEGY;
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
+    (defined (ACE_HAS_GNU_REPO) && !defined (ACE_VXWORKS))
   // The explicit instantiations are necessary with g++ 2.91.66
   // with -frepo, because it misses some of them.
 
