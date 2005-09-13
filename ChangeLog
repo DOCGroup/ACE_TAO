@@ -1,3 +1,14 @@
+Tue Sep 13 09:18:54 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * configure.ac:
+
+          Fixed the autoconf test that checks for memcpy loop unrolling
+          optimization, by (1) removing the testit function and replacing
+          it with a function pointer, (2) by properly setting the right
+          ACE macro when the test succeeds and (3) enabling the flag only
+          when the test produces a result > 10% for all sizes between
+          1..16.
+
 Tue Sep 13 14:10:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Cached_Accept_Conn_Test.cpp:
