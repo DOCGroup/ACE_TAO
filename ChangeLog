@@ -209,7 +209,6 @@ Sun Sep  4 22:27:19 2005  Boris Kolpackov  <boris@kolpackov.net>
         BCB on Windows. Thanks to Vladislav Zverev <vladislav at gtss
         dot spb dot ru> for suggestions.
 
-
 Fri Sep  2 08:29:38 2005  Arvind S. Krishna  <arvindk@tango.dre.vanderbilt.edu>
 
         * ace/OS_NS_string.h:
