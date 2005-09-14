@@ -6404,8 +6404,8 @@ smemcpy (void* dest, const void* src, const size_t n)
    case  3: to[2] = from[2] ;
    case  2: to[1] = from[1] ;
    case  1: to[0] = from[0] ;
-   case  0: break;
-   default: memcpy (dest, src, n);
+   case  0: return dest;
+   default: return memcpy (dest, src, n);
  }
 }
 
@@ -6470,7 +6470,8 @@ main(int argc, char* argv[])
        dnl Cross compilation case
        [ace_cv_memcpy_loop_unroll=no])],
        dnl only if the test succeeds set the macro
-       [AC_DEFINE([ACE_HAS_MEMCPY_LOOP_UNROLL])],)
+       [AC_DEFINE([ACE_HAS_MEMCPY_LOOP_UNROLL], 1,
+		  [Define to 1 if unrolled ACE_OS::fast_memcpy() is faster than system memcpy()])],)
 
 dnl TODO: We only check for ACE_HAS_AUTOMATIC_INIT_FINI on platforms that
 dnl have SVR4 dynamic linking since ACE doesn't support it otherwise.
