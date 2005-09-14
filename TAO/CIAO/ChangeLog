@@ -1,3 +1,18 @@
+Wed Sep 14 11:18:42 2005  William Otte  <wotte@william-ottes-powerbook-g4-15.local>
+
+	* tools/Config_Handlers/CIAOServerResources.cpp
+	* tools/Config_Handlers/CIAOServerResources.hpp
+
+	Removed these from the repo to avoid confusion. 
+	
+	* tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
+
+	Ported patches from:
+	Tue Sep 13 17:18:12 CEST 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	which were made against the wrong file.  Thanks to Gan Deng for
+	pointing this out. 
+	
 Wed Sep 14 13:28:14 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* examples/Hello/descriptors/run_NodeDaemons.pl
