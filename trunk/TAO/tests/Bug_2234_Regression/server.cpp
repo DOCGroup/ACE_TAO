@@ -628,7 +628,7 @@ public:
     CORBA::Any
       *pAny= ri->result( ACE_ENV_SINGLE_ARG_PARAMETER );
     ACE_CHECK;
-    display_any( *CORBA::Any_var( pAny ) );
+    display_any( CORBA::Any_var( pAny ).in() );
     ACE_DEBUG( (LM_INFO, "\n") );
   }
 
