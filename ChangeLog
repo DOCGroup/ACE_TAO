@@ -1,3 +1,13 @@
+Wed Sep 14 13:36:34 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+
+	  Changed ACE_HAS_MEMCPY_LOOP_UNROLL feature test code such that 
+	  smemcpy() correctly returns it's first argument.
+
+	  Added third argument to ACE_HAS_MEMCPY_LOOP_UNROLL's AC_DEFINE
+	  to provide the description for config.h.
+
 Tue Sep 13 14:38:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * include/makeinclude/platform_vxworks5.5.x.GNU:
