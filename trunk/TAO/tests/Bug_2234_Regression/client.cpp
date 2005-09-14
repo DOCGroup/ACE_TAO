@@ -14,7 +14,7 @@ main(
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
-  ::CORBA::Boolean testFailed= 0;
+  CORBA::Boolean testFailed= 0;
   ACE_DEBUG( (LM_INFO, "Regression test for Bug 2234 (Interceptor arg list with var len out params)\n"));
   ACE_TRY
   {
@@ -29,7 +29,7 @@ main(
     ACE_TRY_CHECK;
 
     //-----------------------------------------------------------------------
-    ::CORBA::Long
+    CORBA::Long
        aL= 1,
        bL,
        cL= 3,
@@ -50,13 +50,13 @@ main(
        ACE_DEBUG( (LM_INFO, "OK\n") );
 
     //-----------------------------------------------------------------------
-    ::CORBA::String_var
+    CORBA::String_var
        aS= CORBA::string_dup("1"),
        bS,
        cS= CORBA::string_dup("3"),
        rS;
     ACE_DEBUG( (LM_INFO, ". String()          ") );
-    rS= foo->TestString( aS, bS, cS ACE_ENV_ARG_PARAMETER);
+    rS= foo->TestString( aS.in(), bS.out(), cS.inout() ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
     ACE_DEBUG( (LM_INFO, "a is %s, b is %s, c is %s, r is %s:  ", aS.in(), bS.in(), cS.in(), rS.in()) );
     if ((0 != *aS.in()) && (0 != ACE_OS::strcmp(aS.in(), "1"))) {
@@ -71,15 +71,15 @@ main(
        ACE_DEBUG( (LM_INFO, "OK\n") );
 
     //-----------------------------------------------------------------------
-    ::Test::MyNonVarStruct_var
-       aFS= new ::Test::MyNonVarStruct(),
-       bFS= new ::Test::MyNonVarStruct(),
-       cFS= new ::Test::MyNonVarStruct(),
+    Test::MyNonVarStruct_var
+       aFS= new Test::MyNonVarStruct(),
+       bFS= new Test::MyNonVarStruct(),
+       cFS= new Test::MyNonVarStruct(),
        rFS;
     aFS->val= 1;
     cFS->val= 3;
     ACE_DEBUG( (LM_INFO, ". MyNonVarStruct()  ") );
-    rFS= foo->TestNonVarStruct( aFS, bFS, cFS ACE_ENV_ARG_PARAMETER);
+    rFS= foo->TestNonVarStruct( aFS.in(), bFS.out(), cFS.inout() ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
     ACE_DEBUG( (LM_INFO, "a is %d, b is %d, c is %d, r is %d:  ", aFS.in().val, bFS.in().val, cFS.in().val, rFS.in().val) );
     if (static_cast<CORBA::Long>(1) != aFS->val) {
@@ -94,15 +94,15 @@ main(
        ACE_DEBUG( (LM_INFO, "OK\n") );
 
     //-----------------------------------------------------------------------
-    ::Test::MyVarStruct_var
-       aVS= new ::Test::MyVarStruct(),
+    Test::MyVarStruct_var
+       aVS= new Test::MyVarStruct(),
        bVS,
-       cVS= new ::Test::MyVarStruct(),
+       cVS= new Test::MyVarStruct(),
        rVS;
     aVS->val= CORBA::string_dup("1");
     cVS->val= CORBA::string_dup("3");
     ACE_DEBUG( (LM_INFO, ". MyVarStruct()     ") );
-    rVS= foo->TestVarStruct( aVS, bVS, cVS ACE_ENV_ARG_PARAMETER);
+    rVS= foo->TestVarStruct( aVS.in(), bVS.out(), cVS.inout() ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
     ACE_DEBUG( (LM_INFO, "a is %s, b is %s, c is %s, r is %s:  ", aVS->val.in(), bVS->val.in(), cVS->val.in(), rVS->val.in()) );
     if ((0 != *aVS->val) && (0 != ACE_OS::strcmp(aVS->val, "1"))) {
@@ -117,15 +117,15 @@ main(
        ACE_DEBUG( (LM_INFO, "OK\n") );
 
     //-----------------------------------------------------------------------
-    ::Test::MyNonVarUnion_var
-       aFU= new ::Test::MyNonVarUnion(),
-       bFU= new ::Test::MyNonVarUnion(),
-       cFU= new ::Test::MyNonVarUnion(),
+    Test::MyNonVarUnion_var
+       aFU= new Test::MyNonVarUnion(),
+       bFU= new Test::MyNonVarUnion(),
+       cFU= new Test::MyNonVarUnion(),
        rFU;
     aFU->valLong( static_cast<CORBA::Long>(1) );
     cFU->valLong( static_cast<CORBA::Long>(3) );
     ACE_DEBUG( (LM_INFO, ". MyNonVarUnion()   ") );
-    rFU= foo->TestNonVarUnion( aFU, bFU, cFU ACE_ENV_ARG_PARAMETER);
+    rFU= foo->TestNonVarUnion( aFU.in(), bFU.out(), cFU.inout() ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
     ACE_DEBUG( (LM_INFO, "a is ") );
     if (static_cast<CORBA::Short>(1) != aFU->_d())
@@ -160,15 +160,15 @@ main(
        ACE_DEBUG( (LM_INFO, "OK\n") );
 
     //-----------------------------------------------------------------------
-    ::Test::MyVarUnion_var
-       aVU= new ::Test::MyVarUnion(),
+    Test::MyVarUnion_var
+       aVU= new Test::MyVarUnion(),
        bVU,
-       cVU= new ::Test::MyVarUnion(),
+       cVU= new Test::MyVarUnion(),
        rVU;
     aVU->valLong( static_cast<CORBA::Long>(1) );
     cVU->valLong( static_cast<CORBA::Long>(3) );
     ACE_DEBUG( (LM_INFO, ". MyVarUnion()      ") );
-    rVU= foo->TestVarUnion( aVU, bVU, cVU ACE_ENV_ARG_PARAMETER);
+    rVU= foo->TestVarUnion( aVU.in(), bVU.out(), cVU.inout() ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
     ACE_DEBUG( (LM_INFO, "a is ") );
     if (static_cast<CORBA::Short>(1) != aVU->_d())
@@ -203,17 +203,17 @@ main(
        ACE_DEBUG( (LM_INFO, "OK\n") );
 
     //-----------------------------------------------------------------------
-    ::Test::MySeqOfLong_var
-       aSL= new ::Test::MySeqOfLong(1),
+    Test::MySeqOfLong_var
+       aSL= new Test::MySeqOfLong(1),
        bSL,
-       cSL= new ::Test::MySeqOfLong(1),
+       cSL= new Test::MySeqOfLong(1),
        rSL;
     aSL->length(1);
     aSL[0]= static_cast<CORBA::Long>(1);
     cSL->length(1);
     cSL[0]= static_cast<CORBA::Long>(3);
     ACE_DEBUG( (LM_INFO, ". MySeqOfLong()     ") );
-    rSL= foo->TestSeqOfLong( aSL, bSL, cSL ACE_ENV_ARG_PARAMETER);
+    rSL= foo->TestSeqOfLong( aSL.in(), bSL.out(), cSL.inout() ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
     ACE_DEBUG( (LM_INFO, "a is ") );
     if (1u != aSL->length())
@@ -248,17 +248,17 @@ main(
        ACE_DEBUG( (LM_INFO, "OK\n") );
 
     //-----------------------------------------------------------------------
-    ::CORBA::Any_var
-       aA= new ::CORBA::Any(),
+    CORBA::Any_var
+       aA= new CORBA::Any(),
        bA,
-       cA= new ::CORBA::Any(),
+       cA= new CORBA::Any(),
        rA;
     aA<<= static_cast<CORBA::Long>(1);
     cA<<= static_cast<CORBA::Long>(3);
     ACE_DEBUG( (LM_INFO, ". Any()             ") );
-    rA= foo->TestAny( aA.in(), bA, cA.inout() ACE_ENV_ARG_PARAMETER);
+    rA= foo->TestAny( aA.in(), bA.out(), cA.inout() ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
-    ::CORBA::Boolean
+    CORBA::Boolean
        aB,
        bB,
        cB,
