@@ -1,9 +1,15 @@
+Wed Sep 14 10:34:00 UTC 2005  Simon Massey  <sma@prismtech.com>
+
+        * tests/Bug_2234_Regression/server.cpp:
+
+        Correct another minor fussy compiler gripe.
+
 Wed Sep 14 09:45:00 UTC 2005  Simon Massey  <sma@prismtech.com>
 
-        * tests/Bug_2234_Regression/client.cpp
-        * tests/Bug_2234_Regression/server.cpp
+        * tests/Bug_2234_Regression/client.cpp:
+        * tests/Bug_2234_Regression/server.cpp:
 
-        Correct minor fussy compiler grips for some gcc platforms.
+        Correct minor fussy compiler gripes for some gcc platforms.
 
 Wed Sep 14 08:41:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
@@ -24,17 +30,17 @@ Tue Sep 13 11:43:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
 Tue Sep 13 10:30:00 UTC 2005  Simon Massey  <sma@prismtech.com>
 
-        * tao/AnyTypeCode/Any.cpp
+        * tao/AnyTypeCode/Any.cpp:
 
-        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp
-        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp
-        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
 
-        * tests/Bug_2234_Regression/Bug_2234_Regression.mpc
-        * tests/Bug_2234_Regression/Test.idl
-        * tests/Bug_2234_Regression/client.cpp
-        * tests/Bug_2234_Regression/run_test.pl
-        * tests/Bug_2234_Regression/server.cpp
+        * tests/Bug_2234_Regression/Bug_2234_Regression.mpc:
+        * tests/Bug_2234_Regression/Test.idl:
+        * tests/Bug_2234_Regression/client.cpp:
+        * tests/Bug_2234_Regression/run_test.pl:
+        * tests/Bug_2234_Regression/server.cpp:
 
         This fixes bug 2234.
         The Portiable Interception call to arguments() attempts to create
