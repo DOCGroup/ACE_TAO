@@ -101,7 +101,7 @@ private:
 #if defined(ACE_USES_OLD_IOSTREAMS)
       ostrstream ostr;
 #else
-      ostringstream ostr;
+      std::ostringstream ostr;
 #endif
       ostr << space_craft_name_ << ":" << agent_name_ << ":" << counter_++;
 
