@@ -1,4 +1,10 @@
-Wed Sep 14 11:18:42 2005  William Otte  <wotte@william-ottes-powerbook-g4-15.local>
+Wed Sep 14 13:25:00 CEST 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc
+
+	Fix for a library ordering problem. 
+
+Wed Sep 14 11:18:42 2005 CEST William Otte  <wotte@william-ottes-powerbook-g4-15.local>
 
 	* tools/Config_Handlers/CIAOServerResources.cpp
 	* tools/Config_Handlers/CIAOServerResources.hpp
