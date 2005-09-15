@@ -1,3 +1,15 @@
+Thu Sep 15 12:35:27 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* THANKS:
+
+	  Added Jin Zhi Ye.
+
+	* ace/os_include/os_stdio.h:
+
+	  #undef fgetc and fputc if they are defined, as macro expansion
+	  conflicts with our use of the same names in the ACE_OS wrapper
+	  functions.  Reported by Jin Zhi Ye <jinzhiye at kedacom dot com>.
+
 Thu Sep 15 18:55:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/Atomic_Op.inl:
