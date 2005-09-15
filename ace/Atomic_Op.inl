@@ -218,7 +218,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator-= (unsigned long rhs)
 {
 #if defined (WIN32) && defined (ACE_HAS_INTERLOCKED_EXCHANGEADD)
   return static_cast<unsigned long> (::InterlockedExchangeAdd (const_cast<long *> (reinterpret_cast<volatile long *>(&this->value_)),
-                                   -rhs)) - rhs;
+                                   -static_cast<long>(rhs))) - rhs;
 #else /* WIN32 && ACE_HAS_INTERLOCKED_EXCHANGEADD */
   return static_cast<unsigned long> ((*exchange_add_fn_) (reinterpret_cast<volatile long *> (&this->value_), -rhs)) - rhs;
 #endif /* WIN32 && ACE_HAS_INTERLOCKED_EXCHANGEADD */

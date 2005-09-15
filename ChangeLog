@@ -1,24 +1,31 @@
+Thu Sep 15 18:55:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Atomic_Op.inl:
+
+          Small fix to get rid of annoying warning on Windows concerning
+          unary '-'.
+
 Wed Sep 14 13:36:34 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Changed ACE_HAS_MEMCPY_LOOP_UNROLL feature test code such that 
-	  smemcpy() correctly returns it's first argument.
+          Changed ACE_HAS_MEMCPY_LOOP_UNROLL feature test code such that
+          smemcpy() correctly returns it's first argument.
 
-	  Added third argument to ACE_HAS_MEMCPY_LOOP_UNROLL's AC_DEFINE
-	  to provide the description for config.h.
+          Added third argument to ACE_HAS_MEMCPY_LOOP_UNROLL's AC_DEFINE
+          to provide the description for config.h.
 
 Tue Sep 13 14:38:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * include/makeinclude/platform_vxworks5.5.x.GNU:
 
-		Changed munching step for VxWorks SIMPC builds to generate asm
-		output to circumvent compiler output problem in certain files.
+          Changed munching step for VxWorks SIMPC builds to generate asm
+          output to circumvent compiler output problem in certain files.
 
         * include/makeinclude/rules.lib.GNU:
 
-		Small change to make output of prelink step visible for static
-		libraries build for VxWorks with -frepo.
+          Small change to make output of prelink step visible for static
+          libraries build for VxWorks with -frepo.
 
 Tue Sep 13 09:30:03 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
@@ -43,8 +50,8 @@ Tue Sep 13 14:10:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
         * tests/Cached_Conn_Test.cpp:
         * tests/Message_Block_Test.cpp:
 
-	    Fixed problems with explicit template instantiations and
-	    VxWorks builds.
+          Fixed problems with explicit template instantiations and
+          VxWorks builds.
 
 Tue Sep 13 11:52:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
@@ -58,9 +65,9 @@ Tue Sep 13 11:52:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
         * examples/C++NPv2/TP_Reactor_Logging_Server.cpp:
         * examples/Export/test.cpp:
 
-        Fixed for environments defining ACE_USES_OLD_IOSTREAMS
-        (which unfortunately is the case for Windows x64 at the
-        moment due to shortcomings in the Platform SDK).
+          Fixed for environments defining ACE_USES_OLD_IOSTREAMS
+          (which unfortunately is the case for Windows x64 at the
+          moment due to shortcomings in the Platform SDK).
 
 Tue Sep 13 10:30:00 UTC 2005  Simon Massey  <sma@prismtech.com>
 
