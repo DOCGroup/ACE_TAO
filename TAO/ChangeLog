@@ -1,3 +1,9 @@
+Thu Sep 15 12:42:34 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Makefile.am:
+
+	  Regenerated.
+
 Thu Sep 15 14:16:00 UTC 2005  Simon Massey  <sma@prismtech.com>
 
         * tests/Bug_2234_Regression/server.cpp:
@@ -67,17 +73,17 @@ Tue Sep 13 10:18:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         Removed '-ORBObjRefStyle url' switch because it causes problems with IPv6
         builds and is not essential to the tests.
-        
+
         * tests/Hang_Shutdown/server.cpp:
         * tests/Hang_Shutdown/client.cpp:
-        
+
         Adjusted test timeouts because they were a little too tight for
         Windows/IPv6 environment.
 
 Mon Sep 12 11:52:22 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
       	* orbsvcs/orbsvcs/Makefile.am:
-      
+
       	  Regenerate.
 
 Mon Sep 12 11:34:13 2005  Simon McQueen  <sm@prismtech.com>
