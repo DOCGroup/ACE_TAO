@@ -1,3 +1,13 @@
+Thu Sep 15 15:25:06 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Regenerated.
+
+	* orbsvcs/orbsvcs/CosNaming_Serv.mpc:
+
+	  Added Naming/nsconf.h to Header_Files.
+
 Thu Sep 15 14:04:28 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Request_Dispatcher.h
