@@ -1,3 +1,13 @@
+Thu Sep 15 15:54:24 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Makefile.am:
+
+	  Regenerated.
+
+	* tao/tao.mpc:
+
+	  Added WrongTransactionS.h to Header_Files.
+
 Thu Sep 15 15:25:06 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:
