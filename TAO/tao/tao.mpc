@@ -518,6 +518,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     WCharSeqC.h
     WCharSeqS.h
     WrongTransactionC.h
+    WrongTransactionS.h
     WStringSeqC.h
     WStringSeqS.h
   }
