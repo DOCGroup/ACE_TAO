@@ -1,5 +1,12 @@
+Thu Sep 15 07:29:03 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* TAO/CIAO/examples/Hello/descriptors/NodeManagerMap.dat: Make sure
+	  there's a newline at the end of this file.  Thanks to Zachi
+ 	  Klopman <zklopman@gmail.com> for reporting this.
+	
 Thu Sep 15 11:20:20 2005 CSET William Otte  <wotte@dre.vanderbilt.edu>
 
+  
 	* ciao/Container_Base.cpp
 
 	Fix for compile error on platforms with emulated exceptions.
