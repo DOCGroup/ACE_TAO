@@ -1,3 +1,15 @@
+Thu Sep 15 14:04:28 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Request_Dispatcher.h
+	  (dispatch):
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Request_Dispatcher.cpp
+	  (dispatch):
+
+	  Removed unnecessary exception specification.  It prevented user
+	  exceptions from being propagated to the caller.  Thanks to David
+	  Carlton <david dot carlton at sun dot com> for reporting the
+	  problem and to Johnny Willemsen for suggesting a fix.
+
 Thu Sep 15 12:42:34 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:
