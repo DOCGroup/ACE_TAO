@@ -294,25 +294,25 @@ namespace CIAO
 
         if (exe_dll_name == 0 || sv_dll_name == 0)
           {
-            Deployment::UnknownImplId exception ("Session_Container::ciao_install_home", 0);
+	    ACE_CString exception;
             
             if (exe_dll_name == 0)
               {
-                exception.reason = CORBA::string_dup ("Null component executor DLL name");
+                exception = "Null component executor DLL name";
               }
 
             if (sv_dll_name == 0)
               {
-                exception.reason = CORBA::string_dup ("Null component servant DLL name");
+                exception = "Null component servant DLL name";
               }
             
             if (CIAO::debug_level () > 10)
               ACE_DEBUG ((LM_ERROR,
-                          "ERROR: %s %s\n",
-                          exception.name.in (),
-                          exception.reason.in ()));
+                          "ERROR: %s\n",
+			  exception.c_str ()));
 
-            ACE_THROW_RETURN (exception,
+            ACE_THROW_RETURN (Deployment::UnknownImplId ("Session_Container::ciao_install_home",
+							 exception.c_str ()),
                               Components::CCMHome::_nil ());
           }
 
