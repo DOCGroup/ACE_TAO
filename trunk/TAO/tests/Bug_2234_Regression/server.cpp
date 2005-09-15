@@ -115,7 +115,7 @@ public:
     const Test::MyNonVarStruct &a,
     Test::MyNonVarStruct_out b,
     Test::MyNonVarStruct &c
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS )
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS )
     ACE_THROW_SPEC( (CORBA::SystemException) )
   {
     Test::MyNonVarStruct
@@ -153,7 +153,7 @@ public:
     const Test::MyVarStruct &a,
     Test::MyVarStruct_out b,
     Test::MyVarStruct &c
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS )
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS )
     ACE_THROW_SPEC(( CORBA::SystemException ))
   {
     ACE_DEBUG( (LM_INFO, ". in TestVarStruct\n") );
