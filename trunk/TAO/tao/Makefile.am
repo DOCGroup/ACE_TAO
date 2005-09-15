@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
 
 includedir = @includedir@/tao
 pkgconfigdir = @libdir@/pkgconfig
@@ -269,6 +269,7 @@ nobase_include_HEADERS = \
   Adapter_Registry.h \
   Allocator.h \
   AnyTypeCode_Adapter.h \
+  Any_Insert_Policy_T.h \
   Arg_Traits_T.h \
   Argument.h \
   Array_VarOut_T.cpp \
@@ -693,6 +694,7 @@ nobase_include_HEADERS = \
   Wait_Strategy.inl \
   WrongTransaction.pidl \
   WrongTransactionC.h \
+  WrongTransactionS.inl \
   corba.h \
   corbafwd.h \
   debug.h \
@@ -913,11 +915,13 @@ nobase_include_HEADERS += \
   AnyTypeCode/Dynamic_ParameterC.h \
   AnyTypeCode/Empty_Param_TypeCode.h \
   AnyTypeCode/Empty_Param_TypeCode.inl \
+  AnyTypeCode/Enum_TypeCode.cpp \
   AnyTypeCode/Enum_TypeCode.h \
   AnyTypeCode/Enum_TypeCode.inl \
   AnyTypeCode/Enum_TypeCode_Static.h \
   AnyTypeCode/Enum_TypeCode_Static.inl \
   AnyTypeCode/ExceptionA.h \
+  AnyTypeCode/Fixed_TypeCode.cpp \
   AnyTypeCode/Fixed_TypeCode.h \
   AnyTypeCode/Fixed_TypeCode.inl \
   AnyTypeCode/FloatSeqA.h \
@@ -938,6 +942,7 @@ nobase_include_HEADERS += \
   AnyTypeCode/NVList_Adapter_Impl.h \
   AnyTypeCode/Null_RefCount_Policy.h \
   AnyTypeCode/ObjectIdListA.h \
+  AnyTypeCode/Objref_TypeCode.cpp \
   AnyTypeCode/Objref_TypeCode.h \
   AnyTypeCode/Objref_TypeCode.inl \
   AnyTypeCode/Objref_TypeCode_Static.h \
@@ -948,9 +953,11 @@ nobase_include_HEADERS += \
   AnyTypeCode/PolicyA.h \
   AnyTypeCode/Policy_ForwardA.h \
   AnyTypeCode/PortableInterceptorA.h \
+  AnyTypeCode/Recursive_Type_TypeCode.cpp \
   AnyTypeCode/Recursive_Type_TypeCode.h \
   AnyTypeCode/Recursive_Type_TypeCode.inl \
   AnyTypeCode/RefCount_Policy_Traits.h \
+  AnyTypeCode/Sequence_TypeCode.cpp \
   AnyTypeCode/Sequence_TypeCode.h \
   AnyTypeCode/Sequence_TypeCode.inl \
   AnyTypeCode/Sequence_TypeCode_Static.h \
@@ -958,11 +965,13 @@ nobase_include_HEADERS += \
   AnyTypeCode/ServicesA.h \
   AnyTypeCode/ShortSeqA.h \
   AnyTypeCode/StringSeqA.h \
+  AnyTypeCode/String_TypeCode.cpp \
   AnyTypeCode/String_TypeCode.h \
   AnyTypeCode/String_TypeCode.inl \
   AnyTypeCode/String_TypeCode_Static.h \
   AnyTypeCode/String_TypeCode_Static.inl \
   AnyTypeCode/String_TypeCode_Traits.h \
+  AnyTypeCode/Struct_TypeCode.cpp \
   AnyTypeCode/Struct_TypeCode.h \
   AnyTypeCode/Struct_TypeCode.inl \
   AnyTypeCode/Struct_TypeCode_Static.h \
@@ -976,6 +985,7 @@ nobase_include_HEADERS += \
   AnyTypeCode/True_RefCount_Policy.inl \
   AnyTypeCode/TypeCode.h \
   AnyTypeCode/TypeCode.inl \
+  AnyTypeCode/TypeCode_Base_Attributes.cpp \
   AnyTypeCode/TypeCode_Base_Attributes.h \
   AnyTypeCode/TypeCode_Base_Attributes.inl \
   AnyTypeCode/TypeCode_CDR_Extraction.h \
@@ -993,6 +1003,7 @@ nobase_include_HEADERS += \
   AnyTypeCode/ULongLongSeqA.h \
   AnyTypeCode/ULongSeqA.h \
   AnyTypeCode/UShortSeqA.h \
+  AnyTypeCode/Union_TypeCode.cpp \
   AnyTypeCode/Union_TypeCode.h \
   AnyTypeCode/Union_TypeCode.inl \
   AnyTypeCode/Union_TypeCode_Static.h \
@@ -1000,6 +1011,7 @@ nobase_include_HEADERS += \
   AnyTypeCode/ValueModifierA.h \
   AnyTypeCode/ValueModifierC.h \
   AnyTypeCode/ValueModifierS.h \
+  AnyTypeCode/Value_TypeCode.cpp \
   AnyTypeCode/Value_TypeCode.h \
   AnyTypeCode/Value_TypeCode.inl \
   AnyTypeCode/Value_TypeCode_Static.h \
@@ -1010,17 +1022,7 @@ nobase_include_HEADERS += \
   AnyTypeCode/WCharSeqA.h \
   AnyTypeCode/WStringSeqA.h \
   AnyTypeCode/WrongTransactionA.h \
-  AnyTypeCode/orb_typesA.h \
-  AnyTypeCode/Enum_TypeCode.cpp \
-  AnyTypeCode/Fixed_TypeCode.cpp \
-  AnyTypeCode/Objref_TypeCode.cpp \
-  AnyTypeCode/Recursive_Type_TypeCode.cpp \
-  AnyTypeCode/Sequence_TypeCode.cpp \
-  AnyTypeCode/String_TypeCode.cpp \
-  AnyTypeCode/Struct_TypeCode.cpp \
-  AnyTypeCode/TypeCode_Base_Attributes.cpp \
-  AnyTypeCode/Union_TypeCode.cpp \
-  AnyTypeCode/Value_TypeCode.cpp
+  AnyTypeCode/orb_typesA.h
 
 pkgconfig_DATA += \
   TAO_AnyTypeCode.pc
