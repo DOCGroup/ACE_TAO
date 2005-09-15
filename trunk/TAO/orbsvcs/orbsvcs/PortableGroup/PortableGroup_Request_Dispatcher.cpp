@@ -9,8 +9,8 @@
 #include "tao/TAO_Server_Request.h"
 #include "tao/ORB_Core.h"
 
-ACE_RCSID (PortableGroup, 
-           PortableGroup_Request_Dispatcher, 
+ACE_RCSID (PortableGroup,
+           PortableGroup_Request_Dispatcher,
            "$Id$")
 
 PortableGroup_Request_Dispatcher::~PortableGroup_Request_Dispatcher (void)
