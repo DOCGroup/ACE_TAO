@@ -182,6 +182,9 @@ protected:
   
   long in_recursion_;
   // Storage once the value has been computed.
+  
+  mutable bool recursing_in_legal_pk_;
+  // Node-specific flag to abort recursion in legal_for_primary_key().
 };
 
 #endif           // _AST_TYPE_AST_TYPE_HH

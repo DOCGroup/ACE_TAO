@@ -5,6 +5,7 @@
 #include "ast_factory.h"
 #include "ast_visitor.h"
 #include "ast_extern.h"
+#include "ast_field.h"
 #include "utl_err.h"
 #include "utl_identifier.h"
 #include "utl_indenter.h"
@@ -207,9 +208,61 @@ AST_ValueType::look_in_supported (UTL_ScopedName *e,
 bool
 AST_ValueType::legal_for_primary_key (void) const
 {
-  // TODO - add checks and error message.
+  AST_ValueType *pk_base = this->lookup_primary_key_base ();
 
-  return true;
+  if (!this->derived_from_primary_key_base (this, pk_base))
+    {
+      return false;
+    }
+    
+  bool has_public_member = false;
+  bool retval = true;
+  
+  if (!this->recursing_in_legal_pk_)
+    {
+      this->recursing_in_legal_pk_ = true;
+
+      for (UTL_ScopeActiveIterator i (const_cast<AST_ValueType *> (this),
+                                      UTL_Scope::IK_decls);
+          !i.is_done ();
+          i.next ())
+        {
+          AST_Field *f = AST_Field::narrow_from_decl (i.item ());
+          
+          // We're not interested in any valuetype decls that aren't fields.
+          if (f == 0)
+            {
+              continue;
+            }
+          
+          // Private members are not allowed in primary keys.  
+          if (f->visibility () == AST_Field::vis_PRIVATE)
+            {
+              retval = false;
+              break;
+            }
+          else
+            {
+              // Returns false for interfaces, components, homes.
+              // Called recursively on valuetypes and on members of
+              // structs, unions, sequences, typedefs and arrays. Returns
+              // TRUE otherwise.
+              if (!f->field_type ()->legal_for_primary_key ())
+                {
+                  retval = false;
+                  break;
+                }
+
+              has_public_member = true;
+            }
+        }
+        
+        this->recursing_in_legal_pk_ = false;
+    }
+
+  // Must have at least one public member, unless we are
+  // short-circuiting the test because we are in recursion.
+  return retval && (has_public_member || this->recursing_in_legal_pk_);
 }
 
 void
@@ -335,7 +388,81 @@ AST_ValueType::fe_add_factory (AST_Factory *f)
   return f;
 }
 
-  // Narrowing.
+bool
+AST_ValueType::derived_from_primary_key_base (const AST_ValueType *node,
+                                              const AST_ValueType *pk_base) const
+{
+  if (0 == node)
+    {
+      return false;
+    }
+
+  if (node == pk_base)
+    {
+      return true;
+    }
+    
+  AST_ValueType *concrete_parent = node->inherits_concrete ();
+  
+  if (this->derived_from_primary_key_base (concrete_parent, pk_base))
+    {
+      return true;
+    }
+  
+  AST_Interface **v = node->pd_inherits;
+    
+  for (long i = 0; i < node->pd_n_inherits; ++i)
+    {
+      AST_ValueType *tmp = AST_ValueType::narrow_from_decl (v[i]);
+      
+      if (this->derived_from_primary_key_base (tmp, pk_base))
+        {
+          return true;
+        }
+    }
+
+  return false;
+}
+
+AST_ValueType *
+AST_ValueType::lookup_primary_key_base (void) const
+{
+  AST_ValueType *retval = idl_global->primary_key_base ();
+  
+  if (retval == 0)
+    {
+      Identifier local_id ("PrimaryKeyBase");
+      UTL_ScopedName local_name (&local_id, 0);
+      
+      Identifier scope_name ("Components");
+      UTL_ScopedName pk_name (&scope_name, &local_name);
+      AST_Decl *d =
+        const_cast<AST_ValueType *> (this)->lookup_by_name (&pk_name, I_TRUE);
+      
+      local_id.destroy ();
+      scope_name.destroy ();
+
+      if (d == 0)
+        {
+          idl_global->err ()->lookup_error (&pk_name);
+          return 0;
+        }
+
+      retval = AST_ValueType::narrow_from_decl (d);
+
+      if (retval == 0)
+        {
+          idl_global->err ()->valuetype_expected (d);
+          return 0;
+        }
+        
+      idl_global->primary_key_base (retval);
+    }
+
+  return retval;
+}
+
+// Narrowing.
 IMPL_NARROW_METHODS1(AST_ValueType, AST_Interface)
 IMPL_NARROW_FROM_DECL(AST_ValueType)
 IMPL_NARROW_FROM_SCOPE(AST_ValueType)

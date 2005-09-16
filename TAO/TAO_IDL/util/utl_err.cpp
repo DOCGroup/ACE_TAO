@@ -208,8 +208,10 @@ error_string (UTL_Error::ErrorCode c)
     case UTL_Error::EIDL_TC_SUPPRESSION_WARNING:
       /* More intelligible message printed by warning routine */
       return "";
-    case UTL_Error::EIDL_ILLEGAL_VALUETYPE:
+    case UTL_Error::EIDL_ILLEGAL_BOXED_TYPE:
       return "valuetype not allowed as type of boxed value type";
+    case UTL_Error::EIDL_ILLEGAL_PRIMARY_KEY:
+      return "illegal primary key";
   }
 
   return 0;
@@ -1394,6 +1396,17 @@ UTL_Error::ignore_idl3_error (AST_Decl *d)
   d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
+void
+UTL_Error::illegal_primary_key (AST_Decl *d)
+{
+  idl_error_header (EIDL_ILLEGAL_PRIMARY_KEY,
+                    d->line (),
+                    d->file_name ());
+  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR, "\n"));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 

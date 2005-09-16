@@ -52,6 +52,7 @@ AST_Home::AST_Home (UTL_ScopedName *n,
     pd_managed_component (managed_component),
     pd_primary_key (primary_key)
 {
+  idl_global->primary_keys ().enqueue_tail (primary_key);
 }
 
 AST_Home::~AST_Home (void)
