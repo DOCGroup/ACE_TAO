@@ -1,3 +1,11 @@
+Fri Sep 16 09:54:44 2005  William Otte  <wotte@william-ottes-powerbook-g4-15.local>
+
+	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h
+	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+
+	Emulated exception fixes.
+	
 Thu Sep 15 07:29:03 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO/CIAO/examples/Hello/descriptors/NodeManagerMap.dat: Make sure
