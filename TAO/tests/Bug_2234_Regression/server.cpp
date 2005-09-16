@@ -678,7 +678,7 @@ private:
 
 int main( int argc, char *argv[] )
 {
-  ACE_TRY
+  ACE_TRY_NEW_ENV
   {
     ACE_DEBUG( (LM_INFO, "Server start\n") );
     AnInterceptor
