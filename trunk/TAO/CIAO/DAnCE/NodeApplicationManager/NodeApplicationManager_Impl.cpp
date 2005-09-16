@@ -378,18 +378,21 @@ startLaunch (const Deployment::Properties & configProperty,
     }
   ACE_CATCH (Deployment::UnknownImplId, e)
     {
-      ACE_THROW (Deployment::StartError (e.name.in (),
-                                         e.reason.in ()));
+      ACE_THROW_RETURN (Deployment::StartError (e.name.in (),
+						e.reason.in ()),
+			Deployment::Application::_nil());
     }
   ACE_CATCH (Deployment::ImplEntryPointNotFound, e)
     {
-      ACE_THROW (Deployment::StartError (e.name.in (),
-                                         e.reason.in ()));
+      ACE_THROW_RETURN (Deployment::StartError (e.name.in (),
+						e.reason.in ()),
+			Deployment::Application::_nil());
     }
   ACE_CATCH (Deployment::InstallationFailure,e)
     {
-      ACE_THROW (Deployment::StartError (e.name.in (),
-                                         e.reason.in ()));
+      ACE_THROW_RETURN (Deployment::StartError (e.name.in (),
+						e.reason.in ()),
+			Deployment::Application::_nil());
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (Deployment::Application::_nil());

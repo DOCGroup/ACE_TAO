@@ -215,12 +215,14 @@ namespace CIAO
      * child deployment plan as Receiver side.
      */
     Deployment::Connections *
-    get_outgoing_connections (const Deployment::DeploymentPlan &plan);
+    get_outgoing_connections (const Deployment::DeploymentPlan &plan
+			      ACE_ENV_ARG_DECL);
 
     /// This is a helper function to find the connection for a component.
     bool
     get_outgoing_connections_i (const char * instname,
-                                Deployment::Connections & retv)
+                                Deployment::Connections & retv
+				ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((Deployment::StartError));
 
     /// Dump connections, a static method
