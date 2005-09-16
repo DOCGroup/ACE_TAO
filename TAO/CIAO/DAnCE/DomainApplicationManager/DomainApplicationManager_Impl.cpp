@@ -463,6 +463,7 @@ finishLaunch (::CORBA::Boolean start
           if (this->artifact_map_.find (this->node_manager_names_[i],
                                         entry) != 0)
             {
+
               ACE_CString error ("Unable to resolve a reference to NodeManager: ");
               error += this->node_manager_names_[i];
               
@@ -483,7 +484,8 @@ finishLaunch (::CORBA::Boolean start
 
           // Get the Connections variable.
           Deployment::Connections * my_connections =
-            this->get_outgoing_connections ((entry->int_id_).child_plan_.in ());
+            this->get_outgoing_connections ((entry->int_id_).child_plan_.in ()
+					    ACE_ENV_ARG_PARAMETER);
 
           if (my_connections == 0)
             ACE_THROW (Deployment::StartError ("DomainApplicationManager_Impl::finish_launch",
@@ -748,7 +750,8 @@ getPlan (ACE_ENV_SINGLE_ARG_DECL)
 
 Deployment::Connections *
 CIAO::DomainApplicationManager_Impl::
-get_outgoing_connections (const Deployment::DeploymentPlan &plan)
+get_outgoing_connections (const Deployment::DeploymentPlan &plan
+			  ACE_ENV_ARG_DECL)
 {
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::get_outgoing_connections");
   Deployment::Connections_var connections;
@@ -761,7 +764,8 @@ get_outgoing_connections (const Deployment::DeploymentPlan &plan)
   {
     // Get the component instance name
     if (!get_outgoing_connections_i (plan.instance[i].name.in (),
-                                     connections.inout ()))
+                                     connections.inout ()
+				     ACE_ENV_ARG_PARAMETER))
       return 0;
   }
   return connections._retn ();
@@ -770,7 +774,8 @@ get_outgoing_connections (const Deployment::DeploymentPlan &plan)
 bool
 CIAO::DomainApplicationManager_Impl::
 get_outgoing_connections_i (const char * instname,
-                            Deployment::Connections & retv)
+                            Deployment::Connections & retv
+			    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((Deployment::StartError))
 {
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::get_outoing_connections_i");
@@ -856,8 +861,9 @@ get_outgoing_connections_i (const char * instname,
                   error += instname;
                   error += ": unable to find object reference for connection ";
                   error += curr_conn.name.in ();
-                  ACE_THROW (Deployment::StartError ("DomainApplicationManager_Impl::create_connections_i",
-                                                     error.c_str ()));
+                  ACE_THROW_RETURN (Deployment::StartError ("DomainApplicationManager_Impl::create_connections_i",
+							    error.c_str ()),
+				    false);
                 }
                   
               break; // We know we have found the connection so even we are still on
