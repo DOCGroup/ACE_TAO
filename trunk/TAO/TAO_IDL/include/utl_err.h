@@ -138,7 +138,8 @@ public:
     EIDL_LOCAL_REMOTE_MISMATCH, // Local type used in remote operation
     EIDL_IGNORE_IDL3_ERROR,     // -Sm option used with component or home decl
     EIDL_TC_SUPPRESSION_WARNING,// -St option used with exception decl
-    EIDL_ILLEGAL_VALUETYPE,     // Valuetype not allowed for box value type
+    EIDL_ILLEGAL_BOXED_TYPE,    // Valuetype not allowed for box value type
+    EIDL_ILLEGAL_PRIMARY_KEY,   // Primary key doesn't meet spec constraints
     EIDL_OK                     // No error
   };
 
@@ -336,6 +337,9 @@ public:
   // Improper use of -Sm option.
   void ignore_idl3_error (AST_Decl *d);
 
+  // Valuetype violates a spec-defined constraint on a 
+  // valuetype used as a primary key.
+  void illegal_primary_key (AST_Decl *d);
 };
 
 #endif           // _UTL_ERR_UTL_ERR_HH

@@ -75,7 +75,11 @@ protected:
   idl_bool pd_truncatable;
   idl_bool pd_custom;
 
+protected:
   virtual AST_Factory *fe_add_factory (AST_Factory *f);
+  bool derived_from_primary_key_base (const AST_ValueType *node,
+                                      const AST_ValueType *pk_base) const;
+  AST_ValueType *lookup_primary_key_base (void) const;
 };
 
 #endif           // _AST_INTERFACE_AST_VALUETYPE_HH

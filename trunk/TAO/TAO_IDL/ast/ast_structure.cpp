@@ -278,23 +278,30 @@ AST_Structure::contains_wstring (void)
 bool
 AST_Structure::legal_for_primary_key (void) const
 {
-  for (UTL_ScopeActiveIterator si (const_cast<AST_Structure *> (this),
-                                   UTL_Scope::IK_decls);
-       !si.is_done ();
-       si.next ())
+  bool retval = true;
+
+  if (!this->recursing_in_legal_pk_)
     {
-      AST_Field *f = AST_Field::narrow_from_decl (si.item ());
-    
-      if (f != 0)
+      this->recursing_in_legal_pk_ = true;
+
+      for (UTL_ScopeActiveIterator si (const_cast<AST_Structure *> (this),
+                                      UTL_Scope::IK_decls);
+          !si.is_done ();
+          si.next ())
         {
-          if (!f->field_type ()->legal_for_primary_key ())
+          AST_Field *f = AST_Field::narrow_from_decl (si.item ());
+        
+          if (f != 0 && !f->field_type ()->legal_for_primary_key ())
             {
-              return false;
+              retval = false;
+              break;
             }
         }
+        
+      this->recursing_in_legal_pk_ = false;
     }
     
-  return true;
+  return retval;
 }
 
 // Private operations.

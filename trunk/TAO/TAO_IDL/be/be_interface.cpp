@@ -1415,7 +1415,7 @@ be_interface::traverse_inheritance_graph (
     idl_bool abstract_paths_only
   )
 {
-  AST_Interface *intf;  // element inside the queue
+  AST_Interface *intf = 0;  // element inside the queue
 
   if (!this->insert_queue.is_empty ())
     {

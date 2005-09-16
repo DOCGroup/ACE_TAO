@@ -195,6 +195,11 @@ DRV_drive (const char *s)
     }
 
   FE_yyparse ();
+  
+  // We must do this as late as possible to make sure any
+  // forward declared structs or unions contained in a
+  // primary key at some level have been fully defined.
+  idl_global->check_primary_keys ();
 
   // If there were any errors, stop.
   if (idl_global->err_count () > 0)

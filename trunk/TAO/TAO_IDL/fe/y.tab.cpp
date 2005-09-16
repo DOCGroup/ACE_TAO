@@ -2860,7 +2860,9 @@ tao_yyreduce:
 
             else if (tp->node_type() == AST_Decl::NT_valuetype)
               { // valuetype is not allowed as <type_spec> for boxed value
-                idl_global->err ()->error0 (UTL_Error::EIDL_ILLEGAL_VALUETYPE);
+                idl_global->err ()->error0 (
+                    UTL_Error::EIDL_ILLEGAL_BOXED_TYPE
+                  );
               }
 
             else

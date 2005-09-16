@@ -336,6 +336,9 @@ public:
   virtual AST_Generator    *gen (void);                 // Generator
   virtual void             set_gen (AST_Generator *);   // Set it
 
+  virtual AST_ValueType    *primary_key_base (void);    // PrimaryKeyBase
+  virtual void             primary_key_base (AST_ValueType *);   // Set it
+
   virtual UTL_Error        *err (void);                 // Error reporter
   virtual void             set_err (UTL_Error *);       // Set it
 
@@ -574,12 +577,22 @@ public:
   
   bool hasspace (const char *s);
   // To tell if we have to handle a Windows path with spaces.
+  
+  ACE_Unbounded_Queue<AST_ValueType *> &primary_keys (void);
+  // Accessor for the member.
+  
+  void check_primary_keys (void);
+  // Called affer yy_parse() returns - iterates over our list
+  // of primary keys. Must be called this late so that we can
+  // be sure that all forward declared stucts or unions that
+  // might be used in such a valuetype are fully defined.
 
 private:
   // Data
   UTL_ScopeStack             pd_scopes;              // Store scopes stack
   AST_Root                   *pd_root;               // Store AST root
   AST_Generator              *pd_gen;                // Store generator
+  AST_ValueType              *pd_primary_key_base;   // Store PrimaryKeyBase
   UTL_Error                  *pd_err;                // Error object
   long                       pd_err_count;           // Count of errors
   long                       pd_lineno;              // What line #
@@ -594,7 +607,7 @@ private:
   long                       pd_compile_flags;       // Compile flags
   char                       *pd_local_escapes;      // Trapdoor argument
   UTL_Indenter               *pd_indent;             // Indent object
-                                                     // as its being built
+                                                     // as it's being built
   UTL_String                 **pd_include_file_names;// Array of file names.
   unsigned long              pd_n_include_file_names;// How many.
   unsigned long              pd_n_alloced_file_names;// How many alloced.
@@ -666,6 +679,9 @@ private:
   // we don't want to try to generate another event consumer.
   DCPS_Type_Info_Map dcps_type_info_map_ ;
   // Map of #pragma DCPS_DATA_TYPE and DCPS_DATA_KEY infomation.
+  
+  ACE_Unbounded_Queue<AST_ValueType *>primary_keys_;
+  // List of valuetypes used as a primary key.
 };
 
 

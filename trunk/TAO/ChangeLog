@@ -1,3 +1,50 @@
+Fri Sep 16 08:53:55 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp(lookup_cookie):
+        
+          Changed creation of scoped name to use the member
+          UTL_Identifier for the "Components" module name,
+          instead of creating a new identifier.
+          
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/util/utl_err.cpp:
+        
+          - Changed existing error enum value from EIDL_ILLEGAL_VALUETYPE
+            to the more informative EIDL_ILLEGAL_BOXED_TYPE, which is
+            what this enum value is used to express.
+            
+          - Added new error enum value EIDL_ILLEGAL_PRIMARY_KEY, to be
+            used in the check for illegal primary key described below.
+            
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        
+          Changed usage of EIDL_ILLEGAL_VALUETYPE to
+          EIDL_ILLEGAL_BOXED_TYPE.
+          
+        * TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/ast/ast_home.cpp:
+        * TAO_IDL/ast/ast_structure.cpp:
+        * TAO_IDL/ast/ast_type.cpp:
+        * TAO_IDL/ast/ast_union.cpp:
+        * TAO_IDL/ast/ast_valuetype.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/include/ast_type.h:
+        * TAO_IDL/include/ast_union.h:
+        * TAO_IDL/include/ast_valuetype.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+        
+          Added check for illegal usage of a valuetype as a primary key.
+          The CCM spec puts several constraints on valuetypes that are
+          used as primary keys, and making sure these constaints are
+          satisfied requires checking the valuetype's inheritance
+          graph, as well as recursively checking its members. Valuetypes
+          used as primary keys are place in a list, and the list is
+          checked after all parsing has finished, so that we can be
+          sure all forward declared structs and unions have been
+          fully defined.
+
 Thu Sep 15 15:54:24 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:
