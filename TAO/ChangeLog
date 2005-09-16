@@ -1,27 +1,39 @@
+Fri Sep 16 10:55:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * test/IPV6/Hello.mpc:
+        * test/IPV6/Hello{.h .cpp}:
+        * test/IPV6/client.cpp:
+        * test/IPV6/server.cpp:
+        * test/IPV6/Test.idl:
+        * test/IPV6/run_test.pl:
+        * test/IPV6/README:
+
+          Added new IPV6 specific test.
+
 Fri Sep 16 08:53:55 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp(lookup_cookie):
-        
+
           Changed creation of scoped name to use the member
           UTL_Identifier for the "Components" module name,
           instead of creating a new identifier.
-          
+
         * TAO_IDL/include/utl_err.h:
         * TAO_IDL/util/utl_err.cpp:
-        
+
           - Changed existing error enum value from EIDL_ILLEGAL_VALUETYPE
             to the more informative EIDL_ILLEGAL_BOXED_TYPE, which is
             what this enum value is used to express.
-            
+
           - Added new error enum value EIDL_ILLEGAL_PRIMARY_KEY, to be
             used in the check for illegal primary key described below.
-            
+
         * TAO_IDL/fe/idl.yy:
         * TAO_IDL/fe/y.tab.cpp:
-        
+
           Changed usage of EIDL_ILLEGAL_VALUETYPE to
           EIDL_ILLEGAL_BOXED_TYPE.
-          
+
         * TAO_IDL/tao_idl.cpp:
         * TAO_IDL/ast/ast_home.cpp:
         * TAO_IDL/ast/ast_structure.cpp:
@@ -34,7 +46,7 @@ Fri Sep 16 08:53:55 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/include/ast_valuetype.h:
         * TAO_IDL/include/idl_global.h:
         * TAO_IDL/util/utl_global.cpp:
-        
+
           Added check for illegal usage of a valuetype as a primary key.
           The CCM spec puts several constraints on valuetypes that are
           used as primary keys, and making sure these constaints are
@@ -47,41 +59,41 @@ Fri Sep 16 08:53:55 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Sep 15 15:54:24 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tao/Makefile.am:
+        * tao/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* tao/tao.mpc:
+        * tao/tao.mpc:
 
-	  Added WrongTransactionS.h to Header_Files.
+          Added WrongTransactionS.h to Header_Files.
 
 Thu Sep 15 15:25:06 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* orbsvcs/orbsvcs/CosNaming_Serv.mpc:
+        * orbsvcs/orbsvcs/CosNaming_Serv.mpc:
 
-	  Added Naming/nsconf.h to Header_Files.
+          Added Naming/nsconf.h to Header_Files.
 
 Thu Sep 15 14:04:28 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Request_Dispatcher.h
-	  (dispatch):
-	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Request_Dispatcher.cpp
-	  (dispatch):
+        * orbsvcs/orbsvcs/PortableGroup/PortableGroup_Request_Dispatcher.h
+          (dispatch):
+        * orbsvcs/orbsvcs/PortableGroup/PortableGroup_Request_Dispatcher.cpp
+          (dispatch):
 
-	  Removed unnecessary exception specification.  It prevented user
-	  exceptions from being propagated to the caller.  Thanks to David
-	  Carlton <david dot carlton at sun dot com> for reporting the
-	  problem and to Johnny Willemsen for suggesting a fix.
+          Removed unnecessary exception specification.  It prevented user
+          exceptions from being propagated to the caller.  Thanks to David
+          Carlton <david dot carlton at sun dot com> for reporting the
+          problem and to Johnny Willemsen for suggesting a fix.
 
 Thu Sep 15 12:42:34 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tao/Makefile.am:
+        * tao/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
 Thu Sep 15 14:16:00 UTC 2005  Simon Massey  <sma@prismtech.com>
 
