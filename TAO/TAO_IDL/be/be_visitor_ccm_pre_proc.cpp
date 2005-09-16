@@ -1341,6 +1341,11 @@ be_visitor_ccm_pre_proc::gen_get_primary_key (be_home *node,
 int
 be_visitor_ccm_pre_proc::lookup_ccmobject (void)
 {
+  if (be_global->ccmobject () != 0)
+    {
+      return 0;
+    }
+
   Identifier local_id ("CCMObject");
   UTL_ScopedName local_name (&local_id,
                              0);
@@ -1367,13 +1372,11 @@ be_visitor_ccm_pre_proc::lookup_cookie (be_component *node)
       Identifier local_id ("Cookie");
       UTL_ScopedName local_name (&local_id,
                                  0);
-      Identifier module_id ("Components");
-      UTL_ScopedName cookie_name (&module_id,
+      UTL_ScopedName cookie_name (&this->module_id_,
                                   &local_name);
       AST_Decl *d = node->lookup_by_name (&cookie_name,
                                           I_TRUE);
       local_id.destroy ();
-      module_id.destroy ();
 
       if (d == 0)
         {

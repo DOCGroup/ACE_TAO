@@ -96,6 +96,7 @@ static long *pSeenOnce= 0;
 IDL_GlobalData::IDL_GlobalData (void)
   : pd_root (0),
     pd_gen (0),
+    pd_primary_key_base (0),
     pd_err (0),
     pd_err_count (0),
     pd_lineno (0),
@@ -284,6 +285,19 @@ void
 IDL_GlobalData::set_gen (AST_Generator *g)
 {
   this->pd_gen = g;
+}
+
+// Get or set PrimaryKeyBase object
+AST_ValueType *
+IDL_GlobalData::primary_key_base (void)
+{
+  return this->pd_primary_key_base;
+}
+
+void
+IDL_GlobalData::primary_key_base (AST_ValueType *v)
+{
+  this->pd_primary_key_base = v;
 }
 
 // Get or set error object
@@ -1586,6 +1600,34 @@ IDL_GlobalData::hasspace (const char *s)
     }
 
   return false;
+}
+
+ACE_Unbounded_Queue<AST_ValueType *> &
+IDL_GlobalData::primary_keys (void)
+{
+  return this->primary_keys_;
+}
+
+void
+IDL_GlobalData::check_primary_keys (void)
+{
+  AST_ValueType *holder = 0;
+  
+  while (!this->primary_keys_.is_empty ())
+    {  
+      // Dequeue the element at the head of the queue.
+      if (this->primary_keys_.dequeue_head (holder))
+        {
+          ACE_ERROR((LM_ERROR,
+                     "(%N:%l) idl_global::check_primary_keys - "
+                     "dequeue_head failed\n"));
+        }
+
+      if (!holder->legal_for_primary_key ())
+        {
+          this->pd_err->illegal_primary_key (holder);
+        }
+    }
 }
 
 void

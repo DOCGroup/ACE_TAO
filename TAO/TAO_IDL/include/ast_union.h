@@ -137,11 +137,6 @@ public:
   virtual int default_index (void);
   // Return the default index used.
 
-  // Recursively called on valuetype to check for legal use as
-  // a primary key. Overridden for valuetype, struct, sequence,
-  // union, array, typedef, and interface.
-  virtual bool legal_for_primary_key (void) const;
-
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &);
 
