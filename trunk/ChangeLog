@@ -1,14 +1,21 @@
+Fri Sep 16 10:57:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+
+          Added new TAO/tests/IPV6 test to runlist (only when config
+          IPV6 defined).
+
 Thu Sep 15 12:35:27 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* THANKS:
+        * THANKS:
 
-	  Added Jin Zhi Ye.
+          Added Jin Zhi Ye.
 
-	* ace/os_include/os_stdio.h:
+        * ace/os_include/os_stdio.h:
 
-	  #undef fgetc and fputc if they are defined, as macro expansion
-	  conflicts with our use of the same names in the ACE_OS wrapper
-	  functions.  Reported by Jin Zhi Ye <jinzhiye at kedacom dot com>.
+          #undef fgetc and fputc if they are defined, as macro expansion
+          conflicts with our use of the same names in the ACE_OS wrapper
+          functions.  Reported by Jin Zhi Ye <jinzhiye at kedacom dot com>.
 
 Thu Sep 15 18:55:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 

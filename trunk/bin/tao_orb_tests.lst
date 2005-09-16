@@ -71,6 +71,7 @@ TAO/tests/OBV/Forward/run_test.pl:
 TAO/tests/OBV/TC_Alignment/run_test.pl:
 TAO/tests/OBV/ValueBox/run_test.pl:
 TAO/tests/Hello/run_test.pl:
+TAO/tests/IPV6/run_test.pl: IPV6
 TAO/tests/AlternateIIOP/run_test.pl:
 TAO/tests/Cache_Growth_Test/run_test.pl:
 TAO/tests/Muxing/run_test.pl: !ST
