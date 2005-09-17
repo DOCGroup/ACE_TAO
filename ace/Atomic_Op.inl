@@ -150,7 +150,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::value_i (void)
 }
 
 
-
+#if 0
 ACE_INLINE
 ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::ACE_Atomic_Op (void)
   : value_ (0)
@@ -294,5 +294,6 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::value_i (void)
 {
   return this->value_;
 }
+#endif
 
 #endif /* ACE_HAS_BUILTIN_ATOMIC_OP */
