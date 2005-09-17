@@ -213,7 +213,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-
+#if 0
 long (*ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::increment_fn_) (volatile long *) = 0;
 long (*ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::decrement_fn_) (volatile long *) = 0;
 long (*ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::exchange_fn_) (volatile long *, long) = 0;
@@ -246,5 +246,6 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
+#endif
 
 #endif /* ACE_HAS_BUILTIN_ATOMIC_OP */

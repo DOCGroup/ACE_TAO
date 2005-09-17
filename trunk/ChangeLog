@@ -1,3 +1,14 @@
+Fri Sep 16 19:54:20 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Atomic_Op.cpp:
+        * ace/Atomic_Op.h:
+        * ace/Atomic_Op.inl:
+        * ace/Object_Manager.cpp:
+
+	  #if 0 ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>
+	  specialization to see if it's responsible for recent
+	  TAO performance degradation.
+
 Fri Sep 16 10:57:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * bin/tao_orb_tests.lst:
