@@ -1648,26 +1648,28 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   break;
 
                 case 's':                       // String
+                  {
 #if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-                  wchar_t *str = va_arg (argp, wchar_t *);
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("ls"));
-                  if (can_check)
-                    this_len = ACE_OS::snprintf
-                      (bp, bspace, format, str ? str : "(null)");
-                  else
-                    this_len = ACE_OS::sprintf
-                      (bp, format, str ? str : "(null)");
+                    wchar_t *str = va_arg (argp, wchar_t *);
+                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("ls"));
+                    if (can_check)
+                      this_len = ACE_OS::snprintf
+                        (bp, bspace, format, str ? str : ACE_LIB_TEXT ("(null)"));
+                    else
+                      this_len = ACE_OS::sprintf
+                        (bp, format, str ? str : ACE_LIB_TEXT ("(null)"));
 #else /* ACE_WIN32 && ACE_USES_WCHAR */
-                  ACE_TCHAR *str = va_arg (argp, ACE_TCHAR *);
-                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
-                  if (can_check)
-                    this_len = ACE_OS::snprintf
-                      (bp, bspace, format, str ? str : "(null)");
-                  else
-                    this_len = ACE_OS::sprintf
-                      (bp, format, str ? str : "(null)");
+                    ACE_TCHAR *str = va_arg (argp, ACE_TCHAR *);
+                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+                    if (can_check)
+                      this_len = ACE_OS::snprintf
+                        (bp, bspace, format, str ? str : ACE_LIB_TEXT ("(null)"));
+                    else
+                      this_len = ACE_OS::sprintf
+                        (bp, format, str ? str : ACE_LIB_TEXT ("(null)"));
 #endif /* ACE_WIN32 && ACE_USES_WCHAR */
-                  ACE_UPDATE_COUNT (bspace, this_len);
+                    ACE_UPDATE_COUNT (bspace, this_len);
+                  }
                   break;
 
                 case 'C':         // Char string, Unicode for Win32/WCHAR

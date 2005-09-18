@@ -1,14 +1,19 @@
+Sun Sep 18 17:26:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Log_Msg.cpp:
+          Fixed compile error in latest addition to code.
+
 Sun Sep 18 10:08:05 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Log_Msg.cpp (log): Check for passing of NULL pointers to %s
-	  formatting strings and replace them with "(null") to avoid
- 	  crashes.  Thanks to Steven Xie <steven.xie@mpathix.com> for
- 	  reporting this and to J.T. for suggesting the fix.
+        * ace/Log_Msg.cpp (log): Check for passing of NULL pointers to %s
+          formatting strings and replace them with "(null") to avoid
+          crashes.  Thanks to Steven Xie <steven.xie@mpathix.com> for
+          reporting this and to J.T. for suggesting the fix.
 
-	* protocols/ace/RMCast/Acknowledge.cpp (ACE_RMCast): 
-	  made the default ACE_Hash_Map_Manager size be 10 rather than
- 	  1024.  Thanks to Felix Li <fengli@gmail.com> for reporting
- 	  this.
+        * protocols/ace/RMCast/Acknowledge.cpp (ACE_RMCast):
+          made the default ACE_Hash_Map_Manager size be 10 rather than
+          1024.  Thanks to Felix Li <fengli@gmail.com> for reporting
+          this.
 
 Fri Sep 16 19:54:20 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
