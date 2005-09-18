@@ -1,3 +1,8 @@
+Sun Sep 18 17:28:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/INET_Addr.cpp:
+          Fixed bug in ACE_INET_Addr::string_to_addr().
+
 Sun Sep 18 17:26:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/Log_Msg.cpp:
