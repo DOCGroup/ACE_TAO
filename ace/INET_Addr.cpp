@@ -146,12 +146,14 @@ ACE_INET_Addr::string_to_addr (const char s[])
 {
   ACE_TRACE ("ACE_INET_Addr::string_to_addr");
   int result;
+  char *ip_buf;
   char *ip_addr;
 
   // Need to make a duplicate since we'll be overwriting the string.
-  ACE_ALLOCATOR_RETURN (ip_addr,
+  ACE_ALLOCATOR_RETURN (ip_buf,
                         ACE_OS::strdup (s),
                         -1);
+  ip_addr = ip_buf;
   // We use strrchr because of IPv6 addresses.
   char *port_p = ACE_OS::strrchr (ip_addr, ':');
 #if defined (ACE_HAS_IPV6)
@@ -196,7 +198,7 @@ ACE_INET_Addr::string_to_addr (const char s[])
         result = this->set (port_p, ip_addr);
     }
 
-  ACE_OS::free (ACE_MALLOC_T (ip_addr));
+  ACE_OS::free (ACE_MALLOC_T (ip_buf));
   return result;
 }
 
