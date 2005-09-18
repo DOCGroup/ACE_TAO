@@ -19,6 +19,7 @@ namespace ACE_RMCast
   Acknowledge::
   Acknowledge (Parameters const& params)
       : params_ (params),
+        hold_ (ACE_RMCAST_DEFAULT_MAP_SIZE),
         cond_ (mutex_),
         nrtm_timer_ (params_.nrtm_timeout ()),
         stop_ (false)

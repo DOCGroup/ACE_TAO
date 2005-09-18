@@ -13,6 +13,10 @@
 #include "Bits.h"
 #include "Parameters.h"
 
+#if !defined (ACE_RMCAST_DEFAULT_MAP_SIZE)
+#define ACE_RMCAST_DEFAULT_MAP_SIZE 10
+#endif /* ACE_RMCAST_DEFAULT_MAP_SIZE */
+
 namespace ACE_RMCast
 {
   class Acknowledge : public Element
@@ -119,17 +123,17 @@ namespace ACE_RMCast
       // Should never be here but required by ACE_Hash_Blah_Blah.
       //
       Queue ()
-          : Base (), sn_ (0), max_sn_ (0)
+          : Base (ACE_RMCAST_DEFAULT_MAP_SIZE), sn_ (0), max_sn_ (0)
       {
       }
 
       Queue (u64 sn)
-          : Base (), sn_ (sn), max_sn_ (sn)
+        : Base (ACE_RMCAST_DEFAULT_MAP_SIZE), sn_ (sn), max_sn_ (sn)
       {
       }
 
       Queue (Queue const& q)
-          : Base (), sn_ (q.sn_), max_sn_ (sn_)
+        : Base (ACE_RMCAST_DEFAULT_MAP_SIZE), sn_ (q.sn_), max_sn_ (sn_)
       {
         for (Queue::const_iterator i (q), e (q, 1); i != e; ++i)
         {

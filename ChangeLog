@@ -1,3 +1,10 @@
+Sun Sep 18 10:08:05 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* protocols/ace/RMCast/Acknowledge.cpp (ACE_RMCast): 
+	  made the default ACE_Hash_Map_Manager size be 10 rather than
+ 	  1024.  Thanks to Felix Li <fengli@gmail.com> for reporting
+ 	  this.
+
 Fri Sep 16 19:54:20 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/Atomic_Op.cpp:
