@@ -1649,21 +1649,23 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
                 case 's':                       // String
 #if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+                  wchar_t *str = va_arg (argp, wchar_t *);
                   ACE_OS::strcpy (fp, ACE_LIB_TEXT ("ls"));
                   if (can_check)
                     this_len = ACE_OS::snprintf
-                      (bp, bspace, format, va_arg (argp, wchar_t *));
+                      (bp, bspace, format, str ? str : "(null)");
                   else
                     this_len = ACE_OS::sprintf
-                      (bp, format, va_arg (argp, wchar_t *));
+                      (bp, format, str ? str : "(null)");
 #else /* ACE_WIN32 && ACE_USES_WCHAR */
+                  ACE_TCHAR *str = va_arg (argp, ACE_TCHAR *);
                   ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
                   if (can_check)
                     this_len = ACE_OS::snprintf
-                      (bp, bspace, format, va_arg (argp, ACE_TCHAR *));
+                      (bp, bspace, format, str ? str : "(null)");
                   else
                     this_len = ACE_OS::sprintf
-                      (bp, format, va_arg (argp, ACE_TCHAR *));
+                      (bp, format, str ? str : "(null)");
 #endif /* ACE_WIN32 && ACE_USES_WCHAR */
                   ACE_UPDATE_COUNT (bspace, this_len);
                   break;
