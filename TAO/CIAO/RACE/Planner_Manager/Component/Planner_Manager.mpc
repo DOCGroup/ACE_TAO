@@ -1,4 +1,5 @@
 // generate_component_mpc.pl,v 1.9 2003/12/22 21:56:27 boris Exp
+//$Id$
 // This file is generated with "generate_component_mpc.pl Planner_Manager"
 
 project(Planner_Manager_stub): ciao_deployment_stub {

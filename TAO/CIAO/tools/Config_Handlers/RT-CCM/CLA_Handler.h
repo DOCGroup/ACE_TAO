@@ -1,5 +1,5 @@
 //=======================================================
-/* @file    CLA_HANDLER.h
+/* @file    CLA_Handler.h
  *
  * @author  Lucas Seibert <lseibert@dre.vanderbilt.edu
  * @author Will Otte <wotte@dre.vanderbilt.edu>
@@ -48,5 +48,5 @@ namespace CIAO
     }
 }
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CLA_HANDLER_H */

@@ -1,3 +1,25 @@
+Mon Sep 19 10:55:05 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* RACE/Input_Adapters/Base/Input_Adapter.mpc
+	* RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc
+	* RACE/Output_Adapters/Base/Output_Adapter.mpc
+	* RACE/Output_Adapters/Interface/Output_Adapter_Interface.mpc
+	* RACE/Output_Adapters/XML_Output_Adapter/XML_Output_Adapter.mpc
+	* RACE/Plan_Analyzer/Component/Plan_Analyzer.mpc
+	* RACE/Plan_Analyzer/Interface/Plan_Analyzer_Interface.mpc
+	* RACE/Planner_Manager/Component/Planner_Manager.mpc
+	* RACE/Planner_Manager/Interface/Planner_Manager_Interface.mpc
+	* RACE/Planners/Base/Planner.mpc
+	* RACE/Planners/Interface/Planner_Interface.mpc
+	* RACE/Planners/SimpleBinPacker/SimpleBinPacker.mpc
+	* RACE/common/RACE_common.mpc
+	* tools/Config_Handlers/RT-CCM/CLA_Handler.h
+	* tools/Config_Handlers/RT-CCM/OC_Handler.cpp
+	* tools/Config_Handlers/RT-CCM/OR_Handler.cpp
+	* tools/Config_Handlers/RT-CCM/OR_Handler.h
+
+	Misc fuzz fixes. 
+	
 Fri Sep 16 09:54:44 2005  William Otte  <wotte@william-ottes-powerbook-g4-15.local>
 
 	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
