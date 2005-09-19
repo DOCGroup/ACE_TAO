@@ -28,7 +28,7 @@ project (RT-CCM-Handlers) : acelib, ciao_deployment_stub, xerces {
 
 
 project (RT-CCM_Config_Handlers_Tests) : ciao_component_dnc, xerces {
-//  requires += dummy_label
+  requires += dummy_label
   exename = rt-ccm-test
   after    += RT-CCM-Handlers
   dynamicflags   = CONFIG_HANDLERS_BUILD_DLL
