@@ -690,7 +690,7 @@ int main( int argc, char *argv[] )
       initialiser= initialiser_p;
     PortableInterceptor::register_orb_initializer( initialiser.in() );
 
-    orb= CORBA::ORB_init( argc, argv ACE_ENV_ARG_PARAMETER );
+    orb= CORBA::ORB_init( argc, argv, 0 ACE_ENV_ARG_PARAMETER );
     ACE_TRY_CHECK;
     CORBA::Object_var
       Object = orb->resolve_initial_references( "RootPOA" ACE_ENV_ARG_PARAMETER );
