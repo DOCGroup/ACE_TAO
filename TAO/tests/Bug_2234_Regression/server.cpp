@@ -448,7 +448,7 @@ public:
 
   void receive_request_service_contexts(
     PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_NOT_USED )
+    ACE_ENV_ARG_DECL_NOT_USED )
     ACE_THROW_SPEC( (CORBA::SystemException,
                      PortableInterceptor::ForwardRequest) )
   {
@@ -634,7 +634,7 @@ public:
 
   void send_exception(
     PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_NOT_USED )
+    ACE_ENV_ARG_DECL_NOT_USED  )
     ACE_THROW_SPEC( (CORBA::SystemException,
                      PortableInterceptor::ForwardRequest) )
   {
@@ -642,7 +642,7 @@ public:
 
   void send_other(
     PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_NOT_USED )
+    ACE_ENV_ARG_DECL_NOT_USED )
     ACE_THROW_SPEC( (CORBA::SystemException,
                      PortableInterceptor::ForwardRequest) )
   {
@@ -659,14 +659,14 @@ public:
 
   void pre_init(
     PortableInterceptor::ORBInitInfo_ptr
-    ACE_ENV_ARG_NOT_USED )
+    ACE_ENV_ARG_DECL_NOT_USED )
     ACE_THROW_SPEC( (CORBA::SystemException) )
   {
   }
 
   void post_init(
      PortableInterceptor::ORBInitInfo_ptr info
-     ACE_ENV_ARG_NOT_USED )
+     ACE_ENV_ARG_DECL_NOT_USED )
      ACE_THROW_SPEC( (CORBA::SystemException) )
    {
      info->add_server_request_interceptor( interceptor_ );
