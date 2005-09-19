@@ -17,6 +17,7 @@
 #include "ciao/ServerResourcesC.h"
 #include "CIAOServerResources.hpp"
 #include "ace/Auto_Ptr.h"
+#include "XML_Helper.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,6 +39,8 @@ namespace CIAO
 	public:
 	    class NoSRD {};
 	    
+	    SRD_Handler (const ACE_TCHAR *file);
+
 	    SRD_Handler(ServerResourcesDef *srd);
 
 	    SRD_Handler(::CIAO::DAnCE::ServerResource *srd);

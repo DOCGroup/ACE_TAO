@@ -5,6 +5,7 @@
 #include "Deployment.hpp"
 #include "DP_Handler.h"
 #include "ciao/Deployment_DataC.h"
+#include "ciao/ServerResourcesC.h"
 #include "ace/Get_Opt.h"
 #include "XML_Helper.h"
 #include "DnC_Dump.h"
@@ -38,6 +39,9 @@ parse_args (int argc, char *argv[])
   return 0;  
 }
 
+// Check to see if SRD was imported.
+void check_srd (const Deployment::DeploymentPlan &);
+
 using namespace CIAO::Config_Handlers;
 
 
@@ -66,15 +70,19 @@ int main (int argc, char *argv[])
 
       //Retrieve the newly created IDL structure
       Deployment::DeploymentPlan *idl = dp_handler.plan();
-
+      
+      // Check for server resources, if present....
+      check_srd (*idl);
+      
       //Convert it back to an XSC structure with a new DP_Handler
       DP_Handler reverse_handler(*idl);
-
+      
       //Create a new DOMDocument for writing the XSC into XML
       xercesc::DOMDocument* the_xsc (the_helper.create_dom(0));
 
       //Serialize the XSC into a DOMDocument
       deploymentPlan(*reverse_handler.xsc(), the_xsc);
+      
 
       //Write it to test.xml
       the_helper.write_DOM(doc, "test.xml");
@@ -88,4 +96,24 @@ int main (int argc, char *argv[])
   return 0;
 }
 
-    
+
+void check_srd (const Deployment::DeploymentPlan &dp)
+{
+  for (CORBA::ULong i = 0;
+       i < dp.infoProperty.length ();
+       ++i)
+    {
+      if (ACE_OS::strcmp (dp.infoProperty[i].name.in (),
+                          "CIAOServerResources") == 0)
+        {
+          CIAO::DAnCE::ServerResource *test;
+          
+          if (dp.infoProperty[i].value >>= test)
+            std::cerr << "ServerResources found and successfully extracted." << std::endl;
+          else
+            std::cerr << "ERROR: ServerResource extraction failed!" << std::endl;
+        }
+    }
+
+}
+

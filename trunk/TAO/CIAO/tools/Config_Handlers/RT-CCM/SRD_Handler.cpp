@@ -10,13 +10,33 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
+    SRD_Handler::SRD_Handler (const ACE_TCHAR *file) :
+      idl_srd_(0),
+      srd_ (0),
+      retval_ (false)
+    {
+      XML_Helper helper;
+      
+      XERCES_CPP_NAMESPACE::DOMDocument *dom = 
+	helper.create_dom (file);
+      
+      if (!dom)
+	throw SRD_Handler::NoSRD ();
+      
+      this->srd_.reset (new ServerResourcesDef 
+	(ServerResources (dom)));
+      
+      if (!this->build_srd ())
+	throw NoSRD ();
+    }
+    
     SRD_Handler::SRD_Handler (ServerResourcesDef *srd):
       idl_srd_(0),
       srd_(srd),
       retval_(false)
     {
       if(!this->build_srd())
-        throw;
+        throw NoSRD ();
     }
 
     SRD_Handler::SRD_Handler (::CIAO::DAnCE::ServerResource *srd):
@@ -25,7 +45,7 @@ namespace CIAO
       retval_(false)
     {
       if(!this->build_xsc())
-        throw;
+        throw NoSRD ();
     }
     
     SRD_Handler::~SRD_Handler (void)
