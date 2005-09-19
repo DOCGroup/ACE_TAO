@@ -114,12 +114,8 @@ namespace CIAO
         {
           ACE_CString cstr (src.id ().c_str ());
           
-          bool retval = ADD_Handler::IDREF.bind_ref (cstr,pos);
-          if (!retval)
-            {
-              return false;
-            }
-        }
+          ADD_Handler::IDREF.bind_ref (cstr,pos);
+	}
       else
         {
           ACE_DEBUG ((LM_ERROR,

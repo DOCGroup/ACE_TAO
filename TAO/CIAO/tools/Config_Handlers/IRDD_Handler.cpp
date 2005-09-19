@@ -27,67 +27,88 @@ namespace CIAO
     IRDD_Handler::instance_resource_deployment_descr (
                     const InstanceResourceDeploymentDescription& desc,
                     Deployment::InstanceResourceDeploymentDescription& toconfig)
+      throw (Config_Error)
     {
-
-
       
-      if (desc.resourceUsage () ==
-         ResourceUsageKind::None)        
-         toconfig.resourceUsage = Deployment::None;
-      if (desc.resourceUsage () ==
-         ResourceUsageKind::InstanceUsesResource)        
-         toconfig.resourceUsage = Deployment::InstanceUsesResource;
-      if (desc.resourceUsage () ==
-         ResourceUsageKind::ResourceUsesInstance)        
-         toconfig.resourceUsage = Deployment::ResourceUsesInstance;
-      if (desc.resourceUsage () ==
-         ResourceUsageKind::PortUsesResource)        
-         toconfig.resourceUsage = Deployment::PortUsesResource;
-      if (desc.resourceUsage () ==
-         ResourceUsageKind::ResourceUsesPort)        
-         toconfig.resourceUsage = Deployment::ResourceUsesPort;
+      switch (desc.resourceUsage ().integral ())
+	{
+	case ResourceUsageKind::None_l:
+	  toconfig.resourceUsage = Deployment::None;
+	  break;
+	  
+	case ResourceUsageKind::InstanceUsesResource_l:
+	  toconfig.resourceUsage = Deployment::InstanceUsesResource;
+	  break;
+	  
+	case ResourceUsageKind::ResourceUsesInstance_l:
+	  toconfig.resourceUsage = Deployment::ResourceUsesInstance;
+	  break;
+	  
+	case ResourceUsageKind::PortUsesResource_l:
+	  toconfig.resourceUsage = Deployment::PortUsesResource;
+	  break;
+	  
+	case ResourceUsageKind::ResourceUsesPort_l:
+	  toconfig.resourceUsage = Deployment::ResourceUsesPort;
+	  break;
+	  
+	default:
+	  throw Config_Error (desc.requirementName (),
+			      "Unknown ResourceUsageKind.");
+	  break;
+	}
       
-      toconfig.requirementName=
-           CORBA::string_dup (desc.requirementName ().c_str ());
+      toconfig.requirementName = desc.requirementName ().c_str ();
       
-      toconfig.resourceName=
-           CORBA::string_dup (desc.resourceName ().c_str ());
+      toconfig.resourceName= desc.resourceName ().c_str ();
       
-      Any_Handler::extract_into_any (
-       desc.resourceValue (),
-       toconfig.resourceValue);
+      Any_Handler::extract_into_any (desc.resourceValue (),
+				     toconfig.resourceValue);
       
     }
 
     InstanceResourceDeploymentDescription
     IRDD_Handler::instance_resource_deployment_descr (
       const Deployment::InstanceResourceDeploymentDescription& src)
+      throw (Config_Error)
     {
       XMLSchema::string< char > reqname ((src.requirementName));
       XMLSchema::string< char > resname ((src.resourceName));
       Any resval (Any_Handler::get_any (src.resourceValue));
       
-      InstanceResourceDeploymentDescription irdd (
-	  ResourceUsageKind::None,
-	  reqname,
-	  resname,
-	  resval);  
+      InstanceResourceDeploymentDescription irdd (ResourceUsageKind::None,
+						  reqname,
+						  resname,
+						  resval);
       
-      if (src.resourceUsage == Deployment::None)
-         irdd.resourceUsage (ResourceUsageKind::None);
-      if (src.resourceUsage  ==
-         Deployment::InstanceUsesResource)
-         irdd.resourceUsage (ResourceUsageKind::InstanceUsesResource);
-      if (src.resourceUsage  ==
-         Deployment::ResourceUsesInstance)
-         irdd.resourceUsage (ResourceUsageKind::ResourceUsesInstance);
-      if (src.resourceUsage  ==
-         Deployment::PortUsesResource)
-         irdd.resourceUsage (ResourceUsageKind::PortUsesResource);
-      if (src.resourceUsage  ==
-         Deployment::ResourceUsesPort)
+      switch (src.resourceUsage)
+	{
+	case Deployment::None:
+	  irdd.resourceUsage (ResourceUsageKind::None);
+	  break;
+	  
+	case Deployment::InstanceUsesResource:
+	  irdd.resourceUsage (ResourceUsageKind::InstanceUsesResource);
+	  break;
+	  
+	case Deployment::ResourceUsesInstance:
+	  irdd.resourceUsage (ResourceUsageKind::ResourceUsesInstance);
+	  break;
+	  
+	case Deployment::PortUsesResource:
+	  irdd.resourceUsage (ResourceUsageKind::PortUsesResource);
+	  break;
+
+	case Deployment::ResourceUsesPort:
          irdd.resourceUsage (ResourceUsageKind::ResourceUsesPort);
-         
+	 break;
+	 
+	default:
+	  throw Config_Error (src.resourceName.in (),
+			      "Unknown ResourceUsageKind.");
+	  break;
+	}
+      
       return irdd;
     }
   }

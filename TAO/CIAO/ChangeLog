@@ -1,3 +1,35 @@
+Mon Sep 19 16:29:57 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* ADD_Handler.cpp
+	* Common.h
+	* IDD_Handler.cpp
+	* IDD_Handler.h
+	* IDREF_Base.cpp
+	* IDREF_Base.h
+	* IRDD_Handler.cpp
+	* IRDD_Handler.h
+	* MDD_Handler.cpp
+	* PSPE_Handler.cpp
+	* STD_CID_Handler.cpp
+	* XML_Error_Handler.cpp
+
+	Added some improved error handling/reporting. Much more to come.
+	
+	* test.cpp
+	* RT-CCM/RT-CCM-Handlers.mpc
+	* RT-CCM/SRD_Handler.cpp
+	* RT-CCM/SRD_Handler.h
+	* Config_Handlers.mpc
+	* DP_Handler.cpp
+
+	Added hooks for parsing ServerResources document into a deployment
+	plan.
+
+	This is activated by adding an InfoProperty with name
+	"CIAOServerResources" with a value of a valid CSR file. 
+
+	Also enabled parsing of deployRequirements and infoProperties.
+
 Mon Sep 19 10:55:05 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* RACE/Input_Adapters/Base/Input_Adapter.mpc

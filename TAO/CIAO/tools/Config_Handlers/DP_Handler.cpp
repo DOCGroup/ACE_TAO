@@ -14,6 +14,7 @@
 #include "ID_Handler.h"
 #include "Property_Handler.h"
 #include "cdp.hpp"
+#include "RT-CCM/SRD_Handler.h"
 
 #include "DP_PCD_Handler.h"
   
@@ -124,23 +125,35 @@ namespace CIAO
 
       }
 
-      /* @@ Not needed at this time...
-
       // ... An the property stuff
       for (DeploymentPlan::infoProperty_const_iterator pstart = xsc_dp.begin_infoProperty ();
 	   pstart != xsc_dp.end_infoProperty ();
 	   ++pstart)
 	{
 	  CORBA::ULong len =
-	    this-idl_dp_->infoProperty.length ();
+	    this->idl_dp_->infoProperty.length ();
 
 	  this->idl_dp_->infoProperty.length (len + 1);
+          
+          if (pstart->name () != "CIAOServerResources")
+            Property_Handler::get_property (*pstart,
+                                            this->idl_dp_->infoProperty [len]);
+          else
+            {
+              /*
+               * Hook for RT-CCM
+               */
+              ACE_DEBUG ((LM_DEBUG,
+                          "Importing ServerResources...\n"));
+              
+              // Parse the SR document
+              SRD_Handler srd_handler (pstart->value ().value ().string ().c_str ());
 
-	  Property_Handler::get_property (
-	    *pstart,
-	    this->idl_dp_->infoProperty [len]);
+              // Populate the property
+              this->idl_dp_->infoProperty [len].name = pstart->name ().c_str ();
+              this->idl_dp_->infoProperty [len].value <<= *(srd_handler.srd_idl ());
+            }
 	}
-      */
 
       // Read in the realizes, if present
       if (xsc_dp.realizes_p ())
@@ -232,21 +245,26 @@ namespace CIAO
 	      ID_Handler::impl_dependency(
 		  plan.dependsOn[j]));	
       }
-      
 
-      /* @@ Not needed at this time for the forward handler, so I assume not for the reverse handlers either...
-      // This should be functional if we want to activate it at a later point	 
       // ... And the property stuff
       len = plan.infoProperty.length();
       for (size_t q = 0;
 	   q < len;
 	   q++)
       {
-	  this->xsc_dp_->add_infoProperty (
-	      Property_Handler::get_property (
-	          plan.infoProperty[q]));
+        if (ACE_OS::strcmp (plan.infoProperty[q].name.in (),
+                            "CIAOServerResources") == 0)
+          {
+            ACE_DEBUG ((LM_ERROR,
+                        "(%P|%t) DP_Handler: Dumping of ServerResources not currently supported."));
+            continue;
+          }
+        
+        this->xsc_dp_->add_infoProperty (
+               Property_Handler::get_property (
+                    plan.infoProperty[q]));
       }
-      */
+
 
       // We are assuming there is a realizes for the moment
       // @@ We may want to change this at a later date by creating a sequence of
