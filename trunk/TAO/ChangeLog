@@ -1,3 +1,9 @@
+Mon Sep 19 08:50:00 UTC 2005  Simon Massey  <sma@prismtech.com>
+
+        * tests/Bug_2234_Regression/run_test.pl:
+
+        Forced commit for chmod permissions.
+
 Mon Sep 19 08:00:00 UTC 2005  Simon Massey  <sma@prismtech.com>
 
         * tests/Bug_2234_Regression/server.cpp:
