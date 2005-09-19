@@ -13,6 +13,7 @@
 #define CIAO_CONFIG_HANDLERS_IRDD_Handler_H
 #include /**/ "ace/pre.h"
 
+#include "Common.h"
 #include "Config_Handlers_Export.h"
 #include "ace/config-lite.h"
 
@@ -30,7 +31,6 @@ namespace Deployment
 
 namespace CIAO
 {
-
   namespace Config_Handlers
   {
 
@@ -47,21 +47,21 @@ namespace CIAO
     * corresponding CORBA IDL Any type.
     *
     */
-    
-    class Config_Handlers_Export IRDD_Handler {
-     
+    class Config_Handlers_Export IRDD_Handler {    
       public:
-
         IRDD_Handler (void);
         virtual ~IRDD_Handler (void);
 
         static void instance_resource_deployment_descr (
              const InstanceResourceDeploymentDescription& desc,
-             Deployment::InstanceResourceDeploymentDescription& toconfig);
+             Deployment::InstanceResourceDeploymentDescription& toconfig)
+	  throw (Config_Error);
         
         static InstanceResourceDeploymentDescription
         instance_resource_deployment_descr (
-          const Deployment::InstanceResourceDeploymentDescription& src);
+          const Deployment::InstanceResourceDeploymentDescription& src)
+	  throw (Config_Error);
+      
 
     };
   }

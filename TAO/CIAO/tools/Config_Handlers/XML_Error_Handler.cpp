@@ -43,7 +43,10 @@ namespace CIAO
       ACE_Auto_Basic_Array_Ptr<char> cleanup_msg (msg);
 
       ACE_DEBUG ((LM_DEBUG,
-                  "%s\n", msg));
+                  "%s at line %d and column %d\n", 
+                  msg,
+                  domError.getLocation ()->getLineNumber (),
+                  domError.getLocation ()->getColumnNumber ()));
       
       return true;
     }

@@ -16,8 +16,9 @@ namespace CIAO
   namespace Config_Handlers
   {
     template <typename T>
-    bool
+    void
     IDREF_Base<T>::bind_ref (ACE_CString& id, T value)
+      throw (Config_Error)
     {
       int retval =
         idref_map_.bind (id, value);
@@ -25,35 +26,34 @@ namespace CIAO
       pos_map_.bind (value,id);
 
       if (retval < 0)
-        return false;
-
-      return true;
+        throw Config_Error (id.c_str (),
+			    "Failed to bind an IDRef.  This likely indicates a name clash.");
     }
 
     template <typename T>
-    bool
+    void
     IDREF_Base<T>::find_ref (const ACE_CString& id, T& val)
+      throw (Config_Error)
     {
       int retval =
         idref_map_.find (id, val);
 
       if (retval < 0)
-        return false;
-
-      return true;
+        throw Config_Error (id.c_str (),
+			    "Unable to look up an IDRef.");
     }
 
     template <typename T>
-    bool
+    void
     IDREF_Base<T>::find_ref (const T& value, ACE_CString& id)
+      throw (Config_Error)
     {
       int retval =
         pos_map_.find (value, id);
 
       if (retval < 0)
-        return false;
-
-      return true;
+        throw Config_Error ("No location information",
+			    "Failed a reverse IDRef lookup.");
     }
 
     template <typename T>

@@ -12,6 +12,7 @@
 #define CIAO_CONFIG_HANDLERS_IDD_HANDLER_H
 #include /**/ "ace/pre.h"
 
+#include "Common.h"
 #include "tao/Basic_Types.h"
 #include "Config_Handlers_Export.h"
 #include "IDREF_Base.h"
@@ -51,22 +52,22 @@ namespace CIAO
     public:
       static bool instance_deployment_descrs (
           const DeploymentPlan &src,
-          ::Deployment::InstanceDeploymentDescriptions& dest);
+          ::Deployment::InstanceDeploymentDescriptions& dest)
+	throw (Config_Error);
 
       static InstanceDeploymentDescription instance_deployment_descr (
-	  const Deployment::InstanceDeploymentDescription &src);
+	  const Deployment::InstanceDeploymentDescription &src)
+	throw (Config_Error);
       
       static IDREF_Base<CORBA::ULong> IDREF;
 
     private:
-      static bool instance_deployment_descr (
+      static void instance_deployment_descr (
           const InstanceDeploymentDescription &src,
           ::Deployment::InstanceDeploymentDescription &dest,
-          CORBA::ULong pos);
+          CORBA::ULong pos)
+	throw (Config_Error);
 
-      static void instance_resource_depl_descr (
-        const InstanceResourceDeploymentDescription &src,
-        Deployment::InstanceResourceDeploymentDescription &dest);
     };
   }
 }

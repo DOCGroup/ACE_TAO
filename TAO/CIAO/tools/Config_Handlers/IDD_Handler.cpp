@@ -19,6 +19,7 @@ namespace CIAO
     IDD_Handler::instance_deployment_descrs (
         const DeploymentPlan &src,
         Deployment::InstanceDeploymentDescriptions& dest)
+      throw (Config_Error)
     {
       DeploymentPlan::instance_const_iterator idd_e =
         src.end_instance ();
@@ -33,161 +34,96 @@ namespace CIAO
             dest.length ();
           dest.length (len + 1);
 
-          bool retval =
-            IDD_Handler::instance_deployment_descr ((*idd_b),
-                                                    dest[len], len);
-
-          if (!retval)
-            return false;
+	  IDD_Handler::instance_deployment_descr ((*idd_b),
+						  dest[len], len);
         }
 
       return true;
     }
 
-    bool
+    void
     IDD_Handler::instance_deployment_descr (
         const InstanceDeploymentDescription& src,
         Deployment::InstanceDeploymentDescription& dest,
         CORBA::ULong pos)
+      throw (Config_Error)
     {
-      dest.name =
-        src.name ().c_str ();
-      dest.node =
-        src.node ().c_str ();
+      try
+	{
+	  dest.name = src.name ().c_str ();
+	  dest.node = src.node ().c_str ();
 
-      if (src.id_p ())
-        {
-          ACE_CString cstr (src.id ().c_str ());
-          if (!IDD_Handler::IDREF.bind_ref (cstr, pos))
-           {
-             return false;
-           }
-        }
-      else
-        {
-          ACE_DEBUG((LM_ERROR,
-                    "(%P|%t) Warning:  IDD %s has no idref \n",
-                    src.name ().c_str ()));
-        }
+	  if (src.id_p ())
+	    {
+	      ACE_CString cstr (src.id ().c_str ());
+	      IDD_Handler::IDREF.bind_ref (cstr, pos);
+	    }
+	  else
+	    {
+	      ACE_DEBUG((LM_ERROR,
+			 "(%P|%t) Warning:  IDD %s has no idref \n",
+			 src.name ().c_str ()));
+	    }
 
-      // We know there should be only one element
-      dest.source.length (1);
-      dest.source [0] =
-        src.source ().c_str ();
+	  // We know there should be only one element
+	  // @@ WO:  This is wrong!  this needs to be fixed.
+	  dest.source.length (1);
+	  dest.source [0] =
+	    src.source ().c_str ();
 
-      // @@ MAJO:This is where the MDD should be? Need to look into
-      // this later.
-      // ACE_DEBUG ((LM_DEBUG, "string is %s\n", 
-      //            src.implementation ().id ().c_str ()));
-      CORBA::ULong tmp = 0;
-      bool r = MDD_Handler::IDREF.find_ref 
-          (ACE_CString (src.implementation ().id ().c_str ()), tmp);
+	  CORBA::ULong tmp = 0;
+	  MDD_Handler::IDREF.find_ref 
+	    (ACE_CString (src.implementation ().id ().c_str ()), tmp);
       
-      ACE_UNUSED_ARG (r);
-      
-      // @@ MAJO:  What shouold we do if find_ref fails??
-      dest.implementationRef = tmp;
+	  dest.implementationRef = tmp;
 
-      InstanceDeploymentDescription::configProperty_const_iterator pend =
-        src.end_configProperty ();
+	  InstanceDeploymentDescription::configProperty_const_iterator pend =
+	    src.end_configProperty ();
 
-      for (InstanceDeploymentDescription::configProperty_const_iterator pstart =
-             src.begin_configProperty ();
-           pstart != pend;
-           ++pstart)
-        {
-          // Need to improve this. This is clearly O(n^2).
-          CORBA::ULong len =
-            dest.configProperty.length ();
+	  for (InstanceDeploymentDescription::configProperty_const_iterator pstart =
+		 src.begin_configProperty ();
+	       pstart != pend;
+	       ++pstart)
+	    {
+	      // Need to improve this. This is clearly O(n^2).
+	      CORBA::ULong len =
+		dest.configProperty.length ();
 
-          dest.configProperty.length (len + 1);
+	      dest.configProperty.length (len + 1);
 
-          Property_Handler::get_property (*pstart,
-                                          dest.configProperty[len]);
-        }
+	      Property_Handler::get_property (*pstart,
+					      dest.configProperty[len]);
+	    }
 
-#if 0 /* MAJO:  Handle this next round */
-      InstanceDeploymentDescription::deployedResource_const_iterator drend =
-        src.end_deployedResource ();
+	  if (src.deployedResource_p ())
+	    {
+	      dest.deployedResource.length (1);
 
-      for (InstanceDeploymentDescription::deployedResource_const_iterator drstart =
-             src.begin_deployedResource ();
-           drstart != drend;
-           ++drstart)
-        {
-          const CORBA::ULong len =
-            dest.deployedResource.length ();
+	      IRDD_Handler::instance_resource_deployment_descr (src.deployedResource (),
+							  dest.deployedResource[0]);
+	    }
 
-          dest.deployedResource.length (len + 1);
+	  if (src.deployedSharedResource_p ())
+	    {
+	      dest.deployedSharedResource.length (1);
+	  
+	      IRDD_Handler::instance_resource_deployment_descr (src.deployedSharedResource (),
+								dest.deployedSharedResource[0]);
+	    }
 
-          IDD_Handler::instance_resource_depl_descr (
-            (*drstart),
-            dest.deployedResource[len]);
-
-        }
-
-#endif
-#if 0
-     // @@ MAJO: Need to handle this in the next round
-      if (desc.deployedSharedResource_p ())
-        {
-          CORBA::ULong length = toconfig.deployedSharedResource.length ();
-          toconfig.deployedSharedResource.length (length + 1);
-
-          this->get_InstanceResourceDeploymentDescription
-            (toconfig.deployedResource[length],
-             desc.deployedResource ());
-        }
-#endif /*if 0*/
-      return true;
+	}
+      catch (Config_Error &ex)
+	{
+	  ex.name_ = src.name ()  + ":" + ex.name_;
+	  throw ex;
+	}
       // Done!
     }
-
-    void
-    IDD_Handler::instance_resource_depl_descr (
-        const InstanceResourceDeploymentDescription &src,
-        ::Deployment::InstanceResourceDeploymentDescription &dest
-        )
-    {
-      // resourceUsage is an enumerated type
-      switch (src.resourceUsage ().integral ())
-        {
-        case ResourceUsageKind::None_l:
-          dest.resourceUsage = Deployment::None;
-          break;
-
-        case ResourceUsageKind::InstanceUsesResource_l:
-          dest.resourceUsage = Deployment::InstanceUsesResource;
-          break;
-
-        case ResourceUsageKind::ResourceUsesInstance_l:
-          dest.resourceUsage = Deployment::ResourceUsesInstance;
-          break;
-
-        case ResourceUsageKind::PortUsesResource_l:
-          dest.resourceUsage = Deployment::PortUsesResource;
-          break;
-
-        case ResourceUsageKind::ResourceUsesPort_l:
-          dest.resourceUsage = Deployment::ResourceUsesPort;
-          break;
-        }
-
-      // requirementName and resourceName are strings
-      dest.requirementName =
-        src.requirementName ().c_str ();
-
-      dest.resourceName =
-        src.resourceName ().c_str ();
-
-      Any_Handler::extract_into_any (src.resourceValue (),
-                                     dest.resourceValue);
-
-    }
-
+ 
     InstanceDeploymentDescription
     IDD_Handler::instance_deployment_descr (
 	const Deployment::InstanceDeploymentDescription& src)
+      throw (Config_Error)
     {
 	
 	//Get all the string/IDREFs
@@ -198,7 +134,7 @@ namespace CIAO
 	MDD_Handler::IDREF.find_ref(src.implementationRef, temp);
 	XMLSchema::IDREF< ACE_TCHAR > implementation ((temp.c_str()));
 
-	//Instantiate the IDD
+	// Instantiate the IDD
 	InstanceDeploymentDescription idd (name, node, source, implementation);
 
 	//Get and store the configProperty(s)
@@ -221,10 +157,6 @@ namespace CIAO
 	    idd. deployedSharedResource(
 		IRDD_Handler::instance_resource_deployment_descr(
 		    src.deployedSharedResource[0]));
-
-	// @@ LDS: There is no variable id in src, is this correct, does it need to be added?
-	// XMLSchema::ID < char > id ((src.id));
-	// idd.id(id);
 
 	return idd;
     }	

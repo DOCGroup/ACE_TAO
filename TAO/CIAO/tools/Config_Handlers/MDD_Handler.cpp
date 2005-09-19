@@ -86,17 +86,8 @@ namespace CIAO
         {
           CORBA::ULong tmp = 0;
 
-          bool r =
-            ADD_Handler::IDREF.find_ref (ACE_CString (ab->id ().c_str ()),
-                                         tmp);
-
-          if (!r)
-            {
-              // @@MAJO: What should we do if find_ref fails?
-              ACE_DEBUG ((LM_ERROR,
-                          "(%P|%t) MDD_Handler:  Find ref failed!  Uh oh!\n"));
-              return false;
-            }
+	  ADD_Handler::IDREF.find_ref (ACE_CString (ab->id ().c_str ()),
+						   tmp);
 
           CORBA::ULong len =
             toconfig.artifactRef.length ();
@@ -141,8 +132,7 @@ namespace CIAO
         {
           ACE_CString cstr (desc.id ().c_str ());
           
-          if (!MDD_Handler::IDREF.bind_ref (cstr, pos))
-            return false;
+          MDD_Handler::IDREF.bind_ref (cstr, pos);
         }
       else
         {

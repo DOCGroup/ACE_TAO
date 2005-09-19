@@ -11,6 +11,8 @@
 #define CIAO_CONFIG_HANDLERS_IDREF_BASE_H
 
 #include /**/ "ace/pre.h"
+
+#include "Common.h"
 #include "Config_Handlers_Export.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
@@ -35,16 +37,16 @@ namespace CIAO
     {
     public:
       /// Bind an IDREF to an index
-      bool
-      bind_ref (ACE_CString& id, T value);
+      void bind_ref (ACE_CString& id, T value)
+	throw (Config_Error);
   
       /// Get the index associated with an IDREF
-      bool
-      find_ref (const ACE_CString& id, T& value);
+      void find_ref (const ACE_CString& id, T& value)
+	throw (Config_Error);
       
       /// get the IDREF associated with an index
-      bool
-      find_ref (const T &value, ACE_CString& id);
+      void find_ref (const T &value, ACE_CString& id)
+	throw (Config_Error);
   
       /// Unbind all IDREFS
       bool
