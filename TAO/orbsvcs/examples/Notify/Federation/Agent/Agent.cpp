@@ -4,7 +4,7 @@
 
 #include <ace/streams.h>
 #if defined(ACE_USES_OLD_IOSTREAMS)
-# include <strstrea.h>
+# include <strstream.h>
 #else
 # include <sstream>
 #endif
