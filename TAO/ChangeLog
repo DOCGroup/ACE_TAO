@@ -1,3 +1,9 @@
+Mon Sep 19 14:50:00 UTC 2005  Simon Massey  <sma@prismtech.com>
+
+        * tests/Bug_2234_Regression/server.cpp:
+
+        Elimiate unused exception macros.
+
 Mon Sep 19 11:45:00 UTC 2005  Simon Massey  <sma@prismtech.com>
 
         * orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
