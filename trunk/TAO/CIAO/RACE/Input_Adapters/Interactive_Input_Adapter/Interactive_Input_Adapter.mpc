@@ -1,4 +1,5 @@
 // generate_component_mpc.pl,v 1.9 2003/12/22 21:56:27 boris Exp
+//$Id$
 
 project(Interactive_Input_Adapter_stub): ciao_deployment_stub {
   after += Input_Adapter_stub

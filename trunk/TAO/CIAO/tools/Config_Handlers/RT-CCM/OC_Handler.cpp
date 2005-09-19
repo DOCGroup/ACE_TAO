@@ -1,4 +1,4 @@
-// $Id OC_Handler.cpp, v 1.0 2005/08/12 $Exp lseibert
+// $Id$
 
 #include "OC_Handler.h"
 #include "OR_Handler.h"

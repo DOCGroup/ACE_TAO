@@ -1,4 +1,4 @@
-// $Id OR_Handler.cpp, v 1.0 2005/08/11 10:09:52 lseibert Exp$
+// $Id$
 
 #include "OR_Handler.h"
 #include "TP_Handler.h"
