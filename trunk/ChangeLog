@@ -1,3 +1,9 @@
+﻿Mon Sep 19 12:35:39 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * tests/MT_SOCK_Test.cpp:
+
+	  Fix use of ACE_static_cast from my  Fri Sep 2 checkin.
+
 Mon Sep 19 10:51:26 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* bin/generate_doxygen.pl
@@ -324,6 +330,34 @@ Fri Sep  2 10:44:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
         * bin/MakeProjectCreator/config/global.features:
         * bin/MakeProjectCreator/config/acedefaults.mpb:
           Introduced 'ipv6' feature.
+
+Fri Sep  2 15:08:27 2005  Justin Michel  <michel_j@ociweb.com>
+
+        * ace/ACE.cpp:
+
+          The code that waited for connections to complete had problems with some
+        Windows machines. The code now doesn't trust the write bit in select() to indicate
+        an accepted connection. 
+
+        * ace/SOCK_Connector.cpp:
+
+          There was a workaround for ACE_WIN32 that would wait 35ms and retry after
+        the first connection failure. It wouldn't retry the connect(), but would just
+        retry select(). This workaround appears to be unnecessary for current Windows
+        machines, so I changed the #ifdef ACE_WIN32 to #ifdef ACE_HAS_NON_BLOCKING_BUG.
+
+        * ace/config-win32-common.h:
+
+          ACE would always default to a ACE_DEFAULT_BACKLOG of 5. Changed to default
+        to SOMAXCONN on Win32. This special value is used by Winsock listen() to indicate
+        that the machine should automatically pick a suitable default.
+
+        * tests/MT_SOCK_Test.cpp:
+
+          This test is really to verify that the listen() backlog feature works correctly.
+        Updated the code to make this testable and consistent. The code now sleeps
+        in the server thread to give the 30 client threads time to attempt to connect. Only
+        5-9 clients should succeed, because the Acceptor is created with a listen() backlog=5.
 
 Thu Sep  1 17:28:25 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 

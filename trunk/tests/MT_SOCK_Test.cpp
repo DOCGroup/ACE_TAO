@@ -142,7 +142,7 @@ static void *
 server (void *arg)
 {
   ACE_SOCK_Acceptor *peer_acceptor =
-    ACE_static_cast (ACE_SOCK_Acceptor *, arg);
+    static_cast<ACE_SOCK_Acceptor *> (arg);
 
   if (peer_acceptor->enable (ACE_NONBLOCK) == -1)
     ACE_ERROR ((LM_ERROR,
