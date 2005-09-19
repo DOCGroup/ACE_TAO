@@ -1,3 +1,9 @@
+Mon Sep 19 08:00:00 UTC 2005  Simon Massey  <sma@prismtech.com>
+
+        * tests/Bug_2234_Regression/server.cpp:
+
+        Incorrect emulated exception call for init_orb.
+
 Fri Sep 16 15:12:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * test/IPV6/Hello.mpc:
