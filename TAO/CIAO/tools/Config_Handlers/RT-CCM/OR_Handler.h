@@ -49,4 +49,6 @@ namespace CIAO
     }
 }
 
+#include /**/ "ace/post.h"
+
 #endif /* CIAO_CONFIG_HANDLERS_OR_HANDLER_H */
