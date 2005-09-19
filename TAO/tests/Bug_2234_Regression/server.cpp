@@ -435,20 +435,20 @@ public:
 class AnInterceptor : public PortableInterceptor::ServerRequestInterceptor
 {
 public:
-  char *name( ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS )
+  char *name( ACE_ENV_SINGLE_ARG_DECL_NOT_USED )
     ACE_THROW_SPEC( (CORBA::SystemException) )
   {
     return const_cast<char *>("");
   }
 
-  void destroy( ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS )
+  void destroy( ACE_ENV_SINGLE_ARG_DECL_NOT_USED )
     ACE_THROW_SPEC( (CORBA::SystemException) )
   {
   }
 
   void receive_request_service_contexts(
     PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS )
+    ACE_ENV_ARG_NOT_USED )
     ACE_THROW_SPEC( (CORBA::SystemException,
                      PortableInterceptor::ForwardRequest) )
   {
@@ -634,7 +634,7 @@ public:
 
   void send_exception(
     PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS )
+    ACE_ENV_ARG_NOT_USED )
     ACE_THROW_SPEC( (CORBA::SystemException,
                      PortableInterceptor::ForwardRequest) )
   {
@@ -642,7 +642,7 @@ public:
 
   void send_other(
     PortableInterceptor::ServerRequestInfo_ptr
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS )
+    ACE_ENV_ARG_NOT_USED )
     ACE_THROW_SPEC( (CORBA::SystemException,
                      PortableInterceptor::ForwardRequest) )
   {
@@ -659,14 +659,14 @@ public:
 
   void pre_init(
     PortableInterceptor::ORBInitInfo_ptr
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS )
+    ACE_ENV_ARG_NOT_USED )
     ACE_THROW_SPEC( (CORBA::SystemException) )
   {
   }
 
   void post_init(
      PortableInterceptor::ORBInitInfo_ptr info
-     ACE_ENV_ARG_DECL_WITH_DEFAULTS )
+     ACE_ENV_ARG_NOT_USED )
      ACE_THROW_SPEC( (CORBA::SystemException) )
    {
      info->add_server_request_interceptor( interceptor_ );
