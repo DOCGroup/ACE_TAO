@@ -1,3 +1,20 @@
+Mon Sep 19 10:51:26 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* bin/generate_doxygen.pl
+
+	Removed obsolete CIAO projects from Doxygen generation.
+	
+	* etc/ciao_xml_helpers.doxygen
+
+	Updated path to new config_handlers.
+	
+	* etc/ciao_assembly_deployer.doxygen
+	* etc/ciao_componentserver.doxygen
+	* etc/ciao_daemon.doxygen
+	* etc/ciao_serveractivator.doxygen
+
+	Removed obsolete ciao doxygen files. 
+
 Sun Sep 18 17:28:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/INET_Addr.cpp:

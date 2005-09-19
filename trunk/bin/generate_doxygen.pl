@@ -51,11 +51,7 @@ $dot_path = '/usr/local/bin';
              ,'tao_portablegroup'
              ,'tao_pss'
              ,'tao_ifr');
-@CIAO_DOCS = ('ciao_assembly_deployer'
-             ,'ciao_componentserver'
-	       ,'ciao_daemon'
-	       ,'ciao_serveractivator'
-  	       ,'ciao_xml_helpers'
+@CIAO_DOCS = ('ciao_xml_helpers'
   	       ,'ciao_DAnCE'
 	       ,'ciao');
 
