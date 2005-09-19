@@ -1,3 +1,9 @@
+Mon Sep 19 10:15:00 UTC 2005  Simon Massey  <sma@prismtech.com>
+
+        * orbsvcs/examples/Notify/Federation/Agent/Agent.cpp:
+
+        Corrected typo at line 7 (#include "strstrea.h")
+
 Mon Sep 19 08:50:00 UTC 2005  Simon Massey  <sma@prismtech.com>
 
         * tests/Bug_2234_Regression/run_test.pl:
