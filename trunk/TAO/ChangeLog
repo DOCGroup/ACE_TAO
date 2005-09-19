@@ -1,3 +1,13 @@
+Mon Sep 19 16:11:12 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_home.cpp:
+        
+          Added missing check for null before enqueueing a primary
+          key valuetype into the queue to be checked after parsing.
+          If there is no primary key specified, we don't want to
+          enqueue a 0, since the queue will then be non-empty but
+          have no usable value to dequeue.
+
 Mon Sep 19 14:50:00 UTC 2005  Simon Massey  <sma@prismtech.com>
 
         * tests/Bug_2234_Regression/server.cpp:
