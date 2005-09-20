@@ -1,3 +1,13 @@
+Tue Sep 20 08:32:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * orbsvcs/tests/IOR_MCast/ior_mcast_client_i.cpp:
+
+          Added some traces to be able to see testresult.
+
+        * orbsvcs/tests/IOR_MCast/run_test_ipv6.pl:
+
+          Added IPV6 specific testscript.
+
 Tue Sep 20 08:26:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * tests/BiDirectional/run_test_ipv6.pl:
