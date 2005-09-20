@@ -1,3 +1,9 @@
+Tue Sep 20 08:26:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/BiDirectional/run_test_ipv6.pl:
+
+          Added IPV6 specific testscript.
+
 Tue Sep 20 08:23:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * tao/IIOP_Acceptor.cpp:
