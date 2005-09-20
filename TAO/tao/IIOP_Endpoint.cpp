@@ -264,8 +264,31 @@ TAO_IIOP_Endpoint::object_addr_i (void) const
 {
   // We should have already held the lock
 
+#if defined (ACE_HAS_IPV6)
+  bool is_ipv4_decimal_ = false;
+  if (!this->is_ipv6_decimal_)
+    is_ipv4_decimal_ =
+      ACE_OS::strspn (this->host_.in (), ".0123456789") ==
+                              ACE_OS::strlen (this->host_.in ());
+
+  // If this is *not* an IPv4 decimal address at first try to
+  // resolve the address as an IPv6 address; if that fails
+  // (or it's an IPv4 address) and the address is *not* an IPv6
+  // decimal address try to resolve it as an IPv4 address.
+  if ((is_ipv4_decimal_ ||
+        this->object_addr_.set (this->port_,
+                                this->host_.in (),
+                                1,
+                                AF_INET6) == -1) &&
+      (this->is_ipv6_decimal_ ||
+        this->object_addr_.set (this->port_,
+                              this->host_.in (),
+                              1,
+                              AF_INET) == -1))
+#else
   if (this->object_addr_.set (this->port_,
                               this->host_.in ()) == -1)
+#endif
     {
       // If this call fails, it most likely due a hostname
       // lookup failure caused by a DNS misconfiguration.  If
