@@ -13,6 +13,11 @@
 #include "Codeset_Manager.h"
 #include "SystemException.h"
 
+/*
+ * Hook to add additional include files during specializations.
+ */
+//@@ GIOP_MESSAGE_BASE_INCLUDE_ADD_HOOK
+
 ACE_RCSID (tao,
            GIOP_Message_Base,
            "$Id$")
@@ -824,6 +829,13 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
 
       CORBA::Object_var forward_to;
 
+/*
+ * Hook to specialize request processing within TAO 
+ * This hook will be replaced by specialized request
+ * processing implementation.
+ */
+//@@ TAO_DISPATCH_RESOLUTION_OPT_COMMENT_HOOK_START 
+
       // Do this before the reply is sent.
       this->orb_core_->request_dispatcher ()->dispatch (
           this->orb_core_,
@@ -831,6 +843,8 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
           forward_to
           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+//@@ TAO_DISPATCH_RESOLUTION_OPT_COMMENT_HOOK_END
 
       if (!CORBA::is_nil (forward_to.in ()))
         {

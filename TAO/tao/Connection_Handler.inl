@@ -32,3 +32,5 @@ TAO_Connection_Handler::is_connecting (void) const
 {
   return this->state_ == TAO_LF_Event::LFS_CONNECTION_WAIT;
 }
+
+//@@ CONNECTION_HANDLER_SPL_METHODS_ADD_HOOK

@@ -16,6 +16,8 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"
 
+//@@ TAO_SERVANT_BASE_INCLUDE_ADD_HOOK
+
 ACE_RCSID (PortableServer,
            Servant_Base,
            "$Id$")
@@ -237,6 +239,12 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest & req,
             derived_this
             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      /*
+       * Dispatch resolution specialization add hook.
+       * Over-ridden with code to handle optimized dispatch.
+       */
+      //@@ TAO_DISPATCH_RESOLUTION_OPT_ADD_HOOK
 
       // It is our job to send the already marshaled reply, but only
       // send if it is expected and it has not already been sent
