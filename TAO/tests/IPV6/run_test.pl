@@ -79,6 +79,14 @@ $clt_arg = "-k file://$iorfile ";
          url => 1,
          url_address => "corbaloc:iiop:1.2\@127.0.0.1:",
      },
+     {
+         description => "Testing server with client and IPV4-forced URL",
+         server => "$srv_arg -ORBObjRefStyle url",
+         client => "",
+         error => 0,
+         url => 1,
+         url_address => "corbaloc:iiop:1.2\@127.0.0.1:",
+     },
     );
 
 
