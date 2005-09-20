@@ -265,77 +265,128 @@ mmap_remap_test(void)
 {
     // Use a Position Independent memory segment
     // because this one is going to move
-    MMAP_Allocator* alloc = 0;
+
+    MMAP_Allocator *alloc[ 3 ]= {0, 0, 0};
+    void *pool_base[ 3 ]= {0, 0, 0};
+
     // Make sure the Pool options are set to allow
     // the segment to move
     ACE_MMAP_Memory_Pool_Options data_opts(
                0,
-               ACE_MMAP_Memory_Pool_Options::NEVER_FIXED);
+               ACE_MMAP_Memory_Pool_Options::NEVER_FIXED );
+    int i;
 
-    ACE_OS::unlink("foo");
-    ACE_NEW_RETURN (alloc,
-                    MMAP_Allocator (ACE_TEXT ("foo"), ACE_TEXT("foo"), &data_opts),
-                    -1);
+    for (i= 0; i<3; ++i)
+      {
+        ACE_TCHAR store[ MAXPATHLEN + 1 ];
+        ACE_OS::sprintf( store, ACE_TEXT("foo%d"), i );
+        ACE_OS::unlink( store );
 
-    // Cause memory segment to grow until it is forced
-    // to be remapped at different base address.
-    // I've seen this scheme absorb all available memory on a machine before
-    // remapping on AIX... so this will abort if memory runs out.
-    size_t size = 4096;
-    void* bar = 0;
-    void* oba = alloc->base_addr();
-    while(oba == alloc->base_addr())
-    {
-      if ((bar = alloc->malloc(size)) == 0)
-        {
-          ACE_ERROR ((LM_WARNING, ACE_TEXT ("%p\n"),
-                      ACE_TEXT ("malloc remap failed before seeing different ")
-                      ACE_TEXT ("base; test not completed")));
-          break;
-        }
-      size += size;
-    }
-    void* nba = alloc->base_addr();
+        ACE_NEW_RETURN (alloc[ i ],
+                        MMAP_Allocator (store, store, &data_opts),
+                        -1);
+        pool_base[ i ]= alloc[ i ]->base_addr();
+      }
 
-    void* ba = 0;
-    if(ACE_BASED_POINTER_REPOSITORY::instance()->find(nba, ba) == -1)
+    // sort pools into base address order
+    for (i= 0; i<2; ++i)
+      {
+        if (pool_base[ i ] < pool_base[ i+1 ])
+          {
+            void *tmp1= pool_base[ i ];
+            MMAP_Allocator *tmp2= alloc[ i ];
+            pool_base[ i ]= pool_base[ i+1 ];
+            alloc[ i ]= alloc[ i+1 ];
+            pool_base[ i+1 ]= tmp1;
+            alloc[ i+1 ]= tmp2;
+            i= -1;
+          }
+      }
+
+    // alloc[1] is now bounded, whether memory grows up or
+    // down, it will hit either alloc[0] or alloc[2] and have
+    // to be remapped.
+    //
+    // Calculate maximum space between base addresses
+
+    size_t size= (char *) pool_base[ 0 ] - (char *) pool_base[ 1 ];
+    size_t tmpsize= (char *) pool_base[ 1 ] - (char *) pool_base[ 2 ];
+    size= (size < tmpsize) ? tmpsize : size;
+
+    // force pool to move
+    ++size;
+
+    (void)alloc[ 1 ]->malloc(size);
+    void *nba= alloc[ 1 ]->base_addr();
+
+    if (pool_base[ 1 ] == nba)
+      {
+        ACE_ERROR ((LM_ERROR,
+                   ACE_TEXT ("MMAP Pool did not move base address as expected\n")));
+        for (i= 0; i<3; ++i)
+          {
+            alloc[ i ]->remove();
+            delete alloc[ i ];
+          }
+        return -1;
+      }
+ 
+    void *ba= 0;
+    if (ACE_BASED_POINTER_REPOSITORY::instance()->find(nba, ba) == -1)
       {
         ACE_ERROR ((LM_ERROR,
             ACE_TEXT ("Unable to find base address after remap of segment\n")));
-        alloc->remove();
-        delete alloc;
+  	for (i= 0; i<3; ++i)
+          {
+            alloc[ i ]->remove();
+            delete alloc[ i ];
+          }
         return -1;
       }
 
-    if(ba != nba)
+    if (ba != nba)
       {
         ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("New base address not mapped after MMAP remap\n")));
-        alloc->remove();
-        delete alloc;
-       return -1;
+	for (i= 0; i<3; ++i)
+          {
+            alloc[ i ]->remove();
+            delete alloc[ i ];
+          }
+        return -1;
       }
 
     // Check old base address has been removed
     // from the repository
-    if(ACE_BASED_POINTER_REPOSITORY::instance()->find(oba, ba) == -1)
+    if (ACE_BASED_POINTER_REPOSITORY::instance()->find( pool_base[ 1 ], ba ) == -1)
       {
          ACE_ERROR ((LM_ERROR,
             ACE_TEXT ("Unable to find base address after remap of segment\n")));
-         alloc->remove();
-         delete alloc;
+         for (i= 0; i<3; ++i)
+           {
+             alloc[ i ]->remove();
+             delete alloc[ i ];
+           }
          return -1;
       }
-    if(ba == oba)
+
+    if (ba == pool_base[ 1 ])
       {
         ACE_ERROR ((LM_ERROR,
             ACE_TEXT ("Old base address not removed after MMAP remap\n")));
-        alloc->remove();
-        delete alloc;
+        for (i= 0; i<3; ++i)
+          {
+            alloc[ i ]->remove();
+            delete alloc[ i ];
+          }
         return -1;
       }
-    alloc->remove();
-    delete alloc;
+
+    for (i= 0; i<3; ++i)
+      {
+        alloc[ i ]->remove();
+        delete alloc[ i ];
+      }
     return 0;
 }
 

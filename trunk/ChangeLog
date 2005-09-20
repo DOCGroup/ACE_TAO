@@ -1,3 +1,8 @@
+Tue Sep 20 10:10:00 UTC 2005  Simon Massey  <simon.massey@prismtech.com>
+
+        * tests/Based_Pointer_Test.cpp:
+          Attempt to fix bug 2232 (Implimented the diffs found there).
+
 Tue Sep 20 08:43:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * bin/tao_other_tests.lst:
