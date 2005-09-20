@@ -2,7 +2,7 @@
 // $Id$
 
 #include "ace/Global_Macros.h"
-
+#include "ACE.h"
 ACE_INLINE
 ACE_Pipe::~ACE_Pipe (void)
 {
