@@ -1,25 +1,31 @@
-﻿Mon Sep 19 12:35:39 2005  Justin Michel  <michel_j@ociweb.com>
+Tue Sep 20 08:29:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added new TAO/tests/BiDirectional/run_test_ipv6.pl
+          IPV6 test.
+
+Mon Sep 19 12:35:39 2005  Justin Michel  <michel_j@ociweb.com>
 
         * tests/MT_SOCK_Test.cpp:
 
-	  Fix use of ACE_static_cast from my  Fri Sep 2 checkin.
+          Fix use of ACE_static_cast from my  Fri Sep 2 checkin.
 
 Mon Sep 19 10:51:26 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* bin/generate_doxygen.pl
+        * bin/generate_doxygen.pl
 
-	Removed obsolete CIAO projects from Doxygen generation.
-	
-	* etc/ciao_xml_helpers.doxygen
+          Removed obsolete CIAO projects from Doxygen generation.
 
-	Updated path to new config_handlers.
-	
-	* etc/ciao_assembly_deployer.doxygen
-	* etc/ciao_componentserver.doxygen
-	* etc/ciao_daemon.doxygen
-	* etc/ciao_serveractivator.doxygen
+        * etc/ciao_xml_helpers.doxygen
 
-	Removed obsolete ciao doxygen files. 
+          Updated path to new config_handlers.
+
+        * etc/ciao_assembly_deployer.doxygen
+        * etc/ciao_componentserver.doxygen
+        * etc/ciao_daemon.doxygen
+        * etc/ciao_serveractivator.doxygen
+
+          Removed obsolete ciao doxygen files.
 
 Sun Sep 18 17:28:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
@@ -50,9 +56,9 @@ Fri Sep 16 19:54:20 2005  J.T. Conklin  <jtc@acorntoolworks.com>
         * ace/Atomic_Op.inl:
         * ace/Object_Manager.cpp:
 
-	  #if 0 ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>
-	  specialization to see if it's responsible for recent
-	  TAO performance degradation.
+          #if 0 ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>
+          specialization to see if it's responsible for recent
+          TAO performance degradation.
 
 Fri Sep 16 10:57:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
@@ -337,7 +343,7 @@ Fri Sep  2 15:08:27 2005  Justin Michel  <michel_j@ociweb.com>
 
           The code that waited for connections to complete had problems with some
         Windows machines. The code now doesn't trust the write bit in select() to indicate
-        an accepted connection. 
+        an accepted connection.
 
         * ace/SOCK_Connector.cpp:
 
