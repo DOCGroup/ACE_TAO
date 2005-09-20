@@ -23,6 +23,7 @@ TAO/tests/OctetSeq/run_test.pl:
 TAO/tests/OctetSeq/run_test1.pl: !STATIC
 TAO/tests/OctetSeq/run_test2.pl: !STATIC
 TAO/tests/BiDirectional/run_test.pl: !MINIMUM !GIOP10 !DISABLE_BIDIR
+TAO/tests/BiDirectional/run_test_ipv6.pl: IPV6 !MINIMUM !GIOP10 !DISABLE_BIDIR
 TAO/tests/BiDirectional_NestedUpcall/run_test.pl: !VxWorks !MINIMUM !STATIC !GIOP10 !DISABLE_BIDIR
 TAO/tests/Leader_Followers/run_test.pl: !ST
 TAO/tests/Leader_Followers/run_test_mt.pl: !ST
