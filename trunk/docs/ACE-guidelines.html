@@ -128,15 +128,17 @@ bgcolor="#ffffff">
 
      <li> Never use <CODE>assert()</CODE> macros or related constructs
          (such as abort()) calls in core ACE, TAO, and CIAO
-         library/framework code since these are a major problem for
-         mission-critical software that uses this code.  Instead, add
-         the assert conditions as
+         library/framework code.  These macros are a major problem for
+         production software that uses this code since the
+         error-handling strategy (i.e., abort the process) is
+         excessive.  Instead, extract out the expressions from
+         assert() macros and use them as
          precondition/postconditions/invariants in the
          software and return any violations of these
          conditions/invariants via exceptions or error return values.
          It's fine to use <CODE>assert()</CODE> macros et al. in test
          programs, but make sure these tests never find their way into
-         the core ACE, TAO, and CIAO code. <P>
+         the core ACE, TAO, and CIAO library/framework code base. <P>
 
   </ul>
 
@@ -1167,7 +1169,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 <hr><p>
   <font size=-1>
 <!-- hhmts start -->
-Last modified: Mon Sep 19 18:11:09 CDT 2005
+Last modified: Tue Sep 20 14:06:27 CDT 2005
 <!-- hhmts end -->
   </font><p>
 
