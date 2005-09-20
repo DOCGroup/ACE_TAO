@@ -104,8 +104,11 @@ TAO/orbsvcs/tests/ImplRepo/scale/run_test.pl -servers 5 -objects 5: !MINIMUM
 TAO/orbsvcs/examples/ImR/Combined_Service/run_test.pl: !MINIMUM !STATIC !ST
 TAO/orbsvcs/tests/Log/Basic_Log_Test/run_test.pl: !NO_MESSAGING
 TAO/orbsvcs/tests/Notify/Basic/run_test.pl notify.reactive.conf: !ST !NO_MESSAGING !STATIC !MINIMUM
+TAO/orbsvcs/tests/Notify/Basic/run_test_ipv6.pl notify.reactive.conf: IPV6 !ST !NO_MESSAGING !STATIC !MINIMUM
 TAO/orbsvcs/tests/Notify/Basic/run_test.pl notify.mt.conf: !ST !NOTIFY !NO_MESSAGING !MINIMUM
+TAO/orbsvcs/tests/Notify/Basic/run_test_ipv6.pl notify.mt.conf: IPV6 !ST !NOTIFY !NO_MESSAGING !MINIMUM
 TAO/orbsvcs/tests/Notify/Basic/run_test.pl notify.rt.conf: !ST !STATIC !MINIMUM
+TAO/orbsvcs/tests/Notify/Basic/run_test_ipv6.pl notify.rt.conf: IPV6 !ST !STATIC !MINIMUM
 TAO/orbsvcs/tests/Notify/Blocking/run_test.pl: !ST !NO_MESSAGING !MINIMUM
 TAO/orbsvcs/tests/Notify/Discarding/run_test.pl: !ST !NO_MESSAGING !MINIMUM
 TAO/orbsvcs/tests/Notify/MT_Dispatching/run_test.pl: !ST !NO_MESSAGING !MINIMUM
@@ -141,3 +144,4 @@ TAO/examples/RTScheduling/MIF_Scheduler/run_test.pl: !MINIMUM !DISABLE_INTERCEPT
 TAO/examples/ior_corbaloc/run_test.pl: !NO_MESSAGING
 TAO/utils/nslist/run_test.pl: !ST !SUNCC5_1 !NO_MESSAGING
 TAO/orbsvcs/tests/BiDir_CORBALOC/run_test.pl: !NO_MESSAGING
+TAO/orbsvcs/tests/IOR_MCast/run_test_ipv6.pl: IPV6 !MINIMUM

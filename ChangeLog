@@ -1,3 +1,8 @@
+Tue Sep 20 08:43:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Added new IPV6 specific tests.
+
 Tue Sep 20 08:29:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * bin/tao_orb_tests.lst:
