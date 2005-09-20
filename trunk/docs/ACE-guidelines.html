@@ -126,6 +126,18 @@ bgcolor="#ffffff">
         <a href="#ACE_Time_Value example">ACE_Time_Value example</a>
         .<p>
 
+     <li> Never use <CODE>assert()</CODE> macros or related constructs
+         (such as abort()) calls in core ACE, TAO, and CIAO
+         library/framework code since these are a major problem for
+         mission-critical software that uses this code.  Instead, add
+         the assert conditions as
+         precondition/postconditions/invariants in the
+         software and return any violations of these
+         conditions/invariants via exceptions or error return values.
+         It's fine to use <CODE>assert()</CODE> macros et al. in test
+         programs, but make sure these tests never find their way into
+         the core ACE, TAO, and CIAO code. <P>
+
   </ul>
 
   <li><strong>Code Documentation</strong><p>
@@ -1155,7 +1167,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 <hr><p>
   <font size=-1>
 <!-- hhmts start -->
-Last modified: Thu Jan 20 22:59:04 PST 2005
+Last modified: Mon Sep 19 18:11:09 CDT 2005
 <!-- hhmts end -->
   </font><p>
 

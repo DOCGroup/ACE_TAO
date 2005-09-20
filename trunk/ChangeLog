@@ -14,6 +14,22 @@ Tue Sep 20 08:29:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
           Added new TAO/tests/BiDirectional/run_test_ipv6.pl
           IPV6 test.
 
+Mon Sep 19 11:43:59 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* docs/ACE-guidelines.html: Added a guideline that disallows the use of 
+	  assert() macros et al. in core ACE, TAO, and CIAO
+ 	  library/framework code.  Thanks to Dave Giovannini <giovanninid
+ 	  at ociweb dot com> and Carlos O'Ryan for motivating this.
+
+	* protocols/ace/RMCast/Socket.cpp: Replaced the use of ACE_OS::write()
+	  and ACE_OS::read() with the new ACE_Pipe::send() and
+ 	  ACE_Pipe::recv() methods thanks to Felix's enhancements.
+
+	* ace/Pipe.{h,inl,cpp}: Added a full complement of send*() and recv*()
+	  methods so that the code is portable across different operating
+ 	  systems without requiring user-level #ifdefs.  Thanks to Felix
+ 	  Li <fengli@gmail.com> for submitting these enhancements.
+
 Mon Sep 19 12:35:39 2005  Justin Michel  <michel_j@ociweb.com>
 
         * tests/MT_SOCK_Test.cpp:
