@@ -1,9 +1,8 @@
-Tue Sep 20 10:34:17 2005  William Otte  <wotte@dre.vanderbilt.edu>
+Tue Sep 20 10:37:24 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Pipe.inl
-
-	Fix for a compile problem from:
-	Mon Sep 19 11:43:59 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+	* ace/Pipe.inl: Added #include of "ace/ACE.h" to get the
+	  right class definition for the ACE:: methods.  Thanks to Simon
+ 	  Massey for reporting this.
 
 Tue Sep 20 15:20:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
