@@ -1,3 +1,10 @@
+Tue Sep 20 10:19:46 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* tools/Config_Handlers/test.cdp
+
+	A test deployment plan file that contains odd constructs.
+	Used for testing. 
+	
 Tue Sep 20 10:07:43 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/new_RepositoryManager/new_RepositoryManager.mpc
