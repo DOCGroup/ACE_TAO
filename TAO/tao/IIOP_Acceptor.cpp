@@ -922,23 +922,6 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
         continue;
 #endif /* !ACE_HAS_IPV6 */
 
-#if defined (ACE_HAS_IPV6)
-      if (if_addrs[i].get_type () == AF_INET6 &&
-          if_addrs[i].is_loopback ())
-        {
-          // By default publish IPv6 loopback as decimal addressstring since
-          // otherwise the (common) hostname 'localhost' will (practically) always
-          // be resolved into an IPv4 address posing problems for clients when
-          // IPv6-only policy is set.
-          char addr_buf[INET6_ADDRSTRLEN];
-          if (this->hostname (orb_core,
-                              if_addrs[i],
-                              this->hosts_[host_cnt],
-                              if_addrs[i].get_host_addr (addr_buf, INET6_ADDRSTRLEN)) != 0)
-            return -1;
-        }
-      else
-#endif /* ACE_HAS_IPV6 */
       if (this->hostname (orb_core,
                           if_addrs[i],
                           this->hosts_[host_cnt]) != 0)
