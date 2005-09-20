@@ -8,7 +8,7 @@ project (spec_RepositoryManager) : ciao_server_dnc,ciao_deployment_svnt, ciao_de
   includes += $(CIAO_ROOT)/tools $(CIAO_ROOT)/tools/Config_Handlers
   exename = RepositoryManagerDeamon
   after    += XSC_Config_Handlers
-  libs     += XSC_Config_Handlers
+  libs     += XSC_Config_Handlers RT_CCM_Config_Handlers
   libs     += CIAO_DnC_Server
   requires += zzip zlib
 
@@ -33,7 +33,7 @@ project (spec_RMAdmin) : ciao_client_dnc, ciao_deployment_stub, exceptions {
   exename = RMadmin
   after    += RepositoryManager
   after    += XSC_Config_Handlers
-  libs     += XSC_Config_Handlers
+  libs     += XSC_Config_Handlers RT_CCM_Config_Handlers
   libs     += CIAO_DnC_Client
 
   IDL_Files {
