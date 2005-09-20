@@ -54,9 +54,14 @@ ior_mcast_Client_i::init (int& argc,
 
       if (ret_value != 0)
         {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "The server has not been contacted. Error!!\n"),
+                             -1);
+        }
+      else
+        {
           ACE_DEBUG ((LM_DEBUG,
-                      "The server has not been contacted. Error!!\n",
-                      0));
+                      "The server has been successfully contacted!\n"));
         }
     }
   ACE_CATCH (CORBA::SystemException, ex)
