@@ -1,12 +1,13 @@
 //$Id$
 
 project (XSC_Config_Handlers) : acelib, ciao_deployment_stub, xerces {
+  after += RT_CCM_Config_Handlers
   sharedname = XSC_Config_Handlers
   dynamicflags   = CONFIG_HANDLERS_BUILD_DLL
   macros   += XML_USE_PTHREADS
   requires += exceptions
   includes += $(CIAO_ROOT)/tools/Config_Handlers
-
+  libs += CIAO_DnC_Container RT_CCM_Config_Handlers
   Source_Files {
     ccd.cpp
     cdd.cpp
