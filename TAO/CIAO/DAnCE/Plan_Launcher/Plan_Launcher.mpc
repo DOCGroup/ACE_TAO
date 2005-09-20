@@ -6,7 +6,7 @@ project(Plan_Launcher_Impl) : naming, ciao_server_dnc, xerces {
   sharedname = Plan_Launcher_Impl
   requires += exceptions
   after += XSC_Config_Handlers ExecutionManager_stub NodeDaemon_stub
-  libs     += XSC_Config_Handlers
+  libs     += XSC_Config_Handlers RT_CCM_Config_Handlers
   libs     += ExecutionManager_stub
 
   dynamicflags = PLAN_LAUNCHER_IMPL_BUILD_DLL
