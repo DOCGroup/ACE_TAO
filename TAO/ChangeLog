@@ -1,7 +1,15 @@
+Mon Sep 19 20:46:14 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
+
+	  Removed run-time assertions.  They generally shouldn't be used
+	  infrastructure code. Favor returning and checking error
+	  conditions and/or throwing exceptions instead.
+
 Mon Sep 19 16:11:12 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_home.cpp:
-        
+
           Added missing check for null before enqueueing a primary
           key valuetype into the queue to be checked after parsing.
           If there is no primary key specified, we don't want to
@@ -12,7 +20,7 @@ Mon Sep 19 14:50:00 UTC 2005  Simon Massey  <sma@prismtech.com>
 
         * tests/Bug_2234_Regression/server.cpp:
 
-        Elimiate unused exception macros.
+        Eliminate unused exception macros.
 
 Mon Sep 19 11:45:00 UTC 2005  Simon Massey  <sma@prismtech.com>
 

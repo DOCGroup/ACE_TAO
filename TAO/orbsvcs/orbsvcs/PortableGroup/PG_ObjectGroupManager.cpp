@@ -291,19 +291,25 @@ TAO_PG_ObjectGroupManager::remove_member (
         {
           // Give the GenericFactory a chance to delete a member if
           // its membership is under infrastructure control.
-          this->generic_factory_->delete_member (group_entry->group_id,
-                                                 the_location
-                                                 ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
+          if (this->generic_factory_)
+            {
+              this->generic_factory_->delete_member (group_entry->group_id,
+                                                     the_location
+                                                     ACE_ENV_ARG_PARAMETER);
+              ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
+            }
 
           if (member_infos.remove (info) == 0)
             {
-              this->generic_factory_->check_minimum_number_members (
-                object_group,
-                group_entry->group_id,
-                group_entry->type_id.in ()
-                ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
+              if (this->generic_factory_)
+                {
+                  this->generic_factory_->check_minimum_number_members (
+                    object_group,
+                    group_entry->group_id,
+                    group_entry->type_id.in ()
+                    ACE_ENV_ARG_PARAMETER);
+                  ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
+                }
 
               return PortableGroup::ObjectGroup::_duplicate (object_group);
             }
@@ -541,6 +547,9 @@ TAO_PG_ObjectGroupManager::create_object_group (
   const PortableGroup::Criteria & the_criteria
   ACE_ENV_ARG_DECL)
 {
+  if (CORBA::is_nil (this->poa_.in ()))
+    ACE_THROW_RETURN (CORBA::INTERNAL (), CORBA::Object::_nil ());
+
   // Create a reference for the ObjectGroup corresponding to the
   // RepositoryId of the object being created.
   CORBA::Object_var object_group =
@@ -661,9 +670,6 @@ TAO_PG_ObjectGroupManager::member_count (
 void
 TAO_PG_ObjectGroupManager::poa (PortableServer::POA_ptr p)
 {
-  ACE_ASSERT (CORBA::is_nil (this->poa_.in ())
-              && !CORBA::is_nil (p));
-
   this->poa_ = PortableServer::POA::_duplicate (p);
 }
 
@@ -807,8 +813,8 @@ TAO_PG_ObjectGroupManager::valid_type_id (
 {
   // @todo Strategize this -- e.g. strict type checking.
 
-  ACE_ASSERT (!CORBA::is_nil (member));  // This assertion should
-                                         // never be tripped.
+  if (CORBA::is_nil (member))
+    ACE_THROW_RETURN (CORBA::BAD_PARAM (), false);
 
   // Before we can use this code, i.e. the reverse lock, the
   // TAO_PG_ObjectGroup_Entry should be made so that it is reference
@@ -857,8 +863,6 @@ void
 TAO_PG_ObjectGroupManager::generic_factory (
   TAO_PG_GenericFactory * generic_factory)
 {
-  ACE_ASSERT (generic_factory != 0);
-
   this->generic_factory_ = generic_factory;
 }
 
