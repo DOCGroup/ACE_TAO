@@ -80,8 +80,8 @@ TAO_Default_Endpoint_Selector::select_endpoint (
                             dynamic_cast<TAO_IIOP_Endpoint *> (ep);
                           if (!iep->is_ipv6_decimal ())
                             {
-                              ACE_INET_Addr addr(iep->port (),
-                                                 iep->host ());
+                              const ACE_INET_Addr &addr = iep->object_addr ();
+
                               if (test_ipv6)
                                 try_ep =
                                   addr.get_type () == AF_INET6 &&
@@ -89,7 +89,8 @@ TAO_Default_Endpoint_Selector::select_endpoint (
                               else
                                 try_ep =
                                   addr.get_type () == AF_INET ||
-                                    addr.is_ipv4_mapped_ipv6();
+                                    (addr.get_type () == AF_INET6 &&
+                                      addr.is_ipv4_mapped_ipv6());
                             }
                         }
 
