@@ -2,7 +2,8 @@
 // $Id$
 
 #include "ace/Global_Macros.h"
-#include "ACE.h"
+#include "ace/ACE.h"
+
 ACE_INLINE
 ACE_Pipe::~ACE_Pipe (void)
 {
@@ -23,7 +24,6 @@ ACE_Pipe::write_handle (void) const
   ACE_TRACE ("ACE_Pipe::write_handle");
   return this->handles_[1];
 }
-
 
 ACE_INLINE ssize_t
 ACE_Pipe::sendv_n (const iovec iov[], int n) const
