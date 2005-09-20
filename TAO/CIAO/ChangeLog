@@ -1,3 +1,9 @@
+Tue Sep 20 09:50:28 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+
+	  Modified to kill all NodeApplication processes when the deployment fails.
+
 Tue Sep 20 09:35:28 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/Plan_Launcher/Plan_Launcher.mpc

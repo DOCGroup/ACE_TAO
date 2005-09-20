@@ -512,7 +512,24 @@ finishLaunch (::CORBA::Boolean start
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "DomainApplicationManager_Impl::finishLaunch\t\n");
+                           "DomainApplicationManager_Impl::finishLaunch: Killing NodeApplications.\n");
+      // Invoke destroyManager() operation on each cached
+      // NodeManager object.
+      for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
+        {
+          // Get the NodeManager and NodeApplicationManager object references.
+          ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> * entry;
+          this->artifact_map_.find (this->node_manager_names_[i],entry);
+
+          ::Deployment::NodeApplicationManager_ptr my_node_application_manager =
+                  (entry->int_id_).node_application_manager_.in ();
+
+          // Invoke destoryApplication() operation on the NodeApplicationManger.
+          // Since we have the first arg is not used by NAM anyway.
+          my_node_application_manager->destroyApplication (0
+                                                           ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+        }
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
@@ -863,7 +880,7 @@ get_outgoing_connections_i (const char * instname,
                   error += curr_conn.name.in ();
                   ACE_THROW_RETURN (Deployment::StartError ("DomainApplicationManager_Impl::create_connections_i",
 							    error.c_str ()),
-				    false);
+				          false);
                 }
                   
               break; // We know we have found the connection so even we are still on
