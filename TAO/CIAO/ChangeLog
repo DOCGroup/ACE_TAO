@@ -1,3 +1,9 @@
+Tue Sep 20 10:07:43 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/new_RepositoryManager/new_RepositoryManager.mpc
+
+	Added a missing library.
+
 Tue Sep 20 09:50:28 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
