@@ -13,8 +13,14 @@ interface sface {};
 interface pface {};
 interface uface {};
 interface umface {};
-valuetype pkey {};
-eventtype pubtype : pkey {};
+
+valuetype pkey : Components::PrimaryKeyBase
+{
+  public string info;
+};
+
+valuetype pubtype_base {};
+eventtype pubtype : pubtype_base {};
 eventtype emitype : pubtype {};
 eventtype eattype {};
 
