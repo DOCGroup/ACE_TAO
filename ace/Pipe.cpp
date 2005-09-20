@@ -5,6 +5,7 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_sys_socket.h"
+#include "ace/OS_Memory.h"
 
 #if defined (ACE_HAS_STREAM_PIPES) || defined (__QNX__)
 #  include "ace/OS_NS_unistd.h"
@@ -239,5 +240,96 @@ ACE_Pipe::close (void)
     result |= ACE_OS::closesocket (this->handles_[1]);
   this->handles_[1] = ACE_INVALID_HANDLE;
 
+  return result;
+}
+
+// Send N char *ptrs and int lengths.  Note that the char *'s precede
+// the ints (basically, an varargs version of writev).  The count N is
+// the *total* number of trailing arguments, *not* a couple of the
+// number of tuple pairs!
+
+ssize_t
+ACE_Pipe::send (size_t n, ...) const
+{
+  ACE_TRACE ("ACE_Pipe::send");
+  va_list argp;
+  int total_tuples = (static_cast<int> (n)) / 2;
+  iovec *iovp;
+#if defined (ACE_HAS_ALLOCA)
+  iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
+#else
+  ACE_NEW_RETURN (iovp,
+                  iovec[total_tuples],
+                  -1);
+#endif /* !defined (ACE_HAS_ALLOCA) */
+
+  va_start (argp, n);
+
+  for (int i = 0; i < total_tuples; i++)
+    {
+      iovp[i].iov_base = va_arg (argp, char *);
+      iovp[i].iov_len  = va_arg (argp, int);
+    }
+
+#if defined (ACE_WIN32)
+  ssize_t result = ACE::sendv (this->write_handle (),
+                               iovp,
+                               total_tuples);
+#else
+  ssize_t result = ACE_OS::writev (this->write_handle (),
+                                   iovp,
+                                   total_tuples);
+#endif /* ACE_WIN32 */
+
+#if !defined (ACE_HAS_ALLOCA)
+  delete [] iovp;
+#endif /* !defined (ACE_HAS_ALLOCA) */
+  va_end (argp);
+  return result;
+}
+
+// This is basically an interface to ACE_OS::readv, that doesn't use
+// the struct iovec explicitly.  The ... can be passed as an arbitrary
+// number of (char *ptr, int len) tuples.  However, the count N is the
+// *total* number of trailing arguments, *not* a couple of the number
+// of tuple pairs!
+
+ssize_t
+ACE_Pipe::recv (size_t n, ...) const
+{
+  ACE_TRACE ("ACE_Pipe::recv");
+  va_list argp;
+  int total_tuples = static_cast<int> (n / 2);
+  iovec *iovp;
+#if defined (ACE_HAS_ALLOCA)
+  iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
+#else
+  ACE_NEW_RETURN (iovp,
+                  iovec[total_tuples],
+                  -1);
+#endif /* !defined (ACE_HAS_ALLOCA) */
+
+  va_start (argp, n);
+
+  for (int i = 0; i < total_tuples; i++)
+    {
+      iovp[i].iov_base = va_arg (argp, char *);
+      iovp[i].iov_len  = va_arg (argp, int);
+    }
+
+#if defined (ACE_WIN32)
+  ssize_t result = ACE::recvv (this->read_handle (),
+                               iovp,
+                               total_tuples);
+#else
+  ssize_t result = ACE_OS::readv (this->read_handle (),
+                                  iovp,
+                                  total_tuples);
+#endif /* ACE_WIN32 */
+
+#if !defined (ACE_HAS_ALLOCA)
+  delete [] iovp;
+#endif /* !defined (ACE_HAS_ALLOCA) */
+  va_end (argp);
   return result;
 }

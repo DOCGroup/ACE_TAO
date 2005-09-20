@@ -38,6 +38,7 @@ TAO_CEC_Reactive_ConsumerControl::
     retries_ (retries),
     adapter_ (this),
     event_channel_ (ec),
+    typed_event_channel_ (0),
     orb_ (CORBA::ORB::_duplicate (orb))
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
    // Initialise timer_id_ to an invalid timer id, so that in case we don't
@@ -60,6 +61,7 @@ TAO_CEC_Reactive_ConsumerControl::
     timeout_ (timeout),
     retries_ (retries),
     adapter_ (this),
+    event_channel_ (0),
     typed_event_channel_ (ec),
     orb_ (CORBA::ORB::_duplicate (orb))
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
