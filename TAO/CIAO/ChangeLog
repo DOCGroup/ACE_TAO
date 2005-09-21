@@ -1,3 +1,10 @@
+Wed Sep 21 13:34:28 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* tools/Config_Handlers/RT-CCM/test.cpp
+
+	  Modified so the output XML file is based on the XSC dom document
+	  instead from the input file directly.
+
 Tue Sep 20 21:58:23 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL3/ImpliedIDL/All/convert.idl:
