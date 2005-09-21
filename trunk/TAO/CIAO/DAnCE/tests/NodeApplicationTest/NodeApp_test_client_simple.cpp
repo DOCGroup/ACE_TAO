@@ -119,6 +119,7 @@ main (int argc, char *argv[])
       CORBA::Long input = 1L;
       CORBA::Long output =
         roundtrip_var->cube_long (input ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       if (input == output)
         ACE_DEBUG ((LM_DEBUG, "Retrun values matched!!\n"));
