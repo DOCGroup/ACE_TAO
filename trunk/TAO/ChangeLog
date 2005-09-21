@@ -1,11 +1,17 @@
+Wed Sep 21 08:06:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/CallbackTest/Callback{.h .cpp}:
+
+          Fixed compile errors.
+
 Tue Sep 20 17:23:37 2005  Arvind S. Krishna  <arvindk@doc.dre.vanderbilt.edu>
 
-	* tao/Connection_Handler.inl:
-	* tao/GIOP_Message_Base.cpp:
-	* tao/PortableServer/Servant_Base.cpp:
+        * tao/Connection_Handler.inl:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/PortableServer/Servant_Base.cpp:
 
-	  Added hooks in the source file to enable aggressive
-	  specialization of request processing in certain conditions. 
+          Added hooks in the source file to enable aggressive
+          specialization of request processing in certain conditions.
 
 Tue Sep 20 21:18:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
