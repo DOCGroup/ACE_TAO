@@ -8,11 +8,11 @@ Tue Sep 20 21:58:23 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Sep 20 02:25:34 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-  * tools/Config_Handlers/Config_Handlers.mpc
+        * tools/Config_Handlers/Config_Handlers.mpc
   
-  Quick fix for a build problem on Windows.  A better solution will 
-  follow when I check in my CIAO build system revamp.
-  
+          Quick fix for a build problem on Windows.  A better solution
+ 	  will follow when I check in my CIAO build system revamp.
+	
 Tue Sep 20 10:19:46 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* tools/Config_Handlers/test.cdp
