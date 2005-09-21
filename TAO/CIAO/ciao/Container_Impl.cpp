@@ -156,14 +156,17 @@ CIAO::Container_Impl::install (
 
                  // Register the component with the naming service
                  ACE_DEBUG ((LM_DEBUG, "Register component with naming service.\n"));
-                 if (! register_with_ns (naming_context,
-                                         this->orb_.in (),
-                                         comp.in ()
-                                         ACE_ENV_ARG_PARAMETER))
+                 bool result = register_with_ns (naming_context,
+                                                 this->orb_.in (),
+                                                 comp.in ()
+                                                 ACE_ENV_ARG_PARAMETER);
+                 ACE_TRY_CHECK;
+
+                 if (!result)
                    {
                      ACE_DEBUG ((LM_DEBUG, "Failed to register with naming service.\n"));
                    }
-                 ACE_TRY_CHECK;
+
                }
 
              // Initialize attributes through StandardConfigurator interface

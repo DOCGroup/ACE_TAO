@@ -82,18 +82,20 @@ CIAO::NodeApplication_Task::svc ()
        * 1. call init remotely from NodeApplicationManager
        * 2. call init locally on the servant of NodeApplication.
        */
-
-      if (nodeapp_servant->init (ACE_ENV_SINGLE_ARG_PARAMETER))
+      bool retval = nodeapp_servant->init (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      
+      if (retval)
       {
 	ACE_DEBUG ((LM_DEBUG, "NodeApplication Failed on creating and\
                                initializing the session container!"));
 	return 1;
       }
-      ACE_TRY_CHECK;
-
+      
       CORBA::String_var str = this->orb_->object_to_string (nodeapp_obj.in ()
                                                             ACE_ENV_ARG_PARAMETER);
-
+      ACE_TRY_CHECK;
+      
       if (this->options_.ior_output_filename_.length () != 0)
         CIAO::Utility::write_IOR (this->options_.ior_output_filename_.c_str (),
                                   str.in ());

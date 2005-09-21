@@ -48,6 +48,7 @@ namespace CIDL_Sender_Impl
     Hello::TimeOut_var event = new OBV_Hello::TimeOut;
     ACE_DEBUG ((LM_DEBUG, "Sender 2 initiates the process.\n"));
     this->context_->push_click_out (event ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
   }
 
   void

@@ -1,3 +1,35 @@
+Wed Sep 21 15:32:38 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+	* DAnCE/ExecutionManager/Execution_Manager.cpp
+	* DAnCE/ExecutionManager/Execution_Manager_Impl.cpp
+	* DAnCE/NodeApplication/NodeApplication.cpp
+	* DAnCE/RTNodeApplication/NodeApplication_Task.cpp
+	* DAnCE/RepositoryManager/Repository_Manager.cpp
+	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp
+	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp
+	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp
+	* ciao/Container_Base.cpp
+	* ciao/Container_Impl.cpp
+	* ciao/Servant_Activator.cpp
+	* ciao/Servant_Impl_T.cpp
+	* ciao/Swapping_Container.cpp
+	* ciao/Swapping_Servant_Home_Impl_T.cpp
+	* ciao/Upgradeable_Context_Impl_T.cpp
+	* docs/templates/CIAO_Glue_Session_Template.cpp
+	* examples/Hello/Sender/Sender_exec.cpp
+	* examples/Swapping/Receiver/Receiver_exec.cpp
+	* examples/Swapping/Sender/Sender_exec.cpp
+	* examples/Swapping/Sender/Sender_exec_1.cpp
+	* examples/Swapping/Sender/Sender_exec_2.cpp
+
+	Fixed numerous emulated exception errors.
+	
+	* DAnCE/ExecutionManager/ExecutionManager_Impl.cpp
+	* DAnCE/ExecutionManager/ExecutionManager_Impl.h
+
+	removed obsolete EM implementation.
+	
 Wed Sep 21 13:34:28 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* tools/Config_Handlers/RT-CCM/test.cpp

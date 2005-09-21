@@ -492,6 +492,7 @@ namespace CIAO
 
     tmp->deactivate_object (oid.in ()
                             ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
   }
 
   void
@@ -518,6 +519,7 @@ namespace CIAO
 
     tmp->deactivate_object (oid.in ()
                             ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
   }
 
   void
