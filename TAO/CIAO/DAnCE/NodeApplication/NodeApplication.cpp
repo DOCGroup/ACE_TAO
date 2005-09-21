@@ -154,18 +154,20 @@ main (int argc, char *argv[])
        * 1. call init remotely from NodeApplicationManager
        * 2. call init locally on the servant of NodeApplication.
        */
-
-      if (nodeapp_servant->init (ACE_ENV_SINGLE_ARG_PARAMETER))
+      bool result = nodeapp_servant->init (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      
+      if (result)
       {
         ACE_DEBUG ((LM_DEBUG, "NodeApplication Failed on creating and\
                                initializing the session container!"));
         return 1;
       }
-      ACE_TRY_CHECK;
 
       CORBA::String_var str = orb->object_to_string (nodeapp_obj.in ()
                                                      ACE_ENV_ARG_PARAMETER);
-
+      ACE_TRY_CHECK;
+      
       CIAO::Utility::write_IOR (ior_file_name,
                                 str.in ());
 

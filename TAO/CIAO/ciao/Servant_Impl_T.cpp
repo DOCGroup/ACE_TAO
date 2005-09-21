@@ -45,6 +45,7 @@ namespace CIAO
               if (! ::CORBA::is_nil (scom.in ()))
                 {
                   scom->ccm_remove (ACE_ENV_SINGLE_ARG_PARAMETER);
+                  ACE_TRY_CHECK;
                 }
             }
             ACE_CATCHANY
@@ -172,14 +173,14 @@ namespace CIAO
   {
     if (this->is_activated () == 0)
       {
-        this->ciao_preactivate (
-                ACE_ENV_SINGLE_ARG_PARAMETER);
+        this->ciao_preactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_CHECK;
 
-        this->ciao_activate (
-                ACE_ENV_SINGLE_ARG_PARAMETER);
+        this->ciao_activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_CHECK;
 
-        this->ciao_postactivate (
-                ACE_ENV_SINGLE_ARG_PARAMETER);
+        this->ciao_postactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_CHECK;
       }
   }
 
@@ -206,6 +207,7 @@ namespace CIAO
           {
             this->pre_activated_ = 1;
             temp->ciao_preactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+            ACE_CHECK;
           }
       }
   }
@@ -232,6 +234,7 @@ namespace CIAO
           {
             this->activated_ = 1;
             temp->ccm_activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+            ACE_CHECK;
           }
       }
   }
@@ -259,6 +262,7 @@ namespace CIAO
           {
             this->post_activated_ = 1;
             temp->ciao_postactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+            ACE_CHECK;
           }
       }
   }
@@ -296,6 +300,7 @@ namespace CIAO
 
     if (! ::CORBA::is_nil (temp.in ()))
       temp->ccm_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
   }
 }
 

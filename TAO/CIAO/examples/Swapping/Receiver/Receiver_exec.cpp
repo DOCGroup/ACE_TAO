@@ -127,6 +127,7 @@ namespace CIDL_Receiver_Impl
 
     Hello::Receiver_var receiver = Hello::Receiver::_narrow (comp_object.in ()
                                                       ACE_ENV_ARG_PARAMETER);
+                                                      ACE_CHECK;
 
     ::Components::ConsumerDescriptions_var cons_desc =
       receiver->get_all_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);

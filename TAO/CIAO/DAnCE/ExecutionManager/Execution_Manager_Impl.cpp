@@ -117,6 +117,7 @@ namespace CIAO
 
           this->poa_->deactivate_object (oid.in ()
                                          ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 #endif /*if 0*/
         }
       ACE_CATCHANY
@@ -136,6 +137,7 @@ namespace CIAO
       CIAO_TRACE("Execution_Manager::Execution_Manager_Impl::shutdown");
       // Shutdown the ORB on which it is runing
       this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
     }
   }
 }

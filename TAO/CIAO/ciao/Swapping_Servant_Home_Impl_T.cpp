@@ -228,7 +228,8 @@ namespace CIAO
           (ec, home.in (), this->ins_name_, this, this->container_);
 
     this->container_->add_servant_map (oid, svt ACE_ENV_ARG_PARAMETER);
-
+    ACE_CHECK;
+    
     this->dynamic_servant_map_.bind (oid, svt);
 
     COMP_VAR ho = COMP::_narrow (objref.in ()

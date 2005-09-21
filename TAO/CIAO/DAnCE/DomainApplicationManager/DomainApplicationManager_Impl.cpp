@@ -486,6 +486,7 @@ finishLaunch (::CORBA::Boolean start
           Deployment::Connections * my_connections =
             this->get_outgoing_connections ((entry->int_id_).child_plan_.in ()
 					    ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
           if (my_connections == 0)
             ACE_THROW (Deployment::StartError ("DomainApplicationManager_Impl::finish_launch",

@@ -32,6 +32,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       argv,
                       ""
                       ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
 
   // top level package URL
   char* package_url = 0;

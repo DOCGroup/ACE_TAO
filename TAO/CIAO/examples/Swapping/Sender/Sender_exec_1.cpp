@@ -49,6 +49,7 @@ namespace CIDL_Sender_Impl
     Hello::TimeOut_var event = new OBV_Hello::TimeOut;
     ACE_DEBUG ((LM_DEBUG, "Sender 1 initiates the process.\n"));
     this->context_->push_click_out (event ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
   }
 
   void
@@ -89,6 +90,7 @@ namespace CIDL_Sender_Impl
 
     CORBA::Object_var o =
       this->context_->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
   }
 
   void
@@ -110,14 +112,18 @@ namespace CIDL_Sender_Impl
     Components::ConsumerDescriptions_var retval =
       this->context_->get_registered_consumers ("click_out"
         ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    
     this->base_exec_->consumers (retval._retn ());
 
     CORBA::Object_var o =
       this->context_->get_CCM_object (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
 
     Hello::Sender_var sender =
       Hello::Sender::_narrow (o.in ()
                               ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
 
     Components::FacetDescriptions_var facets =
         sender->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -133,7 +139,10 @@ namespace CIDL_Sender_Impl
         ACE_CHECK;
         /*
         this->context_->update_port_activator (oid ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+
         this->context_->deactivate_facet (oid ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
         */
       }
 

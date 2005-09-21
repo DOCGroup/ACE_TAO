@@ -222,6 +222,7 @@ main (int argc, char *argv[])
 
           CORBA::Long output =
             (comp_list[i])->cube_long (input ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
           if (input*input*input == output)
             {
