@@ -79,10 +79,7 @@ int main (int argc, char *argv[])
     ServerResources (*reverse_handler.srd_xsc (), the_xsc);
     
     // write out the result
-    the_helper.write_DOM (doc, "test.srd");
-    
-    delete doc;
-    
+    the_helper.write_DOM (the_xsc, "output.srd");
   }
   
   std::cout << "Test completed!";
