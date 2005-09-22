@@ -16,7 +16,7 @@
 
 #include "Factory_Finder.h"
 
-ACE_RCSID (Quoter, 
+ACE_RCSID (Quoter,
 
            Factory_Finder, "$Id$")
 
@@ -57,14 +57,16 @@ Quoter_Factory_Finder_Server::init (int argc,
   ACE_TRY
     {
       exception_message = "While ORB_Manager::init";
-      if (this->orb_manager_.init (argc,
-                                   argv
-                                   ACE_ENV_ARG_PARAMETER) == -1)
+      int initvalue = this->orb_manager_.init (argc,
+                                               argv
+                                               ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (initvalue == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "init"),
                           -1);
-      ACE_TRY_CHECK;
 
       // Activate the POA manager
       exception_message = "While activating the POA manager";

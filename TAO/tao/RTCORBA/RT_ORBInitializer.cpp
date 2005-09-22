@@ -37,7 +37,7 @@ ACE_RCSID (RTCORBA,
 #include "ace/Sched_Params.h"
 
 static const char *rt_poa_factory_name = "TAO_RT_Object_Adapter_Factory";
-static const char *rt_poa_factory_directive =
+static const ACE_TCHAR *rt_poa_factory_directive =
   ACE_DYNAMIC_SERVICE_DIRECTIVE(
     "TAO_RT_Object_Adapter_Factory",
     "TAO_RTPortableServer",
@@ -85,7 +85,7 @@ TAO_RT_ORBInitializer::pre_init (
 
   // If the application resolves the root POA, make sure we load the RT POA.
   TAO_ORB_Core::set_poa_factory (rt_poa_factory_name,
-                                 rt_poa_factory_directive);
+                                 ACE_TEXT_ALWAYS_CHAR (rt_poa_factory_directive));
 
   // Create the initial priority mapping instance.
   TAO_Priority_Mapping *pm = 0;

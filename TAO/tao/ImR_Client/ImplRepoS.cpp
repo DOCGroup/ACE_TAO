@@ -29,8 +29,8 @@
 // TAO_IDL - Generated from 
 // be\be_codegen.cpp:553
 
-#ifndef _TAO_IDL_IMPLREPOS_CPP_
-#define _TAO_IDL_IMPLREPOS_CPP_
+#ifndef _TAO_IDL_ORIG_IMPLREPOS_CPP_
+#define _TAO_IDL_ORIG_IMPLREPOS_CPP_
 
 
 #include "ImplRepoS.h"
@@ -288,7 +288,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1465
+// be\be_interface.cpp:1513
 
 class TAO_ImplementationRepository_ServerInformationIterator_Perfect_Hash_OpTable
   : public TAO_Perfect_Hash_OpTable
@@ -467,7 +467,7 @@ POA_ImplementationRepository::_TAO_ServerInformationIterator_Strategized_Proxy_B
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:921
+// be\be_visitor_interface/interface_ss.cpp:924
 
 TAO::Collocation_Proxy_Broker *
 ImplementationRepository__TAO_ServerInformationIterator_Proxy_Broker_Factory_function ( ::CORBA::Object_ptr)
@@ -612,13 +612,12 @@ namespace POA_ImplementationRepository
           this->args_,
           2);
         
-      
       retval =
         this->servant_->next_n (
           arg_1
           , arg_2
           ACE_ENV_ARG_PARAMETER);
-        
+      ACE_CHECK;
     }
   
   private:
@@ -703,7 +702,7 @@ namespace POA_ImplementationRepository
     {
       this->servant_->destroy (
         ACE_ENV_SINGLE_ARG_PARAMETER);
-      
+      ACE_CHECK;
     }
   
   private:
@@ -797,12 +796,11 @@ namespace POA_ImplementationRepository
           this->args_,
           1);
         
-      
       retval =
         this->servant_-> _is_a (
           arg_1
           ACE_ENV_ARG_PARAMETER);
-        
+      ACE_CHECK;
     }
   
   private:
@@ -888,11 +886,10 @@ namespace POA_ImplementationRepository
           this->operation_details_,
           this->args_);
       
-      
       retval =
         this->servant_-> _non_existent (
           ACE_ENV_SINGLE_ARG_PARAMETER);
-        
+      ACE_CHECK;
     }
   
   private:
@@ -976,11 +973,10 @@ namespace POA_ImplementationRepository
           this->operation_details_,
           this->args_);
       
-      
       retval =
         this->servant_-> _repository_id (
           ACE_ENV_SINGLE_ARG_PARAMETER);
-        
+      ACE_CHECK;
     }
   
   private:
@@ -1112,11 +1108,10 @@ namespace POA_ImplementationRepository
           this->operation_details_,
           this->args_);
       
-      
       retval =
         this->servant_-> _get_component (
           ACE_ENV_SINGLE_ARG_PARAMETER);
-        
+      ACE_CHECK;
     }
   
   private:
@@ -1243,7 +1238,7 @@ POA_ImplementationRepository::ServerInformationIterator::_this (ACE_ENV_SINGLE_A
 }
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1465
+// be\be_interface.cpp:1513
 
 class TAO_ImplementationRepository_Administration_Perfect_Hash_OpTable
   : public TAO_Perfect_Hash_OpTable
@@ -1430,7 +1425,7 @@ POA_ImplementationRepository::_TAO_Administration_Strategized_Proxy_Broker::disp
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:921
+// be\be_visitor_interface/interface_ss.cpp:924
 
 TAO::Collocation_Proxy_Broker *
 ImplementationRepository__TAO_Administration_Proxy_Broker_Factory_function ( ::CORBA::Object_ptr)
@@ -1734,7 +1729,7 @@ namespace POA_ImplementationRepository
       this->servant_->activate_server (
         arg_1
         ACE_ENV_ARG_PARAMETER);
-      
+      ACE_CHECK;
     }
   
   private:
@@ -1839,7 +1834,7 @@ namespace POA_ImplementationRepository
         arg_1
         , arg_2
         ACE_ENV_ARG_PARAMETER);
-      
+      ACE_CHECK;
     }
   
   private:
@@ -1938,7 +1933,7 @@ namespace POA_ImplementationRepository
       this->servant_->remove_server (
         arg_1
         ACE_ENV_ARG_PARAMETER);
-      
+      ACE_CHECK;
     }
   
   private:
@@ -2035,7 +2030,7 @@ namespace POA_ImplementationRepository
       this->servant_->shutdown_server (
         arg_1
         ACE_ENV_ARG_PARAMETER);
-      
+      ACE_CHECK;
     }
   
   private:
@@ -2146,7 +2141,7 @@ namespace POA_ImplementationRepository
         , arg_2
         , arg_3
         ACE_ENV_ARG_PARAMETER);
-      
+      ACE_CHECK;
     }
   
   private:
@@ -2247,7 +2242,7 @@ namespace POA_ImplementationRepository
       this->servant_->server_is_shutting_down (
         arg_1
         ACE_ENV_ARG_PARAMETER);
-      
+      ACE_CHECK;
     }
   
   private:
@@ -2351,7 +2346,7 @@ namespace POA_ImplementationRepository
         arg_1
         , arg_2
         ACE_ENV_ARG_PARAMETER);
-      
+      ACE_CHECK;
     }
   
   private:
@@ -2461,7 +2456,7 @@ namespace POA_ImplementationRepository
         , arg_2
         , arg_3
         ACE_ENV_ARG_PARAMETER);
-      
+      ACE_CHECK;
     }
   
   private:
@@ -2566,7 +2561,7 @@ namespace POA_ImplementationRepository
         arg_1
         , arg_2
         ACE_ENV_ARG_PARAMETER);
-      
+      ACE_CHECK;
     }
   
   private:
@@ -2668,12 +2663,11 @@ namespace POA_ImplementationRepository
           this->args_,
           1);
         
-      
       retval =
         this->servant_-> _is_a (
           arg_1
           ACE_ENV_ARG_PARAMETER);
-        
+      ACE_CHECK;
     }
   
   private:
@@ -2759,11 +2753,10 @@ namespace POA_ImplementationRepository
           this->operation_details_,
           this->args_);
       
-      
       retval =
         this->servant_-> _non_existent (
           ACE_ENV_SINGLE_ARG_PARAMETER);
-        
+      ACE_CHECK;
     }
   
   private:
@@ -2847,11 +2840,10 @@ namespace POA_ImplementationRepository
           this->operation_details_,
           this->args_);
       
-      
       retval =
         this->servant_-> _repository_id (
           ACE_ENV_SINGLE_ARG_PARAMETER);
-        
+      ACE_CHECK;
     }
   
   private:
@@ -2983,11 +2975,10 @@ namespace POA_ImplementationRepository
           this->operation_details_,
           this->args_);
       
-      
       retval =
         this->servant_-> _get_component (
           ACE_ENV_SINGLE_ARG_PARAMETER);
-        
+      ACE_CHECK;
     }
   
   private:

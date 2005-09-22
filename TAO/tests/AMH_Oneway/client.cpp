@@ -59,8 +59,9 @@ main (int argc, char *argv[])
       for (int i = 0; i < num_calls; i++)
         {
           roundtrip->test_method (time ACE_ENV_ARG_PARAMETER);
-          ACE_DEBUG ((LM_DEBUG, "Sent call # %d \n", i));
           ACE_TRY_CHECK;
+
+          ACE_DEBUG ((LM_DEBUG, "Sent call # %d \n", i));
         }
     }
   ACE_CATCHANY
