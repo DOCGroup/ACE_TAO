@@ -1050,9 +1050,12 @@ sub check_for_ace_check ()
 
                 if ($disable == 0) {
                     if (m/\s*ACE_ENV_(SINGLE_)?ARG_PARAMETER[,\)]/) {
+                        $env_line = $line;
+                        if ($found_env) {
+                            print_error ("Missing ACE_CHECK/ACE_TRY_CHECK for $file ($env_line)");
+                        }
                         $found_env = 1;
                         $in_func = 1;
-                        $env_line = $line;
                     }
 
                     if (m/^\s*return/) {

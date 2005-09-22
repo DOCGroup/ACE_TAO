@@ -560,9 +560,9 @@ ACE_SOCK_Dgram::set_nic (const ACE_TCHAR *net_if,
             return -1;
         }
       else if (this->ACE_SOCK::set_option (IPPROTO_IP,
-                                      IP_MULTICAST_IF,
-                                      &(send_mreq.imr_interface),
-                                      sizeof send_mreq.imr_interface) == -1)
+                                           IP_MULTICAST_IF,
+                                           &(send_mreq.imr_interface),
+                                           sizeof send_mreq.imr_interface) == -1)
         {
           if (!ipv6_mif_set)
             return -1;
