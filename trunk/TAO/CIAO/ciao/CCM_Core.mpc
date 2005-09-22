@@ -52,7 +52,7 @@ project (CIAO_DnC_Container) : orbsvcslib, portableserver, security, valuetype, 
     CCM_Container_Ex.idl
     SwapExec.idl
     UpgradeableContext.idl
-    ServerResources.idl
+    // ServerResources.idl
   }
 
   Source_Files {
@@ -66,8 +66,6 @@ project (CIAO_DnC_Container) : orbsvcslib, portableserver, security, valuetype, 
     SwapExecC.cpp
     UpgradeableContextC.cpp
     Cookies.cpp
-    ServerResourcesS.cpp
-    ServerResourcesC.cpp
   }
 
 }
@@ -97,6 +95,7 @@ project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client {
     Deployment_Data.idl
     Packaging_Data.idl
     Deployment.idl
+    ServerResources.idl
   }
 
   Source_Files {
@@ -106,6 +105,7 @@ project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client {
     Packaging_DataC.cpp
     DeploymentC.cpp
     NodeApplication_CallBackC.cpp
+    ServerResourcesC.cpp
   }
 }
 
@@ -135,6 +135,7 @@ project(Deployment_svnt) : taolib_with_idl, portableserver, valuetype, ifr_clien
     DeploymentS.cpp
     NodeApp_CB_Impl.cpp
     NodeApplication_CallBackS.cpp
+    ServerResourcesS.cpp
   }
 
 }
