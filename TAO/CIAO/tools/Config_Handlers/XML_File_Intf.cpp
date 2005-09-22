@@ -7,7 +7,7 @@
 #endif
 
 #include "XML_File_Intf.h"
-#include "XML_Helper.h"
+#include "Utils/XML_Helper.h"
 #include "Deployment.hpp"
 #include "DP_Handler.h"
 #include "ciao/Deployment_DataC.h"

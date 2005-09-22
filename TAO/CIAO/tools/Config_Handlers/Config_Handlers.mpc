@@ -1,13 +1,12 @@
 //$Id$
 
-project (XSC_Config_Handlers) : acelib, ciao_deployment_stub, xerces {
-  after += RT_CCM_Config_Handlers
-  sharedname = XSC_Config_Handlers
-  dynamicflags   = CONFIG_HANDLERS_BUILD_DLL
-  macros   += XML_USE_PTHREADS
-  requires += exceptions
+project (XSC_XML_Handlers) : acelib, xerces {
+  sharedname    += XSC_XML_Handlers
+  dynamicflags  = CONFIG_HANDLERS_BUILD_DLL
+  macros       += XML_USE_PTHREADS
+  requires     += exceptions
   includes += $(CIAO_ROOT)/tools/Config_Handlers
-  libs += CIAO_DnC_Container RT_CCM_Config_Handlers
+
   Source_Files {
     ccd.cpp
     cdd.cpp
@@ -19,6 +18,19 @@ project (XSC_Config_Handlers) : acelib, ciao_deployment_stub, xerces {
     pcd.cpp
     toplevel.cpp
     Basic_Deployment_Data.cpp
+  }
+}
+
+project (XSC_Config_Handlers) : acelib, ciao_deployment_stub, xerces {
+  after += RT_CCM_Config_Handlers
+  sharedname = XSC_Config_Handlers
+  dynamicflags   = CONFIG_HANDLERS_BUILD_DLL
+  macros   += XML_USE_PTHREADS
+  requires += exceptions
+  includes += $(CIAO_ROOT)/tools/Config_Handlers
+  libs += CIAO_XML_Utils RT_CCM_Config_Handlers XSC_XML_Handlers
+
+  Source_Files {
     DP_Handler.cpp
     CCD_Handler.cpp
     Property_Handler.cpp
@@ -43,8 +55,6 @@ project (XSC_Config_Handlers) : acelib, ciao_deployment_stub, xerces {
     ComponentPropertyDescription_Handler.cpp
     RDD_Handler.cpp
     ID_Handler.cpp
-    XML_Error_Handler.cpp
-    XML_Helper.cpp
     XML_File_Intf.cpp
     IDREF_Base.cpp
     DnC_Dump.cpp
@@ -55,7 +65,6 @@ project (XSC_Config_Handlers) : acelib, ciao_deployment_stub, xerces {
     STD_IAD_Handler.cpp
     STD_PC_Intf.cpp
     STD_PCD_Handler.cpp
-    XercesString.cpp
     PCD_Handler.cpp
     IRDD_Handler.cpp
   }
@@ -64,16 +73,11 @@ project (XSC_Config_Handlers) : acelib, ciao_deployment_stub, xerces {
   }
 }
 
-project (XSC_Config_Handlers_Tests) : ciao_deployment_stub,xerces {
-
+project (XSC_Config_Handlers_Tests) : ciao_config_handlers, ifr_client {
   requires += dummy_label
   exename = test
-  after    += XSC_Config_Handlers
   dynamicflags   = CONFIG_HANDLERS_BUILD_DLL
   macros   += XML_USE_PTHREADS
-  requires += exceptions
-  libs     += CIAO_DnC_Server TAO_IFR_Client XSC_Config_Handlers RT_CCM_Config_Handlers
-  includes += $(CIAO_ROOT)/tools/Config_Handlers
 
   Source_Files {
     test.cpp
