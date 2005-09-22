@@ -1,3 +1,13 @@
+Thu Sep 22 12:40:20 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* m4/ace.m4:
+
+	  Set BUILD_TAO_FLRESOURCE, BUILD_TAO_QTRESOURCE,
+	  BUILD_TAO_TKRESOURCE, and BUILD_TAO_XTRESOURCE automake
+	  conditionals if --enable-fl-reactor, --enable-qt-reactor,
+	  --enable-tk-reactor, or --enable-xt-reactor are specified
+	  at configure time.
+
 Thu Sep 22 08:40:00 UTC 2005  Simon Massey  <simon.massey@prismtech.com>
 
         * tests/run_test.lst:
