@@ -74,7 +74,7 @@ Service::call_are_you_there (Test::Callback_ptr callback
       CORBA::String_out out_str (outstr);
       ACE_TRY
         {
-          (void) callback->are_you_there (out_str ACE_ENV_SINGLE_ARG_PARAMETER);
+          (void) callback->are_you_there (out_str ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY
