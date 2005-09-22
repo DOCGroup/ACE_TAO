@@ -28,8 +28,8 @@
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:154
 
-#ifndef _TAO_IDL_IMPLREPOC_H_
-#define _TAO_IDL_IMPLREPOC_H_
+#ifndef _TAO_IDL_ORIG_IMPLREPOC_H_
+#define _TAO_IDL_ORIG_IMPLREPOC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -112,9 +112,6 @@ namespace ImplementationRepository
         ACE_ENV_ARG_DECL
       );
     
-    // TAO_IDL - Generated from
-    // be\be_visitor_exception/exception_ch.cpp:129
-    
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
   };
   
@@ -170,9 +167,6 @@ namespace ImplementationRepository
         const char * _tao_reason
       );
     
-    // TAO_IDL - Generated from
-    // be\be_visitor_exception/exception_ch.cpp:129
-    
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
   };
   
@@ -219,9 +213,6 @@ namespace ImplementationRepository
         TAO_InputCDR &
         ACE_ENV_ARG_DECL
       );
-    
-    // TAO_IDL - Generated from
-    // be\be_visitor_exception/exception_ch.cpp:129
     
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
   };
@@ -468,7 +459,7 @@ namespace ImplementationRepository
   extern TAO_IMR_Client_Export ::CORBA::TypeCode_ptr const _tc_ServerInformationList;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:598
+  // be\be_interface.cpp:646
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__VAR_OUT_CH_)
 #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR__VAR_OUT_CH_
@@ -600,7 +591,7 @@ namespace ImplementationRepository
   extern TAO_IMR_Client_Export ::CORBA::TypeCode_ptr const _tc_ServerInformationIterator;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:598
+  // be\be_interface.cpp:646
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION__VAR_OUT_CH_)
 #define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION__VAR_OUT_CH_

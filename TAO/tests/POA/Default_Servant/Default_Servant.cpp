@@ -225,6 +225,7 @@ main (int argc, char **argv)
 
       test_reference_to_servant_active_object(root_poa.in ()
                                               ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       // Test servant.
       test_i test;

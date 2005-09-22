@@ -275,7 +275,7 @@ void ImplementationRepository::AlreadyRegistered::_tao_decode (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:87
+// be\be_visitor_typecode/struct_typecode.cpp:89
 
 static TAO::TypeCode::Struct_Field<char const *, ::CORBA::TypeCode_ptr const *> const * const _tao_fields_ImplementationRepository_AlreadyRegistered = 0;
 static TAO::TypeCode::Struct<char const *,
@@ -421,7 +421,7 @@ ImplementationRepository::CannotActivate::CannotActivate (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:87
+// be\be_visitor_typecode/struct_typecode.cpp:89
 
 static TAO::TypeCode::Struct_Field<char const *, ::CORBA::TypeCode_ptr const *> const _tao_fields_ImplementationRepository_CannotActivate[] =
   {
@@ -553,7 +553,7 @@ void ImplementationRepository::NotFound::_tao_decode (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:87
+// be\be_visitor_typecode/struct_typecode.cpp:89
 
 static TAO::TypeCode::Struct_Field<char const *, ::CORBA::TypeCode_ptr const *> const * const _tao_fields_ImplementationRepository_NotFound = 0;
 static TAO::TypeCode::Struct<char const *,
@@ -576,7 +576,7 @@ namespace ImplementationRepository
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:87
+// be\be_visitor_typecode/struct_typecode.cpp:89
 
 static TAO::TypeCode::Struct_Field<char const *, ::CORBA::TypeCode_ptr const *> const _tao_fields_ImplementationRepository_EnvironmentVariable[] =
   {
@@ -747,7 +747,7 @@ namespace ImplementationRepository
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:87
+// be\be_visitor_typecode/struct_typecode.cpp:89
 
 
 
@@ -797,7 +797,7 @@ ImplementationRepository::StartupOptions::_tao_any_destructor (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:87
+// be\be_visitor_typecode/struct_typecode.cpp:89
 
 static TAO::TypeCode::Struct_Field<char const *, ::CORBA::TypeCode_ptr const *> const _tao_fields_ImplementationRepository_ServerInformation[] =
   {

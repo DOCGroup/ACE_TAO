@@ -188,17 +188,22 @@ Server_i::create_poa (const char *name,
 
       // Servant Retention Policy.
       if (servant_retention_policy == 1)
-        policies_[3] =
-          root_poa_->create_servant_retention_policy
-          (PortableServer::RETAIN
-           ACE_ENV_ARG_PARAMETER);
+        {
+          policies_[3] =
+            root_poa_->create_servant_retention_policy
+            (PortableServer::RETAIN
+             ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
 
       if (servant_retention_policy == 0)
-        policies_[3] =
-          root_poa_->create_servant_retention_policy
-          (PortableServer::NON_RETAIN
-           ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+        {
+          policies_[3] =
+            root_poa_->create_servant_retention_policy
+            (PortableServer::NON_RETAIN
+             ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
 
       // Create myPOA as the child of RootPOA with the above
       // policies_. myPOA will use SERVANT_ACTIVATOR or

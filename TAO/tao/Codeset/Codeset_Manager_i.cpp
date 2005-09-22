@@ -66,10 +66,10 @@ TAO_Codeset_Manager_i::TAO_Codeset_Manager_i ()
     wchar_descriptor_ ()
 {
   char_descriptor_.ncs(TAO_Codeset_Manager_i::default_char_codeset);
-  char_descriptor_.add_translator ("UTF8_Latin1_Factory");
+  char_descriptor_.add_translator (ACE_TEXT ("UTF8_Latin1_Factory"));
 
   wchar_descriptor_.ncs(TAO_Codeset_Manager_i::default_wchar_codeset);
-  wchar_descriptor_.add_translator ("UTF16_BOM_Factory");
+  wchar_descriptor_.add_translator (ACE_TEXT ("UTF16_BOM_Factory"));
 }
 
 TAO_Codeset_Manager_i::~TAO_Codeset_Manager_i ()

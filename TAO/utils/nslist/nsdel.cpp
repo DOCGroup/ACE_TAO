@@ -148,14 +148,22 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 
       // This needs to be bounded by a try/catch
       CORBA::Object_var the_context = root_nc->resolve (the_name ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       root_nc->unbind (the_name ACE_ENV_ARG_PARAMETER );
+      ACE_TRY_CHECK;
 
       if (destroy_after_unbind)
         {
           CosNaming::NamingContext_var nc =
             CosNaming::NamingContext::_narrow (the_context.in () ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
           if (! CORBA::is_nil(nc.in()))
-            nc->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+            {
+              nc->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
         }
 
       ACE_TRY_CHECK;
