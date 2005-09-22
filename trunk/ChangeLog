@@ -1,3 +1,18 @@
+Thu Sep 22 08:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/ASX/Event_Server/Event_Server/event_server.cpp:
+          64bit fix
+
+        * bin/fuzz.pl:
+          Extended fuzz check to detect several corba calls without an
+          ACE_CHECK in between
+
+        * ace/SOCK_Dgram.cpp:
+          Small layout fixes
+
+        * ace/Service_Config.h:
+          Added missing ACE_LIB_TEXT to some macros
+
 Tue Sep 20 10:37:24 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/Pipe.inl: Added #include of "ace/ACE.h" to get the
