@@ -1,3 +1,11 @@
+Thu Sep 22 15:12:12 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/test.idl:
+        
+          Modified valuetype declartion used as a primary key to
+          conform to the CCM spec section 61.7.2.1 listing
+          constraints on primary key types.
+
 Thu Sep 22 08:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/POA/Loader/Server_Manager.cpp:
