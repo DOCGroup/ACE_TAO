@@ -1,3 +1,10 @@
+Thu Sep 22 08:13:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/CallbackTest/Service.cpp:
+        * tests/CallbackTest/server.cpp:
+
+          Fixed compile errors.
+
 Wed Sep 21 08:06:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * tests/CallbackTest/Callback{.h .cpp}:
