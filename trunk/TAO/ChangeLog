@@ -1,3 +1,26 @@
+Thu Sep 22 08:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/POA/Loader/Server_Manager.cpp:
+        * examples/Quoter/Factory_Finder.cpp:
+        * tao/ImR_Client/ImplRepoC.*:
+        * tao/ImR_Client/ImplRepoS.*:
+        * tao/ImR_Client/ServerObjectC.*:
+        * tao/ImR_Client/ServerObjectS.*:
+        * tao/PortableServer/POA_Policy_Set.cpp:
+        * tao/PortableServer/Root_POA.inl:
+        * tests/AMH_Oneway/client.cpp:
+        * tests/POA/Default_Servant/Default_Servant.cpp:
+        * tests/RTScheduling/Thread_Cancel/test.cpp:
+        * utils/nslist/nsdel.cpp:
+          Emulated exceptions fixes
+
+        * tests/RTScheduling/Thread_Cancel/Thread_Cancel.mpc:
+          Removed empty lines
+
+        * tao/Codeset/Codeset_Manager_i.cpp:
+        * tao/RTCORBA/RT_ORBInitializer.cpp:
+          Wchar fixes
+
 Thu Sep 22 08:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/POA/DSI/Server.cpp:
