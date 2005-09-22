@@ -22,10 +22,10 @@
 #include "ace/Malloc_Allocator.h"			//for ACE_New_Allocator needed by the doubly link list
 
 //for the PackageConfiguration parsing
-#include "ciao/tools/Config_Handlers/STD_PC_Intf.h"
-#include "ciao/tools/Config_Handlers/Deployment.hpp"
+#include "Config_Handlers/STD_PC_Intf.h"
+#include "Config_Handlers/Deployment.hpp"
 #include "ciao/Deployment_DataC.h"
-#include "ciao/tools/Config_Handlers/XML_Helper.h"
+#include "Config_Handlers/XML_Helper.h"
 #include "xercesc/dom/DOM.hpp"
 
 #include "RM_Helper.h"					//to be able to externalize/internalize a PackageConfiguration
