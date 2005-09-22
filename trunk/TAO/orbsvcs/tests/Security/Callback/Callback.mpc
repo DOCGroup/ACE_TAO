@@ -1,10 +1,18 @@
 // -*- MPC -*-
 // $Id$
 
-project(*security server): taoexe, portableserver, ssl {
+project(*idl): taoidldefaults {
   IDL_Files {
     server.idl
     client.idl
+  }
+  custom_only = 1
+}
+
+project(*security server): taoexe, portableserver, ssl {
+  after += *idl
+
+  IDL_Files {
   }
 
   Source_Files {
@@ -17,9 +25,9 @@ project(*security server): taoexe, portableserver, ssl {
 }
 
 project(*security client): taoexe, portableserver, ssl {
+  after += *idl
+
   IDL_Files {
-    server.idl
-    client.idl
   }
 
   Source_Files {
@@ -30,4 +38,3 @@ project(*security client): taoexe, portableserver, ssl {
     client.cpp
   }
 }
-
