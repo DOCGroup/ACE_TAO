@@ -4,6 +4,10 @@ Thu Sep 22 16:21:12 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	  Added error report message from the tool.
 
+	* ciao/Container_Base.cpp
+
+	  Cosmetic change.
+
 Thu Sep 22 14:45:32 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* tools/Config_Handlers/Config_Handlers.mpc
