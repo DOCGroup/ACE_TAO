@@ -1,3 +1,37 @@
+Thu Sep 22 10:50:45 CDT 2005 Stoyan spaunov@isis.vanderbilt.edu
+
+
+	* DAnCE/spec_RepositoryManager/HTTP_Client.cpp
+	* DAnCE/spec_RepositoryManager/HTTP_Client.h
+	* DAnCE/spec_RepositoryManager/HTTP_Handler.cpp
+	* DAnCE/spec_RepositoryManager/HTTP_Handler.h
+	* DAnCE/spec_RepositoryManager/Options.cpp
+	* DAnCE/spec_RepositoryManager/Options.h
+	* DAnCE/spec_RepositoryManager/README.txt
+	* DAnCE/spec_RepositoryManager/RepositoryManager.cpp
+	* DAnCE/spec_RepositoryManager/RepositoryManager.idl
+	* DAnCE/spec_RepositoryManager/RepositoryManager_Impl.cpp
+	* DAnCE/spec_RepositoryManager/RepositoryManager_Impl.h
+	* DAnCE/spec_RepositoryManager/RMadmin.cpp
+	* DAnCE/spec_RepositoryManager/RM_Helper.cpp
+	* DAnCE/spec_RepositoryManager/RM_Helper.h
+	* DAnCE/spec_RepositoryManager/spec_RepositoryManager.mpc
+	* DAnCE/spec_RepositoryManager/spec_RepositoryManager.ncb
+	* DAnCE/spec_RepositoryManager/URL_Parser.cpp
+	* DAnCE/spec_RepositoryManager/URL_Parser.h
+	* DAnCE/spec_RepositoryManager/ZIP_Wrapper.cpp
+	* DAnCE/spec_RepositoryManager/ZIP_Wrapper.h
+
+
+	Checked in these file and cleaned up *some* of the underlying mess due to previous
+	mix-ups. Many of the files are new. Some are newer versions of older files. 
+	Previously there were 2 RM directories spec_RepositoryManager and 
+	new_RepositoryManager. Someone had removed the spec* verion and checked in the 
+	wrong files in the new* version (which used to be a non-spec compilent impl).
+	Apparently on top of that the two directories have been linked somehow! I will 
+	check on what the reason for this is later. 
+
+
 Thu Sep 22 13:15:28 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/ExecutionManager/Execution_Manager.cpp:
