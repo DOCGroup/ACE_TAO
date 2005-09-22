@@ -106,6 +106,12 @@ CIAO::NodeManager_Impl::preparePlan (const Deployment::DeploymentPlan &plan
 
   if (! this->validate_plan (plan))
     {
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) NodeManager <%s>:prepare_plan:Plan_Error.\n", 
+        plan.instance[0].node.in ()));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) All component instances hosted in the "
+        "same component server must have the "
+        "same \"resourceName\" defined.\n"));
+
       ACE_THROW_RETURN (Deployment::PlanError (),
                         Deployment::NodeApplicationManager::_nil ());
     }
@@ -236,14 +242,19 @@ CIAO::NodeManager_Impl::destroyManager
 bool
 CIAO::NodeManager_Impl::validate_plan (const Deployment::DeploymentPlan &plan)
 {
-  char * resource_id;
+  const char * resource_id;
   CORBA::ULong i = 0;
 
   for (i = 0; i < plan.instance.length (); ++i)
     {
       if (plan.instance[i].deployedResource.length () != 0)
         {
-          plan.instance[i].deployedResource[0].resourceValue >>= resource_id;
+          // Since the "name" field represents the server_resource_id, and
+          // the "resourceValue" field represents the policy_set_id, so we
+          // are checking to make sure that all component instances have
+          // the same server_resource_id.
+          resource_id = 
+            plan.instance[i].deployedResource[0].resourceName.in ();
           break;
         }
     }
@@ -259,7 +270,8 @@ CIAO::NodeManager_Impl::validate_plan (const Deployment::DeploymentPlan &plan)
         }
       else
         {
-          plan.instance[i].deployedResource[0].resourceValue >>= my_resource_id;
+          my_resource_id = 
+            plan.instance[i].deployedResource[0].resourceName.in ();;
           if (ACE_OS::strcmp (resource_id, my_resource_id) != 0)
             {
               // Error, inconsistent server resource id found.
