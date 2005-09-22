@@ -181,7 +181,7 @@ Event_Server::set_watermarks (void)
   // Set the high and low water marks appropriately.  The water marks
   // control how much data can be buffered before the queues are
   // considered "full."
-  int wm = Options::instance ()->low_water_mark ();
+  size_t wm = Options::instance ()->low_water_mark ();
 
   if (this->event_server_.control (ACE_IO_Cntl_Msg::SET_LWM,
                                    &wm) == -1)
