@@ -1,3 +1,8 @@
+Thu Sep 22 08:40:00 UTC 2005  Simon Massey  <simon.massey@prismtech.com>
+
+        * tests/run_test.lst:
+          Stop based_pointer_test running on VxWorks and Static builds.
+
 Thu Sep 22 08:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/ASX/Event_Server/Event_Server/event_server.cpp:
