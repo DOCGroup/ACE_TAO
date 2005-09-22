@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake TAO.mwc
+## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
 
 SUBDIRS = \
         AVStreams \
@@ -15,6 +15,7 @@ SUBDIRS = \
         Bug_1393_Regression \
         Bug_1395_Regression \
         Bug_1630_Regression \
+        Bug_2137_Regression \
         Concurrency \
         CosEvent \
         EC_Custom_Marshal \
@@ -25,26 +26,24 @@ SUBDIRS = \
         Event \
         FT_App \
         FaultTolerance \
-        FtRtEvent
-
-#        HTIOP \
-#        IOR_MCast \
-#        ImplRepo \
-#        InterfaceRepo \
-#        Interoperable_Naming \
-#        LoadBalancing \
-#        Log \
-#        Miop \
-#        Notify \
-#        Property \
-#        RTCosScheduling \
-#        Redundant_Naming \
-#        Sched \
-#        Sched_Conf \
-#        Security \
-#        Simple_Naming \
-#        Time \
-#        Trading \
-#        ior_corbaname \
-#        tests_svc_loader
+        FtRtEvent \
+        HTIOP \
+        IOR_MCast \
+        ImplRepo \
+        InterfaceRepo \
+        Interoperable_Naming \
+        LoadBalancing \
+        Log \
+        Miop \
+        Notify \
+        Property \
+        Redundant_Naming \
+        Sched \
+        Sched_Conf \
+        Security \
+        Simple_Naming \
+        Time \
+        Trading \
+        ior_corbaname \
+        tests_svc_loader
 

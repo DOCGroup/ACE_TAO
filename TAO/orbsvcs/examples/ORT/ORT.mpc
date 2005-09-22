@@ -1,6 +1,17 @@
 // $Id$
 
+project(*idl): taoidldefaults, minimum_corba {
+  idl_files {
+    Gateway.idl
+    ObjectReferenceFactory.idl
+    sum_server.idl
+  }
+  custom_only = 1
+}
+
 project(*Gateway) : orbsvcsexe, dynamicinterface, ifr_client, minimum_corba {
+  after += *idl
+
   source_files {
     GatewayC.cpp
     GatewayS.cpp
@@ -9,7 +20,6 @@ project(*Gateway) : orbsvcsexe, dynamicinterface, ifr_client, minimum_corba {
     Object_Factory_i.cpp
   }
   idl_files {
-    Gateway.idl
   }
 }
 
@@ -28,8 +38,6 @@ project(*Server) : orbsvcsexe, dynamicinterface, ifr_client, minimum_corba, iori
     ObjectReferenceFactoryC.cpp
   }
   idl_files {
-    ObjectReferenceFactory.idl
-    sum_server.idl
   }
 }
 
@@ -39,9 +47,6 @@ project(*Client) : orbsvcsexe, event, minimum_corba {
     client.cpp
     sum_serverC.cpp
   }
+  idl_files {
+  }
 }
-
-
-
-
-

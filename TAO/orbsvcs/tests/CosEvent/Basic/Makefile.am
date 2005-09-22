@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -38,7 +38,7 @@ Disconnect_SOURCES = \
   Random.h
 
 Disconnect_LDADD = \
-  ../lib/libCECTests.la \
+  $(top_builddir)/orbsvcs/tests/CosEvent/lib/libCECTests.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Serv.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
@@ -81,7 +81,7 @@ MT_Disconnect_SOURCES = \
   MT_Disconnect.h
 
 MT_Disconnect_LDADD = \
-  ../lib/libCECTests.la \
+  $(top_builddir)/orbsvcs/tests/CosEvent/lib/libCECTests.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Serv.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
@@ -125,7 +125,7 @@ Pull_Push_Event_SOURCES = \
   Random.h
 
 Pull_Push_Event_LDADD = \
-  ../lib/libCECTests.la \
+  $(top_builddir)/orbsvcs/tests/CosEvent/lib/libCECTests.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Serv.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
@@ -169,7 +169,7 @@ Push_Event_SOURCES = \
   Random.h
 
 Push_Event_LDADD = \
-  ../lib/libCECTests.la \
+  $(top_builddir)/orbsvcs/tests/CosEvent/lib/libCECTests.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Serv.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
@@ -212,7 +212,7 @@ Random_SOURCES = \
   Random.h
 
 Random_LDADD = \
-  ../lib/libCECTests.la \
+  $(top_builddir)/orbsvcs/tests/CosEvent/lib/libCECTests.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Serv.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
@@ -256,7 +256,7 @@ Shutdown_SOURCES = \
   Random.h
 
 Shutdown_LDADD = \
-  ../lib/libCECTests.la \
+  $(top_builddir)/orbsvcs/tests/CosEvent/lib/libCECTests.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Serv.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
