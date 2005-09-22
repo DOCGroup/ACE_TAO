@@ -130,7 +130,7 @@ TAO_ORB_Core_Static_Resources::TAO_ORB_Core_Static_Resources (void)
     iorinterceptor_adapter_factory_name_ ("IORInterceptor_Adapter_Factory"),
     valuetype_adapter_name_ ("Valuetype_Adapter"),
     poa_factory_name_ ("TAO_Object_Adapter_Factory"),
-    poa_factory_directive_ (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Object_Adapter_Factory", "TAO_PortableServer", "_make_TAO_Object_Adapter_Factory", ""))
+    poa_factory_directive_ (ACE_TEXT_ALWAYS_CHAR (ACE_DYNAMIC_SERVICE_DIRECTIVE("TAO_Object_Adapter_Factory", "TAO_PortableServer", "_make_TAO_Object_Adapter_Factory", "")))
 {
 }
 
