@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -37,7 +37,7 @@ client_SOURCES = \
   client.cpp
 
 client_LDADD = \
-  ../lib/libTAO_RTEC_Perf.la \
+  $(TAO_BUILDDIR)/orbsvcs/performance-tests/RTEvent/lib/libTAO_RTEC_Perf.la \
   $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTCORBAEvent.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
@@ -52,6 +52,7 @@ client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -81,7 +82,7 @@ server_SOURCES = \
   server.cpp
 
 server_LDADD = \
-  ../lib/libTAO_RTEC_Perf.la \
+  $(TAO_BUILDDIR)/orbsvcs/performance-tests/RTEvent/lib/libTAO_RTEC_Perf.la \
   $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTCORBAEvent.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
@@ -96,6 +97,7 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 

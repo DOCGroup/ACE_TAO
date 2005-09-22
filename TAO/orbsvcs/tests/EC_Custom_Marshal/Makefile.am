@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -16,14 +16,12 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.ECM_Consumer.am
+## Makefile.EC_Custom_Marshal_IDL.am
 
 if BUILD_CORBA_MESSAGING
 
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   dataC.cpp \
   dataC.h \
   dataC.inl \
@@ -34,7 +32,7 @@ BUILT_SOURCES += \
   dataS_T.h \
   dataS_T.inl
 
-CLEANFILES += \
+CLEANFILES = \
   data-stamp \
   dataC.cpp \
   dataC.h \
@@ -52,6 +50,13 @@ data-stamp: $(srcdir)/data.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/data.idl
 	@touch $@
 
+
+endif BUILD_CORBA_MESSAGING
+
+## Makefile.ECM_Consumer.am
+
+if BUILD_CORBA_MESSAGING
+
 noinst_PROGRAMS += ECM_Consumer
 
 ECM_Consumer_CPPFLAGS = \
@@ -66,14 +71,8 @@ ECM_Consumer_SOURCES = \
   ECM_Consumer.cpp \
   ECM_Data.cpp \
   dataC.cpp \
-  dataS.cpp \
   ECM_Consumer.h \
-  ECM_Data.h \
-  dataC.h \
-  dataC.inl \
-  dataS.h \
-  dataS_T.h \
-  dataS_T.inl
+  ECM_Data.h
 
 ECM_Consumer_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
@@ -97,35 +96,6 @@ endif BUILD_CORBA_MESSAGING
 
 if BUILD_CORBA_MESSAGING
 
-BUILT_SOURCES += \
-  dataC.cpp \
-  dataC.h \
-  dataC.inl \
-  dataS.cpp \
-  dataS.h \
-  dataS.inl \
-  dataS_T.cpp \
-  dataS_T.h \
-  dataS_T.inl
-
-CLEANFILES += \
-  data-stamp \
-  dataC.cpp \
-  dataC.h \
-  dataC.inl \
-  dataS.cpp \
-  dataS.h \
-  dataS.inl \
-  dataS_T.cpp \
-  dataS_T.h \
-  dataS_T.inl
-
-dataC.cpp dataC.h dataC.inl dataS.cpp dataS.h dataS.inl dataS_T.cpp dataS_T.h dataS_T.inl: data-stamp
-
-data-stamp: $(srcdir)/data.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/data.idl
-	@touch $@
-
 noinst_PROGRAMS += ECM_Supplier
 
 ECM_Supplier_CPPFLAGS = \
@@ -142,12 +112,7 @@ ECM_Supplier_SOURCES = \
   dataC.cpp \
   dataS.cpp \
   ECM_Data.h \
-  ECM_Supplier.h \
-  dataC.h \
-  dataC.inl \
-  dataS.h \
-  dataS_T.h \
-  dataS_T.inl
+  ECM_Supplier.h
 
 ECM_Supplier_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \

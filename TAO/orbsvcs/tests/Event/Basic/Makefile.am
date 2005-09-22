@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -35,7 +35,7 @@ Atomic_Reconnect_SOURCES = \
   Atomic_Reconnect.h
 
 Atomic_Reconnect_LDADD = \
-  ../lib/libECTests.la \
+  $(top_builddir)/orbsvcs/tests/Event/lib/libECTests.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
@@ -73,7 +73,7 @@ BCast_SOURCES = \
   BCast.h
 
 BCast_LDADD = \
-  ../lib/libECTests.la \
+  $(top_builddir)/orbsvcs/tests/Event/lib/libECTests.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
@@ -119,7 +119,7 @@ Bitmask_SOURCES = \
   Shutdown.h
 
 Bitmask_LDADD = \
-  ../lib/libECTests.la \
+  $(top_builddir)/orbsvcs/tests/Event/lib/libECTests.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
@@ -165,7 +165,7 @@ Complex_SOURCES = \
   Shutdown.h
 
 Complex_LDADD = \
-  ../lib/libECTests.la \
+  $(top_builddir)/orbsvcs/tests/Event/lib/libECTests.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
@@ -203,7 +203,7 @@ Control_SOURCES = \
   Control.h
 
 Control_LDADD = \
-  ../lib/libECTests.la \
+  $(top_builddir)/orbsvcs/tests/Event/lib/libECTests.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
@@ -249,7 +249,7 @@ Disconnect_SOURCES = \
   Shutdown.h
 
 Disconnect_LDADD = \
-  ../lib/libECTests.la \
+  $(top_builddir)/orbsvcs/tests/Event/lib/libECTests.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
@@ -295,7 +295,7 @@ Gateway_SOURCES = \
   Shutdown.h
 
 Gateway_LDADD = \
-  ../lib/libECTests.la \
+  $(top_builddir)/orbsvcs/tests/Event/lib/libECTests.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
@@ -333,7 +333,7 @@ MT_Disconnect_SOURCES = \
   MT_Disconnect.h
 
 MT_Disconnect_LDADD = \
-  ../lib/libECTests.la \
+  $(top_builddir)/orbsvcs/tests/Event/lib/libECTests.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
@@ -379,7 +379,7 @@ Negation_SOURCES = \
   Shutdown.h
 
 Negation_LDADD = \
-  ../lib/libECTests.la \
+  $(top_builddir)/orbsvcs/tests/Event/lib/libECTests.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
@@ -417,7 +417,7 @@ Observer_SOURCES = \
   Observer.h
 
 Observer_LDADD = \
-  ../lib/libECTests.la \
+  $(top_builddir)/orbsvcs/tests/Event/lib/libECTests.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
@@ -455,7 +455,7 @@ Random_SOURCES = \
   Random.h
 
 Random_LDADD = \
-  ../lib/libECTests.la \
+  $(top_builddir)/orbsvcs/tests/Event/lib/libECTests.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
@@ -493,7 +493,7 @@ Reconnect_SOURCES = \
   Reconnect.h
 
 Reconnect_LDADD = \
-  ../lib/libECTests.la \
+  $(top_builddir)/orbsvcs/tests/Event/lib/libECTests.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
@@ -531,7 +531,7 @@ Shutdown_SOURCES = \
   Shutdown.h
 
 Shutdown_LDADD = \
-  ../lib/libECTests.la \
+  $(top_builddir)/orbsvcs/tests/Event/lib/libECTests.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
@@ -577,7 +577,7 @@ Timeout_SOURCES = \
   Shutdown.h
 
 Timeout_LDADD = \
-  ../lib/libECTests.la \
+  $(top_builddir)/orbsvcs/tests/Event/lib/libECTests.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
@@ -623,7 +623,7 @@ Wildcard_SOURCES = \
   Shutdown.h
 
 Wildcard_LDADD = \
-  ../lib/libECTests.la \
+  $(top_builddir)/orbsvcs/tests/Event/lib/libECTests.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \

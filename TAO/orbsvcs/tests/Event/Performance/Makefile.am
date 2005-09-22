@@ -6,7 +6,7 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ../bin/mwc.pl -include /home/jtc/ACE/ACE-config3/MPC/config -include /home/jtc/ACE/ACE-config3/MPC/templates -type automake -noreldefs TAO.mwc
+## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
 
 ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
@@ -35,7 +35,7 @@ Connect_SOURCES = \
   Connect.h
 
 Connect_LDADD = \
-  ../lib/libECTests.la \
+  $(top_builddir)/orbsvcs/tests/Event/lib/libECTests.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
@@ -73,7 +73,7 @@ Inversion_SOURCES = \
   Inversion.h
 
 Inversion_LDADD = \
-  ../lib/libECTests.la \
+  $(top_builddir)/orbsvcs/tests/Event/lib/libECTests.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
@@ -112,7 +112,7 @@ Latency_SOURCES = \
 
 Latency_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \
-  ../lib/libECTests.la \
+  $(top_builddir)/orbsvcs/tests/Event/lib/libECTests.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
@@ -154,7 +154,7 @@ Latency_Server_SOURCES = \
 
 Latency_Server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Strategies.la \
-  ../lib/libECTests.la \
+  $(top_builddir)/orbsvcs/tests/Event/lib/libECTests.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
@@ -192,7 +192,7 @@ Throughput_SOURCES = \
   Throughput.h
 
 Throughput_LDADD = \
-  ../lib/libECTests.la \
+  $(top_builddir)/orbsvcs/tests/Event/lib/libECTests.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_RTEvent_Serv.la \
