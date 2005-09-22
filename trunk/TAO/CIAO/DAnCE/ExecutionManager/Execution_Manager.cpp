@@ -179,7 +179,7 @@ namespace CIAO
                 write_ior_file (orb.in (),
                                 daemon.in ()
                                 ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;=
+              ACE_TRY_CHECK;
             }
 
           if (!retval)

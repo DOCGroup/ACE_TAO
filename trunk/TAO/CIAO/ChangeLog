@@ -1,3 +1,9 @@
+Thu Sep 22 13:15:28 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * DAnCE/ExecutionManager/Execution_Manager.cpp:
+        
+          Fixed typo.
+
 Wed Sep 21 15:32:38 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
