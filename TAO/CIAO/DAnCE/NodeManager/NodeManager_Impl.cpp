@@ -8,7 +8,7 @@ CIAO::NodeManager_Impl::NodeManager_Impl (const char *name,
                                           PortableServer::POA_ptr poa,
                                           const char * nodeapp_loc,
                                           const char * nodeapp_options,
-                                        int spawn_delay)
+                                          int spawn_delay)
   ACE_THROW_SPEC ((CORBA::SystemException))
   : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
@@ -97,12 +97,19 @@ CIAO::NodeManager_Impl::leaveDomain (ACE_ENV_SINGLE_ARG_DECL)
 
 Deployment::NodeApplicationManager_ptr
 CIAO::NodeManager_Impl::preparePlan (const Deployment::DeploymentPlan &plan
-                                    ACE_ENV_ARG_DECL)
+                                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError,
                    Deployment::PlanError))
 {
   CIAO_TRACE("CIAO::NodeManager_Impl::preparePlan");
+
+  if (! this->validate_plan (plan))
+    {
+      ACE_THROW_RETURN (Deployment::PlanError (),
+                        Deployment::NodeApplicationManager::_nil ());
+    }
+
   ACE_TRY
     {
       if (!this->map_.is_available (plan.UUID.in ()))
@@ -224,6 +231,41 @@ CIAO::NodeManager_Impl::destroyManager
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  
+}
 
+bool
+CIAO::NodeManager_Impl::validate_plan (const Deployment::DeploymentPlan &plan)
+{
+  char * resource_id;
+  CORBA::ULong i = 0;
+
+  for (i = 0; i < plan.instance.length (); ++i)
+    {
+      if (plan.instance[i].deployedResource.length () != 0)
+        {
+          plan.instance[i].deployedResource[0].resourceValue >>= resource_id;
+          break;
+        }
+    }
+  if (i == plan.instance.length ()) // No server resource id has been set for any instance
+    return true;
+
+  for (i = 0; i < plan.instance.length (); ++i)
+    {
+      const char * my_resource_id;
+      if (plan.instance[i].deployedResource.length () == 0)
+        {
+          continue;
+        }
+      else
+        {
+          plan.instance[i].deployedResource[0].resourceValue >>= my_resource_id;
+          if (ACE_OS::strcmp (resource_id, my_resource_id) != 0)
+            {
+              // Error, inconsistent server resource id found.
+              return false;
+            }
+        }
+    }
+  return true;
 }

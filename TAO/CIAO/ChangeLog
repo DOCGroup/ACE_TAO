@@ -1,3 +1,37 @@
+Thu Sep 22 13:21:12 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* ciao/CCM_Core.mpc
+	* DAnCE/DomainApplicationManager/DomainApplicationManager.mpc
+	* tools/Config_Handlers/RT-CCM/RT-CCM-Handlers.mpc
+
+	  Put the ServerResources.idl into Deployment_stub project. Modified
+	  other MPC project files to reflect this change.
+
+	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+
+	  Pass the infoProperty which contains the entire server resource
+	  definitions to each individual child deployment plans.
+
+	* DAnCE/NodeManager/NodeManager_Impl.cpp
+	* DAnCE/NodeManager/NodeManager_Impl.h
+
+	  NodeManager now validates the correctness of the individual local
+	  dpeloyment plan. In particular,  it tries to verify that all the 
+	  component instances within this child deployment plan have the same 
+	  "server_resource_id" assigned.
+
+	* DAnCE/tests/NodeApplicationTest/NodeAppTest.mpc
+	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client_dynamic.cpp
+
+	  Added a NodeApplication test case, where multiple components could
+	  be installed one-by-one through a serious of "install" invocations.
+
+	* examples/Hello/descriptors/flattened_deploymentplan_without_ns.cdp
+
+	  Fixed a typo.
+
+
+
 Thu Sep 22 12:26:45 CDT 2005 Stoyan spaunov@isis.vanderbilt.edu
 
 	* DAnCE/spec_RepositoryManager/

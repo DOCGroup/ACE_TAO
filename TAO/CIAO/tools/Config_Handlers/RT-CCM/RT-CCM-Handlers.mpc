@@ -7,7 +7,7 @@ project (RT_CCM_Config_Handlers) : acelib, ciao_deployment_stub, xerces {
   requires += exceptions
   includes += $(CIAO_ROOT)/tools/Config_Handlers
   includes += $(CIAO_ROOT)/ciao
-  libs += CIAO_DnC_Container
+  libs += XSC_Config_Handlers
 
   Source_Files {
         CIAOServerResources.cpp
