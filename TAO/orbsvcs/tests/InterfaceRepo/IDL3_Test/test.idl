@@ -21,7 +21,12 @@ module help
   valuetype v_base : v_base_base {};
   interface v_supp1 {};
   abstract interface v_supp2 {};
-  valuetype h_key {};
+  
+  valuetype h_key : Components::PrimaryKeyBase
+  {
+    public long id_key;
+  };
+  
   interface h_supp1 {};
   interface h_supp2 {};
   home h_base supports h_supp1, h_supp2 manages c_base {};
