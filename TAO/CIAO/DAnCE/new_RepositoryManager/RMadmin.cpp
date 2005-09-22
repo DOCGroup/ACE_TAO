@@ -1,5 +1,11 @@
 // $Id$
 
+/***
+ * file RMClient.cpp
+ *
+ * author Stoyan Paunov <spaunov@isis.vanderbilt.edu>
+ **/
+
 #include "RepositoryManagerC.h"
 #include "Options.h"
 
@@ -8,10 +14,16 @@
 #include "ace/OS_NS_unistd.h"		    //for close
 #include "ace/OS_NS_sys_stat.h"		    //for filesize and fstat and mkdir
 
-#include "Config_Handlers/DnC_Dump.h"
+#include "ciao/tools/Config_Handlers/DnC_Dump.h"
 
 #include <iostream>
 using namespace std;
+
+#include "RM_Helper.h"					//to be able to externalize/internalize a PackageConfiguration
+#include "tao/CDR.h"					//for TAO CDR classes
+#include "ace/Message_Block.h"			//for ACE_Message_Block
+
+
 
 //IOR file of the RM
 const char * ior = "file://RepositoryManagerDeamon.ior";
@@ -75,9 +87,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 			{
 				rm->installPackage (options->name_.c_str (), options->path_.c_str ());
 			}
-			catch (CORBA::Exception &)
+			catch (CORBA::Exception & ex)
 			{
-				cout << "\nPackage is already in the repository!\n";
+				cout << "\nException caught!" << ex << "\n";
 				return 0;
 			}
 

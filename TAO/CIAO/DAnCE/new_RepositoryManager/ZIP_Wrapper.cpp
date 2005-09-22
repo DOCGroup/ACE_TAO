@@ -100,7 +100,7 @@ bool ZIP_Wrapper::get_file (char* accessor, ACE_Message_Block &file)
 		head = head->cont ();
 	}
 
-	if (num_read == -1) 
+	if (num_read < 0) 
 		return_code = false;
 
 	zzip_file_close (zip_file);
@@ -126,19 +126,26 @@ bool ZIP_Wrapper::get_file (char* archive_path, char* filename, ACE_Message_Bloc
     if (!zip_file)
 		return false;
 	
-	int num_read;
-	file.size(BUFSIZ);
+	int num_read = 0;
 	ACE_Message_Block* head = &file;
 
 	//read the file into the ACE_Message_Block
-    while (0 < (num_read = zzip_read(zip_file, head->wr_ptr(), head->size())))
+    do
     {
-		head->wr_ptr (num_read);
-		head->cont (new ACE_Message_Block (BUFSIZ));
-		head = head->cont ();
-	}
+		if (head->space () == 0)
+	  {
+		  head->cont (new ACE_Message_Block (BUFSIZ));
+		  head = head->cont ();
+	  }
+		
+		num_read = zzip_read(zip_file, head->wr_ptr(), head->space());
+		
+		if (num_read > 0)
+			head->wr_ptr (num_read);
 
-	if (num_read == -1) 
+	}while (num_read > 0);
+
+	if (num_read < 0) 
 		return_code = false;
 
 	zzip_file_close (zip_file);
@@ -174,7 +181,7 @@ bool ZIP_Wrapper::uncompress (char* zip_archive, char* path)
 	std::string arch_dir (path);
 	arch_dir += "/";
 	arch_dir += zip_archive;
-	arch_dir[arch_dir.length () - 4] = '\0';		//NOTE: Assumes .zip extension
+	arch_dir[arch_dir.length () - 4] = '\0';		//NOTE: Assumes .zip or cpk extension
 
 	//create directory
 	ACE_OS::mkdir(arch_dir.c_str());				//if dir exists -1 is returned and ignored
