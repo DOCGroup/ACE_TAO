@@ -1,3 +1,29 @@
+Thu Sep 22 14:45:32 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* tools/Config_Handlers/Config_Handlers.mpc
+	* tools/Config_Handlers/STD_CID_Handler.cpp
+	* tools/Config_Handlers/STD_CID_Handler.h
+	* tools/Config_Handlers/STD_CPD_Handler.cpp
+	* tools/Config_Handlers/STD_CPD_Handler.h
+	* tools/Config_Handlers/STD_PCD_Handler.cpp
+	* tools/Config_Handlers/STD_PCD_Handler.h
+	* tools/Config_Handlers/STD_PC_Intf.cpp
+	* tools/Config_Handlers/XML_File_Intf.cpp
+	* tools/Config_Handlers/RT-CCM/SRD_Handler.h
+	* tools/Config_Handlers/RT-CCM/RT-CCM-Handlers.mpc	
+
+	Made these files consistent with the new Utils directory.
+	
+	* tools/Config_Handlers/Utils/Utils.mpc
+	* tools/Config_Handlers/Utils/XML_Error_Handler.cpp
+	* tools/Config_Handlers/Utils/XML_Error_Handler.h
+	* tools/Config_Handlers/Utils/XML_Helper.cpp
+	* tools/Config_Handlers/Utils/XML_Helper.h
+	* tools/Config_Handlers/Utils/XercesString.cpp
+	* tools/Config_Handlers/Utils/XercesString.h
+
+	Moved common XML  utilities to a separate directory. 
+	
 Thu Sep 22 13:21:12 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* ciao/CCM_Core.mpc

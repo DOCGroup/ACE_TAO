@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "XML_Helper.h"
+#include "Utils/XML_Helper.h"
 #include "IDREF_Base.h"
 #include "Config_Handlers_Export.h"
 #include "ciao/DeploymentC.h"

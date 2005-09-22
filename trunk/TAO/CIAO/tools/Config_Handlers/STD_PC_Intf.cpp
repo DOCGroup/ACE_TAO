@@ -7,7 +7,7 @@
 #endif
 
 #include "STD_PC_Intf.h"
-#include "XML_Helper.h"
+#include "Utils/XML_Helper.h"
 #include "Deployment.hpp"
 #include "STD_PCD_Handler.h"
 #include "ciao/Packaging_DataC.h"
