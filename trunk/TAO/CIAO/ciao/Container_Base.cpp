@@ -294,7 +294,7 @@ namespace CIAO
 
         if (exe_dll_name == 0 || sv_dll_name == 0)
           {
-	    ACE_CString exception;
+	          ACE_CString exception;
             
             if (exe_dll_name == 0)
               {
@@ -309,10 +309,10 @@ namespace CIAO
             if (CIAO::debug_level () > 10)
               ACE_DEBUG ((LM_ERROR,
                           "ERROR: %s\n",
-			  exception.c_str ()));
+			                    exception.c_str ()));
 
             ACE_THROW_RETURN (Deployment::UnknownImplId ("Session_Container::ciao_install_home",
-							 exception.c_str ()),
+							                exception.c_str ()),
                               Components::CCMHome::_nil ());
           }
 
