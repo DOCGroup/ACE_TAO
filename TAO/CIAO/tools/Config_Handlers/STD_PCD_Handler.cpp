@@ -3,7 +3,6 @@
 #include "STD_CPD_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "ciao/Packaging_DataC.h"
-#include "XML_Helper.h"
 #include "Deployment.hpp"
 
 

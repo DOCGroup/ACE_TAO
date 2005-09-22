@@ -12,7 +12,7 @@
 #define CIAO_CONFIG_HANDLERS_STD_PCD_HANDLER_H
 
 #include /**/ "ace/pre.h"
-#include "XML_Helper.h"
+#include "Utils/XML_Helper.h"
 
 #include "Config_Handlers_Export.h"
 

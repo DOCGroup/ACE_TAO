@@ -3,7 +3,6 @@
 #include "STD_CID_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "ciao/Deployment_DataC.h"
-#include "XML_Helper.h"
 #include "Deployment.hpp"
 
 namespace CIAO
