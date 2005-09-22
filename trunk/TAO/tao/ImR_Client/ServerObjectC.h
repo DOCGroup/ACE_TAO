@@ -28,8 +28,8 @@
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:154
 
-#ifndef _TAO_IDL_SERVEROBJECTC_H_
-#define _TAO_IDL_SERVEROBJECTC_H_
+#ifndef _TAO_IDL_ORIG_SERVEROBJECTC_H_
+#define _TAO_IDL_ORIG_SERVEROBJECTC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -69,7 +69,7 @@ namespace ImplementationRepository
 {
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:598
+  // be\be_interface.cpp:646
 
 #if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT__VAR_OUT_CH_)
 #define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT__VAR_OUT_CH_

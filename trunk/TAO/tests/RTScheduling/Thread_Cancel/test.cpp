@@ -53,13 +53,14 @@ main (int argc, char* argv [])
       ACE_TRY_CHECK;
 
       for (int i = 0; i < 4; i++)
-	{
-	  RTScheduling::DistributableThread_var DT = current->lookup ((task.guids ())[i]
-								      ACE_ENV_ARG_PARAMETER);
-	  ACE_TRY_CHECK;
+        {
+          RTScheduling::DistributableThread_var DT = current->lookup ((task.guids ())[i]
+                            ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
-	  DT->cancel (ACE_ENV_SINGLE_ARG_PARAMETER);
-	}
+          DT->cancel (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
 
       orb->run ();
 
