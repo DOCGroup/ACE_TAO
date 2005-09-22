@@ -5,7 +5,8 @@
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
 #include "ace/SString.h"
-//#include "Config_Handlers/DnC_Dump.h"
+//#include "DnC_Dump.h"
+#include "RT-CCM/SRD_Handler.h"
 
 #if !defined (__ACE_INLINE__)
 # include "DomainApplicationManager_Impl.inl"
@@ -59,6 +60,27 @@ init (ACE_ENV_SINGLE_ARG_DECL)
     {
 
       //Deployment::DnC_Dump::dump (this->plan_);
+
+      //======================================
+      // Dump the contents of infoProperty to a XML file
+      if (CIAO::debug_level () > 1)
+      {
+        CIAO::DAnCE::ServerResource *sr = 0;
+        this->plan_.infoProperty[0].value >>= sr;
+      
+        Config_Handlers::SRD_Handler reverse_handler (sr);
+          
+        Config_Handlers::XML_Helper the_helper;
+        xercesc::DOMDocument *the_xsc (the_helper.create_dom ("CIAO:ServerResources",
+                                                              "http://www.dre.vanderbilt.edu/ServerResources"));
+        
+        ServerResources (*reverse_handler.srd_xsc (), the_xsc);
+        
+        // write out the result
+        the_helper.write_DOM (the_xsc, "output.srd");
+      }
+
+      //======================================
 
       // (1) Call get_plan_info() method to get the total number
       //     of child plans and list of NodeManager names, and
@@ -226,7 +248,13 @@ split_plan (void)
     tmp_plan->externalProperty.length (0);
     tmp_plan->dependsOn.length (0);
     tmp_plan->artifact.length (0);
-    tmp_plan->infoProperty.length (0);
+
+    // @@ There is an optimization point here, since we really don't have to
+    // pass the entire CIAOServerResources into each individual child plan.
+    tmp_plan->infoProperty = this->plan_.infoProperty;
+
+    //tmp_plan->infoProperty[0].name = CORBA::string_dup ("CIAOServerResource");
+    //tmp_plan->infoProperty[0].value = this->plan_.infoProperty[0].value;
 
     Chained_Artifacts artifacts;
 

@@ -97,6 +97,13 @@ namespace CIAO
                        Deployment::StopError,
                        Deployment::InvalidReference));
 
+  private:
+    /// Validate the child deployment plan. In particular, we are
+    /// trying to verify that all the component instances within this
+    /// child deployment plan have the same "server_resource_id"
+    /// assigned.
+    bool validate_plan (const Deployment::DeploymentPlan &plan);
+
   protected:
     /// Since this class is reference counted, making this
     /// destructor protected to enforce proper memory managment
