@@ -1,3 +1,9 @@
+Thu Sep 22 16:21:12 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DAnCE/NodeManager/NodeManager_Impl.cpp
+
+	  Added error report message from the tool.
+
 Thu Sep 22 14:45:32 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* tools/Config_Handlers/Config_Handlers.mpc
