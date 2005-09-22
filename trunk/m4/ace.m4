@@ -983,6 +983,8 @@ AC_ARG_ENABLE([fl-reactor],
 AM_CONDITIONAL([BUILD_FL], [test X$ace_enable_fl_reactor = Xyes])
 AM_CONDITIONAL([BUILD_ACE_FLREACTOR],
                [test X$ace_enable_fl_reactor = Xyes])
+AM_CONDITIONAL([BUILD_TAO_FLRESOURCE],
+               [test X$ace_enable_fl_reactor = Xyes])
 ])
 
 
@@ -1012,6 +1014,8 @@ AC_ARG_ENABLE([qt-reactor],
 AM_CONDITIONAL([BUILD_QT], [test X$ace_enable_qt_reactor = Xyes])
 AM_CONDITIONAL([BUILD_ACE_QTREACTOR],
                [test X$ace_enable_qt_reactor = Xyes])
+AM_CONDITIONAL([BUILD_TAO_QTRESOURCE],
+               [test X$ace_enable_qt_reactor = Xyes])
 ])
 
 
@@ -1040,6 +1044,8 @@ AC_ARG_ENABLE([tk-reactor],
                 ])
 AM_CONDITIONAL([BUILD_TK], [test X$ace_enable_tk_reactor = Xyes])
 AM_CONDITIONAL([BUILD_ACE_TKREACTOR],
+               [test X$ace_enable_tk_reactor = Xyes])
+AM_CONDITIONAL([BUILD_TAO_TKRESOURCE],
                [test X$ace_enable_tk_reactor = Xyes])
 ])
 
@@ -1081,5 +1087,7 @@ dnl line, then "no_x" is set to "yes."
 AM_CONDITIONAL([BUILD_X11], [test X$ace_enable_xt_reactor = Xyes])
 AM_CONDITIONAL([BUILD_XT], [test X$ace_enable_xt_reactor = Xyes])
 AM_CONDITIONAL([BUILD_ACE_XTREACTOR],
+               [test X$ace_enable_xt_reactor = Xyes])
+AM_CONDITIONAL([BUILD_TAO_XTRESOURCE],
                [test X$ace_enable_xt_reactor = Xyes])
 ])
