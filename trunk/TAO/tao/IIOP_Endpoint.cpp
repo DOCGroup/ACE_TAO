@@ -337,16 +337,15 @@ get_ip_interfaces(ACE_Vector<ACE_CString>& local_ips)
   if (err != 0)
     return;
 #if defined (ACE_HAS_IPV6)
-  ACE_TCHAR buf[64];
+  char buf[64];
 #else /* ACE_HAS_IPV6 */
-  ACE_TCHAR buf[32];
+  char buf[32];
 #endif /* !ACE_HAS_IPV6 */
   for (size_t i = 0; i < cnt; ++i)
   {
     const char *s_if = tmp[i].get_host_addr(buf, sizeof (buf));
     ACE_ASSERT(s_if != 0);
-    ACE_UNUSED_ARG(s_if);
-    ACE_CString tmp(ACE_TEXT_ALWAYS_CHAR(s_if));
+    ACE_CString tmp(s_if);
     //ssize_t pos = tmp.find(':');
     //if (pos != ACE_CString::npos)
     //  tmp = tmp.substr(0, pos);

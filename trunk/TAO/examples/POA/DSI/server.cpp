@@ -119,11 +119,13 @@ main (int argc, char **argv)
       policies[1] =
         root_poa->create_lifespan_policy (PortableServer::PERSISTENT
                                           ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       // Request Processing Policy
       policies[2] =
         root_poa->create_request_processing_policy (PortableServer::USE_DEFAULT_SERVANT
                                                     ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       // Servant Retention Policy
       policies[3] =
