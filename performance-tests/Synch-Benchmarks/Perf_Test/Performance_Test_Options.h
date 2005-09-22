@@ -121,7 +121,7 @@ private:
   int           _free_memory;           // Are we freeing up memory?.
   int           _zero_copy;             // Implement a zero-copy driver?.
   int           _print_summary;         // Print a summary of the results only.
-  int           _consecutive_ports;     // Number of consecutive messages from same port.
+  size_t        _consecutive_ports;     // Number of consecutive messages from same port.
   int           _eager_exit;            // Exit eagerly, without cleaning up.
 };
 

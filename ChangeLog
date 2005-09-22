@@ -1,6 +1,7 @@
 Thu Sep 22 08:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/ASX/Event_Server/Event_Server/event_server.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test_Options.h:
           64bit fix
 
         * bin/fuzz.pl:
