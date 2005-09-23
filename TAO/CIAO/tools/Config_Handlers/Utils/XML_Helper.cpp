@@ -1,5 +1,6 @@
 //$Id$
 #include "XML_Helper.h"
+#include "XML_Schema_Handler.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
 #include "xercesc/util/XMLUniDefs.hpp"
@@ -150,7 +151,11 @@ namespace CIAO
           XML_Error_Handler handler;
 
           parser->setErrorHandler (&handler);
-
+          
+          XML_Schema_Handler resolver;
+          
+          parser->setEntityResolver (&resolver);
+          
           DOMDocument* doc = parser->parseURI (url);
 
           if (handler.getErrors ())
