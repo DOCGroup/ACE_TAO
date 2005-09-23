@@ -15,7 +15,7 @@ TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-## Makefile.Security_Send_File_Client.am
+## Makefile.Security_Send_File_Idl.am
 
 BUILT_SOURCES = \
   testC.cpp \
@@ -46,6 +46,9 @@ test-stamp: $(srcdir)/test.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/test.idl
 	@touch $@
 
+
+## Makefile.Security_Send_File_Client.am
+
 noinst_PROGRAMS = client
 
 client_CPPFLAGS = \
@@ -57,12 +60,8 @@ client_CPPFLAGS = \
 client_SOURCES = \
   client.cpp \
   testC.cpp \
-  testS.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS_T.h \
-  testS_T.inl
+  test_i.h \
+  test_i.i
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -71,35 +70,6 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Security_Send_File_Server.am
-
-BUILT_SOURCES += \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.cpp \
-  testS.h \
-  testS.inl \
-  testS_T.cpp \
-  testS_T.h \
-  testS_T.inl
-
-CLEANFILES += \
-  test-stamp \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.cpp \
-  testS.h \
-  testS.inl \
-  testS_T.cpp \
-  testS_T.h \
-  testS_T.inl
-
-testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl testS_T.cpp testS_T.h testS_T.inl: test-stamp
-
-test-stamp: $(srcdir)/test.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/test.idl
-	@touch $@
 
 noinst_PROGRAMS += server
 
@@ -114,11 +84,6 @@ server_SOURCES = \
   testC.cpp \
   testS.cpp \
   test_i.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS_T.h \
-  testS_T.inl \
   test_i.h \
   test_i.i
 
