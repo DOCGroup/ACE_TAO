@@ -115,7 +115,7 @@ main (int argc, char *argv[])
 
       Callback *callback_impl;
       ACE_NEW_RETURN (callback_impl,
-                      Callback(orb),
+                      Callback(orb.in ()),
                       1);
       PortableServer::ServantBase_var owner_transfer(callback_impl);
 

@@ -100,7 +100,7 @@ main (int argc, char *argv[])
 
       Service *service_impl;
       ACE_NEW_RETURN (service_impl,
-                      Service(orb),
+                      Service(orb.in ()),
                       1);
       PortableServer::ServantBase_var owner_transfer(service_impl);
 
