@@ -1,3 +1,13 @@
+Fri Sep 23 16:22:01 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/AnyTypeCode/Any_Basic_Impl_T.cpp:
+        
+          Added include of Any.h, similar to the other Any_*_Impl_T.cpp
+          files. The need for this include shows up only when enums
+          are seen in an IDL file, with no other IDL types to
+          pull in the include. Thanks to Jules Colding <colding@omesc.com>
+          for reporting the problem.
+
 Fri Sep 23 07:42:38 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/examples/Security/Send_File/Makefile.am:
