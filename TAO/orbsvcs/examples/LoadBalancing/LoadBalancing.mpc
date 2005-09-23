@@ -1,5 +1,5 @@
 // $Id$
-project(*idl) : taoidldefaults  {
+project(*idl) : taoidldefaults, anytypecode {
   IDL_Files {
     Test.idl
   }
