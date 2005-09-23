@@ -14,6 +14,7 @@
 # include "ace/config-g++-common.h"
 #endif /* __GNUG__ */
 
+#undef ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 #undef ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 
 #define ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lu")
@@ -33,6 +34,7 @@
 #define ACE_HAS_POSIX_SEM
 
 //#define ACE_HAS_SVR4_TLI
+#define ACE_HAS_SUNOS4_GETTIMEOFDAY
 
 #define ACE_HAS_MEMCHR
 
@@ -189,7 +191,7 @@
 //   - type:
 //        fink install dlcompat
 // as of Dec 2002, if you use fink you will need to uncomment the next line
-//#define ACE_NEEDS_DL_UNDERSCORE
+// #define ACE_NEEDS_DL_UNDERSCORE
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
 #define ACE_LD_SEARCH_PATH ACE_LIB_TEXT ("DYLD_LIBRARY_PATH")
 #define ACE_DLL_SUFFIX ACE_LIB_TEXT (".dylib")
