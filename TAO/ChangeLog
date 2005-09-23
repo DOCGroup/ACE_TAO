@@ -1,3 +1,13 @@
+Fri Sep 23 07:42:38 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/examples/Security/Send_File/Makefile.am:
+
+	  Regenerate.
+
+	* orbsvcs/examples/Security/Send_File/Security_Send_File.mpc:
+
+          Add "*idl" project for compiling *.idl files.
+
 Fri Sep 23 07:07:33 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/examples/LoadBalancing/LoadBalancing.mpc:
