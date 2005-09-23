@@ -1,3 +1,13 @@
+Fri Sep 23 05:55:03 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/HTIOP/Hello/Makefile.am:
+
+	  Regenerated.
+
+	* orbsvcs/HTIOP/Hello/HTIOP_Hello.mpc:
+
+	  Added "custom_only = 1" to *idl project.
+
 Fri Sep 23 11:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/Event.inl:
