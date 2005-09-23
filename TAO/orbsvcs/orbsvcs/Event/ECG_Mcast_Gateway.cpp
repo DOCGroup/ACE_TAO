@@ -44,7 +44,7 @@ TAO_ECG_Mcast_Gateway::fini (void)
 }
 
 int
-TAO_ECG_Mcast_Gateway::init (int argc, char* argv[])
+TAO_ECG_Mcast_Gateway::init (int argc, ACE_TCHAR* argv[])
 {
   int result = 0;
 
@@ -52,53 +52,53 @@ TAO_ECG_Mcast_Gateway::init (int argc, char* argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      const char *arg = arg_shifter.get_current ();
+      const ACE_TCHAR *arg = arg_shifter.get_current ();
 
-      if (ACE_OS::strcasecmp (arg, "-ECGService") == 0)
+      if (ACE_OS::strcasecmp (arg, ACE_TEXT ("-ECGService")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, "receiver") == 0)
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, ACE_TEXT ("receiver")) == 0)
                 this->service_type_ = ECG_MCAST_RECEIVER;
-              else if (ACE_OS::strcasecmp (opt, "sender") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT ("sender")) == 0)
                 this->service_type_ = ECG_MCAST_SENDER;
-              else if (ACE_OS::strcasecmp (opt, "two_way") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT ("two_way")) == 0)
                 this->service_type_ = ECG_MCAST_TWO_WAY;
               else
                 {
                   ACE_ERROR ((LM_ERROR,
-                                         "Unsupported <-ECGService> option "
-                                         "value: <%s>. Ignoring this option "
-                                         "- using defaults instead.\n",
-                            opt));
+                             ACE_TEXT ("Unsupported <-ECGService> option ")
+                             ACE_TEXT ("value: <%s>. Ignoring this option ")
+                             ACE_TEXT ("- using defaults instead.\n"),
+                             opt));
                   result = -1;
                 }
               arg_shifter.consume_arg ();
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECGAddressServer") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT ("-ECGAddressServer")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, "basic") == 0)
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, ACE_TEXT ("basic")) == 0)
                 this->address_server_type_ = ECG_ADDRESS_SERVER_BASIC;
-              else if (ACE_OS::strcasecmp (opt, "source") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT ("source")) == 0)
                 this->address_server_type_ = ECG_ADDRESS_SERVER_SOURCE;
-              else if (ACE_OS::strcasecmp (opt, "type") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT ("type")) == 0)
                 this->address_server_type_ = ECG_ADDRESS_SERVER_TYPE;
               else
                 {
                   ACE_ERROR ((LM_ERROR,
-                                  "Unsupported <-ECGAddressServer> "
-                                  "option value: <%s>. Ignoring this "
-                                  "option - using defaults instead.\n",
+                              ACE_TEXT ("Unsupported <-ECGAddressServer> ")
+                              ACE_TEXT ("option value: <%s>. Ignoring this ")
+                              ACE_TEXT ("option - using defaults instead.\n"),
                               opt));
                   result = -1;
                 }
@@ -106,7 +106,7 @@ TAO_ECG_Mcast_Gateway::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECGAddressServerArg") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT ("-ECGAddressServerArg")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -118,25 +118,25 @@ TAO_ECG_Mcast_Gateway::init (int argc, char* argv[])
         }
 
 
-      else if (ACE_OS::strcasecmp (arg, "-ECGHandler") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT ("-ECGHandler")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char* opt = arg_shifter.get_current ();
-              if (ACE_OS::strcasecmp (opt, "basic") == 0)
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, ACE_TEXT ("basic")) == 0)
                 this->handler_type_ = ECG_HANDLER_BASIC;
-              else if (ACE_OS::strcasecmp (opt, "complex") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT ("complex")) == 0)
                 this->handler_type_ = ECG_HANDLER_COMPLEX;
-              else if (ACE_OS::strcasecmp (opt, "udp") == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_TEXT ("udp")) == 0)
                 this->handler_type_ = ECG_HANDLER_UDP;
               else
                 {
                   ACE_ERROR ((LM_ERROR,
-                                  "Unsupported <-ECGHandler> "
-                                  "option value: <%s>. Ignoring this "
-                                  "option - using defaults instead.\n",
+                              ACE_TEXT ("Unsupported <-ECGHandler> ")
+                              ACE_TEXT ("option value: <%s>. Ignoring this ")
+                              ACE_TEXT ("option - using defaults instead.\n"),
                               opt));
                   result = -1;
                 }
@@ -144,20 +144,20 @@ TAO_ECG_Mcast_Gateway::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECGTTL") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT ("-ECGTTL")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
-              const char* opt = arg_shifter.get_current ();
+              const ACE_TCHAR* opt = arg_shifter.get_current ();
               unsigned long tmp = ACE_OS::strtoul (opt, 0, 0) & 0xff;
               this->ttl_value_ = static_cast<u_char> (tmp);
               arg_shifter.consume_arg ();
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECGNIC") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT ("-ECGNIC")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -168,7 +168,7 @@ TAO_ECG_Mcast_Gateway::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECGIPMULTICASTLOOP") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT ("-ECGIPMULTICASTLOOP")) == 0)
         {
           arg_shifter.consume_arg ();
 
@@ -180,7 +180,7 @@ TAO_ECG_Mcast_Gateway::init (int argc, char* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, "-ECGNONBLOCKING") == 0)
+      else if (ACE_OS::strcasecmp (arg, ACE_TEXT ("-ECGNONBLOCKING")) == 0)
       {
           arg_shifter.consume_arg ();
 
@@ -196,8 +196,8 @@ TAO_ECG_Mcast_Gateway::init (int argc, char* argv[])
         {
           arg_shifter.ignore_arg ();
           ACE_DEBUG ((LM_WARNING,
-                             "Ignoring <%s> option "
-                             "during initialization.\n",
+                      ACE_TEXT ("Ignoring <%s> option ")
+                      ACE_TEXT ("during initialization.\n"),
                       arg));
           result = -1;
         }
