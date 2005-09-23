@@ -143,21 +143,21 @@ project (NodeAppTest_client_ex) : ciao_deployment_stub {
  }
 }
 
-project (NodeAppTest_client_dynamic) : ciao_deployment_stub {
- after += NodeAppTest_RoundTrip_stub
- libs += NodeAppTest_RoundTrip_stub
- exename += client_dynamic
+//project (NodeAppTest_client_dynamic) : ciao_deployment_stub {
+// after += NodeAppTest_RoundTrip_stub
+// libs += NodeAppTest_RoundTrip_stub
+// exename += client_dynamic
+//
+// IDL_Files {
+// }
+//
+// Source_Files {
+//   NodeApp_test_client_dynamic.cpp
+// }
 
- IDL_Files {
- }
+// Header_Files {
+// }
 
- Source_Files {
-   NodeApp_test_client_dynamic.cpp
- }
-
- Header_Files {
- }
-
- Inline_Files {
- }
-}
+// Inline_Files {
+// }
+//}
