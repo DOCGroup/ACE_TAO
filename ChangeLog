@@ -1,3 +1,12 @@
+Fri Sep 23 10:07:25 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* ace/config-macosx-tiger.h
+	* include/makeinclude/platform_macosx_tiger_gcc4.GNU
+
+	Updates for Tiger compatibility. Thanks to Michael van der
+	Westhuizen (r1mikey at gmail dot com) for help with tracking
+	down some troublesome issues in the platform_macros.
+	
 Thu Sep 22 12:40:20 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* m4/ace.m4:
