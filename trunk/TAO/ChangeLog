@@ -104,32 +104,31 @@ Thu Sep 22 14:03:11 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* docs/Makefile.am:
 	* docs/tutorials/Makefile.am:
-	* docs/tutorials/Quoter/Makefile.am:
 	* docs/tutorials/Quoter/AMI/Makefile.am:
 	* docs/tutorials/Quoter/Event_Service/Makefile.am:
+	* docs/tutorials/Quoter/Makefile.am:
 	* docs/tutorials/Quoter/Naming_Service/Makefile.am:
 	* docs/tutorials/Quoter/On_Demand_Activation/Makefile.am:
 	* docs/tutorials/Quoter/RT_Event_Service/Makefile.am:
-	* docs/tutorials/Quoter/Simple/Makefile.am:
 	* docs/tutorials/Quoter/Simple/Client/Makefile.am:
 	* docs/tutorials/Quoter/Simple/Impl-Repo/Makefile.am:
 	* docs/tutorials/Quoter/Simple/ImprovedServer/Makefile.am:
+	* docs/tutorials/Quoter/Simple/Makefile.am:
 	* docs/tutorials/Quoter/Simple/Persistent/Makefile.am:
 	* docs/tutorials/Quoter/Simple/Server/Makefile.am:
 	* docs/tutorials/Quoter/idl/Makefile.am:
-	* examples/Makefile.am:
 	* examples/AMH/Makefile.am:
 	* examples/AMH/Sink_Server/Makefile.am:
-	* examples/AMI/Makefile.am:
 	* examples/AMI/FL_Callback/Makefile.am:
+	* examples/AMI/Makefile.am:
 	* examples/Advanced/Makefile.am:
 	* examples/Advanced/ch_3/Makefile.am:
 	* examples/Buffered_AMI/Makefile.am:
 	* examples/Buffered_Oneways/Makefile.am:
 	* examples/Callback_Quoter/Makefile.am:
-	* examples/Content_Server/Makefile.am:
 	* examples/Content_Server/AMI_Iterator/Makefile.am:
 	* examples/Content_Server/AMI_Observer/Makefile.am:
+	* examples/Content_Server/Makefile.am:
 	* examples/Content_Server/SMI_Iterator/Makefile.am:
 	* examples/Event_Comm/Makefile.am:
 	* examples/Kokyu_dsrt_schedulers/Makefile.am:
@@ -139,18 +138,19 @@ Thu Sep 22 14:03:11 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 	* examples/Load_Balancing/Makefile.am:
 	* examples/Load_Balancing_persistent/Makefile.am:
 	* examples/Logging/Makefile.am:
+	* examples/Makefile.am:
 	* examples/OBV/Makefile.am:
 	* examples/OBV/Typed_Events/Makefile.am:
-	* examples/POA/Makefile.am:
 	* examples/POA/Adapter_Activator/Makefile.am:
 	* examples/POA/DSI/Makefile.am:
 	* examples/POA/Default_Servant/Makefile.am:
-	* examples/POA/Explicit_Activation/Makefile.am:
 	* examples/POA/Explicit_Activation/Alt_Resources/Makefile.am:
+	* examples/POA/Explicit_Activation/Makefile.am:
 	* examples/POA/FindPOA/Makefile.am:
 	* examples/POA/Forwarding/Makefile.am:
 	* examples/POA/Generic_Servant/Makefile.am:
 	* examples/POA/Loader/Makefile.am:
+	* examples/POA/Makefile.am:
 	* examples/POA/NewPOA/Makefile.am:
 	* examples/POA/On_Demand_Activation/Makefile.am:
 	* examples/POA/On_Demand_Loading/Makefile.am:
@@ -160,24 +160,30 @@ Thu Sep 22 14:03:11 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 	* examples/POA/TIE/Makefile.am:
 	* examples/Persistent_Grid/Makefile.am:
 	* examples/PluggableUDP/Makefile.am:
+	* examples/PluggableUDP/tests/Basic/Makefile.am:
+	* examples/PluggableUDP/tests/Makefile.am:
+	* examples/PluggableUDP/tests/Performance/Makefile.am:
+	* examples/PluggableUDP/tests/SimplePerformance/Makefile.am:
 	* examples/Quoter/Makefile.am:
-	* examples/RTCORBA/Makefile.am:
 	* examples/RTCORBA/Activity/Makefile.am:
-	* examples/RTScheduling/Makefile.am:
+	* examples/RTCORBA/Makefile.am:
 	* examples/RTScheduling/Fixed_Priority_Scheduler/Makefile.am:
 	* examples/RTScheduling/MIF_Scheduler/Makefile.am:
+	* examples/RTScheduling/Makefile.am:
 	* examples/Simple/Makefile.am:
 	* examples/Simple/bank/Makefile.am:
 	* examples/Simple/chat/Makefile.am:
 	* examples/Simple/echo/Makefile.am:
 	* examples/Simple/grid/Makefile.am:
-	* examples/Simple/time/Makefile.am:
 	* examples/Simple/time-date/Makefile.am:
-	* examples/Simulator/Makefile.am:
+	* examples/Simple/time/Makefile.am:
 	* examples/Simulator/Event_Supplier/Makefile.am:
+	* examples/Simulator/Makefile.am:
 	* examples/TypeCode_Creation/Makefile.am:
 	* examples/ior_corbaloc/Makefile.am:
 	* examples/mfc/Makefile.am:
+	* interop-tests/Makefile.am:
+	* interop-tests/wchar/Makefile.am:
 	* orbsvcs/examples/CosEC/Factory/Makefile.am:
 	* orbsvcs/examples/CosEC/Makefile.am:
 	* orbsvcs/examples/CosEC/RtEC_Based/Makefile.am:
