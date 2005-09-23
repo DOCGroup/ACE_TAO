@@ -4,6 +4,7 @@
 #define TAO_ANY_BASIC_IMPL_T_C
 
 #include "tao/AnyTypeCode/Any_Basic_Impl_T.h"
+#include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/AnyTypeCode/Marshal.h"
 #include "tao/Environment.h"
