@@ -1,3 +1,9 @@
+Fri Sep 23 14:31:39 2005  Simon McQueen  <sm@prismtech.com>
+
+        * docs/Options.html:
+
+          Removed some text that had been put in the wrong place.
+
 Fri Sep 23 05:55:03 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/HTIOP/Hello/Makefile.am:
