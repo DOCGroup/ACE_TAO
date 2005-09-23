@@ -1,3 +1,17 @@
+Thu Sep 22 23:55:22 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/tests/HTIOP/AMI/Makefile.am:
+	* orbsvcs/tests/HTIOP/Hello/Makefile.am:
+
+	  Regenerated.
+
+	* orbsvcs/tests/HTIOP/AMI/HTIOP_AMI.mpc:
+	* orbsvcs/tests/HTIOP/Hello/HTIOP_Hello.mpc:
+
+          Add "*idl" projects for compiling *.idl files. This eliminates
+          duplicate rules that would otherwise result when Makefile.am's
+          are aggregated in the automake build.
+
 Thu Sep 22 14:03:11 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:

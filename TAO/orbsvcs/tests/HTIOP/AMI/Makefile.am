@@ -16,15 +16,13 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.HTIOP_AMI_Client.am
+## Makefile.HTIOP_AMI_Idl.am
 
 if BUILD_AMI
 if BUILD_CORBA_MESSAGING
 
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   ami_testC.cpp \
   ami_testC.h \
   ami_testC.inl \
@@ -35,7 +33,7 @@ BUILT_SOURCES += \
   ami_testS_T.h \
   ami_testS_T.inl
 
-CLEANFILES += \
+CLEANFILES = \
   ami_test-stamp \
   ami_testC.cpp \
   ami_testC.h \
@@ -53,6 +51,15 @@ ami_test-stamp: $(srcdir)/ami_test.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -GC $(srcdir)/ami_test.idl
 	@touch $@
 
+
+endif BUILD_CORBA_MESSAGING
+endif BUILD_AMI
+
+## Makefile.HTIOP_AMI_Client.am
+
+if BUILD_AMI
+if BUILD_CORBA_MESSAGING
+
 noinst_PROGRAMS += client
 
 client_CPPFLAGS = \
@@ -67,11 +74,7 @@ client_SOURCES = \
   ami_testC.cpp \
   ami_testS.cpp \
   client.cpp \
-  ami_testC.h \
-  ami_testC.inl \
-  ami_testS.h \
-  ami_testS_T.h \
-  ami_testS_T.inl
+  ami_test_i.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
@@ -91,35 +94,6 @@ endif BUILD_AMI
 if BUILD_AMI
 if BUILD_CORBA_MESSAGING
 
-BUILT_SOURCES += \
-  ami_testC.cpp \
-  ami_testC.h \
-  ami_testC.inl \
-  ami_testS.cpp \
-  ami_testS.h \
-  ami_testS.inl \
-  ami_testS_T.cpp \
-  ami_testS_T.h \
-  ami_testS_T.inl
-
-CLEANFILES += \
-  ami_test-stamp \
-  ami_testC.cpp \
-  ami_testC.h \
-  ami_testC.inl \
-  ami_testS.cpp \
-  ami_testS.h \
-  ami_testS.inl \
-  ami_testS_T.cpp \
-  ami_testS_T.h \
-  ami_testS_T.inl
-
-ami_testC.cpp ami_testC.h ami_testC.inl ami_testS.cpp ami_testS.h ami_testS.inl ami_testS_T.cpp ami_testS_T.h ami_testS_T.inl: ami_test-stamp
-
-ami_test-stamp: $(srcdir)/ami_test.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC $(srcdir)/ami_test.idl
-	@touch $@
-
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \
@@ -135,11 +109,6 @@ server_SOURCES = \
   ami_testS.cpp \
   ami_test_i.cpp \
   server.cpp \
-  ami_testC.h \
-  ami_testC.inl \
-  ami_testS.h \
-  ami_testS_T.h \
-  ami_testS_T.inl \
   ami_test_i.h
 
 server_LDADD = \
@@ -160,35 +129,6 @@ endif BUILD_AMI
 if BUILD_AMI
 if BUILD_CORBA_MESSAGING
 
-BUILT_SOURCES += \
-  ami_testC.cpp \
-  ami_testC.h \
-  ami_testC.inl \
-  ami_testS.cpp \
-  ami_testS.h \
-  ami_testS.inl \
-  ami_testS_T.cpp \
-  ami_testS_T.h \
-  ami_testS_T.inl
-
-CLEANFILES += \
-  ami_test-stamp \
-  ami_testC.cpp \
-  ami_testC.h \
-  ami_testC.inl \
-  ami_testS.cpp \
-  ami_testS.h \
-  ami_testS.inl \
-  ami_testS_T.cpp \
-  ami_testS_T.h \
-  ami_testS_T.inl
-
-ami_testC.cpp ami_testC.h ami_testC.inl ami_testS.cpp ami_testS.h ami_testS.inl ami_testS_T.cpp ami_testS_T.h ami_testS_T.inl: ami_test-stamp
-
-ami_test-stamp: $(srcdir)/ami_test.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC $(srcdir)/ami_test.idl
-	@touch $@
-
 noinst_PROGRAMS += simple_client
 
 simple_client_CPPFLAGS = \
@@ -203,11 +143,7 @@ simple_client_SOURCES = \
   ami_testC.cpp \
   ami_testS.cpp \
   simple_client.cpp \
-  ami_testC.h \
-  ami_testC.inl \
-  ami_testS.h \
-  ami_testS_T.h \
-  ami_testS_T.inl
+  ami_test_i.h
 
 simple_client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
