@@ -2,8 +2,16 @@
 //
 // $Id$
 
-project(*Server): taoserver, naming, iortable {
+project(*idl): taoidldefaults {
   idlflags += -Sa -St
+
+  IDL_Files {
+    Test.idl
+  }  
+}
+
+project(*Server): taoserver, naming, iortable {
+  after += *idl
   macros += TEST_OUTPUT_HAS_DLL=0
   Source_Files {
     Test_Output.cpp
@@ -15,9 +23,12 @@ project(*Server): taoserver, naming, iortable {
   Header_Files {
 	../test_config.h
   }
+  IDL_Files {
+  }
 }
 
 project(*Client): taoclient {
+  after += *idl
   macros += TEST_OUTPUT_HAS_DLL=0
   Source_Files {
     Test_Output.cpp
@@ -26,5 +37,7 @@ project(*Client): taoclient {
   }
   Header_Files {
 	../test_config.h
+  }
+  IDL_Files {
   }
 }
