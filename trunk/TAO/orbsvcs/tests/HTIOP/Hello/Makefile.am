@@ -15,59 +15,9 @@ TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-## Makefile.HTIOP_Hello_Client.am
+## Makefile.HTIOP_Hello_Idl.am
 
 BUILT_SOURCES = \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.inl \
-  TestS_T.cpp \
-  TestS_T.h \
-  TestS_T.inl
-
-CLEANFILES = \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.inl \
-  TestS_T.cpp \
-  TestS_T.h \
-  TestS_T.inl
-
-TestC.cpp TestC.h TestC.inl TestS.inl TestS_T.cpp TestS_T.h TestS_T.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
-	@touch $@
-
-noinst_PROGRAMS = client
-
-client_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -DTEST_OUTPUT_HAS_DLL=0
-
-client_SOURCES = \
-  TestC.cpp \
-  Test_Output.cpp \
-  client.cpp \
-  ../test_config.h \
-  TestC.h \
-  TestC.inl \
-  TestS_T.h \
-  TestS_T.inl
-
-client_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-## Makefile.HTIOP_Hello_Server.am
-
-BUILT_SOURCES += \
   TestC.cpp \
   TestC.h \
   TestC.inl \
@@ -78,7 +28,7 @@ BUILT_SOURCES += \
   TestS_T.h \
   TestS_T.inl
 
-CLEANFILES += \
+CLEANFILES = \
   Test-stamp \
   TestC.cpp \
   TestC.h \
@@ -93,8 +43,47 @@ CLEANFILES += \
 TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl TestS_T.cpp TestS_T.h TestS_T.inl: Test-stamp
 
 Test-stamp: $(srcdir)/Test.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Sa -St $(srcdir)/Test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Test.idl
 	@touch $@
+
+noinst_PROGRAMS = client
+
+client_SOURCES = \
+  Hello.cpp \
+  TestC.cpp \
+  TestS.cpp \
+  Test_Output.cpp \
+  client.cpp \
+  server.cpp \
+  Hello.h \
+  TestC.h \
+  TestC.inl \
+  TestS.h \
+  TestS_T.h \
+  TestS_T.inl
+
+## Makefile.HTIOP_Hello_Client.am
+
+noinst_PROGRAMS += client
+
+client_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -DTEST_OUTPUT_HAS_DLL=0
+
+client_SOURCES = \
+  TestC.cpp \
+  Test_Output.cpp \
+  client.cpp \
+  ../test_config.h
+
+client_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+## Makefile.HTIOP_Hello_Server.am
 
 noinst_PROGRAMS += server
 
@@ -114,12 +103,7 @@ server_SOURCES = \
   Test_Output.cpp \
   server.cpp \
   ../test_config.h \
-  Hello.h \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS_T.h \
-  TestS_T.inl
+  Hello.h
 
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
