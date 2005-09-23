@@ -1,3 +1,9 @@
+Fri Sep 23 07:07:33 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/examples/LoadBalancing/LoadBalancing.mpc:
+
+	  Changed *idl project to inherit from anytypecode.
+
 Fri Sep 23 14:31:39 2005  Simon McQueen  <sm@prismtech.com>
 
         * docs/Options.html:
