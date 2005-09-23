@@ -1,3 +1,8 @@
+Fri Sep 23 11:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/Event.inl:
+          Emulated exception fix
+
 Fri Sep 23 11:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.{h,cpp}:
