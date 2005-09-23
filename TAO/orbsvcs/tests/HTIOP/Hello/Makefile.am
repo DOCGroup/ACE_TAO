@@ -46,25 +46,9 @@ Test-stamp: $(srcdir)/Test.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Test.idl
 	@touch $@
 
-noinst_PROGRAMS = client
-
-client_SOURCES = \
-  Hello.cpp \
-  TestC.cpp \
-  TestS.cpp \
-  Test_Output.cpp \
-  client.cpp \
-  server.cpp \
-  Hello.h \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS_T.h \
-  TestS_T.inl
-
 ## Makefile.HTIOP_Hello_Client.am
 
-noinst_PROGRAMS += client
+noinst_PROGRAMS = client
 
 client_CPPFLAGS = \
   -I$(ACE_ROOT) \

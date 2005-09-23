@@ -8,6 +8,8 @@ project(*idl): taoidldefaults {
   IDL_Files {
     Test.idl
   }  
+
+  custom_only = 1
 }
 
 project(*Server): taoserver, naming, iortable {
