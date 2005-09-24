@@ -300,20 +300,24 @@ startLaunch (const Deployment::Properties & configProperty,
        *  5. get the provided connection endpoints back and return them.
        */
       
-      Deployment::NodeImplementationInfo node_info;
-  
-      /*
-       * What does the << mean here?!?  We need to clean this up! -Will
-       */
-      if (!(node_info << (this->plan_)))
-        {
-          if (CIAO::debug_level () > 1)
-            ACE_DEBUG ((LM_DEBUG, "Failed to create Node Implementation Infos!\n"));
+      NodeImplementationInfoHandler handler (this->plan_);
 
-          ACE_THROW_RETURN (Deployment::StartError ("NodeApplicationManager_Imp::startLaunch",
-                                                    "Unable to populate node level plan"),
-                            Deployment::Application::_nil());
-        } //@@ I am not sure about which exception to throw. I will come back to this.
+      Deployment::NodeImplementationInfo * node_info =
+        handler.node_impl_info ();
+  
+  ACE_DEBUG ((LM_DEBUG, "********** NodeApplicationManager ***** step 1\n"));
+
+      if (!node_info)
+      {
+        if (CIAO::debug_level () > 1)
+          ACE_DEBUG ((LM_DEBUG, "Failed to create Node Implementation Infos!\n"));
+
+        ACE_THROW_RETURN (Deployment::StartError ("NodeApplicationManager_Imp::startLaunch",
+                                                  "Unable to populate node level plan"),
+                          Deployment::Application::_nil());
+      }
+
+  ACE_DEBUG ((LM_DEBUG, "********** NodeApplicationManager ***** step 2\n"));
 
       // Now spawn the NodeApplication process.
       // @@TODO: we need to pass arguments to the nodeapplication, ie naming service endpoints, if necessary
@@ -323,13 +327,14 @@ startLaunch (const Deployment::Properties & configProperty,
         create_node_application (cmd_option.c_str () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // This is what we will get back, a sequence of compoent object refs.
-      Deployment::ComponentInfos_var comp_info;
 
       // For debugging.
       if (true) //(CIAO::debug_level () > 1)
         {
-          Deployment::ComponentImplementationInfos infos = node_info[0].impl_infos;
+          CORBA::ULong curr_len = node_info->impl_infos.length ();
+
+          Deployment::ComponentImplementationInfos infos = 
+            ((node_info->impl_infos)[0]).impl_infos;
 
           const CORBA::ULong info_len = infos.length ();
           for (CORBA::ULong i = 0; i < info_len; ++i)
@@ -342,10 +347,12 @@ startLaunch (const Deployment::Properties & configProperty,
                           infos[i].servant_entrypt.in () ));
             }
         }
-  
+
+      // This is what we will get back, a sequence of compoent object refs.
+      Deployment::ComponentInfos_var comp_info;
   
       // This will install all homes and components.
-      comp_info = this->nodeapp_->install (node_info ACE_ENV_ARG_PARAMETER);
+      comp_info = this->nodeapp_->install (*node_info ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Now fill in the map we have for the components.

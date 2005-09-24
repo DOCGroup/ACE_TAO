@@ -1,5 +1,6 @@
 // $Id$
 #include "Packaging_Data.idl"
+#include "ServerResources.idl"
 
 module Deployment {
 

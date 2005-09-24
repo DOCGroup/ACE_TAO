@@ -1,3 +1,44 @@
+Sat Sep 24 02:37:20 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* ciao/Deployment.idl
+	* ciao/Deployment_Core.idl
+	* ciao/ServerResources.idl
+
+	  Enhanced to support RT-CCM feature.
+
+	* DAnCE/NodeApplicationManager/ImplementationInfo.cpp
+	* DAnCE/NodeApplicationManager/ImplementationInfo.h
+	* DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
+	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+	* DAnCE/NodeApplicationManager/Containers_Info_Map.cpp
+	* DAnCE/NodeApplicationManager/Containers_Info_Map.h
+
+	  Refactor the NodeApplicationManager to populate the correct
+	  node level deployment plan info, while taking into account
+	  of the RT-CCM feature.
+
+	* ciao/NodeApplication_Impl.cpp
+	* ciao/NodeApplication_Impl.h
+
+	  Modified to accomodate the change in IDL files.
+
+	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp
+	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp
+	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp
+
+	  Fixed these tests to make them run with the modified IDL 
+	  files.
+
+	* DAnCE/examples/Hello/descriptors/rt-config-example.csr
+	* DAnCE/examples/Hello/descriptors/rt-config-example.cdp
+
+	  An example descriptor files to describe server resource,
+	  and associate server resources and policy set defs with
+	  the deployment plan.
+
+	  NOTE: All above code are tested working fine with the existing
+	  examples.
+
 Fri Sep 23 10:05:18 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/tests/NodeApplicationTest/NodeAppTest.mpc

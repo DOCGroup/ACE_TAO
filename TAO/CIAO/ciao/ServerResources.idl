@@ -227,6 +227,8 @@ module CIAO
     
     struct ServerResource
     {
+      string Id;
+
       CommandlineArgs args;
       SvcconfURI svcconf;
       ORBConfigs orb_config;

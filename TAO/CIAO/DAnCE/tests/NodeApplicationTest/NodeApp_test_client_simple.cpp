@@ -89,8 +89,8 @@ main (int argc, char *argv[])
 
       // Create a NodeImplementationInfo sequence
       Deployment::NodeImplementationInfo node_info;
-      node_info.length (1);
-      node_info[0] = container_info;
+      node_info.impl_infos.length (1);
+      node_info.impl_infos[0] = container_info;
 
       // Install test component and its home on NodeApplication
       Deployment::ComponentInfos_var comp_info =

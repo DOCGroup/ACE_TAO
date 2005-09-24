@@ -1,17 +1,19 @@
-<Deployment:deploymentPlan
- xmlns:Deployment="http://www.omg.org/Deployment"
- xmlns:xmi="http://www.omg.org/XMI"
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Deployment:deploymentPlan 
+ xmlns:Deployment="http://www.omg.org/Deployment" 
+ xmlns:xmi="http://www.omg.org/XMI" 
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="http://www.omg.org/Deployment Modified_Deployment.xsd">
 
   <label>Hello-DeploymentPlan</label>
+
   <UUID>Hello_Plan_UUID_0001</UUID>
-  <!-- Could be ZERO  -->
+
   <realizes>
     <label>BasicSP-realizes-cid</label>
     <UUID>c0965470-7b83-11d9-9669-0800200c9a66</UUID>
-    <specificType><!-- @@ What does here? --></specificType>
-    <supportedType>IDL:BasicSP/EC:1.0</supportedType> 
+    <specificType/>
+    <supportedType>IDL:Hello/Sender:1.0</supportedType>
     <port>
       <name>read_message</name>
       <specificType>IDL:Hello/ReadMessage:1.0</specificType>
@@ -23,36 +25,26 @@
       <kind>SimplexReceptacle</kind>
     </port>
   </realizes>
-  
+
   <implementation id="Hello-Sender-mdd">
     <name>Hello-Sender-mdd</name>
-    <source><!-- @@ Don't know what goes here --></source>
+    <source/>
     <artifact>Hello-Sender_exec</artifact>
     <artifact>Hello-Sender_svnt</artifact>
-    <!--
-    <execParameter></execParameter>
-    <deployRequirement></deployRequirement>
-    -->
   </implementation>
 
   <implementation id="Hello-Receiver-mdd">
     <name>Hello-Receiver-mdd</name>
-    <source><!-- @@ Don't know what goes here --></source>
+    <source/>
     <artifact>Hello-Receiver_exec</artifact>
     <artifact>Hello-Receiver_svnt</artifact>
-    <!--
-    <execParameter></execParameter>
-    <deployRequirement></deployRequirement>
-    -->
   </implementation>
 
   <instance id="Hello-Sender-idd">
     <name>Hello-Sender-idd</name>
     <node>SenderNode</node>
-    <source><!-- @@ What goes here --></source>
+    <source/>
     <implementation>Hello-Sender-mdd</implementation>
-
-    <!-- Add this property if you want to write component reference to IOR -->
     <configProperty>
       <name>ComponentIOR</name>
       <value>
@@ -64,25 +56,36 @@
         </value>
       </value>
     </configProperty>
-
-    <!-- Add this property if you want to initialize component attribute -->
     <configProperty>
       <name>local_message</name>
       <value>
         <type>
-         <kind>tk_string</kind>
+          <kind>tk_string</kind>
         </type>
         <value>
           <string>This is a test message passed in through XML.</string>
         </value>
-      </value> 
+      </value>
     </configProperty>
+    <deployedResource>
+      <resourceUsage>InstanceUsesResource</resourceUsage>
+      <requirementName>CIAO:PolicySet</requirementName>
+      <resourceName>test_policy_set_id</resourceName>
+      <resourceValue>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>test_server_resource_id</string>
+        </value>
+      </resourceValue>
+    </deployedResource>
   </instance>
 
   <instance id="Hello-Receiver-idd">
     <name>Hello-Receiver-idd</name>
-    <node>SenderNode</node>
-    <source><!-- @@ What goes here --></source>
+    <node>ReceiverNode</node>
+    <source/>
     <implementation>Hello-Receiver-mdd</implementation>
     <configProperty>
       <name>ComponentIOR</name>
@@ -96,7 +99,6 @@
       </value>
     </configProperty>
   </instance>
-
 
   <connection>
     <name>hell_event_connection</name>
@@ -126,11 +128,10 @@
     </internalEndpoint>
   </connection>
 
-  <!-- @@ Runtime library name must match exactly in "location" tag -->
   <artifact id="Hello-Sender_exec">
     <name>Sender_exec</name>
-    <source><!-- @@ Not sure about this--></source>
-    <node><!-- blank --></node>
+    <source/>
+    <node/>
     <location>Sender_DnC_exec</location>
     <execParameter>
       <name>entryPoint</name>
@@ -144,11 +145,11 @@
       </value>
     </execParameter>
   </artifact>
-  
+
   <artifact id="Hello-Sender_svnt">
     <name>Sender_svnt</name>
-    <source><!-- @@ Not sure --></source>
-    <node><!-- blank --></node>
+    <source/>
+    <node/>
     <location>Sender_DnC_svnt</location>
     <execParameter>
       <name>entryPoint</name>
@@ -162,11 +163,11 @@
       </value>
     </execParameter>
   </artifact>
-  
+
   <artifact id="Hello-Receiver_exec">
     <name>Receiver_exec</name>
-    <source><!-- @@ Not sure about this--></source>
-    <node><!-- blank --></node>
+    <source/>
+    <node/>
     <location>Receiver_DnC_exec</location>
     <execParameter>
       <name>entryPoint</name>
@@ -180,11 +181,11 @@
       </value>
     </execParameter>
   </artifact>
-  
+
   <artifact id="Hello-Receiver_svnt">
     <name>Receiver_svnt</name>
-    <source><!-- @@ Not sure --></source>
-    <node><!-- blank --></node>
+    <source/>
+    <node/>
     <location>Receiver_DnC_svnt</location>
     <execParameter>
       <name>entryPoint</name>
@@ -198,4 +199,17 @@
       </value>
     </execParameter>
   </artifact>
-</Deployment:deploymentPlan>  
+
+  <infoProperty>
+    <name>CIAOServerResources</name>
+    <value>
+      <type>
+        <kind>tk_string</kind>
+      </type>
+      <value>
+        <string>rt-config-example.csr</string>
+      </value>
+    </value>
+  </infoProperty>
+
+</Deployment:deploymentPlan>

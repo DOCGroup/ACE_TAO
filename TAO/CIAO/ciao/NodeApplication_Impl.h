@@ -188,7 +188,7 @@ namespace CIAO
   protected:
     /// Create and initialize all the containers
     virtual CORBA::Long create_all_containers (
-        const ::Deployment::NodeImplementationInfo & node_impl_info
+        const ::Deployment::ContainerImplementationInfos & container_infos
         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
