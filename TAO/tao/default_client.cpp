@@ -30,7 +30,7 @@ TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
   , connect_strategy_ (TAO_LEADER_FOLLOWER_CONNECT)
   , rd_table_size_ (TAO_RD_TABLE_SIZE)
   , muxed_strategy_lock_type_ (TAO_THREAD_LOCK)
-  , use_cleanup_options_ (true)
+  , use_cleanup_options_ (false)
 {
   // Use single thread client connection handler
 #if defined (TAO_USE_ST_CLIENT_CONNECTION_HANDLER)
