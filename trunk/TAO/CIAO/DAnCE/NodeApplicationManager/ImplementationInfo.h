@@ -21,10 +21,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-//#include "Deployment_CoreS.h"
-//#include "ace/os_types.h"
 #include "ciao/DeploymentC.h"
 #include "ace/SString.h"
+#include "ace/Hash_Map_Manager.h"
+#include "Containers_Info_Map.h"
+
 
 //@@ I wish we could have precompiled header support soon!!!
 
@@ -33,34 +34,28 @@
 
 namespace CIAO
 {
-  bool operator<< (Deployment::NodeImplementationInfo & info,
-		  const Deployment::DeploymentPlan & plan);
-}
-
-/*
-// Helper function to parse the property.
-template < typename OUTPUT>
-bool operator<< (OUTPUT & info,
-			   const Deployment::Property & property);
-
-// Sepcialized for the entry point property
-template < >
-bool operator<< < TAO_String_Manager>
-				(TAO_String_Manager & info,
-				 const Deployment::Property & property)
-{
-  const char * tmp;
-  if (property.value >>= tmp)
-    info = CORBA::string_duplicate (tmp);
-  else
+  class NodeImplementationInfoHandler
   {
-    ACE_DEBUG ((LM_DEBUG, "Property::value >>= TAO_String_Manager failed!\n"));
-    return 0;
-  }
+  public:
+    NodeImplementationInfoHandler (::Deployment::DeploymentPlan & plan);
 
-  return 1;
+    Deployment::NodeImplementationInfo * 
+      node_impl_info (void) const;
+
+  private:
+    Deployment::DeploymentPlan plan_;
+
+    Deployment::NodeImplementationInfo_var node_info_;
+
+    void populate_server_resource_def (void);
+
+    void populate_container_impl_infos (void);
+
+    /// Helper class that helps populate the container_impl_infos 
+    /// field.
+    Containers_Info_Map containers_info_map_;
+  };
 }
-*/
 
 //#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 //#include "ImplementationInfo.cpp"

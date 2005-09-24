@@ -22,13 +22,13 @@ CIAO::NodeApplication_Impl::init (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 CORBA::Long
 CIAO::NodeApplication_Impl::create_all_containers (
-    const ::Deployment::NodeImplementationInfo & node_impl_info
+    const ::Deployment::ContainerImplementationInfos & container_infos
     ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Create all the containers here based on the input node_impl_info.
-  const CORBA::ULong len = node_impl_info.length ();
+  const CORBA::ULong len = container_infos.length ();
   
   for (CORBA::ULong i = 0; i < len; ++i)
     {
@@ -38,7 +38,7 @@ CIAO::NodeApplication_Impl::create_all_containers (
       // Also, the factory method will add the container object reference
       // to the set for us.
       ::Deployment::Container_var cref =
-        this->create_container (node_impl_info[i].container_config);
+        this->create_container (container_infos[i].container_config);
     }
   
   return 0;
@@ -211,6 +211,9 @@ CIAO::NodeApplication_Impl::install (
   Deployment::ComponentInfos_var retv;
   ACE_TRY
     {
+      const ::Deployment::ContainerImplementationInfos container_infos =
+        node_impl_info.impl_infos;
+
       ACE_NEW_THROW_EX (retv,
                         Deployment::ComponentInfos,
                         CORBA::NO_MEMORY ());
@@ -219,17 +222,17 @@ CIAO::NodeApplication_Impl::install (
       retv->length (0UL);
 
       // Call create_all_containers to create all the necessary containers..
-      (void) this->create_all_containers (node_impl_info);
+      (void) this->create_all_containers (container_infos);
 
       // For each container, invoke <install> operation, this will return
       // the ComponentInfo for components installed in each container.
       // Merge all the returned ComponentInfo, which will be used
       // as the return value of this method.
-      const CORBA::ULong num_containers = node_impl_info.length ();
+      const CORBA::ULong num_containers = container_infos.length ();
       for (CORBA::ULong i = 0; i < num_containers; ++i)
         {
           Deployment::ComponentInfos_var comp_infos =
-            this->container_set_.at(i)->install (node_impl_info[i]
+            this->container_set_.at(i)->install (container_infos[i]
                                                  ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 

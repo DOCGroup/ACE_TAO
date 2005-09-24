@@ -112,7 +112,13 @@ module Deployment
     Properties container_config;
   };
 
-  typedef sequence <ContainerImplementationInfo> NodeImplementationInfo;
+  typedef sequence <ContainerImplementationInfo> ContainerImplementationInfos;
+
+  struct NodeImplementationInfo
+  {
+    ContainerImplementationInfos impl_infos;
+    Properties nodeapp_config;
+  };
 
   //==================================
   interface Application

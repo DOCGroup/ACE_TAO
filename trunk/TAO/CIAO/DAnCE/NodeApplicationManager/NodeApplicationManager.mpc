@@ -10,5 +10,6 @@ project(NodeApplicationManager): ciao_server_dnc, ciao_deployment_svnt, ciao_dep
   Source_Files {
     NodeApplicationManager_Impl.cpp
     ImplementationInfo.cpp
+    Containers_Info_Map.cpp
   }
 }
