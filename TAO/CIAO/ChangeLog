@@ -1,3 +1,8 @@
+Sat Sep 24 08:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/spec_RepositoryManager/spec_RepositoryManager.mpc:
+          Added Id tag
+
 Sat Sep 24 02:37:20 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* ciao/Deployment.idl
@@ -26,7 +31,7 @@ Sat Sep 24 02:37:20 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp
 	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp
 
-	  Fixed these tests to make them run with the modified IDL 
+	  Fixed these tests to make them run with the modified IDL
 	  files.
 
 	* DAnCE/examples/Hello/descriptors/rt-config-example.csr
@@ -45,7 +50,7 @@ Fri Sep 23 10:05:18 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* tools/Config_Handlers/Config_Handlers.mpc
 
 	  fixes for build problems.
-	
+
 Thu Sep 22 16:21:12 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DAnCE/NodeManager/NodeManager_Impl.cpp
@@ -68,10 +73,10 @@ Thu Sep 22 14:45:32 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* tools/Config_Handlers/STD_PC_Intf.cpp
 	* tools/Config_Handlers/XML_File_Intf.cpp
 	* tools/Config_Handlers/RT-CCM/SRD_Handler.h
-	* tools/Config_Handlers/RT-CCM/RT-CCM-Handlers.mpc	
+	* tools/Config_Handlers/RT-CCM/RT-CCM-Handlers.mpc
 
 	Made these files consistent with the new Utils directory.
-	
+
 	* tools/Config_Handlers/Utils/Utils.mpc
 	* tools/Config_Handlers/Utils/XML_Error_Handler.cpp
 	* tools/Config_Handlers/Utils/XML_Error_Handler.h
@@ -80,8 +85,8 @@ Thu Sep 22 14:45:32 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* tools/Config_Handlers/Utils/XercesString.cpp
 	* tools/Config_Handlers/Utils/XercesString.h
 
-	Moved common XML  utilities to a separate directory. 
-	
+	Moved common XML  utilities to a separate directory.
+
 Thu Sep 22 13:21:12 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* ciao/CCM_Core.mpc
@@ -100,8 +105,8 @@ Thu Sep 22 13:21:12 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 	* DAnCE/NodeManager/NodeManager_Impl.h
 
 	  NodeManager now validates the correctness of the individual local
-	  dpeloyment plan. In particular,  it tries to verify that all the 
-	  component instances within this child deployment plan have the same 
+	  dpeloyment plan. In particular,  it tries to verify that all the
+	  component instances within this child deployment plan have the same
 	  "server_resource_id" assigned.
 
 	* DAnCE/tests/NodeApplicationTest/NodeAppTest.mpc
@@ -150,18 +155,18 @@ Thu Sep 22 10:50:45 CDT 2005 Stoyan spaunov@isis.vanderbilt.edu
 
 
 	Checked in these file and cleaned up *some* of the underlying mess due to previous
-	mix-ups. Many of the files are new. Some are newer versions of older files. 
-	Previously there were 2 RM directories spec_RepositoryManager and 
-	new_RepositoryManager. Someone had removed the spec* verion and checked in the 
+	mix-ups. Many of the files are new. Some are newer versions of older files.
+	Previously there were 2 RM directories spec_RepositoryManager and
+	new_RepositoryManager. Someone had removed the spec* verion and checked in the
 	wrong files in the new* version (which used to be a non-spec compilent impl).
-	Apparently on top of that the two directories have been linked somehow! I will 
-	check on what the reason for this is later. 
+	Apparently on top of that the two directories have been linked somehow! I will
+	check on what the reason for this is later.
 
 
 Thu Sep 22 13:15:28 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/ExecutionManager/Execution_Manager.cpp:
-        
+
           Fixed typo.
 
 Wed Sep 21 15:32:38 2005  William Otte  <wotte@dre.vanderbilt.edu>
@@ -190,12 +195,12 @@ Wed Sep 21 15:32:38 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* examples/Swapping/Sender/Sender_exec_2.cpp
 
 	Fixed numerous emulated exception errors.
-	
+
 	* DAnCE/ExecutionManager/ExecutionManager_Impl.cpp
 	* DAnCE/ExecutionManager/ExecutionManager_Impl.h
 
 	removed obsolete EM implementation.
-	
+
 Wed Sep 21 13:34:28 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* tools/Config_Handlers/RT-CCM/test.cpp
