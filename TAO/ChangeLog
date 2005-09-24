@@ -1,3 +1,11 @@
+Sat Sep 24 11:37:37 2005  Balachandran Natarajan  <bala_natarajan at symantec dot com>
+
+	* tao/default_client.cpp:
+
+	  Changed the default value of use_cleanup_options_ switch to
+	  false. This should address performance and thread_pool latency
+	  test failures in our daily scoreboard.
+
 Fri Sep 23 12:17:29 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Bug_2222_Regression/test.cpp (main):
