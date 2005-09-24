@@ -1,7 +1,7 @@
 // -*- MPC -*-
-// RepositoryManager.mpc v1.0 Stoyan
+// $Id$
 
-//RepositoryManager project: implementation of a repository manager 
+//RepositoryManager project: implementation of a repository manager
 //compleint with the D&C spec
 
 project (spec_RepositoryManager) : ciao_server_dnc,ciao_deployment_svnt, ciao_deployment_stub, taoexe, xerces, exceptions, zzip, zlib {
