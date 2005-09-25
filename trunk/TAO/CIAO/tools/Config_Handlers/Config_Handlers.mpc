@@ -31,6 +31,7 @@ project (XSC_Config_Handlers) : acelib, ciao_deployment_stub, xerces {
   libs += CIAO_XML_Utils RT_CCM_Config_Handlers XSC_XML_Handlers
 
   Source_Files {
+    Basic_Deployment_Data.cpp
     DP_Handler.cpp
     CCD_Handler.cpp
     Property_Handler.cpp

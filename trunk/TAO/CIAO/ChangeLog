@@ -1,8 +1,9 @@
 Sat Sep 24 20:44:20 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DAnCE/DomainApplicationManager/DomainApplicationManager.mpc
+	* tools/Config_Handlers/Config_Handlers.mpc
 
-	  Fixed a linking error.
+	  Fixed linking errors.
 
 Sat Sep 24 08:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
