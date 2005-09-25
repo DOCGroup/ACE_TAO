@@ -1,3 +1,9 @@
+Sat Sep 24 20:44:20 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DAnCE/DomainApplicationManager/DomainApplicationManager.mpc
+
+	  Fixed a linking error.
+
 Sat Sep 24 08:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/spec_RepositoryManager/spec_RepositoryManager.mpc:
