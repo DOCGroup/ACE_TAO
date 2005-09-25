@@ -2,7 +2,7 @@
 // $Id$
 
 project (DomainApplicationManager): ciao_deployment_svnt, xerces  {
-  after += Config_Handlers NodeManager RT_CCM_Config_Handlers                         
+  after += Config_Handlers XSC_Config_Handlers NodeManager RT_CCM_Config_Handlers                         
 
   sharedname = DomainApplicationManager
 
