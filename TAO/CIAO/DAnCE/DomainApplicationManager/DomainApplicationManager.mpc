@@ -8,7 +8,7 @@ project (DomainApplicationManager): ciao_deployment_svnt, xerces  {
 
   dynamicflags   = DOMAINAPPLICATIONMANAGER_BUILD_DLL
 
-  libs += CIAO_DnC_Client XSC_Config_Handlers RT_CCM_Config_Handlers CIAO_XML_Utils
+  libs += CIAO_DnC_Client RT_CCM_Config_Handlers CIAO_XML_Utils
   includes += $(CIAO_ROOT)/tools/Config_Handlers
 
   Source_Files {
