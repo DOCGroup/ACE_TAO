@@ -51,9 +51,9 @@ $dot_path = '/usr/local/bin';
              ,'tao_portablegroup'
              ,'tao_pss'
              ,'tao_ifr');
-@CIAO_DOCS = ('ciao_xml_helpers'
-  	       ,'ciao_DAnCE'
-	       ,'ciao');
+@CIAO_DOCS = ('ciao_config_handlers'
+             ,'ciao_DAnCE'
+             ,'ciao');
 
 # Modify defaults using the command line arguments
 &parse_args ();
