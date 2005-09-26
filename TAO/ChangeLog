@@ -1,3 +1,14 @@
+Mon Sep 26 14:19:42 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Regenerated.
+
+	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
+
+	  Added "Log/LogStore.h" to Header_Files in the DsLogAdmin_Serv
+	  project.
+
 Mon Sep 26 09:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Scheduler_Factory.cpp:

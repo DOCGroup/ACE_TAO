@@ -2966,6 +2966,7 @@ nobase_include_HEADERS += \
   Log/LogMgr_i.h \
   Log/LogNotification.h \
   Log/LogRecordStore.h \
+  Log/LogStore.h \
   Log/Log_Compaction_Handler.h \
   Log/Log_Constraint_Interpreter.h \
   Log/Log_Constraint_Visitors.h \
