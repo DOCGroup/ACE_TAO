@@ -1,3 +1,9 @@
+Mon Sep 26 09:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Event_Service/Event_Service.cpp:
+          Corrected the way we check whether we should create a persistent POA
+          or not.
+
 Mon Sep 26 07:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_operation/upcall_command_ss.cpp:
