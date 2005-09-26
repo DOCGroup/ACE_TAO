@@ -30,7 +30,7 @@ void
 CIAO::NodeImplementationInfoHandler::populate_server_resource_def (void)
 {
   const CORBA::ULong instance_len = plan_.instance.length ();
-  const char * target_resource_id;
+  const char * target_resource_id = 0;
 
   CORBA::ULong i;
 
@@ -75,8 +75,10 @@ CIAO::NodeImplementationInfoHandler::populate_server_resource_def (void)
 void 
 CIAO::NodeImplementationInfoHandler::populate_container_impl_infos (void)
 {
-  CORBA::ULong curr_len = this->containers_info_map_.containers_info ()->length ();
-
+  CORBA::ULong curr_len = 
+    this->containers_info_map_.containers_info ()->length ();
+  ACE_UNUSED_ARG (curr_len);
+  
   // assignment operation
   this->node_info_->impl_infos = 
     *(this->containers_info_map_.containers_info ());
