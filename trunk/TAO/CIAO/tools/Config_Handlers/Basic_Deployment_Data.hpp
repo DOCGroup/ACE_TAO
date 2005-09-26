@@ -136,7 +136,10 @@ namespace CIAO
       Value v_;
     };
 
+    bool Config_Handlers_Export operator== (TCKind const& a, TCKind const& b);
 
+    bool Config_Handlers_Export operator!= (TCKind const& a, TCKind const& b);
+    
     class Config_Handlers_Export DataType : public ::XSCRT::Type
     {
       //@@ VC6 anathema
@@ -1249,7 +1252,10 @@ namespace CIAO
       Value v_;
     };
 
+    bool Config_Handlers_Export operator== (CCMComponentPortKind const& a, CCMComponentPortKind const& b);
 
+    bool Config_Handlers_Export operator!= (CCMComponentPortKind const& a, CCMComponentPortKind const& b);
+    
     class Config_Handlers_Export ComponentPortDescription : public ::XSCRT::Type
     {
       //@@ VC6 anathema
