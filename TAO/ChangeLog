@@ -1,8 +1,13 @@
+Mon Sep 26 07:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_operation/upcall_command_ss.cpp:
+          Added ACE_CHECK generation and fixed some layout issues
+
 Sun Sep 25 21:33:41 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
 
 	* tao/Transport_Cache_Manager.cpp:
 
-	  Cosmetic check, which seems to help some builds. 
+	  Cosmetic check, which seems to help some builds.
 
 Sat Sep 24 11:37:37 2005  Balachandran Natarajan  <bala_natarajan at symantec dot com>
 
@@ -23,7 +28,7 @@ Fri Sep 23 12:17:29 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 Fri Sep 23 16:22:01 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/AnyTypeCode/Any_Basic_Impl_T.cpp:
-        
+
           Added include of Any.h, similar to the other Any_*_Impl_T.cpp
           files. The need for this include shows up only when enums
           are seen in an IDL file, with no other IDL types to
