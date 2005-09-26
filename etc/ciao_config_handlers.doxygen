@@ -2,7 +2,7 @@
 #
 # $Id$
 #
-PROJECT_NAME          = XML_HELPERS
+PROJECT_NAME          = CONFIG_HELPERS
 PROJECT_NUMBER        = Snapshot
 OUTPUT_DIRECTORY      = .
 OUTPUT_LANGUAGE       = English
@@ -70,7 +70,7 @@ IGNORE_PREFIX         =
 #---------------------------------------------------------------------------
 
 GENERATE_HTML         = YES
-HTML_OUTPUT           = html/tao/ciao/tools/xml_helpers
+HTML_OUTPUT           = html/tao/ciao/tools/config_handlers
 HTML_HEADER           =
 HTML_FOOTER           =
 HTML_STYLESHEET       =
@@ -116,7 +116,7 @@ ENABLE_PREPROCESSING  = YES
 MACRO_EXPANSION       = YES
 EXPAND_ONLY_PREDEF    = YES
 SEARCH_INCLUDES       = YES
-INCLUDE_PATH          = TAO . ACEXML TAO/tao/IORTable TAO/CIAO/tools/XML_Helpers
+INCLUDE_PATH          = TAO . ACEXML TAO/tao/IORTable TAO/CIAO/tools/Config_Handlers
 PREDEFINED            =
 EXPAND_AS_DEFINED     = ACE_RCSID \
 			ACE_UNIMPLEMENTED_FUNC \
@@ -140,7 +140,7 @@ TAGFILES              = html/ace/ACE.tag=../../../../ace \
                         html/tao/rtportableserver/TAO_RTPortableServer.tag=../../../rtportableserver \
                         html/tao/cosnaming/TAO_CosNaming.tag=../../../cosnaming \
                         html/tao/ifr/TAO_IFR.tag=../../../ifr
-GENERATE_TAGFILE      = html/tao/ciao/tools/XML_Helpers.tag
+GENERATE_TAGFILE      = html/tao/ciao/tools/Config_Handlers.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 
