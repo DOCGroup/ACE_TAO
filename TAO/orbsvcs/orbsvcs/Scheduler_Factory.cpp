@@ -669,7 +669,7 @@ ACE_Scheduler_Factory::log_scheduling_entries(TAO_Reconfig_Scheduler_Entry ** en
    FILE* file = stdout;
    if (file_name != 0)
    {
-      file = ACE_OS::fopen (file_name, "w");
+      file = ACE_OS::fopen (file_name, ACE_TEXT ("w"));
       if (file == 0)
         return -1;
     }
@@ -702,7 +702,7 @@ ACE_Scheduler_Factory::log_scheduling_tuples(
    FILE* file = stdout;
    if (file_name != 0)
    {
-      file = ACE_OS::fopen (file_name, "w");
+      file = ACE_OS::fopen (file_name, ACE_TEXT ("w"));
       if (file == 0)
         return;
     }

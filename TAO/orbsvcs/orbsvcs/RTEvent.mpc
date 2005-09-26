@@ -30,6 +30,8 @@ project(RTEvent) : orbsvcslib, core, svc_utils {
     RtecEventCommC.h
     RtecEventChannelAdminC.h
     RtecUDPAdminC.h
+    Event/event_export.h
+    Event/event_skel_export.h
   }
 
   Inline_Files {

@@ -20,6 +20,7 @@ project(RTEvent_Skel) : orbsvcslib, core, rtevent, portableserver {
     RtecEventCommS.h
     RtecEventChannelAdminS.h
     RtecUDPAdminS.h
+    Event/event_skel_export.h
   }
 
   Inline_Files {
