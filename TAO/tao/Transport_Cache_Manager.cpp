@@ -4,6 +4,7 @@
 #include "debug.h"
 #include "ORB_Core.h"
 #include "Connection_Purging_Strategy.h"
+#include "Client_Strategy_Factory.h"
 #include "Condition.h"
 #include "Wait_Strategy.h"
 #include "ace/ACE.h"
@@ -170,15 +171,17 @@ namespace TAO
       {
         transport = int_id.relinquish_transport ();
 
-        if (transport->wait_strategy ()->non_blocking () == 0)
+        if (transport->wait_strategy ()->non_blocking () == 0 &&
+            transport->orb_core ()->client_factory ()->use_cleanup_options ())
           {
             ACE_Event_Handler *eh =
-                         transport->event_handler_i ();
+              transport->event_handler_i ();
 
             ACE_Reactor *r =
               transport->orb_core ()->reactor ();
 
-            if (r->remove_handler (eh,
+            if (eh &&
+                r->remove_handler (eh,
                                    ACE_Event_Handler::READ_MASK |
                                    ACE_Event_Handler::DONT_CALL) == -1)
               {
@@ -714,4 +717,3 @@ namespace TAO
   }
 
 }
-
