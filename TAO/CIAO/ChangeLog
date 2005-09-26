@@ -1,5 +1,11 @@
 Mon Sep 26 11:06:40 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
+  * tools/Config_Handlers/Basic_Deployment_Data.hpp
+  
+  Updates for compile problems in Borland.
+  
+Mon Sep 26 11:06:40 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
 	* DAnCE/NodeApplicationManager/ImplementationInfo.cpp
 	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
 	* DAnCE/NodeManager/NodeManager_Impl.cpp
