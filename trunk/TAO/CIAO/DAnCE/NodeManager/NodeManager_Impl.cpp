@@ -242,7 +242,7 @@ CIAO::NodeManager_Impl::destroyManager
 bool
 CIAO::NodeManager_Impl::validate_plan (const Deployment::DeploymentPlan &plan)
 {
-  const char * resource_id;
+  const char * resource_id = 0;
   CORBA::ULong i = 0;
 
   for (i = 0; i < plan.instance.length (); ++i)
