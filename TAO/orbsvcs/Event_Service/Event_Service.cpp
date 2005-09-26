@@ -191,7 +191,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
           // Create child POA
           CORBA::PolicyList policies (3);
 
-          if (persistent == 1)
+          if (persistent != 0)
             {
               policies[index++] =
                 root_poa->create_id_assignment_policy (PortableServer::USER_ID
