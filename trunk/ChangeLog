@@ -1,7 +1,17 @@
+Mon Sep 26 10:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ciao_xml_helpers.doxygen:
+        * etc/ciao_config_handlers.doxygen:
+          Renamed ciao_xml_helpers to ciao_config_handlers. Corrected also
+          paths, fixes errors in the doxygen build
+
+        * bin/generate_doxygen.pl:
+          Updated change above
+
 Sat Sep 24 12:56:20 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
 
  	* ace/Acceptor.cpp:
-	* ace/Strategies_T.cpp (accept_svc_handler): 
+	* ace/Strategies_T.cpp (accept_svc_handler):
 
 	  Errno of failed accept() call is potentially not preserved due
 	  to unguarded call of svc_handler->close().  Thus when
@@ -18,8 +28,8 @@ Fri Sep 23 10:07:25 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	  Updates for Tiger compatibility. Thanks to Michael van der
 	  Westhuizen (r1mikey at gmail dot com) for help with tracking
-	  down some troublesome issues in the platform_macros. 
-	
+	  down some troublesome issues in the platform_macros.
+
 Thu Sep 22 12:40:20 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* m4/ace.m4:
