@@ -248,13 +248,7 @@ be_visitor_operation_upcall_command_ss::visit (be_operation * node,
       return -1;
     }
 
-  if (!node->void_return_type ())
-    {
-      os << be_uidt;
-    }
-
-  os << be_uidt_nl
-     << "}" << be_uidt_nl << be_nl;
+  os << "}" << be_uidt_nl << be_nl;
 
   // Generate class attributes.
   os << "private:" << be_idt_nl
@@ -423,8 +417,7 @@ be_visitor_operation_upcall_command_ss::gen_upcall (be_operation * node)
 
   if (!node->void_return_type ())
     {
-      os << be_nl
-         << "retval =" << be_idt_nl;
+      os << "retval =" << be_idt_nl;
     }
 
   os << "this->servant_->" << node->local_name () << " ("
@@ -436,9 +429,16 @@ be_visitor_operation_upcall_command_ss::gen_upcall (be_operation * node)
     os << (i == 0 ? "" : ", ") << "arg_" << i + 1 << be_nl;
 
   if (count > 0)
-    os << "ACE_ENV_ARG_PARAMETER);" << be_uidt_nl;
+    os << "ACE_ENV_ARG_PARAMETER);";
   else
-    os << "ACE_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl;
+    os << "ACE_ENV_SINGLE_ARG_PARAMETER);";
+
+  if (!node->void_return_type ())
+    {
+      os << be_uidt;
+    }
+
+  os << be_uidt_nl << "ACE_CHECK;" << be_uidt_nl;
 
   return 0;
 }
