@@ -332,7 +332,8 @@ startLaunch (const Deployment::Properties & configProperty,
       if (true) //(CIAO::debug_level () > 1)
         {
           CORBA::ULong curr_len = node_info->impl_infos.length ();
-
+          ACE_UNUSED_ARG (curre_len);
+          
           Deployment::ComponentImplementationInfos infos = 
             ((node_info->impl_infos)[0]).impl_infos;
 
