@@ -35,7 +35,7 @@ project(Output_Adapter_svnt) : ciao_servant_dnc {
 
   after +=  Output_Adapter_stub Output_Adapter_Interface_svnt
   sharedname  = Output_Adapter_svnt
-  libs  +=  Output_Adapter_stub Output_Adapter_Interface_svnt
+  libs  +=  Output_Adapter_stub Output_Adapter_Interface_svnt Output_Adapter_Interface_stub
 
   idlflags += -Sc \
               -Wb,stub_export_macro=OUTPUT_ADAPTER_STUB_Export \

@@ -19,7 +19,7 @@ project (ExecutionManager_stub): ciao_server_dnc {
   }
 }
 
-project(ExecutionManager): ciao_deployment_svnt, naming, ifr_client, ciao_server_dnc {
+project(ExecutionManager): ciao_component_dnc, ciao_config_handlers {
 
   exename = Execution_Manager
 
