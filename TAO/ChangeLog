@@ -1,3 +1,8 @@
+Tue Sep 27 18:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/POA/Single_Threaded_POA/Single_Threaded_POA.cpp:
+          Emulated exception fix
+
 Mon Sep 26 14:19:42 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:
