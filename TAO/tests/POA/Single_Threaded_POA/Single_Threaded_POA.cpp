@@ -125,6 +125,7 @@ main (int argc, char **argv)
       // Obtain the RootPOA.
       CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA"
                                                                ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
