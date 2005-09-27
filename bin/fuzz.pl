@@ -1075,8 +1075,8 @@ sub check_for_ace_check ()
                         print_error ("Multiple ACE_ENV_ARG_PARAMETER in $file ($line)");
                     }
 
-                    if (m/ACE_THROW_RETURN/ && $in_ace_try) {
-                        print_error ("ACE_THROW_RETURN used inside of an ACE_TRY for $file ($line)");
+                    if (m/ACE_THROW/ && $in_ace_try) {
+                        print_error ("ACE_THROW/ACE_THROW_RETURN used inside of an ACE_TRY for $file ($line)");
                     }
 
                     if ($in_func && m/\)/) {
