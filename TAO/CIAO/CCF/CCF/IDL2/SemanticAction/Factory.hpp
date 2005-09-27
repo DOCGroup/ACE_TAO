@@ -12,6 +12,7 @@ namespace CCF
     namespace SemanticAction
     {
       struct Attribute;
+      struct Const;
       struct Enum;
       struct Exception;
       struct Include;
@@ -19,6 +20,7 @@ namespace CCF
       struct Member;
       struct Module;
       struct Native;
+      struct NumericExpression;
       struct Operation;
       struct Struct;
       struct Typedef;
@@ -40,6 +42,9 @@ namespace CCF
         virtual Attribute&
         attribute () = 0;
 
+        virtual Const&
+        const_ () = 0;
+
         virtual SemanticAction::Enum&
         enum_ () = 0;
 
@@ -60,6 +65,9 @@ namespace CCF
 
         virtual Native&
         native () = 0;
+
+        virtual NumericExpression&
+        numeric_expression () = 0;
 
         virtual Operation&
         operation () = 0;

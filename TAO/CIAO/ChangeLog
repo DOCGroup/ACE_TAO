@@ -1,3 +1,31 @@
+Tue Sep 27 14:26:44 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
+	* CCF/CCF/IDL2/Parser.cpp:
+	* CCF/CCF/IDL2/Parser.hpp:
+	* CCF/CCF/IDL2/SemanticAction.hpp:
+	* CCF/CCF/IDL2/SemanticGraph.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Const.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Factory.hpp:
+	* CCF/CCF/IDL2/SemanticAction/NumericExpression.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Const.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Const.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Elements.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Factory.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Factory.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/NumericExpression.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/NumericExpression.hpp:
+	* CCF/CCF/IDL2/SemanticGraph/Elements.cpp:
+	* CCF/CCF/IDL2/SemanticGraph/Elements.hpp:
+	* CCF/CCF/IDL2/SemanticGraph/IntExpression.cpp:
+	* CCF/CCF/IDL2/SemanticGraph/IntExpression.hpp:
+	* CCF/CCF/IDL3/Parser.cpp:
+	* CCF/CCF/CIDL/Parser.cpp:
+
+	Implemented first part of the const expression support. This
+	includes parser rules, semantic graph types and semantic
+	actions. Traversal types are still to be implemented.
+
 Tue Sep 27 06:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
@@ -242,7 +270,7 @@ Wed Sep 21 13:34:28 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 Tue Sep 20 21:58:23 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL3/ImpliedIDL/All/convert.idl:
-        
+
           Modified valuetype declartion used as a primary key to
           conform to the CCM spec section 61.7.2.1 listing
           constraints on primary key types.
@@ -250,17 +278,17 @@ Tue Sep 20 21:58:23 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 Tue Sep 20 02:25:34 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/Config_Handlers.mpc
-  
+
           Quick fix for a build problem on Windows.  A better solution
  	  will follow when I check in my CIAO build system revamp.
-	
+
 Tue Sep 20 10:19:46 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* tools/Config_Handlers/test.cdp
 
 	A test deployment plan file that contains odd constructs.
-	Used for testing. 
-	
+	Used for testing.
+
 Tue Sep 20 10:07:43 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/new_RepositoryManager/new_RepositoryManager.mpc
@@ -295,7 +323,7 @@ Mon Sep 19 16:29:57 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* XML_Error_Handler.cpp
 
 	Added some improved error handling/reporting. Much more to come.
-	
+
 	* test.cpp
 	* RT-CCM/RT-CCM-Handlers.mpc
 	* RT-CCM/SRD_Handler.cpp
@@ -307,7 +335,7 @@ Mon Sep 19 16:29:57 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	plan.
 
 	This is activated by adding an InfoProperty with name
-	"CIAOServerResources" with a value of a valid CSR file. 
+	"CIAOServerResources" with a value of a valid CSR file.
 
 	Also enabled parsing of deployRequirements and infoProperties.
 
@@ -331,8 +359,8 @@ Mon Sep 19 10:55:05 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* tools/Config_Handlers/RT-CCM/OR_Handler.cpp
 	* tools/Config_Handlers/RT-CCM/OR_Handler.h
 
-	Misc fuzz fixes. 
-	
+	Misc fuzz fixes.
+
 Fri Sep 16 09:54:44 2005  William Otte  <wotte@william-ottes-powerbook-g4-15.local>
 
 	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
@@ -340,16 +368,16 @@ Fri Sep 16 09:54:44 2005  William Otte  <wotte@william-ottes-powerbook-g4-15.loc
 	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
 
 	Emulated exception fixes.
-	
+
 Thu Sep 15 07:29:03 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO/CIAO/examples/Hello/descriptors/NodeManagerMap.dat: Make sure
 	  there's a newline at the end of this file.  Thanks to Zachi
  	  Klopman <zklopman@gmail.com> for reporting this.
-	
+
 Thu Sep 15 11:20:20 2005 CSET William Otte  <wotte@dre.vanderbilt.edu>
 
-  
+
 	* ciao/Container_Base.cpp
 
 	Fix for compile error on platforms with emulated exceptions.
@@ -358,23 +386,23 @@ Wed Sep 14 13:25:00 CEST 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc
 
-	Fix for a library ordering problem. 
+	Fix for a library ordering problem.
 
 Wed Sep 14 11:18:42 2005 CEST William Otte  <wotte@william-ottes-powerbook-g4-15.local>
 
 	* tools/Config_Handlers/CIAOServerResources.cpp
 	* tools/Config_Handlers/CIAOServerResources.hpp
 
-	Removed these from the repo to avoid confusion. 
-	
+	Removed these from the repo to avoid confusion.
+
 	* tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
 
 	Ported patches from:
 	Tue Sep 13 17:18:12 CEST 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	which were made against the wrong file.  Thanks to Gan Deng for
-	pointing this out. 
-	
+	pointing this out.
+
 Wed Sep 14 13:28:14 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* examples/Hello/descriptors/run_NodeDaemons.pl
@@ -390,7 +418,7 @@ Wed Sep 14 13:28:14 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 	  Fixed a bug of setting attribute through command line options
 	  through the "starter" executable. Also, make the default ior
 	  file name to be "Sender.ior" to make it consistent with the
-	  output generated by DAnCE. Thanks Zacki 
+	  output generated by DAnCE. Thanks Zacki
 	  <zklopman at gmail dot com> for reporting these.
 
 	* examples/Hello/step-by-step.html
@@ -404,7 +432,7 @@ Tue Sep 13 17:18:12 CEST 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	Fixes for compile errors in:
 	.  Especially strict C++ compilers
 	.  Windows VC71 (hopefully)
-	
+
 Tue Sep 13 17:05:31 2005 CEST William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
@@ -422,8 +450,8 @@ Tue Sep 13 17:05:31 2005 CEST William Otte  <wotte@dre.vanderbilt.edu>
 
 	Folding in some of the error reporting work that I have been
 	working on for the past couple weeks. Most common deployment
-	errors are now reported through the plan_launcher. 
-	
+	errors are now reported through the plan_launcher.
+
 Tue Sep 13 16:55:15 CEST 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* tools/Config_Handlers/IDD_Handler.cpp
@@ -434,7 +462,7 @@ Tue Sep 13 16:55:15 CEST 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	Fixes for compile errors on both:
 	.  64 bit platforms
 	.  GCC4
-	
+
 Tue Sep 13 16:01:35 CEST 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* tools/Config_Handlers/XMLSchema/Traversal.hpp
@@ -452,7 +480,7 @@ Tue Sep 13 16:01:35 CEST 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	Rolled back Stoyan's changes from the previous commit.  The proper
 	fix for this problem would be to update the include paths in the
 	affected MPC files, which has the virtue of not breaking
-	builds on platforms with case-sensitive filesystems. 
+	builds on platforms with case-sensitive filesystems.
 
 	* DAnCE/new_RepositoryManager/new_RepositoryManager.mpc
 
@@ -473,17 +501,17 @@ Mon Sep 12 17:34:47 CDT 2005 Stoyan Paunov <spaunov@isis.vanderbilt.edu>
 	* tools/Config_Handlers/XSCRT/XMLSchema.hpp
 
 	Fixed a number of problems related to Will's changes. The XSC_Config_Handler_Tests
-	project was not compiling. I had the same problem in RepositoryManager. Will had 
-	changed the directory structure, but did not update any of the include paths. 
+	project was not compiling. I had the same problem in RepositoryManager. Will had
+	changed the directory structure, but did not update any of the include paths.
 	Needless to say there were like 30-40 of those in the XSCRT and XMLSchema directories
-	
+
 Fri Sep  9 12:35:20 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* tools/Config_Handlers/STD_IAD_Handler.cpp
 	* tools/Config_Handlers/STD_PCD_Handler.cpp
 	* tools/Config_Handlers/STD_PC_Intf.cpp
 
-	Changed to comform with new refactoring. 
+	Changed to comform with new refactoring.
 
 Fri Sep  9 12:32:14 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
@@ -493,15 +521,15 @@ Fri Sep  9 12:32:14 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* ciao/Deployment_Core.idl
 	* ciao/Deployment_Data.idl
 	* ciao/Packaging_Data.idl
-	
-	Refactoring to support cidl compilation of deployment structures. 
-	This refactoring should solve compilation errors in the config handlers. 
-	
+
+	Refactoring to support cidl compilation of deployment structures.
+	This refactoring should solve compilation errors in the config handlers.
+
 Wed Sep  7 16:31:12 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantHeaderGenerator.cpp:
-        
-          Removed generation of export macro in the typedef of the 
+
+          Removed generation of export macro in the typedef of the
           template class instantiation that defines a facet servant.
           Thanks to Ossama Othman <ossama@dre.vanderbilt.edu> for
           pointing out that typedefs need not be exported.
@@ -521,7 +549,7 @@ Tue Sep  6 09:58:12 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* examples/Hello/descriptors/run_test.pl
 
 	Modified the script to fix the absolute path to the naming service
-	with a relative path. 
+	with a relative path.
 
 Fri Sep  2 17:38:31 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
@@ -531,8 +559,8 @@ Fri Sep  2 17:38:31 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* performance-tests/Protocols/common/Protocols.mpc
 	* tests/CIDL/CodeGen/CodeGen.mpc
 
-	Migrated to modern CIAO base projects. 
-	
+	Migrated to modern CIAO base projects.
+
 Fri Sep  2 16:41:08 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* performance-tests/Benchmark/Benchmark.mpc
@@ -541,8 +569,8 @@ Fri Sep  2 16:41:08 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* performance-tests/Benchmark/RoundTripClient/RoundTripClient.mpc
 	* performance-tests/Benchmark/RoundTripServer/RoundTripServer.mpc
 
-	Migrated to modern CIAO projects. 
-	
+	Migrated to modern CIAO projects.
+
 Fri Sep  2 15:10:43 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* docs/tutorial
@@ -573,25 +601,25 @@ Fri Sep  2 15:04:00 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* tests/IDL3/ImpliedIDL/Homes/Homes.mpc
 	* tests/IDL3/Lookup/lookup_test.mpc
 
-	Updated to use dnc ciao base project. 
+	Updated to use dnc ciao base project.
 
 	* tests/RTCCM
 
-	Removed this test. 
-	
+	Removed this test.
+
 Thu Sep  1 10:20:48 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	CIAO Reorganization.  Plese see tag before_ciao_reorg
-	to obtain the old version. 
+	to obtain the old version.
 
 Wed Aug 31 15:16:23 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* DAnCE/Config_Handlers/RT-CCM/CB_Handler.cpp
 	* DAnCE/Config_Handlers/RT-CCM/PM_Handler.cpp
 	* DAnCE/Config_Handlers/RT-CCM/TPL_Handler.cpp
 	* DAnCE/Config_Handlers/RT-CCM/TP_Handler.cpp
-	
-	Fixes to satisfy a tempramental Borland compiler. 
-	
+
+	Fixes to satisfy a tempramental Borland compiler.
+
 Wed Aug 31 13:28:46 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/Config_Handlers/ADD_Handler.cpp
@@ -605,13 +633,13 @@ Wed Aug 31 13:28:46 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* DAnCE/Config_Handlers/STD_CID_Handler.cpp
 	* DAnCE/Config_Handlers/STD_CID_Handler.h
 
-	Simple refactoring to make the IDREF interface more generic. 
-	
+	Simple refactoring to make the IDREF interface more generic.
+
 	* DAnCE/Config_Handlers/XML_Helper.cpp
 	* DAnCE/Config_Handlers/XML_Helper.h
 
-	Made empty document creation more generic. 
-	
+	Made empty document creation more generic.
+
 	* DAnCE/Config_Handlers/RT-CCM/CB_Handler.cpp
 	* DAnCE/Config_Handlers/RT-CCM/CB_Handler.h
 	* DAnCE/Config_Handlers/RT-CCM/CIAOServerResources.cpp
@@ -637,17 +665,17 @@ Wed Aug 31 13:28:46 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* DAnCE/Config_Handlers/RT-CCM/test.cpp
 
 	The new RT-CCM handlers.  These have yet to be integrated into the
-	main config_handler path. 
-	
+	main config_handler path.
+
 	* DAnCE/ciao/CCM_Core.mpc
 	* DAnCE/ciao/ServerResources.idl
 
-	Updates to the support the RT-CCM Handlers. 
-	
+	Updates to the support the RT-CCM Handlers.
+
 	* docs/schema/CIAOServerResources.xsd
 
-	Corrected a few oversights. 
-	
+	Corrected a few oversights.
+
 Wed Aug 31 09:49:28 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/Config_Handlers/XMLSchema/TypeInfo.tpp
@@ -664,7 +692,7 @@ Tue Aug 30 11:59:14 CDT 2005  William Otte <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/Config_Handlers/IRDD_Handler.h
 	* DAnCE/Config_Handlers/PCD_Handler.h
-	
+
 	Fixed a class/struct mismatch.
 
 Tue Aug 30 11:51:32 CDT 2005  William Otte <wotte@dre.vanderbilt.edu>
@@ -692,7 +720,7 @@ Tue Aug 30 11:51:32 CDT 2005  William Otte <wotte@dre.vanderbilt.edu>
 	* DAnCE/Config_Handlers/toplevel.cpp
 	* DAnCE/Config_Handlers/toplevel.hpp
 
-	Fixes a large number of compiler warnings in Borland. 
+	Fixes a large number of compiler warnings in Borland.
 
 Thu Aug 25 15:26:25 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
@@ -706,7 +734,7 @@ Wed Aug 24 20:41:59 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * CIDLC/ExecImplSourceGenerator.cpp:
         * CIDLC/ServantHeaderGenerator.cpp:
         * CIDLC/ServantSourceGenerator.cpp:
-        
+
           Removed commented-out code.
 
 Tue Aug 23 20:09:59 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>

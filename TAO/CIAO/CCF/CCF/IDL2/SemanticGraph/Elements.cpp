@@ -433,6 +433,68 @@ namespace CCF
       static_type_info () { return inherits_; }
 
 
+      // Initializes
+      //
+      //
+      namespace
+      {
+        TypeInfo
+        initializes_init_ ()
+        {
+          TypeInfo ti (typeid (Initializes));
+          ti.add_base (Access::PUBLIC, true, Edge::static_type_info ());
+          return ti;
+        }
+
+        TypeInfo initializes_ (initializes_init_ ());
+      }
+
+      TypeInfo const& Initializes::
+      static_type_info () { return initializes_; }
+
+
+      // Expression
+      //
+      //
+      namespace
+      {
+        TypeInfo
+        expression_init_ ()
+        {
+          TypeInfo ti (typeid (Expression));
+          ti.add_base (Access::PUBLIC, true, Node::static_type_info ());
+          return ti;
+        }
+
+        TypeInfo expression_ (expression_init_ ());
+      }
+
+      TypeInfo const& Expression::
+      static_type_info () { return expression_; }
+
+
+      // Const
+      //
+      //
+      namespace
+      {
+        TypeInfo
+        const_init_ ()
+        {
+          TypeInfo ti (typeid (Const));
+          ti.add_base (Access::PUBLIC, true, Instance::static_type_info ());
+          ti.add_base (Access::PUBLIC, true, Nameable::static_type_info ());
+          ti.add_base (Access::PUBLIC, true, Expression::static_type_info ());
+          return ti;
+        }
+
+        TypeInfo const_ (const_init_ ());
+      }
+
+      TypeInfo const& Const::
+      static_type_info () { return const_; }
+
+
       // Contains
       //
       //

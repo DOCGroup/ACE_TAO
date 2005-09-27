@@ -356,8 +356,10 @@ namespace CCF
       //
       PunctuationParser COLON;
       PunctuationParser COMMA;
-      PunctuationParser LBRACE;
-      PunctuationParser RBRACE;
+      PunctuationParser LCBRACE;
+      PunctuationParser RCBRACE;
+      PunctuationParser LSBRACE;
+      PunctuationParser RSBRACE;
       PunctuationParser LPAREN;
       PunctuationParser RPAREN;
       PunctuationParser LT;
@@ -412,16 +414,16 @@ namespace CCF
 
       Rule boolean_const_expr;
       Rule character_const_expr;
-      Rule integer_const_expr;
+      Rule numeric_const_expr;
 
-      Rule integer_or_expr;
-      Rule integer_xor_expr;
-      Rule integer_and_expr;
-      Rule integer_shift_expr;
-      Rule integer_add_expr;
-      Rule integer_mul_expr;
-      Rule integer_unary_expr;
-      Rule integer_primary_expr;
+      Rule numeric_or_expr;
+      Rule numeric_xor_expr;
+      Rule numeric_and_expr;
+      Rule numeric_shift_expr;
+      Rule numeric_add_expr;
+      Rule numeric_mul_expr;
+      Rule numeric_unary_expr;
+      Rule numeric_primary_expr;
 
       Rule string_const_expr;
 
@@ -462,6 +464,7 @@ namespace CCF
       Rule struct_body;
 
       Rule typedef_decl;
+      Rule typedef_declarator;
       Rule typedef_type_spec;
 
       Rule type_id_decl;
@@ -528,6 +531,15 @@ namespace CCF
       NoArgAction<SemanticAction::Attribute>
       act_attribute_end;
 
+      // Const
+      //
+      TwoArgAction<IdentifierPtr, SimpleIdentifierPtr, SemanticAction::Const>
+      act_const_begin;
+
+      NoArgAction<SemanticAction::Const>
+      act_const_expr;
+
+
       // Enum
       //
       //
@@ -536,6 +548,33 @@ namespace CCF
 
       NoArgAction<SemanticAction::Enum>
       act_enum_end;
+
+      // Expression
+      //
+      NoArgAction<SemanticAction::NumericExpression>
+      act_const_expr_flush;
+
+      OneArgAction<IdentifierPtr, SemanticAction::NumericExpression>
+      act_numeric_expression_const;
+
+      OneArgAction<IntegerLiteralPtr, SemanticAction::NumericExpression>
+      act_numeric_expression_integer_literal;
+
+      NoArgAction<SemanticAction::NumericExpression>
+        act_numeric_expression_pos,
+        act_numeric_expression_neg,
+        act_numeric_expression_com,
+        act_numeric_expression_mul,
+        act_numeric_expression_div,
+        act_numeric_expression_rem,
+        act_numeric_expression_add,
+        act_numeric_expression_sub,
+        act_numeric_expression_rsh,
+        act_numeric_expression_lsh,
+        act_numeric_expression_and,
+        act_numeric_expression_xor,
+        act_numeric_expression_or;
+
 
       // Exception
       //

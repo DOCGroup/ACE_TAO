@@ -106,6 +106,8 @@ namespace CCF
       punctuation_table_.insert (",");
       punctuation_table_.insert ("{");
       punctuation_table_.insert ("}");
+      punctuation_table_.insert ("[");
+      punctuation_table_.insert ("]");
       punctuation_table_.insert ("(");
       punctuation_table_.insert (")");
       punctuation_table_.insert ("<");

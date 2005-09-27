@@ -16,6 +16,7 @@
 //@@ It would be nice to move this includes into .cpp
 //
 #include "CCF/IDL2/SemanticAction/Impl/Attribute.hpp"
+#include "CCF/IDL2/SemanticAction/Impl/Const.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Enum.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Exception.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Include.hpp"
@@ -23,6 +24,7 @@
 #include "CCF/IDL2/SemanticAction/Impl/Member.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Module.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Native.hpp"
+#include "CCF/IDL2/SemanticAction/Impl/NumericExpression.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Operation.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Struct.hpp"
 #include "CCF/IDL2/SemanticAction/Impl/Typedef.hpp"
@@ -50,6 +52,12 @@ namespace CCF
           attribute ()
           {
             return attribute_;
+          }
+
+          virtual SemanticAction::Const&
+          const_ ()
+          {
+            return const__;
           }
 
           virtual SemanticAction::Enum&
@@ -92,6 +100,12 @@ namespace CCF
           native ()
           {
             return native_;
+          }
+
+          virtual SemanticAction::NumericExpression&
+          numeric_expression ()
+          {
+            return numeric_expression_;
           }
 
           virtual SemanticAction::Operation&
@@ -153,6 +167,7 @@ namespace CCF
 
         private:
           Attribute attribute_;
+          Const const__;
           Enum enum__;
           Exception exception_;
           Include include_;
@@ -160,6 +175,7 @@ namespace CCF
           Member member_;
           Module module_;
           Native native_;
+          NumericExpression numeric_expression_;
           Operation operation_;
           Struct struct__;
           Typedef typedef__;

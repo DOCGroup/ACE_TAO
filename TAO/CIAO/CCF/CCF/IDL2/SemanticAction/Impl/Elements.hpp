@@ -8,6 +8,7 @@
 #include <stack>
 
 #include "CCF/IDL2/SemanticGraph/Translation.hpp"
+#include "CCF/IDL2/SemanticGraph/IntExpression.hpp"
 
 #include "CCF/IDL2/SemanticAction/Elements.hpp"
 
@@ -92,11 +93,41 @@ namespace CCF
             region_ = &r;
           }
 
+        public:
+          void
+          int_exp_push (SemanticGraph::IntExpression& e)
+          {
+            int_exp_stack_.push (&e);
+          }
+
+          SemanticGraph::IntExpression&
+          int_exp_pop ()
+          {
+            SemanticGraph::IntExpression& e (*int_exp_stack_.top ());
+            int_exp_stack_.pop ();
+            return e;
+          }
+
+          std::size_t
+          int_exp_size ()
+          {
+            return int_exp_stack_.size ();
+          }
+
+          void
+          int_exp_flush ()
+          {
+            while (int_exp_stack_.size ())
+              int_exp_stack_.pop ();
+          }
+
         private:
           bool trace_;
           SemanticGraph::TranslationUnit& tu_;
           SemanticGraph::TranslationRegion* region_;
           SemanticGraph::Scope* scope_;
+
+          std::stack<SemanticGraph::IntExpression*> int_exp_stack_;
 
         private:
           Context (Context const&);
