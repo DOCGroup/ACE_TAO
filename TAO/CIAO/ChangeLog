@@ -1,3 +1,21 @@
+Tue Sep 27 13:16:43 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/ExecutionManager/ExecutionManager.mpc
+	* DAnCE/NodeApplication/NodeApplication.mpc
+	* DAnCE/NodeManager/NodeManager.mpc
+	* DAnCE/Old_Config_Handlers/Config_Handlers.mpc
+	* DAnCE/Plan_Launcher/Plan_Launcher.mpc
+	* DAnCE/RTNodeApplication/RTNodeApplication.mpc
+	* DAnCE/spec_RepositoryManager/spec_RepositoryManager.mpc
+	* RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc
+	* RACE/Output_Adapters/Base/Output_Adapter.mpc
+	* RACE/Planners/SimpleBinPacker/SimpleBinPacker.mpc
+	* ciao/CCM_Core.mpc
+	* examples/BasicSP/BasicSP.mpc
+
+	Fixed a large number of deficiencies in our build structure. 
+	More changes to come later. 
+	
 Tue Sep 27 11:10:37 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* NEWS

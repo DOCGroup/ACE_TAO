@@ -34,7 +34,7 @@ project (CIAO_DnC_Client) : taolib_with_idl, valuetype, ifr_client {
   }
 }
 
-project (CIAO_DnC_Container) : orbsvcslib, portableserver, security, valuetype, ifr_client {
+project (CIAO_DnC_Container) : orbsvcslib, portableserver, security, valuetype, ifr_client, codecfactory, pi {
   after += CIAO_DnC_Client
   sharedname  = CIAO_DnC_Container
   libs       += CIAO_DnC_Client

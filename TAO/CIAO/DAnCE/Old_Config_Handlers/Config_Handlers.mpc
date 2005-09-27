@@ -1,6 +1,6 @@
 //$Id$
 
-project (Config_Handlers) : ciao_deployment_stub, ifr_client, valuetype, xerces, exceptions {
+project (Config_Handlers) : ciao_component_dnc, ifr_client, valuetype, xerces, exceptions {
 
   after     += CIAO_DnC_Server
   sharedname = Config_Handlers
