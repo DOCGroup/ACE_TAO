@@ -73,7 +73,7 @@ project(Interactive_Input_Adapter_svnt) : ciao_servant_dnc {
 }
 
 
-project(Interactive_Input_Adapter_exec) : ciao_component_dnc {
+project(Interactive_Input_Adapter_exec) : ciao_component_dnc, ciao_config_handlers {
   after   += Interactive_Input_Adapter_svnt XSC_Config_Handlers
   sharedname = Interactive_Input_Adapter_exec
   libs    += Interactive_Input_Adapter_stub \

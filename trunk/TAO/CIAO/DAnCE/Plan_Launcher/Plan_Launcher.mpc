@@ -1,12 +1,9 @@
 // -*- MPC -*-
 // $Id$
 
-project(Plan_Launcher_Impl) : naming, ciao_server_dnc, xerces {
-  includes += $(CIAO_ROOT)/tools
+project(Plan_Launcher_Impl) : ciao_component_dnc, ciao_config_handlers {
   sharedname = Plan_Launcher_Impl
-  requires += exceptions
-  after += XSC_Config_Handlers ExecutionManager_stub NodeDaemon_stub
-  libs     += XSC_Config_Handlers RT_CCM_Config_Handlers
+  after +=  ExecutionManager_stub NodeDaemon_stub
   libs     += ExecutionManager_stub
 
   dynamicflags = PLAN_LAUNCHER_IMPL_BUILD_DLL
@@ -21,12 +18,11 @@ project(Plan_Launcher_Impl) : naming, ciao_server_dnc, xerces {
   }
 }
 
-project(Plan_Launcher) : ciao_server_dnc, taoexe, xerces  {
+project(Plan_Launcher) : ciao_component_dnc, taoexe, ciao_config_handlers  {
   exename = plan_launcher
 
-  requires += exceptions
   after += Plan_Launcher_Impl
-  libs  += Plan_Launcher_Impl XSC_Config_Handlers  ExecutionManager_stub
+  libs  += Plan_Launcher_Impl  ExecutionManager_stub
 
   Source_Files {
     Plan_Launcher.cpp

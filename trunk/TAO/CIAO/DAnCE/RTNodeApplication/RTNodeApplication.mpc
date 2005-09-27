@@ -1,6 +1,6 @@
 // $Id$
 
-project(RTNodeApplication): ciao_deployment_stub, ciao_deployment_svnt, ciao_server_dnc,rt_server {
+project(RTNodeApplication): ciao_component_dnc,rt_server {
 
   exename = RTNodeApplication
 
