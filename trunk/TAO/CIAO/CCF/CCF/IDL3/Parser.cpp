@@ -221,7 +221,7 @@ namespace CCF
                     )[act_component_begin_def]
                  >> component_inheritance_spec
                  >> !(SUPPORTS >> component_support_spec)
-                 >> LBRACE[act_component_open_scope]
+                 >> LCBRACE[act_component_open_scope]
                  >> component_def_trailer
                )
              |
@@ -231,14 +231,14 @@ namespace CCF
                       >> SUPPORTS
                     )[act_component_begin_def]
                  >> component_support_spec
-                 >> LBRACE[act_component_open_scope]
+                 >> LCBRACE[act_component_open_scope]
                  >> component_def_trailer
                )
              |
                (
                     (
                          simple_identifier
-                      >> LBRACE
+                      >> LCBRACE
                     )[act_component_begin_def][act_component_open_scope]
                  >> component_def_trailer
                )
@@ -248,7 +248,7 @@ namespace CCF
 
       component_def_trailer =
            component_body
-        >> RBRACE[act_component_close_scope]
+        >> RCBRACE[act_component_close_scope]
         >> SEMI[act_component_end]
         ;
 
@@ -329,7 +329,7 @@ namespace CCF
 
               >> event_type_inheritance_spec
               >> !(SUPPORTS >> event_type_supports_spec)
-              >> LBRACE[act_event_type_open_scope]
+              >> LCBRACE[act_event_type_open_scope]
               >> event_type_def_trailer
             )
           |
@@ -340,14 +340,14 @@ namespace CCF
                  )[act_event_type_begin_abstract_def]
 
               >> event_type_supports_spec
-              >> LBRACE[act_event_type_open_scope]
+              >> LCBRACE[act_event_type_open_scope]
               >> event_type_def_trailer
             )
           |
             (
                  (
                       simple_identifier
-                   >> LBRACE
+                   >> LCBRACE
                  )[act_event_type_begin_abstract_def][act_event_type_open_scope]
 
               >> event_type_def_trailer
@@ -373,7 +373,7 @@ namespace CCF
 
                    >> event_type_inheritance_spec
                    >> !(SUPPORTS >> event_type_supports_spec)
-                   >> LBRACE[act_event_type_open_scope]
+                   >> LCBRACE[act_event_type_open_scope]
                    >> event_type_def_trailer
                  )
                |
@@ -384,14 +384,14 @@ namespace CCF
                       )[act_event_type_begin_concrete_def]
 
                    >> event_type_supports_spec
-                   >> LBRACE[act_event_type_open_scope]
+                   >> LCBRACE[act_event_type_open_scope]
                    >> event_type_def_trailer
                  )
                |
                  (
                       (
                            simple_identifier
-                        >> LBRACE
+                        >> LCBRACE
                       )[act_event_type_begin_concrete_def][act_event_type_open_scope]
 
                    >> event_type_def_trailer
@@ -419,7 +419,7 @@ namespace CCF
 
       event_type_def_trailer =
            event_type_body
-        >> RBRACE[act_event_type_close_scope]
+        >> RCBRACE[act_event_type_close_scope]
         >> SEMI[act_event_type_end]
         ;
 
@@ -476,9 +476,9 @@ namespace CCF
         >> !(COLON >> home_inheritance_spec)
         >> !(SUPPORTS >> home_support_spec)
         >> MANAGES >> home_manage_spec
-        >> LBRACE[act_home_open_scope]
+        >> LCBRACE[act_home_open_scope]
         >> home_body
-        >> RBRACE[act_home_close_scope]
+        >> RCBRACE[act_home_close_scope]
         >> SEMI[act_home_end]
         ;
 

@@ -71,9 +71,9 @@ namespace CCF
       //
       composition_decl =
            composition_header
-        >> LBRACE[act_composition_open_scope]
+        >> LCBRACE[act_composition_open_scope]
         >> home_executor_decl
-        >> RBRACE[act_composition_close_scope]
+        >> RCBRACE[act_composition_close_scope]
         >> SEMI[act_composition_end]
         ;
 
@@ -94,10 +94,10 @@ namespace CCF
       //
       home_executor_decl =
            home_executor_header
-        >> LBRACE
+        >> LCBRACE
         >> home_executor_home_impl_decl
         >> home_executor_executor_decl
-        >> RBRACE
+        >> RCBRACE
         >> SEMI[act_home_executor_end]
         ;
 

@@ -24,6 +24,7 @@ namespace CCF
             : ctx_ (context.get ("trace-semantic-action", false), tu),
 
               attribute_ (ctx_),
+              const__ (ctx_),
               enum__ (ctx_),
               exception_ (ctx_),
               include_ (ctx_),
@@ -31,6 +32,7 @@ namespace CCF
               member_ (ctx_),
               module_ (ctx_),
               native_ (ctx_),
+              numeric_expression_ (ctx_),
               operation_ (ctx_),
               struct__ (ctx_),
               typedef__ (ctx_),
