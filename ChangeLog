@@ -1,3 +1,10 @@
+Tue Sep 27 13:40:45 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/ciao_config_handlers.mpb
+	* bin/MakeProjectCreator/config/ciao_xml_utils.mpb
+
+	Added files that should have been part of the previous commit. 
+	
 Tue Sep 27 13:12:28 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/ciao_client.mpb
