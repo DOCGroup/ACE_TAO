@@ -1,3 +1,11 @@
+Tue Sep 27 10:29:49 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/ciao_component.mpb
+	* bin/MakeProjectCreator/config/ciao_servant.mpb
+	* bin/MakeProjectCreator/config/ciao_server.mpb
+
+	Removed obsolete CIAO base projects.
+
 Tue Sep 27 13:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/ciao_DAnCE.doxygen:
