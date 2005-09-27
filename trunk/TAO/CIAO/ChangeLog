@@ -1,17 +1,27 @@
+Tue Sep 27 06:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+          Fixed compile problem
+
+        * tools/Config_Handlers/XMLSchema/TypeInfo.tpp:
+          Removed using std::make_pair, this causes a crash of the BCB6
+          compiler. It doesn't seem to cause issues with CBX, but it
+          seems the code wasn't really needed and now BCB6 is also happy
+
 Mon Sep 26 11:06:40 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-  * tools/Config_Handlers/Basic_Deployment_Data.hpp
-  
-  Updates for compile problems in Borland.
-  
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp
+
+        Updates for compile problems in Borland.
+
 Mon Sep 26 11:06:40 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/NodeApplicationManager/ImplementationInfo.cpp
 	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
 	* DAnCE/NodeManager/NodeManager_Impl.cpp
 
-	Cleared up some scoreboard errors. 
-	
+	Cleared up some scoreboard errors.
+
 Sat Sep 24 20:44:20 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DAnCE/DomainApplicationManager/DomainApplicationManager.mpc
