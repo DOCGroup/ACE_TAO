@@ -74,7 +74,7 @@ if (defined $opt_l) {
 if (defined $opt_c) {
     $client_def =
 '
-project ('."$unique_prefix"."$com_name".'_client) : ciao_client {
+project ('."$unique_prefix"."$com_name".'_client) : ciao_client_dnc {
   exename = client
   after += '."$client_depend
   $lib_paths".'
@@ -98,7 +98,7 @@ if (defined $opt_i) {
 if (! defined $opt_n) {
     $component_def =
 '
-project('."$unique_prefix"."$com_name".'_exec) : ciao_component {
+project('."$unique_prefix"."$com_name".'_exec) : ciao_component_dnc {
   after   += '."$unique_prefix"."$com_name".'_svnt
   sharedname = '."$com_name".'_exec
   libs      += '."$com_name".'_stub '."$com_name".'_svnt'." $lib_depend
@@ -121,7 +121,7 @@ project('."$unique_prefix"."$com_name".'_exec) : ciao_component {
 $mpc_template = '// $Id$
 // This file is generated with "'."generate_component_mpc.pl $flags".'"
 
-project('."$unique_prefix"."$com_name".'_stub): ciao_client {'."
+project('."$unique_prefix"."$com_name".'_stub): ciao_client_dnc {'."
   $stub_depend".'
   sharedname = '."$com_name".'_stub
   idlflags += -Wb,stub_export_macro='."$UCOM_NAME".'_STUB_Export -Wb,stub_export_include='."$com_name".'_stub_export.h -Wb,skel_export_macro='."$UCOM_NAME".'_SVNT_Export -Wb,skel_export_include='."$com_name".'_svnt_export.h
@@ -136,7 +136,7 @@ project('."$unique_prefix"."$com_name".'_stub): ciao_client {'."
   }
 }
 
-project('."$unique_prefix"."$com_name".'_svnt) : ciao_servant {
+project('."$unique_prefix"."$com_name".'_svnt) : ciao_servant_dnc {
   after += '."$svnt_depend "."$unique_prefix"."$com_name".'_stub
   sharedname  = '."$com_name".'_svnt
   libs    += '."$com_name".'_stub'." $lib_depend
@@ -175,9 +175,20 @@ $client_def
 open (MPCFILE, ">", "$com_name".".mpc");
 print MPCFILE $mpc_template;
 
-print "Run the following command also:\n\n";
-print "\tgenerate_export_file.pl $UCOM_NAME".'_STUB > '."$com_name".'_stub_export.h'."\n";
-print "\tgenerate_export_file.pl $UCOM_NAME".'_SVNT > '."$com_name".'_svnt_export.h'."\n";
+$ACE_ROOT= "$ENV{'ACE_ROOT'}";
+
+print "The following commands have been executed:\n\n";
+
+$command = "generate_export_file.pl $UCOM_NAME".'_STUB > '."$com_name".'_stub_export.h';
+print "\t$command"."\n";
+system ("$ACE_ROOT".'/bin/'."$command");
+
+$command = "generate_export_file.pl $UCOM_NAME".'_SVNT > '."$com_name".'_svnt_export.h';
+print "\t$command"."\n";
+system ("$ACE_ROOT".'/bin/'."$command");
+
 if (! defined $opt_n) {
-    print "\tgenerate_export_file.pl $UCOM_NAME".'_EXEC > '."$com_name".'_exec_export.h'."\n";
+    $command = "generate_export_file.pl $UCOM_NAME".'_EXEC > '."$com_name".'_exec_export.h';
+    print "\t$command"."\n";
+    system ("$ACE_ROOT".'/bin/'."$command");
 }
