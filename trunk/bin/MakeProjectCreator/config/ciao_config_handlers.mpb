@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : ciao_xml_utils {
+  after += XSC_Config_Handlers
+  libs += XSC_Config_Handlers XSC_XML_Handlers RT_CCM_Config_Handlers
+}
