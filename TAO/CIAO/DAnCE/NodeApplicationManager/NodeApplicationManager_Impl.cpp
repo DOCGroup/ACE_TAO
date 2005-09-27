@@ -25,7 +25,7 @@ CIAO::NodeApplicationManager_Impl::init (
                    Deployment::InvalidProperty))
 {
   PortableServer::ObjectId_var oid;
-  
+
   ACE_TRY
     {
       if (nodeapp_location == 0)
@@ -36,9 +36,9 @@ CIAO::NodeApplicationManager_Impl::init (
 
       this->nodeapp_path_.set (nodeapp_location);
       this->spawn_delay_ = delay;
-      
+
       this->nodeapp_command_op_ = CORBA::string_dup (nodeapp_op);
-      
+
       // Make a copy of the plan for later usage.
       this->plan_ =  plan;
 
@@ -288,7 +288,7 @@ startLaunch (const Deployment::Properties & configProperty,
 {
   ACE_TRY
     {
-      
+
       CIAO_TRACE("CIAO::NodeApplicationManager_Impl::startLaunch");
       ACE_UNUSED_ARG (configProperty);
       ACE_UNUSED_ARG (start);
@@ -299,13 +299,13 @@ startLaunch (const Deployment::Properties & configProperty,
        *  4. Initialize the NodeApplication.
        *  5. get the provided connection endpoints back and return them.
        */
-      
+
       NodeImplementationInfoHandler handler (this->plan_);
 
       Deployment::NodeImplementationInfo * node_info =
         handler.node_impl_info ();
-  
-  ACE_DEBUG ((LM_DEBUG, "********** NodeApplicationManager ***** step 1\n"));
+
+      ACE_DEBUG ((LM_DEBUG, "********** NodeApplicationManager ***** step 1\n"));
 
       if (!node_info)
       {
@@ -317,7 +317,7 @@ startLaunch (const Deployment::Properties & configProperty,
                           Deployment::Application::_nil());
       }
 
-  ACE_DEBUG ((LM_DEBUG, "********** NodeApplicationManager ***** step 2\n"));
+      ACE_DEBUG ((LM_DEBUG, "********** NodeApplicationManager ***** step 2\n"));
 
       // Now spawn the NodeApplication process.
       // @@TODO: we need to pass arguments to the nodeapplication, ie naming service endpoints, if necessary
@@ -327,14 +327,13 @@ startLaunch (const Deployment::Properties & configProperty,
         create_node_application (cmd_option.c_str () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-
       // For debugging.
       if (true) //(CIAO::debug_level () > 1)
         {
           CORBA::ULong curr_len = node_info->impl_infos.length ();
-          ACE_UNUSED_ARG (curre_len);
-          
-          Deployment::ComponentImplementationInfos infos = 
+          ACE_UNUSED_ARG (curr_len);
+
+          Deployment::ComponentImplementationInfos infos =
             ((node_info->impl_infos)[0]).impl_infos;
 
           const CORBA::ULong info_len = infos.length ();
@@ -351,7 +350,7 @@ startLaunch (const Deployment::Properties & configProperty,
 
       // This is what we will get back, a sequence of compoent object refs.
       Deployment::ComponentInfos_var comp_info;
-  
+
       // This will install all homes and components.
       comp_info = this->nodeapp_->install (*node_info ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -369,7 +368,7 @@ startLaunch (const Deployment::Properties & configProperty,
             {
               ACE_CString error ("Duplicate component instance name ");
               error += comp_info[len].component_instance_name.in();
-        
+
               ACE_THROW_RETURN (Deployment::StartError ("NodeApplicationManager_Impl::startLaunch",
                                                         error.c_str ()), 0);
             }
@@ -382,7 +381,7 @@ startLaunch (const Deployment::Properties & configProperty,
         ACE_THROW_RETURN (Deployment::StartError () ,
                           Deployment::Application::_nil());
 
-      
+
     }
   ACE_CATCH (Deployment::UnknownImplId, e)
     {
