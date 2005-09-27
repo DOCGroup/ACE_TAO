@@ -70,15 +70,17 @@ namespace CCF
           VALUETYPE   ("valuetype"  ),
           WSTRING     ("wstring"    ),
 
-          COLON  (":"),
-          COMMA  (","),
-          LBRACE ("{"),
-          RBRACE ("}"),
-          LPAREN ("("),
-          RPAREN (")"),
-          LT     ("<"),
-          GT     (">"),
-          SEMI   (";"),
+          COLON   (":"),
+          COMMA   (","),
+          LCBRACE ("{"),
+          RCBRACE ("}"),
+          LSBRACE ("["),
+          RSBRACE ("]"),
+          LPAREN  ("("),
+          RPAREN  (")"),
+          LT      ("<"),
+          GT      (">"),
+          SEMI    (";"),
 
 
           ADD ("+"),
@@ -119,6 +121,14 @@ namespace CCF
           act_attribute_end (
             f.attribute (), &SemanticAction::Attribute::end),
 
+          // Const
+          //
+          act_const_begin (
+            f.const_ (), &SemanticAction::Const::begin),
+
+          act_const_expr (
+            f.const_ (), &SemanticAction::Const::expr),
+
           // Enum
           //
           //
@@ -131,6 +141,73 @@ namespace CCF
           act_enum_end (
             f.enum_ (), &SemanticAction::Enum::end),
 
+
+          // Expression
+          //
+
+          act_const_expr_flush (
+            f.numeric_expression (),
+            &SemanticAction::NumericExpression::flush),
+
+          act_numeric_expression_const (
+            f.numeric_expression (),
+            &SemanticAction::NumericExpression::const_),
+
+          act_numeric_expression_integer_literal (
+            f.numeric_expression (),
+            &SemanticAction::NumericExpression::integer_literal),
+
+          act_numeric_expression_pos (
+            f.numeric_expression (),
+            &SemanticAction::NumericExpression::pos),
+
+          act_numeric_expression_neg (
+            f.numeric_expression (),
+            &SemanticAction::NumericExpression::neg),
+
+          act_numeric_expression_com (
+            f.numeric_expression (),
+            &SemanticAction::NumericExpression::com),
+
+          act_numeric_expression_mul (
+            f.numeric_expression (),
+            &SemanticAction::NumericExpression::mul),
+
+          act_numeric_expression_div (
+            f.numeric_expression (),
+            &SemanticAction::NumericExpression::div),
+
+          act_numeric_expression_rem (
+            f.numeric_expression (),
+            &SemanticAction::NumericExpression::rem),
+
+          act_numeric_expression_add (
+            f.numeric_expression (),
+            &SemanticAction::NumericExpression::add),
+
+          act_numeric_expression_sub (
+            f.numeric_expression (),
+            &SemanticAction::NumericExpression::sub),
+
+          act_numeric_expression_rsh (
+            f.numeric_expression (),
+            &SemanticAction::NumericExpression::rsh),
+
+          act_numeric_expression_lsh (
+            f.numeric_expression (),
+            &SemanticAction::NumericExpression::lsh),
+
+          act_numeric_expression_and (
+            f.numeric_expression (),
+            &SemanticAction::NumericExpression::and_),
+
+          act_numeric_expression_xor (
+            f.numeric_expression (),
+            &SemanticAction::NumericExpression::xor_),
+
+          act_numeric_expression_or (
+            f.numeric_expression (),
+            &SemanticAction::NumericExpression::or_),
 
           // Exception
           //
@@ -514,7 +591,7 @@ namespace CCF
                            f.module (),
                            &SemanticAction::Module::end)
                 (
-                  LBRACE[act_module_open_scope]
+                  LCBRACE[act_module_open_scope]
                 )
              >> assertion ("declaration expected",
                            f.module (),
@@ -537,7 +614,7 @@ namespace CCF
                            RecoveryMethod::STANDARD,
                            DiagnosticType::BEFORE)
                 (
-                  RBRACE[act_module_close_scope]
+                  RCBRACE[act_module_close_scope]
                 )
              >> assertion ("\';\' is missing",
                            f.module (),
@@ -554,10 +631,9 @@ namespace CCF
       //
       const_decl =
            CONST
-        >> identifier
-        >> simple_identifier
-        >> EQ
-        >> const_expr
+        >> (identifier >> simple_identifier)[act_const_begin]
+        >> EQ[act_const_expr_flush] // flush expression stacks
+        >> const_expr[act_const_expr]
         >> SEMI
         ;
 
@@ -569,7 +645,7 @@ namespace CCF
       const_expr =
           boolean_const_expr
         | character_const_expr
-        | integer_const_expr
+        | numeric_const_expr
         | string_const_expr
         ;
 
@@ -577,66 +653,68 @@ namespace CCF
 
       character_const_expr = character_literal;
 
-      //@@ I may have recognision problem on unary operators or
-      //   even worse on LPAREN. Seems not.
+
       //
+      //
+      numeric_const_expr = numeric_or_expr;
 
-      integer_const_expr = integer_or_expr;
-
-      integer_or_expr =
-           integer_xor_expr
-        >> *(OR >> integer_xor_expr)
+      numeric_or_expr =
+           numeric_xor_expr
+        >> *(OR >> numeric_xor_expr)[act_numeric_expression_or]
         ;
 
-      integer_xor_expr =
-           integer_and_expr
-        >> *(XOR >> integer_and_expr)
+      numeric_xor_expr =
+           numeric_and_expr
+        >> *(XOR >> numeric_and_expr)[act_numeric_expression_xor]
         ;
 
 
-      integer_and_expr =
-           integer_shift_expr
-        >> *(AND >> integer_shift_expr)
+      numeric_and_expr =
+           numeric_shift_expr
+        >> *(AND >> numeric_shift_expr)[act_numeric_expression_and]
         ;
 
-      integer_shift_expr =
-           integer_add_expr
+      numeric_shift_expr =
+           numeric_add_expr
         >> *(
-                (RSH >> integer_add_expr)
-              | (LSH >> integer_add_expr)
+                (RSH >> numeric_add_expr)[act_numeric_expression_rsh]
+              | (LSH >> numeric_add_expr)[act_numeric_expression_lsh]
             )
         ;
 
-      integer_add_expr =
-           integer_mul_expr
+      numeric_add_expr =
+           numeric_mul_expr
         >> *(
-                (ADD >> integer_mul_expr)
-              | (SUB >> integer_mul_expr)
+                (ADD >> numeric_mul_expr)[act_numeric_expression_add]
+              | (SUB >> numeric_mul_expr)[act_numeric_expression_sub]
             )
         ;
 
-      integer_mul_expr =
-           integer_unary_expr
+      numeric_mul_expr =
+           numeric_unary_expr
         >> *(
-                (MUL >> integer_unary_expr)
-              | (DIV >> integer_unary_expr)
-              | (REM >> integer_unary_expr)
+                (MUL >> numeric_unary_expr)[act_numeric_expression_mul]
+              | (DIV >> numeric_unary_expr)[act_numeric_expression_div]
+              | (REM >> numeric_unary_expr)[act_numeric_expression_rem]
             )
         ;
 
-      integer_unary_expr =
-          integer_primary_expr
-        | ADD >> integer_primary_expr
-        | SUB >> integer_primary_expr
-        | COM >> integer_primary_expr
+      numeric_unary_expr =
+          numeric_primary_expr
+        | ADD >> numeric_primary_expr[act_numeric_expression_pos]
+        | SUB >> numeric_primary_expr[act_numeric_expression_neg]
+        | COM >> numeric_primary_expr[act_numeric_expression_com]
         ;
 
-      integer_primary_expr =
-          identifier
-        | integer_literal
-        | LPAREN >> integer_const_expr >> RPAREN
+      numeric_primary_expr =
+          identifier[act_numeric_expression_const]
+        | integer_literal[act_numeric_expression_integer_literal]
+        | LPAREN >> numeric_const_expr >> RPAREN
         ;
 
+
+      //
+      //
       string_const_expr = string_literal;
 
 
@@ -646,9 +724,9 @@ namespace CCF
       enum_decl =
            ENUM
         >> simple_identifier[act_enum_begin]
-        >> LBRACE
+        >> LCBRACE
         >> enumerator_decl >> *(COMMA >> enumerator_decl)
-        >> RBRACE
+        >> RCBRACE
         >> SEMI[act_enum_end]
         ;
 
@@ -673,14 +751,14 @@ namespace CCF
                  )[act_interface_begin_abstract_def]
 
               >> interface_inheritance_spec
-              >> LBRACE[act_interface_open_scope]
+              >> LCBRACE[act_interface_open_scope]
               >> interface_def_trailer
             )
           |
             (
                  (
                       simple_identifier
-                   >> LBRACE
+                   >> LCBRACE
                  )[act_interface_begin_abstract_def][act_interface_open_scope]
 
               >> interface_def_trailer
@@ -704,14 +782,14 @@ namespace CCF
                  )[act_interface_begin_local_def]
 
               >> interface_inheritance_spec
-              >> LBRACE[act_interface_open_scope]
+              >> LCBRACE[act_interface_open_scope]
               >> interface_def_trailer
             )
           |
             (
                  (
                       simple_identifier
-                   >> LBRACE
+                   >> LCBRACE
                  )[act_interface_begin_local_def][act_interface_open_scope]
 
               >> interface_def_trailer
@@ -737,14 +815,14 @@ namespace CCF
                       )[act_interface_begin_unconstrained_def]
 
                    >> interface_inheritance_spec
-                   >> LBRACE[act_interface_open_scope]
+                   >> LCBRACE[act_interface_open_scope]
                    >> interface_def_trailer
                  )
                |
                  (
                       (
                            simple_identifier
-                        >> LBRACE
+                        >> LCBRACE
                       )[act_interface_begin_unconstrained_def][act_interface_open_scope]
 
                    >> interface_def_trailer
@@ -780,7 +858,7 @@ namespace CCF
                       RecoveryMethod::STANDARD,
                       DiagnosticType::BEFORE)
            (
-             RBRACE[act_interface_close_scope]
+             RCBRACE[act_interface_close_scope]
            )
         >> assertion ("\';\' is missing",
                       f.interface (),
@@ -802,7 +880,7 @@ namespace CCF
           |
             (
                  !(COLON >> interface_inheritance_spec)
-              >> LBRACE[act_interface_open_scope]
+              >> LCBRACE[act_interface_open_scope]
               >> interface_body
               >> assertion ("declaration or \'}\' expected",
                             f.interface (),
@@ -811,7 +889,7 @@ namespace CCF
                             RecoveryMethod::STANDARD,
                             DiagnosticType::BEFORE)
                  (
-                   RBRACE[act_interface_close_scope]
+                   RCBRACE[act_interface_close_scope]
                  )
               >> assertion ("\';\' is missing",
                             f.interface (),
@@ -903,9 +981,9 @@ namespace CCF
       exception_decl =
            EXCEPTION
         >> simple_identifier[act_exception_begin]
-        >> LBRACE[act_exception_open_scope]
+        >> LCBRACE[act_exception_open_scope]
         >> exception_body
-        >> RBRACE[act_exception_close_scope]
+        >> RCBRACE[act_exception_close_scope]
         >> SEMI[act_exception_end]
         ;
 
@@ -1008,7 +1086,7 @@ namespace CCF
                  (
                       (
                            simple_identifier
-                        >> LBRACE
+                        >> LCBRACE
                       )[act_struct_begin_def][act_struct_open_scope]
                    >> struct_def_trailer
                  )
@@ -1020,9 +1098,9 @@ namespace CCF
       struct_decl =
            STRUCT
         >> simple_identifier
-        >> LBRACE
+        >> LCBRACE
         >> struct_body
-        >> RBRACE
+        >> RCBRACE
         >> SEMI
         ;
       */
@@ -1037,7 +1115,7 @@ namespace CCF
                       RecoveryMethod::STANDARD,
                       DiagnosticType::BEFORE)
            (
-             RBRACE[act_struct_close_scope]
+             RCBRACE[act_struct_close_scope]
            )
         >> assertion ("\';\' is missing",
                       f.struct_ (),
@@ -1061,9 +1139,17 @@ namespace CCF
       typedef_decl =
            TYPEDEF
         >> typedef_type_spec
-        >> simple_identifier[act_typedef_declarator]
-        >> *(COMMA >> simple_identifier[act_typedef_declarator])
+        >> typedef_declarator
+        >> *(COMMA >> typedef_declarator)
         >> SEMI[act_typedef_end]
+        ;
+
+      typedef_declarator =
+           simple_identifier[act_typedef_declarator]
+        >> *(    LSBRACE[act_const_expr_flush] // flush expression stacks
+              >> numeric_const_expr
+              >> RSBRACE
+            )
         ;
 
       typedef_type_spec =
@@ -1073,20 +1159,24 @@ namespace CCF
                SEQUENCE
             >> LT
             >> identifier[act_typedef_begin_seq]
+            >> !(
+                     COMMA[act_const_expr_flush] // flush expression stacks
+                  >> numeric_const_expr
+                )
             >> GT
           )
         |
           (
                STRING
-            >> LT
-            >> integer_const_expr[act_typedef_begin_bounded_string]
+            >> LT[act_const_expr_flush] // flush expression stacks
+            >> numeric_const_expr[act_typedef_begin_bounded_string]
             >> GT
           )
         |
           (
                WSTRING
-            >> LT
-            >> integer_const_expr[act_typedef_begin_bounded_wstring]
+            >> LT[act_const_expr_flush] // flush expression stacks
+            >> numeric_const_expr[act_typedef_begin_bounded_wstring]
             >> GT
           )
         ;
@@ -1119,7 +1209,7 @@ namespace CCF
            LPAREN
         >> identifier[act_union_type]
         >> RPAREN
-        >> LBRACE[act_union_open_scope]
+        >> LCBRACE[act_union_open_scope]
         >> union_body
         >> assertion ("member or \'}\' expected",
                       f.union_ (),
@@ -1128,7 +1218,7 @@ namespace CCF
                       RecoveryMethod::STANDARD,
                       DiagnosticType::BEFORE)
            (
-             RBRACE[act_union_close_scope]
+             RCBRACE[act_union_close_scope]
            )
         >> assertion ("\';\' is missing",
                       f.union_ (),
@@ -1150,7 +1240,11 @@ namespace CCF
         ;
 
       union_case_label =
-          (CASE >> const_expr >> COLON)
+          (
+               CASE[act_const_expr_flush] // flush expression stacks
+            >> const_expr
+            >> COLON
+          )
         |
           (DEFAULT >> COLON)
         ;
@@ -1174,7 +1268,7 @@ namespace CCF
 
               >> value_type_inheritance_spec
               >> !(SUPPORTS >> value_type_supports_spec)
-              >> LBRACE[act_value_type_open_scope]
+              >> LCBRACE[act_value_type_open_scope]
               >> value_type_def_trailer
             )
           |
@@ -1185,14 +1279,14 @@ namespace CCF
                  )[act_value_type_begin_abstract_def]
 
               >> value_type_supports_spec
-              >> LBRACE[act_value_type_open_scope]
+              >> LCBRACE[act_value_type_open_scope]
               >> value_type_def_trailer
             )
           |
             (
                  (
                       simple_identifier
-                   >> LBRACE
+                   >> LCBRACE
                  )[act_value_type_begin_abstract_def][act_value_type_open_scope]
 
               >> value_type_def_trailer
@@ -1218,7 +1312,7 @@ namespace CCF
 
                    >> value_type_inheritance_spec
                    >> !(SUPPORTS >> value_type_supports_spec)
-                   >> LBRACE[act_value_type_open_scope]
+                   >> LCBRACE[act_value_type_open_scope]
                    >> value_type_def_trailer
                  )
                |
@@ -1229,14 +1323,14 @@ namespace CCF
                       )[act_value_type_begin_concrete_def]
 
                    >> value_type_supports_spec
-                   >> LBRACE[act_value_type_open_scope]
+                   >> LCBRACE[act_value_type_open_scope]
                    >> value_type_def_trailer
                  )
                |
                  (
                       (
                            simple_identifier
-                        >> LBRACE
+                        >> LCBRACE
                       )[act_value_type_begin_concrete_def][act_value_type_open_scope]
 
                    >> value_type_def_trailer
@@ -1264,7 +1358,7 @@ namespace CCF
 
       value_type_def_trailer =
            value_type_body
-        >> RBRACE[act_value_type_close_scope]
+        >> RCBRACE[act_value_type_close_scope]
         >> SEMI[act_value_type_end]
         ;
 

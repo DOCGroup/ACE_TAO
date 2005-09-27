@@ -634,8 +634,6 @@ namespace CCF
         Specialized* specialized_;
       };
 
-
-
       class Specialized : public virtual Edge
       {
       public:
@@ -755,6 +753,107 @@ namespace CCF
         {
           type_info (static_type_info ());
         }
+      };
+
+
+      //
+      //
+
+      class Expression;
+      class Const;
+
+      class Initializes: public virtual Edge
+      {
+      public:
+        Expression&
+        expression () const
+        {
+          return *expression_;
+        }
+
+        static Introspection::TypeInfo const&
+        static_type_info ();
+
+      protected:
+        friend class Graph<Node, Edge>;
+
+        Initializes ()
+        {
+          type_info (static_type_info ());
+        }
+
+        void
+        set_left_node (Expression& e)
+        {
+          expression_ = &e;
+        }
+
+        void
+        set_right_node (Const& n)
+        {
+        }
+
+      private:
+        Expression* expression_;
+      };
+
+
+      class Expression: public virtual Node
+      {
+      public:
+        static Introspection::TypeInfo const&
+        static_type_info ();
+
+      protected:
+        friend class Graph<Node, Edge>;
+
+        Expression ()
+        {
+          type_info (static_type_info ());
+        }
+
+        void
+        add_edge_left (Initializes&)
+        {
+        }
+      };
+
+
+      class Const: public virtual Instance,
+                   public virtual Nameable,
+                   public virtual Expression
+      {
+      public:
+        Initializes&
+        initialized () const
+        {
+          return *initialized_;
+        }
+
+        static Introspection::TypeInfo const&
+        static_type_info ();
+
+      protected:
+        friend class Graph<Node, Edge>;
+
+        Const ()
+        {
+          type_info (static_type_info ());
+        }
+
+        using Instance::add_edge_left;
+        using Expression::add_edge_left;
+
+        void
+        add_edge_right (Initializes& i)
+        {
+          initialized_ = &i;
+        }
+
+        using Nameable::add_edge_right;
+
+      private:
+        Initializes* initialized_;
       };
 
 
