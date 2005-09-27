@@ -49,8 +49,31 @@ PLANNED MAJOR CHANGES FOR CIAO-0.4.8
 . Modify DomainApplicationManager interface to make it separate from the
   DomainApplication interface, hence compliant to the D&C spec.
 
-. Enhanced DAnCE to support deploying multiple assemblies with the same
-  set of ExecutionManager and NodeMangers.
+USER VISIBLE CHANGES BETWEEN CIAO-0.4.7 and CIAO-0.4.8
+======================================================
+. Packaging and Deployment (P&D) tools have been completely removed
+  from this release.  DAnCE is now the only supported method of
+  deploying components.
+
+. The CIAO directory structure has changed in support of the previous
+  item. The following important directory moves have been made:
+
+  * $CIAO_ROOT/DAnCE/ciao => $CIAO_ROOT/ciao
+  * $CIAO_ROOT/DAnCE/examples => $CIAO_ROOT/examples
+  * $CIAO_ROOT/DAnCE/Config_Handlers => $CIAO_ROOT/tools/Config_Handlers
+  * Various obsolete examples/tutorials/tests have been removed.
+
+. Error reporting during component deployment has been greatly
+  improved.  While debugging using CIAO_DEBUG_LEVEL is still
+  available, detailed error messages are now generated and propagated
+  to the Plan_Launcher using exceptions. 
+
+. generate_component_mpc.pl has been updated to generate MPC files
+  useful by the modern CIAO infrastructure.  This script now also
+  automatically generates export files. 
+
+. DAnCE has been enhanced to support deploying multiple assemblies
+  with the same set of ExecutionManager and NodeMangers.
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.6 and CIAO-0.4.7
 ======================================================
