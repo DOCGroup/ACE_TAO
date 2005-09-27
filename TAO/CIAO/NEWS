@@ -51,6 +51,9 @@ PLANNED MAJOR CHANGES FOR CIAO-0.4.8
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.7 and CIAO-0.4.8
 ======================================================
+. Fixed bug in CIDL code generation for some types of component and
+  home attributes.
+
 . Packaging and Deployment (P&D) tools have been completely removed
   from this release.  DAnCE is now the only supported method of
   deploying components.
