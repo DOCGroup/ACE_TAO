@@ -1,4 +1,9 @@
-Mon Sep 26 10:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Sep 27 10:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Also detect ACE_THROW in an ACE_TRY block
+
+Mon Sep 26 10:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
           Extended fuzz check to detect ACE_THROW_RETURN in an ACE_TRY block,
