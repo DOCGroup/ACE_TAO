@@ -1,3 +1,17 @@
+Tue Sep 27 13:12:28 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/ciao_client.mpb
+
+	Removed another obsolete ciao base project. 
+	
+	* bin/MakeProjectCreator/config/ciao_client_dnc.mpb
+	* bin/MakeProjectCreator/config/ciao_component_dnc.mpb
+	* bin/MakeProjectCreator/config/ciao_servant_dnc.mpb
+	* bin/MakeProjectCreator/config/ciao_server_dnc.mpb
+
+	Revamped the CIAO base project structure to fix deficiencies
+	exposed by the especially strict linker on MacOS.
+	
 Tue Sep 27 10:29:49 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/ciao_component.mpb
