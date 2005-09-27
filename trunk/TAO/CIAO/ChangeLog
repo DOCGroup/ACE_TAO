@@ -1,11 +1,3 @@
-Tue Sep 27 14:29:35 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-        * CCF/CCF/IDL2/IDL2.vcproj:
-        
-          Added new files, checked in by Boris below, to the VC project.
-          Also changed the include path for Boost to use the BOOST_ROOT
-          environment variable, rather than the existing hard-coded path.
-
 Tue Sep 27 14:26:44 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
