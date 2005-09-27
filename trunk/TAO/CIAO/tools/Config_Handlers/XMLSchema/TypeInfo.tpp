@@ -12,7 +12,6 @@ namespace XMLSchema
   {
     using XSCRT::TypeId;
     using XSCRT::ExtendedTypeInfo;
-    using std::make_pair;
 
     TypeId id (typeid (T));
     ExtendedTypeInfo info (id);
@@ -32,7 +31,6 @@ namespace XMLSchema
   {
     using XSCRT::TypeId;
     using XSCRT::ExtendedTypeInfo;
-    using std::make_pair;
 
     // XSCRT::Type
     //

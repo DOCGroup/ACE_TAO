@@ -1,3 +1,9 @@
+Mon Sep 26 10:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Extended fuzz check to detect ACE_THROW_RETURN in an ACE_TRY block,
+          in that case ACE_TRY_THROW should be used.
+
 Mon Sep 26 10:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/ciao_xml_helpers.doxygen:
