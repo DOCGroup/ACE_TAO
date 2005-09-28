@@ -1,3 +1,9 @@
+Wed Sep 28 16:44:39 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* docs/schema/CIAOServerResources.xsd
+
+	  Updated to support RT-CCM.
+
 Wed Sep 28 14:44:39 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp
