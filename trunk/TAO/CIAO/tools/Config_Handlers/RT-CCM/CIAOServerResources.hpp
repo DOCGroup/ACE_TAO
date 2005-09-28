@@ -1589,7 +1589,7 @@ namespace CIAO
   {
     namespace Writer
     {
-      struct ServerResourcesDef : Traversal::ServerResourcesDef, 
+      struct  ServerResourcesDef : Traversal::ServerResourcesDef, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ServerResourcesDef Type;
