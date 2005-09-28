@@ -5,6 +5,7 @@
 #include "xercesc/util/XMLUniDefs.hpp"
 #include "xercesc/dom/DOM.hpp"
 #include "XML_Error_Handler.h"
+#include "XML_Schema_Resolver.h"
 #include "xercesc/framework/LocalFileFormatTarget.hpp"
 #include "XercesString.h"
 
@@ -150,7 +151,11 @@ namespace CIAO
           XML_Error_Handler handler;
 
           parser->setErrorHandler (&handler);
-
+          
+          CIAO_Schema_Resolver resolver;
+          
+          parser->setEntityResolver (&resolver);
+          
           DOMDocument* doc = parser->parseURI (url);
 
           if (handler.getErrors ())
