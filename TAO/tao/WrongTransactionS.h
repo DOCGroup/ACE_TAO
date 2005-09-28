@@ -25,41 +25,4 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-// TAO_IDL - Generated from
-// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:373
-
-#ifndef _TAO_IDL_ORIG_WRONGTRANSACTIONS_H_
-#define _TAO_IDL_ORIG_WRONGTRANSACTIONS_H_
-
-#include /**/ "ace/pre.h"
-
-#include "WrongTransactionC.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
-
-// TAO_IDL - Generated from
-// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_sh.cpp:49
-
-namespace POA_CORBA
-{
-  
-
-// TAO_IDL - Generated from
-// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_sh.cpp:80
-
-} // module CORBA
-
-// TAO_IDL - Generated from 
-// E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1072
-
-
-#if defined (__ACE_INLINE__)
-#include "WrongTransactionS.inl"
-#endif /* defined INLINE */
-
-#include /**/ "ace/post.h"
-#endif /* ifndef */
-
+// Skeleton file generation suppressed with command line option -SS
