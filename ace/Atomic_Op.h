@@ -140,7 +140,6 @@ private:
   static long (*exchange_add_fn_) (volatile long *, long);
 };
 
-#if 0
 /**
  * @class ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>
  *
@@ -236,7 +235,6 @@ private:
   static long (*exchange_fn_) (volatile long *, long);
   static long (*exchange_add_fn_) (volatile long *, long);
 };
-#endif
 
 #endif /* ACE_HAS_BUILTIN_ATOMIC_OP */
 
