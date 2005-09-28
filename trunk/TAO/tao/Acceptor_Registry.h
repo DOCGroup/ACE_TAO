@@ -104,6 +104,15 @@ private:
                     TAO_ProtocolFactorySetItor &factory,
                     const char *options);
 
+  /// Open a default acceptor.
+  int open_default_i (TAO_ORB_Core *orb_core,
+                      ACE_Reactor *reactor,
+                      int major,
+                      int minor,
+                      TAO_ProtocolFactorySetItor &factory,
+                      TAO_Acceptor* acceptor,
+                      const char *options);
+
   /// Extract endpoint-specific options from the endpoint string.
   void extract_endpoint_options (ACE_CString &addrs,
                                  ACE_CString &options,
