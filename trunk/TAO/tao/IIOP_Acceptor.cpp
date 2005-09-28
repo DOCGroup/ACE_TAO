@@ -38,7 +38,7 @@ TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (CORBA::Boolean flag)
 #if defined (ACE_HAS_IPV6)
     default_address_ (static_cast<unsigned short> (0), ACE_IPV6_ANY, AF_INET6),
 #else
-    default_address_ (static_cast<unsigned short> (0), INADDR_ANY),
+    default_address_ (static_cast<unsigned short> (0), static_cast<ACE_UINT32> (INADDR_ANY)),
 #endif /* ACE_HAS_IPV6 */
     base_acceptor_ (),
     creation_strategy_ (0),
