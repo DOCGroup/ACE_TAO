@@ -1,3 +1,8 @@
+Wed Sep 28 14:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/POA/Demux/demux_test_server.cpp:
+          Fixed fuzz error
+
 Wed Sep 28 14:53:27 2005  Simon McQueen  <sm@prismtech.com>
 
         * orbsvcs/tests/Bug_2137_Regression/client.cpp:
