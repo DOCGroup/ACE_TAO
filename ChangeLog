@@ -1,16 +1,21 @@
+Wed Sep 28 07:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/compiler.bor:
+          At the moment BCBVER is not set, we default to BCB6.
+
 Tue Sep 27 13:40:45 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/ciao_config_handlers.mpb
 	* bin/MakeProjectCreator/config/ciao_xml_utils.mpb
 
-	Added files that should have been part of the previous commit. 
-	
+	Added files that should have been part of the previous commit.
+
 Tue Sep 27 13:12:28 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/ciao_client.mpb
 
-	Removed another obsolete ciao base project. 
-	
+	Removed another obsolete ciao base project.
+
 	* bin/MakeProjectCreator/config/ciao_client_dnc.mpb
 	* bin/MakeProjectCreator/config/ciao_component_dnc.mpb
 	* bin/MakeProjectCreator/config/ciao_servant_dnc.mpb
@@ -18,7 +23,7 @@ Tue Sep 27 13:12:28 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	Revamped the CIAO base project structure to fix deficiencies
 	exposed by the especially strict linker on MacOS.
-	
+
 Tue Sep 27 10:29:49 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/ciao_component.mpb
