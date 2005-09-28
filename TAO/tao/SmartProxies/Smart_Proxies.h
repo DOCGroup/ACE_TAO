@@ -21,6 +21,7 @@
 #include "smartproxies_export.h"
 #include "tao/Object.h"
 #include "tao/TAO_Singleton.h"
+#include "tao/LocalObject.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,7 +34,8 @@
  *
  * Contains the _var pointer to the real proxy.
  */
-class TAO_SmartProxies_Export TAO_Smart_Proxy_Base
+class TAO_SmartProxies_Export TAO_Smart_Proxy_Base :
+  public virtual TAO_Local_RefCounted_Object
 {
 
 public:
