@@ -2,7 +2,7 @@
  xmlns:Deployment="http://www.omg.org/Deployment"
  xmlns:xmi="http://www.omg.org/XMI"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="http://www.omg.org/Deployment Modified_Deployment.xsd">
+ xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
 
   <label>Hello-DeploymentPlan</label>
   <UUID>Hello_Plan_UUID_0001</UUID>

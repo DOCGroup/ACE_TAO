@@ -1,3 +1,39 @@
+Wed Sep 28 08:24:32 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* tools/Config_Handlers/Utils/Utils.mpc
+	* tools/Config_Handlers/Utils/XML_Helper.cpp
+	* tools/Config_Handlers/Utils/XML_Schema_Resolver.cpp
+	* tools/Config_Handlers/Utils/XML_Schema_Resolver.h
+
+	Implemented a schema resolver so that the XML parser till grab the
+	schemata from $CIAO_ROOT/docs/schema.
+	
+	* docs/tutorials/Quoter/Simple/descriptors/Deployment.xsd
+	* docs/tutorials/Quoter/Simple/descriptors/Modified_Deployment.xsd
+	* examples/BasicSP/descriptors/Deployment.xsd
+	* examples/Display/descriptors/Deployment.xsd
+	* examples/Display/descriptors/Modified_Deployment.xsd
+	* examples/Hello/descriptors/Deployment.xsd
+	* examples/Hello/descriptors/Modified_Deployment.xsd
+	* examples/Hello/descriptors/XMI.xsd
+	* examples/Hello/descriptors/Deployment.xsd
+	* examples/Hello/descriptors/Modified_Deployment.xsd
+	* examples/Hello/descriptors/XMI.xsd
+
+	Removed obsolete schemata.
+	
+	* examples/Display/descriptors/flattened_deploymentplan.cdp
+	* examples/Hello/descriptors/flattened_deploymentplan.cdp
+	* examples/Hello/descriptors/flattened_deploymentplan_without_ns.cdp
+	* docs/tutorials/Quoter/Simple/descriptors/flattened_deploymentplan.cdp
+
+	Migrated these deployment plans to use Deployment.xsd and friends,
+	instead of Modified_Deployment.xsd.
+
+	* NEWS
+
+	Updated the NEWS to include this feature.
+	
 Tue Sep 27 13:16:43 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/ExecutionManager/ExecutionManager.mpc
