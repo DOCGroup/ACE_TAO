@@ -21,6 +21,7 @@
       <xsd:element name="svcconf" type="CIAO:ACESvcConf" minOccurs="0"/>
       <xsd:element name="orbConfigs" type="CIAO:ORBConfigs" />
     </xsd:sequence>
+    <xsd:attribute name="id" type="xsd:ID"/>
   </xsd:complexType>
 
 
