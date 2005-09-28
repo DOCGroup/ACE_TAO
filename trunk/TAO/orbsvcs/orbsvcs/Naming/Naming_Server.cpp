@@ -345,11 +345,13 @@ TAO_Naming_Server::init_with_orb (int argc,
           policies[2] =
             this->root_poa_->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER
                                                                ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
           // Servant Retention Policy
           policies[3] =
             this->root_poa_->create_servant_retention_policy (PortableServer::RETAIN
                                                               ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
         }
 #endif /* TAO_HAS_MINIMUM_POA */
 
