@@ -62,6 +62,12 @@ public:
   /// Returns the array of endpoints in this acceptor
   const ACE_INET_Addr *endpoints (void);
 
+  /// Returns address for default endpoint
+  const ACE_INET_Addr& default_address (void) const;
+
+  /// Set address for default endpoint
+  void set_default_address (const ACE_INET_Addr& addr);
+
   typedef ACE_Strategy_Acceptor<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR> BASE_ACCEPTOR;
   typedef TAO_Creation_Strategy<TAO_IIOP_Connection_Handler> CREATION_STRATEGY;
   typedef TAO_Concurrency_Strategy<TAO_IIOP_Connection_Handler> CONCURRENCY_STRATEGY;
@@ -225,6 +231,9 @@ protected:
 
   /// Should we use GIOP lite??
   const bool lite_flag_;
+
+  /// Address for default endpoint
+  ACE_INET_Addr default_address_;
 
 private:
 

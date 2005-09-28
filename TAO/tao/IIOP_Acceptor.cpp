@@ -35,6 +35,11 @@ TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (CORBA::Boolean flag)
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (0),
     lite_flag_ (flag),
+#if defined (ACE_HAS_IPV6)
+    default_address_ (static_cast<unsigned short> (0), ACE_IPV6_ANY, AF_INET6),
+#else
+    default_address_ (static_cast<unsigned short> (0), INADDR_ANY),
+#endif /* ACE_HAS_IPV6 */
     base_acceptor_ (),
     creation_strategy_ (0),
     concurrency_strategy_ (0),
@@ -352,19 +357,14 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
       if (addr.set (address + sizeof (':')) != 0)
         return -1;
 
+      this->default_address_.set_port_number (addr.get_port_number ());
+
       // Now reset the port and set the host.
-#if defined (ACE_HAS_IPV6)
-      if (addr.set (addr.get_port_number (),
-                    ACE_IPV6_ANY) != 0)
-#else /* ACE_HAS_IPV6 */
-      if (addr.set (addr.get_port_number (),
-                    static_cast<ACE_UINT32> (INADDR_ANY),
-                    1) != 0)
-#endif /* !ACE_HAS_IPV6 */
+      if (addr.set (this->default_address_) != 0)
         return -1;
-      else
-        return this->open_i (addr,
-                             reactor);
+
+      return this->open_i (addr,
+                           reactor);
     }
   else if (port_separator_loc == 0)
     {
@@ -520,15 +520,7 @@ TAO_IIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
   // address.
   ACE_INET_Addr addr;
 
-#if defined (ACE_HAS_IPV6)
-  if (addr.set (static_cast<unsigned short> (0),
-                ACE_IPV6_ANY,
-                1) != 0)
-#else /* ACE_HAS_IPV6 */
-  if (addr.set (static_cast<unsigned short> (0),
-                static_cast<ACE_UINT32> (INADDR_ANY),
-                1) != 0)
-#endif /* !ACE_HAS_IPV6 */
+  if (addr.set (this->default_address_) != 0)
     return -1;
 
   return this->open_i (addr,
@@ -661,6 +653,8 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
   unsigned short port = address.get_port_number ();
   for (CORBA::ULong j = 0; j < this->endpoint_count_; ++j)
     this->addrs_[j].set_port_number (port, 1);
+
+  this->default_address_.set_port_number (port);
 
   (void) this->base_acceptor_.acceptor().enable (ACE_CLOEXEC);
   // This avoids having child processes acquire the listen socket thereby
@@ -841,30 +835,45 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr> safe_if_addrs (if_addrs);
 
 #if defined (ACE_HAS_IPV6)
+#if defined (ACE_WIN32)
+  bool ipv4_only = this->default_address_.get_type () == AF_INET;
+  bool ipv6_only =
+    this->default_address_.get_type () == AF_INET6 || orb_core->orb_params ()->connect_ipv6_only ();
+#else
+  bool ipv4_only = false;
+  bool ipv6_only = orb_core->orb_params ()->connect_ipv6_only ();
+#endif
+  // If the loopback interface is the only interface then include it
+  // in the list of interfaces to query for a hostname, otherwise
+  // exclude it from the list.
   bool ignore_lo;
-  if (orb_core->orb_params ()->connect_ipv6_only ())
+  if (ipv6_only)
     // only exclude loopback if non-local if exists
     ignore_lo = ipv6_non_ll;
+  else if (ipv4_only)
+    ignore_lo = ipv4_cnt != ipv4_lo_cnt;
   else
-    // If the loopback interface is the only interface then include it
-    // in the list of interfaces to query for a hostname, otherwise
-    // exclude it from the list.
     ignore_lo = if_cnt != lo_cnt;
 
   // Adjust counts for IPv6 only if required
   size_t if_ok_cnt = if_cnt;
-  if (orb_core->orb_params ()->connect_ipv6_only ())
+  if (ipv6_only)
     {
       if_ok_cnt -= ipv4_cnt;
       lo_cnt -= ipv4_lo_cnt;
       ipv4_lo_cnt = 0;
+    }
+  else if (ipv4_only)
+    {
+      if_ok_cnt = ipv4_cnt;
+      lo_cnt = ipv4_lo_cnt;
     }
 
   // In case there are no non-local IPv6 ifs in the list only exclude
   // IPv4 loopback.
   // IPv6 loopback will be needed to successfully connect IPv6 clients
   // in a localhost environment.
-  if (!ipv6_non_ll)
+  if (!ipv4_only && !ipv6_non_ll)
     lo_cnt = ipv4_lo_cnt;
 
   if (!ignore_lo)
@@ -905,12 +914,18 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
       // non-loopback interfaces.
       if (ignore_lo &&
           if_addrs[i].is_loopback () &&
-          (ipv6_non_ll ||
+          (ipv4_only ||
+           ipv6_non_ll ||
            if_addrs[i].get_type () != AF_INET6))
         continue;
 
+      // Ignore any non-IPv4 interfaces when so required.
+      if (ipv4_only &&
+          (if_addrs[i].get_type () != AF_INET))
+        continue;
+
       // Ignore any non-IPv6 interfaces when so required.
-      if (orb_core->orb_params ()->connect_ipv6_only () &&
+      if (ipv6_only &&
           (if_addrs[i].get_type () != AF_INET6 ||
            if_addrs[i].is_ipv4_mapped_ipv6 ()))
         continue;
