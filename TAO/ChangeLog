@@ -1,3 +1,9 @@
+Wed Sep 28 20:05:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/IIOP_Acceptor.cpp:
+
+          Fixed compile error for Borland compiler.
+
 Wed Sep 28 18:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
@@ -29,7 +35,7 @@ Wed Sep 28 11:35:17 2005  Chad Elliott  <elliott_c@ociweb.com>
           the destruction of smart proxies and a _non_existent()
           crash.
 
-Fri Sep 28 15:21:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+Wed Sep 28 15:21:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * tao/Acceptor_Registry{.h .cpp}:
         * tao/IIOP_Acceptor{.h .cpp .i}:
