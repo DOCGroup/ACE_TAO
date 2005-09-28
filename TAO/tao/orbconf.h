@@ -194,9 +194,11 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 #endif /* TAO_PURGE_PERCENT */
 
 #if !defined (TAO_CONNECTION_CACHE_MAXIMUM)
+// If for some reason you configure the maximum number of handles in
+// your OS to some astronomical value, then you should override this
+// macro to be a smaller value, e.g., NOFILES or FD_SETSIZE.
 # define TAO_CONNECTION_CACHE_MAXIMUM (ACE::max_handles () / 2)
 #endif /* TAO_CONNECTION_CACHE_MAXIMUM */
-
 
 // This definition theoretically is not required. Just leaving it here
 // for backward compatibility

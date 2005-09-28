@@ -1,3 +1,9 @@
+Fri Sep 23 13:11:31 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* tao/orbconf.h: Added a comment warning users about the
+	  impact of setting huge values for the number of configured
+ 	  handles.  Thanks to Jan.Zima@sofis.cz for motivating this.
+
 Wed Sep 28 14:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/IFRService/*S.{h,cpp,inl}:
