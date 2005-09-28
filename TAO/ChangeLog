@@ -1,3 +1,9 @@
+Wed Sep 28 14:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/IFRService/*S.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/IFRService/*S_T.{h,cpp,inl}:
+          Regenerated with the latest version of the TAO_IDL compiler
+
 Wed Sep 28 14:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/POA/Demux/demux_test_server.cpp:
