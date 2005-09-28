@@ -1,3 +1,10 @@
+Wed Sep 28 14:53:27 2005  Simon McQueen  <sm@prismtech.com>
+
+        * orbsvcs/tests/Bug_2137_Regression/client.cpp:
+
+          What kind of muppet makes 35 seperate mistakes with emulated
+          exception handling in one file ? That would be me.
+
 Wed Sep 28 14:35:26 2005  Simon McQueen  <sm@prismtech.com>
 
         * tao/WrongTransaction.pidl:
