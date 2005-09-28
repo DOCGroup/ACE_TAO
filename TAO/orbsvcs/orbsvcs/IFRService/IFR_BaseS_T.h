@@ -26,18 +26,12 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:538
+// be\be_codegen.cpp:501
 
 #ifndef _TAO_IDL_ORIG_IFR_BASES_T_H_
 #define _TAO_IDL_ORIG_IFR_BASES_T_H_
 
 #include /**/ "ace/pre.h"
-
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 
 // TAO_IDL - Generated from 
 // be\be_visitor_root/root_sth.cpp:116
@@ -57,12 +51,12 @@ namespace POA_CORBA
     // the T& ctor
     IRObject_tie (T &t, PortableServer::POA_ptr poa);
     // ctor taking a POA
-    IRObject_tie (T *tp, CORBA::Boolean release = 1);
+    IRObject_tie (T *tp, ::CORBA::Boolean release = 1);
     // ctor taking pointer and an ownership flag
     IRObject_tie (
         T *tp,
         PortableServer::POA_ptr poa,
-        CORBA::Boolean release = 1
+        ::CORBA::Boolean release = 1
       );
     // ctor with T*, ownership flag and a POA
     ~IRObject_tie (void);
@@ -73,11 +67,11 @@ namespace POA_CORBA
     // return the underlying object
     void _tied_object (T &obj);
     // set the underlying object
-    void _tied_object (T *obj, CORBA::Boolean release = 1);
+    void _tied_object (T *obj, ::CORBA::Boolean release = 1);
     // set the underlying object and the ownership flag
-    CORBA::Boolean _is_owner (void);
+    ::CORBA::Boolean _is_owner (void);
     // do we own it
-    void _is_owner (CORBA::Boolean b);
+    void _is_owner ( ::CORBA::Boolean b);
     // set the ownership
     
     // overridden ServantBase operations
@@ -92,7 +86,7 @@ namespace POA_CORBA
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -102,13 +96,13 @@ namespace POA_CORBA
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
   
   private:
     T *ptr_;
     PortableServer::POA_var poa_;
-    CORBA::Boolean rel_;
+    ::CORBA::Boolean rel_;
     
     // copy and assignment are not allowed
     IRObject_tie (const IRObject_tie &);
@@ -127,12 +121,12 @@ namespace POA_CORBA
     // the T& ctor
     Contained_tie (T &t, PortableServer::POA_ptr poa);
     // ctor taking a POA
-    Contained_tie (T *tp, CORBA::Boolean release = 1);
+    Contained_tie (T *tp, ::CORBA::Boolean release = 1);
     // ctor taking pointer and an ownership flag
     Contained_tie (
         T *tp,
         PortableServer::POA_ptr poa,
-        CORBA::Boolean release = 1
+        ::CORBA::Boolean release = 1
       );
     // ctor with T*, ownership flag and a POA
     ~Contained_tie (void);
@@ -143,11 +137,11 @@ namespace POA_CORBA
     // return the underlying object
     void _tied_object (T &obj);
     // set the underlying object
-    void _tied_object (T *obj, CORBA::Boolean release = 1);
+    void _tied_object (T *obj, ::CORBA::Boolean release = 1);
     // set the underlying object and the ownership flag
-    CORBA::Boolean _is_owner (void);
+    ::CORBA::Boolean _is_owner (void);
     // do we own it
-    void _is_owner (CORBA::Boolean b);
+    void _is_owner ( ::CORBA::Boolean b);
     // set the ownership
     
     // overridden ServantBase operations
@@ -162,7 +156,7 @@ namespace POA_CORBA
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -172,7 +166,7 @@ namespace POA_CORBA
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -182,7 +176,7 @@ namespace POA_CORBA
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -193,7 +187,7 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -203,7 +197,7 @@ namespace POA_CORBA
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -214,7 +208,7 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -224,7 +218,7 @@ namespace POA_CORBA
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -235,7 +229,7 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -245,7 +239,7 @@ namespace POA_CORBA
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -255,7 +249,7 @@ namespace POA_CORBA
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -265,7 +259,7 @@ namespace POA_CORBA
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -275,7 +269,7 @@ namespace POA_CORBA
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -288,13 +282,13 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
   
   private:
     T *ptr_;
     PortableServer::POA_var poa_;
-    CORBA::Boolean rel_;
+    ::CORBA::Boolean rel_;
     
     // copy and assignment are not allowed
     Contained_tie (const Contained_tie &);
@@ -313,12 +307,12 @@ namespace POA_CORBA
     // the T& ctor
     Container_tie (T &t, PortableServer::POA_ptr poa);
     // ctor taking a POA
-    Container_tie (T *tp, CORBA::Boolean release = 1);
+    Container_tie (T *tp, ::CORBA::Boolean release = 1);
     // ctor taking pointer and an ownership flag
     Container_tie (
         T *tp,
         PortableServer::POA_ptr poa,
-        CORBA::Boolean release = 1
+        ::CORBA::Boolean release = 1
       );
     // ctor with T*, ownership flag and a POA
     ~Container_tie (void);
@@ -329,11 +323,11 @@ namespace POA_CORBA
     // return the underlying object
     void _tied_object (T &obj);
     // set the underlying object
-    void _tied_object (T *obj, CORBA::Boolean release = 1);
+    void _tied_object (T *obj, ::CORBA::Boolean release = 1);
     // set the underlying object and the ownership flag
-    CORBA::Boolean _is_owner (void);
+    ::CORBA::Boolean _is_owner (void);
     // do we own it
-    void _is_owner (CORBA::Boolean b);
+    void _is_owner ( ::CORBA::Boolean b);
     // set the ownership
     
     // overridden ServantBase operations
@@ -348,7 +342,7 @@ namespace POA_CORBA
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -358,7 +352,7 @@ namespace POA_CORBA
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -369,7 +363,7 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -381,7 +375,7 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -395,7 +389,7 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -408,7 +402,7 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -421,7 +415,7 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -436,7 +430,7 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -450,7 +444,7 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -465,7 +459,7 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -479,7 +473,7 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -493,7 +487,7 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -507,7 +501,7 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -527,7 +521,7 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -541,7 +535,7 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -555,7 +549,7 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -568,7 +562,7 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -582,7 +576,7 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -596,7 +590,7 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -616,13 +610,13 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
   
   private:
     T *ptr_;
     PortableServer::POA_var poa_;
-    CORBA::Boolean rel_;
+    ::CORBA::Boolean rel_;
     
     // copy and assignment are not allowed
     Container_tie (const Container_tie &);
@@ -641,12 +635,12 @@ namespace POA_CORBA
     // the T& ctor
     IDLType_tie (T &t, PortableServer::POA_ptr poa);
     // ctor taking a POA
-    IDLType_tie (T *tp, CORBA::Boolean release = 1);
+    IDLType_tie (T *tp, ::CORBA::Boolean release = 1);
     // ctor taking pointer and an ownership flag
     IDLType_tie (
         T *tp,
         PortableServer::POA_ptr poa,
-        CORBA::Boolean release = 1
+        ::CORBA::Boolean release = 1
       );
     // ctor with T*, ownership flag and a POA
     ~IDLType_tie (void);
@@ -657,11 +651,11 @@ namespace POA_CORBA
     // return the underlying object
     void _tied_object (T &obj);
     // set the underlying object
-    void _tied_object (T *obj, CORBA::Boolean release = 1);
+    void _tied_object (T *obj, ::CORBA::Boolean release = 1);
     // set the underlying object and the ownership flag
-    CORBA::Boolean _is_owner (void);
+    ::CORBA::Boolean _is_owner (void);
     // do we own it
-    void _is_owner (CORBA::Boolean b);
+    void _is_owner ( ::CORBA::Boolean b);
     // set the ownership
     
     // overridden ServantBase operations
@@ -676,7 +670,7 @@ namespace POA_CORBA
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -686,23 +680,23 @@ namespace POA_CORBA
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
     
-    CORBA::TypeCode_ptr type (
+    ::CORBA::TypeCode_ptr type (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
   
   private:
     T *ptr_;
     PortableServer::POA_var poa_;
-    CORBA::Boolean rel_;
+    ::CORBA::Boolean rel_;
     
     // copy and assignment are not allowed
     IDLType_tie (const IDLType_tie &);
@@ -721,12 +715,12 @@ namespace POA_CORBA
     // the T& ctor
     TypedefDef_tie (T &t, PortableServer::POA_ptr poa);
     // ctor taking a POA
-    TypedefDef_tie (T *tp, CORBA::Boolean release = 1);
+    TypedefDef_tie (T *tp, ::CORBA::Boolean release = 1);
     // ctor taking pointer and an ownership flag
     TypedefDef_tie (
         T *tp,
         PortableServer::POA_ptr poa,
-        CORBA::Boolean release = 1
+        ::CORBA::Boolean release = 1
       );
     // ctor with T*, ownership flag and a POA
     ~TypedefDef_tie (void);
@@ -737,11 +731,11 @@ namespace POA_CORBA
     // return the underlying object
     void _tied_object (T &obj);
     // set the underlying object
-    void _tied_object (T *obj, CORBA::Boolean release = 1);
+    void _tied_object (T *obj, ::CORBA::Boolean release = 1);
     // set the underlying object and the ownership flag
-    CORBA::Boolean _is_owner (void);
+    ::CORBA::Boolean _is_owner (void);
     // do we own it
-    void _is_owner (CORBA::Boolean b);
+    void _is_owner ( ::CORBA::Boolean b);
     // set the ownership
     
     // overridden ServantBase operations
@@ -756,7 +750,7 @@ namespace POA_CORBA
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -766,7 +760,7 @@ namespace POA_CORBA
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -776,7 +770,7 @@ namespace POA_CORBA
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -787,7 +781,7 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -797,7 +791,7 @@ namespace POA_CORBA
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -808,7 +802,7 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -818,7 +812,7 @@ namespace POA_CORBA
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -829,7 +823,7 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -839,7 +833,7 @@ namespace POA_CORBA
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -849,7 +843,7 @@ namespace POA_CORBA
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -859,7 +853,7 @@ namespace POA_CORBA
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -869,7 +863,7 @@ namespace POA_CORBA
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
@@ -882,23 +876,23 @@ namespace POA_CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/tie_sh.cpp:60
     
-    CORBA::TypeCode_ptr type (
+    ::CORBA::TypeCode_ptr type (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       ));
   
   private:
     T *ptr_;
     PortableServer::POA_var poa_;
-    CORBA::Boolean rel_;
+    ::CORBA::Boolean rel_;
     
     // copy and assignment are not allowed
     TypedefDef_tie (const TypedefDef_tie &);
@@ -907,7 +901,7 @@ namespace POA_CORBA
 } // module CORBA
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:1221
+// be\be_codegen.cpp:1165
 
 #if defined (__ACE_INLINE__)
 #include "IFR_BaseS_T.inl"
@@ -920,10 +914,6 @@ namespace POA_CORBA
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("IFR_BaseS_T.cpp")
 #endif /* defined REQUIRED PRAGMA */
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* ifndef */
