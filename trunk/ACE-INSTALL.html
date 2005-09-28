@@ -1253,7 +1253,8 @@ to check <a href="#win32nonic">here</a> first. <p>
       <code>set ACE_ROOT=C:\ACE_wrappers</code><br>
       <br>
   </li><li>Set the BCBVER environment vairable to the main version of your Borland C++ compiler.
-      Currently only 6 is supported, 4 and 5 are options but not supported. For example:<br>
+      Currently only 6 is supported, 4 and 5 are options but not supported anymore.
+      If BCBVER is not set we default to 6. For example:<br>
       <br>
       <code>set BCBVER=6</code><br>
       <br>
@@ -1264,8 +1265,7 @@ to check <a href="#win32nonic">here</a> first. <p>
       <code>make -f Makefile.bor all</code><br>
       <br>
   </li><li>You can build several different versions of ACE by setting environment
-variables
-      before you run make:<br>
+      variables before you run make:<br>
       <br>
       Set the environment variable below to build a debug version of ACE<br>
       <code>set DEBUG=1</code><br>
@@ -1307,7 +1307,7 @@ Builder. <p>
 
 Note that when you run <code>make</code> in a sub directory you give <code>make -f Makefile.bor all</code>. The <code>all</code> is needed to make sure the complete project is build.<p>
 
-The Borland C++ Builder 4.0/5.0/6.0 port has been done by <a href="mailto:jody@atdesk.com">Jody Hagins</a>, <a href="mailto:chris@kohlhoff.com">Christopher Kohlhoff</a> and <a href="mailto:jwillemsen@remedy.nl">Johnny Willemsen</a>. </p><p>
+The Borland C++ Builder 4.0/5.0/6.0 port has been done by Jody Hagins, <a href="mailto:chris@kohlhoff.com">Christopher Kohlhoff</a> and <a href="mailto:jwillemsen@remedy.nl">Johnny Willemsen</a>. </p><p>
 
 <b>ACE TESTS</b></p><p>
 
