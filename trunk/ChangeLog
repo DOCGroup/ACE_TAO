@@ -1,3 +1,13 @@
+Wed Sep 28 11:38:07 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        Committing the following change on behalf of Wallace Zhang
+        <zhang_w@ociweb.com>.
+
+        * bin/tao_orb_tests.lst:
+
+          Enabled a new Smart Proxy test,i.e.,
+          $TAO_ROOT/tests/Smart_Proxies/dtor/run_test.pl
+
 Wed Sep 28 07:46:57 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * ace/Atomic_Op.cpp:
@@ -5,12 +15,12 @@ Wed Sep 28 07:46:57 2005  J.T. Conklin  <jtc@acorntoolworks.com>
         * ace/Atomic_Op.inl:
         * ace/Object_Manager.cpp:
 
-	  Revert change:
-	  Fri Sep 16 19:54:20 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+          Revert change:
+          Fri Sep 16 19:54:20 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	  As the new ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>
-	  template specialization was not found responsible for the
-	  TAO performance regressions.
+          As the new ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>
+          template specialization was not found responsible for the
+          TAO performance regressions.
 
 Wed Sep 28 11:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -24,32 +34,32 @@ Wed Sep 28 07:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Sep 27 13:40:45 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/ciao_config_handlers.mpb
-	* bin/MakeProjectCreator/config/ciao_xml_utils.mpb
+        * bin/MakeProjectCreator/config/ciao_config_handlers.mpb
+        * bin/MakeProjectCreator/config/ciao_xml_utils.mpb
 
-	Added files that should have been part of the previous commit.
+        Added files that should have been part of the previous commit.
 
 Tue Sep 27 13:12:28 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/ciao_client.mpb
+        * bin/MakeProjectCreator/config/ciao_client.mpb
 
-	Removed another obsolete ciao base project.
+        Removed another obsolete ciao base project.
 
-	* bin/MakeProjectCreator/config/ciao_client_dnc.mpb
-	* bin/MakeProjectCreator/config/ciao_component_dnc.mpb
-	* bin/MakeProjectCreator/config/ciao_servant_dnc.mpb
-	* bin/MakeProjectCreator/config/ciao_server_dnc.mpb
+        * bin/MakeProjectCreator/config/ciao_client_dnc.mpb
+        * bin/MakeProjectCreator/config/ciao_component_dnc.mpb
+        * bin/MakeProjectCreator/config/ciao_servant_dnc.mpb
+        * bin/MakeProjectCreator/config/ciao_server_dnc.mpb
 
-	Revamped the CIAO base project structure to fix deficiencies
-	exposed by the especially strict linker on MacOS.
+        Revamped the CIAO base project structure to fix deficiencies
+        exposed by the especially strict linker on MacOS.
 
 Tue Sep 27 10:29:49 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/ciao_component.mpb
-	* bin/MakeProjectCreator/config/ciao_servant.mpb
-	* bin/MakeProjectCreator/config/ciao_server.mpb
+        * bin/MakeProjectCreator/config/ciao_component.mpb
+        * bin/MakeProjectCreator/config/ciao_servant.mpb
+        * bin/MakeProjectCreator/config/ciao_server.mpb
 
-	Removed obsolete CIAO base projects.
+        Removed obsolete CIAO base projects.
 
 Tue Sep 27 13:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -79,35 +89,35 @@ Mon Sep 26 10:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Sep 24 12:56:20 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
 
- 	* ace/Acceptor.cpp:
-	* ace/Strategies_T.cpp (accept_svc_handler):
+        * ace/Acceptor.cpp:
+        * ace/Strategies_T.cpp (accept_svc_handler):
 
-	  Errno of failed accept() call is potentially not preserved due
-	  to unguarded call of svc_handler->close().  Thus when
-	  accept_svc_handler() returns -1 the errno value may be due to a
-	  subsequent failure in the svc_handler->close() method rather
-	  than the original accept() failure,  making handling of the
-	  accept() failures difficult. Thanks to Russell Mora
-	  <russell_mora at symantec dot com> for the patch.
+          Errno of failed accept() call is potentially not preserved due
+          to unguarded call of svc_handler->close().  Thus when
+          accept_svc_handler() returns -1 the errno value may be due to a
+          subsequent failure in the svc_handler->close() method rather
+          than the original accept() failure,  making handling of the
+          accept() failures difficult. Thanks to Russell Mora
+          <russell_mora at symantec dot com> for the patch.
 
 Fri Sep 23 10:07:25 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* ace/config-macosx-tiger.h
-	* include/makeinclude/platform_macosx_tiger_gcc4.GNU
+        * ace/config-macosx-tiger.h
+        * include/makeinclude/platform_macosx_tiger_gcc4.GNU
 
-	  Updates for Tiger compatibility. Thanks to Michael van der
-	  Westhuizen (r1mikey at gmail dot com) for help with tracking
-	  down some troublesome issues in the platform_macros.
+          Updates for Tiger compatibility. Thanks to Michael van der
+          Westhuizen (r1mikey at gmail dot com) for help with tracking
+          down some troublesome issues in the platform_macros.
 
 Thu Sep 22 12:40:20 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* m4/ace.m4:
+        * m4/ace.m4:
 
-	  Set BUILD_TAO_FLRESOURCE, BUILD_TAO_QTRESOURCE,
-	  BUILD_TAO_TKRESOURCE, and BUILD_TAO_XTRESOURCE automake
-	  conditionals if --enable-fl-reactor, --enable-qt-reactor,
-	  --enable-tk-reactor, or --enable-xt-reactor are specified
-	  at configure time.
+          Set BUILD_TAO_FLRESOURCE, BUILD_TAO_QTRESOURCE,
+          BUILD_TAO_TKRESOURCE, and BUILD_TAO_XTRESOURCE automake
+          conditionals if --enable-fl-reactor, --enable-qt-reactor,
+          --enable-tk-reactor, or --enable-xt-reactor are specified
+          at configure time.
 
 Thu Sep 22 08:40:00 UTC 2005  Simon Massey  <simon.massey@prismtech.com>
 
@@ -132,9 +142,9 @@ Thu Sep 22 08:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Sep 20 10:37:24 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Pipe.inl: Added #include of "ace/ACE.h" to get the
-	  right class definition for the ACE:: methods.  Thanks to Simon
- 	  Massey for reporting this.
+        * ace/Pipe.inl: Added #include of "ace/ACE.h" to get the
+          right class definition for the ACE:: methods.  Thanks to Simon
+          Massey for reporting this.
 
 Tue Sep 20 15:20:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
@@ -333,9 +343,9 @@ Tue Sep 13 10:11:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
 Fri Sep  9 18:57:31 2005  Steve Huston  <shuston@riverace.com>
 
-      	* ace/Sock_Connect.cpp (bind_port): Replace variable s_addr with
-      	  addr_p. s_addr is a macro on some systems (in this case, Solaris 8)
-      	  and caused problems.
+        * ace/Sock_Connect.cpp (bind_port): Replace variable s_addr with
+          addr_p. s_addr is a macro on some systems (in this case, Solaris 8)
+          and caused problems.
 
 Fri Sep  9 11:05:27 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -344,19 +354,19 @@ Fri Sep  9 11:05:27 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
 Thu Sep  8 16:33:38 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-      	* m4/tls.m4:
+        * m4/tls.m4:
 
-      	  Added support for --with-openssl, --with-openssl-include, and
-      	  --with-openssl-libdir options so users can select or override
-      	  the location of the OpenSSL libraries.
+          Added support for --with-openssl, --with-openssl-include, and
+          --with-openssl-libdir options so users can select or override
+          the location of the OpenSSL libraries.
 
 Thu Sep  8 18:43:12 2005  Steve Huston  <shuston@riverace.com>
 
-      	* tests/Based_Pointer_Test.cpp (mmap_remap_test): Don't keep increasing
-      	  the allocation until the base pointer changes without checking for
-      	  an allocation failure. This caused all memory to be absorbed on AIX
-      	  without remapping the base, then the log file was so big that
-      	  the log processor for the scoreboard ran out of memory processing it.
+        * tests/Based_Pointer_Test.cpp (mmap_remap_test): Don't keep increasing
+          the allocation until the base pointer changes without checking for
+          an allocation failure. This caused all memory to be absorbed on AIX
+          without remapping the base, then the log file was so big that
+          the log processor for the scoreboard ran out of memory processing it.
 
 Thu Sep  8 06:47:11 2005  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -511,32 +521,32 @@ Fri Sep  2 15:08:27 2005  Justin Michel  <michel_j@ociweb.com>
         * ace/ACE.cpp:
 
           The code that waited for connections to complete had problems
- 	  with some Windows machines. The code now doesn't trust the write
- 	  bit in select() to indicate an accepted connection.
+          with some Windows machines. The code now doesn't trust the write
+          bit in select() to indicate an accepted connection.
 
         * ace/SOCK_Connector.cpp:
 
           There was a workaround for ACE_WIN32 that would wait 35ms and
- 	  retry after the first connection failure. It wouldn't retry the
- 	  connect(), but would just retry select(). This workaround
- 	  appears to be unnecessary for current Windows machines, so I
- 	  changed the #ifdef ACE_WIN32 to #ifdef ACE_HAS_NON_BLOCKING_BUG.
+          retry after the first connection failure. It wouldn't retry the
+          connect(), but would just retry select(). This workaround
+          appears to be unnecessary for current Windows machines, so I
+          changed the #ifdef ACE_WIN32 to #ifdef ACE_HAS_NON_BLOCKING_BUG.
 
         * ace/config-win32-common.h:
 
           ACE would always default to a ACE_DEFAULT_BACKLOG of 5. Changed
- 	  to default to SOMAXCONN on Win32. This special value is used by
- 	  Winsock listen() to indicate that the machine should
- 	  automatically pick a suitable default.
+          to default to SOMAXCONN on Win32. This special value is used by
+          Winsock listen() to indicate that the machine should
+          automatically pick a suitable default.
 
         * tests/MT_SOCK_Test.cpp:
 
           This test is really to verify that the listen() backlog feature
- 	  works correctly.  Updated the code to make this testable and
- 	  consistent. The code now sleeps in the server thread to give the
- 	  30 client threads time to attempt to connect. Only 5-9 clients
- 	  should succeed, because the Acceptor is created with a listen()
- 	  backlog=5.
+          works correctly.  Updated the code to make this testable and
+          consistent. The code now sleeps in the server thread to give the
+          30 client threads time to attempt to connect. Only 5-9 clients
+          should succeed, because the Acceptor is created with a listen()
+          backlog=5.
 
 Thu Sep  1 17:28:25 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
@@ -986,12 +996,12 @@ Fri Aug 26 11:43:01 2005  Justin Michel  <michel_j@ociweb.com>
         * ace/CDR_Stream.cpp:
 
           Add a new simple class using RAII to call reset on an output CDR
- 	  when it goes out of scope. This is used to implement a new TAO
- 	  option that will reset() output CDRs after sending each request.
+          when it goes out of scope. This is used to implement a new TAO
+          option that will reset() output CDRs after sending each request.
 
           Add an optional ACE_Lock* to one of the input CDR
- 	  constructors. This is used by one of the TAO Any_Impl derived
- 	  classes to provide thread safety for its internal CDR.
+          constructors. This is used by one of the TAO Any_Impl derived
+          classes to provide thread safety for its internal CDR.
 
 Fri Aug 26 11:02:21 2005  Chad Elliott  <elliott_c@ociweb.com>
 
