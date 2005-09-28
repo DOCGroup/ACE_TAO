@@ -1,3 +1,17 @@
+Wed Sep 28 14:35:26 2005  Simon McQueen  <sm@prismtech.com>
+
+        * tao/WrongTransaction.pidl:
+
+          Changed generation instructions to include use of -SS.
+
+        * tao/WrongTransactionS.h:
+
+          Regenerated using -SS.
+
+        * tao/WrongTransactionS.inl:
+
+          Removed file.
+
 Tue Sep 27 18:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/POA/Single_Threaded_POA/Single_Threaded_POA.cpp:
