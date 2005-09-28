@@ -8,7 +8,7 @@
 # STATIC - if defined means creating a static library or executable
 # DEBUG - if defined means building with debug information
 # UNICODE - if defined means building unicode
-# CBX - if defined means building with the new cbuilderx compiler
+# CBX - if defined means building with the new CBuilderX preview compiler
 #
 # Outputs:
 # ~~~~~~~~
@@ -31,6 +31,22 @@
 # OBJ_EXT - the extension to be used for object files
 # LIB_EXT - the extension to be used for libs
 #
+
+# Get the BCBVER and VCLVER, if it is not set, we default to BCB6.
+!if $(BCBVER) == 6
+VCLVER =
+!else
+!if $(BCBVER) == 5
+VCLVER = 50
+!else
+!if $(BCBVER) == 4
+VCLVER = 40
+!else
+BCBVER = 6
+VCLVER =
+!endif
+!endif
+!endif
 
 !ifdef CBX
 OBJ_EXT = o
@@ -156,20 +172,6 @@ LIB_LFLAGS = /C /P512
 !endif
 !endif
 
-
-#
-# VCL lib version number
-#
-
-!if $(BCBVER) == 6
-VCLVER =
-!else
-!if $(BCBVER) == 5
-VCLVER = 50
-!else
-VCLVER = 40
-!endif
-!endif
 
 #
 # Libraries to be linked
