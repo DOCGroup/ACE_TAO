@@ -1,3 +1,17 @@
+Wed Sep 28 07:46:57 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * ace/Atomic_Op.cpp:
+        * ace/Atomic_Op.h:
+        * ace/Atomic_Op.inl:
+        * ace/Object_Manager.cpp:
+
+	  Revert change:
+	  Fri Sep 16 19:54:20 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	  As the new ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>
+	  template specialization was not found responsible for the
+	  TAO performance regressions.
+
 Wed Sep 28 11:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
