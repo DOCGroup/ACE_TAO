@@ -10,7 +10,7 @@
  * following command:
  *
  *   tao_idl
- *        -o orig -Ge 1 -GA -Sc -Sci
+ *        -o orig -Ge 1 -GA -Sc -Sci -SS
  *        -Wb,export_macro=TAO_Export
  *        -Wb,export_include=tao/TAO_Export.h
  *        -Wb,pre_include="ace/pre.h"
@@ -20,7 +20,7 @@
  * and then:
  *
  * cp orig/WrongTransactionC.{h,inl,cpp} .
- * cp orig/WrongTransactionS.{h.inl} .
+ * cp orig/WrongTransactionS.h .
  *
  */
 #ifndef TAO_CORBA_WRONGTRANSACTION_PIDL
