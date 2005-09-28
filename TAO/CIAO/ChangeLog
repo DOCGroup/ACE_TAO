@@ -1,3 +1,11 @@
+Wed Sep 28 14:44:39 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp
+	* tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
+
+	New version of the XSC including additional features needed for
+	RT-CCM.
+	
 Wed Sep 28 08:24:32 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* tools/Config_Handlers/Utils/Utils.mpc
