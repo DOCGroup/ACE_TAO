@@ -35,8 +35,6 @@ template <class ACE_COND_MUTEX> class TAO_Condition;
 template <class T> class ACE_Unbounded_Set;
 template <class T> class ACE_Unbounded_Set_Iterator;
 
-
-
 namespace TAO
 {
   typedef ACE_Unbounded_Set<TAO_Connection_Handler*> Connection_Handler_Set;
