@@ -13,6 +13,9 @@
 #include "tao/Endpoint.h"
 #include "tao/ORB_Constants.h"
 #include "tao/SystemException.h"
+#if defined (ACE_WIN32) && defined (ACE_HAS_IPV6)
+# include "tao/IIOP_Acceptor.h"
+#endif /* ACE_WIN32 && ACE_HAS_IPV6 */
 
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
@@ -171,6 +174,34 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
         }
 
       ++acceptor_count;  // We've got at least one acceptor so far.
+#if defined (ACE_WIN32) && defined (ACE_HAS_IPV6)
+      // Since Win32 has single-stack IPv4/IPv6 we need an additional
+      // acceptor if an iiop protocol without endpoints is specified
+      // to open explicitly on IPv6 ANY *and* IPv4 ANY.
+
+      // Now get the list of available protocol factories.
+      const TAO_ProtocolFactorySetItor end =
+        orb_core->protocol_factories ()->end ();
+
+      // extract the protocol prefix
+      const ACE_CString prefix (iop.substring (0, slot));
+
+      for (TAO_ProtocolFactorySetItor factory =
+             orb_core->protocol_factories ()->begin ();
+           factory != end;
+           ++factory)
+        {
+          if ((*factory)->factory ()->match_prefix (prefix))
+            {
+              if ((*factory)->factory ()->tag () == IOP::TAG_INTERNET_IOP)
+                {
+                  // just add additional space to cover for possibility
+                  ++acceptor_count;
+                }
+              break; // we found the protocol, no need to go on
+            }
+        }
+#endif /* ACE_WIN32 && ACE_HAS_IPV6 */
 
       // Now count the number of commas.  That number will be the
       // remaining number of endpoints in the current endpoint
@@ -302,6 +333,148 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                                          ACE_Reactor *reactor,
                                          const char *options)
 {
+  // Flag that indicates at least one endpoint was opened.  If one
+  // wasn't opened then there is a problem.
+  bool opened_endpoint = false;
+
+#if defined (ACE_WIN32) && defined (ACE_HAS_IPV6)
+  if (!orb_core->orb_params ()->connect_ipv6_only () && this->acceptors_ == 0)
+    {
+      // Since Win32 has single-stack IPv4/IPv6 we need an additional
+      // acceptor to open explicitly on IPv6 ANY *and* IPv4 ANY.
+      // This code takes care of that.
+
+      TAO_ProtocolFactorySet *pfs = orb_core->protocol_factories ();
+
+      // Number of acceptors to set up
+      size_t acceptor_count = 0;
+
+      const TAO_ProtocolFactorySetItor end = pfs->end ();
+
+      // Loop through all the loaded protocols...
+      for (TAO_ProtocolFactorySetItor i = pfs->begin (); i != end; ++i)
+        {
+          if (!(*i)->factory ()->requires_explicit_endpoint ())
+            {
+              if ((*i)->factory ()->tag () == IOP::TAG_INTERNET_IOP)
+                acceptor_count += 2; // IPv4 AND IPv6 endpoints
+              else
+                acceptor_count += 1;
+            }
+        }
+
+      // Allocate TAO_Acceptor array
+      ACE_NEW_RETURN (this->acceptors_,
+                      TAO_Acceptor *[acceptor_count],
+                      -1);
+
+      // Loop through all the loaded protocols...
+      for (TAO_ProtocolFactorySetItor i = pfs->begin (); i != end; ++i)
+        {
+          // If the protocol requires an explicit -ORBEndpoint option then
+          // don't use it, otherwise open a default endpoint for that
+          // protocol, this solves the problem with persistent endpoints
+          // (such as UNIX domain rendesvouz points) that are not cleaned
+          // up if the server crashes.
+          if (!(*i)->factory ()->requires_explicit_endpoint ())
+            {
+              // Make an acceptor
+              TAO_Acceptor *acceptor =
+                (*i)->factory ()->make_acceptor ();
+
+              if (acceptor == 0)
+                {
+                  if (TAO_debug_level > 0)
+                    {
+                      ACE_ERROR ((
+                          LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) unable to create ")
+                          ACE_TEXT ("an acceptor for <%s>\n"),
+                          ACE_TEXT_CHAR_TO_TCHAR ((*i)->protocol_name ().c_str ())
+                        ));
+                    }
+
+                  return -1;
+                }
+
+              if ((*i)->factory ()->tag () == IOP::TAG_INTERNET_IOP)
+                {
+                  // Open first acceptor on IPv4 ANY
+                  ACE_INET_Addr addr(static_cast<unsigned short> (0)); // IPv4 ANY
+
+                  TAO_IIOP_Acceptor* iiop_acceptor = dynamic_cast<TAO_IIOP_Acceptor*> (acceptor);
+                  iiop_acceptor->set_default_address (addr);
+
+                  if (this->open_default_i (orb_core,
+                                            reactor,
+                                            TAO_DEF_GIOP_MAJOR,  // default major
+                                            TAO_DEF_GIOP_MINOR,  // default minor
+                                            i,
+                                            acceptor,
+                                            options) != 0)
+                    {
+                      return -1;
+                    }
+
+                  // record the port chosen for the IPv4 acceptor
+                  u_short port = iiop_acceptor->default_address ().get_port_number ();
+
+                  // Create second acceptor for IPV6 traffic
+                  acceptor =
+                    (*i)->factory ()->make_acceptor ();
+
+                  if (acceptor == 0)
+                    {
+                      if (TAO_debug_level > 0)
+                        {
+                          ACE_ERROR ((
+                              LM_ERROR,
+                              ACE_TEXT ("TAO (%P|%t) unable to create ")
+                              ACE_TEXT ("an acceptor for <%s>\n"),
+                              ACE_TEXT_CHAR_TO_TCHAR ((*i)->protocol_name ().c_str ())
+                            ));
+                        }
+
+                      return -1;
+                    }
+
+                  addr.set (port, ACE_IPV6_ANY, AF_INET6); // IPv6 ANY on specified port
+
+                  iiop_acceptor = dynamic_cast<TAO_IIOP_Acceptor*> (acceptor);
+                  iiop_acceptor->set_default_address (addr);
+
+                  if (this->open_default_i (orb_core,
+                                            reactor,
+                                            TAO_DEF_GIOP_MAJOR,  // default major
+                                            TAO_DEF_GIOP_MINOR,  // default minor
+                                            i,
+                                            acceptor,
+                                            options) != 0)
+                    {
+                      return -1;
+                    }
+                }
+              else
+                {
+                  if (this->open_default_i (orb_core,
+                                            reactor,
+                                            TAO_DEF_GIOP_MAJOR,  // default major
+                                            TAO_DEF_GIOP_MINOR,  // default minor
+                                            i,
+                                            acceptor,
+                                            options) != 0)
+                    {
+                      return -1;
+                    }
+                }
+
+              opened_endpoint = true;
+            }
+        }
+    }
+  else
+    {
+#endif /* ACE_WIN32 && ACE_HAS_IPV6 */
   TAO_ProtocolFactorySet *pfs = orb_core->protocol_factories ();
 
   // If the TAO_Acceptor array is zero by the time we get here then no
@@ -316,10 +489,6 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
     }
 
   const TAO_ProtocolFactorySetItor end = pfs->end ();
-
-  // Flag that indicates at least one endpoint was opened.  If one
-  // wasn't opened then there is a problem.
-  bool opened_endpoint = false;
 
   // Loop through all the loaded protocols...
   for (TAO_ProtocolFactorySetItor i = pfs->begin (); i != end; ++i)
@@ -344,6 +513,9 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
           opened_endpoint = true;
         }
     }
+#if defined (ACE_WIN32) && defined (ACE_HAS_IPV6)
+    }
+#endif /* ACE_WIN32) && ACE_HAS_IPV6 */
 
   if (!opened_endpoint)
     {
@@ -395,6 +567,25 @@ TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
       return -1;
     }
 
+  return this->open_default_i (orb_core,
+                               reactor,
+                               major,
+                               minor,
+                               factory,
+                               acceptor,
+                               options);
+}
+
+// Open a default server.
+int
+TAO_Acceptor_Registry::open_default_i (TAO_ORB_Core *orb_core,
+                                       ACE_Reactor *reactor,
+                                       int major,
+                                       int minor,
+                                       TAO_ProtocolFactorySetItor &factory,
+                                       TAO_Acceptor* acceptor,
+                                       const char *options)
+{
   // Initialize the acceptor to listen on a default endpoint.
   if (acceptor->open_default (orb_core,
                               reactor,
@@ -539,12 +730,98 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
               // Protocol prefix was specified without any endpoints.
               // All TAO pluggable protocols are expected to have the
               // ability to create a default endpoint.
-              if (this->open_default (orb_core,
-                                      reactor,
-                                      major,
-                                      minor,
-                                      factory,
-                                      options) == 0)
+#if defined (ACE_WIN32) && defined (ACE_HAS_IPV6)
+              if ((*factory)->factory ()->tag () == IOP::TAG_INTERNET_IOP)
+                {
+                  // Open first acceptor on IPv4 ANY
+                  ACE_INET_Addr addr(static_cast<unsigned short> (0)); // IPv4 ANY
+
+                  TAO_IIOP_Acceptor* iiop_acceptor = dynamic_cast<TAO_IIOP_Acceptor*> (acceptor);
+                  iiop_acceptor->set_default_address (addr);
+
+                  if (this->open_default_i (orb_core,
+                                            reactor,
+                                            major,
+                                            minor,
+                                            factory,
+                                            acceptor,
+                                            options) == 0)
+                    {
+                      // record the port chosen for the IPv4 acceptor
+                      u_short port = iiop_acceptor->default_address ().get_port_number ();
+
+                      // Create second acceptor for IPV6 traffic
+                      acceptor =
+                        (*factory)->factory ()->make_acceptor ();
+
+                      if (acceptor == 0)
+                        {
+                          if (TAO_debug_level > 0)
+                            {
+                              ACE_ERROR ((
+                                  LM_ERROR,
+                                  ACE_TEXT ("TAO (%P|%t) unable to create ")
+                                  ACE_TEXT ("an acceptor for <%s>\n"),
+                                  ACE_TEXT_CHAR_TO_TCHAR ((*factory)->protocol_name ().c_str ())
+                                ));
+                            }
+
+                          ACE_THROW_RETURN (CORBA::NO_MEMORY (
+                              CORBA::SystemException::_tao_minor_code (
+                                TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+                                ENOMEM),
+                              CORBA::COMPLETED_NO),
+                            -1);
+                        }
+
+                      addr.set (port, ACE_IPV6_ANY, AF_INET6); // IPv6 ANY on specified port
+
+                      iiop_acceptor = dynamic_cast<TAO_IIOP_Acceptor*> (acceptor);
+                      iiop_acceptor->set_default_address (addr);
+
+                      if (this->open_default_i (orb_core,
+                                                reactor,
+                                                major,
+                                                minor,
+                                                factory,
+                                                acceptor,
+                                                options) == 0)
+                        {
+                          continue;
+                        }
+                    }
+
+                }
+              else
+                {
+                  if (this->open_default_i (orb_core,
+                                            reactor,
+                                            major,
+                                            minor,
+                                            factory,
+                                            acceptor,
+                                            options) == 0)
+                    {
+                      continue;
+                    }
+                }
+
+              // Could not open a default endpoint, nor an explicit
+              // one.
+              ACE_THROW_RETURN (CORBA::INTERNAL (
+                  CORBA::SystemException::_tao_minor_code (
+                    TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+                    0),
+                  CORBA::COMPLETED_NO),
+                -1);
+#else /* ACE_WIN32 && ACE_HAS_IPV6 */
+              if (this->open_default_i (orb_core,
+                                        reactor,
+                                        major,
+                                        minor,
+                                        factory,
+                                        acceptor,
+                                        options) == 0)
                 continue;
 
               // Could not open a default endpoint, nor an explicit
@@ -558,6 +835,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
                       CORBA::COMPLETED_NO),
                     -1);
                 }
+#endif /* !ACE_WIN32 || !ACE_HAS_IPV6 */
             }
           // An explicit endpoint was provided.
           else if (acceptor->open (orb_core,
