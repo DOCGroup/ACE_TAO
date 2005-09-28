@@ -51,6 +51,11 @@ PLANNED MAJOR CHANGES FOR CIAO-0.4.8
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.7 and CIAO-0.4.8
 ======================================================
+. Added functionality in XML parsing code to resolve schema in
+  $CIAO_ROOT/docs/schema instead of the local directory only. All
+  DeploymentPlans should use Deployment.xsd instead of
+  Modified_Deployment.xsd.
+
 . Fixed bug in CIDL code generation for some types of component and
   home attributes.
 
