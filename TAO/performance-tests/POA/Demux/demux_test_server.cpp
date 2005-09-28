@@ -150,6 +150,7 @@ Demux_Test_Server::init (int argc, char *argv []
           policies[0] =
             this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID
                                                           ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK_EX (POLICY);
         }
       else
         {
@@ -159,9 +160,9 @@ Demux_Test_Server::init (int argc, char *argv []
           policies[0] =
             this->root_poa_->create_id_assignment_policy (PortableServer::SYSTEM_ID
                                                           ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK_EX (POLICY);
         }
 
-      ACE_TRY_CHECK_EX (POLICY);
 
       // Choose the LifeSpan Policy. Default is PERSISTENT.
       if (this->use_transient_poas_)
@@ -172,6 +173,7 @@ Demux_Test_Server::init (int argc, char *argv []
           policies[1] =
             this->root_poa_->create_lifespan_policy (PortableServer::TRANSIENT
                                                      ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK_EX (POLICY);
         }
       else
         {
@@ -181,9 +183,8 @@ Demux_Test_Server::init (int argc, char *argv []
           policies[1] =
             this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT
                                                      ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK_EX (POLICY);
         }
-
-      ACE_TRY_CHECK_EX (POLICY);
 
     }
   ACE_CATCHANY
