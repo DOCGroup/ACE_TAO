@@ -31,10 +31,10 @@ parse_args (int argc, char *argv[])
 // Returns false if calling is_equivalent in both directions on the two supplied
 // IORs does not produce expected result.
 CORBA::Boolean
-check_is_equivalent (const char* ior1, const char * ior2, CORBA::Boolean expected_result ACE_ENV_ARG_DECL)
+check_is_equivalent (const char* ior1, const char * ior2, CORBA::Boolean expected_result)
 {
   CORBA::Boolean result = 1;
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       CORBA::Object_var object1 =
         orb->string_to_object(ior1 ACE_ENV_ARG_PARAMETER);
@@ -86,211 +86,211 @@ main (int argc, char *argv[])
 
       // ep1 is equivalent to no other IORs - it is not an IOGR, and ep2 is a different endpoint.
       // The next nine should all be false.
-      if (! check_is_equivalent ("file://ep1.ior", "file://ep1_d1_g1_v1.ior", 0 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1.ior", "file://ep1_d1_g1_v1.ior", 0))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be false because an IOR is never equivalent to an IOGR\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1.ior", "file://ep1_d1_g1_v2.ior", 0 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1.ior", "file://ep1_d1_g1_v2.ior", 0))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be false because an IOR is never equivalent to an IOGR\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1.ior", "file://ep1_d1_g2_v1.ior", 0 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1.ior", "file://ep1_d1_g2_v1.ior", 0))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be false because an IOR is never equivalent to an IOGR\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1.ior", "file://ep1_d2_g1_v1.ior", 0 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1.ior", "file://ep1_d2_g1_v1.ior", 0))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be false because an IOR is never equivalent to an IOGR\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1.ior", "file://ep2.ior", 0 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1.ior", "file://ep2.ior", 0))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be false because these are IORs with different endpoints.\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1.ior", "file://ep2_d1_g1_v1.ior", 0 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1.ior", "file://ep2_d1_g1_v1.ior", 0))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be false because an IOR is never equivalent to an IOGR\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1.ior", "file://ep2_d1_g1_v2.ior", 0 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1.ior", "file://ep2_d1_g1_v2.ior", 0))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be false because an IOR is never equivalent to an IOGR\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1.ior", "file://ep1_d1_g2_v1.ior", 0 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1.ior", "file://ep1_d1_g2_v1.ior", 0))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be false because an IOR is never equivalent to an IOGR\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1.ior", "file://ep1_d2_g1_v1.ior", 0 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1.ior", "file://ep1_d2_g1_v1.ior", 0))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be false because an IOR is never equivalent to an IOGR\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1_d1_g1_v1.ior", "file://ep1_d1_g1_v2.ior", 1 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1_d1_g1_v1.ior", "file://ep1_d1_g1_v2.ior", 1))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be true because both are IOGRs and the domain and group ids match.\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1_d1_g1_v1.ior", "file://ep1_d1_g2_v1.ior", 0 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1_d1_g1_v1.ior", "file://ep1_d1_g2_v1.ior", 0))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be false because both are IOGRs but the domain and group ids don't match.\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1_d1_g1_v1.ior", "file://ep1_d2_g1_v1.ior", 0 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1_d1_g1_v1.ior", "file://ep1_d2_g1_v1.ior", 0))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be false because both are IOGRs but the domain and group ids don't match.\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1_d1_g1_v1.ior", "file://ep2.ior", 0 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1_d1_g1_v1.ior", "file://ep2.ior", 0))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be false because an IOR is never equivalent to an IOGR\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1_d1_g1_v1.ior", "file://ep2_d1_g1_v1.ior", 1 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1_d1_g1_v1.ior", "file://ep2_d1_g1_v1.ior", 1))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be true because both are IOGRs and the domain and group ids match.\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1_d1_g1_v1.ior", "file://ep2_d1_g1_v2.ior", 1 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1_d1_g1_v1.ior", "file://ep2_d1_g1_v2.ior", 1))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be true because both are IOGRs and the domain and group ids match.\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1_d1_g1_v1.ior", "file://ep2_d1_g2_v1.ior", 0 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1_d1_g1_v1.ior", "file://ep2_d1_g2_v1.ior", 0))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be false because both are IOGRs but the domain and group ids don't match.\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1_d1_g1_v1.ior", "file://ep2_d2_g1_v1.ior", 0 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1_d1_g1_v1.ior", "file://ep2_d2_g1_v1.ior", 0))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be false because both are IOGRs but the domain and group ids don't match.\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1_d1_g1_v2.ior", "file://ep1_d1_g2_v1.ior", 0 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1_d1_g1_v2.ior", "file://ep1_d1_g2_v1.ior", 0))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be false because both are IOGRs but the domain and group ids don't match.\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1_d1_g1_v2.ior", "file://ep1_d2_g1_v1.ior", 0 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1_d1_g1_v2.ior", "file://ep1_d2_g1_v1.ior", 0))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be false because both are IOGRs but the domain and group ids don't match.\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1_d1_g1_v2.ior", "file://ep2.ior", 0 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1_d1_g1_v2.ior", "file://ep2.ior", 0))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be false because an IOR is never equivalent to an IOGR\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1_d1_g1_v2.ior", "file://ep2_d1_g1_v1.ior", 1 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1_d1_g1_v2.ior", "file://ep2_d1_g1_v1.ior", 1))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be true because both are IOGRs and the domain and group ids match.\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1_d1_g1_v2.ior", "file://ep2_d1_g1_v2.ior", 1 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1_d1_g1_v2.ior", "file://ep2_d1_g1_v2.ior", 1))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be true because both are IOGRs and the domain and group ids match.\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1_d1_g1_v2.ior", "file://ep2_d1_g2_v1.ior", 0 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1_d1_g1_v2.ior", "file://ep2_d1_g2_v1.ior", 0))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be false because both are IOGRs but the domain and group ids don't match.\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1_d1_g1_v2.ior", "file://ep2_d2_g1_v1.ior", 0 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1_d1_g1_v2.ior", "file://ep2_d2_g1_v1.ior", 0))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be false because both are IOGRs but the domain and group ids don't match.\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1_d1_g2_v1.ior", "file://ep1_d2_g1_v1.ior", 0 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1_d1_g2_v1.ior", "file://ep1_d2_g1_v1.ior", 0))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be false because both are IOGRs but the domain and group ids don't match.\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1_d1_g2_v1.ior", "file://ep2.ior", 0 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1_d1_g2_v1.ior", "file://ep2.ior", 0))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be false because an IOR is never equivalent to an IOGR\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1_d1_g2_v1.ior", "file://ep2_d1_g1_v1.ior", 0 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1_d1_g2_v1.ior", "file://ep2_d1_g1_v1.ior", 0))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be false because both are IOGRs but the domain and group ids don't match.\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1_d1_g2_v1.ior", "file://ep2_d1_g1_v2.ior", 0 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1_d1_g2_v1.ior", "file://ep2_d1_g1_v2.ior", 0))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be false because both are IOGRs but the domain and group ids don't match.\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1_d1_g2_v1.ior", "file://ep2_d1_g2_v1.ior", 1 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1_d1_g2_v1.ior", "file://ep2_d1_g2_v1.ior", 1))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be true because both are IOGRs and the domain and group ids match.\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1_d1_g2_v1.ior", "file://ep2_d2_g1_v1.ior", 0 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1_d1_g2_v1.ior", "file://ep2_d2_g1_v1.ior", 0))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be false because both are IOGRs but the domain and group ids don't match.\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1_d2_g1_v1.ior", "file://ep2.ior", 0 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1_d2_g1_v1.ior", "file://ep2.ior", 0))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be false because an IOR is never equivalent to an IOGR\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1_d2_g1_v1.ior", "file://ep2_d1_g1_v1.ior", 0 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1_d2_g1_v1.ior", "file://ep2_d1_g1_v1.ior", 0))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be false because both are IOGRs but the domain and group ids don't match.\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1_d2_g1_v1.ior", "file://ep2_d1_g1_v1.ior", 0 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1_d2_g1_v1.ior", "file://ep2_d1_g1_v1.ior", 0))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be false because both are IOGRs but the domain and group ids don't match.\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1_d2_g1_v1.ior", "file://ep2_d1_g1_v1.ior", 0 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1_d2_g1_v1.ior", "file://ep2_d1_g1_v1.ior", 0))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be false because both are IOGRs but the domain and group ids don't match.\n\n"));
           result = 1;
         }
 
-      if (! check_is_equivalent ("file://ep1_d2_g1_v1.ior", "file://ep2_d1_g1_v1.ior", 0 ACE_ENV_ARG_PARAMETER))
+      if (! check_is_equivalent ("file://ep1_d2_g1_v1.ior", "file://ep2_d1_g1_v1.ior", 0))
         {
           ACE_DEBUG ((LM_ERROR, "... it should be false because both are IOGRs but the domain and group ids don't match.\n\n"));
           result = 1;
