@@ -1,3 +1,27 @@
+Thu Sep 29 09:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * html/Stats/footer.html:
+        * html/Stats/configuration.shtml:
+        * html/Stats/navigation.html:
+        * html/Stats/index.shtml:
+        * html/Stats/detailed_footprint.shtml:
+          I have taken the files currently on the webserver and updated
+          cvs with these versions. This way we can update these files
+          in cvs and update the webserver automatically. I will reconfigure
+          the stats build to copy all the files in this directory to
+          the webserver when the build is ready
+
+        * html/Stats/footprint.shtml:
+        * html/Stats/img.html:
+        * html/Stats/simple_footprint.shtml:
+        * html/Stats/performance.shtml:
+        * html/Stats/compilation.shtml:
+          New files
+
+        * bin/footprint_stats.sh:
+          Also generate the footprint of the new core TAO libs we added
+          the last months
+
 Thu Sep 29 08:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * html/index.html:
