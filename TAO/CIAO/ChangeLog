@@ -1,3 +1,8 @@
+Thu Sep 29 07:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/Utils/XML_Schema_Resolver.cpp:
+          Fixed not used argument warning
+
 Thu Sep 29 06:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/Utils/XML_Schema_Resolver.h:

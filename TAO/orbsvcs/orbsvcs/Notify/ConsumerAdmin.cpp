@@ -56,6 +56,7 @@ void
 TAO_Notify_ConsumerAdmin::init (TAO_Notify_EventChannel *ec ACE_ENV_ARG_DECL)
 {
   TAO_Notify_Admin::init (ec ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   const CosNotification::QoSProperties &default_ca_qos =
     TAO_Notify_PROPERTIES::instance ()->default_consumer_admin_qos_properties ();
