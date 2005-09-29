@@ -29,8 +29,11 @@ TAO_EC_TPC_ProxyPushSupplier:: disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL
 				this->consumer_.in()));
 
   if (this->is_connected_i ())
-    this->tpc_dispatching ()->remove_consumer (this->consumer_.in()
-                                               ACE_ENV_ARG_PARAMETER);
+    {
+      this->tpc_dispatching ()->remove_consumer (this->consumer_.in()
+                                                 ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
   BASECLASS::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 

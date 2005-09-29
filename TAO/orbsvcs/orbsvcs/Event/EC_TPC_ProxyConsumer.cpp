@@ -38,7 +38,14 @@ TAO_EC_TPC_ProxyPushConsumer::disconnect_push_consumer (
       ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->tpc_dispatching ()->remove_consumer (this->_this(ACE_ENV_SINGLE_ARG_PARAMETER)
+  RtecEventComm::PushConsumer_var emulated_exceptions_suck = 
+    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->tpc_dispatching ()->remove_consumer (emulated_exceptions_suck.in ()
                                              ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
   BASECLASS::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 }
