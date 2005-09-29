@@ -1,3 +1,8 @@
+Thu Sep 29 12:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/footprint_stats.sh:
+          Fixed codeset library name
+
 Thu Sep 29 09:03:00 UTC 2005  Simon Massey  <simon.massey@prismtech.com>
 
         * apps/JAWS2/JAWS/IO_Acceptor.cpp:
