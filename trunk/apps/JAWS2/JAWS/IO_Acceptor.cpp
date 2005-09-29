@@ -131,6 +131,7 @@ JAWS_IO_Asynch_Acceptor::open (const ACE_INET_Addr &address, int backlog)
 
 #else
   ACE_UNUSED_ARG (address);
+  ACE_UNUSED_ARG (backlog);
   return -1;
 #endif /* defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS) */
 }
@@ -161,6 +162,7 @@ JAWS_IO_Asynch_Acceptor::accept (size_t bytes_to_read, const void *act)
   return this->acceptor_.accept (bytes_to_read, act);
 #else
   ACE_UNUSED_ARG (bytes_to_read);
+  ACE_UNUSED_ARG (act);
   return -1;
 #endif /* defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS) */
 }
