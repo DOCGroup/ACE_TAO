@@ -1,3 +1,15 @@
+Thu Sep 29 07:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Smart_Proxies/server.cpp:
+        * tests/Smart_Proxies/Benchmark/client.cpp:
+        * tests/Smart_Proxies/Benchmark/server.cpp:
+        * tests/Smart_Proxies/On_Demand/server.cpp:
+        * tests/Smart_Proxies/Policy/client.cpp:
+        * tests/Smart_Proxies/Policy/server.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+          Fixed fuzz errors
+
 Thu Sep 29 07:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp:
