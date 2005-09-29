@@ -1,3 +1,8 @@
+Thu Sep 29 07:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp:
+          Emulated exception fix
+
 Thu Sep 29 07:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Connect_Strategy.h:
