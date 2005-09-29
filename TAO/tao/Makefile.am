@@ -695,7 +695,6 @@ nobase_include_HEADERS = \
   WrongTransaction.pidl \
   WrongTransactionC.h \
   WrongTransactionS.h \
-  WrongTransactionS.inl \
   corba.h \
   corbafwd.h \
   debug.h \
