@@ -84,6 +84,7 @@ TAO_EventLog_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Send event to indicate the log has been deleted.
   notifier_->object_deletion (logid_ ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   // Remove ourselves from the list of logs.
   this->logmgr_i_.remove (this->logid_
