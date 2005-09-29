@@ -2,9 +2,9 @@
 
 #include "testS.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_string.h"
 
-class Test_i: public virtual POA_Test,
-              public virtual PortableServer::RefCountServantBase
+class Test_i: public virtual POA_Test
 {
 public:
   Test_i (CORBA::ORB_ptr orb);
@@ -100,7 +100,7 @@ int main (int argc, char* argv[])
     ACE_TRY_CHECK;
 
     // Create a servant
-    Test_i servant (orb);
+    Test_i servant (orb.in ());
 
     PortableServer::ObjectId_var oid =
       root_poa->activate_object (&servant

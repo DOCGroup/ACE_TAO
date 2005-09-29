@@ -1,3 +1,12 @@
+Thu Sep 29 07:38:32 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Smart_Proxies/dtor/client.cpp:
+        * tests/Smart_Proxies/dtor/server.cpp:
+
+          Corrected build issues (include files, exception macros and
+          minimum corba related problems) and warnings from certain versions
+          of the GNU compiler about implicit conversion.
+
 Thu Sep 29 12:34:50 2005  Simon McQueen  <sm@prismtech.com>
 
         * tao/Makefile.am:
