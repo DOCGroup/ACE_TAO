@@ -68,9 +68,9 @@ ACE_OS::open (const char *filename,
     {
       ACE_MT
         (
-          ace_os_monitor_lock = (ACE_thread_mutex_t *)
+          ace_os_monitor_lock = static_cast <ACE_thread_mutex_t *> (
             ACE_OS_Object_Manager::preallocated_object[
-              ACE_OS_Object_Manager::ACE_OS_MONITOR_LOCK];
+              ACE_OS_Object_Manager::ACE_OS_MONITOR_LOCK]);
           ACE_OS::thread_mutex_lock (ace_os_monitor_lock);
         )
     }
@@ -223,9 +223,9 @@ ACE_OS::open (const wchar_t *filename,
     {
       ACE_MT
         (
-          ace_os_monitor_lock = (ACE_thread_mutex_t *)
+          ace_os_monitor_lock = static_cast <ACE_thread_mutex_t *> (
             ACE_OS_Object_Manager::preallocated_object[
-              ACE_OS_Object_Manager::ACE_OS_MONITOR_LOCK];
+              ACE_OS_Object_Manager::ACE_OS_MONITOR_LOCK]);
           ACE_OS::thread_mutex_lock (ace_os_monitor_lock);
         )
     }
