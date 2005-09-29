@@ -8,8 +8,8 @@
  */
 
 #ifndef CIAO_CONFIG_HANDLERS_XML_SCHEAM_RESOLVER_H
-#define  CIAO_CONFIG_HANDLERS_XML_SCHEAM_RESOLVER_H
-
+#define CIAO_CONFIG_HANDLERS_XML_SCHEAM_RESOLVER_H
+#include /**/ "ace/pre.h"
 
 #include "Config_Handlers_Export.h"
 
@@ -43,18 +43,18 @@ namespace CIAO
 
       /// If this constructor is passed a nonempty string, it locates
       /// the schema in that path, otherwise its behavior is the same
-      /// as the default constructor. 
+      /// as the default constructor.
       CIAO_Schema_Resolver (const char *path);
-      
+
       /// This function is called by the Xerces infrastructure to
       /// actually resolve the location of a schema.
-      virtual DOMInputSource * resolveEntity (const XMLCh *const publicId, 
+      virtual DOMInputSource * resolveEntity (const XMLCh *const publicId,
                                               const XMLCh *const systemId,
                                               const XMLCh *const baseURI);
-      
+
     private:
       std::string resolve_from_environment (void);
-      
+
       std::string base_path_;
     };
   }
