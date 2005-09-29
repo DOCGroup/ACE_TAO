@@ -35,7 +35,7 @@
  * Contains the _var pointer to the real proxy.
  */
 class TAO_SmartProxies_Export TAO_Smart_Proxy_Base :
-  public virtual TAO_Local_RefCounted_Object
+  public TAO_Local_RefCounted_Object
 {
 
 public:
