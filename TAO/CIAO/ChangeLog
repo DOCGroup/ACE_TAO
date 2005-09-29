@@ -1,3 +1,9 @@
+Thu Sep 29 13:01:23 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* ciao/Version.h
+
+	Corrected the version number. 
+	
 Thu Sep 29 11:34:55 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* ciao/Swapping_Servant_Home_Impl_T.cpp
