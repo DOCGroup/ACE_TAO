@@ -40,8 +40,7 @@ TAO_Stub::TAO_Stub (const char *repository_id,
   , forward_profiles_ (0)
   , profile_in_use_ (0)
   , profile_lock_ptr_ (0)
-  , profile_success_ (0)
-  , refcount_lock_ ()
+  , profile_success_ (false)
   , refcount_ (1)
 #if (TAO_HAS_CORBA_MESSAGING == 1)
   , policies_ (0)
@@ -130,9 +129,9 @@ TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles)
   // make sure we start at the beginning of mprofiles
   this->forward_profiles_->rewind ();
 
-  // Since we have been forwarded, we must set profile_success_ to 0
+  // Since we have been forwarded, we must set profile_success_ to false
   // since we are starting a new with a new set of profiles!
-  this->profile_success_ = 0;
+  this->profile_success_ = false;
 
   // Reset any flags that may be appropriate in the services that
   // selects profiles for invocation
@@ -308,33 +307,19 @@ TAO_Stub::is_equivalent (CORBA::Object_ptr other_obj)
 
 // Memory managment
 
-CORBA::ULong
+void
 TAO_Stub::_incr_refcnt (void)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                    guard,
-                    this->refcount_lock_,
-                    0);
-
-  return this->refcount_++;
+  ++this->refcount_;
 }
 
-CORBA::ULong
+void
 TAO_Stub::_decr_refcnt (void)
 {
-  {
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                      mon,
-                      this->refcount_lock_,
-                      0);
+  const CORBA::ULong new_count = --this->refcount_;
 
-    this->refcount_--;
-    if (this->refcount_ != 0)
-      return this->refcount_;
-  }
-
-  delete this;
-  return 0;
+  if (new_count == 0)
+    delete this;
 }
 
 TAO_Profile *

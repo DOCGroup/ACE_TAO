@@ -6,7 +6,7 @@ ACE_INLINE void
 TAO_Stub::reset_base (void)
 {
   this->base_profiles_.rewind ();
-  this->profile_success_ = 0;
+  this->profile_success_ = false;
 
   this->set_profile_in_use_i (base_profiles_.get_next ());
 }
@@ -115,13 +115,13 @@ TAO_Stub::valid_forward_profile (void)
 ACE_INLINE void
 TAO_Stub::set_valid_profile (void)
 {
-  this->profile_success_ = 1;
+  this->profile_success_ = true;
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_Stub::valid_profile (void)
+TAO_Stub::valid_profile (void) const
 {
-  return (CORBA::Boolean) this->profile_success_;
+  return this->profile_success_;
 }
 
 ACE_INLINE TAO_Profile *
@@ -221,18 +221,6 @@ ACE_INLINE void
 TAO_Stub::servant_orb (CORBA::ORB_ptr orb)
 {
   this->servant_orb_ = CORBA::ORB::_duplicate (orb);
-}
-
-ACE_INLINE TAO_SYNCH_MUTEX &
-TAO_Stub::refcount_lock (void)
-{
-  return this->refcount_lock_;
-}
-
-ACE_INLINE CORBA::ULong &
-TAO_Stub::refcount (void)
-{
-  return this->refcount_;
 }
 
 ACE_INLINE void

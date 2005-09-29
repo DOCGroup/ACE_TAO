@@ -31,16 +31,16 @@ namespace TAO
         POLICYVALUE &value,
         const CORBA::Any& val
         ACE_ENV_ARG_DECL)
-      {
-        if ((val >>= value) == 0)
-          ACE_THROW (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE));
+    {
+      if ((val >>= value) == 0)
+        ACE_THROW (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE));
 
-        ACE_NEW_THROW_EX (policy,
-                          POLICYTYPE (value),
-                          CORBA::NO_MEMORY (TAO::VMCID,
-                                            CORBA::COMPLETED_NO));
-        ACE_CHECK;
-      }
+      ACE_NEW_THROW_EX (policy,
+                        POLICYTYPE (value),
+                        CORBA::NO_MEMORY (TAO::VMCID,
+                                          CORBA::COMPLETED_NO));
+      ACE_CHECK;
+    }
   }
 }
 
