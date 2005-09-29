@@ -37,7 +37,7 @@ LIBS="ace/libACE.a \
     TAO/tao/libTAO_AnyTypeCode.a \
     TAO/tao/libTAO_PI.a \
     TAO/tao/libTAO_PI_Server.a \
-    TAO/tao/libTAO_CodeSet.a \
+    TAO/tao/libTAO_Codeset.a \
     TAO/tao/libTAO_CodecFactory.a \
     TAO/tao/libTAO_RTPortableServer.a"
 
