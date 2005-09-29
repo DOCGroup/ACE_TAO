@@ -220,8 +220,8 @@ TAO_Property_Evaluator::~TAO_Property_Evaluator (void)
 int
 TAO_Property_Evaluator::is_dynamic_property (int index)
 {
-  int return_value = 0,
-    num_properties = this->props_.length();
+  int return_value = 0;
+  int num_properties = this->props_.length();
 
   // Ensure index is in bounds.
   if (index >= 0 && index < num_properties)
@@ -232,9 +232,11 @@ TAO_Property_Evaluator::is_dynamic_property (int index)
 
       // @@ Seth, this will not work on platforms using environment variable.
       ACE_DECLARE_NEW_CORBA_ENV;
+      CORBA::Boolean equal = type->equal (CosTradingDynamic::_tc_DynamicProp
+                                          ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
 
-      if (type->equal (CosTradingDynamic::_tc_DynamicProp
-                       ACE_ENV_ARG_PARAMETER))
+      if (equal)
         return_value = 1;
     }
 
@@ -250,7 +252,9 @@ TAO_Property_Evaluator::property_value (int index
   CORBA::Boolean in_cache =
     this->dp_cache_ != 0 && this->dp_cache_[index] != 0;
 
-  if (! this->is_dynamic_property (index))
+  int dynamic = this->is_dynamic_property (index);
+
+  if (!dynamic)
     prop_val = (CORBA::Any *) &(this->props_[index].value);
   else if (this->supports_dp_ && in_cache)
     prop_val = this->dp_cache_[index];
@@ -312,7 +316,7 @@ TAO_Property_Evaluator::property_type (int index)
     {
       // Extract type information from the DP_Struct.
       const CORBA::Any& value = this->props_[index].value;
-      CosTradingDynamic::DynamicProp* dp_struct;
+      CosTradingDynamic::DynamicProp* dp_struct = 0;
       value >>= dp_struct;
 
       // Grab a pointer to the returned_type description
@@ -366,7 +370,8 @@ int
 TAO_Property_Evaluator_By_Name::
 is_dynamic_property(const char* property_name)
 {
-  int predicate = 0, index = 0;
+  int predicate = 0;
+  int index = 0;
   TAO_String_Hash_Key prop_name (property_name);
 
   // If the property name is in the map, delegate evaluation to our
@@ -912,7 +917,8 @@ copy_in_follow_option (CosTrading::PolicySeq& policy_seq,
 void
 TAO_Policies::
 copy_to_pass (CosTrading::PolicySeq& policy_seq,
-              const CosTrading::Admin::OctetSeq& request_id) const
+              const CosTrading::Admin::OctetSeq& request_id
+              ACE_ENV_ARG_DECL) const
 {
   CORBA::ULong counter = 0;
   CosTrading::Policy* policy_buffer =
@@ -943,10 +949,11 @@ copy_to_pass (CosTrading::PolicySeq& policy_seq,
       // We always require a hop count.
       if (i == HOP_COUNT)
         {
-          // @@ Seth, Same thing here, are you trying to catch the exception??? (and forget about it?)
-          ACE_DECLARE_NEW_CORBA_ENV;
+          CORBA::ULong count = this->hop_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK;
+
           new_policy.name = POLICY_NAMES[HOP_COUNT];
-          new_policy.value <<= this->hop_count (ACE_ENV_SINGLE_ARG_PARAMETER) - 1;
+          new_policy.value <<= count - 1;
 
           // Don't count hop count twice.
           if (this->policies_[i] == 0)
