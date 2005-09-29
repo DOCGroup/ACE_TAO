@@ -57,7 +57,7 @@ CORBA::AbstractBase::AbstractBase (const CORBA::AbstractBase &rhs)
 {
   if (rhs.concrete_stubobj_ != 0)
     {
-      (void) rhs.concrete_stubobj_->_incr_refcnt ();
+      rhs.concrete_stubobj_->_incr_refcnt ();
     }
 
   if (!CORBA::is_nil (rhs.equivalent_obj_))
@@ -81,7 +81,7 @@ CORBA::AbstractBase::AbstractBase (TAO_Stub * protocol_proxy,
     {
       TAO_Stub *stub = this->concrete_stubobj_;
 
-      (void) stub->_incr_refcnt ();
+      stub->_incr_refcnt ();
 
       this->equivalent_obj_ =
         stub->orb_core ()->create_object (stub);
@@ -93,7 +93,7 @@ CORBA::AbstractBase::~AbstractBase (void)
 {
   if (this->concrete_stubobj_ != 0)
     {
-      (void) this->concrete_stubobj_->_decr_refcnt ();
+      this->concrete_stubobj_->_decr_refcnt ();
     }
 }
 
@@ -415,7 +415,7 @@ CORBA::AbstractBase::equivalent_objref (void)
           TAO_ORB_Core *orb_core =
             this->concrete_stubobj_->orb_core ();
 
-          (void) this->concrete_stubobj_->_incr_refcnt ();
+          this->concrete_stubobj_->_incr_refcnt ();
 
           this->equivalent_obj_ =
             orb_core->create_object (this->concrete_stubobj_);
