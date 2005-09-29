@@ -108,7 +108,7 @@ CIAO::NodeApplication_Impl::finishLaunch (
                          ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
               if (CORBA::is_nil (consumer.in ()))
-                ACE_THROW (Deployment::InvalidConnection ());
+                ACE_TRY_THROW (Deployment::InvalidConnection ());
 
               comp->subscribe (providedReference[i].portName.in (),
                                consumer.in ()
@@ -258,8 +258,8 @@ CIAO::NodeApplication_Impl::install (
         if (this->component_map_.
             bind (retv[len].component_instance_name.in(),
                   Components::CCMObject::_duplicate (retv[len].component_ref.in())))
-          ACE_THROW_RETURN (Deployment::InstallationFailure ("NodeApplication_Imp::install",
-                                                             "Duplicate component instance name"), 0);
+          ACE_TRY_THROW (Deployment::InstallationFailure ("NodeApplication_Imp::install",
+                                                          "Duplicate component instance name"));
       }
     }
   ACE_CATCHANY

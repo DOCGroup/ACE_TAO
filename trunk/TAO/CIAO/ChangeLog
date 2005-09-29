@@ -1,3 +1,20 @@
+Thu Sep 29 18:11:25 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+	* ciao/Container_Impl.cpp
+	* ciao/NodeApplication_Impl.cpp
+	* ciao/Upgradeable_Context_Impl_T.cpp
+
+	Fuzz errors. 
+	
+	* DAnCE/DomainApplicationManager/DomainApplicationManager.mpc
+	* tools/Config_Handlers/RT-CCM/Config_Handlers_Export.h
+	* tools/Config_Handlers/RT-CCM/SRD_Handler.h
+	* tools/Config_Handlers/Utils/Config_Handlers_Export.h
+
+	Correction for a emulated exception error. 
+	
 Thu Sep 29 13:01:23 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* ciao/Version.h
