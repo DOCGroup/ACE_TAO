@@ -1,3 +1,45 @@
+Thu Sep 29 16:07:02 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * bin/FOCUS:
+          Directory where FOCUS related work will be added.
+
+        * bin/FOCUS/ChangeLog:
+        * bin/FOCUS/FOCUS.pl:
+        * bin/FOCUS/NEWS:
+        * bin/FOCUS/PROBLEM-REPORT-FORM:
+        * bin/FOCUS/Parser:
+        * bin/FOCUS/README:
+        * bin/FOCUS/VERSION:
+        * bin/FOCUS/docs:
+        * bin/FOCUS/specializations:
+
+          FOCUS related files and directories. Please read the Changelog
+          in FOCUS for more details on each component.
+
+        * bin/FOCUS/specializations/Context-Specific-Optimizations:
+        * bin/FOCUS/specializations/Flushing_Strategy:
+        * bin/FOCUS/specializations/Messaging_Strategy:
+        * bin/FOCUS/specializations/Protocol_Family:
+        * bin/FOCUS/specializations/README:
+        * bin/FOCUS/specializations/Reactor_Family:
+        * bin/FOCUS/specializations/Wait_Strategy:
+
+          Specializations for the different components in ACE+TAO. Each
+          directory contains the specialization files for specializing the
+          appropriate component/strategy.
+
+        * bin/FOCUS/Parser/FOCUSParser.pm:
+
+          Parser/weaver that reads the specialization description and
+          performs the transformations.
+
+        * bin/FOCUS/docs/FOCUS.html:
+
+          Start at the documentation effort.
+
+          The Changelogs within the FOCUS directory will capture the
+          different changes henceforth.
+
 Thu Sep 29 13:28:29 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* bin/fuzz.pl (check_for_refcountservantbase):
