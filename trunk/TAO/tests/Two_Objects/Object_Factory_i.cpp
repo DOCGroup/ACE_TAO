@@ -48,6 +48,7 @@ Object_Factory_i::create_second (ACE_ENV_SINGLE_ARG_DECL)
 
   Two_Objects_Test::Second_var second =
     second_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (Two_Objects_Test::Second::_nil ());
 
   return second._retn();
 }
