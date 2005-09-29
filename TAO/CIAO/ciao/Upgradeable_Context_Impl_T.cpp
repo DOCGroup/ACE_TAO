@@ -92,6 +92,7 @@ namespace CIAO
     CIAO::Servant_Activator *sa =
         this->container_->ports_servant_activator ();
     sa->update_port_activator (oid ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
   }
 
 }

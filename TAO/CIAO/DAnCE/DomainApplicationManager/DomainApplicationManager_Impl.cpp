@@ -6,7 +6,9 @@
 #include "ace/OS_NS_string.h"
 #include "ace/SString.h"
 //#include "DnC_Dump.h"
-#include "RT-CCM/SRD_Handler.h"
+#include "Config_Handlers/RT-CCM/SRD_Handler.h"
+#include "Config_Handlers/Utils/XML_Helper.h"
+#include "Config_Handlers/RT-CCM/CIAOServerResources.hpp"
 
 #if !defined (__ACE_INLINE__)
 # include "DomainApplicationManager_Impl.inl"
@@ -86,11 +88,11 @@ init (ACE_ENV_SINGLE_ARG_DECL)
       //     of child plans and list of NodeManager names, and
       // (2) Check the validity of the global deployment plan.
       if (! this->get_plan_info ())
-        ACE_THROW (Deployment::PlanError ());
+        ACE_TRY_THROW (Deployment::PlanError ());
 
       // Call split_plan()
       if (! this->split_plan ())
-        ACE_THROW (Deployment::PlanError ());
+        ACE_TRY_THROW (Deployment::PlanError ());
 
       // Invoke preparePlan for each child deployment plan.
       for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
@@ -107,7 +109,7 @@ init (ACE_ENV_SINGLE_ARG_DECL)
 
           if (this->artifact_map_.find (this->node_manager_names_[i],
                                         entry) != 0)
-            ACE_THROW (Deployment::PlanError ());
+            ACE_TRY_THROW (Deployment::PlanError ());
 
           Chained_Artifacts & artifacts = entry->int_id_;
 
@@ -137,8 +139,8 @@ init (ACE_ENV_SINGLE_ARG_DECL)
                                  reference for NodeApplicationManager\n");
               
               ACE_DEBUG ((LM_DEBUG, error.c_str ()));
-              ACE_THROW (Deployment::StartError ("DomainApplicationManager_Impl:init",
-                                                 error.c_str ()));
+              ACE_TRY_THROW (Deployment::StartError ("DomainApplicationManager_Impl:init",
+                                                     error.c_str ()));
             }
           ACE_TRY_CHECK;
 
@@ -406,8 +408,8 @@ startLaunch (const ::Deployment::Properties & configProperty,
               ACE_CString error ("Unable to resolve a reference to node manager: ");
               error += this->node_manager_names_[i];
               
-              ACE_THROW (Deployment::StartError ("DomainApplicationManager_Impl:startLaunch",
-                                                 error.c_str ())); // Should never happen!
+              ACE_TRY_THROW (Deployment::StartError ("DomainApplicationManager_Impl:startLaunch",
+                                                     error.c_str ())); // Should never happen!
             }
           
           ::Deployment::NodeApplicationManager_ptr my_nam =
@@ -419,8 +421,8 @@ startLaunch (const ::Deployment::Properties & configProperty,
                                  has a nil reference for NodeApplicationManager\n");
               ACE_DEBUG ((LM_DEBUG, error.c_str ()));
                                      
-              ACE_THROW (Deployment::StartError ("DomainApplicationManager_Impl::startLaunch",
-                                                 error.c_str ()));
+              ACE_TRY_THROW (Deployment::StartError ("DomainApplicationManager_Impl::startLaunch",
+                                                     error.c_str ()));
             }
 
           ACE_TRY_CHECK;
@@ -447,8 +449,8 @@ startLaunch (const ::Deployment::Properties & configProperty,
                                      startLaunch on NodeApplicationManager.\n");
               ACE_ERROR ((LM_ERROR, error.c_str ()));
               
-              ACE_THROW (Deployment::StartError ("DomainApplicationManager_Impl::startLaunch",
-                                                 error.c_str ()));
+              ACE_TRY_THROW (Deployment::StartError ("DomainApplicationManager_Impl::startLaunch",
+                                                     error.c_str ()));
             }
           ACE_TRY_CHECK;
 
@@ -495,7 +497,7 @@ finishLaunch (::CORBA::Boolean start
               ACE_CString error ("Unable to resolve a reference to NodeManager: ");
               error += this->node_manager_names_[i];
               
-              ACE_THROW (Deployment::StartError ("DomainApplicationManager_Impl::finishLaunch",
+              ACE_TRY_THROW (Deployment::StartError ("DomainApplicationManager_Impl::finishLaunch",
                                                  error.c_str ())); // Should never happen!
             }
           
@@ -517,8 +519,8 @@ finishLaunch (::CORBA::Boolean start
           ACE_TRY_CHECK;
 
           if (my_connections == 0)
-            ACE_THROW (Deployment::StartError ("DomainApplicationManager_Impl::finish_launch",
-                                               "There was some error establishing connections."));
+            ACE_TRY_THROW (Deployment::StartError ("DomainApplicationManager_Impl::finish_launch",
+                                                   "There was some error establishing connections."));
 
           Deployment::Connections_var safe (my_connections);
 
@@ -595,8 +597,8 @@ start (ACE_ENV_SINGLE_ARG_DECL)
               ACE_CString error ("Unable to resolve a reference to node manager: ");
               error += this->node_manager_names_[i];
               
-              ACE_THROW (Deployment::StartError ("DomainApplicationManager_Impl:startLaunch",
-                                                 error.c_str ())); // Should never happen!
+              ACE_TRY_THROW (Deployment::StartError ("DomainApplicationManager_Impl:startLaunch",
+                                                     error.c_str ())); // Should never happen!
             }
 
           ::Deployment::NodeApplication_ptr my_na =
@@ -619,7 +621,7 @@ start (ACE_ENV_SINGLE_ARG_DECL)
 
           if (this->artifact_map_.find (this->node_manager_names_[i],
                                         entry) != 0)
-            ACE_THROW (Deployment::StartError ()); // Should never happen!
+            ACE_TRY_THROW (Deployment::StartError ()); // Should never happen!
 
           ::Deployment::NodeApplication_ptr my_na =
            (entry->int_id_).node_application_.in ();
@@ -645,7 +647,7 @@ start (ACE_ENV_SINGLE_ARG_DECL)
               ACE_CString error ("Unable to resolve a reference to node manager: ");
               error += this->node_manager_names_[i];
               
-              ACE_THROW (Deployment::StartError ("DomainApplicationManager_Impl:startLaunch",
+              ACE_TRY_THROW (Deployment::StartError ("DomainApplicationManager_Impl:startLaunch",
                                                  error.c_str ())); // Should never happen!
             }
 
@@ -692,10 +694,10 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
 
           if (this->artifact_map_.find (this->node_manager_names_[i],
                                         entry) != 0)
-            ACE_THROW (Deployment::StopError ()); // Should never happen!
-
+            ACE_TRY_THROW (Deployment::StopError ()); // Should never happen!
+          
           ::Deployment::NodeApplication_ptr my_na =
-                  (entry->int_id_).node_application_.in ();
+              (entry->int_id_).node_application_.in ();
 
           my_na->ciao_passivate ();
           ACE_TRY_CHECK;
@@ -712,7 +714,7 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
 
           if (this->artifact_map_.find (this->node_manager_names_[i],
                                         entry) != 0)
-            ACE_THROW (Deployment::StopError ()); // Should never happen!
+            ACE_TRY_THROW (Deployment::StopError ()); // Should never happen!
 
           ::Deployment::NodeApplicationManager_ptr my_node_application_manager =
                   (entry->int_id_).node_application_manager_.in ();
@@ -753,7 +755,7 @@ destroyManager (ACE_ENV_SINGLE_ARG_DECL)
 
           if (this->artifact_map_.find (this->node_manager_names_[i],
                                         entry) != 0)
-            ACE_THROW (Deployment::StopError ()); // Should never happen!
+            ACE_TRY_THROW (Deployment::StopError ()); // Should never happen!
 
           ::Deployment::NodeManager_var my_node_manager =
              (entry->int_id_).node_manager_;

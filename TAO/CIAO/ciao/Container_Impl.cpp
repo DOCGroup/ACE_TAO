@@ -93,7 +93,7 @@ CIAO::Container_Impl::install (
          ACE_TRY_CHECK;
 
          if (CORBA::is_nil (kh.in ()))
-           ACE_THROW_RETURN (Deployment::InstallationFailure (), 0);
+           ACE_TRY_THROW (Deployment::InstallationFailure ());
 
          // Create component from home
          Components::CCMObject_var comp =
@@ -101,7 +101,7 @@ CIAO::Container_Impl::install (
          ACE_TRY_CHECK;
 
          if (CORBA::is_nil (comp.in ()))
-           ACE_THROW_RETURN (Deployment::InstallationFailure (), 0);
+           ACE_TRY_THROW (Deployment::InstallationFailure ());
 
          if (this->component_map_.bind (impl_infos[i].component_instance_name.in (),
                                         Components::CCMObject::_duplicate (comp.in ())))
