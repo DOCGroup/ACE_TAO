@@ -1,5 +1,7 @@
 //$Id$
 
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/Get_Opt.h"
 #include "testC.h"
 #include "Smart_Proxy_Impl.h"
@@ -73,14 +75,19 @@ int main (int argc, char* argv[])
 
       server->hello(3);
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
       // Testing the _non_existent function
       ACE_DEBUG ((LM_DEBUG, "Testing _non_existent()\n"));
-      if (server->_non_existent())
+      CORBA::Boolean ne =
+        server->_non_existent(ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      if (ne)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Not a Messenger object reference\n"),
                           1);
       else
         ACE_DEBUG ((LM_DEBUG,"Successfully called _non_existent()\n"));
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
       server->shutdown(ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
