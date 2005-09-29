@@ -500,9 +500,7 @@ TAO_Thread_Lane_Resources::shutdown_reactor (void)
              ace_mon,
              leader_follower.lock ());
 
-
   ACE_Reactor *reactor = leader_follower.reactor ();
-
 
   // Wakeup all the threads waiting blocked in the event loop, this
   // does not guarantee that they will all go away, but reduces the

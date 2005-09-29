@@ -25,6 +25,8 @@
 #include "tao/MProfile.h"
 #include "tao/ORB_Core_Auto_Ptr.h"
 
+#include "ace/Atomic_Op.h"
+
 #if defined (HPUX) && defined (IOR)
    /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
       and we don't want that definition.  See IOP_IORC.h. */
@@ -115,8 +117,8 @@ public:
             TAO_ORB_Core *orb_core);
 
   // = Memory management.
-  CORBA::ULong _incr_refcnt (void);
-  CORBA::ULong _decr_refcnt (void);
+  void _incr_refcnt (void);
+  void _decr_refcnt (void);
 
   /// Return the Profile lock. This lock can be used at places where
   /// profiles need to be edited.
@@ -157,9 +159,6 @@ public:
    */
   TAO_Profile *next_profile (void);
 
-  /// NON-THREAD SAFE version of next_profile (void)
-  TAO_Profile *next_profile_i (void);
-
   /**
    * THREAD SAFE
    * this method will reset the base profile list to reference the first
@@ -167,9 +166,6 @@ public:
    * reset.
    */
   void reset_profiles (void);
-
-  /// NON-THREAD SAFE version of reset_profiles (void);
-  void reset_profiles_i (void);
 
   /// Returns 1 if a forward profile has successfully been used.
   /// profile_success_ && forward_profiles_
@@ -180,7 +176,7 @@ public:
 
   /// Returns TRUE if a connection was successful with at least
   /// one profile.
-  CORBA::Boolean valid_profile (void);
+  CORBA::Boolean valid_profile (void) const;
 
   /// Initialize the base_profiles_ and set profile_in_use_ to
   /// reference the first profile.
@@ -210,7 +206,7 @@ public:
   CORBA::ORB_var &servant_orb_var (void);
 
   /**
-   * Accesor and mutator for the servant ORB.  Notice that the muatator
+   * Accesor and mutator for the servant ORB.  Notice that the mutator
    * assumes the ownership of the passed in ORB and the accesor does not
    * return a copy of the orb since the accessing of the ORB is considered
    * temporary.
@@ -224,22 +220,6 @@ public:
   int create_ior_info (IOP::IOR *&ior_info,
                        CORBA::ULong &index
                        ACE_ENV_ARG_DECL);
-
-  /// Return a reference to the reference count lock.
-  /**
-   * This method is meant to be used by the CORBA::Object
-   * implementation to allow it to directly manipulate the reference
-   * count.
-   */
-  TAO_SYNCH_MUTEX & refcount_lock (void);
-
-  /// Return number of outstanding references to this object.
-  /**
-   * This method is meant to be used by the CORBA::Object
-   * implementation to allow it to directly manipulate the reference
-   * count.
-   */
-  CORBA::ULong & refcount (void);
 
   /// Deallocate the TAO_Stub object.
   /**
@@ -259,6 +239,12 @@ protected:
   /// Destructor is to be called only through _decr_refcnt() to
   /// enforce proper reference counting.
   virtual ~TAO_Stub (void);
+
+  /// NON-THREAD SAFE version of reset_profiles (void);
+  void reset_profiles_i (void);
+
+  /// NON-THREAD SAFE version of next_profile (void)
+  TAO_Profile *next_profile_i (void);
 
 private:
   /// Makes a copy of the profile and frees the existing profile_in_use.
@@ -338,13 +324,10 @@ protected:
   ACE_Lock* profile_lock_ptr_;
 
   /// Have we successfully talked to the forward profile yet?
-  size_t profile_success_;
+  CORBA::Boolean profile_success_;
 
-  /// Mutex to protect reference count.
-  TAO_SYNCH_MUTEX refcount_lock_;
-
-  /// Number of outstanding references to this object.
-  CORBA::ULong refcount_;
+  /// Reference counter.
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong> refcount_;
 
   /// The policy overrides in this object, if nil then use the default
   /// policies.
@@ -384,7 +367,7 @@ class TAO_Export TAO_Stub_Auto_Ptr
 {
 public:
   // = Initialization and termination methods.
-  /* explicit */ TAO_Stub_Auto_Ptr (TAO_Stub *p = 0);
+  explicit TAO_Stub_Auto_Ptr (TAO_Stub *p = 0);
   TAO_Stub_Auto_Ptr (TAO_Stub_Auto_Ptr &ap);
   TAO_Stub_Auto_Ptr &operator= (TAO_Stub_Auto_Ptr &rhs);
   ~TAO_Stub_Auto_Ptr (void);

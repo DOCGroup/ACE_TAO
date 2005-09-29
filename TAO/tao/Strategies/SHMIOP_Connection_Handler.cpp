@@ -144,7 +144,7 @@ TAO_SHMIOP_Connection_Handler::open (void*)
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) SHMIOP connection from client")
+                  ACE_TEXT ("TAO (%P|%t) - SHMIOP connection from client")
                   ACE_TEXT ("<%s> on %d\n"),
                   local_as_string, this->peer ().get_handle ()));
     }

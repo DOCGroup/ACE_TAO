@@ -633,7 +633,7 @@ namespace CORBA
 
   private:
 
-    /// lock required for mutual exclusion between multiple threads.
+    /// Lock required for mutual exclusion between multiple threads.
     TAO_SYNCH_MUTEX lock_;
 
     /// Maintains a reference count of number of instantiations of the

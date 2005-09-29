@@ -66,7 +66,7 @@ public:
    * connection handler is set appropriately.
    */
   virtual int wait (TAO_Connection_Handler *ch,
-                     ACE_Time_Value *val) = 0;
+                    ACE_Time_Value *val) = 0;
 
   virtual int wait (TAO_Transport *t,
                     ACE_Time_Value *val) = 0;
