@@ -70,26 +70,29 @@ run_test (CORBA::ORB_ptr orb_ptr,
           object =
             orb->string_to_object (ior1
                                    ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
         }
       else
         {
           object =
             orb->string_to_object (ior2
                                    ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
         }
-      ACE_TRY_CHECK;
 
       Test_var server =
         Test::_narrow (object.in ()
                        ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       if (CORBA::is_nil (server.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Object reference is nil\n"),
                           1);
 
       server->method (0);
-      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
 
+      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
