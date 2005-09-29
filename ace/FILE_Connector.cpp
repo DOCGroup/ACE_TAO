@@ -77,9 +77,9 @@ ACE_FILE_Connector::connect (ACE_FILE_IO &new_io,
     new_io.addr_ = remote_sap; // class copy.
 
   handle = ACE::handle_timed_open (timeout,
-                                              new_io.addr_.get_path_name (),
-                                              flags,
-                                              perms);
+                                   new_io.addr_.get_path_name (),
+                                   flags,
+                                   perms);
 
   new_io.set_handle (handle);
   return handle == ACE_INVALID_HANDLE ? -1 : 0;
