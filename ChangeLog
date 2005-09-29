@@ -1,3 +1,15 @@
+Thu Sep 29 13:28:29 2005  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* bin/fuzz.pl (check_for_refcountservantbase):
+
+	  Added a new fuzz check to catch derivations to
+	  PortableServer::RefCountServantBase.  Obviously, this check only
+	  applied to TAO, and the test itself isn't very discriminating as
+	  it simply looks for the presence of
+	  "PortableServer::RefCountServantBase" in a file and doesn't
+	  attempt to detect derivation.  There are also no means to turn
+	  off the check in comments.  But it's better than nothing.
+
 Thu Sep 29 15:18:24 2005  Simon McQueen  <sm@prismtech.com>
 
         * bin/tao_other_tests.lst:
