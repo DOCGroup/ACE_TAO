@@ -1,3 +1,8 @@
+Thu Sep 29 08:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * html/index.html:
+          Fixed typo
+
 Thu Sep 29 07:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_fcntl.cpp:
