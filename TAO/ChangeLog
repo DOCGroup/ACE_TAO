@@ -1,3 +1,25 @@
+Thu Sep 29 07:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Connect_Strategy.h:
+        * tao/ORB.h:
+        * tao/PI_Server/Policy_Creator_T.h:
+          Layout and documentation changes
+
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+          Updated debug statement to have the same layout as the other messages
+
+        * tao/Stub.{h,cpp,i}:
+          Use an Atomic_Op for the refcount, removed some accessors that are
+          not needed and which violated the encapsulation principle. Made
+          some methods protected which don't need to be public, removed the
+          return value of the _incr_refcnt and _decr_refcnt methods, the
+          return value isn't something you can build logic on because it
+          can change again quickly. Also fixed a 64bit problem.
+
+        * tao/Valuetype/AbstractBase.cpp:
+          Removed (void) before calls of _incr_rfcnt/_decr_refcnt, they don't
+          return a value anymore.
+
 Thu Sep 29 07:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
