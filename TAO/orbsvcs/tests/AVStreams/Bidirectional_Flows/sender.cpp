@@ -437,6 +437,7 @@ main (int argc,
                          argv,
                          0
                          ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA"

@@ -430,6 +430,8 @@ main (int argc,
                                             argv,
                                             0
                                             ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA"
                                            ACE_ENV_ARG_PARAMETER);
@@ -460,6 +462,8 @@ main (int argc,
       result = CLIENT::instance ()->init (argc,
                                           argv
                                           ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "client::init failed\n"),1);

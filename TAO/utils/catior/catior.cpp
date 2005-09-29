@@ -1035,7 +1035,7 @@ void displayHex( TAO_InputCDR &str )
      return;
   }
 
-  ACE_DEBUG (( LM_DEBUG," %s \n", theDescr.c_str()));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" %s \n"), theDescr.c_str()));
 }
 
 static CORBA::Boolean

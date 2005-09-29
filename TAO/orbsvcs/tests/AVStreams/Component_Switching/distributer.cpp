@@ -476,11 +476,14 @@ main (int argc,
 
       while (!DISTRIBUTER::instance ()->done ())
         {
-          if( orb->work_pending( ACE_ENV_SINGLE_ARG_PARAMETER ) )
+          CORBA::Boolean wp = orb->work_pending (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          if (wp)
           {
             orb->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
 	  
-          ACE_TRY_CHECK;
+            ACE_TRY_CHECK;
           }
         }
 
