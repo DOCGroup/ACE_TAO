@@ -312,9 +312,8 @@ startLaunch (const Deployment::Properties & configProperty,
         if (CIAO::debug_level () > 1)
           ACE_DEBUG ((LM_DEBUG, "Failed to create Node Implementation Infos!\n"));
 
-        ACE_THROW_RETURN (Deployment::StartError ("NodeApplicationManager_Imp::startLaunch",
-                                                  "Unable to populate node level plan"),
-                          Deployment::Application::_nil());
+        ACE_TRY_THROW (Deployment::StartError ("NodeApplicationManager_Imp::startLaunch",
+                                              "Unable to populate node level plan"));
       }
 
       ACE_DEBUG ((LM_DEBUG, "********** NodeApplicationManager ***** step 2\n"));
@@ -369,8 +368,8 @@ startLaunch (const Deployment::Properties & configProperty,
               ACE_CString error ("Duplicate component instance name ");
               error += comp_info[len].component_instance_name.in();
 
-              ACE_THROW_RETURN (Deployment::StartError ("NodeApplicationManager_Impl::startLaunch",
-                                                        error.c_str ()), 0);
+              ACE_TRY_THROW (Deployment::StartError ("NodeApplicationManager_Impl::startLaunch",
+                                                     error.c_str ()));
             }
         }
 
@@ -378,10 +377,8 @@ startLaunch (const Deployment::Properties & configProperty,
       ACE_TRY_CHECK;
 
       if (providedReference == 0)
-        ACE_THROW_RETURN (Deployment::StartError () ,
-                          Deployment::Application::_nil());
-
-
+        ACE_TRY_THROW (Deployment::StartError ("NodeApplicationManager_Impl::startLaunch",
+                                               "Error creating connections during startLaunch."));
     }
   ACE_CATCH (Deployment::UnknownImplId, e)
     {

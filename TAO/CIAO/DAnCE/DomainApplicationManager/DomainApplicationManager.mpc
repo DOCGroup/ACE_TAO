@@ -1,14 +1,12 @@
 // -*- MPC -*-
 // $Id$
 
-project (DomainApplicationManager): ciao_deployment_svnt, xerces  {
-  after += Config_Handlers XSC_Config_Handlers NodeManager RT_CCM_Config_Handlers                         
+project (DomainApplicationManager): ciao_deployment_svnt, ciao_config_handlers  {
 
   sharedname = DomainApplicationManager
 
   dynamicflags   = DOMAINAPPLICATIONMANAGER_BUILD_DLL
-
-  libs += CIAO_DnC_Client RT_CCM_Config_Handlers CIAO_XML_Utils
+  
   includes += $(CIAO_ROOT)/tools/Config_Handlers
 
   Source_Files {
