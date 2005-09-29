@@ -1295,6 +1295,29 @@ sub check_for_long_file_names ()
     }
 }
 
+sub check_for_refcountservantbase ()
+{
+    print "Running PortableServer::RefCountServantBase derivation check\n";
+
+    foreach $file (@files_h) {
+        my $line = 0;
+        if (open (FILE, $file)) {
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+                ++$line;
+
+                if (/PortableServer::RefCountServantBase/) {
+                  print_error ("$file:$line: reference to deprecated PortableServer::RefCountServantBase");
+                }
+            }
+            close (FILE);
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
+
 ##############################################################################
 
 use vars qw/$opt_c $opt_d $opt_h $opt_l $opt_t $opt_m $opt_v/;
@@ -1337,7 +1360,8 @@ if (!getopts ('cdhl:t:mv') || $opt_h) {
            check_for_ptr_arith_t
            check_for_include
            check_for_non_bool_operators
-           check_for_long_file_names\n";
+           check_for_long_file_names
+           check_for_refcountservantbase\n";
     exit (1);
 }
 
@@ -1365,6 +1389,7 @@ if ($opt_t) {
 print "--------------------Configuration: Fuzz - Level ",$opt_l,
       "--------------------\n";
 
+check_for_refcountservantbase () if ($opt_l > 1 );
 check_for_msc_ver_string () if ($opt_l >= 3);
 check_for_empty_inline_files () if ($opt_l >= 1);
 check_for_noncvs_files () if ($opt_l >= 1);
