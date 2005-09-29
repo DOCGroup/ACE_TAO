@@ -79,7 +79,7 @@ main (int argc, char *argv[])
                             1);
         }
 
-      Peer *peer_impl;
+      Peer *peer_impl = 0;
       ACE_NEW_RETURN (peer_impl,
                       Peer (orb.in ()),
                       1);
@@ -87,6 +87,7 @@ main (int argc, char *argv[])
 
       Test::Peer_var peer =
         peer_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
