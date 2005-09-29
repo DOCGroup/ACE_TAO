@@ -1,3 +1,9 @@
+Thu Sep 29 11:34:55 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* ciao/Swapping_Servant_Home_Impl_T.cpp
+
+	Fixed build problem on non-exception systems.
+
 Thu Sep 29 07:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/Utils/XML_Schema_Resolver.cpp:
