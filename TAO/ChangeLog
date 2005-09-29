@@ -1,3 +1,13 @@
+Thu Sep 29 07:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
+          Fixed emulated exception fuzz errors. It seems the Trading service
+          is not really correct related to emulated exceptions, if someone
+          really wants to use it in that configuration some more work has
+          to be done.
+
 Thu Sep 29 06:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.cpp:
