@@ -1,3 +1,9 @@
+Thu Sep 29 12:34:50 2005  Simon McQueen  <sm@prismtech.com>
+
+        * tao/Makefile.am:
+
+          Removed WrongTransactionS.inl - file no longer in CVS.
+
 Thu Sep 29 09:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/AVStreams/Bidirectional_Flows/sender.cpp
