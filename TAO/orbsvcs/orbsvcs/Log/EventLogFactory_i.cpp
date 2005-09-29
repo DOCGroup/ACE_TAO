@@ -83,6 +83,7 @@ TAO_EventLogFactory_i::activate (CORBA::ORB_ptr orb,
 
 
   this->event_channel_ = init (this->poa_.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsEventLogAdmin::EventLogFactory::_nil ());
 
   this->consumer_admin_ =
     this->event_channel_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);

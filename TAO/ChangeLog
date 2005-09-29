@@ -1,3 +1,15 @@
+Thu Sep 29 15:07:30 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/EventLog_i.cpp:
+	* orbsvcs/orbsvcs/Log/Log_i.cpp:
+	* orbsvcs/orbsvcs/Log/NotifyLog_i.cpp:
+	* orbsvcs/orbsvcs/Log/RTEventLog_i.cpp:
+
+	  De-fuzzed simple cases ACE_CHECK/ACE_TRY_CHECK warnings.
+	  I'll get to the remaining cases that need new temporary
+	  variables, etc. in the next week.
+
 Thu Sep 29 17:25:39 2005  Simon McQueen  <sm@prismtech.com>
 
         * orbsvcs/tests/Bug_2247_Regression/test_i.cpp:
