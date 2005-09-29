@@ -156,6 +156,7 @@ main (int argc, char *argv[])
       Test_var server =
         Test::_narrow (object.in ()
                        ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -205,6 +206,7 @@ main (int argc, char *argv[])
       Test_var server1 =
         Test::_narrow (object.in ()
                        ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server1.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,

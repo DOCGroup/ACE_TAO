@@ -352,11 +352,16 @@ TAO::SSLIOP::Connector::corbaloc_scan (const char *endpoint,
    //Create the corresponding profile
    TAO_Profile *ptmp = 0;
    if (ssl_only)
+     {
        ptmp = this->make_secure_profile (ACE_ENV_SINGLE_ARG_PARAMETER);
+       ACE_CHECK_RETURN (0);
+     }
    else
+     {
        ptmp = this->make_profile (ACE_ENV_SINGLE_ARG_PARAMETER);
+       ACE_CHECK_RETURN (0);
+     }
 
-   ACE_CHECK_RETURN (0);
    return ptmp;
 }
 

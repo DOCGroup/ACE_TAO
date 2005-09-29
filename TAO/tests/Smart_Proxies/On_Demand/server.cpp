@@ -117,6 +117,7 @@ main (int argc, char *argv[])
       CORBA::Object_var object =
         orb->resolve_initial_references ("RootPOA"
                                          ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (object.in ()
@@ -136,6 +137,7 @@ main (int argc, char *argv[])
       CORBA::String_var ior =
         orb->object_to_string (Test_object.in ()
                                ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
