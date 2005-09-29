@@ -11,9 +11,9 @@
 
     <!--#include file="navigation.html"-->
 
-    <P>All the experiments run on a dual Pentium III @733Mhz, with
-      512Mb of RAM.  The machine is running Linux (Debian 2.2),
-      and we use gcc-2.95.2 to compile ACE+TAO, with static libraries
+    <P>All the experiments run on a dual Xeaon @2.40GHz, with
+      1Gb of RAM.  The machine is running Linux (SuSE 8.2),
+      and we use gcc-3.3 to compile ACE+TAO, with static libraries
       and optimizations enabled.
     </P>
 
