@@ -1,3 +1,10 @@
+Thu Sep 29 09:12:24 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/SmartProxies/Smart_Proxies.h:
+
+          Removed the virtual from the inheritance list.  It is not
+          necessary.
+
 Thu Sep 29 14:29:17 2005  Simon McQueen  <sm@prismtech.com>
 
         * orbsvcs/tests/Bug_2247_Regression/Bug_2247_Regression.mpc:
