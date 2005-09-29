@@ -1,3 +1,8 @@
+Thu Sep 29 09:03:00 UTC 2005  Simon Massey  <simon.massey@prismtech.com>
+
+        * apps/JAWS2/JAWS/IO_Acceptor.cpp:
+          Fixed unused parameters
+
 Thu Sep 29 09:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * html/Stats/footer.html:
