@@ -426,7 +426,8 @@ fill_receptacles (const char* /* type */,
 
       // Register it with the POA.
       offer_itr = oi->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-      // @@ Seth, ACE_CHECK_RETURN (what?);
+      ACE_CHECK_RETURN (total_offers - offers_in_iterator);
+
       oi->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (total_offers - offers_in_iterator);
 
@@ -614,7 +615,8 @@ federated_query (const CosTrading::LinkNameSeq& links,
   offer_iter_collection->add_offer_iterator (offer_iter);
 
   CosTrading::PolicySeq policies_to_pass;
-  policies.copy_to_pass (policies_to_pass, request_id);
+  policies.copy_to_pass (policies_to_pass, request_id ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   for (int i = links.length () - 1; i >= 0; i--)
     {

@@ -442,7 +442,8 @@ public:
 
   /// Policies to forward to the next trader in a federated query.
   void copy_to_pass (CosTrading::PolicySeq& policy_seq,
-                     const CosTrading::Admin::OctetSeq& request_id) const;
+                     const CosTrading::Admin::OctetSeq& request_id
+                     ACE_ENV_ARG_DECL) const;
 
   /// Policies to forward to the next trader in a directed query.
   void copy_to_forward (CosTrading::PolicySeq& policy_seq,

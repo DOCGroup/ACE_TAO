@@ -163,12 +163,17 @@ TAO_Trading_Loader::fini (void)
                           "*** Removing its link to us.\n"));
 
               if (this->bootstrapper_)
-                remote_link->remove_link ("Bootstrap"
-                                          ACE_ENV_ARG_PARAMETER);
+                {
+                  remote_link->remove_link ("Bootstrap"
+                                            ACE_ENV_ARG_PARAMETER);
+                  ACE_TRY_CHECK;
+                }
               else
-                remote_link->remove_link (this->name_.in ()
-                                          ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                {
+                  remote_link->remove_link (this->name_.in ()
+                                            ACE_ENV_ARG_PARAMETER);
+                  ACE_TRY_CHECK;
+                }
             }
         }
     }
