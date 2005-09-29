@@ -107,8 +107,10 @@ TAO_CEC_EventChannel::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 
   this->supplier_admin_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 
   this->consumer_admin_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
