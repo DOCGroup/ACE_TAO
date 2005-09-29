@@ -1,3 +1,8 @@
+Thu Sep 29 06:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/Utils/XML_Schema_Resolver.h:
+          Added missing pre.h
+
 Wed Sep 28 16:44:39 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* docs/schema/CIAOServerResources.xsd
@@ -11,7 +16,7 @@ Wed Sep 28 14:44:39 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	New version of the XSC including additional features needed for
 	RT-CCM.
-	
+
 Wed Sep 28 08:24:32 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* tools/Config_Handlers/Utils/Utils.mpc
@@ -21,7 +26,7 @@ Wed Sep 28 08:24:32 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	Implemented a schema resolver so that the XML parser till grab the
 	schemata from $CIAO_ROOT/docs/schema.
-	
+
 	* docs/tutorials/Quoter/Simple/descriptors/Deployment.xsd
 	* docs/tutorials/Quoter/Simple/descriptors/Modified_Deployment.xsd
 	* examples/BasicSP/descriptors/Deployment.xsd
@@ -35,7 +40,7 @@ Wed Sep 28 08:24:32 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* examples/Hello/descriptors/XMI.xsd
 
 	Removed obsolete schemata.
-	
+
 	* examples/Display/descriptors/flattened_deploymentplan.cdp
 	* examples/Hello/descriptors/flattened_deploymentplan.cdp
 	* examples/Hello/descriptors/flattened_deploymentplan_without_ns.cdp
@@ -47,7 +52,7 @@ Wed Sep 28 08:24:32 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* NEWS
 
 	Updated the NEWS to include this feature.
-	
+
 Tue Sep 27 13:16:43 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/ExecutionManager/ExecutionManager.mpc
@@ -63,14 +68,14 @@ Tue Sep 27 13:16:43 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* ciao/CCM_Core.mpc
 	* examples/BasicSP/BasicSP.mpc
 
-	Fixed a large number of deficiencies in our build structure. 
-	More changes to come later. 
-	
+	Fixed a large number of deficiencies in our build structure.
+	More changes to come later.
+
 Tue Sep 27 11:10:37 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* NEWS
 
-	Updated the news file. 
+	Updated the news file.
 
 Tue Sep 27 10:51:20 2005  William Otte  <wotte@dre.vanderbilt.edu>
 

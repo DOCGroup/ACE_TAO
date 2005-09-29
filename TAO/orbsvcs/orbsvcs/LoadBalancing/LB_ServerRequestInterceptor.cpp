@@ -70,23 +70,23 @@ TAO_LB_ServerRequestInterceptor::receive_request_service_contexts (
 
           CORBA::Boolean byte_order;
           if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-            ACE_THROW (CORBA::BAD_PARAM ());
+            ACE_TRY_THROW (CORBA::BAD_PARAM ());
 
           cdr.reset_byte_order (static_cast<int> (byte_order));
 
           CORBA::Object_var object_group;
           if (cdr >> object_group.out ())
-            ACE_THROW (PortableInterceptor::ForwardRequest (object_group.in (),
+            ACE_TRY_THROW (PortableInterceptor::ForwardRequest (object_group.in (),
                                                             0));
           else
-            ACE_THROW (CORBA::BAD_PARAM ());
+            ACE_TRY_THROW (CORBA::BAD_PARAM ());
           */
 
           // A ServiceContext of the given ServiceId exists.  This
           // means that the target is load balanced.  Force the client
           // to try another profile since this location is currently
           // overloaded.
-          ACE_THROW (CORBA::TRANSIENT ());
+          ACE_TRY_THROW (CORBA::TRANSIENT ());
         }
       ACE_CATCH (CORBA::BAD_PARAM, ex)
         {
