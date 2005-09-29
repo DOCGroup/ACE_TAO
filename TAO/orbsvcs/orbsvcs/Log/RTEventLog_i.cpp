@@ -88,6 +88,7 @@ TAO_RTEventLog_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   notifier_->object_deletion (logid_ ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   // Remove ourselves from the list of logs.
   this->logmgr_i_.remove (this->logid_
@@ -110,6 +111,7 @@ TAO_RTEventLog_i::activate (ACE_ENV_SINGLE_ARG_DECL)
 {
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
     this->event_channel_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 
   this->my_log_consumer_ = new TAO_Rtec_LogConsumer (this);
   this->my_log_consumer_->connect (consumer_admin.in ());

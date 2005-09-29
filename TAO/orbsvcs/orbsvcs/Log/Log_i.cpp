@@ -1108,6 +1108,8 @@ TAO_Log_i::copy_attributes (DsLogAdmin::Log_ptr log
 
   const DsLogAdmin::AdministrativeState adminstrative_state =
     this->get_administrative_state (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
   log->set_administrative_state (adminstrative_state
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;

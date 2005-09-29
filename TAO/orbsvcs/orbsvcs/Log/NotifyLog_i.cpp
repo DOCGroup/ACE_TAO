@@ -54,7 +54,10 @@ TAO_NotifyLog_i::copy (DsLogAdmin::LogId &id ACE_ENV_ARG_DECL)
   ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   CosNotification::QoSProperties* qos = get_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
+
   CosNotification::AdminProperties* admin = get_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   DsNotifyLogAdmin::NotifyLog_var log =
     notifyLogFactory->create (DsLogAdmin::halt, 0, thresholds_, static_cast<const CosNotification::QoSProperties> (*qos),
@@ -77,7 +80,10 @@ TAO_NotifyLog_i::copy_with_id (DsLogAdmin::LogId id ACE_ENV_ARG_DECL)
   ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   CosNotification::QoSProperties* qos = get_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
+
   CosNotification::AdminProperties* admin = get_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   DsNotifyLogAdmin::NotifyLog_var log =
     notifyLogFactory->create_with_id (id, DsLogAdmin::halt, 0, thresholds_, static_cast<const CosNotification::QoSProperties> (*qos),
@@ -95,6 +101,7 @@ TAO_NotifyLog_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   notifier_->object_deletion (logid_ ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   // Remove ourselves from the list of logs.
   this->logmgr_i_.remove (this->logid_
@@ -122,6 +129,8 @@ TAO_NotifyLog_i::activate (ACE_ENV_SINGLE_ARG_DECL)
 
   this->consumer_admin_ =
     this->event_channel_->new_for_consumers (ifgop, adminid ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
 
   CosNotifyFilter::FilterFactory_var ffact =
