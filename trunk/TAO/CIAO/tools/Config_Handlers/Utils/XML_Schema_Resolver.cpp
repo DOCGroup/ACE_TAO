@@ -25,29 +25,29 @@ namespace CIAO
       else
         this->base_path_ = path;
     }
-    
+
     /// This function is called by the Xerces infrastructure to
     /// actually resolve the location of a schema.
-    DOMInputSource * 
-    CIAO_Schema_Resolver::resolveEntity (const XMLCh *const publicId, 
+    DOMInputSource *
+    CIAO_Schema_Resolver::resolveEntity (const XMLCh *const publicId,
                                          const XMLCh *const systemId,
                                          const XMLCh *const baseURI)
     {
       ACE_UNUSED_ARG (baseURI);
-      ACE_UNUSED_ARG (systemId);
-      
+      ACE_UNUSED_ARG (publicId);
+
       XStr path (this->base_path_.c_str ());
       path.append (systemId);
-      
+
       // Ownership of these objects is given to other people.
       return new Wrapper4InputSource (new LocalFileInputSource (path));
     }
-    
+
     std::string
     CIAO_Schema_Resolver::resolve_from_environment (void)
     {
       ACE_Env_Value <const char *> path ("CIAO_ROOT", "");
-      
+
       std::string retval (path);
       return retval += "/docs/schema/";
     }
