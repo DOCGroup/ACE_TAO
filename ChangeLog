@@ -1,3 +1,10 @@
+Fri Sep 30 13:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/modules/BorlandWorkspaceCreator.pm:
+          Corrected the directory changing code to take 2 or more deep
+          relative paths into account. Merged this fix from the MPC
+          templates bmake. Thanks to Chad Elliott for fixing these.
+
 Fri Sep 30 08:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-borland.h:
