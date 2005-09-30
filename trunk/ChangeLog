@@ -1,3 +1,15 @@
+Fri Sep 30 10:34:24 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+
+	  Add feature checks for ACE_LACKS_INTMAX_T, ACE_LACKS_INTPTR_T,
+	  ACE_LACKS_UINTMAX_T, and ACE_LACKS_UINTPTR_T.
+
+	* ace/README:
+
+	  Define ACE_LACKS_INTMAX_T, ACE_LACKS_UINTMAX_T, and
+	  ACE_LACKS_UINTPTR_T feature test macros.
+
 Fri Sep 30 13:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/modules/BorlandWorkspaceCreator.pm:
@@ -13,7 +25,7 @@ Fri Sep 30 08:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ace/OS_NS_stdio.inl:
         * ace/OS_NS_unistd.inl:
         * ace/README:
-          Added new ACE_LACK_INTPTR_T and use this. This type is used to call
+          Added new ACE_LACKS_INTPTR_T and use this. This type is used to call
           _open_osfhandle on windows. It seems not to be available with BCB6
           and earlier and msvc6. Thanks to Simon McQueen for notifying me that
           msvc6 also lacks this.
