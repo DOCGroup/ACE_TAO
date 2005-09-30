@@ -160,16 +160,14 @@ sub check_for_inline_in_cpp ()
 {
     print "Running ACE_INLINE/ASYS_INLINE check\n";
     foreach $file (@files_cpp) {
-        my $line = 0;
         if (open (FILE, $file)) {
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                ++$line;
                 if (/^ACE_INLINE/) {
-                    print_error ("ACE_INLINE found in $file on line $line");
+                    print_error ("$file:$.: ACE_INLINE found");
                 }
                 if (/^ASYS_INLINE/) {
-                    print_error ("ASYS_INLINE found in $file on line $line");
+                    print_error ("$file:$.: ASYS_INLINE found");
                 }
             }
             close (FILE);
@@ -196,12 +194,12 @@ sub check_for_id_string ()
                     $found = 1;
                 }
                 if (/\$id\$/) {
-                    print_error ("Incorrect \$id\$ found in $file correct casing");
+                    print_error ("$file:$.: Incorrect \$id\$ found (correct casing)");
                 }
             }
             close (FILE);
             if ($found == 0) {
-                print_error ("No \$Id\$ string found in $file");
+                print_error ("$file:1: No \$Id\$ string found.");
             }
         }
         else {
@@ -218,6 +216,7 @@ sub check_for_msc_ver_string ()
         my $found = 0;
         if (open (FILE, $file)) {
             my $disable = 0;
+            my $mscline = 0;
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
                 if (/FUZZ\: disable check_for_msc_ver/) {
@@ -228,11 +227,12 @@ sub check_for_msc_ver_string ()
                 }
                 if ($disable == 0 and /\_MSC_VER \>= 1200/) {
                     $found = 1;
+                    $mscline = $.;
                 }
             }
             close (FILE);
             if ($found == 1) {
-               print_error ("Incorrect _MSC_VER >= 1200 found in $file");
+               print_error ("$file:$mscline: Incorrect _MSC_VER >= 1200 found");
             }
         }
         else {
@@ -255,7 +255,7 @@ sub check_for_newline ()
             }
             close (FILE);
             if ($line !~ /\n$/) {
-                print_error ("No ending newline found in $file");
+                print_error ("$file:$.: No ending newline found in $file");
             }
         }
         else {
@@ -280,7 +280,6 @@ sub check_for_inline ()
 {
     print "Running inline check\n";
     foreach $file (@files_inl) {
-        my $line = 0;
         if (open (FILE, $file)) {
             my $disable = 0;
             print "Looking at file $file\n" if $opt_d;
@@ -293,7 +292,7 @@ sub check_for_inline ()
                     $disable = 0;
                 }
                 if ($disable == 0 and m/^\s*inline/) {
-                    print_error ("inline found in $file on line $line");
+                    print_error ("$file:$.: 'inline' keyword found");
                 }
             }
             close (FILE);
@@ -312,12 +311,10 @@ sub check_for_math_include ()
 {
     print "Running math.h test\n";
     foreach $file (@files_h, @files_cpp, @files_inl) {
-        my $line = 0;
         if (open (FILE, $file)) {
             my $disable = 0;
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                ++$line;
                 if (/FUZZ\: disable check_for_math_include/) {
                     $disable = 1;
                 }
@@ -326,7 +323,7 @@ sub check_for_math_include ()
                 }
                 if ($disable == 0
                     and /^\s*#\s*include\s*(\/\*\*\/){0,1}\s*\<math\.h\>/) {
-                    print_error ("math.h included in $file on line $line");
+                    print_error ("$file:$.: <math.h> included");
                 }
             }
             close (FILE);
@@ -343,12 +340,10 @@ sub check_for_streams_include ()
 {
     print "Running ace/streams.h test\n";
     foreach $file (@files_h, @files_cpp, @files_inl) {
-        my $line = 0;
         if (open (FILE, $file)) {
             my $disable = 0;
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                ++$line;
                 if (/FUZZ\: disable check_for_streams_include/) {
                     $disable = 1;
                 }
@@ -357,7 +352,7 @@ sub check_for_streams_include ()
                 }
                 if ($disable == 0
                     and /^\s*#\s*include\s*\"ace\/streams\.h\"/) {
-                    print_error ("ace/streams.h included in $file on line $line");
+                    print_error ("$file:$.: expensive ace/streams.h included; consider ace/iosfwd.h");
                     print " ace/streams.h is very expensive in both ";
                     print "compile-time and footprint. \n";
                     print " Please consider including ace/iosfwd.h instead.\n\n";
@@ -376,12 +371,10 @@ sub check_for_OS_h_include ()
 {
     print "Running ace/OS.h test\n";
     foreach $file (@files_h, @files_cpp, @files_inl) {
-        my $line = 0;
         if (open (FILE, $file)) {
             my $disable = 0;
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                ++$line;
                 if (/FUZZ\: disable check_for_OS_h_include/) {
                     $disable = 1;
                 }
@@ -390,7 +383,7 @@ sub check_for_OS_h_include ()
                 }
                 if ($disable == 0
                     and /^\s*#\s*include\s*\"ace\/OS\.h\"/) {
-                    print_error ("ace/OS.h included in $file on line $line");
+                    print_error ("$file:$.: expensive ace/OS.h included; consider an OS_NS_*.h file");
                     print " OS.h is very expensive in both ";
                     print "compile-time and footprint. \n";
                     print " Please consider including one of the ";
@@ -410,12 +403,10 @@ sub check_for_synch_include ()
 {
     print "Running ace/Synch*.h test\n";
     foreach $file (@files_h, @files_cpp, @files_inl) {
-        my $line = 0;
         if (open (FILE, $file)) {
             my $disable = 0;
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                ++$line;
                 if (/FUZZ\: disable check_for_synch_include/) {
                     $disable = 1;
                 }
@@ -426,7 +417,7 @@ sub check_for_synch_include ()
                     and (/^\s*#\s*include\s*\"(ace\/Synch\.h)\"/
                          or /^\s*#\s*include\s*\"(ace\/Synch_T\.h)\"/)) {
                     my $synch = $1;
-                    print_error ("$synch included in $file on line $line");
+                    print_error ("$file:$.: expensive $synch included;  consider individual synch file");
                     print " $synch is very expensive in both ";
                     print "compile-time and footprint. \n";
                     print " Please consider including one of the ";
@@ -446,16 +437,14 @@ sub check_for_line_length ()
 {
     print "Running line length test\n";
     foreach $file (@files_h, @files_cpp, @files_inl) {
-        my $line = 0;
         if (open (FILE, $file)) {
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                ++$line;
 
                 # Make sure to ignore ACE_RCSID lines, since they
                 # are difficult to get under 80 chars.
                 if (/.{80,}/ and !/^ACE_RCSID/) {
-                    print_error ("Over 80 chars on line $line in $file");
+                    print_error ("$file:$.: line longer than 80 chars");
                 }
             }
             close (FILE);
@@ -473,14 +462,11 @@ sub check_for_preprocessor_comments ()
 {
     print "Running preprocessor comment test\n";
     foreach $file (@files_h, @files_cpp, @files_inl) {
-        my $line = 0;
         if (open (FILE, $file)) {
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                ++$line;
                 if (/^\#.*\/\//) {
-                    print_error ("C++ comment in directive on "
-                                 ."line $line in $file");
+                    print_error ("$file:$.: C++ comment in directive");
                 }
             }
             close (FILE);
@@ -508,8 +494,7 @@ sub check_for_empty_inline_files ()
             }
             close (FILE);
             if ($found_non_empty_line == 0 and $idl_generated == 0) {
-             print_error ("File $file is empty and should not be in the "
-                         ."repository");
+             print_error ("$file:1: empty inline file should not be in the repository");
             }
         }
         else {
@@ -526,12 +511,10 @@ sub check_for_tchar
 {
     print "Running TCHAR test\n";
     foreach $file (@files_h, @files_cpp, @files_inl) {
-        my $line = 0;
         if (open (FILE, $file)) {
             my $disable = 0;
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                ++$line;
                 if (/FUZZ\: disable check_for_tchar/) {
                     $disable = 1;
                 }
@@ -540,33 +523,32 @@ sub check_for_tchar
                 }
                 if ($disable == 0) {
                     if (/LPTSTR/) {
-                        print_error ("LPTSTR found on line $line in $file");
+                        print_error ("$file:$.: LPTSTR found");
                     }
 
                     if (/LPCTSTR/) {
-                        print_error ("LPCTSTR found on line $line in $file");
+                        print_error ("$file:$.: LPCTSTR found");
                     }
 
                     if (/ASYS_TCHAR/) {
-                        print_error ("ASYS_TCHAR found on "
-                                     ."line $line in $file");
+                        print_error ("$file:$.: ASYS_TCHAR found");
                     }
                     elsif (/TCHAR/ and !/ACE_TCHAR/) {
                         ### Do a double check, since some macros do have TCHAR
                         ### (like DEFAULTCHARS)
                         if (/^TCHAR[^\w_]/ or /[^\w_]TCHAR[^\w_]/) {
-                            print_error ("TCHAR on line $line in $file");
+                            print_error ("$file:$.: TCHAR found");
                         }
                     }
 
                     if (/ASYS_TEXT/) {
-                        print_error ("ASYS_TEXT on line $line in $file");
+                        print_error ("$file:$.: ASYS_TEXT found");
                     }
                     elsif (/TEXT/ and !/ACE_TEXT/) {
                         ### Do a double check, since there are several macros
                         ### that end with TEXT
                         if (/^TEXT\s*\(/ or /[^\w_]TEXT\s*\(/) {
-                            print_error ("TEXT found on line $line in $file");
+                            print_error ("$file:$.: TEXT found");
                         }
                     }
                 }
@@ -629,13 +611,13 @@ sub check_for_makefile_variable ()
                         $makevarfound = 1;
                         $makevar = $1;
                         if (!($makevar eq $filename)) {
-                            print_error ("MAKEFILE variable $makevar != $filename in $file");
+                            print_error ("$file:$.: MAKEFILE variable $makevar != $filename");
                             print " Change MAKEFILE = $filename in $file.\n\n";
                         }
                     }
                 }
                 if ($makevarfound == 0 and !($filename eq "GNUmakefile")) {
-                    print_error ("MAKEFILE variable missing in $file");
+                    print_error ("$file:$.: MAKEFILE variable missing in $file");
                     print " Add MAKEFILE = $filename to the top of $file.\n\n";
                 }
                 close (FILE);
@@ -668,11 +650,11 @@ sub check_for_pre_and_post ()
                 }
                 if ($disable == 0) {
                     if (/^\s*#\s*include\s*\"ace\/pre\.h\"/) {
-                        print_error ("pre.h  missing \"/**/\" in $file");
+                        print_error ("$file:$.: pre.h  missing \"/**/\"");
                         ++$pre;
                     }
                     if (/^\s*#\s*include\s*\s*\"ace\/post\.h\"/) {
-                        print_error ("post.h missing \"/**/\" in $file");
+                        print_error ("$file:$.: post.h missing \"/**/\"");
                         ++$post;
                     }
                     if (/^\s*#\s*include\s*\/\*\*\/\s*\"ace\/pre\.h\"/) {
@@ -686,7 +668,7 @@ sub check_for_pre_and_post ()
             close (FILE);
 
             if ($disable == 0 && $pre != $post) {
-                print_error ("pre.h/post.h mismatch in $file");
+                print_error ("$file:1: pre.h/post.h mismatch");
             }
         }
         else {
@@ -725,7 +707,7 @@ sub check_for_push_and_pop ()
             close (FILE);
 
             if ($disable == 0 && $push_count != $pop_count) {
-                print_error ("#pragma warning(push)/(pop) mismatch in $file");
+                print_error ("$file:$.: #pragma warning(push)/(pop) mismatch");
             }
         }
         else {
@@ -750,7 +732,7 @@ sub check_for_mismatched_filename ()
                     # File::BaseName
                     $filename = basename($file,"");
                     if (!($filename eq $1)){
-                        print_error ("\@file mismatch in $file, found $1");
+                        print_error ("$file:$.: \@file mismatch in $file, found $1");
                     }
                 }
             }
@@ -769,13 +751,11 @@ sub check_for_bad_run_test ()
     foreach $file (@files_pl) {
         if (open (FILE, $file)) {
             my $is_run_test = 0;
-            my $line = 0;
             my $sub = 0;
 
             print "Looking at file $file\n" if $opt_d;
 
             while (<FILE>) {
-                ++$line;
 
                 if (m/PerlACE/ || m/ACEutils/) {
                     $is_run_test = 1;
@@ -783,55 +763,54 @@ sub check_for_bad_run_test ()
 
                 if ($is_run_test == 1) {
                     if (m/ACEutils/) {
-                        print_error ("ACEutils.pm still being used in $file ($line)");
+                        print_error ("$file:$.: ACEutils.pm still in use");
                     }
 
                     if (m/unshift \@INC/) {
-                        print_error ("Still unshifting \@INC, should \"use lib\""
-                                     ." instead in $file ($line)");
+                        print_error ("$file:$.: unshifting \@INC; use \"use lib\"");
                     }
 
                     if (m/\$EXEPREFIX/) {
-                        print_error ("Still using \$EXEPREFIX in $file ($line)");
+                        print_error ("$file:$.: using \$EXEPREFIX");
                     }
 
                     if (m/\$EXE_EXT/) {
-                        print_error ("Still using \$EXE_EXT in $file ($line)");
+                        print_error ("$file:$.: using \$EXE_EXT");
                     }
 
                     if (m/\$DIR_SEPARATOR/) {
-                        print_error ("Still using \$DIR_SEPARATOR in $file ($line)");
+                        print_error ("$file:$.: using \$DIR_SEPARATOR");
                     }
                     if (m/ACE\:\:/ && !m/PerlACE\:\:/) {
-                        print_error ("Still using ACE::* in $file ($line)");
+                        print_error ("$file:$.: using ACE::*");
                     }
 
                     if (m/Process\:\:/ && !m/PerlACE\:\:Process\:\:/) {
-                        print_error ("Still using Process::* in $file ($line)");
+                        print_error ("$file:$.: using Process::*");
                     }
 
                     if (m/Process\:\:Create/) {
-                        print_error ("Still using Process::Create in $file ($line)");
+                        print_error ("$file:$.: using Process::Create");
                     }
 
                     if ((m/\.ior/ || m/\.conf/) && !m/LocalFile/) {
-                        print_error ("Not using PerlACE::LocalFile at $file ($line)");
+                        print_error ("$file:$.: Not using PerlACE::LocalFile");
                     }
 
                     if (m/^  [^ ]/) {
-                        print_warning ("Still using two-space indentation in $file ($line)");
+                        print_warning ("$file:$.: using two-space indentation");
                     }
 
                     if (m/^\s*\t/) {
-                        print_error ("Indenting using tabs in $file ($line)");
+                        print_error ("$file:$.: Indenting using tabs");
                     }
 
                     if (m/^\s*\{/ && $sub != 1) {
-                        print_warning ("Using Curly Brace alone on $file ($line)");
+                        print_warning ("$file:$.: Using Curly Brace alone");
                     }
 
                     if (m/timedout/i && !m/\#/) {
-                        print_error ("timedout message found on $file ($line)");
+                        print_error ("$file:$.: timedout message found");
                     }
 
                     if (m/^\s*sub/) {
@@ -873,14 +852,11 @@ sub check_for_absolute_ace_wrappers()
     print "Running absolute ACE_wrappers test\n";
     foreach $file (@files_html) {
         if (open (FILE, $file)) {
-            my $line = 0;
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                ++$line;
                 if (m/\~schmidt\/ACE_wrappers\//) {
                     chomp;
-                    print_error ("~schmidt/ACE_wrappers found in $file on "
-                                 . "line $line");
+                    print_error ("$file:$.: ~schmidt/ACE_wrappers found");
                     print_error ($_) if (defined $opt_v);
                 }
             }
@@ -898,13 +874,11 @@ sub check_for_bad_ace_trace()
     print "Running TRACE test\n";
     foreach $file (@files_inl, @files_cpp) {
         if (open (FILE, $file)) {
-            my $line = 0;
             my $class;
             my $function;
 
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                ++$line;
 
                 # look for methods or functions
                 if (m/(^[^\s][^\(]*)\:\:([^\:^\(]*[^\s^\(])\s*/) {
@@ -936,8 +910,8 @@ sub check_for_bad_ace_trace()
 
                     if ($trace !~ m/\Q$function\E/
                         || ($trace =~ m/\:\:/ && !($trace =~ m/\Q$class\E/ && $trace =~ m/\Q$function\E/))) {
-                        print_error ("Mismatched TRACE in $file on line $line");
-                        print_error ("   I see \"$trace\" but I think I'm in \""
+                        print_error ("$file:$.: Mismatched TRACE");
+                        print_error ("$file:$.:   I see \"$trace\" but I think I'm in \""
                                      . $class . "::" . $function . "\"") if (defined $opt_v);
                     }
                 }
@@ -958,7 +932,6 @@ sub check_for_missing_rir_env ()
 {
     print "Running resolve_initial_references() check\n";
     foreach $file (@files_cpp, @files_inl) {
-        my $line = 0;
         if (open (FILE, $file)) {
             my $disable = 0;
             my $native_try = 0;
@@ -967,7 +940,6 @@ sub check_for_missing_rir_env ()
 
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                ++$line;
                 if (/FUZZ\: disable check_for_missing_rir_env/) {
                     $disable = 1;
                 }
@@ -994,9 +966,8 @@ sub check_for_missing_rir_env ()
                     if ($in_rir == 1 && m/\;\s*$/) {
                         $in_rir = 0;
                         if ($found_env != 1) {
-                            print_error ("Missing ACE_ENV_ARG_PARAMETER in"
-                                         . " resolve_initial_references"
-                                         . " in $file ($line)");
+                            print_error ("$file:$.: Missing ACE_ENV_ARG_PARAMETER in"
+                                         . " resolve_initial_references");
                         }
                         $found_env = 0;
                     }
@@ -1016,7 +987,6 @@ sub check_for_ace_check ()
 {
     print "Running ACE_CHECK check\n";
     foreach $file (@files_cpp, @files_inl) {
-        my $line = 0;
         if (open (FILE, $file)) {
             my $disable = 0;
             my $in_func = 0;
@@ -1026,7 +996,6 @@ sub check_for_ace_check ()
 
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                ++$line;
                 if (/FUZZ\: disable check_for_ace_check/) {
                     $disable = 1;
                 }
@@ -1050,9 +1019,9 @@ sub check_for_ace_check ()
 
                 if ($disable == 0) {
                     if (m/\s*ACE_ENV_(SINGLE_)?ARG_PARAMETER[,\)]/) {
-                        $env_line = $line;
+                        $env_line = $.;
                         if ($found_env) {
-                            print_error ("Missing ACE_CHECK/ACE_TRY_CHECK for $file ($env_line)");
+                            print_error ("$file:$env_line: Missing ACE_CHECK/ACE_TRY_CHECK");
                         }
                         $found_env = 1;
                         $in_func = 1;
@@ -1072,11 +1041,11 @@ sub check_for_ace_check ()
                     }
 
                     if (m/ACE_ENV_(SINGLE_)?ARG_PARAMETER.*ACE_ENV_(SINGLE_)?ARG_PARAMETER/) {
-                        print_error ("Multiple ACE_ENV_ARG_PARAMETER in $file ($line)");
+                        print_error ("$file:$.: Multiple ACE_ENV_ARG_PARAMETER");
                     }
 
                     if (m/ACE_THROW/ && $in_ace_try) {
-                        print_error ("ACE_THROW/ACE_THROW_RETURN used inside of an ACE_TRY for $file ($line)");
+                        print_error ("$file:$.: ACE_THROW/ACE_THROW_RETURN used inside of an ACE_TRY");
                     }
 
                     if ($in_func && m/\)/) {
@@ -1084,10 +1053,10 @@ sub check_for_ace_check ()
                     }
                     elsif (!$in_func && $found_env) {
                         if (m/ACE_CHECK/ && $in_ace_try) {
-                            print_error ("ACE_CHECK/ACE_CHECK_RETURN used inside of an ACE_TRY for $file ($line)");
+                            print_error ("$file:$.: ACE_CHECK/ACE_CHECK_RETURN used inside of an ACE_TRY");
                         }
                         elsif (!m/_CHECK/ && !m/^\}/ && !$in_return) {
-                            print_error ("Missing ACE_CHECK/ACE_TRY_CHECK for $file ($env_line)");
+                            print_error ("$file:$env_line: Missing ACE_CHECK/ACE_TRY_CHECK");
                         }
                         $found_env = 0;
                     }
@@ -1106,26 +1075,24 @@ sub check_for_changelog_errors ()
 {
     print "Running ChangeLog check\n";
     foreach $file (@files_changelog) {
-        my $line = 0;
         if (open (FILE, $file)) {
             my $found_backslash = 0;
             my $found_cvs_conflict = 0;
 
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                ++$line;
 
                 next if m/^\s*\/\//;
                 next if m/^\s*$/;
 
                 # Check for backslashes in paths.
                 if (m/\*.*\\[^ ]*:/) {
-                    print_error ("Backslashes in file path - $file ($line)");
+                    print_error ("$file:$.: Backslashes in file path");
                 }
 
                 # Check for CVS conflict tags
                 if (m/^<<<<</ || m/^=====/ || m/^>>>>>/) {
-                    print_error ("CVS conflict markers in $file ($line)");
+                    print_error ("$file:$.: CVS conflict markers");
                 }
             }
             close (FILE);
@@ -1142,12 +1109,10 @@ sub check_for_ptr_arith_t ()
 {
     print "Running ptr_arith_t check\n";
     foreach $file (@files_cpp, @files_inl, @files_h) {
-        my $line = 0;
         if (open (FILE, $file)) {
 
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                ++$line;
 
                 next if m/^\s*\/\//;  # Ignore C++ comments.
                 next if m/^\s*$/;     # Skip lines only containing
@@ -1157,8 +1122,7 @@ sub check_for_ptr_arith_t ()
                 # ignore typedefs, and should only catch variable
                 # declarations and parameter types.
                 if (m/ptr_arith_t / || m/ptr_arith_t,/) {
-                    print_error ("ptr_arith_t in $file ($line)."
-                                 . "  Use ptrdiff_t instead.");
+                    print_error ("$file:$.: ptr_arith_t; use ptrdiff_t instead.");
                 }
             }
             close (FILE);
@@ -1189,15 +1153,15 @@ sub check_for_include ()
                 }
                 if ($disable == 0) {
                     if (/^\s*#\s*include\s*<[(ace)|(TAO)|(CIAO)]\/.*>/) {
-                        #print_error ("<ace\/..> is used in $file.\n");
+                        print_error ("$file:$.: include <ace\/..> used") if ($opt_v);
                         ++$bad_occurance;
                     }
                     if (/^\s*#\s*include\s*<tao\/.*>/) {
-                        #print_error ("<tao\/..> is used in $file.\n");
+                        print_error ("$file:$.: include <tao\/..> used") if ($opt_v);
                         ++$bad_occurance;
                     }
                     if (/^\s*#\s*include\s*<ciao\/.*>/) {
-                        #print_error ("<ciao\/..> is used in $file.\n");
+                        print_error ("$file:$.: include <ciao\/..> used") if ($opt_v);
                         ++$bad_occurance;
                     }
                 }
@@ -1205,7 +1169,7 @@ sub check_for_include ()
             close (FILE);
 
             if ($disable == 0 && $bad_occurance > 0 ) {
-                print_error ("found #include <> usage of ace\/tao\/ciao $file.");
+                print_error ("$file:1: found $bad_occurance usage(s) of #include <> of ace\/tao\/ciao.");
             }
         }
         else {
@@ -1222,13 +1186,11 @@ sub check_for_non_bool_operators ()
 {
     print "Running non-bool equality, relational and logical operator check\n";
     foreach $file (@files_h, @files_inl, @files_cpp) {
-        my $line = 0;
         if (open (FILE, $file)) {
             print "Looking at file $file\n" if $opt_d;
             my $found_bool = 0;
             my $found_return_type = 0;
             while (<FILE>) {
-                ++$line;
 
                 if ($found_bool == 0
                     && (/[^\w]bool\s*$/
@@ -1255,7 +1217,7 @@ sub check_for_non_bool_operators ()
                     && /(?<![^\w]bool)(\s+|\w+::|>\s*::)operator\s*(?:!|<|<=|>|>=|==|!=|&&|\|\|)\s*\(/
                     && !/\(.*operator\s*(?:!|<|<=|>|>=|==|!=|&&|\|\|)\s*\(/
                     && !/^\s*return\s+/) {
-                    print_error ("non-bool return type for operator in $file on line $line");
+                    print_error ("$file:$.: non-bool return type for operator");
                 }
 
                 $found_return_type = 0;
@@ -1300,14 +1262,12 @@ sub check_for_refcountservantbase ()
     print "Running PortableServer::RefCountServantBase derivation check\n";
 
     foreach $file (@files_h) {
-        my $line = 0;
         if (open (FILE, $file)) {
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                ++$line;
 
                 if (/PortableServer::RefCountServantBase/) {
-                  print_error ("$file:$line: reference to deprecated PortableServer::RefCountServantBase");
+                  print_error ("$file:$.: reference to deprecated PortableServer::RefCountServantBase");
                 }
             }
             close (FILE);

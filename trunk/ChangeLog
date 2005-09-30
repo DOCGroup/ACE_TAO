@@ -1,14 +1,31 @@
+Fri Sep 30 14:00:36 2005  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * bin/fuzz.pl:
+
+	  Added a new test, check_for_refcountservantbase, that will
+	  report occurrences of PortableServer::RefCountServantBase in
+	  code.  This is good because the default is now changed in TAO to
+	  reflect the change in the CORBA spec.
+
+	  Changed all error and warning messages to be consistently
+	  printed with the keyword "Error: " or "Warning: " followed by
+	  the filename and line number where the problem occurred, then
+	  followed by a text description of the problem.  This makes the
+	  messages' format consistent with that output by grep and
+	  compilers so that one can use tools like emacs' 'compile' mode
+	  to step through the fuzz errors and easily fix things.
+
 Fri Sep 30 10:34:24 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Add feature checks for ACE_LACKS_INTMAX_T, ACE_LACKS_INTPTR_T,
-	  ACE_LACKS_UINTMAX_T, and ACE_LACKS_UINTPTR_T.
+          Add feature checks for ACE_LACKS_INTMAX_T, ACE_LACKS_INTPTR_T,
+          ACE_LACKS_UINTMAX_T, and ACE_LACKS_UINTPTR_T.
 
-	* ace/README:
+        * ace/README:
 
-	  Define ACE_LACKS_INTMAX_T, ACE_LACKS_UINTMAX_T, and
-	  ACE_LACKS_UINTPTR_T feature test macros.
+          Define ACE_LACKS_INTMAX_T, ACE_LACKS_UINTMAX_T, and
+          ACE_LACKS_UINTPTR_T feature test macros.
 
 Fri Sep 30 13:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -87,15 +104,15 @@ Thu Sep 29 16:07:02 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
 Thu Sep 29 13:28:29 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* bin/fuzz.pl (check_for_refcountservantbase):
+        * bin/fuzz.pl (check_for_refcountservantbase):
 
-	  Added a new fuzz check to catch derivations to
-	  PortableServer::RefCountServantBase.  Obviously, this check only
-	  applied to TAO, and the test itself isn't very discriminating as
-	  it simply looks for the presence of
-	  "PortableServer::RefCountServantBase" in a file and doesn't
-	  attempt to detect derivation.  There are also no means to turn
-	  off the check in comments.  But it's better than nothing.
+          Added a new fuzz check to catch derivations to
+          PortableServer::RefCountServantBase.  Obviously, this check only
+          applied to TAO, and the test itself isn't very discriminating as
+          it simply looks for the presence of
+          "PortableServer::RefCountServantBase" in a file and doesn't
+          attempt to detect derivation.  There are also no means to turn
+          off the check in comments.  But it's better than nothing.
 
 Thu Sep 29 15:18:24 2005  Simon McQueen  <sm@prismtech.com>
 
