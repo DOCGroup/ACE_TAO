@@ -1,3 +1,13 @@
+Fri Sep 30 10:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Invocation_Base.{h,cpp}:
+          Set the invoke_status_ correctly when an exception has occured.
+          This fixes bugzilla bug 2247. Thanks to Simon McQueen
+          <sm@prismtech.com> for adding the regression for this test
+          to the repo and to Milan Cvetkovic
+          <milan dot cvetkovic at mpathix dot com> for creating the
+          regression
+
 Fri Sep 30 10:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/fe/fe_init.cpp:
