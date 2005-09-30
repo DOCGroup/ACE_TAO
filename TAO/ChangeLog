@@ -1,3 +1,8 @@
+Fri Sep 30 18:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Smart_Proxies/dtor/dtor.mpc:
+          Added anytypecode as base project to the client
+
 Fri Sep 30 12:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/params.cpp:
