@@ -70,6 +70,7 @@
 #   define ACE_HAS_SIG_ATOMIC_T
 # endif /* ACE_HAS_WINCE */
 
+# define ACE_LACKS_INTPTR_T
 
 // Compiler doesn't support static data member templates.
 # define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES

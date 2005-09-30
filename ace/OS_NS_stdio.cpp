@@ -131,7 +131,7 @@ ACE_OS::fopen (const char *filename,
 # else
       hmode &= _O_TEXT | _O_RDONLY | _O_APPEND;
 
-#   if (defined(__BORLANDC__) && __BORLANDC__ < 0x0570)
+#   if defined (ACE_LACKS_INTPTR_T)
       int fd = ::_open_osfhandle (long (handle), 0);
 #   else
       int fd = ::_open_osfhandle (intptr_t (handle), 0);
@@ -188,7 +188,7 @@ ACE_OS::fopen (const wchar_t *filename,
 # else
       hmode &= _O_TEXT | _O_RDONLY | _O_APPEND;
 
-#   if (defined(__BORLANDC__) && __BORLANDC__ < 0x0570)
+#   if defined (ACE_LACKS_INTPTR_T)
       int fd = ::_open_osfhandle (long (handle), hmode);
 #   else
       int fd = ::_open_osfhandle (intptr_t (handle), hmode);
