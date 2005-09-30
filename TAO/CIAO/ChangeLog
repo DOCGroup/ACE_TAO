@@ -1,3 +1,9 @@
+Fri Sep 30 15:11:47 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* NEWS
+
+	  Updated the NEWS file.
+
 Fri Sep 30 07:53:47 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* tools/Config_Handlers/RT-CCM/SRD_Handler.cpp
