@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(ConvertIDL3) : taoidl3toidl2defaults, ciao_server_dnc {
+project(ConvertIDL3) : taoidl3toidl2defaults, ciao_component_dnc {
   idlflags += -Sc -Sm
   
   IDL3TOIDL2_Files {

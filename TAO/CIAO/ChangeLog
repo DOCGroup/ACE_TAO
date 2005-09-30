@@ -1,3 +1,14 @@
+Friday Sep 30 15:12:43 2005  William Otte <wotte@dre.vanderbilt.edu>
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc
+        * DAnCE/spec_RepositoryManager/spec_RepositoryManager.mpc
+        * RACE/Planner_Manager/Component/Planner_Manager.mpc
+        * tests/IDL3/ImpliedIDL/All/all.mpc
+        * tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp
+        * tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
+
+        Fixes for compile problems in Borland6
+        
 Fri Sep 30 15:11:47 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* NEWS
