@@ -80,7 +80,7 @@ project(Planner_Manager_svnt) : ciao_servant_dnc {
 
 
 project(Planner_Manager_exec) : ciao_component_dnc {
-  after   += Planner_Manager_svnt
+  after   += Planner_Manager_svnt Planner_stub
   sharedname = Planner_Manager_exec
   libs    += Planner_Manager_stub \
              Planner_Manager_svnt \

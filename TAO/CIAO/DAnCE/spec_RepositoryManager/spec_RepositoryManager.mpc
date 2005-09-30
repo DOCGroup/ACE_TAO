@@ -29,7 +29,7 @@ project (spec_RepositoryManager) : ciao_server_dnc, taoexe, ciao_config_handlers
 
 // RMadmin project: a sample client for the RM.
 
-project (spec_RMAdmin) : ciao_client_dnc, ciao_config_handlers {
+project (spec_RMAdmin) : ciao_server_dnc, ciao_config_handlers {
   exename = RMadmin
   after    += spec_RepositoryManager
 
