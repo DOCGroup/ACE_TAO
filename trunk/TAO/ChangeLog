@@ -1,3 +1,8 @@
+Fri Sep 30 10:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/fe/fe_init.cpp:
+          WChar fix
+
 Fri Sep 30 09:10:00 2005  Simon Massey  <simon.massey@prismtech.com>
 
         * tao/PI_Server/ServerInterceptorAdapter.cpp:
