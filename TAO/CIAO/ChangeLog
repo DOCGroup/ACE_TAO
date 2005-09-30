@@ -1,3 +1,9 @@
+Fri Sep 30 07:53:47 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* tools/Config_Handlers/RT-CCM/SRD_Handler.cpp
+
+	Should have been part of the previous commit. 
+
 Thu Sep 29 18:11:25 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp

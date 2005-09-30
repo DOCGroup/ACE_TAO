@@ -1,5 +1,5 @@
 // $Id$
-
+#include "Utils/XML_Helper.h"
 #include "SRD_Handler.h"
 #include "CIAOServerResources.hpp"
 #include "CLA_Handler.h"
