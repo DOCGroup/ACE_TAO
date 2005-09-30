@@ -87,6 +87,10 @@
 # endif /* !_MT && !ACE_HAS_WINCE */
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 
+#if (__BORLANDC__ < 0x570)
+# define ACE_LACKS_INTPTR_T
+#endif
+
 #if (__BORLANDC__ >= 0x600)
 # define ACE_LACKS_PTRDIFF_T
 # define ACE_PTRDIFF_T_TYPE std::ptrdiff_t

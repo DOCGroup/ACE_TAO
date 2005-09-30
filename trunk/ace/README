@@ -720,6 +720,8 @@ ACE_HAS_VERBOSE_NOTSUP                  Prints out console message in
                                         tracking down origin of
                                         ACE_NOTSUP.
 
+ACE_LACKS_INTPTR_T                      Platform lacks intptr_t type
+
 ACE_HAS_INT8_T                          Platform provides the int8_t type.
 ACE_HAS_INT16_T                         Platform provides the int16_t type.
 ACE_HAS_INT32_T                         Platform provides the int32_t type.

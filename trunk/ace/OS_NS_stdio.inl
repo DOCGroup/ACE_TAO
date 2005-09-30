@@ -635,7 +635,7 @@ ACE_OS::fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode)
 
   FILE *file = 0;
 
-#if (defined(__BORLANDC__) && __BORLANDC__ < 0x0570)
+#if defined (ACE_LACKS_INTPTR_T)
   int crt_handle = ::_open_osfhandle (long (handle), 0);
 #else
   int crt_handle = ::_open_osfhandle (intptr_t (handle), 0);
