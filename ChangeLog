@@ -1,3 +1,16 @@
+Fri Sep 30 08:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-borland.h:
+        * ace/config-win32-msvc-6.h:
+        * ace/OS_NS_stdio.cpp:
+        * ace/OS_NS_stdio.inl:
+        * ace/OS_NS_unistd.inl:
+        * ace/README:
+          Added new ACE_LACK_INTPTR_T and use this. This type is used to call
+          _open_osfhandle on windows. It seems not to be available with BCB6
+          and earlier and msvc6. Thanks to Simon McQueen for notifying me that
+          msvc6 also lacks this.
+
 Fri Sep 30 07:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SOCK_IO.cpp:
