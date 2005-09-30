@@ -226,6 +226,7 @@ namespace TAO
 
     TAO::Invocation_Status invoke_status_;
 
+  private:
     /// Pointer to the caught exception.
     CORBA::Exception *caught_exception_;
 #endif /*TAO_HAS_INTERCEPTORS*/

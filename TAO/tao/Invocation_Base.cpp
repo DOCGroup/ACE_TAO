@@ -204,7 +204,7 @@ namespace TAO
   Invocation_Base::handle_any_exception (CORBA::Exception *ex
                                          ACE_ENV_ARG_DECL)
   {
-    caught_exception_ = ex;
+    this->exception (ex);
 
     PortableInterceptor::ReplyStatus status =
       PortableInterceptor::SYSTEM_EXCEPTION;
@@ -225,14 +225,14 @@ namespace TAO
   PortableInterceptor::ReplyStatus
   Invocation_Base::handle_all_exception (ACE_ENV_SINGLE_ARG_DECL)
   {
+    CORBA::UNKNOWN ex;
+    this->exception (&ex);
+
     PortableInterceptor::ReplyStatus status =
       PortableInterceptor::SYSTEM_EXCEPTION;
 
     if (adapter_ != 0)
       {
-        CORBA::UNKNOWN ex;
-        this->caught_exception_ = &ex;
-
         this->adapter_->receive_exception (*this
                                            ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (PortableInterceptor::UNKNOWN);
@@ -247,6 +247,11 @@ namespace TAO
   void
   Invocation_Base::exception (CORBA::Exception *exception)
   {
+    if (CORBA::SystemException::_downcast (exception) != 0)
+      this->invoke_status_ = TAO::TAO_INVOKE_SYSTEM_EXCEPTION;
+    else if (CORBA::UserException::_downcast (exception) != 0)
+      this->invoke_status_ = TAO::TAO_INVOKE_USER_EXCEPTION;
+
     this->caught_exception_ = exception;
   }
 
