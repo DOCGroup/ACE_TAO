@@ -300,7 +300,7 @@ ACE_SOCK_Dgram_Bcast::send (const void *buf,
                             int flags) const
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::send");
-  size_t iterations = 0;
+  ssize_t iterations = 0;
   ssize_t total_bytes = 0;
 
   if (this->if_list_ == 0)

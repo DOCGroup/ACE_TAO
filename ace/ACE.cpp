@@ -184,7 +184,7 @@ ACE::select (int width,
                                timeout);
   if (result > 0)
     {
-# if !defined (ACE_WIN64)
+# if !defined (ACE_WIN32)
       // This isn't needed for Windows... it's a no-op anyway.
       if (readfds)
         readfds->sync ((ACE_HANDLE) width);
@@ -192,7 +192,7 @@ ACE::select (int width,
         writefds->sync ((ACE_HANDLE) width);
       if (exceptfds)
         exceptfds->sync ((ACE_HANDLE) width);
-#endif /* ACE_WIN64 */
+#endif /* ACE_WIN32 */
     }
   return result;
 }
@@ -208,7 +208,7 @@ ACE::select (int width,
                                0,
                                timeout);
 
-#if !defined (ACE_WIN64)
+#if !defined (ACE_WIN32)
   if (result > 0)
     readfds.sync ((ACE_HANDLE) width);
 #endif /* ACE_WIN64 */
@@ -2270,7 +2270,7 @@ ACE::handle_ready (ACE_HANDLE handle,
 
   // Wait for data or for the timeout to elapse.
   int select_width;
-#  if defined (ACE_WIN64)
+#  if defined (ACE_WIN32)
   // This arg is ignored on Windows and causes pointer truncation
   // warnings on 64-bit compiles.
   select_width = 0;
@@ -2615,7 +2615,13 @@ ACE::handle_timed_complete (ACE_HANDLE h,
   int n = ACE_OS::poll (&fds, 1, timeout);
 #else
   // Use C-style cast because the type of h varies by platform
+# if defined (ACE_WIN32)
+      // This arg is ignored on Windows and causes pointer truncation
+      // warnings on 64-bit compiles.
+  int select_width = 0;
+# else
   int select_width = int(h) + 1; 
+# endif /* ACE_WIN32 */
   int n = ACE_OS::select (select_width, // Ignored on windows
                           rd_handles,
                           wr_handles,
@@ -2777,13 +2783,13 @@ ACE::handle_timed_accept (ACE_HANDLE listener,
 
 #else
       int select_width;
-#  if defined (ACE_WIN64)
+#  if defined (ACE_WIN32)
       // This arg is ignored on Windows and causes pointer truncation
       // warnings on 64-bit compiles.
       select_width = 0;
 #  else
       select_width = int (listener) + 1;
-#  endif /* ACE_WIN64 */
+#  endif /* ACE_WIN32 */
       int n = ACE_OS::select (select_width,
                               rd_handle, 0, 0,
                               timeout);
