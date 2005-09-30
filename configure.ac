@@ -1806,6 +1806,54 @@ else
   ace_u_long_long_typedef_set=no
 fi dnl test "$cross_compiling" != yes
 
+AC_CHECK_TYPE([intmax_t],
+	      [],
+	      [AC_DEFINE([ACE_LACKS_INTMAX_T], 1,
+			 [Define to 1 if the system lacks the type `intmax_t'.])],
+	      [
+#ifndef ACE_LACKS_STDINT_H
+#include <stdint.h>
+#endif
+#ifndef ACE_LACKS_INTTYPES_H
+#include <inttypes.h>
+#endif])
+
+AC_CHECK_TYPE([uintmax_t],
+	      [],
+	      [AC_DEFINE([ACE_LACKS_UINTMAX_T], 1,
+			 [Define to 1 if the system lacks the type `uintmax_t'.])],
+	      [
+#ifndef ACE_LACKS_STDINT_H
+#include <stdint.h>
+#endif
+#ifndef ACE_LACKS_INTTYPES_H
+#include <inttypes.h>
+#endif])
+
+AC_CHECK_TYPE([intptr_t],
+	      [],
+	      [AC_DEFINE([ACE_LACKS_INTPTR_T], 1,
+			 [Define to 1 if the system lacks the type `intptr_t'.])],
+	      [
+#ifndef ACE_LACKS_STDINT_H
+#include <stdint.h>
+#endif
+#ifndef ACE_LACKS_INTTYPES_H
+#include <inttypes.h>
+#endif])
+
+AC_CHECK_TYPE([uintptr_t],
+	      [],
+	      [AC_DEFINE([ACE_LACKS_UINTPTR_T], 1,
+			 [Define to 1 if the system lacks the type `uintptr_t'.])],
+	      [
+#ifndef ACE_LACKS_STDINT_H
+#include <stdint.h>
+#endif
+#ifndef ACE_LACKS_INTTYPES_H
+#include <inttypes.h>
+#endif])
+
 AC_CHECK_TYPE([int8_t],
 	      [AC_DEFINE([ACE_HAS_INT8_T], 1,
 			 [Define to 1 if the system has the type `int8_t'.])],
