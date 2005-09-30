@@ -1,3 +1,10 @@
+Fri Sep 30 09:10:00 2005  Simon Massey  <simon.massey@prismtech.com>
+
+        * tao/PI_Server/ServerInterceptorAdapter.cpp:
+
+          This fixes Bugzilla 2249.
+          (Problems with  TAO_HAS_EXTENDED_FT_INTERCEPTORS  builds)
+
 Thu Sep 29 15:07:30 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
