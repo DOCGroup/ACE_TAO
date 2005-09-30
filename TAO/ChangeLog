@@ -5,7 +5,13 @@ Fri Sep 30 12:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Sep 30 12:22:51 2005  Simon McQueen  <sm@prismtech.com>
 
-	*
+        * TAO/orbsvcs/tests/Bug_2247_Regression/Bug_2247_Regression.mpc:
+
+          Add minimum_corba.
+
+        * TAO/orbsvcs/tests/Bug_2247_Regression/Manager.cpp:
+
+          ACE_CHECK to ACE_CHECK_RETURN.
 
 Fri Sep 30 10:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
