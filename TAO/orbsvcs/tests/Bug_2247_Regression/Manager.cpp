@@ -577,18 +577,18 @@ Client_i::init (ACE_ENV_SINGLE_ARG_DECL)
                                 argv,
                                 0
                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   CORBA::Object_var object =
     this->orb_->string_to_object (data
                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   // Combined IOR stuff
   Simple_Server_var server =
     Simple_Server::_narrow (object.in ()
                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (server.in ()))
     {

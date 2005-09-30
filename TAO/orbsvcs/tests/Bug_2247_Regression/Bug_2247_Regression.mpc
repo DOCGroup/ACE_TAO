@@ -1,14 +1,14 @@
 // -*- MPC -*-
 // $Id$
 
-project(*server): portableserver, orbsvcsexe, iormanip, messaging {
+project(*server): portableserver, orbsvcsexe, iormanip, messaging, minimum_corba {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project(*Manager): portableserver, orbsvcsexe, iormanip, ftorb {
+project(*Manager): portableserver, orbsvcsexe, iormanip, ftorb, minimum_corba {
   Source_Files {
     testC.cpp
     Manager.cpp
