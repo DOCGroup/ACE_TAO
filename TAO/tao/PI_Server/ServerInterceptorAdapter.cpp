@@ -102,7 +102,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
       // should only be invoked if all of the interceptors registered
       // with the ORB were pushed on to the flow stack by one of the
       // starting endpoints (such as
-      // receive_request_service_contexts()).  If the above condition
+      // tao_ft_interception_point()).  If the above condition
       // evaluates to "true," then it is likely that a starting
       // interception point was never invoked.  This is of course, an
       // internal error that must be corrected.
@@ -111,6 +111,13 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
 
   ACE_TRY
     {
+      // Copy the request scope current (RSC) to the thread scope
+      // current (TSC) upon leaving this scope, i.e. just after the
+      // receive_request_service_contexts() completes.  A "guard" is
+      // used to make the copy also occur if an exception is thrown.
+      TAO::PICurrent_Guard const pi_guard (ri->server_request (),
+                                           false /* Copy RSC to TSC */);
+
       for (size_t i = 0 ; i < server_request.interceptor_count (); ++i)
         {
           this->interceptors_[i]->receive_request_service_contexts (
