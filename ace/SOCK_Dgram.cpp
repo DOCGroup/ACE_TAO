@@ -58,13 +58,13 @@ ACE_SOCK_Dgram::recv (iovec *io_vec,
   // Check the status of the current socket to make sure there's data
   // to recv (or time out).
   int select_width;
-#  if defined (ACE_WIN64)
+#  if defined (ACE_WIN32)
   // This arg is ignored on Windows and causes pointer truncation
   // warnings on 64-bit compiles.
   select_width = 0;
 #  else
   select_width = int (this->get_handle ()) + 1;
-#  endif /* ACE_WIN64 */
+#  endif /* ACE_WIN32 */
   switch (ACE_OS::select (select_width,
                           handle_set,
                           0, 0,
@@ -447,13 +447,13 @@ ACE_SOCK_Dgram::recv (void *buf,
 
   // Check the status of the current socket.
   int select_width;
-#if defined (ACE_WIN64)
+#if defined (ACE_WIN32)
   // This arg is ignored on Windows and causes pointer truncation
   // warnings on 64-bit compiles.
   select_width = 0;
 #else
   select_width = int (this->get_handle ()) + 1;
-#endif /* ACE_WIN64 */
+#endif /* ACE_WIN32 */
   switch (ACE_OS::select (select_width,
                           handle_set,
                           0,
@@ -486,13 +486,13 @@ ACE_SOCK_Dgram::send (const void *buf,
 
   // Check the status of the current socket.
   int select_width;
-#if defined (ACE_WIN64)
+#if defined (ACE_WIN32)
   // This arg is ignored on Windows and causes pointer truncation
   // warnings on 64-bit compiles.
   select_width = 0;
 #else
   select_width = int (this->get_handle ()) + 1;
-#endif /* ACE_WIN64 */
+#endif /* ACE_WIN32 */
   switch (ACE_OS::select (select_width,
                           0,
                           handle_set,

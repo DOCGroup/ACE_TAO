@@ -370,14 +370,14 @@ ACE_MEM_IO::send (const ACE_Message_Block *message_block,
   if (this->deliver_strategy_ == 0)
     return -1;                  // Something went seriously wrong.
 
-  ssize_t len = message_block->total_length ();
+  size_t len = message_block->total_length ();
 
   if (len != 0)
     {
       ACE_MEM_SAP_Node *buf =
         reinterpret_cast<ACE_MEM_SAP_Node *> (
           this->deliver_strategy_->acquire_buffer (len));
-      ssize_t n = 0;
+      size_t n = 0;
       while (message_block != 0)
         {
           ACE_OS::memcpy (static_cast<char *> (buf->data ()) + n,

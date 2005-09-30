@@ -635,11 +635,11 @@ ACE_OS::fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode)
 
   FILE *file = 0;
 
-#  if defined (ACE_WIN64)
-  int crt_handle = ::_open_osfhandle (intptr_t (handle), 0);
-#  else
+#if (defined(__BORLANDC__) && __BORLANDC__ < 0x0570)
   int crt_handle = ::_open_osfhandle (long (handle), 0);
-#  endif /* ACE_WIN64 */
+#else
+  int crt_handle = ::_open_osfhandle (intptr_t (handle), 0);
+#endif
 
   if (crt_handle != -1)
     {
