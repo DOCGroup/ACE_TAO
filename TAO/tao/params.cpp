@@ -142,7 +142,7 @@ TAO_ORB_Parameters::parse_and_add_endpoints (const ACE_CString &endpoints,
             }
         }
 
-      int begin = 0;
+      ssize_t begin = 0;
       ssize_t end = endpoints.find (endpoints_delimiter);
 
       for (int i = 0; i < endpoints_count; ++i)
