@@ -74,15 +74,16 @@ project (XSC_Config_Handlers) : acelib, ciao_deployment_stub, xerces {
   }
 }
 
-//project (XSC_Config_Handlers_Tests) : ciao_config_handlers, ifr_client {
-//  requires += dummy_label
-//  exename = test
-//  dynamicflags   = CONFIG_HANDLERS_BUILD_DLL
-//  macros   += XML_USE_PTHREAD/S
+project (XSC_Config_Handlers_Tests) : ciao_component_dnc, ciao_config_handlers, ifr_client {
+  requires += dummy_label
+  includes += $(CIAO_ROOT)/tools/Config_Handlers
+  exename = test
+  dynamicflags   = CONFIG_HANDLERS_BUILD_DLL
+  macros   += XML_USE_PTHREAD/S
 
-//  Source_Files {
-//    test.cpp
-//  }
-//}
+  Source_Files {
+    test.cpp
+  }
+}
 
 

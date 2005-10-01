@@ -56,18 +56,36 @@ namespace CIAO
             
       dest.instanceRef = tmp;
 
-      if (src.kind () == CCMComponentPortKind::Facet)
-        dest.kind = Deployment::Facet;
-      if (src.kind () == CCMComponentPortKind::SimplexReceptacle)
-        dest.kind = Deployment::SimplexReceptacle;
-      if (src.kind () == CCMComponentPortKind::MultiplexReceptacle)
-        dest.kind = Deployment::MultiplexReceptacle;
-      if (src.kind () == CCMComponentPortKind::EventEmitter)
-        dest.kind = Deployment::EventEmitter;
-      if (src.kind () == CCMComponentPortKind::EventPublisher)
-        dest.kind = Deployment::EventPublisher;
-      if (src.kind () == CCMComponentPortKind::EventConsumer)
-        dest.kind = Deployment::EventConsumer;
+      switch (src.kind ().integral ())
+        {
+          case CCMComponentPortKind::Facet_l:
+            dest.kind = Deployment::Facet;
+            break;
+            
+          case CCMComponentPortKind::SimplexReceptacle_l:
+            dest.kind = Deployment::SimplexReceptacle;
+            break;
+            
+          case CCMComponentPortKind::MultiplexReceptacle_l:
+            dest.kind = Deployment::MultiplexReceptacle;
+            break;
+            
+          case CCMComponentPortKind::EventEmitter_l:
+            dest.kind = Deployment::EventEmitter;
+            break;
+            
+          case CCMComponentPortKind::EventPublisher_l:
+            dest.kind = Deployment::EventPublisher;
+            break;
+            
+          case CCMComponentPortKind::EventConsumer_l:
+            dest.kind = Deployment::EventConsumer;
+            break;
+          
+          default:
+            ACE_DEBUG ((LM_DEBUG, "Invalid port kind in connection\n"));
+            
+         }
     }
 
     PlanSubcomponentPortEndpoint

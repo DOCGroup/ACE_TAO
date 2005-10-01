@@ -1,3 +1,15 @@
+Sat Oct 1 15:38:23  2005  William Otte <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/Config_Handlers.mpc
+        * tools/Config_Handlers/test.cpp
+        
+        Corrected the config handler test to properly test the handlers. 
+        
+        * tools/Config_Handlers/PSPE_Handler.cpp
+        
+        Fixed a run-time bug that was causing corrupted plans in Borland
+        builds. 
+        
 Friday Sep 30 15:12:43 2005  William Otte <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc
