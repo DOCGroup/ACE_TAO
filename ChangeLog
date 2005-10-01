@@ -1,3 +1,8 @@
+Sat Oct  1 11:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.cpp:
+          Fixed _open_osfhandle call
+
 Fri Sep 30 14:00:36 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * bin/fuzz.pl:
