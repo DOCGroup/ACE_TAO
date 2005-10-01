@@ -1,0 +1,79 @@
+$Id$
+
+This directory contains a test case used to verify that the client
+exposed policies get embedded correctly in the IOR and exposed to the
+client in the object reference.
+
+The policy tested are:
+
+    - PriorityModelPolicy
+    - PriorityBandedConnectionPolicy
+    - ClientProtocolPolicy
+
+The policy can be set at POA level or at object level. The policies
+that have to be associated with a POA or with an object are specified
+using a configuration file. As an example we can consider the file
+POA.cfg that contains the policy used to create a child POA:
+
+File: POA.cfg
+
+        IOR_Source poa.ior
+
+        Priority 10
+
+        Priority_Bands 5
+        Priority_Range 3 5
+        Priority_Range 7 11
+        Priority_Range 5 9
+        Priority_Range 1 5
+        Priority_Range 10 15
+
+
+The tag used to decribe the information have the following meaning:
+
+    - IOR_Source: Defines the name of the file that has to be used to
+                  store the IOR of the object created.
+
+    - Priority: Defines a CORBA::Priority value.
+
+    - Priority_Bands: Defines the number of priority bands.
+
+    - Priority_Range: Defines the priority range associated with a
+      priority_band.
+
+
+The policies value that are specified in the config file can be used
+to set the policy at POA level or to override those police on a Object
+level basis (beaware that the only policy that can be overridden on an
+Object basis is the Priority).
+
+In particular the option "-POAConfigFile" let you specify the policy
+that have to be used when the POA is created. While the option
+"-ObjectConfigFile" let you set the options on a object basis
+overriding the policies that were set at a POA level.
+
+
+When the test is run two object are created, of this object one has
+the same priority that where specified when the POA was created, while
+the other ovverride some of them as prescribed in the config file
+specified with the option "-ObjectConfigFile".
+
+The config file are used by the client side to verify that what is
+embedded in the IOR is correct.
+
+
+USAGE:
+
+   server -ORBSvcConf server.conf -ORBendpoint iiop://<hostaddr>:0/priority=<priority> -ORBendpoint iiop://<hostaddr>:0/priority=<priority> -POAConfigFile <config_file_name> -ObjectConfigFile <config_file_name>
+
+   client -POAConfigFile <config_file_name>
+          -ObjectConfigFile <config_file_name>
+
+
+EXAMPLE:
+
+      $ server -POAConfigFile POA.cfg -ObjectConfigFile Object.cfg
+
+      $ client -POAConfigFile POA.cfg -ObjectConfigFile Object.cfg
+
+      $ client -POAConfigFile POA.cfg -ObjectConfigFile Object.cfg

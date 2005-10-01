@@ -1,0 +1,26 @@
+//
+// $Id$
+//
+
+/// A simple module to avoid namespace pollution
+module Test
+{
+  /// A very simple interface
+  interface Simple
+  {
+    /// Destroy the object
+    void destroy ();
+  };
+
+  /// A factory to create simple objects
+  interface _Factory
+  {
+    /// Create the object
+    Simple create_simple_object ();
+
+    /// Shutdown the server
+    void shutdown ();
+  };
+
+  typedef sequence<Simple> Simple_Sequence;
+};

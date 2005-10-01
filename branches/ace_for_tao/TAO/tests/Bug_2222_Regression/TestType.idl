@@ -1,0 +1,3 @@
+// $Id$
+
+typedef octet Array_Typedef[1];

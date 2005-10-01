@@ -1,0 +1,28 @@
+# $Id$
+
+This test verifies that IOR interceptor support is working properly.
+It does so by adding a unique tagged component to the IOR.  If the
+IOR interceptor support is working properly, then the it should be
+possible to extract that tagged component from the IOR on the client
+side via the
+
+  PortableInterceptor::ClientRequestInfo::get_effective_component()
+
+method from within a ClientRequestInterceptor, for example.
+
+Run the test as follows:
+
+	$ perl run_test.pl
+
+Output should be very similar to the following:
+
+==== Running IORInterceptor test
+(4956|16384) Added tagged component containing the
+(4956|16384)   string "FOO_IORInterceptor" to all profiles.
+(4956|16384) Added tagged component containing the
+(4956|16384)   string "FOO_IORInterceptor" to all IIOP profiles.
+(4956|16384) Successfully retrieved effective policy.
+FOO::test: <IOR:...>
+(4957|16384) String extracted from tagged component data: FOO_IORInterceptor
+"test_i" is shutting down.
+Event loop finished.

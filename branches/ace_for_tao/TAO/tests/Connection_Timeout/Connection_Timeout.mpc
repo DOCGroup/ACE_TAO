@@ -1,0 +1,10 @@
+// -*- MPC -*-
+// $Id$
+
+project(*client): taoclient, messaging, portableserver {
+  Source_Files {
+    TestC.cpp
+    client.cpp
+  }
+}
+
