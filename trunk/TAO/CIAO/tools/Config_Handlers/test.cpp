@@ -7,7 +7,7 @@
 #include "ciao/Deployment_DataC.h"
 #include "ciao/ServerResourcesC.h"
 #include "ace/Get_Opt.h"
-#include "XML_Helper.h"
+#include "Utils/XML_Helper.h"
 #include "DnC_Dump.h"
 #include "tao/ORB.h"
 static const char *input_file = "BasicSP.cdp";
@@ -85,7 +85,7 @@ int main (int argc, char *argv[])
       
 
       //Write it to test.xml
-      the_helper.write_DOM(doc, "test.xml");
+      the_helper.write_DOM(the_xsc, "test.xml");
 
       //Cleanliness is next to Godliness
       delete doc;
