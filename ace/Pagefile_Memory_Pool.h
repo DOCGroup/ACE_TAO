@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -13,9 +13,15 @@
 
 #ifndef ACE_PAGEFILE_MEMORY_POOL_H
 #define ACE_PAGEFILE_MEMORY_POOL_H
+
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE.h"
+#ifdef ACE_MEMORY_BUILD_DLL
+# include "ace/ACE_Memory_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Memory_Export ACE_Export
+#endif  /* ACE_MEMORY_BUILD_DLL */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,6 +29,7 @@
 
 #if defined (ACE_WIN32)
 
+#include "ace/ACE.h"
 #include "ace/os_include/sys/os_mman.h"
 
 /**
@@ -33,7 +40,7 @@
  * This should be a nested class, but that breaks too many
  * compilers.
  */
-class ACE_Export ACE_Pagefile_Memory_Pool_Options
+class ACE_Memory_Export ACE_Pagefile_Memory_Pool_Options
 {
 public:
   /// Initialization method.
@@ -53,7 +60,7 @@ public:
  * @brief Make a memory pool that is based on "anonymous" memory
  * regions allocated from the Win32 page file.
  */
-class ACE_Export ACE_Pagefile_Memory_Pool
+class ACE_Memory_Export ACE_Pagefile_Memory_Pool
 {
 public:
   typedef ACE_Pagefile_Memory_Pool_Options OPTIONS;

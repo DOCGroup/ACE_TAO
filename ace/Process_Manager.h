@@ -12,16 +12,24 @@
 
 #ifndef ACE_PROCESS_MANAGER_H
 #define ACE_PROCESS_MANAGER_H
+
 #include /**/ "ace/pre.h"
 
-#include "ace/Event_Handler.h"
-#include "ace/Time_Value.h"
+#ifdef ACE_THREADS_BUILD_DLL
+# include "ace/ACE_Threads_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Threads_Export ACE_Export
+#endif  /* ACE_THREADS_BUILD_DLL */
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Process.h"
+#include "ace/Event_Handler.h"
+#include "ace/Time_Value.h"
 
 #if defined (ACE_HAS_THREADS)
 #  include "ace/Recursive_Thread_Mutex.h"
@@ -35,7 +43,7 @@ class ACE_Reactor;
  * @brief Information describing each process that's controlled by an
  * \<ACE_Process_Manager\>.
  */
-class ACE_Export ACE_Process_Descriptor
+class ACE_Threads_Export ACE_Process_Descriptor
 {
 private:
   friend class ACE_Process_Manager;
@@ -117,7 +125,7 @@ private:
  * + The <handle_input> method collects all available exit
  *   statuses.
  */
-class ACE_Export ACE_Process_Manager : protected ACE_Event_Handler
+class ACE_Threads_Export ACE_Process_Manager : protected ACE_Event_Handler
 {
 public:
   friend class ACE_Process_Control;

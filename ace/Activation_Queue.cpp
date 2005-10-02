@@ -6,6 +6,7 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/Malloc_Base.h"
+#include "ace/Time_Value.h"
 
 ACE_RCSID (ace,
            Activation_Queue,

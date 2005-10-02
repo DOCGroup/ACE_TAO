@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -13,14 +13,21 @@
 
 #ifndef ACE_MMAP_MEMORY_POOL_H
 #define ACE_MMAP_MEMORY_POOL_H
+
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE.h"
+#ifdef ACE_MEMORY_BUILD_DLL
+# include "ace/ACE_Memory_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Memory_Export ACE_Export
+#endif  /* ACE_MEMORY_BUILD_DLL */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/ACE.h"
 #include "ace/Event_Handler.h"
 #include "ace/Signal.h"
 #include "ace/Mem_Map.h"
@@ -33,7 +40,7 @@
  * This should be a nested class, but that breaks too many
  * compilers.
  */
-class ACE_Export ACE_MMAP_Memory_Pool_Options
+class ACE_Memory_Export ACE_MMAP_Memory_Pool_Options
 {
 public:
   enum
@@ -121,7 +128,7 @@ private:
  * @brief Make a memory pool that is based on @c mmap(2).  This
  * implementation allows memory to be shared between processes.
  */
-class ACE_Export ACE_MMAP_Memory_Pool : public ACE_Event_Handler
+class ACE_Memory_Export ACE_MMAP_Memory_Pool : public ACE_Event_Handler
 {
 public:
   typedef ACE_MMAP_Memory_Pool_Options OPTIONS;
@@ -272,7 +279,7 @@ protected:
  * every update.  Naturally, this trades off increased
  * performance for less reliability if the machine crashes.
  */
-class ACE_Export ACE_Lite_MMAP_Memory_Pool : public ACE_MMAP_Memory_Pool
+class ACE_Memory_Export ACE_Lite_MMAP_Memory_Pool : public ACE_MMAP_Memory_Pool
 {
 public:
   /// Initialize the pool.

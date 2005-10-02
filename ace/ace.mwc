@@ -4,6 +4,8 @@
 workspace {
   ace.mpc
   ace_for_tao.mpc
+  ace_memory_for_tao.mpc
+  ace_threads_for_tao.mpc
   ace_flreactor.mpc
   ace_qtreactor.mpc
   ace_tkreactor.mpc

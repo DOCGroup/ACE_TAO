@@ -11,6 +11,7 @@
 
 #ifndef ACE_RW_PROCESS_MUTEX_H
 #define ACE_RW_PROCESS_MUTEX_H
+
 #include /**/ "ace/pre.h"
 
 #include "ace/File_Lock.h"
@@ -35,7 +36,7 @@
  * \todo For systems with pthread_rwlockattr_setpshared one 
  * may consider using them to make the mutex faster.
  */
-class ACE_Export ACE_RW_Process_Mutex
+class ACE_Threads_Export ACE_RW_Process_Mutex
 {
 public:
   /// Create a readers/writer <Process_Mutex>, passing in the optional
