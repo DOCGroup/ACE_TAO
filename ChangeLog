@@ -1,3 +1,12 @@
+Sun Oct  2 19:18:01 2005  Olli Savia  <ops@iki.fi>
+
+        * ace/config-lynxos.h:
+          Added contents from config-lynxos4.0.0.h to this file.
+          config-lynxos4.0.0.h is no longer needed.
+
+        * ace/config-lynxos4.0.0.h:
+          Removed this file.
+
 Sat Oct  1 11:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_stdio.cpp:
@@ -7,18 +16,18 @@ Fri Sep 30 14:00:36 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * bin/fuzz.pl:
 
-	  Added a new test, check_for_refcountservantbase, that will
-	  report occurrences of PortableServer::RefCountServantBase in
-	  code.  This is good because the default is now changed in TAO to
-	  reflect the change in the CORBA spec.
+          Added a new test, check_for_refcountservantbase, that will
+          report occurrences of PortableServer::RefCountServantBase in
+          code.  This is good because the default is now changed in TAO to
+          reflect the change in the CORBA spec.
 
-	  Changed all error and warning messages to be consistently
-	  printed with the keyword "Error: " or "Warning: " followed by
-	  the filename and line number where the problem occurred, then
-	  followed by a text description of the problem.  This makes the
-	  messages' format consistent with that output by grep and
-	  compilers so that one can use tools like emacs' 'compile' mode
-	  to step through the fuzz errors and easily fix things.
+          Changed all error and warning messages to be consistently
+          printed with the keyword "Error: " or "Warning: " followed by
+          the filename and line number where the problem occurred, then
+          followed by a text description of the problem.  This makes the
+          messages' format consistent with that output by grep and
+          compilers so that one can use tools like emacs' 'compile' mode
+          to step through the fuzz errors and easily fix things.
 
 Fri Sep 30 10:34:24 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
