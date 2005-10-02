@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -18,8 +18,13 @@
 #define ACE_SOCK_SEQPACK_CONNECTOR_H
 
 #include /**/ "ace/pre.h"
-#include "ace/config-all.h"
-#include "ace/ACE_export.h"
+
+#ifdef ACE_SOCKETS_BUILD_DLL
+# include "ace/ACE_Sockets_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Sockets_Export ACE_Export
+#endif  /* ACE_SOCKETS_BUILD_DLL */
 
 #include "ace/SOCK_SEQPACK_Association.h"
 #include "ace/Multihomed_INET_Addr.h"
@@ -46,7 +51,7 @@ class ACE_Time_Value;
  * this is that @c ACE_SOCK_SEQPACK_Connector objects do not store state so
  * they can be used reentrantly in multithreaded programs.
  */
-class ACE_Export ACE_SOCK_SEQPACK_Connector
+class ACE_Sockets_Export ACE_SOCK_SEQPACK_Connector
 {
 public:
   // = Initialization and termination methods.

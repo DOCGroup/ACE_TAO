@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -16,14 +16,21 @@
 
 #ifndef ACE_SOCK_DGRAM_MCAST_H
 #define ACE_SOCK_DGRAM_MCAST_H
+
 #include /**/ "ace/pre.h"
 
-#include "ace/SOCK_Dgram.h"
+#ifdef ACE_SOCKETS_BUILD_DLL
+# include "ace/ACE_Sockets_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Sockets_Export ACE_Export
+#endif  /* ACE_SOCKETS_BUILD_DLL */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
 
 #if defined (ACE_SOCK_DGRAM_MCAST_DUMPABLE)
@@ -87,7 +94,7 @@
  *   alphanumeric form and <subscribe> will convert them into numbers via
  *   <ACE_OS::atoi>.
  */
-class ACE_Export ACE_SOCK_Dgram_Mcast : public ACE_SOCK_Dgram
+class ACE_Sockets_Export ACE_SOCK_Dgram_Mcast : public ACE_SOCK_Dgram
 {
 public:
 
