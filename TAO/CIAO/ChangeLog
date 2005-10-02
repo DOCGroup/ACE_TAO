@@ -1,3 +1,13 @@
+Sun Oct  2 22:24:15 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp:
+        
+          Added include of RT-CCM/CIAOServerResources.hpp.
+          
+        * tools/Config_Handlers/DP_Handler.cpp:
+        
+          Added export macros to friend function declarations.
+
 Sat Oct 1 15:38:23  2005  William Otte <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/Config_Handlers.mpc

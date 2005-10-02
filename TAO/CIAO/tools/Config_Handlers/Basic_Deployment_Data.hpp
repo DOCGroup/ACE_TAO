@@ -124,10 +124,10 @@ namespace CIAO
       Value
       integral () const;
 
-      friend bool
+      friend bool Config_Handlers_Export
       operator== (TCKind const& a, TCKind const& b);
 
-      friend bool
+      friend bool Config_Handlers_Export
       operator!= (TCKind const& a, TCKind const& b);
 
       private:
@@ -1240,10 +1240,10 @@ namespace CIAO
       Value
       integral () const;
 
-      friend bool
+      friend bool Config_Handlers_Export
       operator== (CCMComponentPortKind const& a, CCMComponentPortKind const& b);
 
-      friend bool
+      friend bool Config_Handlers_Export
       operator!= (CCMComponentPortKind const& a, CCMComponentPortKind const& b);
 
       private:
