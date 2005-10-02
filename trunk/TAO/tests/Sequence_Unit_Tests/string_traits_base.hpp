@@ -77,6 +77,6 @@ struct string_traits_base<CORBA::WChar>
 };
 
 } // namespace details
-} // namespace CORBA
+} // namespace TAO
 
 #endif // guard_string_traits_base_hpp
