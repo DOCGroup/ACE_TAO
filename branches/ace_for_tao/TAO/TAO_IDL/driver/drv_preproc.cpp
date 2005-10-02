@@ -470,9 +470,9 @@ DRV_get_orb_idl_includes (void)
 
   if (fd == 0) {
     ACE_ERROR ((LM_ERROR,
-		"%s%s",
-		orb_idl_path.fast_rep (),
-		": cannot open input file\n"));
+                "%s%s",
+                orb_idl_path.fast_rep (),
+                ": cannot open input file\n"));
 
     ACE_OS::exit (99);
   }
@@ -560,18 +560,6 @@ DRV_copy_input (FILE *fin,
   ACE_OS::fclose (f);
 }
 
-#ifdef ACE_LACKS_MKSTEMP
-static void
-DRV_copy_input (FILE *fin,
-                const char *fn,
-                const char *orig_filename)
-{
-  FILE *f = ACE_OS::fopen (fn, "w");
-
-  ::DRV_copy_input (fin, f, fn, orig_filename);
-}
-#endif  /* ACE_LACKS_MKSTEMP */
-
 // Strip down a name to the last component,
 // i.e. everything after the last '/' or '\' character.
 static char *
@@ -614,28 +602,11 @@ DRV_pre_proc (const char *myfile)
   const char* tmpdir = idl_global->temp_dir ();
   static const char temp_file_extension[] = ".cpp";
 
-  // If ACE_LACKS_MKSTEMP is defined, we use ACE's uuid generator
-  // to create a unique id to append to tao_idl*_template to get
-  // unique temporary file names.
-  size_t uuid_len = 0;
+  static char const tao_idlf_template[] = "tao-idlf_XXXXXX";
+  static char const tao_idli_template[] = "tao-idli_XXXXXX";
 
-#ifdef ACE_LACKS_MKSTEMP
-
-  static const char tao_idlf_template[] = "tao-idlf_";
-  static const char tao_idli_template[] = "tao-idli_";
-
-  // The generated string format has 32 characters and 4 dashes.
-  uuid_len = 36;
-
-#else
-
-  static const char tao_idlf_template[] = "tao-idlf_XXXXXX";
-  static const char tao_idli_template[] = "tao-idli_XXXXXX";
-
-#endif  /* ACE_LACKS_MKSTEMP */
-
-  size_t tlen =
-    ACE_OS::strlen (tmpdir) + sizeof (temp_file_extension) + uuid_len;
+  size_t const tlen =
+    ACE_OS::strlen (tmpdir) + sizeof (temp_file_extension);
 
   // Prevent a buffer overrun.
   if (tlen + sizeof (tao_idlf_template) > sizeof (tmp_file)
@@ -652,37 +623,14 @@ DRV_pre_proc (const char *myfile)
   ACE_OS::strcpy (tmp_file,  tmpdir);
   ACE_OS::strcpy (tmp_ifile, tmpdir);
 
-#ifdef ACE_LACKS_MKSTEMP
-
-  ACE_CString ftmpl (tao_idlf_template);
-  ACE_CString itmpl (tao_idli_template);
-
-  // Append temporary filename template to temporary directory.
-  ACE_OS::strcat (tmp_file,  ftmpl.substr (0, 9).c_str ());
-  ACE_OS::strcat (tmp_ifile, itmpl.substr (0, 9).c_str ());
-
-  ACE_CString uuid = FE_generate_UUID ();
-
-  const char *suffix = uuid.c_str ();
-
-  ACE_OS::strcat (tmp_file, suffix);
-  ACE_OS::strcat (tmp_ifile, suffix);
-  ACE_OS::strcat (tmp_file,  temp_file_extension);
-  ACE_OS::strcat (tmp_ifile, temp_file_extension);
-
-  char * t_file  = tmp_file;
-  char * t_ifile = tmp_ifile;
-
-#else
-
   // Append temporary filename template to temporary directory.
   ACE_OS::strcat (tmp_file,  tao_idlf_template);
   ACE_OS::strcat (tmp_ifile, tao_idli_template);
 
-  int ti_fd = ACE_OS::mkstemp (tmp_ifile);
-  int tf_fd = ACE_OS::mkstemp (tmp_file);
+  ACE_HANDLE const ti_fd = ACE_OS::mkstemp (tmp_ifile);
+  ACE_HANDLE const tf_fd = ACE_OS::mkstemp (tmp_file);
 
-  if (ti_fd == -1 || tf_fd == -1)
+  if (ti_fd == ACE_INVALID_HANDLE || tf_fd == ACE_INVALID_HANDLE)
     {
       ACE_ERROR ((LM_ERROR,
                   "%s: Unable to create temporary file: %m\n",
@@ -691,8 +639,8 @@ DRV_pre_proc (const char *myfile)
       return;
     }
 
-  static char tmp_cpp_file [MAXPATHLEN + 1] = { 0 };
-  static char tmp_cpp_ifile[MAXPATHLEN + 1] = { 0 };
+  char tmp_cpp_file [MAXPATHLEN + 1] = { 0 };
+  char tmp_cpp_ifile[MAXPATHLEN + 1] = { 0 };
 
   // Append C++ source file extension.  Temporary files will be renamed
   // to these filenames.
@@ -701,27 +649,22 @@ DRV_pre_proc (const char *myfile)
   ACE_OS::strcat (tmp_cpp_file,  temp_file_extension);
   ACE_OS::strcat (tmp_cpp_ifile, temp_file_extension);
 
-  char * t_file  = tmp_cpp_file;
-  char * t_ifile = tmp_cpp_ifile;
+  char * const t_file  = tmp_cpp_file;
+  char * const t_ifile = tmp_cpp_ifile;
 
   ACE_OS::close (tf_fd);
-
-#endif  /* ACE_LACKS_MKSTEMP */
 
   // Rename temporary files so that they have extensions accepted
   // by the preprocessor.
 
-  UTL_String *tmp = 0;
-
-  FILE *file = ACE_OS::fopen (myfile, "r");
+  FILE * const file = ACE_OS::fopen (myfile, "r");
   DRV_copy_input (file,
-#ifndef ACE_LACKS_MKSTEMP
                   ACE_OS::fdopen (ti_fd, "w"),
-#endif  /* !ACE_LACKS_MKSTEMP */
                   tmp_ifile,
                   myfile);
   ACE_OS::fclose (file);
 
+  UTL_String *tmp = 0;
   ACE_NEW (tmp,
            UTL_String (myfile));
   idl_global->set_main_filename (tmp);
@@ -750,7 +693,6 @@ DRV_pre_proc (const char *myfile)
 
   cpp_options.command_line (arglist);
 
-#ifndef ACE_LACKS_MKSTEMP
   // Rename temporary files so that they have extensions accepted
   // by the preprocessor.  Renaming is (supposed to be) an atomic
   // operation so we shouldn't be susceptible to attack.
@@ -763,7 +705,6 @@ DRV_pre_proc (const char *myfile)
 
       return;
     }
-#endif  /* !ACE_LACKS_MKSTEMP */
 
   // Remove any existing output file.
   (void) ACE_OS::unlink (t_file);
@@ -862,7 +803,7 @@ DRV_pre_proc (const char *myfile)
   // version the current process would exit if the pre-processor
   // returned with error.
 
-  FILE *yyin = ACE_OS::fopen (t_file, "r");
+  FILE * const yyin = ACE_OS::fopen (t_file, "r");
 
   if (yyin == NULL)
     {

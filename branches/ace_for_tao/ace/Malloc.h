@@ -384,10 +384,6 @@ public:
 #include "ace/Malloc.inl"
 #endif /* __ACE_INLINE__ */
 
-// Include the ACE_Malloc templates and ACE_Memory_Pool classes at this point.
-#include "ace/Malloc_T.h"
-#include "ace/Memory_Pool.h"
-
 #include /**/ "ace/post.h"
 
 #endif /* ACE_MALLOC_H */

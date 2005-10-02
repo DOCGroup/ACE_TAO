@@ -632,11 +632,6 @@ FE_init (void)
 
   // Put an empty prefix on the stack for the global scope.
   idl_global->pragma_prefixes ().push (ACE::strnew (""));
-
-#ifdef ACE_LACKS_MKSTEMP
-  /// Initialise the UUID Generator
-  ACE_Utils::UUID_GENERATOR::instance ()->init ();
-#endif  /* ACE_LACKS_MKSTEMP */
 }
 
 void

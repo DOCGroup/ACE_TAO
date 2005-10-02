@@ -1,7 +1,6 @@
 // -*- MPC -*-
 // $Id$
 
-project: acedefaults {
-  after    += ACE
-  libs     += ACE
+project: acedefaults, acenosubsets, ace_for_tao {
+
 }

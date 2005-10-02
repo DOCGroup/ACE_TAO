@@ -40,7 +40,7 @@ project(TAO_IDL_EXE) : aceexe, core, tao_output, crosscompile {
 }
 
 
-project(TAO_IDL_BE) : acelib, conv_lib, tao_output, crosscompile {
+project(TAO_IDL_BE) : acelib, aceprocesslib, aceprocesslib_for_tao, conv_lib, tao_output, crosscompile {
   sharedname   = TAO_IDL_BE
   libs        += TAO_IDL_FE
   includes    += include be_include fe
