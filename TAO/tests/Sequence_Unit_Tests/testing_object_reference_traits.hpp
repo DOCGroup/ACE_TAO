@@ -15,20 +15,17 @@
 #include "testing_counters.hpp"
 #include "object_reference_traits.hpp"
 
-namespace TAO
-{
-namespace details
-{
-
 template<typename object_t>
-struct object_reference_traits<object_t,true>
-  : public object_reference_traits<object_t,false>
+struct testing_object_reference_traits
+  : public TAO::details::object_reference_traits_base<object_t>
+  , public TAO::details::object_reference_traits_decorator<object_t, testing_object_reference_traits<object_t> >
 {
   static call_counter default_initializer_calls;
   static call_counter duplicate_calls;
   static call_counter release_calls;
 
   typedef object_t object_type;
+  typedef typename object_type::_var_type object_type_var;
   typedef TAO::details::object_reference_traits<object_t,false> real_traits;
 
   static object_type * default_initializer()
@@ -51,13 +48,24 @@ struct object_reference_traits<object_t,true>
 };
 
 template<typename object_t> call_counter
-object_reference_traits<object_t,true>::default_initializer_calls;
+testing_object_reference_traits<object_t>::default_initializer_calls;
 
 template<typename object_t> call_counter
-object_reference_traits<object_t,true>::duplicate_calls;
+testing_object_reference_traits<object_t>::duplicate_calls;
 
 template<typename object_t> call_counter
-object_reference_traits<object_t,true>::release_calls;
+testing_object_reference_traits<object_t>::release_calls;
+
+namespace TAO
+{
+namespace details
+{
+
+template<typename object_t>
+struct object_reference_traits<object_t,true>
+  : public testing_object_reference_traits<object_t>
+{
+};
 
 } // namespace details
 } // namespace TAO
