@@ -1,3 +1,9 @@
+Sun Oct  2 22:22:55 IST 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
+
+ 	* performance-tests/Latency/Thread_Per_Connection/run_test.pl:
+
+	  Increased the timeout for the test to succeed on all platforms. 
+
 Sun Oct  2 12:01:40 2005  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
