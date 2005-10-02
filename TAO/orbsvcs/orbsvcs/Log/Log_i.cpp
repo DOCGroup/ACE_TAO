@@ -1270,9 +1270,15 @@ TAO_Log_i::validate_capacity_alarm_thresholds (
     if (threshs[i] > 100)
       return false;
 
-  if (threshs.length () != 0)
+  // @@ The current revision of the specification (formal/03-07-01)
+  // does not require theshold values be in order or unique.  This
+  // appears to be an TAO TLS implementation artifact for efficent
+  // threshold checks.  We could eliminate this restriction by
+  // normalizing the sequence.
+  
+  if (threshs.length () > 1)
     for (CORBA::ULong i = 0; i < threshs.length () - 1; i++)
-      if (threshs[i] >= threshs[i +1])
+      if (threshs[i] >= threshs[i + 1])
         return false;
 
   return true;
