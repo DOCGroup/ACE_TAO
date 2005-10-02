@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(TAO_IDL_EXE) : aceexe, core, tao_output, crosscompile {
+project(TAO_IDL_EXE) : aceexe, acethreadslib_for_tao, core, tao_output, crosscompile {
   exename      = tao_idl
   libs        += TAO_IDL_BE TAO_IDL_FE
   includes    += include be_include fe
@@ -40,7 +40,7 @@ project(TAO_IDL_EXE) : aceexe, core, tao_output, crosscompile {
 }
 
 
-project(TAO_IDL_BE) : acelib, aceprocesslib, aceprocesslib_for_tao, conv_lib, tao_output, crosscompile {
+project(TAO_IDL_BE) : acelib, acethreadslib_for_tao, conv_lib, tao_output, crosscompile {
   sharedname   = TAO_IDL_BE
   libs        += TAO_IDL_FE
   includes    += include be_include fe
@@ -65,7 +65,7 @@ project(TAO_IDL_BE) : acelib, aceprocesslib, aceprocesslib_for_tao, conv_lib, ta
 }
 
 
-project(TAO_IDL_FE) : acelib, conv_lib, tao_output, crosscompile {
+project(TAO_IDL_FE) : acelib, acethreadslib_for_tao, conv_lib, tao_output, crosscompile {
   sharedname   = TAO_IDL_FE
   includes    += include fe
   dynamicflags = TAO_IDL_FE_BUILD_DLL

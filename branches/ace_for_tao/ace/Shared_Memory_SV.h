@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -32,7 +32,7 @@
  * manager.  For more a powerful memory allocator please see
  * <ACE_Malloc>.
  */
-class ACE_Export ACE_Shared_Memory_SV : public ACE_Shared_Memory
+class ACE_Memory_Export ACE_Shared_Memory_SV : public ACE_Shared_Memory
 {
 public:
   enum
