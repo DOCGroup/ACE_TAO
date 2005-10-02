@@ -1,3 +1,32 @@
+Sun Oct  2 12:01:40 2005  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
+	* tests/Sequence_Unit_Tests/bounded_object_reference_sequence.hpp:
+	* tests/Sequence_Unit_Tests/bounded_object_reference_sequence_ut.cpp:
+	* tests/Sequence_Unit_Tests/run_test.pl:
+	  Implemented bounded sequences of object references.
+
+	* tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
+	  Fixed typos in unit test.
+
+	* tests/Sequence_Unit_Tests/object_reference_traits.hpp:
+	* tests/Sequence_Unit_Tests/object_reference_traits_base.hpp:
+	  Refactor traits so it is possible to implement better unit
+	  tests.
+	
+	* tests/Sequence_Unit_Tests/string_traits_base.hpp:
+	  Fixed comment
+
+	* tests/Sequence_Unit_Tests/testing_allocation_traits.hpp:
+	  Fixed #include guards
+
+	* tests/Sequence_Unit_Tests/testing_object_reference_traits.hpp:
+	  Modified so we can better test object reference management in
+	  the sequences.
+
+	* tests/Sequence_Unit_Tests/unbounded_object_reference_sequence_ut.cpp:
+	  Add more test cases
+
 Sat Oct  1 08:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/fe/fe_init.cpp:

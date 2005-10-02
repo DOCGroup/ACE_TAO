@@ -1,5 +1,5 @@
-#ifndef guard_testing_sequence_traits_hpp
-#define guard_testing_sequence_traits_hpp
+#ifndef guard_testing_allocation_traits_hpp
+#define guard_testing_allocation_traits_hpp
 /**
  * @file
  *
@@ -86,4 +86,4 @@ struct bounded_reference_allocation_traits<T,reference_traits,MAX,true>
 } // namespace details
 } // namespace TAO
 
-#endif // guard_testing_sequence_traits_hpp
+#endif // guard_testing_allocation_traits_hpp

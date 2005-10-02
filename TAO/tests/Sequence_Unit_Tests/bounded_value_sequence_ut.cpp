@@ -175,7 +175,7 @@ struct Tester
       BOOST_CHECK_EQUAL(false, a.release());
     }
     BOOST_CHECK_MESSAGE(c.expect(0), c);
-    BOOST_CHECK_MESSAGE(f.expect(0), c);
+    BOOST_CHECK_MESSAGE(f.expect(0), f);
     tested_sequence::freebuf(buffer);
   }
 
@@ -189,7 +189,7 @@ struct Tester
       tested_sequence a;
       a.replace(4, buffer, true);
       BOOST_CHECK_MESSAGE(c.expect(0), c);
-      BOOST_CHECK_MESSAGE(f.expect(1), c);
+      BOOST_CHECK_MESSAGE(f.expect(1), f);
 
       BOOST_CHECK_EQUAL(CORBA::ULong(32), a.maximum());
       BOOST_CHECK_EQUAL(CORBA::ULong(4), a.length());
@@ -201,7 +201,7 @@ struct Tester
       BOOST_CHECK_EQUAL(true, a.release());
     }
     BOOST_CHECK_MESSAGE(c.expect(0), c);
-    BOOST_CHECK_MESSAGE(f.expect(1), c);
+    BOOST_CHECK_MESSAGE(f.expect(1), f);
   }
 
   void test_get_buffer_default()
