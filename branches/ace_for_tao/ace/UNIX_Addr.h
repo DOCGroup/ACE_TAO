@@ -13,9 +13,15 @@
 
 #ifndef ACE_UNIX_ADDR_H
 #define ACE_UNIX_ADDR_H
+
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
+#ifdef ACE_SOCKETS_BUILD_DLL
+# include "ace/ACE_Sockets_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Sockets_Export ACE_Export
+#endif  /* ACE_SOCKETS_BUILD_DLL */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,7 +39,7 @@
  *
  * @brief Defines the ``UNIX domain address family'' address format.
  */
-class ACE_Export ACE_UNIX_Addr : public ACE_Addr
+class ACE_Sockets_Export ACE_UNIX_Addr : public ACE_Addr
 {
 public:
   // = Initialization methods.

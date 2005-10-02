@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -19,8 +19,13 @@
 #define ACE_SOCK_SEQPACK_ASSOCIATION_H
 
 #include /**/ "ace/pre.h"
-#include "ace/config-all.h"
-#include "ace/ACE_export.h"
+
+#ifdef ACE_SOCKETS_BUILD_DLL
+# include "ace/ACE_Sockets_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Sockets_Export ACE_Export
+#endif  /* ACE_SOCKETS_BUILD_DLL */
 
 #include "ace/SOCK_IO.h"
 
@@ -74,7 +79,7 @@ class ACE_Message_Block;
  * will result in <send> getting called on Win32 platforms, and
  * <write> getting called on non-Win32 platforms.
  */
-class ACE_Export ACE_SOCK_SEQPACK_Association : public ACE_SOCK_IO
+class ACE_Sockets_Export ACE_SOCK_SEQPACK_Association : public ACE_SOCK_IO
 {
 public:
   // Initialization and termination methods.

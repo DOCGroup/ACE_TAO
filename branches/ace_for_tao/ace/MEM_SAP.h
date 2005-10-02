@@ -24,6 +24,8 @@
 // MEM_SAP requries position independent pointers to work
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
+#include "ace/Malloc_T.h"
+#include "ace/MMAP_Memory_Pool.h"
 #include "ace/Process_Mutex.h"
 
 class ACE_MEM_SAP;

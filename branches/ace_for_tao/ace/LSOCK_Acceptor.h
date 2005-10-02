@@ -36,7 +36,7 @@ class ACE_Reactor;
  * @brief Defines the format and interface for the acceptor side of the
  * local ACE_SOCK ACE_Stream.
  */
-class ACE_Export ACE_LSOCK_Acceptor : public ACE_SOCK_Acceptor
+class ACE_Sockets_Export ACE_LSOCK_Acceptor : public ACE_SOCK_Acceptor
 {
 public:
   // = Initialization methods.

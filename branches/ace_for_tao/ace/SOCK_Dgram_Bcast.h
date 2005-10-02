@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -15,20 +15,26 @@
 #define ACE_SOCK_DGRAM_BCAST_H
 #include /**/ "ace/pre.h"
 
-#include "ace/INET_Addr.h"
+#ifdef ACE_SOCKETS_BUILD_DLL
+# include "ace/ACE_Sockets_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Sockets_Export ACE_Export
+#endif  /* ACE_SOCKETS_BUILD_DLL */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SOCK_Dgram.h"
+#include "ace/INET_Addr.h"
 
 /**
  * @class ACE_Bcast_Node
  *
  * @brief Linked list of broadcast interfaces.
  */
-class ACE_Export ACE_Bcast_Node
+class ACE_Sockets_Export ACE_Bcast_Node
 {
 public:
   /// Default constructor.
@@ -51,7 +57,7 @@ public:
  * @brief Defines the member functions for the ACE_SOCK datagram
  * abstraction.
  */
-class ACE_Export ACE_SOCK_Dgram_Bcast : public ACE_SOCK_Dgram
+class ACE_Sockets_Export ACE_SOCK_Dgram_Bcast : public ACE_SOCK_Dgram
 {
 public:
   // = Initialization and termination methods.

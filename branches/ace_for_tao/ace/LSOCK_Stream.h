@@ -32,7 +32,7 @@
  *
  * @brief Create a Local ACE_SOCK stream.
  */
-class ACE_Export ACE_LSOCK_Stream : public ACE_SOCK_Stream, public ACE_LSOCK
+class ACE_Sockets_Export ACE_LSOCK_Stream : public ACE_SOCK_Stream, public ACE_LSOCK
 {
 public:
   // = Send/recv methods.

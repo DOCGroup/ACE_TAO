@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(Svc_Utils) : orbsvcslib, core, portableserver {
+project(Svc_Utils) : orbsvcslib, acesocketslib_for_tao, core, portableserver {
   sharedname   = TAO_Svc_Utils
   idlflags    += -Wb,export_macro=TAO_Svc_Utils_Export -Wb,export_include=orbsvcs/svc_utils_export.h
   dynamicflags = TAO_SVC_UTILS_BUILD_DLL
