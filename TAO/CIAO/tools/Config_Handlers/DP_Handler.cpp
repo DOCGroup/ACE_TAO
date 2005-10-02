@@ -15,6 +15,7 @@
 #include "Property_Handler.h"
 #include "cdp.hpp"
 #include "RT-CCM/SRD_Handler.h"
+#include "RT-CCM/CIAOServerResources.hpp"
 
 #include "DP_PCD_Handler.h"
   
