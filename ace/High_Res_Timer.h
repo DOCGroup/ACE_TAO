@@ -9,7 +9,7 @@
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //==========================================================================
-
+2
 #ifndef ACE_HIGH_RES_TIMER_H
 #define ACE_HIGH_RES_TIMER_H
 #include /**/ "ace/pre.h"
