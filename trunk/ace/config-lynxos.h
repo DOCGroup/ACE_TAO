@@ -64,7 +64,6 @@
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
 #define ACE_HAS_NONCONST_SETRLIMIT
 #define ACE_HAS_NONCONST_WRITEV
-#define ACE_HAS_POLL
 #define ACE_HAS_POSIX_NONBLOCK
 #define ACE_HAS_POSIX_TIME
 #define ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO
@@ -191,6 +190,7 @@
 # define ALIGN(p) (((unsigned)p + ALIGNBYTES) & ~ALIGNBYTES)
 #else /* LynxOS 3.x */
 # define ACE_LACKS_AUTO_PTR
+# define ACE_HAS_POLL
 #endif /* ACE_LYNXOS_MAJOR > 3 */
 
 #include /**/ "ace/post.h"
