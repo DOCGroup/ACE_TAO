@@ -1,9 +1,10 @@
 // $Id$
 
-#ifndef ACE_OBSTACK_T_C
-#define ACE_OBSTACK_T_C
+#ifndef ACE_OBSTACK_T_CPP
+#define ACE_OBSTACK_T_CPP
 
 #include "ace/Obstack_T.h"
+#include "ace/Malloc_Base.h"
 #include "ace/OS_NS_string.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -13,8 +14,6 @@
 #if !defined (__ACE_INLINE__)
 #include "ace/Obstack_T.inl"
 #endif /* __ACE_INLINE__ */
-
-ACE_RCSID(ace, Obstack_T, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Obstack_T)
 
@@ -202,4 +201,4 @@ ACE_Obstack_T<CHAR>::release (void)
   this->curr_->block_ = this->curr_->cur_ = this->curr_->contents_;
 }
 
-#endif /* ACE_OBSTACK_T_C */
+#endif /* ACE_OBSTACK_T_CPP */

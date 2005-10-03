@@ -14,6 +14,12 @@
 #define ACE_MEM_CONNECTOR_H
 #include /**/ "ace/pre.h"
 
+#ifdef ACE_MEMORY_BUILD_DLL
+# include "ace/ACE_Memory_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Memory_Export ACE_Export
+#endif  /* ACE_MEMORY_BUILD_DLL */
 #include "ace/SOCK_Connector.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -31,7 +37,7 @@
  * @brief Defines the format and interface for connecting to a peer
  * on a @c ACE_MEM_Stream object.
  */
-class ACE_Export ACE_MEM_Connector : public ACE_SOCK_Connector
+class ACE_Memory_Export ACE_MEM_Connector : public ACE_SOCK_Connector
 {
 public:
   // = Initialization methods.

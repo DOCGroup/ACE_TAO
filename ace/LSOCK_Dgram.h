@@ -32,7 +32,7 @@
  *
  * @brief Create a Local ACE_SOCK datagram.
  */
-class ACE_Export ACE_LSOCK_Dgram : public ACE_SOCK_Dgram, public ACE_LSOCK
+class ACE_Sockets_Export ACE_LSOCK_Dgram : public ACE_SOCK_Dgram, public ACE_LSOCK
 {
 public:
   // = Initialization methods.

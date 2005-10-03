@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -13,9 +13,15 @@
 
 #ifndef ACE_LOCAL_SOCK_H
 #define ACE_LOCAL_SOCK_H
+
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
+#ifdef ACE_SOCKETS_BUILD_DLL
+# include "ace/ACE_Sockets_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Sockets_Export ACE_Export
+#endif  /* ACE_SOCKETS_BUILD_DLL */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,7 +37,7 @@
  * @brief Create a Local ACE_SOCK, which is used for passing file
  * descriptors.
  */
-class ACE_Export ACE_LSOCK
+class ACE_Sockets_Export ACE_LSOCK
 {
 public:
 #if defined (ACE_HAS_MSG)

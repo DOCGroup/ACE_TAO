@@ -1,3 +1,128 @@
+Mon Oct  3 10:48:23 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/ACE_Memory_export.h:
+	* ace/ACE_Reactor_export.h:
+	* ace/ACE_Sockets_export.h:
+	* ace/ACE_Threads_export.h:
+
+	  New export headers for a number of ACE subset libraries.
+
+	* ace/Activation_Queue.cpp:
+	* ace/Configuration.h:
+	* ace/Malloc.cpp:
+	* ace/Obstack_T.h:
+	* ace/Obstack_T.cpp:
+	* ace/Svc_Conf_l.cpp:
+	* ace/Timer_Hash_T.cpp:
+	* tests/Based_Pointer_Test.cpp:
+	* tests/Malloc_Test.cpp:
+	* tests/Message_Block_Test.cpp:
+
+          Include appropriate headers to address incomplete type
+	  definition related compile-time errors.  Necessitated by header
+	  dependency reductions in ACE.
+
+	* ace/Activation_Queue.h:
+	* ace/Barrier.h:
+	* ace/Based_Pointer_Repository.h:
+	* ace/Dev_Poll_Reactor.h:
+	* ace/File_Lock.h:
+	* ace/LSOCK.h:
+	* ace/LSOCK_Acceptor.h:
+	* ace/LSOCK_CODgram.h:
+	* ace/LSOCK_Connector.h:
+	* ace/LSOCK_Dgram.h:
+	* ace/LSOCK_Stream.h:
+	* ace/MEM_Acceptor.h:
+	* ace/MEM_Addr.h:
+	* ace/MEM_Connector.h:
+	* ace/MEM_IO.h:
+	* ace/MEM_SAP.h:
+	* ace/MEM_Stream.h:
+	* ace/MMAP_Memory_Pool.h:
+	* ace/Mem_Map.h:
+	* ace/Method_Request.h:
+	* ace/Msg_WFMO_Reactor.h:
+	* ace/Multihomed_INET_Addr.h:
+	* ace/PI_Malloc.h:
+	* ace/Pagefile_Memory_Pool.h:
+	* ace/Priority_Reactor.h:
+	* ace/Process.h:
+	* ace/Process_Manager.h:
+	* ace/Process_Semaphore.h:
+	* ace/RW_Process_Mutex.h:
+	* ace/SOCK_Dgram_Bcast.h:
+	* ace/SOCK_Dgram_Mcast.h:
+	* ace/SOCK_SEQPACK_Acceptor.h:
+	* ace/SOCK_SEQPACK_Association.h:
+	* ace/SOCK_SEQPACK_Connector.h:
+	* ace/SV_Shared_Memory.h:
+	* ace/Sbrk_Memory_Pool.h:
+	* ace/Shared_Memory.h:
+	* ace/Shared_Memory_MM.h:
+	* ace/Shared_Memory_Pool.h:
+	* ace/Shared_Memory_SV.h:
+	* ace/Thread_Semaphore.h:
+	* ace/UNIX_Addr.h:
+
+	  Support export macros specific to ACE subset libraries.
+
+	* ace/Array_Map.h:
+
+	  Comment cleanup.
+
+	* ace/High_Res_Timer.h:
+
+	  Removed trailing whitespace.
+
+	* ace/Malloc.h:
+
+	  Removed extraneous headers unnecessary for the types declared in
+	  this header.
+
+	* ace/OS_NS_Thread.inl (ACE_Thread_ID):
+
+	  Prefer initialization of thread_id_ member in base member
+	  initializer list rather than constructor body.
+
+	* ace/ace.mpc:
+	* ace/ace.mwc:
+	* ace/ace_for_tao.mpc:
+	* ace/ace_os.mpc:
+
+	  Add support ACE subsets (predominantly TAO-specific).
+
+	* ace/svcconf.mpb:
+
+	  Moved Svc_Conf parser and lexer generation Make rules to this
+	  MPC base project.  Allows subset projects to inherit these
+	  rules.
+
+	* bin/MakeProjectCreator/config/ace_for_tao.mpb:
+	* bin/MakeProjectCreator/config/acememorylib_for_tao.mpb:
+	* bin/MakeProjectCreator/config/acenosubsets.mpb:
+	* bin/MakeProjectCreator/config/acereactorlib_for_tao.mpb:
+	* bin/MakeProjectCreator/config/acesocketslib_for_tao.mpb:
+	* bin/MakeProjectCreator/config/acethreadslib_for_tao.mpb:
+
+	  New TAO-specific ACE subset MPC support.  Enabled when
+	  "ace_for_tao" is set to "1" in an MPC features file.
+
+	* bin/MakeProjectCreator/config/aceexe.mpb:
+	* bin/MakeProjectCreator/config/acelib.mpb:
+
+	  Support "ace_for_tao" subset.
+
+	* bin/MakeProjectCreator/config/global.features:
+
+	  Disabled "ace_for_tao" feature by default.
+
+	* bin/MakeProjectCreator/config/taolib.mpb:
+
+	  Inherit "ace_for_tao" feature project.  Causes TAO-based
+	  projects to use the "ace_for_tao" subset libraries when that
+	  feature is enabled.
+
 Mon Oct  3 12:50:00 2005  Simon Massey  <simon.massey@prismtech.com>
 
         * ace/Asynch_IO.h:

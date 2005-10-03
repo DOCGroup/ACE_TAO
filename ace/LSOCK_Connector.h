@@ -32,7 +32,7 @@
  * @brief Defines the format and interface for the connector side of
  * the <ACE_LSOCK_Stream>.
  */
-class ACE_Export ACE_LSOCK_Connector : public ACE_SOCK_Connector
+class ACE_Sockets_Export ACE_LSOCK_Connector : public ACE_SOCK_Connector
 {
 public:
   // = Initialization methods.

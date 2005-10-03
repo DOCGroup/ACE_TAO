@@ -16,7 +16,12 @@
 #define ACE_MSG_WFMO_REACTOR_H
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
+#ifdef ACE_REACTOR_BUILD_DLL
+# include "ace/ACE_Reactor_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Reactor_Export ACE_Export
+#endif  /* ACE_REACTOR_BUILD_DLL */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -37,7 +42,7 @@
  * its ability to react on Windows messages.  It is needed when
  * the task should serve also as a COM/DCOM server.
  */
-class ACE_Export ACE_Msg_WFMO_Reactor : public ACE_WFMO_Reactor
+class ACE_Reactor_Export ACE_Msg_WFMO_Reactor : public ACE_WFMO_Reactor
 {
 public:
   // = Initialization and termination methods.

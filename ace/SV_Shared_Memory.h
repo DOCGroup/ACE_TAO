@@ -15,7 +15,12 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+#ifdef ACE_MEMORY_BUILD_DLL
+# include "ace/ACE_Memory_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Memory_Export ACE_Export
+#endif  /* ACE_MEMORY_BUILD_DLL */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,7 +35,7 @@
  *
  * @brief This is a wrapper for System V shared memory.
  */
-class ACE_Export ACE_SV_Shared_Memory
+class ACE_Memory_Export ACE_SV_Shared_Memory
 {
 public:
   enum

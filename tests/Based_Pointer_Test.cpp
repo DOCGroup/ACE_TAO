@@ -24,10 +24,13 @@
 #include "ace/Based_Pointer_Repository.h"
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS */
 #include "ace/Malloc_T.h"
+#include "ace/MMAP_Memory_Pool.h"
 #include "ace/PI_Malloc.h"
 #include "ace/Null_Mutex.h"
 
-ACE_RCSID(tests, Based_Pointer_Repository_Test, "$Id$")
+ACE_RCSID (tests,
+	   Based_Pointer_Repository_Test,
+	   "$Id$")
 
 #ifdef ACE_HAS_POSITION_INDEPENDENT_POINTERS
 

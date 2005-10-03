@@ -18,12 +18,14 @@
 // ============================================================================
 
 #include "test_config.h"
-#include "ace/Malloc.h"
+#include "Malloc_Test.h"
+
+#include "ace/Malloc_T.h"
+#include "ace/MMAP_Memory_Pool.h"
 #include "ace/Process.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Process_Mutex.h"
 #include "ace/PI_Malloc.h"
-#include "Malloc_Test.h"
 #include "ace/RW_Thread_Mutex.h"
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_unistd.h"
