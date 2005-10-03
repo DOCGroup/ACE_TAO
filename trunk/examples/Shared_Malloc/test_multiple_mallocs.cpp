@@ -4,7 +4,8 @@
 // rooted at different base addresses.
 
 #include "ace/OS_NS_string.h"
-#include "ace/Malloc.h"
+#include "ace/Malloc_T.h"
+#include "ace/MMAP_Memory_Pool.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Process_Mutex.h"
 

@@ -11,6 +11,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Process_Mutex.h"
+#include "ace/Malloc_T.h"
+#include "ace/MMAP_Memory_Pool.h"
 
 ACE_RCSID(Shared_Malloc, test_multiple_mallocs, "$Id$")
 
