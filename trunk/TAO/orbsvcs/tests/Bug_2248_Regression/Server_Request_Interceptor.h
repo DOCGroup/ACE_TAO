@@ -18,7 +18,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "testsC.h"
 #include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)
