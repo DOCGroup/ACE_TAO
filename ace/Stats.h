@@ -70,8 +70,8 @@ public:
 
   /**
    * Access the value as an _unsigned_ 64 bit quantity.  It scales the
-   * value up by <precision> decimal digits, so that no precision will
-   * be lost.  It assumes that <whole_> is >= 0.
+   * value up by {precision} decimal digits, so that no precision will
+   * be lost.  It assumes that {whole_} is >= 0.
    */
   void scaled_value (ACE_UINT64 &) const;
 
@@ -87,7 +87,7 @@ private:
 
   /**
    * The number of decimal digits of precision represented by
-   * <fractional_>.  Not declared const, so the only way to change it
+   * {fractional_}.  Not declared const, so the only way to change it
    * is via the assignment operator.
    */
   u_int precision_;
@@ -149,7 +149,7 @@ public:
              const ACE_UINT32 scale_factor = 1);
 
   /// Access the standard deviation, whole and fractional parts.  See
-  /// description of <mean> method for argument descriptions.
+  /// description of {mean} method for argument descriptions.
   int std_dev (ACE_Stats_Value &std_dev,
                const ACE_UINT32 scale_factor = 1);
 

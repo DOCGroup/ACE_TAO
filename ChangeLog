@@ -1,3 +1,11 @@
+Mon Oct  3 12:50:00 2005  Simon Massey  <simon.massey@prismtech.com>
+
+        * ace/ACE.h:
+        * ace/Acceptor.h:
+        * ace/Stats.h:
+
+          Remove some Doxygen warnings from the scoreboard.
+
 Mon Oct  3 11:27:13 2005  Simon McQueen  <sm@prismtech.com>
 
         * bin/tao_other_tests.lst:
