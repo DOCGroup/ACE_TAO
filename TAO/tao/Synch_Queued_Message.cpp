@@ -2,6 +2,7 @@
 
 #include "Synch_Queued_Message.h"
 #include "debug.h"
+#include "ORB_Core.h"
 
 #include "ace/Malloc_T.h"
 #include "ace/Message_Block.h"
@@ -12,9 +13,10 @@ ACE_RCSID (tao,
 
 TAO_Synch_Queued_Message::
     TAO_Synch_Queued_Message (const ACE_Message_Block *contents,
+                              TAO_ORB_Core *oc,
                               ACE_Allocator *alloc,
                               int is_heap_allocated)
-  : TAO_Queued_Message (alloc, is_heap_allocated)
+  : TAO_Queued_Message (oc, alloc, is_heap_allocated)
   , contents_ (const_cast<ACE_Message_Block*> (contents))
   , current_block_ (contents_)
 {
@@ -102,9 +104,8 @@ TAO_Synch_Queued_Message::bytes_transferred (size_t &byte_count)
     }
 
   if (this->current_block_ == 0)
-    {
-      this->state_changed (TAO_LF_Event::LFS_SUCCESS);
-    }
+    this->state_changed (TAO_LF_Event::LFS_SUCCESS,
+                         this->orb_core_->leader_follower ());
 }
 
 TAO_Queued_Message *
@@ -125,6 +126,7 @@ TAO_Synch_Queued_Message::clone (ACE_Allocator *alloc)
                              static_cast<TAO_Synch_Queued_Message *> (
                                alloc->malloc (sizeof (TAO_Synch_Queued_Message))),
                              TAO_Synch_Queued_Message (mb,
+                                                       this->orb_core_,
                                                        alloc),
                              0);
     }
@@ -140,7 +142,7 @@ TAO_Synch_Queued_Message::clone (ACE_Allocator *alloc)
         }
 
       ACE_NEW_RETURN (qm,
-                      TAO_Synch_Queued_Message (mb),
+                      TAO_Synch_Queued_Message (mb, this->orb_core_),
                       0);
     }
 

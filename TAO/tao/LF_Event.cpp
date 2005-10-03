@@ -24,27 +24,18 @@ TAO_LF_Event::~TAO_LF_Event (void)
 }
 
 void
-TAO_LF_Event::state_changed (int new_state)
+TAO_LF_Event::state_changed (int new_state,
+                             TAO_Leader_Follower &lf)
 {
-  if (this->follower_ == 0)
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, lf.lock ());
+
+  if (this->is_state_final () == 0)
     {
       this->state_changed_i (new_state);
-    }
-  else
-    {
-      TAO_Leader_Follower &leader_follower =
-        this->follower_->leader_follower ();
 
-      ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, leader_follower.lock ());
-
-      if (this->is_state_final () == 0)
-        {
-          this->state_changed_i (new_state);
-
-          /// Sort of double-checked optimization..
-          if (this->follower_ != 0)
-            this->follower_->signal ();
-        }
+      /// Sort of double-checked optimization..
+      if (this->follower_ != 0)
+        this->follower_->signal ();
     }
 }
 

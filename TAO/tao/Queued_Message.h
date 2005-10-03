@@ -25,6 +25,7 @@
 struct iovec;
 class ACE_Message_Block;
 class ACE_Allocator;
+class TAO_ORB_Core;
 
 /**
  * @class TAO_Queued_Message
@@ -68,7 +69,8 @@ class TAO_Export TAO_Queued_Message : public TAO_LF_Invocation_Event
 {
 public:
   /// Constructor
-  TAO_Queued_Message (ACE_Allocator *alloc = 0,
+  TAO_Queued_Message (TAO_ORB_Core *oc,
+                      ACE_Allocator *alloc = 0,
                       int is_heap_allocated = 0);
 
   /// Destructor
@@ -201,6 +203,9 @@ protected:
    * on  heap.
    */
   int is_heap_created_;
+
+  /// Cached copy of ORB_Core pointer
+  TAO_ORB_Core *orb_core_;
 
 private:
   /// Implement an intrusive double-linked list for the message queue
