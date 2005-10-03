@@ -91,6 +91,17 @@ namespace CIAO
       protected:
       ::std::auto_ptr< ::CIAO::Config_Handlers::ORBConfigs > orbConfigs_;
 
+      // id
+      // 
+      public:
+      bool id_p () const;
+      ::XMLSchema::ID< ACE_TCHAR > const& id () const;
+      ::XMLSchema::ID< ACE_TCHAR >& id ();
+      void id (::XMLSchema::ID< ACE_TCHAR > const& );
+
+      protected:
+      ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > id_;
+
       public:
       ServerResourcesDef (::CIAO::Config_Handlers::ORBConfigs const& orbConfigs__);
 
@@ -846,6 +857,18 @@ namespace CIAO
 
         virtual void
         orbConfigs (Type const&);
+
+        virtual void
+        id (Type&);
+
+        virtual void
+        id (Type const&);
+
+        virtual void
+        id_none (Type&);
+
+        virtual void
+        id_none (Type const&);
 
         virtual void
         post (Type&);
@@ -1649,6 +1672,20 @@ namespace CIAO
         #endif /* __BORLANDC__ */
         virtual void
         orbConfigs (Type const&);
+
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        id (Type &o)
+        {
+
+          this->id (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        id (Type const&);
 
         protected:
         ServerResourcesDef ();

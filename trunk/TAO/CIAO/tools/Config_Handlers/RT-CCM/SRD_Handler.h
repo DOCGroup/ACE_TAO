@@ -37,14 +37,14 @@ namespace CIAO
 	class Config_Handlers_Export SRD_Handler
 	{
 	public:
-	    class NoSRD {};
+          class NoSRD {};
 	    
-	    SRD_Handler (const ACE_TCHAR *file);
-
-	    SRD_Handler(ServerResourcesDef *srd);
-
-	    SRD_Handler(::CIAO::DAnCE::ServerResource *srd);
-	    
+          SRD_Handler (const ACE_TCHAR *file);
+          
+          SRD_Handler(ServerResourcesDef *srd);
+          
+          SRD_Handler(::CIAO::DAnCE::ServerResource *srd);
+          
           ~SRD_Handler (void);
           
 	    ::CIAO::DAnCE::ServerResource const *srd_idl (void) const

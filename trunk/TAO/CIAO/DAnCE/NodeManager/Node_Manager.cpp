@@ -69,6 +69,7 @@ parse_args (int argc, char *argv[])
                            "-c <svc.conf file>\n"
                            "-n <use naming service>\n"
                            "-s <NodeApplication executable path>\n"
+                           "-d <spawn delay for nodeapplication>\n"
                            "\n",
                            argv [0]),
                           -1);
