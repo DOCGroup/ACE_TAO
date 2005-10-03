@@ -4,11 +4,13 @@
 #ifndef MY_MALLOC_H
 #define MY_MALLOC_H
 
-#include "ace/Malloc.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+class ACE_Allocator;
 
 class Malloc
   // = TITLE
