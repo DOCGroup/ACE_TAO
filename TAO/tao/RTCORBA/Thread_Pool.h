@@ -7,6 +7,7 @@
  *  $Id$
  *
  *  @author Irfan Pyarali
+ *  @author Johnny Willemsen
  */
 // ===================================================================
 
@@ -134,9 +135,22 @@ public:
   /// Create the static threads - only called once.
   int create_static_threads (void);
 
-  /// Create @a number_of_threads of dynamic threads.  Can be called
-  /// multiple times.
-  int create_dynamic_threads (CORBA::ULong number_of_threads);
+  /// Mark that this lane is shutting down, we then don't create any
+  /// dynamic threads anymore. When the pool is shutting down the leader
+  /// follower loop is called which can cause a request to create a
+  /// new dynamic thread but we shouldn't create a new one.
+  void shutting_down (void);
+
+  /// Called by the TAO_RT_New_Leader_Generator to request a new dynamic
+  /// thread.
+  /**
+   * It can be that no thread can be created because the number of
+   * threads is equal to the maximum we can have or the Thread Lane
+   * is shutting down.
+   * @retval true A new thread is created
+   * @retval false No thread could be created
+   */
+  bool request_dynamic_thread (void);
 
   /// @name Accessors
   // @{
@@ -164,15 +178,30 @@ private:
   /// Validate lane's priority and map it to a native value.
   void validate_and_map_priority (ACE_ENV_SINGLE_ARG_DECL);
 
+  int create_dynamic_threads_i (CORBA::ULong number_of_threads);
+
+  /// Create @a number_of_threads of dynamic threads.  Can be called
+  /// multiple times.
+  int create_dynamic_threads (CORBA::ULong number_of_threads);
+
+  /// The Thread Pool to which this lane belongs.
   TAO_Thread_Pool &pool_;
+
+  /// The id of this lane
   CORBA::ULong id_;
 
   CORBA::Short lane_priority_;
+
+  /// Number of static threads
   CORBA::ULong static_threads_;
+
+  /// Maximum number of threads we are allowed to create
   CORBA::ULong dynamic_threads_;
 
+  /// Current number of threads
   CORBA::ULong current_threads_;
 
+  /// Array with all threads
   TAO_Thread_Pool_Threads threads_;
 
   TAO_RT_New_Leader_Generator new_thread_generator_;
@@ -180,6 +209,9 @@ private:
   TAO_Thread_Lane_Resources resources_;
 
   CORBA::Short native_priority_;
+
+  /// Lock to guard all members of the lane
+  ACE_SYNCH_MUTEX lock_;
 };
 
 class TAO_Thread_Pool_Manager;
@@ -195,8 +227,6 @@ class TAO_Thread_Pool_Manager;
  **/
 class TAO_RTCORBA_Export TAO_Thread_Pool
 {
-  friend class TAO_Thread_Lane;
-
 public:
 
   /// Constructor (for pools without lanes).
@@ -237,6 +267,9 @@ public:
   /// Wait for threads to exit.
   void wait (void);
 
+  /// Mark this thread pool that we are shutting down.
+  void shutting_down (void);
+
   /// Does @a mprofile belong to us?
   int is_collocated (const TAO_MProfile &mprofile);
 
@@ -244,7 +277,7 @@ public:
   int create_static_threads (void);
 
   /// Check if this thread pool has (explicit) lanes.
-  int with_lanes (void) const;
+  bool with_lanes (void) const;
 
   /// @name Accessors
   // @{
@@ -276,7 +309,7 @@ private:
 
   TAO_Thread_Lane **lanes_;
   CORBA::ULong number_of_lanes_;
-  int with_lanes_;
+  bool with_lanes_;
 };
 
 class TAO_ORB_Core;
@@ -340,17 +373,15 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RTCORBA::RTORB::InvalidThreadpool));
 
+  TAO_Thread_Pool *get_threadpool (RTCORBA::ThreadpoolId thread_pool_id ACE_ENV_ARG_DECL);
+
   /// Collection of thread pools.
   typedef ACE_Hash_Map_Manager<RTCORBA::ThreadpoolId, TAO_Thread_Pool *, ACE_Null_Mutex> THREAD_POOLS;
 
   /// @name Accessors
   // @{
 
-  ACE_SYNCH_MUTEX &lock (void);
-
   TAO_ORB_Core &orb_core (void) const;
-
-  THREAD_POOLS &thread_pools (void);
 
   // @}
 
@@ -380,11 +411,6 @@ private:
                                   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy_threadpool_i (RTCORBA::ThreadpoolId threadpool
-                             ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     RTCORBA::RTORB::InvalidThreadpool));
-
   RTCORBA::ThreadpoolId
   create_threadpool_helper (TAO_Thread_Pool *thread_pool
                             ACE_ENV_ARG_DECL)
@@ -398,6 +424,10 @@ private:
   RTCORBA::ThreadpoolId thread_pool_id_counter_;
   ACE_SYNCH_MUTEX lock_;
 };
+
+#if defined (__ACE_INLINE__)
+#include "Thread_Pool.inl"
+#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
