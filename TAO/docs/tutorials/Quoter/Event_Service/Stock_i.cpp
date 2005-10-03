@@ -64,12 +64,3 @@ Quoter_Stock_i::connect (CosEventChannelAdmin::SupplierAdmin_ptr supplier_admin)
   this->consumer_proxy_->connect_push_supplier (supplier.in ());
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class POA_CosEventComm::PushSupplier_tie<Quoter_Stock_i>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate POA_CosEventComm::PushSupplier_tie<Quoter_Stock_i>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

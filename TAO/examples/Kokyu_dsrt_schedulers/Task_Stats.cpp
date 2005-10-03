@@ -81,26 +81,14 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
   for (size_t i = 0; i < this->samples_count_; ++i)
     {
       x = this->thr_run_time_[i];
-      val_1 = ACE_CU64_TO_CU32 (x);	
+      val_1 = ACE_CU64_TO_CU32 (x);
       val_2  = this->thr_count_[i];
       ACE_OS::fprintf (output_file, "%u \t %d\n",val_1,val_2);
     }
-  
+
   ACE_OS::fclose (output_file);
 
   ACE_DEBUG ((LM_DEBUG,
 	      "Samples are ready to be viewed\n"));
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX>;
-template class ACE_Singleton<Task_Stats, TAO_SYNCH_MUTEX>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Singleton<Task_Stats, TAO_SYNCH_MUTEX>
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

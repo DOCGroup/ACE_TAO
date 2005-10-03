@@ -9,8 +9,8 @@
 #include "orbsvcs/Event/EC_Gateway.h"
 #include "ace/Arg_Shifter.h"
 
-ACE_RCSID (EC_Examples, 
-           Supplier, 
+ACE_RCSID (EC_Examples,
+           Supplier,
            "$Id$")
 
 static const char* ecname = 0;
@@ -157,8 +157,3 @@ EC::parse_args (int argc, char *argv[])
   return 0;
 }
 
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

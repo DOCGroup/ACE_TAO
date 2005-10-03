@@ -111,7 +111,7 @@ Consumer::run (int argc, char* argv[])
       proxy_supplier_->connect_any_push_consumer (objref.in ()
                                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-     
+
       orb_->run ();
 
       // We don't do any cleanup, it is hard to do it after shutdown,
@@ -139,7 +139,7 @@ Consumer::push (const CORBA::Any &event
                    ))
 {
   ACE_UNUSED_ARG (event);
- 
+
   this->event_count_ ++;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -172,8 +172,3 @@ Consumer::offer_change
   // No-Op.
 }
 
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

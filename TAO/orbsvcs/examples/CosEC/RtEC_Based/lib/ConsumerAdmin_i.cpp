@@ -66,10 +66,3 @@ TAO_CosEC_ConsumerAdmin_i::obtain_pull_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USE
   return CosEventChannelAdmin::ProxyPullSupplier::_nil ();
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class ACE_Auto_Basic_Ptr<TAO_CosEC_ProxyPushSupplier_i>;
-  template class auto_ptr<TAO_CosEC_ProxyPushSupplier_i>;
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate ACE_Auto_Basic_Ptr<TAO_CosEC_ProxyPushSupplier_i>
-# pragma instantiate auto_ptr<TAO_CosEC_ProxyPushSupplier_i>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

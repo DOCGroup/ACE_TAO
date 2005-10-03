@@ -484,12 +484,3 @@ main (int argc, char *argv [])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Node<Schedule_Viewer_Data *>;
-template class ACE_Unbounded_Queue<Schedule_Viewer_Data *>;
-template class ACE_Unbounded_Queue_Iterator<Schedule_Viewer_Data *>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Node<Schedule_Viewer_Data *>
-#pragma instantiate ACE_Unbounded_Queue<Schedule_Viewer_Data *>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<Schedule_Viewer_Data *>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

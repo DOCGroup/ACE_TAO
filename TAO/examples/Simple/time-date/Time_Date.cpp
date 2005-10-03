@@ -227,12 +227,3 @@ Time_Date_Servant::init (int argc, char *argv[])
 ACE_SVC_FACTORY_DEFINE (DLL_ORB)
 ACE_SVC_FACTORY_DEFINE (Time_Date_Servant)
 
-# if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Dynamic_Service<DLL_ORB>;
-
-# elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Dynamic_Service<DLL_ORB>
-
-# endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

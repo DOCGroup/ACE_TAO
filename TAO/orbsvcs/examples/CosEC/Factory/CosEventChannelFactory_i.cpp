@@ -325,15 +325,3 @@ TAO_CosEventChannelFactory_i::find_channel_id
   return str_return._retn ();
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class auto_ptr <TAO_CEC_EventChannel>;
-template class ACE_Auto_Basic_Ptr <TAO_CEC_EventChannel>;
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate auto_ptr <TAO_CEC_EventChannel>
-#pragma instantiate  ACE_Auto_Basic_Ptr <TAO_CEC_EventChannel>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
