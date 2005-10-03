@@ -126,6 +126,15 @@ Mon Oct  3 10:02:06 2005  Simon McQueen  <sm@prismtech.com>
 
           Regression test for the above.
 
+Sun Oct  2 11:05:51 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/Log_i.cpp (validate_capacity_alarm_thresholds):
+
+	  Fixed out-of-range array element access that occured with single
+	  element sequences.
+
+	  Add note that the specification does not require theshold values
+	  to be in order or unique.
 
 Sun Oct  2 22:22:55 IST 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
 
