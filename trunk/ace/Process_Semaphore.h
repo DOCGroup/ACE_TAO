@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -15,9 +15,16 @@
 
 #ifndef ACE_PROCESS_SEMAPHORE_H
 #define ACE_PROCESS_SEMAPHORE_H
+
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+#ifdef ACE_THREADS_BUILD_DLL
+# include "ace/ACE_Threads_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Threads_Export ACE_Export
+#endif  /* ACE_THREADS_BUILD_DLL */
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -35,7 +42,7 @@
  * @brief Wrapper for Dijkstra style general semaphores that work
  * across processes.
  */
-class ACE_Export ACE_Process_Semaphore
+class ACE_Threads_Export ACE_Process_Semaphore
 {
 public:
   /// Initialize the semaphore, with an initial value of @a count and a
@@ -148,7 +155,7 @@ template <class T> class ACE_Malloc_Lock_Adapter_T;
  * the standard form used by other lock strategy classes.
  */
 template<>
-class ACE_Export ACE_Malloc_Lock_Adapter_T<ACE_Process_Semaphore>
+class ACE_Threads_Export ACE_Malloc_Lock_Adapter_T<ACE_Process_Semaphore>
 {
 public:
   ACE_Process_Semaphore * operator () (const ACE_TCHAR *name);

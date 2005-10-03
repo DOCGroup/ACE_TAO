@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -12,9 +12,15 @@
 
 #ifndef ACE_PROCESS_H
 #define ACE_PROCESS_H
+
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+#ifdef ACE_THREADS_BUILD_DLL
+# include "ace/ACE_Threads_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Threads_Export ACE_Export
+#endif  /* ACE_THREADS_BUILD_DLL */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -46,7 +52,7 @@ class ACE_Time_Value;
  * then, the <spawn> is using the <execvp> which searches for the
  * program file in the PATH variable.
  */
-class ACE_Export ACE_Process_Options
+class ACE_Threads_Export ACE_Process_Options
 {
 public:
   enum
@@ -434,7 +440,7 @@ protected:
  * then, the <spawn> is using the <execvp> which searches for the
  * program file in the PATH variable.
  */
-class ACE_Export ACE_Process
+class ACE_Threads_Export ACE_Process
 {
 public:
   friend class ACE_Process_Manager;
@@ -578,7 +584,7 @@ protected:
  * @arg unmanage() method that deletes the instance.
  * This class is only valid for use as a dynamically-allocated object!
  */
-class ACE_Export ACE_Managed_Process : public ACE_Process
+class ACE_Threads_Export ACE_Managed_Process : public ACE_Process
 {
 public:
   ACE_Managed_Process ();

@@ -1,8 +1,5 @@
 // $Id$
 
-#if !defined (ACE_MALLOC_CPP)
-#define ACE_MALLOC_CPP
-
 #include "ace/Malloc.h"
 
 #if !defined (__ACE_INLINE__)
@@ -10,9 +7,14 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Object_Manager.h"
+#include "ace/Malloc_Base.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(ace, Malloc, "$Id$")
+
+ACE_RCSID (ace,
+           Malloc,
+           "$Id$")
+
 
 // Process-wide ACE_Allocator.
 ACE_Allocator *ACE_Allocator::allocator_ = 0;
@@ -203,4 +205,3 @@ template class ACE_Atomic_Op_Ex<ACE_PROCESS_MUTEX, int>;
 #pragma instantiate ACE_Atomic_Op_Ex<ACE_PROCESS_MUTEX, int>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 #endif /*ACE_HAS_MALLOC_STATS*/
-#endif /* ACE_MALLOC_CPP */

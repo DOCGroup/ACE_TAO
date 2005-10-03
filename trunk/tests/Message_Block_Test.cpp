@@ -22,11 +22,13 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Task.h"
-#include "ace/Malloc.h"
+#include "ace/Malloc_T.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Free_List.h"
 
-ACE_RCSID(tests, Message_Block_Test, "$Id$")
+ACE_RCSID (tests,
+	   Message_Block_Test,
+	   "$Id$")
 
 // Number of memory allocation strategies used in this test.
 static const int ACE_ALLOC_STRATEGY_NO = 2;
