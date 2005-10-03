@@ -6,6 +6,10 @@ ACE_RCSID (RTCORBA,
            Thread_Pool,
            "$Id$")
 
+#if ! defined (__ACE_INLINE__)
+#include "Thread_Pool.inl"
+#endif /* __ACE_INLINE__ */
+
 #include "tao/Exception.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Core_TSS_Resources.h"
@@ -27,62 +31,14 @@ TAO_RT_New_Leader_Generator::TAO_RT_New_Leader_Generator (
 void
 TAO_RT_New_Leader_Generator::no_leaders_available (void)
 {
-  // Note that we are checking this condition below without the lock
-  // held.  The value of <static_threads> and <dynamic_threads> does
-  // not change, but <current_threads> increases when new dynamic
-  // threads are created.  Even if we catch <current_threads> in an
-  // inconsistent state, we will double check later with the lock
-  // held.  Therefore, this check should not cause any big problems.
-  if (this->lane_.current_threads () ==
-      this->lane_.static_threads () +
-      this->lane_.dynamic_threads ())
-    return;
-
-  TAO_Thread_Pool_Manager &manager =
-    this->lane_.pool ().manager ();
-
-  ACE_GUARD (ACE_SYNCH_MUTEX,
-             mon,
-             manager.lock ());
-
-  if (this->lane_.current_threads () <
-      (this->lane_.static_threads () +
-       this->lane_.dynamic_threads ()) &&
-      !manager.orb_core ().has_shutdown ())
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO Process %P Pool %d Lane %d Thread %t\n")
-                    ACE_TEXT ("Current number of threads = %d; ")
-                    ACE_TEXT ("static threads = %d; dynamic threads = %d\n")
-                    ACE_TEXT ("No leaders available; creating new leader!\n"),
-                    this->lane_.pool ().id (),
-                    this->lane_.id (),
-                    this->lane_.current_threads (),
-                    this->lane_.static_threads (),
-                    this->lane_.dynamic_threads ()));
-
-      int result =
-        this->lane_.create_dynamic_threads (1);
-
-      if (result != 0)
-        ACE_ERROR ((LM_ERROR,
-                    "Pool %d Lane %d Thread %t: cannot create dynamic thread\n",
-                    this->lane_.pool ().id (),
-                    this->lane_.id ()));
-    }
+  // Request a new dynamic thread from the Thread Lane
+  this->lane_.request_dynamic_thread ();
 }
 
 TAO_Thread_Pool_Threads::TAO_Thread_Pool_Threads (TAO_Thread_Lane &lane)
   : ACE_Task_Base (lane.pool ().manager ().orb_core ().thr_mgr ()),
     lane_ (lane)
 {
-}
-
-TAO_Thread_Lane &
-TAO_Thread_Pool_Threads::lane (void) const
-{
-  return this->lane_;
 }
 
 int
@@ -151,6 +107,72 @@ TAO_Thread_Lane::TAO_Thread_Lane (TAO_Thread_Pool &pool,
                 &new_thread_generator_),
     native_priority_ (TAO_INVALID_PRIORITY)
 {
+}
+
+bool
+TAO_Thread_Lane::request_dynamic_thread (void)
+{
+  // Note that we are checking this condition below without the lock
+  // held.  The value of <static_threads> and <dynamic_threads> does
+  // not change, but <current_threads> increases when new dynamic
+  // threads are created.  Even if we catch <current_threads> in an
+  // inconsistent state, we will double check later with the lock
+  // held.  Therefore, this check should not cause any big problems.
+  if (this->current_threads_ >=
+      this->static_threads_ +
+      this->dynamic_threads_)
+    return false;
+
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+                    mon,
+                    this->lock_,
+                    false);
+
+  TAO_Thread_Pool_Manager &manager =
+    this->pool_.manager ();
+
+  if (this->current_threads_ <
+      (this->static_threads_ +
+       this->dynamic_threads_) &&
+      !manager.orb_core ().has_shutdown ())
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO Process %P Pool %d Lane %d Thread %t\n")
+                    ACE_TEXT ("Current number of threads = %d; ")
+                    ACE_TEXT ("static threads = %d; dynamic threads = %d\n")
+                    ACE_TEXT ("No leaders available; creating new leader!\n"),
+                    this->pool_.id (),
+                    this->id_,
+                    this->current_threads_,
+                    this->static_threads_,
+                    this->dynamic_threads_));
+
+      int result =
+        this->create_dynamic_threads_i (1);
+
+      if (result != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                          ACE_TEXT ("Pool %d Lane %d Thread %t: ")
+                          ACE_TEXT ("cannot create dynamic thread\n"),
+                          this->pool_.id (),
+                          this->id_),
+                          false);
+    }
+
+  return true;
+}
+
+void
+TAO_Thread_Lane::shutting_down (void)
+{
+  ACE_GUARD (ACE_SYNCH_MUTEX,
+             mon,
+             this->lock_);
+
+  // Just set the number of dynamic threads to 0, this means we just can't
+  // create any new one
+  this->dynamic_threads_ = 0;
 }
 
 void
@@ -299,9 +321,19 @@ TAO_Thread_Lane::create_static_threads (void)
   return this->create_dynamic_threads (this->static_threads_);
 }
 
-
 int
 TAO_Thread_Lane::create_dynamic_threads (CORBA::ULong number_of_threads)
+{
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+                    mon,
+                    this->lock_,
+                    0);
+
+  return this->create_dynamic_threads_i (number_of_threads);
+}
+
+int
+TAO_Thread_Lane::create_dynamic_threads_i (CORBA::ULong number_of_threads)
 {
   // Overwritten parameters.
   int force_active = 1;
@@ -323,7 +355,7 @@ TAO_Thread_Lane::create_dynamic_threads (CORBA::ULong number_of_threads)
        index != number_of_threads;
        ++index)
     stack_size_array[index] =
-      this->pool ().stack_size_;
+      this->pool ().stack_size ();
 
   // Make sure the dynamically created stack size array is properly
   // deleted.
@@ -357,66 +389,6 @@ TAO_Thread_Lane::create_dynamic_threads (CORBA::ULong number_of_threads)
   return result;
 }
 
-CORBA::ULong
-TAO_Thread_Lane::id (void) const
-{
-  return this->id_;
-}
-
-TAO_Thread_Pool &
-TAO_Thread_Lane::pool (void) const
-{
-  return this->pool_;
-}
-
-CORBA::Short
-TAO_Thread_Lane::lane_priority (void) const
-{
-  return this->lane_priority_;
-}
-
-CORBA::Short
-TAO_Thread_Lane::native_priority (void) const
-{
-  return this->native_priority_;
-}
-
-CORBA::ULong
-TAO_Thread_Lane::static_threads (void) const
-{
-  return this->static_threads_;
-}
-
-CORBA::ULong
-TAO_Thread_Lane::dynamic_threads (void) const
-{
-  return this->dynamic_threads_;
-}
-
-CORBA::ULong
-TAO_Thread_Lane::current_threads (void) const
-{
-  return this->current_threads_;
-}
-
-void
-TAO_Thread_Lane::current_threads (CORBA::ULong current_threads)
-{
-  this->current_threads_ = current_threads;
-}
-
-TAO_Thread_Pool_Threads &
-TAO_Thread_Lane::threads (void)
-{
-  return this->threads_;
-}
-
-TAO_Thread_Lane_Resources &
-TAO_Thread_Lane::resources (void)
-{
-  return this->resources_;
-}
-
 TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
                                   CORBA::ULong id,
                                   CORBA::ULong stack_size,
@@ -436,7 +408,7 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
     max_request_buffer_size_ (max_request_buffer_size),
     lanes_ (0),
     number_of_lanes_ (1),
-    with_lanes_ (0)
+    with_lanes_ (false)
 {
   // No support for buffering.
   if (allow_request_buffering)
@@ -471,7 +443,7 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
     max_request_buffer_size_ (max_request_buffer_size),
     lanes_ (0),
     number_of_lanes_ (lanes.length ()),
-    with_lanes_ (1)
+    with_lanes_ (true)
 {
   // No support for buffering or borrowing.
   if (allow_borrowing ||
@@ -537,6 +509,17 @@ TAO_Thread_Pool::shutdown_reactor (void)
 }
 
 void
+TAO_Thread_Pool::shutting_down (void)
+{
+  // Finalize all the lanes.
+  for (CORBA::ULong i = 0;
+       i != this->number_of_lanes_;
+       ++i)
+    this->lanes_[i]->shutting_down ();
+}
+
+
+void
 TAO_Thread_Pool::wait (void)
 {
   // Finalize all the lanes.
@@ -581,66 +564,6 @@ TAO_Thread_Pool::create_static_threads (void)
 
   // Success.
   return 0;
-}
-
-int
-TAO_Thread_Pool::with_lanes (void) const
-{
-  return this->with_lanes_;
-}
-
-TAO_Thread_Pool_Manager &
-TAO_Thread_Pool::manager (void) const
-{
-  return this->manager_;
-}
-
-CORBA::ULong
-TAO_Thread_Pool::id (void) const
-{
-  return this->id_;
-}
-
-CORBA::ULong
-TAO_Thread_Pool::stack_size (void) const
-{
-  return this->stack_size_;
-}
-
-CORBA::Boolean
-TAO_Thread_Pool::allow_borrowing (void) const
-{
-  return this->allow_borrowing_;
-}
-
-CORBA::Boolean
-TAO_Thread_Pool::allow_request_buffering (void) const
-{
-  return this->allow_request_buffering_;
-}
-
-CORBA::ULong
-TAO_Thread_Pool::max_buffered_requests (void) const
-{
-  return this->max_buffered_requests_;
-}
-
-CORBA::ULong
-TAO_Thread_Pool::max_request_buffer_size (void) const
-{
-  return this->max_request_buffer_size_;
-}
-
-TAO_Thread_Lane **
-TAO_Thread_Pool::lanes (void)
-{
-  return this->lanes_;
-}
-
-CORBA::ULong
-TAO_Thread_Pool::number_of_lanes (void) const
-{
-  return this->number_of_lanes_;
 }
 
 #define TAO_THREAD_POOL_MANAGER_GUARD \
@@ -771,11 +694,41 @@ TAO_Thread_Pool_Manager::destroy_threadpool (RTCORBA::ThreadpoolId threadpool
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RTCORBA::RTORB::InvalidThreadpool))
 {
-  TAO_THREAD_POOL_MANAGER_GUARD;
-  ACE_CHECK;
+  TAO_Thread_Pool *tao_thread_pool = 0;
 
-  this->destroy_threadpool_i (threadpool
-                              ACE_ENV_ARG_PARAMETER);
+  // The guard is just for the map, don't do a wait inside the guard, because
+  // during the wait other threads can try to access the thread pool manager
+  // also, this can be one of the threads we are waiting for, which then
+  // results in a deadlock
+  {
+    TAO_THREAD_POOL_MANAGER_GUARD;
+    ACE_CHECK;
+
+    // Unbind the thread pool from the map.
+    int result =
+      this->thread_pools_.unbind (threadpool,
+                                  tao_thread_pool);
+
+    // If the thread pool is not found in our map.
+    if (result != 0)
+      ACE_THROW (RTCORBA::RTORB::InvalidThreadpool ());
+  }
+
+  // Mark the thread pool that we are shutting down.
+  tao_thread_pool->shutting_down ();
+
+  // Shutdown reactor.
+  tao_thread_pool->shutdown_reactor ();
+
+  // Wait for the threads.
+  tao_thread_pool->wait ();
+
+  // Finalize resources.
+  tao_thread_pool->finalize ();
+
+  // Delete the thread pool.
+  delete tao_thread_pool;
+
 }
 
 RTCORBA::ThreadpoolId
@@ -892,52 +845,26 @@ TAO_Thread_Pool_Manager::create_threadpool_helper (TAO_Thread_Pool *thread_pool
   return this->thread_pool_id_counter_++;
 }
 
-void
-TAO_Thread_Pool_Manager::destroy_threadpool_i (RTCORBA::ThreadpoolId thread_pool_id
-                                               ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   RTCORBA::RTORB::InvalidThreadpool))
+TAO_Thread_Pool *
+TAO_Thread_Pool_Manager::get_threadpool (RTCORBA::ThreadpoolId thread_pool_id ACE_ENV_ARG_DECL)
 {
+  TAO_THREAD_POOL_MANAGER_GUARD;
+  ACE_CHECK_RETURN (0);
+
   TAO_Thread_Pool *thread_pool = 0;
-
-  // Unbind the thread pool from the map.
   int result =
-    this->thread_pools_.unbind (thread_pool_id,
-                                thread_pool);
+    thread_pools_.find (thread_pool_id,
+                        thread_pool);
 
-  // If the thread pool is not found in our map.
-  if (result != 0)
-    ACE_THROW (RTCORBA::RTORB::InvalidThreadpool ());
+  ACE_UNUSED_ARG (result);
 
-  // Shutdown reactor.
-  thread_pool->shutdown_reactor ();
-
-  // Wait for the threads.
-  thread_pool->wait ();
-
-  // Finalize resources.
-  thread_pool->finalize ();
-
-  // Delete the thread pool.
-  delete thread_pool;
+  return thread_pool;
 }
 
 TAO_ORB_Core &
 TAO_Thread_Pool_Manager::orb_core (void) const
 {
   return this->orb_core_;
-}
-
-ACE_SYNCH_MUTEX &
-TAO_Thread_Pool_Manager::lock (void)
-{
-  return this->lock_;
-}
-
-TAO_Thread_Pool_Manager::THREAD_POOLS &
-TAO_Thread_Pool_Manager::thread_pools (void)
-{
-  return this->thread_pools_;
 }
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
