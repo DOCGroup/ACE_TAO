@@ -406,7 +406,7 @@ namespace ACE
 #endif /* ACE_HAS_WINCE */
 
   /// Returns a pointer to the "end" of the string, i.e., the character
-  /// past the @c '\0'.
+  /// past the '\0'.
   extern ACE_Export const char *strend (const char *s);
 
   /// This method is just like @c strdup, except that it uses
@@ -525,17 +525,17 @@ namespace ACE
   extern ACE_Export size_t format_hexdump (const char *buffer, size_t size,
                                            ACE_TCHAR *obuf, size_t obuf_sz);
 
-  /// Computes the hash value of <str> using the "Hash PJW" routine.
+  /// Computes the hash value of {str} using the "Hash PJW" routine.
   extern ACE_Export u_long hash_pjw (const char *str);
 
-  /// Computes the hash value of <str> using the "Hash PJW" routine.
+  /// Computes the hash value of {str} using the "Hash PJW" routine.
   extern ACE_Export u_long hash_pjw (const char *str, size_t len);
 
 #if defined (ACE_HAS_WCHAR)
-  /// Computes the hash value of <str> using the "Hash PJW" routine.
+  /// Computes the hash value of {str} using the "Hash PJW" routine.
   extern ACE_Export u_long hash_pjw (const wchar_t *str);
 
-  /// Computes the hash value of <str> using the "Hash PJW" routine.
+  /// Computes the hash value of {str} using the "Hash PJW" routine.
   extern ACE_Export u_long hash_pjw (const wchar_t *str, size_t len);
 #endif /* ACE_HAS_WCHAR */
 
@@ -595,7 +595,7 @@ namespace ACE
   extern ACE_Export bool is_sock_error (int error);
 
   /**
-   * Checks if process with <pid> is still alive.  Returns 1 if it is
+   * Checks if process with {pid} is still alive.  Returns 1 if it is
    * still alive, 0 if it isn't alive, and -1 if something weird
    * happened.
    */
@@ -603,8 +603,8 @@ namespace ACE
 
   /**
    * Terminate the process abruptly with id @a pid.  On Win32 platforms
-   * this uses <TerminateProcess> and on POSIX platforms is uses
-   * <kill> with the -9 (SIGKILL) signal, which cannot be caught or
+   * this uses {TerminateProcess} and on POSIX platforms is uses
+   * {kill} with the -9 (SIGKILL) signal, which cannot be caught or
    * ignored.  Note that this call is potentially dangerous to use
    * since the process being terminated may not have a chance to
    * cleanup before it shuts down.
@@ -615,15 +615,15 @@ namespace ACE
    * This method uses process id and object pointer to come up with a
    * machine wide unique name.  The process ID will provide uniqueness
    * between processes on the same machine. The "this" pointer of the
-   * <object> will provide uniqueness between other "live" objects in
+   * {object} will provide uniqueness between other "live" objects in
    * the same process. The uniqueness of this name is therefore only
-   * valid for the life of <object>.
+   * valid for the life of {object}.
    */
   ACE_NAMESPACE_INLINE_FUNCTION void unique_name (const void *object,
                                                   ACE_TCHAR *name,
                                                   size_t length);
 
-  /// Computes the base 2 logarithm of <num>.
+  /// Computes the base 2 logarithm of {num}.
   ACE_NAMESPACE_INLINE_FUNCTION u_long log2 (u_long num);
 
   /// Hex conversion utility.
