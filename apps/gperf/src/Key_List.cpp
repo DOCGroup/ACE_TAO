@@ -248,7 +248,7 @@ Key_List::read_keys (void)
       // Read in all the keywords from the input file.
       else
         {
-          List_Node *temp;
+          List_Node *temp = 0;
           const char *delimiter = option.delimiter ();
           ACE_NEW_RETURN (this->head,
                           List_Node (buffer,
