@@ -1,3 +1,11 @@
+Mon Oct  3 15:39:59 2005  Simon McQueen  <sm@prismtech.com>
+
+        * orbsvcs/tests/Bug_2248_Regression/Bug_2248_Regression.mpc:
+        * orbsvcs/tests/Bug_2248_Regression/Server_Request_Interceptor.h:
+        * orbsvcs/tests/Bug_2248_Regression/client.h:
+
+          Linux build errors.
+
 Mon Oct  3 06:54:16 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/examples/ImR/Advanced/Makefile.am:
