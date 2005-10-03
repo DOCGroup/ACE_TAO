@@ -29,7 +29,7 @@ test_i::method (CORBA::Long client_id,
 
   /// Get the lane attribute in TSS.
   TAO_Thread_Lane *lane =
-    (TAO_Thread_Lane *) tss->lane_;
+    static_cast <TAO_Thread_Lane *> (tss->lane_);
 
   if (lane)
     ACE_DEBUG ((LM_DEBUG,
