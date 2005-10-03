@@ -1,3 +1,19 @@
+Mon Oct  3 12:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTCORBA/Thread_Pool.{h,cpp,inl}:
+          Fixed deadlock that occured when a ThreadPool was being destructed
+          when the ORB is still running. At that moment we did a wait on
+          the thread pool wait the lock on the thread pool manager was still
+          hold which resulted in a deadlock. Now each Thread Pool lane has
+          its own lock to guard its state, the lock in the thread pool manager
+          is just to guard the map in the manager. This fixes bugzilla bug
+          #2235.
+          Thanks to Anders Olsson <Anders dot EPK dot Olsson at ericsson dot com>
+          for reporting this issue.
+
+        * tao/Makefile.am:
+          Added new Thread_Pool.inl
+
 Mon Oct  3 12:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/RTCORBA/Thread_Pool/test_i.cpp:
