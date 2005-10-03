@@ -656,7 +656,7 @@ private:
   static u_long flags_;
 
   /// Offset of msg_[].
-  static int msg_off_;
+  static long msg_off_;
 
   /**
    * Number of existing ACE_Log_Msg instances; when 0, delete program/host

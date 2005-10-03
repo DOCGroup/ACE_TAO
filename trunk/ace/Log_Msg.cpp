@@ -438,7 +438,7 @@ u_long ACE_Log_Msg::flags_ = ACE_Log_Msg::STDERR;
 pid_t ACE_Log_Msg::pid_ = -1;
 
 /// Current offset of msg_[].
-int ACE_Log_Msg::msg_off_ = 0;
+long ACE_Log_Msg::msg_off_ = 0;
 
 /// Default per-thread priority mask
 /// By default, no priorities are enabled.
@@ -1461,7 +1461,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
                 case 'r': // Run (invoke) this subroutine.
                   {
-                    int osave = ACE_Log_Msg::msg_off_;
+                    long osave = ACE_Log_Msg::msg_off_;
 
                     if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,
                                          ACE_Log_Msg::SILENT) &&
