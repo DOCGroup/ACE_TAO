@@ -1,3 +1,8 @@
+Mon Oct  3 18:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SSL/SSL_Context.cpp:
+          Use prefix increment/decrement instead of postfix
+
 Mon Oct  3 10:48:23 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/ACE_Memory_export.h:
