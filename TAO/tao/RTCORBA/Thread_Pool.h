@@ -150,7 +150,7 @@ public:
    * @retval true A new thread is created
    * @retval false No thread could be created
    */
-  bool request_dynamic_thread (void);
+  bool new_dynamic_thread (void);
 
   /// @name Accessors
   // @{

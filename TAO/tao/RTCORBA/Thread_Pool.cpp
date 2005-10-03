@@ -32,7 +32,7 @@ void
 TAO_RT_New_Leader_Generator::no_leaders_available (void)
 {
   // Request a new dynamic thread from the Thread Lane
-  this->lane_.request_dynamic_thread ();
+  this->lane_.new_dynamic_thread ();
 }
 
 TAO_Thread_Pool_Threads::TAO_Thread_Pool_Threads (TAO_Thread_Lane &lane)
@@ -110,7 +110,7 @@ TAO_Thread_Lane::TAO_Thread_Lane (TAO_Thread_Pool &pool,
 }
 
 bool
-TAO_Thread_Lane::request_dynamic_thread (void)
+TAO_Thread_Lane::new_dynamic_thread (void)
 {
   // Note that we are checking this condition below without the lock
   // held.  The value of <static_threads> and <dynamic_threads> does
