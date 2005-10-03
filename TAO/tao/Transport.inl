@@ -174,3 +174,16 @@ TAO_Transport::connection_handler (void)
   return this->connection_handler_i();
 }
 
+ACE_INLINE size_t
+TAO_Transport::recv_buffer_size (void) const
+{
+  return this->recv_buffer_size_;
+}
+
+ACE_INLINE size_t
+TAO_Transport::sent_byte_count (void) const
+{
+  return this->sent_byte_count_;
+}
+
+
