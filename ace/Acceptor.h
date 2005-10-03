@@ -64,15 +64,15 @@ public:
                 int use_select = 1);
 
   /**
-   * Initialize and register <this> with the Reactor and listen for
-   * connection requests at the designated <local_addr>.  <flags>
-   * indicates how <SVC_HANDLER>'s should be initialized prior to
+   * Initialize and register {this} with the Reactor and listen for
+   * connection requests at the designated {local_addr}.  {flags}
+   * indicates how {SVC_HANDLER}'s should be initialized prior to
    * being activated.  Right now, the only flag that is processed is
-   * <ACE_NONBLOCK>, which enabled non-blocking I/O on the
-   * <SVC_HANDLER> when it is opened.  If <use_select> is non-zero
-   * then <select> is used to determine when to break out of the
-   * <accept> loop.  <reuse_addr> is passed down to the
-   * <PEER_ACCEPTOR>.  If it is non-zero this will allow the OS to
+   * {ACE_NONBLOCK}, which enabled non-blocking I/O on the
+   * {SVC_HANDLER} when it is opened.  If {use_select} is non-zero
+   * then {select} is used to determine when to break out of the
+   * {accept} loop.  {reuse_addr} is passed down to the
+   * {PEER_ACCEPTOR}.  If it is non-zero this will allow the OS to
    * reuse this listen port.
    */
   ACE_Acceptor (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
@@ -130,7 +130,7 @@ public:
   /// Return the underlying PEER_ACCEPTOR object.
   virtual ACE_PEER_ACCEPTOR &acceptor (void) const;
 
-  /// Returns the listening acceptor's <ACE_HANDLE>.
+  /// Returns the listening acceptor's {ACE_HANDLE}.
   virtual ACE_HANDLE get_handle (void) const;
 
   /// Close down the Acceptor
@@ -149,7 +149,7 @@ protected:
 
   /**
    * Bridge method for creating a SVC_HANDLER.  The default is to
-   * create a new <SVC_HANDLER> if <sh> == 0, else <sh> is unchanged.
+   * create a new {SVC_HANDLER} if {sh} == 0, else {sh} is unchanged.
    * However, subclasses can override this policy to perform
    * SVC_HANDLER creation in any way that they like (such as creating
    * subclass instances of SVC_HANDLER, using a singleton, dynamically
@@ -165,9 +165,9 @@ protected:
   virtual int accept_svc_handler (SVC_HANDLER *svc_handler);
 
   /**
-   * Bridge method for activating a <svc_handler> with the appropriate
+   * Bridge method for activating a {svc_handler} with the appropriate
    * concurrency strategy.  The default behavior of this method is to
-   * activate the SVC_HANDLER by calling its <open> method (which
+   * activate the SVC_HANDLER by calling its {open} method (which
    * allows the SVC_HANDLER to define its own concurrency strategy).
    * However, subclasses can override this strategy to do more
    * sophisticated concurrency activations (such as making the
@@ -177,8 +177,8 @@ protected:
   virtual int activate_svc_handler (SVC_HANDLER *svc_handler);
 
   // = Demultiplexing hooks.
-  /// Perform termination activities when <this> is removed from the
-  /// <reactor>.
+  /// Perform termination activities when {this} is removed from the
+  /// {reactor}.
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                             ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
 
@@ -191,40 +191,40 @@ protected:
   /// by application developer to do anything meaningful.
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
-  /// Calls <handle_close>.
+  /// Calls {handle_close}.
   virtual int fini (void);
 
-  /// Default version returns address info in <buf>.
+  /// Default version returns address info in {buf}.
   virtual int info (ACE_TCHAR **buf, size_t) const;
 
 public:
   // = Service management hooks.
-  /// This method calls <Reactor::suspend>.
+  /// This method calls {Reactor::suspend}.
   virtual int suspend (void);
 
-  /// This method calls <Reactor::resume>.
+  /// This method calls {Reactor::resume}.
   virtual int resume (void);
 
 protected:
   /// Concrete factory for accepting connections from clients...
   ACE_PEER_ACCEPTOR peer_acceptor_;
 
-  /// Needed to reopen the socket if <accept> fails.
+  /// Needed to reopen the socket if {accept} fails.
   ACE_PEER_ACCEPTOR_ADDR peer_acceptor_addr_;
 
   /**
-   * Flags that indicate how <SVC_HANDLER>'s should be initialized
+   * Flags that indicate how {SVC_HANDLER}'s should be initialized
    * prior to being activated.  Right now, the only flag that is
-   * processed is <ACE_NONBLOCK>, which enabled non-blocking I/O on
-   * the <SVC_HANDLER> when it is opened.
+   * processed is {ACE_NONBLOCK}, which enabled non-blocking I/O on
+   * the {SVC_HANDLER} when it is opened.
    */
   int flags_;
 
-  /// Flag that indicates whether it shall use <select> in the
-  /// <accept>-loop.
+  /// Flag that indicates whether it shall use {select} in the
+  /// {accept}-loop.
   int use_select_;
 
-  /// Needed to reopen the socket if <accept> fails.
+  /// Needed to reopen the socket if {accept} fails.
   int reuse_addr_;
 };
 
@@ -275,9 +275,9 @@ public:
 
   /**
    * Initialize the appropriate strategies for creation, passive
-   * connection acceptance, and concurrency, and then register <this>
+   * connection acceptance, and concurrency, and then register {this}
    * with the Reactor and listen for connection requests at the
-   * designated <local_addr>.
+   * designated {local_addr}.
    */
   ACE_Strategy_Acceptor (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
                          ACE_Reactor * = ACE_Reactor::instance (),
@@ -299,7 +299,7 @@ public:
    * between the time when the passive-mode socket handle is "ready"
    * and when the actual @c accept call is made.  During this
    * interval, the client can shutdown the connection, in which case,
-   * the <accept> call can hang.
+   * the {accept} call can hang.
    *
    * @param local_addr   The address to listen at.
    * @param reactor      Pointer to the ACE_Reactor instance to register
@@ -332,9 +332,9 @@ public:
 
   /**
    * Initialize the appropriate strategies for creation, passive
-   * connection acceptance, and concurrency, and then register <this>
+   * connection acceptance, and concurrency, and then register {this}
    * with the Reactor and listen for connection requests at the
-   * designated <local_addr>.
+   * designated {local_addr}.
    */
   virtual int open (const ACE_PEER_ACCEPTOR_ADDR &,
                     ACE_Reactor * = ACE_Reactor::instance (),
@@ -356,7 +356,7 @@ public:
   /// Return the underlying PEER_ACCEPTOR object.
   virtual ACE_PEER_ACCEPTOR &acceptor (void) const;
 
-  /// Returns the listening acceptor's <ACE_HANDLE>.
+  /// Returns the listening acceptor's {ACE_HANDLE}.
   virtual ACE_HANDLE get_handle (void) const;
 
   /// Dump the state of an object.
@@ -368,58 +368,58 @@ public:
 protected:
   // = Service management hooks.
 
-  /// This method delegates to the <Scheduling_Strategy>'s <suspend>
+  /// This method delegates to the {Scheduling_Strategy}'s {suspend}
   /// method.
   virtual int suspend (void);
 
-  /// This method delegates to the <Scheduling_Strategy>'s <resume>
+  /// This method delegates to the {Scheduling_Strategy}'s {resume}
   /// method.
   virtual int resume (void);
 
-  /// Calls <handle_close> when dynamically unlinked.
+  /// Calls {handle_close} when dynamically unlinked.
   virtual int fini (void);
 
-  /// Default version returns address info in <buf>.
+  /// Default version returns address info in {buf}.
   virtual int info (ACE_TCHAR **buf, size_t) const;
 
-  // = The following three methods define the <Acceptor>'s strategies
-  // for creating, accepting, and activating <SVC_HANDLER>'s,
+  // = The following three methods define the {Acceptor}'s strategies
+  // for creating, accepting, and activating {SVC_HANDLER}'s,
   // respectively.
 
   /**
-   * Bridge method for creating a <SVC_HANDLER>.  The strategy for
-   * creating a <SVC_HANDLER> are configured into the Acceptor via
-   * it's <creation_strategy_>.  The default is to create a new
-   * <SVC_HANDLER> if <sh> == 0, else <sh> is unchanged.  However,
-   * subclasses can override this policy to perform <SVC_HANDLER>
+   * Bridge method for creating a {SVC_HANDLER}.  The strategy for
+   * creating a {SVC_HANDLER} are configured into the Acceptor via
+   * it's {creation_strategy_}.  The default is to create a new
+   * {SVC_HANDLER} if {sh} == 0, else {sh} is unchanged.  However,
+   * subclasses can override this policy to perform {SVC_HANDLER}
    * creation in any way that they like (such as creating subclass
-   * instances of <SVC_HANDLER>, using a singleton, dynamically
+   * instances of {SVC_HANDLER}, using a singleton, dynamically
    * linking the handler, etc.).  Returns -1 on failure, else 0.
    */
   virtual int make_svc_handler (SVC_HANDLER *&);
 
   /**
    * Bridge method for accepting the new connection into the
-   * <SVC_HANDLER>.  The default behavior delegates to the
-   * <PEER_ACCEPTOR::accept> in the <Acceptor_Strategy>.
+   * {SVC_HANDLER}.  The default behavior delegates to the
+   * {PEER_ACCEPTOR::accept} in the {Acceptor_Strategy}.
    */
   virtual int accept_svc_handler (SVC_HANDLER *svc_handler);
 
   /**
-   * Bridge method for activating a <SVC_HANDLER> with the appropriate
+   * Bridge method for activating a {SVC_HANDLER} with the appropriate
    * concurrency strategy.  The default behavior of this method is to
-   * activate the <SVC_HANDLER> by calling its <open> method (which
-   * allows the <SVC_HANDLER> to define its own concurrency strategy).
+   * activate the {SVC_HANDLER} by calling its {open} method (which
+   * allows the {SVC_HANDLER} to define its own concurrency strategy).
    * However, subclasses can override this strategy to do more
    * sophisticated concurrency activations (such as creating the
-   * <SVC_HANDLER> as an "active object" via multi-threading or
+   * {SVC_HANDLER} as an "active object" via multi-threading or
    * multi-processing).
    */
   virtual int activate_svc_handler (SVC_HANDLER *svc_handler);
 
   // = Demultiplexing hooks.
-  /// Perform termination activities when <this> is removed from the
-  /// <Reactor>.
+  /// Perform termination activities when {this} is removed from the
+  /// {Reactor}.
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                             ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
 
@@ -434,28 +434,28 @@ protected:
   /// Creation strategy for an Acceptor.
   CREATION_STRATEGY *creation_strategy_;
 
-  /// 1 if <Acceptor> created the creation strategy and thus should
+  /// 1 if {Acceptor} created the creation strategy and thus should
   /// delete it, else 0.
   int delete_creation_strategy_;
 
-  /// Accept strategy for an <Acceptor>.
+  /// Accept strategy for an {Acceptor}.
   ACCEPT_STRATEGY *accept_strategy_;
 
-  /// 1 if <Acceptor> created the accept strategy and thus should delete
+  /// 1 if {Acceptor} created the accept strategy and thus should delete
   /// it, else 0.
   int delete_accept_strategy_;
 
-  /// Concurrency strategy for an <Acceptor>.
+  /// Concurrency strategy for an {Acceptor}.
   CONCURRENCY_STRATEGY *concurrency_strategy_;
 
-  /// 1 if <Acceptor> created the concurrency strategy and thus should
+  /// 1 if {Acceptor} created the concurrency strategy and thus should
   /// delete it, else 0.
   int delete_concurrency_strategy_;
 
-  /// Scheduling strategy for an <Acceptor>.
+  /// Scheduling strategy for an {Acceptor}.
   SCHEDULING_STRATEGY *scheduling_strategy_;
 
-  /// 1 if <Acceptor> created the scheduling strategy and thus should
+  /// 1 if {Acceptor} created the scheduling strategy and thus should
   /// delete it, else 0.
   int delete_scheduling_strategy_;
 
@@ -467,7 +467,7 @@ protected:
   /// Description of the service.
   ACE_TCHAR *service_description_;
 
-  /// Address that the <Strategy_Acceptor> uses to listen for
+  /// Address that the {Strategy_Acceptor} uses to listen for
   /// connections.
   ACE_PEER_ACCEPTOR_ADDR service_addr_;
 };
@@ -478,18 +478,18 @@ protected:
  * @brief Generic factory for passively connecting clients and creating
  * exactly one service handler (SVC_HANDLER).
  *
- * This class works similarly to the regular <ACE_Acceptor>,
+ * This class works similarly to the regular {ACE_Acceptor},
  * with the following differences:
- * 1. This class doesn't automagically register <this> with the
- * <ACE_Reactor> since it expects to have its <accept> method
- * called directly.  However, it stashes the <ACE_Reactor>
+ * 1. This class doesn't automagically register {this} with the
+ * {ACE_Reactor} since it expects to have its {accept} method
+ * called directly.  However, it stashes the {ACE_Reactor}
  * pointer away in case it's needed later to finish accepting
  * a connection asynchronously.
- * 2. The class doesn't need an <ACE_Creation_Strategy> (since
+ * 2. The class doesn't need an {ACE_Creation_Strategy} (since
  * the user supplies the SVC_HANDLER) or an
- * <ACE_Accept_Strategy> (since this class only accepts one
+ * {ACE_Accept_Strategy} (since this class only accepts one
  * connection and then removes all traces of itself from the
- * <ACE_Reactor> if it was registered for asynchronous
+ * {ACE_Reactor} if it was registered for asynchronous
  * accepts).
  */
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
@@ -508,10 +508,10 @@ public:
 
   /**
    * Initialize the appropriate strategies for concurrency and then
-   * open the <peer_acceptor> at the designated <local_addr>.  Note
-   * that unlike the <ACE_Acceptor> and <ACE_Strategy_Acceptor>, this
-   * method does NOT register <this> acceptor with the <reactor> at
-   * this point -- it just stashes the <reactor> away in case it's
+   * open the {peer_acceptor} at the designated {local_addr}.  Note
+   * that unlike the {ACE_Acceptor} and {ACE_Strategy_Acceptor}, this
+   * method does NOT register {this} acceptor with the {reactor} at
+   * this point -- it just stashes the {reactor} away in case it's
    * needed later.
    */
   ACE_Oneshot_Acceptor (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
@@ -520,22 +520,22 @@ public:
 
   /**
    * Initialize the appropriate strategies for concurrency and then
-   * open the <peer_acceptor> at the designated <local_addr>.  Note
-   * that unlike the <ACE_Acceptor> and <ACE_Strategy_Acceptor>, this
-   * method does NOT register <this> acceptor with the <reactor> at
-   * this point -- it just stashes the <reactor> away in case it's
+   * open the {peer_acceptor} at the designated {local_addr}.  Note
+   * that unlike the {ACE_Acceptor} and {ACE_Strategy_Acceptor}, this
+   * method does NOT register {this} acceptor with the {reactor} at
+   * this point -- it just stashes the {reactor} away in case it's
    * needed later.
    */
   int open (const ACE_PEER_ACCEPTOR_ADDR &,
             ACE_Reactor *reactor = ACE_Reactor::instance (),
             ACE_Concurrency_Strategy<SVC_HANDLER> * = 0);
 
-  /// Close down the <Oneshot_Acceptor>.
+  /// Close down the {Oneshot_Acceptor}.
   virtual ~ACE_Oneshot_Acceptor (void);
 
   // = Explicit factory operation.
-  /// Create a <SVC_HANDLER>, accept the connection into the
-  /// <SVC_HANDLER>, and activate the <SVC_HANDLER>.
+  /// Create a {SVC_HANDLER}, accept the connection into the
+  /// {SVC_HANDLER}, and activate the {SVC_HANDLER}.
   virtual int accept (SVC_HANDLER * = 0,
                       ACE_PEER_ACCEPTOR_ADDR *remote_addr = 0,
                       const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
@@ -545,13 +545,13 @@ public:
   /// Cancel a oneshot acceptor that was started asynchronously.
   virtual int cancel (void);
 
-  /// Return the underlying <PEER_ACCEPTOR> object.
+  /// Return the underlying {PEER_ACCEPTOR} object.
   virtual operator ACE_PEER_ACCEPTOR &() const;
 
-  /// Return the underlying <PEER_ACCEPTOR> object.
+  /// Return the underlying {PEER_ACCEPTOR} object.
   virtual ACE_PEER_ACCEPTOR &acceptor (void) const;
 
-  /// Close down the <Oneshot_Acceptor>.
+  /// Close down the {Oneshot_Acceptor}.
   virtual int close (void);
 
   /// Dump the state of an object.
@@ -562,17 +562,17 @@ public:
 
 protected:
   /**
-   * Bridge method for activating a <svc_handler> with the appropriate
+   * Bridge method for activating a {svc_handler} with the appropriate
    * concurrency strategy.  Default behavior is to activate the
-   * <SVC_HANDLER> as a "passive object."  However, subclasses can
+   * {SVC_HANDLER} as a "passive object."  However, subclasses can
    * override this strategy to do more sophisticated concurrency
-   * activations (such as creating the <SVC_HANDLER> as an "active
+   * activations (such as creating the {SVC_HANDLER} as an "active
    * object" via multi-threading or multi-processing).
    */
   virtual int activate_svc_handler (SVC_HANDLER *svc_handler);
 
-  /// Factors out the code shared between the <accept> and
-  /// <handle_input> methods.
+  /// Factors out the code shared between the {accept} and
+  /// {handle_input} methods.
   int shared_accept (SVC_HANDLER *svc_handler,
                      ACE_PEER_ACCEPTOR_ADDR *remote_addr,
                      ACE_Time_Value *timeout,
@@ -580,11 +580,11 @@ protected:
                      int reset_new_handle);
 
   // = Demultiplexing hooks.
-  /// Returns the listening acceptor's <ACE_HANDLE>.
+  /// Returns the listening acceptor's {ACE_HANDLE}.
   virtual ACE_HANDLE get_handle (void) const;
 
-  /// Perform termination activities when <this> is removed from the
-  /// <reactor>.
+  /// Perform termination activities when {this} is removed from the
+  /// {reactor}.
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                             ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
 
@@ -605,7 +605,7 @@ protected:
   /// by application developer to do anything meaningful.
   virtual int fini (void);
 
-  /// Default version returns address info in <buf>.
+  /// Default version returns address info in {buf}.
   virtual int info (ACE_TCHAR **, size_t) const;
 
   // = Service management hooks.
@@ -619,7 +619,7 @@ protected:
 
 private:
   /**
-   * Insert ourselves into the <ACE_Reactor> so that we can continue
+   * Insert ourselves into the {ACE_Reactor} so that we can continue
    * accepting this connection asynchronously.  This method should NOT
    * be called by developers directly.
    */
