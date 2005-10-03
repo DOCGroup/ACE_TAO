@@ -71,13 +71,3 @@ TAO::SSLIOP::OpenSSL_traits< ::EVP_PKEY >::copy (::EVP_PKEY const & key)
   return p._retn ();
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO::SSLIOP::OpenSSL_st_var< ::EVP_PKEY >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate TAO::SSLIOP::OpenSSL_st_var< ::EVP_PKEY >
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

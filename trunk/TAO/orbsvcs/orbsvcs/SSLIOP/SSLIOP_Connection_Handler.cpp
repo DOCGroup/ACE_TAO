@@ -166,9 +166,9 @@ TAO::SSLIOP::Connection_Handler::open (void *)
   if (this->peer ().get_local_addr (local_addr) == -1)
     return -1;
 
-  int use_dotted_decimal_addresses = 
+  int use_dotted_decimal_addresses =
     this->orb_core ()->orb_params ()->use_dotted_decimal_addresses ();
-  
+
   if (local_addr.get_ip_address () == remote_addr.get_ip_address ()
       && local_addr.get_port_number () == remote_addr.get_port_number ())
     {
@@ -198,7 +198,7 @@ TAO::SSLIOP::Connection_Handler::open (void *)
       char client[MAXHOSTNAMELEN + 16];
 
       // Verify that we can resolve the peer hostname.
-      if (remote_addr.addr_to_string (client, 
+      if (remote_addr.addr_to_string (client,
                                       sizeof (client),
                                       use_dotted_decimal_addresses) == -1)
       {
@@ -210,15 +210,15 @@ TAO::SSLIOP::Connection_Handler::open (void *)
                   ACE_TEXT ("client <%s> on [%d]\n"),
                   client,
                   this->peer ().get_handle ()));
-      
+
       // Verify that we can resolve our hostname.
-      if (local_addr.addr_to_string (client, 
+      if (local_addr.addr_to_string (client,
                                       sizeof (client),
                                       use_dotted_decimal_addresses) == -1)
       {
         ACE_OS::strcpy (client, "*unable to obtain*");
       }
-      
+
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) SSLIOP connection accepted from ")
                   ACE_TEXT ("server <%s> on [%d]\n"),
@@ -233,7 +233,7 @@ TAO::SSLIOP::Connection_Handler::open (void *)
     return -1;
 
   // @@ Not needed
-  this->state_changed (TAO_LF_Event::LFS_SUCCESS, 
+  this->state_changed (TAO_LF_Event::LFS_SUCCESS,
 		       this->orb_core ()->leader_follower ());
 
   return 0;
@@ -440,14 +440,3 @@ TAO::SSLIOP::Connection_Handler::teardown_ssl_state (
                             setup_done);
 }
 
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Svc_Handler<ACE_SSL_SOCK_STREAM, ACE_NULL_SYNCH>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Svc_Handler<ACE_SSL_SOCK_STREAM, ACE_NULL_SYNCH>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

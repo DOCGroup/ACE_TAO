@@ -193,13 +193,3 @@ tao_TAO_SSLIOP_Current_upcast (
   return *tmp;
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_Pseudo_Var_T<TAO::SSLIOP::Current>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate TAO_Pseudo_Var_T<TAO::SSLIOP::Current>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -58,15 +58,3 @@ TAO::SSLIOP::Accept_Strategy::accept_svc_handler (handler_type * svc_handler)
     return 0;
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Accept_Strategy<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>;
-template class TAO_Accept_Strategy<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate ACE_Accept_Strategy<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>
-# pragma instantiate TAO_Accept_Strategy<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
