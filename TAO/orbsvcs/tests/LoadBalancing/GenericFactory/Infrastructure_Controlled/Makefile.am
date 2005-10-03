@@ -16,41 +16,44 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
+
+## Makefile.Infrastructure_Controlled_Idl.am
+
+BUILT_SOURCES = \
+  TestC.cpp \
+  TestC.h \
+  TestC.inl \
+  TestS.cpp \
+  TestS.h \
+  TestS.inl \
+  TestS_T.cpp \
+  TestS_T.h \
+  TestS_T.inl
+
+CLEANFILES = \
+  Test-stamp \
+  TestC.cpp \
+  TestC.h \
+  TestC.inl \
+  TestS.cpp \
+  TestS.h \
+  TestS.inl \
+  TestS_T.cpp \
+  TestS_T.h \
+  TestS_T.inl
+
+TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl TestS_T.cpp TestS_T.h TestS_T.inl: Test-stamp
+
+Test-stamp: $(srcdir)/Test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
+	@touch $@
+
 
 ## Makefile.Infrastructure_Controlled_Client.am
 
 if BUILD_AMI
 if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
-
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl \
-  TestS_T.cpp \
-  TestS_T.h \
-  TestS_T.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS.inl \
-  TestS_T.cpp \
-  TestS_T.h \
-  TestS_T.inl
-
-TestC.cpp TestC.h TestC.inl TestS.h TestS.inl TestS_T.cpp TestS_T.h TestS_T.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Test.idl
-	@touch $@
 
 noinst_PROGRAMS += client
 
@@ -65,11 +68,11 @@ client_CPPFLAGS = \
 client_SOURCES = \
   TestC.cpp \
   client.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS_T.h \
-  TestS_T.inl
+  Factory.h \
+  Factory_Map.h \
+  Factory_Struct.h \
+  LB_server.h \
+  Simple.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosLoadBalancing.la \
@@ -98,35 +101,6 @@ if BUILD_AMI
 if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
 
-BUILT_SOURCES += \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl \
-  TestS_T.cpp \
-  TestS_T.h \
-  TestS_T.inl
-
-CLEANFILES += \
-  Test-stamp \
-  TestC.cpp \
-  TestC.h \
-  TestC.inl \
-  TestS.cpp \
-  TestS.h \
-  TestS.inl \
-  TestS_T.cpp \
-  TestS_T.h \
-  TestS_T.inl
-
-TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl TestS_T.cpp TestS_T.h TestS_T.inl: Test-stamp
-
-Test-stamp: $(srcdir)/Test.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Test.idl
-	@touch $@
-
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \
@@ -150,12 +124,7 @@ server_SOURCES = \
   Factory_Map.h \
   Factory_Struct.h \
   LB_server.h \
-  Simple.h \
-  TestC.h \
-  TestC.inl \
-  TestS.h \
-  TestS_T.h \
-  TestS_T.inl
+  Simple.h
 
 server_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosLoadBalancing.la \

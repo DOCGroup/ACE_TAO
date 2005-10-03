@@ -15,15 +15,11 @@ TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-CLEANFILES =
 noinst_PROGRAMS =
-BUILT_SOURCES =
 
-## Makefile.ImR_Combined_Service.am
+## Makefile.ImR_Combined_Service_IDL.am
 
-if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   service_configC.cpp \
   service_configC.h \
   service_configC.inl \
@@ -34,7 +30,7 @@ BUILT_SOURCES += \
   service_configS_T.h \
   service_configS_T.inl
 
-CLEANFILES += \
+CLEANFILES = \
   service_config-stamp \
   service_configC.cpp \
   service_configC.h \
@@ -52,91 +48,6 @@ service_config-stamp: $(srcdir)/service_config.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/service_config.idl
 	@touch $@
 
-noinst_PROGRAMS += combined_service
-
-combined_service_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-combined_service_SOURCES = \
-  combined.cpp \
-  service_configC.cpp \
-  service_configS.cpp \
-  service_configC.h \
-  service_configC.inl \
-  service_configS.h \
-  service_configS_T.h \
-  service_configS_T.inl
-
-combined_service_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_EXCEPTIONS
-
-## Makefile.ImR_Combined_Service_Controller.am
-
-if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
-  service_configC.cpp \
-  service_configC.h \
-  service_configC.inl \
-  service_configS.h \
-  service_configS.inl \
-  service_configS_T.cpp \
-  service_configS_T.h \
-  service_configS_T.inl
-
-CLEANFILES += \
-  service_config-stamp \
-  service_configC.cpp \
-  service_configC.h \
-  service_configC.inl \
-  service_configS.h \
-  service_configS.inl \
-  service_configS_T.cpp \
-  service_configS_T.h \
-  service_configS_T.inl
-
-service_configC.cpp service_configC.h service_configC.inl service_configS.h service_configS.inl service_configS_T.cpp service_configS_T.h service_configS_T.inl: service_config-stamp
-
-service_config-stamp: $(srcdir)/service_config.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/service_config.idl
-	@touch $@
-
-noinst_PROGRAMS += controller
-
-controller_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-controller_SOURCES = \
-  controller.cpp \
-  service_configC.cpp \
-  service_configC.h \
-  service_configC.inl \
-  service_configS.h \
-  service_configS_T.h \
-  service_configS_T.inl
-
-controller_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_EXCEPTIONS
-
-## Makefile.ImR_Combined_Service_DynamicServer.am
-
-if BUILD_EXCEPTIONS
-
 BUILT_SOURCES += \
   testC.cpp \
   testC.h \
@@ -165,6 +76,63 @@ testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl testS_T.cpp testS_T.h te
 test-stamp: $(srcdir)/test.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/test.idl
 	@touch $@
+
+
+## Makefile.ImR_Combined_Service.am
+
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += combined_service
+
+combined_service_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+combined_service_SOURCES = \
+  combined.cpp \
+  service_configC.cpp \
+  service_configS.cpp \
+  dynserver.h \
+  dynserver_export.h
+
+combined_service_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
+
+## Makefile.ImR_Combined_Service_Controller.am
+
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += controller
+
+controller_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+controller_SOURCES = \
+  controller.cpp \
+  service_configC.cpp \
+  dynserver.h \
+  dynserver_export.h
+
+controller_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
+
+## Makefile.ImR_Combined_Service_DynamicServer.am
+
+if BUILD_EXCEPTIONS
 
 noinst_LTLIBRARIES = libDynServer.la
 
@@ -182,47 +150,13 @@ libDynServer_la_SOURCES = \
 
 noinst_HEADERS = \
   dynserver.h \
-  dynserver_export.h \
-  test.idl \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS_T.cpp \
-  testS_T.h \
-  testS_T.inl
+  dynserver_export.h
 
 endif BUILD_EXCEPTIONS
 
 ## Makefile.ImR_Combined_Service_Test.am
 
 if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl \
-  testS_T.cpp \
-  testS_T.h \
-  testS_T.inl
-
-CLEANFILES += \
-  test-stamp \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl \
-  testS_T.cpp \
-  testS_T.h \
-  testS_T.inl
-
-testC.cpp testC.h testC.inl testS.h testS.inl testS_T.cpp testS_T.h testS_T.inl: test-stamp
-
-test-stamp: $(srcdir)/test.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/test.idl
-	@touch $@
 
 noinst_PROGRAMS += test
 
@@ -235,11 +169,8 @@ test_CPPFLAGS = \
 test_SOURCES = \
   test.cpp \
   testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS_T.h \
-  testS_T.inl
+  dynserver.h \
+  dynserver_export.h
 
 test_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
@@ -251,35 +182,6 @@ endif BUILD_EXCEPTIONS
 ## Makefile.ImR_Combined_Service_TestServer.am
 
 if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.cpp \
-  testS.h \
-  testS.inl \
-  testS_T.cpp \
-  testS_T.h \
-  testS_T.inl
-
-CLEANFILES += \
-  test-stamp \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.cpp \
-  testS.h \
-  testS.inl \
-  testS_T.cpp \
-  testS_T.h \
-  testS_T.inl
-
-testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl testS_T.cpp testS_T.h testS_T.inl: test-stamp
-
-test-stamp: $(srcdir)/test.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/test.idl
-	@touch $@
 
 noinst_PROGRAMS += test_server
 
@@ -293,11 +195,8 @@ test_server_SOURCES = \
   testC.cpp \
   testS.cpp \
   test_server.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS_T.h \
-  testS_T.inl
+  dynserver.h \
+  dynserver_export.h
 
 test_server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
