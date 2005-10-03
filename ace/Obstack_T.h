@@ -1,16 +1,19 @@
-/* -*- C++ -*- */
+/* -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    Obstack_T.h
  *
  *  $Id$
  *
- *  @author Doug Schmidt <schmidt@cs.wustl.edu> and Nanbor Wang <nanbor@cs.wustl.edu>
+ *  @author Doug Schmidt <schmidt@cs.wustl.edu>
+ *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 //=============================================================================
 
 #ifndef ACE_OBSTACK_T_H
 #define ACE_OBSTACK_T_H
+
 #include /**/ "ace/pre.h"
 
 #include "ace/Obchunk.h"
@@ -18,6 +21,10 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+// #include "ace/Basic_Types.h"
+
+class ACE_Allocator;
 
 /**
  * @class ACE_Obstack

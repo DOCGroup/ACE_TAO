@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -13,9 +13,16 @@
 
 #ifndef ACE_ACTIVATION_QUEUE_H
 #define ACE_ACTIVATION_QUEUE_H
+
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+#ifdef ACE_THREADS_BUILD_DLL
+# include "ace/ACE_Threads_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Threads_Export ACE_Export
+#endif  /* ACE_THREADS_BUILD_DLL */
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -43,7 +50,7 @@
  *
  * @sa ACE_Method_Request
  */
-class ACE_Export ACE_Activation_Queue
+class ACE_Threads_Export ACE_Activation_Queue
 {
 public:
   // = Initialization and termination methods.

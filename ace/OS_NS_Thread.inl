@@ -3717,8 +3717,8 @@ ACE_Thread_ID::ACE_Thread_ID (const ACE_Thread_ID &id)
 
 ACE_INLINE
 ACE_Thread_ID::ACE_Thread_ID (void)
+  : thread_id_ (ACE_OS::thr_self ())
 {
-  thread_id_ = ACE_OS::thr_self ();
   ACE_OS::thr_self (thread_handle_);
 }
 

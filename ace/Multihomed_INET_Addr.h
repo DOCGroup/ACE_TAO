@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -12,14 +12,23 @@
 
 #ifndef ACE_MULTIHOMED_INET_ADDR_H
 #define ACE_MULTIHOMED_INET_ADDR_H
+
 #include /**/ "ace/pre.h"
 
-#include "ace/INET_Addr.h"
-#include "ace/Containers_T.h"
+#ifdef ACE_SOCKETS_BUILD_DLL
+# include "ace/ACE_Sockets_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Sockets_Export ACE_Export
+#endif  /* ACE_SOCKETS_BUILD_DLL */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/INET_Addr.h"
+#include "ace/Containers_T.h"
+
 
 /**
  * @class ACE_Multihomed_INET_Addr
@@ -27,7 +36,7 @@
  * @brief Extends ACE_INET_Addr with support for multi-homed
  * addresses.
  */
-class ACE_Export ACE_Multihomed_INET_Addr : public ACE_INET_Addr
+class ACE_Sockets_Export ACE_Multihomed_INET_Addr : public ACE_INET_Addr
 {
 public:
   // = Initialization methods.
@@ -187,4 +196,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* ACE_MULTIHOMED_INET_ADDR_H */
