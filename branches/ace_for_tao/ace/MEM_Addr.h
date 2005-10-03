@@ -15,7 +15,12 @@
 #define ACE_MEM_ADDR_H
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+#ifdef ACE_MEMORY_BUILD_DLL
+# include "ace/ACE_Memory_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Memory_Export ACE_Export
+#endif  /* ACE_MEMORY_BUILD_DLL */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,7 +36,7 @@
  * @brief Defines a C++ wrapper facade for the shared memory transport
  * address family format.
  */
-class ACE_Export ACE_MEM_Addr : public ACE_Addr
+class ACE_Memory_Export ACE_MEM_Addr : public ACE_Addr
 {
 public:
   // = Initialization methods.

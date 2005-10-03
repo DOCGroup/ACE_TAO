@@ -15,6 +15,13 @@
 #define ACE_MEM_SAP_H
 #include /**/ "ace/pre.h"
 
+#ifdef ACE_MEMORY_BUILD_DLL
+# include "ace/ACE_Memory_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Memory_Export ACE_Export
+#endif  /* ACE_MEMORY_BUILD_DLL */
+
 #include "ace/PI_Malloc.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -36,7 +43,7 @@ class ACE_MEM_IO;
 // Internal data structure
 // MEM_SAP uses to queue up
 // data.
-class ACE_Export ACE_MEM_SAP_Node
+class ACE_Memory_Export ACE_MEM_SAP_Node
 {
 public:
 //    friend class ACE_MEM_SAP;
@@ -73,7 +80,7 @@ public:
  * @brief Defines the methods of shared memory management for
  * shared memory transport.
  */
-class ACE_Export ACE_MEM_SAP
+class ACE_Memory_Export ACE_MEM_SAP
 {
 public:
   // = Initialization and termination methods.

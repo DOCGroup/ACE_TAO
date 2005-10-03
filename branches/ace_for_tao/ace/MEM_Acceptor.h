@@ -14,6 +14,13 @@
 #define ACE_MEM_ACCEPTOR_H
 #include /**/ "ace/pre.h"
 
+#ifdef ACE_MEMORY_BUILD_DLL
+# include "ace/ACE_Memory_export.h"
+#else
+# include "ace/ACE_export.h"
+# define ACE_Memory_Export ACE_Export
+#endif  /* ACE_MEMORY_BUILD_DLL */
+
 #include "ace/SOCK_Acceptor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -47,7 +54,7 @@ class ACE_Reactor;
  * if so desired.  (Currently, using UNIX-domain sockets, i.e.,
  * ACE_LSOCK_*, with this class will not work.)
  */
-class ACE_Export ACE_MEM_Acceptor : public ACE_SOCK_Acceptor
+class ACE_Memory_Export ACE_MEM_Acceptor : public ACE_SOCK_Acceptor
 {
 public:
   // = Initialization methods.
