@@ -27,7 +27,7 @@ TAO_Wait_On_Read::~TAO_Wait_On_Read (void)
 /*
  * Hook to specialize the wait strategy when the concrete strategy is
  * a simple "rw" strategy. Add all public/protected/private methods
- * within the *COPY* hooks. 
+ * within the *COPY* hooks.
  */
 
 //@@ WAIT_STRATEGY_SPL_COPY_HOOK_START
@@ -41,7 +41,8 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
   // method.
   ACE_Countdown_Time countdown (max_wait_time);
 
-  rd.state_changed (TAO_LF_Event::LFS_ACTIVE);
+  rd.state_changed (TAO_LF_Event::LFS_ACTIVE,
+                    this->transport_->orb_core ()->leader_follower ());
 
   // Do the same sort of looping that is done in other wait
   // strategies.
@@ -133,5 +134,5 @@ TAO_Wait_On_Read::can_process_upcalls (void) const
 
 //@@ WAIT_STRATEGY_SPL_COPY_HOOK_END
 /*
- * End copy hook. 
+ * End copy hook.
  */

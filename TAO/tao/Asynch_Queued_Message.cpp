@@ -1,5 +1,6 @@
 #include "Asynch_Queued_Message.h"
 #include "debug.h"
+#include "ORB_Core.h"
 
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
@@ -16,9 +17,10 @@ ACE_RCSID (tao,
 
 TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (
   const ACE_Message_Block *contents,
+  TAO_ORB_Core *oc,
   ACE_Allocator *alloc,
   int is_heap_allocated)
-  : TAO_Queued_Message (alloc, is_heap_allocated)
+  : TAO_Queued_Message (oc, alloc, is_heap_allocated)
   , size_ (contents->total_length ())
   , offset_ (0)
 {
@@ -38,9 +40,10 @@ TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (
 }
 
 TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (char *buf,
+                                                      TAO_ORB_Core *oc,
                                                       size_t size,
                                                       ACE_Allocator *alloc)
-  : TAO_Queued_Message (alloc)
+  : TAO_Queued_Message (oc, alloc)
   , size_ (size)
   , offset_ (0)
   , buffer_ (buf)
@@ -94,7 +97,8 @@ TAO_Asynch_Queued_Message::bytes_transferred (size_t &byte_count)
   byte_count = 0;
 
   if (this->all_data_sent ())
-    this->state_changed (TAO_LF_Event::LFS_SUCCESS);
+    this->state_changed (TAO_LF_Event::LFS_SUCCESS,
+                         this->orb_core_->leader_follower ());
 }
 
 
@@ -126,6 +130,7 @@ TAO_Asynch_Queued_Message::clone (ACE_Allocator *alloc)
                              static_cast<TAO_Asynch_Queued_Message *> (
                                  alloc->malloc (sizeof (TAO_Asynch_Queued_Message))),
                              TAO_Asynch_Queued_Message (buf,
+                                                        this->orb_core_,
                                                         sz,
                                                         alloc),
                              0);
@@ -143,6 +148,7 @@ TAO_Asynch_Queued_Message::clone (ACE_Allocator *alloc)
 
       ACE_NEW_RETURN (qm,
                       TAO_Asynch_Queued_Message (buf,
+                                                 this->orb_core_,
                                                  sz),
                       0);
     }

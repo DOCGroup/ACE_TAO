@@ -43,6 +43,7 @@ public:
    *       cannot block waiting for the message to be delivered.
    */
   TAO_Asynch_Queued_Message (const ACE_Message_Block *contents,
+                             TAO_ORB_Core *oc,
                              ACE_Allocator *alloc = 0,
                              int is_heap_allocated = 0);
 
@@ -78,6 +79,7 @@ protected:
    * @param alloc Allocator used for creating <this> object.
    */
   TAO_Asynch_Queued_Message (char *buf,
+                             TAO_ORB_Core *oc,
                              size_t size,
                              ACE_Allocator *alloc = 0);
 private:

@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class TAO_LF_Follower;
+class TAO_Leader_Follower;
 
 /**
  * @class TAO_LF_Event
@@ -99,7 +100,8 @@ public:
    */
   /// Accessor to change the state. The state isnt changed unless
   /// certain conditions are satisfied.
-  void state_changed (int new_state);
+  void state_changed (int new_state,
+                      TAO_Leader_Follower &lf);
 
   /// Return 1 if the condition was satisfied successfully, 0 if it
   /// has not

@@ -214,7 +214,8 @@ TAO_IIOP_Connection_Handler::open (void*)
   if (!this->transport ()->post_open ((size_t) this->get_handle ()))
     return -1;
 
-  this->state_changed (TAO_LF_Event::LFS_SUCCESS);
+  this->state_changed (TAO_LF_Event::LFS_SUCCESS,
+                       this->orb_core ()->leader_follower ());
 
   return 0;
 }

@@ -229,7 +229,8 @@ TAO_UIPMC_Connection_Handler::handle_close (ACE_HANDLE,
 int
 TAO_UIPMC_Connection_Handler::close (u_long)
 {
-  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
+  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED, 
+		       this->orb_core ()->leader_follower ());
   this->transport ()->remove_reference ();
   return 0;
 }
