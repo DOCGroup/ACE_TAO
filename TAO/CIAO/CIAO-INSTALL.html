@@ -24,31 +24,18 @@
       CIAO is divided into several parts, so different installation/building rules 
       apply to different parts of CIAO.<br />
       <br />
-      <font color="#ff0000">IMPORTANT</font>: There are currently <font color="#ff0000">
-        TWO</font> CIAO implementations with this distribution of the software. The 
-      "old" CIAO is designed and implemented based on the orginal <a href="http://www.omg.org/cgi-bin/doc?formal/02-06-65">
-        OMG CCM 3.0 specification</a>, the "new" CIAO is designed and implemented 
-      based on the new <a href="http://www.omg.org/cgi-bin/doc?ptc/2003-07-02">OMG's 
-        Deployment and Configuration specification</a>. For a temporary solution, we 
-      put the "new" CIAO implementation in the <code>$CIAO_ROOT/DAnCE</code> directory, 
-      which contains the CIAO core, CIAO examples and Deployment and Configuration 
-      Framework. However, both the "old" one and the "new" one have the same modules 
-      and structures, which are described as below.<br />
-      <br />
-      (We suggest you use this "new" CIAO instead of the "old" one, since the "old" 
-      CIAO will not be officially supported soon.)
-    </p>
+      </p>
     <ol>
       <li>
-        CIAO core/examples: This part of CIAO include following directories: <code>$CIAO_ROOT/DAnCE/ciao</code>,
-        <code>$CIAO_ROOT/DAnCE/examples</code>.
+        CIAO core/examples: This part of CIAO include following directories: <code>$CIAO_ROOT/ciao</code>,
+        <code>$CIAO_ROOT/examples</code>.
       </li>
       <li>
         CIDL Compiler: This part of CIAO include <code>$CIAO_ROOT/CCF</code> and <code>$CIAO_ROOT/CIDLC</code>.
       </li>
       <li>
         CIAO Deployment and Configuration Framework: This part of CIAO includes all the 
-        directories in <code>$CIAO_ROOT/DAnCE</code> except the ones mentioned above. 
+        directories in <code>$CIAO_ROOT/DAnCE</code>.
         DAnCE is an implementation of the new <a href="http://www.omg.org/cgi-bin/doc?ptc/2003-07-02">
           Deployment and Configuration</a> specification. We refer, henceforth, to all 
         pieces as CIAO in general. The above two pieces will be referred specifically 
@@ -119,11 +106,15 @@
     </p>
     <ul>
       <li>
-        Open up <code>$ACE_ROOT/bin/MakeProjectCreator/config/global.features</code> and 
+        Open up <code>$ACE_ROOT/bin/MakeProjectCreator/config/default.features</code> and 
         set cidl=1.
       </li>
       <li>
-        Make sure you set cidl=1 in <code>$ACE_ROOT/include/makeinclude/platfrom_macros.GNU</code>.
+        Open up <code>$ACE_ROOT/bin/MakeProjectCreator/config/global.features</code> and 
+        set boost=1.
+      </li>
+      <li>
+        Make sure you set cidl=1, boost=1, and exceptions=1 in <code>$ACE_ROOT/include/makeinclude/platfrom_macros.GNU</code>.
       </li>
       <li>
         Install <code>boost_filesystem</code>, <code>boost_regex</code> and <code>Utility 
