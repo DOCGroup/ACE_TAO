@@ -128,7 +128,7 @@ ACE_SSL_Context::ssl_library_init (void)
 
     }
 
-  ACE_SSL_Context::library_init_count_++;
+  ++ACE_SSL_Context::library_init_count_;
 }
 
 void
@@ -138,7 +138,7 @@ ACE_SSL_Context::ssl_library_fini (void)
                      ace_ssl_mon,
                      *ACE_Static_Object_Lock::instance ()));
 
-  ACE_SSL_Context::library_init_count_--;
+  --ACE_SSL_Context::library_init_count_;
   if (ACE_SSL_Context::library_init_count_ == 0)
     {
       ::ERR_free_strings ();
@@ -263,7 +263,7 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file, const char* ca_dir)
     }
   else
     {
-      this->have_ca_++;
+      ++this->have_ca_;
 
       // for TLS/SSL servers scan all certificates in ca_file and list
       // then as acceptable CAs when requesting a client certificate.
