@@ -3,14 +3,14 @@
 #ifndef BUG_2248_REGRESSION_CLIENT_H
 #define BUG_2248_REGRESSION_CLIENT_H
 
-#include <tao/ORB.h>
+#include "tao/ORB.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include <tao/Object.h>
-#include <tao/IORManipulation/IORManipulation.h>
+#include "tao/Object.h"
+#include "tao/IORManipulation/IORManipulation.h"
 class Manager
 {
 public:

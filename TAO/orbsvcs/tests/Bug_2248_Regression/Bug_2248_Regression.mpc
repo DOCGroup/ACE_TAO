@@ -6,8 +6,6 @@ project(*Server): taoserver, orbsvcsexe, iormanip, pi_server, ftorb, messaging, 
     test_i.cpp
     testC.cpp
     testS.cpp
-    testsC.cpp
-    testsS.cpp
     Server_ORBInitializer.cpp
     Server_Request_Interceptor.cpp
     server.cpp
