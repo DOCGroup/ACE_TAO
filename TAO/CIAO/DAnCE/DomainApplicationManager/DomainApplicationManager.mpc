@@ -1,14 +1,12 @@
 // -*- MPC -*-
 // $Id$
 
-project (DomainApplicationManager): ciao_deployment_svnt, ciao_config_handlers  {
+project (DomainApplicationManager): ciao_deployment_svnt  {
   after += NodeManager_stub 
   sharedname = DomainApplicationManager
 
   dynamicflags   = DOMAINAPPLICATIONMANAGER_BUILD_DLL
   
-  includes += $(CIAO_ROOT)/tools/Config_Handlers
-
   Source_Files {
     DomainApplicationManager_Impl.cpp
     Deployment_Configuration.cpp
