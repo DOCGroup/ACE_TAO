@@ -15,102 +15,11 @@ TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-CLEANFILES =
 noinst_PROGRAMS =
-BUILT_SOURCES =
 
-## Makefile.Advanced_Client.am
+## Makefile.Advanced_IDL.am
 
-if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
-  ManagerC.h \
-  ManagerC.inl \
-  ManagerS.h \
-  ManagerS.inl \
-  ManagerS_T.cpp \
-  ManagerS_T.h \
-  ManagerS_T.inl
-
-CLEANFILES += \
-  Manager-stamp \
-  ManagerC.h \
-  ManagerC.inl \
-  ManagerS.h \
-  ManagerS.inl \
-  ManagerS_T.cpp \
-  ManagerS_T.h \
-  ManagerS_T.inl
-
-ManagerC.h ManagerC.inl ManagerS.h ManagerS.inl ManagerS_T.cpp ManagerS_T.h ManagerS_T.inl: Manager-stamp
-
-Manager-stamp: $(srcdir)/Manager.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Manager.idl
-	@touch $@
-
-BUILT_SOURCES += \
-  MessengerC.cpp \
-  MessengerC.h \
-  MessengerC.inl \
-  MessengerS.h \
-  MessengerS.inl \
-  MessengerS_T.cpp \
-  MessengerS_T.h \
-  MessengerS_T.inl
-
-CLEANFILES += \
-  Messenger-stamp \
-  MessengerC.cpp \
-  MessengerC.h \
-  MessengerC.inl \
-  MessengerS.h \
-  MessengerS.inl \
-  MessengerS_T.cpp \
-  MessengerS_T.h \
-  MessengerS_T.inl
-
-MessengerC.cpp MessengerC.h MessengerC.inl MessengerS.h MessengerS.inl MessengerS_T.cpp MessengerS_T.h MessengerS_T.inl: Messenger-stamp
-
-Messenger-stamp: $(srcdir)/Messenger.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Messenger.idl
-	@touch $@
-
-noinst_PROGRAMS += client_main
-
-client_main_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-client_main_SOURCES = \
-  MessengerC.cpp \
-  TestClient.cpp \
-  client_main.cpp \
-  ManagerC.h \
-  ManagerC.inl \
-  ManagerS.h \
-  ManagerS_T.h \
-  ManagerS_T.inl \
-  MessengerC.h \
-  MessengerC.inl \
-  MessengerS.h \
-  MessengerS_T.h \
-  MessengerS_T.inl \
-  TestClient.h
-
-client_main_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_EXCEPTIONS
-
-## Makefile.Advanced_Manager.am
-
-if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   ManagerC.cpp \
   ManagerC.h \
   ManagerC.inl \
@@ -121,7 +30,7 @@ BUILT_SOURCES += \
   ManagerS_T.h \
   ManagerS_T.inl
 
-CLEANFILES += \
+CLEANFILES = \
   Manager-stamp \
   ManagerC.cpp \
   ManagerC.h \
@@ -168,6 +77,36 @@ Messenger-stamp: $(srcdir)/Messenger.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Messenger.idl
 	@touch $@
 
+
+## Makefile.Advanced_Client.am
+
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += client_main
+
+client_main_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+client_main_SOURCES = \
+  MessengerC.cpp \
+  TestClient.cpp \
+  client_main.cpp \
+  TestClient.h
+
+client_main_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_EXCEPTIONS
+
+## Makefile.Advanced_Manager.am
+
+if BUILD_EXCEPTIONS
+
 noinst_PROGRAMS += manager_main
 
 manager_main_CPPFLAGS = \
@@ -180,20 +119,8 @@ manager_main_SOURCES = \
   ManagerC.cpp \
   ManagerS.cpp \
   Manager_i.cpp \
-  MessengerC.cpp \
-  MessengerS.cpp \
   manager_main.cpp \
-  ManagerC.h \
-  ManagerC.inl \
-  ManagerS.h \
-  ManagerS_T.h \
-  ManagerS_T.inl \
-  Manager_i.h \
-  MessengerC.h \
-  MessengerC.inl \
-  MessengerS.h \
-  MessengerS_T.h \
-  MessengerS_T.inl
+  Manager_i.h
 
 manager_main_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -206,62 +133,6 @@ endif BUILD_EXCEPTIONS
 ## Makefile.Advanced_Server.am
 
 if BUILD_EXCEPTIONS
-
-BUILT_SOURCES += \
-  ManagerC.cpp \
-  ManagerC.h \
-  ManagerC.inl \
-  ManagerS.h \
-  ManagerS.inl \
-  ManagerS_T.cpp \
-  ManagerS_T.h \
-  ManagerS_T.inl
-
-CLEANFILES += \
-  Manager-stamp \
-  ManagerC.cpp \
-  ManagerC.h \
-  ManagerC.inl \
-  ManagerS.h \
-  ManagerS.inl \
-  ManagerS_T.cpp \
-  ManagerS_T.h \
-  ManagerS_T.inl
-
-ManagerC.cpp ManagerC.h ManagerC.inl ManagerS.h ManagerS.inl ManagerS_T.cpp ManagerS_T.h ManagerS_T.inl: Manager-stamp
-
-Manager-stamp: $(srcdir)/Manager.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Manager.idl
-	@touch $@
-
-BUILT_SOURCES += \
-  MessengerC.cpp \
-  MessengerC.h \
-  MessengerC.inl \
-  MessengerS.cpp \
-  MessengerS.h \
-  MessengerS.inl \
-  MessengerS_T.cpp \
-  MessengerS_T.h \
-  MessengerS_T.inl
-
-CLEANFILES += \
-  Messenger-stamp \
-  MessengerC.cpp \
-  MessengerC.h \
-  MessengerC.inl \
-  MessengerS.cpp \
-  MessengerS.h \
-  MessengerS.inl \
-  MessengerS_T.cpp \
-  MessengerS_T.h \
-  MessengerS_T.inl
-
-MessengerC.cpp MessengerC.h MessengerC.inl MessengerS.cpp MessengerS.h MessengerS.inl MessengerS_T.cpp MessengerS_T.h MessengerS_T.inl: Messenger-stamp
-
-Messenger-stamp: $(srcdir)/Messenger.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Messenger.idl
-	@touch $@
 
 noinst_PROGRAMS += server_main
 
@@ -278,16 +149,6 @@ server_main_SOURCES = \
   Messenger_i.cpp \
   TestServer.cpp \
   server_main.cpp \
-  ManagerC.h \
-  ManagerC.inl \
-  ManagerS.h \
-  ManagerS_T.h \
-  ManagerS_T.inl \
-  MessengerC.h \
-  MessengerC.inl \
-  MessengerS.h \
-  MessengerS_T.h \
-  MessengerS_T.inl \
   Messenger_i.h \
   TestServer.h
 
