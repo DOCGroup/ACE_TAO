@@ -1,3 +1,8 @@
+Mon Oct  3 09:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+          Changed the default of exceptions to be 1
+
 Mon Oct  3 06:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg.{h,cpp}:
