@@ -190,12 +190,3 @@ Broadcaster_i::broadcast (const char *text
     }
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Unbounded_Set<Broadcaster_i::Receiver_Data>;
-template class ACE_Unbounded_Set_Iterator<Broadcaster_i::Receiver_Data>;
-template class ACE_Node<Broadcaster_i::Receiver_Data>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Unbounded_Set<Broadcaster_i::Receiver_Data>
-#pragma instantiate ACE_Unbounded_Set_Iterator<Broadcaster_i::Receiver_Data>
-#pragma instantiate ACE_Node<Broadcaster_i::Receiver_Data>
-#endif /* ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA */

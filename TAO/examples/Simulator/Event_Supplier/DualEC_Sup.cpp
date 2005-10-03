@@ -1144,18 +1144,3 @@ main (int argc, char *argv [])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Node<Navigation *>;
-template class ACE_Unbounded_Queue<Navigation *>;
-template class ACE_Unbounded_Queue_Iterator<Navigation *>;
-template class ACE_Node<Weapons *>;
-template class ACE_Unbounded_Queue<Weapons *>;
-template class ACE_Unbounded_Queue_Iterator<Weapons *>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Node<Navigation *>
-#pragma instantiate ACE_Unbounded_Queue<Navigation *>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<Navigation *>
-#pragma instantiate ACE_Node<Weapons *>
-#pragma instantiate ACE_Unbounded_Queue<Weapons *>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<Weapons *>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
