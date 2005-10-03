@@ -1,6 +1,6 @@
 //$Id$
 
-project : taolib, core, anytypecode {
+project : taolib, core, acereactorlib_for_tao, acesocketslib_for_tao, acememorylib_for_tao, anytypecode {
   sharedname   = TAO_Strategies
   dynamicflags = TAO_STRATEGIES_BUILD_DLL
 

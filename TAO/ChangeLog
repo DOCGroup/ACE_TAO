@@ -1,3 +1,28 @@
+Mon Oct 03 10:48:45 2005    <ossama@dre.vanderbilt.edu>
+
+	* TAO/TAO_IDL/tao_idl.mpc:
+	* TAO/orbsvcs/orbsvcs/CosNaming_Serv.mpc:
+	* TAO/orbsvcs/orbsvcs/Svc_Utils.mpc:
+	* TAO/tao/Strategies.mpc:
+
+	  Added "ace_for_tao" ACE library subset support.
+
+	* TAO/TAO_IDL/driver/drv_preproc.cpp:
+	* TAO/TAO_IDL/fe/fe_extern.cpp:
+	* TAO/TAO_IDL/fe/fe_init.cpp:
+	* TAO/TAO_IDL/include/fe_extern.h:
+
+	  Removed use of ACE_UUID.  Rely on ACE_OS::mkstemp() instead to
+	  avoid depending on more areas of ACE than necessary.
+
+	* TAO/orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h:
+	* TAO/tao/default_resource.cpp:
+	* TAO/tao/Strategies/advanced_resource.cpp:
+
+          Include appropriate headers to address incomplete type
+	  definition related compile-time errors.  Necessitated by header
+	  dependency reductions in ACE.
+
 Mon Oct  3 15:39:59 2005  Simon McQueen  <sm@prismtech.com>
 
         * orbsvcs/tests/Bug_2248_Regression/Bug_2248_Regression.mpc:
