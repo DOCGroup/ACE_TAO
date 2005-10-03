@@ -1,3 +1,9 @@
+Mon Oct  3 06:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.{h,cpp}:
+          Changed type of msg_off_ from int to long to fix 64bit
+          conversion warnings
+
 Sun Oct  2 19:18:01 2005  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h:
