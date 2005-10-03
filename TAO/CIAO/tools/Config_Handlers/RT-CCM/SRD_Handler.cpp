@@ -70,7 +70,12 @@ namespace CIAO
 
       this->retval_ = OC_Handler::orb_config (this->srd_->orbConfigs (),
                                               this->idl_srd_->orb_config);
-
+      
+      if (this->srd_->id_p ())
+        {
+          this->idl_srd_->Id = srd_->id ().c_str ();
+        }
+      
       return this->retval_;
     }
 
@@ -102,7 +107,10 @@ namespace CIAO
       ACESvcConf asc;
       asc.uri(curr);
       this->srd_->svcconf (asc);
-
+      
+      XMLSchema::string < ACE_TCHAR > id (this->idl_srd_->Id.in ());
+      this->srd_->id  (id);
+      
       return true;
     }
 

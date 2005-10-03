@@ -30,10 +30,14 @@ CIAO::NodeApplicationManager_Impl::init (
     {
       if (nodeapp_location == 0)
         ACE_TRY_THROW (CORBA::BAD_PARAM ());
-
-      if (spawn_delay_ == 0)
-        ACE_TRY_THROW (CORBA::BAD_PARAM ());
-
+      
+      
+      if (delay == 0)
+        {
+          ACE_DEBUG ((LM_DEBUG, "NodeManager must be started with a -d of greter than zero."));
+          ACE_TRY_THROW (CORBA::BAD_PARAM ());
+        }
+      
       this->nodeapp_path_.set (nodeapp_location);
       this->spawn_delay_ = delay;
 
