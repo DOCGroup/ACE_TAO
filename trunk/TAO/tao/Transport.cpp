@@ -633,7 +633,7 @@ TAO_Transport::send_reply_message_i (const ACE_Message_Block *mb,
                   this->id ()));
     }
 
-  // Till this point we shouldnt have any copying and that is the
+  // Till this point we shouldn't have any copying and that is the
   // point anyway. Now, remove the node from the list
   synch_message.remove_from_list (this->head_,
                                   this->tail_);
@@ -2034,7 +2034,7 @@ TAO_Transport::consolidate_message_queue (ACE_Message_Block &incoming,
         }
 
       // If we get a EWOULDBLOCK ie. n==0, we should anyway put the
-      //  message in queue before returning..
+      // message in queue before returning..
       // Move the write pointer
       qd->msg_block_->wr_ptr (n);
 
@@ -2367,18 +2367,6 @@ TAO::Transport_Cache_Manager &
 TAO_Transport::transport_cache_manager (void)
 {
   return this->orb_core_->lane_resources ().transport_cache ();
-}
-
-size_t
-TAO_Transport::recv_buffer_size (void)
-{
-  return this->recv_buffer_size_;
-}
-
-size_t
-TAO_Transport::sent_byte_count (void)
-{
-  return this->sent_byte_count_;
 }
 
 void
