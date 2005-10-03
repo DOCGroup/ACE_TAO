@@ -29,7 +29,7 @@ else
 endif
 
 winsock2 ?= 1
-exceptions ?= 0
+exceptions ?= 1
 debug ?= 1
 optimize ?= 1
 threads ?= 1
