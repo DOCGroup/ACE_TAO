@@ -6,9 +6,9 @@
 #include "ace/OS_NS_string.h"
 #include "ace/SString.h"
 //#include "DnC_Dump.h"
-#include "Config_Handlers/RT-CCM/SRD_Handler.h"
-#include "Config_Handlers/Utils/XML_Helper.h"
-#include "Config_Handlers/RT-CCM/CIAOServerResources.hpp"
+//#include "Config_Handlers/RT-CCM/SRD_Handler.h"
+//#include "Config_Handlers/Utils/XML_Helper.h"
+//#include "Config_Handlers/RT-CCM/CIAOServerResources.hpp"
 
 #if !defined (__ACE_INLINE__)
 # include "DomainApplicationManager_Impl.inl"
@@ -62,7 +62,7 @@ init (ACE_ENV_SINGLE_ARG_DECL)
     {
 
       //Deployment::DnC_Dump::dump (this->plan_);
-
+      /*
       //======================================
       // Dump the contents of infoProperty to a XML file
       if (CIAO::debug_level () > 1)
@@ -81,7 +81,7 @@ init (ACE_ENV_SINGLE_ARG_DECL)
         // write out the result
         the_helper.write_DOM (the_xsc, "output.srd");
       }
-
+      */
       //======================================
 
       // (1) Call get_plan_info() method to get the total number
