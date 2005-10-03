@@ -1,3 +1,8 @@
+Mon Oct  3 13:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTPortableServer/RT_Policy_Validator.cpp:
+          Updated for threadpool manager interfaces
+
 Mon Oct  3 12:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTCORBA/Thread_Pool.{h,cpp,inl}:
