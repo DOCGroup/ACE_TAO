@@ -1,3 +1,10 @@
+Mon Oct  3 12:48:26 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/DomainApplicationManager/DomainApplicationManager.mpc
+	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+
+	Commented out some debugging information. 
+	
 Mon Oct  3 15:44:15 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * docs/Purify.html:
