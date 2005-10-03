@@ -1,3 +1,9 @@
+Mon Oct  3 14:27:39 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* CIAO-INSTALL.html
+
+	Updated install documentation to reflect the restructuring.
+
 Mon Oct  3 12:48:26 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/DomainApplicationManager/DomainApplicationManager.mpc
