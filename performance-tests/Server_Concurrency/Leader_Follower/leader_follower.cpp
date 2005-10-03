@@ -265,7 +265,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   long flags = THR_BOUND | THR_SCHED_FIFO;
 
   // Create and activate them.
-  size_t i;
+  size_t i = 0;
   for (i = 0; i < number_of_threads; ++i)
     {
       ACE_NEW_RETURN (leader_followers[i],
