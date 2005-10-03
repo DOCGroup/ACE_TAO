@@ -1,3 +1,20 @@
+Mon Oct  3 18:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.cpp
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Accept_Strategy.cpp
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.cpp
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.cpp
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_OwnCredentials.cpp
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_SSL.cpp
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_X509.cpp
+          Zapped explicit templates
+
 Mon Oct  3 18:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTPortableServer/RT_Policy_Validator.cpp:
