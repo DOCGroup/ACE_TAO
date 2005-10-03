@@ -1,3 +1,15 @@
+Mon Oct  3 11:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Connection_Handler.cpp (close_connection_eh):
+          Removed some asserts that triggered when a RTCorba ThreadLane
+          was destroyed from a thread not belonging to this ThreadLane,
+          now we just have a fallback when the reactor associated with the
+          event handler is zero. This fixes bugzilla bug #2244.
+
+        * tao/Transport.{h,cpp,inl}:
+          Moved sent_byte_count and recv_buffer_size const and moved
+          them to the inline file
+
 Mon Oct  3 10:02:06 2005  Simon McQueen  <sm@prismtech.com>
 
         * tao/Synch_Invocation.cpp:
