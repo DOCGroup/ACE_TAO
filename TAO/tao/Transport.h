@@ -750,10 +750,10 @@ public:
                       const void* act);
 
   /// Accessor to recv_buffer_size_
-  size_t recv_buffer_size (void);
+  size_t recv_buffer_size (void) const;
 
   /// Accessor to sent_byte_count_
-  size_t sent_byte_count (void);
+  size_t sent_byte_count (void) const;
 
   /// CodeSet Negotiation - Get the char codeset translator factory
   TAO_Codeset_Translator_Base *char_translator (void) const;
