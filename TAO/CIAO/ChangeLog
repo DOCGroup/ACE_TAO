@@ -1,3 +1,9 @@
+Mon Oct  3 10:00:08 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* bin/valgrind_nodedaemon.py
+
+	Script to help launch nodemanager/nodeapplication under Valgrind. 
+	
 Mon Oct  3 000:31:09 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * docs/Purify.html:
