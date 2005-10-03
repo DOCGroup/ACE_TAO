@@ -583,16 +583,10 @@ TAO_POA_RT_Policy_Validator::extract_thread_pool (TAO_ORB_Core &orb_core,
   TAO_Thread_Pool_Manager &tp_manager =
     tao_rt_orb->tp_manager ();
 
-  TAO_Thread_Pool_Manager::THREAD_POOLS &thread_pools =
-    tp_manager.thread_pools ();
+  TAO_Thread_Pool *thread_pool =
+    tp_manager.get_threadpool (thread_pool_id);
 
-  // Check that the thread pool id is valid.
-  TAO_Thread_Pool *thread_pool = 0;
-  int result =
-    thread_pools.find (thread_pool_id,
-                       thread_pool);
-
-  if (result != 0)
+  if (thread_pool == 0)
     ACE_THROW_RETURN (PortableServer::POA::InvalidPolicy (),
                       0);
 
