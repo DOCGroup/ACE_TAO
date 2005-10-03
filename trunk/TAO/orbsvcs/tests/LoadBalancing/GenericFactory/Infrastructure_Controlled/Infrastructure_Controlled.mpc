@@ -1,7 +1,15 @@
 // $Id$
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Test.idl
+  }
+  custom_only = 1
+}
+
 project(*Server): loadbalancing {
   includes += $(TAO_ROOT)/orbsvcs
 
+  after += *idl
   Source_Files {
     server.cpp
     LB_server.cpp
@@ -9,13 +17,20 @@ project(*Server): loadbalancing {
     Factory.cpp
     Factory_Map.cpp
     Factory_Struct.cpp
+    TestS.cpp
+    TestC.cpp
+  }
+  IDL_Files {
   }
 }
 
 project(*Client): loadbalancing {
+  after += *idl
   Source_Files {
     TestC.cpp
     client.cpp
+  }
+  IDL_Files {
   }
 }
 

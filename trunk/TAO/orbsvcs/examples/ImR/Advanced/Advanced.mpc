@@ -1,8 +1,19 @@
 //$Id$
+project(*IDL): taoidldefaults {
+  IDL_Files {
+    Manager.idl
+    Messenger.idl
+  }
+  custom_only = 1
+}
+
 project(*Manager): orbsvcsexe, portableserver, exceptions {
+  after += *IDL
   Source_Files {
     manager_main.cpp
     Manager_i.cpp
+    ManagerS.cpp
+    ManagerC.cpp
   }
   Documentation_Files {
     Advanced.mpc
@@ -10,9 +21,12 @@ project(*Manager): orbsvcsexe, portableserver, exceptions {
     README
     drivers/*
   }
+  IDL_Files {
+  }
 }
 
 project(*Server): orbsvcsexe, portableserver, iortable, exceptions {
+  after += *IDL
   Source_Files {
     server_main.cpp
     TestServer.cpp
@@ -21,16 +35,20 @@ project(*Server): orbsvcsexe, portableserver, iortable, exceptions {
     MessengerC.cpp
     Messenger_i.cpp
   }
+  IDL_Files {
+  }
 }
 
 project(*Client): orbsvcsexe, exceptions {
+  after += *IDL
   Source_Files {
     client_main.cpp
     TestClient.cpp
     MessengerC.cpp
   }
+  IDL_Files {
+  }
   verbatim(gnuace, macros) {
     VDIR := .obj/Client/
   }
-
 }

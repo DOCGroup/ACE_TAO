@@ -1,3 +1,21 @@
+Mon Oct  3 06:54:16 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/examples/ImR/Advanced/Makefile.am:
+	* orbsvcs/examples/ImR/Combined_Service/Makefile.am:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Makefile.am:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Makefile.am:
+	* orbsvcs/tests/Security/MT_SSLIOP/Makefile.am:
+
+	  Regenerated.
+
+	* orbsvcs/examples/ImR/Advanced/Advanced.mpc:
+	* orbsvcs/examples/ImR/Combined_Service/ImR_Combined_Service.mpc:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Application_Controlled.mpc:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Infrastructure_Controlled.mpc:
+	* orbsvcs/tests/Security/MT_SSLIOP/MT_SSLIOP.mpc:
+
+          Add "*idl" project for compiling *.idl files.
+
 Mon Oct  3 13:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTPortableServer/RT_Policy_Validator.cpp:

@@ -16,78 +16,10 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.MT_SSLIOP_Security_Client.am
+## Makefile.MT_SSLIOP_Idl.am
 
-if BUILD_SSL
-
-BUILT_SOURCES += \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl \
-  testS_T.cpp \
-  testS_T.h \
-  testS_T.inl
-
-CLEANFILES += \
-  test-stamp \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl \
-  testS_T.cpp \
-  testS_T.h \
-  testS_T.inl
-
-testC.cpp testC.h testC.inl testS.h testS.inl testS_T.cpp testS_T.h testS_T.inl: test-stamp
-
-test-stamp: $(srcdir)/test.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/test.idl
-	@touch $@
-
-noinst_PROGRAMS += client
-
-client_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -DACE_HAS_SSL=1 \
-  @ACE_TLS_CPPFLAGS@
-
-client_SOURCES = \
-  Client_Worker.cpp \
-  client.cpp \
-  testC.cpp \
-  Client_Worker.h \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS_T.h \
-  testS_T.inl
-
-client_LDFLAGS = \
- @ACE_TLS_LDFLAGS@
-
-client_LDADD = \
-  $(ACE_BUILDDIR)/ace/SSL/libACE_SSL.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la \
-  @ACE_TLS_LIBS@
-
-endif BUILD_SSL
-
-## Makefile.MT_SSLIOP_Security_Server.am
-
-if BUILD_SSL
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   testC.cpp \
   testC.h \
   testC.inl \
@@ -98,7 +30,7 @@ BUILT_SOURCES += \
   testS_T.h \
   testS_T.inl
 
-CLEANFILES += \
+CLEANFILES = \
   test-stamp \
   testC.cpp \
   testC.h \
@@ -115,6 +47,44 @@ testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl testS_T.cpp testS_T.h te
 test-stamp: $(srcdir)/test.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/test.idl
 	@touch $@
+
+
+## Makefile.MT_SSLIOP_Security_Client.am
+
+if BUILD_SSL
+
+noinst_PROGRAMS += client
+
+client_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -DACE_HAS_SSL=1 \
+  @ACE_TLS_CPPFLAGS@
+
+client_SOURCES = \
+  Client_Worker.cpp \
+  client.cpp \
+  testC.cpp \
+  Client_Worker.h \
+  test_i.i
+
+client_LDFLAGS = \
+ @ACE_TLS_LDFLAGS@
+
+client_LDADD = \
+  $(ACE_BUILDDIR)/ace/SSL/libACE_SSL.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la \
+  @ACE_TLS_LIBS@
+
+endif BUILD_SSL
+
+## Makefile.MT_SSLIOP_Security_Server.am
+
+if BUILD_SSL
 
 noinst_PROGRAMS += server
 
@@ -133,11 +103,6 @@ server_SOURCES = \
   testS.cpp \
   test_i.cpp \
   Server_Worker.h \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS_T.h \
-  testS_T.inl \
   test_i.h \
   test_i.i
 
