@@ -1,0 +1,25 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Server): taoserver, orbsvcsexe, iormanip, pi_server, ftorb, messaging, minimum_corba {
+  Source_Files {
+    test_i.cpp
+    testC.cpp
+    testS.cpp
+    testsC.cpp
+    testsS.cpp
+    Server_ORBInitializer.cpp
+    Server_Request_Interceptor.cpp
+    server.cpp
+  }
+}
+
+project(*Client): taoclient, orbsvcsexe, iormanip, pi_server, ftorb, minimum_corba {
+  idlflags += -DCORBA3
+
+  Source_Files {
+    testC.cpp
+    client.cpp
+  }
+}
+
