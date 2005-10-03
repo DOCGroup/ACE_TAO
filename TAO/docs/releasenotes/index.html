@@ -114,6 +114,9 @@ release</a> of <a href="http://www.dre.vanderbilt.edu/TAO">TAO</a>:
 <a href="#sciop">SCIOP Support in TAO</a></li>
 
 <li>
+<a href="#ipv6">IPv6 Support in TAO</a></li>
+
+<li>
 <a href="../Smart_Proxies.html">Smart Proxies</a></li>
 </ul>
 <td VALIGN=TOP>
@@ -2351,6 +2354,54 @@ implementation.  <p> A paper describing the ACE+TAO SCTP
 implementation and measured results are available <a
 href=http://www.atl.external.lmco.com/projects/QoS/documents/DOA2003_97_Thaker.pdf>
 online</a>.<P>
+
+<hr>
+<h3>
+<a NAME="ipv6"></a>IPv6 Support in TAO</h3>
+Point of contact: <a href="mailto:mcorino@remedy.nl">Martin Corino</a>, Remedy IT.
+
+
+<p>TAO has support for IPv6 for IIOP under Windows and Linux. 
+To use this, add <code>ipv6</code> to your <code>default.features</code>
+file and regenerate all makefiles. When using the automated tests, add IPV6
+to the configs.
+<p>
+Finished work:
+<li>Added IPv6 support to all IIOP related classes (parsers, connectors, 
+  acceptors)</li>
+<li>Added IPv6 support to corbaloc and mcast URL parsers.</li>
+<li>Implemented IPv6 support in the TAO_IOR_MCast utility class from TAO Svc 
+  Utils</li>
+<p>
+
+The following gotchas are known:
+<li>In a localhost situation connecting a server listening at the IPv6 ANY address
+  has the following problems:
+On Linux this does not work when the client tries to connect to a
+    LinkLocal address of one the local NICs, 
+on Windows this only works (locally) by using the 'localhost' address (either
+    IPv4 or IPv6)
+</li>
+<li>Usage of the '-ORBObjRefStyle url' switch poses problems in localhost situations
+  on Windows since this switch causes 'object_to_string' to only return the first server
+  endpoint from the IOR profile as a corbaloc URL. In IPv6 servers this will (almost) allways be an IPv4 interface address of one
+  of the local NICs. This will than cause problems when the server is listening at
+  the IPv6 ANY address as described above.
+</li>
+
+<p>
+Future work:
+<li>IPv6 support for other protocols/strategies than IIOP (i.e. SHMIOP, UIOP, 
+  SCIOP, SSLIOP etc.; for this we excluded some regression tests in IPv6 builds for this 
+  reason)</li>
+
+<li>IPv4 runtime dependencies in various CORBA services (f.i. Event service)
+</li>
+
+
+<P>
+
+
 
 <hr>
 <h3>
