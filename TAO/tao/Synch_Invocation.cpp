@@ -338,14 +338,23 @@ namespace TAO
           {
             (void) bd.unbind_dispatcher ();
             this->resolver_.transport ()->close_connection ();
-            this->resolver_.stub ()->reset_profiles ();
+            
+            ACE_TRY
+              {
+                return
+                  this->orb_core ()->service_raise_comm_failure (
+                    this->details_.request_service_context ().service_info (),
+                    this->resolver_.profile ()
+                    ACE_ENV_ARG_PARAMETER);
+                ACE_TRY_CHECK;
 
-            return
-              this->orb_core ()->service_raise_comm_failure (
-                this->details_.request_service_context ().service_info (),
-                this->resolver_.profile ()
-                ACE_ENV_ARG_PARAMETER);
-
+              }
+            ACE_CATCHANY
+              {
+                this->resolver_.stub ()->reset_profiles ();
+                ACE_RE_THROW;
+              }
+            ACE_ENDTRY;
           }
       }
 
