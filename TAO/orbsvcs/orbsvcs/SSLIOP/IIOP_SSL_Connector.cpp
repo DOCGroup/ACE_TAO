@@ -18,30 +18,6 @@ ACE_RCSID (SSLIOP,
            IIOP_SSL_Connector,
            "$Id$")
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_Connect_Concurrency_Strategy<TAO::IIOP_SSL_Connection_Handler>;
-template class TAO_Connect_Creation_Strategy<TAO::IIOP_SSL_Connection_Handler>;
-template class ACE_Strategy_Connector<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Connect_Strategy<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Connector_Base<TAO::IIOP_SSL_Connection_Handler>;
-template class ACE_Connector<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_NonBlocking_Connect_Handler<TAO::IIOP_SSL_Connection_Handler>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_Connect_Concurrency_Strategy<TAO::IIOP_SSL_Connection_Handler>
-#pragma instantiate TAO_Connect_Creation_Strategy<TAO::IIOP_SSL_Connection_Handler>
-#pragma instantiate ACE_Strategy_Connector<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Connect_Strategy<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Connector_Base<TAO::IIOP_SSL_Connection_Handler>
-#pragma instantiate ACE_Connector<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_Connector>
-#pragma instantiate ACE_NonBlocking_Connect_Handler<TAO::IIOP_SSL_Connection_Handler>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-
 TAO::IIOP_SSL_Connector::IIOP_SSL_Connector (CORBA::Boolean flag)
   : TAO_IIOP_Connector (flag),
     connect_strategy_ (),
