@@ -1,3 +1,10 @@
+Mon Oct  3 15:44:15 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * docs/Purify.html:
+        
+          Updated doc file with installation info and more info about
+          Purifying a spawned child process.
+
 Mon Oct  3 10:14:19 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
