@@ -263,15 +263,3 @@ tao_TAO_SSLIOP_Credentials_upcast (void *src)
   return *tmp;
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_Pseudo_Var_T<TAO::SSLIOP_Credentials>;
-template class TAO_Pseudo_Out_T<TAO::SSLIOP_Credentials, TAO::SSLIOP_Credentials_var>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate TAO_Pseudo_Var_T<TAO::SSLIOP_Credentials>
-# pragma instantiate TAO_Pseudo_Out_T<TAO::SSLIOP_Credentials, TAO::SSLIOP_Credentials_var>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

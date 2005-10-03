@@ -1,3 +1,11 @@
+Mon Oct  3 18:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTPortableServer/RT_Policy_Validator.cpp:
+          Emulated exception fix
+
+        * tao/RTCORBA/Thread_Pool.{h,cpp}:
+          Renamed request_dynamic_thread to new_dynamic_thread.
+
 Mon Oct 03 10:48:45 2005    <ossama@dre.vanderbilt.edu>
 
 	* TAO/TAO_IDL/tao_idl.mpc:

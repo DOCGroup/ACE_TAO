@@ -17,29 +17,6 @@ ACE_RCSID (SSLIOP,
            SSLIOP_Acceptor,
            "$Id$")
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Acceptor<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>;
-template class ACE_Strategy_Acceptor<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>;
-template class ACE_Creation_Strategy<TAO::SSLIOP::Connection_Handler>;
-template class ACE_Concurrency_Strategy<TAO::SSLIOP::Connection_Handler>;
-template class ACE_Scheduling_Strategy<TAO::SSLIOP::Connection_Handler>;
-template class TAO_Creation_Strategy<TAO::SSLIOP::Connection_Handler>;
-template class TAO_Concurrency_Strategy<TAO::SSLIOP::Connection_Handler>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Acceptor<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Strategy_Acceptor<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Creation_Strategy<TAO::SSLIOP::Connection_Handler>
-#pragma instantiate ACE_Concurrency_Strategy<TAO::SSLIOP::Connection_Handler>
-#pragma instantiate ACE_Scheduling_Strategy<TAO::SSLIOP::Connection_Handler>
-#pragma instantiate TAO_Creation_Strategy<TAO::SSLIOP::Connection_Handler>
-#pragma instantiate TAO_Concurrency_Strategy<TAO::SSLIOP::Connection_Handler>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 TAO::SSLIOP::Acceptor::Acceptor (::Security::QOP qop,
                                  const ACE_Time_Value & timeout)
   : TAO::IIOP_SSL_Acceptor (),

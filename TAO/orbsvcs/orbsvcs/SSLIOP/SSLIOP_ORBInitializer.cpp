@@ -243,23 +243,3 @@ TAO::SSLIOP::ORBInitializer::get_tss_slot_id (
   return security_current->tss_slot ();
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#  if defined (ACE_LACKS_AUTO_PTR) \
-      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
-           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
-template class ACE_Auto_Basic_Ptr<TAO::SSLIOP::CredentialsAcquirerFactory>;
-#  endif  /* ACE_LACKS_AUTO_PTR */
-template class auto_ptr<TAO::SSLIOP::CredentialsAcquirerFactory>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#  if defined (ACE_LACKS_AUTO_PTR) \
-      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
-           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO::SSLIOP::CredentialsAcquirerFactory>
-#  endif  /* ACE_LACKS_AUTO_PTR */
-#pragma instanstiate auto_ptr<TAO::SSLIOP::CredentialsAcquirerFactory>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

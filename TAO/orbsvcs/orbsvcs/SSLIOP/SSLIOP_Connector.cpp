@@ -20,37 +20,9 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/os_include/os_netdb.h"
 
-
-
 ACE_RCSID (SSLIOP,
            SSLIOP_Connector,
            "$Id$")
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_Connect_Concurrency_Strategy<TAO::SSLIOP::Connection_Handler>;
-template class TAO_Connect_Creation_Strategy<TAO::SSLIOP::Connection_Handler>;
-template class ACE_Strategy_Connector<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_CONNECTOR>;
-template class ACE_Connect_Strategy<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_CONNECTOR>;
-template class ACE_Connector_Base<TAO::SSLIOP::Connection_Handler>;
-template class ACE_Connector<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_CONNECTOR>;
-template class ACE_NonBlocking_Connect_Handler<TAO::SSLIOP::Connection_Handler>;
-template class ACE_Auto_Basic_Ptr<TAO::SSLIOP::Connection_Handler>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_Connect_Concurrency_Strategy<TAO::SSLIOP::Connection_Handler>
-#pragma instantiate TAO_Connect_Creation_Strategy<TAO::SSLIOP::Connection_Handler>
-#pragma instantiate ACE_Strategy_Connector<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_CONNECTOR>
-#pragma instantiate ACE_Connect_Strategy<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_CONNECTOR>
-#pragma instantiate ACE_Connector_Base<TAO::SSLIOP::Connection_Handler>
-#pragma instantiate ACE_Connector<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_CONNECTOR>
-#pragma instantiate ACE_NonBlocking_Connect_Handler<TAO::SSLIOP::Connection_Handler>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO::SSLIOP::Connection_Handler>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 
 TAO::SSLIOP::Connector::Connector (::Security::QOP qop)
   : TAO::IIOP_SSL_Connector (),
