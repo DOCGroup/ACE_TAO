@@ -1,20 +1,25 @@
+Mon Oct  3 11:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/releasenotes/index.html:
+          Documented IPv6 status
+
 Mon Oct  3 06:33:20 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
 
 	* tao/LF_Event.cpp (state_changed):
 	* tao/LF_Event.h:
 
 	  There was strange problem that showed up during our testing
-	  here. The problem happens only on peers that have server threads 
+	  here. The problem happens only on peers that have server threads
 	  waiting for requests,  effectively leaving some threads hanging
 	  around LF waiting for the reply, when infact the reply was
-	  received by the server thread -- sort of missed wakeups.   
+	  received by the server thread -- sort of missed wakeups.
 
 	  Problem: Server threads that wait for requests can process
 	  replies (for requests initiated by client threads) since they
 	  can get to the reactor right away and become leaders within the
 	  reactor. What happens when a reply is received by a server
 	  thread before a client thread adds itslf as a follower (in the
-	  LF loop as a follower)? Disaster.  
+	  LF loop as a follower)? Disaster.
 
 	  Context: Why disaster? The server thread, never bound by the
 	  synchronization in the LF, would pick the reply. It would
@@ -23,15 +28,15 @@ Mon Oct  3 06:33:20 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
 	  would not have a follower pointer. The server thread would then
 	  simply exit state_changed () without waiting for a follower. The
 	  client thread that becomes a follower will never get a wakeup
-	  signal and continue to hang around blocking a resource. 
+	  signal and continue to hang around blocking a resource.
 
 	  Solution: Do wakeups only with the locks held. Grab LF lock
 	  before thinking of doing wakeups, which would allow clients
-	  languishing to set the follower pointer. 
+	  languishing to set the follower pointer.
 
 	  To implement the solution, all I did was to change the interface
-	  of state_changed () to pass in a LF reference. 
-	
+	  of state_changed () to pass in a LF reference.
+
  	* orbsvcs/orbsvcs/HTIOP/HTIOP_Connection_Handler.cpp:
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
@@ -53,7 +58,7 @@ Mon Oct  3 06:33:20 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
 	* tao/Strategies/UIOP_Connection_Handler.cpp:
 
 	  Changes that got propogated due to the interface change in
-	  LF_Event. 
+	  LF_Event.
 
 Mon Oct  3 11:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
