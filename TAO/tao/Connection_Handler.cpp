@@ -305,11 +305,10 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
     {
       ACE_Reactor *eh_reactor = eh->reactor ();
 
-      // These checks are valid as long as the ORB_Core is not
-      // shutdown. It is good to have these checks and they are valid
-      // for most of the cases. Please see below for exceptions
       if (this->orb_core_->has_shutdown () == 0)
         {
+          // If the ORB is nill, get the reactor from orb_core which gets it
+          // from LF.
           if (eh_reactor == 0)
             eh_reactor = this->transport()->orb_core()->reactor ();
         }
