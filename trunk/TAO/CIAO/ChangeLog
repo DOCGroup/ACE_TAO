@@ -1,3 +1,9 @@
+Mon Oct  3 000:31:09 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * docs/Purify.html:
+        
+          New file, documenting the use of Purify with CIAO and DAnCE.
+
 Sun Oct  2 22:24:15 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/Config_Handlers/Basic_Deployment_Data.hpp:
