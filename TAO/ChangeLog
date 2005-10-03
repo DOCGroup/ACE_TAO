@@ -8,20 +8,20 @@ Mon Oct  3 10:02:06 2005  Simon McQueen  <sm@prismtech.com>
           Thanks to Milan Cvetkovic for reporting the problem and providing
           the regression test.
 
-        * orbsvcs/Bug_2248_Regression/Bug_2248_Regression.mpc:
-        * orbsvcs/Bug_2248_Regression/Client_i.h:
-        * orbsvcs/Bug_2248_Regression/README:
-        * orbsvcs/Bug_2248_Regression/Server_ORBInitializer.cpp:
-        * orbsvcs/Bug_2248_Regression/Server_ORBInitializer.h:
-        * orbsvcs/Bug_2248_Regression/Server_Request_Interceptor.cpp:
-        * orbsvcs/Bug_2248_Regression/Server_Request_Interceptor.h:
-        * orbsvcs/Bug_2248_Regression/client.cpp:
-        * orbsvcs/Bug_2248_Regression/client.h:
-        * orbsvcs/Bug_2248_Regression/run_test.pl:
-        * orbsvcs/Bug_2248_Regression/server.cpp:
-        * orbsvcs/Bug_2248_Regression/test.idl:
-        * orbsvcs/Bug_2248_Regression/test_i.cpp:
-        * orbsvcs/Bug_2248_Regression/test_i.h:
+        * orbsvcs/tests/Bug_2248_Regression/Bug_2248_Regression.mpc:
+        * orbsvcs/tests/Bug_2248_Regression/Client_i.h:
+        * orbsvcs/tests/Bug_2248_Regression/README:
+        * orbsvcs/tests/Bug_2248_Regression/Server_ORBInitializer.cpp:
+        * orbsvcs/tests/Bug_2248_Regression/Server_ORBInitializer.h:
+        * orbsvcs/tests/Bug_2248_Regression/Server_Request_Interceptor.cpp:
+        * orbsvcs/tests/Bug_2248_Regression/Server_Request_Interceptor.h:
+        * orbsvcs/tests/Bug_2248_Regression/client.cpp:
+        * orbsvcs/tests/Bug_2248_Regression/client.h:
+        * orbsvcs/tests/Bug_2248_Regression/run_test.pl:
+        * orbsvcs/tests/Bug_2248_Regression/server.cpp:
+        * orbsvcs/tests/Bug_2248_Regression/test.idl:
+        * orbsvcs/tests/Bug_2248_Regression/test_i.cpp:
+        * orbsvcs/tests/Bug_2248_Regression/test_i.h:
 
           Regression test for the above.
 
