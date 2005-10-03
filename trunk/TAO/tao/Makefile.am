@@ -2456,6 +2456,7 @@ nobase_include_HEADERS += \
   RTCORBA/RT_Transport_Descriptor_Property.h \
   RTCORBA/RT_Transport_Descriptor_Property.inl \
   RTCORBA/Thread_Pool.h \
+  RTCORBA/Thread_Pool.inl \
   RTCORBA/rtcorba_export.h \
   RTCORBA/rtcorba_typedefs.h
 
