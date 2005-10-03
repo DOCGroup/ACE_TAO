@@ -1,3 +1,9 @@
+Mon Oct  3 12:50:00 2005  Simon Massey  <simon.massey@prismtech.com>
+
+        * ace/Asynch_IO.h:
+
+          Remove some more Doxygen warnings from the scoreboard.
+
 Mon Oct  3 13:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * performance-tests/Server_Concurrency/Leader_Follower/leader_follower.cpp:
@@ -8,7 +14,7 @@ Mon Oct  3 12:50:00 2005  Simon Massey  <simon.massey@prismtech.com>
         * ace/ACE.h:
         * ace/Acceptor.h:
         * ace/Stats.h:
-        * ace/Containers_T.h
+        * ace/Containers_T.h:
 
           Remove some Doxygen warnings from the scoreboard.
 
