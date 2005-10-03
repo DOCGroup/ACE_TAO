@@ -21,10 +21,3 @@ void guid_copy( RTScheduling::Current::IdType& lhs, const Kokyu::GuidType& rhs)
                  rhs.length ());
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Lock_Adapter<ACE_Thread_Mutex>;
-template class ACE_Array_Iterator<Kokyu::ConfigInfo>;
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Lock_Adapter<ACE_Thread_Mutex>
-#pragma instantiate ACE_Array_Iterator<Kokyu::ConfigInfo>
-#endif

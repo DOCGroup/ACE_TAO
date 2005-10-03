@@ -43,9 +43,3 @@ main (int argc, char *argv[])
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class Server<Echo_i>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate Server<Echo_i>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

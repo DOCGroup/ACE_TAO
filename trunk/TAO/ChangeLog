@@ -1,3 +1,76 @@
+Mon Oct  3 19:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/tutorials/Quoter/Event_Service/Stock_i.cpp
+        * docs/tutorials/Quoter/RT_Event_Service/Stock_i.cpp
+        * examples/Callback_Quoter/Notifier_i.cpp
+        * examples/Event_Comm/Event_Comm_i.cpp
+        * examples/Kokyu_dsrt_schedulers/EDF_Scheduler.cpp
+        * examples/Kokyu_dsrt_schedulers/FP_Scheduler.cpp
+        * examples/Kokyu_dsrt_schedulers/MIF_Scheduler.cpp
+        * examples/Kokyu_dsrt_schedulers/MUF_Scheduler.cpp
+        * examples/Kokyu_dsrt_schedulers/Task_Stats.cpp
+        * examples/Kokyu_dsrt_schedulers/utils.cpp
+        * examples/Load_Balancing/Load_Balancer_i.cpp
+        * examples/Load_Balancing_persistent/Load_Balancer_i.cpp
+        * examples/Logging/Logger_i.cpp
+        * examples/OBV/Typed_Events/Client_i.cpp
+        * examples/OBV/Typed_Events/server.cpp
+        * examples/POA/On_Demand_Loading/Servant_Manager.cpp
+        * examples/Persistent_Grid/Grid_Client_i.cpp
+        * examples/Persistent_Grid/Persistent_Client_i.cpp
+        * examples/Persistent_Grid/server.cpp
+        * examples/PluggableUDP/tests/Basic/UDP_i.cpp
+        * examples/PluggableUDP/tests/Performance/UDP_i.cpp
+        * examples/RTScheduling/Starter.cpp
+        * examples/Simple/bank/AccountManager_i.cpp
+        * examples/Simple/bank/Bank_Client_i.cpp
+        * examples/Simple/bank/server.cpp
+        * examples/Simple/chat/Broadcaster_i.cpp
+        * examples/Simple/echo/Echo_Client_i.cpp
+        * examples/Simple/echo/server.cpp
+        * examples/Simple/grid/Grid_Client_i.cpp
+        * examples/Simple/grid/server.cpp
+        * examples/Simple/time/Time_Client_i.cpp
+        * examples/Simple/time/server.cpp
+        * examples/Simple/time-date/Time_Date.cpp
+        * examples/Simple/time-date/Time_Date_Client_i.cpp
+        * examples/Simulator/Event_Supplier/DualEC_Sup.cpp
+        * examples/Simulator/Event_Supplier/Event_Sup.cpp
+        * examples/Simulator/Event_Supplier/Logging_Sup.cpp
+        * orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/ConsumerAdmin_i.cpp
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/CosEvent_Utilities.cpp
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/EventChannel_i.cpp
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/ProxyPushConsumer_i.cpp
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/ProxyPushSupplier_i.cpp
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/SupplierAdmin_i.cpp
+        * orbsvcs/examples/CosEC/Simple/Consumer.cpp
+        * orbsvcs/examples/CosEC/Simple/Service.cpp
+        * orbsvcs/examples/CosEC/Simple/Supplier.cpp
+        * orbsvcs/examples/Log/Event/Event_Consumer.cpp
+        * orbsvcs/examples/Log/Event/Event_Supplier.cpp
+        * orbsvcs/examples/Log/Notify/Notify_Consumer.cpp
+        * orbsvcs/examples/Log/Notify/Notify_Supplier.cpp
+        * orbsvcs/examples/Log/RTEvent/RTEvent_Consumer.cpp
+        * orbsvcs/examples/Log/RTEvent/RTEvent_Supplier.cpp
+        * orbsvcs/examples/Notify/Filter/Filter.cpp
+        * orbsvcs/examples/Notify/Subscribe/Subscribe.cpp
+        * orbsvcs/examples/RtEC/IIOPGateway/Consumer.cpp
+        * orbsvcs/examples/RtEC/IIOPGateway/EC.cpp
+        * orbsvcs/examples/RtEC/IIOPGateway/Gateway.cpp
+        * orbsvcs/examples/RtEC/IIOPGateway/Supplier.cpp
+        * orbsvcs/examples/RtEC/Kokyu/Consumer.cpp
+        * orbsvcs/examples/RtEC/Kokyu/Service.cpp
+        * orbsvcs/examples/RtEC/Kokyu/Supplier.cpp
+        * orbsvcs/examples/RtEC/MCast/Consumer.cpp
+        * orbsvcs/examples/RtEC/MCast/MCast.cpp
+        * orbsvcs/examples/RtEC/MCast/Supplier.cpp
+        * orbsvcs/examples/RtEC/Schedule/Service.cpp
+        * orbsvcs/examples/RtEC/Simple/Consumer.cpp
+        * orbsvcs/examples/RtEC/Simple/Service.cpp
+        * orbsvcs/examples/RtEC/Simple/Supplier.cpp
+          Zapped explicit templates
+
 Mon Oct  3 18:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.cpp

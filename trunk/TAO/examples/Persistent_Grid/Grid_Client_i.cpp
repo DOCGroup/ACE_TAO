@@ -126,8 +126,3 @@ Grid_Client_i::run (const char *name,
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class Client<Grid_Factory,Grid_Factory_var>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate Client<Grid_Factory,Grid_Factory_var>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -30,9 +30,9 @@ Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
       event.length (1);
       event[0].header.type   = ACE_ES_EVENT_UNDEFINED + 1;
       event[0].header.source = id_;
-      event[0].header.ttl    = 1;  
+      event[0].header.ttl    = 1;
     }
-  
+
   consumer_proxy_->push (event ACE_ENV_ARG_PARAMETER);
 }
 
@@ -69,8 +69,3 @@ Timeout_Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
 }
 
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

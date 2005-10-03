@@ -150,8 +150,3 @@ Bank_Client_i::test_for_overdraft (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class Client<Bank::AccountManager,Bank::AccountManager_var>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate Client<Bank,Bank_var>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

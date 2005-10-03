@@ -119,9 +119,3 @@ CORBA::Float random_number (double min, double max)
   return static_cast<CORBA::Float> ((min + (range * ACE_OS::rand () / (RAND_MAX + 1.0))));
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class Client<Checkpoint,Checkpoint_var>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate Client<Checkpoint,Checkpoint_var>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

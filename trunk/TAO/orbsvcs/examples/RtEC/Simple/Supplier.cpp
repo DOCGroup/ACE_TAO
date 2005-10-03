@@ -6,8 +6,8 @@
 #include "orbsvcs/CosNamingC.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (EC_Examples, 
-           Supplier, 
+ACE_RCSID (EC_Examples,
+           Supplier,
            "$Id$")
 
 int
@@ -150,8 +150,3 @@ Supplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
 }
 
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -123,12 +123,3 @@ Quoter_Stock_i::connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin
                                                  publications.get_SupplierQOS ());
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class POA_RtecEventComm::PushSupplier_tie<Quoter_Stock_i>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate POA_RtecEventComm::PushSupplier_tie<Quoter_Stock_i>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

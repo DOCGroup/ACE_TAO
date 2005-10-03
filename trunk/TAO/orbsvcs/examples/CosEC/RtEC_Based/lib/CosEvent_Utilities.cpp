@@ -441,20 +441,3 @@ CosEC_ServantBase::init_ConsumerQOS (RtecBase::handle_t cons_handle,
     }
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class auto_ptr <POA_RtecEventChannelAdmin::EventChannel>;
-template class ACE_Auto_Basic_Ptr <POA_RtecEventChannelAdmin::EventChannel>;
-
-template class auto_ptr <TAO_CosEC_EventChannel_i>;
-template class ACE_Auto_Basic_Ptr <TAO_CosEC_EventChannel_i>;
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate auto_ptr <POA_RtecEventChannelAdmin::EventChannel>
-#pragma instantiate  ACE_Auto_Basic_Ptr <POA_RtecEventChannelAdmin::EventChannel>
-
-#pragma instantiate auto_ptr <TAO_CosEC_EventChannel_i>
-#pragma instantiate  ACE_Auto_Basic_Ptr <TAO_CosEC_EventChannel_i>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

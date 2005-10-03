@@ -69,9 +69,3 @@ Echo_Client_i::run (const char *name,
   return 0;
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class Client<Echo,Echo_var>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate Client<Echo,Echo_var>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
