@@ -32,7 +32,8 @@ TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
 
   // Put ourselves in the connection wait state as soon as we get
   // created
-  this->state_changed (TAO_LF_Event::LFS_CONNECTION_WAIT);
+  this->state_changed (TAO_LF_Event::LFS_CONNECTION_WAIT,
+                       this->orb_core_->leader_follower ());
 }
 
 TAO_Connection_Handler::~TAO_Connection_Handler (void)
@@ -363,7 +364,8 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
   // cache or from the reactor. So clean them up before this is
   // called.
   this->transport ()->send_connection_closed_notifications ();
-  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
+  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED,
+                       this->orb_core_->leader_follower ());
 
   if (TAO_debug_level)
     {
@@ -412,7 +414,8 @@ TAO_Connection_Handler::pos_io_hook (int &)
 int
 TAO_Connection_Handler::close_handler (void)
 {
-  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
+  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED,
+	               this->orb_core_->leader_follower ());
   this->transport ()->remove_reference ();
   return 0;
 }

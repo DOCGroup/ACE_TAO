@@ -472,7 +472,8 @@ TAO_Transport::send_message_block_chain_i (const ACE_Message_Block *mb,
 
   // We are going to block, so there is no need to clone
   // the message block.
-  TAO_Synch_Queued_Message synch_message (mb);
+  TAO_Synch_Queued_Message synch_message (mb,
+                                          this->orb_core_);
 
   synch_message.push_back (this->head_, this->tail_);
 
@@ -511,7 +512,7 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
 {
   // We are going to block, so there is no need to clone
   // the message block.
-  TAO_Synch_Queued_Message synch_message (mb);
+  TAO_Synch_Queued_Message synch_message (mb, this->orb_core_);
 
   synch_message.push_back (this->head_, this->tail_);
 
@@ -575,6 +576,7 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
               ACE_NEW_RETURN (queued_message,
                               TAO_Asynch_Queued_Message (
                                   synch_message.current_block (),
+                                  this->orb_core_,
                                   0,
                                   1),
                               -1);
@@ -609,7 +611,7 @@ TAO_Transport::send_reply_message_i (const ACE_Message_Block *mb,
                                      ACE_Time_Value *max_wait_time)
 {
   // Dont clone now.. We could be sent in one shot!
-  TAO_Synch_Queued_Message synch_message (mb);
+  TAO_Synch_Queued_Message synch_message (mb, this->orb_core_);
 
   synch_message.push_back (this->head_,
                            this->tail_);
@@ -955,7 +957,8 @@ TAO_Transport::cleanup_queue_i ()
 
        // @@ This is a good point to insert a flag to indicate that a
        //    CloseConnection message was successfully received.
-      i->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
+      i->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED,
+		        this->orb_core_->leader_follower ());
 
       i->remove_from_list (this->head_, this->tail_);
 
@@ -1251,6 +1254,7 @@ TAO_Transport::queue_message_i(const ACE_Message_Block *message_block)
   TAO_Queued_Message *queued_message = 0;
   ACE_NEW_RETURN (queued_message,
                   TAO_Asynch_Queued_Message (message_block,
+                                             this->orb_core_,
                                              0,
                                              1),
                   -1);

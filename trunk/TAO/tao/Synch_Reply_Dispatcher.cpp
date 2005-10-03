@@ -92,7 +92,8 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (
       db->release ();
     }
 
-  this->state_changed (TAO_LF_Event::LFS_SUCCESS);
+  this->state_changed (TAO_LF_Event::LFS_SUCCESS,
+                       this->orb_core_->leader_follower ());
 
   return 1;
 }
@@ -100,5 +101,6 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (
 void
 TAO_Synch_Reply_Dispatcher::connection_closed (void)
 {
-  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
+  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED,
+                       this->orb_core_->leader_follower ());
 }

@@ -1,3 +1,60 @@
+Mon Oct  3 06:33:20 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
+
+	* tao/LF_Event.cpp (state_changed):
+	* tao/LF_Event.h:
+
+	  There was strange problem that showed up during our testing
+	  here. The problem happens only on peers that have server threads 
+	  waiting for requests,  effectively leaving some threads hanging
+	  around LF waiting for the reply, when infact the reply was
+	  received by the server thread -- sort of missed wakeups.   
+
+	  Problem: Server threads that wait for requests can process
+	  replies (for requests initiated by client threads) since they
+	  can get to the reactor right away and become leaders within the
+	  reactor. What happens when a reply is received by a server
+	  thread before a client thread adds itslf as a follower (in the
+	  LF loop as a follower)? Disaster.  
+
+	  Context: Why disaster? The server thread, never bound by the
+	  synchronization in the LF, would pick the reply. It would
+	  check for the follower (without holding the LF lock), and since
+	  the follower is still joining the follower list, the LF_Event
+	  would not have a follower pointer. The server thread would then
+	  simply exit state_changed () without waiting for a follower. The
+	  client thread that becomes a follower will never get a wakeup
+	  signal and continue to hang around blocking a resource. 
+
+	  Solution: Do wakeups only with the locks held. Grab LF lock
+	  before thinking of doing wakeups, which would allow clients
+	  languishing to set the follower pointer. 
+
+	  To implement the solution, all I did was to change the interface
+	  of state_changed () to pass in a LF reference. 
+	
+ 	* orbsvcs/orbsvcs/HTIOP/HTIOP_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+	* performance-tests/Latency/Thread_Pool/run_test.pl:
+	* tao/Asynch_Queued_Message.cpp:
+	* tao/Asynch_Queued_Message.h:
+	* tao/Connection_Handler.cpp:
+	* tao/IIOP_Connection_Handler.cpp:
+	* tao/Queued_Message.cpp:
+	* tao/Queued_Message.h:
+	* tao/Synch_Queued_Message.cpp:
+	* tao/Synch_Queued_Message.h:
+	* tao/Synch_Reply_Dispatcher.cpp:
+	* tao/Transport.cpp:
+	* tao/Wait_On_Read.cpp:
+	* tao/Strategies/DIOP_Connection_Handler.cpp:
+	* tao/Strategies/SCIOP_Connection_Handler.cpp:
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
+	* tao/Strategies/UIOP_Connection_Handler.cpp:
+
+	  Changes that got propogated due to the interface change in
+	  LF_Event. 
+
 Mon Oct  3 11:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Connection_Handler.cpp (close_connection_eh):
@@ -37,6 +94,7 @@ Mon Oct  3 10:02:06 2005  Simon McQueen  <sm@prismtech.com>
         * orbsvcs/tests/Bug_2248_Regression/test_i.h:
 
           Regression test for the above.
+
 
 Sun Oct  2 22:22:55 IST 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
 
