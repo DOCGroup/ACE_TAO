@@ -7,7 +7,8 @@
 // sized buffers.  This may cause buffers to overrun.
 
 #include "ace/OS_NS_string.h"
-#include "ace/Malloc.h"
+#include "ace/Malloc_T.h"
+#include "ace/MMAP_Memory_Pool.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"

@@ -1,3 +1,20 @@
+Mon Oct  3 13:30:58 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* examples/APG/Containers/Hash_Map.cpp:
+	* examples/APG/Shared_Memory/Malloc.cpp:
+	* examples/APG/Shared_Memory/PI_Malloc.cpp:
+	* examples/APG/Shared_Memory/Pool_Growth.cpp:
+	* examples/Shared_Malloc/Malloc.cpp:
+	* examples/Shared_Malloc/Malloc.h:
+	* examples/Shared_Malloc/test_malloc.cpp:
+	* examples/Shared_Malloc/test_multiple_mallocs.cpp:
+	* examples/Shared_Malloc/test_persistence.cpp:
+	* examples/Shared_Malloc/test_position_independent_malloc.cpp :
+
+          Include appropriate headers to address incomplete type
+	  definition related compile-time errors.  Necessitated by header
+	  dependency reductions in ACE.
+
 Mon Oct  3 18:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SSL/SSL_Context.cpp:

@@ -4,6 +4,7 @@
 #include "ace/OS_NS_string.h"
 
 // Listing 1 code/ch17
+#include "ace/MMAP_Memory_Pool.h"
 #include "ace/Malloc_T.h"
 #include "ace/Null_Mutex.h"
 #include "ace/PI_Malloc.h"
