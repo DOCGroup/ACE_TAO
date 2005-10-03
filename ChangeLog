@@ -3,6 +3,7 @@ Mon Oct  3 12:50:00 2005  Simon Massey  <simon.massey@prismtech.com>
         * ace/ACE.h:
         * ace/Acceptor.h:
         * ace/Stats.h:
+        * ace/Containers_T.h
 
           Remove some Doxygen warnings from the scoreboard.
 

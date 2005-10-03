@@ -323,10 +323,10 @@ private:
   // = Initialization methods
   ACE_DNode (const T &i, ACE_DNode<T> *n = 0, ACE_DNode<T> *p = 0);
 
-  /// Pointer to next element in the list of <ACE_DNode>s.
+  /// Pointer to next element in the list of {ACE_DNode}s.
   ACE_DNode<T> *next_;
 
-  /// Pointer to previous element in the list of <ACE_DNode>s.
+  /// Pointer to previous element in the list of {ACE_DNode}s.
   ACE_DNode<T> *prev_;
 
   /// Current value of the item in this node.
@@ -341,7 +341,7 @@ private:
  * @brief Implement a generic LIFO abstract data type.
  *
  * This implementation of an unbounded Stack uses a linked list.
- * If you use the <insert> or <remove> methods you should keep
+ * If you use the {insert} or {remove} methods you should keep
  * in mind that duplicate entries aren't allowed.  In general,
  * therefore, you should avoid the use of these methods since
  * they aren't really part of the ADT stack.  The stack is implemented
@@ -390,7 +390,7 @@ public:
 
   /// The copy constructor (performs initialization).
   /**
-   * Initialize this stack to be an exact copy of <s>.
+   * Initialize this stack to be an exact copy of {s}.
    */
   ACE_Unbounded_Stack (const ACE_Unbounded_Stack<T> &s);
 
@@ -451,7 +451,7 @@ public:
 
   ///Linear Insert of an item.
   /**
-   * Insert <new_item> into the Stack at the head (but doesn't allow
+   * Insert {new_item} into the Stack at the head (but doesn't allow
    * duplicates).  Returns -1 if failures occur, 1 if item is already
    * present (i.e., no duplicates are allowed), else 0.
    */
@@ -486,7 +486,7 @@ private:
   /// Delete all the nodes in the stack.
   void delete_all_nodes (void);
 
-  /// Copy all nodes from <s> to <this>.
+  /// Copy all nodes from {s} to {this}.
   void copy_all_nodes (const ACE_Unbounded_Stack<T> &s);
 
   /// Head of the linked list of Nodes.
@@ -509,7 +509,7 @@ class ACE_Unbounded_Stack_Iterator
 {
 public:
   // = Initialization method.
-  /// Move to the first element in the <stack>.
+  /// Move to the first element in the {stack}.
   ACE_Unbounded_Stack_Iterator (ACE_Unbounded_Stack<T> &stack);
 
   // = Iteration methods.
@@ -558,7 +558,7 @@ class ACE_Double_Linked_List_Iterator_Base
 public:
   // = Iteration methods.
 
-  /// Passes back the <entry> under the iterator. Returns 0 if the
+  /// Passes back the {entry} under the iterator. Returns 0 if the
   /// iteration has completed, otherwise 1
   int next (T *&) const;
 
@@ -643,9 +643,9 @@ protected:
  *
  * Iterate thru the double-linked list.  This class provides
  * an interface that let users access the internal element
- * addresses directly. Notice <class T> must declare
- * ACE_Double_Linked_List<T>,
- * ACE_Double_Linked_List_Iterator_Base <T> and
+ * addresses directly. Notice {class T} must declare
+ * ACE_Double_Linked_List&lt;T&gt;,
+ * ACE_Double_Linked_List_Iterator_Base &lt;T&gt; and
  * ACE_Double_Linked_List_Iterator as friend classes and class T
  * should also have data members T* next_ and T* prev_.
  */
@@ -678,7 +678,7 @@ public:
   /**
    * Advance the iterator while removing the original item from the
    * list.  Return a pointer points to the original (removed) item.
-   * If <dont_remove> equals 0, this function behaves like <advance>
+   * If {dont_remove} equals 0, this function behaves like {advance}
    * but return 0 (NULL) instead.
    */
   T* advance_and_remove (int dont_remove);
@@ -712,9 +712,9 @@ public:
  * Iterate backwards over the double-linked list.  This class
  * provide an interface that let users access the internal
  * element addresses directly, which seems to break the
- * encapsulation.  Notice <class T> must declare
- * ACE_Double_Linked_List<T>,
- * ACE_Double_Linked_List_Iterator_Base <T> and
+ * encapsulation.  Notice {class T} must declare
+ * ACE_Double_Linked_List&lt;T&gt;,
+ * ACE_Double_Linked_List_Iterator_Base &lt;T&gt; and
  * ACE_Double_Linked_List_Iterator as friend classes and class T
  * should also have data members T* next_ and T* prev_.
  */
@@ -747,7 +747,7 @@ public:
   /**
    * Advance the iterator while removing the original item from the
    * list.  Return a pointer points to the original (removed) item.
-   * If <dont_remove> equals 0, this function behaves like <advance>
+   * If {dont_remove} equals 0, this function behaves like {advance}
    * but return 0 (NULL) instead.
    */
   T* advance_and_remove (int dont_remove);
@@ -781,7 +781,7 @@ public:
  *
  * This implementation of an unbounded double-linked list uses a
  * circular linked list with a dummy node.  It is pretty much
- * like the <ACE_Unbounded_Queue> except that it allows removing
+ * like the {ACE_Unbounded_Queue} except that it allows removing
  * of a specific element from a specific location.
  * Notice that this class is an implementation of a very simple
  * data structure. This is *NOT* a container class.  You can use the
@@ -891,7 +891,7 @@ public:
 
   /// Removes the head of the list and returns a pointer to that item.
   /**
-   * Removes and returns the first <item> in the list.  Returns
+   * Removes and returns the first {item} in the list.  Returns
    * internal node's address on success, 0 if the queue was empty.
    * This method will *not* free the internal node.
    */
@@ -899,7 +899,7 @@ public:
 
   /// Removes the tail of the list and returns a pointer to that item.
   /**
-   * Removes and returns the last <item> in the list.  Returns
+   * Removes and returns the last {item} in the list.  Returns
    * internal nodes's address on success, 0 if the queue was
    * empty. This method will *not* free the internal node.
    */
@@ -909,14 +909,14 @@ public:
 
   ///Empty the list.
   /**
-   * Reset the <ACE_Double_Linked_List> to be empty.
+   * Reset the {ACE_Double_Linked_List} to be empty.
    * Notice that since no one is interested in the items within,
    * This operation will delete all items.
    */
   void reset (void);
 
-  /// Get the <slot>th element in the set.  Returns -1 if the element
-  /// isn't in the range {0..<size> - 1}, else 0.
+  /// Get the {slot}th element in the set.  Returns -1 if the element
+  /// isn't in the range {0..{size} - 1}, else 0.
   /**
    * Iterates through the list to the desired index and assigns the provides pointer
    * with the address of the node occupying that index.
@@ -948,7 +948,7 @@ protected:
    */
   void delete_nodes (void);
 
-  /// Copy nodes from <rhs> into this list.
+  /// Copy nodes from {rhs} into this list.
   /**
    * Copy the elements of the provided list by allocated new nodes and assigning
    * them with the proper data.
@@ -965,7 +965,7 @@ protected:
   /**
    * Insert a @a new_item into the list.  It will be added before
    * or after @a old_item.  Default is to insert the new item *after*
-   * <head_>.  Return 0 if succeed, -1 if error occured.
+   * {head_}.  Return 0 if succeed, -1 if error occured.
    */
   int insert_element (T *new_item,
                       int before = 0,
@@ -974,9 +974,9 @@ protected:
   ///Constant time delete an item from the list structure.
   /**
    * Remove @a item from the list.  Return 0 if succeed, -1 otherwise.
-   * Notice that this function checks if item is <head_> and either its
-   * <next_> or <prev_> is NULL.  The function resets item's <next_> and
-   * <prev_> to 0 to prevent clobbering the double-linked list if a user
+   * Notice that this function checks if item is {head_} and either its
+   * {next_} or {prev_} is NULL.  The function resets item's {next_} and
+   * {prev_} to 0 to prevent clobbering the double-linked list if a user
    * tries to remove the same node again.
    */
   int remove_element (T *item);
@@ -1049,8 +1049,8 @@ public:
   // = Additional utility methods.
 
   /**
-   * Delegates to <ACE_Double_Linked_List>, but where
-   * <ACE_Double_Linked_List> returns the node as the item, this get
+   * Delegates to {ACE_Double_Linked_List}, but where
+   * {ACE_Double_Linked_List} returns the node as the item, this get
    * returns the contents of the node in item.
    */
   int get (T *&item, size_t slot = 0);
@@ -1111,7 +1111,7 @@ public:
   /// items in the list have been seen, else 1.
   int advance (void);
 
-  /// Pass back the <next_item> that hasn't been seen in the list.
+  /// Pass back the {next_item} that hasn't been seen in the list.
   /// Returns 0 when all items have been seen, else 1.
   int next (T *&);
 
@@ -1123,8 +1123,8 @@ public:
   T *next (void) const;
 
   /**
-   * Removes the current item (i.e., <next>) from the list.
-   * Note that DLList iterators do not support <advance_and_remove>
+   * Removes the current item (i.e., {next}) from the list.
+   * Note that DLList iterators do not support {advance_and_remove}
    * directly (defined in its base class) and you will need to
    * release the element returned by it.
    */
@@ -1174,15 +1174,15 @@ public:
   /// items in the list have been seen, else 1.
   int advance (void);
 
-  /// Pass back the <next_item> that hasn't been seen in the list.
+  /// Pass back the {next_item} that hasn't been seen in the list.
   /// Returns 0 when all items have been seen, else 1.
   int next (T *&);
 
   /// @deprecated Delegates to ACE_Double_Linked_List_Iterator.
   T *next (void) const;
 
-  /// Removes the current item (i.e., <next>) from the list.
-  /// Note that DLList iterators do not support <advance_and_remove>
+  /// Removes the current item (i.e., {next}) from the list.
+  /// Note that DLList iterators do not support {advance_and_remove}
   /// directly (defined in its base class) and you will need to
   /// release the element returned by it.
   int remove (void);
@@ -1209,7 +1209,7 @@ class ACE_Fixed_Set_Iterator_Base
 public:
   // = Iteration methods.
 
-  /// Pass back the <next_item> that hasn't been seen in the Set.
+  /// Pass back the {next_item} that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
   int next (T *&next_item);
 
@@ -1243,7 +1243,7 @@ protected:
   /// Dump the state of an object.
   void dump_i (void) const;
   
-  /// Pass back the <next_item> that hasn't been seen in the Set.
+  /// Pass back the {next_item} that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
   int next_i (T *&next_item);
 }; 
@@ -1265,7 +1265,7 @@ public:
 
   // = Iteration methods.
 
-  /// Pass back the <next_item> that hasn't been seen in the Set.
+  /// Pass back the {next_item} that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
   int next (T *&next_item);
 
@@ -1274,7 +1274,7 @@ public:
   
   /// Remove the item where the itearetor is located at.
   /// Returns 1 if it removes a item, else 0.
-  /// Pass back the removed <item>.
+  /// Pass back the removed {item}.
   int remove (T *&item);
   
   /// STL-like iterator dereference operator: returns a reference
@@ -1301,7 +1301,7 @@ public:
 
   // = Iteration methods.
 
-  /// Pass back the <next_item> that hasn't been seen in the Set.
+  /// Pass back the {next_item} that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
   int next (const T *&next_item);
 
@@ -1319,7 +1319,7 @@ public:
 /**
  * @class ACE_Fixed_Set
  *
- * @brief Implement a simple unordered set of <T> with maximum <ACE_SIZE>.
+ * @brief Implement a simple unordered set of {T} with maximum {ACE_SIZE}.
  *
  * This implementation of an unordered set uses a fixed array.
  * It does not allow duplicate members.  The set provides linear insertion/deletion
@@ -1412,7 +1412,7 @@ public:
 
   ///Linear time removal operation of an item.
   /**
-   * Remove first occurrence of <item> from the set.  Returns 0 if
+   * Remove first occurrence of {item} from the set.  Returns 0 if
    * it removes the item, -1 if it can't find the item, and -1 if a
    * failure occurs.  Removal doesn't reclaim memory for the @a item.
    */
@@ -1475,7 +1475,7 @@ public:
 
   // = Iteration methods.
 
-  /// Pass back the <next_item> that hasn't been seen in the Set.
+  /// Pass back the {next_item} that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
   int next (T *&next_item);
 
@@ -1508,7 +1508,7 @@ private:
 /**
  * @class ACE_Bounded_Set
  *
- * @brief Implement a simple unordered set of <T> with maximum
+ * @brief Implement a simple unordered set of {T} with maximum
  * set at creation time.
  *
  * This implementation of an unordered set uses a Bounded array.
@@ -1630,7 +1630,7 @@ public:
 
   /// Finds if @a item occurs in the set.  Returns 0 if finds, else -1.
   /**
-   * find preforms a linear search for <item> and returns 0 on successful
+   * find preforms a linear search for {item} and returns 0 on successful
    * find and -1 otherwise.
    */
   int find (const T &item) const;
@@ -1672,7 +1672,7 @@ private:
  *
  * @brief Implement a bidirectional iterator over an ordered multiset.
  * This class template requires that < operator semantics be
- * defined for the parameterized type <T>, but does not impose
+ * defined for the parameterized type {T}, but does not impose
  * any restriction on how that ordering operator is implemented.
  */
 template <class T>
@@ -1686,7 +1686,7 @@ public:
 
   // = Iteration methods.
 
-  /// Pass back the <next_item> that hasn't been seen in the ordered multiset.
+  /// Pass back the {next_item} that hasn't been seen in the ordered multiset.
   /// Returns 0 when all items have been seen, else 1.
   int next (T *&next_item) const;
 
@@ -1712,7 +1712,7 @@ public:
   /// Dump the state of an object.
   void dump (void) const;
 
-  /// Returns a reference to the internal element <this> is pointing to.
+  /// Returns a reference to the internal element {this} is pointing to.
   T& operator* (void);
 
   /// Declare the dynamic allocation hooks.
@@ -1731,9 +1731,9 @@ private:
 /**
  * @class ACE_Ordered_MultiSet
  *
- * @brief Implement a simple ordered multiset of <T> of unbounded size
+ * @brief Implement a simple ordered multiset of {T} of unbounded size
  * that allows duplicates.  This class template requires that <
- * operator semantics be defined for the parameterized type <T>, but
+ * operator semantics be defined for the parameterized type {T}, but
  * does not impose any restriction on how that ordering operator is
  * implemented.  The set is implemented as a linked list.
  *
@@ -1959,7 +1959,7 @@ public:
   ACE_Array (size_t size = 0,
              ACE_Allocator* alloc = 0);
 
-  /// Dynamically initialize the entire array to the <default_value>.
+  /// Dynamically initialize the entire array to the {default_value}.
   /**
    * Initialize an array the given size placing the default_value in each index.
    */
@@ -1970,7 +1970,7 @@ public:
   ///Copy constructor.
   /**
    * The copy constructor performs initialization by making an exact
-   * copy of the contents of parameter <s>, i.e., *this == s will
+   * copy of the contents of parameter {s}, i.e., *this == s will
    * return true.
    */
   ACE_Array (const ACE_Array<T> &s);
@@ -1978,11 +1978,11 @@ public:
   ///Assignment operator
   /**
    * Assignment operator performs an assignment by making an exact
-   * copy of the contents of parameter <s>, i.e., *this == s will
-   * return true.  Note that if the <max_size_> of <array_> is >= than
-   * <s.max_size_> we can copy it without reallocating.  However, if
-   * <max_size_> is < <s.max_size_> we must delete the <array_>,
-   * reallocate a new <array_>, and then copy the contents of <s>.
+   * copy of the contents of parameter {s}, i.e., *this == s will
+   * return true.  Note that if the {max_size_} of {array_} is >= than
+   * {s.max_size_} we can copy it without reallocating.  However, if
+   * {max_size_} is < {s.max_size_} we must delete the {array_},
+   * reallocate a new {array_}, and then copy the contents of {s}.
    */
   void operator= (const ACE_Array<T> &s);
 
@@ -1990,17 +1990,17 @@ public:
 
   ///Equality comparison operator.
   /**
-   * Compare this array with <s> for equality.  Two arrays are equal
-   * if their <size>'s are equal and all the elements from 0 .. <size>
+   * Compare this array with {s} for equality.  Two arrays are equal
+   * if their {size}'s are equal and all the elements from 0 .. {size}
    * are equal.
    */
   bool operator== (const ACE_Array<T> &s) const;
 
   ///Inequality comparison operator.
   /**
-   * Compare this array with <s> for inequality such that <*this> !=
-   * <s> is always the complement of the boolean return value of
-   * <*this> == <s>.
+   * Compare this array with {s} for inequality such that {*this} !=
+   * {s} is always the complement of the boolean return value of
+   * {*this} == {s}.
    */
   bool operator!= (const ACE_Array<T> &s) const;
 };
