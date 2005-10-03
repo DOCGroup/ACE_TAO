@@ -7,11 +7,11 @@
  *  $Id$
  *
  *  This works on Win32 (#if defined (ACE_WIN32) && !defined
- *  (ACE_HAS_WINCE)) platforms and on POSIX4 platforms with <aio_*>
+ *  (ACE_HAS_WINCE)) platforms and on POSIX4 platforms with {aio_*}
  *  routines (#if defined (ACE_HAS_AIO_CALLS))
  *
  *  On Win32 platforms, the implementation of
- *  <ACE_Asynch_Transmit_File> and <ACE_Asynch_Accept> are only
+ *  {ACE_Asynch_Transmit_File} and {ACE_Asynch_Accept} are only
  *  supported if ACE_HAS_WINSOCK2 is defined or you are on WinNT 4.0
  *  or higher.
  *
@@ -149,7 +149,7 @@ public:
   /**
    * Priority of the operation.
    *
-   * On POSIX4-Unix, this is supported. Priority works like <nice> in
+   * On POSIX4-Unix, this is supported. Priority works like {nice} in
    * Unix. Negative values are not allowed. 0 means priority of the
    * operation same as the process priority. 1 means priority of the
    * operation is one less than process. And so forth.
@@ -160,8 +160,8 @@ public:
 
   /**
    * POSIX4 real-time signal number to be used for the
-   * operation. <signal_number> ranges from ACE_SIGRTMIN to ACE_SIGRTMAX. By
-   * default, ACE_SIGRTMIN is used to issue <aio_> calls. This is a no-op
+   * operation. {signal_number} ranges from ACE_SIGRTMIN to ACE_SIGRTMAX. By
+   * default, ACE_SIGRTMIN is used to issue {aio_} calls. This is a no-op
    * on non-POSIX4 systems and returns 0.
    */
   int signal_number (void) const;
@@ -203,8 +203,8 @@ class ACE_Export ACE_Asynch_Operation
 public:
   /**
    * Initializes the factory with information which will be used with
-   * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * each asynchronous call.  If ({handle} == ACE_INVALID_HANDLE),
+   * {ACE_Handler::handle} will be called on the {handler} to get the
    * correct handle.
    */
   int open (ACE_Handler &handler,
@@ -214,7 +214,7 @@ public:
 
   /**
    * (Attempts to) cancel the asynchronous operation pending against
-   * the <handle> registered with this Operation.
+   * the {handle} registered with this Operation.
    *
    * All completion notifications for the I/O operations will occur
    * normally.
@@ -242,7 +242,7 @@ public:
    * = POSIX:
    *
    *   Attempts to cancel one or more asynchronous I/O requests
-   *   currently outstanding against the <handle> registered in this
+   *   currently outstanding against the {handle} registered in this
    *   operation.
    *   For requested operations that are successfully canceled, the
    *   associated  error  status is set to ECANCELED.
@@ -281,10 +281,10 @@ class ACE_Asynch_Read_Stream_Impl;
  * on a stream. This class forwards all methods to its
  * implementation class.
  *
- * Once <open> is called, multiple asynchronous <read>s can
+ * Once {open} is called, multiple asynchronous {read}s can
  * started using this class.  An ACE_Asynch_Read_Stream::Result
- * will be passed back to the <handler> when the asynchronous
- * reads completes through the <ACE_Handler::handle_read_stream>
+ * will be passed back to the {handler} when the asynchronous
+ * reads completes through the {ACE_Handler::handle_read_stream}
  * callback.
  */
 class ACE_Export ACE_Asynch_Read_Stream : public ACE_Asynch_Operation
@@ -299,8 +299,8 @@ public:
 
   /**
    * Initializes the factory with information which will be used with
-   * each asynchronous call. If (<handle> == ACE_INVALID_HANDLE),
-   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * each asynchronous call. If ({handle} == ACE_INVALID_HANDLE),
+   * {ACE_Handler::handle} will be called on the {handler} to get the
    * correct handle.
    */
   int open (ACE_Handler &handler,
@@ -309,17 +309,17 @@ public:
             ACE_Proactor *proactor = 0);
 
   /**
-   * This starts off an asynchronous read.  Upto <bytes_to_read> will
-   * be read and stored in the <message_block>. <message_block>'s
-   * <wr_ptr> will be updated to reflect the added bytes if the read
+   * This starts off an asynchronous read.  Upto {bytes_to_read} will
+   * be read and stored in the {message_block}. {message_block}'s
+   * {wr_ptr} will be updated to reflect the added bytes if the read
    * operation is successful completed. Priority of the
-   * operation is specified by <priority>. On POSIX4-Unix, this is
-   * supported. Works like <nice> in Unix. Negative values are not
+   * operation is specified by {priority}. On POSIX4-Unix, this is
+   * supported. Works like {nice} in Unix. Negative values are not
    * allowed. 0 means priority of the operation same as the process
    * priority. 1 means priority of the operation is one less than
-   * process. And so forth. On Win32, <priority> is a no-op.
-   * <signal_number> is the POSIX4 real-time signal number to be used
-   * for the operation. <signal_number> ranges from ACE_SIGRTMIN to
+   * process. And so forth. On Win32, {priority} is a no-op.
+   * {signal_number} is the POSIX4 real-time signal number to be used
+   * for the operation. {signal_number} ranges from ACE_SIGRTMIN to
    * ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems.
    */
   int read (ACE_Message_Block &message_block,
@@ -353,11 +353,11 @@ public:
  * @class Result
  *
  * @brief This is the class which will be passed back to the
- * <handler> when the asynchronous read completes. This class
+ * {handler} when the asynchronous read completes. This class
  * forwards all the methods to the implementation classes.
  *
  * This class has all the information necessary for the
- * <handler> to uniquiely identify the completion of the
+ * {handler} to uniquiely identify the completion of the
  * asynchronous read.
  */
   class ACE_Export Result : public ACE_Asynch_Result
@@ -405,11 +405,11 @@ class ACE_Asynch_Write_Stream_Result_Impl;
  * on a stream. This class forwards all methods to its
  * implementation class.
  *
- * Once <open> is called, multiple asynchronous <writes>s can
+ * Once {open} is called, multiple asynchronous {writes}s can
  * started using this class.  An ACE_Asynch_Write_Stream::Result
- * will be passed back to the <handler> when the asynchronous
+ * will be passed back to the {handler} when the asynchronous
  * write completes through the
- * <ACE_Handler::handle_write_stream> callback.
+ * {ACE_Handler::handle_write_stream} callback.
  */
 class ACE_Export ACE_Asynch_Write_Stream : public ACE_Asynch_Operation
 {
@@ -423,8 +423,8 @@ public:
 
   /**
    * Initializes the factory with information which will be used with
-   * each asynchronous call. If (<handle> == ACE_INVALID_HANDLE),
-   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * each asynchronous call. If ({handle} == ACE_INVALID_HANDLE),
+   * {ACE_Handler::handle} will be called on the {handler} to get the
    * correct handle.
    */
   int open (ACE_Handler &handler,
@@ -433,17 +433,17 @@ public:
             ACE_Proactor *proactor = 0);
 
   /**
-   * This starts off an asynchronous write.  Upto <bytes_to_write>
-   * will be written from the <message_block>. Upon successful completion
-   * of the write operation, <message_block>'s <rd_ptr> is updated to
+   * This starts off an asynchronous write.  Upto {bytes_to_write}
+   * will be written from the {message_block}. Upon successful completion
+   * of the write operation, {message_block}'s {rd_ptr} is updated to
    * reflect the data that was written. Priority of the
-   * operation is specified by <priority>. On POSIX4-Unix, this is
-   * supported. Works like <nice> in Unix. Negative values are not
+   * operation is specified by {priority}. On POSIX4-Unix, this is
+   * supported. Works like {nice} in Unix. Negative values are not
    * allowed. 0 means priority of the operation same as the process
    * priority. 1 means priority of the operation is one less than
    * process. And so forth. On Win32, this argument is a no-op.
-   * <signal_number> is the POSIX4 real-time signal number to be used
-   * for the operation. <signal_number> ranges from ACE_SIGRTMIN to
+   * {signal_number} is the POSIX4 real-time signal number to be used
+   * for the operation. {signal_number} ranges from ACE_SIGRTMIN to
    * ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems.
    */
   int write (ACE_Message_Block &message_block,
@@ -477,11 +477,11 @@ public:
  * @class Result
  *
  * @brief This is that class which will be passed back to the
- * <handler> when the asynchronous write completes. This class
+ * {handler} when the asynchronous write completes. This class
  * forwards all the methods to the implementation class.
  *
  * This class has all the information necessary for the
- * <handler> to uniquiely identify the completion of the
+ * {handler} to uniquiely identify the completion of the
  * asynchronous write.
  */
   class ACE_Export Result : public ACE_Asynch_Result
@@ -529,10 +529,10 @@ class ACE_Asynch_Read_File_Result_Impl;
  * on a file. This class forwards all methods to its
  * implementation class.
  *
- * Once <open> is called, multiple asynchronous <read>s can
+ * Once {open} is called, multiple asynchronous {read}s can
  * started using this class. An ACE_Asynch_Read_File::Result
- * will be passed back to the <handler> when the asynchronous
- * reads completes through the <ACE_Handler::handle_read_file>
+ * will be passed back to the {handler} when the asynchronous
+ * reads completes through the {ACE_Handler::handle_read_file}
  * callback.
  * This class differs slightly from ACE_Asynch_Read_Stream as it
  * allows the user to specify an offset for the read.
@@ -549,8 +549,8 @@ public:
 
   /**
    * Initializes the factory with information which will be used with
-   * each asynchronous call. If (<handle> == ACE_INVALID_HANDLE),
-   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * each asynchronous call. If ({handle} == ACE_INVALID_HANDLE),
+   * {ACE_Handler::handle} will be called on the {handler} to get the
    * correct handle.
    */
   int open (ACE_Handler &handler,
@@ -559,16 +559,16 @@ public:
             ACE_Proactor *proactor = 0);
 
   /**
-   * This starts off an asynchronous read.  Upto <bytes_to_read> will
-   * be read and stored in the <message_block>.  The read will start
-   * at <offset> from the beginning of the file. Priority of the
-   * operation is specified by <priority>. On POSIX4-Unix, this is
-   * supported. Works like <nice> in Unix. Negative values are not
+   * This starts off an asynchronous read.  Upto {bytes_to_read} will
+   * be read and stored in the {message_block}.  The read will start
+   * at {offset} from the beginning of the file. Priority of the
+   * operation is specified by {priority}. On POSIX4-Unix, this is
+   * supported. Works like {nice} in Unix. Negative values are not
    * allowed. 0 means priority of the operation same as the process
    * priority. 1 means priority of the operation is one less than
    * process. And so forth. On Win32, this argument is a no-op.
-   * <signal_number> is the POSIX4 real-time signal number to be used
-   * for the operation. <signal_number> ranges from ACE_SIGRTMIN to
+   * {signal_number} is the POSIX4 real-time signal number to be used
+   * for the operation. {signal_number} ranges from ACE_SIGRTMIN to
    * ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems.
    */
   int read (ACE_Message_Block &message_block,
@@ -609,18 +609,18 @@ public:
  * @class Result
  *
  * @brief This is that class which will be passed back to the
- * <handler> when the asynchronous read completes. This class
+ * {handler} when the asynchronous read completes. This class
  * forwards all the methods to the implementation class.
  *
  * This class has all the information necessary for the
- * <handler> to uniquiely identify the completion of the
+ * {handler} to uniquiely identify the completion of the
  * asynchronous read.
  * This class differs slightly from
  * ACE_Asynch_Read_Stream::Result as it calls back
- * <ACE_Handler::handle_read_file> on the <handler> instead of
- * <ACE_Handler::handle_read_stream>.  No additional state is
+ * {ACE_Handler::handle_read_file} on the {handler} instead of
+ * {ACE_Handler::handle_read_stream}.  No additional state is
  * required by this class as ACE_Asynch_Result can store the
- * <offset>.
+ * {offset}.
  */
   class ACE_Export Result : public ACE_Asynch_Read_Stream::Result
   {
@@ -662,10 +662,10 @@ class ACE_Asynch_Write_File_Result_Impl;
  * on a file. This class forwards all methods to its
  * implementation class.
  *
- * Once <open> is called, multiple asynchronous <write>s can be
+ * Once {open} is called, multiple asynchronous {write}s can be
  * started using this class.  A ACE_Asynch_Write_File::Result
- * will be passed back to the <handler> when the asynchronous
- * writes completes through the <ACE_Handler::handle_write_file>
+ * will be passed back to the {handler} when the asynchronous
+ * writes completes through the {ACE_Handler::handle_write_file}
  * callback.
  * This class differs slightly from ACE_Asynch_Write_Stream as
  * it allows the user to specify an offset for the write.
@@ -682,8 +682,8 @@ public:
 
   /**
    * Initializes the factory with information which will be used with
-   * each asynchronous call. If (<handle> == ACE_INVALID_HANDLE),
-   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * each asynchronous call. If ({handle} == ACE_INVALID_HANDLE),
+   * {ACE_Handler::handle} will be called on the {handler} to get the
    * correct handle.
    */
   int open (ACE_Handler &handler,
@@ -692,17 +692,17 @@ public:
             ACE_Proactor *proactor = 0);
 
   /**
-   * This starts off an asynchronous write.  Upto <bytes_to_write>
-   * will be written from the <message_block>, starting at the
-   * block's <rd_ptr>.  The write will go to the file, starting
-   * <offset> bytes from the beginning of the file. Priority of the
-   * operation is specified by <priority>. On POSIX4-Unix, this is
-   * supported. Works like <nice> in Unix. Negative values are not
+   * This starts off an asynchronous write.  Upto {bytes_to_write}
+   * will be written from the {message_block}, starting at the
+   * block's {rd_ptr}.  The write will go to the file, starting
+   * {offset} bytes from the beginning of the file. Priority of the
+   * operation is specified by {priority}. On POSIX4-Unix, this is
+   * supported. Works like {nice} in Unix. Negative values are not
    * allowed. 0 means priority of the operation same as the process
    * priority. 1 means priority of the operation is one less than
    * process. And so forth. On Win32, this is a no-op.
-   * <signal_number> is the POSIX4 real-time signal number to be used
-   * for the operation. <signal_number> ranges from ACE_SIGRTMIN to
+   * {signal_number} is the POSIX4 real-time signal number to be used
+   * for the operation. {signal_number} ranges from ACE_SIGRTMIN to
    * ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems.
    */
   int write (ACE_Message_Block &message_block,
@@ -742,18 +742,18 @@ public:
  * @class Result
  *
  * @brief This is that class which will be passed back to the
- * <handler> when the asynchronous write completes. This class
+ * {handler} when the asynchronous write completes. This class
  * forwards all the methods to the implementation class.
  *
  * This class has all the information necessary for the
- * <handler> to uniquiely identify the completion of the
+ * {handler} to uniquiely identify the completion of the
  * asynchronous write.
  * This class differs slightly from
  * ACE_Asynch_Write_Stream::Result as it calls back
- * <ACE_Handler::handle_write_file> on the <handler> instead
- * of <ACE_Handler::handle_write_stream>.  No additional state
+ * {ACE_Handler::handle_write_file} on the {handler} instead
+ * of {ACE_Handler::handle_write_stream}.  No additional state
  * is required by this class as ACE_Asynch_Result can store
- * the <offset>.
+ * the {offset}.
  */
   class ACE_Export Result : public ACE_Asynch_Write_Stream::Result
   {
@@ -795,10 +795,10 @@ class ACE_Asynch_Accept_Impl;
  * on a listen handle. This class forwards all methods to its
  * implementation class.
  *
- * Once <open> is called, multiple asynchronous <accept>s can
+ * Once {open} is called, multiple asynchronous {accept}s can
  * started using this class.  A ACE_Asynch_Accept::Result will
- * be passed back to the <handler> when the asynchronous accept
- * completes through the <ACE_Handler::handle_accept>
+ * be passed back to the {handler} when the asynchronous accept
+ * completes through the {ACE_Handler::handle_accept}
  * callback.
  */
 class ACE_Export ACE_Asynch_Accept : public ACE_Asynch_Operation
@@ -813,8 +813,8 @@ public:
 
   /**
    * Initializes the factory with information which will be used with
-   * each asynchronous call. If (<handle> == ACE_INVALID_HANDLE),
-   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * each asynchronous call. If ({handle} == ACE_INVALID_HANDLE),
+   * {ACE_Handler::handle} will be called on the {handler} to get the
    * correct handle.
    */
   int open (ACE_Handler &handler,
@@ -878,10 +878,10 @@ public:
  * @class Result
  *
  * @brief This is that class which will be passed back to the
- * <handler> when the asynchronous accept completes.
+ * {handler} when the asynchronous accept completes.
  *
  * This class has all the information necessary for the
- * <handler> to uniquiely identify the completion of the
+ * {handler} to uniquiely identify the completion of the
  * asynchronous accept.
  */
   class ACE_Export Result : public ACE_Asynch_Result
@@ -1025,11 +1025,11 @@ class ACE_Asynch_Transmit_File_Impl;
  * @brief This class is a factory for starting off asynchronous
  * transmit files on a stream.
  *
- * Once <open> is called, multiple asynchronous <transmit_file>s
+ * Once {open} is called, multiple asynchronous {transmit_file}s
  * can started using this class.  A
  * ACE_Asynch_Transmit_File::Result will be passed back to the
- * <handler> when the asynchronous transmit file completes
- * through the <ACE_Handler::handle_transmit_file> callback.
+ * {handler} when the asynchronous transmit file completes
+ * through the {ACE_Handler::handle_transmit_file} callback.
  * The transmit_file function transmits file data over a
  * connected network connection. The function uses the operating
  * system's cache manager to retrieve the file data. This
@@ -1052,8 +1052,8 @@ public:
 
   /**
    * Initializes the factory with information which will be used with
-   * each asynchronous call. If (<handle> == ACE_INVALID_HANDLE),
-   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * each asynchronous call. If ({handle} == ACE_INVALID_HANDLE),
+   * {ACE_Handler::handle} will be called on the {handler} to get the
    * correct handle.
    */
   int open (ACE_Handler &handler,
@@ -1062,22 +1062,22 @@ public:
             ACE_Proactor *proactor = 0);
 
   /**
-   * This starts off an asynchronous transmit file.  The <file> is a
-   * handle to an open file.  <header_and_trailer> is a pointer to a
+   * This starts off an asynchronous transmit file.  The {file} is a
+   * handle to an open file.  {header_and_trailer} is a pointer to a
    * data structure that contains pointers to data to send before and
    * after the file data is sent.  Set this parameter to 0 if you only
-   * want to transmit the file data.  Upto <bytes_to_write> will be
-   * written to the <socket>.  If you want to send the entire file,
-   * let <bytes_to_write> = 0.  <bytes_per_send> is the size of each
+   * want to transmit the file data.  Upto {bytes_to_write} will be
+   * written to the {socket}.  If you want to send the entire file,
+   * let {bytes_to_write} = 0.  {bytes_per_send} is the size of each
    * block of data sent per send operation.  Please read the Win32
    * documentation on what the flags should be. Priority of the
-   * operation is specified by <priority>. On POSIX4-Unix, this is
-   * supported. Works like <nice> in Unix. Negative values are not
+   * operation is specified by {priority}. On POSIX4-Unix, this is
+   * supported. Works like {nice} in Unix. Negative values are not
    * allowed. 0 means priority of the operation same as the process
    * priority. 1 means priority of the operation is one less than
    * process. And so forth. On Win32, this is a no-op.
-   * <signal_number> is the POSIX4 real-time signal number to be used
-   * for the operation. <signal_number> ranges from ACE_SIGRTMIN to
+   * {signal_number} is the POSIX4 real-time signal number to be used
+   * for the operation. {signal_number} ranges from ACE_SIGRTMIN to
    * ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems.
    */
   int transmit_file (ACE_HANDLE file,
@@ -1104,10 +1104,10 @@ public:
  * @class Result
  *
  * @brief This is that class which will be passed back to the
- * <handler> when the asynchronous transmit file completes.
+ * {handler} when the asynchronous transmit file completes.
  *
  * This class has all the information necessary for the
- * <handler> to uniquiely identify the completion of the
+ * {handler} to uniquiely identify the completion of the
  * asynchronous transmit file.
  */
   class ACE_Export Result : public ACE_Asynch_Result
@@ -1239,10 +1239,10 @@ class ACE_Addr;
  * on a UDP socket. This class forwards all methods to its
  * implementation class.
  *
- * Once <open> is called, multiple asynchronous <read>s can be
+ * Once {open} is called, multiple asynchronous {read}s can be
  * started using this class.  An ACE_Asynch_Read_Dgram::Result
- * will be passed back to the <handler> when the asynchronous
- * reads completes through the <ACE_Handler::handle_read_dgram>
+ * will be passed back to the {handler} when the asynchronous
+ * reads completes through the {ACE_Handler::handle_read_dgram}
  * callback.
  */
 class ACE_Export ACE_Asynch_Read_Dgram : public ACE_Asynch_Operation
@@ -1257,8 +1257,8 @@ public:
 
   /**
    * Initializes the factory with information which will be used with
-   * each asynchronous call. If (<handle> == ACE_INVALID_HANDLE),
-   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * each asynchronous call. If ({handle} == ACE_INVALID_HANDLE),
+   * {ACE_Handler::handle} will be called on the {handler} to get the
    * correct handle.
    */
   int open (ACE_Handler &handler,
@@ -1267,29 +1267,29 @@ public:
             ACE_Proactor *proactor = 0);
 
   /** This starts off an asynchronous read.  Upto
-   * <message_block->total_size()> will be read and stored in the
-   * <message_block>.  <message_block>'s <wr_ptr> will be updated to reflect
+   * {message_block->total_size()} will be read and stored in the
+   * {message_block}.  {message_block}'s {wr_ptr} will be updated to reflect
    * the added bytes if the read operation is successfully completed.
-   * Return code of 1 means immediate success and <number_of_bytes_recvd>
-   * will contain number of bytes read.  The <ACE_Handler::handle_read_dgram>
+   * Return code of 1 means immediate success and {number_of_bytes_recvd}
+   * will contain number of bytes read.  The {ACE_Handler::handle_read_dgram}
    * method will still be called.  Return code of 0 means the IO will
    * complete proactively.  Return code of -1 means there was an error, use
    * errno to get the error code.
    *
-   * Scatter/gather is supported on WIN32 by using the <message_block->cont()>
-   * method.  Up to ACE_IOV_MAX <message_block>'s are supported.  Upto
-   * <message_block->size()> bytes will be read into each <message block> for
-   * a total of <message_block->total_size()> bytes.  All <message_block>'s
-   * <wr_ptr>'s will be updated to reflect the added bytes for each
-   * <message_block>
+   * Scatter/gather is supported on WIN32 by using the {message_block->cont()}
+   * method.  Up to ACE_IOV_MAX {message_block}'s are supported.  Upto
+   * {message_block->size()} bytes will be read into each {message block} for
+   * a total of {message_block->total_size()} bytes.  All {message_block}'s
+   * {wr_ptr}'s will be updated to reflect the added bytes for each
+   * {message_block}
    *
-   * Priority of the operation is specified by <priority>. On POSIX4-Unix,
-   * this is supported. Works like <nice> in Unix. Negative values are not
+   * Priority of the operation is specified by {priority}. On POSIX4-Unix,
+   * this is supported. Works like {nice} in Unix. Negative values are not
    * allowed. 0 means priority of the operation same as the process
    * priority. 1 means priority of the operation is one less than
-   * process. And so forth. On Win32, <priority> is a no-op.
-   * <signal_number> is the POSIX4 real-time signal number to be used
-   * for the operation. <signal_number> ranges from ACE_SIGRTMIN to
+   * process. And so forth. On Win32, {priority} is a no-op.
+   * {signal_number} is the POSIX4 real-time signal number to be used
+   * for the operation. {signal_number} ranges from ACE_SIGRTMIN to
    * ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems.
    */
   ssize_t recv (ACE_Message_Block *message_block,
@@ -1313,11 +1313,11 @@ public:
  * @class Result
  *
  * @brief This is the class which will be passed back to the
- * <handler> when the asynchronous read completes. This class
+ * {handler} when the asynchronous read completes. This class
  * forwards all the methods to the implementation classes.
  *
  * This class has all the information necessary for the
- * <handler> to uniquiely identify the completion of the
+ * {handler} to uniquiely identify the completion of the
  * asynchronous read.
  */
   class ACE_Export Result : public ACE_Asynch_Result
@@ -1372,11 +1372,11 @@ class ACE_Asynch_Write_Dgram_Result_Impl;
  * on a UDP socket. This class forwards all methods to its
  * implementation class.
  *
- * Once <open> is called, multiple asynchronous <writes>s can
+ * Once {open} is called, multiple asynchronous {writes}s can
  * started using this class.  An ACE_Asynch_Write_Dgram::Result
- * will be passed back to the <handler> when the asynchronous
+ * will be passed back to the {handler} when the asynchronous
  * write completes through the
- * <ACE_Handler::handle_write_dgram> callback.
+ * {ACE_Handler::handle_write_dgram} callback.
  */
 class ACE_Export ACE_Asynch_Write_Dgram : public ACE_Asynch_Operation
 {
@@ -1390,8 +1390,8 @@ public:
 
   /**
    * Initializes the factory with information which will be used with
-   * each asynchronous call. If (<handle> == ACE_INVALID_HANDLE),
-   * <ACE_Handler::handle> will be called on the <handler> to get the
+   * each asynchronous call. If ({handle} == ACE_INVALID_HANDLE),
+   * {ACE_Handler::handle} will be called on the {handler} to get the
    * correct handle.
    */
   int open (ACE_Handler &handler,
@@ -1400,29 +1400,29 @@ public:
             ACE_Proactor *proactor = 0);
 
   /** This starts off an asynchronous send.  Upto
-   * <message_block->total_length()> will be sent.  <message_block>'s
-   * <rd_ptr> will be updated to reflect the sent bytes if the send operation
+   * {message_block->total_length()} will be sent.  {message_block}'s
+   * {rd_ptr} will be updated to reflect the sent bytes if the send operation
    * is successfully completed.
-   * Return code of 1 means immediate success and <number_of_bytes_sent>
-   * is updated to number of bytes sent.  The <ACE_Handler::handle_write_dgram>
+   * Return code of 1 means immediate success and {number_of_bytes_sent}
+   * is updated to number of bytes sent.  The {ACE_Handler::handle_write_dgram}
    * method will still be called.  Return code of 0 means the IO will
    * complete proactively.  Return code of -1 means there was an error, use
    * errno to get the error code.
    *
-   * Scatter/gather is supported on WIN32 by using the <message_block->cont()>
-   * method.  Up to ACE_IOV_MAX <message_block>'s are supported.  Upto
-   * <message_block->length()> bytes will be sent from each <message block>
-   * for a total of <message_block->total_length()> bytes.  All
-   * <message_block>'s <rd_ptr>'s will be updated to reflect the bytes sent
-   * from each <message_block>.
+   * Scatter/gather is supported on WIN32 by using the {message_block->cont()}
+   * method.  Up to ACE_IOV_MAX {message_block}'s are supported.  Upto
+   * {message_block->length()} bytes will be sent from each {message block}
+   * for a total of {message_block->total_length()} bytes.  All
+   * {message_block}'s {rd_ptr}'s will be updated to reflect the bytes sent
+   * from each {message_block}.
    *
-   * Priority of the operation is specified by <priority>. On POSIX4-Unix,
-   * this is supported. Works like <nice> in Unix. Negative values are not
+   * Priority of the operation is specified by {priority}. On POSIX4-Unix,
+   * this is supported. Works like {nice} in Unix. Negative values are not
    * allowed. 0 means priority of the operation same as the process
    * priority. 1 means priority of the operation is one less than
    * process. And so forth. On Win32, this argument is a no-op.
-   * <signal_number> is the POSIX4 real-time signal number to be used
-   * for the operation. <signal_number> ranges from ACE_SIGRTMIN to
+   * {signal_number} is the POSIX4 real-time signal number to be used
+   * for the operation. {signal_number} ranges from ACE_SIGRTMIN to
    * ACE_SIGRTMAX. This argument is a no-op on non-POSIX4 systems.
    */
   ssize_t send (ACE_Message_Block *message_block,
@@ -1446,11 +1446,11 @@ public:
  * @class Result
  *
  * @brief This is that class which will be passed back to the
- * <handler> when the asynchronous write completes. This class
+ * {handler} when the asynchronous write completes. This class
  * forwards all the methods to the implementation class.
  *
  * This class has all the information necessary for the
- * <handler> to uniquiely identify the completion of the
+ * {handler} to uniquiely identify the completion of the
  * asynchronous write.
  */
   class ACE_Export Result : public ACE_Asynch_Result
@@ -1546,14 +1546,14 @@ public:
   /// completes.
   virtual void handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result);
 
-  /// Called when timer expires.  <tv> was the requested time value and
-  /// <act> is the ACT passed when scheduling the timer.
+  /// Called when timer expires.  {tv} was the requested time value and
+  /// {act} is the ACT passed when scheduling the timer.
   virtual void handle_time_out (const ACE_Time_Value &tv,
                                 const void *act = 0);
 
   /**
-   * This is method works with the <run_event_loop> of the
-   * ACE_Proactor. A special <Wake_Up_Completion> is used to wake up
+   * This is method works with the {run_event_loop} of the
+   * ACE_Proactor. A special {Wake_Up_Completion} is used to wake up
    * all the threads that are blocking for completions.
    */
   virtual void handle_wakeup (void);
@@ -1565,9 +1565,9 @@ public:
   void proactor (ACE_Proactor *p);
 
   /**
-   * Get the I/O handle used by this <handler>. This method will be
+   * Get the I/O handle used by this {handler}. This method will be
    * called by the ACE_Asynch_* classes when an ACE_INVALID_HANDLE is
-   * passed to <open>.
+   * passed to {open}.
    */
   virtual ACE_HANDLE handle (void) const;
 
@@ -1640,7 +1640,7 @@ public:
   virtual ~ACE_Service_Handler (void);
 
   /**
-   * <open> is called by ACE_Asynch_Acceptor to initialize a new
+   * {open} is called by ACE_Asynch_Acceptor to initialize a new
    * instance of ACE_Service_Handler that has been created after the
    * new connection is accepted. The handle for the new connection is
    * passed along with the initial data that may have shown up.
