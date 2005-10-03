@@ -1165,7 +1165,7 @@ protected:
   int restart_;
 
 protected:
-  
+
   /**
    * @class Token_Guard
    *
