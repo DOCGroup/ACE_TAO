@@ -1,3 +1,20 @@
+Mon Oct  3 10:14:19 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+
+	Corrected a bug in parameter checking. 
+	
+	* DAnCE/NodeManager/Node_Manager.cpp
+
+	Added documentation for the -d command line options. 
+	
+	* tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp
+	* tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
+	* tools/Config_Handlers/RT-CCM/SRD_Handler.cpp
+	* tools/Config_Handlers/RT-CCM/SRD_Handler.h
+
+	New functionality in the Config_Handlers. 
+	
 Mon Oct  3 10:00:08 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* bin/valgrind_nodedaemon.py

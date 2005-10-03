@@ -35,11 +35,13 @@ namespace CIAO
     cmdline_ (s.cmdline_.get () ? new ::CIAO::Config_Handlers::ServerCmdlineOptions (*s.cmdline_) : 0),
     svcconf_ (s.svcconf_.get () ? new ::CIAO::Config_Handlers::ACESvcConf (*s.svcconf_) : 0),
     orbConfigs_ (new ::CIAO::Config_Handlers::ORBConfigs (*s.orbConfigs_)),
+    id_ (s.id_.get () ? new ::XMLSchema::ID< ACE_TCHAR > (*s.id_) : 0),
     regulator__ ()
     {
       if (cmdline_.get ()) cmdline_->container (this);
       if (svcconf_.get ()) svcconf_->container (this);
       orbConfigs_->container (this);
+      if (id_.get ()) id_->container (this);
     }
 
     ::CIAO::Config_Handlers::ServerResourcesDef& ServerResourcesDef::
@@ -52,6 +54,9 @@ namespace CIAO
       else svcconf_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ACESvcConf > (0);
 
       orbConfigs (s.orbConfigs ());
+
+      if (s.id_.get ()) id (*(s.id_));
+      else id_ = ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > (0);
 
       return *this;
     }
@@ -145,6 +150,41 @@ namespace CIAO
     orbConfigs (::CIAO::Config_Handlers::ORBConfigs const& e)
     {
       *orbConfigs_ = e;
+    }
+
+    // ServerResourcesDef
+    // 
+    bool ServerResourcesDef::
+    id_p () const
+    {
+      return id_.get () != 0;
+    }
+
+    ::XMLSchema::ID< ACE_TCHAR > const& ServerResourcesDef::
+    id () const
+    {
+      return *id_;
+    }
+
+    ::XMLSchema::ID< ACE_TCHAR >& ServerResourcesDef::
+    id ()
+    {
+      return *id_;
+    }
+
+    void ServerResourcesDef::
+    id (::XMLSchema::ID< ACE_TCHAR > const& e)
+    {
+      if (id_.get ())
+      {
+        *id_ = e;
+      }
+
+      else
+      {
+        id_ = ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > (new ::XMLSchema::ID< ACE_TCHAR > (e));
+        id_->container (this);
+      }
     }
 
 
@@ -2021,6 +2061,21 @@ namespace CIAO
         {
         }
       }
+
+      while (p.more_attributes ())
+      {
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
+        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
+        if (n == "id")
+        {
+          ::XMLSchema::ID< ACE_TCHAR > t (a);
+          id (t);
+        }
+
+        else 
+        {
+        }
+      }
     }
 
     // ServerCmdlineOptions
@@ -2811,6 +2866,8 @@ namespace CIAO
         if (o.svcconf_p ()) svcconf (o);
         else svcconf_none (o);
         orbConfigs (o);
+        if (o.id_p ()) id (o);
+        else id_none (o);
         post (o);
       }
 
@@ -2823,6 +2880,8 @@ namespace CIAO
         if (o.svcconf_p ()) svcconf (o);
         else svcconf_none (o);
         orbConfigs (o);
+        if (o.id_p ()) id (o);
+        else id_none (o);
         post (o);
       }
 
@@ -2890,6 +2949,28 @@ namespace CIAO
       orbConfigs (Type const& o)
       {
         dispatch (o.orbConfigs ());
+      }
+
+      void ServerResourcesDef::
+      id (Type& o)
+      {
+        dispatch (o.id ());
+      }
+
+      void ServerResourcesDef::
+      id (Type const& o)
+      {
+        dispatch (o.id ());
+      }
+
+      void ServerResourcesDef::
+      id_none (Type&)
+      {
+      }
+
+      void ServerResourcesDef::
+      id_none (Type const&)
+      {
       }
 
       void ServerResourcesDef::
@@ -4688,6 +4769,15 @@ namespace CIAO
         push_ (::XSCRT::XML::Element< ACE_TCHAR > ("orbConfigs", top_ ()));
         Traversal::ServerResourcesDef::orbConfigs (o);
         pop_ ();
+      }
+
+      void ServerResourcesDef::
+      id (Type const& o)
+      {
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("id", "", top_ ());
+        attr_ (&a);
+        Traversal::ServerResourcesDef::id (o);
+        attr_ (0);
       }
 
       // ServerCmdlineOptions
