@@ -1,8 +1,35 @@
+Mon Oct  3 10:02:06 2005  Simon McQueen  <sm@prismtech.com>
+
+        * tao/Synch_Invocation.cpp:
+
+          Don't reset the profiles upon a comm failure exception when
+          the FT service callback indicates a restart. This fixes bug #2248.
+
+          Thanks to Milan Cvetkovic for reporting the problem and providing
+          the regression test.
+
+        * orbsvcs/Bug_2248_Regression/Bug_2248_Regression.mpc:
+        * orbsvcs/Bug_2248_Regression/Client_i.h:
+        * orbsvcs/Bug_2248_Regression/README:
+        * orbsvcs/Bug_2248_Regression/Server_ORBInitializer.cpp:
+        * orbsvcs/Bug_2248_Regression/Server_ORBInitializer.h:
+        * orbsvcs/Bug_2248_Regression/Server_Request_Interceptor.cpp:
+        * orbsvcs/Bug_2248_Regression/Server_Request_Interceptor.h:
+        * orbsvcs/Bug_2248_Regression/client.cpp:
+        * orbsvcs/Bug_2248_Regression/client.h:
+        * orbsvcs/Bug_2248_Regression/run_test.pl:
+        * orbsvcs/Bug_2248_Regression/server.cpp:
+        * orbsvcs/Bug_2248_Regression/test.idl:
+        * orbsvcs/Bug_2248_Regression/test_i.cpp:
+        * orbsvcs/Bug_2248_Regression/test_i.h:
+
+          Regression test for the above.
+
 Sun Oct  2 22:22:55 IST 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
 
  	* performance-tests/Latency/Thread_Per_Connection/run_test.pl:
 
-	  Increased the timeout for the test to succeed on all platforms. 
+	  Increased the timeout for the test to succeed on all platforms.
 
 Sun Oct  2 12:01:40 2005  Carlos O'Ryan  <coryan@atdesk.com>
 
@@ -19,7 +46,7 @@ Sun Oct  2 12:01:40 2005  Carlos O'Ryan  <coryan@atdesk.com>
 	* tests/Sequence_Unit_Tests/object_reference_traits_base.hpp:
 	  Refactor traits so it is possible to implement better unit
 	  tests.
-	
+
 	* tests/Sequence_Unit_Tests/string_traits_base.hpp:
 	  Fixed comment
 
