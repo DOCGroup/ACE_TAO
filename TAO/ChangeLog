@@ -1,3 +1,8 @@
+Mon Oct  3 12:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/RTCORBA/Thread_Pool/test_i.cpp:
+          Use C++ cast instead of c-style cast
+
 Mon Oct  3 11:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/releasenotes/index.html:
