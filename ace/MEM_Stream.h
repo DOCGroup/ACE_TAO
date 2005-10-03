@@ -48,7 +48,7 @@ class ACE_MEM_Connector;
  * @c ACE_MEM_Acceptor::init_buffer_size (size_t size);
  * before establishing a connection.
  */
-class ACE_Export ACE_MEM_Stream : public ACE_MEM_IO
+class ACE_Memory_Export ACE_MEM_Stream : public ACE_MEM_IO
 {
 public:
 
