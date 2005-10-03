@@ -18,14 +18,18 @@
 #include "ace/TP_Reactor.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Malloc.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_strings.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Reactor.h"
+#include "ace/Malloc_T.h"
+#include "ace/Local_Memory_Pool.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_strings.h"
+
 
 ACE_RCSID (tao,
            default_resource,
            "$Id$")
+
 
 TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   : use_locked_data_blocks_ (1)
