@@ -1,3 +1,8 @@
+Tue Oct  4 12:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1476_Regression/client.cpp:
+          Fixed bug in handling of -n commandline argument
+
 Tue Oct  4 12:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1476_Regression/server.cpp:

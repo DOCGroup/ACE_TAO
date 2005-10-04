@@ -19,7 +19,7 @@ int number_of_oneways = 10;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Opt get_opts (argc, argv, "k:n:");
   int c;
 
   while ((c = get_opts ()) != -1)
