@@ -72,7 +72,6 @@ libTAO_IDL_FE_la_SOURCES = \
   fe/fe_interface_header.cpp \
   fe/fe_lookup.cpp \
   fe/fe_private.cpp \
-  fe/fe_tmplinst.cpp \
   fe/lex.yy.cpp \
   fe/y.tab.cpp \
   narrow/narrow.cpp \
