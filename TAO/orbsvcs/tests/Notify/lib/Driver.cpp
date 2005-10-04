@@ -314,14 +314,3 @@ TAO_Notify_Tests_Driver::shutdown (void)
 {
   this->orb_->shutdown ();
 }
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Dynamic_Service<TAO_Notify_Tests_Command_Builder>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Dynamic_Service<TAO_Notify_Tests_Command_Builder>
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

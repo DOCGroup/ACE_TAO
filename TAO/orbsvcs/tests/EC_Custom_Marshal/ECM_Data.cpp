@@ -51,17 +51,3 @@ operator>> (TAO_InputCDR& cdr, ECM_Data& x)
     }
   return cdr.good_bit ();
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Map_Manager<CORBA::ULong,CORBA::Double,ACE_Null_Mutex>;
-template class ACE_Map_Entry<CORBA::ULong,CORBA::Double>;
-template class ACE_Map_Iterator_Base<CORBA::ULong,CORBA::Double,ACE_Null_Mutex>;
-template class ACE_Map_Iterator<CORBA::ULong,CORBA::Double,ACE_Null_Mutex>;
-template class ACE_Map_Reverse_Iterator<CORBA::ULong,CORBA::Double,ACE_Null_Mutex>;
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Map_Manager<CORBA::ULong,CORBA::Double,ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Entry<CORBA::ULong,CORBA::Double>
-#pragma instantiate ACE_Map_Iterator_Base<CORBA::ULong,CORBA::Double,ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Iterator<CORBA::ULong,CORBA::Double,ACE_Null_Mutex>
-#pragma instantiate ACE_Map_Reverse_Iterator<CORBA::ULong,CORBA::Double,ACE_Null_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

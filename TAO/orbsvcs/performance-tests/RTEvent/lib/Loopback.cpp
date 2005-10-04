@@ -10,8 +10,8 @@
 #include "Auto_Disconnect.h"
 #include "Implicit_Deactivator.h"
 
-ACE_RCSID (TAO_RTEC_Perf, 
-           Loopback, 
+ACE_RCSID (TAO_RTEC_Perf,
+           Loopback,
            "$Id$")
 
 Loopback::Loopback (CORBA::Long experiment_id,
@@ -38,9 +38,3 @@ Loopback::disconnect (ACE_ENV_SINGLE_ARG_DECL)
   Implicit_Deactivator deactivator (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

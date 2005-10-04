@@ -493,21 +493,3 @@ Demux_Test_Server::run (ACE_ENV_SINGLE_ARG_DECL)
 
   return 0;
 }
-
-#if defined (ACE_ENABLE_TIMEPROBES)
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Function_Timeprobe<ACE_Timeprobe<ACE_Null_Mutex> >;
-template class ACE_Unbounded_Set<ACE_Event_Descriptions>;
-template class ACE_Unbounded_Set_Iterator<ACE_Event_Descriptions>;
-template class ACE_Node<ACE_Event_Descriptions>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Function_Timeprobe<ACE_Timeprobe<ACE_Null_Mutex> >
-#pragma instantiate ACE_Unbounded_Set<ACE_Event_Descriptions>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Event_Descriptions>
-#pragma instantiate ACE_Node<ACE_Event_Descriptions>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-#endif /* ACE_ENABLE_TIMEPROBES */

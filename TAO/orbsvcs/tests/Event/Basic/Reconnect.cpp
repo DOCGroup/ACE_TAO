@@ -7,8 +7,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 
-ACE_RCSID (EC_Tests_Basic, 
-           Reconnect, 
+ACE_RCSID (EC_Tests_Basic,
+           Reconnect,
            "$Id$")
 
 int
@@ -240,9 +240,3 @@ EC_Reconnect::execute_supplier_test (ACE_ENV_SINGLE_ARG_DECL)
         }
     }
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

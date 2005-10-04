@@ -179,8 +179,7 @@ Task_Stats::dump_latency_stats (ACE_TCHAR *out_msg, ACE_UINT32 sf)
                   l_dev));
   */
 }
+
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-
 template ACE_Singleton<Base_Time, ACE_Thread_Mutex> *ACE_Singleton<Base_Time, ACE_Thread_Mutex>::singleton_;
-
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */

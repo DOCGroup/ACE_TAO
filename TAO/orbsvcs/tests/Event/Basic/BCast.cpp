@@ -8,8 +8,8 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/INET_Addr.h"
 
-ACE_RCSID (EC_Tests_Basic, 
-           BCast, 
+ACE_RCSID (EC_Tests_Basic,
+           BCast,
            "$Id$")
 
 int
@@ -155,9 +155,3 @@ Simple_Address_Server::get_addr (const RtecEventComm::EventHeader&,
 {
   address = this->address_;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

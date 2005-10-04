@@ -9,8 +9,8 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 
-ACE_RCSID (EC_Tests, 
-           MT_Disconnect, 
+ACE_RCSID (EC_Tests,
+           MT_Disconnect,
            "$Id$")
 
 static void run_test (PortableServer::POA_ptr poa,
@@ -252,11 +252,3 @@ Task::run_iteration (ACE_ENV_SINGLE_ARG_DECL)
                 supplier_1.disconnect_count, count_1,
                 use_callbacks));
 }
-
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

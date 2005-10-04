@@ -54,15 +54,3 @@ TAO_Notify_Tests_PushConsumer::push (const CORBA::Any & /*data*/ ACE_ENV_ARG_DEC
 {
   // NOP
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_Notify_Tests_Peer_T<TAO_Notify_Tests_PushConsumer_Traits>;
-template class TAO_Notify_Tests_Consumer_T<TAO_Notify_Tests_PushConsumer_Traits>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_Notify_Tests_Peer_T<TAO_Notify_Tests_PushConsumer_Traits>
-#pragma instantiate TAO_Notify_Tests_Consumer_T<TAO_Notify_Tests_PushConsumer_Traits>
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -8,8 +8,8 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/High_Res_Timer.h"
 
-ACE_RCSID (EC_Tests_Basic, 
-           Observer, 
+ACE_RCSID (EC_Tests_Basic,
+           Observer,
            "$Id$")
 
 int
@@ -413,10 +413,3 @@ EC_Observer::consumer_push (void*,
         }
     }
 }
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

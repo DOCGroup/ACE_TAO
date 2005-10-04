@@ -771,18 +771,3 @@ void FT_ReplicaFactory_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   this->quit_requested_ = 1;
   METHOD_RETURN(FT_FaultDetectorFactory_i::shutdown);
 }
-
-
-///////////////////////////////////
-// Template instantiation for
-// competence-challenged compilers.
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class ACE_Vector<FT_TestReplica_i *>;
-  template class ACE_Guard<ACE_Mutex>;
-  template class ACE_Vector<ACE_CString>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate ACE_Vector<FT_TestReplica_i *>
-# pragma instantiate ACE_Guard<ACE_Mutex>
-# pragma instantiate ACE_Vector<ACE_CString>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -83,9 +83,3 @@ main (int argc, char *argv[])
 
   return 0;
 }
-
-#if defined(ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr>
-#endif

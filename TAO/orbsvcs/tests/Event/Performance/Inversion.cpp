@@ -8,8 +8,8 @@
 #include "ace/Sched_Params.h"
 #include "ace/Arg_Shifter.h"
 
-ACE_RCSID (EC_Tests_Performance, 
-           Inversion, 
+ACE_RCSID (EC_Tests_Performance,
+           Inversion,
            "$Id$")
 
 int
@@ -174,9 +174,3 @@ EC_Inversion::activate_tasks (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
         }
     }
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -2249,32 +2249,6 @@ TAO_PSDL_Interface_Visitor::gen_code_for_si (void)
   ps_si->nl ();
   ps_si->nl ();
 
-  *ps_si << "#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \\";
-  ps_si->incr_indent (0);
-  ps_si->incr_indent (0);
-  ps_si->nl ();
-  *ps_si << "defined (ACE_HAS_GNU_REPO)";
-  ps_si->decr_indent (0);
-  ps_si->nl ();
-
-  *ps_si << "template class TAO_Object_Manager<"
-         << this->interface_name_ << ","
-         << this->interface_name_ << "_var>;";
-
-  ps_si->decr_indent (0);
-  ps_si->nl ();
-
-  *ps_si << "#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)";
-  ps_si->nl ();
-
-  *ps_si << "#  pragma instantiate TAO_Object_Manager<"
-         << this->interface_name_ << "," << this->interface_name_
-         << "_var>";   ps_si->nl ();
-  *ps_si << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */";
-
-  ps_si->nl ();
-  ps_si->nl ();
-
   *ps_si << "CORBA::Boolean operator<< (";
 
   ps_si->incr_indent (0);

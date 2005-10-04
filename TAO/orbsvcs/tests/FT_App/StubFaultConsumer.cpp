@@ -309,9 +309,3 @@ void StubFaultConsumer::disconnect_structured_push_consumer(ACE_ENV_SINGLE_ARG_D
   ));
   this->quit_ = 1;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-//  template instantiate ACE_Vector < const char * >;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-//# pragma instantiate ACE_Vector < const char * >
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

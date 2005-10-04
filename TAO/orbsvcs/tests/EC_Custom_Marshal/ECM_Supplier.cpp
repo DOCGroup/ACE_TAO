@@ -18,12 +18,6 @@
 
 ACE_RCSID(EC_Custom_Marshal, ECM_Supplier, "$Id$")
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_PushSupplier_Adapter<Test_Supplier>;
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_PushSupplier_Adapter<Test_Supplier>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 ECMS_Driver::ECMS_Driver (void)
   : n_suppliers_ (1),
     event_count_ (100),

@@ -6,8 +6,8 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (EC_Tests_Performance, 
-           Throughput, 
+ACE_RCSID (EC_Tests_Performance,
+           Throughput,
            "$Id$")
 
 int
@@ -59,9 +59,3 @@ EC_Throughput::dump_results (void)
 {
   this->EC_Driver::dump_results ();
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

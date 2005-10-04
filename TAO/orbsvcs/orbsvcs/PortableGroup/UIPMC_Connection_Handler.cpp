@@ -229,7 +229,7 @@ TAO_UIPMC_Connection_Handler::handle_close (ACE_HANDLE,
 int
 TAO_UIPMC_Connection_Handler::close (u_long)
 {
-  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED, 
+  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED,
 		       this->orb_core ()->leader_follower ());
   this->transport ()->remove_reference ();
   return 0;
@@ -262,17 +262,3 @@ TAO_UIPMC_Connection_Handler::add_transport_to_cache (void)
           .transport_cache ().cache_transport (&prop,
                                                this->transport ());
 }
-
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Concurrency_Strategy<TAO_UIPMC_Connection_Handler>;
-template class ACE_Creation_Strategy<TAO_UIPMC_Connection_Handler>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Concurrency_Strategy<TAO_UIPMC_Connection_Handler>
-#pragma instantiate ACE_Creation_Strategy<TAO_UIPMC_Connection_Handler>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

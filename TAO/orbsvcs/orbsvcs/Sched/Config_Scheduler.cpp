@@ -668,9 +668,3 @@ void ACE_Config_Scheduler::get_config_info_set (RtecScheduler::Config_Info_Set_o
 {
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_DNode<TAO_RT_Info_Tuple *>;
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_DNode<TAO_RT_Info_Tuple *>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

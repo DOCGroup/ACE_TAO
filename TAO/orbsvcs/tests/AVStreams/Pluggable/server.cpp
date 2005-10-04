@@ -208,7 +208,7 @@ main (int argc,
 
       while ( !done )
       {
-        if ( orb->work_pending( ACE_ENV_SINGLE_ARG_PARAMETER ) ) 
+        if ( orb->work_pending( ACE_ENV_SINGLE_ARG_PARAMETER ) )
 	{
           orb->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -230,15 +230,3 @@ main (int argc,
 
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class TAO_AV_Endpoint_Reactive_Strategy_B
-<FTP_Server_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
-template class TAO_AV_Endpoint_Reactive_Strategy
-<FTP_Server_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_B
-<FTP_Server_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy
-<FTP_Server_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

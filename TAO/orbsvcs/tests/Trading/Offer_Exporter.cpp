@@ -632,19 +632,3 @@ TAO_Offer_Exporter::create_offers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       this->props_fs_[i][7].value <<= dp_space_left;
     }
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Node<TAO_Dynamic_Property*>;
-template class ACE_Unbounded_Queue<TAO_Dynamic_Property*>;
-template class ACE_Unbounded_Queue_Iterator<TAO_Dynamic_Property*>;
-template class TAO_Simple_Dynamic_Property<TAO_Trader_Test::StringSeq>;
-template class TAO_Simple_Dynamic_Property<TAO_Trader_Test::ULongSeq>;
-template class TAO_Simple_Dynamic_Property<CORBA::ULong>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Node<TAO_Dynamic_Property*>
-#pragma instantiate ACE_Unbounded_Queue<TAO_Dynamic_Property*>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<TAO_Dynamic_Property*>
-#pragma instantiate TAO_Simple_Dynamic_Property<TAO_Trader_Test::StringSeq>
-#pragma instantiate TAO_Simple_Dynamic_Property<TAO_Trader_Test::ULongSeq>
-#pragma instantiate TAO_Simple_Dynamic_Property<CORBA::ULong>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

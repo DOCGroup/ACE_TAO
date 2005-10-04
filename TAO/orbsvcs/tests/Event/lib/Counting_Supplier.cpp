@@ -4,8 +4,8 @@
 #include "orbsvcs/Event_Utilities.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (EC_Tests, 
-           EC_Count_Supplier, 
+ACE_RCSID (EC_Tests,
+           EC_Count_Supplier,
            "$Id$")
 
 EC_Counting_Supplier::EC_Counting_Supplier (void)
@@ -223,13 +223,3 @@ EC_Counting_Supplier_Task::run (ACE_ENV_SINGLE_ARG_DECL)
     stop = this->stop_flag_;
   } while (stop == 0);
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_PushConsumer_Adapter<EC_Counting_Supplier>;
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_PushConsumer_Adapter<EC_Counting_Supplier>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

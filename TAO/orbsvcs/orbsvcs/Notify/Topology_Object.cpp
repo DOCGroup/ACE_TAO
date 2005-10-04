@@ -142,14 +142,4 @@ namespace TAO_Notify
     // if it is called in a release build, provide 'em a value
     return -1;
   }
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Vector <TAO_Notify_Object::ID>;
-template class ACE_Array_Base <TAO_Notify_Object::ID>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Vector <TAO_Notify_Object::ID>
-#pragma instantiate ACE_Array_Base <TAO_Notify_Object::ID>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 } // namespace TAO_Notify

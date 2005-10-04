@@ -1388,7 +1388,6 @@ ACE_Criticality_Scheduler_Strategy::minimum_critical_priority ()
   return minimum_critical_priority_;
 }
 
-
 // = Provides the dispatching queue type for the given dispatch entry.
 
 ACE_DynScheduler::Dispatching_Type
@@ -1397,29 +1396,3 @@ ACE_Criticality_Scheduler_Strategy::dispatch_type (const Dispatch_Entry &entry)
   ACE_UNUSED_ARG (entry);
   return RtecScheduler::STATIC_DISPATCHING;
 }
-
-
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Node<Dispatch_Entry *>;
-template class ACE_Unbounded_Set<Dispatch_Entry *>;
-template class ACE_Unbounded_Set_Iterator<Dispatch_Entry *>;
-template class ACE_Strategy_Scheduler_Factory<ACE_MUF_Scheduler_Strategy>;
-template class ACE_Strategy_Scheduler_Factory<ACE_RMS_Scheduler_Strategy>;
-template class ACE_Strategy_Scheduler_Factory<ACE_MLF_Scheduler_Strategy>;
-template class ACE_Strategy_Scheduler_Factory<ACE_EDF_Scheduler_Strategy>;
-template class ACE_Strategy_Scheduler_Factory<ACE_Criticality_Scheduler_Strategy>;
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Node<Dispatch_Entry *>
-#pragma instantiate ACE_Unbounded_Set<Dispatch_Entry *>
-#pragma instantiate ACE_Unbounded_Set_Iterator<Dispatch_Entry *>
-#pragma instantiate ACE_Strategy_Scheduler_Factory<ACE_MUF_Scheduler_Strategy>
-#pragma instantiate ACE_Strategy_Scheduler_Factory<ACE_RMS_Scheduler_Strategy>
-#pragma instantiate ACE_Strategy_Scheduler_Factory<ACE_MLF_Scheduler_Strategy>
-#pragma instantiate ACE_Strategy_Scheduler_Factory<ACE_EDF_Scheduler_Strategy>
-#pragma instantiate ACE_Strategy_Scheduler_Factory<ACE_Criticality_Scheduler_Strategy>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-
-// EOF

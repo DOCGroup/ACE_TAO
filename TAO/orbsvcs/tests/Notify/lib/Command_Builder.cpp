@@ -90,19 +90,3 @@ ACE_STATIC_SVC_DEFINE(TAO_Notify_Tests_Command_Builder,
 ACE_FACTORY_DEFINE (TAO_NOTIFY_TEST, TAO_Notify_Tests_Command_Builder)
 
 ACE_STATIC_SVC_REQUIRE (TAO_Notify_Tests_Command_Builder)
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Hash_Map_Manager <ACE_CString, TAO_Notify_Tests_Command_Factory*, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_Notify_Tests_Command_Factory *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_Notify_Tests_Command_Factory *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Entry<ACE_CString, TAO_Notify_Tests_Command_Factory *>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Hash_Map_Manager <ACE_CString, TAO_Notify_Tests_Command_Factory*, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_Notify_Tests_Command_Factory *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_Notify_Tests_Command_Factory *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, TAO_Notify_Tests_Command_Factory *>
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

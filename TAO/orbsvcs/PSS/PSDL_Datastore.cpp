@@ -194,35 +194,3 @@ TAO_PSDL_Datastore::create_index_helper (void *buffer)
   this->obj_ref_map_ = new(buffer) NAME_OBJ_REF_MAP(this->allocator_) ;
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-
-template class ACE_Hash_Map_With_Allocator<TAO_PSDL_String, TAO_PSDL_OctetSeq>;
-template class ACE_Hash_Map_Manager<TAO_PSDL_String, TAO_PSDL_OctetSeq, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<TAO_PSDL_String, TAO_PSDL_OctetSeq, ACE_Hash<TAO_PSDL_String>, ACE_Equal_To<TAO_PSDL_String>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Entry<TAO_PSDL_String, TAO_PSDL_OctetSeq>;
-template class ACE_Hash<TAO_PSDL_String>;
-template class ACE_Equal_To<TAO_PSDL_String>;
-template class ACE_Hash_Map_Iterator_Base_Ex<TAO_PSDL_String, TAO_PSDL_OctetSeq, ACE_Hash<TAO_PSDL_String>, ACE_Equal_To<TAO_PSDL_String>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<TAO_PSDL_String, TAO_PSDL_OctetSeq, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<TAO_PSDL_String, TAO_PSDL_OctetSeq, ACE_Hash<TAO_PSDL_String>, ACE_Equal_To<TAO_PSDL_String>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<TAO_PSDL_String, TAO_PSDL_OctetSeq, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_PSDL_String, TAO_PSDL_OctetSeq, ACE_Hash<TAO_PSDL_String>, ACE_Equal_To<TAO_PSDL_String>, ACE_Null_Mutex>;
-template class ACE_Auto_Basic_Ptr<ACE_Hash_Map_With_Allocator<TAO_PSDL_String,  TAO_PSDL_OctetSeq>::ITERATOR>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Hash_Map_With_Allocator<TAO_PSDL_String, TAO_PSDL_OctetSeq>
-#pragma instantiate ACE_Hash_Map_Manager<TAO_PSDL_String, TAO_PSDL_OctetSeq, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_PSDL_String, TAO_PSDL_OctetSeq, ACE_Hash<TAO_PSDL_String>, ACE_Equal_To<TAO_PSDL_String>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Entry<TAO_PSDL_String, TAO_PSDL_OctetSeq>
-#pragma instantiate ACE_Hash<TAO_PSDL_String>
-#pragma instantiate ACE_Equal_To<TAO_PSDL_String>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_PSDL_String, TAO_PSDL_OctetSeq, ACE_Hash<TAO_PSDL_String>, ACE_Equal_To<TAO_PSDL_String>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<TAO_PSDL_String, TAO_PSDL_OctetSeq, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_PSDL_String, TAO_PSDL_OctetSeq, ACE_Hash<TAO_PSDL_String>, ACE_Equal_To<TAO_PSDL_String>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_PSDL_String, TAO_PSDL_OctetSeq, ACE_Null_Mutex>
-#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Hash_Map_With_Allocator<TAO_PSDL_String,  TAO_PSDL_OctetSeq>::ITERATOR>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_PSDL_String, TAO_PSDL_OctetSeq, ACE_Hash<TAO_PSDL_String>, ACE_Equal_To<TAO_PSDL_String>, ACE_Null_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

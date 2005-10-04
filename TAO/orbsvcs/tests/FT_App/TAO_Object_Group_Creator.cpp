@@ -468,9 +468,3 @@ int TAO::Object_Group_Creator::write_ior_file (const char * outputFile, const ch
   }
   return result;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-//  template ACE_Vector<ACE_CString>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-//# pragma instantiate ACE_Vector<ACE_CString>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

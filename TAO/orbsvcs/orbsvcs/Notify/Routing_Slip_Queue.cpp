@@ -105,14 +105,3 @@ namespace TAO_Notify
     }
   }
 } // namespace
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Node<TAO_Notify::Routing_Slip_Ptr>;
-template class ACE_Unbounded_Queue<TAO_Notify::Routing_Slip_Ptr>;
-template class ACE_Unbounded_Queue_Iterator<TAO_Notify::Routing_Slip_Ptr>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Node<TAO_Notify::Routing_Slip_Ptr>
-#pragma instantiate ACE_Unbounded_Queue<TAO_Notify::Routing_Slip_Ptr>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<TAO_Notify::Routing_Slip_Ptr>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

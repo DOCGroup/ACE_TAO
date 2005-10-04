@@ -18,8 +18,8 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Gateway_IIOP.h"
 
-ACE_RCSID (TAO_RTEC_Perf, 
-           Peer_Base, 
+ACE_RCSID (TAO_RTEC_Perf,
+           Peer_Base,
            "$Id$")
 
 Peer_Base::Peer_Base (CORBA::ORB_ptr orb,
@@ -143,9 +143,3 @@ Peer_Base::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
