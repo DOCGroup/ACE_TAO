@@ -1,3 +1,11 @@
+Tue Oct  4 11:19:47 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/PortableServer/Creation_Time.inl:
+
+	  Include "tao/orbconf.h" to pull in POA_NO_TIMESTAMP definition.
+	  Addresses problems where comparison to this preprocessor
+	  constant were made but no definition of it was available.
+
 Tue Oct  4 14:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Transport.cpp (send):

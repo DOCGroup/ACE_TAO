@@ -2,6 +2,7 @@
 //
 // $Id$
 
+#include "tao/orbconf.h"
 #include "ace/OS_NS_string.h"
 
 namespace TAO
