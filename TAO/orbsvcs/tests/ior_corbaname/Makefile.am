@@ -15,7 +15,7 @@ TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-## Makefile.ior_corbaname_client.am
+## Makefile.ior_corbaname_idl.am
 
 BUILT_SOURCES = \
   corbanameC.cpp \
@@ -43,8 +43,11 @@ CLEANFILES = \
 corbanameC.cpp corbanameC.h corbanameC.inl corbanameS.cpp corbanameS.h corbanameS.inl corbanameS_T.cpp corbanameS_T.h corbanameS_T.inl: corbaname-stamp
 
 corbaname-stamp: $(srcdir)/corbaname.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/corbaname.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/corbaname.idl
 	@touch $@
+
+
+## Makefile.ior_corbaname_client.am
 
 noinst_PROGRAMS = client
 
@@ -59,16 +62,8 @@ client_CPPFLAGS = \
 client_SOURCES = \
   client.cpp \
   corbanameC.cpp \
-  corbanameS.cpp \
   ior_corbaname_client_i.cpp \
-  status_i.cpp \
-  corbanameC.h \
-  corbanameC.inl \
-  corbanameS.h \
-  corbanameS_T.h \
-  corbanameS_T.inl \
-  ior_corbaname_client_i.h \
-  status_i.h
+  ior_corbaname_client_i.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -78,35 +73,6 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.ior_corbaname_server.am
-
-BUILT_SOURCES += \
-  corbanameC.cpp \
-  corbanameC.h \
-  corbanameC.inl \
-  corbanameS.cpp \
-  corbanameS.h \
-  corbanameS.inl \
-  corbanameS_T.cpp \
-  corbanameS_T.h \
-  corbanameS_T.inl
-
-CLEANFILES += \
-  corbaname-stamp \
-  corbanameC.cpp \
-  corbanameC.h \
-  corbanameC.inl \
-  corbanameS.cpp \
-  corbanameS.h \
-  corbanameS.inl \
-  corbanameS_T.cpp \
-  corbanameS_T.h \
-  corbanameS_T.inl
-
-corbanameC.cpp corbanameC.h corbanameC.inl corbanameS.cpp corbanameS.h corbanameS.inl corbanameS_T.cpp corbanameS_T.h corbanameS_T.inl: corbaname-stamp
-
-corbaname-stamp: $(srcdir)/corbaname.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/corbaname.idl
-	@touch $@
 
 noinst_PROGRAMS += server
 
@@ -123,11 +89,6 @@ server_SOURCES = \
   corbanameS.cpp \
   server.cpp \
   status_i.cpp \
-  corbanameC.h \
-  corbanameC.inl \
-  corbanameS.h \
-  corbanameS_T.h \
-  corbanameS_T.inl \
   status_i.h
 
 server_LDADD = \

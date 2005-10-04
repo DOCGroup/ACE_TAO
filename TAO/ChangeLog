@@ -1,3 +1,21 @@
+Mon Oct  3 23:43:08 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/tests/FT_App/Makefile.am:
+	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Makefile.am:
+	* orbsvcs/tests/FaultTolerance/IOGR/Makefile.am:
+	* orbsvcs/tests/IOR_MCast/Makefile.am:
+	* orbsvcs/tests/ior_corbaname/Makefile.am:
+
+	  Regenerated.
+
+	* orbsvcs/tests/FT_App/FT_App.mpc:
+	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/GroupRef_Manipulation.mpc:
+	* orbsvcs/tests/FaultTolerance/IOGR/FaultTolerance_IOGR.mpc:
+	* orbsvcs/tests/IOR_MCast/IOR_MCast.mpc:
+	* orbsvcs/tests/ior_corbaname/ior_corbaname.mpc:
+
+          Add "*idl" project for compiling *.idl files.
+
 Mon Oct  3 19:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/tutorials/Quoter/Event_Service/Stock_i.cpp
