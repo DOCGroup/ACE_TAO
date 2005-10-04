@@ -20,6 +20,11 @@
 #include "ace/DLL.h"
 #include "ace/XML_Svc_Conf.h"
 #include "ace/SString.h"
+
+#ifndef ACE_LACKS_UNIX_SIGNALS
+# include "ace/Signal.h"
+#endif  /* !ACE_LACKS_UNIX_SIGNALS */
+
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
