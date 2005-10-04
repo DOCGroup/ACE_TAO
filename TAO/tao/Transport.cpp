@@ -1122,9 +1122,6 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
 
   ssize_t n;
 
-  TAO_Flushing_Strategy *flushing_strategy =
-    this->orb_core ()->flushing_strategy ();
-
   if (try_sending_first)
     {
       size_t byte_count = 0;
@@ -1230,6 +1227,9 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
   // ... but we also want to activate it if the message was partially
   // sent.... Plus, when we use the blocking flushing strategy the
   // queue is flushed as a side-effect of 'schedule_output()'
+
+  TAO_Flushing_Strategy *flushing_strategy =
+    this->orb_core ()->flushing_strategy ();
 
   if (constraints_reached || try_sending_first)
     {
