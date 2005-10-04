@@ -1,3 +1,10 @@
+Tue Oct  4 14:21:26 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* netsvcs/lib/TS_Clerk_Handler.h:
+
+	  More include directive fixes/additions now necessary due to
+	  header dependency reductions in ACE.
+
 Tue Oct  4 11:12:31 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* apps/JAWS2/JAWS/Cache_Object.h:
