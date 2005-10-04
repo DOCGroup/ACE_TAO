@@ -35,13 +35,3 @@ TAO_Notify_EventChannelFactory_i::create (PortableServer::POA_ptr default_POA AC
 
   return notify_factory._retn ();
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Dynamic_Service<TAO_Notify_Service>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Dynamic_Service<TAO_Notify_Service>
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

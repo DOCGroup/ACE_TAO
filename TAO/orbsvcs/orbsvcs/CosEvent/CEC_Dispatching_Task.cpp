@@ -150,13 +150,3 @@ TAO_CEC_Invoke_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
   return 0;
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Locked_Data_Block<ACE_Lock_Adapter<TAO_SYNCH_MUTEX> >;
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Locked_Data_Block<ACE_Lock_Adapter<TAO_SYNCH_MUTEX> >
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

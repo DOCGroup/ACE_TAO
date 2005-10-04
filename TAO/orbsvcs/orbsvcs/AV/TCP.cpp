@@ -292,11 +292,11 @@ TAO_AV_TCP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                TAO_AV_Transport *transport)
 {
   TAO_AV_Callback *callback = 0;
-  if (endpoint->get_callback (entry->flowname (), callback)) 
+  if (endpoint->get_callback (entry->flowname (), callback))
     {
       ACE_ERROR_RETURN ((LM_ERROR, "(%N,%l) Invalid callback\n"), 0);
     }
-  
+
   TAO_AV_TCP_Object *object = 0;
   ACE_NEW_RETURN (object,
                   TAO_AV_TCP_Object (callback,
@@ -308,7 +308,7 @@ TAO_AV_TCP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
                                  object);
 
   endpoint->protocol_object_set ();
-  
+
   return object;
 }
 
@@ -693,18 +693,6 @@ TAO_AV_TCP_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
 {
   return TAO_AV_Flow_Handler::handle_timeout (tv,arg);
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Acceptor<TAO_AV_TCP_Flow_Handler, ACE_SOCK_ACCEPTOR>;
-template class ACE_Connector_Base<TAO_AV_TCP_Flow_Handler>;
-template class ACE_Connector<TAO_AV_TCP_Flow_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_NonBlocking_Connect_Handler<TAO_AV_TCP_Flow_Handler>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Acceptor<TAO_AV_TCP_Flow_Handler, ACE_SOCK_Acceptor, ACE_INET_Addr>
-#pragma instantiate ACE_Connector_Base<TAO_AV_TCP_Flow_Handler>
-#pragma instantiate ACE_Connector<TAO_AV_TCP_Flow_Handler, ACE_SOCK_Connector, ACE_INET_Addr>
-#pragma instantiate ACE_NonBlocking_Connect_Handler<TAO_AV_TCP_Flow_Handler>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 ACE_STATIC_SVC_DEFINE (TAO_AV_TCP_Flow_Factory,
                        ACE_TEXT ("TCP_Flow_Factory"),

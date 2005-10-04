@@ -10,8 +10,8 @@
 #include "CEC_SupplierAdmin.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (CosEvent, 
-           CEC_SupplierAdmin, 
+ACE_RCSID (CosEvent,
+           CEC_SupplierAdmin,
            "$Id$")
 
 TAO_CEC_SupplierAdmin::TAO_CEC_SupplierAdmin (TAO_CEC_EventChannel *ec)
@@ -98,27 +98,3 @@ TAO_CEC_SupplierAdmin::obtain_pull_consumer (ACE_ENV_SINGLE_ARG_DECL)
 {
   return this->pull_admin_.obtain (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
-
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPushConsumer,CosEventChannelAdmin::ProxyPushConsumer>;
-template class TAO_ESF_Shutdown_Proxy<TAO_CEC_ProxyPushConsumer>;
-template class TAO_ESF_Worker<TAO_CEC_ProxyPushConsumer>;
-
-template class TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPullConsumer,CosEventChannelAdmin::ProxyPullConsumer>;
-template class TAO_ESF_Shutdown_Proxy<TAO_CEC_ProxyPullConsumer>;
-template class TAO_ESF_Worker<TAO_CEC_ProxyPullConsumer>;
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPushConsumer,CosEventChannelAdmin::ProxyPushConsumer>
-#pragma instantiate TAO_ESF_Shutdown_Proxy<TAO_CEC_ProxyPushConsumer>
-#pragma instantiate TAO_ESF_Worker<TAO_CEC_ProxyPushConsumer>
-
-#pragma instantiate TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPullConsumer,CosEventChannelAdmin::ProxyPullConsumer>
-#pragma instantiate TAO_ESF_Shutdown_Proxy<TAO_CEC_ProxyPullConsumer>
-#pragma instantiate TAO_ESF_Worker<TAO_CEC_ProxyPullConsumer>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

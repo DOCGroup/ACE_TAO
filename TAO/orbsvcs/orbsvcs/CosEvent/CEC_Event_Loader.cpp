@@ -507,9 +507,3 @@ TAO_CEC_Event_Loader::fini (void)
 }
 
 ACE_FACTORY_DEFINE (TAO_Event_Serv, TAO_CEC_Event_Loader)
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Dynamic_Service<TAO_CEC_Event_Loader>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Dynamic_Service<TAO_CEC_Event_Loader>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

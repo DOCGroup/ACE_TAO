@@ -236,15 +236,3 @@ TAO_RTEventLogFactory_i::obtain_push_supplier (
 {
   return consumer_admin_->obtain_push_supplier();
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class auto_ptr <TAO_RTEventLog_i>;
-template class ACE_Auto_Basic_Ptr<TAO_RTEventLog_i>;
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate auto_ptr <TAO_RTEventLog_i>
-#pragma instantiate ACE_Auto_Basic_Ptr <TAO_RTEventLog_i>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

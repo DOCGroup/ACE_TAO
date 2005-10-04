@@ -154,14 +154,3 @@ TAO_Notify_ProxySupplier::qos_changed (const TAO_Notify_QoSProperties& qos_prope
 {
   TAO_Notify_Proxy::qos_changed (qos_properties);
 }
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_Notify_Refcountable_Guard_T<TAO_Notify_ProxySupplier>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_Notify_Refcountable_Guard_T<TAO_Notify_ProxySupplier>
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

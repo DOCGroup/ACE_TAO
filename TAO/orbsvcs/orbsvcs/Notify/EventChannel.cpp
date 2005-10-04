@@ -519,17 +519,6 @@ namespace {
         attrs.push_back(TAO_Notify::NVP (prop));
       }
     }
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template void add_attr<TAO_Notify_Property_Boolean>(TAO_Notify::NVPList&,
-  const TAO_Notify_Property_Boolean&);
-template void add_attr<TAO_Notify_Property_T<int> >(TAO_Notify::NVPList&,
-  const TAO_Notify_Property_T<int>&);
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate void add_attr<TAO_Notify_Property_Boolean>(\
-  TAO_Notify::NVPList&, const TAO_Notify_Property_Boolean&)
-#pragma instantiate void add_attr<TAO_Notify_Property_T<int> >(\
-  TAO_Notify::NVPList&, const TAO_Notify_Property_T<int>&)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 }
 
 void

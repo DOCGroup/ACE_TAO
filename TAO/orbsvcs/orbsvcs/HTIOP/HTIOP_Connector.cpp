@@ -414,39 +414,3 @@ TAO::HTIOP::Connector::remote_endpoint (TAO_Endpoint *endpoint)
 
   return htiop_endpoint;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_Connect_Concurrency_Strategy<TAO::HTIOP::Connection_Handler>;
-template class ACE_Concurrency_Strategy<TAO::HTIOP::Connection_Handler>;
-template class TAO_Connect_Creation_Strategy<TAO::HTIOP::Connection_Handler>;
-
-//template class ACE_Strategy_Connector<TAO::HTIOP::Connection_Handler, ACE_SOCK_CONNECTOR>;
-//template class ACE_Connect_Strategy<TAO::HTIOP::Connection_Handler, ACE_SOCK_CONNECTOR>;
-//template class ACE_Connector<TAO::HTIOP::Connection_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Svc_Tuple<TAO::HTIOP::Connection_Handler>;
-
-template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<TAO::HTIOP::Connection_Handler> *, TAO_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<TAO::HTIOP::Connection_Handler> *, TAO_SYNCH_RW_MUTEX>;
-template class ACE_Map_Entry<ACE_HANDLE,ACE_Svc_Tuple<TAO::HTIOP::Connection_Handler>*>;
-template class ACE_Map_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO::HTIOP::Connection_Handler>*,TAO_SYNCH_RW_MUTEX>;
-template class ACE_Map_Reverse_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO::HTIOP::Connection_Handler>*,TAO_SYNCH_RW_MUTEX>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_Connect_Concurrency_Strategy<TAO::HTIOP::Connection_Handler>
-#pragma instantiate ACE_Concurrency_Strategy<TAO::HTIOP::Connection_Handler>
-#pragma instantiate TAO_Connect_Creation_Strategy<TAO::HTIOP::Connection_Handler>
-
-//#pragma instantiate ACE_Strategy_Connector<TAO::HTIOP::Connection_Handler, ACE_SOCK_CONNECTOR>
-//#pragma instantiate ACE_Connect_Strategy<TAO::HTIOP::Connection_Handler, ACE_SOCK_CONNECTOR>
-//#pragma instantiate ACE_Connector<TAO::HTIOP::Connection_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Svc_Tuple<TAO::HTIOP::Connection_Handler>
-
-#pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<TAO::HTIOP::Connection_Handler> *, TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<TAO::HTIOP::Connection_Handler> *, TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Entry<ACE_HANDLE,ACE_Svc_Tuple<TAO::HTIOP::Connection_Handler>*>
-#pragma instantiate ACE_Map_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO::HTIOP::Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO::HTIOP::Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

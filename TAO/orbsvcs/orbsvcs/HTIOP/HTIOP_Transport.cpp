@@ -452,8 +452,3 @@ TAO::HTIOP::Transport::invalidate_event_handler_i (void)
   this->connection_handler_ = 0;
   return eh;
 }
-
-
-#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
-template class HTIOP_Export ACE_Svc_Handler<ACE_HTBP_STREAM, ACE_NULL_SYNCH>;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */

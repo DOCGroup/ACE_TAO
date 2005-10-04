@@ -394,17 +394,3 @@ Persistent_File_Allocator::run()
 }
 
 } /* namespace TAO_Notify */
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Node<size_t>;
-template class ACE_Unbounded_Stack<size_t>;
-template class ACE_Node<TAO_Notify::Persistent_Storage_Block*>;
-template class ACE_Unbounded_Queue<TAO_Notify::Persistent_Storage_Block*>;
-template class ACE_Unbounded_Queue_Iterator<TAO_Notify::Persistent_Storage_Block*>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Node<size_t>
-#pragma instantiate ACE_Unbounded_Stack<size_t>
-#pragma instantiate ACE_Node<TAO_Notify::Persistent_Storage_Block*>
-#pragma instantiate ACE_Unbounded_Queue<TAO_Notify::Persistent_Storage_Block*>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<TAO_Notify::Persistent_Storage_Block*>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

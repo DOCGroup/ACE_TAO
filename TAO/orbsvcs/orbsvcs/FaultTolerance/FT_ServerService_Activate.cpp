@@ -51,9 +51,3 @@ ACE_STATIC_SVC_DEFINE (TAO_FT_ServerService_Activate,
                        &ACE_SVC_NAME (TAO_FT_ServerService_Activate),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Dynamic_Service<TAO_FT_ServerService_Activate>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Dynamic_Service<TAO_FT_ServerService_Activate>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

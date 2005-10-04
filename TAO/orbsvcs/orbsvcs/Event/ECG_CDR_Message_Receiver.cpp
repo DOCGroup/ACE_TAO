@@ -603,26 +603,3 @@ TAO_ECG_CDR_Message_Receiver::Mcast_Header::read (char *header,
 
   return 0;
 }
-
-// ****************************************************************
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Manager<ACE_INET_Addr,TAO_ECG_CDR_Message_Receiver::Requests*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<ACE_INET_Addr, TAO_ECG_CDR_Message_Receiver::Requests*, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Entry<ACE_INET_Addr,TAO_ECG_CDR_Message_Receiver::Requests*>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_INET_Addr, TAO_ECG_CDR_Message_Receiver::Requests*, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<ACE_INET_Addr,TAO_ECG_CDR_Message_Receiver::Requests*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_INET_Addr, TAO_ECG_CDR_Message_Receiver::Requests*, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<ACE_INET_Addr,TAO_ECG_CDR_Message_Receiver::Requests*,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_INET_Addr, TAO_ECG_CDR_Message_Receiver::Requests*, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>;
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Manager<ACE_INET_Addr,TAO_ECG_CDR_Message_Receiver::Requests*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_INET_Addr, TAO_ECG_CDR_Message_Receiver::Requests*, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Entry<ACE_INET_Addr,TAO_ECG_CDR_Message_Receiver::Requests*>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_INET_Addr, TAO_ECG_CDR_Message_Receiver::Requests*, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<ACE_INET_Addr,TAO_ECG_CDR_Message_Receiver::Requests*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_INET_Addr, TAO_ECG_CDR_Message_Receiver::Requests*, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_INET_Addr,TAO_ECG_CDR_Message_Receiver::Requests*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_INET_Addr, TAO_ECG_CDR_Message_Receiver::Requests*, ACE_Hash<ACE_INET_Addr>, ACE_Equal_To<ACE_INET_Addr>, ACE_Null_Mutex>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

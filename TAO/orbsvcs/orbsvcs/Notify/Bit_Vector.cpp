@@ -108,11 +108,3 @@ Bit_Vector::find_first_bit_of(const size_t location, bool set)
 }
 
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Vector<ACE_UINT32>;
-template class ACE_Array_Base<ACE_UINT32>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Vector<ACE_UINT32>
-#pragma instantiate ACE_Array_Base<ACE_UINT32>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

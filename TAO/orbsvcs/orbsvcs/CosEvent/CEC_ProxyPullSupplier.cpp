@@ -355,17 +355,3 @@ TAO_CEC_ProxyPullSupplier::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   this->_decr_refcnt ();
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Unbounded_Queue<CORBA::Any>;
-template class ACE_Node<CORBA::Any>;
-template class ACE_Unbounded_Queue_Iterator<CORBA::Any>;
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Unbounded_Queue<CORBA::Any>
-#pragma instantiate ACE_Node<CORBA::Any>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<CORBA::Any>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

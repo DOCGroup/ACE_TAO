@@ -12,7 +12,7 @@
 DT_Test::DT_Test (void)
 {
   base_t = ACE_OS::gethrtime ();
-}	
+}
 
 void
 DT_Test::check_supported_priorities (void)
@@ -30,7 +30,7 @@ DT_Test::check_supported_priorities (void)
 
       sched_policy_ = ACE_SCHED_RR;
     }
-  else 
+  else
   if (thr_sched_policy_ == THR_SCHED_FIFO)
     {
       // if (TAO_debug_level > 0)
@@ -42,7 +42,7 @@ DT_Test::check_supported_priorities (void)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "Sched policy = THR_SCHED_OTHER\n"));
-      
+
       sched_policy_ = ACE_SCHED_OTHER;
     }
 
@@ -50,7 +50,7 @@ DT_Test::check_supported_priorities (void)
     {
       max_priority_ = ACE_Sched_Params::priority_max (sched_policy_);
       min_priority_ = ACE_Sched_Params::priority_min (sched_policy_);
-      
+
       if (max_priority_ == min_priority_)
 	{
 	  ACE_DEBUG ((LM_DEBUG,
@@ -72,38 +72,38 @@ DT_Test::init (int argc, char *argv []
 			  ""
 			  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
-  
+
   this->check_supported_priorities ();
 
   dt_creator_->orb (orb_.in ());
-  
+
   TASK_STATS::instance ()->init (dt_creator_->total_load ());
 
   CORBA::Object_ptr manager_obj = orb_->resolve_initial_references ("RTSchedulerManager"
 								   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
-      
+
   TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj
 									  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
-      
-  
+
+
   ACE_NEW_RETURN (scheduler_,
-		  Fixed_Priority_Scheduler (orb_.in ()), 
+		  Fixed_Priority_Scheduler (orb_.in ()),
                   -1);
-  
+
   manager->rtscheduler (scheduler_);
-  
+
   CORBA::Object_var object =
-    orb_->resolve_initial_references ("RTScheduler_Current" 
+    orb_->resolve_initial_references ("RTScheduler_Current"
 				      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
-  
+
   current_  =
     RTScheduling::Current::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
-  
-  
+
+
   if (sched_policy_ != ACE_SCHED_OTHER)
     {
 
@@ -123,12 +123,12 @@ DT_Test::init (int argc, char *argv []
   			"(%P|%t): sched_params failed\n"));
   	}
     }
-  
+
   return 0;
 }
 
 void
-DT_Test::run (int argc, char* argv [] 
+DT_Test::run (int argc, char* argv []
 	      ACE_ENV_ARG_DECL)
 {
   init (argc,argv
@@ -139,13 +139,13 @@ DT_Test::run (int argc, char* argv []
     return;
   ACE_CHECK;
 
-  
+
   //TASK_STATS::instance ()->init (this->dt_creator_->dt_count () * 100);
-  
-  
+
+
   this->dt_creator_->activate_root_poa (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  
+
   this->dt_creator_->activate_poa_list (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   this->dt_creator_->activate_job_list (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -156,18 +156,18 @@ DT_Test::run (int argc, char* argv []
   DT_Creator* dt_creator = this->dt_creator_;
   dt_creator->register_synch_obj (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  
+
   ACE_DEBUG ((LM_DEBUG,
 	      "Registered Synch Object\n"));
-  
+
   /*
   dt_creator_->create_distributable_threads (current_.in ()
 					     ACE_ENV_ARG_PARAMETER);
   ACE_TRY_CHECK;
   */
-  
+
   this->activate_task ();
-  
+
   char msg [BUFSIZ];
   ACE_OS::sprintf (msg, "ORB RUN\n");
   dt_creator_->log_msg (msg);
@@ -193,7 +193,7 @@ DT_Test::dt_creator (void)
 }
 
 
-Fixed_Priority_Scheduler* 
+Fixed_Priority_Scheduler*
 DT_Test::scheduler (void)
 {
   return this->scheduler_;
@@ -208,10 +208,10 @@ DT_Test::activate_task (void)
 
   long flags;
   flags = THR_NEW_LWP | THR_JOINABLE;
-  flags |= 
+  flags |=
     orb_->orb_core ()->orb_params ()->scope_policy () |
     orb_->orb_core ()->orb_params ()->sched_policy ();
-  
+
   if (this->activate (flags,
 		      1,
 		      0,
@@ -233,12 +233,12 @@ DT_Test::svc (void)
     {
       ACE_DEBUG ((LM_DEBUG,
 		  "In test::svc\n"));
-      
+
       dt_creator_->create_distributable_threads (current_.in ()
 						 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      
+
     }
   ACE_CATCHANY
     {
@@ -246,7 +246,7 @@ DT_Test::svc (void)
                            "Caught exception:");
       return -1;
     }
-  ACE_ENDTRY; 
+  ACE_ENDTRY;
 
   return 0;
 }
@@ -264,11 +264,11 @@ main (int argc, char* argv [])
   ACE_TRY_NEW_ENV
     {
       ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_FP_DT_Creator);
-      
+
       DT_TEST::instance ()->run (argc, argv
 				 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
     }
   ACE_CATCHANY
     {
@@ -276,23 +276,15 @@ main (int argc, char* argv [])
                            "Caught exception:");
       return 1;
     }
-  ACE_ENDTRY; 
-  
+  ACE_ENDTRY;
+
   return 0;
 }
 
 
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Singleton<DT_Test, TAO_SYNCH_MUTEX>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Singleton<DT_Test, TAO_SYNCH_MUTEX>
-
-#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 
 template ACE_Singleton<DT_Test, ACE_Thread_Mutex> *ACE_Singleton<DT_Test, ACE_Thread_Mutex>::singleton_;
 
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */

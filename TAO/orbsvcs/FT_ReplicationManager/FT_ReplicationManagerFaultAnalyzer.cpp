@@ -1112,17 +1112,3 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::type_failure (
 
   return result;
 }
-
-// Template instantiations.
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Unbounded_Set<PortableGroup::Location>;
-template class ACE_Unbounded_Set_Iterator<PortableGroup::Location>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Unbounded_Set<PortableGroup::Location>
-#pragma instantiate ACE_Unbounded_Set_Iterator<PortableGroup::Location>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

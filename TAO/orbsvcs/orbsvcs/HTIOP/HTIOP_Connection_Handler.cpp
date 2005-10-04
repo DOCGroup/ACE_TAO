@@ -122,7 +122,7 @@ TAO::HTIOP::Connection_Handler::open (void*)
   if (!this->transport ()->post_open ((size_t) this->get_handle ()))
     return -1;
 
-  this->state_changed (TAO_LF_Event::LFS_SUCCESS, 
+  this->state_changed (TAO_LF_Event::LFS_SUCCESS,
 		       this->orb_core ()->leader_follower ());
 
   return 0;
@@ -281,16 +281,3 @@ TAO::HTIOP::Connection_Handler::set_dscp_codepoint (CORBA::Boolean /*enable_netw
 {
   return 0;
 }
-
-
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Svc_Handler<ACE::HTBP::STREAM, ACE_NULL_SYNCH>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Svc_Handler<ACE::HTBP::STREAM, ACE_NULL_SYNCH>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

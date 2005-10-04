@@ -74,7 +74,7 @@ TAO_EC_TPC_Dispatching::add_consumer (RtecEventComm::PushConsumer_ptr consumer
     {
       ACE_DEBUG ((LM_WARNING,
                   "EC (%P|%t): TPC_Dispatching::add_consumer failed to bind consumer (%@)"
-                  " and dispatch task in map (%s): %p\n", 
+                  " and dispatch task in map (%s): %p\n",
                   consumer, explanation));
       dtask->putq (new TAO_EC_Shutdown_Task_Command);
       dtask->wait ();
@@ -137,7 +137,7 @@ TAO_EC_TPC_Dispatching::shutdown (void)
       entry->int_id_->putq (new TAO_EC_Shutdown_Task_Command);
       iter.advance ();
     }
-  
+
   this->thread_manager_.wait (); // Wait for the threads to terminate
 
   // Now iterate again and call CORBA::release on the ext_id;
@@ -152,7 +152,7 @@ TAO_EC_TPC_Dispatching::shutdown (void)
       CORBA::release (entry->ext_id_);
       iter.advance ();
     }
-  
+
   this->consumer_task_map_.unbind_all ();
 }
 
@@ -192,13 +192,3 @@ TAO_EC_TPC_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
       ACE_CHECK;
     }
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class  ACE_Hash_Map_Manager_Ex<RtecEventComm::PushConsumer*, TAO_EC_Dispatching_Task*, ACE_Pointer_Hash<RtecEventComm::PushConsumer*>, ACE_Equal_To<RtecEventComm::PushConsumer*>, ACE_Null_Mutex>;
-template class  ACE_Hash_Map_Iterator_Base_Ex<RtecEventComm::PushConsumer*, TAO_EC_Dispatching_Task*, ACE_Pointer_Hash<RtecEventComm::PushConsumer*>, ACE_Equal_To<RtecEventComm::PushConsumer*>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<RtecEventComm::PushConsumer*,TAO_EC_Dispatching_Task*, ACE_Pointer_Hash<RtecEventComm::PushConsumer*>,ACE_Equal_To<RtecEventComm::PushConsumer*>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<RtecEventComm::PushConsumer*, TAO_EC_Dispatching_Task*, ACE_Pointer_Hash<RtecEventComm::PushConsumer*>, ACE_Equal_To<RtecEventComm::PushConsumer*>, ACE_Null_Mutex>;
-template class ACE_Equal_To<RtecEventComm::PushConsumer*>;
-template class ACE_Pointer_Hash<RtecEventComm::PushConsumer*>;
-template class ACE_Hash_Map_Entry<RtecEventComm::PushConsumer*, TAO_EC_Dispatching_Task*>;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
