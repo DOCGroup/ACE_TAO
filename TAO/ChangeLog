@@ -1,3 +1,8 @@
+Tue Oct  4 12:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1476_Regression/server.cpp:
+          Print an error when the server didn't receive any calls
+
 Tue Oct  4 13:01:42 2005  Simon McQueen  <sm@prismtech.com>
 
         * tests/Bug_2183_Regression/Hello.h:
