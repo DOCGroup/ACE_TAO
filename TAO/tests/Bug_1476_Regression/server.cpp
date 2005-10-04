@@ -115,7 +115,14 @@ main (int argc, char *argv[])
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "Corrected amount received\n"));
+          if (sender_impl->get_number_received () == 0)
+            {
+              ACE_ERROR ((LM_ERROR, "Error: Received no calls\n"));
+            }
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG, "Corrected amount received\n"));
+            }
         }
 
       root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
