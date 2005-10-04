@@ -1,3 +1,9 @@
+Tue Oct  4 14:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport.cpp (send_message_shared_i):
+          Get the flushing_strategy later in the method just before the
+          moment we need it.
+
 Tue Oct  4 13:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1476_Regression/client.cpp:
