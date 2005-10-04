@@ -514,7 +514,7 @@ Mon Oct  3 18:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tao/RTCORBA/Thread_Pool.{h,cpp}:
           Renamed request_dynamic_thread to new_dynamic_thread.
 
-Mon Oct 03 10:48:45 2005    <ossama@dre.vanderbilt.edu>
+Mon Oct  3 10:48:45 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO/TAO_IDL/tao_idl.mpc:
 	* TAO/orbsvcs/orbsvcs/CosNaming_Serv.mpc:
