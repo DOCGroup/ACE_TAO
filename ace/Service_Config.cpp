@@ -687,7 +687,7 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
   if (ACE_Service_Config::pid_file_name_ != 0)
     {
       FILE* pidf = ACE_OS::fopen (ACE_Service_Config::pid_file_name_,
-				  ACE_LIB_TEXT("w"));
+                                  ACE_LIB_TEXT("w"));
 
       if (pidf != 0)
         {
