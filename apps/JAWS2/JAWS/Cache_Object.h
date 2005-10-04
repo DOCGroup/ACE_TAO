@@ -86,7 +86,7 @@ private:
 
   mutable ACE_SYNCH_RW_MUTEX count_;
   mutable ACE_Lock_Adapter<ACE_SYNCH_RW_MUTEX> lock_adapter_;
-  
+
 };
 
 class JAWS_Counted_Cache_Object : public JAWS_Cache_Object
