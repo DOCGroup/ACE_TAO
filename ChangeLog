@@ -1,6 +1,14 @@
+Tue Oct  4 10:39:24 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Service_Config.cpp:
+
+	  Include "ace/Signal.h" when ACE_LACKS_UNIX_SIGNALS is
+	  undefined.  Addresses build errors in non-Windows builds.
+	  Necessitated by header dependency reductions in ACE.
+
 Tue Oct  4 10:00:00 UTC 2005  Simon Massey  <simon.massey@prismtech.com>
 
-        * ace/Obstack_t.h:
+        * ace/Obstack_T.h:
 
           Fix warning about nested comments.
 
