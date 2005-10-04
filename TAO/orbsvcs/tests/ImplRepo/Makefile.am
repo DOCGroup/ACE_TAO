@@ -21,14 +21,10 @@ SUBDIRS = \
         scale
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
-## Makefile.airplane_client.am
+## Makefile.airplane_idl.am
 
-if !BUILD_MINIMUM_CORBA
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   AirplaneC.cpp \
   AirplaneC.h \
   AirplaneC.inl \
@@ -39,7 +35,7 @@ BUILT_SOURCES += \
   AirplaneS_T.h \
   AirplaneS_T.inl
 
-CLEANFILES += \
+CLEANFILES = \
   Airplane-stamp \
   AirplaneC.cpp \
   AirplaneC.h \
@@ -57,6 +53,11 @@ Airplane-stamp: $(srcdir)/Airplane.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Airplane.idl
 	@touch $@
 
+
+## Makefile.airplane_client.am
+
+if !BUILD_MINIMUM_CORBA
+
 noinst_PROGRAMS += airplane_client
 
 airplane_client_CPPFLAGS = \
@@ -70,11 +71,6 @@ airplane_client_SOURCES = \
   AirplaneS.cpp \
   airplane_client.cpp \
   airplane_client_i.cpp \
-  AirplaneC.h \
-  AirplaneC.inl \
-  AirplaneS.h \
-  AirplaneS_T.h \
-  AirplaneS_T.inl \
   airplane_client_i.h
 
 airplane_client_LDADD = \
@@ -90,35 +86,6 @@ endif !BUILD_MINIMUM_CORBA
 
 if !BUILD_MINIMUM_CORBA
 
-BUILT_SOURCES += \
-  AirplaneC.cpp \
-  AirplaneC.h \
-  AirplaneC.inl \
-  AirplaneS.cpp \
-  AirplaneS.h \
-  AirplaneS.inl \
-  AirplaneS_T.cpp \
-  AirplaneS_T.h \
-  AirplaneS_T.inl
-
-CLEANFILES += \
-  Airplane-stamp \
-  AirplaneC.cpp \
-  AirplaneC.h \
-  AirplaneC.inl \
-  AirplaneS.cpp \
-  AirplaneS.h \
-  AirplaneS.inl \
-  AirplaneS_T.cpp \
-  AirplaneS_T.h \
-  AirplaneS_T.inl
-
-AirplaneC.cpp AirplaneC.h AirplaneC.inl AirplaneS.cpp AirplaneS.h AirplaneS.inl AirplaneS_T.cpp AirplaneS_T.h AirplaneS_T.inl: Airplane-stamp
-
-Airplane-stamp: $(srcdir)/Airplane.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Airplane.idl
-	@touch $@
-
 noinst_PROGRAMS += airplane_server
 
 airplane_server_CPPFLAGS = \
@@ -133,11 +100,6 @@ airplane_server_SOURCES = \
   airplane_i.cpp \
   airplane_server.cpp \
   airplane_server_i.cpp \
-  AirplaneC.h \
-  AirplaneC.inl \
-  AirplaneS.h \
-  AirplaneS_T.h \
-  AirplaneS_T.inl \
   airplane_i.h \
   airplane_server_i.h
 
@@ -151,9 +113,7 @@ airplane_server_LDADD = \
 
 endif !BUILD_MINIMUM_CORBA
 
-## Makefile.nestea_client.am
-
-if !BUILD_MINIMUM_CORBA
+## Makefile.nestea_idl.am
 
 BUILT_SOURCES += \
   NesteaC.cpp \
@@ -184,6 +144,11 @@ Nestea-stamp: $(srcdir)/Nestea.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Nestea.idl
 	@touch $@
 
+
+## Makefile.nestea_client.am
+
+if !BUILD_MINIMUM_CORBA
+
 noinst_PROGRAMS += nestea_client
 
 nestea_client_CPPFLAGS = \
@@ -197,11 +162,6 @@ nestea_client_SOURCES = \
   NesteaS.cpp \
   nestea_client.cpp \
   nestea_client_i.cpp \
-  NesteaC.h \
-  NesteaC.inl \
-  NesteaS.h \
-  NesteaS_T.h \
-  NesteaS_T.inl \
   nestea_client_i.h
 
 nestea_client_LDADD = \
@@ -217,35 +177,6 @@ endif !BUILD_MINIMUM_CORBA
 
 if !BUILD_MINIMUM_CORBA
 
-BUILT_SOURCES += \
-  NesteaC.cpp \
-  NesteaC.h \
-  NesteaC.inl \
-  NesteaS.cpp \
-  NesteaS.h \
-  NesteaS.inl \
-  NesteaS_T.cpp \
-  NesteaS_T.h \
-  NesteaS_T.inl
-
-CLEANFILES += \
-  Nestea-stamp \
-  NesteaC.cpp \
-  NesteaC.h \
-  NesteaC.inl \
-  NesteaS.cpp \
-  NesteaS.h \
-  NesteaS.inl \
-  NesteaS_T.cpp \
-  NesteaS_T.h \
-  NesteaS_T.inl
-
-NesteaC.cpp NesteaC.h NesteaC.inl NesteaS.cpp NesteaS.h NesteaS.inl NesteaS_T.cpp NesteaS_T.h NesteaS_T.inl: Nestea-stamp
-
-Nestea-stamp: $(srcdir)/Nestea.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Nestea.idl
-	@touch $@
-
 noinst_PROGRAMS += nestea_server
 
 nestea_server_CPPFLAGS = \
@@ -260,11 +191,6 @@ nestea_server_SOURCES = \
   nestea_i.cpp \
   nestea_server.cpp \
   nestea_server_i.cpp \
-  NesteaC.h \
-  NesteaC.inl \
-  NesteaS.h \
-  NesteaS_T.h \
-  NesteaS_T.inl \
   nestea_i.h \
   nestea_server_i.h
 

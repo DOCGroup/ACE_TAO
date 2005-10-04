@@ -17,7 +17,7 @@ TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
 
-## Makefile.scaletest_idl.am
+## Makefile.Bug_2247_Regression_Idl.am
 
 BUILT_SOURCES = \
   testC.cpp \
@@ -49,35 +49,53 @@ test-stamp: $(srcdir)/test.idl
 	@touch $@
 
 
-## Makefile.scaletest_client.am
+## Makefile.Bug_2247_Regression_Manager.am
 
+if BUILD_ACE_UUID
+if BUILD_CORBA_MESSAGING
+if BUILD_INTERCEPTORS
 if !BUILD_MINIMUM_CORBA
 
-noinst_PROGRAMS += client
+noinst_PROGRAMS += Manager
 
-client_CPPFLAGS = \
+Manager_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs
 
-client_SOURCES = \
-  client.cpp \
+Manager_SOURCES = \
+  Manager.cpp \
   testC.cpp \
-  testS.cpp \
-  server_i.h
+  Manager.h
 
-client_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
+Manager_LDADD = \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FT_ServerORB.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FT_ClientORB.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FTORB_Utils.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif BUILD_INTERCEPTORS
+endif BUILD_CORBA_MESSAGING
+endif BUILD_ACE_UUID
 
-## Makefile.scaletest_server.am
+## Makefile.Bug_2247_Regression_Server.am
 
+if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += server
@@ -90,20 +108,24 @@ server_CPPFLAGS = \
 
 server_SOURCES = \
   server.cpp \
-  server_i.cpp \
   testC.cpp \
   testS.cpp \
-  server_i.h
+  test_i.cpp \
+  test_i.h
 
 server_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_ImR_Client.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.
 clean-local:
