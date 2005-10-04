@@ -15,11 +15,12 @@ ACE_RCSID(Bug_1476_Regression, client, "$Id$")
 
 const char *ior = "file://test.ior";
 int number_of_oneways = 10;
+int number_of_client_tasks = 2;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:n:");
+  ACE_Get_Opt get_opts (argc, argv, "k:n:c:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -31,12 +32,16 @@ parse_args (int argc, char *argv[])
       case 'n' :
         number_of_oneways = ACE_OS::atoi (get_opts.opt_arg ());
         break;
+      case 'c' :
+        number_of_client_tasks = ACE_OS::atoi (get_opts.opt_arg ());
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-k <ior>"
                            "-n <number of oneways>"
+                           "-c <number of client tasks>"
                            "\n",
                            argv [0]),
                           -1);
@@ -132,7 +137,7 @@ main (int argc, char *argv[])
       // will have two threads that would make invocations..
       // this is the first oneway we do, so after this we would have a queue
       // on one of the transports
-      sender->active_objects ((CORBA::Short) 2 ACE_ENV_ARG_PARAMETER);
+      sender->active_objects ((CORBA::Short) number_of_client_tasks ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       TAO::Transport_Cache_Manager& manager = orb->orb_core()->lane_resources ().transport_cache ();
@@ -167,7 +172,7 @@ main (int argc, char *argv[])
           ACE_ERROR ((LM_ERROR, "Error activating server task\n"));
         }
 
-      if (client_task.activate (THR_NEW_LWP | THR_JOINABLE, 2, 1) == -1)
+      if (client_task.activate (THR_NEW_LWP | THR_JOINABLE, number_of_client_tasks, 1) == -1)
         {
           ACE_ERROR ((LM_ERROR, "Error activating client task\n"));
         }
