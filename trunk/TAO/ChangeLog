@@ -1,3 +1,9 @@
+Tue Oct  4 13:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1476_Regression/client.cpp:
+          Added -c commandline argument to control how many client
+          tasks will be created. Makes it easier to debug
+
 Tue Oct  4 12:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1476_Regression/client.cpp:
