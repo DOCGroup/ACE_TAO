@@ -1,3 +1,9 @@
+Tue Oct  4 13:01:42 2005  Simon McQueen  <sm@prismtech.com>
+
+        * tests/Bug_2183_Regression/Hello.h:
+
+          Remove reference to deprecated RefCountServantBase.
+
 Tue Oct  4 12:57:09 2005  Simon McQueen  <sm@prismtech.com>
 
         * orbsvcs/tests/Bug_2248_Regression/tests.idl:
