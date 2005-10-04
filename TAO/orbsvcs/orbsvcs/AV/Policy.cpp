@@ -146,13 +146,3 @@ TAO_AV_Callback::schedule_timer (void)
 {
   return this->handler_->schedule_timer ();
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_Unbounded_Sequence<TAO_AV_Policy*>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_Unbounded_Sequence<TAO_AV_Policy*>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

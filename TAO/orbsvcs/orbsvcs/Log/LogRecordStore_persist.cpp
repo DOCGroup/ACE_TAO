@@ -142,7 +142,7 @@ TAO_LogRecordStore::update (DsLogAdmin::LogRecord &rec)
   --this->num_records_;
   this->current_size_ -= log_record_size(oldrec);
 
-  if (rec_hash_.bind (rec.id, rec) != 0) 
+  if (rec_hash_.bind (rec.id, rec) != 0)
     {
       return -1;
     }
@@ -204,35 +204,3 @@ TAO_LogRecordStore::get_storage (void)
 {
   return rec_hash_;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Hash_Map_Entry<DsLogAdmin::RecordId,DsLogAdmin::LogRecord>;
-template class ACE_Hash_Map_Manager<DsLogAdmin::RecordId,DsLogAdmin::LogRecord,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<DsLogAdmin::RecordId, DsLogAdmin::LogRecord,
-  ACE_Hash<DsLogAdmin::RecordId>, ACE_Equal_To<DsLogAdmin::RecordId>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<DsLogAdmin::RecordId,DsLogAdmin::LogRecord,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<DsLogAdmin::RecordId, DsLogAdmin::LogRecord, ACE_Hash<DsLogAdmin::RecordId>,
-  ACE_Equal_To<DsLogAdmin::RecordId>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<DsLogAdmin::RecordId, DsLogAdmin::LogRecord, ACE_Hash<DsLogAdmin::RecordId>,
-  ACE_Equal_To<DsLogAdmin::RecordId>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<DsLogAdmin::RecordId,DsLogAdmin::LogRecord,ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<DsLogAdmin::RecordId, DsLogAdmin::LogRecord, ACE_Hash<DsLogAdmin::RecordId>,
-  ACE_Equal_To<DsLogAdmin::RecordId>, ACE_Null_Mutex>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Hash_Map_Entry<DsLogAdmin::RecordId,DsLogAdmin::LogRecord>
-#pragma instantiate ACE_Hash_Map_Manager<DsLogAdmin::RecordId,DsLogAdmin::LogRecord,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<DsLogAdmin::RecordId, DsLogAdmin::LogRecord, ACE_Hash<DsLogAdmin::RecordId>,
-ACE_Equal_To<DsLogAdmin::RecordId>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<DsLogAdmin::RecordId,DsLogAdmin::LogRecord,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<DsLogAdmin::RecordId, DsLogAdmin::LogRecord, ACE_Hash<DsLogAdmin::RecordId>,
-ACE_Equal_To<DsLogAdmin::RecordId>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<DsLogAdmin::RecordId, DsLogAdmin::LogRecord, ACE_Hash<DsLogAdmin::RecordId>,
-ACE_Equal_To<DsLogAdmin::RecordId>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<DsLogAdmin::RecordId,DsLogAdmin::LogRecord,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<DsLogAdmin::RecordId, DsLogAdmin::LogRecord, ACE_Hash<DsLogAdmin::RecordId>,
-ACE_Equal_To<DsLogAdmin::RecordId>, ACE_Null_Mutex>
-
-#endif /* ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA */

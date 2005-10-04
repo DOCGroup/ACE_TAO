@@ -675,20 +675,3 @@ TAO_AV_Transport_Factory::make_connector (void)
 {
   return 0;
 }
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Node <TAO_AV_Connector*>;
-template class ACE_Node <TAO_AV_Acceptor*>;
-template class ACE_Unbounded_Set<TAO_AV_Acceptor*>;
-template class ACE_Unbounded_Set<TAO_AV_Connector*>;
-template class ACE_Unbounded_Set_Iterator<TAO_AV_Acceptor*>;
-template class ACE_Unbounded_Set_Iterator<TAO_AV_Connector*>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Node <TAO_AV_Connector*>
-#pragma instantiate ACE_Node <TAO_AV_Acceptor*>
-#pragma instantiate ACE_Unbounded_Set<TAO_AV_Connector*>
-#pragma instantiate ACE_Unbounded_Set<TAO_AV_Acceptor*>
-#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_AV_Connector*>
-#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_AV_Acceptor*>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

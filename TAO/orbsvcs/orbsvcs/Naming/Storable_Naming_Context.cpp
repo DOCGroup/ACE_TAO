@@ -1538,39 +1538,4 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all(
   if(redundant_) gfl_->close();
 
   return result._retn ();
-
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Unbounded_List_Iterator<ACE_CString>;
-template class ACE_Unbounded_List<ACE_CString>;
-template class ACE_NS_Node<ACE_CString>;
-template class ACE_Auto_Basic_Ptr<TAO_Storable_Naming_Context>;
-template class ACE_Hash_Map_Manager<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Hash<TAO_Storable_ExtId>, ACE_Equal_To<TAO_Storable_ExtId>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Entry<TAO_Storable_ExtId, TAO_Storable_IntId>;
-template class ACE_Hash_Map_Iterator_Base_Ex<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Hash<TAO_Storable_ExtId>, ACE_Equal_To<TAO_Storable_ExtId>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Hash<TAO_Storable_ExtId>, ACE_Equal_To<TAO_Storable_ExtId>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Hash<TAO_Storable_ExtId>, ACE_Equal_To<TAO_Storable_ExtId>, ACE_Null_Mutex>;
-template class ACE_Auto_Basic_Ptr<ACE_Hash_Map_Iterator_Ex<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Hash<TAO_Storable_ExtId>, ACE_Equal_To<TAO_Storable_ExtId>, ACE_Null_Mutex > >;
-template class TAO_Bindings_Iterator<ACE_Hash_Map_Iterator_Ex<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Hash<TAO_Storable_ExtId>, ACE_Equal_To<TAO_Storable_ExtId>, ACE_Null_Mutex>, ACE_Hash_Map_Entry<TAO_Storable_ExtId, TAO_Storable_IntId> >;
-template class ACE_Auto_Basic_Ptr<TAO_Bindings_Iterator<ACE_Hash_Map_Iterator_Ex<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Hash<TAO_Storable_ExtId>, ACE_Equal_To<TAO_Storable_ExtId>, ACE_Null_Mutex>, ACE_Hash_Map_Entry<TAO_Storable_ExtId, TAO_Storable_IntId> > >;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Manager<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Hash<TAO_Storable_ExtId>, ACE_Equal_To<TAO_Storable_ExtId>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Entry<TAO_Storable_ExtId, TAO_Storable_IntId>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Hash<TAO_Storable_ExtId>, ACE_Equal_To<TAO_Storable_ExtId>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Hash<TAO_Storable_ExtId>, ACE_Equal_To<TAO_Storable_ExtId>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Hash<TAO_Storable_ExtId>, ACE_Equal_To<TAO_Storable_ExtId>, ACE_Null_Mutex>
-#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Hash_Map_Iterator_Ex<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Hash<TAO_Storable_ExtId>, ACE_Equal_To<TAO_Storable_ExtId>, ACE_Null_Mutex> >
-#pragma instantiate TAO_Bindings_Iterator<ACE_Hash_Map_Iterator_Ex<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Hash<TAO_Storable_ExtId>, ACE_Equal_To<TAO_Storable_ExtId>, ACE_Null_Mutex>, ACE_Hash_Map_Entry<TAO_Storable_ExtId, TAO_Storable_IntId> >
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Bindings_Iterator<ACE_Hash_Map_Iterator_Ex<TAO_Storable_ExtId, TAO_Storable_IntId, ACE_Hash<TAO_Storable_ExtId>, ACE_Equal_To<TAO_Storable_ExtId>, ACE_Null_Mutex>, ACE_Hash_Map_Entry<TAO_Storable_ExtId, TAO_Storable_IntId> > >
-#pragma instantiate ACE_Unbounded_List_Iterator<ACE_CString>
-#pragma instantiate ACE_Unbounded_List<ACE_CString>
-#pragma instantiate ACE_NS_Node<ACE_CString>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Storable_Naming_Context>
-#endif

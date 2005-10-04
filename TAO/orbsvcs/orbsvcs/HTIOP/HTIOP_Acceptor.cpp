@@ -881,36 +881,3 @@ TAO::HTIOP::Acceptor::parse_options (const char *str)
     }
   return 0;
 }
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Auto_Basic_Array_Ptr<ACE::HTBP::Addr>;
-
-template class TAO::HTIOP::Creation_Strategy<TAO::HTIOP::Completion_Handler>;
-template class TAO_Creation_Strategy<TAO::HTIOP::Completion_Handler>;
-template class TAO_Concurrency_Strategy<TAO::HTIOP::Connection_Handler>;
-template class ACE_Concurrency_Strategy<TAO::HTIOP::Completion_Handler>;
-template class TAO::HTIOP::Accept_Strategy<TAO::HTIOP::Completion_Handler, ACE_SOCK_Acceptor>;
-template class ACE_Accept_Strategy<TAO::HTIOP::Completion_Handler, ACE_SOCK_Acceptor>;
-template class TAO_Accept_Strategy<TAO::HTIOP::Completion_Handler, ACE_SOCK_Acceptor>;
-template class ACE_Strategy_Acceptor<TAO::HTIOP::Completion_Handler, ACE_SOCK_Acceptor>;
-template class ACE_Acceptor<TAO::HTIOP::Completion_Handler, ACE_SOCK_Acceptor>;
-template class ACE_Scheduling_Strategy<TAO::HTIOP::Completion_Handler>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<ACE::HTBP::Addr>
-
-#pragma instantiate TAO::HTIOP::Creation_Strategy<TAO::HTIOP::Completion_Handler>
-#pragma instantiate TAO_Creation_Strategy<TAO::HTIOP::Completion_Handler>
-#pragma instantiate TAO_Concurrency_Strategy<TAO::HTIOP::Connection_Handler>
-#pragma instantiate ACE_Concurrency_Strategy<TAO::HTIOP::Completion_Handler>
-#pragma instantiate TAO::HTIOP::Accept_Strategy<TAO::HTIOP::Completion_Handler, ACE_SOCK_Acceptor>
-#pragma instantiate ACE_Accept_Strategy<TAO::HTIOP::Completion_Handler, ACE_SOCK_Acceptor>
-#pragma instantiate TAO_Accept_Strategy<TAO::HTIOP::Completion_Handler, ACE_SOCK_Acceptor>
-#pragma instantiate ACE_Strategy_Acceptor<TAO::HTIOP::Completion_Handler, ACE_SOCK_Acceptor>
-#pragma instantiate ACE_Acceptor<TAO::HTIOP::Completion_Handler, ACE_SOCK_Acceptor>
-#pragma instantiate ACE_Scheduling_Strategy<TAO::HTIOP::Completion_Handler>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -47,7 +47,7 @@ TAO_AV_Flow_Protocol_Factory::control_flow_factory (void)
 //----------------------------------------------------------------------
 TAO_AV_Protocol_Object::TAO_AV_Protocol_Object (void)
   :transport_ (0),
-   callback_ (0) 
+   callback_ (0)
 {
   // no-op.
 }
@@ -124,11 +124,3 @@ TAO_AV_Protocol_Object::handle_control_input (ACE_Message_Block *,
     ACE_DEBUG ((LM_DEBUG,"TAO_AV_Protocol_Object::handle_control_input\n"));
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Dynamic_Service<TAO_AV_Transport_Factory>;
-template class ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Dynamic_Service<TAO_AV_Transport_Factory>
-#pragma instantiate ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>
-#endif

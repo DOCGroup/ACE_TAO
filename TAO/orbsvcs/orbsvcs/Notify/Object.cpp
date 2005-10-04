@@ -331,27 +331,6 @@ namespace {
         attrs.push_back(TAO_Notify::NVP (prop));
       }
     }
-// Note : These instantiations have to be here because each namespace {}
-// is unique.
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template void add_qos_attr<TAO_Notify_Property_Boolean>(
-  TAO_Notify::NVPList&, const TAO_Notify_Property_Boolean&);
-template void add_qos_attr<TAO_Notify_Property_T<int> >(
-  TAO_Notify::NVPList&, const TAO_Notify_Property_T<int>&);
-template void add_qos_attr<TAO_Notify_Property_T<unsigned long long> >(
-  TAO_Notify::NVPList&, const TAO_Notify_Property_T<unsigned long long>&);
-template void add_qos_attr<TAO_Notify_Property_T<short> >(
-  TAO_Notify::NVPList&, const TAO_Notify_Property_T<short>&);
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate void add_qos_attr<TAO_Notify_Property_Boolean>(\
-  TAO_Notify::NVPList&, const TAO_Notify_Property_Boolean&)
-#pragma instantiate void add_qos_attr<TAO_Notify_Property_T<int> >(\
-  TAO_Notify::NVPList&, const TAO_Notify_Property_T<int>&)
-#pragma instantiate void add_qos_attr<TAO_Notify_Property_T<unsigned long long> >(\
-  TAO_Notify::NVPList&, const TAO_Notify_Property_T<unsigned long long>&)
-#pragma instantiate void add_qos_attr<TAO_Notify_Property_T<short> >(\
-  TAO_Notify::NVPList&, const TAO_Notify_Property_T<short>&)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 } // namespace
 
 void

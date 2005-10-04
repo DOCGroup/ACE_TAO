@@ -84,9 +84,3 @@ TAO_Concurrency_Loader::create_object (CORBA::ORB_ptr orb,
 }
 
 ACE_FACTORY_DEFINE (TAO_Concurrency, TAO_Concurrency_Loader)
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Dynamic_Service<TAO_Concurrency_Loader>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Dynamic_Service<TAO_Concurrency_Loader>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -909,21 +909,3 @@ TAO_CEC_ProxyPushSupplier::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   this->_decr_refcnt ();
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_ESF_RefCount_Guard<CORBA::ULong>;
-template class TAO_ESF_Proxy_RefCount_Guard<TAO_CEC_EventChannel,TAO_CEC_ProxyPushSupplier>;
-#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-template class TAO_ESF_Proxy_RefCount_Guard<TAO_CEC_TypedEventChannel,TAO_CEC_ProxyPushSupplier>;
-#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_ESF_RefCount_Guard<CORBA::ULong>
-#pragma instantiate TAO_ESF_Proxy_RefCount_Guard<TAO_CEC_EventChannel,TAO_CEC_ProxyPushSupplier>
-#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-#pragma instantiate TAO_ESF_Proxy_RefCount_Guard<TAO_CEC_TypedEventChannel,TAO_CEC_ProxyPushSupplier>
-#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -529,16 +529,3 @@ TAO_EC_ProxyPushSupplier::add_dependencies (
                                          qos_info
                                          ACE_ENV_ARG_PARAMETER);
 }
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_ESF_RefCount_Guard<CORBA::ULong>;
-template class TAO_ESF_Proxy_RefCount_Guard<TAO_EC_Event_Channel_Base,TAO_EC_ProxyPushSupplier>;
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_ESF_RefCount_Guard<CORBA::ULong>
-#pragma instantiate TAO_ESF_Proxy_RefCount_Guard<TAO_EC_Event_Channel_Base,TAO_EC_ProxyPushSupplier>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

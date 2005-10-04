@@ -210,13 +210,3 @@ namespace TAO_Notify
   }
 
 } // namespace TAO_Notify
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Array_Base<TAO_Notify::NVP>;
-template class ACE_Array<TAO_Notify::NVP>;
-template class ACE_Vector<TAO_Notify::NVP>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Array_Base<TAO_Notify::NVP>
-#pragma instantiate ACE_Array<TAO_Notify::NVP>
-#pragma instantiate ACE_Vector<TAO_Notify::NVP>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

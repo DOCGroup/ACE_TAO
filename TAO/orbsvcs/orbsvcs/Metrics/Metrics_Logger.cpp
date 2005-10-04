@@ -864,28 +864,5 @@ TAO_Metrics_Logger::process_timeprobe_data (const Metrics::TimeprobeParameter_Se
     }
 }
 
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-// Already instantiated in Transport_Mux_Strategy ... otherwise VxWorks gets dual
-// definition link error
-//template class ACE_Equal_To<CORBA::ULong>;
-// The below template already instantiated in ../ace/Funchtor.h
-// template class ACE_Hash<CORBA::ULong>;
-template class ACE_Hash_Map_Manager_Ex<CORBA::ULong, CORBA::String_var *, ACE_Hash<CORBA::ULong>, ACE_Equal_To<CORBA::ULong>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<CORBA::ULong, CORBA::String_var *, ACE_Hash<CORBA::ULong>, ACE_Equal_To<CORBA::ULong>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<CORBA::ULong, CORBA::String_var *, ACE_Hash<CORBA::ULong>, ACE_Equal_To<CORBA::ULong>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<CORBA::ULong, CORBA::String_var *, ACE_Hash<CORBA::ULong>, ACE_Equal_To<CORBA::ULong>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Entry<CORBA::ULong, CORBA::String_var *>;
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Equal_To<CORBA::ULong>
-//#pragma instantiate ACE_Hash<CORBA::ULong>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<CORBA::ULong, CORBA::String_var *, ACE_Hash<CORBA::ULong>, ACE_Equal_To<CORBA::ULong>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<CORBA::ULong, CORBA::String_var *, ACE_Hash<CORBA::ULong>, ACE_Equal_To<CORBA::ULong>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<CORBA::ULong, CORBA::String_var *, ACE_Hash<CORBA::ULong>, ACE_Equal_To<CORBA::ULong>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<CORBA::ULong, CORBA::String_var *, ACE_Hash<CORBA::ULong>, ACE_Equal_To<CORBA::ULong>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Entry<CORBA::ULong, CORBA::String_var *>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 #endif /* ACE_ENABLE_TIMEPROBES & ACE_COMPILE_TIMEPROBES */
 #endif /* ACE_METRICS_COLLECTION */
-

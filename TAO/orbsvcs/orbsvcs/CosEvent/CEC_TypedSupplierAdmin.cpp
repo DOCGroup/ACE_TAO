@@ -107,20 +107,3 @@ TAO_CEC_TypedSupplierAdmin::obtain_pull_consumer (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
-
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_ESF_Proxy_Admin<TAO_CEC_TypedEventChannel,TAO_CEC_TypedProxyPushConsumer,CosTypedEventChannelAdmin::TypedProxyPushConsumer>;
-template class TAO_ESF_Shutdown_Proxy<TAO_CEC_TypedProxyPushConsumer>;
-template class TAO_ESF_Worker<TAO_CEC_TypedProxyPushConsumer>;
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_ESF_Proxy_Admin<TAO_CEC_TypedEventChannel,TAO_CEC_TypedProxyPushConsumer,CosTypedEventChannelAdmin::TypedProxyPushConsumer>
-#pragma instantiate TAO_ESF_Shutdown_Proxy<TAO_CEC_TypedProxyPushConsumer>
-#pragma instantiate TAO_ESF_Worker<TAO_CEC_TypedProxyPushConsumer>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

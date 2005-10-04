@@ -160,7 +160,7 @@ ifr_adding_visitor::visit_module (AST_Module *node)
       if (CORBA::is_nil (prev_def.in ()))
         {
           // New module.
-          CORBA::Container_ptr container = 
+          CORBA::Container_ptr container =
             CORBA::Container::_nil ();
 
           if (be_global->ifr_scopes ().top (container) == 0)
@@ -186,7 +186,7 @@ ifr_adding_visitor::visit_module (AST_Module *node)
         }
       else
         {
-          CORBA::DefinitionKind kind = 
+          CORBA::DefinitionKind kind =
             prev_def->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
@@ -241,7 +241,7 @@ ifr_adding_visitor::visit_module (AST_Module *node)
         }
 
       this->in_reopened_ = 0;
-      CORBA::Container_ptr tmp = 
+      CORBA::Container_ptr tmp =
         CORBA::Container::_nil ();
 
       if (be_global->ifr_scopes ().pop (tmp) != 0)
@@ -393,7 +393,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
                       return 0;
                     }
 
-                  bases[i] = 
+                  bases[i] =
                     CORBA::InterfaceDef::_narrow (result.in ()
                                                   ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
@@ -456,7 +456,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
               this->ir_current_ =
                 CORBA::IDLType::_duplicate (extant_def.in ());
 
-              CORBA::Container_ptr used_scope = 
+              CORBA::Container_ptr used_scope =
                 CORBA::Container::_nil ();
 
               // Pop the new IR object back off the scope stack.
@@ -480,7 +480,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
               // not defined/added - not possible.
               // defined/not added - takes the other branch.
               // defined/added - we're ok.
-              this->ir_current_ = 
+              this->ir_current_ =
                 CORBA::IDLType::_narrow (prev_def.in ()
                                          ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
@@ -528,7 +528,7 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
           CORBA::InterfaceDefSeq bases (0);
           bases.length (0);
 
-          CORBA::Container_ptr current_scope = 
+          CORBA::Container_ptr current_scope =
             CORBA::Container::_nil ();
 
           if (be_global->ifr_scopes ().top (current_scope) == 0)
@@ -681,7 +681,7 @@ ifr_adding_visitor::visit_valuetype (AST_ValueType *node)
                       prev_def->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
                       ACE_TRY_CHECK;
 
-                      int status = 
+                      int status =
                         this->create_value_def (node
                                                 ACE_ENV_ARG_PARAMETER);
                       ACE_TRY_CHECK;
@@ -820,7 +820,7 @@ ifr_adding_visitor::visit_valuetype (AST_ValueType *node)
               // not defined/added - not possible.
               // defined/not added - takes the other branch.
               // defined/added - we're ok.
-              this->ir_current_ = 
+              this->ir_current_ =
                 CORBA::IDLType::_narrow (prev_def.in ()
                                          ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
@@ -874,8 +874,8 @@ ifr_adding_visitor::visit_valuetype_fwd (AST_ValueTypeFwd *node)
 
           CORBA::Container_ptr current_scope =
             CORBA::Container::_nil ();
-            
-          CORBA::Boolean abstract = 
+
+          CORBA::Boolean abstract =
             static_cast<CORBA::Boolean> (v->is_abstract ());
 
           if (be_global->ifr_scopes ().top (current_scope) == 0)
@@ -1013,7 +1013,7 @@ ifr_adding_visitor::visit_component (AST_Component *node)
                       prev_def->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
                       ACE_TRY_CHECK;
 
-                      int status = 
+                      int status =
                         this->create_component_def (node
                                                     ACE_ENV_ARG_PARAMETER);
                       ACE_TRY_CHECK;
@@ -1137,7 +1137,7 @@ ifr_adding_visitor::visit_component (AST_Component *node)
               // not defined/added - not possible.
               // defined/not added - takes the other branch.
               // defined/added - we're ok.
-              this->ir_current_ = 
+              this->ir_current_ =
                 CORBA::IDLType::_narrow (prev_def.in ()
                                          ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
@@ -1156,7 +1156,7 @@ ifr_adding_visitor::visit_component (AST_Component *node)
   return 0;
 }
 
-int 
+int
 ifr_adding_visitor::visit_component_fwd (AST_ComponentFwd *node)
 {
   if (node->imported () && !be_global->do_included_files ())
@@ -1164,7 +1164,7 @@ ifr_adding_visitor::visit_component_fwd (AST_ComponentFwd *node)
       return 0;
     }
 
-  AST_Component *c = 
+  AST_Component *c =
     AST_Component::narrow_from_decl (node->full_definition ());
 
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -1289,7 +1289,7 @@ ifr_adding_visitor::visit_component_fwd (AST_ComponentFwd *node)
   return 0;
 }
 
-int 
+int
 ifr_adding_visitor::visit_eventtype (AST_EventType *node)
 {
   if (node->imported () && !be_global->do_included_files ())
@@ -1378,7 +1378,7 @@ ifr_adding_visitor::visit_eventtype (AST_EventType *node)
                       prev_def->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
                       ACE_TRY_CHECK;
 
-                      int status = 
+                      int status =
                         this->create_event_def (node
                                                 ACE_ENV_ARG_PARAMETER);
                       ACE_TRY_CHECK;
@@ -1517,7 +1517,7 @@ ifr_adding_visitor::visit_eventtype (AST_EventType *node)
               // not defined/added - not possible.
               // defined/not added - takes the other branch.
               // defined/added - we're ok.
-              this->ir_current_ = 
+              this->ir_current_ =
                 CORBA::IDLType::_narrow (prev_def.in ()
                                          ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
@@ -1536,7 +1536,7 @@ ifr_adding_visitor::visit_eventtype (AST_EventType *node)
   return 0;
 }
 
-int 
+int
 ifr_adding_visitor::visit_eventtype_fwd (AST_EventTypeFwd *node)
 {
   if (node->imported () && !be_global->do_included_files ())
@@ -1580,7 +1580,7 @@ ifr_adding_visitor::visit_eventtype_fwd (AST_EventTypeFwd *node)
                                                    ACE_ENV_ARG_PARAMETER
                                                  );
               ACE_TRY_CHECK;
-              
+
               CORBA::Boolean abstract =
                 static_cast<CORBA::Boolean> (v->is_abstract ());
 
@@ -1717,7 +1717,7 @@ ifr_adding_visitor::visit_home (AST_Home *node)
                       prev_def->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
                       ACE_TRY_CHECK;
 
-                      int status = 
+                      int status =
                         this->create_home_def (node
                                                ACE_ENV_ARG_PARAMETER);
                       ACE_TRY_CHECK;
@@ -1737,7 +1737,7 @@ ifr_adding_visitor::visit_home (AST_Home *node)
               // not defined/added - not possible.
               // defined/not added - takes the other branch.
               // defined/added - we're ok.
-              this->ir_current_ = 
+              this->ir_current_ =
                 CORBA::IDLType::_narrow (prev_def.in ()
                                          ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
@@ -1756,7 +1756,7 @@ ifr_adding_visitor::visit_home (AST_Home *node)
   return 0;
 }
 
-int 
+int
 ifr_adding_visitor::visit_factory (AST_Factory *)
 {
   return 0;
@@ -2028,7 +2028,7 @@ ifr_adding_visitor::visit_attribute (AST_Attribute *node)
 
       if (be_global->ifr_scopes ().top (current_scope) == 0)
         {
-          CORBA::DefinitionKind kind = 
+          CORBA::DefinitionKind kind =
             current_scope->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
@@ -2482,7 +2482,7 @@ ifr_adding_visitor::visit_root (AST_Root *node)
         -1
       );
     }
-  
+
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((
@@ -2844,15 +2844,15 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node
                     -1
                   );
                 }
-            
-              bases[i] = 
+
+              bases[i] =
                 CORBA::AbstractInterfaceDef::_narrow (this->ir_current_.in ()
-                                                      ACE_ENV_ARG_PARAMETER);    
+                                                      ACE_ENV_ARG_PARAMETER);
               ACE_CHECK_RETURN (-1);
             }
           else
             {
-              abs_bases[i] = 
+              abs_bases[i] =
                 CORBA::AbstractInterfaceDef::_narrow (result.in ()
                                                       ACE_ENV_ARG_PARAMETER);
               ACE_CHECK_RETURN (-1);
@@ -2901,9 +2901,9 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node
                     -1
                   );
                 }
-            
+
               bases[i] = CORBA::InterfaceDef::_narrow (this->ir_current_.in ()
-                                                       ACE_ENV_ARG_PARAMETER);    
+                                                       ACE_ENV_ARG_PARAMETER);
               ACE_CHECK_RETURN (-1);
             }
           else
@@ -3163,7 +3163,7 @@ ifr_adding_visitor::create_value_def (AST_ValueType *node
   return 0;
 }
 
-int 
+int
 ifr_adding_visitor::create_component_def (AST_Component *node
                                           ACE_ENV_ARG_DECL)
 {
@@ -3289,7 +3289,7 @@ ifr_adding_visitor::create_component_def (AST_Component *node
   return 0;
 }
 
-int 
+int
 ifr_adding_visitor::create_home_def (AST_Home *node
                                      ACE_ENV_ARG_DECL)
 {
@@ -3602,12 +3602,12 @@ ifr_adding_visitor::create_value_member (AST_Field *node)
         }
       ACE_TRY_CHECK;
 
-      CORBA::ValueDef_var vt = 
+      CORBA::ValueDef_var vt =
         CORBA::ValueDef::_narrow (current_scope
                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CORBA::ValueMemberDef_var vm = 
+      CORBA::ValueMemberDef_var vm =
         vt->create_value_member (node->repoID (),
                                  node->local_name ()->get_string (),
                                  node->version (),
@@ -3671,7 +3671,7 @@ ifr_adding_visitor::get_referenced_type (AST_Type *node
   }
 }
 
-void 
+void
 ifr_adding_visitor::fill_base_value (CORBA::ValueDef_ptr &result,
                                      AST_ValueType *node
                                      ACE_ENV_ARG_DECL)
@@ -3693,13 +3693,13 @@ ifr_adding_visitor::fill_base_value (CORBA::ValueDef_ptr &result,
 
   if (!CORBA::is_nil (holder.in ()))
     {
-      result = 
+      result =
         CORBA::ValueDef::_narrow (holder.in ()
                                   ACE_ENV_ARG_PARAMETER);
     }
 }
 
-void 
+void
 ifr_adding_visitor::fill_base_component (
     CORBA::ComponentIR::ComponentDef_ptr &result,
     AST_Component *node
@@ -3723,13 +3723,13 @@ ifr_adding_visitor::fill_base_component (
 
   if (!CORBA::is_nil (holder.in ()))
     {
-      result = 
+      result =
         CORBA::ComponentIR::ComponentDef::_narrow (holder.in ()
                                                    ACE_ENV_ARG_PARAMETER);
     }
 }
 
-void 
+void
 ifr_adding_visitor::fill_base_home (CORBA::ComponentIR::HomeDef_ptr &result,
                                     AST_Home *node
                                     ACE_ENV_ARG_DECL)
@@ -3751,7 +3751,7 @@ ifr_adding_visitor::fill_base_home (CORBA::ComponentIR::HomeDef_ptr &result,
 
   if (!CORBA::is_nil (holder.in ()))
     {
-      result = 
+      result =
         CORBA::ComponentIR::HomeDef::_narrow (holder.in ()
                                               ACE_ENV_ARG_PARAMETER);
     }
@@ -3766,7 +3766,7 @@ ifr_adding_visitor::fill_base_home (CORBA::ComponentIR::HomeDef_ptr &result,
     }
 }
 
-void 
+void
 ifr_adding_visitor::fill_managed_component (
     CORBA::ComponentIR::ComponentDef_ptr &result,
     AST_Home *node
@@ -3788,7 +3788,7 @@ ifr_adding_visitor::fill_managed_component (
 
   if (!CORBA::is_nil (holder.in ()))
     {
-      result = 
+      result =
         CORBA::ComponentIR::ComponentDef::_narrow (holder.in ()
                                                    ACE_ENV_ARG_PARAMETER);
     }
@@ -3803,7 +3803,7 @@ ifr_adding_visitor::fill_managed_component (
     }
 }
 
-void 
+void
 ifr_adding_visitor::fill_primary_key (CORBA::ValueDef_ptr &result,
                                       AST_Home *node
                                       ACE_ENV_ARG_DECL)
@@ -3823,7 +3823,7 @@ ifr_adding_visitor::fill_primary_key (CORBA::ValueDef_ptr &result,
 
   if (!CORBA::is_nil (holder.in ()))
     {
-      result = 
+      result =
         CORBA::ValueDef::_narrow (holder.in ()
                                   ACE_ENV_ARG_PARAMETER);
     }
@@ -3838,7 +3838,7 @@ ifr_adding_visitor::fill_primary_key (CORBA::ValueDef_ptr &result,
     }
 }
 
-void 
+void
 ifr_adding_visitor::fill_abstract_base_values (CORBA::ValueDefSeq &result,
                                                AST_ValueType *node
                                                ACE_ENV_ARG_DECL)
@@ -3874,7 +3874,7 @@ ifr_adding_visitor::fill_abstract_base_values (CORBA::ValueDefSeq &result,
     }
 }
 
-void 
+void
 ifr_adding_visitor::fill_inherited_interfaces (CORBA::InterfaceDefSeq &result,
                                                AST_Interface *node
                                                ACE_ENV_ARG_DECL)
@@ -3886,7 +3886,7 @@ ifr_adding_visitor::fill_inherited_interfaces (CORBA::InterfaceDefSeq &result,
                          ACE_ENV_ARG_PARAMETER);
 }
 
-void 
+void
 ifr_adding_visitor::fill_supported_interfaces (CORBA::InterfaceDefSeq &result,
                                                AST_Interface *node
                                                ACE_ENV_ARG_DECL)
@@ -3929,7 +3929,7 @@ ifr_adding_visitor::fill_supported_interfaces (CORBA::InterfaceDefSeq &result,
                          ACE_ENV_ARG_PARAMETER);
 }
 
-void 
+void
 ifr_adding_visitor::fill_interfaces (CORBA::InterfaceDefSeq &result,
                                      AST_Interface **list,
                                      CORBA::Long length
@@ -3956,7 +3956,7 @@ ifr_adding_visitor::fill_interfaces (CORBA::InterfaceDefSeq &result,
     }
 }
 
-void 
+void
 ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
                                        AST_ValueType *node
                                        ACE_ENV_ARG_DECL_NOT_USED)
@@ -3965,7 +3965,7 @@ ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
   AST_Decl *item = 0;
   ACE_Vector<AST_Factory *> factories;
 
-  for (UTL_ScopeActiveIterator v_iter (node, 
+  for (UTL_ScopeActiveIterator v_iter (node,
                                        UTL_Scope::IK_decls);
        !v_iter.is_done ();
        v_iter.next ())
@@ -4006,10 +4006,10 @@ ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
         {
           arg = AST_Argument::narrow_from_decl (f_iter.item ());
           result[i].members[index].name =
-            CORBA::string_dup (arg->local_name ()->get_string ());  
-          result[i].members[index].type = 
+            CORBA::string_dup (arg->local_name ()->get_string ());
+          result[i].members[index].type =
             CORBA::TypeCode::_duplicate (CORBA::_tc_void);
-          
+
           /// This will put the field type in ir_current_, and also add it
           /// to the repository if it's not already there.
           if (arg->field_type ()->ast_accept (this) != 0)
@@ -4022,11 +4022,11 @@ ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
                 ));
             }
 
-          result[i].members[index].type_def = 
+          result[i].members[index].type_def =
             CORBA::IDLType::_duplicate (this->ir_current_.in ());
         }
 
-      CORBA::ULong n_exceptions = 
+      CORBA::ULong n_exceptions =
         static_cast<CORBA::ULong> (factories[i]->n_exceptions ());
       result[i].exceptions.length (n_exceptions);
       index = 0;
@@ -4036,19 +4036,19 @@ ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
            ei.next ())
         {
           excp = AST_Exception::narrow_from_decl (ei.item ());
-          result[i].exceptions[index].name = 
+          result[i].exceptions[index].name =
             CORBA::string_dup (excp->local_name ()->get_string ());
           result[i].exceptions[index].id = excp->repoID ();
           result[i].exceptions[index].defined_in =
             ScopeAsDecl (excp->defined_in ())->repoID ();
           result[i].exceptions[index].version = excp->version ();
-          result[i].exceptions[index++].type = 
+          result[i].exceptions[index++].type =
             CORBA::TypeCode::_duplicate (CORBA::_tc_void);
         }
     }
 }
 
-void 
+void
 ifr_adding_visitor::fill_get_exceptions (CORBA::ExceptionDefSeq &result,
                                          AST_Attribute *node
                                          ACE_ENV_ARG_DECL)
@@ -4058,7 +4058,7 @@ ifr_adding_visitor::fill_get_exceptions (CORBA::ExceptionDefSeq &result,
                          ACE_ENV_ARG_PARAMETER);
 }
 
-void 
+void
 ifr_adding_visitor::fill_set_exceptions (CORBA::ExceptionDefSeq &result,
                                          AST_Attribute *node
                                          ACE_ENV_ARG_DECL)
@@ -4068,7 +4068,7 @@ ifr_adding_visitor::fill_set_exceptions (CORBA::ExceptionDefSeq &result,
                          ACE_ENV_ARG_PARAMETER);
 }
 
-void 
+void
 ifr_adding_visitor::fill_exceptions (CORBA::ExceptionDefSeq &result,
                                      AST_Decl *node
                                      ACE_ENV_ARG_DECL)
@@ -4097,7 +4097,7 @@ ifr_adding_visitor::fill_exceptions (CORBA::ExceptionDefSeq &result,
     }
 }
 
-void 
+void
 ifr_adding_visitor::fill_exceptions (CORBA::ExceptionDefSeq &result,
                                      UTL_ExceptList *list
                                      ACE_ENV_ARG_DECL)
@@ -4135,7 +4135,7 @@ ifr_adding_visitor::fill_exceptions (CORBA::ExceptionDefSeq &result,
     }
 }
 
-void 
+void
 ifr_adding_visitor::fill_params (CORBA::ParDescriptionSeq &result,
                                  AST_Operation *node
                                  ACE_ENV_ARG_DECL)
@@ -4152,7 +4152,7 @@ ifr_adding_visitor::fill_params (CORBA::ParDescriptionSeq &result,
        iter.next (), ++index)
     {
       arg = AST_Argument::narrow_from_decl (iter.item ());
-      result[index].name = 
+      result[index].name =
         CORBA::string_dup (arg->local_name ()->get_string ());
       result[index].type = CORBA::TypeCode::_duplicate (CORBA::_tc_void);
 
@@ -4167,7 +4167,7 @@ ifr_adding_visitor::fill_params (CORBA::ParDescriptionSeq &result,
     }
 }
 
-void 
+void
 ifr_adding_visitor::visit_all_provides (AST_Component *node,
                                         CORBA::ComponentIR::ComponentDef_ptr c
                                         ACE_ENV_ARG_DECL)
@@ -4205,7 +4205,7 @@ ifr_adding_visitor::visit_all_provides (AST_Component *node,
     }
 }
 
-void 
+void
 ifr_adding_visitor::visit_all_uses (AST_Component *node,
                                     CORBA::ComponentIR::ComponentDef_ptr c
                                     ACE_ENV_ARG_DECL)
@@ -4244,7 +4244,7 @@ ifr_adding_visitor::visit_all_uses (AST_Component *node,
     }
 }
 
-void 
+void
 ifr_adding_visitor::visit_all_emits (AST_Component *node,
                                      CORBA::ComponentIR::ComponentDef_ptr c
                                      ACE_ENV_ARG_DECL)
@@ -4266,7 +4266,7 @@ ifr_adding_visitor::visit_all_emits (AST_Component *node,
                                                        ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      event_type = 
+      event_type =
         CORBA::ComponentIR::EventDef::_narrow (contained.in ()
                                                ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -4283,7 +4283,7 @@ ifr_adding_visitor::visit_all_emits (AST_Component *node,
     }
 }
 
-void 
+void
 ifr_adding_visitor::visit_all_publishes (AST_Component *node,
                                          CORBA::ComponentIR::ComponentDef_ptr c
                                          ACE_ENV_ARG_DECL)
@@ -4305,7 +4305,7 @@ ifr_adding_visitor::visit_all_publishes (AST_Component *node,
                                                        ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      event_type = 
+      event_type =
         CORBA::ComponentIR::EventDef::_narrow (contained.in ()
                                                ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -4322,7 +4322,7 @@ ifr_adding_visitor::visit_all_publishes (AST_Component *node,
     }
 }
 
-void 
+void
 ifr_adding_visitor::visit_all_consumes (AST_Component *node,
                                         CORBA::ComponentIR::ComponentDef_ptr c
                                         ACE_ENV_ARG_DECL)
@@ -4344,7 +4344,7 @@ ifr_adding_visitor::visit_all_consumes (AST_Component *node,
                                                        ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      event_type = 
+      event_type =
         CORBA::ComponentIR::EventDef::_narrow (contained.in ()
                                                ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -4361,7 +4361,7 @@ ifr_adding_visitor::visit_all_consumes (AST_Component *node,
     }
 }
 
-void 
+void
 ifr_adding_visitor::visit_all_factories (AST_Home *node,
                                          CORBA::ComponentIR::HomeDef_ptr h
                                          ACE_ENV_ARG_DECL)
@@ -4397,7 +4397,7 @@ ifr_adding_visitor::visit_all_factories (AST_Home *node,
     }
 }
 
-void 
+void
 ifr_adding_visitor::visit_all_finders (AST_Home *node,
                                        CORBA::ComponentIR::HomeDef_ptr h
                                        ACE_ENV_ARG_DECL)
@@ -4433,39 +4433,10 @@ ifr_adding_visitor::visit_all_finders (AST_Home *node,
     }
 }
 
-void 
+void
 ifr_adding_visitor::expand_id (ACE_CString &str,
                                const char *local_name)
 {
   ssize_t pos = str.rfind (':');
   str = str.substr (0, pos) + '/' + local_name + str.substr (pos);
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Node <AST_Component::port_description>;
-template class ACE_Unbounded_Queue <AST_Component::port_description>;
-template class ACE_Unbounded_Queue_Iterator <AST_Component::port_description>;
-
-template class ACE_Node <AST_Operation *>;
-template class ACE_Unbounded_Queue <AST_Operation *>;
-template class ACE_Unbounded_Queue_Iterator <AST_Operation *>;
-
-template class ACE_Vector<AST_Factory *>;
-template class ACE_Array_Base<AST_Factory *>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Node <AST_Component::port_description>
-#pragma instantiate ACE_Unbounded_Queue <AST_Component::port_description>
-#pragma instantiate ACE_Unbounded_Queue_Iterator <AST_Component::port_description>
-
-#pragma instantiate ACE_Node <AST_Operation *>
-#pragma instantiate ACE_Unbounded_Queue <AST_Operation *>
-#pragma instantiate ACE_Unbounded_Queue_Iterator <AST_Operation *>
-
-#pragma instantiate ACE_Vector<AST_Factory *>
-#pragma instantiate ACE_Array_Base<AST_Factory *>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
