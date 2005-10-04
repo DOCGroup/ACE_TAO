@@ -1,9 +1,18 @@
 // -*- MPC -*-
 // $Id$
 
-project(airplane server) : portableserver, orbsvcsexe, minimum_corba, iortable, imr_client {
+project(airplane_idl) : taoidldefaults {
   IDL_Files {
     Airplane.idl
+  }
+  custom_only = 1
+}
+
+
+project(airplane server) : portableserver, orbsvcsexe, minimum_corba, iortable, imr_client {
+  after += airplane_idl 
+
+  IDL_Files {
   }
 
   Source_Files {
@@ -16,8 +25,9 @@ project(airplane server) : portableserver, orbsvcsexe, minimum_corba, iortable, 
 }
 
 project(airplane client) : portableserver, orbsvcsexe, minimum_corba, iortable {
+  after += airplane_idl 
+
   IDL_Files {
-    Airplane.idl
   }
 
   Source_Files {
@@ -28,9 +38,18 @@ project(airplane client) : portableserver, orbsvcsexe, minimum_corba, iortable {
   }
 }
 
-project(nestea server) : portableserver, orbsvcsexe, minimum_corba, iortable, imr_client {
+project(nestea_idl): taoidldefaults {
   IDL_Files {
     Nestea.idl
+  }
+
+  custom_only = 1
+}
+
+project(nestea server) : portableserver, orbsvcsexe, minimum_corba, iortable, imr_client {
+  after += nestea_idl
+
+  IDL_Files {
   }
 
   Source_Files {
@@ -49,8 +68,9 @@ project(nestea server) : portableserver, orbsvcsexe, minimum_corba, iortable, im
 }
 
 project(nestea client) : portableserver, orbsvcsexe, minimum_corba, iortable {
+  after += nestea_idl
+
   IDL_Files {
-    Nestea.idl
   }
 
   Source_Files {

@@ -368,6 +368,8 @@ AC_CONFIG_FILES([
   orbsvcs/tests/Bug_1395_Regression/Makefile
   orbsvcs/tests/Bug_1630_Regression/Makefile
   orbsvcs/tests/Bug_2137_Regression/Makefile
+  orbsvcs/tests/Bug_2247_Regression/Makefile
+  orbsvcs/tests/Bug_2248_Regression/Makefile
   orbsvcs/tests/Concurrency/Makefile
   orbsvcs/tests/CosEvent/Basic/Makefile
   orbsvcs/tests/CosEvent/Makefile
