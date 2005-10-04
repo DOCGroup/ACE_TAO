@@ -1,9 +1,17 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoserver, orbsvcsexe, iormanip, pi_server, ftorb, messaging {
+project(*idl): taoidldefaults {
   idlflags += -DCORBA3
 
+  IDL_Files {
+    test.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, orbsvcsexe, iormanip, pi_server, ftorb, messaging {
+  after += *idl
   Source_Files {
     test_i.cpp
     testC.cpp
@@ -12,14 +20,17 @@ project(*Server): taoserver, orbsvcsexe, iormanip, pi_server, ftorb, messaging {
     Server_Request_Interceptor.cpp
     server.cpp
   }
+  IDL_Files {
+  }
 }
 
 project(*Client): taoclient, orbsvcsexe, iormanip, pi_server, ftorb {
-  idlflags += -DCORBA3
-
+  after += *idl
   Source_Files {
     testC.cpp
     client.cpp
+  }
+  IDL_Files {
   }
 }
 
