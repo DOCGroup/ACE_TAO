@@ -76,7 +76,7 @@ TAO_IIOP_Transport::send (iovec *iov, int iovcnt,
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::send, ")
-                      ACE_TEXT ("send failure - %m (%d)\n"),
+                      ACE_TEXT ("send failure - %m (errno: %d)\n"),
                       this->id (), errno));
         }
     }
