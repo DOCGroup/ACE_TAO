@@ -193,13 +193,3 @@ TAO_Notify_ProxyConsumer::destroy (ACE_ENV_SINGLE_ARG_DECL)
   this->supplier_admin_->remove (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_Notify_Refcountable_Guard_T<TAO_Notify_ProxyConsumer>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_Notify_Refcountable_Guard_T<TAO_Notify_ProxyConsumer>
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

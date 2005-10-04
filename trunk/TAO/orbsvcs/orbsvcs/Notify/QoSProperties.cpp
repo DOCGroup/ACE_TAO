@@ -212,31 +212,3 @@ TAO_Notify_QoSProperties::transfer (TAO_Notify_QoSProperties& qos_properties)
 
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_Notify_PropertyBase_T<CORBA::Long>;
-template class TAO_Notify_PropertyBase_T<CORBA::Short>;
-template class TAO_Notify_PropertyBase_T<TimeBase::TimeT>;
-
-template class TAO_Notify_Property_T<CORBA::Long>;
-template class TAO_Notify_Property_T<CORBA::Short>;
-template class TAO_Notify_Property_T<TimeBase::TimeT>;
-
-template class TAO_Notify_StructProperty_T<NotifyExt::ThreadPoolParams>;
-template class TAO_Notify_StructProperty_T<NotifyExt::ThreadPoolLanesParams>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_Notify_PropertyBase_T<CORBA::Long>
-#pragma instantiate TAO_Notify_PropertyBase_T<CORBA::Short>
-#pragma instantiate TAO_Notify_PropertyBase_T<TimeBase::TimeT>
-
-#pragma instantiate TAO_Notify_Property_T<CORBA::Long>
-#pragma instantiate TAO_Notify_Property_T<CORBA::Short>
-#pragma instantiate TAO_Notify_Property_T<TimeBase::TimeT>
-
-#pragma instantiate TAO_Notify_StructProperty_T<NotifyExt::ThreadPoolParams>
-#pragma instantiate TAO_Notify_StructProperty_T<NotifyExt::ThreadPoolLanesParams>
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

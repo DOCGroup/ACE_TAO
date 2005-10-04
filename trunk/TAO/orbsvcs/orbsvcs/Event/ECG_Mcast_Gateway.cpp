@@ -698,18 +698,3 @@ ACE_STATIC_SVC_DEFINE (TAO_ECG_Mcast_Gateway,
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO_RTEvent_Serv, TAO_ECG_Mcast_Gateway)
-
-// ****************************************************************
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Dynamic_Service<TAO_ECG_Mcast_Gateway>;
-template void activate<TAO_Objref_Var_T<RtecUDPAdmin::AddrServer> >(TAO_Objref_Var_T<RtecUDPAdmin::AddrServer>&, PortableServer::POA*, TAO_ServantBase*, TAO_EC_Object_Deactivator& ACE_ENV_ARG_DECL);
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Dynamic_Service<TAO_ECG_Mcast_Gateway>
-#pragma instantiate void activate<TAO_Objref_Var_T<RtecUDPAdmin::AddrServer> >(TAO_Objref_Var_T<RtecUDPAdmin::AddrServer>&, PortableServer::POA*, TAO_ServantBase*, TAO_EC_Object_Deactivator& ACE_ENV_ARG_DECL)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

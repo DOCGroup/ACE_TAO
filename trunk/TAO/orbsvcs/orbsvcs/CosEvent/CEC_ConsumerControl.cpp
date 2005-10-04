@@ -55,9 +55,3 @@ void
 TAO_CEC_ConsumerControl::successful_transmission (PortableServer::ServantBase*)
 {
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -313,9 +313,3 @@ TAO_ECG_Reconnect_ConsumerEC_Control_Adapter::handle_timeout (
   this->adaptee_->handle_timeout (tv, arg);
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

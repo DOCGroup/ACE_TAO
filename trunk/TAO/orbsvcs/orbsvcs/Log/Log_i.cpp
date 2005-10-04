@@ -1275,7 +1275,7 @@ TAO_Log_i::validate_capacity_alarm_thresholds (
   // appears to be an TAO TLS implementation artifact for efficent
   // threshold checks.  We could eliminate this restriction by
   // normalizing the sequence.
-  
+
   if (threshs.length () > 1)
     for (CORBA::ULong i = 0; i < threshs.length () - 1; i++)
       if (threshs[i] >= threshs[i + 1])
@@ -1283,9 +1283,3 @@ TAO_Log_i::validate_capacity_alarm_thresholds (
 
   return true;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class TAO_Unbounded_Sequence<DsLogAdmin::TimeInterval>;
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Unbounded_Sequence<DsLogAdmin::TimeInterval>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

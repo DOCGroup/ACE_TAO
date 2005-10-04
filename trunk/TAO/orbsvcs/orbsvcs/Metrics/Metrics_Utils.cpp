@@ -527,12 +527,6 @@ WSOA_Metrics_Handles::WSOA_Metrics_Handles ()
 #include "Metrics_Utils.i"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton<WSOA_Metrics_Handles, ACE_Thread_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<WSOA_Metrics_Handles, ACE_Thread_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 #else
 #error ACE_COMPILE_TIMEPROBES must be defined in order to collect metrics
 #endif /* ACE_ENABLE_TIMEPROBES & ACE_COMPILE_TIMEPROBES */

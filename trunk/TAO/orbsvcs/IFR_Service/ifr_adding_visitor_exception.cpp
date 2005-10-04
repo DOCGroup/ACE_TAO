@@ -485,19 +485,3 @@ ifr_adding_visitor_exception::ir_current (void) const
 {
   return this->ir_current_.in ();
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Unbounded_Queue<CORBA::Contained_ptr>;
-template class ACE_Unbounded_Queue_Iterator<CORBA::Contained_ptr>;
-template class ACE_Node<CORBA::Contained_ptr>;
-template class ACE_Write_Guard<ACE_Lock>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Unbounded_Queue<CORBA::Contained_ptr>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<CORBA::Contained_ptr>
-#pragma instantiate ACE_Node<CORBA::Contained_ptr>
-#pragma instantiate ACE_Write_Guard<ACE_Lock>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

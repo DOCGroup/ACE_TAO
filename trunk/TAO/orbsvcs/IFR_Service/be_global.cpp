@@ -240,18 +240,6 @@ BE_GlobalData::generator_init (void)
   AST_Generator *gen = 0;
   ACE_NEW_RETURN (gen,
                   AST_Generator,
-                  0);             
+                  0);
   return gen;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Unbounded_Stack<CORBA::Container_ptr>;
-template class ACE_Node<CORBA::Container_ptr>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Unbounded_Stack<CORBA::Container_ptr>
-#pragma instantiate ACE_Node<CORBA::Container_ptr>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

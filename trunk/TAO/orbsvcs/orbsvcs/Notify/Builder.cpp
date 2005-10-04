@@ -586,13 +586,3 @@ TAO_Notify_Builder::apply_lane_concurrency (TAO_Notify_Object& /*object*/, const
   // No lane support
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Dynamic_Service<TAO_Notify_FilterFactory>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Dynamic_Service<TAO_Notify_FilterFactory>
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

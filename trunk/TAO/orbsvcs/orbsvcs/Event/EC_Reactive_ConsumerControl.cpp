@@ -270,9 +270,3 @@ TAO_EC_Ping_Consumer::work (TAO_EC_ProxyPushSupplier *supplier
     }
   ACE_ENDTRY;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

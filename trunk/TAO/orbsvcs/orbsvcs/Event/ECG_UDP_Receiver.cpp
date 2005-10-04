@@ -244,14 +244,3 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
   ACE_ENDTRY;
   return 0;
 }
-
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template void activate<TAO_Objref_Var_T<RtecEventComm::PushSupplier> >(TAO_Objref_Var_T<RtecEventComm::PushSupplier>&, PortableServer::POA*, TAO_ServantBase*, TAO_EC_Object_Deactivator& ACE_ENV_ARG_DECL);
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate void activate<TAO_Objref_Var_T<RtecEventComm::PushSupplier> >(TAO_Objref_Var_T<RtecEventComm::PushSupplier>&, PortableServer::POA*, TAO_ServantBase*, TAO_EC_Object_Deactivator& ACE_ENV_ARG_DECL)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

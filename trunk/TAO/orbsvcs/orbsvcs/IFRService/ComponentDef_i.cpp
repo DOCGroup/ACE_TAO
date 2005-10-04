@@ -62,20 +62,6 @@ TAO_Port_Utils<CORBA::ComponentIR::UsesDef>::set_is_multiple (
                              is_multiple);
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::UsesDescriptionSeq>;
-template class TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::EventPortDescriptionSeq>;
-template class TAO_Port_Utils<CORBA::ComponentIR::UsesDef>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::UsesDescriptionSeq>
-#pragma instantiate TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::EventPortDescriptionSeq>
-#pragma instantiate TAO_Port_Utils<CORBA::ComponentIR::UsesDef>
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION*/
-
 // ==============================================================
 
 TAO_ComponentDef_i::TAO_ComponentDef_i (

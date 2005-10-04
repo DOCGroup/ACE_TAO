@@ -119,14 +119,14 @@ GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
   else {
     result->successor = info_->successor;
   }
-  
+
   if (!CORBA::is_nil(result->successor.in()))
   {
     CORBA::PolicyList_var pols;
     result->successor->_validate_connection (pols.out ());
   }
   */
- 
+
   // update backups
   result->backups.length(successors_length);
   for (i = 0; i < successors_length; ++i)  {
@@ -167,12 +167,8 @@ GroupInfoPublisherBase::update_info(GroupInfoPublisherBase::Info_ptr& info)
   info_ = info;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 
 template ACE_Singleton<GroupInfoPublisherBase, ACE_Thread_Mutex> *ACE_Singleton<GroupInfoPublisherBase, ACE_Thread_Mutex>::singleton_;
 
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
