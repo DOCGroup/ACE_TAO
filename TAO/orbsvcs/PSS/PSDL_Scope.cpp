@@ -923,32 +923,6 @@ TAO_PSDL_Scope::scope_map (void)
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Hash_Map_Entry<ACE_CString, TAO_PSDL_Scope *>;
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_PSDL_Scope *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_PSDL_Scope *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_PSDL_Scope *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_PSDL_Scope *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
-
-template class TAO_Singleton<TAO_PSDL_Scope,TAO_SYNCH_MUTEX>;
-template class ACE_Array_Base <TAO_PSDL_Scope *>;
-template class ACE_Array_Base <ACE_CString>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, TAO_PSDL_Scope *>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_PSDL_Scope *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_PSDL_Scope *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_PSDL_Scope *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_PSDL_Scope *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>
-
-#pragma instantiate TAO_Singleton<TAO_PSDL_Scope,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Array_Base <TAO_PSDL_Scope *>;
-#pragma instantiate ACE_Array_Base <ACE_CString>;
-
-#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-
+#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template TAO_Singleton<TAO_PSDL_Scope, ACE_Thread_Mutex> *TAO_Singleton<TAO_PSDL_Scope, ACE_Thread_Mutex>::singleton_;
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */

@@ -270,13 +270,3 @@ int StubFaultAnalyzer::idle(int & result ACE_ENV_ARG_DECL_NOT_USED)
   }
   return quit;
 }
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class ACE_Vector < const char * >;
-  template class ACE_Vector < FT::PullMonitorable_var > ;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate ACE_Vector < const char * >
-# pragma instantiate ACE_Vector < FT::PullMonitorable_var >
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

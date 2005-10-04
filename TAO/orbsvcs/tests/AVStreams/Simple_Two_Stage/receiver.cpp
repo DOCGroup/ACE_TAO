@@ -45,13 +45,13 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   ACE_DEBUG ((LM_DEBUG,
 	      "Receiver_Callback::receive_frame for frame %d\n",
 	      this->frame_count_++));
-  
+
   if (start)
     {
       start_time = ACE_OS::gettimeofday ();
       start = 0;
     }
-  else 
+  else
     {
       ACE_Time_Value elapsed_time = ACE_OS::gettimeofday () - start_time;
       stats [stats_index++] = elapsed_time.msec ();
@@ -68,7 +68,7 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
                         1,
                         output_file);
 
-      
+
       if (result == frame->length ())
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Receiver_Callback::fwrite failed\n"),
@@ -87,7 +87,7 @@ Receiver_Callback::dump_samples (const char* file)
 {
   ACE_DEBUG ((LM_DEBUG,
 	      "Dumping Stats.....\n"));
-  
+
   FILE* stats_file = ACE_OS::fopen (file, "w");
 
   if (stats_file == 0)
@@ -95,7 +95,7 @@ Receiver_Callback::dump_samples (const char* file)
       ACE_ERROR ((LM_ERROR,
 		  "Stats.dat cannot be opened \n"));
     }
-  
+
   int i;
   for (i = 0; i < stats_index; i++)
     {
@@ -106,14 +106,14 @@ Receiver_Callback::dump_samples (const char* file)
 		       stats_file,
 		       1);
   //  ACE_High_Res_Timer::global_scale_factor ());
-  
+
   for (i = 0; i < stats_index; i++)
     {
       ACE_OS::fprintf (stats_file, "%d\n",stats [i]);
     }
-  
-  ACE_OS::fclose (stats_file);  
-  
+
+  ACE_OS::fclose (stats_file);
+
   ACE_DEBUG ((LM_DEBUG,
 	      "Done\n"));
 }
@@ -324,11 +324,3 @@ main (int argc,
 
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class TAO_AV_Endpoint_Reactive_Strategy_B<Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
-template class TAO_AV_Endpoint_Reactive_Strategy<Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_B<Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

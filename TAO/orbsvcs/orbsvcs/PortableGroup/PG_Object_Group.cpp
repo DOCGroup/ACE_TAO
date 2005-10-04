@@ -892,39 +892,3 @@ TAO::PG_Object_Group::has_member_at (const PortableGroup::Location & location)
 # pragma nopushoptwarn
 # pragma nopackwarning
 #endif /* __BORLANDC__ && __BORLANDC__ <= 0x564 */
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Hash_Map_Manager_Ex <
-  PortableGroup::Location,
-  TAO::PG_Object_Group::MemberInfo *,
-  TAO_PG_Location_Hash,
-  TAO_PG_Location_Equal_To,
-  TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Entry <
-  PortableGroup::Location,
-  TAO::PG_Object_Group::MemberInfo *>;
-template class ACE_Hash_Map_Iterator_Ex <
-  PortableGroup::Location,
-  TAO::PG_Object_Group::MemberInfo *,
-  TAO_PG_Location_Hash,
-  TAO_PG_Location_Equal_To,
-  TAO_SYNCH_MUTEX>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate ACE_Hash_Map_Manager_Ex <
-    PortableGroup::Location,
-    TAO::PG_Object_Group::MemberInfo *,
-    TAO_PG_Location_Hash,
-    TAO_PG_Location_Equal_To,
-    TAO::PG_Object_Group::MemberMapMutex>
-# pragma instantiate ACE_Hash_Map_Entry <PortableGroup::Location, TAO::PG_Object_Group::MemberInfo *>
-# pragma instantiate ACE_Hash_Map_Iterator_Ex <
-    PortableGroup::Location,
-    TAO::PG_Object_Group::MemberInfo *,
-    TAO_PG_Location_Hash,
-    TAO_PG_Location_Equal_To,
-    TAO::PG_Object_Group::MemberMapMutex>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

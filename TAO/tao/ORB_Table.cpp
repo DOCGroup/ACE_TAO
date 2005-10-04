@@ -177,9 +177,6 @@ TAO::ORB_Table::instance (void)
   return TAO_Singleton<TAO::ORB_Table, TAO_SYNCH_MUTEX>::instance ();
 }
 
-
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-
 template TAO_Singleton<TAO::ORB_Table,TAO_SYNCH_MUTEX> * TAO_Singleton<TAO::ORB_Table,TAO_SYNCH_MUTEX>::singleton_;
-
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */

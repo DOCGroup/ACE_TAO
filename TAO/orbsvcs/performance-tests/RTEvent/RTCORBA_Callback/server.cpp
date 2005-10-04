@@ -17,8 +17,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID (TAO_PERF_RTEC_RTCORBA_Baseline, 
-           server, 
+ACE_RCSID (TAO_PERF_RTEC_RTCORBA_Baseline,
+           server,
            "$Id$")
 
 const char *ior_output_file = "test.ior";
@@ -143,7 +143,3 @@ int main (int argc, char *argv[])
 
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -53,15 +53,3 @@ TAO_Notify_Tests_PushSupplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL
   ACE_ASSERT(this_method_used_only_by_notify_service);
   ACE_UNUSED_ARG(this_method_used_only_by_notify_service);
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_Notify_Tests_Peer_T<TAO_Notify_Tests_PushSupplier_Traits>;
-template class TAO_Notify_Tests_Supplier_T<TAO_Notify_Tests_PushSupplier_Traits>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_Notify_Tests_Peer_T<TAO_Notify_Tests_PushSupplier_Traits>
-#pragma instantiate TAO_Notify_Tests_Supplier_T<TAO_Notify_Tests_PushSupplier_Traits>
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

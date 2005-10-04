@@ -13,8 +13,8 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Sched_Params.h"
 
-ACE_RCSID (EC_Throughput, 
-           ECT_Consumer, 
+ACE_RCSID (EC_Throughput,
+           ECT_Consumer,
            "$Id$")
 
 Test_Consumer::Test_Consumer (ECT_Driver *driver,
@@ -181,9 +181,3 @@ Test_Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
-
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

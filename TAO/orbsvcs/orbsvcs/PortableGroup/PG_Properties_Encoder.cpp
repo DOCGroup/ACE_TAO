@@ -62,9 +62,3 @@ void TAO_PG::Properties_Encoder::encode (
     // nc.kind defaults to empty.  Leave it that way (for now)
   }
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class ACE_Vector< TAO_PG::Properties_Encoder::NamedValue, 10 >;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate ACE_Vector< TAO_PG::Properties_Encoder::NamedValue, 10 >
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

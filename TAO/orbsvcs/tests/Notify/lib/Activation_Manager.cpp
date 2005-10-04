@@ -294,35 +294,3 @@ TAO_Notify_Tests_Activation_Manager::signal_peer (ACE_ENV_SINGLE_ARG_DECL)
 
   peer->start (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Hash_Map_Manager<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Hash_Map_Manager<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Hash_Map_Iterator<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Hash_Map_Iterator<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Hash_Map_Entry<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*>;
-template class ACE_Hash_Map_Entry<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*>;
-
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*, ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*, ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>, ACE_SYNCH_NULL_MUTEX>;
-
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*, ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*, ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>, ACE_SYNCH_NULL_MUTEX>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*>
-#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*>
-
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*, ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*, ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>, ACE_SYNCH_NULL_MUTEX>
-
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*, ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*, ACE_Hash<ACE_CString>,ACE_Equal_To<ACE_CString>, ACE_SYNCH_NULL_MUTEX>
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

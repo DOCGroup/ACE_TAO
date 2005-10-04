@@ -5,8 +5,8 @@
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
 #include "orbsvcs/CosEvent/CEC_Default_Factory.h"
 
-ACE_RCSID( CEC_Tests_Basic, 
-           Shutdown, 
+ACE_RCSID( CEC_Tests_Basic,
+           Shutdown,
            "$Id$")
 
 static void run_test (PortableServer::POA_ptr poa,
@@ -179,9 +179,3 @@ run_test (PortableServer::POA_ptr poa,
   deactivate_servant (&ec_impl ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

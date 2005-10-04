@@ -251,15 +251,6 @@ TAO_Notify_Tests_LookupManager::resolve (CosNotifyFilter::FilterAdmin_var& filte
   ACE_CHECK;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Singleton<TAO_Notify_Tests_LookupManager, TAO_SYNCH_MUTEX>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Singleton<TAO_Notify_Tests_LookupManager, TAO_SYNCH_MUTEX>
-
-#elif defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template ACE_Singleton<TAO_Notify_Tests_LookupManager, ACE_Thread_Mutex> *ACE_Singleton<TAO_Notify_Tests_LookupManager, ACE_Thread_Mutex>::singleton_;
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /*ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */

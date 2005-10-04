@@ -207,19 +207,3 @@ Driver::run (void)
 
   return retstatus;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class Test_Wrapper<Test_DynAny>;
-template class Test_Wrapper<Test_DynArray>;
-template class Test_Wrapper<Test_DynEnum>;
-template class Test_Wrapper<Test_DynSequence>;
-template class Test_Wrapper<Test_DynStruct>;
-template class Test_Wrapper<Test_DynUnion>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate Test_Wrapper<Test_DynAny>
-#pragma instantiate Test_Wrapper<Test_DynArray>
-#pragma instantiate Test_Wrapper<Test_DynEnum>
-#pragma instantiate Test_Wrapper<Test_DynSequence>
-#pragma instantiate Test_Wrapper<Test_DynStruct>
-#pragma instantiate Test_Wrapper<Test_DynUnion>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

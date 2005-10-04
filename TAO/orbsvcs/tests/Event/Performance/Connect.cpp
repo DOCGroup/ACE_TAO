@@ -8,8 +8,8 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID (EC_Tests_Performance, 
-           Connect, 
+ACE_RCSID (EC_Tests_Performance,
+           Connect,
            "$Id$")
 
 int
@@ -398,10 +398,3 @@ ECC_Supplier::dump_results (const char* name,
   this->connect_time_.dump_results (name, gsf);
   this->EC_Supplier::dump_results (name, gsf);
 }
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

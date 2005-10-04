@@ -55,15 +55,3 @@ TAO_Notify_Tests_SequencePushConsumer::push_structured_events
 {
   // NOP
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_Notify_Tests_Peer_T<TAO_Notify_Tests_SequencePushConsumer_Traits>;
-template class TAO_Notify_Tests_Consumer_T<TAO_Notify_Tests_SequencePushConsumer_Traits>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_Notify_Tests_Peer_T<TAO_Notify_Tests_SequencePushConsumer_Traits>
-#pragma instantiate TAO_Notify_Tests_Consumer_T<TAO_Notify_Tests_SequencePushConsumer_Traits>
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -144,30 +144,3 @@ TAO::PG_Properties_Support::find_typeid_properties (
   }
   return typeid_properties;
 }
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class ACE_Hash_Map_Manager<
-    ACE_CString,
-    ::TAO::PG_Property_Set *,
-    TAO_SYNCH_MUTEX>;
-
-  template class ACE_Hash_Map_Iterator<
-    ACE_CString,
-    ::TAO::PG_Property_Set *,
-    TAO_SYNCH_MUTEX>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate ACE_Hash_Map_Manager<
-    ACE_CString,
-    ::TAO::PG_Property_Set *,
-    TAO_SYNCH_MUTEX>
-
-# pragma instantiate ACE_Hash_Map_Iterator<
-    ACE_CString,
-    ::TAO::PG_Property_Set *,
-    TAO_SYNCH_MUTEX>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

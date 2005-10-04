@@ -12,8 +12,8 @@
 #include "ORB_Task.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (TAO_PERF_RTEC, 
-           ORB_Task, 
+ACE_RCSID (TAO_PERF_RTEC,
+           ORB_Task,
            "$Id$")
 
 ORB_Task::ORB_Task (CORBA::ORB_ptr orb)
@@ -37,7 +37,3 @@ ORB_Task::svc (void)
   ACE_ENDTRY;
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

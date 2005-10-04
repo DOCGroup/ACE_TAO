@@ -161,9 +161,3 @@ EC_Wrapper::remove_observer (RtecEventChannelAdmin::Observer_Handle handle
   else
     ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

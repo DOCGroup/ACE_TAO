@@ -255,11 +255,3 @@ CEC_Pull_Counting_Supplier::disconnect_pull_supplier (ACE_ENV_SINGLE_ARG_DECL_NO
   this->consumer_proxy_ =
     CosEventChannelAdmin::ProxyPullConsumer::_nil ();
 }
-
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

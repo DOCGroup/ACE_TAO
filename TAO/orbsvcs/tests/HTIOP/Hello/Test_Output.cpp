@@ -228,9 +228,3 @@ randomize (int array[], size_t size)
       array [size] = temp;
     }
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-   template class ACE_Framework_Component_T<ACE_Test_Output>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate ACE_Framework_Component_T<ACE_Test_Output>;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

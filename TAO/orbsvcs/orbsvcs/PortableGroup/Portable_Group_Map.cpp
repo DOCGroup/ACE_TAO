@@ -175,21 +175,3 @@ TAO_GroupId_Equal_To::operator () (
     && lhs->object_group_id == rhs->object_group_id
     && lhs->object_group_ref_version == rhs->object_group_ref_version;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Hash_Map_Entry<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *>;
-template class ACE_Hash_Map_Manager_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Hash_Map_Entry<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

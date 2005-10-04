@@ -7,8 +7,8 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (EC_Tests, 
-           EC_Supplier, 
+ACE_RCSID (EC_Tests,
+           EC_Supplier,
            "$Id$")
 
 EC_Supplier::EC_Supplier (EC_Driver *driver,
@@ -296,9 +296,3 @@ EC_Supplier_Task::svc (void)
               "Supplier task finished\n"));
   return 0;
 }
-
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -8,8 +8,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/INET_Addr.h"
 
-ACE_RCSID (Latency, 
-           ping, 
+ACE_RCSID (Latency,
+           ping,
            "$Id$")
 
 const char *ping_ior = CORBA::string_dup ("file://ping.ior");
@@ -182,12 +182,3 @@ int main (int argc, char *argv[])
 
   return 0;
 }
-
-// ****************************************************************
-
-// @@ TODO
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -424,21 +424,3 @@ TAO_Notify_SupplierAdmin::find_proxy_consumer (
   }
   return result;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_Notify_Find_Worker_T<TAO_Notify_Proxy
-                             , CosNotifyChannelAdmin::ProxyConsumer
-                             , CosNotifyChannelAdmin::ProxyConsumer_ptr
-                             , CosNotifyChannelAdmin::ProxyNotFound>;
-template class TAO_Notify_Seq_Worker_T<TAO_Notify_Proxy>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_Notify_Find_Worker_T<TAO_Notify_Proxy
-                             , CosNotifyChannelAdmin::ProxyConsumer
-                             , CosNotifyChannelAdmin::ProxyConsumer_ptr
-                             , CosNotifyChannelAdmin::ProxyNotFound>
-#pragma instantiate TAO_Notify_Seq_Worker_T<TAO_Notify_Proxy>
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
