@@ -1,3 +1,16 @@
+Tue Oct  4 11:12:31 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* apps/JAWS2/JAWS/Cache_Object.h:
+	* apps/JAWS2/JAWS/Cache_Object.cpp:
+
+          Include appropriate headers to address incomplete type
+	  definition related compile-time errors.  Necessitated by header
+	  dependency reductions in ACE.
+
+	  Declare lock members that are meant to be mutable in all cases
+	  as "mutable", and remove casts that worked around the
+	  unnecessary "constness" of those members.
+
 Tue Oct  4 10:39:24 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Service_Config.cpp:
