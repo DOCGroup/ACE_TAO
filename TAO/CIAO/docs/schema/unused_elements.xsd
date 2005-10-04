@@ -125,25 +125,6 @@ Place for strange things. Nobody knows what they are for...
   </xsd:complexType>
 
 
-  <xsd:complexType name="Bridge">
-    <xsd:sequence>
-      <xsd:element name="name" type="xsd:string"/>
-      <xsd:element name="label" type="xsd:string"/>
-      <xsd:element name="connect" type="Deployment:Interconnect"/>
-      <xsd:element name="resource" type="Deployment:Resource"/>      
-    </xsd:sequence>
-  </xsd:complexType>
-
-  <xsd:complexType name="Interconnect">
-    <xsd:choice minOccurs="0" maxOccurs="unbounded">
-      <xsd:element name="name" type="xsd:string"/>
-      <xsd:element name="label" type="xsd:string"/>
-      <xsd:element name="connection" type="Deployment:Bridge"/>
-      <xsd:element name="connect" type="Deployment:Node"/>
-      <xsd:element name="resource" type="Deployment:Resource"/>      
-    </xsd:choice>
-  </xsd:complexType>
-
   <xsd:complexType name="PlanPropertyMapping">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="name" type="xsd:string"/>

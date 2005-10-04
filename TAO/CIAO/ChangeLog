@@ -1,3 +1,16 @@
+Tue Oct  4 14:08:24 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* docs/schema/Basic_Deployment_Data.xsd
+	* docs/schema/unused_elements.xsd
+	* tools/Config_Handlers/Basic_Deployment_Data.cpp
+	* tools/Config_Handlers/Basic_Deployment_Data.hpp
+
+	Updated to include domain information (ie, bridge, interconnect).
+	
+	* tools/Config_Handlers/RT-CCM/SRD_Handler.h
+
+	Cosmetic changes. 
+	
 Mon Oct  3 14:27:39 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* CIAO-INSTALL.html
