@@ -1,3 +1,9 @@
+Tue Oct  4 14:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Transport.cpp (send):
+          Make clear the number printed out in the send failure message is
+          errno.
+
 Tue Oct  4 14:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Big_Oneways/server.cpp:
