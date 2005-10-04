@@ -16,8 +16,38 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
+
+## Makefile.GroupRef_Manipulation_Idl.am
+
+BUILT_SOURCES = \
+  testC.cpp \
+  testC.h \
+  testC.inl \
+  testS.cpp \
+  testS.h \
+  testS.inl \
+  testS_T.cpp \
+  testS_T.h \
+  testS_T.inl
+
+CLEANFILES = \
+  test-stamp \
+  testC.cpp \
+  testC.h \
+  testC.inl \
+  testS.cpp \
+  testS.h \
+  testS.inl \
+  testS_T.cpp \
+  testS_T.h \
+  testS_T.inl
+
+testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl testS_T.cpp testS_T.h testS_T.inl: test-stamp
+
+test-stamp: $(srcdir)/test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -DCORBA3 $(srcdir)/test.idl
+	@touch $@
+
 
 ## Makefile.GroupRef_Manipulation_Client.am
 
@@ -25,33 +55,6 @@ if BUILD_ACE_UUID
 if BUILD_CORBA_MESSAGING
 if BUILD_INTERCEPTORS
 if !BUILD_MINIMUM_CORBA
-
-BUILT_SOURCES += \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl \
-  testS_T.cpp \
-  testS_T.h \
-  testS_T.inl
-
-CLEANFILES += \
-  test-stamp \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl \
-  testS_T.cpp \
-  testS_T.h \
-  testS_T.inl
-
-testC.cpp testC.h testC.inl testS.h testS.inl testS_T.cpp testS_T.h testS_T.inl: test-stamp
-
-test-stamp: $(srcdir)/test.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -DCORBA3 $(srcdir)/test.idl
-	@touch $@
 
 noinst_PROGRAMS += client
 
@@ -66,11 +69,9 @@ client_CPPFLAGS = \
 client_SOURCES = \
   client.cpp \
   testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS_T.h \
-  testS_T.inl
+  Server_ORBInitializer.h \
+  Server_Request_Interceptor.h \
+  test_i.h
 
 client_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FT_ServerORB.la \
@@ -101,35 +102,6 @@ if BUILD_CORBA_MESSAGING
 if BUILD_INTERCEPTORS
 if !BUILD_MINIMUM_CORBA
 
-BUILT_SOURCES += \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.cpp \
-  testS.h \
-  testS.inl \
-  testS_T.cpp \
-  testS_T.h \
-  testS_T.inl
-
-CLEANFILES += \
-  test-stamp \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.cpp \
-  testS.h \
-  testS.inl \
-  testS_T.cpp \
-  testS_T.h \
-  testS_T.inl
-
-testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl testS_T.cpp testS_T.h testS_T.inl: test-stamp
-
-test-stamp: $(srcdir)/test.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -DCORBA3 $(srcdir)/test.idl
-	@touch $@
-
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \
@@ -149,11 +121,6 @@ server_SOURCES = \
   test_i.cpp \
   Server_ORBInitializer.h \
   Server_Request_Interceptor.h \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS_T.h \
-  testS_T.inl \
   test_i.h
 
 server_LDADD = \

@@ -15,7 +15,7 @@ TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-## Makefile.IOR_MCast_Client.am
+## Makefile.IOR_MCast_Idl.am
 
 BUILT_SOURCES = \
   MCastC.cpp \
@@ -43,8 +43,11 @@ CLEANFILES = \
 MCastC.cpp MCastC.h MCastC.inl MCastS.cpp MCastS.h MCastS.inl MCastS_T.cpp MCastS_T.h MCastS_T.inl: MCast-stamp
 
 MCast-stamp: $(srcdir)/MCast.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/MCast.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/MCast.idl
 	@touch $@
+
+
+## Makefile.IOR_MCast_Client.am
 
 noinst_PROGRAMS = client
 
@@ -63,11 +66,6 @@ client_SOURCES = \
   client.cpp \
   ior_mcast_client_i.cpp \
   server_i.cpp \
-  MCastC.h \
-  MCastC.inl \
-  MCastS.h \
-  MCastS_T.h \
-  MCastS_T.inl \
   MCast_Server_i.h \
   ior_mcast_client_i.h \
   server_i.h
@@ -82,35 +80,6 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.IOR_MCast_Server.am
-
-BUILT_SOURCES += \
-  MCastC.cpp \
-  MCastC.h \
-  MCastC.inl \
-  MCastS.cpp \
-  MCastS.h \
-  MCastS.inl \
-  MCastS_T.cpp \
-  MCastS_T.h \
-  MCastS_T.inl
-
-CLEANFILES += \
-  MCast-stamp \
-  MCastC.cpp \
-  MCastC.h \
-  MCastC.inl \
-  MCastS.cpp \
-  MCastS.h \
-  MCastS.inl \
-  MCastS_T.cpp \
-  MCastS_T.h \
-  MCastS_T.inl
-
-MCastC.cpp MCastC.h MCastC.inl MCastS.cpp MCastS.h MCastS.inl MCastS_T.cpp MCastS_T.h MCastS_T.inl: MCast-stamp
-
-MCast-stamp: $(srcdir)/MCast.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/MCast.idl
-	@touch $@
 
 noinst_PROGRAMS += server
 
@@ -128,11 +97,6 @@ server_SOURCES = \
   MCast_Server_i.cpp \
   server.cpp \
   server_i.cpp \
-  MCastC.h \
-  MCastC.inl \
-  MCastS.h \
-  MCastS_T.h \
-  MCastS_T.inl \
   MCast_Server_i.h \
   server_i.h
 

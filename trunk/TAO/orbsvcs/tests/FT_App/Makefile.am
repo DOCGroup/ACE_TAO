@@ -16,8 +16,6 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-CLEANFILES =
-BUILT_SOURCES =
 
 ## Makefile.FT_App_Analyzer.am
 
@@ -73,14 +71,9 @@ endif BUILD_INTERCEPTORS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_ACE_UUID
 
-## Makefile.FT_App_Server.am
+## Makefile.FT_App_Idl.am
 
-if BUILD_ACE_UUID
-if BUILD_CORBA_MESSAGING
-if BUILD_INTERCEPTORS
-if !BUILD_MINIMUM_CORBA
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   FT_TestReplicaC.cpp \
   FT_TestReplicaC.h \
   FT_TestReplicaC.inl \
@@ -91,7 +84,7 @@ BUILT_SOURCES += \
   FT_TestReplicaS_T.h \
   FT_TestReplicaS_T.inl
 
-CLEANFILES += \
+CLEANFILES = \
   FT_TestReplica-stamp \
   FT_TestReplicaC.cpp \
   FT_TestReplicaC.h \
@@ -109,55 +102,6 @@ FT_TestReplica-stamp: $(srcdir)/FT_TestReplica.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/FT_TestReplica.idl
 	@touch $@
 
-noinst_PROGRAMS += ft_replica
-
-ft_replica_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs \
-  -DTAO_HAS_TYPED_EVENT_CHANNEL
-
-ft_replica_SOURCES = \
-  FT_Replica.cpp \
-  FT_ReplicaFactory_i.cpp \
-  FT_TestReplicaC.cpp \
-  FT_TestReplicaS.cpp \
-  FT_TestReplica_i.cpp \
-  FT_ReplicaFactory_i.h \
-  FT_TestReplicaC.h \
-  FT_TestReplicaC.inl \
-  FT_TestReplicaS.h \
-  FT_TestReplicaS_T.h \
-  FT_TestReplicaS_T.inl \
-  FT_TestReplica_i.h
-
-ft_replica_LDADD = \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FaultTolerance.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FT_ServerORB.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FT_ClientORB.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FTORB_Utils.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif !BUILD_MINIMUM_CORBA
-endif BUILD_INTERCEPTORS
-endif BUILD_CORBA_MESSAGING
-endif BUILD_ACE_UUID
 
 ## Makefile.FT_App_Client.am
 
@@ -165,35 +109,6 @@ if BUILD_ACE_UUID
 if BUILD_CORBA_MESSAGING
 if BUILD_INTERCEPTORS
 if !BUILD_MINIMUM_CORBA
-
-BUILT_SOURCES += \
-  FT_TestReplicaC.cpp \
-  FT_TestReplicaC.h \
-  FT_TestReplicaC.inl \
-  FT_TestReplicaS.cpp \
-  FT_TestReplicaS.h \
-  FT_TestReplicaS.inl \
-  FT_TestReplicaS_T.cpp \
-  FT_TestReplicaS_T.h \
-  FT_TestReplicaS_T.inl
-
-CLEANFILES += \
-  FT_TestReplica-stamp \
-  FT_TestReplicaC.cpp \
-  FT_TestReplicaC.h \
-  FT_TestReplicaC.inl \
-  FT_TestReplicaS.cpp \
-  FT_TestReplicaS.h \
-  FT_TestReplicaS.inl \
-  FT_TestReplicaS_T.cpp \
-  FT_TestReplicaS_T.h \
-  FT_TestReplicaS_T.inl
-
-FT_TestReplicaC.cpp FT_TestReplicaC.h FT_TestReplicaC.inl FT_TestReplicaS.cpp FT_TestReplicaS.h FT_TestReplicaS.inl FT_TestReplicaS_T.cpp FT_TestReplicaS_T.h FT_TestReplicaS_T.inl: FT_TestReplica-stamp
-
-FT_TestReplica-stamp: $(srcdir)/FT_TestReplica.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/FT_TestReplica.idl
-	@touch $@
 
 noinst_PROGRAMS += ft_client
 
@@ -209,12 +124,15 @@ ft_client_CPPFLAGS = \
 ft_client_SOURCES = \
   FT_Client.cpp \
   FT_TestReplicaC.cpp \
-  FT_TestReplicaS.cpp \
-  FT_TestReplicaC.h \
-  FT_TestReplicaC.inl \
-  FT_TestReplicaS.h \
-  FT_TestReplicaS_T.h \
-  FT_TestReplicaS_T.inl
+  FT_Creator.h \
+  FT_ReplicaFactory_i.h \
+  FT_TestReplica_i.h \
+  ReplicationManagerFaultConsumerAdapter.h \
+  StubBatchConsumer.h \
+  StubFaultAnalyzer.h \
+  StubFaultConsumer.h \
+  StubFaultNotifier.h \
+  TAO_Object_Group_Creator.h
 
 ft_client_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FaultTolerance.la \
@@ -481,6 +399,58 @@ replmgr_controller_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_MINIMUM_CORBA
+endif BUILD_INTERCEPTORS
+endif BUILD_CORBA_MESSAGING
+endif BUILD_ACE_UUID
+
+## Makefile.FT_App_Server.am
+
+if BUILD_ACE_UUID
+if BUILD_CORBA_MESSAGING
+if BUILD_INTERCEPTORS
+if !BUILD_MINIMUM_CORBA
+
+noinst_PROGRAMS += ft_replica
+
+ft_replica_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_HAS_TYPED_EVENT_CHANNEL
+
+ft_replica_SOURCES = \
+  FT_Replica.cpp \
+  FT_ReplicaFactory_i.cpp \
+  FT_TestReplicaC.cpp \
+  FT_TestReplicaS.cpp \
+  FT_TestReplica_i.cpp \
+  FT_ReplicaFactory_i.h \
+  FT_TestReplica_i.h
+
+ft_replica_LDADD = \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FaultTolerance.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FT_ServerORB.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FT_ClientORB.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FTORB_Utils.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la

@@ -1,11 +1,21 @@
 // $Id$
 
+project(*idl): taoidldefaults, orbsvcslib {
+  IDL_Files {
+    FT_TestReplica.idl
+  }
+  custom_only = 1
+}
+
 project(*Server): taoserver, fault_tolerance, orbsvcsexe, minimum_corba {
   exename = ft_replica
+  after += *idl
   Source_Files {
     FT_Replica.cpp
-    FT_TestReplica_i.cpp
     FT_ReplicaFactory_i.cpp
+    FT_TestReplica_i.cpp
+    FT_TestReplicaS.cpp
+    FT_TestReplicaC.cpp
   }
 // Custom folder: test scripts
 // too bad this doesn't work!
@@ -32,16 +42,22 @@ project(*Server): taoserver, fault_tolerance, orbsvcsexe, minimum_corba {
     run_test_replication_mgr.pl //
     run_test_demo.pl            // test it all together
   }
+
+  IDL_Files {
+  }
 }
 
 project(*Client): taoclient, fault_tolerance, orbsvcsexe, minimum_corba {
   exename = ft_client
   includes += $(TAO_ROOT)
-  after += *Server
+  after += *idl
   Source_Files {
     FT_Client.cpp
+    FT_TestReplicaC.cpp
   }
   Documentation_Files {
+  }
+  IDL_Files {
   }
 }
 
