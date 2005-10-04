@@ -1,3 +1,9 @@
+Tue Oct  4 10:00:00 UTC 2005  Simon Massey  <simon.massey@prismtech.com>
+
+        * ace/Obstack_t.h:
+
+          Fix warning about nested comments.
+
 Mon Oct  3 13:30:58 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/APG/Containers/Hash_Map.cpp:
