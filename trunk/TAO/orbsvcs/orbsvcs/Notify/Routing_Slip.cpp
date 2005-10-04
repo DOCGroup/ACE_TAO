@@ -928,29 +928,3 @@ Routing_Slip::should_retry () const
 
 
 } // namespace
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Auto_Basic_Ptr<TAO_Notify::Routing_Slip>;
-template class ACE_Strong_Bound_Ptr<TAO_Notify::Routing_Slip, TAO_SYNCH_MUTEX>;
-template class ACE_Auto_Basic_Ptr<TAO_Notify::Delivery_Request>;
-template class ACE_Strong_Bound_Ptr<TAO_Notify::Delivery_Request,TAO_SYNCH_MUTEX>;
-template class ACE_Vector <TAO_Notify::Delivery_Request_Ptr>;
-template class ACE_Array_Base<ACE_Strong_Bound_Ptr<TAO_Notify::Delivery_Request,TAO_SYNCH_MUTEX> >;
-template class ACE_Vector <TAO_Notify::Delivery_Request *>;
-template class ACE_Array_Base<TAO_Notify::Delivery_Request *>;
-template class ACE_Dynamic_Service <TAO_Notify::Event_Persistence_Strategy>;
-template class ACE_Array_Base<TAO_Notify_Method_Request_Dispatch_No_Copy*>;
-template class ACE_Vector<TAO_Notify_Method_Request_Dispatch_No_Copy*>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Notify::Routing_Slip>
-#pragma instantiate ACE_Strong_Bound_Ptr<TAO_Notify::Routing_Slip,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Notify::Delivery_Request>
-#pragma instantiate ACE_Strong_Bound_Ptr<TAO_Notify::Delivery_Request,TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Vector <TAO_Notify::Delivery_Request_Ptr>
-#pragma instantiate ACE_Array_Base<ACE_Strong_Bound_Ptr<TAO_Notify::Delivery_Request,TAO_SYNCH_MUTEX> >
-#pragma instantiate ACE_Vector <TAO_Notify::Delivery_Request *>
-#pragma instantiate ACE_Array_Base<TAO_Notify::Delivery_Request *>
-#pragma instantiate ACE_Dynamic_Service <TAO_Notify::Event_Persistence_Strategy>
-#pragma instantiate ACE_Array_Base<TAO_Notify_Method_Request_Dispatch_No_Copy*>
-#pragma instantiate ACE_Vector<TAO_Notify_Method_Request_Dispatch_No_Copy*>
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

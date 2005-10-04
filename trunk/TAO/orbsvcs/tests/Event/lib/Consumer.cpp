@@ -6,8 +6,8 @@
 
 #include "tao/debug.h"
 
-ACE_RCSID (EC_Tests, 
-           EC_Consumer, 
+ACE_RCSID (EC_Tests,
+           EC_Consumer,
            "$Id$")
 
 EC_Consumer::EC_Consumer (EC_Driver *driver,
@@ -165,9 +165,3 @@ EC_Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
   this->supplier_proxy_ =
     RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
 }
-
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

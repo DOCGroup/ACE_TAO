@@ -20,14 +20,3 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   TAO::Utils::Server_Main<StubFaultAnalyzer> server_run("FaultAnalyzer");
   return server_run.run(argc, argv);
 }
-
-///////////////////////////////////
-// Template instantiation for
-// inept compilers.
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO::Utils::Server_Main<StubFaultAnalyzer>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Utils::Server_Main<StubFaultAnalyzer>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

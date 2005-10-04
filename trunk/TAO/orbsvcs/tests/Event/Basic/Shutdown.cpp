@@ -87,11 +87,3 @@ EC_Shutdown::supplier_disconnect (void* cookie
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "Supplier %x has been disconnected\n", cookie));
 }
-
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

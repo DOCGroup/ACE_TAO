@@ -11,15 +11,3 @@ ACE_RCSID(lib, TAO_Notify_Tests_Factories_Define, "$Id$")
 
 TAO_Notify_Tests_COMMAND_FACTORY_DEFINE(TAO_RT_NOTIFY_TEST,TAO_Notify_Tests_RT_POA_Command,TAO_Notify_Tests_Name::poa_command_factory)
 TAO_Notify_Tests_COMMAND_FACTORY_DEFINE(TAO_RT_NOTIFY_TEST,TAO_Notify_Tests_RT_Application_Command,TAO_Notify_Tests_Name::application_command_factory)
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_Notify_Tests_Command_Factory_T<TAO_Notify_Tests_RT_POA_Command>;
-template class TAO_Notify_Tests_Command_Factory_T<TAO_Notify_Tests_RT_Application_Command>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_Notify_Tests_Command_Factory_T<TAO_Notify_Tests_RT_POA_Command>
-#pragma instantiate TAO_Notify_Tests_Command_Factory_T<TAO_Notify_Tests_RT_Application_Command>
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

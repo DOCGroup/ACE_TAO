@@ -12,8 +12,8 @@
 #include "ORB_Task_Activator.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (TAO_PERF_RTEC, 
-           ORB_Task_Activator, 
+ACE_RCSID (TAO_PERF_RTEC,
+           ORB_Task_Activator,
            "$Id$")
 
 ORB_Task_Activator::~ORB_Task_Activator (void)
@@ -27,9 +27,3 @@ ORB_Task_Activator::~ORB_Task_Activator (void)
   } ACE_CATCHANY {
   } ACE_ENDTRY;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class Task_Activator<ORB_Task>;
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate Task_Activator<ORB_Task>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

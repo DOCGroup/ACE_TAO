@@ -8,8 +8,8 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 
-ACE_RCSID (EC_Tests, 
-           Timeout, 
+ACE_RCSID (EC_Tests,
+           Timeout,
            "$Id$")
 
 // ****************************************************************
@@ -203,9 +203,3 @@ main (int argc, char* argv[])
   ACE_ENDTRY;
   return 0;
 }
-
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

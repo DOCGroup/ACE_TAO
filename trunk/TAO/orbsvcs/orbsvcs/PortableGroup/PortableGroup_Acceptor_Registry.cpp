@@ -12,8 +12,8 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Leader_Follower.h"
 
-ACE_RCSID (PortableGroup, 
-           PortableGroup_Acceptor_Registry, 
+ACE_RCSID (PortableGroup,
+           PortableGroup_Acceptor_Registry,
            "$Id$")
 
 TAO_PortableGroup_Acceptor_Registry::TAO_PortableGroup_Acceptor_Registry (void)
@@ -187,19 +187,3 @@ TAO_PortableGroup_Acceptor_Registry::find (const TAO_Profile* profile,
 
    return 0;
 }
-
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Unbounded_Queue<TAO_PortableGroup_Acceptor_Registry::Entry>;
-template class ACE_Unbounded_Queue_Iterator<TAO_PortableGroup_Acceptor_Registry::Entry>;
-template class ACE_Node<TAO_PortableGroup_Acceptor_Registry::Entry>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Unbounded_Queue<TAO_PortableGroup_Acceptor_Registry::Entry>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<TAO_PortableGroup_Acceptor_Registry::Entry>
-#pragma instantiate ACE_Node<TAO_PortableGroup_Acceptor_Registry::Entry>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

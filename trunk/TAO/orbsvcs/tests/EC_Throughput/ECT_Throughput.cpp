@@ -637,27 +637,3 @@ ECT_Throughput::parse_args (int argc, char *argv [])
 
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Auto_Basic_Ptr<POA_RtecScheduler::Scheduler>;
-template class auto_ptr<POA_RtecScheduler::Scheduler>;
-template class ACE_Auto_Basic_Ptr<POA_RtecEventChannelAdmin::EventChannel>;
-template class auto_ptr<POA_RtecEventChannelAdmin::EventChannel>;
-template class ACE_Auto_Basic_Ptr<TAO_Module_Factory>;
-template class auto_ptr<TAO_Module_Factory>;
-template class ACE_Auto_Basic_Ptr<TAO_EC_Factory>;
-template class auto_ptr<TAO_EC_Factory>;
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Auto_Basic_Ptr<POA_RtecScheduler::Scheduler>
-#pragma instantiate auto_ptr<POA_RtecScheduler::Scheduler>
-#pragma instantiate ACE_Auto_Basic_Ptr<POA_RtecEventChannelAdmin::EventChannel>
-#pragma instantiate auto_ptr<POA_RtecEventChannelAdmin::EventChannel>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Module_Factory>
-#pragma instantiate auto_ptr<TAO_Module_Factory>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_EC_Factory>
-#pragma instantiate auto_ptr<TAO_EC_Factory>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

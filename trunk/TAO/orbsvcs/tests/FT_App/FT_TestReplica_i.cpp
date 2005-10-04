@@ -482,23 +482,3 @@ long FT_TestReplica_i::load ()
   }
   return counter;
 }
-
-///////////////////////////////////
-// Template instantiation for
-// competence-challenged compilers.
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template void storeLong <> (::FT::State_var & state, size_t offset, long value);
-  template long loadLong <> (const ::FT::State_var & state, size_t offset);
-
-  template void storeLong <> (unsigned char * & state, size_t offset, long value);
-  template long loadLong <> (const unsigned char * & state, size_t offset);
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate void storeLong(::FT::State_var & state, size_t offset, long value)
-# pragma long loadLong(const ::FT::State_var & state, size_t offset)
-
-# pragma instantiate void storeLong(unsigned char * & state, size_t offset, long value)
-# pragma long loadLong(const unsigned char * & state, size_t offset)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

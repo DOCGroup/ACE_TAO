@@ -3,8 +3,8 @@
 #include "Constraint_Interpreter.h"
 #include "Trader_Constraint_Visitors.h"
 
-ACE_RCSID (Trader, 
-           Constraint_Interpreter, 
+ACE_RCSID (Trader,
+           Constraint_Interpreter,
            "$Id$")
 
 TAO_Constraint_Interpreter::TAO_Constraint_Interpreter (
@@ -248,13 +248,3 @@ TAO_Preference_Interpreter::num_offers (void)
 {
   return this->offers_.size ();
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Node<TAO_Preference_Interpreter::Preference_Info>;
-template class ACE_Unbounded_Queue<TAO_Preference_Interpreter::Preference_Info>;
-template class ACE_Unbounded_Queue_Iterator<TAO_Preference_Interpreter::Preference_Info>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Node<TAO_Preference_Interpreter::Preference_Info>
-#pragma instantiate ACE_Unbounded_Queue<TAO_Preference_Interpreter::Preference_Info>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<TAO_Preference_Interpreter::Preference_Info>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

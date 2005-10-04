@@ -315,11 +315,3 @@ Consumer::push (const RtecEventComm::EventSet& events
   if (events[0].header.type == this->event_base_type_)
     this->event_base_count++;
 }
-
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

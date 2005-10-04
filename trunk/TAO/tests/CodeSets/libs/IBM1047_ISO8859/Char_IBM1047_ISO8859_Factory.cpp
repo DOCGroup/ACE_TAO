@@ -22,16 +22,6 @@
 #include "Char_IBM1047_ISO8859_Factory.h"
 #include "ace/Log_Msg.h"
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class TAO_Codeset_Translator_Factory_T<IBM1047_ISO8859>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_Codeset_Translator_Factory_T<IBM1047_ISO8859>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 ACE_STATIC_SVC_DEFINE (Char_IBM1047_ISO8859_Factory,
                        ACE_TEXT ("Char_IBM1047_ISO8859_Factory"),
                        ACE_SVC_OBJ_T,

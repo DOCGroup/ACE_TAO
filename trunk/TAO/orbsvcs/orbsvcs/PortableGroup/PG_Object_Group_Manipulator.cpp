@@ -90,8 +90,8 @@ TAO::PG_Object_Group_Manipulator::create_object_group (
 }
 
 void
-TAO::PG_Object_Group_Manipulator::init (CORBA::ORB_ptr orb, 
-                                        PortableServer::POA_ptr poa 
+TAO::PG_Object_Group_Manipulator::init (CORBA::ORB_ptr orb,
+                                        PortableServer::POA_ptr poa
                                         ACE_ENV_ARG_DECL)
 {
   ACE_ASSERT (CORBA::is_nil (this->orb_.in ()) && !CORBA::is_nil (orb));
@@ -183,9 +183,3 @@ void dump_membership (const char * label, PortableGroup::ObjectGroup_ptr member)
   }
 #endif
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

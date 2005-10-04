@@ -795,11 +795,3 @@ Routing_Slip_Persistence_Manager::remove_from_dllist()
 }
 
 } /* namespace TAO_Notify */
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-//template class ACE_Node<size_t>;
-//template class ACE_Unbounded_Stack<size_t>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-//#pragma instantiate ACE_Node<size_t>
-//#pragma instantiate ACE_Unbounded_Stack<size_t>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

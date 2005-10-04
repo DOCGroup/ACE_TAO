@@ -41,9 +41,7 @@ TAO_TSS_Resources::instance (void)
 }
 
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-
 template
   TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX> *
   TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX>::singleton_;
-
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */

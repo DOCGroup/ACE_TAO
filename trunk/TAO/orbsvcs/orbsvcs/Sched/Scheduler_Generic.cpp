@@ -268,16 +268,3 @@ void
 Scheduler_Generic::print_schedule ()
 {
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Node<RtecScheduler::RT_Info **>;
-template class ACE_Unbounded_Set<RtecScheduler::RT_Info **>;
-template class ACE_Unbounded_Set_Iterator<RtecScheduler::RT_Info **>;
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Node<RtecScheduler::RT_Info **>
-#pragma instantiate ACE_Unbounded_Set<RtecScheduler::RT_Info **>
-#pragma instantiate ACE_Unbounded_Set_Iterator<RtecScheduler::RT_Info **>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-
-// EOF

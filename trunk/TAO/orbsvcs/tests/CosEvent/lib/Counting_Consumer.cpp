@@ -290,8 +290,3 @@ CEC_Counting_Consumer_Task::run (ACE_ENV_SINGLE_ARG_DECL)
     stop = this->stop_flag_;
   } while (stop == 0);
 }
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

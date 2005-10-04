@@ -179,9 +179,6 @@ main (int argc, char* argv [])
   return 0;
 }
 
-
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-
 template ACE_Singleton<DT_Test, ACE_Thread_Mutex> *ACE_Singleton<DT_Test, ACE_Thread_Mutex>::singleton_;
-
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */

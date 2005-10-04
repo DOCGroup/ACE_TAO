@@ -27,12 +27,6 @@ ACE_RCSID (EC_Mcast,
            EC_Mcast,
            "$Id$")
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_PushConsumer_Adapter<ECM_Supplier>;
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_PushConsumer_Adapter<ECM_Supplier>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 ECM_Driver::ECM_Driver (void)
   : event_period_ (250000),
     event_count_ (100),

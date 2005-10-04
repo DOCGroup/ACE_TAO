@@ -296,33 +296,6 @@ TAO_OutStream::gen_endif (void)
   return 0;
 }
 
-
-// ifdef generation.
-int
-TAO_OutStream::gen_ifdef_AHETI (void)
-{
-  *this << "\n\n#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)";
-
-  return 0;
-}
-
-int
-TAO_OutStream::gen_elif_AHETI (void)
-{
-  *this << "\n\n#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)";
-
-  return 0;
-}
-
-int
-TAO_OutStream::gen_endif_AHETI (void)
-{
-  *this << "\n\n#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ ";
-
-  return 0;
-}
-
-
 // Printf style variable argument print.
 int
 TAO_OutStream::print (const char *format, ...)
