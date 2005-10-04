@@ -1,3 +1,27 @@
+Tue Oct  4 15:15:02 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+	* orbsvcs/tests/Makefile.am:
+
+	  Add Bug_2247_Regression and Bug_2248_Regression directories.
+
+	* orbsvcs/tests/Bug_2247_Regression/Makefile.am:
+	* orbsvcs/tests/Bug_2248_Regression/Makefile.am:
+
+	  New files.
+
+	* orbsvcs/tests/ImplRepo/Makefile.am:
+	* orbsvcs/tests/ImplRepo/scale/Makefile.am:
+
+	  Regenerated.
+
+	* orbsvcs/tests/Bug_2247_Regression/Bug_2247_Regression.mpc:
+	* orbsvcs/tests/Bug_2248_Regression/Bug_2248_Regression.mpc:
+	* orbsvcs/tests/ImplRepo/ImplRepo.mpc:
+	* orbsvcs/tests/ImplRepo/scale/scaletest.mpc
+
+          Add "*idl" project for compiling *.idl files.
+
 Tue Oct  4 11:19:47 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/PortableServer/Creation_Time.inl:

@@ -16,6 +16,8 @@ SUBDIRS = \
         Bug_1395_Regression \
         Bug_1630_Regression \
         Bug_2137_Regression \
+        Bug_2247_Regression \
+        Bug_2248_Regression \
         Concurrency \
         CosEvent \
         EC_Custom_Marshal \
