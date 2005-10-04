@@ -1,3 +1,14 @@
+Tue Oct  4 11:08:35 2005  Simon McQueen  <sm@prismtech.com>
+
+        * orbsvcs/tests/Bug_2248_Regression/tests.idl:
+
+          Added missing file.
+
+        * orbsvcs/tests/Bug_2248_Regression/Bug_2248_Regression.mpc:
+        * orbsvcs/tests/Bug_2248_Regression/Server_Request_Interceptor.h:
+
+          Correct errors.
+
 Tue Oct  4 10:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/POA/DSI/Database_i.cpp

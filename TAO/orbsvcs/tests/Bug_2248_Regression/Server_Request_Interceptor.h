@@ -19,6 +19,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
+#include "testsC.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -46,7 +47,7 @@ public:
 
   /// Set the references to which requests will be forwarded.
   virtual void forward_reference (const char* iorstr)
-	  ACE_THROW_SPEC ((CORBA::SystemException));
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
    * @name Methods Required by the Server Request Interceptor
@@ -98,7 +99,7 @@ private:
 
   /// References to the two objects used in this test.
   CORBA::String_var iorstr_;
-	int request_forwarded_;
+    int request_forwarded_;
 };
 
 #if defined(_MSC_VER)
