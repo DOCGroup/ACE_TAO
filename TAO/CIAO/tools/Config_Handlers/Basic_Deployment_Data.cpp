@@ -936,20 +936,564 @@ namespace CIAO
     }
 
 
+    // Bridge
+    // 
+
+    Bridge::
+    Bridge (::XMLSchema::string< ACE_TCHAR > const& name__)
+    : 
+    ::XSCRT::Type (), 
+    name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
+    regulator__ ()
+    {
+      name_->container (this);
+    }
+
+    Bridge::
+    Bridge (::CIAO::Config_Handlers::Bridge const& s)
+    :
+    ::XSCRT::Type (),
+    name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
+    label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
+    regulator__ ()
+    {
+      name_->container (this);
+      if (label_.get ()) label_->container (this);
+      connect_.reserve (s.connect_.size ());
+      {
+        for (connect_const_iterator i (s.connect_.begin ());
+        i != s.connect_.end ();
+        ++i) add_connect (*i);
+      }
+
+      resource_.reserve (s.resource_.size ());
+      {
+        for (resource_const_iterator i (s.resource_.begin ());
+        i != s.resource_.end ();
+        ++i) add_resource (*i);
+      }
+    }
+
+    ::CIAO::Config_Handlers::Bridge& Bridge::
+    operator= (::CIAO::Config_Handlers::Bridge const& s)
+    {
+      name (s.name ());
+
+      if (s.label_.get ()) label (*(s.label_));
+      else label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+
+      connect_.clear ();
+      connect_.reserve (s.connect_.size ());
+      {
+        for (connect_const_iterator i (s.connect_.begin ());
+        i != s.connect_.end ();
+        ++i) add_connect (*i);
+      }
+
+      resource_.clear ();
+      resource_.reserve (s.resource_.size ());
+      {
+        for (resource_const_iterator i (s.resource_.begin ());
+        i != s.resource_.end ();
+        ++i) add_resource (*i);
+      }
+
+      return *this;
+    }
+
+
+    // Bridge
+    // 
+    ::XMLSchema::string< ACE_TCHAR > const& Bridge::
+    name () const
+    {
+      return *name_;
+    }
+
+    ::XMLSchema::string< ACE_TCHAR >& Bridge::
+    name ()
+    {
+      return *name_;
+    }
+
+    void Bridge::
+    name (::XMLSchema::string< ACE_TCHAR > const& e)
+    {
+      *name_ = e;
+    }
+
+    // Bridge
+    // 
+    bool Bridge::
+    label_p () const
+    {
+      return label_.get () != 0;
+    }
+
+    ::XMLSchema::string< ACE_TCHAR > const& Bridge::
+    label () const
+    {
+      return *label_;
+    }
+
+    ::XMLSchema::string< ACE_TCHAR >& Bridge::
+    label ()
+    {
+      return *label_;
+    }
+
+    void Bridge::
+    label (::XMLSchema::string< ACE_TCHAR > const& e)
+    {
+      if (label_.get ())
+      {
+        *label_ = e;
+      }
+
+      else
+      {
+        label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
+        label_->container (this);
+      }
+    }
+
+    // Bridge
+    // 
+    Bridge::connect_iterator Bridge::
+    begin_connect ()
+    {
+      return connect_.begin ();
+    }
+
+    Bridge::connect_iterator Bridge::
+    end_connect ()
+    {
+      return connect_.end ();
+    }
+
+    Bridge::connect_const_iterator Bridge::
+    begin_connect () const
+    {
+      return connect_.begin ();
+    }
+
+    Bridge::connect_const_iterator Bridge::
+    end_connect () const
+    {
+      return connect_.end ();
+    }
+
+    void Bridge::
+    add_connect (::CIAO::Config_Handlers::Interconnect const& e)
+    {
+      if (connect_.capacity () < connect_.size () + 1)
+      {
+        ::std::vector< ::CIAO::Config_Handlers::Interconnect > v;
+        v.reserve (connect_.size () + 1);
+
+        while (connect_.size ())
+        {
+          //@@ VC6
+          ::CIAO::Config_Handlers::Interconnect& t = connect_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          connect_.pop_back ();
+        }
+
+        connect_.swap (v);
+      }
+
+      connect_.push_back (e);
+      connect_.back ().container (this);
+    }
+
+    size_t Bridge::
+    count_connect(void) const
+    {
+      return connect_.size ();
+    }
+
+    // Bridge
+    // 
+    Bridge::resource_iterator Bridge::
+    begin_resource ()
+    {
+      return resource_.begin ();
+    }
+
+    Bridge::resource_iterator Bridge::
+    end_resource ()
+    {
+      return resource_.end ();
+    }
+
+    Bridge::resource_const_iterator Bridge::
+    begin_resource () const
+    {
+      return resource_.begin ();
+    }
+
+    Bridge::resource_const_iterator Bridge::
+    end_resource () const
+    {
+      return resource_.end ();
+    }
+
+    void Bridge::
+    add_resource (::CIAO::Config_Handlers::Resource const& e)
+    {
+      if (resource_.capacity () < resource_.size () + 1)
+      {
+        ::std::vector< ::CIAO::Config_Handlers::Resource > v;
+        v.reserve (resource_.size () + 1);
+
+        while (resource_.size ())
+        {
+          //@@ VC6
+          ::CIAO::Config_Handlers::Resource& t = resource_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          resource_.pop_back ();
+        }
+
+        resource_.swap (v);
+      }
+
+      resource_.push_back (e);
+      resource_.back ().container (this);
+    }
+
+    size_t Bridge::
+    count_resource(void) const
+    {
+      return resource_.size ();
+    }
+
+
+    // Interconnect
+    // 
+
+    Interconnect::
+    Interconnect (::XMLSchema::string< ACE_TCHAR > const& name__)
+    : 
+    ::XSCRT::Type (), 
+    name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
+    regulator__ ()
+    {
+      name_->container (this);
+    }
+
+    Interconnect::
+    Interconnect (::CIAO::Config_Handlers::Interconnect const& s)
+    :
+    ::XSCRT::Type (),
+    name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
+    label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
+    regulator__ ()
+    {
+      name_->container (this);
+      if (label_.get ()) label_->container (this);
+      connection_.reserve (s.connection_.size ());
+      {
+        for (connection_const_iterator i (s.connection_.begin ());
+        i != s.connection_.end ();
+        ++i) add_connection (*i);
+      }
+
+      connect_.reserve (s.connect_.size ());
+      {
+        for (connect_const_iterator i (s.connect_.begin ());
+        i != s.connect_.end ();
+        ++i) add_connect (*i);
+      }
+
+      resource_.reserve (s.resource_.size ());
+      {
+        for (resource_const_iterator i (s.resource_.begin ());
+        i != s.resource_.end ();
+        ++i) add_resource (*i);
+      }
+    }
+
+    ::CIAO::Config_Handlers::Interconnect& Interconnect::
+    operator= (::CIAO::Config_Handlers::Interconnect const& s)
+    {
+      name (s.name ());
+
+      if (s.label_.get ()) label (*(s.label_));
+      else label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+
+      connection_.clear ();
+      connection_.reserve (s.connection_.size ());
+      {
+        for (connection_const_iterator i (s.connection_.begin ());
+        i != s.connection_.end ();
+        ++i) add_connection (*i);
+      }
+
+      connect_.clear ();
+      connect_.reserve (s.connect_.size ());
+      {
+        for (connect_const_iterator i (s.connect_.begin ());
+        i != s.connect_.end ();
+        ++i) add_connect (*i);
+      }
+
+      resource_.clear ();
+      resource_.reserve (s.resource_.size ());
+      {
+        for (resource_const_iterator i (s.resource_.begin ());
+        i != s.resource_.end ();
+        ++i) add_resource (*i);
+      }
+
+      return *this;
+    }
+
+
+    // Interconnect
+    // 
+    ::XMLSchema::string< ACE_TCHAR > const& Interconnect::
+    name () const
+    {
+      return *name_;
+    }
+
+    ::XMLSchema::string< ACE_TCHAR >& Interconnect::
+    name ()
+    {
+      return *name_;
+    }
+
+    void Interconnect::
+    name (::XMLSchema::string< ACE_TCHAR > const& e)
+    {
+      *name_ = e;
+    }
+
+    // Interconnect
+    // 
+    bool Interconnect::
+    label_p () const
+    {
+      return label_.get () != 0;
+    }
+
+    ::XMLSchema::string< ACE_TCHAR > const& Interconnect::
+    label () const
+    {
+      return *label_;
+    }
+
+    ::XMLSchema::string< ACE_TCHAR >& Interconnect::
+    label ()
+    {
+      return *label_;
+    }
+
+    void Interconnect::
+    label (::XMLSchema::string< ACE_TCHAR > const& e)
+    {
+      if (label_.get ())
+      {
+        *label_ = e;
+      }
+
+      else
+      {
+        label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
+        label_->container (this);
+      }
+    }
+
+    // Interconnect
+    // 
+    Interconnect::connection_iterator Interconnect::
+    begin_connection ()
+    {
+      return connection_.begin ();
+    }
+
+    Interconnect::connection_iterator Interconnect::
+    end_connection ()
+    {
+      return connection_.end ();
+    }
+
+    Interconnect::connection_const_iterator Interconnect::
+    begin_connection () const
+    {
+      return connection_.begin ();
+    }
+
+    Interconnect::connection_const_iterator Interconnect::
+    end_connection () const
+    {
+      return connection_.end ();
+    }
+
+    void Interconnect::
+    add_connection (::CIAO::Config_Handlers::Bridge const& e)
+    {
+      if (connection_.capacity () < connection_.size () + 1)
+      {
+        ::std::vector< ::CIAO::Config_Handlers::Bridge > v;
+        v.reserve (connection_.size () + 1);
+
+        while (connection_.size ())
+        {
+          //@@ VC6
+          ::CIAO::Config_Handlers::Bridge& t = connection_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          connection_.pop_back ();
+        }
+
+        connection_.swap (v);
+      }
+
+      connection_.push_back (e);
+      connection_.back ().container (this);
+    }
+
+    size_t Interconnect::
+    count_connection(void) const
+    {
+      return connection_.size ();
+    }
+
+    // Interconnect
+    // 
+    Interconnect::connect_iterator Interconnect::
+    begin_connect ()
+    {
+      return connect_.begin ();
+    }
+
+    Interconnect::connect_iterator Interconnect::
+    end_connect ()
+    {
+      return connect_.end ();
+    }
+
+    Interconnect::connect_const_iterator Interconnect::
+    begin_connect () const
+    {
+      return connect_.begin ();
+    }
+
+    Interconnect::connect_const_iterator Interconnect::
+    end_connect () const
+    {
+      return connect_.end ();
+    }
+
+    void Interconnect::
+    add_connect (::CIAO::Config_Handlers::Node const& e)
+    {
+      if (connect_.capacity () < connect_.size () + 1)
+      {
+        ::std::vector< ::CIAO::Config_Handlers::Node > v;
+        v.reserve (connect_.size () + 1);
+
+        while (connect_.size ())
+        {
+          //@@ VC6
+          ::CIAO::Config_Handlers::Node& t = connect_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          connect_.pop_back ();
+        }
+
+        connect_.swap (v);
+      }
+
+      connect_.push_back (e);
+      connect_.back ().container (this);
+    }
+
+    size_t Interconnect::
+    count_connect(void) const
+    {
+      return connect_.size ();
+    }
+
+    // Interconnect
+    // 
+    Interconnect::resource_iterator Interconnect::
+    begin_resource ()
+    {
+      return resource_.begin ();
+    }
+
+    Interconnect::resource_iterator Interconnect::
+    end_resource ()
+    {
+      return resource_.end ();
+    }
+
+    Interconnect::resource_const_iterator Interconnect::
+    begin_resource () const
+    {
+      return resource_.begin ();
+    }
+
+    Interconnect::resource_const_iterator Interconnect::
+    end_resource () const
+    {
+      return resource_.end ();
+    }
+
+    void Interconnect::
+    add_resource (::CIAO::Config_Handlers::Resource const& e)
+    {
+      if (resource_.capacity () < resource_.size () + 1)
+      {
+        ::std::vector< ::CIAO::Config_Handlers::Resource > v;
+        v.reserve (resource_.size () + 1);
+
+        while (resource_.size ())
+        {
+          //@@ VC6
+          ::CIAO::Config_Handlers::Resource& t = resource_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          resource_.pop_back ();
+        }
+
+        resource_.swap (v);
+      }
+
+      resource_.push_back (e);
+      resource_.back ().container (this);
+    }
+
+    size_t Interconnect::
+    count_resource(void) const
+    {
+      return resource_.size ();
+    }
+
+
     // Node
     // 
 
     Node::
     Node (::XMLSchema::string< ACE_TCHAR > const& name__,
-    ::XMLSchema::string< ACE_TCHAR > const& label__)
+    ::CIAO::Config_Handlers::Resource const& resource__)
     : 
     ::XSCRT::Type (), 
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
-    label_ (new ::XMLSchema::string< ACE_TCHAR > (label__)),
+    resource_ (new ::CIAO::Config_Handlers::Resource (resource__)),
     regulator__ ()
     {
       name_->container (this);
-      label_->container (this);
+      resource_->container (this);
     }
 
     Node::
@@ -957,11 +1501,27 @@ namespace CIAO
     :
     ::XSCRT::Type (),
     name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
-    label_ (new ::XMLSchema::string< ACE_TCHAR > (*s.label_)),
+    label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
+    resource_ (new ::CIAO::Config_Handlers::Resource (*s.resource_)),
     regulator__ ()
     {
       name_->container (this);
-      label_->container (this);
+      if (label_.get ()) label_->container (this);
+      connection_.reserve (s.connection_.size ());
+      {
+        for (connection_const_iterator i (s.connection_.begin ());
+        i != s.connection_.end ();
+        ++i) add_connection (*i);
+      }
+
+      sharedResource_.reserve (s.sharedResource_.size ());
+      {
+        for (sharedResource_const_iterator i (s.sharedResource_.begin ());
+        i != s.sharedResource_.end ();
+        ++i) add_sharedResource (*i);
+      }
+
+      resource_->container (this);
     }
 
     ::CIAO::Config_Handlers::Node& Node::
@@ -969,7 +1529,26 @@ namespace CIAO
     {
       name (s.name ());
 
-      label (s.label ());
+      if (s.label_.get ()) label (*(s.label_));
+      else label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+
+      connection_.clear ();
+      connection_.reserve (s.connection_.size ());
+      {
+        for (connection_const_iterator i (s.connection_.begin ());
+        i != s.connection_.end ();
+        ++i) add_connection (*i);
+      }
+
+      sharedResource_.clear ();
+      sharedResource_.reserve (s.sharedResource_.size ());
+      {
+        for (sharedResource_const_iterator i (s.sharedResource_.begin ());
+        i != s.sharedResource_.end ();
+        ++i) add_sharedResource (*i);
+      }
+
+      resource (s.resource ());
 
       return *this;
     }
@@ -997,6 +1576,12 @@ namespace CIAO
 
     // Node
     // 
+    bool Node::
+    label_p () const
+    {
+      return label_.get () != 0;
+    }
+
     ::XMLSchema::string< ACE_TCHAR > const& Node::
     label () const
     {
@@ -1012,7 +1597,150 @@ namespace CIAO
     void Node::
     label (::XMLSchema::string< ACE_TCHAR > const& e)
     {
-      *label_ = e;
+      if (label_.get ())
+      {
+        *label_ = e;
+      }
+
+      else
+      {
+        label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
+        label_->container (this);
+      }
+    }
+
+    // Node
+    // 
+    Node::connection_iterator Node::
+    begin_connection ()
+    {
+      return connection_.begin ();
+    }
+
+    Node::connection_iterator Node::
+    end_connection ()
+    {
+      return connection_.end ();
+    }
+
+    Node::connection_const_iterator Node::
+    begin_connection () const
+    {
+      return connection_.begin ();
+    }
+
+    Node::connection_const_iterator Node::
+    end_connection () const
+    {
+      return connection_.end ();
+    }
+
+    void Node::
+    add_connection (::CIAO::Config_Handlers::Interconnect const& e)
+    {
+      if (connection_.capacity () < connection_.size () + 1)
+      {
+        ::std::vector< ::CIAO::Config_Handlers::Interconnect > v;
+        v.reserve (connection_.size () + 1);
+
+        while (connection_.size ())
+        {
+          //@@ VC6
+          ::CIAO::Config_Handlers::Interconnect& t = connection_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          connection_.pop_back ();
+        }
+
+        connection_.swap (v);
+      }
+
+      connection_.push_back (e);
+      connection_.back ().container (this);
+    }
+
+    size_t Node::
+    count_connection(void) const
+    {
+      return connection_.size ();
+    }
+
+    // Node
+    // 
+    Node::sharedResource_iterator Node::
+    begin_sharedResource ()
+    {
+      return sharedResource_.begin ();
+    }
+
+    Node::sharedResource_iterator Node::
+    end_sharedResource ()
+    {
+      return sharedResource_.end ();
+    }
+
+    Node::sharedResource_const_iterator Node::
+    begin_sharedResource () const
+    {
+      return sharedResource_.begin ();
+    }
+
+    Node::sharedResource_const_iterator Node::
+    end_sharedResource () const
+    {
+      return sharedResource_.end ();
+    }
+
+    void Node::
+    add_sharedResource (::CIAO::Config_Handlers::SharedResource const& e)
+    {
+      if (sharedResource_.capacity () < sharedResource_.size () + 1)
+      {
+        ::std::vector< ::CIAO::Config_Handlers::SharedResource > v;
+        v.reserve (sharedResource_.size () + 1);
+
+        while (sharedResource_.size ())
+        {
+          //@@ VC6
+          ::CIAO::Config_Handlers::SharedResource& t = sharedResource_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          sharedResource_.pop_back ();
+        }
+
+        sharedResource_.swap (v);
+      }
+
+      sharedResource_.push_back (e);
+      sharedResource_.back ().container (this);
+    }
+
+    size_t Node::
+    count_sharedResource(void) const
+    {
+      return sharedResource_.size ();
+    }
+
+    // Node
+    // 
+    ::CIAO::Config_Handlers::Resource const& Node::
+    resource () const
+    {
+      return *resource_;
+    }
+
+    ::CIAO::Config_Handlers::Resource& Node::
+    resource ()
+    {
+      return *resource_;
+    }
+
+    void Node::
+    resource (::CIAO::Config_Handlers::Resource const& e)
+    {
+      *resource_ = e;
     }
 
 
@@ -5336,6 +6064,102 @@ namespace CIAO
       }
     }
 
+    // Bridge
+    //
+
+    Bridge::
+    Bridge (::XSCRT::XML::Element< ACE_TCHAR > const& e)
+    :Base__ (e), regulator__ ()
+    {
+
+      ::XSCRT::Parser< ACE_TCHAR > p (e);
+
+      while (p.more_elements ())
+      {
+        ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
+        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
+
+        if (n == "name")
+        {
+          name_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
+          name_->container (this);
+        }
+
+        else if (n == "label")
+        {
+          ::XMLSchema::string< ACE_TCHAR > t (e);
+          label (t);
+        }
+
+        else if (n == "connect")
+        {
+          ::CIAO::Config_Handlers::Interconnect t (e);
+          add_connect (t);
+        }
+
+        else if (n == "resource")
+        {
+          ::CIAO::Config_Handlers::Resource t (e);
+          add_resource (t);
+        }
+
+        else 
+        {
+        }
+      }
+    }
+
+    // Interconnect
+    //
+
+    Interconnect::
+    Interconnect (::XSCRT::XML::Element< ACE_TCHAR > const& e)
+    :Base__ (e), regulator__ ()
+    {
+
+      ::XSCRT::Parser< ACE_TCHAR > p (e);
+
+      while (p.more_elements ())
+      {
+        ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
+        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
+
+        if (n == "name")
+        {
+          name_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
+          name_->container (this);
+        }
+
+        else if (n == "label")
+        {
+          ::XMLSchema::string< ACE_TCHAR > t (e);
+          label (t);
+        }
+
+        else if (n == "connection")
+        {
+          ::CIAO::Config_Handlers::Bridge t (e);
+          add_connection (t);
+        }
+
+        else if (n == "connect")
+        {
+          ::CIAO::Config_Handlers::Node t (e);
+          add_connect (t);
+        }
+
+        else if (n == "resource")
+        {
+          ::CIAO::Config_Handlers::Resource t (e);
+          add_resource (t);
+        }
+
+        else 
+        {
+        }
+      }
+    }
+
     // Node
     //
 
@@ -5359,8 +6183,26 @@ namespace CIAO
 
         else if (n == "label")
         {
-          label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
-          label_->container (this);
+          ::XMLSchema::string< ACE_TCHAR > t (e);
+          label (t);
+        }
+
+        else if (n == "connection")
+        {
+          ::CIAO::Config_Handlers::Interconnect t (e);
+          add_connection (t);
+        }
+
+        else if (n == "sharedResource")
+        {
+          ::CIAO::Config_Handlers::SharedResource t (e);
+          add_sharedResource (t);
+        }
+
+        else if (n == "resource")
+        {
+          resource_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Resource > (new ::CIAO::Config_Handlers::Resource (e));
+          resource_->container (this);
         }
 
         else 
@@ -6611,6 +7453,34 @@ namespace CIAO
 
       PropertyTypeInfoInitializer PropertyTypeInfoInitializer_;
 
+      struct BridgeTypeInfoInitializer
+      {
+        BridgeTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (Bridge));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      BridgeTypeInfoInitializer BridgeTypeInfoInitializer_;
+
+      struct InterconnectTypeInfoInitializer
+      {
+        InterconnectTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (Interconnect));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      InterconnectTypeInfoInitializer InterconnectTypeInfoInitializer_;
+
       struct NodeTypeInfoInitializer
       {
         NodeTypeInfoInitializer ()
@@ -7637,6 +8507,584 @@ namespace CIAO
       {
       }
 
+      // Bridge
+      //
+      //
+
+      void Bridge::
+      traverse (Type& o)
+      {
+        pre (o);
+        name (o);
+        if (o.label_p ()) label (o);
+        else label_none (o);
+        connect (o);
+        resource (o);
+        post (o);
+      }
+
+      void Bridge::
+      traverse (Type const& o)
+      {
+        pre (o);
+        name (o);
+        if (o.label_p ()) label (o);
+        else label_none (o);
+        connect (o);
+        resource (o);
+        post (o);
+      }
+
+      void Bridge::
+      pre (Type&)
+      {
+      }
+
+      void Bridge::
+      pre (Type const&)
+      {
+      }
+
+      void Bridge::
+      name (Type& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void Bridge::
+      name (Type const& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void Bridge::
+      label (Type& o)
+      {
+        dispatch (o.label ());
+      }
+
+      void Bridge::
+      label (Type const& o)
+      {
+        dispatch (o.label ());
+      }
+
+      void Bridge::
+      label_none (Type&)
+      {
+      }
+
+      void Bridge::
+      label_none (Type const&)
+      {
+      }
+
+      void Bridge::
+      connect (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        Bridge::Type::connect_iterator b (o.begin_connect()), e (o.end_connect());
+
+        if (b != e)
+        {
+          connect_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) connect_next (o);
+          }
+
+          connect_post (o);
+        }
+      }
+
+      void Bridge::
+      connect (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        Bridge::Type::connect_const_iterator b (o.begin_connect()), e (o.end_connect());
+
+        if (b != e)
+        {
+          connect_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) connect_next (o);
+          }
+
+          connect_post (o);
+        }
+      }
+
+      void Bridge::
+      connect_pre (Type&)
+      {
+      }
+
+      void Bridge::
+      connect_pre (Type const&)
+      {
+      }
+
+      void Bridge::
+      connect_next (Type&)
+      {
+      }
+
+      void Bridge::
+      connect_next (Type const&)
+      {
+      }
+
+      void Bridge::
+      connect_post (Type&)
+      {
+      }
+
+      void Bridge::
+      connect_post (Type const&)
+      {
+      }
+
+      void Bridge::
+      resource (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        Bridge::Type::resource_iterator b (o.begin_resource()), e (o.end_resource());
+
+        if (b != e)
+        {
+          resource_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) resource_next (o);
+          }
+
+          resource_post (o);
+        }
+
+        else resource_none (o);
+      }
+
+      void Bridge::
+      resource (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        Bridge::Type::resource_const_iterator b (o.begin_resource()), e (o.end_resource());
+
+        if (b != e)
+        {
+          resource_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) resource_next (o);
+          }
+
+          resource_post (o);
+        }
+
+        else resource_none (o);
+      }
+
+      void Bridge::
+      resource_pre (Type&)
+      {
+      }
+
+      void Bridge::
+      resource_pre (Type const&)
+      {
+      }
+
+      void Bridge::
+      resource_next (Type&)
+      {
+      }
+
+      void Bridge::
+      resource_next (Type const&)
+      {
+      }
+
+      void Bridge::
+      resource_post (Type&)
+      {
+      }
+
+      void Bridge::
+      resource_post (Type const&)
+      {
+      }
+
+      void Bridge::
+      resource_none (Type&)
+      {
+      }
+
+      void Bridge::
+      resource_none (Type const&)
+      {
+      }
+
+      void Bridge::
+      post (Type&)
+      {
+      }
+
+      void Bridge::
+      post (Type const&)
+      {
+      }
+
+      // Interconnect
+      //
+      //
+
+      void Interconnect::
+      traverse (Type& o)
+      {
+        pre (o);
+        name (o);
+        if (o.label_p ()) label (o);
+        else label_none (o);
+        connection (o);
+        connect (o);
+        resource (o);
+        post (o);
+      }
+
+      void Interconnect::
+      traverse (Type const& o)
+      {
+        pre (o);
+        name (o);
+        if (o.label_p ()) label (o);
+        else label_none (o);
+        connection (o);
+        connect (o);
+        resource (o);
+        post (o);
+      }
+
+      void Interconnect::
+      pre (Type&)
+      {
+      }
+
+      void Interconnect::
+      pre (Type const&)
+      {
+      }
+
+      void Interconnect::
+      name (Type& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void Interconnect::
+      name (Type const& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void Interconnect::
+      label (Type& o)
+      {
+        dispatch (o.label ());
+      }
+
+      void Interconnect::
+      label (Type const& o)
+      {
+        dispatch (o.label ());
+      }
+
+      void Interconnect::
+      label_none (Type&)
+      {
+      }
+
+      void Interconnect::
+      label_none (Type const&)
+      {
+      }
+
+      void Interconnect::
+      connection (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        Interconnect::Type::connection_iterator b (o.begin_connection()), e (o.end_connection());
+
+        if (b != e)
+        {
+          connection_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) connection_next (o);
+          }
+
+          connection_post (o);
+        }
+
+        else connection_none (o);
+      }
+
+      void Interconnect::
+      connection (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        Interconnect::Type::connection_const_iterator b (o.begin_connection()), e (o.end_connection());
+
+        if (b != e)
+        {
+          connection_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) connection_next (o);
+          }
+
+          connection_post (o);
+        }
+
+        else connection_none (o);
+      }
+
+      void Interconnect::
+      connection_pre (Type&)
+      {
+      }
+
+      void Interconnect::
+      connection_pre (Type const&)
+      {
+      }
+
+      void Interconnect::
+      connection_next (Type&)
+      {
+      }
+
+      void Interconnect::
+      connection_next (Type const&)
+      {
+      }
+
+      void Interconnect::
+      connection_post (Type&)
+      {
+      }
+
+      void Interconnect::
+      connection_post (Type const&)
+      {
+      }
+
+      void Interconnect::
+      connection_none (Type&)
+      {
+      }
+
+      void Interconnect::
+      connection_none (Type const&)
+      {
+      }
+
+      void Interconnect::
+      connect (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        Interconnect::Type::connect_iterator b (o.begin_connect()), e (o.end_connect());
+
+        if (b != e)
+        {
+          connect_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) connect_next (o);
+          }
+
+          connect_post (o);
+        }
+      }
+
+      void Interconnect::
+      connect (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        Interconnect::Type::connect_const_iterator b (o.begin_connect()), e (o.end_connect());
+
+        if (b != e)
+        {
+          connect_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) connect_next (o);
+          }
+
+          connect_post (o);
+        }
+      }
+
+      void Interconnect::
+      connect_pre (Type&)
+      {
+      }
+
+      void Interconnect::
+      connect_pre (Type const&)
+      {
+      }
+
+      void Interconnect::
+      connect_next (Type&)
+      {
+      }
+
+      void Interconnect::
+      connect_next (Type const&)
+      {
+      }
+
+      void Interconnect::
+      connect_post (Type&)
+      {
+      }
+
+      void Interconnect::
+      connect_post (Type const&)
+      {
+      }
+
+      void Interconnect::
+      resource (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        Interconnect::Type::resource_iterator b (o.begin_resource()), e (o.end_resource());
+
+        if (b != e)
+        {
+          resource_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) resource_next (o);
+          }
+
+          resource_post (o);
+        }
+
+        else resource_none (o);
+      }
+
+      void Interconnect::
+      resource (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        Interconnect::Type::resource_const_iterator b (o.begin_resource()), e (o.end_resource());
+
+        if (b != e)
+        {
+          resource_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) resource_next (o);
+          }
+
+          resource_post (o);
+        }
+
+        else resource_none (o);
+      }
+
+      void Interconnect::
+      resource_pre (Type&)
+      {
+      }
+
+      void Interconnect::
+      resource_pre (Type const&)
+      {
+      }
+
+      void Interconnect::
+      resource_next (Type&)
+      {
+      }
+
+      void Interconnect::
+      resource_next (Type const&)
+      {
+      }
+
+      void Interconnect::
+      resource_post (Type&)
+      {
+      }
+
+      void Interconnect::
+      resource_post (Type const&)
+      {
+      }
+
+      void Interconnect::
+      resource_none (Type&)
+      {
+      }
+
+      void Interconnect::
+      resource_none (Type const&)
+      {
+      }
+
+      void Interconnect::
+      post (Type&)
+      {
+      }
+
+      void Interconnect::
+      post (Type const&)
+      {
+      }
+
       // Node
       //
       //
@@ -7646,7 +9094,11 @@ namespace CIAO
       {
         pre (o);
         name (o);
-        label (o);
+        if (o.label_p ()) label (o);
+        else label_none (o);
+        connection (o);
+        sharedResource (o);
+        resource (o);
         post (o);
       }
 
@@ -7655,7 +9107,11 @@ namespace CIAO
       {
         pre (o);
         name (o);
-        label (o);
+        if (o.label_p ()) label (o);
+        else label_none (o);
+        connection (o);
+        sharedResource (o);
+        resource (o);
         post (o);
       }
 
@@ -7691,6 +9147,204 @@ namespace CIAO
       label (Type const& o)
       {
         dispatch (o.label ());
+      }
+
+      void Node::
+      label_none (Type&)
+      {
+      }
+
+      void Node::
+      label_none (Type const&)
+      {
+      }
+
+      void Node::
+      connection (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        Node::Type::connection_iterator b (o.begin_connection()), e (o.end_connection());
+
+        if (b != e)
+        {
+          connection_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) connection_next (o);
+          }
+
+          connection_post (o);
+        }
+
+        else connection_none (o);
+      }
+
+      void Node::
+      connection (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        Node::Type::connection_const_iterator b (o.begin_connection()), e (o.end_connection());
+
+        if (b != e)
+        {
+          connection_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) connection_next (o);
+          }
+
+          connection_post (o);
+        }
+
+        else connection_none (o);
+      }
+
+      void Node::
+      connection_pre (Type&)
+      {
+      }
+
+      void Node::
+      connection_pre (Type const&)
+      {
+      }
+
+      void Node::
+      connection_next (Type&)
+      {
+      }
+
+      void Node::
+      connection_next (Type const&)
+      {
+      }
+
+      void Node::
+      connection_post (Type&)
+      {
+      }
+
+      void Node::
+      connection_post (Type const&)
+      {
+      }
+
+      void Node::
+      connection_none (Type&)
+      {
+      }
+
+      void Node::
+      connection_none (Type const&)
+      {
+      }
+
+      void Node::
+      sharedResource (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        Node::Type::sharedResource_iterator b (o.begin_sharedResource()), e (o.end_sharedResource());
+
+        if (b != e)
+        {
+          sharedResource_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) sharedResource_next (o);
+          }
+
+          sharedResource_post (o);
+        }
+
+        else sharedResource_none (o);
+      }
+
+      void Node::
+      sharedResource (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        Node::Type::sharedResource_const_iterator b (o.begin_sharedResource()), e (o.end_sharedResource());
+
+        if (b != e)
+        {
+          sharedResource_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) sharedResource_next (o);
+          }
+
+          sharedResource_post (o);
+        }
+
+        else sharedResource_none (o);
+      }
+
+      void Node::
+      sharedResource_pre (Type&)
+      {
+      }
+
+      void Node::
+      sharedResource_pre (Type const&)
+      {
+      }
+
+      void Node::
+      sharedResource_next (Type&)
+      {
+      }
+
+      void Node::
+      sharedResource_next (Type const&)
+      {
+      }
+
+      void Node::
+      sharedResource_post (Type&)
+      {
+      }
+
+      void Node::
+      sharedResource_post (Type const&)
+      {
+      }
+
+      void Node::
+      sharedResource_none (Type&)
+      {
+      }
+
+      void Node::
+      sharedResource_none (Type const&)
+      {
+      }
+
+      void Node::
+      resource (Type& o)
+      {
+        dispatch (o.resource ());
+      }
+
+      void Node::
+      resource (Type const& o)
+      {
+        dispatch (o.resource ());
       }
 
       void Node::
@@ -11526,6 +13180,175 @@ namespace CIAO
         pop_ ();
       }
 
+      // Bridge
+      //
+      //
+
+      Bridge::
+      Bridge (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      Bridge::
+      Bridge ()
+      {
+      }
+
+      void Bridge::
+      traverse (Type const& o)
+      {
+        Traversal::Bridge::traverse (o);
+      }
+
+      void Bridge::
+      name (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("name", top_ ()));
+        Traversal::Bridge::name (o);
+        pop_ ();
+      }
+
+      void Bridge::
+      label (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("label", top_ ()));
+        Traversal::Bridge::label (o);
+        pop_ ();
+      }
+
+      void Bridge::
+      connect_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("connect", top_ ()));
+      }
+
+      void Bridge::
+      connect_next (Type const& o)
+      {
+        connect_post (o);
+        connect_pre (o);
+      }
+
+      void Bridge::
+      connect_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void Bridge::
+      resource_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("resource", top_ ()));
+      }
+
+      void Bridge::
+      resource_next (Type const& o)
+      {
+        resource_post (o);
+        resource_pre (o);
+      }
+
+      void Bridge::
+      resource_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      // Interconnect
+      //
+      //
+
+      Interconnect::
+      Interconnect (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      Interconnect::
+      Interconnect ()
+      {
+      }
+
+      void Interconnect::
+      traverse (Type const& o)
+      {
+        Traversal::Interconnect::traverse (o);
+      }
+
+      void Interconnect::
+      name (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("name", top_ ()));
+        Traversal::Interconnect::name (o);
+        pop_ ();
+      }
+
+      void Interconnect::
+      label (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("label", top_ ()));
+        Traversal::Interconnect::label (o);
+        pop_ ();
+      }
+
+      void Interconnect::
+      connection_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("connection", top_ ()));
+      }
+
+      void Interconnect::
+      connection_next (Type const& o)
+      {
+        connection_post (o);
+        connection_pre (o);
+      }
+
+      void Interconnect::
+      connection_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void Interconnect::
+      connect_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("connect", top_ ()));
+      }
+
+      void Interconnect::
+      connect_next (Type const& o)
+      {
+        connect_post (o);
+        connect_pre (o);
+      }
+
+      void Interconnect::
+      connect_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void Interconnect::
+      resource_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("resource", top_ ()));
+      }
+
+      void Interconnect::
+      resource_next (Type const& o)
+      {
+        resource_post (o);
+        resource_pre (o);
+      }
+
+      void Interconnect::
+      resource_post (Type const&)
+      {
+        pop_ ();
+      }
+
       // Node
       //
       //
@@ -11560,6 +13383,52 @@ namespace CIAO
       {
         push_ (::XSCRT::XML::Element< ACE_TCHAR > ("label", top_ ()));
         Traversal::Node::label (o);
+        pop_ ();
+      }
+
+      void Node::
+      connection_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("connection", top_ ()));
+      }
+
+      void Node::
+      connection_next (Type const& o)
+      {
+        connection_post (o);
+        connection_pre (o);
+      }
+
+      void Node::
+      connection_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void Node::
+      sharedResource_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("sharedResource", top_ ()));
+      }
+
+      void Node::
+      sharedResource_next (Type const& o)
+      {
+        sharedResource_post (o);
+        sharedResource_pre (o);
+      }
+
+      void Node::
+      sharedResource_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      void Node::
+      resource (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("resource", top_ ()));
+        Traversal::Node::resource (o);
         pop_ ();
       }
 
