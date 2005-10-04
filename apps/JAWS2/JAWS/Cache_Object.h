@@ -1,4 +1,5 @@
-/* -*- c++ -*- */
+// -*- C++ -*-
+
 // $Id$
 
 
@@ -9,6 +10,11 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Malloc.h"
+#include "ace/RW_Thread_Mutex.h"
+
+
+class ACE_Allocator;
+
 
 // Cache bucket -- use Hash_Bucket to hold cacheable objects.
 
@@ -78,8 +84,8 @@ protected:
 
 private:
 
-  /* MUTABLE */ ACE_SYNCH_RW_MUTEX count_;
-  /* MUTABLE */ ACE_Lock_Adapter<ACE_SYNCH_RW_MUTEX> lock_adapter_;
+  mutable ACE_SYNCH_RW_MUTEX count_;
+  mutable ACE_Lock_Adapter<ACE_SYNCH_RW_MUTEX> lock_adapter_;
   
 };
 
@@ -102,8 +108,8 @@ private:
 
   unsigned int count_;
   unsigned int new_count_;
-  /* MUTABLE */ ACE_SYNCH_MUTEX lock_;
-  /* MUTABLE */ ACE_Lock_Adapter<ACE_SYNCH_MUTEX> lock_adapter_;
+  mutable ACE_SYNCH_MUTEX lock_;
+  mutable ACE_Lock_Adapter<ACE_SYNCH_MUTEX> lock_adapter_;
 
 };
 
