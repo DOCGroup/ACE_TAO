@@ -179,7 +179,7 @@ main (int argc, char *argv[])
         }
 
       ACE_DEBUG ((LM_DEBUG ,"done\n"));
-      ACE_DEBUG ((LM_DEBUG, "Waiting for sessions . . . \n"));
+      ACE_DEBUG ((LM_DEBUG, "Waiting for sessions to finish. . . \n"));
       for (int k = 0;
            k != 300 && !session_control_impl->all_sessions_finished ();
            ++k)
