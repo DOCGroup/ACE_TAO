@@ -2,7 +2,7 @@
 //
 // $Id$
 
-#include "tao/orbconf.h"
+#include "tao/orbconf.h"        /* For POA_NO_TIMESTAMP definition. */
 #include "ace/OS_NS_string.h"
 
 namespace TAO
