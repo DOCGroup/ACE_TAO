@@ -1,7 +1,12 @@
 // $Id$
 
 #include "JAWS/Cache_Object.h"
+
+#include "ace/Malloc_Base.h"
+#include "ace/Guard_T.h"
 #include "ace/OS_NS_time.h"
+
+
 
 JAWS_Cache_Object::JAWS_Cache_Object (const void *data, size_t size)
   : internal_ (0),
@@ -113,10 +118,7 @@ JAWS_Referenced_Cache_Object::lock (void)
 unsigned int
 JAWS_Referenced_Cache_Object::count_i (void) const
 {
-  JAWS_Referenced_Cache_Object *mutable_this
-    = (JAWS_Referenced_Cache_Object *) this;
-
-  if (mutable_this->count_.tryacquire_write () == 0)
+  if (this->count_.tryacquire_write () == 0)
     return 0;
 
   return 1;
@@ -171,13 +173,9 @@ JAWS_Counted_Cache_Object::lock (void)
 unsigned int
 JAWS_Counted_Cache_Object::count_i (void) const
 {
-  JAWS_Counted_Cache_Object *mutable_this = (JAWS_Counted_Cache_Object *) this;
+  ACE_Guard<ACE_SYNCH_MUTEX> g (this->lock_);
 
-  {
-    ACE_Guard<ACE_SYNCH_MUTEX> g (mutable_this->lock_);
-
-    return this->count_;
-  }
+  return this->count_;
 }
 
 int
