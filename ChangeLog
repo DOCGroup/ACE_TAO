@@ -1,6 +1,11 @@
 Wed Oct  5 11:11:21 2005  Simon McQueen  <sm@prismtech.com>
 
-        * 
+        *  bin/MakeProjectCreator/config/core_anytypecode.mpb:
+
+           Add new base MPC base project that links with the TAO_AnyTypeCode
+           library but does not inherit from taoidldefaults or set any IDL
+           compiler flags. To be used as an alternative to anytypecode.mpb
+           for all projects under $ACE_ROOT/TAO/tao.
 
 Wed Oct  5 02:11:28 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
