@@ -4,11 +4,15 @@
 #ifndef _AST_NATIVE_H_
 #define _AST_NATIVE_H_
 
-#include "ast_type.h"
+#include "ast_exception.h"
 
-// Representation of "native" IDL type added by the POA spec.
-
-class TAO_IDL_FE_Export AST_Native : public virtual AST_Type
+// Representation of "native" IDL type. It may be used as a 
+// return type, parameter type, or in an operation's
+// exception list. This last usage creates special problems
+// with both syntax checking and code generation. Letting
+// this class inherit from AST_Exception is the most seamless
+// way to handle it, and does not affect the other use cases.
+class TAO_IDL_FE_Export AST_Native : public virtual AST_Exception
 {
 public:
   // Operations.
@@ -25,7 +29,7 @@ public:
   // Destructor.
 
   // Narrowing.
-  DEF_NARROW_METHODS1(AST_Native, AST_Type);
+  DEF_NARROW_METHODS1(AST_Native, AST_Exception);
   DEF_NARROW_FROM_DECL(AST_Native);
 
   // AST Dumping.

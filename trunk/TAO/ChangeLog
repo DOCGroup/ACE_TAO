@@ -1,3 +1,18 @@
+Wed Oct  5 17:28:52 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_native.cpp:
+        * TAO_IDL/ast/ast_operation.cpp:
+        * TAO_IDL/be/be_native.cpp:
+        * TAO_IDL/be_include/be_native.h:
+        * TAO_IDL/include/ast_native.h:
+        
+          Implemented the handling of IDL native declarations in an
+          IDL operation exception list. Thanks to Johnny Willemsen
+          <jwillemsen@remedy.nl> for pointing out that, in the latest
+          version of the CORBA Messaging specification, the 
+          ExceptionHolder valuetype contains an operation with this
+          use case.
+
 Wed Oct  5 11:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/AMH_Response_Handler.cpp:
