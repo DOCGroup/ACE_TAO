@@ -1,3 +1,8 @@
+Wed Oct  5 10:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/Processes/Spawn.cpp:
+          Fixed 64bit conversion warnings
+
 Wed Oct  5 11:11:21 2005  Simon McQueen  <sm@prismtech.com>
 
         *  bin/MakeProjectCreator/config/core_anytypecode.mpb:
