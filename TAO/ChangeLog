@@ -1,3 +1,13 @@
+Wed Oct  5 13:54:00 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/tests/Miop/McastHello/Makefile.am:
+
+	  Regenerate.
+
+	* orbsvcs/tests/Miop/McastHello/McastHello.mpc:
+
+          Add "*idl" project for compiling *.idl files.
+
 Wed Oct  5 12:18:39 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/POA/DSI/Database_i.h:
