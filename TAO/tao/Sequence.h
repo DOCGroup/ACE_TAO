@@ -530,11 +530,11 @@ public:
 
 // ****************************************************************
 
-template<class T> class TAO_Unbounded_Sequence;
 // forward declaration, we are going to specialize that template
 // here.
 // The template itself requires this file so every user of the
 // template should also see the specialization.
+template<class T> class TAO_Unbounded_Sequence;
 
 /**
  * @class TAO_Unbounded_Sequence<CORBA::Octet>
