@@ -332,19 +332,18 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
   for (UTL_NamelistActiveIterator nl_i (t); !nl_i.is_done (); nl_i.next ())
     {
       nl_n = nl_i.item ();
+      d = this->lookup_by_name (nl_n, I_TRUE);
 
-      d = this->lookup_by_name (nl_n,
-                                I_TRUE);
-
-      if (d == 0 || d->node_type() != AST_Decl::NT_except)
+      if (d == 0)
         {
           idl_global->err ()->lookup_error (nl_n);
           return 0;
         }
 
+      bool oneway_op = (this->flags () == AST_Operation::OP_oneway);
       fe = AST_Exception::narrow_from_decl (d);
 
-      if ((this->flags () == AST_Operation::OP_oneway) && fe)
+      if (oneway_op && fe != 0)
         {
           idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_RAISES,
                                       this);
