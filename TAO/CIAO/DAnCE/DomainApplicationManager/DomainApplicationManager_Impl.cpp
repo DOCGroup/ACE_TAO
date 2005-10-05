@@ -32,6 +32,9 @@ DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
   //         Make sure the default size of artifact_map_ is
   //         appropriate for your needs.  You may also want to make
   //         the size configurable at compile-time, at least.
+  //
+  // Need to initialize chained artifacts here.
+  //
     deployment_file_ (CORBA::string_dup (deployment_file)),
     deployment_config_ (orb)
 {
@@ -163,18 +166,30 @@ CIAO::DomainApplicationManager_Impl::
 get_plan_info (void)
 {
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::get_plan_info");
+  
+  // Read the deployment.dat file and get to know the different nodes
+  // that are present in the deployment domain.
+  // JAI: We should be able to replace this way, by parsing the domain
+  // descriptor to get to know more on the domain.
+  //
   if ( this->deployment_config_.init (this->deployment_file_) == -1 )
     return 0;
 
-  const CORBA::ULong length = this->plan_.instance.length ();
-
   // Error: If there are no nodes in the plan => No nodes to deploy the
   // components
+  const CORBA::ULong length = this->plan_.instance.length ();
   if (length == 0)
     return false;
 
   // Copy the name of the node in the plan on to the node manager
-  // array, Making sure that duplicates are not added twice
+  // array, Making sure that duplicates are not added.
+  //
+  // OPTIMIZATION:
+  // We can parse the domain descriptor and the size of the node
+  // data structure is the size of the num_plans and
+  // the individual node names need to be entered into the
+  // node_manager_map.
+  //
   int num_plans = 0;
   for (CORBA::ULong index = 0; index < length; index ++)
     {
@@ -212,6 +227,9 @@ get_plan_info (void)
     }
 
   // Set the length of the Node Managers
+  //
+  // why cannot we use the provate variable in the above "for" loop?
+  //
   this->num_child_plans_ = num_plans;
 
   // Indicate success
@@ -272,7 +290,7 @@ split_plan (void)
   }
 
   // (1) Iterate over the <instance> field of the global DeploymentPlan
-  //     variabl.
+  //     structure.
   // (2) Retrieve the necessary information to contruct the node-level
   //     plans one by one.
   for ( i = 0; i < (this->plan_.instance).length (); ++i)
