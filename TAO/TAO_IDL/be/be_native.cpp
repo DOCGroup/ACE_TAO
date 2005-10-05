@@ -28,9 +28,14 @@ be_native::be_native (void)
   : COMMON_Base (),
     AST_Decl (),
     AST_Type (),
+    AST_ConcreteType (),
+    UTL_Scope (),
+    AST_Structure (),
     AST_Native (),
+    be_scope (),
     be_decl (),
-    be_type ()
+    be_type (),
+    be_exception ()
 {
 }
 
@@ -40,11 +45,24 @@ be_native::be_native (UTL_ScopedName *n)
               n),
     AST_Type (AST_Decl::NT_native,
               n),
+    AST_ConcreteType (AST_Decl::NT_native,
+                      n),
+    UTL_Scope (AST_Decl::NT_native),
+    AST_Structure (AST_Decl::NT_native,
+                   n,
+                   I_TRUE,
+                   I_FALSE),
+    AST_Exception (n,
+                   I_TRUE,
+                   I_FALSE),
     AST_Native (n),
     be_decl (AST_Decl::NT_native,
              n),
     be_type (AST_Decl::NT_native,
-             n)
+             n),
+    be_exception (n,
+                  I_TRUE,
+                  I_FALSE)
 {
 }
 
@@ -67,5 +85,5 @@ be_native::accept (be_visitor *visitor)
 }
 
 // Narrowing
-IMPL_NARROW_METHODS2(be_native, AST_Native, be_type)
+IMPL_NARROW_METHODS2(be_native, AST_Native, be_exception)
 IMPL_NARROW_FROM_DECL(be_native)
