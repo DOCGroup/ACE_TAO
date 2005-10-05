@@ -58,7 +58,7 @@ feature(ace_svcconf) {
     "	echo '#include \"ace/Object_Manager.h\"' >> $@"
     "	echo '#include \"ace/Guard_T.h\"' >> $@"
     "	echo '#include \"ace/Recursive_Thread_Mutex.h\"' >> $@"
-    "   echo '#include \"ace/Synch_Traits.h\"' >> $@"
+    "	echo '#include \"ace/Synch_Traits.h\"' >> $@"
     "	echo '#include \"ace/OS_NS_ctype.h\"' >> $@"
     "	echo '#include \"ace/OS_NS_string.h\"' >> $@"
     "	$(LEX) -L -t -I Svc_Conf.l >> $@"
