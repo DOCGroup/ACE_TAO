@@ -1,3 +1,8 @@
+Wed Oct  5 11:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging/AMH_Response_Handler.cpp:
+          Removed not needed return at end of method
+
 Wed Oct  5 11:23:27 2005  Simon McQueen  <sm@prismtech.com>
 
         * tao/CodecFactory.mpc:
