@@ -30,10 +30,12 @@
 
 #include "ace/Message_Queue.h"
 #include "ace/Condition_Thread_Mutex.h"
-#include "ace/Method_Request.h"
 
 /// Define to be compatible with the terminology in the POSA2 book!
 #define ACE_Activation_List ACE_Activation_Queue
+
+class ACE_Method_Request;
+
 
 /**
  * @class ACE_Activation_Queue
