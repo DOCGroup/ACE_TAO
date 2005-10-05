@@ -7,7 +7,8 @@
 // will correctly serialize the intialization of the mutex and synch
 // objects.
 
-#include "ace/Malloc.h"
+#include "ace/Malloc_T.h"
+#include "ace/Shared_Memory_Pool.h"
 #include "ace/SV_Semaphore_Complex.h"
 #include "ace/OS_NS_unistd.h"
 
