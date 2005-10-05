@@ -37,19 +37,30 @@ namespace CIAO
                        ))
     {
       CIAO_TRACE("Execution_Manager::Execution_Manager_Impl::preparePlan");
+
       if (CIAO::debug_level () > 10)
         ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) CIAO_Execution_Manager: preparePlan "
-                    " invoked \n"));
+                    "CIAO (%P|%t) Domain Application Manager 
+                     invoked CIAO_Execution_Manager: preparePlan \n"));
 
+      // There is a Domain Application Manager already existing
+      // for this DeploymentPlan.
+      // No need to create a new DAM. Hence pass the
+      // reference that is already created.
+      //
       if (this->map_.is_plan_available (plan.UUID.in ()))
         return this->map_.fetch_dam_reference (plan.UUID.in ());
 
-
-
+      // We are about to begin working on a new
+      // DeploymentPlan.
+      // Create a DAM servant, which will be populated
+      // to be sent back to the PlanLauncher.
+      //
       CIAO::DomainApplicationManager_Impl *dam_servant = 0;
 
-      // Create a new DomainApplicationMananager servant
+      // Create a new Domain Application Manager servant
+      // to be sent back to the Plan Launcher.
+      //
       ACE_NEW_THROW_EX (
         dam_servant,
         CIAO::DomainApplicationManager_Impl (
@@ -58,22 +69,45 @@ namespace CIAO
           ::Deployment::TargetManager::_nil (),
           plan,
           this->init_file_.c_str ()),
-        CORBA::NO_MEMORY ());
+          CORBA::NO_MEMORY ());
 
+      // Sanity check for NULL pointer
+      // Should we throw an exception here?
+      // We have exceptions like PlanError or StartError at
+      // our disposal already in this function.
+      // Why did the creation of DAM fail in the first place?
+      //
       ACE_CHECK_RETURN (::Deployment::DomainApplicationManager::_nil ());
 
+      // Standard owner transfer mechanisms.
+      //
       PortableServer::ServantBase_var safe_daemon (dam_servant);
 
+      // Calling the init function on the DAM.
+      // This function will split the plan into node specific
+      // plans, so that those plans can be sent off to individual
+      // Node Application Managers.
+      //
       dam_servant->init (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+      // This is a wrong exception to be thrown here.
+      // We already had a DAM servant, the DAM servant is
+      // not NIL any more.
+      // We need to throw the right exception here.
+      //
       ACE_CHECK_RETURN (::Deployment::DomainApplicationManager::_nil ());
 
       /// @@ Can be removed -- Bala
+      /// Gan, have you addressed this comment by Bala?
+      /// Do we still need this code lying around?
+      ///
       dam_servant->set_uuid (plan.UUID.in ());
 
       Deployment::DomainApplicationManager_var dam =
         dam_servant->_this ();
 
       /// @@ TODO:Need to check the return value......
+      /// 
       this->map_.bind_dam_reference (
         plan.UUID.in (),
         Deployment::DomainApplicationManager::_duplicate (dam.in ()));
@@ -87,6 +121,9 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
       CIAO_TRACE("Execution_Manager::Execution_Manager_Impl::getManagers");
+
+      // TODO Need to check the return value.
+      //
       return this->map_.get_dams (ACE_ENV_SINGLE_ARG_PARAMETER);
     }
 
@@ -106,6 +143,8 @@ namespace CIAO
 
           (void) this->map_.unbind_dam (plan->UUID.in ());
 
+          // Where does the POA deactivate happen?
+          //
           manager->destroyManager (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
