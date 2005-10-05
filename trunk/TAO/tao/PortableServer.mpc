@@ -1,5 +1,5 @@
 //$Id$
-project : taolib, core, anytypecode {
+project : taolib, core, core_anytypecode {
   sharedname   = TAO_PortableServer
   dynamicflags = TAO_PORTABLESERVER_BUILD_DLL
 
@@ -24,10 +24,6 @@ project : taolib, core, anytypecode {
   }
 
   PIDL_Files {
-    PortableServer
-  }
-
-  IDL_Files {
     PortableServer
   }
 

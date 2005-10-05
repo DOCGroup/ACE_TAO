@@ -1,9 +1,22 @@
+Wed Oct  5 11:23:27 2005  Simon McQueen  <sm@prismtech.com>
+
+        * tao/CodecFactory.mpc:
+        * tao/DynamicAny.mpc:
+        * tao/IFR_Client.mpc:
+        * tao/IORManipulation.mpc:
+        * tao/PortableServer.mpc:
+        * tao/Strategies.mpc:
+        * tao/Valuetype.mpc:
+
+          Removed 'anytypecode' base project and substituted 'core_anytypecode'.
+          This removes a dependency on the IDL compiler that had crept in.
+
 Wed Oct  5 02:24:50 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
 
  	* tests/Queued_Message_Test/Queued_Message_Test.cpp:
 
 	  Fixed compilation errors introduced from Mon Oct  3 06:33:20
-	  2005  Bala Natarajan  <bala_natarajan at symantec dot com> 
+	  2005  Bala Natarajan  <bala_natarajan at symantec dot com>
 
 Tue Oct  4 15:15:02 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
