@@ -1,6 +1,8 @@
 Wed Oct  5 01:57:37 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* apps/JAWS2/JAWS/Cache_Manager.cpp:
+	* examples/APG/Active_Objects/AO.cpp:
+	* examples/APG/Active_Objects/AO2.cpp:
 	* examples/APG/Shared_Memory/Hash_Map.cpp:
 	* tests/Bound_Ptr_Test.cpp:
 

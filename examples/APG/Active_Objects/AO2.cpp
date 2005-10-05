@@ -5,6 +5,7 @@
 
 #include "ace/OS_NS_unistd.h"
 #include "ace/Activation_Queue.h"
+#include "ace/Method_Request.h"
 #include "ace/Task.h"
 #include "ace/Future.h"
 #include "ace/Auto_Ptr.h"
