@@ -133,7 +133,7 @@ public:
 
   /**
    * Compute the size of the smallest buffer that can contain at least
-   * <minsize> bytes.
+   * @a minsize bytes.
    * To understand how a "best fit" is computed look at the
    * algorithm in the code.
    * Basically the buffers grow exponentially, up to a certain point,
@@ -144,14 +144,15 @@ public:
   static size_t first_size (size_t minsize);
 
   /// Compute not the smallest, but the second smallest buffer that
-  /// will fir <minsize> bytes.
+  /// will fir @a minsize bytes.
   static size_t next_size (size_t minsize);
 
   /**
-   * Increase the capacity of mb to contain at least <minsize> bytes.
-   * If <minsize> is zero the size is increased by an amount at least
-   * large enough to contain any of the basic IDL types.  Return -1 on
-   * failure, 0 on success.
+   * Increase the capacity of mb to contain at least @a minsize bytes.
+   * If @a minsize is zero the size is increased by an amount at least
+   * large enough to contain any of the basic IDL types.
+   * @retval -1 Failure
+   * @retval 0 Success.
    */
   static int grow (ACE_Message_Block *mb, size_t minsize);
 
@@ -189,8 +190,7 @@ public:
   typedef ACE_UINT32 ULong;
   typedef ACE_UINT64 ULongLong;
 
-#   if    (defined (_MSC_VER) && (_MSC_VER >= 900)) \
-          || (defined (__BORLANDC__) && (__BORLANDC__ >= 0x530))
+#   if (defined (_MSC_VER)) || (defined (__BORLANDC__))
       typedef __int64 LongLong;
 #   elif ACE_SIZEOF_LONG == 8 && !defined(_CRAYMPP)
       typedef long LongLong;
