@@ -18,6 +18,7 @@
 
 #include "test_config.h"
 #include "ace/Null_Mutex.h"
+#include "ace/Method_Request.h"
 #include "Bound_Ptr_Test.h"
 
 ACE_RCSID (tests, Bound_Ptr_Test, "Bound_Ptr_Test.cpp,v 4.8 2000/04/23 04:43:58 brunsch Exp")
