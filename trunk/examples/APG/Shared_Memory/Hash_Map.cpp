@@ -3,6 +3,7 @@
 #include "ace/OS_NS_stdio.h"
 
 // Listing 1 code/ch17
+#include "ace/MMAP_Memory_Pool.h"
 #include "ace/Hash_Map_With_Allocator_T.h"
 #include "ace/Malloc_T.h"
 #include "ace/PI_Malloc.h"
