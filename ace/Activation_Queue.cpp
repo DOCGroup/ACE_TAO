@@ -5,6 +5,7 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Log_Msg.h"
+#include "ace/Method_Request.h"
 #include "ace/Malloc_Base.h"
 #include "ace/Time_Value.h"
 
