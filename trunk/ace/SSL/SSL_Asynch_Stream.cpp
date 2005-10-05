@@ -9,7 +9,6 @@ ACE_RCSID (ACE_SSL,
 // This only works on platforms with Asynchronous IO support.
 #if OPENSSL_VERSION_NUMBER > 0x0090581fL && ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
 
-
 #if defined (ACE_WIN32)
 
 # define A_RESULT     ACE_WIN32_Asynch_Result
@@ -279,7 +278,7 @@ ACE_SSL_Asynch_Stream::cancel (void)
 
   // attempt to cancel external, i.e. bio_ssl read/write
   int rc_r_ext = notify_read (0, ERR_CANCELED);
-  int rc_w_ext = notify_read (0, ERR_CANCELED);
+  int rc_w_ext = notify_write (0, ERR_CANCELED);
 
   if (rc_r_int < 0  || rc_w_int < 0
       && rc_r_ext < 0  || rc_w_ext < 0)
@@ -1113,10 +1112,10 @@ ACE_SSL_Asynch_Stream::pending_BIO_count (void)
   int ret = 0;
 
   if (this->bio_inp_flag_ & BF_AIO)
-    ret++;
+    ++ret;
 
   if (this->bio_out_flag_ & BF_AIO)
-    return ret++;
+    ++ret;
 
   return ret;
 }
