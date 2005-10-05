@@ -51,7 +51,7 @@ Pdu::Pdu( Vb* pvbs, const int pvb_count): vb_count_(0), error_index_(0),
 validity_(0), request_id_(0), pdu_type_(0), notify_timestamp_(0),
 output_(0)
 {
-   int z;  // looping variable
+   int z = 0;  // looping variable
 
    // zero is ok
    if ( pvb_count == 0) {

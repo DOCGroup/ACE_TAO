@@ -1017,7 +1017,7 @@ void cmu_snmp::add_var(struct snmp_pdu *pdu,
 {
   ACE_TRACE("cmu_snmp::add_var");
 
-  struct variable_list *vars;
+  struct variable_list *vars = 0;
 
   // if we don't have a vb list ,create one
   if (pdu->variables == 0) {
