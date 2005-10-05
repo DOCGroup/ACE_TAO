@@ -9,6 +9,7 @@
 // ============================================================================
 
 #include "tao/Asynch_Queued_Message.h"
+#include "tao/ORB_Core.h"
 #include "ace/Log_Msg.h"
 #include "ace/Message_Block.h"
 #include "ace/ACE.h"
@@ -32,7 +33,7 @@ create_new_message (void)
   ACE_Message_Block mb (block_size);
   mb.wr_ptr (block_size);
 
-  return new TAO_Asynch_Queued_Message (&mb);
+  return new TAO_Asynch_Queued_Message (&mb, TAO_ORB_Core_instance ());
 }
 
 /// Add a new message at the tail of the queue.
