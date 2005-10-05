@@ -62,12 +62,6 @@ namespace CIAO
       return *name_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& NamedImplementationArtifact::
-    name ()
-    {
-      return *name_;
-    }
-
     void NamedImplementationArtifact::
     name (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -78,12 +72,6 @@ namespace CIAO
     // 
     ::CIAO::Config_Handlers::ImplementationArtifactDescription const& NamedImplementationArtifact::
     referencedArtifact () const
-    {
-      return *referencedArtifact_;
-    }
-
-    ::CIAO::Config_Handlers::ImplementationArtifactDescription& NamedImplementationArtifact::
-    referencedArtifact ()
     {
       return *referencedArtifact_;
     }
@@ -200,12 +188,6 @@ namespace CIAO
       return *label_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& ImplementationArtifactDescription::
-    label ()
-    {
-      return *label_;
-    }
-
     void ImplementationArtifactDescription::
     label (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -231,12 +213,6 @@ namespace CIAO
 
     ::XMLSchema::string< ACE_TCHAR > const& ImplementationArtifactDescription::
     UUID () const
-    {
-      return *UUID_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& ImplementationArtifactDescription::
-    UUID ()
     {
       return *UUID_;
     }
@@ -384,12 +360,6 @@ namespace CIAO
       return *execParameter_;
     }
 
-    ::CIAO::Config_Handlers::Property& ImplementationArtifactDescription::
-    execParameter ()
-    {
-      return *execParameter_;
-    }
-
     void ImplementationArtifactDescription::
     execParameter (::CIAO::Config_Handlers::Property const& e)
     {
@@ -415,12 +385,6 @@ namespace CIAO
 
     ::CIAO::Config_Handlers::Requirement const& ImplementationArtifactDescription::
     deployRequirement () const
-    {
-      return *deployRequirement_;
-    }
-
-    ::CIAO::Config_Handlers::Requirement& ImplementationArtifactDescription::
-    deployRequirement ()
     {
       return *deployRequirement_;
     }
@@ -454,12 +418,6 @@ namespace CIAO
       return *infoProperty_;
     }
 
-    ::CIAO::Config_Handlers::Property& ImplementationArtifactDescription::
-    infoProperty ()
-    {
-      return *infoProperty_;
-    }
-
     void ImplementationArtifactDescription::
     infoProperty (::CIAO::Config_Handlers::Property const& e)
     {
@@ -485,12 +443,6 @@ namespace CIAO
 
     ::XMLSchema::string< ACE_TCHAR > const& ImplementationArtifactDescription::
     contentLocation () const
-    {
-      return *contentLocation_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& ImplementationArtifactDescription::
-    contentLocation ()
     {
       return *contentLocation_;
     }

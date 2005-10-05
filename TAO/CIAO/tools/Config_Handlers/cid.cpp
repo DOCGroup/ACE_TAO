@@ -82,12 +82,6 @@ namespace CIAO
       return *name_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& SubcomponentInstantiationDescription::
-    name ()
-    {
-      return *name_;
-    }
-
     void SubcomponentInstantiationDescription::
     name (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -98,12 +92,6 @@ namespace CIAO
     // 
     ::CIAO::Config_Handlers::ComponentPackageDescription const& SubcomponentInstantiationDescription::
     package () const
-    {
-      return *package_;
-    }
-
-    ::CIAO::Config_Handlers::ComponentPackageDescription& SubcomponentInstantiationDescription::
-    package ()
     {
       return *package_;
     }
@@ -124,12 +112,6 @@ namespace CIAO
 
     ::CIAO::Config_Handlers::Property const& SubcomponentInstantiationDescription::
     configProperty () const
-    {
-      return *configProperty_;
-    }
-
-    ::CIAO::Config_Handlers::Property& SubcomponentInstantiationDescription::
-    configProperty ()
     {
       return *configProperty_;
     }
@@ -163,12 +145,6 @@ namespace CIAO
       return *selectRequirement_;
     }
 
-    ::CIAO::Config_Handlers::Requirement& SubcomponentInstantiationDescription::
-    selectRequirement ()
-    {
-      return *selectRequirement_;
-    }
-
     void SubcomponentInstantiationDescription::
     selectRequirement (::CIAO::Config_Handlers::Requirement const& e)
     {
@@ -194,12 +170,6 @@ namespace CIAO
 
     ::CIAO::Config_Handlers::ComponentPackageReference const& SubcomponentInstantiationDescription::
     reference () const
-    {
-      return *reference_;
-    }
-
-    ::CIAO::Config_Handlers::ComponentPackageReference& SubcomponentInstantiationDescription::
-    reference ()
     {
       return *reference_;
     }
@@ -302,12 +272,6 @@ namespace CIAO
       return *propertyName_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& SubcomponentPropertyReference::
-    propertyName ()
-    {
-      return *propertyName_;
-    }
-
     void SubcomponentPropertyReference::
     propertyName (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -318,12 +282,6 @@ namespace CIAO
     // 
     ::CIAO::Config_Handlers::SubcomponentInstantiationDescription const& SubcomponentPropertyReference::
     instance () const
-    {
-      return *instance_;
-    }
-
-    ::CIAO::Config_Handlers::SubcomponentInstantiationDescription& SubcomponentPropertyReference::
-    instance ()
     {
       return *instance_;
     }
@@ -389,12 +347,6 @@ namespace CIAO
       return *name_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& AssemblyPropertyMapping::
-    name ()
-    {
-      return *name_;
-    }
-
     void AssemblyPropertyMapping::
     name (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -409,12 +361,6 @@ namespace CIAO
       return *externalName_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& AssemblyPropertyMapping::
-    externalName ()
-    {
-      return *externalName_;
-    }
-
     void AssemblyPropertyMapping::
     externalName (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -425,12 +371,6 @@ namespace CIAO
     // 
     ::CIAO::Config_Handlers::SubcomponentPropertyReference const& AssemblyPropertyMapping::
     delegatesTo () const
-    {
-      return *delegatesTo_;
-    }
-
-    ::CIAO::Config_Handlers::SubcomponentPropertyReference& AssemblyPropertyMapping::
-    delegatesTo ()
     {
       return *delegatesTo_;
     }
@@ -631,12 +571,6 @@ namespace CIAO
       return *externalProperty_;
     }
 
-    ::CIAO::Config_Handlers::AssemblyPropertyMapping& ComponentAssemblyDescription::
-    externalProperty ()
-    {
-      return *externalProperty_;
-    }
-
     void ComponentAssemblyDescription::
     externalProperty (::CIAO::Config_Handlers::AssemblyPropertyMapping const& e)
     {
@@ -714,12 +648,6 @@ namespace CIAO
 
     ::CIAO::Config_Handlers::Property const& MonolithicImplementationDescription::
     execParameter () const
-    {
-      return *execParameter_;
-    }
-
-    ::CIAO::Config_Handlers::Property& MonolithicImplementationDescription::
-    execParameter ()
     {
       return *execParameter_;
     }
@@ -806,12 +734,6 @@ namespace CIAO
 
     ::CIAO::Config_Handlers::ImplementationRequirement const& MonolithicImplementationDescription::
     deployRequirement () const
-    {
-      return *deployRequirement_;
-    }
-
-    ::CIAO::Config_Handlers::ImplementationRequirement& MonolithicImplementationDescription::
-    deployRequirement ()
     {
       return *deployRequirement_;
     }
@@ -927,12 +849,6 @@ namespace CIAO
       return *label_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& ComponentImplementationDescription::
-    label ()
-    {
-      return *label_;
-    }
-
     void ComponentImplementationDescription::
     label (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -958,12 +874,6 @@ namespace CIAO
 
     ::XMLSchema::string< ACE_TCHAR > const& ComponentImplementationDescription::
     UUID () const
-    {
-      return *UUID_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& ComponentImplementationDescription::
-    UUID ()
     {
       return *UUID_;
     }
@@ -997,12 +907,6 @@ namespace CIAO
       return *implements_;
     }
 
-    ::CIAO::Config_Handlers::ComponentInterfaceDescription& ComponentImplementationDescription::
-    implements ()
-    {
-      return *implements_;
-    }
-
     void ComponentImplementationDescription::
     implements (::CIAO::Config_Handlers::ComponentInterfaceDescription const& e)
     {
@@ -1028,12 +932,6 @@ namespace CIAO
 
     ::CIAO::Config_Handlers::ComponentAssemblyDescription const& ComponentImplementationDescription::
     assemblyImpl () const
-    {
-      return *assemblyImpl_;
-    }
-
-    ::CIAO::Config_Handlers::ComponentAssemblyDescription& ComponentImplementationDescription::
-    assemblyImpl ()
     {
       return *assemblyImpl_;
     }
@@ -1067,12 +965,6 @@ namespace CIAO
       return *monolithicImpl_;
     }
 
-    ::CIAO::Config_Handlers::MonolithicImplementationDescription& ComponentImplementationDescription::
-    monolithicImpl ()
-    {
-      return *monolithicImpl_;
-    }
-
     void ComponentImplementationDescription::
     monolithicImpl (::CIAO::Config_Handlers::MonolithicImplementationDescription const& e)
     {
@@ -1098,12 +990,6 @@ namespace CIAO
 
     ::CIAO::Config_Handlers::Property const& ComponentImplementationDescription::
     configProperty () const
-    {
-      return *configProperty_;
-    }
-
-    ::CIAO::Config_Handlers::Property& ComponentImplementationDescription::
-    configProperty ()
     {
       return *configProperty_;
     }
@@ -1137,12 +1023,6 @@ namespace CIAO
       return *capability_;
     }
 
-    ::CIAO::Config_Handlers::Capability& ComponentImplementationDescription::
-    capability ()
-    {
-      return *capability_;
-    }
-
     void ComponentImplementationDescription::
     capability (::CIAO::Config_Handlers::Capability const& e)
     {
@@ -1168,12 +1048,6 @@ namespace CIAO
 
     ::CIAO::Config_Handlers::ImplementationDependency const& ComponentImplementationDescription::
     dependsOn () const
-    {
-      return *dependsOn_;
-    }
-
-    ::CIAO::Config_Handlers::ImplementationDependency& ComponentImplementationDescription::
-    dependsOn ()
     {
       return *dependsOn_;
     }
@@ -1207,12 +1081,6 @@ namespace CIAO
       return *infoProperty_;
     }
 
-    ::CIAO::Config_Handlers::Property& ComponentImplementationDescription::
-    infoProperty ()
-    {
-      return *infoProperty_;
-    }
-
     void ComponentImplementationDescription::
     infoProperty (::CIAO::Config_Handlers::Property const& e)
     {
@@ -1238,12 +1106,6 @@ namespace CIAO
 
     ::XMLSchema::string< ACE_TCHAR > const& ComponentImplementationDescription::
     contentLocation () const
-    {
-      return *contentLocation_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& ComponentImplementationDescription::
-    contentLocation ()
     {
       return *contentLocation_;
     }

@@ -87,12 +87,6 @@ namespace CIAO
       return *kind_;
     }
 
-    ::CIAO::Config_Handlers::TCKind& DataType::
-    kind ()
-    {
-      return *kind_;
-    }
-
     void DataType::
     kind (::CIAO::Config_Handlers::TCKind const& e)
     {
@@ -229,12 +223,6 @@ namespace CIAO
       return *short__;
     }
 
-    ::XMLSchema::short_& DataValue::
-    short_ ()
-    {
-      return *short__;
-    }
-
     void DataValue::
     short_ (::XMLSchema::short_ const& e)
     {
@@ -260,12 +248,6 @@ namespace CIAO
 
     ::XMLSchema::int_ const& DataValue::
     long_ () const
-    {
-      return *long__;
-    }
-
-    ::XMLSchema::int_& DataValue::
-    long_ ()
     {
       return *long__;
     }
@@ -299,12 +281,6 @@ namespace CIAO
       return *ushort_;
     }
 
-    ::XMLSchema::unsignedShort& DataValue::
-    ushort ()
-    {
-      return *ushort_;
-    }
-
     void DataValue::
     ushort (::XMLSchema::unsignedShort const& e)
     {
@@ -330,12 +306,6 @@ namespace CIAO
 
     ::XMLSchema::unsignedInt const& DataValue::
     ulong () const
-    {
-      return *ulong_;
-    }
-
-    ::XMLSchema::unsignedInt& DataValue::
-    ulong ()
     {
       return *ulong_;
     }
@@ -369,12 +339,6 @@ namespace CIAO
       return *float__;
     }
 
-    ::XMLSchema::float_& DataValue::
-    float_ ()
-    {
-      return *float__;
-    }
-
     void DataValue::
     float_ (::XMLSchema::float_ const& e)
     {
@@ -400,12 +364,6 @@ namespace CIAO
 
     ::XMLSchema::double_ const& DataValue::
     double_ () const
-    {
-      return *double__;
-    }
-
-    ::XMLSchema::double_& DataValue::
-    double_ ()
     {
       return *double__;
     }
@@ -439,12 +397,6 @@ namespace CIAO
       return *boolean_;
     }
 
-    ::XMLSchema::boolean& DataValue::
-    boolean ()
-    {
-      return *boolean_;
-    }
-
     void DataValue::
     boolean (::XMLSchema::boolean const& e)
     {
@@ -470,12 +422,6 @@ namespace CIAO
 
     ::XMLSchema::unsignedByte const& DataValue::
     octet () const
-    {
-      return *octet_;
-    }
-
-    ::XMLSchema::unsignedByte& DataValue::
-    octet ()
     {
       return *octet_;
     }
@@ -509,12 +455,6 @@ namespace CIAO
       return *objref_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& DataValue::
-    objref ()
-    {
-      return *objref_;
-    }
-
     void DataValue::
     objref (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -540,12 +480,6 @@ namespace CIAO
 
     ::XMLSchema::string< ACE_TCHAR > const& DataValue::
     enum_ () const
-    {
-      return *enum__;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& DataValue::
-    enum_ ()
     {
       return *enum__;
     }
@@ -579,12 +513,6 @@ namespace CIAO
       return *string_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& DataValue::
-    string ()
-    {
-      return *string_;
-    }
-
     void DataValue::
     string (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -610,12 +538,6 @@ namespace CIAO
 
     ::XMLSchema::long_ const& DataValue::
     longlong () const
-    {
-      return *longlong_;
-    }
-
-    ::XMLSchema::long_& DataValue::
-    longlong ()
     {
       return *longlong_;
     }
@@ -649,12 +571,6 @@ namespace CIAO
       return *ulonglong_;
     }
 
-    ::XMLSchema::unsignedLong& DataValue::
-    ulonglong ()
-    {
-      return *ulonglong_;
-    }
-
     void DataValue::
     ulonglong (::XMLSchema::unsignedLong const& e)
     {
@@ -680,12 +596,6 @@ namespace CIAO
 
     ::XMLSchema::double_ const& DataValue::
     longdouble () const
-    {
-      return *longdouble_;
-    }
-
-    ::XMLSchema::double_& DataValue::
-    longdouble ()
     {
       return *longdouble_;
     }
@@ -719,12 +629,6 @@ namespace CIAO
       return *fixed_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& DataValue::
-    fixed ()
-    {
-      return *fixed_;
-    }
-
     void DataValue::
     fixed (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -750,12 +654,6 @@ namespace CIAO
 
     ::CIAO::Config_Handlers::DataType const& DataValue::
     typecode () const
-    {
-      return *typecode_;
-    }
-
-    ::CIAO::Config_Handlers::DataType& DataValue::
-    typecode ()
     {
       return *typecode_;
     }
@@ -823,12 +721,6 @@ namespace CIAO
       return *type_;
     }
 
-    ::CIAO::Config_Handlers::DataType& Any::
-    type ()
-    {
-      return *type_;
-    }
-
     void Any::
     type (::CIAO::Config_Handlers::DataType const& e)
     {
@@ -839,12 +731,6 @@ namespace CIAO
     // 
     ::CIAO::Config_Handlers::DataValue const& Any::
     value () const
-    {
-      return *value_;
-    }
-
-    ::CIAO::Config_Handlers::DataValue& Any::
-    value ()
     {
       return *value_;
     }
@@ -903,12 +789,6 @@ namespace CIAO
       return *name_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& Property::
-    name ()
-    {
-      return *name_;
-    }
-
     void Property::
     name (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -923,824 +803,10 @@ namespace CIAO
       return *value_;
     }
 
-    ::CIAO::Config_Handlers::Any& Property::
-    value ()
-    {
-      return *value_;
-    }
-
     void Property::
     value (::CIAO::Config_Handlers::Any const& e)
     {
       *value_ = e;
-    }
-
-
-    // Bridge
-    // 
-
-    Bridge::
-    Bridge (::XMLSchema::string< ACE_TCHAR > const& name__)
-    : 
-    ::XSCRT::Type (), 
-    name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
-    regulator__ ()
-    {
-      name_->container (this);
-    }
-
-    Bridge::
-    Bridge (::CIAO::Config_Handlers::Bridge const& s)
-    :
-    ::XSCRT::Type (),
-    name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
-    label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
-    regulator__ ()
-    {
-      name_->container (this);
-      if (label_.get ()) label_->container (this);
-      connect_.reserve (s.connect_.size ());
-      {
-        for (connect_const_iterator i (s.connect_.begin ());
-        i != s.connect_.end ();
-        ++i) add_connect (*i);
-      }
-
-      resource_.reserve (s.resource_.size ());
-      {
-        for (resource_const_iterator i (s.resource_.begin ());
-        i != s.resource_.end ();
-        ++i) add_resource (*i);
-      }
-    }
-
-    ::CIAO::Config_Handlers::Bridge& Bridge::
-    operator= (::CIAO::Config_Handlers::Bridge const& s)
-    {
-      name (s.name ());
-
-      if (s.label_.get ()) label (*(s.label_));
-      else label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
-
-      connect_.clear ();
-      connect_.reserve (s.connect_.size ());
-      {
-        for (connect_const_iterator i (s.connect_.begin ());
-        i != s.connect_.end ();
-        ++i) add_connect (*i);
-      }
-
-      resource_.clear ();
-      resource_.reserve (s.resource_.size ());
-      {
-        for (resource_const_iterator i (s.resource_.begin ());
-        i != s.resource_.end ();
-        ++i) add_resource (*i);
-      }
-
-      return *this;
-    }
-
-
-    // Bridge
-    // 
-    ::XMLSchema::string< ACE_TCHAR > const& Bridge::
-    name () const
-    {
-      return *name_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& Bridge::
-    name ()
-    {
-      return *name_;
-    }
-
-    void Bridge::
-    name (::XMLSchema::string< ACE_TCHAR > const& e)
-    {
-      *name_ = e;
-    }
-
-    // Bridge
-    // 
-    bool Bridge::
-    label_p () const
-    {
-      return label_.get () != 0;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR > const& Bridge::
-    label () const
-    {
-      return *label_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& Bridge::
-    label ()
-    {
-      return *label_;
-    }
-
-    void Bridge::
-    label (::XMLSchema::string< ACE_TCHAR > const& e)
-    {
-      if (label_.get ())
-      {
-        *label_ = e;
-      }
-
-      else
-      {
-        label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
-        label_->container (this);
-      }
-    }
-
-    // Bridge
-    // 
-    Bridge::connect_iterator Bridge::
-    begin_connect ()
-    {
-      return connect_.begin ();
-    }
-
-    Bridge::connect_iterator Bridge::
-    end_connect ()
-    {
-      return connect_.end ();
-    }
-
-    Bridge::connect_const_iterator Bridge::
-    begin_connect () const
-    {
-      return connect_.begin ();
-    }
-
-    Bridge::connect_const_iterator Bridge::
-    end_connect () const
-    {
-      return connect_.end ();
-    }
-
-    void Bridge::
-    add_connect (::CIAO::Config_Handlers::Interconnect const& e)
-    {
-      if (connect_.capacity () < connect_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::Interconnect > v;
-        v.reserve (connect_.size () + 1);
-
-        while (connect_.size ())
-        {
-          //@@ VC6
-          ::CIAO::Config_Handlers::Interconnect& t = connect_.back ();
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-          connect_.pop_back ();
-        }
-
-        connect_.swap (v);
-      }
-
-      connect_.push_back (e);
-      connect_.back ().container (this);
-    }
-
-    size_t Bridge::
-    count_connect(void) const
-    {
-      return connect_.size ();
-    }
-
-    // Bridge
-    // 
-    Bridge::resource_iterator Bridge::
-    begin_resource ()
-    {
-      return resource_.begin ();
-    }
-
-    Bridge::resource_iterator Bridge::
-    end_resource ()
-    {
-      return resource_.end ();
-    }
-
-    Bridge::resource_const_iterator Bridge::
-    begin_resource () const
-    {
-      return resource_.begin ();
-    }
-
-    Bridge::resource_const_iterator Bridge::
-    end_resource () const
-    {
-      return resource_.end ();
-    }
-
-    void Bridge::
-    add_resource (::CIAO::Config_Handlers::Resource const& e)
-    {
-      if (resource_.capacity () < resource_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::Resource > v;
-        v.reserve (resource_.size () + 1);
-
-        while (resource_.size ())
-        {
-          //@@ VC6
-          ::CIAO::Config_Handlers::Resource& t = resource_.back ();
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-          resource_.pop_back ();
-        }
-
-        resource_.swap (v);
-      }
-
-      resource_.push_back (e);
-      resource_.back ().container (this);
-    }
-
-    size_t Bridge::
-    count_resource(void) const
-    {
-      return resource_.size ();
-    }
-
-
-    // Interconnect
-    // 
-
-    Interconnect::
-    Interconnect (::XMLSchema::string< ACE_TCHAR > const& name__)
-    : 
-    ::XSCRT::Type (), 
-    name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
-    regulator__ ()
-    {
-      name_->container (this);
-    }
-
-    Interconnect::
-    Interconnect (::CIAO::Config_Handlers::Interconnect const& s)
-    :
-    ::XSCRT::Type (),
-    name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
-    label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
-    regulator__ ()
-    {
-      name_->container (this);
-      if (label_.get ()) label_->container (this);
-      connection_.reserve (s.connection_.size ());
-      {
-        for (connection_const_iterator i (s.connection_.begin ());
-        i != s.connection_.end ();
-        ++i) add_connection (*i);
-      }
-
-      connect_.reserve (s.connect_.size ());
-      {
-        for (connect_const_iterator i (s.connect_.begin ());
-        i != s.connect_.end ();
-        ++i) add_connect (*i);
-      }
-
-      resource_.reserve (s.resource_.size ());
-      {
-        for (resource_const_iterator i (s.resource_.begin ());
-        i != s.resource_.end ();
-        ++i) add_resource (*i);
-      }
-    }
-
-    ::CIAO::Config_Handlers::Interconnect& Interconnect::
-    operator= (::CIAO::Config_Handlers::Interconnect const& s)
-    {
-      name (s.name ());
-
-      if (s.label_.get ()) label (*(s.label_));
-      else label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
-
-      connection_.clear ();
-      connection_.reserve (s.connection_.size ());
-      {
-        for (connection_const_iterator i (s.connection_.begin ());
-        i != s.connection_.end ();
-        ++i) add_connection (*i);
-      }
-
-      connect_.clear ();
-      connect_.reserve (s.connect_.size ());
-      {
-        for (connect_const_iterator i (s.connect_.begin ());
-        i != s.connect_.end ();
-        ++i) add_connect (*i);
-      }
-
-      resource_.clear ();
-      resource_.reserve (s.resource_.size ());
-      {
-        for (resource_const_iterator i (s.resource_.begin ());
-        i != s.resource_.end ();
-        ++i) add_resource (*i);
-      }
-
-      return *this;
-    }
-
-
-    // Interconnect
-    // 
-    ::XMLSchema::string< ACE_TCHAR > const& Interconnect::
-    name () const
-    {
-      return *name_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& Interconnect::
-    name ()
-    {
-      return *name_;
-    }
-
-    void Interconnect::
-    name (::XMLSchema::string< ACE_TCHAR > const& e)
-    {
-      *name_ = e;
-    }
-
-    // Interconnect
-    // 
-    bool Interconnect::
-    label_p () const
-    {
-      return label_.get () != 0;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR > const& Interconnect::
-    label () const
-    {
-      return *label_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& Interconnect::
-    label ()
-    {
-      return *label_;
-    }
-
-    void Interconnect::
-    label (::XMLSchema::string< ACE_TCHAR > const& e)
-    {
-      if (label_.get ())
-      {
-        *label_ = e;
-      }
-
-      else
-      {
-        label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
-        label_->container (this);
-      }
-    }
-
-    // Interconnect
-    // 
-    Interconnect::connection_iterator Interconnect::
-    begin_connection ()
-    {
-      return connection_.begin ();
-    }
-
-    Interconnect::connection_iterator Interconnect::
-    end_connection ()
-    {
-      return connection_.end ();
-    }
-
-    Interconnect::connection_const_iterator Interconnect::
-    begin_connection () const
-    {
-      return connection_.begin ();
-    }
-
-    Interconnect::connection_const_iterator Interconnect::
-    end_connection () const
-    {
-      return connection_.end ();
-    }
-
-    void Interconnect::
-    add_connection (::CIAO::Config_Handlers::Bridge const& e)
-    {
-      if (connection_.capacity () < connection_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::Bridge > v;
-        v.reserve (connection_.size () + 1);
-
-        while (connection_.size ())
-        {
-          //@@ VC6
-          ::CIAO::Config_Handlers::Bridge& t = connection_.back ();
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-          connection_.pop_back ();
-        }
-
-        connection_.swap (v);
-      }
-
-      connection_.push_back (e);
-      connection_.back ().container (this);
-    }
-
-    size_t Interconnect::
-    count_connection(void) const
-    {
-      return connection_.size ();
-    }
-
-    // Interconnect
-    // 
-    Interconnect::connect_iterator Interconnect::
-    begin_connect ()
-    {
-      return connect_.begin ();
-    }
-
-    Interconnect::connect_iterator Interconnect::
-    end_connect ()
-    {
-      return connect_.end ();
-    }
-
-    Interconnect::connect_const_iterator Interconnect::
-    begin_connect () const
-    {
-      return connect_.begin ();
-    }
-
-    Interconnect::connect_const_iterator Interconnect::
-    end_connect () const
-    {
-      return connect_.end ();
-    }
-
-    void Interconnect::
-    add_connect (::CIAO::Config_Handlers::Node const& e)
-    {
-      if (connect_.capacity () < connect_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::Node > v;
-        v.reserve (connect_.size () + 1);
-
-        while (connect_.size ())
-        {
-          //@@ VC6
-          ::CIAO::Config_Handlers::Node& t = connect_.back ();
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-          connect_.pop_back ();
-        }
-
-        connect_.swap (v);
-      }
-
-      connect_.push_back (e);
-      connect_.back ().container (this);
-    }
-
-    size_t Interconnect::
-    count_connect(void) const
-    {
-      return connect_.size ();
-    }
-
-    // Interconnect
-    // 
-    Interconnect::resource_iterator Interconnect::
-    begin_resource ()
-    {
-      return resource_.begin ();
-    }
-
-    Interconnect::resource_iterator Interconnect::
-    end_resource ()
-    {
-      return resource_.end ();
-    }
-
-    Interconnect::resource_const_iterator Interconnect::
-    begin_resource () const
-    {
-      return resource_.begin ();
-    }
-
-    Interconnect::resource_const_iterator Interconnect::
-    end_resource () const
-    {
-      return resource_.end ();
-    }
-
-    void Interconnect::
-    add_resource (::CIAO::Config_Handlers::Resource const& e)
-    {
-      if (resource_.capacity () < resource_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::Resource > v;
-        v.reserve (resource_.size () + 1);
-
-        while (resource_.size ())
-        {
-          //@@ VC6
-          ::CIAO::Config_Handlers::Resource& t = resource_.back ();
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-          resource_.pop_back ();
-        }
-
-        resource_.swap (v);
-      }
-
-      resource_.push_back (e);
-      resource_.back ().container (this);
-    }
-
-    size_t Interconnect::
-    count_resource(void) const
-    {
-      return resource_.size ();
-    }
-
-
-    // Node
-    // 
-
-    Node::
-    Node (::XMLSchema::string< ACE_TCHAR > const& name__,
-    ::CIAO::Config_Handlers::Resource const& resource__)
-    : 
-    ::XSCRT::Type (), 
-    name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
-    resource_ (new ::CIAO::Config_Handlers::Resource (resource__)),
-    regulator__ ()
-    {
-      name_->container (this);
-      resource_->container (this);
-    }
-
-    Node::
-    Node (::CIAO::Config_Handlers::Node const& s)
-    :
-    ::XSCRT::Type (),
-    name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
-    label_ (s.label_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.label_) : 0),
-    resource_ (new ::CIAO::Config_Handlers::Resource (*s.resource_)),
-    regulator__ ()
-    {
-      name_->container (this);
-      if (label_.get ()) label_->container (this);
-      connection_.reserve (s.connection_.size ());
-      {
-        for (connection_const_iterator i (s.connection_.begin ());
-        i != s.connection_.end ();
-        ++i) add_connection (*i);
-      }
-
-      sharedResource_.reserve (s.sharedResource_.size ());
-      {
-        for (sharedResource_const_iterator i (s.sharedResource_.begin ());
-        i != s.sharedResource_.end ();
-        ++i) add_sharedResource (*i);
-      }
-
-      resource_->container (this);
-    }
-
-    ::CIAO::Config_Handlers::Node& Node::
-    operator= (::CIAO::Config_Handlers::Node const& s)
-    {
-      name (s.name ());
-
-      if (s.label_.get ()) label (*(s.label_));
-      else label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
-
-      connection_.clear ();
-      connection_.reserve (s.connection_.size ());
-      {
-        for (connection_const_iterator i (s.connection_.begin ());
-        i != s.connection_.end ();
-        ++i) add_connection (*i);
-      }
-
-      sharedResource_.clear ();
-      sharedResource_.reserve (s.sharedResource_.size ());
-      {
-        for (sharedResource_const_iterator i (s.sharedResource_.begin ());
-        i != s.sharedResource_.end ();
-        ++i) add_sharedResource (*i);
-      }
-
-      resource (s.resource ());
-
-      return *this;
-    }
-
-
-    // Node
-    // 
-    ::XMLSchema::string< ACE_TCHAR > const& Node::
-    name () const
-    {
-      return *name_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& Node::
-    name ()
-    {
-      return *name_;
-    }
-
-    void Node::
-    name (::XMLSchema::string< ACE_TCHAR > const& e)
-    {
-      *name_ = e;
-    }
-
-    // Node
-    // 
-    bool Node::
-    label_p () const
-    {
-      return label_.get () != 0;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR > const& Node::
-    label () const
-    {
-      return *label_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& Node::
-    label ()
-    {
-      return *label_;
-    }
-
-    void Node::
-    label (::XMLSchema::string< ACE_TCHAR > const& e)
-    {
-      if (label_.get ())
-      {
-        *label_ = e;
-      }
-
-      else
-      {
-        label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
-        label_->container (this);
-      }
-    }
-
-    // Node
-    // 
-    Node::connection_iterator Node::
-    begin_connection ()
-    {
-      return connection_.begin ();
-    }
-
-    Node::connection_iterator Node::
-    end_connection ()
-    {
-      return connection_.end ();
-    }
-
-    Node::connection_const_iterator Node::
-    begin_connection () const
-    {
-      return connection_.begin ();
-    }
-
-    Node::connection_const_iterator Node::
-    end_connection () const
-    {
-      return connection_.end ();
-    }
-
-    void Node::
-    add_connection (::CIAO::Config_Handlers::Interconnect const& e)
-    {
-      if (connection_.capacity () < connection_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::Interconnect > v;
-        v.reserve (connection_.size () + 1);
-
-        while (connection_.size ())
-        {
-          //@@ VC6
-          ::CIAO::Config_Handlers::Interconnect& t = connection_.back ();
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-          connection_.pop_back ();
-        }
-
-        connection_.swap (v);
-      }
-
-      connection_.push_back (e);
-      connection_.back ().container (this);
-    }
-
-    size_t Node::
-    count_connection(void) const
-    {
-      return connection_.size ();
-    }
-
-    // Node
-    // 
-    Node::sharedResource_iterator Node::
-    begin_sharedResource ()
-    {
-      return sharedResource_.begin ();
-    }
-
-    Node::sharedResource_iterator Node::
-    end_sharedResource ()
-    {
-      return sharedResource_.end ();
-    }
-
-    Node::sharedResource_const_iterator Node::
-    begin_sharedResource () const
-    {
-      return sharedResource_.begin ();
-    }
-
-    Node::sharedResource_const_iterator Node::
-    end_sharedResource () const
-    {
-      return sharedResource_.end ();
-    }
-
-    void Node::
-    add_sharedResource (::CIAO::Config_Handlers::SharedResource const& e)
-    {
-      if (sharedResource_.capacity () < sharedResource_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::SharedResource > v;
-        v.reserve (sharedResource_.size () + 1);
-
-        while (sharedResource_.size ())
-        {
-          //@@ VC6
-          ::CIAO::Config_Handlers::SharedResource& t = sharedResource_.back ();
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-          sharedResource_.pop_back ();
-        }
-
-        sharedResource_.swap (v);
-      }
-
-      sharedResource_.push_back (e);
-      sharedResource_.back ().container (this);
-    }
-
-    size_t Node::
-    count_sharedResource(void) const
-    {
-      return sharedResource_.size ();
-    }
-
-    // Node
-    // 
-    ::CIAO::Config_Handlers::Resource const& Node::
-    resource () const
-    {
-      return *resource_;
-    }
-
-    ::CIAO::Config_Handlers::Resource& Node::
-    resource ()
-    {
-      return *resource_;
-    }
-
-    void Node::
-    resource (::CIAO::Config_Handlers::Resource const& e)
-    {
-      *resource_ = e;
     }
 
 
@@ -1825,12 +891,6 @@ namespace CIAO
       return *name_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& SatisfierProperty::
-    name ()
-    {
-      return *name_;
-    }
-
     void SatisfierProperty::
     name (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -1845,12 +905,6 @@ namespace CIAO
       return *kind_;
     }
 
-    ::CIAO::Config_Handlers::SatisfierPropertyKind& SatisfierProperty::
-    kind ()
-    {
-      return *kind_;
-    }
-
     void SatisfierProperty::
     kind (::CIAO::Config_Handlers::SatisfierPropertyKind const& e)
     {
@@ -1861,12 +915,6 @@ namespace CIAO
     // 
     ::CIAO::Config_Handlers::Any const& SatisfierProperty::
     value () const
-    {
-      return *value_;
-    }
-
-    ::CIAO::Config_Handlers::Any& SatisfierProperty::
-    value ()
     {
       return *value_;
     }
@@ -1932,12 +980,6 @@ namespace CIAO
       return *name_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& Resource::
-    name ()
-    {
-      return *name_;
-    }
-
     void Resource::
     name (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -1948,12 +990,6 @@ namespace CIAO
     // 
     ::XMLSchema::string< ACE_TCHAR > const& Resource::
     resourceType () const
-    {
-      return *resourceType_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& Resource::
-    resourceType ()
     {
       return *resourceType_;
     }
@@ -1972,147 +1008,7 @@ namespace CIAO
       return *property_;
     }
 
-    ::CIAO::Config_Handlers::SatisfierProperty& Resource::
-    property ()
-    {
-      return *property_;
-    }
-
     void Resource::
-    property (::CIAO::Config_Handlers::SatisfierProperty const& e)
-    {
-      *property_ = e;
-    }
-
-
-    // SharedResource
-    // 
-
-    SharedResource::
-    SharedResource (::XMLSchema::string< ACE_TCHAR > const& name__,
-    ::XMLSchema::string< ACE_TCHAR > const& resourceType__,
-    ::CIAO::Config_Handlers::Node const& node__,
-    ::CIAO::Config_Handlers::SatisfierProperty const& property__)
-    : 
-    ::XSCRT::Type (), 
-    name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
-    resourceType_ (new ::XMLSchema::string< ACE_TCHAR > (resourceType__)),
-    node_ (new ::CIAO::Config_Handlers::Node (node__)),
-    property_ (new ::CIAO::Config_Handlers::SatisfierProperty (property__)),
-    regulator__ ()
-    {
-      name_->container (this);
-      resourceType_->container (this);
-      node_->container (this);
-      property_->container (this);
-    }
-
-    SharedResource::
-    SharedResource (::CIAO::Config_Handlers::SharedResource const& s)
-    :
-    ::XSCRT::Type (),
-    name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
-    resourceType_ (new ::XMLSchema::string< ACE_TCHAR > (*s.resourceType_)),
-    node_ (new ::CIAO::Config_Handlers::Node (*s.node_)),
-    property_ (new ::CIAO::Config_Handlers::SatisfierProperty (*s.property_)),
-    regulator__ ()
-    {
-      name_->container (this);
-      resourceType_->container (this);
-      node_->container (this);
-      property_->container (this);
-    }
-
-    ::CIAO::Config_Handlers::SharedResource& SharedResource::
-    operator= (::CIAO::Config_Handlers::SharedResource const& s)
-    {
-      name (s.name ());
-
-      resourceType (s.resourceType ());
-
-      node (s.node ());
-
-      property (s.property ());
-
-      return *this;
-    }
-
-
-    // SharedResource
-    // 
-    ::XMLSchema::string< ACE_TCHAR > const& SharedResource::
-    name () const
-    {
-      return *name_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& SharedResource::
-    name ()
-    {
-      return *name_;
-    }
-
-    void SharedResource::
-    name (::XMLSchema::string< ACE_TCHAR > const& e)
-    {
-      *name_ = e;
-    }
-
-    // SharedResource
-    // 
-    ::XMLSchema::string< ACE_TCHAR > const& SharedResource::
-    resourceType () const
-    {
-      return *resourceType_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& SharedResource::
-    resourceType ()
-    {
-      return *resourceType_;
-    }
-
-    void SharedResource::
-    resourceType (::XMLSchema::string< ACE_TCHAR > const& e)
-    {
-      *resourceType_ = e;
-    }
-
-    // SharedResource
-    // 
-    ::CIAO::Config_Handlers::Node const& SharedResource::
-    node () const
-    {
-      return *node_;
-    }
-
-    ::CIAO::Config_Handlers::Node& SharedResource::
-    node ()
-    {
-      return *node_;
-    }
-
-    void SharedResource::
-    node (::CIAO::Config_Handlers::Node const& e)
-    {
-      *node_ = e;
-    }
-
-    // SharedResource
-    // 
-    ::CIAO::Config_Handlers::SatisfierProperty const& SharedResource::
-    property () const
-    {
-      return *property_;
-    }
-
-    ::CIAO::Config_Handlers::SatisfierProperty& SharedResource::
-    property ()
-    {
-      return *property_;
-    }
-
-    void SharedResource::
     property (::CIAO::Config_Handlers::SatisfierProperty const& e)
     {
       *property_ = e;
@@ -2173,12 +1069,6 @@ namespace CIAO
       return *resourceType_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& Requirement::
-    resourceType ()
-    {
-      return *resourceType_;
-    }
-
     void Requirement::
     resourceType (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -2193,12 +1083,6 @@ namespace CIAO
       return *name_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& Requirement::
-    name ()
-    {
-      return *name_;
-    }
-
     void Requirement::
     name (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -2209,12 +1093,6 @@ namespace CIAO
     // 
     ::CIAO::Config_Handlers::Property const& Requirement::
     property () const
-    {
-      return *property_;
-    }
-
-    ::CIAO::Config_Handlers::Property& Requirement::
-    property ()
     {
       return *property_;
     }
@@ -2280,12 +1158,6 @@ namespace CIAO
       return *requirementName_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& ResourceDeploymentDescription::
-    requirementName ()
-    {
-      return *requirementName_;
-    }
-
     void ResourceDeploymentDescription::
     requirementName (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -2300,12 +1172,6 @@ namespace CIAO
       return *resourceName_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& ResourceDeploymentDescription::
-    resourceName ()
-    {
-      return *resourceName_;
-    }
-
     void ResourceDeploymentDescription::
     resourceName (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -2316,12 +1182,6 @@ namespace CIAO
     // 
     ::CIAO::Config_Handlers::Any const& ResourceDeploymentDescription::
     resourceValue () const
-    {
-      return *resourceValue_;
-    }
-
-    ::CIAO::Config_Handlers::Any& ResourceDeploymentDescription::
-    resourceValue ()
     {
       return *resourceValue_;
     }
@@ -2460,12 +1320,6 @@ namespace CIAO
       return *name_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& ArtifactDeploymentDescription::
-    name ()
-    {
-      return *name_;
-    }
-
     void ArtifactDeploymentDescription::
     name (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -2533,12 +1387,6 @@ namespace CIAO
     // 
     ::XMLSchema::string< ACE_TCHAR > const& ArtifactDeploymentDescription::
     node () const
-    {
-      return *node_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& ArtifactDeploymentDescription::
-    node ()
     {
       return *node_;
     }
@@ -2918,12 +1766,6 @@ namespace CIAO
       return *name_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& MonolithicDeploymentDescription::
-    name ()
-    {
-      return *name_;
-    }
-
     void MonolithicDeploymentDescription::
     name (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -3282,12 +2124,6 @@ namespace CIAO
       return *resourceUsage_;
     }
 
-    ::CIAO::Config_Handlers::ResourceUsageKind& InstanceResourceDeploymentDescription::
-    resourceUsage ()
-    {
-      return *resourceUsage_;
-    }
-
     void InstanceResourceDeploymentDescription::
     resourceUsage (::CIAO::Config_Handlers::ResourceUsageKind const& e)
     {
@@ -3298,12 +2134,6 @@ namespace CIAO
     // 
     ::XMLSchema::string< ACE_TCHAR > const& InstanceResourceDeploymentDescription::
     requirementName () const
-    {
-      return *requirementName_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& InstanceResourceDeploymentDescription::
-    requirementName ()
     {
       return *requirementName_;
     }
@@ -3322,12 +2152,6 @@ namespace CIAO
       return *resourceName_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& InstanceResourceDeploymentDescription::
-    resourceName ()
-    {
-      return *resourceName_;
-    }
-
     void InstanceResourceDeploymentDescription::
     resourceName (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -3338,12 +2162,6 @@ namespace CIAO
     // 
     ::CIAO::Config_Handlers::Any const& InstanceResourceDeploymentDescription::
     resourceValue () const
-    {
-      return *resourceValue_;
-    }
-
-    ::CIAO::Config_Handlers::Any& InstanceResourceDeploymentDescription::
-    resourceValue ()
     {
       return *resourceValue_;
     }
@@ -3446,12 +2264,6 @@ namespace CIAO
       return *name_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& InstanceDeploymentDescription::
-    name ()
-    {
-      return *name_;
-    }
-
     void InstanceDeploymentDescription::
     name (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -3462,12 +2274,6 @@ namespace CIAO
     // 
     ::XMLSchema::string< ACE_TCHAR > const& InstanceDeploymentDescription::
     node () const
-    {
-      return *node_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& InstanceDeploymentDescription::
-    node ()
     {
       return *node_;
     }
@@ -3486,12 +2292,6 @@ namespace CIAO
       return *source_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& InstanceDeploymentDescription::
-    source ()
-    {
-      return *source_;
-    }
-
     void InstanceDeploymentDescription::
     source (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -3502,12 +2302,6 @@ namespace CIAO
     // 
     ::XMLSchema::IDREF< ACE_TCHAR > const& InstanceDeploymentDescription::
     implementation () const
-    {
-      return *implementation_;
-    }
-
-    ::XMLSchema::IDREF< ACE_TCHAR >& InstanceDeploymentDescription::
-    implementation ()
     {
       return *implementation_;
     }
@@ -3589,12 +2383,6 @@ namespace CIAO
       return *deployedResource_;
     }
 
-    ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription& InstanceDeploymentDescription::
-    deployedResource ()
-    {
-      return *deployedResource_;
-    }
-
     void InstanceDeploymentDescription::
     deployedResource (::CIAO::Config_Handlers::InstanceResourceDeploymentDescription const& e)
     {
@@ -3620,12 +2408,6 @@ namespace CIAO
 
     ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription const& InstanceDeploymentDescription::
     deployedSharedResource () const
-    {
-      return *deployedSharedResource_;
-    }
-
-    ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription& InstanceDeploymentDescription::
-    deployedSharedResource ()
     {
       return *deployedSharedResource_;
     }
@@ -3797,12 +2579,6 @@ namespace CIAO
       return *name_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& ComponentPortDescription::
-    name ()
-    {
-      return *name_;
-    }
-
     void ComponentPortDescription::
     name (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -3813,12 +2589,6 @@ namespace CIAO
     // 
     ::XMLSchema::string< ACE_TCHAR > const& ComponentPortDescription::
     specificType () const
-    {
-      return *specificType_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& ComponentPortDescription::
-    specificType ()
     {
       return *specificType_;
     }
@@ -3837,12 +2607,6 @@ namespace CIAO
       return *supportedType_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& ComponentPortDescription::
-    supportedType ()
-    {
-      return *supportedType_;
-    }
-
     void ComponentPortDescription::
     supportedType (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -3853,12 +2617,6 @@ namespace CIAO
     // 
     ::XMLSchema::string< ACE_TCHAR > const& ComponentPortDescription::
     provider () const
-    {
-      return *provider_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& ComponentPortDescription::
-    provider ()
     {
       return *provider_;
     }
@@ -3877,12 +2635,6 @@ namespace CIAO
       return *exclusiveProvider_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& ComponentPortDescription::
-    exclusiveProvider ()
-    {
-      return *exclusiveProvider_;
-    }
-
     void ComponentPortDescription::
     exclusiveProvider (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -3893,12 +2645,6 @@ namespace CIAO
     // 
     ::XMLSchema::string< ACE_TCHAR > const& ComponentPortDescription::
     exclusiveUser () const
-    {
-      return *exclusiveUser_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& ComponentPortDescription::
-    exclusiveUser ()
     {
       return *exclusiveUser_;
     }
@@ -3917,12 +2663,6 @@ namespace CIAO
       return *optional_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& ComponentPortDescription::
-    optional ()
-    {
-      return *optional_;
-    }
-
     void ComponentPortDescription::
     optional (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -3933,12 +2673,6 @@ namespace CIAO
     // 
     ::CIAO::Config_Handlers::CCMComponentPortKind const& ComponentPortDescription::
     kind () const
-    {
-      return *kind_;
-    }
-
-    ::CIAO::Config_Handlers::CCMComponentPortKind& ComponentPortDescription::
-    kind ()
     {
       return *kind_;
     }
@@ -3997,12 +2731,6 @@ namespace CIAO
       return *name_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& ComponentPropertyDescription::
-    name ()
-    {
-      return *name_;
-    }
-
     void ComponentPropertyDescription::
     name (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -4013,12 +2741,6 @@ namespace CIAO
     // 
     ::CIAO::Config_Handlers::DataType const& ComponentPropertyDescription::
     type () const
-    {
-      return *type_;
-    }
-
-    ::CIAO::Config_Handlers::DataType& ComponentPropertyDescription::
-    type ()
     {
       return *type_;
     }
@@ -4066,12 +2788,6 @@ namespace CIAO
     // 
     ::XMLSchema::string< ACE_TCHAR > const& ComponentExternalPortEndpoint::
     portName () const
-    {
-      return *portName_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& ComponentExternalPortEndpoint::
-    portName ()
     {
       return *portName_;
     }
@@ -4142,12 +2858,6 @@ namespace CIAO
       return *portName_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& PlanSubcomponentPortEndpoint::
-    portName ()
-    {
-      return *portName_;
-    }
-
     void PlanSubcomponentPortEndpoint::
     portName (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -4164,12 +2874,6 @@ namespace CIAO
 
     ::XMLSchema::string< ACE_TCHAR > const& PlanSubcomponentPortEndpoint::
     provider () const
-    {
-      return *provider_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& PlanSubcomponentPortEndpoint::
-    provider ()
     {
       return *provider_;
     }
@@ -4197,12 +2901,6 @@ namespace CIAO
       return *kind_;
     }
 
-    ::CIAO::Config_Handlers::CCMComponentPortKind& PlanSubcomponentPortEndpoint::
-    kind ()
-    {
-      return *kind_;
-    }
-
     void PlanSubcomponentPortEndpoint::
     kind (::CIAO::Config_Handlers::CCMComponentPortKind const& e)
     {
@@ -4213,12 +2911,6 @@ namespace CIAO
     // 
     ::XMLSchema::IDREF< ACE_TCHAR > const& PlanSubcomponentPortEndpoint::
     instance () const
-    {
-      return *instance_;
-    }
-
-    ::XMLSchema::IDREF< ACE_TCHAR >& PlanSubcomponentPortEndpoint::
-    instance ()
     {
       return *instance_;
     }
@@ -4266,12 +2958,6 @@ namespace CIAO
     // 
     ::XMLSchema::string< ACE_TCHAR > const& ExternalReferenceEndpoint::
     location () const
-    {
-      return *location_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& ExternalReferenceEndpoint::
-    location ()
     {
       return *location_;
     }
@@ -4344,12 +3030,6 @@ namespace CIAO
       return *targetName_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& ConnectionResourceDeploymentDescription::
-    targetName ()
-    {
-      return *targetName_;
-    }
-
     void ConnectionResourceDeploymentDescription::
     targetName (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -4360,12 +3040,6 @@ namespace CIAO
     // 
     ::XMLSchema::string< ACE_TCHAR > const& ConnectionResourceDeploymentDescription::
     requirementName () const
-    {
-      return *requirementName_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& ConnectionResourceDeploymentDescription::
-    requirementName ()
     {
       return *requirementName_;
     }
@@ -4384,12 +3058,6 @@ namespace CIAO
       return *resourceName_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& ConnectionResourceDeploymentDescription::
-    resourceName ()
-    {
-      return *resourceName_;
-    }
-
     void ConnectionResourceDeploymentDescription::
     resourceName (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -4400,12 +3068,6 @@ namespace CIAO
     // 
     ::CIAO::Config_Handlers::Any const& ConnectionResourceDeploymentDescription::
     resourceValue () const
-    {
-      return *resourceValue_;
-    }
-
-    ::CIAO::Config_Handlers::Any& ConnectionResourceDeploymentDescription::
-    resourceValue ()
     {
       return *resourceValue_;
     }
@@ -4536,12 +3198,6 @@ namespace CIAO
       return *name_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& PlanConnectionDescription::
-    name ()
-    {
-      return *name_;
-    }
-
     void PlanConnectionDescription::
     name (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -4558,12 +3214,6 @@ namespace CIAO
 
     ::XMLSchema::string< ACE_TCHAR > const& PlanConnectionDescription::
     source () const
-    {
-      return *source_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& PlanConnectionDescription::
-    source ()
     {
       return *source_;
     }
@@ -4909,12 +3559,6 @@ namespace CIAO
       return *requiredType_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& ImplementationDependency::
-    requiredType ()
-    {
-      return *requiredType_;
-    }
-
     void ImplementationDependency::
     requiredType (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -4976,12 +3620,6 @@ namespace CIAO
       return *name_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& Capability::
-    name ()
-    {
-      return *name_;
-    }
-
     void Capability::
     name (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -4996,12 +3634,6 @@ namespace CIAO
       return *resourceType_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& Capability::
-    resourceType ()
-    {
-      return *resourceType_;
-    }
-
     void Capability::
     resourceType (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -5012,12 +3644,6 @@ namespace CIAO
     // 
     ::CIAO::Config_Handlers::SatisfierProperty const& Capability::
     property () const
-    {
-      return *property_;
-    }
-
-    ::CIAO::Config_Handlers::SatisfierProperty& Capability::
-    property ()
     {
       return *property_;
     }
@@ -5104,12 +3730,6 @@ namespace CIAO
       return *resourceUsage_;
     }
 
-    ::CIAO::Config_Handlers::ResourceUsageKind& ImplementationRequirement::
-    resourceUsage ()
-    {
-      return *resourceUsage_;
-    }
-
     void ImplementationRequirement::
     resourceUsage (::CIAO::Config_Handlers::ResourceUsageKind const& e)
     {
@@ -5120,12 +3740,6 @@ namespace CIAO
     // 
     ::XMLSchema::string< ACE_TCHAR > const& ImplementationRequirement::
     resourcePort () const
-    {
-      return *resourcePort_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& ImplementationRequirement::
-    resourcePort ()
     {
       return *resourcePort_;
     }
@@ -5144,12 +3758,6 @@ namespace CIAO
       return *componentPort_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& ImplementationRequirement::
-    componentPort ()
-    {
-      return *componentPort_;
-    }
-
     void ImplementationRequirement::
     componentPort (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -5160,12 +3768,6 @@ namespace CIAO
     // 
     ::XMLSchema::string< ACE_TCHAR > const& ImplementationRequirement::
     resourceType () const
-    {
-      return *resourceType_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& ImplementationRequirement::
-    resourceType ()
     {
       return *resourceType_;
     }
@@ -5184,12 +3786,6 @@ namespace CIAO
       return *name_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& ImplementationRequirement::
-    name ()
-    {
-      return *name_;
-    }
-
     void ImplementationRequirement::
     name (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -5200,12 +3796,6 @@ namespace CIAO
     // 
     ::CIAO::Config_Handlers::Property const& ImplementationRequirement::
     property () const
-    {
-      return *property_;
-    }
-
-    ::CIAO::Config_Handlers::Property& ImplementationRequirement::
-    property ()
     {
       return *property_;
     }
@@ -5271,12 +3861,6 @@ namespace CIAO
       return *requiredUUID_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& ComponentPackageReference::
-    requiredUUID ()
-    {
-      return *requiredUUID_;
-    }
-
     void ComponentPackageReference::
     requiredUUID (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -5291,12 +3875,6 @@ namespace CIAO
       return *requiredName_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& ComponentPackageReference::
-    requiredName ()
-    {
-      return *requiredName_;
-    }
-
     void ComponentPackageReference::
     requiredName (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -5307,12 +3885,6 @@ namespace CIAO
     // 
     ::XMLSchema::string< ACE_TCHAR > const& ComponentPackageReference::
     requiredType () const
-    {
-      return *requiredType_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& ComponentPackageReference::
-    requiredType ()
     {
       return *requiredType_;
     }
@@ -5371,12 +3943,6 @@ namespace CIAO
       return *portName_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& SubcomponentPortEndpoint::
-    portName ()
-    {
-      return *portName_;
-    }
-
     void SubcomponentPortEndpoint::
     portName (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -5387,12 +3953,6 @@ namespace CIAO
     // 
     ::XMLSchema::IDREF< ACE_TCHAR > const& SubcomponentPortEndpoint::
     instance () const
-    {
-      return *instance_;
-    }
-
-    ::XMLSchema::IDREF< ACE_TCHAR >& SubcomponentPortEndpoint::
-    instance ()
     {
       return *instance_;
     }
@@ -5493,12 +4053,6 @@ namespace CIAO
       return *name_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& AssemblyConnectionDescription::
-    name ()
-    {
-      return *name_;
-    }
-
     void AssemblyConnectionDescription::
     name (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -5515,12 +4069,6 @@ namespace CIAO
 
     ::CIAO::Config_Handlers::Requirement const& AssemblyConnectionDescription::
     deployRequirement () const
-    {
-      return *deployRequirement_;
-    }
-
-    ::CIAO::Config_Handlers::Requirement& AssemblyConnectionDescription::
-    deployRequirement ()
     {
       return *deployRequirement_;
     }
@@ -6064,153 +4612,6 @@ namespace CIAO
       }
     }
 
-    // Bridge
-    //
-
-    Bridge::
-    Bridge (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
-    {
-
-      ::XSCRT::Parser< ACE_TCHAR > p (e);
-
-      while (p.more_elements ())
-      {
-        ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
-        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
-
-        if (n == "name")
-        {
-          name_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
-          name_->container (this);
-        }
-
-        else if (n == "label")
-        {
-          ::XMLSchema::string< ACE_TCHAR > t (e);
-          label (t);
-        }
-
-        else if (n == "connect")
-        {
-          ::CIAO::Config_Handlers::Interconnect t (e);
-          add_connect (t);
-        }
-
-        else if (n == "resource")
-        {
-          ::CIAO::Config_Handlers::Resource t (e);
-          add_resource (t);
-        }
-
-        else 
-        {
-        }
-      }
-    }
-
-    // Interconnect
-    //
-
-    Interconnect::
-    Interconnect (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
-    {
-
-      ::XSCRT::Parser< ACE_TCHAR > p (e);
-
-      while (p.more_elements ())
-      {
-        ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
-        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
-
-        if (n == "name")
-        {
-          name_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
-          name_->container (this);
-        }
-
-        else if (n == "label")
-        {
-          ::XMLSchema::string< ACE_TCHAR > t (e);
-          label (t);
-        }
-
-        else if (n == "connection")
-        {
-          ::CIAO::Config_Handlers::Bridge t (e);
-          add_connection (t);
-        }
-
-        else if (n == "connect")
-        {
-          ::CIAO::Config_Handlers::Node t (e);
-          add_connect (t);
-        }
-
-        else if (n == "resource")
-        {
-          ::CIAO::Config_Handlers::Resource t (e);
-          add_resource (t);
-        }
-
-        else 
-        {
-        }
-      }
-    }
-
-    // Node
-    //
-
-    Node::
-    Node (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
-    {
-
-      ::XSCRT::Parser< ACE_TCHAR > p (e);
-
-      while (p.more_elements ())
-      {
-        ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
-        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
-
-        if (n == "name")
-        {
-          name_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
-          name_->container (this);
-        }
-
-        else if (n == "label")
-        {
-          ::XMLSchema::string< ACE_TCHAR > t (e);
-          label (t);
-        }
-
-        else if (n == "connection")
-        {
-          ::CIAO::Config_Handlers::Interconnect t (e);
-          add_connection (t);
-        }
-
-        else if (n == "sharedResource")
-        {
-          ::CIAO::Config_Handlers::SharedResource t (e);
-          add_sharedResource (t);
-        }
-
-        else if (n == "resource")
-        {
-          resource_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Resource > (new ::CIAO::Config_Handlers::Resource (e));
-          resource_->container (this);
-        }
-
-        else 
-        {
-        }
-      }
-    }
-
     // SatisfierPropertyKind
     //
 
@@ -6319,51 +4720,6 @@ namespace CIAO
         {
           resourceType_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
           resourceType_->container (this);
-        }
-
-        else if (n == "property")
-        {
-          property_ = ::std::auto_ptr< ::CIAO::Config_Handlers::SatisfierProperty > (new ::CIAO::Config_Handlers::SatisfierProperty (e));
-          property_->container (this);
-        }
-
-        else 
-        {
-        }
-      }
-    }
-
-    // SharedResource
-    //
-
-    SharedResource::
-    SharedResource (::XSCRT::XML::Element< ACE_TCHAR > const& e)
-    :Base__ (e), regulator__ ()
-    {
-
-      ::XSCRT::Parser< ACE_TCHAR > p (e);
-
-      while (p.more_elements ())
-      {
-        ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
-        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
-
-        if (n == "name")
-        {
-          name_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
-          name_->container (this);
-        }
-
-        else if (n == "resourceType")
-        {
-          resourceType_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
-          resourceType_->container (this);
-        }
-
-        else if (n == "node")
-        {
-          node_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Node > (new ::CIAO::Config_Handlers::Node (e));
-          node_->container (this);
         }
 
         else if (n == "property")
@@ -7453,48 +5809,6 @@ namespace CIAO
 
       PropertyTypeInfoInitializer PropertyTypeInfoInitializer_;
 
-      struct BridgeTypeInfoInitializer
-      {
-        BridgeTypeInfoInitializer ()
-        {
-          ::XSCRT::TypeId id (typeid (Bridge));
-          ::XSCRT::ExtendedTypeInfo nf (id);
-
-          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
-          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
-        }
-      };
-
-      BridgeTypeInfoInitializer BridgeTypeInfoInitializer_;
-
-      struct InterconnectTypeInfoInitializer
-      {
-        InterconnectTypeInfoInitializer ()
-        {
-          ::XSCRT::TypeId id (typeid (Interconnect));
-          ::XSCRT::ExtendedTypeInfo nf (id);
-
-          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
-          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
-        }
-      };
-
-      InterconnectTypeInfoInitializer InterconnectTypeInfoInitializer_;
-
-      struct NodeTypeInfoInitializer
-      {
-        NodeTypeInfoInitializer ()
-        {
-          ::XSCRT::TypeId id (typeid (Node));
-          ::XSCRT::ExtendedTypeInfo nf (id);
-
-          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
-          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
-        }
-      };
-
-      NodeTypeInfoInitializer NodeTypeInfoInitializer_;
-
       struct SatisfierPropertyKindTypeInfoInitializer
       {
         SatisfierPropertyKindTypeInfoInitializer ()
@@ -7537,20 +5851,6 @@ namespace CIAO
       };
 
       ResourceTypeInfoInitializer ResourceTypeInfoInitializer_;
-
-      struct SharedResourceTypeInfoInitializer
-      {
-        SharedResourceTypeInfoInitializer ()
-        {
-          ::XSCRT::TypeId id (typeid (SharedResource));
-          ::XSCRT::ExtendedTypeInfo nf (id);
-
-          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
-          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
-        }
-      };
-
-      SharedResourceTypeInfoInitializer SharedResourceTypeInfoInitializer_;
 
       struct RequirementTypeInfoInitializer
       {
@@ -8507,856 +6807,6 @@ namespace CIAO
       {
       }
 
-      // Bridge
-      //
-      //
-
-      void Bridge::
-      traverse (Type& o)
-      {
-        pre (o);
-        name (o);
-        if (o.label_p ()) label (o);
-        else label_none (o);
-        connect (o);
-        resource (o);
-        post (o);
-      }
-
-      void Bridge::
-      traverse (Type const& o)
-      {
-        pre (o);
-        name (o);
-        if (o.label_p ()) label (o);
-        else label_none (o);
-        connect (o);
-        resource (o);
-        post (o);
-      }
-
-      void Bridge::
-      pre (Type&)
-      {
-      }
-
-      void Bridge::
-      pre (Type const&)
-      {
-      }
-
-      void Bridge::
-      name (Type& o)
-      {
-        dispatch (o.name ());
-      }
-
-      void Bridge::
-      name (Type const& o)
-      {
-        dispatch (o.name ());
-      }
-
-      void Bridge::
-      label (Type& o)
-      {
-        dispatch (o.label ());
-      }
-
-      void Bridge::
-      label (Type const& o)
-      {
-        dispatch (o.label ());
-      }
-
-      void Bridge::
-      label_none (Type&)
-      {
-      }
-
-      void Bridge::
-      label_none (Type const&)
-      {
-      }
-
-      void Bridge::
-      connect (Type& o)
-      {
-        // VC6 anathema strikes again
-        //
-        Bridge::Type::connect_iterator b (o.begin_connect()), e (o.end_connect());
-
-        if (b != e)
-        {
-          connect_pre (o);
-          for (;
-           b != e;
-          )
-          {
-            dispatch (*b);
-            if (++b != e) connect_next (o);
-          }
-
-          connect_post (o);
-        }
-      }
-
-      void Bridge::
-      connect (Type const& o)
-      {
-        // VC6 anathema strikes again
-        //
-        Bridge::Type::connect_const_iterator b (o.begin_connect()), e (o.end_connect());
-
-        if (b != e)
-        {
-          connect_pre (o);
-          for (;
-           b != e;
-          )
-          {
-            dispatch (*b);
-            if (++b != e) connect_next (o);
-          }
-
-          connect_post (o);
-        }
-      }
-
-      void Bridge::
-      connect_pre (Type&)
-      {
-      }
-
-      void Bridge::
-      connect_pre (Type const&)
-      {
-      }
-
-      void Bridge::
-      connect_next (Type&)
-      {
-      }
-
-      void Bridge::
-      connect_next (Type const&)
-      {
-      }
-
-      void Bridge::
-      connect_post (Type&)
-      {
-      }
-
-      void Bridge::
-      connect_post (Type const&)
-      {
-      }
-
-      void Bridge::
-      resource (Type& o)
-      {
-        // VC6 anathema strikes again
-        //
-        Bridge::Type::resource_iterator b (o.begin_resource()), e (o.end_resource());
-
-        if (b != e)
-        {
-          resource_pre (o);
-          for (;
-           b != e;
-          )
-          {
-            dispatch (*b);
-            if (++b != e) resource_next (o);
-          }
-
-          resource_post (o);
-        }
-
-        else resource_none (o);
-      }
-
-      void Bridge::
-      resource (Type const& o)
-      {
-        // VC6 anathema strikes again
-        //
-        Bridge::Type::resource_const_iterator b (o.begin_resource()), e (o.end_resource());
-
-        if (b != e)
-        {
-          resource_pre (o);
-          for (;
-           b != e;
-          )
-          {
-            dispatch (*b);
-            if (++b != e) resource_next (o);
-          }
-
-          resource_post (o);
-        }
-
-        else resource_none (o);
-      }
-
-      void Bridge::
-      resource_pre (Type&)
-      {
-      }
-
-      void Bridge::
-      resource_pre (Type const&)
-      {
-      }
-
-      void Bridge::
-      resource_next (Type&)
-      {
-      }
-
-      void Bridge::
-      resource_next (Type const&)
-      {
-      }
-
-      void Bridge::
-      resource_post (Type&)
-      {
-      }
-
-      void Bridge::
-      resource_post (Type const&)
-      {
-      }
-
-      void Bridge::
-      resource_none (Type&)
-      {
-      }
-
-      void Bridge::
-      resource_none (Type const&)
-      {
-      }
-
-      void Bridge::
-      post (Type&)
-      {
-      }
-
-      void Bridge::
-      post (Type const&)
-      {
-      }
-
-      // Interconnect
-      //
-      //
-
-      void Interconnect::
-      traverse (Type& o)
-      {
-        pre (o);
-        name (o);
-        if (o.label_p ()) label (o);
-        else label_none (o);
-        connection (o);
-        connect (o);
-        resource (o);
-        post (o);
-      }
-
-      void Interconnect::
-      traverse (Type const& o)
-      {
-        pre (o);
-        name (o);
-        if (o.label_p ()) label (o);
-        else label_none (o);
-        connection (o);
-        connect (o);
-        resource (o);
-        post (o);
-      }
-
-      void Interconnect::
-      pre (Type&)
-      {
-      }
-
-      void Interconnect::
-      pre (Type const&)
-      {
-      }
-
-      void Interconnect::
-      name (Type& o)
-      {
-        dispatch (o.name ());
-      }
-
-      void Interconnect::
-      name (Type const& o)
-      {
-        dispatch (o.name ());
-      }
-
-      void Interconnect::
-      label (Type& o)
-      {
-        dispatch (o.label ());
-      }
-
-      void Interconnect::
-      label (Type const& o)
-      {
-        dispatch (o.label ());
-      }
-
-      void Interconnect::
-      label_none (Type&)
-      {
-      }
-
-      void Interconnect::
-      label_none (Type const&)
-      {
-      }
-
-      void Interconnect::
-      connection (Type& o)
-      {
-        // VC6 anathema strikes again
-        //
-        Interconnect::Type::connection_iterator b (o.begin_connection()), e (o.end_connection());
-
-        if (b != e)
-        {
-          connection_pre (o);
-          for (;
-           b != e;
-          )
-          {
-            dispatch (*b);
-            if (++b != e) connection_next (o);
-          }
-
-          connection_post (o);
-        }
-
-        else connection_none (o);
-      }
-
-      void Interconnect::
-      connection (Type const& o)
-      {
-        // VC6 anathema strikes again
-        //
-        Interconnect::Type::connection_const_iterator b (o.begin_connection()), e (o.end_connection());
-
-        if (b != e)
-        {
-          connection_pre (o);
-          for (;
-           b != e;
-          )
-          {
-            dispatch (*b);
-            if (++b != e) connection_next (o);
-          }
-
-          connection_post (o);
-        }
-
-        else connection_none (o);
-      }
-
-      void Interconnect::
-      connection_pre (Type&)
-      {
-      }
-
-      void Interconnect::
-      connection_pre (Type const&)
-      {
-      }
-
-      void Interconnect::
-      connection_next (Type&)
-      {
-      }
-
-      void Interconnect::
-      connection_next (Type const&)
-      {
-      }
-
-      void Interconnect::
-      connection_post (Type&)
-      {
-      }
-
-      void Interconnect::
-      connection_post (Type const&)
-      {
-      }
-
-      void Interconnect::
-      connection_none (Type&)
-      {
-      }
-
-      void Interconnect::
-      connection_none (Type const&)
-      {
-      }
-
-      void Interconnect::
-      connect (Type& o)
-      {
-        // VC6 anathema strikes again
-        //
-        Interconnect::Type::connect_iterator b (o.begin_connect()), e (o.end_connect());
-
-        if (b != e)
-        {
-          connect_pre (o);
-          for (;
-           b != e;
-          )
-          {
-            dispatch (*b);
-            if (++b != e) connect_next (o);
-          }
-
-          connect_post (o);
-        }
-      }
-
-      void Interconnect::
-      connect (Type const& o)
-      {
-        // VC6 anathema strikes again
-        //
-        Interconnect::Type::connect_const_iterator b (o.begin_connect()), e (o.end_connect());
-
-        if (b != e)
-        {
-          connect_pre (o);
-          for (;
-           b != e;
-          )
-          {
-            dispatch (*b);
-            if (++b != e) connect_next (o);
-          }
-
-          connect_post (o);
-        }
-      }
-
-      void Interconnect::
-      connect_pre (Type&)
-      {
-      }
-
-      void Interconnect::
-      connect_pre (Type const&)
-      {
-      }
-
-      void Interconnect::
-      connect_next (Type&)
-      {
-      }
-
-      void Interconnect::
-      connect_next (Type const&)
-      {
-      }
-
-      void Interconnect::
-      connect_post (Type&)
-      {
-      }
-
-      void Interconnect::
-      connect_post (Type const&)
-      {
-      }
-
-      void Interconnect::
-      resource (Type& o)
-      {
-        // VC6 anathema strikes again
-        //
-        Interconnect::Type::resource_iterator b (o.begin_resource()), e (o.end_resource());
-
-        if (b != e)
-        {
-          resource_pre (o);
-          for (;
-           b != e;
-          )
-          {
-            dispatch (*b);
-            if (++b != e) resource_next (o);
-          }
-
-          resource_post (o);
-        }
-
-        else resource_none (o);
-      }
-
-      void Interconnect::
-      resource (Type const& o)
-      {
-        // VC6 anathema strikes again
-        //
-        Interconnect::Type::resource_const_iterator b (o.begin_resource()), e (o.end_resource());
-
-        if (b != e)
-        {
-          resource_pre (o);
-          for (;
-           b != e;
-          )
-          {
-            dispatch (*b);
-            if (++b != e) resource_next (o);
-          }
-
-          resource_post (o);
-        }
-
-        else resource_none (o);
-      }
-
-      void Interconnect::
-      resource_pre (Type&)
-      {
-      }
-
-      void Interconnect::
-      resource_pre (Type const&)
-      {
-      }
-
-      void Interconnect::
-      resource_next (Type&)
-      {
-      }
-
-      void Interconnect::
-      resource_next (Type const&)
-      {
-      }
-
-      void Interconnect::
-      resource_post (Type&)
-      {
-      }
-
-      void Interconnect::
-      resource_post (Type const&)
-      {
-      }
-
-      void Interconnect::
-      resource_none (Type&)
-      {
-      }
-
-      void Interconnect::
-      resource_none (Type const&)
-      {
-      }
-
-      void Interconnect::
-      post (Type&)
-      {
-      }
-
-      void Interconnect::
-      post (Type const&)
-      {
-      }
-
-      // Node
-      //
-      //
-
-      void Node::
-      traverse (Type& o)
-      {
-        pre (o);
-        name (o);
-        if (o.label_p ()) label (o);
-        else label_none (o);
-        connection (o);
-        sharedResource (o);
-        resource (o);
-        post (o);
-      }
-
-      void Node::
-      traverse (Type const& o)
-      {
-        pre (o);
-        name (o);
-        if (o.label_p ()) label (o);
-        else label_none (o);
-        connection (o);
-        sharedResource (o);
-        resource (o);
-        post (o);
-      }
-
-      void Node::
-      pre (Type&)
-      {
-      }
-
-      void Node::
-      pre (Type const&)
-      {
-      }
-
-      void Node::
-      name (Type& o)
-      {
-        dispatch (o.name ());
-      }
-
-      void Node::
-      name (Type const& o)
-      {
-        dispatch (o.name ());
-      }
-
-      void Node::
-      label (Type& o)
-      {
-        dispatch (o.label ());
-      }
-
-      void Node::
-      label (Type const& o)
-      {
-        dispatch (o.label ());
-      }
-
-      void Node::
-      label_none (Type&)
-      {
-      }
-
-      void Node::
-      label_none (Type const&)
-      {
-      }
-
-      void Node::
-      connection (Type& o)
-      {
-        // VC6 anathema strikes again
-        //
-        Node::Type::connection_iterator b (o.begin_connection()), e (o.end_connection());
-
-        if (b != e)
-        {
-          connection_pre (o);
-          for (;
-           b != e;
-          )
-          {
-            dispatch (*b);
-            if (++b != e) connection_next (o);
-          }
-
-          connection_post (o);
-        }
-
-        else connection_none (o);
-      }
-
-      void Node::
-      connection (Type const& o)
-      {
-        // VC6 anathema strikes again
-        //
-        Node::Type::connection_const_iterator b (o.begin_connection()), e (o.end_connection());
-
-        if (b != e)
-        {
-          connection_pre (o);
-          for (;
-           b != e;
-          )
-          {
-            dispatch (*b);
-            if (++b != e) connection_next (o);
-          }
-
-          connection_post (o);
-        }
-
-        else connection_none (o);
-      }
-
-      void Node::
-      connection_pre (Type&)
-      {
-      }
-
-      void Node::
-      connection_pre (Type const&)
-      {
-      }
-
-      void Node::
-      connection_next (Type&)
-      {
-      }
-
-      void Node::
-      connection_next (Type const&)
-      {
-      }
-
-      void Node::
-      connection_post (Type&)
-      {
-      }
-
-      void Node::
-      connection_post (Type const&)
-      {
-      }
-
-      void Node::
-      connection_none (Type&)
-      {
-      }
-
-      void Node::
-      connection_none (Type const&)
-      {
-      }
-
-      void Node::
-      sharedResource (Type& o)
-      {
-        // VC6 anathema strikes again
-        //
-        Node::Type::sharedResource_iterator b (o.begin_sharedResource()), e (o.end_sharedResource());
-
-        if (b != e)
-        {
-          sharedResource_pre (o);
-          for (;
-           b != e;
-          )
-          {
-            dispatch (*b);
-            if (++b != e) sharedResource_next (o);
-          }
-
-          sharedResource_post (o);
-        }
-
-        else sharedResource_none (o);
-      }
-
-      void Node::
-      sharedResource (Type const& o)
-      {
-        // VC6 anathema strikes again
-        //
-        Node::Type::sharedResource_const_iterator b (o.begin_sharedResource()), e (o.end_sharedResource());
-
-        if (b != e)
-        {
-          sharedResource_pre (o);
-          for (;
-           b != e;
-          )
-          {
-            dispatch (*b);
-            if (++b != e) sharedResource_next (o);
-          }
-
-          sharedResource_post (o);
-        }
-
-        else sharedResource_none (o);
-      }
-
-      void Node::
-      sharedResource_pre (Type&)
-      {
-      }
-
-      void Node::
-      sharedResource_pre (Type const&)
-      {
-      }
-
-      void Node::
-      sharedResource_next (Type&)
-      {
-      }
-
-      void Node::
-      sharedResource_next (Type const&)
-      {
-      }
-
-      void Node::
-      sharedResource_post (Type&)
-      {
-      }
-
-      void Node::
-      sharedResource_post (Type const&)
-      {
-      }
-
-      void Node::
-      sharedResource_none (Type&)
-      {
-      }
-
-      void Node::
-      sharedResource_none (Type const&)
-      {
-      }
-
-      void Node::
-      resource (Type& o)
-      {
-        dispatch (o.resource ());
-      }
-
-      void Node::
-      resource (Type const& o)
-      {
-        dispatch (o.resource ());
-      }
-
-      void Node::
-      post (Type&)
-      {
-      }
-
-      void Node::
-      post (Type const&)
-      {
-      }
-
       // SatisfierProperty
       //
       //
@@ -9513,100 +6963,6 @@ namespace CIAO
       }
 
       void Resource::
-      post (Type const&)
-      {
-      }
-
-      // SharedResource
-      //
-      //
-
-      void SharedResource::
-      traverse (Type& o)
-      {
-        pre (o);
-        name (o);
-        resourceType (o);
-        node (o);
-        property (o);
-        post (o);
-      }
-
-      void SharedResource::
-      traverse (Type const& o)
-      {
-        pre (o);
-        name (o);
-        resourceType (o);
-        node (o);
-        property (o);
-        post (o);
-      }
-
-      void SharedResource::
-      pre (Type&)
-      {
-      }
-
-      void SharedResource::
-      pre (Type const&)
-      {
-      }
-
-      void SharedResource::
-      name (Type& o)
-      {
-        dispatch (o.name ());
-      }
-
-      void SharedResource::
-      name (Type const& o)
-      {
-        dispatch (o.name ());
-      }
-
-      void SharedResource::
-      resourceType (Type& o)
-      {
-        dispatch (o.resourceType ());
-      }
-
-      void SharedResource::
-      resourceType (Type const& o)
-      {
-        dispatch (o.resourceType ());
-      }
-
-      void SharedResource::
-      node (Type& o)
-      {
-        dispatch (o.node ());
-      }
-
-      void SharedResource::
-      node (Type const& o)
-      {
-        dispatch (o.node ());
-      }
-
-      void SharedResource::
-      property (Type& o)
-      {
-        dispatch (o.property ());
-      }
-
-      void SharedResource::
-      property (Type const& o)
-      {
-        dispatch (o.property ());
-      }
-
-      void SharedResource::
-      post (Type&)
-      {
-      }
-
-      void SharedResource::
       post (Type const&)
       {
       }
@@ -13180,258 +10536,6 @@ namespace CIAO
         pop_ ();
       }
 
-      // Bridge
-      //
-      //
-
-      Bridge::
-      Bridge (::XSCRT::XML::Element< ACE_TCHAR >& e)
-      : ::XSCRT::Writer< ACE_TCHAR > (e)
-      {
-      }
-
-      Bridge::
-      Bridge ()
-      {
-      }
-
-      void Bridge::
-      traverse (Type const& o)
-      {
-        Traversal::Bridge::traverse (o);
-      }
-
-      void Bridge::
-      name (Type const& o)
-      {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("name", top_ ()));
-        Traversal::Bridge::name (o);
-        pop_ ();
-      }
-
-      void Bridge::
-      label (Type const& o)
-      {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("label", top_ ()));
-        Traversal::Bridge::label (o);
-        pop_ ();
-      }
-
-      void Bridge::
-      connect_pre (Type const&)
-      {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("connect", top_ ()));
-      }
-
-      void Bridge::
-      connect_next (Type const& o)
-      {
-        connect_post (o);
-        connect_pre (o);
-      }
-
-      void Bridge::
-      connect_post (Type const&)
-      {
-        pop_ ();
-      }
-
-      void Bridge::
-      resource_pre (Type const&)
-      {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("resource", top_ ()));
-      }
-
-      void Bridge::
-      resource_next (Type const& o)
-      {
-        resource_post (o);
-        resource_pre (o);
-      }
-
-      void Bridge::
-      resource_post (Type const&)
-      {
-        pop_ ();
-      }
-
-      // Interconnect
-      //
-      //
-
-      Interconnect::
-      Interconnect (::XSCRT::XML::Element< ACE_TCHAR >& e)
-      : ::XSCRT::Writer< ACE_TCHAR > (e)
-      {
-      }
-
-      Interconnect::
-      Interconnect ()
-      {
-      }
-
-      void Interconnect::
-      traverse (Type const& o)
-      {
-        Traversal::Interconnect::traverse (o);
-      }
-
-      void Interconnect::
-      name (Type const& o)
-      {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("name", top_ ()));
-        Traversal::Interconnect::name (o);
-        pop_ ();
-      }
-
-      void Interconnect::
-      label (Type const& o)
-      {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("label", top_ ()));
-        Traversal::Interconnect::label (o);
-        pop_ ();
-      }
-
-      void Interconnect::
-      connection_pre (Type const&)
-      {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("connection", top_ ()));
-      }
-
-      void Interconnect::
-      connection_next (Type const& o)
-      {
-        connection_post (o);
-        connection_pre (o);
-      }
-
-      void Interconnect::
-      connection_post (Type const&)
-      {
-        pop_ ();
-      }
-
-      void Interconnect::
-      connect_pre (Type const&)
-      {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("connect", top_ ()));
-      }
-
-      void Interconnect::
-      connect_next (Type const& o)
-      {
-        connect_post (o);
-        connect_pre (o);
-      }
-
-      void Interconnect::
-      connect_post (Type const&)
-      {
-        pop_ ();
-      }
-
-      void Interconnect::
-      resource_pre (Type const&)
-      {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("resource", top_ ()));
-      }
-
-      void Interconnect::
-      resource_next (Type const& o)
-      {
-        resource_post (o);
-        resource_pre (o);
-      }
-
-      void Interconnect::
-      resource_post (Type const&)
-      {
-        pop_ ();
-      }
-
-      // Node
-      //
-      //
-
-      Node::
-      Node (::XSCRT::XML::Element< ACE_TCHAR >& e)
-      : ::XSCRT::Writer< ACE_TCHAR > (e)
-      {
-      }
-
-      Node::
-      Node ()
-      {
-      }
-
-      void Node::
-      traverse (Type const& o)
-      {
-        Traversal::Node::traverse (o);
-      }
-
-      void Node::
-      name (Type const& o)
-      {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("name", top_ ()));
-        Traversal::Node::name (o);
-        pop_ ();
-      }
-
-      void Node::
-      label (Type const& o)
-      {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("label", top_ ()));
-        Traversal::Node::label (o);
-        pop_ ();
-      }
-
-      void Node::
-      connection_pre (Type const&)
-      {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("connection", top_ ()));
-      }
-
-      void Node::
-      connection_next (Type const& o)
-      {
-        connection_post (o);
-        connection_pre (o);
-      }
-
-      void Node::
-      connection_post (Type const&)
-      {
-        pop_ ();
-      }
-
-      void Node::
-      sharedResource_pre (Type const&)
-      {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("sharedResource", top_ ()));
-      }
-
-      void Node::
-      sharedResource_next (Type const& o)
-      {
-        sharedResource_post (o);
-        sharedResource_pre (o);
-      }
-
-      void Node::
-      sharedResource_post (Type const&)
-      {
-        pop_ ();
-      }
-
-      void Node::
-      resource (Type const& o)
-      {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("resource", top_ ()));
-        Traversal::Node::resource (o);
-        pop_ ();
-      }
-
       // SatisfierPropertyKind
       //
       //
@@ -13560,59 +10664,6 @@ namespace CIAO
       {
         push_ (::XSCRT::XML::Element< ACE_TCHAR > ("property", top_ ()));
         Traversal::Resource::property (o);
-        pop_ ();
-      }
-
-      // SharedResource
-      //
-      //
-
-      SharedResource::
-      SharedResource (::XSCRT::XML::Element< ACE_TCHAR >& e)
-      : ::XSCRT::Writer< ACE_TCHAR > (e)
-      {
-      }
-
-      SharedResource::
-      SharedResource ()
-      {
-      }
-
-      void SharedResource::
-      traverse (Type const& o)
-      {
-        Traversal::SharedResource::traverse (o);
-      }
-
-      void SharedResource::
-      name (Type const& o)
-      {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("name", top_ ()));
-        Traversal::SharedResource::name (o);
-        pop_ ();
-      }
-
-      void SharedResource::
-      resourceType (Type const& o)
-      {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("resourceType", top_ ()));
-        Traversal::SharedResource::resourceType (o);
-        pop_ ();
-      }
-
-      void SharedResource::
-      node (Type const& o)
-      {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("node", top_ ()));
-        Traversal::SharedResource::node (o);
-        pop_ ();
-      }
-
-      void SharedResource::
-      property (Type const& o)
-      {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("property", top_ ()));
-        Traversal::SharedResource::property (o);
         pop_ ();
       }
 

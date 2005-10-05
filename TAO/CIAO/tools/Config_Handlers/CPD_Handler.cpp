@@ -23,19 +23,38 @@ namespace CIAO
           toconfig.supportedType[0] =
             desc.supportedType ().c_str ();
         }
-        
-      if (desc.kind () == CCMComponentPortKind::Facet)
-        toconfig.kind = Deployment::Facet;
-      if (desc.kind () == CCMComponentPortKind::SimplexReceptacle)
-        toconfig.kind = Deployment::SimplexReceptacle;
-      if (desc.kind () == CCMComponentPortKind::MultiplexReceptacle)
-        toconfig.kind = Deployment::MultiplexReceptacle;
-      if (desc.kind () == CCMComponentPortKind::EventEmitter)
-        toconfig.kind = Deployment::EventEmitter;
-      if (desc.kind () == CCMComponentPortKind::EventPublisher)
-        toconfig.kind = Deployment::EventPublisher;
-      if (desc.kind () == CCMComponentPortKind::EventConsumer)
-        toconfig.kind = Deployment::EventConsumer;      
+      
+      switch (desc.kind ().integral ())
+        {
+        case CCMComponentPortKind::Facet_l:
+          toconfig.kind = Deployment::Facet;
+          break;
+          
+        case CCMComponentPortKind::SimplexReceptacle_l:
+          toconfig.kind = Deployment::SimplexReceptacle;
+          break;
+          
+        case CCMComponentPortKind::MultiplexReceptacle_l:
+          toconfig.kind = Deployment::MultiplexReceptacle;
+          break;
+          
+        case CCMComponentPortKind::EventEmitter_l:
+          toconfig.kind = Deployment::EventEmitter;
+          break;
+          
+        case CCMComponentPortKind::EventPublisher_l:
+          toconfig.kind = Deployment::EventPublisher;
+          break;
+          
+        case CCMComponentPortKind::EventConsumer_l:
+          toconfig.kind = Deployment::EventConsumer; 
+          break;
+          
+        default:
+          ACE_ERROR ((LM_ERROR, "Invalid port type in connection %s\n",
+                      desc.name ().c_str ()));
+          throw 1;
+        }
       
       /* @@BUG: We need to consider how to handle booleans. */
       toconfig.provider = desc.provider () == "true";
@@ -52,11 +71,32 @@ namespace CIAO
       ::XMLSchema::string< char > stype ((src.specificType));
      
       ::XMLSchema::string< char > tval ("true"); 
+      ::XMLSchema::string< char > fval ("false"); 
       ::XMLSchema::string< char > provider ("");
       ::XMLSchema::string< char > exclusiveProvider ("");
       ::XMLSchema::string< char > exclusiveUser ("");
       ::XMLSchema::string< char > optional ("");
-
+      
+      if (src.provider)
+        provider = tval;
+      else
+        provider = fval;
+      
+      if (src.exclusiveUser)
+        exclusiveUser = tval;
+      else
+        provider = fval;
+      
+      if (src.exclusiveProvider)
+        exclusiveProvider = tval;
+      else
+        provider = fval;
+      
+      if (src.optional)
+        optional = tval;
+      else
+        provider = fval;
+      
       ComponentPortDescription cpd (
         name,
         stype,
@@ -67,27 +107,37 @@ namespace CIAO
         optional,
         CCMComponentPortKind::Facet);
 
-      if (src.provider)
-        provider = tval;
-      if (src.exclusiveUser)
-        exclusiveUser = tval;
-      if (src.exclusiveProvider)
-        exclusiveProvider = tval;
-      if (src.optional)
-        optional = tval;
- 
-      if (src.kind == ::Deployment::Facet)
-        cpd.kind (CCMComponentPortKind::Facet);
-      if (src.kind == ::Deployment::SimplexReceptacle)
-        cpd.kind (CCMComponentPortKind::SimplexReceptacle);
-      if (src.kind == ::Deployment::MultiplexReceptacle)
-        cpd.kind (CCMComponentPortKind::MultiplexReceptacle);
-      if (src.kind == ::Deployment::EventEmitter)
-        cpd.kind (CCMComponentPortKind::EventEmitter);
-      if (src.kind == ::Deployment::EventPublisher)
-        cpd.kind (CCMComponentPortKind::EventPublisher);
-      if (src.kind == ::Deployment::EventConsumer)
-        cpd.kind (CCMComponentPortKind::EventConsumer);
+      switch (src.kind)
+        {
+        case ::Deployment::Facet:
+          cpd.kind (CCMComponentPortKind::Facet);
+          break;
+          
+        case ::Deployment::SimplexReceptacle:
+          cpd.kind (CCMComponentPortKind::SimplexReceptacle);
+          break;
+          
+        case ::Deployment::MultiplexReceptacle:
+          cpd.kind (CCMComponentPortKind::MultiplexReceptacle);
+          break;
+          
+        case ::Deployment::EventEmitter:
+          cpd.kind (CCMComponentPortKind::EventEmitter);
+          break;
+          
+        case ::Deployment::EventPublisher:
+          cpd.kind (CCMComponentPortKind::EventPublisher);
+          break;
+          
+        case ::Deployment::EventConsumer:
+          cpd.kind (CCMComponentPortKind::EventConsumer);
+          break;
+          
+        default:
+          ACE_ERROR ((LM_ERROR, "Invalid port kind in connection %s\n",
+                      name.c_str ()));
+        }
+      
 
       if (src.supportedType.length () > 0)
         cpd.supportedType (

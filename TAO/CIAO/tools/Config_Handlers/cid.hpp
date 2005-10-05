@@ -61,7 +61,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
-      ::XMLSchema::string< ACE_TCHAR >& name ();
       void name (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -71,7 +70,6 @@ namespace CIAO
       // 
       public:
       ::CIAO::Config_Handlers::ComponentPackageDescription const& package () const;
-      ::CIAO::Config_Handlers::ComponentPackageDescription& package ();
       void package (::CIAO::Config_Handlers::ComponentPackageDescription const& );
 
       protected:
@@ -82,7 +80,6 @@ namespace CIAO
       public:
       bool configProperty_p () const;
       ::CIAO::Config_Handlers::Property const& configProperty () const;
-      ::CIAO::Config_Handlers::Property& configProperty ();
       void configProperty (::CIAO::Config_Handlers::Property const& );
 
       protected:
@@ -93,7 +90,6 @@ namespace CIAO
       public:
       bool selectRequirement_p () const;
       ::CIAO::Config_Handlers::Requirement const& selectRequirement () const;
-      ::CIAO::Config_Handlers::Requirement& selectRequirement ();
       void selectRequirement (::CIAO::Config_Handlers::Requirement const& );
 
       protected:
@@ -104,7 +100,6 @@ namespace CIAO
       public:
       bool reference_p () const;
       ::CIAO::Config_Handlers::ComponentPackageReference const& reference () const;
-      ::CIAO::Config_Handlers::ComponentPackageReference& reference ();
       void reference (::CIAO::Config_Handlers::ComponentPackageReference const& );
 
       protected:
@@ -145,7 +140,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& propertyName () const;
-      ::XMLSchema::string< ACE_TCHAR >& propertyName ();
       void propertyName (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -155,7 +149,6 @@ namespace CIAO
       // 
       public:
       ::CIAO::Config_Handlers::SubcomponentInstantiationDescription const& instance () const;
-      ::CIAO::Config_Handlers::SubcomponentInstantiationDescription& instance ();
       void instance (::CIAO::Config_Handlers::SubcomponentInstantiationDescription const& );
 
       protected:
@@ -185,7 +178,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
-      ::XMLSchema::string< ACE_TCHAR >& name ();
       void name (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -195,7 +187,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& externalName () const;
-      ::XMLSchema::string< ACE_TCHAR >& externalName ();
       void externalName (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -205,7 +196,6 @@ namespace CIAO
       // 
       public:
       ::CIAO::Config_Handlers::SubcomponentPropertyReference const& delegatesTo () const;
-      ::CIAO::Config_Handlers::SubcomponentPropertyReference& delegatesTo ();
       void delegatesTo (::CIAO::Config_Handlers::SubcomponentPropertyReference const& );
 
       protected:
@@ -267,7 +257,6 @@ namespace CIAO
       public:
       bool externalProperty_p () const;
       ::CIAO::Config_Handlers::AssemblyPropertyMapping const& externalProperty () const;
-      ::CIAO::Config_Handlers::AssemblyPropertyMapping& externalProperty ();
       void externalProperty (::CIAO::Config_Handlers::AssemblyPropertyMapping const& );
 
       protected:
@@ -297,7 +286,6 @@ namespace CIAO
       public:
       bool execParameter_p () const;
       ::CIAO::Config_Handlers::Property const& execParameter () const;
-      ::CIAO::Config_Handlers::Property& execParameter ();
       void execParameter (::CIAO::Config_Handlers::Property const& );
 
       protected:
@@ -323,7 +311,6 @@ namespace CIAO
       public:
       bool deployRequirement_p () const;
       ::CIAO::Config_Handlers::ImplementationRequirement const& deployRequirement () const;
-      ::CIAO::Config_Handlers::ImplementationRequirement& deployRequirement ();
       void deployRequirement (::CIAO::Config_Handlers::ImplementationRequirement const& );
 
       protected:
@@ -353,7 +340,6 @@ namespace CIAO
       public:
       bool label_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& label () const;
-      ::XMLSchema::string< ACE_TCHAR >& label ();
       void label (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -364,7 +350,6 @@ namespace CIAO
       public:
       bool UUID_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& UUID () const;
-      ::XMLSchema::string< ACE_TCHAR >& UUID ();
       void UUID (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -375,7 +360,6 @@ namespace CIAO
       public:
       bool implements_p () const;
       ::CIAO::Config_Handlers::ComponentInterfaceDescription const& implements () const;
-      ::CIAO::Config_Handlers::ComponentInterfaceDescription& implements ();
       void implements (::CIAO::Config_Handlers::ComponentInterfaceDescription const& );
 
       protected:
@@ -386,7 +370,6 @@ namespace CIAO
       public:
       bool assemblyImpl_p () const;
       ::CIAO::Config_Handlers::ComponentAssemblyDescription const& assemblyImpl () const;
-      ::CIAO::Config_Handlers::ComponentAssemblyDescription& assemblyImpl ();
       void assemblyImpl (::CIAO::Config_Handlers::ComponentAssemblyDescription const& );
 
       protected:
@@ -397,7 +380,6 @@ namespace CIAO
       public:
       bool monolithicImpl_p () const;
       ::CIAO::Config_Handlers::MonolithicImplementationDescription const& monolithicImpl () const;
-      ::CIAO::Config_Handlers::MonolithicImplementationDescription& monolithicImpl ();
       void monolithicImpl (::CIAO::Config_Handlers::MonolithicImplementationDescription const& );
 
       protected:
@@ -408,7 +390,6 @@ namespace CIAO
       public:
       bool configProperty_p () const;
       ::CIAO::Config_Handlers::Property const& configProperty () const;
-      ::CIAO::Config_Handlers::Property& configProperty ();
       void configProperty (::CIAO::Config_Handlers::Property const& );
 
       protected:
@@ -419,7 +400,6 @@ namespace CIAO
       public:
       bool capability_p () const;
       ::CIAO::Config_Handlers::Capability const& capability () const;
-      ::CIAO::Config_Handlers::Capability& capability ();
       void capability (::CIAO::Config_Handlers::Capability const& );
 
       protected:
@@ -430,7 +410,6 @@ namespace CIAO
       public:
       bool dependsOn_p () const;
       ::CIAO::Config_Handlers::ImplementationDependency const& dependsOn () const;
-      ::CIAO::Config_Handlers::ImplementationDependency& dependsOn ();
       void dependsOn (::CIAO::Config_Handlers::ImplementationDependency const& );
 
       protected:
@@ -441,7 +420,6 @@ namespace CIAO
       public:
       bool infoProperty_p () const;
       ::CIAO::Config_Handlers::Property const& infoProperty () const;
-      ::CIAO::Config_Handlers::Property& infoProperty ();
       void infoProperty (::CIAO::Config_Handlers::Property const& );
 
       protected:
@@ -452,7 +430,6 @@ namespace CIAO
       public:
       bool contentLocation_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& contentLocation () const;
-      ::XMLSchema::string< ACE_TCHAR >& contentLocation ();
       void contentLocation (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:

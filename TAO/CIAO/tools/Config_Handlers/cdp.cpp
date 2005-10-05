@@ -159,12 +159,6 @@ namespace CIAO
       return *label_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& DeploymentPlan::
-    label ()
-    {
-      return *label_;
-    }
-
     void DeploymentPlan::
     label (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -194,12 +188,6 @@ namespace CIAO
       return *UUID_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& DeploymentPlan::
-    UUID ()
-    {
-      return *UUID_;
-    }
-
     void DeploymentPlan::
     UUID (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -225,12 +213,6 @@ namespace CIAO
 
     ::CIAO::Config_Handlers::ComponentInterfaceDescription const& DeploymentPlan::
     realizes () const
-    {
-      return *realizes_;
-    }
-
-    ::CIAO::Config_Handlers::ComponentInterfaceDescription& DeploymentPlan::
-    realizes ()
     {
       return *realizes_;
     }
