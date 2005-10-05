@@ -3,10 +3,15 @@
 #include "ace/SV_Shared_Memory.h"
 #include "ace/SV_Semaphore_Simple.h"
 #include "ace/SV_Semaphore_Complex.h"
-#include "ace/Malloc.h"
+#include "ace/Shared_Memory_Pool.h"
+#include "ace/Malloc_T.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(SV_Semaphores, Semaphores_1, "$Id$")
+
+ACE_RCSID (SV_Semaphores,
+           Semaphores_1,
+           "$Id$")
+
 
 #if defined (ACE_HAS_SYSV_IPC) && !defined(ACE_LACKS_SYSV_SHMEM)
 

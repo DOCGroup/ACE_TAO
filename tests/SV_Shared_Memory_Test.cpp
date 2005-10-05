@@ -23,7 +23,8 @@
 // ============================================================================
 
 #include "test_config.h"
-#include "ace/Malloc.h"
+#include "ace/Malloc_T.h"
+#include "ace/Shared_Memory_Pool.h"
 #include "ace/SV_Semaphore_Simple.h"
 #include "ace/SV_Semaphore_Complex.h"
 #include "ace/OS_NS_unistd.h"
