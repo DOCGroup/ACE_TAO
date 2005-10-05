@@ -53,7 +53,7 @@ private:
                          ACE_TEXT ("lseek")), -1);
 
     char buf[1024];
-    int length = 0;
+    ssize_t length = 0;
 
     // Read the contents of the error stream written
     // by the child and print it out.
@@ -174,7 +174,7 @@ public:
     int i = 0;
     while (true)
       {
-        int retval = ACE_OS::read (ACE_STDIN, &str[i], 1);
+        ssize_t retval = ACE_OS::read (ACE_STDIN, &str[i], 1);
         if (retval > 0)
           {
             if (str[i] == '\n')
