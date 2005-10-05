@@ -247,8 +247,6 @@ TAO_AMH_Response_Handler::_remove_ref (void)
     {
       delete this;
     }
-
-  return;
 }
 
 namespace TAO
