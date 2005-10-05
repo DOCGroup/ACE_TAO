@@ -22,22 +22,30 @@ CIAO::Deployment_Configuration::init (const char *filename)
   // @@ We should change to use ACE_Configuration here.
 
   if (filename == 0)
-    return -1;
+    {
+      ACE_ERROR ((LM_ERROR, "CIAO (%P|%t) Deployment_Configuration.cpp
+                  : Unable to identify the file name \n"));
+      return -1;
+    }
 
   FILE *inf = ACE_OS::fopen (filename, "r");
 
   if (inf == NULL)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Fail to open node manager map data file: %s.\n",
-                       filename),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "CIAO (%P|%t) Deployment_Configuration.cpp:
+                          Fail to open node manager map data file: %s : \n",
+                          filename),
+                          -1);
+    }
 
   char destination[NAME_BUFSIZE], ior[NAME_BUFSIZE];
-
   int first = 1;
 
   while (fscanf (inf, "%s %s", destination, ior ) != EOF)
     {
+      // This should not fail!!
+      //
       this->deployment_info_.bind (destination, ior);
 
       if (first)
