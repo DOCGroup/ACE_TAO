@@ -9,7 +9,9 @@
 #include "tao/DynamicInterface/Dynamic_Implementation.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "ace/Singleton.h"
-#include "ace/Malloc.h"
+#include "ace/Local_Memory_Pool.h"
+#include "ace/Malloc_T.h"
+
 
 class DatabaseImpl
 {
