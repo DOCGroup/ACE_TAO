@@ -85,7 +85,7 @@ namespace CIAO
         }
       else if (value.octet_p ())
         {
-          CORBA::Octet val (static_cast <unsigned char &> (value.octet ()));
+          CORBA::Octet val (static_cast <const unsigned char &> (value.octet ()));
 
           toconfig <<=
             CORBA::Any::from_octet (val);
