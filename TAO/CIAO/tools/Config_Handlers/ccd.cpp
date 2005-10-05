@@ -165,12 +165,6 @@ namespace CIAO
       return *label_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& ComponentInterfaceDescription::
-    label ()
-    {
-      return *label_;
-    }
-
     void ComponentInterfaceDescription::
     label (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -200,12 +194,6 @@ namespace CIAO
       return *UUID_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& ComponentInterfaceDescription::
-    UUID ()
-    {
-      return *UUID_;
-    }
-
     void ComponentInterfaceDescription::
     UUID (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -231,12 +219,6 @@ namespace CIAO
 
     ::XMLSchema::string< ACE_TCHAR > const& ComponentInterfaceDescription::
     specificType () const
-    {
-      return *specificType_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& ComponentInterfaceDescription::
-    specificType ()
     {
       return *specificType_;
     }
@@ -608,12 +590,6 @@ namespace CIAO
 
     ::XMLSchema::string< ACE_TCHAR > const& ComponentInterfaceDescription::
     contentLocation () const
-    {
-      return *contentLocation_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& ComponentInterfaceDescription::
-    contentLocation ()
     {
       return *contentLocation_;
     }

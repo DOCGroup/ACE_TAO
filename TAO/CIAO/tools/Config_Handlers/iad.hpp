@@ -53,7 +53,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
-      ::XMLSchema::string< ACE_TCHAR >& name ();
       void name (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -63,7 +62,6 @@ namespace CIAO
       // 
       public:
       ::CIAO::Config_Handlers::ImplementationArtifactDescription const& referencedArtifact () const;
-      ::CIAO::Config_Handlers::ImplementationArtifactDescription& referencedArtifact ();
       void referencedArtifact (::CIAO::Config_Handlers::ImplementationArtifactDescription const& );
 
       protected:
@@ -94,7 +92,6 @@ namespace CIAO
       public:
       bool label_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& label () const;
-      ::XMLSchema::string< ACE_TCHAR >& label ();
       void label (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -105,7 +102,6 @@ namespace CIAO
       public:
       bool UUID_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& UUID () const;
-      ::XMLSchema::string< ACE_TCHAR >& UUID ();
       void UUID (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -146,7 +142,6 @@ namespace CIAO
       public:
       bool execParameter_p () const;
       ::CIAO::Config_Handlers::Property const& execParameter () const;
-      ::CIAO::Config_Handlers::Property& execParameter ();
       void execParameter (::CIAO::Config_Handlers::Property const& );
 
       protected:
@@ -157,7 +152,6 @@ namespace CIAO
       public:
       bool deployRequirement_p () const;
       ::CIAO::Config_Handlers::Requirement const& deployRequirement () const;
-      ::CIAO::Config_Handlers::Requirement& deployRequirement ();
       void deployRequirement (::CIAO::Config_Handlers::Requirement const& );
 
       protected:
@@ -168,7 +162,6 @@ namespace CIAO
       public:
       bool infoProperty_p () const;
       ::CIAO::Config_Handlers::Property const& infoProperty () const;
-      ::CIAO::Config_Handlers::Property& infoProperty ();
       void infoProperty (::CIAO::Config_Handlers::Property const& );
 
       protected:
@@ -179,7 +172,6 @@ namespace CIAO
       public:
       bool contentLocation_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& contentLocation () const;
-      ::XMLSchema::string< ACE_TCHAR >& contentLocation ();
       void contentLocation (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:

@@ -90,12 +90,6 @@ namespace CIAO
       return *label_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR >& PackageConfiguration::
-    label ()
-    {
-      return *label_;
-    }
-
     void PackageConfiguration::
     label (::XMLSchema::string< ACE_TCHAR > const& e)
     {
@@ -121,12 +115,6 @@ namespace CIAO
 
     ::XMLSchema::string< ACE_TCHAR > const& PackageConfiguration::
     UUID () const
-    {
-      return *UUID_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& PackageConfiguration::
-    UUID ()
     {
       return *UUID_;
     }
@@ -160,12 +148,6 @@ namespace CIAO
       return *basePackage_;
     }
 
-    ::CIAO::Config_Handlers::ComponentPackageDescription& PackageConfiguration::
-    basePackage ()
-    {
-      return *basePackage_;
-    }
-
     void PackageConfiguration::
     basePackage (::CIAO::Config_Handlers::ComponentPackageDescription const& e)
     {
@@ -191,12 +173,6 @@ namespace CIAO
 
     ::CIAO::Config_Handlers::ComponentPackageReference const& PackageConfiguration::
     reference () const
-    {
-      return *reference_;
-    }
-
-    ::CIAO::Config_Handlers::ComponentPackageReference& PackageConfiguration::
-    reference ()
     {
       return *reference_;
     }
@@ -230,12 +206,6 @@ namespace CIAO
       return *selectRequirement_;
     }
 
-    ::CIAO::Config_Handlers::Requirement& PackageConfiguration::
-    selectRequirement ()
-    {
-      return *selectRequirement_;
-    }
-
     void PackageConfiguration::
     selectRequirement (::CIAO::Config_Handlers::Requirement const& e)
     {
@@ -265,12 +235,6 @@ namespace CIAO
       return *configProperty_;
     }
 
-    ::CIAO::Config_Handlers::Property& PackageConfiguration::
-    configProperty ()
-    {
-      return *configProperty_;
-    }
-
     void PackageConfiguration::
     configProperty (::CIAO::Config_Handlers::Property const& e)
     {
@@ -296,12 +260,6 @@ namespace CIAO
 
     ::XMLSchema::string< ACE_TCHAR > const& PackageConfiguration::
     contentLocation () const
-    {
-      return *contentLocation_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& PackageConfiguration::
-    contentLocation ()
     {
       return *contentLocation_;
     }

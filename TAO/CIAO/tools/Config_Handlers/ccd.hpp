@@ -53,7 +53,6 @@ namespace CIAO
       public:
       bool label_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& label () const;
-      ::XMLSchema::string< ACE_TCHAR >& label ();
       void label (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -64,7 +63,6 @@ namespace CIAO
       public:
       bool UUID_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& UUID () const;
-      ::XMLSchema::string< ACE_TCHAR >& UUID ();
       void UUID (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -75,7 +73,6 @@ namespace CIAO
       public:
       bool specificType_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& specificType () const;
-      ::XMLSchema::string< ACE_TCHAR >& specificType ();
       void specificType (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -176,7 +173,6 @@ namespace CIAO
       public:
       bool contentLocation_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& contentLocation () const;
-      ::XMLSchema::string< ACE_TCHAR >& contentLocation ();
       void contentLocation (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:

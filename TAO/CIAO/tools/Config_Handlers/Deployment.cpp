@@ -207,8 +207,10 @@ namespace CIAO
 
       struct W : virtual ::CIAO::Config_Handlers::Writer::Domain,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::string< ACE_TCHAR >, ACE_TCHAR >,
-      virtual ::CIAO::Config_Handlers::Writer::SharedResource,
       virtual ::CIAO::Config_Handlers::Writer::Node,
+      virtual ::CIAO::Config_Handlers::Writer::Interconnect,
+      virtual ::CIAO::Config_Handlers::Writer::Bridge,
+      virtual ::CIAO::Config_Handlers::Writer::Resource,
       virtual ::CIAO::Config_Handlers::Writer::SatisfierProperty,
       virtual ::CIAO::Config_Handlers::Writer::SatisfierPropertyKind,
       virtual ::CIAO::Config_Handlers::Writer::Any,
@@ -225,6 +227,7 @@ namespace CIAO
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedByte, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::long_, ACE_TCHAR >,
       virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::unsignedLong, ACE_TCHAR >,
+      virtual ::CIAO::Config_Handlers::Writer::SharedResource,
       virtual ::CIAO::Config_Handlers::Writer::Property,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {

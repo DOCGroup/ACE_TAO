@@ -23,46 +23,88 @@ namespace CIAO{
     {
 
         TCKind kind (desc.kind ());
+        
+        switch (kind.integral ())
+          {
+          case  TCKind::tk_null_l:
+            type = CORBA::TypeCode::_duplicate (CORBA::_tc_null);
+            break;
 
-        if (kind == TCKind::tk_null)
-          type = CORBA::TypeCode::_duplicate (CORBA::_tc_null);
-        else if (kind == TCKind::tk_short)
-          type = CORBA::TypeCode::_duplicate (CORBA::_tc_short);
-        else if (kind == TCKind::tk_long)
-          type = CORBA::TypeCode::_duplicate (CORBA::_tc_long);
-        else if (kind == TCKind::tk_ushort)
-          type = CORBA::TypeCode::_duplicate (CORBA::_tc_ushort);
-        else if (kind == TCKind::tk_ulong)
-          type = CORBA::TypeCode::_duplicate (CORBA::_tc_ulong);
-        else if (kind == TCKind::tk_float)
-          type = CORBA::TypeCode::_duplicate (CORBA::_tc_float);
-        else if (kind == TCKind::tk_double)
-          type = CORBA::TypeCode::_duplicate (CORBA::_tc_double);
-        else if (kind == TCKind::tk_boolean)
-          type = CORBA::TypeCode::_duplicate (CORBA::_tc_boolean);
-        else if (kind == TCKind::tk_char)
-          type = CORBA::TypeCode::_duplicate (CORBA::_tc_char);
-        else if (kind == TCKind::tk_octet)
-          type = CORBA::TypeCode::_duplicate (CORBA::_tc_octet);
-        else if (kind == TCKind::tk_string)
-          type = CORBA::TypeCode::_duplicate (CORBA::_tc_string);
-        else if (kind == TCKind::tk_longlong)
-          type = CORBA::TypeCode::_duplicate (CORBA::_tc_longlong);
-        else if (kind == TCKind::tk_ulonglong)
-          type = CORBA::TypeCode::_duplicate (CORBA::_tc_ulonglong);
-        else if (kind == TCKind::tk_longdouble)
-          type = CORBA::TypeCode::_duplicate (CORBA::_tc_longdouble);
-        else if (kind == TCKind::tk_wchar)
-          type = CORBA::TypeCode::_duplicate (CORBA::_tc_wchar);
-        else if (kind == TCKind::tk_wstring)
-          type = CORBA::TypeCode::_duplicate (CORBA::_tc_wstring);
-        else if (kind == TCKind::tk_any)
-          type = CORBA::TypeCode::_duplicate (CORBA::_tc_any);
-        else if (kind == TCKind::tk_TypeCode)
-          type = CORBA::TypeCode::_duplicate (CORBA::_tc_TypeCode);
+          case  TCKind::tk_short_l:
+            type = CORBA::TypeCode::_duplicate (CORBA::_tc_short);
+            break;
 
-    //   This case used to be supported...is it not in the schema?
-    //    else if (kind == TCKind::tk_Object)
+          case  TCKind::tk_long_l:
+            type = CORBA::TypeCode::_duplicate (CORBA::_tc_long);
+            break;
+
+          case  TCKind::tk_ushort_l:
+            type = CORBA::TypeCode::_duplicate (CORBA::_tc_ushort);
+            break;
+
+          case  TCKind::tk_ulong_l:
+            type = CORBA::TypeCode::_duplicate (CORBA::_tc_ulong);
+            break;
+
+          case  TCKind::tk_float_l:
+            type = CORBA::TypeCode::_duplicate (CORBA::_tc_float);
+            break;
+
+          case  TCKind::tk_double_l:
+            type = CORBA::TypeCode::_duplicate (CORBA::_tc_double);
+            break;
+
+          case  TCKind::tk_boolean_l:
+            type = CORBA::TypeCode::_duplicate (CORBA::_tc_boolean);
+            break;
+
+          case  TCKind::tk_char_l:
+            type = CORBA::TypeCode::_duplicate (CORBA::_tc_char);
+            break;
+
+          case  TCKind::tk_octet_l:
+            type = CORBA::TypeCode::_duplicate (CORBA::_tc_octet);
+            break;
+
+          case  TCKind::tk_string_l:
+            type = CORBA::TypeCode::_duplicate (CORBA::_tc_string);
+            break;
+
+          case  TCKind::tk_longlong_l:
+            type = CORBA::TypeCode::_duplicate (CORBA::_tc_longlong);
+            break;
+
+          case  TCKind::tk_ulonglong_l:
+            type = CORBA::TypeCode::_duplicate (CORBA::_tc_ulonglong);
+            break;
+
+          case  TCKind::tk_longdouble_l:
+            type = CORBA::TypeCode::_duplicate (CORBA::_tc_longdouble);
+            break;
+
+          case  TCKind::tk_wchar_l:
+            type = CORBA::TypeCode::_duplicate (CORBA::_tc_wchar);
+            break;
+
+          case  TCKind::tk_wstring_l:
+            type = CORBA::TypeCode::_duplicate (CORBA::_tc_wstring);
+            break;
+
+          case  TCKind::tk_any_l:
+            type = CORBA::TypeCode::_duplicate (CORBA::_tc_any);
+            break;
+
+          case  TCKind::tk_TypeCode_l:
+            type = CORBA::TypeCode::_duplicate (CORBA::_tc_TypeCode);
+            break;
+
+          default:
+            ACE_ERROR ((LM_ERROR, "Invalid typecode in any\n"));
+            throw 1;
+          }
+        
+        //   This case used to be supported...is it not in the schema?
+    //    case  TCKind::tk_Object)
     //      type = CORBA::TypeCode::_duplicate (CORBA::_tc_Object);*/
 
     }
@@ -71,46 +113,68 @@ namespace CIAO{
     DataType_Handler::data_type (
                       const CORBA::TypeCode_ptr&  src)
     {
-
         DataType type;
-
-        if (src->kind () == ::CORBA::tk_null)
-          type.kind (TCKind::tk_null);
-        else if (src->kind () == CORBA::tk_short)
-          type.kind (TCKind::tk_short);
-        else if (src->kind () == CORBA::tk_long)
-          type.kind (TCKind::tk_long);
-        else if (src->kind () == CORBA::tk_ushort)
-          type.kind (TCKind::tk_ushort);
-        else if (src->kind () == CORBA::tk_ulong)
-          type.kind (TCKind::tk_ulong);
-        else if (src->kind () == CORBA::tk_float)
-          type.kind (TCKind::tk_float);
-        else if (src->kind () == CORBA::tk_double)
-          type.kind (TCKind::tk_double);
-        else if (src->kind () == CORBA::tk_boolean)
-          type.kind (TCKind::tk_boolean);
-        else if (src->kind () == CORBA::tk_char)
-          type.kind (TCKind::tk_char);
-        else if (src->kind () == CORBA::tk_octet)
-          type.kind (TCKind::tk_octet);
-        else if (src->kind () == CORBA::tk_string)
-          type.kind (TCKind::tk_string);
-        else if (src->kind () == CORBA::tk_longlong)
-          type.kind (TCKind::tk_longlong);
-        else if (src->kind () == CORBA::tk_ulonglong)
-          type.kind (TCKind::tk_ulonglong);
-        else if (src->kind () == CORBA::tk_longdouble)
-          type.kind (TCKind::tk_longdouble);
-        else if (src->kind () == CORBA::tk_wchar)
-          type.kind (TCKind::tk_wchar);
-        else if (src->kind () == CORBA::tk_wstring)
-          type.kind (TCKind::tk_wstring);
-        else if (src->kind () == CORBA::tk_any)
-          type.kind (TCKind::tk_any);
-        else if (src->kind () == CORBA::tk_TypeCode)
-          type.kind (TCKind::tk_TypeCode);
-
+        
+        switch (src->kind ())
+          {
+          case ::CORBA::tk_null:
+            type.kind (TCKind::tk_null);
+            break;
+          case CORBA::tk_short:
+            type.kind (TCKind::tk_short);
+            break;
+          case CORBA::tk_long:
+            type.kind (TCKind::tk_long);
+            break;
+          case CORBA::tk_ushort:
+            type.kind (TCKind::tk_ushort);
+            break;
+          case CORBA::tk_ulong:
+            type.kind (TCKind::tk_ulong);
+            break;
+          case CORBA::tk_float:
+            type.kind (TCKind::tk_float);
+            break;
+          case CORBA::tk_double:
+            type.kind (TCKind::tk_double);
+            break;
+          case CORBA::tk_boolean:
+            type.kind (TCKind::tk_boolean);
+            break;
+          case CORBA::tk_char:
+            type.kind (TCKind::tk_char);
+            break;
+          case CORBA::tk_octet:
+            type.kind (TCKind::tk_octet);
+            break;
+          case CORBA::tk_string:
+            type.kind (TCKind::tk_string);
+            break;
+          case CORBA::tk_longlong:
+            type.kind (TCKind::tk_longlong);
+            break;
+          case CORBA::tk_ulonglong:
+            type.kind (TCKind::tk_ulonglong);
+            break;
+          case CORBA::tk_longdouble:
+            type.kind (TCKind::tk_longdouble);
+            break;
+          case CORBA::tk_wchar:
+            type.kind (TCKind::tk_wchar);
+            break;
+          case CORBA::tk_wstring:
+            type.kind (TCKind::tk_wstring);
+            break;
+          case CORBA::tk_any:
+            type.kind (TCKind::tk_any);
+            break;
+          case CORBA::tk_TypeCode:
+            type.kind (TCKind::tk_TypeCode);
+          default:
+            ACE_ERROR ((LM_ERROR, "Invalid typecode\n"));
+            throw 1;
+          }
+        
         return type;
     }
 

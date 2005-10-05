@@ -55,7 +55,6 @@ namespace CIAO
       public:
       bool label_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& label () const;
-      ::XMLSchema::string< ACE_TCHAR >& label ();
       void label (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -66,7 +65,6 @@ namespace CIAO
       public:
       bool UUID_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& UUID () const;
-      ::XMLSchema::string< ACE_TCHAR >& UUID ();
       void UUID (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -77,7 +75,6 @@ namespace CIAO
       public:
       bool basePackage_p () const;
       ::CIAO::Config_Handlers::ComponentPackageDescription const& basePackage () const;
-      ::CIAO::Config_Handlers::ComponentPackageDescription& basePackage ();
       void basePackage (::CIAO::Config_Handlers::ComponentPackageDescription const& );
 
       protected:
@@ -88,7 +85,6 @@ namespace CIAO
       public:
       bool reference_p () const;
       ::CIAO::Config_Handlers::ComponentPackageReference const& reference () const;
-      ::CIAO::Config_Handlers::ComponentPackageReference& reference ();
       void reference (::CIAO::Config_Handlers::ComponentPackageReference const& );
 
       protected:
@@ -99,7 +95,6 @@ namespace CIAO
       public:
       bool selectRequirement_p () const;
       ::CIAO::Config_Handlers::Requirement const& selectRequirement () const;
-      ::CIAO::Config_Handlers::Requirement& selectRequirement ();
       void selectRequirement (::CIAO::Config_Handlers::Requirement const& );
 
       protected:
@@ -110,7 +105,6 @@ namespace CIAO
       public:
       bool configProperty_p () const;
       ::CIAO::Config_Handlers::Property const& configProperty () const;
-      ::CIAO::Config_Handlers::Property& configProperty ();
       void configProperty (::CIAO::Config_Handlers::Property const& );
 
       protected:
@@ -121,7 +115,6 @@ namespace CIAO
       public:
       bool contentLocation_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& contentLocation () const;
-      ::XMLSchema::string< ACE_TCHAR >& contentLocation ();
       void contentLocation (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:

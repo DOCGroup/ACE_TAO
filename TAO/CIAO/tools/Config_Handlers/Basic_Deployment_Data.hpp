@@ -34,13 +34,9 @@ namespace CIAO
     class DataValue;
     class Any;
     class Property;
-    class Bridge;
-    class Interconnect;
-    class Node;
     class SatisfierPropertyKind;
     class SatisfierProperty;
     class Resource;
-    class SharedResource;
     class Requirement;
     class ResourceDeploymentDescription;
     class ArtifactDeploymentDescription;
@@ -119,7 +115,7 @@ namespace CIAO
 
       enum Value
       {
-        tk_null_l,tk_void_l,tk_short_l,tk_long_l,tk_ushort_l,tk_ulong_l,tk_float_l,tk_double_l,tk_boolean_l,tk_char_l,tk_octet_l,tk_any_l,tk_TypeCode_l,tk_Principal_l,tk_objref_l,tk_struct_l,tk_union_l,tk_enum_l,tk_string_l,tk_sequence_l,tk_array_l,tk_alias_l,tk_except_l,tk_longlong_l,tk_ulonglong_l,tk_longdouble_l,tk_wchar_l,tk_wstring_l,tk_wfixed_l,tk_value_l,tk_value_box_l,tk_native_l,tk_abstract_interface_l,tk_local_interface_l,tk_component_l,tk_home_l,tk_event_l,
+        tk_null_l,tk_void_l,tk_short_l,tk_long_l,tk_ushort_l,tk_ulong_l,tk_float_l,tk_double_l,tk_boolean_l,tk_char_l,tk_octet_l,tk_any_l,tk_TypeCode_l,tk_Principal_l,tk_objref_l,tk_struct_l,tk_union_l,tk_enum_l,tk_string_l,tk_sequence_l,tk_array_l,tk_alias_l,tk_except_l,tk_longlong_l,tk_ulonglong_l,tk_longdouble_l,tk_wchar_l,tk_wstring_l,tk_wfixed_l,tk_value_l,tk_value_box_l,tk_native_l,tk_abstract_interface_l,tk_local_interface_l,tk_component_l,tk_home_l,tk_event_l
       };
 
 
@@ -153,7 +149,6 @@ namespace CIAO
       public:
       bool kind_p () const;
       ::CIAO::Config_Handlers::TCKind const& kind () const;
-      ::CIAO::Config_Handlers::TCKind& kind ();
       void kind (::CIAO::Config_Handlers::TCKind const& );
 
       protected:
@@ -183,7 +178,6 @@ namespace CIAO
       public:
       bool short_p () const;
       ::XMLSchema::short_ const& short_ () const;
-      ::XMLSchema::short_& short_ ();
       void short_ (::XMLSchema::short_ const& );
 
       protected:
@@ -194,7 +188,6 @@ namespace CIAO
       public:
       bool long_p () const;
       ::XMLSchema::int_ const& long_ () const;
-      ::XMLSchema::int_& long_ ();
       void long_ (::XMLSchema::int_ const& );
 
       protected:
@@ -205,7 +198,6 @@ namespace CIAO
       public:
       bool ushort_p () const;
       ::XMLSchema::unsignedShort const& ushort () const;
-      ::XMLSchema::unsignedShort& ushort ();
       void ushort (::XMLSchema::unsignedShort const& );
 
       protected:
@@ -216,7 +208,6 @@ namespace CIAO
       public:
       bool ulong_p () const;
       ::XMLSchema::unsignedInt const& ulong () const;
-      ::XMLSchema::unsignedInt& ulong ();
       void ulong (::XMLSchema::unsignedInt const& );
 
       protected:
@@ -227,7 +218,6 @@ namespace CIAO
       public:
       bool float_p () const;
       ::XMLSchema::float_ const& float_ () const;
-      ::XMLSchema::float_& float_ ();
       void float_ (::XMLSchema::float_ const& );
 
       protected:
@@ -238,7 +228,6 @@ namespace CIAO
       public:
       bool double_p () const;
       ::XMLSchema::double_ const& double_ () const;
-      ::XMLSchema::double_& double_ ();
       void double_ (::XMLSchema::double_ const& );
 
       protected:
@@ -249,7 +238,6 @@ namespace CIAO
       public:
       bool boolean_p () const;
       ::XMLSchema::boolean const& boolean () const;
-      ::XMLSchema::boolean& boolean ();
       void boolean (::XMLSchema::boolean const& );
 
       protected:
@@ -260,7 +248,6 @@ namespace CIAO
       public:
       bool octet_p () const;
       ::XMLSchema::unsignedByte const& octet () const;
-      ::XMLSchema::unsignedByte& octet ();
       void octet (::XMLSchema::unsignedByte const& );
 
       protected:
@@ -271,7 +258,6 @@ namespace CIAO
       public:
       bool objref_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& objref () const;
-      ::XMLSchema::string< ACE_TCHAR >& objref ();
       void objref (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -282,7 +268,6 @@ namespace CIAO
       public:
       bool enum_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& enum_ () const;
-      ::XMLSchema::string< ACE_TCHAR >& enum_ ();
       void enum_ (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -293,7 +278,6 @@ namespace CIAO
       public:
       bool string_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& string () const;
-      ::XMLSchema::string< ACE_TCHAR >& string ();
       void string (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -304,7 +288,6 @@ namespace CIAO
       public:
       bool longlong_p () const;
       ::XMLSchema::long_ const& longlong () const;
-      ::XMLSchema::long_& longlong ();
       void longlong (::XMLSchema::long_ const& );
 
       protected:
@@ -315,7 +298,6 @@ namespace CIAO
       public:
       bool ulonglong_p () const;
       ::XMLSchema::unsignedLong const& ulonglong () const;
-      ::XMLSchema::unsignedLong& ulonglong ();
       void ulonglong (::XMLSchema::unsignedLong const& );
 
       protected:
@@ -326,7 +308,6 @@ namespace CIAO
       public:
       bool longdouble_p () const;
       ::XMLSchema::double_ const& longdouble () const;
-      ::XMLSchema::double_& longdouble ();
       void longdouble (::XMLSchema::double_ const& );
 
       protected:
@@ -337,7 +318,6 @@ namespace CIAO
       public:
       bool fixed_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& fixed () const;
-      ::XMLSchema::string< ACE_TCHAR >& fixed ();
       void fixed (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -348,7 +328,6 @@ namespace CIAO
       public:
       bool typecode_p () const;
       ::CIAO::Config_Handlers::DataType const& typecode () const;
-      ::CIAO::Config_Handlers::DataType& typecode ();
       void typecode (::CIAO::Config_Handlers::DataType const& );
 
       protected:
@@ -377,7 +356,6 @@ namespace CIAO
       // 
       public:
       ::CIAO::Config_Handlers::DataType const& type () const;
-      ::CIAO::Config_Handlers::DataType& type ();
       void type (::CIAO::Config_Handlers::DataType const& );
 
       protected:
@@ -387,7 +365,6 @@ namespace CIAO
       // 
       public:
       ::CIAO::Config_Handlers::DataValue const& value () const;
-      ::CIAO::Config_Handlers::DataValue& value ();
       void value (::CIAO::Config_Handlers::DataValue const& );
 
       protected:
@@ -417,7 +394,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
-      ::XMLSchema::string< ACE_TCHAR >& name ();
       void name (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -427,7 +403,6 @@ namespace CIAO
       // 
       public:
       ::CIAO::Config_Handlers::Any const& value () const;
-      ::CIAO::Config_Handlers::Any& value ();
       void value (::CIAO::Config_Handlers::Any const& );
 
       protected:
@@ -442,242 +417,6 @@ namespace CIAO
 
       Property&
       operator= (Property const& s);
-
-      private:
-      char regulator__;
-    };
-
-
-    class Config_Handlers_Export Bridge : public ::XSCRT::Type
-    {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
-
-      // name
-      // 
-      public:
-      ::XMLSchema::string< ACE_TCHAR > const& name () const;
-      ::XMLSchema::string< ACE_TCHAR >& name ();
-      void name (::XMLSchema::string< ACE_TCHAR > const& );
-
-      protected:
-      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
-
-      // label
-      // 
-      public:
-      bool label_p () const;
-      ::XMLSchema::string< ACE_TCHAR > const& label () const;
-      ::XMLSchema::string< ACE_TCHAR >& label ();
-      void label (::XMLSchema::string< ACE_TCHAR > const& );
-
-      protected:
-      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > label_;
-
-      // connect
-      // 
-      public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::Interconnect >::iterator connect_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::Interconnect >::const_iterator connect_const_iterator;
-      connect_iterator begin_connect ();
-      connect_iterator end_connect ();
-      connect_const_iterator begin_connect () const;
-      connect_const_iterator end_connect () const;
-      void add_connect (::CIAO::Config_Handlers::Interconnect const& );
-      size_t count_connect (void) const;
-
-      protected:
-      ::std::vector< ::CIAO::Config_Handlers::Interconnect > connect_;
-
-      // resource
-      // 
-      public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::Resource >::iterator resource_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::Resource >::const_iterator resource_const_iterator;
-      resource_iterator begin_resource ();
-      resource_iterator end_resource ();
-      resource_const_iterator begin_resource () const;
-      resource_const_iterator end_resource () const;
-      void add_resource (::CIAO::Config_Handlers::Resource const& );
-      size_t count_resource (void) const;
-
-      protected:
-      ::std::vector< ::CIAO::Config_Handlers::Resource > resource_;
-
-      public:
-      Bridge (::XMLSchema::string< ACE_TCHAR > const& name__);
-
-      Bridge (::XSCRT::XML::Element< ACE_TCHAR > const&);
-      Bridge (Bridge const& s);
-
-      Bridge&
-      operator= (Bridge const& s);
-
-      private:
-      char regulator__;
-    };
-
-
-    class Config_Handlers_Export Interconnect : public ::XSCRT::Type
-    {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
-
-      // name
-      // 
-      public:
-      ::XMLSchema::string< ACE_TCHAR > const& name () const;
-      ::XMLSchema::string< ACE_TCHAR >& name ();
-      void name (::XMLSchema::string< ACE_TCHAR > const& );
-
-      protected:
-      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
-
-      // label
-      // 
-      public:
-      bool label_p () const;
-      ::XMLSchema::string< ACE_TCHAR > const& label () const;
-      ::XMLSchema::string< ACE_TCHAR >& label ();
-      void label (::XMLSchema::string< ACE_TCHAR > const& );
-
-      protected:
-      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > label_;
-
-      // connection
-      // 
-      public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::Bridge >::iterator connection_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::Bridge >::const_iterator connection_const_iterator;
-      connection_iterator begin_connection ();
-      connection_iterator end_connection ();
-      connection_const_iterator begin_connection () const;
-      connection_const_iterator end_connection () const;
-      void add_connection (::CIAO::Config_Handlers::Bridge const& );
-      size_t count_connection (void) const;
-
-      protected:
-      ::std::vector< ::CIAO::Config_Handlers::Bridge > connection_;
-
-      // connect
-      // 
-      public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::Node >::iterator connect_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::Node >::const_iterator connect_const_iterator;
-      connect_iterator begin_connect ();
-      connect_iterator end_connect ();
-      connect_const_iterator begin_connect () const;
-      connect_const_iterator end_connect () const;
-      void add_connect (::CIAO::Config_Handlers::Node const& );
-      size_t count_connect (void) const;
-
-      protected:
-      ::std::vector< ::CIAO::Config_Handlers::Node > connect_;
-
-      // resource
-      // 
-      public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::Resource >::iterator resource_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::Resource >::const_iterator resource_const_iterator;
-      resource_iterator begin_resource ();
-      resource_iterator end_resource ();
-      resource_const_iterator begin_resource () const;
-      resource_const_iterator end_resource () const;
-      void add_resource (::CIAO::Config_Handlers::Resource const& );
-      size_t count_resource (void) const;
-
-      protected:
-      ::std::vector< ::CIAO::Config_Handlers::Resource > resource_;
-
-      public:
-      Interconnect (::XMLSchema::string< ACE_TCHAR > const& name__);
-
-      Interconnect (::XSCRT::XML::Element< ACE_TCHAR > const&);
-      Interconnect (Interconnect const& s);
-
-      Interconnect&
-      operator= (Interconnect const& s);
-
-      private:
-      char regulator__;
-    };
-
-
-    class Config_Handlers_Export Node : public ::XSCRT::Type
-    {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
-
-      // name
-      // 
-      public:
-      ::XMLSchema::string< ACE_TCHAR > const& name () const;
-      ::XMLSchema::string< ACE_TCHAR >& name ();
-      void name (::XMLSchema::string< ACE_TCHAR > const& );
-
-      protected:
-      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
-
-      // label
-      // 
-      public:
-      bool label_p () const;
-      ::XMLSchema::string< ACE_TCHAR > const& label () const;
-      ::XMLSchema::string< ACE_TCHAR >& label ();
-      void label (::XMLSchema::string< ACE_TCHAR > const& );
-
-      protected:
-      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > label_;
-
-      // connection
-      // 
-      public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::Interconnect >::iterator connection_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::Interconnect >::const_iterator connection_const_iterator;
-      connection_iterator begin_connection ();
-      connection_iterator end_connection ();
-      connection_const_iterator begin_connection () const;
-      connection_const_iterator end_connection () const;
-      void add_connection (::CIAO::Config_Handlers::Interconnect const& );
-      size_t count_connection (void) const;
-
-      protected:
-      ::std::vector< ::CIAO::Config_Handlers::Interconnect > connection_;
-
-      // sharedResource
-      // 
-      public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::SharedResource >::iterator sharedResource_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::SharedResource >::const_iterator sharedResource_const_iterator;
-      sharedResource_iterator begin_sharedResource ();
-      sharedResource_iterator end_sharedResource ();
-      sharedResource_const_iterator begin_sharedResource () const;
-      sharedResource_const_iterator end_sharedResource () const;
-      void add_sharedResource (::CIAO::Config_Handlers::SharedResource const& );
-      size_t count_sharedResource (void) const;
-
-      protected:
-      ::std::vector< ::CIAO::Config_Handlers::SharedResource > sharedResource_;
-
-      // resource
-      // 
-      public:
-      ::CIAO::Config_Handlers::Resource const& resource () const;
-      ::CIAO::Config_Handlers::Resource& resource ();
-      void resource (::CIAO::Config_Handlers::Resource const& );
-
-      protected:
-      ::std::auto_ptr< ::CIAO::Config_Handlers::Resource > resource_;
-
-      public:
-      Node (::XMLSchema::string< ACE_TCHAR > const& name__,
-      ::CIAO::Config_Handlers::Resource const& resource__);
-
-      Node (::XSCRT::XML::Element< ACE_TCHAR > const&);
-      Node (Node const& s);
-
-      Node&
-      operator= (Node const& s);
 
       private:
       char regulator__;
@@ -699,7 +438,7 @@ namespace CIAO
 
       enum Value
       {
-        Quantity_l,Capacity_l,Minimum_l,Maximum_l,Attribute_l,Selection_l,
+        Quantity_l,Capacity_l,Minimum_l,Maximum_l,Attribute_l,Selection_l
       };
 
 
@@ -732,7 +471,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
-      ::XMLSchema::string< ACE_TCHAR >& name ();
       void name (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -742,7 +480,6 @@ namespace CIAO
       // 
       public:
       ::CIAO::Config_Handlers::SatisfierPropertyKind const& kind () const;
-      ::CIAO::Config_Handlers::SatisfierPropertyKind& kind ();
       void kind (::CIAO::Config_Handlers::SatisfierPropertyKind const& );
 
       protected:
@@ -752,7 +489,6 @@ namespace CIAO
       // 
       public:
       ::CIAO::Config_Handlers::Any const& value () const;
-      ::CIAO::Config_Handlers::Any& value ();
       void value (::CIAO::Config_Handlers::Any const& );
 
       protected:
@@ -783,7 +519,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
-      ::XMLSchema::string< ACE_TCHAR >& name ();
       void name (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -793,7 +528,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& resourceType () const;
-      ::XMLSchema::string< ACE_TCHAR >& resourceType ();
       void resourceType (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -803,7 +537,6 @@ namespace CIAO
       // 
       public:
       ::CIAO::Config_Handlers::SatisfierProperty const& property () const;
-      ::CIAO::Config_Handlers::SatisfierProperty& property ();
       void property (::CIAO::Config_Handlers::SatisfierProperty const& );
 
       protected:
@@ -825,68 +558,6 @@ namespace CIAO
     };
 
 
-    class Config_Handlers_Export SharedResource : public ::XSCRT::Type
-    {
-      //@@ VC6 anathema
-      typedef ::XSCRT::Type Base__;
-
-      // name
-      // 
-      public:
-      ::XMLSchema::string< ACE_TCHAR > const& name () const;
-      ::XMLSchema::string< ACE_TCHAR >& name ();
-      void name (::XMLSchema::string< ACE_TCHAR > const& );
-
-      protected:
-      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
-
-      // resourceType
-      // 
-      public:
-      ::XMLSchema::string< ACE_TCHAR > const& resourceType () const;
-      ::XMLSchema::string< ACE_TCHAR >& resourceType ();
-      void resourceType (::XMLSchema::string< ACE_TCHAR > const& );
-
-      protected:
-      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > resourceType_;
-
-      // node
-      // 
-      public:
-      ::CIAO::Config_Handlers::Node const& node () const;
-      ::CIAO::Config_Handlers::Node& node ();
-      void node (::CIAO::Config_Handlers::Node const& );
-
-      protected:
-      ::std::auto_ptr< ::CIAO::Config_Handlers::Node > node_;
-
-      // property
-      // 
-      public:
-      ::CIAO::Config_Handlers::SatisfierProperty const& property () const;
-      ::CIAO::Config_Handlers::SatisfierProperty& property ();
-      void property (::CIAO::Config_Handlers::SatisfierProperty const& );
-
-      protected:
-      ::std::auto_ptr< ::CIAO::Config_Handlers::SatisfierProperty > property_;
-
-      public:
-      SharedResource (::XMLSchema::string< ACE_TCHAR > const& name__,
-      ::XMLSchema::string< ACE_TCHAR > const& resourceType__,
-      ::CIAO::Config_Handlers::Node const& node__,
-      ::CIAO::Config_Handlers::SatisfierProperty const& property__);
-
-      SharedResource (::XSCRT::XML::Element< ACE_TCHAR > const&);
-      SharedResource (SharedResource const& s);
-
-      SharedResource&
-      operator= (SharedResource const& s);
-
-      private:
-      char regulator__;
-    };
-
-
     class Config_Handlers_Export Requirement : public ::XSCRT::Type
     {
       //@@ VC6 anathema
@@ -896,7 +567,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& resourceType () const;
-      ::XMLSchema::string< ACE_TCHAR >& resourceType ();
       void resourceType (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -906,7 +576,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
-      ::XMLSchema::string< ACE_TCHAR >& name ();
       void name (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -916,7 +585,6 @@ namespace CIAO
       // 
       public:
       ::CIAO::Config_Handlers::Property const& property () const;
-      ::CIAO::Config_Handlers::Property& property ();
       void property (::CIAO::Config_Handlers::Property const& );
 
       protected:
@@ -947,7 +615,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& requirementName () const;
-      ::XMLSchema::string< ACE_TCHAR >& requirementName ();
       void requirementName (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -957,7 +624,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& resourceName () const;
-      ::XMLSchema::string< ACE_TCHAR >& resourceName ();
       void resourceName (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -967,7 +633,6 @@ namespace CIAO
       // 
       public:
       ::CIAO::Config_Handlers::Any const& resourceValue () const;
-      ::CIAO::Config_Handlers::Any& resourceValue ();
       void resourceValue (::CIAO::Config_Handlers::Any const& );
 
       protected:
@@ -998,7 +663,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
-      ::XMLSchema::string< ACE_TCHAR >& name ();
       void name (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -1023,7 +687,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& node () const;
-      ::XMLSchema::string< ACE_TCHAR >& node ();
       void node (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -1124,7 +787,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
-      ::XMLSchema::string< ACE_TCHAR >& name ();
       void name (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -1229,7 +891,7 @@ namespace CIAO
 
       enum Value
       {
-        None_l,InstanceUsesResource_l,ResourceUsesInstance_l,PortUsesResource_l,ResourceUsesPort_l,
+        None_l,InstanceUsesResource_l,ResourceUsesInstance_l,PortUsesResource_l,ResourceUsesPort_l
       };
 
 
@@ -1262,7 +924,6 @@ namespace CIAO
       // 
       public:
       ::CIAO::Config_Handlers::ResourceUsageKind const& resourceUsage () const;
-      ::CIAO::Config_Handlers::ResourceUsageKind& resourceUsage ();
       void resourceUsage (::CIAO::Config_Handlers::ResourceUsageKind const& );
 
       protected:
@@ -1272,7 +933,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& requirementName () const;
-      ::XMLSchema::string< ACE_TCHAR >& requirementName ();
       void requirementName (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -1282,7 +942,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& resourceName () const;
-      ::XMLSchema::string< ACE_TCHAR >& resourceName ();
       void resourceName (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -1292,7 +951,6 @@ namespace CIAO
       // 
       public:
       ::CIAO::Config_Handlers::Any const& resourceValue () const;
-      ::CIAO::Config_Handlers::Any& resourceValue ();
       void resourceValue (::CIAO::Config_Handlers::Any const& );
 
       protected:
@@ -1324,7 +982,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
-      ::XMLSchema::string< ACE_TCHAR >& name ();
       void name (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -1334,7 +991,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& node () const;
-      ::XMLSchema::string< ACE_TCHAR >& node ();
       void node (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -1344,7 +1000,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& source () const;
-      ::XMLSchema::string< ACE_TCHAR >& source ();
       void source (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -1354,7 +1009,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::IDREF< ACE_TCHAR > const& implementation () const;
-      ::XMLSchema::IDREF< ACE_TCHAR >& implementation ();
       void implementation (::XMLSchema::IDREF< ACE_TCHAR > const& );
 
       protected:
@@ -1380,7 +1034,6 @@ namespace CIAO
       public:
       bool deployedResource_p () const;
       ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription const& deployedResource () const;
-      ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription& deployedResource ();
       void deployedResource (::CIAO::Config_Handlers::InstanceResourceDeploymentDescription const& );
 
       protected:
@@ -1391,7 +1044,6 @@ namespace CIAO
       public:
       bool deployedSharedResource_p () const;
       ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription const& deployedSharedResource () const;
-      ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription& deployedSharedResource ();
       void deployedSharedResource (::CIAO::Config_Handlers::InstanceResourceDeploymentDescription const& );
 
       protected:
@@ -1440,7 +1092,7 @@ namespace CIAO
 
       enum Value
       {
-        Facet_l,SimplexReceptacle_l,MultiplexReceptacle_l,EventEmitter_l,EventPublisher_l,EventConsumer_l,
+        Facet_l,SimplexReceptacle_l,MultiplexReceptacle_l,EventEmitter_l,EventPublisher_l,EventConsumer_l
       };
 
 
@@ -1473,7 +1125,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
-      ::XMLSchema::string< ACE_TCHAR >& name ();
       void name (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -1483,7 +1134,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& specificType () const;
-      ::XMLSchema::string< ACE_TCHAR >& specificType ();
       void specificType (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -1493,7 +1143,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& supportedType () const;
-      ::XMLSchema::string< ACE_TCHAR >& supportedType ();
       void supportedType (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -1503,7 +1152,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& provider () const;
-      ::XMLSchema::string< ACE_TCHAR >& provider ();
       void provider (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -1513,7 +1161,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& exclusiveProvider () const;
-      ::XMLSchema::string< ACE_TCHAR >& exclusiveProvider ();
       void exclusiveProvider (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -1523,7 +1170,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& exclusiveUser () const;
-      ::XMLSchema::string< ACE_TCHAR >& exclusiveUser ();
       void exclusiveUser (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -1533,7 +1179,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& optional () const;
-      ::XMLSchema::string< ACE_TCHAR >& optional ();
       void optional (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -1543,7 +1188,6 @@ namespace CIAO
       // 
       public:
       ::CIAO::Config_Handlers::CCMComponentPortKind const& kind () const;
-      ::CIAO::Config_Handlers::CCMComponentPortKind& kind ();
       void kind (::CIAO::Config_Handlers::CCMComponentPortKind const& );
 
       protected:
@@ -1579,7 +1223,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
-      ::XMLSchema::string< ACE_TCHAR >& name ();
       void name (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -1589,7 +1232,6 @@ namespace CIAO
       // 
       public:
       ::CIAO::Config_Handlers::DataType const& type () const;
-      ::CIAO::Config_Handlers::DataType& type ();
       void type (::CIAO::Config_Handlers::DataType const& );
 
       protected:
@@ -1619,7 +1261,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& portName () const;
-      ::XMLSchema::string< ACE_TCHAR >& portName ();
       void portName (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -1648,7 +1289,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& portName () const;
-      ::XMLSchema::string< ACE_TCHAR >& portName ();
       void portName (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -1659,7 +1299,6 @@ namespace CIAO
       public:
       bool provider_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& provider () const;
-      ::XMLSchema::string< ACE_TCHAR >& provider ();
       void provider (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -1669,7 +1308,6 @@ namespace CIAO
       // 
       public:
       ::CIAO::Config_Handlers::CCMComponentPortKind const& kind () const;
-      ::CIAO::Config_Handlers::CCMComponentPortKind& kind ();
       void kind (::CIAO::Config_Handlers::CCMComponentPortKind const& );
 
       protected:
@@ -1679,7 +1317,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::IDREF< ACE_TCHAR > const& instance () const;
-      ::XMLSchema::IDREF< ACE_TCHAR >& instance ();
       void instance (::XMLSchema::IDREF< ACE_TCHAR > const& );
 
       protected:
@@ -1710,7 +1347,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& location () const;
-      ::XMLSchema::string< ACE_TCHAR >& location ();
       void location (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -1739,7 +1375,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& targetName () const;
-      ::XMLSchema::string< ACE_TCHAR >& targetName ();
       void targetName (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -1749,7 +1384,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& requirementName () const;
-      ::XMLSchema::string< ACE_TCHAR >& requirementName ();
       void requirementName (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -1759,7 +1393,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& resourceName () const;
-      ::XMLSchema::string< ACE_TCHAR >& resourceName ();
       void resourceName (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -1769,7 +1402,6 @@ namespace CIAO
       // 
       public:
       ::CIAO::Config_Handlers::Any const& resourceValue () const;
-      ::CIAO::Config_Handlers::Any& resourceValue ();
       void resourceValue (::CIAO::Config_Handlers::Any const& );
 
       protected:
@@ -1801,7 +1433,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
-      ::XMLSchema::string< ACE_TCHAR >& name ();
       void name (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -1812,7 +1443,6 @@ namespace CIAO
       public:
       bool source_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& source () const;
-      ::XMLSchema::string< ACE_TCHAR >& source ();
       void source (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -1916,7 +1546,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& requiredType () const;
-      ::XMLSchema::string< ACE_TCHAR >& requiredType ();
       void requiredType (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -1945,7 +1574,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
-      ::XMLSchema::string< ACE_TCHAR >& name ();
       void name (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -1955,7 +1583,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& resourceType () const;
-      ::XMLSchema::string< ACE_TCHAR >& resourceType ();
       void resourceType (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -1965,7 +1592,6 @@ namespace CIAO
       // 
       public:
       ::CIAO::Config_Handlers::SatisfierProperty const& property () const;
-      ::CIAO::Config_Handlers::SatisfierProperty& property ();
       void property (::CIAO::Config_Handlers::SatisfierProperty const& );
 
       protected:
@@ -1996,7 +1622,6 @@ namespace CIAO
       // 
       public:
       ::CIAO::Config_Handlers::ResourceUsageKind const& resourceUsage () const;
-      ::CIAO::Config_Handlers::ResourceUsageKind& resourceUsage ();
       void resourceUsage (::CIAO::Config_Handlers::ResourceUsageKind const& );
 
       protected:
@@ -2006,7 +1631,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& resourcePort () const;
-      ::XMLSchema::string< ACE_TCHAR >& resourcePort ();
       void resourcePort (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -2016,7 +1640,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& componentPort () const;
-      ::XMLSchema::string< ACE_TCHAR >& componentPort ();
       void componentPort (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -2026,7 +1649,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& resourceType () const;
-      ::XMLSchema::string< ACE_TCHAR >& resourceType ();
       void resourceType (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -2036,7 +1658,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
-      ::XMLSchema::string< ACE_TCHAR >& name ();
       void name (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -2046,7 +1667,6 @@ namespace CIAO
       // 
       public:
       ::CIAO::Config_Handlers::Property const& property () const;
-      ::CIAO::Config_Handlers::Property& property ();
       void property (::CIAO::Config_Handlers::Property const& );
 
       protected:
@@ -2080,7 +1700,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& requiredUUID () const;
-      ::XMLSchema::string< ACE_TCHAR >& requiredUUID ();
       void requiredUUID (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -2090,7 +1709,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& requiredName () const;
-      ::XMLSchema::string< ACE_TCHAR >& requiredName ();
       void requiredName (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -2100,7 +1718,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& requiredType () const;
-      ::XMLSchema::string< ACE_TCHAR >& requiredType ();
       void requiredType (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -2131,7 +1748,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& portName () const;
-      ::XMLSchema::string< ACE_TCHAR >& portName ();
       void portName (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -2141,7 +1757,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::IDREF< ACE_TCHAR > const& instance () const;
-      ::XMLSchema::IDREF< ACE_TCHAR >& instance ();
       void instance (::XMLSchema::IDREF< ACE_TCHAR > const& );
 
       protected:
@@ -2171,7 +1786,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
-      ::XMLSchema::string< ACE_TCHAR >& name ();
       void name (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -2182,7 +1796,6 @@ namespace CIAO
       public:
       bool deployRequirement_p () const;
       ::CIAO::Config_Handlers::Requirement const& deployRequirement () const;
-      ::CIAO::Config_Handlers::Requirement& deployRequirement ();
       void deployRequirement (::CIAO::Config_Handlers::Requirement const& );
 
       protected:
@@ -2579,327 +2192,6 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct Config_Handlers_Export Bridge : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::Bridge >
-      {
-        virtual void
-        traverse (Type&);
-
-        virtual void
-        traverse (Type const&);
-
-        virtual void
-        pre (Type&);
-
-        virtual void
-        pre (Type const&);
-
-        virtual void
-        name (Type&);
-
-        virtual void
-        name (Type const&);
-
-        virtual void
-        label (Type&);
-
-        virtual void
-        label (Type const&);
-
-        virtual void
-        label_none (Type&);
-
-        virtual void
-        label_none (Type const&);
-
-        virtual void
-        connect (Type&);
-
-        virtual void
-        connect (Type const&);
-
-        virtual void
-        connect_pre (Type&);
-
-        virtual void
-        connect_pre (Type const&);
-
-        virtual void
-        connect_next (Type&);
-
-        virtual void
-        connect_next (Type const&);
-
-        virtual void
-        connect_post (Type&);
-
-        virtual void
-        connect_post (Type const&);
-
-        virtual void
-        resource (Type&);
-
-        virtual void
-        resource (Type const&);
-
-        virtual void
-        resource_pre (Type&);
-
-        virtual void
-        resource_pre (Type const&);
-
-        virtual void
-        resource_next (Type&);
-
-        virtual void
-        resource_next (Type const&);
-
-        virtual void
-        resource_post (Type&);
-
-        virtual void
-        resource_post (Type const&);
-
-        virtual void
-        resource_none (Type&);
-
-        virtual void
-        resource_none (Type const&);
-
-        virtual void
-        post (Type&);
-
-        virtual void
-        post (Type const&);
-      };
-
-      struct Config_Handlers_Export Interconnect : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::Interconnect >
-      {
-        virtual void
-        traverse (Type&);
-
-        virtual void
-        traverse (Type const&);
-
-        virtual void
-        pre (Type&);
-
-        virtual void
-        pre (Type const&);
-
-        virtual void
-        name (Type&);
-
-        virtual void
-        name (Type const&);
-
-        virtual void
-        label (Type&);
-
-        virtual void
-        label (Type const&);
-
-        virtual void
-        label_none (Type&);
-
-        virtual void
-        label_none (Type const&);
-
-        virtual void
-        connection (Type&);
-
-        virtual void
-        connection (Type const&);
-
-        virtual void
-        connection_pre (Type&);
-
-        virtual void
-        connection_pre (Type const&);
-
-        virtual void
-        connection_next (Type&);
-
-        virtual void
-        connection_next (Type const&);
-
-        virtual void
-        connection_post (Type&);
-
-        virtual void
-        connection_post (Type const&);
-
-        virtual void
-        connection_none (Type&);
-
-        virtual void
-        connection_none (Type const&);
-
-        virtual void
-        connect (Type&);
-
-        virtual void
-        connect (Type const&);
-
-        virtual void
-        connect_pre (Type&);
-
-        virtual void
-        connect_pre (Type const&);
-
-        virtual void
-        connect_next (Type&);
-
-        virtual void
-        connect_next (Type const&);
-
-        virtual void
-        connect_post (Type&);
-
-        virtual void
-        connect_post (Type const&);
-
-        virtual void
-        resource (Type&);
-
-        virtual void
-        resource (Type const&);
-
-        virtual void
-        resource_pre (Type&);
-
-        virtual void
-        resource_pre (Type const&);
-
-        virtual void
-        resource_next (Type&);
-
-        virtual void
-        resource_next (Type const&);
-
-        virtual void
-        resource_post (Type&);
-
-        virtual void
-        resource_post (Type const&);
-
-        virtual void
-        resource_none (Type&);
-
-        virtual void
-        resource_none (Type const&);
-
-        virtual void
-        post (Type&);
-
-        virtual void
-        post (Type const&);
-      };
-
-      struct Config_Handlers_Export Node : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::Node >
-      {
-        virtual void
-        traverse (Type&);
-
-        virtual void
-        traverse (Type const&);
-
-        virtual void
-        pre (Type&);
-
-        virtual void
-        pre (Type const&);
-
-        virtual void
-        name (Type&);
-
-        virtual void
-        name (Type const&);
-
-        virtual void
-        label (Type&);
-
-        virtual void
-        label (Type const&);
-
-        virtual void
-        label_none (Type&);
-
-        virtual void
-        label_none (Type const&);
-
-        virtual void
-        connection (Type&);
-
-        virtual void
-        connection (Type const&);
-
-        virtual void
-        connection_pre (Type&);
-
-        virtual void
-        connection_pre (Type const&);
-
-        virtual void
-        connection_next (Type&);
-
-        virtual void
-        connection_next (Type const&);
-
-        virtual void
-        connection_post (Type&);
-
-        virtual void
-        connection_post (Type const&);
-
-        virtual void
-        connection_none (Type&);
-
-        virtual void
-        connection_none (Type const&);
-
-        virtual void
-        sharedResource (Type&);
-
-        virtual void
-        sharedResource (Type const&);
-
-        virtual void
-        sharedResource_pre (Type&);
-
-        virtual void
-        sharedResource_pre (Type const&);
-
-        virtual void
-        sharedResource_next (Type&);
-
-        virtual void
-        sharedResource_next (Type const&);
-
-        virtual void
-        sharedResource_post (Type&);
-
-        virtual void
-        sharedResource_post (Type const&);
-
-        virtual void
-        sharedResource_none (Type&);
-
-        virtual void
-        sharedResource_none (Type const&);
-
-        virtual void
-        resource (Type&);
-
-        virtual void
-        resource (Type const&);
-
-        virtual void
-        post (Type&);
-
-        virtual void
-        post (Type const&);
-      };
-
       typedef
       ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::SatisfierPropertyKind >
       SatisfierPropertyKind;
@@ -2968,51 +2260,6 @@ namespace CIAO
 
         virtual void
         resourceType (Type const&);
-
-        virtual void
-        property (Type&);
-
-        virtual void
-        property (Type const&);
-
-        virtual void
-        post (Type&);
-
-        virtual void
-        post (Type const&);
-      };
-
-      struct Config_Handlers_Export SharedResource : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::SharedResource >
-      {
-        virtual void
-        traverse (Type&);
-
-        virtual void
-        traverse (Type const&);
-
-        virtual void
-        pre (Type&);
-
-        virtual void
-        pre (Type const&);
-
-        virtual void
-        name (Type&);
-
-        virtual void
-        name (Type const&);
-
-        virtual void
-        resourceType (Type&);
-
-        virtual void
-        resourceType (Type const&);
-
-        virtual void
-        node (Type&);
-
-        virtual void
-        node (Type const&);
 
         virtual void
         property (Type&);
@@ -4781,467 +4028,6 @@ namespace CIAO
         Property ();
       };
 
-      struct Config_Handlers_Export Bridge : Traversal::Bridge, 
-      virtual ::XSCRT::Writer< ACE_TCHAR >
-      {
-        typedef ::CIAO::Config_Handlers::Bridge Type;
-        Bridge (::XSCRT::XML::Element< ACE_TCHAR >&);
-
-        #ifdef __BORLANDC__
-        virtual void 
-        traverse (Type &o)
-        {
-
-          this->traverse (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        traverse (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        name (Type &o)
-        {
-
-          this->name (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        name (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        label (Type &o)
-        {
-
-          this->label (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        label (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        connect_pre (Type &o)
-        {
-
-          this->connect_pre (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        connect_pre (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        connect_next (Type &o)
-        {
-
-          this->connect_next (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        connect_next (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        connect_post (Type &o)
-        {
-
-          this->connect_post (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        connect_post (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        resource_pre (Type &o)
-        {
-
-          this->resource_pre (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        resource_pre (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        resource_next (Type &o)
-        {
-
-          this->resource_next (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        resource_next (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        resource_post (Type &o)
-        {
-
-          this->resource_post (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        resource_post (Type const&);
-
-        protected:
-        Bridge ();
-      };
-
-      struct Config_Handlers_Export Interconnect : Traversal::Interconnect, 
-      virtual ::XSCRT::Writer< ACE_TCHAR >
-      {
-        typedef ::CIAO::Config_Handlers::Interconnect Type;
-        Interconnect (::XSCRT::XML::Element< ACE_TCHAR >&);
-
-        #ifdef __BORLANDC__
-        virtual void 
-        traverse (Type &o)
-        {
-
-          this->traverse (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        traverse (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        name (Type &o)
-        {
-
-          this->name (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        name (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        label (Type &o)
-        {
-
-          this->label (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        label (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        connection_pre (Type &o)
-        {
-
-          this->connection_pre (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        connection_pre (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        connection_next (Type &o)
-        {
-
-          this->connection_next (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        connection_next (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        connection_post (Type &o)
-        {
-
-          this->connection_post (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        connection_post (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        connect_pre (Type &o)
-        {
-
-          this->connect_pre (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        connect_pre (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        connect_next (Type &o)
-        {
-
-          this->connect_next (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        connect_next (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        connect_post (Type &o)
-        {
-
-          this->connect_post (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        connect_post (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        resource_pre (Type &o)
-        {
-
-          this->resource_pre (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        resource_pre (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        resource_next (Type &o)
-        {
-
-          this->resource_next (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        resource_next (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        resource_post (Type &o)
-        {
-
-          this->resource_post (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        resource_post (Type const&);
-
-        protected:
-        Interconnect ();
-      };
-
-      struct Config_Handlers_Export Node : Traversal::Node, 
-      virtual ::XSCRT::Writer< ACE_TCHAR >
-      {
-        typedef ::CIAO::Config_Handlers::Node Type;
-        Node (::XSCRT::XML::Element< ACE_TCHAR >&);
-
-        #ifdef __BORLANDC__
-        virtual void 
-        traverse (Type &o)
-        {
-
-          this->traverse (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        traverse (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        name (Type &o)
-        {
-
-          this->name (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        name (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        label (Type &o)
-        {
-
-          this->label (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        label (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        connection_pre (Type &o)
-        {
-
-          this->connection_pre (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        connection_pre (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        connection_next (Type &o)
-        {
-
-          this->connection_next (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        connection_next (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        connection_post (Type &o)
-        {
-
-          this->connection_post (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        connection_post (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        sharedResource_pre (Type &o)
-        {
-
-          this->sharedResource_pre (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        sharedResource_pre (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        sharedResource_next (Type &o)
-        {
-
-          this->sharedResource_next (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        sharedResource_next (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        sharedResource_post (Type &o)
-        {
-
-          this->sharedResource_post (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        sharedResource_post (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        resource (Type &o)
-        {
-
-          this->resource (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        resource (Type const&);
-
-        protected:
-        Node ();
-      };
-
       struct Config_Handlers_Export SatisfierPropertyKind : Traversal::SatisfierPropertyKind, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
@@ -5390,85 +4176,6 @@ namespace CIAO
 
         protected:
         Resource ();
-      };
-
-      struct Config_Handlers_Export SharedResource : Traversal::SharedResource, 
-      virtual ::XSCRT::Writer< ACE_TCHAR >
-      {
-        typedef ::CIAO::Config_Handlers::SharedResource Type;
-        SharedResource (::XSCRT::XML::Element< ACE_TCHAR >&);
-
-        #ifdef __BORLANDC__
-        virtual void 
-        traverse (Type &o)
-        {
-
-          this->traverse (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        traverse (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        name (Type &o)
-        {
-
-          this->name (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        name (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        resourceType (Type &o)
-        {
-
-          this->resourceType (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        resourceType (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        node (Type &o)
-        {
-
-          this->node (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        node (Type const&);
-
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
-        virtual void 
-        property (Type &o)
-        {
-
-          this->property (const_cast <Type const &> (o));
-        }
-
-
-        #endif /* __BORLANDC__ */
-        virtual void
-        property (Type const&);
-
-        protected:
-        SharedResource ();
       };
 
       struct Config_Handlers_Export Requirement : Traversal::Requirement, 
