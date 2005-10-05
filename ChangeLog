@@ -1,3 +1,13 @@
+Wed Oct  5 13:18:26 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* examples/Shared_Malloc/Malloc.cpp:
+	* examples/System_V_IPC/SV_Message_Queues/MQ_Client.cpp:
+	* examples/System_V_IPC/SV_Semaphores/Semaphores_1.cpp:
+	* examples/System_V_IPC/SV_Semaphores/Semaphores_2.cpp:
+	* tests/SV_Shared_Memory_Test.cpp:
+
+	  More include directive additions/fixes.
+
 Wed Oct  5 13:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CDR_Base.h:

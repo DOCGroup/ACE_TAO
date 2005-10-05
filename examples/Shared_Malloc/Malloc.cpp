@@ -4,6 +4,15 @@
 #include "Malloc.h"
 #include "ace/MMAP_Memory_Pool.h"
 #include "ace/Local_Memory_Pool.h"
+
+#ifndef ACE_LACKS_SYSV_SHMEM
+# include "ace/Shared_Memory_Pool.h"
+#endif  /* !ACE_LACKS_SYSV_SHMEM */
+
+#ifndef ACE_LACKS_SBRK
+# include "ace/Sbrk_Memory_Pool.h"
+#endif  /* !ACE_LACKS_SBRK */
+
 #include "ace/Process_Mutex.h"
 #include "ace/Malloc_T.h"
 
