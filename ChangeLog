@@ -1,3 +1,9 @@
+Wed Oct  5 13:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Base.h:
+          Doxygen fixes and removed some checks for very old msvc and borland
+          versions
+
 Wed Oct  5 12:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/svcconf.mpb:
