@@ -1,6 +1,6 @@
 //$Id$
 
-project : taolib, core, acereactorlib_for_tao, acesocketslib_for_tao, acememorylib_for_tao, anytypecode {
+project : taolib, core, acereactorlib_for_tao, acesocketslib_for_tao, acememorylib_for_tao, core_anytypecode {
   sharedname   = TAO_Strategies
   dynamicflags = TAO_STRATEGIES_BUILD_DLL
 
@@ -26,9 +26,6 @@ project : taolib, core, acereactorlib_for_tao, acesocketslib_for_tao, acememoryl
 
   PIDL_Files {
     Strategies
-  }
-
-  IDL_Files {
   }
 
   Pkgconfig_Files {
