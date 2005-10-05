@@ -1,3 +1,41 @@
+Wed Oct  5 17:07:07 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* docs/schema/Basic_Deployment_Data.xsd
+	* docs/schema/cdd.xsd
+
+	Moved recursive Domain data into cdd.xsd.  This will hopefully
+	lessen the time required to compile.
+	
+	* tools/Config_Handlers/CPD_Handler.cpp
+	* tools/Config_Handlers/DataType_Handler.cpp
+
+	Fixed some potential run-time bugs in Borland.  Style
+	corrections. 
+	
+	* tools/Config_Handlers/Basic_Deployment_Data.cpp
+	* tools/Config_Handlers/Basic_Deployment_Data.hpp
+	* tools/Config_Handlers/Deployment.cpp
+	* tools/Config_Handlers/Deployment.hpp
+	* tools/Config_Handlers/ccd.cpp
+	* tools/Config_Handlers/ccd.hpp
+	* tools/Config_Handlers/cdd.cpp
+	* tools/Config_Handlers/cdd.hpp
+	* tools/Config_Handlers/cdp.cpp
+	* tools/Config_Handlers/cdp.hpp
+	* tools/Config_Handlers/cid.cpp
+	* tools/Config_Handlers/cid.hpp
+	* tools/Config_Handlers/iad.cpp
+	* tools/Config_Handlers/iad.hpp
+	* tools/Config_Handlers/pcd.cpp
+	* tools/Config_Handlers/pcd.hpp
+	* tools/Config_Handlers/test.cdp
+	* tools/Config_Handlers/toplevel.cpp
+	* tools/Config_Handlers/toplevel.hpp
+
+	Regerated with new version of XSC.  Major changes:
+	  * Now only one accessor and one mutator per document element
+	  * Changes in schema above. 
+	
 Wed Oct  5 14:44:31 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/Deployment_Configuration.cpp:
