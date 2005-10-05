@@ -1,3 +1,9 @@
+Wed Oct  5 02:11:28 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/ace_os.mpc:
+
+	  Removed this file.  It was inadvertently committed.
+
 Wed Oct  5 01:57:37 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* apps/JAWS2/JAWS/Cache_Manager.cpp:
