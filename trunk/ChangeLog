@@ -1,3 +1,9 @@
+Thu Oct  6 08:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Message_Queue_Test.cpp:
+        * tests/Message_Queue_Test_Ex.cpp:
+          Fixed might be unitialized warning in MinGW build
+
 Thu Oct  6 08:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * netsvcs/ACE-netsvcs.html:

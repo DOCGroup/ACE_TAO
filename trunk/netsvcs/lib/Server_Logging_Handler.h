@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Server_Logging_Handler.h
-//
-// = AUTHOR
-//    Doug Schmidt and Per Andersson <Per.Andersson@hfera.ericsson.se>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Server_Logging_Handler.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt and Per Andersson <Per.Andersson@hfera.ericsson.se>
+ */
+//=============================================================================
+
 
 #ifndef ACE_SERVER_LOGGING_HANDLER_H
 #define ACE_SERVER_LOGGING_HANDLER_H

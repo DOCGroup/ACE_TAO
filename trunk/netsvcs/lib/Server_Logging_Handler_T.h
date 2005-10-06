@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Server_Logging_Handler_T.h
-//
-// = AUTHOR
-//    Doug Schmidt and Per Andersson
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Server_Logging_Handler_T.h
+ *
+ *  $Id$
+ *
+ *  @author Doug Schmidt and Per Andersson
+ */
+//=============================================================================
+
 
 #ifndef ACE_SERVER_LOGGING_HANDLER_T_H
 #define ACE_SERVER_LOGGING_HANDLER_T_H
@@ -35,54 +32,58 @@
 #include "Base_Optimizer.h"
 #endif /* ! ACE_HAS_BROKEN_HPUX_TEMPLATES && ! __GNUG__ */
 
+/**
+ * @class ACE_Server_Logging_Handler_T
+ *
+ * @brief Product object created by an <ACE_Server_Logging_Acceptor_T>.  An
+ * <ACE_Server_Logging_Handler_T> receives, and frames logging
+ * records. The logging record is then processed by the
+ * <LOG_MESSAGE_RECEIVER>
+ *
+ * Defines the classes that perform server logging daemon
+ * functionality.
+ */
 template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LOG_MESSAGE_RECEIVER>
 class ACE_Server_Logging_Handler_T : public ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_SYNCH_USE>
 {
-  // = TITLE
-  //    Product object created by an <ACE_Server_Logging_Acceptor_T>.  An
-  //    <ACE_Server_Logging_Handler_T> receives, and frames logging
-  //    records. The logging record is then processed by the
-  //    <LOG_MESSAGE_RECEIVER>
-  //
-  // = DESCRIPTION
-  //     Defines the classes that perform server logging daemon
-  //     functionality.
 public:
+  /// Constructor.
   ACE_Server_Logging_Handler_T (ACE_Thread_Manager *,
                                 const LOG_MESSAGE_RECEIVER &receiver );
-  // Constructor.
 
 
+  /// Process remote logging records.
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
-  // Process remote logging records.
 
 protected:
+  /// Receive the logging record from a client.
   int handle_logging_record (void);
-  // Receive the logging record from a client.
 
+  /// Common parts of open function, sets hostname and diables NONBLOCK in peer
+  /// called from derived classes open method.
   int open_common (void);
-  // Common parts of open function, sets hostname and diables NONBLOCK in peer
-  // called from derived classes open method.
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
+  /// Count the number of logging records that arrive.
   static COUNTER request_count_;
-  // Count the number of logging records that arrive.
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
 #if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES) && !defined (__GNUG__)
+  /**
+   * Packs a LOG_MESSAGE_RECEIVER and ACE_CString attribute together
+   * in a optimized fashion.  The LOG_MESSAGE_RECEIVER class is often
+   * a class with no instance data.
+   */
   Base_Optimizer<LOG_MESSAGE_RECEIVER, ACE_TString> receiver_;
-  // Packs a LOG_MESSAGE_RECEIVER and ACE_CString attribute together
-  // in a optimized fashion.  The LOG_MESSAGE_RECEIVER class is often
-  // a class with no instance data.
 #else
   LOG_MESSAGE_RECEIVER receiver_;
   ACE_TString host_name_;
 #endif /* ! ACE_HAS_BROKEN_HPUX_TEMPLATES && ! __GNUG__ */
+  /// Name of the host we are connected to.
   const ACE_TCHAR *host_name (void);
-  // Name of the host we are connected to.
 
+  /// The receiver of log records
   LOG_MESSAGE_RECEIVER &receiver (void){ return receiver_; }
-  // The receiver of log records
 };
 
 #if 1   //!defined (ACE_HAS_TLI)
@@ -93,30 +94,34 @@ protected:
 #define LOGGING_PEER_STREAM ACE_TLI_STREAM
 #endif /* ACE_HAS_TLI */
 
+/**
+ * @class ACE_Server_Logging_Acceptor_T
+ *
+ * @brief Factory that creates <SERVER_LOGGING_HANDLER>s scheduled with
+ * <SCHEDULE_STRATEGY> and logging records proccessed by a
+ * <LOG_MESSAGE_RECEIVER>
+ *
+ * This class contains the service-specific methods that can't
+ * easily be factored into the <ACE_Strategy_Acceptor>.
+ */
 template<class SERVER_LOGGING_HANDLER, class LOG_MESSAGE_RECEIVER, class SCHEDULE_STRATEGY>
 class ACE_Server_Logging_Acceptor_T : public ACE_Strategy_Acceptor<SERVER_LOGGING_HANDLER, LOGGING_PEER_ACCEPTOR>
 {
-  // = TITLE
-  //     Factory that creates <SERVER_LOGGING_HANDLER>s scheduled with
-  //     <SCHEDULE_STRATEGY> and logging records proccessed by a
-  //     <LOG_MESSAGE_RECEIVER>
-  //
-  // = DESCRIPTION
-  //     This class contains the service-specific methods that can't
-  //     easily be factored into the <ACE_Strategy_Acceptor>.
 public:
+  /// Dynamic linking hook.
   ACE_Server_Logging_Acceptor_T (void);
   virtual int init (int argc, ACE_TCHAR *argv[]);
-  // Dynamic linking hook.
 
 protected:
+  /// Parse svc.conf arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
-  // Parse svc.conf arguments.
 
+  /**
+   * Factory that creates a new <SERVER_LOGGING_HANDLER>.  We need to
+   * specialize this since the <LOG_MESSAGE_RECEIVER> held by this Acceptor must be
+   * passed into the <SERVER_LOGGING_HANDLER>.
+   */
   virtual int make_svc_handler (SERVER_LOGGING_HANDLER *&);
-  // Factory that creates a new <SERVER_LOGGING_HANDLER>.  We need to
-  // specialize this since the <LOG_MESSAGE_RECEIVER> held by this Acceptor must be
-  // passed into the <SERVER_LOGGING_HANDLER>.
 
 private:
   // At the moment each ACE_Server_Logging_Acceptor_T contains
@@ -130,33 +135,37 @@ private:
   // ACE_Server_Logging_Acceptor_T code.
 
 #if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES) && !defined (__GNUG__)
+  /**
+   * Packs a LOG_MESSAGE_RECEIVER and ACE_CString attribute together
+   * in a optimized fashion. The LOG_MESSAGE_RECEIVER class is often a
+   * class with no instance data.
+   */
   Base_Optimizer<LOG_MESSAGE_RECEIVER, SCHEDULE_STRATEGY> receiver_;
-  // Packs a LOG_MESSAGE_RECEIVER and ACE_CString attribute together
-  // in a optimized fashion. The LOG_MESSAGE_RECEIVER class is often a
-  // class with no instance data.
 #else
   LOG_MESSAGE_RECEIVER receiver_;
   SCHEDULE_STRATEGY schedule_strategy_;
 #endif /* ! ACE_HAS_BROKEN_HPUX_TEMPLATES && ! __GNUG__ */
 
+  /// The scheduling strategy for the service.
   SCHEDULE_STRATEGY &scheduling_strategy (void);
-  // The scheduling strategy for the service.
 
+  /// The receiver of log records
   LOG_MESSAGE_RECEIVER &receiver (void);
-  // The receiver of log records
 };
 
+/**
+ * @class ACE_Server_Logging_Handler
+ *
+ * @brief Product object created by a
+ * <ACE_Server_Logging_Acceptor_T<ACE_Server_Logging_Handler> >.  An
+ * <ACE_Server_Logging_Handler> receives, frames. The logging record
+ * is then processed by the <LOG_MESSAGE_RECEIVER>
+ *
+ * All clients are handled in the same thread.
+ */
 template<class LOG_MESSAGE_RECEIVER>
 class ACE_Server_Logging_Handler : public ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, LOG_MESSAGE_RECEIVER>
 {
-  // = TITLE
-  //    Product object created by a
-  //    <ACE_Server_Logging_Acceptor_T<ACE_Server_Logging_Handler> >.  An
-  //    <ACE_Server_Logging_Handler> receives, frames. The logging record
-  //    is then processed by the <LOG_MESSAGE_RECEIVER>
-  //
-  // = DESCRIPTION
-  //     All clients are handled in the same thread.
 
 public:
   ACE_Server_Logging_Handler (ACE_Thread_Manager * = 0);
@@ -174,17 +183,19 @@ typedef u_long ACE_LOGGER_COUNTER;
 #define ACE_LOGGER_SYNCH ACE_NULL_SYNCH
 #endif /* ACE_HAS_THREADS */
 
+/**
+ * @class ACE_Thr_Server_Logging_Handler
+ *
+ * @brief Product object created by a
+ * <ACE_Server_Logging_Acceptor_T<ACE_Thr_Server_Logging_Handler>
+ * >.  An <ACE_Thr_Server_Logging_Handler> receives, frames. The
+ * logging record is then processed by the <LOG_MESSAGE_RECEIVER>
+ *
+ * Each client is handled in its own separate thread.
+ */
 template<class LOG_MESSAGE_RECEIVER>
 class ACE_Thr_Server_Logging_Handler : public ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, ACE_LOGGER_COUNTER, ACE_LOGGER_SYNCH, LOG_MESSAGE_RECEIVER>
 {
-  // = TITLE
-  //    Product object created by a
-  //    <ACE_Server_Logging_Acceptor_T<ACE_Thr_Server_Logging_Handler>
-  //    >.  An <ACE_Thr_Server_Logging_Handler> receives, frames. The
-  //    logging record is then processed by the <LOG_MESSAGE_RECEIVER>
-  //
-  // = DESCRIPTION
-  //     Each client is handled in its own separate thread.
 
 public:
   ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager * = 0);
