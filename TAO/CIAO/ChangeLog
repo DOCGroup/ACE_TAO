@@ -1,3 +1,9 @@
+Thu Oct  6 15:05:30 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+
+          Added debug statements and comments.
+
 Thu Oct  6 14:26:31 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/ExecutionManager/DAM_Map.cpp:
