@@ -22,12 +22,6 @@
 // NOTE: Please do not add anything besides #include's here.  Put other stuff
 //       (definitions, etc.) in the included headers
 
-// Include the platform specific config file (Windows CE is special)
-
-#if defined (_WIN32_WCE)
-#    include "ace/config-WinCE.h"
-#endif /* _WIN32_WCE */
-
 // We need to ensure that for Borland vcl.h can be included before
 // windows.h.  So we will not include config-win32-common.h from here,
 // but instead let it be included at the appropriate place in

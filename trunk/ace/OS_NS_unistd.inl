@@ -205,7 +205,7 @@ ACE_INLINE int
 ACE_OS::rmdir (const wchar_t *path)
 {
 #if defined (ACE_HAS_WINCE)
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::RemoveDirectory (path),
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::RemoveDirectoryW (path),
                                           ace_result_),
                         int, -1);
 #elif defined (ACE_WIN32)
@@ -1282,7 +1282,7 @@ ACE_OS::unlink (const wchar_t *path)
   ACE_OS_TRACE ("ACE_OS::unlink");
 # if defined (ACE_HAS_WINCE)
   // @@ The problem is, DeleteFile is not actually equals to unlink. ;(
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::DeleteFile (path), ace_result_),
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::DeleteFileW (path), ace_result_),
                         int, -1);
 # elif defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::_wunlink (path), int, -1);

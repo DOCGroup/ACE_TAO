@@ -58,6 +58,13 @@
   #define ACE_LACKS_NATIVE_WCHAR_T
 #endif
 
+// Win Mobile still does thread exits differently than PC Windows.
+#if defined (_WIN32_WCE)
+#  define ACE_ENDTHREADEX(STATUS) ExitThread ((DWORD) STATUS)
+#else
+#  define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
+#endif /* _WIN32_WCE */
+
 #if (_MSC_VER >= 1400)
 # include "ace/config-win32-msvc-8.h"
 #elif (_MSC_VER >= 1300)

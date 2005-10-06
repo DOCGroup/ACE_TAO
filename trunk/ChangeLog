@@ -1,3 +1,73 @@
+Thu Oct  6 17:56:19 2005  Steve Huston  <shuston@riverace.com>
+
+	Added support for Windows Mobile 5 and Pocket PC 2003 using
+	Visual Studio 2005 (Beta 2). Reorganized some of the config-win32-*
+	files to ensure OS things are in config-win32-common.h and compiler
+	things are in the various compiler files.
+
+	* ace/config-win32-common.h: Now #includes config-WinCE.h. It's
+	  possible that config-WinCE.h may get chopped down further and/or
+	  subsumed into config-win32-common.h as config-WinCE.h gets refined.
+
+	  Added ACE_LACKS_MODE_MASKS. It's needed on all variants of
+	  Windows and all compilers.
+
+	  Turn on both ACE_USES_WCHAR and UNICODE if either is set. Removed
+	  this setting from config-WinCE.h.
+
+	* ace/config-win32-borland.h:
+	* ace/config-win32-dmc.h:
+	* ace/config-win32-ghs.h:
+	* ace/config-win32-mingw.h:
+	* ace/config-win32-msvc-6.h:
+	* ace/config-win32-msvc-7.h:
+	* ace/config-win32-msvc-8.h:
+	* ace/config-win32-visualage.h: Removed ACE_LACKS_MODE_MASKS.
+	  Removed ACE_ENDTHREADEX (moved to config-win32-msvc.h).
+
+	* ace/config-win32-msvc.h: Added ACE_ENDTHREADEX with proper
+	  setting depending on Windows PC vs. Mobile.
+
+	* ace/config-win32.h: Doesn't include config-WinCE.h any longer.
+
+	* ace/config-WinCE.h: Moved the errno value definitions to
+	  config-win32-msvc-6.h. They're only needed for the eVC 3 and 4
+	  compilers, which report themselves using the same versions as
+	  MSVC 6.
+
+	* ace/Object_Manager.cpp (init): Only act on config.h's
+	  ACE_DISABLE_WIN32_ERROR_WINDOWS setting if on Windows, but not CE.
+
+	* ace/OS_NS_time.h: Only define struct tm for WinCE if compiling
+	  on something less than Visual Studio 2005.
+
+	* ace/OS_NS_unistd.inl (rmdir, unlink):
+	* ace/OS_NS_sys_stat.inl (mkdir, stat): For wchar_t version on WinCE,
+	  specify the ...W() form of the system call rather than assume
+	  the call maps to the W form. WinCE can do either A or W now.
+
+	* ace/OS_NS_time.(cpp h) (day_of_week_name[], month_name[]):
+	* ace/OS_NS_sys_socket.cpp (socket_init, socket_fini):
+	  Changed char array from wchar_t to ACE_TCHAR. WinCE can do either
+	  narrow or wide and this allows it to adjust. Everything was
+	  initialized using ACE_LIB_TEXT already.
+
+	* ace/OS_NS_stdio.inl (fdopen, rename, freopen): For WinCE, need to
+	  convert the ACE_TCHAR string to wchar always. There's no char*
+	  version of fdopen, et al that I can see.
+
+	* ace/Service_Config.(h inl): Only define the alternate
+	  intialize/resume/suspend/remove methods for WinCE if ACE_USES_WCHAR
+	  is set. Else there's already a char* version.
+
+	* ace/TSS_T.cpp (ctor): Use ACE_LIB_TEXT around strings for the
+	  MessageBox() call on CE. This resolves properly depending on the
+	  build. CE doesn't always use unicode any more.
+
+	* tests/Logging_Strategy_Test.cpp (get_statistics): Use time_t
+	  instead of int to return the modified time. Makes it portable to
+	  64 bits.
+	  
 Thu Oct  6 10:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
