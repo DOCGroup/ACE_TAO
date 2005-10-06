@@ -40,8 +40,8 @@ namespace CIAO
 
       if (CIAO::debug_level () > 10)
         ACE_DEBUG ((LM_DEBUG,
-                    "CIAO (%P|%t) Domain Application Manager 
-                     invoked CIAO_Execution_Manager: preparePlan \n"));
+                    "CIAO (%P|%t) Domain Application Manager "
+                    "invoked CIAO_Execution_Manager: preparePlan \n"));
 
       // There is a Domain Application Manager already existing
       // for this DeploymentPlan.
@@ -107,7 +107,7 @@ namespace CIAO
         dam_servant->_this ();
 
       /// @@ TODO:Need to check the return value......
-      /// 
+      ///
       this->map_.bind_dam_reference (
         plan.UUID.in (),
         Deployment::DomainApplicationManager::_duplicate (dam.in ()));
