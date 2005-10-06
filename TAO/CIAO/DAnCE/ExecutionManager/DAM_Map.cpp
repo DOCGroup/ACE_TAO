@@ -38,7 +38,7 @@ namespace CIAO
       int retval =  this->map_.find (str,
                                      tmp);
 
-      if (CIAO::debug_level () > 10)
+      if (CIAO::debug_level () > 9)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) CIAO_ExecutionManager: fetch_dam_reference, "
