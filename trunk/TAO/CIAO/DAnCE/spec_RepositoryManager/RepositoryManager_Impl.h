@@ -30,7 +30,7 @@
 namespace
 {
 ///DIRECTORY WHERE THE PACKAGES WILL BE STORED LOCALLY
-const static char* RM_STORAGE_PATH = "RepositoryDir";
+const static char* INSTALL_PATH = "RepositoryDir";
 
 const static size_t TEMP_LEN = 512;
 
@@ -41,7 +41,8 @@ class  CIAO_RepositoryManagerDaemon_i : public virtual POA_CIAO::RepositoryManag
 {
 public:
   //Constructor 
-  CIAO_RepositoryManagerDaemon_i (CORBA::ORB_ptr the_orb);
+	CIAO_RepositoryManagerDaemon_i (CORBA::ORB_ptr the_orb, 
+									const char* server = "http://localhost:5432/");
   
   //Destructor 
   virtual ~CIAO_RepositoryManagerDaemon_i (void);
@@ -131,8 +132,16 @@ public:
 
   protected:
 
-	  ///function to parse and return the PackageConfiguration
-	  Deployment::PackageConfiguration* retrieve_PC (char* package);
+	  ///function to parse and return the PackageConfiguration from a specified package
+	  Deployment::PackageConfiguration* retrieve_PC_from_package (char* package);
+
+	  ///find out what the name of the PackageConfiguration file is
+	  void find_PC_name (char* package, ACE_CString& pcd_name);
+
+	  ///function to parse and return the PackageConfiguration from the already
+	  ///extracted descriptor files
+	  Deployment::PackageConfiguration* retrieve_PC_from_descriptors (const char* pc_name, 
+																	  const char* descriptor_dir);
 
 	  ///function to extract all necessary files for parsing the PackageConfiguration
 	  ///descriptor and populating the idl struct.
@@ -141,7 +150,7 @@ public:
 	  ///
 	  ///NOTE: ACE_CString& pcd_name is an out parameter
 
-	  int extract_necessary_files (char* package,  
+	  int extract_descriptor_files (char* package,  
 								   ACE_CString& pcd_name);
 
 
@@ -151,8 +160,18 @@ public:
 	  ///return 1 on success
 	  ///       0 on error
 
-	  int remove_extracted_files (char* package);
+	  int remove_descriptor_files (char* package);
 
+
+	  ///function to remove the files extracted from the package upon istallation
+	  ///It reads the names of the files from the package. They correspond to the 
+	  ///names on disk. It deletes each file, then it deletes the directories that
+	  ///contain them.
+	  ///NOTE: extraction location is path/*archive_name*/
+	  ///return 1 on success
+	  ///       0 on error
+
+	  int remove_extracted_package (const char* package_path, const char* extraction_location);
 
   private:
 	/// Cached information about the installed PackageConfigurations
@@ -180,7 +199,9 @@ public:
 
 	CORBA::ORB_var the_orb_;
 
-	char cwd_ [TEMP_LEN];		//will hold the current working directory
+	char cwd_ [TEMP_LEN];			//will hold the current working directory
+	ACE_CString	install_root_;		//full path for the install directory
+	ACE_CString HTTP_server_;		//location of the server
 
 };
 
