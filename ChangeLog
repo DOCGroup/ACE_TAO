@@ -1,3 +1,10 @@
+Thu Oct  6 10:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Extended empty inline files to also ignore lines starting
+          with /* as real contents. Will propobly reveal another few files
+          we should zap
+
 Thu Oct  6 08:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * netsvcs/lib/Base_Optimizer.h:
