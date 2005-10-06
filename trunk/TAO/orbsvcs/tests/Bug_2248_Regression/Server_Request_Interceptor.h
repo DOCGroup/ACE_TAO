@@ -46,7 +46,7 @@ public:
   ~Server_Request_Interceptor (void);
 
   /// Set the references to which requests will be forwarded.
-  virtual void forward_reference (const char* iorstr)
+  virtual void forward_reference (const char* iorstr ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
