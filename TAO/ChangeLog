@@ -1,3 +1,9 @@
+Thu Oct  6 15:44:13 2005  Simon McQueen  <sm@prismtech.com>
+
+        * orbsvcs/tests/Bug_2248_Regression/Server_Request_Interceptor.h:
+
+          Yet another emulated exception fix.
+
 Thu Oct  6 10:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Big_AMI/*:
