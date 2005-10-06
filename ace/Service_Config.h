@@ -326,7 +326,7 @@ public:
   /// from the ACE_Reactor, and unlinking it if necessary.
   static int remove (const ACE_TCHAR svc_name[]);
 
-#if defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_WINCE) && defined (ACE_USES_WCHAR)
   // We must provide these function to bridge the Svc_Conf parser
   // with ACE.
   static int initialize (const ACE_Service_Type *, char parameters[]);

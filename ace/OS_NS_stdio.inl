@@ -628,7 +628,9 @@ ACE_OS::fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fdopen");
 # if defined (ACE_HAS_WINCE)
-  ACE_OSCALL_RETURN (::_wfdopen (handle, mode), FILE*, 0);
+  ACE_OSCALL_RETURN (::_wfdopen (handle, ACE_TEXT_ALWAYS_WCHAR (mode)),
+		     FILE*,
+		     0);
 # elif defined (ACE_WIN32)
   // kernel file handle -> FILE* conversion...
   // Options: _O_APPEND, _O_RDONLY and _O_TEXT are lost
@@ -718,8 +720,8 @@ ACE_OS::fgets (wchar_t *buf, int size, FILE *fp)
 }
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_FGETWS */
 
-#if !defined (ACE_WIN32)
-// Win32 implementation of fopen () is in OS_NS_stdio.cpp.
+#if !(defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+// Win32 PC implementation of fopen () is in OS_NS_stdio.cpp.
 ACE_INLINE FILE *
 ACE_OS::fopen (const char *filename, const ACE_TCHAR *mode)
 {
@@ -733,10 +735,15 @@ ACE_INLINE FILE *
 ACE_OS::fopen (const wchar_t *filename, const ACE_TCHAR *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fopen");
+#if defined (ACE_HAS_WINCE)
+  ACE_OSCALL_RETURN
+    (::_wfopen (filename, ACE_TEXT_ALWAYS_WCHAR (mode)), FILE *, 0);
+#else
   // Non-Windows doesn't use wchar_t file systems.
   ACE_Wide_To_Ascii n_filename (filename);
   ACE_OSCALL_RETURN
     (::fopen (n_filename.char_rep (), ACE_TEXT_ALWAYS_CHAR (mode)), FILE*, 0);
+#endif /* ACE_HAS_WINCE */
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -771,8 +778,11 @@ ACE_INLINE FILE *
 ACE_OS::freopen (const ACE_TCHAR *filename, const ACE_TCHAR *mode, FILE* stream)
 {
   ACE_OS_TRACE ("ACE_OS::freopen");
-#if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-  ACE_OSCALL_RETURN (::_wfreopen (filename, mode, stream), FILE *, 0);
+#if defined (ACE_WIN32) && (defined(ACE_USES_WCHAR) || defined(ACE_HAS_WINCE))
+  ACE_OSCALL_RETURN (::_wfreopen (ACE_TEXT_ALWAYS_WCHAR (filename),
+				  ACE_TEXT_ALWAYS_WCHAR (mode),
+				  stream),
+		     FILE *, 0);
 #else
   ACE_OSCALL_RETURN
     (ACE_STD_NAMESPACE::freopen (ACE_TEXT_ALWAYS_CHAR (filename),
@@ -926,7 +936,7 @@ ACE_OS::rename (const wchar_t *old_name,
   ACE_NOTSUP_RETURN (-1);
 # elif defined (ACE_HAS_WINCE)
   ACE_UNUSED_ARG (flags);
-  if (MoveFile (old_name, new_name) != 0)
+  if (MoveFileW (old_name, new_name) != 0)
     ACE_FAIL_RETURN (-1);
   return 0;
 # elif defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 == 1)

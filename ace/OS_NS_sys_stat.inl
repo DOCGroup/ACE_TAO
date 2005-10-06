@@ -232,7 +232,7 @@ namespace ACE_OS {
   {
 #if defined (ACE_HAS_WINCE)
     ACE_UNUSED_ARG (mode);
-    ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (CreateDirectory (path, 0),
+    ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (CreateDirectoryW (path, 0),
                                             ace_result_),
                           int, -1);
 #elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
@@ -315,11 +315,11 @@ namespace ACE_OS {
   {
     ACE_OS_TRACE ("ACE_OS::stat");
 #if defined (ACE_HAS_WINCE)
-    ACE_TEXT_WIN32_FIND_DATA fdata;
+    WIN32_FIND_DATAW fdata;
 
     HANDLE fhandle;
 
-    fhandle = ::FindFirstFile (file, &fdata);
+    fhandle = ::FindFirstFileW (file, &fdata);
     if (fhandle == INVALID_HANDLE_VALUE)
       {
         ACE_OS::set_errno_to_last_error ();

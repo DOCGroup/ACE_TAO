@@ -66,7 +66,7 @@ ACE_Service_Config::signal_handler (ACE_Sig_Adapter *signal_handler)
   signal_handler_ = signal_handler;
 }
 
-#if defined (ACE_HAS_WINCE) && !defined (ACE_USES_WCHAR)
+#if defined (ACE_HAS_WINCE) && defined (ACE_USES_WCHAR)
   // We must provide these function to bridge Svc_Conf parser with ACE.
 
 ACE_INLINE int

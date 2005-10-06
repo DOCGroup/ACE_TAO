@@ -141,8 +141,8 @@ ACE_TSS<TYPE>::ACE_TSS (TYPE *ts_obj)
           // What should we do if this call fails?!
 #if defined (ACE_HAS_WINCE)
           ::MessageBox (0,
-                        L"ACE_Thread::keycreate() failed!",
-                        L"ACE_TSS::ACE_TSS",
+                        ACE_LIB_TEXT ("ACE_Thread::keycreate() failed!"),
+                        ACE_LIB_TEXT ("ACE_TSS::ACE_TSS"),
                         MB_OK);
 #else
           ACE_OS::fprintf (stderr,

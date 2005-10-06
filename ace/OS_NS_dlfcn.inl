@@ -217,7 +217,15 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
 
   // Get the correct OS type.
 #if defined (ACE_HAS_WINCE)
-  const wchar_t *symbolname = sname;
+  // CE (at least thru Pocket PC 2003) offers GetProcAddressW, not ...A, so
+  // we always need a wide-char string.
+  const wchar_t *symbolname = 0;
+#  if defined (ACE_USES_WCHAR)
+  symbolname = sname;
+#  else
+  ACE_Ascii_To_Wide sname_xlate (sname);
+  symbolname = sname_xlate.wchar_rep ();
+#  endif /* ACE_USES_WCHAR */
 #elif defined (ACE_USES_WCHAR)
   // WinCE is WCHAR always; other platforms need a char * symbol name
   ACE_Wide_To_Ascii w_sname (sname);

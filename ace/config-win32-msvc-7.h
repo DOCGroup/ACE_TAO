@@ -60,7 +60,6 @@
 
 #define ACE_HAS_SIG_ATOMIC_T
 #define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
-#define ACE_LACKS_MODE_MASKS
 #define ACE_LACKS_STRRECVFD
 #define ACE_HAS_CPLUSPLUS_HEADERS
 
@@ -115,8 +114,6 @@
 
 // 'function' : unreferenced local function has been removed
 # pragma warning(disable:4505)
-
-#define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
 
 // A template can not be exported. Only an instantiation may be exported.
 #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT

@@ -10,6 +10,14 @@
 #error Use config-win32.h in config.h instead of this header
 #endif /* ACE_CONFIG_WIN32_H */
 
+
+// Windows Mobile (CE) stuff is primarily further restrictions to what's
+// in the rest of this file. Also, it defined ACE_HAS_WINCE, which is used
+// in this file.
+#if defined (_WIN32_WCE)
+#  include "ace/config-WinCE.h"
+#endif /* _WIN32_WCE */
+
 // Complain if WIN32 is not already defined.
 #if !defined (WIN32) && !defined (ACE_HAS_WINCE)
 # error Please define WIN32 in your project settings.
@@ -40,6 +48,14 @@
 # endif
 #endif
 
+// If the invoking procedure turned off debugging by setting NDEBUG, then
+// also set ACE_NDEBUG, unless the user has already set it.
+#if defined (NDEBUG)
+#  if !defined (ACE_NDEBUG)
+#    define ACE_NDEBUG
+#  endif /* ACE_NDEBUG */
+#endif /* NDEBUG */
+
 // Define ACE_HAS_MFC to 1, if you want ACE to use CWinThread. This should
 // be defined, if your application uses MFC.
 //  Setting applies to  : building ACE
@@ -51,22 +67,28 @@
 # define ACE_HAS_MFC 0
 #endif
 
-// If the invoking procedure turned off debugging by setting NDEBUG, then
-// also set ACE_NDEBUG, unless the user has already set it.
-#if defined (NDEBUG)
-#  if !defined (ACE_NDEBUG)
-#    define ACE_NDEBUG
-#  endif /* ACE_NDEBUG */
-#endif /* NDEBUG */
+// ACE_USES_STATIC_MFC always implies ACE_HAS_MFC
+#if defined (ACE_USES_STATIC_MFC)
+# if defined (ACE_HAS_MFC)
+#   undef ACE_HAS_MFC
+# endif
+# define ACE_HAS_MFC 1
+#endif /* ACE_USES_STATIC_MFC */
 
 // Define ACE_HAS_STRICT to 1 in your config.h file if you want to use
 // STRICT type checking.  It is disabled by default because it will
-// break existing application code.
+// break existing application code. However, if ACE_HAS_MFC is turned on,
+// ACE_HAS_STRICT is required by MFC.
 //  Setting applies to  : building ACE, linking with ACE
 //  Runtime restrictions: -
-//  Additonal notes             : ACE_HAS_MFC implies ACE_HAS_STRICT
 #if !defined (ACE_HAS_STRICT)
 # define ACE_HAS_STRICT 0
+#endif
+
+// MFC itself defines STRICT.
+#if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
+# undef ACE_HAS_STRICT
+# define ACE_HAS_STRICT 1
 #endif
 
 // Turn off the following define if you want to disable threading.
@@ -191,44 +213,51 @@
 
 #define ACE_DEFAULT_THREAD_PRIORITY 0
 
-#define ACE_HAS_RECURSIVE_MUTEXES
-#define ACE_HAS_MSG
 #define ACE_HAS_DIRENT
+#define ACE_HAS_MSG
+#define ACE_HAS_RECURSIVE_MUTEXES
 #define ACE_HAS_SOCKADDR_MSG_NAME
-#define ACE_LACKS_DUP2
+#define ACE_HAS_THREAD_SAFE_ACCEPT
+
+/* LACKS dir-related facilities */
+#define ACE_LACKS_READDIR_R
+#define ACE_LACKS_REWINDDIR
+#define ACE_LACKS_SEEKDIR
+#define ACE_LACKS_TELLDIR
+
+/* LACKS gid/pid/sid/uid facilities */
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_GETPPID
 #define ACE_LACKS_SETPGID
 #define ACE_LACKS_SETREGID
 #define ACE_LACKS_SETREUID
 #define ACE_LACKS_SETSID
-#define ACE_HAS_THREAD_SAFE_ACCEPT
+
+/* LACKS miscellaneous */
+#define ACE_LACKS_ARPA_INET_H
+#define ACE_LACKS_DUP2
+#define ACE_LACKS_FORK
 #define ACE_LACKS_GETHOSTENT
+#define ACE_LACKS_INET_ATON
+#define ACE_LACKS_MADVISE
+#define ACE_LACKS_MKFIFO
+#define ACE_LACKS_MODE_MASKS
+#define ACE_LACKS_PTHREAD_H
+#define ACE_LACKS_PWD_FUNCTIONS
+#define ACE_LACKS_READLINK
+#define ACE_LACKS_RLIMIT
+#define ACE_LACKS_SBRK
+#define ACE_LACKS_SEMBUF_T
 #define ACE_LACKS_SIGACTION
 #define ACE_LACKS_SIGSET
-#define ACE_LACKS_FORK
-#define ACE_LACKS_UNIX_SIGNALS
-#define ACE_LACKS_SBRK
-#define ACE_LACKS_UTSNAME_T
-#define ACE_LACKS_SEMBUF_T
+#define ACE_LACKS_SOCKETPAIR
+#define ACE_LACKS_SYS_PARAM_H
 #define ACE_LACKS_SYSV_SHMEM
 #define ACE_LACKS_UNISTD_H
-#define ACE_LACKS_RLIMIT
-#define ACE_LACKS_MKFIFO
-#define ACE_LACKS_TELLDIR
-#define ACE_LACKS_SEEKDIR
-#define ACE_LACKS_REWINDDIR
-#define ACE_LACKS_READDIR_R
-#define ACE_LACKS_INET_ATON
-#define ACE_LACKS_SYS_PARAM_H
-#define ACE_LACKS_PTHREAD_H
-#define ACE_LACKS_ARPA_INET_H
-#define ACE_LACKS_MADVISE
-#define ACE_LACKS_READLINK
-#define ACE_LACKS_PWD_FUNCTIONS
-#define ACE_LACKS_WAIT
-#define ACE_LACKS_SOCKETPAIR
+#define ACE_LACKS_UNIX_SIGNALS
 #define ACE_LACKS_UNIX_SYSLOG
+#define ACE_LACKS_UTSNAME_T
+#define ACE_LACKS_WAIT
 
 #define ACE_HAS_SNPRINTF
 #define ACE_HAS_VFWPRINTF
@@ -252,8 +281,19 @@
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
-// Win32 has wchar_t support
+// Win32 has wide-char support. Use of the compiler-defined wchar_t type
+// is controlled in compiler configs since it's a compiler switch.
+// Additionally, if the user selected use of wide chars (by setting either
+// ACE_USES_WCHAR or UNICODE) make sure both are enabled.
 #define ACE_HAS_WCHAR
+#if defined (ACE_USES_WCHAR)
+#  ifndef UNICODE
+#    define UNICODE
+#  endif
+#endif /* ACE_USES_WCHAR */
+#if defined (UNICODE) && !defined (ACE_USES_WCHAR)
+#  define ACE_USES_WCHAR
+#endif /* UNICODE && !ACE_USES_WCHAR */
 
 // Compiler/platform correctly calls init()/fini() for shared
 // libraries. - applied for DLLs ?
@@ -310,17 +350,6 @@
 // No system support for replacing any previous mappings.
 #define ACE_LACKS_AUTO_MMAP_REPLACEMENT
 
-// MFC itself defines STRICT.
-#if defined( ACE_HAS_MFC ) && (ACE_HAS_MFC != 0)
-# if !defined(ACE_HAS_STRICT)
-#  define ACE_HAS_STRICT 1
-# endif
-# if (ACE_HAS_STRICT != 1)
-#  undef ACE_HAS_STRICT
-#  define ACE_HAS_STRICT 1
-# endif
-#endif
-
 // If you want to use highres timers, ensure that
 // Build.Settings.C++.CodeGeneration.Processor is
 // set to Pentium !
@@ -355,14 +384,6 @@
 #if defined (__ACE_INLINE__) && (__ACE_INLINE__ == 0)
 # undef __ACE_INLINE__
 #endif /* __ACE_INLINE__ */
-
-// ACE_USES_STATIC_MFC always implies ACE_HAS_MFC
-#if defined (ACE_USES_STATIC_MFC)
-# if defined (ACE_HAS_MFC)
-#   undef ACE_HAS_MFC
-# endif
-# define ACE_HAS_MFC 1
-#endif /* ACE_USES_STATIC_MFC */
 
 // We are build ACE and want to use MFC (multithreaded)
 #if defined(ACE_HAS_MFC) && (ACE_HAS_MFC != 0) && defined (_MT)
@@ -426,7 +447,7 @@
 #  include /**/ <winsock2.h>
 // WinCE 4 doesn't define the Exxx values without the WSA prefix, so do that
 // here. This is all lifted from the #if 0'd out part of winsock2.h.
-#  if defined (UNDER_CE) && (UNDER_CE >= 400)
+#  if defined (UNDER_CE) && (UNDER_CE >= 0x400 && UNDER_CE < 0x500)
 #    define EWOULDBLOCK             WSAEWOULDBLOCK
 #    define EINPROGRESS             WSAEINPROGRESS
 #    define EALREADY                WSAEALREADY

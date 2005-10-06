@@ -129,7 +129,7 @@ int ACE_Main_Base::run (HINSTANCE,
 {
   ACE_TCHAR cmdline[1024];
   ACE_OS::strcpy (cmdline, ACE_LIB_TEXT ("program "));
-  ACE_OS::strcat (cmdline, lpCmdLine);
+  ACE_OS::strcat (cmdline, ACE_TEXT_WCHAR_TO_TCHAR (lpCmdLine));
   ACE_ARGV ce_argv (cmdline);
   ACE::init ();
   ACE_MAIN_OBJECT_MANAGER

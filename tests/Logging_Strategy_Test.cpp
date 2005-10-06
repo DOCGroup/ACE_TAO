@@ -196,7 +196,7 @@ count_files (void)
 
 // get the file statistics
 
-static int
+static time_t
 get_statistics (ACE_TCHAR *f_name)
 {
   ACE_stat buf;
@@ -256,7 +256,7 @@ order (void)
     }
   else
     {
-      int tm_bk_1, tm_bk_2;
+      time_t tm_bk_1, tm_bk_2;
       ACE_TCHAR backup_1[MAXPATHLEN+1];
       ACE_TCHAR backup_2[MAXPATHLEN+1];
       ACE_OS::sprintf (backup_1,

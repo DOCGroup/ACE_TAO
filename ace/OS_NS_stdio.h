@@ -236,7 +236,7 @@ namespace ACE_OS {
 
   //@}
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
   extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -244,7 +244,7 @@ namespace ACE_OS {
   FILE *fopen (const char *filename, const ACE_TCHAR *mode);
 
 #if defined (ACE_HAS_WCHAR)
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
   extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION

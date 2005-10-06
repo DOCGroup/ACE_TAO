@@ -50,17 +50,21 @@
 #define ACE_STRNCASECMP_EQUIVALENT ::_strnicmp
 #define ACE_WCSDUP_EQUIVALENT ::_wcsdup
 
-#if !defined (ACE_HAS_WINCE)
-# define ACE_HAS_EXCEPTIONS
-# define ACE_HAS_SIG_ATOMIC_T
-#endif /* ACE_HAS_WINCE */
+//#if defined (_WIN32_WCE) && (_WIN32_WCE < 0x500)
+//#  define ACE_LACKS_RTTI
+//#else
+#  define ACE_HAS_EXCEPTIONS
+// Windows Mobile 5 doesn't do sig_atomic_t, but maybe future versions will.
+#  if !defined (_WIN32_WCE) || (_WIN32_WCE > 0x501)
+#    define ACE_HAS_SIG_ATOMIC_T
+#  endif /* !Win CE 5.0 or less */
+//#endif /* _WIN32_WCE && _WIN32_WCE < 500 */
 
 #define ACE_HAS_STRERROR
 #define ACE_HAS_STRPTIME
 #define ACE_LACKS_NATIVE_STRPTIME
 
 #define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
-#define ACE_LACKS_MODE_MASKS
 #define ACE_LACKS_STRRECVFD
 #define ACE_HAS_CPLUSPLUS_HEADERS
 
@@ -116,7 +120,11 @@
 // did not prevent the warnings.
 #pragma warning(disable:4996)
 
-#define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
+// On CE w/o MFC config-WinCE.h needs to declare a placement new. This
+// triggers a warning that there's no placement delete, which can be ignored.
+#if defined (ACE_HAS_WINCE) && !defined (ACE_HAS_MFC)
+#  pragma warning(disable:4291)
+#endif
 
 // A template can not be exported. Only an instantiation may be exported.
 #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
