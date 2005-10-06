@@ -23,8 +23,8 @@ CIAO::Deployment_Configuration::init (const char *filename)
 
   if (filename == 0)
     {
-      ACE_ERROR ((LM_ERROR, "CIAO (%P|%t) Deployment_Configuration.cpp
-                  : Unable to identify the file name \n"));
+      ACE_ERROR ((LM_ERROR, "CIAO (%P|%t) Deployment_Configuration.cpp"
+                            ": Unable to identify the file name \n"));
       return -1;
     }
 
@@ -33,10 +33,10 @@ CIAO::Deployment_Configuration::init (const char *filename)
   if (inf == NULL)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "CIAO (%P|%t) Deployment_Configuration.cpp:
-                          Fail to open node manager map data file: %s : \n",
-                          filename),
-                          -1);
+                         "CIAO (%P|%t) Deployment_Configuration.cpp:"
+                         "Fail to open node manager map data file: %s : \n",
+                         filename),
+                         -1);
     }
 
   char destination[NAME_BUFSIZE], ior[NAME_BUFSIZE];
