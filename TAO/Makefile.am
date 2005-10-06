@@ -18,6 +18,7 @@ SUBDIRS = \
         TAO_IDL \
         tao \
 	orbsvcs \
+        docs \
 	utils
 
 ## For some reason, automake doesn't include acconfig.h in the distribution

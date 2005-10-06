@@ -28,7 +28,8 @@ client_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(srcdir)/../idl
+  -I$(srcdir)/../idl \
+  -I../idl
 
 client_SOURCES = \
   client.cpp \
@@ -58,7 +59,8 @@ server_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(srcdir)/../idl
+  -I$(srcdir)/../idl \
+  -I../idl
 
 server_SOURCES = \
   Stock_Factory_i.cpp \
