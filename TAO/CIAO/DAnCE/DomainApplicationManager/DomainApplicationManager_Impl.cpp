@@ -76,8 +76,9 @@ init (ACE_ENV_SINGLE_ARG_DECL)
         Config_Handlers::SRD_Handler reverse_handler (sr);
           
         Config_Handlers::XML_Helper the_helper;
-        xercesc::DOMDocument *the_xsc (the_helper.create_dom ("CIAO:ServerResources",
-                                                              "http://www.dre.vanderbilt.edu/ServerResources"));
+        xercesc::DOMDocument *the_xsc 
+              (the_helper.create_dom ("CIAO:ServerResources",
+               "http://www.dre.vanderbilt.edu/ServerResources"));
         
         ServerResources (*reverse_handler.srd_xsc (), the_xsc);
         
@@ -91,11 +92,23 @@ init (ACE_ENV_SINGLE_ARG_DECL)
       //     of child plans and list of NodeManager names, and
       // (2) Check the validity of the global deployment plan.
       if (! this->get_plan_info ())
-        ACE_TRY_THROW (Deployment::PlanError ());
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
+                      "CIAO::DomainApplicationManager_Impl::init -"
+                      "ERROR while calling get_plan_info () \n"));             
+          ACE_TRY_THROW (Deployment::PlanError ());
+        }
 
       // Call split_plan()
       if (! this->split_plan ())
-        ACE_TRY_THROW (Deployment::PlanError ());
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
+                      "CIAO::DomainApplicationManager_Impl::init -"
+                      "ERROR while calling split_plan () \n"));             
+          ACE_TRY_THROW (Deployment::PlanError ());
+        }
 
       // Invoke preparePlan for each child deployment plan.
       for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
@@ -106,22 +119,24 @@ init (ACE_ENV_SINGLE_ARG_DECL)
               (this->node_manager_names_[i].c_str ());
 
           // Get the child deployment plan reference.
-          ACE_Hash_Map_Entry
-            <ACE_CString,
-            Chained_Artifacts> *entry;
+          ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry;
 
           if (this->artifact_map_.find (this->node_manager_names_[i],
                                         entry) != 0)
-            ACE_TRY_THROW (Deployment::PlanError ());
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
+                          "CIAO::DomainApplicationManager_Impl::init -"
+                          "ERROR while finding the node specific plan "
+                          "for the node [%s] \n",
+                          this->node_manager_names_[i].c_str ()));
+              ACE_TRY_THROW (Deployment::PlanError ());
+            }
 
           Chained_Artifacts & artifacts = entry->int_id_;
 
-          // Dump plans
-          if (CIAO::debug_level () > 1)
-            {
-              // The dump() function is broken.
-              //Deployment::DnC_Dump::dump (artifacts.child_plan_);
-            }
+          // The dump() function is broken.
+          //Deployment::DnC_Dump::dump (artifacts.child_plan_);
 
           // Call preparePlan() method on the NodeManager with the
           // corresponding child plan as input, which returns a
@@ -131,19 +146,28 @@ init (ACE_ENV_SINGLE_ARG_DECL)
                                           ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          Deployment::NodeApplicationManager_var app_manager
-                  = Deployment::NodeApplicationManager::_narrow (tmp_app_manager.in ()
-                                                           ACE_ENV_ARG_PARAMETER);
+          Deployment::NodeApplicationManager_var app_manager =
+            Deployment::NodeApplicationManager::_narrow 
+              (tmp_app_manager.in ()
+               ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (CORBA::is_nil (app_manager.in ()))
             {
+              ACE_ERROR ((LM_ERROR,
+                          "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
+                          "CIAO::DomainApplicationManager_Impl::init -"
+                          "ERROR while narroing the NAM "
+                          "for the node [%s] \n",
+                          this->node_manager_names_[i].c_str ()));
+
               ACE_CString error ("DomainAppMgr::init () received a nil \
                                  reference for NodeApplicationManager\n");
               
               ACE_DEBUG ((LM_DEBUG, error.c_str ()));
-              ACE_TRY_THROW (Deployment::StartError ("DomainApplicationManager_Impl:init",
-                                                     error.c_str ()));
+              ACE_TRY_THROW 
+                 (Deployment::StartError ("DomainApplicationManager_Impl:init",
+                                          error.c_str ()));
             }
           ACE_TRY_CHECK;
 
@@ -169,17 +193,32 @@ get_plan_info (void)
   
   // Read the deployment.dat file and get to know the different nodes
   // that are present in the deployment domain.
-  // JAI: We should be able to replace this way, by parsing the domain
+  // We should be able to replace this way, by parsing the domain
   // descriptor to get to know more on the domain.
   //
   if ( this->deployment_config_.init (this->deployment_file_) == -1 )
-    return 0;
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
+                  "CIAO::DomainApplicationManager_Impl::get_plan_info -"
+                  "ERROR while trying to initialize after reading "
+                  "deployment DAT file \n"));
+      return 0;
+    }
 
   // Error: If there are no nodes in the plan => No nodes to deploy the
   // components
   const CORBA::ULong length = this->plan_.instance.length ();
+
   if (length == 0)
-    return false;
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
+                  "CIAO::DomainApplicationManager_Impl::get_plan_info -"
+                  "ERROR while trying to get the total instances to "
+                  "be deployed \n"));
+      return false;
+    }
 
   // Copy the name of the node in the plan on to the node manager
   // array, Making sure that duplicates are not added.
@@ -243,9 +282,11 @@ CIAO::DomainApplicationManager_Impl::
 split_plan (void)
 {
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::split_plan");
+
   // Initialize the total number of child deployment plans specified
   // by the global plan.
   CORBA::ULong i;
+
   for ( i = 0; i < this->num_child_plans_; ++i)
   {
     ::Deployment::DeploymentPlan_var tmp_plan;
@@ -259,9 +300,8 @@ split_plan (void)
     // child plan is to be installed on. 
     ACE_CString child_uuid (this->plan_.UUID.in ());
     child_uuid += this->node_manager_names_[i];
-    
-    tmp_plan->UUID = CORBA::string_dup (child_uuid.c_str ());
 
+    tmp_plan->UUID = CORBA::string_dup (child_uuid.c_str ());
     tmp_plan->implementation.length (0);
     tmp_plan->instance.length (0);
     tmp_plan->connection.length (0);
@@ -384,6 +424,7 @@ CIAO::DomainApplicationManager_Impl::
 add_connections (const Deployment::Connections & incoming_conn)
 {
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::add_connections");
+
   CORBA::ULong old_len = this->all_connections_->length ();
 
   // Expand the length of the <all_connection_> sequence.
@@ -409,7 +450,7 @@ startLaunch (const ::Deployment::Properties & configProperty,
 {
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::startLaunch");
   ACE_UNUSED_ARG (start);
-  ACE_DEBUG ((LM_DEBUG, "CIAO::DomainApplicationManager_Impl::startLaunch.\n"));
+
   ACE_TRY
     {
       // Invoke startLaunch() operations on each cached NodeApplicationManager
@@ -423,11 +464,14 @@ startLaunch (const ::Deployment::Properties & configProperty,
           if (this->artifact_map_.find (this->node_manager_names_[i],
                                         entry) != 0)
             {
-              ACE_CString error ("Unable to resolve a reference to node manager: ");
+              ACE_CString error 
+                 ("Unable to resolve a reference to node manager: ");
               error += this->node_manager_names_[i];
               
-              ACE_TRY_THROW (Deployment::StartError ("DomainApplicationManager_Impl:startLaunch",
-                                                     error.c_str ())); // Should never happen!
+              ACE_TRY_THROW 
+                 (Deployment::StartError 
+                    ("DomainApplicationManager_Impl:startLaunch",
+                     error.c_str ()));
             }
           
           ::Deployment::NodeApplicationManager_ptr my_nam =
@@ -949,19 +993,44 @@ dump_connections (const ::Deployment::Connections & connections)
   const CORBA::ULong conn_len = connections.length ();
   for (CORBA::ULong i = 0; i < conn_len; ++i)
   {
-    ACE_DEBUG ((LM_DEBUG, "instanceName: %s\n", connections[i].instanceName.in ()));
-    ACE_DEBUG ((LM_DEBUG, "portName: %s\n", connections[i].portName.in ()));
-    ACE_DEBUG ((LM_DEBUG, "portkind: "));
-    switch (connections[i].kind) {
-    case Deployment::Facet: ACE_DEBUG ((LM_DEBUG, "Facet\n")); break;
-    case Deployment::SimplexReceptacle: ACE_DEBUG ((LM_DEBUG, "SimplexReceptacle\n")); break;
-    case Deployment::MultiplexReceptacle: ACE_DEBUG ((LM_DEBUG, "MultiplexReceptacle\n")); break;
-    case Deployment::EventEmitter: ACE_DEBUG ((LM_DEBUG, "EventEmitter\n")); break;
-    case Deployment::EventPublisher: ACE_DEBUG ((LM_DEBUG, "EventPublisher\n")); break;
-    case Deployment::EventConsumer: ACE_DEBUG ((LM_DEBUG, "EventConsumer\n")); break;
-    }
+    ACE_DEBUG ((LM_DEBUG, 
+                "instanceName: %s\n", connections[i].instanceName.in ()));
 
-    // object reference.
-    ACE_DEBUG ((LM_DEBUG, "endpoint: \n"));
+    ACE_DEBUG ((LM_DEBUG, "portName: %s\n", connections[i].portName.in ()));
+
+    ACE_DEBUG ((LM_DEBUG, "portkind: "));
+
+    switch (connections[i].kind) 
+      {
+        case Deployment::Facet: 
+
+           ACE_DEBUG ((LM_DEBUG, "Facet\n")); 
+           break;
+
+        case Deployment::SimplexReceptacle: 
+
+           ACE_DEBUG ((LM_DEBUG, "SimplexReceptacle\n")); 
+           break;
+
+        case Deployment::MultiplexReceptacle: 
+
+           ACE_DEBUG ((LM_DEBUG, "MultiplexReceptacle\n")); 
+           break;
+
+        case Deployment::EventEmitter: 
+
+           ACE_DEBUG ((LM_DEBUG, "EventEmitter\n")); 
+           break;
+
+        case Deployment::EventPublisher: 
+
+           ACE_DEBUG ((LM_DEBUG, "EventPublisher\n")); 
+           break;
+
+        case Deployment::EventConsumer: 
+
+           ACE_DEBUG ((LM_DEBUG, "EventConsumer\n")); 
+           break;
+      }
   }
 }
