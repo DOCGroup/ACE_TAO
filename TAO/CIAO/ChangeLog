@@ -1,3 +1,10 @@
+Thu Oct  6 16:52:21 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        *
+          DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+
+          Added more debug statements and comments.
+
 Thu Oct  6 16:11:56 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         *
