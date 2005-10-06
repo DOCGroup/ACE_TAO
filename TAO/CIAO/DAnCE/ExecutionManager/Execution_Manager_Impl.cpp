@@ -38,7 +38,7 @@ namespace CIAO
     {
       CIAO_TRACE("Execution_Manager::Execution_Manager_Impl::preparePlan");
 
-      if (CIAO::debug_level () > 10)
+      if (CIAO::debug_level () > 9)
         ACE_DEBUG ((LM_DEBUG,
                     "CIAO (%P|%t) Domain Application Manager "
                     "invoked CIAO_Execution_Manager: preparePlan \n"));

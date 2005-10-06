@@ -71,7 +71,7 @@ namespace CIAO
           return false;
         }
       
-      if (CIAO::debug_level () > 10)
+      if (CIAO::debug_level () > 9)
         ACE_DEBUG ((LM_DEBUG,
                     "(%P|%t) CIAO_PlanLauncher: Obtained Execution"
                     " Manager ref \n"));
@@ -115,7 +115,7 @@ namespace CIAO
           return 0;
         }
       
-      if (CIAO::debug_level () > 10)
+      if (CIAO::debug_level () > 9)
         ACE_DEBUG ((LM_DEBUG,
                     "CIAO_PlanLauncher: Obtained DAM ref \n"));
       

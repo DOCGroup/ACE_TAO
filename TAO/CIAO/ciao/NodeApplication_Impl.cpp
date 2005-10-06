@@ -87,7 +87,7 @@ CIAO::NodeApplication_Impl::finishLaunch (
             case Deployment::SimplexReceptacle:
             case Deployment::MultiplexReceptacle:
 
-              if (CIAO::debug_level () > 10)
+              if (CIAO::debug_level () > 9)
                 {
                   ACE_DEBUG ((LM_DEBUG,
                               "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
@@ -102,7 +102,7 @@ CIAO::NodeApplication_Impl::finishLaunch (
                              ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
-              if (CIAO::debug_level () > 10)
+              if (CIAO::debug_level () > 9)
                 {
                   ACE_DEBUG ((LM_DEBUG,
                               "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
@@ -136,7 +136,7 @@ CIAO::NodeApplication_Impl::finishLaunch (
                   ACE_TRY_THROW (Deployment::InvalidConnection ());
                 }
 
-              if (CIAO::debug_level () > 10)
+              if (CIAO::debug_level () > 9)
                 {
                   ACE_DEBUG ((LM_DEBUG,
                               "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
@@ -151,7 +151,7 @@ CIAO::NodeApplication_Impl::finishLaunch (
                                       ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
-              if (CIAO::debug_level () > 10)
+              if (CIAO::debug_level () > 9)
                 {
                   ACE_DEBUG ((LM_DEBUG,
                               "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
@@ -182,7 +182,7 @@ CIAO::NodeApplication_Impl::finishLaunch (
                   ACE_TRY_THROW (Deployment::InvalidConnection ());
                 }
 
-              if (CIAO::debug_level () > 10)
+              if (CIAO::debug_level () > 9)
                 {
                   ACE_DEBUG ((LM_DEBUG,
                               "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
@@ -197,7 +197,7 @@ CIAO::NodeApplication_Impl::finishLaunch (
                                ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
-              if (CIAO::debug_level () > 10)
+              if (CIAO::debug_level () > 9)
                 {
                   ACE_DEBUG ((LM_DEBUG,
                               "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
@@ -308,7 +308,7 @@ CIAO::NodeApplication_Impl::install (
       retv->length (0UL);
 
       // Call create_all_containers to create all the necessary containers..
-      if (CIAO::debug_level () > 10)
+      if (CIAO::debug_level () > 9)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "CIAO (%P|%t) NodeApplication_Impl.cpp -"
@@ -316,7 +316,7 @@ CIAO::NodeApplication_Impl::install (
                       "creating all the containers. \n"));
         }
       (void) this->create_all_containers (container_infos);
-      if (CIAO::debug_level () > 10)
+      if (CIAO::debug_level () > 9)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "CIAO (%P|%t) NodeApplication_Impl.cpp -"

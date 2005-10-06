@@ -74,7 +74,7 @@ namespace CIAO
     CORBA::String_var str =
       PortableServer::ObjectId_to_string (oid);
 
-    if (CIAO::debug_level () > 10)
+    if (CIAO::debug_level () > 9)
       ACE_DEBUG ((LM_DEBUG,
                   "CIAO (%P|%t) - Servant_Activator::incarnate, "
                   "activating port name [%s] \n",
@@ -98,7 +98,7 @@ namespace CIAO
 
           if (tmp == 0)
             {
-              if (CIAO::debug_level () > 10)
+              if (CIAO::debug_level () > 9)
                 ACE_ERROR ((LM_ERROR,
                             "CIAO (%P|%t) - Servant_Activator::incarnate (),"
                             " value from the array is null \n"));
@@ -179,7 +179,7 @@ namespace CIAO
       {
         ++this->slot_index_;
 
-        if (CIAO::debug_level () > 10)
+        if (CIAO::debug_level () > 9)
           ACE_DEBUG ((LM_DEBUG,
                       "CIAO (%P|%t) - Servant_Activator::register_port_activator,"
                       " the slot_index_ is [%d] \n",

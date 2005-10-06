@@ -255,7 +255,7 @@ CIAO::Container_Impl::install_home (
                    Deployment::InstallationFailure,
                    Components::InvalidConfiguration))
 {
-  if (CIAO::debug_level () > 10)
+  if (CIAO::debug_level () > 9)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "CIAO (%P|%t) Container_Impl.cpp -"
@@ -274,7 +274,7 @@ CIAO::Container_Impl::install_home (
                                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (Components::CCMHome::_nil ());
 
-  if (CIAO::debug_level () > 10)
+  if (CIAO::debug_level () > 9)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "CIAO (%P|%t) Container_Impl.cpp -"
