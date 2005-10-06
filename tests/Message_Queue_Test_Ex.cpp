@@ -97,7 +97,7 @@ single_thread_performance_test (void)
                   User_Class *[max_messages],
                   -1);
 
-  int i;
+  int i = 0;
 
   for (i = 0; i < max_messages; ++i)
     ACE_NEW_RETURN (send_block[i],
@@ -201,7 +201,7 @@ performance_test (void)
   Queue_Wrapper queue_wrapper;
   const ACE_TCHAR *message =
     ACE_TEXT ("ACE_Message_Queue_Ex<ACE_SYNCH>");
-  int i;
+  int i = 0;
 
   // Create the messages.  Allocate off the heap in case messages is
   // large relative to the amount of stack space available.  Allocate

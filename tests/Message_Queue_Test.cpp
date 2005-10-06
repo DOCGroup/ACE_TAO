@@ -20,9 +20,9 @@
 //      3) a test/usage example of ACE_Message_Queue_Vx.
 //
 // = AUTHORS
-//    Irfan Pyarali <irfan@cs.wustl.edu>, 
-//    David L. Levine <levine@cs.wustl.edu>, and 
-//    Douglas C. Schmidt <schmidt@vanderbilt.edu> 
+//    Irfan Pyarali <irfan@cs.wustl.edu>,
+//    David L. Levine <levine@cs.wustl.edu>, and
+//    Douglas C. Schmidt <schmidt@vanderbilt.edu>
 //
 // ============================================================================
 
@@ -189,7 +189,7 @@ single_thread_performance_test (int queue_type = 0)
     "ACE_Message_Queue Test Message";
   const ACE_TCHAR *message =
     ACE_TEXT ("ACE_Message_Queue<ACE_NULL_SYNCH>, single thread");
-  int i;
+  int i = 0;
 
   // Create a message queue.
   ACE_Message_Queue_Base *msgq = 0;
@@ -371,7 +371,7 @@ performance_test (int queue_type = 0)
   Queue_Wrapper queue_wrapper;
   const ACE_TCHAR *message =
     ACE_TEXT ("ACE_Message_Queue<ACE_SYNCH>");
-  int i;
+  int i = 0;
 
   // Create the messages.  Allocate off the heap in case messages is
   // large relative to the amount of stack space available.  Allocate
@@ -451,37 +451,37 @@ performance_test (int queue_type = 0)
 
 // Ensure that the timedout dequeue_head() sets errno code properly.
 
-static int 
+static int
 timeout_test (void)
 {
   SYNCH_QUEUE mq;
   int status = 0;
 
-  if (!mq.is_empty ()) 
+  if (!mq.is_empty ())
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("New queue is not empty!\n")));
       status = 1;
     }
-  else 
+  else
     {
       ACE_Message_Block *b;
       ACE_Time_Value tv (ACE_OS::gettimeofday ());   // Now
 
-      if (mq.dequeue_head (b, &tv) != -1) 
+      if (mq.dequeue_head (b, &tv) != -1)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Dequeued from empty queue!\n")));
           status = 1;
         }
-      else if (errno != EWOULDBLOCK) 
+      else if (errno != EWOULDBLOCK)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%p\n"),
                       ACE_TEXT ("Dequeue timeout should be EWOULDBLOCK, got")));
           status = 1;
         }
-      else 
+      else
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Timed dequeue test: OK\n")));
