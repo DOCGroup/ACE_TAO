@@ -97,7 +97,7 @@ Thu Oct  6 17:56:19 2005  Steve Huston  <shuston@riverace.com>
 	* tests/Logging_Strategy_Test.cpp (get_statistics): Use time_t
 	  instead of int to return the modified time. Makes it portable to
 	  64 bits.
-	  
+
 Thu Oct  6 10:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
