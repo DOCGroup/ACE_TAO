@@ -1,3 +1,9 @@
+Thu Oct  6 12:30:40 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * ciao/NodeApplication_Impl.cpp:
+
+          Added debug messages and comments.
+
 Thu Oct  6 08:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp:
