@@ -13,11 +13,7 @@
 #ifndef TAO_AMI_TEST_I_H
 #define TAO_AMI_TEST_I_H
 
-#ifdef TAO_HAS_AMI_EXCEPTIONS
-#include "ami_testS-hand.h"
-#else
 #include "ami_testS.h"
-#endif
 
 /**
  * @class AMI_Test_i
@@ -49,7 +45,7 @@ public:
   void yadda (CORBA::Long yadda
               ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
-      
+
   void inout_arg_test (char *& str
                        ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));

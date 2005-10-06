@@ -23,14 +23,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-#ifdef TAO_HAS_AMI_EXCEPTIONS
-#include "ami_testC-hand.h"
-#include "ami_testS-hand.h"
-#else
 #include "ami_testC.h"
 #include "ami_testS.h"
-#endif
-
 
 ACE_RCSID(AMI, simple_client, "$Id$")
 
