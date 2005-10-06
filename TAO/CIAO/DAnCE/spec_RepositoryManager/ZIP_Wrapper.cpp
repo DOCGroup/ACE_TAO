@@ -15,11 +15,13 @@
 
 #include "ace/OS_NS_fcntl.h"	  //for open
 #include "ace/OS_NS_unistd.h"	  //for close
+#include "ace/OS_NS_string.h"	  //for strncpy
+#include "ace/SString.h"		  //for ACE_CString
+#include "ace/OS_NS_sys_stat.h"	  //for stat
 #include "ace/OS_NS_sys_stat.h"   //for filesize and mkdir
 
 #include <string>
 #include <memory>				  //for auto_ptr
-
 
 /////////////////////////////////////////////////////////////////////////////
 //NOTE: some #defines problems with zzip & ACE - put these 2 lines on top!!!!
@@ -157,10 +159,10 @@ bool ZIP_Wrapper::get_file (char* archive_path, char* filename, ACE_Message_Bloc
 
 //uncompress
 //the uncompress format will be
-//mkdir(name of zip archive)
-//store all files in that directory.
+//mkdir(name of zip archive).
 //the path is assumed to be an existing directory
-bool ZIP_Wrapper::uncompress (char* zip_archive, char* path)
+//directory structure of archive is recreated
+bool ZIP_Wrapper::uncompress (char* zip_archive, char* path, bool verbose)
 {
 	ZZIP_DIR * dir;					//pointer to a zip archive
     ZZIP_DIRENT * dir_entry;		//pointer to a file within the archive
@@ -178,10 +180,21 @@ bool ZIP_Wrapper::uncompress (char* zip_archive, char* path)
 	//??????
 
 	//get the name of the archive
-	std::string arch_dir (path);
+	ACE_CString arch_dir (path);
 	arch_dir += "/";
-	arch_dir += zip_archive;
-	arch_dir[arch_dir.length () - 4] = '\0';		//NOTE: Assumes .zip or cpk extension
+
+	//get only the name of the archive; remove path info
+	char* n = ACE_OS::strstr (zip_archive, "/");
+	char* zip_name = 0;
+	while (n != NULL)
+	{
+		zip_name = ++n;
+		n = ACE_OS::strstr (n, "/");
+	}
+
+	arch_dir += zip_name;
+	//NOTE: Assumes .zip or cpk extension
+	arch_dir = arch_dir.substring (0, arch_dir.length () - 4);
 
 	//create directory
 	ACE_OS::mkdir(arch_dir.c_str());				//if dir exists -1 is returned and ignored
@@ -193,8 +206,26 @@ bool ZIP_Wrapper::uncompress (char* zip_archive, char* path)
 		char* name = dir_entry->d_name;
 
 		//remove the subpath part if any		NOTE: Lunux style assumed, need to check
-		while(char* next = strstr(name, "/"))
-			name = next + 1;
+
+		//let's try to create the directory structure for the package
+		char dir_name [2048];
+		char* next = ACE_OS::strstr (name, "/");
+		while (next != NULL)
+		{
+			ACE_CString location (arch_dir);
+			ACE_OS::strncpy (dir_name, name, next - name + 1);
+			dir_name[next - name + 1] = '\0';
+
+			location += "/";
+			location += dir_name;
+
+			ACE_stat stat;
+			if (ACE_OS::stat (location.c_str (), &stat) == -1)
+				ACE_OS::mkdir (location.c_str ());
+
+			next++;
+			next = ACE_OS::strstr (next, "/");
+		}
 
 		//open a zip handle
 		file = zzip_file_open(dir, dir_entry->d_name, O_RDONLY | O_BINARY);
@@ -203,7 +234,8 @@ bool ZIP_Wrapper::uncompress (char* zip_archive, char* path)
 
 		//allocate buffer
 
-		//TODO: change to ACE_NEW_RETURN
+		//std::auto_ptr releases the memory upon reset.
+		//ACE_Auto_Ptr does not support this functionality
 		std::auto_ptr<char> buffer;
 		buffer.reset ( new char [dir_entry->st_size + 1]);
 		
@@ -219,31 +251,35 @@ bool ZIP_Wrapper::uncompress (char* zip_archive, char* path)
 		file_path += name;
 
 		//print out the file to be uncompressed
-		ACE_OS::write(ACE_STDOUT, file_path.c_str (), file_path.length () );
-		ACE_OS::write(ACE_STDOUT, "\n", 1);
+		if (verbose)
+		{
+			ACE_OS::write(ACE_STDOUT, file_path.c_str (), file_path.length () );
+			ACE_OS::write(ACE_STDOUT, "\n", 1);
+		}
 
 	   // Open a file handle to the local filesystem
        ACE_HANDLE handle = ACE_OS::open (file_path.c_str (), O_CREAT | O_TRUNC | O_WRONLY);
        if (handle == ACE_INVALID_HANDLE)
-         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("[uncompress] file creation error")),
-                           0);
+	   {
+		   zzip_closedir(dir);
+		   ACE_ERROR_RETURN ((LM_ERROR,
+							  ACE_TEXT ("%p\n"),
+                              ACE_TEXT ("[uncompress] file creation error")),
+                              0);
+	   }
 
 	   //write the uncompressed data to the file
 	   if (ACE_OS::write (handle, &(*buffer), dir_entry->st_size) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("[uncompress] file write error")),
-                           0);
+	   {
+		   zzip_closedir(dir);
+		   ACE_ERROR_RETURN ((LM_ERROR,
+                              ACE_TEXT ("%p\n"),
+                              ACE_TEXT ("[uncompress] file write error")),
+                              0);
+	   }
 
 	   // Close the file handle
        ACE_OS::close (handle);
-
-	   //free buffer
-	   //TODO: check if auto_ptr has a fxn to release the memory before scope is exited
-		//delete [] buffer;
-
 	}
 
 	zzip_closedir(dir);
