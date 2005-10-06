@@ -489,6 +489,7 @@ sub check_for_empty_inline_files ()
             while (<FILE>) {
               next if /^[:blank:]*$/; # skip empty lines
               next if /^[:blank:]*\/\//; # skip C++ comments
+              next if /^[:blank:]*\/\*/; # skip C++ comments
               $found_non_empty_line = 1;
               last;
             }
