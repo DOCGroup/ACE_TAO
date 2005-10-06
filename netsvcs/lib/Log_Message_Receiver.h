@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Log_Message_Receiver
-//
-// = AUTHOR
-//    Per Andersson
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Log_Message_Receiver
+ *
+ *  $Id$
+ *
+ *  @author Per Andersson
+ */
+//=============================================================================
+
 
 #ifndef LOG_MESSAGE_RECEIVER_H
 #define LOG_MESSAGE_RECEIVER_H
@@ -90,29 +87,31 @@
 
 
 // Type based log message receiver
+/**
+ * @class Static_Log_Message_Receiver
+ *
+ * @brief Static_Log_Message_Receiver is a simple log message receiver. It
+ * has no instance data and only static member
+ * functions. Static/typed based receivers are best when all LMR
+ * should do exactly the same thing.
+ *
+ * This class contains a static log_record member function that
+ * prints the content of log_records on stderr.
+ */
 template<ACE_SYNCH_DECL>
 class Static_Log_Message_Receiver
 {
-  // = TITLE
-  //  Static_Log_Message_Receiver is a simple log message receiver. It
-  //  has no instance data and only static member
-  //  functions. Static/typed based receivers are best when all LMR
-  //  should do exactly the same thing.
-  //
-  // = DESCRIPTION
-  //  This class contains a static log_record member function that
-  //  prints the content of log_records on stderr.
 
 public:
+  /// Prints the log_record to stderr using record.print (hostname, 0, stderr).
+  /// Serializes the output by using a ACE_SYNCH_MUTEX.
   static void log_record(const ACE_TCHAR *hostname,
                          ACE_Log_Record &record);
-  // Prints the log_record to stderr using record.print (hostname, 0, stderr).
-  // Serializes the output by using a ACE_SYNCH_MUTEX.
 
+  /// Prints the log_record to a user specified ostream.
   static void log_output(const ACE_TCHAR *hostname,
                          ACE_Log_Record &record,
                          ostream *output);
-  // Prints the log_record to a user specified ostream.
 };
 
 // Instance based log message receiver
@@ -129,33 +128,33 @@ public:
 //Forward declaration
 template<ACE_SYNCH_DECL> class Log_Message_Receiver_Impl;
 
+/**
+ * @class Log_Message_Receiver
+ *
+ * @brief Log_Message_Receiver is a little more complicated log message
+ * receiver.  It is instance based and have a reference counted
+ * implementation.  Log_Message_Receiver is the envelope class for
+ * Log_Message_Receiver_Impl.  The difference between
+ * Static_Log_Message_Receiver and Log_Message_Receiver is that is
+ * possible to have instance data in Log_Message_Receiver.
+ * Comment:
+ * The practical usage of this is limited with the current
+ * ACE_Server_Logging_Acceptor_T design. Since
+ * ACE_Server_Logging_Acceptor_T will create the
+ * Log_Message_Receiver using the default constructor.  The main
+ * reason for inclusion right now is to ensure that the code in
+ * ACE_Server_Logging_Handler_T works both with type and instance
+ * based LMRs.
+ *
+ * This class contains a log_record member function that prints the
+ * content of log_records on stderr.
+ */
 template<ACE_SYNCH_DECL>
 class Log_Message_Receiver
 {
-  // = TITLE
-  //  Log_Message_Receiver is a little more complicated log message
-  //  receiver.  It is instance based and have a reference counted
-  //  implementation.  Log_Message_Receiver is the envelope class for
-  //  Log_Message_Receiver_Impl.  The difference between
-  //  Static_Log_Message_Receiver and Log_Message_Receiver is that is
-  //  possible to have instance data in Log_Message_Receiver.
-  //
-  //  Comment:
-  //
-  //  The practical usage of this is limited with the current
-  //  ACE_Server_Logging_Acceptor_T design. Since
-  //  ACE_Server_Logging_Acceptor_T will create the
-  //  Log_Message_Receiver using the default constructor.  The main
-  //  reason for inclusion right now is to ensure that the code in
-  //  ACE_Server_Logging_Handler_T works both with type and instance
-  //  based LMRs.
-  //
-  // = DESCRIPTION
-  //  This class contains a log_record member function that prints the
-  //  content of log_records on stderr.
 public:
+  /// Creates a new Log_Message_Receiver
   Log_Message_Receiver (void);
-  // Creates a new Log_Message_Receiver
   Log_Message_Receiver(Log_Message_Receiver<ACE_SYNCH_USE> const &rhs);
   ~Log_Message_Receiver (void);
 
@@ -172,11 +171,14 @@ private:
   Log_Message_Receiver_Impl<ACE_SYNCH_USE> *receiver_impl_;
 };
 
+/**
+ * @class Log_Message_Receiver_Impl
+ *
+ * @brief Implementation with reference count.
+ */
 template<ACE_SYNCH_DECL>
 class Log_Message_Receiver_Impl
 {
-  // = TITLE
-  // Implementation with reference count.
 
   friend class ACE_Shutup_GPlusPlus;  // Turn off g++ warning
 public:
@@ -196,8 +198,8 @@ private:
   Log_Message_Receiver_Impl (void);
   ~Log_Message_Receiver_Impl (void);
 
+  /// Attributes
   typedef ACE_Guard<ACE_SYNCH_MUTEX_T> Guard;
-  // Attributes
   int count_;
   ACE_SYNCH_MUTEX_T print_lock_;
 
