@@ -71,7 +71,8 @@ CIAO::Container_Impl::install (
                        CORBA::NO_MEMORY ());
      ACE_TRY_CHECK;
 
-     // Get the ComponentImplementationInfos from the ContainerImplementationInfo
+     // Get the ComponentImplementationInfos from the 
+     // ContainerImplementationInfo
      // to avoid too long syntax representation
      const ::Deployment::ComponentImplementationInfos impl_infos =
        container_impl_info.impl_infos;
@@ -103,15 +104,25 @@ CIAO::Container_Impl::install (
          if (CORBA::is_nil (comp.in ()))
            ACE_TRY_THROW (Deployment::InstallationFailure ());
 
-         if (this->component_map_.bind (impl_infos[i].component_instance_name.in (),
-                                        Components::CCMObject::_duplicate (comp.in ())))
-           ACE_TRY_THROW (Deployment::InstallationFailure ());
+         if (this->component_map_.bind 
+                (impl_infos[i].component_instance_name.in (),
+                 Components::CCMObject::_duplicate (comp.in ())))
+           {
+             ACE_DEBUG ((LM_DEBUG,
+                         "CIAO (%P|%t) Container_Impl.cpp -"
+                         "CIAO::Container_Impl::install -"
+                         "error in binding component "
+                         "instance name [%s] into the component map \n",
+                         impl_infos[i].component_instance_name.in ()));
+             ACE_TRY_THROW (Deployment::InstallationFailure ());
+           }
 
          // Set the return value.
          (*retv)[i].component_instance_name
            = impl_infos[i].component_instance_name.in ();
 
-         (*retv)[i].component_ref = Components::CCMObject::_duplicate (comp.in ());
+         (*retv)[i].component_ref = 
+             Components::CCMObject::_duplicate (comp.in ());
 
          // Deal with Component instance related Properties.
          // Now I am only concerning about the COMPOENTIOR and attribute
@@ -125,11 +136,10 @@ CIAO::Container_Impl::install (
          for (CORBA::ULong prop_len = 0; prop_len < clen; ++prop_len)
            {
              // Set up the ComponentIOR attribute
-             if (ACE_OS::strcmp (impl_infos[i].component_config[prop_len].name.in (),
-                                 "ComponentIOR") == 0)
+             if (ACE_OS::strcmp 
+                  (impl_infos[i].component_config[prop_len].name.in (),
+                   "ComponentIOR") == 0)
                {
-                 if (CIAO::debug_level () > 1)
-                   ACE_DEBUG ((LM_DEBUG, "Found property to write the IOR.\n"));
                  const char * path;
                  impl_infos[i].component_config[prop_len].value >>= path;
 
@@ -148,14 +158,17 @@ CIAO::Container_Impl::install (
                }
 
              // Set up the naming service attribute
-             if (ACE_OS::strcmp (impl_infos[i].component_config[prop_len].name.in (),
-                                 "RegisterNaming") == 0)
+             if (ACE_OS::strcmp 
+                  (impl_infos[i].component_config[prop_len].name.in (),
+                   "RegisterNaming") == 0)
                {
                  const char * naming_context;
-                 impl_infos[i].component_config[prop_len].value >>= naming_context;
+                 impl_infos[i].
+                    component_config[prop_len].value >>= naming_context;
 
                  // Register the component with the naming service
-                 ACE_DEBUG ((LM_DEBUG, "Register component with naming service.\n"));
+                 ACE_DEBUG ((LM_DEBUG, 
+                             "Register component with naming service.\n"));
                  bool result = register_with_ns (naming_context,
                                                  this->orb_.in (),
                                                  comp.in ()
@@ -164,14 +177,17 @@ CIAO::Container_Impl::install (
 
                  if (!result)
                    {
-                     ACE_DEBUG ((LM_DEBUG, "Failed to register with naming service.\n"));
+                     ACE_DEBUG ((LM_DEBUG, 
+                                 "Failed to register with naming service.\n"));
                    }
 
                }
 
              // Initialize attributes through StandardConfigurator interface
-             // @@Todo: Currently I have to manually map the Deployment::Properties to 
-             // Components::ConfigValues, we should use a common data structure in
+             // @@Todo: Currently I have to manually map 
+             // the Deployment::Properties to 
+             // Components::ConfigValues, we should use a 
+             // common data structure in
              // the future. - Gan
              CORBA::ULong cur_len = comp_attributes.length ();
              comp_attributes.length (cur_len + 1);
@@ -239,6 +255,16 @@ CIAO::Container_Impl::install_home (
                    Deployment::InstallationFailure,
                    Components::InvalidConfiguration))
 {
+  if (CIAO::debug_level () > 10)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "CIAO (%P|%t) Container_Impl.cpp -"
+                  "CIAO::Container_Impl::install_home -"
+                  "installing home for component "
+                  "instance [%s] \n",
+                  impl_info.component_instance_name.in ()));
+    }
+
   Components::CCMHome_var newhome =
     this->container_->ciao_install_home (impl_info.executor_dll.in (),
                                          impl_info.executor_entrypt.in (),
@@ -247,14 +273,32 @@ CIAO::Container_Impl::install_home (
                                          impl_info.component_instance_name.in ()
                                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (Components::CCMHome::_nil ());
+
+  if (CIAO::debug_level () > 10)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "CIAO (%P|%t) Container_Impl.cpp -"
+                  "CIAO::Container_Impl::install_home -"
+                  "success in installing home for component "
+                  "instance [%s] \n",
+                  impl_info.component_instance_name.in ()));
+    }
+
   // We don't have to do _narrow since the generated code makes sure of
   // the object type for us
-
   // Bind the home in the map.
   if (this->home_map_.bind (impl_info.component_instance_name.in (),
                             Components::CCMHome::_duplicate (newhome.in ())))
-    ACE_THROW_RETURN (Deployment::InstallationFailure (),
-                      Components::CCMHome::_nil ());
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "CIAO (%P|%t) Container_Impl.cpp -"
+                  "CIAO::Container_Impl::install_home -"
+                  "error in binding home for component "
+                  "instance [%s] \n",
+                  impl_info.component_instance_name.in ()));
+      ACE_THROW_RETURN (Deployment::InstallationFailure (),
+                        Components::CCMHome::_nil ());
+    }
 
   //Note: If the return value will be discarded, it must be kept in a var or
   //      release () will have to be called explicitly.
@@ -344,7 +388,8 @@ CIAO::Container_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
 
   //if (CIAO::debug_level () > 1)
   if (true)
-    ACE_DEBUG ((LM_DEBUG, "Removed all homes and components from this container!\n"));
+    ACE_DEBUG ((LM_DEBUG, 
+                "Removed all homes and components from this container!\n"));
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -459,7 +504,10 @@ CIAO::Container_Impl::register_with_ns (const char * obj_name,
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
-                           "(%P|%t) NodeApplication: failed to register with naming service.");
+                           "CIAO (%P|%t) Container_Impl.cpp -"
+                           "CIAO::Container_Impl::register_with_ns -"
+                           "NodeApplication: failed to register "
+                           "with naming service.");
       return false;
     }
   ACE_ENDTRY;
@@ -496,7 +544,9 @@ CIAO::Container_Impl::unregister_with_ns (const char * obj_name,
       name[0].kind = CORBA::string_dup ("");
 
       // Register with the Name Server
-      ACE_DEBUG ((LM_DEBUG, "Unregister component with the name server : %s!\n", obj_name));
+      ACE_DEBUG ((LM_DEBUG, 
+                  "Unregister component with the name server : %s!\n", 
+                  obj_name));
       naming_context->unbind (name ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -505,7 +555,10 @@ CIAO::Container_Impl::unregister_with_ns (const char * obj_name,
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
-                           "(%P|%t) NodeApplication: failed to unregister with naming service.");
+                           "CIAO (%P|%t) Container_Impl.cpp -"
+                           "CIAO::Container_Impl::unregister_with_ns -"
+                           "NodeApplication: failed to unregister "
+                           "with naming service.");
       return false;
     }
   ACE_ENDTRY;
