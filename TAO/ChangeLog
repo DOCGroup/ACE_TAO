@@ -1,3 +1,11 @@
+Thu Oct  6 08:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMI/ami_test_i.{h,cpp}:
+        * tests/AMI/client.cpp:
+        * tests/AMI/server.cpp:
+        * tests/AMI/simple_client.cpp:
+          Converted documentation to doxygen style
+
 Thu Oct  6 08:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Param_Test/client.cpp:
