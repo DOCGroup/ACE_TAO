@@ -34,9 +34,25 @@ project(Framework Component DLL) : acelib {
   }
 }
 
-project(DLL Test Lib) : acelib {
+
+project(DLL Test Parent Lib) : acelib {
+  sharedname   = DLL_Test_Parent
+  dynamicflags = DLL_TEST_PARENT_BUILD_DLL
+
+  Source_Files {
+    DLL_Test_Parent.cpp
+  }
+  Header_Files {
+    DLL_Test_Parent_Export.h
+    test_config.h
+  }
+  Resource_Files {
+  }
+}
+
+project(DLL Test Lib) : acelib, dll_test_parent_lib {
   sharedname   = DLL_Test
-  dynamicflags = ACE_BUILD_SVC_DLL
+  dynamicflags = ACE_SVC_BUILD_DLL
 
   Source_Files {
     DLL_Test_Impl.cpp
@@ -50,7 +66,7 @@ project(DLL Test Lib) : acelib {
 
 project(Based Pointer Test Lib) : acelib {
   sharedname   = Based_Pointer_Test
-  dynamicflags = ACE_BUILD_SVC_DLL
+  dynamicflags = ACE_SVC_BUILD_DLL
 
   Source_Files {
     Based_Pointer_Test_Lib.cpp
@@ -282,7 +298,8 @@ project(DLList Test) : acetest {
   }
 }
 
-project(DLL Test) : acetest {
+project(DLL Test) : acetest, dll_test_parent_lib {
+  libs   += DLL_Test
   exename = DLL_Test
   Source_Files {
     DLL_Test.cpp
@@ -1208,6 +1225,7 @@ project(QtReactor Test) : acetest, ace_qtreactor {
 }
 
 project(Based Pointer Test) : acetest {
+  after  += Based Pointer Test Lib
   exename = Based_Pointer_Test
   Source_Files {
     Based_Pointer_Test.cpp
