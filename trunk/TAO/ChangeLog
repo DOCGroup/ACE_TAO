@@ -1,3 +1,11 @@
+Thu Oct  6 09:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMI/ami_test_i.h:
+        * orbsvcs/tests/HTIOP/AMI/simple_client.cpp:
+        * orbsvcs/tests/HTIOP/AMI/ami_test_i.h:
+          Removed usage of TAO_HAS_AMI_EXCEPTIONS, seems something that has gone
+          a long time ago
+
 Thu Oct  6 08:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMI/ami_test_i.{h,cpp}:
