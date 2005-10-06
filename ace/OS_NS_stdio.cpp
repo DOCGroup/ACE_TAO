@@ -107,7 +107,7 @@ void ACE_OS::checkUnicodeFormat (FILE* fp)
 }
 #endif  // ACE_USES_WCHAR
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 FILE *
 ACE_OS::fopen (const char *filename,
                const ACE_TCHAR *mode)
@@ -121,14 +121,6 @@ ACE_OS::fopen (const char *filename,
   ACE_HANDLE handle = ACE_OS::open (filename, hmode);
   if (handle != ACE_INVALID_HANDLE)
     {
-# if defined (ACE_HAS_WINCE)
-      FILE *fp = ::_wfdopen (handle, mode);
-      if (fp != 0)
-      {
-        checkUnicodeFormat(fp);
-        return fp;
-      }
-# else
       hmode &= _O_TEXT | _O_RDONLY | _O_APPEND;
 
 #   if defined (ACE_LACKS_INTPTR_T)
@@ -157,7 +149,6 @@ ACE_OS::fopen (const char *filename,
           }
           ::_close (fd);
         }
-# endif  // ACE_HAS_WINCE
 
       ACE_OS::close (handle);
     }
@@ -178,14 +169,6 @@ ACE_OS::fopen (const wchar_t *filename,
   ACE_HANDLE handle = ACE_OS::open (filename, hmode);
   if (handle != ACE_INVALID_HANDLE)
     {
-# if defined (ACE_HAS_WINCE)
-      FILE *fp = ::_wfdopen (handle, mode);
-      if (fp != 0)
-      {
-        checkUnicodeFormat(fp);
-        return fp;
-      }
-# else
       hmode &= _O_TEXT | _O_RDONLY | _O_APPEND;
 
 #   if defined (ACE_LACKS_INTPTR_T)
@@ -214,7 +197,6 @@ ACE_OS::fopen (const wchar_t *filename,
           }
           ::_close (fd);
         }
-# endif  // ACE_HAS_WINCE
 
       ACE_OS::close (handle);
     }

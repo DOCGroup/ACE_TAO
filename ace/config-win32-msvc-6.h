@@ -60,22 +60,39 @@
 #  define ACE_HAS_EXCEPTIONS
 #  define ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS
 #  define ACE_HAS_NO_THROW_SPEC
+#  define ACE_HAS_SIG_ATOMIC_T
 # endif /* ACE_HAS_WINCE */
+
+// CE SDKs didn't provide some errno values we need in eVC3 and 4 (which
+// are the same base compiler version as MSVC 6).
+#if defined (ACE_HAS_WINCE)
+#  define EMFILE WSAEMFILE
+#  define EINTR  WSAEINTR
+#  define EACCES ERROR_ACCESS_DENIED
+#  define ENOSPC ERROR_HANDLE_DISK_FULL
+#  define EEXIST ERROR_FILE_EXISTS
+#  define EPIPE  ERROR_BROKEN_PIPE
+#  define EFAULT WSAEFAULT
+#  define ENOENT WSAEINVAL
+#  define EINVAL WSAEINVAL
+#  define ERANGE WSAEINVAL
+#  define EAGAIN WSAEWOULDBLOCK
+#  define ENOMEM ERROR_OUTOFMEMORY
+#  define ENODEV ERROR_BAD_DEVICE
+#  define _MAX_FNAME 255
+//#endif  // UNDER_CE
+#endif /* ACE_HAS_WINCE */
 
 # define ACE_HAS_BROKEN_NAMESPACES
 # define ACE_HAS_BROKEN_IMPLICIT_CONST_CAST
 # define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 
-# if !defined (ACE_HAS_WINCE)
-#   define ACE_HAS_SIG_ATOMIC_T
-# endif /* ACE_HAS_WINCE */
 
 # define ACE_LACKS_INTPTR_T
 
 // Compiler doesn't support static data member templates.
 # define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 
-# define ACE_LACKS_MODE_MASKS
 # define ACE_LACKS_STRRECVFD
 
 // Compiler/platform has correctly prototyped header files.
@@ -162,10 +179,6 @@
 
 # define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64d")
 # define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64u")
-
-# if !defined (ACE_ENDTHREADEX)
-#   define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
-# endif
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_MSVC_6_H */

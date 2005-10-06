@@ -244,7 +244,8 @@ ACE_Object_Manager::init (void)
           ACE_TSS_Emulation::tss_open (ts_storage_);
 #     endif /* ACE_HAS_TSS_EMULATION */
 
-#if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS)
+#if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS) && \
+    defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 #if defined (_DEBUG) && (defined (_MSC_VER) || defined (__INTEL_COMPILER))
           // This will keep the ACE_Assert window
           _CrtSetReportMode( _CRT_ERROR, _CRTDBG_MODE_FILE );
@@ -253,7 +254,7 @@ ACE_Object_Manager::init (void)
 
           // And this will catch all unhandled exceptions.
           SetUnhandledExceptionFilter (&ACE_UnhandledExceptionFilter);
-#endif /* ACE_DISABLE_WIN32_ERROR_WINDOWS */
+#endif /* ACE_DISABLE_WIN32_ERROR_WINDOWS && ACE_WIN32 && !ACE_HAS_WINCE */
 
 
 #     if !defined (ACE_LACKS_ACE_SVCCONF)

@@ -105,11 +105,12 @@ private:
 } ;
 #endif /* ACE_PSOS_HAS_TIME */
 
-#if defined (ACE_HAS_WINCE)
-// WinCE doesn't have most of the standard C library time functions. It
-// also doesn't define struct tm. SYSTEMTIME has pretty much the same
-// info though, so we can map it when needed. Define struct tm here and
-// use it when needed. This is taken from the standard C library.
+#if defined (ACE_HAS_WINCE) && (defined (_MSC_VER) && (_MSC_VER < 1400))
+// WinCE prior to Visual Studio 2005 integration doesn't have most of
+// the standard C library time functions. It also doesn't define struct tm.
+// SYSTEMTIME has pretty much the same info though, so we can map it when
+// needed. Define struct tm here and use it when needed. This is taken
+// from the standard C library.
 struct tm {
   int tm_sec;
   int tm_min;
@@ -226,8 +227,8 @@ namespace ACE_OS {
 
 # if defined (ACE_HAS_WINCE)
   /// Supporting data for ctime and ctime_r functions on WinCE.
-  const wchar_t *day_of_week_name[];
-  const wchar_t *month_name[];
+  const ACE_TCHAR *day_of_week_name[];
+  const ACE_TCHAR *month_name[];
 # endif /* ACE_HAS_WINCE */
 
 # if defined (CHORUS) && !defined (CHORUS_4)

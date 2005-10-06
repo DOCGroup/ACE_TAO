@@ -42,12 +42,6 @@
 #pragma comment(lib,"corelibc.lib")
 #pragma comment(linker, "/nodefaultlib:oldnames.lib")
 
-// Unicode is the OS standard string type for WinCE.
-#ifdef ACE_HAS_UNICODE
-# undef ACE_HAS_UNICODE
-#endif  // ACE_HAS_UNICODE
-#define ACE_HAS_UNICODE 1
-
 // Only DLL version is supported on CE.
 //#if defined (ACE_HAS_DLL)
 //# undef ACE_HAS_DLL
@@ -70,16 +64,8 @@
 #endif  // ACE_HAS_WINNT4
 #define ACE_HAS_WINNT4 0
 
-#define ACE_LACKS_ACE_TOKEN
-#define ACE_LACKS_ACE_OTHER
 #define ACE_LACKS_MSG_WFMO
 #define ACE_LACKS_UMASK
-
-#define ACE_HAS_WCHAR
-
-#if !defined (ACE_USES_WCHAR)
-# define ACE_USES_WCHAR
-#endif  // ACE_USES_WCHAR
 
 #define ACE_USES_WINCE_SEMA_SIMULATION
 
@@ -112,7 +98,7 @@
 #endif  // SH3 && _DEBUG
 
 #ifndef ACE_DEFAULT_SERVER_HOST
-# define ACE_DEFAULT_SERVER_HOST L"localhost"
+# define ACE_DEFAULT_SERVER_HOST ACE_LIB_TEXT("localhost")
 #endif  // ACE_DEFAULT_SERVER_HOST
 
 // @@ Need to remap every function that uses any of these flags to
@@ -213,22 +199,7 @@
 typedef void (__cdecl * __sighandler_t)(int); // keep Signal compilation happy
 typedef long off_t;
 
-//#if (UNDER_CE > 200)  // from prior ACE porting effort; left for future reference
-#define EMFILE WSAEMFILE
-#define EINTR  WSAEINTR
-#define EACCES ERROR_ACCESS_DENIED
-#define ENOSPC ERROR_HANDLE_DISK_FULL
-#define EEXIST ERROR_FILE_EXISTS
-#define EPIPE  ERROR_BROKEN_PIPE
-#define EFAULT WSAEFAULT
-#define ENOENT WSAEINVAL
-#define EINVAL WSAEINVAL
-#define ERANGE WSAEINVAL
-#define EAGAIN WSAEWOULDBLOCK
-#define ENOMEM ERROR_OUTOFMEMORY
-#define ENODEV ERROR_BAD_DEVICE
 #define ACE_LACKS_MALLOC_H      // We do have malloc.h, but don't use it.
-//#endif  // UNDER_CE
 
 //#if (UNDER_CE < 300)  // from prior ACE porting effort; left for future reference
 //#define ACE_LACKS_STRPBRK
@@ -238,10 +209,7 @@ typedef long off_t;
 //#define ACE_LACKS_STRTOUL
 //#endif // UNDER_CE < 300
 
-//#if (UNDER_CE >= 211)  // from prior ACE porting effort; left for future reference
 #define ACE_HAS_WINCE_BROKEN_ERRNO
-#define _MAX_FNAME 255
-//#endif  // UNDER_CE
 
 #define ACE_HAS_STRDUP_EMULATION
 
@@ -256,13 +224,6 @@ typedef long off_t;
 #  undef ACE_DEFAULT_BASE_ADDR
 #endif
 #define ACE_DEFAULT_BASE_ADDR 0
-
-// If you don't use MFC, this doesn't get defined
-#if !defined (ACE_HAS_MFC)
- inline void *operator new (unsigned int, void *p) { return p; }
-#endif  // ACE_HAS_MFC
-
-#define ACE_ENDTHREADEX(STATUS) ExitThread ((DWORD) STATUS)
 
 #define ACE_HAS_TSS_EMULATION
 

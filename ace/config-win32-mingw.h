@@ -32,7 +32,6 @@
 #include /**/ <_mingw.h>
 #include /**/ <w32api.h>
 
-#define ACE_LACKS_MODE_MASKS
 #define ACE_HAS_USER_MODE_MASKS
 
 #if (__MINGW32_MAJOR_VERSION < 2)

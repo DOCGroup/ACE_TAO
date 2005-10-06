@@ -18,7 +18,7 @@ ACE_RCSID(ace, OS_NS_time, "$Id$")
 
 #if defined (ACE_HAS_WINCE)
 #  include "ace/OS_NS_stdio.h"     /* Need ACE_OS::sprintf() */
-const wchar_t *ACE_OS::day_of_week_name[7] =
+const ACE_TCHAR *ACE_OS::day_of_week_name[7] =
                                      {ACE_LIB_TEXT ("Sun"),
                                       ACE_LIB_TEXT ("Mon"),
                                       ACE_LIB_TEXT ("Tue"),
@@ -27,7 +27,7 @@ const wchar_t *ACE_OS::day_of_week_name[7] =
                                       ACE_LIB_TEXT ("Fri"),
                                       ACE_LIB_TEXT ("Sat")};
 
-const wchar_t *ACE_OS::month_name[12] =
+const ACE_TCHAR *ACE_OS::month_name[12] =
                                 {ACE_LIB_TEXT ("Jan"), ACE_LIB_TEXT ("Feb"),
                                  ACE_LIB_TEXT ("Mar"), ACE_LIB_TEXT ("Apr"),
                                  ACE_LIB_TEXT ("May"), ACE_LIB_TEXT ("Jun"),
