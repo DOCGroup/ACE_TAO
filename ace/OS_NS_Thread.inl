@@ -2638,9 +2638,9 @@ ACE_OS::thr_getconcurrency (void)
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_STHREADS)
   return ::thr_getconcurrency ();
-# elif defined (ACE_HAS_PTHREADS) || defined (VXWORKS) || defined (ACE_PSOS)
-  ACE_NOTSUP_RETURN (-1);
-# elif defined (ACE_HAS_WTHREADS)
+# elif defined (ACE_HAS_PTHREADS) && defined (ACE_HAS_PTHREAD_GETCONCURRENCY)
+  return ::pthread_getconcurrency ();
+# else
   ACE_NOTSUP_RETURN (-1);
 # endif /* ACE_HAS_STHREADS */
 #else
@@ -3154,11 +3154,21 @@ ACE_INLINE int
 ACE_OS::thr_setconcurrency (int hint)
 {
   ACE_OS_TRACE ("ACE_OS::thr_setconcurrency");
-#if defined (ACE_HAS_THREADS) && defined (ACE_HAS_STHREADS)
+#if defined (ACE_HAS_THREADS)
+# if defined (ACE_HAS_STHREADS)
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setconcurrency (hint),
                                        result),
                      int, -1);
+# elif defined (ACE_HAS_PTHREADS) && defined (ACE_HAS_PTHREAD_SETCONCURRENCY)
+  int result;
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setconcurrency (hint),
+				       result),
+		     int, -1);
+# else
+  ACE_UNUSED_ARG (hint);
+  ACE_NOTSUP_RETURN (-1);
+# endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (hint);
   ACE_NOTSUP_RETURN (-1);
