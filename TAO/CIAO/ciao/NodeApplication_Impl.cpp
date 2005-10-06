@@ -67,25 +67,58 @@ CIAO::NodeApplication_Impl::finishLaunch (
 
           if (this->component_map_.find (name, comp) != 0)
             {
+              ACE_ERROR ((LM_ERROR,
+                          "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
+                          "CIAO::NodeApplication_Impl::finishLaunch, "
+                          "invalid port name [%s] in instance [%s] \n",
+                          providedReference[i].portName.in (),
+                          name.c_str ()));
               ACE_TRY_THROW (Deployment::InvalidConnection ());
             }
 
           Components::EventConsumerBase_var consumer;
-          //Since we know CCMObject inherits from navigation/event/receptacle, no need
-          //to narrow here.
+
+          // Since we know CCMObject inherits from 
+          // navigation/event/receptacle, no need
+          // to narrow here.
+
           switch (providedReference[i].kind)
             {
             case Deployment::SimplexReceptacle:
             case Deployment::MultiplexReceptacle:
+
+              if (CIAO::debug_level () > 10)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
+                              "CIAO::NodeApplication_Impl::finishLaunch, "
+                              "connecting port name [%s] in instance [%s] \n",
+                              providedReference[i].portName.in (),
+                              name.c_str ()));
+                }
+
               comp->connect (providedReference[i].portName.in (),
                              providedReference[i].endpoint.in ()
                              ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
+
+              if (CIAO::debug_level () > 10)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
+                              "CIAO::NodeApplication_Impl::finishLaunch, "
+                              "success connecting port name [%s] in "
+                              "instance [%s] \n",
+                              providedReference[i].portName.in (),
+                              name.c_str ()));
+                }
               break;
 
 	        // @@ (GD) A place holder where the Event Channel connections
 	        //         should be set up.
+
             case Deployment::EventEmitter:
+
               consumer = Components::EventConsumerBase::
                 _narrow (providedReference[i].endpoint.in ()
                          ACE_ENV_ARG_PARAMETER);
@@ -93,27 +126,87 @@ CIAO::NodeApplication_Impl::finishLaunch (
 
               if (CORBA::is_nil (consumer.in ()))
                 {
+                  ACE_ERROR ((LM_ERROR,
+                              "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
+                              "CIAO::NodeApplication_Impl::finishLaunch, "
+                              "for port name [%s] in instance [%s] ,"
+                              "there is an invalid endPoint. \n",
+                              providedReference[i].portName.in (),
+                              name.c_str ()));
                   ACE_TRY_THROW (Deployment::InvalidConnection ());
+                }
+
+              if (CIAO::debug_level () > 10)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
+                              "CIAO::NodeApplication_Impl::finishLaunch, "
+                              "connecting port name [%s] in instance [%s] \n",
+                              providedReference[i].portName.in (),
+                              name.c_str ()));
                 }
 
               comp->connect_consumer (providedReference[i].portName.in (),
                                       consumer.in ()
                                       ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
+
+              if (CIAO::debug_level () > 10)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
+                              "CIAO::NodeApplication_Impl::finishLaunch, "
+                              "success connecting port name [%s] in "
+                              "instance [%s] \n",
+                              providedReference[i].portName.in (),
+                              name.c_str ()));
+                }
               break;
 
             case Deployment::EventPublisher:
+
               consumer = Components::EventConsumerBase::
                 _narrow (providedReference[i].endpoint.in ()
                          ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
+
               if (CORBA::is_nil (consumer.in ()))
-                ACE_TRY_THROW (Deployment::InvalidConnection ());
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
+                              "CIAO::NodeApplication_Impl::finishLaunch, "
+                              "for port name [%s] in instance [%s] ,"
+                              "there is an invalid endPoint. \n",
+                              providedReference[i].portName.in (),
+                              name.c_str ()));
+                  ACE_TRY_THROW (Deployment::InvalidConnection ());
+                }
+
+              if (CIAO::debug_level () > 10)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
+                              "CIAO::NodeApplication_Impl::finishLaunch, "
+                              "connecting port name [%s] in instance [%s] \n",
+                              providedReference[i].portName.in (),
+                              name.c_str ()));
+                }
 
               comp->subscribe (providedReference[i].portName.in (),
                                consumer.in ()
                                ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
+
+              if (CIAO::debug_level () > 10)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
+                              "CIAO::NodeApplication_Impl::finishLaunch, "
+                              "success connecting port name [%s] in "
+                              "instance [%s] \n",
+                              providedReference[i].portName.in (),
+                              name.c_str ()));
+                }
               break;
 
             default:
@@ -121,13 +214,6 @@ CIAO::NodeApplication_Impl::finishLaunch (
             }
         }
     }
-  /*
-  ACE_CATCH (Components::InvalidName, ex)
-    {
-      // @@TODO: translate this into an exception that can be thrown from here.
-      ACE_RE_THROW;
-    }
-  */
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
@@ -222,7 +308,21 @@ CIAO::NodeApplication_Impl::install (
       retv->length (0UL);
 
       // Call create_all_containers to create all the necessary containers..
+      if (CIAO::debug_level () > 10)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "CIAO (%P|%t) NodeApplication_Impl.cpp -"
+                      "CIAO::NodeApplication_Impl::install -"
+                      "creating all the containers. \n"));
+        }
       (void) this->create_all_containers (container_infos);
+      if (CIAO::debug_level () > 10)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "CIAO (%P|%t) NodeApplication_Impl.cpp -"
+                      "CIAO::NodeApplication_Impl::install -"
+                      "created all the containers. \n"));
+        }
 
       // For each container, invoke <install> operation, this will return
       // the ComponentInfo for components installed in each container.
@@ -247,7 +347,8 @@ CIAO::NodeApplication_Impl::install (
       // @@ Maybe we can optimize this. We can come up with a decision later.
       // Cache a copy of the component object references for all the components
       // installed on this NodeApplication. I know we can delegates these to the
-      // undelying containers, but in that case, we should loop all the containers
+      // undelying containers, but in that case, we should loop 
+      // all the containers
       // to find the component object reference. - Gan
       const CORBA::ULong comp_len = retv->length ();
       for (CORBA::ULong len = 0;
@@ -255,11 +356,20 @@ CIAO::NodeApplication_Impl::install (
           ++len)
       {
         //Since we know the type ahead of time...narrow is omitted here.
-        if (this->component_map_.
-            bind (retv[len].component_instance_name.in(),
-                  Components::CCMObject::_duplicate (retv[len].component_ref.in())))
-          ACE_TRY_THROW (Deployment::InstallationFailure ("NodeApplication_Imp::install",
-                                                          "Duplicate component instance name"));
+        if (this->component_map_.bind (retv[len].component_instance_name.in(),
+              Components::CCMObject::_duplicate (retv[len].
+                component_ref.in ())))
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "CIAO (%P|%t) NodeApplication_Impl.cpp -"
+                        "CIAO::NodeApplication_Impl::install -"
+                        "error binding component instance [%s] "
+                        "into the map. \n",
+                        retv[len].component_instance_name.in ()));
+            ACE_TRY_THROW (
+               Deployment::InstallationFailure ("NodeApplication_Imp::install",
+                                       "Duplicate component instance name"));
+          }
       }
     }
   ACE_CATCHANY
