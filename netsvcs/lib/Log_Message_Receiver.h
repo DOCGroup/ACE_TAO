@@ -32,7 +32,7 @@
 //------------- General Requirements on a Log Message Receiver --------------//
 // ==========================================================================//
 //
-//  The requiremnts on a log manager receiver, T, are quite simple.
+//  The requirements on a log manager receiver, T, are quite simple.
 //  1: There must exist one "log_record" member function with the following
 //     prototype:
 //        void log_record(const ACE_TCHAR *hostname,
