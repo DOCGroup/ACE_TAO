@@ -1,3 +1,23 @@
+Wed Oct  5 22:07:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+
+	  Add check for ACE_HAS_PTHREAD_GETCONCURRENCY and
+	  ACE_HAS_PTHREAD_SETCONCURRENCY.
+
+	* ace/OS_NS_Thread.inl:
+
+	  Changed ACE_OS::getconcurrency () to use ::pthread_getconcurrency()
+	  if ACE_HAS_PTHREAD_GETCONCURRENCY is set.
+
+	  Changed ACE_OS::setconcurrency () to use ::pthread_setconcurrency()
+	  if ACE_HAS_PTHREAD_SETCONCURRENCY is set.
+
+        * ace/README:
+
+          Define ACE_HAS_PTHREAD_GETCONCURRENCY and
+	  ACE_HAS_PTHREAD_SETCONCURRENCY feature test macros.
+
 Wed Oct  5 13:18:26 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/Shared_Malloc/Malloc.cpp:
