@@ -4311,6 +4311,7 @@ dnl Check for Unix98 pthreads extensions
     ],,)
 
   ACE_CHECK_HAS_FUNCS(pthread_continue pthread_continue_np pthread_resume_np pthread_suspend pthread_suspend_np)
+  ACE_CHECK_HAS_FUNCS(pthread_getconcurrency pthread_setconcurrency)
 
   AC_CHECK_FUNC([pthread_rwlock_init],,)
   AC_CHECK_FUNC([pthread_rwlock_destroy],,)
