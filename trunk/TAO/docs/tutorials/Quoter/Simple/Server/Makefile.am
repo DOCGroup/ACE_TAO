@@ -25,7 +25,8 @@ server_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(srcdir)/../../idl
+  -I$(srcdir)/../../idl \
+  -I../../idl
 
 server_SOURCES = \
   Stock_Factory_i.cpp \
