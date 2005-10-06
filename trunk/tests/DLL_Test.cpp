@@ -42,7 +42,6 @@ ACE_RCSID(tests, DLL_Test, "$Id$")
 // Declare the type of the symbol:
 typedef Hello *(*Hello_Factory)(void);
 
-// for dynamic_cast_test
 typedef int ( *PFN )( Parent* );
 
 int handle_test (ACE_DLL &dll)
@@ -133,9 +132,7 @@ int dynamic_cast_test (ACE_DLL &dll)
 
   Parent *parent = &child;
 
-  void *foo;
-
-  foo = dll.symbol (ACE_TEXT ("dynamic_cast_test"));
+  void * foo = dll.symbol (ACE_TEXT ("dynamic_cast_test"));
 
   // Cast the void* to long first.
   ptrdiff_t tmp = reinterpret_cast<ptrdiff_t> (foo);

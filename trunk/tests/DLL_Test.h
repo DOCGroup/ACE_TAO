@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // ================================================================
 /**
  * @file DLL_Test.h
@@ -8,15 +10,19 @@
  */
 // ================================================================
 
+
 #ifndef ACE_TESTS_DLL_TEST_H
 #define ACE_TESTS_DLL_TEST_H
 
-#include "ace/Log_Msg.h"
-#include "ace/Trace.h"
+#include "DLL_Test_Parent.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Log_Msg.h"
+#include "ace/Trace.h"
+#include "ace/svc_export.h"
 
 /**
  * @class Hello
@@ -53,29 +59,16 @@ public:
   //@}
 };
 
-// These classes are used to test dynamic_cast in shared libraries.
-class Parent
+
+// Used to test dynamic_cast<> in shared libraries.
+class ACE_Svc_Export Child : public Parent
 {
 public:
-   Parent() {};
-   virtual ~Parent() {};
 
-   virtual void test()
-   {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("parent called\n")));
-   }
-};
+  virtual ~Child (void);
 
-class Child : public Parent
-{
- public:
-   Child() {};
-   virtual~ Child() {};
+  virtual void test (void);
 
-   virtual void test()
-   {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("child called\n")));
-   }
 };
 
 #endif /* ACE_TESTS_DLL_TEST_H */

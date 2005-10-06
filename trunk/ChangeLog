@@ -1,3 +1,33 @@
+Thu Oct  6 15:42:29 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/DLL_Test.cpp:
+	* tests/DLL_Test.h:
+	* tests/DLL_Test_Impl.cpp:
+	* tests/DLL_Test_Parent.cpp:
+	* tests/DLL_Test_Parent.h:
+	* tests/DLL_Test_Parent_Export.h:
+	* tests/dll_test_parent_lib.mpb:
+
+	  Moved "Parent" base class to a separate DSO/DLL to break a
+	  cyclic dependency, in turn allowing its virtual methods to be
+	  moved out of line.  Addresses dynamic_cast<> failures in g++ 4.0
+	  builds.
+
+	  Moved "Child" subclass virtual methods out of line to address
+	  RTTI related problems when using g++ 4.0's
+	  -fvisibility-inlines-hidden command line option.
+
+	* tests/tests.mpc:
+
+	  Added new DLL_Test_Parent_Lib project.
+
+	  Updated DLL_Test project dependencies to reflect new DLL test
+	  library layout.
+
+	  Corrected MPC "dynamicflags" variable for "Based Pointer Test
+	  Lib" and "DLL Test Lib" projects. "ACE_SVC_BUILD_DLL" not
+	  "ACE_BUILD_SVC_DLL".
+
 Thu Oct  6 17:56:19 2005  Steve Huston  <shuston@riverace.com>
 
 	Added support for Windows Mobile 5 and Pocket PC 2003 using
