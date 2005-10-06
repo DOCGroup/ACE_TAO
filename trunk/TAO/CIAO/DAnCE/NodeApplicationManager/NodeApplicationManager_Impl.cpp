@@ -29,18 +29,27 @@ CIAO::NodeApplicationManager_Impl::init (
   ACE_TRY
     {
       if (nodeapp_location == 0)
-        ACE_TRY_THROW (CORBA::BAD_PARAM ());
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "DAnCE (%P|%t) NodeApplicationManager_Impl.cpp -"
+                      "CIAO::NodeApplicationManager_Impl::init -"
+                      "NULL NodeApplication location. \n"));
+          ACE_TRY_THROW (CORBA::BAD_PARAM ());
+        }
       
       
       if (delay == 0)
         {
-          ACE_DEBUG ((LM_DEBUG, "NodeManager must be started with a -d of greter than zero."));
+          ACE_ERROR ((LM_ERROR, 
+                      "DAnCE (%P|%t) NodeApplicationManager_Impl.cpp -"
+                      "CIAO::NodeApplicationManager_Impl::init -"
+                      "NodeManager must be started with a -d "
+                      "of greter than zero.\n"));
           ACE_TRY_THROW (CORBA::BAD_PARAM ());
         }
       
       this->nodeapp_path_.set (nodeapp_location);
       this->spawn_delay_ = delay;
-
       this->nodeapp_command_op_ = CORBA::string_dup (nodeapp_op);
 
       // Make a copy of the plan for later usage.
@@ -157,12 +166,18 @@ create_node_application (const ACE_CString & options
       if (node_application.spawn (p_options) == -1)
         {
           if (CIAO::debug_level () > 1)
-            ACE_DEBUG ((LM_ERROR, "Fail to spawn a NodeApplication process\n"));
-          ACE_TRY_THROW (Deployment::ResourceNotAvailable ("Failed to spawn process",
-                                                           "NodeApplication",
-                                                           "",
-                                                           "",
-                                                           ""));
+            {
+              ACE_DEBUG ((LM_ERROR, 
+                          "Fail to spawn a NodeApplication process\n"));
+            }
+
+          ACE_TRY_THROW 
+            (Deployment::ResourceNotAvailable 
+               ("Failed to spawn process",
+                "NodeApplication",
+                "",
+                "",
+                ""));
         }
 
       // wait for nodeApp to pass back its object reference. with a
@@ -187,14 +202,18 @@ create_node_application (const ACE_CString & options
       if (CORBA::is_nil (retval.in ()))
         {
           if (CIAO::debug_level () > 1)
-            ACE_DEBUG ((LM_ERROR, "Fail to acquire the NodeApplication object\n"));
+            {
+              ACE_ERROR ((LM_ERROR, 
+                          "Fail to acquire the NodeApplication object\n"));
+            }
 
           ACE_TRY_THROW (Deployment::ResourceNotAvailable ());
         }
 
       {
         //ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
-        this->nodeapp_ = Deployment::NodeApplication::_duplicate (retval.in ());
+        this->nodeapp_ = 
+            Deployment::NodeApplication::_duplicate (retval.in ());
       }
     }
   ACE_CATCHANY
@@ -211,7 +230,10 @@ create_node_application (const ACE_CString & options
   ACE_CHECK_RETURN (Deployment::NodeApplication::_nil ());
 
   if (CIAO::debug_level () > 1)
-    ACE_DEBUG ((LM_DEBUG, "CIAO::NodeApplicationManager_Impl::NodeApplication spawned!\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG, 
+            "CIAO::NodeApplicationManager_Impl::NodeApplication spawned!\n"));
+    }
 
   return retval._retn ();
 }
@@ -240,14 +262,54 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL)
        ++iter)
   {
     // Get all the facets first
+    if (CIAO::debug_level () > 9)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                  "DAnCE (%P|%t) NodeApplicationManager_Impl.cpp -"
+                  "CIAO::NodeApplicationManager_Impl::create_connections -"
+                  "getting facets for the component "
+                  "instance [%s] \n",
+                  (*iter).ext_id_.c_str ()));
+      }
+
     Components::FacetDescriptions_var facets =
       ((*iter).int_id_)->get_all_facets (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
 
+    if (CIAO::debug_level () > 9)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                  "DAnCE (%P|%t) NodeApplicationManager_Impl.cpp -"
+                  "CIAO::NodeApplicationManager_Impl::create_connections -"
+                  "success getting facets for the component "
+                  "instance [%s] \n",
+                  (*iter).ext_id_.c_str ()));
+      }
+
     // Get all the event consumers
+    if (CIAO::debug_level () > 9)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                  "DAnCE (%P|%t) NodeApplicationManager_Impl.cpp -"
+                  "CIAO::NodeApplicationManager_Impl::create_connections -"
+                  "getting consumers for the component "
+                  "instance [%s] \n",
+                  (*iter).ext_id_.c_str ()));
+      }
+
     Components::ConsumerDescriptions_var consumers =
       ((*iter).int_id_)->get_all_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
+
+    if (CIAO::debug_level () > 9)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                  "DAnCE (%P|%t) NodeApplicationManager_Impl.cpp -"
+                  "CIAO::NodeApplicationManager_Impl::create_connections -"
+                  "success getting consumers for the component "
+                  "instance [%s] \n",
+                  (*iter).ext_id_.c_str ()));
+      }
 
     const CORBA::ULong facet_len = facets->length ();
     const CORBA::ULong consumer_len = consumers->length ();
@@ -261,6 +323,14 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL)
       Deployment::Connection & conn = retv[len];
       conn.instanceName = (*iter).ext_id_.c_str ();
       conn.portName = facets[i]->name ();
+      if (CIAO::debug_level () > 9)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                    "DAnCE (%P|%t) NodeApplicationManager_Impl.cpp -"
+                    "CIAO::NodeApplicationManager_Impl::create_connections -"
+                    "adding connection for facet [%s] in instance [%s] \n",
+                    conn.portName.in (), conn.instanceName.in ()));
+        }
       conn.kind = Deployment::Facet;
       conn.endpoint = CORBA::Object::_duplicate (facets[i]->facet_ref ());
       ++len;
@@ -271,6 +341,14 @@ create_connections (ACE_ENV_SINGLE_ARG_DECL)
       Deployment::Connection & conn = retv[len];
       conn.instanceName = (*iter).ext_id_.c_str ();
       conn.portName = consumers[i]->name ();
+      if (CIAO::debug_level () > 9)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                    "DAnCE (%P|%t) NodeApplicationManager_Impl.cpp -"
+                    "CIAO::NodeApplicationManager_Impl::create_connections -"
+                    "adding connection for consumer [%s] in instance [%s] \n",
+                    conn.portName.in (), conn.instanceName.in ()));
+        }
       conn.kind = Deployment::EventConsumer;
       conn.endpoint = CORBA::Object::_duplicate (consumers[i]->consumer ());
       ++len;
@@ -309,18 +387,17 @@ startLaunch (const Deployment::Properties & configProperty,
       Deployment::NodeImplementationInfo * node_info =
         handler.node_impl_info ();
 
-      ACE_DEBUG ((LM_DEBUG, "********** NodeApplicationManager ***** step 1\n"));
-
       if (!node_info)
-      {
-        if (CIAO::debug_level () > 1)
-          ACE_DEBUG ((LM_DEBUG, "Failed to create Node Implementation Infos!\n"));
+        {
+          ACE_ERROR ((LM_ERROR, 
+                      "DAnCE (%P|%t) NodeApplicationManager.cpp -"
+                      "CIAO::NodeApplicationManager_Impl::startLaunch -"
+                      "Failed to create Node Implementation Infos!\n"));
 
-        ACE_TRY_THROW (Deployment::StartError ("NodeApplicationManager_Imp::startLaunch",
-                                              "Unable to populate node level plan"));
-      }
-
-      ACE_DEBUG ((LM_DEBUG, "********** NodeApplicationManager ***** step 2\n"));
+          ACE_TRY_THROW 
+            (Deployment::StartError ("NodeApplicationManager_Imp::startLaunch",
+                                     "Unable to get node level infos"));
+        }
 
       // Now spawn the NodeApplication process.
       // @@TODO: we need to pass arguments to the nodeapplication, ie naming service endpoints, if necessary
@@ -330,8 +407,7 @@ startLaunch (const Deployment::Properties & configProperty,
         create_node_application (cmd_option.c_str () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // For debugging.
-      if (true) //(CIAO::debug_level () > 1)
+      if (CIAO::debug_level () > 9)
         {
           CORBA::ULong curr_len = node_info->impl_infos.length ();
           ACE_UNUSED_ARG (curr_len);
@@ -342,7 +418,11 @@ startLaunch (const Deployment::Properties & configProperty,
           const CORBA::ULong info_len = infos.length ();
           for (CORBA::ULong i = 0; i < info_len; ++i)
             {
-              ACE_DEBUG ((LM_DEBUG, "The info for installation: \n\t%s\n\t%s\n\t%s\n\t%s\n\t%s\n",
+              ACE_DEBUG ((LM_DEBUG, 
+                          "DAnCE (%P|%t) NodeApplicationManager.cpp -"
+                          "CIAO::NodeApplicationManager_Impl::startLaunch -"
+                          "The info for installation: "
+                          "\n\t%s\n\t%s\n\t%s\n\t%s\n\t%s\n",
                           infos[i].component_instance_name.in (),
                           infos[i].executor_dll.in (),
                           infos[i].executor_entrypt.in (),
@@ -367,22 +447,30 @@ startLaunch (const Deployment::Properties & configProperty,
           //Since we know the type ahead of time...narrow is omitted here.
           if (this->component_map_.
               bind (comp_info[len].component_instance_name.in(),
-                    Components::CCMObject::_duplicate (comp_info[len].component_ref.in())))
+                    Components::CCMObject::_duplicate 
+                       (comp_info[len].component_ref.in())))
             {
               ACE_CString error ("Duplicate component instance name ");
               error += comp_info[len].component_instance_name.in();
 
-              ACE_TRY_THROW (Deployment::StartError ("NodeApplicationManager_Impl::startLaunch",
-                                                     error.c_str ()));
+              ACE_TRY_THROW 
+                (Deployment::StartError 
+                   ("NodeApplicationManager_Impl::startLaunch",
+                     error.c_str ()));
             }
         }
 
-      providedReference = this->create_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
+      providedReference = 
+        this->create_connections (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (providedReference == 0)
-        ACE_TRY_THROW (Deployment::StartError ("NodeApplicationManager_Impl::startLaunch",
-                                               "Error creating connections during startLaunch."));
+        {
+          ACE_TRY_THROW 
+            (Deployment::StartError 
+               ("NodeApplicationManager_Impl::startLaunch",
+                "Error creating connections during startLaunch."));
+        }
     }
   ACE_CATCH (Deployment::UnknownImplId, e)
     {
