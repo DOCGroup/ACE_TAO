@@ -1,8 +1,14 @@
+Thu Oct  6 08:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp:
+        * DAnCE/DomainApplicationManager/Deployment_Configuration.cpp:
+          Fixed compile problems
+
 Wed Oct  5 17:42:24 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* tools/Config_Handlers/Any_Handler.cpp
 
-	Part of previous commit. 
+	Part of previous commit.
 
 Wed Oct  5 17:07:07 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
@@ -11,13 +17,13 @@ Wed Oct  5 17:07:07 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	Moved recursive Domain data into cdd.xsd.  This will hopefully
 	lessen the time required to compile.
-	
+
 	* tools/Config_Handlers/CPD_Handler.cpp
 	* tools/Config_Handlers/DataType_Handler.cpp
 
 	Fixed some potential run-time bugs in Borland.  Style
-	corrections. 
-	
+	corrections.
+
 	* tools/Config_Handlers/Basic_Deployment_Data.cpp
 	* tools/Config_Handlers/Basic_Deployment_Data.hpp
 	* tools/Config_Handlers/Deployment.cpp
@@ -40,8 +46,8 @@ Wed Oct  5 17:07:07 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	Regerated with new version of XSC.  Major changes:
 	  * Now only one accessor and one mutator per document element
-	  * Changes in schema above. 
-	
+	  * Changes in schema above.
+
 Wed Oct  5 14:44:31 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/Deployment_Configuration.cpp:
@@ -59,11 +65,11 @@ Tue Oct  4 14:08:24 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* tools/Config_Handlers/Basic_Deployment_Data.hpp
 
 	Updated to include domain information (ie, bridge, interconnect).
-	
+
 	* tools/Config_Handlers/RT-CCM/SRD_Handler.h
 
-	Cosmetic changes. 
-	
+	Cosmetic changes.
+
 Mon Oct  3 14:27:39 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* CIAO-INSTALL.html
@@ -75,12 +81,12 @@ Mon Oct  3 12:48:26 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* DAnCE/DomainApplicationManager/DomainApplicationManager.mpc
 	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
 
-	Commented out some debugging information. 
-	
+	Commented out some debugging information.
+
 Mon Oct  3 15:44:15 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * docs/Purify.html:
-        
+
           Updated doc file with installation info and more info about
           Purifying a spawned child process.
 
@@ -88,53 +94,53 @@ Mon Oct  3 10:14:19 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
 
-	Corrected a bug in parameter checking. 
-	
+	Corrected a bug in parameter checking.
+
 	* DAnCE/NodeManager/Node_Manager.cpp
 
-	Added documentation for the -d command line options. 
-	
+	Added documentation for the -d command line options.
+
 	* tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp
 	* tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
 	* tools/Config_Handlers/RT-CCM/SRD_Handler.cpp
 	* tools/Config_Handlers/RT-CCM/SRD_Handler.h
 
-	New functionality in the Config_Handlers. 
-	
+	New functionality in the Config_Handlers.
+
 Mon Oct  3 10:00:08 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* bin/valgrind_nodedaemon.py
 
-	Script to help launch nodemanager/nodeapplication under Valgrind. 
-	
+	Script to help launch nodemanager/nodeapplication under Valgrind.
+
 Mon Oct  3 000:31:09 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * docs/Purify.html:
-        
+
           New file, documenting the use of Purify with CIAO and DAnCE.
 
 Sun Oct  2 22:24:15 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/Config_Handlers/Basic_Deployment_Data.hpp:
-        
+
           Added include of RT-CCM/CIAOServerResources.hpp.
-          
+
         * tools/Config_Handlers/DP_Handler.cpp:
-        
+
           Added export macros to friend function declarations.
 
 Sat Oct 1 15:38:23  2005  William Otte <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/Config_Handlers.mpc
         * tools/Config_Handlers/test.cpp
-        
-        Corrected the config handler test to properly test the handlers. 
-        
+
+        Corrected the config handler test to properly test the handlers.
+
         * tools/Config_Handlers/PSPE_Handler.cpp
-        
+
         Fixed a run-time bug that was causing corrupted plans in Borland
-        builds. 
-        
+        builds.
+
 Friday Sep 30 15:12:43 2005  William Otte <wotte@dre.vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc
@@ -145,7 +151,7 @@ Friday Sep 30 15:12:43 2005  William Otte <wotte@dre.vanderbilt.edu>
         * tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
 
         Fixes for compile problems in Borland6
-        
+
 Fri Sep 30 15:11:47 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* NEWS
@@ -156,7 +162,7 @@ Fri Sep 30 07:53:47 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* tools/Config_Handlers/RT-CCM/SRD_Handler.cpp
 
-	Should have been part of the previous commit. 
+	Should have been part of the previous commit.
 
 Thu Sep 29 18:11:25 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
@@ -166,21 +172,21 @@ Thu Sep 29 18:11:25 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* ciao/NodeApplication_Impl.cpp
 	* ciao/Upgradeable_Context_Impl_T.cpp
 
-	Fuzz errors. 
-	
+	Fuzz errors.
+
 	* DAnCE/DomainApplicationManager/DomainApplicationManager.mpc
 	* tools/Config_Handlers/RT-CCM/Config_Handlers_Export.h
 	* tools/Config_Handlers/RT-CCM/SRD_Handler.h
 	* tools/Config_Handlers/Utils/Config_Handlers_Export.h
 
-	Correction for a emulated exception error. 
-	
+	Correction for a emulated exception error.
+
 Thu Sep 29 13:01:23 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* ciao/Version.h
 
-	Corrected the version number. 
-	
+	Corrected the version number.
+
 Thu Sep 29 11:34:55 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* ciao/Swapping_Servant_Home_Impl_T.cpp
