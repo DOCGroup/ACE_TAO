@@ -68,7 +68,7 @@ namespace CIAO
   Session_Container::Session_Container (CORBA::ORB_ptr o,
                                         Container_Impl *container_impl,
                                         bool static_config_flag,
-                                        const Static_Config_EntryPoints_Maps* maps)
+                                    const Static_Config_EntryPoints_Maps* maps)
   : Container (o, container_impl),
     number_ (0),
     static_config_flag_ (static_config_flag),
@@ -188,8 +188,9 @@ namespace CIAO
     ACE_CHECK;
 
     policies[1] =
-      root->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER
-                                              ACE_ENV_ARG_PARAMETER);
+      root->create_request_processing_policy 
+          (PortableServer::USE_SERVANT_MANAGER
+           ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
     // Servant Retention Policy
@@ -294,7 +295,7 @@ namespace CIAO
 
         if (exe_dll_name == 0 || sv_dll_name == 0)
           {
-	          ACE_CString exception;
+	    ACE_CString exception;
             
             if (exe_dll_name == 0)
               {
@@ -306,14 +307,17 @@ namespace CIAO
                 exception = "Null component servant DLL name";
               }
             
-            if (CIAO::debug_level () > 10)
-              ACE_DEBUG ((LM_ERROR,
-                          "ERROR: %s\n",
-			                    exception.c_str ()));
+            ACE_ERROR ((LM_ERROR,
+                        "CIAO (%P|%t) Container_Base.cpp -"
+                        "Session_Container::ciao_install_home -"
+                        "ERROR: %s\n",
+                        exception.c_str ()));
 
-            ACE_THROW_RETURN (Deployment::UnknownImplId ("Session_Container::ciao_install_home",
-							                exception.c_str ()),
-                              Components::CCMHome::_nil ());
+            ACE_THROW_RETURN 
+              (Deployment::UnknownImplId (
+                 "Session_Container::ciao_install_home",
+	          exception.c_str ()),
+                  Components::CCMHome::_nil ());
           }
 
         if (executor_dll.open (exe_dll_name,
@@ -323,16 +327,16 @@ namespace CIAO
             ACE_CString error ("Failed to open executor DLL: ");
             error += exe_dll_name;
             
-            if (CIAO::debug_level () > 10)
-              {
-                ACE_DEBUG ((LM_ERROR,
-                            "ERROR (install_home): &s",
-                            error.c_str ()));
-              }
+            ACE_ERROR ((LM_ERROR,
+                        "CIAO (%P|%t) Container_Base.cpp -"
+                        "Session_Container::ciao_install_home -"
+                        "ERROR in opening the executor DLL [%s] \n",
+                        exe_dll_name));
               
-            ACE_THROW_RETURN (Deployment::UnknownImplId ("Session_Container::ciao_install_home",
-                                                         error.c_str ()),
-                              Components::CCMHome::_nil ());
+            ACE_THROW_RETURN 
+              (Deployment::UnknownImplId 
+                 ("Session_Container::ciao_install_home",
+                  error.c_str ()), Components::CCMHome::_nil ());
           }
 
         if (servant_dll.open (sv_dll_name,
@@ -342,16 +346,16 @@ namespace CIAO
             ACE_CString error ("Failed to open executor DLL: ");
             error += sv_dll_name;
 
-            if (CIAO::debug_level () > 10)
-              {
-                ACE_DEBUG ((LM_ERROR,
-                            "ERROR (install_home): %s\n",
-                            error.c_str ()));
-              }
+            ACE_ERROR ((LM_ERROR,
+                        "CIAO (%P|%t) Container_Base.cpp -"
+                        "Session_Container::ciao_install_home -"
+                        "ERROR in opening the servant DLL [%s] \n",
+                        sv_dll_name));
               
-            ACE_THROW_RETURN (Deployment::UnknownImplId ("Session_Container::ciao_install_home",
-                                                         error.c_str ()),
-                              Components::CCMHome::_nil ());
+            ACE_THROW_RETURN 
+               (Deployment::UnknownImplId 
+                 ("Session_Container::ciao_install_home",
+                  error.c_str ()), Components::CCMHome::_nil ());
           }
 
         if (exe_entrypt == 0 || sv_entrypt == 0)
@@ -359,13 +363,30 @@ namespace CIAO
             ACE_CString error ("Entry point is null for ");
             
             if (exe_entrypt == 0)
-              error += exe_dll_name;
+              {
+                ACE_ERROR ((LM_ERROR,
+                            "CIAO (%P|%t) Container_Base.cpp -"
+                            "Session_Container::ciao_install_home -"
+                            "ERROR in opening the executor entry point "
+                            "for executor DLL [%s] \n",
+                            exe_dll_name));
+                error += exe_dll_name;
+              }
             else
-              error += sv_dll_name;  
+              {
+                ACE_ERROR ((LM_ERROR,
+                            "CIAO (%P|%t) Container_Base.cpp -"
+                            "Session_Container::ciao_install_home -"
+                            "ERROR in opening the servant entry point "
+                            "for servant DLL [%s] \n",
+                            sv_dll_name));
+                error += sv_dll_name;  
+              }
               
-            ACE_THROW_RETURN (Deployment::ImplEntryPointNotFound ("Session_Container::ciao_install_home",
-                                                                  error.c_str ()),
-                              Components::CCMHome::_nil ());
+            ACE_THROW_RETURN 
+              (Deployment::ImplEntryPointNotFound 
+                 ("Session_Container::ciao_install_home",
+                  error.c_str ()), Components::CCMHome::_nil ());
           }
 
         // @@ (OO) Please use a static_cast<> here instead of a C-style
@@ -414,18 +435,21 @@ namespace CIAO
             error += sv_dll_name;
           }
         
-        ACE_THROW_RETURN (Deployment::ImplEntryPointNotFound ("SessionContainer::ciao_install_home",
-                                                              error.c_str ()),
-                          Components::CCMHome::_nil ());
+        ACE_THROW_RETURN 
+           (Deployment::ImplEntryPointNotFound 
+              ("SessionContainer::ciao_install_home",
+               error.c_str ()), Components::CCMHome::_nil ());
       }
 
     Components::HomeExecutorBase_var home_executor = hcreator ();
     
     if (CORBA::is_nil (home_executor.in ()))
       {
-        ACE_THROW_RETURN (Deployment::InstallationFailure ("SessionContainer::ciao_install_home",
-                                                           "Executor entrypoint failed to create a home."),
-                          Components::CCMHome::_nil ());
+        ACE_THROW_RETURN 
+          (Deployment::InstallationFailure 
+             ("SessionContainer::ciao_install_home",
+              "Executor entrypoint failed to create a home."),
+              Components::CCMHome::_nil ());
       }
 
     PortableServer::Servant home_servant = screator (home_executor.in (),
@@ -436,9 +460,11 @@ namespace CIAO
 
     if (home_servant == 0)
       {
-        ACE_THROW_RETURN (Deployment::InstallationFailure ("SessionContainer::ciao_install_home",
-                                                           "Servant entrypoing failed to create a home."),
-                          Components::CCMHome::_nil ());
+        ACE_THROW_RETURN 
+          (Deployment::InstallationFailure 
+             ("SessionContainer::ciao_install_home",
+              "Servant entrypoing failed to create a home."),
+              Components::CCMHome::_nil ());
       }
 
     PortableServer::ServantBase_var safe (home_servant);
