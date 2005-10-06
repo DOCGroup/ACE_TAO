@@ -1,3 +1,8 @@
+Thu Oct  6 08:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Param_Test/client.cpp:
+          Fixed might be unitialized warning in MinGW build
+
 Wed Oct  5 13:54:00 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/tests/Miop/McastHello/Makefile.am:
