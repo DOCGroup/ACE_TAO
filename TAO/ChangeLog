@@ -1,3 +1,13 @@
+Thu Oct  6 10:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Big_AMI/*:
+          Added new test to test the behaviour of AMI when sending
+          large request. We shouldn't block in that case. Perl script
+          will follow but put the files now in cvs so that I can build
+          the server remotely and then test AMI between two hosts that
+          are connected using the internet. Testing things locally doesn't
+          show the issues I want to address
+
 Thu Oct  6 09:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMI/ami_test_i.h:
