@@ -1,3 +1,24 @@
+Thu Oct  6 15:32:41 CDT 2005 Stoyan Paunov spaunov@isis.vanderbilt.edu
+
+
+	* DAnCE/spec_RepositoryManager/PC_Updater.cpp
+	* DAnCE/spec_RepositoryManager/PC_Updater.h
+	* DAnCE/spec_RepositoryManager/PC_Updater_T.cpp
+	* DAnCE/spec_RepositoryManager/PC_Updater_T.h
+
+	Added these files which implement a PackageConfiguration visitor. 
+	The visitor helps deal with the internal complexity of the PackageConfiguration
+	and helps preseve my sanity ;)
+
+	* DAnCE/spec_RepositoryManager/RepositoryManager_Impl.cpp
+	* DAnCE/spec_RepositoryManager/RepositoryManager_Impl.h
+	* DAnCE/spec_RepositoryManager/ZIP_Wrapper.cpp
+	* DAnCE/spec_RepositoryManager/ZIP_Wrapper.h
+
+	Some more code. With this the package distribution part of the RM 
+	is ready. I still need to clean up a few details. This is coming soon.
+
+
 Thu Oct  6 15:05:30 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
