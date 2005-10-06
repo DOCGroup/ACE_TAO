@@ -50,7 +50,7 @@ Param_Test_Client<T>::~Param_Test_Client (void)
 template <class T> int
 Param_Test_Client<T>::run_sii_test (void)
 {
-  CORBA::ULong i;  // loop index
+  CORBA::ULong i = 0;  // loop index
   Options *opt = OPTIONS::instance (); // get the options
   const char *opname = this->test_object_->opname (); // operation
 
