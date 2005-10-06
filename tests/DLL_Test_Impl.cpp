@@ -76,7 +76,7 @@ void
 Hello_Impl::operator delete (void *ptr)
 {
   ACE_DEBUG ((LM_INFO, "Hello_Impl::delete\n"));
-  delete [] ((char *) ptr);
+  ::delete [] static_cast<char *> (ptr);
 }
 
 extern "C" ACE_Svc_Export Hello *
@@ -107,6 +107,21 @@ public:
 };
 
 static Static_Constructor_Test the_instance;
+
+// --------------------------------------------------------
+
+Child::~Child (void)
+{
+}
+
+void
+Child::test (void)
+{
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("child called\n")));
+}
+
+// --------------------------------------------------------
+
 
 #if !defined (ACE_LACKS_RTTI)
 // Test dynamic cast

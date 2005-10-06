@@ -1,0 +1,10 @@
+// -*- MPC -*-
+//
+// $Id$
+
+project {
+
+  after += DLL Test Parent Lib
+  libs  += DLL_Test_Parent
+
+}
