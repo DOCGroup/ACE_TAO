@@ -1,19 +1,17 @@
 // -*- C++ -*-
-//
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    ace
-//
-// = FILENAME
-//    Name_Handler.h
-//
-// = AUTHOR
-//    Prashant Jain, Gerhard Lenzer, and Douglas C. Schmidt
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Name_Handler.h
+ *
+ *  $Id$
+ *
+ *  @author Prashant Jain
+ *  @author Gerhard Lenzer
+ *  @author and Douglas C. Schmidt
+ */
+//=============================================================================
+
 
 #ifndef ACE_NAME_HANDLER_H
 #define ACE_NAME_HANDLER_H
@@ -33,13 +31,15 @@
 #include "ace/Singleton.h"
 #include "ace/svc_export.h"
 
+/**
+ * @class Naming_Context
+ *
+ * @brief This helper class adds the correct default constructor to the
+ * <ACE_Naming_Context> class so that we can use it in
+ * <ACE_Singleton>.
+ */
 class Naming_Context : public ACE_Naming_Context
 {
-  // = TITLE
-  //
-  //   This helper class adds the correct default constructor to the
-  //   <ACE_Naming_Context> class so that we can use it in
-  //   <ACE_Singleton>.
 public:
   Naming_Context (void)
     : ACE_Naming_Context (ACE_Naming_Context::NET_LOCAL) {}
@@ -51,80 +51,82 @@ typedef ACE_Singleton<Naming_Context, ACE_SYNCH_NULL_MUTEX> NAMING_CONTEXT;
 template class ACE_Svc_Export ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
+/**
+ * @class ACE_Name_Handler
+ *
+ * @brief Product object created by <ACE_Name_Acceptor>.  An
+ * <ACE_Name_Handler> exchanges messages with a <ACE_Name_Proxy>
+ * object on the client-side.
+ *
+ * This class is the main workhorse of the <ACE_Name_Server>.  It
+ * handles client requests to bind, rebind, resolve, and unbind
+ * names.  It also schedules and handles timeouts that are used to
+ * support "timed waits."  Clients used timed waits to bound the
+ * amount of time they block trying to get a name.
+ */
 class ACE_Svc_Export ACE_Name_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
-  // = TITLE
-  //    Product object created by <ACE_Name_Acceptor>.  An
-  //    <ACE_Name_Handler> exchanges messages with a <ACE_Name_Proxy>
-  //    object on the client-side.
-  //
-  // = DESCRIPTION
-  //   This class is the main workhorse of the <ACE_Name_Server>.  It
-  //   handles client requests to bind, rebind, resolve, and unbind
-  //   names.  It also schedules and handles timeouts that are used to
-  //   support "timed waits."  Clients used timed waits to bound the
-  //   amount of time they block trying to get a name.
 
   friend class ACE_Shutup_GPlusPlus;  // Turn off g++ warning
 public:
+  /// Pointer to a member function of ACE_Name_Handler returning int
   typedef int (ACE_Name_Handler::*OPERATION) (void);
-  // Pointer to a member function of ACE_Name_Handler returning int
 
+  /// Pointer to a member function of ACE_Naming_Context returning int
   typedef int (ACE_Naming_Context::*LIST_OP) (ACE_PWSTRING_SET &, const ACE_NS_WString &);
-  // Pointer to a member function of ACE_Naming_Context returning int
 
+  /// Pointer to a member function of ACE_Name_Handler returning ACE_Name_Request
   typedef ACE_Name_Request (ACE_Name_Handler::*REQUEST) (ACE_NS_WString *);
-  // Pointer to a member function of ACE_Name_Handler returning ACE_Name_Request
 
   // = Initialization and termination.
 
+  /// Default constructor.
   ACE_Name_Handler (ACE_Thread_Manager * = 0);
-  // Default constructor.
 
+  /// Activate this instance of the <ACE_Name_Handler> (called by the
+  /// <ACE_Strategy_Acceptor>).
   virtual int open (void * = 0);
-  // Activate this instance of the <ACE_Name_Handler> (called by the
-  // <ACE_Strategy_Acceptor>).
 
 protected:
   // = Helper routines for the operations exported to clients.
 
+  /// Give up waiting (e.g., when a timeout occurs or a client shuts
+  /// down unexpectedly).
   virtual int abandon (void);
-  // Give up waiting (e.g., when a timeout occurs or a client shuts
-  // down unexpectedly).
 
   // = Low level routines for framing requests, dispatching
   // operations, and returning replies.
 
+  /// Receive, frame, and decode the client's request.
   virtual int recv_request (void);
-  // Receive, frame, and decode the client's request.
 
+  /// Dispatch the appropriate operation to handle the client's
+  /// request.
   virtual int dispatch (void);
-  // Dispatch the appropriate operation to handle the client's
-  // request.
 
+  /// Create and send a reply to the client.
   virtual int send_reply (ACE_INT32 status,
                           ACE_UINT32 errnum = 0);
-  // Create and send a reply to the client.
 
+  /// Special kind of reply
   virtual int send_request (ACE_Name_Request &);
-  // Special kind of reply
 
   // = Demultiplexing hooks.
+  /// Return the underlying <ACE_HANDLE>.
   virtual ACE_HANDLE get_handle (void) const;
-  // Return the underlying <ACE_HANDLE>.
 
+  /// Callback method invoked by the <ACE_Reactor> when client events
+  /// arrive.
   virtual int handle_input (ACE_HANDLE);
-  // Callback method invoked by the <ACE_Reactor> when client events
-  // arrive.
 
   // = Timer hook.
+  /// Enable clients to limit the amount of time they wait for a name.
   virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg);
-  // Enable clients to limit the amount of time they wait for a name.
 
 private:
 
+  /// Table of pointers to member functions
   OPERATION op_table_[ACE_Name_Request::MAX_ENUM];
-  // Table of pointers to member functions
 
   struct LIST_ENTRY
   {
@@ -140,72 +142,75 @@ private:
     // Name of the operation we're dispatching (used for debugging).
   };
 
+  /// This is the table of pointers to functions that we use to
+  /// simplify the handling of list requests.
   LIST_ENTRY list_table_[ACE_Name_Request::MAX_LIST];
-  // This is the table of pointers to functions that we use to
-  // simplify the handling of list requests.
 
+  /// Cache request from the client.
   ACE_Name_Request name_request_;
-  // Cache request from the client.
 
+  /// Special kind of reply for resolve and listnames.
   ACE_Name_Request name_request_back_;
-  // Special kind of reply for resolve and listnames.
 
+  /// Cache reply to the client.
   ACE_Name_Reply name_reply_;
-  // Cache reply to the client.
 
+  /// Address of client we are connected with.
   ACE_INET_Addr addr_;
-  // Address of client we are connected with.
 
+  /// Ensure dynamic allocation...
   ~ACE_Name_Handler (void);
-  // Ensure dynamic allocation...
 
+  /// Handle binds.
   int bind (void);
-  // Handle binds.
 
+  /// Handle rebinds.
   int rebind (void);
-  // Handle rebinds.
 
+  /// Handle binds and rebinds.
   int shared_bind (int rebind);
-  // Handle binds and rebinds.
 
+  /// Handle find requests.
   int resolve (void);
-  // Handle find requests.
 
+  /// Handle unbind requests.
   int unbind (void);
-  // Handle unbind requests.
 
+  /// Handle LIST_NAMES, LIST_VALUES, and LIST_TYPES requests.
   int lists (void);
-  // Handle LIST_NAMES, LIST_VALUES, and LIST_TYPES requests.
 
+  /// Handle LIST_NAME_ENTRIES, LIST_VALUE_ENTRIES, and
+  /// LIST_TYPE_ENTRIES requests.
   int lists_entries (void);
-  // Handle LIST_NAME_ENTRIES, LIST_VALUE_ENTRIES, and
-  // LIST_TYPE_ENTRIES requests.
 
+  /// Create a name request.
   ACE_Name_Request name_request (ACE_NS_WString *one_name);
-  // Create a name request.
 
+  /// Create a value request.
   ACE_Name_Request value_request (ACE_NS_WString *one_name);
-  // Create a value request.
 
+  /// Create a type request.
   ACE_Name_Request type_request (ACE_NS_WString *one_name);
-  // Create a type request.
 };
 
+/**
+ * @class ACE_Name_Acceptor
+ *
+ * @brief This class contains the service-specific methods that can't
+ * easily be factored into the <ACE_Strategy_Acceptor>.
+ */
 class ACE_Name_Acceptor : public ACE_Strategy_Acceptor<ACE_Name_Handler, ACE_SOCK_ACCEPTOR>
 {
-  // = TITLE
-  //     This class contains the service-specific methods that can't
-  //     easily be factored into the <ACE_Strategy_Acceptor>.
 public:
+  /// Dynamic linking hook.
   virtual int init (int argc, ACE_TCHAR *argv[]);
-  // Dynamic linking hook.
 
+  /// Parse svc.conf arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
-  // Parse svc.conf arguments.
 
 private:
+  /// The scheduling strategy is designed for Reactive services.
   ACE_Schedule_All_Reactive_Strategy<ACE_Name_Handler> scheduling_strategy_;
-  // The scheduling strategy is designed for Reactive services.
 };
 
 ACE_SVC_FACTORY_DECLARE (ACE_Name_Acceptor)

@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    netsvcs
-//
-// = FILENAME
-//    Base_Optimizer.h
-//
-// = AUTHOR
-//    Per Andersson.
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    Base_Optimizer.h
+ *
+ *  $Id$
+ *
+ *  @author Per Andersson.
+ */
+//=============================================================================
+
 
 #ifndef BASE_OPTIMIZER_H
 #define BASE_OPTIMIZER_H
@@ -23,14 +20,16 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class Base_Optimizer
+ *
+ *
+ * Thanks to Nathan Myers and Fergus Henderson for this little
+ * beauty.
+ */
 template<class Base, class Member>
 class Base_Optimizer : public Base
 {
-  // = TITLE
-  //
-  // = DESCRIPTION
-  //     Thanks to Nathan Myers and Fergus Henderson for this little
-  //     beauty.
 
 public:
   Base_Optimizer (void);
