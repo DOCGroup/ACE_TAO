@@ -1,3 +1,16 @@
+Thu Oct  6 08:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * netsvcs/lib/Base_Optimizer.h:
+        * netsvcs/lib/Client_Logging_Handler.h:
+        * netsvcs/lib/Log_Message_Receiver.h:
+        * netsvcs/lib/Name_Handler.h:
+        * netsvcs/lib/Server_Logging_Handler.h:
+        * netsvcs/lib/Server_Logging_Handler_T.h:
+        * netsvcs/lib/Token_Handler.h:
+        * netsvcs/lib/TS_Clerk_Handler.h:
+        * netsvcs/lib/TS_Server_Handler.h:
+          Converted documentation to doxygen style
+
 Thu Oct  6 08:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Message_Queue_Test.cpp:
