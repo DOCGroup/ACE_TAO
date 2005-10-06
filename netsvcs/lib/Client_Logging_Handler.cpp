@@ -159,14 +159,14 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
     case -1:
     case 0:
       if (ACE_Reactor::instance ()->remove_handler
-	  (handle,
-	   ACE_Event_Handler::READ_MASK
-	   | ACE_Event_Handler::EXCEPT_MASK
-	   | ACE_Event_Handler::DONT_CALL) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%n: %p\n"),
-			   ACE_TEXT ("remove_handler")),
-                          0);
+            (handle,
+              ACE_Event_Handler::READ_MASK
+              | ACE_Event_Handler::EXCEPT_MASK
+              | ACE_Event_Handler::DONT_CALL) == -1)
+         ACE_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("%n: %p\n"),
+                            ACE_TEXT ("remove_handler")),
+                            0);
       if (handle == this->peer ().get_handle ())
         this->peer ().close ();
       else
