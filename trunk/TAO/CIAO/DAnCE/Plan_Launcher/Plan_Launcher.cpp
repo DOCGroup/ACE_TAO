@@ -186,7 +186,7 @@ namespace CIAO
               return -1;
             }
           
-          if (CIAO::debug_level () > 10)
+          if (CIAO::debug_level () > 9)
             ACE_DEBUG ((LM_DEBUG,
                         "CIAO_PlanLauncher: Obtained DAM ref \n"));
 
