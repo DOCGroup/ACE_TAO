@@ -1,3 +1,15 @@
+Fri Oct  7 13:31:10 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/MakeProjectCreator/config/taoidldefaults.mpb:
+
+	  Changed to add -Sa and -St flags to idlflags variable instead of
+	  tao_idlflags.  This ensures they will be emitted (unless they're
+	  suppressed by anytypecode.mpb) in the automake build, where the
+	  value of TAO_IDLFLAGS is set in AutomakeWorkspaceHelper.pm.
+
+	  This would have cought recent problems I introduced in TAO when
+	  splitting out IDL compilation into separate projects.
+
 Fri Oct  7 09:32:06 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
