@@ -391,7 +391,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_NEW_RETURN (reader_tasks,
                   Reader_Task *[n_readers],
                   -1);
-  u_int i;
+  u_int i = 0;
 
   for (i = 0;
        i < n_readers;
