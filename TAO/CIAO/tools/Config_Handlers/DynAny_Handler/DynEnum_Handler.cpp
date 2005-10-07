@@ -37,11 +37,11 @@ namespace CIAO
         }
       
       // Grab pointer to the DynAny_Handler to use the orb and any factory.
-      DynAny_Handler *dah = DynAny_Handler::instance ();
+      //      DynAny_Handler *dah = DynAny_Handler::instance ();
       
       // @@ Leak t his guy onto the heap to avoid a compile problem. 
       CORBA::TypeCode_ptr tc = 
-        dah->orb ()->create_enum_tc (type.enum_ ().typeId ().c_str (),
+        DYNANY_HANDLER->orb ()->create_enum_tc (type.enum_ ().typeId ().c_str (),
                                      type.enum_ ().name ().c_str (),
                                      members);
       
@@ -52,7 +52,7 @@ namespace CIAO
       
       // Make the actual DynEnum
       DynamicAny::DynAny_var temp =  
-        dah->daf ()->create_dyn_any_from_type_code (tc);
+        DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
       DynamicAny::DynEnum_var retval = DynamicAny::DynEnum::_narrow (temp.in ());
       
       retval->set_as_string (value.begin_enum ()->c_str ());
