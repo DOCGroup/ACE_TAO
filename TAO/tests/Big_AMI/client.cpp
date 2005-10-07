@@ -72,16 +72,23 @@ class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
   /// Constructor.
-  Handler (void) {};
+  Handler (void) : reply_count_ (0) {};
 
   /// Destructor.
-    ~Handler (void) {};
+  ~Handler (void) {};
+
+  /// Get the reply count
+  long reply_count (void) const
+  {
+    return reply_count_.value ();
+  }
 
   void foo (CORBA::Long ami_return_val,
             CORBA::Long out_l
             ACE_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
+      ++reply_count_;
       if (debug)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -95,6 +102,7 @@ public:
                   ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
     {
+      ++reply_count_;
 
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <foo_excep> called: \n"
@@ -112,6 +120,9 @@ public:
       ACE_ENDTRY;
       ACE_CHECK;
     };
+
+private:
+  ACE_Atomic_Op <TAO_SYNCH_MUTEX, long> reply_count_;
 };
 
 int
@@ -192,7 +203,13 @@ main (int argc, char *argv[])
           ACE_TRY_CHECK;
         }
 
-      // End test of attributes
+      // We are just sending all requests, but we shouldn't get any replies
+      // until we run the orb or do a real synchronous call, so check whether
+      // we didn't get any reply until this moment
+      if (handler.reply_count () > 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                            "ERROR: Got a reply during sending asynchronous calls\n"),
+                            1);
 
       if (debug)
         {
