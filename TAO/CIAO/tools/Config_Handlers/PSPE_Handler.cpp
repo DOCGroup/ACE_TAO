@@ -9,28 +9,24 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    bool
+    void
     PSPE_Handler::sub_component_port_endpoints (
         const PlanConnectionDescription &src,
         ::Deployment::PlanSubcomponentPortEndpoints &dest)
     {
       PlanConnectionDescription::internalEndpoint_const_iterator iei_e =
         src.end_internalEndpoint ();
+      CORBA::ULong pos = 0;
+      dest.length (src.count_internalEndpoint ());
+      
       for (PlanConnectionDescription::internalEndpoint_const_iterator iei_b =
              src.begin_internalEndpoint ();
            iei_b != iei_e;
            ++iei_b)
         {
-          CORBA::ULong len =
-            dest.length ();
-
-          dest.length (len + 1);
-
-          (void) PSPE_Handler::sub_component_port_endpoint (
-              (*iei_b),
-              dest[len]);
+          PSPE_Handler::sub_component_port_endpoint ((*iei_b),
+                                                     dest[pos++]);
         }
-      return true;
     }
 
     void
@@ -43,11 +39,11 @@ namespace CIAO
 
       if (src.provider_p ())
         {
-          dest.provider = !(src.provider ().empty ());
+          dest.provider = src.provider () == "true";
         }
       else
         {
-          dest.provider = 0;
+          dest.provider = false;
         }
 
       CORBA::ULong tmp = 0;
@@ -107,18 +103,33 @@ namespace CIAO
 					 idref);
       pspe.provider (prov);
       
-      if (src.kind == ::Deployment::Facet)
-        pspe.kind (CCMComponentPortKind::Facet);
-      if (src.kind == ::Deployment::SimplexReceptacle)
-        pspe.kind (CCMComponentPortKind::SimplexReceptacle);
-      if (src.kind == ::Deployment::MultiplexReceptacle)
-        pspe.kind (CCMComponentPortKind::MultiplexReceptacle);
-      if (src.kind == ::Deployment::EventEmitter)
-        pspe.kind (CCMComponentPortKind::EventEmitter);
-      if (src.kind == ::Deployment::EventPublisher)
-        pspe.kind (CCMComponentPortKind::EventPublisher);
-      if (src.kind == ::Deployment::EventConsumer)
-        pspe.kind (CCMComponentPortKind::EventConsumer);
+      switch (src.kind)
+        {    
+        case ::Deployment::Facet:
+          pspe.kind (CCMComponentPortKind::Facet);
+          break;
+          
+        case ::Deployment::SimplexReceptacle:
+          pspe.kind (CCMComponentPortKind::SimplexReceptacle);
+          break;
+          
+        case ::Deployment::MultiplexReceptacle:
+          pspe.kind (CCMComponentPortKind::MultiplexReceptacle);
+          break;
+          
+        case ::Deployment::EventEmitter:
+          pspe.kind (CCMComponentPortKind::EventEmitter);
+          break;
+          
+        case ::Deployment::EventPublisher:
+          pspe.kind (CCMComponentPortKind::EventPublisher);
+          break;
+        
+        case ::Deployment::EventConsumer:
+          pspe.kind (CCMComponentPortKind::EventConsumer);
+          break;
+        }
+      
 
       return pspe;
     }

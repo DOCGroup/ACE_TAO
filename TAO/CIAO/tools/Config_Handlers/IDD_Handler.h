@@ -50,7 +50,7 @@ namespace CIAO
     class Config_Handlers_Export IDD_Handler
     {
     public:
-      static bool instance_deployment_descrs (
+      static void instance_deployment_descrs (
           const DeploymentPlan &src,
           ::Deployment::InstanceDeploymentDescriptions& dest)
 	throw (Config_Error);

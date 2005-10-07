@@ -8,7 +8,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    bool
+    void
     ERE_Handler::external_ref_endpoints (
         const PlanConnectionDescription &src,
         Deployment::ExternalReferenceEndpoints &dest)
@@ -16,20 +16,16 @@ namespace CIAO
       PlanConnectionDescription::externalReference_const_iterator erep_e =
         src.end_externalReference ();
 
-     for (PlanConnectionDescription::externalReference_const_iterator erep_b =
-            src.begin_externalReference ();
-          erep_b != erep_e;
-          ++erep_b)
-       {
-         CORBA::ULong len =
-           dest.length ();
-         dest.length (len + 1);
-
-         ERE_Handler::external_ref_endpoint ((*erep_b),
-                                             dest[0]);
-       }
-
-     return true;
+      CORBA::ULong pos = 0;
+      dest.length (src.count_externalReference ());
+      for (PlanConnectionDescription::externalReference_const_iterator erep_b =
+             src.begin_externalReference ();
+           erep_b != erep_e;
+           ++erep_b)
+        {
+          ERE_Handler::external_ref_endpoint ((*erep_b),
+                                              dest[pos++]);
+        }
     }
 
     void

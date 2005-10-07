@@ -49,7 +49,7 @@ namespace CIAO
     class Config_Handlers_Export MDD_Handler
     {
     public:
-      static bool mono_deployment_descriptions (
+      static void mono_deployment_descriptions (
           const DeploymentPlan &src,
           Deployment::MonolithicDeploymentDescriptions &dest);
       
@@ -59,7 +59,7 @@ namespace CIAO
       static IDREF_Base<CORBA::ULong> IDREF;
       
     private:
-      static bool mono_deployment_description (
+      static void mono_deployment_description (
           const MonolithicDeploymentDescription& desc,
           Deployment::MonolithicDeploymentDescription& toconfig,
           CORBA::ULong pos);

@@ -48,7 +48,7 @@ namespace CIAO
     class Config_Handlers_Export DP_PCD_Handler
     {
     public:
-      static bool plan_connection_descrs (
+      static void plan_connection_descrs (
           const DeploymentPlan &src,
           Deployment::PlanConnectionDescriptions& toconfig);
 
@@ -56,7 +56,7 @@ namespace CIAO
 	  const Deployment::PlanConnectionDescription &src);
 
     private:
-      static bool plan_connection_descr (
+      static void plan_connection_descr (
           const PlanConnectionDescription& desc,
           Deployment::PlanConnectionDescription& toconfig);
     };

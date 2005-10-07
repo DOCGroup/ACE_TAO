@@ -13,44 +13,27 @@ namespace CIAO
   {
     IDREF_Base<CORBA::ULong> MDD_Handler::IDREF;
     
-    bool
+    void
     MDD_Handler::mono_deployment_descriptions (
         const DeploymentPlan& src,
         Deployment::MonolithicDeploymentDescriptions& dest)
     {
-      /* @@ This has changed.  The schema has maxoccurred = unbounded */
-      
-      // We know there should be only one..
-      //dest.length (1);
-
       DeploymentPlan::implementation_const_iterator imp_e =
         src.end_implementation ();
-
+      CORBA::ULong pos = 0;
+      dest.length (src.count_implementation ());
       for (DeploymentPlan::implementation_const_iterator imp_b =
              src.begin_implementation ();
            imp_b != imp_e;
            ++imp_b)
         {
-          CORBA::ULong len =
-            dest.length ();
-          dest.length (len + 1);
-
-          bool retval = MDD_Handler::mono_deployment_description (*imp_b,
-                                                                  dest[len],
-                                                                  len);
-          if (!retval)
-            {
-              ACE_DEBUG ((LM_ERROR,
-                          "(%P|%t) MDD_Handler: Error parsing element %i\n",
-                          len));
-              return false;
-            }
-          
+          MDD_Handler::mono_deployment_description (*imp_b,
+                                                    dest[pos],
+                                                    pos++);
         }
-      return true;
     }  
     
-    bool
+    void
     MDD_Handler::mono_deployment_description (
         const MonolithicDeploymentDescription& desc,
         Deployment::MonolithicDeploymentDescription& toconfig,
@@ -61,24 +44,22 @@ namespace CIAO
 
       MonolithicDeploymentDescription::source_const_iterator me =
         desc.end_source ();
-
+      
+      CORBA::ULong len = 0;
+      toconfig.source.length (desc.count_source ());
       for (MonolithicDeploymentDescription::source_const_iterator se =
              desc.begin_source ();
            se != me;
            ++se)
         {
-          CORBA::ULong len =
-            toconfig.source.length ();
-
-          toconfig.source.length (len + 1);
-
-          toconfig.source[len] =
+          toconfig.source[len++] =
             CORBA::string_dup ((*se).c_str ());
         }
 
       MonolithicDeploymentDescription::artifact_const_iterator ae =
         desc.end_artifact ();
-
+      len = 0;
+      toconfig.artifactRef.length (desc.count_artifact ());
       for (MonolithicDeploymentDescription::artifact_const_iterator
              ab = desc.begin_artifact ();
            ae != ab;
@@ -89,29 +70,20 @@ namespace CIAO
 	  ADD_Handler::IDREF.find_ref (ACE_CString (ab->id ().c_str ()),
 						   tmp);
 
-          CORBA::ULong len =
-            toconfig.artifactRef.length ();
-
-          toconfig.artifactRef.length (len + 1);
-
-          toconfig.artifactRef[len] = tmp;
+          toconfig.artifactRef[len++] = tmp;
         }
 
       MonolithicDeploymentDescription::execParameter_const_iterator epce =
         desc.end_execParameter ();
-
+      len = 0;
+      toconfig.execParameter.length (desc.count_execParameter ());
       for (MonolithicDeploymentDescription::execParameter_const_iterator epcb =
              desc.begin_execParameter ();
            epcb != epce;
            ++epcb)
         {
-          CORBA::ULong len =
-            toconfig.execParameter.length ();
-
-          toconfig.execParameter.length (len + 1);
-
           Property_Handler::get_property ((*epcb),
-                                          toconfig.execParameter[len]);
+                                          toconfig.execParameter[len++]);
         }
 
 #if 0
@@ -140,8 +112,6 @@ namespace CIAO
                      "(%P|%t) Warning:  MDD %s has no idref \n",
                      desc.name ().c_str ()));
         }
-      
-      return true;
     }  
 
 
