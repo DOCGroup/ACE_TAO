@@ -12,6 +12,7 @@ ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
+TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
@@ -48,7 +49,7 @@ CLEANFILES += \
 
 ../SynchC.cpp ../SynchC.h ../SynchC.inl ../SynchS.cpp ../SynchS.h ../SynchS.inl ../SynchS_T.cpp ../SynchS_T.h ../SynchS_T.inl: Synch-stamp
 
-../Synch-stamp: $(srcdir)/../Synch.idl
+../Synch-stamp: $(srcdir)/../Synch.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -o .. $(srcdir)/../Synch.idl
 	@touch $@
 
@@ -119,7 +120,7 @@ CLEANFILES += \
 
 ../SynchC.cpp ../SynchC.h ../SynchC.inl ../SynchS.cpp ../SynchS.h ../SynchS.inl ../SynchS_T.cpp ../SynchS_T.h ../SynchS_T.inl: Synch-stamp
 
-../Synch-stamp: $(srcdir)/../Synch.idl
+../Synch-stamp: $(srcdir)/../Synch.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -o .. $(srcdir)/../Synch.idl
 	@touch $@
 
@@ -148,7 +149,7 @@ CLEANFILES += \
 
 ../JobC.cpp ../JobC.h ../JobC.inl ../JobS.cpp ../JobS.h ../JobS.inl ../JobS_T.cpp ../JobS_T.h ../JobS_T.inl: Job-stamp
 
-../Job-stamp: $(srcdir)/../Job.idl
+../Job-stamp: $(srcdir)/../Job.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -o .. $(srcdir)/../Job.idl
 	@touch $@
 
@@ -175,7 +176,7 @@ CLEANFILES += \
 
 ../MIF_SchedulingC.cpp ../MIF_SchedulingC.h ../MIF_SchedulingC.inl ../MIF_SchedulingS.h ../MIF_SchedulingS.inl ../MIF_SchedulingS_T.cpp ../MIF_SchedulingS_T.h ../MIF_SchedulingS_T.inl: MIF_Scheduling-stamp
 
-../MIF_Scheduling-stamp: $(srcdir)/../MIF_Scheduling.idl
+../MIF_Scheduling-stamp: $(srcdir)/../MIF_Scheduling.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -o .. $(srcdir)/../MIF_Scheduling.idl
 	@touch $@
 

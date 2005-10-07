@@ -12,6 +12,7 @@ ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
+TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
@@ -40,7 +41,7 @@ CLEANFILES = \
 
 interop_wcharC.cpp interop_wcharC.h interop_wcharC.inl interop_wcharS.h interop_wcharS.inl interop_wcharS_T.cpp interop_wcharS_T.h interop_wcharS_T.inl: interop_wchar-stamp
 
-interop_wchar-stamp: $(srcdir)/interop_wchar.idl
+interop_wchar-stamp: $(srcdir)/interop_wchar.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/interop_wchar.idl
 	@touch $@
 
@@ -95,7 +96,7 @@ CLEANFILES += \
 
 interop_wcharC.cpp interop_wcharC.h interop_wcharC.inl interop_wcharS.cpp interop_wcharS.h interop_wcharS.inl interop_wcharS_T.cpp interop_wcharS_T.h interop_wcharS_T.inl: interop_wchar-stamp
 
-interop_wchar-stamp: $(srcdir)/interop_wchar.idl
+interop_wchar-stamp: $(srcdir)/interop_wchar.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/interop_wchar.idl
 	@touch $@
 

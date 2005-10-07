@@ -12,6 +12,7 @@ ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
+TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
@@ -44,8 +45,8 @@ CLEANFILES = \
 
 service_configC.cpp service_configC.h service_configC.inl service_configS.cpp service_configS.h service_configS.inl service_configS_T.cpp service_configS_T.h service_configS_T.inl: service_config-stamp
 
-service_config-stamp: $(srcdir)/service_config.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/service_config.idl
+service_config-stamp: $(srcdir)/service_config.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/service_config.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -73,8 +74,8 @@ CLEANFILES += \
 
 testC.cpp testC.h testC.inl testS.cpp testS.h testS.inl testS_T.cpp testS_T.h testS_T.inl: test-stamp
 
-test-stamp: $(srcdir)/test.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/test.idl
+test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/test.idl
 	@touch $@
 
 

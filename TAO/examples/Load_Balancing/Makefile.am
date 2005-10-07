@@ -12,6 +12,7 @@ ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
+TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
@@ -48,7 +49,7 @@ CLEANFILES += \
 
 Load_BalancerC.cpp Load_BalancerC.h Load_BalancerC.inl Load_BalancerS.cpp Load_BalancerS.h Load_BalancerS.inl Load_BalancerS_T.cpp Load_BalancerS_T.h Load_BalancerS_T.inl: Load_Balancer-stamp
 
-Load_Balancer-stamp: $(srcdir)/Load_Balancer.idl
+Load_Balancer-stamp: $(srcdir)/Load_Balancer.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Load_Balancer.idl
 	@touch $@
 
@@ -111,7 +112,7 @@ CLEANFILES += \
 
 IdentityC.cpp IdentityC.h IdentityC.inl IdentityS.h IdentityS.inl IdentityS_T.cpp IdentityS_T.h IdentityS_T.inl: Identity-stamp
 
-Identity-stamp: $(srcdir)/Identity.idl
+Identity-stamp: $(srcdir)/Identity.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Identity.idl
 	@touch $@
 
@@ -138,7 +139,7 @@ CLEANFILES += \
 
 Load_BalancerC.cpp Load_BalancerC.h Load_BalancerC.inl Load_BalancerS.h Load_BalancerS.inl Load_BalancerS_T.cpp Load_BalancerS_T.h Load_BalancerS_T.inl: Load_Balancer-stamp
 
-Load_Balancer-stamp: $(srcdir)/Load_Balancer.idl
+Load_Balancer-stamp: $(srcdir)/Load_Balancer.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Load_Balancer.idl
 	@touch $@
 
@@ -206,7 +207,7 @@ CLEANFILES += \
 
 IdentityC.cpp IdentityC.h IdentityC.inl IdentityS.cpp IdentityS.h IdentityS.inl IdentityS_T.cpp IdentityS_T.h IdentityS_T.inl: Identity-stamp
 
-Identity-stamp: $(srcdir)/Identity.idl
+Identity-stamp: $(srcdir)/Identity.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Identity.idl
 	@touch $@
 
@@ -233,7 +234,7 @@ CLEANFILES += \
 
 Load_BalancerC.cpp Load_BalancerC.h Load_BalancerC.inl Load_BalancerS.h Load_BalancerS.inl Load_BalancerS_T.cpp Load_BalancerS_T.h Load_BalancerS_T.inl: Load_Balancer-stamp
 
-Load_Balancer-stamp: $(srcdir)/Load_Balancer.idl
+Load_Balancer-stamp: $(srcdir)/Load_Balancer.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Load_Balancer.idl
 	@touch $@
 

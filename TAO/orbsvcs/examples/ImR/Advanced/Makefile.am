@@ -12,6 +12,7 @@ ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
+TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
@@ -44,8 +45,8 @@ CLEANFILES = \
 
 ManagerC.cpp ManagerC.h ManagerC.inl ManagerS.cpp ManagerS.h ManagerS.inl ManagerS_T.cpp ManagerS_T.h ManagerS_T.inl: Manager-stamp
 
-Manager-stamp: $(srcdir)/Manager.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Manager.idl
+Manager-stamp: $(srcdir)/Manager.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Manager.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -73,8 +74,8 @@ CLEANFILES += \
 
 MessengerC.cpp MessengerC.h MessengerC.inl MessengerS.cpp MessengerS.h MessengerS.inl MessengerS_T.cpp MessengerS_T.h MessengerS_T.inl: Messenger-stamp
 
-Messenger-stamp: $(srcdir)/Messenger.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Messenger.idl
+Messenger-stamp: $(srcdir)/Messenger.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Messenger.idl
 	@touch $@
 
 

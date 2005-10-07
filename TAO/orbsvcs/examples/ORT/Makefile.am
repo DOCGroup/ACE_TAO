@@ -12,6 +12,7 @@ ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
+TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
@@ -48,8 +49,8 @@ CLEANFILES += \
 
 GatewayC.cpp GatewayC.h GatewayC.inl GatewayS.cpp GatewayS.h GatewayS.inl GatewayS_T.cpp GatewayS_T.h GatewayS_T.inl: Gateway-stamp
 
-Gateway-stamp: $(srcdir)/Gateway.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Gateway.idl
+Gateway-stamp: $(srcdir)/Gateway.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Gateway.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -77,8 +78,8 @@ CLEANFILES += \
 
 ObjectReferenceFactoryC.cpp ObjectReferenceFactoryC.h ObjectReferenceFactoryC.inl ObjectReferenceFactoryS.cpp ObjectReferenceFactoryS.h ObjectReferenceFactoryS.inl ObjectReferenceFactoryS_T.cpp ObjectReferenceFactoryS_T.h ObjectReferenceFactoryS_T.inl: ObjectReferenceFactory-stamp
 
-ObjectReferenceFactory-stamp: $(srcdir)/ObjectReferenceFactory.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/ObjectReferenceFactory.idl
+ObjectReferenceFactory-stamp: $(srcdir)/ObjectReferenceFactory.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/ObjectReferenceFactory.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -106,8 +107,8 @@ CLEANFILES += \
 
 sum_serverC.cpp sum_serverC.h sum_serverC.inl sum_serverS.cpp sum_serverS.h sum_serverS.inl sum_serverS_T.cpp sum_serverS_T.h sum_serverS_T.inl: sum_server-stamp
 
-sum_server-stamp: $(srcdir)/sum_server.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/sum_server.idl
+sum_server-stamp: $(srcdir)/sum_server.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/sum_server.idl
 	@touch $@
 
 
