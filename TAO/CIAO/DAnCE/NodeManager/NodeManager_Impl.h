@@ -123,10 +123,10 @@ namespace CIAO
 
     /// NodeApplication location
     CORBA::String_var nodeapp_location_;
-    
+
     /// NodeApplication options
     CORBA::String_var nodeapp_options_;
-    
+
     /// Cached callback POA.
     PortableServer::POA_var callback_poa_;
 
@@ -143,10 +143,6 @@ namespace CIAO
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
-#if defined (__ACE_INLINE__)
-# include "NodeManager_Impl.inl"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* CIAO_NODEMANAGER_IMPL_H */
