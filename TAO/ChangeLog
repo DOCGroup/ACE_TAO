@@ -1,3 +1,10 @@
+Fri Oct  7 07:07:28 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* docs/tutorials/Quoter/Event_Service/Quoter_Event_Service.mpc:
+	* docs/tutorials/Quoter/RT_Event_Service/Quoter_RT_Event_Service.mpc:
+
+	  Changed *idl project to inherit from anytypecode.
+
 Fri Oct  7 10:43:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Sync_Strategies.h:
