@@ -136,13 +136,48 @@
     <ol>
       <li>
         Use the provided Visual Studio solution/project file. For detail please see <a href="./CCF/Documentation/Build.html">
-          Build.html</a>
-      </li>
+          Build.html</a>. Since MPC is now supported to build the CIDL compiler on 
+      Windows, these solution/project files may be removed in the future.
       <li>
-        Use MPC: (Not supported yet)
+        Use <a href="../../MPC/README">MPC</a>. The procedure is outlined below.
+        <ul>
+          <li>
+            Open up <code>$ACE_ROOT/bin/MakeProjectCreator/config/global.features</code>
+          and set cidl=1 and boost=1.
+          <li>
+            Install the <a href="http://www.boost.org">Boost</a>
+            libraries on your machine. For Windows, you can download either the 
+            Windows-specific .exe file or the platform-independent .zip file. Use version 
+            1.32.0 or later. The accompanying documentation on how to build and install 
+            Boost is pretty straightforward.
+          <li>
+            Set the following environment variables:
+            <ul>
+              <li>
+                <code>ACE_ROOT</code> - [path&nbsp;ending with&nbsp;ACE_wrappers directory] (this should already be 
+              set if you're using CIAO)
+              <li>
+                <code>BOOST_CFG</code> - <code>_vc7_mdsd</code>
+              <li>
+                <code>BOOST_ROOT</code> - [path ending with Boost directory]
+              <li>
+                <code>BOOST_VERSION</code> - [name of the directory under <code>%BOOST_ROOT%\include</code>, for 
+                ex. <code>boost-1_32</code>, for Boost vesrion 1.32.0]
+              <LI>
+                <code>UTILITY_ROOT</code> - <code>%ACE_ROOT%\contrib\utility</code></LI>
+            </ul>
+          <li>
+            In <code>%CIAO_ROOT%\CIDLC</code> run <code>%ACE_ROOT%\bin\mwc.pl -type vc71 CIDLC.mwc</code>
+          </li>
+          <li>
+            Open <code>CIDLC.sln</code> and build as usual. Within the solution, the CIDLC project is
+            the top-level one, which depends on all the other projects, and produces <code>cidlc.exe</code>
+            in <code>%CIAO_ROOT%\bin</code>.
+          </li>
+        </ul>
       </li>
     </ol>
-    <hr />
+    <hr>
     <h3>
       Obtaining and Installing Xerces-C
     </h3>
