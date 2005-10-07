@@ -74,6 +74,8 @@ public:
    *        queue
    * @param interval If set_timer returns 1, this parameter contains
    *        the timer interval
+   * @param must_flush Is set to 1 if things must be flushed at this
+   *        moment
    */
   virtual int buffering_constraints_reached (
     TAO_Stub *stub,
