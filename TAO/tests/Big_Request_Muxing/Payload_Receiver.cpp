@@ -18,12 +18,12 @@ Payload_Receiver::more_data (const Test::Payload& payload
 {
   if (payload.length() > 0)
   {
-    this->message_count_++;
+    ++this->message_count_;
   }
 }
 
 int
 Payload_Receiver::count() const
 {
-  return message_count_;
+  return message_count_.value ();
 }

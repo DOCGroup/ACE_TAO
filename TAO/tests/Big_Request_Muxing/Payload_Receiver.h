@@ -14,7 +14,6 @@
  */
 class Payload_Receiver
   : public virtual POA_Test::Payload_Receiver
-  , public virtual PortableServer::RefCountServantBase
 {
 public:
   Payload_Receiver (int expected);
@@ -26,7 +25,7 @@ public:
 
   int count() const;
 private:
-  int message_count_;
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, int> message_count_;
   int expected_;
 };
 
