@@ -16,6 +16,7 @@
 
 #include "tao/ORB.h"
 #include "tao/DynamicAny/DynamicAny.h"
+#include "ace/Singleton.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -42,12 +43,14 @@ namespace CIAO
     class Config_Handlers_Export DynAny_Handler
     {
     public:
+      DynAny_Handler ();
+
       ~DynAny_Handler (void);
       
-      static DynAny_Handler *instance ();
+      //      static DynAny_Handler *instance ();
       
       DynamicAny::DynAny_ptr  extract_into_dynany (const DataType& type,
-                                                const DataValue& value);
+                                                   const DataValue& value);
       
       //      Any get_any (const CORBA::Any &src);
       
@@ -56,14 +59,15 @@ namespace CIAO
       DynamicAny::DynAnyFactory_ptr daf ();
             
     private:
-      DynAny_Handler (int, char**);
-      
-      static DynAny_Handler *instance_;
+      //      static DynAny_Handler *instance_;
       
       CORBA::ORB_var orb_;
       
       DynamicAny::DynAnyFactory_var daf_;
     };
+    
+    typedef ACE_Singleton<DynAny_Handler, ACE_Null_Mutex> DynAny_Singleton;
+    #define DYNANY_HANDLER DynAny_Singleton::instance()
   }
 }
 
