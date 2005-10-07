@@ -5,10 +5,6 @@
 
 #include "URL_Locator.h"
 
-#if !defined (__ACE_INLINE__)
-#include "URL_Locator.i"
-#endif
-
 ACE_RCSID(Caching, URL_Locator, "$Id$")
 
 const char * const

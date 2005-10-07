@@ -15,10 +15,6 @@ ACE_RCSID(server, Handle_Thr_Stream, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
-#if !defined (__ACE_INLINE__)
-#include "Handle_Thr_Stream.i"
-#endif /* __ACE_INLINE__ */
-
 #include "ace/OS_NS_time.h"
 
 // Shorthand names.

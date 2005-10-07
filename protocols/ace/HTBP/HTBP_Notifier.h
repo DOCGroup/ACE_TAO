@@ -46,9 +46,5 @@ namespace ACE
   }
 }
 
-#if defined (__ACE_INLINE__)
-#include "HTBP_Notifier.inl"
-#endif
-
 #include /**/ "ace/post.h"
 #endif /* ACE_HTBP_NOTIFIER_H */

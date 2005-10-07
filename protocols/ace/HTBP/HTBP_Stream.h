@@ -283,9 +283,5 @@ namespace ACE
   }
 }
 
-#if defined (__ACE_INLINE__)
-#include "HTBP_Stream.inl"
-#endif
-
 #include /**/ "ace/post.h"
 #endif /* ACE_HTBP_STREAM_H */
