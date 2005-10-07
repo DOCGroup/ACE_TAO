@@ -12,6 +12,7 @@ ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
+TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
@@ -42,7 +43,7 @@ CLEANFILES = \
 
 ReceiverC.cpp ReceiverC.h ReceiverC.inl ReceiverS.cpp ReceiverS.h ReceiverS.inl ReceiverS_T.cpp ReceiverS_T.h ReceiverS_T.inl: Receiver-stamp
 
-Receiver-stamp: $(srcdir)/Receiver.idl
+Receiver-stamp: $(srcdir)/Receiver.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Receiver.idl
 	@touch $@
 
@@ -71,7 +72,7 @@ CLEANFILES += \
 
 BroadcasterC.cpp BroadcasterC.h BroadcasterC.inl BroadcasterS.cpp BroadcasterS.h BroadcasterS.inl BroadcasterS_T.cpp BroadcasterS_T.h BroadcasterS_T.inl: Broadcaster-stamp
 
-Broadcaster-stamp: $(srcdir)/Broadcaster.idl
+Broadcaster-stamp: $(srcdir)/Broadcaster.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Broadcaster.idl
 	@touch $@
 
@@ -140,7 +141,7 @@ CLEANFILES += \
 
 ReceiverC.cpp ReceiverC.h ReceiverC.inl ReceiverS.cpp ReceiverS.h ReceiverS.inl ReceiverS_T.cpp ReceiverS_T.h ReceiverS_T.inl: Receiver-stamp
 
-Receiver-stamp: $(srcdir)/Receiver.idl
+Receiver-stamp: $(srcdir)/Receiver.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Receiver.idl
 	@touch $@
 
@@ -169,7 +170,7 @@ CLEANFILES += \
 
 BroadcasterC.cpp BroadcasterC.h BroadcasterC.inl BroadcasterS.cpp BroadcasterS.h BroadcasterS.inl BroadcasterS_T.cpp BroadcasterS_T.h BroadcasterS_T.inl: Broadcaster-stamp
 
-Broadcaster-stamp: $(srcdir)/Broadcaster.idl
+Broadcaster-stamp: $(srcdir)/Broadcaster.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Broadcaster.idl
 	@touch $@
 

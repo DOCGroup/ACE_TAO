@@ -15,6 +15,7 @@ ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
+TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
@@ -46,7 +47,7 @@ CLEANFILES = \
 
 CosNamingC.cpp CosNamingC.h CosNamingC.inl CosNamingS.cpp CosNamingS.h CosNamingS.inl CosNamingS_T.cpp CosNamingS_T.h CosNamingS_T.inl: CosNaming-stamp
 
-CosNaming-stamp: $(srcdir)/CosNaming.idl
+CosNaming-stamp: $(srcdir)/CosNaming.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Naming_Export -Wb,stub_export_include=orbsvcs/Naming/naming_export.h -Wb,skel_export_macro=TAO_Naming_Skel_Export -Wb,skel_export_include=orbsvcs/Naming/naming_skel_export.h $(srcdir)/CosNaming.idl
 	@touch $@
 
@@ -123,7 +124,7 @@ CLEANFILES += \
 
 CosPropertyC.cpp CosPropertyC.h CosPropertyC.inl CosPropertyS.cpp CosPropertyS.h CosPropertyS.inl CosPropertyS_T.cpp CosPropertyS_T.h CosPropertyS_T.inl: CosProperty-stamp
 
-CosProperty-stamp: $(srcdir)/CosProperty.idl
+CosProperty-stamp: $(srcdir)/CosProperty.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Property_Export -Wb,export_include=orbsvcs/Property/property_export.h $(srcdir)/CosProperty.idl
 	@touch $@
 
@@ -152,7 +153,7 @@ CLEANFILES += \
 
 CosPropertyServiceC.cpp CosPropertyServiceC.h CosPropertyServiceC.inl CosPropertyServiceS.cpp CosPropertyServiceS.h CosPropertyServiceS.inl CosPropertyServiceS_T.cpp CosPropertyServiceS_T.h CosPropertyServiceS_T.inl: CosPropertyService-stamp
 
-CosPropertyService-stamp: $(srcdir)/CosPropertyService.idl
+CosPropertyService-stamp: $(srcdir)/CosPropertyService.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Property_Export -Wb,export_include=orbsvcs/Property/property_export.h $(srcdir)/CosPropertyService.idl
 	@touch $@
 
@@ -242,7 +243,7 @@ CLEANFILES += \
 
 AVStreamsC.cpp AVStreamsC.h AVStreamsC.inl AVStreamsS.cpp AVStreamsS.h AVStreamsS.inl AVStreamsS_T.cpp AVStreamsS_T.inl: AVStreams-stamp
 
-AVStreams-stamp: $(srcdir)/AVStreams.idl
+AVStreams-stamp: $(srcdir)/AVStreams.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_AV_Export -Wb,export_include=orbsvcs/AV/AV_export.h $(srcdir)/AVStreams.idl
 	@touch $@
 
@@ -269,7 +270,7 @@ CLEANFILES += \
 
 Null_MediaCtrlC.cpp Null_MediaCtrlC.h Null_MediaCtrlC.inl Null_MediaCtrlS.cpp Null_MediaCtrlS.h Null_MediaCtrlS.inl Null_MediaCtrlS_T.cpp Null_MediaCtrlS_T.inl: Null_MediaCtrl-stamp
 
-Null_MediaCtrl-stamp: $(srcdir)/Null_MediaCtrl.idl
+Null_MediaCtrl-stamp: $(srcdir)/Null_MediaCtrl.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_AV_Export -Wb,export_include=orbsvcs/AV/AV_export.h $(srcdir)/Null_MediaCtrl.idl
 	@touch $@
 
@@ -296,7 +297,7 @@ CLEANFILES += \
 
 sfpC.cpp sfpC.h sfpC.inl sfpS.cpp sfpS.h sfpS.inl sfpS_T.cpp sfpS_T.inl: sfp-stamp
 
-sfp-stamp: $(srcdir)/sfp.idl
+sfp-stamp: $(srcdir)/sfp.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_AV_Export -Wb,export_include=orbsvcs/AV/AV_export.h $(srcdir)/sfp.idl
 	@touch $@
 
@@ -441,7 +442,7 @@ CLEANFILES += \
 
 CosConcurrencyControlC.cpp CosConcurrencyControlC.h CosConcurrencyControlC.inl CosConcurrencyControlS.cpp CosConcurrencyControlS.h CosConcurrencyControlS.inl CosConcurrencyControlS_T.cpp CosConcurrencyControlS_T.h CosConcurrencyControlS_T.inl: CosConcurrencyControl-stamp
 
-CosConcurrencyControl-stamp: $(srcdir)/CosConcurrencyControl.idl
+CosConcurrencyControl-stamp: $(srcdir)/CosConcurrencyControl.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Concurrency_Export -Wb,export_include=orbsvcs/Concurrency/concurrency_export.h $(srcdir)/CosConcurrencyControl.idl
 	@touch $@
 
@@ -522,7 +523,7 @@ CLEANFILES += \
 
 CosTypedEventCommC.cpp CosTypedEventCommC.h CosTypedEventCommC.inl CosTypedEventCommS_T.cpp: CosTypedEventComm-stamp
 
-CosTypedEventComm-stamp: $(srcdir)/CosTypedEventComm.idl
+CosTypedEventComm-stamp: $(srcdir)/CosTypedEventComm.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h $(srcdir)/CosTypedEventComm.idl
 	@touch $@
 
@@ -541,7 +542,7 @@ CLEANFILES += \
 
 CosTypedEventChannelAdminC.cpp CosTypedEventChannelAdminC.h CosTypedEventChannelAdminC.inl CosTypedEventChannelAdminS_T.cpp: CosTypedEventChannelAdmin-stamp
 
-CosTypedEventChannelAdmin-stamp: $(srcdir)/CosTypedEventChannelAdmin.idl
+CosTypedEventChannelAdmin-stamp: $(srcdir)/CosTypedEventChannelAdmin.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h $(srcdir)/CosTypedEventChannelAdmin.idl
 	@touch $@
 
@@ -560,7 +561,7 @@ CLEANFILES += \
 
 CosEventCommC.cpp CosEventCommC.h CosEventCommC.inl CosEventCommS_T.cpp: CosEventComm-stamp
 
-CosEventComm-stamp: $(srcdir)/CosEventComm.idl
+CosEventComm-stamp: $(srcdir)/CosEventComm.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h $(srcdir)/CosEventComm.idl
 	@touch $@
 
@@ -579,7 +580,7 @@ CLEANFILES += \
 
 CosEventChannelAdminC.cpp CosEventChannelAdminC.h CosEventChannelAdminC.inl CosEventChannelAdminS_T.cpp: CosEventChannelAdmin-stamp
 
-CosEventChannelAdmin-stamp: $(srcdir)/CosEventChannelAdmin.idl
+CosEventChannelAdmin-stamp: $(srcdir)/CosEventChannelAdmin.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h $(srcdir)/CosEventChannelAdmin.idl
 	@touch $@
 
@@ -665,7 +666,7 @@ CLEANFILES += \
 
 TimeBaseC.cpp TimeBaseC.h TimeBaseC.inl TimeBaseS.cpp TimeBaseS.h TimeBaseS.inl TimeBaseS_T.cpp TimeBaseS_T.inl: TimeBase-stamp
 
-TimeBase-stamp: $(srcdir)/TimeBase.idl
+TimeBase-stamp: $(srcdir)/TimeBase.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Svc_Utils_Export -Wb,export_include=orbsvcs/svc_utils_export.h $(srcdir)/TimeBase.idl
 	@touch $@
 
@@ -692,7 +693,7 @@ CLEANFILES += \
 
 RtecBaseC.cpp RtecBaseC.h RtecBaseC.inl RtecBaseS.cpp RtecBaseS.h RtecBaseS.inl RtecBaseS_T.cpp RtecBaseS_T.inl: RtecBase-stamp
 
-RtecBase-stamp: $(srcdir)/RtecBase.idl
+RtecBase-stamp: $(srcdir)/RtecBase.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Svc_Utils_Export -Wb,export_include=orbsvcs/svc_utils_export.h $(srcdir)/RtecBase.idl
 	@touch $@
 
@@ -981,7 +982,7 @@ CLEANFILES += \
 
 CosLifeCycleC.cpp CosLifeCycleC.h CosLifeCycleC.inl CosLifeCycleS.cpp CosLifeCycleS.h CosLifeCycleS.inl CosLifeCycleS_T.cpp CosLifeCycleS_T.h CosLifeCycleS_T.inl: CosLifeCycle-stamp
 
-CosLifeCycle-stamp: $(srcdir)/CosLifeCycle.idl
+CosLifeCycle-stamp: $(srcdir)/CosLifeCycle.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=orbsvcs/LifeCycle/lifecycle_export.h $(srcdir)/CosLifeCycle.idl
 	@touch $@
 
@@ -1010,7 +1011,7 @@ CLEANFILES += \
 
 LifeCycleServiceC.cpp LifeCycleServiceC.h LifeCycleServiceC.inl LifeCycleServiceS.cpp LifeCycleServiceS.h LifeCycleServiceS.inl LifeCycleServiceS_T.cpp LifeCycleServiceS_T.h LifeCycleServiceS_T.inl: LifeCycleService-stamp
 
-LifeCycleService-stamp: $(srcdir)/LifeCycleService.idl
+LifeCycleService-stamp: $(srcdir)/LifeCycleService.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_LifeCycle_Export -Wb,export_include=orbsvcs/LifeCycle/lifecycle_export.h $(srcdir)/LifeCycleService.idl
 	@touch $@
 
@@ -1101,7 +1102,7 @@ CLEANFILES += \
 
 miopC.cpp miopC.h miopC.inl miopS.cpp miopS.h miopS.inl miopS_T.cpp miopS_T.inl: miop-stamp
 
-miop-stamp: $(srcdir)/miop.idl
+miop-stamp: $(srcdir)/miop.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_PortableGroup_Export -Wb,export_include=orbsvcs/PortableGroup/portablegroup_export.h $(srcdir)/miop.idl
 	@touch $@
 
@@ -1122,7 +1123,7 @@ CLEANFILES += \
 
 PortableGroup_Simple_DSC.cpp PortableGroup_Simple_DSC.h PortableGroup_Simple_DSC.inl PortableGroup_Simple_DSS.inl PortableGroup_Simple_DSS_T.inl: PortableGroup_Simple_DS-stamp
 
-PortableGroup_Simple_DS-stamp: $(srcdir)/PortableGroup_Simple_DS.idl
+PortableGroup_Simple_DS-stamp: $(srcdir)/PortableGroup_Simple_DS.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_PortableGroup_Export -Wb,export_include=orbsvcs/PortableGroup/portablegroup_export.h $(srcdir)/PortableGroup_Simple_DS.idl
 	@touch $@
 
@@ -1149,7 +1150,7 @@ CLEANFILES += \
 
 PortableGroupC.cpp PortableGroupC.h PortableGroupC.inl PortableGroupS.cpp PortableGroupS.h PortableGroupS.inl PortableGroupS_T.cpp PortableGroupS_T.inl: PortableGroup-stamp
 
-PortableGroup-stamp: $(srcdir)/PortableGroup.idl
+PortableGroup-stamp: $(srcdir)/PortableGroup.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_PortableGroup_Export -Wb,export_include=orbsvcs/PortableGroup/portablegroup_export.h -GC $(srcdir)/PortableGroup.idl
 	@touch $@
 
@@ -1340,7 +1341,7 @@ CLEANFILES += \
 
 CosLoadBalancingC.cpp CosLoadBalancingC.h CosLoadBalancingC.inl CosLoadBalancingS.cpp CosLoadBalancingS.h CosLoadBalancingS.inl CosLoadBalancingS_T.cpp CosLoadBalancingS_T.h CosLoadBalancingS_T.inl: CosLoadBalancing-stamp
 
-CosLoadBalancing-stamp: $(srcdir)/CosLoadBalancing.idl
+CosLoadBalancing-stamp: $(srcdir)/CosLoadBalancing.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GC -Wb,export_macro=TAO_LoadBalancing_Export -Wb,export_include=orbsvcs/LoadBalancing/LoadBalancing_export.h $(srcdir)/CosLoadBalancing.idl
 	@touch $@
 
@@ -1365,7 +1366,7 @@ CLEANFILES += \
 
 LB_ORTC.cpp LB_ORTC.h LB_ORTC.inl LB_ORTS.h LB_ORTS.inl LB_ORTS_T.h LB_ORTS_T.inl: LB_ORT-stamp
 
-LB_ORT-stamp: $(srcdir)/LB_ORT.idl
+LB_ORT-stamp: $(srcdir)/LB_ORT.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -GC -Wb,export_macro=TAO_LoadBalancing_Export -Wb,export_include=orbsvcs/LoadBalancing/LoadBalancing_export.h $(srcdir)/LB_ORT.idl
 	@touch $@
 
@@ -1652,7 +1653,7 @@ CLEANFILES += \
 
 CosNotificationC.cpp CosNotificationC.h CosNotificationC.inl CosNotificationS.cpp CosNotificationS.h CosNotificationS.inl CosNotificationS_T.cpp CosNotificationS_T.h CosNotificationS_T.inl: CosNotification-stamp
 
-CosNotification-stamp: $(srcdir)/CosNotification.idl
+CosNotification-stamp: $(srcdir)/CosNotification.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Notify_Export -Wb,stub_export_include=orbsvcs/Notify/notify_export.h -Wb,skel_export_macro=TAO_Notify_Skel_Export -Wb,skel_export_include=orbsvcs/Notify/notify_skel_export.h $(srcdir)/CosNotification.idl
 	@touch $@
 
@@ -1681,7 +1682,7 @@ CLEANFILES += \
 
 CosNotifyCommC.cpp CosNotifyCommC.h CosNotifyCommC.inl CosNotifyCommS.cpp CosNotifyCommS.h CosNotifyCommS.inl CosNotifyCommS_T.cpp CosNotifyCommS_T.h CosNotifyCommS_T.inl: CosNotifyComm-stamp
 
-CosNotifyComm-stamp: $(srcdir)/CosNotifyComm.idl
+CosNotifyComm-stamp: $(srcdir)/CosNotifyComm.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Notify_Export -Wb,stub_export_include=orbsvcs/Notify/notify_export.h -Wb,skel_export_macro=TAO_Notify_Skel_Export -Wb,skel_export_include=orbsvcs/Notify/notify_skel_export.h $(srcdir)/CosNotifyComm.idl
 	@touch $@
 
@@ -1710,7 +1711,7 @@ CLEANFILES += \
 
 CosNotifyFilterC.cpp CosNotifyFilterC.h CosNotifyFilterC.inl CosNotifyFilterS.cpp CosNotifyFilterS.h CosNotifyFilterS.inl CosNotifyFilterS_T.cpp CosNotifyFilterS_T.h CosNotifyFilterS_T.inl: CosNotifyFilter-stamp
 
-CosNotifyFilter-stamp: $(srcdir)/CosNotifyFilter.idl
+CosNotifyFilter-stamp: $(srcdir)/CosNotifyFilter.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Notify_Export -Wb,stub_export_include=orbsvcs/Notify/notify_export.h -Wb,skel_export_macro=TAO_Notify_Skel_Export -Wb,skel_export_include=orbsvcs/Notify/notify_skel_export.h $(srcdir)/CosNotifyFilter.idl
 	@touch $@
 
@@ -1739,7 +1740,7 @@ CLEANFILES += \
 
 CosNotifyChannelAdminC.cpp CosNotifyChannelAdminC.h CosNotifyChannelAdminC.inl CosNotifyChannelAdminS.cpp CosNotifyChannelAdminS.h CosNotifyChannelAdminS.inl CosNotifyChannelAdminS_T.cpp CosNotifyChannelAdminS_T.h CosNotifyChannelAdminS_T.inl: CosNotifyChannelAdmin-stamp
 
-CosNotifyChannelAdmin-stamp: $(srcdir)/CosNotifyChannelAdmin.idl
+CosNotifyChannelAdmin-stamp: $(srcdir)/CosNotifyChannelAdmin.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Notify_Export -Wb,stub_export_include=orbsvcs/Notify/notify_export.h -Wb,skel_export_macro=TAO_Notify_Skel_Export -Wb,skel_export_include=orbsvcs/Notify/notify_skel_export.h $(srcdir)/CosNotifyChannelAdmin.idl
 	@touch $@
 
@@ -1768,7 +1769,7 @@ CLEANFILES += \
 
 NotifyExtC.cpp NotifyExtC.h NotifyExtC.inl NotifyExtS.cpp NotifyExtS.h NotifyExtS.inl NotifyExtS_T.cpp NotifyExtS_T.h NotifyExtS_T.inl: NotifyExt-stamp
 
-NotifyExt-stamp: $(srcdir)/NotifyExt.idl
+NotifyExt-stamp: $(srcdir)/NotifyExt.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Notify_Export -Wb,stub_export_include=orbsvcs/Notify/notify_export.h -Wb,skel_export_macro=TAO_Notify_Skel_Export -Wb,skel_export_include=orbsvcs/Notify/notify_skel_export.h $(srcdir)/NotifyExt.idl
 	@touch $@
 
@@ -1797,7 +1798,7 @@ CLEANFILES += \
 
 Event_ForwarderC.cpp Event_ForwarderC.h Event_ForwarderC.inl Event_ForwarderS.cpp Event_ForwarderS.h Event_ForwarderS.inl Event_ForwarderS_T.cpp Event_ForwarderS_T.h Event_ForwarderS_T.inl: Event_Forwarder-stamp
 
-Event_Forwarder-stamp: $(srcdir)/Event_Forwarder.idl
+Event_Forwarder-stamp: $(srcdir)/Event_Forwarder.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Notify_Export -Wb,stub_export_include=orbsvcs/Notify/notify_export.h -Wb,skel_export_macro=TAO_Notify_Skel_Export -Wb,skel_export_include=orbsvcs/Notify/notify_skel_export.h $(srcdir)/Event_Forwarder.idl
 	@touch $@
 
@@ -2320,7 +2321,7 @@ CLEANFILES += \
 
 TimeServiceC.cpp TimeServiceC.h TimeServiceC.inl TimeServiceS.cpp TimeServiceS.h TimeServiceS.inl TimeServiceS_T.cpp TimeServiceS_T.h TimeServiceS_T.inl: TimeService-stamp
 
-TimeService-stamp: $(srcdir)/TimeService.idl
+TimeService-stamp: $(srcdir)/TimeService.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Time_Export -Wb,export_include=orbsvcs/Time/time_export.h $(srcdir)/TimeService.idl
 	@touch $@
 
@@ -2410,7 +2411,7 @@ CLEANFILES += \
 
 CosTradingC.cpp CosTradingC.h CosTradingC.inl CosTradingS.cpp CosTradingS.h CosTradingS.inl CosTradingS_T.cpp CosTradingS_T.h CosTradingS_T.inl: CosTrading-stamp
 
-CosTrading-stamp: $(srcdir)/CosTrading.idl
+CosTrading-stamp: $(srcdir)/CosTrading.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Trading_Export -Wb,stub_export_include=orbsvcs/Trader/trading_export.h -Wb,skel_export_macro=TAO_Trading_Skel_Export -Wb,skel_export_include=orbsvcs/Trader/trading_skel_export.h $(srcdir)/CosTrading.idl
 	@touch $@
 
@@ -2439,7 +2440,7 @@ CLEANFILES += \
 
 CosTradingReposC.cpp CosTradingReposC.h CosTradingReposC.inl CosTradingReposS.cpp CosTradingReposS.h CosTradingReposS.inl CosTradingReposS_T.cpp CosTradingReposS_T.h CosTradingReposS_T.inl: CosTradingRepos-stamp
 
-CosTradingRepos-stamp: $(srcdir)/CosTradingRepos.idl
+CosTradingRepos-stamp: $(srcdir)/CosTradingRepos.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Trading_Export -Wb,stub_export_include=orbsvcs/Trader/trading_export.h -Wb,skel_export_macro=TAO_Trading_Skel_Export -Wb,skel_export_include=orbsvcs/Trader/trading_skel_export.h $(srcdir)/CosTradingRepos.idl
 	@touch $@
 
@@ -2468,7 +2469,7 @@ CLEANFILES += \
 
 CosTradingDynamicC.cpp CosTradingDynamicC.h CosTradingDynamicC.inl CosTradingDynamicS.cpp CosTradingDynamicS.h CosTradingDynamicS.inl CosTradingDynamicS_T.cpp CosTradingDynamicS_T.h CosTradingDynamicS_T.inl: CosTradingDynamic-stamp
 
-CosTradingDynamic-stamp: $(srcdir)/CosTradingDynamic.idl
+CosTradingDynamic-stamp: $(srcdir)/CosTradingDynamic.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Trading_Export -Wb,stub_export_include=orbsvcs/Trader/trading_export.h -Wb,skel_export_macro=TAO_Trading_Skel_Export -Wb,skel_export_include=orbsvcs/Trader/trading_skel_export.h $(srcdir)/CosTradingDynamic.idl
 	@touch $@
 
@@ -2687,7 +2688,7 @@ CLEANFILES += \
 
 DsLogAdminC.cpp DsLogAdminC.h DsLogAdminC.inl DsLogAdminS.cpp DsLogAdminS.h DsLogAdminS.inl DsLogAdminS_T.cpp DsLogAdminS_T.h DsLogAdminS_T.inl: DsLogAdmin-stamp
 
-DsLogAdmin-stamp: $(srcdir)/DsLogAdmin.idl
+DsLogAdmin-stamp: $(srcdir)/DsLogAdmin.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Log_Export -Wb,stub_export_include=orbsvcs/Log/log_export.h -Wb,skel_export_macro=TAO_Log_Skel_Export -Wb,skel_export_include=orbsvcs/Log/log_skel_export.h $(srcdir)/DsLogAdmin.idl
 	@touch $@
 
@@ -2716,7 +2717,7 @@ CLEANFILES += \
 
 DsLogNotificationC.cpp DsLogNotificationC.h DsLogNotificationC.inl DsLogNotificationS.cpp DsLogNotificationS.h DsLogNotificationS.inl DsLogNotificationS_T.cpp DsLogNotificationS_T.h DsLogNotificationS_T.inl: DsLogNotification-stamp
 
-DsLogNotification-stamp: $(srcdir)/DsLogNotification.idl
+DsLogNotification-stamp: $(srcdir)/DsLogNotification.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Log_Export -Wb,stub_export_include=orbsvcs/Log/log_export.h -Wb,skel_export_macro=TAO_Log_Skel_Export -Wb,skel_export_include=orbsvcs/Log/log_skel_export.h $(srcdir)/DsLogNotification.idl
 	@touch $@
 
@@ -2796,7 +2797,7 @@ CLEANFILES += \
 
 DsEventLogAdminC.cpp DsEventLogAdminC.h DsEventLogAdminC.inl DsEventLogAdminS.cpp DsEventLogAdminS.h DsEventLogAdminS.inl DsEventLogAdminS_T.cpp DsEventLogAdminS_T.h DsEventLogAdminS_T.inl: DsEventLogAdmin-stamp
 
-DsEventLogAdmin-stamp: $(srcdir)/DsEventLogAdmin.idl
+DsEventLogAdmin-stamp: $(srcdir)/DsEventLogAdmin.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_EventLog_Export -Wb,stub_export_include=orbsvcs/Log/eventlog_export.h -Wb,skel_export_macro=TAO_EventLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/eventlog_skel_export.h $(srcdir)/DsEventLogAdmin.idl
 	@touch $@
 
@@ -3147,7 +3148,7 @@ CLEANFILES += \
 
 DsNotifyLogAdminC.cpp DsNotifyLogAdminC.h DsNotifyLogAdminC.inl DsNotifyLogAdminS.cpp DsNotifyLogAdminS.h DsNotifyLogAdminS.inl DsNotifyLogAdminS_T.cpp DsNotifyLogAdminS_T.h DsNotifyLogAdminS_T.inl: DsNotifyLogAdmin-stamp
 
-DsNotifyLogAdmin-stamp: $(srcdir)/DsNotifyLogAdmin.idl
+DsNotifyLogAdmin-stamp: $(srcdir)/DsNotifyLogAdmin.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_NotifyLog_Export -Wb,stub_export_include=orbsvcs/Log/notifylog_export.h -Wb,skel_export_macro=TAO_NotifyLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/notifylog_skel_export.h $(srcdir)/DsNotifyLogAdmin.idl
 	@touch $@
 
@@ -3366,7 +3367,7 @@ CLEANFILES += \
 
 FT_CORBA_ORBC.cpp FT_CORBA_ORBC.h FT_CORBA_ORBC.inl FT_CORBA_ORBS.cpp FT_CORBA_ORBS.h FT_CORBA_ORBS.inl FT_CORBA_ORBS_T.cpp FT_CORBA_ORBS_T.h FT_CORBA_ORBS_T.inl: FT_CORBA_ORB-stamp
 
-FT_CORBA_ORB-stamp: $(srcdir)/FT_CORBA_ORB.idl
+FT_CORBA_ORB-stamp: $(srcdir)/FT_CORBA_ORB.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,skel_export_include=tao/PortableServer/PolicyS.h -Wb,export_macro=TAO_FT_ORB_Utils_Export -Wb,export_include=orbsvcs/FaultTolerance/FT_ORB_Utils_export.h $(srcdir)/FT_CORBA_ORB.idl
 	@touch $@
 
@@ -3489,7 +3490,7 @@ CLEANFILES += \
 
 RtecDefaultEventDataC.cpp RtecDefaultEventDataC.h RtecDefaultEventDataC.inl RtecDefaultEventDataS_T.cpp: RtecDefaultEventData-stamp
 
-RtecDefaultEventData-stamp: $(srcdir)/RtecDefaultEventData.idl
+RtecDefaultEventData-stamp: $(srcdir)/RtecDefaultEventData.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_RTEvent_Export -Wb,stub_export_include=orbsvcs/Event/event_export.h -Wb,skel_export_macro=TAO_RTEvent_Skel_Export -Wb,skel_export_include=orbsvcs/Event/event_skel_export.h $(srcdir)/RtecDefaultEventData.idl
 	@touch $@
 
@@ -3508,7 +3509,7 @@ CLEANFILES += \
 
 RtecEventCommC.cpp RtecEventCommC.h RtecEventCommC.inl RtecEventCommS_T.cpp: RtecEventComm-stamp
 
-RtecEventComm-stamp: $(srcdir)/RtecEventComm.idl
+RtecEventComm-stamp: $(srcdir)/RtecEventComm.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_RTEvent_Export -Wb,stub_export_include=orbsvcs/Event/event_export.h -Wb,skel_export_macro=TAO_RTEvent_Skel_Export -Wb,skel_export_include=orbsvcs/Event/event_skel_export.h $(srcdir)/RtecEventComm.idl
 	@touch $@
 
@@ -3527,7 +3528,7 @@ CLEANFILES += \
 
 RtecEventChannelAdminC.cpp RtecEventChannelAdminC.h RtecEventChannelAdminC.inl RtecEventChannelAdminS_T.cpp: RtecEventChannelAdmin-stamp
 
-RtecEventChannelAdmin-stamp: $(srcdir)/RtecEventChannelAdmin.idl
+RtecEventChannelAdmin-stamp: $(srcdir)/RtecEventChannelAdmin.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_RTEvent_Export -Wb,stub_export_include=orbsvcs/Event/event_export.h -Wb,skel_export_macro=TAO_RTEvent_Skel_Export -Wb,skel_export_include=orbsvcs/Event/event_skel_export.h $(srcdir)/RtecEventChannelAdmin.idl
 	@touch $@
 
@@ -3546,7 +3547,7 @@ CLEANFILES += \
 
 RtecUDPAdminC.cpp RtecUDPAdminC.h RtecUDPAdminC.inl RtecUDPAdminS_T.cpp: RtecUDPAdmin-stamp
 
-RtecUDPAdmin-stamp: $(srcdir)/RtecUDPAdmin.idl
+RtecUDPAdmin-stamp: $(srcdir)/RtecUDPAdmin.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_RTEvent_Export -Wb,stub_export_include=orbsvcs/Event/event_export.h -Wb,skel_export_macro=TAO_RTEvent_Skel_Export -Wb,skel_export_include=orbsvcs/Event/event_skel_export.h $(srcdir)/RtecUDPAdmin.idl
 	@touch $@
 
@@ -3579,6 +3580,8 @@ libTAO_RTEvent_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
+  Event/event_export.h \
+  Event/event_skel_export.h \
   Event_Utilities.h \
   Event_Utilities.i \
   RtecDefaultEventData.idl \
@@ -3635,6 +3638,7 @@ libTAO_RTEvent_Skel_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
+  Event/event_skel_export.h \
   RtecDefaultEventDataS.h \
   RtecDefaultEventDataS.inl \
   RtecEventChannelAdminS.h \
@@ -3904,7 +3908,7 @@ CLEANFILES += \
 
 FTRTC.cpp FTRTC.h FTRTC.inl FTRTS.cpp FTRTS.h FTRTS.inl FTRTS_T.cpp FTRTS_T.h FTRTS_T.inl: FTRT-stamp
 
-FTRT-stamp: $(srcdir)/FTRT.idl
+FTRT-stamp: $(srcdir)/FTRT.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=orbsvcs/FtRtEvent/Utils/ftrtevent_export.h -GC $(srcdir)/FTRT.idl
 	@touch $@
 
@@ -3933,7 +3937,7 @@ CLEANFILES += \
 
 FtRtecEventCommC.cpp FtRtecEventCommC.h FtRtecEventCommC.inl FtRtecEventCommS.cpp FtRtecEventCommS.h FtRtecEventCommS.inl FtRtecEventCommS_T.cpp FtRtecEventCommS_T.h FtRtecEventCommS_T.inl: FtRtecEventComm-stamp
 
-FtRtecEventComm-stamp: $(srcdir)/FtRtecEventComm.idl
+FtRtecEventComm-stamp: $(srcdir)/FtRtecEventComm.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=orbsvcs/FtRtEvent/Utils/ftrtevent_export.h -GC $(srcdir)/FtRtecEventComm.idl
 	@touch $@
 
@@ -3962,7 +3966,7 @@ CLEANFILES += \
 
 FTRT_GroupManagerC.cpp FTRT_GroupManagerC.h FTRT_GroupManagerC.inl FTRT_GroupManagerS.cpp FTRT_GroupManagerS.h FTRT_GroupManagerS.inl FTRT_GroupManagerS_T.cpp FTRT_GroupManagerS_T.h FTRT_GroupManagerS_T.inl: FTRT_GroupManager-stamp
 
-FTRT_GroupManager-stamp: $(srcdir)/FTRT_GroupManager.idl
+FTRT_GroupManager-stamp: $(srcdir)/FTRT_GroupManager.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=orbsvcs/FtRtEvent/Utils/ftrtevent_export.h -GC $(srcdir)/FTRT_GroupManager.idl
 	@touch $@
 
@@ -3991,7 +3995,7 @@ CLEANFILES += \
 
 FtRtecEventChannelAdminC.cpp FtRtecEventChannelAdminC.h FtRtecEventChannelAdminC.inl FtRtecEventChannelAdminS.cpp FtRtecEventChannelAdminS.h FtRtecEventChannelAdminS.inl FtRtecEventChannelAdminS_T.cpp FtRtecEventChannelAdminS_T.h FtRtecEventChannelAdminS_T.inl: FtRtecEventChannelAdmin-stamp
 
-FtRtecEventChannelAdmin-stamp: $(srcdir)/FtRtecEventChannelAdmin.idl
+FtRtecEventChannelAdmin-stamp: $(srcdir)/FtRtecEventChannelAdmin.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=orbsvcs/FtRtEvent/Utils/ftrtevent_export.h $(srcdir)/FtRtecEventChannelAdmin.idl
 	@touch $@
 
@@ -4381,7 +4385,7 @@ CLEANFILES += \
 
 FT_CORBAC.cpp FT_CORBAC.h FT_CORBAC.inl FT_CORBAS.cpp FT_CORBAS.h FT_CORBAS.inl FT_CORBAS_T.cpp FT_CORBAS_T.inl: FT_CORBA-stamp
 
-FT_CORBA-stamp: $(srcdir)/FT_CORBA.idl
+FT_CORBA-stamp: $(srcdir)/FT_CORBA.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_FT_Export -Wb,export_include=orbsvcs/FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h $(srcdir)/FT_CORBA.idl
 	@touch $@
 
@@ -4408,7 +4412,7 @@ CLEANFILES += \
 
 FT_ReplicaC.cpp FT_ReplicaC.h FT_ReplicaC.inl FT_ReplicaS.cpp FT_ReplicaS.h FT_ReplicaS.inl FT_ReplicaS_T.cpp FT_ReplicaS_T.inl: FT_Replica-stamp
 
-FT_Replica-stamp: $(srcdir)/FT_Replica.idl
+FT_Replica-stamp: $(srcdir)/FT_Replica.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_FT_Export -Wb,export_include=orbsvcs/FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h $(srcdir)/FT_Replica.idl
 	@touch $@
 
@@ -4435,7 +4439,7 @@ CLEANFILES += \
 
 FT_NotifierC.cpp FT_NotifierC.h FT_NotifierC.inl FT_NotifierS.cpp FT_NotifierS.h FT_NotifierS.inl FT_NotifierS_T.cpp FT_NotifierS_T.inl: FT_Notifier-stamp
 
-FT_Notifier-stamp: $(srcdir)/FT_Notifier.idl
+FT_Notifier-stamp: $(srcdir)/FT_Notifier.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_FT_Export -Wb,export_include=orbsvcs/FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h $(srcdir)/FT_Notifier.idl
 	@touch $@
 
@@ -4462,7 +4466,7 @@ CLEANFILES += \
 
 FT_FaultDetectorFactoryC.cpp FT_FaultDetectorFactoryC.h FT_FaultDetectorFactoryC.inl FT_FaultDetectorFactoryS.cpp FT_FaultDetectorFactoryS.h FT_FaultDetectorFactoryS.inl FT_FaultDetectorFactoryS_T.cpp FT_FaultDetectorFactoryS_T.inl: FT_FaultDetectorFactory-stamp
 
-FT_FaultDetectorFactory-stamp: $(srcdir)/FT_FaultDetectorFactory.idl
+FT_FaultDetectorFactory-stamp: $(srcdir)/FT_FaultDetectorFactory.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_FT_Export -Wb,export_include=orbsvcs/FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h $(srcdir)/FT_FaultDetectorFactory.idl
 	@touch $@
 
@@ -4489,7 +4493,7 @@ CLEANFILES += \
 
 FT_ReplicationManagerC.cpp FT_ReplicationManagerC.h FT_ReplicationManagerC.inl FT_ReplicationManagerS.cpp FT_ReplicationManagerS.h FT_ReplicationManagerS.inl FT_ReplicationManagerS_T.cpp FT_ReplicationManagerS_T.inl: FT_ReplicationManager-stamp
 
-FT_ReplicationManager-stamp: $(srcdir)/FT_ReplicationManager.idl
+FT_ReplicationManager-stamp: $(srcdir)/FT_ReplicationManager.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_FT_Export -Wb,export_include=orbsvcs/FaultTolerance/fault_tol_export.h -Wb,skel_export_include=tao/PortableServer/PolicyS.h $(srcdir)/FT_ReplicationManager.idl
 	@touch $@
 
@@ -4621,7 +4625,7 @@ CLEANFILES += \
 
 HTIOPC.cpp HTIOPC.h HTIOPC.inl HTIOPS.h HTIOPS.inl HTIOPS_T.cpp HTIOPS_T.h HTIOPS_T.inl: HTIOP-stamp
 
-HTIOP-stamp: $(srcdir)/HTIOP.idl
+HTIOP-stamp: $(srcdir)/HTIOP.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=HTIOP_Export -Wb,export_include=orbsvcs/HTIOP/HTIOP_Export.h $(srcdir)/HTIOP.idl
 	@touch $@
 
@@ -4914,7 +4918,7 @@ CLEANFILES += \
 
 RtecSchedulerC.cpp RtecSchedulerC.h RtecSchedulerC.inl RtecSchedulerS.cpp RtecSchedulerS.h RtecSchedulerS.inl RtecSchedulerS_T.cpp RtecSchedulerS_T.h RtecSchedulerS_T.inl: RtecScheduler-stamp
 
-RtecScheduler-stamp: $(srcdir)/RtecScheduler.idl
+RtecScheduler-stamp: $(srcdir)/RtecScheduler.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_RTSched_Export -Wb,export_include=orbsvcs/Sched/sched_export.h $(srcdir)/RtecScheduler.idl
 	@touch $@
 
@@ -5015,7 +5019,7 @@ CLEANFILES += \
 
 RTEventLogAdminC.cpp RTEventLogAdminC.h RTEventLogAdminC.inl RTEventLogAdminS.cpp RTEventLogAdminS.h RTEventLogAdminS.inl RTEventLogAdminS_T.cpp RTEventLogAdminS_T.h RTEventLogAdminS_T.inl: RTEventLogAdmin-stamp
 
-RTEventLogAdmin-stamp: $(srcdir)/RTEventLogAdmin.idl
+RTEventLogAdmin-stamp: $(srcdir)/RTEventLogAdmin.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_RTEventLog_Export -Wb,export_include=orbsvcs/Log/rteventlog_export.h $(srcdir)/RTEventLogAdmin.idl
 	@touch $@
 
@@ -5277,7 +5281,7 @@ CLEANFILES += \
 
 CSIC.cpp CSIC.h CSIC.inl CSIS.inl CSIS_T.inl: CSI-stamp
 
-CSI-stamp: $(srcdir)/CSI.idl
+CSI-stamp: $(srcdir)/CSI.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/CSI.idl
 	@touch $@
 
@@ -5298,7 +5302,7 @@ CLEANFILES += \
 
 CSIIOPC.cpp CSIIOPC.h CSIIOPC.inl CSIIOPS.inl CSIIOPS_T.inl: CSIIOP-stamp
 
-CSIIOP-stamp: $(srcdir)/CSIIOP.idl
+CSIIOP-stamp: $(srcdir)/CSIIOP.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/CSIIOP.idl
 	@touch $@
 
@@ -5319,7 +5323,7 @@ CLEANFILES += \
 
 GSSUPC.cpp GSSUPC.h GSSUPC.inl GSSUPS.inl GSSUPS_T.inl: GSSUP-stamp
 
-GSSUP-stamp: $(srcdir)/GSSUP.idl
+GSSUP-stamp: $(srcdir)/GSSUP.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/GSSUP.idl
 	@touch $@
 
@@ -5346,7 +5350,7 @@ CLEANFILES += \
 
 SecurityC.cpp SecurityC.h SecurityC.inl SecurityS.cpp SecurityS.h SecurityS.inl SecurityS_T.cpp SecurityS_T.inl: Security-stamp
 
-Security-stamp: $(srcdir)/Security.idl
+Security-stamp: $(srcdir)/Security.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/Security.idl
 	@touch $@
 
@@ -5373,7 +5377,7 @@ CLEANFILES += \
 
 SecurityLevel1C.cpp SecurityLevel1C.h SecurityLevel1C.inl SecurityLevel1S.cpp SecurityLevel1S.h SecurityLevel1S.inl SecurityLevel1S_T.cpp SecurityLevel1S_T.inl: SecurityLevel1-stamp
 
-SecurityLevel1-stamp: $(srcdir)/SecurityLevel1.idl
+SecurityLevel1-stamp: $(srcdir)/SecurityLevel1.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/SecurityLevel1.idl
 	@touch $@
 
@@ -5400,7 +5404,7 @@ CLEANFILES += \
 
 SecurityLevel2C.cpp SecurityLevel2C.h SecurityLevel2C.inl SecurityLevel2S.cpp SecurityLevel2S.h SecurityLevel2S.inl SecurityLevel2S_T.cpp SecurityLevel2S_T.inl: SecurityLevel2-stamp
 
-SecurityLevel2-stamp: $(srcdir)/SecurityLevel2.idl
+SecurityLevel2-stamp: $(srcdir)/SecurityLevel2.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/SecurityLevel2.idl
 	@touch $@
 
@@ -5421,7 +5425,7 @@ CLEANFILES += \
 
 SecurityLevel3C.cpp SecurityLevel3C.h SecurityLevel3C.inl SecurityLevel3S.inl SecurityLevel3S_T.inl: SecurityLevel3-stamp
 
-SecurityLevel3-stamp: $(srcdir)/SecurityLevel3.idl
+SecurityLevel3-stamp: $(srcdir)/SecurityLevel3.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_Security_Export -Wb,export_include=orbsvcs/Security/security_export.h $(srcdir)/SecurityLevel3.idl
 	@touch $@
 
@@ -5560,7 +5564,7 @@ CLEANFILES += \
 
 SSLIOPC.cpp SSLIOPC.h SSLIOPC.inl SSLIOPS_T.cpp: SSLIOP-stamp
 
-SSLIOP-stamp: $(srcdir)/SSLIOP.idl
+SSLIOP-stamp: $(srcdir)/SSLIOP.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=TAO_SSLIOP_Export -Wb,export_include=orbsvcs/SSLIOP/SSLIOP_Export.h $(srcdir)/SSLIOP.idl
 	@touch $@
 

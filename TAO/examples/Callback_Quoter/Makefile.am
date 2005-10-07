@@ -12,6 +12,7 @@ ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
+TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
@@ -42,7 +43,7 @@ CLEANFILES = \
 
 ConsumerC.cpp ConsumerC.h ConsumerC.inl ConsumerS.cpp ConsumerS.h ConsumerS.inl ConsumerS_T.cpp ConsumerS_T.h ConsumerS_T.inl: Consumer-stamp
 
-Consumer-stamp: $(srcdir)/Consumer.idl
+Consumer-stamp: $(srcdir)/Consumer.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Consumer.idl
 	@touch $@
 
@@ -71,7 +72,7 @@ CLEANFILES += \
 
 NotifierC.cpp NotifierC.h NotifierC.inl NotifierS.cpp NotifierS.h NotifierS.inl NotifierS_T.cpp NotifierS_T.h NotifierS_T.inl: Notifier-stamp
 
-Notifier-stamp: $(srcdir)/Notifier.idl
+Notifier-stamp: $(srcdir)/Notifier.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Notifier.idl
 	@touch $@
 
@@ -144,7 +145,7 @@ CLEANFILES += \
 
 ConsumerC.cpp ConsumerC.h ConsumerC.inl ConsumerS.cpp ConsumerS.h ConsumerS.inl ConsumerS_T.cpp ConsumerS_T.h ConsumerS_T.inl: Consumer-stamp
 
-Consumer-stamp: $(srcdir)/Consumer.idl
+Consumer-stamp: $(srcdir)/Consumer.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Consumer.idl
 	@touch $@
 
@@ -173,7 +174,7 @@ CLEANFILES += \
 
 NotifierC.cpp NotifierC.h NotifierC.inl NotifierS.cpp NotifierS.h NotifierS.inl NotifierS_T.cpp NotifierS_T.h NotifierS_T.inl: Notifier-stamp
 
-Notifier-stamp: $(srcdir)/Notifier.idl
+Notifier-stamp: $(srcdir)/Notifier.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Notifier.idl
 	@touch $@
 
@@ -245,7 +246,7 @@ CLEANFILES += \
 
 ConsumerC.cpp ConsumerC.h ConsumerC.inl ConsumerS.cpp ConsumerS.h ConsumerS.inl ConsumerS_T.cpp ConsumerS_T.h ConsumerS_T.inl: Consumer-stamp
 
-Consumer-stamp: $(srcdir)/Consumer.idl
+Consumer-stamp: $(srcdir)/Consumer.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Consumer.idl
 	@touch $@
 
@@ -274,7 +275,7 @@ CLEANFILES += \
 
 NotifierC.cpp NotifierC.h NotifierC.inl NotifierS.cpp NotifierS.h NotifierS.inl NotifierS_T.cpp NotifierS_T.h NotifierS_T.inl: Notifier-stamp
 
-Notifier-stamp: $(srcdir)/Notifier.idl
+Notifier-stamp: $(srcdir)/Notifier.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Notifier.idl
 	@touch $@
 

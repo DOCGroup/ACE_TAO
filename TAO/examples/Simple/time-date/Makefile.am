@@ -12,6 +12,7 @@ ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
+TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
@@ -42,7 +43,7 @@ CLEANFILES = \
 
 Time_DateC.cpp Time_DateC.h Time_DateC.inl Time_DateS.cpp Time_DateS.h Time_DateS.inl Time_DateS_T.cpp Time_DateS_T.h Time_DateS_T.inl: Time_Date-stamp
 
-Time_Date-stamp: $(srcdir)/Time_Date.idl
+Time_Date-stamp: $(srcdir)/Time_Date.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Wb,export_macro=Alt_Resource_Factory_Export -Wb,export_include=Alt_Resource_Factory.h $(srcdir)/Time_Date.idl
 	@touch $@
 

@@ -12,6 +12,7 @@ ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
+TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
@@ -42,7 +43,7 @@ CLEANFILES = \
 
 UDPC.cpp UDPC.h UDPC.inl UDPS.cpp UDPS.h UDPS.inl UDPS_T.cpp UDPS_T.h UDPS_T.inl: UDP-stamp
 
-UDP-stamp: $(srcdir)/UDP.idl
+UDP-stamp: $(srcdir)/UDP.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sp -Sd $(srcdir)/UDP.idl
 	@touch $@
 
@@ -102,7 +103,7 @@ CLEANFILES += \
 
 UDPC.cpp UDPC.h UDPC.inl UDPS.cpp UDPS.h UDPS.inl UDPS_T.cpp UDPS_T.h UDPS_T.inl: UDP-stamp
 
-UDP-stamp: $(srcdir)/UDP.idl
+UDP-stamp: $(srcdir)/UDP.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sp -Sd $(srcdir)/UDP.idl
 	@touch $@
 

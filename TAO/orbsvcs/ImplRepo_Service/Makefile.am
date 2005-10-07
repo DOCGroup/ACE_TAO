@@ -12,6 +12,7 @@ ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
+TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
@@ -44,7 +45,7 @@ CLEANFILES = \
 
 ImR_ActivatorC.cpp ImR_ActivatorC.h ImR_ActivatorC.inl ImR_ActivatorS.cpp ImR_ActivatorS.h ImR_ActivatorS.inl ImR_ActivatorS_T.cpp ImR_ActivatorS_T.h ImR_ActivatorS_T.inl: ImR_Activator-stamp
 
-ImR_Activator-stamp: $(srcdir)/ImR_Activator.idl
+ImR_Activator-stamp: $(srcdir)/ImR_Activator.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=ActivatorIDL_Export -Wb,export_include=activator_idl_export.h $(srcdir)/ImR_Activator.idl
 	@touch $@
 
@@ -102,7 +103,7 @@ CLEANFILES += \
 
 ImR_LocatorC.cpp ImR_LocatorC.h ImR_LocatorC.inl ImR_LocatorS.cpp ImR_LocatorS.h ImR_LocatorS.inl ImR_LocatorS_T.cpp ImR_LocatorS_T.h ImR_LocatorS_T.inl: ImR_Locator-stamp
 
-ImR_Locator-stamp: $(srcdir)/ImR_Locator.idl
+ImR_Locator-stamp: $(srcdir)/ImR_Locator.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=LocatorIDL_Export -Wb,export_include=locator_idl_export.h $(srcdir)/ImR_Locator.idl
 	@touch $@
 
@@ -131,7 +132,7 @@ CLEANFILES += \
 
 AsyncStartupWaiterC.cpp AsyncStartupWaiterC.h AsyncStartupWaiterC.inl AsyncStartupWaiterS.cpp AsyncStartupWaiterS.h AsyncStartupWaiterS.inl AsyncStartupWaiterS_T.cpp AsyncStartupWaiterS_T.h AsyncStartupWaiterS_T.inl: AsyncStartupWaiter-stamp
 
-AsyncStartupWaiter-stamp: $(srcdir)/AsyncStartupWaiter.idl
+AsyncStartupWaiter-stamp: $(srcdir)/AsyncStartupWaiter.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,export_macro=LocatorIDL_Export -Wb,export_include=locator_idl_export.h -GH $(srcdir)/AsyncStartupWaiter.idl
 	@touch $@
 

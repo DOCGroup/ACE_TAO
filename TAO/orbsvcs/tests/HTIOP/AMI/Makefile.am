@@ -12,6 +12,7 @@ ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
+TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
@@ -47,7 +48,7 @@ CLEANFILES = \
 
 ami_testC.cpp ami_testC.h ami_testC.inl ami_testS.cpp ami_testS.h ami_testS.inl ami_testS_T.cpp ami_testS_T.h ami_testS_T.inl: ami_test-stamp
 
-ami_test-stamp: $(srcdir)/ami_test.idl
+ami_test-stamp: $(srcdir)/ami_test.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -GC $(srcdir)/ami_test.idl
 	@touch $@
 

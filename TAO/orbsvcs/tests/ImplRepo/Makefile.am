@@ -12,6 +12,7 @@ ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
+TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
@@ -49,8 +50,8 @@ CLEANFILES = \
 
 AirplaneC.cpp AirplaneC.h AirplaneC.inl AirplaneS.cpp AirplaneS.h AirplaneS.inl AirplaneS_T.cpp AirplaneS_T.h AirplaneS_T.inl: Airplane-stamp
 
-Airplane-stamp: $(srcdir)/Airplane.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Airplane.idl
+Airplane-stamp: $(srcdir)/Airplane.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Airplane.idl
 	@touch $@
 
 
@@ -140,8 +141,8 @@ CLEANFILES += \
 
 NesteaC.cpp NesteaC.h NesteaC.inl NesteaS.cpp NesteaS.h NesteaS.inl NesteaS_T.cpp NesteaS_T.h NesteaS_T.inl: Nestea-stamp
 
-Nestea-stamp: $(srcdir)/Nestea.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Nestea.idl
+Nestea-stamp: $(srcdir)/Nestea.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Nestea.idl
 	@touch $@
 
 

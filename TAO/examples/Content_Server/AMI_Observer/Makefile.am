@@ -12,6 +12,7 @@ ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
+TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
@@ -49,7 +50,7 @@ CLEANFILES += \
 
 Push_Web_ServerC.cpp Push_Web_ServerC.h Push_Web_ServerC.inl Push_Web_ServerS.cpp Push_Web_ServerS.h Push_Web_ServerS.inl Push_Web_ServerS_T.cpp Push_Web_ServerS_T.h Push_Web_ServerS_T.inl: Push_Web_Server-stamp
 
-Push_Web_Server-stamp: $(srcdir)/Push_Web_Server.idl
+Push_Web_Server-stamp: $(srcdir)/Push_Web_Server.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -I$(TAO_ROOT)/orbsvcs $(srcdir)/Push_Web_Server.idl
 	@touch $@
 
@@ -121,7 +122,7 @@ CLEANFILES += \
 
 Push_Web_ServerC.cpp Push_Web_ServerC.h Push_Web_ServerC.inl Push_Web_ServerS.cpp Push_Web_ServerS.h Push_Web_ServerS.inl Push_Web_ServerS_T.cpp Push_Web_ServerS_T.h Push_Web_ServerS_T.inl: Push_Web_Server-stamp
 
-Push_Web_Server-stamp: $(srcdir)/Push_Web_Server.idl
+Push_Web_Server-stamp: $(srcdir)/Push_Web_Server.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -I$(TAO_ROOT)/orbsvcs $(srcdir)/Push_Web_Server.idl
 	@touch $@
 

@@ -12,6 +12,7 @@ ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
+TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
@@ -42,7 +43,7 @@ CLEANFILES = \
 
 Event_CommC.cpp Event_CommC.h Event_CommC.inl Event_CommS.cpp Event_CommS.h Event_CommS.inl Event_CommS_T.cpp Event_CommS_T.h Event_CommS_T.inl: Event_Comm-stamp
 
-Event_Comm-stamp: $(srcdir)/Event_Comm.idl
+Event_Comm-stamp: $(srcdir)/Event_Comm.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Event_Comm.idl
 	@touch $@
 
@@ -106,7 +107,7 @@ CLEANFILES += \
 
 Event_CommC.cpp Event_CommC.h Event_CommC.inl Event_CommS.cpp Event_CommS.h Event_CommS.inl Event_CommS_T.cpp Event_CommS_T.h Event_CommS_T.inl: Event_Comm-stamp
 
-Event_Comm-stamp: $(srcdir)/Event_Comm.idl
+Event_Comm-stamp: $(srcdir)/Event_Comm.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Event_Comm.idl
 	@touch $@
 
@@ -172,7 +173,7 @@ CLEANFILES += \
 
 Event_CommC.cpp Event_CommC.h Event_CommC.inl Event_CommS.cpp Event_CommS.h Event_CommS.inl Event_CommS_T.cpp Event_CommS_T.h Event_CommS_T.inl: Event_Comm-stamp
 
-Event_Comm-stamp: $(srcdir)/Event_Comm.idl
+Event_Comm-stamp: $(srcdir)/Event_Comm.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Event_Comm.idl
 	@touch $@
 
