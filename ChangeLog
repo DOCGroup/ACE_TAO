@@ -1,3 +1,8 @@
+Fri Oct  7 08:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-borland.h:
+          Removed ACE_LACKS_MODE_MASKS, it is in config-win32-common.h.
+
 Fri Oct  7 07:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * protocols/ace/HTBP/HTBP_Stream.{h,cpp,inl}:
