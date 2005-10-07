@@ -1,3 +1,11 @@
+Fri Oct  7 18:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeManager/NodeManager_Impl.{h,inl}:
+          Removed inl file, it is empty
+
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.inl:
+          Removed, empty
+
 Thu Oct  6 16:52:21 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         *
@@ -14,13 +22,12 @@ Thu Oct  6 16:11:56 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
 Thu Oct  6 15:32:41 CDT 2005 Stoyan Paunov spaunov@isis.vanderbilt.edu
 
-
 	* DAnCE/spec_RepositoryManager/PC_Updater.cpp
 	* DAnCE/spec_RepositoryManager/PC_Updater.h
 	* DAnCE/spec_RepositoryManager/PC_Updater_T.cpp
 	* DAnCE/spec_RepositoryManager/PC_Updater_T.h
 
-	Added these files which implement a PackageConfiguration visitor. 
+	Added these files which implement a PackageConfiguration visitor.
 	The visitor helps deal with the internal complexity of the PackageConfiguration
 	and helps preseve my sanity ;)
 
@@ -29,7 +36,7 @@ Thu Oct  6 15:32:41 CDT 2005 Stoyan Paunov spaunov@isis.vanderbilt.edu
 	* DAnCE/spec_RepositoryManager/ZIP_Wrapper.cpp
 	* DAnCE/spec_RepositoryManager/ZIP_Wrapper.h
 
-	Some more code. With this the package distribution part of the RM 
+	Some more code. With this the package distribution part of the RM
 	is ready. I still need to clean up a few details. This is coming soon.
 
 
