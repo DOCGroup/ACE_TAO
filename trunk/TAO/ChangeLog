@@ -1,3 +1,9 @@
+Fri Oct  7 07:11:29 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/LogActivator.h:
+
+	  Changed header inclusion guard macro name to match file name.
+
 Fri Oct  7 07:07:28 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* docs/tutorials/Quoter/Event_Service/Quoter_Event_Service.mpc:

@@ -9,8 +9,8 @@
  */
 //=============================================================================
 
-#ifndef TAO_TLS_BASICLOGACTIVATOR_H
-#define TAO_TLS_BASICLOGACTIVATOR_H
+#ifndef TAO_TLS_LOGACTIVATOR_H
+#define TAO_TLS_LOGACTIVATOR_H
 
 #include /**/ "ace/pre.h"
 
