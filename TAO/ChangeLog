@@ -1,3 +1,9 @@
+Fri Oct  7 07:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Big_Request_Muxing/Payload_Receiver.cpp:
+          Removed RefCountServantBase and made the count an Atomic_Op
+          to make sure it does get incremented correctly in a MT situation
+
 Thu Oct  6 10:03:16 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* Makefile.am:
@@ -12,7 +18,7 @@ Thu Oct  6 10:03:16 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 	* docs/tutorials/Quoter/Simple/Persistent/Makefile.am:
 	* docs/tutorials/Quoter/Simple/Server/Makefile.am:
 
-	  Hand tweaks to _CPPFLAGS to find Stub/Skeleton headers in ../idl 
+	  Hand tweaks to _CPPFLAGS to find Stub/Skeleton headers in ../idl
           directory.
 
 	* docs/tutorials/Quoter/AMI/Makefile.am:
