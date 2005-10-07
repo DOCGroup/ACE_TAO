@@ -46,7 +46,7 @@ namespace CIAO
     class Config_Handlers_Export ERE_Handler
     {
     public:
-      static bool external_ref_endpoints (
+      static void external_ref_endpoints (
         const PlanConnectionDescription &src,
         ::Deployment::ExternalReferenceEndpoints &dest);
       

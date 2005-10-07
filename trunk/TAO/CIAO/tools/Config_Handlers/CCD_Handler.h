@@ -44,12 +44,10 @@ namespace CIAO
     class Config_Handlers_Export CCD_Handler
     {
       public:
-       static bool component_interface_descr (
-         const ComponentInterfaceDescription &src,
-         ::Deployment::ComponentInterfaceDescription& dest);
+       static void component_interface_descr (const ComponentInterfaceDescription &src,
+                                              ::Deployment::ComponentInterfaceDescription& dest);
        static ComponentInterfaceDescription
-	   component_interface_descr (
-	       const ::Deployment::ComponentInterfaceDescription&  src);
+	   component_interface_descr (const ::Deployment::ComponentInterfaceDescription&  src);
 
     };
   }

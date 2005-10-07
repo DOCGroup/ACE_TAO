@@ -38,9 +38,9 @@ namespace CIAO
       //the sequence.
       if (desc.source_p ())
         {
-          toconfig.source.length (toconfig.source.length () + 1);
-          toconfig.source[toconfig.source.length () - 1] =
-            CORBA::string_dup (desc.source ().c_str ());
+          // Only one.....
+          toconfig.source.length (1);
+          toconfig.source[0] = desc.source ().c_str ();
         }
 
       for(PlanConnectionDescription::deployRequirement_iterator 
@@ -78,21 +78,18 @@ namespace CIAO
       ERE_Handler::external_ref_endpoints (
 	  desc,
 	  toconfig.externalReference);
-
       
       //Configure the resource value.
       CRDD_Handler crddhandler;
+      CORBA::ULong pos = 0;
+      toconfig.deployedResource.length (desc.count_deployedResource ());
       for(PlanConnectionDescription::deployedResource_iterator res =
 	      desc.begin_deployedResource();
 	  res != desc.end_deployedResource();
 	  res++)
       {
-         
-	  toconfig.deployedResource.length (
-            toconfig.deployedResource.length () + 1);
-
           crddhandler.get_ConnectionResourceDeploymentDescription (
-            toconfig.deployedResource[toconfig.deployedResource.length () - 1],
+            toconfig.deployedResource[pos++],
             *res);
       }
 

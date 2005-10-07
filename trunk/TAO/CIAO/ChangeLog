@@ -1,3 +1,40 @@
+Fri Oct  7 14:25:09 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+        * tools/Config_Handlers/DynAny_Handler/DataType_Handler.cpp
+	* tools/Config_Handlers/DynAny_Handler/DataType_Handler.h
+	* tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp
+	* tools/Config_Handlers/DynAny_Handler/DynAny_Handler.h
+	* tools/Config_Handlers/DynAny_Handler/DynAny_Handler.mpc
+	* tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.cpp
+	* tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.h
+	* tools/Config_Handlers/Any_Handler.cpp
+
+	Add support for using Dynamic Any.  This will evolve in the coming
+	weeks into more complete support for complex types. 
+	
+	* tools/Config_Handlers/ADD_Handler.cpp
+	* tools/Config_Handlers/ADD_Handler.h
+	* tools/Config_Handlers/Basic_Deployment_Data.cpp
+	* tools/Config_Handlers/Basic_Deployment_Data.hpp
+	* tools/Config_Handlers/CCD_Handler.cpp
+	* tools/Config_Handlers/CCD_Handler.h
+	* tools/Config_Handlers/CEPE_Handler.cpp
+	* tools/Config_Handlers/CEPE_Handler.h
+	* tools/Config_Handlers/DP_Handler.cpp
+	* tools/Config_Handlers/DP_PCD_Handler.cpp
+	* tools/Config_Handlers/DP_PCD_Handler.h
+	* tools/Config_Handlers/ERE_Handler.cpp
+	* tools/Config_Handlers/ERE_Handler.h
+	* tools/Config_Handlers/ADD_Handler.cpp
+	* tools/Config_Handlers/IDD_Handler.h
+	* tools/Config_Handlers/MDD_Handler.cpp
+	* tools/Config_Handlers/MDD_Handler.h
+	* tools/Config_Handlers/PCD_Handler.cpp
+	* tools/Config_Handlers/PSPE_Handler.cpp
+	* tools/Config_Handlers/PSPE_Handler.h
+
+	Optimization made possible by improvements in XSC.  
+	
 Fri Oct  7 14:20:36 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/Deployment_Configuration.cpp:

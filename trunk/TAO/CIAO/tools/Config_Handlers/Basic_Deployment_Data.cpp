@@ -46,28 +46,34 @@ namespace CIAO
     // 
 
     DataType::
-    DataType ()
+    DataType (::CIAO::Config_Handlers::TCKind const& kind__)
     : 
     ::XSCRT::Type (), 
+    kind_ (new ::CIAO::Config_Handlers::TCKind (kind__)),
     regulator__ ()
     {
+      kind_->container (this);
     }
 
     DataType::
     DataType (::CIAO::Config_Handlers::DataType const& s)
     :
     ::XSCRT::Type (),
-    kind_ (s.kind_.get () ? new ::CIAO::Config_Handlers::TCKind (*s.kind_) : 0),
+    kind_ (new ::CIAO::Config_Handlers::TCKind (*s.kind_)),
+    enum__ (s.enum__.get () ? new ::CIAO::Config_Handlers::EnumType (*s.enum__) : 0),
     regulator__ ()
     {
-      if (kind_.get ()) kind_->container (this);
+      kind_->container (this);
+      if (enum__.get ()) enum__->container (this);
     }
 
     ::CIAO::Config_Handlers::DataType& DataType::
     operator= (::CIAO::Config_Handlers::DataType const& s)
     {
-      if (s.kind_.get ()) kind (*(s.kind_));
-      else kind_ = ::std::auto_ptr< ::CIAO::Config_Handlers::TCKind > (0);
+      kind (s.kind ());
+
+      if (s.enum__.get ()) enum_ (*(s.enum__));
+      else enum__ = ::std::auto_ptr< ::CIAO::Config_Handlers::EnumType > (0);
 
       return *this;
     }
@@ -75,12 +81,6 @@ namespace CIAO
 
     // DataType
     // 
-    bool DataType::
-    kind_p () const
-    {
-      return kind_.get () != 0;
-    }
-
     ::CIAO::Config_Handlers::TCKind const& DataType::
     kind () const
     {
@@ -90,15 +90,35 @@ namespace CIAO
     void DataType::
     kind (::CIAO::Config_Handlers::TCKind const& e)
     {
-      if (kind_.get ())
+      *kind_ = e;
+    }
+
+    // DataType
+    // 
+    bool DataType::
+    enum_p () const
+    {
+      return enum__.get () != 0;
+    }
+
+    ::CIAO::Config_Handlers::EnumType const& DataType::
+    enum_ () const
+    {
+      return *enum__;
+    }
+
+    void DataType::
+    enum_ (::CIAO::Config_Handlers::EnumType const& e)
+    {
+      if (enum__.get ())
       {
-        *kind_ = e;
+        *enum__ = e;
       }
 
       else
       {
-        kind_ = ::std::auto_ptr< ::CIAO::Config_Handlers::TCKind > (new ::CIAO::Config_Handlers::TCKind (e));
-        kind_->container (this);
+        enum__ = ::std::auto_ptr< ::CIAO::Config_Handlers::EnumType > (new ::CIAO::Config_Handlers::EnumType (e));
+        enum__->container (this);
       }
     }
 
@@ -118,92 +138,206 @@ namespace CIAO
     DataValue (::CIAO::Config_Handlers::DataValue const& s)
     :
     ::XSCRT::Type (),
-    short__ (s.short__.get () ? new ::XMLSchema::short_ (*s.short__) : 0),
-    long__ (s.long__.get () ? new ::XMLSchema::int_ (*s.long__) : 0),
-    ushort_ (s.ushort_.get () ? new ::XMLSchema::unsignedShort (*s.ushort_) : 0),
-    ulong_ (s.ulong_.get () ? new ::XMLSchema::unsignedInt (*s.ulong_) : 0),
-    float__ (s.float__.get () ? new ::XMLSchema::float_ (*s.float__) : 0),
-    double__ (s.double__.get () ? new ::XMLSchema::double_ (*s.double__) : 0),
-    boolean_ (s.boolean_.get () ? new ::XMLSchema::boolean (*s.boolean_) : 0),
-    octet_ (s.octet_.get () ? new ::XMLSchema::unsignedByte (*s.octet_) : 0),
-    objref_ (s.objref_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.objref_) : 0),
-    enum__ (s.enum__.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.enum__) : 0),
-    string_ (s.string_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.string_) : 0),
-    longlong_ (s.longlong_.get () ? new ::XMLSchema::long_ (*s.longlong_) : 0),
-    ulonglong_ (s.ulonglong_.get () ? new ::XMLSchema::unsignedLong (*s.ulonglong_) : 0),
-    longdouble_ (s.longdouble_.get () ? new ::XMLSchema::double_ (*s.longdouble_) : 0),
-    fixed_ (s.fixed_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.fixed_) : 0),
-    typecode_ (s.typecode_.get () ? new ::CIAO::Config_Handlers::DataType (*s.typecode_) : 0),
     regulator__ ()
     {
-      if (short__.get ()) short__->container (this);
-      if (long__.get ()) long__->container (this);
-      if (ushort_.get ()) ushort_->container (this);
-      if (ulong_.get ()) ulong_->container (this);
-      if (float__.get ()) float__->container (this);
-      if (double__.get ()) double__->container (this);
-      if (boolean_.get ()) boolean_->container (this);
-      if (octet_.get ()) octet_->container (this);
-      if (objref_.get ()) objref_->container (this);
-      if (enum__.get ()) enum__->container (this);
-      if (string_.get ()) string_->container (this);
-      if (longlong_.get ()) longlong_->container (this);
-      if (ulonglong_.get ()) ulonglong_->container (this);
-      if (longdouble_.get ()) longdouble_->container (this);
-      if (fixed_.get ()) fixed_->container (this);
-      if (typecode_.get ()) typecode_->container (this);
+      short_.reserve (s.short_.size ());
+      {
+        for (short_const_iterator i (s.short_.begin ());
+        i != s.short_.end ();
+        ++i) add_short (*i);
+      }
+
+      long_.reserve (s.long_.size ());
+      {
+        for (long_const_iterator i (s.long_.begin ());
+        i != s.long_.end ();
+        ++i) add_long (*i);
+      }
+
+      ushort_.reserve (s.ushort_.size ());
+      {
+        for (ushort_const_iterator i (s.ushort_.begin ());
+        i != s.ushort_.end ();
+        ++i) add_ushort (*i);
+      }
+
+      ulong_.reserve (s.ulong_.size ());
+      {
+        for (ulong_const_iterator i (s.ulong_.begin ());
+        i != s.ulong_.end ();
+        ++i) add_ulong (*i);
+      }
+
+      float_.reserve (s.float_.size ());
+      {
+        for (float_const_iterator i (s.float_.begin ());
+        i != s.float_.end ();
+        ++i) add_float (*i);
+      }
+
+      double_.reserve (s.double_.size ());
+      {
+        for (double_const_iterator i (s.double_.begin ());
+        i != s.double_.end ();
+        ++i) add_double (*i);
+      }
+
+      boolean_.reserve (s.boolean_.size ());
+      {
+        for (boolean_const_iterator i (s.boolean_.begin ());
+        i != s.boolean_.end ();
+        ++i) add_boolean (*i);
+      }
+
+      octet_.reserve (s.octet_.size ());
+      {
+        for (octet_const_iterator i (s.octet_.begin ());
+        i != s.octet_.end ();
+        ++i) add_octet (*i);
+      }
+
+      enum_.reserve (s.enum_.size ());
+      {
+        for (enum_const_iterator i (s.enum_.begin ());
+        i != s.enum_.end ();
+        ++i) add_enum (*i);
+      }
+
+      string_.reserve (s.string_.size ());
+      {
+        for (string_const_iterator i (s.string_.begin ());
+        i != s.string_.end ();
+        ++i) add_string (*i);
+      }
+
+      longlong_.reserve (s.longlong_.size ());
+      {
+        for (longlong_const_iterator i (s.longlong_.begin ());
+        i != s.longlong_.end ();
+        ++i) add_longlong (*i);
+      }
+
+      ulonglong_.reserve (s.ulonglong_.size ());
+      {
+        for (ulonglong_const_iterator i (s.ulonglong_.begin ());
+        i != s.ulonglong_.end ();
+        ++i) add_ulonglong (*i);
+      }
+
+      longdouble_.reserve (s.longdouble_.size ());
+      {
+        for (longdouble_const_iterator i (s.longdouble_.begin ());
+        i != s.longdouble_.end ();
+        ++i) add_longdouble (*i);
+      }
     }
 
     ::CIAO::Config_Handlers::DataValue& DataValue::
     operator= (::CIAO::Config_Handlers::DataValue const& s)
     {
-      if (s.short__.get ()) short_ (*(s.short__));
-      else short__ = ::std::auto_ptr< ::XMLSchema::short_ > (0);
+      short_.clear ();
+      short_.reserve (s.short_.size ());
+      {
+        for (short_const_iterator i (s.short_.begin ());
+        i != s.short_.end ();
+        ++i) add_short (*i);
+      }
 
-      if (s.long__.get ()) long_ (*(s.long__));
-      else long__ = ::std::auto_ptr< ::XMLSchema::int_ > (0);
+      long_.clear ();
+      long_.reserve (s.long_.size ());
+      {
+        for (long_const_iterator i (s.long_.begin ());
+        i != s.long_.end ();
+        ++i) add_long (*i);
+      }
 
-      if (s.ushort_.get ()) ushort (*(s.ushort_));
-      else ushort_ = ::std::auto_ptr< ::XMLSchema::unsignedShort > (0);
+      ushort_.clear ();
+      ushort_.reserve (s.ushort_.size ());
+      {
+        for (ushort_const_iterator i (s.ushort_.begin ());
+        i != s.ushort_.end ();
+        ++i) add_ushort (*i);
+      }
 
-      if (s.ulong_.get ()) ulong (*(s.ulong_));
-      else ulong_ = ::std::auto_ptr< ::XMLSchema::unsignedInt > (0);
+      ulong_.clear ();
+      ulong_.reserve (s.ulong_.size ());
+      {
+        for (ulong_const_iterator i (s.ulong_.begin ());
+        i != s.ulong_.end ();
+        ++i) add_ulong (*i);
+      }
 
-      if (s.float__.get ()) float_ (*(s.float__));
-      else float__ = ::std::auto_ptr< ::XMLSchema::float_ > (0);
+      float_.clear ();
+      float_.reserve (s.float_.size ());
+      {
+        for (float_const_iterator i (s.float_.begin ());
+        i != s.float_.end ();
+        ++i) add_float (*i);
+      }
 
-      if (s.double__.get ()) double_ (*(s.double__));
-      else double__ = ::std::auto_ptr< ::XMLSchema::double_ > (0);
+      double_.clear ();
+      double_.reserve (s.double_.size ());
+      {
+        for (double_const_iterator i (s.double_.begin ());
+        i != s.double_.end ();
+        ++i) add_double (*i);
+      }
 
-      if (s.boolean_.get ()) boolean (*(s.boolean_));
-      else boolean_ = ::std::auto_ptr< ::XMLSchema::boolean > (0);
+      boolean_.clear ();
+      boolean_.reserve (s.boolean_.size ());
+      {
+        for (boolean_const_iterator i (s.boolean_.begin ());
+        i != s.boolean_.end ();
+        ++i) add_boolean (*i);
+      }
 
-      if (s.octet_.get ()) octet (*(s.octet_));
-      else octet_ = ::std::auto_ptr< ::XMLSchema::unsignedByte > (0);
+      octet_.clear ();
+      octet_.reserve (s.octet_.size ());
+      {
+        for (octet_const_iterator i (s.octet_.begin ());
+        i != s.octet_.end ();
+        ++i) add_octet (*i);
+      }
 
-      if (s.objref_.get ()) objref (*(s.objref_));
-      else objref_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+      enum_.clear ();
+      enum_.reserve (s.enum_.size ());
+      {
+        for (enum_const_iterator i (s.enum_.begin ());
+        i != s.enum_.end ();
+        ++i) add_enum (*i);
+      }
 
-      if (s.enum__.get ()) enum_ (*(s.enum__));
-      else enum__ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+      string_.clear ();
+      string_.reserve (s.string_.size ());
+      {
+        for (string_const_iterator i (s.string_.begin ());
+        i != s.string_.end ();
+        ++i) add_string (*i);
+      }
 
-      if (s.string_.get ()) string (*(s.string_));
-      else string_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+      longlong_.clear ();
+      longlong_.reserve (s.longlong_.size ());
+      {
+        for (longlong_const_iterator i (s.longlong_.begin ());
+        i != s.longlong_.end ();
+        ++i) add_longlong (*i);
+      }
 
-      if (s.longlong_.get ()) longlong (*(s.longlong_));
-      else longlong_ = ::std::auto_ptr< ::XMLSchema::long_ > (0);
+      ulonglong_.clear ();
+      ulonglong_.reserve (s.ulonglong_.size ());
+      {
+        for (ulonglong_const_iterator i (s.ulonglong_.begin ());
+        i != s.ulonglong_.end ();
+        ++i) add_ulonglong (*i);
+      }
 
-      if (s.ulonglong_.get ()) ulonglong (*(s.ulonglong_));
-      else ulonglong_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (0);
-
-      if (s.longdouble_.get ()) longdouble (*(s.longdouble_));
-      else longdouble_ = ::std::auto_ptr< ::XMLSchema::double_ > (0);
-
-      if (s.fixed_.get ()) fixed (*(s.fixed_));
-      else fixed_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
-
-      if (s.typecode_.get ()) typecode (*(s.typecode_));
-      else typecode_ = ::std::auto_ptr< ::CIAO::Config_Handlers::DataType > (0);
+      longdouble_.clear ();
+      longdouble_.reserve (s.longdouble_.size ());
+      {
+        for (longdouble_const_iterator i (s.longdouble_.begin ());
+        i != s.longdouble_.end ();
+        ++i) add_longdouble (*i);
+      }
 
       return *this;
     }
@@ -211,466 +345,882 @@ namespace CIAO
 
     // DataValue
     // 
-    bool DataValue::
-    short_p () const
+    DataValue::short_iterator DataValue::
+    begin_short ()
     {
-      return short__.get () != 0;
+      return short_.begin ();
     }
 
-    ::XMLSchema::short_ const& DataValue::
-    short_ () const
+    DataValue::short_iterator DataValue::
+    end_short ()
     {
-      return *short__;
+      return short_.end ();
+    }
+
+    DataValue::short_const_iterator DataValue::
+    begin_short () const
+    {
+      return short_.begin ();
+    }
+
+    DataValue::short_const_iterator DataValue::
+    end_short () const
+    {
+      return short_.end ();
     }
 
     void DataValue::
-    short_ (::XMLSchema::short_ const& e)
+    add_short (::XMLSchema::short_ const& e)
     {
-      if (short__.get ())
+      if (short_.capacity () < short_.size () + 1)
       {
-        *short__ = e;
+        ::std::vector< ::XMLSchema::short_ > v;
+        v.reserve (short_.size () + 1);
+
+        while (short_.size ())
+        {
+          //@@ VC6
+          ::XMLSchema::short_& t = short_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          short_.pop_back ();
+        }
+
+        short_.swap (v);
       }
 
-      else
-      {
-        short__ = ::std::auto_ptr< ::XMLSchema::short_ > (new ::XMLSchema::short_ (e));
-        short__->container (this);
-      }
+      short_.push_back (e);
+      short_.back ().container (this);
+    }
+
+    size_t DataValue::
+    count_short(void) const
+    {
+      return short_.size ();
     }
 
     // DataValue
     // 
-    bool DataValue::
-    long_p () const
+    DataValue::long_iterator DataValue::
+    begin_long ()
     {
-      return long__.get () != 0;
+      return long_.begin ();
     }
 
-    ::XMLSchema::int_ const& DataValue::
-    long_ () const
+    DataValue::long_iterator DataValue::
+    end_long ()
     {
-      return *long__;
+      return long_.end ();
+    }
+
+    DataValue::long_const_iterator DataValue::
+    begin_long () const
+    {
+      return long_.begin ();
+    }
+
+    DataValue::long_const_iterator DataValue::
+    end_long () const
+    {
+      return long_.end ();
     }
 
     void DataValue::
-    long_ (::XMLSchema::int_ const& e)
+    add_long (::XMLSchema::int_ const& e)
     {
-      if (long__.get ())
+      if (long_.capacity () < long_.size () + 1)
       {
-        *long__ = e;
+        ::std::vector< ::XMLSchema::int_ > v;
+        v.reserve (long_.size () + 1);
+
+        while (long_.size ())
+        {
+          //@@ VC6
+          ::XMLSchema::int_& t = long_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          long_.pop_back ();
+        }
+
+        long_.swap (v);
       }
 
-      else
-      {
-        long__ = ::std::auto_ptr< ::XMLSchema::int_ > (new ::XMLSchema::int_ (e));
-        long__->container (this);
-      }
+      long_.push_back (e);
+      long_.back ().container (this);
+    }
+
+    size_t DataValue::
+    count_long(void) const
+    {
+      return long_.size ();
     }
 
     // DataValue
     // 
-    bool DataValue::
-    ushort_p () const
+    DataValue::ushort_iterator DataValue::
+    begin_ushort ()
     {
-      return ushort_.get () != 0;
+      return ushort_.begin ();
     }
 
-    ::XMLSchema::unsignedShort const& DataValue::
-    ushort () const
+    DataValue::ushort_iterator DataValue::
+    end_ushort ()
     {
-      return *ushort_;
+      return ushort_.end ();
+    }
+
+    DataValue::ushort_const_iterator DataValue::
+    begin_ushort () const
+    {
+      return ushort_.begin ();
+    }
+
+    DataValue::ushort_const_iterator DataValue::
+    end_ushort () const
+    {
+      return ushort_.end ();
     }
 
     void DataValue::
-    ushort (::XMLSchema::unsignedShort const& e)
+    add_ushort (::XMLSchema::unsignedShort const& e)
     {
-      if (ushort_.get ())
+      if (ushort_.capacity () < ushort_.size () + 1)
       {
-        *ushort_ = e;
+        ::std::vector< ::XMLSchema::unsignedShort > v;
+        v.reserve (ushort_.size () + 1);
+
+        while (ushort_.size ())
+        {
+          //@@ VC6
+          ::XMLSchema::unsignedShort& t = ushort_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          ushort_.pop_back ();
+        }
+
+        ushort_.swap (v);
       }
 
-      else
-      {
-        ushort_ = ::std::auto_ptr< ::XMLSchema::unsignedShort > (new ::XMLSchema::unsignedShort (e));
-        ushort_->container (this);
-      }
+      ushort_.push_back (e);
+      ushort_.back ().container (this);
+    }
+
+    size_t DataValue::
+    count_ushort(void) const
+    {
+      return ushort_.size ();
     }
 
     // DataValue
     // 
-    bool DataValue::
-    ulong_p () const
+    DataValue::ulong_iterator DataValue::
+    begin_ulong ()
     {
-      return ulong_.get () != 0;
+      return ulong_.begin ();
     }
 
-    ::XMLSchema::unsignedInt const& DataValue::
-    ulong () const
+    DataValue::ulong_iterator DataValue::
+    end_ulong ()
     {
-      return *ulong_;
+      return ulong_.end ();
+    }
+
+    DataValue::ulong_const_iterator DataValue::
+    begin_ulong () const
+    {
+      return ulong_.begin ();
+    }
+
+    DataValue::ulong_const_iterator DataValue::
+    end_ulong () const
+    {
+      return ulong_.end ();
     }
 
     void DataValue::
-    ulong (::XMLSchema::unsignedInt const& e)
+    add_ulong (::XMLSchema::unsignedInt const& e)
     {
-      if (ulong_.get ())
+      if (ulong_.capacity () < ulong_.size () + 1)
       {
-        *ulong_ = e;
+        ::std::vector< ::XMLSchema::unsignedInt > v;
+        v.reserve (ulong_.size () + 1);
+
+        while (ulong_.size ())
+        {
+          //@@ VC6
+          ::XMLSchema::unsignedInt& t = ulong_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          ulong_.pop_back ();
+        }
+
+        ulong_.swap (v);
       }
 
-      else
-      {
-        ulong_ = ::std::auto_ptr< ::XMLSchema::unsignedInt > (new ::XMLSchema::unsignedInt (e));
-        ulong_->container (this);
-      }
+      ulong_.push_back (e);
+      ulong_.back ().container (this);
+    }
+
+    size_t DataValue::
+    count_ulong(void) const
+    {
+      return ulong_.size ();
     }
 
     // DataValue
     // 
-    bool DataValue::
-    float_p () const
+    DataValue::float_iterator DataValue::
+    begin_float ()
     {
-      return float__.get () != 0;
+      return float_.begin ();
     }
 
-    ::XMLSchema::float_ const& DataValue::
-    float_ () const
+    DataValue::float_iterator DataValue::
+    end_float ()
     {
-      return *float__;
+      return float_.end ();
+    }
+
+    DataValue::float_const_iterator DataValue::
+    begin_float () const
+    {
+      return float_.begin ();
+    }
+
+    DataValue::float_const_iterator DataValue::
+    end_float () const
+    {
+      return float_.end ();
     }
 
     void DataValue::
-    float_ (::XMLSchema::float_ const& e)
+    add_float (::XMLSchema::float_ const& e)
     {
-      if (float__.get ())
+      if (float_.capacity () < float_.size () + 1)
       {
-        *float__ = e;
+        ::std::vector< ::XMLSchema::float_ > v;
+        v.reserve (float_.size () + 1);
+
+        while (float_.size ())
+        {
+          //@@ VC6
+          ::XMLSchema::float_& t = float_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          float_.pop_back ();
+        }
+
+        float_.swap (v);
       }
 
-      else
-      {
-        float__ = ::std::auto_ptr< ::XMLSchema::float_ > (new ::XMLSchema::float_ (e));
-        float__->container (this);
-      }
+      float_.push_back (e);
+      float_.back ().container (this);
+    }
+
+    size_t DataValue::
+    count_float(void) const
+    {
+      return float_.size ();
     }
 
     // DataValue
     // 
-    bool DataValue::
-    double_p () const
+    DataValue::double_iterator DataValue::
+    begin_double ()
     {
-      return double__.get () != 0;
+      return double_.begin ();
     }
 
-    ::XMLSchema::double_ const& DataValue::
-    double_ () const
+    DataValue::double_iterator DataValue::
+    end_double ()
     {
-      return *double__;
+      return double_.end ();
+    }
+
+    DataValue::double_const_iterator DataValue::
+    begin_double () const
+    {
+      return double_.begin ();
+    }
+
+    DataValue::double_const_iterator DataValue::
+    end_double () const
+    {
+      return double_.end ();
     }
 
     void DataValue::
-    double_ (::XMLSchema::double_ const& e)
+    add_double (::XMLSchema::double_ const& e)
     {
-      if (double__.get ())
+      if (double_.capacity () < double_.size () + 1)
       {
-        *double__ = e;
+        ::std::vector< ::XMLSchema::double_ > v;
+        v.reserve (double_.size () + 1);
+
+        while (double_.size ())
+        {
+          //@@ VC6
+          ::XMLSchema::double_& t = double_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          double_.pop_back ();
+        }
+
+        double_.swap (v);
       }
 
-      else
-      {
-        double__ = ::std::auto_ptr< ::XMLSchema::double_ > (new ::XMLSchema::double_ (e));
-        double__->container (this);
-      }
+      double_.push_back (e);
+      double_.back ().container (this);
+    }
+
+    size_t DataValue::
+    count_double(void) const
+    {
+      return double_.size ();
     }
 
     // DataValue
     // 
-    bool DataValue::
-    boolean_p () const
+    DataValue::boolean_iterator DataValue::
+    begin_boolean ()
     {
-      return boolean_.get () != 0;
+      return boolean_.begin ();
     }
 
-    ::XMLSchema::boolean const& DataValue::
-    boolean () const
+    DataValue::boolean_iterator DataValue::
+    end_boolean ()
     {
-      return *boolean_;
+      return boolean_.end ();
+    }
+
+    DataValue::boolean_const_iterator DataValue::
+    begin_boolean () const
+    {
+      return boolean_.begin ();
+    }
+
+    DataValue::boolean_const_iterator DataValue::
+    end_boolean () const
+    {
+      return boolean_.end ();
     }
 
     void DataValue::
-    boolean (::XMLSchema::boolean const& e)
+    add_boolean (::XMLSchema::boolean const& e)
     {
-      if (boolean_.get ())
+      if (boolean_.capacity () < boolean_.size () + 1)
       {
-        *boolean_ = e;
+        ::std::vector< ::XMLSchema::boolean > v;
+        v.reserve (boolean_.size () + 1);
+
+        while (boolean_.size ())
+        {
+          //@@ VC6
+          ::XMLSchema::boolean& t = boolean_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          boolean_.pop_back ();
+        }
+
+        boolean_.swap (v);
       }
 
-      else
-      {
-        boolean_ = ::std::auto_ptr< ::XMLSchema::boolean > (new ::XMLSchema::boolean (e));
-        boolean_->container (this);
-      }
+      boolean_.push_back (e);
+      boolean_.back ().container (this);
+    }
+
+    size_t DataValue::
+    count_boolean(void) const
+    {
+      return boolean_.size ();
     }
 
     // DataValue
     // 
-    bool DataValue::
-    octet_p () const
+    DataValue::octet_iterator DataValue::
+    begin_octet ()
     {
-      return octet_.get () != 0;
+      return octet_.begin ();
     }
 
-    ::XMLSchema::unsignedByte const& DataValue::
-    octet () const
+    DataValue::octet_iterator DataValue::
+    end_octet ()
     {
-      return *octet_;
+      return octet_.end ();
+    }
+
+    DataValue::octet_const_iterator DataValue::
+    begin_octet () const
+    {
+      return octet_.begin ();
+    }
+
+    DataValue::octet_const_iterator DataValue::
+    end_octet () const
+    {
+      return octet_.end ();
     }
 
     void DataValue::
-    octet (::XMLSchema::unsignedByte const& e)
+    add_octet (::XMLSchema::unsignedByte const& e)
     {
-      if (octet_.get ())
+      if (octet_.capacity () < octet_.size () + 1)
       {
-        *octet_ = e;
+        ::std::vector< ::XMLSchema::unsignedByte > v;
+        v.reserve (octet_.size () + 1);
+
+        while (octet_.size ())
+        {
+          //@@ VC6
+          ::XMLSchema::unsignedByte& t = octet_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          octet_.pop_back ();
+        }
+
+        octet_.swap (v);
       }
 
-      else
-      {
-        octet_ = ::std::auto_ptr< ::XMLSchema::unsignedByte > (new ::XMLSchema::unsignedByte (e));
-        octet_->container (this);
-      }
+      octet_.push_back (e);
+      octet_.back ().container (this);
+    }
+
+    size_t DataValue::
+    count_octet(void) const
+    {
+      return octet_.size ();
     }
 
     // DataValue
     // 
-    bool DataValue::
-    objref_p () const
+    DataValue::enum_iterator DataValue::
+    begin_enum ()
     {
-      return objref_.get () != 0;
+      return enum_.begin ();
     }
 
-    ::XMLSchema::string< ACE_TCHAR > const& DataValue::
-    objref () const
+    DataValue::enum_iterator DataValue::
+    end_enum ()
     {
-      return *objref_;
+      return enum_.end ();
+    }
+
+    DataValue::enum_const_iterator DataValue::
+    begin_enum () const
+    {
+      return enum_.begin ();
+    }
+
+    DataValue::enum_const_iterator DataValue::
+    end_enum () const
+    {
+      return enum_.end ();
     }
 
     void DataValue::
-    objref (::XMLSchema::string< ACE_TCHAR > const& e)
+    add_enum (::XMLSchema::string< ACE_TCHAR > const& e)
     {
-      if (objref_.get ())
+      if (enum_.capacity () < enum_.size () + 1)
       {
-        *objref_ = e;
+        ::std::vector< ::XMLSchema::string< ACE_TCHAR > > v;
+        v.reserve (enum_.size () + 1);
+
+        while (enum_.size ())
+        {
+          //@@ VC6
+          ::XMLSchema::string< ACE_TCHAR >& t = enum_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          enum_.pop_back ();
+        }
+
+        enum_.swap (v);
       }
 
-      else
-      {
-        objref_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
-        objref_->container (this);
-      }
+      enum_.push_back (e);
+      enum_.back ().container (this);
+    }
+
+    size_t DataValue::
+    count_enum(void) const
+    {
+      return enum_.size ();
     }
 
     // DataValue
     // 
-    bool DataValue::
-    enum_p () const
+    DataValue::string_iterator DataValue::
+    begin_string ()
     {
-      return enum__.get () != 0;
+      return string_.begin ();
     }
 
-    ::XMLSchema::string< ACE_TCHAR > const& DataValue::
-    enum_ () const
+    DataValue::string_iterator DataValue::
+    end_string ()
     {
-      return *enum__;
+      return string_.end ();
+    }
+
+    DataValue::string_const_iterator DataValue::
+    begin_string () const
+    {
+      return string_.begin ();
+    }
+
+    DataValue::string_const_iterator DataValue::
+    end_string () const
+    {
+      return string_.end ();
     }
 
     void DataValue::
-    enum_ (::XMLSchema::string< ACE_TCHAR > const& e)
+    add_string (::XMLSchema::string< ACE_TCHAR > const& e)
     {
-      if (enum__.get ())
+      if (string_.capacity () < string_.size () + 1)
       {
-        *enum__ = e;
+        ::std::vector< ::XMLSchema::string< ACE_TCHAR > > v;
+        v.reserve (string_.size () + 1);
+
+        while (string_.size ())
+        {
+          //@@ VC6
+          ::XMLSchema::string< ACE_TCHAR >& t = string_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          string_.pop_back ();
+        }
+
+        string_.swap (v);
       }
 
-      else
-      {
-        enum__ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
-        enum__->container (this);
-      }
+      string_.push_back (e);
+      string_.back ().container (this);
+    }
+
+    size_t DataValue::
+    count_string(void) const
+    {
+      return string_.size ();
     }
 
     // DataValue
     // 
-    bool DataValue::
-    string_p () const
+    DataValue::longlong_iterator DataValue::
+    begin_longlong ()
     {
-      return string_.get () != 0;
+      return longlong_.begin ();
     }
 
-    ::XMLSchema::string< ACE_TCHAR > const& DataValue::
-    string () const
+    DataValue::longlong_iterator DataValue::
+    end_longlong ()
     {
-      return *string_;
+      return longlong_.end ();
+    }
+
+    DataValue::longlong_const_iterator DataValue::
+    begin_longlong () const
+    {
+      return longlong_.begin ();
+    }
+
+    DataValue::longlong_const_iterator DataValue::
+    end_longlong () const
+    {
+      return longlong_.end ();
     }
 
     void DataValue::
-    string (::XMLSchema::string< ACE_TCHAR > const& e)
+    add_longlong (::XMLSchema::long_ const& e)
     {
-      if (string_.get ())
+      if (longlong_.capacity () < longlong_.size () + 1)
       {
-        *string_ = e;
+        ::std::vector< ::XMLSchema::long_ > v;
+        v.reserve (longlong_.size () + 1);
+
+        while (longlong_.size ())
+        {
+          //@@ VC6
+          ::XMLSchema::long_& t = longlong_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          longlong_.pop_back ();
+        }
+
+        longlong_.swap (v);
       }
 
-      else
-      {
-        string_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
-        string_->container (this);
-      }
+      longlong_.push_back (e);
+      longlong_.back ().container (this);
+    }
+
+    size_t DataValue::
+    count_longlong(void) const
+    {
+      return longlong_.size ();
     }
 
     // DataValue
     // 
-    bool DataValue::
-    longlong_p () const
+    DataValue::ulonglong_iterator DataValue::
+    begin_ulonglong ()
     {
-      return longlong_.get () != 0;
+      return ulonglong_.begin ();
     }
 
-    ::XMLSchema::long_ const& DataValue::
-    longlong () const
+    DataValue::ulonglong_iterator DataValue::
+    end_ulonglong ()
     {
-      return *longlong_;
+      return ulonglong_.end ();
+    }
+
+    DataValue::ulonglong_const_iterator DataValue::
+    begin_ulonglong () const
+    {
+      return ulonglong_.begin ();
+    }
+
+    DataValue::ulonglong_const_iterator DataValue::
+    end_ulonglong () const
+    {
+      return ulonglong_.end ();
     }
 
     void DataValue::
-    longlong (::XMLSchema::long_ const& e)
+    add_ulonglong (::XMLSchema::unsignedLong const& e)
     {
-      if (longlong_.get ())
+      if (ulonglong_.capacity () < ulonglong_.size () + 1)
       {
-        *longlong_ = e;
+        ::std::vector< ::XMLSchema::unsignedLong > v;
+        v.reserve (ulonglong_.size () + 1);
+
+        while (ulonglong_.size ())
+        {
+          //@@ VC6
+          ::XMLSchema::unsignedLong& t = ulonglong_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          ulonglong_.pop_back ();
+        }
+
+        ulonglong_.swap (v);
       }
 
-      else
-      {
-        longlong_ = ::std::auto_ptr< ::XMLSchema::long_ > (new ::XMLSchema::long_ (e));
-        longlong_->container (this);
-      }
+      ulonglong_.push_back (e);
+      ulonglong_.back ().container (this);
+    }
+
+    size_t DataValue::
+    count_ulonglong(void) const
+    {
+      return ulonglong_.size ();
     }
 
     // DataValue
     // 
-    bool DataValue::
-    ulonglong_p () const
+    DataValue::longdouble_iterator DataValue::
+    begin_longdouble ()
     {
-      return ulonglong_.get () != 0;
+      return longdouble_.begin ();
     }
 
-    ::XMLSchema::unsignedLong const& DataValue::
-    ulonglong () const
+    DataValue::longdouble_iterator DataValue::
+    end_longdouble ()
     {
-      return *ulonglong_;
+      return longdouble_.end ();
+    }
+
+    DataValue::longdouble_const_iterator DataValue::
+    begin_longdouble () const
+    {
+      return longdouble_.begin ();
+    }
+
+    DataValue::longdouble_const_iterator DataValue::
+    end_longdouble () const
+    {
+      return longdouble_.end ();
     }
 
     void DataValue::
-    ulonglong (::XMLSchema::unsignedLong const& e)
+    add_longdouble (::XMLSchema::double_ const& e)
     {
-      if (ulonglong_.get ())
+      if (longdouble_.capacity () < longdouble_.size () + 1)
       {
-        *ulonglong_ = e;
+        ::std::vector< ::XMLSchema::double_ > v;
+        v.reserve (longdouble_.size () + 1);
+
+        while (longdouble_.size ())
+        {
+          //@@ VC6
+          ::XMLSchema::double_& t = longdouble_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          longdouble_.pop_back ();
+        }
+
+        longdouble_.swap (v);
       }
 
-      else
-      {
-        ulonglong_ = ::std::auto_ptr< ::XMLSchema::unsignedLong > (new ::XMLSchema::unsignedLong (e));
-        ulonglong_->container (this);
-      }
+      longdouble_.push_back (e);
+      longdouble_.back ().container (this);
     }
 
-    // DataValue
+    size_t DataValue::
+    count_longdouble(void) const
+    {
+      return longdouble_.size ();
+    }
+
+
+    // EnumType
     // 
-    bool DataValue::
-    longdouble_p () const
+
+    EnumType::
+    EnumType (::XMLSchema::string< ACE_TCHAR > const& name__,
+    ::XMLSchema::string< ACE_TCHAR > const& typeId__)
+    : 
+    ::XSCRT::Type (), 
+    name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
+    typeId_ (new ::XMLSchema::string< ACE_TCHAR > (typeId__)),
+    regulator__ ()
     {
-      return longdouble_.get () != 0;
+      name_->container (this);
+      typeId_->container (this);
     }
 
-    ::XMLSchema::double_ const& DataValue::
-    longdouble () const
+    EnumType::
+    EnumType (::CIAO::Config_Handlers::EnumType const& s)
+    :
+    ::XSCRT::Type (),
+    name_ (new ::XMLSchema::string< ACE_TCHAR > (*s.name_)),
+    typeId_ (new ::XMLSchema::string< ACE_TCHAR > (*s.typeId_)),
+    regulator__ ()
     {
-      return *longdouble_;
-    }
-
-    void DataValue::
-    longdouble (::XMLSchema::double_ const& e)
-    {
-      if (longdouble_.get ())
+      name_->container (this);
+      typeId_->container (this);
+      member_.reserve (s.member_.size ());
       {
-        *longdouble_ = e;
+        for (member_const_iterator i (s.member_.begin ());
+        i != s.member_.end ();
+        ++i) add_member (*i);
+      }
+    }
+
+    ::CIAO::Config_Handlers::EnumType& EnumType::
+    operator= (::CIAO::Config_Handlers::EnumType const& s)
+    {
+      name (s.name ());
+
+      typeId (s.typeId ());
+
+      member_.clear ();
+      member_.reserve (s.member_.size ());
+      {
+        for (member_const_iterator i (s.member_.begin ());
+        i != s.member_.end ();
+        ++i) add_member (*i);
       }
 
-      else
-      {
-        longdouble_ = ::std::auto_ptr< ::XMLSchema::double_ > (new ::XMLSchema::double_ (e));
-        longdouble_->container (this);
-      }
+      return *this;
     }
 
-    // DataValue
+
+    // EnumType
     // 
-    bool DataValue::
-    fixed_p () const
+    ::XMLSchema::string< ACE_TCHAR > const& EnumType::
+    name () const
     {
-      return fixed_.get () != 0;
+      return *name_;
     }
 
-    ::XMLSchema::string< ACE_TCHAR > const& DataValue::
-    fixed () const
+    void EnumType::
+    name (::XMLSchema::string< ACE_TCHAR > const& e)
     {
-      return *fixed_;
+      *name_ = e;
     }
 
-    void DataValue::
-    fixed (::XMLSchema::string< ACE_TCHAR > const& e)
-    {
-      if (fixed_.get ())
-      {
-        *fixed_ = e;
-      }
-
-      else
-      {
-        fixed_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
-        fixed_->container (this);
-      }
-    }
-
-    // DataValue
+    // EnumType
     // 
-    bool DataValue::
-    typecode_p () const
+    ::XMLSchema::string< ACE_TCHAR > const& EnumType::
+    typeId () const
     {
-      return typecode_.get () != 0;
+      return *typeId_;
     }
 
-    ::CIAO::Config_Handlers::DataType const& DataValue::
-    typecode () const
+    void EnumType::
+    typeId (::XMLSchema::string< ACE_TCHAR > const& e)
     {
-      return *typecode_;
+      *typeId_ = e;
     }
 
-    void DataValue::
-    typecode (::CIAO::Config_Handlers::DataType const& e)
+    // EnumType
+    // 
+    EnumType::member_iterator EnumType::
+    begin_member ()
     {
-      if (typecode_.get ())
+      return member_.begin ();
+    }
+
+    EnumType::member_iterator EnumType::
+    end_member ()
+    {
+      return member_.end ();
+    }
+
+    EnumType::member_const_iterator EnumType::
+    begin_member () const
+    {
+      return member_.begin ();
+    }
+
+    EnumType::member_const_iterator EnumType::
+    end_member () const
+    {
+      return member_.end ();
+    }
+
+    void EnumType::
+    add_member (::XMLSchema::string< ACE_TCHAR > const& e)
+    {
+      if (member_.capacity () < member_.size () + 1)
       {
-        *typecode_ = e;
+        ::std::vector< ::XMLSchema::string< ACE_TCHAR > > v;
+        v.reserve (member_.size () + 1);
+
+        while (member_.size ())
+        {
+          //@@ VC6
+          ::XMLSchema::string< ACE_TCHAR >& t = member_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          member_.pop_back ();
+        }
+
+        member_.swap (v);
       }
 
-      else
-      {
-        typecode_ = ::std::auto_ptr< ::CIAO::Config_Handlers::DataType > (new ::CIAO::Config_Handlers::DataType (e));
-        typecode_->container (this);
-      }
+      member_.push_back (e);
+      member_.back ().container (this);
+    }
+
+    size_t EnumType::
+    count_member(void) const
+    {
+      return member_.size ();
     }
 
 
@@ -4419,8 +4969,14 @@ namespace CIAO
 
         if (n == "kind")
         {
-          ::CIAO::Config_Handlers::TCKind t (e);
-          kind (t);
+          kind_ = ::std::auto_ptr< ::CIAO::Config_Handlers::TCKind > (new ::CIAO::Config_Handlers::TCKind (e));
+          kind_->container (this);
+        }
+
+        else if (n == "enum")
+        {
+          ::CIAO::Config_Handlers::EnumType t (e);
+          enum_ (t);
         }
 
         else 
@@ -4447,97 +5003,118 @@ namespace CIAO
         if (n == "short")
         {
           ::XMLSchema::short_ t (e);
-          short_ (t);
+          add_short (t);
         }
 
         else if (n == "long")
         {
           ::XMLSchema::int_ t (e);
-          long_ (t);
+          add_long (t);
         }
 
         else if (n == "ushort")
         {
           ::XMLSchema::unsignedShort t (e);
-          ushort (t);
+          add_ushort (t);
         }
 
         else if (n == "ulong")
         {
           ::XMLSchema::unsignedInt t (e);
-          ulong (t);
+          add_ulong (t);
         }
 
         else if (n == "float")
         {
           ::XMLSchema::float_ t (e);
-          float_ (t);
+          add_float (t);
         }
 
         else if (n == "double")
         {
           ::XMLSchema::double_ t (e);
-          double_ (t);
+          add_double (t);
         }
 
         else if (n == "boolean")
         {
           ::XMLSchema::boolean t (e);
-          boolean (t);
+          add_boolean (t);
         }
 
         else if (n == "octet")
         {
           ::XMLSchema::unsignedByte t (e);
-          octet (t);
-        }
-
-        else if (n == "objref")
-        {
-          ::XMLSchema::string< ACE_TCHAR > t (e);
-          objref (t);
+          add_octet (t);
         }
 
         else if (n == "enum")
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
-          enum_ (t);
+          add_enum (t);
         }
 
         else if (n == "string")
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
-          string (t);
+          add_string (t);
         }
 
         else if (n == "longlong")
         {
           ::XMLSchema::long_ t (e);
-          longlong (t);
+          add_longlong (t);
         }
 
         else if (n == "ulonglong")
         {
           ::XMLSchema::unsignedLong t (e);
-          ulonglong (t);
+          add_ulonglong (t);
         }
 
         else if (n == "longdouble")
         {
           ::XMLSchema::double_ t (e);
-          longdouble (t);
+          add_longdouble (t);
         }
 
-        else if (n == "fixed")
+        else 
+        {
+        }
+      }
+    }
+
+    // EnumType
+    //
+
+    EnumType::
+    EnumType (::XSCRT::XML::Element< ACE_TCHAR > const& e)
+    :Base__ (e), regulator__ ()
+    {
+
+      ::XSCRT::Parser< ACE_TCHAR > p (e);
+
+      while (p.more_elements ())
+      {
+        ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
+        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
+
+        if (n == "name")
+        {
+          name_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
+          name_->container (this);
+        }
+
+        else if (n == "typeId")
+        {
+          typeId_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
+          typeId_->container (this);
+        }
+
+        else if (n == "member")
         {
           ::XMLSchema::string< ACE_TCHAR > t (e);
-          fixed (t);
-        }
-
-        else if (n == "typecode")
-        {
-          ::CIAO::Config_Handlers::DataType t (e);
-          typecode (t);
+          add_member (t);
         }
 
         else 
@@ -5781,6 +6358,20 @@ namespace CIAO
 
       DataValueTypeInfoInitializer DataValueTypeInfoInitializer_;
 
+      struct EnumTypeTypeInfoInitializer
+      {
+        EnumTypeTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (EnumType));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      EnumTypeTypeInfoInitializer EnumTypeTypeInfoInitializer_;
+
       struct AnyTypeInfoInitializer
       {
         AnyTypeInfoInitializer ()
@@ -6165,8 +6756,9 @@ namespace CIAO
       traverse (Type& o)
       {
         pre (o);
-        if (o.kind_p ()) kind (o);
-        else kind_none (o);
+        kind (o);
+        if (o.enum_p ()) enum_ (o);
+        else enum_none (o);
         post (o);
       }
 
@@ -6174,8 +6766,9 @@ namespace CIAO
       traverse (Type const& o)
       {
         pre (o);
-        if (o.kind_p ()) kind (o);
-        else kind_none (o);
+        kind (o);
+        if (o.enum_p ()) enum_ (o);
+        else enum_none (o);
         post (o);
       }
 
@@ -6202,12 +6795,24 @@ namespace CIAO
       }
 
       void DataType::
-      kind_none (Type&)
+      enum_ (Type& o)
+      {
+        dispatch (o.enum_ ());
+      }
+
+      void DataType::
+      enum_ (Type const& o)
+      {
+        dispatch (o.enum_ ());
+      }
+
+      void DataType::
+      enum_none (Type&)
       {
       }
 
       void DataType::
-      kind_none (Type const&)
+      enum_none (Type const&)
       {
       }
 
@@ -6229,38 +6834,19 @@ namespace CIAO
       traverse (Type& o)
       {
         pre (o);
-        if (o.short_p ()) short_ (o);
-        else short_none (o);
-        if (o.long_p ()) long_ (o);
-        else long_none (o);
-        if (o.ushort_p ()) ushort (o);
-        else ushort_none (o);
-        if (o.ulong_p ()) ulong (o);
-        else ulong_none (o);
-        if (o.float_p ()) float_ (o);
-        else float_none (o);
-        if (o.double_p ()) double_ (o);
-        else double_none (o);
-        if (o.boolean_p ()) boolean (o);
-        else boolean_none (o);
-        if (o.octet_p ()) octet (o);
-        else octet_none (o);
-        if (o.objref_p ()) objref (o);
-        else objref_none (o);
-        if (o.enum_p ()) enum_ (o);
-        else enum_none (o);
-        if (o.string_p ()) string (o);
-        else string_none (o);
-        if (o.longlong_p ()) longlong (o);
-        else longlong_none (o);
-        if (o.ulonglong_p ()) ulonglong (o);
-        else ulonglong_none (o);
-        if (o.longdouble_p ()) longdouble (o);
-        else longdouble_none (o);
-        if (o.fixed_p ()) fixed (o);
-        else fixed_none (o);
-        if (o.typecode_p ()) typecode (o);
-        else typecode_none (o);
+        short_ (o);
+        long_ (o);
+        ushort (o);
+        ulong (o);
+        float_ (o);
+        double_ (o);
+        boolean (o);
+        octet (o);
+        enum_ (o);
+        string (o);
+        longlong (o);
+        ulonglong (o);
+        longdouble (o);
         post (o);
       }
 
@@ -6268,38 +6854,19 @@ namespace CIAO
       traverse (Type const& o)
       {
         pre (o);
-        if (o.short_p ()) short_ (o);
-        else short_none (o);
-        if (o.long_p ()) long_ (o);
-        else long_none (o);
-        if (o.ushort_p ()) ushort (o);
-        else ushort_none (o);
-        if (o.ulong_p ()) ulong (o);
-        else ulong_none (o);
-        if (o.float_p ()) float_ (o);
-        else float_none (o);
-        if (o.double_p ()) double_ (o);
-        else double_none (o);
-        if (o.boolean_p ()) boolean (o);
-        else boolean_none (o);
-        if (o.octet_p ()) octet (o);
-        else octet_none (o);
-        if (o.objref_p ()) objref (o);
-        else objref_none (o);
-        if (o.enum_p ()) enum_ (o);
-        else enum_none (o);
-        if (o.string_p ()) string (o);
-        else string_none (o);
-        if (o.longlong_p ()) longlong (o);
-        else longlong_none (o);
-        if (o.ulonglong_p ()) ulonglong (o);
-        else ulonglong_none (o);
-        if (o.longdouble_p ()) longdouble (o);
-        else longdouble_none (o);
-        if (o.fixed_p ()) fixed (o);
-        else fixed_none (o);
-        if (o.typecode_p ()) typecode (o);
-        else typecode_none (o);
+        short_ (o);
+        long_ (o);
+        ushort (o);
+        ulong (o);
+        float_ (o);
+        double_ (o);
+        boolean (o);
+        octet (o);
+        enum_ (o);
+        string (o);
+        longlong (o);
+        ulonglong (o);
+        longdouble (o);
         post (o);
       }
 
@@ -6316,13 +6883,79 @@ namespace CIAO
       void DataValue::
       short_ (Type& o)
       {
-        dispatch (o.short_ ());
+        // VC6 anathema strikes again
+        //
+        DataValue::Type::short_iterator b (o.begin_short()), e (o.end_short());
+
+        if (b != e)
+        {
+          short_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) short_next (o);
+          }
+
+          short_post (o);
+        }
+
+        else short_none (o);
       }
 
       void DataValue::
       short_ (Type const& o)
       {
-        dispatch (o.short_ ());
+        // VC6 anathema strikes again
+        //
+        DataValue::Type::short_const_iterator b (o.begin_short()), e (o.end_short());
+
+        if (b != e)
+        {
+          short_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) short_next (o);
+          }
+
+          short_post (o);
+        }
+
+        else short_none (o);
+      }
+
+      void DataValue::
+      short_pre (Type&)
+      {
+      }
+
+      void DataValue::
+      short_pre (Type const&)
+      {
+      }
+
+      void DataValue::
+      short_next (Type&)
+      {
+      }
+
+      void DataValue::
+      short_next (Type const&)
+      {
+      }
+
+      void DataValue::
+      short_post (Type&)
+      {
+      }
+
+      void DataValue::
+      short_post (Type const&)
+      {
       }
 
       void DataValue::
@@ -6338,13 +6971,79 @@ namespace CIAO
       void DataValue::
       long_ (Type& o)
       {
-        dispatch (o.long_ ());
+        // VC6 anathema strikes again
+        //
+        DataValue::Type::long_iterator b (o.begin_long()), e (o.end_long());
+
+        if (b != e)
+        {
+          long_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) long_next (o);
+          }
+
+          long_post (o);
+        }
+
+        else long_none (o);
       }
 
       void DataValue::
       long_ (Type const& o)
       {
-        dispatch (o.long_ ());
+        // VC6 anathema strikes again
+        //
+        DataValue::Type::long_const_iterator b (o.begin_long()), e (o.end_long());
+
+        if (b != e)
+        {
+          long_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) long_next (o);
+          }
+
+          long_post (o);
+        }
+
+        else long_none (o);
+      }
+
+      void DataValue::
+      long_pre (Type&)
+      {
+      }
+
+      void DataValue::
+      long_pre (Type const&)
+      {
+      }
+
+      void DataValue::
+      long_next (Type&)
+      {
+      }
+
+      void DataValue::
+      long_next (Type const&)
+      {
+      }
+
+      void DataValue::
+      long_post (Type&)
+      {
+      }
+
+      void DataValue::
+      long_post (Type const&)
+      {
       }
 
       void DataValue::
@@ -6360,13 +7059,79 @@ namespace CIAO
       void DataValue::
       ushort (Type& o)
       {
-        dispatch (o.ushort ());
+        // VC6 anathema strikes again
+        //
+        DataValue::Type::ushort_iterator b (o.begin_ushort()), e (o.end_ushort());
+
+        if (b != e)
+        {
+          ushort_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) ushort_next (o);
+          }
+
+          ushort_post (o);
+        }
+
+        else ushort_none (o);
       }
 
       void DataValue::
       ushort (Type const& o)
       {
-        dispatch (o.ushort ());
+        // VC6 anathema strikes again
+        //
+        DataValue::Type::ushort_const_iterator b (o.begin_ushort()), e (o.end_ushort());
+
+        if (b != e)
+        {
+          ushort_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) ushort_next (o);
+          }
+
+          ushort_post (o);
+        }
+
+        else ushort_none (o);
+      }
+
+      void DataValue::
+      ushort_pre (Type&)
+      {
+      }
+
+      void DataValue::
+      ushort_pre (Type const&)
+      {
+      }
+
+      void DataValue::
+      ushort_next (Type&)
+      {
+      }
+
+      void DataValue::
+      ushort_next (Type const&)
+      {
+      }
+
+      void DataValue::
+      ushort_post (Type&)
+      {
+      }
+
+      void DataValue::
+      ushort_post (Type const&)
+      {
       }
 
       void DataValue::
@@ -6382,13 +7147,79 @@ namespace CIAO
       void DataValue::
       ulong (Type& o)
       {
-        dispatch (o.ulong ());
+        // VC6 anathema strikes again
+        //
+        DataValue::Type::ulong_iterator b (o.begin_ulong()), e (o.end_ulong());
+
+        if (b != e)
+        {
+          ulong_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) ulong_next (o);
+          }
+
+          ulong_post (o);
+        }
+
+        else ulong_none (o);
       }
 
       void DataValue::
       ulong (Type const& o)
       {
-        dispatch (o.ulong ());
+        // VC6 anathema strikes again
+        //
+        DataValue::Type::ulong_const_iterator b (o.begin_ulong()), e (o.end_ulong());
+
+        if (b != e)
+        {
+          ulong_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) ulong_next (o);
+          }
+
+          ulong_post (o);
+        }
+
+        else ulong_none (o);
+      }
+
+      void DataValue::
+      ulong_pre (Type&)
+      {
+      }
+
+      void DataValue::
+      ulong_pre (Type const&)
+      {
+      }
+
+      void DataValue::
+      ulong_next (Type&)
+      {
+      }
+
+      void DataValue::
+      ulong_next (Type const&)
+      {
+      }
+
+      void DataValue::
+      ulong_post (Type&)
+      {
+      }
+
+      void DataValue::
+      ulong_post (Type const&)
+      {
       }
 
       void DataValue::
@@ -6404,13 +7235,79 @@ namespace CIAO
       void DataValue::
       float_ (Type& o)
       {
-        dispatch (o.float_ ());
+        // VC6 anathema strikes again
+        //
+        DataValue::Type::float_iterator b (o.begin_float()), e (o.end_float());
+
+        if (b != e)
+        {
+          float_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) float_next (o);
+          }
+
+          float_post (o);
+        }
+
+        else float_none (o);
       }
 
       void DataValue::
       float_ (Type const& o)
       {
-        dispatch (o.float_ ());
+        // VC6 anathema strikes again
+        //
+        DataValue::Type::float_const_iterator b (o.begin_float()), e (o.end_float());
+
+        if (b != e)
+        {
+          float_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) float_next (o);
+          }
+
+          float_post (o);
+        }
+
+        else float_none (o);
+      }
+
+      void DataValue::
+      float_pre (Type&)
+      {
+      }
+
+      void DataValue::
+      float_pre (Type const&)
+      {
+      }
+
+      void DataValue::
+      float_next (Type&)
+      {
+      }
+
+      void DataValue::
+      float_next (Type const&)
+      {
+      }
+
+      void DataValue::
+      float_post (Type&)
+      {
+      }
+
+      void DataValue::
+      float_post (Type const&)
+      {
       }
 
       void DataValue::
@@ -6426,13 +7323,79 @@ namespace CIAO
       void DataValue::
       double_ (Type& o)
       {
-        dispatch (o.double_ ());
+        // VC6 anathema strikes again
+        //
+        DataValue::Type::double_iterator b (o.begin_double()), e (o.end_double());
+
+        if (b != e)
+        {
+          double_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) double_next (o);
+          }
+
+          double_post (o);
+        }
+
+        else double_none (o);
       }
 
       void DataValue::
       double_ (Type const& o)
       {
-        dispatch (o.double_ ());
+        // VC6 anathema strikes again
+        //
+        DataValue::Type::double_const_iterator b (o.begin_double()), e (o.end_double());
+
+        if (b != e)
+        {
+          double_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) double_next (o);
+          }
+
+          double_post (o);
+        }
+
+        else double_none (o);
+      }
+
+      void DataValue::
+      double_pre (Type&)
+      {
+      }
+
+      void DataValue::
+      double_pre (Type const&)
+      {
+      }
+
+      void DataValue::
+      double_next (Type&)
+      {
+      }
+
+      void DataValue::
+      double_next (Type const&)
+      {
+      }
+
+      void DataValue::
+      double_post (Type&)
+      {
+      }
+
+      void DataValue::
+      double_post (Type const&)
+      {
       }
 
       void DataValue::
@@ -6448,13 +7411,79 @@ namespace CIAO
       void DataValue::
       boolean (Type& o)
       {
-        dispatch (o.boolean ());
+        // VC6 anathema strikes again
+        //
+        DataValue::Type::boolean_iterator b (o.begin_boolean()), e (o.end_boolean());
+
+        if (b != e)
+        {
+          boolean_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) boolean_next (o);
+          }
+
+          boolean_post (o);
+        }
+
+        else boolean_none (o);
       }
 
       void DataValue::
       boolean (Type const& o)
       {
-        dispatch (o.boolean ());
+        // VC6 anathema strikes again
+        //
+        DataValue::Type::boolean_const_iterator b (o.begin_boolean()), e (o.end_boolean());
+
+        if (b != e)
+        {
+          boolean_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) boolean_next (o);
+          }
+
+          boolean_post (o);
+        }
+
+        else boolean_none (o);
+      }
+
+      void DataValue::
+      boolean_pre (Type&)
+      {
+      }
+
+      void DataValue::
+      boolean_pre (Type const&)
+      {
+      }
+
+      void DataValue::
+      boolean_next (Type&)
+      {
+      }
+
+      void DataValue::
+      boolean_next (Type const&)
+      {
+      }
+
+      void DataValue::
+      boolean_post (Type&)
+      {
+      }
+
+      void DataValue::
+      boolean_post (Type const&)
+      {
       }
 
       void DataValue::
@@ -6470,13 +7499,79 @@ namespace CIAO
       void DataValue::
       octet (Type& o)
       {
-        dispatch (o.octet ());
+        // VC6 anathema strikes again
+        //
+        DataValue::Type::octet_iterator b (o.begin_octet()), e (o.end_octet());
+
+        if (b != e)
+        {
+          octet_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) octet_next (o);
+          }
+
+          octet_post (o);
+        }
+
+        else octet_none (o);
       }
 
       void DataValue::
       octet (Type const& o)
       {
-        dispatch (o.octet ());
+        // VC6 anathema strikes again
+        //
+        DataValue::Type::octet_const_iterator b (o.begin_octet()), e (o.end_octet());
+
+        if (b != e)
+        {
+          octet_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) octet_next (o);
+          }
+
+          octet_post (o);
+        }
+
+        else octet_none (o);
+      }
+
+      void DataValue::
+      octet_pre (Type&)
+      {
+      }
+
+      void DataValue::
+      octet_pre (Type const&)
+      {
+      }
+
+      void DataValue::
+      octet_next (Type&)
+      {
+      }
+
+      void DataValue::
+      octet_next (Type const&)
+      {
+      }
+
+      void DataValue::
+      octet_post (Type&)
+      {
+      }
+
+      void DataValue::
+      octet_post (Type const&)
+      {
       }
 
       void DataValue::
@@ -6490,37 +7585,81 @@ namespace CIAO
       }
 
       void DataValue::
-      objref (Type& o)
-      {
-        dispatch (o.objref ());
-      }
-
-      void DataValue::
-      objref (Type const& o)
-      {
-        dispatch (o.objref ());
-      }
-
-      void DataValue::
-      objref_none (Type&)
-      {
-      }
-
-      void DataValue::
-      objref_none (Type const&)
-      {
-      }
-
-      void DataValue::
       enum_ (Type& o)
       {
-        dispatch (o.enum_ ());
+        // VC6 anathema strikes again
+        //
+        DataValue::Type::enum_iterator b (o.begin_enum()), e (o.end_enum());
+
+        if (b != e)
+        {
+          enum_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) enum_next (o);
+          }
+
+          enum_post (o);
+        }
+
+        else enum_none (o);
       }
 
       void DataValue::
       enum_ (Type const& o)
       {
-        dispatch (o.enum_ ());
+        // VC6 anathema strikes again
+        //
+        DataValue::Type::enum_const_iterator b (o.begin_enum()), e (o.end_enum());
+
+        if (b != e)
+        {
+          enum_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) enum_next (o);
+          }
+
+          enum_post (o);
+        }
+
+        else enum_none (o);
+      }
+
+      void DataValue::
+      enum_pre (Type&)
+      {
+      }
+
+      void DataValue::
+      enum_pre (Type const&)
+      {
+      }
+
+      void DataValue::
+      enum_next (Type&)
+      {
+      }
+
+      void DataValue::
+      enum_next (Type const&)
+      {
+      }
+
+      void DataValue::
+      enum_post (Type&)
+      {
+      }
+
+      void DataValue::
+      enum_post (Type const&)
+      {
       }
 
       void DataValue::
@@ -6536,13 +7675,79 @@ namespace CIAO
       void DataValue::
       string (Type& o)
       {
-        dispatch (o.string ());
+        // VC6 anathema strikes again
+        //
+        DataValue::Type::string_iterator b (o.begin_string()), e (o.end_string());
+
+        if (b != e)
+        {
+          string_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) string_next (o);
+          }
+
+          string_post (o);
+        }
+
+        else string_none (o);
       }
 
       void DataValue::
       string (Type const& o)
       {
-        dispatch (o.string ());
+        // VC6 anathema strikes again
+        //
+        DataValue::Type::string_const_iterator b (o.begin_string()), e (o.end_string());
+
+        if (b != e)
+        {
+          string_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) string_next (o);
+          }
+
+          string_post (o);
+        }
+
+        else string_none (o);
+      }
+
+      void DataValue::
+      string_pre (Type&)
+      {
+      }
+
+      void DataValue::
+      string_pre (Type const&)
+      {
+      }
+
+      void DataValue::
+      string_next (Type&)
+      {
+      }
+
+      void DataValue::
+      string_next (Type const&)
+      {
+      }
+
+      void DataValue::
+      string_post (Type&)
+      {
+      }
+
+      void DataValue::
+      string_post (Type const&)
+      {
       }
 
       void DataValue::
@@ -6558,13 +7763,79 @@ namespace CIAO
       void DataValue::
       longlong (Type& o)
       {
-        dispatch (o.longlong ());
+        // VC6 anathema strikes again
+        //
+        DataValue::Type::longlong_iterator b (o.begin_longlong()), e (o.end_longlong());
+
+        if (b != e)
+        {
+          longlong_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) longlong_next (o);
+          }
+
+          longlong_post (o);
+        }
+
+        else longlong_none (o);
       }
 
       void DataValue::
       longlong (Type const& o)
       {
-        dispatch (o.longlong ());
+        // VC6 anathema strikes again
+        //
+        DataValue::Type::longlong_const_iterator b (o.begin_longlong()), e (o.end_longlong());
+
+        if (b != e)
+        {
+          longlong_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) longlong_next (o);
+          }
+
+          longlong_post (o);
+        }
+
+        else longlong_none (o);
+      }
+
+      void DataValue::
+      longlong_pre (Type&)
+      {
+      }
+
+      void DataValue::
+      longlong_pre (Type const&)
+      {
+      }
+
+      void DataValue::
+      longlong_next (Type&)
+      {
+      }
+
+      void DataValue::
+      longlong_next (Type const&)
+      {
+      }
+
+      void DataValue::
+      longlong_post (Type&)
+      {
+      }
+
+      void DataValue::
+      longlong_post (Type const&)
+      {
       }
 
       void DataValue::
@@ -6580,13 +7851,79 @@ namespace CIAO
       void DataValue::
       ulonglong (Type& o)
       {
-        dispatch (o.ulonglong ());
+        // VC6 anathema strikes again
+        //
+        DataValue::Type::ulonglong_iterator b (o.begin_ulonglong()), e (o.end_ulonglong());
+
+        if (b != e)
+        {
+          ulonglong_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) ulonglong_next (o);
+          }
+
+          ulonglong_post (o);
+        }
+
+        else ulonglong_none (o);
       }
 
       void DataValue::
       ulonglong (Type const& o)
       {
-        dispatch (o.ulonglong ());
+        // VC6 anathema strikes again
+        //
+        DataValue::Type::ulonglong_const_iterator b (o.begin_ulonglong()), e (o.end_ulonglong());
+
+        if (b != e)
+        {
+          ulonglong_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) ulonglong_next (o);
+          }
+
+          ulonglong_post (o);
+        }
+
+        else ulonglong_none (o);
+      }
+
+      void DataValue::
+      ulonglong_pre (Type&)
+      {
+      }
+
+      void DataValue::
+      ulonglong_pre (Type const&)
+      {
+      }
+
+      void DataValue::
+      ulonglong_next (Type&)
+      {
+      }
+
+      void DataValue::
+      ulonglong_next (Type const&)
+      {
+      }
+
+      void DataValue::
+      ulonglong_post (Type&)
+      {
+      }
+
+      void DataValue::
+      ulonglong_post (Type const&)
+      {
       }
 
       void DataValue::
@@ -6602,13 +7939,79 @@ namespace CIAO
       void DataValue::
       longdouble (Type& o)
       {
-        dispatch (o.longdouble ());
+        // VC6 anathema strikes again
+        //
+        DataValue::Type::longdouble_iterator b (o.begin_longdouble()), e (o.end_longdouble());
+
+        if (b != e)
+        {
+          longdouble_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) longdouble_next (o);
+          }
+
+          longdouble_post (o);
+        }
+
+        else longdouble_none (o);
       }
 
       void DataValue::
       longdouble (Type const& o)
       {
-        dispatch (o.longdouble ());
+        // VC6 anathema strikes again
+        //
+        DataValue::Type::longdouble_const_iterator b (o.begin_longdouble()), e (o.end_longdouble());
+
+        if (b != e)
+        {
+          longdouble_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) longdouble_next (o);
+          }
+
+          longdouble_post (o);
+        }
+
+        else longdouble_none (o);
+      }
+
+      void DataValue::
+      longdouble_pre (Type&)
+      {
+      }
+
+      void DataValue::
+      longdouble_pre (Type const&)
+      {
+      }
+
+      void DataValue::
+      longdouble_next (Type&)
+      {
+      }
+
+      void DataValue::
+      longdouble_next (Type const&)
+      {
+      }
+
+      void DataValue::
+      longdouble_post (Type&)
+      {
+      }
+
+      void DataValue::
+      longdouble_post (Type const&)
+      {
       }
 
       void DataValue::
@@ -6622,55 +8025,153 @@ namespace CIAO
       }
 
       void DataValue::
-      fixed (Type& o)
-      {
-        dispatch (o.fixed ());
-      }
-
-      void DataValue::
-      fixed (Type const& o)
-      {
-        dispatch (o.fixed ());
-      }
-
-      void DataValue::
-      fixed_none (Type&)
-      {
-      }
-
-      void DataValue::
-      fixed_none (Type const&)
-      {
-      }
-
-      void DataValue::
-      typecode (Type& o)
-      {
-        dispatch (o.typecode ());
-      }
-
-      void DataValue::
-      typecode (Type const& o)
-      {
-        dispatch (o.typecode ());
-      }
-
-      void DataValue::
-      typecode_none (Type&)
-      {
-      }
-
-      void DataValue::
-      typecode_none (Type const&)
-      {
-      }
-
-      void DataValue::
       post (Type&)
       {
       }
 
       void DataValue::
+      post (Type const&)
+      {
+      }
+
+      // EnumType
+      //
+      //
+
+      void EnumType::
+      traverse (Type& o)
+      {
+        pre (o);
+        name (o);
+        typeId (o);
+        member (o);
+        post (o);
+      }
+
+      void EnumType::
+      traverse (Type const& o)
+      {
+        pre (o);
+        name (o);
+        typeId (o);
+        member (o);
+        post (o);
+      }
+
+      void EnumType::
+      pre (Type&)
+      {
+      }
+
+      void EnumType::
+      pre (Type const&)
+      {
+      }
+
+      void EnumType::
+      name (Type& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void EnumType::
+      name (Type const& o)
+      {
+        dispatch (o.name ());
+      }
+
+      void EnumType::
+      typeId (Type& o)
+      {
+        dispatch (o.typeId ());
+      }
+
+      void EnumType::
+      typeId (Type const& o)
+      {
+        dispatch (o.typeId ());
+      }
+
+      void EnumType::
+      member (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        EnumType::Type::member_iterator b (o.begin_member()), e (o.end_member());
+
+        if (b != e)
+        {
+          member_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) member_next (o);
+          }
+
+          member_post (o);
+        }
+      }
+
+      void EnumType::
+      member (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        EnumType::Type::member_const_iterator b (o.begin_member()), e (o.end_member());
+
+        if (b != e)
+        {
+          member_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) member_next (o);
+          }
+
+          member_post (o);
+        }
+      }
+
+      void EnumType::
+      member_pre (Type&)
+      {
+      }
+
+      void EnumType::
+      member_pre (Type const&)
+      {
+      }
+
+      void EnumType::
+      member_next (Type&)
+      {
+      }
+
+      void EnumType::
+      member_next (Type const&)
+      {
+      }
+
+      void EnumType::
+      member_post (Type&)
+      {
+      }
+
+      void EnumType::
+      member_post (Type const&)
+      {
+      }
+
+      void EnumType::
+      post (Type&)
+      {
+      }
+
+      void EnumType::
       post (Type const&)
       {
       }
@@ -10313,6 +11814,14 @@ namespace CIAO
         pop_ ();
       }
 
+      void DataType::
+      enum_ (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("enum", top_ ()));
+        Traversal::DataType::enum_ (o);
+        pop_ ();
+      }
+
       // DataValue
       //
       //
@@ -10335,130 +11844,305 @@ namespace CIAO
       }
 
       void DataValue::
-      short_ (Type const& o)
+      short_pre (Type const&)
       {
         push_ (::XSCRT::XML::Element< ACE_TCHAR > ("short", top_ ()));
-        Traversal::DataValue::short_ (o);
+      }
+
+      void DataValue::
+      short_next (Type const& o)
+      {
+        short_post (o);
+        short_pre (o);
+      }
+
+      void DataValue::
+      short_post (Type const&)
+      {
         pop_ ();
       }
 
       void DataValue::
-      long_ (Type const& o)
+      long_pre (Type const&)
       {
         push_ (::XSCRT::XML::Element< ACE_TCHAR > ("long", top_ ()));
-        Traversal::DataValue::long_ (o);
+      }
+
+      void DataValue::
+      long_next (Type const& o)
+      {
+        long_post (o);
+        long_pre (o);
+      }
+
+      void DataValue::
+      long_post (Type const&)
+      {
         pop_ ();
       }
 
       void DataValue::
-      ushort (Type const& o)
+      ushort_pre (Type const&)
       {
         push_ (::XSCRT::XML::Element< ACE_TCHAR > ("ushort", top_ ()));
-        Traversal::DataValue::ushort (o);
+      }
+
+      void DataValue::
+      ushort_next (Type const& o)
+      {
+        ushort_post (o);
+        ushort_pre (o);
+      }
+
+      void DataValue::
+      ushort_post (Type const&)
+      {
         pop_ ();
       }
 
       void DataValue::
-      ulong (Type const& o)
+      ulong_pre (Type const&)
       {
         push_ (::XSCRT::XML::Element< ACE_TCHAR > ("ulong", top_ ()));
-        Traversal::DataValue::ulong (o);
+      }
+
+      void DataValue::
+      ulong_next (Type const& o)
+      {
+        ulong_post (o);
+        ulong_pre (o);
+      }
+
+      void DataValue::
+      ulong_post (Type const&)
+      {
         pop_ ();
       }
 
       void DataValue::
-      float_ (Type const& o)
+      float_pre (Type const&)
       {
         push_ (::XSCRT::XML::Element< ACE_TCHAR > ("float", top_ ()));
-        Traversal::DataValue::float_ (o);
+      }
+
+      void DataValue::
+      float_next (Type const& o)
+      {
+        float_post (o);
+        float_pre (o);
+      }
+
+      void DataValue::
+      float_post (Type const&)
+      {
         pop_ ();
       }
 
       void DataValue::
-      double_ (Type const& o)
+      double_pre (Type const&)
       {
         push_ (::XSCRT::XML::Element< ACE_TCHAR > ("double", top_ ()));
-        Traversal::DataValue::double_ (o);
+      }
+
+      void DataValue::
+      double_next (Type const& o)
+      {
+        double_post (o);
+        double_pre (o);
+      }
+
+      void DataValue::
+      double_post (Type const&)
+      {
         pop_ ();
       }
 
       void DataValue::
-      boolean (Type const& o)
+      boolean_pre (Type const&)
       {
         push_ (::XSCRT::XML::Element< ACE_TCHAR > ("boolean", top_ ()));
-        Traversal::DataValue::boolean (o);
+      }
+
+      void DataValue::
+      boolean_next (Type const& o)
+      {
+        boolean_post (o);
+        boolean_pre (o);
+      }
+
+      void DataValue::
+      boolean_post (Type const&)
+      {
         pop_ ();
       }
 
       void DataValue::
-      octet (Type const& o)
+      octet_pre (Type const&)
       {
         push_ (::XSCRT::XML::Element< ACE_TCHAR > ("octet", top_ ()));
-        Traversal::DataValue::octet (o);
-        pop_ ();
       }
 
       void DataValue::
-      objref (Type const& o)
+      octet_next (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("objref", top_ ()));
-        Traversal::DataValue::objref (o);
+        octet_post (o);
+        octet_pre (o);
+      }
+
+      void DataValue::
+      octet_post (Type const&)
+      {
         pop_ ();
       }
 
       void DataValue::
-      enum_ (Type const& o)
+      enum_pre (Type const&)
       {
         push_ (::XSCRT::XML::Element< ACE_TCHAR > ("enum", top_ ()));
-        Traversal::DataValue::enum_ (o);
+      }
+
+      void DataValue::
+      enum_next (Type const& o)
+      {
+        enum_post (o);
+        enum_pre (o);
+      }
+
+      void DataValue::
+      enum_post (Type const&)
+      {
         pop_ ();
       }
 
       void DataValue::
-      string (Type const& o)
+      string_pre (Type const&)
       {
         push_ (::XSCRT::XML::Element< ACE_TCHAR > ("string", top_ ()));
-        Traversal::DataValue::string (o);
+      }
+
+      void DataValue::
+      string_next (Type const& o)
+      {
+        string_post (o);
+        string_pre (o);
+      }
+
+      void DataValue::
+      string_post (Type const&)
+      {
         pop_ ();
       }
 
       void DataValue::
-      longlong (Type const& o)
+      longlong_pre (Type const&)
       {
         push_ (::XSCRT::XML::Element< ACE_TCHAR > ("longlong", top_ ()));
-        Traversal::DataValue::longlong (o);
+      }
+
+      void DataValue::
+      longlong_next (Type const& o)
+      {
+        longlong_post (o);
+        longlong_pre (o);
+      }
+
+      void DataValue::
+      longlong_post (Type const&)
+      {
         pop_ ();
       }
 
       void DataValue::
-      ulonglong (Type const& o)
+      ulonglong_pre (Type const&)
       {
         push_ (::XSCRT::XML::Element< ACE_TCHAR > ("ulonglong", top_ ()));
-        Traversal::DataValue::ulonglong (o);
+      }
+
+      void DataValue::
+      ulonglong_next (Type const& o)
+      {
+        ulonglong_post (o);
+        ulonglong_pre (o);
+      }
+
+      void DataValue::
+      ulonglong_post (Type const&)
+      {
         pop_ ();
       }
 
       void DataValue::
-      longdouble (Type const& o)
+      longdouble_pre (Type const&)
       {
         push_ (::XSCRT::XML::Element< ACE_TCHAR > ("longdouble", top_ ()));
-        Traversal::DataValue::longdouble (o);
-        pop_ ();
       }
 
       void DataValue::
-      fixed (Type const& o)
+      longdouble_next (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("fixed", top_ ()));
-        Traversal::DataValue::fixed (o);
-        pop_ ();
+        longdouble_post (o);
+        longdouble_pre (o);
       }
 
       void DataValue::
-      typecode (Type const& o)
+      longdouble_post (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("typecode", top_ ()));
-        Traversal::DataValue::typecode (o);
+        pop_ ();
+      }
+
+      // EnumType
+      //
+      //
+
+      EnumType::
+      EnumType (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      EnumType::
+      EnumType ()
+      {
+      }
+
+      void EnumType::
+      traverse (Type const& o)
+      {
+        Traversal::EnumType::traverse (o);
+      }
+
+      void EnumType::
+      name (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("name", top_ ()));
+        Traversal::EnumType::name (o);
+        pop_ ();
+      }
+
+      void EnumType::
+      typeId (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("typeId", top_ ()));
+        Traversal::EnumType::typeId (o);
+        pop_ ();
+      }
+
+      void EnumType::
+      member_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > ("member", top_ ()));
+      }
+
+      void EnumType::
+      member_next (Type const& o)
+      {
+        member_post (o);
+        member_pre (o);
+      }
+
+      void EnumType::
+      member_post (Type const&)
+      {
         pop_ ();
       }
 

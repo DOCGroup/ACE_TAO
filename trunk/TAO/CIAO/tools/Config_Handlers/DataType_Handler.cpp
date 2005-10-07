@@ -113,69 +113,68 @@ namespace CIAO{
     DataType_Handler::data_type (
                       const CORBA::TypeCode_ptr&  src)
     {
-        DataType type;
-        
+              
         switch (src->kind ())
           {
           case ::CORBA::tk_null:
-            type.kind (TCKind::tk_null);
+            return DataType ( (TCKind::tk_null));
             break;
           case CORBA::tk_short:
-            type.kind (TCKind::tk_short);
+            return DataType ( (TCKind::tk_short));
             break;
           case CORBA::tk_long:
-            type.kind (TCKind::tk_long);
+            return DataType ( (TCKind::tk_long));
             break;
           case CORBA::tk_ushort:
-            type.kind (TCKind::tk_ushort);
+            return DataType ( (TCKind::tk_ushort));
             break;
           case CORBA::tk_ulong:
-            type.kind (TCKind::tk_ulong);
+            return DataType ( (TCKind::tk_ulong));
             break;
           case CORBA::tk_float:
-            type.kind (TCKind::tk_float);
+            return DataType ( (TCKind::tk_float));
             break;
           case CORBA::tk_double:
-            type.kind (TCKind::tk_double);
+            return DataType ( (TCKind::tk_double));
             break;
           case CORBA::tk_boolean:
-            type.kind (TCKind::tk_boolean);
+            return DataType ( (TCKind::tk_boolean));
             break;
           case CORBA::tk_char:
-            type.kind (TCKind::tk_char);
+            return DataType ( (TCKind::tk_char));
             break;
           case CORBA::tk_octet:
-            type.kind (TCKind::tk_octet);
+            return DataType ( (TCKind::tk_octet));
             break;
           case CORBA::tk_string:
-            type.kind (TCKind::tk_string);
+            return DataType ( (TCKind::tk_string));
             break;
           case CORBA::tk_longlong:
-            type.kind (TCKind::tk_longlong);
+            return DataType ( (TCKind::tk_longlong));
             break;
           case CORBA::tk_ulonglong:
-            type.kind (TCKind::tk_ulonglong);
+            return DataType ( (TCKind::tk_ulonglong));
             break;
           case CORBA::tk_longdouble:
-            type.kind (TCKind::tk_longdouble);
+            return DataType ( (TCKind::tk_longdouble));
             break;
           case CORBA::tk_wchar:
-            type.kind (TCKind::tk_wchar);
+            return DataType ( (TCKind::tk_wchar));
             break;
           case CORBA::tk_wstring:
-            type.kind (TCKind::tk_wstring);
+            return DataType ( (TCKind::tk_wstring));
             break;
           case CORBA::tk_any:
-            type.kind (TCKind::tk_any);
+            return DataType ( (TCKind::tk_any));
             break;
           case CORBA::tk_TypeCode:
-            type.kind (TCKind::tk_TypeCode);
+            return DataType ( (TCKind::tk_TypeCode));
           default:
             ACE_ERROR ((LM_ERROR, "Invalid typecode\n"));
             throw 1;
           }
         
-        return type;
+        
     }
 
   }

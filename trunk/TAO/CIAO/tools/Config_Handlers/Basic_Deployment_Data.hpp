@@ -32,6 +32,7 @@ namespace CIAO
     class TCKind;
     class DataType;
     class DataValue;
+    class EnumType;
     class Any;
     class Property;
     class SatisfierPropertyKind;
@@ -115,7 +116,7 @@ namespace CIAO
 
       enum Value
       {
-        tk_null_l,tk_void_l,tk_short_l,tk_long_l,tk_ushort_l,tk_ulong_l,tk_float_l,tk_double_l,tk_boolean_l,tk_char_l,tk_octet_l,tk_any_l,tk_TypeCode_l,tk_Principal_l,tk_objref_l,tk_struct_l,tk_union_l,tk_enum_l,tk_string_l,tk_sequence_l,tk_array_l,tk_alias_l,tk_except_l,tk_longlong_l,tk_ulonglong_l,tk_longdouble_l,tk_wchar_l,tk_wstring_l,tk_wfixed_l,tk_value_l,tk_value_box_l,tk_native_l,tk_abstract_interface_l,tk_local_interface_l,tk_component_l,tk_home_l,tk_event_l
+        tk_null_l,tk_void_l,tk_short_l,tk_long_l,tk_ushort_l,tk_ulong_l,tk_float_l,tk_double_l,tk_boolean_l,tk_char_l,tk_octet_l,tk_any_l,tk_TypeCode_l,tk_Principal_l,tk_objref_l,tk_struct_l,tk_union_l,tk_enum_l,tk_string_l,tk_sequence_l,tk_array_l,tk_alias_l,tk_except_l,tk_longlong_l,tk_ulonglong_l,tk_longdouble_l,tk_wchar_l,tk_wstring_l,tk_wfixed_l,tk_value_l,tk_value_box_l,tk_native_l,tk_abstract_interface_l,tk_local_interface_l,tk_component_l,tk_home_l,tk_event_l,
       };
 
 
@@ -147,15 +148,24 @@ namespace CIAO
       // kind
       // 
       public:
-      bool kind_p () const;
       ::CIAO::Config_Handlers::TCKind const& kind () const;
       void kind (::CIAO::Config_Handlers::TCKind const& );
 
       protected:
       ::std::auto_ptr< ::CIAO::Config_Handlers::TCKind > kind_;
 
+      // enum
+      // 
       public:
-      DataType ();
+      bool enum_p () const;
+      ::CIAO::Config_Handlers::EnumType const& enum_ () const;
+      void enum_ (::CIAO::Config_Handlers::EnumType const& );
+
+      protected:
+      ::std::auto_ptr< ::CIAO::Config_Handlers::EnumType > enum__;
+
+      public:
+      DataType (::CIAO::Config_Handlers::TCKind const& kind__);
 
       DataType (::XSCRT::XML::Element< ACE_TCHAR > const&);
       DataType (DataType const& s);
@@ -176,162 +186,197 @@ namespace CIAO
       // short
       // 
       public:
-      bool short_p () const;
-      ::XMLSchema::short_ const& short_ () const;
-      void short_ (::XMLSchema::short_ const& );
+      typedef ::std::vector< ::XMLSchema::short_ >::iterator short_iterator;
+      typedef ::std::vector< ::XMLSchema::short_ >::const_iterator short_const_iterator;
+      short_iterator begin_short ();
+      short_iterator end_short ();
+      short_const_iterator begin_short () const;
+      short_const_iterator end_short () const;
+      void add_short (::XMLSchema::short_ const& );
+      size_t count_short (void) const;
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::short_ > short__;
+      ::std::vector< ::XMLSchema::short_ > short_;
 
       // long
       // 
       public:
-      bool long_p () const;
-      ::XMLSchema::int_ const& long_ () const;
-      void long_ (::XMLSchema::int_ const& );
+      typedef ::std::vector< ::XMLSchema::int_ >::iterator long_iterator;
+      typedef ::std::vector< ::XMLSchema::int_ >::const_iterator long_const_iterator;
+      long_iterator begin_long ();
+      long_iterator end_long ();
+      long_const_iterator begin_long () const;
+      long_const_iterator end_long () const;
+      void add_long (::XMLSchema::int_ const& );
+      size_t count_long (void) const;
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::int_ > long__;
+      ::std::vector< ::XMLSchema::int_ > long_;
 
       // ushort
       // 
       public:
-      bool ushort_p () const;
-      ::XMLSchema::unsignedShort const& ushort () const;
-      void ushort (::XMLSchema::unsignedShort const& );
+      typedef ::std::vector< ::XMLSchema::unsignedShort >::iterator ushort_iterator;
+      typedef ::std::vector< ::XMLSchema::unsignedShort >::const_iterator ushort_const_iterator;
+      ushort_iterator begin_ushort ();
+      ushort_iterator end_ushort ();
+      ushort_const_iterator begin_ushort () const;
+      ushort_const_iterator end_ushort () const;
+      void add_ushort (::XMLSchema::unsignedShort const& );
+      size_t count_ushort (void) const;
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::unsignedShort > ushort_;
+      ::std::vector< ::XMLSchema::unsignedShort > ushort_;
 
       // ulong
       // 
       public:
-      bool ulong_p () const;
-      ::XMLSchema::unsignedInt const& ulong () const;
-      void ulong (::XMLSchema::unsignedInt const& );
+      typedef ::std::vector< ::XMLSchema::unsignedInt >::iterator ulong_iterator;
+      typedef ::std::vector< ::XMLSchema::unsignedInt >::const_iterator ulong_const_iterator;
+      ulong_iterator begin_ulong ();
+      ulong_iterator end_ulong ();
+      ulong_const_iterator begin_ulong () const;
+      ulong_const_iterator end_ulong () const;
+      void add_ulong (::XMLSchema::unsignedInt const& );
+      size_t count_ulong (void) const;
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::unsignedInt > ulong_;
+      ::std::vector< ::XMLSchema::unsignedInt > ulong_;
 
       // float
       // 
       public:
-      bool float_p () const;
-      ::XMLSchema::float_ const& float_ () const;
-      void float_ (::XMLSchema::float_ const& );
+      typedef ::std::vector< ::XMLSchema::float_ >::iterator float_iterator;
+      typedef ::std::vector< ::XMLSchema::float_ >::const_iterator float_const_iterator;
+      float_iterator begin_float ();
+      float_iterator end_float ();
+      float_const_iterator begin_float () const;
+      float_const_iterator end_float () const;
+      void add_float (::XMLSchema::float_ const& );
+      size_t count_float (void) const;
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::float_ > float__;
+      ::std::vector< ::XMLSchema::float_ > float_;
 
       // double
       // 
       public:
-      bool double_p () const;
-      ::XMLSchema::double_ const& double_ () const;
-      void double_ (::XMLSchema::double_ const& );
+      typedef ::std::vector< ::XMLSchema::double_ >::iterator double_iterator;
+      typedef ::std::vector< ::XMLSchema::double_ >::const_iterator double_const_iterator;
+      double_iterator begin_double ();
+      double_iterator end_double ();
+      double_const_iterator begin_double () const;
+      double_const_iterator end_double () const;
+      void add_double (::XMLSchema::double_ const& );
+      size_t count_double (void) const;
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::double_ > double__;
+      ::std::vector< ::XMLSchema::double_ > double_;
 
       // boolean
       // 
       public:
-      bool boolean_p () const;
-      ::XMLSchema::boolean const& boolean () const;
-      void boolean (::XMLSchema::boolean const& );
+      typedef ::std::vector< ::XMLSchema::boolean >::iterator boolean_iterator;
+      typedef ::std::vector< ::XMLSchema::boolean >::const_iterator boolean_const_iterator;
+      boolean_iterator begin_boolean ();
+      boolean_iterator end_boolean ();
+      boolean_const_iterator begin_boolean () const;
+      boolean_const_iterator end_boolean () const;
+      void add_boolean (::XMLSchema::boolean const& );
+      size_t count_boolean (void) const;
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::boolean > boolean_;
+      ::std::vector< ::XMLSchema::boolean > boolean_;
 
       // octet
       // 
       public:
-      bool octet_p () const;
-      ::XMLSchema::unsignedByte const& octet () const;
-      void octet (::XMLSchema::unsignedByte const& );
+      typedef ::std::vector< ::XMLSchema::unsignedByte >::iterator octet_iterator;
+      typedef ::std::vector< ::XMLSchema::unsignedByte >::const_iterator octet_const_iterator;
+      octet_iterator begin_octet ();
+      octet_iterator end_octet ();
+      octet_const_iterator begin_octet () const;
+      octet_const_iterator end_octet () const;
+      void add_octet (::XMLSchema::unsignedByte const& );
+      size_t count_octet (void) const;
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::unsignedByte > octet_;
-
-      // objref
-      // 
-      public:
-      bool objref_p () const;
-      ::XMLSchema::string< ACE_TCHAR > const& objref () const;
-      void objref (::XMLSchema::string< ACE_TCHAR > const& );
-
-      protected:
-      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > objref_;
+      ::std::vector< ::XMLSchema::unsignedByte > octet_;
 
       // enum
       // 
       public:
-      bool enum_p () const;
-      ::XMLSchema::string< ACE_TCHAR > const& enum_ () const;
-      void enum_ (::XMLSchema::string< ACE_TCHAR > const& );
+      typedef ::std::vector< ::XMLSchema::string< ACE_TCHAR > >::iterator enum_iterator;
+      typedef ::std::vector< ::XMLSchema::string< ACE_TCHAR > >::const_iterator enum_const_iterator;
+      enum_iterator begin_enum ();
+      enum_iterator end_enum ();
+      enum_const_iterator begin_enum () const;
+      enum_const_iterator end_enum () const;
+      void add_enum (::XMLSchema::string< ACE_TCHAR > const& );
+      size_t count_enum (void) const;
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > enum__;
+      ::std::vector< ::XMLSchema::string< ACE_TCHAR > > enum_;
 
       // string
       // 
       public:
-      bool string_p () const;
-      ::XMLSchema::string< ACE_TCHAR > const& string () const;
-      void string (::XMLSchema::string< ACE_TCHAR > const& );
+      typedef ::std::vector< ::XMLSchema::string< ACE_TCHAR > >::iterator string_iterator;
+      typedef ::std::vector< ::XMLSchema::string< ACE_TCHAR > >::const_iterator string_const_iterator;
+      string_iterator begin_string ();
+      string_iterator end_string ();
+      string_const_iterator begin_string () const;
+      string_const_iterator end_string () const;
+      void add_string (::XMLSchema::string< ACE_TCHAR > const& );
+      size_t count_string (void) const;
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > string_;
+      ::std::vector< ::XMLSchema::string< ACE_TCHAR > > string_;
 
       // longlong
       // 
       public:
-      bool longlong_p () const;
-      ::XMLSchema::long_ const& longlong () const;
-      void longlong (::XMLSchema::long_ const& );
+      typedef ::std::vector< ::XMLSchema::long_ >::iterator longlong_iterator;
+      typedef ::std::vector< ::XMLSchema::long_ >::const_iterator longlong_const_iterator;
+      longlong_iterator begin_longlong ();
+      longlong_iterator end_longlong ();
+      longlong_const_iterator begin_longlong () const;
+      longlong_const_iterator end_longlong () const;
+      void add_longlong (::XMLSchema::long_ const& );
+      size_t count_longlong (void) const;
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::long_ > longlong_;
+      ::std::vector< ::XMLSchema::long_ > longlong_;
 
       // ulonglong
       // 
       public:
-      bool ulonglong_p () const;
-      ::XMLSchema::unsignedLong const& ulonglong () const;
-      void ulonglong (::XMLSchema::unsignedLong const& );
+      typedef ::std::vector< ::XMLSchema::unsignedLong >::iterator ulonglong_iterator;
+      typedef ::std::vector< ::XMLSchema::unsignedLong >::const_iterator ulonglong_const_iterator;
+      ulonglong_iterator begin_ulonglong ();
+      ulonglong_iterator end_ulonglong ();
+      ulonglong_const_iterator begin_ulonglong () const;
+      ulonglong_const_iterator end_ulonglong () const;
+      void add_ulonglong (::XMLSchema::unsignedLong const& );
+      size_t count_ulonglong (void) const;
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::unsignedLong > ulonglong_;
+      ::std::vector< ::XMLSchema::unsignedLong > ulonglong_;
 
       // longdouble
       // 
       public:
-      bool longdouble_p () const;
-      ::XMLSchema::double_ const& longdouble () const;
-      void longdouble (::XMLSchema::double_ const& );
+      typedef ::std::vector< ::XMLSchema::double_ >::iterator longdouble_iterator;
+      typedef ::std::vector< ::XMLSchema::double_ >::const_iterator longdouble_const_iterator;
+      longdouble_iterator begin_longdouble ();
+      longdouble_iterator end_longdouble ();
+      longdouble_const_iterator begin_longdouble () const;
+      longdouble_const_iterator end_longdouble () const;
+      void add_longdouble (::XMLSchema::double_ const& );
+      size_t count_longdouble (void) const;
 
       protected:
-      ::std::auto_ptr< ::XMLSchema::double_ > longdouble_;
-
-      // fixed
-      // 
-      public:
-      bool fixed_p () const;
-      ::XMLSchema::string< ACE_TCHAR > const& fixed () const;
-      void fixed (::XMLSchema::string< ACE_TCHAR > const& );
-
-      protected:
-      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > fixed_;
-
-      // typecode
-      // 
-      public:
-      bool typecode_p () const;
-      ::CIAO::Config_Handlers::DataType const& typecode () const;
-      void typecode (::CIAO::Config_Handlers::DataType const& );
-
-      protected:
-      ::std::auto_ptr< ::CIAO::Config_Handlers::DataType > typecode_;
+      ::std::vector< ::XMLSchema::double_ > longdouble_;
 
       public:
       DataValue ();
@@ -341,6 +386,59 @@ namespace CIAO
 
       DataValue&
       operator= (DataValue const& s);
+
+      private:
+      char regulator__;
+    };
+
+
+    class Config_Handlers_Export EnumType : public ::XSCRT::Type
+    {
+      //@@ VC6 anathema
+      typedef ::XSCRT::Type Base__;
+
+      // name
+      // 
+      public:
+      ::XMLSchema::string< ACE_TCHAR > const& name () const;
+      void name (::XMLSchema::string< ACE_TCHAR > const& );
+
+      protected:
+      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > name_;
+
+      // typeId
+      // 
+      public:
+      ::XMLSchema::string< ACE_TCHAR > const& typeId () const;
+      void typeId (::XMLSchema::string< ACE_TCHAR > const& );
+
+      protected:
+      ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > typeId_;
+
+      // member
+      // 
+      public:
+      typedef ::std::vector< ::XMLSchema::string< ACE_TCHAR > >::iterator member_iterator;
+      typedef ::std::vector< ::XMLSchema::string< ACE_TCHAR > >::const_iterator member_const_iterator;
+      member_iterator begin_member ();
+      member_iterator end_member ();
+      member_const_iterator begin_member () const;
+      member_const_iterator end_member () const;
+      void add_member (::XMLSchema::string< ACE_TCHAR > const& );
+      size_t count_member (void) const;
+
+      protected:
+      ::std::vector< ::XMLSchema::string< ACE_TCHAR > > member_;
+
+      public:
+      EnumType (::XMLSchema::string< ACE_TCHAR > const& name__,
+      ::XMLSchema::string< ACE_TCHAR > const& typeId__);
+
+      EnumType (::XSCRT::XML::Element< ACE_TCHAR > const&);
+      EnumType (EnumType const& s);
+
+      EnumType&
+      operator= (EnumType const& s);
 
       private:
       char regulator__;
@@ -438,7 +536,7 @@ namespace CIAO
 
       enum Value
       {
-        Quantity_l,Capacity_l,Minimum_l,Maximum_l,Attribute_l,Selection_l
+        Quantity_l,Capacity_l,Minimum_l,Maximum_l,Attribute_l,Selection_l,
       };
 
 
@@ -891,7 +989,7 @@ namespace CIAO
 
       enum Value
       {
-        None_l,InstanceUsesResource_l,ResourceUsesInstance_l,PortUsesResource_l,ResourceUsesPort_l
+        None_l,InstanceUsesResource_l,ResourceUsesInstance_l,PortUsesResource_l,ResourceUsesPort_l,
       };
 
 
@@ -1092,7 +1190,7 @@ namespace CIAO
 
       enum Value
       {
-        Facet_l,SimplexReceptacle_l,MultiplexReceptacle_l,EventEmitter_l,EventPublisher_l,EventConsumer_l
+        Facet_l,SimplexReceptacle_l,MultiplexReceptacle_l,EventEmitter_l,EventPublisher_l,EventConsumer_l,
       };
 
 
@@ -1901,10 +1999,16 @@ namespace CIAO
         kind (Type const&);
 
         virtual void
-        kind_none (Type&);
+        enum_ (Type&);
 
         virtual void
-        kind_none (Type const&);
+        enum_ (Type const&);
+
+        virtual void
+        enum_none (Type&);
+
+        virtual void
+        enum_none (Type const&);
 
         virtual void
         post (Type&);
@@ -1934,6 +2038,24 @@ namespace CIAO
         short_ (Type const&);
 
         virtual void
+        short_pre (Type&);
+
+        virtual void
+        short_pre (Type const&);
+
+        virtual void
+        short_next (Type&);
+
+        virtual void
+        short_next (Type const&);
+
+        virtual void
+        short_post (Type&);
+
+        virtual void
+        short_post (Type const&);
+
+        virtual void
         short_none (Type&);
 
         virtual void
@@ -1944,6 +2066,24 @@ namespace CIAO
 
         virtual void
         long_ (Type const&);
+
+        virtual void
+        long_pre (Type&);
+
+        virtual void
+        long_pre (Type const&);
+
+        virtual void
+        long_next (Type&);
+
+        virtual void
+        long_next (Type const&);
+
+        virtual void
+        long_post (Type&);
+
+        virtual void
+        long_post (Type const&);
 
         virtual void
         long_none (Type&);
@@ -1958,6 +2098,24 @@ namespace CIAO
         ushort (Type const&);
 
         virtual void
+        ushort_pre (Type&);
+
+        virtual void
+        ushort_pre (Type const&);
+
+        virtual void
+        ushort_next (Type&);
+
+        virtual void
+        ushort_next (Type const&);
+
+        virtual void
+        ushort_post (Type&);
+
+        virtual void
+        ushort_post (Type const&);
+
+        virtual void
         ushort_none (Type&);
 
         virtual void
@@ -1968,6 +2126,24 @@ namespace CIAO
 
         virtual void
         ulong (Type const&);
+
+        virtual void
+        ulong_pre (Type&);
+
+        virtual void
+        ulong_pre (Type const&);
+
+        virtual void
+        ulong_next (Type&);
+
+        virtual void
+        ulong_next (Type const&);
+
+        virtual void
+        ulong_post (Type&);
+
+        virtual void
+        ulong_post (Type const&);
 
         virtual void
         ulong_none (Type&);
@@ -1982,6 +2158,24 @@ namespace CIAO
         float_ (Type const&);
 
         virtual void
+        float_pre (Type&);
+
+        virtual void
+        float_pre (Type const&);
+
+        virtual void
+        float_next (Type&);
+
+        virtual void
+        float_next (Type const&);
+
+        virtual void
+        float_post (Type&);
+
+        virtual void
+        float_post (Type const&);
+
+        virtual void
         float_none (Type&);
 
         virtual void
@@ -1992,6 +2186,24 @@ namespace CIAO
 
         virtual void
         double_ (Type const&);
+
+        virtual void
+        double_pre (Type&);
+
+        virtual void
+        double_pre (Type const&);
+
+        virtual void
+        double_next (Type&);
+
+        virtual void
+        double_next (Type const&);
+
+        virtual void
+        double_post (Type&);
+
+        virtual void
+        double_post (Type const&);
 
         virtual void
         double_none (Type&);
@@ -2006,6 +2218,24 @@ namespace CIAO
         boolean (Type const&);
 
         virtual void
+        boolean_pre (Type&);
+
+        virtual void
+        boolean_pre (Type const&);
+
+        virtual void
+        boolean_next (Type&);
+
+        virtual void
+        boolean_next (Type const&);
+
+        virtual void
+        boolean_post (Type&);
+
+        virtual void
+        boolean_post (Type const&);
+
+        virtual void
         boolean_none (Type&);
 
         virtual void
@@ -2018,28 +2248,52 @@ namespace CIAO
         octet (Type const&);
 
         virtual void
+        octet_pre (Type&);
+
+        virtual void
+        octet_pre (Type const&);
+
+        virtual void
+        octet_next (Type&);
+
+        virtual void
+        octet_next (Type const&);
+
+        virtual void
+        octet_post (Type&);
+
+        virtual void
+        octet_post (Type const&);
+
+        virtual void
         octet_none (Type&);
 
         virtual void
         octet_none (Type const&);
 
         virtual void
-        objref (Type&);
-
-        virtual void
-        objref (Type const&);
-
-        virtual void
-        objref_none (Type&);
-
-        virtual void
-        objref_none (Type const&);
-
-        virtual void
         enum_ (Type&);
 
         virtual void
         enum_ (Type const&);
+
+        virtual void
+        enum_pre (Type&);
+
+        virtual void
+        enum_pre (Type const&);
+
+        virtual void
+        enum_next (Type&);
+
+        virtual void
+        enum_next (Type const&);
+
+        virtual void
+        enum_post (Type&);
+
+        virtual void
+        enum_post (Type const&);
 
         virtual void
         enum_none (Type&);
@@ -2054,6 +2308,24 @@ namespace CIAO
         string (Type const&);
 
         virtual void
+        string_pre (Type&);
+
+        virtual void
+        string_pre (Type const&);
+
+        virtual void
+        string_next (Type&);
+
+        virtual void
+        string_next (Type const&);
+
+        virtual void
+        string_post (Type&);
+
+        virtual void
+        string_post (Type const&);
+
+        virtual void
         string_none (Type&);
 
         virtual void
@@ -2064,6 +2336,24 @@ namespace CIAO
 
         virtual void
         longlong (Type const&);
+
+        virtual void
+        longlong_pre (Type&);
+
+        virtual void
+        longlong_pre (Type const&);
+
+        virtual void
+        longlong_next (Type&);
+
+        virtual void
+        longlong_next (Type const&);
+
+        virtual void
+        longlong_post (Type&);
+
+        virtual void
+        longlong_post (Type const&);
 
         virtual void
         longlong_none (Type&);
@@ -2078,6 +2368,24 @@ namespace CIAO
         ulonglong (Type const&);
 
         virtual void
+        ulonglong_pre (Type&);
+
+        virtual void
+        ulonglong_pre (Type const&);
+
+        virtual void
+        ulonglong_next (Type&);
+
+        virtual void
+        ulonglong_next (Type const&);
+
+        virtual void
+        ulonglong_post (Type&);
+
+        virtual void
+        ulonglong_post (Type const&);
+
+        virtual void
         ulonglong_none (Type&);
 
         virtual void
@@ -2090,34 +2398,85 @@ namespace CIAO
         longdouble (Type const&);
 
         virtual void
+        longdouble_pre (Type&);
+
+        virtual void
+        longdouble_pre (Type const&);
+
+        virtual void
+        longdouble_next (Type&);
+
+        virtual void
+        longdouble_next (Type const&);
+
+        virtual void
+        longdouble_post (Type&);
+
+        virtual void
+        longdouble_post (Type const&);
+
+        virtual void
         longdouble_none (Type&);
 
         virtual void
         longdouble_none (Type const&);
 
         virtual void
-        fixed (Type&);
+        post (Type&);
 
         virtual void
-        fixed (Type const&);
+        post (Type const&);
+      };
+
+      struct Config_Handlers_Export EnumType : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::EnumType >
+      {
+        virtual void
+        traverse (Type&);
 
         virtual void
-        fixed_none (Type&);
+        traverse (Type const&);
 
         virtual void
-        fixed_none (Type const&);
+        pre (Type&);
 
         virtual void
-        typecode (Type&);
+        pre (Type const&);
 
         virtual void
-        typecode (Type const&);
+        name (Type&);
 
         virtual void
-        typecode_none (Type&);
+        name (Type const&);
 
         virtual void
-        typecode_none (Type const&);
+        typeId (Type&);
+
+        virtual void
+        typeId (Type const&);
+
+        virtual void
+        member (Type&);
+
+        virtual void
+        member (Type const&);
+
+        virtual void
+        member_pre (Type&);
+
+        virtual void
+        member_pre (Type const&);
+
+        virtual void
+        member_next (Type&);
+
+        virtual void
+        member_next (Type const&);
+
+        virtual void
+        member_post (Type&);
+
+        virtual void
+        member_post (Type const&);
 
         virtual void
         post (Type&);
@@ -3675,6 +4034,20 @@ namespace CIAO
         virtual void
         kind (Type const&);
 
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        enum_ (Type &o)
+        {
+
+          this->enum_ (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        enum_ (Type const&);
+
         protected:
         DataType ();
       };
@@ -3701,229 +4074,644 @@ namespace CIAO
         // Hack to make borland stop complaining.  
         #ifdef __BORLANDC__
         virtual void 
-        short_ (Type &o)
+        short_pre (Type &o)
         {
 
-          this->short_ (const_cast <Type const &> (o));
+          this->short_pre (const_cast <Type const &> (o));
         }
 
 
         #endif /* __BORLANDC__ */
         virtual void
-        short_ (Type const&);
+        short_pre (Type const&);
 
         // Hack to make borland stop complaining.  
         #ifdef __BORLANDC__
         virtual void 
-        long_ (Type &o)
+        short_next (Type &o)
         {
 
-          this->long_ (const_cast <Type const &> (o));
+          this->short_next (const_cast <Type const &> (o));
         }
 
 
         #endif /* __BORLANDC__ */
         virtual void
-        long_ (Type const&);
+        short_next (Type const&);
 
         // Hack to make borland stop complaining.  
         #ifdef __BORLANDC__
         virtual void 
-        ushort (Type &o)
+        short_post (Type &o)
         {
 
-          this->ushort (const_cast <Type const &> (o));
+          this->short_post (const_cast <Type const &> (o));
         }
 
 
         #endif /* __BORLANDC__ */
         virtual void
-        ushort (Type const&);
+        short_post (Type const&);
 
         // Hack to make borland stop complaining.  
         #ifdef __BORLANDC__
         virtual void 
-        ulong (Type &o)
+        long_pre (Type &o)
         {
 
-          this->ulong (const_cast <Type const &> (o));
+          this->long_pre (const_cast <Type const &> (o));
         }
 
 
         #endif /* __BORLANDC__ */
         virtual void
-        ulong (Type const&);
+        long_pre (Type const&);
 
         // Hack to make borland stop complaining.  
         #ifdef __BORLANDC__
         virtual void 
-        float_ (Type &o)
+        long_next (Type &o)
         {
 
-          this->float_ (const_cast <Type const &> (o));
+          this->long_next (const_cast <Type const &> (o));
         }
 
 
         #endif /* __BORLANDC__ */
         virtual void
-        float_ (Type const&);
+        long_next (Type const&);
 
         // Hack to make borland stop complaining.  
         #ifdef __BORLANDC__
         virtual void 
-        double_ (Type &o)
+        long_post (Type &o)
         {
 
-          this->double_ (const_cast <Type const &> (o));
+          this->long_post (const_cast <Type const &> (o));
         }
 
 
         #endif /* __BORLANDC__ */
         virtual void
-        double_ (Type const&);
+        long_post (Type const&);
 
         // Hack to make borland stop complaining.  
         #ifdef __BORLANDC__
         virtual void 
-        boolean (Type &o)
+        ushort_pre (Type &o)
         {
 
-          this->boolean (const_cast <Type const &> (o));
+          this->ushort_pre (const_cast <Type const &> (o));
         }
 
 
         #endif /* __BORLANDC__ */
         virtual void
-        boolean (Type const&);
+        ushort_pre (Type const&);
 
         // Hack to make borland stop complaining.  
         #ifdef __BORLANDC__
         virtual void 
-        octet (Type &o)
+        ushort_next (Type &o)
         {
 
-          this->octet (const_cast <Type const &> (o));
+          this->ushort_next (const_cast <Type const &> (o));
         }
 
 
         #endif /* __BORLANDC__ */
         virtual void
-        octet (Type const&);
+        ushort_next (Type const&);
 
         // Hack to make borland stop complaining.  
         #ifdef __BORLANDC__
         virtual void 
-        objref (Type &o)
+        ushort_post (Type &o)
         {
 
-          this->objref (const_cast <Type const &> (o));
+          this->ushort_post (const_cast <Type const &> (o));
         }
 
 
         #endif /* __BORLANDC__ */
         virtual void
-        objref (Type const&);
+        ushort_post (Type const&);
 
         // Hack to make borland stop complaining.  
         #ifdef __BORLANDC__
         virtual void 
-        enum_ (Type &o)
+        ulong_pre (Type &o)
         {
 
-          this->enum_ (const_cast <Type const &> (o));
+          this->ulong_pre (const_cast <Type const &> (o));
         }
 
 
         #endif /* __BORLANDC__ */
         virtual void
-        enum_ (Type const&);
+        ulong_pre (Type const&);
 
         // Hack to make borland stop complaining.  
         #ifdef __BORLANDC__
         virtual void 
-        string (Type &o)
+        ulong_next (Type &o)
         {
 
-          this->string (const_cast <Type const &> (o));
+          this->ulong_next (const_cast <Type const &> (o));
         }
 
 
         #endif /* __BORLANDC__ */
         virtual void
-        string (Type const&);
+        ulong_next (Type const&);
 
         // Hack to make borland stop complaining.  
         #ifdef __BORLANDC__
         virtual void 
-        longlong (Type &o)
+        ulong_post (Type &o)
         {
 
-          this->longlong (const_cast <Type const &> (o));
+          this->ulong_post (const_cast <Type const &> (o));
         }
 
 
         #endif /* __BORLANDC__ */
         virtual void
-        longlong (Type const&);
+        ulong_post (Type const&);
 
         // Hack to make borland stop complaining.  
         #ifdef __BORLANDC__
         virtual void 
-        ulonglong (Type &o)
+        float_pre (Type &o)
         {
 
-          this->ulonglong (const_cast <Type const &> (o));
+          this->float_pre (const_cast <Type const &> (o));
         }
 
 
         #endif /* __BORLANDC__ */
         virtual void
-        ulonglong (Type const&);
+        float_pre (Type const&);
 
         // Hack to make borland stop complaining.  
         #ifdef __BORLANDC__
         virtual void 
-        longdouble (Type &o)
+        float_next (Type &o)
         {
 
-          this->longdouble (const_cast <Type const &> (o));
+          this->float_next (const_cast <Type const &> (o));
         }
 
 
         #endif /* __BORLANDC__ */
         virtual void
-        longdouble (Type const&);
+        float_next (Type const&);
 
         // Hack to make borland stop complaining.  
         #ifdef __BORLANDC__
         virtual void 
-        fixed (Type &o)
+        float_post (Type &o)
         {
 
-          this->fixed (const_cast <Type const &> (o));
+          this->float_post (const_cast <Type const &> (o));
         }
 
 
         #endif /* __BORLANDC__ */
         virtual void
-        fixed (Type const&);
+        float_post (Type const&);
 
         // Hack to make borland stop complaining.  
         #ifdef __BORLANDC__
         virtual void 
-        typecode (Type &o)
+        double_pre (Type &o)
         {
 
-          this->typecode (const_cast <Type const &> (o));
+          this->double_pre (const_cast <Type const &> (o));
         }
 
 
         #endif /* __BORLANDC__ */
         virtual void
-        typecode (Type const&);
+        double_pre (Type const&);
+
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        double_next (Type &o)
+        {
+
+          this->double_next (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        double_next (Type const&);
+
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        double_post (Type &o)
+        {
+
+          this->double_post (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        double_post (Type const&);
+
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        boolean_pre (Type &o)
+        {
+
+          this->boolean_pre (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        boolean_pre (Type const&);
+
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        boolean_next (Type &o)
+        {
+
+          this->boolean_next (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        boolean_next (Type const&);
+
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        boolean_post (Type &o)
+        {
+
+          this->boolean_post (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        boolean_post (Type const&);
+
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        octet_pre (Type &o)
+        {
+
+          this->octet_pre (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        octet_pre (Type const&);
+
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        octet_next (Type &o)
+        {
+
+          this->octet_next (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        octet_next (Type const&);
+
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        octet_post (Type &o)
+        {
+
+          this->octet_post (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        octet_post (Type const&);
+
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        enum_pre (Type &o)
+        {
+
+          this->enum_pre (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        enum_pre (Type const&);
+
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        enum_next (Type &o)
+        {
+
+          this->enum_next (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        enum_next (Type const&);
+
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        enum_post (Type &o)
+        {
+
+          this->enum_post (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        enum_post (Type const&);
+
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        string_pre (Type &o)
+        {
+
+          this->string_pre (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        string_pre (Type const&);
+
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        string_next (Type &o)
+        {
+
+          this->string_next (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        string_next (Type const&);
+
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        string_post (Type &o)
+        {
+
+          this->string_post (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        string_post (Type const&);
+
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        longlong_pre (Type &o)
+        {
+
+          this->longlong_pre (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        longlong_pre (Type const&);
+
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        longlong_next (Type &o)
+        {
+
+          this->longlong_next (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        longlong_next (Type const&);
+
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        longlong_post (Type &o)
+        {
+
+          this->longlong_post (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        longlong_post (Type const&);
+
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        ulonglong_pre (Type &o)
+        {
+
+          this->ulonglong_pre (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        ulonglong_pre (Type const&);
+
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        ulonglong_next (Type &o)
+        {
+
+          this->ulonglong_next (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        ulonglong_next (Type const&);
+
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        ulonglong_post (Type &o)
+        {
+
+          this->ulonglong_post (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        ulonglong_post (Type const&);
+
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        longdouble_pre (Type &o)
+        {
+
+          this->longdouble_pre (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        longdouble_pre (Type const&);
+
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        longdouble_next (Type &o)
+        {
+
+          this->longdouble_next (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        longdouble_next (Type const&);
+
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        longdouble_post (Type &o)
+        {
+
+          this->longdouble_post (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        longdouble_post (Type const&);
 
         protected:
         DataValue ();
+      };
+
+      struct Config_Handlers_Export EnumType : Traversal::EnumType, 
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::CIAO::Config_Handlers::EnumType Type;
+        EnumType (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        #ifdef __BORLANDC__
+        virtual void 
+        traverse (Type &o)
+        {
+
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        traverse (Type const&);
+
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        name (Type &o)
+        {
+
+          this->name (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        name (Type const&);
+
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        typeId (Type &o)
+        {
+
+          this->typeId (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        typeId (Type const&);
+
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        member_pre (Type &o)
+        {
+
+          this->member_pre (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        member_pre (Type const&);
+
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        member_next (Type &o)
+        {
+
+          this->member_next (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        member_next (Type const&);
+
+        // Hack to make borland stop complaining.  
+        #ifdef __BORLANDC__
+        virtual void 
+        member_post (Type &o)
+        {
+
+          this->member_post (const_cast <Type const &> (o));
+        }
+
+
+        #endif /* __BORLANDC__ */
+        virtual void
+        member_post (Type const&);
+
+        protected:
+        EnumType ();
       };
 
       struct Config_Handlers_Export Any : Traversal::Any, 

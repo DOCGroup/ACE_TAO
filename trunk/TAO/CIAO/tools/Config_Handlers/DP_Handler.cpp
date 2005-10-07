@@ -30,7 +30,7 @@ namespace CIAO
     DP_Handler::DP_Handler (DeploymentPlan &dp)
       :   xsc_dp_ (0)
         , idl_dp_ (0)
-        , retval_ (false)
+        , retval_ (true)
     {
       if (!this->resolve_plan (dp))
         throw;
@@ -148,7 +148,7 @@ namespace CIAO
                           "Importing ServerResources...\n"));
               
               // Parse the SR document
-              SRD_Handler srd_handler (pstart->value ().value ().string ().c_str ());
+              SRD_Handler srd_handler (pstart->value ().value ().begin_string ()->c_str ());
 
               // Populate the property
               this->idl_dp_->infoProperty [len].name = pstart->name ().c_str ();
@@ -159,62 +159,24 @@ namespace CIAO
       // Read in the realizes, if present
       if (xsc_dp.realizes_p ())
       {
-        this->retval_ =
           CCD_Handler::component_interface_descr (
             xsc_dp.realizes (),
             this->idl_dp_->realizes);
-
-        if (!this->retval_)
-          {
-            ACE_DEBUG ((LM_ERROR,
-                        "(%P|%t) DP_Handler: "
-                        "Error parsing Component Interface Descriptor."));
-            return false;
-          }
       }
 
 
-      this->retval_ =
-        ADD_Handler::artifact_deployment_descrs (
-          xsc_dp,
-          this->idl_dp_->artifact);
+      ADD_Handler::artifact_deployment_descrs (xsc_dp,
+                                               this->idl_dp_->artifact);
 
-      if (!this->retval_)
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "(%P|%t) DP_Handler: "
-                      "Error parsing Artifact Deployment Descriptior."));
-          return false;
-        }
+      MDD_Handler::mono_deployment_descriptions (xsc_dp,
+                                                 this->idl_dp_->implementation);
 
-      this->retval_ =
-        MDD_Handler::mono_deployment_descriptions (
-          xsc_dp,
-          this->idl_dp_->implementation);
-
-      if (!this->retval_)
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "(%P|%t) DP_Handler: "
-                      "Error parsing Monolithic Deployment Decriptions."));
-          return false;
-        }
-
-      this->retval_ =
-        IDD_Handler::instance_deployment_descrs (
-          xsc_dp,
-          this->idl_dp_->instance);
-
-      if (!this->retval_)
-        {
-          ACE_DEBUG ((LM_ERROR,
-                      "(%P|%t) DP_Handler: "
-                      "Error parsing Instance Deployment Decriptions."));
-          return false;
-        }
+      IDD_Handler::instance_deployment_descrs (xsc_dp,
+                                               this->idl_dp_->instance);
 
       DP_PCD_Handler::plan_connection_descrs (xsc_dp, this->idl_dp_->connection);
-      return this->retval_;
+      
+      return true;
     }
     
     bool

@@ -49,7 +49,7 @@ namespace CIAO
     class Config_Handlers_Export ADD_Handler
     {
     public:
-      static bool artifact_deployment_descrs (
+      static void artifact_deployment_descrs (
           const DeploymentPlan &src,
           ::Deployment::ArtifactDeploymentDescriptions &dest);
 
@@ -61,7 +61,7 @@ namespace CIAO
       static IDREF_Base<CORBA::ULong> IDREF;
       
     private:
-      static bool artifact_deployment_descr (
+      static void artifact_deployment_descr (
           const ArtifactDeploymentDescription& desc,
           ::Deployment::ArtifactDeploymentDescription &dest,
           CORBA::ULong l = 0);

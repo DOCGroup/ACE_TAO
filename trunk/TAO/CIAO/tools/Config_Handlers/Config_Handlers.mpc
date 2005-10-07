@@ -28,7 +28,7 @@ project (XSC_Config_Handlers) : acelib, ciao_deployment_stub, xerces {
   macros   += XML_USE_PTHREADS
   requires += exceptions
   includes += $(CIAO_ROOT)/tools/Config_Handlers
-  libs += CIAO_XML_Utils RT_CCM_Config_Handlers XSC_XML_Handlers
+  libs += CIAO_XML_Utils RT_CCM_Config_Handlers XSC_XML_Handlers XSC_DynAny_Handler
 
   Source_Files {
     Basic_Deployment_Data.cpp

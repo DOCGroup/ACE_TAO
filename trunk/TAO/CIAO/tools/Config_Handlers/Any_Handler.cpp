@@ -7,6 +7,7 @@
 #include "Basic_Deployment_Data.hpp"
 #include "tao/AnyTypeCode/Any.h"
 
+#include "DynAny_Handler/DynAny_Handler.h"
 
 namespace CIAO
 {
@@ -26,81 +27,13 @@ namespace CIAO
                                    CORBA::Any& toconfig)
 
     {
-      // Get the value that should be assigned to the Any.
-      DataValue value =
-        desc.value ();
-
-      if (value.short_p ())
-        {
-          toconfig <<=
-            CORBA::Short (static_cast < ::XMLSchema::short_ const & > (value.short_ ()));
-
-          //  static_cast<CORBA::Short> (value.short_ ());
-        }
-      else if (value.ushort_p ())
-        {
-          toconfig <<=
-            CORBA::UShort (static_cast< ::XMLSchema::unsignedShort const & > (value.ushort ()));
-
-        }
-      else if (value.long_p ())
-        {
-          toconfig <<=
-            CORBA::Long (static_cast < ::XMLSchema::int_ const& > (value.long_ ()));
-
-        }
-      else if (value.ulong_p ())
-        {
-          toconfig <<=
-            CORBA::ULong (static_cast < ::XMLSchema::unsignedInt const& > (value.ulong ()));
-        }
-      else if (value.boolean_p ())
-        {
-          toconfig <<=
-	    CORBA::Any::from_boolean (static_cast < ::XMLSchema::boolean const& > (value.boolean ()));
-        }
-      else if (value.double_p ())
-        {
-          toconfig <<=
-#ifdef __BORLANDC__
-            CORBA::Double (static_cast < double &> (value.double_ ()));
-#else
-            CORBA::Double (static_cast < ::XMLSchema::double_ const& > (value.double_ ()));
-#endif
-        }
-      else if (value.float_p ())
-        {
-          toconfig <<=
-#ifdef __BORLANDC__
-            CORBA::Float (static_cast < float & > (value.float_ ()));
-#else
-            CORBA::Float (static_cast < ::XMLSchema::float_ const& > (value.float_ ()));
-#endif
-        }
-      else if (value.string_p ())
-        {
-          toconfig <<=
-            value.string ().c_str ();
-
-        }
-      else if (value.octet_p ())
-        {
-          CORBA::Octet val (static_cast <const unsigned char &> (value.octet ()));
-
-          toconfig <<=
-            CORBA::Any::from_octet (val);
-
-        }
-      else if (value.longlong_p ())
-        {
-          toconfig <<=
-            CORBA::LongLong (static_cast < ::XMLSchema::long_ const& > (value.longlong ()));
-	}
-      else if (value.ulonglong_p ())
-        {
-          toconfig <<=
-            CORBA::ULongLong (static_cast < ::XMLSchema::unsignedLong const& > (value.ulonglong ()));
-        }
+      DynamicAny::DynAny_var dyn;
+      dyn = DynAny_Handler::instance ()->extract_into_dynany (desc.type (),
+                                                              desc.value ());
+      
+      toconfig = *dyn->to_any ();
+      
+      dyn->destroy ();
     }
 
     Any Any_Handler::get_any (const ::CORBA::Any& src)
