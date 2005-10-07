@@ -27,9 +27,8 @@ namespace CIAO
                                    CORBA::Any& toconfig)
 
     {
-      DynamicAny::DynAny_var dyn;
-      dyn = DynAny_Handler::instance ()->extract_into_dynany (desc.type (),
-                                                              desc.value ());
+      DynamicAny::DynAny_var dyn = DYNANY_HANDLER->extract_into_dynany (desc.type (),
+                                                 desc.value ());
       
       toconfig = *dyn->to_any ();
       

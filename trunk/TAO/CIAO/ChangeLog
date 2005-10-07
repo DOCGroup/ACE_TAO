@@ -1,4 +1,13 @@
-Fri Oct  7 18:25:11 2005  root  <root@mako.isislab.vanderbilt.edu>
+Fri Oct  7 18:22:40 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* tools/Config_Handlers/Any_Handler.cpp
+	* tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp
+	* tools/Config_Handlers/DynAny_Handler/DynAny_Handler.h
+	* tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.cpp
+
+	*Hopefully* fix compile problem on Windows. 
+
+Fri Oct  7 18:25:11 2005  Will Otte <wotte@dre.vanderbilt.edu>
 
 	* tools/Config_Handlers/ADD_Handler.cpp
 	* tools/Config_Handlers/DP_Handler.cpp
@@ -7,7 +16,7 @@ Fri Oct  7 18:25:11 2005  root  <root@mako.isislab.vanderbilt.edu>
 
 	Fix runtime error. 
 
-Fri Oct  7 16:18:40 2005  root  <root@mako.isislab.vanderbilt.edu>
+Fri Oct  7 16:18:40 2005  Will Otte <wotte@dre.vanderbilt.edu>
 
 	* tools/Config_Handlers/Config_Handlers.mpc
 	* tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.cpp

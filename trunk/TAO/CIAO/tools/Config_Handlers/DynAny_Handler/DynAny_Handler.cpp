@@ -10,12 +10,17 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    DynAny_Handler * DynAny_Handler::instance_ = 0;
+    //    DynAny_Handler * DynAny_Handler::instance_ = 0;
     
-    DynAny_Handler::DynAny_Handler (int argc, char **argv) :
-      orb_ (CORBA::ORB_init (argc, argv)),
+    DynAny_Handler::DynAny_Handler (void) :
+      orb_ (0),
       daf_ (0)
     {
+      int argc = 0;
+      char **argv = 0;
+      
+      CORBA::ORB_init (argc, argv);
+      
       CORBA::Object_var temp = this->orb_->resolve_initial_references ("DynAnyFactory");
       daf_ = DynamicAny::DynAnyFactory::_narrow (temp.in ());
       
@@ -30,6 +35,7 @@ namespace CIAO
     {
     }
     
+    /*
     DynAny_Handler *
     DynAny_Handler::instance (void)
     {
@@ -38,7 +44,8 @@ namespace CIAO
       
       return instance_;
     }
-    
+    */
+
     CORBA::ORB_ptr 
     DynAny_Handler::orb ()
     {
