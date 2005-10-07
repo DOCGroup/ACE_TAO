@@ -23,7 +23,6 @@ namespace CIAO
     {
       DeploymentPlan::artifact_const_iterator aci_e =
         src.end_artifact ();
-      
       dest.length (src.count_artifact ());
       CORBA::ULong pos = 0;
       for (DeploymentPlan::artifact_const_iterator aci_b =
@@ -33,7 +32,8 @@ namespace CIAO
         {
           ADD_Handler::artifact_deployment_descr ((*aci_b),
                                                   dest[pos],
-                                                  pos++);
+                                                  pos);
+	  pos++;
         }
     }
 
@@ -49,7 +49,7 @@ namespace CIAO
 
       ArtifactDeploymentDescription::location_const_iterator end =
         src.end_location ();
-
+      
       dest.location.length (src.count_location ());
       CORBA::ULong len = 0;
       for (ArtifactDeploymentDescription::location_const_iterator
@@ -85,7 +85,6 @@ namespace CIAO
           Property_Handler::get_property ((*adcb),
                                           dest.execParameter[len++]);
         }
-
 
       if (src.id_p ())
         {

@@ -112,7 +112,6 @@ namespace CIAO
 	          CORBA::string_dup (xsc_dp.UUID ().c_str ());
 	      }
 
-
       // Similar thing for dependsOn
       for (DeploymentPlan::dependsOn_const_iterator dstart = xsc_dp.begin_dependsOn ();
 	   dstart != xsc_dp.end_dependsOn ();
@@ -144,7 +143,9 @@ namespace CIAO
               /*
                * Hook for RT-CCM
                */
-              ACE_DEBUG ((LM_DEBUG,
+
+
+	      ACE_DEBUG ((LM_DEBUG,
                           "Importing ServerResources...\n"));
               
               // Parse the SR document
@@ -155,7 +156,6 @@ namespace CIAO
               this->idl_dp_->infoProperty [len].value <<= *(srd_handler.srd_idl ());
             }
 	}
-
       // Read in the realizes, if present
       if (xsc_dp.realizes_p ())
       {
@@ -164,16 +164,15 @@ namespace CIAO
             this->idl_dp_->realizes);
       }
 
-
       ADD_Handler::artifact_deployment_descrs (xsc_dp,
                                                this->idl_dp_->artifact);
-
+      
       MDD_Handler::mono_deployment_descriptions (xsc_dp,
                                                  this->idl_dp_->implementation);
 
       IDD_Handler::instance_deployment_descrs (xsc_dp,
                                                this->idl_dp_->instance);
-
+      
       DP_PCD_Handler::plan_connection_descrs (xsc_dp, this->idl_dp_->connection);
       
       return true;

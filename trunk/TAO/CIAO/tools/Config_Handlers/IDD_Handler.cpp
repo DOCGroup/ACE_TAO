@@ -32,7 +32,8 @@ namespace CIAO
            ++idd_b)
         {
 	  IDD_Handler::instance_deployment_descr ((*idd_b),
-						  dest[pos], pos++);
+						  dest[pos], pos);
+	  pos++;
         }
     }
 

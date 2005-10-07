@@ -29,7 +29,8 @@ namespace CIAO
         {
           MDD_Handler::mono_deployment_description (*imp_b,
                                                     dest[pos],
-                                                    pos++);
+                                                    pos);
+	  pos++;
         }
     }  
     
