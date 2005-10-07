@@ -12,6 +12,7 @@ ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
+TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
@@ -42,8 +43,8 @@ CLEANFILES = \
 
 corbanameC.cpp corbanameC.h corbanameC.inl corbanameS.cpp corbanameS.h corbanameS.inl corbanameS_T.cpp corbanameS_T.h corbanameS_T.inl: corbaname-stamp
 
-corbaname-stamp: $(srcdir)/corbaname.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/corbaname.idl
+corbaname-stamp: $(srcdir)/corbaname.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/corbaname.idl
 	@touch $@
 
 

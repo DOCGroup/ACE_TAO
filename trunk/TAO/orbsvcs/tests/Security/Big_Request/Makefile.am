@@ -12,6 +12,7 @@ ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
+TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
@@ -44,8 +45,8 @@ CLEANFILES = \
 
 TX_ObjectC.cpp TX_ObjectC.h TX_ObjectC.inl TX_ObjectS.cpp TX_ObjectS.h TX_ObjectS.inl TX_ObjectS_T.cpp TX_ObjectS_T.h TX_ObjectS_T.inl: TX_Object-stamp
 
-TX_Object-stamp: $(srcdir)/TX_Object.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/TX_Object.idl
+TX_Object-stamp: $(srcdir)/TX_Object.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/TX_Object.idl
 	@touch $@
 
 

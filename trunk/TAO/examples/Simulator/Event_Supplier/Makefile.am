@@ -12,6 +12,7 @@ ACE_BUILDDIR = $(top_builddir)/..
 ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
+TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
@@ -48,7 +49,7 @@ CLEANFILES += \
 
 ./NavWeapC.cpp ./NavWeapC.h ./NavWeapC.inl ./NavWeapS.cpp ./NavWeapS.h ./NavWeapS.inl ./NavWeapS_T.cpp ./NavWeapS_T.h ./NavWeapS_T.inl: ./NavWeap-stamp
 
-./NavWeap-stamp: $(srcdir)/../NavWeap.idl
+./NavWeap-stamp: $(srcdir)/../NavWeap.idl $(TAO_IDL_DEP)
 	mkdir -p .
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs $(srcdir)/../NavWeap.idl
 	@touch $@
@@ -125,7 +126,7 @@ CLEANFILES += \
 
 ./NavWeapC.cpp ./NavWeapC.h ./NavWeapC.inl ./NavWeapS.cpp ./NavWeapS.h ./NavWeapS.inl ./NavWeapS_T.cpp ./NavWeapS_T.h ./NavWeapS_T.inl: ./NavWeap-stamp
 
-./NavWeap-stamp: $(srcdir)/../NavWeap.idl
+./NavWeap-stamp: $(srcdir)/../NavWeap.idl $(TAO_IDL_DEP)
 	mkdir -p .
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs $(srcdir)/../NavWeap.idl
 	@touch $@
@@ -198,7 +199,7 @@ CLEANFILES += \
 
 ./NavWeapC.cpp ./NavWeapC.h ./NavWeapC.inl ./NavWeapS.cpp ./NavWeapS.h ./NavWeapS.inl ./NavWeapS_T.cpp ./NavWeapS_T.h ./NavWeapS_T.inl: ./NavWeap-stamp
 
-./NavWeap-stamp: $(srcdir)/../NavWeap.idl
+./NavWeap-stamp: $(srcdir)/../NavWeap.idl $(TAO_IDL_DEP)
 	mkdir -p .
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs $(srcdir)/../NavWeap.idl
 	@touch $@
@@ -274,7 +275,7 @@ CLEANFILES += \
 
 ./NavWeapC.cpp ./NavWeapC.h ./NavWeapC.inl ./NavWeapS.cpp ./NavWeapS.h ./NavWeapS.inl ./NavWeapS_T.cpp ./NavWeapS_T.h ./NavWeapS_T.inl: ./NavWeap-stamp
 
-./NavWeap-stamp: $(srcdir)/../NavWeap.idl
+./NavWeap-stamp: $(srcdir)/../NavWeap.idl $(TAO_IDL_DEP)
 	mkdir -p .
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs $(srcdir)/../NavWeap.idl
 	@touch $@
