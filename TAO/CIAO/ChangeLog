@@ -1,3 +1,11 @@
+Fri Oct  7 14:20:36 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/DomainApplicationManager/Deployment_Configuration.cpp:
+        *
+          DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+
+          Added more debug statements.
+
 Fri Oct  7 19:14:29 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIAO-INSTALL.html:

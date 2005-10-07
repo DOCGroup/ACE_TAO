@@ -234,7 +234,9 @@ get_plan_info (void)
     {
       bool matched = false;
 
-      const CORBA::ULong number_node_managers = this->node_manager_names_.size ();
+      const CORBA::ULong number_node_managers = 
+           this->node_manager_names_.size ();
+
       for (CORBA::ULong i = 0; i < number_node_managers; ++i)
         // If a match is found do not add it to the list of unique
         // node names
