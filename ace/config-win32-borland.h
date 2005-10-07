@@ -33,7 +33,6 @@
 // Borland on win32 has swab
 # undef ACE_LACKS_SWAB
 
-# define ACE_LACKS_MODE_MASKS 1
 # define ACE_WSTRING_HAS_USHORT_SUPPORT 1
 # define ACE_HAS_DIRENT
 
