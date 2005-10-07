@@ -20,7 +20,7 @@ Server_Request_Interceptor::~Server_Request_Interceptor (void)
 void
 Server_Request_Interceptor::forward_reference (
   const char* iorstr
-  ACE_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->iorstr_ = CORBA::string_dup (iorstr);
@@ -42,7 +42,7 @@ Server_Request_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 void
 Server_Request_Interceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr //
-    ACE_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
