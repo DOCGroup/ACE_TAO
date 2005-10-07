@@ -66,13 +66,6 @@ protected:
 
 extern ACE_Service_Object_Type rts;
 
-#if defined (__ACE_INLINE__)
-#define ACE_INLINE inline
-#include "Handle_Thr_Stream.i"
-#else
-#define ACE_INLINE
-#endif /* __ACE_INLINE__ */
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Handle_Thr_Stream.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */

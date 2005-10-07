@@ -10,11 +10,6 @@
  */
 //=============================================================================
 #include "HTBP_Notifier.h"
-
-#if !defined (__ACE_INLINE__)
-#include "HTBP_Notifier.inl"
-#endif
-
 #include "HTBP_Channel.h"
 #include "HTBP_Session.h"
 #include "ace/Reactor.h"

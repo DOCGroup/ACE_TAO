@@ -11,7 +11,7 @@
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
-## Makefile.Svc_Cfg_IPC_Server_Lib.am 
+## Makefile.Svc_Cfg_IPC_Server_Lib.am
 noinst_LTLIBRARIES = libIPC_Tests_Server.la
 
 libIPC_Tests_Server_la_CPPFLAGS = \
@@ -56,7 +56,7 @@ noinst_HEADERS = \
   Handle_Thr_Stream.i \
   Handle_Timeout.i
 
-## Makefile.Svc_Cfg_IPC_Server_Test.am 
+## Makefile.Svc_Cfg_IPC_Server_Test.am
 noinst_PROGRAMS = server_test
 
 server_test_CPPFLAGS = \
@@ -85,7 +85,6 @@ server_test_SOURCES = \
   Handle_L_Stream.i \
   Handle_R_Dgram.i \
   Handle_R_Stream.i \
-  Handle_Thr_Stream.i \
   Handle_Timeout.i
 
 server_test_LDADD = \
