@@ -37,7 +37,7 @@ namespace CIAO
       static DynamicAny::DynAny_ptr extract_into_dynany (const DataType &type,
                                                       const DataValue &value);
       
-      static Any extract_out_of_dynany (const DynamicAny::DynAny_ptr dyn);
+      static void extract_out_of_dynany (const DynamicAny::DynAny_ptr dyn);
     };
     
   }

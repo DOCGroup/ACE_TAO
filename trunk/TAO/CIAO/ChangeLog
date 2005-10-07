@@ -1,3 +1,11 @@
+Fri Oct  7 16:18:40 2005  root  <root@mako.isislab.vanderbilt.edu>
+
+	* tools/Config_Handlers/Config_Handlers.mpc
+	* tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.cpp
+	* tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.h
+
+	Fix for a compile problem. 
+	
 Fri Oct  7 14:25:09 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/DynAny_Handler/DataType_Handler.cpp
