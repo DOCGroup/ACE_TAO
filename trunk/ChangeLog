@@ -1,3 +1,10 @@
+Fri Oct  7 09:32:06 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
+
+	  Define TAO_IDL_DEP if TAO_IDL is found in the any per-project
+	  Makefile.am as they are aggregated into the final Makefile.am.
+
 Fri Oct  7 12:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Upgradable_RW_Test.cpp:
