@@ -1,3 +1,16 @@
+Fri Oct  7 07:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * protocols/ace/HTBP/HTBP_Stream.{h,cpp,inl}:
+        * protocols/ace/HTBP/HTBP_Notifier.{h,cpp,inl}:
+        * examples/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.{h,cpp,i}:
+        * apps/JAWS/clients/Caching/URL_Locator.{h,cpp,i}:
+          Removed empty inline files
+
+        * protocols/ace/HTBP/Makefile.am:
+        * examples/Service_Configurator/IPC-tests/server/Makefile.am:
+        * apps/JAWS/clients/Caching/Makefile.am:
+          Removed inline files we zapped above
+
 Thu Oct  6 15:42:29 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/DLL_Test.cpp:
