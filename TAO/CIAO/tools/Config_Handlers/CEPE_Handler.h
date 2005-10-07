@@ -45,7 +45,7 @@ namespace CIAO
     class Config_Handlers_Export CEPE_Handler
     {
     public:
-      static bool external_port_endpoints (
+      static void external_port_endpoints (
         const PlanConnectionDescription &src,
         ::Deployment::ComponentExternalPortEndpoints &dest);
       

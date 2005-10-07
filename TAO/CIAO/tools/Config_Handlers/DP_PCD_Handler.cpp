@@ -14,34 +14,24 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    bool
+    void
     DP_PCD_Handler::plan_connection_descrs (
         const DeploymentPlan &src,
         Deployment::PlanConnectionDescriptions& dest)
     {
       DeploymentPlan::connection_const_iterator cci_e =
         src.end_connection ();
-
+      
+      CORBA::ULong pos = 0;
+      dest.length (src.count_connection ());
       for (DeploymentPlan::connection_const_iterator cci_b =
              src.begin_connection ();
            cci_b != cci_e;
            ++cci_b)
         {
-          CORBA::ULong len =
-            dest.length ();
-
-          dest.length (len + 1);
-
-          bool retval =
-            DP_PCD_Handler::plan_connection_descr (
-              *(cci_b),
-              dest[len]);
-
-          if (!retval)
-            return retval;
+          DP_PCD_Handler::plan_connection_descr (*(cci_b),
+                                                 dest[pos++]);
         }
-
-      return true;
     }
     
     PlanConnectionDescription
@@ -52,7 +42,7 @@ namespace CIAO
 	return pcd;
     }
 
-    bool
+    void
     DP_PCD_Handler::plan_connection_descr (
         const PlanConnectionDescription &src,
         Deployment::PlanConnectionDescription &dest)
@@ -69,17 +59,13 @@ namespace CIAO
         }
 
 
-      if (!CEPE_Handler::external_port_endpoints (src,
-                                                  dest.externalEndpoint))
-        return false;
+      CEPE_Handler::external_port_endpoints (src,
+                                             dest.externalEndpoint);
+      ERE_Handler::external_ref_endpoints (src,
+                                           dest.externalReference);
 
-      if (!ERE_Handler::external_ref_endpoints (src,
-                                                dest.externalReference))
-        return false;
-
-      if (!PSPE_Handler::sub_component_port_endpoints (src,
-                                                       dest.internalEndpoint))
-        return false;
+      PSPE_Handler::sub_component_port_endpoints (src,
+                                                  dest.internalEndpoint);
 
 #if 0
       // @@MAJO: Need to figure how to use this.
@@ -111,11 +97,8 @@ namespace CIAO
             desc.deployRequirement ());
 
 
-          return 0;
         }
 #endif /*if 0*/
-
-      return true;
     }
   }
 }

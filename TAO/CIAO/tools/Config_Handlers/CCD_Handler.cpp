@@ -11,7 +11,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    bool
+    void
     CCD_Handler::component_interface_descr (
         const ComponentInterfaceDescription &desc,
         Deployment::ComponentInterfaceDescription& toconfig)
@@ -35,101 +35,76 @@ namespace CIAO
 	ComponentInterfaceDescription::supportedType_const_iterator
 	    end = desc.end_supportedType ();
 	
+        CORBA::ULong pos = 0;
+        toconfig.supportedType.length (desc.count_supportedType ());
 	for (ComponentInterfaceDescription::supportedType_const_iterator s =
 		 desc.begin_supportedType ();
 	     s != end;
 	     ++s)
         {
-	    // This loop is going to be very slow! :(!
-	    CORBA::ULong len =
-		toconfig.supportedType.length ();
-	    
-	    toconfig.supportedType.length (len + 1);
-	    toconfig.supportedType[len] =
-		CORBA::string_dup ((*s).c_str ());
+          toconfig.supportedType[pos++] = s->c_str ();
         }
 	
 	ComponentInterfaceDescription::idlFile_const_iterator
 	    eidl = desc.end_idlFile ();
-	
+	pos = 0;
+        toconfig.idlFile.length (desc.count_idlFile ());
 	for (ComponentInterfaceDescription::idlFile_const_iterator sidl=
 		 desc.begin_idlFile ();
 	     sidl != eidl;
 	     ++sidl)
         {
-	    // @@ Another n^2 algorithm
-	    CORBA::ULong len =
-		toconfig.idlFile.length ();
-	    
-	    toconfig.idlFile.length (len + 1);
-	    
-	    toconfig.idlFile [len] =
-		(*sidl).c_str ();
+	    toconfig.idlFile [pos++] = sidl->c_str ();
         }
 	
 	ComponentInterfaceDescription::configProperty_const_iterator pend =
 	    desc.end_configProperty ();
-	
+	pos = 0;
+        toconfig.configProperty.length (desc.count_configProperty ());
 	for (ComponentInterfaceDescription::configProperty_const_iterator pstart =
 		 desc.begin_configProperty ();
 	     pstart != pend;
 	     ++pstart)
 	{
-	    // Need to improve this. This is clearly O(n^2).
-	    CORBA::ULong len =
-		toconfig.configProperty.length ();
-	    
-	    toconfig.configProperty.length (len + 1);
-	    
 	    Property_Handler::get_property (*pstart,
-					    toconfig.configProperty [len]);
+					    toconfig.configProperty [pos++]);
 	}
 	
+        pos = 0;
+        toconfig.port.length (desc.count_port ());
 	for (ComponentInterfaceDescription::port_const_iterator
 		 port (desc.begin_port ());
 	     port != desc.end_port ();
 	     ++port)
 	{
-	    CORBA::ULong len =
-		toconfig.port.length ();
-	    
-	    toconfig.port.length (len + 1);
-	    
 	    CPD_Handler::component_port_description (
 		*port,
-		toconfig.port[len]);
+		toconfig.port[pos++]);
 	}
 	
+        pos = 0;
+        toconfig.property.length ( desc.count_property ());
 	for(ComponentInterfaceDescription::property_const_iterator
 		prop (desc.begin_property());
 	    prop != desc.end_property();
 	    prop++)
 	{
-	    CORBA::ULong len =
-		toconfig.property.length();
-	    
-	    toconfig.property.length (len + 1);
-	    
 	    ComponentPropertyDescription_Handler::component_property_description (
 		*prop,
-		toconfig.property[len]);
+		toconfig.property[pos++]);
 	}
 	
+        pos = 0;
+        toconfig.infoProperty.length (desc.count_infoProperty ());
 	for ( ComponentInterfaceDescription::infoProperty_const_iterator
 		  infoProp (desc.begin_infoProperty());
 	      infoProp != desc.end_infoProperty();
 	      infoProp++)
 	{
-	    CORBA::ULong len = toconfig.infoProperty.length();
-	    
-	    toconfig.infoProperty.length( len + 1 );
-	    
 	    Property_Handler::get_property (
 		*infoProp,
-		toconfig.infoProperty[len]);
-	}
-	
-	return 1;
+		toconfig.infoProperty[pos]);
+	}	
     }
 
       ComponentInterfaceDescription

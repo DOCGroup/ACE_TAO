@@ -1,0 +1,14 @@
+// $Id$
+
+project (XSC_DynAny_Handler) : taolib, xerces, dynamicany, anytypecode, typecodefactory {
+  after += XSC_XML_Handlers
+  libs += XSC_XML_Handlers
+  macros += XML_USE_PTHREADS
+  requires += exceptions
+  includes += $(CIAO_ROOT)/tools/Config_Handlers
+
+  Source_Files {
+        DynAny_Handler.cpp
+        DynEnum_Handler.cpp
+  }
+}

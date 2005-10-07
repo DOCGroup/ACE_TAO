@@ -15,7 +15,7 @@ namespace CIAO
   {
     IDREF_Base<CORBA::ULong> IDD_Handler::IDREF;
 
-    bool
+    void
     IDD_Handler::instance_deployment_descrs (
         const DeploymentPlan &src,
         Deployment::InstanceDeploymentDescriptions& dest)
@@ -23,22 +23,17 @@ namespace CIAO
     {
       DeploymentPlan::instance_const_iterator idd_e =
         src.end_instance ();
-
+      
+      CORBA::ULong pos = 0;
+      dest.length (src.count_instance ());
       for (DeploymentPlan::instance_const_iterator idd_b =
              src.begin_instance ();
            idd_b != idd_e;
            ++idd_b)
         {
-          /* @@ Can you say n^2? */
-          CORBA::ULong len =
-            dest.length ();
-          dest.length (len + 1);
-
 	  IDD_Handler::instance_deployment_descr ((*idd_b),
-						  dest[len], len);
+						  dest[pos], pos++);
         }
-
-      return true;
     }
 
     void
@@ -66,8 +61,7 @@ namespace CIAO
 	    }
 
 	  // We know there should be only one element
-	  // @@ WO:  This is wrong!  this needs to be fixed.
-	  dest.source.length (1);
+          dest.source.length (1);
 	  dest.source [0] =
 	    src.source ().c_str ();
 
@@ -79,26 +73,21 @@ namespace CIAO
 
 	  InstanceDeploymentDescription::configProperty_const_iterator pend =
 	    src.end_configProperty ();
-
+          
+          CORBA::ULong pos = 0;
+          dest.configProperty.length (src.count_configProperty ());
 	  for (InstanceDeploymentDescription::configProperty_const_iterator pstart =
 		 src.begin_configProperty ();
 	       pstart != pend;
 	       ++pstart)
 	    {
-	      // Need to improve this. This is clearly O(n^2).
-	      CORBA::ULong len =
-		dest.configProperty.length ();
-
-	      dest.configProperty.length (len + 1);
-
 	      Property_Handler::get_property (*pstart,
-					      dest.configProperty[len]);
+					      dest.configProperty[pos++]);
 	    }
 
 	  if (src.deployedResource_p ())
 	    {
 	      dest.deployedResource.length (1);
-
 	      IRDD_Handler::instance_resource_deployment_descr (src.deployedResource (),
 							  dest.deployedResource[0]);
 	    }
@@ -106,7 +95,6 @@ namespace CIAO
 	  if (src.deployedSharedResource_p ())
 	    {
 	      dest.deployedSharedResource.length (1);
-	  
 	      IRDD_Handler::instance_resource_deployment_descr (src.deployedSharedResource (),
 								dest.deployedSharedResource[0]);
 	    }

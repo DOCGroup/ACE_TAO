@@ -8,7 +8,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    bool
+    void
     CEPE_Handler::external_port_endpoints (
         const PlanConnectionDescription &src,
         ::Deployment::ComponentExternalPortEndpoints &dest)
@@ -16,22 +16,16 @@ namespace CIAO
       PlanConnectionDescription::externalEndpoint_const_iterator eeci_e =
         src.end_externalEndpoint ();
 
+      CORBA::ULong pos = 0;
+      dest.length (src.count_externalEndpoint ());
       for (PlanConnectionDescription::externalEndpoint_const_iterator eeci_b =
              src.begin_externalEndpoint ();
            eeci_b != eeci_e;
            ++eeci_b)
         {
-          CORBA::ULong len =
-            dest.length ();
-
-          dest.length (len + 1);
-
-          (void) CEPE_Handler::external_port_endpoint ((*eeci_b),
-                                                       dest[len]);
+          CEPE_Handler::external_port_endpoint ((*eeci_b),
+                                                dest[pos++]);
         }
-
-      return true;
-
     }
 
     void
@@ -39,8 +33,7 @@ namespace CIAO
         const ComponentExternalPortEndpoint &src,
         ::Deployment::ComponentExternalPortEndpoint &dest)
     {
-      dest.portName =
-        src.portName ().c_str ();
+      dest.portName = src.portName ().c_str ();
     }
     
     ComponentExternalPortEndpoint

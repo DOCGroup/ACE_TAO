@@ -45,7 +45,7 @@ namespace CIAO
     class Config_Handlers_Export PSPE_Handler
     {
     public:
-      static bool sub_component_port_endpoints (
+      static void sub_component_port_endpoints (
         const PlanConnectionDescription &src,
         ::Deployment::PlanSubcomponentPortEndpoints &dest);
 
