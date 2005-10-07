@@ -4,8 +4,11 @@
 #include "DynAny_Handler.h"
 
 #include "Basic_Deployment_Data.hpp"
+#include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.h"
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/AnyTypeCode/Enum_TypeCode.h"
-#include "tao/IFR_Client/IFR_BaseC.h"
+#include "tao/IFR_Client/IFR_BasicC.h"
 
 namespace CIAO
 {
@@ -36,7 +39,8 @@ namespace CIAO
       // Grab pointer to the DynAny_Handler to use the orb and any factory.
       DynAny_Handler *dah = DynAny_Handler::instance ();
       
-      CORBA::TypeCode_var tc = 
+      // @@ Leak t his guy onto the heap to avoid a compile problem. 
+      CORBA::TypeCode_ptr tc = 
         dah->orb ()->create_enum_tc (type.enum_ ().typeId ().c_str (),
                                      type.enum_ ().name ().c_str (),
                                      members);
@@ -48,7 +52,7 @@ namespace CIAO
       
       // Make the actual DynEnum
       DynamicAny::DynAny_var temp =  
-        dah->daf ()->create_dyn_any_from_type_code (tc.in ());
+        dah->daf ()->create_dyn_any_from_type_code (tc);
       DynamicAny::DynEnum_var retval = DynamicAny::DynEnum::_narrow (temp.in ());
       
       retval->set_as_string (value.begin_enum ()->c_str ());
@@ -56,9 +60,10 @@ namespace CIAO
       return retval._retn ();
     }
     
-    Any
+    void
     DynEnum_Handler::extract_out_of_dynany (const DynamicAny::DynAny_ptr dyn)
     {
+      ACE_UNUSED_ARG (dyn);
       ACE_ERROR ((LM_ERROR, "Extracting Enums not yet supported\n"));
     }
   }
