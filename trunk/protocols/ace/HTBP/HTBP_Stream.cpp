@@ -11,10 +11,6 @@
 //=============================================================================
 #include "HTBP_Stream.h"
 
-#if !defined (__ACE_INLINE__)
-#include "HTBP_Stream.inl"
-#endif
-
 #include "HTBP_Session.h"
 #include "HTBP_Filter_Factory.h"
 

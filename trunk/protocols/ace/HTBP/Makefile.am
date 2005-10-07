@@ -51,13 +51,11 @@ nobase_include_HEADERS = \
   HTBP_Inside_Squid_Filter.inl \
   HTBP_Macros.h \
   HTBP_Notifier.h \
-  HTBP_Notifier.inl \
   HTBP_Outside_Squid_Filter.h \
   HTBP_Outside_Squid_Filter.inl \
   HTBP_Session.h \
   HTBP_Session.inl \
-  HTBP_Stream.h \
-  HTBP_Stream.inl
+  HTBP_Stream.h
 
 pkgconfig_DATA = ACE_HTBP.pc
 

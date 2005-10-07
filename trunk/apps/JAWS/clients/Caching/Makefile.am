@@ -12,7 +12,7 @@ ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-## Makefile.http_client.am 
+## Makefile.http_client.am
 
 if BUILD_ACE_FILECACHE
 noinst_PROGRAMS += http_client
@@ -27,7 +27,6 @@ http_client_SOURCES = \
   http_handler.h \
   Local_Locator.i \
   Locator_Request_Reply.i \
-  URL_Locator.i \
   URL_Properties.i
 
 http_client_LDADD = \

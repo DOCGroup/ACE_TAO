@@ -109,8 +109,4 @@ public:
   // Provide a human readable error status.
 };
 
-#if defined (__ACE_INLINE__)
-#include "URL_Locator.i"
-#endif /* __ACE_INLINE__ */
-
 #endif /* ACE_WEB_LOCATOR_H */
