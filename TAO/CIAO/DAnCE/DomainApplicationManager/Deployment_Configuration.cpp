@@ -33,7 +33,7 @@ CIAO::Deployment_Configuration::init (const char *filename)
   if (inf == NULL)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "CIAO (%P|%t) Deployment_Configuration.cpp:"
+                         "DAnCE (%P|%t) Deployment_Configuration.cpp:"
                          "Fail to open node manager map data file: %s : \n",
                          filename),
                          -1);
@@ -46,7 +46,14 @@ CIAO::Deployment_Configuration::init (const char *filename)
     {
       // This should not fail!!
       //
-      this->deployment_info_.bind (destination, ior);
+      if (this->deployment_info_.bind (destination, ior) != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "DAnCE (%P|%t) Deployment_Configuration.cpp:"
+                             "Failed to bind destination [%s] : \n",
+                             destination),
+                             -1);
+        }
 
       if (first)
         {
@@ -54,7 +61,6 @@ CIAO::Deployment_Configuration::init (const char *filename)
           first = 0;
         }
     }
-
   return 0;
 }
 
@@ -70,7 +76,13 @@ CIAO::Deployment_Configuration::get_node_manager_ior (const char *name)
 
   if (this->deployment_info_.find (ACE_CString (name),
                                    entry) != 0)
-    return 0;                   // no valid name found.
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "DAnCE (%P|%t) Deployment_Configuration.cpp:"
+                  "Failed to find IOR for destination [%s] : \n",
+                  name));
+      return 0;
+    }
 
   return entry->int_id_.IOR_.c_str ();
 }
@@ -96,7 +108,13 @@ CIAO::Deployment_Configuration::get_node_manager (const char *name
 
   if (this->deployment_info_.find (ACE_CString (name),
                                    entry) != 0)
-    return 0;                   // no valid name found.
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "DAnCE (%P|%t) Deployment_Configuration.cpp:"
+                  "Failed to find IOR for destination [%s] : \n",
+                  name));
+      return 0;
+    }
 
   if (CORBA::is_nil (entry->int_id_.node_manager_.in ()))
     {
