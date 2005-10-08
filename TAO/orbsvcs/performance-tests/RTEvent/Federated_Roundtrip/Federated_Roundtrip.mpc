@@ -2,7 +2,7 @@
 project(*server): orbsvcsexe, rtcorbaevent, strategies, minimum_corba {    
   after    += RTEC_Perf
   libs     += TAO_RTEC_Perf
-  includes += ../lib $(TAO_ROOT)/orbsvcs
+  includes += ../lib
 
   Source_Files {
     server.cpp
@@ -12,7 +12,7 @@ project(*server): orbsvcsexe, rtcorbaevent, strategies, minimum_corba {
 project(*client): orbsvcsexe, rtcorbaevent, strategies, minimum_corba {
   after    += RTEC_Perf
   libs     += TAO_RTEC_Perf
-  includes += ../lib $(TAO_ROOT)/orbsvcs
+  includes += ../lib
 
   Source_Files {
     client.cpp

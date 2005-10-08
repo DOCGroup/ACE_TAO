@@ -7,8 +7,6 @@ project(*idl): taoidldefaults {
 }
 
 project(*Server): loadbalancing {
-  includes += $(TAO_ROOT)/orbsvcs
-
   after += *idl
   Source_Files {
     server.cpp
