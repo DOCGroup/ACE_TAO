@@ -1,3 +1,10 @@
+Fri Oct  7 17:35:42 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* examples/Service_Configurator/IPC-tests/server/Makefile.am:
+	* tests/Makefile.am:
+
+	  Regenerate to account for recent changes.
+
 Fri Oct  7 13:31:10 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/MakeProjectCreator/config/taoidldefaults.mpb:
