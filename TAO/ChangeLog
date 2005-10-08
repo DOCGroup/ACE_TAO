@@ -1,3 +1,13 @@
+Sat Oct  8 07:50:48 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* examples/Quoter/Quoter.mpc:
+
+	  Remove includes and idlflags definitions pointing to
+	  ../../orbsvcs/orbsvcs.  This hasn't been right since we
+	  normalized all orbsvcs header files to be included with
+	  "orbsvcs/foo.h".  The correct settings of ../../orbsvcs is
+	  already obtained from the base projects we derive from.
+
 Fri Oct  7 14:03:54 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* docs/tutorials/Quoter/AMI/Makefile.am:
