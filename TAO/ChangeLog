@@ -1,3 +1,25 @@
+Sat Oct  8 08:18:29 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.mpc:
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.mpc:
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.mpc:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Colocated_Roundtrip.mpc:
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Federated_Roundtrip.mpc:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/RTCORBA_Baseline.mpc:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/RTCORBA_Callback.mpc:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/Roundtrip.mpc:
+	* orbsvcs/performance-tests/RTEvent/TCP_Baseline/TCP_Baseline.mpc:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Infrastructure_Controlled.mpc:
+	* orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/LoadMonitorCPU.mpc:
+
+	  Remove includes definitions pointing to $(TAO_ROOT)/orbsvcs.
+	  This is already obtained from the base projects we derive from.
+
+	* orbsvcs/tests/FT_App/FT_App.mpc:
+
+	  Remove includes definitions pointing to $(TAO_ROOT).
+	  This is already obtained from the base projects we derive from.
+
 Sat Oct  8 07:50:48 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* examples/Simulator/Event_Supplier/Event_Supplier.mpc:

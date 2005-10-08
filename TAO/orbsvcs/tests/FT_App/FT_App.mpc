@@ -49,7 +49,6 @@ project(*Server): taoserver, fault_tolerance, orbsvcsexe, minimum_corba {
 
 project(*Client): taoclient, fault_tolerance, orbsvcsexe, minimum_corba {
   exename = ft_client
-  includes += $(TAO_ROOT)
   after += *idl
   Source_Files {
     FT_Client.cpp
