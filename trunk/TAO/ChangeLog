@@ -1,5 +1,6 @@
 Sat Oct  8 07:50:48 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
+	* examples/Simulator/Event_Supplier/Event_Supplier.mpc:
 	* examples/Quoter/Quoter.mpc:
 
 	  Remove includes and idlflags definitions pointing to
