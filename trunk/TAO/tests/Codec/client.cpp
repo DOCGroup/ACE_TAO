@@ -10,6 +10,28 @@ ACE_RCSID (Codec,
            client,
            "$Id$")
 
+CORBA::WChar *
+gen_wstring (CORBA::ULong max_length)
+{
+  CORBA::ULong len = max_length;
+  CORBA::WChar *buf = CORBA::wstring_alloc (len);
+  CORBA::ULong i = 0;
+  CORBA::WChar limit =
+    ACE_OutputCDR::wchar_maxbytes() == 1 ? ACE_OCTET_MAX : ACE_WCHAR_MAX;
+  while (i < len)
+    {
+      CORBA::WChar wc = ACE_OS::rand () % limit;
+      if (wc)
+        {
+          buf[i] = wc;
+          i++;
+        }
+    }
+
+  buf[i] = 0;
+  return buf;
+}
+
 int
 verify_data (Foo::Bar *original, Foo::Bar *extracted)
 {
@@ -41,7 +63,8 @@ verify_data (Foo::Bar *original, Foo::Bar *extracted)
   if (original->A != extracted->A
       || original->B != extracted->B
       || original->C != extracted->C
-      || ACE_OS::strcmp (original->D, extracted->D) != 0)
+      || (ACE_OS::strcmp (original->D, extracted->D) != 0)
+      || (ACE_OS::strcmp (original->E, extracted->E) != 0))
     return -1;
 
   return 0;
@@ -92,7 +115,8 @@ main (int argc, char *argv[])
       const CORBA::Long A = 1010;
       const CORBA::Long B = -3427;
       const CORBA::ULongLong C = ACE_UINT64_LITERAL (2001);
-      const char D[] = "I'm Batman.";
+      const CORBA::Char D[] = "I'm Batman.";
+      const CORBA::WChar* E = gen_wstring (25);
 
       // Create the structure to be encoded.
       Foo::Bar value;
@@ -100,6 +124,7 @@ main (int argc, char *argv[])
       value.B = B;
       value.C = C;
       value.D = CORBA::string_dup (D);
+      value.E = CORBA::wstring_dup (E);
 
       CORBA::Any data;
       data <<= value;
@@ -110,7 +135,7 @@ main (int argc, char *argv[])
       CORBA::Any_var decoded_data;
       Foo::Bar *extracted_value;
 
-          // Encode the structure into an octet sequence using the CDR
+      // Encode the structure into an octet sequence using the CDR
       // enscapsulation Codec.
 
       ACE_DEBUG ((LM_DEBUG,
@@ -141,7 +166,7 @@ main (int argc, char *argv[])
 
       // Verify that the extracted data matches the data that was
       // originally encoded into the octet sequence.
-          if (::verify_data (&value, extracted_value) != 0)
+      if (::verify_data (&value, extracted_value) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "ERROR: Data extracted using "
                            "IOP::Codec::decode() does not match "
