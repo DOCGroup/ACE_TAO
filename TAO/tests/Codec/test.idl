@@ -21,6 +21,7 @@ module Foo
     long B;
     unsigned long long C;
     string D;
+    wstring E;
   };
 
 };
