@@ -1,3 +1,11 @@
+Sat Oct  8 18:43:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Codec/client.cpp:
+        * tests/Codec/test.idl:
+          Added a wstring to the struct we encode/decode, this fails at
+          this moment, working on a fix, but this at least demonstrates
+          the problem
+
 Sat Oct  8 08:18:29 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.mpc:
