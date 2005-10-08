@@ -53,7 +53,6 @@ noinst_HEADERS = \
   Handle_L_SPIPE.i \
   Handle_L_Stream.i \
   Handle_R_Stream.i \
-  Handle_Thr_Stream.i \
   Handle_Timeout.i
 
 ## Makefile.Svc_Cfg_IPC_Server_Test.am
