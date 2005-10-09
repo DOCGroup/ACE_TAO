@@ -1,34 +1,40 @@
+Sun Oct  9 21:34:08 2005  Olli Savia  <ops@iki.fi>
+
+        * ace/config-lynxos.h:
+          Do not define ACE_LACKS_SETREGID ACE_LACKS_SETREUID
+          on LynxOS 4.x
+        
 Fri Oct  7 17:52:38 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
- 	* bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
+        * bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
 
-	  Fix typo in recently added TAO_IDL_DEP definition.
+          Fix typo in recently added TAO_IDL_DEP definition.
 
 Fri Oct  7 17:35:42 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* examples/Service_Configurator/IPC-tests/server/Makefile.am:
-	* tests/Makefile.am:
+        * examples/Service_Configurator/IPC-tests/server/Makefile.am:
+        * tests/Makefile.am:
 
-	  Regenerate to account for recent changes.
+          Regenerate to account for recent changes.
 
 Fri Oct  7 13:31:10 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* bin/MakeProjectCreator/config/taoidldefaults.mpb:
+        * bin/MakeProjectCreator/config/taoidldefaults.mpb:
 
-	  Changed to add -Sa and -St flags to idlflags variable instead of
-	  tao_idlflags.  This ensures they will be emitted (unless they're
-	  suppressed by anytypecode.mpb) in the automake build, where the
-	  value of TAO_IDLFLAGS is set in AutomakeWorkspaceHelper.pm.
+          Changed to add -Sa and -St flags to idlflags variable instead of
+          tao_idlflags.  This ensures they will be emitted (unless they're
+          suppressed by anytypecode.mpb) in the automake build, where the
+          value of TAO_IDLFLAGS is set in AutomakeWorkspaceHelper.pm.
 
-	  This would have cought recent problems I introduced in TAO when
-	  splitting out IDL compilation into separate projects.
+          This would have cought recent problems I introduced in TAO when
+          splitting out IDL compilation into separate projects.
 
 Fri Oct  7 09:32:06 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
+        * bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
 
-	  Define TAO_IDL_DEP if TAO_IDL is found in the any per-project
-	  Makefile.am as they are aggregated into the final Makefile.am.
+          Define TAO_IDL_DEP if TAO_IDL is found in the any per-project
+          Makefile.am as they are aggregated into the final Makefile.am.
 
 Fri Oct  7 12:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -55,103 +61,103 @@ Fri Oct  7 07:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Oct  6 15:42:29 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/DLL_Test.cpp:
-	* tests/DLL_Test.h:
-	* tests/DLL_Test_Impl.cpp:
-	* tests/DLL_Test_Parent.cpp:
-	* tests/DLL_Test_Parent.h:
-	* tests/DLL_Test_Parent_Export.h:
-	* tests/dll_test_parent_lib.mpb:
+        * tests/DLL_Test.cpp:
+        * tests/DLL_Test.h:
+        * tests/DLL_Test_Impl.cpp:
+        * tests/DLL_Test_Parent.cpp:
+        * tests/DLL_Test_Parent.h:
+        * tests/DLL_Test_Parent_Export.h:
+        * tests/dll_test_parent_lib.mpb:
 
-	  Moved "Parent" base class to a separate DSO/DLL to break a
-	  cyclic dependency, in turn allowing its virtual methods to be
-	  moved out of line.  Addresses dynamic_cast<> failures in g++ 4.0
-	  builds.  Thanks to Carlos for suggesting this change.
+          Moved "Parent" base class to a separate DSO/DLL to break a
+          cyclic dependency, in turn allowing its virtual methods to be
+          moved out of line.  Addresses dynamic_cast<> failures in g++ 4.0
+          builds.  Thanks to Carlos for suggesting this change.
 
-	  Moved "Child" subclass virtual methods out of line to address
-	  RTTI related problems when using g++ 4.0's
-	  -fvisibility-inlines-hidden command line option.
+          Moved "Child" subclass virtual methods out of line to address
+          RTTI related problems when using g++ 4.0's
+          -fvisibility-inlines-hidden command line option.
 
-	* tests/tests.mpc:
+        * tests/tests.mpc:
 
-	  Added new DLL_Test_Parent_Lib project.
+          Added new DLL_Test_Parent_Lib project.
 
-	  Updated DLL_Test project dependencies to reflect new DLL test
-	  library layout.
+          Updated DLL_Test project dependencies to reflect new DLL test
+          library layout.
 
-	  Corrected MPC "dynamicflags" variable for "Based Pointer Test
-	  Lib" and "DLL Test Lib" projects. "ACE_SVC_BUILD_DLL" not
-	  "ACE_BUILD_SVC_DLL".
+          Corrected MPC "dynamicflags" variable for "Based Pointer Test
+          Lib" and "DLL Test Lib" projects. "ACE_SVC_BUILD_DLL" not
+          "ACE_BUILD_SVC_DLL".
 
 Thu Oct  6 17:56:19 2005  Steve Huston  <shuston@riverace.com>
 
-	Added support for Windows Mobile 5 and Pocket PC 2003 using
-	Visual Studio 2005 (Beta 2). Reorganized some of the config-win32-*
-	files to ensure OS things are in config-win32-common.h and compiler
-	things are in the various compiler files.
+        Added support for Windows Mobile 5 and Pocket PC 2003 using
+        Visual Studio 2005 (Beta 2). Reorganized some of the config-win32-*
+        files to ensure OS things are in config-win32-common.h and compiler
+        things are in the various compiler files.
 
-	* ace/config-win32-common.h: Now #includes config-WinCE.h. It's
-	  possible that config-WinCE.h may get chopped down further and/or
-	  subsumed into config-win32-common.h as config-WinCE.h gets refined.
+        * ace/config-win32-common.h: Now #includes config-WinCE.h. It's
+          possible that config-WinCE.h may get chopped down further and/or
+          subsumed into config-win32-common.h as config-WinCE.h gets refined.
 
-	  Added ACE_LACKS_MODE_MASKS. It's needed on all variants of
-	  Windows and all compilers.
+          Added ACE_LACKS_MODE_MASKS. It's needed on all variants of
+          Windows and all compilers.
 
-	  Turn on both ACE_USES_WCHAR and UNICODE if either is set. Removed
-	  this setting from config-WinCE.h.
+          Turn on both ACE_USES_WCHAR and UNICODE if either is set. Removed
+          this setting from config-WinCE.h.
 
-	* ace/config-win32-borland.h:
-	* ace/config-win32-dmc.h:
-	* ace/config-win32-ghs.h:
-	* ace/config-win32-mingw.h:
-	* ace/config-win32-msvc-6.h:
-	* ace/config-win32-msvc-7.h:
-	* ace/config-win32-msvc-8.h:
-	* ace/config-win32-visualage.h: Removed ACE_LACKS_MODE_MASKS.
-	  Removed ACE_ENDTHREADEX (moved to config-win32-msvc.h).
+        * ace/config-win32-borland.h:
+        * ace/config-win32-dmc.h:
+        * ace/config-win32-ghs.h:
+        * ace/config-win32-mingw.h:
+        * ace/config-win32-msvc-6.h:
+        * ace/config-win32-msvc-7.h:
+        * ace/config-win32-msvc-8.h:
+        * ace/config-win32-visualage.h: Removed ACE_LACKS_MODE_MASKS.
+          Removed ACE_ENDTHREADEX (moved to config-win32-msvc.h).
 
-	* ace/config-win32-msvc.h: Added ACE_ENDTHREADEX with proper
-	  setting depending on Windows PC vs. Mobile.
+        * ace/config-win32-msvc.h: Added ACE_ENDTHREADEX with proper
+          setting depending on Windows PC vs. Mobile.
 
-	* ace/config-win32.h: Doesn't include config-WinCE.h any longer.
+        * ace/config-win32.h: Doesn't include config-WinCE.h any longer.
 
-	* ace/config-WinCE.h: Moved the errno value definitions to
-	  config-win32-msvc-6.h. They're only needed for the eVC 3 and 4
-	  compilers, which report themselves using the same versions as
-	  MSVC 6.
+        * ace/config-WinCE.h: Moved the errno value definitions to
+          config-win32-msvc-6.h. They're only needed for the eVC 3 and 4
+          compilers, which report themselves using the same versions as
+          MSVC 6.
 
-	* ace/Object_Manager.cpp (init): Only act on config.h's
-	  ACE_DISABLE_WIN32_ERROR_WINDOWS setting if on Windows, but not CE.
+        * ace/Object_Manager.cpp (init): Only act on config.h's
+          ACE_DISABLE_WIN32_ERROR_WINDOWS setting if on Windows, but not CE.
 
-	* ace/OS_NS_time.h: Only define struct tm for WinCE if compiling
-	  on something less than Visual Studio 2005.
+        * ace/OS_NS_time.h: Only define struct tm for WinCE if compiling
+          on something less than Visual Studio 2005.
 
-	* ace/OS_NS_unistd.inl (rmdir, unlink):
-	* ace/OS_NS_sys_stat.inl (mkdir, stat): For wchar_t version on WinCE,
-	  specify the ...W() form of the system call rather than assume
-	  the call maps to the W form. WinCE can do either A or W now.
+        * ace/OS_NS_unistd.inl (rmdir, unlink):
+        * ace/OS_NS_sys_stat.inl (mkdir, stat): For wchar_t version on WinCE,
+          specify the ...W() form of the system call rather than assume
+          the call maps to the W form. WinCE can do either A or W now.
 
-	* ace/OS_NS_time.(cpp h) (day_of_week_name[], month_name[]):
-	* ace/OS_NS_sys_socket.cpp (socket_init, socket_fini):
-	  Changed char array from wchar_t to ACE_TCHAR. WinCE can do either
-	  narrow or wide and this allows it to adjust. Everything was
-	  initialized using ACE_LIB_TEXT already.
+        * ace/OS_NS_time.(cpp h) (day_of_week_name[], month_name[]):
+        * ace/OS_NS_sys_socket.cpp (socket_init, socket_fini):
+          Changed char array from wchar_t to ACE_TCHAR. WinCE can do either
+          narrow or wide and this allows it to adjust. Everything was
+          initialized using ACE_LIB_TEXT already.
 
-	* ace/OS_NS_stdio.inl (fdopen, rename, freopen): For WinCE, need to
-	  convert the ACE_TCHAR string to wchar always. There's no char*
-	  version of fdopen, et al that I can see.
+        * ace/OS_NS_stdio.inl (fdopen, rename, freopen): For WinCE, need to
+          convert the ACE_TCHAR string to wchar always. There's no char*
+          version of fdopen, et al that I can see.
 
-	* ace/Service_Config.(h inl): Only define the alternate
-	  intialize/resume/suspend/remove methods for WinCE if ACE_USES_WCHAR
-	  is set. Else there's already a char* version.
+        * ace/Service_Config.(h inl): Only define the alternate
+          intialize/resume/suspend/remove methods for WinCE if ACE_USES_WCHAR
+          is set. Else there's already a char* version.
 
-	* ace/TSS_T.cpp (ctor): Use ACE_LIB_TEXT around strings for the
-	  MessageBox() call on CE. This resolves properly depending on the
-	  build. CE doesn't always use unicode any more.
+        * ace/TSS_T.cpp (ctor): Use ACE_LIB_TEXT around strings for the
+          MessageBox() call on CE. This resolves properly depending on the
+          build. CE doesn't always use unicode any more.
 
-	* tests/Logging_Strategy_Test.cpp (get_statistics): Use time_t
-	  instead of int to return the modified time. Makes it portable to
-	  64 bits.
+        * tests/Logging_Strategy_Test.cpp (get_statistics): Use time_t
+          instead of int to return the modified time. Makes it portable to
+          64 bits.
 
 Thu Oct  6 10:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -186,33 +192,33 @@ Thu Oct  6 08:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Oct  5 22:07:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Add check for ACE_HAS_PTHREAD_GETCONCURRENCY and
-	  ACE_HAS_PTHREAD_SETCONCURRENCY.
+          Add check for ACE_HAS_PTHREAD_GETCONCURRENCY and
+          ACE_HAS_PTHREAD_SETCONCURRENCY.
 
-	* ace/OS_NS_Thread.inl:
+        * ace/OS_NS_Thread.inl:
 
-	  Changed ACE_OS::getconcurrency () to use ::pthread_getconcurrency()
-	  if ACE_HAS_PTHREAD_GETCONCURRENCY is set.
+          Changed ACE_OS::getconcurrency () to use ::pthread_getconcurrency()
+          if ACE_HAS_PTHREAD_GETCONCURRENCY is set.
 
-	  Changed ACE_OS::setconcurrency () to use ::pthread_setconcurrency()
-	  if ACE_HAS_PTHREAD_SETCONCURRENCY is set.
+          Changed ACE_OS::setconcurrency () to use ::pthread_setconcurrency()
+          if ACE_HAS_PTHREAD_SETCONCURRENCY is set.
 
         * ace/README:
 
           Define ACE_HAS_PTHREAD_GETCONCURRENCY and
-	  ACE_HAS_PTHREAD_SETCONCURRENCY feature test macros.
+          ACE_HAS_PTHREAD_SETCONCURRENCY feature test macros.
 
 Wed Oct  5 13:18:26 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* examples/Shared_Malloc/Malloc.cpp:
-	* examples/System_V_IPC/SV_Message_Queues/MQ_Client.cpp:
-	* examples/System_V_IPC/SV_Semaphores/Semaphores_1.cpp:
-	* examples/System_V_IPC/SV_Semaphores/Semaphores_2.cpp:
-	* tests/SV_Shared_Memory_Test.cpp:
+        * examples/Shared_Malloc/Malloc.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/MQ_Client.cpp:
+        * examples/System_V_IPC/SV_Semaphores/Semaphores_1.cpp:
+        * examples/System_V_IPC/SV_Semaphores/Semaphores_2.cpp:
+        * tests/SV_Shared_Memory_Test.cpp:
 
-	  More include directive additions/fixes.
+          More include directive additions/fixes.
 
 Wed Oct  5 13:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -241,21 +247,21 @@ Wed Oct  5 11:11:21 2005  Simon McQueen  <sm@prismtech.com>
 
 Wed Oct  5 02:11:28 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/ace_os.mpc:
+        * ace/ace_os.mpc:
 
-	  Removed this file.  It was inadvertently committed.
+          Removed this file.  It was inadvertently committed.
 
 Wed Oct  5 01:57:37 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* apps/JAWS2/JAWS/Cache_Manager.cpp:
-	* examples/APG/Active_Objects/AO.cpp:
-	* examples/APG/Active_Objects/AO2.cpp:
-	* examples/APG/Shared_Memory/Hash_Map.cpp:
-	* tests/Bound_Ptr_Test.cpp:
+        * apps/JAWS2/JAWS/Cache_Manager.cpp:
+        * examples/APG/Active_Objects/AO.cpp:
+        * examples/APG/Active_Objects/AO2.cpp:
+        * examples/APG/Shared_Memory/Hash_Map.cpp:
+        * tests/Bound_Ptr_Test.cpp:
 
           Include appropriate headers to address incomplete type
-	  definition related compile-time errors.  Necessitated by header
-	  dependency reductions in ACE.
+          definition related compile-time errors.  Necessitated by header
+          dependency reductions in ACE.
 
 Wed Oct  5 08:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -266,55 +272,55 @@ Wed Oct  5 08:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Oct  5 00:41:18 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Activation_Queue.cpp:
-	* ace/Activation_Queue.h:
+        * ace/Activation_Queue.cpp:
+        * ace/Activation_Queue.h:
 
-	  Moved "ace/Method_Request.h" include directive to implementation
-	  file.  A forward request in the header will suffice.
+          Moved "ace/Method_Request.h" include directive to implementation
+          file.  A forward request in the header will suffice.
 
-	* ace/SOCK_CODgram.h:
+        * ace/SOCK_CODgram.h:
 
-	  Support export macros specific to ACE subset libraries.
+          Support export macros specific to ACE subset libraries.
 
-	* ace/ace.mwc:
+        * ace/ace.mwc:
 
-	  Added missing "ace_for_tao" subset MPC files.
+          Added missing "ace_for_tao" subset MPC files.
 
-	* ace/ace_memory_for_tao.mpc:
-	* ace/ace_reactor_for_tao.mpc:
-	* ace/ace_sockets_for_tao.mpc:
-	* ace/ace_threads_for_tao.mpc:
+        * ace/ace_memory_for_tao.mpc:
+        * ace/ace_reactor_for_tao.mpc:
+        * ace/ace_sockets_for_tao.mpc:
+        * ace/ace_threads_for_tao.mpc:
 
-	  New TAO-specific ACE subset MPC files that were not committed
-	  in initial "ace_for_tao" commit.
+          New TAO-specific ACE subset MPC files that were not committed
+          in initial "ace_for_tao" commit.
 
 Tue Oct  4 14:21:26 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* netsvcs/lib/TS_Clerk_Handler.h:
+        * netsvcs/lib/TS_Clerk_Handler.h:
 
-	  More include directive fixes/additions now necessary due to
-	  header dependency reductions in ACE.
+          More include directive fixes/additions now necessary due to
+          header dependency reductions in ACE.
 
 Tue Oct  4 11:12:31 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* apps/JAWS2/JAWS/Cache_Object.h:
-	* apps/JAWS2/JAWS/Cache_Object.cpp:
+        * apps/JAWS2/JAWS/Cache_Object.h:
+        * apps/JAWS2/JAWS/Cache_Object.cpp:
 
           Include appropriate headers to address incomplete type
-	  definition related compile-time errors.  Necessitated by header
-	  dependency reductions in ACE.
+          definition related compile-time errors.  Necessitated by header
+          dependency reductions in ACE.
 
-	  Declare lock members that are meant to be mutable in all cases
-	  as "mutable", and remove casts that worked around the
-	  unnecessary "constness" of those members.
+          Declare lock members that are meant to be mutable in all cases
+          as "mutable", and remove casts that worked around the
+          unnecessary "constness" of those members.
 
 Tue Oct  4 10:39:24 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Service_Config.cpp:
+        * ace/Service_Config.cpp:
 
-	  Include "ace/Signal.h" when ACE_LACKS_UNIX_SIGNALS is
-	  undefined.  Addresses build errors in non-Windows builds.
-	  Necessitated by header dependency reductions in ACE.
+          Include "ace/Signal.h" when ACE_LACKS_UNIX_SIGNALS is
+          undefined.  Addresses build errors in non-Windows builds.
+          Necessitated by header dependency reductions in ACE.
 
 Tue Oct  4 10:00:00 UTC 2005  Simon Massey  <simon.massey@prismtech.com>
 
@@ -324,20 +330,20 @@ Tue Oct  4 10:00:00 UTC 2005  Simon Massey  <simon.massey@prismtech.com>
 
 Mon Oct  3 13:30:58 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* examples/APG/Containers/Hash_Map.cpp:
-	* examples/APG/Shared_Memory/Malloc.cpp:
-	* examples/APG/Shared_Memory/PI_Malloc.cpp:
-	* examples/APG/Shared_Memory/Pool_Growth.cpp:
-	* examples/Shared_Malloc/Malloc.cpp:
-	* examples/Shared_Malloc/Malloc.h:
-	* examples/Shared_Malloc/test_malloc.cpp:
-	* examples/Shared_Malloc/test_multiple_mallocs.cpp:
-	* examples/Shared_Malloc/test_persistence.cpp:
-	* examples/Shared_Malloc/test_position_independent_malloc.cpp :
+        * examples/APG/Containers/Hash_Map.cpp:
+        * examples/APG/Shared_Memory/Malloc.cpp:
+        * examples/APG/Shared_Memory/PI_Malloc.cpp:
+        * examples/APG/Shared_Memory/Pool_Growth.cpp:
+        * examples/Shared_Malloc/Malloc.cpp:
+        * examples/Shared_Malloc/Malloc.h:
+        * examples/Shared_Malloc/test_malloc.cpp:
+        * examples/Shared_Malloc/test_multiple_mallocs.cpp:
+        * examples/Shared_Malloc/test_persistence.cpp:
+        * examples/Shared_Malloc/test_position_independent_malloc.cpp :
 
           Include appropriate headers to address incomplete type
-	  definition related compile-time errors.  Necessitated by header
-	  dependency reductions in ACE.
+          definition related compile-time errors.  Necessitated by header
+          dependency reductions in ACE.
 
 Mon Oct  3 18:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -346,128 +352,128 @@ Mon Oct  3 18:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Oct  3 10:48:23 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/ACE_Memory_export.h:
-	* ace/ACE_Reactor_export.h:
-	* ace/ACE_Sockets_export.h:
-	* ace/ACE_Threads_export.h:
+        * ace/ACE_Memory_export.h:
+        * ace/ACE_Reactor_export.h:
+        * ace/ACE_Sockets_export.h:
+        * ace/ACE_Threads_export.h:
 
-	  New export headers for a number of ACE subset libraries.
+          New export headers for a number of ACE subset libraries.
 
-	* ace/Activation_Queue.cpp:
-	* ace/Configuration.h:
-	* ace/Malloc.cpp:
-	* ace/Obstack_T.h:
-	* ace/Obstack_T.cpp:
-	* ace/Svc_Conf_l.cpp:
-	* ace/Timer_Hash_T.cpp:
-	* tests/Based_Pointer_Test.cpp:
-	* tests/Malloc_Test.cpp:
-	* tests/Message_Block_Test.cpp:
+        * ace/Activation_Queue.cpp:
+        * ace/Configuration.h:
+        * ace/Malloc.cpp:
+        * ace/Obstack_T.h:
+        * ace/Obstack_T.cpp:
+        * ace/Svc_Conf_l.cpp:
+        * ace/Timer_Hash_T.cpp:
+        * tests/Based_Pointer_Test.cpp:
+        * tests/Malloc_Test.cpp:
+        * tests/Message_Block_Test.cpp:
 
           Include appropriate headers to address incomplete type
-	  definition related compile-time errors.  Necessitated by header
-	  dependency reductions in ACE.
+          definition related compile-time errors.  Necessitated by header
+          dependency reductions in ACE.
 
-	* ace/Activation_Queue.h:
-	* ace/Barrier.h:
-	* ace/Based_Pointer_Repository.h:
-	* ace/Dev_Poll_Reactor.h:
-	* ace/File_Lock.h:
-	* ace/LSOCK.h:
-	* ace/LSOCK_Acceptor.h:
-	* ace/LSOCK_CODgram.h:
-	* ace/LSOCK_Connector.h:
-	* ace/LSOCK_Dgram.h:
-	* ace/LSOCK_Stream.h:
-	* ace/MEM_Acceptor.h:
-	* ace/MEM_Addr.h:
-	* ace/MEM_Connector.h:
-	* ace/MEM_IO.h:
-	* ace/MEM_SAP.h:
-	* ace/MEM_Stream.h:
-	* ace/MMAP_Memory_Pool.h:
-	* ace/Mem_Map.h:
-	* ace/Method_Request.h:
-	* ace/Msg_WFMO_Reactor.h:
-	* ace/Multihomed_INET_Addr.h:
-	* ace/PI_Malloc.h:
-	* ace/Pagefile_Memory_Pool.h:
-	* ace/Priority_Reactor.h:
-	* ace/Process.h:
-	* ace/Process_Manager.h:
-	* ace/Process_Semaphore.h:
-	* ace/RW_Process_Mutex.h:
-	* ace/SOCK_Dgram_Bcast.h:
-	* ace/SOCK_Dgram_Mcast.h:
-	* ace/SOCK_SEQPACK_Acceptor.h:
-	* ace/SOCK_SEQPACK_Association.h:
-	* ace/SOCK_SEQPACK_Connector.h:
-	* ace/SV_Shared_Memory.h:
-	* ace/Sbrk_Memory_Pool.h:
-	* ace/Shared_Memory.h:
-	* ace/Shared_Memory_MM.h:
-	* ace/Shared_Memory_Pool.h:
-	* ace/Shared_Memory_SV.h:
-	* ace/Thread_Semaphore.h:
-	* ace/UNIX_Addr.h:
+        * ace/Activation_Queue.h:
+        * ace/Barrier.h:
+        * ace/Based_Pointer_Repository.h:
+        * ace/Dev_Poll_Reactor.h:
+        * ace/File_Lock.h:
+        * ace/LSOCK.h:
+        * ace/LSOCK_Acceptor.h:
+        * ace/LSOCK_CODgram.h:
+        * ace/LSOCK_Connector.h:
+        * ace/LSOCK_Dgram.h:
+        * ace/LSOCK_Stream.h:
+        * ace/MEM_Acceptor.h:
+        * ace/MEM_Addr.h:
+        * ace/MEM_Connector.h:
+        * ace/MEM_IO.h:
+        * ace/MEM_SAP.h:
+        * ace/MEM_Stream.h:
+        * ace/MMAP_Memory_Pool.h:
+        * ace/Mem_Map.h:
+        * ace/Method_Request.h:
+        * ace/Msg_WFMO_Reactor.h:
+        * ace/Multihomed_INET_Addr.h:
+        * ace/PI_Malloc.h:
+        * ace/Pagefile_Memory_Pool.h:
+        * ace/Priority_Reactor.h:
+        * ace/Process.h:
+        * ace/Process_Manager.h:
+        * ace/Process_Semaphore.h:
+        * ace/RW_Process_Mutex.h:
+        * ace/SOCK_Dgram_Bcast.h:
+        * ace/SOCK_Dgram_Mcast.h:
+        * ace/SOCK_SEQPACK_Acceptor.h:
+        * ace/SOCK_SEQPACK_Association.h:
+        * ace/SOCK_SEQPACK_Connector.h:
+        * ace/SV_Shared_Memory.h:
+        * ace/Sbrk_Memory_Pool.h:
+        * ace/Shared_Memory.h:
+        * ace/Shared_Memory_MM.h:
+        * ace/Shared_Memory_Pool.h:
+        * ace/Shared_Memory_SV.h:
+        * ace/Thread_Semaphore.h:
+        * ace/UNIX_Addr.h:
 
-	  Support export macros specific to ACE subset libraries.
+          Support export macros specific to ACE subset libraries.
 
-	* ace/Array_Map.h:
+        * ace/Array_Map.h:
 
-	  Comment cleanup.
+          Comment cleanup.
 
-	* ace/High_Res_Timer.h:
+        * ace/High_Res_Timer.h:
 
-	  Removed trailing whitespace.
+          Removed trailing whitespace.
 
-	* ace/Malloc.h:
+        * ace/Malloc.h:
 
-	  Removed extraneous headers unnecessary for the types declared in
-	  this header.
+          Removed extraneous headers unnecessary for the types declared in
+          this header.
 
-	* ace/OS_NS_Thread.inl (ACE_Thread_ID):
+        * ace/OS_NS_Thread.inl (ACE_Thread_ID):
 
-	  Prefer initialization of thread_id_ member in base member
-	  initializer list rather than constructor body.
+          Prefer initialization of thread_id_ member in base member
+          initializer list rather than constructor body.
 
-	* ace/ace.mpc:
-	* ace/ace.mwc:
-	* ace/ace_for_tao.mpc:
-	* ace/ace_os.mpc:
+        * ace/ace.mpc:
+        * ace/ace.mwc:
+        * ace/ace_for_tao.mpc:
+        * ace/ace_os.mpc:
 
-	  Add support ACE subsets (predominantly TAO-specific).
+          Add support ACE subsets (predominantly TAO-specific).
 
-	* ace/svcconf.mpb:
+        * ace/svcconf.mpb:
 
-	  Moved Svc_Conf parser and lexer generation Make rules to this
-	  MPC base project.  Allows subset projects to inherit these
-	  rules.
+          Moved Svc_Conf parser and lexer generation Make rules to this
+          MPC base project.  Allows subset projects to inherit these
+          rules.
 
-	* bin/MakeProjectCreator/config/ace_for_tao.mpb:
-	* bin/MakeProjectCreator/config/acememorylib_for_tao.mpb:
-	* bin/MakeProjectCreator/config/acenosubsets.mpb:
-	* bin/MakeProjectCreator/config/acereactorlib_for_tao.mpb:
-	* bin/MakeProjectCreator/config/acesocketslib_for_tao.mpb:
-	* bin/MakeProjectCreator/config/acethreadslib_for_tao.mpb:
+        * bin/MakeProjectCreator/config/ace_for_tao.mpb:
+        * bin/MakeProjectCreator/config/acememorylib_for_tao.mpb:
+        * bin/MakeProjectCreator/config/acenosubsets.mpb:
+        * bin/MakeProjectCreator/config/acereactorlib_for_tao.mpb:
+        * bin/MakeProjectCreator/config/acesocketslib_for_tao.mpb:
+        * bin/MakeProjectCreator/config/acethreadslib_for_tao.mpb:
 
-	  New TAO-specific ACE subset MPC support.  Enabled when
-	  "ace_for_tao" is set to "1" in an MPC features file.
+          New TAO-specific ACE subset MPC support.  Enabled when
+          "ace_for_tao" is set to "1" in an MPC features file.
 
-	* bin/MakeProjectCreator/config/aceexe.mpb:
-	* bin/MakeProjectCreator/config/acelib.mpb:
+        * bin/MakeProjectCreator/config/aceexe.mpb:
+        * bin/MakeProjectCreator/config/acelib.mpb:
 
-	  Support "ace_for_tao" subset.
+          Support "ace_for_tao" subset.
 
-	* bin/MakeProjectCreator/config/global.features:
+        * bin/MakeProjectCreator/config/global.features:
 
-	  Disabled "ace_for_tao" feature by default.
+          Disabled "ace_for_tao" feature by default.
 
-	* bin/MakeProjectCreator/config/taolib.mpb:
+        * bin/MakeProjectCreator/config/taolib.mpb:
 
-	  Inherit "ace_for_tao" feature project.  Causes TAO-based
-	  projects to use the "ace_for_tao" subset libraries when that
-	  feature is enabled.
+          Inherit "ace_for_tao" feature project.  Causes TAO-based
+          projects to use the "ace_for_tao" subset libraries when that
+          feature is enabled.
 
 Mon Oct  3 12:50:00 2005  Simon Massey  <simon.massey@prismtech.com>
 
