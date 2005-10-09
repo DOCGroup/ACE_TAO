@@ -1,3 +1,9 @@
+Sun Oct  9 09:51:41 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* tools/Config_Handlers/DynAny_Handler.mpc
+
+	Moved this file down a level to make MPC stop complaining.
+	
 Fri Oct  7 18:22:40 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* tools/Config_Handlers/Any_Handler.cpp
