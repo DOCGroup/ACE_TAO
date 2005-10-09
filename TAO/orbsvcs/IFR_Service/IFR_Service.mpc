@@ -46,8 +46,12 @@ project(TAO_IFR_EXE) : aceexe, core, ifr_client, crosscompile, minimum_corba {
   after          += TAO_IFR_BE TAO_IDL_FE
   exename         = tao_ifr
   libs           += TAO_IFR_BE TAO TAO_IDL_FE
-  includes       += $(TAO_ROOT) $(TAO_ROOT)/orbsvcs/IFR_Service $(TAO_ROOT)/TAO_IDL/include $(TAO_ROOT)/TAO_IDL/fe
+  includes       += $(TAO_ROOT)/TAO_IDL/include $(TAO_ROOT)/TAO_IDL/fe
   install         = $(ACE_ROOT)/bin
+
+  specific(automake) {
+    macros += TAO_IDL_INCLUDE_DIR=\"\\"$(includedir)/tao\\"\"
+  }
 
   verbatim(gnuace, local) {
     ifeq ($(TAO_IDL_PREPROCESSOR),)
@@ -67,4 +71,3 @@ project(TAO_IFR_EXE) : aceexe, core, ifr_client, crosscompile, minimum_corba {
     $(TAO_ROOT)/TAO_IDL/include/drv_extern.h
   }
 }
-

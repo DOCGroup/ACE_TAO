@@ -1,3 +1,15 @@
+Sun Oct  9 14:14:01 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/IFR_Service/IFR_Service.mpc:
+
+	  Removed includes definitions pointing to $(TAO_ROOT) and
+	  $(TAO_ROOT)/orbsvcs/IFR_Service.  These are already
+	  obtained from the base projects we derive from.
+
+	  Set TAO_IDL_INCLUDE_DIR to $(includedir)/tao for automake
+	  builds so end-user's won't have to set ACE_ROOT/TAO_ROOT
+	  to run the installed executable.
+
 Sun Oct  9 08:16:17 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/examples/RtEC/Kokyu/RtECKokyu.mpc:
