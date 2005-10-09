@@ -50,7 +50,7 @@ CLEANFILES += \
 QuoterC.cpp QuoterC.h QuoterC.inl QuoterS.cpp QuoterS.h QuoterS.inl QuoterS_T.cpp QuoterS_T.h QuoterS_T.inl: Quoter-stamp
 
 Quoter-stamp: $(srcdir)/Quoter.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -I../../orbsvcs/orbsvcs $(srcdir)/Quoter.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Quoter.idl
 	@touch $@
 
 noinst_PROGRAMS += client
@@ -61,8 +61,7 @@ client_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(srcdir)/../../orbsvcs/orbsvcs
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 client_SOURCES = \
   QuoterC.cpp \
@@ -115,7 +114,7 @@ CLEANFILES += \
 QuoterC.cpp QuoterC.h QuoterC.inl QuoterS.cpp QuoterS.h QuoterS.inl QuoterS_T.cpp QuoterS_T.h QuoterS_T.inl: Quoter-stamp
 
 Quoter-stamp: $(srcdir)/Quoter.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -I../../orbsvcs/orbsvcs $(srcdir)/Quoter.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Quoter.idl
 	@touch $@
 
 noinst_PROGRAMS += Factory_Finder
@@ -126,8 +125,7 @@ Factory_Finder_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(srcdir)/../../orbsvcs/orbsvcs
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 Factory_Finder_SOURCES = \
   Factory_Finder.cpp \
@@ -185,7 +183,7 @@ CLEANFILES += \
 QuoterC.cpp QuoterC.h QuoterC.inl QuoterS.cpp QuoterS.h QuoterS.inl QuoterS_T.cpp QuoterS_T.h QuoterS_T.inl: Quoter-stamp
 
 Quoter-stamp: $(srcdir)/Quoter.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -I../../orbsvcs/orbsvcs $(srcdir)/Quoter.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Quoter.idl
 	@touch $@
 
 noinst_PROGRAMS += Generic_Factory
@@ -196,8 +194,7 @@ Generic_Factory_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(srcdir)/../../orbsvcs/orbsvcs
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 Generic_Factory_SOURCES = \
   Generic_Factory.cpp \
@@ -255,7 +252,7 @@ CLEANFILES += \
 QuoterC.cpp QuoterC.h QuoterC.inl QuoterS.cpp QuoterS.h QuoterS.inl QuoterS_T.cpp QuoterS_T.h QuoterS_T.inl: Quoter-stamp
 
 Quoter-stamp: $(srcdir)/Quoter.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -I../../orbsvcs/orbsvcs $(srcdir)/Quoter.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/Quoter.idl
 	@touch $@
 
 noinst_PROGRAMS += server
@@ -266,8 +263,7 @@ server_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(srcdir)/../../orbsvcs/orbsvcs
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 server_SOURCES = \
   QuoterC.cpp \

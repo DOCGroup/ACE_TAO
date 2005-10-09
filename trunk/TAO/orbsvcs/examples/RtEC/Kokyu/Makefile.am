@@ -27,8 +27,7 @@ Service_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(ACE_ROOT)/Kokyu \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs/Sched
+  -I$(ACE_ROOT)/Kokyu
 
 Service_SOURCES = \
   Consumer.cpp \

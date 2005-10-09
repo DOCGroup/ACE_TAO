@@ -3445,7 +3445,6 @@ libTAO_FTRT_ClientORB_la_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs/FtRtEvent/ClientORB \
   -DTAO_FTRT_BUILD_DLL
 
 libTAO_FTRT_ClientORB_la_SOURCES = \
@@ -4105,7 +4104,6 @@ libTAO_FTRT_EventChannel_la_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs/FtRtEvent/EventChannel \
   -DTAO_FTRTEC_BUILD_DLL
 
 libTAO_FTRT_EventChannel_la_SOURCES = \
