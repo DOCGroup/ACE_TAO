@@ -98,8 +98,6 @@
 #define ACE_LACKS_RWLOCK_T
 #define ACE_LACKS_SCANDIR_PROTOTYPE
 #define ACE_LACKS_SETPGID
-#define ACE_LACKS_SETREGID
-#define ACE_LACKS_SETREUID
 #define ACE_LACKS_SIGINFO_H
 #define ACE_LACKS_SI_ADDR
 #define ACE_LACKS_STRCASECMP_PROTOTYPE
@@ -189,8 +187,10 @@
 # define ALIGNBYTES (sizeof(int) - 1)
 # define ALIGN(p) (((unsigned)p + ALIGNBYTES) & ~ALIGNBYTES)
 #else /* LynxOS 3.x */
-# define ACE_LACKS_AUTO_PTR
 # define ACE_HAS_POLL
+# define ACE_LACKS_AUTO_PTR
+# define ACE_LACKS_SETREGID
+# define ACE_LACKS_SETREUID
 #endif /* ACE_LYNXOS_MAJOR > 3 */
 
 #include /**/ "ace/post.h"
