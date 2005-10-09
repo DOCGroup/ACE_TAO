@@ -1,3 +1,12 @@
+Sun Oct  9 08:16:17 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/examples/RtEC/Kokyu/RtECKokyu.mpc:
+	* orbsvcs/orbsvcs/FtRtEvent.mpc:
+
+	  Removed includes definitions pointing to directories under
+	  $(TAO_ROOT)/orbsvcs.  This appears no longer to be needed,
+	  all headers are specified relative to $(TAO_ROOT)/orbsvcs.
+
 Sat Oct  8 18:43:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Codec/client.cpp:

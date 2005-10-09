@@ -41,7 +41,6 @@ project (FTRT_ClientORB) :  messaging, orbsvcslib, pi, core {
   sharedname   = TAO_FTRT_ClientORB
   dynamicflags = TAO_FTRT_BUILD_DLL
   tagchecks    = FTRT_ClientORB
-  includes    += $(TAO_ROOT)/orbsvcs/orbsvcs/FtRtEvent/ClientORB
 
   IDL_Files {
   }
@@ -63,7 +62,6 @@ project (FTRT_EventChannel) :  orbsvcslib, core, ftrtevent, rtevent_serv, utils,
   sharedname   = TAO_FTRT_EventChannel
   dynamicflags = TAO_FTRTEC_BUILD_DLL
   tagchecks    = FTRT_EventChannel
-  includes    += $(TAO_ROOT)/orbsvcs/orbsvcs/FtRtEvent/EventChannel
   after       += FTORB_Utils
 
   IDL_Files {
