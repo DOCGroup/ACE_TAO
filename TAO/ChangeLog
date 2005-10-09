@@ -1,3 +1,13 @@
+Sun Oct  9 14:38:12 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* examples/Quoter/Makefile.am:
+	* examples/Simulator/Event_Supplier/Makefile.am:
+	* orbsvcs/IFR_Service/Makefile.am:
+	* orbsvcs/examples/RtEC/Kokyu/Makefile.am:
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Regenerate with recent *.mpc file changes.
+
 Sun Oct  9 14:14:01 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/IFR_Service/IFR_Service.mpc:

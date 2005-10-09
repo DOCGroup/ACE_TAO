@@ -51,7 +51,7 @@ CLEANFILES += \
 
 ./NavWeap-stamp: $(srcdir)/../NavWeap.idl $(TAO_IDL_DEP)
 	mkdir -p .
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs $(srcdir)/../NavWeap.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/../NavWeap.idl
 	@touch $@
 
 noinst_PROGRAMS += DualEC_Sup
@@ -62,8 +62,7 @@ DualEC_Sup_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 DualEC_Sup_SOURCES = \
   ./NavWeapC.cpp \
@@ -128,7 +127,7 @@ CLEANFILES += \
 
 ./NavWeap-stamp: $(srcdir)/../NavWeap.idl $(TAO_IDL_DEP)
 	mkdir -p .
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs $(srcdir)/../NavWeap.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/../NavWeap.idl
 	@touch $@
 
 noinst_PROGRAMS += Event_Con
@@ -139,8 +138,7 @@ Event_Con_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 Event_Con_SOURCES = \
   ./NavWeapC.cpp \
@@ -201,7 +199,7 @@ CLEANFILES += \
 
 ./NavWeap-stamp: $(srcdir)/../NavWeap.idl $(TAO_IDL_DEP)
 	mkdir -p .
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs $(srcdir)/../NavWeap.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/../NavWeap.idl
 	@touch $@
 
 noinst_PROGRAMS += Event_Sup
@@ -212,8 +210,7 @@ Event_Sup_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 Event_Sup_SOURCES = \
   ./NavWeapC.cpp \
@@ -277,7 +274,7 @@ CLEANFILES += \
 
 ./NavWeap-stamp: $(srcdir)/../NavWeap.idl $(TAO_IDL_DEP)
 	mkdir -p .
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs $(srcdir)/../NavWeap.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/../NavWeap.idl
 	@touch $@
 
 noinst_PROGRAMS += Logging_Sup
@@ -288,8 +285,7 @@ Logging_Sup_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 Logging_Sup_SOURCES = \
   ./NavWeapC.cpp \
