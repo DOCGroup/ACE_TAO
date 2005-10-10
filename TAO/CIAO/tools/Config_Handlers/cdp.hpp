@@ -19,7 +19,7 @@
 # include <string.h>
 #endif
 
-#include "Config_Handlers_Export.h"
+#include "XSC_XML_Handlers_Export.h"
 #ifndef CDP_HPP
 #define CDP_HPP
 
@@ -43,7 +43,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    class Config_Handlers_Export DeploymentPlan : public ::XSCRT::Type
+    class XSC_XML_Handlers_Export DeploymentPlan : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -198,7 +198,7 @@ namespace CIAO
   {
     namespace Traversal
     {
-      struct Config_Handlers_Export DeploymentPlan : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::DeploymentPlan >
+      struct XSC_XML_Handlers_Export DeploymentPlan : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::DeploymentPlan >
       {
         virtual void
         traverse (Type&);
@@ -440,7 +440,7 @@ namespace CIAO
   {
     namespace Writer
     {
-      struct Config_Handlers_Export DeploymentPlan : Traversal::DeploymentPlan, 
+      struct XSC_XML_Handlers_Export DeploymentPlan : Traversal::DeploymentPlan, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::DeploymentPlan Type;

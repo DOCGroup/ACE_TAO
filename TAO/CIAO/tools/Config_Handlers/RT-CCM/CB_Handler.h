@@ -12,7 +12,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Config_Handlers_Export.h"
+#include "RT_CCM_Handlers_Export.h"
 #include "ciao/ServerResourcesC.h"
 #include "IDREF_Base.h"
 
@@ -31,7 +31,7 @@ namespace CIAO
 	 * A brief Handler class for <ConnectionBands>
 	 */
 
-	class Config_Handlers_Export CB_Handler
+	class RT_CCM_Handlers_Export CB_Handler
 	{
         public:
           static bool connection_band (const ConnectionBandsDef &src,

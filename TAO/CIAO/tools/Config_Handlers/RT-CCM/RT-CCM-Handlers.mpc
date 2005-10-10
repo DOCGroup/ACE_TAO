@@ -2,7 +2,7 @@
 
 project (RT_CCM_Config_Handlers) : acelib, ciao_deployment_stub, xerces {
   sharedname = RT_CCM_Config_Handlers
-  dynamicflags   = CONFIG_HANDLERS_BUILD_DLL
+  dynamicflags   = RT_CCM_HANDLERS_BUILD_DLL
   macros   += XML_USE_PTHREADS
   requires += exceptions
   includes += $(CIAO_ROOT)/tools/Config_Handlers

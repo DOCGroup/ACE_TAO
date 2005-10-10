@@ -9,7 +9,7 @@
 #define CIAO_CONFIG_HANDLERS_DYNENUM_HANDLER_H
 #include /**/ "ace/pre.h"
 
-#include "Config_Handlers_Export.h"
+#include "DynAny_Handler_Export.h"
 
 #include "tao/ORB.h"
 #include "tao/DynamicAny/DynamicAny.h"
@@ -31,7 +31,7 @@ namespace CIAO
      * @brief Translates enums specified in deployment plans into Dynamic Anys
      *
      */
-    class Config_Handlers_Export DynEnum_Handler
+    class DynEnum_Handler
     {
     public:
       static DynamicAny::DynAny_ptr extract_into_dynany (const DataType &type,

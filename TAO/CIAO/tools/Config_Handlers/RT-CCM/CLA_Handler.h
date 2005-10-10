@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Config_Handlers_Export.h"
+#include "RT_CCM_Handlers_Export.h"
 #include "ciao/ServerResourcesC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -33,7 +33,7 @@ namespace CIAO
 	 * This is a brief Handler class for <CommandlineArg>
 	 */
 	
-	class Config_Handlers_Export CLA_Handler
+	class RT_CCM_Handlers_Export CLA_Handler
 	{
 	public:
 	    static bool

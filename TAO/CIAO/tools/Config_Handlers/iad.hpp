@@ -19,7 +19,7 @@
 # include <string.h>
 #endif
 
-#include "Config_Handlers_Export.h"
+#include "XSC_XML_Handlers_Export.h"
 #ifndef IAD_HPP
 #define IAD_HPP
 
@@ -44,7 +44,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    class Config_Handlers_Export NamedImplementationArtifact : public ::XSCRT::Type
+    class XSC_XML_Handlers_Export NamedImplementationArtifact : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -82,7 +82,7 @@ namespace CIAO
     };
 
 
-    class Config_Handlers_Export ImplementationArtifactDescription : public ::XSCRT::Type
+    class XSC_XML_Handlers_Export ImplementationArtifactDescription : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -218,7 +218,7 @@ namespace CIAO
   {
     namespace Traversal
     {
-      struct Config_Handlers_Export NamedImplementationArtifact : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::NamedImplementationArtifact >
+      struct XSC_XML_Handlers_Export NamedImplementationArtifact : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::NamedImplementationArtifact >
       {
         virtual void
         traverse (Type&);
@@ -251,7 +251,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct Config_Handlers_Export ImplementationArtifactDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ImplementationArtifactDescription >
+      struct XSC_XML_Handlers_Export ImplementationArtifactDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ImplementationArtifactDescription >
       {
         virtual void
         traverse (Type&);
@@ -427,7 +427,7 @@ namespace CIAO
   {
     namespace Writer
     {
-      struct Config_Handlers_Export NamedImplementationArtifact : Traversal::NamedImplementationArtifact, 
+      struct XSC_XML_Handlers_Export NamedImplementationArtifact : Traversal::NamedImplementationArtifact, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::NamedImplementationArtifact Type;
@@ -478,7 +478,7 @@ namespace CIAO
         NamedImplementationArtifact ();
       };
 
-      struct Config_Handlers_Export ImplementationArtifactDescription : Traversal::ImplementationArtifactDescription, 
+      struct XSC_XML_Handlers_Export ImplementationArtifactDescription : Traversal::ImplementationArtifactDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ImplementationArtifactDescription Type;

@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Config_Handlers_Export.h"
+#include "RT_CCM_Handlers_Export.h"
 #include "ciao/ServerResourcesC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -31,7 +31,7 @@ namespace CIAO
 	 * A brief Handler class for <ThreadpoolDef>
 	 */
 
-	class Config_Handlers_Export TP_Handler
+	class RT_CCM_Handlers_Export TP_Handler
 	{
         public:
           static bool thread_pool (const ThreadpoolDef &src,

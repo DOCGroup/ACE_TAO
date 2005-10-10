@@ -33,7 +33,7 @@ namespace CIAO
      *
      */
     template <typename T>
-    class Config_Handlers_Export IDREF_Base
+    class IDREF_Base
     {
     public:
       /// Bind an IDREF to an index
