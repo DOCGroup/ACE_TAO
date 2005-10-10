@@ -76,6 +76,7 @@ extern void DRV_usage (void);
 extern void DRV_pre_proc (const char *myfile);
 extern void DRV_store_env_include_paths (void);
 extern void DRV_cpp_init (void);
+extern void DRV_cpp_post_init (void);
 extern void DRV_cpp_putarg (const char *str);
 extern void DRV_cpp_new_location (const char *new_loc);
 extern void DRV_get_orb_idl_includes (void);
