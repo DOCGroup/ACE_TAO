@@ -129,7 +129,7 @@ test_registering_all_handlers (void)
                __LINE__,
                ACE_TEXT_CHAR_TO_TCHAR (__FILE__));
   Time_Handler rt[ACE_MAX_TIMERS];
-  int t_id[ACE_MAX_TIMERS];
+  long t_id[ACE_MAX_TIMERS];
 
   for (size_t i = 0; i < ACE_MAX_TIMERS; i++)
     {
@@ -152,7 +152,7 @@ test_registering_one_handler (void)
                __LINE__,
                ACE_TEXT_CHAR_TO_TCHAR (__FILE__));
   Time_Handler rt[ACE_MAX_TIMERS];
-  int t_id[ACE_MAX_TIMERS];
+  long t_id[ACE_MAX_TIMERS];
 
   done = 0;
   count = 0;
@@ -177,7 +177,7 @@ test_canceling_odd_timers (void)
                __LINE__,
                ACE_TEXT_CHAR_TO_TCHAR (__FILE__));
   Time_Handler rt[ACE_MAX_TIMERS];
-  int t_id[ACE_MAX_TIMERS];
+  long t_id[ACE_MAX_TIMERS];
 
   done = 0;
   count = 1;
@@ -212,7 +212,7 @@ test_resetting_timer_intervals (void)
                __LINE__,
                ACE_TEXT_CHAR_TO_TCHAR (__FILE__));
   Time_Handler rt;
-  int t_id;
+  long t_id;
 
   done = 0;
   count = 0;
