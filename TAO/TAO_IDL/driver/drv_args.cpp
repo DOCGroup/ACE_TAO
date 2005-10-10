@@ -574,4 +574,6 @@ DRV_parse_args (long ac, char **av)
 
       idl_global->temp_dir (tmpdir);
     }
+    
+  DRV_cpp_post_init ();
 }
