@@ -226,7 +226,7 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
 #if defined (ACE_LACKS_STRUCT_DIR)
       dirent *newdp = (dirent *) ACE_OS::malloc (sizeof (dirent));
 #else
-      int dsize =
+      size_t dsize =
         sizeof (dirent) +
         ((ACE_OS::strlen (dp->d_name) + 1) * sizeof (ACE_TCHAR));
       dirent *newdp = (dirent *) ACE_OS::malloc (dsize);
