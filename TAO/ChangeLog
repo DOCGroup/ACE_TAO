@@ -1,3 +1,8 @@
+Mon Oct 10 13:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMI_Timeouts/timeout_client.{h,cpp}:
+          Fixed 64bit conversion warnings
+
 Mon Oct 10 13:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/AVStreams/Modify_QoS/sender.cpp:
