@@ -11,7 +11,6 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"
 
-
 ACE_RCSID (tao,
            Any_Unknown_IDL_Type,
            "$Id$")
@@ -155,6 +154,13 @@ TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR &cdr
   this->cdr_.reset (&new_mb, cdr.byte_order ());
   this->cdr_.char_translator (cdr.char_translator ());
   this->cdr_.wchar_translator (cdr.wchar_translator ());
+
+  // Take over the GIOP version, the input cdr can have a different
+  // version then our current GIOP version.
+  ACE_CDR::Octet major_version;
+  ACE_CDR::Octet minor_version;
+  cdr.get_version (major_version, minor_version);
+  this->cdr_.set_version (major_version, minor_version);
 }
 
 CORBA::Boolean
