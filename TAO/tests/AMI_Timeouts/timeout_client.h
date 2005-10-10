@@ -77,5 +77,5 @@ private:
 
   const CORBA::Boolean INVOKE_ASYNCH;
 
-  unsigned int timeToWait_;
+  unsigned long timeToWait_;
 };
