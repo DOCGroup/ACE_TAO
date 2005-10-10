@@ -1,3 +1,17 @@
+Mon Oct 10 10:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/Any_Unknown_IDL_Type.cpp (_tao_decode):
+          Take over the version of the source cdr. For example the
+          (de)marshaling of a wstring is dependent on the GIOP version,
+          it can be that we get a 1.1 version to decode, by default the
+          version is 1.2 and when we don't take over the version number
+          we try to decode a 1.1 version streams as 1.2 version which
+          will fail. When we take over the version we correctly decode
+          the stream later as 1.1. Thanks to Lothar Werzinger
+          <lothar at tradescape dot biz> for reporting this issue
+          and supply a test case. This fixes the Codec test in our
+          daily builds.
+
 Mon Oct 10 06:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.{h,cpp}:
