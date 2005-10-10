@@ -313,8 +313,8 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
   // @@ should be a default defined for each protocol implementation?
   //    since we may have protocols loaded which use shared memory of
   //    some form, fredk
-  long rcv_sock_size = -1;
-  long snd_sock_size = -1;
+  int rcv_sock_size = -1;
+  int snd_sock_size = -1;
 
   // Use TCP_NODELAY.
   int nodelay = 1;

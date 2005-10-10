@@ -67,11 +67,11 @@ be_visitor_obv_operation_arglist::is_amh_exception_holder (be_operation *node)
 int
 be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
 {
-  int amh_valuetype = this->is_amh_exception_holder (node);
+  idl_bool amh_valuetype = this->is_amh_exception_holder (node);
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << " (";
-  
+
   if (!be_global->exception_support () || node->nmembers () > 0)
     {
       *os << be_idt << be_idt_nl;
@@ -106,7 +106,7 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
             {
               // Use ACE_ENV_SINGLE_ARG_DECL or ACE_ENV_ARG_DECL
               // depending on whether the operation node has parameters.
-              
+
               if (node->argument_count () == 0)
                 {
                   *os << " ACE_ENV_SINGLE_ARG_DECL";
@@ -115,7 +115,7 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
                 {
                   *os << " ACE_ENV_ARG_DECL";
                 }
-            } 
+            }
 
           if (!amh_valuetype)
             {
@@ -135,7 +135,7 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
           << ")";
     }
   else
-    {  
+    {
       *os << "void)";
     }
 
