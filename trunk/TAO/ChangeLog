@@ -1,3 +1,13 @@
+Mon Oct 10 07:13:58 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/IFR_Service/IFR_Service.mpc:
+
+	  Partially revert:
+	  Sun Oct  9 14:14:01 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	  Add $(TAO_ROOT)/orbsvcs/IFR_Service back to includes definition
+	  for TAO_IFR_EXE project.
+
 Mon Oct 10 13:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/AMI_Timeouts/timeout_client.{h,cpp}:
