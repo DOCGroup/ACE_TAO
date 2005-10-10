@@ -21,8 +21,8 @@ TimeStamp_Protocol_Object::TimeStamp_Protocol_Object (TAO_AV_Callback *callback,
 int
 TimeStamp_Protocol_Object::handle_input (void)
 {
-  int n = this->transport_->recv (this->frame_->rd_ptr (),
-                                  this->frame_->size ());
+  ssize_t n = this->transport_->recv (this->frame_->rd_ptr (),
+                                      this->frame_->size ());
   if (n == -1)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_UDP_Flow_Handler::handle_input recv failed\n"),-1);
   if (n == -1)
@@ -142,7 +142,7 @@ TimeStamp_Protocol_Object::send_frame (ACE_Message_Block *frame,
 
   frame->cont (timestamp);
 
-  int result = this->transport_->send (frame);
+  ssize_t result = this->transport_->send (frame);
   if (result < 0)
     return result;
   return 0;
