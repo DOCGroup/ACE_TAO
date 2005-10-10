@@ -38,8 +38,8 @@ TAO_UTF16_BOM_Translator::TAO_UTF16_BOM_Translator (bool forceBE)
 {
   if (TAO_debug_level > 1)
     ACE_DEBUG((LM_DEBUG,
-               ACE_TEXT ("(%P|%t)TAO_UTF16_BOM_Translator")
-               ACE_TEXT("forceBE %d\n"), this->forceBE_?1:0 ));
+               ACE_TEXT ("TAO (%P|%t) - UTF16_BOM_Translator: ")
+               ACE_TEXT("forceBE %d\n"), this->forceBE_ ? 1:0 ));
 }
 
 TAO_UTF16_BOM_Translator::~TAO_UTF16_BOM_Translator (void)
