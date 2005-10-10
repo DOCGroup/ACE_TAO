@@ -1,3 +1,10 @@
+Mon Oct 10 17:37:20 2005 Stoyan Paunov spaunov@isis.vanderbilt.edu
+
+	* DAnCE/spec_RepositoryManager/ZIP_Wrapper.cpp
+
+	reverted a change we made earlier to accomodate older verisons of ZZIPLIB
+
+
 Mon Oct 10 15:46:57 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/spec_RepositoryManager/RepositoryManager_Impl.cpp
