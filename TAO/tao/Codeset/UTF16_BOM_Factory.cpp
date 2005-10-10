@@ -128,8 +128,8 @@ TAO_UTF16_BOM_Factory::create_translator () const
     {
       if (TAO_debug_level)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) TAO_UTF16_BOM_Factory ")
-                    ACE_TEXT ("cannot create Translator\n")
+                    ACE_TEXT ("TAO (%P|%t) - UTF16_BOM_Factory: ")
+                    ACE_TEXT ("Cannot create translator\n")
         ));
     }
   }
