@@ -1,3 +1,11 @@
+Mon Oct 10 13:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/AVStreams/Modify_QoS/sender.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable/server.cpp:
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/TimeStamp.cpp:
+          Fixed 64bit conversion warningw
+
 Mon Oct 10 13:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_valuetype/arglist.cpp:
