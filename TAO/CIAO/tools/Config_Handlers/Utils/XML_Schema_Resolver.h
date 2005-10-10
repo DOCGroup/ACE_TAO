@@ -11,7 +11,7 @@
 #define CIAO_CONFIG_HANDLERS_XML_SCHEAM_RESOLVER_H
 #include /**/ "ace/pre.h"
 
-#include "Config_Handlers_Export.h"
+#include "CIAO_XML_Utils_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -33,7 +33,7 @@ namespace CIAO
      * @class CIAO_Schema_Resolver
      * @brief Resolves schema locations for CIAO.
      */
-    class Config_Handlers_Export CIAO_Schema_Resolver
+    class CIAO_Schema_Resolver
       : public virtual DOMEntityResolver
     {
     public:

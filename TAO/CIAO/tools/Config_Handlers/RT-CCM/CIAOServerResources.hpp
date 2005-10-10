@@ -19,7 +19,8 @@
 # include <string.h>
 #endif
 
-#include "Config_Handlers_Export.h"
+#include "RT_CCM_Handlers_Export.h"
+
 #ifndef CIAOSERVER_RESOURCES_HPP
 #define CIAOSERVER_RESOURCES_HPP
 
@@ -54,7 +55,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    class Config_Handlers_Export ServerResourcesDef : public ::XSCRT::Type
+    class  ServerResourcesDef : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -116,7 +117,7 @@ namespace CIAO
     };
 
 
-    class Config_Handlers_Export ServerCmdlineOptions : public ::XSCRT::Type
+    class  ServerCmdlineOptions : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -150,7 +151,7 @@ namespace CIAO
     };
 
 
-    class Config_Handlers_Export ACESvcConf : public ::XSCRT::Type
+    class  ACESvcConf : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -180,7 +181,7 @@ namespace CIAO
     };
 
 
-    class Config_Handlers_Export ORBConfigs : public ::XSCRT::Type
+    class  ORBConfigs : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -225,7 +226,7 @@ namespace CIAO
     };
 
 
-    class Config_Handlers_Export ORBResources : public ::XSCRT::Type
+    class  ORBResources : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -289,7 +290,7 @@ namespace CIAO
     };
 
 
-    class Config_Handlers_Export Priority : public ::XMLSchema::int_
+    class  Priority : public ::XMLSchema::int_
     {
       //@@ VC6 anathema
       typedef ::XMLSchema::int_ Base__;
@@ -308,7 +309,7 @@ namespace CIAO
       char regulator__;
     };
 
-    class Config_Handlers_Export ThreadpoolDef : public ::XSCRT::Type
+    class  ThreadpoolDef : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -414,7 +415,7 @@ namespace CIAO
     };
 
 
-    class Config_Handlers_Export ThreadpoolWithLanesDef : public ::XSCRT::Type
+    class  ThreadpoolWithLanesDef : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -513,7 +514,7 @@ namespace CIAO
     };
 
 
-    class Config_Handlers_Export ThreadpoolLaneDef : public ::XSCRT::Type
+    class  ThreadpoolLaneDef : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -564,7 +565,7 @@ namespace CIAO
     };
 
 
-    class Config_Handlers_Export ConnectionBandsDef : public ::XSCRT::Type
+    class  ConnectionBandsDef : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -609,7 +610,7 @@ namespace CIAO
     };
 
 
-    class Config_Handlers_Export PriorityBandDef : public ::XSCRT::Type
+    class  PriorityBandDef : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -649,7 +650,7 @@ namespace CIAO
     };
 
 
-    class Config_Handlers_Export PolicySet : public ::XSCRT::Type
+    class  PolicySet : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -724,7 +725,7 @@ namespace CIAO
     };
 
 
-    class Config_Handlers_Export PriorityModel : public ::XSCRT::Type
+    class  PriorityModel : public ::XSCRT::Type
     {
       public:
       PriorityModel (::XSCRT::XML::Element< ACE_TCHAR > const&);
@@ -755,7 +756,7 @@ namespace CIAO
     };
 
 
-    class Config_Handlers_Export PriorityModelPolicyDef : public ::XSCRT::Type
+    class  PriorityModelPolicyDef : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -800,7 +801,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    Config_Handlers_Export
+    
     ::CIAO::Config_Handlers::ServerResourcesDef
     ServerResources (xercesc::DOMDocument const*);
   }
@@ -814,7 +815,7 @@ namespace CIAO
   {
     namespace Traversal
     {
-      struct Config_Handlers_Export ServerResourcesDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ServerResourcesDef >
+      struct  ServerResourcesDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ServerResourcesDef >
       {
         virtual void
         traverse (Type&);
@@ -877,7 +878,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct Config_Handlers_Export ServerCmdlineOptions : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ServerCmdlineOptions >
+      struct  ServerCmdlineOptions : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ServerCmdlineOptions >
       {
         virtual void
         traverse (Type&);
@@ -922,7 +923,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct Config_Handlers_Export ACESvcConf : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ACESvcConf >
+      struct  ACESvcConf : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ACESvcConf >
       {
         virtual void
         traverse (Type&);
@@ -955,7 +956,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct Config_Handlers_Export ORBConfigs : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ORBConfigs >
+      struct  ORBConfigs : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ORBConfigs >
       {
         virtual void
         traverse (Type&);
@@ -1012,7 +1013,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct Config_Handlers_Export ORBResources : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ORBResources >
+      struct  ORBResources : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ORBResources >
       {
         virtual void
         traverse (Type&);
@@ -1123,7 +1124,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct Config_Handlers_Export Priority : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::Priority >
+      struct  Priority : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::Priority >
       {
         virtual void
         traverse (Type&);
@@ -1144,7 +1145,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct Config_Handlers_Export ThreadpoolDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ThreadpoolDef >
+      struct  ThreadpoolDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ThreadpoolDef >
       {
         virtual void
         traverse (Type&);
@@ -1219,7 +1220,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct Config_Handlers_Export ThreadpoolWithLanesDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ThreadpoolWithLanesDef >
+      struct  ThreadpoolWithLanesDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ThreadpoolWithLanesDef >
       {
         virtual void
         traverse (Type&);
@@ -1306,7 +1307,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct Config_Handlers_Export ThreadpoolLaneDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ThreadpoolLaneDef >
+      struct  ThreadpoolLaneDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ThreadpoolLaneDef >
       {
         virtual void
         traverse (Type&);
@@ -1345,7 +1346,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct Config_Handlers_Export ConnectionBandsDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ConnectionBandsDef >
+      struct  ConnectionBandsDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ConnectionBandsDef >
       {
         virtual void
         traverse (Type&);
@@ -1402,7 +1403,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct Config_Handlers_Export PriorityBandDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::PriorityBandDef >
+      struct  PriorityBandDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::PriorityBandDef >
       {
         virtual void
         traverse (Type&);
@@ -1435,7 +1436,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct Config_Handlers_Export PolicySet : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::PolicySet >
+      struct  PolicySet : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::PolicySet >
       {
         virtual void
         traverse (Type&);
@@ -1562,7 +1563,7 @@ namespace CIAO
       ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::PriorityModel >
       PriorityModel;
 
-      struct Config_Handlers_Export PriorityModelPolicyDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::PriorityModelPolicyDef >
+      struct  PriorityModelPolicyDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::PriorityModelPolicyDef >
       {
         virtual void
         traverse (Type&);
@@ -2765,7 +2766,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    Config_Handlers_Export
+    
     void
     ServerResources (::CIAO::Config_Handlers::ServerResourcesDef const&, xercesc::DOMDocument*);
   }

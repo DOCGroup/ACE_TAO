@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Config_Handlers_Export.h"
+#include "CIAO_XML_Utils_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -35,7 +35,7 @@ namespace CIAO
      * @brief Error handler for XERCES
      *
      */
-    class Config_Handlers_Export XML_Error_Handler
+    class XML_Error_Handler
       : public DOMErrorHandler
     {
     public:

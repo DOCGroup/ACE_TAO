@@ -11,7 +11,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "Config_Handlers_Export.h"
+#include "RT_CCM_Handlers_Export.h"
 #include "ciao/ServerResourcesC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -29,7 +29,7 @@ namespace CIAO
        * @brief Handler class for PriorityModelPolicyDefs
        */
       
-      class Config_Handlers_Export PM_Handler
+      class RT_CCM_Handlers_Export PM_Handler
       {
       public:
         static bool priority_model_pd (const PriorityModelPolicyDef &src,

@@ -2,7 +2,7 @@
 
 project (XSC_XML_Handlers) : acelib, xerces {
   sharedname    += XSC_XML_Handlers
-  dynamicflags  = CONFIG_HANDLERS_BUILD_DLL
+  dynamicflags  = XSC_XML_HANDLERS_BUILD_DLL
   macros       += XML_USE_PTHREADS
   requires     += exceptions
   includes += $(CIAO_ROOT)/tools/Config_Handlers
@@ -21,7 +21,7 @@ project (XSC_XML_Handlers) : acelib, xerces {
   }
 }
 
-project (XSC_Config_Handlers) : acelib, ciao_deployment_stub, xerces {
+project (XSC_Config_Handlers) : acelib, ciao_deployment_stub, xerces, dynamicany {
   after += RT_CCM_Config_Handlers XSC_XML_Handlers XSC_DynAny_Handler
   sharedname = XSC_Config_Handlers
   dynamicflags   = CONFIG_HANDLERS_BUILD_DLL
@@ -31,7 +31,6 @@ project (XSC_Config_Handlers) : acelib, ciao_deployment_stub, xerces {
   libs += CIAO_XML_Utils RT_CCM_Config_Handlers XSC_XML_Handlers XSC_DynAny_Handler
 
   Source_Files {
-    Basic_Deployment_Data.cpp
     DP_Handler.cpp
     CCD_Handler.cpp
     Property_Handler.cpp

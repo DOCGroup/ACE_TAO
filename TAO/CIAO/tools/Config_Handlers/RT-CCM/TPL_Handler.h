@@ -16,7 +16,7 @@
 
 #include "ciao/ServerResourcesC.h"
 
-#include "Config_Handlers_Export.h"
+#include "RT_CCM_Handlers_Export.h"
 
 namespace CIAO
 {
@@ -29,7 +29,7 @@ namespace CIAO
 	 *  A brief Handler class for <ThreadpoolWithLanesDef>
 	 */
 
-	class Config_Handlers_Export TPL_Handler
+	class RT_CCM_Handlers_Export TPL_Handler
 	{
 	public:
 

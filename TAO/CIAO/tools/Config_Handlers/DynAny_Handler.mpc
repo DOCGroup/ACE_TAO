@@ -3,6 +3,7 @@
 project (XSC_DynAny_Handler) : taolib, xerces, dynamicany, anytypecode, typecodefactory {
   after += XSC_XML_Handlers
   libs += XSC_XML_Handlers
+  dynamicflags += DYNANY_HANDLER_BUILD_DLL
   macros += XML_USE_PTHREADS
   requires += exceptions
   includes += $(CIAO_ROOT)/tools/Config_Handlers

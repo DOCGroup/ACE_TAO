@@ -19,7 +19,7 @@
 # include <string.h>
 #endif
 
-#include "Config_Handlers_Export.h"
+#include "XSC_XML_Handlers_Export.h"
 #ifndef CPD_HPP
 #define CPD_HPP
 
@@ -46,7 +46,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    class Config_Handlers_Export PackagedComponentImplementation : public ::XSCRT::Type
+    class XSC_XML_Handlers_Export PackagedComponentImplementation : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -86,7 +86,7 @@ namespace CIAO
     };
 
 
-    class Config_Handlers_Export ComponentPackageDescription : public ::XSCRT::Type
+    class XSC_XML_Handlers_Export ComponentPackageDescription : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -209,7 +209,7 @@ namespace CIAO
   {
     namespace Traversal
     {
-      struct Config_Handlers_Export PackagedComponentImplementation : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::PackagedComponentImplementation >
+      struct XSC_XML_Handlers_Export PackagedComponentImplementation : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::PackagedComponentImplementation >
       {
         virtual void
         traverse (Type&);
@@ -242,7 +242,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct Config_Handlers_Export ComponentPackageDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ComponentPackageDescription >
+      struct XSC_XML_Handlers_Export ComponentPackageDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ComponentPackageDescription >
       {
         virtual void
         traverse (Type&);
@@ -370,7 +370,7 @@ namespace CIAO
   {
     namespace Writer
     {
-      struct Config_Handlers_Export PackagedComponentImplementation : Traversal::PackagedComponentImplementation, 
+      struct XSC_XML_Handlers_Export PackagedComponentImplementation : Traversal::PackagedComponentImplementation, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::PackagedComponentImplementation Type;
@@ -421,7 +421,7 @@ namespace CIAO
         PackagedComponentImplementation ();
       };
 
-      struct Config_Handlers_Export ComponentPackageDescription : Traversal::ComponentPackageDescription, 
+      struct XSC_XML_Handlers_Export ComponentPackageDescription : Traversal::ComponentPackageDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ComponentPackageDescription Type;

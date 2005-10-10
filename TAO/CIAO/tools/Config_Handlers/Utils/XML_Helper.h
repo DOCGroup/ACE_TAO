@@ -12,7 +12,7 @@
 #define CIAO_CONFIG_HANDLERS_XML_HELPER_H
 #include /**/ "ace/pre.h"
 
-#include "Config_Handlers_Export.h"
+#include "CIAO_XML_Utils_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -37,7 +37,7 @@ namespace CIAO
      *
      * @brief Helper class for some routine XML stuff.
      */
-    class Config_Handlers_Export XML_Helper
+    class CIAO_XML_Utils_Export XML_Helper
     {
     public:
       XML_Helper (void);

@@ -15,7 +15,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ciao/ServerResourcesC.h"
-#include "Config_Handlers_Export.h"
+#include "RT_CCM_Handlers_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,7 +32,7 @@ namespace CIAO
 	 * @function A brief Handler class for the <ORBResource> member
 	 */
 
-	class Config_Handlers_Export OR_Handler
+	class RT_CCM_Handlers_Export OR_Handler
 	{
 	public:
           
