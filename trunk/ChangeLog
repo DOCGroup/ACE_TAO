@@ -1,9 +1,14 @@
+Mon Oct 10 10:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added new Big_AMI test
+
 Sun Oct  9 21:34:08 2005  Olli Savia  <ops@iki.fi>
 
         * ace/config-lynxos.h:
           Do not define ACE_LACKS_SETREGID ACE_LACKS_SETREUID
           on LynxOS 4.x
-        
+
 Fri Oct  7 17:52:38 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
