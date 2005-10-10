@@ -1124,10 +1124,9 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
       try_sending_first = 0;
     }
 
-  ssize_t n;
-
   if (try_sending_first)
     {
+      ssize_t n = 0;
       size_t byte_count = 0;
       // ... in this case we must try to send the message first ...
 
