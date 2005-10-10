@@ -904,7 +904,6 @@ TAO_Transport::drain_queue_i (void)
       i = i->next ();
     }
 
-
   if (iovcnt != 0)
     {
       int retval = this->drain_queue_helper (iovcnt, iov);
@@ -1090,21 +1089,26 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
                                       const ACE_Message_Block *message_block,
                                       ACE_Time_Value *max_wait_time)
 {
-
-// @todo Bala mentioned that this has to go out here
-// {
-  if (message_semantics == TAO_Transport::TAO_TWOWAY_REQUEST)
+  switch (message_semantics)
     {
-      return this->send_synchronous_message_i (message_block,
-                                               max_wait_time);
+      case TAO_Transport::TAO_TWOWAY_REQUEST:
+        return this->send_synchronous_message_i (message_block,
+                                                 max_wait_time);
+      case TAO_Transport::TAO_REPLY:
+        return this->send_reply_message_i (message_block,
+                                           max_wait_time);
+      case TAO_Transport::TAO_ONEWAY_REQUEST:
+        return this->send_asynchronous_message_i (stub,
+                                                  message_block,
+                                                  max_wait_time);
     }
-  else if (message_semantics == TAO_Transport::TAO_REPLY)
-    {
-      return this->send_reply_message_i (message_block,
-                                         max_wait_time);
-    }
- // }
+}
 
+int
+TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
+                                            const ACE_Message_Block *message_block,
+                                            ACE_Time_Value *max_wait_time)
+{
   // Let's figure out if the message should be queued without trying
   // to send first:
   int try_sending_first = 1;
@@ -1132,7 +1136,7 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
       if (TAO_debug_level > 6)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Transport[%d]::send_message_shared_i, "
+                      "TAO (%P|%t) - Transport[%d]::send_asynchronous_message_i, "
                       "trying to send the message (ml = %d)\n",
                       this->id (), total_length));
         }
@@ -1156,7 +1160,7 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
               if (TAO_debug_level > 0)
                 {
                   ACE_ERROR ((LM_ERROR,
-                              "TAO (%P|%t) - Transport[%d]::send_message_shared_i, "
+                              "TAO (%P|%t) - Transport[%d]::send_asynchronous_message_i, "
                               "fatal error in "
                               "send_message_block_chain_i - %m\n",
                               this->id ()));
@@ -1179,7 +1183,7 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
       if (TAO_debug_level > 6)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Transport[%d]::send_message_shared_i, "
+                      "TAO (%P|%t) - Transport[%d]::send_asynchronous_message_i, "
                       "partial send %d / %d bytes\n",
                       this->id (), byte_count, total_length));
         }
@@ -1202,7 +1206,7 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
   if (TAO_debug_level > 6)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Transport[%d]::send_message_shared_i, "
+                  "TAO (%P|%t) - Transport[%d]::send_asynchronous_message_i, "
                   "message is queued\n",
                   this->id ()));
     }
@@ -1210,7 +1214,7 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
   if (this->queue_message_i(message_block) == -1)
   {
     ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) - Transport[%d]::send_message_shared_i, "
+                "TAO (%P|%t) - Transport[%d]::send_asynchronous_message_i, "
                 "cannot queue message for "
                 " - %m\n",
                 this->id ()));

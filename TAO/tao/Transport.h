@@ -858,9 +858,15 @@ private:
                                   ACE_Time_Value *max_wait_time);
 
   /// Send a reply message, i.e. do not block until the message is on
-  /// the wire, but just return after adding them  to the queue.
+  /// the wire, but just return after adding them to the queue.
   int send_reply_message_i (const ACE_Message_Block *message_block,
                             ACE_Time_Value *max_wait_time);
+
+  /// Send an asynchronous message, i.e. do not block until the message is on
+  /// the wire
+  int send_asynchronous_message_i (TAO_Stub *stub,
+                                   const ACE_Message_Block *message_block,
+                                   ACE_Time_Value *max_wait_time);
 
   /// A helper method used by send_synchronous_message_i() and
   /// send_reply_message_i(). Reusable code that could be used by both
