@@ -1,3 +1,8 @@
+Mon Oct 10 19:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_dirent.cpp:
+          Fixed 64bit conversion
+
 Mon Oct 10 13:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Reactor_Timer_Test.cpp:
