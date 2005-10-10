@@ -24,7 +24,7 @@ Peer::create_session (Test::Session_Control_ptr control,
                       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  Session *session_impl;
+  Session *session_impl = 0;
   ACE_NEW_THROW_EX (session_impl,
                     Session (control,
                              payload_size,
