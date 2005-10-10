@@ -1,3 +1,11 @@
+Mon Oct 10 10:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Big_AMI/run_test.pl:
+          Perl script for running this test.
+
+        * tests/Big_AMI/README:
+          Short readme
+
 Mon Oct 10 10:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Quoter/Quoter.idl:
