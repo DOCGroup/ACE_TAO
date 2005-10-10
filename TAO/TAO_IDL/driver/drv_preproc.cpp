@@ -90,8 +90,8 @@ ACE_RCSID (driver,
            drv_preproc,
            "$Id$")
 
-static long argcount = 0;
 static long max_argcount = 128;
+static long argcount = 0;
 static const char *arglist[128];
 static const char *output_arg_format = 0;
 static long output_arg_index = 0;
@@ -208,7 +208,8 @@ DRV_cpp_init (void)
     {
       // If no cpp flag was defined by the user, we define some
       // platform specific flags here.
-      char option[BUFSIZ];
+      char option1[BUFSIZ];
+      char option2[BUFSIZ];
 
 #if defined (TAO_IDL_PREPROCESSOR_ARGS)
       cpp_args = TAO_IDL_PREPROCESSOR_ARGS;
@@ -220,7 +221,8 @@ DRV_cpp_init (void)
 
       // So we can find OMG IDL files, such as `orb.idl'.
       
-      ACE_OS::strcpy (option, "-I");
+      ACE_OS::strcpy (option1, "-I");
+      ACE_OS::strcpy (option2, "-I");
       char* TAO_ROOT = ACE_OS::getenv ("TAO_ROOT");
       size_t len = 0;
       
@@ -234,11 +236,12 @@ DRV_cpp_init (void)
               TAO_ROOT[len - 1] = '\0';
             }
 
-          ACE_OS::strcat (option, TAO_ROOT);
+          ACE_OS::strcat (option1, TAO_ROOT);
+          ACE_OS::strcat (option2, TAO_ROOT);
 #if defined (ACE_WIN32)
-          ACE_OS::strcat (option, "\\tao");
+          ACE_OS::strcat (option2, "\\tao");
 #else
-          ACE_OS::strcat (option, "/tao");
+          ACE_OS::strcat (option2, "/tao");
 #endif
         }
       else
@@ -255,11 +258,12 @@ DRV_cpp_init (void)
                   ACE_ROOT[len - 1] = '\0';
                 }
 
-              ACE_OS::strcat (option, ACE_ROOT);
+              ACE_OS::strcat (option1, ACE_ROOT);
+              ACE_OS::strcat (option2, ACE_ROOT);
 #if defined (ACE_WIN32)
-              ACE_OS::strcat (option, "\\TAO\\tao");
+              ACE_OS::strcat (option2, "\\TAO\\tao");
 #else
-              ACE_OS::strcat (option, "/TAO/tao");
+              ACE_OS::strcat (option2, "/TAO/tao");
 #endif
             }
           else
@@ -267,7 +271,7 @@ DRV_cpp_init (void)
 #if defined (TAO_IDL_INCLUDE_DIR)
               // TAO_IDL_INCLUDE_DIR should be in quotes,
               // e.g. "/usr/local/include/tao"
-              ACE_OS::strcat (option,
+              ACE_OS::strcat (option1,
                               TAO_IDL_INCLUDE_DIR);
 #else
               ACE_ERROR ((LM_WARNING,
@@ -276,14 +280,17 @@ DRV_cpp_init (void)
                           "      TAO_IDL may not be able to "
                           "locate orb.idl\n"));
 
-              ACE_OS::strcat (option, ".");
+              ACE_OS::strcat (option1, ".");
+              ACE_OS::strcat (option2, ".");
 #endif  /* TAO_IDL_INCLUDE_DIR */
             }
         }
 
-      DRV_cpp_putarg (option);
-      idl_global->add_include_path (ACE_CString (option + 2).c_str ());
-      idl_global->tao_root (option + 2);
+      DRV_cpp_putarg (option1);
+      DRV_cpp_putarg (option2);
+      idl_global->add_include_path (ACE_CString (option1 + 2).c_str ());
+      idl_global->add_include_path (ACE_CString (option2 + 2).c_str ());
+      idl_global->tao_root (option1 + 2);
     }
 
   // Add any flags in cpp_args to cpp's arglist.
@@ -304,6 +311,91 @@ DRV_cpp_init (void)
           DRV_cpp_putarg (arglist[arg_cnt]);
         }
     }
+}
+
+// Adds additional include paths, but after parse_args() has
+// added user-defined include paths.
+void
+DRV_cpp_post_init (void)
+{
+  char option3[BUFSIZ];
+  char option4[BUFSIZ];
+  char option5[BUFSIZ];
+  
+  ACE_OS::strcpy (option3, "-I");
+  ACE_OS::strcpy (option4, "-I");
+  ACE_OS::strcpy (option5, "-I");
+
+  char* TAO_ROOT = ACE_OS::getenv ("TAO_ROOT");
+  size_t len = 0;
+  
+  if (TAO_ROOT != 0)
+    {
+      len = ACE_OS::strlen (TAO_ROOT);
+
+      // Some compilers choke on "//" separators.
+      if (TAO_ROOT[len - 1] == '/')
+        {
+          TAO_ROOT[len - 1] = '\0';
+        }
+
+      ACE_OS::strcat (option3, TAO_ROOT);
+      ACE_OS::strcat (option4, TAO_ROOT);
+      ACE_OS::strcat (option5, TAO_ROOT);
+#if defined (ACE_WIN32)
+      ACE_OS::strcat (option3, "\\orbsvcs");
+      ACE_OS::strcat (option4, "\\CIAO");
+      ACE_OS::strcat (option5, "\\CIAO\\ciao");
+#else
+      ACE_OS::strcat (option3, "/orbsvcs");
+      ACE_OS::strcat (option4, "/CIAO");
+      ACE_OS::strcat (option5, "/CIAO/ciao");
+#endif
+    }
+  else
+    {
+      char* ACE_ROOT = ACE_OS::getenv ("ACE_ROOT");
+
+      if (ACE_ROOT != 0)
+        {
+          len = ACE_OS::strlen (ACE_ROOT);
+
+          // Some compilers choke on "//" separators.
+          if (ACE_ROOT[len - 1] == '/')
+            {
+              ACE_ROOT[len - 1] = '\0';
+            }
+
+          ACE_OS::strcat (option3, ACE_ROOT);
+          ACE_OS::strcat (option4, ACE_ROOT);
+          ACE_OS::strcat (option5, ACE_ROOT);
+#if defined (ACE_WIN32)
+          ACE_OS::strcat (option3, "\\TAO\\orbsvcs");
+          ACE_OS::strcat (option4, "\\TAO\\CIAO");
+          ACE_OS::strcat (option5, "\\TAO\\CIAO\\ciao");
+#else
+          ACE_OS::strcat (option3, "/TAO/orbsvcs");
+          ACE_OS::strcat (option4, "/TAO/CIAO");
+          ACE_OS::strcat (option5, "/TAO/CIAO/ciao");
+#endif
+        }
+      else
+        {
+#if !defined (TAO_IDL_INCLUDE_DIR)
+          ACE_OS::strcat (option3, ".");
+          ACE_OS::strcat (option4, ".");
+          ACE_OS::strcat (option5, ".");
+#endif
+        }
+    }
+
+  DRV_cpp_putarg (option3);
+  DRV_cpp_putarg (option4);
+  DRV_cpp_putarg (option5);
+  
+  idl_global->add_include_path (ACE_CString (option3 + 2).c_str ());
+  idl_global->add_include_path (ACE_CString (option4 + 2).c_str ());
+  idl_global->add_include_path (ACE_CString (option5 + 2).c_str ());
 }
 
 // We really need to know whether this line is a "#include ...". If
@@ -430,9 +522,13 @@ DRV_check_for_include (const char* buf)
   file_name [i] = '\0';
   
   size_t len = ACE_OS::strlen (file_name);
+  ACE_CString name_str (file_name);
+  ACE_CString simple ("orb.idl");
+  ACE_CString nix_path ("tao/orb.idl");
+  ACE_CString win_path ("tao\\orb.idl");
 
   // Some backends pass this file through, others don't.
-  if (ACE_OS::strcmp (file_name, "orb.idl") == 0)
+  if (name_str == simple || name_str == nix_path || name_str == win_path)
     {
       if (idl_global->pass_orb_idl ())
         {
@@ -465,7 +561,7 @@ void
 DRV_get_orb_idl_includes (void)
 {
   ACE_CString orb_idl_path (idl_global->tao_root ());
-  orb_idl_path += "/orb.idl";
+  orb_idl_path += "/tao/orb.idl";
   FILE *fd = ACE_OS::fopen (orb_idl_path.fast_rep (), "r");
 
   if (fd == 0) {
