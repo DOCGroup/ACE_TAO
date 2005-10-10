@@ -19,7 +19,7 @@
 # include <string.h>
 #endif
 
-#include "Config_Handlers_Export.h"
+#include "XSC_XML_Handlers_Export.h"
 #ifndef CDD_HPP
 #define CDD_HPP
 
@@ -47,7 +47,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    class Config_Handlers_Export Domain : public ::XSCRT::Type
+    class XSC_XML_Handlers_Export Domain : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -140,7 +140,7 @@ namespace CIAO
     };
 
 
-    class Config_Handlers_Export Bridge : public ::XSCRT::Type
+    class XSC_XML_Handlers_Export Bridge : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -208,7 +208,7 @@ namespace CIAO
     };
 
 
-    class Config_Handlers_Export Interconnect : public ::XSCRT::Type
+    class XSC_XML_Handlers_Export Interconnect : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -291,7 +291,7 @@ namespace CIAO
     };
 
 
-    class Config_Handlers_Export Node : public ::XSCRT::Type
+    class XSC_XML_Handlers_Export Node : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -369,7 +369,7 @@ namespace CIAO
     };
 
 
-    class Config_Handlers_Export SharedResource : public ::XSCRT::Type
+    class XSC_XML_Handlers_Export SharedResource : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -443,7 +443,7 @@ namespace CIAO
   {
     namespace Traversal
     {
-      struct Config_Handlers_Export Domain : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::Domain >
+      struct XSC_XML_Handlers_Export Domain : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::Domain >
       {
         virtual void
         traverse (Type&);
@@ -548,7 +548,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct Config_Handlers_Export Bridge : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::Bridge >
+      struct XSC_XML_Handlers_Export Bridge : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::Bridge >
       {
         virtual void
         traverse (Type&);
@@ -641,7 +641,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct Config_Handlers_Export Interconnect : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::Interconnect >
+      struct XSC_XML_Handlers_Export Interconnect : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::Interconnect >
       {
         virtual void
         traverse (Type&);
@@ -764,7 +764,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct Config_Handlers_Export Node : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::Node >
+      struct XSC_XML_Handlers_Export Node : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::Node >
       {
         virtual void
         traverse (Type&);
@@ -869,7 +869,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct Config_Handlers_Export SharedResource : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::SharedResource >
+      struct XSC_XML_Handlers_Export SharedResource : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::SharedResource >
       {
         virtual void
         traverse (Type&);
@@ -925,7 +925,7 @@ namespace CIAO
   {
     namespace Writer
     {
-      struct Config_Handlers_Export Domain : Traversal::Domain, 
+      struct XSC_XML_Handlers_Export Domain : Traversal::Domain, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::Domain Type;
@@ -1074,7 +1074,7 @@ namespace CIAO
         Domain ();
       };
 
-      struct Config_Handlers_Export Bridge : Traversal::Bridge, 
+      struct XSC_XML_Handlers_Export Bridge : Traversal::Bridge, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::Bridge Type;
@@ -1209,7 +1209,7 @@ namespace CIAO
         Bridge ();
       };
 
-      struct Config_Handlers_Export Interconnect : Traversal::Interconnect, 
+      struct XSC_XML_Handlers_Export Interconnect : Traversal::Interconnect, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::Interconnect Type;
@@ -1386,7 +1386,7 @@ namespace CIAO
         Interconnect ();
       };
 
-      struct Config_Handlers_Export Node : Traversal::Node, 
+      struct XSC_XML_Handlers_Export Node : Traversal::Node, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::Node Type;
@@ -1535,7 +1535,7 @@ namespace CIAO
         Node ();
       };
 
-      struct Config_Handlers_Export SharedResource : Traversal::SharedResource, 
+      struct XSC_XML_Handlers_Export SharedResource : Traversal::SharedResource, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::SharedResource Type;

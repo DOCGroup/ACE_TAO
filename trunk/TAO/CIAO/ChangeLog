@@ -1,3 +1,44 @@
+Mon Oct 10 13:53:15 2005  Will Otte <wotte@dre.vanderbilt.edu>
+	
+	* tools/Config_Handlers/Basic_Deployment_Data.hpp
+	* tools/Config_Handlers/Config_Handlers.mpc
+	* tools/Config_Handlers/Deployment.hpp
+	* tools/Config_Handlers/DynAny_Handler.mpc
+	* tools/Config_Handlers/IDREF_Base.h
+	* tools/Config_Handlers/XSC_XML_Handlers_Export.h
+	* tools/Config_Handlers/ccd.hpp
+	* tools/Config_Handlers/cdd.hpp
+	* tools/Config_Handlers/cdp.hpp
+	* tools/Config_Handlers/cid.hpp
+	* tools/Config_Handlers/cpd.hpp
+	* tools/Config_Handlers/iad.hpp
+	* tools/Config_Handlers/pcd.hpp
+	* tools/Config_Handlers/toplevel.hpp
+	* tools/Config_Handlers/DynAny_Handler/DynAny_Handler.h
+	* tools/Config_Handlers/DynAny_Handler/DynAny_Handler_Export.h
+	* tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.h
+	* tools/Config_Handlers/RT-CCM/CB_Handler.h
+	* tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
+	* tools/Config_Handlers/RT-CCM/CLA_Handler.h
+	* tools/Config_Handlers/RT-CCM/OC_Handler.h
+	* tools/Config_Handlers/RT-CCM/OR_Handler.h
+	* tools/Config_Handlers/RT-CCM/PM_Handler.h
+	* tools/Config_Handlers/RT-CCM/PS_Handler.h
+	* tools/Config_Handlers/RT-CCM/RT-CCM-Handlers.mpc
+	* tools/Config_Handlers/RT-CCM/RT_CCM_Handlers_Export.h
+	* tools/Config_Handlers/RT-CCM/SRD_Handler.h
+	* tools/Config_Handlers/RT-CCM/TPL_Handler.h
+	* tools/Config_Handlers/RT-CCM/TP_Handler.h
+	* tools/Config_Handlers/RT-CCM/input.csr
+	* tools/Config_Handlers/Utils/CIAO_XML_Utils_Export.h
+	* tools/Config_Handlers/Utils/Utils.mpc
+	* tools/Config_Handlers/Utils/XML_Error_Handler.h
+	* tools/Config_Handlers/Utils/XML_Helper.h
+	* tools/Config_Handlers/Utils/XML_Schema_Resolver.h
+
+	Fixed messy export macro usage.  This will clean up builds on
+	Windows. 
+	
 Sun Oct 9 19:22:44 CDT 2005 Stoyan Paunov spaunov@isis.vanderbilt.edu
 
 	* DAnCE/spec_RepositoryManager/RepositoryManager_Impl.cpp

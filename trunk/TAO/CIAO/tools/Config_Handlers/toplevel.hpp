@@ -19,7 +19,7 @@
 # include <string.h>
 #endif
 
-#include "Config_Handlers_Export.h"
+#include "XSC_XML_Handlers_Export.h"
 #ifndef TOPLEVEL_HPP
 #define TOPLEVEL_HPP
 
@@ -43,7 +43,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    class Config_Handlers_Export TopLevelPackageDescription : public ::XSCRT::Type
+    class XSC_XML_Handlers_Export TopLevelPackageDescription : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -93,7 +93,7 @@ namespace CIAO
   {
     namespace Traversal
     {
-      struct Config_Handlers_Export TopLevelPackageDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::TopLevelPackageDescription >
+      struct XSC_XML_Handlers_Export TopLevelPackageDescription : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::TopLevelPackageDescription >
       {
         virtual void
         traverse (Type&);
@@ -149,7 +149,7 @@ namespace CIAO
   {
     namespace Writer
     {
-      struct Config_Handlers_Export TopLevelPackageDescription : Traversal::TopLevelPackageDescription, 
+      struct XSC_XML_Handlers_Export TopLevelPackageDescription : Traversal::TopLevelPackageDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::TopLevelPackageDescription Type;

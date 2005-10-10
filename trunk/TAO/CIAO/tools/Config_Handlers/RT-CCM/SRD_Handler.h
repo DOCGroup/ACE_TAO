@@ -13,7 +13,7 @@
 #define CIAO_CONFIG_HANDLERS_SRD_HANDLER_H
 #include /**/ "ace/pre.h"
 
-#include "Config_Handlers_Export.h"
+#include "RT_CCM_Handlers_Export.h"
 #include "ciao/ServerResourcesC.h"
 #include "ace/Auto_Ptr.h"
 // #include "Utils/XML_Helper.h"
@@ -34,7 +34,7 @@ namespace CIAO
 	 * @brief Handler class for <ServerResourcesDef
 	 */
 
-	class Config_Handlers_Export SRD_Handler
+	class RT_CCM_Handlers_Export SRD_Handler
 	{
 	public:
           class NoSRD {};

@@ -12,7 +12,7 @@
 #define CIAO_CONFIG_HANDLERS_DYNANY_HANDLER_H
 #include /**/ "ace/pre.h"
 
-#include "Config_Handlers_Export.h"
+#include "DynAny_Handler_Export.h"
 
 #include "tao/ORB.h"
 #include "tao/DynamicAny/DynamicAny.h"
@@ -40,7 +40,7 @@ namespace CIAO
     * corresponding CORBA IDL Any type.
     *
     */
-    class Config_Handlers_Export DynAny_Handler
+    class DynAny_Handler_Export DynAny_Handler
     {
     public:
       DynAny_Handler ();
