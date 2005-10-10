@@ -26,7 +26,7 @@
 /////////////////////////////////////////////////////////////////////////////
 //NOTE: some #defines problems with zzip & ACE - put these 2 lines on top!!!!
 /////////////////////////////////////////////////////////////////////////////
-#include "zziplib.h"				//for ZZIP
+#include "zzip/zzip.h"				//for ZZIP
 #include "ZIP_Wrapper.h"
 
 
@@ -63,7 +63,7 @@ size_t ZIP_Wrapper::file_list_info (char* zip_name, ACE_Double_Linked_List<ZIP_F
 	  return 0;
 
 	//read each dir entry and show one line of info per file
-    while (dir_entry = zzip_readdir (dir))
+    while ((dir_entry = zzip_readdir (dir)))
 	{
 		//retrieve the name of the file
 		char* name = dir_entry->d_name;
@@ -200,7 +200,7 @@ bool ZIP_Wrapper::uncompress (char* zip_archive, char* path, bool verbose)
 	ACE_OS::mkdir(arch_dir.c_str());				//if dir exists -1 is returned and ignored
 
 	//read each dir entry and show one line of info per file
-    while (dir_entry = zzip_readdir (dir))
+    while ((dir_entry = zzip_readdir (dir)))
 	{
 		//retrieve the name of the file
 		char* name = dir_entry->d_name;
