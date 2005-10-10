@@ -322,15 +322,10 @@ Client::pace_data (ACE_ENV_SINGLE_ARG_DECL)
           count_++;
 
           // Read from the file into a message block.
-          int n = ACE_OS::fread(this->mb.rd_ptr (),
-                                1,
-                                this->mb.size (),
-                                CLIENT::instance ()->file ());
-
-          if (n < 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "FTP_Client_Flow_Handler::fread end of file\n"),
-                              -1);
+          size_t n = ACE_OS::fread(this->mb.rd_ptr (),
+                                   1,
+                                   this->mb.size (),
+                                   CLIENT::instance ()->file ());
 
           if (n == 0)
             {

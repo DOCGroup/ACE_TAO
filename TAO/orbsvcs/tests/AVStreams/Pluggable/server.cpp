@@ -37,10 +37,10 @@ FTP_Server_Callback::receive_frame (ACE_Message_Block *frame,
   while (frame != 0)
     {
       // Write the received data to the file.
-      unsigned int result = ACE_OS::fwrite (frame->rd_ptr (),
-                                            frame->length (),
-                                            1,
-                                            output_file);
+      size_t result = ACE_OS::fwrite (frame->rd_ptr (),
+                                      frame->length (),
+                                      1,
+                                      output_file);
 
       if (result == frame->length ())
         ACE_ERROR_RETURN ((LM_ERROR,
