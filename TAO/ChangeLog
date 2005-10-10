@@ -1,3 +1,8 @@
+Mon Oct 10 10:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Quoter/Quoter.idl:
+          Fixed include
+
 Mon Oct 10 10:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/Any_Unknown_IDL_Type.cpp (_tao_decode):
