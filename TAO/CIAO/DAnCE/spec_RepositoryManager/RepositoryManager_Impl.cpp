@@ -26,7 +26,7 @@
 #include "Config_Handlers/Deployment.hpp"
 #include "ciao/Deployment_DataC.h"
 #include "ciao/Packaging_DataC.h"
-#include "Config_Handlers/XML_Helper.h"
+#include "Config_Handlers/Utils/XML_Helper.h"
 #include "xercesc/dom/DOM.hpp"
 
 #include "RM_Helper.h"					//to be able to externalize/internalize a PackageConfiguration
