@@ -19,9 +19,13 @@ project (XSC_XML_Handlers) : acelib, xerces {
     toplevel.cpp
     Basic_Deployment_Data.cpp
   }
+  
+  Header_Files {
+    XSC_XML_Handlers_Export.h
+  }
 }
 
-project (XSC_Config_Handlers) : acelib, ciao_deployment_stub, xerces, dynamicany {
+project (XSC_Config_Handlers) : ciao_deployment_stub, xerces, dynamicany {
   after += RT_CCM_Config_Handlers XSC_XML_Handlers XSC_DynAny_Handler
   sharedname = XSC_Config_Handlers
   dynamicflags   = CONFIG_HANDLERS_BUILD_DLL
@@ -70,6 +74,7 @@ project (XSC_Config_Handlers) : acelib, ciao_deployment_stub, xerces, dynamicany
   }
 
   Header_Files {
+    Config_Handlers_Export.h
   }
 }
 

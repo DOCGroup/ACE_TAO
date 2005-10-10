@@ -1,3 +1,16 @@
+Mon Oct 10 20:07:39 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/Config_Handlers/Config_Handlers.mpc:
+        * tools/Config_Handlers/DynAny_Handler.mpc:
+        
+          Add export files to projects, and removed redundant
+          base projects.
+          
+        * tools/Config_Handlers/RT-CCM/TPL_Handler.cpp:
+        
+          Changed some static casts on the rhs of assignments to types
+          corresponding to the lhs, elminating warnings on MSVC 7.1.
+
 Mon Oct 10 15:05:00 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* docs/schema/Basic_Deployment_Data.xsd
