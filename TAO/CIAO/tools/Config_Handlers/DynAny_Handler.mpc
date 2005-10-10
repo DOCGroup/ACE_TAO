@@ -9,7 +9,11 @@ project (XSC_DynAny_Handler) : taolib, xerces, dynamicany, anytypecode, typecode
   includes += $(CIAO_ROOT)/tools/Config_Handlers
 
   Source_Files {
-        DynAny_Handler/DynAny_Handler.cpp
-        DynAny_Handler/DynEnum_Handler.cpp
+    DynAny_Handler/DynAny_Handler.cpp
+    DynAny_Handler/DynEnum_Handler.cpp
+  }
+  
+  Header_Files {
+    DynAny_Handler_Export.h
   }
 }
