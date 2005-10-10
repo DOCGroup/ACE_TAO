@@ -1,3 +1,9 @@
+Mon Oct 10 13:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Reactor_Timer_Test.cpp:
+          Timers are of type long, so update this test to use long for timer
+          ids, not int.
+
 Mon Oct 10 10:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
