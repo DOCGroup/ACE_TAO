@@ -15,7 +15,7 @@
 //
 // ============================================================================
 
-#include "CosLifeCycle.idl"
+#include "orbsvcs/CosLifeCycle.idl"
 
 module Stock
 {
@@ -28,26 +28,26 @@ module Stock
       //   Access Stock information.
 
       // Returns the current stock value or throws an exception.
-      long get_quote (in string stock_name) 
+      long get_quote (in string stock_name)
         raises (Invalid_Stock, Invalid_Quoter);
 
-      // LifeCycleObject copy(in FactoryFinder there, 
+      // LifeCycleObject copy(in FactoryFinder there,
       // 	   in Criteria the_criteria)
       //     raises(NoFactory, NotCopyable, InvalidCriteria, CannotMeetCriteria);
       // copies this object to a location "there" using the "the_criteria"
-  
-      // void move(in FactoryFinder there, 
+
+      // void move(in FactoryFinder there,
       //     in Criteria the_criteria)
       //     raises(NoFactory, NotMovable, InvalidCriteria,  CannotMeetCriteria);
       // moves this object to a location "there" using the "the_criteria"
-   
+
       // void remove()
       //     raises(NotRemovable);
       // removes/deletes this object
 
     };
-  
-  interface Quoter_Factory 
+
+  interface Quoter_Factory
     {
       // = TITLE
       //   Creation of Quoter objects
@@ -60,19 +60,19 @@ module Stock
 
   interface Quoter_Factory_Finder : CosLifeCycle::FactoryFinder
     {
-      // = TITLE 
+      // = TITLE
       //   Wrapper for the CosLifeCycle FactoryFinder
       //
-      // inherits: 
+      // inherits:
       // Factories find_factories(in Key factory_key) raises(NoFactory);
     };
 
   interface Quoter_Generic_Factory : CosLifeCycle::GenericFactory
     {
-      // = TITLE 
+      // = TITLE
       //   Wrapper for the CosLifeCycle GenericFactory
       //
-      // inherits: 
+      // inherits:
       // boolean supports(in Key k);
       // Object create_object(in Key	k, in Criteria the_criteria)
       //      raises (NoFactory, InvalidCriteria, CannotMeetCriteria);
@@ -80,15 +80,15 @@ module Stock
 
   interface Quoter_Life_Cycle_Service : CosLifeCycle::GenericFactory
     {
-      // = TITLE 
+      // = TITLE
       //   Wrapper for the CosLifeCycle GenericFactory
       //
-      // inherits: 
+      // inherits:
       // boolean supports(in Key k);
       // Object create_object(in Key	k, in Criteria the_criteria)
       //      raises (NoFactory, InvalidCriteria, CannotMeetCriteria);
 
-      void register_factory (in string name, 
+      void register_factory (in string name,
 			     in string location,
 			     in string description,
 			     in Object _object);
@@ -113,14 +113,14 @@ module Stock
       // raised if the questioned configuration is not available
 
       SeqNamedValuePair getInitialization ();
-      // get the initialization 
+      // get the initialization
 
       string getFilter ();
-      // get a filter string 
+      // get a filter string
 
       SeqNamedValuePair getLogicalLocation ();
       // get the logical location
-      
+
       string getPreferences ();
       // get the preferences, not implemented
 
