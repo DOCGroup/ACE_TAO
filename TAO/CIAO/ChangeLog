@@ -1,3 +1,14 @@
+Mon Oct 10 15:46:57 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/spec_RepositoryManager/RepositoryManager_Impl.cpp
+	* DAnCE/spec_RepositoryManager/ZIP_Wrapper.cpp
+
+	Trivial corrections for portability problems. 
+	
+	* DAnCE/spec_RepositoryManager/spec_RepositoryManager.mpc
+
+	Updated to properlly use base projects. 
+	
 Mon Oct 10 20:07:39 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/Config_Handlers/Config_Handlers.mpc:
@@ -59,7 +70,6 @@ Mon Oct 10 13:53:15 2005  Will Otte <wotte@dre.vanderbilt.edu>
 	Fixed messy export macro usage.  This will clean up builds on
 	Windows. 
 	
->>>>>>> 1.1513
 Sun Oct 9 19:22:44 CDT 2005 Stoyan Paunov spaunov@isis.vanderbilt.edu
 
 	* DAnCE/spec_RepositoryManager/RepositoryManager_Impl.cpp

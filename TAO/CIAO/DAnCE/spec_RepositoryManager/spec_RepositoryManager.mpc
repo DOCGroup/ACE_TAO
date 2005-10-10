@@ -4,11 +4,10 @@
 //RepositoryManager project: implementation of a repository manager
 //compleint with the D&C spec
 
-project (spec_RepositoryManager) : ciao_server_dnc, taoexe, ciao_config_handlers, zzip, zlib {
+project (spec_RepositoryManager) : ciao_component_dnc, taoexe, ciao_config_handlers, zzip, zlib {
 
   exename = RepositoryManagerDeamon
   requires += zzip zlib
-  includes += $(CIAO_ROOT)/tools $(CIAO_ROOT)/tools/Config_Handlers
 
   IDL_Files {
     RepositoryManager.idl
@@ -32,10 +31,9 @@ project (spec_RepositoryManager) : ciao_server_dnc, taoexe, ciao_config_handlers
 
 // RMadmin project: a sample client for the RM.
 
-project (spec_RMAdmin) : ciao_server_dnc, ciao_config_handlers {
+project (spec_RMAdmin) : ciao_component_dnc, ciao_config_handlers {
   exename = RMadmin
   after    += spec_RepositoryManager
-  includes += $(CIAO_ROOT)/tools $(CIAO_ROOT)/tools/Config_Handlers
 
   IDL_Files {
    RepositoryManager.idl
