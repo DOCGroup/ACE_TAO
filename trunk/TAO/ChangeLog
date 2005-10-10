@@ -1,3 +1,12 @@
+Mon Oct 10 13:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_valuetype/arglist.cpp:
+          Fixed 64bit conversion warning
+
+        * tao/ORB_Core.cpp (init):
+          Fixed 64bit conversion warnings when setting sock_rcvbuf_size
+          and sock_sndbuf_size
+
 Mon Oct 10 11:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.cpp:
