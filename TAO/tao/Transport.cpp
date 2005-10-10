@@ -1102,6 +1102,8 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
                                                   message_block,
                                                   max_wait_time);
     }
+
+  return -1;
 }
 
 int
