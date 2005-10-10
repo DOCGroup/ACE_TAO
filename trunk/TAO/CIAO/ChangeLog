@@ -1,3 +1,10 @@
+Mon Oct 10 15:05:00 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* docs/schema/Basic_Deployment_Data.xsd
+	* docs/schema/cdd.xsd
+
+	Checking in some updated schema for domain information. 
+
 Mon Oct 10 13:53:15 2005  Will Otte <wotte@dre.vanderbilt.edu>
 	
 	* tools/Config_Handlers/Basic_Deployment_Data.hpp
@@ -39,6 +46,7 @@ Mon Oct 10 13:53:15 2005  Will Otte <wotte@dre.vanderbilt.edu>
 	Fixed messy export macro usage.  This will clean up builds on
 	Windows. 
 	
+>>>>>>> 1.1513
 Sun Oct 9 19:22:44 CDT 2005 Stoyan Paunov spaunov@isis.vanderbilt.edu
 
 	* DAnCE/spec_RepositoryManager/RepositoryManager_Impl.cpp
