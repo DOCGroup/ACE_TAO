@@ -1,3 +1,8 @@
+Mon Oct 10 11:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport.cpp:
+          Added missing return
+
 Mon Oct 10 10:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Big_AMI/run_test.pl:
