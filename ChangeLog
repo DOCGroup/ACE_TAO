@@ -1,34 +1,39 @@
+Tue Oct 11 08:28:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/INET_Addr{.h .inl}:
+          Added additional "is_xx' method for IPv6 address testing.
+
 Tue Oct 11 01:17:10 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	From James Megquier <jmegq at radiance dot com>
-	* tests/DLL_Test.cpp (basic_test):
-	* tests/tests.mpc:
+        From James Megquier <jmegq at radiance dot com>
+        * tests/DLL_Test.cpp (basic_test):
+        * tests/tests.mpc:
 
-	  Rename DLL_Test library to avoid MPC name conflict with DLL_Test
-	  executable.  [Bug 2258]
+          Rename DLL_Test library to avoid MPC name conflict with DLL_Test
+          executable.  [Bug 2258]
 
-	* ace/config-g++-common.h:
+        * ace/config-g++-common.h:
 
-	  Sadly, G++ 4.x silently ignores visibility attributes on
-	  template instantiations, which breaks singletons.  As a
-	  workaround, we use the GCC visibility pragmas.  And to make them
-	  fit in a macro, we use C99's _Pragma() (see
-	  http://gcc.gnu.org/bugzilla/show_bug.cgi?id=17470).  [Bug 2260]
+          Sadly, G++ 4.x silently ignores visibility attributes on
+          template instantiations, which breaks singletons.  As a
+          workaround, we use the GCC visibility pragmas.  And to make them
+          fit in a macro, we use C99's _Pragma() (see
+          http://gcc.gnu.org/bugzilla/show_bug.cgi?id=17470).  [Bug 2260]
 
-	* ace/Based_Pointer_Repository.h:
-	* ace/Obstack.h:
-	* ace/Timeprobe.h:
-	* examples/Export/dll.h:
+        * ace/Based_Pointer_Repository.h:
+        * ace/Obstack.h:
+        * ace/Timeprobe.h:
+        * examples/Export/dll.h:
 
-	  Declare exported (i.e. default visibility) singleton templates
-	  prior to typedefs that reference  them.  Prevents g++ 4.0 from
-	  silently making their visibility hidden.  [Bug 2260]
+          Declare exported (i.e. default visibility) singleton templates
+          prior to typedefs that reference  them.  Prevents g++ 4.0 from
+          silently making their visibility hidden.  [Bug 2260]
 
-	* include/makeinclude/platform_g++_common.GNU:
+        * include/makeinclude/platform_g++_common.GNU:
 
-	  Added "no_hidden_visibility" make flag/variable.  Setting to "1"
-	  in a platform_macros.GNU file will disable g++ 4.0 visibility
-	  attribute support.  [Bug 2259]
+          Added "no_hidden_visibility" make flag/variable.  Setting to "1"
+          in a platform_macros.GNU file will disable g++ 4.0 visibility
+          attribute support.  [Bug 2259]
 
 Tue Oct 11 06:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -44,9 +49,9 @@ Tue Oct 11 06:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Oct 10 15:45:17 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/ciao_config_handlers.mpb
+        * bin/MakeProjectCreator/config/ciao_config_handlers.mpb:
 
-	Updated to reflect changes in config handles.
+          Updated to reflect changes in config handles.
 
 Mon Oct 10 19:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
