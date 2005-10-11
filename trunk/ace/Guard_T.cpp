@@ -15,6 +15,10 @@ ACE_RCSID(ace, Guard_T, "$Id$")
 #include "ace/Guard_T.inl"
 #endif /* __ACE_INLINE__ */
 
+#if defined (ACE_HAS_DUMP)
+# include "ace/Log_Msg.h"
+#endif /* ACE_HAS_DUMP */
+
 // ****************************************************************
 // ACE_ALLOC_HOOK_DEFINE(ACE_Guard)
 
