@@ -1,3 +1,37 @@
+Tue Oct 11 16:37:01 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* tools/Config_Handlers/Basic_Deployment_Data.cpp
+	* tools/Config_Handlers/Basic_Deployment_Data.hpp
+	* tools/Config_Handlers/Deployment.cpp
+	* tools/Config_Handlers/Deployment.hpp
+	* tools/Config_Handlers/ccd.cpp
+	* tools/Config_Handlers/ccd.hpp
+	* tools/Config_Handlers/cdd.cpp
+	* tools/Config_Handlers/cdd.hpp
+	* tools/Config_Handlers/cdp.cpp
+	* tools/Config_Handlers/cdp.hpp
+	* tools/Config_Handlers/cid.cpp
+	* tools/Config_Handlers/cid.hpp
+	* tools/Config_Handlers/cpd.cpp
+	* tools/Config_Handlers/cpd.hpp
+	* tools/Config_Handlers/iad.cpp
+	* tools/Config_Handlers/iad.hpp
+	* tools/Config_Handlers/pcd.cpp
+	* tools/Config_Handlers/pcd.hpp
+	* tools/Config_Handlers/toplevel.cpp
+	* tools/Config_Handlers/toplevel.hpp
+	* tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp
+	* tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
+
+	Fixed a bug which broke the gaurantee that element order in the
+	XSC type would be the same as the element order in the instance
+	document.
+	
+	* tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp
+	* tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.cpp
+
+	Fixed a runtime error and removed some debugging information. 
+	
 Mon Oct 10 17:37:20 2005 Stoyan Paunov spaunov@isis.vanderbilt.edu
 
 	* DAnCE/spec_RepositoryManager/ZIP_Wrapper.cpp

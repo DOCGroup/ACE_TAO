@@ -943,7 +943,7 @@ namespace CIAO
   {
     namespace Writer
     {
-      struct XSC_XML_Handlers_Export SubcomponentInstantiationDescription : Traversal::SubcomponentInstantiationDescription, 
+      struct SubcomponentInstantiationDescription : Traversal::SubcomponentInstantiationDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::SubcomponentInstantiationDescription Type;
@@ -1050,7 +1050,7 @@ namespace CIAO
         SubcomponentInstantiationDescription ();
       };
 
-      struct XSC_XML_Handlers_Export SubcomponentPropertyReference : Traversal::SubcomponentPropertyReference, 
+      struct SubcomponentPropertyReference : Traversal::SubcomponentPropertyReference, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::SubcomponentPropertyReference Type;
@@ -1101,7 +1101,7 @@ namespace CIAO
         SubcomponentPropertyReference ();
       };
 
-      struct XSC_XML_Handlers_Export AssemblyPropertyMapping : Traversal::AssemblyPropertyMapping, 
+      struct AssemblyPropertyMapping : Traversal::AssemblyPropertyMapping, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::AssemblyPropertyMapping Type;
@@ -1166,7 +1166,7 @@ namespace CIAO
         AssemblyPropertyMapping ();
       };
 
-      struct XSC_XML_Handlers_Export ComponentAssemblyDescription : Traversal::ComponentAssemblyDescription, 
+      struct ComponentAssemblyDescription : Traversal::ComponentAssemblyDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ComponentAssemblyDescription Type;
@@ -1287,7 +1287,7 @@ namespace CIAO
         ComponentAssemblyDescription ();
       };
 
-      struct XSC_XML_Handlers_Export MonolithicImplementationDescription : Traversal::MonolithicImplementationDescription, 
+      struct MonolithicImplementationDescription : Traversal::MonolithicImplementationDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::MonolithicImplementationDescription Type;
@@ -1380,7 +1380,7 @@ namespace CIAO
         MonolithicImplementationDescription ();
       };
 
-      struct XSC_XML_Handlers_Export ComponentImplementationDescription : Traversal::ComponentImplementationDescription, 
+      struct ComponentImplementationDescription : Traversal::ComponentImplementationDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ComponentImplementationDescription Type;

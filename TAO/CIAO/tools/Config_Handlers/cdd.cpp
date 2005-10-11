@@ -181,14 +181,14 @@ namespace CIAO
         ::std::vector< ::CIAO::Config_Handlers::Node > v;
         v.reserve (node_.size () + 1);
 
-        while (node_.size ())
+        for (node_iterator i = node_.begin ();
+        i != node_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::CIAO::Config_Handlers::Node& t = node_.back ();
+          ::CIAO::Config_Handlers::Node& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          node_.pop_back ();
         }
 
         node_.swap (v);
@@ -434,14 +434,14 @@ namespace CIAO
         ::std::vector< ::CIAO::Config_Handlers::Interconnect > v;
         v.reserve (connect_.size () + 1);
 
-        while (connect_.size ())
+        for (connect_iterator i = connect_.begin ();
+        i != connect_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::CIAO::Config_Handlers::Interconnect& t = connect_.back ();
+          ::CIAO::Config_Handlers::Interconnect& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          connect_.pop_back ();
         }
 
         connect_.swap (v);
@@ -491,14 +491,14 @@ namespace CIAO
         ::std::vector< ::CIAO::Config_Handlers::Resource > v;
         v.reserve (resource_.size () + 1);
 
-        while (resource_.size ())
+        for (resource_iterator i = resource_.begin ();
+        i != resource_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::CIAO::Config_Handlers::Resource& t = resource_.back ();
+          ::CIAO::Config_Handlers::Resource& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          resource_.pop_back ();
         }
 
         resource_.swap (v);
@@ -673,14 +673,14 @@ namespace CIAO
         ::std::vector< ::CIAO::Config_Handlers::Bridge > v;
         v.reserve (connection_.size () + 1);
 
-        while (connection_.size ())
+        for (connection_iterator i = connection_.begin ();
+        i != connection_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::CIAO::Config_Handlers::Bridge& t = connection_.back ();
+          ::CIAO::Config_Handlers::Bridge& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          connection_.pop_back ();
         }
 
         connection_.swap (v);
@@ -730,14 +730,14 @@ namespace CIAO
         ::std::vector< ::CIAO::Config_Handlers::Node > v;
         v.reserve (connect_.size () + 1);
 
-        while (connect_.size ())
+        for (connect_iterator i = connect_.begin ();
+        i != connect_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::CIAO::Config_Handlers::Node& t = connect_.back ();
+          ::CIAO::Config_Handlers::Node& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          connect_.pop_back ();
         }
 
         connect_.swap (v);
@@ -787,14 +787,14 @@ namespace CIAO
         ::std::vector< ::CIAO::Config_Handlers::Resource > v;
         v.reserve (resource_.size () + 1);
 
-        while (resource_.size ())
+        for (resource_iterator i = resource_.begin ();
+        i != resource_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::CIAO::Config_Handlers::Resource& t = resource_.back ();
+          ::CIAO::Config_Handlers::Resource& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          resource_.pop_back ();
         }
 
         resource_.swap (v);
@@ -962,14 +962,14 @@ namespace CIAO
         ::std::vector< ::CIAO::Config_Handlers::Interconnect > v;
         v.reserve (connection_.size () + 1);
 
-        while (connection_.size ())
+        for (connection_iterator i = connection_.begin ();
+        i != connection_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::CIAO::Config_Handlers::Interconnect& t = connection_.back ();
+          ::CIAO::Config_Handlers::Interconnect& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          connection_.pop_back ();
         }
 
         connection_.swap (v);
@@ -1019,14 +1019,14 @@ namespace CIAO
         ::std::vector< ::CIAO::Config_Handlers::SharedResource > v;
         v.reserve (sharedResource_.size () + 1);
 
-        while (sharedResource_.size ())
+        for (sharedResource_iterator i = sharedResource_.begin ();
+        i != sharedResource_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::CIAO::Config_Handlers::SharedResource& t = sharedResource_.back ();
+          ::CIAO::Config_Handlers::SharedResource& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          sharedResource_.pop_back ();
         }
 
         sharedResource_.swap (v);

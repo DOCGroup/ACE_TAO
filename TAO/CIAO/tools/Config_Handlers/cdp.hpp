@@ -440,7 +440,7 @@ namespace CIAO
   {
     namespace Writer
     {
-      struct XSC_XML_Handlers_Export DeploymentPlan : Traversal::DeploymentPlan, 
+      struct DeploymentPlan : Traversal::DeploymentPlan, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::DeploymentPlan Type;

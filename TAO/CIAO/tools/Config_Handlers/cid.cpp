@@ -477,14 +477,14 @@ namespace CIAO
         ::std::vector< ::CIAO::Config_Handlers::SubcomponentInstantiationDescription > v;
         v.reserve (instance_.size () + 1);
 
-        while (instance_.size ())
+        for (instance_iterator i = instance_.begin ();
+        i != instance_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::CIAO::Config_Handlers::SubcomponentInstantiationDescription& t = instance_.back ();
+          ::CIAO::Config_Handlers::SubcomponentInstantiationDescription& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          instance_.pop_back ();
         }
 
         instance_.swap (v);
@@ -534,14 +534,14 @@ namespace CIAO
         ::std::vector< ::CIAO::Config_Handlers::AssemblyConnectionDescription > v;
         v.reserve (connection_.size () + 1);
 
-        while (connection_.size ())
+        for (connection_iterator i = connection_.begin ();
+        i != connection_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::CIAO::Config_Handlers::AssemblyConnectionDescription& t = connection_.back ();
+          ::CIAO::Config_Handlers::AssemblyConnectionDescription& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          connection_.pop_back ();
         }
 
         connection_.swap (v);
@@ -701,14 +701,14 @@ namespace CIAO
         ::std::vector< ::CIAO::Config_Handlers::NamedImplementationArtifact > v;
         v.reserve (primaryArtifact_.size () + 1);
 
-        while (primaryArtifact_.size ())
+        for (primaryArtifact_iterator i = primaryArtifact_.begin ();
+        i != primaryArtifact_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::CIAO::Config_Handlers::NamedImplementationArtifact& t = primaryArtifact_.back ();
+          ::CIAO::Config_Handlers::NamedImplementationArtifact& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          primaryArtifact_.pop_back ();
         }
 
         primaryArtifact_.swap (v);

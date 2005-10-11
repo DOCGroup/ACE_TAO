@@ -55,7 +55,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::string< ACE_TCHAR > const& name () const;
-      ::XMLSchema::string< ACE_TCHAR >& name ();
       void name (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -65,7 +64,6 @@ namespace CIAO
       // 
       public:
       ::CIAO::Config_Handlers::ComponentImplementationDescription const& referencedImplementation () const;
-      ::CIAO::Config_Handlers::ComponentImplementationDescription& referencedImplementation ();
       void referencedImplementation (::CIAO::Config_Handlers::ComponentImplementationDescription const& );
 
       protected:
@@ -96,7 +94,6 @@ namespace CIAO
       public:
       bool label_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& label () const;
-      ::XMLSchema::string< ACE_TCHAR >& label ();
       void label (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -107,7 +104,6 @@ namespace CIAO
       public:
       bool UUID_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& UUID () const;
-      ::XMLSchema::string< ACE_TCHAR >& UUID ();
       void UUID (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -118,7 +114,6 @@ namespace CIAO
       public:
       bool realizes_p () const;
       ::CIAO::Config_Handlers::ComponentInterfaceDescription const& realizes () const;
-      ::CIAO::Config_Handlers::ComponentInterfaceDescription& realizes ();
       void realizes (::CIAO::Config_Handlers::ComponentInterfaceDescription const& );
 
       protected:
@@ -129,7 +124,6 @@ namespace CIAO
       public:
       bool configProperty_p () const;
       ::CIAO::Config_Handlers::Property const& configProperty () const;
-      ::CIAO::Config_Handlers::Property& configProperty ();
       void configProperty (::CIAO::Config_Handlers::Property const& );
 
       protected:
@@ -140,7 +134,6 @@ namespace CIAO
       public:
       bool implementation_p () const;
       ::CIAO::Config_Handlers::PackagedComponentImplementation const& implementation () const;
-      ::CIAO::Config_Handlers::PackagedComponentImplementation& implementation ();
       void implementation (::CIAO::Config_Handlers::PackagedComponentImplementation const& );
 
       protected:
@@ -151,7 +144,6 @@ namespace CIAO
       public:
       bool infoProperty_p () const;
       ::CIAO::Config_Handlers::Property const& infoProperty () const;
-      ::CIAO::Config_Handlers::Property& infoProperty ();
       void infoProperty (::CIAO::Config_Handlers::Property const& );
 
       protected:
@@ -162,7 +154,6 @@ namespace CIAO
       public:
       bool contentLocation_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& contentLocation () const;
-      ::XMLSchema::string< ACE_TCHAR >& contentLocation ();
       void contentLocation (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -370,7 +361,7 @@ namespace CIAO
   {
     namespace Writer
     {
-      struct XSC_XML_Handlers_Export PackagedComponentImplementation : Traversal::PackagedComponentImplementation, 
+      struct PackagedComponentImplementation : Traversal::PackagedComponentImplementation, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::PackagedComponentImplementation Type;
@@ -421,7 +412,7 @@ namespace CIAO
         PackagedComponentImplementation ();
       };
 
-      struct XSC_XML_Handlers_Export ComponentPackageDescription : Traversal::ComponentPackageDescription, 
+      struct ComponentPackageDescription : Traversal::ComponentPackageDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ComponentPackageDescription Type;
