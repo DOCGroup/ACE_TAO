@@ -709,7 +709,16 @@ TAO_IIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
       char tmp_host[MAXHOSTNAMELEN + 1];
 
       // Get the hostname associated with our address
+#if defined (ACE_HAS_IPV6)
+      // If we have a IPv4-compatible IPv6 address don't do hostname lookup
+      // because that gets us into trouble. Most likely we get the same hostname
+      // returned as for the actual IPv4 address but resolving that into an IPv6
+      // address at the client will fail.
+      if (addr.is_ipv4_compat_ipv6 () ||
+          addr.get_host_name (tmp_host, sizeof (tmp_host)) != 0)
+#else /* ACE_HAS_IPV6 */
       if (addr.get_host_name (tmp_host, sizeof (tmp_host)) != 0)
+#endif /* !ACE_HAS_IPV6 */
         {
           // On failure, just return the decimal address.
           return this->dotted_decimal_address (addr, host);
