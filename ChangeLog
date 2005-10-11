@@ -1,8 +1,20 @@
+Tue Oct 11 06:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Guard_T.cpp:
+          When ACE_HAS_DUMP is defined include Log_Msg.h to get ACE_DEBUG.
+          Thanks to James Megquier <jmegq at radiance dot com> for reporting
+          this. This fixes bugzilla bug 2257
+
+        * ACE-INSTALL.html:
+          Updated Remedy IT support platforms and added
+          Borland C++ Builder 2006 as new support platform. This is now publicly
+          announced by Borland.
+
 Mon Oct 10 15:45:17 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/ciao_config_handlers.mpb
 
-	Updated to reflect changes in config handles. 
+	Updated to reflect changes in config handles.
 
 Mon Oct 10 19:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
