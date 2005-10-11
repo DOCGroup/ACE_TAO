@@ -272,14 +272,14 @@ namespace CIAO
         ::std::vector< ::XMLSchema::string< ACE_TCHAR > > v;
         v.reserve (supportedType_.size () + 1);
 
-        while (supportedType_.size ())
+        for (supportedType_iterator i = supportedType_.begin ();
+        i != supportedType_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::XMLSchema::string< ACE_TCHAR >& t = supportedType_.back ();
+          ::XMLSchema::string< ACE_TCHAR >& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          supportedType_.pop_back ();
         }
 
         supportedType_.swap (v);
@@ -329,14 +329,14 @@ namespace CIAO
         ::std::vector< ::XMLSchema::string< ACE_TCHAR > > v;
         v.reserve (idlFile_.size () + 1);
 
-        while (idlFile_.size ())
+        for (idlFile_iterator i = idlFile_.begin ();
+        i != idlFile_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::XMLSchema::string< ACE_TCHAR >& t = idlFile_.back ();
+          ::XMLSchema::string< ACE_TCHAR >& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          idlFile_.pop_back ();
         }
 
         idlFile_.swap (v);
@@ -386,14 +386,14 @@ namespace CIAO
         ::std::vector< ::CIAO::Config_Handlers::Property > v;
         v.reserve (configProperty_.size () + 1);
 
-        while (configProperty_.size ())
+        for (configProperty_iterator i = configProperty_.begin ();
+        i != configProperty_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::CIAO::Config_Handlers::Property& t = configProperty_.back ();
+          ::CIAO::Config_Handlers::Property& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          configProperty_.pop_back ();
         }
 
         configProperty_.swap (v);
@@ -443,14 +443,14 @@ namespace CIAO
         ::std::vector< ::CIAO::Config_Handlers::ComponentPortDescription > v;
         v.reserve (port_.size () + 1);
 
-        while (port_.size ())
+        for (port_iterator i = port_.begin ();
+        i != port_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::CIAO::Config_Handlers::ComponentPortDescription& t = port_.back ();
+          ::CIAO::Config_Handlers::ComponentPortDescription& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          port_.pop_back ();
         }
 
         port_.swap (v);
@@ -500,14 +500,14 @@ namespace CIAO
         ::std::vector< ::CIAO::Config_Handlers::ComponentPropertyDescription > v;
         v.reserve (property_.size () + 1);
 
-        while (property_.size ())
+        for (property_iterator i = property_.begin ();
+        i != property_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::CIAO::Config_Handlers::ComponentPropertyDescription& t = property_.back ();
+          ::CIAO::Config_Handlers::ComponentPropertyDescription& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          property_.pop_back ();
         }
 
         property_.swap (v);
@@ -557,14 +557,14 @@ namespace CIAO
         ::std::vector< ::CIAO::Config_Handlers::Property > v;
         v.reserve (infoProperty_.size () + 1);
 
-        while (infoProperty_.size ())
+        for (infoProperty_iterator i = infoProperty_.begin ();
+        i != infoProperty_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::CIAO::Config_Handlers::Property& t = infoProperty_.back ();
+          ::CIAO::Config_Handlers::Property& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          infoProperty_.pop_back ();
         }
 
         infoProperty_.swap (v);

@@ -427,7 +427,7 @@ namespace CIAO
   {
     namespace Writer
     {
-      struct XSC_XML_Handlers_Export NamedImplementationArtifact : Traversal::NamedImplementationArtifact, 
+      struct NamedImplementationArtifact : Traversal::NamedImplementationArtifact, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::NamedImplementationArtifact Type;
@@ -478,7 +478,7 @@ namespace CIAO
         NamedImplementationArtifact ();
       };
 
-      struct XSC_XML_Handlers_Export ImplementationArtifactDescription : Traversal::ImplementationArtifactDescription, 
+      struct ImplementationArtifactDescription : Traversal::ImplementationArtifactDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ImplementationArtifactDescription Type;

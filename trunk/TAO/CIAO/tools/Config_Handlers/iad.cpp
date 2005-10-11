@@ -266,14 +266,14 @@ namespace CIAO
         ::std::vector< ::XMLSchema::string< ACE_TCHAR > > v;
         v.reserve (location_.size () + 1);
 
-        while (location_.size ())
+        for (location_iterator i = location_.begin ();
+        i != location_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::XMLSchema::string< ACE_TCHAR >& t = location_.back ();
+          ::XMLSchema::string< ACE_TCHAR >& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          location_.pop_back ();
         }
 
         location_.swap (v);
@@ -323,14 +323,14 @@ namespace CIAO
         ::std::vector< ::CIAO::Config_Handlers::NamedImplementationArtifact > v;
         v.reserve (dependsOn_.size () + 1);
 
-        while (dependsOn_.size ())
+        for (dependsOn_iterator i = dependsOn_.begin ();
+        i != dependsOn_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::CIAO::Config_Handlers::NamedImplementationArtifact& t = dependsOn_.back ();
+          ::CIAO::Config_Handlers::NamedImplementationArtifact& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          dependsOn_.pop_back ();
         }
 
         dependsOn_.swap (v);

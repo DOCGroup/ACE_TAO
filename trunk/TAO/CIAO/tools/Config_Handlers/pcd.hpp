@@ -266,7 +266,7 @@ namespace CIAO
   {
     namespace Writer
     {
-      struct XSC_XML_Handlers_Export PackageConfiguration : Traversal::PackageConfiguration, 
+      struct PackageConfiguration : Traversal::PackageConfiguration, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::PackageConfiguration Type;

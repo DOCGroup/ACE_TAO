@@ -76,12 +76,6 @@ namespace CIAO
       return *cmdline_;
     }
 
-    ::CIAO::Config_Handlers::ServerCmdlineOptions& ServerResourcesDef::
-    cmdline ()
-    {
-      return *cmdline_;
-    }
-
     void ServerResourcesDef::
     cmdline (::CIAO::Config_Handlers::ServerCmdlineOptions const& e)
     {
@@ -111,12 +105,6 @@ namespace CIAO
       return *svcconf_;
     }
 
-    ::CIAO::Config_Handlers::ACESvcConf& ServerResourcesDef::
-    svcconf ()
-    {
-      return *svcconf_;
-    }
-
     void ServerResourcesDef::
     svcconf (::CIAO::Config_Handlers::ACESvcConf const& e)
     {
@@ -136,12 +124,6 @@ namespace CIAO
     // 
     ::CIAO::Config_Handlers::ORBConfigs const& ServerResourcesDef::
     orbConfigs () const
-    {
-      return *orbConfigs_;
-    }
-
-    ::CIAO::Config_Handlers::ORBConfigs& ServerResourcesDef::
-    orbConfigs ()
     {
       return *orbConfigs_;
     }
@@ -262,14 +244,14 @@ namespace CIAO
         ::std::vector< ::XMLSchema::string< ACE_TCHAR > > v;
         v.reserve (arg_.size () + 1);
 
-        while (arg_.size ())
+        for (arg_iterator i = arg_.begin ();
+        i != arg_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::XMLSchema::string< ACE_TCHAR >& t = arg_.back ();
+          ::XMLSchema::string< ACE_TCHAR >& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          arg_.pop_back ();
         }
 
         arg_.swap (v);
@@ -327,12 +309,6 @@ namespace CIAO
 
     ::XMLSchema::string< ACE_TCHAR > const& ACESvcConf::
     uri () const
-    {
-      return *uri_;
-    }
-
-    ::XMLSchema::string< ACE_TCHAR >& ACESvcConf::
-    uri ()
     {
       return *uri_;
     }
@@ -412,12 +388,6 @@ namespace CIAO
       return *resources_;
     }
 
-    ::CIAO::Config_Handlers::ORBResources& ORBConfigs::
-    resources ()
-    {
-      return *resources_;
-    }
-
     void ORBConfigs::
     resources (::CIAO::Config_Handlers::ORBResources const& e)
     {
@@ -467,14 +437,14 @@ namespace CIAO
         ::std::vector< ::CIAO::Config_Handlers::PolicySet > v;
         v.reserve (policySet_.size () + 1);
 
-        while (policySet_.size ())
+        for (policySet_iterator i = policySet_.begin ();
+        i != policySet_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::CIAO::Config_Handlers::PolicySet& t = policySet_.back ();
+          ::CIAO::Config_Handlers::PolicySet& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          policySet_.pop_back ();
         }
 
         policySet_.swap (v);
@@ -595,14 +565,14 @@ namespace CIAO
         ::std::vector< ::CIAO::Config_Handlers::ThreadpoolDef > v;
         v.reserve (threadpool_.size () + 1);
 
-        while (threadpool_.size ())
+        for (threadpool_iterator i = threadpool_.begin ();
+        i != threadpool_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::CIAO::Config_Handlers::ThreadpoolDef& t = threadpool_.back ();
+          ::CIAO::Config_Handlers::ThreadpoolDef& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          threadpool_.pop_back ();
         }
 
         threadpool_.swap (v);
@@ -652,14 +622,14 @@ namespace CIAO
         ::std::vector< ::CIAO::Config_Handlers::ThreadpoolWithLanesDef > v;
         v.reserve (threadpoolWithLanes_.size () + 1);
 
-        while (threadpoolWithLanes_.size ())
+        for (threadpoolWithLanes_iterator i = threadpoolWithLanes_.begin ();
+        i != threadpoolWithLanes_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::CIAO::Config_Handlers::ThreadpoolWithLanesDef& t = threadpoolWithLanes_.back ();
+          ::CIAO::Config_Handlers::ThreadpoolWithLanesDef& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          threadpoolWithLanes_.pop_back ();
         }
 
         threadpoolWithLanes_.swap (v);
@@ -709,14 +679,14 @@ namespace CIAO
         ::std::vector< ::CIAO::Config_Handlers::ConnectionBandsDef > v;
         v.reserve (connectionBands_.size () + 1);
 
-        while (connectionBands_.size ())
+        for (connectionBands_iterator i = connectionBands_.begin ();
+        i != connectionBands_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::CIAO::Config_Handlers::ConnectionBandsDef& t = connectionBands_.back ();
+          ::CIAO::Config_Handlers::ConnectionBandsDef& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          connectionBands_.pop_back ();
         }
 
         connectionBands_.swap (v);
@@ -849,12 +819,6 @@ namespace CIAO
       return *stacksize_;
     }
 
-    ::XMLSchema::unsignedLong& ThreadpoolDef::
-    stacksize ()
-    {
-      return *stacksize_;
-    }
-
     void ThreadpoolDef::
     stacksize (::XMLSchema::unsignedLong const& e)
     {
@@ -865,12 +829,6 @@ namespace CIAO
     // 
     ::XMLSchema::unsignedLong const& ThreadpoolDef::
     static_threads () const
-    {
-      return *static_threads_;
-    }
-
-    ::XMLSchema::unsignedLong& ThreadpoolDef::
-    static_threads ()
     {
       return *static_threads_;
     }
@@ -889,12 +847,6 @@ namespace CIAO
       return *dynamic_threads_;
     }
 
-    ::XMLSchema::unsignedLong& ThreadpoolDef::
-    dynamic_threads ()
-    {
-      return *dynamic_threads_;
-    }
-
     void ThreadpoolDef::
     dynamic_threads (::XMLSchema::unsignedLong const& e)
     {
@@ -905,12 +857,6 @@ namespace CIAO
     // 
     ::CIAO::Config_Handlers::Priority const& ThreadpoolDef::
     default_priority () const
-    {
-      return *default_priority_;
-    }
-
-    ::CIAO::Config_Handlers::Priority& ThreadpoolDef::
-    default_priority ()
     {
       return *default_priority_;
     }
@@ -929,12 +875,6 @@ namespace CIAO
       return *allow_request_buffering_;
     }
 
-    ::XMLSchema::boolean& ThreadpoolDef::
-    allow_request_buffering ()
-    {
-      return *allow_request_buffering_;
-    }
-
     void ThreadpoolDef::
     allow_request_buffering (::XMLSchema::boolean const& e)
     {
@@ -949,12 +889,6 @@ namespace CIAO
       return *max_buffered_requests_;
     }
 
-    ::XMLSchema::unsignedLong& ThreadpoolDef::
-    max_buffered_requests ()
-    {
-      return *max_buffered_requests_;
-    }
-
     void ThreadpoolDef::
     max_buffered_requests (::XMLSchema::unsignedLong const& e)
     {
@@ -965,12 +899,6 @@ namespace CIAO
     // 
     ::XMLSchema::unsignedLong const& ThreadpoolDef::
     max_request_buffered_size () const
-    {
-      return *max_request_buffered_size_;
-    }
-
-    ::XMLSchema::unsignedLong& ThreadpoolDef::
-    max_request_buffered_size ()
     {
       return *max_request_buffered_size_;
     }
@@ -1131,14 +1059,14 @@ namespace CIAO
         ::std::vector< ::CIAO::Config_Handlers::ThreadpoolLaneDef > v;
         v.reserve (threadpoolLane_.size () + 1);
 
-        while (threadpoolLane_.size ())
+        for (threadpoolLane_iterator i = threadpoolLane_.begin ();
+        i != threadpoolLane_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::CIAO::Config_Handlers::ThreadpoolLaneDef& t = threadpoolLane_.back ();
+          ::CIAO::Config_Handlers::ThreadpoolLaneDef& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          threadpoolLane_.pop_back ();
         }
 
         threadpoolLane_.swap (v);
@@ -1162,12 +1090,6 @@ namespace CIAO
       return *stacksize_;
     }
 
-    ::XMLSchema::unsignedLong& ThreadpoolWithLanesDef::
-    stacksize ()
-    {
-      return *stacksize_;
-    }
-
     void ThreadpoolWithLanesDef::
     stacksize (::XMLSchema::unsignedLong const& e)
     {
@@ -1178,12 +1100,6 @@ namespace CIAO
     // 
     ::XMLSchema::boolean const& ThreadpoolWithLanesDef::
     allow_borrowing () const
-    {
-      return *allow_borrowing_;
-    }
-
-    ::XMLSchema::boolean& ThreadpoolWithLanesDef::
-    allow_borrowing ()
     {
       return *allow_borrowing_;
     }
@@ -1202,12 +1118,6 @@ namespace CIAO
       return *allow_request_buffering_;
     }
 
-    ::XMLSchema::boolean& ThreadpoolWithLanesDef::
-    allow_request_buffering ()
-    {
-      return *allow_request_buffering_;
-    }
-
     void ThreadpoolWithLanesDef::
     allow_request_buffering (::XMLSchema::boolean const& e)
     {
@@ -1222,12 +1132,6 @@ namespace CIAO
       return *max_buffered_requests_;
     }
 
-    ::XMLSchema::unsignedLong& ThreadpoolWithLanesDef::
-    max_buffered_requests ()
-    {
-      return *max_buffered_requests_;
-    }
-
     void ThreadpoolWithLanesDef::
     max_buffered_requests (::XMLSchema::unsignedLong const& e)
     {
@@ -1238,12 +1142,6 @@ namespace CIAO
     // 
     ::XMLSchema::unsignedLong const& ThreadpoolWithLanesDef::
     max_request_buffered_size () const
-    {
-      return *max_request_buffered_size_;
-    }
-
-    ::XMLSchema::unsignedLong& ThreadpoolWithLanesDef::
-    max_request_buffered_size ()
     {
       return *max_request_buffered_size_;
     }
@@ -1344,12 +1242,6 @@ namespace CIAO
       return *static_threads_;
     }
 
-    ::XMLSchema::unsignedLong& ThreadpoolLaneDef::
-    static_threads ()
-    {
-      return *static_threads_;
-    }
-
     void ThreadpoolLaneDef::
     static_threads (::XMLSchema::unsignedLong const& e)
     {
@@ -1364,12 +1256,6 @@ namespace CIAO
       return *dynamic_threads_;
     }
 
-    ::XMLSchema::unsignedLong& ThreadpoolLaneDef::
-    dynamic_threads ()
-    {
-      return *dynamic_threads_;
-    }
-
     void ThreadpoolLaneDef::
     dynamic_threads (::XMLSchema::unsignedLong const& e)
     {
@@ -1380,12 +1266,6 @@ namespace CIAO
     // 
     ::CIAO::Config_Handlers::Priority const& ThreadpoolLaneDef::
     priority () const
-    {
-      return *priority_;
-    }
-
-    ::CIAO::Config_Handlers::Priority& ThreadpoolLaneDef::
-    priority ()
     {
       return *priority_;
     }
@@ -1477,14 +1357,14 @@ namespace CIAO
         ::std::vector< ::CIAO::Config_Handlers::PriorityBandDef > v;
         v.reserve (band_.size () + 1);
 
-        while (band_.size ())
+        for (band_iterator i = band_.begin ();
+        i != band_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::CIAO::Config_Handlers::PriorityBandDef& t = band_.back ();
+          ::CIAO::Config_Handlers::PriorityBandDef& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          band_.pop_back ();
         }
 
         band_.swap (v);
@@ -1583,12 +1463,6 @@ namespace CIAO
       return *low_;
     }
 
-    ::XMLSchema::int_& PriorityBandDef::
-    low ()
-    {
-      return *low_;
-    }
-
     void PriorityBandDef::
     low (::XMLSchema::int_ const& e)
     {
@@ -1599,12 +1473,6 @@ namespace CIAO
     // 
     ::XMLSchema::int_ const& PriorityBandDef::
     high () const
-    {
-      return *high_;
-    }
-
-    ::XMLSchema::int_& PriorityBandDef::
-    high ()
     {
       return *high_;
     }
@@ -1726,14 +1594,14 @@ namespace CIAO
         ::std::vector< ::CIAO::Config_Handlers::PriorityModelPolicyDef > v;
         v.reserve (priorityModel_.size () + 1);
 
-        while (priorityModel_.size ())
+        for (priorityModel_iterator i = priorityModel_.begin ();
+        i != priorityModel_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::CIAO::Config_Handlers::PriorityModelPolicyDef& t = priorityModel_.back ();
+          ::CIAO::Config_Handlers::PriorityModelPolicyDef& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          priorityModel_.pop_back ();
         }
 
         priorityModel_.swap (v);
@@ -1783,14 +1651,14 @@ namespace CIAO
         ::std::vector< ::XMLSchema::IDREF< ACE_TCHAR > > v;
         v.reserve (threadpool_.size () + 1);
 
-        while (threadpool_.size ())
+        for (threadpool_iterator i = threadpool_.begin ();
+        i != threadpool_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::XMLSchema::IDREF< ACE_TCHAR >& t = threadpool_.back ();
+          ::XMLSchema::IDREF< ACE_TCHAR >& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          threadpool_.pop_back ();
         }
 
         threadpool_.swap (v);
@@ -1840,14 +1708,14 @@ namespace CIAO
         ::std::vector< ::XMLSchema::IDREF< ACE_TCHAR > > v;
         v.reserve (priorityBandedConnection_.size () + 1);
 
-        while (priorityBandedConnection_.size ())
+        for (priorityBandedConnection_iterator i = priorityBandedConnection_.begin ();
+        i != priorityBandedConnection_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::XMLSchema::IDREF< ACE_TCHAR >& t = priorityBandedConnection_.back ();
+          ::XMLSchema::IDREF< ACE_TCHAR >& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          priorityBandedConnection_.pop_back ();
         }
 
         priorityBandedConnection_.swap (v);
@@ -1967,12 +1835,6 @@ namespace CIAO
     // 
     ::CIAO::Config_Handlers::PriorityModel const& PriorityModelPolicyDef::
     priority_model () const
-    {
-      return *priority_model_;
-    }
-
-    ::CIAO::Config_Handlers::PriorityModel& PriorityModelPolicyDef::
-    priority_model ()
     {
       return *priority_model_;
     }
@@ -4993,7 +4855,7 @@ namespace CIAO
       void Priority::
       traverse (Type const& o)
       {
-        ::XMLSchema::Writer::FundamentalType< ::CIAO::Config_Handlers::Priority, ACE_TCHAR >::traverse (o);
+        ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >::traverse (o);
         Traversal::Priority::traverse (o);
       }
 

@@ -89,14 +89,14 @@ namespace CIAO
         ::std::vector< ::CIAO::Config_Handlers::PackageConfiguration > v;
         v.reserve (package_.size () + 1);
 
-        while (package_.size ())
+        for (package_iterator i = package_.begin ();
+        i != package_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::CIAO::Config_Handlers::PackageConfiguration& t = package_.back ();
+          ::CIAO::Config_Handlers::PackageConfiguration& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          package_.pop_back ();
         }
 
         package_.swap (v);

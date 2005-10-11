@@ -116,7 +116,7 @@ namespace CIAO
 
       enum Value
       {
-        tk_null_l,tk_void_l,tk_short_l,tk_long_l,tk_ushort_l,tk_ulong_l,tk_float_l,tk_double_l,tk_boolean_l,tk_char_l,tk_octet_l,tk_any_l,tk_TypeCode_l,tk_Principal_l,tk_objref_l,tk_struct_l,tk_union_l,tk_enum_l,tk_string_l,tk_sequence_l,tk_array_l,tk_alias_l,tk_except_l,tk_longlong_l,tk_ulonglong_l,tk_longdouble_l,tk_wchar_l,tk_wstring_l,tk_wfixed_l,tk_value_l,tk_value_box_l,tk_native_l,tk_abstract_interface_l,tk_local_interface_l,tk_component_l,tk_home_l,tk_event_l,
+        tk_null_l,tk_void_l,tk_short_l,tk_long_l,tk_ushort_l,tk_ulong_l,tk_float_l,tk_double_l,tk_boolean_l,tk_char_l,tk_octet_l,tk_any_l,tk_TypeCode_l,tk_Principal_l,tk_objref_l,tk_struct_l,tk_union_l,tk_enum_l,tk_string_l,tk_sequence_l,tk_array_l,tk_alias_l,tk_except_l,tk_longlong_l,tk_ulonglong_l,tk_longdouble_l,tk_wchar_l,tk_wstring_l,tk_wfixed_l,tk_value_l,tk_value_box_l,tk_native_l,tk_abstract_interface_l,tk_local_interface_l,tk_component_l,tk_home_l,tk_event_l
       };
 
 
@@ -536,7 +536,7 @@ namespace CIAO
 
       enum Value
       {
-        Quantity_l,Capacity_l,Minimum_l,Maximum_l,Attribute_l,Selection_l,
+        Quantity_l,Capacity_l,Minimum_l,Maximum_l,Attribute_l,Selection_l
       };
 
 
@@ -989,7 +989,7 @@ namespace CIAO
 
       enum Value
       {
-        None_l,InstanceUsesResource_l,ResourceUsesInstance_l,PortUsesResource_l,ResourceUsesPort_l,
+        None_l,InstanceUsesResource_l,ResourceUsesInstance_l,PortUsesResource_l,ResourceUsesPort_l
       };
 
 
@@ -1190,7 +1190,7 @@ namespace CIAO
 
       enum Value
       {
-        Facet_l,SimplexReceptacle_l,MultiplexReceptacle_l,EventEmitter_l,EventPublisher_l,EventConsumer_l,
+        Facet_l,SimplexReceptacle_l,MultiplexReceptacle_l,EventEmitter_l,EventPublisher_l,EventConsumer_l
       };
 
 
@@ -3981,7 +3981,7 @@ namespace CIAO
   {
     namespace Writer
     {
-      struct XSC_XML_Handlers_Export TCKind : Traversal::TCKind, 
+      struct TCKind : Traversal::TCKind, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         TCKind (::XSCRT::XML::Element< ACE_TCHAR >&);
@@ -4001,7 +4001,7 @@ namespace CIAO
         TCKind ();
       };
 
-      struct XSC_XML_Handlers_Export DataType : Traversal::DataType, 
+      struct DataType : Traversal::DataType, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::DataType Type;
@@ -4052,7 +4052,7 @@ namespace CIAO
         DataType ();
       };
 
-      struct XSC_XML_Handlers_Export DataValue : Traversal::DataValue, 
+      struct DataValue : Traversal::DataValue, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::DataValue Type;
@@ -4621,7 +4621,7 @@ namespace CIAO
         DataValue ();
       };
 
-      struct XSC_XML_Handlers_Export EnumType : Traversal::EnumType, 
+      struct EnumType : Traversal::EnumType, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::EnumType Type;
@@ -4714,7 +4714,7 @@ namespace CIAO
         EnumType ();
       };
 
-      struct XSC_XML_Handlers_Export Any : Traversal::Any, 
+      struct Any : Traversal::Any, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::Any Type;
@@ -4765,7 +4765,7 @@ namespace CIAO
         Any ();
       };
 
-      struct XSC_XML_Handlers_Export Property : Traversal::Property, 
+      struct Property : Traversal::Property, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::Property Type;
@@ -4816,7 +4816,7 @@ namespace CIAO
         Property ();
       };
 
-      struct XSC_XML_Handlers_Export SatisfierPropertyKind : Traversal::SatisfierPropertyKind, 
+      struct SatisfierPropertyKind : Traversal::SatisfierPropertyKind, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         SatisfierPropertyKind (::XSCRT::XML::Element< ACE_TCHAR >&);
@@ -4836,7 +4836,7 @@ namespace CIAO
         SatisfierPropertyKind ();
       };
 
-      struct XSC_XML_Handlers_Export SatisfierProperty : Traversal::SatisfierProperty, 
+      struct SatisfierProperty : Traversal::SatisfierProperty, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::SatisfierProperty Type;
@@ -4901,7 +4901,7 @@ namespace CIAO
         SatisfierProperty ();
       };
 
-      struct XSC_XML_Handlers_Export Resource : Traversal::Resource, 
+      struct Resource : Traversal::Resource, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::Resource Type;
@@ -4966,7 +4966,7 @@ namespace CIAO
         Resource ();
       };
 
-      struct XSC_XML_Handlers_Export Requirement : Traversal::Requirement, 
+      struct Requirement : Traversal::Requirement, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::Requirement Type;
@@ -5031,7 +5031,7 @@ namespace CIAO
         Requirement ();
       };
 
-      struct XSC_XML_Handlers_Export ResourceDeploymentDescription : Traversal::ResourceDeploymentDescription, 
+      struct ResourceDeploymentDescription : Traversal::ResourceDeploymentDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ResourceDeploymentDescription Type;
@@ -5096,7 +5096,7 @@ namespace CIAO
         ResourceDeploymentDescription ();
       };
 
-      struct XSC_XML_Handlers_Export ArtifactDeploymentDescription : Traversal::ArtifactDeploymentDescription, 
+      struct ArtifactDeploymentDescription : Traversal::ArtifactDeploymentDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ArtifactDeploymentDescription Type;
@@ -5371,7 +5371,7 @@ namespace CIAO
         ArtifactDeploymentDescription ();
       };
 
-      struct XSC_XML_Handlers_Export MonolithicDeploymentDescription : Traversal::MonolithicDeploymentDescription, 
+      struct MonolithicDeploymentDescription : Traversal::MonolithicDeploymentDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::MonolithicDeploymentDescription Type;
@@ -5590,7 +5590,7 @@ namespace CIAO
         MonolithicDeploymentDescription ();
       };
 
-      struct XSC_XML_Handlers_Export ResourceUsageKind : Traversal::ResourceUsageKind, 
+      struct ResourceUsageKind : Traversal::ResourceUsageKind, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         ResourceUsageKind (::XSCRT::XML::Element< ACE_TCHAR >&);
@@ -5610,7 +5610,7 @@ namespace CIAO
         ResourceUsageKind ();
       };
 
-      struct XSC_XML_Handlers_Export InstanceResourceDeploymentDescription : Traversal::InstanceResourceDeploymentDescription, 
+      struct InstanceResourceDeploymentDescription : Traversal::InstanceResourceDeploymentDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription Type;
@@ -5689,7 +5689,7 @@ namespace CIAO
         InstanceResourceDeploymentDescription ();
       };
 
-      struct XSC_XML_Handlers_Export InstanceDeploymentDescription : Traversal::InstanceDeploymentDescription, 
+      struct InstanceDeploymentDescription : Traversal::InstanceDeploymentDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::InstanceDeploymentDescription Type;
@@ -5852,7 +5852,7 @@ namespace CIAO
         InstanceDeploymentDescription ();
       };
 
-      struct XSC_XML_Handlers_Export CCMComponentPortKind : Traversal::CCMComponentPortKind, 
+      struct CCMComponentPortKind : Traversal::CCMComponentPortKind, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         CCMComponentPortKind (::XSCRT::XML::Element< ACE_TCHAR >&);
@@ -5872,7 +5872,7 @@ namespace CIAO
         CCMComponentPortKind ();
       };
 
-      struct XSC_XML_Handlers_Export ComponentPortDescription : Traversal::ComponentPortDescription, 
+      struct ComponentPortDescription : Traversal::ComponentPortDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ComponentPortDescription Type;
@@ -6007,7 +6007,7 @@ namespace CIAO
         ComponentPortDescription ();
       };
 
-      struct XSC_XML_Handlers_Export ComponentPropertyDescription : Traversal::ComponentPropertyDescription, 
+      struct ComponentPropertyDescription : Traversal::ComponentPropertyDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ComponentPropertyDescription Type;
@@ -6058,7 +6058,7 @@ namespace CIAO
         ComponentPropertyDescription ();
       };
 
-      struct XSC_XML_Handlers_Export ComponentExternalPortEndpoint : Traversal::ComponentExternalPortEndpoint, 
+      struct ComponentExternalPortEndpoint : Traversal::ComponentExternalPortEndpoint, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ComponentExternalPortEndpoint Type;
@@ -6095,7 +6095,7 @@ namespace CIAO
         ComponentExternalPortEndpoint ();
       };
 
-      struct XSC_XML_Handlers_Export PlanSubcomponentPortEndpoint : Traversal::PlanSubcomponentPortEndpoint, 
+      struct PlanSubcomponentPortEndpoint : Traversal::PlanSubcomponentPortEndpoint, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint Type;
@@ -6174,7 +6174,7 @@ namespace CIAO
         PlanSubcomponentPortEndpoint ();
       };
 
-      struct XSC_XML_Handlers_Export ExternalReferenceEndpoint : Traversal::ExternalReferenceEndpoint, 
+      struct ExternalReferenceEndpoint : Traversal::ExternalReferenceEndpoint, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ExternalReferenceEndpoint Type;
@@ -6211,7 +6211,7 @@ namespace CIAO
         ExternalReferenceEndpoint ();
       };
 
-      struct XSC_XML_Handlers_Export ConnectionResourceDeploymentDescription : Traversal::ConnectionResourceDeploymentDescription, 
+      struct ConnectionResourceDeploymentDescription : Traversal::ConnectionResourceDeploymentDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription Type;
@@ -6290,7 +6290,7 @@ namespace CIAO
         ConnectionResourceDeploymentDescription ();
       };
 
-      struct XSC_XML_Handlers_Export PlanConnectionDescription : Traversal::PlanConnectionDescription, 
+      struct PlanConnectionDescription : Traversal::PlanConnectionDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::PlanConnectionDescription Type;
@@ -6551,7 +6551,7 @@ namespace CIAO
         PlanConnectionDescription ();
       };
 
-      struct XSC_XML_Handlers_Export ImplementationDependency : Traversal::ImplementationDependency, 
+      struct ImplementationDependency : Traversal::ImplementationDependency, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ImplementationDependency Type;
@@ -6588,7 +6588,7 @@ namespace CIAO
         ImplementationDependency ();
       };
 
-      struct XSC_XML_Handlers_Export Capability : Traversal::Capability, 
+      struct Capability : Traversal::Capability, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::Capability Type;
@@ -6653,7 +6653,7 @@ namespace CIAO
         Capability ();
       };
 
-      struct XSC_XML_Handlers_Export ImplementationRequirement : Traversal::ImplementationRequirement, 
+      struct ImplementationRequirement : Traversal::ImplementationRequirement, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ImplementationRequirement Type;
@@ -6760,7 +6760,7 @@ namespace CIAO
         ImplementationRequirement ();
       };
 
-      struct XSC_XML_Handlers_Export ComponentPackageReference : Traversal::ComponentPackageReference, 
+      struct ComponentPackageReference : Traversal::ComponentPackageReference, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ComponentPackageReference Type;
@@ -6825,7 +6825,7 @@ namespace CIAO
         ComponentPackageReference ();
       };
 
-      struct XSC_XML_Handlers_Export SubcomponentPortEndpoint : Traversal::SubcomponentPortEndpoint, 
+      struct SubcomponentPortEndpoint : Traversal::SubcomponentPortEndpoint, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::SubcomponentPortEndpoint Type;
@@ -6876,7 +6876,7 @@ namespace CIAO
         SubcomponentPortEndpoint ();
       };
 
-      struct XSC_XML_Handlers_Export AssemblyConnectionDescription : Traversal::AssemblyConnectionDescription, 
+      struct AssemblyConnectionDescription : Traversal::AssemblyConnectionDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::AssemblyConnectionDescription Type;

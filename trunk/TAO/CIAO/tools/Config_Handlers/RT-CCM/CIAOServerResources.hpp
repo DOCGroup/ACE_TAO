@@ -20,7 +20,6 @@
 #endif
 
 #include "RT_CCM_Handlers_Export.h"
-
 #ifndef CIAOSERVER_RESOURCES_HPP
 #define CIAOSERVER_RESOURCES_HPP
 
@@ -55,7 +54,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    class  ServerResourcesDef : public ::XSCRT::Type
+    class RT_CCM_Handlers_Export ServerResourcesDef : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -65,7 +64,6 @@ namespace CIAO
       public:
       bool cmdline_p () const;
       ::CIAO::Config_Handlers::ServerCmdlineOptions const& cmdline () const;
-      ::CIAO::Config_Handlers::ServerCmdlineOptions& cmdline ();
       void cmdline (::CIAO::Config_Handlers::ServerCmdlineOptions const& );
 
       protected:
@@ -76,7 +74,6 @@ namespace CIAO
       public:
       bool svcconf_p () const;
       ::CIAO::Config_Handlers::ACESvcConf const& svcconf () const;
-      ::CIAO::Config_Handlers::ACESvcConf& svcconf ();
       void svcconf (::CIAO::Config_Handlers::ACESvcConf const& );
 
       protected:
@@ -86,7 +83,6 @@ namespace CIAO
       // 
       public:
       ::CIAO::Config_Handlers::ORBConfigs const& orbConfigs () const;
-      ::CIAO::Config_Handlers::ORBConfigs& orbConfigs ();
       void orbConfigs (::CIAO::Config_Handlers::ORBConfigs const& );
 
       protected:
@@ -117,7 +113,7 @@ namespace CIAO
     };
 
 
-    class  ServerCmdlineOptions : public ::XSCRT::Type
+    class RT_CCM_Handlers_Export ServerCmdlineOptions : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -151,7 +147,7 @@ namespace CIAO
     };
 
 
-    class  ACESvcConf : public ::XSCRT::Type
+    class RT_CCM_Handlers_Export ACESvcConf : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -161,7 +157,6 @@ namespace CIAO
       public:
       bool uri_p () const;
       ::XMLSchema::string< ACE_TCHAR > const& uri () const;
-      ::XMLSchema::string< ACE_TCHAR >& uri ();
       void uri (::XMLSchema::string< ACE_TCHAR > const& );
 
       protected:
@@ -181,7 +176,7 @@ namespace CIAO
     };
 
 
-    class  ORBConfigs : public ::XSCRT::Type
+    class RT_CCM_Handlers_Export ORBConfigs : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -191,7 +186,6 @@ namespace CIAO
       public:
       bool resources_p () const;
       ::CIAO::Config_Handlers::ORBResources const& resources () const;
-      ::CIAO::Config_Handlers::ORBResources& resources ();
       void resources (::CIAO::Config_Handlers::ORBResources const& );
 
       protected:
@@ -226,7 +220,7 @@ namespace CIAO
     };
 
 
-    class  ORBResources : public ::XSCRT::Type
+    class RT_CCM_Handlers_Export ORBResources : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -290,7 +284,7 @@ namespace CIAO
     };
 
 
-    class  Priority : public ::XMLSchema::int_
+    class RT_CCM_Handlers_Export Priority : public ::XMLSchema::int_
     {
       //@@ VC6 anathema
       typedef ::XMLSchema::int_ Base__;
@@ -309,7 +303,7 @@ namespace CIAO
       char regulator__;
     };
 
-    class  ThreadpoolDef : public ::XSCRT::Type
+    class RT_CCM_Handlers_Export ThreadpoolDef : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -318,7 +312,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::unsignedLong const& stacksize () const;
-      ::XMLSchema::unsignedLong& stacksize ();
       void stacksize (::XMLSchema::unsignedLong const& );
 
       protected:
@@ -328,7 +321,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::unsignedLong const& static_threads () const;
-      ::XMLSchema::unsignedLong& static_threads ();
       void static_threads (::XMLSchema::unsignedLong const& );
 
       protected:
@@ -338,7 +330,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::unsignedLong const& dynamic_threads () const;
-      ::XMLSchema::unsignedLong& dynamic_threads ();
       void dynamic_threads (::XMLSchema::unsignedLong const& );
 
       protected:
@@ -348,7 +339,6 @@ namespace CIAO
       // 
       public:
       ::CIAO::Config_Handlers::Priority const& default_priority () const;
-      ::CIAO::Config_Handlers::Priority& default_priority ();
       void default_priority (::CIAO::Config_Handlers::Priority const& );
 
       protected:
@@ -358,7 +348,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::boolean const& allow_request_buffering () const;
-      ::XMLSchema::boolean& allow_request_buffering ();
       void allow_request_buffering (::XMLSchema::boolean const& );
 
       protected:
@@ -368,7 +357,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::unsignedLong const& max_buffered_requests () const;
-      ::XMLSchema::unsignedLong& max_buffered_requests ();
       void max_buffered_requests (::XMLSchema::unsignedLong const& );
 
       protected:
@@ -378,7 +366,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::unsignedLong const& max_request_buffered_size () const;
-      ::XMLSchema::unsignedLong& max_request_buffered_size ();
       void max_request_buffered_size (::XMLSchema::unsignedLong const& );
 
       protected:
@@ -415,7 +402,7 @@ namespace CIAO
     };
 
 
-    class  ThreadpoolWithLanesDef : public ::XSCRT::Type
+    class RT_CCM_Handlers_Export ThreadpoolWithLanesDef : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -439,7 +426,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::unsignedLong const& stacksize () const;
-      ::XMLSchema::unsignedLong& stacksize ();
       void stacksize (::XMLSchema::unsignedLong const& );
 
       protected:
@@ -449,7 +435,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::boolean const& allow_borrowing () const;
-      ::XMLSchema::boolean& allow_borrowing ();
       void allow_borrowing (::XMLSchema::boolean const& );
 
       protected:
@@ -459,7 +444,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::boolean const& allow_request_buffering () const;
-      ::XMLSchema::boolean& allow_request_buffering ();
       void allow_request_buffering (::XMLSchema::boolean const& );
 
       protected:
@@ -469,7 +453,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::unsignedLong const& max_buffered_requests () const;
-      ::XMLSchema::unsignedLong& max_buffered_requests ();
       void max_buffered_requests (::XMLSchema::unsignedLong const& );
 
       protected:
@@ -479,7 +462,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::unsignedLong const& max_request_buffered_size () const;
-      ::XMLSchema::unsignedLong& max_request_buffered_size ();
       void max_request_buffered_size (::XMLSchema::unsignedLong const& );
 
       protected:
@@ -514,7 +496,7 @@ namespace CIAO
     };
 
 
-    class  ThreadpoolLaneDef : public ::XSCRT::Type
+    class RT_CCM_Handlers_Export ThreadpoolLaneDef : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -523,7 +505,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::unsignedLong const& static_threads () const;
-      ::XMLSchema::unsignedLong& static_threads ();
       void static_threads (::XMLSchema::unsignedLong const& );
 
       protected:
@@ -533,7 +514,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::unsignedLong const& dynamic_threads () const;
-      ::XMLSchema::unsignedLong& dynamic_threads ();
       void dynamic_threads (::XMLSchema::unsignedLong const& );
 
       protected:
@@ -543,7 +523,6 @@ namespace CIAO
       // 
       public:
       ::CIAO::Config_Handlers::Priority const& priority () const;
-      ::CIAO::Config_Handlers::Priority& priority ();
       void priority (::CIAO::Config_Handlers::Priority const& );
 
       protected:
@@ -565,7 +544,7 @@ namespace CIAO
     };
 
 
-    class  ConnectionBandsDef : public ::XSCRT::Type
+    class RT_CCM_Handlers_Export ConnectionBandsDef : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -610,7 +589,7 @@ namespace CIAO
     };
 
 
-    class  PriorityBandDef : public ::XSCRT::Type
+    class RT_CCM_Handlers_Export PriorityBandDef : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -619,7 +598,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::int_ const& low () const;
-      ::XMLSchema::int_& low ();
       void low (::XMLSchema::int_ const& );
 
       protected:
@@ -629,7 +607,6 @@ namespace CIAO
       // 
       public:
       ::XMLSchema::int_ const& high () const;
-      ::XMLSchema::int_& high ();
       void high (::XMLSchema::int_ const& );
 
       protected:
@@ -650,7 +627,7 @@ namespace CIAO
     };
 
 
-    class  PolicySet : public ::XSCRT::Type
+    class RT_CCM_Handlers_Export PolicySet : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -725,7 +702,7 @@ namespace CIAO
     };
 
 
-    class  PriorityModel : public ::XSCRT::Type
+    class RT_CCM_Handlers_Export PriorityModel : public ::XSCRT::Type
     {
       public:
       PriorityModel (::XSCRT::XML::Element< ACE_TCHAR > const&);
@@ -743,10 +720,10 @@ namespace CIAO
       Value
       integral () const;
 
-      friend bool
+      friend bool RT_CCM_Handlers_Export 
       operator== (PriorityModel const& a, PriorityModel const& b);
 
-      friend bool
+      friend bool RT_CCM_Handlers_Export 
       operator!= (PriorityModel const& a, PriorityModel const& b);
 
       private:
@@ -755,8 +732,12 @@ namespace CIAO
       Value v_;
     };
 
+    bool RT_CCM_Handlers_Export operator== (PriorityModel const &a, PriorityModel const &b);
 
-    class  PriorityModelPolicyDef : public ::XSCRT::Type
+    bool RT_CCM_Handlers_Export operator!= (PriorityModel const &a, PriorityModel const &b);
+
+
+    class RT_CCM_Handlers_Export PriorityModelPolicyDef : public ::XSCRT::Type
     {
       //@@ VC6 anathema
       typedef ::XSCRT::Type Base__;
@@ -765,7 +746,6 @@ namespace CIAO
       // 
       public:
       ::CIAO::Config_Handlers::PriorityModel const& priority_model () const;
-      ::CIAO::Config_Handlers::PriorityModel& priority_model ();
       void priority_model (::CIAO::Config_Handlers::PriorityModel const& );
 
       protected:
@@ -801,7 +781,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    
+    RT_CCM_Handlers_Export
     ::CIAO::Config_Handlers::ServerResourcesDef
     ServerResources (xercesc::DOMDocument const*);
   }
@@ -815,7 +795,7 @@ namespace CIAO
   {
     namespace Traversal
     {
-      struct  ServerResourcesDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ServerResourcesDef >
+      struct RT_CCM_Handlers_Export ServerResourcesDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ServerResourcesDef >
       {
         virtual void
         traverse (Type&);
@@ -878,7 +858,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct  ServerCmdlineOptions : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ServerCmdlineOptions >
+      struct RT_CCM_Handlers_Export ServerCmdlineOptions : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ServerCmdlineOptions >
       {
         virtual void
         traverse (Type&);
@@ -923,7 +903,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct  ACESvcConf : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ACESvcConf >
+      struct RT_CCM_Handlers_Export ACESvcConf : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ACESvcConf >
       {
         virtual void
         traverse (Type&);
@@ -956,7 +936,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct  ORBConfigs : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ORBConfigs >
+      struct RT_CCM_Handlers_Export ORBConfigs : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ORBConfigs >
       {
         virtual void
         traverse (Type&);
@@ -1013,7 +993,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct  ORBResources : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ORBResources >
+      struct RT_CCM_Handlers_Export ORBResources : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ORBResources >
       {
         virtual void
         traverse (Type&);
@@ -1124,7 +1104,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct  Priority : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::Priority >
+      struct RT_CCM_Handlers_Export Priority : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::Priority >
       {
         virtual void
         traverse (Type&);
@@ -1145,7 +1125,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct  ThreadpoolDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ThreadpoolDef >
+      struct RT_CCM_Handlers_Export ThreadpoolDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ThreadpoolDef >
       {
         virtual void
         traverse (Type&);
@@ -1220,7 +1200,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct  ThreadpoolWithLanesDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ThreadpoolWithLanesDef >
+      struct RT_CCM_Handlers_Export ThreadpoolWithLanesDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ThreadpoolWithLanesDef >
       {
         virtual void
         traverse (Type&);
@@ -1307,7 +1287,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct  ThreadpoolLaneDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ThreadpoolLaneDef >
+      struct RT_CCM_Handlers_Export ThreadpoolLaneDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ThreadpoolLaneDef >
       {
         virtual void
         traverse (Type&);
@@ -1346,7 +1326,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct  ConnectionBandsDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ConnectionBandsDef >
+      struct RT_CCM_Handlers_Export ConnectionBandsDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::ConnectionBandsDef >
       {
         virtual void
         traverse (Type&);
@@ -1403,7 +1383,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct  PriorityBandDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::PriorityBandDef >
+      struct RT_CCM_Handlers_Export PriorityBandDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::PriorityBandDef >
       {
         virtual void
         traverse (Type&);
@@ -1436,7 +1416,7 @@ namespace CIAO
         post (Type const&);
       };
 
-      struct  PolicySet : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::PolicySet >
+      struct RT_CCM_Handlers_Export PolicySet : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::PolicySet >
       {
         virtual void
         traverse (Type&);
@@ -1563,7 +1543,7 @@ namespace CIAO
       ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::PriorityModel >
       PriorityModel;
 
-      struct  PriorityModelPolicyDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::PriorityModelPolicyDef >
+      struct RT_CCM_Handlers_Export PriorityModelPolicyDef : ::XMLSchema::Traversal::Traverser< ::CIAO::Config_Handlers::PriorityModelPolicyDef >
       {
         virtual void
         traverse (Type&);
@@ -1613,7 +1593,7 @@ namespace CIAO
   {
     namespace Writer
     {
-      struct  ServerResourcesDef : Traversal::ServerResourcesDef, 
+      struct ServerResourcesDef : Traversal::ServerResourcesDef, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ServerResourcesDef Type;
@@ -1692,7 +1672,7 @@ namespace CIAO
         ServerResourcesDef ();
       };
 
-      struct  ServerCmdlineOptions : Traversal::ServerCmdlineOptions, 
+      struct ServerCmdlineOptions : Traversal::ServerCmdlineOptions, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ServerCmdlineOptions Type;
@@ -1757,7 +1737,7 @@ namespace CIAO
         ServerCmdlineOptions ();
       };
 
-      struct  ACESvcConf : Traversal::ACESvcConf, 
+      struct ACESvcConf : Traversal::ACESvcConf, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ACESvcConf Type;
@@ -1794,7 +1774,7 @@ namespace CIAO
         ACESvcConf ();
       };
 
-      struct  ORBConfigs : Traversal::ORBConfigs, 
+      struct ORBConfigs : Traversal::ORBConfigs, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ORBConfigs Type;
@@ -1873,7 +1853,7 @@ namespace CIAO
         ORBConfigs ();
       };
 
-      struct  ORBResources : Traversal::ORBResources, 
+      struct ORBResources : Traversal::ORBResources, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ORBResources Type;
@@ -2022,8 +2002,8 @@ namespace CIAO
         ORBResources ();
       };
 
-      struct  Priority : Traversal::Priority, 
-      virtual ::XMLSchema::Writer::FundamentalType< ::CIAO::Config_Handlers::Priority, ACE_TCHAR >,
+      struct Priority : Traversal::Priority, 
+      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::Priority Type;
@@ -2046,7 +2026,7 @@ namespace CIAO
         Priority ();
       };
 
-      struct  ThreadpoolDef : Traversal::ThreadpoolDef, 
+      struct ThreadpoolDef : Traversal::ThreadpoolDef, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ThreadpoolDef Type;
@@ -2181,7 +2161,7 @@ namespace CIAO
         ThreadpoolDef ();
       };
 
-      struct  ThreadpoolWithLanesDef : Traversal::ThreadpoolWithLanesDef, 
+      struct ThreadpoolWithLanesDef : Traversal::ThreadpoolWithLanesDef, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ThreadpoolWithLanesDef Type;
@@ -2330,7 +2310,7 @@ namespace CIAO
         ThreadpoolWithLanesDef ();
       };
 
-      struct  ThreadpoolLaneDef : Traversal::ThreadpoolLaneDef, 
+      struct ThreadpoolLaneDef : Traversal::ThreadpoolLaneDef, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ThreadpoolLaneDef Type;
@@ -2395,7 +2375,7 @@ namespace CIAO
         ThreadpoolLaneDef ();
       };
 
-      struct  ConnectionBandsDef : Traversal::ConnectionBandsDef, 
+      struct ConnectionBandsDef : Traversal::ConnectionBandsDef, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ConnectionBandsDef Type;
@@ -2474,7 +2454,7 @@ namespace CIAO
         ConnectionBandsDef ();
       };
 
-      struct  PriorityBandDef : Traversal::PriorityBandDef, 
+      struct PriorityBandDef : Traversal::PriorityBandDef, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::PriorityBandDef Type;
@@ -2525,7 +2505,7 @@ namespace CIAO
         PriorityBandDef ();
       };
 
-      struct  PolicySet : Traversal::PolicySet, 
+      struct PolicySet : Traversal::PolicySet, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::PolicySet Type;
@@ -2688,7 +2668,7 @@ namespace CIAO
         PolicySet ();
       };
 
-      struct  PriorityModel : Traversal::PriorityModel, 
+      struct PriorityModel : Traversal::PriorityModel, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         PriorityModel (::XSCRT::XML::Element< ACE_TCHAR >&);
@@ -2708,7 +2688,7 @@ namespace CIAO
         PriorityModel ();
       };
 
-      struct  PriorityModelPolicyDef : Traversal::PriorityModelPolicyDef, 
+      struct PriorityModelPolicyDef : Traversal::PriorityModelPolicyDef, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::PriorityModelPolicyDef Type;
@@ -2766,7 +2746,7 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    
+    RT_CCM_Handlers_Export
     void
     ServerResources (::CIAO::Config_Handlers::ServerResourcesDef const&, xercesc::DOMDocument*);
   }
