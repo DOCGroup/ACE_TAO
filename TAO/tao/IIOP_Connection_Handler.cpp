@@ -128,8 +128,8 @@ TAO_IIOP_Connection_Handler::open (void*)
     return -1;
 #endif /* ! ACE_LACKS_TCP_NODELAY */
 
-  if (!client ||
-      this->transport ()->wait_strategy ()->non_blocking ())
+  if (this->transport ()->wait_strategy ()->non_blocking ()
+      || this->transport ()->opened_as () == TAO::TAO_SERVER_ROLE)
     {
       if (this->peer ().enable (ACE_NONBLOCK) == -1)
         return -1;
