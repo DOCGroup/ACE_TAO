@@ -156,8 +156,6 @@ protected:
   CORBA::Boolean stop_run_;
 };
 
-typedef ACE_Singleton<TAO_AV_Core, ACE_Null_Mutex> TAO_AV_CORE;
-
 #if defined (__BORLANDC__)
 # if !defined (TAO_AV_BUILD_DLL)
 #   pragma option push -Jgx
@@ -169,6 +167,8 @@ TAO_AV_SINGLETON_DECLARE (ACE_Singleton, TAO_AV_Core, ACE_Null_Mutex)
 #   pragma option pop
 # endif
 #endif
+
+typedef ACE_Singleton<TAO_AV_Core, ACE_Null_Mutex> TAO_AV_CORE;
 
 #include /**/ "ace/post.h"
 #endif /* TAO_AV_CORE_H */
