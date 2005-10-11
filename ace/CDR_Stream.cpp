@@ -872,7 +872,7 @@ ACE_InputCDR::skip_wchar (void)
   else
     {
       ACE_CDR::WChar x;
-      if (sizeof (ACE_CDR::WChar) == 2)
+      if (ACE_OutputCDR::wchar_maxbytes_ == 2)
         return this->read_2 (reinterpret_cast<ACE_CDR::UShort *> (&x));
       else
         return this->read_4 (reinterpret_cast<ACE_CDR::ULong *> (&x));
