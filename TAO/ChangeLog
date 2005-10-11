@@ -1,14 +1,19 @@
+Tue Oct 11 08:33:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/IIOP_Acceptor.cpp:
+          Fix to counter problems with IPv4-compatible IPv6 addresses.
+
 Tue Oct 11 01:24:45 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	From James Megquier <jmegq at radiance dot com>
-	* orbsvcs/orbsvcs/AV/AV_Core.h:
-	* orbsvcs/orbsvcs/Notify/Properties.h:
-	* orbsvcs/orbsvcs/Notify/RT_Properties.h:
-	* orbsvcs/tests/Notify/lib/LookupManager.h:
+        From James Megquier <jmegq at radiance dot com>
+        * orbsvcs/orbsvcs/AV/AV_Core.h:
+        * orbsvcs/orbsvcs/Notify/Properties.h:
+        * orbsvcs/orbsvcs/Notify/RT_Properties.h:
+        * orbsvcs/tests/Notify/lib/LookupManager.h:
 
-	  Declare exported (i.e. default visibility) singleton templates
-	  prior to typedefs that reference  them.  Prevents g++ 4.0 from
-	  silently making their visibility hidden.  [Bug 2260]
+          Declare exported (i.e. default visibility) singleton templates
+          prior to typedefs that reference  them.  Prevents g++ 4.0 from
+          silently making their visibility hidden.  [Bug 2260]
 
 Tue Oct 11 07:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
