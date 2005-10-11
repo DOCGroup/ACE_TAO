@@ -301,8 +301,11 @@ public:
   /// Return @c true if the IP address is IPv6 linklocal address.
   bool is_linklocal (void) const;
 
-  /// Return @c true if the IP address is IPv4 mapped IPv6 address.
+  /// Return @c true if the IP address is IPv4-mapped IPv6 address.
   bool is_ipv4_mapped_ipv6 (void) const;
+
+  /// Return @c true if the IP address is IPv4-compatible IPv6 address.
+  bool is_ipv4_compat_ipv6 (void) const;
 #endif /* ACE_HAS_IPV6 */
 
   /**
