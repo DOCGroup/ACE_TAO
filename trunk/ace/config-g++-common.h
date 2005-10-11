@@ -89,13 +89,13 @@
 #   define ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) template class ACE_Proper_Export_Flag SINGLETON_TYPE <CLASS, LOCK>;
 #  else  /* ! GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS */
 #   define ACE_EXPORT_SINGLETON_DECLARATION(T)     \
-	_Pragma ("GCC visibility push(default)")  \
-	template class T                          \
-	_Pragma ("GCC visibility pop")
+        _Pragma ("GCC visibility push(default)")  \
+        template class T                          \
+        _Pragma ("GCC visibility pop")
 #   define ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) \
-	_Pragma ("GCC visibility push(default)")                    \
-	template class SINGLETON_TYPE<CLASS, LOCK>;                 \
-	_Pragma ("GCC visibility pop")
+        _Pragma ("GCC visibility push(default)")                    \
+        template class SINGLETON_TYPE<CLASS, LOCK>;                 \
+        _Pragma ("GCC visibility pop")
 #  endif /* ! GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS */
 
 #  define ACE_IMPORT_SINGLETON_DECLARATION(T) extern template class T
