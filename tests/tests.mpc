@@ -299,7 +299,7 @@ project(DLList Test) : acetest {
 }
 
 project(DLL Test) : acetest, dll_test_parent_lib {
-  libs   += DLL_Test
+  libs   += DLL_Test_Lib
   exename = DLL_Test
   Source_Files {
     DLL_Test.cpp
