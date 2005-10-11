@@ -129,7 +129,11 @@ ifeq ($(shared_libs), 1)
     # Take advantage of G++ (>= 4.x) visibility attributes to generate
     # improved shared library binaries.
     ifeq ($(GXX_4_OR_BETTER), 1)
-      CCFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
+      ifneq ($(no_hidden_visibility),1)
+        CCFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
+      else
+        CPPFLAGS += -DACE_HAS_CUSTOM_EXPORT_MACROS=0
+      endif # no_hidden_visibility
     endif # GXX_4_OR_BETTER == 1
   endif # static_libs_only
 endif # shared_libs

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 //=============================================================================
 /**
  *  @file    Obstack.h
@@ -19,9 +19,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-typedef ACE_Obstack_T<char> ACE_Obstack;
-
 ACE_SINGLETON_DECLARATION (ACE_Obstack_T <char>;)
+
+typedef ACE_Obstack_T<char> ACE_Obstack;
 
 #include /**/ "ace/post.h"
 #endif /* ACE_OBSTACK_H */
