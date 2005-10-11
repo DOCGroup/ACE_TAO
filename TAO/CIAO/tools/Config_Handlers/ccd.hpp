@@ -468,7 +468,7 @@ namespace CIAO
   {
     namespace Writer
     {
-      struct XSC_XML_Handlers_Export ComponentInterfaceDescription : Traversal::ComponentInterfaceDescription, 
+      struct ComponentInterfaceDescription : Traversal::ComponentInterfaceDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::ComponentInterfaceDescription Type;

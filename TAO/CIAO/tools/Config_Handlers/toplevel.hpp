@@ -149,7 +149,7 @@ namespace CIAO
   {
     namespace Writer
     {
-      struct XSC_XML_Handlers_Export TopLevelPackageDescription : Traversal::TopLevelPackageDescription, 
+      struct TopLevelPackageDescription : Traversal::TopLevelPackageDescription, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::TopLevelPackageDescription Type;

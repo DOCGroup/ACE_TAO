@@ -266,14 +266,14 @@ namespace CIAO
         ::std::vector< ::CIAO::Config_Handlers::MonolithicDeploymentDescription > v;
         v.reserve (implementation_.size () + 1);
 
-        while (implementation_.size ())
+        for (implementation_iterator i = implementation_.begin ();
+        i != implementation_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::CIAO::Config_Handlers::MonolithicDeploymentDescription& t = implementation_.back ();
+          ::CIAO::Config_Handlers::MonolithicDeploymentDescription& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          implementation_.pop_back ();
         }
 
         implementation_.swap (v);
@@ -323,14 +323,14 @@ namespace CIAO
         ::std::vector< ::CIAO::Config_Handlers::InstanceDeploymentDescription > v;
         v.reserve (instance_.size () + 1);
 
-        while (instance_.size ())
+        for (instance_iterator i = instance_.begin ();
+        i != instance_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::CIAO::Config_Handlers::InstanceDeploymentDescription& t = instance_.back ();
+          ::CIAO::Config_Handlers::InstanceDeploymentDescription& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          instance_.pop_back ();
         }
 
         instance_.swap (v);
@@ -380,14 +380,14 @@ namespace CIAO
         ::std::vector< ::CIAO::Config_Handlers::PlanConnectionDescription > v;
         v.reserve (connection_.size () + 1);
 
-        while (connection_.size ())
+        for (connection_iterator i = connection_.begin ();
+        i != connection_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::CIAO::Config_Handlers::PlanConnectionDescription& t = connection_.back ();
+          ::CIAO::Config_Handlers::PlanConnectionDescription& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          connection_.pop_back ();
         }
 
         connection_.swap (v);
@@ -437,14 +437,14 @@ namespace CIAO
         ::std::vector< ::CIAO::Config_Handlers::ImplementationDependency > v;
         v.reserve (dependsOn_.size () + 1);
 
-        while (dependsOn_.size ())
+        for (dependsOn_iterator i = dependsOn_.begin ();
+        i != dependsOn_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::CIAO::Config_Handlers::ImplementationDependency& t = dependsOn_.back ();
+          ::CIAO::Config_Handlers::ImplementationDependency& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          dependsOn_.pop_back ();
         }
 
         dependsOn_.swap (v);
@@ -494,14 +494,14 @@ namespace CIAO
         ::std::vector< ::CIAO::Config_Handlers::ArtifactDeploymentDescription > v;
         v.reserve (artifact_.size () + 1);
 
-        while (artifact_.size ())
+        for (artifact_iterator i = artifact_.begin ();
+        i != artifact_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::CIAO::Config_Handlers::ArtifactDeploymentDescription& t = artifact_.back ();
+          ::CIAO::Config_Handlers::ArtifactDeploymentDescription& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          artifact_.pop_back ();
         }
 
         artifact_.swap (v);
@@ -551,14 +551,14 @@ namespace CIAO
         ::std::vector< ::CIAO::Config_Handlers::Property > v;
         v.reserve (infoProperty_.size () + 1);
 
-        while (infoProperty_.size ())
+        for (infoProperty_iterator i = infoProperty_.begin ();
+        i != infoProperty_.end ();
+         ++i)
         {
-          //@@ VC6
-          ::CIAO::Config_Handlers::Property& t = infoProperty_.back ();
+          ::CIAO::Config_Handlers::Property& t = *i;
           t.container (0);
           v.push_back (t);
           v.back ().container (this);
-          infoProperty_.pop_back ();
         }
 
         infoProperty_.swap (v);

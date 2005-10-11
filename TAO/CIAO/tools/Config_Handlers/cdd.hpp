@@ -925,7 +925,7 @@ namespace CIAO
   {
     namespace Writer
     {
-      struct XSC_XML_Handlers_Export Domain : Traversal::Domain, 
+      struct Domain : Traversal::Domain, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::Domain Type;
@@ -1074,7 +1074,7 @@ namespace CIAO
         Domain ();
       };
 
-      struct XSC_XML_Handlers_Export Bridge : Traversal::Bridge, 
+      struct Bridge : Traversal::Bridge, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::Bridge Type;
@@ -1209,7 +1209,7 @@ namespace CIAO
         Bridge ();
       };
 
-      struct XSC_XML_Handlers_Export Interconnect : Traversal::Interconnect, 
+      struct Interconnect : Traversal::Interconnect, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::Interconnect Type;
@@ -1386,7 +1386,7 @@ namespace CIAO
         Interconnect ();
       };
 
-      struct XSC_XML_Handlers_Export Node : Traversal::Node, 
+      struct Node : Traversal::Node, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::Node Type;
@@ -1535,7 +1535,7 @@ namespace CIAO
         Node ();
       };
 
-      struct XSC_XML_Handlers_Export SharedResource : Traversal::SharedResource, 
+      struct SharedResource : Traversal::SharedResource, 
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::SharedResource Type;

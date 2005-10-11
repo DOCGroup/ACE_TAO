@@ -19,9 +19,9 @@ namespace CIAO
       int argc = 0;
       char **argv = 0;
       
-      CORBA::ORB_init (argc, argv);
+      orb_ = CORBA::ORB_init (argc, argv);
       
-      CORBA::Object_var temp = this->orb_->resolve_initial_references ("DynAnyFactory");
+      CORBA::Object_var temp = orb_->resolve_initial_references ("DynAnyFactory");
       daf_ = DynamicAny::DynAnyFactory::_narrow (temp.in ());
       
       if (CORBA::is_nil (daf_.in ()))
