@@ -1,3 +1,8 @@
+Tue Oct 11 07:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMI_Timeouts/timeout_client.cpp:
+          Added casts to unsigned long to silence compiler warnings
+
 Tue Oct 11 07:10:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Sync_Strategies.cpp:
