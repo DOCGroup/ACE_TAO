@@ -143,11 +143,11 @@ Thu Oct  6 15:42:29 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
           Moved "Parent" base class to a separate DSO/DLL to break a
           cyclic dependency, in turn allowing its virtual methods to be
           moved out of line.  Addresses dynamic_cast<> failures in g++ 4.0
-          builds.  Thanks to Carlos for suggesting this change.
+          builds.  Thanks to Carlos for suggesting this change. [Bug 2143]
 
           Moved "Child" subclass virtual methods out of line to address
           RTTI related problems when using g++ 4.0's
-          -fvisibility-inlines-hidden command line option.
+          -fvisibility-inlines-hidden command line option.      [Bug 2143]
 
         * tests/tests.mpc:
 
