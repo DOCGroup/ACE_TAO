@@ -276,11 +276,11 @@ TimeoutClient::accuracy_test ()
 
   this->send (INVOKE_ASYNCH,
               timeToWait_,
-              timeToWait_*1.5);
+              (unsigned long)(timeToWait_*1.5));
 
   this->send (INVOKE_ASYNCH,
               timeToWait_,
-              timeToWait_*0.5);
+              (unsigned long)(timeToWait_*0.5));
 
   if (timeoutHandler_i_->reply_counter () != 1
    || timeoutHandler_i_->reply_excep_counter () != 1
