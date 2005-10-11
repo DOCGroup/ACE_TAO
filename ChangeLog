@@ -1,3 +1,12 @@
+Tue Oct 11 17:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Stream.cpp (skip_wchar):
+          When having a 1.1 or 1.0 stream, we must use
+          ACE_OutputCDR::wchar_maxbytes_ instead of sizeof (ACE_CDR::WChar)
+          to determine whether we have to read 2 or 4 bytes for a
+          ACE_CDR::WChar. This fixes the failing of the TAO Codec test
+          under fe linux
+
 Tue Oct 11 08:28:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * ace/INET_Addr{.h .inl}:
