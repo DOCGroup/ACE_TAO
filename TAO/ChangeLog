@@ -1,9 +1,19 @@
+Tue Oct 11 07:10:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Sync_Strategies.cpp:
+          Changed the default for flush for TAO_Transport_Sync_Strategy to
+          false. This means that when an application does oneway calls or
+          AMI calls, we only buffer at the moment the send block and we
+          schedule the transport for output but don't do a forced flush
+          at that moment. We just control to the app and send out the data
+          later when the socket is free again.
+
 Mon Oct 10 21:15:45 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/driver/drv_args.cpp:
         * TAO_IDL/driver/drv_preproc.cpp:
         * TAO_IDL/include/drv_extern.h:
-        
+
           Added some commonly used include paths to the list that is passed
           by the IDL compiler to the preprocessor, and to its own
           internal list of include paths. Some are necessary to find
@@ -12,14 +22,14 @@ Mon Oct 10 21:15:45 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
           internally in the IDL compiler), while others are paths to
           files commonly included in applications. The current order
           of include paths is:
-          
+
           1. $ACE_ROOT/TAO
           2. $ACE_ROOT/TAO/tao
           3. -I command line options
           4. $ACE_ROOT/TAO/orbsvcs
           5. $ACE_ROOT/TAO/CIAO
           6. $ACE_ROOT/TAO/CIAO/ciao
-          
+
           The last 3 can be overridden by the user, by passing in alternate
           paths ahead of these 3 on the command line, but this practice
           is almost sure to cause link problems.
