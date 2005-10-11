@@ -193,5 +193,15 @@ ACE_INET_Addr::is_ipv4_mapped_ipv6 (void) const
 
   return false;
 }
+
+// Return @c true if the IP address is IPv4-compatible IPv6 address.
+ACE_INLINE bool
+ACE_INET_Addr::is_ipv4_compat_ipv6 (void) const
+{
+  if (this->get_type () == AF_INET6)
+      return IN6_IS_ADDR_V4COMPAT (&this->inet_addr_.in6_.sin6_addr);
+
+  return false;
+}
 #endif /* ACE_HAS_IPV6 */
 
