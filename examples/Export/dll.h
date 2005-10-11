@@ -57,12 +57,13 @@ public:
 #   pragma option push -Jgx
 # endif
 #endif
-typedef ACE_Singleton<test_class, ACE_Null_Mutex> TEST_SINGLETON;
 TEST_SINGLETON_DECLARE (ACE_Singleton, test_class, ACE_Null_Mutex)
 #if defined (__BORLANDC__)
 # if !defined (TEST_BUILD_DLL)
 #   pragma option pop
 # endif
 #endif
+
+typedef ACE_Singleton<test_class, ACE_Null_Mutex> TEST_SINGLETON;
 
 Test_Export test_class *get_dll_singleton ();
