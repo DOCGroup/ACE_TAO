@@ -582,7 +582,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   // Create the Timer ID array
   ACE_NEW_RETURN (timer_ids,
-		  long[max_iterations],
+                  long[max_iterations],
                   -1);
 
   Timer_Queue_Stack *tq_ptr = tq_stack;
