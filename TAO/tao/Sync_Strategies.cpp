@@ -35,7 +35,7 @@ TAO_Transport_Sync_Strategy::buffering_constraints_reached (
   ACE_Time_Value &)
 {
   set_timer = 0;
-  must_flush = 1;
+  must_flush = 0;
   return 1;
 }
 
