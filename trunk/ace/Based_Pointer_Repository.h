@@ -75,14 +75,19 @@ private:
 
 };
 
+// ----------------------------------
+
 #include "ace/Singleton.h"
+
+/// Declare a process wide singleton
+ACE_MEMORY_SINGLETON_DECLARE (ACE_Singleton,
+                              ACE_Based_Pointer_Repository,
+                              ACE_SYNCH_RW_MUTEX)
 
 /// Provide a Singleton access point to the based pointer repository.
 typedef ACE_Singleton<ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX>
         ACE_BASED_POINTER_REPOSITORY;
 
-/// Declare a process wide singleton
-ACE_MEMORY_SINGLETON_DECLARE(ACE_Singleton, ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX)
 
 #include /**/ "ace/post.h"
 
