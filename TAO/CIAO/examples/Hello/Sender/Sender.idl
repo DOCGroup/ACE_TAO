@@ -17,7 +17,13 @@ module Hello
     void start ();
   };
 
-  enum COLOR_SELECTION {white, red, yello};
+  enum COLOR_SELECTION 
+    {
+      empty,
+      white, 
+      red, 
+      yellow
+    };
 
   component Sender supports trigger
   {
@@ -25,9 +31,9 @@ module Hello
     publishes TimeOut click_out;
     attribute string local_message;
     readonly attribute long hertz;
-    
-    //attribute COLOR_SELECTION color;
+
     // A test attribute to test setting attributes through XML
+    attribute COLOR_SELECTION color;
   };
 
   home SenderHome manages Sender
