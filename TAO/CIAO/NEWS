@@ -40,10 +40,11 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
 ==========================================
 
-. Enhance DAnCE to support dyamica adding/removing components to/from the
-  existing running assembly without shutting down the running appliation.
-  This will allow the application developers to evolve their applications
-  on the fly without incuring service down time.
+. Enhance DAnCE to support dynamically adding/removing components
+  to/from the existing running assembly without shutting down the
+  running appliation.  This will allow the application developers to
+  evolve their applications on the fly without incuring service down
+  time. 
 
 . Adding support to manage multiple interconnected assemblies, which will 
   involve the work through ExternalReferenceEndPoint idea.
