@@ -13,6 +13,12 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.7 and ACE-5.4.8
 
 . Improved 64bit portability
 
+. TTY_IO overhaul
+  - Improved documentation.
+  - It is now possible to request infinite timeout in portable manner.
+    This can be achived by setting negative value to readtimeoutmsec.
+  - Various bugs fixed and portability issues resolved.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.4.6 and ACE-5.4.7
 ====================================================
 
