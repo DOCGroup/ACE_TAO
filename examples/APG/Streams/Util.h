@@ -63,7 +63,7 @@ public:
                         0);
 
     char rwbuf[512];
-    int rwbytes;
+    ssize_t rwbytes;
     while ((rwbytes = input.recv (rwbuf, 512)) > 0)
       {
         output.send_n (rwbuf, rwbytes);

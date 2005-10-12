@@ -43,7 +43,7 @@ test_functionality (ACE_Timer_Queue *tq)
   const void *timer_act = 0;
 
   ACE_NEW (timer_act, int (1));
-  int timer_id1 = tq->schedule (&eh, timer_act, ACE_OS::gettimeofday ());
+  long timer_id1 = tq->schedule (&eh, timer_act, ACE_OS::gettimeofday ());
 
   // Use timer_id outside of an assert, so that we don't get compile
   // warnings with ACE_NDEBUG about it being unused.
@@ -71,7 +71,7 @@ test_functionality (ACE_Timer_Queue *tq)
   timer_id1 = tq->schedule (&eh, timer_act, ACE_OS::gettimeofday ());
   ACE_ASSERT (timer_id1 != -1);
   ACE_NEW (timer_act, int (5));
-  int timer_id2 = tq->schedule (&eh, timer_act, ACE_OS::gettimeofday ());
+  long timer_id2 = tq->schedule (&eh, timer_act, ACE_OS::gettimeofday ());
   ACE_ASSERT (timer_id2 != -1);
 
   result = tq->cancel (timer_id1, &timer_act);
