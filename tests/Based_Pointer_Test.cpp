@@ -333,7 +333,7 @@ mmap_remap_test(void)
           }
         return -1;
       }
- 
+
     void *ba= 0;
     if (ACE_BASED_POINTER_REPOSITORY::instance()->find(nba, ba) == -1)
       {
