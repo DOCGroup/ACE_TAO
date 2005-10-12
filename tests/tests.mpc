@@ -65,7 +65,7 @@ project(DLL Test Lib) : acelib, dll_test_parent_lib {
 }
 
 project(Based Pointer Test Lib) : acelib {
-  sharedname   = Based_Pointer_Test
+  sharedname   = Based_Pointer_Test_Lib
   dynamicflags = ACE_SVC_BUILD_DLL
 
   Source_Files {
@@ -299,6 +299,7 @@ project(DLList Test) : acetest {
 }
 
 project(DLL Test) : acetest, dll_test_parent_lib {
+  after  += DLL_Test_Lib
   libs   += DLL_Test_Lib
   exename = DLL_Test
   Source_Files {
@@ -1041,6 +1042,7 @@ project(CDR Array Test) : acetest {
 }
 
 project(Service Config Test) : acetest {
+  after  += Service_Config_DLL
   exename = Service_Config_Test
   Source_Files {
     Service_Config_Test.cpp
@@ -1048,6 +1050,7 @@ project(Service Config Test) : acetest {
 }
 
 project(Framework Component Test) : acetest {
+  after  += Framework_Component_DLL
   exename = Framework_Component_Test
   Source_Files {
     Framework_Component_Test.cpp
@@ -1225,7 +1228,7 @@ project(QtReactor Test) : acetest, ace_qtreactor {
 }
 
 project(Based Pointer Test) : acetest {
-  after  += Based Pointer Test Lib
+  after  += Based_Pointer_Test_Lib
   exename = Based_Pointer_Test
   Source_Files {
     Based_Pointer_Test.cpp
