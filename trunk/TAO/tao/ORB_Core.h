@@ -94,15 +94,6 @@ class TAO_Codeset_Manager;
 class TAO_IORInterceptor_Adapter;
 class TAO_Valuetype_Adapter;
 
-#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
-
-class TAO_Eager_Buffering_Sync_Strategy;
-class TAO_Delayed_Buffering_Sync_Strategy;
-
-#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-
-class TAO_Transport_Sync_Strategy;
-class TAO_Sync_Strategy;
 class TAO_Policy_Validator;
 
 namespace TAO
@@ -110,6 +101,7 @@ namespace TAO
   class GUIResource_Factory;
   class PolicyFactory_Registry_Adapter;
   class ORBInitializer_Registry_Adapter;
+  class Transport_Queueing_Strategy;
 }
 
 namespace CORBA
@@ -519,27 +511,16 @@ public:
                              bool &has_synchronization,
                              Messaging::SyncScope &scope);
 
-  TAO_Sync_Strategy &get_sync_strategy (TAO_Stub *stub,
-                                        Messaging::SyncScope &scope);
+  TAO::Transport_Queueing_Strategy &get_transport_queueing_strategy (
+    TAO_Stub *stub,
+    Messaging::SyncScope &scope);
+
   typedef void (*Sync_Scope_Hook) (TAO_ORB_Core *,
                                    TAO_Stub *,
                                    bool &,
                                    Messaging::SyncScope &);
 
   static void set_sync_scope_hook (Sync_Scope_Hook hook);
-
-#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
-
-  /// This strategy will buffer messages.
-  //@{
-  TAO_Eager_Buffering_Sync_Strategy &eager_buffering_sync_strategy (void);
-  TAO_Delayed_Buffering_Sync_Strategy &delayed_buffering_sync_strategy (void);
-  //@}
-
-#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-
-  /// This strategy will sync with the transport.
-  TAO_Transport_Sync_Strategy &transport_sync_strategy (void);
 
   /// Handle to the factory for protocols_hooks_..
   TAO_Protocols_Hooks *protocols_hooks_;
@@ -879,6 +860,9 @@ public:
   /// Choose to be not a default ORB when there is more than one ORB.
   void not_default (const char * orb_id);
 
+  /// This strategy will sync with the transport.
+  TAO::Transport_Queueing_Strategy &default_transport_queueing_strategy (void);
+
 protected:
 
   /// Destructor is protected since the ORB Core is a reference
@@ -968,6 +952,15 @@ private:
   CORBA::Boolean is_collocation_enabled (TAO_ORB_Core *other_orb,
                                          const TAO_MProfile &mp);
 
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
+
+  /// This strategy will buffer messages.
+  //@{
+  TAO::Transport_Queueing_Strategy &eager_transport_queueing_strategy (void);
+  TAO::Transport_Queueing_Strategy &delayed_transport_queueing_strategy (void);
+  //@}
+
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
 protected:
 
@@ -1139,15 +1132,15 @@ protected:
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
   /// This strategy will buffer messages.
-  TAO_Eager_Buffering_Sync_Strategy *eager_buffering_sync_strategy_;
+  TAO::Transport_Queueing_Strategy *eager_transport_queueing_strategy_;
 
   /// This strategy will buffer messages.
-  TAO_Delayed_Buffering_Sync_Strategy *delayed_buffering_sync_strategy_;
+  TAO::Transport_Queueing_Strategy *delayed_transport_queueing_strategy_;
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
   /// This strategy will sync with the transport.
-  TAO_Transport_Sync_Strategy *transport_sync_strategy_;
+  TAO::Transport_Queueing_Strategy *default_transport_queueing_strategy_;
 
   /// Number of outstanding references to this object.
   CORBA::ULong refcount_;

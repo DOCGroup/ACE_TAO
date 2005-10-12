@@ -11,7 +11,7 @@
 #include "Leader_Follower.h"
 #include "LF_Event_Loop_Thread_Helper.h"
 #include "Connector_Registry.h"
-#include "Sync_Strategies.h"
+#include "Transport_Queueing_Strategies.h"
 #include "Object_Loader.h"
 #include "ObjectIdListC.h"
 #include "BiDir_Adapter.h"
@@ -188,10 +188,10 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     open_lock_ (),
     endpoint_selector_factory_ (0),
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
-    eager_buffering_sync_strategy_ (0),
-    delayed_buffering_sync_strategy_ (0),
+    eager_transport_queueing_strategy_ (0),
+    delayed_transport_queueing_strategy_ (0),
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-    transport_sync_strategy_ (0),
+    default_transport_queueing_strategy_ (0),
     refcount_ (1),
     policy_factory_registry_ (0),
     orbinitializer_registry_ (0),
@@ -210,11 +210,11 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 {
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
-  ACE_NEW (this->eager_buffering_sync_strategy_,
-           TAO_Eager_Buffering_Sync_Strategy);
+  ACE_NEW (this->eager_transport_queueing_strategy_,
+           TAO::Eager_Transport_Queueing_Strategy);
 
-  ACE_NEW (this->delayed_buffering_sync_strategy_,
-           TAO_Delayed_Buffering_Sync_Strategy);
+  ACE_NEW (this->delayed_transport_queueing_strategy_,
+           TAO::Delayed_Transport_Queueing_Strategy);
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
@@ -231,8 +231,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
-  ACE_NEW (this->transport_sync_strategy_,
-           TAO_Transport_Sync_Strategy);
+  ACE_NEW (this->default_transport_queueing_strategy_,
+           TAO::Default_Transport_Queueing_Strategy);
 
   // Initialize the default request dispatcher.
   ACE_NEW (this->request_dispatcher_,
@@ -249,8 +249,8 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
-  delete this->eager_buffering_sync_strategy_;
-  delete this->delayed_buffering_sync_strategy_;
+  delete this->eager_transport_queueing_strategy_;
+  delete this->delayed_transport_queueing_strategy_;
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
@@ -262,7 +262,7 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
-  delete this->transport_sync_strategy_;
+  delete this->default_transport_queueing_strategy_;
 
   delete this->request_dispatcher_;
 
@@ -2675,16 +2675,16 @@ TAO_ORB_Core::call_sync_scope_hook (TAO_Stub *stub,
   (*sync_scope_hook) (this, stub, has_synchronization, scope);
 }
 
-TAO_Sync_Strategy &
-TAO_ORB_Core::get_sync_strategy (TAO_Stub *,
-                                 Messaging::SyncScope &scope)
+TAO::Transport_Queueing_Strategy &
+TAO_ORB_Core::get_transport_queueing_strategy (TAO_Stub *,
+                                               Messaging::SyncScope &scope)
 {
 
   if (scope == Messaging::SYNC_WITH_TRANSPORT
       || scope == Messaging::SYNC_WITH_SERVER
       || scope == Messaging::SYNC_WITH_TARGET)
     {
-      return this->transport_sync_strategy ();
+      return this->default_transport_queueing_strategy ();
     }
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
@@ -2692,17 +2692,17 @@ TAO_ORB_Core::get_sync_strategy (TAO_Stub *,
   if (scope == Messaging::SYNC_NONE
       || scope == TAO::SYNC_EAGER_BUFFERING)
     {
-      return this->eager_buffering_sync_strategy ();
+      return this->eager_transport_queueing_strategy ();
     }
 
   if (scope == TAO::SYNC_DELAYED_BUFFERING)
     {
-      return this->delayed_buffering_sync_strategy ();
+      return this->delayed_transport_queueing_strategy ();
     }
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
-  return this->transport_sync_strategy ();
+  return this->default_transport_queueing_strategy ();
 }
 
 void
