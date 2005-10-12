@@ -1,3 +1,11 @@
+Wed Oct 12 13:17:58 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/TypeNameEmitter.cpp:
+        
+          Removed generation of error message with code that attempts 
+          to set an enum attribute value, and replace it with code
+          that extracts the enum value from the Any arguement.
+
 Wed Oct 12 08:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/spec_RepositoryManager/RepositoryManager_Impl.h:
