@@ -305,6 +305,12 @@ Sat Oct  8 07:50:48 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 	  normalized all orbsvcs header files to be included with
 	  "orbsvcs/foo.h".  The correct settings of ../../orbsvcs is
 	  already obtained from the base projects we derive from.
+	  
+Fri Oct  7 16:40:05 2005  Simon McQueen  <sm@prismtech.com>
+
+        * orbsvcs/tests/Bug_2248_Regression/Server_Request_Interceptor.cpp:
+
+          Another day, another emulated exception macro problem.
 
 Fri Oct  7 14:03:54 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
