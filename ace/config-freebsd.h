@@ -225,7 +225,7 @@ extern "C" { char * cuserid (char *s); }
 #define ACE_HAS_SIGWAIT
 
 #define ACE_HAS_TERM_IOCTLS
-#define ACE_USES_NEW_TERMIOS_STRUCT
+#define ACE_HAS_NEW_TERMIOS_STRUCT
 #define TCGETS TIOCGETA
 #define TCSETS TIOCSETA
 

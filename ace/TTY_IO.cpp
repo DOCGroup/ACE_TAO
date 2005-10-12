@@ -47,11 +47,11 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
 #endif /* TCGETS */
    return -1;
 
-#if defined (ACE_USES_NEW_TERMIOS_STRUCT)
+#if defined (ACE_HAS_NEW_TERMIOS_STRUCT)
   speed_t newbaudrate = 0;
 #else
   unsigned int newbaudrate = 0;
-#endif /* ACE_USES_NEW_TERMIOS_STRUCT */
+#endif /* ACE_HAS_NEW_TERMIOS_STRUCT */
 
   switch (cmd)
     {
@@ -173,7 +173,7 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
           return -1;
         }
 
-#if defined (ACE_USES_NEW_TERMIOS_STRUCT)
+#if defined (ACE_HAS_NEW_TERMIOS_STRUCT)
       // Can you really have different input and output baud rates?!
       devpar.c_ispeed = newbaudrate;
       devpar.c_ospeed = newbaudrate;
@@ -183,7 +183,7 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
       devpar.c_cflag &= ~CBAUDEX;
 # endif /* CBAUDEX */
       devpar.c_cflag |= newbaudrate;
-#endif /* ACE_USES_NEW_TERMIOS_STRUCT */
+#endif /* ACE_HAS_NEW_TERMIOS_STRUCT */
 
       devpar.c_cflag &= ~CSIZE;
       switch (arg->databits)
