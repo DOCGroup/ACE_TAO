@@ -1,3 +1,9 @@
+Wed Oct 12 08:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/performance-tests/RTEvent/lib/Servant_var.h:
+        * orbsvcs/examples/Notify/Federation/Gate/Gate.h:
+          Fixed fuzz check
+
 Wed Oct 12 08:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rules.tao.GNU:
