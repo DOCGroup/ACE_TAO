@@ -1,3 +1,11 @@
+Wed Oct 12 15:08:31 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/Config_Handlers/RT-CCM/TP_Handler.cpp:
+        
+          Changed the types of some static_casts on the rhs of 
+          assignments to match the types on the lhs, eliminating
+          warnings from MSVC 7.1.
+
 Wed Oct 12 13:17:58 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/TypeNameEmitter.cpp:
