@@ -1,7 +1,7 @@
 // $Id$
 
-#include "ace/TTY_IO.h"
 #include "ace/os_include/os_termios.h"
+#include "ace/TTY_IO.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_strings.h"
 
