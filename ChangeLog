@@ -1,11 +1,20 @@
+Wed Oct 12 22:32:33 2005  Olli Savia  <ops@iki.fi>
+
+        * ace/TTY_IO.h:
+        * ace/TTY_IO.cpp:
+          TTY_IO class overhaul. See NEWS for more information.
+	
+        * NEWS:
+          Added TTY_IO changes.
+
 Wed Oct 12 12:02:46 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/Based_Pointer_Test.cpp:
-	* tests/dll_test_parent_lib.mpb:
-	* tests/tests.mpc:
+        * tests/Based_Pointer_Test.cpp:
+        * tests/dll_test_parent_lib.mpb:
+        * tests/tests.mpc:
 
-	  Fixed project dependencies for tests with an accompanying shared
-	  library.
+          Fixed project dependencies for tests with an accompanying shared
+          library.
 
 Wed Oct 12 12:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -96,7 +105,7 @@ Tue Oct 11 06:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ACE-INSTALL.html:
           Updated Remedy IT support platforms and added
           Borland C++ Builder 2006 as new support platform. This is now
-	  publicly announced by Borland.
+          publicly announced by Borland.
 
 Mon Oct 10 15:45:17 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
