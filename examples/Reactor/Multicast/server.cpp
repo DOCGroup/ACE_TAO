@@ -43,7 +43,7 @@ private:
 
   int initialized_;
   int count_;
-  int interval_;
+  long interval_;
   // time interval to log messages
 
   ACE_Time_Value *how_long_;

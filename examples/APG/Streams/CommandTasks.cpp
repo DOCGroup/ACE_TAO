@@ -135,7 +135,7 @@ int PlayMessageDownstreamTask::process (Command *command)
         (CommandModule*)this->module ();
 
       char rwbuf[512];
-      int rwbytes;
+      ssize_t rwbytes;
       while ((rwbytes = file.recv (rwbuf, 512)) > 0)
         {
           module->peer ().send_n (rwbuf, rwbytes);
@@ -201,9 +201,9 @@ int RecordMessageUpstreamTask::process (Command *command)
   CommandModule *module =
     (CommandModule*)this->module ();
 
-  int total_bytes = 0;
+  ssize_t total_bytes = 0;
   char rwbuf[512];
-  int rwbytes;
+  ssize_t rwbytes;
   while ((rwbytes = module->peer ().recv (rwbuf, 512)) > 0)
     {
       total_bytes += file.send_n (rwbuf, rwbytes);
