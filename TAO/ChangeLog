@@ -2,6 +2,8 @@ Wed Oct 12 07:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/DIOP_Transport.cpp:
         * tao/Strategies/SHMIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
           Remove not needed include of tao/Sync_Strategies.h
 
 Wed Oct 12 03:59:27 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>

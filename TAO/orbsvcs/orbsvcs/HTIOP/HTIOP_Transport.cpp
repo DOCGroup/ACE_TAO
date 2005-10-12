@@ -7,7 +7,6 @@
 #include "HTIOP_Profile.h"
 #include "ace/HTBP/HTBP_Session.h"
 
-
 #include "tao/Acceptor_Registry.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/operation_details.h"
@@ -15,7 +14,6 @@
 #include "tao/CDR.h"
 #include "tao/Transport_Mux_Strategy.h"
 #include "tao/Wait_Strategy.h"
-#include "tao/Sync_Strategies.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
@@ -29,8 +27,8 @@ ACE_RCSID (HTIOP,
            "$Id$")
 
 TAO::HTIOP::Transport::Transport (TAO::HTIOP::Connection_Handler *h,
-                                          TAO_ORB_Core *orb_core,
-                                          CORBA::Boolean flag)
+                                  TAO_ORB_Core *orb_core,
+                                  CORBA::Boolean flag)
   : TAO_Transport (OCI_TAG_HTIOP_PROFILE, orb_core),
     connection_handler_ (h),
     messaging_object_ (0)
@@ -74,8 +72,8 @@ TAO::HTIOP::Transport::messaging_object (void)
 
 ssize_t
 TAO::HTIOP::Transport::send (iovec *iov, int iovcnt,
-                           size_t &bytes_transferred,
-                           const ACE_Time_Value *max_wait_time)
+                            size_t &bytes_transferred,
+                            const ACE_Time_Value *max_wait_time)
 {
   ACE_UNUSED_ARG (max_wait_time);
   ssize_t retval = this->connection_handler_->peer ().sendv (iov, iovcnt,
@@ -162,10 +160,10 @@ TAO::HTIOP::Transport::register_handler (void)
 
 int
 TAO::HTIOP::Transport::send_request (TAO_Stub *stub,
-                                   TAO_ORB_Core *orb_core,
-                                   TAO_OutputCDR &stream,
-                                   int message_semantics,
-                                   ACE_Time_Value *max_wait_time)
+                                     TAO_ORB_Core *orb_core,
+                                     TAO_OutputCDR &stream,
+                                     int message_semantics,
+                                     ACE_Time_Value *max_wait_time)
 {
   if (this->ws_->sending_request (orb_core,
                                   message_semantics) == -1)
@@ -218,9 +216,9 @@ TAO::HTIOP::Transport::send_message (TAO_OutputCDR &stream,
 
 int
 TAO::HTIOP::Transport::send_message_shared (TAO_Stub *stub,
-                                          int message_semantics,
-                                          const ACE_Message_Block *message_block,
-                                          ACE_Time_Value *max_wait_time)
+                                            int message_semantics,
+                                            const ACE_Message_Block *message_block,
+                                            ACE_Time_Value *max_wait_time)
 {
   int r;
   {
@@ -272,7 +270,7 @@ TAO::HTIOP::Transport::generate_request_header (TAO_Operation_Details &opdetails
 
 int
 TAO::HTIOP::Transport::messaging_init (CORBA::Octet major,
-                                     CORBA::Octet minor)
+                                       CORBA::Octet minor)
 {
   this->messaging_object_->init (major,
                                  minor);
@@ -358,7 +356,7 @@ TAO::HTIOP::Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
 
 int
 TAO::HTIOP::Transport::get_listen_point (::HTIOP::ListenPointList &lp_list,
-                                       TAO_Acceptor *acceptor)
+                                         TAO_Acceptor *acceptor)
 {
   TAO::HTIOP::Acceptor *htiop_acceptor =
     dynamic_cast<TAO::HTIOP::Acceptor *> (acceptor );
