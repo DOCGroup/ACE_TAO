@@ -30,13 +30,15 @@ namespace CIDL_Sender_Impl
   public:
     /// Default constructor.
     Sender_exec_i ()
-        : message_(CORBA::string_dup ("Default Message"))
+      : message_(CORBA::string_dup ("Default Message")),
+        color_ (::Hello::empty)
     {
     }
 
     /// Secondary construction.
     Sender_exec_i (const char* local_message)
-      : message_ (CORBA::string_dup (local_message))
+      : message_ (CORBA::string_dup (local_message)),
+        color_ (::Hello::empty)
     {
     }
 
@@ -71,6 +73,14 @@ namespace CIDL_Sender_Impl
     get_push_message (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    virtual ::Hello::COLOR_SELECTION
+    color (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual void
+    color (::Hello::COLOR_SELECTION
+           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operation inside of the trigger interface.
     virtual void start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -111,6 +121,8 @@ namespace CIDL_Sender_Impl
 
     CORBA::Long hertz_;
 
+    ::Hello::COLOR_SELECTION color_;
+    
     friend class Message_Impl;
   };
 
