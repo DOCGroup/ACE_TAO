@@ -111,7 +111,7 @@ main (int argc, char *argv[])
 
       ACE_DEBUG((LM_DEBUG, "Server waiting for extra messages...\n"));
 
-      ACE_Time_Value tv(1);
+      ACE_Time_Value tv(3);
       orb->run(tv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -127,7 +127,10 @@ main (int argc, char *argv[])
         result = 1;
       }
 
-      ACE_DEBUG ((LM_DEBUG, "(%P) - Server got %d messages\n", count));
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P) - Server got %d messages, expected %d\n",
+                  count,
+                  expected));
 
       root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
