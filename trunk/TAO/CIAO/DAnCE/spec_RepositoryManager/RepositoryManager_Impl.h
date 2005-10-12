@@ -7,7 +7,7 @@
 // filename: RepositoryManager_Impl.h
 // Author: Stoyan Paunov	spaunov@isis.vanderbilt.edu
 //
-// Purpose: This class is the implementation class for the spec 
+// Purpose: This class is the implementation class for the spec
 //          complient RepositoryManager
 //
 
@@ -37,24 +37,24 @@ const static size_t TEMP_LEN = 512;
 const static char* PC_EXTENSION = ".epc";
 }
 
-class  CIAO_RepositoryManagerDaemon_i : public virtual POA_CIAO::RepositoryManagerDaemon, public virtual PortableServer::RefCountServantBase
+class  CIAO_RepositoryManagerDaemon_i : public virtual POA_CIAO::RepositoryManagerDaemon
 {
 public:
-  //Constructor 
-	CIAO_RepositoryManagerDaemon_i (CORBA::ORB_ptr the_orb, 
+  //Constructor
+	CIAO_RepositoryManagerDaemon_i (CORBA::ORB_ptr the_orb,
 									const char* server = "http://localhost:5432/");
-  
-  //Destructor 
+
+  //Destructor
   virtual ~CIAO_RepositoryManagerDaemon_i (void);
-  
+
   virtual
   void shutdown (
-      
+
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-  
+
   virtual
   void installPackage (
       const char * installationName,
@@ -65,7 +65,7 @@ public:
       ::Deployment::NameExists,
       ::Deployment::PackageError
     ));
-  
+
   virtual
   void createPackage (
       const char * installationName,
@@ -78,7 +78,7 @@ public:
       ::Deployment::NameExists,
       ::Deployment::PackageError
     ));
-  
+
   virtual
   ::Deployment::PackageConfiguration * findPackageByName (
       const char * name
@@ -87,7 +87,7 @@ public:
       CORBA::SystemException,
       ::Deployment::NoSuchName
     ));
-  
+
   virtual
   ::Deployment::PackageConfiguration * findPackageByUUID (
       const char * UUID
@@ -96,7 +96,7 @@ public:
       CORBA::SystemException,
       ::Deployment::NoSuchName
     ));
-  
+
   virtual
   ::CORBA::StringSeq * findNamesByType (
       const char * type
@@ -104,23 +104,23 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-  
+
   virtual
   ::CORBA::StringSeq * getAllNames (
-      
+
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-  
+
   virtual
   ::CORBA::StringSeq * getAllTypes (
-      
+
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-  
+
   virtual
   void deletePackage (
       const char * installationName
@@ -140,7 +140,7 @@ public:
 
 	  ///function to parse and return the PackageConfiguration from the already
 	  ///extracted descriptor files
-	  Deployment::PackageConfiguration* retrieve_PC_from_descriptors (const char* pc_name, 
+	  Deployment::PackageConfiguration* retrieve_PC_from_descriptors (const char* pc_name,
 																	  const char* descriptor_dir);
 
 	  ///function to extract all necessary files for parsing the PackageConfiguration
@@ -150,7 +150,7 @@ public:
 	  ///
 	  ///NOTE: ACE_CString& pcd_name is an out parameter
 
-	  int extract_descriptor_files (char* package,  
+	  int extract_descriptor_files (char* package,
 								   ACE_CString& pcd_name);
 
 
@@ -164,7 +164,7 @@ public:
 
 
 	  ///function to remove the files extracted from the package upon istallation
-	  ///It reads the names of the files from the package. They correspond to the 
+	  ///It reads the names of the files from the package. They correspond to the
 	  ///names on disk. It deletes each file, then it deletes the directories that
 	  ///contain them.
 	  ///NOTE: extraction location is path/*archive_name*/
@@ -179,7 +179,7 @@ public:
     /// Key:	PackageConfiguration name or its UUID (CString type)
     /// Value:	The location of the local copy of the package
 
-	///Based on the synchronization needed we can parametrize this with either 
+	///Based on the synchronization needed we can parametrize this with either
 	///ACE_Null_Mutex or ACE_RW_Mutex
 
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
