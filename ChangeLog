@@ -1,9 +1,20 @@
+Wed Oct 12 22:50:39 2005  Olli Savia  <ops@iki.fi>
+
+        * ace/TTY_IO.cpp:
+        * ace/config-freebsd.h:
+        * ace/config-irix6.x-common.h:
+        * ace/config-linux-common.h:
+        * ace/config-openbsd.h:
+        * ace/config-win32-interix.h:
+          Changed ACE_USES_NEW_TERMIOS_STRUCT to ACE_HAS_NEW_TERMIOS_STRUCT
+          to better follow ACE naming conventions.
+
 Wed Oct 12 22:32:33 2005  Olli Savia  <ops@iki.fi>
 
         * ace/TTY_IO.h:
         * ace/TTY_IO.cpp:
           TTY_IO class overhaul. See NEWS for more information.
-	
+
         * NEWS:
           Added TTY_IO changes.
 
