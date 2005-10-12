@@ -1863,7 +1863,7 @@ SetAttributeDelegationEmitter::traverse (Object&)
 void
 SetAttributeDelegationEmitter::traverse (ValueBase&)
 {
-  emit_error ("sequence");
+  emit_error ("CORBA::ValueBase");
 }
 
 void
@@ -1875,7 +1875,7 @@ SetAttributeDelegationEmitter::traverse (Any&)
 void
 SetAttributeDelegationEmitter::traverse (SemanticGraph::Enum&)
 {
-  emit_error ("enum");
+  emit_delegation ();
 }
 
 void
