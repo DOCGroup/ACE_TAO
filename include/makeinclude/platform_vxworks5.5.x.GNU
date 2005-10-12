@@ -33,7 +33,7 @@ debug ?= 1
 optimize ?= 1
 rtti ?= 1
 threads ?= 1
-exceptions ?= 0
+exceptions ?= 1
 
 ifeq ($(static_libs),1)
   shared_libs = 0
