@@ -1,3 +1,22 @@
+Wed Oct 12 03:59:27 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_union/discriminant_ci.cpp:
+        
+          In the generated body of the _default() method for a 
+          union, which sets the discriminator to its default
+          value (the _default() method is not generated unless
+          the disccriminator can have a valid default value),
+          added a call to _reset(), which will free memory
+          allocated for the existing active member. The former
+          behavior, without the call to _reset(), was producing
+          a memory leak in many cases when _default() is called
+          on an instantiated union. Thanks to Georg Lohrer
+          <news@tropezien.de> for reporting the problem.
+          
+        * TAO_IDLbe/be_visitor_union/union_cs.cpp:
+        
+          Minor change to generated code formatting.
+
 Tue Oct 11 22:23:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * tao/IIOP_Connection_Handler.cpp:
