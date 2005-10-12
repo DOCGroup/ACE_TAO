@@ -1,3 +1,8 @@
+Wed Oct 12 08:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/spec_RepositoryManager/RepositoryManager_Impl.h:
+          Fixed fuzz check
+
 Tue Oct 11 16:37:01 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* tools/Config_Handlers/Basic_Deployment_Data.cpp
@@ -26,12 +31,12 @@ Tue Oct 11 16:37:01 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	Fixed a bug which broke the gaurantee that element order in the
 	XSC type would be the same as the element order in the instance
 	document.
-	
+
 	* tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp
 	* tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.cpp
 
-	Fixed a runtime error and removed some debugging information. 
-	
+	Fixed a runtime error and removed some debugging information.
+
 Mon Oct 10 17:37:20 2005 Stoyan Paunov spaunov@isis.vanderbilt.edu
 
 	* DAnCE/spec_RepositoryManager/ZIP_Wrapper.cpp
@@ -44,22 +49,22 @@ Mon Oct 10 15:46:57 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* DAnCE/spec_RepositoryManager/RepositoryManager_Impl.cpp
 	* DAnCE/spec_RepositoryManager/ZIP_Wrapper.cpp
 
-	Trivial corrections for portability problems. 
-	
+	Trivial corrections for portability problems.
+
 	* DAnCE/spec_RepositoryManager/spec_RepositoryManager.mpc
 
-	Updated to properlly use base projects. 
-	
+	Updated to properlly use base projects.
+
 Mon Oct 10 20:07:39 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/Config_Handlers/Config_Handlers.mpc:
         * tools/Config_Handlers/DynAny_Handler.mpc:
-        
+
           Add export files to projects, and removed redundant
           base projects.
-          
+
         * tools/Config_Handlers/RT-CCM/TPL_Handler.cpp:
-        
+
           Changed some static casts on the rhs of assignments to types
           corresponding to the lhs, elminating warnings on MSVC 7.1.
 
@@ -68,10 +73,10 @@ Mon Oct 10 15:05:00 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* docs/schema/Basic_Deployment_Data.xsd
 	* docs/schema/cdd.xsd
 
-	Checking in some updated schema for domain information. 
+	Checking in some updated schema for domain information.
 
 Mon Oct 10 13:53:15 2005  Will Otte <wotte@dre.vanderbilt.edu>
-	
+
 	* tools/Config_Handlers/Basic_Deployment_Data.hpp
 	* tools/Config_Handlers/Config_Handlers.mpc
 	* tools/Config_Handlers/Deployment.hpp
@@ -109,8 +114,8 @@ Mon Oct 10 13:53:15 2005  Will Otte <wotte@dre.vanderbilt.edu>
 	* tools/Config_Handlers/Utils/XML_Schema_Resolver.h
 
 	Fixed messy export macro usage.  This will clean up builds on
-	Windows. 
-	
+	Windows.
+
 Sun Oct 9 19:22:44 CDT 2005 Stoyan Paunov spaunov@isis.vanderbilt.edu
 
 	* DAnCE/spec_RepositoryManager/RepositoryManager_Impl.cpp
@@ -124,7 +129,7 @@ Sun Oct  9 09:51:41 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* tools/Config_Handlers/DynAny_Handler.mpc
 
 	Moved this file down a level to make MPC stop complaining.
-	
+
 Fri Oct  7 18:22:40 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* tools/Config_Handlers/Any_Handler.cpp
@@ -132,7 +137,7 @@ Fri Oct  7 18:22:40 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* tools/Config_Handlers/DynAny_Handler/DynAny_Handler.h
 	* tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.cpp
 
-	*Hopefully* fix compile problem on Windows. 
+	*Hopefully* fix compile problem on Windows.
 
 Fri Oct  7 18:25:11 2005  Will Otte <wotte@dre.vanderbilt.edu>
 
@@ -141,7 +146,7 @@ Fri Oct  7 18:25:11 2005  Will Otte <wotte@dre.vanderbilt.edu>
 	* tools/Config_Handlers/IDD_Handler.cpp
 	* tools/Config_Handlers/MDD_Handler.cpp
 
-	Fix runtime error. 
+	Fix runtime error.
 
 Fri Oct  7 16:18:40 2005  Will Otte <wotte@dre.vanderbilt.edu>
 
@@ -149,8 +154,8 @@ Fri Oct  7 16:18:40 2005  Will Otte <wotte@dre.vanderbilt.edu>
 	* tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.cpp
 	* tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.h
 
-	Fix for a compile problem. 
-	
+	Fix for a compile problem.
+
 Fri Oct  7 14:25:09 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/DynAny_Handler/DataType_Handler.cpp
@@ -163,8 +168,8 @@ Fri Oct  7 14:25:09 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* tools/Config_Handlers/Any_Handler.cpp
 
 	Add support for using Dynamic Any.  This will evolve in the coming
-	weeks into more complete support for complex types. 
-	
+	weeks into more complete support for complex types.
+
 	* tools/Config_Handlers/ADD_Handler.cpp
 	* tools/Config_Handlers/ADD_Handler.h
 	* tools/Config_Handlers/Basic_Deployment_Data.cpp
@@ -186,8 +191,8 @@ Fri Oct  7 14:25:09 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* tools/Config_Handlers/PSPE_Handler.cpp
 	* tools/Config_Handlers/PSPE_Handler.h
 
-	Optimization made possible by improvements in XSC.  
-	
+	Optimization made possible by improvements in XSC.
+
 Fri Oct  7 14:20:36 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/DomainApplicationManager/Deployment_Configuration.cpp:
