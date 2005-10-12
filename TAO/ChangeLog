@@ -1,3 +1,10 @@
+Wed Oct 12 08:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rules.tao.GNU:
+          Emulated exception macros are not maintained anymore, so it
+          is just not safe to use them, so when exceptions=0, we output
+          an error about this and refer to the NEWS file.
+
 Wed Oct 12 07:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/DIOP_Transport.cpp:
