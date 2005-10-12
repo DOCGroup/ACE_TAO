@@ -21,7 +21,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
                        ACE_TEXT ("connect")), 1);
   // Listing 2
 
-  int bc;
+  ssize_t bc;
   char buf[64];
 
   // Listing 3 code/ch06

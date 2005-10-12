@@ -72,7 +72,7 @@ private:
   size_t id_;
   // ID passed in by Thread_Handler constructor.
 
-  int iterations_;
+  size_t iterations_;
 
   static sig_atomic_t shutdown_;
   // Shutting down.
@@ -112,7 +112,7 @@ Thread_Handler::~Thread_Handler (void)
 Thread_Handler::Thread_Handler (int delay,
 				int interval,
 				size_t n_threads,
-                                size_t max_iterations)
+        size_t max_iterations)
     : iterations_ (max_iterations)
 {
   ACE_Sig_Set sig_set;

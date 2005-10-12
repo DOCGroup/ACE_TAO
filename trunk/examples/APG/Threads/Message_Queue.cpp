@@ -57,30 +57,30 @@ Message_Receiver::shut_down_message (void)
 int
 Message_Receiver::read_header (DeviceCommandHeader *dch)
 {
-    ssize_t result =
-        this->peer ().recv_n (dch, sizeof (DeviceCommandHeader));
-    if (result <= 0)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("Recieve Failure")),
-                          -1);
-    return 0;
+  ssize_t result =
+    this->peer ().recv_n (dch, sizeof (DeviceCommandHeader));
+  if (result <= 0)
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("Recieve Failure")),
+                        -1);
+  return 0;
 }
 // Listing 3 code/ch12
 int
 Message_Receiver::copy_payload (ACE_Message_Block *mb,
                                 int payload_length)
 {
-  int result =
+  ssize_t result =
     this->peer ().recv_n (mb->wr_ptr (), payload_length);
 
-    if (result <= 0)
-      {
-        mb->release ();
-        return result;
-      }
+ if (result <= 0)
+   {
+     mb->release ();
+     return -1;
+   }
 
-    mb->wr_ptr (payload_length);
-    return 0;
+  mb->wr_ptr (payload_length);
+  return 0;
 }
 // Listing 3
 // Listing 2 code/ch12
