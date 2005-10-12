@@ -1,3 +1,10 @@
+Wed Oct 12 23:08:43 2005  Olli Savia  <ops@iki.fi>
+
+        * ace/CDR_Stream.inl:
+        * ace/CDR_Stream.cpp:
+        * ace/SString.cpp:
+          Fixed might be unitialized warning in FC4 build.
+        
 Wed Oct 12 22:50:39 2005  Olli Savia  <ops@iki.fi>
 
         * ace/TTY_IO.cpp:

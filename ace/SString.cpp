@@ -438,7 +438,7 @@ ACE_Tokenizer::next (void)
       return 0;
     }
 
-  ACE_TCHAR replacement;
+  ACE_TCHAR replacement = 0;
   int replace;
   ACE_TCHAR *next_token;
 

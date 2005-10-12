@@ -769,7 +769,7 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
       this->start_.rd_ptr (newpos);
       this->start_.wr_ptr (newpos + size);
 
-      ACE_CDR::Octet byte_order;
+      ACE_CDR::Octet byte_order = 0;
       this->read_octet (byte_order);
       this->do_byte_swap_ = (byte_order != ACE_CDR_BYTE_ORDER);
     }
