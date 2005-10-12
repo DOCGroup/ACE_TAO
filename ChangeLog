@@ -1,3 +1,14 @@
+Wed Oct 12 12:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/Sockets/Basic.cpp:
+        * examples/APG/Streams/Util.h:
+        * examples/APG/Streams/CommandTasks.cpp:
+        * examples/APG/Threads/Message_Queue.cpp:
+        * examples/Reactor/Misc/notification.cpp:
+        * examples/Reactor/Misc/test_timer_queue.cpp:
+        * examples/Reactor/Multicast/server.cpp:
+          Fixed 64bit conversion warnings
+
 Wed Oct 12 09:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/ipv6.mpb:
