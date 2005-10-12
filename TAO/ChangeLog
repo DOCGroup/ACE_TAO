@@ -1,3 +1,10 @@
+Wed Oct 12 08:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rules.tao.GNU:
+          Just for some hours disabled no exception check, the performance
+          stats use no exceptions, if the stats are back to normal I will
+          enable this check again
+
 Wed Oct 12 08:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/performance-tests/RTEvent/lib/Servant_var.h:
