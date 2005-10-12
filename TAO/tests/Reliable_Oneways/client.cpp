@@ -137,6 +137,12 @@ main (int argc, char *argv[])
           ACE_TRY_CHECK;
         }
 
+      // Run the orb for 3 seconds, this way we make sure things are flushed
+      // to the transport.
+      ACE_Time_Value time (3, 0);
+      orb->run (time ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       if (successful_calls == 0)
         ACE_ERROR ((LM_ERROR, "ERROR: No requests were successful\n"));
 
