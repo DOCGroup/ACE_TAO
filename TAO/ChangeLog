@@ -1,3 +1,20 @@
+Wed Oct 12 09:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Sync_Strategies.{h,cpp}:
+        * tao/Transport_Queueing_Strategies.{h,cpp}:
+          Renamed Sync_Strategies to Transport_Queueing_Strategies, this is
+          what it are, and there was already a todo that a rename should be
+          done. Also use bool instead of int where usable and there is no
+          need to export these classes.
+
+        * tao/Makefile.am:
+        * tao/tao.mpc:
+        * tao/ORB_Core.{h,cpp,i}:
+        * tao/Stub.{h,cpp}:
+        * tao/Transport.{h,cpp}:
+          Updated for change above, also updated these files to talk about
+          Transport Queueing Strategies
+
 Wed Oct 12 08:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rules.tao.GNU:

@@ -204,7 +204,6 @@ libTAO_la_SOURCES = \
   StringSeqC.cpp \
   Stub.cpp \
   Stub_Factory.cpp \
-  Sync_Strategies.cpp \
   Synch_Invocation.cpp \
   Synch_Queued_Message.cpp \
   Synch_Reply_Dispatcher.cpp \
@@ -226,6 +225,7 @@ libTAO_la_SOURCES = \
   Transport_Connector.cpp \
   Transport_Descriptor_Interface.cpp \
   Transport_Mux_Strategy.cpp \
+  Transport_Queueing_Strategies.cpp \
   Transport_Timer.cpp \
   TypeCodeFactory_Adapter.cpp \
   Typecode_typesC.cpp \
@@ -607,7 +607,6 @@ nobase_include_HEADERS = \
   Stub.h \
   Stub.i \
   Stub_Factory.h \
-  Sync_Strategies.h \
   Synch_Invocation.h \
   Synch_Invocation.inl \
   Synch_Queued_Message.h \
@@ -649,6 +648,7 @@ nobase_include_HEADERS = \
   Transport_Descriptor_Interface.h \
   Transport_Descriptor_Interface.inl \
   Transport_Mux_Strategy.h \
+  Transport_Queueing_Strategies.h \
   Transport_Timer.h \
   TypeCodeFactory_Adapter.h \
   Typecode_types.pidl \

@@ -8,7 +8,7 @@
 #include "Wait_Strategy.h"
 #include "Transport_Mux_Strategy.h"
 #include "Stub.h"
-#include "Sync_Strategies.h"
+#include "Transport_Queueing_Strategies.h"
 #include "Connection_Handler.h"
 #include "Pluggable_Messaging.h"
 #include "Synch_Queued_Message.h"
@@ -1004,7 +1004,7 @@ TAO_Transport::cleanup_queue (size_t byte_count)
 
 int
 TAO_Transport::check_buffering_constraints_i (TAO_Stub *stub,
-                                              int &must_flush)
+                                              bool &must_flush)
 {
   // First let's compute the size of the queue:
   size_t msg_count = 0;
@@ -1016,17 +1016,18 @@ TAO_Transport::check_buffering_constraints_i (TAO_Stub *stub,
       total_bytes += i->message_length ();
     }
 
-  int set_timer;
+  bool set_timer;
   ACE_Time_Value new_deadline;
 
-  int constraints_reached =
-    stub->sync_strategy ().buffering_constraints_reached (stub,
-                                                          msg_count,
-                                                          total_bytes,
-                                                          must_flush,
-                                                          this->current_deadline_,
-                                                          set_timer,
-                                                          new_deadline);
+  bool constraints_reached =
+    stub->transport_queueing_strategy ().
+      buffering_constraints_reached (stub,
+                                     msg_count,
+                                     total_bytes,
+                                     must_flush,
+                                     this->current_deadline_,
+                                     set_timer,
+                                     new_deadline);
 
   // ... set the new timer, also cancel any previous timers ...
   if (set_timer)
@@ -1113,17 +1114,17 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
 {
   // Let's figure out if the message should be queued without trying
   // to send first:
-  int try_sending_first = 1;
+  bool try_sending_first = 1;
 
-  const int queue_empty = (this->head_ == 0);
+  const bool queue_empty = (this->head_ == 0);
 
   if (!queue_empty)
     {
-      try_sending_first = 0;
+      try_sending_first = false;
     }
-  else if (stub->sync_strategy ().must_queue (queue_empty))
+  else if (stub->transport_queueing_strategy ().must_queue (queue_empty))
     {
-      try_sending_first = 0;
+      try_sending_first = false;
     }
 
   if (try_sending_first)
@@ -1224,8 +1225,8 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
 
   // ... if the queue is full we need to activate the output on the
   // queue ...
-  int must_flush = 0;
-  const int constraints_reached =
+  bool must_flush = false;
+  const bool constraints_reached =
     this->check_buffering_constraints_i (stub,
                                          must_flush);
 
