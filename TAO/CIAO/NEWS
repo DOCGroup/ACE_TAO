@@ -59,6 +59,7 @@ PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.7 and CIAO-0.4.8
 ======================================================
+
 . Integrated Real-time QoS support to CIAO based on OMG's new
   Deployment and Configuration (D&C) specification. Such effort
   allows application developers to use real-time CORBA 1.0 features
