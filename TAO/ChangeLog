@@ -1,3 +1,26 @@
+Wed Oct 12 10:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.{h,cpp,i}:
+        * tao/Transport_Queueing_Strategies.{h,cpp}:
+          Added new flush strategy. For asynchronous calls we now have
+          the following behaviour:
+          - Normal oneways are not explicitly buffered, but when send
+            returns EWOULDBLOCK we buffer the message and schedule for
+            output, we just send the data later and don't explicitly
+            flush things, we return control directly to the app
+          - Oneways with SYNC_WITH_TRANSPORT, SYNC_WITH_SERVER and
+            SYNC_WITH_TARGET, we don't explicitly buffer but when
+            send returns EWOULDBLOCK we buffer things, but we do
+            then explicitly flush things
+          - When SYNC_NONE is specified, this is the same as
+            TAO::SYNC_EAGER_BUFFERING and we do buffer then things
+            explicitly
+
+        * tests/Reliable_Oneways/client.cpp:
+          After doing all calls run the orb for 3 seconds, this way at
+          least all queues are flushed
+
+
 Wed Oct 12 09:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/UIOP_Transport.cpp:
