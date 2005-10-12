@@ -82,7 +82,7 @@ int singleton_test (void)
     // at exit time if the library is unloaded. Override
     // the default close on destruct.
     int retval = dll.open (OBJ_PREFIX
-                           ACE_TEXT ("Based_Pointer_Test")
+                           ACE_TEXT ("Based_Pointer_Test_Lib")
                            OBJ_SUFFIX,
                            ACE_DEFAULT_SHLIB_MODE,
                            0);
