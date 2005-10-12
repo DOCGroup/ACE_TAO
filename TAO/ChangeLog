@@ -1,3 +1,10 @@
+Wed Oct 12 12:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Big_Request_Muxing/server.cpp:
+          Run the orb 3 seconds instead of 1 and print out how many
+          messages we expect so that it is easy to see how many
+          messages we didn't receive.
+
 Wed Oct 12 10:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.{h,cpp,i}:
