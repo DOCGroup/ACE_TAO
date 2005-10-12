@@ -568,7 +568,7 @@ ACE_InputCDR::read_octet (ACE_CDR::Octet& x)
 ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::read_boolean (ACE_CDR::Boolean& x)
 {
-  ACE_CDR::Octet tmp;
+  ACE_CDR::Octet tmp = 0;
   this->read_octet (tmp);
   x = tmp ? true : false;
   return (ACE_CDR::Boolean) this->good_bit_;
