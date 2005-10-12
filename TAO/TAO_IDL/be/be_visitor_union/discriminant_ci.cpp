@@ -78,6 +78,7 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
           << "void " << be_nl
           << bu->name () << "::_default ()" << be_nl
           << "{" << be_idt_nl
+          << "this->_reset (this->disc_, false);" << be_nl
           << "this->disc_ = ";
 
       be_type* dt =
@@ -172,6 +173,7 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
           << "void " << be_nl
           << bu->name () << "::_default ()" << be_nl
           << "{" << be_idt_nl
+          << "this->_reset (this->disc_, false);" << be_nl
           << "this->disc_ = ";
 
       switch (bu->udisc_type ())
@@ -199,7 +201,7 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
           os->print ("L'\\%d'", dv.u.wchar_val);
           break;
         case AST_Expression::EV_bool:
-          *os << dv.u.bool_val;
+          *os << (dv.u.bool_val == 0 ? "false" : "true");
 
           break;
         case AST_Expression::EV_longlong:
