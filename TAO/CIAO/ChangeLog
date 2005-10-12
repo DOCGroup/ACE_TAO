@@ -1,3 +1,12 @@
+Wed Oct 12 14:13:09 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* examples/Hello/Sender/Sender.idl
+	* examples/Hello/Sender/Sender_exec.cpp
+	* examples/Hello/Sender/Sender_exec.h
+	* examples/Hello/descriptors/flattened_deploymentplan_without_ns.cdp
+
+	Example of initializing enumerated attributes.
+
 Wed Oct 12 15:08:31 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/Config_Handlers/RT-CCM/TP_Handler.cpp:
