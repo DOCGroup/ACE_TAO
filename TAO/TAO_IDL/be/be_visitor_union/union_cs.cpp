@@ -245,11 +245,11 @@ int be_visitor_union_cs::visit_union (be_union *node)
   *os << be_uidt_nl
       << "}" << be_nl << be_nl;
   *os << "return *this;" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
   // The reset method.
   this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_RESET_CS);
-  os->indent ();
+  
   *os << "// Reset method to reset old values of a union." << be_nl;
   *os << "void " << node->name () << "::_reset (" << bt->name ()
       << ", ::CORBA::Boolean /*finalize*/)" << be_nl;
