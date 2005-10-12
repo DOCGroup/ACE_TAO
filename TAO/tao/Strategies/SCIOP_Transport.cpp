@@ -14,12 +14,10 @@
 #include "tao/CDR.h"
 #include "tao/Transport_Mux_Strategy.h"
 #include "tao/Wait_Strategy.h"
-#include "tao/Sync_Strategies.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/GIOP_Message_Base.h"
-// #include "tao/GIOP_Message_Lite.h"
 #include "tao/Protocols_Hooks.h"
 #include "tao/Adapter.h"
 
