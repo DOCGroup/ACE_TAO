@@ -1,3 +1,8 @@
+Wed Oct 12 09:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/ipv6.mpb:
+          Also for cbx we need to add an extra lib
+
 Wed Oct 12 08:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
