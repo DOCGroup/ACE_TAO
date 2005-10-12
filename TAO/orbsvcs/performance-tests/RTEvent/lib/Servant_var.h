@@ -17,8 +17,7 @@
  *
  * @brief Implement a smart pointer class for Servants
  *
- * Many servants, are reference counted objects, for example, those
- * that derive from the PortableServer::RefCountServantBase mixin.
+ * All servants, are reference counted objects.
  * Unfortunately the specification lacks such an useful smart pointer
  * class to manage their life-cycle.
  */

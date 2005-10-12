@@ -23,8 +23,7 @@
 
 #include "Export.h"
 
-class Gate_Export Gate : public POA_CosNotifyComm::StructuredPushConsumer,
-                         public PortableServer::RefCountServantBase
+class Gate_Export Gate : public POA_CosNotifyComm::StructuredPushConsumer
 {
 public:
   virtual

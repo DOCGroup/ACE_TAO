@@ -1,3 +1,8 @@
+Wed Oct 12 08:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Also raised the level for the rir check
+
 Wed Oct 12 08:10:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
