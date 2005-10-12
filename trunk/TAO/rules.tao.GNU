@@ -35,6 +35,10 @@ ifeq ($(templates),explicit)
   default:
 	echo "ERROR: Explicit templates are not possible to be used with TAO"
 endif # templates
+ifeq ($(exceptions),0)
+  default:
+	echo "ERROR: Emulated exceptions are not safe to use anymore, see the NEWS file"
+endif # templates
 
 
 ifdef COMSPEC
