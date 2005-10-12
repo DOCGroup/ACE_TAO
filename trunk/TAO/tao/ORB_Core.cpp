@@ -190,6 +190,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
     eager_transport_queueing_strategy_ (0),
     delayed_transport_queueing_strategy_ (0),
+    flush_transport_queueing_strategy_ (0),
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
     default_transport_queueing_strategy_ (0),
     refcount_ (1),
@@ -215,6 +216,9 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 
   ACE_NEW (this->delayed_transport_queueing_strategy_,
            TAO::Delayed_Transport_Queueing_Strategy);
+
+  ACE_NEW (this->flush_transport_queueing_strategy_,
+           TAO::Flush_Transport_Queueing_Strategy);
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
@@ -251,6 +255,7 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 
   delete this->eager_transport_queueing_strategy_;
   delete this->delayed_transport_queueing_strategy_;
+  delete this->flush_transport_queueing_strategy_;
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
@@ -2675,6 +2680,8 @@ TAO_ORB_Core::call_sync_scope_hook (TAO_Stub *stub,
   (*sync_scope_hook) (this, stub, has_synchronization, scope);
 }
 
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
+
 TAO::Transport_Queueing_Strategy &
 TAO_ORB_Core::get_transport_queueing_strategy (TAO_Stub *,
                                                Messaging::SyncScope &scope)
@@ -2684,10 +2691,8 @@ TAO_ORB_Core::get_transport_queueing_strategy (TAO_Stub *,
       || scope == Messaging::SYNC_WITH_SERVER
       || scope == Messaging::SYNC_WITH_TARGET)
     {
-      return this->default_transport_queueing_strategy ();
+      return this->flush_transport_queueing_strategy ();
     }
-
-#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
   if (scope == Messaging::SYNC_NONE
       || scope == TAO::SYNC_EAGER_BUFFERING)
@@ -2700,10 +2705,10 @@ TAO_ORB_Core::get_transport_queueing_strategy (TAO_Stub *,
       return this->delayed_transport_queueing_strategy ();
     }
 
-#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-
   return this->default_transport_queueing_strategy ();
 }
+
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
 void
 TAO_ORB_Core::set_sync_scope_hook (Sync_Scope_Hook hook)

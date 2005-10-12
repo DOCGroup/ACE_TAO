@@ -540,6 +540,12 @@ TAO_ORB_Core::delayed_transport_queueing_strategy (void)
   return *this->delayed_transport_queueing_strategy_;
 }
 
+ACE_INLINE TAO::Transport_Queueing_Strategy &
+TAO_ORB_Core::flush_transport_queueing_strategy (void)
+{
+  return *this->flush_transport_queueing_strategy_;
+}
+
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
 ACE_INLINE TAO::Transport_Queueing_Strategy &
