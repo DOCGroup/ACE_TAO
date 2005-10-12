@@ -1,6 +1,7 @@
 Wed Oct 12 09:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/UIOP_Transport.cpp:
+        * tao/Strategies/SCIOP_Transport.cpp:
           Remove not needed include of tao/Sync_Strategies.h
 
 Wed Oct 12 09:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
