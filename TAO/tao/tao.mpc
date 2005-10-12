@@ -184,7 +184,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     StringSeqC.cpp
     Stub.cpp
     Stub_Factory.cpp
-    Sync_Strategies.cpp
     Synch_Invocation.cpp
     Synch_Queued_Message.cpp
     Synch_Reply_Dispatcher.cpp
@@ -206,6 +205,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Transport_Connector.cpp
     Transport_Descriptor_Interface.cpp
     Transport_Mux_Strategy.cpp
+    Transport_Queueing_Strategies.cpp
     Transport_Timer.cpp
     TSS_Resources.cpp
     TypeCodeFactory_Adapter.cpp
@@ -466,7 +466,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Synch_Invocation.h
     Synch_Queued_Message.h
     Synch_Reply_Dispatcher.h
-    Sync_Strategies.h
     SystemException.h
     Tagged_Components.h
     Tagged_Profile.h
@@ -490,6 +489,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Transport_Descriptor_Interface.h
     Transport.h
     Transport_Mux_Strategy.h
+    Transport_Queueing_Strategies.h
     Transport_Timer.h
     TSS_Resources.h
     TypeCodeFactory_Adapter.h

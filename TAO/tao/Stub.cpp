@@ -12,7 +12,7 @@
 #include "Profile.h"
 #include "ORB_Core.h"
 #include "Client_Strategy_Factory.h"
-#include "Sync_Strategies.h"
+#include "Transport_Queueing_Strategies.h"
 #include "debug.h"
 #include "Policy_Manager.h"
 #include "SystemException.h"
@@ -560,8 +560,8 @@ TAO_Stub::get_policy_overrides (const CORBA::PolicyTypeSeq &types
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
-TAO_Sync_Strategy &
-TAO_Stub::sync_strategy (void)
+TAO::Transport_Queueing_Strategy &
+TAO_Stub::transport_queueing_strategy (void)
 {
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -573,11 +573,11 @@ TAO_Stub::sync_strategy (void)
                                          scope);
 
   if (has_synchronization == true)
-    return this->orb_core_->get_sync_strategy (this,
-                                               scope);
+    return this->orb_core_->get_transport_queueing_strategy  (this,
+                                                              scope);
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
-  return this->orb_core_->transport_sync_strategy ();
+  return this->orb_core_->default_transport_queueing_strategy ();
 }
 

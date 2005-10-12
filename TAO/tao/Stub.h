@@ -34,14 +34,13 @@
 #endif /* HPUX && IOR */
 
 // Forward declarations.
-class TAO_Sync_Strategy;
 class TAO_Policy_Set;
 class TAO_Profile;
 
-/// Forward declaration for ObjectKey
 namespace TAO
 {
   class ObjectKey;
+  class Transport_Queueing_Strategy;
 }
 
 namespace IOP
@@ -89,9 +88,9 @@ public:
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
-  /// Return the sync strategy to be used in by the transport.
+  /// Return the queueing strategy to be used in by the transport.
   /// Selection will be based on the SyncScope policies.
-  TAO_Sync_Strategy &sync_strategy (void);
+  TAO::Transport_Queueing_Strategy &transport_queueing_strategy (void);
 
   /// All objref representations carry around a type ID.
   CORBA::String_var type_id;
