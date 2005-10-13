@@ -1,3 +1,8 @@
+Thu Oct 13 13:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Threads/tss2.cpp:
+          Fixed warning in MinGW build
+
 Thu Oct 13 13:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_static_order.lst:
