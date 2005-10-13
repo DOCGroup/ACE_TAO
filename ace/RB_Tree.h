@@ -43,31 +43,6 @@ public:
   enum RB_Tree_Node_Color {RED, BLACK};
 };
 
-class ACE_RB_Tree_Base
-{
-public:
-  /// Search result enumeration.
-  enum RB_SearchResult {LEFT, EXACT, RIGHT};
-
-  /// Get the allocator;
-  /**
-   * @note This method is inlined here rather than in RB_Tree.inl
-   *       since that file may be included multiple times when
-   *       inlining is disabled and on platforms where
-   *       @c ACE_TEMPLATES_REQUIRE_SOURCE is defined.  In those
-   *       platform/configuration combinations, multiple definitions
-   *       of this method occured.  Placing the definition inline in
-   *       the header avoids such errors.
-   */
-  ACE_Allocator * allocator (void) const { return this->allocator_; }
-
-protected:
-  // = Protected members.
-
-  /// Pointer to a memory allocator.
-  ACE_Allocator *allocator_;
-};
-
 /**
  * @class ACE_RB_Tree_Node
  *
@@ -80,7 +55,7 @@ public:
   // = Initialization and termination methods.
 
   /// Constructor.
-  ACE_RB_Tree_Node (const EXT_ID &k, const INT_ID &t, const ACE_RB_Tree_Base &tree);
+  ACE_RB_Tree_Node (const EXT_ID &k, const INT_ID &t);
 
   /// Destructor.
   ~ACE_RB_Tree_Node (void);
@@ -134,9 +109,31 @@ private:
 
   /// Pointer to node's right child.
   ACE_RB_Tree_Node<EXT_ID, INT_ID> *right_;
+};
 
-  /// Pointer to tree base (to get the allocator).
-  const ACE_RB_Tree_Base *tree_;
+class ACE_RB_Tree_Base
+{
+public:
+  /// Search result enumeration.
+  enum RB_SearchResult {LEFT, EXACT, RIGHT};
+
+  /// Get the allocator;
+  /**
+   * @note This method is inlined here rather than in RB_Tree.inl
+   *       since that file may be included multiple times when
+   *       inlining is disabled and on platforms where
+   *       @c ACE_TEMPLATES_REQUIRE_SOURCE is defined.  In those
+   *       platform/configuration combinations, multiple definitions
+   *       of this method occured.  Placing the definition inline in
+   *       the header avoids such errors.
+   */
+  ACE_Allocator * allocator (void) const { return this->allocator_; }
+
+protected:
+  // = Protected members.
+
+  /// Pointer to a memory allocator.
+  ACE_Allocator *allocator_;
 };
 
 /**
@@ -503,14 +500,19 @@ protected:
   /// Rebalance the tree after insertion of a node.
   void RB_rebalance (ACE_RB_Tree_Node<EXT_ID, INT_ID> * x);
 
+  /// Delete children (left and right) of the node. Must be called with
+  /// lock held.
+  void delete_children_i (ACE_RB_Tree_Node<EXT_ID, INT_ID> *parent);
+
   /// Close down an RB_Tree.  this method should
   /// only be called with locks already held.
   int close_i (void);
 
   /**
    * Retrieves a pointer to the item corresponding to the
-   * given key. If find_exact==1, find the exact match node. Otherwise just find a match node
-   * returns 0 for success, or -1 if it cannot find the key in the tree.
+   * given key. If find_exact==1, find the exact match node,
+   * otherwise just find a match node
+   * Returns 0 for success, or -1 if it cannot find the key in the tree.
    */
   int find_i (const EXT_ID &ext_id, ACE_RB_Tree_Node<EXT_ID, INT_ID>* &entry, int find_exact = 1);
 
