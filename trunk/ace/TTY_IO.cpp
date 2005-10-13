@@ -255,7 +255,7 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
       if (arg->modem)
         devpar.c_cflag &= ~CLOCAL;
       else
-      devpar.c_cflag |= CLOCAL;
+        devpar.c_cflag |= CLOCAL;
 #endif /* CLOCAL */
 
       devpar.c_iflag = IGNPAR | INPCK;
@@ -285,6 +285,11 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
       else
         devpar.c_iflag &= ~IXON;
 #endif /* IXON */
+
+#if defined (ICANON)
+      // Enable noncanonical input processing mode
+      devpar.c_lflag &= ~ICANON;
+#endif /* ICANON */
 
       if (arg->readtimeoutmsec < 0)
         {
