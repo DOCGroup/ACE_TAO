@@ -132,10 +132,10 @@ public:
   size_t size (void) const;
 
   /// Unmap the region starting at <base_addr_>.
-  int unmap (int len = -1);
+  int unmap (ssize_t len = -1);
 
   /// Unmap the region starting at <addr_>.
-  int unmap (void *addr, int len);
+  int unmap (void *addr, ssize_t len);
 
   /**
    * Sync <len> bytes of the memory region to the backing store

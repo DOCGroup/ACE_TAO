@@ -47,7 +47,7 @@ ACE_OS::shmdt (void *shmaddr)
 }
 
 ACE_INLINE int
-ACE_OS::shmget (key_t key, int size, int flags)
+ACE_OS::shmget (key_t key, size_t size, int flags)
 {
   ACE_OS_TRACE ("ACE_OS::shmget");
 #if defined (ACE_HAS_SYSV_IPC)
