@@ -51,7 +51,7 @@ namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int shmget (key_t key,
-              int size,
+              size_t size,
               int flags);
   ///@}
 
