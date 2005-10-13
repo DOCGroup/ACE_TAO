@@ -62,8 +62,8 @@ ACE_LSOCK_Stream::dump (void) const
 
 ssize_t
 ACE_LSOCK_Stream::send_msg (const iovec iov[],
-			    size_t n,
-			    ACE_HANDLE handle)
+                            size_t n,
+                            ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_LSOCK_Stream::send_msg");
   msghdr send_msg;

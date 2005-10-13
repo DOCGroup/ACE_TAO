@@ -21,7 +21,7 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
   if (host_name == 0 || host_name[0] == '\0')
     host_name = " ";
 #  endif /* ACE_WIN32 */
-  ACE_UINT32 ip_addr = ACE_OS::inet_addr (host_name);
+  unsigned long ip_addr = ACE_OS::inet_addr (host_name);
 
   if (ip_addr == INADDR_NONE
       // Broadcast addresses are weird...
