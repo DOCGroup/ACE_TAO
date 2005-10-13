@@ -111,7 +111,7 @@ ACE_Mem_Map::close_filemapping_handle (void)
 // Unmap the region starting at <this->base_addr_>.
 
 ACE_INLINE int
-ACE_Mem_Map::unmap (int len)
+ACE_Mem_Map::unmap (ssize_t len)
 {
   ACE_TRACE ("ACE_Mem_Map::unmap");
 
@@ -149,7 +149,7 @@ ACE_Mem_Map::unmap (int len)
 // Unmap the region starting at <addr_>.
 
 ACE_INLINE int
-ACE_Mem_Map::unmap (void *addr, int len)
+ACE_Mem_Map::unmap (void *addr, ssize_t len)
 {
   ACE_TRACE ("ACE_Mem_Map::unmap");
 
@@ -165,14 +165,14 @@ ACE_Mem_Map::unmap (void *addr, int len)
         ACE_OS::lseek (handle_, 0, 0) != -1
         && ACE_OS::write (handle_,
                           base_addr_,
-                          (int) filesize) == filesize ? 0 : -1;
+                          filesize) == filesize ? 0 : -1;
     }
 #endif /* ACE_HAS_LYNXOS_BROKEN_MMAP */
 
 #if defined (ACE_HAS_LYNXOS_BROKEN_MMAP)
   return ACE_OS::munmap (addr,
                          len < 0 ? this->length_ : len)
-    | writeback_result;;
+    | writeback_result;
 #else  /* ! ACE_HAS_LYNXOS_BROKEN_MMAP */
   return ACE_OS::munmap (addr,
                          len < 0 ? this->length_ : len);
