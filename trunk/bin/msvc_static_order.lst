@@ -109,6 +109,7 @@ TAO/examples/Simple/time-date/Simple_Time_Date_Lib
 TAO/docs/tutorials/Quoter/idl/Quoter_Idl_Lib
 TAO/performance-tests/RTCorba/Multiple_Endpoints/Common/RTCORBA_Common
 tests/Test_Output
+tests/DLL_Test_Parent
 performance-tests/Synch-Benchmarks/Synch_Lib/Synch_Lib
 examples/Service_Configurator/Misc/Service_Configurator_Misc_Timer
 examples/Timer_Queue/Timer_Queue_Library
