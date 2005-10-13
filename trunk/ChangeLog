@@ -1,3 +1,10 @@
+Thu Oct 13 13:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Message_Queue.{h,cpp,inl}:
+        * ace/Message_Queue_T.{h,cpp}:
+          Changed message_count to be a size_t to fix 64bit conversion warnings
+          in code that uses this.
+
 Thu Oct 13 13:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.{h,inl}:
