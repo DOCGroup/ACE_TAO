@@ -323,7 +323,7 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
 #endif /* definded (TIOCMGET) */
 
 #if defined (ACE_HAS_NEW_TERMIOS_STRUCT)
-      return ::tcgetattr (get_handle () , &devpar);
+      return ::tcsetattr (get_handle (), TCSANOW, &devpar);
 #elif defined (TCSETS)
       return this->ACE_IO_SAP::control (TCSETS, static_cast<void*>(&devpar));
 #elif defined (TCSETA)
