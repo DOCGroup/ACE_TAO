@@ -21,13 +21,12 @@
 
 #include /**/ "ace/pre.h"
 
-#include "pi_export.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/orbconf.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
@@ -58,8 +57,8 @@ namespace TAO
    * point, and enforces flow rules dictated by the Portable Interceptor
    * specification/chapter.
    */
-  class TAO_PI_Export ClientRequestInterceptor_Adapter_Impl :
-    public ClientRequestInterceptor_Adapter
+  class ClientRequestInterceptor_Adapter_Impl
+    : public ClientRequestInterceptor_Adapter
   {
   public:
 

@@ -17,7 +17,8 @@ TAO_Pseudo_Var_T<T>::TAO_Pseudo_Var_T (T * p)
 template <typename T>
 ACE_INLINE
 TAO_Pseudo_Var_T<T>::TAO_Pseudo_Var_T (const TAO_Pseudo_Var_T<T> & p)
-  : ptr_ (T::_duplicate (p.ptr ()))
+  : TAO_Base_var ()
+  , ptr_ (T::_duplicate (p.ptr ()))
 {}
 
 template <typename T>

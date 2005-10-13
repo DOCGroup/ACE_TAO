@@ -21,7 +21,7 @@
 #include "tao/debug.h"
 
 ACE_RCSID (PI,
-           PolicyFactory_Loader,
+           ClientRequestInterceptor_Factory_Impl,
            "$Id$")
 
 TAO::ClientRequestInterceptor_Adapter*

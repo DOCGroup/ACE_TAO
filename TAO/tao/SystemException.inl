@@ -81,6 +81,29 @@ CORBA::SystemException::_downcast (const CORBA::Exception *exception)
     TAO_SYSTEM_EXCEPTION (ACTIVITY_REQUIRED) \
     TAO_SYSTEM_EXCEPTION (THREAD_CANCELLED)
 
+// Concrete SystemException constructors
+#define TAO_SYSTEM_EXCEPTION(name) \
+ACE_INLINE \
+CORBA::name ::name (void) \
+  :  CORBA::SystemException ("IDL:omg.org/CORBA/" #name ":1.0", \
+                             #name, \
+                             0, \
+                             CORBA::COMPLETED_NO) \
+{ \
+} \
+\
+ACE_INLINE \
+CORBA::name ::name (CORBA::ULong code, CORBA::CompletionStatus completed) \
+  : CORBA::SystemException ("IDL:omg.org/CORBA/" #name ":1.0", \
+                            #name, \
+                            code, \
+                            completed) \
+{ \
+}
+
+TAO_STANDARD_SYSTEM_EXCEPTION_LIST
+#undef TAO_SYSTEM_EXCEPTION
+
 #define TAO_SYSTEM_EXCEPTION(name) \
 ACE_INLINE CORBA::name * \
 CORBA::name ::_downcast (CORBA::Exception* exception) \
@@ -96,6 +119,16 @@ ACE_INLINE CORBA::name const * \
 CORBA::name ::_downcast (CORBA::Exception const * exception) \
 { \
   return dynamic_cast<CORBA::name const *> (exception); \
+}
+
+TAO_STANDARD_SYSTEM_EXCEPTION_LIST
+#undef TAO_SYSTEM_EXCEPTION
+
+#define TAO_SYSTEM_EXCEPTION(name) \
+ACE_INLINE void \
+CORBA::name ::_tao_any_destructor (void * x) \
+{ \
+  delete static_cast<CORBA::name *> (x); \
 }
 
 TAO_STANDARD_SYSTEM_EXCEPTION_LIST

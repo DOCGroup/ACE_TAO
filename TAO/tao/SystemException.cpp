@@ -909,16 +909,6 @@ CORBA::name ::_tao_type (void) const \
 STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
 
-#define TAO_SYSTEM_EXCEPTION(name) \
-void \
-CORBA::name ::_tao_any_destructor (void * x) \
-{ \
-  delete static_cast<CORBA::name *> (x); \
-}
-
-STANDARD_EXCEPTION_LIST
-#undef TAO_SYSTEM_EXCEPTION
-
 CORBA::SystemException *
 TAO_Exceptions::create_system_exception (const char *id)
 {
@@ -936,27 +926,6 @@ void \
 CORBA::name ::_raise (void) const \
 { \
   TAO_RAISE (*this); \
-}
-
-STANDARD_EXCEPTION_LIST
-#undef TAO_SYSTEM_EXCEPTION
-
-// SystemException constructors
-#define TAO_SYSTEM_EXCEPTION(name) \
-CORBA::name ::name (void) \
-  :  CORBA::SystemException ("IDL:omg.org/CORBA/" #name ":1.0", \
-                             #name, \
-                             0, \
-                             CORBA::COMPLETED_NO) \
-{ \
-} \
-\
-CORBA::name ::name (CORBA::ULong code, CORBA::CompletionStatus completed) \
-  : CORBA::SystemException ("IDL:omg.org/CORBA/" #name ":1.0", \
-                            #name, \
-                            code, \
-                            completed) \
-{ \
 }
 
 STANDARD_EXCEPTION_LIST

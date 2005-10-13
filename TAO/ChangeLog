@@ -1,4 +1,60 @@
-Thu Oct 13 12:03:05 2005  Steve Totten  <totten_s@ociweb.com>
+Thu Oct 13 12:26:47 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/ORB_Core.cpp:
+
+	  Minor coding convention updates.  Class members outside of a
+	  base member initializer list should be referenced with the
+	  "this" pointer (e.g. this->client_request_interceptor_adapter_).
+
+	* tao/Pseudo_VarOut_T.h:
+
+	  Added unimplemented copy constructor and assignment operator
+	  that accept a TAO_Base_var parameter.  Prevents invalid
+	  widening.
+
+	* tao/Pseudo_VarOut_T.inl:
+
+	  Explicitly initialize TAO_Base_var in the copy constructor
+	  base member initializer list.
+
+	* tao/SystemException.cpp:
+	* tao/SystemException.inl:
+
+	  Inlined concrete system exception constructors and static
+	  _tao_any_destructor() method.  Since they are small, a good
+	  footprint decrease is achieved by doing so, especially since
+	  only a few of the concrete SystemExceptions are used within
+	  TAO.
+
+	* tao/UserException.cpp:
+	* tao/UserException.inl:
+
+	  Likewise.
+
+	  Moved _tao_type() method of out of line.  Since it is virtual
+	  inlining can cause RTTI related problems when using g++ 4.x's
+	  "-fvisibility-inlines-hidden" feature.
+
+	* tao/TSS_Resources.cpp:
+
+	  Do not use "this" pointer in base member initializer list.  It
+	  is not guaranteed to be available until after base member
+	  initialization is completed.
+
+	* tao/TSS_Resources.h:
+
+	  Minor include directive reorganization.
+
+	* tao/PI/ClientRequestInterceptor_Adapter_Impl.h:
+
+	  Cosmetic update.
+
+	* tao/PI/ClientRequestInterceptor_Adapter_Impl.cpp:
+	* tao/PI/ClientRequestInterceptor_Factory_Impl.cpp:
+
+	  Corrected ACE_RCSID macro arguments.
+
+Thu Oct 13 12:03:05 2005  Steve Totten  <totten_s@ociweb.com>:
 
         * orbsvcs/orbsvcs/CosEvent/CEC_DynamicImplementation.cpp:
         * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
