@@ -247,9 +247,9 @@ namespace ACE_OS {
                   size_t *bytes_transferred = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int readlink (const char *path,
-                char *buf,
-                size_t bufsiz);
+  ssize_t readlink (const char *path,
+                    char *buf,
+                    size_t bufsiz);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void *sbrk (int brk);

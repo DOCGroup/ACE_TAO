@@ -906,7 +906,7 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len,
 #endif /* ACE_WIN32 */
 }
 
-ACE_INLINE int
+ACE_INLINE ssize_t
 ACE_OS::readlink (const char *path, char *buf, size_t bufsiz)
 {
   ACE_OS_TRACE ("ACE_OS::readlink");
@@ -917,10 +917,10 @@ ACE_OS::readlink (const char *path, char *buf, size_t bufsiz)
   ACE_NOTSUP_RETURN (-1);
 # else
 #   if !defined(ACE_HAS_NONCONST_READLINK)
-      ACE_OSCALL_RETURN (::readlink (path, buf, bufsiz), int, -1);
+      ACE_OSCALL_RETURN (::readlink (path, buf, bufsiz), ssize_t, -1);
 #   else
       ACE_OSCALL_RETURN (
-        ::readlink (const_cast <char *>(path), buf, bufsiz), int, -1);
+        ::readlink (const_cast <char *>(path), buf, bufsiz), ssize_t, -1);
 #   endif
 # endif /* ACE_LACKS_READLINK */
 }
