@@ -1,3 +1,11 @@
+Wed Oct 12 19:26:48 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* docs/notification/reliability.html:
+
+	  Fix library name in service config file examples.
+
+	  Fix formatting of NotifyExt.inl excerpts.
+
 Wed Oct 12 12:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Big_Request_Muxing/server.cpp:
