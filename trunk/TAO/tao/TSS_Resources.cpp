@@ -10,14 +10,14 @@ ACE_RCSID (tao,
 
 
 TAO_TSS_Resources::TAO_TSS_Resources (void)
-  :  poa_current_impl_ (0)
+  : poa_current_impl_ (0)
   , rtscheduler_current_impl_ (0)
   , rtscheduler_previous_current_impl_ (0)
-  , default_environment_ (&this->tss_environment_)
+  , default_environment_ (&tss_environment_)
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-  , policy_current_ (&this->initial_policy_current_)
+  , policy_current_ (&initial_policy_current_)
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
   , gui_resource_factory_ (0)
@@ -27,7 +27,7 @@ TAO_TSS_Resources::TAO_TSS_Resources (void)
 
 TAO_TSS_Resources::~TAO_TSS_Resources (void)
 {
-  delete gui_resource_factory_;
+  delete this->gui_resource_factory_;
 }
 
 TAO_TSS_Resources *
