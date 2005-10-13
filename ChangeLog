@@ -1,3 +1,8 @@
+Thu Oct 13 07:49:37 2005  Olli Savia  <ops@iki.fi>
+
+        * ace/TTY_IO.cpp:
+          Include OS_NS_string.h to fix compile error on various platforms.
+
 Wed Oct 12 23:55:23 2005  Olli Savia  <ops@iki.fi>
 
         * ace/TTY_IO.cpp:
