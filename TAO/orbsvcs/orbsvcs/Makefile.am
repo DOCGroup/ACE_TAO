@@ -2094,6 +2094,7 @@ libTAO_CosNotification_Serv_la_SOURCES = \
   Notify/Structured/StructuredProxyPushSupplier.cpp \
   Notify/Structured/StructuredPushConsumer.cpp \
   Notify/Structured/StructuredPushSupplier.cpp \
+  Notify/Service.cpp \
   Notify/Subscription_Change_Worker.cpp \
   Notify/Supplier.cpp \
   Notify/SupplierAdmin.cpp \
