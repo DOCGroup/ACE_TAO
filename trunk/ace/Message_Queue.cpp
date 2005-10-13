@@ -203,7 +203,7 @@ ACE_Message_Queue_Vx::message_length (void)
   ACE_NOTSUP_RETURN ((size_t) -1);
 }
 
-int
+size_t
 ACE_Message_Queue_Vx::message_count (void)
 {
   ACE_TRACE ("ACE_Message_Queue_Vx::message_count");
