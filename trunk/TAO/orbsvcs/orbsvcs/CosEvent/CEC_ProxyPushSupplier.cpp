@@ -64,23 +64,25 @@ TAO_CEC_ProxyPushSupplier::TAO_CEC_ProxyPushSupplier (TAO_CEC_TypedEventChannel*
   this->default_POA_ =
     this->typed_event_channel_->typed_supplier_poa ();
 
-  this->event_channel_->get_servant_retry_map ().bind (this, 0);
+  this->typed_event_channel_->get_servant_retry_map ().bind (this, 0);
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
 TAO_CEC_ProxyPushSupplier::~TAO_CEC_ProxyPushSupplier (void)
 {
-  this->event_channel_->get_servant_retry_map ().unbind (this);
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   if (this->is_typed_ec () )
     {
+      this->typed_event_channel_->get_servant_retry_map ().unbind (this);
       this->typed_event_channel_->destroy_supplier_lock (this->lock_);
     }
   else
     {
+      this->event_channel_->get_servant_retry_map ().unbind (this);
       this->event_channel_->destroy_supplier_lock (this->lock_);
     }
 #else
+  this->event_channel_->get_servant_retry_map ().unbind (this);
   this->event_channel_->destroy_supplier_lock (this->lock_);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 }
@@ -361,7 +363,9 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
       {
         if (TAO_debug_level >= 10)
           {
-            ACE_DEBUG ((LM_DEBUG, "***** connect_push_consumer, Event channel is typed *****\n"));
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("***** connect_push_consumer, ")
+                        ACE_TEXT ("Event channel is typed *****\n")));
           }
 
         // Temporary for the TypedPushConsumer and it's Typed interface,
@@ -435,7 +439,9 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
 
         if (TAO_debug_level >= 10)
           {
-            ACE_DEBUG ((LM_DEBUG, "***** connect_push_consumer, Event channel is un-typed *****\n"));
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("***** connect_push_consumer, ")
+                        ACE_TEXT ("Event channel is un-typed *****\n")));
           }
 
         {
@@ -662,11 +668,20 @@ TAO_CEC_ProxyPushSupplier::reactive_push_to_consumer (
     }
   ACE_CATCH (CORBA::OBJECT_NOT_EXIST, not_used)
     {
-      control->consumer_not_exist (this ACE_ENV_ARG_PARAMETER);
+       if (TAO_debug_level >= 4)
+        {
+          ACE_PRINT_EXCEPTION (not_used, "during TAO_CEC_ProxyPushSupplier::reactive_push_to_consumer");
+        }
+     control->consumer_not_exist (this ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
+      if (TAO_debug_level >= 4)
+        {
+          ACE_PRINT_EXCEPTION (sysex, "during TAO_CEC_ProxyPushSupplier::reactive_push_to_consumer");
+        }
+
       control->system_exception (this,
                                  sysex
                                  ACE_ENV_ARG_PARAMETER);
@@ -703,6 +718,9 @@ TAO_CEC_ProxyPushSupplier::invoke_to_consumer (const TAO_CEC_TypedEvent &typed_e
       CORBA::Object::_duplicate (this->typed_consumer_obj_.in ());
   }
 
+  TAO_CEC_ConsumerControl *control =
+               this->typed_event_channel_->consumer_control ();
+
   // Create the DII request
   ACE_TRY
     {
@@ -720,6 +738,9 @@ TAO_CEC_ProxyPushSupplier::invoke_to_consumer (const TAO_CEC_TypedEvent &typed_e
       // Call the DII invoke for the operation on the target object
       target_request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      // Inform the control that we were able to invoke something
+      control->successful_transmission(this);
     }
   ACE_CATCH (CORBA::OBJECT_NOT_EXIST, not_used)
     {
@@ -727,10 +748,6 @@ TAO_CEC_ProxyPushSupplier::invoke_to_consumer (const TAO_CEC_TypedEvent &typed_e
         {
           ACE_PRINT_EXCEPTION (not_used, "during TAO_CEC_ProxyPushSupplier::invoke_to_consumer");
         }
-
-      TAO_CEC_ConsumerControl *control =
-        this->typed_event_channel_->consumer_control ();
-
       control->consumer_not_exist (this ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -740,10 +757,6 @@ TAO_CEC_ProxyPushSupplier::invoke_to_consumer (const TAO_CEC_TypedEvent &typed_e
         {
           ACE_PRINT_EXCEPTION (sysex, "during TAO_CEC_ProxyPushSupplier::invoke_to_consumer");
         }
-
-      TAO_CEC_ConsumerControl *control =
-        this->typed_event_channel_->consumer_control ();
-
       control->system_exception (this,
                                  sysex
                                  ACE_ENV_ARG_PARAMETER);
@@ -786,6 +799,9 @@ TAO_CEC_ProxyPushSupplier::reactive_invoke_to_consumer (
       CORBA::Object::_duplicate (this->typed_consumer_obj_.in ());
   }
 
+  TAO_CEC_ConsumerControl *control =
+                  this->typed_event_channel_->consumer_control ();
+
   // Create the DII request
   ACE_TRY
     {
@@ -803,6 +819,9 @@ TAO_CEC_ProxyPushSupplier::reactive_invoke_to_consumer (
       // Call the DII invoke for the operation on the target object
       target_request->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      // Inform the control that we were able to invoke something
+      control->successful_transmission(this);
     }
   ACE_CATCH (CORBA::OBJECT_NOT_EXIST, not_used)
     {
@@ -810,10 +829,6 @@ TAO_CEC_ProxyPushSupplier::reactive_invoke_to_consumer (
         {
           ACE_PRINT_EXCEPTION (not_used, "during TAO_CEC_ProxyPushSupplier::reactive_invoke_to_consumer");
         }
-
-      TAO_CEC_ConsumerControl *control =
-        this->typed_event_channel_->consumer_control ();
-
       control->consumer_not_exist (this ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -823,10 +838,6 @@ TAO_CEC_ProxyPushSupplier::reactive_invoke_to_consumer (
         {
           ACE_PRINT_EXCEPTION (sysex, "during TAO_CEC_ProxyPushSupplier::reactive_invoke_to_consumer");
         }
-
-      TAO_CEC_ConsumerControl *control =
-        this->typed_event_channel_->consumer_control ();
-
       control->system_exception (this,
                                  sysex
                                  ACE_ENV_ARG_PARAMETER);

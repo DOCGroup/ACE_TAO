@@ -147,7 +147,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
             default:
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
               ACE_DEBUG ((LM_DEBUG,
-                          "Usage: %s "
+                          ACE_TEXT ("Usage: %s "
                           "-n service_name "
                           "-o ior_file_name "
                           "-p pid_file_name "
@@ -155,17 +155,17 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
                           "-r [rebind, no AlreadyBound failures] "
                           "-t [enable typed event channel] "
                           "-d [destroy typed event channel on shutdown] "
-                          "\n",
+                          "\n"),
                           argv[0]));
 #else
               ACE_DEBUG ((LM_DEBUG,
-                          "Usage: %s "
+                          ACE_TEXT ("Usage: %s "
                           "-n service_name "
                           "-o ior_file_name "
                           "-p pid_file_name "
                           "-x [disable naming service bind] "
                           "-r [rebind, no AlreadyBound failures] "
-                          "\n",
+                          "\n"),
                           argv[0]));
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
               return CORBA::Object::_nil ();
@@ -286,7 +286,8 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
           // IFR initialization
           if (TAO_debug_level >= 10)
             {
-              ACE_DEBUG ((LM_DEBUG, "***** Initializing the IFR connection... *****\n"));
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("***** Initializing the IFR connection... *****\n")));
             }
 
           CORBA::Repository_var interface_repository;
@@ -299,7 +300,8 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
             {
               if (TAO_debug_level >= 10)
                 {
-                  ACE_DEBUG ((LM_DEBUG, "***** resolve_initial_references for IFR failed\n *****"));
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("***** resolve_initial_references for IFR failed\n *****")));
                 }
               return CORBA::Object::_nil ();
             }
@@ -313,7 +315,8 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
                 {
                   if (TAO_debug_level >= 10)
                     {
-                      ACE_DEBUG ((LM_DEBUG, "***** CORBA::Repository::_narrow failed *****\n"));
+                      ACE_DEBUG ((LM_DEBUG,
+                                  ACE_TEXT ("***** CORBA::Repository::_narrow failed *****\n")));
                     }
                   return CORBA::Object::_nil ();
                 }
@@ -321,7 +324,8 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
                 {
                   if (TAO_debug_level >= 10)
                     {
-                      ACE_DEBUG ((LM_DEBUG, "***** ...IFR connection completed *****\n"));
+                      ACE_DEBUG ((LM_DEBUG,
+                                  ACE_TEXT ("***** ...IFR connection completed *****\n")));
                     }
                 }
             }
