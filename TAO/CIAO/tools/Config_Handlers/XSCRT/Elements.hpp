@@ -333,16 +333,17 @@ namespace XSCRT
     }
 
   public:
+    
     operator X const& () const
     {
       return x_;
     }
-
+    /* 
     operator X& ()
     {
       return x_;
     }
-
+    */
   protected:
     X x_;
   };

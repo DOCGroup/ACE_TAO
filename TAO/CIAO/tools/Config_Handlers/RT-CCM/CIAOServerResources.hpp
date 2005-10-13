@@ -2003,20 +2003,19 @@ namespace CIAO
       };
 
       struct Priority : Traversal::Priority, 
-      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
+//      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::Priority Type;
         Priority (::XSCRT::XML::Element< ACE_TCHAR >&);
 
         #ifdef __BORLANDC__
+
         virtual void 
         traverse (Type &o)
         {
-
           this->traverse (const_cast <Type const &> (o));
         }
-
 
         #endif /* __BORLANDC__ */
         virtual void
