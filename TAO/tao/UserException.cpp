@@ -14,17 +14,7 @@ ACE_RCSID (tao,
            "$Id$")
 
 
-CORBA::UserException::UserException (void)
-{
-}
-
-CORBA::UserException::UserException (char const * repository_id,
-                                     char const * local_name)
-  : CORBA::Exception (repository_id,
-                      local_name)
-{
-}
-
+// Virtual.  Do not inline.
 CORBA::UserException::~UserException (void)
 {
 }
@@ -34,6 +24,13 @@ CORBA::UserException::operator= (CORBA::UserException const & rhs)
 {
   this->Exception::operator= (rhs);
   return *this;
+}
+
+// Virtual.  Do not inline.
+CORBA::TypeCode_ptr
+CORBA::UserException::_tao_type (void) const
+{
+  return 0;
 }
 
 ACE_CString

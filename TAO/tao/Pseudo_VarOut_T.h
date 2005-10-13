@@ -40,6 +40,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/varbase.h"
+
 /**
  * @class TAO_Pseudo_Var_T
  *
@@ -50,7 +52,7 @@
  *
  */
 template <typename T>
-class TAO_Pseudo_Var_T
+class TAO_Pseudo_Var_T : private TAO_Base_var
 {
 public:
   TAO_Pseudo_Var_T (void);
@@ -79,6 +81,12 @@ public:
 
   // TAO extension.
   _retn_type    ptr (void) const;
+
+private:
+
+  // Unimplemented - prevents widening assignment.
+  TAO_Pseudo_Var_T (const TAO_Base_var &);
+  void operator= (const TAO_Base_var &);
 
 private:
   T * ptr_;
