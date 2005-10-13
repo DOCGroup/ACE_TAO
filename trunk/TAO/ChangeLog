@@ -1,7 +1,12 @@
+Thu Oct 13 10:06:22 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/Any/Recursive/client.cpp:
+
+	  Added recursive union test case.
+
 Thu Oct 13 11:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         From James Megquier <jmegq at radiance dot com>
-
         * orbsvcs/orbsvcs/Notify/Service.{h,cpp}:
           Added destructor to fix runtime gcc4 problems. Fixes bugzilla
           2262
