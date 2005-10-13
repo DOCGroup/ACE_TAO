@@ -291,7 +291,7 @@ public:
   /**
    * Number of total messages on the queue.
    */
-  virtual int message_count (void);
+  virtual size_t message_count (void);
 
   // = Manual changes to these stats (used when queued message blocks
   // change size or lengths).
@@ -1108,7 +1108,7 @@ public:
   /**
    * Number of total messages on the queue.
    */
-  virtual int message_count (void);
+  virtual size_t message_count (void);
 
   // = Manual changes to these stats (used when queued message blocks
   // change size or lengths).

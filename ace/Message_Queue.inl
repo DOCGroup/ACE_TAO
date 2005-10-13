@@ -67,7 +67,7 @@ ACE_Message_Queue_NT::message_length (void)
   return this->cur_length_;
 }
 
-ACE_INLINE int
+ACE_INLINE size_t
 ACE_Message_Queue_NT::message_count (void)
 {
   ACE_TRACE ("ACE_Message_Queue_NT::message_count");
