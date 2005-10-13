@@ -98,8 +98,12 @@
         _Pragma ("GCC visibility pop")
 #  endif /* ! GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS */
 
-#  define ACE_IMPORT_SINGLETON_DECLARATION(T) extern template class T
-#  define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) extern template class SINGLETON_TYPE<CLASS, LOCK>;
+// Note that the "__extension__" is needed to prevent g++ from issuing
+// an error when using its "-pedantic" command line flag.
+#  define ACE_IMPORT_SINGLETON_DECLARATION(T) __extension__ extern template class T
+#  define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) __extension__ extern template class SINGLETON_TYPE<CLASS, LOCK>;
+
+
 # endif  /* ACE_HAS_CUSTOM_EXPORT_MACROS == 0 */
 #endif  /* __GNU__ > 3 */
 
