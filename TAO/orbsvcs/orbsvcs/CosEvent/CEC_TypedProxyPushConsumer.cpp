@@ -12,8 +12,6 @@
 #include "CEC_TypedProxyPushConsumer.i"
 #endif /* __ACE_INLINE__ */
 
-#include "tao/debug.h"
-
 #include "ace/Reverse_Lock_T.h"
 
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_CEC_Unlock;
@@ -30,10 +28,13 @@ TAO_CEC_TypedProxyPushConsumer::TAO_CEC_TypedProxyPushConsumer (TAO_CEC_TypedEve
   this->default_POA_ =
     this->typed_event_channel_->typed_consumer_poa ();
 
+  this->typed_event_channel_->get_servant_retry_map ().bind (this, 0);
+
   // DSI initialization
   if (TAO_debug_level >= 10)
     {
-      ACE_DEBUG ((LM_DEBUG, "***** Initializing the DSI for the new TypedProxyPushConsumer *****\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("***** Initializing the DSI for the new TypedProxyPushConsumer *****\n")));
     }
 
   this->dsi_impl_ = new
@@ -68,6 +69,7 @@ TAO_CEC_TypedProxyPushConsumer::~TAO_CEC_TypedProxyPushConsumer (void)
 
   delete dsi_impl_;
 
+  this->typed_event_channel_->get_servant_retry_map ().unbind (this);
   this->typed_event_channel_->destroy_consumer_lock (this->lock_);
 }
 

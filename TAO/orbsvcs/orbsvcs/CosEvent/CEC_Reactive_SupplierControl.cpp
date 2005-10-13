@@ -1,5 +1,9 @@
 // $Id$
 
+// Note: This class controls the behaviour of suppliers connected to both
+// the Typed and Un-typed Event Channels.  A check must be made in the code
+// to ensure the correct EC is referenced. 
+
 #include "CEC_EventChannel.h"
 #include "CEC_SupplierAdmin.h"
 #include "CEC_ProxyPushConsumer.h"
@@ -28,6 +32,7 @@ ACE_RCSID (CosEvent,
            CEC_Reactive_SupplierControl,
            "$Id$")
 
+// TAO_CEC_Reactive_SupplierControl constructor for the Un-typed EC
 TAO_CEC_Reactive_SupplierControl::
      TAO_CEC_Reactive_SupplierControl (const ACE_Time_Value &rate,
                                        const ACE_Time_Value &timeout,
@@ -50,6 +55,7 @@ TAO_CEC_Reactive_SupplierControl::
     this->orb_->orb_core ()->reactor ();
 }
 
+// TAO_CEC_Reactive_SupplierControl constructor for the Typed EC
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 TAO_CEC_Reactive_SupplierControl::
      TAO_CEC_Reactive_SupplierControl (const ACE_Time_Value &rate,
@@ -85,6 +91,7 @@ TAO_CEC_Reactive_SupplierControl::query_suppliers (
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   if (this->typed_event_channel_)
     {
+      // Typed EC
       TAO_CEC_Ping_Typed_Push_Supplier push_worker (this);
 
       this->typed_event_channel_->typed_supplier_admin ()->for_each (&push_worker
@@ -95,6 +102,7 @@ TAO_CEC_Reactive_SupplierControl::query_suppliers (
     {
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
+  // Un-typed EC
   TAO_CEC_Ping_Push_Supplier push_worker (this);
   this->event_channel_->supplier_admin ()->for_each (&push_worker
                                                      ACE_ENV_ARG_PARAMETER);
@@ -115,6 +123,27 @@ TAO_CEC_Reactive_SupplierControl::need_to_disconnect (
                                     PortableServer::ServantBase* proxy)
 {
   bool disconnect = true;
+
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+  if (this->typed_event_channel_)
+    {
+      // Typed EC
+      TAO_CEC_TypedEventChannel::ServantRetryMap::ENTRY* entry = 0;
+      if (this->typed_event_channel_->
+          get_servant_retry_map ().find (proxy, entry) == 0)
+        {
+          ++entry->int_id_;
+          if (entry->int_id_ <= this->retries_)
+            {
+              disconnect = false;
+            }
+        }
+    }
+  else
+    {
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
+
+  // Un-typed EC
   TAO_CEC_EventChannel::ServantRetryMap::ENTRY* entry = 0;
   if (this->event_channel_->
       get_servant_retry_map ().find (proxy, entry) == 0)
@@ -126,6 +155,10 @@ TAO_CEC_Reactive_SupplierControl::need_to_disconnect (
         }
     }
 
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+    }
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
+
   return disconnect;
 }
 
@@ -133,12 +166,33 @@ void
 TAO_CEC_Reactive_SupplierControl::successful_transmission (
                                     PortableServer::ServantBase* proxy)
 {
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+  if (this->typed_event_channel_)
+    {
+      // Typed EC
+      TAO_CEC_TypedEventChannel::ServantRetryMap::ENTRY* entry = 0;
+      if (this->typed_event_channel_->
+          get_servant_retry_map ().find (proxy, entry) == 0)
+        {
+          entry->int_id_ = 0;
+        }
+    }
+  else
+    {
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
+
+  // Un-typed EC
   TAO_CEC_EventChannel::ServantRetryMap::ENTRY* entry = 0;
   if (this->event_channel_->
       get_servant_retry_map ().find (proxy, entry) == 0)
     {
       entry->int_id_ = 0;
     }
+
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+    }
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
+
 }
 
 void

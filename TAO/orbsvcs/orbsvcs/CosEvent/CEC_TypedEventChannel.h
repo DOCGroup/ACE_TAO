@@ -109,6 +109,19 @@ class TAO_CEC_Operation_Params;
 class TAO_Event_Serv_Export TAO_CEC_TypedEventChannel : public virtual POA_CosTypedEventChannelAdmin::TypedEventChannel
 {
 public:
+  class ServantBaseHash
+  {
+  public:
+    u_long operator() (PortableServer::ServantBase* const & ptr) const {
+      return reinterpret_cast<u_long> (ptr);
+    }
+  };
+
+  typedef ACE_Hash_Map_Manager_Ex<PortableServer::ServantBase*,
+                                  unsigned int,
+                                  ServantBaseHash,
+                                  ACE_Equal_To<PortableServer::ServantBase*>,
+                                  TAO_SYNCH_MUTEX> ServantRetryMap;
 
   /**
    * Constructor
@@ -248,6 +261,8 @@ public:
   virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  ServantRetryMap& get_servant_retry_map (void);
+
 protected:
   /// Function caches the full interface description from the IFR
   int cache_interface_description (const char *interface ACE_ENV_ARG_DECL);
@@ -307,6 +322,8 @@ private:
   /// Strategies to disconnect misbehaving or destroyed consumers and
   /// suppliers
   TAO_CEC_ConsumerControl *consumer_control_;
+  ServantRetryMap retry_map_;
+
   TAO_CEC_SupplierControl *supplier_control_;
 
   /// The uses_interface_ for the TypedConsumerAdmin.

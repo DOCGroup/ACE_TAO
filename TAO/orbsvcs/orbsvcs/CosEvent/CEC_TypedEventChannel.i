@@ -169,6 +169,12 @@ TAO_CEC_TypedEventChannel::number_of_base_interfaces (void) const
   return this->base_interfaces_.length ();
 }
 
+ACE_INLINE TAO_CEC_TypedEventChannel::ServantRetryMap&
+TAO_CEC_TypedEventChannel::get_servant_retry_map (void)
+{
+  return this->retry_map_;
+}
+
 ACE_INLINE
 TAO_CEC_Param::TAO_CEC_Param (void)
 {

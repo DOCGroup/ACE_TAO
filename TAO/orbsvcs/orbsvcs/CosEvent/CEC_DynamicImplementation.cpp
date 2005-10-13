@@ -41,7 +41,8 @@ TAO_CEC_DynamicImplementationServer::invoke (CORBA::ServerRequest_ptr request
         {
           if (TAO_debug_level >= 10)
             {
-              ACE_DEBUG ((LM_DEBUG, "***** Operation not found in IFR cache *****\n"));
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("***** Operation not found in IFR cache *****\n")));
             }
 
           this->typed_event_channel_->create_list (0, list ACE_ENV_ARG_PARAMETER);
@@ -114,7 +115,8 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request
 
   if (TAO_debug_level >= 10)
     {
-      ACE_DEBUG ((LM_DEBUG, "***** TAO_CEC_DynamicImplementationServer::is_a called with value %s *****\n",
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("***** TAO_CEC_DynamicImplementationServer::is_a called with value %s *****\n"),
                   value));
     }
 
@@ -124,8 +126,12 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request
 
   if (TAO_debug_level >= 10)
     {
-      ACE_DEBUG ((LM_DEBUG, "***** is_a using Server's RepositoryId %s *****\n", this->repository_id_));
-      ACE_DEBUG ((LM_DEBUG, "***** is_a using base interface %s *****\n", object_id));
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("***** is_a using Server's RepositoryId %s *****\n"),
+                  this->repository_id_));
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("***** is_a using base interface %s *****\n"),
+                  object_id));
     }
 
   CORBA::Boolean result = 0;
@@ -141,7 +147,8 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request
         {
           if (TAO_debug_level >= 10)
             {
-              ACE_DEBUG ((LM_DEBUG, "***** is_a using base interface %s *****\n",
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("***** is_a using base interface %s *****\n"),
                           this->typed_event_channel_->base_interfaces (base) ));
             }
           
@@ -154,7 +161,9 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request
   
   if (TAO_debug_level >= 10)
     {
-      ACE_DEBUG ((LM_DEBUG, "***** is_a returning %d *****\n", result));
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("***** is_a returning %d *****\n"),
+                  result));
     }
   
   CORBA::Any result_any;
