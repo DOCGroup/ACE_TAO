@@ -1,6 +1,7 @@
 Thu Oct 13 15:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Threads/task_four.cpp:
+        * examples/Reactor/Proactor/post_completions.cpp:
           Fixed warning in MinGW build
 
 Thu Oct 13 17:51:04 2005  Olli Savia  <ops@iki.fi>
