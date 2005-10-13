@@ -172,12 +172,12 @@ Invoker_Task::svc (void)
 
   ACE_Thread_Manager *thr_mgr =
     ACE_Thread_Manager::instance ();
-  Worker_Task **worker_task;
+  Worker_Task **worker_task = 0;
 
   ACE_NEW_RETURN (worker_task,
                   Worker_Task *[n_tasks_],
                   -1);
-  size_t task;
+  size_t task = 0;
 
   for (task = 0;
        task < this->n_tasks_;
