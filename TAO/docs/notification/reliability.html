@@ -93,10 +93,10 @@
       strategy is:
     </P>
     <p><code>dynamic Topology_Factory Service_Object*
-        TAO_CosNotification_persist:_make_XML_Topology_Factory() "-base_path ./reconnect_test" </code>
+        TAO_CosNotification_Persist:_make_XML_Topology_Factory() "-base_path ./reconnect_test" </code>
     </p>
     <p>The first part of this line: <code>dynamic Topology_Factory Service_Object*
-        TAO_CosNotification_persist:_make_XML_Topology_Factory()</code>should be given
+        TAO_CosNotification_Persist:_make_XML_Topology_Factory()</code>should be given
       exactly as shown. For details on this syntax, see chapter 17 of the TAO
       Developer's Guide.
     </p>
@@ -187,7 +187,7 @@
       An example of the line needed to configure the Event_Persistence object is:
     </p>
     <p><code>dynamic Event_Persistence Service_Object*
-        TAO_CosNotification_persist:_make_Standard_Event_Persistence() "-v -file_path
+        TAO_CosNotification_Persist:_make_Standard_Event_Persistence() "-v -file_path
         ./event_persist.db" </code>
     </p>
     <p><CODE></CODE>If this line does not appear in svc.conf, then event reliability
@@ -280,21 +280,22 @@
       running.</p>
     <P>The interfaces involved are defined in the NotifyExt.idl file (in
       $TAO_ROOT/orbsvcs/orbsvcs) and are shown here:</P>
-    <pre>
-   /** * \brief An interface which gets registered with a
-   ReconnectionRegistry.
-   * * A supplier or consumer must implement this interface in order
-   to * allow the Notification Service to attempt to reconnect to it
-   after * a  failure. The supplier or consumer must register its instance
-   of * this interface with the
-   ReconnectionRegistry.
-  */ interface
-  ReconnectionCallback
-    { /// Perform operations to reconnect to the Notification
-    Service /// after a
-    failure. void reconnect (in Object
+  <pre>
+  /** 
+   * \brief An interface which gets registered with a ReconnectionRegistry.
+   * 
+   * A supplier or consumer must implement this interface in order to 
+   * allow the Notification Service to attempt to reconnect to it after 
+   * a failure.  The supplier or consumer must register its instance of 
+   * this interface with the ReconnectionRegistry.
+   */ 
+  interface ReconnectionCallback
+  { 
+    /// Perform operations to reconnect to the Notification Service 
+    /// after a failure.
+    void reconnect (in Object new_connection); 
 
-    new_connection); /// Check to see if the ReconnectionCallback is alive
+    /// Check to see if the ReconnectionCallback is alive
     boolean is_alive ();
   };
 
