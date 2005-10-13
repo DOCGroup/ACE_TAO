@@ -1,3 +1,24 @@
+Thu Oct 13 12:03:05 2005  Steve Totten  <totten_s@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_DynamicImplementation.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.cpp:
+
+          Applied several changes from OCI's TAO 1.4a release to fix problems
+          in the Typed Event Channel implementation.  The primary fixes are to
+          properly handle consumer/supplier disconnects when using typed event
+          channels, and to properly deal with unresponsive push consumers when
+          the reactive consumer control is used.  Also fixed some memory
+          leaks.  Most of these changes originated from Jonathon Astle
+          <jon@astle45.fsnet.co.uk> and Paul Calabrese
+          <calabrese_p@ociweb.com>.
+
 Thu Oct 13 10:06:22 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Any/Recursive/client.cpp:
