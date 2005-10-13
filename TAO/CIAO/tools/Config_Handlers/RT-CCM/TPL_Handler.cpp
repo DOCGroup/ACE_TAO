@@ -28,7 +28,7 @@ namespace CIAO
 		      dest.threadpool_lanes.length (len + 1);
                       
           dest.threadpool_lanes[len].lane_priority =
-            static_cast <ACE_INT16> (loc->priority ());
+            static_cast <const ACE_INT16> (loc->priority ());
 
 		      dest.threadpool_lanes[len].static_threads =
 		        static_cast <ACE_UINT32> (loc->static_threads ());

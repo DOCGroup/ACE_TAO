@@ -1,3 +1,19 @@
+Thu Oct 13 15:42:12 2005  William Otte  <wotte@dre.vanderbilt.edu>
+       * tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp
+       * tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
+       * tools/Config_Handlers/RT-CCM/TPL_Handler.cpp
+
+       Various compile fixes for Borland. 
+       
+       * tools/Config_Handlers/XMLSchema/Types.hpp
+       
+       Modified to use ACE typedefs for number types. 
+       
+       * tools/Config_Handlers/XSCRT/Elements.hpp
+       
+       Removed unneeded non-const conversion operator which was causing
+       errors in Borland.
+       
 Wed Oct 12 14:13:09 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* examples/Hello/Sender/Sender.idl

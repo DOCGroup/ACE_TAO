@@ -8,6 +8,7 @@
 #include <string>
 #include "XSCRT/Elements.hpp"
 
+#include "ace/Basic_Types.h"
 /**
  * @@ HACK: VC7
  *
@@ -19,14 +20,14 @@
 #endif
 namespace XMLSchema
 {
-  typedef XSCRT::FundamentalType<signed char> byte;
-  typedef XSCRT::FundamentalType<unsigned char> unsignedByte;
+  typedef XSCRT::FundamentalType<ACE_INT8> byte;
+  typedef XSCRT::FundamentalType<ACE_UINT8> unsignedByte;
 
-  typedef XSCRT::FundamentalType<short> short_;
-  typedef XSCRT::FundamentalType<unsigned short> unsignedShort;
+  typedef XSCRT::FundamentalType<ACE_INT16> short_;
+  typedef XSCRT::FundamentalType<ACE_UINT16> unsignedShort;
 
-  typedef XSCRT::FundamentalType<int> int_;
-  typedef XSCRT::FundamentalType<unsigned int> unsignedInt;
+  typedef XSCRT::FundamentalType<ACE_INT32> int_;
+  typedef XSCRT::FundamentalType<ACE_UINT32> unsignedInt;
 
   //@@ VC6
 #if defined (_MSC_VER) && (_MSC_VER < 1300)
@@ -36,8 +37,8 @@ namespace XMLSchema
 
 #else
 
-  typedef XSCRT::FundamentalType<long long> long_;
-  typedef XSCRT::FundamentalType<unsigned long long> unsignedLong;
+  typedef XSCRT::FundamentalType<ACE_INT64> long_;
+  typedef XSCRT::FundamentalType<ACE_UINT64> unsignedLong;
 
 #endif
 
