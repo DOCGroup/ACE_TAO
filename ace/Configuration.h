@@ -794,10 +794,10 @@ public:
   /// Opens a configuration based on a file name
   int open (const ACE_TCHAR* file_name,
             void* base_address = ACE_DEFAULT_BASE_ADDR,
-            int default_map_size = ACE_DEFAULT_CONFIG_SECTION_SIZE);
+            size_t default_map_size = ACE_DEFAULT_CONFIG_SECTION_SIZE);
 
   /// Opens a heap based configuration
-  int open (int default_map_size = ACE_DEFAULT_CONFIG_SECTION_SIZE);
+  int open (size_t default_map_size = ACE_DEFAULT_CONFIG_SECTION_SIZE);
 
   virtual int open_section (const ACE_Configuration_Section_Key& base,
                             const ACE_TCHAR* sub_section,
@@ -881,7 +881,7 @@ private:
 
   ACE_Allocator *allocator_;
   SECTION_MAP *index_;
-  int default_map_size_;
+  size_t default_map_size_;
 };
 
 #include /**/ "ace/post.h"
