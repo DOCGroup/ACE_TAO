@@ -253,7 +253,7 @@ ACE_Pipe::send (size_t n, ...) const
 {
   ACE_TRACE ("ACE_Pipe::send");
   va_list argp;
-  int total_tuples = (static_cast<int> (n)) / 2;
+  size_t total_tuples = n / 2;
   iovec *iovp;
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
@@ -265,7 +265,7 @@ ACE_Pipe::send (size_t n, ...) const
 
   va_start (argp, n);
 
-  for (int i = 0; i < total_tuples; i++)
+  for (size_t i = 0; i < total_tuples; i++)
     {
       iovp[i].iov_base = va_arg (argp, char *);
       iovp[i].iov_len  = va_arg (argp, int);
@@ -299,7 +299,7 @@ ACE_Pipe::recv (size_t n, ...) const
 {
   ACE_TRACE ("ACE_Pipe::recv");
   va_list argp;
-  int total_tuples = static_cast<int> (n / 2);
+  size_t total_tuples = n / 2;
   iovec *iovp;
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
@@ -311,7 +311,7 @@ ACE_Pipe::recv (size_t n, ...) const
 
   va_start (argp, n);
 
-  for (int i = 0; i < total_tuples; i++)
+  for (size_t i = 0; i < total_tuples; i++)
     {
       iovp[i].iov_base = va_arg (argp, char *);
       iovp[i].iov_len  = va_arg (argp, int);
