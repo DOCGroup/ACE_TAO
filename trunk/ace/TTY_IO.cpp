@@ -6,11 +6,11 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
 
-static const ACE_TCHAR* const ACE_TTY_IO_ODD   = ACE_LIB_TEXT("odd");
-static const ACE_TCHAR* const ACE_TTY_IO_EVEN  = ACE_LIB_TEXT("even");
+static const char* const ACE_TTY_IO_ODD   = "odd";
+static const char* const ACE_TTY_IO_EVEN  = "even";
 #if defined (ACE_WIN32)
-static const ACE_TCHAR* const ACE_TTY_IO_MARK  = ACE_LIB_TEXT("mark");
-static const ACE_TCHAR* const ACE_TTY_IO_SPACE = ACE_LIB_TEXT("space");
+static const char* const ACE_TTY_IO_MARK  = "mark";
+static const char* const ACE_TTY_IO_SPACE = "space";
 #endif /* ACE_WIN32 */
 
 ACE_RCSID (ace,

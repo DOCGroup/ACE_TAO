@@ -1,3 +1,13 @@
+Thu Oct 13 17:39:31 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/TTY_IO.cpp: Changed ACE_TTY_IO_{ODD EVEN MARK SPACE} to
+	  char* from ACE_TCHAR* since the strings they're compared to (from
+	  Serial_Params) are char* always.
+
+	* ace/config-win32-common.h: Removed the check for UNDER_CE >= 0x400
+	  && UNDER_CE < 0x500 when deciding whether or not to define E...
+	  symbols. Windows Mobile 5 requires them as well.
+
 Thu Oct 13 13:58:44 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/config-g++-common.h (ACE_IMPORT_SINGLETON_DECLARE):
