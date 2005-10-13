@@ -145,7 +145,7 @@ public:
   virtual size_t message_length (void) = 0;
 
   /// Number of total messages on the queue.
-  virtual int message_count (void) = 0;
+  virtual size_t message_count (void) = 0;
 
   /// New value of the number of total bytes on the queue, i.e.,
   /// sum of the message block sizes.
@@ -292,7 +292,7 @@ public:
   /**
    * Number of total messages on the queue.
    */
-  virtual int message_count (void);
+  virtual size_t message_count (void);
 
   // = Manual changes to these stats (used when queued message blocks
   // change size or lengths).
@@ -496,7 +496,7 @@ public:
   /**
    * Number of total messages on the queue.
    */
-  virtual int message_count (void);
+  virtual size_t message_count (void);
 
   // = Manual changes to these stats (used when queued message blocks
   // change size or lengths).
@@ -580,7 +580,7 @@ private:
   size_t cur_length_;
 
   /// Current number of messages in the queue.
-  int cur_count_;
+  size_t cur_count_;
 
   /**
    * Synchronizer.  This should really be an ACE_Recursive_Thread_Mutex

@@ -427,7 +427,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::message_length (void)
   return this->queue_.message_length ();
 }
 
-template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> size_t
 ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::message_count (void)
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::message_count");
@@ -693,7 +693,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::message_length (void)
   return this->cur_length_;
 }
 
-template <ACE_SYNCH_DECL> int
+template <ACE_SYNCH_DECL> size_t
 ACE_Message_Queue<ACE_SYNCH_USE>::message_count (void)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::message_count");
