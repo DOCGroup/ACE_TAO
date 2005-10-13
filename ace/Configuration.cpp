@@ -1366,7 +1366,7 @@ ACE_Configuration_Heap::~ACE_Configuration_Heap (void)
 }
 
 int
-ACE_Configuration_Heap::open (int default_map_size)
+ACE_Configuration_Heap::open (size_t default_map_size)
 {
   default_map_size_ = default_map_size;
   // Create the allocator with the appropriate options.
@@ -1382,7 +1382,7 @@ ACE_Configuration_Heap::open (int default_map_size)
 int
 ACE_Configuration_Heap::open (const ACE_TCHAR* file_name,
                               void* base_address,
-                              int default_map_size)
+                              size_t default_map_size)
 {
   default_map_size_ = default_map_size;
 

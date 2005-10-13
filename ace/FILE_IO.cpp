@@ -44,8 +44,8 @@ ACE_FILE_IO::send (size_t n, ...) const
 {
   ACE_TRACE ("ACE_FILE_IO::send");
   va_list argp;
-  int total_tuples = (static_cast<int> (n)) / 2;
-  iovec *iovp;
+  size_t total_tuples = n / 2;
+  iovec *iovp = 0;
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
 #else
@@ -56,7 +56,7 @@ ACE_FILE_IO::send (size_t n, ...) const
 
   va_start (argp, n);
 
-  for (int i = 0; i < total_tuples; i++)
+  for (size_t i = 0; i < total_tuples; i++)
     {
       iovp[i].iov_base = va_arg (argp, char *);
       iovp[i].iov_len  = va_arg (argp, int);
@@ -83,8 +83,8 @@ ACE_FILE_IO::recv (size_t n, ...) const
 {
   ACE_TRACE ("ACE_FILE_IO::recv");
   va_list argp;
-  int total_tuples = static_cast<int> (n / 2);
-  iovec *iovp;
+  size_t total_tuples = n / 2;
+  iovec *iovp = 0;
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
 #else
@@ -95,7 +95,7 @@ ACE_FILE_IO::recv (size_t n, ...) const
 
   va_start (argp, n);
 
-  for (int i = 0; i < total_tuples; i++)
+  for (size_t i = 0; i < total_tuples; i++)
     {
       iovp[i].iov_base = va_arg (argp, char *);
       iovp[i].iov_len  = va_arg (argp, int);
