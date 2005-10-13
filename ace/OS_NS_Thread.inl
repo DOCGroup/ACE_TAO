@@ -559,13 +559,13 @@ ACE_OS::event_init (ACE_event_t *event,
 }
 #endif /* ACE_HAS_WCHAR */
 
-ACE_INLINE int
+ACE_INLINE long
 ACE_OS::priority_control (ACE_idtype_t idtype, ACE_id_t identifier, int cmd, void *arg)
 {
   ACE_OS_TRACE ("ACE_OS::priority_control");
 #if defined (ACE_HAS_PRIOCNTL)
   ACE_OSCALL_RETURN (priocntl (idtype, identifier, cmd, static_cast<caddr_t> (arg)),
-                     int, -1);
+                     long, -1);
 #else  /* ! ACE_HAS_PRIOCNTL*/
   ACE_UNUSED_ARG (idtype);
   ACE_UNUSED_ARG (identifier);
