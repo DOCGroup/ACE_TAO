@@ -236,7 +236,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   const size_t NrCompletions (10);
   My_Result *result_objects [NrCompletions];
   int signal_number = ACE_SIGRTMAX;
-  size_t ri;
+  size_t ri = 0;
 
   Completions_To_Go = NrCompletions;
 
