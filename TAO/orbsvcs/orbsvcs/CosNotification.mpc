@@ -200,6 +200,7 @@ project(CosNotification_Serv) : orbsvcslib, svc_utils, core, notification_skel, 
       Notify/Routing_Slip.cpp
       Notify/Routing_Slip_Persistence_Manager.cpp
       Notify/Routing_Slip_Queue.cpp
+      Notify/Service.cpp
       Notify/Subscription_Change_Worker.cpp
       Notify/Supplier.cpp
       Notify/SupplierAdmin.cpp
