@@ -1,3 +1,15 @@
+Thu Oct 13 11:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        From James Megquier <jmegq at radiance dot com>
+
+        * orbsvcs/orbsvcs/Notify/Service.{h,cpp}:
+          Added destructor to fix runtime gcc4 problems. Fixes bugzilla
+          2262
+
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/Makefile.am:
+          Added new cpp file
+
 Wed Oct 12 19:26:48 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* docs/notification/reliability.html:
@@ -320,7 +332,7 @@ Sat Oct  8 07:50:48 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 	  normalized all orbsvcs header files to be included with
 	  "orbsvcs/foo.h".  The correct settings of ../../orbsvcs is
 	  already obtained from the base projects we derive from.
-	  
+
 Fri Oct  7 16:40:05 2005  Simon McQueen  <sm@prismtech.com>
 
         * orbsvcs/tests/Bug_2248_Regression/Server_Request_Interceptor.cpp:
