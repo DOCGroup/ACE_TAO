@@ -404,7 +404,7 @@ ACE_OS::realpath (const char *file_name,
 
               char link_buf[PATH_MAX];
 
-              int link_len = ACE_OS::readlink (rpath, link_buf, PATH_MAX);
+              ssize_t link_len = ACE_OS::readlink (rpath, link_buf, PATH_MAX);
               int tail_len = ACE_OS::strlen (file_name) + 1;
 
               // Check if there is room to expand link?
