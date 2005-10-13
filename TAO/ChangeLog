@@ -1,3 +1,13 @@
+Thu Oct 13 13:12:12 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/examples/ImR/Combined_Service/ImR_Combined_Service.mpc:
+
+	  Add synthetic dependencies for the gnuace build so that IDL-
+	  generated files used by more than one project won't be compiled
+	  multiple times simultaneously (with parallel builds), which may
+	  result in corrupted object files.  Thanks to Simon Massey for
+	  pointing out this problem in a scoreboard build.
+
 Thu Oct 13 12:26:47 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/ORB_Core.cpp:
