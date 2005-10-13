@@ -28,31 +28,22 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
 {
 #if defined (ACE_HAS_TERM_IOCTLS)
 
-#if defined (TCGETS)
+#if defined (ACE_HAS_NEW_TERMIOS_STRUCT)
   struct termios devpar;
-#elif defined (TCGETA)
-  struct termio devpar;
-#else
-  errno = ENOSYS;
-  return -1;
-#endif
-
-  // Get default device parameters.
-
-#if defined (TCGETS)
+  speed_t newbaudrate = 0;
+  if (::tcgetattr (get_handle () , &devpar) == -1)
+#elif defined (TCGETS)
+  struct termios devpar;
+  unsigned int newbaudrate = 0;
   if (this->ACE_IO_SAP::control (TCGETS, static_cast<void*>(&devpar)) == -1)
 #elif defined (TCGETA)
+  struct termio devpar;
+  unsigned int newbaudrate = 0;
   if (this->ACE_IO_SAP::control (TCGETA, static_cast<void*>(&devpar)) == -1)
 #else
   errno = ENOSYS;
-#endif /* TCGETS */
-   return -1;
-
-#if defined (ACE_HAS_NEW_TERMIOS_STRUCT)
-  speed_t newbaudrate = 0;
-#else
-  unsigned int newbaudrate = 0;
 #endif /* ACE_HAS_NEW_TERMIOS_STRUCT */
+  return -1;
 
   switch (cmd)
     {
@@ -176,8 +167,10 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
 
 #if defined (ACE_HAS_NEW_TERMIOS_STRUCT)
       // Can you really have different input and output baud rates?!
-      devpar.c_ispeed = newbaudrate;
-      devpar.c_ospeed = newbaudrate;
+      if (::cfsetospeed (&devpar, newbaudrate) == -1)
+        return -1;
+      if (::cfsetispeed (&devpar, newbaudrate) == -1)
+        return -1;
 #else
       devpar.c_cflag &= ~CBAUD;
 # if defined (CBAUDEX)
@@ -329,14 +322,17 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
       this->ACE_IO_SAP::control (TIOCMSET, &status);
 #endif /* definded (TIOCMGET) */
 
-#if defined (TCSETS)
+#if defined (ACE_HAS_NEW_TERMIOS_STRUCT)
+      return ::tcgetattr (get_handle () , &devpar);
+#elif defined (TCSETS)
       return this->ACE_IO_SAP::control (TCSETS, static_cast<void*>(&devpar));
 #elif defined (TCSETA)
       return this->ACE_IO_SAP::control (TCSETA, static_cast<void*>(&devpar));
 #else
       errno = ENOSYS;
       return -1;
-#endif
+#endif /* ACE_HAS_NEW_TERMIOS_STRUCT */
+
     case GETPARAMS:
       return -1; // Not yet implemented.
     default:
