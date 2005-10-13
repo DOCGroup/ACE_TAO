@@ -1,3 +1,12 @@
+Thu Oct 13 13:58:44 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/config-g++-common.h (ACE_IMPORT_SINGLETON_DECLARE):
+	  (ACE_IMPORT_SINGLETON_DECLARATION):
+
+	  Suppress "-pedantic" error caused by use of g++ "extern
+	  template" extension by preceding the expression by
+	  "__extension__".
+
 Thu Oct 13 15:38:29 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/RB_Tree.{cpp h}: Follow-up to:
