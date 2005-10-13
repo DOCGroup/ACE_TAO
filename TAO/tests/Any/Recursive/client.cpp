@@ -52,6 +52,7 @@ void
 dump<Test::RecursiveStruct> (Test::RecursiveStruct * data)
 {
   ACE_DEBUG ((LM_DEBUG,
+              "Test::RecursiveStruct\n"
               "%d\n"
               "%u\n"
               "%d\n"
@@ -60,6 +61,35 @@ dump<Test::RecursiveStruct> (Test::RecursiveStruct * data)
               data->recursive_structs.length (),
               data->recursive_structs[0].i,
               data->recursive_structs[1].i));
+}
+
+template<>
+void
+dump<Test::RecursiveUnion> (Test::RecursiveUnion * data)
+{
+  ACE_DEBUG ((LM_DEBUG, "Test::RecursiveUnion\n"));
+
+  switch (data->_d ())
+    {
+    case 0:
+      {
+        Test::RecursiveUnionSeq const & seq = data->recursive_unions ();
+
+        ACE_DEBUG ((LM_DEBUG,
+                    "%u\n"
+                    "%d\n"
+                    "%u\n",
+                    seq.length (),
+                    seq[0].i (),
+                    seq[1].recursive_unions ().length ()));
+      }
+      break;
+    default:
+      ACE_DEBUG ((LM_DEBUG,
+                  "%d\n",
+                  data->i ()));
+      break;
+    }
 }
 
 template<typename T>
@@ -131,14 +161,41 @@ recursive_struct_test (CORBA::ORB_ptr /* orb */,
 
 void
 recursive_union_test (CORBA::ORB_ptr /* orb */,
-                      Test::Hello_ptr /* hello */
-                      ACE_ENV_ARG_DECL_NOT_USED)
+                      Test::Hello_ptr hello
+                      ACE_ENV_ARG_DECL)
 {
   ACE_DEBUG ((LM_INFO,
               "Executing recursive union test\n"));
 
-  ACE_DEBUG ((LM_WARNING,
-              "  Currently unimplemented.\n"));
+  Test::RecursiveUnion foo;
+
+  // Non-recursive member case.
+  static CORBA::Long const test_long = 238901;
+
+  foo.i (test_long);
+
+  CORBA::Any the_any;
+  the_any <<= foo;
+
+  ::perform_invocation<Test::RecursiveUnion> (hello,
+                                              the_any
+                                              ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Recursive member case.
+  Test::RecursiveUnionSeq seq;
+  seq.length (2);
+  seq[0].i (37);
+  seq[1].recursive_unions (Test::RecursiveUnionSeq ());
+
+  foo.recursive_unions (seq);
+
+  the_any <<= foo;
+
+  ::perform_invocation<Test::RecursiveUnion> (hello,
+                                              the_any
+                                              ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 
