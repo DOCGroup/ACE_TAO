@@ -44,6 +44,11 @@ project(*Test) : orbsvcsexe, exceptions {
 // A server to use with the imr
 project(*TestServer) : orbsvcsexe, portableserver, iortable, exceptions {
   after += *IDL
+  // The gnuace specific portion is to prevent invalid object files from
+  // IDL generated files being compiled simultaneously with parallel builds.
+  specific(gnuace) {
+    after += *Test
+  }
   source_files {
     test_server.cpp
     testC.cpp
@@ -59,7 +64,10 @@ project(*DynamicServer) : taolib, portableserver, iortable, exceptions {
   dynamicflags = DYNSERVER_BUILD_DLL
   sharedname   = DynServer
   after += *IDL
-  idl_files {
+  // The gnuace specific portion is to prevent invalid object files from
+  // IDL-generated files being compiled simultaneously with parallel builds.
+  specific(gnuace) {
+    after += *TestServer
   }
   source_files {
     testC.cpp
@@ -69,5 +77,7 @@ project(*DynamicServer) : taolib, portableserver, iortable, exceptions {
   header_files {
     dynserver.h
     dynserver_export.h
+  }
+  idl_files {
   }
 }
