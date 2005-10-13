@@ -1,3 +1,13 @@
+Thu Oct 13 13:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.{h,inl}:
+          Changed return type of priority_control from int to long to fix
+          64bit issues.
+
+        * ace/Mem_Map.{h,inl}:
+        * ace/OS_NS_sys_shm.{h,inl}:
+          Fixed 64bit conversion warnings
+
 Thu Oct 13 11:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_stdlib.{h,cpp,inl}:
