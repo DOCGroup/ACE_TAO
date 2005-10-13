@@ -1,3 +1,8 @@
+Thu Oct 13 20:42:00 2005  Olli Savia  <ops@iki.fi>
+
+        * ace/TTY_IO.cpp:
+          Enable noncanonical input processing on POSIX systems.
+
 Thu Oct 13 19:18:44 2005  Olli Savia  <ops@iki.fi>
 
         * ace/TTY_IO.cpp:
