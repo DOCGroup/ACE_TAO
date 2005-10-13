@@ -1,3 +1,14 @@
+Thu Oct 13 15:38:29 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/RB_Tree.{cpp h}: Follow-up to:
+	  Fri Jul  9 21:23:13 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	  Don't include a tree pointer in each RB_Tree_Node just to be able to
+	  get back to the tree to retrieve the allocator. Leave the allocator
+	  pointer in ACE_RB_Tree_Base, and add a ACE_RB_Tree::remove_children_i
+	  method that uses the allocator to release memory. Thank you to
+	  Sergei Kuchin at MQSoftware for this improvement.
+
 Thu Oct 13 20:42:00 2005  Olli Savia  <ops@iki.fi>
 
         * ace/TTY_IO.cpp:
