@@ -1406,7 +1406,7 @@ namespace ACE_OS {
    * Solaris.
    */
   ACE_NAMESPACE_INLINE_FUNCTION
-  int priority_control (ACE_idtype_t, ACE_id_t, int, void *);
+  long priority_control (ACE_idtype_t, ACE_id_t, int, void *);
 
   //@{ @name A set of wrappers for recursive mutex locks.
 
