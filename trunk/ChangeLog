@@ -1,3 +1,9 @@
+Thu Oct 13 14:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_arpa_inet.cpp:
+        * ace/Pipe.cpp:
+          64bit fixes
+
 Thu Oct 13 13:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Threads/tss2.cpp:
