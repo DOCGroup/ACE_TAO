@@ -120,7 +120,11 @@ for $config (@test_configs)
         $test = new PerlACE::Process ("./$name->{name}",
                                       "-ORBInitRef NameService=file://$namingior " .
                                       "$name->{args} ");
-        $test->Spawn ();
+        $test_spawn = $test->Spawn ();
+        if ($test_spawn != 0) 
+          {
+            break;
+          }
 
         $status = $test->WaitKill ($experiment_timeout +
                                    (defined $name->{extra} ?
