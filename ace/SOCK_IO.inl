@@ -45,7 +45,7 @@ ACE_SOCK_IO::recv (void *buf,
 
 ACE_INLINE ssize_t
 ACE_SOCK_IO::recvv (iovec iov[],
-                    int n,
+                    size_t n,
                     const ACE_Time_Value *timeout) const
 {
   ACE_TRACE ("ACE_SOCK_IO::recvv");
