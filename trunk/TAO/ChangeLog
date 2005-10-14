@@ -1,3 +1,13 @@
+Fri Oct 14 08:55:07 2005  Ciju John  <john_c@ociweb.com>
+
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Acceptor.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
+
+        Added new IIOP specific option 'reuse_addr' which would be
+        provided to the -ORBEndpoint option to control socket level
+        option SO_REUSEADDR being set/unset.
+
 Fri Oct 14 12:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:

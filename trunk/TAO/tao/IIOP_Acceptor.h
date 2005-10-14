@@ -232,6 +232,9 @@ protected:
   /// Should we use GIOP lite??
   const bool lite_flag_;
 
+  /// Enable socket option SO_REUSEADDR to be set
+  int reuse_addr_;
+
   /// Address for default endpoint
   ACE_INET_Addr default_address_;
 
