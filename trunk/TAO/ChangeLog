@@ -1,3 +1,31 @@
+Fri Oct 14 11:25:17 2005  Paul Calabrese  <calabrese_p@ociweb.com>
+
+          Merge some changes from OCI TAO 1.4a that are mostly
+          documentation.
+
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/driver/drv_args.cpp:
+
+          Move the documentation for the -g option from the front end
+          to the back end.  This causes it to not be in the help message
+          of other IDL processors (like tao_ifr) as it is specific to
+          tao_idl.
+          Add an error check to the processing of -t (avoids a core if
+          no argument is passed).
+
+        * docs/interfacerepo/tao_ifr.html:
+
+          Document some missing options.
+
+        * orbsvcs/Event_Service/Event_Service.h:
+        * orbsvcs/Event_Service/Event_Service.cpp:
+
+          Rename the servant_name variable and documentation to object_id.
+
+        * orbsvcs/orbsvcs/Event/EC_Kokyu_Factory.cpp:
+
+          Fix the scope settings for kokyu scheduling.
+
 Fri Oct 14 14:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicInterface/ExceptionList.cpp:
@@ -44,69 +72,69 @@ Fri Oct 14 09:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Oct 13 13:12:12 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/examples/ImR/Combined_Service/ImR_Combined_Service.mpc:
+        * orbsvcs/examples/ImR/Combined_Service/ImR_Combined_Service.mpc:
 
-	  Add synthetic dependencies for the gnuace build so that IDL-
-	  generated files used by more than one project won't be compiled
-	  multiple times simultaneously (with parallel builds), which may
-	  result in corrupted object files.  Thanks to Simon Massey for
-	  pointing out this problem in a scoreboard build.
+          Add synthetic dependencies for the gnuace build so that IDL-
+          generated files used by more than one project won't be compiled
+          multiple times simultaneously (with parallel builds), which may
+          result in corrupted object files.  Thanks to Simon Massey for
+          pointing out this problem in a scoreboard build.
 
 Thu Oct 13 12:26:47 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/ORB_Core.cpp:
+        * tao/ORB_Core.cpp:
 
-	  Minor coding convention updates.  Class members outside of a
-	  base member initializer list should be referenced with the
-	  "this" pointer (e.g. this->client_request_interceptor_adapter_).
+          Minor coding convention updates.  Class members outside of a
+          base member initializer list should be referenced with the
+          "this" pointer (e.g. this->client_request_interceptor_adapter_).
 
-	* tao/Pseudo_VarOut_T.h:
+        * tao/Pseudo_VarOut_T.h:
 
-	  Added unimplemented copy constructor and assignment operator
-	  that accept a TAO_Base_var parameter.  Prevents invalid
-	  widening.
+          Added unimplemented copy constructor and assignment operator
+          that accept a TAO_Base_var parameter.  Prevents invalid
+          widening.
 
-	* tao/Pseudo_VarOut_T.inl:
+        * tao/Pseudo_VarOut_T.inl:
 
-	  Explicitly initialize TAO_Base_var in the copy constructor
-	  base member initializer list.
+          Explicitly initialize TAO_Base_var in the copy constructor
+          base member initializer list.
 
-	* tao/SystemException.cpp:
-	* tao/SystemException.inl:
+        * tao/SystemException.cpp:
+        * tao/SystemException.inl:
 
-	  Inlined concrete system exception constructors and static
-	  _tao_any_destructor() method.  Since they are small, a good
-	  footprint decrease is achieved by doing so, especially since
-	  only a few of the concrete SystemExceptions are used within
-	  TAO.
+          Inlined concrete system exception constructors and static
+          _tao_any_destructor() method.  Since they are small, a good
+          footprint decrease is achieved by doing so, especially since
+          only a few of the concrete SystemExceptions are used within
+          TAO.
 
-	* tao/UserException.cpp:
-	* tao/UserException.inl:
+        * tao/UserException.cpp:
+        * tao/UserException.inl:
 
-	  Likewise.
+          Likewise.
 
-	  Moved _tao_type() method of out of line.  Since it is virtual
-	  inlining can cause RTTI related problems when using g++ 4.x's
-	  "-fvisibility-inlines-hidden" feature.
+          Moved _tao_type() method of out of line.  Since it is virtual
+          inlining can cause RTTI related problems when using g++ 4.x's
+          "-fvisibility-inlines-hidden" feature.
 
-	* tao/TSS_Resources.cpp:
+        * tao/TSS_Resources.cpp:
 
-	  Do not use "this" pointer in base member initializer list.  It
-	  is not guaranteed to be available until after base member
-	  initialization is completed.
+          Do not use "this" pointer in base member initializer list.  It
+          is not guaranteed to be available until after base member
+          initialization is completed.
 
-	* tao/TSS_Resources.h:
+        * tao/TSS_Resources.h:
 
-	  Minor include directive reorganization.
+          Minor include directive reorganization.
 
-	* tao/PI/ClientRequestInterceptor_Adapter_Impl.h:
+        * tao/PI/ClientRequestInterceptor_Adapter_Impl.h:
 
-	  Cosmetic update.
+          Cosmetic update.
 
-	* tao/PI/ClientRequestInterceptor_Adapter_Impl.cpp:
-	* tao/PI/ClientRequestInterceptor_Factory_Impl.cpp:
+        * tao/PI/ClientRequestInterceptor_Adapter_Impl.cpp:
+        * tao/PI/ClientRequestInterceptor_Factory_Impl.cpp:
 
-	  Corrected ACE_RCSID macro arguments.
+          Corrected ACE_RCSID macro arguments.
 
 Thu Oct 13 12:03:05 2005  Steve Totten  <totten_s@ociweb.com>:
 
@@ -131,9 +159,9 @@ Thu Oct 13 12:03:05 2005  Steve Totten  <totten_s@ociweb.com>:
 
 Thu Oct 13 10:06:22 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/Any/Recursive/client.cpp:
+        * tests/Any/Recursive/client.cpp:
 
-	  Added recursive union test case.
+          Added recursive union test case.
 
 Thu Oct 13 11:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -148,11 +176,11 @@ Thu Oct 13 11:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Oct 12 19:26:48 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* docs/notification/reliability.html:
+        * docs/notification/reliability.html:
 
-	  Fix library name in service config file examples.
+          Fix library name in service config file examples.
 
-	  Fix formatting of NotifyExt.inl excerpts.
+          Fix formatting of NotifyExt.inl excerpts.
 
 Wed Oct 12 12:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -328,13 +356,13 @@ Mon Oct 10 19:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Oct 10 07:13:58 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/IFR_Service/IFR_Service.mpc:
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
 
-	  Partially revert:
-	  Sun Oct  9 14:14:01 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+          Partially revert:
+          Sun Oct  9 14:14:01 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	  Add $(TAO_ROOT)/orbsvcs/IFR_Service back to includes definition
-	  for TAO_IFR_EXE project.
+          Add $(TAO_ROOT)/orbsvcs/IFR_Service back to includes definition
+          for TAO_IFR_EXE project.
 
 Mon Oct 10 13:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -399,34 +427,34 @@ Mon Oct 10 06:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Oct  9 14:38:12 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* examples/Quoter/Makefile.am:
-	* examples/Simulator/Event_Supplier/Makefile.am:
-	* orbsvcs/IFR_Service/Makefile.am:
-	* orbsvcs/examples/RtEC/Kokyu/Makefile.am:
-	* orbsvcs/orbsvcs/Makefile.am:
+        * examples/Quoter/Makefile.am:
+        * examples/Simulator/Event_Supplier/Makefile.am:
+        * orbsvcs/IFR_Service/Makefile.am:
+        * orbsvcs/examples/RtEC/Kokyu/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Regenerate with recent *.mpc file changes.
+          Regenerate with recent *.mpc file changes.
 
 Sun Oct  9 14:14:01 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/IFR_Service/IFR_Service.mpc:
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
 
-	  Removed includes definitions pointing to $(TAO_ROOT) and
-	  $(TAO_ROOT)/orbsvcs/IFR_Service.  These are already
-	  obtained from the base projects we derive from.
+          Removed includes definitions pointing to $(TAO_ROOT) and
+          $(TAO_ROOT)/orbsvcs/IFR_Service.  These are already
+          obtained from the base projects we derive from.
 
-	  Set TAO_IDL_INCLUDE_DIR to $(includedir)/tao for automake
-	  builds so end-user's won't have to set ACE_ROOT/TAO_ROOT
-	  to run the installed executable.
+          Set TAO_IDL_INCLUDE_DIR to $(includedir)/tao for automake
+          builds so end-user's won't have to set ACE_ROOT/TAO_ROOT
+          to run the installed executable.
 
 Sun Oct  9 08:16:17 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/examples/RtEC/Kokyu/RtECKokyu.mpc:
-	* orbsvcs/orbsvcs/FtRtEvent.mpc:
+        * orbsvcs/examples/RtEC/Kokyu/RtECKokyu.mpc:
+        * orbsvcs/orbsvcs/FtRtEvent.mpc:
 
-	  Removed includes definitions pointing to directories under
-	  $(TAO_ROOT)/orbsvcs.  This appears no longer to be needed,
-	  all headers are specified relative to $(TAO_ROOT)/orbsvcs.
+          Removed includes definitions pointing to directories under
+          $(TAO_ROOT)/orbsvcs.  This appears no longer to be needed,
+          all headers are specified relative to $(TAO_ROOT)/orbsvcs.
 
 Sat Oct  8 18:43:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -438,36 +466,36 @@ Sat Oct  8 18:43:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Oct  8 08:18:29 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.mpc:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.mpc:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.mpc:
-	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Colocated_Roundtrip.mpc:
-	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Federated_Roundtrip.mpc:
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/RTCORBA_Baseline.mpc:
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/RTCORBA_Callback.mpc:
-	* orbsvcs/performance-tests/RTEvent/Roundtrip/Roundtrip.mpc:
-	* orbsvcs/performance-tests/RTEvent/TCP_Baseline/TCP_Baseline.mpc:
-	* orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Infrastructure_Controlled.mpc:
-	* orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/LoadMonitorCPU.mpc:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.mpc:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.mpc:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.mpc:
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Colocated_Roundtrip.mpc:
+        * orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Federated_Roundtrip.mpc:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/RTCORBA_Baseline.mpc:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/RTCORBA_Callback.mpc:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/Roundtrip.mpc:
+        * orbsvcs/performance-tests/RTEvent/TCP_Baseline/TCP_Baseline.mpc:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Infrastructure_Controlled.mpc:
+        * orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/LoadMonitorCPU.mpc:
 
-	  Remove includes definitions pointing to $(TAO_ROOT)/orbsvcs.
-	  This is already obtained from the base projects we derive from.
+          Remove includes definitions pointing to $(TAO_ROOT)/orbsvcs.
+          This is already obtained from the base projects we derive from.
 
-	* orbsvcs/tests/FT_App/FT_App.mpc:
+        * orbsvcs/tests/FT_App/FT_App.mpc:
 
-	  Remove includes definitions pointing to $(TAO_ROOT).
-	  This is already obtained from the base projects we derive from.
+          Remove includes definitions pointing to $(TAO_ROOT).
+          This is already obtained from the base projects we derive from.
 
 Sat Oct  8 07:50:48 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* examples/Simulator/Event_Supplier/Event_Supplier.mpc:
-	* examples/Quoter/Quoter.mpc:
+        * examples/Simulator/Event_Supplier/Event_Supplier.mpc:
+        * examples/Quoter/Quoter.mpc:
 
-	  Remove includes and idlflags definitions pointing to
-	  ../../orbsvcs/orbsvcs.  This hasn't been right since we
-	  normalized all orbsvcs header files to be included with
-	  "orbsvcs/foo.h".  The correct settings of ../../orbsvcs is
-	  already obtained from the base projects we derive from.
+          Remove includes and idlflags definitions pointing to
+          ../../orbsvcs/orbsvcs.  This hasn't been right since we
+          normalized all orbsvcs header files to be included with
+          "orbsvcs/foo.h".  The correct settings of ../../orbsvcs is
+          already obtained from the base projects we derive from.
 
 Fri Oct  7 16:40:05 2005  Simon McQueen  <sm@prismtech.com>
 
@@ -477,124 +505,124 @@ Fri Oct  7 16:40:05 2005  Simon McQueen  <sm@prismtech.com>
 
 Fri Oct  7 14:03:54 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* docs/tutorials/Quoter/AMI/Makefile.am:
-	* docs/tutorials/Quoter/Event_Service/Makefile.am:
-	* docs/tutorials/Quoter/On_Demand_Activation/Makefile.am:
-	* docs/tutorials/Quoter/RT_Event_Service/Makefile.am:
-	* docs/tutorials/Quoter/idl/Makefile.am:
-	* examples/AMH/Sink_Server/Makefile.am:
-	* examples/AMI/FL_Callback/Makefile.am:
-	* examples/Advanced/ch_3/Makefile.am:
-	* examples/Buffered_AMI/Makefile.am:
-	* examples/Buffered_Oneways/Makefile.am:
-	* examples/Callback_Quoter/Makefile.am:
-	* examples/Content_Server/AMI_Iterator/Makefile.am:
-	* examples/Content_Server/AMI_Observer/Makefile.am:
-	* examples/Content_Server/SMI_Iterator/Makefile.am:
-	* examples/Event_Comm/Makefile.am:
-	* examples/Kokyu_dsrt_schedulers/Makefile.am:
-	* examples/Kokyu_dsrt_schedulers/fp_example/Makefile.am:
-	* examples/Kokyu_dsrt_schedulers/mif_example/Makefile.am:
-	* examples/Kokyu_dsrt_schedulers/muf_example/Makefile.am:
-	* examples/Load_Balancing/Makefile.am:
-	* examples/Load_Balancing_persistent/Makefile.am:
-	* examples/Logging/Makefile.am:
-	* examples/OBV/Typed_Events/Makefile.am:
-	* examples/POA/DSI/Makefile.am:
-	* examples/POA/Default_Servant/Makefile.am:
-	* examples/POA/Forwarding/Makefile.am:
-	* examples/POA/Generic_Servant/Makefile.am:
-	* examples/POA/TIE/Makefile.am:
-	* examples/Persistent_Grid/Makefile.am:
-	* examples/PluggableUDP/tests/Basic/Makefile.am:
-	* examples/PluggableUDP/tests/Performance/Makefile.am:
-	* examples/PluggableUDP/tests/SimplePerformance/Makefile.am:
-	* examples/Quoter/Makefile.am:
-	* examples/RTCORBA/Activity/Makefile.am:
-	* examples/RTScheduling/Fixed_Priority_Scheduler/Makefile.am:
-	* examples/RTScheduling/MIF_Scheduler/Makefile.am:
-	* examples/Simple/bank/Makefile.am:
-	* examples/Simple/chat/Makefile.am:
-	* examples/Simple/echo/Makefile.am:
-	* examples/Simple/grid/Makefile.am:
-	* examples/Simple/time/Makefile.am:
-	* examples/Simple/time-date/Makefile.am:
-	* examples/Simulator/Event_Supplier/Makefile.am:
-	* examples/TypeCode_Creation/Makefile.am:
-	* examples/ior_corbaloc/Makefile.am:
-	* examples/mfc/Makefile.am:
-	* interop-tests/wchar/Makefile.am:
-	* orbsvcs/ImplRepo_Service/Makefile.am:
-	* orbsvcs/examples/CosEC/Factory/Makefile.am:
-	* orbsvcs/examples/CosEC/TypedSimple/Makefile.am:
-	* orbsvcs/examples/FaultTolerance/RolyPoly/Makefile.am:
-	* orbsvcs/examples/ImR/Advanced/Makefile.am:
-	* orbsvcs/examples/ImR/Combined_Service/Makefile.am:
-	* orbsvcs/examples/LoadBalancing/Makefile.am:
-	* orbsvcs/examples/ORT/Makefile.am:
-	* orbsvcs/examples/Security/Send_File/Makefile.am:
-	* orbsvcs/orbsvcs/Makefile.am:
-	* orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/lib/Makefile.am:
-	* orbsvcs/tests/BiDir_CORBALOC/Makefile.am:
-	* orbsvcs/tests/Bug_1395_Regression/Makefile.am:
-	* orbsvcs/tests/Bug_2247_Regression/Makefile.am:
-	* orbsvcs/tests/Bug_2248_Regression/Makefile.am:
-	* orbsvcs/tests/EC_Custom_Marshal/Makefile.am:
-	* orbsvcs/tests/FT_App/Makefile.am:
-	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Makefile.am:
-	* orbsvcs/tests/FaultTolerance/IOGR/Makefile.am:
-	* orbsvcs/tests/HTIOP/AMI/Makefile.am:
-	* orbsvcs/tests/HTIOP/BiDirectional/Makefile.am:
-	* orbsvcs/tests/HTIOP/Hello/Makefile.am:
-	* orbsvcs/tests/IOR_MCast/Makefile.am:
-	* orbsvcs/tests/ImplRepo/Makefile.am:
-	* orbsvcs/tests/ImplRepo/scale/Makefile.am:
-	* orbsvcs/tests/InterfaceRepo/Application_Test/Makefile.am:
-	* orbsvcs/tests/Interoperable_Naming/Makefile.am:
-	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Makefile.am:
-	* orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Makefile.am:
-	* orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Makefile.am:
-	* orbsvcs/tests/Miop/McastHello/Makefile.am:
-	* orbsvcs/tests/Notify/Blocking/Makefile.am:
-	* orbsvcs/tests/Notify/Discarding/Makefile.am:
-	* orbsvcs/tests/Notify/MT_Dispatching/Makefile.am:
-	* orbsvcs/tests/Notify/Ordering/Makefile.am:
-	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Makefile.am:
-	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile.am:
-	* orbsvcs/tests/Notify/Structured_Filter/Makefile.am:
-	* orbsvcs/tests/Notify/Structured_Multi_Filter/Makefile.am:
-	* orbsvcs/tests/Notify/lib/Makefile.am:
-	* orbsvcs/tests/Notify/performance-tests/Filter/Makefile.am:
-	* orbsvcs/tests/Redundant_Naming/Makefile.am:
-	* orbsvcs/tests/Security/BiDirectional/Makefile.am:
-	* orbsvcs/tests/Security/Big_Request/Makefile.am:
-	* orbsvcs/tests/Security/Callback/Makefile.am:
-	* orbsvcs/tests/Security/Crash_Test/Makefile.am:
-	* orbsvcs/tests/Security/MT_IIOP_SSL/Makefile.am:
-	* orbsvcs/tests/Security/MT_SSLIOP/Makefile.am:
-	* orbsvcs/tests/Security/Secure_Invocation/Makefile.am:
-	* orbsvcs/tests/Security/ssliop_corbaloc/Makefile.am:
-	* orbsvcs/tests/Simple_Naming/Makefile.am:
-	* orbsvcs/tests/Trading/Makefile.am:
-	* orbsvcs/tests/ior_corbaname/Makefile.am:
+        * docs/tutorials/Quoter/AMI/Makefile.am:
+        * docs/tutorials/Quoter/Event_Service/Makefile.am:
+        * docs/tutorials/Quoter/On_Demand_Activation/Makefile.am:
+        * docs/tutorials/Quoter/RT_Event_Service/Makefile.am:
+        * docs/tutorials/Quoter/idl/Makefile.am:
+        * examples/AMH/Sink_Server/Makefile.am:
+        * examples/AMI/FL_Callback/Makefile.am:
+        * examples/Advanced/ch_3/Makefile.am:
+        * examples/Buffered_AMI/Makefile.am:
+        * examples/Buffered_Oneways/Makefile.am:
+        * examples/Callback_Quoter/Makefile.am:
+        * examples/Content_Server/AMI_Iterator/Makefile.am:
+        * examples/Content_Server/AMI_Observer/Makefile.am:
+        * examples/Content_Server/SMI_Iterator/Makefile.am:
+        * examples/Event_Comm/Makefile.am:
+        * examples/Kokyu_dsrt_schedulers/Makefile.am:
+        * examples/Kokyu_dsrt_schedulers/fp_example/Makefile.am:
+        * examples/Kokyu_dsrt_schedulers/mif_example/Makefile.am:
+        * examples/Kokyu_dsrt_schedulers/muf_example/Makefile.am:
+        * examples/Load_Balancing/Makefile.am:
+        * examples/Load_Balancing_persistent/Makefile.am:
+        * examples/Logging/Makefile.am:
+        * examples/OBV/Typed_Events/Makefile.am:
+        * examples/POA/DSI/Makefile.am:
+        * examples/POA/Default_Servant/Makefile.am:
+        * examples/POA/Forwarding/Makefile.am:
+        * examples/POA/Generic_Servant/Makefile.am:
+        * examples/POA/TIE/Makefile.am:
+        * examples/Persistent_Grid/Makefile.am:
+        * examples/PluggableUDP/tests/Basic/Makefile.am:
+        * examples/PluggableUDP/tests/Performance/Makefile.am:
+        * examples/PluggableUDP/tests/SimplePerformance/Makefile.am:
+        * examples/Quoter/Makefile.am:
+        * examples/RTCORBA/Activity/Makefile.am:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/Makefile.am:
+        * examples/RTScheduling/MIF_Scheduler/Makefile.am:
+        * examples/Simple/bank/Makefile.am:
+        * examples/Simple/chat/Makefile.am:
+        * examples/Simple/echo/Makefile.am:
+        * examples/Simple/grid/Makefile.am:
+        * examples/Simple/time/Makefile.am:
+        * examples/Simple/time-date/Makefile.am:
+        * examples/Simulator/Event_Supplier/Makefile.am:
+        * examples/TypeCode_Creation/Makefile.am:
+        * examples/ior_corbaloc/Makefile.am:
+        * examples/mfc/Makefile.am:
+        * interop-tests/wchar/Makefile.am:
+        * orbsvcs/ImplRepo_Service/Makefile.am:
+        * orbsvcs/examples/CosEC/Factory/Makefile.am:
+        * orbsvcs/examples/CosEC/TypedSimple/Makefile.am:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/Makefile.am:
+        * orbsvcs/examples/ImR/Advanced/Makefile.am:
+        * orbsvcs/examples/ImR/Combined_Service/Makefile.am:
+        * orbsvcs/examples/LoadBalancing/Makefile.am:
+        * orbsvcs/examples/ORT/Makefile.am:
+        * orbsvcs/examples/Security/Send_File/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/lib/Makefile.am:
+        * orbsvcs/tests/BiDir_CORBALOC/Makefile.am:
+        * orbsvcs/tests/Bug_1395_Regression/Makefile.am:
+        * orbsvcs/tests/Bug_2247_Regression/Makefile.am:
+        * orbsvcs/tests/Bug_2248_Regression/Makefile.am:
+        * orbsvcs/tests/EC_Custom_Marshal/Makefile.am:
+        * orbsvcs/tests/FT_App/Makefile.am:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Makefile.am:
+        * orbsvcs/tests/FaultTolerance/IOGR/Makefile.am:
+        * orbsvcs/tests/HTIOP/AMI/Makefile.am:
+        * orbsvcs/tests/HTIOP/BiDirectional/Makefile.am:
+        * orbsvcs/tests/HTIOP/Hello/Makefile.am:
+        * orbsvcs/tests/IOR_MCast/Makefile.am:
+        * orbsvcs/tests/ImplRepo/Makefile.am:
+        * orbsvcs/tests/ImplRepo/scale/Makefile.am:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/Makefile.am:
+        * orbsvcs/tests/Interoperable_Naming/Makefile.am:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Makefile.am:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Makefile.am:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Manage_Object_Group/Makefile.am:
+        * orbsvcs/tests/Miop/McastHello/Makefile.am:
+        * orbsvcs/tests/Notify/Blocking/Makefile.am:
+        * orbsvcs/tests/Notify/Discarding/Makefile.am:
+        * orbsvcs/tests/Notify/MT_Dispatching/Makefile.am:
+        * orbsvcs/tests/Notify/Ordering/Makefile.am:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Makefile.am:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile.am:
+        * orbsvcs/tests/Notify/Structured_Filter/Makefile.am:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Makefile.am:
+        * orbsvcs/tests/Notify/lib/Makefile.am:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Makefile.am:
+        * orbsvcs/tests/Redundant_Naming/Makefile.am:
+        * orbsvcs/tests/Security/BiDirectional/Makefile.am:
+        * orbsvcs/tests/Security/Big_Request/Makefile.am:
+        * orbsvcs/tests/Security/Callback/Makefile.am:
+        * orbsvcs/tests/Security/Crash_Test/Makefile.am:
+        * orbsvcs/tests/Security/MT_IIOP_SSL/Makefile.am:
+        * orbsvcs/tests/Security/MT_SSLIOP/Makefile.am:
+        * orbsvcs/tests/Security/Secure_Invocation/Makefile.am:
+        * orbsvcs/tests/Security/ssliop_corbaloc/Makefile.am:
+        * orbsvcs/tests/Simple_Naming/Makefile.am:
+        * orbsvcs/tests/Trading/Makefile.am:
+        * orbsvcs/tests/ior_corbaname/Makefile.am:
 
-	  Regenerate with recent MPC and base project changes.
+          Regenerate with recent MPC and base project changes.
 
 Fri Oct  7 07:11:29 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/LogActivator.h:
+        * orbsvcs/orbsvcs/Log/LogActivator.h:
 
-	  Changed header inclusion guard macro name to match file name.
+          Changed header inclusion guard macro name to match file name.
 
 Fri Oct  7 07:07:28 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* docs/tutorials/Quoter/Event_Service/Quoter_Event_Service.mpc:
-	* docs/tutorials/Quoter/RT_Event_Service/Quoter_RT_Event_Service.mpc:
+        * docs/tutorials/Quoter/Event_Service/Quoter_Event_Service.mpc:
+        * docs/tutorials/Quoter/RT_Event_Service/Quoter_RT_Event_Service.mpc:
 
-	  Changed *idl project to inherit from anytypecode.
+          Changed *idl project to inherit from anytypecode.
 
 Fri Oct  7 10:43:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -616,32 +644,32 @@ Fri Oct  7 07:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Oct  6 10:03:16 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* Makefile.am:
+        * Makefile.am:
 
           Enabled building "docs" subdirectory.
 
-	* docs/tutorials/Quoter/Naming_Service/Makefile.am:
-	* docs/tutorials/Quoter/Simple/Makefile.am:
-	* docs/tutorials/Quoter/Simple/Client/Makefile.am:
-	* docs/tutorials/Quoter/Simple/Impl-Repo/Makefile.am:
-	* docs/tutorials/Quoter/Simple/ImprovedServer/Makefile.am:
-	* docs/tutorials/Quoter/Simple/Persistent/Makefile.am:
-	* docs/tutorials/Quoter/Simple/Server/Makefile.am:
+        * docs/tutorials/Quoter/Naming_Service/Makefile.am:
+        * docs/tutorials/Quoter/Simple/Makefile.am:
+        * docs/tutorials/Quoter/Simple/Client/Makefile.am:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/Makefile.am:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/Makefile.am:
+        * docs/tutorials/Quoter/Simple/Persistent/Makefile.am:
+        * docs/tutorials/Quoter/Simple/Server/Makefile.am:
 
-	  Hand tweaks to _CPPFLAGS to find Stub/Skeleton headers in ../idl
+          Hand tweaks to _CPPFLAGS to find Stub/Skeleton headers in ../idl
           directory.
 
-	* docs/tutorials/Quoter/AMI/Makefile.am:
-	* docs/tutorials/Quoter/Event_Service/Makefile.am:
-	* docs/tutorials/Quoter/On_Demand_Activation/Makefile.am:
-	* docs/tutorials/Quoter/RT_Event_Service/Makefile.am:
+        * docs/tutorials/Quoter/AMI/Makefile.am:
+        * docs/tutorials/Quoter/Event_Service/Makefile.am:
+        * docs/tutorials/Quoter/On_Demand_Activation/Makefile.am:
+        * docs/tutorials/Quoter/RT_Event_Service/Makefile.am:
 
-	  Regenerate.
+          Regenerate.
 
-	* docs/tutorials/Quoter/AMI/Quoter_AMI.mpc:
-	* docs/tutorials/Quoter/Event_Service/Quoter_Event_Service.mpc:
-	* docs/tutorials/Quoter/On_Demand_Activation/Quoter_On_Demand_Activation.mpc:
-	* docs/tutorials/Quoter/RT_Event_Service/Quoter_RT_Event_Service.mpc:
+        * docs/tutorials/Quoter/AMI/Quoter_AMI.mpc:
+        * docs/tutorials/Quoter/Event_Service/Quoter_Event_Service.mpc:
+        * docs/tutorials/Quoter/On_Demand_Activation/Quoter_On_Demand_Activation.mpc:
+        * docs/tutorials/Quoter/RT_Event_Service/Quoter_RT_Event_Service.mpc:
 
           Add "*idl" project for compiling *.idl files.
 
@@ -684,21 +712,21 @@ Thu Oct  6 08:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Oct  5 13:54:00 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/tests/Miop/McastHello/Makefile.am:
+        * orbsvcs/tests/Miop/McastHello/Makefile.am:
 
-	  Regenerate.
+          Regenerate.
 
-	* orbsvcs/tests/Miop/McastHello/McastHello.mpc:
+        * orbsvcs/tests/Miop/McastHello/McastHello.mpc:
 
           Add "*idl" project for compiling *.idl files.
 
 Wed Oct  5 12:18:39 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* examples/POA/DSI/Database_i.h:
+        * examples/POA/DSI/Database_i.h:
 
           Include appropriate headers to address incomplete type
-	  definition related compile-time errors.  Necessitated by header
-	  dependency reductions in ACE.
+          definition related compile-time errors.  Necessitated by header
+          dependency reductions in ACE.
 
 Wed Oct  5 17:28:52 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -735,42 +763,42 @@ Wed Oct  5 11:23:27 2005  Simon McQueen  <sm@prismtech.com>
 
 Wed Oct  5 02:24:50 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
 
- 	* tests/Queued_Message_Test/Queued_Message_Test.cpp:
+        * tests/Queued_Message_Test/Queued_Message_Test.cpp:
 
-	  Fixed compilation errors introduced from Mon Oct  3 06:33:20
-	  2005  Bala Natarajan  <bala_natarajan at symantec dot com>
+          Fixed compilation errors introduced from Mon Oct  3 06:33:20
+          2005  Bala Natarajan  <bala_natarajan at symantec dot com>
 
 Tue Oct  4 15:15:02 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
-	* orbsvcs/tests/Makefile.am:
+        * configure.ac:
+        * orbsvcs/tests/Makefile.am:
 
-	  Add Bug_2247_Regression and Bug_2248_Regression directories.
+          Add Bug_2247_Regression and Bug_2248_Regression directories.
 
-	* orbsvcs/tests/Bug_2247_Regression/Makefile.am:
-	* orbsvcs/tests/Bug_2248_Regression/Makefile.am:
+        * orbsvcs/tests/Bug_2247_Regression/Makefile.am:
+        * orbsvcs/tests/Bug_2248_Regression/Makefile.am:
 
-	  New files.
+          New files.
 
-	* orbsvcs/tests/ImplRepo/Makefile.am:
-	* orbsvcs/tests/ImplRepo/scale/Makefile.am:
+        * orbsvcs/tests/ImplRepo/Makefile.am:
+        * orbsvcs/tests/ImplRepo/scale/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* orbsvcs/tests/Bug_2247_Regression/Bug_2247_Regression.mpc:
-	* orbsvcs/tests/Bug_2248_Regression/Bug_2248_Regression.mpc:
-	* orbsvcs/tests/ImplRepo/ImplRepo.mpc:
-	* orbsvcs/tests/ImplRepo/scale/scaletest.mpc
+        * orbsvcs/tests/Bug_2247_Regression/Bug_2247_Regression.mpc:
+        * orbsvcs/tests/Bug_2248_Regression/Bug_2248_Regression.mpc:
+        * orbsvcs/tests/ImplRepo/ImplRepo.mpc:
+        * orbsvcs/tests/ImplRepo/scale/scaletest.mpc
 
           Add "*idl" project for compiling *.idl files.
 
 Tue Oct  4 11:19:47 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/PortableServer/Creation_Time.inl:
+        * tao/PortableServer/Creation_Time.inl:
 
-	  Include "tao/orbconf.h" to pull in POA_NO_TIMESTAMP definition.
-	  Addresses problems where comparison to this preprocessor
-	  constant were made but no definition of it was available.
+          Include "tao/orbconf.h" to pull in POA_NO_TIMESTAMP definition.
+          Addresses problems where comparison to this preprocessor
+          constant were made but no definition of it was available.
 
 Tue Oct  4 14:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1174,19 +1202,19 @@ Tue Oct  4 10:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Oct  3 23:43:08 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/tests/FT_App/Makefile.am:
-	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Makefile.am:
-	* orbsvcs/tests/FaultTolerance/IOGR/Makefile.am:
-	* orbsvcs/tests/IOR_MCast/Makefile.am:
-	* orbsvcs/tests/ior_corbaname/Makefile.am:
+        * orbsvcs/tests/FT_App/Makefile.am:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Makefile.am:
+        * orbsvcs/tests/FaultTolerance/IOGR/Makefile.am:
+        * orbsvcs/tests/IOR_MCast/Makefile.am:
+        * orbsvcs/tests/ior_corbaname/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* orbsvcs/tests/FT_App/FT_App.mpc:
-	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/GroupRef_Manipulation.mpc:
-	* orbsvcs/tests/FaultTolerance/IOGR/FaultTolerance_IOGR.mpc:
-	* orbsvcs/tests/IOR_MCast/IOR_MCast.mpc:
-	* orbsvcs/tests/ior_corbaname/ior_corbaname.mpc:
+        * orbsvcs/tests/FT_App/FT_App.mpc:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/GroupRef_Manipulation.mpc:
+        * orbsvcs/tests/FaultTolerance/IOGR/FaultTolerance_IOGR.mpc:
+        * orbsvcs/tests/IOR_MCast/IOR_MCast.mpc:
+        * orbsvcs/tests/ior_corbaname/ior_corbaname.mpc:
 
           Add "*idl" project for compiling *.idl files.
 
@@ -1290,28 +1318,28 @@ Mon Oct  3 18:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Oct  3 10:48:45 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO/TAO_IDL/tao_idl.mpc:
-	* TAO/orbsvcs/orbsvcs/CosNaming_Serv.mpc:
-	* TAO/orbsvcs/orbsvcs/Svc_Utils.mpc:
-	* TAO/tao/Strategies.mpc:
+        * TAO/TAO_IDL/tao_idl.mpc:
+        * TAO/orbsvcs/orbsvcs/CosNaming_Serv.mpc:
+        * TAO/orbsvcs/orbsvcs/Svc_Utils.mpc:
+        * TAO/tao/Strategies.mpc:
 
-	  Added "ace_for_tao" ACE library subset support.
+          Added "ace_for_tao" ACE library subset support.
 
-	* TAO/TAO_IDL/driver/drv_preproc.cpp:
-	* TAO/TAO_IDL/fe/fe_extern.cpp:
-	* TAO/TAO_IDL/fe/fe_init.cpp:
-	* TAO/TAO_IDL/include/fe_extern.h:
+        * TAO/TAO_IDL/driver/drv_preproc.cpp:
+        * TAO/TAO_IDL/fe/fe_extern.cpp:
+        * TAO/TAO_IDL/fe/fe_init.cpp:
+        * TAO/TAO_IDL/include/fe_extern.h:
 
-	  Removed use of ACE_UUID.  Rely on ACE_OS::mkstemp() instead to
-	  avoid depending on more areas of ACE than necessary.
+          Removed use of ACE_UUID.  Rely on ACE_OS::mkstemp() instead to
+          avoid depending on more areas of ACE than necessary.
 
-	* TAO/orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h:
-	* TAO/tao/default_resource.cpp:
-	* TAO/tao/Strategies/advanced_resource.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h:
+        * TAO/tao/default_resource.cpp:
+        * TAO/tao/Strategies/advanced_resource.cpp:
 
           Include appropriate headers to address incomplete type
-	  definition related compile-time errors.  Necessitated by header
-	  dependency reductions in ACE.
+          definition related compile-time errors.  Necessitated by header
+          dependency reductions in ACE.
 
 Mon Oct  3 15:39:59 2005  Simon McQueen  <sm@prismtech.com>
 
@@ -1323,19 +1351,19 @@ Mon Oct  3 15:39:59 2005  Simon McQueen  <sm@prismtech.com>
 
 Mon Oct  3 06:54:16 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/examples/ImR/Advanced/Makefile.am:
-	* orbsvcs/examples/ImR/Combined_Service/Makefile.am:
-	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Makefile.am:
-	* orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Makefile.am:
-	* orbsvcs/tests/Security/MT_SSLIOP/Makefile.am:
+        * orbsvcs/examples/ImR/Advanced/Makefile.am:
+        * orbsvcs/examples/ImR/Combined_Service/Makefile.am:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Makefile.am:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Makefile.am:
+        * orbsvcs/tests/Security/MT_SSLIOP/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
-	* orbsvcs/examples/ImR/Advanced/Advanced.mpc:
-	* orbsvcs/examples/ImR/Combined_Service/ImR_Combined_Service.mpc:
-	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Application_Controlled.mpc:
-	* orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Infrastructure_Controlled.mpc:
-	* orbsvcs/tests/Security/MT_SSLIOP/MT_SSLIOP.mpc:
+        * orbsvcs/examples/ImR/Advanced/Advanced.mpc:
+        * orbsvcs/examples/ImR/Combined_Service/ImR_Combined_Service.mpc:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Application_Controlled.mpc:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Infrastructure_Controlled.mpc:
+        * orbsvcs/tests/Security/MT_SSLIOP/MT_SSLIOP.mpc:
 
           Add "*idl" project for compiling *.idl files.
 
@@ -1372,60 +1400,60 @@ Mon Oct  3 11:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Oct  3 06:33:20 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
 
-	* tao/LF_Event.cpp (state_changed):
-	* tao/LF_Event.h:
+        * tao/LF_Event.cpp (state_changed):
+        * tao/LF_Event.h:
 
-	  There was strange problem that showed up during our testing
-	  here. The problem happens only on peers that have server threads
-	  waiting for requests,  effectively leaving some threads hanging
-	  around LF waiting for the reply, when infact the reply was
-	  received by the server thread -- sort of missed wakeups.
+          There was strange problem that showed up during our testing
+          here. The problem happens only on peers that have server threads
+          waiting for requests,  effectively leaving some threads hanging
+          around LF waiting for the reply, when infact the reply was
+          received by the server thread -- sort of missed wakeups.
 
-	  Problem: Server threads that wait for requests can process
-	  replies (for requests initiated by client threads) since they
-	  can get to the reactor right away and become leaders within the
-	  reactor. What happens when a reply is received by a server
-	  thread before a client thread adds itslf as a follower (in the
-	  LF loop as a follower)? Disaster.
+          Problem: Server threads that wait for requests can process
+          replies (for requests initiated by client threads) since they
+          can get to the reactor right away and become leaders within the
+          reactor. What happens when a reply is received by a server
+          thread before a client thread adds itslf as a follower (in the
+          LF loop as a follower)? Disaster.
 
-	  Context: Why disaster? The server thread, never bound by the
-	  synchronization in the LF, would pick the reply. It would
-	  check for the follower (without holding the LF lock), and since
-	  the follower is still joining the follower list, the LF_Event
-	  would not have a follower pointer. The server thread would then
-	  simply exit state_changed () without waiting for a follower. The
-	  client thread that becomes a follower will never get a wakeup
-	  signal and continue to hang around blocking a resource.
+          Context: Why disaster? The server thread, never bound by the
+          synchronization in the LF, would pick the reply. It would
+          check for the follower (without holding the LF lock), and since
+          the follower is still joining the follower list, the LF_Event
+          would not have a follower pointer. The server thread would then
+          simply exit state_changed () without waiting for a follower. The
+          client thread that becomes a follower will never get a wakeup
+          signal and continue to hang around blocking a resource.
 
-	  Solution: Do wakeups only with the locks held. Grab LF lock
-	  before thinking of doing wakeups, which would allow clients
-	  languishing to set the follower pointer.
+          Solution: Do wakeups only with the locks held. Grab LF lock
+          before thinking of doing wakeups, which would allow clients
+          languishing to set the follower pointer.
 
-	  To implement the solution, all I did was to change the interface
-	  of state_changed () to pass in a LF reference.
+          To implement the solution, all I did was to change the interface
+          of state_changed () to pass in a LF reference.
 
- 	* orbsvcs/orbsvcs/HTIOP/HTIOP_Connection_Handler.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
-	* performance-tests/Latency/Thread_Pool/run_test.pl:
-	* tao/Asynch_Queued_Message.cpp:
-	* tao/Asynch_Queued_Message.h:
-	* tao/Connection_Handler.cpp:
-	* tao/IIOP_Connection_Handler.cpp:
-	* tao/Queued_Message.cpp:
-	* tao/Queued_Message.h:
-	* tao/Synch_Queued_Message.cpp:
-	* tao/Synch_Queued_Message.h:
-	* tao/Synch_Reply_Dispatcher.cpp:
-	* tao/Transport.cpp:
-	* tao/Wait_On_Read.cpp:
-	* tao/Strategies/DIOP_Connection_Handler.cpp:
-	* tao/Strategies/SCIOP_Connection_Handler.cpp:
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
-	* tao/Strategies/UIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * performance-tests/Latency/Thread_Pool/run_test.pl:
+        * tao/Asynch_Queued_Message.cpp:
+        * tao/Asynch_Queued_Message.h:
+        * tao/Connection_Handler.cpp:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Queued_Message.cpp:
+        * tao/Queued_Message.h:
+        * tao/Synch_Queued_Message.cpp:
+        * tao/Synch_Queued_Message.h:
+        * tao/Synch_Reply_Dispatcher.cpp:
+        * tao/Transport.cpp:
+        * tao/Wait_On_Read.cpp:
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+        * tao/Strategies/SCIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
 
-	  Changes that got propogated due to the interface change in
-	  LF_Event.
+          Changes that got propogated due to the interface change in
+          LF_Event.
 
 Mon Oct  3 11:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1469,48 +1497,48 @@ Mon Oct  3 10:02:06 2005  Simon McQueen  <sm@prismtech.com>
 
 Sun Oct  2 11:05:51 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp (validate_capacity_alarm_thresholds):
+        * orbsvcs/orbsvcs/Log/Log_i.cpp (validate_capacity_alarm_thresholds):
 
-	  Fixed out-of-range array element access that occured with single
-	  element sequences.
+          Fixed out-of-range array element access that occured with single
+          element sequences.
 
-	  Add note that the specification does not require theshold values
-	  to be in order or unique.
+          Add note that the specification does not require theshold values
+          to be in order or unique.
 
 Sun Oct  2 22:22:55 IST 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
 
- 	* performance-tests/Latency/Thread_Per_Connection/run_test.pl:
+        * performance-tests/Latency/Thread_Per_Connection/run_test.pl:
 
-	  Increased the timeout for the test to succeed on all platforms.
+          Increased the timeout for the test to succeed on all platforms.
 
 Sun Oct  2 12:01:40 2005  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
-	* tests/Sequence_Unit_Tests/bounded_object_reference_sequence.hpp:
-	* tests/Sequence_Unit_Tests/bounded_object_reference_sequence_ut.cpp:
-	* tests/Sequence_Unit_Tests/run_test.pl:
-	  Implemented bounded sequences of object references.
+        * tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
+        * tests/Sequence_Unit_Tests/bounded_object_reference_sequence.hpp:
+        * tests/Sequence_Unit_Tests/bounded_object_reference_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/run_test.pl:
+          Implemented bounded sequences of object references.
 
-	* tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
-	  Fixed typos in unit test.
+        * tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
+          Fixed typos in unit test.
 
-	* tests/Sequence_Unit_Tests/object_reference_traits.hpp:
-	* tests/Sequence_Unit_Tests/object_reference_traits_base.hpp:
-	  Refactor traits so it is possible to implement better unit
-	  tests.
+        * tests/Sequence_Unit_Tests/object_reference_traits.hpp:
+        * tests/Sequence_Unit_Tests/object_reference_traits_base.hpp:
+          Refactor traits so it is possible to implement better unit
+          tests.
 
-	* tests/Sequence_Unit_Tests/string_traits_base.hpp:
-	  Fixed comment
+        * tests/Sequence_Unit_Tests/string_traits_base.hpp:
+          Fixed comment
 
-	* tests/Sequence_Unit_Tests/testing_allocation_traits.hpp:
-	  Fixed #include guards
+        * tests/Sequence_Unit_Tests/testing_allocation_traits.hpp:
+          Fixed #include guards
 
-	* tests/Sequence_Unit_Tests/testing_object_reference_traits.hpp:
-	  Modified so we can better test object reference management in
-	  the sequences.
+        * tests/Sequence_Unit_Tests/testing_object_reference_traits.hpp:
+          Modified so we can better test object reference management in
+          the sequences.
 
-	* tests/Sequence_Unit_Tests/unbounded_object_reference_sequence_ut.cpp:
-	  Add more test cases
+        * tests/Sequence_Unit_Tests/unbounded_object_reference_sequence_ut.cpp:
+          Add more test cases
 
 Sat Oct  1 08:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1562,15 +1590,15 @@ Fri Sep 30 09:10:00 2005  Simon Massey  <simon.massey@prismtech.com>
 
 Thu Sep 29 15:07:30 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
-	* orbsvcs/orbsvcs/Log/EventLog_i.cpp:
-	* orbsvcs/orbsvcs/Log/Log_i.cpp:
-	* orbsvcs/orbsvcs/Log/NotifyLog_i.cpp:
-	* orbsvcs/orbsvcs/Log/RTEventLog_i.cpp:
+        * orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/EventLog_i.cpp:
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+        * orbsvcs/orbsvcs/Log/NotifyLog_i.cpp:
+        * orbsvcs/orbsvcs/Log/RTEventLog_i.cpp:
 
-	  De-fuzzed simple cases ACE_CHECK/ACE_TRY_CHECK warnings.
-	  I'll get to the remaining cases that need new temporary
-	  variables, etc. in the next week.
+          De-fuzzed simple cases ACE_CHECK/ACE_TRY_CHECK warnings.
+          I'll get to the remaining cases that need new temporary
+          variables, etc. in the next week.
 
 Thu Sep 29 17:25:39 2005  Simon McQueen  <sm@prismtech.com>
 
@@ -1584,8 +1612,8 @@ Thu Sep 29 10:02:19 2005  Chris Cleeland  <cleeland_c@ociweb.com>
         * orbsvcs/orbsvcs/Event/EC_TPC_ProxyConsumer.cpp:
         * orbsvcs/orbsvcs/Event/EC_TPC_ProxySupplier.cpp:
 
-	  De-fuzzed ACE_CHECK/ACE_TRY_CHECK warnings.  Thanks to Johnny
-	  Willemsen for catching this and holding my feet to the fire.
+          De-fuzzed ACE_CHECK/ACE_TRY_CHECK warnings.  Thanks to Johnny
+          Willemsen for catching this and holding my feet to the fire.
 
 Thu Sep 29 09:12:24 2005  Chad Elliott  <elliott_c@ociweb.com>
 

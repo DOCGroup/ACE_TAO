@@ -172,10 +172,10 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
 
       RtecEventChannelAdmin::EventChannel_var ec;
 
-      // If the servant name is empty and we don't use BiDIR GIOP, activate the
-      // servant under the default POA, else create a new child POA with persistent policies
+      // If the object_id_ is empty and we don't use BiDIR GIOP, activate the
+      // servant under the default POA, else create a new child POA with 
       // the needed policies
-      int persistent = ACE_OS::strcmp(this->servant_name_.c_str(), "");
+      int persistent = ACE_OS::strcmp(this->object_id_.c_str(), "");
       if ((persistent == 0) && (this->use_bidir_giop_ == false))
         {
           // Notice that we activate *this* object with the POA, but we
@@ -240,7 +240,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
                               1);
 
           PortableServer::ObjectId_var ec_object_id =
-            PortableServer::string_to_ObjectId(servant_name_.c_str());
+            PortableServer::string_to_ObjectId(object_id_.c_str());
 
           child_poa->activate_object_with_id(ec_object_id.in(),
                                              this
@@ -362,7 +362,7 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
           break;
 
         case 'q':
-          this->servant_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+          this->object_id_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
           break;
 
         case 'b':
@@ -408,7 +408,7 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
                       ACE_TEXT("-o ior_file_name ")
                       ACE_TEXT("-p pid_file_name ")
                       ACE_TEXT("-s <global|local|none> ")
-                      ACE_TEXT("-q servant_name for persistent IOR ")
+                      ACE_TEXT("-q ec_object_id ")
                       ACE_TEXT("-x [disable naming service bind] ")
                       ACE_TEXT("-b [use bidir giop] ")
                       ACE_TEXT("\n"),

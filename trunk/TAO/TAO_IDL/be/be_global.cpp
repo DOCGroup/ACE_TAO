@@ -1924,6 +1924,10 @@ BE_GlobalData::usage (void) const
     ));
   ACE_DEBUG ((
       LM_DEBUG,
+      ACE_TEXT (" -g <gperf_path>\tPath for the GPERF program.")
+      ACE_TEXT (" Default is $ACE_ROOT/bin/gperf\n")));
+  ACE_DEBUG ((
+      LM_DEBUG,
       ACE_TEXT (" -GC \t\t\tGenerate the AMI classes\n")
     ));
   ACE_DEBUG ((
