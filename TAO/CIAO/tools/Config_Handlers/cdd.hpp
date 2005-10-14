@@ -38,7 +38,7 @@ namespace CIAO
 }
 
 #include <memory>
-#include <vector>
+#include <list>
 #include "XMLSchema/Types.hpp"
 
 #include "Basic_Deployment_Data.hpp"
@@ -75,8 +75,8 @@ namespace CIAO
       // node
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::Node >::iterator node_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::Node >::const_iterator node_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Node >::iterator node_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Node >::const_iterator node_const_iterator;
       node_iterator begin_node ();
       node_iterator end_node ();
       node_const_iterator begin_node () const;
@@ -85,7 +85,7 @@ namespace CIAO
       size_t count_node (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::Node > node_;
+      ::std::list< ::CIAO::Config_Handlers::Node > node_;
 
       // interconnect
       // 
@@ -167,8 +167,8 @@ namespace CIAO
       // connect
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::Interconnect >::iterator connect_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::Interconnect >::const_iterator connect_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Interconnect >::iterator connect_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Interconnect >::const_iterator connect_const_iterator;
       connect_iterator begin_connect ();
       connect_iterator end_connect ();
       connect_const_iterator begin_connect () const;
@@ -177,13 +177,13 @@ namespace CIAO
       size_t count_connect (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::Interconnect > connect_;
+      ::std::list< ::CIAO::Config_Handlers::Interconnect > connect_;
 
       // resource
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::Resource >::iterator resource_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::Resource >::const_iterator resource_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Resource >::iterator resource_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Resource >::const_iterator resource_const_iterator;
       resource_iterator begin_resource ();
       resource_iterator end_resource ();
       resource_const_iterator begin_resource () const;
@@ -192,7 +192,7 @@ namespace CIAO
       size_t count_resource (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::Resource > resource_;
+      ::std::list< ::CIAO::Config_Handlers::Resource > resource_;
 
       public:
       Bridge (::XMLSchema::string< ACE_TCHAR > const& name__);
@@ -235,8 +235,8 @@ namespace CIAO
       // connection
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::Bridge >::iterator connection_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::Bridge >::const_iterator connection_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Bridge >::iterator connection_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Bridge >::const_iterator connection_const_iterator;
       connection_iterator begin_connection ();
       connection_iterator end_connection ();
       connection_const_iterator begin_connection () const;
@@ -245,13 +245,13 @@ namespace CIAO
       size_t count_connection (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::Bridge > connection_;
+      ::std::list< ::CIAO::Config_Handlers::Bridge > connection_;
 
       // connect
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::Node >::iterator connect_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::Node >::const_iterator connect_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Node >::iterator connect_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Node >::const_iterator connect_const_iterator;
       connect_iterator begin_connect ();
       connect_iterator end_connect ();
       connect_const_iterator begin_connect () const;
@@ -260,13 +260,13 @@ namespace CIAO
       size_t count_connect (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::Node > connect_;
+      ::std::list< ::CIAO::Config_Handlers::Node > connect_;
 
       // resource
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::Resource >::iterator resource_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::Resource >::const_iterator resource_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Resource >::iterator resource_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Resource >::const_iterator resource_const_iterator;
       resource_iterator begin_resource ();
       resource_iterator end_resource ();
       resource_const_iterator begin_resource () const;
@@ -275,7 +275,7 @@ namespace CIAO
       size_t count_resource (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::Resource > resource_;
+      ::std::list< ::CIAO::Config_Handlers::Resource > resource_;
 
       public:
       Interconnect (::XMLSchema::string< ACE_TCHAR > const& name__);
@@ -318,8 +318,8 @@ namespace CIAO
       // connection
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::Interconnect >::iterator connection_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::Interconnect >::const_iterator connection_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Interconnect >::iterator connection_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Interconnect >::const_iterator connection_const_iterator;
       connection_iterator begin_connection ();
       connection_iterator end_connection ();
       connection_const_iterator begin_connection () const;
@@ -328,13 +328,13 @@ namespace CIAO
       size_t count_connection (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::Interconnect > connection_;
+      ::std::list< ::CIAO::Config_Handlers::Interconnect > connection_;
 
       // sharedResource
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::SharedResource >::iterator sharedResource_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::SharedResource >::const_iterator sharedResource_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::SharedResource >::iterator sharedResource_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::SharedResource >::const_iterator sharedResource_const_iterator;
       sharedResource_iterator begin_sharedResource ();
       sharedResource_iterator end_sharedResource ();
       sharedResource_const_iterator begin_sharedResource () const;
@@ -343,7 +343,7 @@ namespace CIAO
       size_t count_sharedResource (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::SharedResource > sharedResource_;
+      ::std::list< ::CIAO::Config_Handlers::SharedResource > sharedResource_;
 
       // resource
       // 

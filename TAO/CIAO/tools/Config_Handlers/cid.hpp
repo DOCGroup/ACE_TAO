@@ -39,7 +39,7 @@ namespace CIAO
 }
 
 #include <memory>
-#include <vector>
+#include <list>
 #include "XMLSchema/Types.hpp"
 
 #include "Basic_Deployment_Data.hpp"
@@ -225,8 +225,8 @@ namespace CIAO
       // instance
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::SubcomponentInstantiationDescription >::iterator instance_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::SubcomponentInstantiationDescription >::const_iterator instance_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::SubcomponentInstantiationDescription >::iterator instance_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::SubcomponentInstantiationDescription >::const_iterator instance_const_iterator;
       instance_iterator begin_instance ();
       instance_iterator end_instance ();
       instance_const_iterator begin_instance () const;
@@ -235,13 +235,13 @@ namespace CIAO
       size_t count_instance (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::SubcomponentInstantiationDescription > instance_;
+      ::std::list< ::CIAO::Config_Handlers::SubcomponentInstantiationDescription > instance_;
 
       // connection
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::AssemblyConnectionDescription >::iterator connection_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::AssemblyConnectionDescription >::const_iterator connection_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::AssemblyConnectionDescription >::iterator connection_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::AssemblyConnectionDescription >::const_iterator connection_const_iterator;
       connection_iterator begin_connection ();
       connection_iterator end_connection ();
       connection_const_iterator begin_connection () const;
@@ -250,7 +250,7 @@ namespace CIAO
       size_t count_connection (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::AssemblyConnectionDescription > connection_;
+      ::std::list< ::CIAO::Config_Handlers::AssemblyConnectionDescription > connection_;
 
       // externalProperty
       // 
@@ -294,8 +294,8 @@ namespace CIAO
       // primaryArtifact
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::NamedImplementationArtifact >::iterator primaryArtifact_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::NamedImplementationArtifact >::const_iterator primaryArtifact_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::NamedImplementationArtifact >::iterator primaryArtifact_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::NamedImplementationArtifact >::const_iterator primaryArtifact_const_iterator;
       primaryArtifact_iterator begin_primaryArtifact ();
       primaryArtifact_iterator end_primaryArtifact ();
       primaryArtifact_const_iterator begin_primaryArtifact () const;
@@ -304,7 +304,7 @@ namespace CIAO
       size_t count_primaryArtifact (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::NamedImplementationArtifact > primaryArtifact_;
+      ::std::list< ::CIAO::Config_Handlers::NamedImplementationArtifact > primaryArtifact_;
 
       // deployRequirement
       // 

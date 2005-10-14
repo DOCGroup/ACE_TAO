@@ -32,7 +32,6 @@ namespace CIAO
     ::XSCRT::Type (),
     regulator__ ()
     {
-      package_.reserve (s.package_.size ());
       {
         for (package_const_iterator i (s.package_.begin ());
         i != s.package_.end ();
@@ -44,7 +43,6 @@ namespace CIAO
     operator= (::CIAO::Config_Handlers::TopLevelPackageDescription const& s)
     {
       package_.clear ();
-      package_.reserve (s.package_.size ());
       {
         for (package_const_iterator i (s.package_.begin ());
         i != s.package_.end ();
@@ -84,26 +82,7 @@ namespace CIAO
     void TopLevelPackageDescription::
     add_package (::CIAO::Config_Handlers::PackageConfiguration const& e)
     {
-      if (package_.capacity () < package_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::PackageConfiguration > v;
-        v.reserve (package_.size () + 1);
-
-        for (package_iterator i = package_.begin ();
-        i != package_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::PackageConfiguration& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        package_.swap (v);
-      }
-
       package_.push_back (e);
-      package_.back ().container (this);
     }
 
     size_t TopLevelPackageDescription::

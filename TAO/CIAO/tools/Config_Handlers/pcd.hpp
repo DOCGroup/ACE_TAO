@@ -34,7 +34,7 @@ namespace CIAO
 }
 
 #include <memory>
-#include <vector>
+#include <list>
 #include "XMLSchema/Types.hpp"
 
 #include "Basic_Deployment_Data.hpp"

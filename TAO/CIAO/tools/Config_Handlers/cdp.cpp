@@ -38,42 +38,36 @@ namespace CIAO
       if (label_.get ()) label_->container (this);
       if (UUID_.get ()) UUID_->container (this);
       if (realizes_.get ()) realizes_->container (this);
-      implementation_.reserve (s.implementation_.size ());
       {
         for (implementation_const_iterator i (s.implementation_.begin ());
         i != s.implementation_.end ();
         ++i) add_implementation (*i);
       }
 
-      instance_.reserve (s.instance_.size ());
       {
         for (instance_const_iterator i (s.instance_.begin ());
         i != s.instance_.end ();
         ++i) add_instance (*i);
       }
 
-      connection_.reserve (s.connection_.size ());
       {
         for (connection_const_iterator i (s.connection_.begin ());
         i != s.connection_.end ();
         ++i) add_connection (*i);
       }
 
-      dependsOn_.reserve (s.dependsOn_.size ());
       {
         for (dependsOn_const_iterator i (s.dependsOn_.begin ());
         i != s.dependsOn_.end ();
         ++i) add_dependsOn (*i);
       }
 
-      artifact_.reserve (s.artifact_.size ());
       {
         for (artifact_const_iterator i (s.artifact_.begin ());
         i != s.artifact_.end ();
         ++i) add_artifact (*i);
       }
 
-      infoProperty_.reserve (s.infoProperty_.size ());
       {
         for (infoProperty_const_iterator i (s.infoProperty_.begin ());
         i != s.infoProperty_.end ();
@@ -94,7 +88,6 @@ namespace CIAO
       else realizes_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ComponentInterfaceDescription > (0);
 
       implementation_.clear ();
-      implementation_.reserve (s.implementation_.size ());
       {
         for (implementation_const_iterator i (s.implementation_.begin ());
         i != s.implementation_.end ();
@@ -102,7 +95,6 @@ namespace CIAO
       }
 
       instance_.clear ();
-      instance_.reserve (s.instance_.size ());
       {
         for (instance_const_iterator i (s.instance_.begin ());
         i != s.instance_.end ();
@@ -110,7 +102,6 @@ namespace CIAO
       }
 
       connection_.clear ();
-      connection_.reserve (s.connection_.size ());
       {
         for (connection_const_iterator i (s.connection_.begin ());
         i != s.connection_.end ();
@@ -118,7 +109,6 @@ namespace CIAO
       }
 
       dependsOn_.clear ();
-      dependsOn_.reserve (s.dependsOn_.size ());
       {
         for (dependsOn_const_iterator i (s.dependsOn_.begin ());
         i != s.dependsOn_.end ();
@@ -126,7 +116,6 @@ namespace CIAO
       }
 
       artifact_.clear ();
-      artifact_.reserve (s.artifact_.size ());
       {
         for (artifact_const_iterator i (s.artifact_.begin ());
         i != s.artifact_.end ();
@@ -134,7 +123,6 @@ namespace CIAO
       }
 
       infoProperty_.clear ();
-      infoProperty_.reserve (s.infoProperty_.size ());
       {
         for (infoProperty_const_iterator i (s.infoProperty_.begin ());
         i != s.infoProperty_.end ();
@@ -261,26 +249,7 @@ namespace CIAO
     void DeploymentPlan::
     add_implementation (::CIAO::Config_Handlers::MonolithicDeploymentDescription const& e)
     {
-      if (implementation_.capacity () < implementation_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::MonolithicDeploymentDescription > v;
-        v.reserve (implementation_.size () + 1);
-
-        for (implementation_iterator i = implementation_.begin ();
-        i != implementation_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::MonolithicDeploymentDescription& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        implementation_.swap (v);
-      }
-
       implementation_.push_back (e);
-      implementation_.back ().container (this);
     }
 
     size_t DeploymentPlan::
@@ -318,26 +287,7 @@ namespace CIAO
     void DeploymentPlan::
     add_instance (::CIAO::Config_Handlers::InstanceDeploymentDescription const& e)
     {
-      if (instance_.capacity () < instance_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::InstanceDeploymentDescription > v;
-        v.reserve (instance_.size () + 1);
-
-        for (instance_iterator i = instance_.begin ();
-        i != instance_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::InstanceDeploymentDescription& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        instance_.swap (v);
-      }
-
       instance_.push_back (e);
-      instance_.back ().container (this);
     }
 
     size_t DeploymentPlan::
@@ -375,26 +325,7 @@ namespace CIAO
     void DeploymentPlan::
     add_connection (::CIAO::Config_Handlers::PlanConnectionDescription const& e)
     {
-      if (connection_.capacity () < connection_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::PlanConnectionDescription > v;
-        v.reserve (connection_.size () + 1);
-
-        for (connection_iterator i = connection_.begin ();
-        i != connection_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::PlanConnectionDescription& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        connection_.swap (v);
-      }
-
       connection_.push_back (e);
-      connection_.back ().container (this);
     }
 
     size_t DeploymentPlan::
@@ -432,26 +363,7 @@ namespace CIAO
     void DeploymentPlan::
     add_dependsOn (::CIAO::Config_Handlers::ImplementationDependency const& e)
     {
-      if (dependsOn_.capacity () < dependsOn_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::ImplementationDependency > v;
-        v.reserve (dependsOn_.size () + 1);
-
-        for (dependsOn_iterator i = dependsOn_.begin ();
-        i != dependsOn_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::ImplementationDependency& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        dependsOn_.swap (v);
-      }
-
       dependsOn_.push_back (e);
-      dependsOn_.back ().container (this);
     }
 
     size_t DeploymentPlan::
@@ -489,26 +401,7 @@ namespace CIAO
     void DeploymentPlan::
     add_artifact (::CIAO::Config_Handlers::ArtifactDeploymentDescription const& e)
     {
-      if (artifact_.capacity () < artifact_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::ArtifactDeploymentDescription > v;
-        v.reserve (artifact_.size () + 1);
-
-        for (artifact_iterator i = artifact_.begin ();
-        i != artifact_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::ArtifactDeploymentDescription& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        artifact_.swap (v);
-      }
-
       artifact_.push_back (e);
-      artifact_.back ().container (this);
     }
 
     size_t DeploymentPlan::
@@ -546,26 +439,7 @@ namespace CIAO
     void DeploymentPlan::
     add_infoProperty (::CIAO::Config_Handlers::Property const& e)
     {
-      if (infoProperty_.capacity () < infoProperty_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::Property > v;
-        v.reserve (infoProperty_.size () + 1);
-
-        for (infoProperty_iterator i = infoProperty_.begin ();
-        i != infoProperty_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::Property& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        infoProperty_.swap (v);
-      }
-
       infoProperty_.push_back (e);
-      infoProperty_.back ().container (this);
     }
 
     size_t DeploymentPlan::

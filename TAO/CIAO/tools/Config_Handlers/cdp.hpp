@@ -34,7 +34,7 @@ namespace CIAO
 }
 
 #include <memory>
-#include <vector>
+#include <list>
 #include "XMLSchema/Types.hpp"
 
 #include "ccd.hpp"
@@ -81,8 +81,8 @@ namespace CIAO
       // implementation
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::MonolithicDeploymentDescription >::iterator implementation_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::MonolithicDeploymentDescription >::const_iterator implementation_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::MonolithicDeploymentDescription >::iterator implementation_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::MonolithicDeploymentDescription >::const_iterator implementation_const_iterator;
       implementation_iterator begin_implementation ();
       implementation_iterator end_implementation ();
       implementation_const_iterator begin_implementation () const;
@@ -91,13 +91,13 @@ namespace CIAO
       size_t count_implementation (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::MonolithicDeploymentDescription > implementation_;
+      ::std::list< ::CIAO::Config_Handlers::MonolithicDeploymentDescription > implementation_;
 
       // instance
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::InstanceDeploymentDescription >::iterator instance_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::InstanceDeploymentDescription >::const_iterator instance_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::InstanceDeploymentDescription >::iterator instance_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::InstanceDeploymentDescription >::const_iterator instance_const_iterator;
       instance_iterator begin_instance ();
       instance_iterator end_instance ();
       instance_const_iterator begin_instance () const;
@@ -106,13 +106,13 @@ namespace CIAO
       size_t count_instance (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::InstanceDeploymentDescription > instance_;
+      ::std::list< ::CIAO::Config_Handlers::InstanceDeploymentDescription > instance_;
 
       // connection
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::PlanConnectionDescription >::iterator connection_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::PlanConnectionDescription >::const_iterator connection_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::PlanConnectionDescription >::iterator connection_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::PlanConnectionDescription >::const_iterator connection_const_iterator;
       connection_iterator begin_connection ();
       connection_iterator end_connection ();
       connection_const_iterator begin_connection () const;
@@ -121,13 +121,13 @@ namespace CIAO
       size_t count_connection (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::PlanConnectionDescription > connection_;
+      ::std::list< ::CIAO::Config_Handlers::PlanConnectionDescription > connection_;
 
       // dependsOn
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::ImplementationDependency >::iterator dependsOn_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::ImplementationDependency >::const_iterator dependsOn_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::ImplementationDependency >::iterator dependsOn_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::ImplementationDependency >::const_iterator dependsOn_const_iterator;
       dependsOn_iterator begin_dependsOn ();
       dependsOn_iterator end_dependsOn ();
       dependsOn_const_iterator begin_dependsOn () const;
@@ -136,13 +136,13 @@ namespace CIAO
       size_t count_dependsOn (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::ImplementationDependency > dependsOn_;
+      ::std::list< ::CIAO::Config_Handlers::ImplementationDependency > dependsOn_;
 
       // artifact
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::ArtifactDeploymentDescription >::iterator artifact_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::ArtifactDeploymentDescription >::const_iterator artifact_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::ArtifactDeploymentDescription >::iterator artifact_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::ArtifactDeploymentDescription >::const_iterator artifact_const_iterator;
       artifact_iterator begin_artifact ();
       artifact_iterator end_artifact ();
       artifact_const_iterator begin_artifact () const;
@@ -151,13 +151,13 @@ namespace CIAO
       size_t count_artifact (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::ArtifactDeploymentDescription > artifact_;
+      ::std::list< ::CIAO::Config_Handlers::ArtifactDeploymentDescription > artifact_;
 
       // infoProperty
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::Property >::iterator infoProperty_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::Property >::const_iterator infoProperty_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator infoProperty_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator infoProperty_const_iterator;
       infoProperty_iterator begin_infoProperty ();
       infoProperty_iterator end_infoProperty ();
       infoProperty_const_iterator begin_infoProperty () const;
@@ -166,7 +166,7 @@ namespace CIAO
       size_t count_infoProperty (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::Property > infoProperty_;
+      ::std::list< ::CIAO::Config_Handlers::Property > infoProperty_;
 
       public:
       DeploymentPlan ();

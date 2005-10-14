@@ -35,7 +35,7 @@ namespace CIAO
 }
 
 #include <memory>
-#include <vector>
+#include <list>
 #include "XMLSchema/Types.hpp"
 
 #include "Basic_Deployment_Data.hpp"
@@ -110,8 +110,8 @@ namespace CIAO
       // location
       // 
       public:
-      typedef ::std::vector< ::XMLSchema::string< ACE_TCHAR > >::iterator location_iterator;
-      typedef ::std::vector< ::XMLSchema::string< ACE_TCHAR > >::const_iterator location_const_iterator;
+      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator location_iterator;
+      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator location_const_iterator;
       location_iterator begin_location ();
       location_iterator end_location ();
       location_const_iterator begin_location () const;
@@ -120,13 +120,13 @@ namespace CIAO
       size_t count_location (void) const;
 
       protected:
-      ::std::vector< ::XMLSchema::string< ACE_TCHAR > > location_;
+      ::std::list< ::XMLSchema::string< ACE_TCHAR > > location_;
 
       // dependsOn
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::NamedImplementationArtifact >::iterator dependsOn_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::NamedImplementationArtifact >::const_iterator dependsOn_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::NamedImplementationArtifact >::iterator dependsOn_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::NamedImplementationArtifact >::const_iterator dependsOn_const_iterator;
       dependsOn_iterator begin_dependsOn ();
       dependsOn_iterator end_dependsOn ();
       dependsOn_const_iterator begin_dependsOn () const;
@@ -135,7 +135,7 @@ namespace CIAO
       size_t count_dependsOn (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::NamedImplementationArtifact > dependsOn_;
+      ::std::list< ::CIAO::Config_Handlers::NamedImplementationArtifact > dependsOn_;
 
       // execParameter
       // 

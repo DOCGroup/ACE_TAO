@@ -45,7 +45,6 @@ namespace CIAO
     {
       if (UUID_.get ()) UUID_->container (this);
       if (label_.get ()) label_->container (this);
-      node_.reserve (s.node_.size ());
       {
         for (node_const_iterator i (s.node_.begin ());
         i != s.node_.end ();
@@ -68,7 +67,6 @@ namespace CIAO
       else label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
 
       node_.clear ();
-      node_.reserve (s.node_.size ());
       {
         for (node_const_iterator i (s.node_.begin ());
         i != s.node_.end ();
@@ -176,26 +174,7 @@ namespace CIAO
     void Domain::
     add_node (::CIAO::Config_Handlers::Node const& e)
     {
-      if (node_.capacity () < node_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::Node > v;
-        v.reserve (node_.size () + 1);
-
-        for (node_iterator i = node_.begin ();
-        i != node_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::Node& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        node_.swap (v);
-      }
-
       node_.push_back (e);
-      node_.back ().container (this);
     }
 
     size_t Domain::
@@ -314,14 +293,12 @@ namespace CIAO
     {
       name_->container (this);
       if (label_.get ()) label_->container (this);
-      connect_.reserve (s.connect_.size ());
       {
         for (connect_const_iterator i (s.connect_.begin ());
         i != s.connect_.end ();
         ++i) add_connect (*i);
       }
 
-      resource_.reserve (s.resource_.size ());
       {
         for (resource_const_iterator i (s.resource_.begin ());
         i != s.resource_.end ();
@@ -338,7 +315,6 @@ namespace CIAO
       else label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
 
       connect_.clear ();
-      connect_.reserve (s.connect_.size ());
       {
         for (connect_const_iterator i (s.connect_.begin ());
         i != s.connect_.end ();
@@ -346,7 +322,6 @@ namespace CIAO
       }
 
       resource_.clear ();
-      resource_.reserve (s.resource_.size ());
       {
         for (resource_const_iterator i (s.resource_.begin ());
         i != s.resource_.end ();
@@ -429,26 +404,7 @@ namespace CIAO
     void Bridge::
     add_connect (::CIAO::Config_Handlers::Interconnect const& e)
     {
-      if (connect_.capacity () < connect_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::Interconnect > v;
-        v.reserve (connect_.size () + 1);
-
-        for (connect_iterator i = connect_.begin ();
-        i != connect_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::Interconnect& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        connect_.swap (v);
-      }
-
       connect_.push_back (e);
-      connect_.back ().container (this);
     }
 
     size_t Bridge::
@@ -486,26 +442,7 @@ namespace CIAO
     void Bridge::
     add_resource (::CIAO::Config_Handlers::Resource const& e)
     {
-      if (resource_.capacity () < resource_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::Resource > v;
-        v.reserve (resource_.size () + 1);
-
-        for (resource_iterator i = resource_.begin ();
-        i != resource_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::Resource& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        resource_.swap (v);
-      }
-
       resource_.push_back (e);
-      resource_.back ().container (this);
     }
 
     size_t Bridge::
@@ -538,21 +475,18 @@ namespace CIAO
     {
       name_->container (this);
       if (label_.get ()) label_->container (this);
-      connection_.reserve (s.connection_.size ());
       {
         for (connection_const_iterator i (s.connection_.begin ());
         i != s.connection_.end ();
         ++i) add_connection (*i);
       }
 
-      connect_.reserve (s.connect_.size ());
       {
         for (connect_const_iterator i (s.connect_.begin ());
         i != s.connect_.end ();
         ++i) add_connect (*i);
       }
 
-      resource_.reserve (s.resource_.size ());
       {
         for (resource_const_iterator i (s.resource_.begin ());
         i != s.resource_.end ();
@@ -569,7 +503,6 @@ namespace CIAO
       else label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
 
       connection_.clear ();
-      connection_.reserve (s.connection_.size ());
       {
         for (connection_const_iterator i (s.connection_.begin ());
         i != s.connection_.end ();
@@ -577,7 +510,6 @@ namespace CIAO
       }
 
       connect_.clear ();
-      connect_.reserve (s.connect_.size ());
       {
         for (connect_const_iterator i (s.connect_.begin ());
         i != s.connect_.end ();
@@ -585,7 +517,6 @@ namespace CIAO
       }
 
       resource_.clear ();
-      resource_.reserve (s.resource_.size ());
       {
         for (resource_const_iterator i (s.resource_.begin ());
         i != s.resource_.end ();
@@ -668,26 +599,7 @@ namespace CIAO
     void Interconnect::
     add_connection (::CIAO::Config_Handlers::Bridge const& e)
     {
-      if (connection_.capacity () < connection_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::Bridge > v;
-        v.reserve (connection_.size () + 1);
-
-        for (connection_iterator i = connection_.begin ();
-        i != connection_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::Bridge& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        connection_.swap (v);
-      }
-
       connection_.push_back (e);
-      connection_.back ().container (this);
     }
 
     size_t Interconnect::
@@ -725,26 +637,7 @@ namespace CIAO
     void Interconnect::
     add_connect (::CIAO::Config_Handlers::Node const& e)
     {
-      if (connect_.capacity () < connect_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::Node > v;
-        v.reserve (connect_.size () + 1);
-
-        for (connect_iterator i = connect_.begin ();
-        i != connect_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::Node& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        connect_.swap (v);
-      }
-
       connect_.push_back (e);
-      connect_.back ().container (this);
     }
 
     size_t Interconnect::
@@ -782,26 +675,7 @@ namespace CIAO
     void Interconnect::
     add_resource (::CIAO::Config_Handlers::Resource const& e)
     {
-      if (resource_.capacity () < resource_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::Resource > v;
-        v.reserve (resource_.size () + 1);
-
-        for (resource_iterator i = resource_.begin ();
-        i != resource_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::Resource& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        resource_.swap (v);
-      }
-
       resource_.push_back (e);
-      resource_.back ().container (this);
     }
 
     size_t Interconnect::
@@ -838,14 +712,12 @@ namespace CIAO
     {
       name_->container (this);
       if (label_.get ()) label_->container (this);
-      connection_.reserve (s.connection_.size ());
       {
         for (connection_const_iterator i (s.connection_.begin ());
         i != s.connection_.end ();
         ++i) add_connection (*i);
       }
 
-      sharedResource_.reserve (s.sharedResource_.size ());
       {
         for (sharedResource_const_iterator i (s.sharedResource_.begin ());
         i != s.sharedResource_.end ();
@@ -864,7 +736,6 @@ namespace CIAO
       else label_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
 
       connection_.clear ();
-      connection_.reserve (s.connection_.size ());
       {
         for (connection_const_iterator i (s.connection_.begin ());
         i != s.connection_.end ();
@@ -872,7 +743,6 @@ namespace CIAO
       }
 
       sharedResource_.clear ();
-      sharedResource_.reserve (s.sharedResource_.size ());
       {
         for (sharedResource_const_iterator i (s.sharedResource_.begin ());
         i != s.sharedResource_.end ();
@@ -957,26 +827,7 @@ namespace CIAO
     void Node::
     add_connection (::CIAO::Config_Handlers::Interconnect const& e)
     {
-      if (connection_.capacity () < connection_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::Interconnect > v;
-        v.reserve (connection_.size () + 1);
-
-        for (connection_iterator i = connection_.begin ();
-        i != connection_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::Interconnect& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        connection_.swap (v);
-      }
-
       connection_.push_back (e);
-      connection_.back ().container (this);
     }
 
     size_t Node::
@@ -1014,26 +865,7 @@ namespace CIAO
     void Node::
     add_sharedResource (::CIAO::Config_Handlers::SharedResource const& e)
     {
-      if (sharedResource_.capacity () < sharedResource_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::SharedResource > v;
-        v.reserve (sharedResource_.size () + 1);
-
-        for (sharedResource_iterator i = sharedResource_.begin ();
-        i != sharedResource_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::SharedResource& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        sharedResource_.swap (v);
-      }
-
       sharedResource_.push_back (e);
-      sharedResource_.back ().container (this);
     }
 
     size_t Node::
