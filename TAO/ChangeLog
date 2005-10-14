@@ -1,3 +1,22 @@
+Fri Oct 14 09:35:33 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Regenerate.
+
+	* orbsvcs/orbsvcs/CosEvent.mpc:
+
+	  Split out separate project for generating IDL files.
+
+	* orbsvcs/orbsvcs/ec_typed_event.mpb:
+
+	  Remove IDL Files section from project, they've been moved
+	  to ec_typed_event_idl.mpb.
+
+	* orbsvcs/orbsvcs/ec_typed_event_idl.mpb:
+
+	  New base project containing Typed Event IDL files.
+
 Fri Oct 14 11:25:17 2005  Paul Calabrese  <calabrese_p@ociweb.com>
 
           Merge some changes from OCI TAO 1.4a that are mostly
