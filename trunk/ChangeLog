@@ -1,3 +1,8 @@
+Fri Oct 14 11:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SOCK_IO.{h,inl}:
+          64bit fix
+
 Fri Oct 14 10:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SSL/SSL_Asynch_BIO.{h,cpp}:

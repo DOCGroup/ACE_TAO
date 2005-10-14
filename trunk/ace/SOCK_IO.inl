@@ -115,7 +115,7 @@ ACE_SOCK_IO::send (const void *buf,
 
 ACE_INLINE ssize_t
 ACE_SOCK_IO::sendv (const iovec iov[],
-                    int n,
+                    size_t n,
                     const ACE_Time_Value *timeout) const
 {
   ACE_TRACE ("ACE_SOCK_IO::sendv");
@@ -132,7 +132,7 @@ ACE_SOCK_IO::send (const iovec iov[],
 {
   ACE_TRACE ("ACE_SOCK_IO::send");
   return this->sendv (iov,
-                      static_cast<int> (n),
+                      n,
                       timeout);
 }
 
