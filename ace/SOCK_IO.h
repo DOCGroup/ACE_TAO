@@ -114,7 +114,7 @@ public:
 
   /// Send an <iovec> of size <n> to the connected socket.
   ssize_t sendv (const iovec iov[],
-                 int n,
+                 size_t n,
                  const ACE_Time_Value *timeout = 0) const;
 
   /// Same as above.  Deprecated.
