@@ -228,7 +228,7 @@ ACE::HTBP::Session::flush_outbound_queue (void)
                       iovec[this->outbound_queue_.message_count()],
                       -1);
       this->outbound_queue_.peek_dequeue_head (msg);
-      for (int i = 0; i < this->outbound_queue_.message_count(); i++)
+      for (size_t i = 0; i < this->outbound_queue_.message_count(); i++)
         {
           iov[i].iov_base = msg->rd_ptr();
           iov[i].iov_len = msg->length();
