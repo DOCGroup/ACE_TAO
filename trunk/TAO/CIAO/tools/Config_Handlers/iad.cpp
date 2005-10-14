@@ -109,14 +109,12 @@ namespace CIAO
     {
       if (label_.get ()) label_->container (this);
       if (UUID_.get ()) UUID_->container (this);
-      location_.reserve (s.location_.size ());
       {
         for (location_const_iterator i (s.location_.begin ());
         i != s.location_.end ();
         ++i) add_location (*i);
       }
 
-      dependsOn_.reserve (s.dependsOn_.size ());
       {
         for (dependsOn_const_iterator i (s.dependsOn_.begin ());
         i != s.dependsOn_.end ();
@@ -140,7 +138,6 @@ namespace CIAO
       else UUID_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
 
       location_.clear ();
-      location_.reserve (s.location_.size ());
       {
         for (location_const_iterator i (s.location_.begin ());
         i != s.location_.end ();
@@ -148,7 +145,6 @@ namespace CIAO
       }
 
       dependsOn_.clear ();
-      dependsOn_.reserve (s.dependsOn_.size ());
       {
         for (dependsOn_const_iterator i (s.dependsOn_.begin ());
         i != s.dependsOn_.end ();
@@ -261,26 +257,7 @@ namespace CIAO
     void ImplementationArtifactDescription::
     add_location (::XMLSchema::string< ACE_TCHAR > const& e)
     {
-      if (location_.capacity () < location_.size () + 1)
-      {
-        ::std::vector< ::XMLSchema::string< ACE_TCHAR > > v;
-        v.reserve (location_.size () + 1);
-
-        for (location_iterator i = location_.begin ();
-        i != location_.end ();
-         ++i)
-        {
-          ::XMLSchema::string< ACE_TCHAR >& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        location_.swap (v);
-      }
-
       location_.push_back (e);
-      location_.back ().container (this);
     }
 
     size_t ImplementationArtifactDescription::
@@ -318,26 +295,7 @@ namespace CIAO
     void ImplementationArtifactDescription::
     add_dependsOn (::CIAO::Config_Handlers::NamedImplementationArtifact const& e)
     {
-      if (dependsOn_.capacity () < dependsOn_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::NamedImplementationArtifact > v;
-        v.reserve (dependsOn_.size () + 1);
-
-        for (dependsOn_iterator i = dependsOn_.begin ();
-        i != dependsOn_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::NamedImplementationArtifact& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        dependsOn_.swap (v);
-      }
-
       dependsOn_.push_back (e);
-      dependsOn_.back ().container (this);
     }
 
     size_t ImplementationArtifactDescription::

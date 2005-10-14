@@ -35,7 +35,7 @@ namespace CIAO
 }
 
 #include <memory>
-#include <vector>
+#include <list>
 #include "XMLSchema/Types.hpp"
 
 #include "ccd.hpp"

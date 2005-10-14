@@ -34,7 +34,7 @@ namespace CIAO
 }
 
 #include <memory>
-#include <vector>
+#include <list>
 #include "XMLSchema/Types.hpp"
 
 #include "Basic_Deployment_Data.hpp"
@@ -81,8 +81,8 @@ namespace CIAO
       // supportedType
       // 
       public:
-      typedef ::std::vector< ::XMLSchema::string< ACE_TCHAR > >::iterator supportedType_iterator;
-      typedef ::std::vector< ::XMLSchema::string< ACE_TCHAR > >::const_iterator supportedType_const_iterator;
+      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator supportedType_iterator;
+      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator supportedType_const_iterator;
       supportedType_iterator begin_supportedType ();
       supportedType_iterator end_supportedType ();
       supportedType_const_iterator begin_supportedType () const;
@@ -91,13 +91,13 @@ namespace CIAO
       size_t count_supportedType (void) const;
 
       protected:
-      ::std::vector< ::XMLSchema::string< ACE_TCHAR > > supportedType_;
+      ::std::list< ::XMLSchema::string< ACE_TCHAR > > supportedType_;
 
       // idlFile
       // 
       public:
-      typedef ::std::vector< ::XMLSchema::string< ACE_TCHAR > >::iterator idlFile_iterator;
-      typedef ::std::vector< ::XMLSchema::string< ACE_TCHAR > >::const_iterator idlFile_const_iterator;
+      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator idlFile_iterator;
+      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator idlFile_const_iterator;
       idlFile_iterator begin_idlFile ();
       idlFile_iterator end_idlFile ();
       idlFile_const_iterator begin_idlFile () const;
@@ -106,13 +106,13 @@ namespace CIAO
       size_t count_idlFile (void) const;
 
       protected:
-      ::std::vector< ::XMLSchema::string< ACE_TCHAR > > idlFile_;
+      ::std::list< ::XMLSchema::string< ACE_TCHAR > > idlFile_;
 
       // configProperty
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::Property >::iterator configProperty_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::Property >::const_iterator configProperty_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator configProperty_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator configProperty_const_iterator;
       configProperty_iterator begin_configProperty ();
       configProperty_iterator end_configProperty ();
       configProperty_const_iterator begin_configProperty () const;
@@ -121,13 +121,13 @@ namespace CIAO
       size_t count_configProperty (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::Property > configProperty_;
+      ::std::list< ::CIAO::Config_Handlers::Property > configProperty_;
 
       // port
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::ComponentPortDescription >::iterator port_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::ComponentPortDescription >::const_iterator port_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::ComponentPortDescription >::iterator port_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::ComponentPortDescription >::const_iterator port_const_iterator;
       port_iterator begin_port ();
       port_iterator end_port ();
       port_const_iterator begin_port () const;
@@ -136,13 +136,13 @@ namespace CIAO
       size_t count_port (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::ComponentPortDescription > port_;
+      ::std::list< ::CIAO::Config_Handlers::ComponentPortDescription > port_;
 
       // property
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::ComponentPropertyDescription >::iterator property_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::ComponentPropertyDescription >::const_iterator property_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::ComponentPropertyDescription >::iterator property_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::ComponentPropertyDescription >::const_iterator property_const_iterator;
       property_iterator begin_property ();
       property_iterator end_property ();
       property_const_iterator begin_property () const;
@@ -151,13 +151,13 @@ namespace CIAO
       size_t count_property (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::ComponentPropertyDescription > property_;
+      ::std::list< ::CIAO::Config_Handlers::ComponentPropertyDescription > property_;
 
       // infoProperty
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::Property >::iterator infoProperty_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::Property >::const_iterator infoProperty_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator infoProperty_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator infoProperty_const_iterator;
       infoProperty_iterator begin_infoProperty ();
       infoProperty_iterator end_infoProperty ();
       infoProperty_const_iterator begin_infoProperty () const;
@@ -166,7 +166,7 @@ namespace CIAO
       size_t count_infoProperty (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::Property > infoProperty_;
+      ::std::list< ::CIAO::Config_Handlers::Property > infoProperty_;
 
       // contentLocation
       // 

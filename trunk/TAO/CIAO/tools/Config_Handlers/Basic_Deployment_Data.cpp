@@ -140,91 +140,78 @@ namespace CIAO
     ::XSCRT::Type (),
     regulator__ ()
     {
-      short_.reserve (s.short_.size ());
       {
         for (short_const_iterator i (s.short_.begin ());
         i != s.short_.end ();
         ++i) add_short (*i);
       }
 
-      long_.reserve (s.long_.size ());
       {
         for (long_const_iterator i (s.long_.begin ());
         i != s.long_.end ();
         ++i) add_long (*i);
       }
 
-      ushort_.reserve (s.ushort_.size ());
       {
         for (ushort_const_iterator i (s.ushort_.begin ());
         i != s.ushort_.end ();
         ++i) add_ushort (*i);
       }
 
-      ulong_.reserve (s.ulong_.size ());
       {
         for (ulong_const_iterator i (s.ulong_.begin ());
         i != s.ulong_.end ();
         ++i) add_ulong (*i);
       }
 
-      float_.reserve (s.float_.size ());
       {
         for (float_const_iterator i (s.float_.begin ());
         i != s.float_.end ();
         ++i) add_float (*i);
       }
 
-      double_.reserve (s.double_.size ());
       {
         for (double_const_iterator i (s.double_.begin ());
         i != s.double_.end ();
         ++i) add_double (*i);
       }
 
-      boolean_.reserve (s.boolean_.size ());
       {
         for (boolean_const_iterator i (s.boolean_.begin ());
         i != s.boolean_.end ();
         ++i) add_boolean (*i);
       }
 
-      octet_.reserve (s.octet_.size ());
       {
         for (octet_const_iterator i (s.octet_.begin ());
         i != s.octet_.end ();
         ++i) add_octet (*i);
       }
 
-      enum_.reserve (s.enum_.size ());
       {
         for (enum_const_iterator i (s.enum_.begin ());
         i != s.enum_.end ();
         ++i) add_enum (*i);
       }
 
-      string_.reserve (s.string_.size ());
       {
         for (string_const_iterator i (s.string_.begin ());
         i != s.string_.end ();
         ++i) add_string (*i);
       }
 
-      longlong_.reserve (s.longlong_.size ());
       {
         for (longlong_const_iterator i (s.longlong_.begin ());
         i != s.longlong_.end ();
         ++i) add_longlong (*i);
       }
 
-      ulonglong_.reserve (s.ulonglong_.size ());
       {
         for (ulonglong_const_iterator i (s.ulonglong_.begin ());
         i != s.ulonglong_.end ();
         ++i) add_ulonglong (*i);
       }
 
-      longdouble_.reserve (s.longdouble_.size ());
       {
         for (longdouble_const_iterator i (s.longdouble_.begin ());
         i != s.longdouble_.end ();
@@ -236,7 +223,6 @@ namespace CIAO
     operator= (::CIAO::Config_Handlers::DataValue const& s)
     {
       short_.clear ();
-      short_.reserve (s.short_.size ());
       {
         for (short_const_iterator i (s.short_.begin ());
         i != s.short_.end ();
@@ -244,7 +230,6 @@ namespace CIAO
       }
 
       long_.clear ();
-      long_.reserve (s.long_.size ());
       {
         for (long_const_iterator i (s.long_.begin ());
         i != s.long_.end ();
@@ -252,7 +237,6 @@ namespace CIAO
       }
 
       ushort_.clear ();
-      ushort_.reserve (s.ushort_.size ());
       {
         for (ushort_const_iterator i (s.ushort_.begin ());
         i != s.ushort_.end ();
@@ -260,7 +244,6 @@ namespace CIAO
       }
 
       ulong_.clear ();
-      ulong_.reserve (s.ulong_.size ());
       {
         for (ulong_const_iterator i (s.ulong_.begin ());
         i != s.ulong_.end ();
@@ -268,7 +251,6 @@ namespace CIAO
       }
 
       float_.clear ();
-      float_.reserve (s.float_.size ());
       {
         for (float_const_iterator i (s.float_.begin ());
         i != s.float_.end ();
@@ -276,7 +258,6 @@ namespace CIAO
       }
 
       double_.clear ();
-      double_.reserve (s.double_.size ());
       {
         for (double_const_iterator i (s.double_.begin ());
         i != s.double_.end ();
@@ -284,7 +265,6 @@ namespace CIAO
       }
 
       boolean_.clear ();
-      boolean_.reserve (s.boolean_.size ());
       {
         for (boolean_const_iterator i (s.boolean_.begin ());
         i != s.boolean_.end ();
@@ -292,7 +272,6 @@ namespace CIAO
       }
 
       octet_.clear ();
-      octet_.reserve (s.octet_.size ());
       {
         for (octet_const_iterator i (s.octet_.begin ());
         i != s.octet_.end ();
@@ -300,7 +279,6 @@ namespace CIAO
       }
 
       enum_.clear ();
-      enum_.reserve (s.enum_.size ());
       {
         for (enum_const_iterator i (s.enum_.begin ());
         i != s.enum_.end ();
@@ -308,7 +286,6 @@ namespace CIAO
       }
 
       string_.clear ();
-      string_.reserve (s.string_.size ());
       {
         for (string_const_iterator i (s.string_.begin ());
         i != s.string_.end ();
@@ -316,7 +293,6 @@ namespace CIAO
       }
 
       longlong_.clear ();
-      longlong_.reserve (s.longlong_.size ());
       {
         for (longlong_const_iterator i (s.longlong_.begin ());
         i != s.longlong_.end ();
@@ -324,7 +300,6 @@ namespace CIAO
       }
 
       ulonglong_.clear ();
-      ulonglong_.reserve (s.ulonglong_.size ());
       {
         for (ulonglong_const_iterator i (s.ulonglong_.begin ());
         i != s.ulonglong_.end ();
@@ -332,7 +307,6 @@ namespace CIAO
       }
 
       longdouble_.clear ();
-      longdouble_.reserve (s.longdouble_.size ());
       {
         for (longdouble_const_iterator i (s.longdouble_.begin ());
         i != s.longdouble_.end ();
@@ -372,26 +346,7 @@ namespace CIAO
     void DataValue::
     add_short (::XMLSchema::short_ const& e)
     {
-      if (short_.capacity () < short_.size () + 1)
-      {
-        ::std::vector< ::XMLSchema::short_ > v;
-        v.reserve (short_.size () + 1);
-
-        for (short_iterator i = short_.begin ();
-        i != short_.end ();
-         ++i)
-        {
-          ::XMLSchema::short_& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        short_.swap (v);
-      }
-
       short_.push_back (e);
-      short_.back ().container (this);
     }
 
     size_t DataValue::
@@ -429,26 +384,7 @@ namespace CIAO
     void DataValue::
     add_long (::XMLSchema::int_ const& e)
     {
-      if (long_.capacity () < long_.size () + 1)
-      {
-        ::std::vector< ::XMLSchema::int_ > v;
-        v.reserve (long_.size () + 1);
-
-        for (long_iterator i = long_.begin ();
-        i != long_.end ();
-         ++i)
-        {
-          ::XMLSchema::int_& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        long_.swap (v);
-      }
-
       long_.push_back (e);
-      long_.back ().container (this);
     }
 
     size_t DataValue::
@@ -486,26 +422,7 @@ namespace CIAO
     void DataValue::
     add_ushort (::XMLSchema::unsignedShort const& e)
     {
-      if (ushort_.capacity () < ushort_.size () + 1)
-      {
-        ::std::vector< ::XMLSchema::unsignedShort > v;
-        v.reserve (ushort_.size () + 1);
-
-        for (ushort_iterator i = ushort_.begin ();
-        i != ushort_.end ();
-         ++i)
-        {
-          ::XMLSchema::unsignedShort& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        ushort_.swap (v);
-      }
-
       ushort_.push_back (e);
-      ushort_.back ().container (this);
     }
 
     size_t DataValue::
@@ -543,26 +460,7 @@ namespace CIAO
     void DataValue::
     add_ulong (::XMLSchema::unsignedInt const& e)
     {
-      if (ulong_.capacity () < ulong_.size () + 1)
-      {
-        ::std::vector< ::XMLSchema::unsignedInt > v;
-        v.reserve (ulong_.size () + 1);
-
-        for (ulong_iterator i = ulong_.begin ();
-        i != ulong_.end ();
-         ++i)
-        {
-          ::XMLSchema::unsignedInt& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        ulong_.swap (v);
-      }
-
       ulong_.push_back (e);
-      ulong_.back ().container (this);
     }
 
     size_t DataValue::
@@ -600,26 +498,7 @@ namespace CIAO
     void DataValue::
     add_float (::XMLSchema::float_ const& e)
     {
-      if (float_.capacity () < float_.size () + 1)
-      {
-        ::std::vector< ::XMLSchema::float_ > v;
-        v.reserve (float_.size () + 1);
-
-        for (float_iterator i = float_.begin ();
-        i != float_.end ();
-         ++i)
-        {
-          ::XMLSchema::float_& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        float_.swap (v);
-      }
-
       float_.push_back (e);
-      float_.back ().container (this);
     }
 
     size_t DataValue::
@@ -657,26 +536,7 @@ namespace CIAO
     void DataValue::
     add_double (::XMLSchema::double_ const& e)
     {
-      if (double_.capacity () < double_.size () + 1)
-      {
-        ::std::vector< ::XMLSchema::double_ > v;
-        v.reserve (double_.size () + 1);
-
-        for (double_iterator i = double_.begin ();
-        i != double_.end ();
-         ++i)
-        {
-          ::XMLSchema::double_& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        double_.swap (v);
-      }
-
       double_.push_back (e);
-      double_.back ().container (this);
     }
 
     size_t DataValue::
@@ -714,26 +574,7 @@ namespace CIAO
     void DataValue::
     add_boolean (::XMLSchema::boolean const& e)
     {
-      if (boolean_.capacity () < boolean_.size () + 1)
-      {
-        ::std::vector< ::XMLSchema::boolean > v;
-        v.reserve (boolean_.size () + 1);
-
-        for (boolean_iterator i = boolean_.begin ();
-        i != boolean_.end ();
-         ++i)
-        {
-          ::XMLSchema::boolean& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        boolean_.swap (v);
-      }
-
       boolean_.push_back (e);
-      boolean_.back ().container (this);
     }
 
     size_t DataValue::
@@ -771,26 +612,7 @@ namespace CIAO
     void DataValue::
     add_octet (::XMLSchema::unsignedByte const& e)
     {
-      if (octet_.capacity () < octet_.size () + 1)
-      {
-        ::std::vector< ::XMLSchema::unsignedByte > v;
-        v.reserve (octet_.size () + 1);
-
-        for (octet_iterator i = octet_.begin ();
-        i != octet_.end ();
-         ++i)
-        {
-          ::XMLSchema::unsignedByte& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        octet_.swap (v);
-      }
-
       octet_.push_back (e);
-      octet_.back ().container (this);
     }
 
     size_t DataValue::
@@ -828,26 +650,7 @@ namespace CIAO
     void DataValue::
     add_enum (::XMLSchema::string< ACE_TCHAR > const& e)
     {
-      if (enum_.capacity () < enum_.size () + 1)
-      {
-        ::std::vector< ::XMLSchema::string< ACE_TCHAR > > v;
-        v.reserve (enum_.size () + 1);
-
-        for (enum_iterator i = enum_.begin ();
-        i != enum_.end ();
-         ++i)
-        {
-          ::XMLSchema::string< ACE_TCHAR >& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        enum_.swap (v);
-      }
-
       enum_.push_back (e);
-      enum_.back ().container (this);
     }
 
     size_t DataValue::
@@ -885,26 +688,7 @@ namespace CIAO
     void DataValue::
     add_string (::XMLSchema::string< ACE_TCHAR > const& e)
     {
-      if (string_.capacity () < string_.size () + 1)
-      {
-        ::std::vector< ::XMLSchema::string< ACE_TCHAR > > v;
-        v.reserve (string_.size () + 1);
-
-        for (string_iterator i = string_.begin ();
-        i != string_.end ();
-         ++i)
-        {
-          ::XMLSchema::string< ACE_TCHAR >& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        string_.swap (v);
-      }
-
       string_.push_back (e);
-      string_.back ().container (this);
     }
 
     size_t DataValue::
@@ -942,26 +726,7 @@ namespace CIAO
     void DataValue::
     add_longlong (::XMLSchema::long_ const& e)
     {
-      if (longlong_.capacity () < longlong_.size () + 1)
-      {
-        ::std::vector< ::XMLSchema::long_ > v;
-        v.reserve (longlong_.size () + 1);
-
-        for (longlong_iterator i = longlong_.begin ();
-        i != longlong_.end ();
-         ++i)
-        {
-          ::XMLSchema::long_& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        longlong_.swap (v);
-      }
-
       longlong_.push_back (e);
-      longlong_.back ().container (this);
     }
 
     size_t DataValue::
@@ -999,26 +764,7 @@ namespace CIAO
     void DataValue::
     add_ulonglong (::XMLSchema::unsignedLong const& e)
     {
-      if (ulonglong_.capacity () < ulonglong_.size () + 1)
-      {
-        ::std::vector< ::XMLSchema::unsignedLong > v;
-        v.reserve (ulonglong_.size () + 1);
-
-        for (ulonglong_iterator i = ulonglong_.begin ();
-        i != ulonglong_.end ();
-         ++i)
-        {
-          ::XMLSchema::unsignedLong& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        ulonglong_.swap (v);
-      }
-
       ulonglong_.push_back (e);
-      ulonglong_.back ().container (this);
     }
 
     size_t DataValue::
@@ -1056,26 +802,7 @@ namespace CIAO
     void DataValue::
     add_longdouble (::XMLSchema::double_ const& e)
     {
-      if (longdouble_.capacity () < longdouble_.size () + 1)
-      {
-        ::std::vector< ::XMLSchema::double_ > v;
-        v.reserve (longdouble_.size () + 1);
-
-        for (longdouble_iterator i = longdouble_.begin ();
-        i != longdouble_.end ();
-         ++i)
-        {
-          ::XMLSchema::double_& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        longdouble_.swap (v);
-      }
-
       longdouble_.push_back (e);
-      longdouble_.back ().container (this);
     }
 
     size_t DataValue::
@@ -1111,7 +838,6 @@ namespace CIAO
     {
       name_->container (this);
       typeId_->container (this);
-      member_.reserve (s.member_.size ());
       {
         for (member_const_iterator i (s.member_.begin ());
         i != s.member_.end ();
@@ -1127,7 +853,6 @@ namespace CIAO
       typeId (s.typeId ());
 
       member_.clear ();
-      member_.reserve (s.member_.size ());
       {
         for (member_const_iterator i (s.member_.begin ());
         i != s.member_.end ();
@@ -1195,26 +920,7 @@ namespace CIAO
     void EnumType::
     add_member (::XMLSchema::string< ACE_TCHAR > const& e)
     {
-      if (member_.capacity () < member_.size () + 1)
-      {
-        ::std::vector< ::XMLSchema::string< ACE_TCHAR > > v;
-        v.reserve (member_.size () + 1);
-
-        for (member_iterator i = member_.begin ();
-        i != member_.end ();
-         ++i)
-        {
-          ::XMLSchema::string< ACE_TCHAR >& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        member_.swap (v);
-      }
-
       member_.push_back (e);
-      member_.back ().container (this);
     }
 
     size_t EnumType::
@@ -1769,7 +1475,6 @@ namespace CIAO
     regulator__ ()
     {
       name_->container (this);
-      source_.reserve (s.source_.size ());
       {
         for (source_const_iterator i (s.source_.begin ());
         i != s.source_.end ();
@@ -1777,28 +1482,24 @@ namespace CIAO
       }
 
       node_->container (this);
-      location_.reserve (s.location_.size ());
       {
         for (location_const_iterator i (s.location_.begin ());
         i != s.location_.end ();
         ++i) add_location (*i);
       }
 
-      execParameter_.reserve (s.execParameter_.size ());
       {
         for (execParameter_const_iterator i (s.execParameter_.begin ());
         i != s.execParameter_.end ();
         ++i) add_execParameter (*i);
       }
 
-      deployRequirement_.reserve (s.deployRequirement_.size ());
       {
         for (deployRequirement_const_iterator i (s.deployRequirement_.begin ());
         i != s.deployRequirement_.end ();
         ++i) add_deployRequirement (*i);
       }
 
-      deployedResource_.reserve (s.deployedResource_.size ());
       {
         for (deployedResource_const_iterator i (s.deployedResource_.begin ());
         i != s.deployedResource_.end ();
@@ -1814,7 +1515,6 @@ namespace CIAO
       name (s.name ());
 
       source_.clear ();
-      source_.reserve (s.source_.size ());
       {
         for (source_const_iterator i (s.source_.begin ());
         i != s.source_.end ();
@@ -1824,7 +1524,6 @@ namespace CIAO
       node (s.node ());
 
       location_.clear ();
-      location_.reserve (s.location_.size ());
       {
         for (location_const_iterator i (s.location_.begin ());
         i != s.location_.end ();
@@ -1832,7 +1531,6 @@ namespace CIAO
       }
 
       execParameter_.clear ();
-      execParameter_.reserve (s.execParameter_.size ());
       {
         for (execParameter_const_iterator i (s.execParameter_.begin ());
         i != s.execParameter_.end ();
@@ -1840,7 +1538,6 @@ namespace CIAO
       }
 
       deployRequirement_.clear ();
-      deployRequirement_.reserve (s.deployRequirement_.size ());
       {
         for (deployRequirement_const_iterator i (s.deployRequirement_.begin ());
         i != s.deployRequirement_.end ();
@@ -1848,7 +1545,6 @@ namespace CIAO
       }
 
       deployedResource_.clear ();
-      deployedResource_.reserve (s.deployedResource_.size ());
       {
         for (deployedResource_const_iterator i (s.deployedResource_.begin ());
         i != s.deployedResource_.end ();
@@ -1905,26 +1601,7 @@ namespace CIAO
     void ArtifactDeploymentDescription::
     add_source (::XMLSchema::string< ACE_TCHAR > const& e)
     {
-      if (source_.capacity () < source_.size () + 1)
-      {
-        ::std::vector< ::XMLSchema::string< ACE_TCHAR > > v;
-        v.reserve (source_.size () + 1);
-
-        for (source_iterator i = source_.begin ();
-        i != source_.end ();
-         ++i)
-        {
-          ::XMLSchema::string< ACE_TCHAR >& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        source_.swap (v);
-      }
-
       source_.push_back (e);
-      source_.back ().container (this);
     }
 
     size_t ArtifactDeploymentDescription::
@@ -1976,26 +1653,7 @@ namespace CIAO
     void ArtifactDeploymentDescription::
     add_location (::XMLSchema::string< ACE_TCHAR > const& e)
     {
-      if (location_.capacity () < location_.size () + 1)
-      {
-        ::std::vector< ::XMLSchema::string< ACE_TCHAR > > v;
-        v.reserve (location_.size () + 1);
-
-        for (location_iterator i = location_.begin ();
-        i != location_.end ();
-         ++i)
-        {
-          ::XMLSchema::string< ACE_TCHAR >& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        location_.swap (v);
-      }
-
       location_.push_back (e);
-      location_.back ().container (this);
     }
 
     size_t ArtifactDeploymentDescription::
@@ -2033,26 +1691,7 @@ namespace CIAO
     void ArtifactDeploymentDescription::
     add_execParameter (::CIAO::Config_Handlers::Property const& e)
     {
-      if (execParameter_.capacity () < execParameter_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::Property > v;
-        v.reserve (execParameter_.size () + 1);
-
-        for (execParameter_iterator i = execParameter_.begin ();
-        i != execParameter_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::Property& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        execParameter_.swap (v);
-      }
-
       execParameter_.push_back (e);
-      execParameter_.back ().container (this);
     }
 
     size_t ArtifactDeploymentDescription::
@@ -2090,26 +1729,7 @@ namespace CIAO
     void ArtifactDeploymentDescription::
     add_deployRequirement (::CIAO::Config_Handlers::Requirement const& e)
     {
-      if (deployRequirement_.capacity () < deployRequirement_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::Requirement > v;
-        v.reserve (deployRequirement_.size () + 1);
-
-        for (deployRequirement_iterator i = deployRequirement_.begin ();
-        i != deployRequirement_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::Requirement& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        deployRequirement_.swap (v);
-      }
-
       deployRequirement_.push_back (e);
-      deployRequirement_.back ().container (this);
     }
 
     size_t ArtifactDeploymentDescription::
@@ -2147,26 +1767,7 @@ namespace CIAO
     void ArtifactDeploymentDescription::
     add_deployedResource (::CIAO::Config_Handlers::ResourceDeploymentDescription const& e)
     {
-      if (deployedResource_.capacity () < deployedResource_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::ResourceDeploymentDescription > v;
-        v.reserve (deployedResource_.size () + 1);
-
-        for (deployedResource_iterator i = deployedResource_.begin ();
-        i != deployedResource_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::ResourceDeploymentDescription& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        deployedResource_.swap (v);
-      }
-
       deployedResource_.push_back (e);
-      deployedResource_.back ().container (this);
     }
 
     size_t ArtifactDeploymentDescription::
@@ -2233,28 +1834,24 @@ namespace CIAO
     regulator__ ()
     {
       name_->container (this);
-      source_.reserve (s.source_.size ());
       {
         for (source_const_iterator i (s.source_.begin ());
         i != s.source_.end ();
         ++i) add_source (*i);
       }
 
-      artifact_.reserve (s.artifact_.size ());
       {
         for (artifact_const_iterator i (s.artifact_.begin ());
         i != s.artifact_.end ();
         ++i) add_artifact (*i);
       }
 
-      execParameter_.reserve (s.execParameter_.size ());
       {
         for (execParameter_const_iterator i (s.execParameter_.begin ());
         i != s.execParameter_.end ();
         ++i) add_execParameter (*i);
       }
 
-      deployRequirement_.reserve (s.deployRequirement_.size ());
       {
         for (deployRequirement_const_iterator i (s.deployRequirement_.begin ());
         i != s.deployRequirement_.end ();
@@ -2270,7 +1867,6 @@ namespace CIAO
       name (s.name ());
 
       source_.clear ();
-      source_.reserve (s.source_.size ());
       {
         for (source_const_iterator i (s.source_.begin ());
         i != s.source_.end ();
@@ -2278,7 +1874,6 @@ namespace CIAO
       }
 
       artifact_.clear ();
-      artifact_.reserve (s.artifact_.size ());
       {
         for (artifact_const_iterator i (s.artifact_.begin ());
         i != s.artifact_.end ();
@@ -2286,7 +1881,6 @@ namespace CIAO
       }
 
       execParameter_.clear ();
-      execParameter_.reserve (s.execParameter_.size ());
       {
         for (execParameter_const_iterator i (s.execParameter_.begin ());
         i != s.execParameter_.end ();
@@ -2294,7 +1888,6 @@ namespace CIAO
       }
 
       deployRequirement_.clear ();
-      deployRequirement_.reserve (s.deployRequirement_.size ());
       {
         for (deployRequirement_const_iterator i (s.deployRequirement_.begin ());
         i != s.deployRequirement_.end ();
@@ -2351,26 +1944,7 @@ namespace CIAO
     void MonolithicDeploymentDescription::
     add_source (::XMLSchema::string< ACE_TCHAR > const& e)
     {
-      if (source_.capacity () < source_.size () + 1)
-      {
-        ::std::vector< ::XMLSchema::string< ACE_TCHAR > > v;
-        v.reserve (source_.size () + 1);
-
-        for (source_iterator i = source_.begin ();
-        i != source_.end ();
-         ++i)
-        {
-          ::XMLSchema::string< ACE_TCHAR >& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        source_.swap (v);
-      }
-
       source_.push_back (e);
-      source_.back ().container (this);
     }
 
     size_t MonolithicDeploymentDescription::
@@ -2408,26 +1982,7 @@ namespace CIAO
     void MonolithicDeploymentDescription::
     add_artifact (::XMLSchema::IDREF< ACE_TCHAR > const& e)
     {
-      if (artifact_.capacity () < artifact_.size () + 1)
-      {
-        ::std::vector< ::XMLSchema::IDREF< ACE_TCHAR > > v;
-        v.reserve (artifact_.size () + 1);
-
-        for (artifact_iterator i = artifact_.begin ();
-        i != artifact_.end ();
-         ++i)
-        {
-          ::XMLSchema::IDREF< ACE_TCHAR >& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        artifact_.swap (v);
-      }
-
       artifact_.push_back (e);
-      artifact_.back ().container (this);
     }
 
     size_t MonolithicDeploymentDescription::
@@ -2465,26 +2020,7 @@ namespace CIAO
     void MonolithicDeploymentDescription::
     add_execParameter (::CIAO::Config_Handlers::Property const& e)
     {
-      if (execParameter_.capacity () < execParameter_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::Property > v;
-        v.reserve (execParameter_.size () + 1);
-
-        for (execParameter_iterator i = execParameter_.begin ();
-        i != execParameter_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::Property& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        execParameter_.swap (v);
-      }
-
       execParameter_.push_back (e);
-      execParameter_.back ().container (this);
     }
 
     size_t MonolithicDeploymentDescription::
@@ -2522,26 +2058,7 @@ namespace CIAO
     void MonolithicDeploymentDescription::
     add_deployRequirement (::CIAO::Config_Handlers::Requirement const& e)
     {
-      if (deployRequirement_.capacity () < deployRequirement_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::Requirement > v;
-        v.reserve (deployRequirement_.size () + 1);
-
-        for (deployRequirement_iterator i = deployRequirement_.begin ();
-        i != deployRequirement_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::Requirement& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        deployRequirement_.swap (v);
-      }
-
       deployRequirement_.push_back (e);
-      deployRequirement_.back ().container (this);
     }
 
     size_t MonolithicDeploymentDescription::
@@ -2762,7 +2279,6 @@ namespace CIAO
       node_->container (this);
       source_->container (this);
       implementation_->container (this);
-      configProperty_.reserve (s.configProperty_.size ());
       {
         for (configProperty_const_iterator i (s.configProperty_.begin ());
         i != s.configProperty_.end ();
@@ -2786,7 +2302,6 @@ namespace CIAO
       implementation (s.implementation ());
 
       configProperty_.clear ();
-      configProperty_.reserve (s.configProperty_.size ());
       {
         for (configProperty_const_iterator i (s.configProperty_.begin ());
         i != s.configProperty_.end ();
@@ -2891,26 +2406,7 @@ namespace CIAO
     void InstanceDeploymentDescription::
     add_configProperty (::CIAO::Config_Handlers::Property const& e)
     {
-      if (configProperty_.capacity () < configProperty_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::Property > v;
-        v.reserve (configProperty_.size () + 1);
-
-        for (configProperty_iterator i = configProperty_.begin ();
-        i != configProperty_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::Property& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        configProperty_.swap (v);
-      }
-
       configProperty_.push_back (e);
-      configProperty_.back ().container (this);
     }
 
     size_t InstanceDeploymentDescription::
@@ -3652,35 +3148,30 @@ namespace CIAO
     {
       name_->container (this);
       if (source_.get ()) source_->container (this);
-      deployRequirement_.reserve (s.deployRequirement_.size ());
       {
         for (deployRequirement_const_iterator i (s.deployRequirement_.begin ());
         i != s.deployRequirement_.end ();
         ++i) add_deployRequirement (*i);
       }
 
-      externalEndpoint_.reserve (s.externalEndpoint_.size ());
       {
         for (externalEndpoint_const_iterator i (s.externalEndpoint_.begin ());
         i != s.externalEndpoint_.end ();
         ++i) add_externalEndpoint (*i);
       }
 
-      internalEndpoint_.reserve (s.internalEndpoint_.size ());
       {
         for (internalEndpoint_const_iterator i (s.internalEndpoint_.begin ());
         i != s.internalEndpoint_.end ();
         ++i) add_internalEndpoint (*i);
       }
 
-      externalReference_.reserve (s.externalReference_.size ());
       {
         for (externalReference_const_iterator i (s.externalReference_.begin ());
         i != s.externalReference_.end ();
         ++i) add_externalReference (*i);
       }
 
-      deployedResource_.reserve (s.deployedResource_.size ());
       {
         for (deployedResource_const_iterator i (s.deployedResource_.begin ());
         i != s.deployedResource_.end ();
@@ -3697,7 +3188,6 @@ namespace CIAO
       else source_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
 
       deployRequirement_.clear ();
-      deployRequirement_.reserve (s.deployRequirement_.size ());
       {
         for (deployRequirement_const_iterator i (s.deployRequirement_.begin ());
         i != s.deployRequirement_.end ();
@@ -3705,7 +3195,6 @@ namespace CIAO
       }
 
       externalEndpoint_.clear ();
-      externalEndpoint_.reserve (s.externalEndpoint_.size ());
       {
         for (externalEndpoint_const_iterator i (s.externalEndpoint_.begin ());
         i != s.externalEndpoint_.end ();
@@ -3713,7 +3202,6 @@ namespace CIAO
       }
 
       internalEndpoint_.clear ();
-      internalEndpoint_.reserve (s.internalEndpoint_.size ());
       {
         for (internalEndpoint_const_iterator i (s.internalEndpoint_.begin ());
         i != s.internalEndpoint_.end ();
@@ -3721,7 +3209,6 @@ namespace CIAO
       }
 
       externalReference_.clear ();
-      externalReference_.reserve (s.externalReference_.size ());
       {
         for (externalReference_const_iterator i (s.externalReference_.begin ());
         i != s.externalReference_.end ();
@@ -3729,7 +3216,6 @@ namespace CIAO
       }
 
       deployedResource_.clear ();
-      deployedResource_.reserve (s.deployedResource_.size ());
       {
         for (deployedResource_const_iterator i (s.deployedResource_.begin ());
         i != s.deployedResource_.end ();
@@ -3812,26 +3298,7 @@ namespace CIAO
     void PlanConnectionDescription::
     add_deployRequirement (::CIAO::Config_Handlers::Requirement const& e)
     {
-      if (deployRequirement_.capacity () < deployRequirement_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::Requirement > v;
-        v.reserve (deployRequirement_.size () + 1);
-
-        for (deployRequirement_iterator i = deployRequirement_.begin ();
-        i != deployRequirement_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::Requirement& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        deployRequirement_.swap (v);
-      }
-
       deployRequirement_.push_back (e);
-      deployRequirement_.back ().container (this);
     }
 
     size_t PlanConnectionDescription::
@@ -3869,26 +3336,7 @@ namespace CIAO
     void PlanConnectionDescription::
     add_externalEndpoint (::CIAO::Config_Handlers::ComponentExternalPortEndpoint const& e)
     {
-      if (externalEndpoint_.capacity () < externalEndpoint_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint > v;
-        v.reserve (externalEndpoint_.size () + 1);
-
-        for (externalEndpoint_iterator i = externalEndpoint_.begin ();
-        i != externalEndpoint_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::ComponentExternalPortEndpoint& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        externalEndpoint_.swap (v);
-      }
-
       externalEndpoint_.push_back (e);
-      externalEndpoint_.back ().container (this);
     }
 
     size_t PlanConnectionDescription::
@@ -3926,26 +3374,7 @@ namespace CIAO
     void PlanConnectionDescription::
     add_internalEndpoint (::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint const& e)
     {
-      if (internalEndpoint_.capacity () < internalEndpoint_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint > v;
-        v.reserve (internalEndpoint_.size () + 1);
-
-        for (internalEndpoint_iterator i = internalEndpoint_.begin ();
-        i != internalEndpoint_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        internalEndpoint_.swap (v);
-      }
-
       internalEndpoint_.push_back (e);
-      internalEndpoint_.back ().container (this);
     }
 
     size_t PlanConnectionDescription::
@@ -3983,26 +3412,7 @@ namespace CIAO
     void PlanConnectionDescription::
     add_externalReference (::CIAO::Config_Handlers::ExternalReferenceEndpoint const& e)
     {
-      if (externalReference_.capacity () < externalReference_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::ExternalReferenceEndpoint > v;
-        v.reserve (externalReference_.size () + 1);
-
-        for (externalReference_iterator i = externalReference_.begin ();
-        i != externalReference_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::ExternalReferenceEndpoint& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        externalReference_.swap (v);
-      }
-
       externalReference_.push_back (e);
-      externalReference_.back ().container (this);
     }
 
     size_t PlanConnectionDescription::
@@ -4040,26 +3450,7 @@ namespace CIAO
     void PlanConnectionDescription::
     add_deployedResource (::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription const& e)
     {
-      if (deployedResource_.capacity () < deployedResource_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription > v;
-        v.reserve (deployedResource_.size () + 1);
-
-        for (deployedResource_iterator i = deployedResource_.begin ();
-        i != deployedResource_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        deployedResource_.swap (v);
-      }
-
       deployedResource_.push_back (e);
-      deployedResource_.back ().container (this);
     }
 
     size_t PlanConnectionDescription::
@@ -4537,21 +3928,18 @@ namespace CIAO
     {
       name_->container (this);
       if (deployRequirement_.get ()) deployRequirement_->container (this);
-      externalEndpoint_.reserve (s.externalEndpoint_.size ());
       {
         for (externalEndpoint_const_iterator i (s.externalEndpoint_.begin ());
         i != s.externalEndpoint_.end ();
         ++i) add_externalEndpoint (*i);
       }
 
-      internalEndpoint_.reserve (s.internalEndpoint_.size ());
       {
         for (internalEndpoint_const_iterator i (s.internalEndpoint_.begin ());
         i != s.internalEndpoint_.end ();
         ++i) add_internalEndpoint (*i);
       }
 
-      externalReference_.reserve (s.externalReference_.size ());
       {
         for (externalReference_const_iterator i (s.externalReference_.begin ());
         i != s.externalReference_.end ();
@@ -4568,7 +3956,6 @@ namespace CIAO
       else deployRequirement_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Requirement > (0);
 
       externalEndpoint_.clear ();
-      externalEndpoint_.reserve (s.externalEndpoint_.size ());
       {
         for (externalEndpoint_const_iterator i (s.externalEndpoint_.begin ());
         i != s.externalEndpoint_.end ();
@@ -4576,7 +3963,6 @@ namespace CIAO
       }
 
       internalEndpoint_.clear ();
-      internalEndpoint_.reserve (s.internalEndpoint_.size ());
       {
         for (internalEndpoint_const_iterator i (s.internalEndpoint_.begin ());
         i != s.internalEndpoint_.end ();
@@ -4584,7 +3970,6 @@ namespace CIAO
       }
 
       externalReference_.clear ();
-      externalReference_.reserve (s.externalReference_.size ());
       {
         for (externalReference_const_iterator i (s.externalReference_.begin ());
         i != s.externalReference_.end ();
@@ -4667,26 +4052,7 @@ namespace CIAO
     void AssemblyConnectionDescription::
     add_externalEndpoint (::CIAO::Config_Handlers::ComponentExternalPortEndpoint const& e)
     {
-      if (externalEndpoint_.capacity () < externalEndpoint_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint > v;
-        v.reserve (externalEndpoint_.size () + 1);
-
-        for (externalEndpoint_iterator i = externalEndpoint_.begin ();
-        i != externalEndpoint_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::ComponentExternalPortEndpoint& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        externalEndpoint_.swap (v);
-      }
-
       externalEndpoint_.push_back (e);
-      externalEndpoint_.back ().container (this);
     }
 
     size_t AssemblyConnectionDescription::
@@ -4724,26 +4090,7 @@ namespace CIAO
     void AssemblyConnectionDescription::
     add_internalEndpoint (::CIAO::Config_Handlers::SubcomponentPortEndpoint const& e)
     {
-      if (internalEndpoint_.capacity () < internalEndpoint_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::SubcomponentPortEndpoint > v;
-        v.reserve (internalEndpoint_.size () + 1);
-
-        for (internalEndpoint_iterator i = internalEndpoint_.begin ();
-        i != internalEndpoint_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::SubcomponentPortEndpoint& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        internalEndpoint_.swap (v);
-      }
-
       internalEndpoint_.push_back (e);
-      internalEndpoint_.back ().container (this);
     }
 
     size_t AssemblyConnectionDescription::
@@ -4781,26 +4128,7 @@ namespace CIAO
     void AssemblyConnectionDescription::
     add_externalReference (::CIAO::Config_Handlers::ExternalReferenceEndpoint const& e)
     {
-      if (externalReference_.capacity () < externalReference_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::ExternalReferenceEndpoint > v;
-        v.reserve (externalReference_.size () + 1);
-
-        for (externalReference_iterator i = externalReference_.begin ();
-        i != externalReference_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::ExternalReferenceEndpoint& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        externalReference_.swap (v);
-      }
-
       externalReference_.push_back (e);
-      externalReference_.back ().container (this);
     }
 
     size_t AssemblyConnectionDescription::

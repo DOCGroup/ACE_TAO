@@ -63,7 +63,7 @@ namespace CIAO
 }
 
 #include <memory>
-#include <vector>
+#include <list>
 #include "XMLSchema/Types.hpp"
 
 namespace CIAO
@@ -186,8 +186,8 @@ namespace CIAO
       // short
       // 
       public:
-      typedef ::std::vector< ::XMLSchema::short_ >::iterator short_iterator;
-      typedef ::std::vector< ::XMLSchema::short_ >::const_iterator short_const_iterator;
+      typedef ::std::list< ::XMLSchema::short_ >::iterator short_iterator;
+      typedef ::std::list< ::XMLSchema::short_ >::const_iterator short_const_iterator;
       short_iterator begin_short ();
       short_iterator end_short ();
       short_const_iterator begin_short () const;
@@ -196,13 +196,13 @@ namespace CIAO
       size_t count_short (void) const;
 
       protected:
-      ::std::vector< ::XMLSchema::short_ > short_;
+      ::std::list< ::XMLSchema::short_ > short_;
 
       // long
       // 
       public:
-      typedef ::std::vector< ::XMLSchema::int_ >::iterator long_iterator;
-      typedef ::std::vector< ::XMLSchema::int_ >::const_iterator long_const_iterator;
+      typedef ::std::list< ::XMLSchema::int_ >::iterator long_iterator;
+      typedef ::std::list< ::XMLSchema::int_ >::const_iterator long_const_iterator;
       long_iterator begin_long ();
       long_iterator end_long ();
       long_const_iterator begin_long () const;
@@ -211,13 +211,13 @@ namespace CIAO
       size_t count_long (void) const;
 
       protected:
-      ::std::vector< ::XMLSchema::int_ > long_;
+      ::std::list< ::XMLSchema::int_ > long_;
 
       // ushort
       // 
       public:
-      typedef ::std::vector< ::XMLSchema::unsignedShort >::iterator ushort_iterator;
-      typedef ::std::vector< ::XMLSchema::unsignedShort >::const_iterator ushort_const_iterator;
+      typedef ::std::list< ::XMLSchema::unsignedShort >::iterator ushort_iterator;
+      typedef ::std::list< ::XMLSchema::unsignedShort >::const_iterator ushort_const_iterator;
       ushort_iterator begin_ushort ();
       ushort_iterator end_ushort ();
       ushort_const_iterator begin_ushort () const;
@@ -226,13 +226,13 @@ namespace CIAO
       size_t count_ushort (void) const;
 
       protected:
-      ::std::vector< ::XMLSchema::unsignedShort > ushort_;
+      ::std::list< ::XMLSchema::unsignedShort > ushort_;
 
       // ulong
       // 
       public:
-      typedef ::std::vector< ::XMLSchema::unsignedInt >::iterator ulong_iterator;
-      typedef ::std::vector< ::XMLSchema::unsignedInt >::const_iterator ulong_const_iterator;
+      typedef ::std::list< ::XMLSchema::unsignedInt >::iterator ulong_iterator;
+      typedef ::std::list< ::XMLSchema::unsignedInt >::const_iterator ulong_const_iterator;
       ulong_iterator begin_ulong ();
       ulong_iterator end_ulong ();
       ulong_const_iterator begin_ulong () const;
@@ -241,13 +241,13 @@ namespace CIAO
       size_t count_ulong (void) const;
 
       protected:
-      ::std::vector< ::XMLSchema::unsignedInt > ulong_;
+      ::std::list< ::XMLSchema::unsignedInt > ulong_;
 
       // float
       // 
       public:
-      typedef ::std::vector< ::XMLSchema::float_ >::iterator float_iterator;
-      typedef ::std::vector< ::XMLSchema::float_ >::const_iterator float_const_iterator;
+      typedef ::std::list< ::XMLSchema::float_ >::iterator float_iterator;
+      typedef ::std::list< ::XMLSchema::float_ >::const_iterator float_const_iterator;
       float_iterator begin_float ();
       float_iterator end_float ();
       float_const_iterator begin_float () const;
@@ -256,13 +256,13 @@ namespace CIAO
       size_t count_float (void) const;
 
       protected:
-      ::std::vector< ::XMLSchema::float_ > float_;
+      ::std::list< ::XMLSchema::float_ > float_;
 
       // double
       // 
       public:
-      typedef ::std::vector< ::XMLSchema::double_ >::iterator double_iterator;
-      typedef ::std::vector< ::XMLSchema::double_ >::const_iterator double_const_iterator;
+      typedef ::std::list< ::XMLSchema::double_ >::iterator double_iterator;
+      typedef ::std::list< ::XMLSchema::double_ >::const_iterator double_const_iterator;
       double_iterator begin_double ();
       double_iterator end_double ();
       double_const_iterator begin_double () const;
@@ -271,13 +271,13 @@ namespace CIAO
       size_t count_double (void) const;
 
       protected:
-      ::std::vector< ::XMLSchema::double_ > double_;
+      ::std::list< ::XMLSchema::double_ > double_;
 
       // boolean
       // 
       public:
-      typedef ::std::vector< ::XMLSchema::boolean >::iterator boolean_iterator;
-      typedef ::std::vector< ::XMLSchema::boolean >::const_iterator boolean_const_iterator;
+      typedef ::std::list< ::XMLSchema::boolean >::iterator boolean_iterator;
+      typedef ::std::list< ::XMLSchema::boolean >::const_iterator boolean_const_iterator;
       boolean_iterator begin_boolean ();
       boolean_iterator end_boolean ();
       boolean_const_iterator begin_boolean () const;
@@ -286,13 +286,13 @@ namespace CIAO
       size_t count_boolean (void) const;
 
       protected:
-      ::std::vector< ::XMLSchema::boolean > boolean_;
+      ::std::list< ::XMLSchema::boolean > boolean_;
 
       // octet
       // 
       public:
-      typedef ::std::vector< ::XMLSchema::unsignedByte >::iterator octet_iterator;
-      typedef ::std::vector< ::XMLSchema::unsignedByte >::const_iterator octet_const_iterator;
+      typedef ::std::list< ::XMLSchema::unsignedByte >::iterator octet_iterator;
+      typedef ::std::list< ::XMLSchema::unsignedByte >::const_iterator octet_const_iterator;
       octet_iterator begin_octet ();
       octet_iterator end_octet ();
       octet_const_iterator begin_octet () const;
@@ -301,13 +301,13 @@ namespace CIAO
       size_t count_octet (void) const;
 
       protected:
-      ::std::vector< ::XMLSchema::unsignedByte > octet_;
+      ::std::list< ::XMLSchema::unsignedByte > octet_;
 
       // enum
       // 
       public:
-      typedef ::std::vector< ::XMLSchema::string< ACE_TCHAR > >::iterator enum_iterator;
-      typedef ::std::vector< ::XMLSchema::string< ACE_TCHAR > >::const_iterator enum_const_iterator;
+      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator enum_iterator;
+      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator enum_const_iterator;
       enum_iterator begin_enum ();
       enum_iterator end_enum ();
       enum_const_iterator begin_enum () const;
@@ -316,13 +316,13 @@ namespace CIAO
       size_t count_enum (void) const;
 
       protected:
-      ::std::vector< ::XMLSchema::string< ACE_TCHAR > > enum_;
+      ::std::list< ::XMLSchema::string< ACE_TCHAR > > enum_;
 
       // string
       // 
       public:
-      typedef ::std::vector< ::XMLSchema::string< ACE_TCHAR > >::iterator string_iterator;
-      typedef ::std::vector< ::XMLSchema::string< ACE_TCHAR > >::const_iterator string_const_iterator;
+      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator string_iterator;
+      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator string_const_iterator;
       string_iterator begin_string ();
       string_iterator end_string ();
       string_const_iterator begin_string () const;
@@ -331,13 +331,13 @@ namespace CIAO
       size_t count_string (void) const;
 
       protected:
-      ::std::vector< ::XMLSchema::string< ACE_TCHAR > > string_;
+      ::std::list< ::XMLSchema::string< ACE_TCHAR > > string_;
 
       // longlong
       // 
       public:
-      typedef ::std::vector< ::XMLSchema::long_ >::iterator longlong_iterator;
-      typedef ::std::vector< ::XMLSchema::long_ >::const_iterator longlong_const_iterator;
+      typedef ::std::list< ::XMLSchema::long_ >::iterator longlong_iterator;
+      typedef ::std::list< ::XMLSchema::long_ >::const_iterator longlong_const_iterator;
       longlong_iterator begin_longlong ();
       longlong_iterator end_longlong ();
       longlong_const_iterator begin_longlong () const;
@@ -346,13 +346,13 @@ namespace CIAO
       size_t count_longlong (void) const;
 
       protected:
-      ::std::vector< ::XMLSchema::long_ > longlong_;
+      ::std::list< ::XMLSchema::long_ > longlong_;
 
       // ulonglong
       // 
       public:
-      typedef ::std::vector< ::XMLSchema::unsignedLong >::iterator ulonglong_iterator;
-      typedef ::std::vector< ::XMLSchema::unsignedLong >::const_iterator ulonglong_const_iterator;
+      typedef ::std::list< ::XMLSchema::unsignedLong >::iterator ulonglong_iterator;
+      typedef ::std::list< ::XMLSchema::unsignedLong >::const_iterator ulonglong_const_iterator;
       ulonglong_iterator begin_ulonglong ();
       ulonglong_iterator end_ulonglong ();
       ulonglong_const_iterator begin_ulonglong () const;
@@ -361,13 +361,13 @@ namespace CIAO
       size_t count_ulonglong (void) const;
 
       protected:
-      ::std::vector< ::XMLSchema::unsignedLong > ulonglong_;
+      ::std::list< ::XMLSchema::unsignedLong > ulonglong_;
 
       // longdouble
       // 
       public:
-      typedef ::std::vector< ::XMLSchema::double_ >::iterator longdouble_iterator;
-      typedef ::std::vector< ::XMLSchema::double_ >::const_iterator longdouble_const_iterator;
+      typedef ::std::list< ::XMLSchema::double_ >::iterator longdouble_iterator;
+      typedef ::std::list< ::XMLSchema::double_ >::const_iterator longdouble_const_iterator;
       longdouble_iterator begin_longdouble ();
       longdouble_iterator end_longdouble ();
       longdouble_const_iterator begin_longdouble () const;
@@ -376,7 +376,7 @@ namespace CIAO
       size_t count_longdouble (void) const;
 
       protected:
-      ::std::vector< ::XMLSchema::double_ > longdouble_;
+      ::std::list< ::XMLSchema::double_ > longdouble_;
 
       public:
       DataValue ();
@@ -418,8 +418,8 @@ namespace CIAO
       // member
       // 
       public:
-      typedef ::std::vector< ::XMLSchema::string< ACE_TCHAR > >::iterator member_iterator;
-      typedef ::std::vector< ::XMLSchema::string< ACE_TCHAR > >::const_iterator member_const_iterator;
+      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator member_iterator;
+      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator member_const_iterator;
       member_iterator begin_member ();
       member_iterator end_member ();
       member_const_iterator begin_member () const;
@@ -428,7 +428,7 @@ namespace CIAO
       size_t count_member (void) const;
 
       protected:
-      ::std::vector< ::XMLSchema::string< ACE_TCHAR > > member_;
+      ::std::list< ::XMLSchema::string< ACE_TCHAR > > member_;
 
       public:
       EnumType (::XMLSchema::string< ACE_TCHAR > const& name__,
@@ -769,8 +769,8 @@ namespace CIAO
       // source
       // 
       public:
-      typedef ::std::vector< ::XMLSchema::string< ACE_TCHAR > >::iterator source_iterator;
-      typedef ::std::vector< ::XMLSchema::string< ACE_TCHAR > >::const_iterator source_const_iterator;
+      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator source_iterator;
+      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator source_const_iterator;
       source_iterator begin_source ();
       source_iterator end_source ();
       source_const_iterator begin_source () const;
@@ -779,7 +779,7 @@ namespace CIAO
       size_t count_source (void) const;
 
       protected:
-      ::std::vector< ::XMLSchema::string< ACE_TCHAR > > source_;
+      ::std::list< ::XMLSchema::string< ACE_TCHAR > > source_;
 
       // node
       // 
@@ -793,8 +793,8 @@ namespace CIAO
       // location
       // 
       public:
-      typedef ::std::vector< ::XMLSchema::string< ACE_TCHAR > >::iterator location_iterator;
-      typedef ::std::vector< ::XMLSchema::string< ACE_TCHAR > >::const_iterator location_const_iterator;
+      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator location_iterator;
+      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator location_const_iterator;
       location_iterator begin_location ();
       location_iterator end_location ();
       location_const_iterator begin_location () const;
@@ -803,13 +803,13 @@ namespace CIAO
       size_t count_location (void) const;
 
       protected:
-      ::std::vector< ::XMLSchema::string< ACE_TCHAR > > location_;
+      ::std::list< ::XMLSchema::string< ACE_TCHAR > > location_;
 
       // execParameter
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::Property >::iterator execParameter_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::Property >::const_iterator execParameter_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator execParameter_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator execParameter_const_iterator;
       execParameter_iterator begin_execParameter ();
       execParameter_iterator end_execParameter ();
       execParameter_const_iterator begin_execParameter () const;
@@ -818,13 +818,13 @@ namespace CIAO
       size_t count_execParameter (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::Property > execParameter_;
+      ::std::list< ::CIAO::Config_Handlers::Property > execParameter_;
 
       // deployRequirement
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::Requirement >::iterator deployRequirement_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::Requirement >::const_iterator deployRequirement_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::iterator deployRequirement_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::const_iterator deployRequirement_const_iterator;
       deployRequirement_iterator begin_deployRequirement ();
       deployRequirement_iterator end_deployRequirement ();
       deployRequirement_const_iterator begin_deployRequirement () const;
@@ -833,13 +833,13 @@ namespace CIAO
       size_t count_deployRequirement (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
+      ::std::list< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
 
       // deployedResource
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::ResourceDeploymentDescription >::iterator deployedResource_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::ResourceDeploymentDescription >::const_iterator deployedResource_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::ResourceDeploymentDescription >::iterator deployedResource_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::ResourceDeploymentDescription >::const_iterator deployedResource_const_iterator;
       deployedResource_iterator begin_deployedResource ();
       deployedResource_iterator end_deployedResource ();
       deployedResource_const_iterator begin_deployedResource () const;
@@ -848,7 +848,7 @@ namespace CIAO
       size_t count_deployedResource (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::ResourceDeploymentDescription > deployedResource_;
+      ::std::list< ::CIAO::Config_Handlers::ResourceDeploymentDescription > deployedResource_;
 
       // id
       // 
@@ -893,8 +893,8 @@ namespace CIAO
       // source
       // 
       public:
-      typedef ::std::vector< ::XMLSchema::string< ACE_TCHAR > >::iterator source_iterator;
-      typedef ::std::vector< ::XMLSchema::string< ACE_TCHAR > >::const_iterator source_const_iterator;
+      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::iterator source_iterator;
+      typedef ::std::list< ::XMLSchema::string< ACE_TCHAR > >::const_iterator source_const_iterator;
       source_iterator begin_source ();
       source_iterator end_source ();
       source_const_iterator begin_source () const;
@@ -903,13 +903,13 @@ namespace CIAO
       size_t count_source (void) const;
 
       protected:
-      ::std::vector< ::XMLSchema::string< ACE_TCHAR > > source_;
+      ::std::list< ::XMLSchema::string< ACE_TCHAR > > source_;
 
       // artifact
       // 
       public:
-      typedef ::std::vector< ::XMLSchema::IDREF< ACE_TCHAR > >::iterator artifact_iterator;
-      typedef ::std::vector< ::XMLSchema::IDREF< ACE_TCHAR > >::const_iterator artifact_const_iterator;
+      typedef ::std::list< ::XMLSchema::IDREF< ACE_TCHAR > >::iterator artifact_iterator;
+      typedef ::std::list< ::XMLSchema::IDREF< ACE_TCHAR > >::const_iterator artifact_const_iterator;
       artifact_iterator begin_artifact ();
       artifact_iterator end_artifact ();
       artifact_const_iterator begin_artifact () const;
@@ -918,13 +918,13 @@ namespace CIAO
       size_t count_artifact (void) const;
 
       protected:
-      ::std::vector< ::XMLSchema::IDREF< ACE_TCHAR > > artifact_;
+      ::std::list< ::XMLSchema::IDREF< ACE_TCHAR > > artifact_;
 
       // execParameter
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::Property >::iterator execParameter_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::Property >::const_iterator execParameter_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator execParameter_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator execParameter_const_iterator;
       execParameter_iterator begin_execParameter ();
       execParameter_iterator end_execParameter ();
       execParameter_const_iterator begin_execParameter () const;
@@ -933,13 +933,13 @@ namespace CIAO
       size_t count_execParameter (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::Property > execParameter_;
+      ::std::list< ::CIAO::Config_Handlers::Property > execParameter_;
 
       // deployRequirement
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::Requirement >::iterator deployRequirement_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::Requirement >::const_iterator deployRequirement_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::iterator deployRequirement_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::const_iterator deployRequirement_const_iterator;
       deployRequirement_iterator begin_deployRequirement ();
       deployRequirement_iterator end_deployRequirement ();
       deployRequirement_const_iterator begin_deployRequirement () const;
@@ -948,7 +948,7 @@ namespace CIAO
       size_t count_deployRequirement (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
+      ::std::list< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
 
       // id
       // 
@@ -1115,8 +1115,8 @@ namespace CIAO
       // configProperty
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::Property >::iterator configProperty_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::Property >::const_iterator configProperty_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Property >::iterator configProperty_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Property >::const_iterator configProperty_const_iterator;
       configProperty_iterator begin_configProperty ();
       configProperty_iterator end_configProperty ();
       configProperty_const_iterator begin_configProperty () const;
@@ -1125,7 +1125,7 @@ namespace CIAO
       size_t count_configProperty (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::Property > configProperty_;
+      ::std::list< ::CIAO::Config_Handlers::Property > configProperty_;
 
       // deployedResource
       // 
@@ -1549,8 +1549,8 @@ namespace CIAO
       // deployRequirement
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::Requirement >::iterator deployRequirement_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::Requirement >::const_iterator deployRequirement_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::iterator deployRequirement_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::Requirement >::const_iterator deployRequirement_const_iterator;
       deployRequirement_iterator begin_deployRequirement ();
       deployRequirement_iterator end_deployRequirement ();
       deployRequirement_const_iterator begin_deployRequirement () const;
@@ -1559,13 +1559,13 @@ namespace CIAO
       size_t count_deployRequirement (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
+      ::std::list< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
 
       // externalEndpoint
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint >::iterator externalEndpoint_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint >::const_iterator externalEndpoint_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint >::iterator externalEndpoint_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint >::const_iterator externalEndpoint_const_iterator;
       externalEndpoint_iterator begin_externalEndpoint ();
       externalEndpoint_iterator end_externalEndpoint ();
       externalEndpoint_const_iterator begin_externalEndpoint () const;
@@ -1574,13 +1574,13 @@ namespace CIAO
       size_t count_externalEndpoint (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint > externalEndpoint_;
+      ::std::list< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint > externalEndpoint_;
 
       // internalEndpoint
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint >::iterator internalEndpoint_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint >::const_iterator internalEndpoint_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint >::iterator internalEndpoint_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint >::const_iterator internalEndpoint_const_iterator;
       internalEndpoint_iterator begin_internalEndpoint ();
       internalEndpoint_iterator end_internalEndpoint ();
       internalEndpoint_const_iterator begin_internalEndpoint () const;
@@ -1589,13 +1589,13 @@ namespace CIAO
       size_t count_internalEndpoint (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint > internalEndpoint_;
+      ::std::list< ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint > internalEndpoint_;
 
       // externalReference
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::ExternalReferenceEndpoint >::iterator externalReference_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::ExternalReferenceEndpoint >::const_iterator externalReference_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::ExternalReferenceEndpoint >::iterator externalReference_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::ExternalReferenceEndpoint >::const_iterator externalReference_const_iterator;
       externalReference_iterator begin_externalReference ();
       externalReference_iterator end_externalReference ();
       externalReference_const_iterator begin_externalReference () const;
@@ -1604,13 +1604,13 @@ namespace CIAO
       size_t count_externalReference (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::ExternalReferenceEndpoint > externalReference_;
+      ::std::list< ::CIAO::Config_Handlers::ExternalReferenceEndpoint > externalReference_;
 
       // deployedResource
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription >::iterator deployedResource_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription >::const_iterator deployedResource_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription >::iterator deployedResource_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription >::const_iterator deployedResource_const_iterator;
       deployedResource_iterator begin_deployedResource ();
       deployedResource_iterator end_deployedResource ();
       deployedResource_const_iterator begin_deployedResource () const;
@@ -1619,7 +1619,7 @@ namespace CIAO
       size_t count_deployedResource (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription > deployedResource_;
+      ::std::list< ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription > deployedResource_;
 
       public:
       PlanConnectionDescription (::XMLSchema::string< ACE_TCHAR > const& name__);
@@ -1902,8 +1902,8 @@ namespace CIAO
       // externalEndpoint
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint >::iterator externalEndpoint_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint >::const_iterator externalEndpoint_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint >::iterator externalEndpoint_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint >::const_iterator externalEndpoint_const_iterator;
       externalEndpoint_iterator begin_externalEndpoint ();
       externalEndpoint_iterator end_externalEndpoint ();
       externalEndpoint_const_iterator begin_externalEndpoint () const;
@@ -1912,13 +1912,13 @@ namespace CIAO
       size_t count_externalEndpoint (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint > externalEndpoint_;
+      ::std::list< ::CIAO::Config_Handlers::ComponentExternalPortEndpoint > externalEndpoint_;
 
       // internalEndpoint
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::SubcomponentPortEndpoint >::iterator internalEndpoint_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::SubcomponentPortEndpoint >::const_iterator internalEndpoint_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::SubcomponentPortEndpoint >::iterator internalEndpoint_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::SubcomponentPortEndpoint >::const_iterator internalEndpoint_const_iterator;
       internalEndpoint_iterator begin_internalEndpoint ();
       internalEndpoint_iterator end_internalEndpoint ();
       internalEndpoint_const_iterator begin_internalEndpoint () const;
@@ -1927,13 +1927,13 @@ namespace CIAO
       size_t count_internalEndpoint (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::SubcomponentPortEndpoint > internalEndpoint_;
+      ::std::list< ::CIAO::Config_Handlers::SubcomponentPortEndpoint > internalEndpoint_;
 
       // externalReference
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::ExternalReferenceEndpoint >::iterator externalReference_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::ExternalReferenceEndpoint >::const_iterator externalReference_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::ExternalReferenceEndpoint >::iterator externalReference_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::ExternalReferenceEndpoint >::const_iterator externalReference_const_iterator;
       externalReference_iterator begin_externalReference ();
       externalReference_iterator end_externalReference ();
       externalReference_const_iterator begin_externalReference () const;
@@ -1942,7 +1942,7 @@ namespace CIAO
       size_t count_externalReference (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::ExternalReferenceEndpoint > externalReference_;
+      ::std::list< ::CIAO::Config_Handlers::ExternalReferenceEndpoint > externalReference_;
 
       public:
       AssemblyConnectionDescription (::XMLSchema::string< ACE_TCHAR > const& name__);

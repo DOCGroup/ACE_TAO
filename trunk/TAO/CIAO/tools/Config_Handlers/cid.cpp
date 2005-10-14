@@ -400,14 +400,12 @@ namespace CIAO
     externalProperty_ (s.externalProperty_.get () ? new ::CIAO::Config_Handlers::AssemblyPropertyMapping (*s.externalProperty_) : 0),
     regulator__ ()
     {
-      instance_.reserve (s.instance_.size ());
       {
         for (instance_const_iterator i (s.instance_.begin ());
         i != s.instance_.end ();
         ++i) add_instance (*i);
       }
 
-      connection_.reserve (s.connection_.size ());
       {
         for (connection_const_iterator i (s.connection_.begin ());
         i != s.connection_.end ();
@@ -421,7 +419,6 @@ namespace CIAO
     operator= (::CIAO::Config_Handlers::ComponentAssemblyDescription const& s)
     {
       instance_.clear ();
-      instance_.reserve (s.instance_.size ());
       {
         for (instance_const_iterator i (s.instance_.begin ());
         i != s.instance_.end ();
@@ -429,7 +426,6 @@ namespace CIAO
       }
 
       connection_.clear ();
-      connection_.reserve (s.connection_.size ());
       {
         for (connection_const_iterator i (s.connection_.begin ());
         i != s.connection_.end ();
@@ -472,26 +468,7 @@ namespace CIAO
     void ComponentAssemblyDescription::
     add_instance (::CIAO::Config_Handlers::SubcomponentInstantiationDescription const& e)
     {
-      if (instance_.capacity () < instance_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::SubcomponentInstantiationDescription > v;
-        v.reserve (instance_.size () + 1);
-
-        for (instance_iterator i = instance_.begin ();
-        i != instance_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::SubcomponentInstantiationDescription& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        instance_.swap (v);
-      }
-
       instance_.push_back (e);
-      instance_.back ().container (this);
     }
 
     size_t ComponentAssemblyDescription::
@@ -529,26 +506,7 @@ namespace CIAO
     void ComponentAssemblyDescription::
     add_connection (::CIAO::Config_Handlers::AssemblyConnectionDescription const& e)
     {
-      if (connection_.capacity () < connection_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::AssemblyConnectionDescription > v;
-        v.reserve (connection_.size () + 1);
-
-        for (connection_iterator i = connection_.begin ();
-        i != connection_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::AssemblyConnectionDescription& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        connection_.swap (v);
-      }
-
       connection_.push_back (e);
-      connection_.back ().container (this);
     }
 
     size_t ComponentAssemblyDescription::
@@ -607,7 +565,6 @@ namespace CIAO
     regulator__ ()
     {
       if (execParameter_.get ()) execParameter_->container (this);
-      primaryArtifact_.reserve (s.primaryArtifact_.size ());
       {
         for (primaryArtifact_const_iterator i (s.primaryArtifact_.begin ());
         i != s.primaryArtifact_.end ();
@@ -624,7 +581,6 @@ namespace CIAO
       else execParameter_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Property > (0);
 
       primaryArtifact_.clear ();
-      primaryArtifact_.reserve (s.primaryArtifact_.size ());
       {
         for (primaryArtifact_const_iterator i (s.primaryArtifact_.begin ());
         i != s.primaryArtifact_.end ();
@@ -696,26 +652,7 @@ namespace CIAO
     void MonolithicImplementationDescription::
     add_primaryArtifact (::CIAO::Config_Handlers::NamedImplementationArtifact const& e)
     {
-      if (primaryArtifact_.capacity () < primaryArtifact_.size () + 1)
-      {
-        ::std::vector< ::CIAO::Config_Handlers::NamedImplementationArtifact > v;
-        v.reserve (primaryArtifact_.size () + 1);
-
-        for (primaryArtifact_iterator i = primaryArtifact_.begin ();
-        i != primaryArtifact_.end ();
-         ++i)
-        {
-          ::CIAO::Config_Handlers::NamedImplementationArtifact& t = *i;
-          t.container (0);
-          v.push_back (t);
-          v.back ().container (this);
-        }
-
-        primaryArtifact_.swap (v);
-      }
-
       primaryArtifact_.push_back (e);
-      primaryArtifact_.back ().container (this);
     }
 
     size_t MonolithicImplementationDescription::
