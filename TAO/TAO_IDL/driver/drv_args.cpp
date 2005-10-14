@@ -153,10 +153,6 @@ DRV_usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -g <gperf_path>\tPath for the GPERF program.")
-      ACE_TEXT (" Default is $ACE_ROOT/bin/gperf\n")));
-  ACE_DEBUG ((
-      LM_DEBUG,
       ACE_TEXT (" -Idir\t\t\tincludes dir in search path for preprocessor\n")
     ));
   ACE_DEBUG ((
@@ -311,7 +307,7 @@ DRV_parse_args (long ac, char **av)
               break;
             // Temp directory for the IDL compiler to keep its files.
             case 't':
-              if (av[i][2] == '\0')
+              if ((av[i][2] == '\0') && (i < ac - 1))
                 {
                   idl_global->append_idl_flag (av[i + 1]);
                   idl_global->temp_dir (av [i + 1]);
