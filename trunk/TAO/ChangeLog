@@ -1,3 +1,10 @@
+Fri Oct 14 14:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DynamicInterface/ExceptionList.cpp:
+          Use prefix increment/decrement and store the value after decrement
+          in a temporarily variable and use that check whether to delete
+          ourself to prevent a possible double deletion.
+
 Fri Oct 14 14:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/Basic/run_test.pl:
