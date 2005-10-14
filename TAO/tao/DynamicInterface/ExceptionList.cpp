@@ -90,15 +90,15 @@ CORBA::ExceptionList::_destroy (void)
 void
 CORBA::ExceptionList::_incr_refcnt (void)
 {
-  this->ref_count_++;
+  ++this->ref_count_;
 }
 
 void
 CORBA::ExceptionList::_decr_refcnt (void)
 {
-  this->ref_count_--;
+  CORBA::ULong refcount = --this->ref_count_;
 
-  if (this->ref_count_ == 0)
+  if (refcount == 0)
     {
       delete this;
     }
