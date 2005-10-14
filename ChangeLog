@@ -1,3 +1,8 @@
+Fri Oct 14 08:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * protocols/ace/HTBP/HTBP_Session.cpp:
+          Fixed signed/unsigned warning
+
 Thu Oct 13 17:39:31 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/TTY_IO.cpp: Changed ACE_TTY_IO_{ODD EVEN MARK SPACE} to
