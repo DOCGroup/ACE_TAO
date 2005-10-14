@@ -2595,39 +2595,40 @@ ACE::handle_timed_complete (ACE_HANDLE h,
 #else
   ACE_Handle_Set rd_handles;
   ACE_Handle_Set wr_handles;
-  // Winsock is different - it sets the exception bit for failed connect,
-  // unlike other platforms, where the read bit is set.
-  // !!! Some Windows machines with some network cards will set the 
-  // read bit instead of the exception bit. In fact, sometimes only the
-  // write bit will be set, and you won't know the connection failed 
-  // until you call send/recv.
-  ACE_Handle_Set ex_handles;
 
   rd_handles.set_bit (h);
   wr_handles.set_bit (h);
-  ex_handles.set_bit (h);
 #endif /* !ACE_WIN32 && ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
 
-  bool need_to_check = false;
-  bool known_failure = false;
+#if defined (ACE_WIN32)
+  // Winsock is different - it sets the exception bit for failed connect,
+  // unlike other platforms, where the read bit is set.
+  ACE_Handle_Set ex_handles;
+  ex_handles.set_bit (h);
+#endif /* ACE_WIN32 */
 
-#if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
-  int n = ACE_OS::poll (&fds, 1, timeout);
+  int need_to_check = 0;
+  int known_failure = 0;
+
+#if defined (ACE_WIN32)
+  int n = ACE_OS::select (0,    // Ignored on Windows: int (h) + 1,
+                          0,
+                          wr_handles,
+                          ex_handles,
+                          timeout);
 #else
-  // Use C-style cast because the type of h varies by platform
-# if defined (ACE_WIN32)
-      // This arg is ignored on Windows and causes pointer truncation
-      // warnings on 64-bit compiles.
-  int select_width = 0;
+# if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
+
+  int n = ACE_OS::poll (&fds, 1, timeout);
+
 # else
-  int select_width = int(h) + 1; 
-# endif /* ACE_WIN32 */
-  int n = ACE_OS::select (select_width, // Ignored on windows
+  int n = ACE_OS::select (int (h) + 1,
                           rd_handles,
                           wr_handles,
-                          ex_handles,   // Ignored on unix
+                          0,
                           timeout);
-#endif /* defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT) */
+# endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
+#endif /* ACE_WIN32 */
 
   // If we failed to connect within the time period allocated by the
   // caller, then we fail (e.g., the remote host might have been too
@@ -2652,93 +2653,78 @@ ACE::handle_timed_complete (ACE_HANDLE h,
   // what getsockopt says about the error.
   if (ex_handles.is_set (h))
     {
-      known_failure = true;
+      need_to_check = 1;
+      known_failure = 1;
     }
-  else if (rd_handles.is_set(h)) 
-    {
-      need_to_check = true;
-    }
-  else 
-    {
-      ACE_ASSERT(wr_handles.is_set(h) != 0);
-      // Depending on the network card or driver, sometimes you can't trust
-      // the select bits. The easiest, most reliable, and most portable thing
-      // is to always check the connection. 
-      need_to_check = true;
-    }
-#elif defined (VXWORKS) || defined (AIX)
+#elif defined (VXWORKS)
   ACE_UNUSED_ARG (is_tli);
 
   // Force the check on VxWorks.  The read handle for "h" is not set,
   // so "need_to_check" is false at this point.  The write handle is
   // set, for what it's worth.
-  need_to_check = true;
+  need_to_check = 1;
 #else
   if (is_tli)
-    {
+
 # if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
     need_to_check = (fds.revents & POLLIN) && !(fds.revents & POLLOUT);
 # else
     need_to_check = rd_handles.is_set (h) && !wr_handles.is_set (h);
 # endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
-    }
+
   else
-    {
+#if defined(AIX)
+    // AIX is broken... both success and failed connect will set the
+    // write handle only, so always check.
+    need_to_check = 1;
+#else
 # if defined (ACE_HAS_POLL) && defined (ACE_HAS_LIMITED_SELECT)
-  need_to_check = (fds.revents & POLLIN) != 0;
+  need_to_check = (fds.revents & POLLIN);
 # else
-  need_to_check = rd_handles.is_set (h) != 0;
+  need_to_check = rd_handles.is_set (h);
 # endif /* ACE_HAS_POLL && ACE_HAS_LIMITED_SELECT */
-    }
+#endif /* AIX */
 #endif /* ACE_WIN32 */
 
-  if (need_to_check || known_failure)
+  if (need_to_check)
     {
-      int sock_err = 0;
 #if defined (SOL_SOCKET) && defined (SO_ERROR)
+      int sock_err = 0;
       int sock_err_len = sizeof (sock_err);
       int sockopt_ret = ACE_OS::getsockopt (h, SOL_SOCKET, SO_ERROR,
                                             (char *)&sock_err, &sock_err_len);
-      if (sockopt_ret >= 0 && sock_err != 0)
+      if (sockopt_ret < 0)
+        {
+          h = ACE_INVALID_HANDLE;
+        }
+
+      if (sock_err != 0 || known_failure)
         {
           h = ACE_INVALID_HANDLE;
           errno = sock_err;
         }
-      else
-#endif
-      if (known_failure) 
-        {
-          h = ACE_INVALID_HANDLE;
-          errno = ECONNREFUSED;
-        }
-      else
-        {
+#else
+      char dummy;
 
-          // The following recv() won't block provided that the
-          // ACE_NONBLOCK flag has not been turned off .
-          char dummy;
-          n = ACE::recv (h, &dummy, 1, MSG_PEEK);
+      // The following recv() won't block provided that the
+      // ACE_NONBLOCK flag has not been turned off .
+      n = ACE::recv (h, &dummy, 1, MSG_PEEK);
 
-          // If no data was read/peeked at, check to see if it's because
-          // of a non-connected socket (and therefore an error) or there's
-          // just no data yet.
+      // If no data was read/peeked at, check to see if it's because
+      // of a non-connected socket (and therefore an error) or there's
+      // just no data yet.
+      if (n <= 0)
+        {
           if (n == 0)
             {
               errno = ECONNREFUSED;
               h = ACE_INVALID_HANDLE;
             }
-          else if (n < 0)
-            {
-              sock_err = errno; // errno is a function on win32
-              if (sock_err != EWOULDBLOCK && sock_err != EAGAIN)
-                {
-                  // Ignore the error from recv(), the real error is ...
-                  errno = ECONNREFUSED;
-                  h = ACE_INVALID_HANDLE;
-                }
-            }
+          else if (errno != EWOULDBLOCK && errno != EAGAIN)
+            h = ACE_INVALID_HANDLE;
         }
-     }
+#endif
+    }
 
   // 1. The HANDLE is ready for writing and doesn't need to be checked or
   // 2. recv() returned an indication of the state of the socket - if there is
