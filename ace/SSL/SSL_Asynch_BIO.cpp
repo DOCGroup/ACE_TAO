@@ -75,7 +75,7 @@ ACE_Asynch_BIO_free (BIO *pBIO)
 }
 
 int
-ACE_Asynch_BIO_read (BIO * pBIO, char * buf, int len)
+ACE_Asynch_BIO_read (BIO * pBIO, char * buf, size_t len)
 {
   BIO_clear_retry_flags (pBIO);
 
@@ -97,7 +97,7 @@ ACE_Asynch_BIO_read (BIO * pBIO, char * buf, int len)
 
   int retval =
     p_stream->ssl_bio_read (buf,
-                            static_cast<size_t> (len),
+                            len,
                             errval);
 
   if (retval >= 0)
@@ -110,7 +110,7 @@ ACE_Asynch_BIO_read (BIO * pBIO, char * buf, int len)
 }
 
 int
-ACE_Asynch_BIO_write (BIO * pBIO, const char * buf, int len)
+ACE_Asynch_BIO_write (BIO * pBIO, const char * buf, size_t len)
 {
   BIO_clear_retry_flags (pBIO);
 
@@ -123,7 +123,7 @@ ACE_Asynch_BIO_write (BIO * pBIO, const char * buf, int len)
   if (buf == 0)
     return -1;
 
-  if (len <= 0)
+  if (len == 0)
     return -1;
 
   BIO_clear_retry_flags (pBIO);
@@ -132,7 +132,7 @@ ACE_Asynch_BIO_write (BIO * pBIO, const char * buf, int len)
 
   int retval =
     p_stream->ssl_bio_write (buf,
-                             static_cast<size_t> (len),
+                             len,
                              errval);
 
   if (retval >= 0)
@@ -191,7 +191,7 @@ ACE_Asynch_BIO_ctrl (BIO * pBIO, int cmd, long num, void *ptr)
 int
 ACE_Asynch_BIO_puts (BIO *pBIO, const char *str)
 {
-  int n = ACE_OS::strlen (str);
+  size_t n = ACE_OS::strlen (str);
 
   return ACE_Asynch_BIO_write (pBIO, str, n);
 }

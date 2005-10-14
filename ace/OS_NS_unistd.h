@@ -155,7 +155,7 @@ namespace ACE_OS {
               const char *optstring);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int getpagesize (void);
+  long getpagesize (void);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   pid_t getpgid (pid_t pid);
