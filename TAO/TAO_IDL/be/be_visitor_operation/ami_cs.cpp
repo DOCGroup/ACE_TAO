@@ -208,7 +208,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   int nargs = ami_op->argument_count ();
 
   const char *lname = node->local_name ()->get_string ();
-  long opname_len = ACE_OS::strlen (lname);
+  size_t opname_len = ACE_OS::strlen (lname);
   ACE_CString opname;
 
   if (this->ctx_->attribute ())
