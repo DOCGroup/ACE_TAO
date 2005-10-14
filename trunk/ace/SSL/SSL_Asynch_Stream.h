@@ -60,8 +60,8 @@ class ACE_SSL_Export ACE_SSL_Asynch_Stream
   : public ACE_Asynch_Operation,
     public ACE_Service_Handler
 {
-  friend int ACE_Asynch_BIO_read (BIO * pBIO, char * buf, int len);
-  friend int ACE_Asynch_BIO_write (BIO * pBIO, const char * buf, int len);
+  friend int ACE_Asynch_BIO_read (BIO * pBIO, char * buf, size_t len);
+  friend int ACE_Asynch_BIO_write (BIO * pBIO, const char * buf, size_t len);
 
 public:
 
