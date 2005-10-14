@@ -1,3 +1,9 @@
+Fri Oct 14 12:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+          64bit fixes
+
 Fri Oct 14 09:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         From James Megquier <jmegq at radiance dot com>
