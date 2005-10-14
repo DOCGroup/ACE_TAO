@@ -1,3 +1,8 @@
+Fri Oct 14 12:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/soreduce/Library.cpp:
+          Fixed 64bit problem
+
 Fri Oct 14 11:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SOCK_IO.{h,inl}:
