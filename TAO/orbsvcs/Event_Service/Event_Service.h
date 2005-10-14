@@ -85,7 +85,7 @@ private:
   ACE_CString pid_file_name_;
 
   /// The name of the servant we use when we use persistent IORs
-  ACE_CString servant_name_;
+  ACE_CString object_id_;
 
   /// Should we use a global scheduler or a local one or none?
   Sched_type_t scheduler_type_;
