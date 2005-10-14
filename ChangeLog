@@ -1,3 +1,11 @@
+Fri Oct 14 10:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SSL/SSL_Asynch_BIO.{h,cpp}:
+          Fixed 64bit conversion warnings
+
+        * ace/OS_NS_unistd.{h,inl}:
+          Let getpagesize return a long
+
 Fri Oct 14 08:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * protocols/ace/HTBP/HTBP_Session.cpp:
