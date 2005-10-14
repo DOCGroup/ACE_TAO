@@ -1,3 +1,18 @@
+Fri Oct 14 09:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        From James Megquier <jmegq at radiance dot com>
+
+        * orbsvcs/orbsvcs/Notify/Service.h:
+          This should be in the notification project, removed include of
+          PortableServer, just add some forward declarations, this is
+          an interface class, no need to pull in portableserver library
+
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+          Moved service to Notification project
+
+        * orbsvcs/orbsvcs/Notify/Property.h:
+          Added typedef for ULong property
+
 Thu Oct 13 13:12:12 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/examples/ImR/Combined_Service/ImR_Combined_Service.mpc:
