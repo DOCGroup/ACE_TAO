@@ -69,7 +69,7 @@ public:
 
   /// Recv an <iovec> of size <n> from the connected socket.
   ssize_t recvv (iovec iov[],
-                 int n,
+                 size_t n,
                  const ACE_Time_Value *timeout = 0) const;
 
   /// @deprecated Same as above.  Deprecated.
