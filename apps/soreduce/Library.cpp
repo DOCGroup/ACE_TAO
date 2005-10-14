@@ -192,7 +192,7 @@ Library::set_path (const char *p)
 {
   char abspath[1000];
   memset (abspath,0,1000);
-  int abspathlen = ACE_OS::readlink(p,abspath,999);
+  ssize_t abspathlen = ACE_OS::readlink(p,abspath,999);
   ACE_CString path (p);
   if (abspathlen > 0) {
     abspath[abspathlen] = 0;
