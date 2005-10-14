@@ -1,0 +1,11 @@
+// -*- MPC -*-
+// $Id$
+
+feature(ec_typed_events) {
+  macros   += TAO_HAS_TYPED_EVENT_CHANNEL
+
+  IDL_Files {
+    CosTypedEventComm.idl
+    CosTypedEventChannelAdmin.idl
+  }
+}
