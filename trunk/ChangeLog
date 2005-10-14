@@ -1,11 +1,22 @@
+Fri Oct 14 14:56:16 2005  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * ace/ACE.cpp:
+        * ace/SOCK_Connector.cpp:
+
+	  Reverted the change from Fri Sep  2 15:08:27 2005  Justin Michel
+	  due to suspicions that it might be inadvertently responsible for
+	  observed additional jitter in TAO performance tests.  The
+	  motivation for the original change and a patch to restore the
+	  original change is documented in Bugzilla #2246.
+
 Fri Oct 14 11:49:29 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ACEXML/apps/svcconf/Makefile.am:
+        * ACEXML/apps/svcconf/Makefile.am:
 
-	  Tweak to use pkgconfigdir and @libdir@/pkgconfig instead of
-	  pkgconfdatadir and ${prefix}/lib/pkgconfig to be consistent with
-	  all our other Makefile.am's.  This will hold until we regenerate
-	  all the ACE Makefile.am's from MPC.  [Bug 2266]
+          Tweak to use pkgconfigdir and @libdir@/pkgconfig instead of
+          pkgconfdatadir and ${prefix}/lib/pkgconfig to be consistent with
+          all our other Makefile.am's.  This will hold until we regenerate
+          all the ACE Makefile.am's from MPC.  [Bug 2266]
 
 Fri Oct 14 14:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -40,33 +51,33 @@ Fri Oct 14 08:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Oct 13 17:39:31 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/TTY_IO.cpp: Changed ACE_TTY_IO_{ODD EVEN MARK SPACE} to
-	  char* from ACE_TCHAR* since the strings they're compared to (from
-	  Serial_Params) are char* always.
+        * ace/TTY_IO.cpp: Changed ACE_TTY_IO_{ODD EVEN MARK SPACE} to
+          char* from ACE_TCHAR* since the strings they're compared to (from
+          Serial_Params) are char* always.
 
-	* ace/config-win32-common.h: Removed the check for UNDER_CE >= 0x400
-	  && UNDER_CE < 0x500 when deciding whether or not to define E...
-	  symbols. Windows Mobile 5 requires them as well.
+        * ace/config-win32-common.h: Removed the check for UNDER_CE >= 0x400
+          && UNDER_CE < 0x500 when deciding whether or not to define E...
+          symbols. Windows Mobile 5 requires them as well.
 
 Thu Oct 13 13:58:44 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/config-g++-common.h (ACE_IMPORT_SINGLETON_DECLARE):
-	  (ACE_IMPORT_SINGLETON_DECLARATION):
+        * ace/config-g++-common.h (ACE_IMPORT_SINGLETON_DECLARE):
+          (ACE_IMPORT_SINGLETON_DECLARATION):
 
-	  Suppress "-pedantic" error caused by use of g++ "extern
-	  template" extension by preceding the expression with
-	  "__extension__".
+          Suppress "-pedantic" error caused by use of g++ "extern
+          template" extension by preceding the expression with
+          "__extension__".
 
 Thu Oct 13 15:38:29 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/RB_Tree.{cpp h}: Follow-up to:
-	  Fri Jul  9 21:23:13 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+        * ace/RB_Tree.{cpp h}: Follow-up to:
+          Fri Jul  9 21:23:13 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	  Don't include a tree pointer in each RB_Tree_Node just to be able to
-	  get back to the tree to retrieve the allocator. Leave the allocator
-	  pointer in ACE_RB_Tree_Base, and add a ACE_RB_Tree::remove_children_i
-	  method that uses the allocator to release memory. Thank you to
-	  Sergei Kuchin <skuchin at mqsoftware dot com> for this improvement.
+          Don't include a tree pointer in each RB_Tree_Node just to be able to
+          get back to the tree to retrieve the allocator. Leave the allocator
+          pointer in ACE_RB_Tree_Base, and add a ACE_RB_Tree::remove_children_i
+          method that uses the allocator to release memory. Thank you to
+          Sergei Kuchin <skuchin at mqsoftware dot com> for this improvement.
 
 Thu Oct 13 20:42:00 2005  Olli Savia  <ops@iki.fi>
 
