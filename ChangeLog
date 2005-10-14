@@ -1,3 +1,11 @@
+Fri Oct 14 14:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+         Reverted the change below, causes compile problems
+
+          Fri Oct 14 10:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+          * ace/SSL/SSL_Asynch_BIO.{h,cpp}:
+          Fixed 64bit conversion warnings
+
 Fri Oct 14 12:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/soreduce/Library.cpp:
