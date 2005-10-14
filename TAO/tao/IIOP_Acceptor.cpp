@@ -35,6 +35,7 @@ TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (CORBA::Boolean flag)
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (0),
     lite_flag_ (flag),
+    reuse_addr_ (1),
 #if defined (ACE_HAS_IPV6)
     default_address_ (static_cast<unsigned short> (0), ACE_IPV6_ANY, AF_INET6),
 #else
@@ -552,7 +553,9 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
                                      reactor,
                                      this->creation_strategy_,
                                      this->accept_strategy_,
-                                     this->concurrency_strategy_) == -1)
+                                     this->concurrency_strategy_,
+				     0, 0, 0, 1,
+				     this->reuse_addr_) == -1)
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
@@ -586,7 +589,9 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
                                          reactor,
                                          this->creation_strategy_,
                                          this->accept_strategy_,
-                                         this->concurrency_strategy_) != -1)
+                                         this->concurrency_strategy_,
+					 0, 0, 0, 1,
+					 this->reuse_addr_) != -1)
             {
               found_a_port = true;
               break;
@@ -1158,6 +1163,10 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
         {
           this->hostname_in_ior_ = value.rep ();
         }
+      else if (name == "reuse_addr")
+	{
+	  this->reuse_addr_ = ACE_OS::atoi (value.c_str ());
+	}
       else
         {
           // the name is not known, skip to the next option

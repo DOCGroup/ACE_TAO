@@ -468,7 +468,9 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
                                     reactor,
                                     this->creation_strategy_,
                                     this->accept_strategy_,
-                                    this->concurrency_strategy_) == -1)
+				    this->concurrency_strategy_,
+				    0, 0, 0, 1,
+				    this->reuse_addr_) == -1)
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
@@ -502,7 +504,9 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
                                         reactor,
                                         this->creation_strategy_,
                                         this->accept_strategy_,
-                                        this->concurrency_strategy_) != -1)
+					this->concurrency_strategy_,
+					0, 0, 0, 1,
+					this->reuse_addr_) != -1)
             {
               found_a_port = 1;
               break;
