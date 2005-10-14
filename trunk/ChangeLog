@@ -1,3 +1,12 @@
+Fri Oct 14 11:49:29 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ACEXML/apps/svcconf/Makefile.am:
+
+	  Tweak to use pkgconfigdir and @libdir@/pkgconfig instead of
+	  pkgconfdatadir and ${prefix}/lib/pkgconfig to be consistent with
+	  all our other Makefile.am's.  This will hold until we regenerate
+	  all the ACE Makefile.am's from MPC.  [Bug 2266]
+
 Fri Oct 14 14:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
          Reverted the change below, causes compile problems
