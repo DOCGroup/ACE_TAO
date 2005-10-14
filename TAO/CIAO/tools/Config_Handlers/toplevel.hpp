@@ -34,7 +34,7 @@ namespace CIAO
 }
 
 #include <memory>
-#include <vector>
+#include <list>
 #include "XMLSchema/Types.hpp"
 
 #include "pcd.hpp"
@@ -51,8 +51,8 @@ namespace CIAO
       // package
       // 
       public:
-      typedef ::std::vector< ::CIAO::Config_Handlers::PackageConfiguration >::iterator package_iterator;
-      typedef ::std::vector< ::CIAO::Config_Handlers::PackageConfiguration >::const_iterator package_const_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::PackageConfiguration >::iterator package_iterator;
+      typedef ::std::list< ::CIAO::Config_Handlers::PackageConfiguration >::const_iterator package_const_iterator;
       package_iterator begin_package ();
       package_iterator end_package ();
       package_const_iterator begin_package () const;
@@ -61,7 +61,7 @@ namespace CIAO
       size_t count_package (void) const;
 
       protected:
-      ::std::vector< ::CIAO::Config_Handlers::PackageConfiguration > package_;
+      ::std::list< ::CIAO::Config_Handlers::PackageConfiguration > package_;
 
       public:
       TopLevelPackageDescription ();
