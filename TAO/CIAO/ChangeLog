@@ -1,20 +1,25 @@
+Fri Oct 14 14:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+          Removed not needed ;
+
 Thu Oct 13 15:42:12 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
        * tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp
        * tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
        * tools/Config_Handlers/RT-CCM/TPL_Handler.cpp
 
-       Various compile fixes for Borland. 
-       
+       Various compile fixes for Borland.
+
        * tools/Config_Handlers/XMLSchema/Types.hpp
-       
-       Modified to use ACE typedefs for number types. 
-       
+
+       Modified to use ACE typedefs for number types.
+
        * tools/Config_Handlers/XSCRT/Elements.hpp
-       
+
        Removed unneeded non-const conversion operator which was causing
        errors in Borland.
-       
+
 Wed Oct 12 14:13:09 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* examples/Hello/Sender/Sender.idl
@@ -27,16 +32,16 @@ Wed Oct 12 14:13:09 2005  William Otte  <wotte@dre.vanderbilt.edu>
 Wed Oct 12 15:08:31 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tools/Config_Handlers/RT-CCM/TP_Handler.cpp:
-        
-          Changed the types of some static_casts on the rhs of 
+
+          Changed the types of some static_casts on the rhs of
           assignments to match the types on the lhs, eliminating
           warnings from MSVC 7.1.
 
 Wed Oct 12 13:17:58 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/TypeNameEmitter.cpp:
-        
-          Removed generation of error message with code that attempts 
+
+          Removed generation of error message with code that attempts
           to set an enum attribute value, and replace it with code
           that extracts the enum value from the Any arguement.
 

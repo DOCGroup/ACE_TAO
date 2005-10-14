@@ -34,8 +34,8 @@
 //@{
 extern "C"
 {
-  int  ACE_Asynch_BIO_write (BIO *pBIO, const char *buf, size_t len);
-  int  ACE_Asynch_BIO_read  (BIO *pBIO, char *buf, size_t len);
+  int  ACE_Asynch_BIO_write (BIO *pBIO, const char *buf, int len);
+  int  ACE_Asynch_BIO_read  (BIO *pBIO, char *buf, int len);
   int  ACE_Asynch_BIO_puts  (BIO *pBIO, const char *str);
   long ACE_Asynch_BIO_ctrl  (BIO *pBIO, int cmd, long arg1, void *arg2);
   int  ACE_Asynch_BIO_new   (BIO *pBIO);

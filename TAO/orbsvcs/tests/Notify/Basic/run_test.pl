@@ -79,7 +79,11 @@ $Naming = new PerlACE::Process ("../../../Naming_Service/Naming_Service",
                                 "-o $namingior");
 unlink $namingior;
 
-$Naming->Spawn ();
+$naming_spawn = $Naming->Spawn ();
+if ($naming_spawn != 0) 
+  {
+    exit 1;
+  }
 
 if (PerlACE::waitforfile_timed ($namingior, $startup_timeout) == -1) {
   print STDERR "ERROR: waiting for the naming service to start\n";

@@ -75,7 +75,7 @@ ACE_Asynch_BIO_free (BIO *pBIO)
 }
 
 int
-ACE_Asynch_BIO_read (BIO * pBIO, char * buf, size_t len)
+ACE_Asynch_BIO_read (BIO * pBIO, char * buf, int len)
 {
   BIO_clear_retry_flags (pBIO);
 
@@ -110,7 +110,7 @@ ACE_Asynch_BIO_read (BIO * pBIO, char * buf, size_t len)
 }
 
 int
-ACE_Asynch_BIO_write (BIO * pBIO, const char * buf, size_t len)
+ACE_Asynch_BIO_write (BIO * pBIO, const char * buf, int len)
 {
   BIO_clear_retry_flags (pBIO);
 
@@ -123,7 +123,7 @@ ACE_Asynch_BIO_write (BIO * pBIO, const char * buf, size_t len)
   if (buf == 0)
     return -1;
 
-  if (len == 0)
+  if (len <= 0)
     return -1;
 
   BIO_clear_retry_flags (pBIO);
