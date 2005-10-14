@@ -78,16 +78,16 @@ ACE_OS::alarm (u_int secs)
 #endif /* ACE_WIN32 || VXWORKS || CHORUS || ACE_PSOS */
 }
 
-ACE_INLINE int
+ACE_INLINE long
 ACE_OS::getpagesize (void)
 {
   ACE_OS_TRACE ("ACE_OS::getpagesize");
 #if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
   SYSTEM_INFO sys_info;
   ::GetSystemInfo (&sys_info);
-  return (int) sys_info.dwPageSize;
+  return (long) sys_info.dwPageSize;
 #elif defined (_SC_PAGESIZE)
-  return (int) ::sysconf (_SC_PAGESIZE);
+  return ::sysconf (_SC_PAGESIZE);
 #elif defined (ACE_HAS_GETPAGESIZE)
   return ::getpagesize ();
 #else
