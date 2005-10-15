@@ -27,7 +27,7 @@ void Country_i::update_population (const char * country,
 }
   
 CORBA::Object_ptr
-Country_i::get_typed_consumer (ACE_ENV_SINGLE_ARG_DECL)
+Country_i::get_typed_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 
 {
@@ -66,16 +66,15 @@ Country_i::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
   
   PortableServer::ObjectId_var t_id =
-    t_poa->servant_to_id (this
-                          ACE_ENV_ARG_PARAMETER);
+    t_poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  t_poa->deactivate_object (t_id.in ()
-                            ACE_ENV_ARG_PARAMETER);
+  t_poa->deactivate_object (t_id.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  ACE_DEBUG ((LM_DEBUG, "Country_i::disconnect_push_consumer, calling ORB shutdown...\n"));
-  orb_->shutdown (0
-                  ACE_ENV_ARG_PARAMETER);
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Country_i::disconnect_push_consumer, ")
+              ACE_TEXT ("calling ORB shutdown...\n")));
+  orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }

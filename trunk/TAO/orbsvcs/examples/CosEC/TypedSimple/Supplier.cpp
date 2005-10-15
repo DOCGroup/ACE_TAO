@@ -48,7 +48,7 @@ main (int argc, char* argv[])
       ACE_TRY_CHECK;
 
       CosTypedEventChannelAdmin::TypedProxyPushConsumer_var typed_proxy_push_consumer =
-        typed_supplier_admin->obtain_typed_push_consumer ("IDL:jon.com/Country:1.0"
+        typed_supplier_admin->obtain_typed_push_consumer (_tc_Country->id()
                                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

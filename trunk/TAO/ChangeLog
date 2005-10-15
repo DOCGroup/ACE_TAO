@@ -1,21 +1,39 @@
+Sat Oct 15 00:42:36 2005  Steve Totten  <totten_s@ociweb.com>
+
+        * orbsvcs/examples/CosEC/TypedSimple/Consumer.cpp:
+        * orbsvcs/examples/CosEC/TypedSimple/Country.idl:
+        * orbsvcs/examples/CosEC/TypedSimple/Country.idl.for_ifr:
+        * orbsvcs/examples/CosEC/TypedSimple/Country_i.cpp:
+        * orbsvcs/examples/CosEC/TypedSimple/Supplier.cpp:
+        * orbsvcs/examples/CosEC/TypedSimple/run_test.pl:
+
+          Merge changes from OCI TAO 1.4a to fix build errors for exceptions=0
+          builds, remove the hard-coded repository IDs and the unneeded pragma
+          prefix from this test, add various missing #includes for Windows
+          builds, disable use of IFR persistence, add a new test script for
+          this example, and make some changes to Consumer.cpp to make the
+          script reliable.  Thanks to Paul Calabrese <calabrese_p@ociweb.com>
+          and Chad Elliott <elliott_c@ociweb.com> for originating these
+          changes.
+
 Fri Oct 14 09:35:33 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Regenerate.
+          Regenerate.
 
-	* orbsvcs/orbsvcs/CosEvent.mpc:
+        * orbsvcs/orbsvcs/CosEvent.mpc:
 
-	  Split out separate project for generating IDL files.
+          Split out separate project for generating IDL files.
 
-	* orbsvcs/orbsvcs/ec_typed_event.mpb:
+        * orbsvcs/orbsvcs/ec_typed_event.mpb:
 
-	  Remove IDL Files section from project, they've been moved
-	  to ec_typed_event_idl.mpb.
+          Remove IDL Files section from project, they've been moved
+          to ec_typed_event_idl.mpb.
 
-	* orbsvcs/orbsvcs/ec_typed_event_idl.mpb:
+        * orbsvcs/orbsvcs/ec_typed_event_idl.mpb:
 
-	  New base project containing Typed Event IDL files.
+          New base project containing Typed Event IDL files.
 
 Fri Oct 14 11:25:17 2005  Paul Calabrese  <calabrese_p@ociweb.com>
 
