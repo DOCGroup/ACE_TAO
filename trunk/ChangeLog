@@ -1,3 +1,10 @@
+Sat Oct 15 00:57:19 2005  Steve Totten  <totten_s@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+
+          Added TAO/orbsvcs/examples/CosEC/TypedSimple/run_test.pl to
+          the nightly tests.
+
 Fri Oct 14 22:30:40 2005  Krishnakumar B  <kitty@nospam.invalid.domain>
 
         * ace/config-macosx-tiger.h (ACE_HAS_NEW_TERMIOS_STRUCT): Defined
