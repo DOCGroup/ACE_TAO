@@ -1,3 +1,9 @@
+Fri Oct 14 22:30:40 2005  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * ace/config-macosx-tiger.h (ACE_HAS_NEW_TERMIOS_STRUCT): Defined
+          the macro ACE_HAS_NEW_TERMIOS_STRUCT to fix compilation errors
+          on Mac OS X Tiger.
+
 Fri Oct 14 14:56:16 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * ace/ACE.cpp:
