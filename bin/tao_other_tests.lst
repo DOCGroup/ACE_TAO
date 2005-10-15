@@ -104,6 +104,7 @@ TAO/orbsvcs/tests/ImplRepo/NameService/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/ImplRepo/locked/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/ImplRepo/scale/run_test.pl -servers 5 -objects 5: !MINIMUM
 TAO/orbsvcs/examples/ImR/Combined_Service/run_test.pl: !MINIMUM !STATIC !ST
+TAO/orbsvcs/examples/CosEC/TypedSimple/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/Log/Basic_Log_Test/run_test.pl: !NO_MESSAGING
 TAO/orbsvcs/tests/Notify/Basic/run_test.pl notify.reactive.conf: !ST !NO_MESSAGING !STATIC !MINIMUM
 TAO/orbsvcs/tests/Notify/Basic/run_test_ipv6.pl notify.reactive.conf: IPV6 !ST !NO_MESSAGING !STATIC !MINIMUM
