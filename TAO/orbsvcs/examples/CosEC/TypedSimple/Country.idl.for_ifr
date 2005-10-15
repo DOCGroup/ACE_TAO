@@ -6,7 +6,6 @@
 #define TAO_COUNTRY_IDL
 
 //#include "orbsvcs/CosEventComm.idl"
-#pragma prefix "jon.com"
 
 interface Country //: ::CosTypedEventComm::TypedPushConsumer 
 {

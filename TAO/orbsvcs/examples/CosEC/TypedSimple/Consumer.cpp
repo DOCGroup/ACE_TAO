@@ -3,6 +3,7 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/CosTypedEventChannelAdminC.h"
 #include "Country_i.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (CosEC_Examples, 
            Consumer, 
@@ -66,11 +67,27 @@ main (int argc, char* argv[])
       ACE_TRY_CHECK;
 
       CosEventChannelAdmin::ProxyPushSupplier_var proxy_push_supplier =
-        typed_consumer_admin->obtain_typed_push_supplier ("IDL:jon.com/Country:1.0"
+        typed_consumer_admin->obtain_typed_push_supplier (_tc_Country->id()
                                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       proxy_push_supplier->connect_push_consumer (typed_consumer.in () );
+
+      CORBA::String_var str =
+         orb->object_to_string (typed_consumer.in () ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      const char* ior_file_name = "Consumer.ior";
+      FILE *output_file=
+	ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(ior_file_name),
+		       ACE_LIB_TEXT("w"));
+      if (output_file == 0)
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   "Cannot open output file for writing IOR: %s",
+			   ior_file_name),
+			  1);
+      ACE_OS::fprintf (output_file, "%s", str.in ());
+      ACE_OS::fclose (output_file);
 
       // Wait for events.
       ACE_DEBUG ((LM_DEBUG, "Waiting on orb->run for events...\n"));
