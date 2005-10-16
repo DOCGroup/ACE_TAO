@@ -17,6 +17,10 @@
 #define ACE_RMCAST_DEFAULT_MAP_SIZE 10
 #endif /* ACE_RMCAST_DEFAULT_MAP_SIZE */
 
+#if !defined (ACE_RMCAST_DEFAULT_QUEUE_SIZE)
+#define ACE_RMCAST_DEFAULT_QUEUE_SIZE 10
+#endif /* ACE_RMCAST_DEFAULT_QUEUE_SIZE */
+
 namespace ACE_RMCast
 {
   class Acknowledge : public Element

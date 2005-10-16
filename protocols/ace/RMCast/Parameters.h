@@ -37,14 +37,17 @@ namespace ACE_RMCast
 
       // How long to retain a message for retransmission, in ticks.
       //
-      unsigned long retention_timeout = 500  // 1 sec
+      unsigned long retention_timeout = 500,  // 1 sec
+
+      size_t addr_map_size = 50
     )
         : simulator_ (simulator),
           max_packet_size_ (max_packet_size),
           tick_ (tick),
           nak_timeout_ (nak_timeout),
           nrtm_timeout_ (nrtm_timeout),
-          retention_timeout_ (retention_timeout)
+          retention_timeout_ (retention_timeout),
+          addr_map_size_(addr_map_size)
     {
     }
 
@@ -85,6 +88,12 @@ namespace ACE_RMCast
       return retention_timeout_;
     }
 
+    size_t
+    addr_map_size () const
+    {
+      return addr_map_size_;
+    }
+
   private:
     bool simulator_;
     unsigned short max_packet_size_;
@@ -92,6 +101,7 @@ namespace ACE_RMCast
     unsigned long nak_timeout_;
     unsigned long nrtm_timeout_;
     unsigned long retention_timeout_;
+    size_t addr_map_size_;
   };
 }
 
