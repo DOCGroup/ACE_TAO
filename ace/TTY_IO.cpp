@@ -1,6 +1,10 @@
 // $Id$
 
-#include "ace/os_include/os_termios.h"
+#if defined (ACE_HAS_TERMIOS)
+# include "ace/os_include/os_termios.h"
+#elif  defined (ACE_HAS_TERMIO)
+# include <termio.h>
+#endif
 #include "ace/TTY_IO.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_string.h"
@@ -26,9 +30,9 @@ ACE_TTY_IO::Serial_Params::Serial_Params (void)
 
 int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
 {
-#if defined (ACE_HAS_TERM_IOCTLS)
+#if defined (ACE_HAS_TERMIOS) || defined (ACE_HAS_TERMIO)
 
-#if defined (ACE_HAS_NEW_TERMIOS_STRUCT)
+#if defined (ACE_HAS_TERMIOS)
   struct termios devpar;
   speed_t newbaudrate = 0;
   if (::tcgetattr (get_handle () , &devpar) == -1)
@@ -42,7 +46,7 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
   if (this->ACE_IO_SAP::control (TCGETA, static_cast<void*>(&devpar)) == -1)
 #else
   errno = ENOSYS;
-#endif /* ACE_HAS_NEW_TERMIOS_STRUCT */
+#endif /* ACE_HAS_TERMIOS */
   return -1;
 
   switch (cmd)
@@ -165,7 +169,7 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
           return -1;
         }
 
-#if defined (ACE_HAS_NEW_TERMIOS_STRUCT)
+#if defined (ACE_HAS_TERMIOS)
       // Can you really have different input and output baud rates?!
       if (::cfsetospeed (&devpar, newbaudrate) == -1)
         return -1;
@@ -177,7 +181,7 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
       devpar.c_cflag &= ~CBAUDEX;
 # endif /* CBAUDEX */
       devpar.c_cflag |= newbaudrate;
-#endif /* ACE_HAS_NEW_TERMIOS_STRUCT */
+#endif /* ACE_HAS_TERMIOS */
 
       devpar.c_cflag &= ~CSIZE;
       switch (arg->databits)
@@ -242,7 +246,7 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
       if (arg->rcvenb)
         devpar.c_cflag |= CREAD;
       else
-        devpar.c_cflag &= CREAD;
+        devpar.c_cflag &= ~CREAD;
 #endif /* CREAD */
 
 #if defined (HUPCL)
@@ -275,7 +279,7 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
       if (arg->xinenb)
         devpar.c_iflag |= IXOFF;
       else
-        devpar.c_iflag &= IXOFF;
+        devpar.c_iflag &= ~IXOFF;
 #endif /* IXOFF */
 
 #if defined (IXON)
@@ -327,7 +331,7 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
       this->ACE_IO_SAP::control (TIOCMSET, &status);
 #endif /* definded (TIOCMGET) */
 
-#if defined (ACE_HAS_NEW_TERMIOS_STRUCT)
+#if defined (ACE_HAS_TERMIOS)
       return ::tcsetattr (get_handle (), TCSANOW, &devpar);
 #elif defined (TCSETS)
       return this->ACE_IO_SAP::control (TCSETS, static_cast<void*>(&devpar));
@@ -336,7 +340,7 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
 #else
       errno = ENOSYS;
       return -1;
-#endif /* ACE_HAS_NEW_TERMIOS_STRUCT */
+#endif /* ACE_HAS_TERMIOS */
 
     case GETPARAMS:
       return -1; // Not yet implemented.
@@ -512,7 +516,7 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
   ACE_UNUSED_ARG (cmd);
   ACE_UNUSED_ARG (arg);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_TERM_IOCTLS */
+#endif /* ACE_HAS_TERMIOS || ACE_HAS_TERMIO */
 }
 
 #if defined (ACE_NEEDS_DEV_IO_CONVERSION)

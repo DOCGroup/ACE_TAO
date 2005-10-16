@@ -665,8 +665,11 @@ ACE_HAS_TEMPLATE_TYPEDEFS               Compiler implements templates
                                         of classes used as formal
                                         arguments to a template
                                         class.
-ACE_HAS_TERM_IOCTLS                     Platform has terminal ioctl
-                                        flags like TCGETS and TCSETS.
+ACE_HAS_TERMIO                          Platform has terminal ioctl
+                                        flags like TCGETS and TCSETS and
+                                        termio struct.
+ACE_HAS_TERMIOS                         Platform has POSIX terminal
+                                        interface and termios struct.
 ACE_HAS_LAZY_MAP_MANAGER                ACE supports lazy Map Managers
                                         that allow deletion of entries
                                         during active iteration.
