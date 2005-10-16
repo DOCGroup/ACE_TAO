@@ -1,3 +1,8 @@
+Sun Oct 16 12:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
+          Fixed signed/unsigned warning
+
 Sat Oct 15 00:42:36 2005  Steve Totten  <totten_s@ociweb.com>
 
         * orbsvcs/examples/CosEC/TypedSimple/Consumer.cpp:
