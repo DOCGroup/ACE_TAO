@@ -1,3 +1,8 @@
+Sun Oct 16 12:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Don't run Big_AMI test in minimum builds
+
 Sat Oct 15 00:57:19 2005  Steve Totten  <totten_s@ociweb.com>
 
         * bin/tao_other_tests.lst:
