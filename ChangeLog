@@ -1,3 +1,13 @@
+Sun Oct 16 16:14:48 2005  Olli Savia  <ops@iki.fi>
+
+        * ace/README:
+        * ace/TTY_IO.cpp:
+          Introduce new macros ACE_HAS_TERMIO and ACE_HAS_TERMIOS to
+          select between old ioctl based interface and POSIX terminal
+          interface. The old macros ACE_HAS_TERM_IOCTLS and
+          ACE_HAS_NEW_TERMIOS_STRUCT are not used anymore. Thanks
+          to J.T. Conklin for motivating this change.
+
 Sun Oct 16 12:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
@@ -21,11 +31,11 @@ Fri Oct 14 14:56:16 2005  Chris Cleeland  <cleeland_c@ociweb.com>
         * ace/ACE.cpp:
         * ace/SOCK_Connector.cpp:
 
-	  Reverted the change from Fri Sep  2 15:08:27 2005  Justin Michel
-	  due to suspicions that it might be inadvertently responsible for
-	  observed additional jitter in TAO performance tests.  The
-	  motivation for the original change and a patch to restore the
-	  original change is documented in Bugzilla #2246.
+          Reverted the change from Fri Sep  2 15:08:27 2005  Justin Michel
+          due to suspicions that it might be inadvertently responsible for
+          observed additional jitter in TAO performance tests.  The
+          motivation for the original change and a patch to restore the
+          original change is documented in Bugzilla #2246.
 
 Fri Oct 14 11:49:29 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
