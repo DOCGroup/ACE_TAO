@@ -44,64 +44,64 @@ public:
   {
     Serial_Params (void);
 
-    /// Specifies the baudrate at which the communnication port operates.
+    /** Specifies the baudrate at which the communnication port operates. */
     int baudrate;
-    /// Specifies the minimum number of bytes in input buffer before XON char
-    /// is sent. Negative value indicates that default value should
-    /// be used (Win32).
+    /** Specifies the minimum number of bytes in input buffer before XON char
+        is sent. Negative value indicates that default value should
+        be used (Win32). */
     int xonlim;
-    /// Specifies the maximum number of bytes in input buffer before XOFF char
-    /// is sent. Negative value indicates that default value should
-    /// be used (Win32).
+    /** Specifies the maximum number of bytes in input buffer before XOFF char
+        is sent. Negative value indicates that default value should
+        be used (Win32). */
     int xofflim;
-    /// Specifies the minimum number of characters for non-canonical read.
+    /** Specifies the minimum number of characters for non-canonical read. */
     int readmincharacters;
-    /// Specifies the time to wait before returning from read. Negative value
-    /// means infinite timeout.
+    /** Specifies the time to wait before returning from read. Negative value
+        means infinite timeout. */
     int readtimeoutmsec;
-    /// Enable/disable parity checking.
+    /** Enable/disable parity checking. */
     bool parityenb;
-    /// Specifies the parity mode. POSIX supports "even" and "odd" parity.
-    /// Additionally Win32 supports "mark" and "space" parity modes.
+    /** Specifies the parity mode. POSIX supports "even" and "odd" parity.
+        Additionally Win32 supports "mark" and "space" parity modes. */
     const char *paritymode;
-    /// Enable & set CTS mode. Note that RTS & CTS are enabled/disabled
-    /// together on some systems (RTS/CTS is enabled if either
-    /// <code>ctsenb</code> or <code>rtsenb</code> is set).
+    /** Enable & set CTS mode. Note that RTS & CTS are enabled/disabled
+        together on some systems (RTS/CTS is enabled if either
+        <code>ctsenb</code> or <code>rtsenb</code> is set). */
     bool ctsenb;
-    /// Enable & set RTS mode. Note that RTS & CTS are enabled/disabled
-    /// together on some systems (RTS/CTS is enabled if either
-    /// <code>ctsenb</code> or <code>rtsenb</code> is set).
-    /// - 0 = Disable RTS.
-    /// - 1 = Enable RTS.
-    /// - 2 = Enable RTS flow-control handshaking (Win32).
-    /// - 3 = Specifies that RTS line will be high if bytes are available
-    ///       for transmission. After transmission RTS will be low (Win32).
+    /** Enable & set RTS mode. Note that RTS & CTS are enabled/disabled
+        together on some systems (RTS/CTS is enabled if either
+        <code>ctsenb</code> or <code>rtsenb</code> is set).
+        - 0 = Disable RTS.
+        - 1 = Enable RTS.
+        - 2 = Enable RTS flow-control handshaking (Win32).
+        - 3 = Specifies that RTS line will be high if bytes are available
+              for transmission. After transmission RTS will be low (Win32). */
     int rtsenb;
-    /// Enable/disable software flow control on input.
+    /** Enable/disable software flow control on input. */
     bool xinenb;
-    /// Enable/disable software flow control on output.
+    /** Enable/disable software flow control on output. */
     bool xoutenb;
-    /// Specifies if device is a modem (POSIX). If not set modem status
-    /// lines are ignored.
+    /** Specifies if device is a modem (POSIX). If not set modem status
+        lines are ignored. */
     bool modem;
-    /// Enable/disable receiver (POSIX).
+    /** Enable/disable receiver (POSIX). */
     bool rcvenb;
-    /// Controls whether DSR is disabled or enabled (Win32).
+    /** Controls whether DSR is disabled or enabled (Win32). */
     bool dsrenb;
-    /// Controls whether DTR is disabled or enabled (Win32).
+    /** Controls whether DTR is disabled or enabled (Win32). */
     int dtrdisable;
-    /// Data bits. Valid values 5, 6, 7 and 8 data bits.
-    /// Additionally Win32 supports 4 data bits.
+    /** Data bits. Valid values 5, 6, 7 and 8 data bits.
+        Additionally Win32 supports 4 data bits. */
     unsigned char databits;
-    /// Stop bits. Valid values are 1 and 2.
+    /** Stop bits. Valid values are 1 and 2. */
     unsigned char stopbits;
   };
 
-  /// Interface for reading/writing serial device parameters.
+  /** Interface for reading/writing serial device parameters. */
   int control (Control_Mode cmd, Serial_Params *arg) const;
 
 #if defined (ACE_NEEDS_DEV_IO_CONVERSION)
-  /// This is necessary to pass ACE_TTY_IO as parameter to DEV_Connector.
+  /** This is necessary to pass ACE_TTY_IO as parameter to DEV_Connector. */
   operator ACE_DEV_IO &();
 #endif /* ACE_NEEDS_DEV_IO_CONVERSION */
 };
