@@ -78,7 +78,7 @@ TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable& met
   bool discarded_existing = false;
 
   bool local_overflow = this->max_events_per_consumer_.is_valid() &&
-    this->msg_queue_.message_count () >= this->max_events_per_consumer_.value();
+    static_cast <CORBA::Long> (this->msg_queue_.message_count ()) >= this->max_events_per_consumer_.value();
 
   bool global_overflow = this->max_queue_length_.value () != 0 &&
     this->global_queue_length_ >= this->max_queue_length_.value ();
@@ -102,7 +102,7 @@ TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable& met
       if (errno != ETIME)
       {
         local_overflow = this->max_events_per_consumer_.is_valid() &&
-          this->msg_queue_.message_count () >= this->max_events_per_consumer_.value();
+          static_cast <CORBA::Long> (this->msg_queue_.message_count ()) >= this->max_events_per_consumer_.value();
         global_overflow = this->max_queue_length_.value () != 0 &&
           this->global_queue_length_ >= this->max_queue_length_.value ();
         continue;
