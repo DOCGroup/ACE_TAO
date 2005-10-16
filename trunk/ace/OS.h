@@ -294,9 +294,9 @@ class ACE_Timeout_Manager;
 #     include "ace/os_include/os_strings.h"
 #   endif /* ACE_HAS_STRINGS */
 
-#   if defined (ACE_HAS_TERM_IOCTLS)
+#   if defined (ACE_HAS_TERMIOS)
 #     include "ace/os_include/os_termios.h"
-#   endif /* ACE_HAS_TERM_IOCTLS */
+#   endif /* ACE_HAS_TERMIOS */
 
 #   if defined (ACE_HAS_AIO_CALLS)
 #     include "ace/os_include/os_aio.h"

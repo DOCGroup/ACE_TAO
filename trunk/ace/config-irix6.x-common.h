@@ -183,8 +183,8 @@
 #define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
 #define ACE_PI_CONTROL_BLOCK_ALIGN_LONGS 2
 
-// Enables use of POSIX termios struct
-#define ACE_HAS_NEW_TERMIOS_STRUCT
+// Platform has POSIX terminal interface.
+#define ACE_HAS_TERMIOS 
 
 // IRIX 6.5 supports AIO
 #define ACE_HAS_AIO_CALLS
@@ -212,9 +212,6 @@
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
-
-// Platform has terminal ioctl flags like TCGETS and TCSETS.
-#define ACE_HAS_TERM_IOCTLS
 
 // Platform does not support reentrant password file accessor functiions.
 #define ACE_LACKS_PWD_REENTRANT_FUNCTIONS

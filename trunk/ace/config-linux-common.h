@@ -298,8 +298,6 @@
 // (see NOTES in Linux's select(2) man page).
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
 
-#define ACE_HAS_TERM_IOCTLS
-
 #define ACE_DEFAULT_MAX_SOCKET_BUFSIZ 65535
 
 #define ACE_HAS_GETPAGESIZE 1
@@ -383,8 +381,8 @@
 #define ACE_LACKS_GETIPNODEBYADDR
 #define ACE_LACKS_GETIPNODEBYNAME
 
-// Enables use of POSIX termios struct
-#define ACE_HAS_NEW_TERMIOS_STRUCT
+// Platform has POSIX terminal interface.
+#define ACE_HAS_TERMIOS
 
 #if !defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO)
 // Detect if getsockname() and getpeername() returns random values in

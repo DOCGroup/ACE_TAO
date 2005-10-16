@@ -333,8 +333,8 @@
    as formal arguments to a template class. */
 #define ACE_HAS_TEMPLATE_TYPEDEFS 1
 
-/* Platform has terminal ioctl flags like TCGETS and TCSETS. */
-#define ACE_HAS_TERM_IOCTLS 1
+/* Platform has POSIX terminal interface. */
+#define ACE_HAS_TERMIOS 1
 
 /* Platform supports threads */
 #define ACE_HAS_THREADS 1

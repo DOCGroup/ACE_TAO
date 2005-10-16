@@ -26,7 +26,8 @@
 
 #define ACE_HAS_XPG4_MULTIBYTE_CHAR
 
-#define ACE_HAS_TERM_IOCTLS
+// Platform has POSIX terminal interface.
+#define ACE_HAS_TERMIOS 
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC

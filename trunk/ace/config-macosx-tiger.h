@@ -171,10 +171,8 @@
 #define ACE_LACKS_SETSCHED
 //#define ACE_HAS_RECURSIVE_MUTEXES
 
-#define ACE_HAS_TERM_IOCTLS
-#define ACE_HAS_NEW_TERMIOS_STRUCT
-#define TCGETS TIOCGETA
-#define TCSETS TIOCSETA
+// Platform has POSIX terminal interface.
+#define ACE_HAS_TERMIOS 
 
 #define ACE_HAS_SEMUN
 #define ACE_HAS_SIGINFO_T

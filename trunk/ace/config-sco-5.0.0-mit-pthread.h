@@ -51,8 +51,8 @@
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 
-// Platform supports Term Ioctls
-#define ACE_HAS_TERM_IOCTLS
+// Platform has POSIX terminal interface.
+#define ACE_HAS_TERMIOS 
 
 // Platform supports recvmsg and sendmsg.
 #define ACE_HAS_MSG

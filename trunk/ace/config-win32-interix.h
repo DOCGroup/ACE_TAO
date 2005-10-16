@@ -73,10 +73,7 @@
 #define ACE_HAS_STRERROR
 #define ACE_HAS_SVR4_GETTIMEOFDAY
 #define ACE_HAS_UALARM
-#define ACE_HAS_TERM_IOCTLS
-#define ACE_HAS_NEW_TERMIOS_STRUCT
-#define TCGETS TIOCGETA
-#define TCSETS TIOCSETA
+#define ACE_HAS_TERMIOS
 #define ACE_HAS_SIGWAIT
 #define ACE_LACKS_RTTI                      // DLL_Test checks RTTI, and it fails so...
 

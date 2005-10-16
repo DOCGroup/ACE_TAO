@@ -38,8 +38,8 @@
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYS_SYSCALL_H
 
-// Platform has terminal ioctl flags like TCGETS and TCSETS.
-#define ACE_HAS_TERM_IOCTLS
+// Platform has POSIX terminal interface.
+#define ACE_HAS_TERMIOS 
 
 // Compiler/platform correctly calls init()/fini() for shared libraries.
 #define ACE_HAS_AUTOMATIC_INIT_FINI
