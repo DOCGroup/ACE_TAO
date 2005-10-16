@@ -1,3 +1,43 @@
+Sun Oct 16 17:17:50 2005  Olli Savia  <ops@iki.fi>
+
+        * ace/OS.h:
+        * ace/config-cray.h:
+        * ace/config-cygwin32.h:
+        * ace/config-dgux-4.11-epc.h:
+        * ace/config-dgux-4.x-ghs.h:
+        * ace/config-freebsd.h:
+        * ace/config-hpux-11.00.h:
+        * ace/config-irix6.x-common.h:
+        * ace/config-linux-common.h:
+        * ace/config-lynxos.h:
+        * ace/config-m88k.h:
+        * ace/config-macosx-panther.h:
+        * ace/config-macosx-tiger.h:
+        * ace/config-macosx.h:
+        * ace/config-openbsd.h:
+        * ace/config-qnx-neutrino.h:
+        * ace/config-qnx-rtp-62x.h:
+        * ace/config-qnx-rtp-pre62x.h:
+        * ace/config-rtems.h:
+        * ace/config-sco-5.0.0-mit-pthread.h:
+        * ace/config-sco-5.0.0.h:
+        * ace/config-sunos5.4-centerline-2.x.h:
+        * ace/config-sunos5.4-g++.h:
+        * ace/config-sunos5.4-sunc++-4.x.h:
+        * ace/config-sunos5.5.h:
+        * ace/config-tandem.h:
+        * ace/config-unixware-2.01-g++.h:
+        * ace/config-unixware-2.1.2-g++.h:
+        * ace/config-unixware-7.1.0.h:
+        * ace/config-unixware-7.1.0.udk.h:
+        * ace/config-win32-interix.h:
+          Replaced old TTY_IO related macros with the new
+          ACE_HAS_TERMIOS macro.
+
+        * ace/TTY_IO.cpp:
+          Added include "ace/config-lite.h" to pull feature macro
+          definitions.
+
 Sun Oct 16 16:14:48 2005  Olli Savia  <ops@iki.fi>
 
         * ace/README:

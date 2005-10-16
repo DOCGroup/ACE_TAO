@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/config-lite.h"
 #if defined (ACE_HAS_TERMIOS)
 # include "ace/os_include/os_termios.h"
 #elif  defined (ACE_HAS_TERMIO)

@@ -221,10 +221,8 @@
 
 #endif /* ! ACE_HAD_THREADS */
 
-#define ACE_HAS_TERM_IOCTLS
-#define ACE_HAS_NEW_TERMIOS_STRUCT
-#define TCGETS TIOCGETA
-#define TCSETS TIOCSETA
+// Platform has POSIX terminal interface.
+#define ACE_HAS_TERMIOS 
 
 // OpenBSD actually has the clearerr call, but it causes a
 // bogus compiler syntax error.

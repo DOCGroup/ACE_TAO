@@ -54,8 +54,8 @@
 //Platform provides <sysent.h> header
 #define ACE_HAS_SYSENT_H
 
-// Platform has terminal ioctl flags like TCGETS and TCSETS.
-#define ACE_HAS_TERM_IOCTLS
+// Platform has POSIX terminal interface.
+#define ACE_HAS_TERMIOS
 
 //Platform supports POSIX O_NONBLOCK semantics
 #define ACE_HAS_POSIX_NONBLOCK
