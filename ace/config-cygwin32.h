@@ -99,7 +99,8 @@
 
 #define ACE_HAS_BIG_FD_SET
 
-#define ACE_HAS_TERM_IOCTLS
+// Platform has POSIX terminal interface.
+#define ACE_HAS_TERMIOS 
 
 #define ACE_DEFAULT_MAX_SOCKET_BUFSIZ 65535
 

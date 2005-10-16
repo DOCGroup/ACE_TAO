@@ -35,8 +35,8 @@
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 
-// Platform supports Term Ioctls
-#define ACE_HAS_TERM_IOCTLS
+// Platform has POSIX terminal interface.
+#define ACE_HAS_TERMIOS 
 
 // Compiler/platform contains the <sys/syscall.h> file.
 //#define ACE_HAS_SYS_SYSCALL_H

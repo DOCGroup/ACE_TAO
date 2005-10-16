@@ -488,7 +488,9 @@
 #endif /* ACE_HAS_THREADS */
 
 #define ACE_HAS_POSIX_SEM
-#define ACE_HAS_TERM_IOCTLS
+
+// Platform has POSIX terminal interface.
+#define ACE_HAS_TERMIOS 
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

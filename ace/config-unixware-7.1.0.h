@@ -268,8 +268,8 @@
 /* Platform provides <sys/xti.h> header */
 #define ACE_HAS_SYS_XTI_H 1
 
-/* Platform has terminal ioctl flags like TCGETS and TCSETS. */
-#define ACE_HAS_TERM_IOCTLS 1
+/* Platform has POSIX terminal interface. */
+#define ACE_HAS_TERMIOS 1
 
 /* Platform supports threads */
 #define ACE_HAS_THREADS 1
