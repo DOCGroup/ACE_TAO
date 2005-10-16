@@ -1,10 +1,15 @@
+Sun Oct 16 19:39:10 2005  Olli Savia  <ops@iki.fi>
+
+        * ace/TTY_IO.h:
+          Fixed Doxygen tags.
+
 Sun Oct 16 09:27:25 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* protocols/ace/RMCast/Acknowledge.{h,cpp}
-  	* protocols/ace/RMCast/Parameters.h:
-	  Added some fixes so that the default size of the hash map won't
- 	  be so huge.  Thanks to Felix Li <fengli at gmail dot com> for
- 	  these fixes.
+        * protocols/ace/RMCast/Acknowledge.{h,cpp}
+        * protocols/ace/RMCast/Parameters.h:
+          Added some fixes so that the default size of the hash map won't
+          be so huge.  Thanks to Felix Li <fengli at gmail dot com> for
+          these fixes.
 
 Sun Oct 16 17:17:50 2005  Olli Savia  <ops@iki.fi>
 
