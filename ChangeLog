@@ -1,3 +1,10 @@
+Sun Oct 16 11:59:05 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+
+	  Updated tty feature checks to define ACE_HAS_TERMIO and/or
+	  ACE_HAS_TERMIOS.
+
 Sun Oct 16 19:39:10 2005  Olli Savia  <ops@iki.fi>
 
         * ace/TTY_IO.h:

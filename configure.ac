@@ -662,34 +662,31 @@ ACE_CHECK_HAS_HEADERS(sysent.h)
 
 ACE_CHECK_LACKS_HEADERS(time.h)
 
-ACE_CHECK_LACKS_HEADERS(termios.h)
+ACE_CHECK_LACKS_HEADERS(termio.h termios.h)
 
 ACE_CHECK_LACKS_HEADERS(wctype.h)
 
-
-
 AC_CHECK_HEADER([sys/systeminfo.h],[],[])
 
-AC_CHECK_HEADER([sys/termios.h],
-  [
-   AC_EGREP_CPP([ACE_WITH_TERM_IOCTLS],
-      [
-#include <sys/termios.h>
-
-#if !defined (ACE_LACKS_SYS_IOCTL_H)
-# include <sys/ioctl.h>
+AC_CHECK_TYPE([struct termio],
+	      [AC_DEFINE([ACE_HAS_TERMIO], 1,
+			 [Define to 1 if system supports SysV tty API.])],
+	      [],
+	      [
+#ifndef ACE_LACKS_TERMIO_H
+#include <termio.h>
 #endif
+	      ])
 
-#if defined(TCGETS) && defined(TCSETS)
-          ACE_WITH_TERM_IOCTLS
-#elif defined(TCGETA) && defined(TCSETA)
-          ACE_WITH_TERM_IOCTLS
+AC_CHECK_TYPE([struct termios],
+	      [AC_DEFINE([ACE_HAS_TERMIOS], 1,
+			 [Define to 1 if system supports POSIX tty API.])],
+	      [],
+	      [
+#ifndef ACE_LACKS_TERMIOS_H
+#include <termios.h>
 #endif
-      ],
-      [
-       AC_DEFINE([ACE_HAS_TERM_IOCTLS])
-      ],)
-  ],)
+	      ])
 
 dnl If the platform has XTI, don't bother with the TLI checks as XTI is
 dnl preferred.
