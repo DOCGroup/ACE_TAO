@@ -1,3 +1,9 @@
+Sun Oct 16 12:05:45 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/config-netbsd.h:
+
+	  Define ACE_HAS_TERMIOS.
+
 Sun Oct 16 11:59:05 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
