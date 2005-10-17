@@ -1871,6 +1871,8 @@ libTAO_Messaging_la_SOURCES = \
   Messaging/Asynch_Reply_Dispatcher.cpp \
   Messaging/Asynch_Timeout_Handler.cpp \
   Messaging/Connection_Timeout_Policy_i.cpp \
+  Messaging/ExceptionHolderA.cpp \
+  Messaging/ExceptionHolderC.cpp \
   Messaging/Messaging.cpp \
   Messaging/MessagingA.cpp \
   Messaging/MessagingC.cpp \
@@ -1885,6 +1887,8 @@ libTAO_Messaging_la_SOURCES = \
   Messaging/Messaging_RT_PolicyC.cpp \
   Messaging/Messaging_SyncScope_PolicyA.cpp \
   Messaging/Messaging_SyncScope_PolicyC.cpp \
+  Messaging/OldExceptionHolderA.cpp \
+  Messaging/OldExceptionHolderC.cpp \
   Messaging/PollableC.cpp \
   Messaging/TAO_ExtA.cpp \
   Messaging/TAO_ExtC.cpp
@@ -1908,8 +1912,14 @@ nobase_include_HEADERS += \
   Messaging/Asynch_Reply_Dispatcher.h \
   Messaging/Asynch_Timeout_Handler.h \
   Messaging/Connection_Timeout_Policy_i.h \
+  Messaging/ExceptionHolder.pidl \
+  Messaging/ExceptionHolderA.h \
+  Messaging/ExceptionHolderC.h \
+  Messaging/ExceptionHolderC.inl \
+  Messaging/ExceptionHolderS.h \
   Messaging/Messaging.h \
   Messaging/Messaging.pidl \
+  Messaging/MessagingA.h \
   Messaging/MessagingC.h \
   Messaging/MessagingC.inl \
   Messaging/MessagingS.h \
@@ -1918,19 +1928,28 @@ nobase_include_HEADERS += \
   Messaging/MessagingS_T.inl \
   Messaging/Messaging_Loader.h \
   Messaging/Messaging_No_Impl.pidl \
+  Messaging/Messaging_No_ImplA.h \
   Messaging/Messaging_No_ImplC.h \
   Messaging/Messaging_ORBInitializer.h \
   Messaging/Messaging_PolicyFactory.h \
   Messaging/Messaging_Policy_i.h \
   Messaging/Messaging_Policy_i.i \
   Messaging/Messaging_RT_Policy.pidl \
+  Messaging/Messaging_RT_PolicyA.h \
   Messaging/Messaging_RT_PolicyC.h \
   Messaging/Messaging_SyncScope_Policy.pidl \
+  Messaging/Messaging_SyncScope_PolicyA.h \
   Messaging/Messaging_SyncScope_PolicyC.h \
+  Messaging/OldExceptionHolder.pidl \
+  Messaging/OldExceptionHolderA.h \
+  Messaging/OldExceptionHolderC.h \
+  Messaging/OldExceptionHolderC.inl \
+  Messaging/OldExceptionHolderS.h \
   Messaging/Pollable.pidl \
   Messaging/PollableC.h \
   Messaging/PollableS.h \
   Messaging/TAO_Ext.pidl \
+  Messaging/TAO_ExtA.h \
   Messaging/TAO_ExtC.h \
   Messaging/messaging_export.h
 
