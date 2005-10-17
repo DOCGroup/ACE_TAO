@@ -1,3 +1,13 @@
+Mon Oct 17 11:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging/*:
+          Moved the ExceptionHolder to its own file (OldExceptionHolder)
+          the latest CORBA spec describe an updated ExceptionHolder
+          and this impacts the AMI generated but also user written
+          code. Working on this new spec but we will keep the old
+          mapping supported until x.5.1 has come out. By moving
+          this to its own file we can easier support the new one
+
 Mon Oct 17 11:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/*:
