@@ -1,3 +1,9 @@
+Mon Oct 17 09:24:13 2005  Paul Calabrese  <calabrese_p@ociweb.com>
+
+        * docs/ec_options.html:
+
+          Rename the -q option's parameter from servant_name to ec_object_id.
+
 Mon Oct 17 13:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/orbconf.h:
