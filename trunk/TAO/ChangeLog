@@ -1,3 +1,8 @@
+Mon Oct 17 07:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rules.tao.GNU:
+          Prevent building with emulated exceptions
+
 Mon Oct 17 07:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/Service.h:
