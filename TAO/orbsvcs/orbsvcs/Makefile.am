@@ -8,7 +8,7 @@
 ## MPC Command:
 ## ../bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/TAO/../MPC/templates -type automake -noreldefs TAO.mwc
 
-includedir = @includedir@/orbsvcs
+includedir = @includedir@/orbsvcs/orbsvcs
 pkgconfigdir = @libdir@/pkgconfig
 
 ACE_BUILDDIR = $(top_builddir)/..
@@ -534,7 +534,7 @@ CLEANFILES += \
 CosTypedEventCommC.cpp CosTypedEventCommC.h CosTypedEventCommC.inl CosTypedEventCommS.cpp CosTypedEventCommS.h CosTypedEventCommS.inl CosTypedEventCommS_T.cpp CosTypedEventCommS_T.h CosTypedEventCommS_T.inl: CosTypedEventComm-stamp
 
 CosTypedEventComm-stamp: $(srcdir)/CosTypedEventComm.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/CosTypedEventComm.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h $(srcdir)/CosTypedEventComm.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -563,7 +563,7 @@ CLEANFILES += \
 CosTypedEventChannelAdminC.cpp CosTypedEventChannelAdminC.h CosTypedEventChannelAdminC.inl CosTypedEventChannelAdminS.cpp CosTypedEventChannelAdminS.h CosTypedEventChannelAdminS.inl CosTypedEventChannelAdminS_T.cpp CosTypedEventChannelAdminS_T.h CosTypedEventChannelAdminS_T.inl: CosTypedEventChannelAdmin-stamp
 
 CosTypedEventChannelAdmin-stamp: $(srcdir)/CosTypedEventChannelAdmin.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/CosTypedEventChannelAdmin.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h $(srcdir)/CosTypedEventChannelAdmin.idl
 	@touch $@
 
 BUILT_SOURCES += \
@@ -1871,7 +1871,6 @@ libTAO_CosNotification_la_SOURCES = \
   CosNotifyFilterC.cpp \
   Event_ForwarderC.cpp \
   Notify/Notify_Extensions.cpp \
-  Notify/Service.cpp \
   NotifyExtC.cpp
 
 libTAO_CosNotification_la_LDFLAGS = \
@@ -1895,7 +1894,6 @@ nobase_include_HEADERS += \
   Event_ForwarderC.h \
   Event_ForwarderC.inl \
   Notify/Notify_Extensions.h \
-  Notify/Service.h \
   Notify/notify_export.h \
   NotifyExtC.h \
   NotifyExtC.inl
@@ -2133,6 +2131,7 @@ libTAO_CosNotification_Serv_la_SOURCES = \
   Notify/Sequence/SequenceProxyPushSupplier.cpp \
   Notify/Sequence/SequencePushConsumer.cpp \
   Notify/Sequence/SequencePushSupplier.cpp \
+  Notify/Service.cpp \
   Notify/Standard_Event_Persistence.cpp \
   Notify/Structured/StructuredEvent.cpp \
   Notify/Structured/StructuredProxyPushConsumer.cpp \
@@ -2254,6 +2253,7 @@ nobase_include_HEADERS += \
   Notify/Sequence/SequenceProxyPushSupplier.h \
   Notify/Sequence/SequencePushConsumer.h \
   Notify/Sequence/SequencePushSupplier.h \
+  Notify/Service.h \
   Notify/Standard_Event_Persistence.h \
   Notify/Structured/StructuredEvent.h \
   Notify/Structured/StructuredProxyPushConsumer.h \
