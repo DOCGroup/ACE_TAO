@@ -74,14 +74,14 @@ ACE_INLINE ssize_t
 ACE_FILE_IO::send (const void *buf, size_t n) const
 {
   ACE_TRACE ("ACE_FILE_IO::send");
-  return ACE_OS::write (this->get_handle (), (const char *) buf, n);
+  return ACE_OS::write (this->get_handle (), buf, n);
 }
 
 ACE_INLINE ssize_t
 ACE_FILE_IO::recv (void *buf, size_t n) const
 {
   ACE_TRACE ("ACE_FILE_IO::recv");
-  return ACE_OS::read (this->get_handle (), (char *) buf, n);
+  return ACE_OS::read (this->get_handle (), buf, n);
 }
 
 ACE_INLINE ssize_t
@@ -129,20 +129,20 @@ ACE_FILE_IO::send (const ACE_Str_Buf *cntl, const ACE_Str_Buf *data, int flags) 
 
 ACE_INLINE ssize_t
 ACE_FILE_IO::send (const void *buf, size_t n,
-                       ACE_OVERLAPPED *overlapped) const
+                   ACE_OVERLAPPED *overlapped) const
 {
   ACE_TRACE ("ACE_FILE_IO::send");
   return ACE_OS::write (this->get_handle (),
-                        (const char *) buf, n,
+                        buf, n,
                         overlapped);
 }
 
 ACE_INLINE ssize_t
 ACE_FILE_IO::recv (void *buf, size_t n,
-                       ACE_OVERLAPPED *overlapped) const
+                   ACE_OVERLAPPED *overlapped) const
 {
   ACE_TRACE ("ACE_FILE_IO::recv");
-  return ACE_OS::read (this->get_handle (), (char *) buf, n,
+  return ACE_OS::read (this->get_handle (), buf, n,
                        overlapped);
 }
 
