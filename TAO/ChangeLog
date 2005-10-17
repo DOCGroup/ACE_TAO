@@ -1,3 +1,91 @@
+Mon Oct 17 09:52:05 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* Makefile.am:
+
+          Enabled building "performance-tests" subdirectory.
+
+	* configure.ac:
+
+	  Configure all Makefile.am's in performance-tests subdirectories.
+
+	* performance-tests/Makefile.am:
+	* performance-tests/Anyop/Makefile.am:
+	* performance-tests/Callback/Makefile.am:
+	* performance-tests/Cubit/Makefile.am:
+	* performance-tests/Cubit/TAO/Makefile.am:
+	* performance-tests/Cubit/TAO/DII_Cubit/Makefile.am:
+	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile.am:
+	* performance-tests/Cubit/TAO/MT_Cubit/Makefile.am:
+	* performance-tests/Latency/Makefile.am:
+	* performance-tests/Latency/AMH_Single_Threaded/Makefile.am:
+	* performance-tests/Latency/AMI/Makefile.am:
+	* performance-tests/Latency/Collocation/Makefile.am:
+	* performance-tests/Latency/DII/Makefile.am:
+	* performance-tests/Latency/DSI/Makefile.am:
+	* performance-tests/Latency/Deferred/Makefile.am:
+	* performance-tests/Latency/Single_Threaded/Makefile.am:
+	* performance-tests/Latency/Thread_Per_Connection/Makefile.am:
+	* performance-tests/Latency/Thread_Pool/Makefile.am:
+	* performance-tests/Memory/Makefile.am:
+	* performance-tests/Memory/IORsize/Makefile.am:
+	* performance-tests/Memory/Single_Threaded/Makefile.am:
+	* performance-tests/POA/Makefile.am:
+	* performance-tests/POA/Create_Reference/Makefile.am:
+	* performance-tests/POA/Demux/Makefile.am:
+	* performance-tests/POA/Implicit_Activation/Makefile.am:
+	* performance-tests/POA/Object_Creation_And_Registration/Makefile.am:
+	* performance-tests/Pluggable/Makefile.am:
+	* performance-tests/Protocols/Makefile.am:
+	* performance-tests/RTCorba/Makefile.am:
+	* performance-tests/RTCorba/Multiple_Endpoints/Makefile.am:
+	* performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile.am:
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile.am:
+	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile.am:
+	* performance-tests/RTCorba/Oneways/Makefile.am:
+	* performance-tests/RTCorba/Oneways/Reliable/Makefile.am:
+	* performance-tests/RTCorba/Thread_Pool/Makefile.am:
+	* performance-tests/Sequence_Latency/Makefile.am:
+	* performance-tests/Sequence_Latency/AMH_Single_Threaded/Makefile.am:
+	* performance-tests/Sequence_Latency/AMI/Makefile.am:
+	* performance-tests/Sequence_Latency/DII/Makefile.am:
+	* performance-tests/Sequence_Latency/DSI/Makefile.am:
+	* performance-tests/Sequence_Latency/Deferred/Makefile.am:
+	* performance-tests/Sequence_Latency/Single_Threaded/Makefile.am:
+	* performance-tests/Sequence_Latency/Thread_Per_Connection/Makefile.am:
+	* performance-tests/Sequence_Latency/Thread_Pool/Makefile.am:
+	* performance-tests/Throughput/Makefile.am:
+
+	  New files.
+
+	* performance-tests/Callback/Callback.mpc:
+	* performance-tests/Cubit/TAO/IDL_Cubit/IDL_Cubit.mpc:
+	* performance-tests/Cubit/TAO/MT_Cubit/MT_Cubit.mpc:
+	* performance-tests/Latency/AMH_Single_Threaded/Single_Threaded.mpc:
+	* performance-tests/Latency/AMI/AMI.mpc:
+	* performance-tests/Latency/DII/DII.mpc:
+	* performance-tests/Latency/Deferred/Deferred.mpc:
+	* performance-tests/Latency/Single_Threaded/Single_Threaded.mpc:
+	* performance-tests/Latency/Thread_Per_Connection/Thread_Per_Connection.mpc:
+	* performance-tests/Latency/Thread_Pool/Thread_Pool.mpc:
+	* performance-tests/Memory/IORsize/Memory_IORsize.mpc:
+	* performance-tests/Memory/Single_Threaded/Memory_Growth.mpc:
+	* performance-tests/POA/Implicit_Activation/Implicit_Activation.mpc:
+	* performance-tests/Pluggable/Pluggable.mpc:
+	* performance-tests/Protocols/Protocols.mpc:
+	* performance-tests/Sequence_Latency/AMH_Single_Threaded/Single_Threaded.mpc:
+	* performance-tests/Sequence_Latency/AMI/ami.mpc:
+	* performance-tests/Sequence_Latency/DII/DII.mpc:
+	* performance-tests/Sequence_Latency/DSI/DSI.mpc:
+	* performance-tests/Sequence_Latency/Deferred/Deferred.mpc:
+	* performance-tests/Sequence_Latency/Single_Threaded/Single_Threaded.mpc:
+	* performance-tests/Sequence_Latency/Thread_Per_Connection/Thread_Per_Conn.mpc:
+	* performance-tests/Sequence_Latency/Thread_Pool/Thread_Pool.mpc:
+	* performance-tests/Throughput/Throughput.mpc:
+
+          Add *_IDL projects for compiling *.idl files.  This eliminates
+          duplicate rules that would otherwise result when Makefile.am's
+          are aggregated in the automake build.
+
 Mon Oct 17 09:24:13 2005  Paul Calabrese  <calabrese_p@ociweb.com>
 
         * docs/ec_options.html:

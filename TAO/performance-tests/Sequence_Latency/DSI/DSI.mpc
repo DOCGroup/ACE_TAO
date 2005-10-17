@@ -13,7 +13,6 @@ project(*sequence server) : taoserver, strategies, dynamicinterface, minimum_cor
   Source_Files {
     Roundtrip.cpp
     server.cpp
-    TestS.cpp
     TestC.cpp
   }
   IDL_Files {
@@ -28,4 +27,3 @@ project(*sequence client): taoclient, strategies, minimum_corba {
   IDL_Files {
   }
 }
-
