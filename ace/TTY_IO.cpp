@@ -36,7 +36,7 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
 #if defined (ACE_HAS_TERMIOS)
   struct termios devpar;
   speed_t newbaudrate = 0;
-  if (::tcgetattr (get_handle () , &devpar) == -1)
+  if (tcgetattr (get_handle () , &devpar) == -1)
 #elif defined (TCGETS)
   struct termios devpar;
   unsigned int newbaudrate = 0;
@@ -172,9 +172,9 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
 
 #if defined (ACE_HAS_TERMIOS)
       // Can you really have different input and output baud rates?!
-      if (::cfsetospeed (&devpar, newbaudrate) == -1)
+      if (cfsetospeed (&devpar, newbaudrate) == -1)
         return -1;
-      if (::cfsetispeed (&devpar, newbaudrate) == -1)
+      if (cfsetispeed (&devpar, newbaudrate) == -1)
         return -1;
 #else
       devpar.c_cflag &= ~CBAUD;
@@ -333,7 +333,7 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
 #endif /* definded (TIOCMGET) */
 
 #if defined (ACE_HAS_TERMIOS)
-      return ::tcsetattr (get_handle (), TCSANOW, &devpar);
+      return tcsetattr (get_handle (), TCSANOW, &devpar);
 #elif defined (TCSETS)
       return this->ACE_IO_SAP::control (TCSETS, static_cast<void*>(&devpar));
 #elif defined (TCSETA)
