@@ -1,3 +1,15 @@
+Mon Oct 17 12:33:03 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Regenerated.
+
+	* orbsvcs/orbsvcs/ec_typed_events_idl.mpb:
+
+	  Set idlflags to be used when compiling Cos TypedEvent IDL files.
+	  Reset idlflags so they won't be duplicated when compiling plain
+	  CosEvent IDL files.
+
 Mon Oct 17 18:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Invocation_Base.h:
