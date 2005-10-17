@@ -7,5 +7,5 @@ Name: TAO_PI_Server
 Description: TAO PI Server Library
 Requires: TAO_PortableServer, TAO_PI, TAO_CodecFactory, TAO_AnyTypeCode, TAO
 Version: @VERSION@
-Libs: -L${libdir} -lPI_Server
+Libs: -L${libdir} -lTAO_PI_Server
 Cflags: -I${includedir}
