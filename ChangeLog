@@ -1,3 +1,13 @@
+Mon Oct 17 09:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Time_Value.{h,inl}:
+        * ace/UUID.cpp:
+          Fixed 64bit conversion problems. Added a to_usec method
+          to ACE_Time_Value that returns the total of sec and usec
+          as ACE_UINT64 and use that in UUID.cpp.
+          Thanks to James Megquier <jmegq at radiance dot com>.
+          This fixes bugzilla 2263
+
 Sun Oct 16 13:01:12 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* protocols/ace/RMCast/Acknowledge.cpp:
