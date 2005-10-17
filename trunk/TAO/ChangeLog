@@ -1,14 +1,14 @@
 Mon Oct 17 07:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rules.tao.GNU:
-          Prevent building with emulated exceptions.
+          Prevent building with emulated exceptions
 
 Mon Oct 17 07:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/Service.h:
         * orbsvcs/orbsvcs/CosNotification.mpc:
-          Service should be in CosNotification_Serv. Thanks to JT
-          for notificing this.
+          Service should be in CosNotification_Serv. Thanks for JT
+          for notificing this
 
 Sun Oct 16 12:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -325,7 +325,7 @@ Wed Oct 12 03:59:27 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
           In the generated body of the _default() method for a
           union, which sets the discriminator to its default
           value (the _default() method is not generated unless
-          the disccriminator can have a valid default value),
+          the discriminator can have a valid default value),
           added a call to _reset(), which will free memory
           allocated for the existing active member. The former
           behavior, without the call to _reset(), was producing
@@ -711,6 +711,7 @@ Thu Oct  6 10:03:16 2005  J.T. Conklin  <jtc@acorntoolworks.com>
         * docs/tutorials/Quoter/Simple/Server/Makefile.am:
 
           Hand tweaks to _CPPFLAGS to find Stub/Skeleton headers in ../idl
+
           directory.
 
         * docs/tutorials/Quoter/AMI/Makefile.am:
