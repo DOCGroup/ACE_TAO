@@ -1,3 +1,9 @@
+Mon Oct 17 11:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging/*:
+          Regenerated all files with the latest version of the idl
+          compiler.
+
 Mon Oct 17 10:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI/TAO_PI.pc.in:
