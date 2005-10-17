@@ -233,10 +233,14 @@ run_test (int write_file,
       size_t msgsize = info.size_ - 1;
 
       // Allocate the input buffer
-      char *buffer;
+      char *buffer = 0;
       ACE_NEW_RETURN (buffer,
                       char[msgsize],
                       -1);
+#if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
+      ACE_OS::memset(buffer_, 0, sizeof (buffer_));
+#endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
+
       // Make sure <buffer> is released automagically.
       ACE_Auto_Basic_Array_Ptr<char> b (buffer);
 
