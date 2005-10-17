@@ -48,7 +48,7 @@ Messaging::ExceptionHolder::_tao_obv_static_repository_id ()
 ACE_INLINE
 Messaging::ReplyHandler::ReplyHandler (
     TAO_Stub *objref,
-    CORBA::Boolean _tao_collocated,
+    ::CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant,
     TAO_ORB_Core *oc
   )
@@ -68,7 +68,7 @@ Messaging::ReplyHandler::ReplyHandler (
     IOP::IOR *ior,
     TAO_ORB_Core *oc
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (ior, oc),
+  : ACE_NESTED_CLASS ( ::CORBA, Object) (ior, oc),
     the_TAO_ReplyHandler_Proxy_Broker_ (0)
 {
 }

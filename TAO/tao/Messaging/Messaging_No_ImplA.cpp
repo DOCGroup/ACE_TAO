@@ -25,14 +25,14 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+#include "Messaging_No_ImplA.h"
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
 #include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
 #include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
 #include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
-#include "tao/AnyTypeCode/Recursive_Type_TypeCode.h"
-#include "Messaging_No_ImplC.h"
+#include "tao/AnyTypeCode/Any.h"
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Impl_T.h"
@@ -42,14 +42,14 @@
 // be\be_visitor_typecode/alias_typecode.cpp:50
 
 static TAO::TypeCode::Alias<char const *,
-                            CORBA::TypeCode_ptr const *,
+                            ::CORBA::TypeCode_ptr const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_Priority (
-    CORBA::tk_alias,
+    ::CORBA::tk_alias,
     "IDL:omg.org/Messaging/Priority:1.0",
     "Priority",
     &CORBA::_tc_short);
-
+  
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_Priority =
@@ -62,14 +62,14 @@ namespace Messaging
 // be\be_visitor_typecode/alias_typecode.cpp:50
 
 static TAO::TypeCode::Alias<char const *,
-                            CORBA::TypeCode_ptr const *,
+                            ::CORBA::TypeCode_ptr const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_RebindMode (
-    CORBA::tk_alias,
+    ::CORBA::tk_alias,
     "IDL:omg.org/Messaging/RebindMode:1.0",
     "RebindMode",
     &CORBA::_tc_short);
-
+  
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_RebindMode =
@@ -82,14 +82,14 @@ namespace Messaging
 // be\be_visitor_typecode/alias_typecode.cpp:50
 
 static TAO::TypeCode::Alias<char const *,
-                            CORBA::TypeCode_ptr const *,
+                            ::CORBA::TypeCode_ptr const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_RoutingType (
-    CORBA::tk_alias,
+    ::CORBA::tk_alias,
     "IDL:omg.org/Messaging/RoutingType:1.0",
     "RoutingType",
     &CORBA::_tc_short);
-
+  
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_RoutingType =
@@ -102,14 +102,14 @@ namespace Messaging
 // be\be_visitor_typecode/alias_typecode.cpp:50
 
 static TAO::TypeCode::Alias<char const *,
-                            CORBA::TypeCode_ptr const *,
+                            ::CORBA::TypeCode_ptr const *,
                             TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_Ordering (
-    CORBA::tk_alias,
+    ::CORBA::tk_alias,
     "IDL:omg.org/Messaging/Ordering:1.0",
     "Ordering",
     &CORBA::_tc_ushort);
-
+  
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_Ordering =
@@ -124,10 +124,10 @@ namespace Messaging
 static TAO::TypeCode::Objref<char const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_RebindPolicy (
-    CORBA::tk_local_interface,
+    ::CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/RebindPolicy:1.0",
     "RebindPolicy");
-
+  
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_RebindPolicy =
@@ -137,25 +137,25 @@ namespace Messaging
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:87
+// be\be_visitor_typecode/struct_typecode.cpp:89
 
-static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_Messaging_PriorityRange[] =
+static TAO::TypeCode::Struct_Field<char const *, ::CORBA::TypeCode_ptr const *> const _tao_fields_Messaging_PriorityRange[] =
   {
     { "min", &Messaging::_tc_Priority },
     { "max", &Messaging::_tc_Priority }
-
+    
   };
 static TAO::TypeCode::Struct<char const *,
-                      CORBA::TypeCode_ptr const *,
-                      TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const *,
+                      ::CORBA::TypeCode_ptr const *,
+                      TAO::TypeCode::Struct_Field<char const *, ::CORBA::TypeCode_ptr const *> const *,
                       TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_PriorityRange (
-    CORBA::tk_struct,
+    ::CORBA::tk_struct,
     "IDL:omg.org/Messaging/PriorityRange:1.0",
     "PriorityRange",
     _tao_fields_Messaging_PriorityRange,
     2);
-
+  
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_PriorityRange =
@@ -170,10 +170,10 @@ namespace Messaging
 static TAO::TypeCode::Objref<char const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_RequestPriorityPolicy (
-    CORBA::tk_local_interface,
+    ::CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/RequestPriorityPolicy:1.0",
     "RequestPriorityPolicy");
-
+  
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_RequestPriorityPolicy =
@@ -188,10 +188,10 @@ namespace Messaging
 static TAO::TypeCode::Objref<char const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_ReplyPriorityPolicy (
-    CORBA::tk_local_interface,
+    ::CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/ReplyPriorityPolicy:1.0",
     "ReplyPriorityPolicy");
-
+  
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_ReplyPriorityPolicy =
@@ -206,10 +206,10 @@ namespace Messaging
 static TAO::TypeCode::Objref<char const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_RequestStartTimePolicy (
-    CORBA::tk_local_interface,
+    ::CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/RequestStartTimePolicy:1.0",
     "RequestStartTimePolicy");
-
+  
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_RequestStartTimePolicy =
@@ -224,10 +224,10 @@ namespace Messaging
 static TAO::TypeCode::Objref<char const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_RequestEndTimePolicy (
-    CORBA::tk_local_interface,
+    ::CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/RequestEndTimePolicy:1.0",
     "RequestEndTimePolicy");
-
+  
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_RequestEndTimePolicy =
@@ -242,10 +242,10 @@ namespace Messaging
 static TAO::TypeCode::Objref<char const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_ReplyStartTimePolicy (
-    CORBA::tk_local_interface,
+    ::CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/ReplyStartTimePolicy:1.0",
     "ReplyStartTimePolicy");
-
+  
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_ReplyStartTimePolicy =
@@ -260,10 +260,10 @@ namespace Messaging
 static TAO::TypeCode::Objref<char const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_ReplyEndTimePolicy (
-    CORBA::tk_local_interface,
+    ::CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/ReplyEndTimePolicy:1.0",
     "ReplyEndTimePolicy");
-
+  
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_ReplyEndTimePolicy =
@@ -278,10 +278,10 @@ namespace Messaging
 static TAO::TypeCode::Objref<char const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_RelativeRequestTimeoutPolicy (
-    CORBA::tk_local_interface,
+    ::CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/RelativeRequestTimeoutPolicy:1.0",
     "RelativeRequestTimeoutPolicy");
-
+  
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_RelativeRequestTimeoutPolicy =
@@ -291,25 +291,25 @@ namespace Messaging
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:87
+// be\be_visitor_typecode/struct_typecode.cpp:89
 
-static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const _tao_fields_Messaging_RoutingTypeRange[] =
+static TAO::TypeCode::Struct_Field<char const *, ::CORBA::TypeCode_ptr const *> const _tao_fields_Messaging_RoutingTypeRange[] =
   {
     { "min", &Messaging::_tc_RoutingType },
     { "max", &Messaging::_tc_RoutingType }
-
+    
   };
 static TAO::TypeCode::Struct<char const *,
-                      CORBA::TypeCode_ptr const *,
-                      TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const *,
+                      ::CORBA::TypeCode_ptr const *,
+                      TAO::TypeCode::Struct_Field<char const *, ::CORBA::TypeCode_ptr const *> const *,
                       TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_RoutingTypeRange (
-    CORBA::tk_struct,
+    ::CORBA::tk_struct,
     "IDL:omg.org/Messaging/RoutingTypeRange:1.0",
     "RoutingTypeRange",
     _tao_fields_Messaging_RoutingTypeRange,
     2);
-
+  
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_RoutingTypeRange =
@@ -324,10 +324,10 @@ namespace Messaging
 static TAO::TypeCode::Objref<char const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_RoutingPolicy (
-    CORBA::tk_local_interface,
+    ::CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/RoutingPolicy:1.0",
     "RoutingPolicy");
-
+  
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_RoutingPolicy =
@@ -342,10 +342,10 @@ namespace Messaging
 static TAO::TypeCode::Objref<char const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_MaxHopsPolicy (
-    CORBA::tk_local_interface,
+    ::CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/MaxHopsPolicy:1.0",
     "MaxHopsPolicy");
-
+  
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_MaxHopsPolicy =
@@ -360,10 +360,10 @@ namespace Messaging
 static TAO::TypeCode::Objref<char const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_Messaging_QueueOrderPolicy (
-    CORBA::tk_local_interface,
+    ::CORBA::tk_local_interface,
     "IDL:omg.org/Messaging/QueueOrderPolicy:1.0",
     "QueueOrderPolicy");
-
+  
 namespace Messaging
 {
   ::CORBA::TypeCode_ptr const _tc_QueueOrderPolicy =
@@ -372,101 +372,29 @@ namespace Messaging
 
 
 
-// TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::RebindPolicy>::to_object (
-      CORBA::Object_ptr &_tao_elem
-    ) const
-  {
-    _tao_elem = CORBA::Object::_duplicate (this->value_);
-    return true;
-  }
-}
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::RebindPolicy>::marshal_value (TAO_OutputCDR &)
-  {
-    return false;
-  }
-
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::RebindPolicy>::demarshal_value (TAO_InputCDR &)
-  {
-    return false;
-  }
-}
-
-// Copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    Messaging::RebindPolicy_ptr _tao_elem
-  )
-{
-  Messaging::RebindPolicy_ptr _tao_objptr =
-    Messaging::RebindPolicy::_duplicate (_tao_elem);
-  _tao_any <<= &_tao_objptr;
-}
-
-// Non-copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    Messaging::RebindPolicy_ptr *_tao_elem
-  )
-{
-  TAO::Any_Impl_T<Messaging::RebindPolicy>::insert (
-      _tao_any,
-      Messaging::RebindPolicy::_tao_any_destructor,
-      Messaging::_tc_RebindPolicy,
-      *_tao_elem
-    );
-}
-
-CORBA::Boolean
-operator>>= (
-    const CORBA::Any &_tao_any,
-    Messaging::RebindPolicy_ptr &_tao_elem
-  )
-{
-  return
-    TAO::Any_Impl_T<Messaging::RebindPolicy>::extract (
-        _tao_any,
-        Messaging::RebindPolicy::_tao_any_destructor,
-        Messaging::_tc_RebindPolicy,
-        _tao_elem
-      );
-}
-
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
-    CORBA::Any &_tao_any,
+    ::CORBA::Any &_tao_any,
     const Messaging::PriorityRange &_tao_elem
   )
 {
-  TAO::Any_Dual_Impl_T<Messaging::PriorityRange>::insert_copy (
-      _tao_any,
-      Messaging::PriorityRange::_tao_any_destructor,
-      Messaging::_tc_PriorityRange,
-      _tao_elem
-    );
+  if (0 == &_tao_elem) // Trying to de-reference NULL object
+    _tao_any <<= static_cast<Messaging::PriorityRange *>( 0 ); // Use non-copying insertion of a NULL
+  else
+    TAO::Any_Dual_Impl_T<Messaging::PriorityRange>::insert_copy (
+        _tao_any,
+        Messaging::PriorityRange::_tao_any_destructor,
+        Messaging::_tc_PriorityRange,
+        _tao_elem
+      );
 }
 
 // Non-copying insertion.
 void operator<<= (
-    CORBA::Any &_tao_any,
+    ::CORBA::Any &_tao_any,
     Messaging::PriorityRange *_tao_elem
   )
 {
@@ -479,8 +407,8 @@ void operator<<= (
 }
 
 // Extraction to non-const pointer (deprecated).
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
+::CORBA::Boolean operator>>= (
+    const ::CORBA::Any &_tao_any,
     Messaging::PriorityRange *&_tao_elem
   )
 {
@@ -491,8 +419,8 @@ CORBA::Boolean operator>>= (
 }
 
 // Extraction to const pointer.
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
+::CORBA::Boolean operator>>= (
+    const ::CORBA::Any &_tao_any,
     const Messaging::PriorityRange *&_tao_elem
   )
 {
@@ -505,551 +433,29 @@ CORBA::Boolean operator>>= (
       );
 }
 
-// TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::RequestPriorityPolicy>::to_object (
-      CORBA::Object_ptr &_tao_elem
-    ) const
-  {
-    _tao_elem = CORBA::Object::_duplicate (this->value_);
-    return true;
-  }
-}
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::RequestPriorityPolicy>::marshal_value (TAO_OutputCDR &)
-  {
-    return false;
-  }
-
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::RequestPriorityPolicy>::demarshal_value (TAO_InputCDR &)
-  {
-    return false;
-  }
-}
-
-// Copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    Messaging::RequestPriorityPolicy_ptr _tao_elem
-  )
-{
-  Messaging::RequestPriorityPolicy_ptr _tao_objptr =
-    Messaging::RequestPriorityPolicy::_duplicate (_tao_elem);
-  _tao_any <<= &_tao_objptr;
-}
-
-// Non-copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    Messaging::RequestPriorityPolicy_ptr *_tao_elem
-  )
-{
-  TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::insert (
-      _tao_any,
-      Messaging::RequestPriorityPolicy::_tao_any_destructor,
-      Messaging::_tc_RequestPriorityPolicy,
-      *_tao_elem
-    );
-}
-
-CORBA::Boolean
-operator>>= (
-    const CORBA::Any &_tao_any,
-    Messaging::RequestPriorityPolicy_ptr &_tao_elem
-  )
-{
-  return
-    TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::extract (
-        _tao_any,
-        Messaging::RequestPriorityPolicy::_tao_any_destructor,
-        Messaging::_tc_RequestPriorityPolicy,
-        _tao_elem
-      );
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::ReplyPriorityPolicy>::to_object (
-      CORBA::Object_ptr &_tao_elem
-    ) const
-  {
-    _tao_elem = CORBA::Object::_duplicate (this->value_);
-    return true;
-  }
-}
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::ReplyPriorityPolicy>::marshal_value (TAO_OutputCDR &)
-  {
-    return false;
-  }
-
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::ReplyPriorityPolicy>::demarshal_value (TAO_InputCDR &)
-  {
-    return false;
-  }
-}
-
-// Copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    Messaging::ReplyPriorityPolicy_ptr _tao_elem
-  )
-{
-  Messaging::ReplyPriorityPolicy_ptr _tao_objptr =
-    Messaging::ReplyPriorityPolicy::_duplicate (_tao_elem);
-  _tao_any <<= &_tao_objptr;
-}
-
-// Non-copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    Messaging::ReplyPriorityPolicy_ptr *_tao_elem
-  )
-{
-  TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::insert (
-      _tao_any,
-      Messaging::ReplyPriorityPolicy::_tao_any_destructor,
-      Messaging::_tc_ReplyPriorityPolicy,
-      *_tao_elem
-    );
-}
-
-CORBA::Boolean
-operator>>= (
-    const CORBA::Any &_tao_any,
-    Messaging::ReplyPriorityPolicy_ptr &_tao_elem
-  )
-{
-  return
-    TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::extract (
-        _tao_any,
-        Messaging::ReplyPriorityPolicy::_tao_any_destructor,
-        Messaging::_tc_ReplyPriorityPolicy,
-        _tao_elem
-      );
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::RequestStartTimePolicy>::to_object (
-      CORBA::Object_ptr &_tao_elem
-    ) const
-  {
-    _tao_elem = CORBA::Object::_duplicate (this->value_);
-    return true;
-  }
-}
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::RequestStartTimePolicy>::marshal_value (TAO_OutputCDR &)
-  {
-    return false;
-  }
-
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::RequestStartTimePolicy>::demarshal_value (TAO_InputCDR &)
-  {
-    return false;
-  }
-}
-
-// Copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    Messaging::RequestStartTimePolicy_ptr _tao_elem
-  )
-{
-  Messaging::RequestStartTimePolicy_ptr _tao_objptr =
-    Messaging::RequestStartTimePolicy::_duplicate (_tao_elem);
-  _tao_any <<= &_tao_objptr;
-}
-
-// Non-copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    Messaging::RequestStartTimePolicy_ptr *_tao_elem
-  )
-{
-  TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::insert (
-      _tao_any,
-      Messaging::RequestStartTimePolicy::_tao_any_destructor,
-      Messaging::_tc_RequestStartTimePolicy,
-      *_tao_elem
-    );
-}
-
-CORBA::Boolean
-operator>>= (
-    const CORBA::Any &_tao_any,
-    Messaging::RequestStartTimePolicy_ptr &_tao_elem
-  )
-{
-  return
-    TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::extract (
-        _tao_any,
-        Messaging::RequestStartTimePolicy::_tao_any_destructor,
-        Messaging::_tc_RequestStartTimePolicy,
-        _tao_elem
-      );
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::RequestEndTimePolicy>::to_object (
-      CORBA::Object_ptr &_tao_elem
-    ) const
-  {
-    _tao_elem = CORBA::Object::_duplicate (this->value_);
-    return true;
-  }
-}
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::RequestEndTimePolicy>::marshal_value (TAO_OutputCDR &)
-  {
-    return false;
-  }
-
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::RequestEndTimePolicy>::demarshal_value (TAO_InputCDR &)
-  {
-    return false;
-  }
-}
-
-// Copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    Messaging::RequestEndTimePolicy_ptr _tao_elem
-  )
-{
-  Messaging::RequestEndTimePolicy_ptr _tao_objptr =
-    Messaging::RequestEndTimePolicy::_duplicate (_tao_elem);
-  _tao_any <<= &_tao_objptr;
-}
-
-// Non-copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    Messaging::RequestEndTimePolicy_ptr *_tao_elem
-  )
-{
-  TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::insert (
-      _tao_any,
-      Messaging::RequestEndTimePolicy::_tao_any_destructor,
-      Messaging::_tc_RequestEndTimePolicy,
-      *_tao_elem
-    );
-}
-
-CORBA::Boolean
-operator>>= (
-    const CORBA::Any &_tao_any,
-    Messaging::RequestEndTimePolicy_ptr &_tao_elem
-  )
-{
-  return
-    TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::extract (
-        _tao_any,
-        Messaging::RequestEndTimePolicy::_tao_any_destructor,
-        Messaging::_tc_RequestEndTimePolicy,
-        _tao_elem
-      );
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::ReplyStartTimePolicy>::to_object (
-      CORBA::Object_ptr &_tao_elem
-    ) const
-  {
-    _tao_elem = CORBA::Object::_duplicate (this->value_);
-    return true;
-  }
-}
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::ReplyStartTimePolicy>::marshal_value (TAO_OutputCDR &)
-  {
-    return false;
-  }
-
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::ReplyStartTimePolicy>::demarshal_value (TAO_InputCDR &)
-  {
-    return false;
-  }
-}
-
-// Copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    Messaging::ReplyStartTimePolicy_ptr _tao_elem
-  )
-{
-  Messaging::ReplyStartTimePolicy_ptr _tao_objptr =
-    Messaging::ReplyStartTimePolicy::_duplicate (_tao_elem);
-  _tao_any <<= &_tao_objptr;
-}
-
-// Non-copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    Messaging::ReplyStartTimePolicy_ptr *_tao_elem
-  )
-{
-  TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::insert (
-      _tao_any,
-      Messaging::ReplyStartTimePolicy::_tao_any_destructor,
-      Messaging::_tc_ReplyStartTimePolicy,
-      *_tao_elem
-    );
-}
-
-CORBA::Boolean
-operator>>= (
-    const CORBA::Any &_tao_any,
-    Messaging::ReplyStartTimePolicy_ptr &_tao_elem
-  )
-{
-  return
-    TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::extract (
-        _tao_any,
-        Messaging::ReplyStartTimePolicy::_tao_any_destructor,
-        Messaging::_tc_ReplyStartTimePolicy,
-        _tao_elem
-      );
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::ReplyEndTimePolicy>::to_object (
-      CORBA::Object_ptr &_tao_elem
-    ) const
-  {
-    _tao_elem = CORBA::Object::_duplicate (this->value_);
-    return true;
-  }
-}
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::ReplyEndTimePolicy>::marshal_value (TAO_OutputCDR &)
-  {
-    return false;
-  }
-
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::ReplyEndTimePolicy>::demarshal_value (TAO_InputCDR &)
-  {
-    return false;
-  }
-}
-
-// Copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    Messaging::ReplyEndTimePolicy_ptr _tao_elem
-  )
-{
-  Messaging::ReplyEndTimePolicy_ptr _tao_objptr =
-    Messaging::ReplyEndTimePolicy::_duplicate (_tao_elem);
-  _tao_any <<= &_tao_objptr;
-}
-
-// Non-copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    Messaging::ReplyEndTimePolicy_ptr *_tao_elem
-  )
-{
-  TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::insert (
-      _tao_any,
-      Messaging::ReplyEndTimePolicy::_tao_any_destructor,
-      Messaging::_tc_ReplyEndTimePolicy,
-      *_tao_elem
-    );
-}
-
-CORBA::Boolean
-operator>>= (
-    const CORBA::Any &_tao_any,
-    Messaging::ReplyEndTimePolicy_ptr &_tao_elem
-  )
-{
-  return
-    TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::extract (
-        _tao_any,
-        Messaging::ReplyEndTimePolicy::_tao_any_destructor,
-        Messaging::_tc_ReplyEndTimePolicy,
-        _tao_elem
-      );
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::to_object (
-      CORBA::Object_ptr &_tao_elem
-    ) const
-  {
-    _tao_elem = CORBA::Object::_duplicate (this->value_);
-    return true;
-  }
-}
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::marshal_value (TAO_OutputCDR &)
-  {
-    return false;
-  }
-
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::demarshal_value (TAO_InputCDR &)
-  {
-    return false;
-  }
-}
-
-// Copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    Messaging::RelativeRequestTimeoutPolicy_ptr _tao_elem
-  )
-{
-  Messaging::RelativeRequestTimeoutPolicy_ptr _tao_objptr =
-    Messaging::RelativeRequestTimeoutPolicy::_duplicate (_tao_elem);
-  _tao_any <<= &_tao_objptr;
-}
-
-// Non-copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    Messaging::RelativeRequestTimeoutPolicy_ptr *_tao_elem
-  )
-{
-  TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::insert (
-      _tao_any,
-      Messaging::RelativeRequestTimeoutPolicy::_tao_any_destructor,
-      Messaging::_tc_RelativeRequestTimeoutPolicy,
-      *_tao_elem
-    );
-}
-
-CORBA::Boolean
-operator>>= (
-    const CORBA::Any &_tao_any,
-    Messaging::RelativeRequestTimeoutPolicy_ptr &_tao_elem
-  )
-{
-  return
-    TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::extract (
-        _tao_any,
-        Messaging::RelativeRequestTimeoutPolicy::_tao_any_destructor,
-        Messaging::_tc_RelativeRequestTimeoutPolicy,
-        _tao_elem
-      );
-}
-
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
-    CORBA::Any &_tao_any,
+    ::CORBA::Any &_tao_any,
     const Messaging::RoutingTypeRange &_tao_elem
   )
 {
-  TAO::Any_Dual_Impl_T<Messaging::RoutingTypeRange>::insert_copy (
-      _tao_any,
-      Messaging::RoutingTypeRange::_tao_any_destructor,
-      Messaging::_tc_RoutingTypeRange,
-      _tao_elem
-    );
+  if (0 == &_tao_elem) // Trying to de-reference NULL object
+    _tao_any <<= static_cast<Messaging::RoutingTypeRange *>( 0 ); // Use non-copying insertion of a NULL
+  else
+    TAO::Any_Dual_Impl_T<Messaging::RoutingTypeRange>::insert_copy (
+        _tao_any,
+        Messaging::RoutingTypeRange::_tao_any_destructor,
+        Messaging::_tc_RoutingTypeRange,
+        _tao_elem
+      );
 }
 
 // Non-copying insertion.
 void operator<<= (
-    CORBA::Any &_tao_any,
+    ::CORBA::Any &_tao_any,
     Messaging::RoutingTypeRange *_tao_elem
   )
 {
@@ -1062,8 +468,8 @@ void operator<<= (
 }
 
 // Extraction to non-const pointer (deprecated).
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
+::CORBA::Boolean operator>>= (
+    const ::CORBA::Any &_tao_any,
     Messaging::RoutingTypeRange *&_tao_elem
   )
 {
@@ -1074,8 +480,8 @@ CORBA::Boolean operator>>= (
 }
 
 // Extraction to const pointer.
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
+::CORBA::Boolean operator>>= (
+    const ::CORBA::Any &_tao_any,
     const Messaging::RoutingTypeRange *&_tao_elem
   )
 {
@@ -1084,231 +490,6 @@ CORBA::Boolean operator>>= (
         _tao_any,
         Messaging::RoutingTypeRange::_tao_any_destructor,
         Messaging::_tc_RoutingTypeRange,
-        _tao_elem
-      );
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::RoutingPolicy>::to_object (
-      CORBA::Object_ptr &_tao_elem
-    ) const
-  {
-    _tao_elem = CORBA::Object::_duplicate (this->value_);
-    return true;
-  }
-}
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::RoutingPolicy>::marshal_value (TAO_OutputCDR &)
-  {
-    return false;
-  }
-
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::RoutingPolicy>::demarshal_value (TAO_InputCDR &)
-  {
-    return false;
-  }
-}
-
-// Copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    Messaging::RoutingPolicy_ptr _tao_elem
-  )
-{
-  Messaging::RoutingPolicy_ptr _tao_objptr =
-    Messaging::RoutingPolicy::_duplicate (_tao_elem);
-  _tao_any <<= &_tao_objptr;
-}
-
-// Non-copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    Messaging::RoutingPolicy_ptr *_tao_elem
-  )
-{
-  TAO::Any_Impl_T<Messaging::RoutingPolicy>::insert (
-      _tao_any,
-      Messaging::RoutingPolicy::_tao_any_destructor,
-      Messaging::_tc_RoutingPolicy,
-      *_tao_elem
-    );
-}
-
-CORBA::Boolean
-operator>>= (
-    const CORBA::Any &_tao_any,
-    Messaging::RoutingPolicy_ptr &_tao_elem
-  )
-{
-  return
-    TAO::Any_Impl_T<Messaging::RoutingPolicy>::extract (
-        _tao_any,
-        Messaging::RoutingPolicy::_tao_any_destructor,
-        Messaging::_tc_RoutingPolicy,
-        _tao_elem
-      );
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::MaxHopsPolicy>::to_object (
-      CORBA::Object_ptr &_tao_elem
-    ) const
-  {
-    _tao_elem = CORBA::Object::_duplicate (this->value_);
-    return true;
-  }
-}
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::MaxHopsPolicy>::marshal_value (TAO_OutputCDR &)
-  {
-    return false;
-  }
-
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::MaxHopsPolicy>::demarshal_value (TAO_InputCDR &)
-  {
-    return false;
-  }
-}
-
-// Copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    Messaging::MaxHopsPolicy_ptr _tao_elem
-  )
-{
-  Messaging::MaxHopsPolicy_ptr _tao_objptr =
-    Messaging::MaxHopsPolicy::_duplicate (_tao_elem);
-  _tao_any <<= &_tao_objptr;
-}
-
-// Non-copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    Messaging::MaxHopsPolicy_ptr *_tao_elem
-  )
-{
-  TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::insert (
-      _tao_any,
-      Messaging::MaxHopsPolicy::_tao_any_destructor,
-      Messaging::_tc_MaxHopsPolicy,
-      *_tao_elem
-    );
-}
-
-CORBA::Boolean
-operator>>= (
-    const CORBA::Any &_tao_any,
-    Messaging::MaxHopsPolicy_ptr &_tao_elem
-  )
-{
-  return
-    TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::extract (
-        _tao_any,
-        Messaging::MaxHopsPolicy::_tao_any_destructor,
-        Messaging::_tc_MaxHopsPolicy,
-        _tao_elem
-      );
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_cs.cpp:50
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::QueueOrderPolicy>::to_object (
-      CORBA::Object_ptr &_tao_elem
-    ) const
-  {
-    _tao_elem = CORBA::Object::_duplicate (this->value_);
-    return true;
-  }
-}
-
-namespace TAO
-{
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::QueueOrderPolicy>::marshal_value (TAO_OutputCDR &)
-  {
-    return false;
-  }
-
-  template<>
-  CORBA::Boolean
-  Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
-  {
-    return false;
-  }
-}
-
-// Copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    Messaging::QueueOrderPolicy_ptr _tao_elem
-  )
-{
-  Messaging::QueueOrderPolicy_ptr _tao_objptr =
-    Messaging::QueueOrderPolicy::_duplicate (_tao_elem);
-  _tao_any <<= &_tao_objptr;
-}
-
-// Non-copying insertion.
-void
-operator<<= (
-    CORBA::Any &_tao_any,
-    Messaging::QueueOrderPolicy_ptr *_tao_elem
-  )
-{
-  TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::insert (
-      _tao_any,
-      Messaging::QueueOrderPolicy::_tao_any_destructor,
-      Messaging::_tc_QueueOrderPolicy,
-      *_tao_elem
-    );
-}
-
-CORBA::Boolean
-operator>>= (
-    const CORBA::Any &_tao_any,
-    Messaging::QueueOrderPolicy_ptr &_tao_elem
-  )
-{
-  return
-    TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::extract (
-        _tao_any,
-        Messaging::QueueOrderPolicy::_tao_any_destructor,
-        Messaging::_tc_QueueOrderPolicy,
         _tao_elem
       );
 }

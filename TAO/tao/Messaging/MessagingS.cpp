@@ -26,14 +26,13 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-// TAO_IDL - Generated from
-// be\be_codegen.cpp:599
+// TAO_IDL - Generated from 
+// be\be_codegen.cpp:553
 
-#ifndef _TAO_IDL_ORIG_MESSAGINGS_CPP_
-#define _TAO_IDL_ORIG_MESSAGINGS_CPP_
+#ifndef _TAO_IDL_MESSAGINGS_CPP_
+#define _TAO_IDL_MESSAGINGS_CPP_
 
-#include "tao/AnyTypeCode/TypeCode.h"
-#include "tao/AnyTypeCode/DynamicC.h"
+
 #include "MessagingS.h"
 #include "tao/PortableServer/Operation_Table_Perfect_Hash.h"
 #include "tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h"
@@ -53,16 +52,14 @@
 #include "tao/Stub.h"
 #include "tao/IFR_Client_Adapter.h"
 #include "tao/Object_T.h"
+#include "tao/AnyTypeCode/TypeCode.h"
+#include "tao/AnyTypeCode/DynamicC.h"
 #include "tao/CDR.h"
 #include "tao/operation_details.h"
 #include "tao/PortableInterceptor.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Malloc_Allocator.h"
 
-#if defined (__BORLANDC__)
-#pragma option -w-rvl -w-rch -w-ccc -w-aus
-#endif /* __BORLANDC__ */
-
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
 
@@ -82,7 +79,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be\be_interface.cpp:1455
+// be\be_interface.cpp:1513
 
 class TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable
   : public TAO_Perfect_Hash_OpTable
@@ -102,46 +99,46 @@ TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable::hash (const char *str, unsigned
   static const unsigned char asso_values[] =
     {
 #if defined (ACE_MVS)
-     14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14, 14, 14, 14,  0,
-     14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14, 14, 14, 14,  0,
-     14, 14, 14,  1, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14,  0, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14,
+     16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16, 16, 16, 16,  0,
+     16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16, 16, 16, 16,  0,
+     16, 16,  0,  5, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16,  0, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16,
 #else
-     14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14,  0, 14,  0, 14, 14,
-     14,  1, 14, 14, 14, 14, 14, 14, 14, 14,
-     14, 14, 14, 14, 14, 14,  0, 14, 14, 14,
-     14, 14, 14, 14, 14, 14, 14, 14,
+     16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16,  0, 16,  0, 16, 16,
+      0,  5, 16, 16, 16, 16, 16, 16, 16, 16,
+     16, 16, 16, 16, 16, 16,  0, 16, 16, 16,
+     16, 16, 16, 16, 16, 16, 16, 16,
 #endif /* ACE_MVS */
     };
   return len + asso_values[(int) str[len - 1]] + asso_values[(int) str[0]];
@@ -152,14 +149,14 @@ TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable::lookup (const char *str, unsign
 {
   enum
     {
-      TOTAL_KEYWORDS = 4,
+      TOTAL_KEYWORDS = 5,
       MIN_WORD_LENGTH = 5,
-      MAX_WORD_LENGTH = 13,
+      MAX_WORD_LENGTH = 14,
       MIN_HASH_VALUE = 5,
-      MAX_HASH_VALUE = 13,
-      HASH_VALUE_RANGE = 9,
+      MAX_HASH_VALUE = 15,
+      HASH_VALUE_RANGE = 11,
       DUPLICATES = 0,
-      WORDLIST_SIZE = 9
+      WORDLIST_SIZE = 10
     };
 
   static const TAO_operation_db_entry  wordlist[] =
@@ -168,9 +165,10 @@ TAO_Messaging_ReplyHandler_Perfect_Hash_OpTable::lookup (const char *str, unsign
       {"_is_a", &POA_Messaging::ReplyHandler::_is_a_skel, 0},
       {"",0,0},{"",0,0},{"",0,0},{"",0,0},
       {"_component", &POA_Messaging::ReplyHandler::_component_skel, 0},
-      {"_interface", &POA_Messaging::ReplyHandler::_interface_skel, 0},
-      {"",0,0},
+      {"",0,0},{"",0,0},
       {"_non_existent", &POA_Messaging::ReplyHandler::_non_existent_skel, 0},
+      {"_repository_id", &POA_Messaging::ReplyHandler::_repository_id_skel, 0},
+      {"_interface", &POA_Messaging::ReplyHandler::_interface_skel, 0},
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -202,7 +200,7 @@ POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::the_TAO_ReplyHandler_
 {
   static POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker
   strategized_proxy_broker;
-
+  
   return &strategized_proxy_broker;
 }
 
@@ -216,22 +214,22 @@ POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::~_TAO_ReplyHandler_St
 
 TAO::Collocation_Strategy
 POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::get_strategy (
-    CORBA::Object_ptr obj
+    ::CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC (( ::CORBA::SystemException))
 {
   TAO::Collocation_Strategy strategy =
     TAO_ORB_Core::collocation_strategy (obj ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO::TAO_CS_REMOTE_STRATEGY);
-
+  
   return strategy;
 }
 
 void
 POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::dispatch (
-    CORBA::Object_ptr obj,
-    CORBA::Object_out forward_obj,
+    ::CORBA::Object_ptr obj,
+    ::CORBA::Object_out forward_obj,
     TAO::Argument ** args,
     int num_args,
     const char * op,
@@ -239,17 +237,17 @@ POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::dispatch (
     TAO::Collocation_Strategy strategy
     ACE_ENV_ARG_DECL
   )
-  ACE_THROW_SPEC ((CORBA::Exception))
+  ACE_THROW_SPEC (( ::CORBA::Exception))
 {
   TAO::Direct_Collocation_Upcall_Wrapper collocation_upcall_wrapper;
   collocation_upcall_wrapper.upcall (
-    obj,
-    forward_obj,
-    args,
-    num_args,
-    op,
-    op_len,
-    strategy
+    obj, 
+    forward_obj, 
+    args, 
+    num_args, 
+    op, 
+    op_len, 
+    strategy 
     ACE_ENV_ARG_PARAMETER);
 }
 
@@ -258,10 +256,10 @@ POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::dispatch (
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:813
+// be\be_visitor_interface/interface_ss.cpp:924
 
 TAO::Collocation_Proxy_Broker *
-Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function (CORBA::Object_ptr)
+Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function ( ::CORBA::Object_ptr)
 {
   return
     ::POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::the_TAO_ReplyHandler_Strategized_Proxy_Broker ();
@@ -270,9 +268,9 @@ Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function (CORBA::Object_ptr)
 int
 Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_Initializer (size_t)
 {
-  Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer =
+  Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer = 
     Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function;
-
+  
   return 0;
 }
 
@@ -300,7 +298,7 @@ POA_Messaging::_TAO_ReplyHandler_Direct_Proxy_Impl::~_TAO_ReplyHandler_Direct_Pr
 //           End Direct Proxy Implementation
 ///////////////////////////////////////////////////////////////////////
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_interface/interface_ss.cpp:103
 
 POA_Messaging::ReplyHandler::ReplyHandler (void)
@@ -319,16 +317,16 @@ POA_Messaging::ReplyHandler::~ReplyHandler (void)
 {
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_interface/interface_ss.cpp:169
 
 namespace POA_Messaging
 {
-
-
+  
+  
   // TAO_IDL - Generated from
   // be\be_visitor_operation/upcall_command_ss.cpp:127
-
+  
   class _is_a_ReplyHandler_Upcall_Command
     : public TAO::Upcall_Command
   {
@@ -342,68 +340,67 @@ namespace POA_Messaging
       , args_ (args)
     {
     }
-
+    
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
         TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
           this->operation_details_,
           this->args_);
-
+      
       TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::in_arg_type> (
           this->operation_details_,
           this->args_,
           1);
-
-
+        
       retval =
         this->servant_-> _is_a (
           arg_1
           ACE_ENV_ARG_PARAMETER);
-
+      ACE_CHECK;
     }
-
+  
   private:
     POA_Messaging::ReplyHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
-
+  
 }
 void POA_Messaging::ReplyHandler::_is_a_skel (
-    TAO_ServerRequest & server_request,
+    TAO_ServerRequest & server_request, 
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
 {
-
-
+  
+  
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const * const exceptions = 0;
-  static CORBA::ULong const nexceptions = 0;
+  static ::CORBA::TypeCode_ptr const * const exceptions = 0;
+  static ::CORBA::ULong const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
-
+  
   TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val retval;
   TAO::SArg_Traits< ::CORBA::Char *>::in_arg_val _tao_repository_id;
-
+  
   TAO::Argument * const args[] =
     {
       &retval,
       &_tao_repository_id
     };
-
+  
   static size_t const nargs = 2;
-
+  
   POA_Messaging::ReplyHandler * const impl =
     static_cast<POA_Messaging::ReplyHandler *> (servant);
-
+  
   _is_a_ReplyHandler_Upcall_Command command (
     impl,
     server_request.operation_details (),
     args);
-
+  
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -416,16 +413,16 @@ void POA_Messaging::ReplyHandler::_is_a_skel (
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-
+  
 }
 
 namespace POA_Messaging
 {
-
-
+  
+  
   // TAO_IDL - Generated from
   // be\be_visitor_operation/upcall_command_ss.cpp:127
-
+  
   class _non_existent_ReplyHandler_Upcall_Command
     : public TAO::Upcall_Command
   {
@@ -439,59 +436,58 @@ namespace POA_Messaging
       , args_ (args)
     {
     }
-
+    
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
         TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean, TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type> (
           this->operation_details_,
           this->args_);
-
-
+      
       retval =
         this->servant_-> _non_existent (
           ACE_ENV_SINGLE_ARG_PARAMETER);
-
+      ACE_CHECK;
     }
-
+  
   private:
     POA_Messaging::ReplyHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
-
+  
 }
 void POA_Messaging::ReplyHandler::_non_existent_skel (
-    TAO_ServerRequest & server_request,
+    TAO_ServerRequest & server_request, 
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
 {
-
-
+  
+  
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const * const exceptions = 0;
-  static CORBA::ULong const nexceptions = 0;
+  static ::CORBA::TypeCode_ptr const * const exceptions = 0;
+  static ::CORBA::ULong const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
-
+  
   TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val retval;
-
+  
   TAO::Argument * const args[] =
     {
       &retval
     };
-
+  
   static size_t const nargs = 1;
-
+  
   POA_Messaging::ReplyHandler * const impl =
     static_cast<POA_Messaging::ReplyHandler *> (servant);
-
+  
   _non_existent_ReplyHandler_Upcall_Command command (
     impl,
     server_request.operation_details (),
     args);
-
+  
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -504,18 +500,105 @@ void POA_Messaging::ReplyHandler::_non_existent_skel (
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+  
+}
 
+namespace POA_Messaging
+{
+  
+  
+  // TAO_IDL - Generated from
+  // be\be_visitor_operation/upcall_command_ss.cpp:127
+  
+  class _repository_id_ReplyHandler_Upcall_Command
+    : public TAO::Upcall_Command
+  {
+  public:
+    inline _repository_id_ReplyHandler_Upcall_Command (
+      POA_Messaging::ReplyHandler * servant,
+      TAO_Operation_Details const * operation_details,
+      TAO::Argument * const args[])
+      : servant_ (servant)
+      , operation_details_ (operation_details)
+      , args_ (args)
+    {
+    }
+    
+    virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
+    {
+      TAO::SArg_Traits< ::CORBA::Char *>::ret_arg_type retval =
+        TAO::Portable_Server::get_ret_arg< ::CORBA::Char *, TAO::SArg_Traits< ::CORBA::Char *>::ret_arg_type> (
+          this->operation_details_,
+          this->args_);
+      
+      retval =
+        this->servant_-> _repository_id (
+          ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+  
+  private:
+    POA_Messaging::ReplyHandler * const servant_;
+    TAO_Operation_Details const * const operation_details_;
+    TAO::Argument * const * const args_;
+  };
+  
+}
+void POA_Messaging::ReplyHandler::_repository_id_skel (
+    TAO_ServerRequest & server_request, 
+    void * TAO_INTERCEPTOR (servant_upcall),
+    void * servant
+    ACE_ENV_ARG_DECL
+  )
+{
+  
+  
+#if TAO_HAS_INTERCEPTORS == 1
+  static ::CORBA::TypeCode_ptr const * const exceptions = 0;
+  static ::CORBA::ULong const nexceptions = 0;
+#endif /* TAO_HAS_INTERCEPTORS */
+  
+  TAO::SArg_Traits< ::CORBA::Char *>::ret_val retval;
+  
+  TAO::Argument * const args[] =
+    {
+      &retval
+    };
+  
+  static size_t const nargs = 1;
+  
+  POA_Messaging::ReplyHandler * const impl =
+    static_cast<POA_Messaging::ReplyHandler *> (servant);
+  
+  _repository_id_ReplyHandler_Upcall_Command command (
+    impl,
+    server_request.operation_details (),
+    args);
+  
+  TAO::Upcall_Wrapper upcall_wrapper;
+  upcall_wrapper.upcall (server_request
+                         , args
+                         , nargs
+                         , command
+#if TAO_HAS_INTERCEPTORS == 1
+                         , servant_upcall
+                         , exceptions
+                         , nexceptions
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+                         ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  
 }
 
 
 
-// TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:393
+// TAO_IDL - Generated from 
+// be\be_visitor_interface/interface_ss.cpp:501
 
 
 
 void POA_Messaging::ReplyHandler::_interface_skel (
-    TAO_ServerRequest & server_request,
+    TAO_ServerRequest & server_request, 
     void * /* servant_upcall */,
     void * servant
     ACE_ENV_ARG_DECL
@@ -525,43 +608,43 @@ void POA_Messaging::ReplyHandler::_interface_skel (
     ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
         TAO_ORB_Core::ifr_client_adapter_name ()
       );
-
+    
   if (_tao_adapter == 0)
     {
-      ACE_THROW (CORBA::INTF_REPOS (CORBA::OMGVMCID | 1,
-                                    CORBA::COMPLETED_NO));
+      ACE_THROW ( ::CORBA::INTF_REPOS ( ::CORBA::OMGVMCID | 1,
+                                        ::CORBA::COMPLETED_NO));
     }
-
+  
   POA_Messaging::ReplyHandler * const impl =
     static_cast<POA_Messaging::ReplyHandler *> (servant);
-  CORBA::InterfaceDef_ptr _tao_retval =
+  ::CORBA::InterfaceDef_ptr _tao_retval = 
     impl->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-
+  
   server_request.init_reply ();
   TAO_OutputCDR &_tao_out = *server_request.outgoing ();
-
-  CORBA::Boolean const _tao_result =
+  
+  ::CORBA::Boolean const _tao_result =
     _tao_adapter->interfacedef_cdr_insert (
         _tao_out,
         _tao_retval
       );
-
+  
   _tao_adapter->dispose (_tao_retval);
-
+  
   if (_tao_result == 0)
     {
-      ACE_THROW (CORBA::MARSHAL ());
+      ACE_THROW ( ::CORBA::MARSHAL ());
     }
 }
 
 namespace POA_Messaging
 {
-
-
+  
+  
   // TAO_IDL - Generated from
   // be\be_visitor_operation/upcall_command_ss.cpp:127
-
+  
   class _get_component_ReplyHandler_Upcall_Command
     : public TAO::Upcall_Command
   {
@@ -575,59 +658,58 @@ namespace POA_Messaging
       , args_ (args)
     {
     }
-
+    
     virtual void execute (ACE_ENV_SINGLE_ARG_DECL)
     {
       TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
         TAO::Portable_Server::get_ret_arg< ::CORBA::Object, TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type> (
           this->operation_details_,
           this->args_);
-
-
+      
       retval =
         this->servant_-> _get_component (
           ACE_ENV_SINGLE_ARG_PARAMETER);
-
+      ACE_CHECK;
     }
-
+  
   private:
     POA_Messaging::ReplyHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
-
+  
 }
 void POA_Messaging::ReplyHandler::_component_skel (
-    TAO_ServerRequest & server_request,
+    TAO_ServerRequest & server_request, 
     void * TAO_INTERCEPTOR (servant_upcall),
     void * servant
     ACE_ENV_ARG_DECL
   )
 {
-
-
+  
+  
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const * const exceptions = 0;
-  static CORBA::ULong const nexceptions = 0;
+  static ::CORBA::TypeCode_ptr const * const exceptions = 0;
+  static ::CORBA::ULong const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
-
+  
   TAO::SArg_Traits< ::CORBA::Object>::ret_val retval;
-
+  
   TAO::Argument * const args[] =
     {
       &retval
     };
-
+  
   static size_t const nargs = 1;
-
+  
   POA_Messaging::ReplyHandler * const impl =
     static_cast<POA_Messaging::ReplyHandler *> (servant);
-
+  
   _get_component_ReplyHandler_Upcall_Command command (
     impl,
     server_request.operation_details (),
     args);
-
+  
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -640,10 +722,10 @@ void POA_Messaging::ReplyHandler::_component_skel (
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-
+  
 }
 
-CORBA::Boolean POA_Messaging::ReplyHandler::_is_a (
+::CORBA::Boolean POA_Messaging::ReplyHandler::_is_a (
     const char* value
     ACE_ENV_ARG_DECL_NOT_USED
   )
@@ -667,7 +749,7 @@ const char* POA_Messaging::ReplyHandler::_interface_repository_id (void) const
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:754
+// be\be_visitor_interface/interface_ss.cpp:862
 
 void POA_Messaging::ReplyHandler::_dispatch (
     TAO_ServerRequest & req,
@@ -682,29 +764,29 @@ void POA_Messaging::ReplyHandler::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:705
+// be\be_visitor_interface/interface_ss.cpp:813
 
 Messaging::ReplyHandler *
 POA_Messaging::ReplyHandler::_this (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_Stub *stub = this->_create_stub (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-
+  
   TAO_Stub_Auto_Ptr safe_stub (stub);
-  CORBA::Object_ptr tmp = CORBA::Object::_nil ();
-
-  CORBA::Boolean _tao_opt_colloc =
+  ::CORBA::Object_ptr tmp = CORBA::Object::_nil ();
+  
+  ::CORBA::Boolean _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-
+  
   ACE_NEW_RETURN (
       tmp,
-      CORBA::Object (stub, _tao_opt_colloc, this),
+      ::CORBA::Object (stub, _tao_opt_colloc, this),
       0
     );
-
-  CORBA::Object_var obj = tmp;
+  
+  ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
-
+  
   typedef ::Messaging::ReplyHandler STUB_SCOPED_NAME;
   return
     TAO::Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow (

@@ -33,6 +33,7 @@ TAO_Requires_Messaging_Initializer = TAO_Messaging_Initializer::init ();
 #include "MessagingC.h"
 #undef TAO_MESSAGING_SAFE_INCLUDE
 
+#include "MessagingA.h"
 #include "TAO_ExtC.h"
 #include "tao/TAOC.h"
 
