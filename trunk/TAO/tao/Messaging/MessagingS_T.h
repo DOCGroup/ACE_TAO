@@ -26,18 +26,12 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:536
+// be\be_codegen.cpp:501
 
-#ifndef _TAO_IDL_ORIG_MESSAGINGS_T_H_
-#define _TAO_IDL_ORIG_MESSAGINGS_T_H_
+#ifndef _TAO_IDL_MESSAGINGS_T_H_
+#define _TAO_IDL_MESSAGINGS_T_H_
 
 #include /**/ "ace/pre.h"
-
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 
 // TAO_IDL - Generated from 
 // be\be_visitor_root/root_sth.cpp:116
@@ -57,12 +51,12 @@ namespace POA_Messaging
     // the T& ctor
     ReplyHandler_tie (T &t, PortableServer::POA_ptr poa);
     // ctor taking a POA
-    ReplyHandler_tie (T *tp, CORBA::Boolean release = 1);
+    ReplyHandler_tie (T *tp, ::CORBA::Boolean release = 1);
     // ctor taking pointer and an ownership flag
     ReplyHandler_tie (
         T *tp,
         PortableServer::POA_ptr poa,
-        CORBA::Boolean release = 1
+        ::CORBA::Boolean release = 1
       );
     // ctor with T*, ownership flag and a POA
     ~ReplyHandler_tie (void);
@@ -73,11 +67,11 @@ namespace POA_Messaging
     // return the underlying object
     void _tied_object (T &obj);
     // set the underlying object
-    void _tied_object (T *obj, CORBA::Boolean release = 1);
+    void _tied_object (T *obj, ::CORBA::Boolean release = 1);
     // set the underlying object and the ownership flag
-    CORBA::Boolean _is_owner (void);
+    ::CORBA::Boolean _is_owner (void);
     // do we own it
-    void _is_owner (CORBA::Boolean b);
+    void _is_owner ( ::CORBA::Boolean b);
     // set the ownership
     
     // overridden ServantBase operations
@@ -88,7 +82,7 @@ namespace POA_Messaging
   private:
     T *ptr_;
     PortableServer::POA_var poa_;
-    CORBA::Boolean rel_;
+    ::CORBA::Boolean rel_;
     
     // copy and assignment are not allowed
     ReplyHandler_tie (const ReplyHandler_tie &);
@@ -97,7 +91,7 @@ namespace POA_Messaging
 } // module Messaging
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:1096
+// be\be_codegen.cpp:1165
 
 #if defined (__ACE_INLINE__)
 #include "MessagingS_T.inl"
@@ -110,10 +104,6 @@ namespace POA_Messaging
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("MessagingS_T.cpp")
 #endif /* defined REQUIRED PRAGMA */
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* ifndef */

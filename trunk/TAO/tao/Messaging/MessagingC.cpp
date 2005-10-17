@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:291
+// be\be_codegen.cpp:277
 
 
 #include "Messaging.h"
@@ -34,10 +34,6 @@
 #include "tao/Object_T.h"
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_string.h"
-
-#if defined (__BORLANDC__)
-#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
-#endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
 #include "MessagingC.inl"
@@ -60,7 +56,7 @@ TAO::Value_Traits<Messaging::ExceptionHolder>::add_ref (
     Messaging::ExceptionHolder * p
   )
 {
-  CORBA::add_ref (p);
+  ::CORBA::add_ref (p);
 }
 
 void
@@ -68,7 +64,7 @@ TAO::Value_Traits<Messaging::ExceptionHolder>::remove_ref (
     Messaging::ExceptionHolder * p
   )
 {
-  CORBA::remove_ref (p);
+  ::CORBA::remove_ref (p);
 }
 
 void
@@ -76,11 +72,11 @@ TAO::Value_Traits<Messaging::ExceptionHolder>::release (
     Messaging::ExceptionHolder * p
   )
 {
-  CORBA::remove_ref (p);
+  ::CORBA::remove_ref (p);
 }
 
 Messaging::ExceptionHolder *
-Messaging::ExceptionHolder::_downcast (CORBA::ValueBase *v)
+Messaging::ExceptionHolder::_downcast ( ::CORBA::ValueBase *v)
 {
   return dynamic_cast< ::Messaging::ExceptionHolder * > (v);
 }
@@ -96,59 +92,59 @@ Messaging::ExceptionHolder::_tao_any_destructor (void *_tao_void_pointer)
 {
   ExceptionHolder *_tao_tmp_pointer =
     static_cast<ExceptionHolder *> (_tao_void_pointer);
-  CORBA::remove_ref (_tao_tmp_pointer);
+  ::CORBA::remove_ref (_tao_tmp_pointer);
 }
 
 Messaging::ExceptionHolder::~ExceptionHolder (void)
 {}
 
-CORBA::Boolean Messaging::ExceptionHolder::_tao_marshal_v (TAO_OutputCDR & strm) const
+::CORBA::Boolean Messaging::ExceptionHolder::_tao_marshal_v (TAO_OutputCDR & strm) const
 {
   return this->_tao_marshal__Messaging_ExceptionHolder (strm);
 }
 
-CORBA::Boolean Messaging::ExceptionHolder::_tao_unmarshal_v (TAO_InputCDR & strm)
+::CORBA::Boolean Messaging::ExceptionHolder::_tao_unmarshal_v (TAO_InputCDR & strm)
 {
   return this->_tao_unmarshal__Messaging_ExceptionHolder (strm);
 }
 
-CORBA::Boolean Messaging::ExceptionHolder::_tao_unmarshal (
+::CORBA::Boolean Messaging::ExceptionHolder::_tao_unmarshal (
     TAO_InputCDR &strm,
     ExceptionHolder *&new_object
   )
 {
-  CORBA::ValueBase *base = 0;
-  CORBA::ValueFactory_var factory;
-  CORBA::Boolean retval =
-    CORBA::ValueBase::_tao_unmarshal_pre (
+  ::CORBA::ValueBase *base = 0;
+  ::CORBA::ValueFactory_var factory;
+  ::CORBA::Boolean retval =
+    ::CORBA::ValueBase::_tao_unmarshal_pre (
         strm,
         factory.out (),
         base,
         ExceptionHolder::_tao_obv_static_repository_id ()
       );
-
+  
   if (retval == 0)
     {
       return 0;
     }
-
+  
   if (factory.in () != 0)
     {
       base = factory->create_for_unmarshal ();
-
+      
       if (base == 0)
         {
           return 0;  // %! except.?
         }
-
+      
       retval = base->_tao_unmarshal_v (strm);
-
+      
       if (retval == 0)
         {
           return 0;
         }
     }
-
+  
   // Now base must be null or point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = ExceptionHolder::_downcast (base);
@@ -167,25 +163,25 @@ Messaging::ExceptionHolder_init::~ExceptionHolder_init (void)
 }
 
 Messaging::ExceptionHolder_init *
-Messaging::ExceptionHolder_init::_downcast (CORBA::ValueFactoryBase *v)
+Messaging::ExceptionHolder_init::_downcast ( ::CORBA::ValueFactoryBase *v)
 {
   return dynamic_cast< ::Messaging::ExceptionHolder_init * > (v);
 }
 
-const char*
+const char* 
 Messaging::ExceptionHolder_init::tao_repository_id (void)
 {
   return ::Messaging::ExceptionHolder::_tao_obv_static_repository_id ();
 }
 
-CORBA::ValueBase *
+::CORBA::ValueBase *
 Messaging::ExceptionHolder_init::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL)
 {
-  CORBA::ValueBase *ret_val = 0;
+  ::CORBA::ValueBase *ret_val = 0;
   ACE_NEW_THROW_EX (
       ret_val,
       OBV_Messaging::ExceptionHolder,
-      CORBA::NO_MEMORY ()
+      ::CORBA::NO_MEMORY ()
     );
   return ret_val;
 }
@@ -217,19 +213,19 @@ TAO::Objref_Traits<Messaging::ReplyHandler>::nil (void)
   return Messaging::ReplyHandler::_nil ();
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 TAO::Objref_Traits<Messaging::ReplyHandler>::marshal (
     Messaging::ReplyHandler_ptr p,
     TAO_OutputCDR & cdr
   )
 {
-  return CORBA::Object::marshal (p, cdr);
+  return ::CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
+    ::CORBA::Object_ptr obj
   ) = 0;
 
 Messaging::ReplyHandler::ReplyHandler (void)
@@ -251,7 +247,7 @@ Messaging::ReplyHandler::Messaging_ReplyHandler_setup_collocation ()
 Messaging::ReplyHandler::~ReplyHandler (void)
 {}
 
-void
+void 
 Messaging::ReplyHandler::_tao_any_destructor (void *_tao_void_pointer)
 {
   ReplyHandler *_tao_tmp_pointer =
@@ -261,7 +257,7 @@ Messaging::ReplyHandler::_tao_any_destructor (void *_tao_void_pointer)
 
 Messaging::ReplyHandler_ptr
 Messaging::ReplyHandler::_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL
   )
 {
@@ -276,7 +272,7 @@ Messaging::ReplyHandler::_narrow (
 
 Messaging::ReplyHandler_ptr
 Messaging::ReplyHandler::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL
   )
 {
@@ -296,7 +292,7 @@ Messaging::ReplyHandler::_duplicate (ReplyHandler_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -306,7 +302,7 @@ Messaging::ReplyHandler::_tao_release (ReplyHandler_ptr obj)
   CORBA::release (obj);
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 Messaging::ReplyHandler::_is_a (
     const char *value
     ACE_ENV_ARG_DECL
@@ -327,7 +323,7 @@ Messaging::ReplyHandler::_is_a (
     }
   else
     {
-      return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a (
+      return this->ACE_NESTED_CLASS ( ::CORBA, Object)::_is_a (
           value
           ACE_ENV_ARG_PARAMETER
         );
@@ -339,7 +335,7 @@ const char* Messaging::ReplyHandler::_interface_repository_id (void) const
   return "IDL:omg.org/Messaging/ReplyHandler:1.0";
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 Messaging::ReplyHandler::marshal (TAO_OutputCDR &cdr)
 {
   return (cdr << this);
@@ -354,13 +350,13 @@ OBV_Messaging::ExceptionHolder::ExceptionHolder (void)
 OBV_Messaging::ExceptionHolder::~ExceptionHolder (void)
 {}
 
-CORBA::Boolean
+::CORBA::Boolean
 OBV_Messaging::ExceptionHolder::_tao_marshal__Messaging_ExceptionHolder (TAO_OutputCDR &strm) const
 {
   return _tao_marshal_state (strm);
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 OBV_Messaging::ExceptionHolder::_tao_unmarshal__Messaging_ExceptionHolder (TAO_InputCDR &strm)
 {
   return _tao_unmarshal_state (strm);
@@ -378,7 +374,7 @@ OBV_Messaging::ExceptionHolder::is_system_exception (CORBA::Boolean val)
 }
 
 // Retrieve the member
-CORBA::Boolean
+::CORBA::Boolean
 OBV_Messaging::ExceptionHolder::is_system_exception (void) const
 {
   return this->_pd_is_system_exception;
@@ -396,14 +392,14 @@ OBV_Messaging::ExceptionHolder::byte_order (CORBA::Boolean val)
 }
 
 // Retrieve the member
-CORBA::Boolean
+::CORBA::Boolean
 OBV_Messaging::ExceptionHolder::byte_order (void) const
 {
   return this->_pd_byte_order;
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_valuetype/field_cs.cpp:767
+// be\be_visitor_valuetype/field_cs.cpp:763
 
 // Accessor to set the member.
 void
@@ -450,21 +446,21 @@ CORBA::remove_ref (Messaging::ExceptionHolder * vt)
 // TAO_IDL - Generated from
 // be\be_visitor_valuetype/cdr_op_cs.cpp:73
 
-CORBA::Boolean
+::CORBA::Boolean
 operator<< (
     TAO_OutputCDR &strm,
     const Messaging::ExceptionHolder *_tao_valuetype
   )
 {
   return
-    CORBA::ValueBase::_tao_marshal (
+    ::CORBA::ValueBase::_tao_marshal (
         strm,
         _tao_valuetype,
         reinterpret_cast<ptrdiff_t> (&Messaging::ExceptionHolder::_downcast)
       );
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 operator>> (
     TAO_InputCDR &strm,
     Messaging::ExceptionHolder *&_tao_valuetype
@@ -476,22 +472,22 @@ operator>> (
 // TAO_IDL - Generated from
 // be\be_visitor_valuetype/marshal_cs.cpp:44
 
-CORBA::Boolean
+::CORBA::Boolean
 OBV_Messaging::ExceptionHolder::_tao_marshal_state (TAO_OutputCDR &strm) const
 {
   return (
-      (strm << ACE_OutputCDR::from_boolean (_pd_is_system_exception)) &&
-      (strm << ACE_OutputCDR::from_boolean (_pd_byte_order)) &&
+      (strm << ::ACE_OutputCDR::from_boolean (_pd_is_system_exception)) &&
+      (strm << ::ACE_OutputCDR::from_boolean (_pd_byte_order)) &&
       (strm << _pd_marshaled_exception)
     );
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 OBV_Messaging::ExceptionHolder::_tao_unmarshal_state (TAO_InputCDR &strm)
 {
   return (
-    (strm >> ACE_InputCDR::to_boolean (_pd_is_system_exception)) &&
-    (strm >> ACE_InputCDR::to_boolean (_pd_byte_order)) &&
+    (strm >> ::ACE_InputCDR::to_boolean (_pd_is_system_exception)) &&
+    (strm >> ::ACE_InputCDR::to_boolean (_pd_byte_order)) &&
     (strm >> _pd_marshaled_exception)
   );
 }
@@ -499,35 +495,35 @@ OBV_Messaging::ExceptionHolder::_tao_unmarshal_state (TAO_InputCDR &strm)
 // TAO_IDL - Generated from
 // be\be_visitor_interface/cdr_op_cs.cpp:63
 
-CORBA::Boolean operator<< (
+::CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
     const Messaging::ReplyHandler_ptr _tao_objref
   )
 {
-  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  ::CORBA::Object_ptr _tao_corba_obj = _tao_objref;
   return (strm << _tao_corba_obj);
 }
 
-CORBA::Boolean operator>> (
+::CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
     Messaging::ReplyHandler_ptr &_tao_objref
   )
 {
-  CORBA::Object_var obj;
-
+  ::CORBA::Object_var obj;
+  
   if (!(strm >> obj.inout ()))
     {
       return false;
     }
-
+  
   typedef ::Messaging::ReplyHandler RHS_SCOPED_NAME;
-
+  
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (
         obj.in (),
         Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function_pointer
       );
-
+    
   return 1;
 }

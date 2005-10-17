@@ -26,16 +26,12 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:291
+// be\be_codegen.cpp:277
 
 
 #include "Messaging_RT_PolicyC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
-
-#if defined (__BORLANDC__)
-#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
-#endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
@@ -73,13 +69,13 @@ TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::nil (void)
   return Messaging::RelativeRoundtripTimeoutPolicy::_nil ();
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::marshal (
     Messaging::RelativeRoundtripTimeoutPolicy_ptr p,
     TAO_OutputCDR & cdr
   )
 {
-  return CORBA::Object::marshal (p, cdr);
+  return ::CORBA::Object::marshal (p, cdr);
 }
 
 Messaging::RelativeRoundtripTimeoutPolicy::RelativeRoundtripTimeoutPolicy (void)
@@ -88,17 +84,9 @@ Messaging::RelativeRoundtripTimeoutPolicy::RelativeRoundtripTimeoutPolicy (void)
 Messaging::RelativeRoundtripTimeoutPolicy::~RelativeRoundtripTimeoutPolicy (void)
 {}
 
-void 
-Messaging::RelativeRoundtripTimeoutPolicy::_tao_any_destructor (void *_tao_void_pointer)
-{
-  RelativeRoundtripTimeoutPolicy *_tao_tmp_pointer =
-    static_cast<RelativeRoundtripTimeoutPolicy *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
 Messaging::RelativeRoundtripTimeoutPolicy_ptr
 Messaging::RelativeRoundtripTimeoutPolicy::_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -109,7 +97,7 @@ Messaging::RelativeRoundtripTimeoutPolicy::_narrow (
 
 Messaging::RelativeRoundtripTimeoutPolicy_ptr
 Messaging::RelativeRoundtripTimeoutPolicy::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -135,7 +123,7 @@ Messaging::RelativeRoundtripTimeoutPolicy::_tao_release (RelativeRoundtripTimeou
   CORBA::release (obj);
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 Messaging::RelativeRoundtripTimeoutPolicy::_is_a (
     const char *value
     ACE_ENV_ARG_DECL_NOT_USED
@@ -173,7 +161,7 @@ const char* Messaging::RelativeRoundtripTimeoutPolicy::_interface_repository_id 
   return "IDL:omg.org/Messaging/RelativeRoundtripTimeoutPolicy:1.0";
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 Messaging::RelativeRoundtripTimeoutPolicy::marshal (TAO_OutputCDR &)
 {
   return false;
