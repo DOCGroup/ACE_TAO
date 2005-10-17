@@ -37,8 +37,11 @@ AdminProperties_SOURCES = \
 
 AdminProperties_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib/libTAO_NotifyTests.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -72,8 +75,11 @@ ConnectDisconnect_SOURCES = \
 
 ConnectDisconnect_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib/libTAO_NotifyTests.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -107,8 +113,11 @@ Events_SOURCES = \
 
 Events_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib/libTAO_NotifyTests.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -142,8 +151,11 @@ Filter_SOURCES = \
 
 Filter_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib/libTAO_NotifyTests.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -177,8 +189,11 @@ IdAssignment_SOURCES = \
 
 IdAssignment_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib/libTAO_NotifyTests.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -212,8 +227,11 @@ LifeCycle_SOURCES = \
 
 LifeCycle_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib/libTAO_NotifyTests.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -247,8 +265,11 @@ MultiTypes_SOURCES = \
 
 MultiTypes_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib/libTAO_NotifyTests.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -282,8 +303,11 @@ Sequence_SOURCES = \
 
 Sequence_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib/libTAO_NotifyTests.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -317,8 +341,11 @@ Simple_SOURCES = \
 
 Simple_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib/libTAO_NotifyTests.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
@@ -352,8 +379,11 @@ Updates_SOURCES = \
 
 Updates_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib/libTAO_NotifyTests.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
