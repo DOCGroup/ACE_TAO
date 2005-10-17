@@ -1,3 +1,14 @@
+Mon Oct 17 13:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/orbconf.h:
+        * tao/Messaging/ExceptionHolder*.*:
+        * tao/Messaging/OldExceptionHolder*.*:
+          Added also the new ExceptionHolder. Old and new are guarded with
+          TAO_HAS_DEPRECATED_EXCEPTION_HOLDER. This is enabled at this
+          moment until the new mapping is fully working, at that moment
+          we remove this define from orbconf.h and it is up to the user
+          to enable the old mapping
+
 Mon Oct 17 11:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/*:
