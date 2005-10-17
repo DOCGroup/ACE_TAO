@@ -26,38 +26,15 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-// TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
-
-#if !defined (_MESSAGING_REPLYHANDLER___CI_)
-#define _MESSAGING_REPLYHANDLER___CI_
+// TAO_IDL - Generated from 
+// be\be_visitor_valuetype/valuetype_ci.cpp:56
 
 ACE_INLINE
-Messaging::ReplyHandler::ReplyHandler (
-    TAO_Stub *objref,
-    ::CORBA::Boolean _tao_collocated,
-    TAO_Abstract_ServantBase *servant,
-    TAO_ORB_Core *oc
-  )
-  : ACE_NESTED_CLASS (CORBA, Object) (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
-    the_TAO_ReplyHandler_Proxy_Broker_ (0)
-{
-  this->Messaging_ReplyHandler_setup_collocation ();
-}
+Messaging::ExceptionHolder::ExceptionHolder (void)
+{}
 
-ACE_INLINE
-Messaging::ReplyHandler::ReplyHandler (
-    IOP::IOR *ior,
-    TAO_ORB_Core *oc
-  )
-  : ACE_NESTED_CLASS ( ::CORBA, Object) (ior, oc),
-    the_TAO_ReplyHandler_Proxy_Broker_ (0)
+ACE_INLINE const char* 
+Messaging::ExceptionHolder::_tao_obv_static_repository_id ()
 {
+  return "IDL:omg.org/Messaging/ExceptionHolder:1.0";
 }
-
-#endif /* end #if !defined */

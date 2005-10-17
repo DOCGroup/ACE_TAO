@@ -25,39 +25,36 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+// TAO_IDL - Generated from
+// be\be_codegen.cpp:754
+
+#ifndef _TAO_IDL_TAO_EXTA_H_
+#define _TAO_IDL_TAO_EXTA_H_
+
+#include /**/ "ace/pre.h"
+
+#include "messaging_export.h"
+#include "tao/Messaging/TAO_ExtC.h"
+#include "tao/AnyTypeCode/PolicyA.h"
+#include "tao/AnyTypeCode/TimeBaseA.h"
+
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ci.cpp:70
+// be\be_visitor_module/module_ch.cpp:59
 
-#if !defined (_MESSAGING_REPLYHANDLER___CI_)
-#define _MESSAGING_REPLYHANDLER___CI_
-
-ACE_INLINE
-Messaging::ReplyHandler::ReplyHandler (
-    TAO_Stub *objref,
-    ::CORBA::Boolean _tao_collocated,
-    TAO_Abstract_ServantBase *servant,
-    TAO_ORB_Core *oc
-  )
-  : ACE_NESTED_CLASS (CORBA, Object) (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
-    the_TAO_ReplyHandler_Proxy_Broker_ (0)
+namespace TAO
 {
-  this->Messaging_ReplyHandler_setup_collocation ();
-}
 
-ACE_INLINE
-Messaging::ReplyHandler::ReplyHandler (
-    IOP::IOR *ior,
-    TAO_ORB_Core *oc
-  )
-  : ACE_NESTED_CLASS ( ::CORBA, Object) (ior, oc),
-    the_TAO_ReplyHandler_Proxy_Broker_ (0)
-{
-}
+  // TAO_IDL - Generated from
+  // be\be_visitor_typecode/typecode_decl.cpp:49
 
-#endif /* end #if !defined */
+  extern TAO_Messaging_Export ::CORBA::TypeCode_ptr const _tc_ConnectionTimeoutPolicy;
+
+// TAO_IDL - Generated from
+// be\be_visitor_module/module_ch.cpp:86
+
+} // module TAO
+
+#include /**/ "ace/post.h"
+
+#endif /* ifndef */
