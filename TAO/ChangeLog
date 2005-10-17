@@ -1,3 +1,17 @@
+Mon Oct 17 12:45:57 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* performance-tests/POA/Demux/Makefile.am:
+	* performance-tests/RTCorba/Oneways/Reliable/Makefile.am:
+	* performance-tests/RTCorba/Thread_Pool/Makefile.am:
+
+	  Regenerated.
+
+	* performance-tests/POA/Demux/Demux.mpc:
+	* performance-tests/RTCorba/Oneways/Reliable/Reliable.mpc:
+	* performance-tests/RTCorba/Thread_Pool/Thread_Pool.mpc:
+
+          Add/tweak *_IDL projects for compiling *.idl files.
+
 Mon Oct 17 12:33:03 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:

@@ -16,7 +16,7 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-## Makefile.Demux_Poa_Client.am
+## Makefile.Demux_Poa_Idl.am
 
 BUILT_SOURCES = \
   demux_testC.cpp \
@@ -44,8 +44,11 @@ CLEANFILES = \
 demux_testC.cpp demux_testC.h demux_testC.inl demux_testS.cpp demux_testS.h demux_testS.inl demux_testS_T.cpp demux_testS_T.h demux_testS_T.inl: demux_test-stamp
 
 demux_test-stamp: $(srcdir)/demux_test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/demux_test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/demux_test.idl
 	@touch $@
+
+
+## Makefile.Demux_Poa_Client.am
 
 noinst_PROGRAMS = client
 
@@ -62,11 +65,6 @@ client_SOURCES = \
   demux_testC.cpp \
   demux_testS.cpp \
   demux_test_client.cpp \
-  demux_testC.h \
-  demux_testC.inl \
-  demux_testS.h \
-  demux_testS_T.h \
-  demux_testS_T.inl \
   demux_test_client.h \
   demux_test_client.i
 
@@ -78,35 +76,6 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Makefile.Demux_Poa_Server.am
-
-BUILT_SOURCES += \
-  demux_testC.cpp \
-  demux_testC.h \
-  demux_testC.inl \
-  demux_testS.cpp \
-  demux_testS.h \
-  demux_testS.inl \
-  demux_testS_T.cpp \
-  demux_testS_T.h \
-  demux_testS_T.inl
-
-CLEANFILES += \
-  demux_test-stamp \
-  demux_testC.cpp \
-  demux_testC.h \
-  demux_testC.inl \
-  demux_testS.cpp \
-  demux_testS.h \
-  demux_testS.inl \
-  demux_testS_T.cpp \
-  demux_testS_T.h \
-  demux_testS_T.inl
-
-demux_testC.cpp demux_testC.h demux_testC.inl demux_testS.cpp demux_testS.h demux_testS.inl demux_testS_T.cpp demux_testS_T.h demux_testS_T.inl: demux_test-stamp
-
-demux_test-stamp: $(srcdir)/demux_test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/demux_test.idl
-	@touch $@
 
 noinst_PROGRAMS += server
 
@@ -124,11 +93,7 @@ server_SOURCES = \
   demux_test_i.cpp \
   demux_test_server.cpp \
   server.cpp \
-  demux_testC.h \
-  demux_testC.inl \
-  demux_testS.h \
-  demux_testS_T.h \
-  demux_testS_T.inl \
+  demux_test_client.i \
   demux_test_i.h \
   demux_test_server.h
 
