@@ -29,12 +29,6 @@
 #include "tao/ClientRequestInterceptor_Adapter.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
-namespace Dynamic
-{
-  class ExceptionList;
-  class ParameterList;
-}
-
 class TAO_Service_Context;
 class TAO_Operation_Details;
 class TAO_Stub;
