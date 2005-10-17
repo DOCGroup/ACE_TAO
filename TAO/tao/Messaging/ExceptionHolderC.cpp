@@ -29,15 +29,17 @@
 // be\be_codegen.cpp:277
 
 
-#include "OldExceptionHolderC.h"
+#include "ExceptionHolderC.h"
 #include "tao/CDR.h"
+#include "tao/Valuetype/ValueFactory.h"
 #include "tao/ORB_Core.h"
+#include "ace/OS_NS_string.h"
+
+#if !defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
 
 #if !defined (__ACE_INLINE__)
-#include "OldExceptionHolderC.inl"
+#include "ExceptionHolderC.inl"
 #endif /* !defined INLINE */
-
-#if defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
@@ -149,41 +151,6 @@ Messaging::ExceptionHolder::~ExceptionHolder (void)
   // Align the pointer to the right subobject.
   new_object = ExceptionHolder::_downcast (base);
   return retval;
-}
-
-// TAO_IDL - Generated from
-// be\be_visitor_valuetype/valuetype_init_cs.cpp:85
-
-Messaging::ExceptionHolder_init::ExceptionHolder_init (void)
-{
-}
-
-Messaging::ExceptionHolder_init::~ExceptionHolder_init (void)
-{
-}
-
-Messaging::ExceptionHolder_init *
-Messaging::ExceptionHolder_init::_downcast ( ::CORBA::ValueFactoryBase *v)
-{
-  return dynamic_cast< ::Messaging::ExceptionHolder_init * > (v);
-}
-
-const char*
-Messaging::ExceptionHolder_init::tao_repository_id (void)
-{
-  return ::Messaging::ExceptionHolder::_tao_obv_static_repository_id ();
-}
-
-::CORBA::ValueBase *
-Messaging::ExceptionHolder_init::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL)
-{
-  ::CORBA::ValueBase *ret_val = 0;
-  ACE_NEW_THROW_EX (
-      ret_val,
-      OBV_Messaging::ExceptionHolder,
-      ::CORBA::NO_MEMORY ()
-    );
-  return ret_val;
 }
 
 // TAO_IDL - Generated from
@@ -337,4 +304,4 @@ OBV_Messaging::ExceptionHolder::_tao_unmarshal_state (TAO_InputCDR &strm)
   );
 }
 
-#endif /* */
+#endif
