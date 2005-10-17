@@ -24,7 +24,8 @@
 /**
  * @class TAO_RT_Notify_Service
  *
- * @brief Implemetation of the TAO_Notify_Service interface for RT Notification.
+ * @brief Implementation of the TAO_Notify_Service interface for
+ * RT Notification.
  *
  */
 class TAO_RT_Notify_Export TAO_RT_Notify_Service : public TAO_CosNotify_Service
