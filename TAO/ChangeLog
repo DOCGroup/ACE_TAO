@@ -1,3 +1,11 @@
+Mon Oct 17 10:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI/TAO_PI.pc.in:
+        * tao/PI_Server/TAO_PI_Server.pc.in:
+          Fixed incorrect libs. Thanks to
+          <f dot salvestrini at nextworks dot it> for reporting this.
+          This fixes bugzilla bug 2267
+
 Mon Oct 17 10:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/CosEvent/Basic/Shutdown.cpp:
