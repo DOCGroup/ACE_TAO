@@ -66,7 +66,8 @@ TAO_RT_Notify_Service::init_i (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 TAO_Notify_Factory*
 TAO_RT_Notify_Service::create_factory (ACE_ENV_SINGLE_ARG_DECL)
 {
-  TAO_Notify_Factory* factory  = ACE_Dynamic_Service<TAO_Notify_Factory>::instance ("TAO_Notify_Factory");
+  TAO_Notify_Factory* factory =
+    ACE_Dynamic_Service<TAO_Notify_Factory>::instance ("TAO_Notify_Factory");
 
   if (factory == 0)
     {

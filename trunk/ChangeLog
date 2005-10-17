@@ -1,3 +1,9 @@
+Mon Oct 17 13:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/notifytest.mpb:
+          Added notication_serv as base project, needed for collocated
+          tests
+
 Mon Oct 17 10:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/FILE_IO.inl:
