@@ -7,5 +7,5 @@ Name: TAO_PI
 Description: TAO PI Library
 Requires: TAO_CodecFactory, TAO_AnyTypeCode, TAO
 Version: @VERSION@
-Libs: -L${libdir} -lPI
+Libs: -L${libdir} -lTAO_PI
 Cflags: -I${includedir}

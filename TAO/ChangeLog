@@ -1,3 +1,8 @@
+Mon Oct 17 10:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/CosEvent/Basic/Shutdown.cpp:
+          Fixed MinGW build warnings
+
 Mon Oct 17 07:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rules.tao.GNU:
