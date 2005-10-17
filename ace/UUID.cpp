@@ -448,12 +448,13 @@ namespace ACE_Utils
   void
   UUID_Generator::get_systemtime (UUID_time & timestamp)
   {
-    const UUID_time timeOffset = 0;
-    //const UUID_time timeOffset = 0x1B21DD213814000;
+    const UUID_time timeOffset = ACE_UINT64_LITERAL (0x1B21DD213814000);
 
     /// Get the time of day, convert to 100ns ticks then add the offset.
     ACE_Time_Value now = ACE_OS::gettimeofday();
-    UUID_time time = now.sec() * 10000000 + now.usec() * 10;
+    ACE_UINT64 time;
+    now.to_usec (time);
+    time = time * 10;
     timestamp = time + timeOffset;
 }
 
@@ -477,8 +478,6 @@ namespace ACE_Utils
   }
 
 }
-
-
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton <ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX>;
