@@ -55,7 +55,11 @@
 #include "tao/Messaging/Messaging_RT_PolicyC.h"
 #include "tao/Messaging/Messaging_No_ImplC.h"
 #include "tao/Messaging/PollableC.h"
+#if defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
 #include "tao/Messaging/OldExceptionHolderC.h"
+#else
+#include "tao/Messaging/ExceptionHolderC.h"
+#endif
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO

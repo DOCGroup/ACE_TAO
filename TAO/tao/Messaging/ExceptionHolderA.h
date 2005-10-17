@@ -28,16 +28,18 @@
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:754
 
-#ifndef _TAO_IDL_OLDEXCEPTIONHOLDERA_H_
-#define _TAO_IDL_OLDEXCEPTIONHOLDERA_H_
+#ifndef _TAO_IDL_EXCEPTIONHOLDERA_H_
+#define _TAO_IDL_EXCEPTIONHOLDERA_H_
 
 #include /**/ "ace/pre.h"
 
 #include "messaging_export.h"
-#include "tao/Messaging/OldExceptionHolderC.h"
+#include "tao/Messaging/ExceptionHolderC.h"
 #include "tao/AnyTypeCode/OctetSeqA.h"
+#include "tao/AnyTypeCode/DynamicA.h"
 
-#if defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
+
+#if !defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:59
@@ -77,7 +79,7 @@ TAO_Messaging_Export ::CORBA::Boolean operator>>= (const ::CORBA::Any &, Messagi
 
 #endif
 
-#endif /* */
+#endif
 
 #include /**/ "ace/post.h"
 

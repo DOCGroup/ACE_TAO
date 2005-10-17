@@ -876,6 +876,11 @@ enum TAO_Policy_Scope
 #define TAO_RESET_OUTPUT_CDR_AFTER_SEND 0
 #endif /* TAO_RESET_OUTPUT_CDR_AFTER_SEND */
 
+/// By default at this moment we use the deprecated exception holder
+/// when the new version is ready we will remove this define.
+#define TAO_HAS_DEPRECATED_EXCEPTION_HOLDER
+
+
 #include /**/ "ace/post.h"
 
 #endif  /* TAO_ORBCONF_H */

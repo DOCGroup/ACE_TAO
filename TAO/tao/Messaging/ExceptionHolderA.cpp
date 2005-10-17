@@ -25,10 +25,13 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "OldExceptionHolderA.h"
+#include "ExceptionHolderA.h"
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
+#include "tao/AnyTypeCode/String_TypeCode_Static.h"
+#include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
+#include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
 #include "tao/AnyTypeCode/Value_TypeCode_Static.h"
 #include "tao/AnyTypeCode/TypeCode_Value_Field.h"
 #include "tao/AnyTypeCode/Recursive_Type_TypeCode.h"
@@ -36,21 +39,24 @@
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Impl_T.h"
+#include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
+
+#if !defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
+
 
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/value_typecode.cpp:63
 
 
-#if defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
 
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/typecode_defn.cpp:937
 
 static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> const _tao_fields_Messaging_ExceptionHolder[] =
   {
-    { "is_system_exception", &CORBA::_tc_boolean, ::CORBA::PUBLIC_MEMBER },
-    { "byte_order", &CORBA::_tc_boolean, ::CORBA::PUBLIC_MEMBER },
-    { "marshaled_exception", &CORBA::_tc_OctetSeq, ::CORBA::PUBLIC_MEMBER }
+    { "is_system_exception", &CORBA::_tc_boolean, ::CORBA::PRIVATE_MEMBER },
+    { "byte_order", &CORBA::_tc_boolean, ::CORBA::PRIVATE_MEMBER },
+    { "marshaled_exception", &CORBA::_tc_OctetSeq, ::CORBA::PRIVATE_MEMBER }
 
   };
 static TAO::TypeCode::Value<char const *,
@@ -187,4 +193,4 @@ operator>>= (
 
 #endif
 
-#endif /* */
+#endif
