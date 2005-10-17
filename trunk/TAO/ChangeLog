@@ -1,3 +1,9 @@
+Mon Oct 17 14:43:18 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Makefile.am:
+
+	  Regenerated due to tao/Messaging/* refactor.
+
 Mon Oct 17 14:42:09 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/examples/Notify/Lanes/Makefile.am:
