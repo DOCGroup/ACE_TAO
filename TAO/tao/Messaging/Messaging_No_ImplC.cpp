@@ -26,16 +26,12 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:291
+// be\be_codegen.cpp:277
 
 
 #include "Messaging_No_ImplC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
-
-#if defined (__BORLANDC__)
-#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
-#endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
@@ -73,13 +69,13 @@ TAO::Objref_Traits<Messaging::RebindPolicy>::nil (void)
   return Messaging::RebindPolicy::_nil ();
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 TAO::Objref_Traits<Messaging::RebindPolicy>::marshal (
     Messaging::RebindPolicy_ptr p,
     TAO_OutputCDR & cdr
   )
 {
-  return CORBA::Object::marshal (p, cdr);
+  return ::CORBA::Object::marshal (p, cdr);
 }
 
 Messaging::RebindPolicy::RebindPolicy (void)
@@ -88,17 +84,9 @@ Messaging::RebindPolicy::RebindPolicy (void)
 Messaging::RebindPolicy::~RebindPolicy (void)
 {}
 
-void 
-Messaging::RebindPolicy::_tao_any_destructor (void *_tao_void_pointer)
-{
-  RebindPolicy *_tao_tmp_pointer =
-    static_cast<RebindPolicy *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
 Messaging::RebindPolicy_ptr
 Messaging::RebindPolicy::_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -109,7 +97,7 @@ Messaging::RebindPolicy::_narrow (
 
 Messaging::RebindPolicy_ptr
 Messaging::RebindPolicy::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -135,7 +123,7 @@ Messaging::RebindPolicy::_tao_release (RebindPolicy_ptr obj)
   CORBA::release (obj);
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 Messaging::RebindPolicy::_is_a (
     const char *value
     ACE_ENV_ARG_DECL_NOT_USED
@@ -173,7 +161,7 @@ const char* Messaging::RebindPolicy::_interface_repository_id (void) const
   return "IDL:omg.org/Messaging/RebindPolicy:1.0";
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 Messaging::RebindPolicy::marshal (TAO_OutputCDR &)
 {
   return false;
@@ -219,13 +207,13 @@ TAO::Objref_Traits<Messaging::RequestPriorityPolicy>::nil (void)
   return Messaging::RequestPriorityPolicy::_nil ();
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 TAO::Objref_Traits<Messaging::RequestPriorityPolicy>::marshal (
     Messaging::RequestPriorityPolicy_ptr p,
     TAO_OutputCDR & cdr
   )
 {
-  return CORBA::Object::marshal (p, cdr);
+  return ::CORBA::Object::marshal (p, cdr);
 }
 
 Messaging::RequestPriorityPolicy::RequestPriorityPolicy (void)
@@ -234,17 +222,9 @@ Messaging::RequestPriorityPolicy::RequestPriorityPolicy (void)
 Messaging::RequestPriorityPolicy::~RequestPriorityPolicy (void)
 {}
 
-void 
-Messaging::RequestPriorityPolicy::_tao_any_destructor (void *_tao_void_pointer)
-{
-  RequestPriorityPolicy *_tao_tmp_pointer =
-    static_cast<RequestPriorityPolicy *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
 Messaging::RequestPriorityPolicy_ptr
 Messaging::RequestPriorityPolicy::_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -255,7 +235,7 @@ Messaging::RequestPriorityPolicy::_narrow (
 
 Messaging::RequestPriorityPolicy_ptr
 Messaging::RequestPriorityPolicy::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -281,7 +261,7 @@ Messaging::RequestPriorityPolicy::_tao_release (RequestPriorityPolicy_ptr obj)
   CORBA::release (obj);
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 Messaging::RequestPriorityPolicy::_is_a (
     const char *value
     ACE_ENV_ARG_DECL_NOT_USED
@@ -319,7 +299,7 @@ const char* Messaging::RequestPriorityPolicy::_interface_repository_id (void) co
   return "IDL:omg.org/Messaging/RequestPriorityPolicy:1.0";
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 Messaging::RequestPriorityPolicy::marshal (TAO_OutputCDR &)
 {
   return false;
@@ -352,13 +332,13 @@ TAO::Objref_Traits<Messaging::ReplyPriorityPolicy>::nil (void)
   return Messaging::ReplyPriorityPolicy::_nil ();
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 TAO::Objref_Traits<Messaging::ReplyPriorityPolicy>::marshal (
     Messaging::ReplyPriorityPolicy_ptr p,
     TAO_OutputCDR & cdr
   )
 {
-  return CORBA::Object::marshal (p, cdr);
+  return ::CORBA::Object::marshal (p, cdr);
 }
 
 Messaging::ReplyPriorityPolicy::ReplyPriorityPolicy (void)
@@ -367,17 +347,9 @@ Messaging::ReplyPriorityPolicy::ReplyPriorityPolicy (void)
 Messaging::ReplyPriorityPolicy::~ReplyPriorityPolicy (void)
 {}
 
-void 
-Messaging::ReplyPriorityPolicy::_tao_any_destructor (void *_tao_void_pointer)
-{
-  ReplyPriorityPolicy *_tao_tmp_pointer =
-    static_cast<ReplyPriorityPolicy *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
 Messaging::ReplyPriorityPolicy_ptr
 Messaging::ReplyPriorityPolicy::_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -388,7 +360,7 @@ Messaging::ReplyPriorityPolicy::_narrow (
 
 Messaging::ReplyPriorityPolicy_ptr
 Messaging::ReplyPriorityPolicy::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -414,7 +386,7 @@ Messaging::ReplyPriorityPolicy::_tao_release (ReplyPriorityPolicy_ptr obj)
   CORBA::release (obj);
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 Messaging::ReplyPriorityPolicy::_is_a (
     const char *value
     ACE_ENV_ARG_DECL_NOT_USED
@@ -452,7 +424,7 @@ const char* Messaging::ReplyPriorityPolicy::_interface_repository_id (void) cons
   return "IDL:omg.org/Messaging/ReplyPriorityPolicy:1.0";
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 Messaging::ReplyPriorityPolicy::marshal (TAO_OutputCDR &)
 {
   return false;
@@ -485,13 +457,13 @@ TAO::Objref_Traits<Messaging::RequestStartTimePolicy>::nil (void)
   return Messaging::RequestStartTimePolicy::_nil ();
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 TAO::Objref_Traits<Messaging::RequestStartTimePolicy>::marshal (
     Messaging::RequestStartTimePolicy_ptr p,
     TAO_OutputCDR & cdr
   )
 {
-  return CORBA::Object::marshal (p, cdr);
+  return ::CORBA::Object::marshal (p, cdr);
 }
 
 Messaging::RequestStartTimePolicy::RequestStartTimePolicy (void)
@@ -500,17 +472,9 @@ Messaging::RequestStartTimePolicy::RequestStartTimePolicy (void)
 Messaging::RequestStartTimePolicy::~RequestStartTimePolicy (void)
 {}
 
-void 
-Messaging::RequestStartTimePolicy::_tao_any_destructor (void *_tao_void_pointer)
-{
-  RequestStartTimePolicy *_tao_tmp_pointer =
-    static_cast<RequestStartTimePolicy *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
 Messaging::RequestStartTimePolicy_ptr
 Messaging::RequestStartTimePolicy::_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -521,7 +485,7 @@ Messaging::RequestStartTimePolicy::_narrow (
 
 Messaging::RequestStartTimePolicy_ptr
 Messaging::RequestStartTimePolicy::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -547,7 +511,7 @@ Messaging::RequestStartTimePolicy::_tao_release (RequestStartTimePolicy_ptr obj)
   CORBA::release (obj);
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 Messaging::RequestStartTimePolicy::_is_a (
     const char *value
     ACE_ENV_ARG_DECL_NOT_USED
@@ -585,7 +549,7 @@ const char* Messaging::RequestStartTimePolicy::_interface_repository_id (void) c
   return "IDL:omg.org/Messaging/RequestStartTimePolicy:1.0";
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 Messaging::RequestStartTimePolicy::marshal (TAO_OutputCDR &)
 {
   return false;
@@ -618,13 +582,13 @@ TAO::Objref_Traits<Messaging::RequestEndTimePolicy>::nil (void)
   return Messaging::RequestEndTimePolicy::_nil ();
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 TAO::Objref_Traits<Messaging::RequestEndTimePolicy>::marshal (
     Messaging::RequestEndTimePolicy_ptr p,
     TAO_OutputCDR & cdr
   )
 {
-  return CORBA::Object::marshal (p, cdr);
+  return ::CORBA::Object::marshal (p, cdr);
 }
 
 Messaging::RequestEndTimePolicy::RequestEndTimePolicy (void)
@@ -633,17 +597,9 @@ Messaging::RequestEndTimePolicy::RequestEndTimePolicy (void)
 Messaging::RequestEndTimePolicy::~RequestEndTimePolicy (void)
 {}
 
-void 
-Messaging::RequestEndTimePolicy::_tao_any_destructor (void *_tao_void_pointer)
-{
-  RequestEndTimePolicy *_tao_tmp_pointer =
-    static_cast<RequestEndTimePolicy *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
 Messaging::RequestEndTimePolicy_ptr
 Messaging::RequestEndTimePolicy::_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -654,7 +610,7 @@ Messaging::RequestEndTimePolicy::_narrow (
 
 Messaging::RequestEndTimePolicy_ptr
 Messaging::RequestEndTimePolicy::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -680,7 +636,7 @@ Messaging::RequestEndTimePolicy::_tao_release (RequestEndTimePolicy_ptr obj)
   CORBA::release (obj);
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 Messaging::RequestEndTimePolicy::_is_a (
     const char *value
     ACE_ENV_ARG_DECL_NOT_USED
@@ -718,7 +674,7 @@ const char* Messaging::RequestEndTimePolicy::_interface_repository_id (void) con
   return "IDL:omg.org/Messaging/RequestEndTimePolicy:1.0";
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 Messaging::RequestEndTimePolicy::marshal (TAO_OutputCDR &)
 {
   return false;
@@ -751,13 +707,13 @@ TAO::Objref_Traits<Messaging::ReplyStartTimePolicy>::nil (void)
   return Messaging::ReplyStartTimePolicy::_nil ();
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 TAO::Objref_Traits<Messaging::ReplyStartTimePolicy>::marshal (
     Messaging::ReplyStartTimePolicy_ptr p,
     TAO_OutputCDR & cdr
   )
 {
-  return CORBA::Object::marshal (p, cdr);
+  return ::CORBA::Object::marshal (p, cdr);
 }
 
 Messaging::ReplyStartTimePolicy::ReplyStartTimePolicy (void)
@@ -766,17 +722,9 @@ Messaging::ReplyStartTimePolicy::ReplyStartTimePolicy (void)
 Messaging::ReplyStartTimePolicy::~ReplyStartTimePolicy (void)
 {}
 
-void 
-Messaging::ReplyStartTimePolicy::_tao_any_destructor (void *_tao_void_pointer)
-{
-  ReplyStartTimePolicy *_tao_tmp_pointer =
-    static_cast<ReplyStartTimePolicy *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
 Messaging::ReplyStartTimePolicy_ptr
 Messaging::ReplyStartTimePolicy::_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -787,7 +735,7 @@ Messaging::ReplyStartTimePolicy::_narrow (
 
 Messaging::ReplyStartTimePolicy_ptr
 Messaging::ReplyStartTimePolicy::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -813,7 +761,7 @@ Messaging::ReplyStartTimePolicy::_tao_release (ReplyStartTimePolicy_ptr obj)
   CORBA::release (obj);
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 Messaging::ReplyStartTimePolicy::_is_a (
     const char *value
     ACE_ENV_ARG_DECL_NOT_USED
@@ -851,7 +799,7 @@ const char* Messaging::ReplyStartTimePolicy::_interface_repository_id (void) con
   return "IDL:omg.org/Messaging/ReplyStartTimePolicy:1.0";
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 Messaging::ReplyStartTimePolicy::marshal (TAO_OutputCDR &)
 {
   return false;
@@ -884,13 +832,13 @@ TAO::Objref_Traits<Messaging::ReplyEndTimePolicy>::nil (void)
   return Messaging::ReplyEndTimePolicy::_nil ();
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 TAO::Objref_Traits<Messaging::ReplyEndTimePolicy>::marshal (
     Messaging::ReplyEndTimePolicy_ptr p,
     TAO_OutputCDR & cdr
   )
 {
-  return CORBA::Object::marshal (p, cdr);
+  return ::CORBA::Object::marshal (p, cdr);
 }
 
 Messaging::ReplyEndTimePolicy::ReplyEndTimePolicy (void)
@@ -899,17 +847,9 @@ Messaging::ReplyEndTimePolicy::ReplyEndTimePolicy (void)
 Messaging::ReplyEndTimePolicy::~ReplyEndTimePolicy (void)
 {}
 
-void 
-Messaging::ReplyEndTimePolicy::_tao_any_destructor (void *_tao_void_pointer)
-{
-  ReplyEndTimePolicy *_tao_tmp_pointer =
-    static_cast<ReplyEndTimePolicy *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
 Messaging::ReplyEndTimePolicy_ptr
 Messaging::ReplyEndTimePolicy::_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -920,7 +860,7 @@ Messaging::ReplyEndTimePolicy::_narrow (
 
 Messaging::ReplyEndTimePolicy_ptr
 Messaging::ReplyEndTimePolicy::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -946,7 +886,7 @@ Messaging::ReplyEndTimePolicy::_tao_release (ReplyEndTimePolicy_ptr obj)
   CORBA::release (obj);
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 Messaging::ReplyEndTimePolicy::_is_a (
     const char *value
     ACE_ENV_ARG_DECL_NOT_USED
@@ -984,7 +924,7 @@ const char* Messaging::ReplyEndTimePolicy::_interface_repository_id (void) const
   return "IDL:omg.org/Messaging/ReplyEndTimePolicy:1.0";
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 Messaging::ReplyEndTimePolicy::marshal (TAO_OutputCDR &)
 {
   return false;
@@ -1017,13 +957,13 @@ TAO::Objref_Traits<Messaging::RelativeRequestTimeoutPolicy>::nil (void)
   return Messaging::RelativeRequestTimeoutPolicy::_nil ();
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 TAO::Objref_Traits<Messaging::RelativeRequestTimeoutPolicy>::marshal (
     Messaging::RelativeRequestTimeoutPolicy_ptr p,
     TAO_OutputCDR & cdr
   )
 {
-  return CORBA::Object::marshal (p, cdr);
+  return ::CORBA::Object::marshal (p, cdr);
 }
 
 Messaging::RelativeRequestTimeoutPolicy::RelativeRequestTimeoutPolicy (void)
@@ -1032,17 +972,9 @@ Messaging::RelativeRequestTimeoutPolicy::RelativeRequestTimeoutPolicy (void)
 Messaging::RelativeRequestTimeoutPolicy::~RelativeRequestTimeoutPolicy (void)
 {}
 
-void 
-Messaging::RelativeRequestTimeoutPolicy::_tao_any_destructor (void *_tao_void_pointer)
-{
-  RelativeRequestTimeoutPolicy *_tao_tmp_pointer =
-    static_cast<RelativeRequestTimeoutPolicy *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
 Messaging::RelativeRequestTimeoutPolicy_ptr
 Messaging::RelativeRequestTimeoutPolicy::_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -1053,7 +985,7 @@ Messaging::RelativeRequestTimeoutPolicy::_narrow (
 
 Messaging::RelativeRequestTimeoutPolicy_ptr
 Messaging::RelativeRequestTimeoutPolicy::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -1079,7 +1011,7 @@ Messaging::RelativeRequestTimeoutPolicy::_tao_release (RelativeRequestTimeoutPol
   CORBA::release (obj);
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 Messaging::RelativeRequestTimeoutPolicy::_is_a (
     const char *value
     ACE_ENV_ARG_DECL_NOT_USED
@@ -1117,7 +1049,7 @@ const char* Messaging::RelativeRequestTimeoutPolicy::_interface_repository_id (v
   return "IDL:omg.org/Messaging/RelativeRequestTimeoutPolicy:1.0";
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 Messaging::RelativeRequestTimeoutPolicy::marshal (TAO_OutputCDR &)
 {
   return false;
@@ -1163,13 +1095,13 @@ TAO::Objref_Traits<Messaging::RoutingPolicy>::nil (void)
   return Messaging::RoutingPolicy::_nil ();
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 TAO::Objref_Traits<Messaging::RoutingPolicy>::marshal (
     Messaging::RoutingPolicy_ptr p,
     TAO_OutputCDR & cdr
   )
 {
-  return CORBA::Object::marshal (p, cdr);
+  return ::CORBA::Object::marshal (p, cdr);
 }
 
 Messaging::RoutingPolicy::RoutingPolicy (void)
@@ -1178,17 +1110,9 @@ Messaging::RoutingPolicy::RoutingPolicy (void)
 Messaging::RoutingPolicy::~RoutingPolicy (void)
 {}
 
-void 
-Messaging::RoutingPolicy::_tao_any_destructor (void *_tao_void_pointer)
-{
-  RoutingPolicy *_tao_tmp_pointer =
-    static_cast<RoutingPolicy *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
 Messaging::RoutingPolicy_ptr
 Messaging::RoutingPolicy::_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -1199,7 +1123,7 @@ Messaging::RoutingPolicy::_narrow (
 
 Messaging::RoutingPolicy_ptr
 Messaging::RoutingPolicy::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -1225,7 +1149,7 @@ Messaging::RoutingPolicy::_tao_release (RoutingPolicy_ptr obj)
   CORBA::release (obj);
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 Messaging::RoutingPolicy::_is_a (
     const char *value
     ACE_ENV_ARG_DECL_NOT_USED
@@ -1263,7 +1187,7 @@ const char* Messaging::RoutingPolicy::_interface_repository_id (void) const
   return "IDL:omg.org/Messaging/RoutingPolicy:1.0";
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 Messaging::RoutingPolicy::marshal (TAO_OutputCDR &)
 {
   return false;
@@ -1296,13 +1220,13 @@ TAO::Objref_Traits<Messaging::MaxHopsPolicy>::nil (void)
   return Messaging::MaxHopsPolicy::_nil ();
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 TAO::Objref_Traits<Messaging::MaxHopsPolicy>::marshal (
     Messaging::MaxHopsPolicy_ptr p,
     TAO_OutputCDR & cdr
   )
 {
-  return CORBA::Object::marshal (p, cdr);
+  return ::CORBA::Object::marshal (p, cdr);
 }
 
 Messaging::MaxHopsPolicy::MaxHopsPolicy (void)
@@ -1311,17 +1235,9 @@ Messaging::MaxHopsPolicy::MaxHopsPolicy (void)
 Messaging::MaxHopsPolicy::~MaxHopsPolicy (void)
 {}
 
-void 
-Messaging::MaxHopsPolicy::_tao_any_destructor (void *_tao_void_pointer)
-{
-  MaxHopsPolicy *_tao_tmp_pointer =
-    static_cast<MaxHopsPolicy *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
 Messaging::MaxHopsPolicy_ptr
 Messaging::MaxHopsPolicy::_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -1332,7 +1248,7 @@ Messaging::MaxHopsPolicy::_narrow (
 
 Messaging::MaxHopsPolicy_ptr
 Messaging::MaxHopsPolicy::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -1358,7 +1274,7 @@ Messaging::MaxHopsPolicy::_tao_release (MaxHopsPolicy_ptr obj)
   CORBA::release (obj);
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 Messaging::MaxHopsPolicy::_is_a (
     const char *value
     ACE_ENV_ARG_DECL_NOT_USED
@@ -1396,7 +1312,7 @@ const char* Messaging::MaxHopsPolicy::_interface_repository_id (void) const
   return "IDL:omg.org/Messaging/MaxHopsPolicy:1.0";
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 Messaging::MaxHopsPolicy::marshal (TAO_OutputCDR &)
 {
   return false;
@@ -1429,13 +1345,13 @@ TAO::Objref_Traits<Messaging::QueueOrderPolicy>::nil (void)
   return Messaging::QueueOrderPolicy::_nil ();
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 TAO::Objref_Traits<Messaging::QueueOrderPolicy>::marshal (
     Messaging::QueueOrderPolicy_ptr p,
     TAO_OutputCDR & cdr
   )
 {
-  return CORBA::Object::marshal (p, cdr);
+  return ::CORBA::Object::marshal (p, cdr);
 }
 
 Messaging::QueueOrderPolicy::QueueOrderPolicy (void)
@@ -1444,17 +1360,9 @@ Messaging::QueueOrderPolicy::QueueOrderPolicy (void)
 Messaging::QueueOrderPolicy::~QueueOrderPolicy (void)
 {}
 
-void 
-Messaging::QueueOrderPolicy::_tao_any_destructor (void *_tao_void_pointer)
-{
-  QueueOrderPolicy *_tao_tmp_pointer =
-    static_cast<QueueOrderPolicy *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
 Messaging::QueueOrderPolicy_ptr
 Messaging::QueueOrderPolicy::_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -1465,7 +1373,7 @@ Messaging::QueueOrderPolicy::_narrow (
 
 Messaging::QueueOrderPolicy_ptr
 Messaging::QueueOrderPolicy::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -1491,7 +1399,7 @@ Messaging::QueueOrderPolicy::_tao_release (QueueOrderPolicy_ptr obj)
   CORBA::release (obj);
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 Messaging::QueueOrderPolicy::_is_a (
     const char *value
     ACE_ENV_ARG_DECL_NOT_USED
@@ -1529,7 +1437,7 @@ const char* Messaging::QueueOrderPolicy::_interface_repository_id (void) const
   return "IDL:omg.org/Messaging/QueueOrderPolicy:1.0";
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 Messaging::QueueOrderPolicy::marshal (TAO_OutputCDR &)
 {
   return false;
@@ -1538,7 +1446,7 @@ Messaging::QueueOrderPolicy::marshal (TAO_OutputCDR &)
 // TAO_IDL - Generated from
 // be\be_visitor_structure/cdr_op_cs.cpp:61
 
-CORBA::Boolean operator<< (
+::CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
     const Messaging::PriorityRange &_tao_aggregate
   )
@@ -1548,7 +1456,7 @@ CORBA::Boolean operator<< (
     (strm << _tao_aggregate.max);
 }
 
-CORBA::Boolean operator>> (
+::CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
     Messaging::PriorityRange &_tao_aggregate
   )
@@ -1561,7 +1469,7 @@ CORBA::Boolean operator>> (
 // TAO_IDL - Generated from
 // be\be_visitor_structure/cdr_op_cs.cpp:61
 
-CORBA::Boolean operator<< (
+::CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
     const Messaging::RoutingTypeRange &_tao_aggregate
   )
@@ -1571,7 +1479,7 @@ CORBA::Boolean operator<< (
     (strm << _tao_aggregate.max);
 }
 
-CORBA::Boolean operator>> (
+::CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
     Messaging::RoutingTypeRange &_tao_aggregate
   )

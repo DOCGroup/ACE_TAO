@@ -26,10 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:153
+// be\be_codegen.cpp:154
 
-#ifndef _TAO_IDL_ORIG_MESSAGING_SYNCSCOPE_POLICYC_H_
-#define _TAO_IDL_ORIG_MESSAGING_SYNCSCOPE_POLICYC_H_
+#ifndef _TAO_IDL_MESSAGING_SYNCSCOPE_POLICYC_H_
+#define _TAO_IDL_MESSAGING_SYNCSCOPE_POLICYC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -55,17 +55,8 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_Messaging_Export
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
-
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:49
 
 namespace Messaging
 {
@@ -76,7 +67,7 @@ namespace Messaging
   const CORBA::PolicyType SYNC_SCOPE_POLICY_TYPE = 24U;
   
   // TAO_IDL - Generated from
-  // be\be_interface.cpp:598
+  // be\be_interface.cpp:646
 
 #if !defined (_MESSAGING_SYNCSCOPEPOLICY__VAR_OUT_CH_)
 #define _MESSAGING_SYNCSCOPEPOLICY__VAR_OUT_CH_
@@ -117,12 +108,12 @@ namespace Messaging
     static void _tao_release (SyncScopePolicy_ptr obj);
     
     static SyncScopePolicy_ptr _narrow (
-        CORBA::Object_ptr obj
+        ::CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
     static SyncScopePolicy_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj
+        ::CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
@@ -131,16 +122,16 @@ namespace Messaging
       return static_cast<SyncScopePolicy_ptr> (0);
     }
     
-    static void _tao_any_destructor (void *);
+    
     
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
     
-    virtual Messaging::SyncScope synchronization (
+    virtual ::Messaging::SyncScope synchronization (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -150,7 +141,7 @@ namespace Messaging
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       )) = 0;
     
     // TAO_IDL - Generated from
@@ -160,19 +151,19 @@ namespace Messaging
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        ::CORBA::SystemException
       )) = 0;
     
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
     
-    virtual CORBA::Boolean _is_a (
+    virtual ::CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
     virtual const char* _interface_repository_id (void) const;
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+    virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
   
   protected:
     // Abstract or local interface only.
@@ -188,14 +179,9 @@ namespace Messaging
   };
 
 #endif /* end #if !defined */
-  
-  // TAO_IDL - Generated from
-  // be\be_visitor_typecode/typecode_decl.cpp:44
-  
-  extern TAO_Messaging_Export ::CORBA::TypeCode_ptr const _tc_SyncScopePolicy;
 
 // TAO_IDL - Generated from
-// be\be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:78
 
 } // module Messaging
 
@@ -206,8 +192,8 @@ namespace Messaging
 namespace TAO
 {
 
-#if !defined (_MESSAGING_SYNCSCOPEPOLICY__TRAITS_CH_)
-#define _MESSAGING_SYNCSCOPEPOLICY__TRAITS_CH_
+#if !defined (_MESSAGING_SYNCSCOPEPOLICY__TRAITS_)
+#define _MESSAGING_SYNCSCOPEPOLICY__TRAITS_
   
   template<>
   struct TAO_Messaging_Export Objref_Traits< ::Messaging::SyncScopePolicy>
@@ -219,7 +205,7 @@ namespace TAO
         ::Messaging::SyncScopePolicy_ptr
       );
     static ::Messaging::SyncScopePolicy_ptr nil (void);
-    static CORBA::Boolean marshal (
+    static ::CORBA::Boolean marshal (
         ::Messaging::SyncScopePolicy_ptr p,
         TAO_OutputCDR & cdr
       );
@@ -229,22 +215,7 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/any_op_ch.cpp:52
-
-TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::SyncScopePolicy_ptr); // copying
-TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::SyncScopePolicy_ptr *); // non-copying
-TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::SyncScopePolicy_ptr &);
-
-// TAO_IDL - Generated from
-// be\be_codegen.cpp:955
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
+// be\be_codegen.cpp:1040
 
 #include /**/ "ace/post.h"
 

@@ -26,10 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from 
-// be\be_codegen.cpp:677
+// be\be_codegen.cpp:627
 
-#ifndef _TAO_IDL_ORIG_MESSAGINGS_T_CPP_
-#define _TAO_IDL_ORIG_MESSAGINGS_T_CPP_
+#ifndef _TAO_IDL_MESSAGINGS_T_CPP_
+#define _TAO_IDL_MESSAGINGS_T_CPP_
 
 #include "MessagingS_T.h"
 
