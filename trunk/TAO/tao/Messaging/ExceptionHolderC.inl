@@ -29,7 +29,7 @@
 // TAO_IDL - Generated from
 // be\be_visitor_valuetype/valuetype_ci.cpp:56
 
-#if defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
+#if !defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
 
 ACE_INLINE
 Messaging::ExceptionHolder::ExceptionHolder (void)
@@ -41,4 +41,4 @@ Messaging::ExceptionHolder::_tao_obv_static_repository_id ()
   return "IDL:omg.org/Messaging/ExceptionHolder:1.0";
 }
 
-#endif /* */
+#endif

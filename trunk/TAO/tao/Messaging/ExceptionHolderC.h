@@ -28,8 +28,8 @@
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:154
 
-#ifndef _TAO_IDL_OLDEXCEPTIONHOLDERC_H_
-#define _TAO_IDL_OLDEXCEPTIONHOLDERC_H_
+#ifndef _TAO_IDL_EXCEPTIONHOLDERC_H_
+#define _TAO_IDL_EXCEPTIONHOLDERC_H_
 
 #include /**/ "ace/pre.h"
 
@@ -43,20 +43,20 @@
 #include "messaging_export.h"
 #include "tao/Valuetype/ValueBase.h"
 #include "tao/Valuetype/Valuetype_Adapter_Impl.h"
-#include "tao/Valuetype/ValueFactory.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/Valuetype/Value_VarOut_T.h"
 
 #include "tao/OctetSeqC.h"
+#include "tao/AnyTypeCode/DynamicC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
 #define TAO_EXPORT_MACRO TAO_Messaging_Export
 
-#if defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
+#if !defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:49
@@ -114,6 +114,24 @@ namespace Messaging
     static void _tao_any_destructor (void *);
 
     // TAO_IDL - Generated from
+    // be\be_visitor_valuetype/valuetype_ch.cpp:400
+
+  public:
+    virtual void raise_exception (
+         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      ) = 0;
+
+    // TAO_IDL - Generated from
+    // be\be_visitor_valuetype/valuetype_ch.cpp:400
+
+  public:
+    virtual void raise_exception_with_list (
+        const ::Dynamic::ExceptionList & ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      ) = 0;
+
+  protected:
+
+    // TAO_IDL - Generated from
     // be\be_visitor_valuetype/field_ch.cpp:469
 
     virtual void is_system_exception (::CORBA::Boolean) = 0;
@@ -157,34 +175,6 @@ namespace Messaging
 
 #endif /* end #if !defined */
 
-#if !defined (_MESSAGING_EXCEPTIONHOLDER___INIT_CH_)
-#define _MESSAGING_EXCEPTIONHOLDER___INIT_CH_
-
-  // TAO_IDL - Generated from
-  // be\be_visitor_valuetype/valuetype_init_ch.cpp:72
-
-  class TAO_Messaging_Export ExceptionHolder_init : public virtual ::CORBA::ValueFactoryBase
-  {
-  public:
-    ExceptionHolder_init (void);
-
-    static ExceptionHolder_init* _downcast ( ::CORBA::ValueFactoryBase *);
-
-    virtual ::CORBA::ValueBase *
-    create_for_unmarshal (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      );
-
-    // TAO-specific extensions
-  public:
-    virtual const char* tao_repository_id (void);
-
-  protected:
-    virtual ~ExceptionHolder_init (void);
-  };
-
-#endif /* end #if !defined */
-
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:78
 
@@ -204,12 +194,11 @@ namespace OBV_Messaging
 
   // OBV_ class
   class TAO_Messaging_Export ExceptionHolder
-    : public virtual Messaging::ExceptionHolder,
-      public virtual ::CORBA::DefaultValueRefCountBase
+    : public virtual Messaging::ExceptionHolder
   {
   public:
-    ExceptionHolder (void);
-    virtual ~ExceptionHolder (void);
+
+  protected:
 
     // TAO_IDL - Generated from
     // be\be_visitor_valuetype/field_ch.cpp:469
@@ -229,6 +218,10 @@ namespace OBV_Messaging
     virtual void marshaled_exception (const CORBA::OctetSeq &);
     virtual const CORBA::OctetSeq &marshaled_exception (void) const;
     virtual CORBA::OctetSeq &marshaled_exception (void);
+
+  protected:
+    ExceptionHolder (void);
+    virtual ~ExceptionHolder (void);
 
   protected:
     virtual ::CORBA::Boolean
@@ -289,10 +282,10 @@ TAO_Messaging_Export ::CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::Exc
 // be\be_codegen.cpp:1040
 
 #if defined (__ACE_INLINE__)
-#include "OldExceptionHolderC.inl"
+#include "ExceptionHolderC.inl"
 #endif /* defined INLINE */
 
-#endif /* */
+#endif
 
 #include /**/ "ace/post.h"
 
