@@ -1,3 +1,8 @@
+Mon Oct 17 18:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Invocation_Base.h:
+          Removed some not needed forward declarations
+
 Mon Oct 17 09:52:05 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* Makefile.am:
