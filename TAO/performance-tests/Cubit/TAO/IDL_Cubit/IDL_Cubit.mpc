@@ -1,8 +1,17 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoexe, utils, portableserver, strategies {
+project(*IDL): taoidldefaults, strategies {
   idlflags += -Gd
+
+  IDL_Files {
+    cubit.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoexe, utils, portableserver, strategies {
+  after += *IDL
 
   Source_Files {
     RTI_IO.cpp
@@ -10,25 +19,35 @@ project(*Server): taoexe, utils, portableserver, strategies {
     Cubit_Client.cpp
     Cubit_Server.cpp
     server.cpp
+    cubitS.cpp
+    cubitC.cpp
+  }
+
+  IDL_Files {
   }
 }
 
 project(*client): taoexe, portableserver, strategies {
-  idlflags += -Gd
+  after += *IDL
 
   Source_Files {
     RTI_IO.cpp
     Cubit_Client.cpp
     client.cpp
+    cubitC.cpp
+  }
+
+  IDL_Files {
   }
 }
 
 project(*collocation): taoexe, utils, portableserver, strategies {
+  after += *IDL
+
   // Note : You can't just prepend collocation/ to the exename
   //        to get it to ouput to that directory. It won't go
   //        to the right place on some platforms. (Windows)
   exename   = collocation_test
-  idlflags += -Gd
 
   Source_Files {
     RTI_IO.cpp
@@ -36,5 +55,10 @@ project(*collocation): taoexe, utils, portableserver, strategies {
     Cubit_i.cpp
     Cubit_Client.cpp
     Cubit_Server.cpp
+    cubitS.cpp
+    cubitC.cpp
+  }
+
+  IDL_Files {
   }
 }
