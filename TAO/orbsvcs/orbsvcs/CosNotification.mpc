@@ -34,7 +34,6 @@ project(CosNotification) : orbsvcslib, core, event {
     NotifyExtC.cpp
     Event_ForwarderC.cpp
     Notify/Notify_Extensions.cpp
-    Notify/Service.cpp
   }
 
   Header_Files {
@@ -46,7 +45,6 @@ project(CosNotification) : orbsvcslib, core, event {
     Event_ForwarderC.h
     Notify/Notify_Extensions.h
     Notify/notify_export.h
-    Notify/Service.h
   }
 
   Inline_Files {
@@ -202,6 +200,7 @@ project(CosNotification_Serv) : orbsvcslib, svc_utils, core, notification_skel, 
       Notify/Routing_Slip.cpp
       Notify/Routing_Slip_Persistence_Manager.cpp
       Notify/Routing_Slip_Queue.cpp
+      Notify/Service.cpp
       Notify/Subscription_Change_Worker.cpp
       Notify/Supplier.cpp
       Notify/SupplierAdmin.cpp
