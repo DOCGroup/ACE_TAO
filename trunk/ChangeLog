@@ -1,3 +1,12 @@
+Mon Oct 17 10:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/FILE_IO.inl:
+          Removed some not needed c-style casts
+
+        * tests/CDR_File_Test.cpp:
+          Explicitly initialise memory with 0 when we are using a
+          profiler.
+
 Mon Oct 17 09:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Time_Value.{h,inl}:
