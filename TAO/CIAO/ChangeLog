@@ -1,3 +1,9 @@
+Mon Oct 17 13:21:59 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* docs/schema/ccd.xsd
+
+	Updated to work with expected format for Repoman/ComponentPackager
+
 Fri Oct 14 17:22:59 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* tools/Config_Handlers/Basic_Deployment_Data.cpp
