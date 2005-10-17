@@ -40,25 +40,13 @@
 #include "tao/Messaging/Messaging_RT_Policy.pidl"
 #include "tao/Messaging/Messaging_No_Impl.pidl"
 #include "tao/Messaging/Pollable.pidl"
-#include "tao/OctetSeq.pidl"
+#include "tao/Messaging/OldExceptionHolder.pidl"
 
 #pragma prefix "omg.org"
 
 module Messaging
 {
-  //
-  // Exception Delivery in the Callback Model
-  //
-  valuetype ExceptionHolder {
-    public boolean         is_system_exception;
-    public boolean         byte_order;
-    public CORBA::OctetSeq marshaled_exception;
-  };
-
-  //
-  // Base interface for the Callback model
-  //
-
+  /// Base interface for the Callback model
   interface ReplyHandler { };
 };
 
