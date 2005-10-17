@@ -1,14 +1,14 @@
 Mon Oct 17 07:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rules.tao.GNU:
-          Prevent building with emulated exceptions
+          Prevent building with emulated exceptions.
 
 Mon Oct 17 07:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/Service.h:
         * orbsvcs/orbsvcs/CosNotification.mpc:
-          Service should be in CosNotification_Serv. Thanks for JT
-          for notificing this
+          Service should be in CosNotification_Serv. Thanks to JT
+          for notificing this.
 
 Sun Oct 16 12:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -11841,7 +11841,7 @@ Fri Jul  1 000:27:47 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
           and valuetypes to happen soon enough to make the generation of
           the file include of Recursive_Type_TypeCode.h conditional on
           whether a recursive type has been seen or not. Thanks to
-          Ossama Otheman <ossama@dre.vanderbilt.edu> for suggesting
+          Ossama Othman <ossama@dre.vanderbilt.edu> for suggesting
           the conditional include.
 
 Thu Jun 30 18:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
