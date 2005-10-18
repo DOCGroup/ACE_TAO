@@ -161,9 +161,9 @@ be_change_idl_file_extension (UTL_String* idl_file,
     {
       return 0;
     }
-    
-  // Anyop file output defaults to general output dir if not set.  
-  const char *output_path = (for_anyop 
+
+  // Anyop file output defaults to general output dir if not set.
+  const char *output_path = (for_anyop
                              ? (be_global->anyop_output_dir () == 0
                                 ? be_global->output_dir ()
                                 : be_global->anyop_output_dir ())
@@ -431,7 +431,7 @@ BE_GlobalData::skel_export_macro (void) const
     {
       return "";
     }
-    
+
   return this->skel_export_macro_;
 }
 
@@ -460,7 +460,7 @@ BE_GlobalData::stub_export_macro (void) const
     {
       return "";
     }
-    
+
   return this->stub_export_macro_;
 }
 
@@ -489,7 +489,7 @@ BE_GlobalData::anyop_export_macro (void) const
     {
       return "";
     }
-    
+
   return this->anyop_export_macro_;
 }
 
@@ -2126,7 +2126,7 @@ BE_GlobalData::usage (void) const
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -SS\t\t\tsuppress generating skeleton implementation")
-      ACE_TEXT ("  and inline file (disabled by default)\n")
+      ACE_TEXT (" and inline file (disabled by default)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
