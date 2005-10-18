@@ -14,7 +14,7 @@ ACE_RCSID (ace,
 #include "ace/OS_Errno.h"
 
 #if defined (ACE_USES_WCHAR)
-ACE_Argv_Type_Converter::ACE_Argv_Type_Converter(int &argc, wchar_t** argv)
+ACE_Argv_Type_Converter::ACE_Argv_Type_Converter (int &argc, wchar_t** argv)
   : saved_argc_ (argc)
     , char_argv_ (0)
     , wchar_argv_ (argv)
@@ -34,7 +34,7 @@ ACE_Argv_Type_Converter::ACE_Argv_Type_Converter(int &argc, wchar_t** argv)
 #endif  // ACE_USES_WCHAR
 
 
-ACE_Argv_Type_Converter::ACE_Argv_Type_Converter(int &argc, char** argv)
+ACE_Argv_Type_Converter::ACE_Argv_Type_Converter (int &argc, char** argv)
   : saved_argc_(argc)
   , char_argv_(argv)
 #if defined (ACE_USES_WCHAR)
@@ -70,7 +70,7 @@ ACE_Argv_Type_Converter::~ACE_Argv_Type_Converter (void)
         }
       for (int i = 0; i < this->before_pass_argc_; ++i)
         {
-          delete [] this->char_argv_[i];
+          ACE_OS::free (this->char_argv_[i]);
         }
       delete [] this->char_argv_;
     }
@@ -82,7 +82,7 @@ ACE_Argv_Type_Converter::~ACE_Argv_Type_Converter (void)
       }
       for (int i = 0; i < this->before_pass_argc_; ++i)
         {
-          delete [] this->wchar_argv_[i];
+          ACE_OS::free (this->wchar_argv_[i]);
         }
       delete [] this->wchar_argv_;
     }
@@ -188,12 +188,12 @@ ACE_Argv_Type_Converter::cleanup (void)
       //  Check whether it's ours to delete.
       if (original_type_ == 1) 
         {
-          delete [] this->char_argv_[i];
+          ACE_OS::free (this->char_argv_[i]);
           this->char_argv_[i] = 0;
         }
       else 
         {
-          delete [] this->wchar_argv_[i];
+          ACE_OS::free (this->wchar_argv_[i]);
           this->wchar_argv_[i] = 0;
         }
     }
