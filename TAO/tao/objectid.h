@@ -89,13 +89,16 @@
 //    dynamically.
 
 /// Service IDs for the services that are located through Multicast.
-enum TAO_MCAST_SERVICEID
+namespace TAO
 {
-  NAMESERVICE,
-  TRADINGSERVICE,
-  IMPLREPOSERVICE,
-  INTERFACEREPOSERVICE
-};
+  enum MCAST_SERVICEID
+    {
+      MCAST_NAMESERVICE,
+      MCAST_TRADINGSERVICE,
+      MCAST_IMPLREPOSERVICE,
+      MCAST_INTERFACEREPOSERVICE
+    };
+}
 
 /// No. of services locatable through multicast.
 #define TAO_NO_OF_MCAST_SERVICES 4

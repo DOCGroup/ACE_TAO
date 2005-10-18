@@ -1097,39 +1097,28 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
   // deferred until after the service config entries had been
   // determined.
 
-  this->orb_params ()->service_port (NAMESERVICE, ns_port);
+  this->orb_params ()->service_port (TAO::MCAST_NAMESERVICE, ns_port);
 
   if (ns_port != 0)
     {
-      char ns_port_char[256];
+      static char const mcast_fmt[] = "mcast://:%d::";
+      static size_t const PORT_BUF_SIZE = 256;
 
-      ACE_OS::itoa (ns_port,
-                    ns_port_char,
-                    10);
+      char def_init_ref[PORT_BUF_SIZE] = { 0 }; // snprintf() doesn't
+                                                // null terminate.
+                                                // Make sure we do.
 
-      CORBA::String_var ns_port_ptr =
-        CORBA::string_alloc (static_cast<CORBA::ULong> (
-                               ACE_OS::strlen ((const char *) ns_port_char)));
+      ACE_OS::snprintf (def_init_ref,
+                        PORT_BUF_SIZE - 1, // Account for null
+                                           // terminator.
+                        mcast_fmt,
+                        ns_port);
 
-      ns_port_ptr = (const char *) ns_port_char;
-
-      const char prefix[] = "mcast://:";
-
-      CORBA::String_var def_init_ref =
-        CORBA::string_alloc (sizeof (prefix) +
-                             static_cast<CORBA::ULong> (
-                                    ACE_OS::strlen (ns_port_ptr.in ())) +
-                             2);
-
-      ACE_OS::strcpy (def_init_ref.inout (), prefix);
-      ACE_OS::strcat (def_init_ref.inout (), ns_port_ptr.in ());
-      ACE_OS::strcat (def_init_ref.inout (), "::");
-
-      this->orb_params ()->default_init_ref (def_init_ref.in ());
+      this->orb_core_->orb_params ()->default_init_ref (def_init_ref);
     }
 
-  this->orb_params ()->service_port (TRADINGSERVICE, ts_port);
-  this->orb_params ()->service_port (IMPLREPOSERVICE, ir_port);
+  this->orb_params ()->service_port (TAO::MCAST_TRADINGSERVICE, ts_port);
+  this->orb_params ()->service_port (TAO::MCAST_IMPLREPOSERVICE, ir_port);
 
   this->orb_params ()->use_dotted_decimal_addresses (dotted_decimal_addresses);
   // When caching incoming transports don't use the host name if
