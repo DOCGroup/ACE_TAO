@@ -1,3 +1,8 @@
+Tue Oct 18 09:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_global.cpp:
+          Removed duplicate space
+
 Tue Oct 18 08:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
