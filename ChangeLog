@@ -1,10 +1,16 @@
+Tue Oct 18 22:24:11 2005  Olli Savia  <ops@iki.fi>
+
+        * ace/TTY_IO.h:
+          Changed type of readmincharacters from int to unsigned int.
+          Fixes compile time warning.
+
 Tue Oct 18 09:53:29 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	From Mickael P. Golovin <migel at garant dot ru>
-	* ace/Argv_Type_Converter.cpp:
+        From Mickael P. Golovin <migel at garant dot ru>
+        * ace/Argv_Type_Converter.cpp:
 
-	  Fixed strdup()/operator delete() mismatches.  Strings allocated
-	  by strdup() should be deallocated using free().
+          Fixed strdup()/operator delete() mismatches.  Strings allocated
+          by strdup() should be deallocated using free().
 
 Mon Oct 17 22:05:37 2005  Olli Savia  <ops@iki.fi>
 
@@ -42,7 +48,7 @@ Sun Oct 16 13:01:12 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * protocols/ace/RMCast/Acknowledge.cpp:
 
-	  Fix typo in last change.
+          Fix typo in last change.
 
 Sun Oct 16 12:05:45 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
