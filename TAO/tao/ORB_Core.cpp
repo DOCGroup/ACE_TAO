@@ -1114,7 +1114,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                         mcast_fmt,
                         ns_port);
 
-      this->orb_core_->orb_params ()->default_init_ref (def_init_ref);
+      this->orb_params ()->default_init_ref (def_init_ref);
     }
 
   this->orb_params ()->service_port (TAO::MCAST_TRADINGSERVICE, ts_port);
