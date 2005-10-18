@@ -357,7 +357,8 @@ ImR_Locator_i::setup_multicast (ACE_Reactor* reactor, const char* ior)
   else
   {
     // Port can be specified as param, env var, or default
-    CORBA::UShort port = core->orb_params()->service_port(IMPLREPOSERVICE);
+    CORBA::UShort port =
+      core->orb_params()->service_port (TAO::MCAST_IMPLREPOSERVICE);
     if (port == 0)
     {
       // Check environment var. for multicast port.
