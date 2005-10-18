@@ -1,5 +1,6 @@
 Tue Oct 18 09:34:53 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
+	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp (setup_multicast):
 	* orbsvcs/orbsvcs/Naming/Naming_Server.cpp (init_new_naming):
 	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp
 	  (init_multicast_server):
