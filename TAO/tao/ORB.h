@@ -613,8 +613,12 @@ namespace CORBA
   private:
 
     /// Resolve the given service based on the service ID.
-    CORBA::Object_ptr resolve_service (TAO_MCAST_SERVICEID service_id
-                                       ACE_ENV_ARG_DECL);
+    /**
+     * "@c resolve_service" is a legacy name.  This method now simply
+     * sets up a default initial reference that will be subsequently
+     * used in resolve_initial_references().
+     */
+    void resolve_service (TAO::MCAST_SERVICEID service_id);
 
     /// Convert an OMG IOR into an object reference.
     CORBA::Object_ptr ior_string_to_object (const char* ior

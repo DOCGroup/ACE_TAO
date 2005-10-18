@@ -978,11 +978,10 @@ CORBA::ORB::resolve_policy_current (void)
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 }
 
-CORBA::Object_ptr
-CORBA::ORB::resolve_service (TAO_MCAST_SERVICEID mcast_service_id
-                             ACE_ENV_ARG_DECL_NOT_USED)
+void
+CORBA::ORB::resolve_service (TAO::MCAST_SERVICEID mcast_service_id)
 {
-  static const char * env_service_port[] =
+  static char const * const env_service_port[] =
   {
     "NameServicePort",
     "TradingServicePort",
@@ -990,7 +989,7 @@ CORBA::ORB::resolve_service (TAO_MCAST_SERVICEID mcast_service_id
     "InterfaceRepoServicePort"
   };
 
-  static const unsigned short default_service_port[] =
+  static unsigned short const default_service_port[] =
   {
     TAO_DEFAULT_NAME_SERVER_REQUEST_PORT,
     TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT,
@@ -998,66 +997,52 @@ CORBA::ORB::resolve_service (TAO_MCAST_SERVICEID mcast_service_id
     TAO_DEFAULT_INTERFACEREPO_SERVER_REQUEST_PORT
   };
 
-  CORBA::Object_var return_value;
-
   // By now, the table filled in with -ORBInitRef arguments has been
   // checked.  We only get here if the table didn't contain an initial
   // reference for the requested Service.
 
-  // First, determine if the port was supplied on the command line
-  unsigned short port =
-  this->orb_core_->orb_params ()->service_port (mcast_service_id);
-
-  if (port == 0)
-  {
-    // Look for the port among our environment variables.
-    const char *port_number =
-      ACE_OS::getenv (env_service_port[mcast_service_id]);
-
-    if (port_number != 0)
-      port = static_cast<unsigned short> (ACE_OS::atoi (port_number));
-    else
-      port = default_service_port[mcast_service_id];
-  }
-
-  // Set the port value in ORB_Params: modify the default mcast
-  // value.
-  static const char prefix[] = "mcast://:";
-
-  char port_char[256];
-
-  ACE_OS::itoa (port,
-                port_char,
-                10);
-
-  CORBA::String_var port_ptr =
-    CORBA::string_alloc (static_cast<CORBA::ULong> (
-                           ACE_OS::strlen ((const char *) port_char)));
-
-  port_ptr = (const char *) port_char;
-
-  CORBA::String_var def_init_ref =
-    CORBA::string_alloc (sizeof (prefix) +
-                         static_cast<CORBA::ULong> (
-                           ACE_OS::strlen (port_ptr.in ())) + 2);
-
-  ACE_OS::strcpy (def_init_ref.inout (), prefix);
-  ACE_OS::strcat (def_init_ref.inout (), port_ptr.in ());
-  ACE_OS::strcat (def_init_ref.inout (), "::");
-
   CORBA::String_var default_init_ref =
         this->orb_core_->orb_params ()->default_init_ref ();
 
-  static const char mcast_prefix[] = "mcast://:::";
+  static char const mcast_prefix[] = "mcast://:::";
 
   if ((ACE_OS::strncmp (default_init_ref.in (),
-                       mcast_prefix,
-                       sizeof mcast_prefix - 1) == 0))
-  {
-    this->orb_core_->orb_params ()->default_init_ref (def_init_ref.in ());
-  }
+                        mcast_prefix,
+                        sizeof (mcast_prefix) - 1) == 0))
+    {
+      // First, determine if the port was supplied on the command line
+      unsigned short port =
+        this->orb_core_->orb_params ()->service_port (mcast_service_id);
 
-  return CORBA::Object::_nil ();
+      if (port == 0)
+        {
+          // Look for the port among our environment variables.
+          char const * const port_number =
+            ACE_OS::getenv (env_service_port[mcast_service_id]);
+
+          if (port_number != 0)
+            port = static_cast<unsigned short> (ACE_OS::atoi (port_number));
+          else
+            port = default_service_port[mcast_service_id];
+        }
+
+      // Set the port value in ORB_Params: modify the default mcast
+      // value.
+      static char const mcast_fmt[] = "mcast://:%d::";
+      static size_t const PORT_BUF_SIZE = 256;
+
+      char def_init_ref[PORT_BUF_SIZE] = { 0 }; // snprintf() doesn't
+                                                // null terminate.
+                                                // Make sure we do.
+
+      ACE_OS::snprintf (def_init_ref,
+                        PORT_BUF_SIZE - 1, // Account for null
+                                           // terminator.
+                        mcast_fmt,
+                        port);
+
+      this->orb_core_->orb_params ()->default_init_ref (def_init_ref);
+    }
 }
 
 CORBA::Object_ptr
@@ -1193,39 +1178,19 @@ CORBA::ORB::resolve_initial_references (const char *name,
 
   if (ACE_OS::strcmp (name, TAO_OBJID_NAMESERVICE) == 0)
     {
-      result = this->resolve_service (NAMESERVICE
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-      if (!CORBA::is_nil (result.in ()))
-        return result._retn ();
+      this->resolve_service (TAO::MCAST_NAMESERVICE);
     }
   else if (ACE_OS::strcmp (name, TAO_OBJID_TRADINGSERVICE) == 0)
     {
-      result = this->resolve_service (TRADINGSERVICE
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-      if (!CORBA::is_nil (result.in ()))
-        return result._retn ();
+      this->resolve_service (TAO::MCAST_TRADINGSERVICE);
     }
   else if (ACE_OS::strcmp (name, TAO_OBJID_IMPLREPOSERVICE) == 0)
     {
-      result = this->resolve_service (IMPLREPOSERVICE
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-      if (!CORBA::is_nil (result.in ()))
-        return result._retn ();
+      this->resolve_service (TAO::MCAST_IMPLREPOSERVICE);
     }
   else if (ACE_OS::strcmp (name, TAO_OBJID_INTERFACEREP) == 0)
     {
-      result = this->resolve_service (INTERFACEREPOSERVICE
-                                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-      if (!CORBA::is_nil (result.in ()))
-        return result._retn ();
+      this->resolve_service (TAO::MCAST_INTERFACEREPOSERVICE);
     }
 
   // Is not one of the well known services, try to find it in the
