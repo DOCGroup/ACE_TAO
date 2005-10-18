@@ -1,3 +1,9 @@
+Tue Oct 18 00:19:41 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/ORB_Core.cpp (init):
+
+	  Corrected minor typo in previous commit.
+
 Tue Oct 18 00:08:30 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/SystemException.cpp:
