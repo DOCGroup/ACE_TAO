@@ -1,3 +1,10 @@
+Tue Oct 18 13:23:21 2005  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* docs/ec_options.html: Finally updated documentation to
+	  include information about the "new" queue-full options.
+	  See entry from "Thu Aug 25 11:00:47 2005  Chris Cleeland" for
+	  more info.
+
 Tue Oct 18 10:31:38 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
