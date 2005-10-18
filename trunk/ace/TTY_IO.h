@@ -54,8 +54,9 @@ public:
         is sent. Negative value indicates that default value should
         be used (Win32). */
     int xofflim;
-    /** Specifies the minimum number of characters for non-canonical read. */
-    int readmincharacters;
+    /** Specifies the minimum number of characters for non-canonical
+        read (POSIX). */
+    unsigned int readmincharacters;
     /** Specifies the time to wait before returning from read. Negative value
         means infinite timeout. */
     int readtimeoutmsec;
