@@ -29,6 +29,11 @@
 
 class TAO_DII_Deferred_Reply_Dispatcher;
 
+namespace Dynamic
+{
+  class ParameterList;
+}
+
 namespace TAO
 {
   /**
