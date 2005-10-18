@@ -34,7 +34,7 @@ Sun Oct 16 13:01:12 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * protocols/ace/RMCast/Acknowledge.cpp:
 
-          Fix tipo in last change.
+	  Fix typo in last change.
 
 Sun Oct 16 12:05:45 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
