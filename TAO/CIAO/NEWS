@@ -36,6 +36,7 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
   decisions, without handcrafting the mechanisms needed to (1) configure
   the algorithms and (2) deploy the decisions made by the algorithms.
 
+. Implement support for more complex type initialization with XML. 
 
 PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
 ==========================================
@@ -59,6 +60,14 @@ PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.7 and CIAO-0.4.8
 ======================================================
+. The XSC based config handlers have been heavily optimized, resulting
+  in greatly reduced parsing overhead for large deployments. 
+
+. The DAnCE toolchain now supports initializing attributes which have
+  enumerated types. Support for other complex types is planned for the
+  future. Please see examples/Hello/descriptors/
+  flattened_deploymentplan_without_ns.cdp for an example of how to
+  populate enumerated attributes. 
 
 . Integrated Real-time QoS support to CIAO based on OMG's new
   Deployment and Configuration (D&C) specification. Such effort
@@ -71,7 +80,7 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.4.7 and CIAO-0.4.8
 . Added functionality in XML parsing code to resolve schema in
   $CIAO_ROOT/docs/schema instead of the local directory only. All
   DeploymentPlans should use Deployment.xsd instead of
-  Modified_Deployment.xsd.
+  Modified_Deployment.xsd, which has been removed. 
 
 . Fixed bug in CIDL code generation for some types of component and
   home attributes.
