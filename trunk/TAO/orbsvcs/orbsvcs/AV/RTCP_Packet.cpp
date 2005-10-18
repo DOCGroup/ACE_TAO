@@ -601,7 +601,7 @@ RTCP_SDES_Packet::~RTCP_SDES_Packet(void)
 void
 RTCP_SDES_Packet::add_chunk(ACE_UINT32 ssrc)
 {
-  sdesChunk_t *cp; // pointer to chunk
+  sdesChunk_t *cp = 0; // pointer to chunk
 
   // If this is the first chunk.
   if (chd_.count_ == 0)
@@ -688,7 +688,7 @@ RTCP_SDES_Packet::add_item (ACE_UINT32 ssrc,
     }
 
   ip->type_ = type;
-  
+
   ip->info_.standard_.length_ = length;
 
   ACE_NEW (ip->info_.standard_.data_,
@@ -701,9 +701,9 @@ RTCP_SDES_Packet::add_item (ACE_UINT32 ssrc,
 
 void
 RTCP_SDES_Packet::add_priv_item (ACE_UINT32 ssrc,
-                                 unsigned char nameLength, 
+                                 unsigned char nameLength,
                                  const char* name,
-                                 unsigned char dataLength, 
+                                 unsigned char dataLength,
                                  const char* data)
 {
   sdesChunk_t *cp; // pointer to chunk
