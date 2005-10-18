@@ -591,7 +591,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           // First, see if the user has given us a multicast port number
           // on the command-line;
           u_short port =
-            orb->orb_core ()->orb_params ()->service_port (NAMESERVICE);
+            orb->orb_core ()->orb_params ()->service_port (TAO::MCAST_NAMESERVICE);
 
           if (port == 0)
             {
