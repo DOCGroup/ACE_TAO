@@ -238,7 +238,7 @@ run_test (int write_file,
                       char[msgsize],
                       -1);
 #if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
-      ACE_OS::memset(buffer_, 0, sizeof (buffer_));
+      ACE_OS::memset(buffer, 0, sizeof (buffer));
 #endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
 
       // Make sure <buffer> is released automagically.
