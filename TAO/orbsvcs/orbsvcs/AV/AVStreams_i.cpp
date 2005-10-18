@@ -2765,7 +2765,7 @@ TAO_StreamEndPoint_A::multiconnect (AVStreams::streamQoS &stream_qos,
       TAO_AV_QoS qos (stream_qos);
       for (u_int i=0;i< flow_spec.length ();i++)
         {
-          TAO_Forward_FlowSpec_Entry *forward_entry;
+          TAO_Forward_FlowSpec_Entry *forward_entry = 0;
           ACE_NEW_RETURN (forward_entry,
                           TAO_Forward_FlowSpec_Entry,
                           0);
