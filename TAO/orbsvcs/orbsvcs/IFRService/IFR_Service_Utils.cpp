@@ -413,7 +413,7 @@ TAO_IFR_Server::init_multicast_server (ACE_ENV_SINGLE_ARG_DECL)
   // on the command-line;
   u_short port =
     TAO_ORB_Core_instance ()->orb_params ()->service_port (
-                                                 INTERFACEREPOSERVICE
+                                                 MCAST_INTERFACEREPOSERVICE
                                                );
 
   if (port == 0)
