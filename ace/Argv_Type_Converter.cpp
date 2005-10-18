@@ -186,12 +186,12 @@ ACE_Argv_Type_Converter::cleanup (void)
   for (int i = this->saved_argc_; i < this->before_pass_argc_; ++i)
     {
       //  Check whether it's ours to delete.
-      if (original_type_ == 1) 
+      if (original_type_ == 1)
         {
           ACE_OS::free (this->char_argv_[i]);
           this->char_argv_[i] = 0;
         }
-      else 
+      else
         {
           ACE_OS::free (this->wchar_argv_[i]);
           this->wchar_argv_[i] = 0;
