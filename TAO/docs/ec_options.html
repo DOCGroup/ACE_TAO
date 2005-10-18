@@ -63,16 +63,33 @@ struct RtecEventData
       can also parse options in the Service Configurator script file.
     </P>
 
-    <P>There are currently four implementations of the factory.  The
-      table below describes all of the options (and values) supported by
-      these factories.  The <em>default</em> factory supports all of
+    <P>There are currently several implementations of the factory.
+      <ul>
+<li>The <em>default</em> factory supports all of
       the options below and most of the potential values, except as
       specifically indicated.
+<li>
       The <em>sched</em> factory defines new option values as indicated
       below that allow the RTES to integrate with the Real-Time
       Scheduling Service.  Use of the <em>sched</em> factory requires
       that you link in the TAO_RTSchedEvent library.
-      The <em>basic</em> and <em>null</em> factories are hard-coded
+<li>
+        The <em>tpc</em> (thread per consumer) factory defines new
+        options values as indicated below.  This
+          strategy is similar to the MT dispatching strategy in that it
+          separates the thread that receives the push() from a supplier
+          from the thread that does the eventual push() to the
+          consumer(s), but it differs from MT in that MT has a pool of
+          threads pulling from a single queue and ultimately potentially
+          servicing every consumer, whereas TPC has a queue for <em>each</em>
+          consumer and, thus, a single thread dedicated to pushing to that
+          consumer.  This insures that a badly-behaved consumer <b>CANNOT</b>
+          have an adverse effect on the channel or supplier.<br>
+        To use this new strategy you will have to replace the call in your code
+          for <code>TAO_EC_Default_Factory::init_svcs()</code> with
+          <code>TAO_EC_TPC_Factory::init_svcs()</code>.
+
+<li>      The <em>basic</em> and <em>null</em> factories are hard-coded
       factories that do not support any configuration options.
       They both define simple configurations that may enable some
       applications to use the RTES in a smaller footprint.
@@ -80,7 +97,51 @@ struct RtecEventData
       <code>$TAO_ROOT/orbsvcs/orbsvcs/Event/EC_Null_Factory.h</code>
       and <code>$TAO_ROOT/orbsvcs/orbsvcs/Event/EC_Basic_Factory.h</code>
       for details.
+</ul>
+    The
+      table below describes all of the options (and values) supported by
+      these factories.
     </P>
+<h3>Special Topic: Queue Configuration</h3>
+    <p>
+      In certain configurations such as <em>mt</em> and <em>tpc</em>,
+      the RTES implementation uses something called
+      <code>TAO_EC_Queue</code>, which is an in-memory queue that
+      separates threads that receive <code>push()</code> invocations
+      from suppliers from the threads that dispatch
+      <code>push()</code> invocations to consumers.  A user of the
+      RTES can configure some behaviors of this queue as well as
+      behaviors when the queue reaches certain trigger points.  The
+      configuration of these behaviors is a combination of
+      compile-time and run-time specification.
+    </p>
+    <p>
+      The queue itself has two trigger points for the number of
+      invocations in the queue:
+      <ul>
+      <li><em>low-water mark (LWM)</em>, a lower threshold below which the
+      queue allows more invocations to be placed into the queue;
+      <li><em>high-water mark (HWM)</em>, an upper threshold above which the
+      queue prevents more invocations from being added to the queue
+      </ul>
+    The values for these can be set at compile time via
+    <code>TAO_EC_QUEUE_LWM</code> and <code>TAO_EC_QUEUE_HWM</code>
+    for the low-water mark and high-water mark, respectively.
+    <p>
+      In addition, an application can specify what the RTES should do if a
+      queue reaches the HWM, i.e., fills up.  This behavior is encapsulated in a
+      derivation of an <code>ACE_Service_Object</code>, called
+      <code>TAO_EC_Queue_Full_Service_Object</code>.  The RTES looks
+      for a service object of a particular name (the default for this
+      name is in macro TAO_EC_DEFAULT_QUEUE_FULL_SERVICE_OBJECT_NAME,
+      which is "EC_QueueFullSimpleActions") and invokes
+      <code>queue_full_action()</code> on the instance.  See class
+      <code>TAO_EC_Simple_Queue_Full_Action</code> in file
+      <code>$TAO_ROOT/orbsvcs/orbsvcs/Event/EC_Dispatching_Task.h</code>
+      for an example.  This particular example can be configured to
+      either <em>wait</em> or <em>discard</em> new invocations on
+      reaching the HWM.
+    </p>
 
     <H3>The configuration file</H3>
 
@@ -97,6 +158,11 @@ struct RtecEventData
 # Comments go here...
 # More comments if you want to...
 static EC_Factory "-ECFiltering basic ....."
+# ...and optionally...
+static EC_QueueFullSimpleActions "[wait | discard]"
+# ...or you can define your own TAO_EC_Queue_Full_Service_Object,
+#    give it whatever name you want and use -ECQueueFullServiceObject
+#    (see below) to specify that object's service configurator tag.
 </PRE>
 
     <P>All the event service factory options start with
@@ -119,13 +185,14 @@ static EC_Factory "-ECFiltering basic ....."
           <TD>Select the dispatching strategy used by the real-time
             event service. The <EM>reactive</EM> strategy uses the
             same thread that received the event from the supplier to
-            push the event to all the consumers.
+            push the event to all the consumers.<br>
             The <EM>priority</EM> strategy (sched factory only) uses
             a prioritized pool
             of threads and queries the scheduling service to select
-            the thread that dispatches each event.
+            the thread that dispatches each event.<br>
             The <EM>mt</EM> strategy also uses a pool of threads,
-            but the thread to dispatch is randomly selected.
+            but the thread to dispatch is randomly selected.<br>
+            <b>Does not apply to the <em>tpc</em> factory.</b>
           </TD>
         </TR>
 
@@ -135,10 +202,24 @@ static EC_Factory "-ECFiltering basic ....."
             <EM>number_of_threads</EM>
           </TD>
           <TD>Select the number of threads used by the <EM>mt</EM>
-            dispatching strategy.
+            dispatching strategy.<br>
+            <b>Does not apply to the <em>tpc</em> factory.</b>
           </TD>
         </TR>
 
+        <!-- <TR  NAME="ECQueueFullServiceObject"> -->
+        <tr>
+          <td><code>-ECQueueFullServiceObject</code>
+            <em>service_object_name</em>
+            </td>
+          <td>
+            Used to specify the name/tag in the service configurator
+            through which the RTEC should look for a "queue full
+            service object".<br>
+            <b>Will only have an effect on dispatch strategies that
+            use <code>TAO_EC_Queue</code>.</b>
+          </td>
+        </tr>
         <!-- <TR NAME="ECFiltering"> -->
         <TR>
           <TD><CODE>-ECFiltering</CODE>
@@ -794,10 +875,10 @@ static EC_Gateway_IIOP_Factory "-ECGIIOPConsumerECControl null ....."
 
       <!--#include virtual="/~schmidt/cgi-sig.html" -->
 
-    <address><a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a></address>
+<!--    <address><a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a></address>-->
 <!-- Created: Thu Jul  1 21:44:28 CDT 1999 -->
 <!-- hhmts start -->
-Last modified: Fri Aug 08 08:39:42 CDT 2003
+Last modified: Tue Oct 18 13:13:54 CDT 2005
 <!-- hhmts end -->
   </body>
 </html>
