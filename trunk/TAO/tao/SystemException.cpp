@@ -886,6 +886,27 @@ TAO::excp_factory excp_array [] = {
       0
 };
 
+// Concrete SystemException constructors
+#define TAO_SYSTEM_EXCEPTION(name) \
+CORBA::name ::name (void) \
+  :  CORBA::SystemException ("IDL:omg.org/CORBA/" #name ":1.0", \
+                             #name, \
+                             0, \
+                             CORBA::COMPLETED_NO) \
+{ \
+} \
+\
+CORBA::name ::name (CORBA::ULong code, CORBA::CompletionStatus completed) \
+  : CORBA::SystemException ("IDL:omg.org/CORBA/" #name ":1.0", \
+                            #name, \
+                            code, \
+                            completed) \
+{ \
+}
+
+STANDARD_EXCEPTION_LIST
+#undef TAO_SYSTEM_EXCEPTION
+
 #define TAO_SYSTEM_EXCEPTION(name) \
 CORBA::TypeCode_ptr \
 CORBA::name ::_tao_type (void) const \

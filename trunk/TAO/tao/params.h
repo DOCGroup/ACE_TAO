@@ -64,8 +64,8 @@ public:
                          TAO_EndpointSet &endpoint_set);
 
   /// Set/Get the port of services locatable through multicast.
-  CORBA::UShort service_port (TAO_MCAST_SERVICEID service_id) const;
-  void service_port (TAO_MCAST_SERVICEID service_id, CORBA::UShort port);
+  CORBA::UShort service_port (TAO::MCAST_SERVICEID service_id) const;
+  void service_port (TAO::MCAST_SERVICEID service_id, CORBA::UShort port);
 
   /// Get/Set address:port for Multicast Discovery Protocol for
   /// the Naming Service.

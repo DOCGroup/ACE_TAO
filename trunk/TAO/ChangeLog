@@ -1,3 +1,54 @@
+Tue Oct 18 00:08:30 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/SystemException.cpp:
+	* tao/SystemException.inl:
+
+	  Moved concrete SystemException constructors out of line again.
+	  The intended footprint decreases were unfortunately not seen
+	  across all platforms.
+
+	* tao/ORB.h (resolve_service):
+
+	  Removed unnecessary return type and emulated exception
+	  parameter.
+
+	* tao/ORB.cpp (resolve_service):
+
+	  Use snprintf() to simplify integer to-tring conversion and
+	  string concatenation.  Thanks to Jiang Wei <jw dot tao at sduept
+	  dot com> for providing a patch.
+
+	  Optimized to only determine multicast port if multicast default
+	  initial reference is enabled.
+
+	  Removed unused "return_value" variable.
+
+	  (resolve_initial_references):
+
+	  Updated to calls to resolve_service() to reflect new signature
+	  and void return type.
+	  
+	* tao/ORB_Core.cpp (init):
+
+	  Simplified code that sets Name Service default initial
+	  reference.
+
+	  Updated names of multicast-capable service IDs to match the new
+	  names in tao/objectid.h.
+
+	* tao/objectid.h (TAO_MCAST_SERVICEID):
+
+	  Addressed global namespace pollution by placing this enumeration
+	  within the TAO namespace.  Also prepended each service ID
+	  enumerator with "MCAST_" to further reduce potential internal
+	  TAO namespace pollution.
+
+	* tao/params.h:
+	* tao/params.i:
+
+  	  TAO_MCAST_SERVICEID is now TAO::MCAST_SERVICEID, as changed in
+	  tao/objectid.h.
+
 Tue Oct 18 06:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicInterface/DII_Invocation.h:
