@@ -822,6 +822,10 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
   this->cleanup_in_progress_ = 1;
 
+  // Inform the custom servant dispatching strategy to stop the working
+  // threads when the poa is destroyed. 
+  this->poa_deactivated_hook ();
+
   // This operation destroys the POA and all descendant POAs. The POA
   // so destroyed (that is, the POA with its name) may be re-created
   // later in the same process. (This differs from the
@@ -2890,5 +2894,37 @@ TAO_POA_Static_Resources::TAO_POA_Static_Resources (void)
   : ort_adapter_factory_name_ ("ORT_Adapter_Factory"),
     imr_client_adapter_name_ ("ImR_Client_Adapter")
 {
+}
+
+void 
+TAO_Root_POA::poa_activated_hook ()
+{
+  //no-ops
+}
+
+void 
+TAO_Root_POA::poa_deactivated_hook ()
+{
+  //no-ops
+}
+
+void 
+TAO_Root_POA::servant_activated_hook (PortableServer::Servant servant, 
+                                      const PortableServer::ObjectId& oid
+                                      ACE_ENV_ARG_DECL)
+{
+  //no-ops
+  ACE_UNUSED_ARG (servant);
+  ACE_UNUSED_ARG (oid);
+}
+
+void 
+TAO_Root_POA::servant_deactivated_hook (PortableServer::Servant servant, 
+                                        const PortableServer::ObjectId& oid
+                                        ACE_ENV_ARG_DECL)
+{
+  //no-ops
+  ACE_UNUSED_ARG (servant);
+  ACE_UNUSED_ARG (oid);
 }
 
