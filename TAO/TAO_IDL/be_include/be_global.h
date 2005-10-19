@@ -26,6 +26,7 @@
 #include "ace/SString.h"
 
 class be_interface;
+class be_valuetype;
 class be_interface_fwd;
 class UTL_String;
 class AST_PredefinedType;
@@ -287,13 +288,13 @@ public:
 
   void anyop_header_ending (const char* s);
   // Set the anyop_header_ending.
-  
+
   const char* anyop_header_ending (void) const;
   // Get the anyop_header_ending.
-  
+
   void anyop_source_ending (const char* s);
   // Set the anyop_source_ending.
-    
+
   const char* anyop_source_ending (void) const;
   // Get the anyop_source_ending.
 
@@ -461,6 +462,10 @@ public:
   void ccmobject (be_interface *val);
   // Accessors for the member.
 
+  be_valuetype *exceptionholder (void) const;
+  void exceptionholder (be_valuetype *val);
+  // Accessors for the member.
+
   idl_bool gen_anyop_files (void) const;
   void gen_anyop_files (idl_bool val);
   // Accessors for the member.
@@ -507,7 +512,7 @@ private:
   char* skel_export_include_;
   char* stub_export_macro_;
   char* stub_export_include_;
-  
+
   // Macro and include used on ORB .pidl files generating to the
   // AnyTypeCode library.
   char* anyop_export_macro_;
@@ -559,7 +564,7 @@ private:
 
   // Anyop header file name ending. Default is "A.h".
   char* anyop_hdr_ending_;
-  
+
   // Anyop source file name ending. Default is "A.cpp".
   char* anyop_src_ending_;
 
@@ -641,6 +646,9 @@ private:
 
   be_interface *ccmobject_;
   // Reference holder for component skeleton visitors.
+
+  be_valuetype *exceptionholder_;
+  // Reference holder for the exceptionholder.
 
   idl_bool gen_anyop_files_;
   // Separate files for generated Any operators?
