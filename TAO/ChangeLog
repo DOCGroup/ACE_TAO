@@ -1,3 +1,9 @@
+Tue Oct 18 18:35:26 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Makefile.am:
+
+	  Regenerate due to CSD.
+
 Tue Oct 18 18:33:04 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* examples/Kokyu_dsrt_schedulers/fp_example/Makefile.am:
