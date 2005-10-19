@@ -20,6 +20,11 @@ endif
 ifeq (,$(versioned_so))
   versioned_so = 0
 endif
+ifeq (,$(no_hidden_visibility))
+# Apple's g++ 4 compiler doesn't appear to correctly support
+# visibility attributes, at least as well as the vanilla g++.
+  no_hidden_visibility = 1
+endif
 with_ld = macosx
 
 pipes ?= 1
