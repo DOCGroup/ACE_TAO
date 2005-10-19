@@ -80,12 +80,6 @@ private:
   ACE_Reactor_Impl *reactor_;
 };
 
-// There's no Reactor_Token_T.inl, but if there was, here's where it would
-// get included.
-#if 0 // defined (__ACE_INLINE__)
-#include "ace/Reactor_Token_T.inl"
-#endif /* __ACE_INLINE__ */
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Reactor_Token_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
