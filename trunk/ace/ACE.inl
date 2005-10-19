@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 #include "ace/OS_NS_unistd.h"
@@ -264,6 +265,20 @@ ACE::handle_exception_ready (ACE_HANDLE handle,
                             0,
                             1);
 }
+
+ACE_INLINE void
+ACE::strdelete (char *s)
+{
+  delete [] s;
+}
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE void
+ACE::strdelete (wchar_t *s)
+{
+  delete [] s;
+}
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE void
 ACE::unique_name (const void *object,
