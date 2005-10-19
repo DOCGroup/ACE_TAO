@@ -21,6 +21,8 @@ ifeq (,$(versioned_so))
   versioned_so = 0
 endif
 ifeq (,$(no_hidden_visibility))
+# Disable symbol visibility support by default.
+#
 # Apple's g++ 4 compiler doesn't appear to correctly support
 # visibility attributes, at least as well as the vanilla g++.
   no_hidden_visibility = 1
