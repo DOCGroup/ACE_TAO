@@ -1,3 +1,9 @@
+Wed Oct 19 07:43:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Reactor_Token_T.h:
+          Removed code for including the .inl file, it is not there, just
+          a waste of bytes ;-)
+
 Wed Oct 19 00:23:02 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Global_Macros.h (ACE_FACTORY_DEFINE):
