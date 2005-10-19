@@ -1,3 +1,9 @@
+Tue Oct 18 20:56:24 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/CSD_ThreadPool.mpc:
+
+	  Changed to inherit from core.mpb base project.
+
 Tue Oct 18 18:35:26 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:
