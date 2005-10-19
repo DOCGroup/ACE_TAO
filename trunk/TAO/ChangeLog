@@ -1,3 +1,24 @@
+Tue Oct 18 23:43:02 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Makefile.am
+
+	  Regenerate.
+
+	* tao/CSD_Framework.mpc:
+	* tao/CSD_ThreadPool.mpc:
+
+	  Add Pkconfig_Files section for new pkg-config templates.
+
+	* tao/CSD_Framework/TAO_CSD_Framework.pc.in:
+
+          New file, pkg-config *.pc template for TAO_CSD_Framework
+	  library.
+
+	* tao/CSD_ThreadPool/TAO_CSD_ThreadPool.pc.in:
+
+          New file, pkg-config *.pc template for TAO_CSD_ThreadPool
+	  library.
+
 Tue Oct 18 20:56:24 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/CSD_ThreadPool.mpc:
