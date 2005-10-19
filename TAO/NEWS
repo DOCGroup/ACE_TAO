@@ -1,7 +1,10 @@
 PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 ===========================================================================
 
-. (JTC/Ossama) autoconf support for TAO tests and examples
+. (JTC) provide example Telecom Log Service Persistance Strategies that 
+  use BerkeleyDB, ODBC, etc.  Refine Strategy interface as required.
+
+. (JTC) autoconf support for tests and examples subdirectories.
 
 . (Ossama) Remainder of CSIv2 code that didn't make it into TAO 1.4.2
 
