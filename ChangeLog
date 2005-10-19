@@ -1,3 +1,15 @@
+Wed Oct 19 00:23:02 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Global_Macros.h (ACE_FACTORY_DEFINE):
+	  (ACE_FACTORY_NAMESPACE_DEFINE):
+
+	  Don't bother qualifying the SERVICE_CLASS name with
+	  ACE_VERSIONED_NAMESPACE_NAME scope.  That scoped is already
+	  pulled in by a "using" clause.  Addresses compile-time errors
+	  caused by calling the ACE_FACTORY_{NAMESPACE_}DEFINE macro
+	  within a namespace and passing the locally scoped name of the
+	  SERVICE_CLASS rather than the fully qualified one.
+
 Tue Oct 18 23:23:14 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	The following changes comprise the core implementation of
