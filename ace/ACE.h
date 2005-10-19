@@ -98,7 +98,7 @@ namespace ACE
   /// Check if error indicates the process being out of handles (file
   /// descriptors).
   extern ACE_Export int out_of_handles (int error);
- 
+
   /// Simple wildcard matching function supporting '*' and '?'
   /// return true if string s matches pattern.
   extern ACE_Export bool wild_match(const char* s, const char* pattern, bool case_sensitive = true);
