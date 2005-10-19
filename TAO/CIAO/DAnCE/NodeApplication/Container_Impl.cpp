@@ -1,6 +1,6 @@
 // $Id$
 #include "Container_Impl.h"
-#include "CCM_ComponentC.h" // for calling StandardConfigurator interface
+#include "ciao/CCM_ComponentC.h" // for calling StandardConfigurator interface
 
 #include "orbsvcs/CosNamingC.h"
 

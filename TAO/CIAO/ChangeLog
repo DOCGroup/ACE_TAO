@@ -1,3 +1,55 @@
+Wed Oct 19 15:03:56 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
+
+	  These changes are made to add support for RT-capable
+	  NodeApplication.  
+	
+	* ciao/CCM_Core.mpc:
+	* ciao/Container_Impl.h:
+	* ciao/Container_Impl.inl:
+	* ciao/Container_Impl.cpp:
+	* ciao/NodeApplication_Impl.h:
+	* ciao/NodeApplication_Impl.inl: 
+	* ciao/NodeApplication_Impl.cpp: Moved NodeApplication and
+	  Container interface implementations under DAnCE/NodeApplication/
+	  subdir.  They are coupled with NodeApplication implementation
+	  now.  
+
+	* DAnCE/NodeApplication/NodeApplication.mpc: Changed to
+	  incorporate the following files/changes.
+
+	* DAnCE/NodeApplication/NodeApp_Configurator.h:
+	* DAnCE/NodeApplication/NodeApp_Configurator.cpp: Added abstract,
+	  base NodeApp_Configurator class to define the interface for
+	  configuring NodeApplication internal.
+
+	* DAnCE/NodeApplication/Container_Impl.h:
+	* DAnCE/NodeApplication/Container_Impl.inl:
+	* DAnCE/NodeApplication/Container_Impl.cpp: Moved from ciao/
+	  subdir.  
+
+	* DAnCE/NodeApplication/NodeApplication_Impl.h:
+	* DAnCE/NodeApplication/NodeApplication_Impl.inl:
+	* DAnCE/NodeApplication/NodeApplication_Impl.cpp: Changed to
+	  depend on a concrete NodeApp_Configurator to perform the
+	  configuration.  
+
+	* DAnCE/NodeApplication/NodeApplication_Core.h:
+	* DAnCE/NodeApplication/NodeApplication_Core.inl:
+	* DAnCE/NodeApplication/NodeApplication_Core.cpp:
+	* DAnCE/NodeApplication/NodeApplication.cpp:  Restructured the
+	  NodeApplication implementation so that the ORB event loop can be
+	  run on the main thread or on a separate thread, using the FIFO
+	  scheduling class.  
+
+	  A new create_configurator method in NodeApplication_Core will
+	  create the "right" concrete configurator based on the command
+	  line flags.  We will support a RT configuration soon.
+	  Currently, there's only a NoOp_Configurator for running
+	  NodeApplication without RT support.
+	
+	  We will add the RT configuration as a dynamic library and will
+	  hook it up via ACE_DLL in a few days.
+
 Tue Oct 18 16:50:24 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* NEWS
