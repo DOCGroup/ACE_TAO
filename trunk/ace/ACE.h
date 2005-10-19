@@ -415,7 +415,7 @@ namespace ACE
   extern ACE_Export char *strnew (const char *s);
 
   /// Delete the memory allocated by @c strnew.
-  extern ACE_Export void strdelete (char *s);
+  ACE_NAMESPACE_INLINE_FUNCTION void strdelete (char *s);
 
   /// Create a fresh new copy of @a str, up to @a n chars long.  Uses
   /// @c ACE_OS::malloc to allocate the new string.
