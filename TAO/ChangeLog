@@ -1,3 +1,12 @@
+Wed Oct 19 09:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging/ExceptionHolder_i.{h,cpp}:
+          Added new Messaging::ExceptionHolder implementation, will be used
+          for the new AMI mapping
+
+        * tao/Makefile.am:
+          Added new files above
+
 Wed Oct 19 08:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be_include/be_global.h:
