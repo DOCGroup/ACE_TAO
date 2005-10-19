@@ -373,7 +373,7 @@ test_ostream (void)
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   // Create a persistent store.
   const ACE_TCHAR *filename = ACE_TEXT ("output");
-  ofstream myostream (ACE_TEXT_ALWAYS_CHAR (filename), ios::out | ios::trunc);
+  ofstream myostream (ACE_TEXT_TO_CHAR_IN (filename), ios::out | ios::trunc);
 
   // Check for errors.
   if (myostream.bad ())

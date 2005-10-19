@@ -112,7 +112,7 @@ test_registering_all_handlers (void)
 {
   ACE_Trace t (ACE_TEXT ("test_registering_all_handler"),
                __LINE__,
-               ACE_TEXT_CHAR_TO_TCHAR (__FILE__));
+               ACE_TEXT_TO_TCHAR_IN (__FILE__));
   Time_Handler rt[ACE_MAX_TIMERS];
   long t_id[ACE_MAX_TIMERS];
   size_t which[ACE_MAX_TIMERS];
@@ -138,7 +138,7 @@ test_registering_one_handler (void)
 {
   ACE_Trace t (ACE_TEXT ("test_registering_one_handler"),
                __LINE__,
-               ACE_TEXT_CHAR_TO_TCHAR (__FILE__));
+               ACE_TEXT_TO_TCHAR_IN (__FILE__));
   Time_Handler rt[ACE_MAX_TIMERS];
   long t_id[ACE_MAX_TIMERS];
   size_t which[ACE_MAX_TIMERS];
@@ -166,7 +166,7 @@ test_canceling_odd_timers (void)
 {
   ACE_Trace t (ACE_TEXT ("test_canceling_odd_timers"),
                __LINE__,
-               ACE_TEXT_CHAR_TO_TCHAR (__FILE__));
+               ACE_TEXT_TO_TCHAR_IN (__FILE__));
   Time_Handler rt[ACE_MAX_TIMERS];
   long t_id[ACE_MAX_TIMERS];
   size_t which[ACE_MAX_TIMERS];

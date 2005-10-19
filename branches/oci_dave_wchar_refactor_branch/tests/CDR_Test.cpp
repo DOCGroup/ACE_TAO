@@ -228,7 +228,7 @@ short_stream (void)
                        ACE_TEXT ("string transfer error")),
                       1);
 
-  if (ACE_OS::wscmp (wstr1, wstr))
+  if (ACE_OS::strcmp (wstr1, wstr))
      ACE_ERROR_RETURN ((LM_ERROR,
                         ACE_TEXT ("%p\n"),
                         ACE_TEXT ("wide string transfer error")),
@@ -430,7 +430,7 @@ CDR_Test_Types::test_get (ACE_InputCDR &cdr) const
                            1);
       // zero length
       ACE_Auto_Basic_Array_Ptr<ACE_CDR::WChar> auto_xwstr (wstr1);
-       if (ACE_OS::wslen(auto_xwstr.get () ))
+       if (ACE_OS::strlen(auto_xwstr.get () ))
          ACE_ERROR_RETURN ((LM_ERROR,
                             ACE_TEXT ("wstring[%d] differs\n"),
                              i),

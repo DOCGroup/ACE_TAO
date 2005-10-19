@@ -70,7 +70,7 @@ test_argv_type_converter (void)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT (" (%d) %s\n"),
                   i,
-                  ACE_TEXT_CHAR_TO_TCHAR (argv[i])));
+                  ACE_TEXT_TO_TCHAR_IN (argv[i])));
   }
 
   for (size_t i = 0; save_argv[i]; ++i) 

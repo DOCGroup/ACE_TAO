@@ -80,11 +80,11 @@ acquire_release (void)
 #if defined (ACE_WIN32) || \
       defined (ACE_USES_FIFO_SEM) || \
       (defined (ACE_HAS_POSIX_SEM) && !defined (ACE_LACKS_NAMED_POSIX_SEM))
-  ACE_Semaphore sema_ping (0, USYNC_PROCESS, ACE_TEXT_CHAR_TO_TCHAR (sema_ping_name));
-  ACE_Semaphore sema_pong (0, USYNC_PROCESS, ACE_TEXT_CHAR_TO_TCHAR (sema_pong_name));
+  ACE_Semaphore sema_ping (0, USYNC_PROCESS, ACE_TEXT_TO_TCHAR_IN (sema_ping_name));
+  ACE_Semaphore sema_pong (0, USYNC_PROCESS, ACE_TEXT_TO_TCHAR_IN (sema_pong_name));
 #else
-  ACE_Process_Semaphore sema_ping (0, ACE_TEXT_CHAR_TO_TCHAR (sema_ping_name));
-  ACE_Process_Semaphore sema_pong (0, ACE_TEXT_CHAR_TO_TCHAR (sema_pong_name));
+  ACE_Process_Semaphore sema_ping (0, ACE_TEXT_TO_TCHAR_IN (sema_ping_name));
+  ACE_Process_Semaphore sema_pong (0, ACE_TEXT_TO_TCHAR_IN (sema_pong_name));
 #endif
 
   // Make sure the constructor succeeded

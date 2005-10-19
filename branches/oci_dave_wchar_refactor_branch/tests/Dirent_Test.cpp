@@ -202,7 +202,7 @@ dirent_count (const ACE_TCHAR *dir_path,
 
 #if !defined (ACE_LACKS_STRUCT_DIR)
       ACE_OS::strncpy (tname,
-                       ACE_TEXT_CHAR_TO_TCHAR (directory->d_name),
+                       ACE_TEXT_TO_TCHAR_IN (directory->d_name),
                        maxnamlen);
 #else
       ACE_OS::strncpy (tname, directory->d_name, maxnamlen);

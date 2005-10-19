@@ -63,7 +63,7 @@ run_main (int, ACE_TCHAR *[])
 
       for (size_t i = 0; i < how_many; i++)
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\t%s\n"),
-                    ACE_TEXT_CHAR_TO_TCHAR (the_addr_array[i].get_host_addr ())));
+                    ACE_TEXT_TO_TCHAR_IN (the_addr_array[i].get_host_addr ())));
 
       delete [] the_addr_array;
     }

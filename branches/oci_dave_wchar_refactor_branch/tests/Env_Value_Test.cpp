@@ -110,7 +110,7 @@ run_main (int argc, ACE_TCHAR * [], ACE_TCHAR *envp[])
       const ACE_TCHAR *defstr = ACE_TEXT ("Sarah Cleeland is Two!");
       ACE_Env_Value<const ACE_TCHAR *> sval (ACE_TEXT ("This_Shouldnt_Be_Set_Hopefully"),
                                   defstr);
-      ACE_ASSERT (ACE_OS::strcmp (sval, defstr) == 0);
+      ACE_ASSERT (ACE_OS::strcmp (static_cast<const ACE_TCHAR *>(sval), defstr) == 0);
       ACE_END_TEST;
     }
   return 0;

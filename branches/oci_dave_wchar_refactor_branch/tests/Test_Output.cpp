@@ -101,7 +101,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
     test_dir = 0;
   else
     {
-      ACE_OS::strcpy (tempenv, ACE_TEXT_CHAR_TO_TCHAR (test_dir_n));
+      ACE_OS::strcpy (tempenv, ACE_TEXT_TO_TCHAR_IN (test_dir_n));
       test_dir = tempenv;
     }
 #  endif /* ACE_WIN32 || !ACE_USES_WCHAR */
@@ -145,7 +145,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 # endif /* ! VXWORKS */
 
 # if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-  this->output_file_->open (ACE_TEXT_ALWAYS_CHAR (temp),
+  this->output_file_->open (ACE_TEXT_TO_CHAR_IN (temp),
                             ios::out | (append ? ios::app : ios::trunc));
   if (this->output_file_->bad ())
     return -1;

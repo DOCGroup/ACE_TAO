@@ -1234,3 +1234,10 @@ project(Based Pointer Test) : acetest {
     Based_Pointer_Test.cpp
   }
 }
+
+project(WChar_Conversion) : acetest {
+  exename = WChar_Conversion
+  Source_Files {
+    WChar_Conversion.cpp
+  }
+}

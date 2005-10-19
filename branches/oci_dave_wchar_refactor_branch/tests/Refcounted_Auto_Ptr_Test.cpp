@@ -53,7 +53,7 @@ Printer::print (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_LIB_TEXT ("(%t) %s\n"),
-              ACE_TEXT_CHAR_TO_TCHAR(this->message_)));
+              ACE_TEXT_TO_TCHAR_IN(this->message_)));
 }
 
 #if defined (ACE_HAS_THREADS)

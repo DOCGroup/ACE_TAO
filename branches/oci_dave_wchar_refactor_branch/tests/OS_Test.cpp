@@ -284,7 +284,6 @@ string_emulation_test (void)
                                 "-4566733") == 0);
   }
 
-#if defined (ACE_HAS_WCHAR)
   {
     // ========================================================================
     // Test itoa (wchar_t version)
@@ -519,7 +518,6 @@ string_emulation_test (void)
 
 
   }
-#endif /* ACE_HAS_WCHAR */
 
   return 0;
 }
@@ -661,7 +659,6 @@ string_strsncpy_test (void)
 
   }
 
-#if defined (ACE_HAS_WCHAR)
   {
     // Test strsncpy (wchar_t version)
      ACE_DEBUG ((LM_DEBUG,
@@ -728,7 +725,6 @@ string_strsncpy_test (void)
     // size should be 9 (+ '\0' char)
     ACE_ASSERT(ACE_OS::strlen(strsncpy2) == 9);
   }
-#endif /* ACE_HAS_WCHAR */
 
   return 0;
 }
@@ -738,7 +734,6 @@ string_strsncpy_test (void)
 int
 string_convert_test (void)
 {
-#if defined (ACE_HAS_WCHAR)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing narrow/wide string conversion\n")));
 
@@ -749,28 +744,28 @@ string_convert_test (void)
   const wchar_t *test2_w = ACE_TEXT_WIDE ("\xe9\xe8\xe0\xf9\xea");
   wchar_t str_w[10];
   char str_n[10];
-  ACE_OS::strcpy (str_w, ACE_Ascii_To_Wide (test1_n).wchar_rep ());
+  ACE_OS::strcpy (str_w, ACE_TEXT_TO_WCHAR_IN (test1_n));
   if (0 != ACE_OS::strcmp (test1_w, str_w))
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Simple narrow->wide failed: ")
                   ACE_TEXT ("Expected \"%W\"; Got \"%W\"\n"), test1_w, str_w));
       result = 1;
     }
-  ACE_OS::strcpy (str_n, ACE_Wide_To_Ascii (test1_w).char_rep ());
+  ACE_OS::strcpy (str_n, ACE_TEXT_TO_CHAR_IN (test1_w));
   if (0 != ACE_OS::strcmp (test1_n, str_n))
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Simple wide->narrow failed: ")
                   ACE_TEXT ("Expected \"%C\"; Got \"%C\"\n"), test1_n, str_n));
       result = 1;
     }
-  ACE_OS::strcpy (str_w, ACE_Ascii_To_Wide (test2_n).wchar_rep ());
+  ACE_OS::strcpy (str_w, ACE_TEXT_TO_WCHAR_IN (test2_n));
   if (0 != ACE_OS::strcmp (test2_w, str_w))
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Complex narrow->wide failed: ")
                   ACE_TEXT ("Expected \"%W\"; Got \"%W\"\n"), test2_w, str_w));
       result = 1;
     }
-  ACE_OS::strcpy (str_n, ACE_Wide_To_Ascii (test2_w).char_rep ());
+  ACE_OS::strcpy (str_n, ACE_TEXT_TO_CHAR_IN (test2_w));
   if (0 != ACE_OS::strcmp (test2_n, str_n))
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Complex wide->narrow failed: ")
@@ -778,9 +773,6 @@ string_convert_test (void)
       result = 1;
     }
   return result;
-#else
-  return 0;
-#endif /* ACE_HAS_WCHAR */
 }
 
 // Test the methods for getting cpu info
