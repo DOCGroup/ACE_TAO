@@ -3448,20 +3448,6 @@ ACE::strnew (const wchar_t *s)
 }
 #endif /* ACE_HAS_WCHAR */
 
-void
-ACE::strdelete (char *s)
-{
-  delete [] s;
-}
-
-#if defined (ACE_HAS_WCHAR)
-void
-ACE::strdelete (wchar_t *s)
-{
-  delete [] s;
-}
-#endif /* ACE_HAS_WCHAR */
-
 inline static bool equal_char(char a, char b, bool case_sensitive)
 {
   if (case_sensitive)
