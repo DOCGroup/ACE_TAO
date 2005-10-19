@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuetype, 
-           ami_exception_holder_ch, 
+ACE_RCSID (be_visitor_valuetype,
+           ami_exception_holder_ch,
            "$Id$")
 
 // ******************************************************
@@ -42,6 +42,7 @@ be_visitor_valuetype_ami_exception_holder_ch::visit_valuetype (
     be_valuetype *node
   )
 {
+#if defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Generate the implemenation of the Messaging aware ORB.
@@ -74,7 +75,9 @@ be_visitor_valuetype_ami_exception_holder_ch::visit_valuetype (
 
   *os << be_uidt_nl
       << "};";
-
+#else
+  ACE_UNUSED_ARG (node);
+#endif
   return 0;
 }
 
@@ -84,12 +87,12 @@ be_visitor_valuetype_ami_exception_holder_ch::visit_operation (
   )
 {
   be_visitor_context ctx (*this->ctx_);
-  
+
   // Using the implementation class visitor is strange, but we
   // do it here because it's the only one that generates the
   // environment variable in the operation signature without
   // the trailing _WITH_DEFAULTS, which is what we want.
-  // For performance reasons, we would rather there be a 
+  // For performance reasons, we would rather there be a
   // compile error if the user does not pass an environment
   // variable, than create a default one, which causes extra
   // TSS activity.
@@ -106,7 +109,7 @@ be_visitor_valuetype_ami_exception_holder_ch::visit_operation (
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  
+
   *os << be_uidt;
 
   return 0;

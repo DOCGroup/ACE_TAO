@@ -1,3 +1,18 @@
+
+        * TAO_IDL/be_include/be_global.h:
+          Added define of TAO_HAS_DEPRECATED_EXCEPTION_HOLDER. This way
+          I can the new AMI support to the IDL compiler in the repo
+          and build it on multiple boxes by removing this define by hand.
+          At the moment the new AMI support is fully ready I will remove
+          this define and then it is up to the user to set it.
+
+        * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/ami_exception_holder_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/ami_exception_holder_cs.cpp:
+          Added support for the new AMI mapping, is enabled when
+          TAO_HAS_DEPRECATED_EXCEPTION_HOLDER is not defined.
+
 Wed Oct 19 09:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/ExceptionHolder_i.{h,cpp}:
