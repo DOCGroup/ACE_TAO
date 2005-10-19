@@ -493,11 +493,67 @@ ACE_Function_Node::dump (void) const
 
 ACE_Function_Node::ACE_Function_Node (const ACE_TCHAR *path,
                                       const ACE_TCHAR *func_name)
-  : function_name_ (ACE::strnew (func_name))
+  : function_name_ (make_func_name (func_name))
 {
   ACE_TRACE ("ACE_Function_Node::ACE_Function_Node");
   this->pathname (ACE::strnew (path));
   this->must_delete_ = 1;
+}
+
+ACE_TCHAR *
+ACE_Function_Node::make_func_name (ACE_TCHAR const * func_name)
+{
+  // Preprocessor symbols will not be expanded if they are
+  // stringified.  Force the preprocessor to expand them during the
+  // argument prescan by calling a macro that itself calls another
+  // that performs the actual stringification.
+#if defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1
+# define ACE_MAKE_VERSIONED_NAMESPACE_NAME_STRING_IMPL(NAME) #NAME
+# define ACE_MAKE_VERSIONED_NAMESPACE_NAME_STRING(NAME) ACE_MAKE_VERSIONED_NAMESPACE_NAME_STRING_IMPL(NAME)
+# define ACE_VERSIONED_NAMESPACE_NAME_STRING ACE_MAKE_VERSIONED_NAMESPACE_NAME_STRING(ACE_VERSIONED_NAMESPACE_NAME)
+
+  // Check if function is using the ACE naming convention.  If so,
+  // it is likely that the ACE factory function macros
+  // (e.g. ACE_FACTORY_DECLARE) were used to declare and define it, so
+  // mangle the function name to include the ACE versioned namespace
+  // name as is done in the ACE macros.  Otherwise, leave the function
+  // name as is.
+
+  static ACE_TCHAR const make_prefix = ACE_LIB_TEXT ("_make_");
+  static size_t const make_prefix_len =
+    sizeof (make_prefix) / sizeof (make_prefix[0]);
+
+  if (ACE_OS::strncmp (make, func_name, make_len) == 0)
+    {
+      static ACE_TCHAR const versioned_namespace_name[] =
+        ACE_LIB_TEXT (ACE_VERSIONED_NAMESPACE_NAME_STRING) ACE_LIB_TEXT("_") ;
+
+      static size_t const versioned_namespace_name_len =
+        sizeof (versioned_namespace_name)
+        / sizeof (versioned_namespace_name[0]);
+
+      size_t const len =
+        ACE_OS::strlen (func_name)
+        + versioned_namespace_name_len
+        - 1;  // Null terminator included in
+              // versioned_namespace_name_len since it is static constant.
+
+      // @note Variable length array lengths are only supported by
+      //       conforming/modern compilers.
+      ACE_TCHAR mangled_func_name[len] = { 0 };
+
+      ACE_OS::snprintf (mangled_func_name,
+                        len,
+                        make_prefix
+                        versioned_namespace_name
+                        ACE_LIB_TEXT ("%s"),
+                        func_name + make_prefix_len);
+
+      return ACE::strnew (mangled_func_name);
+    }
+#endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
+
+  return ACE::strnew (func_name);
 }
 
 void *

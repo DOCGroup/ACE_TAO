@@ -427,6 +427,7 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     UPIPE_Addr.h
     Value_Ptr.h
     Version.h
+    Versioned_Namespace.h
     ace_wchar.h
     config-WinCE.h
     config-all.h

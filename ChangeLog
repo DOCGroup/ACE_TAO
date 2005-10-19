@@ -1,3 +1,58 @@
+Tue Oct 18 23:23:14 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	The following changes comprise the core implementation of
+	"versioned namespace" support in ACE.  When enabled, all ACE
+	library code will be wrapped within a namespace, such as
+	"ACE_5_4_7", to prevent symbol conflicts with other versions of
+	ACE shared libraries in third party libraries.  This feature is
+	disabled by default to preserve backward compatibility.
+
+	* ace/Global_Macros.h:
+
+	  Updated ACE Service Configurator macros to take into account
+	  versioned namespace when enabled.
+
+	* ace/Parse_Node.cpp (ACE_Function_Node, make_func_name):
+	* ace/Parse_Node.h:
+
+          Check if factory function is using the ACE naming convention.
+	  If so, it is likely that the ACE factory function macros
+	  (e.g. ACE_FACTORY_DECLARE) were used to declare and define it,
+	  so mangle the function name to include the ACE versioned
+	  namespace name as is done in the ACE macros.  Otherwise, leave
+	  the function name as is.
+
+	* ace/README:
+
+	  Added description for new ACE_HAS_VERSIONED_NAMESPACE
+	  preprocessor symbol.
+
+	* ace/Version.h:
+
+	  Include "ace/Versioned_Namespace.h" to pull in versioned
+	  namespace macros.
+
+	* ace/Versioned_Namespace.h:
+
+	  New header containing core versioned namespace macros.
+
+	* ace/ace.mpc (Header_Files):
+
+	  Added "Versioned_Namespace.h" to list of headers.
+
+	* ace/pre.h:
+
+	  Include "ace/Version.h" to pull in versioned namespace support.
+
+	* ace/post.h:
+
+	  End versioned namespace block, if enabled.
+
+	* bin/make_release (update_version_files):
+
+	  Generate include directive for "ace/Versioned_Namespace.h" when
+	  creating "ace/Version.h".
+
 Tue Oct 18 23:08:34 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/ACE.cpp (strdelete):
