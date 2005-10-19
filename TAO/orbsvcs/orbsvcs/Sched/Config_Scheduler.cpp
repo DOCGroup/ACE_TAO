@@ -35,7 +35,7 @@ ACE_Config_Scheduler::create (const char * entry_point
 {
   typedef RtecScheduler::RT_Info* RT_Info_ptr;
 
-  RtecScheduler::RT_Info** rt_info;
+  RtecScheduler::RT_Info** rt_info = 0;
   ACE_NEW_RETURN (rt_info, RT_Info_ptr[1], -1);
 
   ACE_NEW_RETURN (rt_info[0], RtecScheduler::RT_Info, -1);
