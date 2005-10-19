@@ -111,23 +111,19 @@ TAO::CSD::Strategy_Base::apply_to (PortableServer::POA_ptr poa
 
 void
 TAO::CSD::Strategy_Base::servant_activated_event_i
-                                (PortableServer::Servant servant,
-                                 const PortableServer::ObjectId& oid
+                                (PortableServer::Servant ,
+                                 const PortableServer::ObjectId& 
                                  ACE_ENV_ARG_DECL)
 {
-  ACE_UNUSED_ARG(servant);
-  ACE_UNUSED_ARG(oid);
   // do nothing.
 }
 
 
 void
 TAO::CSD::Strategy_Base::servant_deactivated_event_i
-                                (PortableServer::Servant servant,
-                                 const PortableServer::ObjectId& oid
+                                (PortableServer::Servant,
+                                 const PortableServer::ObjectId&
                                  ACE_ENV_ARG_DECL)
 {
-  ACE_UNUSED_ARG(servant);
-  ACE_UNUSED_ARG(oid);
   // do nothing.
 }

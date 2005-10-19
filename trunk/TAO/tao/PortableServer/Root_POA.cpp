@@ -2909,22 +2909,18 @@ TAO_Root_POA::poa_deactivated_hook ()
 }
 
 void 
-TAO_Root_POA::servant_activated_hook (PortableServer::Servant servant, 
-                                      const PortableServer::ObjectId& oid
+TAO_Root_POA::servant_activated_hook (PortableServer::Servant, 
+                                      const PortableServer::ObjectId&
                                       ACE_ENV_ARG_DECL)
 {
   //no-ops
-  ACE_UNUSED_ARG (servant);
-  ACE_UNUSED_ARG (oid);
 }
 
 void 
-TAO_Root_POA::servant_deactivated_hook (PortableServer::Servant servant, 
-                                        const PortableServer::ObjectId& oid
+TAO_Root_POA::servant_deactivated_hook (PortableServer::Servant, 
+                                        const PortableServer::ObjectId&
                                         ACE_ENV_ARG_DECL)
 {
   //no-ops
-  ACE_UNUSED_ARG (servant);
-  ACE_UNUSED_ARG (oid);
 }
 

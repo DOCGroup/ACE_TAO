@@ -18,7 +18,7 @@
 /// Implement the Test::Hello interface
 class Hello
   : public virtual POA_Test::Hello
-  , public virtual PortableServer::RefCountServantBase
+  , public virtual PortableServer::ServantBase
 {
 public:
   /// Constructor

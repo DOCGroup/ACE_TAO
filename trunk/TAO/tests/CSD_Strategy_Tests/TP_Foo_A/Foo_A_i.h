@@ -8,7 +8,7 @@
 
 
 class CSD_TP_Foo_A_Export Foo_A_i : public virtual POA_Foo_A,
-                public virtual PortableServer::RefCountServantBase
+                public virtual PortableServer::ServantBase
 {
   public:
 
