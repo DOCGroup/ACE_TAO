@@ -61,7 +61,8 @@ muf_client_CPPFLAGS = \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
   -I$(ACE_ROOT)/Kokyu \
-  -I$(TAO_ROOT)/examples/Kokyu_dsrt_schedulers
+  -I$(TAO_ROOT)/examples/Kokyu_dsrt_schedulers \
+  -I$(TAO_BUILDDIR)/examples/Kokyu_dsrt_schedulers
 
 muf_client_SOURCES = \
   client.cpp \
@@ -129,7 +130,8 @@ muf_server_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(ACE_ROOT)/Kokyu \
-  -I$(TAO_ROOT)/examples/Kokyu_dsrt_schedulers
+  -I$(TAO_ROOT)/examples/Kokyu_dsrt_schedulers \
+  -I$(TAO_BUILDDIR)/examples/Kokyu_dsrt_schedulers
 
 muf_server_SOURCES = \
   server.cpp \
