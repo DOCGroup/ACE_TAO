@@ -1,3 +1,8 @@
+Wed Oct 19 08:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CDR_File_Test.cpp:
+          Fixed compile error
+
 Wed Oct 19 07:43:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Reactor_Token_T.h:
