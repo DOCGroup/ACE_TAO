@@ -1,3 +1,13 @@
+Tue Oct 18 23:08:34 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/ACE.cpp (strdelete):
+	* ace/ACE.inl (strdelete):
+
+	  Inlined this function.  It simply calles operator delete[] on a
+	  pointer to char or wchar_t.  Reduces footprint if it is never
+	  called, and optimizes the call at run-time slightly if it is
+	  called.
+
 Tue Oct 18 20:51:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/MakeProjectCreator/config/csd_framework.mpb:
