@@ -23,14 +23,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-namespace TAO
-{
-  namespace CSD
-  {
-    class FW_Server_Request_Wrapper;
-  }
-}
-
 /**
  * @class TAO_Service_Context
  *
@@ -60,11 +52,6 @@ namespace TAO
 class TAO_Export TAO_Service_Context
 {
 public:
-  /// Declare FW_Server_Request_Wrapper a friend
-  /// This friendship makes the FW_Server_Request_Wrapper be able to 
-  /// clone the TAO_Service_Context data member in TAO_ServerRequest.
-  friend class TAO::CSD::FW_Server_Request_Wrapper;
-
   /// Constructor
   TAO_Service_Context (void);
 

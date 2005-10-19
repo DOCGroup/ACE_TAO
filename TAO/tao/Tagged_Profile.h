@@ -24,14 +24,6 @@
 #include "tao/Object_KeyC.h"
 #include "ace/SString.h"
 
-namespace TAO
-{
-  namespace CSD
-  {
-    class FW_Server_Request_Wrapper;
-  }
-}
-
 /**
  * @class TAO_Tagged_Profile
  *
@@ -42,12 +34,6 @@ namespace TAO
 class TAO_Export TAO_Tagged_Profile
 {
 public:
-
-  /// Declare FW_Server_Request_Wrapper a friend
-  /// This friendship makes the FW_Server_Request_Wrapper be able to 
-  /// clone the TAO_Tagged_Profile data member in TAO_ServerRequest.
-  friend class TAO::CSD::FW_Server_Request_Wrapper;
-
   /// Ctor
   TAO_Tagged_Profile (TAO_ORB_Core *orb_core);
 

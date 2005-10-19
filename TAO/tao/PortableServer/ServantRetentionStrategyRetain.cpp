@@ -105,18 +105,6 @@ namespace TAO
       // Decrement the reference count.
       CORBA::UShort new_count = --active_object_map_entry->reference_count_;
 
-      // Inform the custom servant dispatching (CSD) strategy that the 
-      // servant is deactivated. This would be called just once when the
-      // servant is deactivated the first time.
-      if (active_object_map_entry->deactivated_ == 0)
-        {
-          this->poa_->servant_deactivated_hook (
-            active_object_map_entry->servant_,
-            active_object_map_entry->user_id_
-            ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
-        }
-
       if (new_count == 0)
         {
           this->poa_->cleanup_servant (active_object_map_entry->servant_,
@@ -569,13 +557,6 @@ namespace TAO
           // Everything is finally ok
           //
 
-          // Inform the custom servant dispatching (CSD) strategy that the 
-          // sevant is activated.
-          this->poa_->servant_activated_hook (servant, 
-                                              user_id.in ()
-                                              ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
-
           // ATTENTION: Trick locking here, see class header for details
           Non_Servant_Upcall non_servant_upcall (*this->poa_);
           ACE_UNUSED_ARG (non_servant_upcall);
@@ -653,13 +634,6 @@ namespace TAO
           //
           // Everything is finally ok
           //
-
-          // Inform the custom servant dispatching (CSD) strategy that the 
-          // sevant is activated.
-          this->poa_->servant_activated_hook (servant, 
-                                              system_id.in ()
-                                              ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
 
           // ATTENTION: Trick locking here, see class header for details
           Non_Servant_Upcall non_servant_upcall (*this->poa_);
@@ -784,13 +758,6 @@ namespace TAO
       // Everything is finally ok
       //
 
-      // Inform the custom servant dispatching (CSD) strategy that the 
-      // sevant is activated.
-      this->poa_->servant_activated_hook (servant, 
-                                          user_id.in () 
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
       // ATTENTION: Trick locking here, see class header for details
       Non_Servant_Upcall non_servant_upcall (*this->poa_);
       ACE_UNUSED_ARG (non_servant_upcall);
@@ -897,13 +864,6 @@ namespace TAO
       //
       // Everything is finally ok
       //
-
-      // Inform the custom servant dispatching (CSD) strategy that the 
-      // sevant is activated.
-      this->poa_->servant_activated_hook (servant, 
-                                          id
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
 
       // ATTENTION: Trick locking here, see class header for details
       Non_Servant_Upcall non_servant_upcall (*this->poa_);

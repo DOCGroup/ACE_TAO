@@ -52,14 +52,6 @@ namespace CORBA
   class Exception;
 }
 
-namespace TAO
-{
-  namespace CSD
-  {
-    class FW_Server_Request_Wrapper;
-  }
-}
-
 class TAO_Operation_Details;
 
 /**
@@ -73,12 +65,6 @@ class TAO_Operation_Details;
 class TAO_Export TAO_ServerRequest
 {
 public:
-  
-  /// Declare FW_Server_Request_Wrapper a friend
-  /// This friendship makes the FW_Server_Request_Wrapper be able to
-  /// clone the TAO_ServerRequest.
-  friend class TAO::CSD::FW_Server_Request_Wrapper;
-
   /// Declare TAO_AMH_Response_Handler a friend
   /**
    * The TAO_AMH_Response_Handler class needs to copy part of the
@@ -333,7 +319,7 @@ private:
   /// Used to pad CDR stream if we have used DSI.
   ptrdiff_t dsi_nvlist_align_;
 
-  TAO_Operation_Details const * operation_details_;
+  TAO_Operation_Details const * const operation_details_;
 
   /**
    * An argument flag to indicate whether there is any data that is

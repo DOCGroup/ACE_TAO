@@ -561,25 +561,6 @@ public:
       ACE_ENV_SINGLE_ARG_DECL
     );
 
-  /// These hooks are needed by the CSD strategy to override 
-  /// and no-ops by default.
-
-  /// Hook - The POA has been (or is being) activated.
-  virtual void poa_activated_hook ();
-
-  /// Hook - The POA has been deactivated.
-  virtual void poa_deactivated_hook ();
-
-  /// Hook - A servant has been activated.
-  virtual void servant_activated_hook (PortableServer::Servant servant, 
-                               const PortableServer::ObjectId& oid
-                               ACE_ENV_ARG_DECL);
-
-  /// Hook - A servant has been deactivated.
-  virtual void servant_deactivated_hook (PortableServer::Servant servant, 
-                                 const PortableServer::ObjectId& oid
-                                 ACE_ENV_ARG_DECL);
-
 protected:
 
 #if (TAO_HAS_MINIMUM_POA == 0)

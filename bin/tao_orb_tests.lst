@@ -186,30 +186,3 @@ TAO/tests/GIOP_Fragments/PMB_With_Fragments/run_test.pl:
 TAO/tests/CodeSets/simple/run_test.pl: !VxWorks !GIOP10 !STATIC
 TAO/tests/Hang_Shutdown/run_test.pl: !ST
 TAO/tests/Any/Recursive/run_test.pl:
-TAO/tests/CSD_Strategy_Tests/TP_Test_1/run_test.pl: !ST 
-TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl: !ST
-TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl remote: !ST
-TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl collocated: !ST 
-TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl remote_orbthreads: !ST 
-TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl remote_servants: !ST 
-TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl remote_csdthreads: !ST 
-TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl remote_big: !ST 
-TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl big: !ST 
-TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl: !ST 
-TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl remote: !ST 
-TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl collocated: !ST 
-TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl remote_orbthreads: !ST 
-TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl remote_servants: !ST 
-TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl remote_csdthreads: !ST 
-TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl remote_big: !ST 
-TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl big: !ST
-TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl: !ST 
-TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl remote: !ST 
-TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl collocated: !ST 
-TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl remote_orbthreads: !ST 
-TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl remote_servants: !ST 
-TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl remote_csdthreads: !ST 
-TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl remote_big: !ST 
-TAO/tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl big: !ST 
-TAO/tests/CSD_Strategy_Tests/TP_Test_Dynamic/run_test.pl: !STATIC !ST
-TAO/tests/CSD_Strategy_Tests/TP_Test_Static/run_test.pl: !ST

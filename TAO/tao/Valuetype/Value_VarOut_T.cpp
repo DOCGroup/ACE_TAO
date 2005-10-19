@@ -6,7 +6,6 @@
 #include "tao/Valuetype/Value_VarOut_T.h"
 #include "tao/Valuetype/Value_CORBA_methods.h"
 
-#include <algorithm>  /* For std::swap<>() */
 
 template<typename T>
 void
@@ -71,18 +70,23 @@ template <typename T>
 TAO_Value_Var_T<T> &
 TAO_Value_Var_T<T>::operator= (T * p)
 {
-  TAO_Value_Var_T<T> tmp (p);
-  std::swap (this->ptr_, tmp.ptr_);
-
+  TAO::Value_Traits<T>::remove_ref (this->ptr_);
+  this->ptr_ = p;
+  TAO::Value_Traits<T>::add_ref (p);
   return *this;
 }
 
 template <typename T>
 TAO_Value_Var_T<T> &
-TAO_Value_Var_T<T>::operator= (const TAO_Value_Var_T<T> & p)
+TAO_Value_Var_T<T>::operator= (const TAO_Value_Var_T & p)
 {
-  TAO_Value_Var_T<T> tmp (p);
-  std::swap (this->ptr_, tmp.ptr_);
+  if (this != &p)
+  {
+    TAO::Value_Traits<T>::remove_ref (this->ptr_);
+    T * tmp = p.ptr ();
+    TAO::Value_Traits<T>::add_ref (tmp);
+    this->ptr_ = tmp;
+  }
 
   return *this;
 }

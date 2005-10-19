@@ -98,7 +98,7 @@ namespace ACE
   /// Check if error indicates the process being out of handles (file
   /// descriptors).
   extern ACE_Export int out_of_handles (int error);
-
+ 
   /// Simple wildcard matching function supporting '*' and '?'
   /// return true if string s matches pattern.
   extern ACE_Export bool wild_match(const char* s, const char* pattern, bool case_sensitive = true);
@@ -415,7 +415,7 @@ namespace ACE
   extern ACE_Export char *strnew (const char *s);
 
   /// Delete the memory allocated by @c strnew.
-  ACE_NAMESPACE_INLINE_FUNCTION void strdelete (char *s);
+  extern ACE_Export void strdelete (char *s);
 
   /// Create a fresh new copy of @a str, up to @a n chars long.  Uses
   /// @c ACE_OS::malloc to allocate the new string.

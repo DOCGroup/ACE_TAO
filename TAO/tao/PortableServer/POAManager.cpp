@@ -51,15 +51,6 @@ TAO_POA_Manager::activate_i (ACE_ENV_SINGLE_ARG_DECL)
   else
     {
       this->state_ = PortableServer::POAManager::ACTIVE;
-      // Find the poas that applied the custom servant dispatching
-      // strategy to launch the dispatching threads.
-
-      for (POA_COLLECTION::iterator iterator = this->poa_collection_.begin ();
-       iterator != this->poa_collection_.end ();
-       ++iterator)
-        {
-          (*iterator)->poa_activated_hook ();
-        }
     }
 
   this->adapter_manager_state_changed (this->state_
@@ -126,10 +117,6 @@ TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
        ++iterator)
     {
       TAO_Root_POA *poa = *iterator;
-      // Notify the poas that applied the custom servant dispatching
-      // strategy to stop the dispatching threads.
-      poa->poa_deactivated_hook ();
-
       poa->deactivate_all_objects_i (etherealize_objects,
                                      wait_for_completion
                                      ACE_ENV_ARG_PARAMETER);

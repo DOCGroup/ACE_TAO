@@ -8,10 +8,6 @@ project(NodeApplication): ciao_component_dnc {
   }
 
   Source_Files {
-    NodeApp_Configurator.cpp
-    Container_Impl.cpp
-    NodeApplication_Core.cpp
-    NodeApplication_Impl.cpp
     NodeApplication.cpp
   }
 }

@@ -217,10 +217,6 @@ protected:
   static ACE_Lock *create_lock (int enable_locking,
                                 TAO_SYNCH_MUTEX &thread_lock);
 
-  virtual void do_dispatch (TAO_ServerRequest& req,
-                            TAO::Portable_Server::Servant_Upcall& upcall
-                            ACE_ENV_ARG_DECL);
-
 public:
 
   /**
