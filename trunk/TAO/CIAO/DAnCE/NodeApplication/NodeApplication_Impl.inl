@@ -4,10 +4,12 @@
 ACE_INLINE
 CIAO::NodeApplication_Impl::
 NodeApplication_Impl (CORBA::ORB_ptr o,
-                      PortableServer::POA_ptr p)
+                      PortableServer::POA_ptr p,
+                      NodeApp_Configurator &c)
 
   : orb_ (CORBA::ORB::_duplicate (o)),
-    poa_ (PortableServer::POA::_duplicate (p))
+    poa_ (PortableServer::POA::_duplicate (p)),
+    configurator_ (c)
 {
 }
 

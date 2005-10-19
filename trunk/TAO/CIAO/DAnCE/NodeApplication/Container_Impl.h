@@ -25,12 +25,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Deployment_CoreS.h"
-#include "Container_Base.h"
-#include "Swapping_Container.h"
+#include "ciao/Deployment_CoreS.h"
+#include "ciao/Container_Base.h"
+//#include "ciao/Swapping_Container.h"
 #include "ace/SString.h"
-#include "Server_init.h"  // write_IOR function
-#include "CIAO_common.h" // CIAO::debug_level
+#include "ciao/Server_init.h"  // write_IOR function
+#include "ciao/CIAO_common.h" // CIAO::debug_level
 
 namespace CIAO
 {
@@ -45,7 +45,7 @@ namespace CIAO
    * interface and is used to manage the lifecycle of the installed
    * components and homes.
    */
-  class CIAO_SERVER_Export Container_Impl
+  class Container_Impl
     : public virtual POA_Deployment::Container
   {
   public:

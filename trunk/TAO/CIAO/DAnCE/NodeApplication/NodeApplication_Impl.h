@@ -20,16 +20,16 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Container_Base.h"
-#include "Deployment_CoreS.h"
-#include "Server_init.h"
-#include "CIAO_common.h"
-#include "Object_Set_T.h"
+#include "ciao/Deployment_CoreS.h"
+#include "ciao/Server_init.h"
+#include "ciao/CIAO_common.h"
+#include "ciao/Object_Set_T.h"
 #include "tao/ORB.h"
 #include "ace/Synch.h"
 #include "ace/Synch_Traits.h"
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager_T.h"
+#include "NodeApp_Configurator.h"
 
 using CIAO::Utility::write_IOR;
 
@@ -57,13 +57,14 @@ namespace CIAO
   // @@ Gan, as we discussed before can you please wrap this
   // implementation in a namespace Node_Application or whatever to
   // signify that it belongs to another software piece of CIAO?
-  class CIAO_SERVER_Export NodeApplication_Impl
+  class NodeApplication_Impl
     : public virtual POA_Deployment::NodeApplication
   {
   public:
     /// Default constructor.
     NodeApplication_Impl (CORBA::ORB_ptr o,
-                          PortableServer::POA_ptr p);
+                          PortableServer::POA_ptr p,
+                          NodeApp_Configurator &c);
 
     /// Default destructor.
     virtual ~NodeApplication_Impl (void);
@@ -218,6 +219,9 @@ namespace CIAO
     // different one. My sense is that its different. Could you please
     //document it?
     PortableServer::POA_var poa_;
+
+    // Configurator for allocating NodeApp resources and policies
+    NodeApp_Configurator &configurator_;
 
     /// Cached properties
     Deployment::Properties properties_;
