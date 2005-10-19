@@ -1,54 +1,62 @@
+Tue Oct 18 18:33:04 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* examples/Kokyu_dsrt_schedulers/fp_example/Makefile.am:
+	* examples/Kokyu_dsrt_schedulers/mif_example/Makefile.am:
+	* examples/Kokyu_dsrt_schedulers/muf_example/Makefile.am:
+
+	  Regenerate due to change in Kokyu_dsrt_schedulers.mpb.
+
 Tue Oct 18 17:24:26 MST 2005  Yan Dai  <dai_y@ociweb.com>
 
         Merged in the CSD (Custom Servant Dispatching) feature from OCI.
 
         The main changes to existing code are:
 
-          - Four hooks are added to TAO_Root_POA to notify the CSD when poa 
+          - Four hooks are added to TAO_Root_POA to notify the CSD when poa
             is activated/deactivated and servant is activated/deactivated.
             Some areas of the code were instrumented to call these hooks to
-            notify the CSD Strategy object of POA activation and deactivation 
+            notify the CSD Strategy object of POA activation and deactivation
             "events".  Likewise, code was added to notify the CSD Strategy object
             of servant activation and deactivation "events".
           - A virtual method do_dispatch() is added to the TAO_Object_Adapter so
-            the CSD object adpater can override the default implementation to 
+            the CSD object adpater can override the default implementation to
             dispatch the requests to the CSD strategy.
           - The remote requests and the collocated oneway requests are cloned when
             they are dispatched to the CSD strategy. To support the TAO_ServerRequest
             clone in the CSD library, the friendship is added to the TAO_ServerRequest
             class and it's data member classes such as TAO_Service_Context class,
             TAO_Operation_Details class and TAO_Tagged_Profile class.
-                    
+
         * tao/PortableServer/Root_POA.cpp:
         * tao/PortableServer/Root_POA.h:
 
           Added four hooks.
-          
+
         * tao/PortableServer/Object_Adapter.cpp:
         * tao/PortableServer/Object_Adapter.h:
         * tao/PortableServer/POAManager.cpp:
         * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
-        
+
           Instrumented to call the hooks.
 
         * tao/operation_details.h:
         * tao/Service_Context.h:
         * tao/Tagged_Profile.h:
 
-          Added friendship with CSD_FW_Server_Request_Wrapper to support 
+          Added friendship with CSD_FW_Server_Request_Wrapper to support
           the TAO_ServerRequest clone in CSD library.
 
         * tao/TAO_Server_Request.h:
 
-          - Changed the operation_details_ to be pointer to const 
-          TAO_Operation_Details object instead of const pointer to const 
+          - Changed the operation_details_ to be pointer to const
+          TAO_Operation_Details object instead of const pointer to const
           TAO_Operation_Details object. This change is made to accommodate
           the change of TAO_ServerRequest clone in the CSD library.
-          - Added friendship with CSD_FW_Server_Request_Wrapper to support 
-          the TAO_ServerRequest clone in CSD library. 
-  
+          - Added friendship with CSD_FW_Server_Request_Wrapper to support
+          the TAO_ServerRequest clone in CSD library.
+
         * tao/PortableServer/get_arg.h:
-        
+
           Made the get_in_arg template function check whether the
           detail argument is nil. If the detail is not nil and the
           argument list in detail is nil(collocated oneway case) then it
@@ -56,17 +64,17 @@ Tue Oct 18 17:24:26 MST 2005  Yan Dai  <dai_y@ociweb.com>
           change is made to accommodate the changes in TAO_Operation_Details
           clone that writes the argument list to the input CDR of the
           TAO_ServerRequest object.
-        
+
         * tao/Intrusive_Ref_Count_Base_T.cpp:
         * tao/Intrusive_Ref_Count_Base_T.h:
         * tao/Intrusive_Ref_Count_Base_T.inl:
         * tao/Intrusive_Ref_Count_Handle_T.cpp:
         * tao/Intrusive_Ref_Count_Handle_T.h:
         * tao/Intrusive_Ref_Count_Handle_T.inl:
-        
+
           These are two new classes that provide infrastructure-level support
           for classes that need an "intrusive" reference counting mechanism.
-                  
+
         * tao/CSD_Framework.mpc:
         * tao/CSD_Framework/CSD_Default_Servant_Dispatcher.cpp:
         * tao/CSD_Framework/CSD_Default_Servant_Dispatcher.h:
@@ -100,13 +108,13 @@ Tue Oct 18 17:24:26 MST 2005  Yan Dai  <dai_y@ociweb.com>
         * tao/CSD_Framework/CSD_Strategy_Repository.cpp:
         * tao/CSD_Framework/CSD_Strategy_Repository.h:
         * tao/CSD_Framework/diffs/CSD_Framework.diff:
-        
+
           All of the files listed above are brand new and are used to build
           the new CSD Framework library. This framework implements the base
           classes for the concrete strategy implementation and implements
           the service objects for CSD strategy static and dynamic loading
-          via the service configuration file.  
-        
+          via the service configuration file.
+
         * tao/CSD_ThreadPool.mpc:
         * tao/CSD_ThreadPool/CSD_ThreadPool.cpp:
         * tao/CSD_ThreadPool/CSD_ThreadPool.h:
@@ -170,7 +178,7 @@ Tue Oct 18 17:24:26 MST 2005  Yan Dai  <dai_y@ociweb.com>
         * tao/CSD_ThreadPool/CSD_TP_Task.cpp:
         * tao/CSD_ThreadPool/CSD_TP_Task.h:
         * tao/CSD_ThreadPool/CSD_TP_Task.inl:
-                  
+
           All of the files listed above are brand new and are used to build
           the new CSD ThreadPool library.  Collectively, these classes
           represent the reference-implementation for the CSD Strategy feature.
@@ -455,7 +463,7 @@ Tue Oct 18 17:24:26 MST 2005  Yan Dai  <dai_y@ociweb.com>
         * tests/CSD_Strategy_Tests/TP_Test_Static/ServerApp.h:
         * tests/CSD_Strategy_Tests/TP_Test_Static/svc.conf:
 
-          All of the files above are part of the examples, tests and performance 
+          All of the files above are part of the examples, tests and performance
           tests added for the CSD feature.
 
 Tue Oct 18 13:23:21 2005  Chris Cleeland  <cleeland_c@ociweb.com>
