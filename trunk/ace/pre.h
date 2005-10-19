@@ -16,6 +16,9 @@
  */
 //=============================================================================
 
+// Versioned namespace (disabled by default)
+#include "ace/Version.h"
+
 
 // No header guard
 #if defined (_MSC_VER)
@@ -26,10 +29,6 @@
 # pragma nopushoptwarn
 # pragma nopackwarning
 #endif
-
-// Versioned namespace (disabled by default)
-#include "ace/Version.h"
-
 
 #ifndef ACE_NAMESPACE_VERSION_ENTERED
 #define ACE_NAMESPACE_VERSION_ENTERED
