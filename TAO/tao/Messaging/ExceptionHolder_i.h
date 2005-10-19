@@ -20,6 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/orbconf.h"
+
 #if !defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
 
 #include "tao/Messaging/ExceptionHolderA.h"
