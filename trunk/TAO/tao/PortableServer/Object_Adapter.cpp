@@ -355,9 +355,7 @@ TAO_Object_Adapter::dispatch_servant (const TAO::ObjectKey &key,
   {
     ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_DISPATCH_START);
 
-    servant_upcall.servant ()->_dispatch (req,
-                                          &servant_upcall
-                                          ACE_ENV_ARG_PARAMETER);
+    do_dispatch (req, servant_upcall ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (result);
   }
 
@@ -1240,5 +1238,16 @@ TAO_Object_Adapter::servant_dispatcher (TAO_Servant_Dispatcher *dispatcher)
     delete this->servant_dispatcher_;
 
   this->servant_dispatcher_ = dispatcher;
+}
+
+void
+TAO_Object_Adapter::do_dispatch (TAO_ServerRequest& req,
+                                 TAO::Portable_Server::Servant_Upcall& upcall
+                                 ACE_ENV_ARG_DECL)
+{
+  upcall.servant ()->_dispatch(req,
+                               &upcall
+                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
