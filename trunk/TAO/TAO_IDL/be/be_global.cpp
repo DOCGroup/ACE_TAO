@@ -87,6 +87,7 @@ BE_GlobalData::BE_GlobalData (void)
     lookup_strategy_ (TAO_PERFECT_HASH),
     void_type_ (0),
     ccmobject_ (0),
+    exceptionholder_ (0),
     gen_anyop_files_ (I_FALSE),
     gen_skel_files_ (I_TRUE),
     gen_client_inline_ (I_TRUE),
@@ -1084,6 +1085,18 @@ void
 BE_GlobalData::ccmobject (be_interface *val)
 {
   this->ccmobject_ = val;
+}
+
+be_valuetype *
+BE_GlobalData::exceptionholder (void) const
+{
+  return this->exceptionholder_;
+}
+
+void
+BE_GlobalData::exceptionholder (be_valuetype *val)
+{
+  this->exceptionholder_ = val;
 }
 
 idl_bool
