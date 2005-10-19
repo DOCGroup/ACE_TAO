@@ -34,7 +34,7 @@ class TAO_Root_POA;
 namespace PortableServer
 {
   class POAManager;
-};
+}
 
 
 namespace TAO
