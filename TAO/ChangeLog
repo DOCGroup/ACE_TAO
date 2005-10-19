@@ -12,6 +12,7 @@ Wed Oct 19 10:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
         * TAO_IDL/be/be_visitor_valuetype/ami_exception_holder_ch.cpp:
         * TAO_IDL/be/be_visitor_valuetype/ami_exception_holder_cs.cpp:
         * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
           Added support for the new AMI mapping, is enabled when
           TAO_HAS_DEPRECATED_EXCEPTION_HOLDER is not defined, so by
           default it is disabled at this moment

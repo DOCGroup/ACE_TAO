@@ -34,6 +34,8 @@
 #include "be_attribute.h"
 #include "be_predefined_type.h"
 #include "be_argument.h"
+#include "be_global.h"
+#include "be_extern.h"
 #include "utl_identifier.h"
 #include "nr_extern.h"
 #include "global_extern.h"
@@ -309,6 +311,8 @@ be_visitor_ami_pre_proc::visit_attribute (be_attribute *node)
   return 0;
 }
 
+#if defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
+
 be_valuetype *
 be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
 {
@@ -328,7 +332,7 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
   ACE_NEW_RETURN (msg,
                   be_module (sn),
                   0);
-                  
+
   idl_global->scopes ().push (msg);
 
   ACE_NEW_RETURN (id,
@@ -369,7 +373,7 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
                                 0,
                                 0),
                   0);
-                  
+
   idl_global->scopes ().pop ();
 
   inherit_vt->set_name (inherit_name);
@@ -398,7 +402,7 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
                   0);
 
   p_intf[0] = inherit_vt;
-  
+
   UTL_Scope *s = node->defined_in ();
   idl_global->scopes ().push (s);
 
@@ -417,7 +421,7 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
                                 0,
                                 0),
                   0);
-                  
+
   idl_global->scopes ().pop ();
 
   excep_holder->set_defined_in (s);
@@ -484,6 +488,129 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
 
   return excep_holder;
 }
+
+#else /* !TAO_HAS_DEPRECATED_EXCEPTION_HOLDER */
+
+be_valuetype *
+be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
+{
+  be_valuetype *global = be_global->exceptionholder ();
+  if (global != 0)
+    {
+      return global;
+    }
+
+  Identifier *id = 0;
+  UTL_ScopedName *sn = 0;
+
+  ACE_NEW_RETURN (id,
+                  Identifier ("Messaging"),
+                  0);
+
+  ACE_NEW_RETURN (sn,
+                  UTL_ScopedName (id,
+                                  0),
+                  0);
+
+  be_module *msg = 0;
+  ACE_NEW_RETURN (msg,
+                  be_module (sn),
+                  0);
+
+  idl_global->scopes ().push (msg);
+
+  ACE_NEW_RETURN (id,
+                  Identifier ("Messaging"),
+                  0);
+
+  // Create a virtual module named "Messaging" and an valuetype "ExceptionHolder"
+  // from which we inherit.
+  UTL_ScopedName *inherit_name = 0;
+  ACE_NEW_RETURN (inherit_name,
+                  UTL_ScopedName (id,
+                                  0),
+                  0);
+
+  ACE_NEW_RETURN (id,
+                  Identifier ("ExceptionHolder"),
+                  0);
+
+  ACE_NEW_RETURN (sn,
+                  UTL_ScopedName (id,
+                                  0),
+                  0);
+
+  inherit_name->nconc (sn);
+
+  be_valuetype *inherit_vt = 0;
+  ACE_NEW_RETURN (inherit_vt,
+                  be_valuetype (inherit_name,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0),
+                  0);
+
+  inherit_vt->set_name (inherit_name);
+  inherit_vt->seen_in_operation (I_TRUE);
+
+  // Notice the valuetype "ExceptionHolder" that it is defined in the
+  // "Messaging" module
+  inherit_vt->set_defined_in (msg);
+  inherit_vt->set_prefix_with_typeprefix ("omg.org");
+
+  // Create the exception holder name
+  ACE_CString excep_holder_local_name;
+  excep_holder_local_name = "ExceptionHolder";
+
+  UTL_ScopedName *excep_holder_name = 0;
+  excep_holder_name =
+    static_cast<UTL_ScopedName *> (node->name ()->copy ());
+  excep_holder_name->last_component ()->replace_string (
+                                            excep_holder_local_name.rep ()
+                                          );
+
+  AST_Interface_ptr *p_intf = 0;
+  ACE_NEW_RETURN (p_intf,
+                  AST_Interface_ptr[1],
+                  0);
+
+  p_intf[0] = inherit_vt;
+
+  be_valuetype *excep_holder = 0;
+  ACE_NEW_RETURN (excep_holder,
+                  be_valuetype (excep_holder_name,
+                                p_intf,
+                                1,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0),
+                  0);
+
+  idl_global->scopes ().pop ();
+  excep_holder->seen_in_operation (I_TRUE);
+  excep_holder->cli_hdr_gen (true);
+  excep_holder->set_imported (true);
+
+  be_global->exceptionholder (excep_holder);
+
+  return excep_holder;
+}
+
+#endif
 
 be_interface *
 be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
@@ -697,6 +824,7 @@ be_visitor_ami_pre_proc::create_raise_operation (
   operation->set_name (op_name);
   operation->set_defined_in (excep_holder);
 
+#if defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
   if (operation_kind == NORMAL)
     {
       if (orig_op)
@@ -709,6 +837,7 @@ be_visitor_ami_pre_proc::create_raise_operation (
             }
         }
     }
+#endif
 
   // Set the proper strategy.
   be_operation_ami_exception_holder_raise_strategy *boaehrs = 0;
@@ -1048,8 +1177,14 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
 
   operation->set_defined_in (reply_handler);
 
-  // We do not copy the exceptions because the exceptions
-  // are delivered by the excep methods.
+#if !defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
+  // Copy the exceptions.
+  if (node->exceptions ())
+    {
+      UTL_ExceptList *exceptions = node->exceptions ();
+      operation->be_add_exceptions (exceptions);
+    }
+#endif
 
   // After having generated the operation we insert it into the
   // reply handler interface.
@@ -1385,7 +1520,7 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
       ACE_NEW_RETURN (msg,
                       be_module (sn),
                       0);
-                      
+
       idl_global->scopes ().push (msg);
 
       // Create a virtual module named "Messaging" and an interface "ReplyHandler"
@@ -1424,7 +1559,7 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
 
       inherit_intf->set_name (inherit_name);
       inherit_intf->set_prefix_with_typeprefix ("omg.org");
-      
+
       idl_global->scopes ().pop ();
 
       // Notice the interface "ReplyHandler" that it is defined in the
