@@ -31,4 +31,8 @@ project : csd_framework, core {
   PIDL_Files {
     CSD_ThreadPool
   }
+
+  Pkgconfig_Files {
+    CSD_ThreadPool/TAO_CSD_ThreadPool.pc.in
+  }
 }

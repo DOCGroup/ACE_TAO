@@ -31,4 +31,8 @@ project : taolib, portableserver, core, pi {
   PIDL_Files {
     CSD_Framework
   }
+
+  Pkgconfig_Files {
+    CSD_Framework/TAO_CSD_Framework.pc.in
+  }
 }

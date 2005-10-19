@@ -1688,6 +1688,19 @@ nobase_include_HEADERS += \
   CSD_Framework/CSD_Strategy_Proxy.inl \
   CSD_Framework/CSD_Strategy_Repository.h
 
+pkgconfig_DATA += \
+  TAO_CSD_Framework.pc
+
+CLEANFILES += \
+  TAO_CSD_Framework.pc
+
+TAO_CSD_Framework.pc: ${top_builddir}/config.status ${srcdir}/CSD_Framework/TAO_CSD_Framework.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/CSD_Framework/TAO_CSD_Framework.pc.in
+
+EXTRA_DIST += \
+  CSD_Framework/TAO_CSD_Framework.pc.in
+
+
 ## Makefile.CSD_ThreadPool.am
 
 lib_LTLIBRARIES += libTAO_CSD_ThreadPool.la
@@ -1775,6 +1788,19 @@ nobase_include_HEADERS += \
   CSD_ThreadPool/CSD_TP_Task.h \
   CSD_ThreadPool/CSD_TP_Task.inl \
   CSD_ThreadPool/CSD_ThreadPool.h
+
+pkgconfig_DATA += \
+  TAO_CSD_ThreadPool.pc
+
+CLEANFILES += \
+  TAO_CSD_ThreadPool.pc
+
+TAO_CSD_ThreadPool.pc: ${top_builddir}/config.status ${srcdir}/CSD_ThreadPool/TAO_CSD_ThreadPool.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/CSD_ThreadPool/TAO_CSD_ThreadPool.pc.in
+
+EXTRA_DIST += \
+  CSD_ThreadPool/TAO_CSD_ThreadPool.pc.in
+
 
 ## Makefile.IFR_Client.am
 
