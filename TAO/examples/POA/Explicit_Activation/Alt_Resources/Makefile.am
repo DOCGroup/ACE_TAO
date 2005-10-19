@@ -13,7 +13,10 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_ROOT = $(top_srcdir)
 
+
 ## Makefile.Alt_Resource.am
+
+if BUILD_WFMO
 
 noinst_LTLIBRARIES = libAlt_Resource_Factory.la
 
@@ -30,6 +33,8 @@ libAlt_Resource_Factory_la_SOURCES = \
 noinst_HEADERS = \
   Alt_Resource_Factory.h \
   Resource_Factory.h
+
+endif BUILD_WFMO
 
 ## Clean up template repositories, etc.
 clean-local:
