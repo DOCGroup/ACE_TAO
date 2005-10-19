@@ -1670,6 +1670,12 @@ TAO_CodeGen::gen_stub_src_includes (void)
       this->gen_standard_include (this->client_stubs_,
                                   "tao/Messaging/Asynch_Invocation_Adapter.h");
 
+#if !defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
+      this->gen_standard_include (this->client_stubs_,
+                                  "tao/Messaging/ExceptionHolder_i.h");
+#endif
+
+#if defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
       // If a valuetype has been seen, this will already be in the header file.
       if (!idl_global->valuetype_seen_)
         {
@@ -1684,6 +1690,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
           this->gen_standard_include (this->client_stubs_,
                                       "tao/Valuetype/Valuetype_Adapter_Impl.h");
         }
+#endif
     }
 
   // If valuefactory_seen_ was set, this was generated in the stub header file,
