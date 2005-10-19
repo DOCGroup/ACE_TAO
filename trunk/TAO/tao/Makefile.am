@@ -2049,6 +2049,7 @@ libTAO_Messaging_la_SOURCES = \
   Messaging/Asynch_Reply_Dispatcher.cpp \
   Messaging/Asynch_Timeout_Handler.cpp \
   Messaging/Connection_Timeout_Policy_i.cpp \
+  Messaging/ExceptionHolder_i.cpp \
   Messaging/ExceptionHolderA.cpp \
   Messaging/ExceptionHolderC.cpp \
   Messaging/Messaging.cpp \
@@ -2091,6 +2092,7 @@ nobase_include_HEADERS += \
   Messaging/Asynch_Timeout_Handler.h \
   Messaging/Connection_Timeout_Policy_i.h \
   Messaging/ExceptionHolder.pidl \
+  Messaging/ExceptionHolder_i.h \
   Messaging/ExceptionHolderA.h \
   Messaging/ExceptionHolderC.h \
   Messaging/ExceptionHolderC.inl \
