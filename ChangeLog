@@ -1,3 +1,11 @@
+Wed Oct 19 09:26:34 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/ACE.h (strdelete):
+
+	  Declare this function with the ACE_NAMESPACE_INLINE_FUNCTION.
+	  Addresses case where this method is inlined, and should not be
+	  marked "extern".
+
 Wed Oct 19 09:23:13 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/pre.h:
