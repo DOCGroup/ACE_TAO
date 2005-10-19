@@ -6,7 +6,7 @@
 
 
 class Callback_i : public virtual POA_Callback,
-              public virtual PortableServer::RefCountServantBase
+              public virtual PortableServer::ServantBase
 {
   public:
 

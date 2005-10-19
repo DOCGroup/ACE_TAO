@@ -1,3 +1,35 @@
+Wed Oct 19 11:30:23 MST 2005  Yan Dai  <dai_y@ociweb.com>
+
+        * tao/CSD_Framework/CSD_Strategy_Base.h:
+
+          Removed un-necessary ";" from the POAManager forward declaration.
+          
+        * tao/CSD_Framework/CSD_Strategy_Base.cpp:
+        * tao/PortableServer/Root_POA.cpp:
+           
+          Removed the argument name from the csd hook interfaces instead
+          of using ACE_UNUSED_ARG. 
+          
+        * docs/libraries.html:
+        
+          Added CSD_Framework and CSD_ThreadPool library descriptions.
+          
+        * examples/CSD_Strategy/ThreadPool/Foo_i.h:
+        * examples/CSD_Strategy/ThreadPool2/Foo_i.h:
+        * examples/CSD_Strategy/ThreadPool3/Foo_i.h:
+        * examples/CSD_Strategy/ThreadPool4/Callback_i.h:
+        * examples/CSD_Strategy/ThreadPool4/Foo_i.h:
+        * examples/CSD_Strategy/ThreadPool5/Callback_i.h:
+        * examples/CSD_Strategy/ThreadPool5/Foo_i.h:
+        * performance-tests/CSD_Strategy/TestServant/Foo_i.h:
+        * tests/CSD_Strategy_Tests/TP_Foo_A/Foo_A_i.h:
+        * tests/CSD_Strategy_Tests/TP_Foo_B/Callback_i.h:
+        * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B_i.h:
+        * tests/CSD_Strategy_Tests/TP_Foo_C/Foo_C_i.h:
+        * tests/CSD_Strategy_Tests/TP_Test_Dynamic/Hello.h:
+        
+          Replaced deprecated RefCountServantBase with ServantBase. 
+          
 Wed Oct 19 10:01:03 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Valuetype/Value_VarOut_T.cpp (operator=):
