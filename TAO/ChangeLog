@@ -1,3 +1,10 @@
+Wed Oct 19 08:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/be/be_global.cpp:
+          Added member to store the new Messaging::ExceptionHolder
+          for the latest AMI mapping
+
 Wed Oct 19 00:35:02 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
