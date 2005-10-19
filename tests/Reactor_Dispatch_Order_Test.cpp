@@ -129,7 +129,7 @@ Handler::handle_input (ACE_HANDLE fd)
 
   ACE_DEBUG ((LM_DEBUG,
               "Handler::handle_input: %s\n",
-              ACE_TEXT_CHAR_TO_TCHAR (buffer)));
+              ACE_TEXT_TO_TCHAR_IN (buffer)));
 
   ACE_ASSERT (ACE_OS::strcmp (buffer,
                               message) == 0);

@@ -446,7 +446,7 @@ Counting_Service::handle_input (ACE_HANDLE)
                   bytes,
                   this->peer ().get_handle (),
                   bytes,
-                  ACE_TEXT_CHAR_TO_TCHAR (buf)));
+                  ACE_TEXT_TO_TCHAR_IN (buf)));
       // Read and return the current value in the file.
       if (ACE_OS::strncmp (buf,
                            "read",
@@ -611,7 +611,7 @@ client (void *arg)
       // the call to ACE_OS::strrchr ().
       buf [bytes_read] = '\0';
 
-      size_t count = ACE_OS::atoi (ACE_OS::strrchr (ACE_TEXT_CHAR_TO_TCHAR (buf),
+      size_t count = ACE_OS::atoi (ACE_OS::strrchr (ACE_TEXT_TO_TCHAR_IN (buf),
                                                     ACE_TEXT (' ')));
 
       ACE_DEBUG ((LM_DEBUG,

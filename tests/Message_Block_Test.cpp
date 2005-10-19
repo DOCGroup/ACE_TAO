@@ -119,7 +119,7 @@ Worker_Task::svc (void)
       // message here.
       else if (length > 0)
         {
-          int current_count = ACE_OS::atoi (ACE_TEXT_CHAR_TO_TCHAR (mb->rd_ptr ()));
+          int current_count = ACE_OS::atoi (ACE_TEXT_TO_TCHAR_IN (mb->rd_ptr ()));
           int i;
 
           ACE_ASSERT (count == current_count);
@@ -157,7 +157,7 @@ Worker_Task::svc (void)
           for (i = current_count; i > 0; i--)
             {
               ACE_ASSERT (this->msg_queue ()->dequeue_head (dup) != -1);
-              ACE_ASSERT (count == ACE_OS::atoi (ACE_TEXT_CHAR_TO_TCHAR (dup->rd_ptr ())));
+              ACE_ASSERT (count == ACE_OS::atoi (ACE_TEXT_TO_TCHAR_IN (dup->rd_ptr ())));
               ACE_ASSERT (ACE_OS::strcmp (mb->rd_ptr (), dup->rd_ptr ()) == 0);
               ACE_ASSERT (dup->msg_priority () == ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY + 1);
               dup->release ();

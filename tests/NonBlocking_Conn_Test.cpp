@@ -168,7 +168,7 @@ test (ACE_Reactor_Impl *impl)
       else
         ACE_DEBUG ((LM_INFO,
                     ACE_TEXT ("%p\n"),
-                    ACE_TEXT_CHAR_TO_TCHAR (hosts[i])));
+                    ACE_TEXT_TO_TCHAR_IN (hosts[i])));
     }
 
   ACE_Reactor reactor (impl,
