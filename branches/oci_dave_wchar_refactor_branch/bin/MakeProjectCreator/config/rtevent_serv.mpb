@@ -1,0 +1,8 @@
+// -*- MPC -*-
+// $Id$
+
+project : orbsvcslib, rtevent_skel  {
+  after     += RTEvent_Serv
+  libs      += TAO_RTEvent_Serv
+  tagchecks += RTEvent
+}

@@ -1,0 +1,143 @@
+// -*- C++ -*-
+//
+// $Id$
+
+
+#ifdef _SECURITY_ADMIN_IDL_
+#define _SECURITY_ADMIN_IDL_
+
+#include <SecurityLevel2.idl>
+
+#pragma prefix "omg.org"
+
+module SecurityAdmin {
+
+#   pragma version SecurityAdmin 1.5
+
+    // interface AccessPolicy
+    interface AccessPolicy : CORBA::Policy {
+
+#   pragma version AccessPolicy 1.5
+
+        Security::RightsList get_effective_rights (
+            in   Security::AttributeList     attrib_list,
+            in   Security::ExtensibleFamily  rights_family
+        );
+
+        Security::RightsList get_all_effective_rights(
+            in   Security::AttributeList      attrib_list
+        );
+    };
+
+    // interface DomainAccessPolicy
+    interface DomainAccessPolicy : AccessPolicy {
+
+#    pragma version DomainAccessPolicy 1.5
+
+        void grant_rights(
+            in   Security::SecAttribute      priv_attr,
+            in   Security::DelegationState   del_state,
+            in   Security::ExtensibleFamily  rights_family,
+            in   Security::RightsList        rights
+        );
+
+        void revoke_rights(
+            in   Security::SecAttribute      priv_attr,
+            in   Security::DelegationState   del_state,
+            in   Security::ExtensibleFamily  rights_family,
+            in   Security::RightsList        rights
+        );
+
+        void replace_rights (
+            in   Security::SecAttribute      priv_attr,
+            in   Security::DelegationState   del_state,
+            in   Security::ExtensibleFamily  rights_family,
+            in   Security::RightsList        rights
+        );
+
+        Security::RightsList get_rights (
+            in   Security::SecAttribute      priv_attr,
+            in   Security::DelegationState   del_state,
+            in   Security::ExtensibleFamily  rights_family
+        );
+
+        Security::RightsList get_all_rights(
+            in Security::SecAttribute priv_attr,
+            in Security::DelegationState del_state
+        );
+    };
+
+    // interface AuditPolicy
+    interface AuditPolicy : CORBA::Policy {
+
+# pragma version AuditPolicy 1.5
+
+        void set_audit_selectors (
+            in   CORBA::RepositoryId          object_type,
+            in   Security::AuditEventTypeList events,
+            in   Security::SelectorValueList  selectors,
+            in   Security::AuditCombinator    audit_combinator
+        );
+
+        void clear_audit_selectors (
+            in   CORBA::RepositoryId          object_type,
+            in   Security::AuditEventTypeList events
+        );
+
+        void replace_audit_selectors (
+            in   CORBA::RepositoryId          object_type,
+            in   Security::AuditEventTypeList events,
+            in   Security::SelectorValueList  selectors,
+            in   Security::AuditCombinator    audit_combinator
+        );
+
+        void get_audit_selectors (
+            in   CORBA::RepositoryId           object_type,
+            in   Security::AuditEventTypeList  events,
+            in   Security::SelectorValueList  selectors,
+            in   Security::AuditCombinator    audit_combinator
+        );
+
+        void set_audit_channel (
+            in   Security::AuditChannelId      audit_channel_id
+        );
+    };
+
+    // interface SecureInvocationPolicy
+    interface SecureInvocationPolicy : CORBA::Policy {
+
+#    pragma version SecureInvocationPolicy 1.5
+
+        void set_association_options(
+            in   CORBA::RepositoryId              object_type,
+            in   Security::RequiresSupports       requires_supports,
+            in   Security::CommunicationDirection direction,
+            in   Security::AssociationOptions     options
+        );
+
+        Security::AssociationOptions get_association_options(
+            in   CORBA::RepositoryID              object_type,
+            in   Security::RequiresSupports       requires_supports,
+            in   Security::CommunicationDirection direction
+        );
+    };
+
+    // interface DelegationPolicy
+    interface DelegationPolicy : CORBA::Policy {
+
+# pragma version DelegationPolicy 1.5
+
+        void set_delegation_mode(
+            in   CORBA::InterfaceDef          object_type,
+            in   Security::DelegationMode     mode
+        );
+
+        Security::DelegationMode get_delegation_mode(
+            in   CORBA::RepositoryId          object_type
+        );
+    };
+};
+
+#pragma prefix ""
+
+#endif /* _SECURITY_ADMIN_IDL_ */

@@ -1,0 +1,13 @@
+// -*- MPC -*-
+// $Id$
+
+project(NodeApplication): ciao_component_dnc {
+  exename   = NodeApplication
+
+    IDL_Files {
+  }
+
+  Source_Files {
+    NodeApplication.cpp
+  }
+}
