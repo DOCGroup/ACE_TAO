@@ -155,9 +155,7 @@ project (CIAO_DnC_Server) : orbsvcslib, portableserver, valuetype, naming, ifr_c
 
   Source_Files {
     Container_Base.cpp
-    Container_Impl.cpp
     Swapping_Container.cpp
-    NodeApplication_Impl.cpp
     Context_Impl_Base.cpp
     Home_Servant_Impl_Base.cpp
     Servant_Impl_Base.cpp

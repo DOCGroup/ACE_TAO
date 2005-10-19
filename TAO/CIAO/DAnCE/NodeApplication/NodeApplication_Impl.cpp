@@ -297,6 +297,9 @@ CIAO::NodeApplication_Impl::install (
   Deployment::ComponentInfos_var retv;
   ACE_TRY
     {
+      // Extract ORB resource def here.
+      // this->configurator_.init_resource_manager (xxx);
+
       const ::Deployment::ContainerImplementationInfos container_infos =
         node_impl_info.impl_infos;
 
