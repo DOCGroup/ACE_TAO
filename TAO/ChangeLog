@@ -1,3 +1,463 @@
+Tue Oct 18 17:24:26 MST 2005  Yan Dai  <dai_y@ociweb.com>
+
+        Merged in the CSD (Custom Servant Dispatching) feature from OCI.
+
+        The main changes to existing code are:
+
+          - Four hooks are added to TAO_Root_POA to notify the CSD when poa 
+            is activated/deactivated and servant is activated/deactivated.
+            Some areas of the code were instrumented to call these hooks to
+            notify the CSD Strategy object of POA activation and deactivation 
+            "events".  Likewise, code was added to notify the CSD Strategy object
+            of servant activation and deactivation "events".
+          - A virtual method do_dispatch() is added to the TAO_Object_Adapter so
+            the CSD object adpater can override the default implementation to 
+            dispatch the requests to the CSD strategy.
+          - The remote requests and the collocated oneway requests are cloned when
+            they are dispatched to the CSD strategy. To support the TAO_ServerRequest
+            clone in the CSD library, the friendship is added to the TAO_ServerRequest
+            class and it's data member classes such as TAO_Service_Context class,
+            TAO_Operation_Details class and TAO_Tagged_Profile class.
+                    
+        * tao/PortableServer/Root_POA.cpp:
+        * tao/PortableServer/Root_POA.h:
+
+          Added four hooks.
+          
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Object_Adapter.h:
+        * tao/PortableServer/POAManager.cpp:
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+        
+          Instrumented to call the hooks.
+
+        * tao/operation_details.h:
+        * tao/Service_Context.h:
+        * tao/Tagged_Profile.h:
+
+          Added friendship with CSD_FW_Server_Request_Wrapper to support 
+          the TAO_ServerRequest clone in CSD library.
+
+        * tao/TAO_Server_Request.h:
+
+          - Changed the operation_details_ to be pointer to const 
+          TAO_Operation_Details object instead of const pointer to const 
+          TAO_Operation_Details object. This change is made to accommodate
+          the change of TAO_ServerRequest clone in the CSD library.
+          - Added friendship with CSD_FW_Server_Request_Wrapper to support 
+          the TAO_ServerRequest clone in CSD library. 
+  
+        * tao/PortableServer/get_arg.h:
+        
+          Made the get_in_arg template function check whether the
+          detail argument is nil. If the detail is not nil and the
+          argument list in detail is nil(collocated oneway case) then it
+          will demarshall the input CDR stream and get arguments. This
+          change is made to accommodate the changes in TAO_Operation_Details
+          clone that writes the argument list to the input CDR of the
+          TAO_ServerRequest object.
+        
+        * tao/Intrusive_Ref_Count_Base_T.cpp:
+        * tao/Intrusive_Ref_Count_Base_T.h:
+        * tao/Intrusive_Ref_Count_Base_T.inl:
+        * tao/Intrusive_Ref_Count_Handle_T.cpp:
+        * tao/Intrusive_Ref_Count_Handle_T.h:
+        * tao/Intrusive_Ref_Count_Handle_T.inl:
+        
+          These are two new classes that provide infrastructure-level support
+          for classes that need an "intrusive" reference counting mechanism.
+                  
+        * tao/CSD_Framework.mpc:
+        * tao/CSD_Framework/CSD_Default_Servant_Dispatcher.cpp:
+        * tao/CSD_Framework/CSD_Default_Servant_Dispatcher.h:
+        * tao/CSD_Framework/CSD_Framework.pidl:
+        * tao/CSD_Framework/CSD_Framework_Loader.cpp:
+        * tao/CSD_Framework/CSD_Framework_Loader.h:
+        * tao/CSD_Framework/CSD_FrameworkA.cpp:
+        * tao/CSD_Framework/CSD_FrameworkA.h:
+        * tao/CSD_Framework/CSD_FrameworkC.cpp:
+        * tao/CSD_Framework/CSD_FrameworkC.h:
+        * tao/CSD_Framework/CSD_FrameworkC.inl:
+        * tao/CSD_Framework/CSD_FW_Export.h:
+        * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp:
+        * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.h:
+        * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.inl:
+        * tao/CSD_Framework/CSD_Object_Adapter.cpp:
+        * tao/CSD_Framework/CSD_Object_Adapter.h:
+        * tao/CSD_Framework/CSD_Object_Adapter_Factory.cpp:
+        * tao/CSD_Framework/CSD_Object_Adapter_Factory.h:
+        * tao/CSD_Framework/CSD_ORBInitializer.cpp:
+        * tao/CSD_Framework/CSD_ORBInitializer.h:
+        * tao/CSD_Framework/CSD_POA.cpp:
+        * tao/CSD_Framework/CSD_POA.h:
+        * tao/CSD_Framework/CSD_POA.inl:
+        * tao/CSD_Framework/CSD_Strategy_Base.cpp:
+        * tao/CSD_Framework/CSD_Strategy_Base.h:
+        * tao/CSD_Framework/CSD_Strategy_Base.inl:
+        * tao/CSD_Framework/CSD_Strategy_Proxy.cpp:
+        * tao/CSD_Framework/CSD_Strategy_Proxy.h:
+        * tao/CSD_Framework/CSD_Strategy_Proxy.inl:
+        * tao/CSD_Framework/CSD_Strategy_Repository.cpp:
+        * tao/CSD_Framework/CSD_Strategy_Repository.h:
+        * tao/CSD_Framework/diffs/CSD_Framework.diff:
+        
+          All of the files listed above are brand new and are used to build
+          the new CSD Framework library. This framework implements the base
+          classes for the concrete strategy implementation and implements
+          the service objects for CSD strategy static and dynamic loading
+          via the service configuration file.  
+        
+        * tao/CSD_ThreadPool.mpc:
+        * tao/CSD_ThreadPool/CSD_ThreadPool.cpp:
+        * tao/CSD_ThreadPool/CSD_ThreadPool.h:
+        * tao/CSD_ThreadPool/CSD_TP_Cancel_Visitor.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Cancel_Visitor.h:
+        * tao/CSD_ThreadPool/CSD_TP_Cancel_Visitor.inl:
+        * tao/CSD_ThreadPool/CSD_TP_Collocated_Asynch_Request.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Collocated_Asynch_Request.h:
+        * tao/CSD_ThreadPool/CSD_TP_Collocated_Asynch_Request.inl:
+        * tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_Request.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_Request.h:
+        * tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_Request.inl:
+        * tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_With_Server_Request.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_With_Server_Request.h:
+        * tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_With_Server_Request.inl:
+        * tao/CSD_ThreadPool/CSD_TP_Corba_Request.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Corba_Request.h:
+        * tao/CSD_ThreadPool/CSD_TP_Corba_Request.inl:
+        * tao/CSD_ThreadPool/CSD_TP_Custom_Asynch_Request.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Custom_Asynch_Request.h:
+        * tao/CSD_ThreadPool/CSD_TP_Custom_Asynch_Request.inl:
+        * tao/CSD_ThreadPool/CSD_TP_Custom_Request.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Custom_Request.h:
+        * tao/CSD_ThreadPool/CSD_TP_Custom_Request.inl:
+        * tao/CSD_ThreadPool/CSD_TP_Custom_Request_Operation.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Custom_Request_Operation.h:
+        * tao/CSD_ThreadPool/CSD_TP_Custom_Request_Operation.inl:
+        * tao/CSD_ThreadPool/CSD_TP_Custom_Synch_Request.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Custom_Synch_Request.h:
+        * tao/CSD_ThreadPool/CSD_TP_Custom_Synch_Request.inl:
+        * tao/CSD_ThreadPool/CSD_TP_Dispatchable_Visitor.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Dispatchable_Visitor.h:
+        * tao/CSD_ThreadPool/CSD_TP_Dispatchable_Visitor.inl:
+        * tao/CSD_ThreadPool/CSD_TP_Export.h:
+        * tao/CSD_ThreadPool/CSD_TP_Queue.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Queue.h:
+        * tao/CSD_ThreadPool/CSD_TP_Queue.inl:
+        * tao/CSD_ThreadPool/CSD_TP_Queue_Visitor.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Queue_Visitor.h:
+        * tao/CSD_ThreadPool/CSD_TP_Queue_Visitor.inl:
+        * tao/CSD_ThreadPool/CSD_TP_Remote_Request.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Remote_Request.h:
+        * tao/CSD_ThreadPool/CSD_TP_Remote_Request.inl:
+        * tao/CSD_ThreadPool/CSD_TP_Request.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Request.h:
+        * tao/CSD_ThreadPool/CSD_TP_Request.inl:
+        * tao/CSD_ThreadPool/CSD_TP_Servant_State.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Servant_State.h:
+        * tao/CSD_ThreadPool/CSD_TP_Servant_State.inl:
+        * tao/CSD_ThreadPool/CSD_TP_Servant_State_Map.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Servant_State_Map.h:
+        * tao/CSD_ThreadPool/CSD_TP_Servant_State_Map.inl:
+        * tao/CSD_ThreadPool/CSD_TP_Strategy.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Strategy.h:
+        * tao/CSD_ThreadPool/CSD_TP_Strategy.inl:
+        * tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.h:
+        * tao/CSD_ThreadPool/CSD_TP_Synch_Helper.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Synch_Helper.h:
+        * tao/CSD_ThreadPool/CSD_TP_Synch_Helper.inl:
+        * tao/CSD_ThreadPool/CSD_TP_Task.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Task.h:
+        * tao/CSD_ThreadPool/CSD_TP_Task.inl:
+                  
+          All of the files listed above are brand new and are used to build
+          the new CSD ThreadPool library.  Collectively, these classes
+          represent the reference-implementation for the CSD Strategy feature.
+
+        * examples/CSD_Strategy/README:
+        * examples/CSD_Strategy/ThreadPool/client_main.cpp:
+        * examples/CSD_Strategy/ThreadPool/ClientApp.cpp:
+        * examples/CSD_Strategy/ThreadPool/ClientApp.h:
+        * examples/CSD_Strategy/ThreadPool/CSD_Test_ThreadPool.mpc:
+        * examples/CSD_Strategy/ThreadPool/Foo.idl:
+        * examples/CSD_Strategy/ThreadPool/Foo_i.cpp:
+        * examples/CSD_Strategy/ThreadPool/Foo_i.h:
+        * examples/CSD_Strategy/ThreadPool/OrbShutdownTask.cpp:
+        * examples/CSD_Strategy/ThreadPool/OrbShutdownTask.h:
+        * examples/CSD_Strategy/ThreadPool/README:
+        * examples/CSD_Strategy/ThreadPool/run_test.pl:
+        * examples/CSD_Strategy/ThreadPool/server_main.cpp:
+        * examples/CSD_Strategy/ThreadPool/ServerApp.cpp:
+        * examples/CSD_Strategy/ThreadPool/ServerApp.h:
+        * examples/CSD_Strategy/ThreadPool2/client_main.cpp:
+        * examples/CSD_Strategy/ThreadPool2/ClientApp.cpp:
+        * examples/CSD_Strategy/ThreadPool2/ClientApp.h:
+        * examples/CSD_Strategy/ThreadPool2/CSD_Test_ThreadPool2.mpc:
+        * examples/CSD_Strategy/ThreadPool2/Foo.idl:
+        * examples/CSD_Strategy/ThreadPool2/Foo_i.cpp:
+        * examples/CSD_Strategy/ThreadPool2/Foo_i.h:
+        * examples/CSD_Strategy/ThreadPool2/FooServantList.cpp:
+        * examples/CSD_Strategy/ThreadPool2/FooServantList.h:
+        * examples/CSD_Strategy/ThreadPool2/OrbShutdownTask.cpp:
+        * examples/CSD_Strategy/ThreadPool2/OrbShutdownTask.h:
+        * examples/CSD_Strategy/ThreadPool2/README:
+        * examples/CSD_Strategy/ThreadPool2/run_test.pl:
+        * examples/CSD_Strategy/ThreadPool2/server_main.cpp:
+        * examples/CSD_Strategy/ThreadPool2/ServerApp.cpp:
+        * examples/CSD_Strategy/ThreadPool2/ServerApp.h:
+        * examples/CSD_Strategy/ThreadPool3/client_main.cpp:
+        * examples/CSD_Strategy/ThreadPool3/ClientApp.cpp:
+        * examples/CSD_Strategy/ThreadPool3/ClientApp.h:
+        * examples/CSD_Strategy/ThreadPool3/CSD_Test_ThreadPool3.mpc:
+        * examples/CSD_Strategy/ThreadPool3/Foo.idl:
+        * examples/CSD_Strategy/ThreadPool3/Foo_i.cpp:
+        * examples/CSD_Strategy/ThreadPool3/Foo_i.h:
+        * examples/CSD_Strategy/ThreadPool3/OrbShutdownTask.cpp:
+        * examples/CSD_Strategy/ThreadPool3/OrbShutdownTask.h:
+        * examples/CSD_Strategy/ThreadPool3/OrbTask.cpp:
+        * examples/CSD_Strategy/ThreadPool3/OrbTask.h:
+        * examples/CSD_Strategy/ThreadPool3/README:
+        * examples/CSD_Strategy/ThreadPool3/run_test.pl:
+        * examples/CSD_Strategy/ThreadPool3/server_main.cpp:
+        * examples/CSD_Strategy/ThreadPool3/ServerApp.cpp:
+        * examples/CSD_Strategy/ThreadPool3/ServerApp.h:
+        * examples/CSD_Strategy/ThreadPool4/Callback.idl:
+        * examples/CSD_Strategy/ThreadPool4/Callback_i.cpp:
+        * examples/CSD_Strategy/ThreadPool4/Callback_i.h:
+        * examples/CSD_Strategy/ThreadPool4/ClientTask.cpp:
+        * examples/CSD_Strategy/ThreadPool4/ClientTask.h:
+        * examples/CSD_Strategy/ThreadPool4/CSD_Test_ThreadPool4.mpc:
+        * examples/CSD_Strategy/ThreadPool4/Foo.idl:
+        * examples/CSD_Strategy/ThreadPool4/Foo_i.cpp:
+        * examples/CSD_Strategy/ThreadPool4/Foo_i.h:
+        * examples/CSD_Strategy/ThreadPool4/OrbShutdownTask.cpp:
+        * examples/CSD_Strategy/ThreadPool4/OrbShutdownTask.h:
+        * examples/CSD_Strategy/ThreadPool4/README:
+        * examples/CSD_Strategy/ThreadPool4/run_test.pl:
+        * examples/CSD_Strategy/ThreadPool4/server_main.cpp:
+        * examples/CSD_Strategy/ThreadPool4/ServerApp.cpp:
+        * examples/CSD_Strategy/ThreadPool4/ServerApp.h:
+        * examples/CSD_Strategy/ThreadPool5/Callback.idl:
+        * examples/CSD_Strategy/ThreadPool5/Callback_i.cpp:
+        * examples/CSD_Strategy/ThreadPool5/Callback_i.h:
+        * examples/CSD_Strategy/ThreadPool5/client_main.cpp:
+        * examples/CSD_Strategy/ThreadPool5/ClientApp.cpp:
+        * examples/CSD_Strategy/ThreadPool5/ClientApp.h:
+        * examples/CSD_Strategy/ThreadPool5/ClientTask.cpp:
+        * examples/CSD_Strategy/ThreadPool5/ClientTask.h:
+        * examples/CSD_Strategy/ThreadPool5/CSD_Test_ThreadPool5.mpc:
+        * examples/CSD_Strategy/ThreadPool5/Foo.idl:
+        * examples/CSD_Strategy/ThreadPool5/Foo_i.cpp:
+        * examples/CSD_Strategy/ThreadPool5/Foo_i.h:
+        * examples/CSD_Strategy/ThreadPool5/FooServantList.cpp:
+        * examples/CSD_Strategy/ThreadPool5/FooServantList.h:
+        * examples/CSD_Strategy/ThreadPool5/OrbShutdownTask.cpp:
+        * examples/CSD_Strategy/ThreadPool5/OrbShutdownTask.h:
+        * examples/CSD_Strategy/ThreadPool5/OrbTask.cpp:
+        * examples/CSD_Strategy/ThreadPool5/OrbTask.h:
+        * examples/CSD_Strategy/ThreadPool5/README:
+        * examples/CSD_Strategy/ThreadPool5/run_test.pl:
+        * examples/CSD_Strategy/ThreadPool5/server_main.cpp:
+        * examples/CSD_Strategy/ThreadPool5/ServerApp.cpp:
+        * examples/CSD_Strategy/ThreadPool5/ServerApp.h:
+        * examples/CSD_Strategy/ThreadPool6/client_main.cpp:
+        * examples/CSD_Strategy/ThreadPool6/ClientApp.cpp:
+        * examples/CSD_Strategy/ThreadPool6/ClientApp.h:
+        * examples/CSD_Strategy/ThreadPool6/CSD_Test_ThreadPool6.mpc:
+        * examples/CSD_Strategy/ThreadPool6/Foo.idl:
+        * examples/CSD_Strategy/ThreadPool6/Foo_i.cpp:
+        * examples/CSD_Strategy/ThreadPool6/Foo_i.h:
+        * examples/CSD_Strategy/ThreadPool6/OrbShutdownTask.cpp:
+        * examples/CSD_Strategy/ThreadPool6/OrbShutdownTask.h:
+        * examples/CSD_Strategy/ThreadPool6/README:
+        * examples/CSD_Strategy/ThreadPool6/run_test.pl:
+        * examples/CSD_Strategy/ThreadPool6/server_main.cpp:
+        * examples/CSD_Strategy/ThreadPool6/ServerApp.cpp:
+        * examples/CSD_Strategy/ThreadPool6/ServerApp.h:
+        * performance-tests/CSD_Strategy/TestApps/client_main.cpp:
+        * performance-tests/CSD_Strategy/TestApps/ClientApp.cpp:
+        * performance-tests/CSD_Strategy/TestApps/ClientApp.h:
+        * performance-tests/CSD_Strategy/TestApps/csd_pt_testapps.mpc:
+        * performance-tests/CSD_Strategy/TestApps/run_test.pl:
+        * performance-tests/CSD_Strategy/TestApps/server_main.cpp:
+        * performance-tests/CSD_Strategy/TestApps/ServerApp.cpp:
+        * performance-tests/CSD_Strategy/TestApps/ServerApp.h:
+        * performance-tests/CSD_Strategy/TestApps/README:
+        * performance-tests/CSD_Strategy/TestInf/AppHelper.cpp:
+        * performance-tests/CSD_Strategy/TestInf/AppHelper.h:
+        * performance-tests/CSD_Strategy/TestInf/AppShutdown.cpp:
+        * performance-tests/CSD_Strategy/TestInf/AppShutdown.h:
+        * performance-tests/CSD_Strategy/TestInf/CancelledException.idl:
+        * performance-tests/CSD_Strategy/TestInf/ClientEngine.cpp:
+        * performance-tests/CSD_Strategy/TestInf/ClientEngine.h:
+        * performance-tests/CSD_Strategy/TestInf/ClientTask.cpp:
+        * performance-tests/CSD_Strategy/TestInf/ClientTask.h:
+        * performance-tests/CSD_Strategy/TestInf/csd_pt_testinf.mpc:
+        * performance-tests/CSD_Strategy/TestInf/CSD_PT_TestInf_Export.h:
+        * performance-tests/CSD_Strategy/TestInf/CustomException.idl:
+        * performance-tests/CSD_Strategy/TestInf/FooException.idl:
+        * performance-tests/CSD_Strategy/TestInf/OrbRunner.cpp:
+        * performance-tests/CSD_Strategy/TestInf/OrbRunner.h:
+        * performance-tests/CSD_Strategy/TestInf/OrbShutdownTask.cpp:
+        * performance-tests/CSD_Strategy/TestInf/OrbShutdownTask.h:
+        * performance-tests/CSD_Strategy/TestInf/OrbTask.cpp:
+        * performance-tests/CSD_Strategy/TestInf/OrbTask.h:
+        * performance-tests/CSD_Strategy/TestInf/ServantList_T.cpp:
+        * performance-tests/CSD_Strategy/TestInf/ServantList_T.h:
+        * performance-tests/CSD_Strategy/TestInf/TestAppBase.cpp:
+        * performance-tests/CSD_Strategy/TestInf/TestAppBase.h:
+        * performance-tests/CSD_Strategy/TestInf/TestAppException.idl:
+        * performance-tests/CSD_Strategy/TestInf/TestAppMain.h:
+        * performance-tests/CSD_Strategy/TestInf/README:
+        * performance-tests/CSD_Strategy/TestServant/csd_pt_testservant.mpc:
+        * performance-tests/CSD_Strategy/TestServant/CSD_PT_TestServant_Export.h:
+        * performance-tests/CSD_Strategy/TestServant/Foo.idl:
+        * performance-tests/CSD_Strategy/TestServant/Foo_ClientEngine.cpp:
+        * performance-tests/CSD_Strategy/TestServant/Foo_ClientEngine.h:
+        * performance-tests/CSD_Strategy/TestServant/Foo_i.cpp:
+        * performance-tests/CSD_Strategy/TestServant/Foo_i.h:
+        * performance-tests/CSD_Strategy/TestServant/Foo_Statistics.cpp:
+        * performance-tests/CSD_Strategy/TestServant/Foo_Statistics.h:
+        * performance-tests/CSD_Strategy/TestServant/README:
+        * tests/CSD_Strategy_Tests/README:
+        * tests/CSD_Strategy_Tests/Broken/client_main.cpp:
+        * tests/CSD_Strategy_Tests/Broken/ClientApp.cpp:
+        * tests/CSD_Strategy_Tests/Broken/ClientApp.h:
+        * tests/CSD_Strategy_Tests/Broken/CSD_TP_Broken.mpc:
+        * tests/CSD_Strategy_Tests/Broken/run_test.pl:
+        * tests/CSD_Strategy_Tests/Broken/server_main.cpp:
+        * tests/CSD_Strategy_Tests/Broken/ServerApp.cpp:
+        * tests/CSD_Strategy_Tests/Broken/ServerApp.h:
+        * tests/CSD_Strategy_Tests/TP_Common/AppHelper.cpp:
+        * tests/CSD_Strategy_Tests/TP_Common/AppHelper.h:
+        * tests/CSD_Strategy_Tests/TP_Common/AppShutdown.cpp:
+        * tests/CSD_Strategy_Tests/TP_Common/AppShutdown.h:
+        * tests/CSD_Strategy_Tests/TP_Common/CancelledException.idl:
+        * tests/CSD_Strategy_Tests/TP_Common/ClientEngine.cpp:
+        * tests/CSD_Strategy_Tests/TP_Common/ClientEngine.h:
+        * tests/CSD_Strategy_Tests/TP_Common/ClientTask.cpp:
+        * tests/CSD_Strategy_Tests/TP_Common/ClientTask.h:
+        * tests/CSD_Strategy_Tests/TP_Common/CSD_TP_Test_Export.h:
+        * tests/CSD_Strategy_Tests/TP_Common/CSD_TP_Test_Lib.mpc:
+        * tests/CSD_Strategy_Tests/TP_Common/CustomException.idl:
+        * tests/CSD_Strategy_Tests/TP_Common/FooException.idl:
+        * tests/CSD_Strategy_Tests/TP_Common/OrbRunner.cpp:
+        * tests/CSD_Strategy_Tests/TP_Common/OrbRunner.h:
+        * tests/CSD_Strategy_Tests/TP_Common/OrbShutdownTask.cpp:
+        * tests/CSD_Strategy_Tests/TP_Common/OrbShutdownTask.h:
+        * tests/CSD_Strategy_Tests/TP_Common/OrbTask.cpp:
+        * tests/CSD_Strategy_Tests/TP_Common/OrbTask.h:
+        * tests/CSD_Strategy_Tests/TP_Common/ServantList_T.cpp:
+        * tests/CSD_Strategy_Tests/TP_Common/ServantList_T.h:
+        * tests/CSD_Strategy_Tests/TP_Common/StatisticsHelper.cpp:
+        * tests/CSD_Strategy_Tests/TP_Common/StatisticsHelper.h:
+        * tests/CSD_Strategy_Tests/TP_Common/TestAppBase.cpp:
+        * tests/CSD_Strategy_Tests/TP_Common/TestAppBase.h:
+        * tests/CSD_Strategy_Tests/TP_Common/TestAppException.idl:
+        * tests/CSD_Strategy_Tests/TP_Common/TestAppMain.h:
+        * tests/CSD_Strategy_Tests/TP_Foo_A/CSD_TP_Foo_A_Export.h:
+        * tests/CSD_Strategy_Tests/TP_Foo_A/csd_tp_foo_a_lib.mpc:
+        * tests/CSD_Strategy_Tests/TP_Foo_A/Foo_A.idl:
+        * tests/CSD_Strategy_Tests/TP_Foo_A/Foo_A_ClientEngine.cpp:
+        * tests/CSD_Strategy_Tests/TP_Foo_A/Foo_A_ClientEngine.h:
+        * tests/CSD_Strategy_Tests/TP_Foo_A/Foo_A_i.cpp:
+        * tests/CSD_Strategy_Tests/TP_Foo_A/Foo_A_i.h:
+        * tests/CSD_Strategy_Tests/TP_Foo_A/Foo_A_Statistics.cpp:
+        * tests/CSD_Strategy_Tests/TP_Foo_A/Foo_A_Statistics.h:
+        * tests/CSD_Strategy_Tests/TP_Foo_B/Callback.idl:
+        * tests/CSD_Strategy_Tests/TP_Foo_B/Callback_i.cpp:
+        * tests/CSD_Strategy_Tests/TP_Foo_B/Callback_i.h:
+        * tests/CSD_Strategy_Tests/TP_Foo_B/CSD_TP_Foo_B_Export.h:
+        * tests/CSD_Strategy_Tests/TP_Foo_B/csd_tp_foo_b_lib.mpc:
+        * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B.idl:
+        * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B_ClientEngine.cpp:
+        * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B_ClientEngine.h:
+        * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B_i.cpp:
+        * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B_i.h:
+        * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B_SimpleClientEngine.cpp:
+        * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B_SimpleClientEngine.h:
+        * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B_Statistics.cpp:
+        * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B_Statistics.h:
+        * tests/CSD_Strategy_Tests/TP_Foo_C/CSD_TP_Foo_C_Export.h:
+        * tests/CSD_Strategy_Tests/TP_Foo_C/csd_tp_foo_c_lib.mpc:
+        * tests/CSD_Strategy_Tests/TP_Foo_C/Foo_C.idl:
+        * tests/CSD_Strategy_Tests/TP_Foo_C/Foo_C_ClientEngine.cpp:
+        * tests/CSD_Strategy_Tests/TP_Foo_C/Foo_C_ClientEngine.h:
+        * tests/CSD_Strategy_Tests/TP_Foo_C/Foo_C_cust_op1.cpp:
+        * tests/CSD_Strategy_Tests/TP_Foo_C/Foo_C_cust_op1.h:
+        * tests/CSD_Strategy_Tests/TP_Foo_C/Foo_C_cust_op2.cpp:
+        * tests/CSD_Strategy_Tests/TP_Foo_C/Foo_C_cust_op2.h:
+        * tests/CSD_Strategy_Tests/TP_Foo_C/Foo_C_cust_op3.cpp:
+        * tests/CSD_Strategy_Tests/TP_Foo_C/Foo_C_cust_op3.h:
+        * tests/CSD_Strategy_Tests/TP_Foo_C/Foo_C_cust_op4.cpp:
+        * tests/CSD_Strategy_Tests/TP_Foo_C/Foo_C_cust_op4.h:
+        * tests/CSD_Strategy_Tests/TP_Foo_C/Foo_C_cust_op5.cpp:
+        * tests/CSD_Strategy_Tests/TP_Foo_C/Foo_C_cust_op5.h:
+        * tests/CSD_Strategy_Tests/TP_Foo_C/Foo_C_Custom_ClientEngine.cpp:
+        * tests/CSD_Strategy_Tests/TP_Foo_C/Foo_C_Custom_ClientEngine.h:
+        * tests/CSD_Strategy_Tests/TP_Foo_C/Foo_C_Custom_Proxy.cpp:
+        * tests/CSD_Strategy_Tests/TP_Foo_C/Foo_C_Custom_Proxy.h:
+        * tests/CSD_Strategy_Tests/TP_Foo_C/Foo_C_i.cpp:
+        * tests/CSD_Strategy_Tests/TP_Foo_C/Foo_C_i.h:
+        * tests/CSD_Strategy_Tests/TP_Foo_C/Foo_C_Statistics.cpp:
+        * tests/CSD_Strategy_Tests/TP_Foo_C/Foo_C_Statistics.h:
+        * tests/CSD_Strategy_Tests/TP_Test_1/client_main.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_1/ClientApp.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_1/ClientApp.h:
+        * tests/CSD_Strategy_Tests/TP_Test_1/CSD_TP_Test_1.mpc:
+        * tests/CSD_Strategy_Tests/TP_Test_1/run_test.pl:
+        * tests/CSD_Strategy_Tests/TP_Test_1/server_main.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_1/ServerApp.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_1/ServerApp.h:
+        * tests/CSD_Strategy_Tests/TP_Test_2/client_main.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_2/ClientApp.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_2/ClientApp.h:
+        * tests/CSD_Strategy_Tests/TP_Test_2/CSD_TP_Test_2.mpc:
+        * tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl:
+        * tests/CSD_Strategy_Tests/TP_Test_2/server_main.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_2/ServerApp.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_2/ServerApp.h:
+        * tests/CSD_Strategy_Tests/TP_Test_3/client_main.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_3/ClientApp.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_3/ClientApp.h:
+        * tests/CSD_Strategy_Tests/TP_Test_3/CSD_TP_Test_3.mpc:
+        * tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl:
+        * tests/CSD_Strategy_Tests/TP_Test_3/server_main.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_3/ServerApp.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_3/ServerApp.h:
+        * tests/CSD_Strategy_Tests/TP_Test_4/client_main.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_4/ClientApp.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_4/ClientApp.h:
+        * tests/CSD_Strategy_Tests/TP_Test_4/CSD_TP_Test_4.mpc:
+        * tests/CSD_Strategy_Tests/TP_Test_4/README:
+        * tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl:
+        * tests/CSD_Strategy_Tests/TP_Test_4/server_main.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_4/ServerApp.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_4/ServerApp.h:
+        * tests/CSD_Strategy_Tests/TP_Test_Dynamic/client.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_Dynamic/CSD_TP_Test_Dynamic.mpc:
+        * tests/CSD_Strategy_Tests/TP_Test_Dynamic/Hello.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_Dynamic/Hello.h:
+        * tests/CSD_Strategy_Tests/TP_Test_Dynamic/README:
+        * tests/CSD_Strategy_Tests/TP_Test_Dynamic/run_test.pl:
+        * tests/CSD_Strategy_Tests/TP_Test_Dynamic/server.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_Dynamic/svc.conf:
+        * tests/CSD_Strategy_Tests/TP_Test_Dynamic/Test.idl:
+        * tests/CSD_Strategy_Tests/TP_Test_Static/client_main.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_Static/ClientApp.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_Static/ClientApp.h:
+        * tests/CSD_Strategy_Tests/TP_Test_Static/CSD_TP_Test_Static.mpc:
+        * tests/CSD_Strategy_Tests/TP_Test_Static/README:
+        * tests/CSD_Strategy_Tests/TP_Test_Static/run_test.pl:
+        * tests/CSD_Strategy_Tests/TP_Test_Static/server_main.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_Static/ServerApp.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_Static/ServerApp.h:
+        * tests/CSD_Strategy_Tests/TP_Test_Static/svc.conf:
+
+          All of the files above are part of the examples, tests and performance 
+          tests added for the CSD feature.
+
 Tue Oct 18 13:23:21 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* docs/ec_options.html: Finally updated documentation to
