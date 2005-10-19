@@ -1,3 +1,14 @@
+Wed Oct 19 00:11:34 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* examples/POA/Explicit_Activation/Alt_Resources/Makefile.am:
+
+	  Regenerate.
+
+	* examples/POA/Explicit_Activation/Alt_Resources/Alt_Resource.mpc:
+
+	  Changed to inherit from wfmo instead of using a verbatim section
+	  to disable building on systems without the ACE_WFMO_Reactor.
+
 Tue Oct 18 23:43:02 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am
