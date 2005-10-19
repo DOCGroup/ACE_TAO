@@ -278,6 +278,13 @@
 #define ACE_UINT64_TYPE		unsigned long long
 #endif
 
+// ACE WChar support
+#define ACE_SIZEOF_WCHAR 2
+#define ACE_WCHAR_MAX    0xFFFF
+#if !defined(_NATIVE_WCHAR_T_DEFINED)
+#  define ACE_LACKS_BUILTIN_WCHAR_T
+#endif
+
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
@@ -285,12 +292,6 @@
 // is controlled in compiler configs since it's a compiler switch.
 // Additionally, if the user selected use of wide chars (by setting either
 // ACE_USES_WCHAR or UNICODE) make sure both are enabled.
-#define ACE_HAS_WCHAR
-#if defined (ACE_USES_WCHAR)
-#  ifndef UNICODE
-#    define UNICODE
-#  endif
-#endif /* ACE_USES_WCHAR */
 #if defined (UNICODE) && !defined (ACE_USES_WCHAR)
 #  define ACE_USES_WCHAR
 #endif /* UNICODE && !ACE_USES_WCHAR */

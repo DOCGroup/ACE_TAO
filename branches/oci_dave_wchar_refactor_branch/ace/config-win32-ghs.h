@@ -25,7 +25,6 @@
 
 //Green Hills Native x86 does not support structural exceptions
 # undef ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS
-# undef ACE_HAS_WCHAR
 # define ACE_CONFIG_INCLUDE_GHS_COMMON
 # include "ace/config-ghs-common.h"
 

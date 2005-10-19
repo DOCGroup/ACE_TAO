@@ -88,7 +88,6 @@ public:
                  ACE_UINT32 ip_addr,
                  const char protocol[] = "tcp");
 
-#if defined (ACE_HAS_WCHAR)
   ACE_INET_Addr (u_short port_number,
                  const wchar_t host_name[],
                  int address_family = AF_UNSPEC);
@@ -102,7 +101,6 @@ public:
   ACE_INET_Addr (const wchar_t port_name[],
                  ACE_UINT32 ip_addr,
                  const wchar_t protocol[] = ACE_TEXT_WIDE ("tcp"));
-#endif /* ACE_HAS_WCHAR */
 
   /// Default dtor.
   ~ACE_INET_Addr (void);
@@ -170,7 +168,6 @@ public:
   int set (const sockaddr_in *,
            int len);
 
-#if defined (ACE_HAS_WCHAR)
   int set (u_short port_number,
            const wchar_t host_name[],
            int encode = 1,
@@ -185,7 +182,6 @@ public:
            const wchar_t protocol[] = ACE_TEXT_WIDE ("tcp"));
 
   int set (const wchar_t addr[]);
-#endif /* ACE_HAS_WCHAR */
 
   /// Return a pointer to the underlying network address.
   virtual void *get_addr (void) const;
@@ -219,12 +215,6 @@ public:
    * with the IP address being INADDR_ANY.
    */
   virtual int string_to_addr (const char address[]);
-
-#if defined (ACE_HAS_WCHAR)
-  /*
-  virtual int string_to_addr (const char address[]);
-  */
-#endif /* ACE_HAS_WCHAR */
 
   /**
    * Sets the port number without affecting the host name.  If
@@ -271,10 +261,8 @@ public:
   int get_host_name (char hostname[],
                      size_t hostnamelen) const;
 
-#if defined (ACE_HAS_WCHAR)
   int get_host_name (wchar_t hostname[],
                      size_t hostnamelen) const;
-#endif /* ACE_HAS_WCHAR */
 
   /**
    * Return the character representation of the hostname (this version

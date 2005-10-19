@@ -76,13 +76,13 @@ ACE_CE_Screen_Output& ACE_CE_Screen_Output::operator << (const ACE_TCHAR* output
 
 ACE_CE_Screen_Output& ACE_CE_Screen_Output::operator << (ACE_ANTI_TCHAR* output)
 {
-    *this << ACE_TEXT_CHAR_TO_TCHAR(output);
+    *this << ACE_TEXT_TO_TCHAR_IN(output);
     return *this;
 }
 
 ACE_CE_Screen_Output& ACE_CE_Screen_Output::operator << (const ACE_ANTI_TCHAR* output)
 {
-    *this << ACE_TEXT_CHAR_TO_TCHAR(output);
+    *this << ACE_TEXT_TO_TCHAR_IN(output);
     return *this;
 }
 

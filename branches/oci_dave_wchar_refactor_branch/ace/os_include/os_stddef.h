@@ -81,12 +81,6 @@ extern "C"
   value equal to its value when used as the lone character in an integer
   character constant.
 */
-#if defined (ACE_LACKS_WCHAR_T)
-#  if !defined (ACE_WCHAR_T_TYPE)
-#    define ACE_WCHAR_T_TYPE long;
-#  endif /* !ACE_WCHAR_T_TYPE */
-   typedef ACE_WCHAR_T_TYPE wchar_t;
-#endif /* ACE_LACKS_WCHAR_T */
 
 //  Unsigned integer type of the result of the sizeof operator.
 #if defined (ACE_LACKS_SIZE_T)

@@ -38,7 +38,7 @@ ACE_Process_Mutex::unique_name (void)
 
 ACE_Process_Mutex::ACE_Process_Mutex (const char *name, void *arg, mode_t mode)
 #if defined (_ACE_USE_SV_SEM)
-  : lock_ (name ? name : ACE_TEXT_ALWAYS_CHAR (this->unique_name ()),
+  : lock_ (name ? name : ACE_TEXT_TO_CHAR_IN (this->unique_name ()),
            ACE_SV_Semaphore_Complex::ACE_CREATE,
            1,
            1,
@@ -46,7 +46,7 @@ ACE_Process_Mutex::ACE_Process_Mutex (const char *name, void *arg, mode_t mode)
 #else
   : lock_ (USYNC_PROCESS,
            name ?
-             ACE_TEXT_CHAR_TO_TCHAR (name) : this->unique_name (),
+             ACE_TEXT_TO_TCHAR_IN (name) : this->unique_name (),
            (ACE_mutexattr_t *) arg,
            mode)
 #endif /* _ACE_USE_SV_SEM */
@@ -56,14 +56,13 @@ ACE_Process_Mutex::ACE_Process_Mutex (const char *name, void *arg, mode_t mode)
 #endif /* !_ACE_USE_SV_SEM */
 }
 
-#if defined (ACE_HAS_WCHAR)
 ACE_Process_Mutex::ACE_Process_Mutex (const wchar_t *name,
                                       void *arg,
                                       mode_t mode)
 #if defined (_ACE_USE_SV_SEM)
   : lock_ (name ?
-             ACE_Wide_To_Ascii (name).char_rep () :
-             ACE_TEXT_ALWAYS_CHAR (this->unique_name ()),
+             ACE_TEXT_TO_CHAR_IN (name) :
+             ACE_TEXT_TO_CHAR_IN (this->unique_name ()),
            ACE_SV_Semaphore_Complex::ACE_CREATE,
            1,
            1,
@@ -71,7 +70,7 @@ ACE_Process_Mutex::ACE_Process_Mutex (const wchar_t *name,
 #else
   : lock_ (USYNC_PROCESS,
            name ?
-             ACE_TEXT_WCHAR_TO_TCHAR (name) : this->unique_name (),
+             ACE_TEXT_TO_TCHAR_IN (name) : this->unique_name (),
            (ACE_mutexattr_t *) arg,
            mode)
 #endif /* _ACE_USE_SV_SEM */
@@ -80,7 +79,7 @@ ACE_Process_Mutex::ACE_Process_Mutex (const wchar_t *name,
   ACE_UNUSED_ARG (arg);
 #endif /* _ACE_USE_SV_SEM */
 }
-#endif /* ACE_HAS_WCHAR */
+
 ACE_Process_Mutex::~ACE_Process_Mutex (void)
 {
 }

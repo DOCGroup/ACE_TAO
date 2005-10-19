@@ -290,19 +290,17 @@ ACE_Allocator_Adapter<MALLOC>::protect (void *addr, size_t len, int flags)
 
 template <class MALLOC>
 ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter (const char *pool_name)
-  : allocator_ (ACE_TEXT_CHAR_TO_TCHAR (pool_name))
+  : allocator_ (ACE_TEXT_TO_TCHAR_IN (pool_name))
 {
   ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter");
 }
 
-#if defined (ACE_HAS_WCHAR)
 template <class MALLOC>
 ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter (const wchar_t *pool_name)
-  : allocator_ (ACE_TEXT_WCHAR_TO_TCHAR (pool_name))
+  : allocator_ (ACE_TEXT_TO_TCHAR_IN (pool_name))
 {
   ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter");
 }
-#endif /* ACE_HAS_WCHAR */
 
 template <class MALLOC>
 ACE_Allocator_Adapter<MALLOC>::~ACE_Allocator_Adapter (void)

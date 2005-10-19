@@ -71,9 +71,9 @@ public:
 
   /// Create a ACE_Name_Request message.
   ACE_Name_Request (ACE_INT32 msg_type, // Type of request.
-                    const ACE_WCHAR_T name[], //
+                    const wchar_t name[], //
                     const ACE_UINT32 name_length,
-                    const ACE_WCHAR_T value[],
+                    const wchar_t value[],
                     const ACE_UINT32 value_length,
                     const char type[],
                     const ACE_UINT32 type_length,
@@ -100,12 +100,12 @@ public:
   void timeout (const ACE_Time_Value timeout);
 
   // = Set/get the name
-  const ACE_WCHAR_T *name (void) const;
-  void name (const ACE_WCHAR_T *);
+  const wchar_t *name (void) const;
+  void name (const wchar_t *);
 
   // = Set/get the value
-  const ACE_WCHAR_T *value (void) const;
-  void value (const ACE_WCHAR_T *);
+  const wchar_t *value (void) const;
+  void value (const wchar_t *);
 
   // = Set/get the type
   const char *type (void) const;
@@ -167,17 +167,17 @@ private:
     /// The data portion contains the <name_>
     /// followed by the <value_>
     /// followed by the <type_>.
-    ACE_WCHAR_T data_[MAX_NAME_LENGTH + MAXPATHLEN + MAXPATHLEN + 2];
+    wchar_t data_[MAX_NAME_LENGTH + MAXPATHLEN + MAXPATHLEN + 2];
   };
 
   /// Transfer buffer.
   Transfer transfer_;
 
   /// Pointer to the beginning of the name in this->data_.
-  ACE_WCHAR_T *name_;
+  wchar_t *name_;
 
   /// Pointer to the beginning of the value in this->data_;
-  ACE_WCHAR_T *value_;
+  wchar_t *value_;
 
   /// Pointer to the beginning of the type in this->data_;
   char *type_;

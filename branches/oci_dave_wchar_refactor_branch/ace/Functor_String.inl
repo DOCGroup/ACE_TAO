@@ -26,7 +26,6 @@ ACE_Less_Than<ACE_CString>::operator () (const ACE_CString &lhs,
 }
 
 
-#if defined (ACE_USES_WCHAR)
 ACE_INLINE unsigned long
 ACE_Hash<ACE_WString>::operator () (const ACE_WString &t) const
 {
@@ -48,4 +47,3 @@ ACE_Less_Than<ACE_WString>::operator () (const ACE_WString &lhs,
   return (lhs < rhs);
 }
 
-#endif /*ACE_USES_WCHAR*/

@@ -157,7 +157,7 @@ ACE_OS::itoa_emulation (int value, char *string, int radix)
 }
 #endif /* !ACE_HAS_ITOA */
 
-#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_ITOW)
+#if defined (ACE_LACKS_ITOW)
 wchar_t *
 ACE_OS::itow_emulation (int value, wchar_t *string, int radix)
 {
@@ -207,7 +207,7 @@ ACE_OS::itow_emulation (int value, wchar_t *string, int radix)
 
   return string;
 }
-#endif /* ACE_HAS_WCHAR && ACE_LACKS_ITOW */
+#endif /* ACE_LACKS_ITOW */
 
 void *
 ACE_OS::malloc (size_t nbytes)

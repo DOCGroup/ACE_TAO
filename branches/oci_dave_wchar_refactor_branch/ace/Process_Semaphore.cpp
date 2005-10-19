@@ -30,7 +30,7 @@ ACE_Process_Semaphore::ACE_Process_Semaphore (u_int count,
 #if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
   : lock_ (count, USYNC_PROCESS, name, arg, max)
 #else
-  : lock_ (ACE_TEXT_ALWAYS_CHAR (name),
+  : lock_ (ACE_TEXT_TO_CHAR_IN (name),
            ACE_SV_Semaphore_Complex::ACE_CREATE,
            count)
 #endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */

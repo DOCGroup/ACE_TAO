@@ -1302,7 +1302,6 @@ ACE_OS::cond_init (ACE_cond_t *cv,
     ACE_OS::cond_init (cv, static_cast<short> (attributes.type), name, arg);
 }
 
-# if defined (ACE_HAS_WCHAR)
 int
 ACE_OS::cond_init (ACE_cond_t *cv,
                    ACE_condattr_t &attributes,
@@ -1311,7 +1310,6 @@ ACE_OS::cond_init (ACE_cond_t *cv,
   return
     ACE_OS::cond_init (cv, static_cast<short> (attributes.type), name, arg);
 }
-# endif /* ACE_HAS_WCHAR */
 
 int
 ACE_OS::cond_init (ACE_cond_t *cv, short type, const char *name, void *arg)
@@ -1342,7 +1340,6 @@ ACE_OS::cond_init (ACE_cond_t *cv, short type, const char *name, void *arg)
 # endif /* ACE_HAS_THREADS */
 }
 
-# if defined (ACE_HAS_WCHAR)
 int
 ACE_OS::cond_init (ACE_cond_t *cv, short type, const wchar_t *name, void *arg)
 {
@@ -1371,7 +1368,6 @@ ACE_OS::cond_init (ACE_cond_t *cv, short type, const wchar_t *name, void *arg)
   ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_THREADS */
 }
-# endif /* ACE_HAS_WCHAR */
 
 int
 ACE_OS::cond_signal (ACE_cond_t *cv)
@@ -1983,7 +1979,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   ::CreateMutexW (ACE_OS::default_win32_security_attributes_r
                           (sa, &sa_buffer, &sd_buffer),
                         FALSE,
-                        ACE_Ascii_To_Wide (name).wchar_rep ());
+                        ACE_TEXT_TO_WCHAR_IN (name));
 #   else /* ACE_HAS_WINCE */
       m->proc_mutex_ =
   ::CreateMutexA (ACE_OS::default_win32_security_attributes_r
@@ -2136,7 +2132,6 @@ ACE_OS::mutex_destroy (ACE_mutex_t *m)
 #endif /* ACE_HAS_THREADS */
 }
 
-#if defined (ACE_HAS_WCHAR)
 int
 ACE_OS::mutex_init (ACE_mutex_t *m,
                     int lock_scope,
@@ -2173,13 +2168,12 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 #else /* ACE_HAS_THREADS && ACE_HAS_WTHREADS */
   return ACE_OS::mutex_init (m,
                              lock_scope,
-                             ACE_Wide_To_Ascii (name).char_rep (),
+                             ACE_TEXT_TO_CHAR_IN (name),
                              attributes,
                              sa,
                              lock_type);
 #endif /* ACE_HAS_THREADS && ACE_HAS_WTHREADS */
 }
-#endif /* ACE_HAS_WCHAR */
 
 int
 ACE_OS::mutex_lock (ACE_mutex_t *m)
@@ -2647,7 +2641,7 @@ ACE_OS::event_destroy (ACE_event_t *event)
 # endif
       ACE_OS::munmap (event->eventdata_,
                       sizeof (ACE_eventdata_t));
-      ACE_OS::shm_unlink (ACE_TEXT_CHAR_TO_TCHAR(event->name_));
+      ACE_OS::shm_unlink (ACE_TEXT_TO_TCHAR_IN(event->name_));
       ACE_OS::free (event->name_);
       return r1 != 0 || r2 != 0 ? -1 : 0;
     }
@@ -2736,7 +2730,7 @@ ACE_OS::event_init (ACE_event_t *event,
                              (sa, &sa_buffer, &sd_buffer),
                            manual_reset,
                            initial_state,
-                           ACE_Ascii_To_Wide (name).wchar_rep ());
+                           ACE_TEXT_TO_WCHAR_IN (name));
 # else /* ACE_HAS_WINCE */
   *event = ::CreateEventA (ACE_OS::default_win32_security_attributes_r
                              (sa, &sa_buffer, &sd_buffer),
@@ -2757,13 +2751,13 @@ ACE_OS::event_init (ACE_event_t *event,
     {
       int owner = 0;
       // Let's see if the shared memory entity already exists.
-      ACE_HANDLE fd = ACE_OS::shm_open (ACE_TEXT_CHAR_TO_TCHAR (name),
+      ACE_HANDLE fd = ACE_OS::shm_open (ACE_TEXT_TO_TCHAR_IN (name),
                                         O_RDWR | O_CREAT | O_EXCL,
                                         ACE_DEFAULT_FILE_PERMS);
       if (fd == ACE_INVALID_HANDLE)
         {
           if (errno == EEXIST)
-            fd = ACE_OS::shm_open (ACE_TEXT_CHAR_TO_TCHAR (name),
+            fd = ACE_OS::shm_open (ACE_TEXT_TO_TCHAR_IN (name),
                                    O_RDWR | O_CREAT,
                                    ACE_DEFAULT_FILE_PERMS);
           if (fd == ACE_INVALID_HANDLE)   // Still can't get it.
@@ -2791,7 +2785,7 @@ ACE_OS::event_init (ACE_event_t *event,
       if (evtdata == MAP_FAILED)
         {
           if (owner)
-            ACE_OS::shm_unlink (ACE_TEXT_CHAR_TO_TCHAR (name));
+            ACE_OS::shm_unlink (ACE_TEXT_TO_TCHAR_IN (name));
           return -1;
         }
 
@@ -2800,7 +2794,7 @@ ACE_OS::event_init (ACE_event_t *event,
           event->name_ = ACE_OS::strdup (name);
           if (event->name_ == 0)
             {
-              ACE_OS::shm_unlink (ACE_TEXT_CHAR_TO_TCHAR (name));
+              ACE_OS::shm_unlink (ACE_TEXT_TO_TCHAR_IN (name));
               return -1;
             }
           event->eventdata_ = evtdata;

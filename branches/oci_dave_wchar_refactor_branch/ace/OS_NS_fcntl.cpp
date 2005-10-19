@@ -80,7 +80,7 @@ ACE_OS::open (const char *filename,
   SECURITY_DESCRIPTOR sd_buffer;
 
 #if defined (ACE_HAS_WINCE)
-  ACE_HANDLE h = ::CreateFileW (ACE_Ascii_To_Wide (filename).wchar_rep (),
+  ACE_HANDLE h = ::CreateFileW (ACE_TEXT_TO_WCHAR_IN (filename),
                                 access,
                                 shared_mode,
                                 ACE_OS::default_win32_security_attributes_r
@@ -167,7 +167,6 @@ ACE_OS::open (const char *filename,
 #endif /* ACE_WIN32 */
 }
 
-#if defined (ACE_HAS_WCHAR)
 ACE_HANDLE
 ACE_OS::open (const wchar_t *filename,
               int mode,
@@ -259,10 +258,9 @@ ACE_OS::open (const wchar_t *filename,
     return h;
 #else /* ACE_WIN32 */
   // Just emulate with ascii version
-  return ACE_OS::open (ACE_Wide_To_Ascii (filename).char_rep (),
+  return ACE_OS::open (ACE_TEXT_TO_CHAR_IN (filename),
                        mode,
                        perms,
                        sa);
 #endif /* ACE_WIN32 */
 }
-#endif /* ACE_HAS_WCHAR */

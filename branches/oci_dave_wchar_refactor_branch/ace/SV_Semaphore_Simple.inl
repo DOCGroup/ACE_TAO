@@ -6,7 +6,6 @@
 #include "ace/Global_Macros.h"
 #include "ace/OS_NS_Thread.h"
 
-#if defined (ACE_HAS_WCHAR)
 // Semaphores don't offer wide-char names, so convert the name and forward
 // to the narrow-char open().
 ACE_INLINE int
@@ -17,13 +16,12 @@ ACE_SV_Semaphore_Simple::open (const wchar_t *name,
                                int perms)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::open (wchar_t)");
-  return this->open (ACE_Wide_To_Ascii (name).char_rep (),
+  return this->open (ACE_TEXT_TO_CHAR_IN (name),
                      flags,
                      initial_value,
                      nsems,
                      perms);
 }
-#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
 ACE_SV_Semaphore_Simple::control (int cmd,

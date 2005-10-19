@@ -14,7 +14,6 @@
  *
  *  Sizes of built-in types:
  *    - ACE_SIZEOF_CHAR
- *    - ACE_SIZEOF_WCHAR
  *    - ACE_SIZEOF_SHORT
  *    - ACE_SIZEOF_INT
  *    - ACE_SIZEOF_LONG
@@ -82,23 +81,6 @@
 
 // A char always has 1 byte, by definition.
 # define ACE_SIZEOF_CHAR 1
-
-// Unfortunately, there isn't a portable way to determine the size of a wchar.
-// So we just define them on a platform basis. If the platform doesn't
-// define it and it's an XPG4 system, assume wchar_t is 4 bytes. Some code
-// uses ACE_SIZEOF_WCHAR in preprocessor statements, so sizeof() isn't valid.
-// If the platform config doesn't set this, and this guess is wrong,
-// Basic_Types_Test should catch the inconsistency.
-# if defined (ACE_HAS_WCHAR)
-#   if !defined (ACE_SIZEOF_WCHAR)
-#     if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
-#       define ACE_SIZEOF_WCHAR 4
-#     else
-// 0 so the Basic_Types test will catch this.
-#       define ACE_SIZEOF_WCHAR 0
-#     endif /* ACE_HAS_XPG4_MULTIBYTE_CHAR */
-#   endif /* !ACE_SIZEOF_WCHAR */
-# endif /* ACE_HAS_WCHAR */
 
 // The number of bytes in a short.
 # if !defined (ACE_SIZEOF_SHORT)
@@ -268,17 +250,6 @@ typedef ACE_UINT16 ACE_USHORT16;  // @@ Backward compatibility.
 
 // Define a generic byte for use in codecs
 typedef unsigned char ACE_Byte;
-
-// Define a pseudo wide character type when wchar is not supported so we
-// can support basic wide character string operations.
-
-# if defined (ACE_HAS_WCHAR) || defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
-#   define ACE_WINT_T wint_t
-#   define ACE_WCHAR_T wchar_t
-# else
-#   define ACE_WINT_T ACE_UINT16
-#   define ACE_WCHAR_T ACE_UINT16
-# endif /* ACE_HAS_WCHAR */
 
 // The number of bytes in a void *.
 # ifndef ACE_SIZEOF_VOID_P
@@ -769,7 +740,6 @@ typedef ptrdiff_t ptr_arith_t;
 #define ACE_INT16_MAX 0x7FFF
 #define ACE_INT16_MIN -(ACE_INT16_MAX)-1
 #define ACE_UINT16_MAX 0xFFFF
-#define ACE_WCHAR_MAX ACE_UINT16_MAX
 #define ACE_INT32_MAX 0x7FFFFFFF
 #define ACE_INT32_MIN -(ACE_INT32_MAX)-1
 #define ACE_UINT32_MAX 0xFFFFFFFF

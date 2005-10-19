@@ -27,7 +27,7 @@ namespace ACE_OS {
     ACE_UNUSED_ARG (mode);
     ACE_NOTSUP_RETURN (-1);
 #else
-    ACE_OSCALL_RETURN (::creat (ACE_TEXT_ALWAYS_CHAR (filename), mode),
+    ACE_OSCALL_RETURN (::creat (ACE_TEXT_TO_CHAR_IN (filename), mode),
                        ACE_HANDLE, ACE_INVALID_HANDLE);
 #endif /* ACE_WIN32 */
   }
@@ -154,7 +154,6 @@ namespace ACE_OS {
 # endif /* ACE_LACKS_LSTAT */
   }
 
-#if defined (ACE_HAS_WCHAR)
   ACE_INLINE int
   lstat (const wchar_t *file, ACE_stat *stp)
   {
@@ -162,10 +161,9 @@ namespace ACE_OS {
 # if defined (ACE_LACKS_LSTAT)
     return ACE_OS::stat (file, stp);
 # else
-    return ACE_OS::lstat (ACE_Wide_To_Ascii (file).char_rep (), stp);
+    return ACE_OS::lstat (ACE_TEXT_TO_CHAR_IN (file), stp);
 # endif /* ACE_LACKS_LSTAT */
   }
-#endif /* ACE_HAS_WCHAR */
 
   ACE_INLINE int
   mkdir (const char *path, mode_t mode)
@@ -214,7 +212,7 @@ namespace ACE_OS {
     ACE_OSCALL_RETURN (::_mkdir ((char *) path), int, -1);
 #elif defined (ACE_HAS_WINCE)
     ACE_UNUSED_ARG (mode);
-    ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CreateDirectory (ACE_TEXT_CHAR_TO_TCHAR (path), 0),
+    ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CreateDirectory (ACE_TEXT_TO_TCHAR_IN (path), 0),
                                             ace_result_),
                           int, -1);
 #elif defined (ACE_MKDIR_LACKS_MODE)
@@ -224,8 +222,6 @@ namespace ACE_OS {
     ACE_OSCALL_RETURN (::mkdir (path, mode), int, -1);
 #endif /* ACE_PSOS_LACKS_PHILE */
   }
-
-#if defined (ACE_HAS_WCHAR)
 
   ACE_INLINE int
   mkdir (const wchar_t *path, mode_t mode)
@@ -239,11 +235,9 @@ namespace ACE_OS {
     ACE_UNUSED_ARG (mode);
     ACE_OSCALL_RETURN (::_wmkdir (path), int, -1);
 #else
-    return ACE_OS::mkdir (ACE_Wide_To_Ascii (path).char_rep (), mode);
+    return ACE_OS::mkdir (ACE_TEXT_TO_CHAR_IN (path), mode);
 #endif /* ACE_HAS_WINCE */
   }
-
-#endif /* ACE_HAS_WCHAR */
 
   ACE_INLINE int
   mkfifo (const ACE_TCHAR *file, mode_t mode)
@@ -254,7 +248,7 @@ namespace ACE_OS {
     ACE_UNUSED_ARG (mode);
     ACE_NOTSUP_RETURN (-1);
 #else
-    ACE_OSCALL_RETURN (::mkfifo (ACE_TEXT_ALWAYS_CHAR (file), mode), int, -1);
+    ACE_OSCALL_RETURN (::mkfifo (ACE_TEXT_TO_CHAR_IN (file), mode), int, -1);
 #endif /* ACE_LACKS_MKFIFO */
   }
 
@@ -275,7 +269,7 @@ namespace ACE_OS {
 
     HANDLE fhandle;
 
-    fhandle = ::FindFirstFile (ACE_TEXT_CHAR_TO_TCHAR (file), &fdata);
+    fhandle = ::FindFirstFile (ACE_TEXT_TO_TCHAR_IN (file), &fdata);
     if (fhandle == INVALID_HANDLE_VALUE)
       {
         ACE_OS::set_errno_to_last_error ();
@@ -309,7 +303,6 @@ namespace ACE_OS {
 #endif /* ACE_HAS_NONCONST_STAT */
   }
 
-#if defined (ACE_HAS_WCHAR)
   ACE_INLINE int
   stat (const wchar_t *file, ACE_stat *stp)
   {
@@ -343,11 +336,9 @@ namespace ACE_OS {
 #elif defined (ACE_WIN32)
     ACE_OSCALL_RETURN (::_wstat (file, (struct _stat *) stp), int, -1);
 #else /* ACE_HAS_WINCE */
-    ACE_Wide_To_Ascii nfile (file);
-    return ACE_OS::stat (nfile.char_rep (), stp);
+    return ACE_OS::stat (ACE_TEXT_TO_CHAR_IN (file), stp);
 #endif /* ACE_HAS_WINCE */
   }
-#endif /* ACE_HAS_WCHAR */
 
   ACE_INLINE mode_t
   umask (mode_t cmask)

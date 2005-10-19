@@ -53,13 +53,13 @@ ACE_Hash<char>::operator () (char t) const
   return t;
 }
 
-#if defined (ACE_HAS_WCHAR) && ! defined (ACE_LACKS_NATIVE_WCHAR_T)
+#if defined (ACE_LACKS_BUILTIN_WCHAR_T)
 ACE_INLINE unsigned long
 ACE_Hash<wchar_t>::operator () (wchar_t t) const
 {
   return t;
 }
-#endif /* ACE_HAS_WCHAR && ! ACE_LACKS_NATIVE_WCHAR_T */
+#endif /* ACE_LACKS_BUILTIN_WCHAR_T */
 
 ACE_INLINE unsigned long
 ACE_Hash<signed char>::operator () (signed char t) const
@@ -182,9 +182,6 @@ ACE_Less_Than<char *>::operator () (const char *lhs, const char *rhs) const
   return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
 }
 
-
-#if defined (ACE_HAS_WCHAR)
-
 ACE_INLINE unsigned long
 ACE_Hash<const wchar_t *>::operator () (const wchar_t *t) const
 {
@@ -223,4 +220,3 @@ ACE_Less_Than<wchar_t *>::operator () (const wchar_t *lhs, const wchar_t *rhs) c
   return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
 }
 
-#endif  // ACE_HAS_WCHAR

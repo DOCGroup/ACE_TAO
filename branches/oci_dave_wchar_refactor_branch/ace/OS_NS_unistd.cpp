@@ -57,7 +57,7 @@ ACE_OS::argv_to_string (ACE_TCHAR **argv,
       // Account for environment variables.
       if (substitute_env_args && argv[i][0] == ACE_LIB_TEXT ('$'))
         {
-#  if defined (ACE_WIN32) || !defined (ACE_HAS_WCHAR)
+#  if defined (ACE_WIN32)
           ACE_TCHAR *temp = 0;
           // Win32 is the only platform with a wide-char ACE_OS::getenv().
           if ((temp = ACE_OS::getenv (&argv[i][1])) != 0)
@@ -65,17 +65,17 @@ ACE_OS::argv_to_string (ACE_TCHAR **argv,
           else
             buf_len += ACE_OS::strlen (argv[i]);
 #  else
-          // This is an ACE_HAS_WCHAR platform and not ACE_WIN32.
+          // This is not ACE_WIN32.
           // Convert the env variable name for getenv(), then add
           // the length of the returned char *string. Later, when we
           // actually use the returned env variable value, convert it
           // as well.
-          char *ctemp = ACE_OS::getenv (ACE_TEXT_ALWAYS_CHAR (&argv[i][1]));
+          char *ctemp = ACE_OS::getenv (ACE_TEXT_TO_CHAR_IN (&argv[i][1]));
           if (ctemp == 0)
             buf_len += ACE_OS::strlen (argv[i]);
           else
             buf_len += ACE_OS::strlen (ctemp);
-#  endif /* ACE_WIN32 || !ACE_HAS_WCHAR */
+#  endif /* ACE_WIN32 */
         }
       else
 #endif /* ACE_LACKS_ENV */
@@ -104,7 +104,7 @@ ACE_OS::argv_to_string (ACE_TCHAR **argv,
       // Account for environment variables.
       if (substitute_env_args && argv[j][0] == ACE_LIB_TEXT ('$'))
         {
-#  if defined (ACE_WIN32) || !defined (ACE_HAS_WCHAR)
+#  if defined (ACE_WIN32)
           // Win32 is the only platform with a wide-char ACE_OS::getenv().
           ACE_TCHAR *temp = ACE_OS::getenv (&argv[j][1]);
           if (temp != 0)
@@ -112,15 +112,15 @@ ACE_OS::argv_to_string (ACE_TCHAR **argv,
           else
             end = ACE_OS::strecpy (end, argv[j]);
 #  else
-          // This is an ACE_HAS_WCHAR platform and not ACE_WIN32.
+          // This is not ACE_WIN32.
           // Convert the env variable name for getenv(), then convert
           // the returned char *string back to wchar_t.
-          char *ctemp = ACE_OS::getenv (ACE_TEXT_ALWAYS_CHAR (&argv[j][1]));
+          char *ctemp = ACE_OS::getenv (ACE_TEXT_TO_CHAR_IN (&argv[j][1]));
           if (ctemp == 0)
             end = ACE_OS::strecpy (end, argv[j]);
           else
-            end = ACE_OS::strecpy (end, ACE_TEXT_CHAR_TO_TCHAR (ctemp));
-#  endif /* ACE_WIN32 || !ACE_HAS_WCHAR */
+            end = ACE_OS::strecpy (end, ACE_TEXT_TO_TCHAR_IN (ctemp));
+#  endif /* ACE_WIN32 */
         }
       else
 #endif /* ACE_LACKS_ENV */
@@ -251,7 +251,7 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
       // narrow char strings for execv().
       char **cargv;
       int arg_count;
-#   endif /* ACE_HAS_WCHAR */
+#   endif /* ACE_USES_WCHAR */
 
       switch (result)
         {
@@ -269,8 +269,9 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
             ACE_OS::exit (errno);
           --arg_count;    // Back to 0-indexed
           cargv[arg_count] = 0;
+// WHAT!
           while (--arg_count >= 0)
-            cargv[arg_count] = ACE_Wide_To_Ascii::convert (argv[arg_count]);
+            cargv[arg_count] = ACE_TEXT_TO_CHAR_IN::convert (argv[arg_count]);
           // Don't worry about freeing the cargv or the strings it points to.
           // Either the process will be replaced, or we'll exit.
           if (ACE_OS::execv (cargv[0], cargv) == -1)
@@ -285,7 +286,7 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
               // If the execv fails, this child needs to exit.
               ACE_OS::exit (errno);
             }
-#   endif /* ACE_HAS_WCHAR */
+#   endif /* ACE_USES_WCHAR */
 
         default:
           // Server process.  The fork succeeded.

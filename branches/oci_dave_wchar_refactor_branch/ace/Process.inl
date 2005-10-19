@@ -247,7 +247,7 @@ ACE_INLINE int
 ACE_Process_Options::setreugid (const ACE_TCHAR* user)
 {
 #if !defined (ACE_LACKS_PWD_FUNCTIONS)
-  struct passwd *ent = ACE_OS::getpwnam (ACE_TEXT_ALWAYS_CHAR (user));
+  struct passwd *ent = ACE_OS::getpwnam (ACE_TEXT_TO_CHAR_IN (user));
 
   if (ent != 0)
     {
@@ -339,23 +339,21 @@ ACE_INLINE void
 ACE_Process_Options::working_directory (const char *wd)
 {
 #if !defined(ACE_HAS_WINCE)
-  ACE_OS::strcpy (working_directory_, ACE_TEXT_CHAR_TO_TCHAR (wd));
+  ACE_OS::strcpy (working_directory_, ACE_TEXT_TO_TCHAR_IN (wd));
 #else
   ACE_UNUSED_ARG (wd);
 #endif /* !ACE_HAS_WINCE */
 }
 
-#if defined (ACE_HAS_WCHAR)
 ACE_INLINE void
 ACE_Process_Options::working_directory (const wchar_t *wd)
 {
 #if !defined(ACE_HAS_WINCE)
-  ACE_OS::strcpy (working_directory_, ACE_TEXT_WCHAR_TO_TCHAR (wd));
+  ACE_OS::strcpy (working_directory_, ACE_TEXT_TO_TCHAR_IN (wd));
 #else
   ACE_UNUSED_ARG (wd);
 #endif /* !ACE_HAS_WINCE */
 }
-#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE void
 ACE_Process_Options::process_name (const ACE_TCHAR *p)

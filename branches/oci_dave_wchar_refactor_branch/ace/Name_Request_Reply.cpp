@@ -20,9 +20,9 @@ ACE_Name_Request::ACE_Name_Request (void)
 
 ACE_Name_Request::ACE_Name_Request (
   ACE_INT32 t, // Type of request.
-  const ACE_WCHAR_T name[], // Name
+  const wchar_t name[], // Name
   const ACE_UINT32 name_length, // size in bytes
-  const ACE_WCHAR_T value[], //
+  const wchar_t value[], //
   const ACE_UINT32 value_length, // size in bytes
   const char type[], //
   const ACE_UINT32 type_length, // size in bytes
@@ -51,8 +51,8 @@ ACE_Name_Request::ACE_Name_Request (
 
   // Set up pointers and copy name value and type into request.
   this->name_ = this->transfer_.data_;
-  this->value_  = &this->name_[name_length / sizeof (ACE_WCHAR_T) ];
-  this->type_  = (char *)(&this->value_[value_length / sizeof (ACE_WCHAR_T)]); //
+  this->value_  = &this->name_[name_length / sizeof (wchar_t) ];
+  this->type_  = (char *)(&this->value_[value_length / sizeof (wchar_t)]); //
 
   (void) ACE_OS::memcpy (this->name_,
                          name,
@@ -198,7 +198,7 @@ ACE_Name_Request::timeout (const ACE_Time_Value timeout)
 
 // = Set/get the name
 
-const ACE_WCHAR_T *
+const wchar_t *
 ACE_Name_Request::name (void) const
 {
   ACE_TRACE ("ACE_Name_Request::name");
@@ -206,7 +206,7 @@ ACE_Name_Request::name (void) const
 }
 
 void
-ACE_Name_Request::name (const ACE_WCHAR_T *t)
+ACE_Name_Request::name (const wchar_t *t)
 {
   ACE_TRACE ("ACE_Name_Request::name");
   (void) ACE_OS::memcpy (this->name_,
@@ -216,7 +216,7 @@ ACE_Name_Request::name (const ACE_WCHAR_T *t)
 
 // = Set/get the value
 
-const ACE_WCHAR_T *
+const wchar_t *
 ACE_Name_Request::value (void) const
 {
   ACE_TRACE ("ACE_Name_Request::value");
@@ -224,7 +224,7 @@ ACE_Name_Request::value (void) const
 }
 
 void
-ACE_Name_Request::value (const ACE_WCHAR_T *c)
+ACE_Name_Request::value (const wchar_t *c)
 {
   ACE_TRACE ("ACE_Name_Request::value");
 
@@ -264,7 +264,7 @@ ACE_Name_Request::encode (void *&buf)
 
   size_t nv_data_len =
     (this->transfer_.name_len_ + this->transfer_.value_len_)
-    / sizeof (ACE_WCHAR_T);
+    / sizeof (wchar_t);
 
   for (size_t i = 0; i < nv_data_len; i++)
     this->transfer_.data_[i] =
@@ -302,15 +302,15 @@ ACE_Name_Request::decode (void)
 
   size_t nv_data_len =
     (this->transfer_.name_len_ + this->transfer_.value_len_)
-    / sizeof (ACE_WCHAR_T);
+    / sizeof (wchar_t);
 
   for (size_t i = 0; i < nv_data_len; i++)
     this->transfer_.data_[i] =
       ntohs (this->transfer_.data_[i]);
 
   this->name_ = this->transfer_.data_;
-  this->value_ = &this->name_[this->transfer_.name_len_ / sizeof (ACE_WCHAR_T)];
-  this->type_ = (char *)(&this->value_[this->transfer_.value_len_ / sizeof (ACE_WCHAR_T)]);
+  this->value_ = &this->name_[this->transfer_.name_len_ / sizeof (wchar_t)];
+  this->type_ = (char *)(&this->value_[this->transfer_.value_len_ / sizeof (wchar_t)]);
   this->type_[this->transfer_.type_len_] = '\0';
 
   // Decode the variable-sized portion.

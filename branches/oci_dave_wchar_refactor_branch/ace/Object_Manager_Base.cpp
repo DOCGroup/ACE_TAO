@@ -408,7 +408,7 @@ ACE_OS_Object_Manager::print_error_message (unsigned int line_number,
 #if !defined (ACE_HAS_WINCE)
   fprintf (stderr, "ace/OS.cpp, line %u: %s ",
            line_number,
-           ACE_TEXT_ALWAYS_CHAR (message));
+           ACE_TEXT_TO_CHAR_IN (message));
   perror ("failed");
 #else
   // @@ Need to use the following information.

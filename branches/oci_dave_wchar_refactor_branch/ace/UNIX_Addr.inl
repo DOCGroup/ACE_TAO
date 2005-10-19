@@ -8,21 +8,19 @@
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
-#if defined (ACE_HAS_WCHAR)
 /// Creates an ACE_UNIX_Addr from a string.
 ACE_INLINE
 ACE_UNIX_Addr::ACE_UNIX_Addr (const wchar_t rendezvous_point[])
 {
-  this->set (ACE_TEXT_ALWAYS_CHAR (rendezvous_point));
+  this->set (rendezvous_point);
 }
 
 /// Creates an ACE_UNIX_Addr from a string.
 ACE_INLINE int
 ACE_UNIX_Addr::set (const wchar_t rendezvous_point[])
 {
-  return this->set (ACE_TEXT_ALWAYS_CHAR (rendezvous_point));
+  return this->set (ACE_TEXT_TO_CHAR_IN (rendezvous_point));
 }
-#endif /* ACE_HAS_WCHAR */
 
 // Compare two addresses for equality.
 

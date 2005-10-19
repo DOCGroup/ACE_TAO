@@ -392,7 +392,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
   // Get host ip address if necessary.
   if (host_name)
     {
-      hostent *hp = ACE_OS::gethostbyname (ACE_TEXT_ALWAYS_CHAR (host_name));
+      hostent *hp = ACE_OS::gethostbyname (ACE_TEXT_TO_CHAR_IN (host_name));
 
       if (hp == 0)
         return -1;

@@ -235,14 +235,13 @@ public:
   ACE_Allocator_Adapter (const char *pool_name,
                          const char *lock_name,
                          MEMORY_POOL_OPTIONS options = 0)
-      : allocator_ (ACE_TEXT_CHAR_TO_TCHAR (pool_name),
-                    ACE_TEXT_CHAR_TO_TCHAR (lock_name),
+      : allocator_ (ACE_TEXT_TO_TCHAR_IN (pool_name),
+                    ACE_TEXT_TO_TCHAR_IN (lock_name),
                     options)
     {
       ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter");
     }
 
-#if defined (ACE_HAS_WCHAR)
   /**
    * Note that @a pool_name should be located in
    * a directory with the appropriate visibility and protection so
@@ -258,13 +257,12 @@ public:
   ACE_Allocator_Adapter (const wchar_t *pool_name,
                          const wchar_t *lock_name,
                          MEMORY_POOL_OPTIONS options = 0)
-      : allocator_ (ACE_TEXT_WCHAR_TO_TCHAR (pool_name),
-                    ACE_TEXT_WCHAR_TO_TCHAR (lock_name),
+      : allocator_ (ACE_TEXT_TO_TCHAR_IN (pool_name),
+                    ACE_TEXT_TO_TCHAR_IN (lock_name),
                     options)
     {
       ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter");
     }
-#endif /* ACE_HAS_WCHAR */
 
   /// Destructor.
   virtual ~ACE_Allocator_Adapter (void);

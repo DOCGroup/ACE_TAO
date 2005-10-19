@@ -617,7 +617,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
       // Look up the interface by number, not name.
       if_address.ifr_ifno = ACE_OS::atoi (net_if);
 #else
-      ACE_OS::strcpy (if_address.ifr_name, ACE_TEXT_ALWAYS_CHAR (net_if));
+      ACE_OS::string_copy (if_address.ifr_name, net_if, sizeof(if_address.ifr_name));
 #endif /* defined (ACE_PSOS) */
 
       if (ACE_OS::ioctl (this->get_handle (),
@@ -660,7 +660,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
 #if defined(__linux__)
   if (net_if != 0)
     {
-      lmreq.ipv6mr_interface = ACE_OS::if_nametoindex (ACE_TEXT_ALWAYS_CHAR(net_if));
+      lmreq.ipv6mr_interface = ACE_OS::if_nametoindex (ACE_TEXT_TO_CHAR_IN(net_if));
     }
   else
 #elif defined (ACE_WIN32)
@@ -704,10 +704,11 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
         {
           if ((num_if && pAddrs->Ipv6IfIndex == static_cast<unsigned int>(if_ix))
               || (!num_if &&
-                  (ACE_OS::strcmp (ACE_TEXT_ALWAYS_CHAR (net_if),
-                                   pAddrs->AdapterName) == 0
-                   || ACE_OS::strcmp (ACE_TEXT_ALWAYS_CHAR (net_if),
-                                      ACE_Wide_To_Ascii (pAddrs->FriendlyName).char_rep()) == 0)))
+                  // Do we need these conversions?
+                  (ACE_OS::strcmp (ACE_TEXT_TO_CHAR_IN (net_if),
+                                   ACE_TEXT_TO_CHAR_IN (pAddrs->AdapterName)) == 0
+                   || ACE_OS::strcmp (ACE_TEXT_TO_CHAR_IN (net_if),
+                                      ACE_TEXT_TO_CHAR_IN (pAddrs->FriendlyName)) == 0)))
             {
               lmreq.ipv6mr_interface = pAddrs->Ipv6IfIndex;
               break;

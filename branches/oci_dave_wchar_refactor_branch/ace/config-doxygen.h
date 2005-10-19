@@ -18,9 +18,6 @@
 /// Make sure that we always turn inlining on.
 #defind __ACE_INLINE__
 
-/// Make the wchar_t interfaces available.
-#define ACE_HAS_WCHAR
-
 /// Make all the emulation versions of string operations visible
 // #define ACE_LACKS_WCSTOK
 #define ACE_LACKS_ITOW

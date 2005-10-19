@@ -43,13 +43,11 @@ public:
                     const char *name = 0,
                     void *arg = 0);
 
-#if defined (ACE_HAS_WCHAR)
   /// constructor which will create manual event (wchar_t version)
   ACE_Manual_Event (int initial_state,
                     int type,
                     const wchar_t *name,
                     void *arg = 0);
-#endif /* ACE_HAS_WCHAR */
 
   /// Default dtor.
   ~ACE_Manual_Event (void);
