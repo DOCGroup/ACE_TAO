@@ -429,6 +429,12 @@ nobase_include_HEADERS = \
   Incoming_Message_Queue.h \
   Incoming_Message_Queue.inl \
   InterfaceDef.pidl \
+  Intrusive_Ref_Count_Base_T.cpp \
+  Intrusive_Ref_Count_Base_T.h \
+  Intrusive_Ref_Count_Base_T.inl \
+  Intrusive_Ref_Count_Handle_T.cpp \
+  Intrusive_Ref_Count_Handle_T.h \
+  Intrusive_Ref_Count_Handle_T.inl \
   InvalidName.pidl \
   Invocation_Adapter.h \
   Invocation_Adapter.inl \
@@ -1623,6 +1629,152 @@ EXTRA_DIST += \
   PortableServer/TAO_PortableServer.pc.in \
   PortableServer/TAO_PortableServer.rc
 
+
+## Makefile.CSD_Framework.am
+
+lib_LTLIBRARIES += libTAO_CSD_Framework.la
+
+libTAO_CSD_Framework_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/tao \
+  -DTAO_CSD_FW_BUILD_DLL
+
+libTAO_CSD_Framework_la_SOURCES = \
+  CSD_Framework/CSD_Default_Servant_Dispatcher.cpp \
+  CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp \
+  CSD_Framework/CSD_FrameworkA.cpp \
+  CSD_Framework/CSD_FrameworkC.cpp \
+  CSD_Framework/CSD_Framework_Loader.cpp \
+  CSD_Framework/CSD_ORBInitializer.cpp \
+  CSD_Framework/CSD_Object_Adapter.cpp \
+  CSD_Framework/CSD_Object_Adapter_Factory.cpp \
+  CSD_Framework/CSD_POA.cpp \
+  CSD_Framework/CSD_Strategy_Base.cpp \
+  CSD_Framework/CSD_Strategy_Proxy.cpp \
+  CSD_Framework/CSD_Strategy_Repository.cpp
+
+libTAO_CSD_Framework_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_CSD_Framework_la_LIBADD = \
+  libTAO_PI.la \
+  libTAO_CodecFactory.la \
+  libTAO_PortableServer.la \
+  libTAO_AnyTypeCode.la \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  CSD_Framework/CSD_Default_Servant_Dispatcher.h \
+  CSD_Framework/CSD_FW_Export.h \
+  CSD_Framework/CSD_FW_Server_Request_Wrapper.h \
+  CSD_Framework/CSD_FW_Server_Request_Wrapper.inl \
+  CSD_Framework/CSD_Framework.pidl \
+  CSD_Framework/CSD_FrameworkA.h \
+  CSD_Framework/CSD_FrameworkC.h \
+  CSD_Framework/CSD_FrameworkC.inl \
+  CSD_Framework/CSD_Framework_Loader.h \
+  CSD_Framework/CSD_ORBInitializer.h \
+  CSD_Framework/CSD_Object_Adapter.h \
+  CSD_Framework/CSD_Object_Adapter_Factory.h \
+  CSD_Framework/CSD_POA.h \
+  CSD_Framework/CSD_POA.inl \
+  CSD_Framework/CSD_Strategy_Base.h \
+  CSD_Framework/CSD_Strategy_Base.inl \
+  CSD_Framework/CSD_Strategy_Proxy.h \
+  CSD_Framework/CSD_Strategy_Proxy.inl \
+  CSD_Framework/CSD_Strategy_Repository.h
+
+## Makefile.CSD_ThreadPool.am
+
+lib_LTLIBRARIES += libTAO_CSD_ThreadPool.la
+
+libTAO_CSD_ThreadPool_la_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/tao \
+  -DTAO_CSD_TP_BUILD_DLL
+
+libTAO_CSD_ThreadPool_la_SOURCES = \
+  CSD_ThreadPool/CSD_TP_Cancel_Visitor.cpp \
+  CSD_ThreadPool/CSD_TP_Collocated_Asynch_Request.cpp \
+  CSD_ThreadPool/CSD_TP_Collocated_Synch_Request.cpp \
+  CSD_ThreadPool/CSD_TP_Collocated_Synch_With_Server_Request.cpp \
+  CSD_ThreadPool/CSD_TP_Corba_Request.cpp \
+  CSD_ThreadPool/CSD_TP_Custom_Asynch_Request.cpp \
+  CSD_ThreadPool/CSD_TP_Custom_Request.cpp \
+  CSD_ThreadPool/CSD_TP_Custom_Request_Operation.cpp \
+  CSD_ThreadPool/CSD_TP_Custom_Synch_Request.cpp \
+  CSD_ThreadPool/CSD_TP_Dispatchable_Visitor.cpp \
+  CSD_ThreadPool/CSD_TP_Queue.cpp \
+  CSD_ThreadPool/CSD_TP_Queue_Visitor.cpp \
+  CSD_ThreadPool/CSD_TP_Remote_Request.cpp \
+  CSD_ThreadPool/CSD_TP_Request.cpp \
+  CSD_ThreadPool/CSD_TP_Servant_State.cpp \
+  CSD_ThreadPool/CSD_TP_Servant_State_Map.cpp \
+  CSD_ThreadPool/CSD_TP_Strategy.cpp \
+  CSD_ThreadPool/CSD_TP_Strategy_Factory.cpp \
+  CSD_ThreadPool/CSD_TP_Synch_Helper.cpp \
+  CSD_ThreadPool/CSD_TP_Task.cpp \
+  CSD_ThreadPool/CSD_ThreadPool.cpp
+
+libTAO_CSD_ThreadPool_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
+
+libTAO_CSD_ThreadPool_la_LIBADD = \
+  libTAO_CSD_Framework.la \
+  libTAO_PortableServer.la \
+  libTAO_AnyTypeCode.la \
+  libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+nobase_include_HEADERS += \
+  CSD_ThreadPool/CSD_TP_Cancel_Visitor.h \
+  CSD_ThreadPool/CSD_TP_Cancel_Visitor.inl \
+  CSD_ThreadPool/CSD_TP_Collocated_Asynch_Request.h \
+  CSD_ThreadPool/CSD_TP_Collocated_Asynch_Request.inl \
+  CSD_ThreadPool/CSD_TP_Collocated_Synch_Request.h \
+  CSD_ThreadPool/CSD_TP_Collocated_Synch_Request.inl \
+  CSD_ThreadPool/CSD_TP_Collocated_Synch_With_Server_Request.h \
+  CSD_ThreadPool/CSD_TP_Collocated_Synch_With_Server_Request.inl \
+  CSD_ThreadPool/CSD_TP_Corba_Request.h \
+  CSD_ThreadPool/CSD_TP_Corba_Request.inl \
+  CSD_ThreadPool/CSD_TP_Custom_Asynch_Request.h \
+  CSD_ThreadPool/CSD_TP_Custom_Asynch_Request.inl \
+  CSD_ThreadPool/CSD_TP_Custom_Request.h \
+  CSD_ThreadPool/CSD_TP_Custom_Request.inl \
+  CSD_ThreadPool/CSD_TP_Custom_Request_Operation.h \
+  CSD_ThreadPool/CSD_TP_Custom_Request_Operation.inl \
+  CSD_ThreadPool/CSD_TP_Custom_Synch_Request.h \
+  CSD_ThreadPool/CSD_TP_Custom_Synch_Request.inl \
+  CSD_ThreadPool/CSD_TP_Dispatchable_Visitor.h \
+  CSD_ThreadPool/CSD_TP_Dispatchable_Visitor.inl \
+  CSD_ThreadPool/CSD_TP_Export.h \
+  CSD_ThreadPool/CSD_TP_Queue.h \
+  CSD_ThreadPool/CSD_TP_Queue.inl \
+  CSD_ThreadPool/CSD_TP_Queue_Visitor.h \
+  CSD_ThreadPool/CSD_TP_Queue_Visitor.inl \
+  CSD_ThreadPool/CSD_TP_Remote_Request.h \
+  CSD_ThreadPool/CSD_TP_Remote_Request.inl \
+  CSD_ThreadPool/CSD_TP_Request.h \
+  CSD_ThreadPool/CSD_TP_Request.inl \
+  CSD_ThreadPool/CSD_TP_Servant_State.h \
+  CSD_ThreadPool/CSD_TP_Servant_State.inl \
+  CSD_ThreadPool/CSD_TP_Servant_State_Map.h \
+  CSD_ThreadPool/CSD_TP_Servant_State_Map.inl \
+  CSD_ThreadPool/CSD_TP_Strategy.h \
+  CSD_ThreadPool/CSD_TP_Strategy.inl \
+  CSD_ThreadPool/CSD_TP_Strategy_Factory.h \
+  CSD_ThreadPool/CSD_TP_Synch_Helper.h \
+  CSD_ThreadPool/CSD_TP_Synch_Helper.inl \
+  CSD_ThreadPool/CSD_TP_Task.h \
+  CSD_ThreadPool/CSD_TP_Task.inl \
+  CSD_ThreadPool/CSD_ThreadPool.h
 
 ## Makefile.IFR_Client.am
 
