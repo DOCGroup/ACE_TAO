@@ -307,6 +307,28 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
+
+  /// Return mangled function name that takes into account ACE
+  /// versioned namespace.
+  /**
+   * This function embeds the ACE versioned namespace name into the
+   * original function name if versioned namespace support has been
+   * enabled and the original function name conforms to the ACE
+   * Service Object factory function naming conventions.  For example
+   * "@c _make_Foo" becomes "@c make_ACE_5_4_7_Foo".
+   * @par
+   * If versioned namespace support is disabled or the factory
+   * function name does conform to ACE conventions, no mangling will
+   * occur and the verbatim function name is returned.
+   *
+   * @return Function name that takes into account versioned namespace
+   *         name.  Caller is responsible for calling operator
+   *         delete[] or ACE::strdelete() on the returned string.
+   */
+  ACE_TCHAR * make_func_name (ACE_TCHAR const * func_name);
+
+private:
+
   /// Name of the function that we're parsing.
   const ACE_TCHAR *function_name_;
 };

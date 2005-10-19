@@ -586,6 +586,20 @@ static ACE_Static_Svc_##SERVICE_CLASS ace_static_svc_##SERVICE_CLASS;
 
 #endif /* !ACE_LACKS_STATIC_CONSTRUCTORS */
 
+#if defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1
+// Preprocessor symbols will not be expanded if they are
+// concatenated.  Force the preprocessor to expand them during the
+// argument prescan by calling a macro that itself calls another that
+// performs the actual concatenation.
+# define ACE_MAKE_SVC_CONFIG_FUNCTION_NAME(PREFIX,VERSIONED_NAMESPACE,SERVICE_CLASS) PREFIX ## _ ## VERSIONED_NAMESPACE ## _ ## SERVICE_CLASS
+#else
+# define ACE_MAKE_SVC_CONFIG_FUNCTION_NAME(PREFIX,VERSIONED_NAMESPACE,SERVICE_CLASS) PREFIX ## _ ## SERVICE_CLASS
+#endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
+
+#define ACE_MAKE_SVC_CONFIG_FACTORY_NAME(VERSIONED_NAMESPACE,SERVICE_CLASS) ACE_MAKE_SVC_CONFIG_FUNCTION_NAME(_make,VERSIONED_NAMESPACE,SERVICE_CLASS)
+#define ACE_MAKE_SVC_CONFIG_GOBBLER_NAME(VERSIONED_NAMESPACE,SERVICE_CLASS) ACE_MAKE_SVC_CONFIG_FUNCTION_NAME(_gobble,VERSIONED_NAMESPACE,SERVICE_CLASS)
+
+
 /// Declare the factory method used to create dynamically loadable
 /// services.
 /**
@@ -603,8 +617,8 @@ static ACE_Static_Svc_##SERVICE_CLASS ace_static_svc_##SERVICE_CLASS;
  *
  */
 #define ACE_FACTORY_DECLARE(CLS,SERVICE_CLASS) \
-extern "C" CLS##_Export ACE_Service_Object *\
-_make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *);
+extern "C" CLS##_Export ACE_VERSIONED_NAMESPACE_NAME::ACE_Service_Object * \
+ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (ACE_Service_Object_Exterminator *);
 
 /// Define the factory method (and destructor) for a dynamically
 /// loadable service.
@@ -623,17 +637,18 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *);
 # define ACE_Local_Service_Export
 
 # define ACE_FACTORY_DEFINE(CLS,SERVICE_CLASS) \
-void _gobble_##SERVICE_CLASS (void *p) { \
-  ACE_Service_Object *_p = static_cast<ACE_Service_Object *> (p); \
+void ACE_MAKE_SVC_CONFIG_GOBBLER_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (void *p) { \
+  ACE_VERSIONED_NAMESPACE_NAME::ACE_Service_Object * _p = \
+    static_cast<ACE_VERSIONED_NAMESPACE_NAME::ACE_Service_Object *> (p); \
   ACE_ASSERT (_p != 0); \
   delete _p; } \
-extern "C" CLS##_Export ACE_Service_Object *\
-_make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
+extern "C" CLS##_Export ACE_VERSIONED_NAMESPACE_NAME::ACE_Service_Object *\
+ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (ACE_Service_Object_Exterminator *gobbler) \
 { \
   ACE_TRACE (#SERVICE_CLASS); \
   if (gobbler != 0) \
-    *gobbler = (ACE_Service_Object_Exterminator) _gobble_##SERVICE_CLASS; \
-  return new SERVICE_CLASS; \
+    *gobbler = (ACE_Service_Object_Exterminator) ACE_MAKE_SVC_CONFIG_GOBBLER_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS); \
+  return new ACE_VERSIONED_NAMESPACE_NAME::SERVICE_CLASS; \
 }
 
 /**
@@ -663,25 +678,26 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
  * style functions.
  */
 # define ACE_FACTORY_NAMESPACE_DEFINE(CLS,SERVICE_CLASS,NAMESPACE_CLASS) \
-void _gobble_##SERVICE_CLASS (void *p) { \
-  ACE_Service_Object *_p = static_cast<ACE_Service_Object *> (p); \
+void ACE_MAKE_SVC_CONFIG_GOBBLER_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (void *p) { \
+  ACE_VERSIONED_NAMESPACE_NAME::ACE_Service_Object * _p = \
+    static_cast<ACE_VERSIONED_NAMESPACE_NAME::ACE_Service_Object *> (p); \
   ACE_ASSERT (_p != 0); \
   delete _p; } \
-extern "C" CLS##_Export ACE_Service_Object *\
-_make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
+extern "C" CLS##_Export ACE_VERSIONED_NAMESPACE_NAME::ACE_Service_Object *\
+ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (ACE_Service_Object_Exterminator *gobbler) \
 { \
   ACE_TRACE (#SERVICE_CLASS); \
   if (gobbler != 0) \
-    *gobbler = (ACE_Service_Object_Exterminator) _gobble_##SERVICE_CLASS; \
-  return new NAMESPACE_CLASS; \
+    *gobbler = (ACE_Service_Object_Exterminator) ACE_MAKE_SVC_CONFIG_GOBBLER_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS); \
+  return new ACE_VERSIONED_NAMESPACE_NAME::NAMESPACE_CLASS; \
 }
 
 /// The canonical name for a service factory method
-#define ACE_SVC_NAME(SERVICE_CLASS) _make_##SERVICE_CLASS
+#define ACE_SVC_NAME(SERVICE_CLASS) ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS)
 
 /// The canonical way to invoke (i.e. construct) a service factory
 /// method.
-#define ACE_SVC_INVOKE(SERVICE_CLASS) _make_##SERVICE_CLASS (0)
+#define ACE_SVC_INVOKE(SERVICE_CLASS) ACE_SVC_NAME(SERVICE_CLASS) (0)
 
 //@}
 

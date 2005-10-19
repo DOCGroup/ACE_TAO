@@ -5,3 +5,5 @@
 #define ACE_MINOR_VERSION 4
 #define ACE_BETA_VERSION 7
 #define ACE_VERSION "5.4.7"
+
+#include "ace/Versioned_Namespace.h"
