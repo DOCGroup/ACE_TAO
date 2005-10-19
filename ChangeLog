@@ -1,11 +1,18 @@
+Tue Oct 18 18:06:43 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/MakeProjectCreator/config/kokyu_dsrt_schedulers.mpb:
+
+	  Add $(TAO_BUILDDIR)/examples/Kokyu_dsrt_schedulers to
+	  includes for automake builds.
+
 Tue Oct 18 17:24:26 MST 2005  Yan Dai  <dai_y@ociweb.com>
 
         Merged in the CSD (Custom Servant Dispatching) feature from OCI.
 
         * bin/tao_orb_tests.lst:
-        
+
           Added CSD tests.
-          
+
         * bin/MakeProjectCreator/config/csd_framework.mpb:
         * bin/MakeProjectCreator/config/csd_threadpool.mpb:
         * bin/MakeProjectCreator/config/csd_tp_test_lib.mpb:
@@ -20,7 +27,7 @@ Tue Oct 18 17:24:26 MST 2005  Yan Dai  <dai_y@ociweb.com>
         * bin/MakeProjectCreator/config/csd_pt_test_exe.mpb:
 
           Added base projects for the CSD strategies and tests.
-          
+
 Tue Oct 18 22:24:11 2005  Olli Savia  <ops@iki.fi>
 
         * ace/TTY_IO.h:
