@@ -1,3 +1,13 @@
+Tue Oct 18 20:51:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/MakeProjectCreator/config/csd_framework.mpb:
+
+	  Remove "core" from list of base projects.  Just because
+	  we use the CSD framework, doesn't necessarily mean that
+	  the project should be installed.  It needs to explictly
+	  inherit from core (or install, install-bin, install-lib,
+	  or install-headers) for that.
+
 Tue Oct 18 18:06:43 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/MakeProjectCreator/config/kokyu_dsrt_schedulers.mpb:
