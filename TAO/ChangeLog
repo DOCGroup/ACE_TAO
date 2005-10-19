@@ -1,3 +1,9 @@
+Wed Oct 19 00:35:02 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+
+	  Add default AM_CONDITIONAL for BUILD_WFMO.
+
 Wed Oct 19 07:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp:
