@@ -59,7 +59,8 @@ mif_client_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(ACE_ROOT)/Kokyu \
-  -I$(TAO_ROOT)/examples/Kokyu_dsrt_schedulers
+  -I$(TAO_ROOT)/examples/Kokyu_dsrt_schedulers \
+  -I$(TAO_BUILDDIR)/examples/Kokyu_dsrt_schedulers
 
 mif_client_SOURCES = \
   client.cpp \
@@ -126,7 +127,8 @@ mif_server_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(ACE_ROOT)/Kokyu \
-  -I$(TAO_ROOT)/examples/Kokyu_dsrt_schedulers
+  -I$(TAO_ROOT)/examples/Kokyu_dsrt_schedulers \
+  -I$(TAO_BUILDDIR)/examples/Kokyu_dsrt_schedulers
 
 mif_server_SOURCES = \
   server.cpp \
