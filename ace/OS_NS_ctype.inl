@@ -2,9 +2,7 @@
 // $Id$
 
 #include "ace/os_include/os_ctype.h"
-#if defined ACE_HAS_WCHAR
 # include "ace/os_include/os_wctype.h"
-#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
 ACE_OS::ace_isalnum (ACE_TCHAR c)
@@ -122,13 +120,16 @@ ACE_OS::ace_tolower (int c)
   return tolower (c);
 }
 
-#if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_TOWLOWER)
 ACE_INLINE wint_t
 ACE_OS::ace_towlower (wint_t c)
 {
-  return towlower (c);
+  #if !defined (ACE_LACKS_TOWLOWER)
+    return towlower (c);
+  #else
+    ACE_UNUSED_ARG( c );
+    ACE_NOTSUP_RETURN (0);
+  #endif
 }
-#endif /* ACE_HAS_WCHAR && !ACE_LACKS_TOWLOWER */
 
 ACE_INLINE int
 ACE_OS::ace_toupper (int c)
@@ -136,10 +137,14 @@ ACE_OS::ace_toupper (int c)
   return toupper (c);
 }
 
-#if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_TOWUPPER)
 ACE_INLINE wint_t
 ACE_OS::ace_towupper (wint_t c)
 {
-  return towupper (c);
+  #if !defined (ACE_LACKS_TOWUPPER)
+    return towupper (c);
+  #else
+    ACE_UNUSED_ARG( c );
+    ACE_NOTSUP_RETURN (0);
+  #endif
 }
-#endif /* ACE_HAS_WCHAR && !ACE_LACKS_TOWUPPER */
+

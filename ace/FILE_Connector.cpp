@@ -65,7 +65,7 @@ ACE_FILE_Connector::connect (ACE_FILE_IO &new_io,
       handle = ACE_OS::mkstemp (filename); // mkstemp() replaces "XXXXXX"
 
       if (handle == ACE_INVALID_HANDLE
-          || new_io.addr_.set (ACE_TEXT_CHAR_TO_TCHAR (filename)) != 0)
+          || new_io.addr_.set (ACE_TEXT_TO_TCHAR_IN (filename)) != 0)
         return -1;
 
       new_io.set_handle (handle);

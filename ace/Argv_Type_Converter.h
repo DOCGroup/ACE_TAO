@@ -41,14 +41,15 @@ public:
 
   ACE_Argv_Type_Converter (int &argc, char** argv);
 
-#if defined (ACE_USES_WCHAR)
   ACE_Argv_Type_Converter (int &argc, wchar_t** argv);
-#endif  // ACE_USES_WCHAR
 
   ~ACE_Argv_Type_Converter (void);
 
   /// Returns the pointer of converted command line.
   ACE_TCHAR** get_TCHAR_argv (void);
+
+  /// Returns the pointer of converted command line.
+  wchar_t** get_Wide_argv (void);
 
   /// Returns the pointer of ASCII (char) command line.
   char** get_ASCII_argv (void);
@@ -64,8 +65,6 @@ private:
   /// Assignment '=' operator should not be used.
   ACE_Argv_Type_Converter operator= (const ACE_Argv_Type_Converter&);
 
-#if defined (ACE_USES_WCHAR)
-
   /// Perform common initialization for two Ctor's.
   void initialize (void);
 
@@ -79,7 +78,6 @@ private:
 
   /// Clean up removed (comsumed) argv entries and reset the pass flags.
   void cleanup (void);
-#endif  // ACE_USES_WCHAR
 
 private:
   /// Original number of input paramter, same as 'argc'.
@@ -88,7 +86,6 @@ private:
   /// Data member pointer that contains converted argv in ACE_ANTI_TCHAR.
   char** char_argv_;
 
-#if defined (ACE_USES_WCHAR)
   /// Data member pointer that contains converted argv in ACE_TCHAR.
   wchar_t** wchar_argv_;
 
@@ -104,7 +101,6 @@ private:
 
   /// TRUE indicates char type argv has been passed.
   int char_passed_;
-#endif  /* ACE_USES_WCHAR */
 };
 
 #if defined (__ACE_INLINE__)

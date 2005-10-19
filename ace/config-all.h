@@ -89,6 +89,9 @@
 #  include "ace/Trace.h"
 #endif /* ACE_OS_NTRACE */
 
+// Include the string conversion services here for backward compatibility
+#include "ace/String_Conversion_T.h"
+
 // These includes are here to avoid circular dependencies.
 // Keep this at the bottom of the file.  It contains the main macros.
 #include "ace/OS_main.h"

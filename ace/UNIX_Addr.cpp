@@ -48,7 +48,7 @@ int
 ACE_UNIX_Addr::addr_to_string (ACE_TCHAR s[], size_t len) const
 {
   ACE_OS::strsncpy (s,
-                    ACE_TEXT_CHAR_TO_TCHAR (this->unix_addr_.sun_path),
+                    ACE_TEXT_TO_TCHAR_IN (this->unix_addr_.sun_path),
                     len);
   return 0;
 }

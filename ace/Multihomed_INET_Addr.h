@@ -85,7 +85,6 @@ public:
                            const ACE_UINT32 *secondary_ip_addrs = 0,
                            size_t size = 0);
 
-#if defined (ACE_HAS_WCHAR)
     /**
      * WCHAR versions of the methods that take char's as arguments.
      */
@@ -101,8 +100,6 @@ public:
            int address_family = AF_UNSPEC,
            const wchar_t *(secondary_host_names[]) = 0,
            size_t size = 0);
-
-#endif /* ACE_HAS_WCHAR */
 
   /// Use compiler-generated copy constructor.
 

@@ -297,7 +297,7 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_LIB_TEXT ("accepted from host %s at port %d\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (sa.get_host_name ()),
+                  ACE_TEXT_TO_TCHAR_IN (sa.get_host_name ()),
                   sa.get_port_number ()));
     }
 

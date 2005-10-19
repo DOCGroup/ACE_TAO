@@ -19,7 +19,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Basic_Types.h"   /* ACE_WCHAR_T definition */
+#include "ace/Basic_Types.h"   /* wchar_t definition */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,7 +28,7 @@
 
 template <class CHAR> class ACE_String_Base;  // Forward declaration.
 
-typedef ACE_WCHAR_T ACE_WSTRING_TYPE;
+typedef wchar_t ACE_WSTRING_TYPE;
 
 typedef ACE_String_Base<char> ACE_CString;
 typedef ACE_String_Base<ACE_WSTRING_TYPE> ACE_WString;

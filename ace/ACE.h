@@ -425,7 +425,6 @@ namespace ACE
   /// @c ACE_OS::malloc to allocate the new string.
   extern ACE_Export char *strnnew (const char *str, size_t n);
 
-#if defined (ACE_HAS_WCHAR)
   extern ACE_Export const wchar_t *strend (const wchar_t *s);
 
   extern ACE_Export wchar_t *strnew (const wchar_t *s);
@@ -435,8 +434,6 @@ namespace ACE
   extern ACE_Export wchar_t *strndup (const wchar_t *str, size_t n);
 
   extern ACE_Export wchar_t *strnnew (const wchar_t *str, size_t n);
-
-#endif /* ACE_HAS_WCHAR */
 
   /**
    * On Windows, determines if a specified pathname ends with ".exe"
@@ -531,13 +528,11 @@ namespace ACE
   /// Computes the hash value of {str} using the "Hash PJW" routine.
   extern ACE_Export u_long hash_pjw (const char *str, size_t len);
 
-#if defined (ACE_HAS_WCHAR)
   /// Computes the hash value of {str} using the "Hash PJW" routine.
   extern ACE_Export u_long hash_pjw (const wchar_t *str);
 
   /// Computes the hash value of {str} using the "Hash PJW" routine.
   extern ACE_Export u_long hash_pjw (const wchar_t *str, size_t len);
-#endif /* ACE_HAS_WCHAR */
 
   /// Computes CRC-CCITT for the string.
   extern ACE_Export ACE_UINT16 crc_ccitt(const char *str);

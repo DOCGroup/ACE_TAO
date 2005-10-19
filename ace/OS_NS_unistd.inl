@@ -31,7 +31,7 @@ ACE_OS::access (const char *path, int amode)
   // @@ WINCE: There should be a Win32 API that can do this.
   // Hard coded read access here.
   ACE_UNUSED_ARG (amode);
-  FILE* handle = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(path),
+  FILE* handle = ACE_OS::fopen (ACE_TEXT_TO_TCHAR_IN(path),
                                 ACE_LIB_TEXT ("r"));
   if (handle != 0)
     {
@@ -52,18 +52,15 @@ ACE_OS::access (const char *path, int amode)
 #endif /* ACE_LACKS_ACCESS */
 }
 
-
-#if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
 ACE_OS::access (const wchar_t *path, int amode)
 {
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
   ACE_OSCALL_RETURN (::_waccess (path, amode), int, -1);
 #else /* ACE_WIN32 && !ACE_HAS_WINCE */
-  return ACE_OS::access (ACE_Wide_To_Ascii (path).char_rep (), amode);
+  return ACE_OS::access (ACE_TEXT_TO_CHAR_IN (path), amode);
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE */
 }
-#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE u_int
 ACE_OS::alarm (u_int secs)
@@ -138,17 +135,15 @@ ACE_OS::chdir (const char *path)
 #endif /* ACE_HAS_NONCONST_CHDIR */
 }
 
-#if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
 ACE_OS::chdir (const wchar_t *path)
 {
 #if defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::_wchdir (path), int, -1);
 #else /* ACE_WIN32 */
-  return ACE_OS::chdir (ACE_Wide_To_Ascii (path).char_rep ());
+  return ACE_OS::chdir (ACE_TEXT_TO_CHAR_IN (path));
 #endif /* ACE_WIN32 */
 }
-#endif /* ACE_HAS_WCHAR */
 #endif /* ACE_LACKS_CHDIR */
 
 ACE_INLINE int
@@ -192,7 +187,7 @@ ACE_OS::rmdir (const char *path)
 #elif defined (ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
   ACE_OSCALL_RETURN (::_rmdir ((char *) path), int, -1);
 #elif defined (ACE_HAS_WINCE)
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::RemoveDirectory (ACE_TEXT_CHAR_TO_TCHAR (path)),
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::RemoveDirectory (ACE_TEXT_TO_TCHAR_IN (path)),
                                           ace_result_),
                         int, -1);
 #else
@@ -200,7 +195,6 @@ ACE_OS::rmdir (const char *path)
 #endif /* ACE_PSOS_LACKS_PHILE */
 }
 
-#if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
 ACE_OS::rmdir (const wchar_t *path)
 {
@@ -211,11 +205,9 @@ ACE_OS::rmdir (const wchar_t *path)
 #elif defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::_wrmdir (path), int, -1);
 #else
-  ACE_Wide_To_Ascii n_path (path);
-  return ACE_OS::rmdir (n_path.char_rep ());
+  return ACE_OS::rmdir (ACE_TEXT_TO_CHAR_IN (path));
 #endif /* ACE_HAS_WINCE */
 }
-#endif /* ACE_HAS_WCHAR */
 
 // @todo: which 4 and why???  dhinton
 // NOTE: The following four function definitions must appear before
@@ -516,7 +508,6 @@ ACE_OS::getcwd (char *buf, size_t size)
 #endif /* ACE_PSOS_LACKS_PHILE */
 }
 
-#if defined (ACE_HAS_WCHAR)
 ACE_INLINE wchar_t *
 ACE_OS::getcwd (wchar_t *buf, size_t size)
 {
@@ -527,17 +518,11 @@ ACE_OS::getcwd (wchar_t *buf, size_t size)
 #  elif defined (ACE_WIN32)
   return ::_wgetcwd (buf, static_cast<int> (size));
 #  else
-  char *narrow_buf = new char[size];
-  char *result = 0;
-  result = ACE_OS::getcwd (narrow_buf, size);
-  ACE_Ascii_To_Wide wide_buf (result);
-  delete [] narrow_buf;
-  if (result != 0)
-    ACE_OS::strsncpy (buf, wide_buf.wchar_rep (), size);
+  ACE::String_Conversion::Convert_InOut< char, wchar_t > convert (buf, size);
+  result = ACE_OS::getcwd (convert.c_str(), convert.size());
   return result == 0 ? 0 : buf;
 #  endif /* ACE_WIN32 */
 }
-#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE gid_t
 ACE_OS::getgid (void)
@@ -689,7 +674,6 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
 #endif /* ACE_HAS_PHARLAP */
 }
 
-#if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
 ACE_OS::hostname (wchar_t name[], size_t maxnamelen)
 {
@@ -699,19 +683,13 @@ ACE_OS::hostname (wchar_t name[], size_t maxnamelen)
                                           ace_result_), int, -1);
 #else /* ACE_WIN32 && !ACE_HAS_WINCE */
   // Emulate using the char version
-  char *char_name = 0;
-  int result = 0;
-
-  ACE_NEW_RETURN (char_name, char[maxnamelen], -1);
-
-  result = ACE_OS::hostname(char_name, maxnamelen);
-  ACE_OS::strcpy (name, ACE_Ascii_To_Wide (char_name).wchar_rep ());
+  ACE::String_Conversion::Convert_InOut< char, wchar_t > convert (name, maxnamelen);
+  result = ACE_OS::hostname (convert.c_str(), convert.size());
 
   delete [] char_name;
   return result;
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE */
 }
-#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
 ACE_OS::isatty (int handle)
@@ -1205,7 +1183,7 @@ ACE_OS::truncate (const ACE_TCHAR *filename,
   /* NOTREACHED */
 #elif !defined (ACE_LACKS_TRUNCATE)
   ACE_OSCALL_RETURN
-    (::truncate (ACE_TEXT_ALWAYS_CHAR (filename), offset), int, -1);
+    (::truncate (ACE_TEXT_TO_CHAR_IN (filename), offset), int, -1);
 #else
   ACE_UNUSED_ARG (filename);
   ACE_UNUSED_ARG (offset);
@@ -1265,7 +1243,7 @@ ACE_OS::unlink (const char *path)
                      int, -1);
 # elif defined (ACE_HAS_WINCE)
   // @@ The problem is, DeleteFile is not actually equals to unlink. ;(
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::DeleteFile (ACE_TEXT_CHAR_TO_TCHAR (path)), ace_result_),
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::DeleteFile (ACE_TEXT_TO_TCHAR_IN (path)), ace_result_),
                         int, -1);
 # elif defined (ACE_LACKS_UNLINK)
   ACE_UNUSED_ARG (path);
@@ -1275,7 +1253,6 @@ ACE_OS::unlink (const char *path)
 # endif /* ACE_HAS_NONCONST_UNLINK */
 }
 
-#if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
 ACE_OS::unlink (const wchar_t *path)
 {
@@ -1287,11 +1264,9 @@ ACE_OS::unlink (const wchar_t *path)
 # elif defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::_wunlink (path), int, -1);
 # else
-  ACE_Wide_To_Ascii npath (path);
-  return ACE_OS::unlink (npath.char_rep ());
+  return ACE_OS::unlink (ACE_TEXT_TO_CHAR_IN (path));
 # endif /* ACE_HAS_WINCE */
 }
-#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE ssize_t
 ACE_OS::write (ACE_HANDLE handle, const void *buf, size_t nbyte)

@@ -282,7 +282,7 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
   if (result == 0)
     {
       // Since ostream expects only chars, we cannot pass wchar_t's
-      s << ACE_TEXT_ALWAYS_CHAR (verbose_msg);
+      s << ACE_TEXT_TO_CHAR_IN (verbose_msg);
       s.flush ();
     }
 

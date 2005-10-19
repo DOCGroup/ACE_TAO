@@ -139,8 +139,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (
 {
 
   ACE_TRACE ("ACE_Local_Name_Space::shared_bind_i");
-  const size_t name_len = (name.length () + 1) * sizeof (ACE_WCHAR_T);
-  const size_t value_len = (value.length () + 1) * sizeof (ACE_WCHAR_T);
+  const size_t name_len = (name.length () + 1) * sizeof (wchar_t);
+  const size_t value_len = (value.length () + 1) * sizeof (wchar_t);
   const size_t type_len = ACE_OS::strlen (type) + 1;
   const size_t total_len = name_len + value_len + type_len;
   char *ptr = (char *) this->allocator_->malloc (total_len);
@@ -151,12 +151,12 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (
     {
       // Note that the value_rep *must* come first to make sure we can
       // retrieve this pointer later on in unbind().
-      ACE_WCHAR_T *value_rep = (ACE_WCHAR_T *) (ptr);
-      ACE_WCHAR_T *name_rep = (ACE_WCHAR_T *) (ptr + value_len);
+      wchar_t *value_rep = (wchar_t *) (ptr);
+      wchar_t *name_rep = (wchar_t *) (ptr + value_len);
       char *new_type = (char *) (ptr + value_len + name_len);
 
-      ACE_Auto_Basic_Array_Ptr<ACE_WCHAR_T> name_urep (name.rep ());
-      ACE_Auto_Basic_Array_Ptr<ACE_WCHAR_T> value_urep (value.rep ());
+      ACE_Auto_Basic_Array_Ptr<wchar_t> name_urep (name.rep ());
+      ACE_Auto_Basic_Array_Ptr<wchar_t> value_urep (value.rep ());
       ACE_NS_String new_name (name_rep, name_urep.get (), name_len);
       ACE_NS_String new_value (value_rep, value_urep.get (), value_len);
 
@@ -325,7 +325,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve_i (
   value = nbc_string;
 
   // Gets type and then the actual reprsentation which is a
-  // ACE_WCHAR_T
+  // wchar_t
   const char *temp = ns_internal.type ();
 
   size_t len = ACE_OS::strlen (ns_internal.type ());
@@ -818,7 +818,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::dump_i (void) const
 #endif /* ! ACE_NLOGGING */
 
       ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("key=%s\nvalue=%s\ntype=%s\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (key), ACE_TEXT_CHAR_TO_TCHAR (value), ACE_TEXT_CHAR_TO_TCHAR (type)));
+                  ACE_TEXT_TO_TCHAR_IN (key), ACE_TEXT_TO_TCHAR_IN (value), ACE_TEXT_TO_TCHAR_IN (type)));
       // We need to delete key and value since char_rep allocates
       // memory for them
       delete [] key;

@@ -256,7 +256,6 @@ typedef union sigval sigval_t;
 
 #define ACE_LACKS_STROPTS_H
 
-// Needed when ACE_HAS_WCHAR is defined.
 #define ACE_LACKS_WCSNICMP
 #define ACE_LACKS_WCSICMP
 #define ACE_LACKS_WCSDUP

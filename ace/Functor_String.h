@@ -82,9 +82,6 @@ public:
                    const ACE_CString &rhs) const;
 };
 
-
-#if defined (ACE_USES_WCHAR)
-
 /**
  * @class ACE_Equal_To<ACE_WString>
  *
@@ -128,7 +125,6 @@ public:
                    const ACE_WString &rhs) const;
 };
 
-#endif /*ACE_USES_WCHAR*/
 #if defined (__ACE_INLINE__)
 #include "ace/Functor_String.inl"
 #endif /* __ACE_INLINE__ */

@@ -131,10 +131,8 @@ public:
   /// be <= MAXPATHLEN.
   void working_directory (const char *wd);
 
-#if defined (ACE_HAS_WCHAR)
   /// wchar_t version of working_directory
   void working_directory (const wchar_t *wd);
-#endif /* ACE_HAS_WCHAR */
 
   /**
    * Set the command-line arguments.  @a format can use any printf
@@ -147,10 +145,10 @@ public:
    */
   int command_line (const ACE_TCHAR *format, ...);
 
-#if defined (ACE_HAS_WCHAR) && !defined (ACE_HAS_WINCE)
+#if !defined (ACE_HAS_WINCE)
   /// Anti-TChar version of command_line ()
   int command_line (const ACE_ANTI_TCHAR *format, ...);
-#endif /* ACE_HAS_WCHAR && !ACE_HAS_WINCE */
+#endif /* !ACE_HAS_WINCE */
 
   /// Same as above in argv format.  @a argv must be null terminated.
   int command_line (const ACE_TCHAR * const argv[]);

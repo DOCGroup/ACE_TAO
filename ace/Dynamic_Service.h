@@ -40,12 +40,10 @@ class ACE_Dynamic_Service : public ACE_Dynamic_Service_Base
 {
 public:
   /// Return instance using @a name to search the Service_Repository.
-  static TYPE* instance (const ACE_TCHAR *name);
+  static TYPE* instance (const char *name);
 
-#if defined (ACE_USES_WCHAR)
   /// Return instance using @a name to search the Service_Repository.
-  static TYPE* instance (const ACE_ANTI_TCHAR *name);
-#endif  // ACE_USES_WCHAR
+  static TYPE* instance (const wchar_t *name);
 };
 
 #if defined (__ACE_INLINE__)

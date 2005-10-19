@@ -38,12 +38,7 @@ operator<< (ACE_OSTREAM_TYPE &os, const ACE_WString &ws)
 {
   // @@ Need to figure out how to print the "wide" string
   //    on platforms that don't support "wide" strings.
-#if defined (ACE_HAS_WCHAR)
-  os << ACE_Wide_To_Ascii (ws.fast_rep ()).char_rep ();
-#else
-  ACE_UNUSED_ARG (ws);
-  os << "(*non-printable string*)";
-#endif
+  os << ACE_TEXT_TO_CHAR_IN (ws.fast_rep ());
   return os;
 }
 

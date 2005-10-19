@@ -1,18 +1,16 @@
 // -*- C++ -*-
 // $Id$
 
-#include "ace/OS_NS_wchar.h"
+# include "ace/OS_NS_wchar.h"
 
-ACE_RCSID(ace, OS_NS_wchar, "$Id$")
+ACE_RCSID(ace, OS_NS_wchar_t, "$Id$")
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_wchar.inl"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
-#if defined (ACE_HAS_WCHAR)
-#  include "ace/OS_NS_ctype.h"
-#  include "ace/OS_NS_string.h"
-#endif /* ACE_HAS_WCHAR */
+#include "ace/OS_NS_ctype.h"
+#include "ace/OS_NS_string.h"
 
 // The following wcs*_emulation methods were created based on BSD code:
 /*-
@@ -51,7 +49,7 @@ ACE_RCSID(ace, OS_NS_wchar, "$Id$")
  * SUCH DAMAGE.
  */
 
-#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSCAT)
+#if defined (ACE_LACKS_WCSCAT)
 wchar_t *
 ACE_OS::wcscat_emulation (wchar_t *destination,
                           const wchar_t *source)
@@ -62,9 +60,9 @@ ACE_OS::wcscat_emulation (wchar_t *destination,
   while ((*destination++ = *source++));
   return save;
 }
-#endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSCAT */
+#endif /* ACE_LACKS_WCSCAT */
 
-#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSCHR)
+#if defined (ACE_LACKS_WCSCHR)
 wchar_t *
 ACE_OS::wcschr_emulation (const wchar_t *string, wint_t c)
 {
@@ -74,21 +72,21 @@ ACE_OS::wcschr_emulation (const wchar_t *string, wint_t c)
 
   return 0;
 }
-#endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSCHR */
+#endif /* ACE_LACKS_WCSCHR */
 
-#if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSCMP)
+#if defined (ACE_LACKS_WCSCMP)
 int
-ACE_OS::wcscmp_emulation (const ACE_WCHAR_T *string1,
-                          const ACE_WCHAR_T *string2)
+ACE_OS::wcscmp_emulation (const wchar_t *string1,
+                          const wchar_t *string2)
 {
   while (*string1 == *string2++)
     if (*string1++ == 0)
       return (0);
   return (*string1 - *--string2);
 }
-#endif /* !ACE_HAS_WCHAR || ACE_LACKS_WCSCMP */
+#endif /* ACE_LACKS_WCSCMP */
 
-#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSCPY)
+#if defined (ACE_LACKS_WCSCPY)
 wchar_t *
 ACE_OS::wcscpy_emulation (wchar_t *destination,
                           const wchar_t *source)
@@ -98,9 +96,9 @@ ACE_OS::wcscpy_emulation (wchar_t *destination,
   for (; (*destination = *source); ++source, ++destination);
   return save;
 }
-#endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSCPY */
+#endif /* ACE_LACKS_WCSCPY */
 
-#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSCSPN)
+#if defined (ACE_LACKS_WCSCSPN)
 size_t
 ACE_OS::wcscspn_emulation (const wchar_t *s, const wchar_t *reject)
 {
@@ -120,9 +118,9 @@ ACE_OS::wcscspn_emulation (const wchar_t *s, const wchar_t *reject)
 
   return count;
 }
-#endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSCSPN */
+#endif /* ACE_LACKS_WCSCSPN */
 
-#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSICMP)
+#if defined (ACE_LACKS_WCSICMP)
 int
 ACE_OS::wcsicmp_emulation (const wchar_t *s, const wchar_t *t)
 {
@@ -150,31 +148,31 @@ ACE_OS::wcsicmp_emulation (const wchar_t *s, const wchar_t *t)
   else
     return ACE_OS::ace_tolower (*scan1) - ACE_OS::ace_towlower (*scan2);
 }
-#endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSICMP */
+#endif /* ACE_LACKS_WCSICMP */
 
-#if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSLEN)
+#if defined (ACE_LACKS_WCSLEN)
 size_t
-ACE_OS::wcslen_emulation (const ACE_WCHAR_T *string)
+ACE_OS::wcslen_emulation (const wchar_t *string)
 {
-  const ACE_WCHAR_T *s;
+  const wchar_t *s;
 
   for (s = string; *s; ++s)
     continue;
 
   return s - string;
 }
-#endif /* !ACE_HAS_WCHAR || ACE_LACKS_WCSLEN */
+#endif /* ACE_LACKS_WCSLEN */
 
-#if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSNCAT)
-ACE_WCHAR_T *
-ACE_OS::wcsncat_emulation (ACE_WCHAR_T *destination,
-                           const ACE_WCHAR_T *source,
+#if defined (ACE_LACKS_WCSNCAT)
+wchar_t *
+ACE_OS::wcsncat_emulation (wchar_t *destination,
+                           const wchar_t *source,
                            size_t count)
 {
   if (count != 0)
     {
-      ACE_WCHAR_T *d = destination;
-      const ACE_WCHAR_T *s = source;
+      wchar_t *d = destination;
+      const wchar_t *s = source;
 
       while (*d != 0)
         d++;
@@ -192,12 +190,12 @@ ACE_OS::wcsncat_emulation (ACE_WCHAR_T *destination,
 
   return destination;
 }
-#endif /* !ACE_HAS_WCHAR || ACE_LACKS_WCSCAT */
+#endif /* ACE_LACKS_WCSCAT */
 
-#if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSNCMP)
+#if defined (ACE_LACKS_WCSNCMP)
 int
-ACE_OS::wcsncmp_emulation (const ACE_WCHAR_T *s1,
-                           const ACE_WCHAR_T *s2,
+ACE_OS::wcsncmp_emulation (const wchar_t *s1,
+                           const wchar_t *s2,
                            size_t len)
 {
   if (len == 0)
@@ -213,18 +211,18 @@ ACE_OS::wcsncmp_emulation (const ACE_WCHAR_T *s1,
 
   return 0;
 }
-#endif /* !ACE_HAS_WCHAR || ACE_LACKS_WCSNCMP */
+#endif /* ACE_LACKS_WCSNCMP */
 
-#if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSNCPY)
-ACE_WCHAR_T *
-ACE_OS::wcsncpy_emulation (ACE_WCHAR_T *destination,
-                           const ACE_WCHAR_T *source,
+#if defined (ACE_LACKS_WCSNCPY)
+wchar_t *
+ACE_OS::wcsncpy_emulation (wchar_t *destination,
+                           const wchar_t *source,
                            size_t len)
 {
   if (len != 0)
     {
-      ACE_WCHAR_T *d = destination;
-      const ACE_WCHAR_T *s = source;
+      wchar_t *d = destination;
+      const wchar_t *s = source;
 
       do
         {
@@ -240,9 +238,9 @@ ACE_OS::wcsncpy_emulation (ACE_WCHAR_T *destination,
 
   return destination;
 }
-#endif /* !ACE_HAS_WCHAR || ACE_LACKS_WCSNCPY */
+#endif /* ACE_LACKS_WCSNCPY */
 
-#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSNICMP)
+#if defined (ACE_LACKS_WCSNICMP)
 int
 ACE_OS::wcsnicmp_emulation (const wchar_t *s,
                             const wchar_t *t,
@@ -277,9 +275,9 @@ ACE_OS::wcsnicmp_emulation (const wchar_t *s,
   else
     return ACE_OS::ace_towlower (*scan1) - ACE_OS::ace_towlower (*scan2);
 }
-#endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSNICMP */
+#endif /* ACE_LACKS_WCSNICMP */
 
-#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSPBRK)
+#if defined (ACE_LACKS_WCSPBRK)
 wchar_t *
 ACE_OS::wcspbrk_emulation (const wchar_t *string,
                            const wchar_t *charset)
@@ -296,9 +294,9 @@ ACE_OS::wcspbrk_emulation (const wchar_t *string,
 
   return 0;
 }
-#endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSPBRK */
+#endif /* ACE_LACKS_WCSPBRK */
 
-#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSRCHR)
+#if defined (ACE_LACKS_WCSRCHR)
 const wchar_t *
 ACE_OS::wcsrchr_emulation (const wchar_t *s, wint_t c)
 {
@@ -326,9 +324,9 @@ ACE_OS::wcsrchr_emulation (wchar_t *s, wint_t c)
 
   return p;
 }
-#endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSRCHR */
+#endif /* ACE_LACKS_WCSRCHR */
 
-#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSSPN)
+#if defined (ACE_LACKS_WCSSPN)
 size_t
 ACE_OS::wcsspn_emulation (const wchar_t *string,
                           const wchar_t *charset)
@@ -345,9 +343,9 @@ cont:
       goto cont;
   return (p - 1 - string);
 }
-#endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSSPN */
+#endif /* ACE_LACKS_WCSSPN */
 
-#if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSSTR)
+#if defined (ACE_LACKS_WCSSTR)
 wchar_t *
 ACE_OS::wcsstr_emulation (const wchar_t *string,
                           const wchar_t *charset)
@@ -371,5 +369,5 @@ ACE_OS::wcsstr_emulation (const wchar_t *string,
 
   return const_cast<wchar_t *> (string);
 }
-#endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSSTR */
+#endif /* ACE_LACKS_WCSSTR */
 

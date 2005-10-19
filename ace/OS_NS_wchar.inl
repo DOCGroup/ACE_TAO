@@ -1,7 +1,6 @@
 // -*- C++ -*-
 // $Id$
 
-#if defined (ACE_HAS_WCHAR)
 ACE_INLINE wint_t
 ACE_OS::fgetwc (FILE* fp)
 {
@@ -12,10 +11,9 @@ ACE_OS::fgetwc (FILE* fp)
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fgetwc (fp), wint_t, WEOF);
 #  endif /* ACE_LACKS_FGETWC */
 }
-#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE u_int
-ACE_OS::wslen (const WChar *s)
+ACE_OS::wslen (const wchar_t *s)
 {
   u_int len = 0;
 
@@ -25,10 +23,10 @@ ACE_OS::wslen (const WChar *s)
   return len;
 }
 
-ACE_INLINE ACE_OS::WChar *
-ACE_OS::wscpy (WChar *dest, const WChar *src)
+ACE_INLINE wchar_t *
+ACE_OS::wscpy (wchar_t *dest, const wchar_t *src)
 {
-  WChar *original_dest = dest;
+  wchar_t *original_dest = dest;
 
   while ((*dest++ = *src++) != 0)
     continue;
@@ -37,10 +35,10 @@ ACE_OS::wscpy (WChar *dest, const WChar *src)
 }
 
 ACE_INLINE int
-ACE_OS::wscmp (const WChar *s, const WChar *t)
+ACE_OS::wscmp (const wchar_t *s, const wchar_t *t)
 {
-  const WChar *scan1 = s;
-  const WChar *scan2 = t;
+  const wchar_t *scan1 = s;
+  const wchar_t *scan2 = t;
 
   while (*scan1 != 0 && *scan1 == *scan2)
     {
@@ -52,10 +50,10 @@ ACE_OS::wscmp (const WChar *s, const WChar *t)
 }
 
 ACE_INLINE int
-ACE_OS::wsncmp (const WChar *s, const WChar *t, size_t len)
+ACE_OS::wsncmp (const wchar_t *s, const wchar_t *t, size_t len)
 {
-  const WChar *scan1 = s;
-  const WChar *scan2 = t;
+  const wchar_t *scan1 = s;
+  const wchar_t *scan2 = t;
 
   while (len != 0 && *scan1 != 0 && *scan1 == *scan2)
     {
@@ -67,7 +65,6 @@ ACE_OS::wsncmp (const WChar *s, const WChar *t, size_t len)
   return len == 0 ? 0 : *scan1 - *scan2;
 }
 
-#if defined (ACE_HAS_WCHAR)
 ACE_INLINE wint_t
 ACE_OS::ungetwc (wint_t c, FILE* fp)
 {
@@ -79,5 +76,4 @@ ACE_OS::ungetwc (wint_t c, FILE* fp)
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::ungetwc (c, fp), wint_t, WEOF);
 #  endif /* ACE_LACKS_FGETWC */
 }
-#endif /* ACE_HAS_WCHAR */
 

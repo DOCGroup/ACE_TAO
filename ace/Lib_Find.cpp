@@ -318,9 +318,8 @@ ACE::ldfind (const ACE_TCHAR* filename,
 #    else
           // Wide-char, non-Windows only offers char * getenv. So capture
           // it, translate to wide-char, and continue.
-          ACE_Ascii_To_Wide wide_ldpath
-            (ACE_OS::getenv (ACE_TEXT_ALWAYS_CHAR (ACE_LD_SEARCH_PATH)));
-          ld_path = wide_ldpath.wchar_rep ();
+          ACE::String_Conversion::Convert_In< wchar_t, char >( STRING ) wide_ldpath(ACE_OS::getenv (ACE_LD_SEARCH_PATH_A);
+          ld_path = wide_ldpath.c_str ();
 #    endif /* ACE_WIN32 || !ACE_USES_WCHAR */
 #  endif /* ACE_DEFAULT_LD_SEARCH_PATH */
 
@@ -561,7 +560,7 @@ ACE::get_temp_dir (ACE_TCHAR *buffer, size_t buffer_len)
     }
   else
     {
-      ACE_OS::strcpy (buffer, ACE_TEXT_CHAR_TO_TCHAR (tmpdir));
+      ACE_OS::string_copy (buffer, tmpdir, buffer_len);
 
       // Add a trailing slash because we cannot assume there is already one
       // at the end.  And having an extra one should not cause problems.
@@ -652,7 +651,6 @@ ACE::strsplit_r (char *str,
   return result;
 }
 
-#if defined (ACE_HAS_WCHAR)
 wchar_t *
 ACE::strsplit_r (wchar_t *str,
                  const wchar_t *token,
@@ -702,4 +700,3 @@ ACE::strrepl (wchar_t *s, wchar_t search, wchar_t replace)
 
   return replaced;
 }
-#endif /* ACE_HAS_WCHAR */

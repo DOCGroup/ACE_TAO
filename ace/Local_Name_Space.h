@@ -42,8 +42,8 @@ public:
   ACE_NS_String (void);
 
   /// Initialization method.
-  ACE_NS_String (ACE_WCHAR_T *dst,
-                 const ACE_WCHAR_T *src,
+  ACE_NS_String (wchar_t *dst,
+                 const wchar_t *src,
                  size_t len);
 
   /// Converts an ACE_NS_WString to an ACE_NS_String;
@@ -71,7 +71,7 @@ public:
   size_t len (void) const;
 
   /// Returns the underlying representation.
-  ACE_WCHAR_T *fast_rep (void) const;
+  wchar_t *fast_rep (void) const;
 
   /// Returns a hash value for this string.
   u_long hash (void) const;
@@ -81,7 +81,7 @@ private:
   size_t len_;
 
   /// This actually points into shared/persistent memory.
-  ACE_WCHAR_T *rep_;
+  wchar_t *rep_;
 
   /// Should rep_ be deleted when destructed (only used
   /// for WString conversions)

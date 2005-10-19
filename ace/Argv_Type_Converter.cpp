@@ -13,53 +13,45 @@ ACE_RCSID (ace,
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Errno.h"
 
-#if defined (ACE_USES_WCHAR)
 ACE_Argv_Type_Converter::ACE_Argv_Type_Converter (int &argc, wchar_t** argv)
-  : saved_argc_ (argc)
-    , char_argv_ (0)
-    , wchar_argv_ (argv)
-    , before_pass_argc_ (argc)
-    , original_type_ (1)
-    , wchar_passed_ (0)
-    , char_passed_ (0)
+: saved_argc_ (argc)
+, char_argv_ (0)
+, wchar_argv_ (argv)
+, before_pass_argc_ (argc)
+, original_type_ (1)
+, wchar_passed_ (0)
+, char_passed_ (0)
 {
   this->initialize ();
 
   for (int i = 0; i < argc; ++i)
     {
       this->char_argv_[i] =
-        ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR (argv[i]));
+        ACE::String_Conversion::duplicate< char >( argv[i] );
     }
 }
-#endif  // ACE_USES_WCHAR
 
 
 ACE_Argv_Type_Converter::ACE_Argv_Type_Converter (int &argc, char** argv)
-  : saved_argc_(argc)
-  , char_argv_(argv)
-#if defined (ACE_USES_WCHAR)
-    , wchar_argv_(0)
-    , before_pass_argc_(argc)
-    , original_type_(0)
-    , wchar_passed_(0)
-    , char_passed_(0)
+: saved_argc_(argc)
+, char_argv_(argv)
+, wchar_argv_(0)
+, before_pass_argc_(argc)
+, original_type_(0)
+, wchar_passed_(0)
+, char_passed_(0)
 {
   this->initialize();
 
   for (int i = 0; i < argc; ++i)
     {
       this->wchar_argv_[i] =
-        ACE_OS::strdup (ACE_TEXT_ANTI_TO_TCHAR (argv[i]));
+        ACE::String_Conversion::duplicate< wchar_t >( argv[i] );
     }
 }
-#else
-{
-}
-#endif  // ACE_USES_WCHAR
 
 ACE_Argv_Type_Converter::~ACE_Argv_Type_Converter (void)
 {
-#if defined (ACE_USES_WCHAR)
   // selectively delete the 'copy' of argv
   if (this->original_type_)
     {
@@ -70,7 +62,7 @@ ACE_Argv_Type_Converter::~ACE_Argv_Type_Converter (void)
         }
       for (int i = 0; i < this->before_pass_argc_; ++i)
         {
-          ACE_OS::free (this->char_argv_[i]);
+          ACE::String_Conversion::free( this->char_argv_[i] );
         }
       delete [] this->char_argv_;
     }
@@ -82,14 +74,12 @@ ACE_Argv_Type_Converter::~ACE_Argv_Type_Converter (void)
       }
       for (int i = 0; i < this->before_pass_argc_; ++i)
         {
-          ACE_OS::free (this->wchar_argv_[i]);
+          ACE::String_Conversion::free( this->wchar_argv_[i] );
         }
       delete [] this->wchar_argv_;
     }
-#endif  // ACE_USES_WCHAR
 }
 
-#if defined (ACE_USES_WCHAR)
 void
 ACE_Argv_Type_Converter::initialize (void)
 {
@@ -118,14 +108,14 @@ ACE_Argv_Type_Converter::align_char_with_wchar (void)
     {
       // if n'th entries of both argv lists are different
       if (ACE_OS::strcmp(this->char_argv_[wchar_argv_index],
-                                ACE_TEXT_ALWAYS_CHAR (match_argv)) != 0)
+                                ACE_TEXT_TO_CHAR_IN (match_argv)) != 0)
         {
           // loop through the wchar argv list entries that are after
           // wchar_argv_index
           for (int i = wchar_argv_index + 1; i < before_pass_argc_; ++i)
             {
               if (ACE_OS::strcmp (this->char_argv_[i],
-                                         ACE_TEXT_ALWAYS_CHAR (match_argv))
+                                  ACE_TEXT_TO_CHAR_IN (match_argv))
                   == 0)
                 {
                   // swap the pointers in the char argv list
@@ -154,7 +144,7 @@ ACE_Argv_Type_Converter::align_wchar_with_char (void)
     {
       // if n'th entries of both argv lists are different
       if (ACE_OS::strcmp (
-            ACE_TEXT_ALWAYS_CHAR (this->wchar_argv_[char_argv_index]),
+            ACE_TEXT_TO_CHAR_IN (this->wchar_argv_[char_argv_index]),
             match_argv) != 0)
         {
           // loop through the wchar argv list entries that are after
@@ -162,7 +152,7 @@ ACE_Argv_Type_Converter::align_wchar_with_char (void)
           for (int i = char_argv_index + 1; i < this->before_pass_argc_; ++i)
             {
               if (ACE_OS::strcmp (
-                    ACE_TEXT_ALWAYS_CHAR(this->wchar_argv_[i]),
+                    ACE_TEXT_TO_CHAR_IN(this->wchar_argv_[i]),
                     match_argv) == 0) {
                 // swap the pointers in the char argv list
                 wchar_t* temp = this->wchar_argv_[char_argv_index];
@@ -188,12 +178,12 @@ ACE_Argv_Type_Converter::cleanup (void)
       //  Check whether it's ours to delete.
       if (original_type_ == 1)
         {
-          ACE_OS::free (this->char_argv_[i]);
+          ACE::String_Conversion::free( this->char_argv_[i] );
           this->char_argv_[i] = 0;
         }
       else
         {
-          ACE_OS::free (this->wchar_argv_[i]);
+          ACE::String_Conversion::free( this->wchar_argv_[i] );
           this->wchar_argv_[i] = 0;
         }
     }
@@ -203,4 +193,3 @@ ACE_Argv_Type_Converter::cleanup (void)
   this->wchar_passed_ = 0;
   this->char_passed_ = 0;
 }
-#endif  // ACE_USES_WCHAR

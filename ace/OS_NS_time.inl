@@ -117,14 +117,15 @@ ACE_OS::ctime (const time_t *t)
   ACE_OSCALL (::ctime (t), char *, 0, narrow_time);
   if (narrow_time == 0)
     return 0;
-  // ACE_Ascii_To_Wide::convert allocates (via new []) a wchar_t[]. If
+  // ACE_TEXT_TO_WCHAR_IN::convert allocates (via new []) a wchar_t[]. If
   // we've done this before, free the previous one. Yes, this leaves a
   // small memory leak (26 characters) but there's no way around this
   // that I know of. (Steve Huston, 12-Feb-2003).
   static wchar_t *wide_time = 0;
   if (wide_time != 0)
     delete [] wide_time;
-  wide_time = ACE_Ascii_To_Wide::convert (narrow_time);
+  wide_time = ACE_TEXT_TO_WCHAR_IN::convert (narrow_time);
+// WHAT!
   return wide_time;
 #  else
   ACE_OSCALL_RETURN (::ctime (t), char *, 0);
@@ -175,8 +176,7 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
     return 0;
 
 #   if defined (ACE_USES_WCHAR)
-  ACE_Ascii_To_Wide wide_buf (bufp);
-  ACE_OS_String::strcpy (buf, wide_buf.wchar_rep ());
+  ACE_OS::string_copy (buf, wide_buf, buflen);
   return buf;
 #   else
   return bufp;

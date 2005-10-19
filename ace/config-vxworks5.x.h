@@ -36,6 +36,11 @@
 
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 
+// ACE WChar support
+#define ACE_SIZEOF_WCHAR 4
+#define ACE_WCHAR_MAX    0xFFFFFFFF
+#undef ACE_LACKS_BUILTIN_WCHAR_T
+
 // An explicit check for Tornado 2.1, which had very limited release.
 // See include/makeinclude/platform_vxworks5.x_g++.GNU for details
 // on version conventions used by ACE for VxWorks.

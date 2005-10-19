@@ -155,7 +155,6 @@ ACE_OS::fopen (const char *filename,
   return 0;
 }
 
-#if defined (ACE_HAS_WCHAR)
 FILE *
 ACE_OS::fopen (const wchar_t *filename,
                const ACE_TCHAR *mode)
@@ -202,7 +201,6 @@ ACE_OS::fopen (const wchar_t *filename,
     }
   return 0;
 }
-#endif /* ACE_HAS_WCHAR */
 
 #endif /* ACE_WIN32 */
 
@@ -218,7 +216,6 @@ ACE_OS::fprintf (FILE *fp, const char *format, ...)
   return result;
 }
 
-#if defined (ACE_HAS_WCHAR)
 int
 ACE_OS::fprintf (FILE *fp, const wchar_t *format, ...)
 {
@@ -239,7 +236,6 @@ ACE_OS::fprintf (FILE *fp, const wchar_t *format, ...)
 
 # endif /* ACE_HAS_VFWPRINTF */
 }
-#endif /* ACE_HAS_WCHAR */
 
 
 // The following *printf functions aren't inline because
@@ -298,8 +294,6 @@ ACE_OS::snprintf (char *buf, size_t maxlen, const char *format, ...)
 #endif /* ACE_HAS_SNPRINTF */
 }
 
-#if defined (ACE_HAS_WCHAR)
-
 int
 ACE_OS::snprintf (wchar_t *buf, size_t maxlen, const wchar_t *format, ...)
 {
@@ -343,7 +337,6 @@ ACE_OS::snprintf (wchar_t *buf, size_t maxlen, const wchar_t *format, ...)
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_SNPRINTF */
 }
-#endif /* ACE_HAS_WCHAR */
 
 int
 ACE_OS::sprintf (char *buf, const char *format, ...)
@@ -358,7 +351,6 @@ ACE_OS::sprintf (char *buf, const char *format, ...)
   return result;
 }
 
-#if defined (ACE_HAS_WCHAR)
 int
 ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
 {
@@ -397,4 +389,4 @@ ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
 
 # endif /* XPG5 || ACE_HAS_DINKUM_STL */
 }
-#endif /* ACE_HAS_WCHAR */
+
