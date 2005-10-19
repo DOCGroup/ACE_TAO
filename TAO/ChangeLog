@@ -1,3 +1,16 @@
+Wed Oct 19 10:01:03 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Valuetype/Value_VarOut_T.cpp (operator=):
+
+	  Implement assignment operators in terms of their constructor
+	  counterparts using the canonical copy and (non-throwing) swap
+	  technique.  Provides strong exception safety guarantee, obviates
+	  need for self-assignment check and reduces code duplication
+	  between constructors and assignment operators.  This change also
+	  reverts "Tue Jun 21 13:38:23 2005  Gary Maxey <gary.maxey@...>",
+	  and fixes a memory leak reported by Mickael P. Golovin <migel at
+	  garant dot ru>.
+
 Wed Oct 19 12:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/ExceptionHolder_i.cpp:
