@@ -63,12 +63,12 @@ public:
 
   virtual void worker_started (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void worker_started_excep (Test::AMI_ControllerExceptionHolder*
+  virtual void worker_started_excep (::Messaging::ExceptionHolder*
                                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual void worker_finished (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void worker_finished_excep (Test::AMI_ControllerExceptionHolder*
+  virtual void worker_finished_excep (::Messaging::ExceptionHolder*
                                       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 

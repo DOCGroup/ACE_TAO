@@ -34,13 +34,13 @@ Manager_Handler::start_workers (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Manager_Handler::start_workers_excep (Test::AMI_ManagerExceptionHolder * holder
+Manager_Handler::start_workers_excep (::Messaging::ExceptionHolder * holder
                                       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
     {
-      holder->raise_start_workers (ACE_ENV_SINGLE_ARG_PARAMETER);
+      holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

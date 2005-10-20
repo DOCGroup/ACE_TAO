@@ -42,7 +42,7 @@ public:
         CORBA::SystemException
         ));
     virtual void set_update_excep (
-        FTRT::AMI_UpdateableExceptionHolder * excep_holder
+        ::Messaging::ExceptionHolder * excep_holder
         ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((

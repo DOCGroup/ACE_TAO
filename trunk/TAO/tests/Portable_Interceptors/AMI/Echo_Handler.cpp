@@ -27,7 +27,7 @@ Echo_Handler::echo_operation (char const *
 }
 
 void
-Echo_Handler::echo_operation_excep (Test::AMI_EchoExceptionHolder *
+Echo_Handler::echo_operation_excep (::Messaging::ExceptionHolder *
                                     ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
@@ -40,7 +40,7 @@ Echo_Handler::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-Echo_Handler::shutdown_excep (Test::AMI_EchoExceptionHolder *
+Echo_Handler::shutdown_excep (::Messaging::ExceptionHolder *
                               ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC((CORBA::SystemException))
 {

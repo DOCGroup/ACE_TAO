@@ -33,7 +33,7 @@ public:
                                   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void test_octet_method_excep (Test::AMI_RoundtripExceptionHolder *holder
+  virtual void test_octet_method_excep (::Messaging::ExceptionHolder *holder
                                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -41,7 +41,7 @@ public:
   virtual void test_char_method (Test::Timestamp send_time
                                  ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void test_char_method_excep (Test::AMI_RoundtripExceptionHolder *holder
+  virtual void test_char_method_excep (::Messaging::ExceptionHolder *holder
                                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -49,15 +49,15 @@ public:
   virtual void test_long_method  (Test::Timestamp send_time
                                   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void test_long_method_excep (Test::AMI_RoundtripExceptionHolder *holder
-                                        ACE_ENV_ARG_DECL)
+  virtual void test_long_method_excep (::Messaging::ExceptionHolder *holder
+                                       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = The skeleton methods for test short load
   virtual void test_short_method (Test::Timestamp send_time
                                   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void test_short_method_excep (Test::AMI_RoundtripExceptionHolder *holder
+  virtual void test_short_method_excep (::Messaging::ExceptionHolder *holder
                                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -65,7 +65,7 @@ public:
   virtual void test_longlong_method (Test::Timestamp send_time
                                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void test_longlong_method_excep (Test::AMI_RoundtripExceptionHolder *holder
+  virtual void test_longlong_method_excep (::Messaging::ExceptionHolder *holder
                                            ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -73,7 +73,7 @@ public:
   virtual void test_double_method (Test::Timestamp send_time
                                    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void test_double_method_excep (Test::AMI_RoundtripExceptionHolder *holder
+  virtual void test_double_method_excep (::Messaging::ExceptionHolder *holder
                                          ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -81,7 +81,7 @@ public:
 
   virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void shutdown_excep (Test::AMI_RoundtripExceptionHolder *holder
+  virtual void shutdown_excep (::Messaging::ExceptionHolder *holder
                                ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
