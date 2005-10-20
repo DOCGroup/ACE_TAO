@@ -1,3 +1,51 @@
+Thu Oct 20 11:54:38 MST 2005  Yan Dai  <dai_y@ociweb.com>
+
+        * examples/CSD_Strategy/ThreadPool/Foo_i.h:
+        * examples/CSD_Strategy/ThreadPool2/Foo_i.h:
+        * examples/CSD_Strategy/ThreadPool3/Foo_i.h:
+        * examples/CSD_Strategy/ThreadPool4/Callback_i.h:
+        * examples/CSD_Strategy/ThreadPool4/Foo_i.h:
+        * examples/CSD_Strategy/ThreadPool5/Callback_i.h:
+        * examples/CSD_Strategy/ThreadPool5/Foo_i.h:
+        * performance-tests/CSD_Strategy/TestServant/Foo_i.h:
+        * tests/CSD_Strategy_Tests/TP_Foo_A/Foo_A_i.h:
+        * tests/CSD_Strategy_Tests/TP_Foo_B/Callback_i.h:
+        * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B_i.h:
+        * tests/CSD_Strategy_Tests/TP_Foo_C/Foo_C_i.h:
+        
+          Removed the duplicated inheritence of PortableServer::ServantBase.
+          
+        * tao/CSD_Framework/CSD_Framework.pidl:
+        
+          Fixed fuzz errors.
+          
+        * tao/CSD_Framework/CSD_FrameworkA.cpp:
+        * tao/CSD_Framework/CSD_FrameworkA.h:
+        * tao/CSD_Framework/CSD_FrameworkC.cpp:
+        * tao/CSD_Framework/CSD_FrameworkC.h:
+        * tao/CSD_Framework/diffs/CSD_Framework.diff:
+        
+          Regenerated files from pidl file and updated to resolve error 
+          message from compiler.
+          
+        * tao/CSD_Framework/CSD_FrameworkC.inl:
+        
+          Removed the empty file to fix fuzz error.
+          
+        * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp:
+        * tao/CSD_Framework/CSD_Strategy_Base.h:
+        * tao/CSD_ThreadPool/CSD_ThreadPool.h:
+        * tao/CSD_ThreadPool/CSD_TP_Task.cpp:
+        * tests/CSD_Strategy_Tests/TP_Foo_C/Foo_C_Custom_ClientEngine.h:
+        
+          Fixed fuzz errors and compilation errors shown on scoreboard.
+          
+        * tests/CSD_Strategy_Tests/TP_Test_Dynamic/client.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_Dynamic/Hello.h:
+        * tests/CSD_Strategy_Tests/TP_Test_Dynamic/run_test.pl:
+
+          Updated to be the same as in $TAO_ROOT/tests/Hello test.
+          
 Thu Oct 20 14:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ObjectGroupManagerHandler.cpp:
@@ -83,7 +131,7 @@ Wed Oct 19 11:30:23 MST 2005  Yan Dai  <dai_y@ociweb.com>
 
         * tao/CSD_Framework/CSD_Strategy_Base.h:
 
-          Removed un-necessary ";" from the POAManager forward declaration.
+          Removed extra ";" from the POAManager forward declaration.
 
         * tao/CSD_Framework/CSD_Strategy_Base.cpp:
         * tao/PortableServer/Root_POA.cpp:

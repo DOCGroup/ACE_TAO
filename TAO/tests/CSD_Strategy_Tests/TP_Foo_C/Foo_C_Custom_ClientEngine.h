@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Foo_C_ClientEngine.h
+ *  @file    Foo_C_Custom_ClientEngine.h
  *
  *  $Id$
  *
