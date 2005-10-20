@@ -30,7 +30,7 @@ namespace CIAO
    *
    * @brief This class defines and implements the default
    * NodeApp_Configurator base class that's needed for configuring the
-   * NodeApplication process.  
+   * NodeApplication process.
    **/
   class NodeApp_Configurator
   {
@@ -39,7 +39,7 @@ namespace CIAO
     NodeApp_Configurator (CORBA::ORB_ptr o);
 
     /// Default destructor.
-    virtual ~NodeApp_Configurator (void) = 0 {}
+    virtual ~NodeApp_Configurator (void);
 
     /**
      * @brief "initialize" is called after NodeApplication get a hold
