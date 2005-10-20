@@ -164,7 +164,7 @@ ACE_OutputCDR::grow_and_adjust (size_t size,
                       -1);
       this->good_bit_ = true;
 
-#if !defined (ACE_LACKS_CDR_ALIGNMENT) 
+#if !defined (ACE_LACKS_CDR_ALIGNMENT)
       // The new block must start with the same alignment as the
       // previous block finished.
       ptrdiff_t tmpalign =

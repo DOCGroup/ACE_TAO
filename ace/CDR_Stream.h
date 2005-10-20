@@ -18,15 +18,15 @@
  * precision and double precision IEEE floats.
  * Those assumptions are pretty good these days, with Crays beign
  * the only known exception.
- * 
+ *
  * Optimizations
  * -------------
- *  ACE_LACKS_CDR_ALIGNMENT 
+ *  ACE_LACKS_CDR_ALIGNMENT
  *  @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
  *
  *  CDR stream ignores alignment when marshaling data. Use this option
- *  only when ACE_DISABLE_SWAP_ON_READ can enabled. This option requires 
- *  ACE CDR engine to do both marshaling and demarshaling. 
+ *  only when ACE_DISABLE_SWAP_ON_READ can enabled. This option requires
+ *  ACE CDR engine to do both marshaling and demarshaling.
  *
  *
  *  @author TAO version by Aniruddha Gokhale <gokhale@cs.wustl.edu>
