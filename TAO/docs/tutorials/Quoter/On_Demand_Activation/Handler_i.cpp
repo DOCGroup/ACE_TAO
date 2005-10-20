@@ -25,7 +25,7 @@ Single_Query_Stock_Handler_i::get_price_and_names (CORBA::Double ami_return_val,
 
 void
 Single_Query_Stock_Handler_i::
-    get_price_and_names_excep (Quoter::AMI_Single_Query_StockExceptionHolder *)
+    get_price_and_names_excep (::Messaging::ExceptionHolder *)
   throw (CORBA::SystemException)
 {
   // We ignore the exception, but this counts as a reponse, otherwise
@@ -45,7 +45,7 @@ Single_Query_Stock_Handler_i::get_symbol (const char *)
 
 void
 Single_Query_Stock_Handler_i::
-    get_symbol_excep (Quoter::AMI_StockExceptionHolder *)
+    get_symbol_excep (::Messaging::ExceptionHolder *)
   throw (CORBA::SystemException)
 {
   throw CORBA::NO_IMPLEMENT ();
@@ -60,7 +60,7 @@ Single_Query_Stock_Handler_i::get_full_name (const char *)
 
 void
 Single_Query_Stock_Handler_i::
-   get_full_name_excep (Quoter::AMI_StockExceptionHolder *)
+   get_full_name_excep (::Messaging::ExceptionHolder *)
   throw (CORBA::SystemException)
 {
     throw CORBA::NO_IMPLEMENT ();
@@ -75,7 +75,7 @@ Single_Query_Stock_Handler_i::price (double)
 
 void
 Single_Query_Stock_Handler_i::
-    price_excep (Quoter::AMI_StockExceptionHolder *)
+    price_excep (::Messaging::ExceptionHolder *)
   throw (CORBA::SystemException)
 {
     throw CORBA::NO_IMPLEMENT ();

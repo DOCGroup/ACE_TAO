@@ -82,7 +82,7 @@ TimeoutHandler_i::sendTimeToWait (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-TimeoutHandler_i::sendTimeToWait_excep (AMI_TimeoutObjExceptionHolder *excep_holder
+TimeoutHandler_i::sendTimeToWait_excep (::Messaging::ExceptionHolder *excep_holder
                                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -90,7 +90,7 @@ TimeoutHandler_i::sendTimeToWait_excep (AMI_TimeoutObjExceptionHolder *excep_hol
 
   ACE_TRY
     {
-      excep_holder->raise_sendTimeToWait (ACE_ENV_SINGLE_ARG_PARAMETER);
+      excep_holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::TIMEOUT, timeout)

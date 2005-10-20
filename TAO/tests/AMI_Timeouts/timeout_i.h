@@ -55,7 +55,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void sendTimeToWait_excep (
-      AMI_TimeoutObjExceptionHolder * excep_holder
+      ::Messaging::ExceptionHolder * excep_holder
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
