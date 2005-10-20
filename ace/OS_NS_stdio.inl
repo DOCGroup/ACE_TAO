@@ -132,7 +132,8 @@ ACE_OS::flock_init (ACE_OS::ace_flock_t *lock,
                   ACE_HANDLE,
                   ACE_INVALID_HANDLE,
                   lock->handle_);
-      lock->lockname_ = ACE_OS::strdup (name);
+      if (lock->handle_ != ACE_INVALID_HANDLE)
+        lock->lockname_ = ACE_OS::strdup (name);
       return lock->handle_ == ACE_INVALID_HANDLE ? -1 : 0;
     }
   else
