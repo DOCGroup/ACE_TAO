@@ -18,6 +18,16 @@
  * precision and double precision IEEE floats.
  * Those assumptions are pretty good these days, with Crays beign
  * the only known exception.
+ * 
+ * Optimizations
+ * -------------
+ *  ACE_LACKS_CDR_ALIGNMENT 
+ *  @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
+ *
+ *  CDR stream ignores alignment when marshaling data. Use this option
+ *  only when ACE_DISABLE_SWAP_ON_READ can enabled. This option requires 
+ *  ACE CDR engine to do both marshaling and demarshaling. 
+ *
  *
  *  @author TAO version by Aniruddha Gokhale <gokhale@cs.wustl.edu>
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
@@ -431,6 +441,7 @@ private:
   /// The current block in the chain were we are writing.
   ACE_Message_Block *current_;
 
+#if !defined (ACE_LACKS_CDR_IALIGNMENT)
   /**
    * The current alignment as measured from the start of the buffer.
    * Usually this coincides with the alignment of the buffer in
@@ -440,6 +451,7 @@ private:
    * the stolen message block.
    */
   size_t current_alignment_;
+#endif /* ACE_LACKS_CDR_ALIGNMENT */
 
   /**
    * Is the current block writable.  When we steal a buffer from the

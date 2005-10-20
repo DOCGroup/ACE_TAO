@@ -482,8 +482,12 @@ ACE_CDR::swap_16_array (const char* orig, char* target, size_t n)
 void
 ACE_CDR::mb_align (ACE_Message_Block *mb)
 {
+#if !defined (ACE_CDR_IGNORE_ALIGNMENT)
   char *start = ACE_ptr_align_binary (mb->base (),
                                       ACE_CDR::MAX_ALIGNMENT);
+#else
+  char *start = mb->base ();
+#endif /* ACE_CDR_IGNORE_ALIGNMENT */
   mb->rd_ptr (start);
   mb->wr_ptr (start);
 }
@@ -542,6 +546,7 @@ ACE_CDR::consolidate (ACE_Message_Block *dst,
                          + ACE_CDR::MAX_ALIGNMENT);
   dst->size (newsize);
 
+#if !defined (ACE_CDR_IGNORE_ALIGNMENT)
   // We must copy the contents of <src> into the new buffer, but
   // respecting the alignment.
   ptrdiff_t srcalign =
@@ -553,6 +558,7 @@ ACE_CDR::consolidate (ACE_Message_Block *dst,
     offset += ACE_CDR::MAX_ALIGNMENT;
   dst->rd_ptr (offset);
   dst->wr_ptr (dst->rd_ptr ());
+#endif /* ACE_CDR_IGNORE_ALIGNMENT */
 
   for (const ACE_Message_Block* i = src;
        i != 0;
