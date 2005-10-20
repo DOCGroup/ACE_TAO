@@ -1,3 +1,8 @@
+Thu Oct 20 12:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/releasenotes/index.html:
+          Fixed html tag
+
 Thu Oct 20 10:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
