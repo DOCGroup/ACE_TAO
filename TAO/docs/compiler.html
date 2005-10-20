@@ -17,14 +17,14 @@ TAO IDL Compiler User's Guide</h3>
 <h3> Scope</h3> This document describes the options and features of
 TAO IDL compiler.  It is not a reference manual or tutorial on OMG
 IDL.  For more information on OMG IDL see the <A
-HREF="http://cgi.omg.org/library/c2indx.html">online CORBA
-specification</A> and the <A
+HREF="http://www.omg.org/technology/documents/corba_spec_catalog.htm">
+online CORBA specification</A> and the <A
 HREF="http://www.triodia.com/staff/michi-henning.html">Advanced CORBA
 Programming with C++</A> book.  More information on the design of
 TAO's IDL compiler is also available <A
 HREF="http://www.cs.wustl.edu/~schmidt/PDF/ami1.pdf">online</A>.
 Finally, comprehensive documentation on TAO's IDL compiler is
-available in the OCI <A HREF="http://www.theaceorb.com/product/">TAO
+available in the OCI <A HREF="http://www.theaceorb.com/product/index.html">TAO
 Developer's Guide</A>.<P>
 
 <HR><P>
@@ -164,6 +164,17 @@ the following:
 Note that if you can't use perfect hashing for some reason the next
 best operation demuxing strategy is binary search, which can be
 configured using TAO's IDL compiler <A HREF="#options">options</A>.<P>
+
+<HR><P>
+<h3>AMI support</h3>
+
+By default the TAO_IDL compiler generates AMI stubs and skeletons as
+described in the CORBA 3.0.3 specification. If you want to use the
+old deprecated AMI support, add the following line to your 
+<code>config.h</code> file and rebuild the core TAO libs and
+the TAO_IDL compiler.</p>
+<p>
+<code>#define TAO_HAS_DEPRECATED_EXCEPTION_HOLDER</code>
 
 <hr><p>
 <h3><a name="collocation-stubs">Collocation Strategies</a></h3>
