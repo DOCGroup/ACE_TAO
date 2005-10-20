@@ -1213,8 +1213,8 @@ ACE_OS::truncate (const ACE_TCHAR *filename,
 #endif /* ACE_WIN32 */
 }
 
-ACE_INLINE u_int
-ACE_OS::ualarm (u_int usecs, u_int interval)
+ACE_INLINE u_long
+ACE_OS::ualarm (u_long usecs, u_long interval)
 {
   ACE_OS_TRACE ("ACE_OS::ualarm");
 
