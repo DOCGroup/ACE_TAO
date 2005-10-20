@@ -65,13 +65,13 @@ public:
         received_all_replies = 1;
     }
 
-  void method_excep (AMI_testExceptionHolder *holder
+  void method_excep (::Messaging::ExceptionHolder *holder
                      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_TRY
       {
-        holder->raise_method (ACE_ENV_SINGLE_ARG_PARAMETER);
+        holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
     ACE_CATCH(CORBA::SystemException, ex)
@@ -86,13 +86,13 @@ public:
   {
   }
 
-  void shutdown_excep (AMI_testExceptionHolder *holder
+  void shutdown_excep (::Messaging::ExceptionHolder *holder
                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     ACE_TRY
       {
-        holder->raise_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+        holder->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
     ACE_CATCH(CORBA::SystemException, ex)

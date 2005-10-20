@@ -19,19 +19,19 @@ public:
   // = The skeleton methods
   virtual void receive_data (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void receive_data_excep (Test::AMI_AMI_BufferingExceptionHolder *holder
+  virtual void receive_data_excep (::Messaging::ExceptionHolder *holder
                                    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void sync (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void sync_excep (Test::AMI_AMI_BufferingExceptionHolder *holder
+  virtual void sync_excep (::Messaging::ExceptionHolder *holder
                            ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void shutdown_excep (Test::AMI_AMI_BufferingExceptionHolder *holder
+  virtual void shutdown_excep (::Messaging::ExceptionHolder *holder
                                ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };

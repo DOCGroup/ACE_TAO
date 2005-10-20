@@ -16,14 +16,14 @@ Reply_Handler::next_prime (CORBA::ULong
 
 void
 Reply_Handler::next_prime_excep (
-    Test::AMI_HelloExceptionHolder *ex
+    ::Messaging::ExceptionHolder *ex
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   ACE_TRY
     {
-      ex->raise_next_prime (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ex->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::COMM_FAILURE, t)

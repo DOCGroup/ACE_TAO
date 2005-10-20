@@ -31,7 +31,7 @@ Reply_Handler::short_sleep (ACE_ENV_SINGLE_ARG_DECL)
 
 void
 Reply_Handler::short_sleep_excep (
-    Test::AMI_HelloExceptionHolder *ex
+    ::Messaging::ExceptionHolder *ex
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -40,7 +40,7 @@ Reply_Handler::short_sleep_excep (
 
   ACE_TRY
     {
-      ex->raise_short_sleep (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ex->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -65,7 +65,7 @@ Reply_Handler::short_sleep_excep (
 void Reply_Handler::
 check_counter(ACE_ENV_SINGLE_ARG_DECL)
 {
-  long count = counter_--;
+  long count = --counter_;
   if(count == 0)
   {
     // ACE_DEBUG((LM_DEBUG, "(%P|%t) Shut down client thread\n"));

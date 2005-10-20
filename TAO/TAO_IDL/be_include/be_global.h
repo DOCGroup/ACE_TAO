@@ -32,8 +32,6 @@ class UTL_String;
 class AST_PredefinedType;
 class AST_Generator;
 
-#define TAO_HAS_DEPRECATED_EXCEPTION_HOLDER
-
 // Defines a class containing all back end global data.
 
 class TAO_IDL_BE_Export BE_GlobalData

@@ -45,7 +45,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void enable_alert_excep (
-      CosLoadBalancing::AMI_LoadAlertExceptionHolder *
+      ::Messaging::ExceptionHolder *
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -53,7 +53,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void disable_alert_excep (
-      CosLoadBalancing::AMI_LoadAlertExceptionHolder *
+      ::Messaging::ExceptionHolder *
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 

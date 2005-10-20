@@ -31,7 +31,7 @@ public:
                          ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void request_excep (AMI_PeerExceptionHolder * excep_holder
+  virtual void request_excep (::Messaging::ExceptionHolder * excep_holder
                               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 

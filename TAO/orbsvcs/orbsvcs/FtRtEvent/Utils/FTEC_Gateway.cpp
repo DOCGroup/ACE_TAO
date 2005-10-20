@@ -95,7 +95,7 @@ public:
   virtual void push (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void push_excep (FtRtecEventComm::AMI_PushConsumerExceptionHolder * excep_holder ACE_ENV_ARG_DECL)
+  virtual void push_excep (::Messaging::ExceptionHolder * excep_holder ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
@@ -511,9 +511,8 @@ void PushConsumerHandler::push (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
 }
 
-void PushConsumerHandler::push_excep (FtRtecEventComm::AMI_PushConsumerExceptionHolder * excep_holder ACE_ENV_ARG_DECL_NOT_USED)
+void PushConsumerHandler::push_excep (::Messaging::ExceptionHolder * ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG(excep_holder);
 }
 }
