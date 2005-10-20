@@ -55,7 +55,7 @@
 #define TAO_EXPORT_MACRO TAO_CSD_FW_Export
 
 // TAO_IDL - Generated from
-// c:\csd\code\doc\ace_wrappers\tao\tao_idl\be\be_visitor_module/module_ch.cpp:49
+// c:\csd\ace_wrappers\tao\tao_idl\be\be_visitor_module/module_ch.cpp:49
 
 namespace CSD_Framework
 {
@@ -84,7 +84,7 @@ namespace CSD_Framework
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // c:\csd\code\doc\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ch.cpp:54
+  // c:\csd\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_CSD_FRAMEWORK_STRATEGY_CH_)
 #define _CSD_FRAMEWORK_STRATEGY_CH_
@@ -119,7 +119,7 @@ namespace CSD_Framework
     
     
     // TAO_IDL - Generated from
-    // c:\csd\code\doc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // c:\csd\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual ::CORBA::Boolean apply_to (
         ::PortableServer::POA_ptr p
@@ -130,7 +130,7 @@ namespace CSD_Framework
       )) = 0;
     
     // TAO_IDL - Generated from
-    // c:\csd\code\doc\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ch.cpp:210
+    // c:\csd\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ch.cpp:210
     
     virtual ::CORBA::Boolean _is_a (
         const char *type_id
@@ -179,7 +179,7 @@ namespace CSD_Framework
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // c:\csd\code\doc\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ch.cpp:54
+  // c:\csd\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_CSD_FRAMEWORK_POA_CH_)
 #define _CSD_FRAMEWORK_POA_CH_
@@ -214,7 +214,7 @@ namespace CSD_Framework
     
     
     // TAO_IDL - Generated from
-    // c:\csd\code\doc\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
+    // c:\csd\ace_wrappers\tao\tao_idl\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void set_csd_strategy (
         ::CSD_Framework::Strategy_ptr s
@@ -225,7 +225,7 @@ namespace CSD_Framework
       )) = 0;
     
     // TAO_IDL - Generated from
-    // c:\csd\code\doc\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ch.cpp:210
+    // c:\csd\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_ch.cpp:210
     
     virtual ::CORBA::Boolean _is_a (
         const char *type_id
@@ -251,7 +251,7 @@ namespace CSD_Framework
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// c:\csd\code\doc\ace_wrappers\tao\tao_idl\be\be_visitor_module/module_ch.cpp:78
+// c:\csd\ace_wrappers\tao\tao_idl\be\be_visitor_module/module_ch.cpp:78
 
 } // module CSD_Framework
 

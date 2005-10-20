@@ -5,8 +5,7 @@
 #include "CallbackS.h"
 
 
-class Callback_i : public virtual POA_Callback,
-              public virtual PortableServer::ServantBase
+class Callback_i : public virtual POA_Callback
 {
   public:
 

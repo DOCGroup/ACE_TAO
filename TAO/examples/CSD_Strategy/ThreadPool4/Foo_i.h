@@ -10,8 +10,7 @@
 
 class FooServantList;
 
-class Foo_i : public virtual POA_Foo,
-              public virtual PortableServer::ServantBase
+class Foo_i : public virtual POA_Foo
 {
   public:
 

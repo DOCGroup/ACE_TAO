@@ -7,8 +7,7 @@
 #include "Foo_C_Statistics.h"
 
 
-class CSD_TP_Foo_C_Export Foo_C_i : public virtual POA_Foo_C,
-                public virtual PortableServer::ServantBase
+class CSD_TP_Foo_C_Export Foo_C_i : public virtual POA_Foo_C
 {
   public:
 

@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Custom_Servant_Dispatching_Strategy.h
+ *  @file    CSD_Strategy_Base.h
  *
  *  $Id$
  *

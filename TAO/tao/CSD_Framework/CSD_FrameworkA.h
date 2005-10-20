@@ -39,23 +39,23 @@
 
 
 // TAO_IDL - Generated from
-// c:\csd\code\doc\ace_wrappers\tao\tao_idl\be\be_visitor_module/module_ch.cpp:59
+// c:\csd\ace_wrappers\tao\tao_idl\be\be_visitor_module/module_ch.cpp:59
 
 namespace CSD_Framework
 {
   
   // TAO_IDL - Generated from
-  // c:\csd\code\doc\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/typecode_decl.cpp:49
+  // c:\csd\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_CSD_FW_Export ::CORBA::TypeCode_ptr const _tc_Strategy;
   
   // TAO_IDL - Generated from
-  // c:\csd\code\doc\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/typecode_decl.cpp:49
+  // c:\csd\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/typecode_decl.cpp:49
   
   extern TAO_CSD_FW_Export ::CORBA::TypeCode_ptr const _tc_POA;
 
 // TAO_IDL - Generated from
-// c:\csd\code\doc\ace_wrappers\tao\tao_idl\be\be_visitor_module/module_ch.cpp:86
+// c:\csd\ace_wrappers\tao\tao_idl\be\be_visitor_module/module_ch.cpp:86
 
 } // module CSD_Framework
 

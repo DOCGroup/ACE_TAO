@@ -9,13 +9,13 @@
  * This file was used to generate the code in
  * CSD_FrameworkC.{h,inl,cpp}, using the following command:
  *
-  $ACE_ROOT/bin/tao_idl \
-      -o orig -Gp -Gd -Ge 1 -Gt -Sc -GA -I$TAO_ROOT \
-           -Wb,export_macro=TAO_CSD_FW_Export \
-           -Wb,export_include="CSD_FW_Export.h" \
-           -Wb,pre_include="ace/pre.h" \
-           -Wb,post_include="ace/post.h" \
-           CSD_Framework.pidl
+ * $ACE_ROOT/bin/tao_idl \
+ *     -o orig -Gp -Gd -Ge 1 -Gt -Sc -GA -I$TAO_ROOT \
+ *          -Wb,export_macro=TAO_CSD_FW_Export \
+ *          -Wb,export_include="CSD_FW_Export.h" \
+ *          -Wb,pre_include="ace/pre.h" \
+ *          -Wb,post_include="ace/post.h" \
+ *          CSD_Framework.pidl
  *
  * After the file is generated a patch from the diffs directory must
  * be applied.  The patch:
@@ -42,20 +42,20 @@
  *   done
  */
 
-#ifndef _CSD_FRAMEWORK_IDL_
-#define _CSD_FRAMEWORK_IDL_
+#ifndef CSD_FRAMEWORK_PIDL
+#define CSD_FRAMEWORK_PIDL
 
-#include <tao/PortableServer/PortableServer.pidl>
+#include "tao/PortableServer/PortableServer.pidl"
 
 module CSD_Framework {
   
-  //# pragma version CSD_Framework 2.3
+  # pragma version CSD_Framework 2.3
 
   // This is a common base interface for all CSD strategy
   // implementations
   local interface Strategy {
 
-    //# pragma version Strategy 2.3
+    # pragma version Strategy 2.3
 
     // This is support for a legacy method of supplying a strategy to a
     // POA.
@@ -66,10 +66,10 @@ module CSD_Framework {
   // the POA.
   local interface POA : PortableServer::POA {
 
-    //# pragma version POA 2.3
+    # pragma version POA 2.3
 
     void set_csd_strategy (in Strategy s);
   };
 };
 
-#endif //_CSD_FRAMEWORK_IDL_
+#endif //CSD_FRAMEWORK_PIDL

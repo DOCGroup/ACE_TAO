@@ -33,9 +33,6 @@
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
-#if !defined (__ACE_INLINE__)
-#include "CSD_FrameworkC.inl"
-#endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
 // .\be\be_visitor_arg_traits.cpp:70
@@ -47,7 +44,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// c:\csd\code\doc\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_cs.cpp:60
+// c:\csd\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for CSD_Framework::Strategy.
 
@@ -136,7 +133,7 @@ CSD_Framework::Strategy::_is_a (
   if (
       !ACE_OS::strcmp (
           value,
-          "IDL:CSD_Framework/Strategy:1.0"
+          "IDL:CSD_Framework/Strategy:2.3"
         ) ||
       !ACE_OS::strcmp (
           value,
@@ -158,7 +155,7 @@ CSD_Framework::Strategy::_is_a (
 
 const char* CSD_Framework::Strategy::_interface_repository_id (void) const
 {
-  return "IDL:CSD_Framework/Strategy:1.0";
+  return "IDL:CSD_Framework/Strategy:2.3";
 }
 
 ::CORBA::Boolean
@@ -168,7 +165,7 @@ CSD_Framework::Strategy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// c:\csd\code\doc\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_cs.cpp:60
+// c:\csd\ace_wrappers\tao\tao_idl\be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for CSD_Framework::POA.
 
@@ -257,11 +254,11 @@ CSD_Framework::POA::_is_a (
   if (
       !ACE_OS::strcmp (
           value,
-          "IDL:omg.org/PortableServer/POA:1.0"
+          "IDL:omg.org/PortableServer/POA:2.3"
         ) ||
       !ACE_OS::strcmp (
           value,
-          "IDL:CSD_Framework/POA:1.0"
+          "IDL:CSD_Framework/POA:2.3"
         ) ||
       !ACE_OS::strcmp (
           value,
@@ -283,7 +280,7 @@ CSD_Framework::POA::_is_a (
 
 const char* CSD_Framework::POA::_interface_repository_id (void) const
 {
-  return "IDL:CSD_Framework/POA:1.0";
+  return "IDL:CSD_Framework/POA:2.3";
 }
 
 ::CORBA::Boolean
