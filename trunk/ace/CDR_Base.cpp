@@ -1,4 +1,4 @@
-#include "ace/CDR_Base.h"
+k#include "ace/CDR_Base.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ace/CDR_Base.inl"
@@ -21,7 +21,7 @@ ACE_CDR::swap_2_array (const char* orig, char* target, size_t n)
 {
   // ACE_ASSERT(n > 0); The caller checks that n > 0
 
-  // We pretend that AMD64/GNU G++ systems have a Pentium CPU to 
+  // We pretend that AMD64/GNU G++ systems have a Pentium CPU to
   // take advantage of the inline assembly implementation.
 
   // Later, we try to read in 32 or 64 bit chunks,
@@ -287,7 +287,7 @@ ACE_CDR::swap_4_array (const char* orig, char* target, size_t n)
           register unsigned long b =
             * reinterpret_cast<const long*> (orig + 8);
 
-#if defined(__amd64__) && defined(__GNUC__) 
+#if defined(__amd64__) && defined(__GNUC__)
           asm ("bswapq %1" : "=r" (a) : "0" (a));
           asm ("bswapq %1" : "=r" (b) : "0" (b));
           asm ("rol $32, %1" : "=r" (a) : "0" (a));

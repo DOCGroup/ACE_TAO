@@ -1704,14 +1704,14 @@ ACE_WChar_Codeset_Translator::minor_version (ACE_OutputCDR& output)
   return output.minor_version_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 OutputCDR_Auto_Reset::OutputCDR_Auto_Reset (ACE_OutputCDR& cdr)
   : cdr_ (cdr)
-{ 
+{
 }
 
-ACE_INLINE 
-OutputCDR_Auto_Reset::~OutputCDR_Auto_Reset (void) 
+ACE_INLINE
+OutputCDR_Auto_Reset::~OutputCDR_Auto_Reset (void)
 {
   cdr_.reset ();
 }
