@@ -1,3 +1,8 @@
+Thu Oct 20 14:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ObjectGroupManagerHandler.cpp:
+          Fixed argument not used warning
+
 Thu Oct 20 13:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Enabled the new AMI implementation as described in the CORBA
