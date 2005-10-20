@@ -1,3 +1,10 @@
+Thu Oct 20 12:24:30 MST 2005  Yan Dai  <dai_y@ociweb.com>
+
+        * tests/CSD_Strategy_Tests/TP_Test_Dynamic/server.cpp:
+
+          Made the ACE_Thread_Manager instance wait for CSD task threads
+          exit. This should fix test failure shown on scoreboard.
+          
 Thu Oct 20 11:54:38 MST 2005  Yan Dai  <dai_y@ociweb.com>
 
         * examples/CSD_Strategy/ThreadPool/Foo_i.h:

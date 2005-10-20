@@ -3,6 +3,7 @@
 #include "Hello.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/Thread_Manager.h"
 
 ACE_RCSID (Hello,
            server,
@@ -102,6 +103,9 @@ main (int argc, char *argv[])
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      // Wait for all CSD task threads exit.
+      ACE_Thread_Manager::instance ()->wait ();
     }
   ACE_CATCHANY
     {
