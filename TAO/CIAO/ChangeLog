@@ -1,18 +1,23 @@
+Thu Oct 20 09:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeApplication/NodeApp_Configurator.{h,cpp}:
+          Destructor can't be pure virtual
+
 Wed Oct 19 15:03:56 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
 	  These changes are made to add support for RT-capable
-	  NodeApplication.  
-	
+	  NodeApplication.
+
 	* ciao/CCM_Core.mpc:
 	* ciao/Container_Impl.h:
 	* ciao/Container_Impl.inl:
 	* ciao/Container_Impl.cpp:
 	* ciao/NodeApplication_Impl.h:
-	* ciao/NodeApplication_Impl.inl: 
+	* ciao/NodeApplication_Impl.inl:
 	* ciao/NodeApplication_Impl.cpp: Moved NodeApplication and
 	  Container interface implementations under DAnCE/NodeApplication/
 	  subdir.  They are coupled with NodeApplication implementation
-	  now.  
+	  now.
 
 	* DAnCE/NodeApplication/NodeApplication.mpc: Changed to
 	  incorporate the following files/changes.
@@ -25,13 +30,13 @@ Wed Oct 19 15:03:56 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 	* DAnCE/NodeApplication/Container_Impl.h:
 	* DAnCE/NodeApplication/Container_Impl.inl:
 	* DAnCE/NodeApplication/Container_Impl.cpp: Moved from ciao/
-	  subdir.  
+	  subdir.
 
 	* DAnCE/NodeApplication/NodeApplication_Impl.h:
 	* DAnCE/NodeApplication/NodeApplication_Impl.inl:
 	* DAnCE/NodeApplication/NodeApplication_Impl.cpp: Changed to
 	  depend on a concrete NodeApp_Configurator to perform the
-	  configuration.  
+	  configuration.
 
 	* DAnCE/NodeApplication/NodeApplication_Core.h:
 	* DAnCE/NodeApplication/NodeApplication_Core.inl:
@@ -39,14 +44,14 @@ Wed Oct 19 15:03:56 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 	* DAnCE/NodeApplication/NodeApplication.cpp:  Restructured the
 	  NodeApplication implementation so that the ORB event loop can be
 	  run on the main thread or on a separate thread, using the FIFO
-	  scheduling class.  
+	  scheduling class.
 
 	  A new create_configurator method in NodeApplication_Core will
 	  create the "right" concrete configurator based on the command
 	  line flags.  We will support a RT configuration soon.
 	  Currently, there's only a NoOp_Configurator for running
 	  NodeApplication without RT support.
-	
+
 	  We will add the RT configuration as a dynamic library and will
 	  hook it up via ACE_DLL in a few days.
 
@@ -54,7 +59,7 @@ Tue Oct 18 16:50:24 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* NEWS
 
-	Updated release notes. 
+	Updated release notes.
 
 Mon Oct 17 13:21:59 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
@@ -86,8 +91,8 @@ Fri Oct 14 17:22:59 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* tools/Config_Handlers/toplevel.hpp
 
 	Regerated with new version of XSC which implements some heavy
-	optimizations. 
-	
+	optimizations.
+
 Fri Oct 14 14:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
