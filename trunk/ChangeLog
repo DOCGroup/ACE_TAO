@@ -1,3 +1,9 @@
+Thu Oct 29 11:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_unistd.{h,inl}:
+          Changed the return value and arguments of ualarm from u_int
+          to u_long to fix 64bit problems
+
 Wed Oct 19 18:57:53 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/OS_NS_stdio.inl (flock_init): Only allocate the
