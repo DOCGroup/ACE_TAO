@@ -44,6 +44,7 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (
     be_operation *node
   )
 {
+#if defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
@@ -208,5 +209,8 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (
       << "ACE_ENV_ARG_PARAMETER);" << be_uidt << be_uidt_nl;
 
   *os << "}\n\n";
+#else
+  ACE_UNUSED_ARG (node);
+#endif
   return 0;
 }
