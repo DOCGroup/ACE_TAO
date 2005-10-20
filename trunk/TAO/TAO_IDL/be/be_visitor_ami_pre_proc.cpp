@@ -109,6 +109,7 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
     }
 
   be_valuetype *excep_holder = 0;
+  be_valuetype *global_excep_holder = be_global->exceptionholder ();
 
   if (! node->imported ())
     {
@@ -163,7 +164,10 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
       old_strategy = 0;
     }
 
-  if (excep_holder)
+  // Only do this when we have created a new exceptionholder. In the old
+  // AMI setup the global_excep_holder is always 0, in the new setup it
+  // is only 0 in the first case.
+  if (excep_holder && !global_excep_holder)
     {
       excep_holder->set_defined_in (node->defined_in ());
       // Insert the exception holder after the original node,
@@ -193,13 +197,15 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
     }
   else
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_ami_pre_proc::"
-                         "visit_interface - "
-                         "creating the exception holder failed\n"),
-                        -1);
+      if (!excep_holder)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_ami_pre_proc::"
+                             "visit_interface - "
+                             "creating the exception holder failed\n"),
+                            -1);
+        }
     }
-
 
   if (this->visit_scope (node) == -1)
     {
