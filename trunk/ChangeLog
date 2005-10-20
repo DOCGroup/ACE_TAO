@@ -1,3 +1,10 @@
+Wed Oct 19 18:57:53 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/OS_NS_stdio.inl (flock_init): Only allocate the
+	  memory for the name if the call to ACE_OS::open() succeeds.
+  	  This fixes a subtle memory leak.  Thanks to Sandeep Deshpande
+ 	  <sandeep dot bvb at gmail dot com> for this fix!
+
 Wed Oct 19 09:56:31 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* include/makeinclude/platform_macosx_tiger_gcc4.GNU:
