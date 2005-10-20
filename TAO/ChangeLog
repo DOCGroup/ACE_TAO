@@ -1,3 +1,46 @@
+Thu Oct 20 13:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Enabled the new AMI implementation as described in the CORBA
+        3.0.3 specification. All tests and examples are updated to the
+        new spec but if you want to use the old specification for
+        your application then define TAO_HAS_DEPRECATED_EXCEPTION_HOLDER
+        in your config.h and rebuild the core libs and the TAO IDL compiler.
+        This deprecated AMI support will be kept alive until x.5.1 has
+        been released and then we will zap it completely from the
+        TAO distribution
+
+        * TAO_IDL/be_include/be_global.h:
+        * tao/orbconf.h:
+          Removed define of TAO_HAS_DEPRECATED_EXCEPTION_HOLDER, we
+          are switching now to the new AMI implementation
+
+        * docs/tutorials/Quoter/AMI/Handler_i.{h,cpp}:
+        * docs/tutorials/Quoter/On_Demand_Activation/Handler_i.{h,cpp}:
+        * examples/AMI/FL_Callback/Peer_i.{h,cpp}:
+        * examples/Buffered_AMI/client.cpp:
+        * examples/Content_Server/AMI_Iterator/Iterator_Handler.h:
+        * examples/Content_Server/AMI_Observer/Callback_Handler.{h,cpp}:
+        * examples/Content_Server/AMI_Observer/Push_Iterator_Handler.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ObjectGroupManagerHandler.{h,cpp}:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/UpdateableHandler.{h,cpp}:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/FTEC_Gateway.cpp
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlert_Handler.{h,cpp}:
+        * orbsvcs/tests/HTIOP/AMI/client.cpp
+        * orbsvcs/tests/HTIOP/AMI/simple_client.cpp
+        * performance-tests/Latency/AMI/Roundtrip_Handler.{h,cpp}:
+        * performance-tests/Sequence_Latency/AMI/Roundtrip_Handler.{h,cpp}:
+        * tests/AMI/client.cpp:
+        * tests/AMI/simple_client.cpp:
+        * tests/AMI_Buffering/Reply_Handler.{h,cpp}:
+        * tests/AMI_Timeouts/timeout_i.{h,cpp}:
+        * tests/Big_AMI/client.cpp:
+        * tests/Bug_1482_Regression/Reply_Handler.{h,cpp}:
+        * tests/Bug_1551_Regression/Reply_Handler.{h,cpp}:
+        * tests/LongUpcalls/AMI_Manager.{h,cpp}:
+        * tests/LongUpcalls/Manager_Handler.{h,cpp}:
+        * tests/Portable_Interceptors/AMI/Echo_Handler.{h,cpp}:
+          Updated for the new AMI mapping
+
 Thu Oct 20 12:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/compiler.html:
