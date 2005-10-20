@@ -8,8 +8,7 @@
 
 
 class CSD_TP_Foo_B_Export Callback_i
-                              : public virtual POA_Callback,
-                                public virtual PortableServer::ServantBase
+                              : public virtual POA_Callback
 {
   public:
 

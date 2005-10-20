@@ -53,7 +53,7 @@ TAO::CSD::TP_Task::open(void* num_threads_ptr)
 
   if (num_threads_ptr != 0)
     {
-      unsigned* tmp = ACE_static_cast(unsigned*, num_threads_ptr);
+      unsigned* tmp = static_cast<unsigned*> (num_threads_ptr);
 
       if (tmp == 0)
         {

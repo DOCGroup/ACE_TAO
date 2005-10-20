@@ -37,13 +37,13 @@
 #include "tao/AnyTypeCode/Any_Impl_T.h"
 
 // TAO_IDL - Generated from
-// c:\csd\code\doc\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/objref_typecode.cpp:76
+// c:\csd\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CSD_Framework_Strategy (
     ::CORBA::tk_local_interface,
-    "IDL:CSD_Framework/Strategy:1.0",
+    "IDL:CSD_Framework/Strategy:2.3",
     "Strategy");
   
 namespace CSD_Framework
@@ -55,13 +55,13 @@ namespace CSD_Framework
 
 
 // TAO_IDL - Generated from
-// c:\csd\code\doc\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/objref_typecode.cpp:76
+// c:\csd\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CSD_Framework_POA (
     ::CORBA::tk_local_interface,
-    "IDL:CSD_Framework/POA:1.0",
+    "IDL:CSD_Framework/POA:2.3",
     "POA");
   
 namespace CSD_Framework

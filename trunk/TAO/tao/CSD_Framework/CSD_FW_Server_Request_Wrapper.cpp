@@ -296,8 +296,8 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Operation_Details const *& from,
                                             TAO_Operation_Details const *& to, 
                                             TAO_InputCDR*& cdr)
 {
-  TAO_Operation_Details* from_non_const
-    = const_cast <TAO_Operation_Details *>(from);
+  TAO_Operation_Details *& from_non_const
+    = const_cast <TAO_Operation_Details *&>(from);
 
   char* cloned_op_name = new char[from_non_const->opname_len_ + 1];
   ACE_OS::strncpy(cloned_op_name, from_non_const->opname_, from_non_const->opname_len_);
