@@ -301,8 +301,8 @@ namespace ACE_OS {
   int truncate (const ACE_TCHAR *filename, off_t length);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  u_int ualarm (u_int usecs,
-                u_int interval = 0);
+  u_long ualarm (u_long usecs,
+                 u_long interval = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   u_int ualarm (const ACE_Time_Value &tv,
