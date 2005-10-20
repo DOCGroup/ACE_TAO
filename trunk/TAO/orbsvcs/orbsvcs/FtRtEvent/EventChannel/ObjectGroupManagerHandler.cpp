@@ -60,7 +60,7 @@ ObjectGroupManagerHandler::set_state (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-ObjectGroupManagerHandler::set_state_excep (::Messaging::ExceptionHolder * excep_holder
+ObjectGroupManagerHandler::set_state_excep (::Messaging::ExceptionHolder *
                                             ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {

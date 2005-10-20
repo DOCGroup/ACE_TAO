@@ -1,7 +1,12 @@
+Thu Oct 29 14:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/CDR_Base.cpp:
+          Removed character before #include
+
 Thu Oct 20 08:53:47 2005  Arvind S. Krishna  <arvindk@doc.dre.vanderbilt.edu>
 
 	* ace/CDR_Base.cpp:
-	* ace/CDR_Strea.h:
+        * ace/CDR_Stream.h:
 	* ace/CDR_Stream.cpp:
 	* ace/CDR_Stream.inl:
 	* ace/Message_Block.cpp:
@@ -16,7 +21,7 @@ Thu Oct 20 08:53:47 2005  Arvind S. Krishna  <arvindk@doc.dre.vanderbilt.edu>
 	  during (de)marshaling. This macro should be used when ACE_CDR is
 	  both the (de)marshaler. Additionally, use this option only when
 	  byte orders of the two machines are the same.  This restriction
-	  is temporary and will be removed in a subsequent commit. 
+	  is temporary and will be removed in a subsequent commit.
 
 Thu Oct 29 11:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
