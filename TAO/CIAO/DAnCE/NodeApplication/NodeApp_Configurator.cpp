@@ -8,5 +8,4 @@ CIAO::NodeApp_Configurator::NodeApp_Configurator (CORBA::ORB_ptr o)
 }
 
 CIAO::NodeApp_Configurator::~NodeApp_Configurator (void)
-{
-}
+{}

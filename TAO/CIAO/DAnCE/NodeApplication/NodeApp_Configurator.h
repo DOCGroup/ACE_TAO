@@ -39,7 +39,7 @@ namespace CIAO
     NodeApp_Configurator (CORBA::ORB_ptr o);
 
     /// Default destructor.
-    virtual ~NodeApp_Configurator (void);
+    virtual ~NodeApp_Configurator (void) = 0;
 
     /**
      * @brief "initialize" is called after NodeApplication get a hold

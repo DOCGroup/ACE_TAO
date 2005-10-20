@@ -1,3 +1,9 @@
+Thu Oct 20 09:07:21 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
+
+	* DAnCE/NodeApplication/NodeApp_Configurator.{h,cpp}:
+	  Actually, destructors can be pure virtual.  They just can't be
+	  defined in header files.
+
 Thu Oct 20 09:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeApplication/NodeApp_Configurator.{h,cpp}:
