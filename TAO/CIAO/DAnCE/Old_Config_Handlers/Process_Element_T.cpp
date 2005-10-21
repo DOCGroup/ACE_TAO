@@ -155,9 +155,9 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
   try
     {
       // the number of attributes
-      int length = named_node_map->getLength();
+      size_t length = named_node_map->getLength();
       // iterate the attributes
-      for (int j = 0; j < length; ++j)
+      for (size_t j = 0; j < length; ++j)
         {
           DOMNode* attribute_node = named_node_map->item (j);
           XStr strattrnodename (attribute_node->getNodeName ());
@@ -200,7 +200,7 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
 
               CIAO::Config_Handler::Config_Error_Handler handler;
               parser->setErrorHandler(&handler);
-                      
+
               if (xml_url.isRelative ())
                 {
                   href_doc = parser->parseURI (final_url.c_str ());
@@ -281,7 +281,7 @@ process_sequential_element (DOMNode* node,
       DOMNamedNodeMap* named_node_map = node->getAttributes ();
 
       // the number of attributes the element have
-      int length = named_node_map->getLength();
+      size_t length = named_node_map->getLength();
       // if there is no other attribute but 'version'
 
       if (length == 1) // call directly the static process_ method
