@@ -1,3 +1,9 @@
+Fri Oct 21 12:25:56 MST 2005  Yan Dai  <dai_y@ociweb.com>
+
+        * tao/PI_Server/PI_Server_Loader.cpp:
+
+          Removed the %P|%t in the ACE_PRINT_EXCEPTION info parameter.
+          
 Fri Oct 21 11:17:10 MST 2005  Yan Dai  <dai_y@ociweb.com>
 
         * tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.cpp:
