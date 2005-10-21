@@ -84,6 +84,13 @@ namespace TAO
       return objid;
     }
 
+    CORBA::Object_ptr
+    POA_Current_Impl::get_reference (void)
+    {
+      // TODO
+      return CORBA::Object::_nil ();
+    }
+
     PortableServer::Servant
     POA_Current_Impl::get_servant (void)
     {

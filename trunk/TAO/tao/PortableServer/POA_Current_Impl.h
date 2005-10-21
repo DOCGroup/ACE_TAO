@@ -69,17 +69,21 @@ namespace TAO
       /**
        * Return pointer to the object id through which this was invoked.
        * This may be necessary in cases where a <Servant> is serving under
-       * the guise of multiple object ids.  This has _out semantics Raises
-       * the <CORBA::NoContext> exception.
+       * the guise of multiple object ids.
        */
       PortableServer::ObjectId *get_object_id (void);
 
       /**
        * Returns a reference to the servant that hosts the object in whose
-       * context it is called. If called outside the context of the POA
-       * dispatched operation, a NoContext exception is raised
+       * context it is called.
        */
       PortableServer::Servant get_servant (void);
+
+      /**
+       * This operation returns a locally manufactured reference to the object
+       * in the context of which it is called.
+       */
+      CORBA::Object_ptr get_reference (void);
 
       /// Set the POA implementation.
       void poa (::TAO_Root_POA *);

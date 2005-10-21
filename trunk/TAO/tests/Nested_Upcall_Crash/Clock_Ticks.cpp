@@ -10,11 +10,11 @@
 
 ACE_RCSID(Nested_Upcall_Crash, Clock_Ticks, "$Id$")
 
-int
+long
 Clock_Ticks::get_hz (void)
 {
 #if defined(_SC_CLK_TCK)
-  int r = ACE_OS::sysconf(_SC_CLK_TCK);
+  long r = ACE_OS::sysconf(_SC_CLK_TCK);
   if(r != -1)
     return r;
 #endif /* _SC_CLK_TCK */

@@ -1347,7 +1347,6 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/POA_Current_Impl.cpp \
   PortableServer/POA_Guard.cpp \
   PortableServer/POA_Policy_Set.cpp \
-  PortableServer/PS_CurrentA.cpp \
   PortableServer/PS_CurrentC.cpp \
   PortableServer/PS_ForwardA.cpp \
   PortableServer/PS_ForwardC.cpp \
