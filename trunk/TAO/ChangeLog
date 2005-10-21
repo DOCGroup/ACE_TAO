@@ -1,3 +1,15 @@
+Fri Oct 21 11:17:10 MST 2005  Yan Dai  <dai_y@ociweb.com>
+
+        * tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.cpp:
+        
+          Made the number of threads to use the default value 1 if the
+          number of threads is not specified in the service config file.
+          
+        * tao/CSD_ThreadPool/CSD_TP_Task.cpp:
+
+          Replaced the unsigned* with unsigned int* to fix a parse error 
+          compilation error on some compilers.
+          
 Fri Oct 21 07:19:32 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* performance-tests/Sequence_Latency/Deferred/Deferred.mpc:
