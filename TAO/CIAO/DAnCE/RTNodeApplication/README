@@ -1,6 +1,7 @@
 $Id$
 
-This directory contains the RTNodeApplication implementation
+This directory contains the depricated RTNodeApplication
+implementation.  It will be removed shortly.
 
 * Currently, the RTNodeApplication does not support configuring of any
   RT policies.
