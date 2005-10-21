@@ -212,7 +212,7 @@ Foo_B_i::test_var_array_arg(const Var_Array messages
     unsigned client_id = 0;
     unsigned str_id = 0;
     char test_str[20];
-    sscanf (messages[i].in (), "%d %s %d", &client_id, test_str, &str_id);
+    sscanf (messages[i].in (), "%u %s %u", &client_id, test_str, &str_id);
 
     if (str_id != i)
     {

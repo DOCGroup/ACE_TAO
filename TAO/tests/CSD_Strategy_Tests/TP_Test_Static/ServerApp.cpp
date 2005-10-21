@@ -6,6 +6,7 @@
 #include "AppShutdown.h"
 #include "ace/Get_Opt.h"
 // To force static load the service.
+#include "tao/PI/PI.h"
 #include "tao/CSD_ThreadPool/CSD_ThreadPool.h"
 
 

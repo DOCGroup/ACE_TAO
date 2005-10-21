@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): csd_threadpool, taoexe, portableserver, minimum_corba {
+project(*Server): csd_threadpool, taoexe, portableserver, minimum_corba, pi {
   exename = server_main
   idlflags -= -Sc
 

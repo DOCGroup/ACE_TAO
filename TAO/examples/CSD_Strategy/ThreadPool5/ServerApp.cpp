@@ -7,6 +7,9 @@
 #include "ace/Get_Opt.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Strategy.h"
 #include "tao/Intrusive_Ref_Count_Handle_T.h"
+// To force static load the service.
+#include "tao/PI/PI.h"
+#include "tao/CSD_ThreadPool/CSD_ThreadPool.h"
 
 
 ServerApp::ServerApp()

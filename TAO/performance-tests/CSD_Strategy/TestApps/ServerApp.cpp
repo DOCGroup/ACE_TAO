@@ -9,6 +9,9 @@
 #include "ace/Get_Opt.h"
 #include "ace/Time_Value.h"
 #include "ace/High_Res_Timer.h"
+// To force static load the service.
+#include "tao/PI/PI.h"
+#include "tao/CSD_ThreadPool/CSD_ThreadPool.h"
 
 
 ServerApp::ServerApp()
