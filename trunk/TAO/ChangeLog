@@ -1,10 +1,15 @@
+Fri Oct 21 09:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging/ExceptionHolder_i.h:
+          Fixed forward declaration
+
 Thu Oct 20 12:24:30 MST 2005  Yan Dai  <dai_y@ociweb.com>
 
         * tests/CSD_Strategy_Tests/TP_Test_Dynamic/server.cpp:
 
           Made the ACE_Thread_Manager instance wait for CSD task threads
           exit. This should fix test failure shown on scoreboard.
-          
+
 Thu Oct 20 11:54:38 MST 2005  Yan Dai  <dai_y@ociweb.com>
 
         * examples/CSD_Strategy/ThreadPool/Foo_i.h:
@@ -19,40 +24,40 @@ Thu Oct 20 11:54:38 MST 2005  Yan Dai  <dai_y@ociweb.com>
         * tests/CSD_Strategy_Tests/TP_Foo_B/Callback_i.h:
         * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B_i.h:
         * tests/CSD_Strategy_Tests/TP_Foo_C/Foo_C_i.h:
-        
+
           Removed the duplicated inheritence of PortableServer::ServantBase.
-          
+
         * tao/CSD_Framework/CSD_Framework.pidl:
-        
+
           Fixed fuzz errors.
-          
+
         * tao/CSD_Framework/CSD_FrameworkA.cpp:
         * tao/CSD_Framework/CSD_FrameworkA.h:
         * tao/CSD_Framework/CSD_FrameworkC.cpp:
         * tao/CSD_Framework/CSD_FrameworkC.h:
         * tao/CSD_Framework/diffs/CSD_Framework.diff:
-        
-          Regenerated files from pidl file and updated to resolve error 
+
+          Regenerated files from pidl file and updated to resolve error
           message from compiler.
-          
+
         * tao/CSD_Framework/CSD_FrameworkC.inl:
-        
+
           Removed the empty file to fix fuzz error.
-          
+
         * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp:
         * tao/CSD_Framework/CSD_Strategy_Base.h:
         * tao/CSD_ThreadPool/CSD_ThreadPool.h:
         * tao/CSD_ThreadPool/CSD_TP_Task.cpp:
         * tests/CSD_Strategy_Tests/TP_Foo_C/Foo_C_Custom_ClientEngine.h:
-        
+
           Fixed fuzz errors and compilation errors shown on scoreboard.
-          
+
         * tests/CSD_Strategy_Tests/TP_Test_Dynamic/client.cpp:
         * tests/CSD_Strategy_Tests/TP_Test_Dynamic/Hello.h:
         * tests/CSD_Strategy_Tests/TP_Test_Dynamic/run_test.pl:
 
           Updated to be the same as in $TAO_ROOT/tests/Hello test.
-          
+
 Thu Oct 20 14:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ObjectGroupManagerHandler.cpp:
@@ -67,7 +72,13 @@ Thu Oct 20 13:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
         in your config.h and rebuild the core libs and the TAO IDL compiler.
         This deprecated AMI support will be kept alive until x.5.1 has
         been released and then we will zap it completely from the
-        TAO distribution
+        TAO distribution.
+
+        When you want to update the application code for the new mapping,
+        all _excep methods in the reply handler must be updated. Change
+        the interface specific exceptionholder in the interface to
+        ::Messaging::ExceptionHolder, change in the implementation the
+        raise_x call to raise_exception.
 
         * TAO_IDL/be_include/be_global.h:
         * tao/orbconf.h:
