@@ -39,7 +39,7 @@ namespace Messaging
 
 namespace TAO
 {
-  class Exception_Data;
+  struct Exception_Data;
 
   class TAO_Messaging_Export ExceptionHolder
     : public virtual ::OBV_Messaging::ExceptionHolder,
@@ -59,7 +59,7 @@ namespace TAO
     virtual void raise_exception (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
     virtual void raise_exception_with_list (
-        const ::Dynamic::ExceptionList & ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        const ::Dynamic::ExceptionList & exc_list ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
   private:
