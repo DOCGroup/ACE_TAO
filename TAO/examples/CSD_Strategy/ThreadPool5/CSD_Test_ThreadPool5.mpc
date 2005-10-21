@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): csd_threadpool, taoexe, portableserver {
+project(*Server): csd_threadpool, taoexe, portableserver, pi {
   exename = server_main
 
   Source_Files {
@@ -20,7 +20,7 @@ project(*Server): csd_threadpool, taoexe, portableserver {
   }
 }
 
-project(*Client): csd_threadpool, taoexe, portableserver {
+project(*Client): csd_threadpool, taoexe, portableserver, pi {
   exename = client_main
 
   Source_Files {
