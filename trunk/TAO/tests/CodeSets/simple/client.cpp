@@ -37,7 +37,7 @@ make_wstring (const char *str)
   wchar_t *wstr = new wchar_t[len];
   ACE_DEBUG ((LM_DEBUG,
               "make_wstring: str = %s\n",str));
-  for (int i = 0; i < len; i++)
+  for (size_t i = 0; i < len; i++)
     {
       char *t = const_cast<char *> (str);
       wstr[i] = static_cast<wchar_t> (*(t + i));
