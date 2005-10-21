@@ -1,3 +1,9 @@
+Fri Oct 21 13:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp:
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+          Fixed unitialized warnings
+
 Fri Oct 21 10:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/Old_Config_Handlers/Process_Element_T.cpp:
