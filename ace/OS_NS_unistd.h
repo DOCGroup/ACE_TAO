@@ -252,7 +252,7 @@ namespace ACE_OS {
                     size_t bufsiz);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  void *sbrk (int brk);
+  void *sbrk (ptrdiff_t brk);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int setgid (gid_t);
