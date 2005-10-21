@@ -13,7 +13,7 @@ namespace CIAO
     this->initialize_map ();
     this->build_map ();
   }
-  
+
   Deployment::ContainerImplementationInfos *
   Containers_Info_Map::containers_info (void)
   {
@@ -21,7 +21,7 @@ namespace CIAO
     // and return the corresponding sequence
     Deployment::ContainerImplementationInfos_var retv;
 
-    ACE_NEW_RETURN (retv, 
+    ACE_NEW_RETURN (retv,
                     Deployment::ContainerImplementationInfos,
                     0);
 
@@ -39,7 +39,7 @@ namespace CIAO
       }
     return retv._retn ();
   }
-  
+
   void
   Containers_Info_Map::
   initialize_map (void)
@@ -56,7 +56,7 @@ namespace CIAO
 
         if (this->plan_.instance[i].deployedResource.length () != 0)
           {
-            my_resource_id = 
+            my_resource_id =
               this->plan_.instance[i].deployedResource[0].resourceName.in ();
 
             this->plan_.instance[i].deployedResource[0].resourceValue >>=
@@ -82,13 +82,13 @@ namespace CIAO
             // Fetch the actual policy_set_def from the infoProperty
             // Ugly due to the IDL data structure definition! :(
             CORBA::ULong j;
-            for (j = 0; 
-                  j < this->plan_.infoProperty.length (); 
+            for (j = 0;
+                  j < this->plan_.infoProperty.length ();
                   ++j)
               {
                 CIAO::DAnCE::ServerResource *server_resource_def = 0;
                 this->plan_.infoProperty[j].value >>= server_resource_def;
-                if (ACE_OS::strcmp ((*server_resource_def).Id, 
+                if (ACE_OS::strcmp ((*server_resource_def).Id,
                                     my_resource_id) == 0)
                   {
                     // Iterate over the policy_sets
@@ -102,9 +102,9 @@ namespace CIAO
                           {
                             // Foud the target policy set def
                             info->container_config.length (1);
-                            info->container_config[0].name = 
+                            info->container_config[0].name =
                               CORBA::string_dup ("ContainerPolicySet");
-                            info->container_config[0].value <<= 
+                            info->container_config[0].value <<=
                               (*server_resource_def).orb_config.policy_set[k];
                           }
                       }
@@ -116,7 +116,7 @@ namespace CIAO
                   }
               } // end of for loop for fetching policy_set_def
 
-            if (j == this->plan_.infoProperty.length ()) 
+            if (j == this->plan_.infoProperty.length ())
               {
                 // No Server Resource Def found?! Inconsistent descriptor files.
                 ACE_DEBUG ((LM_ERROR, "(%P|%t) Descriptor error: "
@@ -159,13 +159,13 @@ namespace CIAO
       }
 
     // Find the ContainerImplementationInfo entry from the map
-    MAP::ENTRY *entry;
+    MAP::ENTRY *entry = 0;
     if (this->map_.find (policy_set_id, entry) != 0)
       return false; //should never happen
     else
       {
         this->insert_instance_into_container (
-                instance, 
+                instance,
                 entry->int_id_->impl_infos);
       }
 
@@ -225,7 +225,7 @@ namespace CIAO
             svnt_found = true;
             // Copy the servant dll/so name.
             // @@ Note: I ignore all the other locations except the first one.
-            impl_infos[i].servant_dll = 
+            impl_infos[i].servant_dll =
               CORBA::string_dup (arti.location[0].in ());
 
             // Get the entry point.
@@ -266,7 +266,7 @@ namespace CIAO
             // Cpoy the servant dll/so name.
             // @@ Note: I ignore all the other locations except the first one.
             exec_found = true;
-            impl_infos[i].executor_dll = 
+            impl_infos[i].executor_dll =
               CORBA::string_dup (arti.location[0].in ());
 
             // Get the entry point.
