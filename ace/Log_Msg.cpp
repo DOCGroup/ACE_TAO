@@ -1708,10 +1708,10 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 # endif /* HPUX */
                     if (can_check)
                       this_len = ACE_OS::snprintf
-                        (bp, bspace, format, wchar_str ? wchar_str : ACE_LIB_TEXT ("(null)"));
+                        (bp, bspace, format, wchar_str);
                     else
                       this_len = ACE_OS::sprintf
-                        (bp, format, wchar_str ? wchar_str : ACE_LIB_TEXT ("(null)"));
+                        (bp, format, wchar_str);
 #endif /* ACE_WIN32 / ACE_HAS_WCHAR */
                     ACE_UPDATE_COUNT (bspace, this_len);
                   }
