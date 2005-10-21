@@ -3,7 +3,7 @@ Fri Oct 21 10:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ace/Log_Msg.cpp (log)
           Check for passing of NULL pointers to %C and %w
           formatting strings and replace them with "(null)" to avoid
-          crashes.  Thanks to <im-scooter at yandex dot ru> for
+          crashes.  Thanks to Scooter <im-scooter at yandex dot ru> for
           reporting this. Fixes bugzilla bug 2276
 
 Thu Oct 20 22:20:26 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
