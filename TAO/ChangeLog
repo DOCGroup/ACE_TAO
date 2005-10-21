@@ -1,3 +1,36 @@
+Fri Oct 21 10:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/driver.cpp:
+        * orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/client.cpp:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/client.cpp:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/client.cpp:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/client.cpp:
+        * orbsvcs/performance-tests/RTEvent/TCP_Baseline/client.cpp:
+          Don't use barrier as variable name, can be a macro. fixes bugzila
+          bug 2271. Thanks to Francesco Salvestrini
+          <f dot salvestrini at nextworks dot it> for reporting this.
+
+        * tests/Nested_Upcall_Crash/Clock_Ticks.{h,cpp}:
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+        * tests/CodeSets/simple/client.cpp:
+          64bit fixes
+
+        * examples/Simple/echo/Echo_i.cpp:
+          Initialise pointer with 0
+
+        * tao/PortableServer/POA_Current.{h,cpp}:
+        * tao/PortableServer/POA_Current_Impl.{h,cpp}:
+        * tao/PortableServer/PS_CurrentA.cpp:
+        * tao/PortableServer/PS_CurrentC.{h,cpp}:
+        * tao/PortableServer/PS_Current.pidl:
+          Added Current::get_reference as to be implemented method, that will
+          be done soon. Generated the pidl file as a result of AnyTypeCode
+          refactoring the PS_CurrentA.cpp is not usable for this file, so
+          zapped it.
+
+        * tao/Makefile.am:
+          Removed PS_CurrentA.cpp
+
 Fri Oct 21 09:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/ExceptionHolder_i.h:
