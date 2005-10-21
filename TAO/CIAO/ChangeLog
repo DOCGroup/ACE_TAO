@@ -1,3 +1,8 @@
+Fri Oct 21 10:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/Old_Config_Handlers/Process_Element_T.cpp:
+          Fixed 64bit warnings
+
 Thu Oct 20 09:07:21 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
 	* DAnCE/NodeApplication/NodeApp_Configurator.{h,cpp}:
