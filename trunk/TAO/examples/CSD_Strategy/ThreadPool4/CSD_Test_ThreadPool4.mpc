@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): csd_threadpool, messaging, taoexe, portableserver {
+project(*Server): csd_threadpool, messaging, taoexe, portableserver, pi {
   exename = server_main
 
   Source_Files {

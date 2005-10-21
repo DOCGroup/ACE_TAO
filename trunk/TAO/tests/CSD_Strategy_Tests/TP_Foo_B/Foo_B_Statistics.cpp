@@ -155,7 +155,7 @@ Foo_B_Statistics::actual_vs_expected()
             for (unsigned k = 0; k < actual_size; k++)
               {
                 unsigned client_id;
-                sscanf (this->actual_in_string_[i][k].c_str(), "%d %s", &client_id, buffer);
+                sscanf (this->actual_in_string_[i][k].c_str(), "%u %s", &client_id, buffer);
                 if (ACE_OS::strcmp (buffer, ONEWAY_ARG_TEST_STR) != 0)
                   {
                     return false;

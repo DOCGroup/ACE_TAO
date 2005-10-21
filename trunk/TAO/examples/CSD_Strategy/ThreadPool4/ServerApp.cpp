@@ -9,6 +9,9 @@
 #include "tao/Intrusive_Ref_Count_Handle_T.h"
 #include "tao/Messaging/Messaging.h"
 #include "tao/AnyTypeCode/Any.h"
+// To force static load the service.
+#include "tao/PI/PI.h"
+#include "tao/CSD_ThreadPool/CSD_ThreadPool.h"
 
 
 ServerApp::ServerApp()

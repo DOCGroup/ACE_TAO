@@ -6,6 +6,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 // To force static load the service.
+#include "tao/PI/PI.h"
 #include "tao/CSD_ThreadPool/CSD_ThreadPool.h"
 
 ClientApp::ClientApp()
