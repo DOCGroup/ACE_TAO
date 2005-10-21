@@ -72,16 +72,16 @@ init (ACE_ENV_SINGLE_ARG_DECL)
       {
         CIAO::DAnCE::ServerResource *sr = 0;
         this->plan_.infoProperty[0].value >>= sr;
-      
+
         Config_Handlers::SRD_Handler reverse_handler (sr);
-          
+
         Config_Handlers::XML_Helper the_helper;
-        xercesc::DOMDocument *the_xsc 
+        xercesc::DOMDocument *the_xsc
               (the_helper.create_dom ("CIAO:ServerResources",
                "http://www.dre.vanderbilt.edu/ServerResources"));
-        
+
         ServerResources (*reverse_handler.srd_xsc (), the_xsc);
-        
+
         // write out the result
         the_helper.write_DOM (the_xsc, "output.srd");
       }
@@ -96,7 +96,7 @@ init (ACE_ENV_SINGLE_ARG_DECL)
           ACE_ERROR ((LM_ERROR,
                       "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
                       "CIAO::DomainApplicationManager_Impl::init -"
-                      "ERROR while calling get_plan_info () \n"));             
+                      "ERROR while calling get_plan_info () \n"));
           ACE_TRY_THROW (Deployment::PlanError ());
         }
 
@@ -106,7 +106,7 @@ init (ACE_ENV_SINGLE_ARG_DECL)
           ACE_ERROR ((LM_ERROR,
                       "DAnCE (%P|%t) DomainApplicationManager_Impl.cpp -"
                       "CIAO::DomainApplicationManager_Impl::init -"
-                      "ERROR while calling split_plan () \n"));             
+                      "ERROR while calling split_plan () \n"));
           ACE_TRY_THROW (Deployment::PlanError ());
         }
 
@@ -147,7 +147,7 @@ init (ACE_ENV_SINGLE_ARG_DECL)
           ACE_TRY_CHECK;
 
           Deployment::NodeApplicationManager_var app_manager =
-            Deployment::NodeApplicationManager::_narrow 
+            Deployment::NodeApplicationManager::_narrow
               (tmp_app_manager.in ()
                ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -163,9 +163,9 @@ init (ACE_ENV_SINGLE_ARG_DECL)
 
               ACE_CString error ("DomainAppMgr::init () received a nil \
                                  reference for NodeApplicationManager\n");
-              
+
               ACE_DEBUG ((LM_DEBUG, error.c_str ()));
-              ACE_TRY_THROW 
+              ACE_TRY_THROW
                  (Deployment::StartError ("DomainApplicationManager_Impl:init",
                                           error.c_str ()));
             }
@@ -190,7 +190,7 @@ CIAO::DomainApplicationManager_Impl::
 get_plan_info (void)
 {
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::get_plan_info");
-  
+
   // Read the deployment.dat file and get to know the different nodes
   // that are present in the deployment domain.
   // We should be able to replace this way, by parsing the domain
@@ -234,7 +234,7 @@ get_plan_info (void)
     {
       bool matched = false;
 
-      const CORBA::ULong number_node_managers = 
+      const CORBA::ULong number_node_managers =
            this->node_manager_names_.size ();
 
       for (CORBA::ULong i = 0; i < number_node_managers; ++i)
@@ -295,11 +295,11 @@ split_plan (void)
     ACE_NEW_RETURN (tmp_plan,
                     ::Deployment::DeploymentPlan,
                     0);
-    
-    // Construct the UUID for the child plan.  
+
+    // Construct the UUID for the child plan.
     // Currently, this UUID consists of:
     // The global UUID for the parent plan + the name of the node the
-    // child plan is to be installed on. 
+    // child plan is to be installed on.
     ACE_CString child_uuid (this->plan_.UUID.in ());
     child_uuid += this->node_manager_names_[i];
 
@@ -357,7 +357,7 @@ split_plan (void)
       // Get the child plan.
       ::Deployment::DeploymentPlan_var &child_plan =
           (entry->int_id_).child_plan_;
-      
+
       // Fill in the contents of the child plan entry.
 
       // Append the "MonolithicDeploymentDescriptions implementation"
@@ -462,7 +462,7 @@ startLaunch (const ::Deployment::Properties & configProperty,
           ACE_Hash_Map_Entry
             <ACE_CString,
             Chained_Artifacts> *entry;
-          
+
           if (this->artifact_map_.find (this->node_manager_names_[i],
                                         entry) != 0)
             {
@@ -473,19 +473,19 @@ startLaunch (const ::Deployment::Properties & configProperty,
                           "for the node [%s] \n",
                           this->node_manager_names_[i].c_str ()));
 
-              ACE_CString error 
+              ACE_CString error
                  ("Unable to resolve a reference to node manager: ");
               error += this->node_manager_names_[i];
-              
-              ACE_TRY_THROW 
-                 (Deployment::StartError 
+
+              ACE_TRY_THROW
+                 (Deployment::StartError
                     ("DomainApplicationManager_Impl:startLaunch",
                      error.c_str ()));
             }
-          
+
           ::Deployment::NodeApplicationManager_ptr my_nam =
             (entry->int_id_).node_application_manager_.in ();
-          
+
           if (CORBA::is_nil (my_nam))
             {
               ACE_ERROR ((LM_ERROR,
@@ -495,13 +495,13 @@ startLaunch (const ::Deployment::Properties & configProperty,
                           "for the node [%s] \n",
                           this->node_manager_names_[i].c_str ()));
 
-              ACE_CString error 
+              ACE_CString error
                  ("While starting launch, the DomainApplicationManager\
                   has a nil reference for NodeApplicationManager\n");
               ACE_DEBUG ((LM_DEBUG, error.c_str ()));
-                                     
-              ACE_TRY_THROW 
-                (Deployment::StartError 
+
+              ACE_TRY_THROW
+                (Deployment::StartError
                    ("DomainApplicationManager_Impl::startLaunch",
                      error.c_str ()));
             }
@@ -532,14 +532,14 @@ startLaunch (const ::Deployment::Properties & configProperty,
                           "for the node [%s] \n",
                           this->node_manager_names_[i].c_str ()));
 
-              ACE_CString error 
+              ACE_CString error
                 ("The DomainApplicationManager receives a nil\
                  reference of NodeApplication after calling\
                  startLaunch on NodeApplicationManager.\n");
               ACE_ERROR ((LM_ERROR, error.c_str ()));
-              
-              ACE_TRY_THROW 
-                (Deployment::StartError 
+
+              ACE_TRY_THROW
+                (Deployment::StartError
                    ("DomainApplicationManager_Impl::startLaunch",
                      error.c_str ()));
             }
@@ -590,27 +590,27 @@ finishLaunch (::CORBA::Boolean start
                           "for the node [%s] \n",
                           this->node_manager_names_[i].c_str ()));
 
-              ACE_CString error 
+              ACE_CString error
                  ("Unable to resolve a reference to NodeManager: ");
               error += this->node_manager_names_[i];
-              
-              ACE_TRY_THROW 
-                (Deployment::StartError 
+
+              ACE_TRY_THROW
+                (Deployment::StartError
                    ("DomainApplicationManager_Impl::finishLaunch",
                      error.c_str ()));
             }
-          
+
 
           //@@ Note: Don't delete the below debugging helpers.
           // Dump the connections for debug purpose.
           if (CIAO::debug_level () > 9)
             {
-              ACE_DEBUG ((LM_DEBUG, 
+              ACE_DEBUG ((LM_DEBUG,
                  "==============================================\n"));
-              ACE_DEBUG ((LM_DEBUG, 
+              ACE_DEBUG ((LM_DEBUG,
                  "dump incoming connections for child plan:%d\n", i));
               dump_connections (this->all_connections_.in ());
-              ACE_DEBUG ((LM_DEBUG, 
+              ACE_DEBUG ((LM_DEBUG,
                   "==============================================\n"));
             }
 
@@ -629,8 +629,8 @@ finishLaunch (::CORBA::Boolean start
                           "for the node [%s] \n",
                           this->node_manager_names_[i].c_str ()));
 
-              ACE_TRY_THROW 
-                (Deployment::StartError 
+              ACE_TRY_THROW
+                (Deployment::StartError
                    ("DomainApplicationManager_Impl::finish_launch",
                     "There was some error establishing connections."));
             }
@@ -640,17 +640,17 @@ finishLaunch (::CORBA::Boolean start
           // Dump the connections for debug purpose.
           if (CIAO::debug_level () > 1)
             {
-              ACE_DEBUG ((LM_DEBUG, 
+              ACE_DEBUG ((LM_DEBUG,
                   "==============================================\n"));
-              ACE_DEBUG ((LM_DEBUG, 
+              ACE_DEBUG ((LM_DEBUG,
                   "dump outgoing connections for child plan:%d\n", i));
               dump_connections (safe.in ());
-              ACE_DEBUG ((LM_DEBUG, 
+              ACE_DEBUG ((LM_DEBUG,
                   "==============================================\n"));
             }
 
           // Invoke finishLaunch() operation on NodeApplication.
-          entry->int_id_.node_application_->finishLaunch 
+          entry->int_id_.node_application_->finishLaunch
              (safe.in (),
               start
               ACE_ENV_ARG_PARAMETER);
@@ -668,16 +668,16 @@ finishLaunch (::CORBA::Boolean start
       for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
         {
           // Get the NodeManager and NodeApplicationManager object references.
-          ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> * entry;
+          ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> * entry = 0;
           this->artifact_map_.find (this->node_manager_names_[i],entry);
 
-          ::Deployment::NodeApplicationManager_ptr 
+          ::Deployment::NodeApplicationManager_ptr
               my_node_application_manager =
                   (entry->int_id_).node_application_manager_.in ();
 
           // Invoke destoryApplication() operation on the NodeApplicationManger.
           // Since we have the first arg is not used by NAM anyway.
-          my_node_application_manager->destroyApplication 
+          my_node_application_manager->destroyApplication
              (0
               ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
@@ -716,11 +716,11 @@ start (ACE_ENV_SINGLE_ARG_DECL)
                           "for the node [%s] \n",
                           this->node_manager_names_[i].c_str ()));
 
-              ACE_CString error 
+              ACE_CString error
                 ("Unable to resolve a reference to node manager: ");
               error += this->node_manager_names_[i];
-              
-              ACE_TRY_THROW (Deployment::StartError 
+
+              ACE_TRY_THROW (Deployment::StartError
                 ("DomainApplicationManager_Impl:startLaunch",
                   error.c_str ()));
             }
@@ -757,8 +757,8 @@ start (ACE_ENV_SINGLE_ARG_DECL)
           my_na->start (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
-      
-     // Invoke ciao_postctivate () operation on each 
+
+     // Invoke ciao_postctivate () operation on each
      // cached NodeApplication object.
 
       for (i = 0; i < this->num_child_plans_; ++i)
@@ -776,11 +776,11 @@ start (ACE_ENV_SINGLE_ARG_DECL)
                           "for the node [%s] \n",
                           this->node_manager_names_[i].c_str ()));
 
-              ACE_CString error 
+              ACE_CString error
                 ("Unable to resolve a reference to node manager: ");
               error += this->node_manager_names_[i];
-              
-              ACE_TRY_THROW (Deployment::StartError 
+
+              ACE_TRY_THROW (Deployment::StartError
                   ("DomainApplicationManager_Impl:startLaunch",
                     error.c_str ()));
             }
@@ -832,7 +832,7 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
 
               ACE_TRY_THROW (Deployment::StopError ());
             }
-          
+
           ::Deployment::NodeApplication_ptr my_na =
               (entry->int_id_).node_application_.in ();
 
@@ -860,13 +860,13 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
               ACE_TRY_THROW (Deployment::StopError ());
             }
 
-          ::Deployment::NodeApplicationManager_ptr 
+          ::Deployment::NodeApplicationManager_ptr
               my_node_application_manager =
                   (entry->int_id_).node_application_manager_.in ();
 
           // Invoke destoryApplication() operation on the NodeApplicationManger.
           // Since we have the first arg is not used by NAM anyway.
-          my_node_application_manager->destroyApplication 
+          my_node_application_manager->destroyApplication
               (0
                ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -905,10 +905,10 @@ destroyManager (ACE_ENV_SINGLE_ARG_DECL)
 
           ::Deployment::NodeManager_var my_node_manager =
              (entry->int_id_).node_manager_;
-          
-          ::Deployment::NodeApplicationManager_var my_nam = 
+
+          ::Deployment::NodeApplicationManager_var my_nam =
               (entry->int_id_).node_application_manager_;
-          
+
           my_node_manager->destroyManager (my_nam.in ()
                                            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -1010,19 +1010,19 @@ get_outgoing_connections_i (const char * instname,
               this->plan_.instance[curr_conn.internalEndpoint[index].
                  instanceRef].name.in ();
 
-            // Cache the name of the port from the 
+            // Cache the name of the port from the
             // other component for searching later.
 
             ACE_CString port_name =
               curr_conn.internalEndpoint[index].portName.in ();
-            
+
             ACE_DEBUG ((LM_ERROR, "Looking: %s,%s \n",
                         name.c_str (),
                         port_name.c_str ()));
-            
+
             bool found = false;
 
-            // Now we have to search in the received 
+            // Now we have to search in the received
             // connections to get the objRef.
 
             const CORBA::ULong all_conn_len = this->all_connections_->length ();
@@ -1030,10 +1030,10 @@ get_outgoing_connections_i (const char * instname,
                 conn_index < all_conn_len;
                 ++conn_index)
               {
-                const Deployment::Connection curr_rev_conn = 
+                const Deployment::Connection curr_rev_conn =
                     this->all_connections_[conn_index];
 
-                // We need to look at the instance name and the 
+                // We need to look at the instance name and the
                 // port name to confirm.
                 if (ACE_OS::strcmp (curr_rev_conn.instanceName.in (),
                                     name.c_str ()) == 0 &&
@@ -1046,7 +1046,7 @@ get_outgoing_connections_i (const char * instname,
                     retv[len].instanceName = instname;
                     retv[len].portName = endpoint.portName.in ();
                     retv[len].kind = endpoint.kind;
-                    retv[len].endpoint = 
+                    retv[len].endpoint =
                        CORBA::Object::_duplicate(curr_rev_conn.endpoint.in ());
                     ++len;
                     found = true;
@@ -1054,21 +1054,21 @@ get_outgoing_connections_i (const char * instname,
                   }
               }
 
-              // We didnt find the counter part connection even 
+              // We didnt find the counter part connection even
               // we are sure there must be 1.
 
-              if (!found) 
+              if (!found)
                 {
                   ACE_CString error ("Creating connections for ");
                   error += instname;
                   error += ": unable to find object reference for connection ";
                   error += curr_conn.name.in ();
-                  ACE_THROW_RETURN (Deployment::StartError 
+                  ACE_THROW_RETURN (Deployment::StartError
                     ("DomainApplicationManager_Impl::create_connections_i",
 		      error.c_str ()),
 		      false);
                 }
-                  
+
               break;
           }
       }
@@ -1085,43 +1085,43 @@ dump_connections (const ::Deployment::Connections & connections)
   const CORBA::ULong conn_len = connections.length ();
   for (CORBA::ULong i = 0; i < conn_len; ++i)
   {
-    ACE_DEBUG ((LM_DEBUG, 
+    ACE_DEBUG ((LM_DEBUG,
                 "instanceName: %s\n", connections[i].instanceName.in ()));
 
     ACE_DEBUG ((LM_DEBUG, "portName: %s\n", connections[i].portName.in ()));
 
     ACE_DEBUG ((LM_DEBUG, "portkind: "));
 
-    switch (connections[i].kind) 
+    switch (connections[i].kind)
       {
-        case Deployment::Facet: 
+        case Deployment::Facet:
 
-           ACE_DEBUG ((LM_DEBUG, "Facet\n")); 
+           ACE_DEBUG ((LM_DEBUG, "Facet\n"));
            break;
 
-        case Deployment::SimplexReceptacle: 
+        case Deployment::SimplexReceptacle:
 
-           ACE_DEBUG ((LM_DEBUG, "SimplexReceptacle\n")); 
+           ACE_DEBUG ((LM_DEBUG, "SimplexReceptacle\n"));
            break;
 
-        case Deployment::MultiplexReceptacle: 
+        case Deployment::MultiplexReceptacle:
 
-           ACE_DEBUG ((LM_DEBUG, "MultiplexReceptacle\n")); 
+           ACE_DEBUG ((LM_DEBUG, "MultiplexReceptacle\n"));
            break;
 
-        case Deployment::EventEmitter: 
+        case Deployment::EventEmitter:
 
-           ACE_DEBUG ((LM_DEBUG, "EventEmitter\n")); 
+           ACE_DEBUG ((LM_DEBUG, "EventEmitter\n"));
            break;
 
-        case Deployment::EventPublisher: 
+        case Deployment::EventPublisher:
 
-           ACE_DEBUG ((LM_DEBUG, "EventPublisher\n")); 
+           ACE_DEBUG ((LM_DEBUG, "EventPublisher\n"));
            break;
 
-        case Deployment::EventConsumer: 
+        case Deployment::EventConsumer:
 
-           ACE_DEBUG ((LM_DEBUG, "EventConsumer\n")); 
+           ACE_DEBUG ((LM_DEBUG, "EventConsumer\n"));
            break;
       }
   }
