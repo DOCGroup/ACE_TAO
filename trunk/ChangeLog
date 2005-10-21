@@ -1,3 +1,9 @@
+Fri Oct 21 12:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Proactor.h:
+          Added virtual destructor to the dummy ACE_Proactor that is
+          enabled when the ACE_Proactor can't be used
+
 Fri Oct 21 12:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg.cpp:
