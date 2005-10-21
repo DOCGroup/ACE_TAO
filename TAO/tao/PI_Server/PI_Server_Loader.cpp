@@ -62,7 +62,7 @@ TAO_PI_Server_Loader::init (int,
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "(%P | %t) Caught exception:");
+                           "Caught exception:");
       return -1;
     }
   ACE_ENDTRY;
