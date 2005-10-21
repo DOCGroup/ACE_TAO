@@ -494,7 +494,7 @@ protected:
   size_t cur_length_;
 
   /// Current number of messages in the queue.
-  int cur_count_;
+  size_t cur_count_;
 
   /// The notification strategy used when a new message is enqueued.
   ACE_Notification_Strategy *notification_strategy_;

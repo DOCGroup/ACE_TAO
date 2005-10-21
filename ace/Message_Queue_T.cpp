@@ -845,7 +845,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::flush_i (void)
   // and <release> their memory.
   for (this->tail_ = 0; this->head_ != 0; )
     {
-      number_flushed++;
+      ++number_flushed;
 
       size_t mb_bytes = 0;
       size_t mb_length = 0;
@@ -854,7 +854,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::flush_i (void)
       // Subtract off all of the bytes associated with this message.
       this->cur_bytes_ -= mb_bytes;
       this->cur_length_ -= mb_length;
-      this->cur_count_--;
+      --this->cur_count_;
 
       ACE_Message_Block *temp = this->head_;
       this->head_ = this->head_->next ();
@@ -995,7 +995,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_tail_i (ACE_Message_Block *new_item)
   // Make sure to count all the bytes in a composite message!!!
   new_item->total_size_and_length (this->cur_bytes_,
                                    this->cur_length_);
-  this->cur_count_++;
+  ++this->cur_count_;
 
   if (this->signal_dequeue_waiters () == -1)
     return -1;
@@ -1026,7 +1026,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_head_i (ACE_Message_Block *new_item)
   // Make sure to count all the bytes in a composite message!!!
   new_item->total_size_and_length (this->cur_bytes_,
                                    this->cur_length_);
-  this->cur_count_++;
+  ++this->cur_count_;
 
   if (this->signal_dequeue_waiters () == -1)
     return -1;
@@ -1091,7 +1091,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_i (ACE_Message_Block *new_item)
   // Make sure to count all the bytes in a composite message!!!
   new_item->total_size_and_length (this->cur_bytes_,
                                    this->cur_length_);
-  this->cur_count_++;
+  ++this->cur_count_;
 
   if (this->signal_dequeue_waiters () == -1)
     return -1;
@@ -1152,7 +1152,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_deadline_i (ACE_Message_Block *new_ite
   // Make sure to count all the bytes in a composite message!!!
   new_item->total_size_and_length (this->cur_bytes_,
                                    this->cur_length_);
-  this->cur_count_++;
+  ++this->cur_count_;
 
   if (this->signal_dequeue_waiters () == -1)
     return -1;
@@ -1191,7 +1191,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&first_item
   // Subtract off all of the bytes associated with this message.
   this->cur_bytes_ -= mb_bytes;
   this->cur_length_ -= mb_length;
-  this->cur_count_--;
+  --this->cur_count_;
 
   if (this->cur_count_ == 0 && this->head_ == this->tail_)
     this->head_ = this->tail_ = 0;
@@ -1267,7 +1267,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_prio_i (ACE_Message_Block *&dequeued)
   // Subtract off all of the bytes associated with this message.
   this->cur_bytes_ -= mb_bytes;
   this->cur_length_ -= mb_length;
-  this->cur_count_--;
+  --this->cur_count_;
 
   if (this->cur_count_ == 0 && this->head_ == this->tail_)
     this->head_ = this->tail_ = 0;
@@ -1316,7 +1316,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_tail_i (ACE_Message_Block *&dequeued)
   // Subtract off all of the bytes associated with this message.
   this->cur_bytes_ -= mb_bytes;
   this->cur_length_ -= mb_length;
-  this->cur_count_--;
+  --this->cur_count_;
 
   if (this->cur_count_ == 0 && this->head_ == this->tail_)
     this->head_ = this->tail_ = 0;
@@ -1385,7 +1385,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_deadline_i (ACE_Message_Block *&dequeu
   // Subtract off all of the bytes associated with this message.
   this->cur_bytes_ -= mb_bytes;
   this->cur_length_ -= mb_length;
-  this->cur_count_--;
+  --this->cur_count_;
 
   if (this->cur_count_ == 0 && this->head_ == this->tail_)
     this->head_ = this->tail_ = 0;
@@ -1869,7 +1869,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::remove_messages (ACE_Message_Block *&l
        temp1 != 0;
        temp1 = temp1->next ())
     {
-      this->cur_count_--;
+      --this->cur_count_;
 
       size_t mb_bytes = 0;
       size_t mb_length = 0;
@@ -2089,7 +2089,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_i (ACE_Message_Block *new_item
                                    mb_length);
   this->cur_bytes_ += mb_bytes;
   this->cur_length_ += mb_length;
-  this->cur_count_++;
+  ++this->cur_count_;
 
   if (this->signal_dequeue_waiters () == -1)
     return -1;
@@ -2278,7 +2278,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&fi
   // Subtract off all of the bytes associated with this message.
   this->cur_bytes_ -= mb_bytes;
   this->cur_length_ -= mb_length;
-  this->cur_count_--;
+  --this->cur_count_;
 
   // Only signal enqueueing threads if we've fallen below the low
   // water mark.
