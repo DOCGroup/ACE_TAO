@@ -1,3 +1,9 @@
+Fri Oct 21 11:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/compiler.bor:
+          BCBVER must be explicitly defined by the end user and must
+          be set to a supported value, else just don't build.
+
 Fri Oct 21 10:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg.cpp (log)
