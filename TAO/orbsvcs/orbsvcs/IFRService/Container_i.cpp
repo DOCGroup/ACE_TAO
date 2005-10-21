@@ -200,7 +200,7 @@ TAO_Container_i::lookup_i (const char *search_name
   ACE_TString section_name;
   int status = 0;
   int index = 0;
-  int pos = 0;
+  ssize_t pos = 0;
   int so_far_so_good = 0;
   u_int kind = 0;
   CORBA::DefinitionKind def_kind = CORBA::dk_none;
@@ -2424,7 +2424,7 @@ TAO_Container_i::update_refs (const char *path,
                                                 "name",
                                                 ref_name);
 
-      int pos = ref_name.find (this->repo_->extension ());
+      ssize_t pos = ref_name.find (this->repo_->extension ());
 
       // If one of the names has been mangled by move(), fix it.
       if (pos != ACE_TString::npos)
