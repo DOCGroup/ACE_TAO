@@ -1,3 +1,9 @@
+Fri Oct 21 12:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Message_Queue_T.{h,cpp}:
+          Changed cur_count to size_t and use prefix operators instead
+          of postfix
+
 Fri Oct 21 11:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/compiler.bor:
