@@ -1,3 +1,9 @@
+Thu Oct 20 22:20:26 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Dev_Poll_Reactor.cpp (open): Disabling the notify pipe was
+ 	  failing, but now it works.  Thanks to Oh Yoon Sik <boom at
+ 	  estsoft dot com> for this fix.
+
 Thu Oct 29 14:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/CDR_Base.cpp:

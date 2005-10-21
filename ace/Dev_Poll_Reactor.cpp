@@ -906,10 +906,11 @@ ACE_Dev_Poll_Reactor::open (size_t size,
   else if (this->notify_handler_->open (this,
                                         0,
                                         disable_notify_pipe) == -1
-           || this->register_handler_i (
-                       this->notify_handler_->notify_handle (),
-                       this->notify_handler_,
-                       ACE_Event_Handler::READ_MASK) == -1)
+           || (disable_notify_pipe == 0 
+               && this->register_handler_i (
+                                            this->notify_handler_->notify_handle (),
+                                            this->notify_handler_,
+                                            ACE_Event_Handler::READ_MASK)) == -1)
     result = -1;
 
   this->size_ = size;
