@@ -56,9 +56,18 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
             // Parse the parameter
             ACE_CString arg ((const char *)argv[curarg]);
             ssize_t pos = arg.find (':');
-            poa_name = arg.substr (0, pos);
-            ACE_CString num_thread_str = arg.substr (pos + 1, arg.length () - pos);
-            num_threads = ACE_OS::strtoul (num_thread_str.c_str (), 0, 10);
+            // If the number of threads is not specified then use the default value
+            // which is 1.
+            if (pos == ACE_CString::npos)
+              {
+                poa_name = arg;
+              }
+            else
+              {
+                poa_name = arg.substr (0, pos);
+                ACE_CString num_thread_str = arg.substr (pos + 1, arg.length () - pos);
+                num_threads = ACE_OS::strtoul (num_thread_str.c_str (), 0, 10);
+              }
 
             // Create the ThreadPool strategy for each named poa.
             TP_Strategy* strategy = 0;
