@@ -1,3 +1,8 @@
+Fri Oct 21 12:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.cpp:
+          Fixed compile problem in Linux builds
+
 Fri Oct 21 12:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_unistd.{h,inl} (sbrk):
