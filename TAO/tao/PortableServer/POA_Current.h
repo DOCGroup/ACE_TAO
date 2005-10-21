@@ -62,6 +62,19 @@ namespace TAO
                          PortableServer::Current::NoContext));
 
       /**
+       * This operation returns a locally manufactured reference to the object
+       * in the context of which it is called. If called outside the context
+       * of a POA dispatched operation, a NoContext exception is raised.
+       * @note This reference is not guaranteed to be identical to the original
+       * reference the client used to make the invocation, and calling the
+       * Object::is_equivalent operation to compare the two references may not
+       * necessarily return true.
+       */
+      CORBA::Object_ptr get_reference (ACE_ENV_SINGLE_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::Current::NoContext));
+
+      /**
        * Returns a reference to the servant that hosts the object in whose
        * context it is called. If called outside the context of the POA
        * dispatched operation, a NoContext exception is raised

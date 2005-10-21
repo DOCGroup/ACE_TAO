@@ -33,7 +33,7 @@ make_wstring (const char *str)
   if (str == 0)
     return 0;
 
-  int len = strlen (str) + 1;
+  size_t len = strlen (str) + 1;
   wchar_t *wstr = new wchar_t[len];
   ACE_DEBUG ((LM_DEBUG,
               "make_wstring: str = %s\n",str));
