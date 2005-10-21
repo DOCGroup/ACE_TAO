@@ -33,6 +33,9 @@
 #
 
 # Get the BCBVER and VCLVER, if it is not set, we default to BCB6.
+!if $(BCBVER) == 8
+VCLVER =
+!else
 !if $(BCBVER) == 6
 VCLVER =
 !else
@@ -42,8 +45,8 @@ VCLVER = 50
 !if $(BCBVER) == 4
 VCLVER = 40
 !else
-BCBVER = 6
-VCLVER =
+!error BCBVER must be explicitly set as environment variable or is set to a not supported value.
+!endif
 !endif
 !endif
 !endif
