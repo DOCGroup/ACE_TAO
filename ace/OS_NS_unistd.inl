@@ -957,7 +957,7 @@ ACE_OS::pipe (ACE_HANDLE fds[])
 #endif /* !ACE_WIN32 */
 
 ACE_INLINE void *
-ACE_OS::sbrk (int brk)
+ACE_OS::sbrk (ptrdiff_t brk)
 {
 #if defined (ACE_LACKS_SBRK)
   ACE_UNUSED_ARG (brk);
