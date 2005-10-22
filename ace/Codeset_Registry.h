@@ -41,27 +41,27 @@ class ACE_Export ACE_Codeset_Registry
 {
 public:
 
-  // based on a locale string, find the registry value and optional codeset
-  // collection. This wraps the dce_cs_loc_to_rgy function, or emulates it.
+  /// Based on a locale string, find the registry value and optional codeset
+  /// collection. This wraps the dce_cs_loc_to_rgy function, or emulates it.
   static int locale_to_registry (const ACE_CString &locale,
                                  ACE_CDR::ULong &codeset_id,
                                  ACE_CDR::UShort * = 0,
                                  ACE_CDR::UShort ** = 0);
 
-  // based on a registry value, find the locale string and optional codeset
-  // collection.  This wraps the dce_cs_rgy_to_loc function, or emulates it.
+  /// Based on a registry value, find the locale string and optional codeset
+  /// collection.  This wraps the dce_cs_rgy_to_loc function, or emulates it.
   static int registry_to_locale (ACE_CDR::ULong codeset_id,
                                  ACE_CString &locale,
                                  ACE_CDR::UShort * = 0,
                                  ACE_CDR::UShort ** = 0);
 
-  // tell if two codesets are compatible. This wraps the
-  //rpc_cs_char_set_compat_check function.
+  /// Tell if two codesets are compatible. This wraps the
+  /// rpc_cs_char_set_compat_check function.
   static int is_compatible (ACE_CDR::ULong codeset_id,
                             ACE_CDR::ULong other);
 
-  // return the max number of bytes required to represent a single character.
-  // This wraps the rpc_rgy_get_max_bytes function.
+  /// Return the max number of bytes required to represent a single character.
+  /// This wraps the rpc_rgy_get_max_bytes function.
   static ACE_CDR::Short get_max_bytes (ACE_CDR::ULong codeset_id);
 
   enum {max_charsets_ = 5};
