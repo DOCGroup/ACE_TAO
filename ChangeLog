@@ -1,14 +1,19 @@
+Sat Oct 22 11:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Codeset_Registry.h:
+          Doxygen improvements
+
 Fri Oct 21 14:28:54 MST 2005  Yan Dai  <dai_y@ociweb.com>
 
         * bin/MakeProjectCreator/config/csd_pt_test_exe.mpb:
 
-          Added dependency on pi base project since the PI.h is included 
+          Added dependency on pi base project since the PI.h is included
           in the test application for the static initialization.
-          
+
 Tue Oct 18 17:24:26 MST 2005  Yan Dai  <dai_y@ociweb.com>
 
         * bin/msvc_static_order.lst:
-        
+
           Added TAO/tests/CSD_Strategy_Tests/TP_Common/CSD_TP_Test_Lib.
 
 Fri Oct 21 11:44:33 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
