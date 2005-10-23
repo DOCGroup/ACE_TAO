@@ -54,6 +54,14 @@ RESDIR = <%rcdir%>
 <%if(resource_files)%>
 
 RESOURCE =<%foreach(resource_files)%> $(OBJDIR)\<%basenoextension(resource_file)%>.res<%endfor%>
+
+<%if(includes)%>
+RC_FLAGS = \
+<%foreach(includes)%>
+        -i"<%include%>"<%fornotlast(" \\")%>
+<%endfor%>
+<%endif%>
+
 <%endif%>
 
 !ifdef STATIC
@@ -71,13 +79,6 @@ DLL_FLAGS = \
 <%endfor%>
 <%endif%>
 !endif
-
-<%if(includes)%>
-RC_FLAGS = \
-<%foreach(includes)%>
-        -i"<%include%>"<%fornotlast(" \\")%>
-<%endfor%>
-<%endif%>
 
 CFLAGS = \
 <%if(pch_header)%>

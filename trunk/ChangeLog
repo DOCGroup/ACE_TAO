@@ -1,3 +1,13 @@
+Sun Oct 23 06:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+          Generate new RC_FLAGS with the includes that need to be passed to
+          the resource compiler
+
+        * include/makeinclude/build_dll.bor:
+        * include/makeinclude/build_exe.bor:
+          Use the new RC_FLAGS
+
 Sat Oct 22 11:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Codeset_Registry.h:
