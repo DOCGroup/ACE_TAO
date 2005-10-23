@@ -72,6 +72,13 @@ DLL_FLAGS = \
 <%endif%>
 !endif
 
+<%if(includes)%>
+RC_FLAGS = \
+<%foreach(includes)%>
+        -i"<%include%>"<%fornotlast(" \\")%>
+<%endfor%>
+<%endif%>
+
 CFLAGS = \
 <%if(pch_header)%>
 <%foreach(pch_defines)%>

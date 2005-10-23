@@ -109,6 +109,6 @@ USE_FULL_PATH = 1
 
 .rc.res:
 	@$(MAKE_OBJDIR)
-	$(RC) -fo$@ $<
+        $(RC) $(RC_FLAGS) -fo$@ $<
 
 .autodepend
