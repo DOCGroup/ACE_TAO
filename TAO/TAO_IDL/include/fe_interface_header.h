@@ -107,6 +107,9 @@ public:
 
   idl_bool is_abstract (void) const;
   // See if we are an abstract interface.
+  
+  void destroy (void);
+  // Destroy anything allocated for this class.
 
   // Data.
 protected:

@@ -282,6 +282,19 @@ FE_InterfaceHeader::is_abstract (void) const
   return this->pd_is_abstract;
 }
 
+void
+FE_InterfaceHeader::destroy (void)
+{
+  if (this->pd_interface_name == 0)
+    {
+      return;
+    }
+    
+  this->pd_interface_name->destroy ();
+  delete this->pd_interface_name;
+  this->pd_interface_name = 0;
+}
+
 // Add this interface to the list of inherited if not already there.
 void
 FE_InterfaceHeader::compile_one_inheritance (AST_Interface *i)
