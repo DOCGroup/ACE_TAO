@@ -10,7 +10,7 @@
 //
 // = DESCRIPTION
 //     This is a test of the opendir and readdir emulation provided by the
-//     class ACE_OS_Dirent.  It is used to ensure that the emulation code
+//     class ACE_Dirent.  It is used to ensure that the emulation code
 //     works properly on platforms that don't support this capability
 //     natively.  As the emulation code is not compiled in other
 //     platforms, this test also ensures that there is no impact to
