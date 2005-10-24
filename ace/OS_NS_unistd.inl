@@ -1237,8 +1237,8 @@ ACE_OS::ualarm (const ACE_Time_Value &tv,
   ACE_OS_TRACE ("ACE_OS::ualarm");
 
 #if defined (ACE_HAS_UALARM)
-  ulong usecs = (tv.sec () * ACE_ONE_SECOND_IN_USECS) + tv.usec ();
-  ulong interval = (tv_interval.sec () * ACE_ONE_SECOND_IN_USECS) + tv_interval.usec ();
+  u_long usecs = (tv.sec () * ACE_ONE_SECOND_IN_USECS) + tv.usec ();
+  u_long interval = (tv_interval.sec () * ACE_ONE_SECOND_IN_USECS) + tv_interval.usec ();
   return ::ualarm (usecs, interval);
 #elif !defined (ACE_LACKS_UNIX_SIGNALS)
   ACE_UNUSED_ARG (tv_interval);
