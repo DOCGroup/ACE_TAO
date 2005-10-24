@@ -36,6 +36,8 @@
 
 namespace CIAO
 {
+  class NodeApplicationManager_Impl_Base;
+
   /**
    * @class NodeManager_Impl
    *
@@ -45,13 +47,13 @@ namespace CIAO
    * This class implements the CIAO:NodeManager interface.
    *
    */
-  class NodeManager_Impl
+  class NodeManager_Impl_Base
     : public virtual POA_CIAO::NodeManager
   {
   public:
 
     /// Constructor
-    NodeManager_Impl (const char *name,
+    NodeManager_Impl_Base (const char *name,
                       CORBA::ORB_ptr orb,
                       PortableServer::POA_ptr p,
                       const char * nodeapp_loc,
@@ -110,7 +112,13 @@ namespace CIAO
     /// through the reference counting mechanism (i.e. to
     /// disallow calling operator delete() on an instance of
     /// this class.
-    virtual ~NodeManager_Impl (void);
+    virtual ~NodeManager_Impl_Base (void);
+
+    virtual ::CIAO::NodeApplicationManager_Impl_Base *
+    create_node_app_manager (CORBA::ORB_ptr orb, 
+                             PortableServer::POA_ptr poa
+                             ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException))=0;
 
     /// Keep a pointer to the managing ORB serving this servant.
     CORBA::ORB_var orb_;
@@ -138,6 +146,86 @@ namespace CIAO
 
     NAM_Map map_;
   };
+
+
+  /**
+   * @class NodeManager_Impl
+   *
+   */
+  class NodeManager_Impl
+    : public virtual NodeManager_Impl_Base
+  {
+  public:
+
+    /// Constructor
+    NodeManager_Impl (const char *name,
+                     CORBA::ORB_ptr orb,
+                     PortableServer::POA_ptr p,
+                     const char * nodeapp_loc,
+                     const char * nodeapp_options,
+                     int spawn_delay);
+
+  protected:
+    /// Since this class is reference counted, making this
+    /// destructor protected to enforce proper memory managment
+    /// through the reference counting mechanism (i.e. to
+    /// disallow calling operator delete() on an instance of
+    /// this class.
+    virtual ~NodeManager_Impl (void);
+
+    virtual ::CIAO::NodeApplicationManager_Impl_Base *
+    create_node_app_manager (CORBA::ORB_ptr orb, 
+                             PortableServer::POA_ptr poa
+                             ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+  };
+
+  class NodeApplicationManager_Impl;
+  struct Static_Config_EntryPoints_Maps;
+
+  /**
+   * @class Static_NodeManager_Impl
+   *
+   */
+  class Static_NodeManager_Impl
+    : public virtual NodeManager_Impl_Base
+  {
+  public:
+
+    /// Constructor
+    Static_NodeManager_Impl (const char *name,
+                            CORBA::ORB_ptr orb,
+                            PortableServer::POA_ptr p,
+                            const char * nodeapp_loc,
+                            const char * nodeapp_options,
+                            int spawn_delay,
+                            Static_Config_EntryPoints_Maps* static_config_entrypoints_maps
+                            );
+
+    void destroyManager
+    (Deployment::NodeApplicationManager_ptr manager
+     ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Deployment::StopError,
+                       Deployment::InvalidReference));
+
+  protected:
+    /// Since this class is reference counted, making this
+    /// destructor protected to enforce proper memory managment
+    /// through the reference counting mechanism (i.e. to
+    /// disallow calling operator delete() on an instance of
+    /// this class.
+    virtual ~Static_NodeManager_Impl (void);
+
+    virtual ::CIAO::NodeApplicationManager_Impl_Base *
+    create_node_app_manager (CORBA::ORB_ptr orb, 
+                             PortableServer::POA_ptr poa
+                             ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    Static_Config_EntryPoints_Maps* static_config_entrypoints_maps_;    
+  };
+
 }
 
 #if defined(_MSC_VER)

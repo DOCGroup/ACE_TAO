@@ -68,9 +68,9 @@ namespace CIAO
                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-  protected:
     Deployment::NodeApplication_ptr get_nodeapp_ref (void);
 
+  protected:
     CORBA::ORB_var orb_;
 
     PortableServer::POA_var poa_;

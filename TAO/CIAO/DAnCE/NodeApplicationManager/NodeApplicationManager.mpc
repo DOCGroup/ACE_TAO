@@ -11,5 +11,9 @@ project(NodeApplicationManager): ciao_server_dnc, ciao_deployment_svnt, ciao_dep
     NodeApplicationManager_Impl.cpp
     ImplementationInfo.cpp
     Containers_Info_Map.cpp
+    ../NodeApplication/NodeApplication_Core.cpp
+    ../NodeApplication/NodeApp_Configurator.cpp
+    ../NodeApplication/NodeApplication_Impl.cpp
+    ../NodeApplication/Container_Impl.cpp
   }
 }
