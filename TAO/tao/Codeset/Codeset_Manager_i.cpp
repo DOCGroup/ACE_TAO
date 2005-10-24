@@ -216,7 +216,7 @@ TAO_Codeset_Manager_i::process_service_context (TAO_ServerRequest &request)
 
 void
 TAO_Codeset_Manager_i::generate_service_context (TAO_Operation_Details &opd,
-                                               TAO_Transport &trans)
+                                                 TAO_Transport &trans)
 {
   TAO_Service_Context &service_cntx = opd.request_service_context ();
   CONV_FRAME::CodeSetContext codeset_cntx;
@@ -297,7 +297,7 @@ TAO_Codeset_Manager_i::isCompatible(CONV_FRAME::CodeSetId cs1,
 /// returns the TCS for Char / Wchar
 CONV_FRAME::CodeSetId
 TAO_Codeset_Manager_i::computeTCS (CONV_FRAME::CodeSetComponent &remote,
-                                 CONV_FRAME::CodeSetComponent &local )
+                                   CONV_FRAME::CodeSetComponent &local )
 {
   if (remote.native_code_set == local.native_code_set)
     {
@@ -486,7 +486,7 @@ TAO_Codeset_Manager_i::get_wchar_trans (CONV_FRAME::CodeSetId tcs)
 
 TAO_Codeset_Translator_Base *
 TAO_Codeset_Manager_i::get_translator_i (TAO_Codeset_Descriptor& cd,
-                                       CONV_FRAME::CodeSetId tcs)
+                                         CONV_FRAME::CodeSetId tcs)
 {
   for (TAO_Codeset_Descriptor::Translator_Node *tlist = cd.translators();
        tlist; tlist = tlist->next_)
