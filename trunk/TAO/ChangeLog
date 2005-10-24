@@ -1,3 +1,8 @@
+Mon Oct 24 17:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Codec/client.cpp:
+          Added missing return
+
 Mon Oct 24 06:53:12 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/IFR_Service/Makefile.am:
