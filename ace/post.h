@@ -7,19 +7,10 @@
  *  $Id$
  *
  *  @author Christopher Kohlhoff <chris@kohlhoff.com>
- *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  *
- *  This file restores the original alignment rules, and closes
- *  the versioned namespace (if enabled by the user).
- *
+ *  This file restores the original alignment rules.
  */
 //=============================================================================
-
-
-// No need to include header defining this macro.  It should have
-// already been pulled in by ace/pre.h.
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 
 // No header guard
 #if defined (_MSC_VER)

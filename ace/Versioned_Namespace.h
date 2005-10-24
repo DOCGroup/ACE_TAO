@@ -17,8 +17,8 @@
 #ifndef ACE_VERSIONED_NAMESPACE_H
 #define ACE_VERSIONED_NAMESPACE_H
 
-#ifndef ACE_MAJOR_VERSION
-# error This header is only meant to be included by "ace/Version.h".
+#ifndef ACE_CONFIG_LITE_H
+# error This header is only meant to be included by "ace/config-lite.h".
 #endif  /* !ACE_MAJOR_VERSION */
 
 
