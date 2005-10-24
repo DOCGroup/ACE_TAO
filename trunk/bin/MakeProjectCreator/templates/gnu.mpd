@@ -157,7 +157,7 @@ RESOURCES += \
 
 RCFLAGS = \
 <%foreach(includes)%>
-        -I<%include%><%fornotlast(" \\")%>
+        --include-dir=<%include%><%fornotlast(" \\")%>
 <%endfor%>
 <%endif%>
 endif
