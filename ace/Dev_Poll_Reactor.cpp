@@ -93,6 +93,9 @@ ACE_Dev_Poll_Reactor_Notify::open (ACE_Reactor_Impl *r,
         if (free_queue_.enqueue_head (temp + i) == -1)
           return -1;
 
+      if (ACE::set_flags (this->notification_pipe_.write_handle (),
+                          ACE_NONBLOCK) == -1)
+        return -1;
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
       // Set the read handle into non-blocking mode since we need to
@@ -667,8 +670,11 @@ ACE_Dev_Poll_Reactor_Handler_Repository::find (ACE_HANDLE handle,
     {
       eh = this->handlers_[handle].event_handler;
 
-      if (eh != 0 && index_p != 0)
-        *index_p = handle;
+      if (eh != 0)
+        {
+          if (index_p != 0)
+            *index_p = handle;
+        }
       else
         errno = ENOENT;
     }
@@ -1395,51 +1401,52 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
       */
       ACE_Event_Handler *eh = this->handler_rep_.find (handle);
 
-      {
-        // Modify the reference count in an exception-safe way.
-        // Note that eh could be the notify handler. It's not strictly
-        // necessary to manage its refcount, but since we don't enable
-        // the counting policy, it won't do much. Management of the
-        // notified handlers themselves is done in the notify handler.
-        ACE_Dev_Poll_Handler_Guard eh_guard (eh);
+      if (eh)
+        {
+          // Modify the reference count in an exception-safe way.
+          // Note that eh could be the notify handler. It's not strictly
+          // necessary to manage its refcount, but since we don't enable
+          // the counting policy, it won't do much. Management of the
+          // notified handlers themselves is done in the notify handler.
+          ACE_Dev_Poll_Handler_Guard eh_guard (eh);
 
-        // Release the reactor token before upcall.
-        guard.release_token ();
+          // Release the reactor token before upcall.
+          guard.release_token ();
 
-        // Dispatch the detected event
-        if (disp_out)
-          {
-            const int status =
-              this->upcall (eh, &ACE_Event_Handler::handle_output, handle);
+          // Dispatch the detected event
+          if (disp_out)
+            {
+              const int status =
+                this->upcall (eh, &ACE_Event_Handler::handle_output, handle);
 
-            if (status < 0)
-              // Note that the token is reacquired in remove_handler().
-              this->remove_handler (handle, ACE_Event_Handler::WRITE_MASK);
-            return 1;
-          }
+              if (status < 0)
+                // Note that the token is reacquired in remove_handler().
+                this->remove_handler (handle, ACE_Event_Handler::WRITE_MASK);
+              return 1;
+            }
 
-        if (disp_exc)
-          {
-            const int status =
-              this->upcall (eh, &ACE_Event_Handler::handle_exception, handle);
+          if (disp_exc)
+            {
+              const int status =
+                this->upcall (eh, &ACE_Event_Handler::handle_exception, handle);
 
-            if (status < 0)
-              // Note that the token is reacquired in remove_handler().
-              this->remove_handler (handle, ACE_Event_Handler::EXCEPT_MASK);
-            return 1;
-          }
+              if (status < 0)
+                // Note that the token is reacquired in remove_handler().
+                this->remove_handler (handle, ACE_Event_Handler::EXCEPT_MASK);
+              return 1;
+            }
 
-        if (disp_in)
-          {
-            const int status =
-              this->upcall (eh, &ACE_Event_Handler::handle_input, handle);
+          if (disp_in)
+            {
+              const int status =
+                this->upcall (eh, &ACE_Event_Handler::handle_input, handle);
 
-            if (status < 0)
-              // Note that the token is reacquired in remove_handler().
-              this->remove_handler (handle, ACE_Event_Handler::READ_MASK);
-            return 1;
-          }
-      } // The reactor token is reacquired upon leaving this scope.
+              if (status < 0)
+                // Note that the token is reacquired in remove_handler().
+                this->remove_handler (handle, ACE_Event_Handler::READ_MASK);
+              return 1;
+            }
+        } // The reactor token is reacquired upon leaving this scope.
     }
 
   return 0;

@@ -264,10 +264,11 @@ Wed Oct 19 14:09:44 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
  	* tao/Messaging/AMH_Response_Handler.cpp:
 
 	  Release the lock in the destructor before calling
-	  _tao_rh_send_exception (). The said method is well
-	  protected. Calling this method with the lock held could create a
-	  deadlock. Thanks to <im-scooter at yandex.ru> for reporting the
-	  problem. This fixes [BUGID 2269].
+ 	  _tao_rh_send_exception (). The said method is well
+ 	  protected. Calling this method with the lock held could create a
+ 	  deadlock. Thanks to Anton Bakanovskiy <Anton dot Bakanovskiy at
+ 	  bercut dot ru> and Toha Bakanovsky <im-scooter at yandex.ru> for
+ 	  reporting the problem. This fixes [BUGID 2269].
 
 Wed Oct 19 11:30:23 MST 2005  Yan Dai  <dai_y@ociweb.com>
 
