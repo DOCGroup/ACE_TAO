@@ -1,3 +1,25 @@
+Mon Oct 24 18:39:31 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/fe_interface_header.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/fe_interface_header.h:
+        
+          For IDL types that are added to the IDL compiler's
+          AST via an FE_*Header class (interfaces, valuetypes,
+          eventtypes, components, and homes), modified the 
+          creation of this class to pass in a scoped name
+          created on the heap instead of on the stack.
+          Memory allocated within this scoped name was being
+          freed in a different scope, and it's dangerous
+          to assume that the stack address would still be
+          valid. Also added a destroy() method to the
+          FE_InterfaceHeader class (base class to all the
+          others) that handles the destruction of the scoped
+          name member and its contents, if it is nonzero.
+          Thanks to Iliyan Jeliazkov <jeliazkov_i@ociweb.com>
+          for reporting the problem.
+
 Mon Oct 24 18:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/CodecFactory/CodecFactory_impl.cpp:

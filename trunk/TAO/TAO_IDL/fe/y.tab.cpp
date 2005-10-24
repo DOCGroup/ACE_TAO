@@ -2363,7 +2363,7 @@ tao_yyreduce:
               (void) s->fe_add_interface (i);
 
               // This FE_InterfaceHeader class isn't destroyed with the AST.
-              tao_yyvsp[0].ihval->name ()->destroy ();
+              tao_yyvsp[0].ihval->destroy ();
               delete tao_yyvsp[0].ihval;
               tao_yyvsp[0].ihval = 0;
             }
@@ -2440,10 +2440,12 @@ tao_yyreduce:
            * list of all interfaces which this interface inherits from,
            * recursively
            */
-          UTL_ScopedName n (tao_yyvsp[-1].idval,
-                            0);
+          UTL_ScopedName *n = 0;
+          ACE_NEW_RETURN (n,
+                          UTL_ScopedName (tao_yyvsp[-1].idval, 0),
+                          1);
           ACE_NEW_RETURN (tao_yyval.ihval,
-                          FE_InterfaceHeader (&n,
+                          FE_InterfaceHeader (n,
                                               tao_yyvsp[0].nlval,
                                               I_FALSE,
                                               I_FALSE,
@@ -2464,10 +2466,12 @@ tao_yyreduce:
            * list of all interfaces which this interface inherits from,
            * recursively
            */
-          UTL_ScopedName n (tao_yyvsp[-1].idval,
-                            0);
+          UTL_ScopedName *n = 0;
+          ACE_NEW_RETURN (n,
+                          UTL_ScopedName (tao_yyvsp[-1].idval, 0),
+                          1);
           ACE_NEW_RETURN (tao_yyval.ihval,
-                          FE_InterfaceHeader (&n,
+                          FE_InterfaceHeader (n,
                                               tao_yyvsp[0].nlval,
                                               I_TRUE,
                                               I_FALSE,
@@ -2488,10 +2492,12 @@ tao_yyreduce:
            * list of all interfaces which this interface inherits from,
            * recursively
            */
-          UTL_ScopedName n (tao_yyvsp[-1].idval,
-                            0);
+          UTL_ScopedName *n = 0;
+          ACE_NEW_RETURN (n,
+                          UTL_ScopedName (tao_yyvsp[-1].idval, 0),
+                          1);
           ACE_NEW_RETURN (tao_yyval.ihval,
-                          FE_InterfaceHeader (&n,
+                          FE_InterfaceHeader (n,
                                               tao_yyvsp[0].nlval,
                                               I_FALSE,
                                               I_TRUE,
@@ -2572,6 +2578,11 @@ tao_yyreduce:
                */
               v = AST_ValueType::narrow_from_decl (i);
               (void) s->fe_add_valuetype (v);
+              
+              // FE_OBVHeader is not automatically destroyed in the AST
+              tao_yyvsp[0].vhval->destroy ();
+              delete tao_yyvsp[0].vhval;
+              tao_yyvsp[0].vhval = 0;
             }
 
           /*
@@ -2653,6 +2664,11 @@ tao_yyreduce:
                */
               v = AST_ValueType::narrow_from_decl (i);
               (void) s->fe_add_valuetype (v);
+              
+              // FE_OBVHeader is not automatically destroyed in the AST
+              tao_yyvsp[0].vhval->destroy ();
+              delete tao_yyvsp[0].vhval;
+              tao_yyvsp[0].vhval = 0;
             }
 
           /*
@@ -2718,8 +2734,7 @@ tao_yyreduce:
 
           UTL_ScopedName *sn = 0;
           ACE_NEW_RETURN (sn,
-                          UTL_ScopedName (tao_yyvsp[-3].idval,
-                                          0),
+                          UTL_ScopedName (tao_yyvsp[-3].idval, 0),
                           1);
           ACE_NEW_RETURN (tao_yyval.vhval,
                           FE_OBVHeader (sn,
@@ -2796,7 +2811,7 @@ tao_yyreduce:
           if (s != 0)
             {
               f = idl_global->gen ()->create_valuetype_fwd (&n,
-                                                           I_TRUE);
+                                                            I_TRUE);
               (void) s->fe_add_valuetype_fwd (f);
             }
         }
@@ -6492,7 +6507,7 @@ tao_yyreduce:
               (void) s->fe_add_component (c);
 
               // This FE_ComponentHeader class isn't destroyed with the AST.
-              tao_yyvsp[0].chval->name ()->destroy ();
+              tao_yyvsp[0].chval->destroy ();
               delete tao_yyvsp[0].chval;
               tao_yyvsp[0].chval = 0;
             }
@@ -6559,10 +6574,12 @@ tao_yyreduce:
            * Create an AST representation of the information in the header
            * part of a component.
            */
-          UTL_ScopedName n (tao_yyvsp[-4].idval,
-                            0);
+          UTL_ScopedName *n = 0;
+          ACE_NEW_RETURN (n,
+                          UTL_ScopedName (tao_yyvsp[-4].idval, 0),
+                          1);
           ACE_NEW_RETURN (tao_yyval.chval,
-                          FE_ComponentHeader (&n,
+                          FE_ComponentHeader (n,
                                               tao_yyvsp[-2].idlist,
                                               tao_yyvsp[0].nlval,
                                               I_FALSE),
@@ -6964,7 +6981,7 @@ tao_yyreduce:
               (void) s->fe_add_home (h);
 
               // This FE_HomeHeader class isn't destroyed with the AST.
-              tao_yyvsp[0].hhval->name ()->destroy ();
+              tao_yyvsp[0].hhval->destroy ();
               delete tao_yyvsp[0].hhval;
               tao_yyvsp[0].hhval = 0;
             }
@@ -7045,10 +7062,12 @@ tao_yyreduce:
            * Create an AST representation of the information in the header
            * part of a component home.
            */
-          UTL_ScopedName n (tao_yyvsp[-10].idval,
-                            0);
+          UTL_ScopedName *n = 0;
+          ACE_NEW_RETURN (n,
+                          UTL_ScopedName (tao_yyvsp[-10].idval, 0),
+                          1);
           ACE_NEW_RETURN (tao_yyval.hhval,
-                          FE_HomeHeader (&n,
+                          FE_HomeHeader (n,
                                          tao_yyvsp[-8].idlist,
                                          tao_yyvsp[-6].nlval,
                                          tao_yyvsp[-2].idlist,
@@ -7382,6 +7401,11 @@ tao_yyreduce:
                */
               e = AST_EventType::narrow_from_decl (i);
               (void) s->fe_add_eventtype (e);
+              
+              // FE_EventHeader is not automatically destroyed in the AST
+              tao_yyvsp[0].ehval->destroy ();
+              delete tao_yyvsp[0].ehval;
+              tao_yyvsp[0].ehval = 0;
             }
 
           /*
