@@ -2083,7 +2083,8 @@ UTL_Scope::add_to_scope (AST_Decl *e,
           idl_global->err ()->redef_error (decl_string,
                                            ref_string);
 
-          return;
+          // if we try to continue from here, we risk a crash.
+          ACE_OS::exit (99);
         }
       // If the spellings differ only by case, it's also an error,
       // unless one, but not both of the identifiers were escaped.
@@ -2095,7 +2096,9 @@ UTL_Scope::add_to_scope (AST_Decl *e,
               idl_global->err ()->name_case_error (decl_string,
                                                    ref_string);
 
-              return;
+
+              // if we try to continue from here, we risk a crash.
+              ACE_OS::exit (99);
             }
           else
             {
@@ -2123,6 +2126,9 @@ UTL_Scope::add_to_scope (AST_Decl *e,
                                   decl_name->get_string (),
                                   parent_name->get_string ()
                                 );
+
+          // if we try to continue from here, we risk a crash.
+          ACE_OS::exit (99);
         }
       else if (decl_name->case_compare_quiet (parent_name) == I_TRUE)
         {
@@ -2132,7 +2138,10 @@ UTL_Scope::add_to_scope (AST_Decl *e,
                                       decl_name->get_string (),
                                       parent_name->get_string ()
                                     );
-            }
+ 
+              // if we try to continue from here, we risk a crash.
+              ACE_OS::exit (99);
+           }
           else
             {
               idl_global->err ()->name_case_warning (

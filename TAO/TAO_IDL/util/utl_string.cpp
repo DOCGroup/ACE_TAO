@@ -184,6 +184,9 @@ UTL_String::compare (UTL_String *s)
         {
           idl_global->err ()->name_case_error (this->p_str,
                                                s->get_string ());
+ 
+            // if we try to continue from here, we risk a crash.
+            ACE_OS::exit (99);
         }
       else
         {
