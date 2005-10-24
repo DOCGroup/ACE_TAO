@@ -1,3 +1,13 @@
+Mon Oct 24 19:08:06 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/util/utl_scope.cpp:
+        * TAO_IDL/util/utl_string.cpp:
+        
+          Added immediate exits when name clash errors are encountered,
+          since trying to continue parsing from these points can lead
+          to a crash. Thanks to <ianzag@megasignal.com> for reporting
+          the problem. This fix closes [BUGID:2281].
+
 Mon Oct 24 18:39:31 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/fe_interface_header.cpp:
