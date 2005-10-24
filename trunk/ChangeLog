@@ -1,15 +1,24 @@
+Mon Oct 24 14:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+
+        * ace/OS_NS_Thread.inl:
+          Fixed typo in VxWorks part
+
+        * ace/config-vxworks5.x.h:
+          Added some extra ACE_LACKS_x for VxWorks
+
 Mon Oct 24 07:19:29 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/Dev_Poll_Reactor.cpp: Fixed a couple of bugs that
 	  were causing core dumps.  Thanks to Oh Yoon Sik
- 	  <boom@estsoft.com> for these fixes.	
-  
+ 	  <boom@estsoft.com> for these fixes.
+
 Sun Oct 23 13:05:33 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* tests/Pipe_Test.cpp (run_main): Updated this test to be a bit
-	  cleaner.  
+	  cleaner.
 
-	* tests/Dirent_Test.cpp: Fixed a typo in the comments - this test 
+	* tests/Dirent_Test.cpp: Fixed a typo in the comments - this test
 	  exericses the ACE_Dirent class, not the ACE_OS_Dirent class.
 
 Fri Oct 21 07:46:47 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
@@ -107,7 +116,7 @@ Fri Oct 21 14:28:54 MST 2005  Yan Dai  <dai_y@ociweb.com>
 
           Added dependency on pi base project since the PI.h is included
           in the test application for the static initialization.
-  
+
 Tue Oct 18 17:24:26 MST 2005  Yan Dai  <dai_y@ociweb.com>
 
         * bin/msvc_static_order.lst:
