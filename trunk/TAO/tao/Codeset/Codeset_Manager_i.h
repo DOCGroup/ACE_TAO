@@ -129,6 +129,8 @@ private:
   TAO_Codeset_Translator_Base * get_translator_i (TAO_Codeset_Descriptor&,
                                                   CONV_FRAME::CodeSetId);
 
+  void get_ncs (CONV_FRAME::CodeSetId &ncsc, CONV_FRAME::CodeSetId& ncsw);
+
   // The CodeSetComponentInfo struct contains all of the information
   // regarding the code sets this application recognizes. This is
   // where the native code set for both char and wchar are stored.
