@@ -1,3 +1,8 @@
+Mon Oct 24 08:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_unistd.{h,inl}:
+          64bit fixes
+
 Mon Oct 24 08:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
