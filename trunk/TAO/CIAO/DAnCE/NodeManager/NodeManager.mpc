@@ -17,12 +17,29 @@ project (NodeManager_stub): ciao_component_dnc {
 
 project(NodeManager): ciao_component_dnc, iortable, ifr_client {
   after += NodeApplicationManager NodeManager_stub
-  libs += NodeManager_stub NodeApplicationManager
+  libs += NodeManager_stub NodeApplicationManager 
   exename = NodeManager
 
   IDL_Files {
   }
 
+  Source_Files {
+    NodeManagerS.cpp
+    NodeManager_Impl.cpp
+    Node_Manager.cpp
+    NAM_Map.cpp
+  }
+}
+
+//For static D&C, the NodeManager should be available as a linkable library
+project(libNodeManager): ciao_component_dnc, iortable, ifr_client {
+  sharedname = NodeManager
+  after += NodeApplicationManager NodeManager_stub
+  libs += NodeManager_stub NodeApplicationManager
+ 
+  IDL_Files {
+  }
+ 
   Source_Files {
     NodeManagerS.cpp
     NodeManager_Impl.cpp

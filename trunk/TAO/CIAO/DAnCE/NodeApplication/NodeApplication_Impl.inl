@@ -5,11 +5,12 @@ ACE_INLINE
 CIAO::NodeApplication_Impl::
 NodeApplication_Impl (CORBA::ORB_ptr o,
                       PortableServer::POA_ptr p,
-                      NodeApp_Configurator &c)
-
+                      NodeApp_Configurator &c,
+                      const Static_Config_EntryPoints_Maps* static_entrypts_maps)
   : orb_ (CORBA::ORB::_duplicate (o)),
     poa_ (PortableServer::POA::_duplicate (p)),
-    configurator_ (c)
+    configurator_ (c),
+    static_entrypts_maps_ (static_entrypts_maps)
 {
 }
 

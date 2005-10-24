@@ -1,4 +1,5 @@
 //$Id$
+
 // -*- C++ -*-
 
 //=============================================================================
@@ -30,18 +31,19 @@
 #include "ciao/CIAO_common.h"
 #include "CIAO_NAM_Export.h"
 #include "ImplementationInfo.h"
+#include "NodeApplication/NodeApplication_Core.h"
 
 namespace CIAO
 {
   /**
    * @class NodeApplicationManager_Impl
    */
-  class CIAO_NAM_Export NodeApplicationManager_Impl
+  class CIAO_NAM_Export NodeApplicationManager_Impl_Base
     : public virtual POA_Deployment::NodeApplicationManager
   {
   public:
     /// Constructor
-    NodeApplicationManager_Impl (CORBA::ORB_ptr o,
+    NodeApplicationManager_Impl_Base (CORBA::ORB_ptr o,
                                  PortableServer::POA_ptr p);
 
     /*===========================================================
@@ -103,14 +105,14 @@ namespace CIAO
           const PortableServer::POA_ptr callback_poa
           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::InvalidProperty));
+                       Deployment::InvalidProperty))=0;
 
     //@@ Note: This method doesn't do duplicate.
     Deployment::NodeApplicationManager_ptr get_nodeapp_manager (void);
 
   protected:
     /// Destructor
-    virtual ~NodeApplicationManager_Impl (void);
+    virtual ~NodeApplicationManager_Impl_Base (void);
 
     // Internal help function to create new NodeApplicationProcess
     virtual Deployment::NodeApplication_ptr
@@ -119,7 +121,7 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::ResourceNotAvailable,
                        Deployment::StartError,
-                       Deployment::InvalidProperty));
+                       Deployment::InvalidProperty))=0;
 
     // Helper function to get the connection.
     virtual Deployment::Connections *
@@ -181,6 +183,86 @@ namespace CIAO
     // Synchronize access to the object set.
     TAO_SYNCH_MUTEX lock_;
   };
+
+  /**
+   * @class NodeApplicationManager_Impl
+   */
+  class NodeApplicationManager_Impl
+    : public virtual NodeApplicationManager_Impl_Base
+  {
+  public:
+    /// Constructor
+    NodeApplicationManager_Impl (CORBA::ORB_ptr o,
+                                 PortableServer::POA_ptr p);
+
+    virtual PortableServer::ObjectId
+    init (const char *nodeapp_location,
+          const char *nodeapp_options,
+          const CORBA::ULong delay,
+          const Deployment::DeploymentPlan & plan,
+          const PortableServer::POA_ptr callback_poa
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Deployment::InvalidProperty));
+
+  protected:
+    /// Destructor
+    virtual ~NodeApplicationManager_Impl (void);
+
+    // Internal help function to create new NodeApplicationProcess
+    // Here we override it to create an in-process NodeApplication object
+    virtual Deployment::NodeApplication_ptr
+    create_node_application (const ACE_CString & options
+                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Deployment::ResourceNotAvailable,
+                       Deployment::StartError,
+                       Deployment::InvalidProperty));
+  };
+
+  struct Static_Config_EntryPoints_Maps;
+
+  /**
+   * @class Static_NodeApplicationManager_Impl
+   */
+  class Static_NodeApplicationManager_Impl
+    : public virtual NodeApplicationManager_Impl_Base
+  {
+  public:
+    /// Constructor
+    Static_NodeApplicationManager_Impl (CORBA::ORB_ptr o,
+                                        PortableServer::POA_ptr p,
+                                        Static_Config_EntryPoints_Maps* static_config_entrypoints_maps);
+
+    virtual PortableServer::ObjectId
+    init (const char *nodeapp_location,
+          const char *nodeapp_options,
+          const CORBA::ULong delay,
+          const Deployment::DeploymentPlan & plan,
+          const PortableServer::POA_ptr callback_poa
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Deployment::InvalidProperty));
+
+  protected:
+    /// Destructor
+    virtual ~Static_NodeApplicationManager_Impl (void);
+
+    // Internal help function to create new NodeApplicationProcess
+    // Here we override it to create an in-process NodeApplication object
+    virtual Deployment::NodeApplication_ptr
+    create_node_application (const ACE_CString & options
+                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Deployment::ResourceNotAvailable,
+                       Deployment::StartError,
+                       Deployment::InvalidProperty));
+
+    Static_Config_EntryPoints_Maps* static_config_entrypoints_maps_;
+
+    CIAO::NoOp_Configurator configurator_;
+  };
+
 }
 
 #if defined (__ACE_INLINE__)

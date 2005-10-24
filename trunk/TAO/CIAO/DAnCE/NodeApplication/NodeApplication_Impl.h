@@ -30,6 +30,7 @@
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "NodeApp_Configurator.h"
+#include "Container_Base.h"
 
 using CIAO::Utility::write_IOR;
 
@@ -64,7 +65,8 @@ namespace CIAO
     /// Default constructor.
     NodeApplication_Impl (CORBA::ORB_ptr o,
                           PortableServer::POA_ptr p,
-                          NodeApp_Configurator &c);
+                          NodeApp_Configurator &c,
+                          const Static_Config_EntryPoints_Maps* static_entrypts_maps =0);
 
     /// Default destructor.
     virtual ~NodeApplication_Impl (void);
@@ -231,6 +233,8 @@ namespace CIAO
 
     /// Cache the object reference (of ourselves).
     ::Deployment::NodeApplication_var objref_;
+
+    const Static_Config_EntryPoints_Maps* static_entrypts_maps_;
   };
 }
 
