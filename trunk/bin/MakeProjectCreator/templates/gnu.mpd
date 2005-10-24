@@ -153,6 +153,13 @@ RESOURCES += \
 <%foreach(resource_files)%>
   <%resource_file%><%fornotlast(" \\")%>
 <%endfor%>
+<%if(includes)%>
+
+RCFLAGS = \
+<%foreach(includes)%>
+        -I<%include%><%fornotlast(" \\")%>
+<%endfor%>
+<%endif%>
 endif
 
 <%endif%>
