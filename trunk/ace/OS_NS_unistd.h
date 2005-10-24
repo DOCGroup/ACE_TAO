@@ -55,7 +55,7 @@ namespace ACE_OS {
   unsigned int alarm (u_int secs);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int allocation_granularity (void);
+  long allocation_granularity (void);
 
   // used by ARGV::argv_to_string() and ACE_OS::fork_exec()
   extern ACE_Export
@@ -305,8 +305,8 @@ namespace ACE_OS {
                  u_long interval = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  u_int ualarm (const ACE_Time_Value &tv,
-                const ACE_Time_Value &tv_interval = ACE_Time_Value::zero);
+  u_long ualarm (const ACE_Time_Value &tv,
+                 const ACE_Time_Value &tv_interval = ACE_Time_Value::zero);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int unlink (const char *path);
