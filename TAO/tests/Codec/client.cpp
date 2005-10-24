@@ -177,6 +177,8 @@ test_codec (IOP::Codec_ptr codec)
                         "IOP::Codec::decode_value() does not match "
                         "original data.\n"),
                       -1);
+
+  return 0;
 }
 
 int
