@@ -1,3 +1,13 @@
+Mon Oct 24 18:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CodecFactory/CodecFactory_impl.cpp:
+          Added validation whether the requested codesets are supported
+
+        * tao/Codeset/Codeset_Manager_i.{h,cpp}:
+        * tao/Codeset_Manager.h:
+          Added get_ncs to be able to check whether a codeset is supported.
+          Thanks to Phil Mesnier for helping with this issue.
+
 Mon Oct 24 17:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Codec/client.cpp:
