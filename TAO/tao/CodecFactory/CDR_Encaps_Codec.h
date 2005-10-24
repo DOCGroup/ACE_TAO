@@ -23,6 +23,8 @@
 
 #include "tao/LocalObject.h"
 
+class TAO_Codeset_Translator_Base;
+
 /**
  * @class TAO_CDR_Encaps_Codec
  *
@@ -48,7 +50,9 @@ public:
   /// Constructor.
   TAO_CDR_Encaps_Codec (CORBA::Octet major,
                         CORBA::Octet minor,
-                        TAO_ORB_Core * orb_core);
+                        TAO_ORB_Core * orb_core,
+                        TAO_Codeset_Translator_Base * char_trans,
+                        TAO_Codeset_Translator_Base * wchar_trans);
 
   /// Encode the given data, including the TypeCode, into an octet
   /// sequence.
@@ -119,6 +123,11 @@ private:
   /// encapsulation.
   TAO_ORB_Core * const orb_core_;
 
+  /// Char codeset translator
+  TAO_Codeset_Translator_Base * char_translator_;
+
+  /// WChar codeset translator
+  TAO_Codeset_Translator_Base * wchar_translator_;
 };
 
 #include /**/ "ace/post.h"

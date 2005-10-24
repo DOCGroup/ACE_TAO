@@ -1058,7 +1058,6 @@ libTAO_CodecFactory_la_SOURCES = \
   CodecFactory/CDR_Encaps_Codec.cpp \
   CodecFactory/CodecFactory.cpp \
   CodecFactory/CodecFactory_impl.cpp \
-  CodecFactory/IOP_CodecA.cpp \
   CodecFactory/IOP_CodecC.cpp
 
 libTAO_CodecFactory_la_LDFLAGS = \
