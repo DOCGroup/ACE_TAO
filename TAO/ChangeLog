@@ -1,3 +1,9 @@
+Mon Oct 24 12:59:07 2005  Simon McQueen  <sm@prismtech.com>
+
+        * tao/Messaging/ExceptionHolder_i.cpp:
+
+          Fixed compile error with VC++ 6.
+
 Mon Oct 24 07:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * Adapter_Registry.cpp:

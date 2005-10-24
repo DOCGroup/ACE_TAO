@@ -19,8 +19,6 @@ namespace TAO
       const ::CORBA::OctetSeq &marshaled_exception,
       ::TAO::Exception_Data* data,
       ::CORBA::ULong exceptions_count) :
-        ::OBV_Messaging::ExceptionHolder (),
-        ::CORBA::DefaultValueRefCountBase (),
         data_ (data),
         count_ (exceptions_count)
   {
