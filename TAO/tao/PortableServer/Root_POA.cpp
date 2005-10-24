@@ -823,7 +823,7 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
   this->cleanup_in_progress_ = 1;
 
   // Inform the custom servant dispatching strategy to stop the working
-  // threads when the poa is destroyed. 
+  // threads when the poa is destroyed.
   this->poa_deactivated_hook ();
 
   // This operation destroys the POA and all descendant POAs. The POA
@@ -2518,8 +2518,8 @@ TAO_Root_POA::ORT_adapter_i (void)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "(%P|%t) Cannot initialize the "
-                           "object_reference_template_adapter\n");
+                           "Cannot initialize the "
+                           "object_reference_template_adapter");
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);

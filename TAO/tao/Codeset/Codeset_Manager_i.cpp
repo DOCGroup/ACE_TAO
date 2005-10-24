@@ -98,7 +98,7 @@ void
 TAO_Codeset_Manager_i::set_tcs (TAO_Profile &theProfile,
                                 TAO_Transport &trans)
 {
-  /// If tcs is already set on the transport then donot process,
+  /// If tcs is already set on the transport then do not process,
   /// use existing transport as CDR have translators set.
   TAO_Tagged_Components& theTaggedComp = theProfile.tagged_components ();
 
@@ -120,8 +120,8 @@ TAO_Codeset_Manager_i::set_tcs (TAO_Profile &theProfile,
                     ACE_TEXT ("TAO (%P|%t) - Codeset_Manager_i::set_tcs, ")
                     ACE_TEXT ("No codeset component in profile\n")));
 
-  // These are the "fallback" codeset ids for use if no context is
-  // available
+       // These are the "fallback" codeset ids for use if no context is
+       // available
        remote.ForCharData.native_code_set =
          TAO_CODESET_ID_XOPEN_UTF_8;
        remote.ForWcharData.native_code_set =
@@ -255,7 +255,7 @@ TAO_Codeset_Manager_i::generate_service_context (TAO_Operation_Details &opd,
 /// Checks whether the NCS is a part of CCS
 int
 TAO_Codeset_Manager_i::isElementOf (CONV_FRAME::CodeSetId id,
-                                  CONV_FRAME::CodeSetComponent &cs_comp)
+                                    CONV_FRAME::CodeSetComponent &cs_comp)
 {
   for (CORBA::ULong i = 0L;
        i < cs_comp.conversion_code_sets.length ();
@@ -271,7 +271,7 @@ TAO_Codeset_Manager_i::isElementOf (CONV_FRAME::CodeSetId id,
 /// Find the Intersection of Client and Server CCS's
 CONV_FRAME::CodeSetId
 TAO_Codeset_Manager_i::intersectionOf (CONV_FRAME::CodeSetComponent &cs_comp1,
-                                     CONV_FRAME::CodeSetComponent &cs_comp2)
+                                       CONV_FRAME::CodeSetComponent &cs_comp2)
 {
   for(CORBA::ULong index = 0L;
        index < cs_comp1.conversion_code_sets.length();
@@ -288,7 +288,7 @@ TAO_Codeset_Manager_i::intersectionOf (CONV_FRAME::CodeSetComponent &cs_comp1,
 
 int
 TAO_Codeset_Manager_i::isCompatible(CONV_FRAME::CodeSetId cs1,
-                                  CONV_FRAME::CodeSetId cs2 )
+                                    CONV_FRAME::CodeSetId cs2 )
 {
   // Call the is_compatible method of ACE_Codeset_Registry
   return ACE_Codeset_Registry::is_compatible(cs1,cs2);

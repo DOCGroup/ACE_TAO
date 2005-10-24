@@ -50,7 +50,7 @@ TAO_Adapter_Registry::close (int wait_for_completion
       if (TAO_debug_level > 3)
         {
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Exception in TAO_Adapter_Registry::close () \n");
+                               "Exception in TAO_Adapter_Registry::close ()");
         }
       return;
     }
