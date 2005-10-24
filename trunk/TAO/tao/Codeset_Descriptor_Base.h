@@ -29,8 +29,6 @@
  * This class also serves as a default implementation when codeset support
  * is not linked in.
  */
-
-
 class TAO_Export TAO_Codeset_Descriptor_Base
 {
 public:
