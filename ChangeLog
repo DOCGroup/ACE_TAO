@@ -1,3 +1,10 @@
+Mon Oct 24 12:58:45 MST 2005  Yan Dai  <dai_y@ociweb.com>
+        
+        * bin/msvc_static_order.lst:
+
+          Corrected the entry TAO/tests/CSD_Strategy_Tests/TP_Common/CSD_TP_Test.
+          The library name should be used instead of project name. 
+
 Mon Oct 24 10:21:39 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* docs/ACE-guidelines.html:
