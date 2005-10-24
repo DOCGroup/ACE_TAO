@@ -22,7 +22,8 @@
 #endif  /* !ACE_MAJOR_VERSION */
 
 
-#if defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1
+#if defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1 \
+  && !(defined (_MSC_VER) && _MSC_VER <= 1200)
 
 # ifndef ACE_VERSIONED_NAMESPACE_NAME
 // Preprocessor symbols will not be expanded if they are
