@@ -498,3 +498,11 @@ TAO_Codeset_Manager_i::get_translator_i (TAO_Codeset_Descriptor& cd,
   return 0;
 }
 
+void
+TAO_Codeset_Manager_i::get_ncs (CONV_FRAME::CodeSetId &ncsc,
+                                CONV_FRAME::CodeSetId &ncsw)
+{
+   ncsc = this->char_descriptor_.ncs();
+   ncsw = this->wchar_descriptor_.ncs();
+}
+

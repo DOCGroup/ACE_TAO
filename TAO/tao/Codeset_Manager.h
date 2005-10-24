@@ -87,6 +87,8 @@ public:
   virtual TAO_Codeset_Descriptor_Base *char_codeset_descriptor (void) = 0;
   virtual TAO_Codeset_Descriptor_Base *wchar_codeset_descriptor (void) = 0;
 
+  virtual void get_ncs (CONV_FRAME::CodeSetId &ncsc,
+                        CONV_FRAME::CodeSetId &ncsw) = 0;
 };
 
 #include /**/ "ace/post.h"

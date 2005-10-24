@@ -8,6 +8,7 @@
 #include "tao/ORB_Constants.h"
 #include "tao/ORB_Core.h"
 #include "tao/Codeset_Manager.h"
+#include "ace/Codeset_Symbols.h"
 
 ACE_RCSID (CodecFactory_impl,
            CodecFactory,
@@ -25,16 +26,42 @@ TAO_CodecFactory::create_codec_with_codesets (const IOP::Encoding_1_2 & enc
                      IOP::CodecFactory::UnknownEncoding,
                      IOP::CodecFactory::UnsupportedCodeset))
 {
-  // @todo Check whether this are supported codesets
-
   TAO_Codeset_Translator_Base *char_trans = 0;
   TAO_Codeset_Translator_Base *wchar_trans = 0;
+  CONV_FRAME::CodeSetId ncsc;
+  CONV_FRAME::CodeSetId ncsw;
 
   TAO_Codeset_Manager *csm = this->orb_core_->codeset_manager ();
+
   if (csm)
     {
       char_trans = csm->get_char_trans (enc.char_codeset);
       wchar_trans = csm->get_wchar_trans (enc.wchar_codeset);
+      csm->get_ncs (ncsc,ncsw); // pass by reference
+    }
+  else
+    {
+      // No codeset manager, so also raise an unsupported codeset
+      ACE_THROW_RETURN (IOP::CodecFactory::UnsupportedCodeset (
+                          enc.wchar_codeset),
+                        IOP::Codec::_nil ());
+    }
+
+  if (wchar_trans == 0 &&
+      enc.wchar_codeset != ACE_CODESET_ID_ISO_UTF_16 &&
+      enc.wchar_codeset != ncsw)
+    {
+      ACE_THROW_RETURN (IOP::CodecFactory::UnsupportedCodeset (
+                          enc.wchar_codeset),
+                        IOP::Codec::_nil ());
+    }
+
+  if (char_trans == 0 &&
+      enc.char_codeset != ncsc)
+    {
+      ACE_THROW_RETURN (IOP::CodecFactory::UnsupportedCodeset (
+                          enc.char_codeset),
+                        IOP::Codec::_nil ());
     }
 
   return this->create_codec_i (enc.major_version,
