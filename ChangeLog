@@ -1,3 +1,10 @@
+Mon Oct 24 06:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/ace_qt.mpb:
+          Update to enable to define specific versions of the
+          QT library(-ies) needed to be linked for Windows based
+          builds as with *nix based builds.
+
 Sun Oct 23 22:27:45 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Global_Macros.h:
