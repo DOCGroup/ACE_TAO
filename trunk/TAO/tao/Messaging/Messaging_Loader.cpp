@@ -61,7 +61,7 @@ TAO_Messaging_Loader::init (int,
       if (TAO_debug_level > 0)
         {
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "(%P | %t) Caught exception:");
+                               "Caught exception:");
         }
       return -1;
     }

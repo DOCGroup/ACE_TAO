@@ -358,7 +358,7 @@ TAO_RT_Servant_Dispatcher::post_invoke (TAO_Root_POA &poa,
         {
           // Eat up the exception.
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "Exception caught: TAO (%P|%t) - "
+                               "Exception caught: TAO - "
                                "Priority_Model_Processing::"
                                "~Priority_Model_Processing");
         }
