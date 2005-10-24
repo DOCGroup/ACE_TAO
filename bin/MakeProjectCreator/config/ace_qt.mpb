@@ -9,4 +9,8 @@ project: qt {
     LIBS += $(PLATFORM_QT_LIBS)
     LDFLAGS += $(PLATFORM_QT_LDFLAGS)
   }
+  specific(vc6, vc7, vc71, vc8, nmake) {
+    lit_libs -= qt-mt230nc
+    pure_libs += $(PLATFORM_QT_LIBS)
+  }
 }
