@@ -729,7 +729,11 @@ ACE_HAS_VERSIONED_NAMESPACE             Wrap all library code within a
                                         prevent symbol conflicts with
                                         other versions of ACE shared
                                         libraries in third party
-                                        libraries.
+                                        libraries.  Default namespace
+                                        name may be overridden by
+                                        defining preprocessor symbol
+                                        ACE_VERSIONED_NAMESPACE_NAME
+                                        to desired name.
 ACE_LACKS_INTMAX_T                      Platform lacks the intmax_t type
 ACE_LACKS_UINTMAX_T			Platform lacks the uintmax_t type.
 ACE_LACKS_INTPTR_T                      Platform lacks the intptr_t type
