@@ -1,3 +1,38 @@
+Mon Oct 24 13:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CodecFactory/CDR_Encaps_Codec.{h,cpp}
+        * tao/CodecFactory/CodecFactory_impl.{h,cpp}:
+        * tao/CodecFactory/IOP_Codec.pidl:
+        * tao/CodecFactory/IOP_Codec_includeC.h:
+        * tao/CodecFactory/IOP_Codec_includeS.h:
+        * tao/CodecFactory/IOP_CodecC.{h,cpp}:
+          The current Codec just encode/decodes wstring without
+          using the codesets. When wstrings are encoded/decoded
+          this causes problems. We found that there has been
+          raised already an issue at the OMG for this: issue 6050,
+          see http://www.omg.org/issues/issue6050.txt
+          This proposes a new IDL method on CodecFactory,
+          CodecFactory::create_codec_with_codesets.
+          With this method a Codec can be created with specific
+          codesets in place. We implemented this method in TAO,
+          the only thing we will add soon is the extra check whether
+          the requested codeset is supported, this is not possible
+          at this moment because the codeset interfaces are not really
+          setup in a way to do this.
+
+        * tao/CodecFactory/IOP_CodecA.cpp:
+          Removed
+
+        * tao/Codeset_Manager.h:
+        * tao/Codeset_Descriptor_Base.h:
+          Small layout/doxygen fixes
+
+        * tao/Makefile.am:
+          Removed tao/CodecFactory/IOP_CodecA.cpp
+
+        * tao/CodecFactory/diff/IOP_Codec.diff:
+          Updated
+
 Mon Oct 24 12:59:07 2005  Simon McQueen  <sm@prismtech.com>
 
         * tao/Messaging/ExceptionHolder_i.cpp:
