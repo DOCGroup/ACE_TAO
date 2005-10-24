@@ -1,3 +1,10 @@
+Mon Oct 24 08:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Generate includes for the resource compiler, this fixes compile
+          problems of the resource file when it contains includes that
+          expect an include path being set
+
 Mon Oct 24 06:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/ace_qt.mpb:

@@ -96,13 +96,13 @@ ACE_OS::getpagesize (void)
 #endif /* ACE_WIN32 */
 }
 
-ACE_INLINE int
+ACE_INLINE long
 ACE_OS::allocation_granularity (void)
 {
 #if defined (ACE_WIN32)
   SYSTEM_INFO sys_info;
   ::GetSystemInfo (&sys_info);
-  return (int) sys_info.dwAllocationGranularity;
+  return sys_info.dwAllocationGranularity;
 #else
   return ACE_OS::getpagesize ();
 #endif /* ACE_WIN32 */
@@ -1230,15 +1230,15 @@ ACE_OS::ualarm (u_long usecs, u_long interval)
 #endif /* ACE_HAS_UALARM */
 }
 
-ACE_INLINE u_int
+ACE_INLINE u_long
 ACE_OS::ualarm (const ACE_Time_Value &tv,
                 const ACE_Time_Value &tv_interval)
 {
   ACE_OS_TRACE ("ACE_OS::ualarm");
 
 #if defined (ACE_HAS_UALARM)
-  u_int usecs = (tv.sec () * ACE_ONE_SECOND_IN_USECS) + tv.usec ();
-  u_int interval = (tv_interval.sec () * ACE_ONE_SECOND_IN_USECS) + tv_interval.usec ();
+  ulong usecs = (tv.sec () * ACE_ONE_SECOND_IN_USECS) + tv.usec ();
+  ulong interval = (tv_interval.sec () * ACE_ONE_SECOND_IN_USECS) + tv_interval.usec ();
   return ::ualarm (usecs, interval);
 #elif !defined (ACE_LACKS_UNIX_SIGNALS)
   ACE_UNUSED_ARG (tv_interval);
