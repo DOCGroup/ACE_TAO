@@ -1,3 +1,11 @@
+Sun Oct 23 22:27:45 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Global_Macros.h:
+	* ace/Versioned_Namespace.h:
+
+	  Disable versioned namespace support for MSVC++ 6.  It's
+	  preprocessor can't handle the required macro expansions.
+
 Sun Oct 23 21:48:15 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/README:
