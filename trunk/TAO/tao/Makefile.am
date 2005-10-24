@@ -1673,7 +1673,6 @@ nobase_include_HEADERS += \
   CSD_Framework/CSD_Framework.pidl \
   CSD_Framework/CSD_FrameworkA.h \
   CSD_Framework/CSD_FrameworkC.h \
-  CSD_Framework/CSD_FrameworkC.inl \
   CSD_Framework/CSD_Framework_Loader.h \
   CSD_Framework/CSD_ORBInitializer.h \
   CSD_Framework/CSD_Object_Adapter.h \
@@ -2047,9 +2046,9 @@ libTAO_Messaging_la_SOURCES = \
   Messaging/Asynch_Reply_Dispatcher.cpp \
   Messaging/Asynch_Timeout_Handler.cpp \
   Messaging/Connection_Timeout_Policy_i.cpp \
-  Messaging/ExceptionHolder_i.cpp \
   Messaging/ExceptionHolderA.cpp \
   Messaging/ExceptionHolderC.cpp \
+  Messaging/ExceptionHolder_i.cpp \
   Messaging/Messaging.cpp \
   Messaging/MessagingA.cpp \
   Messaging/MessagingC.cpp \
@@ -2090,11 +2089,11 @@ nobase_include_HEADERS += \
   Messaging/Asynch_Timeout_Handler.h \
   Messaging/Connection_Timeout_Policy_i.h \
   Messaging/ExceptionHolder.pidl \
-  Messaging/ExceptionHolder_i.h \
   Messaging/ExceptionHolderA.h \
   Messaging/ExceptionHolderC.h \
   Messaging/ExceptionHolderC.inl \
   Messaging/ExceptionHolderS.h \
+  Messaging/ExceptionHolder_i.h \
   Messaging/Messaging.h \
   Messaging/Messaging.pidl \
   Messaging/MessagingA.h \

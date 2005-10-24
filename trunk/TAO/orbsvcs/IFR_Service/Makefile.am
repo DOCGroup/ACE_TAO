@@ -102,6 +102,7 @@ tao_ifr_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs/IFR_Service \
   -I$(TAO_ROOT)/TAO_IDL/include \
   -I$(TAO_ROOT)/TAO_IDL/fe \
   -DTAO_IDL_INCLUDE_DIR="\"$(includedir)/tao\""
