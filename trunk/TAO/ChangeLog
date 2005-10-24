@@ -1,3 +1,19 @@
+Mon Oct 24 07:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * Adapter_Registry.cpp:
+        * ORB_Core.cpp:
+        * Object.cpp:
+        * BiDir_GIOP/BiDirGIOP.cpp:
+        * CSD_Framework/CSD_Object_Adapter_Factory.cpp:
+        * Messaging/Messaging_Loader.cpp:
+        * PortableServer/Root_POA.cpp:
+        * RTPortableServer/RT_Servant_Dispatcher.cpp:
+          Don't pass %P, %t, \n to ACE_PRINT_EXCEPTION, it
+          does this itself already.
+
+        * Codeset/Codeset_Manager_i.cpp:
+          Layout improvements
+
 Fri Oct 21 14:12:49 MST 2005  Yan Dai  <dai_y@ociweb.com>
 
         * examples/CSD_Strategy/ThreadPool6/ServerApp.cpp:
@@ -17,24 +33,24 @@ Fri Oct 21 14:12:49 MST 2005  Yan Dai  <dai_y@ociweb.com>
         * tests/CSD_Strategy_Tests/Broken/ClientApp.cpp:
         * tests/CSD_Strategy_Tests/Broken/ServerApp.cpp:
         * performance-tests/CSD_Strategy/TestApps/ServerApp.cpp:
-        
+
           Added PI.h include to force statically initialization happen
-          before the TAO_CSD_Object_Adapter::init() is called. This would 
-          resolve the problem that CSD test failures on static builds. 
-          
+          before the TAO_CSD_Object_Adapter::init() is called. This would
+          resolve the problem that CSD test failures on static builds.
+
         * examples/CSD_Strategy/ThreadPool/CSD_Test_ThreadPool.mpc:
         * examples/CSD_Strategy/ThreadPool2/CSD_Test_ThreadPool2.mpc:
         * examples/CSD_Strategy/ThreadPool3/CSD_Test_ThreadPool3.mpc:
         * examples/CSD_Strategy/ThreadPool4/CSD_Test_ThreadPool4.mpc:
         * examples/CSD_Strategy/ThreadPool5/CSD_Test_ThreadPool5.mpc:
         * examples/CSD_Strategy/ThreadPool6/CSD_Test_ThreadPool6.mpc:
-        
-          Added dependency on pi base project since the PI.h is included 
+
+          Added dependency on pi base project since the PI.h is included
           in the test application.
-          
+
         * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B_i.cpp:
         * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B_Statistics.cpp:
-          
+
           Corrected the conversion specifier (using %u) for unsigned value.
 
 Fri Oct 21 12:25:56 MST 2005  Yan Dai  <dai_y@ociweb.com>
@@ -42,19 +58,19 @@ Fri Oct 21 12:25:56 MST 2005  Yan Dai  <dai_y@ociweb.com>
         * tao/PI_Server/PI_Server_Loader.cpp:
 
           Removed the %P|%t in the ACE_PRINT_EXCEPTION info parameter.
-          
+
 Fri Oct 21 11:17:10 MST 2005  Yan Dai  <dai_y@ociweb.com>
 
         * tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.cpp:
-        
+
           Made the number of threads to use the default value 1 if the
           number of threads is not specified in the service config file.
-          
+
         * tao/CSD_ThreadPool/CSD_TP_Task.cpp:
 
-          Replaced the unsigned* with unsigned int* to fix a parse error 
+          Replaced the unsigned* with unsigned int* to fix a parse error
           compilation error on some compilers.
-          
+
 Fri Oct 21 07:19:32 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* performance-tests/Sequence_Latency/Deferred/Deferred.mpc:
