@@ -2,8 +2,8 @@
 // $Id$
 
 ACE_INLINE
-CIAO::NodeApplicationManager_Impl::
-NodeApplicationManager_Impl (CORBA::ORB_ptr o,
+CIAO::NodeApplicationManager_Impl_Base::
+NodeApplicationManager_Impl_Base (CORBA::ORB_ptr o,
                              PortableServer::POA_ptr p)
   : orb_ (CORBA::ORB::_duplicate (o)),
     poa_ (PortableServer::POA::_duplicate (p)),
@@ -20,7 +20,7 @@ NodeApplicationManager_Impl (CORBA::ORB_ptr o,
 
 ACE_INLINE
 Deployment::NodeApplicationManager_ptr
-CIAO::NodeApplicationManager_Impl::get_nodeapp_manager (void)
+CIAO::NodeApplicationManager_Impl_Base::get_nodeapp_manager (void)
 {
   return this->objref_.in ();
 }

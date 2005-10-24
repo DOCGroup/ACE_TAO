@@ -406,7 +406,9 @@ CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
   if (CIAO::debug_level () > 1)
     ACE_DEBUG ((LM_DEBUG, "Removed all containers from this NodeApplication!\n"));
 
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  //For static deployment, ORB will be shutdown in the Static_NodeManager
+  if (this->static_entrypts_maps_ == 0)
+    this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }
 
 
@@ -426,7 +428,8 @@ CIAO::NodeApplication_Impl::create_container (const ::Deployment::Properties &pr
   ACE_NEW_THROW_EX (container_servant,
                     CIAO::Container_Impl (this->orb_.in (),
                                           this->poa_.in (),
-                                          this->get_objref ()),
+                                          this->get_objref (),
+                                          this->static_entrypts_maps_),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 

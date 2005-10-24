@@ -52,7 +52,8 @@ namespace CIAO
     /// Constructor
     Container_Impl (CORBA::ORB_ptr o,
                     PortableServer::POA_ptr p,
-                    ::Deployment::NodeApplication_ptr server);
+                    ::Deployment::NodeApplication_ptr server,
+                    const Static_Config_EntryPoints_Maps* static_entrypts_maps =0);
 
     /// Destructor
     virtual ~Container_Impl (void);
@@ -207,6 +208,8 @@ protected:
                                     ACE_Null_Mutex> CCMComponent_Map;
     typedef CCMComponent_Map::iterator Component_Iterator;
     CCMComponent_Map component_map_;
+    
+    const Static_Config_EntryPoints_Maps* static_entrypts_maps_;
   };
 }
 

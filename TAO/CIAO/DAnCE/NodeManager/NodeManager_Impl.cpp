@@ -3,7 +3,7 @@
 #include "NodeManager_Impl.h"
 #include "../NodeApplicationManager/NodeApplicationManager_Impl.h"
 
-CIAO::NodeManager_Impl::NodeManager_Impl (const char *name,
+CIAO::NodeManager_Impl_Base::NodeManager_Impl_Base (const char *name,
                                           CORBA::ORB_ptr orb,
                                           PortableServer::POA_ptr poa,
                                           const char * nodeapp_loc,
@@ -20,13 +20,13 @@ CIAO::NodeManager_Impl::NodeManager_Impl (const char *name,
 {
 }
 
-CIAO::NodeManager_Impl::~NodeManager_Impl ()
+CIAO::NodeManager_Impl_Base::~NodeManager_Impl_Base ()
 {
 
 }
 
 void
-CIAO::NodeManager_Impl::init (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeManager_Impl_Base::init (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
@@ -55,21 +55,21 @@ CIAO::NodeManager_Impl::init (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 PortableServer::POA_ptr
-CIAO::NodeManager_Impl::_default_POA (void)
+CIAO::NodeManager_Impl_Base::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 
 char *
-CIAO::NodeManager_Impl::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+CIAO::NodeManager_Impl_Base::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup (this->name_.in ());
 }
 
 void
-CIAO::NodeManager_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeManager_Impl_Base::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
@@ -77,7 +77,7 @@ CIAO::NodeManager_Impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-CIAO::NodeManager_Impl::joinDomain (const Deployment::Domain & ,
+CIAO::NodeManager_Impl_Base::joinDomain (const Deployment::Domain & ,
                                    Deployment::TargetManager_ptr ,
                                    Deployment::Logger_ptr
                                    ACE_ENV_ARG_DECL)
@@ -87,7 +87,7 @@ CIAO::NodeManager_Impl::joinDomain (const Deployment::Domain & ,
 }
 
 void
-CIAO::NodeManager_Impl::leaveDomain (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeManager_Impl_Base::leaveDomain (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //Implementation undefined.
@@ -96,7 +96,7 @@ CIAO::NodeManager_Impl::leaveDomain (ACE_ENV_SINGLE_ARG_DECL)
 
 
 Deployment::NodeApplicationManager_ptr
-CIAO::NodeManager_Impl::preparePlan (const Deployment::DeploymentPlan &plan
+CIAO::NodeManager_Impl_Base::preparePlan (const Deployment::DeploymentPlan &plan
                                      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError,
@@ -128,11 +128,9 @@ CIAO::NodeManager_Impl::preparePlan (const Deployment::DeploymentPlan &plan
             }
 
           //Implementation undefined.
-          CIAO::NodeApplicationManager_Impl *app_mgr;
-          ACE_NEW_THROW_EX (app_mgr,
-                            CIAO::NodeApplicationManager_Impl (this->orb_.in (),
-                                                               this->poa_.in ()),
-                            CORBA::NO_MEMORY ());
+          CIAO::NodeApplicationManager_Impl_Base *app_mgr;
+          app_mgr = this->create_node_app_manager (this->orb_.in (), this->poa_.in ()
+                                                   ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           PortableServer::ServantBase_var safe (app_mgr);
@@ -188,7 +186,7 @@ CIAO::NodeManager_Impl::preparePlan (const Deployment::DeploymentPlan &plan
 }
 
 void
-CIAO::NodeManager_Impl::destroyManager
+CIAO::NodeManager_Impl_Base::destroyManager
         (Deployment::NodeApplicationManager_ptr manager
          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -198,6 +196,7 @@ CIAO::NodeManager_Impl::destroyManager
   CIAO_TRACE("CIAO::NodeManager_Impl::destroyManager");
   ACE_TRY
     {
+      printf("Entering NM_Impl::destroyManager\n");
       // Deactivate this object
       PortableServer::ObjectId_var id =
         this->poa_->reference_to_id (manager
@@ -214,6 +213,7 @@ CIAO::NodeManager_Impl::destroyManager
       this->poa_->deactivate_object (id.in ()
                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+      printf("Exiting NM_Impl::destroyManager\n");
     }
   ACE_CATCH (PortableServer::POA::WrongAdapter, ex)
     {
@@ -240,7 +240,7 @@ CIAO::NodeManager_Impl::destroyManager
 }
 
 bool
-CIAO::NodeManager_Impl::validate_plan (const Deployment::DeploymentPlan &plan)
+CIAO::NodeManager_Impl_Base::validate_plan (const Deployment::DeploymentPlan &plan)
 {
   const char * resource_id = 0;
   CORBA::ULong i = 0;
@@ -280,4 +280,95 @@ CIAO::NodeManager_Impl::validate_plan (const Deployment::DeploymentPlan &plan)
         }
     }
   return true;
+}
+
+CIAO::NodeManager_Impl::~NodeManager_Impl ()
+{
+}
+
+CIAO::NodeManager_Impl::
+NodeManager_Impl (const char *name,
+                 CORBA::ORB_ptr orb,
+                 PortableServer::POA_ptr poa,
+                 const char * nodeapp_loc,
+                 const char * nodeapp_options,
+                 int spawn_delay)
+  : NodeManager_Impl_Base (name, orb, poa, nodeapp_loc, nodeapp_options, spawn_delay)
+{}
+
+
+::CIAO::NodeApplicationManager_Impl_Base *
+::CIAO::NodeManager_Impl::
+create_node_app_manager (CORBA::ORB_ptr orb, 
+                         PortableServer::POA_ptr poa
+                         ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  CIAO::NodeApplicationManager_Impl_Base *app_mgr;
+  ACE_NEW_THROW_EX (app_mgr,
+                    CIAO::NodeApplicationManager_Impl (orb,
+                                                       poa),
+                    CORBA::NO_MEMORY ());
+  return app_mgr;
+}
+
+CIAO::Static_NodeManager_Impl::~Static_NodeManager_Impl ()
+{
+}
+
+CIAO::Static_NodeManager_Impl::
+Static_NodeManager_Impl (const char *name,
+                        CORBA::ORB_ptr orb,
+                        PortableServer::POA_ptr poa,
+                        const char * nodeapp_loc,
+                        const char * nodeapp_options,
+                        int spawn_delay,
+                        Static_Config_EntryPoints_Maps* static_config_entrypoints_maps)
+  : NodeManager_Impl_Base (name, orb, poa, nodeapp_loc, nodeapp_options, spawn_delay),
+    static_config_entrypoints_maps_ (static_config_entrypoints_maps)
+{}
+
+::CIAO::NodeApplicationManager_Impl_Base *
+::CIAO::Static_NodeManager_Impl::
+create_node_app_manager (CORBA::ORB_ptr orb, 
+                         PortableServer::POA_ptr poa
+                         ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_DEBUG ((LM_DEBUG, "creating static_node_app_manager\n"));
+  CIAO::NodeApplicationManager_Impl_Base *app_mgr;
+  ACE_NEW_THROW_EX (app_mgr,
+    CIAO::Static_NodeApplicationManager_Impl (orb,
+      poa,
+      this->static_config_entrypoints_maps_),
+    CORBA::NO_MEMORY ());
+  return app_mgr;
+}
+
+void
+CIAO::Static_NodeManager_Impl::destroyManager
+        (Deployment::NodeApplicationManager_ptr manager
+         ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::StopError,
+                   Deployment::InvalidReference))
+{
+  CIAO_TRACE("CIAO::Static_NodeManager_Impl::destroyManager");
+  ACE_TRY
+    {
+      CIAO::NodeManager_Impl_Base::destroyManager (manager ACE_ENV_ARG_PARAMETER);
+
+      this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+      
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Static_NodeManager_Impl::destroyManager\t\n");
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+
+  ACE_CHECK;
 }
