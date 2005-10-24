@@ -27,6 +27,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Version.h"
+#include "ace/Versioned_Namespace.h"
+
 // ACE_HAS_TLI is used to decide whether to try any XTI/TLI functionality
 // so if it isn't set, set it. Capabilities and differences between
 // XTI and TLI favor XTI, but when deciding to do anything, as opposed to

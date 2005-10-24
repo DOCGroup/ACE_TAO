@@ -1,3 +1,34 @@
+Sun Oct 23 21:48:15 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/README:
+
+	  Added documentation that describes how to override the default
+	  versioned namespace name when ACE_HAS_VERSIONED_NAMESPACE is
+	  defined.
+
+	* ace/Version.h:
+
+	  Removed "ace/Versioned_Namespace.h" include directive.  It
+	  caused some resource compilers on Windows some grief.
+
+	* ace/Versioned_Namespace.h:
+
+	  Updated required header filename in preprocessor error message.
+	  This header should now be included through "ace/config-lite.h".
+
+	* ace/config-lite.h:
+
+	  Include "ace/Version.h" and "ace/Versioned_Namespace.h" to pull
+	  in versioned namespace support (disabled by default).
+
+	* ace/post.h:
+	* ace/pre.h:
+
+	  Removed versioned namespace support.  Versioned namespace
+	  declarations must now be added directly to the appropriate ACE
+	  library headers.  Addresses premature closure of versioned
+	  namespace.
+
 Sun Oct 23 06:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/templates/bor.mpd:
