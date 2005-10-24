@@ -1,3 +1,11 @@
+Mon Oct 24 06:53:12 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/IFR_Service/Makefile.am:
+	* orbsvcs/orbsvcs/Makefile.am:
+	* tao/Makefile.am:
+
+	  Regenerated.
+
 Mon Oct 24 13:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Codec/client.cpp:
