@@ -2921,7 +2921,7 @@ TAO_ORB_Core::ior_interceptor_adapter (void)
           ACE_CATCHANY
             {
               ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                   "(%P|%t) Cannot initialize the "
+                                   "Cannot initialize the "
                                    "ior_interceptor_adapter \n");
             }
           ACE_ENDTRY;

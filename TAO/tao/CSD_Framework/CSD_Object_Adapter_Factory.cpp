@@ -75,7 +75,7 @@ TAO_CSD_Object_Adapter_Factory::init (int /* argc */,
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "(%P | %t) Caught exception:");
+                           "Caught exception:");
       return -1;
     }
   ACE_ENDTRY;
