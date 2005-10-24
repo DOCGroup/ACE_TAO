@@ -215,6 +215,7 @@
 #define ACE_LACKS_STRINGS_H
 #define ACE_LACKS_TERMIOS_H
 #define ACE_LACKS_POLL_H
+#define ACE_LACKS_WCTYPE_H
 
 // Not sure if these should always be defined.
 #define ACE_LACKS_SYS_UN_H
@@ -243,7 +244,11 @@
 #define ACE_LACKS_WCSTOL
 #define ACE_LACKS_WCSTOUL
 #define ACE_LACKS_WCSDUP
+
 #define ACE_LACKS_SYMLINKS
+#define ACE_LACKS_FGETWC
+#define ACE_LACKS_FGETWS
+#define ACE_LACKS_FPUTWS
 
 // It is possible to enable pthread support with VxWorks, when the user decides
 // to use this, we need some more defines
