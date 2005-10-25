@@ -1,34 +1,66 @@
+Tue Oct 25 14:08:44 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* CCF/CCF/IDL2/Parser.cpp:
+	* CCF/CCF/IDL2/Parser.hpp:
+	* CCF/CCF/IDL2/SemanticGraph.hpp:
+	* CCF/CCF/IDL2/Traversal.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Typedef.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Typedef.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Typedef.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Union.cpp:
+	* CCF/CCF/IDL2/SemanticGraph/Array.cpp:
+	* CCF/CCF/IDL2/SemanticGraph/Array.hpp:
+	* CCF/CCF/IDL2/SemanticGraph/Elements.cpp:
+	* CCF/CCF/IDL2/SemanticGraph/Elements.hpp:
+	* CCF/CCF/IDL2/SemanticGraph/Sequence.cpp:
+	* CCF/CCF/IDL2/SemanticGraph/Sequence.hpp:
+	* CCF/CCF/IDL2/SemanticGraph/String.cpp:
+	* CCF/CCF/IDL2/SemanticGraph/String.hpp:
+	* CCF/CCF/IDL2/SemanticGraph/Union.cpp:
+	* CCF/CCF/IDL2/SemanticGraph/Union.hpp:
+	* CCF/CCF/IDL2/Traversal/Array.cpp:
+	* CCF/CCF/IDL2/Traversal/Array.hpp:
+	* CCF/CCF/IDL2/Traversal/Elements.hpp:
+	* CCF/CCF/IDL2/Traversal/IntExpression.hpp:
+	* CCF/CCF/IDL2/Traversal/Sequence.cpp:
+	* CCF/CCF/IDL2/Traversal/Sequence.hpp:
+	* CCF/CCF/IDL2/Traversal/String.cpp:
+	* CCF/CCF/IDL2/Traversal/String.hpp:
+
+	Implemented the second part of the const expression support.
+	This includes bounded sequences, strings, and arrays.
+
 Mon Oct 24 09:36:28 2005  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* docs/static_dance.html: 
+	* docs/static_dance.html:
 
 	Corrected minor error with display of figures.
 
 Mon Oct 24 08:10:29 2005  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* DAnCE/NodeApplication/NodeApplication_Impl.{h,inl,cpp}: 
-	* DAnCE/NodeApplication/Container_Impl.{h,inl,cpp}: 
+	* DAnCE/NodeApplication/NodeApplication_Impl.{h,inl,cpp}:
+	* DAnCE/NodeApplication/Container_Impl.{h,inl,cpp}:
 	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.{cpp,inl,h}:
-	* DAnCE/NodeManager/NodeManager_Impl.{cpp,h}: 
-	* DAnCE/NodeApplicationManager/NodeApplicationManager.mpc: 
-	* DAnCE/NodeManager/NodeManager.mpc: 
-	* DAnCE/StaticConfigurator/README: 	
-	* DAnCE/StaticConfigurator/StaticDAnCEParser.{cpp,mpc}: 	
-	* DAnCE/StaticConfigurator/StaticDAnCEApp.{cpp.tmpl,mpc.tmpl}: 	
-	* docs/static_dance.html: 
-	* docs/imgs/dance_arch.{vsd,jpg}: 
-	* docs/imgs/static_dance_arch.{vsd,jpg}: 
-	* docs/imgs/static_dance_impl.{vsd,jpg}: 
+	* DAnCE/NodeManager/NodeManager_Impl.{cpp,h}:
+	* DAnCE/NodeApplicationManager/NodeApplicationManager.mpc:
+	* DAnCE/NodeManager/NodeManager.mpc:
+	* DAnCE/StaticConfigurator/README:
+	* DAnCE/StaticConfigurator/StaticDAnCEParser.{cpp,mpc}:
+	* DAnCE/StaticConfigurator/StaticDAnCEApp.{cpp.tmpl,mpc.tmpl}:
+	* docs/static_dance.html:
+	* docs/imgs/dance_arch.{vsd,jpg}:
+	* docs/imgs/static_dance_arch.{vsd,jpg}:
+	* docs/imgs/static_dance_impl.{vsd,jpg}:
 
 	Added Static D&C capability to CIAO. See
 	  $CIAO_ROOT/docs/static_dance.html for further details.
-	
+
 Fri Oct 21 13:58:13 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* tools/Config_Handlers/DynAny_Handler.mpc
 
 	Modified to make this not build on systems built with minimum
-	corba.  
+	corba.
 
 Fri Oct 21 09:56:10 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
@@ -36,7 +68,7 @@ Fri Oct 21 09:56:10 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 	  file to prevent it from being built.
 
 	* DAnCE/RTNodeApplication/REAME: Stated the directory has been
-	  depricated. 
+	  depricated.
 
 Fri Oct 21 13:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -403,7 +435,7 @@ Fri Oct  7 14:20:36 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 Fri Oct  7 19:14:29 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIAO-INSTALL.html:
-        
+
           Updated CIDL compiler section with instructions for building
           the CIDL compiler using MPC.
 

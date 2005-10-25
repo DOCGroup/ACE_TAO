@@ -1,9 +1,9 @@
-// file      : CCF/IDL2/SemanticGraph/Sequence.hpp
+// file      : CCF/IDL2/SemanticGraph/String.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
-#ifndef CCF_IDL2_SEMANTIC_GRAPH_SEQUENCE_HPP
-#define CCF_IDL2_SEMANTIC_GRAPH_SEQUENCE_HPP
+#ifndef CCF_IDL2_SEMANTIC_GRAPH_STRING_HPP
+#define CCF_IDL2_SEMANTIC_GRAPH_STRING_HPP
 
 #include "CCF/IDL2/SemanticGraph/Elements.hpp"
 #include "CCF/IDL2/SemanticGraph/IntExpression.hpp"
@@ -16,21 +16,22 @@ namespace CCF
     {
       //
       //
-      //
-      class Sequence : public virtual Specialization
+      class BoundedString : public virtual Specialization
       {
       public:
-        Type&
-        type () const
+        IntExpression&
+        bound () const
         {
           return
-            dynamic_cast<ArgumentsWithType&> (**arguments_begin ()).type ();
+            dynamic_cast<IntExpression&> (
+              dynamic_cast<ArgumentsWithValue&> (
+                **arguments_begin ()).value ());
         }
 
         virtual bool
         complete () const
         {
-          return type ().complete ();
+          return true;
         }
 
         static Introspection::TypeInfo const&
@@ -39,7 +40,7 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        Sequence ()
+        BoundedString ()
         {
           type_info (static_type_info ());
         }
@@ -50,39 +51,22 @@ namespace CCF
 
       //
       //
-      //
-      class UnboundedSequence : public virtual Sequence
-      {
-      public:
-        static Introspection::TypeInfo const&
-        static_type_info ();
-
-      protected:
-        friend class Graph<Node, Edge>;
-
-        UnboundedSequence ()
-        {
-          type_info (static_type_info ());
-        }
-      };
-
-
-      //
-      //
-      //
-      class BoundedSequence : public virtual Sequence
+      class BoundedWideString : public virtual Specialization
       {
       public:
         IntExpression&
         bound () const
         {
-          ArgumentsIterator i (arguments_begin ());
-
-          ++i; // Bound is always second to the type.
-
           return
             dynamic_cast<IntExpression&> (
-              dynamic_cast<ArgumentsWithValue&> (**i).value ());
+              dynamic_cast<ArgumentsWithValue&> (
+                **arguments_begin ()).value ());
+        }
+
+        virtual bool
+        complete () const
+        {
+          return true;
         }
 
         static Introspection::TypeInfo const&
@@ -91,13 +75,15 @@ namespace CCF
       protected:
         friend class Graph<Node, Edge>;
 
-        BoundedSequence ()
+        BoundedWideString ()
         {
           type_info (static_type_info ());
         }
+
+        using Specialization::add_edge_right;
       };
     }
   }
 }
 
-#endif  // CCF_IDL2_SEMANTIC_GRAPH_SEQUENCE_HPP
+#endif  // CCF_IDL2_SEMANTIC_GRAPH_STRING_HPP

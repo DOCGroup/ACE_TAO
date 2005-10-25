@@ -352,46 +352,97 @@ namespace CCF
       static_type_info () { return belongs_; }
 
 
-      // TypeTemplateSpecialization
+      // Specialization
       //
       //
       namespace
       {
         TypeInfo
-        type_template_specialization_init_ ()
+        specialization_init_ ()
         {
-          TypeInfo ti (typeid (TypeTemplateSpecialization));
+          TypeInfo ti (typeid (Specialization));
           ti.add_base (Access::PUBLIC, true, Type::static_type_info ());
           return ti;
         }
 
-        TypeInfo type_template_specialization_ (
-          type_template_specialization_init_ ());
+        TypeInfo specialization_ (
+          specialization_init_ ());
       }
 
-      TypeInfo const& TypeTemplateSpecialization::
-      static_type_info () { return type_template_specialization_; }
+      TypeInfo const& Specialization::
+      static_type_info () { return specialization_; }
 
 
-      // Specialized
+      // Arguments
       //
       //
       namespace
       {
         TypeInfo
-        specialized_init_ ()
+        arguments_init_ ()
         {
-          TypeInfo ti (typeid (Specialized));
+          TypeInfo ti (typeid (Arguments));
           ti.add_base (Access::PUBLIC, true, Edge::static_type_info ());
           return ti;
         }
 
-        TypeInfo specialized_ (specialized_init_ ());
+        TypeInfo arguments_ (arguments_init_ ());
       }
 
-      TypeInfo const& Specialized::
-      static_type_info () { return specialized_; }
+      TypeInfo const& Arguments::
+      static_type_info () { return arguments_; }
 
+
+      // ArgumentsWithType
+      //
+      //
+      namespace
+      {
+        TypeInfo
+        arguments_with_type_init_ ()
+        {
+          TypeInfo ti (typeid (ArgumentsWithType));
+          ti.add_base (Access::PUBLIC, true, Arguments::static_type_info ());
+          return ti;
+        }
+
+        TypeInfo arguments_with_type_ (arguments_with_type_init_ ());
+      }
+
+      TypeInfo const& ArgumentsWithType::
+      static_type_info () { return arguments_with_type_; }
+
+
+      // ArgumentsWithValue
+      //
+      //
+      namespace
+      {
+        TypeInfo
+        arguments_with_value_init_ ()
+        {
+          TypeInfo ti (typeid (ArgumentsWithValue));
+          ti.add_base (Access::PUBLIC, true, Arguments::static_type_info ());
+          return ti;
+        }
+
+        TypeInfo arguments_with_value_ (arguments_with_value_init_ ());
+      }
+
+      TypeInfo const& ArgumentsWithValue::
+      static_type_info () { return arguments_with_value_; }
+
+      Expression& ArgumentsWithValue::
+      value () const
+      {
+        return dynamic_cast<Expression&> (argument ());
+      }
+
+      void ArgumentsWithValue::
+      set_left_node (Expression& n)
+      {
+        Arguments::set_left_node (n);
+      }
 
       // IsA
       //

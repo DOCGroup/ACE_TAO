@@ -121,7 +121,7 @@ namespace CCF
         }
       };
 
-      class Union : public virtual TypeTemplateSpecialization,
+      class Union : public virtual Specialization,
                     public virtual Scope
       {
       public:
@@ -142,8 +142,8 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        using TypeTemplateSpecialization::add_edge_left;
-        using TypeTemplateSpecialization::add_edge_right;
+        using Specialization::add_edge_left;
+        using Specialization::add_edge_right;
         using Scope::add_edge_left;
       };
     }

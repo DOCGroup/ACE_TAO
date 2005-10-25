@@ -734,13 +734,22 @@ namespace CCF
       act_typedef_begin;
 
       OneArgAction<IdentifierPtr, SemanticAction::Typedef>
-      act_typedef_begin_seq;
+      act_typedef_begin_unbounded_seq;
+
+      OneArgAction<IdentifierPtr, SemanticAction::Typedef>
+      act_typedef_begin_bounded_seq;
 
       NoArgAction<SemanticAction::Typedef>
       act_typedef_begin_bounded_string;
 
       NoArgAction<SemanticAction::Typedef>
       act_typedef_begin_bounded_wstring;
+
+      NoArgAction<SemanticAction::Typedef>
+      act_typedef_begin_array;
+
+      NoArgAction<SemanticAction::Typedef>
+      act_typedef_bound;
 
       OneArgAction<SimpleIdentifierPtr, SemanticAction::Typedef>
       act_typedef_declarator;
