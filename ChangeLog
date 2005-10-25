@@ -1,3 +1,11 @@
+Tue Oct 25 09:05:47 MST 2005  Yan Dai  <dai_y@ociweb.com>
+        
+        * bin/msvc_static_order.lst:
+          
+          Rolled back 
+          "Mon Oct 24 12:58:45 MST 2005  Yan Dai  <dai_y@ociweb.com>" change,
+          the entry should be project file name.
+
 Tue Oct 25 08:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-qnx-rtp-62x.h:
