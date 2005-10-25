@@ -1,3 +1,8 @@
+Tue Oct 25 08:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/CosEvent/Basic/Shutdown.cpp:
+          Fixed warning in MinGW build
+
 Tue Oct 25 07:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA_Current_Impl.cpp:
