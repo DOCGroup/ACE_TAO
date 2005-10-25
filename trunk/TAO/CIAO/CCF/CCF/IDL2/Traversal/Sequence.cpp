@@ -11,11 +11,14 @@ namespace CCF
     namespace Traversal
     {
 
+      // UnboundedSequence
+      //
+
       void UnboundedSequence::
       traverse (Type& us)
       {
         pre (us);
-        specialized (us);
+        arguments_with_type (us);
         name (us);
         post (us);
       }
@@ -26,15 +29,15 @@ namespace CCF
       }
 
       void UnboundedSequence::
-      specialized (Type& us, EdgeDispatcherBase& d)
+      arguments_with_type (Type& us, EdgeDispatcherBase& d)
       {
-        d.traverse (us.specialized ());
+        d.traverse (**us.arguments_begin ());
       }
 
       void UnboundedSequence::
-      specialized (Type& us)
+      arguments_with_type (Type& us)
       {
-        specialized (us, edge_traverser ());
+        arguments_with_type (us, edge_traverser ());
       }
 
       void UnboundedSequence::
@@ -43,6 +46,63 @@ namespace CCF
       }
 
       void UnboundedSequence::
+      post (Type&)
+      {
+      }
+
+
+      // BoundedSequence
+      //
+
+      void BoundedSequence::
+      traverse (Type& bs)
+      {
+        pre (bs);
+        arguments_with_type (bs);
+        arguments_with_value (bs);
+        name (bs);
+        post (bs);
+      }
+
+      void BoundedSequence::
+      pre (Type&)
+      {
+      }
+
+      void BoundedSequence::
+      arguments_with_type (Type& bs, EdgeDispatcherBase& d)
+      {
+        d.traverse (**bs.arguments_begin ());
+      }
+
+      void BoundedSequence::
+      arguments_with_type (Type& bs)
+      {
+        arguments_with_type (bs, edge_traverser ());
+      }
+
+      void BoundedSequence::
+      arguments_with_value (Type& bs, EdgeDispatcherBase& d)
+      {
+        Type::ArgumentsIterator i (bs.arguments_begin ());
+
+        ++i; // Bound is always second to the type.
+
+        d.traverse (**i);
+      }
+
+      void BoundedSequence::
+      arguments_with_value (Type& bs)
+      {
+        arguments_with_value (bs, edge_traverser ());
+      }
+
+      void BoundedSequence::
+      name (Type&)
+      {
+      }
+
+      void BoundedSequence::
       post (Type&)
       {
       }

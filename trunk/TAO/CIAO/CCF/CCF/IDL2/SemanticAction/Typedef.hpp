@@ -19,13 +19,22 @@ namespace CCF
         begin (IdentifierPtr const& id) = 0;
 
         virtual void
-        begin_seq (IdentifierPtr const& id) = 0;
+        begin_unbounded_seq (IdentifierPtr const& id) = 0;
+
+        virtual void
+        begin_bounded_seq (IdentifierPtr const& id) = 0;
 
         virtual void
         begin_bounded_string () = 0;
 
         virtual void
         begin_bounded_wstring () = 0;
+
+        virtual void
+        begin_array () = 0;
+
+        virtual void
+        bound () = 0;
 
         virtual void
         declarator (SimpleIdentifierPtr const& id) = 0;

@@ -356,14 +356,23 @@ namespace CCF
           act_typedef_begin (
             f.typedef_ (), &SemanticAction::Typedef::begin),
 
-          act_typedef_begin_seq (
-            f.typedef_ (), &SemanticAction::Typedef::begin_seq),
+          act_typedef_begin_unbounded_seq (
+            f.typedef_ (), &SemanticAction::Typedef::begin_unbounded_seq),
+
+          act_typedef_begin_bounded_seq (
+            f.typedef_ (), &SemanticAction::Typedef::begin_bounded_seq),
 
           act_typedef_begin_bounded_string (
             f.typedef_ (), &SemanticAction::Typedef::begin_bounded_string),
 
           act_typedef_begin_bounded_wstring (
             f.typedef_ (), &SemanticAction::Typedef::begin_bounded_wstring),
+
+          act_typedef_begin_array (
+            f.typedef_ (), &SemanticAction::Typedef::begin_array),
+
+          act_typedef_bound (
+            f.typedef_ (), &SemanticAction::Typedef::bound),
 
           act_typedef_declarator (
             f.typedef_ (), &SemanticAction::Typedef::declarator),
@@ -1145,11 +1154,16 @@ namespace CCF
         ;
 
       typedef_declarator =
-           simple_identifier[act_typedef_declarator]
-        >> *(    LSBRACE[act_const_expr_flush] // flush expression stacks
-              >> numeric_const_expr
-              >> RSBRACE
-            )
+        (    simple_identifier
+          >> !(    LSBRACE[act_typedef_begin_array][act_const_expr_flush]
+                >> numeric_const_expr[act_typedef_bound]
+                >> RSBRACE
+              )
+          >> *(    LSBRACE[act_const_expr_flush]
+                >> numeric_const_expr[act_typedef_bound]
+                >> RSBRACE
+              )
+        )[act_typedef_declarator]
         ;
 
       typedef_type_spec =
@@ -1158,12 +1172,17 @@ namespace CCF
           (
                SEQUENCE
             >> LT
-            >> identifier[act_typedef_begin_seq]
-            >> !(
-                     COMMA[act_const_expr_flush] // flush expression stacks
-                  >> numeric_const_expr
-                )
-            >> GT
+            >>
+               (
+                   (identifier >> GT)[act_typedef_begin_unbounded_seq]
+                 |
+                   (
+                        identifier[act_typedef_begin_bounded_seq]
+                     >> COMMA[act_const_expr_flush] // flush expression stacks
+                     >> numeric_const_expr[act_typedef_bound]
+                     >> GT
+                   )
+               )
           )
         |
           (
