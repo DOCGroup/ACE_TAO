@@ -85,7 +85,7 @@ open (ACE_Pipe &pipe,
   ACE_ASSERT (result != -1);
   result = pipe.read_handle () != ACE_INVALID_HANDLE
     && pipe.write_handle () != ACE_INVALID_HANDLE;
-  ACE_ASSERT (result == 0);
+  ACE_ASSERT (result == 1);
 
   if (close_pipe)
     pipe.close ();
