@@ -87,8 +87,7 @@ namespace TAO
     CORBA::Object_ptr
     POA_Current_Impl::get_reference (void)
     {
-      // TODO
-      return CORBA::Object::_nil ();
+      return this->poa_->id_to_reference (this->object_id_);
     }
 
     PortableServer::Servant
