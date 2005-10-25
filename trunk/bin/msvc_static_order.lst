@@ -105,7 +105,7 @@ TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/CosEC_RtEC_Based_lib
 TAO/orbsvcs/performance-tests/RTEvent/lib/RTEC_Perf
 TAO/tests/Smart_Proxies/Collocation/SP_Collocation_TestStubsLib
 TAO/tests/Collocation/Collocation_Test_Stub
-TAO/tests/CSD_Strategy_Tests/TP_Common/CSD_TP_Test
+TAO/tests/CSD_Strategy_Tests/TP_Common/CSD_TP_Test_Lib
 TAO/examples/POA/Generic_Servant/POA_Generic_Servant_Lib
 TAO/examples/Simple/time-date/Simple_Time_Date_Lib
 TAO/docs/tutorials/Quoter/idl/Quoter_Idl_Lib
