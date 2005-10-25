@@ -14,6 +14,7 @@
 //                ACE_HAS Section
 /////////////////////////////////////////////////////////////////
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
+#define ACE_HAS_3_PARAM_WCSTOK
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 // Although ACE does have alloca() on this compiler/platform combination, it is
 // disabled by default since it can be dangerous.  Uncomment the following line
