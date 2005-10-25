@@ -1,3 +1,8 @@
+Tue Oct 25 08:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-qnx-rtp-62x.h:
+          Added ACE_HAS_3_PARAM_WCSTOK
+
 Tue Oct 25 08:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Pipe_Test.cpp:
