@@ -1,8 +1,14 @@
+Tue Oct 25 07:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA_Current_Impl.cpp:
+          Implemented POA_Current::get_reference. This is the last item
+          of bugzilla bug 1917, which is now totally fixed
+
 Mon Oct 24 19:08:06 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_scope.cpp:
         * TAO_IDL/util/utl_string.cpp:
-        
+
           Added immediate exits when name clash errors are encountered,
  	  since trying to continue parsing from these points can lead to a
  	  crash. Thanks to Ian Zagorskih <ianzag@megasignal.com> for
@@ -14,10 +20,10 @@ Mon Oct 24 18:39:31 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/fe/idl.yy:
         * TAO_IDL/fe/y.tab.cpp:
         * TAO_IDL/include/fe_interface_header.h:
-        
+
           For IDL types that are added to the IDL compiler's
           AST via an FE_*Header class (interfaces, valuetypes,
-          eventtypes, components, and homes), modified the 
+          eventtypes, components, and homes), modified the
           creation of this class to pass in a scoped name
           created on the heap instead of on the stack.
           Memory allocated within this scoped name was being
