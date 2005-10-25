@@ -9,6 +9,17 @@ Tue Oct 25 07:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
           Implemented POA_Current::get_reference. This is the last item
           of bugzilla bug 1917, which is now totally fixed
 
+Mon Oct 24 14:40:43 MST 2005  Yan Dai  <dai_y@ociweb.com>
+
+        * tests/CSD_Strategy_Tests/TP_Test_1/ServerApp.cpp:
+        
+          Removed duplicated log message.
+          
+        * tests/CSD_Strategy_Tests/TP_Test_3/ServerApp.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_3/ClientApp.cpp:
+
+          Added ACE_DEBUG log message to help debugging.
+          
 Mon Oct 24 19:08:06 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_scope.cpp:
