@@ -7,10 +7,12 @@
 
 #include "CCF/IDL2/Traversal/Elements.hpp"
 
+#include "CCF/IDL2/Traversal/Array.hpp"
 #include "CCF/IDL2/Traversal/Attribute.hpp"
 #include "CCF/IDL2/Traversal/Enum.hpp"
 #include "CCF/IDL2/Traversal/Exception.hpp"
 #include "CCF/IDL2/Traversal/Fundamental.hpp"
+#include "CCF/IDL2/Traversal/IntExpression.hpp"
 #include "CCF/IDL2/Traversal/Interface.hpp"
 #include "CCF/IDL2/Traversal/Member.hpp"
 #include "CCF/IDL2/Traversal/Module.hpp"
@@ -18,6 +20,7 @@
 #include "CCF/IDL2/Traversal/Operation.hpp"
 #include "CCF/IDL2/Traversal/Struct.hpp"
 #include "CCF/IDL2/Traversal/Sequence.hpp"
+#include "CCF/IDL2/Traversal/String.hpp"
 #include "CCF/IDL2/Traversal/Struct.hpp"
 #include "CCF/IDL2/Traversal/Translation.hpp"
 #include "CCF/IDL2/Traversal/TypeId.hpp"

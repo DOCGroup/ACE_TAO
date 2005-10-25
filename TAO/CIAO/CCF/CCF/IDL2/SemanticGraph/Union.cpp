@@ -124,9 +124,8 @@ namespace CCF
         {
           TypeInfo ti (typeid (Union));
 
-          ti.add_base (Access::PUBLIC,
-                       true,
-                       TypeTemplateSpecialization::static_type_info ());
+          ti.add_base (
+            Access::PUBLIC, true, Specialization::static_type_info ());
 
           ti.add_base (Access::PUBLIC, true, Scope::static_type_info ());
           return ti;

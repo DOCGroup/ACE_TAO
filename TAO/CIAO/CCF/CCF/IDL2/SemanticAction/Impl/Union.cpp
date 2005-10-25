@@ -96,7 +96,7 @@ namespace CCF
                 throw WrongType (type_->scoped_name ());
               }
 
-              ctx.tu ().new_edge<Specialized> (now (), *type_);
+              ctx.tu ().new_edge<ArgumentsWithType> (*type_, now ());
             }
             catch (Resolve const&)
             {
