@@ -338,7 +338,7 @@ namespace TAO
           {
             (void) bd.unbind_dispatcher ();
             this->resolver_.transport ()->close_connection ();
-            
+
             ACE_TRY
               {
                 return
