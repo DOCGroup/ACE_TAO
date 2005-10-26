@@ -1,3 +1,9 @@
+Wed Oct 26 13:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/diffs/ServerRequestInterceptor.diff:
+        * tao/PI_Server/diffs/ServerRequestInterceptor.diff:
+          Moved this diff to the PI_Server directory, it belongs there
+
 Wed Oct 26 09:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ObjRefTemplate/ObjectReferenceTemplate.pidl:
