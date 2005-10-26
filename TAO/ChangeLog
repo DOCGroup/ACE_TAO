@@ -1,3 +1,11 @@
+Tue Oct 25 22:24:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/LocateRequest_Invocation.cpp (invoke):
+	* tao/Synch_Invocation.cpp (remote_oneway, remote_twoway):
+
+	  Changed OutputCDR_Auto_Reset to ACE_OutputCDR_Auto_Reset to
+	  match corresponding changes made to ACE.
+
 Tue Oct 25 21:50:46 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* utils/wxNamingViewer/wxNamingViewer.cpp: 
