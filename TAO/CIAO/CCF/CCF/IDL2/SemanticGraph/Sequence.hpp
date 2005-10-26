@@ -43,8 +43,6 @@ namespace CCF
         {
           type_info (static_type_info ());
         }
-
-        using Specialization::add_edge_right;
       };
 
 
