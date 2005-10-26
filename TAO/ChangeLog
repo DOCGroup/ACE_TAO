@@ -1,3 +1,13 @@
+Wed Oct 26 18:57:47 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_global.cpp (be_change_idl_file_extension):
+        
+          Changed logic to ignore a header extension set by the -hc
+          option and use "C.h", if we are processing a .pidl file,
+          and we are not generating an *A.h file. Thanks to 
+          Johnny Willemsen <jwillemsen@remedy.nl> for reporting
+          the problem.
+
 Wed Oct 26 18:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI/ClientRequestInfoA.cpp
