@@ -1,3 +1,23 @@
+Wed Oct 26 17:22:12 2005  Don Busch  <busch_d@ociweb.com>
+
+        * ace/bin/MakeProjectCreator/config/event_serv.mpb
+        * ace/bin/MakeProjectCreator/config/messaging.mpb
+        * ace/bin/MakeProjectCreator/config/messaging_optional.mpb
+        * ace/bin/MakeProjectCreator/config/naming_serv.mpb
+
+          This is a footprint reduction fix, eliminating a library dependency.
+          TAO 1.4 introduced a new dependency on the Messaging, Valuetype,
+          PI, and CodecFactory libraries for the CosNaming_Serv and
+          CosEvent_Serv libraries.  Turning off CORBA Messaging did not remove
+          this dependency. Thus, any application that uses CosNaming_Serv or
+          CosEvent_Serv, but not CORBA Messaging, depends on those libraries
+          anyway. This change eliminates the CosNaming_Serv and CosEvent_Serv
+          dependencies on Messaging (and thus PI, CodecFactory, and Valuetype)
+          when CORBA Messaging and Interceptors are turned off.  It reduces
+          the footprint in that case by about 600K.
+          There is a TAO ChangeLog entry with the same timestamp that
+          descibes the TAO changes.
+
 Wed Oct 26 12:26:01 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Codeset_Registry.cpp (locale_to_registry_i):

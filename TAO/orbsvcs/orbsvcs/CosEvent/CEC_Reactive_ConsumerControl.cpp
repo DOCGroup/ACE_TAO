@@ -18,7 +18,10 @@
 
 #include "orbsvcs/Time_Utilities.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 #include "tao/Messaging/Messaging.h"
+#endif
+
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "ace/Reactor.h"
@@ -43,7 +46,9 @@ TAO_CEC_Reactive_ConsumerControl::
     retries_ (retries),
     adapter_ (this),
     event_channel_ (ec),
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
     typed_event_channel_ (0),
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
     orb_ (CORBA::ORB::_duplicate (orb))
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
    // Initialise timer_id_ to an invalid timer id, so that in case we don't
