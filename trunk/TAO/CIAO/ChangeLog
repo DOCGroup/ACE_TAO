@@ -1,3 +1,10 @@
+Wed Oct 26 16:37:26 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* CCF/CCF/IDL2/SemanticAction/Impl/Typedef.cpp:
+
+	Clear array type before starting sequence, string, etc.,
+	declarations.
+
 Tue Oct 25 14:08:44 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* CCF/CCF/IDL2/Parser.cpp:

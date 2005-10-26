@@ -80,6 +80,7 @@ namespace CCF
 
           define_ = true;
           type_ = 0;
+          array_type_ = 0;
 
           Name name (id->lexeme ());
           ScopedName from (ctx.scope ().scoped_name ());
@@ -123,6 +124,7 @@ namespace CCF
 
           define_ = true;
           type_ = 0;
+          array_type_ = 0;
 
           Name name (id->lexeme ());
           ScopedName from (ctx.scope ().scoped_name ());
@@ -166,6 +168,7 @@ namespace CCF
 
           define_ = true;
           type_ = 0;
+          array_type_ = 0;
 
           type_ = &ctx.tu ().new_node<BoundedString> ();
           bound ();
@@ -178,6 +181,7 @@ namespace CCF
 
           define_ = true;
           type_ = 0;
+          array_type_ = 0;
 
           type_ = &ctx.tu ().new_node<BoundedWideString> ();
           bound ();
