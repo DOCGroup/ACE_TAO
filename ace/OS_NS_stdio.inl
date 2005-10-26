@@ -1110,6 +1110,22 @@ ACE_OS::vsnprintf (wchar_t *buffer, size_t maxlen, const wchar_t *format, va_lis
 
   return vswprintf (buffer, maxlen, format, ap);
 
+# elif defined (ACE_WIN32)
+
+  int result =
+    ACE_SPRINTF_ADAPTER (::_vsnwprintf (buffer, maxlen, format, ap));
+
+  // Win32 doesn't regard a full buffer with no 0-terminate as an
+  // overrun.
+  if (result == static_cast<int> (maxlen))
+    result = -1;
+
+  // Win32 doesn't 0-terminate the string if it overruns maxlen.
+  if (result == -1)
+    buffer[maxlen-1] = '\0';
+
+  return result;
+
 # else
 
   ACE_UNUSED_ARG (buffer);
