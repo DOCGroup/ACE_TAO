@@ -1118,7 +1118,6 @@ libTAO_PI_la_SOURCES = \
   PI/InvalidSlotA.cpp \
   PI/InvalidSlotC.cpp \
   PI/ORBInitInfo.cpp \
-  PI/ORBInitInfoA.cpp \
   PI/ORBInitInfoC.cpp \
   PI/ORBInitializerA.cpp \
   PI/ORBInitializerC.cpp \
@@ -1152,15 +1151,18 @@ libTAO_PI_la_LIBADD = \
 nobase_include_HEADERS += \
   PI/ClientRequestInfo.h \
   PI/ClientRequestInfo.pidl \
+  PI/ClientRequestInfoA.h \
   PI/ClientRequestInfoC.h \
   PI/ClientRequestInfoS.h \
   PI/ClientRequestInterceptor.pidl \
+  PI/ClientRequestInterceptorA.h \
   PI/ClientRequestInterceptorC.h \
   PI/ClientRequestInterceptorS.h \
   PI/ClientRequestInterceptor_Adapter_Impl.h \
   PI/ClientRequestInterceptor_Adapter_Impl.inl \
   PI/ClientRequestInterceptor_Factory_Impl.h \
   PI/Interceptor.pidl \
+  PI/InterceptorA.h \
   PI/InterceptorC.h \
   PI/InterceptorS.h \
   PI/Interceptor_List_T.cpp \
@@ -1175,6 +1177,7 @@ nobase_include_HEADERS += \
   PI/ORBInitInfoC.h \
   PI/ORBInitInfoS.h \
   PI/ORBInitializer.pidl \
+  PI/ORBInitializerA.h \
   PI/ORBInitializerC.h \
   PI/ORBInitializerS.h \
   PI/ORBInitializer_Registry_Impl.h \
@@ -1190,14 +1193,17 @@ nobase_include_HEADERS += \
   PI/PICurrent_Impl.inl \
   PI/PICurrent_Loader.h \
   PI/PIForwardRequest.pidl \
+  PI/PIForwardRequestA.h \
   PI/PIForwardRequestC.h \
   PI/PIForwardRequestS.h \
   PI/PolicyFactory.pidl \
+  PI/PolicyFactoryA.h \
   PI/PolicyFactoryC.h \
   PI/PolicyFactoryS.h \
   PI/PolicyFactory_Loader.h \
   PI/PolicyFactory_Registry.h \
   PI/RequestInfo.pidl \
+  PI/RequestInfoA.h \
   PI/RequestInfoC.h \
   PI/RequestInfoS.h \
   PI/RequestInfo_Util.h \
@@ -2539,9 +2545,11 @@ nobase_include_HEADERS += \
   PI_Server/ServerRequestInfo.h \
   PI_Server/ServerRequestInfo.inl \
   PI_Server/ServerRequestInfo.pidl \
+  PI_Server/ServerRequestInfoA.h \
   PI_Server/ServerRequestInfoC.h \
   PI_Server/ServerRequestInfoS.h \
   PI_Server/ServerRequestInterceptor.pidl \
+  PI_Server/ServerRequestInterceptorA.h \
   PI_Server/ServerRequestInterceptorC.h \
   PI_Server/ServerRequestInterceptorS.h \
   PI_Server/ServerRequestInterceptor_Factory_Impl.h \

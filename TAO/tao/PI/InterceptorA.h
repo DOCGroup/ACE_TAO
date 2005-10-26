@@ -25,30 +25,34 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "PolicyFactoryA.h"
-#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
-#include "tao/AnyTypeCode/TypeCode_Constants.h"
-#include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
-#include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
-#include "tao/AnyTypeCode/Any.h"
-#include "tao/CDR.h"
-#include "tao/AnyTypeCode/Any.h"
-#include "tao/AnyTypeCode/Any_Impl_T.h"
+// TAO_IDL - Generated from
+// be\be_codegen.cpp:754
+
+#ifndef _TAO_IDL_INTERCEPTORA_H_
+#define _TAO_IDL_INTERCEPTORA_H_
+
+#include /**/ "ace/pre.h"
+
+#include "tao/PI/pi_export.h"
+#include "tao/PI/InterceptorC.h"
+
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be\be_visitor_module/module_ch.cpp:59
 
-static TAO::TypeCode::Objref<char const *,
-                             TAO::Null_RefCount_Policy>
-  _tao_tc_PortableInterceptor_PolicyFactory (
-    ::CORBA::tk_local_interface,
-    "IDL:omg.org/PortableInterceptor/PolicyFactory:1.0",
-    "PolicyFactory");
-  
 namespace PortableInterceptor
 {
-  ::CORBA::TypeCode_ptr const _tc_PolicyFactory =
-    &_tao_tc_PortableInterceptor_PolicyFactory;
-}
 
+  // TAO_IDL - Generated from
+  // be\be_visitor_typecode/typecode_decl.cpp:49
 
+  extern TAO_PI_Export ::CORBA::TypeCode_ptr const _tc_Interceptor;
+
+// TAO_IDL - Generated from
+// be\be_visitor_module/module_ch.cpp:86
+
+} // module PortableInterceptor
+
+#include /**/ "ace/post.h"
+
+#endif /* ifndef */
