@@ -26,17 +26,13 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:291
+// be\be_codegen.cpp:277
 
 
 #include "ServerRequestInterceptorC.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_string.h"
-
-#if defined (__BORLANDC__)
-#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
-#endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
@@ -74,13 +70,13 @@ TAO::Objref_Traits<PortableInterceptor::ServerRequestInterceptor>::nil (void)
   return PortableInterceptor::ServerRequestInterceptor::_nil ();
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 TAO::Objref_Traits<PortableInterceptor::ServerRequestInterceptor>::marshal (
     PortableInterceptor::ServerRequestInterceptor_ptr p,
     TAO_OutputCDR & cdr
   )
 {
-  return CORBA::Object::marshal (p, cdr);
+  return ::CORBA::Object::marshal (p, cdr);
 }
 
 PortableInterceptor::ServerRequestInterceptor::ServerRequestInterceptor (void)
@@ -89,17 +85,9 @@ PortableInterceptor::ServerRequestInterceptor::ServerRequestInterceptor (void)
 PortableInterceptor::ServerRequestInterceptor::~ServerRequestInterceptor (void)
 {}
 
-void 
-PortableInterceptor::ServerRequestInterceptor::_tao_any_destructor (void *_tao_void_pointer)
-{
-  ServerRequestInterceptor *_tao_tmp_pointer =
-    static_cast<ServerRequestInterceptor *> (_tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
 PortableInterceptor::ServerRequestInterceptor_ptr
 PortableInterceptor::ServerRequestInterceptor::_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -110,7 +98,7 @@ PortableInterceptor::ServerRequestInterceptor::_narrow (
 
 PortableInterceptor::ServerRequestInterceptor_ptr
 PortableInterceptor::ServerRequestInterceptor::_unchecked_narrow (
-    CORBA::Object_ptr _tao_objref
+    ::CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
@@ -136,7 +124,7 @@ PortableInterceptor::ServerRequestInterceptor::_tao_release (ServerRequestInterc
   CORBA::release (obj);
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 PortableInterceptor::ServerRequestInterceptor::_is_a (
     const char *value
     ACE_ENV_ARG_DECL_NOT_USED
@@ -174,7 +162,7 @@ const char* PortableInterceptor::ServerRequestInterceptor::_interface_repository
   return "IDL:omg.org/PortableInterceptor/ServerRequestInterceptor:1.0";
 }
 
-CORBA::Boolean
+::CORBA::Boolean
 PortableInterceptor::ServerRequestInterceptor::marshal (TAO_OutputCDR &)
 {
   return false;

@@ -135,10 +135,18 @@ TAO_IORInterceptor_Adapter_Impl::components_established (
     {
       ACE_TRY
         {
-          this->ior_interceptor_list_.interceptor (j)->components_established (
-            info
-            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          PortableInterceptor::IORInterceptor_ptr ior_interceptor =
+            this->ior_interceptor_list_.interceptor (j);
+
+          PortableInterceptor::IORInterceptor_3_0_var ior_3_interceptor =
+            PortableInterceptor::IORInterceptor_3_0::_narrow (ior_interceptor);
+          if (!CORBA::is_nil (ior_3_interceptor))
+            {
+              ior_3_interceptor->components_established (
+                info
+                ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
         }
       ACE_CATCHANY
         {
@@ -179,11 +187,19 @@ TAO_IORInterceptor_Adapter_Impl::adapter_state_changed (
 
   for (size_t i = 0; i < interceptor_count; ++i)
     {
-      this->ior_interceptor_list_.interceptor (i)->adapter_state_changed (
-        seq_obj_ref_template,
-        state
-        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      PortableInterceptor::IORInterceptor_ptr ior_interceptor =
+        this->ior_interceptor_list_.interceptor (i);
+
+      PortableInterceptor::IORInterceptor_3_0_var ior_3_interceptor =
+        PortableInterceptor::IORInterceptor_3_0::_narrow (ior_interceptor);
+      if (!CORBA::is_nil (ior_3_interceptor))
+        {
+          ior_3_interceptor->adapter_state_changed (
+            seq_obj_ref_template,
+            state
+            ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+        }
     }
 }
 
@@ -204,10 +220,18 @@ TAO_IORInterceptor_Adapter_Impl::adapter_manager_state_changed (
 
   for (size_t i = 0; i < interceptor_count; ++i)
     {
-      this->ior_interceptor_list_.interceptor(i)->adapter_manager_state_changed (
-        id,
-        state
-        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      PortableInterceptor::IORInterceptor_ptr ior_interceptor =
+        this->ior_interceptor_list_.interceptor (i);
+
+      PortableInterceptor::IORInterceptor_3_0_var ior_3_interceptor =
+        PortableInterceptor::IORInterceptor_3_0::_narrow (ior_interceptor);
+      if (!CORBA::is_nil (ior_3_interceptor))
+        {
+          ior_3_interceptor->adapter_manager_state_changed (
+            id,
+            state
+            ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+        }
     }
 }

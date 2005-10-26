@@ -56,7 +56,7 @@ namespace TAO
 
     void
     Cached_Policies::update_policy (const CORBA::Policy_ptr policy
-                                            ACE_ENV_ARG_DECL)
+                                    ACE_ENV_ARG_DECL)
     {
 
     #if (TAO_HAS_MINIMUM_POA == 0)
