@@ -510,7 +510,7 @@ namespace CCF
         }
 
         void
-        add_edge_right (ArgumentsWithType&)
+        add_edge_left (ArgumentsWithType&)
         {
         }
 
@@ -605,6 +605,8 @@ namespace CCF
       //
       //
       class Arguments;
+      class ArgumentsWithType;
+      class ArgumentsWithValue;
 
       class Specialization: public virtual Type
       {
@@ -641,10 +643,10 @@ namespace CCF
         }
 
         void
-        add_edge_left (Arguments& e)
-        {
-          arguments_.push_back (&e);
-        }
+        add_edge_right (ArgumentsWithType& e);
+
+        void
+        add_edge_right (ArgumentsWithValue& e);
 
       private:
         Arguments_ arguments_;

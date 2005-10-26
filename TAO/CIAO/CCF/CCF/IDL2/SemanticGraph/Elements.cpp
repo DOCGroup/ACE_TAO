@@ -372,6 +372,17 @@ namespace CCF
       TypeInfo const& Specialization::
       static_type_info () { return specialization_; }
 
+      void Specialization::
+      add_edge_right (ArgumentsWithType& e)
+      {
+        arguments_.push_back (&e);
+      }
+
+      void Specialization::
+      add_edge_right (ArgumentsWithValue& e)
+      {
+        arguments_.push_back (&e);
+      }
 
       // Arguments
       //

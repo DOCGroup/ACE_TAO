@@ -145,6 +145,7 @@ namespace CCF
         using Specialization::add_edge_left;
         using Specialization::add_edge_right;
         using Scope::add_edge_left;
+        using Scope::add_edge_right;
       };
     }
   }

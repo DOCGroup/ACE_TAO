@@ -209,7 +209,7 @@ namespace CCF
           }
 
           Array& a (ctx.tu ().new_node<Array> ());
-          ctx.tu ().new_edge<Arguments> (*type_, a);
+          ctx.tu ().new_edge<ArgumentsWithType> (*type_, a);
 
           array_type_ = &a;
         }
