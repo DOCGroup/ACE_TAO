@@ -27,17 +27,17 @@
 #include "ace/SString.h"
 #include "ace/Functor_String.h"
 
-# if defined (ACE_HAS_WCHAR) && (ACE_SIZEOF_WCHAR == 2)
+# if (ACE_SIZEOF_WCHAR == 2)
 typedef wchar_t ACEXML_UTF16;
 # else
 typedef ACE_USHORT16 ACEXML_UTF16;
-# endif /* ACE_HAS_WCHAR && ACE_SIZEOF_WCHAR == 2 */
+# endif /* ACE_SIZEOF_WCHAR == 2 */
 
-# if defined (ACE_HAS_WCHAR) && (ACE_SIZEOF_WCHAR == 4)
+# if (ACE_SIZEOF_WCHAR == 4)
 typedef wchar_t ACEXML_UCS4;
 # else
 typedef ACE_UINT32 ACEXML_UCS4;
-# endif /* ACE_HAS_WCHAR && ACE_SIZEOF_WCHAR == 4 */
+# endif /* ACE_SIZEOF_WCHAR == 4 */
 
 typedef char ACEXML_UTF8;
 
