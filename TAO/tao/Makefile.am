@@ -1076,6 +1076,7 @@ nobase_include_HEADERS += \
   CodecFactory/IOP_CodecC.h \
   CodecFactory/IOP_CodecS.h \
   CodecFactory/IOP_Codec_include.pidl \
+  CodecFactory/IOP_Codec_includeA.h \
   CodecFactory/IOP_Codec_includeC.h \
   CodecFactory/IOP_Codec_includeS.h \
   CodecFactory/codecfactory_export.h
