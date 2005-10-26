@@ -1,3 +1,10 @@
+Wed Oct 26 09:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ObjRefTemplate/ObjectReferenceTemplate.pidl:
+          Removed the equals and make_profiles methods which where
+          commented out. That these exist in the IDL of CORBA 3.0.3
+          is an editorial error. See also OMG issue 9112
+
 Tue Oct 25 22:24:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/LocateRequest_Invocation.cpp (invoke):
