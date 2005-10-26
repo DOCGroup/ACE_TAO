@@ -74,7 +74,7 @@ Wed Oct 26 18:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
           Splitted PortableInterceptor::IORInterceptor into IORInterceptor
           and IORInterceptor_3_0. This is triggered by bug 1271 which contained
           issues about CORBA Compliance. In the 3.0.3 spec the IORInterceptor
-          was splitted.
+          was splitted. This fixes bug 1271.
 
           IMPORTANT!!!
           If you use IORInterceptor methods components_established,
