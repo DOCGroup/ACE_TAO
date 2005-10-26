@@ -1,3 +1,10 @@
+Tue Oct 25 21:50:46 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* utils/wxNamingViewer/wxNamingViewer.cpp: 
+	* utils/wxNamingViewer/wxNamingViewerFrame.cpp: Added some #include
+	  files to get things working again on Linux.  Thanks to Matt
+ 	  Gillen <mgillen@bbn.com> for these fixes.
+
 Tue Oct 25 08:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/CosEvent/Basic/Shutdown.cpp:
