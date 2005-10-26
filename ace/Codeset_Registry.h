@@ -37,6 +37,8 @@
 #include /**/ <dce/rpc.h>
 #endif /* ACE_HAS_DCE_CODESET_REGISTRY */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Export ACE_Codeset_Registry
 {
 public:
@@ -76,8 +78,8 @@ protected:
   } registry_entry;
 
 private:
-  static size_t num_registry_entries_;
-  static registry_entry registry_db_[];
+  static size_t const num_registry_entries_;
+  static registry_entry const registry_db_[];
 
   static int locale_to_registry_i (const ACE_CString &locale,
                                    ACE_CDR::ULong &codeset_id,
@@ -91,6 +93,8 @@ private:
                               ACE_CDR::ULong other);
   static ACE_CDR::Short get_max_bytes_i (ACE_CDR::ULong codeset_id);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Codeset_Registry.inl"

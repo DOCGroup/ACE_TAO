@@ -1,3 +1,27 @@
+Wed Oct 26 12:26:01 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Codeset_Registry.cpp (locale_to_registry_i):
+	  (registry_to_locale_i):
+
+	  Corrected reversed destination and source arguments in memcpy()
+	  call.
+
+	  Improved const correctness.  Revealed the above memcpy()
+	  problem.
+
+	* ace/Codeset_Registry.h:
+	* ace/Codeset_Registry_db.cpp:
+
+	  Made registry entry array "const" to prevent the above memcpy()
+	  problem from being potentially reintroduced in the future.  Also
+	  provides the compiler with additional optimization opportunities
+	  (e.g. placing the array in read-only memory).
+
+	* apps/mkcsregdb/mkcsregdb.cpp (init_output, fini_output):
+
+	  Updated output to generate an array of const registry entries in
+	  accordance with the changes made to ace/Codeset_Registry.h.
+
 Wed Oct 26 15:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_cidlc.pl:
