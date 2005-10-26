@@ -1,3 +1,28 @@
+Wed Oct 26 17:22:12 2005  Don Busch  <busch_d@ociweb.com>
+
+        * orbsvcs/CosEvent_Service/CosEvent_Service.mpc
+        * orbsvcs/examples/ORT/ORT.mpc
+        * orbsvcs/orbsvcs/CosEvent.mpc
+        * orbsvcs/orbsvcs/CosNaming_Serv.mpc
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.cpp
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.cpp
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.cpp
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp 
+        * tao/CSD_Framework.mpc 
+
+          This is a footprint reduction fix, eliminating a library dependency.
+          TAO 1.4 introduced a new dependency on the Messaging, Valuetype,
+          PI, and CodecFactory libraries for the CosNaming_Serv and
+          CosEvent_Serv libraries.  Turning off CORBA Messaging did not remove
+          this dependency. Thus, any application that uses CosNaming_Serv or
+          CosEvent_Serv, but not CORBA Messaging, depends on those libraries
+          anyway. This change eliminates the CosNaming_Serv and CosEvent_Serv
+          dependencies on Messaging (and thus PI, CodecFactory, and Valuetype)
+          when CORBA Messaging and Interceptors are turned off.  It reduces
+          the footprint in that case by about 600K.
+          There is a ACE ChangeLog entry with the same timestamp that
+          descibes the MPC config file changes.
+
 Wed Oct 26 19:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/CodecFactory/IOP_Codec_includeA.h:

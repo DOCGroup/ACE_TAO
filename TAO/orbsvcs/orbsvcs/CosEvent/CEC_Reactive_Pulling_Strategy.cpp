@@ -8,7 +8,10 @@
 
 #include "orbsvcs/Time_Utilities.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 #include "tao/Messaging/Messaging.h"
+#endif
+
 #include "tao/ORB_Core.h"
 
 #include "ace/Reactor.h"
