@@ -1,4 +1,4 @@
-Tue Oct 25 22:08:23 2005    <ossama@dre.vanderbilt.edu>
+Tue Oct 25 22:18:03 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/CDR_Stream.h (OutputCDR_Auto_Reset):
 	* ace/CDR_Stream.inl (OutputCDR_Auto_Reset):
@@ -16,10 +16,10 @@ Tue Oct 25 22:08:23 2005    <ossama@dre.vanderbilt.edu>
 	  ACE coding conventions/guidelines.
 
 Tue Oct 25 09:05:47 MST 2005  Yan Dai  <dai_y@ociweb.com>
-        
+
         * bin/msvc_static_order.lst:
-          
-          Rolled back 
+
+          Rolled back
           "Mon Oct 24 12:58:45 MST 2005  Yan Dai  <dai_y@ociweb.com>" change,
           the entry should be project file name.
 
