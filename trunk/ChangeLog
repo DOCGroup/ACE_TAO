@@ -1,3 +1,13 @@
+Wed Oct 26 12:58:17 2005  Simon McQueen  <sm@prismtech.com>
+
+        * ace/OS_NS_stdio.inl:
+
+          Added a ACE_WIN32 implementation for ACE_OS::vsnprintf for
+          wide chars using ::_vsnwprintf, in the style of the existing
+          ACE_OS::vsnprintf for normal chars.
+
+          This (hopefully) fixes bug #2208.
+
 Tue Oct 25 22:18:03 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/CDR_Stream.h (OutputCDR_Auto_Reset):
