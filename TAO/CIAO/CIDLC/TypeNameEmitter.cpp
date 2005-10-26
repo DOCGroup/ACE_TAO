@@ -86,7 +86,17 @@ TypeNameEmitter::traverse (String&)
 }
 
 void
+TypeNameEmitter::traverse (SemanticGraph::BoundedString&)
+{
+}
+
+void
 TypeNameEmitter::traverse (Wstring&)
+{
+}
+
+void
+TypeNameEmitter::traverse (SemanticGraph::BoundedWideString&)
 {
 }
 
@@ -106,6 +116,11 @@ TypeNameEmitter::traverse (Any&)
 }
 
 void
+TypeNameEmitter::traverse (SemanticGraph::Array&)
+{
+}
+
+void
 TypeNameEmitter::traverse (SemanticGraph::Enum&)
 {
 }
@@ -117,6 +132,11 @@ TypeNameEmitter::traverse (SemanticGraph::Struct&)
 
 void
 TypeNameEmitter::traverse (SemanticGraph::Union&)
+{
+}
+
+void
+TypeNameEmitter::traverse (SemanticGraph::BoundedSequence&)
 {
 }
 
@@ -242,7 +262,19 @@ ReturnTypeNameEmitter::traverse (String&)
 }
 
 void
+ReturnTypeNameEmitter::traverse (SemanticGraph::BoundedString&)
+{
+  os << "char *";
+}
+
+void
 ReturnTypeNameEmitter::traverse (Wstring&)
+{
+  os << "::CORBA::WChar *";
+}
+
+void
+ReturnTypeNameEmitter::traverse (SemanticGraph::BoundedWideString&)
 {
   os << "::CORBA::WChar *";
 }
@@ -263,6 +295,12 @@ void
 ReturnTypeNameEmitter::traverse (Any&)
 {
   os << "::CORBA::Any *";
+}
+
+void
+ReturnTypeNameEmitter::traverse (SemanticGraph::Array& a)
+{
+  os << a.scoped_name () << "_slice *";
 }
 
 void
@@ -299,6 +337,12 @@ ReturnTypeNameEmitter::traverse (SemanticGraph::Union& u)
   {
     os << " *";
   }
+}
+
+void
+ReturnTypeNameEmitter::traverse (SemanticGraph::BoundedSequence& s)
+{
+  os << s.scoped_name () << " *";
 }
 
 void
@@ -423,7 +467,19 @@ INArgTypeNameEmitter::traverse (String&)
 }
 
 void
+INArgTypeNameEmitter::traverse (SemanticGraph::BoundedString&)
+{
+  os << "const char *";
+}
+
+void
 INArgTypeNameEmitter::traverse (Wstring&)
+{
+  os << "const ::CORBA::WChar *";
+}
+
+void
+INArgTypeNameEmitter::traverse (SemanticGraph::BoundedWideString&)
 {
   os << "const ::CORBA::WChar *";
 }
@@ -447,6 +503,11 @@ INArgTypeNameEmitter::traverse (Any&)
 }
 
 void
+INArgTypeNameEmitter::traverse (SemanticGraph::Array& a)
+{
+  os << "const " << a.scoped_name ();
+}
+void
 INArgTypeNameEmitter::traverse (SemanticGraph::Enum& e)
 {
   os << e.scoped_name ();
@@ -462,6 +523,12 @@ void
 INArgTypeNameEmitter::traverse (SemanticGraph::Union& u)
 {
   os << "const " << u.scoped_name () << " &";;
+}
+
+void
+INArgTypeNameEmitter::traverse (SemanticGraph::BoundedSequence& s)
+{
+  os << "const " << s.scoped_name () << " &";;
 }
 
 void
@@ -586,7 +653,19 @@ INOUTArgTypeNameEmitter::traverse (String&)
 }
 
 void
+INOUTArgTypeNameEmitter::traverse (SemanticGraph::BoundedString&)
+{
+  os << "char *&";
+}
+
+void
 INOUTArgTypeNameEmitter::traverse (Wstring&)
+{
+  os << "::CORBA::WChar *&";
+}
+
+void
+INOUTArgTypeNameEmitter::traverse (SemanticGraph::BoundedWideString&)
 {
   os << "::CORBA::WChar *&";
 }
@@ -610,6 +689,12 @@ INOUTArgTypeNameEmitter::traverse (Any&)
 }
 
 void
+INOUTArgTypeNameEmitter::traverse (SemanticGraph::Array& a)
+{
+  os << a.scoped_name ();
+}
+
+void
 INOUTArgTypeNameEmitter::traverse (SemanticGraph::Enum& e)
 {
   os << e.scoped_name () << " &";
@@ -625,6 +710,12 @@ void
 INOUTArgTypeNameEmitter::traverse (SemanticGraph::Union& u)
 {
   os << u.scoped_name () << " &";
+}
+
+void
+INOUTArgTypeNameEmitter::traverse (SemanticGraph::BoundedSequence& s)
+{
+  os << s.scoped_name () << " &";
 }
 
 void
@@ -749,9 +840,21 @@ OUTArgTypeNameEmitter::traverse (String&)
 }
 
 void
+OUTArgTypeNameEmitter::traverse (SemanticGraph::BoundedString& s)
+{
+  os << s.scoped_name () << "_out";
+}
+
+void
 OUTArgTypeNameEmitter::traverse (Wstring&)
 {
   os << "::CORBA::WString_out";
+}
+
+void
+OUTArgTypeNameEmitter::traverse (SemanticGraph::BoundedWideString& s)
+{
+  os << s.scoped_name () << "_out";
 }
 
 void
@@ -773,6 +876,12 @@ OUTArgTypeNameEmitter::traverse (Any&)
 }
 
 void
+OUTArgTypeNameEmitter::traverse (SemanticGraph::Array& a)
+{
+  os << a.scoped_name () << "_out";
+}
+
+void
 OUTArgTypeNameEmitter::traverse (SemanticGraph::Enum& e)
 {
   os << e.scoped_name () << "_out";
@@ -788,6 +897,12 @@ void
 OUTArgTypeNameEmitter::traverse (SemanticGraph::Union& u)
 {
   os << u.scoped_name () << "_out";
+}
+
+void
+OUTArgTypeNameEmitter::traverse (SemanticGraph::BoundedSequence& s)
+{
+  os << s.scoped_name () << "_out";
 }
 
 void
@@ -912,7 +1027,19 @@ NullReturnEmitter::traverse (String&)
 }
 
 void
+NullReturnEmitter::traverse (SemanticGraph::BoundedString&)
+{
+  os << "return 0;";
+}
+
+void
 NullReturnEmitter::traverse (Wstring&)
+{
+  os << "return 0;";
+}
+
+void
+NullReturnEmitter::traverse (SemanticGraph::BoundedWideString&)
 {
   os << "return 0;";
 }
@@ -931,6 +1058,12 @@ NullReturnEmitter::traverse (ValueBase&)
 
 void
 NullReturnEmitter::traverse (Any&)
+{
+  os << "return 0;";
+}
+
+void
+NullReturnEmitter::traverse (SemanticGraph::Array&)
 {
   os << "return 0;";
 }
@@ -976,6 +1109,12 @@ NullReturnEmitter::traverse (SemanticGraph::Union& u)
     os << u.scoped_name () << " retval;" << endl
        << "return retval;";
   }
+}
+
+void
+NullReturnEmitter::traverse (SemanticGraph::BoundedSequence&)
+{
+  os << "return 0;";
 }
 
 void
@@ -1106,7 +1245,19 @@ AceCheckReturnEmitter::traverse (String&)
 }
 
 void
+AceCheckReturnEmitter::traverse (SemanticGraph::BoundedString&)
+{
+  os << STRS[ACE_CR] << " (0);";
+}
+
+void
 AceCheckReturnEmitter::traverse (Wstring&)
+{
+  os << STRS[ACE_CR] << " (0);";
+}
+
+void
+AceCheckReturnEmitter::traverse (SemanticGraph::BoundedWideString&)
 {
   os << STRS[ACE_CR] << " (0);";
 }
@@ -1125,6 +1276,12 @@ AceCheckReturnEmitter::traverse (ValueBase&)
 
 void
 AceCheckReturnEmitter::traverse (Any&)
+{
+  os << STRS[ACE_CR] << " (0);";
+}
+
+void
+AceCheckReturnEmitter::traverse (SemanticGraph::Array&)
 {
   os << STRS[ACE_CR] << " (0);";
 }
@@ -1176,6 +1333,12 @@ AceCheckReturnEmitter::traverse (SemanticGraph::Union& u)
 }
 
 void
+AceCheckReturnEmitter::traverse (SemanticGraph::BoundedSequence&)
+{
+  os << STRS[ACE_CR] << " (0);";
+}
+
+void
 AceCheckReturnEmitter::traverse (SemanticGraph::UnboundedSequence&)
 {
   os << STRS[ACE_CR] << " (0);";
@@ -1212,6 +1375,7 @@ AceCheckReturnEmitter::traverse (SemanticGraph::Home& h)
 }
 
 // ====================================================================
+/* Not currently used, but it was at one time and may be useful again.
 
 NullRHSEmitter::NullRHSEmitter (ostream& os_)
   : TypeNameEmitter (os_)
@@ -1297,7 +1461,19 @@ NullRHSEmitter::traverse (String&)
 }
 
 void
+NullRHSEmitter::traverse (SemanticGraph::BoundedString&)
+{
+  os << "= 0;";
+}
+
+void
 NullRHSEmitter::traverse (Wstring&)
+{
+  os << "= 0;";
+}
+
+void
+NullRHSEmitter::traverse (SemanticGraph::BoundedWideString&)
 {
   os << "= 0;";
 }
@@ -1318,6 +1494,14 @@ void
 NullRHSEmitter::traverse (Any&)
 {
   // This will hopefully work both if the lhs is a pointer (for example
+  // RetunrTypeNameEmitter) or not (for example INArgTypeNameEmitter).
+  os << ";";
+}
+
+void
+NullRHSEmitter::traverse (SemanticGraph::Array&)
+{
+  // This will hopefully work both if the lhs is a slice pointer (for example
   // RetunrTypeNameEmitter) or not (for example INArgTypeNameEmitter).
   os << ";";
 }
@@ -1363,6 +1547,12 @@ NullRHSEmitter::traverse (SemanticGraph::Union& u)
 }
 
 void
+NullRHSEmitter::traverse (SemanticGraph::BoundedSequence&)
+{
+  os << "= 0;";
+}
+
+void
 NullRHSEmitter::traverse (SemanticGraph::UnboundedSequence&)
 {
   os << "= 0;";
@@ -1397,7 +1587,7 @@ NullRHSEmitter::traverse (SemanticGraph::Home& h)
 {
   os << "= " << h.scoped_name () << "::_nil ();";
 }
-
+*/
 // ====================================================================
 
 ExtractedTypeDeclEmitter::ExtractedTypeDeclEmitter (ostream& os_)
@@ -1493,7 +1683,19 @@ ExtractedTypeDeclEmitter::traverse (String&)
 }
 
 void
+ExtractedTypeDeclEmitter::traverse (SemanticGraph::BoundedString&)
+{
+  os << "const char * " << STRS[EXTRACT] << " = 0;";
+}
+
+void
 ExtractedTypeDeclEmitter::traverse (Wstring&)
+{
+  os << "::CORBA::WChar * " << STRS[EXTRACT] << " = 0;";
+}
+
+void
+ExtractedTypeDeclEmitter::traverse (SemanticGraph::BoundedWideString&)
 {
   os << "::CORBA::WChar * " << STRS[EXTRACT] << " = 0;";
 }
@@ -1518,6 +1720,12 @@ ExtractedTypeDeclEmitter::traverse (Any&)
 }
 
 void
+ExtractedTypeDeclEmitter::traverse (SemanticGraph::Array& a)
+{
+  os << a.scoped_name () << "_forany & " << STRS[EXTRACT] << ";";
+}
+
+void
 ExtractedTypeDeclEmitter::traverse (SemanticGraph::Enum& e)
 {
   os << e.scoped_name () << " " << STRS[EXTRACT] << ";";
@@ -1533,6 +1741,12 @@ void
 ExtractedTypeDeclEmitter::traverse (SemanticGraph::Union& u)
 {
   os << u.scoped_name () << " * " << STRS[EXTRACT] << " = 0;";
+}
+
+void
+ExtractedTypeDeclEmitter::traverse (SemanticGraph::BoundedSequence& s)
+{
+  os << s.scoped_name () << " * " << STRS[EXTRACT] << " = 0;";
 }
 
 void
@@ -1660,7 +1874,19 @@ AssignFromExtractedEmitter::traverse (String&)
 }
 
 void
+AssignFromExtractedEmitter::traverse (SemanticGraph::BoundedString&)
+{
+  os << STRS[EXTRACT];
+}
+
+void
 AssignFromExtractedEmitter::traverse (Wstring&)
+{
+  os << STRS[EXTRACT];
+}
+
+void
+AssignFromExtractedEmitter::traverse (SemanticGraph::BoundedWideString&)
 {
   os << STRS[EXTRACT];
 }
@@ -1681,6 +1907,12 @@ void
 AssignFromExtractedEmitter::traverse (Any&)
 {
   os << "*" << STRS[EXTRACT];
+}
+
+void
+AssignFromExtractedEmitter::traverse (SemanticGraph::Array&)
+{
+  os << STRS[EXTRACT] << ".in ()";
 }
 
 void
@@ -1717,6 +1949,12 @@ AssignFromExtractedEmitter::traverse (SemanticGraph::Union& u)
   }
   
   os << STRS[EXTRACT];
+}
+
+void
+AssignFromExtractedEmitter::traverse (SemanticGraph::BoundedSequence&)
+{
+  os << "*" << STRS[EXTRACT];
 }
 
 void
@@ -1762,9 +2000,9 @@ SetAttributeDelegationEmitter::SetAttributeDelegationEmitter (
     SemanticGraph::ReadWriteAttribute& a
   )
   : TypeNameEmitter (os),
-    attr_ (a),
-    assign_emitter_ (os),
-    extract_emitter_ (os)
+    attr_ (a)
+    , assign_emitter_ (os)
+    , extract_emitter_ (os)
 {
   assign_belongs_.node_traverser (assign_emitter_);
   extract_belongs_.node_traverser (extract_emitter_);
@@ -1849,9 +2087,21 @@ SetAttributeDelegationEmitter::traverse (String&)
 }
 
 void
+SetAttributeDelegationEmitter::traverse (SemanticGraph::BoundedString&)
+{
+  emit_error ("bounded string");
+}
+
+void
 SetAttributeDelegationEmitter::traverse (Wstring&)
 {
   emit_error ("wstring");
+}
+
+void
+SetAttributeDelegationEmitter::traverse (SemanticGraph::BoundedWideString&)
+{
+  emit_error ("bounded wstring");
 }
 
 void
@@ -1873,27 +2123,39 @@ SetAttributeDelegationEmitter::traverse (Any&)
 }
 
 void
+SetAttributeDelegationEmitter::traverse (SemanticGraph::Array&)
+{
+  emit_error ("array");
+}
+
+void
 SetAttributeDelegationEmitter::traverse (SemanticGraph::Enum&)
 {
   emit_delegation ();
 }
 
 void
-SetAttributeDelegationEmitter::traverse (SemanticGraph::Struct& s)
+SetAttributeDelegationEmitter::traverse (SemanticGraph::Struct&)
 {
   emit_error ("struct");
 }
 
 void
-SetAttributeDelegationEmitter::traverse (SemanticGraph::Union& u)
+SetAttributeDelegationEmitter::traverse (SemanticGraph::Union&)
 {
   emit_error ("union");
 }
 
 void
+SetAttributeDelegationEmitter::traverse (SemanticGraph::BoundedSequence&)
+{
+  emit_error ("bounded sequence");
+}
+
+void
 SetAttributeDelegationEmitter::traverse (SemanticGraph::UnboundedSequence&)
 {
-  emit_error ("sequence");
+  emit_error ("unbounded sequence");
 }
 
 void

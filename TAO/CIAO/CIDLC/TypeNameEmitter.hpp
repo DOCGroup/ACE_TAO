@@ -29,13 +29,17 @@ class TypeNameEmitter : public Traversal::Void,
                         public Traversal::Float,
                         public Traversal::Double,
                         public Traversal::String,
+                        public Traversal::BoundedString,
                         public Traversal::Wstring,
+                        public Traversal::BoundedWideString,
                         public Traversal::Object,
                         public Traversal::ValueBase,
                         public Traversal::Any,
+                        public Traversal::Array,
                         public Traversal::Enum,
                         public Traversal::Struct,
                         public Traversal::Union,
+                        public Traversal::BoundedSequence,
                         public Traversal::UnboundedSequence,
                         public Traversal::Interface,
                         public Traversal::ValueType,
@@ -58,13 +62,17 @@ public:
   virtual void traverse (Float&);
   virtual void traverse (Double&);
   virtual void traverse (String&);
+  virtual void traverse (SemanticGraph::BoundedString&);
   virtual void traverse (Wstring&);
+  virtual void traverse (SemanticGraph::BoundedWideString&);
   virtual void traverse (Object&);
   virtual void traverse (ValueBase&);
   virtual void traverse (Any&);
+  virtual void traverse (SemanticGraph::Array&);
   virtual void traverse (SemanticGraph::Enum&);
   virtual void traverse (SemanticGraph::Struct&);
   virtual void traverse (SemanticGraph::Union&);
+  virtual void traverse (SemanticGraph::BoundedSequence&);
   virtual void traverse (SemanticGraph::UnboundedSequence&);
   virtual void traverse (SemanticGraph::Interface&);
   virtual void traverse (SemanticGraph::ValueType&);
@@ -100,13 +108,17 @@ public:
   virtual void traverse (Float&);
   virtual void traverse (Double&);
   virtual void traverse (String&);
+  virtual void traverse (SemanticGraph::BoundedString&);
   virtual void traverse (Wstring&);
+  virtual void traverse (SemanticGraph::BoundedWideString&);
   virtual void traverse (Object&);
   virtual void traverse (ValueBase&);
   virtual void traverse (Any&);
+  virtual void traverse (SemanticGraph::Array&);
   virtual void traverse (SemanticGraph::Enum&);
   virtual void traverse (SemanticGraph::Struct&);
   virtual void traverse (SemanticGraph::Union&);
+  virtual void traverse (SemanticGraph::BoundedSequence&);
   virtual void traverse (SemanticGraph::UnboundedSequence&);
   virtual void traverse (SemanticGraph::Interface&);
   virtual void traverse (SemanticGraph::ValueType&);
@@ -136,13 +148,17 @@ public:
   virtual void traverse (Float&);
   virtual void traverse (Double&);
   virtual void traverse (String&);
+  virtual void traverse (SemanticGraph::BoundedString&);
   virtual void traverse (Wstring&);
+  virtual void traverse (SemanticGraph::BoundedWideString&);
   virtual void traverse (Object&);
   virtual void traverse (ValueBase&);
   virtual void traverse (Any&);
+  virtual void traverse (SemanticGraph::Array&);
   virtual void traverse (SemanticGraph::Enum&);
   virtual void traverse (SemanticGraph::Struct&);
   virtual void traverse (SemanticGraph::Union&);
+  virtual void traverse (SemanticGraph::BoundedSequence&);
   virtual void traverse (SemanticGraph::UnboundedSequence&);
   virtual void traverse (SemanticGraph::Interface&);
   virtual void traverse (SemanticGraph::ValueType&);
@@ -172,13 +188,17 @@ public:
   virtual void traverse (Float&);
   virtual void traverse (Double&);
   virtual void traverse (String&);
+  virtual void traverse (SemanticGraph::BoundedString&);
   virtual void traverse (Wstring&);
+  virtual void traverse (SemanticGraph::BoundedWideString&);
   virtual void traverse (Object&);
   virtual void traverse (ValueBase&);
   virtual void traverse (Any&);
+  virtual void traverse (SemanticGraph::Array&);
   virtual void traverse (SemanticGraph::Enum&);
   virtual void traverse (SemanticGraph::Struct&);
   virtual void traverse (SemanticGraph::Union&);
+  virtual void traverse (SemanticGraph::BoundedSequence&);
   virtual void traverse (SemanticGraph::UnboundedSequence&);
   virtual void traverse (SemanticGraph::Interface&);
   virtual void traverse (SemanticGraph::ValueType&);
@@ -208,13 +228,17 @@ public:
   virtual void traverse (Float&);
   virtual void traverse (Double&);
   virtual void traverse (String&);
+  virtual void traverse (SemanticGraph::BoundedString&);
   virtual void traverse (Wstring&);
+  virtual void traverse (SemanticGraph::BoundedWideString&);
   virtual void traverse (Object&);
   virtual void traverse (ValueBase&);
   virtual void traverse (Any&);
+  virtual void traverse (SemanticGraph::Array&);
   virtual void traverse (SemanticGraph::Enum&);
   virtual void traverse (SemanticGraph::Struct&);
   virtual void traverse (SemanticGraph::Union&);
+  virtual void traverse (SemanticGraph::BoundedSequence&);
   virtual void traverse (SemanticGraph::UnboundedSequence&);
   virtual void traverse (SemanticGraph::Interface&);
   virtual void traverse (SemanticGraph::ValueType&);
@@ -245,13 +269,17 @@ public:
   virtual void traverse (Float&);
   virtual void traverse (Double&);
   virtual void traverse (String&);
+  virtual void traverse (SemanticGraph::BoundedString&);
   virtual void traverse (Wstring&);
+  virtual void traverse (SemanticGraph::BoundedWideString&);
   virtual void traverse (Object&);
   virtual void traverse (ValueBase&);
   virtual void traverse (Any&);
+  virtual void traverse (SemanticGraph::Array&);
   virtual void traverse (SemanticGraph::Enum&);
   virtual void traverse (SemanticGraph::Struct&);
   virtual void traverse (SemanticGraph::Union&);
+  virtual void traverse (SemanticGraph::BoundedSequence&);
   virtual void traverse (SemanticGraph::UnboundedSequence&);
   virtual void traverse (SemanticGraph::Interface&);
   virtual void traverse (SemanticGraph::ValueType&);
@@ -283,13 +311,17 @@ public:
   virtual void traverse (Float&);
   virtual void traverse (Double&);
   virtual void traverse (String&);
+  virtual void traverse (SemanticGraph::BoundedString&);
   virtual void traverse (Wstring&);
+  virtual void traverse (SemanticGraph::BoundedWideString&);
   virtual void traverse (Object&);
   virtual void traverse (ValueBase&);
   virtual void traverse (Any&);
+  virtual void traverse (SemanticGraph::Array&);
   virtual void traverse (SemanticGraph::Enum&);
   virtual void traverse (SemanticGraph::Struct&);
   virtual void traverse (SemanticGraph::Union&);
+  virtual void traverse (SemanticGraph::BoundedSequence&);
   virtual void traverse (SemanticGraph::UnboundedSequence&);
   virtual void traverse (SemanticGraph::Interface&);
   virtual void traverse (SemanticGraph::ValueType&);
@@ -297,6 +329,8 @@ public:
   virtual void traverse (SemanticGraph::Component&);
   virtual void traverse (SemanticGraph::Home&);
 };
+
+/* Not currently used, but it was at one time and may be useful again.
 
 // Generates the appropriate NULL value, including the assignment operator,
 // if needed, for the rhs of an assignment statement.
@@ -320,13 +354,17 @@ public:
   virtual void traverse (Float&);
   virtual void traverse (Double&);
   virtual void traverse (String&);
+  virtual void traverse (SemanticGraph::BoundedString&);
   virtual void traverse (Wstring&);
+  virtual void traverse (SemanticGraph::BoundedWideString&);
   virtual void traverse (Object&);
   virtual void traverse (ValueBase&);
   virtual void traverse (Any&);
+  virtual void traverse (SemanticGraph::Array&);
   virtual void traverse (SemanticGraph::Enum&);
   virtual void traverse (SemanticGraph::Struct&);
   virtual void traverse (SemanticGraph::Union&);
+  virtual void traverse (SemanticGraph::BoundedSequence&);
   virtual void traverse (SemanticGraph::UnboundedSequence&);
   virtual void traverse (SemanticGraph::Interface&);
   virtual void traverse (SemanticGraph::ValueType&);
@@ -334,7 +372,7 @@ public:
   virtual void traverse (SemanticGraph::Component&);
   virtual void traverse (SemanticGraph::Home&);
 };
-
+*/
 // Declares and initializes a variable to use for any extraction.
 //
 //
@@ -356,13 +394,17 @@ public:
   virtual void traverse (Float&);
   virtual void traverse (Double&);
   virtual void traverse (String&);
+  virtual void traverse (SemanticGraph::BoundedString&);
   virtual void traverse (Wstring&);
+  virtual void traverse (SemanticGraph::BoundedWideString&);
   virtual void traverse (Object&);
   virtual void traverse (ValueBase&);
   virtual void traverse (Any&);
+  virtual void traverse (SemanticGraph::Array&);
   virtual void traverse (SemanticGraph::Enum&);
   virtual void traverse (SemanticGraph::Struct&);
   virtual void traverse (SemanticGraph::Union&);
+  virtual void traverse (SemanticGraph::BoundedSequence&);
   virtual void traverse (SemanticGraph::UnboundedSequence&);
   virtual void traverse (SemanticGraph::Interface&);
   virtual void traverse (SemanticGraph::ValueType&);
@@ -392,13 +434,17 @@ public:
   virtual void traverse (Float&);
   virtual void traverse (Double&);
   virtual void traverse (String&);
+  virtual void traverse (SemanticGraph::BoundedString&);
   virtual void traverse (Wstring&);
+  virtual void traverse (SemanticGraph::BoundedWideString&);
   virtual void traverse (Object&);
   virtual void traverse (ValueBase&);
   virtual void traverse (Any&);
+  virtual void traverse (SemanticGraph::Array&);
   virtual void traverse (SemanticGraph::Enum&);
   virtual void traverse (SemanticGraph::Struct&);
   virtual void traverse (SemanticGraph::Union&);
+  virtual void traverse (SemanticGraph::BoundedSequence&);
   virtual void traverse (SemanticGraph::UnboundedSequence&);
   virtual void traverse (SemanticGraph::Interface&);
   virtual void traverse (SemanticGraph::ValueType&);
@@ -427,13 +473,17 @@ public:
   virtual void traverse (Float&);
   virtual void traverse (Double&);
   virtual void traverse (String&);
+  virtual void traverse (SemanticGraph::BoundedString&);
   virtual void traverse (Wstring&);
+  virtual void traverse (SemanticGraph::BoundedWideString&);
   virtual void traverse (Object&);
   virtual void traverse (ValueBase&);
   virtual void traverse (Any&);
+  virtual void traverse (SemanticGraph::Array&);
   virtual void traverse (SemanticGraph::Enum&);
   virtual void traverse (SemanticGraph::Struct&);
   virtual void traverse (SemanticGraph::Union&);
+  virtual void traverse (SemanticGraph::BoundedSequence&);
   virtual void traverse (SemanticGraph::UnboundedSequence&);
   virtual void traverse (SemanticGraph::Interface&);
   virtual void traverse (SemanticGraph::ValueType&);
