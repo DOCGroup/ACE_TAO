@@ -1,3 +1,9 @@
+Wed Oct 26 15:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/msvc_cidlc.pl:
+          Print an error if no configurations have been build, at that moment
+          we just didn't build something which we have to handle as error
+
 Wed Oct 26 12:58:17 2005  Simon McQueen  <sm@prismtech.com>
 
         * ace/OS_NS_stdio.inl:
