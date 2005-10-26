@@ -76,29 +76,3 @@ IORInterceptor::establish_components (
   ACE_CHECK;
 }
 
-void
-IORInterceptor::components_established (
-    PortableInterceptor::IORInfo_ptr
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-
-}
-
-void
-IORInterceptor::adapter_manager_state_changed (
-    PortableInterceptor::AdapterManagerId,
-    PortableInterceptor::AdapterState
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-}
-
-void
-IORInterceptor:: adapter_state_changed (
-    const PortableInterceptor::ObjectReferenceTemplateSeq &,
-    PortableInterceptor::AdapterState
-    ACE_ENV_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-}
