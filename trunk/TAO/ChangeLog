@@ -1,3 +1,95 @@
+Wed Oct 26 18:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI/ClientRequestInfoA.cpp
+        * tao/PI/ClientRequestInfoC.cpp
+        * tao/PI/ClientRequestInfoC.h
+        * tao/PI/ClientRequestInfoS.h
+        * tao/PI/ClientRequestInterceptorA.cpp
+        * tao/PI/ClientRequestInterceptorC.cpp
+        * tao/PI/ClientRequestInterceptorC.h
+        * tao/PI/ClientRequestInterceptorS.h
+        * tao/PI/InterceptorA.cpp
+        * tao/PI/InterceptorC.cpp
+        * tao/PI/InterceptorC.h
+        * tao/PI/InterceptorS.h
+        * tao/PI/ORBInitInfoC.cpp
+        * tao/PI/ORBInitInfoC.h
+        * tao/PI/ORBInitInfoS.h
+        * tao/PI/ORBInitializerA.cpp
+        * tao/PI/ORBInitializerC.cpp
+        * tao/PI/ORBInitializerC.h
+        * tao/PI/ORBInitializerS.h
+        * tao/PI/PIForwardRequestA.cpp
+        * tao/PI/PIForwardRequestC.cpp
+        * tao/PI/PIForwardRequestC.h
+        * tao/PI/PIForwardRequestS.h
+        * tao/PI/PolicyFactoryA.cpp
+        * tao/PI/PolicyFactoryC.cpp
+        * tao/PI/PolicyFactoryC.h
+        * tao/PI/PolicyFactoryS.h
+        * tao/PI/RequestInfoA.cpp
+        * tao/PI/RequestInfoC.cpp
+        * tao/PI/RequestInfoC.h
+        * tao/PI/RequestInfoS.h
+        * tao/PI_Server/ServerRequestInfoA.cpp
+        * tao/PI_Server/ServerRequestInfoC.cpp
+        * tao/PI_Server/ServerRequestInfoC.h
+        * tao/PI_Server/ServerRequestInfoS.h
+        * tao/PI_Server/ServerRequestInterceptorA.cpp
+        * tao/PI_Server/ServerRequestInterceptorC.cpp
+        * tao/PI_Server/ServerRequestInterceptorC.h
+        * tao/PI_Server/ServerRequestInterceptorS.h
+        * tao/IORInterceptor/IORInfoC.cpp
+        * tao/IORInterceptor/IORInfoC.h
+          Regenerated
+
+        * tao/IORInterceptor/IORInfo.pidl
+        * tao/PI/ORBInitInfo.pidl
+          Updated regeneration instructions
+
+        * tao/PI/ORBInitInfoA.cpp:
+          Removed
+
+        * tao/PI/ClientRequestInfoA.h
+        * tao/PI/ClientRequestInterceptorA.h
+        * tao/PI/InterceptorA.h
+        * tao/PI/ORBInitializerA.h
+        * tao/PI/PIForwardRequestA.h
+        * tao/PI/PolicyFactoryA.h
+        * tao/PI/RequestInfoA.h
+        * tao/PI_Server/ServerRequestInfoA.h
+        * tao/PI_Server/ServerRequestInterceptorA.h
+          New generated files
+
+        * tao/PortableServer/POA_Cached_Policies.cpp
+          Layout fix
+
+        * tao/Makefile.am
+          Added new files
+
+        * tao/IORInterceptor/IORInterceptor.pidl
+        * tao/IORInterceptor/IORInterceptorC.cpp
+        * tao/IORInterceptor/IORInterceptorC.h
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.cpp
+          Splitted PortableInterceptor::IORInterceptor into IORInterceptor
+          and IORInterceptor_3_0. This is triggered by bug 1271 which contained
+          issues about CORBA Compliance. In the 3.0.3 spec the IORInterceptor
+          was splitted.
+
+          IMPORTANT!!!
+          If you use IORInterceptor methods components_established,
+          adapter_manger_state_changed and adapter_state_changed you have to
+          derive your implementation from IORInterceptor_3_0 else these
+          methods don't get called!!!
+
+        * tests/ORT/ORT_test_IORInterceptor.h
+        * tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.h
+        * tests/Portable_Interceptors/PolicyFactory/IORInterceptor.cpp
+        * tests/Portable_Interceptors/PolicyFactory/IORInterceptor.h
+        * orbsvcs/examples/ORT/Server_IORInterceptor.h
+        * orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.h
+          Changes for IORInterceptor_3_0.
+
 Wed Oct 26 13:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/diffs/ServerRequestInterceptor.diff:
