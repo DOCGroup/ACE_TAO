@@ -1,3 +1,39 @@
+Wed Oct 26 16:16:32 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
+
+	* DAnCE/NodeApplication/NodeApp_Configurator.cpp:
+	* DAnCE/NodeApplication/NodeApp_Configurator.h: Updated the
+	  NodeApp_Configurator to support pre_orb_initialize and
+	  post_orb_initialize methods which will be invoked before and
+	  after ORB_init is called.
+
+	* DAnCE/NodeApplication/NodeApplication.cpp: Moved ORB_init into
+	  NodeApplication_Core object.
+
+	* DAnCE/NodeApplication/NodeApplication_Core.cpp:
+	* DAnCE/NodeApplication/NodeApplication_Core.h:
+	* DAnCE/NodeApplication/NodeApplication_Core.inl: Moved the
+	  NodeApplication_Options and NoOp_Configurator classes into
+	  Configurator_Factory.* file.  Refactored NodeApplication_Core to
+	  enable pre_orb_initialize and post_orb_initialize.
+
+	* DAnCE/NodeApplication/Configurator_Factory.cpp:
+	* DAnCE/NodeApplication/Configurator_Factory.h: Factored all the
+	  NodeApp_Configurtor creation strategies and NodeApplication
+	  configuration managements into these files.  It also includes
+	  the no-ops NodeApp_Configurator used by non-RT NodeApplication.
+	  
+	  We should extend the argument parsing logic to support
+	  user-supplied NodeApp_Configurator at some point.
+	
+	* DAnCE/NodeApplication/NodeApplication.mpc:
+	* DAnCE/NodeApplication/RTNA_Configurator_Export.h:
+	* DAnCE/NodeApplication/RTNodeApp_Configurator.cpp:
+	* DAnCE/NodeApplication/RTNodeApp_Configurator.h: Added the
+	  dynamic library for real-time configuration.  The current
+	  implementation set up the NodeApplication process by enabling
+	  the RTCORBA support.  We still need to add the capability to
+	  parse and allocate RT resources and policies.
+
 Wed Oct 26 18:37:00 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* CCF/CCF/IDL2/SemanticAction/Impl/Typedef.cpp:
