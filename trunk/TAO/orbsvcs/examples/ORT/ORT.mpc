@@ -42,7 +42,7 @@ project(*Server) : orbsvcsexe, dynamicinterface, ifr_client, minimum_corba, iori
 }
 
 project(*Client) : orbsvcsexe, event, minimum_corba {
-  after += *Server
+  after += *Idl *Server
   source_files {
     client.cpp
     sum_serverC.cpp

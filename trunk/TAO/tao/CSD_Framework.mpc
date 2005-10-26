@@ -1,5 +1,5 @@
 //$Id$
-project : taolib, portableserver, core, pi {
+project : taolib, portableserver, core, pi, interceptors {
   sharedname   = TAO_CSD_Framework
   dynamicflags = TAO_CSD_FW_BUILD_DLL
   includes    += $(TAO_ROOT)/tao

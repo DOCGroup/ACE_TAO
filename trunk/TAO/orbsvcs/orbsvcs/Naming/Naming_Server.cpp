@@ -13,7 +13,11 @@
 #include "tao/ORB_Core.h"
 
 #include "tao/IORTable/IORTable.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 #include "tao/Messaging/Messaging.h"
+#endif
+
 #include "tao/AnyTypeCode/Any.h"
 
 #include "ace/Arg_Shifter.h"
@@ -648,6 +652,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
   ACE_UNUSED_ARG (enable_multicast);
 #endif /* ACE_HAS_IP_MULTICAST */
 
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0  
       if (use_round_trip_timeout == 1)
       {
         TimeBase::TimeT roundTripTimeoutVal = round_trip_timeout;
@@ -675,6 +680,9 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
         ACE_TRY_CHECK;
         polList[0] = CORBA::Policy::_nil ();
       }
+#else
+  ACE_UNUSED_ARG (use_round_trip_timeout);
+#endif /* TAO_HAS_CORBA_MESSAGING */
     }
   ACE_CATCHANY
     {
