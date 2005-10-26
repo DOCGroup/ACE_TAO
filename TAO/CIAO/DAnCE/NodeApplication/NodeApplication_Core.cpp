@@ -5,8 +5,8 @@
 #include "NodeApplication_Impl.h"
 #include "NodeApplication_Core.h"
 #include "ace/Null_Mutex.h"
+#include "ciao/Server_init.h"
 #include "ciao/CIAO_common.h"
-#include "ace/Get_Opt.h"
 
 #if !defined (__ACE_INLINE__)
 # include "NodeApplication_Core.inl"
@@ -58,84 +58,6 @@ check_supported_priorities (CORBA::ORB_ptr orb)
 
       return -1;
     }
-  return 0;
-}
-
-CIAO::NoOp_Configurator::~NoOp_Configurator (void)
-{
-  // Not much to do.
-}
-
-int
-CIAO::NoOp_Configurator::initialize (void)
-{
-  // Do nothing to initialize the NodeApplication process.
-  return 0;
-}
-
-int
-CIAO::NoOp_Configurator::init_resource_manager
-(const ::Deployment::Properties & /*properties*/)
-{
-  // @@ Currently do thing.  We should go over the resource struct in
-  // the future and throw exceptions if there are
-  // un-recognizable/supported stuff in it.
-  return 0;
-}
-
-CORBA::PolicyList *
-CIAO::NoOp_Configurator::find_container_policies
-(const ::Deployment::Properties & /*properties*/)
-{
-  // Not much to do.
-
-  return 0;
-}
-
-int
-CIAO::NodeApplication_Options::parse_args (int argc, char *argv[])
-{
-  ACE_Get_Opt get_opts (argc, argv, "nrk:o:");
-  int c;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'n':
-        this->use_callback_ = 0;
-        break;
-
-
-      case 'o':  // get the file name to write to
-        this->ior_output_filename_ = get_opts.opt_arg ();
-        break;
-
-      case 'k':  // get the activator callback IOR
-        this->callback_ior_ = get_opts.opt_arg ();
-        break;
-
-      case 'r':                 // Enable RT support
-        this->rt_support_ = 1;
-        break;
-
-      case '?':  // display help for use of the server.
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s\n"
-                           "-n Do not use Callback (for testing)\n"
-                           "-o <ior_output_file>\n"
-                           "-k <NodeApplicationManager_callback_ior>\n"
-                           "-r Request RT support\n"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
-
-  if (this->use_callback_ && this->callback_ior_.length() == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Callback IOR to NodeApplicationManager is required.\n"),
-                      -1);
-
   return 0;
 }
 
@@ -213,8 +135,8 @@ CIAO::NodeApplication_Core::svc ()
                                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       
-      if (this->options_.ior_output_filename_.length () != 0)
-        CIAO::Utility::write_IOR (this->options_.ior_output_filename_.c_str (),
+      if (this->options_.write_ior_file ())
+        CIAO::Utility::write_IOR (this->options_.ior_output_filename (),
                                   str.in ());
 
       // End Deployment part
@@ -227,9 +149,9 @@ CIAO::NodeApplication_Core::svc ()
       Deployment::NodeApplicationManager_var nodeapp_man;
       Deployment::Properties_var prop = new Deployment::Properties;
 
-      if (this->options_.use_callback_)
+      if (this->options_.use_callback ())
         {
-          object = this->orb_->string_to_object (this->options_.callback_ior_.c_str ()
+          object = this->orb_->string_to_object (this->options_.callback_ior ()
                                                  ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
@@ -272,20 +194,36 @@ CIAO::NodeApplication_Core::svc ()
 }
 
 int
+CIAO::NodeApplication_Core::startup (int argc, char *argv[])
+{
+  // pre-init
+  this->configurator_.reset (this->options_.create_nodeapp_configurator ());
+
+  if (this->configurator_->pre_orb_initialize ())
+    return -1;
+
+  // Initialize orb
+  this->orb_ =
+    CORBA::ORB_init (argc,
+                     argv,
+                     "");
+  CIAO::Server_init (this->orb_.in ());
+
+  return this->configurator_->post_orb_initialize (this->orb_.in ());
+}
+
+int
 CIAO::NodeApplication_Core::run_orb ()
 {
   // check supported priority before running RT
-  if (this->options_.rt_support_ != 0 &&
+  if (this->options_.rt_support () &&
       check_supported_priorities (this->orb_.in ()) != 0)
     {
-      ACE_DEBUG ((LM_ERROR, "ERROR: DISABLE RT SUPPORT\n"));
-      this->options_.rt_support_ = 0;
+      ACE_ERROR_RETURN ((LM_ERROR, "ERROR: DISABLE RT SUPPORT\n"), -1);
+      //      this->options_.rt_support_ = 0;
     }
 
-  if (this->configurator_factory () != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "ERROR: Unable to acquire and initialize the NodeApplication configurator.\n"), -1);
-
-  if (this->options_.rt_support_ != 0) // RT support reuqested
+  if (this->options_.rt_support ()) // RT support reuqested
     {
       
 
@@ -329,21 +267,3 @@ CIAO::NodeApplication_Core::run_orb ()
     return this->svc ();
 }
 
-int
-CIAO::NodeApplication_Core::configurator_factory (void)
-{
-  CIAO::NodeApp_Configurator* ptr = 0;
-
-  if (this->options_.rt_support_)
-    {
-      // Manufacture a RTNA_configurator
-    }
-  else
-    ACE_NEW_RETURN (ptr,
-                    CIAO::NoOp_Configurator (this->orb_.in ()),
-                    -1);
-
-  this->configurator_.reset (ptr);
-
-  return this->configurator_->initialize ();
-}
