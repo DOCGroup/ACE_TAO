@@ -8,7 +8,7 @@ Tue Oct 25 22:24:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 Tue Oct 25 21:50:46 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* utils/wxNamingViewer/wxNamingViewer.cpp: 
+	* utils/wxNamingViewer/wxNamingViewer.cpp:
 	* utils/wxNamingViewer/wxNamingViewerFrame.cpp: Added some #include
 	  files to get things working again on Linux.  Thanks to Matt
  	  Gillen <mgillen@bbn.com> for these fixes.
@@ -27,14 +27,14 @@ Tue Oct 25 07:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 Mon Oct 24 14:40:43 MST 2005  Yan Dai  <dai_y@ociweb.com>
 
         * tests/CSD_Strategy_Tests/TP_Test_1/ServerApp.cpp:
-        
+
           Removed duplicated log message.
-          
+
         * tests/CSD_Strategy_Tests/TP_Test_3/ServerApp.cpp:
         * tests/CSD_Strategy_Tests/TP_Test_3/ClientApp.cpp:
 
           Added ACE_DEBUG log message to help debugging.
-          
+
 Mon Oct 24 19:08:06 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_scope.cpp:
