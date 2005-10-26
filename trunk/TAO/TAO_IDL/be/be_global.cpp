@@ -163,6 +163,17 @@ be_change_idl_file_extension (UTL_String* idl_file,
       return 0;
     }
 
+  // If the included IDL file is from the ORB, ignore any command line
+  // mods to the header file extension.
+  if (!for_anyop)
+    {
+      if (ACE_OS::strcmp (base, extensions[1]) == 0
+          || ACE_OS::strcmp (base, extensions[3]) == 0)
+        {
+          new_extension = "C.h";
+        }
+    }
+    
   // Anyop file output defaults to general output dir if not set.
   const char *output_path = (for_anyop
                              ? (be_global->anyop_output_dir () == 0
