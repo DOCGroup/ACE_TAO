@@ -7,6 +7,8 @@
 
 // ****************************************************************
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // implementing the special types
 ACE_INLINE
 ACE_OutputCDR::from_boolean::from_boolean (ACE_CDR::Boolean b)
@@ -1705,13 +1707,15 @@ ACE_WChar_Codeset_Translator::minor_version (ACE_OutputCDR& output)
 }
 
 ACE_INLINE
-OutputCDR_Auto_Reset::OutputCDR_Auto_Reset (ACE_OutputCDR& cdr)
+ACE_OutputCDR_Auto_Reset::ACE_OutputCDR_Auto_Reset (ACE_OutputCDR& cdr)
   : cdr_ (cdr)
 {
 }
 
 ACE_INLINE
-OutputCDR_Auto_Reset::~OutputCDR_Auto_Reset (void)
+ACE_OutputCDR_Auto_Reset::~ACE_OutputCDR_Auto_Reset (void)
 {
-  cdr_.reset ();
+  this->cdr_.reset ();
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,3 +1,20 @@
+Tue Oct 25 22:08:23 2005    <ossama@dre.vanderbilt.edu>
+
+	* ace/CDR_Stream.h (OutputCDR_Auto_Reset):
+	* ace/CDR_Stream.inl (OutputCDR_Auto_Reset):
+
+	  Prepend "ACE_" to this class (described in ChangeLog entry "Fri
+	  Aug 26 11:43:01 2005  Justin Michel  <michel_j@ociweb.com>") to
+	  address potential global namespace pollution issues, and to be
+	  consistent with ACE naming conventions.
+
+	  Adding missing ACE_Export.  Addresses unresolved symbol errors
+	  in Windows and g++ 4 builds when inlining is disabled and
+	  TAO_RESET_OUTPUT_CDR_AFTER_SEND is defined to 1.
+
+	  Use "this" pointer to reference class members, as dictated by
+	  ACE coding conventions/guidelines.
+
 Tue Oct 25 09:05:47 MST 2005  Yan Dai  <dai_y@ociweb.com>
         
         * bin/msvc_static_order.lst:
@@ -218,7 +235,7 @@ Thu Oct 20 14:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 Thu Oct 20 08:53:47 2005  Arvind S. Krishna  <arvindk@doc.dre.vanderbilt.edu>
 
 	* ace/CDR_Base.cpp:
-        * ace/CDR_Stream.h:
+	* ace/CDR_Stream.h:
 	* ace/CDR_Stream.cpp:
 	* ace/CDR_Stream.inl:
 	* ace/Message_Block.cpp:
