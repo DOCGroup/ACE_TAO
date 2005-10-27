@@ -1,3 +1,16 @@
+Thu Oct 27 14:20:35 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_global.cpp:
+        
+          Modified change in
+          
+          Wed Oct 26 18:57:47 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          to handle the use case where skeleton files are generated
+          from a .pidl file, for example tao/ImR_Client/ImplRepo.pidl.
+          Thanks to Johnny Willemsen <jwillemsen@remedy.nl> for
+          reporting the problem.
+
 Thu Oct 27 14:31:12 2005  Simon McQueen  <sm@prismtech.com>
 
         * orbsvcs/tests/Bug_2287_Regression/Hello.cpp:
