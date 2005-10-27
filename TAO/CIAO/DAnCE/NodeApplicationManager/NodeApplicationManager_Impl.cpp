@@ -543,8 +543,7 @@ Static_NodeApplicationManager_Impl (CORBA::ORB_ptr o,
                              PortableServer::POA_ptr p,
                              Static_Config_EntryPoints_Maps* static_config_entrypoints_maps)
   : NodeApplicationManager_Impl_Base (o, p),
-    static_config_entrypoints_maps_ (static_config_entrypoints_maps),
-    configurator_ (o)
+    static_config_entrypoints_maps_ (static_config_entrypoints_maps)
 {
 }
 

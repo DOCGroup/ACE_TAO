@@ -11,5 +11,11 @@ project (DomainApplicationManager): ciao_deployment_svnt  {
     DomainApplicationManager_Impl.cpp
     Deployment_Configuration.cpp
   }
+
+  Header_Files {
+    DomainApplicationManager_Impl.h
+    Deployment_Configuration.h
+    DomainApplicationManager_Export.h
+  }
 }
 

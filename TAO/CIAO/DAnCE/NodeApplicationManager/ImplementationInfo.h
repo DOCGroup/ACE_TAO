@@ -25,7 +25,7 @@
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager.h"
 #include "Containers_Info_Map.h"
-
+#include "CIAO_NAM_Export.h"
 
 //@@ I wish we could have precompiled header support soon!!!
 
@@ -34,7 +34,7 @@
 
 namespace CIAO
 {
-  class NodeImplementationInfoHandler
+  class CIAO_NAM_Export NodeImplementationInfoHandler
   {
   public:
     NodeImplementationInfoHandler (::Deployment::DeploymentPlan & plan);
