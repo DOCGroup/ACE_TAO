@@ -1,3 +1,9 @@
+Thu Oct 27 09:47:32 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * specializations/iiop.spl:
+
+          Updated specializations file based on changes made to ACE+TAO
+
 Thu Sep 29 15:57:36 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * FOCUS.pl:
