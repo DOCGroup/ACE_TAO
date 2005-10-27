@@ -43,7 +43,7 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
     repo->init(0,0);
 
   ACE_CString poa_name;
-  unsigned num_threads = 1;
+  unsigned long num_threads = 1;
 
   // Parse any service configurator parameters.
   for (int curarg = 0; curarg < argc; curarg++)
@@ -81,7 +81,7 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
             if (repo == 0)
               {
                  TAO_CSD_ThreadPool::init ();
-                 repo = ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance ( 
+                 repo = ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance (
                             "TAO_CSD_Strategy_Repository"
                           );
               }
