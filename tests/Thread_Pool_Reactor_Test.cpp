@@ -87,7 +87,7 @@ static int req_delay = 50;
 static void
 parse_arg (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("r:s:c:d:i:n:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR>  getopt (argc, argv, ACE_TEXT ("r:s:c:d:i:n:"));
 
   int c;
 
