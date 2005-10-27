@@ -829,7 +829,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
               // AnyTypeCode prefix.
               ACE_CString work_hdr (anyop_hdr);
               ACE_CString final_hdr = "tao/AnyTypeCode/";
-              int pos = work_hdr.rfind ('/');
+              ssize_t pos = work_hdr.rfind ('/');
 
               if (pos != ACE_SString::npos)
                 {
@@ -1570,7 +1570,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
               // AnyTypeCode prefix.
               ACE_CString work_hdr (anyop_hdr);
               ACE_CString final_hdr = "tao/AnyTypeCode/";
-              int pos = work_hdr.rfind ('/');
+              ssize_t pos = work_hdr.rfind ('/');
 
               if (pos != ACE_SString::npos)
                 {
