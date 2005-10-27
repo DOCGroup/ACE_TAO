@@ -6,6 +6,7 @@
 #define CCF_CODE_GENERATION_KIT_INDENTATION_CXX_HPP
 
 #include <deque>
+#include <stack>
 
 #include "CCF/CodeGenerationKit/IndentationBuffer.hpp"
 
@@ -34,10 +35,12 @@ namespace Indentation
   public:
     Cxx (Buffer<C>& out)
         : out_ (out),
-          indentation_ (0),
+          position_ (0),
+          paren_balance_ (0),
           spaces_ (2),
           construct_ (OTHER)
     {
+      indentation_.push (0);
     }
 
     virtual
@@ -52,11 +55,30 @@ namespace Indentation
       try
       {
         bool defaulting = false;
+
+        if (!hold_.empty () && hold_.back () == '(')
+        {
+          unbuffer (); // We don't need to hold it any more.
+
+          if (c == '\n')
+            indentation_.push (indentation_.top () + spaces_);
+          else
+            indentation_.push (position_);
+        }
+
         switch (c)
         {
         case '\n':
           {
             hold_.push_back (c);
+            position_ = 0; // Starting a new line.
+
+            if (construct_ == CXX_COMMENT)
+            {
+              //std::cerr << "end comment" << endl;
+              construct_ = OTHER;
+            }
+
             break;
           }
         case '{':
@@ -65,12 +87,15 @@ namespace Indentation
             output_indentation ();
             result = write (c);
             ensure_new_line ();
-            indentation_++;
+
+            indentation_.push (indentation_.top () + spaces_);
+
             break;
           }
         case '}':
           {
-            if (indentation_ > 0) indentation_--;
+            if (indentation_.size () > 1)
+              indentation_.pop ();
 
             // Reduce multiple newlines to one.
             while (hold_.size () > 1)
@@ -93,57 +118,77 @@ namespace Indentation
             //
             hold_.push_back ('\n');
             hold_.push_back ('\n');
-
+            position_ = 0;
 
             break;
           }
         case ';':
           {
-            // Handling '};' case.
-            //
-
-            bool brace (false);
-
-            if (hold_.size () > 1 && hold_.back () == '\n')
+            if (paren_balance_ != 0)
             {
-              bool pop_nl (false);
+              // We are inside for (;;) statement. Nothing to do here.
+              //
+              defaulting = true;
+            }
+            else
+            {
+              // Handling '};' case.
+              //
 
-              for (typename Hold::reverse_iterator
-                     i (hold_.rbegin ()), e (hold_.rend ()); i != e; ++i)
+              bool brace (false);
+
+              if (hold_.size () > 1 && hold_.back () == '\n')
               {
-                if (*i != '\n')
+                bool pop_nl (false);
+
+                for (typename Hold::reverse_iterator
+                       i (hold_.rbegin ()), e (hold_.rend ()); i != e; ++i)
                 {
-                  if (*i == '}') brace = pop_nl = true;
-                  break;
+                  if (*i != '\n')
+                  {
+                    if (*i == '}') brace = pop_nl = true;
+                    break;
+                  }
                 }
+
+                if (pop_nl) while (hold_.back () == '\n') hold_.pop_back ();
               }
 
-              if (pop_nl) while (hold_.back () == '\n') hold_.pop_back ();
+              output_indentation ();
+              result = write (c);
+              position_++;
+
+              if (brace)
+              {
+                hold_.push_back ('\n');
+                hold_.push_back ('\n');
+              }
+
+              if (construct_ != STRING_LITERAL && construct_ != CHAR_LITERAL)
+              {
+                ensure_new_line ();
+              }
             }
 
-            output_indentation ();
-            result = write (c);
-
-            if (brace)
-            {
-              hold_.push_back ('\n');
-              hold_.push_back ('\n');
-            }
-
-            if (construct_ != STRING_LITERAL && construct_ != CHAR_LITERAL)
-            {
-              ensure_new_line ();
-            }
             break;
           }
         case '\\':
           {
-            hold_.push_back (c);
+            if (construct_ != CXX_COMMENT)
+            {
+              output_indentation ();
+              hold_.push_back (c);
+              position_++;
+            }
+            else
+              defaulting = true;
+
             break;
           }
         case '\"':
           {
-            if (hold_.empty () || hold_.back () != '\\')
+            if (construct_ != CXX_COMMENT &&
+                (hold_.empty () || hold_.back () != '\\'))
             {
               // not escape sequence
               if (construct_ == STRING_LITERAL) construct_ = OTHER;
@@ -155,14 +200,74 @@ namespace Indentation
           }
         case '\'':
           {
-            if (hold_.empty () || hold_.back () != '\\')
+            if (construct_ != CXX_COMMENT &&
+                (hold_.empty () || hold_.back () != '\\'))
             {
               // not escape sequence
               if (construct_ == CHAR_LITERAL) construct_ = OTHER;
-              else construct_ = CHAR_LITERAL;
+              else
+                {
+                  //std::cerr << "char literal" << endl;
+                  construct_ = CHAR_LITERAL;
+                }
+
             }
 
             defaulting = true;
+            break;
+          }
+        case '(':
+          {
+            if (construct_ == OTHER)
+            {
+              // Hold it so that we can see what's coming next.
+              //
+              output_indentation ();
+              hold_.push_back (c);
+              position_++;
+              paren_balance_++;
+            }
+            else
+              defaulting = true;
+
+            break;
+          }
+        case ')':
+          {
+            if (construct_ == OTHER)
+            {
+              if (indentation_.size () > 1)
+                indentation_.pop ();
+
+              if (paren_balance_ > 0)
+                paren_balance_--;
+            }
+
+            defaulting = true;
+            break;
+          }
+        case '/':
+          {
+            if (construct_ == OTHER)
+            {
+              if (!hold_.empty () && hold_.back () == '/')
+              {
+                construct_ = CXX_COMMENT;
+                //std::cerr << "start comment" << endl;
+                defaulting = true;
+              }
+              else
+              {
+                output_indentation ();
+                hold_.push_back (c);
+                position_++;
+              }
+            }
+            else
+            {
+              defaulting = true;
+            }
+
             break;
           }
         default:
@@ -176,6 +281,7 @@ namespace Indentation
         {
           output_indentation ();
           result = write (c);
+          position_++;
         }
       }
       catch (Full const&)
@@ -214,6 +320,7 @@ namespace Indentation
       if (hold_.empty () || hold_.back () != '\n')
       {
         hold_.push_back ('\n');
+        position_ = 0; // Starting a new line.
       }
     }
 
@@ -223,10 +330,10 @@ namespace Indentation
     {
       if (!hold_.empty () && hold_.back () == '\n')
       {
-        for (unsigned long i = 0; i < indentation_ * spaces_; i++)
-        {
+        for (unsigned long i = 0; i < indentation_.top (); i++)
           write (' ');
-        }
+
+        position_ += indentation_.top ();
       }
     }
 
@@ -241,7 +348,8 @@ namespace Indentation
       {
         result = out_.put (hold_.front ());
 
-        if (result == traits_type::eof ()) throw Full ();
+        if (result == traits_type::eof ())
+          throw Full ();
 
         hold_.pop_front ();
       }
@@ -252,7 +360,9 @@ namespace Indentation
 
   private:
     Buffer<C>& out_;
-    unsigned long indentation_;
+    unsigned long position_; // Current position on the line.
+    unsigned long paren_balance_; // ( ) balance.
+    std::stack<unsigned long> indentation_;
     unsigned long spaces_;
 
     bool suppress_nl_;
@@ -260,6 +370,7 @@ namespace Indentation
     enum Construct
     {
       OTHER,
+      CXX_COMMENT,
       STRING_LITERAL,
       CHAR_LITERAL
     };
