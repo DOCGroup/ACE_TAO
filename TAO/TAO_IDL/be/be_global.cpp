@@ -163,17 +163,6 @@ be_change_idl_file_extension (UTL_String* idl_file,
       return 0;
     }
 
-  // If the included IDL file is from the ORB, ignore any command line
-  // mods to the header file extension.
-  if (!for_anyop)
-    {
-      if (ACE_OS::strcmp (base, extensions[1]) == 0
-          || ACE_OS::strcmp (base, extensions[3]) == 0)
-        {
-          new_extension = "C.h";
-        }
-    }
-    
   // Anyop file output defaults to general output dir if not set.
   const char *output_path = (for_anyop
                              ? (be_global->anyop_output_dir () == 0
@@ -230,8 +219,15 @@ const char *
 BE_GlobalData::be_get_client_hdr (UTL_String *idl_file_name,
                                   int base_name_only)
 {
+  // User-defined file extensions don't apply to .pidl files.
+  ACE_CString fn (idl_file_name->get_string ());
+  ACE_CString fn_ext = fn.substr (fn.length () - 5);
+  bool orb_file = (fn_ext == ".pidl" || fn_ext == ".PIDL");
+  
   return be_change_idl_file_extension (idl_file_name,
-                                       be_global->client_hdr_ending (),
+                                       orb_file
+                                         ? "C.h"
+                                         : be_global->client_hdr_ending (),
                                        base_name_only);
 }
 
@@ -255,8 +251,15 @@ const char *
 BE_GlobalData::be_get_server_hdr (UTL_String *idl_file_name,
                                   int base_name_only)
 {
+  // User-defined file extensions don't apply to .pidl files.
+  ACE_CString fn (idl_file_name->get_string ());
+  ACE_CString fn_ext = fn.substr (fn.length () - 5);
+  bool orb_file = (fn_ext == ".pidl" || fn_ext == ".PIDL");
+  
   return be_change_idl_file_extension (idl_file_name,
-                                       be_global->server_hdr_ending (),
+                                       orb_file
+                                         ? "S.h"
+                                         : be_global->server_hdr_ending (),
                                        base_name_only);
 }
 
