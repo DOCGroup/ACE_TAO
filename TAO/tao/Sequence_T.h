@@ -82,6 +82,8 @@ public:
   /// Implement the TAO_Base_Sequence methods (see Sequence.h)
   virtual void _allocate_buffer (CORBA::ULong length);
   virtual void _deallocate_buffer (void);
+  virtual void _shrink_buffer (CORBA::ULong new_length,
+                               CORBA::ULong old_length);
 
   // = orbos/98-01-11 proposed extensions.
   /**
@@ -188,6 +190,9 @@ public:
 
   /// deallocate the buffer
   virtual void _deallocate_buffer (void);
+
+  virtual void _shrink_buffer (CORBA::ULong new_length,
+                               CORBA::ULong old_length);
 
   // = orbos/98-01-11 proposed extensions.
   /**
