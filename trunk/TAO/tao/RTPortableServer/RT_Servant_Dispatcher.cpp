@@ -3,7 +3,7 @@
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #include "RT_POA.h"
-#include "tao/RTCORBA/Thread_Pool.h"
+
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/TAO_Server_Request.h"
@@ -15,9 +15,10 @@
 #include "tao/debug.h"
 #include "tao/CDR.h"
 
+#include "tao/RTCORBA/Thread_Pool.h"
+
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
-
 
 ACE_RCSID (RTPortableServer,
            RT_Servant_Dispatcher,
