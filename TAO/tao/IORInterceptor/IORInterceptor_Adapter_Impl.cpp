@@ -140,7 +140,7 @@ TAO_IORInterceptor_Adapter_Impl::components_established (
 
           PortableInterceptor::IORInterceptor_3_0_var ior_3_interceptor =
             PortableInterceptor::IORInterceptor_3_0::_narrow (ior_interceptor);
-          if (!CORBA::is_nil (ior_3_interceptor))
+          if (!CORBA::is_nil (ior_3_interceptor.in ()))
             {
               ior_3_interceptor->components_established (
                 info
@@ -192,7 +192,7 @@ TAO_IORInterceptor_Adapter_Impl::adapter_state_changed (
 
       PortableInterceptor::IORInterceptor_3_0_var ior_3_interceptor =
         PortableInterceptor::IORInterceptor_3_0::_narrow (ior_interceptor);
-      if (!CORBA::is_nil (ior_3_interceptor))
+      if (!CORBA::is_nil (ior_3_interceptor.in ()))
         {
           ior_3_interceptor->adapter_state_changed (
             seq_obj_ref_template,
@@ -225,7 +225,7 @@ TAO_IORInterceptor_Adapter_Impl::adapter_manager_state_changed (
 
       PortableInterceptor::IORInterceptor_3_0_var ior_3_interceptor =
         PortableInterceptor::IORInterceptor_3_0::_narrow (ior_interceptor);
-      if (!CORBA::is_nil (ior_3_interceptor))
+      if (!CORBA::is_nil (ior_3_interceptor.in ()))
         {
           ior_3_interceptor->adapter_manager_state_changed (
             id,
