@@ -1,11 +1,17 @@
+Thu Oct 27 07:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rules.ciao.GNU:
+          When cmd is the shell, use a different way to get the CIAO versions
+          needed for building with VxWorks 5.5 with Windows as host
+
 Wed Oct 26 23:07:59 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/TypeNameEmitter.cpp:
         * CIDLC/TypeNameEmitter.hpp:
-        
+
           Added backend support for the frontend features added by
           Boris in
-          
+
           Tue Oct 25 14:08:44 2005  Boris Kolpackov  <boris@kolpackov.net>.
 
 Wed Oct 26 16:16:32 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
@@ -31,10 +37,10 @@ Wed Oct 26 16:16:32 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 	  NodeApp_Configurtor creation strategies and NodeApplication
 	  configuration managements into these files.  It also includes
 	  the no-ops NodeApp_Configurator used by non-RT NodeApplication.
-	  
+
 	  We should extend the argument parsing logic to support
 	  user-supplied NodeApp_Configurator at some point.
-	
+
 	* DAnCE/NodeApplication/NodeApplication.mpc:
 	* DAnCE/NodeApplication/RTNA_Configurator_Export.h:
 	* DAnCE/NodeApplication/RTNodeApp_Configurator.cpp:
