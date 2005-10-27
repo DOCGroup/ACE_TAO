@@ -1,3 +1,9 @@
+Thu Oct 27 14:31:12 2005  Simon McQueen  <sm@prismtech.com>
+
+        * orbsvcs/tests/Bug_2287_Regression/Hello.cpp:
+
+          Fix gcc unused arg warning. 
+
 Thu Oct 27 13:36:53 2005  Simon McQueen  <sm@prismtech.com>
 
         * orbsvcs/tests/Bug_2285_Regression/Hello.h:
