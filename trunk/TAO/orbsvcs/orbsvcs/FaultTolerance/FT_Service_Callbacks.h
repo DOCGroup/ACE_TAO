@@ -70,6 +70,8 @@ public:
       IOP::ServiceContextList &clist,
       TAO_Profile *profile
       ACE_ENV_ARG_DECL);
+      
+  static TimeBase::TimeT now (void);
 
 private:
 
@@ -85,27 +87,6 @@ private:
   /// Mutex to protect access to the profile that gets passed along
   /// @@ Lock needs to be removed...
   ACE_Lock* profile_lock_;
-
-  /**
-   * A flag that indicates that the primary has already failed. So any
-   * more calls to select_profile () should not reset the profile
-   * pointer to the primary.
-   */
-  CORBA::Boolean primary_failed_;
-
-  /**
-   * A flag to indicate that a secondary has been selected for
-   * invocation. We do this only once in the cycle. When we get there
-   * again we dont select a primary again and again.
-   */
-  CORBA::Boolean secondary_set_;
-
-  /// FT group component in the IOGR
-  FT::TagFTGroupTaggedComponent group_component_;
-
-  /// A flag to indicate whether we have extracted the
-  /// <group_component> before.
-  CORBA::Boolean group_component_flag_;
 };
 
 #include /**/ "ace/post.h"

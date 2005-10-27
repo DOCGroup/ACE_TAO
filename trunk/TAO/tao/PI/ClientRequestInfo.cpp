@@ -722,4 +722,28 @@ TAO_ClientRequestInfo::check_validity (ACE_ENV_SINGLE_ARG_DECL)
                                      CORBA::COMPLETED_NO));
 }
 
+void
+TAO_ClientRequestInfo::tao_ft_expiration_time (TimeBase::TimeT time)
+{
+  this->invocation_->operation_details ().ft_expiration_time (time);
+}
+
+TimeBase::TimeT
+TAO_ClientRequestInfo::tao_ft_expiration_time (void) const
+{
+  return this->invocation_->operation_details ().ft_expiration_time ();
+}
+
+void
+TAO_ClientRequestInfo::tao_ft_retention_id (CORBA::Long request_id)
+{
+  this->invocation_->operation_details ().ft_retention_id (request_id) ;
+}
+
+CORBA::Long
+TAO_ClientRequestInfo::tao_ft_retention_id (void) const
+{
+  return this->invocation_->operation_details ().ft_retention_id ();
+}
+
 #endif /* TAO_HAS_INTERCEPTORS == 1 */

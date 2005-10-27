@@ -3,6 +3,8 @@
 #include "FT_Service_Callbacks.h"
 #include "FT_ClientPolicy_i.h"
 
+#include "ace/OS_NS_sys_time.h"
+
 #include "tao/MProfile.h"
 #include "tao/Profile.h"
 #include "tao/Tagged_Components.h"
@@ -20,11 +22,7 @@ TAO_FT_Service_Callbacks::TAO_FT_Service_Callbacks (
     TAO_ORB_Core *orb_core)
 
   : orb_core_ (orb_core),
-    profile_lock_ (0),
-    primary_failed_ (0),
-    secondary_set_ (0),
-    group_component_ (),
-    group_component_flag_ (0)
+    profile_lock_ (0)
 {
   this->profile_lock_ =
     this->orb_core_->client_factory ()->create_profile_lock ();
@@ -223,12 +221,36 @@ TAO_FT_Service_Callbacks::restart_policy_check (
         {
           if (service_list[i].context_id == IOP::FT_REQUEST)
             {
-              // Success
-              return 1;
+              // This would be a heck of a lot easier if we had the invocation
+              // here rather than just the contexts, but lemons -> lemonade I guess.
+              TAO_InputCDR cdr (ACE_reinterpret_cast (const char*,
+                                service_list[i].context_data.get_buffer()),
+                                service_list[i].context_data.length());
+              CORBA::Boolean byte_order;
+              if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+                return 0;
+              cdr.reset_byte_order (ACE_static_cast (int, byte_order));
+              FT::FTRequestServiceContext ftsrc;
+              if ((cdr >> ftsrc) == 0)
+                return 0;
+                
+              return (ftsrc.expiration_time > now ());
             }
         }
     }
 
   // Failure
   return 0;
+}
+
+TimeBase::TimeT
+TAO_FT_Service_Callbacks::now (void)
+{
+  // Grab the localtime on the machine where this is running
+  ACE_Time_Value time_val = ACE_OS::gettimeofday ();
+  TimeBase::TimeT sec_part  = ((TimeBase::TimeT)time_val.sec ()) * 10000000;
+  TimeBase::TimeT usec_part = ((TimeBase::TimeT)time_val.usec ()) * 10;
+  
+  // Add the offset to convert from posix time.
+  return (sec_part + usec_part + ACE_UINT64_LITERAL (0x1B21DD213814000));   
 }

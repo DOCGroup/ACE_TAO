@@ -1,3 +1,61 @@
+Thu Oct 27 11:30:59 2005  Simon McQueen  <sm@prismtech.com>
+
+        * tao/operation_details.h:
+        * tao/operation_details.i:
+
+          Add members (with accessors) for the FT request retention ID and
+          expiration time.
+
+        * tao/PI/ClientRequestInfo.cpp:
+        * tao/PI/ClientRequestInfo.h:
+
+          Add accessors for the FT request retention ID and expiration time
+          of the underlying request operation details (see above).
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+
+          Transmit the correct retention ID and request expiration time in
+          the request service context. Bound retries by the expiration time.
+
+          This fixes bus #2285 and #2287.
+
+        * orbsvcs/tests/Bug_2285_Regression/Bug_2285_Regression.mpc:
+        * orbsvcs/tests/Bug_2285_Regression/Hello.cpp:
+        * orbsvcs/tests/Bug_2285_Regression/Hello.h:
+        * orbsvcs/tests/Bug_2285_Regression/README:
+        * orbsvcs/tests/Bug_2285_Regression/ServerORBInitializer.cpp:
+        * orbsvcs/tests/Bug_2285_Regression/ServerORBInitializer.h:
+        * orbsvcs/tests/Bug_2285_Regression/ServerORBInitializer2.cpp:
+        * orbsvcs/tests/Bug_2285_Regression/ServerORBInitializer2.h:
+        * orbsvcs/tests/Bug_2285_Regression/ServerRequest_Interceptor.cpp:
+        * orbsvcs/tests/Bug_2285_Regression/ServerRequest_Interceptor.h:
+        * orbsvcs/tests/Bug_2285_Regression/ServerRequest_Interceptor2.cpp:
+        * orbsvcs/tests/Bug_2285_Regression/ServerRequest_Interceptor2.h:
+        * orbsvcs/tests/Bug_2285_Regression/Test.idl:
+        * orbsvcs/tests/Bug_2285_Regression/client.cpp:
+        * orbsvcs/tests/Bug_2285_Regression/client2.cpp:
+        * orbsvcs/tests/Bug_2285_Regression/run_test.pl:
+        * orbsvcs/tests/Bug_2285_Regression/run_test2.pl:
+        * orbsvcs/tests/Bug_2285_Regression/server.cpp:
+        * orbsvcs/tests/Bug_2285_Regression/server2.cpp:
+        * orbsvcs/tests/Bug_2287_Regression/Bug_2287_Regression.mpc:
+        * orbsvcs/tests/Bug_2287_Regression/Hello.cpp:
+        * orbsvcs/tests/Bug_2287_Regression/Hello.h:
+        * orbsvcs/tests/Bug_2287_Regression/README:
+        * orbsvcs/tests/Bug_2287_Regression/ServerORBInitializer2.cpp:
+        * orbsvcs/tests/Bug_2287_Regression/ServerORBInitializer2.h:
+        * orbsvcs/tests/Bug_2287_Regression/ServerRequest_Interceptor2.cpp:
+        * orbsvcs/tests/Bug_2287_Regression/ServerRequest_Interceptor2.h:
+        * orbsvcs/tests/Bug_2287_Regression/Test.idl:
+        * orbsvcs/tests/Bug_2287_Regression/client.cpp:
+        * orbsvcs/tests/Bug_2287_Regression/run_test.pl:
+        * orbsvcs/tests/Bug_2287_Regression/server.cpp:
+
+          Regression tests for these bugs.
+
 Thu Oct 27 09:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Sequence_T.{h,cpp}:
