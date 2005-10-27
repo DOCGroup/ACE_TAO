@@ -21,7 +21,7 @@ URL_Parser::instance (void)
 bool
 URL_Parser::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("rwu:h:p:f:d"));
+  ACE_Get_Arg_Opt<char> get_opt (argc, argv, ACE_TEXT ("rwu:h:p:f:d"));
 
   bool success = true;
   int c;

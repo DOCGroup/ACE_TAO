@@ -78,7 +78,7 @@ using namespace CCF::CIDL;
 using namespace CCF::CIDL::SemanticGraph;
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   try
   {

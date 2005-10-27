@@ -16,7 +16,7 @@ static const char *input_file = "BasicSP.cdp";
 static int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "i:");
 
   int c;
 
@@ -41,7 +41,7 @@ parse_args (int argc, char *argv[])
 
 using namespace CIAO::Config_Handlers;
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
     
   if (parse_args (argc, argv) != 0)
