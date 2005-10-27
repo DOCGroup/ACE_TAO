@@ -145,7 +145,7 @@ test_reactor_dispatch_order (ACE_Reactor &reactor)
   Handler handler (reactor);
 
   // This should trigger a call to <handle_input>.
-  int result =
+  ssize_t result =
     ACE::send_n (handler.pipe_.write_handle (),
                  message,
                  ACE_OS::strlen (message));
