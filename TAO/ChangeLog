@@ -1,3 +1,8 @@
+Thu Oct 27 09:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2201_Regression/*:
+          Added regression for bug 2201 to the cvs archive
+
 Thu Oct 27 06:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IORInterceptor/IORInterceptor_Adapter_Impl.cpp:
