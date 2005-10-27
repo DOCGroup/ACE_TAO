@@ -1,3 +1,9 @@
+Thu Oct 27 11:58:07 2005  Simon McQueen  <sm@prismtech.com>
+
+        * bin/tao_other_tests.lst:
+
+          Three new FT regression tests.
+
 Thu Oct 27 09:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
