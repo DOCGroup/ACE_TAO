@@ -20,6 +20,10 @@ TAO_Operation_Details::TAO_Operation_Details (const char *name,
     , num_args_ (num)
     , ex_data_ (data)
     , ex_count_ (count)
+#if TAO_HAS_INTERCEPTORS == 1
+    , ft_expiration_time_ (0)
+    , ft_retention_id_ (0)
+#endif /*TAO_HAS_INTERCEPTORS == 1*/
 {
 }
 
@@ -164,3 +168,29 @@ TAO_Operation_Details::args_num (void) const
 {
   return this->num_args_;
 }
+
+#if TAO_HAS_INTERCEPTORS == 1
+ACE_INLINE void
+TAO_Operation_Details::ft_expiration_time (TimeBase::TimeT time)
+{
+  this->ft_expiration_time_ = time;
+}
+
+ACE_INLINE TimeBase::TimeT
+TAO_Operation_Details::ft_expiration_time (void) const
+{
+  return this->ft_expiration_time_;
+}
+
+ACE_INLINE void
+TAO_Operation_Details::ft_retention_id (CORBA::Long request_id)
+{
+  this->ft_retention_id_ = request_id;
+}
+
+ACE_INLINE CORBA::Long
+TAO_Operation_Details::ft_retention_id (void) const
+{
+  return this->ft_retention_id_;
+}
+#endif /*TAO_HAS_INTERCEPTORS == 1*/
