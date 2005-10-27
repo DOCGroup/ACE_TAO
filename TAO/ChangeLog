@@ -1,3 +1,16 @@
+Thu Oct 27 13:36:53 2005  Simon McQueen  <sm@prismtech.com>
+
+        * orbsvcs/tests/Bug_2285_Regression/Hello.h:
+        * orbsvcs/tests/Bug_2287_Regression/Hello.h:
+        * orbsvcs/tests/Bug_2285_Regression/ServerORBInitializer.h:
+        * orbsvcs/tests/Bug_2285_Regression/ServerORBInitializer2.h:
+        * orbsvcs/tests/Bug_2285_Regression/ServerRequest_Interceptor.h:
+        * orbsvcs/tests/Bug_2285_Regression/ServerRequest_Interceptor2.h:
+        * orbsvcs/tests/Bug_2287_Regression/ServerORBInitializer2.h:
+        * orbsvcs/tests/Bug_2287_Regression/ServerRequest_Interceptor2.h:
+
+          Fix the obligatory fuzz errors.
+
 Thu Oct 27 11:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:
