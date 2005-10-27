@@ -118,7 +118,7 @@ template <class BARRIER> int
 Worker_Task<BARRIER>::service (ACE_Message_Block *mb,
                                int iter)
 {
-  int length = mb->length ();
+  size_t length = mb->length ();
 
   if (length > 0)
     {
@@ -162,7 +162,7 @@ Worker_Task<BARRIER>::svc (void)
 	  break;
 	}
 
-      int length = mb->length ();
+      size_t length = mb->length ();
       this->service (mb,iter);
 
       if (length == 0)
@@ -223,7 +223,7 @@ Worker_Task<BARRIER>::input (ACE_Message_Block *mb)
   char str[] = "kalle";
   ACE_OS::strcpy (mb->rd_ptr (), str);
 
-  int n = ACE_OS::strlen (str);
+  size_t n = ACE_OS::strlen (str);
 
   if (l == 1000)
     n = 1;
