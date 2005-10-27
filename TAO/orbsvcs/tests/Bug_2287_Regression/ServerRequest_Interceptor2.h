@@ -94,8 +94,5 @@ CORBA::ORB_var orb_;
 CORBA::Boolean expired_;
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
-#endif /* _MSC_VER */
-
 #endif  /* TAO249_SERVER_REQUEST_INTERCEPTOR2_H */
+
