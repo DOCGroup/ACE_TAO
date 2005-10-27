@@ -39,6 +39,7 @@
 #include "tao/ORB_Constants.h"
 #include "tao/LocalObject.h"
 #include "tao/Invocation_Utils.h"
+#include "tao/TimeBaseC.h"
 
 
 class TAO_Service_Context;
@@ -67,7 +68,7 @@ namespace Messaging
  * @brief Implementation of the PortableInterceptor::ClientRequestInfo
  *        interface.
  */
-class TAO_ClientRequestInfo
+class TAO_PI_Export TAO_ClientRequestInfo
   : public virtual PortableInterceptor::ClientRequestInfo,
     public virtual TAO_Local_RefCounted_Object
 {
@@ -219,6 +220,27 @@ public:
       CORBA::Boolean replace
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  /*
+  * Proprietary accessor methods for the FT retention ID and
+  * request expiration time.
+  */
+
+  /// Set the absolute FT expiration time for this request.
+  void tao_ft_expiration_time (TimeBase::TimeT time);
+
+  /// Get the absolute FT expiration time for this request
+  TimeBase::TimeT tao_ft_expiration_time (void) const;
+
+  /// Set the FT request retention ID for this request.
+  void tao_ft_retention_id (CORBA::Long request_id);
+
+  /// Get the FT request retention ID for this request.
+  CORBA::Long tao_ft_retention_id (void) const;
+
+  /*
+  * End proprietary FT methods.
+  */
 
 private:
 
