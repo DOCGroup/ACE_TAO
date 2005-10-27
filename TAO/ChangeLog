@@ -1,3 +1,11 @@
+Thu Oct 27 09:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Sequence_T.{h,cpp}:
+          Applied the fix of bug 2201, when shrinking a sequence we
+          re initialize the elements. Fixes bugzilla 2201.
+          Thanks to Frank Pilhofer <fp at mc dot com> for reporting this
+          and supplying the patch.
+
 Thu Oct 27 09:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2201_Regression/*:
