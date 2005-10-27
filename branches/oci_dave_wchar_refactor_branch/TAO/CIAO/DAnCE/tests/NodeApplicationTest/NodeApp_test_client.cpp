@@ -18,7 +18,7 @@ int count = 0;
 
 int parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:n:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "k:n:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -47,7 +47,7 @@ int parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   std::vector<NodeAppTest::NodeAppTest_RoundTrip_var> comp_list;
   //std::vector<NodeAppTest::NodeAppTest_RoundTrip_var>::const_iterator iter;

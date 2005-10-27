@@ -40,7 +40,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // deployment plan URL
   char* plan_url = 0;
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:d:k:t:"));
+  ACE_Get_Arg_Opt<char> get_opt (argc, argv, ACE_TEXT ("p:d:k:t:"));
   int c;
 
   while ((c = get_opt ()) != EOF)

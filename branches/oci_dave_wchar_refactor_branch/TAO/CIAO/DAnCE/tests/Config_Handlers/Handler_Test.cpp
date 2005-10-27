@@ -52,7 +52,7 @@ namespace Config_Handler_Test
   {
     ACE_TCHAR* url = 0;
     
-    ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("u:"));
+    ACE_Get_Arg_Opt<char> get_opt (argc, argv, ACE_TEXT ("u:"));
     int c;
     
     while ((c = get_opt ()) != EOF)

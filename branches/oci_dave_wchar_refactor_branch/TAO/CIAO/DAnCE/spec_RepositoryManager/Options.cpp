@@ -21,7 +21,7 @@ Options::instance (void)
 void
 Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
-	ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("n:l:u:ifds"));
+	ACE_Get_Arg_Opt<char> get_opt (argc, argv, ACE_TEXT ("n:l:u:ifds"));
 
   int c;
 
