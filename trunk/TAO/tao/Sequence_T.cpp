@@ -137,6 +137,18 @@ TAO_Unbounded_Sequence<T>::_deallocate_buffer (void)
   this->release_ = 0;
 }
 
+template<typename T>
+void
+TAO_Unbounded_Sequence<T>::_shrink_buffer (CORBA::ULong nl,
+                                           CORBA::ULong ol)
+{
+  T * tmp = reinterpret_cast <T *> (this->buffer_);
+
+  for (CORBA::ULong i = nl; i < ol; ++i) {
+    tmp[i] = T();
+  }
+}
+
 template <typename T>
 T *
 TAO_Unbounded_Sequence<T>::get_buffer (CORBA::Boolean orphan)
@@ -319,6 +331,18 @@ TAO_Bounded_Sequence<T, MAX>::_deallocate_buffer (void)
   this->buffer_ = 0;
   this->length_  = 0;
   this->release_ = 0;
+}
+
+template<typename T, size_t MAX>
+void
+TAO_Bounded_Sequence<T, MAX>::_shrink_buffer (CORBA::ULong nl,
+                                              CORBA::ULong ol)
+{
+  T * tmp = reinterpret_cast <T *> (this->buffer_);
+
+  for (CORBA::ULong i = nl; i < ol; ++i) {
+    tmp[i] = T();
+  }
 }
 
 template <typename T, size_t MAX>
