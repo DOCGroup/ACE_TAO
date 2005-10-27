@@ -40,6 +40,7 @@ TAO/tests/Bug_1482_Regression/run_test.pl: !VxWorks !MINIMUM !ST
 TAO/tests/Bug_1551_Regression/run_test.pl: !VxWorks !MINIMUM !ST !IRIX
 TAO/tests/Bug_2174_Regression/run_test.pl: !MINIMUM
 TAO/tests/Bug_2183_Regression/run_test.pl:
+TAO/tests/Bug_2201_Regression/run_test.pl:
 TAO/tests/Bug_2234_Regression/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/RTCORBA/Banded_Connections/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Client_Propagated/run_test.pl: !MINIMUM !ST
@@ -186,18 +187,18 @@ TAO/tests/GIOP_Fragments/PMB_With_Fragments/run_test.pl:
 TAO/tests/CodeSets/simple/run_test.pl: !VxWorks !GIOP10 !STATIC
 TAO/tests/Hang_Shutdown/run_test.pl: !ST
 TAO/tests/Any/Recursive/run_test.pl:
-TAO/tests/CSD_Strategy_Tests/TP_Test_1/run_test.pl: !ST 
+TAO/tests/CSD_Strategy_Tests/TP_Test_1/run_test.pl: !ST
 TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl: !ST
 TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl remote: !ST
-TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl collocated: !ST 
-TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl remote_orbthreads: !ST 
-TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl remote_servants: !ST 
-TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl remote_csdthreads: !ST 
-TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl remote_big: !ST 
-TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl big: !ST 
-TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl: !ST 
-TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl remote: !ST 
-TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl collocated: !ST 
+TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl collocated: !ST
+TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl remote_orbthreads: !ST
+TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl remote_servants: !ST
+TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl remote_csdthreads: !ST
+TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl remote_big: !ST
+TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl big: !ST
+TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl: !ST
+TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl remote: !ST
+TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl collocated: !ST
 TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl remote_orbthreads: !ST 
 TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl remote_servants: !ST 
 TAO/tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl remote_csdthreads: !ST 
