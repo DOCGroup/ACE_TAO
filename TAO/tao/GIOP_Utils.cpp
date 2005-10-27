@@ -28,7 +28,7 @@ TAO_GIOP_Utils::
   char *buf = input.rd_ptr ();
   ssize_t n = 0;
 
-  for (int t = read_size;
+  for (CORBA::ULong t = read_size;
        t != 0;
        t -= n)
     {

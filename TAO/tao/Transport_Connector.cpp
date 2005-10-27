@@ -173,8 +173,8 @@ TAO_Connector::make_mprofile (const char *string,
   //    `shu/arf'
   //    `1.1@chicken/arf'
 
-  int begin = 0;
-  int end = ior_index - 1;
+  ssize_t begin = 0;
+  ssize_t end = ior_index - 1;
   // Initialize the end of the endpoint index
 
   for (CORBA::ULong j = 0; j < profile_count; ++j)
@@ -190,7 +190,7 @@ TAO_Connector::make_mprofile (const char *string,
           end = objkey_index;  // Handle last endpoint differently
         }
 
-      if (end < static_cast<int> (ior.length ()) && end != ior.npos)
+      if (end < static_cast<ssize_t> (ior.length ()) && end != ior.npos)
         {
           ACE_CString endpoint = ior.substring (begin, end - begin);
 
