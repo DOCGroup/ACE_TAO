@@ -187,7 +187,7 @@ namespace CIAO
   /**
    * @class NodeApplicationManager_Impl
    */
-  class NodeApplicationManager_Impl
+  class CIAO_NAM_Export NodeApplicationManager_Impl
     : public virtual NodeApplicationManager_Impl_Base
   {
   public:
@@ -225,7 +225,7 @@ namespace CIAO
   /**
    * @class Static_NodeApplicationManager_Impl
    */
-  class Static_NodeApplicationManager_Impl
+  class CIAO_NAM_Export Static_NodeApplicationManager_Impl
     : public virtual NodeApplicationManager_Impl_Base
   {
   public:

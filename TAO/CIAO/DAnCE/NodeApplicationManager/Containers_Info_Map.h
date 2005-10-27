@@ -17,6 +17,8 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ciao/DeploymentC.h"
 #include "ace/SString.h"
+#include "CIAO_NAM_Export.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -30,7 +32,7 @@ namespace CIAO
    * This is a helper class to populate the NodeImplementationInfo struct from
    * a deployment plan..
    */
-  class Containers_Info_Map
+  class CIAO_NAM_Export Containers_Info_Map
   {
   public:
 

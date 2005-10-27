@@ -16,4 +16,11 @@ project(NodeApplicationManager): ciao_server_dnc, ciao_deployment_svnt, ciao_dep
     ../NodeApplication/NodeApplication_Impl.cpp
     ../NodeApplication/Container_Impl.cpp
   }
+
+  Header_Files {
+    NodeApplicationManager_Impl.h
+    ImplementationInfo.h
+    Containers_Info_Map.h
+    NodeApplicationManager_Export.h
+  }
 }

@@ -1,3 +1,16 @@
+Thu Oct 27 00:29:11 2005  Gan Deng <gan.deng@vanderbilt.edu>
+
+	* DAnCE/DomainApplicationManager/DomainApplicationManager.mpc
+	* DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
+	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h
+	* DAnCE/NodeApplicationManager/Containers_Info_Map.h
+	* DAnCE/NodeApplicationManager/ImplementationInfo.h
+	* DAnCE/StaticConfigurator/StaticDAnCEParser.mpc
+
+	  Fixed some compilation and linking errors shown on the scoreboard,
+	  particularly for Windows builds.
+
 Thu Oct 27 07:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rules.ciao.GNU:
