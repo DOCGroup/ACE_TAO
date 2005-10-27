@@ -1,3 +1,8 @@
+Thu Oct 27 09:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added TAO Bug_2201_Regression test
+
 Wed Oct 26 17:22:12 2005  Don Busch  <busch_d@ociweb.com>
 
         * ace/bin/MakeProjectCreator/config/event_serv.mpb
