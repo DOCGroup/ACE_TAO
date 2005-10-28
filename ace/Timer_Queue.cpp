@@ -1,8 +1,5 @@
 // $Id$
 
-#if !defined (ACE_TIMER_QUEUE_C)
-#define ACE_TIMER_QUEUE_C
-
 #include "ace/Containers.h"
 #include "ace/Timer_Queue.h"
 #include "ace/Synch_Traits.h"
@@ -13,6 +10,8 @@ ACE_RCSID(ace, Timer_Queue, "$Id$")
 #if defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
 #include "ace/Timer_Hash.h"
 #include "ace/Timer_Queue_T.cpp"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class
@@ -58,4 +57,4 @@ template class ACE_Event_Handler_Handle_Timeout_Upcall<ACE_SYNCH_RECURSIVE_MUTEX
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* ACE_TIMER_QUEUE_C */
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -22,11 +22,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (ACE_HAS_THREADS)
+
 #include "ace/SPIPE.h"
 #include "ace/Message_Queue.h"
 #include "ace/UPIPE_Addr.h"
 
-#if defined (ACE_HAS_THREADS)
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Use a typedef to make life easier later on.
 typedef ACE_Stream<ACE_SYNCH> MT_Stream;
@@ -127,10 +129,14 @@ private:
 #endif /* ACE_MT_SAFE */
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
 #include "ace/UPIPE_Stream.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_THREADS */
+
 #include /**/ "ace/post.h"
+
 #endif /*ACE_UPIPE_STREAM_H */

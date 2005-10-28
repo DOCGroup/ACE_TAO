@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_UNBOUNDED_QUEUE_C
-#define ACE_UNBOUNDED_QUEUE_C
+#ifndef ACE_UNBOUNDED_QUEUE_CPP
+#define ACE_UNBOUNDED_QUEUE_CPP
 
 #include "ace/Unbounded_Queue.h"
 
@@ -17,7 +17,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/os_include/os_errno.h"
 
-ACE_RCSID(ace, Unbounded_Queue, "$Id$")
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_Queue)
 
@@ -429,4 +429,6 @@ ACE_Unbounded_Queue_Iterator<T>::next (T *&item)
     }
 }
 
-#endif /* ACE_UNBOUNDED_QUEUE_C */
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_UNBOUNDED_QUEUE_CPP */

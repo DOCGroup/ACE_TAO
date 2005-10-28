@@ -10,6 +10,8 @@ ACE_RCSID(ace, UNIX_Addr, "$Id$")
 #include "ace/UNIX_Addr.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_UNIX_Addr)
 
 // Set a pointer to the address.
@@ -20,8 +22,8 @@ ACE_UNIX_Addr::set_addr (void *addr, int len)
 
   this->ACE_Addr::base_set (AF_UNIX, len);
   ACE_OS::memcpy ((void *) &this->unix_addr_,
-		  (void *) addr,
-		  len);
+                  (void *) addr,
+                  len);
 }
 
 // Return a pointer to the underlying address.
@@ -107,7 +109,7 @@ int
 ACE_UNIX_Addr::set (const sockaddr_un *un, int len)
 {
   (void) ACE_OS::memset ((void *) &this->unix_addr_, 0,
-		   sizeof this->unix_addr_);
+                   sizeof this->unix_addr_);
   this->unix_addr_.sun_family = AF_UNIX;
   ACE_OS::strcpy (this->unix_addr_.sun_path, un->sun_path);
   this->base_set (AF_UNIX, len);
@@ -123,17 +125,17 @@ int
 ACE_UNIX_Addr::set (const char rendezvous_point[])
 {
   (void) ACE_OS::memset ((void *) &this->unix_addr_,
-			 0,
-			 sizeof this->unix_addr_);
+                         0,
+                         sizeof this->unix_addr_);
   this->unix_addr_.sun_family = AF_UNIX;
-  (void) ACE_OS::strsncpy (this->unix_addr_.sun_path, 
+  (void) ACE_OS::strsncpy (this->unix_addr_.sun_path,
                            rendezvous_point,
                            sizeof this->unix_addr_.sun_path);
 
   this->ACE_Addr::base_set (AF_UNIX,
-			    sizeof this->unix_addr_ -
-			    sizeof (this->unix_addr_.sun_path) +
-			    ACE_OS::strlen (this->unix_addr_.sun_path));
+                            sizeof this->unix_addr_ -
+                            sizeof (this->unix_addr_.sun_path) +
+                            ACE_OS::strlen (this->unix_addr_.sun_path));
   return 0;
 }
 
@@ -143,5 +145,7 @@ ACE_UNIX_Addr::ACE_UNIX_Addr (const char rendezvous_point[])
 {
   this->set (rendezvous_point);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */

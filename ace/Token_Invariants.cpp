@@ -1,13 +1,14 @@
 #include "ace/Token_Invariants.h"
-#include "ace/Object_Manager.h"
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
+#include "ace/Object_Manager.h"
 
 ACE_RCSID (ace,
            Token_Invariants,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Token_Invariant_Manager *ACE_Token_Invariant_Manager::instance_ = 0;
 
@@ -372,5 +373,7 @@ template class ACE_Map_Entry<ACE_Token_Name, ACE_RWLock_Invariants *>;
 #pragma instantiate ACE_Map_Reverse_Iterator<ACE_Token_Name, ACE_RWLock_Invariants *, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Entry<ACE_Token_Name, ACE_RWLock_Invariants *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_TOKENS_LIBRARY */

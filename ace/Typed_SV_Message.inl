@@ -1,13 +1,16 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 #include "ace/config-all.h"
 #include "ace/Global_Macros.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class T> ACE_INLINE
-ACE_Typed_SV_Message<T>::ACE_Typed_SV_Message (long t, 
-					       int l, 
-					       int m)
+ACE_Typed_SV_Message<T>::ACE_Typed_SV_Message (long t,
+                                               int l,
+                                               int m)
   : type_ (t)
 {
   ACE_TRACE ("ACE_Typed_SV_Message<T>::ACE_Typed_SV_Message");
@@ -16,10 +19,10 @@ ACE_Typed_SV_Message<T>::ACE_Typed_SV_Message (long t,
 }
 
 template <class T> ACE_INLINE
-ACE_Typed_SV_Message<T>::ACE_Typed_SV_Message (const T &d, 
-					       long t, 
-					       int l, 
-					       int m)
+ACE_Typed_SV_Message<T>::ACE_Typed_SV_Message (const T &d,
+                                               long t,
+                                               int l,
+                                               int m)
   : type_ (t),
     data_ (d)
 {
@@ -90,3 +93,4 @@ ACE_Typed_SV_Message<T>::data (const T &d)
   this->data_ = d;
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL

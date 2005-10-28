@@ -2,6 +2,7 @@
 //
 // $Id$
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_Thread_Manager *
 ACE_Task_Base::thr_mgr (void) const
@@ -76,3 +77,4 @@ ACE_Task_Base::grp_id (int identifier)
     this->thr_mgr ()->set_grp (this, identifier);
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL

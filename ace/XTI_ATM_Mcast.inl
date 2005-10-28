@@ -1,7 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
-// XTI_ATM_Mcast.i
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_XTI_ATM_Mcast::ACE_XTI_ATM_Mcast (ACE_TLI_Stream &new_stream,
@@ -60,3 +61,5 @@ ACE_XTI_ATM_Mcast::connect (ACE_TLI_Stream &new_stream,
                                     udata,
                                     opt);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

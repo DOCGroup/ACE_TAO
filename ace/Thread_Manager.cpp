@@ -18,6 +18,8 @@ ACE_RCSID (ace,
            "$Id$")
 
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
 
 ACE_At_Thread_Exit::~ACE_At_Thread_Exit (void)
@@ -2373,3 +2375,5 @@ template class ACE_Locked_Free_List<ACE_Thread_Descriptor, ACE_DEFAULT_THREAD_MA
 #  pragma instantiate ACE_Free_List<ACE_Thread_Descriptor>
 #  pragma instantiate ACE_Locked_Free_List<ACE_Thread_Descriptor, ACE_DEFAULT_THREAD_MANAGER_LOCK>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -22,6 +22,8 @@
 
 #include "ace/Free_List.h"
 #include "ace/Unbounded_Set.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declaration
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
@@ -321,6 +323,8 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Timer_Heap_T (const ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK> &))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK> &))
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE) && !defined(ACE_HAS_BROKEN_HPUX_TEMPLATES)
 #include "ace/Timer_Heap_T.cpp"

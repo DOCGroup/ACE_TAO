@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -21,6 +21,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Typed_SV_Message.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Typed_SV_Message_Queue
@@ -71,6 +73,8 @@ public:
 private:
   ACE_SV_Message_Queue message_queue_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Typed_SV_Message_Queue.inl"

@@ -26,8 +26,12 @@
 
 #if defined (ACE_HAS_DEFERRED_TIMER_COMMANDS)
 #  include "ace/Unbounded_Queue.h"
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Command_Base;
+ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* ACE_HAS_DEFERRED_TIMER_COMMANDS */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Async_Timer_Queue_Adapter
@@ -229,6 +233,8 @@ private:
   /// Thread id of our active object task.
   ACE_thread_t thr_id_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "ace/Timer_Queue_Adapters.inl"

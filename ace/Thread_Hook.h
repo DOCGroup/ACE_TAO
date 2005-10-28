@@ -23,6 +23,8 @@
 
 #include "ace/ACE_export.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Thread_Hook
  *
@@ -56,6 +58,8 @@ public:
   /// Returns the current system thread hook.
   static ACE_Thread_Hook *thread_hook (void);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_THREAD_HOOK_H */

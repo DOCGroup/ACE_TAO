@@ -1,8 +1,5 @@
 // $Id$
 
-#if !defined (ACE_TIMER_LIST_C)
-#define ACE_TIMER_LIST_C
-
 #include "ace/Timer_List.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Recursive_Thread_Mutex.h"
@@ -12,6 +9,8 @@ ACE_RCSID(ace, Timer_List, "$Id$")
 #if defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
 #include "ace/Timer_Hash.h"
 #include "ace/Timer_List_T.cpp"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class
@@ -42,5 +41,4 @@ template class ACE_Timer_List_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_
 #pragma instantiate ACE_Timer_List_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_SYNCH_RECURSIVE_MUTEX>, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-
-#endif /* ACE_TIMER_LIST_C */
+ACE_END_VERSIONED_NAMESPACE_DECL

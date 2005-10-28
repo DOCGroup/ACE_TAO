@@ -1,11 +1,10 @@
+// -*- C++ -*-
 
 //=============================================================================
 /**
  *  @file   Test_and_Set.h
  *
  *  $Id$
- *
- *  @author Priyanka Gontla <pgontla@ece.uci.edu>
  */
 //=============================================================================
 
@@ -19,6 +18,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Test_and_Set
@@ -59,6 +60,8 @@ private:
   /// Protect the state from race conditions.
   ACE_LOCK lock_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Test_and_Set.cpp"

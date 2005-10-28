@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_TIMER_QUEUE_T_C
-#define ACE_TIMER_QUEUE_T_C
+#ifndef ACE_TIMER_QUEUE_T_CPP
+#define ACE_TIMER_QUEUE_T_CPP
 
 #include "ace/config-all.h"
 
@@ -20,10 +20,7 @@
 #include "ace/Timer_Queue_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (ace,
-           Timer_Queue_T,
-           "$Id$")
-
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // This fudge factor can be overriden for timers that need it, such as on
 // Solaris, by defining the ACE_TIMER_SKEW symbol in the appropriate config
@@ -475,4 +472,6 @@ ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::deletion (TIMER_QUEUE &timer_
   return 0;
 }
 
-#endif /* ACE_TIMER_QUEUE_T_C */
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_TIMER_QUEUE_T_CPP */

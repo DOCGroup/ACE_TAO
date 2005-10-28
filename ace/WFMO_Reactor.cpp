@@ -18,6 +18,8 @@ ACE_RCSID(ace, WFMO_Reactor, "$Id$")
 
 #include "ace/Auto_Ptr.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_WFMO_Reactor_Handler_Repository::ACE_WFMO_Reactor_Handler_Repository (ACE_WFMO_Reactor &wfmo_reactor)
   : wfmo_reactor_ (wfmo_reactor)
 {
@@ -2676,28 +2678,22 @@ ACE_WFMO_Reactor::resumable_handler (void)
 // No-op WinSOCK2 methods to help WFMO_Reactor compile
 #if !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0)
 int
-WSAEventSelect (SOCKET s,
-                WSAEVENT hEventObject,
-                long lNetworkEvents)
+WSAEventSelect (SOCKET /* s */,
+                WSAEVENT /* hEventObject */,
+                long /* lNetworkEvents */)
 {
-  ACE_UNUSED_ARG (s);
-  ACE_UNUSED_ARG (hEventObject);
-  ACE_UNUSED_ARG (lNetworkEvents);
-
   return -1;
 }
 
 int
-WSAEnumNetworkEvents (SOCKET s,
-                      WSAEVENT hEventObject,
-                      LPWSANETWORKEVENTS lpNetworkEvents)
+WSAEnumNetworkEvents (SOCKET /* s */,
+                      WSAEVENT /* hEventObject */,
+                      LPWSANETWORKEVENTS /* lpNetworkEvents */)
 {
-  ACE_UNUSED_ARG (s);
-  ACE_UNUSED_ARG (hEventObject);
-  ACE_UNUSED_ARG (lpNetworkEvents);
-
   return -1;
 }
 #endif /* !defined ACE_HAS_WINSOCK2 */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 */
