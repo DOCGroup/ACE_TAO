@@ -48,9 +48,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class ACE_Export ACE_Copy_Disabled
 {
-protected:
+public:
 
-  ACE_Copy_Disabled (void) {}
+  /// Default constructor
+  ACE_Copy_Disabled (void);
 
 private:
   ACE_Copy_Disabled (const ACE_Copy_Disabled &);
