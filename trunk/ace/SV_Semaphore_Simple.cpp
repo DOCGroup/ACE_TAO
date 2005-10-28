@@ -11,8 +11,9 @@ ACE_RCSID (ace,
            SV_Semaphore_Simple,
            "$Id$")
 
-ACE_ALLOC_HOOK_DEFINE (ACE_SV_Semaphore_Simple)
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+ACE_ALLOC_HOOK_DEFINE (ACE_SV_Semaphore_Simple)
 
 void
 ACE_SV_Semaphore_Simple::dump (void) const
@@ -232,3 +233,5 @@ ACE_SV_Semaphore_Simple::remove (void) const
   ((ACE_SV_Semaphore_Simple *) this)->init ();
   return result;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

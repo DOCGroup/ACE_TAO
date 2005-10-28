@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "ace/OS_NS_dirent.h"
@@ -41,6 +40,8 @@ extern "C"
 #    define INVALID_SET_FILE_POINTER ((DWORD)-1)
 #  endif /* INVALID_SET_FILE_POINTER */
 #endif /* ACE_WIN32 */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 ACE_OS::closedir_emulation (ACE_DIR *d)
@@ -286,3 +287,5 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
 
   return nfiles;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

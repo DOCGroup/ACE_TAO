@@ -5,6 +5,8 @@
 
 ACE_RCSID(ace, Priority_Reactor, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 typedef ACE_Unbounded_Queue_Iterator<ACE_Event_Tuple> QUEUE_ITERATOR;
 // Its iterator.
 
@@ -194,3 +196,5 @@ template class ACE_Cached_Mem_Pool_Node<ACE_Node<ACE_Event_Tuple> >;
 #pragma instantiate ACE_Free_List<ACE_Cached_Mem_Pool_Node<ACE_Node<ACE_Event_Tuple> > >
 #pragma instantiate ACE_Cached_Mem_Pool_Node<ACE_Node<ACE_Event_Tuple> >
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -113,6 +113,8 @@
 # undef THREAD
 #endif /* THREAD */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Log_Msg_Callback;
 class ACE_Log_Msg_Backend;
 
@@ -701,6 +703,8 @@ private:
   ACE_Log_Msg (const ACE_Log_Msg &);
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || \
      defined (ACE_HAS_TSS_EMULATION)
@@ -710,9 +714,25 @@ private:
 #  else
 #   define LOCAL_EXTERN_PREFIX
 #  endif /* ACE_HAS_THR_C_DEST */
+
+#if (defined (ACE_HAS_VERSIONED_NAMESPACE) \
+     && ACE_HAS_VERSIONED_NAMESPACE == 1) \
+  && !(defined (_MSC_VER) && _MSC_VER <= 1200)
+// MSVC++ 6's preprocessor can't handle macro expansions required by
+// the versioned namespace support.  *sigh*
+
+# define ACE_TSS_CLEANUP_NAME ACE_ ## ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _TSS_cleanup)
+
+#else
+
+# define ACE_TSS_CLEANUP_NAME ACE_TSS_cleanup
+
+#endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
+
+
 LOCAL_EXTERN_PREFIX
 void
-ACE_TSS_cleanup (void *ptr);
+ACE_TSS_CLEANUP_NAME (void *ptr);
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
 #endif /* ACE_MT_SAFE */
 

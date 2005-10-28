@@ -28,11 +28,17 @@
 
 #if defined (ACE_WIN32)
 #include "ace/SOCK_Stream.h"
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ACE_SOCK_Stream ATM_Stream;
+ACE_END_VERSIONED_NAMESPACE_DECL
 #else
 #include "ace/TLI_Stream.h"
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ACE_TLI_Stream ATM_Stream;
+ACE_END_VERSIONED_NAMESPACE_DECL
 #endif
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_ATM_Stream
@@ -89,6 +95,8 @@ private:
   /// Typedef'd to the appropriate stream mechanism above.
   ATM_Stream stream_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/ATM_Stream.inl"

@@ -24,6 +24,8 @@
 #include "ace/IPC_SAP.h"
 #include "ace/OS_NS_stropts.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_SOCK
  *
@@ -39,8 +41,6 @@
 class ACE_Export ACE_SOCK : public ACE_IPC_SAP
 {
 public:
-  /// Default ctor/dtor.
-  ~ACE_SOCK (void);
 
   /// Wrapper around the <setsockopt> system call.
   int set_option (int level,
@@ -96,6 +96,7 @@ public:
             int reuse_addr);
 
 protected:
+
   /// Constructor with arguments to call the BSD-style <socket> system
   /// call (no QoS).
   ACE_SOCK (int type,
@@ -117,7 +118,17 @@ protected:
   /// from being defined.
   ACE_SOCK (void);
 
+  /// Protected destructor.
+  /**
+   * Not a virtual destructor.  Protected destructor to prevent
+   * operator delete() from being called through a base class ACE_SOCK
+   * pointer/reference.
+   */
+  ~ACE_SOCK (void);
+
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/SOCK.inl"

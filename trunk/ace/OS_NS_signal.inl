@@ -1,10 +1,14 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "ace/OS_NS_macros.h"
 #include "ace/OS_NS_errno.h"
 
-namespace ACE_OS {
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace ACE_OS
+{
 
 ACE_INLINE int
 kill (pid_t pid, int signum)
@@ -271,3 +275,5 @@ sigsuspend (const sigset_t *sigset)
 }
 
 }  /* end namespace ACE_OS */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

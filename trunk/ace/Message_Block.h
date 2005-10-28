@@ -26,6 +26,8 @@
 #include "ace/Global_Macros.h"
 #include "ace/Time_Value.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward declaration.
 class ACE_Allocator;
 class ACE_Data_Block;
@@ -1032,6 +1034,8 @@ public:
   /// Dump the state of the strategy.
   virtual void dump (void) const;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Message_Block.inl"

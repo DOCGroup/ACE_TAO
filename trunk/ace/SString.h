@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -28,9 +28,13 @@
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 #include "ace/iosfwd.h"
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_Export ACE_OSTREAM_TYPE &operator << (ACE_OSTREAM_TYPE &, const ACE_CString &);
 ACE_Export ACE_OSTREAM_TYPE &operator << (ACE_OSTREAM_TYPE &, const ACE_WString &);
+ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
 template class ACE_Export ACE_String_Base<char>;
@@ -478,6 +482,8 @@ public:
 private:
   char* p_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/SString.inl"

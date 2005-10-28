@@ -1,4 +1,5 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "ace/OS_NS_string.h"
@@ -6,6 +7,8 @@
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_time.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE char *
 ACE_OS::asctime (const struct tm *t)
@@ -216,7 +219,7 @@ ACE_OS::difftime (time_t t1, time_t t0)
 #endif /* ! ACE_LACKS_DIFFTIME */
 
 #if defined (ghs) && defined (ACE_HAS_PENTIUM) && !defined (ACE_WIN32)
-  extern "C" ACE_hrtime_t ACE_gethrtime ();
+  extern "C" ACE_hrtime_t ACE_GETHRTIME_NAME ();
 #endif /* ghs && ACE_HAS_PENTIUM */
 
 ACE_INLINE ACE_hrtime_t
@@ -237,7 +240,7 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
 #elif defined (ghs) && defined (ACE_HAS_PENTIUM) && !defined (ACE_WIN32)
   ACE_UNUSED_ARG (op);
   // Use .obj/gethrtime.o, which was compiled with g++.
-  return ACE_gethrtime ();
+  return ACE_GETHRTIME_NAME ();
 #elif (defined(__KCC) || defined (__GNUG__) || defined (__INTEL_COMPILER)) && !defined (ACE_WIN32) && !defined(ACE_VXWORKS) && defined (ACE_HAS_PENTIUM)
   ACE_UNUSED_ARG (op);
 # if defined (ACE_LACKS_LONGLONG_T)
@@ -554,3 +557,5 @@ ACE_OS::tzset (void)
   errno = ENOTSUP;
 # endif /* ACE_HAS_WINCE && !VXWORKS && !ACE_PSOS && !__rtems__ && !ACE_HAS_DINKUM_STL */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

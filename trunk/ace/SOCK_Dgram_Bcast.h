@@ -29,6 +29,8 @@
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Bcast_Node
  *
@@ -132,6 +134,8 @@ private:
   /// Do not allow this function to percolate up to this interface...
   int get_remote_addr (ACE_Addr &) const;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/SOCK_Dgram_Bcast.inl"

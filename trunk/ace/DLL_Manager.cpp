@@ -14,10 +14,13 @@
 #include "ace/OS_NS_dlfcn.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID (ace, DLL_Manager,
-    "DLL_Manager.cpp,v 4.23 2003/11/05 23:30:46 shuston Exp")
+ACE_RCSID (ace,
+           DLL_Manager,
+           "DLL_Manager.cpp,v 4.23 2003/11/05 23:30:46 shuston Exp")
 
 /******************************************************************/
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 sig_atomic_t ACE_DLL_Handle::open_called_ = 0;
 
@@ -703,3 +706,5 @@ template class ACE_Auto_Basic_Ptr<ACE_TString>;
 #    pragma instantiate ACE_Auto_Basic_Ptr<ACE_TString>
 #  endif  /* ACE_LACKS_AUTO_PTR */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

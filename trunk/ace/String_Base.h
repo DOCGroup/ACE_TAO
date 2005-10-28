@@ -24,6 +24,8 @@
 
 #include "ace/Global_Macros.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Allocator;
 
 /**
@@ -513,6 +515,8 @@ template < class CHAR >
 template < class CHAR >
   ACE_String_Base < CHAR > operator + (const CHAR c,
                                        const ACE_String_Base < CHAR > &t);
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/String_Base.inl"

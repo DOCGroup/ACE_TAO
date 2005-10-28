@@ -30,6 +30,8 @@
 // For linkers which cant grok long names...
 #define ACE_Cached_Connect_Strategy_Ex ACCSE
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Cached_Connect_Strategy_Ex
  *
@@ -246,6 +248,7 @@ protected:
   size_t  max_size_;
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Cached_Connect_Strategy_T.cpp"

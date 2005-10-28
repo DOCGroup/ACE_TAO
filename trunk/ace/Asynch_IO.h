@@ -47,6 +47,8 @@
 #include "ace/os_include/sys/os_socket.h"
 #include "ace/os_include/sys/os_types.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 # if defined (ACE_WIN32) && ! defined (ACE_HAS_WINCE) \
                          && ! defined (ACE_HAS_PHARLAP)
 typedef TRANSMIT_FILE_BUFFERS ACE_TRANSMIT_FILE_BUFFERS;
@@ -1660,6 +1662,8 @@ public:
   /// Called by ACE_Asynch_Acceptor to pass the act.
   virtual void act (const void *);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS*/
 #include /**/ "ace/post.h"

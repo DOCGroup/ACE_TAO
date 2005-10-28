@@ -1,5 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_NT_Service::ACE_NT_Service (DWORD start_timeout,
@@ -78,3 +81,5 @@ ACE_NT_Service::svc_handle(const SERVICE_STATUS_HANDLE new_svc_handle)
   this->svc_handle_ = new_svc_handle;
   return;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -12,9 +12,11 @@
 
 ACE_RCSID(ace, MEM_IO, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_MEM_IO)
 
-ACE_Reactive_MEM_IO::~ACE_Reactive_MEM_IO ()
+ACE_Reactive_MEM_IO::~ACE_Reactive_MEM_IO (void)
 {
 }
 
@@ -535,5 +537,7 @@ ACE_MEM_IO::recv (size_t n, ...) const
   return result;
 }
 #endif /* 0 */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */

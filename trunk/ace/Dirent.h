@@ -25,6 +25,8 @@
 
 #include "ace/OS_NS_dirent.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Dirent
  *
@@ -109,6 +111,8 @@ private:
   /// Pointer to the directory stream.
   ACE_DIR *dirp_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Dirent.inl"

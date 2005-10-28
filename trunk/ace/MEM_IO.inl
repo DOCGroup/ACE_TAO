@@ -1,9 +1,9 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
-
-// MEM_IO.i
-
 #include "ace/OS_NS_string.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_Reactive_MEM_IO::ACE_Reactive_MEM_IO ()
@@ -229,3 +229,5 @@ ACE_MEM_IO::send (const void *buf,
   ACE_TRACE ("ACE_MEM_IO::send");
   return this->send (buf, len, 0, timeout);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -32,6 +32,9 @@
 #include "ace/ACE.h"
 #include "ace/os_include/sys/os_mman.h"
 
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Sbrk_Memory_Pool_Options
  *
@@ -111,6 +114,9 @@ protected:
   /// appropriate chunksize.
   virtual size_t round_up (size_t nbytes);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* !ACE_LACKS_SBRK */
 
 #include /**/ "ace/post.h"

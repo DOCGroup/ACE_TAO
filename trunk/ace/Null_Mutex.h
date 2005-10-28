@@ -27,6 +27,9 @@
 #include "ace/Global_Macros.h"
 #include "ace/OS_Memory.h"
 
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Time_Value;
 
 /**
@@ -214,6 +217,8 @@ public:
     return p;
   }
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_NULL_MUTEX_H */

@@ -1,8 +1,6 @@
-#include "ace/Service_Manager.h"
+// $Id$
 
-#if !defined (__ACE_INLINE__)
-#include "ace/Service_Manager.inl"
-#endif /* __ACE_INLINE__ */
+#include "ace/Service_Manager.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
@@ -18,6 +16,7 @@ ACE_RCSID (ace,
            Service_Manager,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Service_Manager)
 
@@ -38,6 +37,11 @@ ACE_Service_Manager::ACE_Service_Manager (void)
     signum_ (SIGHUP)
 {
   ACE_TRACE ("ACE_Service_Manager::ACE_Service_Manager");
+}
+
+ACE_Service_Manager::~ACE_Service_Manager (void)
+{
+  ACE_TRACE ("ACE_Service_Manager::~ACE_Service_Manager");
 }
 
 int
@@ -376,3 +380,5 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
                 ACE_LIB_TEXT ("close")));
   return 0;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -18,6 +18,8 @@ ACE_RCSID (ACE_SSL,
            SSL_SOCK_Stream,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Stream)
 
 ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream (ACE_SSL_Context *context)
@@ -586,3 +588,5 @@ ACE_SSL_SOCK_Stream::get_remote_addr (ACE_Addr &addr) const
 
   return -1;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

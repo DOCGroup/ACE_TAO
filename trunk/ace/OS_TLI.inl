@@ -1,7 +1,10 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 #include "ace/OS_NS_errno.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
 
@@ -383,3 +386,5 @@ t_unbind (ACE_HANDLE handle)
 }
 
 }  /* end namespace ACE_OS */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

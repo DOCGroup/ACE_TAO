@@ -1,7 +1,10 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 // Clean up the array (e.g., delete dynamically allocated memory).
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T> ACE_INLINE
 ACE_Array_Base<T>::~ACE_Array_Base (void)
@@ -84,3 +87,5 @@ ACE_Array_Iterator<T>::done (void) const
 
   return this->current_ >= array_.size ();
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

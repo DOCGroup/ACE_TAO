@@ -12,6 +12,8 @@
 
 ACE_RCSID(ace, Log_Msg_NT_Event_Log, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_Log_Msg_NT_Event_Log::ACE_Log_Msg_NT_Event_Log (void)
   : evlog_handle_(0)
 {
@@ -152,5 +154,7 @@ ACE_Log_Msg_NT_Event_Log::log (ACE_Log_Record &log_record)
   else
     return 0;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_LOG_MSG_NT_EVENT_LOG */

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "ace/OS_NS_sys_utsname.h"
@@ -15,8 +14,10 @@ ACE_RCSID(ace, OS_NS_sys_utsname, "$Id$")
 
 #if defined (VXWORKS)
 // for sysBspRev(), sysModel()
-#  include /**/ <sysLib.h> 
+#  include /**/ <sysLib.h>
 #endif /* VXWORKS */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_WIN32) || defined (VXWORKS) || defined (CHORUS) || defined (ACE_PSOS)
 // Don't inline on those platforms because this function contains
@@ -234,3 +235,5 @@ ACE_OS::uname (ACE_utsname *name)
 #endif /* ACE_WIN32 */
 }
 #endif /* ACE_WIN32 || VXWORKS */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -19,6 +19,8 @@ ACE_RCSID (ace,
            "$Id$")
 
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #if defined (ACE_WIN32)
 #define ACE_SELECT_REACTOR_HANDLE(H) (this->event_handlers_[(H)].handle_)
 #define ACE_SELECT_REACTOR_EVENT_HANDLER(THIS,H) ((THIS)->event_handlers_[(H)].event_handler_)
@@ -1268,3 +1270,5 @@ template class ACE_Node <ACE_Notification_Buffer *>;
 #pragma instantiate ACE_Node <ACE_Notification_Buffer *>
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,3 @@
-// TLI_Connector.cpp
 // $Id$
 
 #include "ace/TLI_Connector.h"
@@ -15,6 +14,8 @@ ACE_RCSID(ace, TLI_Connector, "$Id$")
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Time_Value.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_TLI_Connector)
 
@@ -249,5 +250,7 @@ ACE_TLI_Connector::complete (ACE_TLI_Stream &new_stream,
     }
 #endif /* ACE_WIN32 */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_TLI */

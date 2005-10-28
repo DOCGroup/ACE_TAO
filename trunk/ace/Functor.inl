@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 // ============================================================================
@@ -7,7 +8,7 @@
 //    ace
 //
 // = FILENAME
-//    Functor.i
+//    Functor.inl
 //
 // = DESCRIPTION
 //    Inlinable method definitions for non-templatized classes
@@ -31,6 +32,8 @@
 
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //////////////////////////////////////////////////////////////
 // GOF Command Pattern Classes and Template Specializations //
@@ -224,3 +227,5 @@ ACE_Less_Than<wchar_t *>::operator () (const wchar_t *lhs, const wchar_t *rhs) c
 }
 
 #endif  // ACE_HAS_WCHAR
+
+ACE_END_VERSIONED_NAMESPACE_DECL

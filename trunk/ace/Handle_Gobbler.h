@@ -1,3 +1,4 @@
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -20,6 +21,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Handle_Gobbler
@@ -57,6 +60,8 @@ private:
   /// The container which holds the open descriptors.
   HANDLE_SET handle_set_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include "ace/Handle_Gobbler.inl"
 

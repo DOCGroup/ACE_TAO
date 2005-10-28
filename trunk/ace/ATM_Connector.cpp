@@ -12,6 +12,9 @@ ACE_RCSID(ace, ATM_Connector, "$Id$")
 #include "ace/ATM_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
+// Open versioned namespace, if enabled by the user.
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_ATM_Connector)
 
 ACE_ATM_Connector::ACE_ATM_Connector (void)
@@ -128,5 +131,8 @@ ACE_ATM_Connector::connect (ACE_ATM_Stream &new_stream,
   return 0;
 #endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 || ACE_HAS_LINUX_ATM */
 }
+
+// Close versioned namespace, if enabled by the user.
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_ATM */

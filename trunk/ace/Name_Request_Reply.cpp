@@ -8,6 +8,7 @@ ACE_RCSID (ace,
            Name_Request_Reply,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Default "do nothing" constructor.
 
@@ -563,3 +564,5 @@ ACE_Name_Reply::dump (void) const
     }
 #endif /* ACE_HAS_DUMP */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -27,13 +27,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if !defined (ACE_LACKS_SYSV_SHMEM)
+
 #include "ace/ACE.h"
 #include "ace/Event_Handler.h"
 #include "ace/Signal.h"
-
-#if !defined (ACE_LACKS_SYSV_SHMEM)
-
 #include "ace/os_include/sys/os_mman.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Shared_Memory_Pool_Options
@@ -203,6 +204,9 @@ protected:
   /// properly.
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* !ACE_LACKS_SYSV_SHMEM */
 
 #include /**/ "ace/post.h"

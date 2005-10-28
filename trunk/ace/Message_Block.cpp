@@ -16,6 +16,8 @@ ACE_RCSID (ace,
            Message_Block,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE (ACE_Message_Block)
 
 #if defined (ACE_ENABLE_TIMEPROBES)
@@ -1380,3 +1382,5 @@ template class ACE_Guard <ACE_Lock>;
 // #pragma instantiate ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex>
 // #pragma instantiate ACE_Allocator_Adapter <ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> >
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

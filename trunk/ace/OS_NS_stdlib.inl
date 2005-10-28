@@ -1,4 +1,5 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "ace/config-all.h"           /* Need ACE_TRACE */
@@ -13,6 +14,8 @@
 #else
 # define ACE_WCHAR_STD_NAMESPACE ACE_STD_NAMESPACE
 #endif /* ACE_WCHAR_IN_STD_NAMESPACE */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Doesn't need a macro since it *never* returns!
 
@@ -496,3 +499,5 @@ ACE_OS::system (const ACE_TCHAR *s)
   ACE_OSCALL_RETURN (::system (ACE_TEXT_ALWAYS_CHAR (s)), int, -1);
 #endif /* !CHORUS */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

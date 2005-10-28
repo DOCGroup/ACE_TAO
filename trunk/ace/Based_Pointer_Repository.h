@@ -28,8 +28,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Singleton.h"
 #include "ace/Synch_Traits.h"
 #include "ace/os_include/os_stddef.h"
+
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decl., using the "Cheshire Cat" technique.
 class ACE_Based_Pointer_Repository_Rep;
@@ -77,8 +81,6 @@ private:
 
 // ----------------------------------
 
-#include "ace/Singleton.h"
-
 /// Declare a process wide singleton
 ACE_MEMORY_SINGLETON_DECLARE (ACE_Singleton,
                               ACE_Based_Pointer_Repository,
@@ -88,6 +90,7 @@ ACE_MEMORY_SINGLETON_DECLARE (ACE_Singleton,
 typedef ACE_Singleton<ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX>
         ACE_BASED_POINTER_REPOSITORY;
 
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

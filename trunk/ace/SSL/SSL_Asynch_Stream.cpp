@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 #include "SSL_Asynch_Stream.h"
 
 ACE_RCSID (ACE_SSL,
@@ -36,12 +34,14 @@ ACE_RCSID (ACE_SSL,
 
 #include <openssl/err.h>
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // ************************************************************
 //  SSL Asynchronous Write Result
 // ************************************************************
 
-class ACE_SSL_Export ACE_SSL_Asynch_Write_Stream_Result:
-  public AWS_RESULT
+class ACE_SSL_Asynch_Write_Stream_Result
+  : public AWS_RESULT
 {
   /// Factory class will have special permissions.
   friend class ACE_SSL_Asynch_Stream;
@@ -83,8 +83,8 @@ ACE_SSL_Asynch_Write_Stream_Result::ACE_SSL_Asynch_Write_Stream_Result
 // ************************************************************
 //  SSL Asynchronous Read Result
 // ************************************************************
-class ACE_SSL_Export ACE_SSL_Asynch_Read_Stream_Result:
-  public ARS_RESULT
+class ACE_SSL_Asynch_Read_Stream_Result
+  : public ARS_RESULT
 {
   /// Factory class will have special permissions.
   friend class ACE_SSL_Asynch_Stream;
@@ -1119,6 +1119,8 @@ ACE_SSL_Asynch_Stream::pending_BIO_count (void)
 
   return ret;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* OPENSSL_VERSION_NUMBER > 0x0090581fL && (ACE_WIN32 ||
            ACE_HAS_AIO_CALLS) */

@@ -22,6 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #if defined (VXWORKS)
 class ACE_Message_Queue_Vx;
 #endif /* defined (VXWORKS) */
@@ -1213,6 +1215,8 @@ protected:
   /// Implement this via an <ACE_Message_Queue>.
   ACE_Message_Queue<ACE_SYNCH_USE> queue_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Message_Queue_T.cpp"

@@ -13,6 +13,8 @@
 
 ACE_RCSID(ace, Process_Mutex, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Process_Mutex)
 
 void
@@ -99,3 +101,5 @@ template class ACE_Malloc_Lock_Adapter_T<ACE_Process_Mutex>;
 #pragma instantiate ACE_Malloc_Lock_Adapter_T<ACE_Process_Mutex>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

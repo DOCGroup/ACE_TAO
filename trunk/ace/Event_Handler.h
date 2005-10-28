@@ -24,6 +24,8 @@
 #include "ace/Atomic_Op.h"
 #include "ace/Synch_Traits.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward declaration.
 class ACE_Message_Block;
 class ACE_Reactor;
@@ -375,6 +377,8 @@ public:
   /// Mask that indicates which method to call.
   ACE_Reactor_Mask mask_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Event_Handler.inl"

@@ -6,6 +6,8 @@
 #include "ace/Malloc_Base.h"
 #include "ace/Log_Msg.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /////////////////////////////////////////////////////
 // template class ACE_RB_Tree_Node<EXT_ID, INT_ID> //
 /////////////////////////////////////////////////////
@@ -1151,3 +1153,5 @@ ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::next (ACE_
 
   return 0;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_INTRUSIVE_LIST_C
-#define ACE_INTRUSIVE_LIST_C
+#ifndef ACE_INTRUSIVE_LIST_CPP
+#define ACE_INTRUSIVE_LIST_CPP
 
 #include "ace/Intrusive_List.h"
 
@@ -13,7 +13,7 @@
 #include "ace/Intrusive_List.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Intrusive_List, "$Id$")
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T>
 ACE_Intrusive_List<T>::ACE_Intrusive_List (void)
@@ -148,4 +148,6 @@ ACE_Intrusive_List<T>::check_invariants (void)
 }
 #endif /* 0 */
 
-#endif /* ACE_INTRUSIVE_LIST_C */
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_INTRUSIVE_LIST_CPP */

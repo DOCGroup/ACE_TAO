@@ -4,6 +4,8 @@
 
 # if !defined (ACE_LACKS_LONGLONG_T) && defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Implementation for ACE_U_LongLong when we have signed long long
 // but no unsigned long long.
 
@@ -134,7 +136,7 @@ ACE_U_LongLong::operator>= (const ACE_U_LongLong &n) const
 {
   if (data_ == n.data_) return true;
 
-  return data_ > n.data_;  
+  return data_ > n.data_;
 }
 
 ACE_INLINE bool
@@ -942,5 +944,7 @@ ACE_U_LongLong::operator/ (const int n) const
   return operator/ ((ACE_UINT32) n);
 }
 #endif /* ACE_SIZEOF_INT != 4 */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_LACKS_LONGLONG_T  || ACE_LACKS_UNSIGNEDLONGLONG_T */

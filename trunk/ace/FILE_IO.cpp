@@ -13,6 +13,8 @@
 
 ACE_RCSID(ace, FILE_IO, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_FILE_IO)
 
 void
@@ -136,3 +138,5 @@ ACE_FILE_IO::recvv (iovec *io_vec)
   else
     return length;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

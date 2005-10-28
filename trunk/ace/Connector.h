@@ -25,6 +25,8 @@
 #include "ace/Synch_Options.h"
 #include "ace/Handle_Set.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Connector_Base
  *
@@ -559,6 +561,8 @@ protected:
   /// delete it, else 0.
   int delete_concurrency_strategy_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Connector.cpp"

@@ -1,8 +1,11 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "ace/OS_NS_errno.h"
 #include "ace/os_include/os_regex.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE char *
 ACE_OS::compile (const char *instring, char *expbuf, char *endbuf)
@@ -33,3 +36,4 @@ ACE_OS::step (const char *str, char *expbuf)
 #endif /* ACE_HAS_REGEX */
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL

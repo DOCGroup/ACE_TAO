@@ -1,5 +1,5 @@
-#ifndef ACE_SYNCH_C
-#define ACE_SYNCH_C
+#ifndef ACE_SYNCH_CPP
+#define ACE_SYNCH_CPP
 
 #include "ace/Thread.h"
 #include "ace/ACE.h"
@@ -33,6 +33,8 @@ ACE_RCSID (ace,
 #include "ace/Thread_Mutex.cpp"
 #include "ace/Thread_Semaphore.cpp"
 
-  //ACE_ALLOC_HOOK_DEFINE(ACE_Null_Mutex)
+// ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+// ACE_ALLOC_HOOK_DEFINE(ACE_Null_Mutex)
+// ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_SYNCH_C */
+#endif /* ACE_SYNCH_CPP */

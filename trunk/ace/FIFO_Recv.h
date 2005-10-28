@@ -25,6 +25,8 @@
 #include "ace/os_include/os_fcntl.h"
 #include "ace/Default_Constants.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_FIFO_Recv
  *
@@ -71,6 +73,8 @@ private:
   /// Auxiliary handle that is used to implement persistent FIFOs.
   ACE_HANDLE aux_handle_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/FIFO_Recv.inl"

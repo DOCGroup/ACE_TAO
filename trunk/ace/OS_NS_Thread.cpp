@@ -23,8 +23,9 @@ ACE_RCSID (ace,
 #include "ace/Condition_T.h"
 #include "ace/Guard_T.h"
 
+
 extern "C" void
-ace_mutex_lock_cleanup_adapter (void *args)
+ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args)
 {
   ACE_OS::mutex_lock_cleanup (args);
 }
@@ -86,6 +87,8 @@ HANDLE WINAPI __IBMCPP__beginthreadex(void *stack,
 #endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
 
 /*****************************************************************************/
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 ACE_Thread_ID::to_string (char *thr_string) const
@@ -5393,6 +5396,8 @@ ACE_OS::unique_name (const void *object,
                     length);
 }
 #endif
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (VXWORKS)
 # include /**/ <usrLib.h>   /* for ::sp() */

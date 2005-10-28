@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -28,6 +28,8 @@
 #include "ace/Default_Constants.h"
 #include "ace/Basic_Types.h"
 #include "ace/iosfwd.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Time_Value;
 
@@ -189,9 +191,9 @@ private:
   /// Logging record data
   ACE_TCHAR msg_data_[MAXLOGMSGLEN + 1]; // Add one for NUL-terminator.
 
-  /// Symbolic names for the <ACE_Log_Priority> enums.
-  static const ACE_TCHAR *priority_names_[];
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Log_Record.inl"

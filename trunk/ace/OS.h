@@ -336,7 +336,7 @@ class ACE_Timeout_Manager;
  *     efficient system programs on Win32, POSIX and other versions
  *     of UNIX, and various real-time operating systems.
  *
- * This class encapsulates the differences between various OS
+ * This namespace encapsulates the differences between various OS
  * platforms.  When porting ACE to a new platform, this class is
  * the place to focus on.  Once this file is ported to a new
  * platform, pretty much everything else comes for "free."  See
@@ -347,12 +347,7 @@ class ACE_Timeout_Manager;
  */
 namespace ACE_OS
 {
-
-
-
   // = A set of wrappers for miscellaneous operations.
-
-
 }  /* namespace ACE_OS */
 
 # if defined (ACE_HAS_INLINED_OSCALLS)

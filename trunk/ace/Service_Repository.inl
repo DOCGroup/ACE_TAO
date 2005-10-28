@@ -1,7 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
-
-// Service_Repository.i
 
 // Returns a count of the number of currently valid entries (counting
 // both resumed and suspended entries).
@@ -10,6 +9,8 @@
 #include "ace/Guard_T.h"
 #include "ace/Thread_Mutex.h"
 #endif /* ACE_MT_SAFE */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 ACE_Service_Repository::current_size (void) const
@@ -34,3 +35,5 @@ ACE_INLINE
 ACE_Service_Repository_Iterator::~ACE_Service_Repository_Iterator (void)
 {
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,7 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
-// Stream.i
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <ACE_SYNCH_DECL> ACE_INLINE ACE_Module<ACE_SYNCH_USE> *
 ACE_Stream<ACE_SYNCH_USE>::head (void)
@@ -47,3 +48,4 @@ ACE_Stream_Iterator<ACE_SYNCH_USE>::advance (void)
   return this->next_ != 0;
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL

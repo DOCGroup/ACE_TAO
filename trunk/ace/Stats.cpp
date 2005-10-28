@@ -12,6 +12,8 @@
 
 ACE_RCSID(ace, Stats, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_UINT32
 ACE_Stats_Value::fractional_field (void) const
 {
@@ -612,10 +614,4 @@ ACE_Throughput_Stats::dump_throughput (const ACE_TCHAR *msg,
 #endif /* ACE_NLOGGING */
 }
 
-// ****************************************************************
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+ACE_END_VERSIONED_NAMESPACE_DECL

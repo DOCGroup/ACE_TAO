@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -23,6 +23,8 @@
 
 #include "ace/Global_Macros.h"
 #include "ace/os_include/os_dlfcn.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_DLL_Handle;
 
@@ -113,7 +115,7 @@ public:
 
   /// Set the handle for the DLL object. By default, the close()
   //operation on / the object will be invoked before it is destroyed.
-  int set_handle (ACE_SHLIB_HANDLE handle, 
+  int set_handle (ACE_SHLIB_HANDLE handle,
                   int close_handle_on_destruction = 1);
 
 private:
@@ -144,6 +146,8 @@ private:
   // = Disallow copying and assignment since we don't handle these.
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_DLL &))
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_DLL_H */

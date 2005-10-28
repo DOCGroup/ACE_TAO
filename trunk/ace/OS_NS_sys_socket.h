@@ -60,10 +60,13 @@
 #define ACE_SHUTDOWN_BOTH 2
 #endif /* SD_BOTH */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Accept_QoS_Params;
 class ACE_QoS_Params;
 
-namespace ACE_OS {
+namespace ACE_OS
+{
 
 # if defined (ACE_WIN32)
   /// Keeps track of whether we've already initialized WinSock...
@@ -284,6 +287,8 @@ namespace ACE_OS {
                   ACE_HANDLE sv[2]);
 
 } /* namespace ACE_OS */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

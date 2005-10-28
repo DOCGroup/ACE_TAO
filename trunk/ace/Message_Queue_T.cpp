@@ -15,6 +15,8 @@
 
 #include "ace/Notification_Strategy.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Message_Queue)
 ACE_ALLOC_HOOK_DEFINE(ACE_Dynamic_Message_Queue)
 ACE_ALLOC_HOOK_DEFINE(ACE_Message_Queue_Ex)
@@ -2663,4 +2665,7 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE>::create_NT_message_queue (size_t max_th
 
 #endif /* ACE_WIN32 && ACE_HAS_WINNT4 != 0 */
 #endif /* defined (VXWORKS) */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* !ACE_MESSAGE_QUEUE_T_CPP */

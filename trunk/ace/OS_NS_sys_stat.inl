@@ -1,4 +1,5 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "ace/OS_NS_unistd.h"
@@ -6,7 +7,10 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_macros.h"
 
-namespace ACE_OS {
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace ACE_OS
+{
 
   ACE_INLINE ACE_HANDLE
   creat (const ACE_TCHAR *filename, mode_t mode)
@@ -364,3 +368,5 @@ namespace ACE_OS {
   }
 
 } // ACE_OS namespace
+
+ACE_END_VERSIONED_NAMESPACE_DECL

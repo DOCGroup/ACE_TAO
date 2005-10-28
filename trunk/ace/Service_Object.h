@@ -24,6 +24,8 @@
 #include "ace/Event_Handler.h"
 #include "ace/DLL.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #define ACE_Component ACE_Service_Object
 /**
  * @class ACE_Service_Object
@@ -166,6 +168,8 @@ private:
   /// Holds the service object until we're done.
   ACE_Service_Object *service_object_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Service_Object.inl"

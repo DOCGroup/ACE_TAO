@@ -2,6 +2,8 @@
 //
 // $Id$
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE
 ACE_CapEntry::ACE_CapEntry (int captype)
   : captype_ (captype)
@@ -46,3 +48,5 @@ ACE_BoolCapEntry::getval (void) const
 {
   return val_;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -42,6 +42,8 @@ ACE_RCSID (ace,
 // static const int WCOPY_FLAGS = O_RDWR | O_CREAT | O_TRUNC;
 #endif /* ACE_WIN32 */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // static data members
 ACE_Filecache *ACE_Filecache::cvf_ = 0;
 
@@ -759,3 +761,5 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<const ACE_TCHAR *, ACE_Filecache
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<const ACE_TCHAR *, ACE_Filecache_Object *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<const ACE_TCHAR *, ACE_Filecache_Object *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

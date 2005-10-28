@@ -27,6 +27,8 @@
 #include "ace/SString.h"
 #include "ace/OS_NS_signal.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward decl.
 class ACE_Service_Object;
 class ACE_Service_Type;
@@ -37,6 +39,8 @@ class ACE_Allocator;
 class ACE_Reactor;
 class ACE_Thread_Manager;
 class ACE_DLL;
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
 #define ACE_DYNAMIC_SERVICE_DIRECTIVE(ident, libpathname, objectclass, parameters) \
@@ -76,6 +80,8 @@ extern "C"
 {
   typedef ACE_Service_Object *(*ACE_SERVICE_ALLOCATOR) (ACE_Service_Object_Exterminator *);
 }
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Static_Svc_Descriptor
@@ -476,6 +482,8 @@ private:
    */
   static int is_initialized_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Service_Config.inl"

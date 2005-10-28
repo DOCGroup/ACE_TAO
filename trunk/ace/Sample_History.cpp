@@ -12,6 +12,9 @@
 
 ACE_RCSID(ace, Sample_History, "$Id$")
 
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_Sample_History::ACE_Sample_History (size_t max_samples)
   : max_samples_ (max_samples)
   , sample_count_ (0)
@@ -58,3 +61,5 @@ ACE_Sample_History::collect_basic_stats (ACE_Basic_Stats &stats) const
       stats.sample (this->samples_[i]);
     }
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

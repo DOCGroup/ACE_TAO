@@ -6,12 +6,14 @@ ACE_RCSID(ace, FlReactor, "$Id$")
 
 #include /**/ <FL/Fl.h>
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE (ACE_FlReactor)
 
 // Must be called with lock held
 ACE_FlReactor::ACE_FlReactor (size_t size,
-			      int restart,
-			      ACE_Sig_Handler *h)
+                              int restart,
+                              ACE_Sig_Handler *h)
   : ACE_Select_Reactor (size, restart, h)
 {
   // When the ACE_Select_Reactor is constructed it creates the notify
@@ -40,7 +42,7 @@ ACE_FlReactor::~ACE_FlReactor (void)
 
 int
 ACE_FlReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_set,
-					 ACE_Time_Value *max_wait_time)
+                                         ACE_Time_Value *max_wait_time)
 {
   ACE_TRACE ("ACE_FlReactor::wait_for_multiple_events");
   int nfound;
@@ -124,9 +126,9 @@ ACE_FlReactor::fl_io_proc (int fd, void* reactor)
     wait_set.ex_mask_.set_bit (handle);
 
   int result = ACE_OS::select (fd + 1,
-			       wait_set.rd_mask_,
-			       wait_set.wr_mask_,
-			       wait_set.ex_mask_, &zero);
+                               wait_set.rd_mask_,
+                               wait_set.wr_mask_,
+                               wait_set.ex_mask_, &zero);
 
   ACE_Select_Reactor_Handle_Set dispatch_set;
 
@@ -134,11 +136,11 @@ ACE_FlReactor::fl_io_proc (int fd, void* reactor)
   if (result > 0)
     {
       if (wait_set.rd_mask_.is_set (handle))
-	dispatch_set.rd_mask_.set_bit (handle);
+        dispatch_set.rd_mask_.set_bit (handle);
       if (wait_set.wr_mask_.is_set (handle))
-	dispatch_set.wr_mask_.set_bit (handle);
+        dispatch_set.wr_mask_.set_bit (handle);
       if (wait_set.ex_mask_.is_set (handle))
-	dispatch_set.ex_mask_.set_bit (handle);
+        dispatch_set.ex_mask_.set_bit (handle);
 
       self->dispatch (1, dispatch_set);
     }
@@ -158,8 +160,8 @@ ACE_FlReactor::fl_timeout_proc (void* reactor)
 
 int
 ACE_FlReactor::register_handler_i (ACE_HANDLE handle,
-				   ACE_Event_Handler *handler,
-				   ACE_Reactor_Mask mask)
+                                   ACE_Event_Handler *handler,
+                                   ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_FlReactor::register_handler_i");
 
@@ -195,8 +197,8 @@ ACE_FlReactor::register_handler_i (ACE_HANDLE handle,
 
 int
 ACE_FlReactor::register_handler_i (const ACE_Handle_Set &handles,
-				   ACE_Event_Handler *handler,
-				   ACE_Reactor_Mask mask)
+                                   ACE_Event_Handler *handler,
+                                   ACE_Reactor_Mask mask)
 {
   return ACE_Select_Reactor::register_handler_i (handles,
                                                  handler,
@@ -205,7 +207,7 @@ ACE_FlReactor::register_handler_i (const ACE_Handle_Set &handles,
 
 int
 ACE_FlReactor::remove_handler_i (ACE_HANDLE handle,
-				 ACE_Reactor_Mask mask)
+                                 ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_FlReactor::remove_handler_i");
 
@@ -223,10 +225,10 @@ ACE_FlReactor::remove_handler_i (ACE_HANDLE handle,
 
 int
 ACE_FlReactor::remove_handler_i (const ACE_Handle_Set &handles,
-				 ACE_Reactor_Mask mask)
+                                 ACE_Reactor_Mask mask)
 {
   return ACE_Select_Reactor::remove_handler_i (handles,
-					       mask);
+                                               mask);
 }
 
 // The following function ensures there's an Fl timeout for the first
@@ -271,9 +273,9 @@ ACE_FlReactor::reset_timer_interval
 
 long
 ACE_FlReactor::schedule_timer (ACE_Event_Handler *event_handler,
-			       const void *arg,
+                               const void *arg,
                 const ACE_Time_Value &delay,
-			       const ACE_Time_Value &interval)
+                               const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_FlReactor::schedule_timer");
   ACE_MT (ACE_GUARD_RETURN (ACE_Select_Reactor_Token, ace_mon, this->token_, -1));
@@ -293,12 +295,12 @@ ACE_FlReactor::schedule_timer (ACE_Event_Handler *event_handler,
 
 int
 ACE_FlReactor::cancel_timer (ACE_Event_Handler *handler,
-			     int dont_call_handle_close)
+                             int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_FlReactor::cancel_timer");
 
   if (ACE_Select_Reactor::cancel_timer (handler,
-					dont_call_handle_close) == -1)
+                                        dont_call_handle_close) == -1)
     return -1;
   else
     {
@@ -309,14 +311,14 @@ ACE_FlReactor::cancel_timer (ACE_Event_Handler *handler,
 
 int
 ACE_FlReactor::cancel_timer (long timer_id,
-			     const void **arg,
-			     int dont_call_handle_close)
+                             const void **arg,
+                             int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_FlReactor::cancel_timer");
 
   if (ACE_Select_Reactor::cancel_timer (timer_id,
-					arg,
-					dont_call_handle_close) == -1)
+                                        arg,
+                                        dont_call_handle_close) == -1)
     return -1;
   else
     {
@@ -324,3 +326,5 @@ ACE_FlReactor::cancel_timer (long timer_id,
       return 0;
     }
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

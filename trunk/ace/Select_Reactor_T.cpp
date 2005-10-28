@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_SELECT_REACTOR_T_C
-#define ACE_SELECT_REACTOR_T_C
+#ifndef ACE_SELECT_REACTOR_T_CPP
+#define ACE_SELECT_REACTOR_T_CPP
 
 #include "ace/Select_Reactor_T.h"
 
@@ -21,6 +21,8 @@
 
 // For timer_queue_
 #include "ace/Recursive_Thread_Mutex.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /*
  * ACE Reactor specialization hook.
@@ -382,7 +384,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
   // Can't initialize ourselves more than once.
-  if (this->initialized_ > 0)
+  if (this->initialized_)
     return -1;
 
   this->owner_ = ACE_Thread::self ();
@@ -1565,4 +1567,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
-#endif /* ACE_SELECT_REACTOR_T_C */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_SELECT_REACTOR_T_CPP */

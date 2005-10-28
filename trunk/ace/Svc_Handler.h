@@ -16,9 +16,6 @@
 
 #include /**/ "ace/pre.h"
 
-// Forward decls.
-class ACE_Connection_Recycling_Strategy;
-
 #include "ace/Synch_Options.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -28,6 +25,11 @@ class ACE_Connection_Recycling_Strategy;
 #include "ace/Task.h"
 #include "ace/Recyclable.h"
 #include "ace/Reactor.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+// Forward decls.
+class ACE_Connection_Recycling_Strategy;
 
 /**
  * @class ACE_Svc_Handler
@@ -319,6 +321,8 @@ protected:
   /// Timeout pointer.
   ACE_Time_Value *timeoutp_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Svc_Handler.cpp"

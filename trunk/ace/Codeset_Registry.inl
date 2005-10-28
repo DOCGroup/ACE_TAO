@@ -14,6 +14,8 @@
  */
 //=============================================================================
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE
 int
 ACE_Codeset_Registry::locale_to_registry(const ACE_CString &locale,
@@ -96,3 +98,5 @@ ACE_Codeset_Registry::get_max_bytes (ACE_CDR::ULong codeset_id)
   return ACE_Codeset_Registry::get_max_bytes_i (codeset_id);
 #endif /* ACE_HAS_DCE_CODESET_REGISTRY */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

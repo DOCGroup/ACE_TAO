@@ -26,13 +26,20 @@
 #include "ace/Addr.h"
 
 #if defined (ACE_HAS_FORE_ATM_XTI)
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ATMSAPAddress ATM_Addr;
+ACE_END_VERSIONED_NAMESPACE_DECL
 #elif defined (ACE_HAS_FORE_ATM_WS2)
 #define FORE_NAME_SPACE NS_ALL
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef struct sockaddr_atm ATM_Addr;
+ACE_END_VERSIONED_NAMESPACE_DECL
 #elif defined (ACE_HAS_LINUX_ATM)
 
 #include /**/ "atm.h"
+
+// Open versioned namespace, if enabled by the user.
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //pbrandao:as Linux has this 2 structs separeted we "link it" here
 typedef struct _linux_atm_addr
@@ -176,6 +183,10 @@ public:
 private:
   ATM_Addr atm_addr_;
 };
+
+// Close versioned namespace, if enabled by the user.
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 
 #if defined (__ACE_INLINE__)
 #include "ace/ATM_Addr.inl"

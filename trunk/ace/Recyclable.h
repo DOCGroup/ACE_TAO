@@ -19,6 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// States of a recyclable object.
 enum ACE_Recyclable_State
@@ -62,13 +63,17 @@ public:
   void recycle_state (ACE_Recyclable_State new_state);
 
 protected:
-  /// Protected constructor.
+
+  /// Constructor.
   ACE_Recyclable (ACE_Recyclable_State initial_state);
+
+protected:
 
   /// Our state.
   ACE_Recyclable_State recycle_state_;
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Recyclable.inl"

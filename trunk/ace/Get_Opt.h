@@ -26,6 +26,8 @@
 #undef optarg
 #undef opterr
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /*
  *  These definitions are for backward compatibility with previous versions.
  *  of ACE_Get_Opt.
@@ -457,6 +459,8 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Get_Opt (const ACE_Get_Opt &))
   ACE_UNIMPLEMENTED_FUNC (ACE_Get_Opt &operator= (const ACE_Get_Opt &))
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Get_Opt.inl"

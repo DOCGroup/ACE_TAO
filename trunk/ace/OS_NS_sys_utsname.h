@@ -39,6 +39,7 @@
 #   if !defined (_SYS_NMLN)
 #     define _SYS_NMLN SYS_NMLN
 #   endif /* _SYS_NMLN */
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 struct ACE_utsname
 {
   ACE_TCHAR sysname[_SYS_NMLN];
@@ -47,10 +48,15 @@ struct ACE_utsname
   ACE_TCHAR version[_SYS_NMLN];
   ACE_TCHAR machine[_SYS_NMLN];
 };
+ACE_END_VERSIONED_NAMESPACE_DECL
 # else
 #   include "ace/os_include/sys/os_utsname.h"
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef struct utsname ACE_utsname;
+ACE_END_VERSIONED_NAMESPACE_DECL
 # endif /* ACE_LACKS_UTSNAME_T */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
 
@@ -62,6 +68,8 @@ namespace ACE_OS {
   int uname (ACE_utsname *name);
 
 } /* namespace ACE_OS */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

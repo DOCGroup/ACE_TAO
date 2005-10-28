@@ -19,6 +19,8 @@
 
 ACE_RCSID(ace, Pipe, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 void
 ACE_Pipe::dump (void) const
 {
@@ -333,3 +335,5 @@ ACE_Pipe::recv (size_t n, ...) const
   va_end (argp);
   return result;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

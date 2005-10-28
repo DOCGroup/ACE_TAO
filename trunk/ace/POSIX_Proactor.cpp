@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "ace/POSIX_Proactor.h"
@@ -27,6 +26,9 @@
 #endif /* sun */
 
 // *********************************************************************
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_POSIX_Wakeup_Completion
  *
@@ -34,7 +36,7 @@
  * ACE_Proactor interface to wake up all the threads blocking
  * for completions.
  */
-class ACE_Export ACE_POSIX_Wakeup_Completion : public ACE_POSIX_Asynch_Result
+class ACE_POSIX_Wakeup_Completion : public ACE_POSIX_Asynch_Result
 {
 public:
   /// Constructor.
@@ -624,7 +626,7 @@ ACE_POSIX_Proactor::get_impl_type (void)
  * message block to another <accept>, we update <wr_ptr> and put
  * it in its initial position.
  */
-class ACE_Export ACE_AIOCB_Notify_Pipe_Manager : public ACE_Handler
+class ACE_AIOCB_Notify_Pipe_Manager : public ACE_Handler
 {
 public:
   /// Constructor. You need the posix proactor because you need to call
@@ -1698,7 +1700,7 @@ ACE_POSIX_Proactor::Proactor_Type
 ACE_POSIX_SIG_Proactor::get_impl_type (void)
 {
   return PROACTOR_SIG;
-} 
+}
 
 int
 ACE_POSIX_SIG_Proactor::handle_events (ACE_Time_Value &wait_time)
@@ -2057,5 +2059,6 @@ ACE_POSIX_Wakeup_Completion::complete (size_t       /* bytes_transferred */,
     handler->handle_wakeup ();
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_AIO_CALLS */

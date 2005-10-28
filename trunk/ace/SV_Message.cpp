@@ -9,6 +9,8 @@
 
 ACE_RCSID(ace, SV_Message, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_SV_Message)
 
 void
@@ -19,3 +21,4 @@ ACE_SV_Message::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL

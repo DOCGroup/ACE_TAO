@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -10,9 +10,9 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_MEM_SAP_H
 #define ACE_MEM_SAP_H
+
 #include /**/ "ace/pre.h"
 
 #ifdef ACE_MEMORY_BUILD_DLL
@@ -34,6 +34,8 @@
 #include "ace/Malloc_T.h"
 #include "ace/MMAP_Memory_Pool.h"
 #include "ace/Process_Mutex.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_MEM_SAP;
 class ACE_Reactive_MEM_IO;
@@ -160,6 +162,8 @@ protected:
   ACE_MEM_SAP (void);
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
 #include "ace/MEM_SAP.inl"
 #endif /* __ACE_INLINE__ */
@@ -167,4 +171,5 @@ protected:
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
 #include /**/ "ace/post.h"
+
 #endif /* ACE_SOCK_IO_H */

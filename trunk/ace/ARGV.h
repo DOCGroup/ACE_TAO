@@ -23,6 +23,9 @@
 
 #include "ace/Unbounded_Queue.h"
 
+// Open versioned namespace, if enabled by the user.
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_ARGV
  *
@@ -174,6 +177,9 @@ private:
   /// active in the "iterative" mode.
   ACE_Unbounded_Queue<ACE_TCHAR *> queue_;
 };
+
+// Close versioned namespace, if enabled by the user.
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/ARGV.inl"

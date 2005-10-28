@@ -1,5 +1,8 @@
 // -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_Errno_Guard::ACE_Errno_Guard (ACE_ERRNO_TYPE &errno_ref,
@@ -60,3 +63,5 @@ ACE_Errno_Guard::operator!= (int error)
 {
   return this->error_ != error;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

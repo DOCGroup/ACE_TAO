@@ -1,15 +1,13 @@
 // $Id$
 
-#ifndef ACE_GUARD_T_C
-#define ACE_GUARD_T_C
+#ifndef ACE_GUARD_T_CPP
+#define ACE_GUARD_T_CPP
 
 #include "ace/Guard_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-ACE_RCSID(ace, Guard_T, "$Id$")
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Guard_T.inl"
@@ -20,6 +18,9 @@ ACE_RCSID(ace, Guard_T, "$Id$")
 #endif /* ACE_HAS_DUMP */
 
 // ****************************************************************
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // ACE_ALLOC_HOOK_DEFINE(ACE_Guard)
 
 template <class ACE_LOCK> void
@@ -55,4 +56,6 @@ ACE_Read_Guard<ACE_LOCK>::dump (void) const
   ACE_Guard<ACE_LOCK>::dump ();
 }
 
-#endif /* ACE_GUARD_T_C */
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_GUARD_T_CPP */

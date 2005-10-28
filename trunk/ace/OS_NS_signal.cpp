@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "ace/OS_NS_signal.h"
@@ -22,3 +21,6 @@ siginfo_t::siginfo_t (ACE_HANDLE *handles)
 {
 }
 #endif /* ACE_HAS_SIGINFO_T */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_END_VERSIONED_NAMESPACE_DECL

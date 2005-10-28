@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef CACHING_UTILITY_T_C
-#define CACHING_UTILITY_T_C
+#ifndef ACE_CACHING_UTILITY_T_CPP
+#define ACE_CACHING_UTILITY_T_CPP
 
 #include "ace/Caching_Utility_T.h"
 
@@ -11,12 +11,11 @@
 
 #include "ace/Min_Max.h"
 #include "ace/OS_Memory.h"
-// #include "ace/Strategies.h"
 #include "ace/Recyclable.h"
 
-ACE_RCSID(ace, Caching_Utility_T, "$Id$")
-
 //////////////////////////////////////////////////////////////////////////////
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
 ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::ACE_Pair_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy,
@@ -495,4 +494,6 @@ ACE_Null_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::minimum (
   ACE_UNUSED_ARG (value_to_remove);
 }
 
-#endif /* CACHING_UTILITY_T_C */
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_CACHING_UTILITY_T_CPP */

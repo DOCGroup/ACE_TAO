@@ -1,3 +1,5 @@
+// $Id$
+
 #ifndef ACE_LOCAL_NAME_SPACE_T_CPP
 #define ACE_LOCAL_NAME_SPACE_T_CPP
 
@@ -14,10 +16,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (ace,
-           Local_Name_Space_T,
-           "$Id$")
-
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class ALLOCATOR>
 ACE_Name_Space_Map<ALLOCATOR>::ACE_Name_Space_Map (ALLOCATOR *alloc)
@@ -964,5 +963,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::dump (void) const
     }
 #endif /* ACE_HAS_DUMP */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_LOCAL_NAME_SPACE_T_CPP */

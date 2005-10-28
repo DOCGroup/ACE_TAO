@@ -157,6 +157,9 @@ typedef wchar_t ACE_ANTI_TCHAR;
 #endif /* ACE_HAS_XPG4_MULTIBYTE_CHAR */
 
 #if defined ACE_HAS_WCHAR
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Wide_To_Ascii
  *
@@ -229,6 +232,8 @@ private:
 typedef ACE_Ascii_To_Wide ACE_OS_CString;
 typedef ACE_Wide_To_Ascii ACE_OS_WString;
 #endif /* ACE_LEGACY_MODE */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_WCHAR */
 

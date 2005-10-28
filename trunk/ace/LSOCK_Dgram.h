@@ -1,5 +1,4 @@
-/* -*- C++ -*- */
-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -26,6 +25,8 @@
 
 #include "ace/SOCK_Dgram.h"
 #include "ace/LSOCK.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_LSOCK_Dgram
@@ -61,6 +62,8 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/LSOCK_Dgram.inl"

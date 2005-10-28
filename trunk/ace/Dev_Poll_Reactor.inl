@@ -4,6 +4,8 @@
 
 #include "ace/Log_Msg.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE
 ACE_Dev_Poll_Event_Tuple::ACE_Dev_Poll_Event_Tuple (void)
   : event_handler (0),
@@ -222,3 +224,5 @@ ACE_Dev_Poll_Reactor::Token_Guard::is_owner (void)
 {
   return this->owner_;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

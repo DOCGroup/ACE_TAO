@@ -40,6 +40,8 @@
 #  define ACE_DEFAULT_SELECT_REACTOR_SIZE ACE_FD_SETSIZE
 #endif /* ACE_DEFAULT_SELECT_REACTOR_SIZE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Handle_Set
  *
@@ -235,6 +237,8 @@ private:
   u_long word_val_;
 #endif /* !ACE_WIN32 && !ACE_HAS_BIG_FD_SET */
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Handle_Set.inl"

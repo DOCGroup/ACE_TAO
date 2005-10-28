@@ -3,6 +3,9 @@
 
 #include "ace/Global_Macros.h"
 
+// Open versioned namespace, if enabled by the user.
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Return the number of args
 ACE_INLINE int
 ACE_ARGV::argc (void) const
@@ -65,3 +68,6 @@ ACE_ARGV::operator[] (size_t i)
 
   return (const ACE_TCHAR *) this->argv ()[i];
 }
+
+// Close versioned namespace, if enabled by the user.
+ACE_END_VERSIONED_NAMESPACE_DECL

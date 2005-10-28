@@ -24,6 +24,8 @@
 #include "ace/Default_Constants.h"
 #include "ace/os_include/os_stddef.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Free_List
  *
@@ -133,6 +135,8 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Locked_Free_List (const ACE_Locked_Free_List<T, ACE_LOCK> &))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Locked_Free_List<T, ACE_LOCK> &))
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Free_List.cpp"

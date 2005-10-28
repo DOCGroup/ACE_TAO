@@ -1,15 +1,18 @@
-// -*- C++ -*-
 // $Id$
 
 #include "ace/Cleanup.h"
 
-ACE_RCSID(ace, Cleanup, "$Id$")
+ACE_RCSID (ace,
+           Cleanup,
+           "$Id$")
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/Cleanup.inl"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
 #include "ace/OS_Memory.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 ACE_Cleanup::cleanup (void *)
@@ -163,7 +166,7 @@ ACE_OS_Exit_Info::find (void *object)
 }
 
 void
-ACE_OS_Exit_Info::call_hooks ()
+ACE_OS_Exit_Info::call_hooks (void)
 {
   // Call all registered cleanup hooks, in reverse order of
   // registration.
@@ -183,3 +186,5 @@ ACE_OS_Exit_Info::call_hooks ()
         (*info.cleanup_hook_) (info.object_, info.param_);
     }
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

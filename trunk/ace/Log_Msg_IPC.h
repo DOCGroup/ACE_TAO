@@ -25,15 +25,21 @@
 // problems it can't be...
 #if defined (ACE_HAS_STREAM_PIPES)
 # include "ace/SPIPE_Connector.h"
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ACE_SPIPE_Stream ACE_LOG_MSG_IPC_STREAM;
 typedef ACE_SPIPE_Connector ACE_LOG_MSG_IPC_CONNECTOR;
 typedef ACE_SPIPE_Addr ACE_LOG_MSG_IPC_ADDR;
+ACE_END_VERSIONED_NAMESPACE_DECL
 #else
 # include "ace/SOCK_Connector.h"
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ACE_SOCK_Stream ACE_LOG_MSG_IPC_STREAM;
 typedef ACE_SOCK_Connector ACE_LOG_MSG_IPC_CONNECTOR;
 typedef ACE_INET_Addr ACE_LOG_MSG_IPC_ADDR;
+ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* ACE_HAS_STREAM_PIPES */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Defines the interfaces for ACE_Log_Msg backend.
 /**
@@ -58,6 +64,8 @@ public:
 private:
   ACE_LOG_MSG_IPC_STREAM message_queue_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_LOG_MSG_H */

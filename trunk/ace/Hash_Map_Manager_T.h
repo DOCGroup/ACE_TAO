@@ -24,6 +24,8 @@
 #include "ace/Functor_T.h"
 #include "ace/Log_Msg.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Hash_Map_Entry
  *
@@ -933,6 +935,8 @@ public:
   ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> &
   operator= (const ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK> &base);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 // Include ace/Hash_Map_Manager_T.i on all platforms excluding SunCC.

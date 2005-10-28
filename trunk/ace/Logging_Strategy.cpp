@@ -20,6 +20,8 @@ ACE_RCSID (ace,
            "$Id$")
 
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Parse the string containing (thread) priorities and set them
 // accordingly.
 
@@ -360,7 +362,7 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
 
           if (output_file->rdstate () != ios::goodbit)
             {
-	      if (delete_ostream) 
+              if (delete_ostream)
                 delete output_file;
               return -1;
             }
@@ -547,9 +549,10 @@ ACE_Logging_Strategy::log_msg (ACE_Log_Msg *log_msg)
   this->log_msg_  = log_msg;
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 // The following is a "Factory" used by the ACE_Service_Config and
 // svc.conf file to dynamically initialize the state of the
 // Logging_Strategy.
 
 ACE_FACTORY_DEFINE (ACE, ACE_Logging_Strategy)
-

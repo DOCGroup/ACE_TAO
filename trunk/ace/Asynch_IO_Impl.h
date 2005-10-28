@@ -36,6 +36,8 @@
 
 #include "ace/Asynch_IO.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward declaration.
 class ACE_Proactor_Impl;
 
@@ -811,6 +813,8 @@ protected:
   /// Do-nothing constructor.
   ACE_Asynch_Write_Dgram_Result_Impl (void);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Asynch_IO_Impl.inl"

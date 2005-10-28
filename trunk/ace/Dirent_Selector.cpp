@@ -13,6 +13,8 @@ ACE_RCSID (ace,
            Dirent_Selector,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Construction/Destruction
 
 ACE_Dirent_Selector::ACE_Dirent_Selector (void)
@@ -54,3 +56,5 @@ ACE_Dirent_Selector::close (void)
   this->namelist_ = 0;
   return 0;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -24,6 +24,8 @@ ACE_RCSID (ace,
 
 // ************************************************************
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 ACE_OSTREAM_TYPE &
 operator<< (ACE_OSTREAM_TYPE &os, const ACE_CString &cs)
@@ -565,3 +567,5 @@ template ACE_String_Base<ACE_WSTRING_TYPE> operator + (const ACE_WSTRING_TYPE *,
 template char ACE_String_Base<char>::NULL_String_;
 template ACE_WSTRING_TYPE ACE_String_Base<ACE_WSTRING_TYPE>::NULL_String_;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

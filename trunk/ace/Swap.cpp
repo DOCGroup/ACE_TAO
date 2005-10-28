@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  * @file Swap.cpp
  *
@@ -7,8 +6,8 @@
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
-#ifndef ACE_SWAP_C
-#define ACE_SWAP_C
+#ifndef ACE_SWAP_CPP
+#define ACE_SWAP_CPP
 
 #include "ace/Swap.h"
 
@@ -20,6 +19,4 @@
 #include "ace/Swap.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Swap, "$Id$")
-
-#endif /* ACE_SWAP_C */
+#endif /* ACE_SWAP_CPP */

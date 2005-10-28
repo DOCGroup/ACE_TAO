@@ -25,6 +25,8 @@
 #include "ace/Global_Macros.h"
 #include "ace/OS_NS_Thread.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Guard
  *
@@ -342,6 +344,9 @@ public:
   // ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* !(defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))) */
 
 #if defined (__ACE_INLINE__)

@@ -30,6 +30,8 @@
 
 #include "ace/INET_Addr.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_MEM_Addr
  *
@@ -146,6 +148,8 @@ private:
   /// Internal INET addr for accepting/connecting.
   ACE_INET_Addr internal_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/MEM_Addr.inl"

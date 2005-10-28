@@ -28,6 +28,8 @@
 #include "ace/os_include/os_stdio.h"
 #include "ace/os_include/sys/os_uio.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Time_Value;
 
 /**
@@ -172,6 +174,8 @@ private:
   /// Address of device we are connected to.
   ACE_DEV_Addr addr_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/DEV_IO.inl"

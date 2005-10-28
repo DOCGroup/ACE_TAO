@@ -35,6 +35,8 @@ fileno (FILE *fp)
 
 /*****************************************************************************/
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #if defined (ACE_WIN32)
 ACE_INLINE void
 ACE_OS::flock_adjust_params (ACE_OS::ace_flock_t *lock,
@@ -630,8 +632,8 @@ ACE_OS::fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode)
   ACE_OS_TRACE ("ACE_OS::fdopen");
 # if defined (ACE_HAS_WINCE)
   ACE_OSCALL_RETURN (::_wfdopen (handle, ACE_TEXT_ALWAYS_WCHAR (mode)),
-		     FILE*,
-		     0);
+                     FILE*,
+                     0);
 # elif defined (ACE_WIN32)
   // kernel file handle -> FILE* conversion...
   // Options: _O_APPEND, _O_RDONLY and _O_TEXT are lost
@@ -781,9 +783,9 @@ ACE_OS::freopen (const ACE_TCHAR *filename, const ACE_TCHAR *mode, FILE* stream)
   ACE_OS_TRACE ("ACE_OS::freopen");
 #if defined (ACE_WIN32) && (defined(ACE_USES_WCHAR) || defined(ACE_HAS_WINCE))
   ACE_OSCALL_RETURN (::_wfreopen (ACE_TEXT_ALWAYS_WCHAR (filename),
-				  ACE_TEXT_ALWAYS_WCHAR (mode),
-				  stream),
-		     FILE *, 0);
+                                  ACE_TEXT_ALWAYS_WCHAR (mode),
+                                  stream),
+                     FILE *, 0);
 #else
   ACE_OSCALL_RETURN
     (ACE_STD_NAMESPACE::freopen (ACE_TEXT_ALWAYS_CHAR (filename),
@@ -1209,3 +1211,5 @@ ACE_OS::default_win32_security_attributes_r (LPSECURITY_ATTRIBUTES sa,
 
 #endif /* ACE_WIN32 */
 #endif
+
+ACE_END_VERSIONED_NAMESPACE_DECL

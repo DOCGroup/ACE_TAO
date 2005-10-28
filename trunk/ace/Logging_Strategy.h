@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -6,8 +6,8 @@
  *
  *  $Id$
  *
- *  @author Prashant Jain <pjain@cs.wustl.edu> and 
- *          Orlando Ribeiro <oribeiro@inescporto.pt>
+ *  @author Prashant Jain <pjain@cs.wustl.edu>
+ *  @author Orlando Ribeiro <oribeiro@inescporto.pt>
  */
 //=============================================================================
 
@@ -24,6 +24,8 @@
 #if !defined (ACE_DEFAULT_LOGFILE_POLL_INTERVAL)
 #define ACE_DEFAULT_LOGFILE_POLL_INTERVAL 600 /* Seconds */
 #endif /* ACE_DEFAULT_LOGFILE_POLL_INTERVAL */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Logging_Strategy
@@ -62,10 +64,10 @@
  * to set the reactor used by @c ACE_Logging_Strategy to something
  * other than the singleton reactor you'll need to get a pointer to
  * the @c ACE_Logging_Strategy instance and do this
- * 
+ *
  * ACE_Reactor my_reactor;
  * ACE_Logging_Strategy *logging_strategy = ...... // Get instance.
- * 
+ *
  * logging_strategy->reactor (&my_reactor);
  *
  * and then logging_strategy will use your reactor.  If you're
@@ -180,6 +182,8 @@ protected:
   /// ACE_Log_Msg instance to work with
   ACE_Log_Msg *log_msg_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DECLARE (ACE, ACE_Logging_Strategy)
 

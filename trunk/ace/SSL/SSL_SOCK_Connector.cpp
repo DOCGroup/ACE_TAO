@@ -20,8 +20,9 @@ ACE_RCSID (ACE_SSL,
            SSL_SOCK_Connector,
            "$Id$")
 
-ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Connector)
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Connector)
 
 ACE_SSL_SOCK_Connector::~ACE_SSL_SOCK_Connector (void)
 {
@@ -406,3 +407,5 @@ ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
                  reuse_addr,
                  perms);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

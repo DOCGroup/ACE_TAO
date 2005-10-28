@@ -13,6 +13,8 @@ ACE_RCSID (ace,
            Multihomed_INET_Addr,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Multihomed_INET_Addr)
 
 // Default constructor
@@ -303,4 +305,6 @@ template class ACE_Array<ACE_INET_Addr>;
 #pragma instantiate ACE_Array_Base<ACE_INET_Addr>
 #pragma instantiate ACE_Array<ACE_INET_Addr>
 
-#endif /*ACE_HAS_TEMPLATE_INSTANTIATION*/
+#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

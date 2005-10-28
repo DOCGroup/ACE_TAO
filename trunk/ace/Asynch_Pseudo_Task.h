@@ -25,6 +25,8 @@
 #include "ace/Select_Reactor.h"
 #include "ace/Task.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /*
  * Specialization hook to replace the Reactor with the
  * concrete Reactor implementation, e.g., select_st,
@@ -62,6 +64,8 @@ protected:
   // should be initialized before reactor_
   ACE_Reactor reactor_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

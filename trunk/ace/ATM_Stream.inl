@@ -1,7 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
-// ATM_Stream.i
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
 ACE_ATM_Stream::dump (void) const
@@ -129,3 +130,4 @@ ACE_ATM_Stream::send_n (const void *buf,
 #endif /* ACE_HAS_FORE_ATM_XTI */
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -38,6 +38,8 @@
 #  endif /* ACE_DEFAULT_SEM_KEY */
 #endif /* ACE_WIN32 */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_SV_Semaphore_Simple
  *
@@ -183,6 +185,8 @@ protected:
             int i = -1);
   key_t name_2_key (const char *name);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/SV_Semaphore_Simple.inl"

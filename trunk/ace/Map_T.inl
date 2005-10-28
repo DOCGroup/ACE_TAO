@@ -1,5 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T> ACE_INLINE int
 ACE_Noop_Key_Generator<T>::operator() (T &)
@@ -408,3 +411,5 @@ ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::key_generator (void)
 {
   return this->key_generator_;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

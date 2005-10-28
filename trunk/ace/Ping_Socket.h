@@ -26,6 +26,8 @@
 
 #include "ace/ICMP_Socket.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_INET_Addr;
 
 /**
@@ -103,6 +105,8 @@ private:
   int connected_socket_;
 
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "ace/Ping_Socket.inl"

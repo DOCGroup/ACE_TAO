@@ -1,5 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /************************************************************************/
 // Methods for ACE_EH_Dispatch_Info
@@ -109,3 +112,5 @@ ACE_TP_Reactor::clear_dispatch_mask (ACE_HANDLE ,
   this->ready_set_.wr_mask_.reset ();
   this->ready_set_.ex_mask_.reset ();
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

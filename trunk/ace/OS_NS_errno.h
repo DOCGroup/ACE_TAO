@@ -33,6 +33,8 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -74,6 +76,8 @@ private:
   static ACE_CE_Errno *instance_;
   static DWORD errno_key_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 # define errno (* (ACE_CE_Errno::instance ()))
 #endif /* ACE_HAS_WINCE_BROKEN_ERRNO */

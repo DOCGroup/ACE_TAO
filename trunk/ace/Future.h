@@ -30,6 +30,8 @@
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Condition_Recursive_Thread_Mutex.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward decl.
 template <class T> class ACE_Future_Holder;
 template <class T> class ACE_Future_Observer;
@@ -206,7 +208,7 @@ private:
   int ref_count_;
 
   typedef ACE_Future_Observer<T>
-	    OBSERVER;
+            OBSERVER;
 
   typedef ACE_Unbounded_Set<OBSERVER *>
         OBSERVER_COLLECTION;
@@ -370,6 +372,8 @@ private:
   typedef ACE_Future_Rep<T> FUTURE_REP;
   FUTURE_REP *future_rep_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Future.cpp"

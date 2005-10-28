@@ -1,10 +1,13 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "ace/os_include/os_ctype.h"
 #if defined ACE_HAS_WCHAR
 # include "ace/os_include/os_wctype.h"
 #endif /* ACE_HAS_WCHAR */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 ACE_OS::ace_isalnum (ACE_TCHAR c)
@@ -143,3 +146,5 @@ ACE_OS::ace_towupper (wint_t c)
   return towupper (c);
 }
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_TOWUPPER */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

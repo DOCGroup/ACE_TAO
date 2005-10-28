@@ -1,7 +1,10 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 #include "ace/Reactor.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_Event_Tuple::~ACE_Event_Tuple (void)
@@ -55,11 +58,14 @@ ACE_INLINE
 ACE_Select_Reactor_Impl::ACE_Select_Reactor_Impl (bool ms)
   : handler_rep_ (*this)
   , timer_queue_ (0)
-  , delete_timer_queue_ (0)
-  , delete_signal_handler_ (0)
-  , delete_notify_handler_ (0)
+  , signal_handler_ (0)
+  , notify_handler_ (0)
+  , delete_timer_queue_ (false)
+  , delete_signal_handler_ (false)
+  , delete_notify_handler_ (false)
+  , initialized_ (false)
+  , restart_ (0)
   , requeue_position_ (-1) // Requeue at end of waiters by default.
-  , initialized_ (0)
   , state_changed_ (0)
   , mask_signals_ (ms)
   , supress_renew_ (0)
@@ -77,3 +83,5 @@ ACE_Select_Reactor_Impl::supress_notify_renew (int sr)
 {
   this->supress_renew_ = sr;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

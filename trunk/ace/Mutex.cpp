@@ -15,6 +15,7 @@ ACE_RCSID (ace,
            Mutex,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Mutex)
 
@@ -120,3 +121,5 @@ ACE_Mutex::~ACE_Mutex (void)
 // ACE_TRACE ("ACE_Mutex::~ACE_Mutex");
   this->remove ();
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

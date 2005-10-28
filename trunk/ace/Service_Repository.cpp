@@ -17,6 +17,8 @@ ACE_RCSID (ace,
            Service_Repository,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Repository)
 
 // Process-wide Service Repository.
@@ -442,3 +444,5 @@ ACE_Service_Repository_Iterator::advance (void)
 
   return this->next_ < this->svc_rep_.current_size_;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

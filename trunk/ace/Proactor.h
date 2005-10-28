@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -36,6 +36,8 @@
 #  include "ace/Timer_List.h"
 #  include "ace/Timer_Heap.h"
 #  include "ace/Timer_Wheel.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations.
 class ACE_Proactor_Impl;
@@ -675,6 +677,8 @@ public:
   /// Placeholder to enable compilation on non-Win32 platforms
   static sig_atomic_t event_loop_done (void);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS*/
 

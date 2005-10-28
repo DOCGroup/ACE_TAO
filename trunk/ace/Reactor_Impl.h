@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -26,6 +26,8 @@
 // Event_Handler.h contains the definition of ACE_Reactor_Mask
 #include "ace/Event_Handler.h"
 #include "ace/Countdown_Time.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decls
 class ACE_Handle_Set;
@@ -560,6 +562,8 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_REACTOR_IMPL_H */

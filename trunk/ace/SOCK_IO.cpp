@@ -1,4 +1,3 @@
-// SOCK_IO.cpp
 // $Id$
 
 #include "ace/SOCK_IO.h"
@@ -13,6 +12,8 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, SOCK_IO, "$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_IO)
 
@@ -169,3 +170,5 @@ ACE_SOCK_IO::recv (size_t n, ...) const
   va_end (argp);
   return result;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

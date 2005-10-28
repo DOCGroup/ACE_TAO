@@ -73,7 +73,6 @@ private:
 
 };
 
-
 #include /**/ "ace/post.h"
 
 #endif  /* ACE_SVC_CONF_LEXER_GUARD_H */

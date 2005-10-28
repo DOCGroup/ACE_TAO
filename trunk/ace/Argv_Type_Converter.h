@@ -22,6 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Argv_Type_Converter
@@ -106,6 +107,8 @@ private:
   int char_passed_;
 #endif  /* ACE_USES_WCHAR */
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Argv_Type_Converter.inl"

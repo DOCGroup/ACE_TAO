@@ -33,6 +33,9 @@
 #    define ACE_PROCESS_MUTEX ACE_SV_Semaphore_Simple
 #  endif /* ACE_HAS_THREADS */
 
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 typedef ACE_Atomic_Op<ACE_PROCESS_MUTEX, int> ACE_INT;
 
 /******************************************************************
@@ -379,6 +382,8 @@ public:
   /// Dump the state of the object.
   void dump (void) const;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Malloc.inl"

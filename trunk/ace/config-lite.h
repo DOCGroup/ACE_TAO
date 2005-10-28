@@ -492,8 +492,12 @@
 // at_exit declarations
 // ============================================================================
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Marker for cleanup, used by ACE_Exit_Info.
 extern int ace_exit_hook_marker;
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 // For use by <ACE_OS::exit>.
 extern "C"
@@ -514,6 +518,8 @@ typedef void (*ACE_CLEANUP_FUNC)(void *object, void *param) /* throw () */;
 // ============================================================================
 // log_msg declarations
 // ============================================================================
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
 typedef int (*ACE_SEH_EXCEPT_HANDLER)(void *);
@@ -538,6 +544,8 @@ typedef void (*ACE_CLOSE_LOG_MSG_HOOK) (void);
 typedef void (*ACE_SYNC_LOG_MSG_HOOK) (const ACE_TCHAR *prog_name);
 
 typedef ACE_OS_Thread_Descriptor *(*ACE_THR_DESC_LOG_MSG_HOOK) (void);
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 // ============================================================================
 // Fundamental types

@@ -17,6 +17,8 @@
 #include "ace/OS_NS_string.h"
 
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class T, class ACE_LOCK>
 ACE_Cached_Allocator<T, ACE_LOCK>::ACE_Cached_Allocator (size_t n_chunks)
   : pool_ (0),
@@ -1251,4 +1253,6 @@ ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::start (void)
   return this->curr_ != 0;
 }
 
-#endif /* ACE_MALLOC_T_C */
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_MALLOC_T_CPP */

@@ -1,4 +1,5 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "ace/OS_NS_macros.h"
@@ -18,6 +19,8 @@
 #  include "ace/OS_Memory.h"
 #  include "ace/OS_NS_string.h"
 #endif /* ACE_USES_ASM_SYMBOL_IN_DLSYM */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 ACE_OS::dlclose (ACE_SHLIB_HANDLE handle)
@@ -185,8 +188,8 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
       if ( (loaderror != 0) && (handle != 0) )
         {
           // ouch something went wrong most likely unresolved externals
-		  if (handle)
-          	::unldByModuleId ( handle, 0 );
+                  if (handle)
+                ::unldByModuleId ( handle, 0 );
           handle = 0;
         }
     }
@@ -286,3 +289,5 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
 
 # endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -9,6 +9,8 @@ ACE_RCSID (ace,
            "$Id$")
 
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_Arg_Shifter::ACE_Arg_Shifter (int& argc,
                                   const ACE_TCHAR** argv,
                                   const ACE_TCHAR** temp)
@@ -50,10 +52,10 @@ ACE_Arg_Shifter::init (void)
       // Fill the temporary array.
       this->argc_ = 0;
       for (int i = 0; i < this->total_size_; i++)
-	{
-	  this->temp_[i] = this->argv_[i];
-	  this->argv_[i] = 0;
-	}
+        {
+          this->temp_[i] = this->argv_[i];
+          this->argv_[i] = 0;
+        }
     }
   else
     {
@@ -100,9 +102,9 @@ ACE_Arg_Shifter::get_the_parameter (const ACE_TCHAR *flag)
       this->consume_arg ();
 
       if (!this->is_parameter_next())
-	{
-	  return 0;
-	}
+        {
+          return 0;
+        }
     }
   // the paramter is in the middle somewhere...
   return this->temp_[current_index_] + offset;
@@ -120,22 +122,22 @@ ACE_Arg_Shifter::cur_arg_strncasecmp (const ACE_TCHAR *flag)
       if (ACE_OS::strncasecmp(this->temp_[current_index_],
                               flag,
                               flag_length) == 0)
-	{
-	  if (ACE_OS::strlen(temp_[current_index_]) ==
-	      flag_length)
-	    {
-	      // match and lengths are equal
-	      return 0;
-	    }
-	  else
-	    {
-	      // matches, with more info to boot!
+        {
+          if (ACE_OS::strlen(temp_[current_index_]) ==
+              flag_length)
+            {
+              // match and lengths are equal
+              return 0;
+            }
+          else
+            {
+              // matches, with more info to boot!
         size_t remaining = ACE_OS::strspn
                 (this->temp_[current_index_] + flag_length,
                 ACE_LIB_TEXT (" ")) + flag_length;
         return static_cast<int> (remaining);
-	    }
-	}
+            }
+        }
     }
   // failure
   return -1;
@@ -150,9 +152,9 @@ ACE_Arg_Shifter::consume_arg (int number)
   if (this->is_anything_left() >= number)
     {
       for (int i = 0, j = this->back_ - (number - 1);
-	   i < number;
-	   ++i, ++j, ++this->current_index_)
-	this->argv_[j] = this->temp_[this->current_index_];
+           i < number;
+           ++i, ++j, ++this->current_index_)
+        this->argv_[j] = this->temp_[this->current_index_];
 
       this->back_ -= number;
       retval = 1;
@@ -170,9 +172,9 @@ ACE_Arg_Shifter::ignore_arg (int number)
   if (this->is_anything_left () >= number)
     {
       for (int i = 0;
-	   i < number;
-	   i++, this->current_index_++, this->front_++)
-	this->argv_[this->front_] = this->temp_[this->current_index_];
+           i < number;
+           i++, this->current_index_++, this->front_++)
+        this->argv_[this->front_] = this->temp_[this->current_index_];
 
       retval = 1;
       this->argc_ += number;
@@ -206,3 +208,5 @@ ACE_Arg_Shifter::num_ignored_args (void) const
 {
   return this->front_;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

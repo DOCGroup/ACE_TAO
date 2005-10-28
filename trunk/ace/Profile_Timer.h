@@ -23,6 +23,8 @@
 
 #include "ace/High_Res_Timer.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Profile_Timer
  *
@@ -129,6 +131,8 @@ private:
   ACE_High_Res_Timer timer_;
 #endif /* ACE_WIN32 || !ACE_HAS_PRUSAGE_T && !ACE_HAS_GETRUSAGE */
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "ace/Profile_Timer.inl"

@@ -15,7 +15,7 @@
 //=============================================================================
 
 #ifndef ACE_OS_NS_STRING_H
-# define ACE_OS_NS_STRING_H
+#define ACE_OS_NS_STRING_H
 
 # include /**/ "ace/pre.h"
 
@@ -33,6 +33,8 @@
 #  undef ACE_EXPORT_MACRO
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
 
@@ -455,6 +457,8 @@ namespace ACE_OS {
 # endif  // ACE_HAS_WCHAR && ACE_LACKS_WCSTOK
 
 } /* namespace ACE_OS */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

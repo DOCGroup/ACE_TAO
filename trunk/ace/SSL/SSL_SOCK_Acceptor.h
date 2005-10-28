@@ -29,6 +29,8 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/OS_QoS.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_SSL_SOCK_Acceptor
  *
@@ -68,10 +70,10 @@ public:
    *                   upon return.
    */
   ACE_SSL_SOCK_Acceptor (const ACE_Addr &local_sap,
-			 int reuse_addr = 0,
-			 int protocol_family = PF_UNSPEC,
-			 int backlog = ACE_DEFAULT_BACKLOG,
-			 int protocol = 0);
+                         int reuse_addr = 0,
+                         int protocol_family = PF_UNSPEC,
+                         int backlog = ACE_DEFAULT_BACKLOG,
+                         int protocol = 0);
 
   /**
    * Initiate a passive-mode QoS-enabled acceptor socket.
@@ -84,13 +86,13 @@ public:
    *                   upon return.
    */
   ACE_SSL_SOCK_Acceptor (const ACE_Addr &local_sap,
-			 ACE_Protocol_Info *protocolinfo,
-			 ACE_SOCK_GROUP g,
-			 u_long flags,
-			 int reuse_addr,
-			 int protocol_family = PF_UNSPEC,
-			 int backlog = ACE_DEFAULT_BACKLOG,
-			 int protocol = 0);
+                         ACE_Protocol_Info *protocolinfo,
+                         ACE_SOCK_GROUP g,
+                         u_long flags,
+                         int reuse_addr,
+                         int protocol_family = PF_UNSPEC,
+                         int backlog = ACE_DEFAULT_BACKLOG,
+                         int protocol = 0);
 
   /**
    * Initiate a passive mode SSL/BSD-style acceptor socket.
@@ -156,7 +158,7 @@ public:
    * @return 0 if success; -1 for failure (errno contains error code).
    */
   int accept (ACE_SSL_SOCK_Stream &new_stream,
-	      ACE_Accept_QoS_Params qos_params,
+              ACE_Accept_QoS_Params qos_params,
               ACE_Addr *remote_addr = 0,
               ACE_Time_Value *timeout = 0,
               int restart = 1,
@@ -184,6 +186,8 @@ private:
   ACE_SOCK_Acceptor acceptor_;
 
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "SSL_SOCK_Acceptor.i"

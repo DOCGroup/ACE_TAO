@@ -1,4 +1,3 @@
-// SPIPE_Acceptor.cpp
 // $Id$
 
 #include "ace/SPIPE_Acceptor.h"
@@ -11,6 +10,8 @@
 #endif  // ACE_HAS_STREAM_PIPES
 
 ACE_RCSID(ace, SPIPE_Acceptor, "$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor (void)
 #if (defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
@@ -302,3 +303,5 @@ ACE_SPIPE_Acceptor::accept (ACE_SPIPE_Stream &new_io,
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_STREAM_PIPES */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

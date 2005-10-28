@@ -41,6 +41,9 @@ ACE_RCSID (ace,
            "$Id$")
 
 
+// Open versioned namespace, if enabled by the user.
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace ACE
 {
   // private:
@@ -3501,3 +3504,6 @@ ACE::wild_match(const char* str, const char* pat, bool case_sensitive)
 
   return *p == '\0';
 }
+
+// Close versioned namespace, if enabled by the user.
+ACE_END_VERSIONED_NAMESPACE_DECL

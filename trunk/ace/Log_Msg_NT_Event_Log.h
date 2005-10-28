@@ -24,6 +24,8 @@
 
 #include "ace/Log_Msg_Backend.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Log_Msg_NT_Event_Log
  *
@@ -61,6 +63,8 @@ public:
 private:
   HANDLE evlog_handle_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_LOG_MSG_NT_EVENT_LOG */
 

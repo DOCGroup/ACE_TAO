@@ -13,6 +13,8 @@
 
 ACE_RCSID(ace, Event_Handler, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Implement conceptually abstract virtual functions in the base class
 // so derived classes don't have to implement unused ones.
 
@@ -404,3 +406,5 @@ ACE_Notification_Buffer::ACE_Notification_Buffer (ACE_Event_Handler *eh,
 {
   ACE_TRACE ("ACE_Notification_Buffer::ACE_Notification_Buffer");
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

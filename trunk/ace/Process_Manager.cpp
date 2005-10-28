@@ -32,6 +32,8 @@ ACE_Process_Manager_cleanup (void *instance, void *arg)
 }
 #endif
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 void
 ACE_Process_Manager::cleanup (void *, void *)
 {
@@ -977,3 +979,5 @@ ACE_Process_Manager::notify_proc_handler (size_t i,
       return 0;
     }
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

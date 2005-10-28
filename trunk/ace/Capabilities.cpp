@@ -16,6 +16,7 @@ ACE_RCSID (ace,
 
 #define ACE_ESC ((ACE_TCHAR)0x1b)
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_CapEntry::~ACE_CapEntry (void)
 {
@@ -364,3 +365,5 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TString,ACE_CapEntry*,ACE_Ha
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TString,ACE_CapEntry*,ACE_Hash<ACE_TString>,ACE_Equal_To<ACE_TString>,ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

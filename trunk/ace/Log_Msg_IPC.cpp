@@ -5,6 +5,8 @@
 
 ACE_RCSID(ace, Log_Msg_IPC, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_Log_Msg_IPC::ACE_Log_Msg_IPC (void)
 {
 }
@@ -68,3 +70,5 @@ ACE_Log_Msg_IPC::log (ACE_Log_Record &log_record)
                                   log_record.length ());
 #endif /* ACE_HAS_STREAM_PIPES */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

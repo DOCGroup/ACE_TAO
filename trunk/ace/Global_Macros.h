@@ -48,6 +48,9 @@
 #   if defined (_DEBUG) && !defined (ACE_HAS_WINCE) && !defined (__BORLANDC__)
 # include /**/ <crtdbg.h>
 
+// Open versioned namespace, if enabled by the user.
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Export ACE_No_Heap_Check
 {
 public:
@@ -58,6 +61,10 @@ public:
 private:
   int old_state;
 };
+
+// Close versioned namespace, if enabled by the user.
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #     define ACE_NO_HEAP_CHECK ACE_No_Heap_Check ____no_heap;
 #   else /* !_DEBUG */
 #     define ACE_NO_HEAP_CHECK
@@ -585,6 +592,13 @@ static ACE_Static_Svc_##SERVICE_CLASS ace_static_svc_##SERVICE_CLASS;
 #define ACE_STATIC_SVC_REGISTER(SERVICE_CLASS) do {} while (0)
 
 #endif /* !ACE_LACKS_STATIC_CONSTRUCTORS */
+
+// Preprocessor symbols will not be expanded if they are
+// concatenated.  Force the preprocessor to expand them during the
+// argument prescan by calling a macro that itself calls another that
+// performs the actual concatenation.
+#define ACE_PREPROC_CONCATENATE_IMPL(A,B) A ## B
+#define ACE_PREPROC_CONCATENATE(A,B) ACE_PREPROC_CONCATENATE_IMPL(A,B)
 
 #if defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1
 // Preprocessor symbols will not be expanded if they are

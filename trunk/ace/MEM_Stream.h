@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -28,6 +28,8 @@
 #if !defined (ACE_MEM_STREAM_MIN_BUFFER)
 # define ACE_MEM_STREAM_MIN_BUFFER 4096
 #endif /* ACE_MEM_STREAM_MIN_BUFFER */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_MEM_Acceptor;
 class ACE_MEM_Connector;
@@ -143,6 +145,8 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/MEM_Stream.inl"

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -35,6 +35,8 @@
 
 #define ACE_AIO_MAX_SIZE     2048
 #define ACE_AIO_DEFAULT_SIZE 1024
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_POSIX_Proactor
@@ -648,6 +650,8 @@ protected:
   /// Time value requested by caller
   ACE_Time_Value time_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/POSIX_Proactor.inl"

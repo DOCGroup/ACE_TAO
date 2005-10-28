@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -24,6 +24,8 @@
 #include "ace/os_include/sys/os_types.h"
 #include "ace/os_include/sys/os_mman.h"
 #include "ace/os_include/sys/os_types.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // The definition of this class is located in Malloc.cpp.
 
@@ -155,6 +157,8 @@ private:
   /// Must delete the <allocator_> if non-0.
   static int delete_allocator_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_MALLOC_BASE_H */

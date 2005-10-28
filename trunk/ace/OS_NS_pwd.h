@@ -15,7 +15,7 @@
 //=============================================================================
 
 #ifndef ACE_OS_NS_PWD_H
-# define ACE_OS_NS_PWD_H
+#define ACE_OS_NS_PWD_H
 
 # include /**/ "ace/pre.h"
 
@@ -39,7 +39,10 @@
 
 struct passwd;
 
-namespace ACE_OS {
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace ACE_OS
+{
 
 
   //@{ @name A set of wrappers for password routines.
@@ -63,6 +66,8 @@ namespace ACE_OS {
   //@}
 
 } /* namespace ACE_OS */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

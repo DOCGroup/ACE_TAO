@@ -24,6 +24,7 @@
 #include "ace/Strategies_T.h"
 #include "ace/Synch_Options.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Acceptor
@@ -643,6 +644,8 @@ private:
   /// delete it, else 0.
   int delete_concurrency_strategy_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Acceptor.cpp"
