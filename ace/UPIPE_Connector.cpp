@@ -1,4 +1,3 @@
-// UPIPE_Connector.cpp
 // $Id$
 
 #include "ace/UPIPE_Connector.h"
@@ -7,11 +6,14 @@ ACE_RCSID(ace, UPIPE_Connector, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
+#include "ace/Handle_Ops.h"
 #include "ace/OS_NS_unistd.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/UPIPE_Connector.inl"
 #endif /* __ACE_INLINE__ */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_UPIPE_Connector)
 
@@ -45,7 +47,7 @@ ACE_UPIPE_Connector::connect (ACE_UPIPE_Stream &new_stream,
                                               flags, perms);
 
   if (handle == ACE_INVALID_HANDLE)
-    return -1;
+    return -1;  
 #if !defined (ACE_WIN32)
   else if (ACE_OS::isastream (handle) != 1)
     return -1;
@@ -92,4 +94,7 @@ ACE_UPIPE_Connector::connect (ACE_UPIPE_Stream &new_stream,
       return result;
     }
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* ACE_HAS_THREADS */

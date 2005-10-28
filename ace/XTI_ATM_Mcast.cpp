@@ -1,4 +1,3 @@
-// XTI_ATM_Mcast.cpp
 // $Id$
 
 #include "ace/XTI_ATM_Mcast.h"
@@ -10,6 +9,8 @@ ACE_RCSID(ace, XTI_ATM_Mcast, "$Id$")
 #if !defined (__ACE_INLINE__)
 #include "ace/XTI_ATM_Mcast.inl"
 #endif /* __ACE_INLINE__ */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_XTI_ATM_Mcast)
 
@@ -30,8 +31,8 @@ ACE_XTI_ATM_Mcast::ACE_XTI_ATM_Mcast (void)
 
 int
 ACE_XTI_ATM_Mcast::add_leaf (ACE_TLI_Stream &current_stream,
-			     const ACE_Addr &remote_sap,
-			     ACE_INT32 leaf_id,
+                             const ACE_Addr &remote_sap,
+                             ACE_INT32 leaf_id,
                              ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_XTI_ATM_Mcast::add_leaf");
@@ -64,5 +65,7 @@ ACE_XTI_ATM_Mcast::add_leaf (ACE_TLI_Stream &current_stream,
 
   return 0;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_XTI_ATM */

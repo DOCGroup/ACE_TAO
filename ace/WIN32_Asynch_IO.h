@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -40,6 +40,8 @@
 #include "ace/Handle_Set.h"
 #include "ace/Map_Manager.h"
 #include "ace/Null_Mutex.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declaration
 class ACE_WIN32_Proactor;
@@ -1926,6 +1928,8 @@ protected:
   /// Do-nothing constructor.
   ACE_WIN32_Asynch_Write_Dgram (void);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE */
 #include /**/ "ace/post.h"

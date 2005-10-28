@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -34,14 +34,15 @@
 # define ACE_TOKEN_USES_SEMAPHORE
 #endif /* (ACE_WIN32 && !ACE_HAS_WINCE) || VXWORKS || ACE_PSOS */
 
-class ACE_Time_Value;
-
 #if defined (ACE_TOKEN_USES_SEMAPHORE)
 #  include "ace/Semaphore.h"
 #endif /* ACE_TOKEN_USES_SEMAPHORE */
 
 #include "ace/Condition_Thread_Mutex.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class ACE_Time_Value;
 
 /**
  * @class ACE_Token
@@ -316,7 +317,12 @@ private:
   int queueing_strategy_;
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #else
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Export ACE_Token
 {
 public:
@@ -327,7 +333,12 @@ public:
   int remove (void) { ACE_NOTSUP_RETURN (-1); }
   int release (void) { ACE_NOTSUP_RETURN (-1); }
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* ACE_HAS_THREADS */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Export ACE_Noop_Token : public ACE_Null_Mutex
 {
@@ -353,6 +364,8 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Token.inl"

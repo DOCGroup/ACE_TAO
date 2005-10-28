@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_TIMER_HEAP_T_C
-#define ACE_TIMER_HEAP_T_C
+#ifndef ACE_TIMER_HEAP_T_CPP
+#define ACE_TIMER_HEAP_T_CPP
 
 #include "ace/Timer_Heap_T.h"
 #include "ace/Log_Msg.h"
@@ -12,7 +12,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_RCSID(ace, Timer_Heap_T, "$Id$")
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Define some simple macros to clarify the code.
 #define ACE_HEAP_PARENT(X) (X == 0 ? 0 : (((X) - 1) / 2))
@@ -814,4 +814,6 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::get_first (void)
   return this->cur_size_ == 0 ? 0 : this->heap_[0];
 }
 
-#endif /* ACE_TIMER_HEAP_T_C */
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_TIMER_HEAP_T_CPP */

@@ -1,13 +1,14 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 #include "ace/Guard_T.h"
 
-// Token.i
-
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/Time_Value.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 ACE_Token::queueing_strategy (void)
@@ -29,15 +30,15 @@ ACE_Token::remove (void)
   ACE_NOTSUP_RETURN (-1);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Token::tryacquire (void)
 {
   ACE_TRACE ("ACE_Token::tryacquire");
-  return this->shared_acquire 
+  return this->shared_acquire
     (0, 0, (ACE_Time_Value *) &ACE_Time_Value::zero, ACE_Token::WRITE_TOKEN);
 }
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Token::waiters (void)
 {
   ACE_TRACE ("ACE_Token::waiters");
@@ -47,7 +48,7 @@ ACE_Token::waiters (void)
   return ret;
 }
 
-ACE_INLINE ACE_thread_t 
+ACE_INLINE ACE_thread_t
 ACE_Token::current_owner (void)
 {
   ACE_TRACE ("ACE_Token::current_owner");
@@ -132,7 +133,7 @@ ACE_Token::ACE_Token_Queue_Entry::wait (ACE_Time_Value *timeout, ACE_Thread_Mute
 ACE_INLINE int
 ACE_Token::ACE_Token_Queue_Entry::signal (void)
 {
-  return 
+  return
 #if defined (ACE_TOKEN_USES_SEMAPHORE)
     this->cv_.release ();
 #else
@@ -140,8 +141,13 @@ ACE_Token::ACE_Token_Queue_Entry::signal (void)
 #endif /* ACE_TOKEN_USES_SEMAPHORE */
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* ACE_HAS_THREADS */
-/******************************************************************************/
+
+/*****************************************************************************/
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 ACE_Noop_Token::queueing_strategy (void)
@@ -164,3 +170,5 @@ ACE_INLINE void
 ACE_Noop_Token::dump (void) const
 {
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

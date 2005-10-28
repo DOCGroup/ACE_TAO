@@ -10,6 +10,8 @@ ACE_RCSID (ace,
 #endif /* __ACE_INLINE__ */
 
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Static constant representing `zero-time'.
 // Note: this object requires static construction.
 const ACE_Time_Value ACE_Time_Value::zero;
@@ -241,3 +243,5 @@ ACE_Time_Value::operator *= (double d)
 
   return *this;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

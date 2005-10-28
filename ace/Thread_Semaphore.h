@@ -34,6 +34,8 @@
 
 #include "ace/Semaphore.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Thread_Semaphore
  *
@@ -79,6 +81,8 @@ class ACE_Threads_Export ACE_Malloc_Lock_Adapter_T<ACE_Thread_Semaphore>
 public:
   ACE_Thread_Semaphore * operator () (const ACE_TCHAR *name);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Thread_Semaphore.inl"

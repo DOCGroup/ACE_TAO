@@ -2,6 +2,7 @@
 //
 // $Id$
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
 ACE_INLINE
@@ -315,3 +316,5 @@ ACE_Thread_Manager::count_threads (void) const
 {
   return this->thr_list_.size ();
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

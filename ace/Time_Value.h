@@ -31,11 +31,6 @@
 #define ACE_ONE_SECOND_IN_USECS 1000000L
 #define ACE_ONE_SECOND_IN_NSECS 1000000000L
 
-// This forward declaration is needed by the set() and FILETIME() functions
-#if defined (ACE_LACKS_LONGLONG_T)
-class ACE_Export ACE_U_LongLong;
-#endif  /* ACE_LACKS_LONGLONG_T */
-
 # if !defined (ACE_HAS_POSIX_TIME) && !defined (ACE_PSOS)
 // Definition per POSIX.
 typedef struct timespec
@@ -56,6 +51,13 @@ typedef struct timespec timespec_t;
 
 // needed for ACE_UINT64
 #include "ace/Basic_Types.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+// This forward declaration is needed by the set() and FILETIME() functions
+#if defined (ACE_LACKS_LONGLONG_T)
+class ACE_Export ACE_U_LongLong;
+#endif  /* ACE_LACKS_LONGLONG_T */
 
 // -------------------------------------------------------------------
 
@@ -266,11 +268,11 @@ public:
 
   /// Adds two ACE_Time_Value objects together, returns the sum.
   friend ACE_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1,
-					       const ACE_Time_Value &tv2);
+                                               const ACE_Time_Value &tv2);
 
   /// Subtracts two ACE_Time_Value objects, returns the difference.
   friend ACE_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1,
-					       const ACE_Time_Value &tv2);
+                                               const ACE_Time_Value &tv2);
 
   /// True if @a tv1 < @a tv2.
   friend ACE_Export bool operator < (const ACE_Time_Value &tv1,
@@ -299,7 +301,7 @@ public:
   //@{
   /// Multiplies the time value by @a d
   friend ACE_Export ACE_Time_Value operator * (double d,
-					       const ACE_Time_Value &tv);
+                                               const ACE_Time_Value &tv);
 
   friend ACE_Export ACE_Time_Value operator * (const ACE_Time_Value &tv,
                                                   double d);
@@ -346,6 +348,8 @@ private:
 static const ACE_Time_Value& __zero_time = ACE_Time_Value::zero;
 static const ACE_Time_Value& __max_time = ACE_Time_Value::max_time;
 #endif /* __MINGW32__ */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

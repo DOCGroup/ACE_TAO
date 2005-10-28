@@ -17,6 +17,8 @@ ACE_RCSID (ace,
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_socket.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 size_t
 ACE_WIN32_Asynch_Result::bytes_transferred (void) const
 {
@@ -3769,5 +3771,7 @@ template class ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_WIN32_Asynch_Connect_Res
 #pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_WIN32_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 || ACE_HAS_WINCE */

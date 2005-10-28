@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -73,6 +73,8 @@
 #if !defined (ACE_DEFAULT_THREAD_MANAGER_LOCK)
 # define ACE_DEFAULT_THREAD_MANAGER_LOCK ACE_SYNCH_MUTEX
 #endif /* ACE_DEFAULT_THREAD_MANAGER_LOCK */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations.
 class ACE_Task_Base;
@@ -1134,6 +1136,8 @@ private:
         ACE_Singleton<ACE_Thread_Manager, ACE_SYNCH_MUTEX>;
 typedef ACE_Singleton<ACE_Thread_Manager, ACE_SYNCH_MUTEX> ACE_THREAD_MANAGER_SINGLETON;
 #endif /* defined (ACE_THREAD_MANAGER_LACKS_STATICS) */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Thread_Manager.inl"
