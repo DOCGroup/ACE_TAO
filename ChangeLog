@@ -1,6 +1,13 @@
+Fri Oct 28 16:07:45 2005    <ossama@dre.vanderbilt.edu>
+
+	* ace/SSL/SSL_Context.cpp (ACE_SSL_locking_callback):
+	  (ACE_SSL_thread_id):
+
+	  Removed duplicate definitions.
+
 Fri Oct 28 16:42:12 2005  Don Busch  <busch_d@ociweb.com>
 
-        * ace/bin/MakeProjectCreator/config/messaging_optional.mpb
+        * bin/MakeProjectCreator/config/messaging_optional.mpb
 
           Add "after += Messaging" to ensure that CosNaming_Serv and
           CosEvent_Serv always build after Messaging
@@ -963,10 +970,10 @@ Thu Oct 27 09:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Oct 26 17:22:12 2005  Don Busch  <busch_d@ociweb.com>
 
-        * ace/bin/MakeProjectCreator/config/event_serv.mpb
-        * ace/bin/MakeProjectCreator/config/messaging.mpb
-        * ace/bin/MakeProjectCreator/config/messaging_optional.mpb
-        * ace/bin/MakeProjectCreator/config/naming_serv.mpb
+        * bin/MakeProjectCreator/config/event_serv.mpb
+        * bin/MakeProjectCreator/config/messaging.mpb
+        * bin/MakeProjectCreator/config/messaging_optional.mpb
+        * bin/MakeProjectCreator/config/naming_serv.mpb
 
           This is a footprint reduction fix, eliminating a library dependency.
           TAO 1.4 introduced a new dependency on the Messaging, Valuetype,
