@@ -1,3 +1,13 @@
+Fri Oct 28 10:42:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Copy_Disabled.cpp
+	* ace/Copy_Disabled.h:
+	* ace/Makefile.am (libACE_la_SOURCES):
+	* ace/ace.mpc:
+
+	  Reinstituted Copy_Disabled.cpp.  Addresses unresolved symbol
+	  link-time errors.
+
 Fri Oct 28 09:23:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Reverse_Lock_T.h (ACE_Acquire_Method):
