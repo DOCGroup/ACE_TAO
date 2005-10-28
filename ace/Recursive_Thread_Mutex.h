@@ -29,6 +29,8 @@
 
 #include "ace/OS_NS_Thread.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Recursive_Thread_Mutex
  *
@@ -157,6 +159,8 @@ private:
   void operator= (const ACE_Recursive_Thread_Mutex &);
   ACE_Recursive_Thread_Mutex (const ACE_Recursive_Thread_Mutex &);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Recursive_Thread_Mutex.inl"

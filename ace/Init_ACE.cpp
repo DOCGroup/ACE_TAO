@@ -7,6 +7,8 @@ ACE_RCSID (ace,
            "$Id$")
 
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 unsigned int ACE::init_fini_count_ = 0;
 
 int
@@ -39,3 +41,5 @@ ACE::fini (void)
     // application!
     return -1;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

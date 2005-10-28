@@ -1,5 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE const ACE_rwlock_t &
 ACE_RW_Mutex::lock (void) const
@@ -76,3 +79,5 @@ ACE_RW_Mutex::release (void)
 // ACE_TRACE ("ACE_RW_Mutex::release");
   return ACE_OS::rw_unlock (&this->lock_);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

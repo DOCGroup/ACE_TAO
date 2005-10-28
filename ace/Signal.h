@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -31,6 +31,8 @@
 
 // Type of the extended signal handler.
 typedef void (*ACE_Sig_Handler_Ex) (int, siginfo_t *siginfo, ucontext_t *ucontext);
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Sig_Set
@@ -506,16 +508,7 @@ private:
 };
 #endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
 
-#if defined (ACE_HAS_SIG_C_FUNC)
-extern "C" void
-ace_sig_handler_dispatch (int signum, siginfo_t *info, ucontext_t *context);
-
-#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
-extern "C" void
-ace_sig_handlers_dispatch (int signum, siginfo_t *info, ucontext_t *context);
-#endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
-
-#endif /* ACE_HAS_SIG_C_FUNC */
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Signal.inl"

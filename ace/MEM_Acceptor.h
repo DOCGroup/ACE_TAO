@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -35,6 +35,8 @@
 #if !defined (ACE_HAS_WINCE)
 #include "ace/OS_QoS.h"
 #endif  // ACE_HAS_WINCE
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decl.
 class ACE_Reactor;
@@ -182,6 +184,8 @@ private:
   /// Preferred signaling strategy.
   ACE_MEM_IO::Signal_Strategy preferred_strategy_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/MEM_Acceptor.inl"

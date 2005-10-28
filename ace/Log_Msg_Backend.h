@@ -21,6 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Log_Record;
 
 /**
@@ -59,6 +61,8 @@ public:
   /// subclass.
   virtual int log (ACE_Log_Record &log_record) = 0;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_LOG_MSG_BACKEND_H */

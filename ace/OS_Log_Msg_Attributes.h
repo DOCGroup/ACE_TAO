@@ -24,13 +24,18 @@
 #include "ace/os_include/os_stdio.h"
 #include "ace/iosfwd.h"
 
-/// The attributes required by ACE_Log_Msg.
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
+ * @class ACE_OS_Log_Msg_Attributes
+ *
+ * @brief The attributes required by ACE_Log_Msg.
+ *
  * When a new thread is created the TSS resources for the Log_Msg
  * class in the new thread may be inherited by the creator thread.
  * The base_attributes are encapsulated in this class to simplify their
  * manipulation and destruction.
- *
+ * @par
  * The contents of the class must be made available to the OS layer,
  * because they are part of the thread descriptor.
  */
@@ -70,6 +75,8 @@ private:
   ACE_OS_Log_Msg_Attributes (const ACE_OS_Log_Msg_Attributes &);
   ACE_OS_Log_Msg_Attributes &operator= (const ACE_OS_Log_Msg_Attributes &);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

@@ -23,6 +23,8 @@
 
 #include "ace/SV_Shared_Memory.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Shared_Memory_SV
  *
@@ -88,6 +90,8 @@ private:
    /// segments.
    ACE_SV_Shared_Memory shared_memory_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Shared_Memory_SV.inl"

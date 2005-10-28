@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_CONTAINERS_T_C
-#define ACE_CONTAINERS_T_C
+#ifndef ACE_CONTAINERS_T_CPP
+#define ACE_CONTAINERS_T_CPP
 
 #include "ace/Log_Msg.h"
 #include "ace/Malloc_Base.h"
@@ -17,9 +17,7 @@
 #include "ace/Containers_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (ace,
-           Containers_T,
-           "$Id$")
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Bounded_Stack)
 
@@ -1934,5 +1932,6 @@ ACE_Array<T>::operator== (const ACE_Array<T> &s) const
 
 // ****************************************************************
 
+ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_CONTAINERS_T_C */
+#endif /* ACE_CONTAINERS_T_CPP */

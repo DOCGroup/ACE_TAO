@@ -33,7 +33,10 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
-namespace ACE_OS {
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace ACE_OS
+{
 #if defined (ACE_WIN32) && defined (_WIN32_WCE)
 // Something is a bit brain-damaged here and I'm not sure what... this code
 // compiled before the OS reorg for ACE 5.4. Since then it hasn't - eVC
@@ -43,12 +46,16 @@ namespace ACE_OS {
 //    - Steve Huston, 23-Aug-2004
 extern "C++" {
 #endif
+
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_Time_Value gettimeofday (void);
+
 #if defined (ACE_WIN32) && defined (_WIN32_WCE)
 }
 #endif
 } /* namespace ACE_OS */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

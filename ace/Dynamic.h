@@ -46,8 +46,8 @@ public:
    */
   void set (void);
 
-  /// 1 if we were allocated dynamically, else 0.
-  int is_dynamic (void);
+  /// @c true if we were allocated dynamically, else @c false.
+  bool is_dynamic (void);
 
   /// Resets state flag.
   void reset (void);
@@ -60,7 +60,7 @@ private:
    * method is usually called in operator new and then checked and
    * reset in the constructor.
    */
-  int is_dynamic_;
+  bool is_dynamic_;
 };
 
 #if defined (__ACE_INLINE__)

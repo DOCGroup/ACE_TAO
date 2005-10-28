@@ -1,7 +1,10 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "ace/OS_NS_sys_socket.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
 ACE_SSL_SOCK::set_handle (ACE_HANDLE fd)
@@ -25,9 +28,9 @@ ACE_SSL_SOCK::control (int cmd, void *arg) const
 
 ACE_INLINE int
 ACE_SSL_SOCK::set_option (int level,
-		     int option,
-		     void *optval,
-		     int optlen) const
+                     int option,
+                     void *optval,
+                     int optlen) const
 {
 //   switch (option)
 //     {
@@ -37,9 +40,9 @@ ACE_SSL_SOCK::set_option (int level,
 //       return ::BIO_set_read_buffer_size (this->io_bio_, *((int *) optval));
 //     default:
       return ACE_OS::setsockopt (this->get_handle (),
-				 level,
-				 option, (char *) optval,
-				 optlen);
+                                 level,
+                                 option, (char *) optval,
+                                 optlen);
 //    }
 }
 
@@ -47,9 +50,9 @@ ACE_SSL_SOCK::set_option (int level,
 
 ACE_INLINE int
 ACE_SSL_SOCK::get_option (int level,
-		     int option,
-		     void *optval,
-		     int *optlen) const
+                     int option,
+                     void *optval,
+                     int *optlen) const
 {
 //  switch (option)
 //    {
@@ -59,8 +62,10 @@ ACE_SSL_SOCK::get_option (int level,
 //       return ::BIO_get_read_buffer_size (this->io_bio_, *((int *) optval));
 //    default:
       return ACE_OS::getsockopt (this->get_handle (),
-				 level,
-				 option, (char *) optval,
-				 optlen);
+                                 level,
+                                 option, (char *) optval,
+                                 optlen);
 //    }
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

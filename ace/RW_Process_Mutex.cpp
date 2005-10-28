@@ -16,6 +16,8 @@ ACE_RCSID(ace, RW_Process_Mutex, "$Id$")
 #include "ace/OS_NS_fcntl.h"
 #endif /* ACE_WIN32 */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_RW_Process_Mutex)
 
 const ACE_TCHAR *
@@ -27,7 +29,7 @@ ACE_RW_Process_Mutex::unique_name (void)
 
 ACE_RW_Process_Mutex::ACE_RW_Process_Mutex (const ACE_TCHAR *name,
                                             int flags,
-	                                        mode_t mode )
+                                                mode_t mode )
   : lock_ (name ? name : this->unique_name (), flags, mode)
 {
 // ACE_TRACE ("ACE_RW_Process_Mutex::ACE_RW_Process_Mutex");
@@ -63,3 +65,5 @@ template class ACE_Malloc_Lock_Adapter_T<ACE_RW_Process_Mutex>;
 #pragma instantiate ACE_Malloc_Lock_Adapter_T<ACE_RW_Process_Mutex>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

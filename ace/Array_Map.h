@@ -32,6 +32,7 @@
 #include <iterator>
 #include <functional>
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Array_Map
@@ -299,6 +300,8 @@ bool operator<  (ACE_Array_Map<Key, Value, EqualTo> const & lhs,
                  ACE_Array_Map<Key, Value, EqualTo> const & rhs);
 
 // --------------------------------------------------------------
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #ifdef __ACE_INLINE__
 # include "ace/Array_Map.inl"

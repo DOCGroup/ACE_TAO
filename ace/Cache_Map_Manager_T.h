@@ -25,6 +25,8 @@
 #include "ace/Global_Macros.h"
 #include "ace/Pair_T.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward declaration.
 class ACE_Allocator;
 
@@ -383,6 +385,8 @@ protected:
   /// belonging to the Cache_Map_Manager.
   REVERSE_IMPLEMENTATION reverse_iterator_implementation_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Cache_Map_Manager_T.inl"

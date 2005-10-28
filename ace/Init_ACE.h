@@ -8,8 +8,6 @@
  *
  *  Initialize ACE library services.  Can be called only once per
  *  program invocation.
- *
- *  @author Priyanka Gontla <pgontla@ece.uci.edu>
  */
 //=============================================================================
 
@@ -25,12 +23,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-/**
- * @class ACE_Init_ACE
- *
- * @brief
- *
- */
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace ACE
 {
   /**
@@ -60,6 +54,8 @@ namespace ACE
    */
   extern unsigned int init_fini_count_;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

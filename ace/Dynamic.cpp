@@ -1,4 +1,3 @@
-// Dynamic.cpp
 // $Id$
 
 #include "ace/Dynamic.h"
@@ -13,8 +12,10 @@
 
 ACE_RCSID(ace, Dynamic, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_Dynamic::ACE_Dynamic (void)
-  : is_dynamic_ (0)
+  : is_dynamic_ (false)
 {
   ACE_TRACE ("ACE_Dynamic::ACE_Dynamic");
 }
@@ -43,3 +44,5 @@ template ACE_TSS_Singleton<ACE_Dynamic, ACE_Null_Mutex> *
   ACE_TSS_Singleton<ACE_Dynamic, ACE_Null_Mutex>::singleton_;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

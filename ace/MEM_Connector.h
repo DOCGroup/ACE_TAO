@@ -31,6 +31,8 @@
 #include "ace/MEM_Stream.h"
 #include "ace/MEM_Addr.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_MEM_Connector
  *
@@ -169,6 +171,8 @@ private:
   /// Preferred signaling strategy.
   ACE_MEM_IO::Signal_Strategy preferred_strategy_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/MEM_Connector.inl"

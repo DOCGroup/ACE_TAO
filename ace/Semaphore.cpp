@@ -13,6 +13,8 @@ ACE_RCSID (ace,
            Semaphore,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Semaphore)
 
 void
@@ -56,3 +58,5 @@ ACE_Semaphore::~ACE_Semaphore (void)
 
   this->remove ();
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -26,6 +26,9 @@
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/ACE_export.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Cleanup
  *
@@ -112,6 +115,8 @@ private:
    */
   ACE_Cleanup_Info_Node *registered_objects_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

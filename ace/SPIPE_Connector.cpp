@@ -12,6 +12,8 @@
 
 ACE_RCSID(ace, SPIPE_Connector, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_SPIPE_Connector)
 
 // Creates a Local ACE_SPIPE.
@@ -156,3 +158,5 @@ ACE_SPIPE_Connector::connect (ACE_SPIPE_Stream &new_io,
 
   return handle == ACE_INVALID_HANDLE ? -1 : 0;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

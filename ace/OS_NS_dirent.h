@@ -33,6 +33,8 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -84,6 +86,8 @@ namespace ACE_OS {
   dirent *readdir_emulation (ACE_DIR *);
 
 } /* namespace ACE_OS */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

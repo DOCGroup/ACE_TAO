@@ -22,6 +22,8 @@ ACE_RCSID (ACE_SSL,
            SSL_SOCK_Acceptor,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_SSL_SOCK_Acceptor::~ACE_SSL_SOCK_Acceptor (void)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::~ACE_SSL_SOCK_Acceptor");
@@ -242,5 +244,6 @@ ACE_SSL_SOCK_Acceptor::accept (ACE_SSL_SOCK_Stream &new_stream,
     }
 
   return 0;
-
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -33,11 +33,18 @@
 
 #if defined (ACE_HAS_FORE_ATM_WS2) || defined (ACE_HAS_LINUX_ATM)
 #include "ace/SOCK_Acceptor.h"
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ACE_SOCK_Acceptor ATM_Acceptor;
+ACE_END_VERSIONED_NAMESPACE_DECL
 #elif defined (ACE_HAS_FORE_ATM_XTI)
 #include "ace/TLI_Acceptor.h"
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ACE_TLI_Acceptor ATM_Acceptor;
+ACE_END_VERSIONED_NAMESPACE_DECL
 #endif // ACE_HAS_FORE_ATM_WS2 || ACE_HAS_LINUX_ATM
+
+// Open versioned namespace, if enabled by the user.
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations.
 class ACE_Time_Value
@@ -102,6 +109,10 @@ public:
 private:
   ATM_Acceptor acceptor_;
 };
+
+// Close versioned namespace, if enabled by the user.
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 
 #if defined (__ACE_INLINE__)
 #include "ace/ATM_Acceptor.inl"

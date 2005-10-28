@@ -25,6 +25,8 @@
 #include "ace/Free_List.h"
 #include "ace/Guard_T.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Cached_Mem_Pool_Node
  *
@@ -887,6 +889,8 @@ class ACE_Malloc_Lock_Adapter_T
 public:
   ACE_LOCK * operator () (const ACE_TCHAR *myname);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Malloc_T.inl"

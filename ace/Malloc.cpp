@@ -16,6 +16,8 @@ ACE_RCSID (ace,
            "$Id$")
 
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Process-wide ACE_Allocator.
 ACE_Allocator *ACE_Allocator::allocator_ = 0;
 
@@ -205,3 +207,5 @@ template class ACE_Atomic_Op_Ex<ACE_PROCESS_MUTEX, int>;
 #pragma instantiate ACE_Atomic_Op_Ex<ACE_PROCESS_MUTEX, int>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 #endif /*ACE_HAS_MALLOC_STATS*/
+
+ACE_END_VERSIONED_NAMESPACE_DECL

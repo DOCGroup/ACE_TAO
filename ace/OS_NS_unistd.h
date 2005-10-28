@@ -41,7 +41,10 @@
 extern "C" ACE_Export int ftruncate (ACE_HANDLE handle, long len);
 #endif /* ACE_NEEDS_FTRUNCATE */
 
-namespace ACE_OS {
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace ACE_OS
+{
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int access (const char *path, int amode);
@@ -341,6 +344,8 @@ namespace ACE_OS {
                    size_t *bytes_transferred = 0);
 
 } /* namespace ACE_OS */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

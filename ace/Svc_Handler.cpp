@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_SVC_HANDLER_C
-#define ACE_SVC_HANDLER_C
+#ifndef ACE_SVC_HANDLER_CPP
+#define ACE_SVC_HANDLER_CPP
 
 #include "ace/Svc_Handler.h"
 
@@ -15,10 +15,10 @@
 
 #include "ace/Dynamic.h"
 
-ACE_RCSID(ace, Svc_Handler, "$Id$")
-
 #define PR_ST_1 ACE_PEER_STREAM_1
 #define PR_ST_2 ACE_PEER_STREAM_2
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <PR_ST_1, ACE_SYNCH_DECL> void *
 ACE_Svc_Handler<PR_ST_2,  ACE_SYNCH_USE>::operator new (size_t,
@@ -509,6 +509,8 @@ ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::handle_timeout (const ACE_Time
   return 0;
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #undef PR_ST_1
 #undef PR_ST_2
-#endif /* ACE_SVC_HANDLER_C */
+#endif /* ACE_SVC_HANDLER_CPP */

@@ -1,5 +1,8 @@
 // -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_HAS_WCHAR)
 ACE_INLINE wint_t
@@ -81,3 +84,4 @@ ACE_OS::ungetwc (wint_t c, FILE* fp)
 }
 #endif /* ACE_HAS_WCHAR */
 
+ACE_END_VERSIONED_NAMESPACE_DECL

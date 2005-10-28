@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -27,8 +27,10 @@
 #include "ace/Reactor_Impl.h"
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-#include "ace/Unbounded_Queue.h"
+# include "ace/Unbounded_Queue.h"
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Add useful typedefs to simplify the following code.
 typedef void (ACE_Handle_Set::*ACE_FDS_PTMF) (ACE_HANDLE);
@@ -39,7 +41,7 @@ class ACE_Select_Reactor_Impl;
 
 /*
  * Hook to specialize the Select_Reactor_Base implementation
- * with the concrete reactor, e.g., select or tp reactor 
+ * with the concrete reactor, e.g., select or tp reactor
  * specified at build/compilation time.
  */
 //@@ REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
@@ -451,7 +453,7 @@ public:
   virtual int resumable_handler (void);
 
   /*
-   * Hook to add concrete methods required to specialize the 
+   * Hook to add concrete methods required to specialize the
    * implementation with concrete methods required for the concrete
    * reactor implementation, for example, select, tp reactors.
    */
@@ -497,24 +499,27 @@ protected:
   /// Defined as a pointer to allow overriding by derived classes...
   ACE_Timer_Queue *timer_queue_;
 
-  /// Keeps track of whether we should delete the timer queue (if we
-  /// didn't create it, then we don't delete it).
-  int delete_timer_queue_;
-
   /// Handle signals without requiring global/static variables.
   ACE_Sig_Handler *signal_handler_;
-
-  /// Keeps track of whether we should delete the signal handler (if we
-  /// didn't create it, then we don't delete it).
-  int delete_signal_handler_;
 
   /// Callback object that unblocks the <ACE_Select_Reactor> if it's
   /// sleeping.
   ACE_Reactor_Notify *notify_handler_;
 
+  /// Keeps track of whether we should delete the timer queue (if we
+  /// didn't create it, then we don't delete it).
+  bool delete_timer_queue_;
+
+  /// Keeps track of whether we should delete the signal handler (if we
+  /// didn't create it, then we don't delete it).
+  bool delete_signal_handler_;
+
   /// Keeps track of whether we need to delete the notify handler (if
   /// we didn't create it, then we don't delete it).
-  int delete_notify_handler_;
+  bool delete_notify_handler_;
+
+  /// True if we've been initialized yet...
+  bool initialized_;
 
   /// Restart the <handle_events> event-loop method automatically when
   /// <select> is interrupted via <EINTR>.
@@ -528,9 +533,6 @@ protected:
    * that indicates the number of waiters to skip over.
    */
   int requeue_position_;
-
-  /// True if we've been initialized yet...
-  int initialized_;
 
   /// The original thread that created this Select_Reactor.
   ACE_thread_t owner_;
@@ -558,6 +560,7 @@ protected:
 
 
 private:
+
   /// Determine whether we should renew Select_Reactor's token after handling
   /// the notification message.
   int supress_renew_;
@@ -566,6 +569,8 @@ private:
   ACE_Select_Reactor_Impl (const ACE_Select_Reactor_Impl &);
   ACE_Select_Reactor_Impl &operator = (const ACE_Select_Reactor_Impl &);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Select_Reactor_Base.inl"

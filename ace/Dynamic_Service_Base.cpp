@@ -9,6 +9,7 @@ ACE_RCSID (ace,
            Dynamic_Service_Base,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 ACE_Dynamic_Service_Base::dump (void) const
@@ -39,6 +40,8 @@ ACE_Dynamic_Service_Base::instance (const ACE_TCHAR *name)
   if (type == 0)
     return 0;
 
-  void *obj = type->object ();
+  void * const obj = type->object ();
   return obj;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

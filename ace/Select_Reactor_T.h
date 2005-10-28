@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -23,9 +23,11 @@
 #include "ace/Lock_Adapter_T.h"
 #include "ace/Token.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /*
- * Hook for specializing the reactor with the concrete 
- * type, for example, select, or thread pool. 
+ * Hook for specializing the reactor with the concrete
+ * type, for example, select, or thread pool.
  */
 //@@ REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
 
@@ -696,6 +698,8 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Select_Reactor_T (const ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &))
   ACE_UNIMPLEMENTED_FUNC (ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &operator=  (const ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &) )
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 // @@ The latest version of SunCC can't grok the code if we put inline
 // function here.  Therefore, we temporarily disable the code here.

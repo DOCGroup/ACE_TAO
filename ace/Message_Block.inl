@@ -1,7 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
-// Message_Block.i
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_Data_Block *
 ACE_Message_Block::data_block (void) const
@@ -621,3 +622,5 @@ ACE_Dynamic_Message_Strategy::priority_status (ACE_Message_Block & mb,
   return status;
 }
   // returns the priority status of the message
+
+ACE_END_VERSIONED_NAMESPACE_DECL

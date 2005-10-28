@@ -1,5 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 ACE_MEM_Acceptor::open (const ACE_Addr &local_sap,
@@ -96,3 +99,5 @@ ACE_MEM_Acceptor::malloc_options (void)
 
   return this->malloc_options_;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,10 +1,12 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
-
-// Return flags currently associated with handle.
 
 #include "ace/OS_NS_fcntl.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+// Return flags currently associated with handle.
 ACE_INLINE int
 ACE::get_flags (ACE_HANDLE handle)
 {
@@ -20,3 +22,5 @@ ACE::get_flags (ACE_HANDLE handle)
   return ACE_OS::fcntl (handle, F_GETFL, 0);
 #endif /* ACE_LACKS_FCNTL */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -7,6 +7,9 @@
 ACE_RCSID(ace, Sbrk_Memory_Pool, "$Id$")
 
 #if !defined (ACE_LACKS_SBRK)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Sbrk_Memory_Pool)
 
 // Ask system for more local memory via sbrk(2).
@@ -107,7 +110,6 @@ ACE_Sbrk_Memory_Pool::base_addr (void) const
   return 0;
 }
 
-
 // Round up the request to a multiple of the page size.
 
 size_t
@@ -116,4 +118,7 @@ ACE_Sbrk_Memory_Pool::round_up (size_t nbytes)
   ACE_TRACE ("ACE_Sbrk_Memory_Pool::round_up");
   return ACE::round_to_pagesize (nbytes);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* !ACE_LACKS_SBRK */

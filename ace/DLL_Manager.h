@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -32,6 +32,9 @@
 
 #define ACE_DEFAULT_DLL_MANAGER_SIZE 1024
 
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_DLL_Handle
  *
@@ -48,9 +51,9 @@
  * extracting symbol information from a DLL, respectively.
  *
  * Most of this class came from the original ACE_DLL class.
- * ACE_DLL is now just an interface that passed all it's calls 
- * either directly or via ACE_DLL_Manager to this class for 
- * execution.  
+ * ACE_DLL is now just an interface that passed all it's calls
+ * either directly or via ACE_DLL_Manager to this class for
+ * execution.
  *
  */
 class ACE_Export ACE_DLL_Handle
@@ -76,12 +79,12 @@ public:
    * processing of any other DLLs.  Returns -1 on failure and 0 on
    * success.
    */
-  int open (const ACE_TCHAR *dll_name, 
+  int open (const ACE_TCHAR *dll_name,
             int open_mode,
             ACE_SHLIB_HANDLE handle);
 
   /// Call to close the DLL object.  If unload = 0, it only decrements
-  /// the refcount, but if unload = 1, then it will actually unload 
+  /// the refcount, but if unload = 1, then it will actually unload
   /// the library when the refcount == 0;
   int close (int unload = 0);
 
@@ -100,7 +103,7 @@ public:
    * caller assumes ownership of the handle so we decrement the retcount.
    */
   ACE_SHLIB_HANDLE get_handle (int become_owner = 0);
- 
+
 private:
   /// Returns a pointer to a string explaining why <symbol> or <open>
   /// failed.  This is used internal to print out the error to the log,
@@ -146,10 +149,10 @@ class ACE_Framework_Repository;
 /**
  * @class ACE_DLL_Manager
  *
- * @brief This class is a singleton and serves as a factory and 
- * repository for instances of ACE_DLL_Handle.  
+ * @brief This class is a singleton and serves as a factory and
+ * repository for instances of ACE_DLL_Handle.
  *
- * This class is a singleton whose lifetime is managed by the 
+ * This class is a singleton whose lifetime is managed by the
  * ACE_Framework_Repository.  Although it is normally meant to be
  * used directly only by ACE_DLL, applications can call the unload_policy()
  * methods in order get/set the the dll unload policy.  Unload policies include
@@ -157,29 +160,29 @@ class ACE_Framework_Repository;
  * by using the ACE_DLL_UNLOAD_POLICY macro found in config-all.h.  If a dll
  * choses to set an unload policy, it will be used when the per-dll policy
  * (the default) is in effect.  If the per-dll policy is in effect and a dll
- * has not chosen to set a policy, the current per-process policy will be 
- * used.  
+ * has not chosen to set a policy, the current per-process policy will be
+ * used.
  *
  * The following policy macros are provided in config-all.h:
  *
- *  ACE_DLL_UNLOAD_POLICY_PER_PROCESS - Per-process policy that unloads dlls 
+ *  ACE_DLL_UNLOAD_POLICY_PER_PROCESS - Per-process policy that unloads dlls
  *  eagerly.
- * 
- *  ACE_DLL_UNLOAD_POLICY_PER_DLL - Apply policy on a per-dll basis.  If the 
- *  dll doesn't use one of the macros below, the current per-process policy 
+ *
+ *  ACE_DLL_UNLOAD_POLICY_PER_DLL - Apply policy on a per-dll basis.  If the
+ *  dll doesn't use one of the macros below, the current per-process policy
  *  will be used.
  *
- *  ACE_DLL_UNLOAD_POLICY_LAZY - Don't unload dll when refcount reaches 
+ *  ACE_DLL_UNLOAD_POLICY_LAZY - Don't unload dll when refcount reaches
  *  zero, i.e., wait for either an explicit unload request or program exit.
  *
- *  ACE_DLL_UNLOAD_POLICY_DEFAULT - Default policy allows dlls to control 
+ *  ACE_DLL_UNLOAD_POLICY_DEFAULT - Default policy allows dlls to control
  *  their own destinies, but will unload those that don't make a choice eagerly.
  *
  */
 class ACE_Export ACE_DLL_Manager
 {
 public:
-  // This if to silence the compiler warnings, even though ACE_Framework_Repository 
+  // This if to silence the compiler warnings, even though ACE_Framework_Repository
   // always uses the instance method.
   friend class ACE_Framework_Repository;
 
@@ -191,10 +194,10 @@ public:
   /// Return a unique instance
   static ACE_DLL_Manager *instance (int size = ACE_DLL_Manager::DEFAULT_SIZE);
 
-  /// Factory for ACE_DLL_Handle objects.  If one already exits, 
+  /// Factory for ACE_DLL_Handle objects.  If one already exits,
   /// its refcount is incremented.
-  ACE_DLL_Handle *open_dll (const ACE_TCHAR *dll_name, 
-                            int openmode, 
+  ACE_DLL_Handle *open_dll (const ACE_TCHAR *dll_name,
+                            int openmode,
                             ACE_SHLIB_HANDLE handle);
 
   /// Close the underlying dll.  Decrements the refcount.
@@ -203,7 +206,7 @@ public:
   /// Returns the current per-process UNLOAD_POLICY.
   u_long unload_policy (void) const;
 
-  /// Set the per-process UNLOAD_POLICY.  If the policy is changed from 
+  /// Set the per-process UNLOAD_POLICY.  If the policy is changed from
   /// LAZY to EAGER, then it will also unload any dlls with zero
   /// refcounts.
   void unload_policy (u_long unload_policy);
@@ -255,6 +258,8 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ACE_DLL_Manager (const ACE_DLL_Manager &))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_DLL_Manager &))
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_DLL_MANAGER_H */

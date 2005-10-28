@@ -7,6 +7,10 @@
 #include "ace/os_include/os_ctype.h"
 #include "ace/OS_NS_sys_socket.h"
 
+// Open versioned namespace, if enabled by the user.
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+
 // Wrappers for methods that have been moved to ACE_OS.
 
 ACE_INLINE ssize_t
@@ -327,3 +331,6 @@ ACE::hex2byte (ACE_TCHAR c)
   else
     return (u_char) (10 + c - ACE_LIB_TEXT ('A'));
 }
+
+// Close versioned namespace, if enabled by the user.
+ACE_END_VERSIONED_NAMESPACE_DECL

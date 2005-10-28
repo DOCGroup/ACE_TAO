@@ -1,3 +1,4 @@
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -46,7 +47,7 @@ public:
   /// Constructor.
   ACE_Thread_Adapter (ACE_THR_FUNC user_func,
                       void *arg,
-                      ACE_THR_C_FUNC entry_point = (ACE_THR_C_FUNC) ace_thread_adapter,
+                      ACE_THR_C_FUNC entry_point = (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME,
                       ACE_Thread_Manager *thr_mgr = 0,
                       ACE_Thread_Descriptor *td = 0
 # if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
@@ -65,21 +66,22 @@ public:
   /// Accessor for the optional <Thread_Manager>.
   ACE_Thread_Manager *thr_mgr (void);
 
-private:
+protected:
+
   /// Ensure that this object must be allocated on the heap.
   ~ACE_Thread_Adapter (void);
+
+private:
 
   /// Called by invoke, mainly here to separate the SEH stuff because
   /// SEH on Win32 doesn't compile with local vars with destructors.
   virtual ACE_THR_FUNC_RETURN invoke_i (void);
 
 private:
+
   /// Optional thread manager.
   ACE_Thread_Manager *thr_mgr_;
 
-  /// Friend declaration to avoid compiler warning:  only defines a private
-  /// destructor and has no friends.
-  friend class ACE_Thread_Adapter_Has_Private_Destructor;
 };
 
 # if defined (ACE_HAS_INLINED_OSCALLS)

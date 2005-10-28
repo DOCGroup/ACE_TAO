@@ -23,6 +23,8 @@
 
 #include "ace/SPIPE_Addr.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_SPIPE
  *
@@ -103,6 +105,8 @@ protected:
   /// Our local address.
   ACE_SPIPE_Addr local_addr_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/SPIPE.inl"

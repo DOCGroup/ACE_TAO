@@ -24,6 +24,8 @@
 #include "ace/OS_NS_time.h"
 #include "ace/Time_Value.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_High_Res_Timer
  *
@@ -309,6 +311,8 @@ private:
    */
   static int global_scale_factor_status_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/High_Res_Timer.inl"

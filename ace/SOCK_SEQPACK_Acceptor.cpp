@@ -15,6 +15,8 @@
 
 ACE_RCSID(ace, SOCK_SEQPACK_Acceptor, "SOCK_SEQPACK_Acceptor.cpp,v 4.30 2002/03/08 23:18:09 spark Exp")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_SEQPACK_Acceptor)
 
 // Do nothing routine for constructor.
@@ -591,3 +593,4 @@ ACE_SOCK_SEQPACK_Acceptor::close (void)
   return ACE_SOCK::close ();
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -30,6 +30,8 @@
 #include "ace/Global_Macros.h"
 #include "ace/os_include/sys/os_types.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward declaration
 class ACE_Time_Value;
 
@@ -587,18 +589,18 @@ protected:
 class ACE_Threads_Export ACE_Managed_Process : public ACE_Process
 {
 public:
-  ACE_Managed_Process ();
 
   /// Cleanup by deleting @c this.
   virtual void unmanage (void);
 
-private:
+protected:
+
   /// Make sure that we're allocated dynamically!
   virtual ~ACE_Managed_Process (void);
 
-  /// Keep G++ happy...
-  friend class ace_dewarn_gplusplus;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Process.inl"

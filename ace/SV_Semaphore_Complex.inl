@@ -1,5 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 ACE_SV_Semaphore_Complex::acquire (u_short n, int flags) const
@@ -77,3 +80,5 @@ ACE_SV_Semaphore_Complex::control (int cmd, int value, u_short n) const
   ACE_TRACE ("ACE_SV_Semaphore_Complex::control");
   return ACE_SV_Semaphore_Simple::control (cmd, value, (u_short) n + 2);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -275,6 +275,8 @@ get_windows_version()
 
 #endif //(ACE_WIN32) && !(ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 == 0)
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Bind socket to an unused port.
 
 int
@@ -1533,3 +1535,5 @@ template class ACE_Auto_Basic_Array_Ptr<struct ifreq>;
 #pragma instantiate ACE_Auto_Basic_Array_Ptr<struct ifreq>
 #  endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 #endif /* (__unix || __Lynx_ || AIX ) */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

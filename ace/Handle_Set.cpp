@@ -11,6 +11,8 @@
 
 ACE_RCSID(ace, Handle_Set, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Handle_Set)
 
   // ACE_MSB_MASK is only used here.
@@ -572,3 +574,5 @@ ACE_Handle_Set_Iterator::reset_state (void)
       }
 #endif /* !ACE_WIN32 && !ACE_HAS_BIG_FD_SET */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

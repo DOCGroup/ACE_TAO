@@ -8,6 +8,8 @@
 
 ACE_RCSID(ace, Lock, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_Lock::~ACE_Lock (void)
 {
 }
@@ -82,3 +84,5 @@ ACE_Adaptive_Lock::dump (void) const
   //  return this->lock_->dump ();
 #endif /* ACE_HAS_DUMP */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

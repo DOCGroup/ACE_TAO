@@ -32,6 +32,8 @@
 #include "ace/ACE.h"
 #include "ace/os_include/sys/os_mman.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Pagefile_Memory_Pool_Options
  *
@@ -190,6 +192,8 @@ private:
   /// Name of the backing store where the shared memory pool is kept.
   ACE_TCHAR backing_store_name_[MAXPATHLEN];
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 */
 

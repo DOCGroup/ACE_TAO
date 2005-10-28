@@ -1,8 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 #define ACE_T1 class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES
 #define ACE_T2 KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <ACE_T1> ACE_INLINE int
 ACE_Hash_Cache_Map_Manager<ACE_T2>::bind (const KEY &key,
@@ -63,6 +66,8 @@ ACE_Hash_Cache_Map_Manager<ACE_T2>::unbind (const KEY &key,
   return ACE_HCMM_BASE::unbind (key,
                                 value);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #undef ACE_T1
 #undef ACE_T2

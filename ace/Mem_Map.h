@@ -32,6 +32,8 @@
 #include "ace/os_include/os_fcntl.h"
 #include "ace/Default_Constants.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Mem_Map
  *
@@ -216,6 +218,8 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Mem_Map (const ACE_Mem_Map &))
   ACE_UNIMPLEMENTED_FUNC (void operator = (const ACE_Mem_Map &))
 };
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Mem_Map.inl"

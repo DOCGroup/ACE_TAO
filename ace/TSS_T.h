@@ -37,6 +37,8 @@
 
 #include "ace/Thread_Mutex.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_TSS
  *
@@ -170,6 +172,8 @@ private:
   /// The wrapped value.
   TYPE value_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/TSS_T.inl"

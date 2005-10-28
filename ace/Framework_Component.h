@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    Framework_Component.h
@@ -46,6 +47,8 @@
 #include "ace/Thread_Mutex.h"
 
 #define ACE_DEFAULT_FRAMEWORK_REPOSITORY_SIZE 1024
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Framework_Component
@@ -184,6 +187,8 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Framework_Repository (const ACE_Framework_Repository &))
   ACE_UNIMPLEMENTED_FUNC (ACE_Framework_Repository &operator= (const ACE_Framework_Repository &))
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Framework_Component.inl"

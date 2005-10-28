@@ -1,4 +1,5 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "ace/OS_NS_macros.h"
@@ -38,6 +39,8 @@
   } while(0)
 # endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 #endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if !defined (VXWORKS)
 
@@ -526,3 +529,5 @@ ACE_OS::getservbyname_r (const char *svc,
                        0);
 #endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE) */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

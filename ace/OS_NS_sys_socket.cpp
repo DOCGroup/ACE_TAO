@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "ace/OS_NS_sys_socket.h"
@@ -8,6 +7,8 @@ ACE_RCSID(ace, OS_NS_sys_socket, "$Id$")
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_sys_socket.inl"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_WIN32)
 int ACE_OS::socket_initialized_;
@@ -157,3 +158,4 @@ ACE_OS::socket_fini (void)
   return 0;
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL

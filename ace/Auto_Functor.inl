@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename X, typename Functor> ACE_INLINE
 ACE_Utils::Auto_Functor_Ref<X,Functor>::
@@ -141,3 +145,5 @@ ACE_Utils::Auto_Functor<X,Functor>::operator ACE_Utils::Auto_Functor_Ref<X,Funct
 }
 
 #endif /* ACE_LACKS_MEMBER_TEMPLATES */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

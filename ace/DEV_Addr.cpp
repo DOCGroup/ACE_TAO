@@ -1,4 +1,3 @@
-// DEV_Addr.cpp
 // $Id$
 
 #include "ace/DEV_Addr.h"
@@ -12,6 +11,8 @@
 ACE_RCSID (ace,
            DEV_Addr,
            "$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_DEV_Addr)
 
@@ -56,7 +57,7 @@ ACE_DEV_Addr::ACE_DEV_Addr (void)
   ACE_TRACE ("ACE_DEV_Addr::ACE_DEV_Addr");
 
   (void) ACE_OS::memset ((void *) &this->devname_,
-			 0, sizeof this->devname_);
+                         0, sizeof this->devname_);
 }
 
 int
@@ -104,3 +105,4 @@ ACE_DEV_Addr::operator= (const ACE_DEV_Addr &sa)
   return *this;
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -22,6 +22,8 @@ ACE_RCSID (ace,
            INET_Addr,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_INET_Addr)
 
 // Transform the current address into string format.
@@ -35,9 +37,10 @@ ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
 
   // XXX Can we (should we) include the scope id for IPv6 addresses?
 
-  size_t total_len = (ipaddr_format == 0 ?
-                      ACE_OS::strlen (this->get_host_name ()) :
-                      ACE_OS::strlen (this->get_host_addr ()))
+  size_t const total_len =
+    (ipaddr_format == 0
+     ? ACE_OS::strlen (this->get_host_name ())
+     : ACE_OS::strlen (this->get_host_addr ()))
     + ACE_OS::strlen ("65536") // Assume the max port number.
     + sizeof (':')
     + sizeof ('\0'); // For trailing '\0'.
@@ -111,7 +114,7 @@ ACE_INET_Addr::hash (void) const
 }
 
 ACE_INET_Addr::ACE_INET_Addr (void)
-  : ACE_Addr (this->determine_type(), sizeof (inet_addr_))
+  : ACE_Addr (this->determine_type (), sizeof (inet_addr_))
 {
   // ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   this->reset ();
@@ -1089,3 +1092,5 @@ ACE_INET_Addr::get_ip_address (void) const
 #endif /* ACE_HAS_IPV6 */
   return ntohl (ACE_UINT32 (this->inet_addr_.in4_.sin_addr.s_addr));
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

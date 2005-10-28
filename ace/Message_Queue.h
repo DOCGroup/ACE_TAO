@@ -22,6 +22,8 @@
 
 #include "ace/IO_Cntl_Msg.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward decls.
 class ACE_Notification_Strategy;
 template <ACE_SYNCH_DECL> class ACE_Message_Queue_Iterator;
@@ -598,6 +600,7 @@ private:
 };
 #endif /* ACE_WIN32 && ACE_HAS_WINNT4 != 0 */
 
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Message_Queue.inl"

@@ -27,13 +27,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS_NS_errno.h"
+#include "ace/config-all.h"
 
 // ACE platform supports some form of threading.
 #if !defined (ACE_HAS_THREADS)
 
-#include "ace/config-all.h"
+#include "ace/OS_NS_errno.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Barrier
@@ -189,6 +190,8 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Barrier.inl"

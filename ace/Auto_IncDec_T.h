@@ -24,6 +24,8 @@
 
 #include "ace/Global_Macros.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Auto_IncDec
  *
@@ -61,6 +63,8 @@ private:
     ACE_UNIMPLEMENTED_FUNC (ACE_Auto_IncDec (const
                                              ACE_Auto_IncDec<ACE_SAFELY_INCREMENTABLE_DECREMENTABLE> &))
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Auto_IncDec_T.inl"

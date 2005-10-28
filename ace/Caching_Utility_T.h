@@ -27,6 +27,8 @@
 // For linkers that cant grok long names.
 #define ACE_Pair_Caching_Utility APUTIL
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Pair_Caching_Utility
  *
@@ -329,6 +331,8 @@ private:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Null_Caching_Utility<KEY,VALUE,CONTAINER,ITERATOR,ATTRIBUTES> &))
   ACE_UNIMPLEMENTED_FUNC (ACE_Null_Caching_Utility (const ACE_Null_Caching_Utility<KEY,VALUE,CONTAINER,ITERATOR,ATTRIBUTES> &))
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Caching_Utility_T.cpp"

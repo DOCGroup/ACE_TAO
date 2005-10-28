@@ -2,6 +2,8 @@
 //
 //$Id$
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class KEY, class VALUE, class MAP, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES> ACE_INLINE int
 ACE_Cache_Map_Manager<KEY, VALUE, MAP, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES>::purge (void)
 {
@@ -240,3 +242,4 @@ ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRAT
   return this->reverse_iterator_implementation_;
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL

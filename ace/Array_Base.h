@@ -22,6 +22,8 @@
 #include "ace/Global_Macros.h"
 #include "ace/Malloc_Base.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward declaration.
 template <class T> class ACE_Array_Iterator;
 
@@ -189,6 +191,8 @@ private:
   /// Pointer to the Array we're iterating over.
   ACE_Array_Base<T> &array_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Array_Base.inl"

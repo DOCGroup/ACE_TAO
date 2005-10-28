@@ -32,6 +32,9 @@
 #  pragma warning(disable: 4284)
 #endif /* _MSC_VER */
 
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Auto_Basic_Ptr
  *
@@ -162,6 +165,8 @@ public:
 
   X *operator-> () const;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 // Some platforms have an older version of auto_ptr
 // support, which lacks reset, and cannot be disabled

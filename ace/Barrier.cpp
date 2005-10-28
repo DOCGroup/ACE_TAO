@@ -14,7 +14,11 @@
 #  include "ace/Log_Msg.h"
 #endif /* ACE_HAS_DUMP */
 
-ACE_RCSID(ace, Barrier, "$Id$")
+ACE_RCSID (ace,
+           Barrier,
+           "$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Sub_Barrier)
 
@@ -147,5 +151,7 @@ ACE_Process_Barrier::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 #endif /* 0 */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_THREADS */

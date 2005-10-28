@@ -38,7 +38,7 @@
 
 #include "ace/Malloc_Base.h"
 
-ACE_RCSID(ace, Hash_Map_Manager_T, "$Id$")
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class EXT_ID, class INT_ID>
 ACE_Hash_Map_Entry<EXT_ID, INT_ID>::ACE_Hash_Map_Entry (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *next,
@@ -517,5 +517,7 @@ ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_
 
   return this->index_ >= 0;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HASH_MAP_MANAGER_T_CPP */

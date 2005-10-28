@@ -27,6 +27,8 @@
 #include "ace/UNIX_Addr.h"
 #include "ace/LSOCK.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_LSOCK_Stream
  *
@@ -68,6 +70,8 @@ public:
   /// for UNIX domain sockets.
   int get_remote_addr (ACE_Addr &) const;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/LSOCK_Stream.inl"

@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_NODE_C
-#define ACE_NODE_C
+#ifndef ACE_NODE_CPP
+#define ACE_NODE_CPP
 
 #include "ace/Node.h"
 
@@ -9,7 +9,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_RCSID(ace, Node, "$Id$")
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Node)
 
@@ -43,4 +43,6 @@ ACE_Node<T>::ACE_Node (const ACE_Node<T> &s)
   // ACE_TRACE ("ACE_Node<T>::ACE_Node");
 }
 
-#endif /* ACE_NODE_C */
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_NODE_CPP */

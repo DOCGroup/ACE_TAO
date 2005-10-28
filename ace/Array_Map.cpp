@@ -11,6 +11,7 @@
 
 #include <algorithm>
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #ifndef ACE_LACKS_MEMBER_TEMPLATES
 template<typename Key, typename Value, class EqualTo>
@@ -280,5 +281,7 @@ operator< (ACE_Array_Map<Key, Value, EqualTo> const & lhs,
   return std::lexicographical_compare (lhs.begin (), lhs.end (),
                                        rhs.begin (), rhs.end ());
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* ACE_ARRAY_MAP_CPP */

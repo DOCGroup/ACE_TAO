@@ -9,6 +9,8 @@
 
 ACE_RCSID(ace, SV_Message_Queue, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_SV_Message_Queue)
 
 void
@@ -30,11 +32,13 @@ ACE_SV_Message_Queue::~ACE_SV_Message_Queue (void)
 }
 
 ACE_SV_Message_Queue::ACE_SV_Message_Queue (key_t external_id,
-					    int create,
-					    int perms)
+                                            int create,
+                                            int perms)
 {
   ACE_TRACE ("ACE_SV_Message_Queue::ACE_SV_Message_Queue");
   if (this->open (external_id, create, perms) == -1)
     ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("%p\n"),
-		ACE_LIB_TEXT ("ACE_SV_Message_Queue::ACE_SV_Message_Queue")));
+                ACE_LIB_TEXT ("ACE_SV_Message_Queue::ACE_SV_Message_Queue")));
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

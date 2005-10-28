@@ -5,6 +5,8 @@
 #include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class X, class ACE_LOCK> inline int
 ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::count (void) const
 {
@@ -212,3 +214,5 @@ ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::operator = (const ACE_Refcounted_Auto_Ptr<
   AUTO_REFCOUNTED_PTR_REP::assign (this->rep_,
                                    AUTO_REFCOUNTED_PTR_REP::attach (r.rep_));
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

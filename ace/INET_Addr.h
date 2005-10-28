@@ -27,6 +27,8 @@
 #  include /**/ "inetLib.h"
 #endif /* VXWORKS */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_INET_Addr
  *
@@ -360,6 +362,8 @@ private:
   char buf_[INET_ADDR_LEN];
 #endif
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/INET_Addr.inl"

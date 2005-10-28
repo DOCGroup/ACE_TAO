@@ -1,7 +1,10 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "ace/OS_NS_errno.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void *
 ACE_OS::shmat (int int_id, void *shmaddr, int shmflg)
@@ -60,3 +63,5 @@ ACE_OS::shmget (key_t key, size_t size, int flags)
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_SYSV_IPC */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

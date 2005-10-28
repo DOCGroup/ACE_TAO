@@ -19,6 +19,8 @@ ACE_RCSID (ace,
            Ping_Socket,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE (ACE_Ping_Socket)
 
 //---------------------------------------------------------------------------
@@ -361,5 +363,7 @@ ACE_Ping_Socket::make_echo_check (ACE_INET_Addr & remote_addr,
 
   return this->receive_echo_reply (timeout);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* ACE_HAS_ICMP_SUPPORT == 1 */

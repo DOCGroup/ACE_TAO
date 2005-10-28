@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "ace/OS_NS_unistd.h"
@@ -38,6 +37,8 @@ ftruncate (ACE_HANDLE handle, long len)
 #endif /* ACE_NEEDS_FTRUNCATE */
 
 /*****************************************************************************/
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 ACE_OS::argv_to_string (ACE_TCHAR **argv,
@@ -311,7 +312,7 @@ ACE_OS::num_processors (void)
   int num_processors;
   int mib[2] = { CTL_HW, HW_NCPU };
   size_t len = sizeof (num_processors);
-  
+
   sysctl(mib, 2, &num_processors, &len, NULL, 0);
   return num_processors;
 #else
@@ -342,7 +343,7 @@ ACE_OS::num_processors_online (void)
   int num_processors;
   int mib[2] = { CTL_HW, HW_NCPU };
   size_t len = sizeof (num_processors);
-  
+
   sysctl(mib, 2, &num_processors, &len, NULL, 0);
   return num_processors;
 #else
@@ -776,3 +777,4 @@ ACE_OS::write_n (ACE_HANDLE handle,
   return bytes_transferred;
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL

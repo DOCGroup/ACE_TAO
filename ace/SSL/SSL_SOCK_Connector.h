@@ -30,6 +30,8 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/OS_QoS.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_SSL_SOCK_Connector
  *
@@ -258,13 +260,13 @@ public:
   int connect (ACE_SSL_SOCK_Stream &new_stream,
                const ACE_Addr &remote_sap,
                ACE_QoS_Params qos_params,
-	       const ACE_Time_Value *timeout = 0,
-	       const ACE_Addr &local_sap = ACE_Addr::sap_any,
+               const ACE_Time_Value *timeout = 0,
+               const ACE_Addr &local_sap = ACE_Addr::sap_any,
                ACE_Protocol_Info *protocolinfo = 0,
                ACE_SOCK_GROUP g = 0,
                u_long flags = 0,
-	       int reuse_addr = 0,
-	       int perms = 0);
+               int reuse_addr = 0,
+               int perms = 0);
 
   /**
    * Try to complete a non-blocking connection.
@@ -304,6 +306,8 @@ private:
   ACE_SOCK_Connector connector_;
 
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "SSL_SOCK_Connector.i"

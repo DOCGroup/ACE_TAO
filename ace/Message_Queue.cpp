@@ -13,6 +13,8 @@ ACE_RCSID (ace,
            "$Id$")
 
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_Message_Queue_Base::~ACE_Message_Queue_Base (void)
 {
 }
@@ -605,3 +607,5 @@ ACE_Message_Queue_NT::dump (void) const
 }
 
 #endif /* ACE_WIN32 && ACE_HAS_WINNT4 != 0 */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

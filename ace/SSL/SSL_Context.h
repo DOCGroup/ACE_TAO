@@ -33,20 +33,16 @@
 #ifdef ACE_HAS_THREADS
 extern "C"
 {
-
   /// Mutex locking/unlocking callback for OpenSSL multithread
   /// support.
   void ACE_SSL_locking_callback (int mode,
                                  int type,
                                  const char * file,
                                  int line);
-
-  /// Return the current thread ID.  OpenSSL uses this on platforms
-  /// that need it.
-  unsigned long ACE_SSL_thread_id (void);
 }
 #endif  /* ACE_HAS_THREADS */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_SSL_Export ACE_SSL_Data_File
 {
@@ -88,7 +84,7 @@ private:
  */
 class ACE_SSL_Export ACE_SSL_Context
 {
-  friend void ACE_SSL_locking_callback (int, int, const char *, int);
+  friend void ::ACE_SSL_locking_callback (int, int, const char *, int);
 
 public:
 
@@ -353,6 +349,8 @@ private:
 #endif
 
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
 #include "SSL_Context.inl"

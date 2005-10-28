@@ -29,6 +29,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/Containers_T.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Multihomed_INET_Addr
@@ -190,6 +191,8 @@ public:
 private:
   ACE_Array<ACE_INET_Addr> secondaries_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #  include "ace/Multihomed_INET_Addr.inl"

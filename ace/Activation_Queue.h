@@ -34,8 +34,9 @@
 /// Define to be compatible with the terminology in the POSA2 book!
 #define ACE_Activation_List ACE_Activation_Queue
 
-class ACE_Method_Request;
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+class ACE_Method_Request;
 
 /**
  * @class ACE_Activation_Queue
@@ -163,10 +164,11 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Activation_Queue (const ACE_Activation_Queue &))
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
 #include "ace/Activation_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_ACTIVATION_QUEUE_H */
-

@@ -9,14 +9,13 @@
 #include "ace/OS_NS_netdb.h"
 #include "ace/OS_NS_sys_socket.h"
 
-#if !defined (__ACE_INLINE__)
-# include "ace/ICMP_Socket.inl"
-#endif  /* !__ACE_INLINE__ */
-
 
 ACE_RCSID (ace,
            ICMP_Socket,
            "$Id$")
+
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE (ACE_ICMP_Socket)
 
@@ -181,5 +180,7 @@ ACE_ICMP_Socket::calculate_checksum (unsigned short * paddress,
 
   return (answer);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* ACE_HAS_ICMP_SUPPORT == 1 */

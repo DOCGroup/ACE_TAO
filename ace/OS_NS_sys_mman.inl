@@ -1,4 +1,5 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "ace/OS_NS_fcntl.h"
@@ -10,6 +11,8 @@
 #if defined (__Lynx__)
 #  include "ace/OS_NS_sys_stat.h"
 #endif /* __Lynx__ */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_HAS_VOIDPTR_MMAP)
 // Needed for some odd OS's (e.g., SGI).
@@ -326,3 +329,4 @@ ACE_OS::shm_unlink (const ACE_TCHAR *path)
 # endif /* ACE_HAS_SHM_OPEN */
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL

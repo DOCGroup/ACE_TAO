@@ -41,6 +41,8 @@
 #include "ace/ACE_export.h"
 #include "ace/Basic_Types.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 //////////////////////////////////////////////////////////////
 // GOF Command Pattern Classes and Template Specializations //
 //////////////////////////////////////////////////////////////
@@ -468,6 +470,8 @@ public:
 };
 
 #endif  // ACE_HAS_WCHAR
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Functor.inl"

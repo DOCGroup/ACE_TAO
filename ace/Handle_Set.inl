@@ -1,7 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
-// Handle_Set.i
 #include "ace/Log_Msg.h"
 
 // todo: This should be cleaned up a bit.
@@ -20,6 +20,8 @@
 #if defined (ACE_HAS_STRINGS)
 #  include "ace/os_include/os_strings.h"
 #endif /* ACE_HAS_STRINGS */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Initialize the bitmask to all 0s and reset the associated fields.
 
@@ -184,3 +186,5 @@ ACE_INLINE
 ACE_Handle_Set_Iterator::~ACE_Handle_Set_Iterator (void)
 {
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

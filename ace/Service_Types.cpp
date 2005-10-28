@@ -16,6 +16,7 @@ ACE_RCSID (ace,
            Service_Types,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef ACE_Stream<ACE_SYNCH> MT_Stream;
 typedef ACE_Module<ACE_SYNCH> MT_Module;
@@ -506,3 +507,5 @@ template class ACE_Thru_Task<ACE_SYNCH>;
   #endif *//* ACE_HAS_THREADS */
 //#else
 //#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

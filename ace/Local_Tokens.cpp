@@ -17,6 +17,8 @@ ACE_RCSID (ace,
            Local_Tokens,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 void
 ACE_Tokens::dump (void) const
 {
@@ -1637,5 +1639,7 @@ template class ACE_Node <ACE_TPQ_Entry *>;
 #pragma instantiate ACE_Unbounded_Stack <ACE_TPQ_Entry *>
 #pragma instantiate ACE_Node <ACE_TPQ_Entry *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_TOKENS_LIBRARY */

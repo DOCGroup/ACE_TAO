@@ -24,6 +24,9 @@
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
 # if !defined (ACE_LACKS_MIN_MAX_TEMPLATES)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class T>
 inline const T &
 ace_min (const T &t1, const T &t2)
@@ -58,6 +61,9 @@ ace_range (const T &min, const T &max, const T &val)
 {
   return ace_min (ace_max (min, val), max);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 # else
 // These macros should only be used if a C++ compiler can't grok the
 // inline templates

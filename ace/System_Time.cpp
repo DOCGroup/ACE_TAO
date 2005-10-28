@@ -1,4 +1,3 @@
-// System_Time.cpp
 // $Id$
 
 #include "ace/System_Time.h"
@@ -7,6 +6,8 @@
 #include "ace/Time_Value.h"
 
 ACE_RCSID(ace, System_Time, "$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_System_Time::ACE_System_Time (const ACE_TCHAR *poolname)
   : delta_time_ (0)
@@ -141,3 +142,5 @@ template class ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_M
 #pragma instantiate ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
 #pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> >
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

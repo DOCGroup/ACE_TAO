@@ -40,6 +40,8 @@ ACE_RCSID (ace,
 #include "ace/os_include/os_poll.h"
 #include "ace/OS_NS_sys_mman.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_Dev_Poll_Reactor_Notify::ACE_Dev_Poll_Reactor_Notify (void)
   : dp_reactor_ (0)
   , notification_pipe_ ()
@@ -912,7 +914,7 @@ ACE_Dev_Poll_Reactor::open (size_t size,
   else if (this->notify_handler_->open (this,
                                         0,
                                         disable_notify_pipe) == -1
-           || (disable_notify_pipe == 0 
+           || (disable_notify_pipe == 0
                && this->register_handler_i (
                                             this->notify_handler_->notify_handle (),
                                             this->notify_handler_,
@@ -2662,5 +2664,7 @@ template class ACE_Reverse_Lock<ACE_Dev_Poll_Reactor_Token>;
 #pragma instantiate ACE_Reverse_Lock<ACE_Dev_Poll_Reactor_Token>
 
 #endif  /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* ACE_HAS_EVENT_POLL || ACE_HAS_DEV_POLL */

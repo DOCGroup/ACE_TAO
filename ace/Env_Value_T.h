@@ -27,6 +27,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Env_Value
  *
@@ -77,6 +79,8 @@ private:
 /// Function to convert a string @a s into type @c T.
 template <class T> void ACE_Convert (const ACE_TCHAR *s, T &t);
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
 #include "ace/Env_Value_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -85,6 +89,7 @@ template <class T> void ACE_Convert (const ACE_TCHAR *s, T &t);
 #include "ace/Env_Value_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Default calls a CTOR on type T of the form 'T::T(const char*)', but
 // users can feel free to create their own specialized conversion
@@ -151,6 +156,8 @@ ACE_Convert (const ACE_TCHAR *s, double &d)
 {
   d = ACE_OS::strtod (s, 0);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Env_Value_T.cpp")

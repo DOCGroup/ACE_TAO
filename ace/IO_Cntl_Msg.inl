@@ -1,5 +1,8 @@
 // -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_IO_Cntl_Msg::ACE_IO_Cntl_Msg (ACE_IO_Cntl_Cmds c)
@@ -55,3 +58,4 @@ ACE_IO_Cntl_Msg::rval (int r)
   this->rval_ = r;
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL

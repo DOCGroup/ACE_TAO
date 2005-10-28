@@ -30,6 +30,8 @@
 // Event_Handler.h contains the definition of ACE_Reactor_Mask
 #include "ace/Event_Handler.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Reactor_Impl;
 class ACE_Handle_Set;
 class ACE_Sig_Action;
@@ -38,7 +40,7 @@ class ACE_Sig_Set;
 
 /*
  * Hook to specialize the Reactor implementation with the concrete
- * Reactor type, for exmaple, select, thread pool reactor known 
+ * Reactor type, for exmaple, select, thread pool reactor known
  * at compile time.
  */
 //@@ REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
@@ -851,6 +853,9 @@ protected:
   ACE_Reactor (const ACE_Reactor &);
   ACE_Reactor &operator = (const ACE_Reactor &);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 
 #if defined (__ACE_INLINE__)
 #include "ace/Reactor.inl"

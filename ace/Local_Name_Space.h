@@ -23,6 +23,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_NS_WString;
 
 /**
@@ -119,6 +121,8 @@ private:
   /// Contains the type of the string.
   const char *type_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 // Include the ACE_Local_Name_Space templates stuff at this point.
 #include "ace/Local_Name_Space_T.h"

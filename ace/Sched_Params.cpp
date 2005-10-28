@@ -29,6 +29,8 @@
 
 ACE_RCSID(ace, Sched_Params, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 int
 ACE_Sched_Params::priority_min (const Policy policy,
                                 const int scope)
@@ -332,3 +334,5 @@ ACE_Sched_Params::previous_priority (const Policy policy,
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

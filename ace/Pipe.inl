@@ -1,8 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 #include "ace/Global_Macros.h"
 #include "ace/ACE.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_Pipe::~ACE_Pipe (void)
@@ -181,3 +184,5 @@ ACE_Pipe::recv (void *buf, size_t n,
   return ACE_OS::read (this->read_handle (), (char *) buf, n,
                        overlapped);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

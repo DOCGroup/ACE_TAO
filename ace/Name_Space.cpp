@@ -7,6 +7,8 @@
 
 ACE_RCSID(ace, Name_Space, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_Name_Binding::ACE_Name_Binding (void)
   : type_ (ACE_OS::strdup (""))
 {
@@ -65,3 +67,5 @@ ACE_Name_Space::~ACE_Name_Space (void)
 {
   ACE_TRACE ("ACE_Name_Space::~ACE_Name_Space");
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

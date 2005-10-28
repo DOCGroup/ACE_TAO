@@ -5,6 +5,8 @@
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_string.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_Config_ImpExp_Base::ACE_Config_ImpExp_Base (ACE_Configuration& config)
   : config_ (config)
 {
@@ -644,3 +646,5 @@ ACE_Ini_ImpExp::squish (ACE_TCHAR *src)
 
   return cp;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

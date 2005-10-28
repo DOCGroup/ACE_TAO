@@ -108,6 +108,9 @@ ace_main_i
 #   elif !defined (ACE_HAS_WINCE)
 
 #     if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Export ACE_Main_Base
 {
 public:
@@ -132,7 +135,11 @@ ACE_WMAIN (int argc, ACE_TCHAR *argv[]) /* user's entry point, e.g., wmain */ \
 int \
 ace_wmain_i
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #     else /* ! (ACE_WIN32 && ACE_USES_WCHAR) */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Export ACE_Main_Base
 {
@@ -158,9 +165,13 @@ ACE_MAIN (int argc, char *argv[]) /* user's entry point, e.g., wmain */ \
 int \
 ace_main_i
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #     endif /* ACE_WIN32 && ACE_USES_WCHAR */
 
 #   else /* ACE_HAS_WINCE */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Export ACE_Main_Base
 {
@@ -168,6 +179,8 @@ public:
   int run (HINSTANCE, HINSTANCE, LPWSTR, int);
   virtual int run_i (int, ACE_TCHAR *[]) = 0;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #     if defined (ACE_TMAIN)  // Use WinMain on CE; others give warning/error.
 #       undef ACE_TMAIN

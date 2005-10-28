@@ -25,6 +25,8 @@
 #  include "ace/OS_NS_stropts.h"
 #endif /* ACE_HAS_STREAM_PIPES */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward Decls
 class ACE_Str_Buf;
 
@@ -78,6 +80,8 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/FIFO_Send_Msg.inl"

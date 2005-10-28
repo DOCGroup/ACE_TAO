@@ -12,6 +12,8 @@ ACE_RCSID (ace,
 
 // ****************************************************************
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 int ACE_OutputCDR::wchar_maxbytes_ = sizeof (ACE_CDR::WChar);
 
 ACE_OutputCDR::ACE_OutputCDR (size_t size,
@@ -1667,3 +1669,5 @@ operator>> (ACE_InputCDR &is, ACE_CString &x)
   is.read_string (x);
   return is.good_bit ();
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

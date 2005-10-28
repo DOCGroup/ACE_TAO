@@ -22,6 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Dynamic_Service_Base
@@ -41,6 +42,8 @@ protected:
   /// Return instance using @a name to search the Service_Repository.
   static void* instance (const ACE_TCHAR *name);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_DYNAMIC_SERVICE_BASE_H */

@@ -43,6 +43,8 @@
 
 ACE_RCSID(ace, Log_Msg, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
 
 // only used here...  dhinton
@@ -240,7 +242,7 @@ ACE_Log_Msg_Manager::close (void)
 #  endif /* ACE_HAS_THR_C_DEST */
 LOCAL_EXTERN_PREFIX
 void
-ACE_TSS_cleanup (void *ptr)
+ACE_TSS_CLEANUP_NAME (void *ptr)
 {
 #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
   // Delegate to thr_desc if this not has terminated
@@ -307,7 +309,7 @@ ACE_Log_Msg::instance (void)
           {
             ACE_NO_HEAP_CHECK;
             if (ACE_Thread::keycreate (log_msg_tss_key (),
-                                       &ACE_TSS_cleanup) != 0)
+                                       &ACE_TSS_CLEANUP_NAME) != 0)
               {
                 if (1 == ACE_OS_Object_Manager::starting_up())
                   //This function is called before ACE_OS_Object_Manager is
@@ -2652,3 +2654,5 @@ ACE_Log_Msg::inherit_hook (ACE_OS_Thread_Descriptor *thr_desc,
 #  endif /* ACE_PSOS */
 #endif /* ! ACE_THREADS_DONT_INHERIT_LOG_MSG  &&  ! ACE_HAS_MINIMAL_ACE_OS */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -15,6 +15,8 @@
 #include "ace/OS_NS_string.h"
 #endif
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #if defined (ACE_HAS_VOIDPTR_SOCKOPT)
 typedef void *ACE_SOCKOPT_TYPE1;
 #elif defined (ACE_HAS_CHARPTR_SOCKOPT)
@@ -954,3 +956,5 @@ ACE_OS::if_freenameindex (struct if_nameindex *ptr)
     ::if_freenameindex (ptr);
 }
 #endif /* __linux__ && ACE_HAS_IPV6 */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

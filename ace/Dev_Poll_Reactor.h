@@ -62,14 +62,15 @@
 # include "ace/Unbounded_Queue.h"
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
-// Forward declarations
-class ACE_Sig_Handler;
-class ACE_Dev_Poll_Reactor;
-
 #if defined (ACE_HAS_DEV_POLL)
 struct pollfd;
 #endif
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+// Forward declarations
+class ACE_Sig_Handler;
+class ACE_Dev_Poll_Reactor;
 
 /**
  * @class ACE_Dev_Poll_Event_Tuple
@@ -1267,6 +1268,7 @@ private:
 
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "ace/Dev_Poll_Reactor.inl"

@@ -179,7 +179,8 @@ multi_cpu_exchange_add (volatile long *value, long rhs)
 
 } // end namespace
 
-  
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 long (*ACE_Atomic_Op<ACE_Thread_Mutex, long>::increment_fn_) (volatile long *) = 0;
 long (*ACE_Atomic_Op<ACE_Thread_Mutex, long>::decrement_fn_) (volatile long *) = 0;
 long (*ACE_Atomic_Op<ACE_Thread_Mutex, long>::exchange_fn_) (volatile long *, long) = 0;
@@ -245,5 +246,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_BUILTIN_ATOMIC_OP */

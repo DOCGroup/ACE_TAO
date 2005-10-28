@@ -53,6 +53,8 @@
 #define ACE_DEFAULT_CONFIG_SECTION_SIZE 16
 #endif /* ACE_DEFAULT_CONFIG_SECTION_SIZE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Section_Key_Internal
  *
@@ -883,6 +885,8 @@ private:
   SECTION_MAP *index_;
   size_t default_map_size_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIGURATION_H */

@@ -25,6 +25,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class CHAR> class ACE_String_Base;  // Forward declaration.
 
@@ -40,6 +41,8 @@ typedef ACE_WString ACE_TString;
 #else /* ACE_USES_WCHAR */
 typedef ACE_CString ACE_TString;
 #endif /* ACE_USES_WCHAR */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

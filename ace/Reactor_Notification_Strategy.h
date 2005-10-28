@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -11,6 +11,7 @@
 //=============================================================================
 #ifndef ACE_REACTOR_NOTIFICATION_STRATEGY_H
 #define ACE_REACTOR_NOTIFICATION_STRATEGY_H
+
 #include /**/ "ace/pre.h"
 
 #include "ace/Notification_Strategy.h"
@@ -18,6 +19,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Reactor_Notification_Strategy
@@ -53,9 +56,12 @@ protected:
   ACE_Reactor *reactor_;
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
 #include "ace/Reactor_Notification_Strategy.inl"
 #endif /* __ACE_INLINE __ */
 
 #include /**/ "ace/post.h"
+
 #endif /*ACE_REACTOR_NOTIFICATION_STRATEGY_H */

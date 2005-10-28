@@ -13,6 +13,8 @@
 
 ACE_RCSID(ace, SOCK_SEQPACK_Association, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_SEQPACK_Association)
 
 void
@@ -341,3 +343,5 @@ template class ACE_Auto_Basic_Array_Ptr<sockaddr_in>;
 #pragma instantiate ACE_Auto_Array_Ptr<sockaddr_in>
 #pragma instantiate ACE_Auto_Basic_Array_Ptr<sockaddr_in>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

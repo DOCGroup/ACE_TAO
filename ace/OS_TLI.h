@@ -147,6 +147,8 @@ extern "C" {
 
 # endif /* ACE_HAS_XTI || ACE_HAS_TLI */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @namespace ACE_OS
  *
@@ -259,6 +261,8 @@ namespace ACE_OS
   int t_unbind (ACE_HANDLE fildes);
 
 } /* namespace ACE_OS */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

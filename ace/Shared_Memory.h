@@ -29,6 +29,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Shared_Memory
  *
@@ -53,6 +55,8 @@ public:
   virtual int get_segment_size (void) const = 0;
   virtual ACE_HANDLE get_id (void) const = 0;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -87,6 +87,8 @@ ACE_RCSID (ace,
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Get_Opt)
 
 ACE_Get_Opt::ACE_Get_Opt (int argc,
@@ -745,3 +747,5 @@ template class ACE_Array_Base<ACE_Get_Opt::ACE_Get_Opt_Long_Option *>;
 #pragma instantiate ACE_Array<ACE_Get_Opt::ACE_Get_Opt_Long_Option *>
 #pragma instantiate ACE_Array_Base<ACE_Get_Opt::ACE_Get_Opt_Long_Option *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

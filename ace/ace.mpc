@@ -58,7 +58,6 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Container_Instantiations.cpp
     Containers.cpp
     Countdown_Time.cpp
-    Copy_Disabled.cpp
     Date_Time.cpp
     DEV.cpp
     DEV_Addr.cpp
@@ -89,7 +88,6 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     gethrtime.cpp
     Handle_Ops.cpp
     Handle_Set.cpp
-    Hash_Map_Manager.cpp
     Hashable.cpp
     High_Res_Timer.cpp
     ICMP_Socket.cpp

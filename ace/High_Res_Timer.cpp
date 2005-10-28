@@ -23,6 +23,8 @@
 
 ACE_RCSID(ace, High_Res_Timer, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
 
 // For Intel platforms, a scale factor is required for
@@ -533,3 +535,5 @@ ACE_High_Res_Timer::get_env_global_scale_factor (const ACE_TCHAR *env)
 #endif /* !ACE_HAS_WINCE */
   return -1;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

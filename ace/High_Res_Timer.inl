@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*- */
+//
 // $Id$
 
 #include "ace/Global_Macros.h"
@@ -7,9 +8,11 @@
 #  include "ace/OS_NS_sys_time.h"
 #endif /* ACE_WIN32 */
 
-// Be very carefull before changing the calculations inside
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+// Be very careful before changing the calculations inside
 // ACE_High_Res_Timer.  The precision matters and we are using integer
-// calculations not floating point.  Also look good at the emulated 64
+// calculations not floating point.  Also look closely at the emulated 64
 // bit int class (inside Basic_Types{h,i,cpp} before changing
 // anything.  It's operator/ only returns 32 bits not 64 bits, among
 // other things.
@@ -170,3 +173,5 @@ ACE_High_Res_Timer::global_scale_factor (ACE_UINT32 gsf)
 {
   global_scale_factor_ = gsf;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

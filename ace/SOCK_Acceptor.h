@@ -20,6 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Time_Value;
 class ACE_Accept_QoS_Params;
 
@@ -165,6 +167,8 @@ private:
   /// Do not allow this function to percolate up to this interface...
   int get_remote_addr (ACE_Addr &) const;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/SOCK_Acceptor.inl"
