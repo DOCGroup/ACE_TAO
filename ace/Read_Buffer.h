@@ -25,6 +25,8 @@
 #include "ace/Global_Macros.h"
 #include "ace/os_include/os_stdio.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Allocator;
 
 /**
@@ -113,6 +115,8 @@ private:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Read_Buffer &))
   ACE_UNIMPLEMENTED_FUNC (ACE_Read_Buffer (const ACE_Read_Buffer &))
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "ace/Read_Buffer.inl"

@@ -1,15 +1,13 @@
 // $Id$
 
-#ifndef ACE_TSS_T_C
-#define ACE_TSS_T_C
+#ifndef ACE_TSS_T_CPP
+#define ACE_TSS_T_CPP
 
 #include "ace/TSS_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-ACE_RCSID(ace, TSS_T, "$Id$")
 
 #if !defined (__ACE_INLINE__)
 #include "ace/TSS_T.inl"
@@ -23,6 +21,8 @@ ACE_RCSID(ace, TSS_T, "$Id$")
 #if defined (ACE_HAS_THR_C_DEST)
 #  include "ace/TSS_Adapter.h"
 #endif /* ACE_HAS_THR_C_DEST */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_TSS)
 
@@ -697,4 +697,6 @@ ACE_TSS_Read_Guard<ACE_LOCK>::dump (void) const
 
 #endif /* defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)) */
 
-#endif /* ACE_TSS_T_C */
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_TSS_T_CPP */

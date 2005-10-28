@@ -28,6 +28,8 @@
 #include "ace/RW_Thread_Mutex.h"
 #include "ace/OS_NS_sys_stat.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 enum ACE_Filecache_Flag
 {
   ACE_NOMAP = 0,
@@ -344,6 +346,7 @@ private:
   ACE_SYNCH_RW_MUTEX &lock_;
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

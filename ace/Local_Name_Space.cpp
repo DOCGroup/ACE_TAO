@@ -7,6 +7,8 @@ ACE_RCSID (ace,
            Local_Name_Space,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_NS_String::~ACE_NS_String (void)
 {
   if (this->delete_rep_)
@@ -212,3 +214,4 @@ template class ACE_Write_Guard<ACE_RW_Process_Mutex>;
 #pragma instantiate ACE_Write_Guard<ACE_RW_Process_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+ACE_END_VERSIONED_NAMESPACE_DECL

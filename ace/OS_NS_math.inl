@@ -1,5 +1,8 @@
 // -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
 
@@ -22,3 +25,5 @@ namespace ACE_OS {
   }
 
 } // ACE_OS namespace
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL

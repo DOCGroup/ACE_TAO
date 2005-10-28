@@ -20,6 +20,8 @@ ACE_RCSID (ace,
 #  include "ace/OS_NS_stdio.h"
 #endif /* ACE_LACKS_STRERROR */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #if !defined (ACE_HAS_MEMCHR)
 const void *
 ACE_OS::memchr_emulation (const void *s, int c, size_t len)
@@ -407,3 +409,5 @@ ACE_OS::strtok_r_emulation (ACE_WCHAR_T *s,
   return s ;
 }
 # endif  /* ACE_HAS_WCHAR && ACE_LACKS_WCSTOK */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

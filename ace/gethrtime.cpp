@@ -10,9 +10,12 @@
 ACE_RCSID(ace, gethrtime, "$Id$")
 
 #if defined (ghs) && (defined (i386) || defined(__i386__))
+
+#include "ace/OS_NS_time.h"
+
 extern "C"
 ACE_hrtime_t
-ACE_gethrtime (void)
+ACE_GETHRTIME_NAME (void)
 {
 #if defined (ACE_HAS_PENTIUM)
   // ACE_TRACE ("ACE_gethrtime");

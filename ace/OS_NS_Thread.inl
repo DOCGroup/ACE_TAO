@@ -23,6 +23,8 @@
 #  include /**/ <sys/priocntl.h>
 #endif /* ACE_HAS_PRIOCNTL */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /*****************************************************************************/
 
 #if defined (ACE_LACKS_COND_T) && defined (ACE_HAS_THREADS)
@@ -3163,8 +3165,8 @@ ACE_OS::thr_setconcurrency (int hint)
 # elif defined (ACE_HAS_PTHREADS) && defined (ACE_HAS_PTHREAD_SETCONCURRENCY)
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setconcurrency (hint),
-				       result),
-		     int, -1);
+                                       result),
+                     int, -1);
 # else
   ACE_UNUSED_ARG (hint);
   ACE_NOTSUP_RETURN (-1);
@@ -3770,3 +3772,5 @@ ACE_Thread_ID::operator!= (const ACE_Thread_ID &rhs) const
 {
   return !(*this == rhs);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

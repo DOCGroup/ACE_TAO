@@ -1,7 +1,10 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 #include "ace/OS_NS_unistd.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Send an n byte message to the connected socket.
 
@@ -147,3 +150,5 @@ ACE_SOCK_IO::send (const void *buf,
                         n,
                         overlapped);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

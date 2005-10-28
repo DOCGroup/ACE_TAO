@@ -69,7 +69,6 @@ libACE_la_SOURCES = \
   Connection_Recycling_Strategy.cpp \
   Container_Instantiations.cpp \
   Containers.cpp \
-  Copy_Disabled.cpp \
   Countdown_Time.cpp \
   DEV.cpp \
   DEV_Addr.cpp \
@@ -104,7 +103,6 @@ libACE_la_SOURCES = \
   Get_Opt.cpp \
   Handle_Ops.cpp \
   Handle_Set.cpp \
-  Hash_Map_Manager.cpp \
   Hashable.cpp \
   High_Res_Timer.cpp \
   ICMP_Socket.cpp \
@@ -553,7 +551,6 @@ nobase_include_HEADERS = \
   High_Res_Timer.h \
   High_Res_Timer.inl \
   ICMP_Socket.h \
-  ICMP_Socket.inl \
   INET_Addr.h \
   INET_Addr.inl \
   IOStream.h \

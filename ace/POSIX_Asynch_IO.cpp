@@ -19,6 +19,8 @@ ACE_RCSID (ace,
            "$Id$")
 
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 size_t
 ACE_POSIX_Asynch_Result::bytes_transferred (void) const
 {
@@ -2492,8 +2494,8 @@ template class ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_POSIX_Asynch_Connect_Res
 #pragma instantiate ACE_Map_Const_Iterator<ACE_HANDLE, ACE_POSIX_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>
 #pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_POSIX_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>
 
-
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_AIO_CALLS */

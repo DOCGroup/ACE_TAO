@@ -27,6 +27,8 @@
 
 #include "ace/OS_NS_stdio.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_File_Lock
  *
@@ -58,7 +60,7 @@ public:
                  int unlink_in_destructor = 1);
 
   /// Open the <filename> with <flags> and <mode> and set the result to
-  /// <handle_>.  
+  /// <handle_>.
   int open (const ACE_TCHAR *filename,
             int flags,
             mode_t mode = 0);
@@ -162,6 +164,8 @@ private:
   void operator= (const ACE_File_Lock &);
   ACE_File_Lock (const ACE_File_Lock &);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/File_Lock.inl"

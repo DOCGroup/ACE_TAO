@@ -1,9 +1,12 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #if defined (ACE_HAS_WCHAR)
 #  include "ace/OS_NS_wchar.h"
 #endif /* ACE_HAS_WCHAR */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 ACE_OS::strcasecmp (const char *s, const char *t)
@@ -53,3 +56,4 @@ ACE_OS::strncasecmp (const wchar_t *s, const wchar_t *t, size_t len)
 }
 #endif /* ACE_HAS_WCHAR */
 
+ACE_END_VERSIONED_NAMESPACE_DECL

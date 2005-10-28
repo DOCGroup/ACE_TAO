@@ -1,4 +1,5 @@
 // -*- C++ -*-
+
 //==========================================================================
 /**
  *  @file    Module.h
@@ -22,6 +23,8 @@
 
 #include "ace/Task_T.h"
 #include "ace/os_include/os_dirent.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Module_Base
@@ -191,6 +194,8 @@ private:
   /// task have to be deleted on exit
   int flags_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Module.inl"

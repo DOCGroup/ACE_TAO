@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -24,6 +24,8 @@
 #include "ace/POSIX_Proactor.h"
 #include /**/ <sys/asynch.h>    // Sun native aio calls
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_SUN_Proactor
  *
@@ -47,16 +49,16 @@
  * it has the following structure:
  * typedef struct aiocb
  * {
- * int 		aio_fildes;     File descriptor
- * void		*aio_buf;       buffer location
+ * int          aio_fildes;     File descriptor
+ * void         *aio_buf;       buffer location
  * size_t       aio_nbytes;     length of transfer
  * off_t        aio_offset;     file offset
- * int	        aio_reqprio;    request priority offset
+ * int          aio_reqprio;    request priority offset
  * sigevent     aio_sigevent;   signal number and offset
- * int 		aio_lio_opcode; listio operation
- * aio_result_t	aio_resultp;    results
- * int 		aio_state;      state flag for List I/O
- * int		aio__pad[1];    extension padding
+ * int          aio_lio_opcode; listio operation
+ * aio_result_t aio_resultp;    results
+ * int          aio_state;      state flag for List I/O
+ * int          aio__pad[1];    extension padding
  * };
  */
 class ACE_Export ACE_SUN_Proactor : public ACE_POSIX_AIOCB_Proactor
@@ -117,6 +119,8 @@ protected:
   /// used to wait the first AIO start
   ACE_SYNCH_CONDITION condition_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_AIO_CALLS && sun */
 #endif /* ACE_SUN_PROACTOR_H*/

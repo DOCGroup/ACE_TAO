@@ -26,6 +26,8 @@
 #include "ace/Name_Space.h"
 #include "ace/os_include/os_netdb.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward decl
 class ACE_Name_Options;
 class ACE_Static_Svc_Descriptor;
@@ -371,6 +373,8 @@ private:
   /// The context in which the naming database will be created.
   ACE_Naming_Context::Context_Scope_Type context_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DECLARE (ACE, ACE_Naming_Context)
 ACE_STATIC_SVC_DECLARE_EXPORT (ACE, ACE_Naming_Context)

@@ -54,6 +54,8 @@
 #   include /**/ <sys/tspriocntl.h>
 # endif /* ACE_HAS_PRIOCNTL */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 # if defined (ACE_PSOS)
 // Use pSOS semaphores, wrapped . . .
 typedef struct
@@ -115,6 +117,8 @@ typedef DWORD ACE_OS_thread_key_t;
 #   endif /* ! ACE_HAS_TSS_EMULATION */
 # endif /* ACE_WIN32 */
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 # if !defined (ACE_HAS_POSIX_SEM) && defined (ACE_USES_FIFO_SEM)
 
 extern "C" {
@@ -150,6 +154,9 @@ extern "C" {
 #   if defined (ACE_HAS_PTHREADS)
 // moved to pthread.h
 #   elif defined (ACE_HAS_STHREADS)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Solaris threads, without PTHREADS.
 // Typedefs to help compatibility with Windows NT and Pthreads.
 typedef thread_t ACE_thread_t;
@@ -181,6 +188,8 @@ struct ACE_Export ACE_mutexattr_t
 typedef ACE_thread_t ACE_hthread_t;
 typedef ACE_mutex_t ACE_thread_mutex_t;
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #     define THR_CANCEL_DISABLE      0
 #     define THR_CANCEL_ENABLE       0
 #     define THR_CANCEL_DEFERRED     0
@@ -191,6 +200,8 @@ typedef ACE_mutex_t ACE_thread_mutex_t;
 #     define THR_SCHED_DEFAULT       0
 
 #   elif defined (ACE_PSOS)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Some versions of pSOS provide native mutex support.  For others,
 // implement ACE_thread_mutex_t and ACE_mutex_t using pSOS semaphores.
@@ -232,6 +243,8 @@ typedef u_int ACE_OS_thread_key_t;
 #   else  /* ! ACE_HAS_TSS_EMULATION */
       typedef ACE_OS_thread_key_t ACE_thread_key_t;
 #   endif /* ! ACE_HAS_TSS_EMULATION */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #     define THR_CANCEL_DISABLE      0  /* thread can never be cancelled */
 #     define THR_CANCEL_ENABLE       0      /* thread can be cancelled */
@@ -317,6 +330,8 @@ typedef u_int ACE_OS_thread_key_t;
 #     define USYNC_PROCESS           1 /* It's all global on VxWorks
                                           (without MMU option). */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 typedef SEM_ID ACE_mutex_t;
 // Implement ACE_thread_mutex_t with ACE_mutex_t because there's just
 // one process . . .
@@ -346,11 +361,15 @@ typedef u_int ACE_OS_thread_key_t;
       typedef ACE_OS_thread_key_t ACE_thread_key_t;
 #   endif /* ! ACE_HAS_TSS_EMULATION */
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
       // Marker for ACE_Thread_Manager to indicate that it allocated
       // an ACE_thread_t.  It is placed at the beginning of the ID.
 #     define ACE_THR_ID_ALLOCATED '\022'
 
 #   elif defined (ACE_HAS_WTHREADS)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef CRITICAL_SECTION ACE_thread_mutex_t;
 
@@ -396,6 +415,8 @@ public:
 #       endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 #     endif /* defined (ACE_WIN32) */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // These need to be different values, neither of which can be 0...
 #     define USYNC_THREAD 1
 #     define USYNC_PROCESS 2
@@ -423,6 +444,9 @@ public:
 // takes care of it) unless we're on Windows. Win32 mutexes, semaphores,
 // and condition variables are not yet supported in PACE.
 #   if defined (ACE_LACKS_COND_T)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_cond_t
  *
@@ -481,9 +505,14 @@ struct ACE_Export ACE_mutexattr_t
 {
   int type;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #   endif /* ACE_LACKS_COND_T */
 
 #   if defined (ACE_LACKS_RWLOCK_T) && !defined (ACE_HAS_PTHREADS_UNIX98_EXT)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_rwlock_t
@@ -524,11 +553,18 @@ public:
   /// Condition for the upgrading reader
   ACE_cond_t waiting_important_writer_;
 };
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #   elif defined (ACE_HAS_PTHREADS_UNIX98_EXT)
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef pthread_rwlock_t ACE_rwlock_t;
+ACE_END_VERSIONED_NAMESPACE_DECL
 #   elif defined (ACE_HAS_STHREADS)
 #     include /**/ <synch.h>
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef rwlock_t ACE_rwlock_t;
+ACE_END_VERSIONED_NAMESPACE_DECL
 #   endif /* ACE_LACKS_RWLOCK_T */
 
 // Define some default thread priorities on all threaded platforms, if
@@ -578,6 +614,9 @@ typedef rwlock_t ACE_rwlock_t;
 //    and recursive_mutex_cond_relock() methods to maintain the expected
 //    state when the wait finishes.
 #   if defined (ACE_HAS_RECURSIVE_MUTEXES)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 typedef ACE_thread_mutex_t ACE_recursive_thread_mutex_t;
 #     if defined (ACE_WIN32)
 // Windows has recursive mutexes, but doesn't have condition variables,
@@ -593,7 +632,13 @@ struct ACE_recursive_mutex_state
 // No need for special handling; just need a type for method signatures.
 typedef int ACE_recursive_mutex_state;
 #     endif /* ACE_WIN32 */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #   else
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_recursive_thread_mutex_t
  *
@@ -628,6 +673,9 @@ struct ACE_recursive_mutex_state
   int nesting_level_;
   ACE_thread_t owner_id_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #   endif /* ACE_HAS_RECURSIVE_MUTEXES */
 
 # else /* !ACE_HAS_THREADS, i.e., the OS/platform doesn't support threading. */
@@ -694,6 +742,8 @@ struct ACE_recursive_mutex_state
 #     define THR_SCOPE_SYSTEM 0
 #   endif /* ! THR_SCOPE_SYSTEM */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // These are dummies needed for class OS.h
 typedef int ACE_cond_t;
 struct ACE_Export ACE_condattr_t
@@ -723,6 +773,8 @@ typedef unsigned int ACE_OS_thread_key_t;
       typedef ACE_OS_thread_key_t ACE_thread_key_t;
 #   endif /* ! ACE_HAS_TSS_EMULATION */
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 // Ensure that ACE_THR_PRI_FIFO_DEF and ACE_THR_PRI_OTHER_DEF are
 // defined on non-threaded platforms, to support application source
 // code compatibility.  ACE_THR_PRI_FIFO_DEF should be used by
@@ -736,6 +788,8 @@ typedef unsigned int ACE_OS_thread_key_t;
 #   endif /* ! ACE_THR_PRI_OTHER_DEF */
 
 # endif /* ACE_HAS_THREADS ***********************************************/
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Thread_ID
@@ -1103,9 +1157,26 @@ private:
 #   define ACE_KEY_INDEX(OBJ,KEY) u_int OBJ = KEY
 # endif /* ACE_HAS_NONSCALAR_THREAD_KEY_T */
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#if (defined (ACE_HAS_VERSIONED_NAMESPACE) \
+     && ACE_HAS_VERSIONED_NAMESPACE == 1) \
+  && !(defined (_MSC_VER) && _MSC_VER <= 1200)
+// MSVC++ 6's preprocessor can't handle macro expansions required by
+// the versioned namespace support.  *sigh*
+
+# define ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _ace_mutex_lock_cleanup_adapter)
+
+#else
+
+# define ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME ace_mutex_lock_cleanup_adapter
+
+#endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
+
+
 # if defined (ACE_HAS_THR_C_FUNC)
 // This is necessary to work around nasty problems with MVS C++.
-extern "C" ACE_Export void ace_mutex_lock_cleanup_adapter (void *args);
+extern "C" ACE_Export void ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args);
 #   define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ace_mutex_lock_cleanup_adapter, (void *) A);
 #   define ACE_PTHREAD_CLEANUP_POP(A) pthread_cleanup_pop(A)
 # elif defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_CLEANUP)
@@ -1113,13 +1184,15 @@ extern "C" ACE_Export void ace_mutex_lock_cleanup_adapter (void *args);
 // pthread_cleanup_push, it is undone by the Solaris header file
 // /usr/include/pthread.h. So this macro generates a warning under Solaris
 // with SunCC. This is a bug in the Solaris header file.
-extern "C" ACE_Export void ace_mutex_lock_cleanup_adapter (void *args);
+extern "C" ACE_Export void ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args);
 #   define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ace_mutex_lock_cleanup_adapter, (void *) A);
 #   define ACE_PTHREAD_CLEANUP_POP(A) pthread_cleanup_pop(A)
 # else
 #   define ACE_PTHREAD_CLEANUP_PUSH(A)
 #   define ACE_PTHREAD_CLEANUP_POP(A)
 # endif /* ACE_HAS_THR_C_FUNC */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 # if !defined (ACE_WIN32)
 // forward decl's
@@ -2012,6 +2085,8 @@ protected:
   ACE_OS_Recursive_Thread_Mutex_Guard (
     const ACE_OS_Recursive_Thread_Mutex_Guard &);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 // used in time and unistd
 # define ACE_OS_GUARD \

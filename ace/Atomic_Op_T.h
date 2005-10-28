@@ -20,6 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Atomic_Op_Ex
  *
@@ -234,6 +236,7 @@ private:
   ACE_Atomic_Op_Ex <ACE_LOCK, TYPE> impl_;
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Atomic_Op_T.inl"

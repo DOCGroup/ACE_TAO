@@ -1,5 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_Control_Block::ACE_Name_Node::~ACE_Name_Node (void)
@@ -19,3 +22,5 @@ ACE_Control_Block::ACE_Name_Node::init_ptr
 {
   *ptr = init;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

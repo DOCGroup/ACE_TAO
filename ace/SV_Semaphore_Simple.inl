@@ -1,10 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
-
-// SV_Semaphore_Simple.i
 
 #include "ace/Global_Macros.h"
 #include "ace/OS_NS_Thread.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_HAS_WCHAR)
 // Semaphores don't offer wide-char names, so convert the name and forward
@@ -27,8 +28,8 @@ ACE_SV_Semaphore_Simple::open (const wchar_t *name,
 
 ACE_INLINE int
 ACE_SV_Semaphore_Simple::control (int cmd,
-				  semun arg,
-				  u_short n) const
+                                  semun arg,
+                                  u_short n) const
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::control");
   return this->internal_id_ == -1 ?
@@ -124,3 +125,4 @@ ACE_SV_Semaphore_Simple::get_id (void) const
   return this->internal_id_;
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL

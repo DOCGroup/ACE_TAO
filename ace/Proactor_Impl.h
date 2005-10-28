@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -26,6 +26,8 @@
 #include "ace/Reactor.h"
 #include "ace/Countdown_Time.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Proactor_Impl
  *
@@ -50,7 +52,7 @@ public:
   /// This method adds the <handle> to the I/O completion port. This
   /// function is a no-op function for Unix systems.
   virtual int register_handle (ACE_HANDLE handle,
-			       const void *completion_key) = 0;
+                               const void *completion_key) = 0;
 
   /**
    * Dispatch a single set of events.  If <wait_time> elapses before
@@ -255,6 +257,8 @@ public:
    */
   virtual int post_wakeup_completions (int how_many) = 0;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* (ACE_WIN32 && ACE_HAS_WINCE) || ACE_HAS_AIO_CALLS */
 #include /**/ "ace/post.h"

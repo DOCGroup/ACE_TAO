@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_CACHE_MAP_MANAGER_T_C
-#define ACE_CACHE_MAP_MANAGER_T_C
+#ifndef ACE_CACHE_MAP_MANAGER_T_CPP
+#define ACE_CACHE_MAP_MANAGER_T_CPP
 
 #include "ace/Cache_Map_Manager_T.h"
 
@@ -16,7 +16,7 @@
 #include "ace/Cache_Map_Manager_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Cache_Map_Manager_T, "$Id$")
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Cache_Map_Manager)
 
@@ -415,4 +415,6 @@ ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>
 {
 }
 
-#endif /* ACE_CACHE_MAP_MANAGER_T_C */
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_CACHE_MAP_MANAGER_T_CPP */

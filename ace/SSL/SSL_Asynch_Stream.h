@@ -35,9 +35,9 @@ extern "C"
   BIO * BIO_new_ACE_Asynch (void *ssl_asynch_stream);
 }
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Forward declarations
-class ACE_SSL_Asynch_Stream;
 class ACE_SSL_Asynch_Result;
 class ACE_SSL_Asynch_Read_Stream_Result;
 class ACE_SSL_Asynch_Write_Stream_Result;
@@ -246,6 +246,7 @@ protected:
 
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* OPENSSL_VERSION_NUMBER > 0x0090581fL && (ACE_WIN32 ||
            ACE_HAS_AIO_CALLS) */

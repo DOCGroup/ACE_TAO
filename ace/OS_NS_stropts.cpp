@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "ace/OS_NS_stropts.h"
@@ -8,6 +7,8 @@ ACE_RCSID(ace, OS_NS_stropts, "$Id$")
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_stropts.inl"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 ACE_OS::ioctl (ACE_HANDLE socket,
@@ -190,3 +191,5 @@ ACE_OS::ioctl (ACE_HANDLE socket,
 # endif /* ACE_HAS_WINSOCK2 */
 }
 #endif /* ACE_HAS_WINCE */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

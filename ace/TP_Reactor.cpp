@@ -15,6 +15,8 @@ ACE_RCSID (ace,
            TP_Reactor,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE (ACE_TP_Reactor)
 
 int
@@ -736,3 +738,5 @@ ACE_TP_Reactor::get_notify_handle (void)
   // None found..
   return ACE_INVALID_HANDLE;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -10,6 +10,8 @@
 #include "ace/Asynch_IO_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_Asynch_Result_Impl::~ACE_Asynch_Result_Impl (void)
 {
 }
@@ -110,7 +112,6 @@ ACE_Asynch_Write_Dgram_Result_Impl::ACE_Asynch_Write_Dgram_Result_Impl (void)
 {
 }
 
-
-
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 || ACE_HAS_WINCE */

@@ -45,6 +45,8 @@ ace_sig_handlers_dispatch (int signum, siginfo_t *info, ucontext_t *context)
 #endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
 #endif /* ACE_HAS_SIG_C_FUNC */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Array of Event_Handlers that will handle the signals.
 ACE_Event_Handler *ACE_Sig_Handler::signal_handlers_[ACE_NSIG];
 
@@ -878,3 +880,5 @@ template class ACE_Fixed_Set_Iterator_Base<ACE_Event_Handler *, ACE_MAX_SIGNAL_H
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

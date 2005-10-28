@@ -8,6 +8,8 @@
 
 ACE_RCSID(ace, Local_Memory_Pool, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Local_Memory_Pool)
 
 void
@@ -148,3 +150,5 @@ template class ACE_Unbounded_Set_Iterator<char *>;
 #pragma instantiate ACE_Unbounded_Set<char *>
 #pragma instantiate ACE_Unbounded_Set_Iterator<char *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,7 +1,10 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "ace/OS_NS_errno.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 ACE_OS::fcntl (ACE_HANDLE handle, int cmd, long arg)
@@ -16,3 +19,5 @@ ACE_OS::fcntl (ACE_HANDLE handle, int cmd, long arg)
   ACE_OSCALL_RETURN (::fcntl (handle, cmd, arg), int, -1);
 # endif /* ACE_LACKS_FCNTL */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

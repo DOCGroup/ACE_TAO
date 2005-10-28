@@ -94,6 +94,8 @@ struct flock
 #   endif /* ! VXWORKS */
 # endif /* ACE_LACKS_FILELOCKS */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace ACE_OS {
 
   /**
@@ -411,6 +413,8 @@ namespace ACE_OS {
 # endif /* ACE_HAS_WCHAR */
 
 } /* namespace ACE_OS */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

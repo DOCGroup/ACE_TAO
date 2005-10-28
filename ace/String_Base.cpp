@@ -1,3 +1,5 @@
+// $Id$
+
 #ifndef ACE_STRING_BASE_CPP
 #define ACE_STRING_BASE_CPP
 
@@ -11,11 +13,7 @@
 #include "ace/String_Base.inl"
 #endif /* __ACE_INLINE__ */
 
-
-ACE_RCSID (ace,
-           String_Base,
-           "$Id$")
-
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_String_Base)
 
@@ -353,10 +351,10 @@ template <class CHAR> int
 ACE_String_Base<CHAR>::compare (const ACE_String_Base<CHAR> &s) const
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::compare");
- 
+
   if (this->rep_ == s.rep_)
     return 0;
- 
+
   // Pick smaller of the two lengths and perform the comparison.
   size_t smaller_length = ace_min (this->len_, s.len_);
 
@@ -495,5 +493,6 @@ ACE_String_Base<CHAR>::operator+= (const CHAR c)
   return this->append(&c, slen);
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* ACE_STRING_BASE_CPP */

@@ -17,6 +17,8 @@ ACE_RCSID(ace, OS_NS_netdb, "$Id$")
 #include "ace/OS_NS_stropts.h"
 #include "ace/OS_NS_sys_socket.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #if defined (VXWORKS)
 
 struct hostent *
@@ -307,14 +309,14 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
     (struct sockaddr_in *)&(ar.arp_pa);
 
   ACE_OS::memset (&ar,
-		  0,
-		  sizeof (struct arpreq));
+                  0,
+                  sizeof (struct arpreq));
 
   psa->sin_family = AF_INET;
 
   ACE_OS::memcpy (&(psa->sin_addr),
-		  *paddrs,
-		  sizeof (struct in_addr));
+                  *paddrs,
+                  sizeof (struct in_addr));
 
   if (ACE_OS::ioctl (handle,
                      SIOCGARP,
@@ -386,3 +388,5 @@ ACE_OS::netdb_release (void)
       ACE_OS_Object_Manager::ACE_OS_MONITOR_LOCK]);
 }
 # endif /* defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS) */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

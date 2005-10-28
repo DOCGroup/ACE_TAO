@@ -2,6 +2,8 @@
 //
 // $Id$
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class T1, class T2> ACE_INLINE
 ACE_Pair<T1, T2>::ACE_Pair (const T1 &t1,
                             const T2 &t2)
@@ -84,3 +86,5 @@ ACE_Reference_Pair<T1, T2>::operator== (const ACE_Reference_Pair<T1, T2> &rhs) c
   return (this->first_ == rhs.first_ &&
           this->second_ == rhs.second_);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

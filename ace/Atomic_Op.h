@@ -44,6 +44,9 @@
 #endif /* ACE_HAS_THREADS */
 
 #if defined (ACE_HAS_BUILTIN_ATOMIC_OP)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Atomic_Op<ACE_Thread_Mutex, long>
  *
@@ -235,6 +238,8 @@ private:
   static long (*exchange_fn_) (volatile long *, long);
   static long (*exchange_add_fn_) (volatile long *, long);
 };
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_BUILTIN_ATOMIC_OP */
 

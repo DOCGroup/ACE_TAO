@@ -15,11 +15,12 @@ ACE_RCSID (ace,
            "$Id$")
 
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE (ACE_Stream_Node)
 
 // Provide the class hierarchy that defines the parse tree of Service
 // Nodes.
-
 
 void
 ACE_Stream_Node::dump (void) const
@@ -739,5 +740,7 @@ ACE_Static_Function_Node::~ACE_Static_Function_Node (void)
   ACE_TRACE ("ACE_Static_Function_Node::~ACE_Static_Function_Node");
   delete[] const_cast<ACE_TCHAR *> (this->function_name_);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */

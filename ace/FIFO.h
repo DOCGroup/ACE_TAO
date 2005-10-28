@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //==========================================================================
 /**
@@ -23,6 +23,8 @@
 
 #include "ace/IPC_SAP.h"
 #include "ace/os_include/os_limits.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_FIFO
@@ -72,6 +74,8 @@ private:
   /// Rendezvous point in the file system.
   ACE_TCHAR rendezvous_[MAXPATHLEN + 1];
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/FIFO.inl"

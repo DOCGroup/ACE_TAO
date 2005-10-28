@@ -28,12 +28,13 @@
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
 #  include "ace/INET_Addr.h"
-#  include "ace/Handle_Set.h"
 #  include "ace/Global_Macros.h"
 
 #  if defined (ACE_LACKS_IOSTREAM_FX)
 #   include "ace/os_include/os_ctype.h"
 #  endif /**/
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #  if defined (ACE_HAS_STRING_CLASS)
 template <class STREAM> STREAM & operator>> (STREAM &stream, ACE_Quoted_String &str);
@@ -276,6 +277,8 @@ public:
 protected:
   ACE_INET_Addr peer_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #  if defined (__ACE_INLINE__)
 #    include "ace/IOStream_T.inl"

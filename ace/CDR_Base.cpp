@@ -12,6 +12,8 @@ ACE_RCSID (ace,
            CDR_Base,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 //
 // See comments in CDR_Base.inl about optimization cases for swap_XX_array.
 //
@@ -620,3 +622,5 @@ ACE_CDR::Float::operator!= (const ACE_CDR::Float & /* rhs */) const
   return false;
 }
 #endif /* _UNICOS */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

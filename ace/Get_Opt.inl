@@ -2,6 +2,7 @@
 //
 // $Id$
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE bool
 ACE_Get_Opt::ACE_Get_Opt_Long_Option::operator < (const ACE_Get_Opt_Long_Option &rhs)
@@ -38,3 +39,5 @@ ACE_Get_Opt::opt_ind (void)
 {
   return this->optind;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

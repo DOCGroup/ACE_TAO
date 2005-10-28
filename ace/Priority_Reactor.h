@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -27,6 +27,8 @@
 
 #include "ace/Select_Reactor.h"
 #include "ace/Unbounded_Queue.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Priority_Reactor
@@ -95,6 +97,8 @@ private:
   ACE_Priority_Reactor (const ACE_Priority_Reactor &);
   ACE_Priority_Reactor &operator = (const ACE_Priority_Reactor &);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_PRIORITY_REACTOR_H */

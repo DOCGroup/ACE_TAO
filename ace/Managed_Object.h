@@ -24,6 +24,8 @@
 #include "ace/Object_Manager.h"
 #include "ace/Global_Macros.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Cleanup_Adapter
  *
@@ -136,14 +138,18 @@ public:
   // Note: the function definition is inlined here so that it compiles
   // on AIX 4.1 w/xlC v. 3.01.
 
-private:
+protected:
+
   // Disallow instantiation of this class.
   ACE_UNIMPLEMENTED_FUNC (ACE_Managed_Object (void))
+
+private:
+
   ACE_UNIMPLEMENTED_FUNC (ACE_Managed_Object (const ACE_Managed_Object<TYPE> &))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Managed_Object<TYPE> &))
-
-  friend class this_prevents_compiler_warning_about_only_private_constructors;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Managed_Object.inl"

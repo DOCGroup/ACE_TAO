@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -23,6 +23,8 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/INET_Addr.h"
 #include "ace/Service_Object.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Service_Manager
@@ -112,9 +114,7 @@ protected:
   static u_short DEFAULT_PORT_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "ace/Service_Manager.inl"
-#endif /* __ACE_INLINE__ */
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* _SERVICE_MANAGER_H */

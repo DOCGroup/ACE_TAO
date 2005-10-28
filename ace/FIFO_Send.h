@@ -25,6 +25,8 @@
 #include "ace/os_include/os_fcntl.h"
 #include "ace/Default_Constants.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_FIFO_Send
  *
@@ -61,6 +63,8 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/FIFO_Send.inl"

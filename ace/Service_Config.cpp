@@ -34,6 +34,8 @@ ACE_RCSID (ace,
            Service_Config,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE (ACE_Service_Config)
 
 void
@@ -914,3 +916,5 @@ ACE_Service_Config::start_daemon (void)
   ACE_TRACE ("ACE_Service_Config::start_daemon");
   return ACE::daemonize ();
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

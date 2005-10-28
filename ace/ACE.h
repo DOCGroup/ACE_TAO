@@ -35,11 +35,6 @@
 #include "ace/Sock_Connect.h"
 #include "ace/Default_Constants.h"
 
-// Forward declarations.
-class ACE_Time_Value;
-class ACE_Message_Block;
-class ACE_Handle_Set;
-
 #if defined (CYGWIN32)
 // Include math.h. math.h defines a macro log2 that conflicts with ACE::log2()
 // which seems to only cause a problem on cygwin.  Insuring that math.h is
@@ -59,6 +54,13 @@ class ACE_Handle_Set;
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
+// Open versioned namespace, if enabled by the user.
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+// Forward declarations.
+class ACE_Time_Value;
+class ACE_Message_Block;
+class ACE_Handle_Set;
 
 /**
  * @namespace ACE
@@ -820,6 +822,9 @@ namespace ACE
                                        size_t *bytes_transferred);
 
 }
+
+// Close versioned namespace, if enabled by the user.
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/ACE.inl"

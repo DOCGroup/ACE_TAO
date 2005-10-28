@@ -32,6 +32,8 @@
 #include "ace/Signal.h"
 #include "ace/Mem_Map.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_MMAP_Memory_Pool_Options
  *
@@ -295,6 +297,8 @@ public:
   /// Overwrite the default sync behavior with no-op
   virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_MMAP_MEMORY_POOL_H */

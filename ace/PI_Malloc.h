@@ -32,6 +32,8 @@
 #include "ace/Malloc.h"
 #include "ace/Based_Pointer_T.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // prepare for position independent malloc
 /**
  * @class ACE_PI_Control_Block
@@ -194,6 +196,8 @@ public:
 private:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Control_Block &))
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/PI_Malloc.inl"

@@ -1,4 +1,3 @@
-// FIFO.cpp
 // $Id$
 
 #include "ace/FIFO.h"
@@ -14,6 +13,8 @@
 #include "ace/OS_NS_fcntl.h"
 
 ACE_RCSID(ace, FIFO, "$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_FIFO)
 
@@ -52,8 +53,8 @@ ACE_FIFO::open (const ACE_TCHAR *r, int flags, int perms,
 }
 
 ACE_FIFO::ACE_FIFO (const ACE_TCHAR *fifo_name,
-		    int flags,
-		    int perms,
+                    int flags,
+                    int perms,
                     LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_FIFO::ACE_FIFO");
@@ -79,3 +80,5 @@ ACE_FIFO::close (void)
     }
  return result;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

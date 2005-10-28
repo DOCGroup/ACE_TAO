@@ -26,6 +26,8 @@
 #include "ace/Default_Constants.h"
 #include "ace/Asynch_IO.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward declarations
 class ACE_Message_Block;
 class ACE_INET_Addr;
@@ -278,6 +280,8 @@ private:
   /// to @c open().
   int addr_family_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Asynch_Acceptor.cpp"

@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 // These are always inlined
@@ -9,6 +10,8 @@
 #if !defined (ACE_WIN32)
 #  include /**/ <string.h>             // Need to see strlen()
 #endif /* ACE_WIN32 */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 inline
 ACE_Wide_To_Ascii::~ACE_Wide_To_Ascii (void)
@@ -115,8 +118,10 @@ ACE_Ascii_To_Wide::convert (const char *str)
 
 inline
 ACE_Ascii_To_Wide::ACE_Ascii_To_Wide (const char *s)
-: s_ (ACE_Ascii_To_Wide::convert (s))
+  : s_ (ACE_Ascii_To_Wide::convert (s))
 {
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_WCHAR */

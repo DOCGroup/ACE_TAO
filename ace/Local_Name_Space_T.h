@@ -27,6 +27,8 @@
 #include "ace/Local_Name_Space.h"
 #include "ace/Null_Mutex.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// A short-hand name for our set of name/value/type tuples passed back
 /// to callers.
 typedef ACE_Unbounded_Set<ACE_NS_WString> ACE_WSTRING_SET;
@@ -255,6 +257,8 @@ private:
   /// Synchronization variable.
   ACE_LOCK *lock_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Local_Name_Space_T.cpp"

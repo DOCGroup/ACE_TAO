@@ -24,6 +24,8 @@ ACE_RCSID(ace, Asynch_Acceptor, "$Id$")
 #include "ace/SOCK_Stream.h"
 #include "ace/Sock_Connect.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class HANDLER>
 ACE_Asynch_Acceptor<HANDLER>::ACE_Asynch_Acceptor (void)
   : listen_handle_ (ACE_INVALID_HANDLE),
@@ -517,6 +519,8 @@ ACE_Asynch_Acceptor<HANDLER>::should_reissue_accept (void)
 {
   return this->reissue_accept_;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS */
 #endif /* ACE_ASYNCH_ACCEPTOR_C */

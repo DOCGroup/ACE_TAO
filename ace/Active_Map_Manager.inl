@@ -4,6 +4,8 @@
 
 #include "ace/OS_NS_string.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE
 ACE_Active_Map_Manager_Key::ACE_Active_Map_Manager_Key (void)
 {
@@ -89,3 +91,5 @@ ACE_Active_Map_Manager_Key::encode (void *data) const
                   &this->key_data_,
                   sizeof this->key_data_);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

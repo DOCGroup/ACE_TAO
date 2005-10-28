@@ -30,6 +30,8 @@ ACE_RCSID (ace,
 # endif
 #endif  /* ACE_LACKS_MKSTEMP */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_EXIT_HOOK ACE_OS::exit_hook_ = 0;
 
 void *
@@ -685,3 +687,5 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
   return ACE_INVALID_HANDLE;
 }
 #endif /* ACE_LACKS_MKSTEMP */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

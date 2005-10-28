@@ -31,6 +31,7 @@ sigchld_nop (int, siginfo_t *, ucontext_t *)
 #endif /* ACE_WIN32 */
 
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Process::ACE_Process (void)
   :
@@ -1110,10 +1111,6 @@ ACE_Process_Options::passed_handles (ACE_Handle_Set &set) const
   return 1;
 }
 
-ACE_Managed_Process::ACE_Managed_Process (void)
-{
-}
-
 ACE_Managed_Process::~ACE_Managed_Process (void)
 {
 }
@@ -1123,3 +1120,5 @@ ACE_Managed_Process::unmanage (void)
 {
   delete this;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

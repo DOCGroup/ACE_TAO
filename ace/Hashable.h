@@ -21,6 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Hashable
@@ -49,10 +50,11 @@ protected:
 protected:
 
   /// Pre-computed hash-value.
-  unsigned long hash_value_;
+  mutable unsigned long hash_value_;
 
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Hashable.inl"

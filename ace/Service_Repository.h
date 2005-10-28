@@ -24,6 +24,7 @@
 #include "ace/Default_Constants.h"
 #include "ace/Recursive_Thread_Mutex.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Service_Type;
 
@@ -205,6 +206,8 @@ private:
   /// Are we ignoring suspended services?
   int ignore_suspended_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Service_Repository.inl"

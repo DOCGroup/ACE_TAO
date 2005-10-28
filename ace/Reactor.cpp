@@ -2,7 +2,6 @@
 
 #include "ace/Reactor.h"
 
-
 //#if !defined (ACE_HAS_WINCE)
 #  if !defined (ACE_LACKS_ACE_SVCCONF)
 #    include "ace/Service_Config.h"
@@ -59,6 +58,8 @@ ACE_RCSID (ace,
            Reactor,
            "$Id$")
 
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Reactor)
 
@@ -949,3 +950,5 @@ template class ACE_Framework_Component_T<ACE_Reactor>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Framework_Component_T<ACE_Reactor>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

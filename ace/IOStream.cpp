@@ -1,7 +1,7 @@
 // $Id$
 
-#if !defined (ACE_IOSTREAM_C)
-#define ACE_IOSTREAM_C
+#ifndef ACE_IOSTREAM_CPP
+#define ACE_IOSTREAM_CPP
 
 #include "ace/IOStream.h"
 
@@ -85,6 +85,8 @@ ACE_RCSID(ace, IOStream, "$Id$")
   // Because you provided operator>> (int&) in class myiostream, that
   // function will be invoked by the first >>.  Since it returns
   // a myiostream&, the second >> will be invoked as desired.  */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_HANDLE
 ACE_Streambuf::get_handle (void)
@@ -657,5 +659,7 @@ u_char ACE_Streambuf::timeout (void)
   return rval;
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* !ACE_LACKS_ACE_IOSTREAM */
-#endif /* ACE_IOSTREAM_C */
+#endif /* ACE_IOSTREAM_CPP */

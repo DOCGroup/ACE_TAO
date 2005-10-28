@@ -24,6 +24,8 @@
 #include "ace/Flag_Manip.h"
 #include "ace/os_include/os_dirent.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_FILE_Addr
  *
@@ -77,6 +79,8 @@ private:
   /// Name of the file.
   ACE_TCHAR filename_[MAXPATHLEN + 1];
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/FILE_Addr.inl"

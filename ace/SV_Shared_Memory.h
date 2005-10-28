@@ -30,6 +30,8 @@
 #include "ace/os_include/sys/os_ipc.h"
 #include "ace/Default_Constants.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_SV_Shared_Memory
  *
@@ -113,6 +115,8 @@ protected:
   /// Round up to an appropriate page size.
   size_t round_up (size_t len);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/SV_Shared_Memory.inl"

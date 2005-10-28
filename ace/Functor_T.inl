@@ -2,6 +2,8 @@
 //
 // $Id$
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class TYPE> ACE_INLINE unsigned long
 ACE_Hash<TYPE>::operator () (const TYPE &t) const
 {
@@ -36,3 +38,5 @@ ACE_Less_Than<TYPE>::operator () (const TYPE &lhs,
 {
   return lhs < rhs;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

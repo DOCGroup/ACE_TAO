@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -25,6 +25,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_THREADS)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Future_Set
@@ -115,7 +117,7 @@ private:
                                   FUTURE_HOLDER *,
                                   FUTURE_REP_HASH,
                                   FUTURE_REP_COMPARE,
-			          ACE_Null_Mutex> FUTURE_HASH_MAP;
+                                  ACE_Null_Mutex> FUTURE_HASH_MAP;
 
   /// Map of <ACE_Futures>, subjects, which have not been written to by
   /// client's writer thread.
@@ -128,6 +130,8 @@ private:
   /// Keeps track of whether we need to delete the message queue.
   int delete_queue_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Future_Set.cpp"

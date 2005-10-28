@@ -12,6 +12,8 @@ ACE_RCSID (ace,
            "$Id$")
 
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Shared_Memory_SV)
 
 void
@@ -23,11 +25,11 @@ ACE_Shared_Memory_SV::dump (void) const
 }
 
 ACE_Shared_Memory_SV::ACE_Shared_Memory_SV (key_t id,
-					    int length,
-					    int create,
-					    int perms,
-					    void *addr,
-					    int flags)
+                                            int length,
+                                            int create,
+                                            int perms,
+                                            void *addr,
+                                            int flags)
   : shared_memory_ (id, length, create, perms, addr, flags)
 {
   ACE_TRACE ("ACE_Shared_Memory_SV::ACE_Shared_Memory_SV");
@@ -82,3 +84,5 @@ ACE_Shared_Memory_SV::free (void *p)
   ACE_TRACE ("ACE_Shared_Memory_SV::free");
   return p != 0;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -33,7 +33,10 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
-namespace ACE_OS {
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace ACE_OS
+{
 
   /// Calls OS <::wait> function, so it's only portable to UNIX/POSIX
   /// platforms.
@@ -70,6 +73,8 @@ namespace ACE_OS {
                  ACE_HANDLE handle = 0);
 
 } /* namespace ACE_OS */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

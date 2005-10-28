@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 #include "ace/OS_NS_sys_time.h"
@@ -7,8 +8,9 @@
 
 #if (defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)) && !defined (ACE_WIN32)
 
-#  if defined (ACE_HAS_PRUSAGE_T)
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+#  if defined (ACE_HAS_PRUSAGE_T)
 #    include "ace/OS_NS_stropts.h"
 
 ACE_INLINE int
@@ -107,5 +109,7 @@ ACE_INLINE
 ACE_Profile_Timer::~ACE_Profile_Timer (void)
 {
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE) */

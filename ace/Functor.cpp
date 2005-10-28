@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 // ============================================================================
@@ -29,9 +28,6 @@
 //
 // ============================================================================
 
-#if !defined (ACE_FUNCTOR_C)
-#define ACE_FUNCTOR_C
-
 #include "ace/Functor_T.h"
 #include "ace/Functor.h"
 
@@ -41,12 +37,10 @@
 
 ACE_RCSID(ace, Functor, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_Command_Base::~ACE_Command_Base (void)
 {
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#endif /* ACE_FUNCTOR_C */
+ACE_END_VERSIONED_NAMESPACE_DECL

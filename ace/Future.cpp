@@ -16,6 +16,8 @@ ACE_RCSID (ace, Future, "$Id$")
 #  include "ace/Guard_T.h"
 #  include "ace/Recursive_Thread_Mutex.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class T>
 ACE_Future_Holder<T>::ACE_Future_Holder (void)
 {
@@ -425,5 +427,8 @@ ACE_Future<T>::get_rep ()
   return this->future_rep_;
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* ACE_HAS_THREADS */
+
 #endif /* ACE_FUTURE_CPP */

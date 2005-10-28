@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  * @file Recursive_Thread_Mutex.cpp
  *
@@ -20,6 +19,8 @@
 #include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, Recursive_Thread_Mutex, "$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Recursive_Thread_Mutex)
 
@@ -141,5 +142,7 @@ ACE_Recursive_Thread_Mutex::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_THREADS */

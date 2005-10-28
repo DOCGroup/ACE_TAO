@@ -1,4 +1,4 @@
-/*-*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -27,6 +27,8 @@
 #include "ace/Registry.h"
 #include "ace/Naming_Context.h"
 #include "ace/Name_Space.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Registry_Name_Space
@@ -129,6 +131,10 @@ private:
   ACE_Registry::Naming_Context context_;
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* ACE_WIN32 && UNICODE */
+
 #include /**/ "ace/post.h"
+
 #endif /* ACE_REGISTRY_NAME_SPACE_H */

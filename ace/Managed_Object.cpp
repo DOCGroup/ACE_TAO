@@ -13,11 +13,13 @@
 #include "ace/Managed_Object.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Managed_Object, "$Id$")
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TYPE>
 ACE_Cleanup_Adapter<TYPE>::~ACE_Cleanup_Adapter (void)
 {
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_MANAGED_OBJECT_CPP */

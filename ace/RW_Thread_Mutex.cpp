@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  * @file RW_Thread_Mutex.cpp
  *
@@ -20,6 +19,8 @@
 #include "ace/Guard_T.h"
 
 ACE_RCSID(ace, RW_Thread_Mutex, "$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_RW_Thread_Mutex)
 
@@ -50,5 +51,7 @@ template class ACE_Write_Guard<ACE_RW_Thread_Mutex>;
 #pragma instantiate ACE_Read_Guard<ACE_RW_Thread_Mutex>
 #pragma instantiate ACE_Write_Guard<ACE_RW_Thread_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_THREADS */

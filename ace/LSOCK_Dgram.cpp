@@ -11,6 +11,8 @@ ACE_RCSID(ace, LSOCK_Dgram, "$Id$")
 #include "ace/LSOCK_Dgram.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_LSOCK_Dgram)
 
 void
@@ -37,13 +39,13 @@ ACE_LSOCK_Dgram::ACE_LSOCK_Dgram (void)
 
 int
 ACE_LSOCK_Dgram::open (const ACE_Addr &local,
-		       int protocol_family,
-		       int protocol)
+                       int protocol_family,
+                       int protocol)
 {
   ACE_TRACE ("ACE_LSOCK_Dgram::open");
   if (ACE_SOCK_Dgram::open (local,
                             protocol_family,
-			    protocol) == -1)
+                            protocol) == -1)
     return -1;
   ACE_LSOCK::set_handle (this->ACE_SOCK_Dgram::get_handle ());
   return 0;
@@ -52,16 +54,18 @@ ACE_LSOCK_Dgram::open (const ACE_Addr &local,
 // Create a local ACE_SOCK datagram.
 
 ACE_LSOCK_Dgram::ACE_LSOCK_Dgram (const ACE_Addr &local,
-				  int protocol_family,
-				  int protocol)
+                                  int protocol_family,
+                                  int protocol)
 {
   ACE_TRACE ("ACE_LSOCK_Dgram::ACE_LSOCK_Dgram");
   if (this->open (local,
                   protocol_family,
-		  protocol) == -1)
+                  protocol) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_LSOCK_Dgram")));
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */

@@ -7,6 +7,8 @@
 #include "ace/OS_NS_wchar.h"
 #include "ace/os_include/os_string.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE const void *
 ACE_OS::memchr (const void *s, int c, size_t len)
 {
@@ -486,3 +488,5 @@ ACE_OS::strtok_r (ACE_WCHAR_T *s, const ACE_WCHAR_T *tokens, ACE_WCHAR_T **lasts
 #endif  /* ACE_LACKS_WCSTOK */
 }
 #endif  // ACE_HAS_WCHAR
+
+ACE_END_VERSIONED_NAMESPACE_DECL

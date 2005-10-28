@@ -7,6 +7,7 @@
 #include "ace/Global_Macros.h"
 #include "ace/OS_NS_arpa_inet.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
 ACE_INET_Addr::reset (void)
@@ -205,3 +206,4 @@ ACE_INET_Addr::is_ipv4_compat_ipv6 (void) const
 }
 #endif /* ACE_HAS_IPV6 */
 
+ACE_END_VERSIONED_NAMESPACE_DECL

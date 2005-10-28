@@ -24,6 +24,8 @@
 
 #include "ace/Event.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Auto_Event
  *
@@ -60,6 +62,8 @@ public:
   /// Declare the dynamic allocation hooks
   ACE_ALLOC_HOOK_DECLARE;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Auto_Event.inl"

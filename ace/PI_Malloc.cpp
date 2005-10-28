@@ -17,6 +17,8 @@ ACE_RCSID (ace,
 #include "ace/Process_Mutex.h"
 #include "ace/OS_NS_string.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 void
 ACE_PI_Control_Block::ACE_Malloc_Header::dump (void) const
 {
@@ -171,6 +173,8 @@ template class ACE_Based_Pointer<ACE_PI_Control_Block::ACE_Name_Node>;
 #pragma instantiate ACE_Based_Pointer<ACE_PI_Control_Block::ACE_Malloc_Header>
 #pragma instantiate ACE_Based_Pointer<ACE_PI_Control_Block::ACE_Name_Node>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1*/
 

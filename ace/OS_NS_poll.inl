@@ -1,8 +1,11 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_errno.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 ACE_OS::poll (struct pollfd *pollfds,
@@ -38,3 +41,5 @@ ACE_OS::poll (struct pollfd *pollfds,
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_POLL */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

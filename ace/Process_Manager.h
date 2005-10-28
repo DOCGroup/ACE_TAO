@@ -35,6 +35,8 @@
 #  include "ace/Recursive_Thread_Mutex.h"
 #endif /* ACE_HAS_THREADS */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Reactor;
 
 /**
@@ -401,6 +403,8 @@ private:
   ACE_Recursive_Thread_Mutex lock_;
 #endif /* ACE_HAS_THREADS */
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Process_Manager.inl"

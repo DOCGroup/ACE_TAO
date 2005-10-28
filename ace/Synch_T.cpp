@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_SYNCH_T_C
-#define ACE_SYNCH_T_C
+#ifndef ACE_SYNCH_T_CPP
+#define ACE_SYNCH_T_CPP
 
 #include "ace/Thread.h"
 
@@ -13,12 +13,10 @@
 #include "ace/Synch_T.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(ace, Synch_T, "$Id$")
-
 #include "ace/Lock_Adapter_T.cpp"
 #include "ace/Reverse_Lock_T.cpp"
 #include "ace/Guard_T.cpp"
 #include "ace/TSS_T.cpp"
 #include "ace/Condition_T.cpp"
 
-#endif /* ACE_SYNCH_T_C */
+#endif /* ACE_SYNCH_T_CPP */

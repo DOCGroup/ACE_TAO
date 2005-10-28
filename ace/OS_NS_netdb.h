@@ -15,7 +15,7 @@
 //=============================================================================
 
 #ifndef ACE_OS_NS_NETDB_H
-# define ACE_OS_NS_NETDB_H
+#define ACE_OS_NS_NETDB_H
 
 # include /**/ "ace/pre.h"
 
@@ -33,10 +33,13 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
-namespace ACE_OS {
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace ACE_OS
+{
 
 #if defined (VXWORKS)
-  extern ACE_Export 
+  extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
 #endif /* VXWORKS */
@@ -45,7 +48,7 @@ namespace ACE_OS {
                                  int type);
 
 #if defined (VXWORKS)
-  extern ACE_Export 
+  extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
 #endif /* VXWORKS */
@@ -57,14 +60,14 @@ namespace ACE_OS {
                                    int *h_errnop);
 
 #if defined (VXWORKS)
-  extern ACE_Export 
+  extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
 #endif /* VXWORKS */
   struct hostent *gethostbyname (const char *name);
 
 #if defined (VXWORKS)
-  extern ACE_Export 
+  extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
 #endif /* VXWORKS */
@@ -75,7 +78,7 @@ namespace ACE_OS {
 
 
 #if defined (VXWORKS)
-  extern ACE_Export 
+  extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
 #endif /* VXWORKS */
@@ -83,7 +86,7 @@ namespace ACE_OS {
                                    int family);
 
 #if defined (VXWORKS)
-  extern ACE_Export 
+  extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
 #endif /* VXWORKS */
@@ -98,7 +101,7 @@ namespace ACE_OS {
     unsigned char node[6];
   };
 
-  extern ACE_Export 
+  extern ACE_Export
   int getmacaddress (struct macaddr_node_t *node);
 
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -128,14 +131,16 @@ namespace ACE_OS {
                                    ACE_SERVENT_DATA buf);
 
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) && defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
-  extern ACE_Export 
+  extern ACE_Export
   int netdb_acquire (void);
 
-  extern ACE_Export 
+  extern ACE_Export
   int netdb_release (void);
 # endif /* defined (ACE_MT_SAFE) && ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 
 } /* namespace ACE_OS */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

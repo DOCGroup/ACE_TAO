@@ -19,6 +19,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_TTY_IO
  *
@@ -106,5 +108,7 @@ public:
   operator ACE_DEV_IO &();
 #endif /* ACE_NEEDS_DEV_IO_CONVERSION */
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_TTY_IO_H */

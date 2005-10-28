@@ -23,6 +23,8 @@
 
 #include "ace/Auto_Ptr.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Bound_Ptr_Counter
  *
@@ -332,6 +334,8 @@ private:
   /// The underlying object.
   X *ptr_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include "ace/Bound_Ptr.inl"
 

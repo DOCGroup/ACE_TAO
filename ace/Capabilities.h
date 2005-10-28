@@ -27,6 +27,8 @@
 #include "ace/SString.h"
 #include "ace/Functor_String.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_CapEntry
  *
@@ -203,6 +205,8 @@ is_line (const ACE_TCHAR *line)
   return *line != ACE_LIB_TEXT ('\0');
 }
 #endif /* ACE_IS_SPLITTING */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Capabilities.inl"

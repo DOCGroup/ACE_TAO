@@ -1,8 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 #include "ace/ACE.h"
 #include "ace/String_Base.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE unsigned long
 ACE_Hash<ACE_CString>::operator () (const ACE_CString &t) const
@@ -49,3 +52,5 @@ ACE_Less_Than<ACE_WString>::operator () (const ACE_WString &lhs,
 }
 
 #endif /*ACE_USES_WCHAR*/
+
+ACE_END_VERSIONED_NAMESPACE_DECL

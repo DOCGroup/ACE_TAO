@@ -10,6 +10,8 @@ ACE_RCSID(ace, ATM_QoS, "$Id$")
 #include "ace/ATM_QoS.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2)
 #define BHLI_MAGIC "FORE_ATM"
 // This is line rate in cells/s for an OC-3 MM interface.
@@ -153,25 +155,25 @@ ACE_ATM_QoS::ACE_ATM_QoS(int rate,
     + sizeof( ATM_QOS_CLASS_IE );
   ACE_OS::memcpy(ie_ptr->IE, &ie_qos, sizeof(ATM_QOS_CLASS_IE));
 
-  //	qos_.SendingFlowspec.TokenRate = 0xffffffff;
-  //	qos_.SendingFlowspec.TokenBucketSize = 0xffffffff;
-  //	qos_.SendingFlowspec.PeakBandwidth = 0xffffffff;
-  //	qos_.SendingFlowspec.Latency = 0xffffffff;
-  //	qos_.SendingFlowspec.DelayVariation = 0xffffffff;
-  //	qos_.SendingFlowspec.ServiceType = SERVICETYPE_BESTEFFORT;
+  //    qos_.SendingFlowspec.TokenRate = 0xffffffff;
+  //    qos_.SendingFlowspec.TokenBucketSize = 0xffffffff;
+  //    qos_.SendingFlowspec.PeakBandwidth = 0xffffffff;
+  //    qos_.SendingFlowspec.Latency = 0xffffffff;
+  //    qos_.SendingFlowspec.DelayVariation = 0xffffffff;
+  //    qos_.SendingFlowspec.ServiceType = SERVICETYPE_BESTEFFORT;
   // This will most probably be ignored by the service provider.
-  //	qos_.SendingFlowspec.MaxSduSize = 0xffffffff;
-  //	qos_.SendingFlowspec.MinimumPolicedSize = 0xffffffff;
+  //    qos_.SendingFlowspec.MaxSduSize = 0xffffffff;
+  //    qos_.SendingFlowspec.MinimumPolicedSize = 0xffffffff;
 
-  //	qos_.ReceivingFlowspec.TokenRate = 0xffffffff;
-  //	qos_.ReceivingFlowspec.TokenBucketSize = 0xffffffff;
-  //	qos_.ReceivingFlowspec.PeakBandwidth = 0xffffffff;
-  //	qos_.ReceivingFlowspec.Latency = 0xffffffff;
-  //	qos_.ReceivingFlowspec.DelayVariation = 0xffffffff;
-  //	qos_.ReceivingFlowspec.ServiceType = SERVICETYPE_BESTEFFORT;
+  //    qos_.ReceivingFlowspec.TokenRate = 0xffffffff;
+  //    qos_.ReceivingFlowspec.TokenBucketSize = 0xffffffff;
+  //    qos_.ReceivingFlowspec.PeakBandwidth = 0xffffffff;
+  //    qos_.ReceivingFlowspec.Latency = 0xffffffff;
+  //    qos_.ReceivingFlowspec.DelayVariation = 0xffffffff;
+  //    qos_.ReceivingFlowspec.ServiceType = SERVICETYPE_BESTEFFORT;
   // This will most probably be ignored by the service provider.
-  //	qos_.ReceivingFlowspec.MaxSduSize = 0xffffffff;
-  //	qos_.ReceivingFlowspec.MinimumPolicedSize = 0;
+  //    qos_.ReceivingFlowspec.MaxSduSize = 0xffffffff;
+  //    qos_.ReceivingFlowspec.MinimumPolicedSize = 0;
 
   ACE_Flow_Spec send_fspec( 0xffffffff,
                             0xffffffff,
@@ -346,7 +348,7 @@ ACE_ATM_QoS::set_cbr_rate (int rate,
   // Peak bandwidth is in bytes/sec. The rate is specified in cells/sec so
   //  we need to convert from cells/sec to bytes/sec (i.e., multiply by 53).
   qos_.SendingFlowspec.PeakBandwidth = rate * BYTES_PER_ATM_CELL;
-  qos_.SendingFlowspec.Latency = -1;	// we don't care too much
+  qos_.SendingFlowspec.Latency = -1;    // we don't care too much
   qos_.SendingFlowspec.DelayVariation = -1; // we don't care too much
   // no provider-specific data allowed on ATM
   qos_.ProviderSpecific.buf=0;
@@ -478,7 +480,7 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
       // signal the UNI 3.1 Calling Party ID Information Element.
       t_atm_addr *source_addr;
 
-      popt->len	= sizeof (struct t_opthdr) + sizeof (t_atm_addr);
+      popt->len = sizeof (struct t_opthdr) + sizeof (t_atm_addr);
       popt->level = T_ATM_SIGNALING;
       popt->name = T_ATM_ORIG_ADDR;
       popt->status = 0;
@@ -530,7 +532,7 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
       struct t_atm_traffic *traffic;
 
       // T_ATM_BEARER_CAP: Broadband bearer capability
-      popt->len	= sizeof (struct t_opthdr) + sizeof (struct t_atm_bearer);
+      popt->len = sizeof (struct t_opthdr) + sizeof (struct t_atm_bearer);
       popt->level = T_ATM_SIGNALING;
       popt->name = T_ATM_BEARER_CAP;
       popt->status = 0;
@@ -546,7 +548,7 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
         }
       else
         {
-          bearer->traffic_type	 = 0; // UBR
+          bearer->traffic_type   = 0; // UBR
           bearer->timing_requirements = 0;
         }
       bearer->clipping_susceptibility = T_ATM_NULL;
@@ -559,7 +561,7 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
       popt = T_OPT_NEXTHDR (buf, info.options, popt);
 
       // T_ATM_TRAFFIC: traffic descriptor
-      popt->len	= sizeof (struct t_opthdr) + sizeof (struct t_atm_traffic);
+      popt->len = sizeof (struct t_opthdr) + sizeof (struct t_atm_traffic);
       popt->level = T_ATM_SIGNALING;
       popt->name = T_ATM_TRAFFIC;
       popt->status = 0;
@@ -576,13 +578,13 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
       traffic->forward.tagging = T_NO;
 
       traffic->backward.PCR_high_priority = T_ATM_ABSENT;
-      traffic->backward.PCR_all_traffic	=
+      traffic->backward.PCR_all_traffic =
         (ACE_BIT_ENABLED (flags, OPT_FLAGS_PMP))
         ? 0 : qos_cells ? qos_cells : LINE_RATE;
       traffic->backward.SCR_high_priority = T_ATM_ABSENT;
-      traffic->backward.SCR_all_traffic	= T_ATM_ABSENT;
+      traffic->backward.SCR_all_traffic = T_ATM_ABSENT;
       traffic->backward.MBS_high_priority = T_ATM_ABSENT;
-      traffic->backward.MBS_all_traffic	= T_ATM_ABSENT;
+      traffic->backward.MBS_all_traffic = T_ATM_ABSENT;
       traffic->backward.tagging = T_NO;
 
       traffic->best_effort = qos_cells ? T_NO : T_YES;
@@ -597,7 +599,7 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
       struct t_atm_qos *qos;
 
       // T_ATM_QOS: Quality of Service
-      popt->len	= sizeof (struct t_opthdr) + sizeof (struct t_atm_qos);
+      popt->len = sizeof (struct t_opthdr) + sizeof (struct t_atm_qos);
       popt->level = T_ATM_SIGNALING;
       popt->name = T_ATM_QOS;
       popt->status = 0;
@@ -622,6 +624,8 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
   return (0);
 #endif /* ACE_HAS_FORE_ATM_WS2 */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_ATM */
 

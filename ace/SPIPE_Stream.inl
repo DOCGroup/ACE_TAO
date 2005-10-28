@@ -1,7 +1,6 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
-
-// SPIPE_Stream.i
 
 #include "ace/OS_NS_sys_uio.h"
 #include "ace/OS_NS_errno.h"
@@ -9,6 +8,8 @@
 #if defined (ACE_WIN32)
 #include "ace/OS_NS_sys_socket.h"
 #endif
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Create an ACE_SPIPE_Stream.
 
@@ -271,4 +272,6 @@ ACE_SPIPE_Stream::sendv (const iovec iov[],
                          iov,
                          n);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 

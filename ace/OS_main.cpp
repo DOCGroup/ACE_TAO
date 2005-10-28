@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "ace/OS_main.h"
@@ -70,6 +69,8 @@ ACE_MAIN ()   /* user's entry point, e.g., "main" w/out argc, argv */
 
 #    endif /* ACE_PSOSIM */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #    if defined (ACE_VXWORKS)
 ace_main_proc_ptr vx_ace_main_i_ptr = 0;
 
@@ -139,4 +140,7 @@ int ACE_Main_Base::run (HINSTANCE,
 }
 
 #  endif   /* !ACE_HAS_WINCE */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 # endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */

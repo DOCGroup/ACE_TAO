@@ -1,8 +1,7 @@
-// Connector.cpp
 // $Id$
 
-#ifndef ACE_CONNECTOR_C
-#define ACE_CONNECTOR_C
+#ifndef ACE_CONNECTOR_CPP
+#define ACE_CONNECTOR_CPP
 
 #include "ace/Connector.h"
 #include "ace/OS_NS_stdio.h"
@@ -13,7 +12,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_RCSID(ace, Connector, "$Id$")
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Connector)
 
@@ -993,5 +992,7 @@ ACE_Strategy_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::concurrency_strategy 
 {
   return this->concurrency_strategy_;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_CONNECTOR_C */

@@ -50,6 +50,8 @@ extern "C" {
 }
 #endif /* ACE_WIN32 && _MSC_VER */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace ACE_OS {
 
   /** @name Non-standard functions
@@ -273,8 +275,9 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int system (const ACE_TCHAR *s);
 
-
 } /* namespace ACE_OS */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

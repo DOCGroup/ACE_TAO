@@ -26,6 +26,8 @@
 
 #include "ace/os_include/os_errno.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Time_Value;
 
 /**
@@ -76,6 +78,8 @@ private:
   void operator= (const ACE_Null_Condition &);
   ACE_Null_Condition (const ACE_Null_Condition &);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_NULL_CONDITION_H */

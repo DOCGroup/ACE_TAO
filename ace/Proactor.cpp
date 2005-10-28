@@ -38,6 +38,8 @@ ACE_RCSID (ace,
 
 #include "ace/Auto_Event.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// Process-wide ACE_Proactor.
 ACE_Proactor *ACE_Proactor::proactor_ = 0;
 
@@ -1235,5 +1237,7 @@ ACE_Proactor::event_loop_done (void)
 {
   return sig_atomic_t (1);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS*/

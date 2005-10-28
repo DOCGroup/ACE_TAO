@@ -23,6 +23,8 @@
 
 ACE_RCSID(ace, Mem_Map, "Mem_Map.cpp,v 4.39 2003/11/01 11:15:13 dhinton Exp")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Mem_Map)
 
 #if defined (ACE_USE_MAPPING_NAME)
@@ -392,3 +394,5 @@ ACE_Mem_Map::remove (void)
   else
     return 0;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

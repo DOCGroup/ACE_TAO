@@ -30,6 +30,8 @@
 
 #include "ace/Global_Macros.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Method_Request
  *
@@ -92,6 +94,8 @@ private:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Method_Request &))
   ACE_UNIMPLEMENTED_FUNC (ACE_Method_Request (const ACE_Method_Request &))
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 
 #include /**/ "ace/post.h"

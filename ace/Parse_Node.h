@@ -26,6 +26,7 @@
 
 #include "ace/DLL.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Forward declarations.
 class ACE_Service_Config;
@@ -390,6 +391,8 @@ private:
 /// Global variable used to communicate between the parser and the main
 /// program.
 extern ACE_Service_Config *ace_this_svc;
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
 

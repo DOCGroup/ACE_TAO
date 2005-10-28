@@ -28,6 +28,8 @@
 #include "ace/ACE_FlReactor_export.h"
 #include "ace/Select_Reactor.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_FlReactor
  *
@@ -101,6 +103,8 @@ private:
   ACE_FlReactor (const ACE_FlReactor &);
   ACE_FlReactor &operator = (const ACE_FlReactor &);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_FLREACTOR_H */

@@ -1,7 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
-// TLI_Connector.i
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_TLI_Connector::ACE_TLI_Connector (ACE_TLI_Stream &new_stream,
@@ -45,3 +46,4 @@ ACE_TLI_Connector::reset_new_handle (ACE_HANDLE handle)
   return 0;
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -9,6 +9,8 @@ ACE_RCSID(ace, OS_NS_arpa_inet, "$Id$")
 # include "ace/OS_NS_arpa_inet.inl"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 int
 ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
 {
@@ -66,3 +68,5 @@ ACE_OS::inet_ntoa (const struct in_addr addr)
   return addrstr;
 }
 #endif /* defined (ACE_PSOS) */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

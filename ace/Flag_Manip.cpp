@@ -19,6 +19,8 @@ ACE_RCSID (ace,
            Flag_Manip,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Flags are file status flags to turn on.
 
 int
@@ -89,3 +91,5 @@ ACE::clr_flags (ACE_HANDLE handle, int flags)
     return 0;
 #endif /* ACE_LACKS_FCNTL */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

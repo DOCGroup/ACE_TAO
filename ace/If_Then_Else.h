@@ -17,6 +17,8 @@
 #ifndef ACE_IF_THEN_ELSE_H
 #define ACE_IF_THEN_ELSE_H
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace ACE
 {
 
@@ -79,5 +81,7 @@ namespace ACE
   };
 
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* ACE_IF_THEN_ELSE_H */

@@ -24,7 +24,6 @@
 
 #include "ace/SOCK.h"
 #include "ace/MEM_SAP.h"
-#include "ace/Memory_Pool.h"
 #include "ace/Message_Block.h"
 #include "ace/Process_Semaphore.h"
 #include "ace/Process_Mutex.h"
@@ -34,6 +33,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Memory_Export ACE_Reactive_MEM_IO : public ACE_MEM_SAP
 {
@@ -300,6 +301,8 @@ private:
   /// Record the current read pointer location in <recv_buffer_>.
   ssize_t cur_offset_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/MEM_IO.inl"

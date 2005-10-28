@@ -1,4 +1,3 @@
-// ARGV.cpp
 // $Id$
 
 // Transforms a string BUF into an ARGV-style vector of strings.
@@ -15,6 +14,9 @@
 #include "ace/OS_Memory.h"
 
 ACE_RCSID(ace, ARGV, "$Id$")
+
+// Open versioned namespace, if enabled by the user.
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE (ACE_ARGV)
 
@@ -64,7 +66,7 @@ ACE_ARGV::argv_to_string (ACE_TCHAR **argv, ACE_TCHAR *&buf)
 }
 
 ACE_ARGV::ACE_ARGV (const ACE_TCHAR buf[],
-		    int substitute_env_args)
+                    int substitute_env_args)
   : substitute_env_args_ (substitute_env_args),
     state_ (TO_PTR_ARRAY),
     argc_ (0),
@@ -91,7 +93,7 @@ ACE_ARGV::ACE_ARGV (const ACE_TCHAR buf[],
 }
 
 ACE_ARGV::ACE_ARGV (ACE_TCHAR *argv[],
-		    int substitute_env_args)
+                    int substitute_env_args)
   : substitute_env_args_ (substitute_env_args),
     state_ (TO_STRING),
     argc_ (0),
@@ -197,7 +199,7 @@ ACE_ARGV::add (const ACE_TCHAR *next_arg)
   if (this->argv_ != 0)
     {
       for (int i = 0; this->argv_[i] != 0; i++)
-	ACE_OS::free ((void *) this->argv_[i]);
+        ACE_OS::free ((void *) this->argv_[i]);
 
       delete [] this->argv_;
       this->argv_ = 0;
@@ -277,7 +279,7 @@ ACE_ARGV::create_buf_from_queue (void)
 
       // Put in an argument separating space.
       if (more != 0)
-	*ptr++ = ' ';
+        *ptr++ = ' ';
     }
 
   // Put in the NUL terminator
@@ -295,3 +297,6 @@ template class ACE_Node<ACE_TCHAR *>;
 #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_TCHAR *>
 #pragma instantiate ACE_Node<ACE_TCHAR *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+// Close versioned namespace, if enabled by the user.
+ACE_END_VERSIONED_NAMESPACE_DECL

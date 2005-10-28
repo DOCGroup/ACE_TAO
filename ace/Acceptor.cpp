@@ -19,6 +19,8 @@ ACE_RCSID (ace,
            Acceptor,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Acceptor)
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> void
@@ -1220,5 +1222,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::operator ACE_PEER_ACCEPT
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::operator ACE_PEER_ACCEPTOR &");
   return (ACE_PEER_ACCEPTOR &) this->peer_acceptor_;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_ACCEPTOR_CPP */

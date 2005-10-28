@@ -1,7 +1,10 @@
 // -*- C++ -*-
+//
 // $Id$
 
 #include "ace/config-all.h"    /* Need ACE_TRACE */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 ACE_OS::last_error (void)
@@ -94,3 +97,5 @@ ACE_CE_Errno::operator= (int x)
 }
 
 #endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

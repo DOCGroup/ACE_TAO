@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -20,6 +20,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //@@ TAO_REACTOR_SPL_COMMENT_HOOK_START
 typedef ACE_Reactor_Token_T<ACE_SELECT_TOKEN> ACE_Select_Reactor_Token;
@@ -59,6 +61,8 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Guard (const ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> > &))
 };
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE == 0 */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_SELECT_REACTOR_H */

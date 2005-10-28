@@ -22,6 +22,8 @@
 #  include "ace/os_include/os_unistd.h"
 #endif /* VXWORKS || ACE_HAS_WINCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE int
 ACE_OS::access (const char *path, int amode)
 {
@@ -1350,3 +1352,5 @@ ACE_OS::write (ACE_HANDLE handle,
   return ACE_OS::write (handle, buf, nbyte);
 #endif /* ACE_WIN32 */
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

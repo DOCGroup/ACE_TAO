@@ -23,6 +23,7 @@
 
 #include "ace/Time_Value.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Synch_Options
@@ -80,9 +81,6 @@ public:
   ACE_Synch_Options (unsigned long options = 0,
                      const ACE_Time_Value &timeout = ACE_Time_Value::zero,
                      const void *arg = 0);
-
-  /// Default dtor.
-  ~ACE_Synch_Options (void);
 
   /// Initialize the Synch_Options based on parameters.
   void set (unsigned long options = 0,
@@ -149,9 +147,7 @@ private:
   const void *arg_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "ace/Synch_Options.inl"
-#endif /* __ACE_INLINE__ */
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

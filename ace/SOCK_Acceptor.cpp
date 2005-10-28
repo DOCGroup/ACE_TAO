@@ -1,4 +1,3 @@
-// SOCK_Acceptor.cpp
 // $Id$
 
 #include "ace/SOCK_Acceptor.h"
@@ -17,6 +16,8 @@
 #endif  // ACE_HAS_WINCE
 
 ACE_RCSID(ace, SOCK_Acceptor, "$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Acceptor)
 
@@ -401,3 +402,5 @@ ACE_SOCK_Acceptor::close (void)
 {
   return ACE_SOCK::close ();
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

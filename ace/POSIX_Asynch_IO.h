@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -39,6 +39,8 @@
 #endif
 
 #include "ace/Null_Mutex.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations
 class ACE_POSIX_Proactor;
@@ -1295,6 +1297,8 @@ protected:
   ACE_HANDLE handle_;
 
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_AIO_CALLS */
 #endif /* ACE_POSIX_ASYNCH_IO_H */

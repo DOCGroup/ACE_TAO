@@ -4,6 +4,8 @@
 
 #include "ace/os_include/os_errno.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace ACE_OS
 {
 #if !defined (ACE_WIN32) && !defined (VXWORKS) && !defined (CHORUS) && !defined (ACE_PSOS)
@@ -31,3 +33,5 @@ namespace ACE_OS
   }
 #endif /* ! ACE_WIN32 && ! VXWORKS && ! CHORUS */
 } // namespace ACE_OS
+
+ACE_END_VERSIONED_NAMESPACE_DECL
