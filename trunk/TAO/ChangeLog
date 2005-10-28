@@ -1,3 +1,27 @@
+Fri Oct 28 23:55:14 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_type.cpp:
+        
+          Cosmetic changes.
+          
+        * TAO_IDL/include/ast_attribute.h:
+        
+          Removed legacy comment.
+          
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
+        * TAO_IDL/be_include/be_valuetype.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype_obv_cs.h:
+        
+          Added generation of valuetype constructor that initializes all
+          members, including inherited members, as specified in the CORBA
+          C++ mapping (03-06-03) section 1.17.2. This fix closes
+          [BUGID:2270].
+
 Thu Oct 27 14:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Dynamic/server_interceptor.cpp:
