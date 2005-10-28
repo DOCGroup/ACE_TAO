@@ -1,3 +1,11 @@
+Fri Oct 28 12:30:06 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/NodeApplication/Configurator_Factory.cpp
+	* DAnCE/NodeApplication/RTNodeApp_Configurator.cpp
+	* DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
+
+	Scoreboard fixes. 
+	
 Thu Oct 27 21:06:39 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* CCF/CCF/CodeGenerationKit/IndentationCxx.hpp:
