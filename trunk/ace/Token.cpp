@@ -1,7 +1,12 @@
 // $Id$
 
-#include "ace/Thread.h"
 #include "ace/Token.h"
+
+ACE_RCSID(ace, Token, "$Id$")
+
+#if defined (ACE_HAS_THREADS)
+
+#include "ace/Thread.h"
 #include "ace/Log_Msg.h"
 
 #if defined (DEBUGGING)
@@ -9,16 +14,13 @@
 #include "ace/streams.h"
 #endif /* DEBUGGING */
 
-ACE_RCSID(ace, Token, "$Id$")
-
 #if !defined (__ACE_INLINE__)
 #include "ace/Token.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_HAS_THREADS)
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Token)
-
 
 void
 ACE_Token::dump (void) const
@@ -544,8 +546,6 @@ ACE_Token::wakeup_next_waiter (void)
   this->owner_ = queue->head_->thread_id_;
 }
 
-#endif /* ACE_HAS_THREADS */
+ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_THREADS */

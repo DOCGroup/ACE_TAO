@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -21,7 +21,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// The following typedef are here for ease of use and backward
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+// The following typedefs are here for ease of use and backward
 // compatibility.
 
 typedef ACE_Timer_List_T<ACE_Event_Handler *,
@@ -33,6 +35,8 @@ typedef ACE_Timer_List_Iterator_T<ACE_Event_Handler *,
                                   ACE_Event_Handler_Handle_Timeout_Upcall<ACE_SYNCH_RECURSIVE_MUTEX>,
                                   ACE_SYNCH_RECURSIVE_MUTEX>
         ACE_Timer_List_Iterator;
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_TIMER_LIST_H */

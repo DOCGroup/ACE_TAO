@@ -22,6 +22,8 @@
 
 #include "ace/Base_Thread_Adapter.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward decl.
 class ACE_Thread_Manager;
 class ACE_Thread_Descriptor;
@@ -83,6 +85,8 @@ private:
   ACE_Thread_Manager *thr_mgr_;
 
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

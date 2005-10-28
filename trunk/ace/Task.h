@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -22,6 +22,8 @@
 
 #include "ace/Thread_Manager.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_Task_Flags
  *
@@ -32,9 +34,8 @@
  *    code defined here, so we don't have to worry about multiple
  *    definitions.
  */
-class ACE_Export ACE_Task_Flags
+namespace ACE_Task_Flags
 {
-public:
   enum
   {
     /// Identifies a Task as being the "reader" in a Module.
@@ -276,6 +277,8 @@ private:
   ACE_Task_Base &operator= (const ACE_Task_Base &);
   ACE_Task_Base (const ACE_Task_Base &);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Task.inl"

@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file  UUID.h
@@ -23,6 +24,8 @@
 #include "ace/SString.h"
 #include "ace/Singleton.h"
 #include "ace/Synch_Traits.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_Utils
 {
@@ -215,9 +218,11 @@ namespace ACE_Utils
     int destroy_lock_;
   };
 
-  typedef ACE_Singleton <UUID_Generator, ACE_SYNCH_MUTEX> UUID_GENERATOR;
+  typedef ACE_Singleton<UUID_Generator, ACE_SYNCH_MUTEX> UUID_GENERATOR;
 
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/UUID.inl"

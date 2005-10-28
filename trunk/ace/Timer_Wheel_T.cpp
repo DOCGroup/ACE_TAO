@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_TIMER_WHEEL_T_C
-#define ACE_TIMER_WHEEL_T_C
+#ifndef ACE_TIMER_WHEEL_T_CPP
+#define ACE_TIMER_WHEEL_T_CPP
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -12,8 +12,7 @@
 #include "ace/Timer_Wheel_T.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID(ace, Timer_Wheel_T, "$Id$")
-
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Design/implementation notes for ACE_Timer_Wheel_T.
 //
@@ -941,7 +940,6 @@ ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::goto_next (u_int start_spok
   this->current_node_ = 0;
 }
 
-
 /**
 * @return True when we there aren't any more items (when current_node_ == 0)
 */
@@ -950,7 +948,6 @@ ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::isdone (void) const
 {
   return this->current_node_ == 0;
 }
-
 
 /**
 * @return The node at the current spokeition in the sequence or 0 if the wheel
@@ -962,5 +959,6 @@ ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::item (void)
   return this->current_node_;
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_TIMER_WHEEL_T_C */
+#endif /* ACE_TIMER_WHEEL_T_CPP */

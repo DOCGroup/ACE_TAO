@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef ACE_TIMEPROBE_T_C
-#define ACE_TIMEPROBE_T_C
+#ifndef ACE_TIMEPROBE_T_CPP
+#define ACE_TIMEPROBE_T_CPP
 
 #include "ace/config-all.h"
 
@@ -9,13 +9,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_RCSID(ace, Timeprobe_T, "$Id$")
-
 #if defined (ACE_COMPILE_TIMEPROBES)
 
 #include "ace/Timeprobe.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/OS_NS_string.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::ACE_Timeprobe_Ex (u_long size)
@@ -394,5 +394,7 @@ ACE_Function_Timeprobe<Timeprobe>::~ACE_Function_Timeprobe (void)
   this->timeprobe_.timeprobe (this->event_ + 1);
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* ACE_COMPILE_TIMEPROBES */
-#endif /* ACE_TIMEPROBE_T_C */
+#endif /* ACE_TIMEPROBE_T_CPP */

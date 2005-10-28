@@ -1,13 +1,13 @@
 // $Id$
 
+#ifndef ACE_TIMER_QUEUE_ADAPTERS_CPP
+#define ACE_TIMER_QUEUE_ADAPTERS_CPP
+
 #include "ace/Timer_Queue_Adapters.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#ifndef ACE_TIMER_QUEUE_ADAPTERS_CPP
-#define ACE_TIMER_QUEUE_ADAPTERS_CPP
 
 # if !defined (__ACE_INLINE__)
 #  include "ace/Timer_Queue_Adapters.inl"
@@ -15,6 +15,8 @@
 
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_time.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TQ> TQ &
 ACE_Async_Timer_Queue_Adapter<TQ>::timer_queue (void)
@@ -339,5 +341,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::dispatch_commands (void)
 }
 
 # endif /* ACE_HAS_DEFERRED_TIMER_COMMANDS */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_TIMER_QUEUE_ADAPTERS_CPP */

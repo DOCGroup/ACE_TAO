@@ -34,6 +34,8 @@
 #include "ace/ACE.h"
 #include "ace/os_include/sys/os_un.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_UNIX_Addr
  *
@@ -107,10 +109,14 @@ private:
   sockaddr_un unix_addr_;
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
 #include "ace/UNIX_Addr.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
+
 #include /**/ "ace/post.h"
+
 #endif /* ACE_UNIX_ADDR_H */

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -22,6 +22,8 @@
 
 #include "ace/Synch_Traits.h"
 #include "ace/Task.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decls...
 template <ACE_SYNCH_DECL> class ACE_Module;
@@ -166,6 +168,8 @@ private:
 template class ACE_Export ACE_Task<ACE_MT_SYNCH>;
 template class ACE_Export ACE_Task<ACE_NULL_SYNCH>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Task_T.inl"

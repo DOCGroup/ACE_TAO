@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -24,6 +24,8 @@
 
 #include "ace/Event_Handler.h"
 #include "ace/Time_Value.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Timer_Node_Dispatch_Info_T
@@ -541,6 +543,8 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Event_Handler_Handle_Timeout_Upcall (const ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK> &))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK> &))
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Timer_Queue_T.inl"

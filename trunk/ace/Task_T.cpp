@@ -1,8 +1,7 @@
-// Task.cpp
 // $Id$
 
-#ifndef ACE_TASK_T_C
-#define ACE_TASK_T_C
+#ifndef ACE_TASK_T_CPP
+#define ACE_TASK_T_CPP
 
 #include "ace/Task_T.h"
 
@@ -17,7 +16,7 @@
 #include "ace/Task_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Task_T, "$Id$")
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <ACE_SYNCH_DECL> void
 ACE_Task<ACE_SYNCH_USE>::dump (void) const
@@ -104,4 +103,6 @@ ACE_Task<ACE_SYNCH_USE>::module (void) const
   return this->mod_;
 }
 
-#endif /* ACE_TASK_T_C */
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_TASK_T_CPP */

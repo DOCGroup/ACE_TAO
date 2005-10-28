@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -19,6 +19,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declaration
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
@@ -210,6 +212,8 @@ private:
   ACE_UNIMPLEMENTED_FUNC (
     void operator= (const ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK> &))
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)

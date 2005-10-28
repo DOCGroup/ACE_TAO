@@ -2,6 +2,7 @@
 //
 // $Id$
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TYPE> ACE_INLINE void
 ACE_Timer_Node_T<TYPE>::set (const TYPE &type,
@@ -217,3 +218,5 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::upcall_functor (void)
 {
   return *this->upcall_functor_;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

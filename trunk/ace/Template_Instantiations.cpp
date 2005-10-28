@@ -35,6 +35,8 @@
 #error ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_FILE may not be used with  ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION or ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
 #endif /* defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA) */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 //  D E P T H = 0
 // Templates with nesting depth 0 (no dependencies on
 // other templates), ordered by number of template arguments
@@ -349,6 +351,8 @@ template class ACE_Timer_List_Iterator_T<ACE_Event_Handler*, ACE_Timer_Hash_Upca
 template class ACE_Timer_Queue_T<ACE_Event_Handler*, ACE_Timer_Hash_Upcall<ACE_Event_Handler*, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>, ACE_Null_Mutex>;
 
 template class ACE_Timer_Queue_Iterator_T<ACE_Event_Handler*, ACE_Timer_Hash_Upcall<ACE_Event_Handler*, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>, ACE_Null_Mutex>;
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #elif defined (__HP_aCC)
 // Make aC++ stop complaining about an empty translation unit

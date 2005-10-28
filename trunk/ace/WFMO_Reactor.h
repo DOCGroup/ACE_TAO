@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -72,6 +72,8 @@ int WSAEnumNetworkEvents (SOCKET s,
                           LPWSANETWORKEVENTS lpNetworkEvents);
 
 #endif /* !defined ACE_HAS_WINSOCK2 */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decl.
 class ACE_WFMO_Reactor;
@@ -1341,6 +1343,8 @@ private:
   ACE_WFMO_Reactor (const ACE_WFMO_Reactor &);
   ACE_WFMO_Reactor &operator = (const ACE_WFMO_Reactor &);
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/WFMO_Reactor.inl"
