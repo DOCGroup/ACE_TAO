@@ -7,7 +7,7 @@
 #include "ace/Log_Msg.h"
 #include "Iterative_Logging_Server.h"
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Iterative_Logging_Server server;
 

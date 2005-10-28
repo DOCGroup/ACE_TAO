@@ -275,7 +275,7 @@ public:
     char timestamp[26]; // Max size of ctime_r() string.
     time_t time_secs (secs);
     ACE_OS::ctime_r (&time_secs, timestamp_t, sizeof timestamp_t);
-    ACE_OS::strcpy (timestamp, ACE_TEXT_ALWAYS_CHAR (timestamp_t));
+    ACE_OS::strcpy (timestamp, ACE_TEXT_TO_CHAR_IN (timestamp_t));
     mblk->size (26); // Max size of ctime_r() string.
     mblk->reset ();
     timestamp[19] = '\0'; // NUL-terminate after the time.

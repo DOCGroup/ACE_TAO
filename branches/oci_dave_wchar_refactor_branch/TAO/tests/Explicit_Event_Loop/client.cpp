@@ -22,6 +22,7 @@
 #include "timeC.h"
 
 #include "ace/Log_Msg.h"
+#include "ace/Argv_Type_Converter.h"
 
 // The following header is #included automatically by ACE+TAO.
 // Therefore, they don't need to be included explicitly.
@@ -29,14 +30,16 @@
 //#include <iomanip.h>
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Initialize orb
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
+      CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(),
+                                            convert.get_ASCII_argv(),
                                             ""
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -50,7 +53,7 @@ main (int argc, char *argv[])
         }
 
       // Destringify argv[1].
-      CORBA::Object_var obj = orb->string_to_object (argv[1]
+      CORBA::Object_var obj = orb->string_to_object (ACE_TEXT_TO_CHAR_IN(argv[1])
                                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

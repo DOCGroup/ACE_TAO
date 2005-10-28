@@ -15,6 +15,7 @@
 
 #include "Concurrency_Loader.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Concurrency, Concurrency_Loader, "$Id$")
 
@@ -29,14 +30,16 @@ TAO_Concurrency_Loader::~TAO_Concurrency_Loader (void)
 }
 
 int
-TAO_Concurrency_Loader::init (int argc, char *argv[])
+TAO_Concurrency_Loader::init (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Initialize the ORB
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), 0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // This function call initializes the Concurrency Service
@@ -64,7 +67,7 @@ TAO_Concurrency_Loader::fini (void)
 CORBA::Object_ptr
 TAO_Concurrency_Loader::create_object (CORBA::ORB_ptr orb,
                                        int /* argc */,
-                                       char * /* argv */ []
+                                       ACE_TCHAR * /* argv */ []
                                        ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {

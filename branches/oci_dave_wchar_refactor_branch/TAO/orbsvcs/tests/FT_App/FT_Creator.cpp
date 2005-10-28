@@ -43,7 +43,7 @@ FTAPP::FT_Creator::parse_args (int argc, char *argv[])
 {
   int result = 0;
 
-  ACE_Get_Opt get_opts (argc, argv, "r:ignf:u:p:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "r:ignf:u:p:");
   int c;
 
   while (result == 0 && (c = get_opts ()) != -1)
@@ -255,7 +255,7 @@ int FTAPP::FT_Creator::fini ()
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int result = 0;
   ACE_TRY_NEW_ENV

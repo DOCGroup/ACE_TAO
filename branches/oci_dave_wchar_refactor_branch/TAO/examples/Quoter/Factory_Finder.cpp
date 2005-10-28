@@ -189,7 +189,7 @@ Quoter_Factory_Finder_Server::run (ACE_ENV_SINGLE_ARG_DECL)
 u_int
 Quoter_Factory_Finder_Server::parse_args (void)
 {
-  ACE_Get_Opt get_opt (this->argc_, this->argv_, "?d:");
+  ACE_Get_Arg_Opt<char> get_opt (this->argc_, this->argv_, "?d:");
   int opt;
   int exit_code = 0;
 
@@ -220,7 +220,7 @@ Quoter_Factory_Finder_Server::parse_args (void)
 // function main
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Quoter_Factory_Finder_Server quoter_Factory_Finder_Server;
 

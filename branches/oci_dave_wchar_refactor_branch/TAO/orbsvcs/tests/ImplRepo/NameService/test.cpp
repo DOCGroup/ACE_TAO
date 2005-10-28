@@ -6,7 +6,7 @@
 
 #include "ace/Log_Msg.h"
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRY_NEW_ENV
     {

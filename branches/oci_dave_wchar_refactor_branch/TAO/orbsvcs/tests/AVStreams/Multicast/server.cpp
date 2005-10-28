@@ -165,7 +165,7 @@ Server::run (void)
 int
 Server::parse_args (int argc,char **argv)
 {
-  ACE_Get_Opt opts (argc,argv,"f:p:");
+  ACE_Get_Arg_Opt<char> opts (argc,argv,"f:p:");
 
   int c;
   while ((c = opts ()) != -1)
@@ -196,7 +196,7 @@ Server::file (void)
 }
 
 int
-main (int argc,
+ACE_TMAIN (int argc,
       char **argv)
 {
   int result = 0;

@@ -5366,7 +5366,6 @@ ACE_OS::unique_name (const void *object,
                     length);
 }
 
-#if defined (ACE_USES_WCHAR)
 void
 ACE_OS::unique_name (const void *object,
                      wchar_t *name,
@@ -5379,14 +5378,13 @@ ACE_OS::unique_name (const void *object,
   // <object>.
   wchar_t temp_name[ACE_UNIQUE_NAME_LEN];
   ACE_OS::sprintf (temp_name,
-                   ACE_LIB_TEXT ("%p%d"),
+                   ACE_TEXT_WIDE ("%p%d"),
                    object,
                    static_cast <int> (ACE_OS::getpid ()));
   ACE_OS::strsncpy (name,
                     temp_name,
                     length);
 }
-#endif
 
 #if defined (VXWORKS)
 # include /**/ <usrLib.h>   /* for ::sp() */

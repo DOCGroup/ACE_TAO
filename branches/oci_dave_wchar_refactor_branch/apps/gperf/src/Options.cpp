@@ -261,7 +261,7 @@ Options::parse_args (int argc, char *argv[])
   if (ACE_LOG_MSG->open (argv[0]) == -1)
     return -1;
 
-  ACE_Get_Opt getopt (argc, argv, "abBcCdDe:Ef:F:gGhH:i:IJj:k:K:lL:mMnN:oOprs:S:tTvVZ:");
+  ACE_Get_Arg_Opt<char> getopt (argc, argv, "abBcCdDe:Ef:F:gGhH:i:IJj:k:K:lL:mMnN:oOprs:S:tTvVZ:");
   int option_char;
 
   argc_ = argc;

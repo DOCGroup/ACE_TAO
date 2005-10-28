@@ -112,7 +112,7 @@ TAO_ECG_Mcast_Gateway::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              this->address_server_arg_.set (arg_shifter.get_current ());
+              this->address_server_arg_.set (ACE_TEXT_TO_CHAR_IN (arg_shifter.get_current ()));
               arg_shifter.consume_arg ();
             }
         }
@@ -163,7 +163,7 @@ TAO_ECG_Mcast_Gateway::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              this->nic_.set (arg_shifter.get_current ());
+              this->nic_.set (ACE_TEXT_TO_CHAR_IN (arg_shifter.get_current ()));
               arg_shifter.consume_arg ();
             }
         }
@@ -312,7 +312,7 @@ TAO_ECG_Mcast_Gateway::init_endpoint (void)
 
   if (this->nic_.length () != 0)
     {
-      dgram.set_nic (this->nic_.c_str ());
+      dgram.set_nic (ACE_TEXT_TO_TCHAR_IN(this->nic_.c_str ()));
     }
 
   if (this->ttl_value_ > 0)
@@ -433,7 +433,7 @@ TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
       handler.reset (h);
 
       h->reactor (reactor);
-      if (h->open (address_server_arg, nic) != 0)
+      if (h->open (address_server_arg, ACE_TEXT_TO_TCHAR_IN(nic)) != 0)
         return TAO_ECG_Refcounted_Handler ();
     }
 
@@ -441,7 +441,7 @@ TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
     {
       TAO_ECG_Mcast_EH * h = 0;
       ACE_NEW_RETURN (h,
-                      TAO_ECG_Mcast_EH (receiver, nic),
+                      TAO_ECG_Mcast_EH (receiver, ACE_TEXT_TO_TCHAR_IN(nic)),
                       handler);
       handler.reset (h);
 

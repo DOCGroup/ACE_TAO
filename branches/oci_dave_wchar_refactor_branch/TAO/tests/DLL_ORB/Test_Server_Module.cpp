@@ -11,6 +11,7 @@ ACE_RCSID (DLL_ORB,
            "$Id$")
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 
 
 const char *ior_file = "test.ior";
@@ -18,7 +19,7 @@ const char *ior_file = "test.ior";
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "o:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -39,7 +40,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
+Test_Server_Module::init (int argc, char *argv[])
 {
   // -----------------------------------------------------------------
   // Pre-ORB initialization steps necessary for proper DLL ORB
@@ -131,7 +132,7 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
                   ior.in ()));
 
       // Write IOR to a file.
-      FILE *output_file= ACE_OS::fopen (ior_file, "w");
+      FILE *output_file= ACE_OS::fopen (ior_file, ACE_TEXT("w"));
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file <%s> for writing "

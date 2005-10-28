@@ -13,7 +13,7 @@ ACE_RCSID (EC_Tests_Basic,
            "$Id$")
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
   EC_Master master;
@@ -40,7 +40,7 @@ EC_Master::~EC_Master (void)
 }
 
 int
-EC_Master::run (int argc, char* argv[])
+EC_Master::run (int argc, ACE_TCHAR* argv[])
 {
   ACE_TRY_NEW_ENV
     {
@@ -161,7 +161,7 @@ EC_Master::run (int argc, char* argv[])
 }
 
 void
-EC_Master::initialize_orb_and_poa (int &argc, char* argv[]
+EC_Master::initialize_orb_and_poa (int &argc, ACE_TCHAR* argv[]
                                    ACE_ENV_ARG_DECL)
 {
   this->orb_ =
@@ -192,7 +192,7 @@ EC_Master::initialize_orb_and_poa (int &argc, char* argv[]
 }
 
 int
-EC_Master::parse_args (int &argc, char *argv [])
+EC_Master::parse_args (int &argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -257,7 +257,7 @@ EC_Observer::initialize_orb_and_poa (int&, char*[]
 }
 
 int
-EC_Observer::parse_args (int& argc, char* argv[])
+EC_Observer::parse_args (int& argc, ACE_TCHAR* argv[])
 {
   return this->EC_Driver::parse_args (argc, argv);
 }

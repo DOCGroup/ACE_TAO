@@ -12,6 +12,7 @@
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS.h"
+#include "ace/Argv_Type_Converter.h"
 
 TAO_IMR_i::TAO_IMR_i (void)
 : imr_ (ImplementationRepository::Administration::_nil ())
@@ -36,22 +37,22 @@ TAO_IMR_i::run ()
 }
 
 int
-TAO_IMR_i::init (int argc, char **argv)
+TAO_IMR_i::init (int argc, ACE_TCHAR **argv)
 {
-  this->argc_ = argc;
-  this->argv_ = argv;
-
   const char *exception_message = "Null Message";
+
+  ACE_Argv_Type_Converter convert (argc, argv);
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
   {
     // Retrieve the ORB.
-    this->orb_ = CORBA::ORB_init (this->argc_, this->argv_, "tao_imr_i" ACE_ENV_ARG_PARAMETER);
+    this->orb_ = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), 
+                    "tao_imr_i" ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     // Parse command line and verify parameters.
-    if (this->parse_args () == -1)
+    if (this->parse_args (convert.get_argc(), convert.get_TCHAR_argv()) == -1)
       return -1;
 
     // Get the ImplRepo object
@@ -94,29 +95,29 @@ TAO_IMR_i::init (int argc, char **argv)
 // Go through and figure out which operation we should do.
 
 int
-TAO_IMR_i::parse_args (void)
+TAO_IMR_i::parse_args (int argc, ACE_TCHAR **argv)
 {
   // Make sure one command was given
-  if (this->argc_ < 2)
+  if (argc < 2)
   {
     ACE_ERROR((LM_ERROR, "Error: No operation specified.\n"));
     this->print_usage ();
     return -1;
   }
 
-  this->op_.reset(TAO_IMR_Op::make_op (this->argv_[1]));
+  this->op_.reset(TAO_IMR_Op::make_op (argv[1]));
 
   // Check for unrecognized operation
 
   if (this->op_.get() == 0)
   {
-    ACE_ERROR((LM_ERROR, "Error: Unknown operation '%s'.\n", this->argv_[1]));
+    ACE_ERROR((LM_ERROR, "Error: Unknown operation '%s'.\n", argv[1]));
     this->print_usage ();
     return -1;
   }
 
   // Adjust argc and argv so only the command specific args are passed
-  return this->op_->parse (this->argc_ - 1, this->argv_ + 1);
+  return this->op_->parse (argc - 1, argv + 1);
 }
 
 
@@ -284,9 +285,9 @@ TAO_IMR_Op_Activate::parse (int argc, ACE_TCHAR **argv)
   }
 
   // Skip both the program name and the "activate" command
-  ACE_Get_Opt get_opts (argc, argv, "h");
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_LIB_TEXT("h"));
 
-  this->server_name_ = argv[1];
+  this->server_name_.set (ACE_TEXT_TO_CHAR_IN (argv[1]));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -316,7 +317,7 @@ int
 TAO_IMR_Op_Autostart::parse (int argc, ACE_TCHAR **argv)
 {
   // Skip the "autostart" command
-  ACE_Get_Opt get_opts (argc, argv, "h");
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_LIB_TEXT("h"));
 
   int c;
 
@@ -361,9 +362,9 @@ TAO_IMR_Op_IOR::parse (int argc, ACE_TCHAR **argv)
   }
 
   // Skip both the program name and the "ior" command
-  ACE_Get_Opt get_opts (argc, argv, "hf:");
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_LIB_TEXT("hf:"));
 
-  this->server_name_ = argv[1];
+  this->server_name_.set (ACE_TEXT_TO_CHAR_IN (argv[1]));
   if (this->server_name_.length() == 0 || this->server_name_[0] == '-')
   {
     ACE_ERROR((LM_ERROR, "ERROR : name is required.\n"));
@@ -377,7 +378,7 @@ TAO_IMR_Op_IOR::parse (int argc, ACE_TCHAR **argv)
     switch (c)
   {
     case 'f':  // File name
-      this->filename_ = get_opts.opt_arg ();
+      this->filename_.set (ACE_TEXT_TO_CHAR_IN (get_opts.opt_arg ()));
       break;
     case 'h':  // display help
       this->print_usage();
@@ -412,12 +413,12 @@ TAO_IMR_Op_List::parse (int argc, ACE_TCHAR **argv)
 
   if (argc > 1 && argv[1][0] != '-')
   {
-    this->server_name_ = argv[1];
+    this->server_name_.set (ACE_TEXT_TO_CHAR_IN (argv[1]));
     server_flag = 2;
   }
 
   // Skip both the program name and the "list" command
-  ACE_Get_Opt get_opts (argc, argv, "vh", server_flag);
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_LIB_TEXT("vh"), server_flag);
 
   int c;
 
@@ -461,9 +462,9 @@ TAO_IMR_Op_Remove::parse (int argc, ACE_TCHAR **argv)
   }
 
   // Skip both the program name and the "remove" command
-  ACE_Get_Opt get_opts (argc, argv, "h");
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_LIB_TEXT("h"));
 
-  this->server_name_ = argv[1];
+  this->server_name_.set (ACE_TEXT_TO_CHAR_IN (argv[1]));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -503,9 +504,9 @@ TAO_IMR_Op_Shutdown::parse (int argc, ACE_TCHAR **argv)
   }
 
   // Skip both the program name and the "shutdown" command
-  ACE_Get_Opt get_opts (argc, argv, "h");
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_LIB_TEXT("h"));
 
-  this->server_name_ = argv[1];
+  this->server_name_.set (ACE_TEXT_TO_CHAR_IN (argv[1]));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -550,7 +551,7 @@ TAO_IMR_Op_ShutdownRepo::parse (int argc, ACE_TCHAR **argv)
   }
 
   // Skip both the program name and the "shutdown-repo" command
-  ACE_Get_Opt get_opts (argc, argv, "ha");
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_LIB_TEXT("ha"));
 
   int c;
 
@@ -580,8 +581,8 @@ TAO_IMR_Op_Register::addenv (ACE_TCHAR *opt)
   CORBA::ULong length = this->environment_vars_.length ();
   // Increase the length of the sequence
   this->environment_vars_.length (length + 1);
-  ACE_CString tokens (opt);
-  int index = tokens.find ("=");
+  ACE_TString tokens (opt);
+  int index = tokens.find (ACE_LIB_TEXT("="));
   // Insert at position length since that is our new element
   this->environment_vars_ [length].name =
     CORBA::string_dup (tokens.substr (0, index).c_str ());
@@ -620,9 +621,9 @@ TAO_IMR_Op_Register::parse (int argc, ACE_TCHAR **argv)
   }
 
   // Skip both the program name and the "update" command
-  ACE_Get_Opt get_opts (argc, argv, "hc:w:a:e:r:R:l:");
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_LIB_TEXT("hc:w:a:e:r:R:l:"));
 
-  this->server_name_ = argv[1];
+  this->server_name_.set (ACE_TEXT_TO_CHAR_IN (argv[1]));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -630,7 +631,7 @@ TAO_IMR_Op_Register::parse (int argc, ACE_TCHAR **argv)
   {
     case 'c':  // Command line arguments
       this->set_command_line_ = true;
-      this->command_line_ = get_opts.opt_arg ();
+      this->command_line_.set (ACE_TEXT_TO_CHAR_IN (get_opts.opt_arg ()));
       break;
     case 'e':  // set environment variables
       this->set_environment_vars_ = true;
@@ -638,17 +639,17 @@ TAO_IMR_Op_Register::parse (int argc, ACE_TCHAR **argv)
       break;
     case 'w':  // Working Directory
       this->set_working_dir_ = true;
-      this->working_dir_ = get_opts.opt_arg ();
+      this->working_dir_.set (ACE_TEXT_TO_CHAR_IN (get_opts.opt_arg ()));
       break;
     case 'a':  // Activation Mode
       this->set_activation_ = true;
-      if (ACE_OS::strcasecmp (get_opts.opt_arg (), "NORMAL") == 0)
+      if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT("NORMAL")) == 0)
         this->activation_ = ImplementationRepository::NORMAL;
-      else if (ACE_OS::strcasecmp (get_opts.opt_arg (), "MANUAL") == 0)
+      else if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT("MANUAL")) == 0)
         this->activation_ = ImplementationRepository::MANUAL;
-      else if (ACE_OS::strcasecmp (get_opts.opt_arg (), "PER_CLIENT") == 0)
+      else if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT("PER_CLIENT")) == 0)
         this->activation_ = ImplementationRepository::PER_CLIENT;
-      else if (ACE_OS::strcasecmp (get_opts.opt_arg (), "AUTO_START") == 0)
+      else if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT("AUTO_START")) == 0)
         this->activation_ = ImplementationRepository::AUTO_START;
       else
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -666,7 +667,7 @@ TAO_IMR_Op_Register::parse (int argc, ACE_TCHAR **argv)
       }
       break;
     case 'l': /// hostname of the activator
-      this->activator_ = get_opts.optarg;
+      this->activator_.set (ACE_TEXT_TO_CHAR_IN (get_opts.optarg));
       this->set_activator_ = true;
       break;
     case 'h':  // display help
@@ -827,7 +828,7 @@ TAO_IMR_Op_IOR::run (void)
 
     if (this->filename_.length () > 0)
     {
-      FILE *file = ACE_OS::fopen (this->filename_.c_str (), "w");
+      FILE *file = ACE_OS::fopen (this->filename_.c_str (), ACE_TEXT("w"));
 
       if (file == 0)
       {

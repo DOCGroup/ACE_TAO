@@ -7,7 +7,7 @@
 #include "tao/AnyTypeCode/NVList.h"
 #include "ace/OS_NS_string.h"
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY_NEW_ENV

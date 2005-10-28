@@ -45,7 +45,7 @@ static Test_Type test_type = PACED;
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "a:b:c:d:e:i:k:m:p:r:s:t:x:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "a:b:c:d:e:i:k:m:p:r:s:t:x:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -678,7 +678,7 @@ Worker::run (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
   gsf = ACE_High_Res_Timer::global_scale_factor ();
 

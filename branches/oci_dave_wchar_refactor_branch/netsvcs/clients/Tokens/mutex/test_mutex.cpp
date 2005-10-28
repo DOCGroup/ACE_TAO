@@ -69,7 +69,7 @@ parse_args (int argc, char *argv[])
 {
   ACE_LOG_MSG->open (argv[0]);
 
-  ACE_Get_Opt get_opt (argc, argv, "t:uh:p:n:", 1);
+  ACE_Get_Arg_Opt get_opt (argc, argv, "t:uh:p:n:", 1);
 
   for (int c; (c = get_opt ()) != -1; )
     {
@@ -107,7 +107,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Thread_Manager thread_mgr;
 
@@ -135,7 +135,7 @@ main (int argc, char *argv[])
   return 0;
 }
 #else
-int main (int, char *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR, "you must have threads to run this test program\n"), -1);
 }

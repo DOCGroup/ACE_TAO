@@ -25,6 +25,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Benchmark,
            client,
@@ -47,7 +48,7 @@ class Marker
                    ACE_UINT32 gsf)
     {
       // Print stats
-      this->throughput_.dump_results (msg, gsf);
+      this->throughput_.dump_results (ACE_TEXT_TO_TCHAR_IN(msg), gsf);
     }
   void sample (ACE_hrtime_t throughput_diff,
                ACE_hrtime_t latency_diff)
@@ -66,7 +67,7 @@ class Marker
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:n:r:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "i:n:r:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -95,8 +96,10 @@ parse_args (int argc, char *argv[])
 
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
      + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
@@ -120,13 +123,13 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
+        CORBA::ORB_init (convert.get_argc(),
+                         convert.get_ASCII_argv(),
                          ""
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
         return 1;
 
        CORBA::Object_var object =

@@ -75,19 +75,19 @@ Policy_Tester::init (int argc,
     {
       const char *arg = 0;
       // IOR File Name Option.
-      if ((arg = arg_shifter.get_the_parameter ("-POAConfigFile")))
+      if ((arg = arg_shifter.get_the_parameter (ACE_TEXT("-POAConfigFile"))))
         {
           this->rt_poa_properties_ =
             RT_Properties::read_from (arg ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
         }
-      else if ((arg = arg_shifter.get_the_parameter ("-ObjectConfigFile")))
+      else if ((arg = arg_shifter.get_the_parameter (ACE_TEXT("-ObjectConfigFile"))))
         {
           this->rt_object_properties_ =
             RT_Properties::read_from (arg ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
         }
-      else if ((arg = arg_shifter.get_the_parameter ("-BaseObjectIOR")))
+      else if ((arg = arg_shifter.get_the_parameter (ACE_TEXT("-BaseObjectIOR"))))
         {
           if (this->rt_poa_properties_ == 0)
             {
@@ -99,7 +99,7 @@ Policy_Tester::init (int argc,
             }
           this->rt_poa_properties_->ior_source (arg);
         }
-      else if ((arg = arg_shifter.get_the_parameter ("-OverriddenIOR")))
+      else if ((arg = arg_shifter.get_the_parameter (ACE_TEXT("-OverriddenIOR"))))
         {
           if (this->rt_object_properties_ == 0)
             {
@@ -138,7 +138,7 @@ Policy_Tester::check_reference (CORBA::Object_ptr object,
 {
   if (CORBA::is_nil (object))
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT (msg)));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT_TO_TCHAR_IN (msg)));
       return 0;
     }
   return 1;
@@ -233,7 +233,7 @@ Policy_Tester::create_objects (ACE_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Activated as <%s>\n"), ior.in ()));
 
-  FILE *output_file = ACE_OS::fopen (this->rt_poa_properties_->ior_source (), "w");
+  FILE *output_file = ACE_OS::fopen (this->rt_poa_properties_->ior_source (), ACE_TEXT("w"));
   if (output_file == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Cannot open output file for writing IOR: %s"),
@@ -278,7 +278,7 @@ Policy_Tester::create_objects (ACE_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Activated as <%s>\n"), o_ior.in ()));
 
-  output_file = ACE_OS::fopen (this->rt_object_properties_->ior_source (), "w");
+  output_file = ACE_OS::fopen (this->rt_object_properties_->ior_source (), ACE_TEXT("w"));
 
   if (output_file == 0)
     ACE_ERROR_RETURN ((LM_ERROR,

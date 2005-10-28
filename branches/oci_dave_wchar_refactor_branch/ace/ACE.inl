@@ -284,7 +284,7 @@ ACE::log2 (u_long num)
   return log;
 }
 
-ACE_INLINE ACE_TCHAR
+ACE_INLINE char
 ACE::nibble2hex (u_int n)
 {
   // Hexadecimal characters.
@@ -293,9 +293,9 @@ ACE::nibble2hex (u_int n)
   // loads of warnings when inlining.
   // problem (incorrect warning leftover from older GNU) has been reported as
   // TSR to Windriver.
-  const ACE_TCHAR hex_chars[] = ACE_LIB_TEXT ("0123456789abcdef");
+  const char hex_chars[] = "0123456789abcdef";
 #else
-  static const ACE_TCHAR hex_chars[] = ACE_LIB_TEXT ("0123456789abcdef");
+  static const char hex_chars[] = "0123456789abcdef";
 #endif
 
   // @@ UNICODE does this work?

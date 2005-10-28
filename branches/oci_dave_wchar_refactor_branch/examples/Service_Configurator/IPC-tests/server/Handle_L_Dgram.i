@@ -31,7 +31,7 @@ Handle_L_Dgram::info (ACE_TCHAR **strp, size_t length) const
   if (this->ACE_LSOCK_Dgram::get_local_addr (sa) == -1)
     return -1;
 
-  ACE_OS::strcpy (buf, ACE_TEXT_CHAR_TO_TCHAR (sa.get_path_name ()));
+  ACE_OS::strcpy (buf, ACE_TEXT_TO_TCHAR_IN (sa.get_path_name ()));
   ACE_OS::strcat (buf, ACE_TEXT (" # tests local datagram\n"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
@@ -45,7 +45,7 @@ ACE_INLINE int
 Handle_L_Dgram::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_UNIX_Addr  sudg;
-  ACE_Get_Opt    get_opt (argc, argv, ACE_TEXT ("r:"), 0);
+  ACE_Get_Arg_Opt    get_opt (argc, argv, ACE_TEXT ("r:"), 0);
   const ACE_TCHAR *r = Handle_L_Dgram::DEFAULT_RENDEZVOUS;
 
   for (int c; (c = get_opt ()) != -1; )

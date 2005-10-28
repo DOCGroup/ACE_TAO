@@ -30,6 +30,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ace/Log_Msg.h"
+#include "ace/Argv_Type_Converter.h"
 
 class TAO_ORB_Manager;
 

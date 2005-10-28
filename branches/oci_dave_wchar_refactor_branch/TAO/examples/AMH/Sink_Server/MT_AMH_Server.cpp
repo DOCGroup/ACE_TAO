@@ -45,7 +45,7 @@ MT_AMH_Server::parse_args (void)
       ACE_OS::exit (1);
     }
 
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "n:");
+  ACE_Get_Arg_Opt<char> get_opts (this->argc_, this->argv_, "n:");
   int c;
   int count_argv = 0;
 

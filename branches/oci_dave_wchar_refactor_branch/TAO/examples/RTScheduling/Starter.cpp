@@ -132,7 +132,7 @@ Starter::add_to_synchs (CosNaming::BindingList &binding_list
 
 
 int
-main (int argc, char** argv)
+ACE_TMAIN (int argc, ACE_TCHAR** argv)
 {
   ACE_TRY_NEW_ENV
     {

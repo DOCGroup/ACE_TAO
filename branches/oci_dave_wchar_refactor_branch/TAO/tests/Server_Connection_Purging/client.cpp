@@ -4,6 +4,7 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/TP_Reactor.h"
 #include "ace/Reactor.h"
+#include "ace/Argv_Type_Converter.h"
 
 const char *host = "localhost";
 static int port = 10008;
@@ -13,7 +14,7 @@ int purged_handles = 0;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "h:p:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "h:p:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -70,9 +71,11 @@ Purging_Handler::handle_close (ACE_HANDLE h,
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  if (parse_args (argc, argv) == -1)
+  ACE_Argv_Type_Converter convert (argc, argv);
+
+  if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) == -1)
     return -1;
 
   ACE_Select_Reactor sr;

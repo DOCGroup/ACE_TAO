@@ -142,7 +142,7 @@ parse_args (int argc, char *argv[])
 {
   ACE_LOG_MSG->open (argv[0], ACE_Log_Msg::STDERR); // | ACE_Log_Msg::VERBOSE);
 
-  ACE_Get_Opt get_opt (argc, argv, "t:iun:dr:sp:h:R", 1);
+  ACE_Get_Arg_Opt get_opt (argc, argv, "t:iun:dr:sp:h:R", 1);
 
   for (int c; (c = get_opt ()) != -1; )
     {
@@ -204,7 +204,7 @@ parse_args (int argc, char *argv[])
 #endif
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   if (parse_args (argc, argv) == -1)
     return -1;
@@ -244,7 +244,7 @@ main (int argc, char* argv[])
 
 #else
 int 
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR, 
 		     "threads not supported on this platform\n"), -1);

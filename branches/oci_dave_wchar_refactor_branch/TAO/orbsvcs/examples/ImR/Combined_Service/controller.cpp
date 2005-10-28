@@ -18,7 +18,7 @@ namespace {
       "(e.g. dynamic mysvc Service_Object * MySvc:_make_MySvc() \"-arg1 one\"\n\n"));
   }
 
-  bool parse_args(int argc, char* argv[]) {
+  bool parse_args(int argc, ACE_TCHAR* argv[]) {
     if (argc != 2 && argc != 3) {
       ACE_ERROR((LM_ERROR, "Controller: wrong number of arguments. %d\n", argc - 1));
       return false;
@@ -39,7 +39,7 @@ namespace {
   }
 }
 
-int main(int argc, char* argv[]) {
+int ACE_TMAIN(int argc, ACE_TCHAR* argv[]) {
 
   try {
 

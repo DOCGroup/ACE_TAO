@@ -431,7 +431,7 @@ Activity::create_started_flag_file (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_Builder);
 

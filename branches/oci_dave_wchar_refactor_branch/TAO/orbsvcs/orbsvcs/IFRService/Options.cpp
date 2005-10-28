@@ -26,7 +26,7 @@ Options::~Options ()
 int
 Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:pb:lm:r");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "o:pb:lm:r");
   int c;
 
   while ((c = get_opts ()) != -1)

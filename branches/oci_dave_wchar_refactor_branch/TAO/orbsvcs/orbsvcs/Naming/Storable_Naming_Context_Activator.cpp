@@ -59,8 +59,8 @@ TAO_Storable_Naming_Context_Activator::incarnate (const PortableServer::ObjectId
   // Does this already exist on disk?
   ACE_TString file_name(persistence_directory_);
   file_name += ACE_TEXT("/");
-  file_name += ACE_TEXT_CHAR_TO_TCHAR(poa_id.in());
-  TAO_Storable_Base * fl = factory_->create_stream(ACE_TEXT_ALWAYS_CHAR(file_name.c_str()), ACE_TEXT("rw"));
+  file_name += ACE_TEXT_TO_TCHAR_IN(poa_id.in());
+  TAO_Storable_Base * fl = factory_->create_stream(ACE_TEXT_TO_CHAR_IN(file_name.c_str()), ACE_TEXT("rw"));
   if (!fl->exists()) {
     ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
                       0);

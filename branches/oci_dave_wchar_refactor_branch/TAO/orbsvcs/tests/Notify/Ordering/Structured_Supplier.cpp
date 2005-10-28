@@ -65,14 +65,14 @@ private:
 class Supplier_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, char* argv[]);
+  virtual int parse_args (int argc, ACE_TCHAR* argv[]);
 };
 
 
 int
 Supplier_Client::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:e:d:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "o:e:d:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -197,7 +197,7 @@ create_suppliers (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
   ACE_CHECK;
 }
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   ACE_Auto_Ptr< sig_i > sig_impl;
   ACE_TRY_NEW_ENV

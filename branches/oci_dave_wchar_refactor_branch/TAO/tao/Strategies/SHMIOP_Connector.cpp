@@ -145,7 +145,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
     ACE_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - SHMIOP_Connector::make_connection, "
                 "making a new connection to <%s:%d>\n",
-                ACE_TEXT_CHAR_TO_TCHAR (shmiop_endpoint->host ()),
+                ACE_TEXT_TO_TCHAR_IN (shmiop_endpoint->host ()),
                 shmiop_endpoint->port ()));
 
   // Get the right synch options
@@ -181,7 +181,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - SHMIOP_Connector::make_connection, ")
                       ACE_TEXT ("connection to <%s:%u> failed (%p)\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR (shmiop_endpoint->host ()),
+                      ACE_TEXT_TO_TCHAR_IN (shmiop_endpoint->host ()),
                       shmiop_endpoint->port (),
                       ACE_TEXT ("errno")));
         }
@@ -195,7 +195,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
     ACE_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - SHMIOP_Connector::make_connection, "
                 "new connection to <%s:%d> on Transport[%d]\n",
-                ACE_TEXT_CHAR_TO_TCHAR (shmiop_endpoint->host ()),
+                ACE_TEXT_TO_TCHAR_IN (shmiop_endpoint->host ()),
                 shmiop_endpoint->port (),
                 svc_handler->peer ().get_handle ()));
 

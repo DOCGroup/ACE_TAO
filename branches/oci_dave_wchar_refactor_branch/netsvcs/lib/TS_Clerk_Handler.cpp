@@ -566,7 +566,7 @@ ACE_TS_Clerk_Processor::parse_args (int argc, ACE_TCHAR *argv[])
   ACE_INET_Addr server_addr;
   ACE_TS_Clerk_Handler *handler;
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("h:t:p:b"), 0);
+  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT ("h:t:p:b"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
     {

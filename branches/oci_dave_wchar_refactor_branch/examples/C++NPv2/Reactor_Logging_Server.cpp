@@ -11,7 +11,7 @@
 typedef Reactor_Logging_Server<Logging_Acceptor_Ex>
         Server_Logging_Daemon;
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Reactor reactor;
   Server_Logging_Daemon *server;

@@ -36,7 +36,7 @@ public:
   Consumer (void);
   // Constructor
 
-  int run (int argc, char* argv[]);
+  int run (int argc, ACE_TCHAR* argv[]);
   // Run the test
 
   // = The RtecEventComm::PushConsumer methods

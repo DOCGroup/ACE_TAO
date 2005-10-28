@@ -58,21 +58,21 @@ public:
   int verbose (void) const;
 
   /// Execute the test.
-  virtual int run (int argc, char* argv[]);
+  virtual int run (int argc, ACE_TCHAR* argv[]);
 
   /// The initialization section
-  virtual void run_init (int& argc, char* argv[]
+  virtual void run_init (int& argc, ACE_TCHAR* argv[]
                          ACE_ENV_ARG_DECL);
 
   /// The cleanup section
   virtual void run_cleanup (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Initialize the ORB and obtain the RootPOA object
-  virtual void initialize_orb_and_poa (int& argc, char* argv[]
+  virtual void initialize_orb_and_poa (int& argc, ACE_TCHAR* argv[]
                                        ACE_ENV_ARG_DECL);
 
   /// Parse the common command-line arguments for all tests
-  virtual int parse_args (int& argc, char* argv[]);
+  virtual int parse_args (int& argc, ACE_TCHAR* argv[]);
 
   /// Print the usage method
   virtual void print_usage (void);

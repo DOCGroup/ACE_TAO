@@ -420,7 +420,7 @@ File_Open_Lock_and_Check::File_Open_Lock_and_Check(
   file_name += context->name_;
 
   // Create the stream
-  fl_ = context->factory_->create_stream(file_name, ACE_TEXT_CHAR_TO_TCHAR(mode));
+  fl_ = context->factory_->create_stream(file_name, ACE_TEXT_TO_TCHAR_IN(mode));
   if (TAO_Storable_Naming_Context::redundant_)
   {
     if (fl_->open() != 0)
@@ -532,7 +532,7 @@ TAO_Storable_Naming_Context::TAO_Storable_Naming_Context (
     name_ (poa_id),
     poa_ (PortableServer::POA::_duplicate (poa)),
     factory_(factory),
-    persistence_directory_ (ACE_TEXT_ALWAYS_CHAR(persistence_directory)),
+    persistence_directory_ (ACE_TEXT_TO_CHAR_IN(persistence_directory)),
     hash_table_size_(hash_table_size),
     last_changed_(0)
 {
@@ -723,7 +723,7 @@ TAO_Storable_Naming_Context::new_context (ACE_ENV_SINGLE_ARG_DECL)
                       poa_id,
                       this->storable_context_->total_size (),
                       this->factory_,
-                      ACE_TEXT_CHAR_TO_TCHAR (this->persistence_directory_.c_str ()),
+                      ACE_TEXT_TO_TCHAR_IN (this->persistence_directory_.c_str ()),
                       &new_context
                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
@@ -1492,8 +1492,8 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all(
   // Now does this already exist on disk?
   ACE_TString file_name(persistence_directory);
   file_name += ACE_TEXT("/");
-  file_name += ACE_TEXT_CHAR_TO_TCHAR(poa_id);
-  ACE_Auto_Ptr<TAO_Storable_Base> fl (factory->create_stream(ACE_TEXT_ALWAYS_CHAR(file_name.c_str()), ACE_TEXT("r")));
+  file_name += ACE_TEXT_TO_TCHAR_IN(poa_id);
+  ACE_Auto_Ptr<TAO_Storable_Base> fl (factory->create_stream(ACE_TEXT_TO_CHAR_IN(file_name.c_str()), ACE_TEXT("r")));
   if (fl->exists())
   {
     // Load the map from disk
@@ -1517,7 +1517,7 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all(
   file_name += ACE_TEXT("_global");
 
   // Create the stream for the counter used to uniquely creat context names
-  gfl_.reset(factory->create_stream(ACE_TEXT_ALWAYS_CHAR(file_name.c_str()), ACE_TEXT("crw")));
+  gfl_.reset(factory->create_stream(ACE_TEXT_TO_CHAR_IN(file_name.c_str()), ACE_TEXT("crw")));
   if (gfl_->open() != 0)
     {
       delete gfl_.release();

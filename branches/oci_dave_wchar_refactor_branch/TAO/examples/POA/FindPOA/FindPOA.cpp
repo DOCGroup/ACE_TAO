@@ -57,7 +57,7 @@ find_non_existant_POA (PortableServer::POA_ptr parent,
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 

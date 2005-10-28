@@ -187,7 +187,7 @@ CORBA::ORB::destroy (ACE_ENV_SINGLE_ARG_DECL)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("CORBA::ORB::destroy() has been called on ORB <%s>.\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (this->orb_core ()->orbid ())));
+                  ACE_TEXT_TO_TCHAR_IN (this->orb_core ()->orbid ())));
     }
 
   this->orb_core ()->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -1451,7 +1451,7 @@ CORBA::ORB_init (int &argc,
               if (arg_shifter.is_parameter_next ())
                 {
                   orbid_string =
-                    ACE_TEXT_ALWAYS_CHAR (arg_shifter.get_current ());
+                    ACE_TEXT_TO_CHAR_IN (arg_shifter.get_current ());
                   arg_shifter.consume_arg ();
                 }
             }
@@ -1463,9 +1463,9 @@ CORBA::ORB_init (int &argc,
               // but we should skip an optional space...
               if (current_arg[orbid_len] == ' ')
                 orbid_string =
-                  ACE_TEXT_ALWAYS_CHAR (current_arg + orbid_len + 1);
+                  ACE_TEXT_TO_CHAR_IN (current_arg + orbid_len + 1);
               else
-                orbid_string = ACE_TEXT_ALWAYS_CHAR (current_arg + orbid_len);
+                orbid_string = ACE_TEXT_TO_CHAR_IN (current_arg + orbid_len);
             }
           else
             arg_shifter.ignore_arg ();
@@ -1561,7 +1561,7 @@ CORBA::ORB_init (int &argc,
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("TAO (%P|%t) created new ORB <%s>\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (orbid_string.c_str ())));
+                  ACE_TEXT_TO_TCHAR_IN (orbid_string.c_str ())));
     }
 
   // Before returning remember to store the ORB into the table...

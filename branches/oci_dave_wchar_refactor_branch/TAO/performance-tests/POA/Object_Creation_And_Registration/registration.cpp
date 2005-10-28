@@ -80,7 +80,7 @@ static u_long iterations = 1000;
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:r");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "i:r");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -340,7 +340,7 @@ child_poa_testing (PortableServer::POA_ptr root_poa
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 

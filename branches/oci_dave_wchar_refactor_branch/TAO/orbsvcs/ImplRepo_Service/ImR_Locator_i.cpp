@@ -17,6 +17,7 @@
 #include "ace/ARGV.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Vector_T.h"
+#include "ace/Argv_Type_Converter.h"
 
 static const int DEFAULT_START_LIMIT = 1;
 
@@ -180,7 +181,7 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts ACE_ENV_ARG_DECL
   // We write the ior file last so that the tests can know we are ready.
   if (opts.ior_filename().length() > 0)
   {
-    FILE* fp = ACE_OS::fopen(opts.ior_filename().c_str(), "w");
+    FILE* fp = ACE_OS::fopen(opts.ior_filename().c_str(), ACE_TEXT("w"));
     if (fp == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -196,13 +197,16 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts ACE_ENV_ARG_DECL
 int
 ImR_Locator_i::init(Options& opts ACE_ENV_ARG_DECL)
 {
-  ACE_CString cmdline = opts.cmdline();
-  cmdline += " -orbcollocation no -orbuseimr 0";
+  ACE_TString cmdline = opts.cmdline();
+  cmdline += ACE_TEXT(" -orbcollocation no -orbuseimr 0");
   ACE_ARGV av(cmdline.c_str());
   int argc = av.argc();
-  char** argv = av.argv();
+  ACE_TCHAR** argv = av.argv();
 
-  CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, "TAO_ImR_Locator" ACE_ENV_ARG_PARAMETER);
+  ACE_Argv_Type_Converter convert (argc, argv);
+
+  CORBA::ORB_var orb = CORBA::ORB_init(convert.get_argc(), convert.get_ASCII_argv(), 
+                          "TAO_ImR_Locator" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN(-1);
   int err = this->init_with_orb(orb.in(), opts ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN(-1);
@@ -223,7 +227,7 @@ ImR_Locator_i::run(ACE_ENV_SINGLE_ARG_DECL)
       "\tLocked : %s\n\n",
       ping_interval_.msec(),
       startup_timeout_.sec(),
-      repository_.repo_mode(),
+      ACE_TEXT_TO_CHAR_IN(repository_.repo_mode()),
       ior_multicast_.reactor() != 0 ? "Enabled" : "Disabled",
       debug(),
       read_only_ ? "True" : "False"));

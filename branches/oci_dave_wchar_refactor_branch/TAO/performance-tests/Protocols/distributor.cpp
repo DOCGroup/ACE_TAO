@@ -16,7 +16,7 @@ static int number_of_connection_attempts = 20;
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "f:k:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "f:k:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -348,7 +348,7 @@ test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
   ACE_TRY_NEW_ENV
     {

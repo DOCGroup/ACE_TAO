@@ -257,8 +257,8 @@ Test_Complex_Any::comp_engine (const CORBA::AnySeq *level2_in_seq,
           if (!((*level3_test_seq)[j] >>= level4_test_struct))
             return 0;
 
-          if (ACE_OS::strcmp (level4_in_struct->level5_string,
-                              level4_test_struct->level5_string))
+          if (ACE_OS::strcmp (level4_in_struct->level5_string.in(),
+                              level4_test_struct->level5_string.in()))
             {
               ACE_DEBUG ((LM_DEBUG,
                           "mismatch of level 5 string values\n"));
@@ -288,8 +288,8 @@ Test_Complex_Any::comp_engine (const CORBA::AnySeq *level2_in_seq,
           if (!((*level7_test_any) >>= level8_test_struct))
             return 0;
 
-          if (ACE_OS::strcmp (level8_in_struct->level9_string,
-                               level8_test_struct->level9_string))
+          if (ACE_OS::strcmp (level8_in_struct->level9_string.in(),
+                               level8_test_struct->level9_string.in()))
             {
               ACE_DEBUG ((LM_DEBUG,
                           "mismatch of level 9 string values\n"));

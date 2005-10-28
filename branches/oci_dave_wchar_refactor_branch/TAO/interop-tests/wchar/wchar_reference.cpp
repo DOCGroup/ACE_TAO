@@ -23,19 +23,19 @@
 
 #if defined (ACE_HAS_WCHAR) || defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
 
-ACE_OS::WChar
+wchar_t
 wchar_reference::ref_wchar[NUM_KEYS] =
   {1234};
 
-const ACE_OS::WChar *
+const wchar_t *
 wchar_reference::ref_wstring[NUM_KEYS] =
   {L"have a nice day"};
 
-ACE_OS::WChar
+wchar_t
 wchar_reference::ref_warray[NUM_KEYS][10] =
   { {L'a',L'A',L'!',L'1',L'4',L'[',L'?',L'%',L'X',L'E'} };
 
-const ACE_OS::WChar *
+const wchar_t *
 wchar_reference::ref_except[NUM_KEYS] =
   {L"TEST EXCEPTION"};
 
@@ -50,19 +50,19 @@ wchar_reference::set_verbose(int v)
   this->verbose_ = v;
 }
 
-ACE_OS::WChar
+wchar_t
 wchar_reference::get_wchar (short key)
 {
   return wchar_reference::ref_wchar[key];
 }
 
-const ACE_OS::WChar *
+const wchar_t *
 wchar_reference::get_wstring (short key)
 {
   return wchar_reference::ref_wstring[key];
 }
 
-ACE_OS::WChar *
+wchar_t *
 wchar_reference::get_warray (short key)
 {
   return wchar_reference::ref_warray[key];
@@ -70,22 +70,22 @@ wchar_reference::get_warray (short key)
 
 void
 wchar_reference::assign_warray (short key,
-                                ACE_OS::WChar *warray)
+                                wchar_t *warray)
 {
   ACE_OS::memcpy(warray,
                  wchar_reference::ref_warray[key],
-                 10*(sizeof(ACE_OS::WChar))
+                 10*(sizeof(wchar_t))
                  );
 }
 
-const ACE_OS::WChar *
+const wchar_t *
 wchar_reference::get_except (short key)
 {
   return wchar_reference::ref_except[key];
 }
 
 int
-wchar_reference::match_wchar (short key, ACE_OS::WChar test)
+wchar_reference::match_wchar (short key, wchar_t test)
 {
   if (verbose_)
     ACE_DEBUG ((LM_DEBUG,
@@ -95,7 +95,7 @@ wchar_reference::match_wchar (short key, ACE_OS::WChar test)
 }
 
 int
-wchar_reference::match_wstring (short key, const ACE_OS::WChar *test)
+wchar_reference::match_wstring (short key, const wchar_t *test)
 {
   if (key == -1)
     {
@@ -114,7 +114,7 @@ wchar_reference::match_wstring (short key, const ACE_OS::WChar *test)
 }
 
 int
-wchar_reference::match_warray (short key, const ACE_OS::WChar *test)
+wchar_reference::match_warray (short key, const wchar_t *test)
 {
   if (verbose_)
     ACE_DEBUG ((LM_DEBUG,
@@ -133,7 +133,7 @@ wchar_reference::match_warray (short key, const ACE_OS::WChar *test)
 }
 
 int
-wchar_reference::match_except(short key, const ACE_OS::WChar *test)
+wchar_reference::match_except(short key, const wchar_t *test)
 {
   if (verbose_)
     ACE_DEBUG ((LM_DEBUG,
@@ -153,19 +153,19 @@ wchar_reference::set_verbose(int v)
   this->verbose_ = v;
 }
 
-ACE_OS::WChar
+wchar_t
 wchar_reference::get_wchar (short )
 {
   return 0;
 }
 
-const ACE_OS::WChar *
+const wchar_t *
 wchar_reference::get_wstring (short )
 {
   return 0;
 }
 
-ACE_OS::WChar *
+wchar_t *
 wchar_reference::get_warray (short )
 {
   return 0;
@@ -173,30 +173,30 @@ wchar_reference::get_warray (short )
 
 void
 wchar_reference::assign_warray (short ,
-                                ACE_OS::WChar *)
+                                wchar_t *)
 {
 }
 
-const ACE_OS::WChar *
+const wchar_t *
 wchar_reference::get_except (short )
 {
   return 0;
 }
 
 int
-wchar_reference::match_wchar (short , ACE_OS::WChar )
+wchar_reference::match_wchar (short , wchar_t )
 {
   return 0;
 }
 
 int
-wchar_reference::match_wstring (short , const ACE_OS::WChar *)
+wchar_reference::match_wstring (short , const wchar_t *)
 {
   return 0;
 }
 
 int
-wchar_reference::match_warray (short , const ACE_OS::WChar *)
+wchar_reference::match_warray (short , const wchar_t *)
 {
   return 0;
 }

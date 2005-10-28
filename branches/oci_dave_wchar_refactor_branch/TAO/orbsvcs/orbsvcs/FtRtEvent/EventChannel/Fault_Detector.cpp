@@ -40,7 +40,7 @@ Fault_Detector* Fault_Detector::instance()
   return detector;
 }
 
-int Fault_Detector::init(int argc, char** argv)
+int Fault_Detector::init(int argc, ACE_TCHAR** argv)
 {
   detector = this;
   if (this->parse_conf(argc, argv)==0 &&
@@ -65,7 +65,7 @@ void Fault_Detector::set_listener(TAO_FTEC_Fault_Listener* listener)
   listener_ = listener;
 }
 
-int Fault_Detector::parse_conf(int , char** )
+int Fault_Detector::parse_conf(int , ACE_TCHAR** )
 {
   return 0;
 }

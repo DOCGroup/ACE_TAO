@@ -34,7 +34,7 @@ ACE_RCSID (Anyop,
            "$Id$")
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
@@ -55,7 +55,7 @@ main (int argc, char *argv[])
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ACE_Get_Opt get_opt (argc, argv, "dien:");
+      ACE_Get_Arg_Opt<char> get_opt (argc, argv, "dien:");
       int opt;
 
       while ((opt = get_opt ()) != EOF)

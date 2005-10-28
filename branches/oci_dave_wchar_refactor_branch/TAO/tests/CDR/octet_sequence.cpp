@@ -40,7 +40,7 @@ void dump(const char * msg)
               m3->data_block()->reference_count()));
 }
 
-int main(int, char*[])
+int ACE_TMAIN(int, ACE_TCHAR*[])
 {
   // setup mb's
   char buf[1024];

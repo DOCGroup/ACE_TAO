@@ -10,7 +10,7 @@ ACE_RCSID (CosEC_Examples,
            "$Id$")
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
 
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -79,7 +79,7 @@ main (int argc, char* argv[])
 
       const char* ior_file_name = "Consumer.ior";
       FILE *output_file=
-	ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(ior_file_name),
+	ACE_OS::fopen (ACE_TEXT_TO_TCHAR_IN(ior_file_name),
 		       ACE_LIB_TEXT("w"));
       if (output_file == 0)
 	ACE_ERROR_RETURN ((LM_ERROR,

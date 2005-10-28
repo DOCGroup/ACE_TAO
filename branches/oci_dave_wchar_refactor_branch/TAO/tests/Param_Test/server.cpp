@@ -18,6 +18,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Param_Test,
            server,
@@ -30,7 +31,7 @@ static const char *ior_output_filename = "test.ior";
 static int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "do:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "do:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -56,8 +57,10 @@ parse_args (int argc, char *argv[])
 // Standard command line parsing utilities used.
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   PortableServer::POA_var oa_ptr;
   Param_Test_i *param_test = 0;
 
@@ -66,7 +69,7 @@ main (int argc, char *argv[])
     {
       const char *orb_name = "";
       CORBA::ORB_var orb_ptr =
-        CORBA::ORB_init (argc, argv, orb_name ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), orb_name ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var temp; // holder for the myriad of times we get
@@ -112,7 +115,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Parse remaining command line and verify parameters.
-      parse_args (argc, argv);
+      parse_args (convert.get_argc(), convert.get_ASCII_argv());
 
       // initialize a param_test target object and register it with the object
       // adapter
@@ -149,7 +152,7 @@ main (int argc, char *argv[])
                       str.in ()));
         }
 
-      ior_output_file = ACE_OS::fopen (ior_output_filename, "w");
+      ior_output_file = ACE_OS::fopen (ior_output_filename, ACE_TEXT("w"));
 
       if (ior_output_file == 0)
         {

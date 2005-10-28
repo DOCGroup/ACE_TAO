@@ -4,14 +4,16 @@
 #include "tao/DynamicAny/DynAnyFactory.h"
 #include "structC.h"
 #include <ace/streams.h>
+#include "ace/Argv_Type_Converter.h"
 
 using namespace StructTest;
 using namespace DynamicAny;
 
 //--------------------------------------------------------------------
-int main (int argc, char * argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 //--------------------------------------------------------------------
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
 
   // Generic catch handler
   try {
@@ -20,7 +22,7 @@ int main (int argc, char * argv[])
     // ------------------
     CORBA::ORB_var orb;  // _var, so we don't need/may not CORBA::release(orb)
     try {
-      orb = CORBA::ORB_init (argc, argv);
+      orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv());
     } catch (...) {
       cerr << "Cannot initialize ORB" << endl;
       throw;

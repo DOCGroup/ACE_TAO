@@ -122,7 +122,7 @@ run_main (int, ACE_TCHAR *[])
     ACE::String_Conversion::Convert_Out< char > convert( source );
     char* result = convert.c_str();
     ACE_ASSERT( ACE_OS::strcmp( result, source ) == 0 );
-    ACE::String_Conversion::free( result );
+    convert.free( result );
   }
 
   // char to wchar_t
@@ -131,7 +131,7 @@ run_main (int, ACE_TCHAR *[])
     ACE::String_Conversion::Convert_Out< wchar_t > convert( source );
     wchar_t* result = convert.c_str();
     ACE_ASSERT( ACE_OS::strcmp( result, ACE_TEXT_TO_WCHAR_IN( source ) ) == 0 );
-    ACE::String_Conversion::free( result );
+    convert.free( result );
   }
 
   // wchar_t to char
@@ -140,7 +140,7 @@ run_main (int, ACE_TCHAR *[])
     ACE::String_Conversion::Convert_Out< char > convert( source );
     char* result = convert.c_str();
     ACE_ASSERT( ACE_OS::strcmp( result, ACE_TEXT_TO_CHAR_IN( source ) ) == 0 );
-    ACE::String_Conversion::free( result );
+    convert.free( result );
   }
 
   // wchar_t to wchar_t
@@ -149,7 +149,7 @@ run_main (int, ACE_TCHAR *[])
     ACE::String_Conversion::Convert_Out< wchar_t > convert( source );
     wchar_t* result = convert.c_str();
     ACE_ASSERT( ACE_OS::strcmp( result, source ) == 0 );
-    ACE::String_Conversion::free( result );
+    convert.free( result );
   }
 
 // In place

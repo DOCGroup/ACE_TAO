@@ -164,7 +164,7 @@ int
 ACE_Service_Config::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRACE ("ACE_Service_Config::parse_args");
-  ACE_Get_Opt getopt (argc,
+  ACE_Get_Arg_Opt<ACE_TCHAR> getopt (argc,
                       argv,
                       ACE_LIB_TEXT ("bdf:k:nyp:s:S:"),
                       1); // Start at argv[1].

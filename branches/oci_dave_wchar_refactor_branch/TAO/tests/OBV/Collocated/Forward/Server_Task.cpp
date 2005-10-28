@@ -98,7 +98,7 @@ Server_Task::svc (void)
       ACE_TRY_CHECK;
 
       // If the this->output_ exists, output the ior to it
-      FILE *output_file= ACE_OS::fopen (this->output_, "w");
+      FILE *output_file= ACE_OS::fopen (this->output_, ACE_TEXT("w"));
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",

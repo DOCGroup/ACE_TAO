@@ -1465,12 +1465,12 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
                   "TAO (%P|%t) - GIOP_Message_Base::dump_msg, "
                   "%s GIOP v%c.%c msg, %d data bytes, %s endian, "
                   "Type %s[%u]\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (label),
+                  ACE_TEXT_TO_TCHAR_IN (label),
                   digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],
                   digits[ptr[TAO_GIOP_VERSION_MINOR_OFFSET]],
                   len - TAO_GIOP_MESSAGE_HEADER_LEN ,
                   (byte_order == TAO_ENCAP_BYTE_ORDER) ? ACE_TEXT("my") : ACE_TEXT("other"),
-                  ACE_TEXT_CHAR_TO_TCHAR(message_name),
+                  ACE_TEXT_TO_TCHAR_IN(message_name),
                   *id));
 
       if (TAO_debug_level >= 10)

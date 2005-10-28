@@ -30,7 +30,7 @@ int nthreads = 0;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:n:r");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "o:n:r");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -63,7 +63,7 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 

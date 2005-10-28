@@ -1815,12 +1815,12 @@ namespace ACE_OS {
   void unique_name (const void *object,
                     char *name,
                     size_t length);
-#if defined (ACE_USES_WCHAR)
+
   extern ACE_Export
   void unique_name (const void *object,
                     wchar_t *name,
                     size_t length);
-#endif /* ACE_USES_WCHAR */
+
 } /* namespace ACE_OS */
 
 #if !defined (ACE_WIN32)

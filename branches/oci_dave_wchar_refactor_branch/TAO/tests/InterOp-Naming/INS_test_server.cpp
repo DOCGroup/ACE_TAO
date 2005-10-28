@@ -5,8 +5,9 @@
 // This is the main driver program for the INS test server.
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
 
   Server_i server;
 
@@ -15,8 +16,7 @@ main (int argc, char *argv[])
 
   ACE_TRY_NEW_ENV
     {
-      if (server.init (argc,
-                       argv
+      if (server.init (convert.get_argc(), convert.get_ASCII_argv()
                        ACE_ENV_ARG_PARAMETER) == -1)
         return 1;
       else

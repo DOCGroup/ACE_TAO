@@ -55,7 +55,7 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("TAO (%P|%t) - Transport[%d]::%s, ")
               ACE_TEXT ("sending %d buffers\n"),
-              id, ACE_TEXT_CHAR_TO_TCHAR (location), iovcnt));
+              id, ACE_TEXT_TO_TCHAR_IN (location), iovcnt));
 
   for (int i = 0; i != iovcnt && 0 < current_transfer; ++i)
     {
@@ -70,7 +70,7 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Transport[%d]::%s, ")
                   ACE_TEXT ("buffer %d/%d has %d bytes\n"),
-                  id, ACE_TEXT_CHAR_TO_TCHAR(location),
+                  id, ACE_TEXT_TO_TCHAR_IN(location),
                   i, iovcnt,
                   iov_len));
 
@@ -107,7 +107,7 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("TAO (%P|%t) - Transport[%d]::%s, ")
               ACE_TEXT ("end of data\n"),
-              id, ACE_TEXT_CHAR_TO_TCHAR(location)));
+              id, ACE_TEXT_TO_TCHAR_IN(location)));
 
   ACE_Log_Msg::instance ()->release ();
 }
@@ -1060,7 +1060,7 @@ TAO_Transport::report_invalid_event_handler (const char *caller)
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Transport[%d]::report_invalid_event_handler"
                   "(%s) no longer associated with handler [tag=%d]\n",
-                  this->id (), ACE_TEXT_CHAR_TO_TCHAR (caller), this->tag_));
+                  this->id (), ACE_TEXT_TO_TCHAR_IN (caller), this->tag_));
     }
 }
 

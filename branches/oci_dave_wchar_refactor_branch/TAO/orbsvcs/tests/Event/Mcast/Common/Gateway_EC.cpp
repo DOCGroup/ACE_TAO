@@ -26,9 +26,9 @@ Gateway_EC::check_for_nil (CORBA::Object_ptr obj, const char *message)
 }
 
 int
-Gateway_EC::parse_args (int argc, char *argv [])
+Gateway_EC::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "i:");
+  ACE_Get_Arg_Opt<char> get_opt (argc, argv, "i:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)

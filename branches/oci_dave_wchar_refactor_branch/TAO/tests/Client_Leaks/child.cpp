@@ -2,16 +2,19 @@
 
 #include "Process.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(Client_Leaks, server, "$Id$")
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (argc < 2)
@@ -27,7 +30,7 @@ main (int argc, char *argv[])
         }
 
       CORBA::Object_var object =
-        orb->string_to_object (argv[1] ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (ACE_TEXT_TO_CHAR_IN(argv[1]) ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       Test::Startup_Callback_var startup_callback =
         Test::Startup_Callback::_narrow (object.in () ACE_ENV_ARG_PARAMETER);

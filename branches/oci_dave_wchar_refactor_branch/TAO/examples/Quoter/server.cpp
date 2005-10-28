@@ -28,7 +28,7 @@ Quoter_Server::Quoter_Server (void)
 int
 Quoter_Server::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "d:n:");
+  ACE_Get_Arg_Opt<char> get_opts (argc_, argv_, "d:n:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -259,7 +259,7 @@ Quoter_Server::~Quoter_Server (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Quoter_Server quoter_server;
 

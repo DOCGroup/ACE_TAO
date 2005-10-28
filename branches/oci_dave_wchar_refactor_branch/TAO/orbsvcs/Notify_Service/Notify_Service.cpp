@@ -32,7 +32,7 @@ TAO_Notify_Service_Driver::~TAO_Notify_Service_Driver (void)
 }
 
 int
-TAO_Notify_Service_Driver::init_ORB (int& argc, ACE_TCHAR *argv []
+TAO_Notify_Service_Driver::init_ORB (int& argc, char *argv []
                               ACE_ENV_ARG_DECL)
 {
   // Copy command line parameter.
@@ -73,11 +73,13 @@ int
 TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
                           ACE_ENV_ARG_DECL)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   if (this->parse_args(argc, argv) != 0)
     return -1;
 
   // initalize the ORB.
-  if (this->init_ORB (argc, argv
+  if (this->init_ORB (convert.get_argc(), convert.get_ASCII_argv()
                       ACE_ENV_ARG_PARAMETER) != 0)
   return -1;
 
@@ -316,7 +318,7 @@ TAO_Notify_Service_Driver::parse_args (int &argc, ACE_TCHAR *argv[])
     {
       if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Factory"))))
         {
-          this->notify_factory_name_.set (ACE_TEXT_ALWAYS_CHAR(current_arg));
+          this->notify_factory_name_.set (ACE_TEXT_TO_CHAR_IN(current_arg));
           arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Boot")) == 0)
@@ -351,7 +353,7 @@ TAO_Notify_Service_Driver::parse_args (int &argc, ACE_TCHAR *argv[])
         }
       else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ChannelName"))))
         {
-          this->notify_channel_name_.set(ACE_TEXT_ALWAYS_CHAR(current_arg));
+          this->notify_channel_name_.set(ACE_TEXT_TO_CHAR_IN(current_arg));
           arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Channel")) == 0)

@@ -43,7 +43,7 @@ ACE_INLINE int
 Handle_L_FIFO::init (int argc, ACE_TCHAR *argv[])
 {
   const ACE_TCHAR *rendezvous_fifo = Handle_L_FIFO::DEFAULT_RENDEZVOUS;
-  ACE_Get_Opt    get_opt (argc, argv, ACE_TEXT("r:"), 0);
+  ACE_Get_Arg_Opt    get_opt (argc, argv, ACE_TEXT("r:"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
      switch (c)

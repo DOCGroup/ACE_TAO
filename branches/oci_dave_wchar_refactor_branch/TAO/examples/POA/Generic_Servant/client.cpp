@@ -17,7 +17,7 @@ static int timed_method = 0;
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "f:k:i:T:otx");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "f:k:i:T:otx");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -104,7 +104,7 @@ print_stats (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time,
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 

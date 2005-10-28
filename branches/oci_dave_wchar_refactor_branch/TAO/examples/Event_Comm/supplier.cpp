@@ -67,7 +67,7 @@ Supplier::init (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Initialize server daemon.
   Supplier supplier;

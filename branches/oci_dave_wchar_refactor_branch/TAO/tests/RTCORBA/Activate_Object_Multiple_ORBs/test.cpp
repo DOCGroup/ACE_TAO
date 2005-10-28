@@ -21,7 +21,7 @@ public:
 };
 
 
-int main(int, char**)
+int ACE_TMAIN(int, ACE_TCHAR**)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY

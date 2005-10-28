@@ -2,6 +2,7 @@
 
 #include "valueboxC.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(ValueBox,
           client,
@@ -13,7 +14,7 @@ const char *ior = "file://test.ior";
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "k:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -1441,19 +1442,20 @@ int test_boxed_union_invocations (Test * test_object)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   Test_var test_object;
   CORBA::ORB_var orb;
-
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY_EX (init)
     {
-      orb = CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+      orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX (init);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
         return 1;
 
       // Obtain reference to the object.

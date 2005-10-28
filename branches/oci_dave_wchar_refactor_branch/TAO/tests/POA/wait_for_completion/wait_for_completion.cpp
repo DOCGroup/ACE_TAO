@@ -17,6 +17,7 @@
 //=========================================================================
 
 #include "testS.h"
+#include "ace/Argv_Type_Converter.h"
 
 class test_i : public POA_test
 {
@@ -84,23 +85,23 @@ init_orb (int argc,
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc,
+      ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       PortableServer::POA_var first_poa =
-        init_orb (argc,
-                  argv,
+        init_orb (convert.get_argc(), convert.get_ASCII_argv(),
                   "first ORB"
                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var second_poa =
-        init_orb (argc,
-                  argv,
+        init_orb (convert.get_argc(), convert.get_ASCII_argv(),
                   "second ORB"
                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

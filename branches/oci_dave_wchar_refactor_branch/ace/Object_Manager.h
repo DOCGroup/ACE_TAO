@@ -146,7 +146,7 @@ template <class T> class ACE_Cleanup_Adapter;
  * With ACE_HAS_NONSTATIC_OBJECT_MANAGER enabled, the ACE
  * library has no static objects that require destruction.
  * However, there are two drawbacks to using it:
- * 1) main (int, char *[]) must be declared with arguments, even
+ * 1) ACE_TMAIN (int, ACE_TCHAR *[]) must be declared with arguments, even
  * if they're not used.  All of ACE is converted to this, so
  * just applications have to be concerned with it.
  * 2) If there any static objects that depend on those that are

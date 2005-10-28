@@ -11,7 +11,7 @@ ACE_RCSID(Web_Crawler, Options, "$Id$")
 int 
 Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("df:h:i:l:rt:u:vo:p:"));
+  ACE_Get_Arg_Opt getopt (argc, argv, ACE_TEXT ("df:h:i:l:rt:u:vo:p:"));
 
   ACE_LOG_MSG->open (argv[0]);
 

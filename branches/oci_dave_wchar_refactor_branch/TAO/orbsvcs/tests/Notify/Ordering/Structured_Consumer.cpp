@@ -18,13 +18,13 @@ static bool use_ordering = false;
 class Consumer_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, char* argv[]);
+  virtual int parse_args (int argc, ACE_TCHAR* argv[]);
 };
 
 int
 Consumer_Client::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "ok:e:d:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "ok:e:d:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -122,7 +122,7 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
   ACE_CHECK;
 }
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   ACE_TRY_NEW_ENV
   {

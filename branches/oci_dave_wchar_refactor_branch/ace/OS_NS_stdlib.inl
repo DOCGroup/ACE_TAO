@@ -189,7 +189,7 @@ ACE_INLINE ACE_HANDLE
 ACE_OS::mkstemp (wchar_t *s)
 {
 #  if !defined (ACE_LACKS_MKSTEMP)
-  return ::mkstemp (ACE_TEXT_TO_CHAR_INOUT (s));
+  return ::mkstemp (ACE_TEXT_TO_CHAR_IN_INOUT (s));
 #  else
   return ACE_OS::mkstemp_emulation (ACE_TEXT_TO_TCHAR_INOUT (s));
 #  endif  /* !ACE_LACKS_MKSTEMP */
@@ -221,7 +221,7 @@ ACE_OS::mktemp (wchar_t *s)
   // For narrow-char filesystems, we must convert the wide-char input to
   // a narrow-char string for mktemp(), then convert the name back to
   // wide-char for the caller.
-  if (::mktemp (ACE_TEXT_TO_CHAR_INOUT (s)) == 0)
+  if (::mktemp (ACE_TEXT_TO_CHAR_IN_INOUT (s)) == 0)
     return 0;
   return s;
 #endif
@@ -407,7 +407,7 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
 #  else
       // Use char * for environment on non-Windows.
       char *temp = 0;
-      if ((temp = ACE_OS::getenv (ACE_TEXT_TO_CHAR_IN (&str[1]))) != 0)
+      if ((temp = ACE_OS::getenv (&str[1])) != 0)
         return ACE_OS::strdup (ACE_TEXT_TO_TCHAR_IN (temp));
 #  endif /* ACE_WIN32 */
       return ACE_OS::strdup (str);

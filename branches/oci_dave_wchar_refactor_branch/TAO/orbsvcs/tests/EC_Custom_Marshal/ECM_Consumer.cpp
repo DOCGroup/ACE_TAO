@@ -23,7 +23,7 @@ ACE_RCSID (EC_Custom_Marshal,
            "$Id$")
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Driver driver;
   return driver.run (argc, argv);
@@ -44,7 +44,7 @@ Driver::Driver (void)
 // ****************************************************************
 
 int
-Driver::run (int argc, char* argv[])
+Driver::run (int argc, ACE_TCHAR* argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -310,9 +310,9 @@ Driver::disconnect_consumers (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-Driver::parse_args (int argc, char *argv [])
+Driver::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "dc:n:h:p:");
+  ACE_Get_Arg_Opt<char> get_opt (argc, argv, "dc:n:h:p:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)

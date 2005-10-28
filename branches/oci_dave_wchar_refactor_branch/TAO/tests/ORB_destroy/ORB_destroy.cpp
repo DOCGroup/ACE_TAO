@@ -20,6 +20,7 @@
 #include "tao/PortableServer/PortableServer.h"
 
 #include "ace/Log_Msg.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(ORB_destroy, ORB_destroy, "$Id$")
 
@@ -136,66 +137,68 @@ test_with_funky_poa_manager (int argc,
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   int result = 0;
 
-  result = test_with_regular_poa_manager (argc, argv,
+  result = test_with_regular_poa_manager (convert.get_argc(), convert.get_ASCII_argv(),
                                           "destroy_nothing_with_poa_manager",
                                           0, 0);
   ACE_ASSERT (result == 0);
 
-  result = test_with_regular_poa_manager (argc, argv,
+  result = test_with_regular_poa_manager (convert.get_argc(), convert.get_ASCII_argv(),
                                           "destroy_poa_with_poa_manager",
                                           0, 1);
   ACE_ASSERT (result == 0);
 
-  result = test_with_regular_poa_manager (argc, argv,
+  result = test_with_regular_poa_manager (convert.get_argc(), convert.get_ASCII_argv(),
                                           "destroy_orb_with_poa_manager",
                                           1, 0);
   ACE_ASSERT (result == 0);
 
-  result = test_with_regular_poa_manager (argc, argv,
+  result = test_with_regular_poa_manager (convert.get_argc(), convert.get_ASCII_argv(),
                                           "destroy_poa_and_orb_with_poa_manager",
                                           1, 1);
   ACE_ASSERT (result == 0);
 
-  result = test_with_funky_poa_manager   (argc, argv,
+  result = test_with_funky_poa_manager   (convert.get_argc(), convert.get_ASCII_argv(),
                                           "destroy_nothing_without_poa_manager",
                                           0, 0, 0);
   ACE_ASSERT (result == 0);
 
-  result = test_with_funky_poa_manager   (argc, argv,
+  result = test_with_funky_poa_manager   (convert.get_argc(), convert.get_ASCII_argv(),
                                           "destroy_poa_without_poa_manager",
                                           0, 1, 0);
   ACE_ASSERT (result == 0);
 
-  result = test_with_funky_poa_manager   (argc, argv,
+  result = test_with_funky_poa_manager   (convert.get_argc(), convert.get_ASCII_argv(),
                                           "destroy_orb_without_poa_manager",
                                           1, 0, 0);
   ACE_ASSERT (result == 0);
 
-  result = test_with_funky_poa_manager   (argc, argv,
+  result = test_with_funky_poa_manager   (convert.get_argc(), convert.get_ASCII_argv(),
                                           "destroy_poa_and_orb_without_poa_manager",
                                           1, 1, 0);
   ACE_ASSERT (result == 0);
 
-  result = test_with_funky_poa_manager   (argc, argv,
+  result = test_with_funky_poa_manager   (convert.get_argc(), convert.get_ASCII_argv(),
                                           "destroy_nothing_with_funky_poa_manager",
                                           0, 0, 1);
   ACE_ASSERT (result == 0);
 
-  result = test_with_funky_poa_manager   (argc, argv,
+  result = test_with_funky_poa_manager   (convert.get_argc(), convert.get_ASCII_argv(),
                                           "destroy_poa_with_funky_poa_manager",
                                           0, 1, 1);
   ACE_ASSERT (result == 0);
 
-  result = test_with_funky_poa_manager   (argc, argv,
+  result = test_with_funky_poa_manager   (convert.get_argc(), convert.get_ASCII_argv(),
                                           "destroy_orb_with_funky_poa_manager",
                                           1, 0, 1);
   ACE_ASSERT (result == 0);
 
-  result = test_with_funky_poa_manager   (argc, argv,
+  result = test_with_funky_poa_manager   (convert.get_argc(), convert.get_ASCII_argv(),
                                           "destroy_poa_and_orb_with_funky_poa_manager",
                                           1, 1, 1);
   ACE_ASSERT (result == 0);

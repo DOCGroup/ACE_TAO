@@ -152,7 +152,7 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
   this->interval_ = ACE_DEFAULT_LOGFILE_POLL_INTERVAL;
   this->max_size_ = 0;
 
-  ACE_Get_Opt get_opt (argc, argv,
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv,
                        ACE_LIB_TEXT ("f:i:k:m:n:N:op:s:t:w"), 0);
 
   for (int c; (c = get_opt ()) != -1; )

@@ -36,7 +36,7 @@ QoS_Util::~QoS_Util (void)
 int
 QoS_Util::parse_args (void)
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("m:n:p:P:c"));
+  ACE_Get_Arg_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("m:n:p:P:c"));
   int c = 0;
 
   while ((c = get_opts ()) != -1)

@@ -66,9 +66,8 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::analyze_fault_event (
     for (CORBA::ULong n_prop = 0; n_prop < item_count; ++n_prop)
     {
       ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT(
-          "TAO::FT_ReplicationManagerFaultAnalyzer::analyze_fault_event: "
-          "Property Name: <%s>\n"),
+        ACE_TEXT( "TAO::FT_ReplicationManagerFaultAnalyzer::analyze_fault_event: " )
+        ACE_TEXT( "Property Name: <%s>\n"),
         filterable[n_prop].name.in()
       ));
     }
@@ -158,9 +157,8 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_type_id (
   if ((val >>= type_id_value) == 0)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
-      ACE_TEXT (
-        "TAO::FT_ReplicationManagerFaultAnalyzer::get_type_id: "
-        "Could not extract TypeId value from any.\n")),
+      ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::get_type_id: " )
+      ACE_TEXT( "Could not extract TypeId value from any.\n")),
       -1);
   }
 
@@ -177,9 +175,8 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_object_group_id (
   if ((val >>= temp_id) == 0)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
-      ACE_TEXT (
-        "TAO::FT_ReplicationManagerFaultAnalyzer::get_object_group_id: "
-        "Could not extract ObjectGroupId value from any.\n")),
+      ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::get_object_group_id: ")
+      ACE_TEXT ("Could not extract ObjectGroupId value from any.\n")),
       -1);
   }
   id = temp_id;
@@ -193,9 +190,8 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_location (
   if ((val >>= temp_loc) == 0)
   {
     ACE_ERROR_RETURN ((LM_ERROR,
-      ACE_TEXT (
-        "TAO::FT_ReplicationManagerFaultAnalyzer::get_location: "
-        "Could not extract Location value from fault event.\n")),
+      ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::get_location: ")
+      ACE_TEXT ("Could not extract Location value from fault event.\n")),
       -1);
   }
   // Make a deep copy of the Location.
@@ -225,9 +221,8 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_membership_style (
     if (TAO_debug_level > 6)
     {
       ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManagerFaultAnalyzer::get_membership_style: "
-          "MembershipStyle is <%d>:\n"),
+        ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::get_membership_style: ")
+        ACE_TEXT ("MembershipStyle is <%d>:\n"),
         membership_style
       ));
     }
@@ -256,9 +251,8 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_replication_style (
     if (TAO_debug_level > 6)
     {
       ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManagerFaultAnalyzer::get_replication_style: "
-          "ReplicationStyle is <%d>:\n"),
+        ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::get_replication_style: ")
+        ACE_TEXT ("ReplicationStyle is <%d>:\n"),
         replication_style
       ));
     }
@@ -287,9 +281,8 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_minimum_number_members (
     if (TAO_debug_level > 6)
     {
       ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManagerFaultAnalyzer::get_minimum_number_members: "
-          "MinimumNumberMembers is <%d>:\n"),
+        ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::get_minimum_number_members: ")
+        ACE_TEXT ("MinimumNumberMembers is <%d>:\n"),
         minimum_number_members
       ));
     }
@@ -318,9 +311,8 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_initial_number_members (
     if (TAO_debug_level > 6)
     {
       ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManagerFaultAnalyzer::get_initial_number_members: "
-          "InitialNumberMembers is <%d>:\n"),
+        ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::get_initial_number_members: ")
+        ACE_TEXT ("InitialNumberMembers is <%d>:\n"),
         initial_number_members
       ));
     }
@@ -349,9 +341,8 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_factories (
     if ((value >>= temp_factories) == 0)
     {
       ACE_ERROR ((LM_ERROR,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManagerFaultAnalyzer::get_factories: "
-          "Could not extract Factories from properties.\n")
+        ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::get_factories: ")
+        ACE_TEXT ("Could not extract Factories from properties.\n")
       ));
       result = -1;
     }
@@ -365,9 +356,8 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_factories (
   else
   {
     ACE_ERROR ((LM_ERROR,
-      ACE_TEXT (
-        "TAO::FT_ReplicationManagerFaultAnalyzer::get_factories: "
-        "Could not find Factories property.\n")
+      ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::get_factories: ")
+      ACE_TEXT ("Could not find Factories property.\n")
     ));
     result = -1;
   }
@@ -418,9 +408,8 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member (
         if (CORBA::is_nil (primary_obj.in()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-            ACE_TEXT (
-              "TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member: "
-              "Could not get primary IOR from IOGR.\n")),
+            ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member: ")
+            ACE_TEXT ("Could not get primary IOR from IOGR.\n")),
             -1);
         }
 
@@ -432,9 +421,8 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member (
         if (CORBA::is_nil (failed_obj.in()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-            ACE_TEXT (
-              "TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member: "
-              "Could not get IOR of failed member from IOGR.\n")),
+            ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member: ")
+            ACE_TEXT ("Could not get IOR of failed member from IOGR.\n")),
             -1);
         }
 
@@ -451,9 +439,8 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member (
       else  // primary is not set
       {
         ACE_ERROR ((LM_ERROR,
-          ACE_TEXT (
-            "TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member: "
-            "Primary is not set on IOGR.\n")
+          ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member: ")
+          ACE_TEXT ("Primary is not set on IOGR.\n")
         ));
         result = -1;
       }
@@ -461,9 +448,8 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member (
     else // could not get tagged component
     {
       ACE_ERROR ((LM_ERROR,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member: "
-          "Could not get tagged component from IOGR.\n")
+        ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::is_primary_member: ")
+        ACE_TEXT ("Could not get tagged component from IOGR.\n")
       ));
       result = -1;
     }
@@ -503,9 +489,8 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
     if (CORBA::is_nil (the_object_group.in()))
     {
       ACE_ERROR ((LM_ERROR,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-          "Could not get ObjectGroup reference from ObjectGroupId: <%Q>.\n"),
+        ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: ")
+        ACE_TEXT ("Could not get ObjectGroup reference from ObjectGroupId: <%Q>.\n"),
           fault_event_desc.object_group_id
       ));
       ACE_TRY_THROW (PortableGroup::ObjectGroupNotFound ());
@@ -537,10 +522,9 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
     {
       //@@ it seems a shame to fail here.  We should at least remove the failed replica from the group.
       ACE_ERROR_RETURN ((LM_ERROR,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-          "Could not extract MembershipStyle from properties on "
-          "ObjectGroup with id <%Q>.\n"),
+        ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: ")
+        ACE_TEXT ("Could not extract MembershipStyle from properties on ")
+        ACE_TEXT ("ObjectGroup with id <%Q>.\n"),
         fault_event_desc.object_group_id),
         -1);
     }
@@ -550,9 +534,8 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
       if (TAO_debug_level > 6)
       {
         ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT (
-            "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-            "MembershipStyleValue = <%d>"),
+          ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: ")
+          ACE_TEXT ("MembershipStyleValue = <%d>"),
             fault_event_desc.membership_style
         ));
       }
@@ -565,10 +548,9 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
     {
       //@@ it seems a shame to fail here.  We should at least remove the failed replica from the group.
       ACE_ERROR_RETURN ((LM_ERROR,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-          "Could not extract ReplicationStyle from properties on "
-          "ObjectGroup with id <%Q>.\n"),
+        ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: ")
+        ACE_TEXT ("Could not extract ReplicationStyle from properties on ")
+        ACE_TEXT ("ObjectGroup with id <%Q>.\n"),
         fault_event_desc.object_group_id),
         -1);
     }
@@ -578,9 +560,8 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
       if (TAO_debug_level > 6)
       {
         ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT (
-            "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-            "ReplicationStyleValue = <%d>"),
+          ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: ")
+          ACE_TEXT ("ReplicationStyleValue = <%d>"),
             fault_event_desc.replication_style
         ));
       }
@@ -597,10 +578,9 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
       if (TAO_debug_level > 3)
       {
         ACE_ERROR ((LM_ERROR,
-          ACE_TEXT (
-            "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-            "Could not extract MinimumNumberMembers from properties on "
-            "ObjectGroup with id <%Q>.\n"),
+          ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: ")
+          ACE_TEXT ("Could not extract MinimumNumberMembers from properties on ")
+          ACE_TEXT ("ObjectGroup with id <%Q>.\n"),
           fault_event_desc.object_group_id));
       }
     }
@@ -610,9 +590,8 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
       if (TAO_debug_level > 6)
       {
         ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT (
-            "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-            "MinimumNumberMembers = <%d>"),
+          ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: ")
+          ACE_TEXT ("MinimumNumberMembers = <%d>"),
             fault_event_desc.minimum_number_members
         ));
       }
@@ -629,10 +608,9 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
       if (TAO_debug_level > 3)
       {
         ACE_ERROR ((LM_ERROR,
-          ACE_TEXT (
-            "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-            "Could not extract InitialNumberMembers from properties on "
-            "ObjectGroup with id <%Q>.\n"),
+          ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: ")
+          ACE_TEXT ("Could not extract InitialNumberMembers from properties on ")
+          ACE_TEXT ("ObjectGroup with id <%Q>.\n"),
           fault_event_desc.object_group_id));
       }
     }
@@ -642,9 +620,8 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
       if (TAO_debug_level > 6)
       {
         ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT (
-            "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-            "InitialNumberMembers = <%d>"),
+          ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: ")
+          ACE_TEXT ("InitialNumberMembers = <%d>"),
             fault_event_desc.initial_number_members
         ));
       }
@@ -661,10 +638,9 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
       if (TAO_debug_level > 3)
       {
         ACE_ERROR ((LM_ERROR,
-          ACE_TEXT (
-            "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-            "Could not extract Factories from properties on "
-            "ObjectGroup with id <%Q>.\n"),
+          ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: ")
+          ACE_TEXT ("Could not extract Factories from properties on ")
+          ACE_TEXT ("ObjectGroup with id <%Q>.\n"),
           fault_event_desc.object_group_id));
        }
     }
@@ -673,10 +649,9 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
       if (TAO_debug_level > 6)
       {
         ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT (
-            "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-            "Got Factories from properties on "
-            "ObjectGroup with id <%Q>.\n"),
+          ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: ")
+          ACE_TEXT ("Got Factories from properties on ")
+          ACE_TEXT ("ObjectGroup with id <%Q>.\n"),
             fault_event_desc.object_group_id
         ));
       }
@@ -695,10 +670,9 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
     if (TAO_debug_level > 6)
     {
       ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-          "Checking to see if failed replica was the primary for "
-          "ObjectGroup with id <%Q>.\n"),
+        ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: ")
+        ACE_TEXT ("Checking to see if failed replica was the primary for ")
+        ACE_TEXT ("ObjectGroup with id <%Q>.\n"),
           fault_event_desc.object_group_id
       ));
     }
@@ -730,10 +704,9 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure (
       if (TAO_debug_level > 6)
       {
         ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT (
-            "TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: "
-            "Setting new primary for "
-            "ObjectGroup with id <%Q>.\n"),
+          ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::single_replica_failure: ")
+          ACE_TEXT ("Setting new primary for ")
+          ACE_TEXT ("ObjectGroup with id <%Q>.\n"),
             fault_event_desc.object_group_id
         ));
       }
@@ -839,9 +812,8 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::set_new_primary (
     else
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManagerFaultAnalyzer::set_new_primary: "
-          "No locations remaining in ObjectGroup with id <%Q>.\n"),
+        ACE_TEXT ("TAO::FT_ReplicationManagerFaultAnalyzer::set_new_primary: ")
+        ACE_TEXT ("No locations remaining in ObjectGroup with id <%Q>.\n"),
           fault_event_desc.object_group_id),
         -1);
     }

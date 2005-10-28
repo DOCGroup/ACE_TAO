@@ -252,7 +252,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
           if (arg_shifter.is_parameter_next ())
             {
               // Copy argument for later use
-              this->orbid_ = ACE_OS::strdup(ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ()));
+              this->orbid_ = ACE_OS::strdup(ACE_TEXT_TO_CHAR_IN(arg_shifter.get_current ()));
               orbid_dupped_ = 1;
               arg_shifter.consume_arg ();
             }

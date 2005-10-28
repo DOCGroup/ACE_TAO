@@ -67,12 +67,11 @@ int TAO::FT_DefaultFaultAnalyzer::validate_event_type (
       if (TAO_debug_level > 6)
       {
         ACE_ERROR ((LM_ERROR,
-          ACE_TEXT (
-            "TAO::FT_DefaultFaultAnalyzer::validate_event_type: "
-            "Received invalid event type.\n"
-            "EventType domain: <%s>\n"
-            "EventType type: <%s>\n"
-            "EventName: <%s>\n"),
+          ACE_TEXT ("TAO::FT_DefaultFaultAnalyzer::validate_event_type: ")
+          ACE_TEXT ("Received invalid event type.\n")
+          ACE_TEXT ("EventType domain: <%s>\n")
+          ACE_TEXT ("EventType type: <%s>\n")
+          ACE_TEXT ("EventName: <%s>\n"),
           domain_name.in(),
           type_name.in(),
           event_name.in()
@@ -107,10 +106,9 @@ int TAO::FT_DefaultFaultAnalyzer::validate_event_type (
         if (TAO_debug_level > 6)
         {
           ACE_ERROR ((LM_ERROR,
-            ACE_TEXT (
-              "TAO::FT_DefaultFaultAnalyzer::validate_event_type: "
-              "Received invalid structured event.\n"
-              "filterable_data[0] must be \"FTDomainId\", not \"%s\"\n"),
+            ACE_TEXT ("TAO::FT_DefaultFaultAnalyzer::validate_event_type: ")
+            ACE_TEXT ("Received invalid structured event.\n")
+            ACE_TEXT ("filterable_data[0] must be \"FTDomainId\", not \"%s\"\n"),
             event.filterable_data[0].name.in()
           ));
         }
@@ -122,10 +120,9 @@ int TAO::FT_DefaultFaultAnalyzer::validate_event_type (
         if (TAO_debug_level > 6)
         {
           ACE_ERROR ((LM_ERROR,
-            ACE_TEXT (
-              "TAO::FT_DefaultFaultAnalyzer::validate_event_type: "
-              "Received invalid structured event.\n"
-              "filterable_data[1] must be \"Location\", not \"%s\"\n"),
+            ACE_TEXT ("TAO::FT_DefaultFaultAnalyzer::validate_event_type: ")
+            ACE_TEXT ("Received invalid structured event.\n")
+            ACE_TEXT ("filterable_data[1] must be \"Location\", not \"%s\"\n"),
             event.filterable_data[1].name.in()
           ));
         }
@@ -137,11 +134,10 @@ int TAO::FT_DefaultFaultAnalyzer::validate_event_type (
       if (TAO_debug_level > 6)
       {
         ACE_ERROR ((LM_ERROR,
-          ACE_TEXT (
-            "TAO::FT_DefaultFaultAnalyzer::validate_event_type: "
-            "Received invalid structured event.\n"
-            "There must be at least two name/value pairs in "
-            "the filterable_data field, for \"FTDomainId\" and \"Location\".\n")
+          ACE_TEXT ("TAO::FT_DefaultFaultAnalyzer::validate_event_type: ")
+          ACE_TEXT ("Received invalid structured event.\n")
+          ACE_TEXT ("There must be at least two name/value pairs in ")
+          ACE_TEXT ("the filterable_data field, for \"FTDomainId\" and \"Location\".\n")
         ));
       }
       result = -1;

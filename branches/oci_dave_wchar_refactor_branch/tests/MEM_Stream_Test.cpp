@@ -469,7 +469,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_OS::sprintf(lognm, ACE_TEXT ("MEM_Stream_Test-%d"), mypid);
       ACE_START_TEST (lognm);
 
-      ACE_Get_Opt opts (argc, argv, ACE_TEXT ("p:rm"));
+      ACE_Get_Arg_Opt<ACE_TCHAR>  opts (argc, argv, ACE_TEXT ("p:rm"));
       int opt, iport, status;
       ACE_MEM_IO::Signal_Strategy model = ACE_MEM_IO::Reactive;
 

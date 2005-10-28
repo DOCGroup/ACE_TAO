@@ -127,7 +127,7 @@ have_asynchio (void)
 }
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   if (have_asynchio () == 0)
     printf ("Test successful\n");

@@ -10,7 +10,7 @@ ACE_RCSID(TLI_SAP, CPP_ATM_server, "$Id$")
 // ACE_TLI Server
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Time_Value timeout (ACE_DEFAULT_TIMEOUT);
 

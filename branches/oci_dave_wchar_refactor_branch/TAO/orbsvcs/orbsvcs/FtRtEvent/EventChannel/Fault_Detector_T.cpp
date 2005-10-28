@@ -28,10 +28,16 @@ Fault_Detector_T<ACCEPTOR, CONNECTOR, DETECTION_HANDLER>::init_acceptor()
 
   ACE_DEBUG((LM_DEBUG, "listening at %s:%d\n", listen_addr.get_host_name(),
                                                listen_addr.get_port_number()));
-  char* buf = CORBA::string_alloc(MAXHOSTNAMELEN);
+
+  ACE_TCHAR* buf = new ACE_TCHAR[ MAXHOSTNAMELEN + 1 ];
   listen_addr.addr_to_string(buf, MAXHOSTNAMELEN, 0);
   location_.length(1);
+#if defined (ACE_USES_WCHAR)
+  location_[0].id = ACE::String_Conversion::Convert_Out<char>( buf ).c_str();
+  delete buf;
+#else
   location_[0].id = buf;
+#endif
   return 0;
 }
 

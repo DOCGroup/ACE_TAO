@@ -74,7 +74,7 @@ Performance_Test_Options::Performance_Test_Options (void)
 void
 Performance_Test_Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("a:A:bBc:C:dDe:F:g:H:i:L:l:M:m:n:Np:P:s:S:t:T:uvX:Z:"), 0);
+  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT("a:A:bBc:C:dDe:F:g:H:i:L:l:M:m:n:Np:P:s:S:t:T:uvX:Z:"), 0);
   int c;
 
   while ((c = get_opt ()) != -1)

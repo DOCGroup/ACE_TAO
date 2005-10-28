@@ -33,7 +33,7 @@ print_usage_and_die (void)
 static void
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:t:"));
+  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT("n:t:"));
 
   int c;
 

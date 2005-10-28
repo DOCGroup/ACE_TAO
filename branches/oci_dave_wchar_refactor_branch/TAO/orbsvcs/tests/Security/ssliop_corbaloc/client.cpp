@@ -90,7 +90,7 @@ CosNaming_Client::CosNaming_Client (void)
 int
 CosNaming_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "p:dstieym:c:");
+  ACE_Get_Arg_Opt<char> get_opts (argc_, argv_, "p:dstieym:c:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -1268,7 +1268,7 @@ Persistent_Test_End::execute (TAO_Naming_Client &root_context)
 // This function runs the test.
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
   CosNaming_Client cosnaming_client;
 

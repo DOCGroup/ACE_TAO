@@ -12,7 +12,7 @@ ACE_RCSID (EC_Tests_Basic,
            "$Id$")
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   EC_Reconnect driver;
   return driver.run (argc, argv);
@@ -28,12 +28,12 @@ EC_Reconnect::EC_Reconnect (void)
 }
 
 int
-EC_Reconnect::parse_args (int& argc, char* argv[])
+EC_Reconnect::parse_args (int& argc, ACE_TCHAR* argv[])
 {
   if (this->EC_Driver::parse_args (argc, argv) != 0)
     return -1;
 
-  ACE_Get_Opt get_opt (argc, argv, "scd:");
+  ACE_Get_Arg_Opt<char> get_opt (argc, argv, "scd:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)

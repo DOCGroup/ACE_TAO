@@ -528,7 +528,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
 
-  ACE_Get_Opt getopt (argc, argv, ACE_TEXT("hxwvb:I:p:sci:m:at:"));
+  ACE_Get_Arg_Opt getopt (argc, argv, ACE_TEXT("hxwvb:I:p:sci:m:at:"));
 
   while ((c = getopt ()) != -1)
     {
@@ -655,7 +655,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       if (remote_addr.set (dstport,
                            (ACE_UINT32) ACE_OS::inet_addr
-                           (ACE_TEXT_ALWAYS_CHAR(argv[getopt.opt_ind ()]))) == -1)
+                           (ACE_TEXT_TO_CHAR_IN(argv[getopt.opt_ind ()]))) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "invalid IP address: %s\n",
                            argv[getopt.opt_ind ()]),

@@ -93,21 +93,19 @@ CORBA::Exception::_tao_print_exception (const char *user_provided_info,
   ACE_DEBUG ((LM_ERROR,
               ACE_TEXT ("(%P|%t) EXCEPTION, %s\n")
               ACE_TEXT ("%s\n"),
-              ACE_TEXT_CHAR_TO_TCHAR (user_provided_info),
-              ACE_TEXT_CHAR_TO_TCHAR (this->_info ().c_str ())));
+              ACE_TEXT_TO_TCHAR_IN (user_provided_info),
+              ACE_TEXT_TO_TCHAR_IN (this->_info ().c_str ())));
 }
 
-#if defined (ACE_USES_WCHAR)
 void
-CORBA::Exception::_tao_print_exception (const ACE_WCHAR_T *info,
+CORBA::Exception::_tao_print_exception (const wchar_t *info,
                                         FILE *f) const
 {
   // Even though this call causes additional type conversions, this is
   // better for the maintenance.  Plus, this will occur only on
   // exception anyway.
-  this->_tao_print_exception (ACE_TEXT_ALWAYS_CHAR (info), f);
+  this->_tao_print_exception (ACE_TEXT_TO_CHAR_IN (info), f);
 }
-#endif  // ACE_USES_WCHAR
 
 void
 CORBA::Exception::_tao_any_destructor (void *x)

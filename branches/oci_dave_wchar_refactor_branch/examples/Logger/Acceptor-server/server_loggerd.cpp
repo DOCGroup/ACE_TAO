@@ -42,7 +42,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
   this->port_ = ACE_DEFAULT_SERVER_PORT;
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:"));
+  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT ("p:"));
 
   for (int c; (c = get_opt ()) != -1; )
     switch (c)
@@ -138,9 +138,9 @@ Logging_Handler::handle_input (ACE_HANDLE)
           {
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ")));
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-            lp.print (ACE_TEXT_CHAR_TO_TCHAR (this->peer_name_), 1, cerr);
+            lp.print (ACE_TEXT_TO_TCHAR_IN (this->peer_name_), 1, cerr);
 #else
-            lp.print (ACE_TEXT_CHAR_TO_TCHAR (this->peer_name_), 1, stderr);
+            lp.print (ACE_TEXT_TO_TCHAR_IN (this->peer_name_), 1, stderr);
 #endif
           }
         else

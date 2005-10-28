@@ -464,7 +464,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                       ACE_TEXT ("TAO (%P|%t) - ")
                       ACE_TEXT ("IIOP_Acceptor::open, ")
                       ACE_TEXT ("Overriding address in IOR with %s\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR (this->hostname_in_ior_)));
+                      ACE_TEXT_TO_TCHAR_IN (this->hostname_in_ior_)));
         }
       specified_hostname = this->hostname_in_ior_;
     }
@@ -673,7 +673,7 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - IIOP_Acceptor::open_i, ")
                       ACE_TEXT ("listening on: <%s:%u>\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR(this->hosts_[i]),
+                      ACE_TEXT_TO_TCHAR_IN(this->hosts_[i]),
                       this->addrs_[i].get_port_number ()));
         }
     }
@@ -1126,7 +1126,7 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("TAO (%P|%t) - IIOP option <%s> is ")
                            ACE_TEXT ("missing a value.\n"),
-                           ACE_TEXT_CHAR_TO_TCHAR(argv[i]->c_str ())),
+                           ACE_TEXT_TO_TCHAR_IN(argv[i]->c_str ())),
                           -1);
 
       ACE_CString name = argv[i]->substring (0, slot);

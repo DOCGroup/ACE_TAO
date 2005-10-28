@@ -381,7 +381,7 @@ Event_Supplier::insert_event_data (CORBA::Any &data,
 unsigned int
 Event_Supplier::get_options (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "f:m:");
+  ACE_Get_Arg_Opt<char> get_opt (argc, argv, "f:m:");
   int opt;
   int temp;
 
@@ -443,7 +443,7 @@ Event_Supplier::get_options (int argc, char *argv [])
 // function main
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRY_NEW_ENV
     {

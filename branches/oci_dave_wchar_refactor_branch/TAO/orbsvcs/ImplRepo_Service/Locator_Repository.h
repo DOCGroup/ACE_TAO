@@ -95,7 +95,7 @@ public:
   /// Returns the internal hash map containing the activator information.
   AIMap& activators(void);
 
-  const char* repo_mode();
+  const ACE_TCHAR* repo_mode();
 
 private:
   // Type mechanism to use for persistence.
@@ -107,7 +107,7 @@ private:
   // Several rmode_ values require this.
   ACE_Auto_Ptr<ACE_Configuration> config_;
   // XML requires the file name
-  ACE_CString fname_;
+  ACE_TString fname_;
 };
 
 

@@ -63,7 +63,7 @@ namespace TAO
 
       // = Service Configurator hooks.
       /// Dynamic linking hook
-      virtual int init (int argc, char* argv[]);
+      virtual int init (int argc, ACE_TCHAR* argv[]);
 
       /// Verify prefix is a match
       virtual int match_prefix (const ACE_CString & prefix);

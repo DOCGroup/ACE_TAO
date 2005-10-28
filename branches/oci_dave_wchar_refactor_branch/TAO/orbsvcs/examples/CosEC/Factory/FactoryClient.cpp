@@ -21,7 +21,7 @@ public:
   virtual ~FactoryClient (void);
   // destructor.
 
-  void init_ORB (int argc, char *argv [] ACE_ENV_ARG_DECL);
+  void init_ORB (int argc, char *argv[]) ACE_ENV_ARG_DECL);
   // Initializes the ORB.
 
   void resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
@@ -87,7 +87,7 @@ FactoryClient::~FactoryClient (void)
 
 void
 FactoryClient::init_ORB (int argc,
-                       char *argv []
+                       char *argv[])
                        ACE_ENV_ARG_DECL)
 {
   this->orb_ = CORBA::ORB_init (argc,
@@ -364,7 +364,7 @@ FactoryClient::run_test (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_DEBUG ((LM_DEBUG,
               "The FactoryClient will test the Cos Event Channel Factory\n"));

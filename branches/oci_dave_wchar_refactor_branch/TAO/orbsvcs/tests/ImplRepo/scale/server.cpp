@@ -3,7 +3,7 @@
 #include "server_i.h"
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY

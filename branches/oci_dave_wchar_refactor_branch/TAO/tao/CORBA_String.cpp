@@ -24,84 +24,66 @@ CORBA::string_dup (const char *str)
       errno = EINVAL;
       return 0;
     }
-
-  const size_t len = ACE_OS::strlen (str);
-
-  // This allocates an extra byte for the '\0';
-  char * copy = CORBA::string_alloc (static_cast<CORBA::ULong> (len));
-
-  // The memcpy() below assumes that the destination is a valid buffer.
-  if (copy == 0)
-    {
-      return 0;
-    }
-
-  ACE_OS::memcpy (copy,
-                  str,
-                  len + 1);
-  return copy;
+  return ACE::String_Conversion::Convert_Out< char >( str ).c_str();
 }
 
 char *
-CORBA::string_alloc (CORBA::ULong len)
-{
-  // Allocate 1 + strlen to accomodate the null terminating character.
-
-  char *s = 0;
-  ACE_NEW_RETURN (s,
-                  char[size_t (len + 1)],
-                  0);
-
-  s[0]= '\0';
-
-  return s;
-}
-
-void
-CORBA::string_free (char *str)
-{
-  delete [] str;
-}
-
-// ****************************************************************
-
-CORBA::WChar*
-CORBA::wstring_dup (const WChar *const str)
+CORBA::string_dup (const WChar *str)
 {
   if (!str)
     {
       errno = EINVAL;
       return 0;
     }
+  return ACE::String_Conversion::Convert_Out< char >( str ).c_str();
+}
 
-  CORBA::WChar* retval = 
-    CORBA::wstring_alloc (static_cast <CORBA::ULong> (ACE_OS::strlen (str)));
+char *
+CORBA::string_alloc (CORBA::ULong len)
+{
+  return ACE::String_Conversion::Allocator_cpp< char >().alloc( len );
+}
 
-  // The wscpy() below assumes that the destination is a valid buffer.
-  if (retval == 0)
+void
+CORBA::string_free (char *str)
+{
+  ACE::String_Conversion::Allocator_cpp< char >().free( str );
+}
+
+// ****************************************************************
+
+CORBA::WChar*
+CORBA::wstring_dup (const WChar * str)
+{
+  if (!str)
     {
+      errno = EINVAL;
       return 0;
     }
+  return ACE::String_Conversion::Convert_Out< WChar >( str ).c_str();
+}
 
-  return ACE_OS::wscpy (retval,
-                        str);
+CORBA::WChar*
+CORBA::wstring_dup (const char *str)
+{
+  if (!str)
+    {
+      errno = EINVAL;
+      return 0;
+    }
+  return ACE::String_Conversion::Convert_Out< WChar >( str ).c_str();
 }
 
 CORBA::WChar*
 CORBA::wstring_alloc (CORBA::ULong len)
 {
-  CORBA::WChar *s = 0;
-  ACE_NEW_RETURN (s,
-                  CORBA::WChar [(size_t) (len + 1)],
-                  0);
-
-  return s;
+  return ACE::String_Conversion::Allocator_cpp< WChar >().alloc( len );
 }
 
 void
-CORBA::wstring_free (CORBA::WChar *const str)
+CORBA::wstring_free (CORBA::WChar * str)
 {
-  delete [] str;
+  ACE::String_Conversion::Allocator_cpp< WChar >().free( str );
 }
 
 // ****************************************************************

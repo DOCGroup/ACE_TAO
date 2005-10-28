@@ -120,7 +120,7 @@ TAO_DIOP_Transport::recv (char *buf,
       ACE_DEBUG ((LM_DEBUG,
                   "TAO_DIOP_Transport::recv_i: received %d bytes from %s:%d %d\n",
                   n,
-                  ACE_TEXT_CHAR_TO_TCHAR (from_addr.get_host_name ()),
+                  ACE_TEXT_TO_TCHAR_IN (from_addr.get_host_name ()),
                   from_addr.get_port_number (),
                   errno));
     }

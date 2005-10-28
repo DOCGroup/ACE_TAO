@@ -9,6 +9,7 @@
 #include "tao/IORTable/IORTable.h"
 #include "ace/OS_main.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (RTEvent_Logging_Service,
            RTEvent_Logging_Service,
@@ -28,9 +29,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 RTEvent_Logging_Service::RTEvent_Logging_Service (void)
   : sched_impl_ (0),
     // ec_impl_ (0),
-    service_name_ (0),
-    ior_file_name_ (0),
-    pid_file_name_ (0),
     global_scheduler_ (0),
     rtevent_log_factory_name_ ("RTEventLogFactory"),
     child_poa_name_ ("RTEventLog_ChildPOA"),
@@ -47,16 +45,18 @@ RTEvent_Logging_Service::~RTEvent_Logging_Service (void)
 }
 
 int
-RTEvent_Logging_Service::run (int argc, char* argv[])
+RTEvent_Logging_Service::run (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
     {
       // Initialize ORB.
       this->orb_ =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (this->parse_args (argc, argv) == -1)
+      if (this->parse_args (convert.get_argc(), convert.get_TCHAR_argv()) == -1)
         return 1;
 
       ACE_NEW_RETURN (factory_servant_,
@@ -220,9 +220,9 @@ RTEvent_Logging_Service::run (int argc, char* argv[])
           ACE_CHECK_RETURN (-1);
         }
 
-      if (this->ior_file_name_ != 0)
+      if (this->ior_file_name_.length() != 0)
         {
-          FILE *output_file= ACE_OS::fopen (this->ior_file_name_, "w");
+          FILE *output_file= ACE_OS::fopen (this->ior_file_name_.fast_rep(), ACE_TEXT("w"));
           if (output_file == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",
@@ -232,9 +232,9 @@ RTEvent_Logging_Service::run (int argc, char* argv[])
           ACE_OS::fclose (output_file);
         }
 
-      if (this->pid_file_name_ != 0)
+      if (this->pid_file_name_.length() != 0)
         {
-          FILE *pidf = fopen (this->pid_file_name_, "w");
+          FILE *pidf = fopen (this->pid_file_name_.fast_rep(), "w");
           if (pidf != 0)
             {
               ACE_OS::fprintf (pidf,
@@ -276,12 +276,12 @@ RTEvent_Logging_Service::run (int argc, char* argv[])
 }
 
 int
-RTEvent_Logging_Service::parse_args (int argc, char *argv [])
+RTEvent_Logging_Service::parse_args (int argc, ACE_TCHAR *argv[])
 {
   // default values...
   this->service_name_ = "EventService";
 
-  ACE_Get_Opt get_opt (argc, argv, "n:o:p:s:");
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT("n:o:p:s:"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -289,15 +289,15 @@ RTEvent_Logging_Service::parse_args (int argc, char *argv [])
       switch (opt)
         {
         case 'n':
-          this->service_name_ = get_opt.opt_arg ();
+          this->service_name_.set (ACE_TEXT_TO_CHAR_IN (get_opt.opt_arg ()));
           break;
 
         case 'o':
-          this->ior_file_name_ = get_opt.opt_arg ();
+          this->ior_file_name_.set (ACE_TEXT_TO_CHAR_IN (get_opt.opt_arg ()));
           break;
 
         case 'p':
-          this->pid_file_name_ = get_opt.opt_arg ();
+          this->pid_file_name_.set (ACE_TEXT_TO_CHAR_IN (get_opt.opt_arg ()));
           break;
 
         case 's':
@@ -305,11 +305,11 @@ RTEvent_Logging_Service::parse_args (int argc, char *argv [])
           // argument, but this is consistent with the EC_Multiple
           // test and also allows for a runtime scheduling service.
 
-          if (ACE_OS::strcasecmp (get_opt.opt_arg (), "global") == 0)
+          if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT("global")) == 0)
             {
               this->global_scheduler_ = 1;
             }
-          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), "local") == 0)
+          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT("local")) == 0)
             {
               this->global_scheduler_ = 0;
             }

@@ -258,7 +258,7 @@ DynSched_Test::run_schedule (ACE_Scheduler_Strategy &strategy,
 }
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   int result = 0;
 

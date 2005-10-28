@@ -25,7 +25,7 @@ StubFaultAnalyzer::~StubFaultAnalyzer ()
 int StubFaultAnalyzer::parse_args (int argc, char * argv[])
 {
   int optionError = 0;
-  ACE_Get_Opt get_opts (argc, argv, "o:r:d:n:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "o:r:d:n:");
   int c;
   while ((c = get_opts ()) != -1)
   {

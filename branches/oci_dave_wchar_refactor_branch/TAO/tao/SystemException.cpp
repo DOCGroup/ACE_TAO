@@ -223,7 +223,7 @@ CORBA::SystemException::_tao_print_system_exception (FILE *) const
 {
   ACE_DEBUG ((LM_ERROR,
               ACE_TEXT("(%P|%t) system exception, ID '%s'\n"),
-              ACE_TEXT_CHAR_TO_TCHAR (this->_info ().c_str ())));
+              ACE_TEXT_TO_TCHAR_IN (this->_info ().c_str ())));
 }
 
 ACE_CString

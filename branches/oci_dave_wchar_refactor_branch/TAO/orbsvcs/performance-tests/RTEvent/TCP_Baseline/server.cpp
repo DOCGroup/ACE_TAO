@@ -36,7 +36,7 @@ private:
   ACE_Reactor reactor_;
 };
 
-int main (int argc, char *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   /// Move the test to the real-time class if it is possible.
   RT_Class rt_class;
@@ -165,7 +165,7 @@ Task::svc()
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "h:l:n:r");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "h:l:n:r");
   int c;
 
   while ((c = get_opts ()) != -1)

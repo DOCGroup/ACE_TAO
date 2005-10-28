@@ -730,7 +730,7 @@ TAO_DynCommon::insert_wstring (const CORBA::WChar * value
       CORBA::ULong bound = unaliased_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
-      if (bound > 0 && bound < ACE_OS::wslen (value))
+      if (bound > 0 && bound < ACE_OS::strlen (value))
         {
           ACE_THROW (DynamicAny::DynAny::InvalidValue ());
         }

@@ -43,8 +43,8 @@ CosProperty_Hash_Key::CosProperty_Hash_Key (const CosProperty_Hash_Key &src)
 bool
 CosProperty_Hash_Key::operator == (const CosProperty_Hash_Key &hash_key) const
 {
-  return (ACE_OS::strcmp (this->pname_,
-                          hash_key.pname_) == 0);
+  return (ACE_OS::strcmp (this->pname_.in(),
+                          hash_key.pname_.in()) == 0);
 }
 
 u_long

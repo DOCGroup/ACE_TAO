@@ -50,10 +50,10 @@ char *test_name[TEST_END] = { "ACE_Guard", "ACE_Thread_Mutex_Guard" };
 guard_func test_function=guard;
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Profile_Timer timer;
-  ACE_Get_Opt getopt (argc, argv, "gtn:");
+  ACE_Get_Arg_Opt getopt (argc, argv, "gtn:");
   int iterations = DEFAULT_ITERATIONS;
   int c, i;
 
@@ -105,7 +105,7 @@ main (int argc, char *argv[])
 }
 #else
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
   return 0;

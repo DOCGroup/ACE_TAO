@@ -41,7 +41,7 @@ int snmp_agent::set_args(int argc, char *argv[])
   const ACE_TCHAR *wr = WR_COM;
   ACE_Argv_Type_Converter to_tchar (argc, argv);
 
-  ACE_Get_Opt get_opt
+  ACE_Get_Arg_Opt get_opt
     (argc, to_tchar.get_TCHAR_argv (), ACE_TEXT ("p:w:r:hv"));
   for (int c; (c = get_opt ()) != -1; ) {
      switch (c)
@@ -71,8 +71,8 @@ int snmp_agent::set_args(int argc, char *argv[])
 
    
    agent_ = new agent_impl(port,
-                           ACE_TEXT_ALWAYS_CHAR (rd),
-                           ACE_TEXT_ALWAYS_CHAR (wr)); // opens OS IO port
+                           ACE_TEXT_TO_CHAR_IN (rd),
+                           ACE_TEXT_TO_CHAR_IN (wr)); // opens OS IO port
    return 0;
 }
 

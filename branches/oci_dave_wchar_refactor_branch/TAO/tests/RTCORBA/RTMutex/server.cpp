@@ -6,6 +6,7 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Argv_Type_Converter.h"
 
 static int test_try_lock_flag =
 #if defined (ACE_HAS_MUTEX_TIMEOUTS) && !defined (ACE_HAS_WTHREADS)
@@ -23,7 +24,7 @@ static int test_try_lock_flag =
 static int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "t");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "t");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -498,16 +499,18 @@ test_mutex_try_lock (RTCORBA::RTORB_ptr rt_orb)
 #endif /* ACE_HAS_THREADS */
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
     {
       // ORB.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+      CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Parse arguments.
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
         return -1;
 
       // RTORB.

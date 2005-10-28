@@ -14,13 +14,16 @@
 #include "Policy_Tester.h"
 
 #include "tao/Strategies/advanced_resource.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(tao, server, "$Id$")
 
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY

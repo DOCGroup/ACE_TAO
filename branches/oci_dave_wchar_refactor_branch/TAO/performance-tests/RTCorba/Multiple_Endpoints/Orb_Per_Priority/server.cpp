@@ -52,7 +52,7 @@ const char *ior_output_file_base = "test.ior";
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:t:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "o:t:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -83,7 +83,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int policy = ACE_SCHED_FIFO;
   int flags = THR_NEW_LWP|THR_JOINABLE|THR_SCHED_FIFO|THR_BOUND;

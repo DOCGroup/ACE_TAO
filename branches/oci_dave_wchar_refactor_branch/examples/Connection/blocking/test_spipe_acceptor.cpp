@@ -25,7 +25,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 #else
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Asynchronous IO is unsupported.\n")));

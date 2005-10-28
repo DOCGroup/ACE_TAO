@@ -205,7 +205,7 @@ TAO_SHMIOP_Acceptor::open (TAO_ORB_Core *orb_core,
     return -1;                  // Port number must consist of digits
 
   if (port)
-    this->address_.set (ACE_TEXT_CHAR_TO_TCHAR(port));
+    this->address_.set (ACE_TEXT_TO_TCHAR_IN(port));
 
   return this->open_i (orb_core,
                        reactor);
@@ -330,7 +330,8 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
                         ACE_TEXT ("cannot cache hostname\n")));
           return -1;
         }
-      this->host_ = ACE_TEXT_ALWAYS_CHAR(tmp_host);
+// what!
+      this->host_ = ACE_TEXT_TO_CHAR_IN(tmp_host);
     }
 
   // This avoids having child processes acquire the listen socket thereby
@@ -343,7 +344,7 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - SHMIOP_Acceptor::open_i, ")
                   ACE_TEXT ("listening on : <%s:%u>\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR(this->host_.c_str ()),
+                  ACE_TEXT_TO_TCHAR_IN(this->host_.c_str ()),
                   this->address_.get_port_number ()));
     }
   return 0;
@@ -477,7 +478,7 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) SHMIOP option <%s> is ")
                                ACE_TEXT ("missing a value.\n"),
-                               ACE_TEXT_CHAR_TO_TCHAR(opt.c_str ())),
+                               ACE_TEXT_TO_TCHAR_IN(opt.c_str ())),
                               -1);
 
           ACE_CString name = opt.substring (0, slot);
@@ -499,7 +500,7 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
           else
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) Invalid SHMIOP option: <%s>\n"),
-                               ACE_TEXT_CHAR_TO_TCHAR(name.c_str ())),
+                               ACE_TEXT_TO_TCHAR_IN(name.c_str ())),
                               -1);
         }
     }

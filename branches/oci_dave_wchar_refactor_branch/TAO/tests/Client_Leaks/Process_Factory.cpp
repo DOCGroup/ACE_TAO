@@ -39,9 +39,11 @@ Process_Factory::create_new_process (ACE_ENV_SINGLE_ARG_DECL)
     this->orb_->object_to_string (startup_callback.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (Test::Process::_nil ());
 
-  const char* argv[3] = {
-    "child",
-    ior.in (),
+  ACE::String_Conversion::Convert_In<ACE_TCHAR, ACE_ANTI_TCHAR > tchar_ior( ior.in () );
+
+  const ACE_TCHAR* argv[3] = {
+    ACE_TEXT("child"),
+    tchar_ior.c_str (),
     0};
 
   ACE_Process_Options options;

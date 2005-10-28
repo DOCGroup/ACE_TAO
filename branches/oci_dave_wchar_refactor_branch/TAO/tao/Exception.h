@@ -142,15 +142,11 @@ namespace CORBA
      */
     void _tao_print_exception (const char *info,
                                FILE *f = stdout) const;
-
-#if defined (ACE_USES_WCHAR)
-    /// ACE_WCHAR_T version of _tao_print_exception.
     /**
      * @note This method is TAO-specific.
      */
-    void _tao_print_exception (const ACE_WCHAR_T *info,
+    void _tao_print_exception (const wchar_t *info,
                                FILE *f = stdout) const;
-#endif  // ACE_USES_WCHAR
 
     /// Returns a string containing information about the exception. This
     /// function is not CORBA compliant.

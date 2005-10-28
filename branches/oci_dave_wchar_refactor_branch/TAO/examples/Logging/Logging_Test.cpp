@@ -7,7 +7,7 @@ ACE_RCSID(Logger, Logging_Test, "$Id$")
 // This function runs the Logging service test.
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
   Logger_Client logger_client;
 

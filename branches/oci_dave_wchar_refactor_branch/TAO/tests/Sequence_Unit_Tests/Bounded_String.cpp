@@ -13,7 +13,7 @@
 CORBA::ULong const MAXIMUM = 42;
 typedef TAO::bounded_string_sequence<MAXIMUM> s_sequence;
 
-int main(int,char*[])
+int ACE_TMAIN(int,ACE_TCHAR*[])
 {
   s_sequence a;
   s_sequence b(a);

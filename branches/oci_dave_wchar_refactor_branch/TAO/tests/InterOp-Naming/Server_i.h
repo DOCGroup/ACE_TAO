@@ -22,6 +22,7 @@
 #include "tao/Utils/ORB_Manager.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
+#include "ace/Argv_Type_Converter.h"
 #include "INS_i.h"
 
 class Server_i

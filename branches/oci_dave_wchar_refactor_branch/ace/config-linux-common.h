@@ -371,7 +371,8 @@
 #if defined (__ia64) || defined(__alpha) || defined (__x86_64__)
 // On 64 bit platforms, the "long" type is 64-bits.  Override the
 // default 32-bit platform-specific format specifiers appropriately.
-# define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lu")
+# define ACE_UINT64_FORMAT_SPECIFIER_A "%lu"
+# define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT (ACE_UINT64_FORMAT_SPECIFIER_A)
 # define ACE_SSIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("%ld")
 # define ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lu")
 #endif /* __ia64 */

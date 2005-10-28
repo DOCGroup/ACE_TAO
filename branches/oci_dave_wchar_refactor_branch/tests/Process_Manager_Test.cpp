@@ -105,7 +105,7 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
 int
 run_main (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt args (argc, argv, ACE_TEXT ("d"));
+  ACE_Get_Arg_Opt<ACE_TCHAR>  args (argc, argv, ACE_TEXT ("d"));
 
   for (int arg = args (); arg != EOF; arg = args ())
     switch (arg)

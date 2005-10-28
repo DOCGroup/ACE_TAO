@@ -517,7 +517,7 @@ namespace TAO
                     ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
                     ACE_TEXT ("handle_user_exception - ")
                     ACE_TEXT ("raising exception %s\n"),
-                    ACE_TEXT_CHAR_TO_TCHAR (buf.in ())));
+                    ACE_TEXT_TO_TCHAR_IN (buf.in ())));
       }
 
     mon.set_status (TAO_INVOKE_USER_EXCEPTION);

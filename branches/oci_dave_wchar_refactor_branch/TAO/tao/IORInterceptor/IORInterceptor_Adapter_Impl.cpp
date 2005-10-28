@@ -94,7 +94,7 @@ TAO_IORInterceptor_Adapter_Impl::establish_components (
                   ACE_DEBUG ((LM_WARNING,
                               "(%P|%t) Exception thrown while processing "
                               "IORInterceptor \"%s\">\n",
-                              ACE_TEXT_CHAR_TO_TCHAR (name.in ())));
+                              ACE_TEXT_TO_TCHAR_IN (name.in ())));
                 }
 
               ACE_PRINT_TAO_EXCEPTION (ACE_ANY_EXCEPTION,

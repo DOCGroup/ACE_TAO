@@ -39,6 +39,7 @@ namespace CORBA
   //@{
   TAO_Export char * string_alloc (ULong len);
   TAO_Export char * string_dup (const char *);
+  TAO_Export char * string_dup (const WChar *);
   TAO_Export void string_free (char *);
   //@}
 
@@ -49,8 +50,9 @@ namespace CORBA
    */
   //@{
   TAO_Export WChar * wstring_alloc (ULong len);
-  TAO_Export WChar * wstring_dup (const WChar * const);
-  TAO_Export void wstring_free (WChar * const);
+  TAO_Export WChar * wstring_dup (const WChar *);
+  TAO_Export WChar * wstring_dup (const char *);
+  TAO_Export void wstring_free (WChar *);
   //@}
 
   /**

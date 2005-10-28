@@ -161,7 +161,7 @@ typedef ACE_Select_Reactor_T<ACE_Select_Reactor_Noop_Token>
         ACE_Select_NULL_LOCK_Reactor;
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Select_NULL_LOCK_Reactor *select_reactor;
   select_reactor = new ACE_Select_NULL_LOCK_Reactor;
@@ -173,7 +173,7 @@ main (int argc, char *argv[])
   ACE_Reactor::instance ()->register_handler (SIGINT, signal_handler);
   ACE_OS::signal (SIGPIPE, SIG_IGN);
 
-  ACE_Get_Opt options (argc, argv, "f:r:n:w:");
+  ACE_Get_Arg_Opt options (argc, argv, "f:r:n:w:");
 
   // f -- file list
   // r -- request rate in requests per second

@@ -29,7 +29,7 @@ const char *data_type = "octet";
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "t:s:hxk:i:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "t:s:hxk:i:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -389,7 +389,7 @@ test_longlong_seq (const CORBA::Object_var object ACE_ENV_ARG_DECL)
 // The main() function starts here
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)

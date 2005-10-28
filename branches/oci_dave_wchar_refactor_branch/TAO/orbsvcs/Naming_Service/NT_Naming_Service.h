@@ -64,8 +64,8 @@ private:
   int argc_save_;
   // Argument count.
 
-  char **argv_;
-  char **argv_save_;
+  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_save_;
   // Argument list.
 
   friend class ACE_Singleton<TAO_NT_Naming_Service, MUTEX>;

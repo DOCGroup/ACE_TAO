@@ -47,7 +47,7 @@ HTTP_Server::parse_args (int argc, ACE_TCHAR *argv[])
   this->backlog_ = 0;
   this->throttle_ = 0;
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:n:t:i:b:"));
+  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT ("p:n:t:i:b:"));
 
   while ((c = get_opt ()) != -1)
     switch (c)

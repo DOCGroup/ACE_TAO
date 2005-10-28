@@ -24,7 +24,7 @@ ACE_RCSID (Transceiver,
 int
 Event_Transceiver::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("Ch:p:S"));
+  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT ("Ch:p:S"));
 
   this->port_number_ = ACE_DEFAULT_SERVER_PORT;
   this->host_name_ = ACE_DEFAULT_SERVER_HOST;

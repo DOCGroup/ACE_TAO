@@ -56,7 +56,7 @@ TAO_Object_Ref_Table::bind (const char *id,
                       ACE_TEXT ("bind:")
                       ACE_TEXT ("  Could not register duplicate object <%s> ")
                       ACE_TEXT ("with the ORB\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR (id)));
+                      ACE_TEXT_TO_TCHAR_IN (id)));
         }
 
       return -1;

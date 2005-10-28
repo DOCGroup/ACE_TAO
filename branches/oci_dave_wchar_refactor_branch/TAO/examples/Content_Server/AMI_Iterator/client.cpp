@@ -26,7 +26,7 @@ void invoke_requests (int argc,
                       ACE_ENV_ARG_DECL);
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY

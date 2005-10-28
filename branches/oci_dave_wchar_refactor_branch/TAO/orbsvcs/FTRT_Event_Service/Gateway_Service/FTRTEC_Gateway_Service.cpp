@@ -3,6 +3,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/Argv_Type_Converter.h"
 #include "orbsvcs/FtRtEvent/Utils/FTEC_Gateway.h"
 #include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
 /// include this file to statically linked with FT ORB
@@ -18,13 +19,13 @@ ACE_RCSID (Gateway_Service,
 namespace {
   CORBA::ORB_var orb;
   FtRtecEventChannelAdmin::EventChannel_var ftec;
-  ACE_CString ior_file_name;
+  ACE_TString ior_file_name;
 }
 
 int parse_args(int argc, ACE_TCHAR** argv)
 {
   ACE_TRY_NEW_ENV {
-    ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("i:n:o:"));
+    ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT("i:n:o:"));
     int opt;
     CosNaming::Name name(1);
     name.length(1);
@@ -36,7 +37,7 @@ int parse_args(int argc, ACE_TCHAR** argv)
       {
       case 'i':
         {
-          CORBA::Object_var obj = orb->string_to_object(get_opt.opt_arg ()
+          CORBA::Object_var obj = orb->string_to_object(ACE_TEXT_TO_CHAR_IN(get_opt.opt_arg ())
                                                         ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           ftec = FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in()
@@ -48,7 +49,7 @@ int parse_args(int argc, ACE_TCHAR** argv)
         name[0].id = CORBA::string_dup(get_opt.opt_arg ());
         break;
       case 'o':
-        ior_file_name = get_opt.opt_arg ();
+        ior_file_name.set (get_opt.opt_arg ());
         break;
       }
     }
@@ -79,13 +80,15 @@ int parse_args(int argc, ACE_TCHAR** argv)
 
 int main(int argc,  ACE_TCHAR** argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
   {
-    orb = CORBA::ORB_init (argc, argv, ""
+    orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), ""
                            ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
-    if (parse_args(argc, argv)==-1)
+    if (parse_args(convert.get_argc(), convert.get_TCHAR_argv())==-1)
       return 1;
 
     PortableServer::POA_var
@@ -115,7 +118,7 @@ int main(int argc,  ACE_TCHAR** argv)
       ACE_TRY_CHECK;
 
       FILE *output_file=
-        ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(ior_file_name.c_str()),
+        ACE_OS::fopen (ACE_TEXT_TO_TCHAR_IN(ior_file_name.c_str()),
         ACE_TEXT("w"));
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,

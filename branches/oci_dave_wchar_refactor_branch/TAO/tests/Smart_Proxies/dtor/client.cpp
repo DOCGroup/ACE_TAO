@@ -3,6 +3,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "testC.h"
 #include "Smart_Proxy_Impl.h"
 
@@ -12,7 +13,7 @@ bool dtor_called;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "i:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -33,17 +34,19 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
   {
-    CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                          argv,
+    CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(),
+                                          convert.get_ASCII_argv(),
                                           ""
                                           ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
-    if (parse_args (argc, argv) != 0)
+    if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
       return 1;
 
     CORBA::Object_var obj = orb->string_to_object (ior

@@ -5,10 +5,13 @@
 #include "Thread_Action.h"
 #include "ace/Thread_Manager.h"
 #include "ace/SString.h"
+#include "ace/Argv_Type_Converter.h"
 
 int
-main (int argc, char* argv [])
+ACE_TMAIN (int argc, ACE_TCHAR* argv [])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   CORBA::ORB_var orb;
   RTScheduling::Current_var current;
 		    
@@ -20,8 +23,8 @@ main (int argc, char* argv [])
 
   ACE_TRY_NEW_ENV
     {
-      orb = CORBA::ORB_init (argc,
-			     argv,
+      orb = CORBA::ORB_init (convert.get_argc(),
+                         convert.get_ASCII_argv(),
 			     ""
 			     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

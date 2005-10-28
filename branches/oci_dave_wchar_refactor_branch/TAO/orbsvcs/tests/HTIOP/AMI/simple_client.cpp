@@ -36,7 +36,7 @@ int debug = 0;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "dk:i:x");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "dk:i:x");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -155,7 +155,7 @@ public:
 };
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("HTIOP_AMI_simple_client"));
 

@@ -11,7 +11,7 @@ ACE_RCSID (ImplRepo,
 // This function runs the test.
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
   Airplane_Client_i client;
 

@@ -104,7 +104,7 @@ void TAO::FT_FaultDetectorFactory_i::shutdown_i()
 int TAO::FT_FaultDetectorFactory_i::write_ior()
 {
   int result = -1;
-  FILE* out = ACE_OS::fopen (this->ior_output_file_, "w");
+  FILE* out = ACE_OS::fopen (this->ior_output_file_, ACE_TEXT("w"));
   if (out)
   {
     ACE_OS::fprintf (out, "%s", this->ior_.in ());
@@ -125,7 +125,7 @@ int TAO::FT_FaultDetectorFactory_i::write_ior()
 
 int TAO::FT_FaultDetectorFactory_i::parse_args (int argc, char * argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "d:l:o:qr");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "d:l:o:qr");
   int c;
 
   while ((c = get_opts ()) != -1)

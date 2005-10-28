@@ -4,7 +4,7 @@
 #include "AMH_Servant.h"
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   MT_AMH_Server amh_server (argc, argv);
   amh_server.try_RT_scheduling();

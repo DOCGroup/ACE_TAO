@@ -40,7 +40,7 @@ Handle_L_Stream::info (ACE_TCHAR **strp, size_t length) const
   if (this->get_local_addr (sa) == -1)
     return -1;
   
-  ACE_OS::strcpy (buf, ACE_TEXT_CHAR_TO_TCHAR (sa.get_path_name ()));
+  ACE_OS::strcpy (buf, ACE_TEXT_TO_TCHAR_IN (sa.get_path_name ()));
   ACE_OS::strcat (buf, ACE_TEXT (" # tests local ACE_Stream\n"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
@@ -55,7 +55,7 @@ Handle_L_Stream::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_UNIX_Addr sus;
   const ACE_TCHAR *r = Handle_L_Stream::DEFAULT_RENDEZVOUS;
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("r:"), 0);
+  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT ("r:"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
      switch (c)
@@ -130,7 +130,7 @@ Handle_L_Stream::handle_input (ACE_HANDLE)
   if (new_local_stream.send (4,
 			     Handle_L_Stream::login_name, 
 			     ACE_OS::strlen (Handle_L_Stream::login_name),
-			     ACE_TEXT_ALWAYS_CHAR (cs), 
+			     ACE_TEXT_TO_CHAR_IN (cs), 
 			     ACE_OS::strlen (cs)) == -1)
     return -1;
   else if (ACE_OS::close (handle) == -1)

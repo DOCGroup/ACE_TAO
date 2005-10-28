@@ -27,7 +27,7 @@ ACE_RCSID (time_date,
            "$Id$")
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (ACE_Service_Config::open (argc, argv) == -1
       && errno != ENOENT)

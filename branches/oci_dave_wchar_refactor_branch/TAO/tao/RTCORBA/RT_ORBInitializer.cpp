@@ -85,7 +85,7 @@ TAO_RT_ORBInitializer::pre_init (
 
   // If the application resolves the root POA, make sure we load the RT POA.
   TAO_ORB_Core::set_poa_factory (rt_poa_factory_name,
-                                 ACE_TEXT_ALWAYS_CHAR (rt_poa_factory_directive));
+                                 ACE_TEXT_TO_CHAR_IN (rt_poa_factory_directive));
 
   // Create the initial priority mapping instance.
   TAO_Priority_Mapping *pm = 0;

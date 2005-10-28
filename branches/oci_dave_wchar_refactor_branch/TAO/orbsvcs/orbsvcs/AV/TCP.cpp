@@ -533,7 +533,7 @@ TAO_AV_TCP_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
   inet_addr->set (inet_addr->get_port_number (),
                   inet_addr->get_host_name ());
 
-  char buf[BUFSIZ];
+  ACE_TCHAR buf[BUFSIZ];
   inet_addr->addr_to_string (buf,
                              BUFSIZ);
 
@@ -594,7 +594,7 @@ TAO_AV_TCP_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
   address->set (address->get_port_number (),
                 address->get_host_name ());
 
-  char buf[BUFSIZ];
+  ACE_TCHAR buf[BUFSIZ];
   address->addr_to_string (buf,BUFSIZ);
 
   if (TAO_debug_level > 0)
@@ -659,7 +659,7 @@ TAO_AV_TCP_Flow_Handler::open (void * /*arg*/)
   if (this->peer ().get_remote_addr (addr) == -1)
     return -1;
 
-  char server[MAXHOSTNAMELEN + 16];
+  ACE_TCHAR server[MAXHOSTNAMELEN + 16];
 
   (void) addr.addr_to_string (server, sizeof (server));
 

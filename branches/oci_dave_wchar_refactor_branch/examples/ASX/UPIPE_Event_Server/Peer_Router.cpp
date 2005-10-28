@@ -26,7 +26,7 @@ ACE_RCSID(UPIPE_Event_Server, Peer_Router, "$Id$")
 template <class PH, class PK> int
 Acceptor_Factory<PH, PK>::init (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("df:"), 0);
+  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT ("df:"), 0);
   ACE_UPIPE_Addr addr;
 
   for (int c; (c = get_opt ()) != -1; )

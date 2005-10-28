@@ -67,45 +67,45 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
       __program_name[Options_Manager::string_len - 1] = '\0';
     }
 
-    // Declare options with ACE_Get_Opt
+    // Declare options with ACE_Get_Arg_Opt
     int c;
-    ACE_Get_Opt * get_opt = 0;
+    ACE_Get_Arg_Opt * get_opt = 0;
     if (!ACE_OS::strcmp(ACE_TEXT ("client-opts"), opts_set)){
-      get_opt = new ACE_Get_Opt(argc, argv, ACE_TEXT("c:nt:m:M:x:b:C:i:p:H:s:h"));
+      get_opt = new ACE_Get_Arg_Opt(argc, argv, ACE_TEXT("c:nt:m:M:x:b:C:i:p:H:s:h"));
 
       get_opt->long_option (ACE_TEXT ("test_iterations"),         'c',
-                            ACE_Get_Opt::ARG_REQUIRED);
+                            ACE_Get_Arg_Opt::ARG_REQUIRED);
       get_opt->long_option (ACE_TEXT ("test_enable_nagle"),       'n');
       get_opt->long_option (ACE_TEXT ("test_transport_protocol"), 't',
-                            ACE_Get_Opt::ARG_REQUIRED);
+                            ACE_Get_Arg_Opt::ARG_REQUIRED);
       get_opt->long_option (ACE_TEXT ("histogram_min_bin"),       'm',
-                            ACE_Get_Opt::ARG_REQUIRED);
+                            ACE_Get_Arg_Opt::ARG_REQUIRED);
       get_opt->long_option (ACE_TEXT ("histogram_max_bin"),       'M',
-                            ACE_Get_Opt::ARG_REQUIRED);
+                            ACE_Get_Arg_Opt::ARG_REQUIRED);
       get_opt->long_option (ACE_TEXT ("histogram_num_outliers"),  'x',
-                            ACE_Get_Opt::ARG_REQUIRED);
+                            ACE_Get_Arg_Opt::ARG_REQUIRED);
       get_opt->long_option (ACE_TEXT ("histogram_bin_count"),     'b',
-                            ACE_Get_Opt::ARG_REQUIRED);
+                            ACE_Get_Arg_Opt::ARG_REQUIRED);
       get_opt->long_option (ACE_TEXT ("client_port"),             'C',
-                            ACE_Get_Opt::ARG_REQUIRED);
+                            ACE_Get_Arg_Opt::ARG_REQUIRED);
       get_opt->long_option (ACE_TEXT ("client_accept_addr"),      'i',
-                            ACE_Get_Opt::ARG_REQUIRED);
+                            ACE_Get_Arg_Opt::ARG_REQUIRED);
       get_opt->long_option (ACE_TEXT ("server_port"),             'p',
-                            ACE_Get_Opt::ARG_REQUIRED);
+                            ACE_Get_Arg_Opt::ARG_REQUIRED);
       get_opt->long_option (ACE_TEXT ("server_host"),             'H',
-                            ACE_Get_Opt::ARG_REQUIRED);
+                            ACE_Get_Arg_Opt::ARG_REQUIRED);
       get_opt->long_option (ACE_TEXT ("payload_size_power_of_2"), 's',
-                            ACE_Get_Opt::ARG_REQUIRED);
+                            ACE_Get_Arg_Opt::ARG_REQUIRED);
       get_opt->long_option (ACE_TEXT ("help"),                    'h');
     } else if (!ACE_OS::strcmp (ACE_TEXT ("server-opts"), opts_set)){
-      get_opt = new ACE_Get_Opt(argc, argv, ACE_TEXT("nt:p:a:u"));
+      get_opt = new ACE_Get_Arg_Opt(argc, argv, ACE_TEXT("nt:p:a:u"));
       get_opt->long_option (ACE_TEXT ("test_enable_nagle"),       'n');
       get_opt->long_option (ACE_TEXT ("test_transport_protocol"), 't',
-                            ACE_Get_Opt::ARG_REQUIRED);
+                            ACE_Get_Arg_Opt::ARG_REQUIRED);
       get_opt->long_option (ACE_TEXT ("server_port"),             'p',
-                            ACE_Get_Opt::ARG_REQUIRED);
+                            ACE_Get_Arg_Opt::ARG_REQUIRED);
       get_opt->long_option (ACE_TEXT ("server_accept_addr"),      'a',
-                            ACE_Get_Opt::ARG_REQUIRED);
+                            ACE_Get_Arg_Opt::ARG_REQUIRED);
       get_opt->long_option (ACE_TEXT ("help"),                    'h');
     } else {
       _error = 1;
@@ -114,7 +114,7 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
       return;
     }
 
-    // Parse options with ACE_Get_Opt
+    // Parse options with ACE_Get_Arg_Opt
     while ((c = (*get_opt)()) != -1)
       {
         switch ((char) c)
@@ -173,7 +173,7 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
             // Obtain the 32-bit, host-byte-order representation of
             // the primary address.
             struct in_addr foo;
-            int aton_retval = ACE_OS::inet_aton(ACE_TEXT_ALWAYS_CHAR (str),
+            int aton_retval = ACE_OS::inet_aton(ACE_TEXT_TO_CHAR_IN (str),
                                                 &foo);
 
             // If this representation was not obtained, terminate with
@@ -231,7 +231,7 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
               // Obtain the 32-bit, host-byte-order representation of
               // a secondary address.
               aton_retval =
-                ACE_OS::inet_aton(ACE_TEXT_ALWAYS_CHAR (next_secondary_addr),
+                ACE_OS::inet_aton(ACE_TEXT_TO_CHAR_IN (next_secondary_addr),
                                   &foo);
 
               // If the representation was obtained without error,
@@ -290,7 +290,7 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
             // Obtain the 32-bit, host-byte-order representation of
             // the primary address.
             struct in_addr foo;
-            int aton_retval = ACE_OS::inet_aton (ACE_TEXT_ALWAYS_CHAR (str),
+            int aton_retval = ACE_OS::inet_aton (ACE_TEXT_TO_CHAR_IN (str),
                                                  &foo);
 
             // If this representation was not obtained, terminate with
@@ -348,7 +348,7 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
               // Obtain the 32-bit, host-byte-order representation of
               // a secondary address.
               aton_retval =
-                ACE_OS::inet_aton (ACE_TEXT_ALWAYS_CHAR (next_secondary_addr),
+                ACE_OS::inet_aton (ACE_TEXT_TO_CHAR_IN (next_secondary_addr),
                                    &foo);
 
               // If the representation was obtained without error,

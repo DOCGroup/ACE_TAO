@@ -25,7 +25,7 @@ Consumer::Consumer (void)
 }
 
 int
-Consumer::run (int argc, char* argv[])
+Consumer::run (int argc, ACE_TCHAR* argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY

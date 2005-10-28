@@ -405,7 +405,7 @@ TAO_Hash_LogRecordStore::retrieve (DsLogAdmin::TimeT from_time,
                    ACE_U64_TO_U32 (from_time));
 #else
   ACE_OS::sprintf (uint64_formating,
-                   ACE_UINT64_FORMAT_SPECIFIER,
+                   ACE_UINT64_FORMAT_SPECIFIER_A,
                    from_time);
 #endif
 

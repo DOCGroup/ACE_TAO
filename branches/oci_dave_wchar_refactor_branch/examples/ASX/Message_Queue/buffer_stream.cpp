@@ -302,7 +302,7 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
 }
 #else
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("threads not supported on this platform\n")));

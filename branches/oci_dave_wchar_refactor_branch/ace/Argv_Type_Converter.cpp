@@ -18,16 +18,16 @@ ACE_Argv_Type_Converter::ACE_Argv_Type_Converter (int &argc, wchar_t** argv)
 , char_argv_ (0)
 , wchar_argv_ (argv)
 , before_pass_argc_ (argc)
-, original_type_ (1)
-, wchar_passed_ (0)
-, char_passed_ (0)
+, original_type_wchar_ (true)
+, wchar_passed_ (false)
+, char_passed_ (false)
 {
   this->initialize ();
 
   for (int i = 0; i < argc; ++i)
     {
       this->char_argv_[i] =
-        ACE::String_Conversion::duplicate< char >( argv[i] );
+        ACE::String_Conversion::Convert_Out< char >( argv[i] ).c_str();
     }
 }
 
@@ -35,25 +35,25 @@ ACE_Argv_Type_Converter::ACE_Argv_Type_Converter (int &argc, wchar_t** argv)
 ACE_Argv_Type_Converter::ACE_Argv_Type_Converter (int &argc, char** argv)
 : saved_argc_(argc)
 , char_argv_(argv)
-, wchar_argv_(0)
+, wchar_argv_(false)
 , before_pass_argc_(argc)
-, original_type_(0)
-, wchar_passed_(0)
-, char_passed_(0)
+, original_type_wchar_(false)
+, wchar_passed_(false)
+, char_passed_(false)
 {
   this->initialize();
 
   for (int i = 0; i < argc; ++i)
     {
       this->wchar_argv_[i] =
-        ACE::String_Conversion::duplicate< wchar_t >( argv[i] );
+        ACE::String_Conversion::Convert_Out< wchar_t >( argv[i] ).c_str();
     }
 }
 
 ACE_Argv_Type_Converter::~ACE_Argv_Type_Converter (void)
 {
   // selectively delete the 'copy' of argv
-  if (this->original_type_)
+  if (this->original_type_wchar_)
     {
       // if original type is wchar_t
       if (this->char_passed_)
@@ -62,7 +62,7 @@ ACE_Argv_Type_Converter::~ACE_Argv_Type_Converter (void)
         }
       for (int i = 0; i < this->before_pass_argc_; ++i)
         {
-          ACE::String_Conversion::free( this->char_argv_[i] );
+          ACE::String_Conversion::Convert_Out<char>::free( this->char_argv_[i] );
         }
       delete [] this->char_argv_;
     }
@@ -74,7 +74,7 @@ ACE_Argv_Type_Converter::~ACE_Argv_Type_Converter (void)
       }
       for (int i = 0; i < this->before_pass_argc_; ++i)
         {
-          ACE::String_Conversion::free( this->wchar_argv_[i] );
+          ACE::String_Conversion::Convert_Out<wchar_t>::free( this->wchar_argv_[i] );
         }
       delete [] this->wchar_argv_;
     }
@@ -83,7 +83,7 @@ ACE_Argv_Type_Converter::~ACE_Argv_Type_Converter (void)
 void
 ACE_Argv_Type_Converter::initialize (void)
 {
-  if (this->original_type_)
+  if (this->original_type_wchar_)
     {  // make a copy of argv in 'char' type
       // Create one more argv entry than original argc for the NULL.
       ACE_NEW (char_argv_, char*[this->saved_argc_ + 1]);
@@ -176,20 +176,20 @@ ACE_Argv_Type_Converter::cleanup (void)
   for (int i = this->saved_argc_; i < this->before_pass_argc_; ++i)
     {
       //  Check whether it's ours to delete.
-      if (original_type_ == 1)
+      if (original_type_wchar_ == true)
         {
-          ACE::String_Conversion::free( this->char_argv_[i] );
+          ACE::String_Conversion::Convert_Out<char>::free( this->char_argv_[i] );
           this->char_argv_[i] = 0;
         }
       else
         {
-          ACE::String_Conversion::free( this->wchar_argv_[i] );
+          ACE::String_Conversion::Convert_Out<wchar_t>::free( this->wchar_argv_[i] );
           this->wchar_argv_[i] = 0;
         }
     }
 
   this->before_pass_argc_ = this->saved_argc_;
 
-  this->wchar_passed_ = 0;
-  this->char_passed_ = 0;
+  this->wchar_passed_ = false;
+  this->char_passed_ = false;
 }

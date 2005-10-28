@@ -269,7 +269,7 @@ run_tests (interop::WChar_Passer_ptr server ACE_ENV_ARG_DECL)
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:t:vx"));
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, ACE_TEXT("k:t:vx"));
   int c;
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -333,7 +333,7 @@ ACE_TMAIN( int argc, ACE_TCHAR *argv[] )
       return 0;
 
     // Destringify ior
-    CORBA::Object_var obj = orb->string_to_object( ACE_TEXT_ALWAYS_CHAR(ior) ACE_ENV_ARG_PARAMETER);
+    CORBA::Object_var obj = orb->string_to_object( ACE_TEXT_TO_CHAR_IN(ior) ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
     if( CORBA::is_nil( obj.in() ) )
       ACE_ERROR_RETURN ((LM_ERROR,

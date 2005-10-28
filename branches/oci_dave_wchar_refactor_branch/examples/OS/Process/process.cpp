@@ -58,7 +58,7 @@ static int run_wait = 0;
 static int
 parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("dlx:p:e:gastuw"));
+  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT ("dlx:p:e:gastuw"));
   int c;
 
   while ((c = get_opt ()) != -1)

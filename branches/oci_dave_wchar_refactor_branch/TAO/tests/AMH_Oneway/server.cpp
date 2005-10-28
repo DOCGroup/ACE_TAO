@@ -4,6 +4,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "TestS.h"
 
 int num_calls = 10; // total calls client is going to make
@@ -15,7 +16,8 @@ int calls_received = 0;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "n:");
+  ACE_Argv_Type_Converter convert (argc, argv);
+  ACE_Get_Arg_Opt<char> get_opts (convert.get_argc(), convert.get_ASCII_argv(), "n:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -232,7 +234,7 @@ ST_AMH_Server::write_ior_to_file (CORBA::String_var ior)
 {
   // If the ior_output_file exists, output the ior to it
   FILE *output_file= ACE_OS::fopen (ST_AMH_Server::ior_output_file_,
-                                    "w");
+                                    ACE_TEXT("w"));
   if (output_file == 0)
     {
       ACE_ERROR ((LM_ERROR,
@@ -248,12 +250,15 @@ ST_AMH_Server::write_ior_to_file (CORBA::String_var ior)
 
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  if (parse_args (argc, argv) != 0)
+  ACE_Argv_Type_Converter convert (argc, argv);
+
+  if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
     return 1;
 
-  ST_AMH_Server amh_server (&argc, argv);
+  int& argc2 = convert.get_argc();
+  ST_AMH_Server amh_server (&argc2, convert.get_ASCII_argv());
 
   amh_server.start_orb_and_poa ();
 

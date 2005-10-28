@@ -22,6 +22,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_fcntl.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Param_Test,
            options,
@@ -47,7 +48,7 @@ Options::~Options (void)
 int
 Options::parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "xdn:f:i:t:k:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "xdn:f:i:t:k:");
   int c;
   int result;
 

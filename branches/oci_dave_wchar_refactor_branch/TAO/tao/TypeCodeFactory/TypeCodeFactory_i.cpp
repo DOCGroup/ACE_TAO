@@ -203,7 +203,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
         {
           // Is this a duplicate case label? If so, we have to adjust
           // the 'length' we encode - a member gets encoded only once.
-          if (ACE_OS::strcmp (member_name, members[i - 1].name) == 0)
+          if (ACE_OS::strcmp (member_name, members[i - 1].name.in()) == 0)
             {
               CORBA::Boolean const equiv =
                 member.type.in ()->equivalent (members[i - 1].type.in ()
@@ -332,8 +332,8 @@ TAO_TypeCodeFactory_i::create_union_tc (
         {
           // Is this a duplicate case label? If so, skip it - a member
           // goes into the TypeCode only once.
-          if (ACE_OS::strcmp (member.name,
-                              members[index - 1].name) == 0)
+          if (ACE_OS::strcmp (member.name.in(),
+                              members[index - 1].name.in()) == 0)
             {
               continue;
             }

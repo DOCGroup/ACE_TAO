@@ -42,7 +42,7 @@ make_client (void)
 }
  
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Options::set_options (argc, argv);
 

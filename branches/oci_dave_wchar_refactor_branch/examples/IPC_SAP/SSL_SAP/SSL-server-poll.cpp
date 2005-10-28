@@ -169,7 +169,7 @@ handle_connections (ACE_SSL_SOCK_Acceptor &peer_acceptor,
 }
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   u_short port = ACE_DEFAULT_SERVER_PORT + 1;
 
@@ -203,7 +203,7 @@ main (int, char *[])
 }
 #else
 #include "ace/OS_NS_stdio.h"
-int main (int, char *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_OS::fprintf (stderr, "This feature is not supported\n");
   return 0;

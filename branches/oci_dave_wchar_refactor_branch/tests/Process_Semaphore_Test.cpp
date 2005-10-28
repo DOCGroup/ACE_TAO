@@ -55,7 +55,7 @@ print_usage_and_die (void)
 static void
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("i:c"));
+  ACE_Get_Arg_Opt<ACE_TCHAR>  get_opt (argc, argv, ACE_TEXT ("i:c"));
 
   int c;
 

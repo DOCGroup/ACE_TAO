@@ -126,7 +126,7 @@ int TAO::FT_FaultNotifier_i::idle(int &result ACE_ENV_ARG_DECL_NOT_USED)
 int TAO::FT_FaultNotifier_i::write_ior()
 {
   int result = -1;
-  FILE* out = ACE_OS::fopen (this->ior_output_file_, "w");
+  FILE* out = ACE_OS::fopen (this->ior_output_file_, ACE_TEXT("w"));
   if (out)
   {
     ACE_OS::fprintf (out, "%s", this->ior_.in ());
@@ -147,7 +147,7 @@ int TAO::FT_FaultNotifier_i::write_ior()
 
 int TAO::FT_FaultNotifier_i::parse_args (int argc, char * argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:rq");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "o:rq");
   int c;
 
   while ((c = get_opts ()) != -1)

@@ -40,7 +40,7 @@ print_usage_and_die (void)
 {
   ACE_OS::fprintf (stderr, "usage: %s"
                    " [-i input_file] [-o output_file] [-n iteration_count] [-r]\n",
-                   ACE_TEXT_ALWAYS_CHAR (program_name));
+                   ACE_TEXT_TO_CHAR_IN (program_name));
   ACE_OS::exit (1);
 }
 
@@ -59,7 +59,7 @@ cleanup (int = 0)
 static void
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("i:n:o:r"));
+  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT ("i:n:o:r"));
 
   for (int c; ((c = get_opt ()) != -1); )
     switch (c)
@@ -162,7 +162,7 @@ run_tests (int iterations, FILE *input_fp, FILE *output_fp)
 }
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   program_name = ACE::basename (argv[0],
                                 ACE_DIRECTORY_SEPARATOR_CHAR);

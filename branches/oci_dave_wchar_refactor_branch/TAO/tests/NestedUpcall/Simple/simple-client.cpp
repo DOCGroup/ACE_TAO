@@ -3,6 +3,7 @@
 #include "client_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(Simple, client, "$Id$")
 
@@ -72,7 +73,7 @@ static int
 parse_args (int argc,
             char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "qxn:k:t:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "qxn:k:t:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -122,19 +123,20 @@ parse_args (int argc,
 }
 
 int
-main (int argc,
+ACE_TMAIN (int argc,
       char **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
+      CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(),
+                                            convert.get_ASCII_argv(),
                                             0
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      int result = parse_args (argc,
-                               argv);
+      int result = parse_args (convert.get_argc(), convert.get_ASCII_argv());
       if (result != 0)
         return result;
 

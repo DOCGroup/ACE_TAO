@@ -4,6 +4,7 @@
 #include "tao/ORB.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/Argv_Type_Converter.h"
 
 int
 test_multiple_orbs (const char *test_name,
@@ -77,16 +78,17 @@ test_multiple_orbs (const char *test_name,
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   int iterations = 5;
   int rt_orb = 0;
   int destroy = 0;
 
   int result =
     test_multiple_orbs ("non-RT ORBs, disable destroy",
-                        argc,
-                        argv,
+                        convert.get_argc(), convert.get_ASCII_argv(),
                         iterations,
                         rt_orb,
                         destroy);
@@ -97,8 +99,7 @@ main (int argc, char *argv[])
 
   result =
     test_multiple_orbs ("non-RT ORBs, enable destroy",
-                        argc,
-                        argv,
+                        convert.get_argc(), convert.get_ASCII_argv(),
                         iterations,
                         rt_orb,
                         destroy);
@@ -109,8 +110,7 @@ main (int argc, char *argv[])
 
   result =
     test_multiple_orbs ("RT ORBs, disable destroy",
-                        argc,
-                        argv,
+                        convert.get_argc(), convert.get_ASCII_argv(),
                         iterations,
                         rt_orb,
                         destroy);
@@ -121,8 +121,7 @@ main (int argc, char *argv[])
 
   result =
     test_multiple_orbs ("RT ORBs, enable destroy",
-                        argc,
-                        argv,
+                        convert.get_argc(), convert.get_ASCII_argv(),
                         iterations,
                         rt_orb,
                         destroy);

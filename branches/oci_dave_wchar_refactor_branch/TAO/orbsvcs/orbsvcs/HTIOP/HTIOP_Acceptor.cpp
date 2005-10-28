@@ -450,7 +450,7 @@ TAO::HTIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
                       sizeof (char*) * this->endpoint_count_);
 
       ACE::HTBP::ID_Requestor req(ht_env_);
-      this->addrs_[0] = req.get_HTID();
+      this->addrs_[0] = ACE::HTBP::Addr(ACE_TEXT_TO_CHAR_IN(req.get_HTID()));
       return 0;
 
     }
@@ -540,7 +540,7 @@ TAO::HTIOP::Acceptor::open_i (const ACE::HTBP::Addr& addr,
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) TAO::HTIOP::Acceptor::open_i - ")
                       ACE_TEXT ("listening on: <%s:%u>\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR(this->hosts_[i]),
+                      ACE_TEXT_TO_TCHAR_IN(this->hosts_[i]),
                       this->addrs_[i].get_port_number ()));
         }
     }

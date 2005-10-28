@@ -52,7 +52,7 @@ ACE_INLINE int
 Handle_R_Stream::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_INET_Addr sis (Handle_R_Stream::DEFAULT_PORT);
-  ACE_Get_Opt   get_opt (argc, argv, ACE_TEXT("p:"), 0);
+  ACE_Get_Arg_Opt   get_opt (argc, argv, ACE_TEXT("p:"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
      switch (c)

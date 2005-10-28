@@ -248,7 +248,7 @@ Client_i::read_ior (char *filename)
 int
 Client_i::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dn:f:xk:");
+  ACE_Get_Arg_Opt<char> get_opts (argc_, argv_, "dn:f:xk:");
   int c;
   int result;
 

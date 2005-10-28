@@ -59,7 +59,7 @@ EC_Driver::~EC_Driver (void)
 }
 
 int
-EC_Driver::run (int argc, char* argv[])
+EC_Driver::run (int argc, ACE_TCHAR* argv[])
 {
   ACE_TRY_NEW_ENV
     {
@@ -91,7 +91,7 @@ EC_Driver::run (int argc, char* argv[])
 }
 
 void
-EC_Driver::run_init (int &argc, char* argv[]
+EC_Driver::run_init (int &argc, ACE_TCHAR* argv[]
                      ACE_ENV_ARG_DECL)
 {
   this->initialize_orb_and_poa (argc, argv ACE_ENV_ARG_PARAMETER);
@@ -170,7 +170,7 @@ EC_Driver::run_cleanup (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-EC_Driver::initialize_orb_and_poa (int &argc, char* argv[]
+EC_Driver::initialize_orb_and_poa (int &argc, ACE_TCHAR* argv[]
                                    ACE_ENV_ARG_DECL)
 {
   this->orb_ =
@@ -727,7 +727,7 @@ EC_Driver::dump_results (void)
 }
 
 int
-EC_Driver::parse_args (int &argc, char *argv [])
+EC_Driver::parse_args (int &argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 

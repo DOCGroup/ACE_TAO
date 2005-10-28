@@ -98,7 +98,7 @@ Dump_Restore::handle_input (ACE_HANDLE)
     case 'h' :
       if (::scanf ("%s %hu", buf1, &port) <= 0)
         break;
-      set_host (ACE_TEXT_CHAR_TO_TCHAR (buf1), port);
+      set_host (ACE_TEXT_TO_TCHAR_IN (buf1), port);
       break;
     case 'F':
     case 'f':

@@ -17,7 +17,7 @@ static const char* supplierec = 0;
 static const char* consumerec = 0;
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   Gateway gateway;
 
@@ -31,7 +31,7 @@ Gateway::Gateway (void)
 }
 
 int
-Gateway::run (int argc, char* argv[])
+Gateway::run (int argc, ACE_TCHAR* argv[])
 {
   TAO_EC_Gateway_IIOP_Factory::init_svcs ();
 

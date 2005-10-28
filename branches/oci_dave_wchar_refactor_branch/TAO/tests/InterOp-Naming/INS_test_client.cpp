@@ -7,18 +7,21 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Argv_Type_Converter.h"
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   int i = 0;
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Retrieve a reference to the ORB.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
+      CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(),
+                                            convert.get_ASCII_argv(),
                                             0
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -34,7 +37,7 @@ main (int argc, char *argv[])
 
       for (i = 1; i < argc; ++i)
         {
-          if (ACE_OS::strcmp (argv[i], "-l") == 0)
+          if (ACE_OS::strcmp (argv[i], ACE_TEXT("-l")) == 0)
             {
               // List initial services
               CORBA::ORB::ObjectIdList_var list =
@@ -69,7 +72,7 @@ main (int argc, char *argv[])
             }
           else
             {
-              objref = orb->resolve_initial_references (argv[i] ACE_ENV_ARG_PARAMETER);
+              objref = orb->resolve_initial_references (ACE_TEXT_TO_CHAR_IN(argv[i]) ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               if (CORBA::is_nil (objref.in ()))

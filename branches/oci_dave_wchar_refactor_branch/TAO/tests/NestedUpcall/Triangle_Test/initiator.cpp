@@ -76,7 +76,7 @@ Initiator_Server::read_ior (char *filename, unsigned int A_B)
 int
 Initiator_Server::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "df:g:");
+  ACE_Get_Arg_Opt<char> get_opts (argc_, argv_, "df:g:");
   int c, result;
 
   while ((c = get_opts ()) != -1)
@@ -289,8 +289,10 @@ Initiator_Server::~Initiator_Server (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DEBUG ((LM_DEBUG,
               "\n \t NestedUpCalls.Triangle_Test: Initiator Server \n \n"));
 
@@ -300,7 +302,7 @@ main (int argc, char *argv[])
       Initiator_Server initiator_Server;
 
       int retval =
-        initiator_Server.init (argc, argv ACE_ENV_ARG_PARAMETER);
+        initiator_Server.init (convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (retval == -1)

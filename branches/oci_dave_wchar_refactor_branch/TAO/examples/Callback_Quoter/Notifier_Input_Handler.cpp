@@ -99,7 +99,7 @@ Notifier_Input_Handler::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 int
 Notifier_Input_Handler::parse_args (void)
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "df:s ");
+  ACE_Get_Arg_Opt<char> get_opts (this->argc_, this->argv_, "df:s ");
   int c;
 
   while ((c = get_opts ()) != -1)

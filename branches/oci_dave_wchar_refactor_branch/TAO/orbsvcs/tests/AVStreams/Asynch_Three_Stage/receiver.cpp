@@ -146,7 +146,7 @@ Receiver::parse_args (int argc,
                       char **argv)
 {
   // Parse the command line arguments
-  ACE_Get_Opt opts (argc,
+  ACE_Get_Arg_Opt<char> opts (argc,
                     argv,
                     "f:s:r:a:");
 
@@ -184,8 +184,8 @@ Receiver::output_file_name (void)
 }
 
 int
-main (int argc,
-      char **argv)
+ACE_TMAIN (int argc,
+      ACE_TCHAR **argv)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY

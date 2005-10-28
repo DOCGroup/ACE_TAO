@@ -145,7 +145,7 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *r,
 
   ACE::HTBP::Session_Id_t session_id;
   ACE_INET_Addr *proxy;
-  ACE_CString proxy_host;
+  ACE_TString proxy_host;
   unsigned proxy_port;
 
   int port_set = this->ht_env_->get_proxy_port(proxy_port);
@@ -154,12 +154,12 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       host_set != 0)
     {
       proxy_port = htiop_endpoint->port();
-      proxy_host = htiop_endpoint->host();
+      proxy_host.set (ACE_TEXT_TO_TCHAR_IN (htiop_endpoint->host()));
     }
   else
     {
       ACE::HTBP::ID_Requestor req(ht_env_);
-      session_id.local_ = req.get_HTID();
+      session_id.local_ = ACE::HTBP::Addr(ACE_TEXT_TO_CHAR_IN(req.get_HTID()));
     }
 
   if (proxy_port == 0)

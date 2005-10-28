@@ -125,7 +125,7 @@ print_priority_info (const char *const name)
 }
 
 int
-Test_ECG::run (int argc, char* argv[])
+Test_ECG::run (int argc, ACE_TCHAR* argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -1096,9 +1096,9 @@ Test_ECG::local_source (RtecEventComm::EventSourceID id) const
 }
 
 int
-Test_ECG::parse_args (int argc, char *argv [])
+Test_ECG::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "l:r:s:i:xh:w:p:d:");
+  ACE_Get_Arg_Opt<char> get_opt (argc, argv, "l:r:s:i:xh:w:p:d:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -1595,7 +1595,7 @@ Test_Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Test_ECG *test;
 

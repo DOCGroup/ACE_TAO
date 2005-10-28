@@ -62,7 +62,7 @@ LifeCycle::parse_args (int argc,
 
 void
 LifeCycle::init (int argc,
-                     char* argv[]
+                     ACE_TCHAR* argv[]
                      ACE_ENV_ARG_DECL)
 {
   CORBA::ORB_var orb = CORBA::ORB_init (argc,
@@ -242,7 +242,7 @@ LifeCycle::destroy_ec (ACE_ENV_SINGLE_ARG_DECL)
 
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY

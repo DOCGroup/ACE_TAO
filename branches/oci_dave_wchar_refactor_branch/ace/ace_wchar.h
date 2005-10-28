@@ -112,6 +112,19 @@ using std::size_t;
   # define ACE_LIB_TEXT(STRING) STRING
 #endif /* ACE_USES_WCHAR */
 
+#if !defined (ACE_LACKS_DEPRECATED_MACROS)
+  // Via compiler, sys headers, config-platform.h, 
+  // or this header we have a wchar_t
+  #define ACE_HAS_WCHAR 
+  #undef ACE_LACKS_WCHAR_T
+  // The wchar type is simpley wchar_t
+  #define ACE_WCHAR_T wchar_t
+  #define ACE_WINT_T wint_t
+  #define ACE_WCHAR_T_TYPE wchar_t
+  #define ACE_LACKS_NATIVR_WCHAR_T ACE_LACKS_BUILTIN_WCHAR_T
+  namespace ACE_OS { typedef wchar_t WChar; }
+#endif
+
 // This package should only be included in the implementation files
 // that use it.
 #if defined (ACE_WIN32)

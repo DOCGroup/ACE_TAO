@@ -1872,7 +1872,7 @@ int Consumer_Main::run (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int result = -1;
   Consumer_Main app;

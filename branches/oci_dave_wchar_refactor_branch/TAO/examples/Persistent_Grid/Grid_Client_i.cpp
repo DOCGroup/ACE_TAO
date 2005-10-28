@@ -29,7 +29,7 @@ Grid_Client_i::parse_args (int argc,
                            char *argv[])
 {
   // Parses some of the options that are specific to this example
-  ACE_Get_Opt get_opts (argc, argv, "df:nk:xw:h:v:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "df:nk:xw:h:v:");
 
   int c = 0;
   while ((c = get_opts ()) != -1)

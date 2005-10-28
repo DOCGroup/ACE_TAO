@@ -171,7 +171,7 @@ FTClientMain::parse_args (int argc, char *argv[])
 
   // note: dfnkx are simple_util options
   // include them here so we can detect bad args
-  ACE_Get_Opt get_opts (argc, argv, "c:f:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "c:f:");
   int c;
 
   while (result == 0 && (c = get_opts ()) != -1)
@@ -624,7 +624,7 @@ int FTClientMain::run (ACE_ENV_SINGLE_ARG_DECL)
 
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   FTClientMain app;
   int result = app.parse_args(argc, argv);

@@ -199,7 +199,7 @@ Options::~Options (void)
 int
 Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:c:f:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR>  get_opt (argc, argv, ACE_TEXT ("p:c:f:"));
 
   // - 26 is for the "process_strategy_test_temp" that is appended
   if (ACE::get_temp_dir (this->filename_, MAXPATHLEN - 26) == -1)

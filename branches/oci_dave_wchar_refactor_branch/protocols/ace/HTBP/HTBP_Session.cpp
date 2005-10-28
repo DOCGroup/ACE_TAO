@@ -68,7 +68,7 @@ ACE::HTBP::Session::Session (void)
 {
   ACE::HTBP::ID_Requestor req;
   ACE_TCHAR * htid = req.get_HTID();
-  session_id_.local_ = ACE_TEXT_ALWAYS_CHAR(htid);
+  session_id_.local_ = ACE_TEXT_TO_CHAR_IN(htid);
   delete[] htid;
   session_id_.id_ = ACE::HTBP::Session::next_session_id();
   ACE_NEW (inbound_, ACE::HTBP::Channel (this));

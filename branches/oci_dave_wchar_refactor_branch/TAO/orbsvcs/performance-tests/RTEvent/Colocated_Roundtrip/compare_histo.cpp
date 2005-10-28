@@ -41,7 +41,7 @@ load_file (Vector &vector,
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Vector X;
   load_file (X, argv[1]);

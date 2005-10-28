@@ -2,14 +2,17 @@
 
 #include "Client_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(Recursive_ORBInitializer,
           client,
           "$Id$")
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   Client_ORBInitializer* initializer1 = 0;
   Client_ORBInitializer* initializer2 = 0;
 
@@ -34,11 +37,11 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::ORB_var orb2 =
-        CORBA::ORB_init (argc, argv, "SecondORB" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "SecondORB" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

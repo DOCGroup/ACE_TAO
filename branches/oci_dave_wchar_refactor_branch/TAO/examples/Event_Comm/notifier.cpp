@@ -61,7 +61,7 @@ Notifier::~Notifier (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Initialize server daemon.
   Notifier notifier (argc, argv);

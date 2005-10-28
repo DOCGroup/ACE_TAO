@@ -163,7 +163,7 @@ template class ACE_Task <ACE_NULL_SYNCH>;
 #else /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS && !ACE_POSIX_AIOCB_PROACTOR*/
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_DEBUG ((LM_DEBUG,
               "This example cannot work with AIOCB_Proactor.\n"));

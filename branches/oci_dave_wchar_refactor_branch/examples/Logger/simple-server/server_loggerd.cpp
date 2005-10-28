@@ -41,7 +41,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_INET_Addr addr (PORT);
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:"));
+  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT ("p:"));
 
   for (int c; (c = get_opt ()) != -1; )
      switch (c)

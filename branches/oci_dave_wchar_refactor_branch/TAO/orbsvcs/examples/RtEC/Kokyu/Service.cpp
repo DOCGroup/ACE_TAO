@@ -42,7 +42,7 @@ typedef TAO_Reconfig_Scheduler<TAO_RMS_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_M
 typedef TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> RECONFIG_MUF_SCHED_TYPE;
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   //TAO_EC_Default_Factory::init_svcs ();
 
@@ -497,14 +497,14 @@ main (int argc, char* argv[])
 
 int parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "cs:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "cs:");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 's':
-        sched_type = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
+        sched_type = ACE_TEXT_TO_CHAR_IN(get_opts.opt_arg ());
         break;
 
       case '?':

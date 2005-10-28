@@ -7,13 +7,13 @@
 
 #include "ping.h"
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   const char* host = 0;
   int nsamples = 10000;
   int c;
 
-  ACE_Get_Opt getopt (argc, argv, "h:i:");
+  ACE_Get_Arg_Opt getopt (argc, argv, "h:i:");
 
   while ((c = getopt ()) != -1)
     {

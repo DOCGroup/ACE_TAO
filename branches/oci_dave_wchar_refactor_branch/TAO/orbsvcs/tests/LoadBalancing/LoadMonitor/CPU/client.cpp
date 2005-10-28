@@ -18,7 +18,7 @@ const CosLoadBalancing::LoadId LOAD_ID = CosLoadBalancing::LoadAverage;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "l:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "l:");
 
   int c;
 
@@ -62,7 +62,7 @@ check_loads (const CosLoadBalancing::LoadList & loads
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY

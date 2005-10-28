@@ -952,7 +952,7 @@ DualEC_Supplier::load_schedule_data ()
 unsigned int
 DualEC_Supplier::get_options (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "f:m:b:n:w:dsrp");
+  ACE_Get_Arg_Opt<char> get_opt (argc, argv, "f:m:b:n:w:dsrp");
   int opt;
   int temp;
 
@@ -1084,7 +1084,7 @@ DualEC_Supplier::get_options (int argc, char *argv [])
 // function main
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
   int min_priority =
