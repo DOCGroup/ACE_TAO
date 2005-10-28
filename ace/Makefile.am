@@ -69,6 +69,7 @@ libACE_la_SOURCES = \
   Connection_Recycling_Strategy.cpp \
   Container_Instantiations.cpp \
   Containers.cpp \
+  Copy_Disabled.cpp \
   Countdown_Time.cpp \
   DEV.cpp \
   DEV_Addr.cpp \
