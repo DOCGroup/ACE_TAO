@@ -1,9 +1,15 @@
+Fri Oct 28 09:53:24 2005  Simon McQueen  <sm@prismtech.com>
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
+
+          Fixed debian full build error - residual ACE cast macro.
+
 Thu Oct 27 14:20:35 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_global.cpp:
-        
+
           Modified change in
-          
+
           Wed Oct 26 18:57:47 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           to handle the use case where skeleton files are generated
@@ -15,7 +21,7 @@ Thu Oct 27 14:31:12 2005  Simon McQueen  <sm@prismtech.com>
 
         * orbsvcs/tests/Bug_2287_Regression/Hello.cpp:
 
-          Fix gcc unused arg warning. 
+          Fix gcc unused arg warning.
 
 Thu Oct 27 13:36:53 2005  Simon McQueen  <sm@prismtech.com>
 

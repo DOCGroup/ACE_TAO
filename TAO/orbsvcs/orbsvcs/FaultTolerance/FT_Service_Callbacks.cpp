@@ -223,17 +223,16 @@ TAO_FT_Service_Callbacks::restart_policy_check (
             {
               // This would be a heck of a lot easier if we had the invocation
               // here rather than just the contexts, but lemons -> lemonade I guess.
-              TAO_InputCDR cdr (ACE_reinterpret_cast (const char*,
-                                service_list[i].context_data.get_buffer()),
-                                service_list[i].context_data.length());
+              TAO_InputCDR cdr (reinterpret_cast <const char*> (service_list[i].context_data.get_buffer ()),
+                                service_list[i].context_data.length ());
               CORBA::Boolean byte_order;
               if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
                 return 0;
-              cdr.reset_byte_order (ACE_static_cast (int, byte_order));
+              cdr.reset_byte_order (static_cast <int> (byte_order));
               FT::FTRequestServiceContext ftsrc;
               if ((cdr >> ftsrc) == 0)
                 return 0;
-                
+
               return (ftsrc.expiration_time > now ());
             }
         }
@@ -250,7 +249,7 @@ TAO_FT_Service_Callbacks::now (void)
   ACE_Time_Value time_val = ACE_OS::gettimeofday ();
   TimeBase::TimeT sec_part  = ((TimeBase::TimeT)time_val.sec ()) * 10000000;
   TimeBase::TimeT usec_part = ((TimeBase::TimeT)time_val.usec ()) * 10;
-  
+
   // Add the offset to convert from posix time.
-  return (sec_part + usec_part + ACE_UINT64_LITERAL (0x1B21DD213814000));   
+  return (sec_part + usec_part + ACE_UINT64_LITERAL (0x1B21DD213814000));
 }
