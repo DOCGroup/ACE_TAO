@@ -1,3 +1,9 @@
+Fri Oct 28 10:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/pre.h:
+          Removed several arguments for the option push, these are passed
+          from the commandline already
+
 Fri Oct 28 07:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-linux-common.h:
