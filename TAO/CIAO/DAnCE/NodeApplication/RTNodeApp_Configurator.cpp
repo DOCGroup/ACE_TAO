@@ -29,15 +29,14 @@ CIAO::RTNodeApp_Configurator::post_orb_initialize (CORBA::ORB_ptr o)
 
 int
 CIAO::RTNodeApp_Configurator::init_resource_manager
-(const ::Deployment::Properties &properties)
+(const ::Deployment::Properties &)
 {
-  
   return 0;
 }
 
 CORBA::PolicyList *
 CIAO::RTNodeApp_Configurator::find_container_policies
-(const ::Deployment::Properties &properties)
+(const ::Deployment::Properties &)
 {
 
   return 0;
