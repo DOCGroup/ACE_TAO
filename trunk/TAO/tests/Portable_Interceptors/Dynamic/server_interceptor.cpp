@@ -1,11 +1,11 @@
 // $Id$
 
-#include "server_interceptor.h"
-#include "testC.h"
-
-#include "tao/AnyTypeCode/DynamicC.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.h"
+#include "tao/AnyTypeCode/DynamicC.h"
+
+#include "server_interceptor.h"
+#include "testC.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
