@@ -17,7 +17,7 @@ CIAO::NoOp_Configurator::pre_orb_initialize ()
 }
 
 int
-CIAO::NoOp_Configurator::post_orb_initialize (CORBA::ORB_ptr o)
+CIAO::NoOp_Configurator::post_orb_initialize (CORBA::ORB_ptr)
 {
   return 0;
 }

@@ -15,6 +15,7 @@ project(NodeApplicationManager): ciao_server_dnc, ciao_deployment_svnt, ciao_dep
     ../NodeApplication/NodeApp_Configurator.cpp
     ../NodeApplication/NodeApplication_Impl.cpp
     ../NodeApplication/Container_Impl.cpp
+    ../NodeApplication/Configurator_Factory.cpp
   }
 
   Header_Files {
