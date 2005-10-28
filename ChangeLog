@@ -1,3 +1,10 @@
+Fri Oct 28 16:42:12 2005  Don Busch  <busch_d@ociweb.com>
+
+        * ace/bin/MakeProjectCreator/config/messaging_optional.mpb
+
+          Add "after += Messaging" to ensure that CosNaming_Serv and
+          CosEvent_Serv always build after Messaging
+
 Fri Oct 28 14:28:13 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Map_Manager.h:
