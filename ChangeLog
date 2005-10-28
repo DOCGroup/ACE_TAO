@@ -904,6 +904,11 @@ Fri Oct 28 00:01:06 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  Added versioned namespace support.
 
+	  Removed some empty and/or unnecessary `.cpp' and `.inl' files.
+
+	  Hid some static class member constants declared in headers in
+	  the corresponding implementation `.cpp' file.
+
 Thu Oct 27 11:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Process_Strategy_Test.cpp:
