@@ -939,7 +939,7 @@ ACE_Select_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
                         -1);
 
     bool write_next_buffer = false;
-    ACE_Notification_Buffer ** next;
+    ACE_Notification_Buffer ** next = 0;
 
     if(!this->notify_queue_.is_empty())
       {
