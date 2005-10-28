@@ -43,7 +43,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  **/
 namespace ACE_Acquire_Method
 {
-public:
   enum METHOD_TYPE
   {
     ACE_REGULAR,
