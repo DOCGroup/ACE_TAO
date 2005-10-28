@@ -5,7 +5,12 @@ Thu Oct 27 14:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Oct 28 15:35:54 2005  Simon McQueen  <sm@prismtech.com>
 
-	*
+        * orbsvcs/tests/Bug_2287_Regression/Hello.cpp:
+        * orbsvcs/tests/Bug_2285_Regression/ServerRequest_Interceptor.cpp:
+        * orbsvcs/tests/Bug_2285_Regression/client2.cpp:
+
+          More unused arg warnings and 'EXCEPTION' in the debug output
+          was incorrectly marking this as a 'fail'.
 
 Fri Oct 28 09:53:24 2005  Simon McQueen  <sm@prismtech.com>
 
