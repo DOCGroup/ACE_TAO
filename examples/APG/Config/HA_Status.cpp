@@ -27,14 +27,14 @@ int
 HA_Status::init (int argc, ACE_TCHAR *argv[])
 {
 
-  // Do ACE_Get_Opt and get conf file name, read out the sections
+  // Do ACE_Get_Arg_Opt and get conf file name, read out the sections
   // and print the names.
 
   // Listing 1 code/ch04
   static const ACE_TCHAR options[] = ACE_TEXT (":f:");
-  ACE_Get_Opt cmd_opts (argc, argv, options);
+  ACE_Get_Arg_Opt cmd_opts (argc, argv, options);
   if (cmd_opts.long_option
-      (ACE_TEXT ("config"), 'f', ACE_Get_Opt::ARG_REQUIRED) == -1)
+      (ACE_TEXT ("config"), 'f', ACE_Get_Arg_Opt::ARG_REQUIRED) == -1)
     return -1;
   int option;
   ACE_TCHAR config_file[MAXPATHLEN];

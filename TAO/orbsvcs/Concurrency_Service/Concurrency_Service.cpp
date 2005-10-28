@@ -31,9 +31,7 @@ ACE_RCSID(Concurrency_Service,
 // Default Constructor.
 
 Concurrency_Service::Concurrency_Service (void)
-  : use_naming_service_ (1),
-    ior_file_name_ (0),
-    pid_file_name_ (0)
+  : use_naming_service_ (1)
 {
   ACE_DEBUG ((LM_DEBUG,
              ACE_TEXT("Concurrency_Service::Concurrency_Service (void)\n")));
@@ -56,7 +54,7 @@ Concurrency_Service::parse_args (int argc, ACE_TCHAR** argv)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("Concurrency_Service::parse_args\n")));
 
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("do:p:s"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_TEXT("do:p:s"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -66,10 +64,10 @@ Concurrency_Service::parse_args (int argc, ACE_TCHAR** argv)
         TAO_debug_level++;
         break;
       case 'o': // output the IOR to a file
-        this->ior_file_name_ = get_opts.opt_arg();
+        this->ior_file_name_.set (ACE_TEXT_TO_CHAR_IN (get_opts.opt_arg()));
         break;
       case 'p':
-        this->pid_file_name_ = get_opts.opt_arg();
+        this->pid_file_name_.set (ACE_TEXT_TO_CHAR_IN (get_opts.opt_arg()));
         break;
       case 's':
         this->use_naming_service_ = 0;
@@ -119,11 +117,11 @@ Concurrency_Service::init (int argc,
                                 ACE_ENV_ARG_PARAMETER);
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
-              ACE_TEXT_CHAR_TO_TCHAR(str.in ())));
+              ACE_TEXT_TO_TCHAR_IN(str.in ())));
 
-  if (this->ior_file_name_ != 0)
+  if (this->ior_file_name_.length() != 0)
     {
-      FILE* iorf = ACE_OS::fopen (ior_file_name_, ACE_TEXT("w"));
+      FILE* iorf = ACE_OS::fopen (ior_file_name_.fast_rep(), ACE_TEXT("w"));
       if (iorf == 0)
         {
 	  ACE_ERROR_RETURN ((LM_ERROR,
@@ -136,9 +134,9 @@ Concurrency_Service::init (int argc,
       ACE_OS::fclose (iorf);
     }
 
-  if (this->pid_file_name_ != 0)
+  if (this->pid_file_name_.length() != 0)
     {
-      FILE* pidf = ACE_OS::fopen (pid_file_name_, ACE_TEXT("w"));
+      FILE* pidf = ACE_OS::fopen (pid_file_name_.fast_rep(), ACE_TEXT("w"));
       if (pidf != 0)
         {
 	  ACE_OS::fprintf (pidf,

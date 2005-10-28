@@ -102,8 +102,8 @@ TAO_Notify_EventType::operator==(const TAO_Notify_EventType& event_type) const
   if (this->hash () != event_type.hash ())
     return false;
   else // compare the strings
-    return (ACE_OS::strcmp (this->event_type_.type_name, event_type.event_type_.type_name) == 0  &&
-            ACE_OS::strcmp (this->event_type_.domain_name, event_type.event_type_.domain_name) == 0
+    return (ACE_OS::strcmp (this->event_type_.type_name.in(), event_type.event_type_.type_name.in()) == 0  &&
+            ACE_OS::strcmp (this->event_type_.domain_name.in(), event_type.event_type_.domain_name.in()) == 0
            );
 }
 
@@ -113,8 +113,8 @@ TAO_Notify_EventType::operator!=(const TAO_Notify_EventType& event_type) const
   if (this->hash () != event_type.hash ())
     return true;
   else // compare the strings
-    return (ACE_OS::strcmp (this->event_type_.type_name, event_type.event_type_.type_name) != 0  ||
-            ACE_OS::strcmp (this->event_type_.domain_name, event_type.event_type_.domain_name) != 0
+    return (ACE_OS::strcmp (this->event_type_.type_name.in(), event_type.event_type_.type_name.in()) != 0  ||
+            ACE_OS::strcmp (this->event_type_.domain_name.in(), event_type.event_type_.domain_name.in()) != 0
            );
 }
 
@@ -122,12 +122,12 @@ CORBA::Boolean
 TAO_Notify_EventType::is_special (void) const
 {
   if ((this->event_type_.domain_name == 0 ||
-             ACE_OS::strcmp (this->event_type_.domain_name, "") == 0 ||
-             ACE_OS::strcmp (this->event_type_.domain_name, "*") == 0) &&
+             ACE_OS::strcmp (this->event_type_.domain_name.in(), "") == 0 ||
+             ACE_OS::strcmp (this->event_type_.domain_name.in(), "*") == 0) &&
       (this->event_type_.type_name == 0 ||
-             ACE_OS::strcmp (this->event_type_.type_name, "") == 0 ||
-             ACE_OS::strcmp (this->event_type_.type_name, "*") == 0 ||
-             ACE_OS::strcmp (this->event_type_.type_name, "%ALL") == 0))
+             ACE_OS::strcmp (this->event_type_.type_name.in(), "") == 0 ||
+             ACE_OS::strcmp (this->event_type_.type_name.in(), "*") == 0 ||
+             ACE_OS::strcmp (this->event_type_.type_name.in(), "%ALL") == 0))
     return 1;
   else
     return 0;

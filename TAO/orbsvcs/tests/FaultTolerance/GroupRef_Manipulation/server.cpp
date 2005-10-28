@@ -23,7 +23,7 @@ const char *ior_file = 0;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "o:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -121,7 +121,7 @@ add_ft_prop (CORBA::ORB_ptr o,
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -272,7 +272,7 @@ main (int argc, char *argv[])
 #else
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   return 0;
 }

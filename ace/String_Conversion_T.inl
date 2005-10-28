@@ -14,29 +14,42 @@ namespace ACE
 namespace String_Conversion
 {
 
-template < typename T >
-alloc< T >::alloc( size_t len )
-: str_( 0 )
+template < typename T > ACE_INLINE
+T*
+Allocator_cpp< T >::alloc( size_t len ) const
 {
-  str_ = new T[len + 1];
+  T* result = new T [len+1];
+  result[ 0 ] = 0;
+  return result;
 }
 
-
-template < typename T >
-alloc< T >::operator T* () const
-{
-  return str_;
-}
-
-
-template < typename T > void
-free( T* str )
+template < typename T > ACE_INLINE 
+void
+Allocator_cpp< T >::free( T* str ) const
 {
   delete[] str;
 }
 
-template < typename DestT, typename SrcT > inline
-DestT* duplicate( const SrcT* src, size_t* dest_len )
+template < typename T > ACE_INLINE 
+T*
+Allocator_malloc< T >::alloc( size_t len ) const
+: str_( 0 )
+{
+  T* result = static_cast<T*>::malloc((len+1)*sizeof(T));
+  result[ 0 ] = 0;
+  return result;
+}
+
+template < typename T > ACE_INLINE
+void
+Allocator_malloc< T >::free( T* str ) const
+{
+  ::free (str_);
+}
+
+template < typename DestT, typename SrcT, typename Allocator > ACE_INLINE
+DestT*
+duplicate( const SrcT* src, size_t* dest_len )
 {
   DestT* dest = 0;
 
@@ -49,13 +62,13 @@ DestT* duplicate( const SrcT* src, size_t* dest_len )
 
   if ( dest_len != 0 )
   {
-    if ( *dest_len == calc_len )
-      *dest_len = len;
-    else if ( *dest_len < len )
+    if ( *dest_len < len && *dest_len != calc_len )
       len = *dest_len;
+    else
+      *dest_len = len;
   }
 
-  dest = alloc<DestT>( len );
+  dest = Allocator().alloc( len );
 
   copy( dest, src, len );
 
@@ -63,33 +76,39 @@ DestT* duplicate( const SrcT* src, size_t* dest_len )
 }
 
 
-template < typename DestT, typename SrcT > inline
-void copy( DestT* dest, const SrcT* src, size_t dest_len )
+template < typename DestT, typename SrcT > ACE_INLINE
+size_t
+copy( DestT* dest, const SrcT* src, size_t dest_len )
 {
-  // Note: dest should not be null, but no assert is available.
-  //       Just crash with null pointer dereference.
+  if ( dest == 0 )
+  {
+    return -1;
+  }
   if (src == 0 || dest_len == 0)
   {
     dest[0] = 0;
-    return;
+    return 0;
   }
   if ( dest_len == calc_len )
   {
     dest_len = ACE_OS::string_copy( static_cast<DestT*>(0), src, 0 );
   }
-  ACE_OS::string_copy( dest, src, dest_len + 1 );
+  int result = ACE_OS::string_copy( dest, src, dest_len + 1 );
   dest[ dest_len ] = 0;
+  return result;
 }
 
-template < typename DestT > ACE_INLINE DestT*
-Convert_Out< DestT >::c_str() const
+template < typename DestT, typename Allocator > ACE_INLINE
+DestT*
+Convert_Out< DestT, Allocator >::c_str() const
 {
   return dest_;
 }
 
 
-template < typename DestT > ACE_INLINE int
-Convert_Out< DestT >::length() const
+template < typename DestT, typename Allocator > ACE_INLINE
+size_t
+Convert_Out< DestT, Allocator >::length() const
 {
   return len_;
 }
@@ -97,11 +116,12 @@ Convert_Out< DestT >::length() const
 template < typename DestT, typename SrcT > ACE_INLINE
 Convert_In< DestT, SrcT >::~Convert_In()
 {
-  free( ownstr_ );
+  Allocator_cpp<DestT>().free( ownstr_ );
 }
 
 
-template < typename DestT, typename SrcT > ACE_INLINE const DestT*
+template < typename DestT, typename SrcT > ACE_INLINE
+const DestT*
 Convert_In< DestT, SrcT >::c_str( void ) const
 {
   return ( str_ != 0 ? str_ : ownstr_ );
@@ -113,12 +133,13 @@ Convert_InOut< DestT, SrcT >::~Convert_InOut( void )
   if (ownstr_ != 0)
   {
     copy(orig_, ownstr_, len_);
-    free( ownstr_ );
+    Allocator_cpp<DestT>().free( ownstr_ );
   }
 }
 
 
-template < typename DestT, typename SrcT > ACE_INLINE DestT*
+template < typename DestT, typename SrcT > ACE_INLINE
+DestT*
 Convert_InOut< DestT, SrcT >::c_str( void )
 {
   return ( str_ != 0 ? str_ : ownstr_ );

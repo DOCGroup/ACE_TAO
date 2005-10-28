@@ -21,7 +21,7 @@ ACE_UINT32 gsf;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "hi:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "hi:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -131,7 +131,7 @@ object_creation_test (PortableServer::POA_ptr poa,
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   set_rt_scheduling ();
 

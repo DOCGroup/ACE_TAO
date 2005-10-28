@@ -38,7 +38,7 @@ POA_ptr createPersistPOA(const char* name, POA_ptr root_poa, POAManager_ptr poam
   return poa._retn();
 }
 
-int main(int argc, char* argv[]) {
+int ACE_TMAIN(int argc, ACE_TCHAR* argv[]) {
 
   try {
  

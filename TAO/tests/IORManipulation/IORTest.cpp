@@ -13,6 +13,7 @@
 
 
 #include "ace/Log_Msg.h"
+#include "ace/Argv_Type_Converter.h"
 #include "tao/ORB.h"
 #include "tao/Environment.h"
 #include "tao/IORManipulation/IORManip_Loader.h"
@@ -23,8 +24,10 @@ ACE_RCSID (IORManipluation,
            "$Id$")
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   // The variable is declared volatile because, some compilers
   // optimizes this the wrong way. A case is point is the CC compiler
   // on IRIX.
@@ -37,8 +40,8 @@ main (int argc, char *argv[])
   ACE_TRY
     {
       // Retrieve the ORB.
-      CORBA::ORB_var orb_ = CORBA::ORB_init (argc,
-                                             argv,
+      CORBA::ORB_var orb_ = CORBA::ORB_init (convert.get_argc(),
+                                            convert.get_ASCII_argv(),
                                              ""
                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

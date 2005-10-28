@@ -25,7 +25,7 @@ const char *udp_mcast_address =
 int parse_args (int argc, char *argv[]);
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   // Register the default factory in the Service Configurator.
   // If your platform supports static constructors then you can
@@ -354,7 +354,7 @@ main (int argc, char* argv[])
 
 int parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "m:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "m:");
   int c;
 
   while ((c = get_opts ()) != -1)

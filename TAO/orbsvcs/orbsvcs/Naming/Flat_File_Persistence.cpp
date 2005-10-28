@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------------
 #include "Flat_File_Persistence.h"
 
+#include "ace/config-all.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_unistd.h"
@@ -30,7 +31,7 @@ void
 TAO_NS_FlatFileStream::remove ()
 {
   ACE_TRACE("remove");
-  ACE_OS::unlink(ACE_TEXT_CHAR_TO_TCHAR(file_.c_str()));
+  ACE_OS::unlink(ACE_TEXT_TO_TCHAR_IN(file_.c_str()));
 }
 
 int
@@ -58,21 +59,21 @@ TAO_NS_FlatFileStream::open()
   if( strchr(mode_.c_str(), 'c') )
     flags |= O_CREAT;
 #ifndef ACE_WIN32
-  if( ACE_OS::flock_init (&filelock_, flags, ACE_TEXT_CHAR_TO_TCHAR(file_.c_str()), 0666) != 0 )
+  if( ACE_OS::flock_init (&filelock_, flags, ACE_TEXT_TO_TCHAR_IN(file_.c_str()), 0666) != 0 )
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Cannot open file %s for mode %s: (%d) %s\n",
                        file_.c_str(), mode_.c_str(),
                        errno, ACE_OS::strerror(errno)),
                       -1);
 #else
-  if( (filelock_.handle_= ACE_OS::open (ACE_TEXT_CHAR_TO_TCHAR(file_.c_str()), flags, 0)) == ACE_INVALID_HANDLE )
+  if( (filelock_.handle_= ACE_OS::open (ACE_TEXT_TO_TCHAR_IN(file_.c_str()), flags, 0)) == ACE_INVALID_HANDLE )
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Cannot open file %s for mode %s: (%d) %s\n",
                        file_.c_str(), mode_.c_str(),
                        errno, ACE_OS::strerror(errno)),
                       -1);
 #endif
-  this->fl_ = ACE_OS::fdopen(filelock_.handle_, ACE_TEXT_CHAR_TO_TCHAR(fdmode));
+  this->fl_ = ACE_OS::fdopen(filelock_.handle_, ACE_TEXT_TO_TCHAR_IN(fdmode));
   if (this->fl_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Cannot fdopen file %s for mode %s: (%d) %s\n",
@@ -245,9 +246,7 @@ TAO_NS_FlatFileStream::operator >>(
       return *this;
     }
   char *id = new char[bufSize+1];
-  //char *id;
-  //ACE_NEW_RETURN (id, char[bufSize+1], 1);
-  if (ACE_OS::fgets(ACE_TEXT_CHAR_TO_TCHAR(id), bufSize+1, fl_) == 0 &&
+  if (ACE_OS::fgets(id, bufSize+1, fl_) == 0 &&
       bufSize != 0)
     {
       this->setstate (badbit);
@@ -268,9 +267,7 @@ TAO_NS_FlatFileStream::operator >>(
       return *this;
     }
   char *kind = new char[bufSize+1];
-  //char *kind;
-  //ACE_NEW (kind, char[bufSize+1]);
-  if (ACE_OS::fgets(ACE_TEXT_CHAR_TO_TCHAR(kind), bufSize+1, fl_) == 0 &&
+  if (ACE_OS::fgets(kind, bufSize+1, fl_) == 0 &&
       bufSize != 0)
     {
       this->setstate (badbit);
@@ -292,9 +289,7 @@ TAO_NS_FlatFileStream::operator >>(
       return *this;
     }
   char *ref = new char[bufSize+1];
-  //char *ref;
-  //ACE_NEW(ref, char[bufSize+1]);
-  if (ACE_OS::fgets(ACE_TEXT_CHAR_TO_TCHAR(ref), bufSize+1, fl_) == 0 &&
+  if (ACE_OS::fgets(ref, bufSize+1, fl_) == 0 &&
       bufSize != 0)
     {
       this->setstate (badbit);
@@ -352,7 +347,7 @@ TAO_Storable_Base *TAO_NS_FlatFileFactory::create_stream(
   TAO_Storable_Base *stream = 0;
 
   ACE_NEW_RETURN (stream,
-                  TAO_NS_FlatFileStream(file, ACE_TEXT_ALWAYS_CHAR (mode)),
+                  TAO_NS_FlatFileStream(file, ACE_TEXT_TO_CHAR_IN (mode)),
                   0);
   return stream;
 }

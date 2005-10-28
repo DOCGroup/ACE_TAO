@@ -1,6 +1,7 @@
 // -*- C++ -*-
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 
 #include "test_i.h"
 #include "Server_ORBInitializer.h"
@@ -24,7 +25,7 @@ parse_args (int argc, char *argv[])
                        "Wrong number of arguments.\n"),
                       -1);
 
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "o:");
   int c;
 
   int ior_count = 1;
@@ -58,8 +59,10 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
@@ -77,7 +80,7 @@ main (int argc, char *argv[])
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "Server ORB" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "Server ORB" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
@@ -97,7 +100,7 @@ main (int argc, char *argv[])
         root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (::parse_args (argc, argv) != 0)
+      if (::parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
         return -1;
 
       CORBA::PolicyList policies;  // Empty policy list.
@@ -186,7 +189,7 @@ main (int argc, char *argv[])
       // Write each IOR to a file.
 
       // IOR 1
-      FILE *output_file= ACE_OS::fopen (ior1_file, "w");
+      FILE *output_file= ACE_OS::fopen (ior1_file, ACE_TEXT("w"));
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file <%s> for writing "
@@ -197,7 +200,7 @@ main (int argc, char *argv[])
       ACE_OS::fclose (output_file);
 
       // IOR 2
-      output_file= ACE_OS::fopen (ior2_file, "w");
+      output_file= ACE_OS::fopen (ior2_file, ACE_TEXT("w"));
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",

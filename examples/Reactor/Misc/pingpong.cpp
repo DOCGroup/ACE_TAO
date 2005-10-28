@@ -204,7 +204,7 @@ run_svc (ACE_HANDLE handle)
 {
   Ping_Pong *callback = 0;
   ACE_NEW (callback,
-           Ping_Pong (ACE_TEXT_ALWAYS_CHAR (string_name),
+           Ping_Pong (ACE_TEXT_TO_CHAR_IN (string_name),
                       handle));
 
   ACE_Reactor reactor;

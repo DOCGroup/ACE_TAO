@@ -158,7 +158,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
           {
             TAO_Protocol_Item *item = 0;
             ACE_NEW_RETURN (item,
-                            TAO_Protocol_Item (ACE_TEXT_ALWAYS_CHAR(argv[curarg])),
+                            TAO_Protocol_Item (ACE_TEXT_TO_CHAR_IN(argv[curarg])),
                             -1);
             if (pset->insert (item) == -1)
               ACE_ERROR ((LM_ERROR,
@@ -312,7 +312,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
 
         if (curarg < argc)
           {
-            this->add_to_ior_parser_names (ACE_TEXT_ALWAYS_CHAR(argv[curarg]));
+            this->add_to_ior_parser_names (ACE_TEXT_TO_CHAR_IN(argv[curarg]));
           }
       }
 
@@ -624,7 +624,7 @@ TAO_Default_Resource_Factory::load_default_protocols (void)
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) Unable to add ")
                       ACE_TEXT ("<%s> to protocol factory set.\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR (item->protocol_name ().c_str ())));
+                      ACE_TEXT_TO_TCHAR_IN (item->protocol_name ().c_str ())));
 
           delete item;
 
@@ -665,7 +665,7 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("TAO (%P|%t) Unable to load ")
                              ACE_TEXT ("protocol <%s>, %p\n"),
-                             ACE_TEXT_CHAR_TO_TCHAR(name.c_str ()),
+                             ACE_TEXT_TO_TCHAR_IN(name.c_str ()),
                              ACE_TEXT ("")),
                             -1);
         }
@@ -674,7 +674,7 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) Loaded protocol <%s>\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR(name.c_str ())));
+                      ACE_TEXT_TO_TCHAR_IN(name.c_str ())));
         }
     }
 

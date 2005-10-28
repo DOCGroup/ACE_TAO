@@ -9,7 +9,7 @@ ACE_RCSID (IFR_Service,
            "$Id$")
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   IFR_Service server;
 

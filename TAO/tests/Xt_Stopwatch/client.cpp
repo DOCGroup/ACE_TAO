@@ -2,6 +2,7 @@
 
 #include "testC.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(Xt_Stopwatch, client, "$Id$")
 
@@ -10,8 +11,10 @@ ACE_RCSID(Xt_Stopwatch, client, "$Id$")
 
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   XtAppContext app;
   Widget toplevel = XtAppInitialize (&app,
                                      "Start & Stop",
@@ -32,12 +35,12 @@ main (int argc, char *argv[])
   ACE_TRY
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Client client (orb.in ());
 
-      client.parse_args (argc, argv ACE_ENV_ARG_PARAMETER);
+      client.parse_args (convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       client.add_callback (control);
@@ -72,7 +75,7 @@ Client::parse_args (int argc,
 {
   const char *ior = "file://test.ior";
 
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "k:");
   int c;
 
   while ((c = get_opts ()) != -1)

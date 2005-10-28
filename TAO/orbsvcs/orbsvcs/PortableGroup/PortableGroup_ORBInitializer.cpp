@@ -13,7 +13,7 @@ ACE_RCSID (PortableGroup,
            "$Id$")
 
 static const char pg_poa_factory_name[] = "TAO_PG_POA";
-static const char pg_poa_factory_directive[] = ACE_DYNAMIC_SERVICE_DIRECTIVE(
+static const char pg_poa_factory_directive[] = ACE_DYNAMIC_SERVICE_DIRECTIVE_A(
   "TAO_PG_POA", "TAO_PortableGroup", "_make_TAO_PG_Object_Adapter_Factory", "");
 
 void

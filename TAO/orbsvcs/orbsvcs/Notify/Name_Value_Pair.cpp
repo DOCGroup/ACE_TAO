@@ -62,7 +62,7 @@ namespace TAO_Notify
 #else
     ACE_OS::sprintf(buf, ACE_UINT64_FORMAT_SPECIFIER, us);
 #endif /* ACE_LACKS_LONGLONG_T */
-    value = ACE_TEXT_ALWAYS_CHAR (buf);
+    value = ACE_TEXT_TO_CHAR_IN (buf);
   }
 
   NVP::NVP(const TAO_Notify_Property_Boolean& p)

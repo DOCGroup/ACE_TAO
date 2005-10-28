@@ -4,6 +4,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ace/Synch_T.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(MT_Server, server, "server.cpp,v 1.7 2002/01/29 20:21:08 okellogg Exp")
 
@@ -17,7 +18,7 @@ int nclient_threads = nthreads;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "c:l:i:o:n:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "c:l:i:o:n:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -120,12 +121,14 @@ private:
 
 /***************************************************/
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
@@ -145,7 +148,7 @@ main (int argc, char *argv[])
         root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
         return 1;
 
       Simple_Server_i *server_impl = 0;
@@ -168,7 +171,7 @@ main (int argc, char *argv[])
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
         {
-          FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+          FILE *output_file= ACE_OS::fopen (ior_output_file, ACE_TEXT("w"));
           if (output_file == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "(%P|%t) Cannot open output file for writing IOR: %s",

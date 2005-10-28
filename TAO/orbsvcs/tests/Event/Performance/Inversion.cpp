@@ -13,7 +13,7 @@ ACE_RCSID (EC_Tests_Performance,
            "$Id$")
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   EC_Inversion driver;
   return driver.run (argc, argv);
@@ -27,7 +27,7 @@ EC_Inversion::EC_Inversion (void)
 }
 
 int
-EC_Inversion::parse_args (int &argc, char *argv [])
+EC_Inversion::parse_args (int &argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 

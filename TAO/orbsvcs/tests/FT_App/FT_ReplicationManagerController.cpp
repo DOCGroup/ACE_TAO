@@ -18,7 +18,7 @@ public:
   virtual ~TAO_FT_ReplicationManagerController ();
 
   int init (int & argc, char * argv[]);
-  int parse_args (int & argc, char* argv[]);
+  int parse_args (int & argc, ACE_TCHAR* argv[]);
   int run ();
 
 /////////////////////////////
@@ -116,7 +116,7 @@ int TAO_FT_ReplicationManagerController::parse_args (int & argc, char * argv[])
 {
   int result = 0;
 
-  ACE_Get_Opt get_opts (argc, argv, "k:x");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "k:x");
   int c;
 
   while (result == 0 && (c = get_opts ()) != -1)
@@ -186,7 +186,7 @@ int TAO_FT_ReplicationManagerController::run ()
   return result;
 }
 
-int main (int argc, char * argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
   int result = 0;
   TAO_FT_ReplicationManagerController rmctrl;

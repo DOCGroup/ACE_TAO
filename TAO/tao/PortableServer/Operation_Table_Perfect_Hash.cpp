@@ -54,7 +54,7 @@ TAO_Perfect_Hash_OpTable::find (const char *opname,
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO_Perfect_Hash_OpTable:find for ")
                          ACE_TEXT ("operation '%s' (length=%d) failed\n"),
-                         ACE_TEXT_CHAR_TO_TCHAR (opname ? opname : "<null string>"), length),
+                         ACE_TEXT_TO_TCHAR_IN (opname ? opname : "<null string>"), length),
                         -1);
     }
 
@@ -80,7 +80,7 @@ TAO_Perfect_Hash_OpTable::find (const char *opname,
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO_Perfect_Hash_OpTable:find for ")
                          ACE_TEXT ("operation '%s' (length=%d) failed\n"),
-                         ACE_TEXT_CHAR_TO_TCHAR (opname ? opname : "<null string>"), length),
+                         ACE_TEXT_TO_TCHAR_IN (opname ? opname : "<null string>"), length),
                         -1);
     }
 

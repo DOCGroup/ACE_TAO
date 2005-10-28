@@ -360,7 +360,7 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
                       ACE_TEXT("process_listen_point_list, ")
                       ACE_TEXT("Listening port [%d] on [%s]\n"),
                       listen_point.port,
-                      ACE_TEXT_CHAR_TO_TCHAR(listen_point.host.in ())));
+                      ACE_TEXT_TO_TCHAR_IN(listen_point.host.in ())));
         }
 
       // Construct an  IIOP_Endpoint object using the host as provided

@@ -18,6 +18,7 @@
 #include "testS.h"
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(Identity, Identity, "$Id$")
 
@@ -694,13 +695,15 @@ test_poas (CORBA::ORB_ptr orb,
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0
+      CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), 0
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

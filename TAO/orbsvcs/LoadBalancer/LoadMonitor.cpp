@@ -10,6 +10,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_main.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/Argv_Type_Converter.h"
 
 
 ACE_RCSID (LoadBalancer,
@@ -17,11 +18,11 @@ ACE_RCSID (LoadBalancer,
            "$Id$")
 
 
-static const char * location_id = 0;
-static const char * location_kind = 0;
-static const char * mtype = "CPU";
-static const char * mstyle = "PUSH";
-static const char * custom_monitor_ior = 0;
+static const ACE_TCHAR * location_id = 0;
+static const ACE_TCHAR * location_kind = 0;
+static const ACE_TCHAR * mtype = ACE_TEXT("CPU");
+static const ACE_TCHAR * mstyle = ACE_TEXT("PUSH");
+static const ACE_TCHAR * custom_monitor_ior = 0;
 
 // For the sake of consistency, make default push monitoring interval
 // the same as the pull monitoring interval.
@@ -51,10 +52,10 @@ parse_args (int argc,
             ACE_TCHAR *argv[]
             ACE_ENV_ARG_DECL)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("l:k:t:s:i:m:h"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_TEXT ("l:k:t:s:i:m:h"));
 
   int c = 0;
-  const char * s;
+  const ACE_TCHAR * s;
 
   while ((c = get_opts ()) != -1)
     {
@@ -149,7 +150,7 @@ get_load_monitor (CORBA::ORB_ptr orb,
   if (::custom_monitor_ior != 0)
     {
       CORBA::Object_var obj =
-        orb->string_to_object (::custom_monitor_ior
+        orb->string_to_object (ACE_TEXT_TO_CHAR_IN(::custom_monitor_ior)
                                ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CosLoadBalancing::LoadMonitor::_nil ());
 
@@ -167,12 +168,13 @@ get_load_monitor (CORBA::ORB_ptr orb,
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (CosLoadBalancing::LoadMonitor::_nil ());
 
-      if (ACE_OS::strcasecmp (::mtype, "CPU") == 0)
+      if (ACE_OS::strcasecmp (::mtype, ACE_TEXT("CPU")) == 0)
         {
           TAO_LB_CPU_Load_Average_Monitor * monitor = 0;
           ACE_NEW_THROW_EX (monitor,
-                            TAO_LB_CPU_Load_Average_Monitor (::location_id,
-                                                ::location_kind),
+                            TAO_LB_CPU_Load_Average_Monitor (
+                                                ACE_TEXT_TO_CHAR_IN(::location_id),
+                                                ACE_TEXT_TO_CHAR_IN(::location_kind)),
                             CORBA::NO_MEMORY ());
           ACE_CHECK_RETURN (CosLoadBalancing::LoadMonitor::_nil ());
 
@@ -181,9 +183,9 @@ get_load_monitor (CORBA::ORB_ptr orb,
 
           return monitor->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
         }
-      else if (ACE_OS::strcasecmp (::mtype, "Disk") == 0
-               || ACE_OS::strcasecmp (::mtype, "Memory") == 0
-               || ACE_OS::strcasecmp (::mtype, "Network") == 0)
+      else if (ACE_OS::strcasecmp (::mtype, ACE_TEXT("Disk")) == 0
+               || ACE_OS::strcasecmp (::mtype, ACE_TEXT("Memory")) == 0
+               || ACE_OS::strcasecmp (::mtype, ACE_TEXT("Network")) == 0)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("ERROR: \"%s\" load monitor currently ")
@@ -214,7 +216,7 @@ register_load_monitor (CosLoadBalancing::LoadManager_ptr manager,
                        long & timer_id
                        ACE_ENV_ARG_DECL)
 {
-  if (ACE_OS::strcasecmp (::mstyle, "PULL") == 0)
+  if (ACE_OS::strcasecmp (::mstyle, ACE_TEXT("PULL")) == 0)
     {
       PortableGroup::Location_var location =
         monitor->the_location (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -225,7 +227,7 @@ register_load_monitor (CosLoadBalancing::LoadManager_ptr manager,
                                       ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
-  else if (ACE_OS::strcasecmp (::mstyle, "PUSH") == 0)
+  else if (ACE_OS::strcasecmp (::mstyle, ACE_TEXT("PUSH")) == 0)
     {
       ACE_Time_Value interval (::push_interval, 0);
       ACE_Time_Value restart (::push_interval, 0);
@@ -257,20 +259,22 @@ register_load_monitor (CosLoadBalancing::LoadManager_ptr manager,
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // The usual server side boilerplate code.
 
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
+      CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), 
+                                            convert.get_ASCII_argv(),
                                             ""
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Check the non-ORB arguments.
-      ::parse_args (argc,
-                    argv
+      ::parse_args (convert.get_argc(), 
+                    convert.get_TCHAR_argv()
                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

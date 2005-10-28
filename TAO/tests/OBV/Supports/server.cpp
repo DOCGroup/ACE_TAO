@@ -6,12 +6,14 @@
 const char * ior_output_file = "test.ior";
 
 int
-main (int argc, char * argv[])
+ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
 	ACE_TRY_NEW_ENV
 	{
 
-		CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+		CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
 		ACE_TRY_CHECK;
 
 		CORBA::Object_var poa_object = orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
@@ -62,7 +64,7 @@ main (int argc, char * argv[])
       CORBA::String_var ior = orb->object_to_string (a_test ACE_ENV_ARG_PARAMETER);
 		ACE_TRY_CHECK;
 
-      FILE * output_file = ACE_OS::fopen (ior_output_file, "w");
+      FILE * output_file = ACE_OS::fopen (ior_output_file, ACE_TEXT("w"));
 
       if (output_file == 0) ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output file for writing IOR: %s", ior_output_file), 1);
 

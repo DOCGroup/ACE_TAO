@@ -50,7 +50,7 @@ TAO_EC_Gateway_IIOP_Factory::fini (void)
 }
 
 int
-TAO_EC_Gateway_IIOP_Factory::init (int argc, char* argv[])
+TAO_EC_Gateway_IIOP_Factory::init (int argc, ACE_TCHAR* argv[])
 {
   int result = 0;
 
@@ -58,7 +58,7 @@ TAO_EC_Gateway_IIOP_Factory::init (int argc, char* argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      const char *arg = arg_shifter.get_current ();
+      const ACE_TCHAR *arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcasecmp (arg, ACE_TEXT("-ECGIIOPConsumerECControl")) == 0)
         {
@@ -74,7 +74,7 @@ TAO_EC_Gateway_IIOP_Factory::init (int argc, char* argv[])
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("reconnect")) == 0)
                 this->consumer_ec_control_ = 2;
               else
-                this->unsupported_option_value ("-ECGIIOPConsumerECControl", opt);
+                this->unsupported_option_value ("-ECGIIOPConsumerECControl", ACE_TEXT_TO_CHAR_IN(opt));
               arg_shifter.consume_arg ();
             }
         }
@@ -111,7 +111,7 @@ TAO_EC_Gateway_IIOP_Factory::init (int argc, char* argv[])
           if (arg_shifter.is_parameter_next ())
             {
               // Save argument for later use
-              this->orbid_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
+              this->orbid_ = ACE_TEXT_TO_CHAR_IN(arg_shifter.get_current ());
               arg_shifter.consume_arg ();
             }
         }

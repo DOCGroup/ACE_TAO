@@ -282,7 +282,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *[])
 }
 #else
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "The HP C++ compiler is too lame to support this feature\n"),

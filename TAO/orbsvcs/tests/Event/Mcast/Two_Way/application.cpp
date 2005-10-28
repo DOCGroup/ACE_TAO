@@ -571,7 +571,7 @@ check_for_nil (CORBA::Object_ptr obj, const char *message)
 int
 parse_args (int argc, char ** argv)
 {
-  ACE_Get_Opt get_opt (argc, argv, "d");
+  ACE_Get_Arg_Opt<char> get_opt (argc, argv, "d");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -597,7 +597,7 @@ parse_args (int argc, char ** argv)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // We may want this to be alive beyond the next block.
   TAO_EC_Servant_Var<Heartbeat_Application> app;

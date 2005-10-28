@@ -1512,7 +1512,7 @@ ace_get_module (ACE_Static_Node *str_rec,
 // Main driver program.
 
 int
-main (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Svc_Conf_Param param (stdin);
 

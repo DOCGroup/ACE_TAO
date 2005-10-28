@@ -20,7 +20,7 @@ int enable_yield = 1;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:n:ds");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "o:n:ds");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -80,7 +80,7 @@ private:
 Task_Stats task_stats;
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   MUF_Scheduler* scheduler = 0;
   RTScheduling::Current_var current;

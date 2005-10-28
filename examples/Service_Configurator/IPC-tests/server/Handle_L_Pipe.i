@@ -36,7 +36,7 @@ Handle_L_Pipe::info (ACE_TCHAR **strp, size_t length) const
   if (ACE_LSOCK_Acceptor::get_local_addr (sa) == -1)
     return -1;
 
-  ACE_OS::strcpy (buf, ACE_TEXT_CHAR_TO_TCHAR (sa.get_path_name ()));
+  ACE_OS::strcpy (buf, ACE_TEXT_TO_TCHAR_IN (sa.get_path_name ()));
   ACE_OS::strcat (buf, ACE_TEXT (" # tests local pipe\n"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
@@ -51,7 +51,7 @@ Handle_L_Pipe::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_UNIX_Addr sup;
   const ACE_TCHAR *r = Handle_L_Pipe::DEFAULT_RENDEZVOUS;
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("r:"), 0);
+  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT ("r:"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
      switch (c)

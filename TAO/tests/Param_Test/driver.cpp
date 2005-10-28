@@ -21,6 +21,7 @@
 #include "results.h"
 #include "tests.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Param_Test,
            driver,
@@ -28,13 +29,15 @@ ACE_RCSID (Param_Test,
 
 // This function runs the test (main program)
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   // get an instance of the driver object
   Driver drv;
 
   // initialize the driver
-  if (drv.init (argc, argv) == -1)
+  if (drv.init (convert.get_argc(), convert.get_ASCII_argv()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%N:%l) driver.cpp - "
                        "Driver initialization failed\n"),

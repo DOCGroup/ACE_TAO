@@ -102,7 +102,7 @@ TAO_Connector::make_mprofile (const char *string,
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - TAO_Connector::make_mprofile ")
                   ACE_TEXT ("<%s>\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR (string)));
+                  ACE_TEXT_TO_TCHAR_IN (string)));
     }
 
   ACE_CString ior;

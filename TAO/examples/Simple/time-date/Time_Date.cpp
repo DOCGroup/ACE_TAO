@@ -135,7 +135,7 @@ DLL_ORB::fini (void)
 int
 Time_Date_Servant::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "dn:o:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "dn:o:");
   int c = 0;
 
   this->orb_ = "ORB";

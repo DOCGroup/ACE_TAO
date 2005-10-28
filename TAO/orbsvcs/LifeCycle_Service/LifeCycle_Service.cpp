@@ -88,7 +88,7 @@ Life_Cycle_Service_Server::init (int argc,
   ACE_CHECK_RETURN (-1);
 
   if (this->debug_level_ >= 2)
-    ACE_DEBUG ((LM_DEBUG, "LifeCycle_Service: IOR is: <%s>\n", ACE_TEXT_CHAR_TO_TCHAR(str.in ())));
+    ACE_DEBUG ((LM_DEBUG, "LifeCycle_Service: IOR is: <%s>\n", ACE_TEXT_TO_TCHAR_IN(str.in ())));
 
   // Register the LifeCycle Service with the Naming Service.
   ACE_TRY
@@ -166,7 +166,7 @@ u_int
 Life_Cycle_Service_Server::parse_args (int argc,
                                        ACE_TCHAR* argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("?d:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT("?d:"));
   int opt;
   int exit_code = 0;
 

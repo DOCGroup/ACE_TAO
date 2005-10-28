@@ -6,6 +6,7 @@
 #include "tao/RTCORBA/Network_Priority_Mapping.h"
 #include "Custom_Network_Priority_Mapping.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "tao/Policy_Manager.h"
 
 static const char *ior = "file://simple_servant.ior";
@@ -130,7 +131,7 @@ change_network_priority (int enable_network_priority,
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:n:p:x:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "k:n:p:x:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -183,15 +184,17 @@ toggle (int &i)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
         return -1;
 
       // Initialize and obtain reference to the Test object.

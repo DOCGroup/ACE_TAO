@@ -83,10 +83,10 @@ private:
   /// Original number of input paramter, same as 'argc'.
   int &saved_argc_;
 
-  /// Data member pointer that contains converted argv in ACE_ANTI_TCHAR.
+  /// Data member pointer that contains converted argv in char.
   char** char_argv_;
 
-  /// Data member pointer that contains converted argv in ACE_TCHAR.
+  /// Data member pointer that contains converted argv in wchar_t.
   wchar_t** wchar_argv_;
 
   /// argc value before any argv has been passed.
@@ -94,13 +94,13 @@ private:
 
   /// FALSE represents original argv passed in is char, and TRUE
   /// represents wchar_t.
-  const int original_type_;
+  const bool original_type_wchar_;
 
   /// TRUE indicates wchar_t type argv has been passed.
-  int wchar_passed_;
+  bool wchar_passed_;
 
   /// TRUE indicates char type argv has been passed.
-  int char_passed_;
+  bool char_passed_;
 };
 
 #if defined (__ACE_INLINE__)

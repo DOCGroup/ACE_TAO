@@ -5,6 +5,7 @@
 #include "tao/StringSeqC.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (DLL_ORB,
            Test_Client_Module,
@@ -16,7 +17,7 @@ const char *ior = "file://test.ior";
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "k:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -39,7 +40,7 @@ parse_args (int argc, char *argv[])
 
 
 int
-Test_Client_Module::init (int argc, ACE_TCHAR *argv[])
+Test_Client_Module::init (int argc, char *argv[])
 {
   // -----------------------------------------------------------------
   // Pre-ORB initialization steps necessary for proper DLL ORB

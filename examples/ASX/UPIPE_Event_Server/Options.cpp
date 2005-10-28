@@ -98,7 +98,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_LOG_MSG->open (argv[0]);
 
-  ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("C:c:bdH:i:L:l:M:nS:s:t:T:v"));
+  ACE_Get_Arg_Opt getopt (argc, argv, ACE_TEXT ("C:c:bdH:i:L:l:M:nS:s:t:T:v"));
   int c;
 
   while ((c = getopt ()) != -1)
@@ -170,7 +170,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 		   "\t[-s supplier port]\n"
 		   "\t[-t number of threads]\n"
 		   "\t[-v] (verbose) \n",
-		   ACE_TEXT_ALWAYS_CHAR (argv[0]));
+		   ACE_TEXT_TO_CHAR_IN (argv[0]));
 	::exit (1);
 	/* NOTREACHED */
 	break;

@@ -110,7 +110,7 @@ Options::read (void *buf, size_t len, size_t &iteration)
 int
 Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("2h:i:m:p:q:st:T:"), 1);
+  ACE_Get_Arg_Opt getopt (argc, argv, ACE_TEXT ("2h:i:m:p:q:st:T:"), 1);
 
   for (int c; (c = getopt ()) != -1; )
     switch (c)
@@ -132,7 +132,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         break;
       case 'q':
         ACE_OS::strncpy (this->quit_string_,
-                         ACE_TEXT_ALWAYS_CHAR (getopt.opt_arg ()),
+                         ACE_TEXT_TO_CHAR_IN (getopt.opt_arg ()),
                          QUIT_STRING_SIZE);
         break;
       case 's':

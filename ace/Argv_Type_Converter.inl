@@ -6,7 +6,7 @@
 ACE_INLINE ACE_TCHAR**
 ACE_Argv_Type_Converter::get_TCHAR_argv (void)
 {
-#if ACE_USES_WCHAR
+#if defined (ACE_USES_WCHAR)
   return get_Wide_argv ();
 #else
   return get_ASCII_argv ();
@@ -33,7 +33,7 @@ ACE_Argv_Type_Converter::get_ASCII_argv (void)
       this->align_char_with_wchar ();
     }
 
-  this->char_passed_ = 1;
+  this->char_passed_ = true;
 
   return this->char_argv_;
 }

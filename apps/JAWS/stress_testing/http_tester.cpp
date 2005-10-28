@@ -124,7 +124,7 @@ int driver(char *id, int total_num, float requests_sec, char *url1, float p1, ch
 }
 
 
-main(int argc, char **argv) 
+ACE_TMAIN(int argc, ACE_TCHAR **argv) 
 {
   // This will set the global scale factor if the ACE_SCALE_FACTOR
   // environment variable is set.

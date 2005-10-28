@@ -30,7 +30,7 @@ static const char *forward_to_ior = 0;
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "f:o:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "f:o:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -175,7 +175,7 @@ create_servant_manager (CORBA::ORB_ptr orb,
 }
 
 int
-main (int argc,
+ACE_TMAIN (int argc,
       char **argv)
 {
   ACE_DECLARE_NEW_CORBA_ENV;

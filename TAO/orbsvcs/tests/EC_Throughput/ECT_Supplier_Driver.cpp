@@ -21,7 +21,7 @@ ACE_RCSID (EC_Throughput,
            "$Id$")
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ECT_Supplier_Driver driver;
   return driver.run (argc, argv);
@@ -52,7 +52,7 @@ ECT_Supplier_Driver::shutdown_consumer (void*
 }
 
 int
-ECT_Supplier_Driver::run (int argc, char* argv[])
+ECT_Supplier_Driver::run (int argc, ACE_TCHAR* argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -301,9 +301,9 @@ ECT_Supplier_Driver::dump_results (void)
 }
 
 int
-ECT_Supplier_Driver::parse_args (int argc, char *argv [])
+ECT_Supplier_Driver::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "ds:u:n:t:b:h:p:");
+  ACE_Get_Arg_Opt<char> get_opt (argc, argv, "ds:u:n:t:b:h:p:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)

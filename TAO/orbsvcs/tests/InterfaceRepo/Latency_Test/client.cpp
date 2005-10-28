@@ -8,7 +8,7 @@ ACE_RCSID (Latency__Test,
            "$Id$")
 
 int 
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Latency_Query_Client client;
 

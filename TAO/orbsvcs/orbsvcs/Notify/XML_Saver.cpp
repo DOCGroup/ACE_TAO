@@ -127,7 +127,7 @@ namespace TAO_Notify
 #ifdef ACE_LACKS_LONGLONG_T
         nowus.as_string(nowusstr);
 #else
-        ACE_OS::sprintf(nowusstr, ACE_UINT64_FORMAT_SPECIFIER, nowus);
+        ACE_OS::sprintf(nowusstr, ACE_UINT64_FORMAT_SPECIFIER_A, nowus);
 #endif /* ACE_LACKS_LONGLONG_T */
 
         attrs.push_back(NVP("version", "1.0"));
@@ -169,10 +169,10 @@ namespace TAO_Notify
     }
 
     const size_t BUF_SIZE = 512;
-    ACE_CString tmp(BUF_SIZE);
+    ACE_TString tmp(BUF_SIZE);
     for (size_t idx = 0; idx < attrs.size(); idx++)
     {
-      ACEXML_escape_string(attrs[idx].value, tmp);
+      ACEXML_escape_string(ACE_TEXT_TO_TCHAR_IN(attrs[idx].value.fast_rep()), tmp);
       ACE_OS::fprintf (out, "%s%s%s%s%s", " ",
         attrs[idx].name.c_str (), "=\"", tmp.c_str(), "\"");
     }

@@ -83,7 +83,7 @@ child (char *shm)
 }
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   char *shm = (char *) my_alloc.malloc (27);
 

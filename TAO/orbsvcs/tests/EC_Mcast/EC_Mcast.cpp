@@ -38,7 +38,7 @@ ECM_Driver::ECM_Driver (void)
 }
 
 int
-ECM_Driver::run (int argc, char* argv[])
+ECM_Driver::run (int argc, ACE_TCHAR* argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -339,9 +339,9 @@ ECM_Driver::dump_results (void)
 // ****************************************************************
 
 int
-ECM_Driver::parse_args (int argc, char *argv [])
+ECM_Driver::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "l:p:c:n:t:f:");
+  ACE_Get_Arg_Opt<char> get_opt (argc, argv, "l:p:c:n:t:f:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -1150,7 +1150,7 @@ ECM_Local_Federation::subscribed_bit (int i) const
 }
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 

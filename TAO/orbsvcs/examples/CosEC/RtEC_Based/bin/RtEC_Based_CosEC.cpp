@@ -18,7 +18,7 @@ RtEC_Based_CosEC::~RtEC_Based_CosEC (void)
 }
 
 void
-RtEC_Based_CosEC::init_ORB  (int& argc, char *argv []
+RtEC_Based_CosEC::init_ORB  (int& argc, char *argv[])
                              ACE_ENV_ARG_DECL)
 {
   this->orb_ = CORBA::ORB_init (argc,
@@ -46,9 +46,9 @@ RtEC_Based_CosEC::init_ORB  (int& argc, char *argv []
 }
 
 int
-RtEC_Based_CosEC::parse_args (int argc, char *argv [])
+RtEC_Based_CosEC::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "t:n:e:o:p:r");
+  ACE_Get_Arg_Opt<char> get_opt (argc, argv, "t:n:e:o:p:r");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -276,7 +276,7 @@ RtEC_Based_CosEC::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 

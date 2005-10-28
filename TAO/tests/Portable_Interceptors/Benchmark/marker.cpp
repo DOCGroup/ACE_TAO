@@ -30,13 +30,13 @@ Marker::dump_stats (const char* msg,
   switch (which_method)
     {
     case 1: // method ready
-      this->throughput_method_ready_.dump_results (msg, gsf);
+      this->throughput_method_ready_.dump_results (ACE_TEXT_TO_TCHAR_IN(msg), gsf);
       break;
     case 2: // method authentciate
-      this->throughput_method_authenticate_.dump_results (msg, gsf);
+      this->throughput_method_authenticate_.dump_results (ACE_TEXT_TO_TCHAR_IN(msg), gsf);
       break;
     case 3: // method update_records
-      this->throughput_method_update_records_.dump_results (msg, gsf);
+      this->throughput_method_update_records_.dump_results (ACE_TEXT_TO_TCHAR_IN(msg), gsf);
       break;
     default:
       break;

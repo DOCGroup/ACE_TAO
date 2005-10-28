@@ -16,7 +16,7 @@ ACE_RCSID (EC_Examples,
 static const char* ecname = 0;
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   EC channel;
 
@@ -30,7 +30,7 @@ EC::EC (void)
 }
 
 int
-EC::run (int argc, char* argv[])
+EC::run (int argc, ACE_TCHAR* argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 

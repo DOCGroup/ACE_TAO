@@ -43,7 +43,7 @@ Time_impl::Shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 int
-main(int argc, char * argv[])
+ACE_TMAIN(int argc, ACE_TCHAR * argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 

@@ -1085,7 +1085,7 @@ static
 u_int
 get_options (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("c:n?"));
+  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT("c:n?"));
   int opt;
   while ((opt = get_opt ()) != EOF) {
     switch (opt) {
@@ -1307,7 +1307,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 }
 #else
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
   return 0;

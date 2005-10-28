@@ -45,7 +45,7 @@ ACE_INLINE int
 Handle_R_Dgram::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_INET_Addr sidg (Handle_R_Dgram::DEFAULT_PORT);
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:"), 0);
+  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT ("p:"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
      switch (c)

@@ -58,7 +58,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 	  while (isspace (*s));
 
           // Shell command.
-          if (ACE_OS::system (ACE_TEXT_CHAR_TO_TCHAR (s)) == -1)
+          if (ACE_OS::system (ACE_TEXT_TO_TCHAR_IN (s)) == -1)
             ACE_ERROR ((LM_ERROR, ACE_TEXT (" ! Error executing: %C\n"), s));
         }
       else if (ACE_OS::strncmp (s, "http://", 7) == 0)

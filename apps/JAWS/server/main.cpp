@@ -33,7 +33,7 @@ handler (int)
 // JAWS as an ACE Service, as well.
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Service_Config daemon;
 

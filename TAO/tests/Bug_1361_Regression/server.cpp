@@ -5,6 +5,7 @@
 #include "tao/Utils/Servant_Var.h"
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "Server_Thread_Pool.h"
 #include "ORB_Task.h"
 
@@ -16,12 +17,14 @@ int
 parse_args (int argc, char *argv[]);
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, ""
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), ""
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -49,7 +52,7 @@ main (int argc, char *argv[])
                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
         return 1;
 
       ACE_Thread_Manager mymanager;
@@ -78,7 +81,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // If the ior_output_file exists, output the ior to it
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+      FILE *output_file= ACE_OS::fopen (ior_output_file, ACE_TEXT("w"));
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
@@ -125,7 +128,7 @@ main (int argc, char *argv[])
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "o:");
   int c;
 
   while ((c = get_opts ()) != -1)

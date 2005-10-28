@@ -171,7 +171,7 @@ TAO_GroupId_Equal_To::operator () (
   const PortableGroup::TagGroupTaggedComponent *rhs) const
 {
   return
-    ACE_OS::strcmp (lhs->group_domain_id, rhs->group_domain_id) == 0
+    ACE_OS::strcmp (lhs->group_domain_id.in(), rhs->group_domain_id.in()) == 0
     && lhs->object_group_id == rhs->object_group_id
     && lhs->object_group_ref_version == rhs->object_group_ref_version;
 }

@@ -31,7 +31,7 @@ Identity_Client::Identity_Client (void)
 int
 Identity_Client::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "di:n:k:r");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "di:n:k:r");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -245,7 +245,7 @@ Identity_Client::~Identity_Client (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int result = 0;
   Identity_Client client;

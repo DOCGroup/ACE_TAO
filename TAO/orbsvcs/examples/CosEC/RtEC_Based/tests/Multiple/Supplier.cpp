@@ -11,9 +11,9 @@ Supplier::Supplier ()
 }
 
 int
-Supplier::parse_args (int argc, char *argv [])
+Supplier::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "n:c:");
+  ACE_Get_Arg_Opt<char> get_opt (argc, argv, "n:c:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -170,7 +170,7 @@ Supplier::run (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Supplier supp;
 

@@ -28,7 +28,7 @@ static int iterations = 1;
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "a:b:c:d:e:f:i:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "a:b:c:d:e:f:i:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -172,7 +172,7 @@ public:
 };
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY

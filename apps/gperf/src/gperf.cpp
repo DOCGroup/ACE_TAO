@@ -38,7 +38,7 @@ ACE_RCSID(src, gperf, "$Id$")
 #include "ace/OS_main.h"
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   struct tm *tm;
   time_t clock;
@@ -75,7 +75,7 @@ main (int argc, char *argv[])
 }
 #else  /* ! ACE_HAS_GPERF */
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);

@@ -154,7 +154,7 @@ TAO_DIOP_Connection_Handler::open (void*)
      ACE_DEBUG ((LM_DEBUG,
                  ACE_TEXT("\nTAO (%P|%t) TAO_DIOP_Connection_Handler::open -")
                  ACE_TEXT("listening on: <%s:%u>\n"),
-                 ACE_TEXT_CHAR_TO_TCHAR (this->local_addr_.get_host_name ()),
+                 ACE_TEXT_TO_TCHAR_IN (this->local_addr_.get_host_name ()),
                  this->local_addr_.get_port_number ()));
   }
 
@@ -179,7 +179,7 @@ TAO_DIOP_Connection_Handler::open_server (void)
      ACE_DEBUG ((LM_DEBUG,
                  ACE_TEXT("\nTAO (%P|%t) TAO_DIOP_Connection_Handler::open_server -")
                  ACE_TEXT("listening on %s:%d\n"),
-                 ACE_TEXT_CHAR_TO_TCHAR (this->local_addr_.get_host_name ()),
+                 ACE_TEXT_TO_TCHAR_IN (this->local_addr_.get_host_name ()),
                  this->local_addr_.get_port_number ()
                ));
   }

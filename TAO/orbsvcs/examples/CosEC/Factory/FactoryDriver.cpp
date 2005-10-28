@@ -19,9 +19,9 @@ FactoryDriver::~FactoryDriver (void)
 }
 
 int
-FactoryDriver::parse_args (int argc, char *argv [])
+FactoryDriver::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "dr:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "dr:");
   int c = 0;
 
   while ((c = get_opts ()) != -1)
@@ -50,7 +50,7 @@ FactoryDriver::parse_args (int argc, char *argv [])
 }
 
 int
-FactoryDriver::start (int argc, char *argv [])
+FactoryDriver::start (int argc, ACE_TCHAR *argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY

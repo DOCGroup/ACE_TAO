@@ -26,7 +26,7 @@ Globals::Globals (void)
 int
 Globals::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt opts (argc, argv, "e:t:f:rm");
+  ACE_Get_Arg_Opt<char> opts (argc, argv, "e:t:f:rm");
   int c;
 
   while ((c = opts ()) != -1)

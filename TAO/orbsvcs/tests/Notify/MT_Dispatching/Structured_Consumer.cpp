@@ -30,14 +30,14 @@ static unsigned int expected = 1;
 class Consumer_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, char* argv[]);
+  virtual int parse_args (int argc, ACE_TCHAR* argv[]);
 };
 
 
 int
 Consumer_Client::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:e:c:f");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "k:e:c:f");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -125,7 +125,7 @@ disconnect_consumers (ACE_ENV_SINGLE_ARG_DECL)
 // Main Section
 // ******************************************************************
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   int status = 0;
   ACE_TRY_NEW_ENV

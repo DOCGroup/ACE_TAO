@@ -32,7 +32,7 @@ TAO_EC_Simple_Queue_Full_Action::init_svcs (void)
 }
 
 int
-TAO_EC_Simple_Queue_Full_Action::init (int argc, char* argv[])
+TAO_EC_Simple_Queue_Full_Action::init (int argc, ACE_TCHAR* argv[])
 {
   // Here we look at the args and set an internal flag indicating whether
   // the default action should be to wait for the queue to not be full
@@ -45,9 +45,9 @@ TAO_EC_Simple_Queue_Full_Action::init (int argc, char* argv[])
     if (argc == 0)
       break;
 
-    if (ACE_OS::strcasecmp ("wait", argv[0]) == 0)
+    if (ACE_OS::strcasecmp (ACE_TEXT("wait"), argv[0]) == 0)
       this->queue_full_action_return_value_ = WAIT_TO_EMPTY;
-    else if (ACE_OS::strcasecmp ("discard", argv[0]) == 0)
+    else if (ACE_OS::strcasecmp (ACE_TEXT("discard"), argv[0]) == 0)
       this->queue_full_action_return_value_ = SILENTLY_DISCARD;
 #if 0
     else

@@ -1,7 +1,7 @@
 /**
  * $Id$
  *
- * ACE_Get_Opt examples not in a larger program. Sample code from The ACE
+ * ACE_Get_Arg_Opt examples not in a larger program. Sample code from The ACE
  * Programmer's Guide, Copyright 2003 Addison-Wesley. All Rights Reserved.
  */
 
@@ -16,7 +16,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Example for a long option without a corresponding short option.
   // Just put some context here so the following compiles and runs.
   static const ACE_TCHAR options[] = ACE_TEXT (":f:");
-  ACE_Get_Opt cmd_opts (argc, argv, options);
+  ACE_Get_Arg_Opt cmd_opts (argc, argv, options);
 
   // Listing 1 code/ch04
   cmd_opts.long_option (ACE_TEXT ("cool_option"));

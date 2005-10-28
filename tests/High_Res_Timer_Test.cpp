@@ -114,7 +114,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   u_int iterations = 1;
 
-  ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("i:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR>  getopt (argc, argv, ACE_TEXT ("i:"));
   for (int c; (c = getopt ()) != -1; )
     switch (c)
       {

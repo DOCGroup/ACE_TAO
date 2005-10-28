@@ -133,7 +133,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 }
 #else
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   return 0;
 }

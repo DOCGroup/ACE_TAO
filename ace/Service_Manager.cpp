@@ -92,7 +92,7 @@ ACE_Service_Manager::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRACE ("ACE_Service_Manager::init");
   ACE_INET_Addr local_addr (ACE_Service_Manager::DEFAULT_PORT_);
-  ACE_Get_Opt getopt (argc, argv, ACE_LIB_TEXT ("dp:s:"), 0); // Start at argv[0]
+  ACE_Get_Arg_Opt<ACE_TCHAR> getopt (argc, argv, ACE_LIB_TEXT ("dp:s:"), 0); // Start at argv[0]
 
   for (int c; (c = getopt ()) != -1; )
      switch (c)

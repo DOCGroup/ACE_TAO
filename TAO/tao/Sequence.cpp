@@ -64,7 +64,7 @@ TAO_Base_Sequence::check_bounds (char const * filename,
       ACE_ERROR ((LM_ERROR,
                   "Access error in TAO_Base_Sequence file=%s, line=%u, "
                   "idx=%u, max=%u\n",
-                  ACE_TEXT_CHAR_TO_TCHAR (filename),
+                  ACE_TEXT_TO_TCHAR_IN (filename),
                   lineno,
                   tao_idx,
                   tao_max));

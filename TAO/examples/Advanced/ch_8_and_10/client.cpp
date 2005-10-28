@@ -135,7 +135,7 @@ set_temp(CCS::Thermostat_ptr tmstat, CCS::TempType new_temp)
 //----------------------------------------------------------------
 
 int
-main(int argc, char * argv[])
+ACE_TMAIN(int argc, ACE_TCHAR * argv[])
 {
     try {
         // Initialize the ORB

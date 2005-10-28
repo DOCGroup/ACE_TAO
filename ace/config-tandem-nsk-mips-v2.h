@@ -241,7 +241,8 @@ typedef enum CMA_T_SCHED_POLICY {
 #define ACE_HRTIME_T_IS_BASIC_TYPE
 
 // printf format specifiers for 64 bit integers
-# define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%Ld")
+# define ACE_UINT64_FORMAT_SPECIFIER_A "%Ld"
+# define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT (ACE_UINT64_FORMAT_SPECIFIER_A)
 # define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%Ld")
 
 //=========================================================================

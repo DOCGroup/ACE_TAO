@@ -6,7 +6,7 @@
 ACE_RCSID(Logging_Service, Logging_Service, "$Id$")
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Set TAO_debug_level to 0 to ensure silent running unless
   // debugging is explicitly invoked

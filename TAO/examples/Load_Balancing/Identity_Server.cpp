@@ -28,7 +28,7 @@ Identity_Server::Identity_Server (void)
 int
 Identity_Server::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "di:a:o:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "di:a:o:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -210,7 +210,7 @@ Identity_Server::~Identity_Server (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int result = 0;
   Identity_Server server;

@@ -12,10 +12,12 @@ namespace ACE_OS
 template <typename DCHAR, typename SCHAR> inline
 size_t string_copy (DCHAR* dest, const SCHAR* src, size_t len)
 {
-  if ( src == 0 )
+  // We must have a source and a valid length with a dest
+  if ( src == 0 || ( dest != 0 && len < 0 ) )
   {
     return -1;
   }
+  // If we perform a copy
   if ( dest != 0 )
   {
     if (len != 0)
@@ -36,6 +38,7 @@ size_t string_copy (DCHAR* dest, const SCHAR* src, size_t len)
     }
     return 0;
   }
+  // Otherwise just calc length
   return ACE_OS::strlen( src );
 }
 

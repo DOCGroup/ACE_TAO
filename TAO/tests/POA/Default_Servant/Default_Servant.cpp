@@ -19,6 +19,7 @@
 
 #include "testS.h"
 #include "ace/SString.h"
+#include "ace/Argv_Type_Converter.h"
 #include "tao/PortableServer/ServantManagerC.h"
 
 class test_i : public POA_test
@@ -148,15 +149,17 @@ test_reference_to_servant_active_object(PortableServer::POA_ptr root_poa
 
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       // Initialize the ORB.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
+      CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(),
+                                            convert.get_ASCII_argv(),
                                             0
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

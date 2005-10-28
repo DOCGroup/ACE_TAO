@@ -11,6 +11,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/os_include/os_netdb.h"
+#include "ace/Argv_Type_Converter.h"
 
 static ACE_CString getHostName()
 {
@@ -174,7 +175,7 @@ ImR_Activator_i::init_with_orb(CORBA::ORB_ptr orb, const Activator_Options& opts
     // that the activator is ready to go as soon as the ior is written.
     if (opts.ior_filename().length() > 0)
     {
-      FILE* fp = ACE_OS::fopen(opts.ior_filename().c_str(), "w");
+      FILE* fp = ACE_OS::fopen(opts.ior_filename().c_str(), ACE_TEXT("w"));
       if (fp == 0)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -197,15 +198,17 @@ ImR_Activator_i::init_with_orb(CORBA::ORB_ptr orb, const Activator_Options& opts
 int
 ImR_Activator_i::init (Activator_Options& opts ACE_ENV_ARG_DECL)
 {
-  ACE_CString cmdline = opts.cmdline();
+  ACE_TString cmdline = opts.cmdline();
   // Must use IOR style objrefs, because URLs sometimes get mangled when passed
   // to ACE_Process::spawn().
-  cmdline += "-ORBUseImR 0 -ORBObjRefStyle IOR ";
+  cmdline += ACE_TEXT("-ORBUseImR 0 -ORBObjRefStyle IOR ");
   ACE_ARGV av(cmdline.c_str());
   int argc = av.argc();
 
+  ACE_Argv_Type_Converter convert (argc, av.argv());
+
   CORBA::ORB_var orb =
-    CORBA::ORB_init(argc, av.argv(), "TAO_ImR_Activator" ACE_ENV_ARG_PARAMETER);
+    CORBA::ORB_init(convert.get_argc(), convert.get_ASCII_argv(), "TAO_ImR_Activator" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN(-1);
 
   int ret = this->init_with_orb(orb.in(), opts ACE_ENV_ARG_PARAMETER);
@@ -312,15 +315,16 @@ ImR_Activator_i::start_server(const char* name,
   // handles. This includes stdin, stdout, logs, etc.
   proc_opts.handle_inheritence (0);
 
-  proc_opts.setenv("TAO_USE_IMR", "1");
+  proc_opts.setenv(ACE_TEXT("TAO_USE_IMR"), ACE_TEXT("1"));
   if (!CORBA::is_nil (this->locator_.in ()))
   {
     CORBA::String_var ior = orb_->object_to_string(locator_.in());
-    proc_opts.setenv("ImplRepoServiceIOR", ior.in());
+    proc_opts.setenv(ACE_TEXT("ImplRepoServiceIOR"), ior.in());
   }
 
   for (CORBA::ULong i = 0; i < env.length(); ++i) {
-    proc_opts.setenv (env[i].name.in(), env[i].value.in());
+    proc_opts.setenv (ACE_TEXT_TO_TCHAR_IN(env[i].name.in()), 
+                      ACE_TEXT_TO_TCHAR_IN(env[i].value.in()));
   }
 
   int pid = this->process_mgr_.spawn (proc_opts);

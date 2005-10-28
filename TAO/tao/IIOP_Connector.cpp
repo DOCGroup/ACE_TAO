@@ -144,7 +144,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
     ACE_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - IIOP_Connector::make_connection, "
                 "to <%s:%d> which should %s\n",
-                ACE_TEXT_CHAR_TO_TCHAR(iiop_endpoint->host()),
+                ACE_TEXT_TO_TCHAR_IN(iiop_endpoint->host()),
                 iiop_endpoint->port(),
                 r->blocked_connect () ? ACE_TEXT("block") : ACE_TEXT("nonblock")));
 

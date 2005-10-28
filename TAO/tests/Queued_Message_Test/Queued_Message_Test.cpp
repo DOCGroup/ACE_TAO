@@ -16,6 +16,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_stdlib.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (tests,
            Queued_Message_Test,
@@ -87,9 +88,8 @@ static void del_message (TAO_Queued_Message *&head,
 }
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
-
   // Initialize a random seed to get better coverage.
   // @@ The random seed and default values should be configurable
   // using command line options.

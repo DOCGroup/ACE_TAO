@@ -355,7 +355,7 @@ CORBA::Any::operator<<= (CORBA::Any::from_string s)
 void
 CORBA::Any::operator<<= (CORBA::Any::from_wstring ws)
 {
-  if (ws.bound_ > 0 && ws.val_ != 0 && ACE_OS::wslen (ws.val_) > ws.bound_)
+  if (ws.bound_ > 0 && ws.val_ != 0 && ACE_OS::strlen (ws.val_) > ws.bound_)
     {
       return;
     }

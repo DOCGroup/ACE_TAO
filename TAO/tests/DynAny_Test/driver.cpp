@@ -24,13 +24,16 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Argv_Type_Converter.h"
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   Driver driver;
 
   // initialize the driver
-  if (driver.init (argc, argv) == -1)
+  if (driver.init (convert.get_argc(), convert.get_ASCII_argv()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%N:%l) driver.cpp - "
                        "Driver initialization failed\n"),
@@ -106,7 +109,7 @@ Driver::parse_args (int argc, char* argv[])
                        argv [0]),
                       -1);
 
-  ACE_Get_Opt get_opts (argc, argv, "t:d");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "t:d");
   int c;
 
   while ((c = get_opts ()) != -1)

@@ -435,7 +435,7 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("\nTAO (%P|%t) DIOP_Acceptor::open_i - ")
                       ACE_TEXT ("listening on: <%s:%u>\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR (this->hosts_[i]),
+                      ACE_TEXT_TO_TCHAR_IN (this->hosts_[i]),
                       this->addrs_[i].get_port_number ()));
         }
     }
@@ -718,7 +718,7 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) DIOP option <%s> is ")
                                ACE_TEXT ("missing a value.\n"),
-                               ACE_TEXT_CHAR_TO_TCHAR (opt.c_str ())),
+                               ACE_TEXT_TO_TCHAR_IN (opt.c_str ())),
                               -1);
 
           ACE_CString name = opt.substring (0, slot);
@@ -740,7 +740,7 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
           else
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) Invalid DIOP option: <%s>\n"),
-                               ACE_TEXT_CHAR_TO_TCHAR (name.c_str ())),
+                               ACE_TEXT_TO_TCHAR_IN (name.c_str ())),
                               -1);
         }
     }

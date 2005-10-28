@@ -162,7 +162,7 @@ int FT_ReplicaFactory_i::write_ior(const char * outputFile, const char * ior)
 
 int FT_ReplicaFactory_i::parse_args (int argc, char * argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:n:f:i:l:t:qu");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "o:n:f:i:l:t:qu");
   int c;
 
   while ((c = get_opts ()) != -1)

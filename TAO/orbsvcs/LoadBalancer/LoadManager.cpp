@@ -10,6 +10,8 @@
 
 #include "tao/IORTable/IORTable.h"
 
+#include "ace/Argv_Type_Converter.h"
+
 #if defined (linux) && defined (ACE_HAS_THREADS)
 # include "ace/Signal.h"
 #endif /* linux && ACE_HAS_THREADS */
@@ -20,7 +22,7 @@ ACE_RCSID (LoadBalancer,
            "$Id$")
 
 
-static const char * lm_ior_file = "lm.ior";
+static ACE_CString lm_ior_file ("lm.ior");
 
 void
 usage (const ACE_TCHAR * cmd)
@@ -43,7 +45,7 @@ parse_args (int argc,
             int & default_strategy
             ACE_ENV_ARG_DECL)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:s:h"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_TEXT ("o:s:h"));
 
   int c = 0;
 
@@ -52,18 +54,18 @@ parse_args (int argc,
       switch (c)
         {
         case 'o':
-          ::lm_ior_file = get_opts.opt_arg ();
+          ::lm_ior_file.set (ACE_TEXT_TO_CHAR_IN (get_opts.opt_arg ()));
           break;
 
         case 's':
           if (ACE_OS::strcasecmp (get_opts.opt_arg (),
-                                  "RoundRobin") == 0)
+                                  ACE_TEXT("RoundRobin")) == 0)
             default_strategy = 0;
           else if (ACE_OS::strcasecmp (get_opts.opt_arg (),
-                                       "Random") == 0)
+                                       ACE_TEXT("Random")) == 0)
             default_strategy = 1;
           else if (ACE_OS::strcasecmp (get_opts.opt_arg (),
-                                       "LeastLoaded") == 0)
+                                       ACE_TEXT("LeastLoaded")) == 0)
             default_strategy = 2;
           else
             ACE_DEBUG ((LM_DEBUG,
@@ -120,13 +122,15 @@ TAO_LB_run_load_manager (void * orb_arg)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // The usual server side boilerplate code.
 
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
+      CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), 
+                                            convert.get_ASCII_argv(),
                                             ""
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -155,8 +159,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int default_strategy = 1;
 
       // Check the non-ORB arguments.
-      ::parse_args (argc,
-                    argv,
+      ::parse_args (convert.get_argc(), 
+                    convert.get_TCHAR_argv(),
                     default_strategy
                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -235,7 +239,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       table->bind ("LoadManager", str.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      FILE * lm_ior = ACE_OS::fopen (lm_ior_file, "w");
+      FILE * lm_ior = ACE_OS::fopen (lm_ior_file.fast_rep(), ACE_TEXT("w"));
       ACE_OS::fprintf (lm_ior, "%s", str.in ());
       ACE_OS::fclose (lm_ior);
 

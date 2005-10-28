@@ -74,7 +74,7 @@ ACE::HTBP::Addr::addr_to_string (ACE_TCHAR buffer[],
   if (size < htid_.length())
     return -1;
   ACE_OS::strncpy (buffer,
-                   ACE_TEXT_CHAR_TO_TCHAR(htid_.c_str()),
+                   ACE_TEXT_TO_TCHAR_IN(htid_.c_str()),
                    size);
   return 0;
 }

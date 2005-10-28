@@ -32,7 +32,7 @@ ECMS_Driver::ECMS_Driver (void)
 // ****************************************************************
 
 int
-ECMS_Driver::run (int argc, char* argv[])
+ECMS_Driver::run (int argc, ACE_TCHAR* argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -329,9 +329,9 @@ ECMS_Driver::disconnect_suppliers (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-ECMS_Driver::parse_args (int argc, char *argv [])
+ECMS_Driver::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "ds:n:t:h:p:b:");
+  ACE_Get_Arg_Opt<char> get_opt (argc, argv, "ds:n:t:h:p:b:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -522,7 +522,7 @@ Test_Supplier::consumer_proxy (void)
 }
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ECMS_Driver driver;
   return driver.run (argc, argv);

@@ -26,7 +26,7 @@ Load_Balancing_Service::Load_Balancing_Service (void)
 int
 Load_Balancing_Service::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "do:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "do:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -174,7 +174,7 @@ Load_Balancing_Service::~Load_Balancing_Service (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int result = 0;
   Load_Balancing_Service factory;

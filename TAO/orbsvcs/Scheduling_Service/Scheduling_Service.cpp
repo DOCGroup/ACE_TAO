@@ -129,7 +129,7 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT("The scheduler IOR is <%s>\n"),
-                            ACE_TEXT_CHAR_TO_TCHAR(scheduler_ior_string.in ())));
+                            ACE_TEXT_TO_TCHAR_IN(scheduler_ior_string.in ())));
 
       // Register the servant with the Naming Context....
       CosNaming::Name schedule_name (1);
@@ -145,7 +145,7 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR* argv[])
             {
               ACE_OS::fprintf (iorf,
                                ACE_TEXT("%s\n"),
-                               ACE_TEXT_CHAR_TO_TCHAR(scheduler_ior_string.in ()));
+                               ACE_TEXT_TO_TCHAR_IN(scheduler_ior_string.in ()));
               ACE_OS::fclose (iorf);
             }
         }
@@ -188,7 +188,7 @@ TAO_Scheduling_Service::run (ACE_ENV_SINGLE_ARG_DECL)
 int
 TAO_Scheduling_Service::parse_args (int argc, ACE_TCHAR* argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:p:o:s:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT("n:p:o:s:"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -196,15 +196,15 @@ TAO_Scheduling_Service::parse_args (int argc, ACE_TCHAR* argv[])
       switch (opt)
         {
         case 'n':
-          this->service_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+          this->service_name_ = ACE_TEXT_TO_CHAR_IN(get_opt.opt_arg ());
           break;
 
         case 'p':
-          this->pid_file_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+          this->pid_file_name_ = ACE_TEXT_TO_CHAR_IN(get_opt.opt_arg ());
           break;
 
         case 'o':
-          this->ior_file_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+          this->ior_file_name_ = ACE_TEXT_TO_CHAR_IN(get_opt.opt_arg ());
           break;
 
 // The templatized method parameters needed by the reconfig scheduler

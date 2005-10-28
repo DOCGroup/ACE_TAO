@@ -138,7 +138,7 @@ Connection_Config_File_Parser::read_entry (Connection_Config_Info &entry,
 
 #if defined (DEBUGGING)
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   FP_RETURN_TYPE result;
   int line_number = 0;

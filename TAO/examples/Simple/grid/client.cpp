@@ -5,7 +5,7 @@
 // The client program for the application.
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Grid_Client_i client;
   

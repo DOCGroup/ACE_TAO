@@ -1606,10 +1606,10 @@ TAO_GIOP_Message_Lite::dump_msg (const char *label,
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P | %t):%s GIOP lite msg, ")
                   ACE_TEXT ("%d data bytes, %s endian, <%s = %d> \n"),
-                  ACE_TEXT_CHAR_TO_TCHAR(label),
+                  ACE_TEXT_TO_TCHAR_IN(label),
                   len - TAO_GIOP_LITE_HEADER_LEN,
                   (byte_order == TAO_ENCAP_BYTE_ORDER) ? ACE_TEXT("my") : ACE_TEXT("other"),
-                  ACE_TEXT_CHAR_TO_TCHAR (message_name),
+                  ACE_TEXT_TO_TCHAR_IN (message_name),
                   *id));
 
       if (TAO_debug_level >= 10)

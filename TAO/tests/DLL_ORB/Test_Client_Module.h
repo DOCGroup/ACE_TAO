@@ -40,7 +40,7 @@ class Test_Client_Module_Export Test_Client_Module : public ACE_Task_Base
 public:
 
   /// Initializes object when dynamic linking occurs.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  virtual int init (int argc, char *argv[]);
 
   /// Terminates object when dynamic unlinking occurs.
   virtual int fini (void);

@@ -285,9 +285,9 @@ index_operator_test (void)
         {
           if ((*n).first  != *letter || (*n).second != *word)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Key/Datum mismatch:\n"
-                                         "    key \"%c\" should be \"%c\"\n"
-                                         "  datum \"%s\" should be \"%s\"\n"),
+                               ACE_TEXT ("Key/Datum mismatch:\n")
+                               ACE_TEXT ("    key \"%c\" should be \"%c\"\n")
+                               ACE_TEXT ("  datum \"%s\" should be \"%s\"\n"),
                                (*n).first,
                                *letter,
                                (*n).second.c_str (),
@@ -324,9 +324,9 @@ index_operator_test (void)
         {
           if ((*r).first != *letter || (*r).second != *word)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Key/Datum mismatch:\n"
-                                         "    key \"%c\" should be \"%c\"\n"
-                                         "  datum \"%s\" should be \"%s\"\n"),
+                               ACE_TEXT ("Key/Datum mismatch:\n")
+                               ACE_TEXT ("    key \"%c\" should be \"%c\"\n")
+                               ACE_TEXT ("  datum \"%s\" should be \"%s\"\n"),
                                (*r).first,
                                *letter,
                                (*r).second.c_str (),

@@ -20,7 +20,7 @@ get_priority_bands (const char *test_type,
   // Read bands from a file.
   //
   FILE* file =
-    ACE_OS::fopen (bands_file, "r");
+    ACE_OS::fopen (bands_file, ACE_TEXT("r"));
 
   if (file == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -119,7 +119,7 @@ get_values (const char *test_type,
   // Read lanes from a file.
   //
   FILE* file =
-    ACE_OS::fopen (file_name, "r");
+    ACE_OS::fopen (file_name, ACE_TEXT("r"));
 
   if (file == 0)
     ACE_ERROR_RETURN ((LM_ERROR,

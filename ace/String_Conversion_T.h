@@ -4,6 +4,7 @@
 #ifndef ACE_CHAR_CONVERT_T_H
 #define ACE_CHAR_CONVERT_T_H
 #include /**/ "ace/pre.h"
+#include /**/ "ace/ace_wchar.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -18,32 +19,38 @@ namespace String_Conversion
 // conversions between wchar_t and char.
 // * The alloc/free suite of methods are used to advertise
 //   how the String_Conversion services manage memory.
+//   Alloc allocates len + 1 and sets first byte to zero.
 // * The duplicate method allocates the output string.
 // * The copy method is the worker that expects two existing buffers
-//   of at least <len+1> size.
+//   of at least <len+1> size. It will always NULL terminate the dest string.
 
 static const size_t calc_len = static_cast<size_t>(-1);
 
 template < typename T >
-class alloc
+class Allocator_cpp
 {
 public:
-  explicit alloc( size_t len );
+  T* alloc( size_t len ) const;
 
-  operator T* () const;
-
-private:
-  T* str_;
+  void free( T* str ) const;
 };
 
-template < typename T > void
-free( T* str );
+template < typename T >
+class Allocator_malloc
+{
+public:
+  T* alloc( size_t len ) const;
 
-template < typename DestT, typename SrcT > inline
-DestT* duplicate( const SrcT* src, size_t* dest_len = 0 );
+  void free( T* str ) const;
+};
 
-template < typename DestT, typename SrcT > inline
-void copy( DestT* dest, const SrcT* src, size_t dest_len = calc_len );
+template < typename DestT, typename SrcT, typename Allocator > ACE_INLINE
+DestT*
+duplicate( const SrcT* src, size_t* dest_len = 0 );
+
+template < typename DestT, typename SrcT > ACE_INLINE
+size_t
+copy( DestT* dest, const SrcT* src, size_t dest_len = calc_len );
 
 // Length Note:
 // The len parameters are content-length. The need to
@@ -66,15 +73,21 @@ void copy( DestT* dest, const SrcT* src, size_t dest_len = calc_len );
  * This class will always allocate a new copy
  * of the source string.
  */
-template < typename DestT >
+template < typename DestT, typename Allocator = Allocator_cpp<DestT> >
 class Convert_Out
 {
 public:
   template < typename SrcT >
   explicit Convert_Out( const SrcT* src, size_t len = calc_len )
   : len_( len )
-  , dest_( duplicate<DestT>( src, &len_ ) )
+  , dest_( duplicate<DestT, SrcT, Allocator>( src, &len_ ) )
   {
+  }
+
+  // Make certain we provide a counter to the allocation
+  static free( DestT* ptr )
+  {
+    Allocator().free( ptr );
   }
 
   DestT* c_str() const;
@@ -86,7 +99,7 @@ public:
   }
 #endif
 
-  int length() const;
+  size_t length() const;
 
 private:
   size_t len_;
@@ -121,7 +134,7 @@ public:
   //template < typename SrcT >
   explicit Convert_In( const SrcT* src )
   : str_(0)
-  , ownstr_( duplicate<DestT>( src, 0 ) )
+  , ownstr_( duplicate<DestT, SrcT, Allocator_cpp<DestT> >( src, 0 ) )
   {
   }
 
@@ -166,6 +179,9 @@ private:
  * along or make a temporary copy.
  * The if a temp string is created, it is copied
  * back to the src on destruction.
+ *
+ * NOTE: The size passed in at construction is buffer size,
+ * including space for the NULL char.
  */
 template < typename DestT, typename SrcT >
 class Convert_InOut
@@ -176,7 +192,7 @@ public:
   : len_(size==calc_len ? calc_len : size-1)
   , str_(0)
   , orig_(src)
-  , ownstr_(duplicate<DestT>(src, &len_))
+  , ownstr_( duplicate<DestT, SrcT, Allocator_cpp<DestT> >(src, &len_))
   {
   }
 
@@ -229,13 +245,13 @@ private:
 # define ACE_TEXT_TO_WCHAR_OUT(STRING) ACE::String_Conversion::Convert_Out< wchar_t >( STRING ).c_str()
 # define ACE_TEXT_TO_TCHAR_OUT(STRING) ACE::String_Conversion::Convert_Out< ACE_TCHAR >( STRING ).c_str()
 
+# define ACE_TEXT_TO_MALLOC_CHAR_OUT(STRING) ACE::String_Conversion::Convert_Out< char, ACE::String_Conversion::Allocator_malloc >( STRING ).c_str()
+# define ACE_TEXT_TO_MALLOC_WCHAR_OUT(STRING) ACE::String_Conversion::Convert_Out< wchar_t, ACE::String_Conversion::Allocator_malloc >( STRING ).c_str()
+# define ACE_TEXT_TO_MALLOC_TCHAR_OUT(STRING) ACE::String_Conversion::Convert_Out< ACE_TCHAR, ACE::String_Conversion::Allocator_malloc >( STRING ).c_str()
+
 # define ACE_TEXT_TO_CHAR_IN(STRING) ACE::String_Conversion::Convert_In< char, wchar_t  >( STRING ).c_str()
 # define ACE_TEXT_TO_WCHAR_IN(STRING) ACE::String_Conversion::Convert_In< wchar_t, char >( STRING ).c_str()
 # define ACE_TEXT_TO_TCHAR_IN(STRING) ACE::String_Conversion::Convert_In< ACE_TCHAR, ACE_ANTI_TCHAR >( STRING ).c_str()
-
-# define ACE_TEXT_TO_CHAR_LEN_INOUT(STRING, LEN) ACE::String_Conversion::Convert_InOut< char, wchar_t >( STRING, LEN ).c_str()
-# define ACE_TEXT_TO_WCHAR_LEN_INOUT(STRING, LEN) ACE::String_Conversion::Convert_InOut< wchar_t, char >( STRING, LEN ).c_str()
-# define ACE_TEXT_TO_TCHAR_LEN_INOUT(STRING, LEN) ACE::String_Conversion::Convert_InOut< ACE_TCHAR, ACE_ANTI_TCHAR >( STRING, LEN ).c_str()
 
 # define ACE_TEXT_TO_CHAR_INOUT(STRING) ACE::String_Conversion::Convert_InOut< char, wchar_t >( STRING ).c_str()
 # define ACE_TEXT_TO_WCHAR_INOUT(STRING) ACE::String_Conversion::Convert_InOut< wchar_t, char >( STRING ).c_str()

@@ -27,7 +27,7 @@ static const char *ior_output_file = "ior";
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "f:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "f:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -100,7 +100,7 @@ write_iors_to_file (const char *first_ior,
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 

@@ -177,7 +177,7 @@ Sender::parse_args (int argc,
                     char **argv)
 {
   /// Parse command line arguments
-  ACE_Get_Opt opts (argc, argv, "s:f:r:d");
+  ACE_Get_Arg_Opt<char> opts (argc, argv, "s:f:r:d");
 
   int c;
   while ((c= opts ()) != -1)
@@ -452,7 +452,7 @@ Sender::connection_manager (void)
 //  }
 
 int
-main (int argc,
+ACE_TMAIN (int argc,
       char **argv)
 {
   ACE_DECLARE_NEW_CORBA_ENV;

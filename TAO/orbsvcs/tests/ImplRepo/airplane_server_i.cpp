@@ -29,7 +29,7 @@ Airplane_Server_i::Airplane_Server_i (void)
 int
 Airplane_Server_i::parse_args (void)
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:");
+  ACE_Get_Arg_Opt<char> get_opts (this->argc_, this->argv_, "do:");
   int c;
 
   while ((c = get_opts ()) != -1)

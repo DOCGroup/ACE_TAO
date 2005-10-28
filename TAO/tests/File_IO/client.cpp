@@ -22,6 +22,7 @@
 #include "ace/OS.h"
 #include "ace/SString.h"
 #include "ace/Thread_Manager.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(Default_Servant, client, "client.cpp,v 1.8 2001/03/26 21:16:52 coryan Exp")
 
@@ -36,7 +37,7 @@ static CORBA::ORB_var orb;
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "t:dk:f:i:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "t:dk:f:i:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -166,18 +167,20 @@ MTTEST (void *args)
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       // Initialize the ORB
-      orb = CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
+      orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), 0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Parse the command-line arguments to get the IOR
-      parse_args (argc, argv);
+      parse_args (convert.get_argc(), convert.get_ASCII_argv());
 
       // parse args should catch this, but just in case...
       if (iorfile == 0)

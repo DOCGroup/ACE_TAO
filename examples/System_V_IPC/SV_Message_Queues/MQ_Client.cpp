@@ -16,7 +16,7 @@ ACE_RCSID(SV_Message_Queues, MQ_Client, "$Id$")
 #if defined (ACE_HAS_SYSV_IPC) && !defined(ACE_LACKS_SYSV_SHMEM)
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   long pid = long (ACE_OS::getpid ());
   ACE_SV_Message_Queue msgque (SRV_KEY);

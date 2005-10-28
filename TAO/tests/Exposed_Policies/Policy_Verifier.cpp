@@ -40,13 +40,13 @@ Policy_Verifier::init (int argc,
           this->priority_bands_ =
             this->rt_poa_properties_->priority_bands ().length ();
         }
-      else if ((arg = arg_shifter.get_the_parameter ("-ObjectConfigFile")))
+      else if ((arg = arg_shifter.get_the_parameter (ACE_TEXT("-ObjectConfigFile"))))
         {
           this->rt_object_properties_ =
             RT_Properties::read_from (arg ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (false);
         }
-      else if ((arg = arg_shifter.get_the_parameter ("-BaseObjectIOR")))
+      else if ((arg = arg_shifter.get_the_parameter (ACE_TEXT("-BaseObjectIOR"))))
         {
           if (this->rt_poa_properties_ == 0)
             {
@@ -61,7 +61,7 @@ Policy_Verifier::init (int argc,
           ACE_OS::strcat (this->base_object_ref_,
                           this->rt_poa_properties_->ior_source ());
         }
-      else if ((arg = arg_shifter.get_the_parameter ("-OverriddenIOR")))
+      else if ((arg = arg_shifter.get_the_parameter (ACE_TEXT("-OverriddenIOR"))))
         {
           if (this->rt_object_properties_ == 0)
             {
@@ -260,7 +260,7 @@ Policy_Verifier::check_reference (CORBA::Object_ptr object,
 {
   if (CORBA::is_nil (object))
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT (msg)));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT_TO_TCHAR_IN (msg)));
       return 0;
     }
   return 1;

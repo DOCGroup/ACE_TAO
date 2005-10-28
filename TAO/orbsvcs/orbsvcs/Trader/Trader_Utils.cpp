@@ -899,7 +899,7 @@ copy_in_follow_option (CosTrading::PolicySeq& policy_seq,
 
   CORBA::ULong i = 0;
   for (i = 0; i < policy_seq.length (); i++)
-    if (ACE_OS::strcmp (policy_seq[i].name,
+    if (ACE_OS::strcmp (policy_seq[i].name.in(),
                         POLICY_NAMES[LINK_FOLLOW_RULE]) == 0)
       {
         policy_seq[i].value <<= follow_option;

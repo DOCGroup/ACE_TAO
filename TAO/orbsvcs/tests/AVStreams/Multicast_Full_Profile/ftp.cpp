@@ -103,7 +103,7 @@ int
 Client::parse_args (int argc,
                     char **argv)
 {
-  ACE_Get_Opt opts (argc,argv,"f:a:p:sd");
+  ACE_Get_Arg_Opt<char> opts (argc,argv,"f:a:p:sd");
 
   this->use_sfp_ = 0;
   int c;
@@ -382,7 +382,7 @@ Client::run (void)
 }
 
 int
-main (int argc,
+ACE_TMAIN (int argc,
       char *argv[])
 {
 

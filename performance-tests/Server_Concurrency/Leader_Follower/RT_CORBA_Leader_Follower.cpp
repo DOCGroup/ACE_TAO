@@ -246,7 +246,7 @@ Leader_Follower_Task::svc (void)
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("m:t:d:s:"));
+  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT ("m:t:d:s:"));
   int c;
 
   while ((c = get_opt ()) != -1)

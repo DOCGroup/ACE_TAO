@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "tao/ORB.h"
 #include "tao/RTCORBA/RTCORBA.h"
 
@@ -19,7 +20,7 @@ static int iterations = 5;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "i:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -89,13 +90,15 @@ create_threadpool_with_lanes (RTCORBA::RTORB_ptr rt_orb
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
+        CORBA::ORB_init (convert.get_argc(),
+                         convert.get_ASCII_argv(),
                          ""
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -125,7 +128,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       int result =
-        parse_args (argc, argv);
+        parse_args (convert.get_argc(), convert.get_ASCII_argv());
       if (result != 0)
         return result;
 

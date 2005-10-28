@@ -68,7 +68,7 @@ class trapapp {
 
 
 // main entry point
-int main( int argc, char *argv[])
+int ACE_TMAIN( int argc, ACE_TCHAR *argv[])
 {
   trapapp get(argc, argv);
   if (get.valid())
@@ -98,23 +98,23 @@ trapapp::trapapp(int argc, char *argv[]): valid_(0)
    }
 
    ACE_Argv_Type_Converter to_tchar (argc, argv);
-   ACE_Get_Opt get_opt (argc,
+   ACE_Get_Arg_Opt get_opt (argc,
                         to_tchar.get_TCHAR_argv (),
                         ACE_TEXT ("c:e:t:"));
    for (int c; (c = get_opt ()) != -1; )
      switch (c)
        {
        case 'c': // community string
-         community_ = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg());
+         community_ = ACE_TEXT_TO_CHAR_IN (get_opt.opt_arg());
          target_.set_read_community(community_);
          break;
 
        case 'e': // trap oid to send
-         ent = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg());
+         ent = ACE_TEXT_TO_CHAR_IN (get_opt.opt_arg());
          break;
 
        case 't': // trap oid
-         trap = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg());
+         trap = ACE_TEXT_TO_CHAR_IN (get_opt.opt_arg());
          break;;
 
        default:

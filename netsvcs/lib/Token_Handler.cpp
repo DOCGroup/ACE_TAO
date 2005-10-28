@@ -42,7 +42,7 @@ ACE_Token_Acceptor::parse_args (int argc, char *argv[])
 
   ACE_LOG_MSG->open ("Token Service");
 
-  ACE_Get_Opt get_opt (argc, argv, "p:", 0);
+  ACE_Get_Arg_Opt get_opt (argc, argv, "p:", 0);
 
   for (int c; (c = get_opt ()) != -1; )
     {

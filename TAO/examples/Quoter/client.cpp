@@ -42,7 +42,7 @@ Quoter_Client::Quoter_Client (void)
 int
 Quoter_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "n:d:lx");
+  ACE_Get_Arg_Opt<char> get_opts (argc_, argv_, "n:d:lx");
   int opt;
   int exit_code = 0;
 
@@ -372,7 +372,7 @@ Quoter_Client::init (int argc, char **argv)
 // This function runs the test.
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
   ACE_Thread_Manager thr_mgr;
 

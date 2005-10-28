@@ -90,7 +90,7 @@ void ParameterList::addParameter(char* newParameter)
 
     delete w_output;
 #else
-    this->addParameter(ACE_TEXT_CHAR_TO_TCHAR(newParameter));
+    this->addParameter(ACE_TEXT_TO_TCHAR_IN(newParameter));
 #endif  // NO_ACE
 }
 

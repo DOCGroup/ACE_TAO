@@ -76,7 +76,7 @@ class RedGreen_Test
   void dump_results (void);
 
   void init (int argc,
-             char *argv []
+             ACE_TCHAR *argv[])
              ACE_ENV_ARG_DECL);
   // Initialize the Client.
 
@@ -92,7 +92,7 @@ class RedGreen_Test
 
  protected:
   void init_ORB (int argc,
-                 char *argv []
+                 char *argv[])
                  ACE_ENV_ARG_DECL);
   // Initializes the ORB.
 

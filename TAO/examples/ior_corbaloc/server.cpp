@@ -5,7 +5,7 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/CosNamingC.h"
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY

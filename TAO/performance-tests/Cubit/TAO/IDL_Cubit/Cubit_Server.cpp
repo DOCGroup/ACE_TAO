@@ -20,7 +20,7 @@ Cubit_Server::Cubit_Server (void)
 int
 Cubit_Server::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "df:");
+  ACE_Get_Arg_Opt<char> get_opts (argc_, argv_, "df:");
   int c;
 
   while ((c = get_opts ()) != -1)

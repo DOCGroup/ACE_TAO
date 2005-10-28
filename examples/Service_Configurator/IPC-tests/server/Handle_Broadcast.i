@@ -50,7 +50,7 @@ ACE_INLINE int
 Handle_Broadcast::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_INET_Addr sba (Handle_Broadcast::DEFAULT_PORT);
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("p:"), 0);
+  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT("p:"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
      switch (c)

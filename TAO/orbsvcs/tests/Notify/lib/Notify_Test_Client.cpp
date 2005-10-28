@@ -34,7 +34,7 @@ Notify_Test_Client::~Notify_Test_Client ()
 }
 
 int
-Notify_Test_Client::init (int argc, char *argv [] ACE_ENV_ARG_DECL)
+Notify_Test_Client::init (int argc, ACE_TCHAR *argv[]) ACE_ENV_ARG_DECL)
 {
   int status = this->init_ORB (argc, argv ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
@@ -57,7 +57,7 @@ Notify_Test_Client::parse_args (int /*argc*/, char** /*argv*/)
 
 int
 Notify_Test_Client::init_ORB (int argc,
-                              char *argv []
+                              char *argv[])
                               ACE_ENV_ARG_DECL)
 {
   this->orb_ = CORBA::ORB_init (argc,

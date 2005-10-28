@@ -21,7 +21,7 @@ Client_Task::Client_Task (int &argc, char **argv)
 int
 Client_Task::parse_args (void)
 {
-    ACE_Get_Opt get_opts (this->argc_, this->argv_, "k:n:");
+    ACE_Get_Arg_Opt<char> get_opts (this->argc_, this->argv_, "k:n:");
     int c;
 
     while ((c = get_opts ()) != -1)

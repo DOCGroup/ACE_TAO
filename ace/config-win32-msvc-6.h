@@ -178,7 +178,8 @@
 # pragma warning(default: 4201)  /* winnt.h uses nameless structs */
 
 # define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64d")
-# define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64u")
+# define ACE_UINT64_FORMAT_SPECIFIER_A "%I64u"
+# define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT (ACE_UINT64_FORMAT_SPECIFIER_A)
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_MSVC_6_H */

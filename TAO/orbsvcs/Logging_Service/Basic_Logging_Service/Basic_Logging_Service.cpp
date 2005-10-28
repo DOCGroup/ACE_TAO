@@ -4,6 +4,7 @@
 #include "tao/IORTable/IORTable.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Basic_Logging_Service,
            Basic_Logging_Service,
@@ -12,8 +13,6 @@ ACE_RCSID (Basic_Logging_Service,
 
 Basic_Logging_Service::Basic_Logging_Service (void)
   : service_name_ ("BasicLogFactory"),
-    ior_file_name_ (0),
-    pid_file_name_ (0),
     bind_to_naming_service_ (1),
     nthreads_ (0)
 {
@@ -26,7 +25,7 @@ Basic_Logging_Service::~Basic_Logging_Service (void)
 }
 
 void
-Basic_Logging_Service::init_ORB  (int& argc, char *argv []
+Basic_Logging_Service::init_ORB  (int& argc, char *argv[]
                                   ACE_ENV_ARG_DECL)
 {
   this->orb_ = CORBA::ORB_init (argc,
@@ -54,9 +53,9 @@ Basic_Logging_Service::init_ORB  (int& argc, char *argv []
 }
 
 int
-Basic_Logging_Service::parse_args (int argc, char *argv[])
+Basic_Logging_Service::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:o:p:t:x"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT("n:o:p:t:x"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -64,15 +63,15 @@ Basic_Logging_Service::parse_args (int argc, char *argv[])
       switch (opt)
         {
         case 'n':
-          service_name_ = get_opt.opt_arg();
+          service_name_.set (ACE_TEXT_TO_CHAR_IN (get_opt.opt_arg()));
           break;
 
         case 'o':
-          ior_file_name_ = get_opt.opt_arg();
+          ior_file_name_.set (ACE_TEXT_TO_CHAR_IN (get_opt.opt_arg()));
           break;
 
         case 'p':
-          pid_file_name_ = get_opt.opt_arg();
+          pid_file_name_.set (ACE_TEXT_TO_CHAR_IN (get_opt.opt_arg()));
           break;
 
         case 't':
@@ -102,14 +101,16 @@ Basic_Logging_Service::parse_args (int argc, char *argv[])
 }
 
 int
-Basic_Logging_Service::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
+Basic_Logging_Service::init (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   // initalize the ORB.
-  this->init_ORB (argc, argv
+  this->init_ORB (convert.get_argc(), convert.get_ASCII_argv()
                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  if (this->parse_args (argc, argv) == -1)
+  if (this->parse_args (convert.get_argc(), convert.get_TCHAR_argv()) == -1)
     return -1;
 
   // Activate the basic log factory
@@ -140,9 +141,9 @@ Basic_Logging_Service::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
       ACE_CHECK_RETURN (-1);
     }
 
-  if (ior_file_name_ != 0)
+  if (ior_file_name_.length() != 0)
     {
-      FILE* iorf = ACE_OS::fopen (ior_file_name_, ACE_TEXT("w"));
+      FILE* iorf = ACE_OS::fopen (ior_file_name_.fast_rep(), ACE_TEXT("w"));
       if (iorf == 0) {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
@@ -154,9 +155,9 @@ Basic_Logging_Service::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
       ACE_OS::fclose (iorf);
     }
 
-  if (pid_file_name_ != 0)
+  if (pid_file_name_.length() != 0)
     {
-      FILE* pidf = ACE_OS::fopen (pid_file_name_, ACE_TEXT("w"));
+      FILE* pidf = ACE_OS::fopen (pid_file_name_.fast_rep(), ACE_TEXT("w"));
       if (pidf != 0)
         {
           ACE_OS::fprintf (pidf,
@@ -177,7 +178,7 @@ Basic_Logging_Service::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
 
       CosNaming::Name name (1);
       name.length (1);
-      name[0].id = CORBA::string_dup (this->service_name_);
+      name[0].id = CORBA::string_dup (this->service_name_.fast_rep());
 
       this->naming_->rebind (name,
                              obj.in ()
@@ -264,7 +265,7 @@ Basic_Logging_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
       // Unbind from the naming service.
       CosNaming::Name name (1);
       name.length (1);
-      name[0].id = CORBA::string_dup (this->service_name_);
+      name[0].id = CORBA::string_dup (this->service_name_.fast_rep());
 
       this->naming_->unbind (name
                              ACE_ENV_ARG_PARAMETER);

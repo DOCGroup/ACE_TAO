@@ -139,7 +139,7 @@ set_temp(CCS::Thermostat_ptr tmstat, CCS::TempType new_temp)
 //----------------------------------------------------------------
 
 int
-main(int argc, char * argv[])
+ACE_TMAIN(int argc, ACE_TCHAR * argv[])
 {
     CORBA::ULong i = 0;
     try {

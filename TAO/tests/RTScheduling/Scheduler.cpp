@@ -3,6 +3,7 @@
 #include "Scheduler.h"
 #include "tao/ORB.h"
 #include "ace/Atomic_Op.h"
+#include "ace/Argv_Type_Converter.h"
 #include "tao/RTScheduling/Request_Interceptor.h"
 
 TAO_Scheduler::TAO_Scheduler (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)

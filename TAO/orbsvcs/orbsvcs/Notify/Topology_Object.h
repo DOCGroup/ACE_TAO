@@ -45,7 +45,7 @@
 //
 namespace TAO_Notify
 {
-  static const char TOPOLOGY_ID_NAME[] = "TopologyID";
+  static const ACE_TCHAR TOPOLOGY_ID_NAME[] = ACE_TEXT("TopologyID");
 
   class Topology_Saver;
   class Topology_Parent;

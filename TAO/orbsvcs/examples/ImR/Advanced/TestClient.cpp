@@ -12,7 +12,7 @@
 
 using std::string;
 
-TestClient::TestClient(CORBA::ORB_ptr orb, int argc, char* argv[])
+TestClient::TestClient(CORBA::ORB_ptr orb, int argc, ACE_TCHAR* argv[])
 : orb_(CORBA::ORB::_duplicate(orb))
 , pauseType_('s')
 , startupPause_(0)
@@ -32,9 +32,9 @@ TestClient::~TestClient()
 {
 }
 
-int TestClient::parseCommands(int argc, char* argv[])
+int TestClient::parseCommands(int argc, ACE_TCHAR* argv[])
 {
-  ACE_Get_Opt get_opts(argc, argv, "s:t:i:r:x:e:z:");
+  ACE_Get_Arg_Opt<char> get_opts(argc, argv, "s:t:i:r:x:e:z:");
   int c;
   while ((c = get_opts()) != -1)
   {

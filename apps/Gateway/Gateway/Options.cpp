@@ -173,7 +173,7 @@ int
 Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
   // Assign defaults.
-  ACE_Get_Opt get_opt (argc,
+  ACE_Get_Arg_Opt get_opt (argc,
                        argv,
                        ACE_TEXT("a:bC:c:dm:P:p:q:r:t:vw:"),
                        0);

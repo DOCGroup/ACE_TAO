@@ -67,7 +67,7 @@ class getapp {
 
 
 // main entry point
-int main( int argc, char *argv[])
+int ACE_TMAIN( int argc, ACE_TCHAR *argv[])
 {
   getapp get(argc, argv);
   if (get.valid())
@@ -95,22 +95,22 @@ getapp::getapp(int argc, char *argv[]): valid_(0)
    }
 
    ACE_Argv_Type_Converter to_tchar (argc, argv);
-   ACE_Get_Opt get_opt (argc,
+   ACE_Get_Arg_Opt get_opt (argc,
                         to_tchar.get_TCHAR_argv (),
                         ACE_TEXT ("o:c:r:t:p:"));
    for (int c; (c = get_opt ()) != -1; )
      switch (c)
        {
        case 'o':
-         req = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg());
+         req = ACE_TEXT_TO_CHAR_IN (get_opt.opt_arg());
          if (req.valid() == 0)
          cout << "ERROR: oid value: "
-              << ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg())
+              << ACE_TEXT_TO_CHAR_IN (get_opt.opt_arg())
               << "is not valid. using default.\n";
          break;
 
        case 'c':
-         community_ = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg());
+         community_ = ACE_TEXT_TO_CHAR_IN (get_opt.opt_arg());
          target_.set_read_community(community_);
          break;
 

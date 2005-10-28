@@ -305,7 +305,7 @@ template class ACE_Atomic_Op_Ex <ACE_Thread_Mutex, size_t>;
 #else /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS && !ACE_POSIX_AIOCB_PROACTOR*/
 
 int
-main (int, char *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_DEBUG ((LM_DEBUG,
               "This example cannot work with AIOCB_Proactor.\n"));

@@ -28,20 +28,24 @@
 
 /*
  *  These definitions are for backward compatibility with previous versions.
- *  of ACE_Get_Opt.
+ *  of ACE_Get_Arg_Opt.
  */
 
 /**
- * @class ACE_Get_Opt
+ * @class ACE_Get_Arg_Opt
  *
  * @brief Iterator for parsing command-line arguments.
  *
  * This is a C++ wrapper for getopt(3c) and getopt_long(3c).
  */
 
-class ACE_Export ACE_Get_Opt
+template < typename CHAR_TYPE = char >
+class ACE_Get_Arg_Opt
 {
 public:
+  typedef CHAR_TYPE Char;
+  typedef ACE_String_Base<Char> String;
+
   /// Mutually exclusive ordering values.
   enum
   {
@@ -167,16 +171,16 @@ public:
    * xxx" will only find "xxx" as the argument for @e c if @a optstring is
    * specified as @c "abc:" not @c "abc::".
    */
-  ACE_Get_Opt (int argc,
-               ACE_TCHAR **argv,
-               const ACE_TCHAR *optstring = ACE_LIB_TEXT (""),
+  ACE_Get_Arg_Opt (int argc,
+               Char **argv,
+               const Char *optstring = 0,
                int skip_args = 1,
                int report_errors = 0,
                int ordering = PERMUTE_ARGS,
                int long_only = 0);
 
   /// Default dtor.
-  ~ACE_Get_Opt (void);
+  ~ACE_Get_Arg_Opt (void);
 
   /**
    * Scan elements of @a argv (whose length is @a argc) for short option
@@ -216,12 +220,14 @@ public:
    */
   int operator () (void);
 
+  static int eof();
+
   /**
    * For communication from @c operator() to the caller.  When
    * @c operator() finds an option that takes an argument, the argument
    * value is returned from this method, otherwise it returns 0.
    */
-  ACE_TCHAR *opt_arg (void) const;
+  Char *opt_arg (void) const;
 
   /**
    * Returns the most recently matched option character. Especially
@@ -229,7 +235,7 @@ public:
    * that's required, since this allows the caller to learn what option
    * was specified without its required argument.
    */
-  int opt_opt (void);
+  Char opt_opt (void);
 
   /**
    * Index in @a argv of the next element to be scanned.  This is used
@@ -256,7 +262,7 @@ public:
    * @retval 0  Success
    * @retval -1 The long option can not be added.
    */
-  int long_option (const ACE_TCHAR *name,
+  int long_option (const Char *name,
                    OPTION_ARG_MODE has_arg = NO_ARG);
 
   /// Adds a long option with a corresponding short option.
@@ -273,32 +279,32 @@ public:
    * @retval 0  Success
    * @retval -1 The long option can not be added.
    */
-  int long_option (const ACE_TCHAR *name,
+  int long_option (const Char *name,
                    int short_option,
                    OPTION_ARG_MODE has_arg = NO_ARG);
 
   /// Returns the name of the long option found on the last call to
   /// @c operator() or 0 if none was found.
-  const ACE_TCHAR *long_option (void) const;
+  const Char *long_option (void) const;
 
   /// The number of arguments in the internal @c argv_.
   int argc (void) const;
 
   /// Accessor for the internal @c argv_ pointer.
-  ACE_TCHAR **argv (void) const;
+  Char **argv (void) const;
 
   /// Accessor for the @c last_option that was processed.  This allows
   /// applications to know if the found option was a short or long
   /// option, and is especially useful in cases where it was invalid
   /// and the caller wants to print out the invalid value.
-  const ACE_TCHAR *last_option (void) const;
+  const Char *last_option (void) const;
 
   /// Dump the state of an object.
   void dump (void) const;
 
   /// Return the @a optstring.  This is handy to verify that calls to
   /// long_option added short options as expected.
-  const ACE_TCHAR *optstring (void) const;
+  const Char *optstring (void) const;
 
 public:
   /*
@@ -323,7 +329,7 @@ public:
    * write code that relies on this member being public; use the
    * @c argv() accessor method instead.
    */
-  ACE_TCHAR **argv_;
+  Char **argv_;
 
   /// Index in @c argv_ of the next element to be scanned.
   /**
@@ -352,18 +358,18 @@ public:
    * write code that relies on this member being public; use the
    * @c opt_arg() accessor method instead.
    */
-  ACE_TCHAR *optarg;
+  Char *optarg;
 
 private:
   /**
    * @class ACE_Get_Opt_Long_Option  This class is for internal use
-   * in the ACE_Get_Opt class, and is inaccessible to users.
+   * in the ACE_Get_Arg_Opt class, and is inaccessible to users.
    */
   class ACE_Get_Opt_Long_Option
   {
   public:
     /// ctor
-    ACE_Get_Opt_Long_Option (const ACE_TCHAR *name,
+    ACE_Get_Opt_Long_Option (const Char *name,
                              int has_arg,
                              int val = 0);
 
@@ -373,7 +379,7 @@ private:
     bool operator < (const ACE_Get_Opt_Long_Option &rhs);
 
     /// Long option name.
-    const ACE_TCHAR *name_;
+    const Char *name_;
 
     /// Contains value for <OPTION_ARG_MODE>.
     int has_arg_;
@@ -388,7 +394,7 @@ private:
   };
 
   /// Updates nextchar_.
-  int nextchar_i (void);
+  Char nextchar_i (void);
 
   /// Handles long options.
   int long_option_i (void);
@@ -405,10 +411,10 @@ private:
   int permute (void);
 
   /// Set last_option.
-  void last_option (const ACE_TString &s);
+  void last_option (const String &s);
 
   /// Holds the option string.
-  ACE_TString *optstring_;
+  String *optstring_;
 
   /// Treat all options as long options.
   int long_only_;
@@ -420,7 +426,7 @@ private:
 
   /// This is the last option, short or long, that was processed.  This
   /// is handy to have in cases where the option passed was invalid.
-  ACE_TString *last_option_;
+  String *last_option_;
 
   /**
    * The next char to be scanned in the option-element in which the
@@ -429,7 +435,7 @@ private:
    * If this is zero, or a null string, it means resume the scan
    * by advancing to the next <argv>-element.
    */
-  ACE_TCHAR *nextchar_;
+  Char *nextchar_;
 
   /// Most recently matched short option character.
   int optopt_;
@@ -454,13 +460,13 @@ private:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  ACE_UNIMPLEMENTED_FUNC (ACE_Get_Opt (const ACE_Get_Opt &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Get_Opt &operator= (const ACE_Get_Opt &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Get_Arg_Opt (const ACE_Get_Arg_Opt<CHAR_TYPE> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Get_Arg_Opt &operator= (const ACE_Get_Arg_Opt<CHAR_TYPE> &))
 };
 
-#if defined (__ACE_INLINE__)
+typedef ACE_Get_Arg_Opt< ACE_TCHAR > ACE_Get_Opt;
+
 #include "ace/Get_Opt.inl"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_GET_OPT_H */

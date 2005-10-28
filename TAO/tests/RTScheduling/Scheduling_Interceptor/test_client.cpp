@@ -3,16 +3,17 @@
 #include "tao/RTScheduling/RTScheduler_Manager.h"
 #include "testC.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/SString.h"
 
 ACE_CString ior = "file://test.ior";
 
 int
 parse_args (int argc,
-            ACE_TCHAR* argv [])
+            char* argv [])
 {
   // Parse command line arguments
-  ACE_Get_Opt opts (argc, argv, "f:");
+  ACE_Get_Arg_Opt<char> opts (argc, argv, "f:");
 
   int c;
   while ((c= opts ()) != -1)
@@ -21,7 +22,7 @@ parse_args (int argc,
         {
         case 'f':
           ior = "file://";
-          ior += opts.opt_arg ();
+          ior += ACE_TEXT_TO_CHAR_IN(opts.opt_arg ());
           break;
         default:
           ACE_DEBUG ((LM_DEBUG, "Unknown Option\n"));
@@ -36,20 +37,22 @@ parse_args (int argc,
 #endif /* ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO */
 
 int
-main (int argc, char* argv [])
+ACE_TMAIN (int argc, ACE_TCHAR* argv [])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   CORBA::ORB_var orb;
   test_var server;
   ACE_TRY_NEW_ENV
     {
 
-      orb = CORBA::ORB_init (argc,
-                             argv,
+      orb = CORBA::ORB_init (convert.get_argc(),
+                             convert.get_ASCII_argv(),
                              ""
                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (parse_args (argc, argv) == -1)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) == -1)
         return (-1);
 
       CORBA::Object_ptr manager_obj = orb->resolve_initial_references ("RTSchedulerManager"

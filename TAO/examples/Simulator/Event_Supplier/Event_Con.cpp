@@ -253,7 +253,7 @@ Demo_Consumer::shutdown (void)
 static unsigned int
 get_options (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "Oc:djm:s:t:?");
+  ACE_Get_Arg_Opt<char> get_opt (argc, argv, "Oc:djm:s:t:?");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -289,7 +289,7 @@ get_options (int argc, char *argv [])
 // function main.
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRY_NEW_ENV
     {

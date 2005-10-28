@@ -612,7 +612,7 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
   // clean it up in the destructor).
   this->database (this->process_name ());
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT ("b:c:dh:l:P:p:s:T:vr"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_LIB_TEXT ("b:c:dh:l:P:p:s:T:vr"));
 
   for (int c; (c = get_opt ()) != -1; )
     switch (c)

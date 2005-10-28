@@ -37,7 +37,7 @@ Multiple::init (int argc, char *argv[])
 }
 
 int
-Multiple::init_ORB  (int argc, char *argv [])
+Multiple::init_ORB  (int argc, char *argv[]))
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY

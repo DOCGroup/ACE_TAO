@@ -18,7 +18,7 @@ namespace TAO_FTRTEC {
   void Log::hexdump(unsigned int level, const char* buf, size_t len, const char* msg)
   {
     if (Log::log_level_ >= level)
-      ACE_HEX_DUMP((LM_DEBUG, buf, len, msg));
+      ACE_HEX_DUMP((LM_DEBUG, buf, len, ACE_TEXT_TO_TCHAR_IN(msg)));
   }
 #else // NDEBUG
   ACE_INLINE

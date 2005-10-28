@@ -83,7 +83,7 @@ My_Test_Object::id (CORBA::Short id ACE_ENV_ARG_DECL_NOT_USED)
 // This function runs the test.
 
 int
-main (int argc, ACE_TCHAR **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
   int c_breath = 4;
   int c_depth = 4;
@@ -91,7 +91,7 @@ main (int argc, ACE_TCHAR **argv)
   ACE_TCHAR *ns1ref = 0;
   ACE_TCHAR *ns2ref = 0;
 
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("b:d:o:p:q:"));
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, ACE_TEXT ("b:d:o:p:q:"));
   int c;
   int i;
 
@@ -161,7 +161,7 @@ main (int argc, ACE_TCHAR **argv)
     // Resolve the first name server
 
     CORBA::Object_var ns1obj = orb->string_to_object (
-                            ACE_TEXT_ALWAYS_CHAR (ns1ref) ACE_ENV_ARG_PARAMETER);
+                            ACE_TEXT_TO_CHAR_IN (ns1ref) ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK_EX(bl_a);
 
     if (CORBA::is_nil (ns1obj.in ()))
@@ -177,7 +177,7 @@ main (int argc, ACE_TCHAR **argv)
     // Resolve the second name server
 
     CORBA::Object_var ns2obj = orb->string_to_object (
-                            ACE_TEXT_ALWAYS_CHAR (ns2ref) ACE_ENV_ARG_PARAMETER);
+                            ACE_TEXT_TO_CHAR_IN (ns2ref) ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK_EX(bl_a);
 
     if (CORBA::is_nil (ns2obj.in ()))

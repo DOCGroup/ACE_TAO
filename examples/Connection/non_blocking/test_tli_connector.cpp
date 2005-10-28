@@ -14,7 +14,7 @@ typedef Peer_Handler<ACE_TLI_STREAM> PEER_HANDLER;
 typedef IPC_Client<PEER_HANDLER, ACE_TLI_CONNECTOR> IPC_CLIENT;
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Perform Service_Config initializations
   ACE_Service_Config daemon (argv[0]);

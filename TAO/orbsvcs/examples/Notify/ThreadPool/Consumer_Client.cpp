@@ -215,7 +215,7 @@ TAO_Notify_ThreadPool_Consumer_Client::svc (void)
 }
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRY_NEW_ENV
     {

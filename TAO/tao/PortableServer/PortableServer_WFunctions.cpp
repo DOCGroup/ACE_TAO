@@ -16,7 +16,7 @@ namespace PortableServer
     // We DO NOT include the zero terminator, as this is simply an
     // artifact of the way strings are stored in C.
     //
-    u_int string_length = ACE_OS::wslen (string);
+    u_int string_length = ACE_OS::strlen (string);
 
     CORBA::ULong buffer_size = string_length * sizeof (CORBA::WChar);
 

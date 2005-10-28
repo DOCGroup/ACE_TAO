@@ -39,7 +39,7 @@ ACE_URL_Addr::addr_to_string (ACE_TCHAR *s,
   else
     {
       ACE_OS::sprintf (s, ACE_TEXT ("%s:%d/%s"),
-                       ACE_TEXT_CHAR_TO_TCHAR (ipaddr_format == 0
+                       ACE_TEXT_TO_TCHAR_IN (ipaddr_format == 0
                                                ? this->get_host_name ()
                                                : this->get_host_addr ()),
                        this->get_port_number (),
@@ -73,7 +73,7 @@ ACE_URL_Addr::addr_to_string (int ipaddr_format) const
     }
   ACE_OS::sprintf (this->addr_string_,
                    ACE_TEXT ("%s:%d/%s"),
-                   ACE_TEXT_CHAR_TO_TCHAR (ipaddr_format == 0
+                   ACE_TEXT_TO_TCHAR_IN (ipaddr_format == 0
                                            ? this->get_host_name ()
                                           : this->get_host_addr ()),
                    this->get_port_number (),

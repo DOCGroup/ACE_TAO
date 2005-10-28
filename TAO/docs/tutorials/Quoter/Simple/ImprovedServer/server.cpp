@@ -6,7 +6,7 @@
 #include "Stock_i.h"
 #include "ace/streams.h"
 
-int main (int argc, char* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   try {
     // First initialize the ORB, that will remove some arguments...

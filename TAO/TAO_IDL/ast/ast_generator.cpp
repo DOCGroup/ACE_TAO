@@ -858,7 +858,7 @@ AST_Generator::create_wstring (AST_Expression *ms)
                   AST_String (nt,
                               &n,
                               ms,
-                              sizeof (ACE_OS::WChar)),
+                              sizeof (wchar_t)),
                   0);
 
   return retval;

@@ -174,7 +174,7 @@ Handle_Events::serve (char *buf)
 static void
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "i:u:q");
+  ACE_Get_Arg_Opt get_opt (argc, argv, "i:u:q");
 
   int c;
 
@@ -205,7 +205,7 @@ handler (int)
 }
 
 int 
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
   ACE_OS::signal (SIGCLD, SIG_IGN);
@@ -231,7 +231,7 @@ main (int argc, char *argv[])
 }
 #else
 int 
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_ERROR ((LM_ERROR, "error: %s must be run on a platform that support IP multicast\n",
 	    argv[0]));

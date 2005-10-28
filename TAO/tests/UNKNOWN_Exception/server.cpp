@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "testS.h"
 #include "tao/PortableServer/Root_POA.h"
 #include "ace/OS_NS_stdio.h"
@@ -160,7 +161,7 @@ test_factory_i::shutdown (void)
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "o:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -184,13 +185,15 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   try
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
+        CORBA::ORB_init (convert.get_argc(),
+                         convert.get_ASCII_argv(),
                          "");
 
       CORBA::Object_var poa_object =
@@ -202,7 +205,7 @@ main (int argc, char *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
         return -1;
 
       {
@@ -218,7 +221,7 @@ main (int argc, char *argv[])
         CORBA::String_var ior =
           orb->object_to_string (test_factory.in ());
 
-        FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+        FILE *output_file = ACE_OS::fopen (ior_output_file, ACE_TEXT("w"));
         if (output_file == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Cannot open output file for writing IOR: %s",

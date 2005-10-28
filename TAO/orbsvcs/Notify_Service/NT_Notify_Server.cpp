@@ -28,7 +28,7 @@
 #include "ace/Log_Msg.h"
 
 int
-main (int, char*[])
+ACE_TMAIN (int, ACE_TCHAR*[])
 {
   ACE_ERROR ((LM_INFO,
               "This program is only supported "
@@ -57,10 +57,10 @@ public:
   Options (void);
   ~Options (void);
 
-  int run (int argc, char *argv[]);
+  int run (int argc, ACE_TCHAR *argv[]);
 
 private:
-  void parse_args (int argc, char *argv[]);
+  void parse_args (int argc, ACE_TCHAR *argv[]);
   void print_usage_and_die (void);
 
 private:
@@ -115,9 +115,9 @@ Options::print_usage_and_die (void)
 }
 
 void
-Options::parse_args (int argc, char *argv[])
+Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "i:rskt:d");
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT("i:rskt:d"));
   int c;
 
   while ((c = get_opt ()) != -1)
@@ -150,7 +150,7 @@ Options::parse_args (int argc, char *argv[])
       default:
         // -i can also be given without a value - if so, it defaults
         // to defined value.
-        if (ACE_OS::strcmp (get_opt.argv_[get_opt.optind-1], "-i") == 0)
+        if (ACE_OS::strcmp (get_opt.argv_[get_opt.optind-1], ACE_TEXT("-i")) == 0)
           {
             opt_install = 1;
             opt_startup = DEFAULT_SERVICE_INIT_STARTUP;
@@ -172,13 +172,13 @@ ConsoleHandler (DWORD /* ctrlType */)
 
 ACE_NT_SERVICE_DEFINE (service,
                        TAO_NT_Notify_Service,
-                       "TAO NT Notify Service");
+                       ACE_TEXT("TAO NT Notify Service"));
 
 int
-Options::run (int argc, char* argv[])
+Options::run (int argc, ACE_TCHAR* argv[])
 {
-  SERVICE::instance ()->name ("TAO_NT_Notify_Service",
-                              "TAO NT Notify Service");
+  SERVICE::instance ()->name (ACE_TEXT("TAO_NT_Notify_Service"),
+                              ACE_TEXT("TAO NT Notify Service"));
 
   this->parse_args (argc, argv);
 
@@ -223,7 +223,7 @@ Options::run (int argc, char* argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   return OPTIONS::instance ()->run (argc, argv);
 }

@@ -302,7 +302,7 @@ Distributer::done (int done)
 }
 
 int
-main (int argc,
+ACE_TMAIN (int argc,
       char **argv)
 {
   ACE_DECLARE_NEW_CORBA_ENV;

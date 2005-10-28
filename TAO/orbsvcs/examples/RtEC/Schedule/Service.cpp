@@ -25,7 +25,7 @@ int parse_args (int argc, char *argv[]);
 typedef TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> RECONFIG_SCHED_TYPE;
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 
@@ -383,7 +383,7 @@ main (int argc, char* argv[])
 
 int parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "c");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "c");
   int c;
 
   while ((c = get_opts ()) != -1)

@@ -90,7 +90,7 @@ CC_Client::read_ior (char *filename)
 int
 CC_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dc:sf:k:xbhe:");
+  ACE_Get_Arg_Opt<char> get_opts (argc_, argv_, "dc:sf:k:xbhe:");
   int c;
   int result;
 
@@ -453,7 +453,7 @@ CC_Client::init (int argc, char **argv)
 // This function runs the test.
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
   CC_Client cc_client;
 

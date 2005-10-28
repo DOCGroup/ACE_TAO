@@ -216,7 +216,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
   int opt             = 0;
   int auto_test_recv  = 0;
   int result          = 0;
-  ACE_Get_Opt opts (argc, argv, ACE_TEXT ("p:t:n:sra"));
+  ACE_Get_Arg_Opt<ACE_TCHAR>  opts (argc, argv, ACE_TEXT ("p:t:n:sra"));
   while ((opt = opts ()) != -1)
     switch (opt)
       {

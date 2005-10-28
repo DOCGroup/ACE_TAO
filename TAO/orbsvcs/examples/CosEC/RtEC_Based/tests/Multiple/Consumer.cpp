@@ -11,9 +11,9 @@ Consumer::Consumer ()
 }
 
 int
-Consumer::parse_args (int argc, char *argv [])
+Consumer::parse_args (int argc, ACE_TCHAR *argv[])
 {
- ACE_Get_Opt get_opt (argc, argv, "n:c:");
+ ACE_Get_Arg_Opt<char> get_opt (argc, argv, "n:c:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -176,7 +176,7 @@ Consumer::init_Consumer (void)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Consumer cons;
 

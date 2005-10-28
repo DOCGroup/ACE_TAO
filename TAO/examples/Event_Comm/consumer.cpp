@@ -110,7 +110,7 @@ Consumer::initialize (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Initialize the supplier and consumer object references.
   Consumer consumer;

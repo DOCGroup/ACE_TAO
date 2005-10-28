@@ -34,7 +34,7 @@ int orb_threads = 1; // Number of threads running inside the ORB.
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:o:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "i:o:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -79,7 +79,7 @@ static ACE_THR_FUNC_RETURN svc (void *arg)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRY_NEW_ENV
     {

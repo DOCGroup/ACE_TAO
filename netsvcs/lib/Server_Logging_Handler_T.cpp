@@ -163,10 +163,10 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::op
 
 #if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES) && !defined (__GNUG__)
   this->receiver_.m_ =
-    ACE_TString (ACE_TEXT_CHAR_TO_TCHAR (client_addr.get_host_name ()));
+    ACE_TString (ACE_TEXT_TO_TCHAR_IN (client_addr.get_host_name ()));
 #else
   this->host_name_ =
-    ACE_TString (ACE_TEXT_CHAR_TO_TCHAR (client_addr.get_host_name ()));
+    ACE_TString (ACE_TEXT_TO_TCHAR_IN (client_addr.get_host_name ()));
 #endif /* ! ACE_HAS_BROKEN_HPUX_TEMPLATES && ! __GNUG__ */
 
   ACE_DEBUG ((LM_DEBUG,
@@ -249,7 +249,7 @@ ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::parse_args (int argc, ACE_TCHAR *a
 
   ACE_LOG_MSG->open (ACE_TEXT ("Logging Service"));
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:"), 0);
+  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT ("p:"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
     {

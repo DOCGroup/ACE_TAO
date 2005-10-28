@@ -30,24 +30,24 @@ class wchar_reference
  public:
   wchar_reference (int v = 0);
   void set_verbose (int v);
-  ACE_OS::WChar get_wchar (short key);
-  const ACE_OS::WChar *get_wstring (short key);
-  ACE_OS::WChar *get_warray (short key);
-  void assign_warray (short key, ACE_OS::WChar *warray);
+  wchar_t get_wchar (short key);
+  const wchar_t *get_wstring (short key);
+  wchar_t *get_warray (short key);
+  void assign_warray (short key, wchar_t *warray);
 
-  const ACE_OS::WChar *get_except (short key);
+  const wchar_t *get_except (short key);
 
-  int match_wchar (short key, ACE_OS::WChar test);
-  int match_wstring (short key, const ACE_OS::WChar* test);
-  int match_warray (short key, const ACE_OS::WChar *test);
-  int match_except (short key, const ACE_OS::WChar *test);
+  int match_wchar (short key, wchar_t test);
+  int match_wstring (short key, const wchar_t* test);
+  int match_warray (short key, const wchar_t *test);
+  int match_except (short key, const wchar_t *test);
 
  private:
 #if defined (ACE_HAS_WCHAR) || defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
-  static ACE_OS::WChar ref_wchar[NUM_KEYS];
-  static const ACE_OS::WChar *ref_wstring[NUM_KEYS];
-  static ACE_OS::WChar ref_warray[NUM_KEYS][10];
-  static const ACE_OS::WChar *ref_except[NUM_KEYS];
+  static wchar_t ref_wchar[NUM_KEYS];
+  static const wchar_t *ref_wstring[NUM_KEYS];
+  static wchar_t ref_warray[NUM_KEYS][10];
+  static const wchar_t *ref_except[NUM_KEYS];
 #endif // ACE_HAS_WCHAR
   int verbose_;
 };

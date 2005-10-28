@@ -271,7 +271,7 @@ Peer_Handler::Peer_Handler (int argc, ACE_TCHAR *argv[])
   // then notifies us.
   this->msg_queue ()->notification_strategy (&this->strategy_);
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("h:p:"));
+  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT("h:p:"));
   int c;
 
   while ((c = get_opt ()) != EOF)

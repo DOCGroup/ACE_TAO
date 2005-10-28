@@ -19,7 +19,7 @@ const RtecEventComm::EventType     MY_EVENT_TYPE = ACE_ES_EVENT_UNDEFINED + 1;
 static const char* ecname = 0;
 
 int
-main (int argc, char* argv[])
+ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   Supplier supplier;
 
@@ -33,7 +33,7 @@ Supplier::Supplier (void)
 }
 
 int
-Supplier::run (int argc, char* argv[])
+Supplier::run (int argc, ACE_TCHAR* argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY

@@ -382,7 +382,7 @@ TAO_Advanced_Resource_Factory::init_protocol_factories (void)
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT("TAO (%P|%t) Unable to add ")
                       ACE_TEXT("<%s> to protocol factory set.\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR(item->protocol_name ().c_str ())));
+                      ACE_TEXT_TO_TCHAR_IN(item->protocol_name ().c_str ())));
 
           delete item;
 
@@ -445,7 +445,7 @@ TAO_Advanced_Resource_Factory::init_protocol_factories (void)
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT("TAO (%P|%t) Unable to add ")
                       ACE_TEXT("<%s> to protocol factory set.\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR(item->protocol_name ().c_str ())));
+                      ACE_TEXT_TO_TCHAR_IN(item->protocol_name ().c_str ())));
 
           delete item;
 
@@ -508,7 +508,7 @@ TAO_Advanced_Resource_Factory::init_protocol_factories (void)
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT("TAO (%P|%t) Unable to add ")
                       ACE_TEXT("<%s> to protocol factory set.\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR(item->protocol_name ().c_str ())));
+                      ACE_TEXT_TO_TCHAR_IN(item->protocol_name ().c_str ())));
 
           delete item;
 
@@ -571,7 +571,7 @@ TAO_Advanced_Resource_Factory::init_protocol_factories (void)
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT("TAO (%P|%t) Unable to add ")
                       ACE_TEXT("<%s> to protocol factory set.\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR(item->protocol_name ().c_str ())));
+                      ACE_TEXT_TO_TCHAR_IN(item->protocol_name ().c_str ())));
 
           delete item;
 
@@ -604,7 +604,7 @@ TAO_Advanced_Resource_Factory::init_protocol_factories (void)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT("TAO (%P|%t) Unable to load ")
                              ACE_TEXT("protocol <%s>, %m\n"),
-                             ACE_TEXT_CHAR_TO_TCHAR(name.c_str ())),
+                             ACE_TEXT_TO_TCHAR_IN(name.c_str ())),
                             -1);
         }
 
@@ -612,7 +612,7 @@ TAO_Advanced_Resource_Factory::init_protocol_factories (void)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT("TAO (%P|%t) Loaded protocol <%s>\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR(name.c_str ())));
+                      ACE_TEXT_TO_TCHAR_IN(name.c_str ())));
         }
     }
  return 0;

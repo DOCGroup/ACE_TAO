@@ -106,7 +106,7 @@ public:
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "a:b:k:m:i:t:x");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "a:b:k:m:i:t:x");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -258,7 +258,7 @@ setup_buffering_constraints (CORBA::ORB_ptr orb
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 

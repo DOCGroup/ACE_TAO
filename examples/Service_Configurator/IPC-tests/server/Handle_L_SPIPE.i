@@ -51,7 +51,7 @@ Handle_L_SPIPE::init (int argc, char *argv[])
 {
   ACE_SPIPE_Addr susp;
   const char     *rendezvous = Handle_L_SPIPE::DEFAULT_RENDEZVOUS;
-  ACE_Get_Opt    get_opt (argc, argv, "r:", 0);
+  ACE_Get_Arg_Opt    get_opt (argc, argv, "r:", 0);
 
   for (int c; (c = get_opt ()) != -1; )
      switch (c)

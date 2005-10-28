@@ -5,7 +5,7 @@
 #include "CosEvent_Utilities.h"
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Basic basic;
 
@@ -61,7 +61,7 @@ Basic::init (int argc, char *argv[]
 }
 
 void
-Basic::init_ORB  (int argc, char *argv []
+Basic::init_ORB  (int argc, char *argv[])
                         ACE_ENV_ARG_DECL)
 {
   this->orb_ = CORBA::ORB_init (argc,

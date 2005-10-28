@@ -122,9 +122,9 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
   str = process_str;
 
   const int ENV_BUF_LEN = 512;
-  char buf[ENV_BUF_LEN];
+  ACE_TCHAR buf[ENV_BUF_LEN];
   server_addr.addr_to_string(buf,ENV_BUF_LEN,0);
-  options.setenv("EventChannelFactoryAddr", buf);
+  options.setenv(ACE_TEXT("EventChannelFactoryAddr"), buf);
 
   // extract the object ID from the criteria
   for (size_t i = 0; i < the_criteria.length(); ++i)
@@ -135,10 +135,10 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
       const char* id_str = name[0].id.in();
       the_criteria[i].val >>= val;
       if (id_str[0] != '-') // environment variable
-        options.setenv(id_str, "%s", val);
+        options.setenv(ACE_TEXT_TO_TCHAR_IN(id_str), "%s", val);
       else {// command line option
-        ACE_OS::sprintf(buf, " %s %s", id_str, val);
-        str += buf;
+        ACE_OS::sprintf(buf, ACE_TEXT(" %s %s"), id_str, val);
+        str += ACE_TEXT_TO_CHAR_IN(buf);
       }
     }
   }

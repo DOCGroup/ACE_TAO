@@ -52,7 +52,7 @@ class TestConsumer
   }
 };
 
-int main(int ac, char **av)
+int ACE_TMAIN(int ac, ACE_TCHAR **av)
 {
   int retval = 1;
 

@@ -25,25 +25,28 @@
 #include "tao/Object_T.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Param_Test, 
            anyop, 
            "$Id$")
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   int n = 1024;
 
   ACE_TRY_NEW_ENV
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
+      CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(),
+                                            convert.get_ASCII_argv(),
                                             0
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ACE_Get_Opt get_opt (argc, argv, "dn:");
+      ACE_Get_Arg_Opt<char> get_opt (convert.get_argc(), convert.get_ASCII_argv(), "dn:");
       int opt;
 
       while ((opt = get_opt ()) != EOF)

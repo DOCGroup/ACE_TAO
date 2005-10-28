@@ -350,7 +350,7 @@ int ACE_Scheduler_Factory::dump_schedule
   FILE* file = stdout;
   if (file_name != 0)
     {
-      file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(file_name), ACE_TEXT("w"));
+      file = ACE_OS::fopen (ACE_TEXT_TO_TCHAR_IN(file_name), ACE_TEXT("w"));
       if (file == 0)
           return -1;
     }

@@ -20,6 +20,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Log_Msg.h"
+#include "ace/Argv_Type_Converter.h"
 
 #include "tao/ORB.h"
 #include "tao/debug.h"
@@ -63,15 +64,17 @@ test_read (TAO_InputCDR &cdr, int n)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   int n = 100;
   int low = 64;
   int hi = 4096;
   int s = 4;
   int quiet = 0;
 
-  ACE_Get_Opt get_opt (argc, argv, "dn:l:h:s:q");
+  ACE_Get_Arg_Opt<char> get_opt (convert.get_argc(), convert.get_ASCII_argv(), "dn:l:h:s:q");
   int opt;
 
   while ((opt = get_opt ()) != EOF)

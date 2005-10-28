@@ -25,7 +25,7 @@ RtecEventChannelAdmin::EventChannel_ptr
 get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
 {
     FtRtecEventChannelAdmin::EventChannel_var channel;
-    ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("hi:nt:?"));
+    ACE_Get_Arg_Opt<char> get_opt (argc, argv, ACE_TEXT("hi:nt:?"));
     int opt;
     int use_gateway = 1;
 
@@ -92,7 +92,7 @@ get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
 }
 
 
-int main(int argc, ACE_TCHAR** argv)
+int ACE_TMAIN(int argc, ACE_TCHAR** argv)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY {

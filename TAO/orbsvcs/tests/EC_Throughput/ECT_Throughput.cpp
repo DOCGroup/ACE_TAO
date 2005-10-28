@@ -26,7 +26,7 @@ ACE_RCSID (EC_Throughput,
            "$Id$")
 
 int
-main (int argc, char *argv [])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 
@@ -61,7 +61,7 @@ ECT_Throughput::~ECT_Throughput (void)
 }
 
 int
-ECT_Throughput::run (int argc, char* argv[])
+ECT_Throughput::run (int argc, ACE_TCHAR* argv[])
 {
   ACE_TRY_NEW_ENV
     {
@@ -475,9 +475,9 @@ ECT_Throughput::dump_results (void)
 }
 
 int
-ECT_Throughput::parse_args (int argc, char *argv [])
+ECT_Throughput::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "dc:s:u:n:t:b:h:l:p:w:");
+  ACE_Get_Arg_Opt<char> get_opt (argc, argv, "dc:s:u:n:t:b:h:l:p:w:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)

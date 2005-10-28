@@ -4,7 +4,7 @@
 #include "PSDL_Extern.h"
 #include "Dump_Visitor.h"
 
-int main (int argc, char *argv [])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   void *result_ptr = 0;
 

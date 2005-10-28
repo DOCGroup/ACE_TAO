@@ -43,7 +43,7 @@ Base_Server::parse_args (void)
 {
   // *** To get correct behaviour, set ** POSIXLY_CORECT=1 ** on Linux
   // systems!!! ***
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "o:");
+  ACE_Get_Arg_Opt<char> get_opts (this->argc_, this->argv_, "o:");
   int c;
   int count_argv = 0;
 

@@ -17,7 +17,7 @@ static ACE_UINT32 gsf = 0;
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "d:f:m:");
+  ACE_Get_Arg_Opt<char> get_opts (argc, argv, "d:f:m:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -343,7 +343,7 @@ test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-main (int argc, char **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
   gsf = ACE_High_Res_Timer::global_scale_factor ();
 

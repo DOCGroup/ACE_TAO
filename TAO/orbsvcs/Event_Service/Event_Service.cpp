@@ -265,7 +265,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
       if (ACE_OS::strcmp(this->ior_file_name_.c_str(), "") != 0)
         {
           FILE *output_file=
-            ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(this->ior_file_name_.c_str()),
+            ACE_OS::fopen (ACE_TEXT_TO_TCHAR_IN(this->ior_file_name_.c_str()),
                            ACE_TEXT("w"));
           if (output_file == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -279,7 +279,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
       if (ACE_OS::strcmp(this->pid_file_name_.c_str(), "") != 0)
         {
           FILE *pidf =
-            ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(this->pid_file_name_.c_str()),
+            ACE_OS::fopen (ACE_TEXT_TO_TCHAR_IN(this->pid_file_name_.c_str()),
                            ACE_TEXT("w"));
           if (pidf != 0)
             {
@@ -292,7 +292,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("The EC IOR is <%s>\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR(str.in ())));
+                  ACE_TEXT_TO_TCHAR_IN(str.in ())));
 
       if (bind_to_naming_service_ && !CORBA::is_nil (naming_context.in ()))
         {
@@ -305,7 +305,7 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("%s; running event service\n"),
-                  ACE_TEXT_CHAR_TO_TCHAR(__FILE__)));
+                  ACE_TEXT_TO_TCHAR_IN(__FILE__)));
 
       this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -343,7 +343,7 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
   // default values...
   this->service_name_ = "EventService";
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:o:p:s:q:bx"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT("n:o:p:s:q:bx"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -351,18 +351,18 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
       switch (opt)
         {
         case 'n':
-          this->service_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+          this->service_name_ = ACE_TEXT_TO_CHAR_IN(get_opt.opt_arg ());
 
         case 'o':
-          this->ior_file_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+          this->ior_file_name_ = ACE_TEXT_TO_CHAR_IN(get_opt.opt_arg ());
           break;
 
         case 'p':
-          this->pid_file_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+          this->pid_file_name_ = ACE_TEXT_TO_CHAR_IN(get_opt.opt_arg ());
           break;
 
         case 'q':
-          this->object_id_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+          this->object_id_ = ACE_TEXT_TO_CHAR_IN(get_opt.opt_arg ());
           break;
 
         case 'b':
