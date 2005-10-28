@@ -65,47 +65,6 @@ extern "C"
 
 // ****************************************************************
 
-#ifdef ACE_HAS_THREADS
-void
-ACE_SSL_locking_callback (int mode,
-                          int type,
-                          const char * /* file */,
-                          int /* line */)
-{
-  // #ifdef undef
-  //   fprintf(stderr,"thread=%4d mode=%s lock=%s %s:%d\n",
-  //           CRYPTO_thread_id(),
-  //           (mode&CRYPTO_LOCK)?"l":"u",
-  //           (type&CRYPTO_READ)?"r":"w",file,line);
-  // #endif
-  //   /*
-  //     if (CRYPTO_LOCK_SSL_CERT == type)
-  //     fprintf(stderr,"(t,m,f,l) %ld %d %s %d\n",
-  //     CRYPTO_thread_id(),
-  //     mode,file,line);
-  //   */
-  if (mode & CRYPTO_LOCK)
-    ACE_OS::mutex_lock (&(ACE_SSL_Context::lock_[type]));
-  else
-    ACE_OS::mutex_unlock (&(ACE_SSL_Context::lock_[type]));
-}
-
-// -------------------------------
-
-extern "C"
-{
-  /// Return the current thread ID.  OpenSSL uses this on platforms
-  /// that need it.
-  unsigned long
-  ACE_SSL_thread_id (void)
-  {
-    return (unsigned long) ACE_OS::thr_self ();
-  }
-}
-#endif  /* ACE_HAS_THREADS */
-
-// ****************************************************************
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #ifdef ACE_HAS_THREADS
