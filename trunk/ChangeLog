@@ -1,3 +1,10 @@
+Fri Oct 28 14:28:13 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Map_Manager.h:
+
+	  Include "ace/Default_Constants.h" to pull in
+	  ACE_DEFAULT_MAP_SIZE definition.
+
 Fri Oct 28 10:42:32 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Copy_Disabled.cpp
