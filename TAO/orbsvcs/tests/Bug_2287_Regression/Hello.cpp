@@ -5,7 +5,7 @@
 
 ACE_RCSID(Hello, Hello, "$Id$")
 
-Hello::Hello (CORBA::ORB_ptr orb, Test::Hello_ptr server, CORBA::ULong)
+Hello::Hello (CORBA::ORB_ptr orb, Test::Hello_ptr, CORBA::ULong)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }

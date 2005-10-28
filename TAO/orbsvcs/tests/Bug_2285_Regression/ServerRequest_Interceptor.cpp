@@ -40,7 +40,7 @@ ACE_THROW_SPEC ((CORBA::SystemException))
 
 void
 TAO249_ServerRequest_Interceptor::receive_request_service_contexts (
-  PortableInterceptor::ServerRequestInfo_ptr ri
+  PortableInterceptor::ServerRequestInfo_ptr
   ACE_ENV_ARG_DECL)
 ACE_THROW_SPEC ((CORBA::SystemException,
                  PortableInterceptor::ForwardRequest))
