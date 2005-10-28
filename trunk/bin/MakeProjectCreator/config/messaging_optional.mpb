@@ -2,6 +2,7 @@
 // $Id$
 
 feature(corba_messaging) : valuetype, portableserver, pi {
-  libs += TAO_Messaging
+  libs  += TAO_Messaging
+  after += Messaging
 }
 
