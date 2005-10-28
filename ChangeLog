@@ -1,3 +1,9 @@
+Fri Oct 28 09:23:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Reverse_Lock_T.h (ACE_Acquire_Method):
+
+	  Fixed typo.
+
 Fri Oct 28 14:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Select_Reactor_Base.cpp:
