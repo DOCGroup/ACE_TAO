@@ -1,13 +1,18 @@
+Sat Oct 29 13:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_2285_Regression/client2.cpp:
+          Fixed compile error
+
 Fri Oct 28 23:55:14 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_type.cpp:
-        
+
           Cosmetic changes.
-          
+
         * TAO_IDL/include/ast_attribute.h:
-        
+
           Removed legacy comment.
-          
+
         * TAO_IDL/be/be_valuetype.cpp:
         * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
         * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
@@ -16,7 +21,7 @@ Fri Oct 28 23:55:14 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be_include/be_valuetype.h:
         * TAO_IDL/be_include/be_visitor_valuetype/valuetype.h:
         * TAO_IDL/be_include/be_visitor_valuetype/valuetype_obv_cs.h:
-        
+
           Added generation of valuetype constructor that initializes all
           members, including inherited members, as specified in the CORBA
           C++ mapping (03-06-03) section 1.17.2. This fix closes
