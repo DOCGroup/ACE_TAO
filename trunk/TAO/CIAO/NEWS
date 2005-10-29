@@ -6,7 +6,7 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
     - This should allow system deployers to specify the dependencies
       among component instances within the assembly.
 
-    - Add support in DAnCE so DAnCE could enforce the order in which 
+    - Add support in DAnCE so DAnCE could enforce the order in which
       components are to be activated within the assembly.
 
 . Add AMI support in DAnCE toolchain to when the DomainApplicationManager
@@ -36,7 +36,9 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
   decisions, without handcrafting the mechanisms needed to (1) configure
   the algorithms and (2) deploy the decisions made by the algorithms.
 
-. Implement support for more complex type initialization with XML. 
+. Implement support for more complex type initialization with XML.
+
+. (Remedy) support for using CIAO with VxWorks as target
 
 PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
 ==========================================
@@ -45,42 +47,42 @@ PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
   to/from the existing running assembly without shutting down the
   running appliation.  This will allow the application developers to
   evolve their applications on the fly without incuring service down
-  time. 
+  time.
 
-. Adding support to manage multiple interconnected assemblies, which will 
+. Adding support to manage multiple interconnected assemblies, which will
   involve the work through ExternalReferenceEndPoint idea.
 
-. Seamless integration of swapping into the main line programming model, 
+. Seamless integration of swapping into the main line programming model,
   so that DAnCE can actually kickstart swapping.
 
 . Integrate RepositoryManager into the DAnCE toolchain.
 
 . Integrate various Pub/Sub services into CIAO and DAnCE.
- 
+
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.7 and CIAO-0.4.8
 ======================================================
 . The XSC based config handlers have been heavily optimized, resulting
-  in greatly reduced parsing overhead for large deployments. 
+  in greatly reduced parsing overhead for large deployments.
 
 . The DAnCE toolchain now supports initializing attributes which have
   enumerated types. Support for other complex types is planned for the
   future. Please see examples/Hello/descriptors/
   flattened_deploymentplan_without_ns.cdp for an example of how to
-  populate enumerated attributes. 
+  populate enumerated attributes.
 
 . Integrated Real-time QoS support to CIAO based on OMG's new
   Deployment and Configuration (D&C) specification. Such effort
   allows application developers to use real-time CORBA 1.0 features
   within their CCM appliation through meta-programming (via XML
-  metadata through DAnCE toolchain). Particularly, we added support 
-  for server-side RT policies, including extension for schema, 
+  metadata through DAnCE toolchain). Particularly, we added support
+  for server-side RT policies, including extension for schema,
   container, and NodeApplication.
 
 . Added functionality in XML parsing code to resolve schema in
   $CIAO_ROOT/docs/schema instead of the local directory only. All
   DeploymentPlans should use Deployment.xsd instead of
-  Modified_Deployment.xsd, which has been removed. 
+  Modified_Deployment.xsd, which has been removed.
 
 . Fixed bug in CIDL code generation for some types of component and
   home attributes.
@@ -100,11 +102,11 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.4.7 and CIAO-0.4.8
 . Error reporting during component deployment has been greatly
   improved.  While debugging using CIAO_DEBUG_LEVEL is still
   available, detailed error messages are now generated and propagated
-  to the Plan_Launcher using exceptions. 
+  to the Plan_Launcher using exceptions.
 
 . generate_component_mpc.pl has been updated to generate MPC files
   useful by the modern CIAO infrastructure.  This script now also
-  automatically generates export files. 
+  automatically generates export files.
 
 . DAnCE has been enhanced to support deploying multiple assemblies
   with the same set of ExecutionManager and NodeMangers.
@@ -112,14 +114,14 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.4.7 and CIAO-0.4.8
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.6 and CIAO-0.4.7
 ======================================================
-. Added a component packaging tool to DAnCE. This tool will allow 
-  component packagers to create from deployment plan archived 
-  packages that wrap up all relevant component properties, 
+. Added a component packaging tool to DAnCE. This tool will allow
+  component packagers to create from deployment plan archived
+  packages that wrap up all relevant component properties,
   descriptors and implementation artifacts.The component packages
-  generated from this tool will be distributed to Repository 
+  generated from this tool will be distributed to Repository
   Manager.
 
-. Enhanced DAnCE to allow more than one NodeApplicationManagers within 
+. Enhanced DAnCE to allow more than one NodeApplicationManagers within
   a NodeManager.
 
 . Enhanced DAnCE to support configurable output of debugging information.
@@ -132,7 +134,7 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.4.6 and CIAO-0.4.7
 
 . Added binding component to the Naming Service. A system deployer
   could configure this through XML-based flattened deployment plan
-  descriptor. 
+  descriptor.
   See $CIAO_ROOT/DAnCE/examples/Hello/descriptors/flattened_deploymentplan.cdp
   for details. Currently DAnCE only provides resolving naming service
   reference through multicast, so be sure to initialize the naming service
