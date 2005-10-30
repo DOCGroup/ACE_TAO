@@ -51,7 +51,7 @@ namespace ACE_Task_Flags
     /// Flush both queues
     ACE_FLUSHRW    = 030
   };
-};
+}
 
 /**
  * @class ACE_Task_Base
