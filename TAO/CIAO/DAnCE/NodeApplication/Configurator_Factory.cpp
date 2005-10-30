@@ -65,10 +65,12 @@ CIAO::NodeApplication_Options::parse_args (int argc, char *argv[])
         this->ior_output_filename_ = parm;
         shifter.consume_arg ();
       }
-    else if ((parm = shifter.get_the_parameter ("-o")) !=0)
+    else if ((parm = shifter.get_the_parameter ("-k")) !=0)
       {
         this->callback_ior_ = parm;
         shifter.consume_arg ();
+
+        ACE_DEBUG ((LM_DEBUG, 
       }
     else if (shifter.cur_arg_strncasecmp ("-h") == 0)
       {
