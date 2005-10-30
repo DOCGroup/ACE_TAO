@@ -69,8 +69,6 @@ CIAO::NodeApplication_Options::parse_args (int argc, char *argv[])
       {
         this->callback_ior_ = parm;
         shifter.consume_arg ();
-
-        ACE_DEBUG ((LM_DEBUG, 
       }
     else if (shifter.cur_arg_strncasecmp ("-h") == 0)
       {
