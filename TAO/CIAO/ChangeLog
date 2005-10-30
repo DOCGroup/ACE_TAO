@@ -1,3 +1,8 @@
+Sun Oct 30 10:27:27 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
+
+	* DAnCE/NodeApplication/Configurator_Factory.cpp: Fixed a typo in
+	  command line option flag.
+
 Fri Oct 28 12:30:06 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/NodeApplication/Configurator_Factory.cpp
