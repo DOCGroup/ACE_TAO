@@ -1,3 +1,8 @@
+Sun Oct 30 08:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Task.h:
+          Fixed gcc4 compile error
+
 Fri Oct 28 16:07:45 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/SSL/SSL_Context.cpp (ACE_SSL_locking_callback):
