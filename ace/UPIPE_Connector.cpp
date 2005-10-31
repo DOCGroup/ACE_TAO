@@ -8,6 +8,7 @@ ACE_RCSID(ace, UPIPE_Connector, "$Id$")
 
 #include "ace/Handle_Ops.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_stropts.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/UPIPE_Connector.inl"
@@ -47,7 +48,7 @@ ACE_UPIPE_Connector::connect (ACE_UPIPE_Stream &new_stream,
                                               flags, perms);
 
   if (handle == ACE_INVALID_HANDLE)
-    return -1;  
+    return -1;
 #if !defined (ACE_WIN32)
   else if (ACE_OS::isastream (handle) != 1)
     return -1;
