@@ -96,7 +96,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 extern "C" void
 ACE_THREAD_ADAPTER_NAME (unsigned long args)
 {
-  ACE_OS_TRACE ("ace_thread_adapter");
+  ACE_OS_TRACE ("ACE_THREAD_ADAPTER_NAME");
 
 #if defined (ACE_HAS_TSS_EMULATION)
   // As early as we can in the execution of the new thread, allocate
@@ -116,7 +116,7 @@ ACE_THREAD_ADAPTER_NAME (unsigned long args)
 extern "C" ACE_THR_FUNC_RETURN
 ACE_THREAD_ADAPTER_NAME (void *args)
 {
-  ACE_OS_TRACE ("ace_thread_adapter");
+  ACE_OS_TRACE ("ACE_THREAD_ADAPTER_NAME");
 
 #if defined (ACE_HAS_TSS_EMULATION)
   // As early as we can in the execution of the new thread, allocate
