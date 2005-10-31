@@ -106,7 +106,9 @@ CIAO::NodeApplication_Options::create_nodeapp_configurator (void)
 
   if (this->rt_support_)
     {
-      int retval = this->config_dll_.open (ACE_DLL_PREFIX ACE_TEXT("CIAO_RTNA_Configurator"));
+      int retval = this->config_dll_.open
+        (ACE_DLL_PREFIX ACE_TEXT("CIAO_RTNA_Configurator"),
+         ACE_DEFAULT_SHLIB_MODE, 0);
 
       if (retval != 0)
         ACE_ERROR_RETURN ((LM_ERROR,

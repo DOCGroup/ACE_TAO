@@ -451,7 +451,7 @@ create_node_application (const ACE_CString & options
       ACE_TRY_CHECK;
 
       // spawn the new NodeApplication.
-      p_options.command_line ("%s -k %s"
+      p_options.command_line ("%s -k %s "
                               "%s",
                               this->nodeapp_path_.c_str (),
                               cb_ior.in (),

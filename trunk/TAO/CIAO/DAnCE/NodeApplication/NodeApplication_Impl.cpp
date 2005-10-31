@@ -298,7 +298,7 @@ CIAO::NodeApplication_Impl::install (
   ACE_TRY
     {
       // Extract ORB resource def here.
-      // this->configurator_.init_resource_manager (xxx);
+      this->configurator_.init_resource_manager (node_impl_info.nodeapp_config);
 
       const ::Deployment::ContainerImplementationInfos container_infos =
         node_impl_info.impl_infos;
@@ -423,6 +423,9 @@ CIAO::NodeApplication_Impl::create_container (const ::Deployment::Properties &pr
   if (CIAO::debug_level () > 1)
     ACE_DEBUG ((LM_DEBUG, "ENTERING: NodeApplication_Impl::create_container()\n"));
 
+  CORBA::PolicyList_var policies
+    = this->configurator_.find_container_policies (properties);
+
   CIAO::Container_Impl *container_servant = 0;
 
   ACE_NEW_THROW_EX (container_servant,
@@ -440,7 +443,7 @@ CIAO::NodeApplication_Impl::create_container (const ::Deployment::Properties &pr
   // suggest how to install the components.  Each such data stucture
   // should be correspond to one <process_collocation> tag  in the XML
   // file to describe the deployment plan.
-  container_servant->init (properties
+  container_servant->init (policies.ptr ()
                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 

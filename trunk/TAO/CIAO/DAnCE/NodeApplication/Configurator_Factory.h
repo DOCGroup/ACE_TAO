@@ -75,6 +75,14 @@ namespace CIAO
    *
    * @brief An class for managing and extracting command line options
    * for NodeApplication.
+   *
+   * @note We currently support loading one single external module for
+   * RT support.  Perhaps how this should really be done is to allow
+   * the NodeApplication_Core to load up a list of external modules
+   * (in DLLs or otherwise) and call the corresponding init methods in
+   * sequence.   This way, we open up the component server so system
+   * developers can plug in their own system configuration needs into
+   * the whole system.
    */
   class NodeApplication_Options
   {
