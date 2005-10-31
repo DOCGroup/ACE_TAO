@@ -24,15 +24,10 @@ ACE_RCSID (ace,
       return 0; \
     } while (0)
 
-namespace
-{
-#undef STRING_SEPARATOR
-
-  // Separator for components in a name
-  ACE_TCHAR const STRING_SEPARATOR[] = ACE_LIB_TEXT ("\\");
-}
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+ACE_TCHAR const ACE_Registry::STRING_SEPARATOR[] = ACE_LIB_TEXT ("\\");
 
 bool
 ACE_Registry::Name_Component::operator== (const Name_Component &rhs) const
