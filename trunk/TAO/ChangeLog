@@ -1,7 +1,7 @@
 Mon Oct 31 12:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2084_Regression/*:
-          Integrated regression for bug 2084. Thanks to
+          Integrated regression for bug 2084. Thanks to David Faure
           <dfaure at klaralvdalens-datakonsult dot se> for creating this
           test. It seems this bug has already been resolved in the past
           but to prevent to reappear it in the future added the test
