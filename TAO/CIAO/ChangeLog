@@ -1,3 +1,46 @@
+Sun Oct 30 22:49:52 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
+
+	* DAnCE/NodeManager/Node_Manager.cpp: Fixed missing -a Get_Opt
+	  parameter and usage text.  "-a" is used to set the optional
+	  command line flags for the NodeApplication.  The logic was there
+	  in the Get_Opt loop but the Get_Opt object was not set to parse
+	  the flag and the usage text for Node_Manager didn't mention the
+	  flag either.  
+
+	  Eventually, the optional command line flags should really come
+	  from the ServerResource XML file.
+
+	* NodeApplicationManager/NodeApplicationManager_Impl.cpp: Added a
+	  missing space to separate optional command line flags from the
+	  default ones.  The old one worked only when no optional
+	  commandline flags are presented.
+
+	* ciao/Deployment_Core.idl: Removed "init" method from the
+	  Container interface since it is really implementation specific. 
+	
+	* DAnCE/NodeApplication/Container_Impl.cpp:
+	* DAnCE/NodeApplication/Container_Impl.h: Changed the signature of
+	  init method to take a PolicyList pointer directly since this is
+	  what we really need to initialize a container.
+	  
+	* DAnCE/NodeApplication/Configurator_Factory.h: Added comments
+	  documentating how we should really support multiple external
+	  configurator module and how it could be done.
+
+	* DAnCE/NodeApplication/Configurator_Factory.cpp: Changed DLL open
+	  to not closing down the DLL handle on exit.  Otherwise,
+	  NodeApplication can not shut down cleanly.
+	
+	* DAnCE/NodeApplication/NodeApp_Configurator.h: Commented on the
+	  potential need for a finalizer method, or two.
+	
+	* DAnCE/NodeApplication/NodeApplication_Impl.cpp: Added actual
+	  hooks to process optional policies for RT support.
+	
+	* DAnCE/NodeApplication/RTNodeApp_Configurator.cpp: Added code to
+	  parse the optional properties and manipulate RT resources and
+	  policies.
+
 Sun Oct 30 10:27:27 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
 	* DAnCE/NodeApplication/Configurator_Factory.cpp: Fixed a typo in

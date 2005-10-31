@@ -62,7 +62,7 @@ namespace CIAO
     /*--------------------  IDL operations (idl) ------------------*/
 
     /// Initialize the container.
-    virtual CORBA::Long init (const ::Deployment::Properties &properties
+    virtual CORBA::Long init (const CORBA::PolicyList *policies
                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 

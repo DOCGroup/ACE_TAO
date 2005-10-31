@@ -1,6 +1,7 @@
 // $Id$
 
 #include "RTNodeApp_Configurator.h"
+#include "ciao/ServerResourcesC.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 
 int
@@ -29,15 +30,46 @@ CIAO::RTNodeApp_Configurator::post_orb_initialize (CORBA::ORB_ptr o)
 
 int
 CIAO::RTNodeApp_Configurator::init_resource_manager
-(const ::Deployment::Properties &)
+(const ::Deployment::Properties &properties)
 {
+  
+  //  if (CIAO::debug_level () > 9)
+    ACE_DEBUG ((LM_DEBUG, "RTNodeApp_Configurator::init_resource_manager\n"));
+  // @@ Should we cache the properties that we consumed here?
+
+  for (CORBA::ULong i = 0; i < properties.length (); ++i)
+    {
+      //      if (CIAO::debug_level () > 9)
+      ACE_DEBUG ((LM_DEBUG, "RTNodeApp_Configurator::init_resource_manager processing property: %s\n",
+                  properties[i].name.in ()));
+
+      if (ACE_OS::strcmp ("CIAOServerResources", properties[i].name) == 0)
+        {              
+          CIAO::DAnCE::ServerResource *svr_resource;
+          if (properties[i].value >>= svr_resource)
+            {
+              //  Now we have the information to initialize the manager.
+            }
+        }
+      
+      // Ignore other stuff
+    }
+
   return 0;
 }
 
 CORBA::PolicyList *
 CIAO::RTNodeApp_Configurator::find_container_policies
-(const ::Deployment::Properties &)
+(const ::Deployment::Properties &properties)
 {
+  ACE_DEBUG ((LM_DEBUG, "RTNodeApp_Configurator::find_container_policies\n"));
+  // @@ Should we cache the properties that we consumed here?
+
+  for (CORBA::ULong i = 0; i < properties.length (); ++i)
+    {
+      ACE_DEBUG ((LM_DEBUG, "RTNodeApp_Configurator::find_container_policies processing property: %s\n",
+                  properties[i].name.in ()));
+    }
 
   return 0;
 }
