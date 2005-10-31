@@ -49,21 +49,29 @@ namespace CIAO
     // Iterate over the instance list and look at the policy set id of each
     // component instance. For each policy set, we create a separate container
     // to host all the components with such policy set.
+    // NOTE: all the component instances without policies are specified should
+    // be hosted in the same container, and in our map the key is an empty string ""
     for (CORBA::ULong i = 0; i < instance_len; ++i)
       {
-        const char * my_resource_id = "";
-        const char * my_policy_set_id = "";
+        char my_resource_id[256];
+        char *my_policy_set_id;
 
         if (this->plan_.instance[i].deployedResource.length () != 0)
           {
-            my_resource_id =
-              this->plan_.instance[i].deployedResource[0].resourceName.in ();
-
+            ACE_OS::strcpy (my_resource_id,
+              this->plan_.instance[i].deployedResource[0].resourceName.in ());
+              
             this->plan_.instance[i].deployedResource[0].resourceValue >>=
               my_policy_set_id;
           }
+        else
+          {
+            my_policy_set_id = new char[256];
+            ACE_OS::strcpy (my_resource_id, "");
+            ACE_OS::strcpy (my_policy_set_id, "");
+          }
 
-        // If we find a different policy_set_id, then we bind it.
+        // If we find a different policy_set_id, then we bind it to the map.
         if (this->map_.find (my_policy_set_id) == 0)
           continue;
         else if (ACE_OS::strcmp (my_policy_set_id, "") == 0)
@@ -82,6 +90,8 @@ namespace CIAO
             // Fetch the actual policy_set_def from the infoProperty
             // Ugly due to the IDL data structure definition! :(
             CORBA::ULong j;
+            bool found = false;
+
             for (j = 0;
                   j < this->plan_.infoProperty.length ();
                   ++j)
@@ -97,6 +107,11 @@ namespace CIAO
                           k < (*server_resource_def).orb_config.policy_set.length ();
                           ++k)
                       {
+                        ACE_DEBUG ((LM_DEBUG, "Looking for policy set id: %s\n", my_policy_set_id));
+                        ACE_DEBUG ((LM_DEBUG, "Compare against policy set id: %s\n\n", 
+                                    (*server_resource_def).orb_config.policy_set[k].Id.in ()));
+
+
                         if (ACE_OS::strcmp (my_policy_set_id,
                           (*server_resource_def).orb_config.policy_set[k].Id) == 0)
                           {
@@ -106,22 +121,32 @@ namespace CIAO
                               CORBA::string_dup ("ContainerPolicySet");
                             info->container_config[0].value <<=
                               (*server_resource_def).orb_config.policy_set[k];
+
+                            ACE_DEBUG ((LM_DEBUG, "Found matching rt policy set*****\n\n"));
+                            found = true;
+                            break;
                           }
                       }
                     if (k == (*server_resource_def).orb_config.policy_set.length ())
                       {
                         // No Server Resource Def found?
-                        ACE_DEBUG ((LM_DEBUG, "No matching policy set def found!\n"));
+                        ACE_DEBUG ((LM_DEBUG,
+                            "No matching policy set def found in resource def: %s!\n",
+                            my_resource_id));
                       }
                   }
+
+                // if we successfully found the policy_set_id
+                if (found)
+                  break;
               } // end of for loop for fetching policy_set_def
 
             if (j == this->plan_.infoProperty.length ())
               {
                 // No Server Resource Def found?! Inconsistent descriptor files.
                 ACE_DEBUG ((LM_ERROR, "(%P|%t) Descriptor error: "
-                  "No matching server resrouce def found for component: %s!\n",
-                  this->plan_.instance[i].name.in ()));
+                    "No matching server resource def found for component: %s!\n",
+                    this->plan_.instance[i].name.in ()));
               }
             this->map_.bind (my_policy_set_id, info);
           }

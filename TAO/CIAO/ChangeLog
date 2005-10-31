@@ -1,3 +1,11 @@
+Mon Oct 31 11:22:41 2005    <Gan Deng@SKYLINENETGEAR>
+
+	* examples/Hello/descriptors/rt-config-example.csr
+	* DAnCE/NodeApplicationManager/Containers_Info_Map.cpp
+	* DAnCE/NodeApplicationManager/ImplementationInfo.cpp
+
+	  Fixed the descriptor by adding the server resource id tag.
+
 Sun Oct 30 22:49:52 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
 	* DAnCE/NodeManager/Node_Manager.cpp: Fixed missing -a Get_Opt
