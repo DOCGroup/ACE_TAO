@@ -105,13 +105,13 @@ TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/CosEC_RtEC_Based_lib
 TAO/orbsvcs/performance-tests/RTEvent/lib/RTEC_Perf
 TAO/tests/Smart_Proxies/Collocation/SP_Collocation_TestStubsLib
 TAO/tests/Collocation/Collocation_Test_Stub
-TAO/tests/CSD_Strategy_Tests/TP_Common/CSD_TP_Test_Lib
 TAO/examples/POA/Generic_Servant/POA_Generic_Servant_Lib
 TAO/examples/Simple/time-date/Simple_Time_Date_Lib
 TAO/docs/tutorials/Quoter/idl/Quoter_Idl_Lib
 TAO/performance-tests/RTCorba/Multiple_Endpoints/Common/RTCORBA_Common
 tests/Test_Output
 tests/DLL_Test_Parent
+TAO/tests/CSD_Strategy_Tests/TP_Common/CSD_TP_Test_Lib
 performance-tests/Synch-Benchmarks/Synch_Lib/Synch_Lib
 examples/Service_Configurator/Misc/Service_Configurator_Misc_Timer
 examples/Timer_Queue/Timer_Queue_Library
