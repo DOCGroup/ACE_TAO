@@ -18,7 +18,7 @@ ACE_hrtime_t
 ACE_GETHRTIME_NAME (void)
 {
 #if defined (ACE_HAS_PENTIUM)
-  // ACE_TRACE ("ACE_gethrtime");
+  // ACE_TRACE ("ACE_GETHRTIME_NAME");
 
 #if defined (ACE_LACKS_LONGLONG_T)
   double now;
