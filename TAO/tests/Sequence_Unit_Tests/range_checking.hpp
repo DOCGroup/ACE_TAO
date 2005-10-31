@@ -19,7 +19,7 @@ namespace details
 {
 
 /**
- * @struct
+ * @struct range_checking
  *
  * @brief Configurable traits to tradeoff safety vs. performance in
  *        the implementation of TAO sequences.
@@ -89,7 +89,7 @@ namespace details
  * };
  * </PRE>
  *
- * 
+ *
  *
  * @todo There is no control on a per-sequence type basis, only on a
  *       per-underlying type basis, for example, the following two IDL

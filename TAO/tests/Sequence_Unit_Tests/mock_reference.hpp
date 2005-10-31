@@ -28,7 +28,7 @@ void release(mock_reference*);
 
 
 /**
- * @class
+ * @class mock_reference
  *
  * @brief Implement a concrete class with the right interface for an
  *        object reference.
