@@ -10,7 +10,7 @@ Mon Oct 31 12:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 Mon Oct 31 11:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2074_Regression/*:
-          Integrated regression for bug 2074. Thanks to
+          Integrated regression for bug 2074. Thanks to Robert Hancock
           <hancockr at shaw dot ca> for creating this test
 
 Sat Oct 29 13:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
