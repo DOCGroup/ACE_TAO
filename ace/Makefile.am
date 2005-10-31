@@ -899,7 +899,6 @@ nobase_include_HEADERS = \
   Service_Config.h \
   Service_Config.inl \
   Service_Manager.h \
-  Service_Manager.inl \
   Service_Object.h \
   Service_Object.inl \
   Service_Repository.h \
