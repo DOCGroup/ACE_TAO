@@ -1,3 +1,8 @@
+Mon Oct 31 11:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2074_Regression/*:
+          Integrated regression for bug 2074
+
 Sat Oct 29 13:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_2285_Regression/client2.cpp:
