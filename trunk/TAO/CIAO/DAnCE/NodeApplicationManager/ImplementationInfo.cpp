@@ -42,31 +42,30 @@ CIAO::NodeImplementationInfoHandler::populate_server_resource_def (void)
         {
           target_resource_id = 
             this->plan_.instance[i].deployedResource[0].resourceName.in ();
-          break;
         }
-    }
 
-  if (i != instance_len)
-    {
-      // Some component instance has server resource usage defined, so we
-      // set the <nodeapp_config> field of the NodeImplementationInfo struct.
-      for (CORBA::ULong j = 0; j < this->plan_.infoProperty.length (); ++j)
+      if (i != instance_len)
         {
-          CIAO::DAnCE::ServerResource *server_resource_def = 0;
-          this->plan_.infoProperty[j].value >>= server_resource_def;
-
-          if (ACE_OS::strcmp ((*server_resource_def).Id, 
-                              target_resource_id) == 0)
+          // Some component instance has server resource usage defined, so we
+          // set the <nodeapp_config> field of the NodeImplementationInfo struct.
+          for (CORBA::ULong j = 0; j < this->plan_.infoProperty.length (); ++j)
             {
-              // Found the target server resource def, and store it.
-              this->node_info_->nodeapp_config.length (1);
+              CIAO::DAnCE::ServerResource *server_resource_def = 0;
+              this->plan_.infoProperty[j].value >>= server_resource_def;
 
-              this->node_info_->nodeapp_config[0].name = 
-                CORBA::string_dup ("CIAOServerResource");
+              if (ACE_OS::strcmp ((*server_resource_def).Id, 
+                                  target_resource_id) == 0)
+                {
+                  // Found the target server resource def, and store it.
+                  this->node_info_->nodeapp_config.length (1);
 
-              this->node_info_->nodeapp_config[0].value <<= 
-                server_resource_def;
-              break;
+                  this->node_info_->nodeapp_config[0].name = 
+                    CORBA::string_dup ("CIAOServerResource");
+
+                  this->node_info_->nodeapp_config[0].value <<= 
+                    server_resource_def;
+                  break;
+                }
             }
         }
     }
