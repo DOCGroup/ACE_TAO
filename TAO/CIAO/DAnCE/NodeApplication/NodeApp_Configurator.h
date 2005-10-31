@@ -61,6 +61,10 @@ namespace CIAO
      */
     virtual CORBA::PolicyList *
     find_container_policies (const ::Deployment::Properties &properties) = 0;
+
+    /// @@ Perhaps we also need a finalizer method here.  Perhaps we
+    /// even need to differentiate finalizer before ORB is destroyed
+    /// and the one after that.
   };
 }
 

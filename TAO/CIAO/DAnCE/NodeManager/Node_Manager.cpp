@@ -25,7 +25,7 @@ int spawn_delay = 1;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:c:m:s:d:n");
+  ACE_Get_Opt get_opts (argc, argv, "o:c:m:s:d:na:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -69,6 +69,7 @@ parse_args (int argc, char *argv[])
                            "-c <svc.conf file>\n"
                            "-n <use naming service>\n"
                            "-s <NodeApplication executable path>\n"
+                           "-a <arguments to NodeApplication>\n" 
                            "-d <spawn delay for nodeapplication>\n"
                            "\n",
                            argv [0]),

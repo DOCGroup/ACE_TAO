@@ -23,14 +23,10 @@ CIAO::Container_Impl::_default_POA (void)
   ///////////////////////////////////////////////////////////////
 
 CORBA::Long
-CIAO::Container_Impl::init (const ::Deployment::Properties &properties
+CIAO::Container_Impl::init (const CORBA::PolicyList *policies
                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // @@ Gan/Jai, see how this init can create many instances of the
-  // same container? Neither thread safe or single entity safe.
-  this->properties_ = properties;
-
   // @@ Initialize container and create the internal container
   // implementation that actually interacts with installed
   // homes/components.
@@ -58,7 +54,7 @@ CIAO::Container_Impl::init (const ::Deployment::Properties &properties
     }
 
   return this->container_->init (0,
-                                 0
+                                 policies
                                  ACE_ENV_ARG_PARAMETER);
 }
 
