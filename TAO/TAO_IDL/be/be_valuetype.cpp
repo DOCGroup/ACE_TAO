@@ -418,13 +418,40 @@ be_valuetype::will_have_factory (void)
   return (fs == FS_ABSTRACT_FACTORY || fs == FS_CONCRETE_FACTORY);
 }
 
-int
-be_valuetype::gen_helper_header (char*,
-                                 char*)
+bool
+be_valuetype::has_member (void)
 {
-  TAO_OutStream *os = 0;
+  AST_ValueType *parent = this->pd_inherits_concrete;
+  
+  // We're looking for inherited members too.
+  if (parent != 0)
+    {
+      be_valuetype *be_parent =
+        be_valuetype::narrow_from_decl (parent);
+      
+      if (be_parent->has_member ())
+        {
+          return true;
+        }
+    }
+    
+  for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next())
+    {
+      if (si.item ()->node_type () == AST_Decl::NT_field)
+        {
+          return true;
+        }
+    }
+    
+  return false;
+}
 
-  os = tao_cg->client_header ();
+int
+be_valuetype::gen_helper_header (char *, char *)
+{
+  TAO_OutStream *os = tao_cg->client_header ();
 
   *os << be_nl << be_nl
       << "// TAO_IDL - Generated from" << be_nl
@@ -445,12 +472,9 @@ be_valuetype::gen_helper_header (char*,
 }
 
 int
-be_valuetype::gen_helper_inline (char*,
-                                 char*)
+be_valuetype::gen_helper_inline (char *, char *)
 {
-  TAO_OutStream *os = 0;
-
-  os = tao_cg->client_inline ();
+  TAO_OutStream *os = tao_cg->client_inline ();
 
   // There is a problem, here. Looks like the if defined __ACE_INLINE
   // is not getting generated... Actually this is a much bigger
@@ -476,12 +500,9 @@ be_valuetype::gen_helper_inline (char*,
 
 
 int
-be_valuetype::gen_helper_stubs (char* ,
-                                char* )
+be_valuetype::gen_helper_stubs (char *, char *)
 {
-  TAO_OutStream *os = 0;
-
-  os = tao_cg->client_stubs ();
+  TAO_OutStream *os = tao_cg->client_stubs ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
