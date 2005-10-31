@@ -1,3 +1,8 @@
+Mon Oct 31 14:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Makefile.am:
+          Removed Service_Manager.inl
+
 Mon Oct 31 13:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
