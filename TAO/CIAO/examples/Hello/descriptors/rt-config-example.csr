@@ -3,7 +3,8 @@
  xmlns:CIAO="http://www.dre.vanderbilt.edu/ServerResources"
  xmlns:xmi="http://www.omg.org/XMI"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="http://www.dre.vanderbilt.edu/ServerResources CIAOServerResources.xsd">
+ xsi:schemaLocation="http://www.dre.vanderbilt.edu/ServerResources CIAOServerResources.xsd"
+ id="test_server_resource_id">
   
   <cmdline>
     <arg> -ORBDebugLevel 10 -ORBEndpoint corbaloc://foo/bar</arg>
@@ -59,12 +60,10 @@
       <priorityModel>
         <priority_model>CLIENT_PROPAGATED</priority_model>
       </priorityModel>
-      
       <threadpool>threadpool-1</threadpool>
       <threadpool>threadpool-2</threadpool>
-      
       <priorityBandedConnection>cb-1</priorityBandedConnection>
-      
     </policySet>
+    
   </orbConfigs>
 </CIAO:ServerResources>
