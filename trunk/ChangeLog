@@ -1,3 +1,10 @@
+Mon Oct 31 10:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/pre.h:
+          Reverted change below, makes it much easier to use ACE from
+          application projects
+          Fri Oct 28 10:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
 Mon Oct 31 09:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/gethrtime.cpp:
