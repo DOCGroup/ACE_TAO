@@ -1,3 +1,8 @@
+Mon Oct 31 08:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/msvc_static_order.lst:
+          Moved CSD test lib down, let us see the impact on the vc build
+
 Mon Oct 31 06:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/UPIPE_Connector.cpp:
