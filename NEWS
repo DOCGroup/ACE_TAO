@@ -3,11 +3,6 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (Remedy) VxWorks 6.x support
 
-PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.8
-====================================================
-
-. Subset ACE for TAO and TAO Services
-
 USER VISIBLE CHANGES BETWEEN ACE-5.4.7 and ACE-5.4.8
 ====================================================
 
@@ -20,6 +15,10 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.7 and ACE-5.4.8
   - It is now possible to request infinite timeout in portable manner.
     This can be achived by setting negative value to readtimeoutmsec.
   - Various bugs fixed and portability issues resolved.
+
+. Subset ACE for TAO and TAO Services
+
+. Support for Intel C++ 9.0 on Windows and Linux
 
 USER VISIBLE CHANGES BETWEEN ACE-5.4.6 and ACE-5.4.7
 ====================================================
