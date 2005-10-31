@@ -945,7 +945,6 @@ nobase_include_HEADERS = \
   Swap.inl \
   Synch.h \
   Synch_Options.h \
-  Synch_Options.inl \
   Synch_T.cpp \
   Synch_T.h \
   Synch_Traits.h \
@@ -960,7 +959,6 @@ nobase_include_HEADERS = \
   TP_Reactor.h \
   TP_Reactor.inl \
   TSS_Adapter.h \
-  TSS_Adapter.inl \
   TSS_T.cpp \
   TSS_T.h \
   TSS_T.inl \
