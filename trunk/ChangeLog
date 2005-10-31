@@ -1,3 +1,9 @@
+Mon Oct 31 09:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/gethrtime.cpp:
+        * ace/Base_Thread_Adapter.cpp:
+          Fixed fuzz errors
+
 Mon Oct 31 08:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_static_order.lst:
