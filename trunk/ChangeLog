@@ -1,3 +1,8 @@
+Mon Oct 31 06:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/UPIPE_Connector.cpp:
+          Added missing include for Linux builds
+
 Sun Oct 30 08:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Task.h:
