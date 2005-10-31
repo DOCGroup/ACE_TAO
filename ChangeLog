@@ -1,3 +1,13 @@
+Mon Oct 31 07:55:57 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Registry.cpp (STRING_SEPARATOR):
+	* ace/Registry.h (STRING_SEPARATOR):
+
+	  Reintroduced this string as a static class member.  It is also
+	  used outside of the ACE_Registry class in
+	  ACE_Registry_Name_Space.  Fixes an unresolved symbol error in
+	  Borland builds.
+
 Mon Oct 31 14:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Makefile.am:

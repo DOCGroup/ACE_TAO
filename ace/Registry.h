@@ -61,6 +61,9 @@ public:
   /// A Name is an ordered collections of components (ids)
   typedef ACE_Unbounded_Set<Name_Component> Name;
 
+  /// Separator for components in a name
+  static const ACE_TCHAR STRING_SEPARATOR[];
+
   /// Convert a @a name to a @c string
   static ACE_TString make_string (const Name &name);
 
