@@ -1,3 +1,8 @@
+Mon Oct 31 09:54:18 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Makefile.am:
+	  Removed Synch_Options.inl and TSS_Adapter.inl.
+
 Mon Oct 31 07:55:57 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Registry.cpp (STRING_SEPARATOR):
