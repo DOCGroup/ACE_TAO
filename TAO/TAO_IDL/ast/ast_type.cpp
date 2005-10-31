@@ -345,9 +345,7 @@ AST_Type::nested_name (const char* local_name,
       use_next = ACE_OS::strstr (use_curr, "::");
 
       // If the scopes are identical, don't supply them.
-      if  (ACE_OS::strcmp (def_name,
-                         use_name)
-             == 0)
+      if  (ACE_OS::strcmp (def_name, use_name) == 0)
         {
           if (prefix != 0)
             {

@@ -72,7 +72,7 @@ public:
   virtual int gen_helper_stubs (char *local_name = 0,
                                 char *full_name = 0);
   // Generate the helper functions implementation.
-
+  
   void gen_var_out_seq_decls (void);
   // Generate the declarations used by the template _var, _out
   // classes for valuetypes, and by sequence template classes.
@@ -176,7 +176,10 @@ public:
   virtual idl_bool will_have_factory (void);
   // Use the above enum and methods to determine this after the
   // node's scope is visited but before code generation.
-
+  
+  bool has_member (void);
+  // Decides whether to generate the initializing contstructor or not.
+  
 private:
   char *full_obv_skel_name_;
 

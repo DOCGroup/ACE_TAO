@@ -33,7 +33,7 @@ ACE_RCSID (be_visitor_valuetype,
 be_visitor_valuetype_obv_cs::be_visitor_valuetype_obv_cs (
     be_visitor_context *ctx
   )
-  : be_visitor_scope (ctx)
+  : be_visitor_valuetype (ctx)
 {
 }
 
@@ -57,6 +57,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  // Default constructor.
   *os << node->full_obv_skel_name () << "::";
 
   if (! node->is_nested ())
@@ -66,7 +67,34 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
 
   *os << node->local_name () << " (void)" << be_nl
       << "{}" << be_nl << be_nl;
+  
+  // Initializing constructor.    
+  if (node->has_member ())
+    {
+      *os << node->full_obv_skel_name () << "::";
 
+      if (! node->is_nested ())
+        {
+          *os << "OBV_";
+        }
+
+      *os << node->local_name () << " (" << be_idt << be_idt;
+          
+      unsigned long index = 0;    
+      this->gen_obv_init_constructor_args (node, index);
+
+      *os << be_uidt_nl
+          << ")" << be_nl
+          << ": " << be_idt;
+          
+      index = 0;    
+      this->gen_obv_init_constructor_init_list (node);
+      
+      *os << be_uidt << be_uidt_nl
+          << "{}" << be_nl << be_nl;
+    }
+
+  // Destructor.
   *os << node->full_obv_skel_name () << "::~";
 
   if (! node->is_nested ())
@@ -157,3 +185,93 @@ be_visitor_valuetype_obv_cs::visit_field (be_field *node)
 
   return 0;
 }
+
+void
+be_visitor_valuetype_obv_cs::gen_obv_init_constructor_init_list (
+    be_valuetype *node
+  )
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  AST_ValueType *parent = node->inherits_concrete ();
+
+  // Generate for inherited members first.
+  if (parent != 0)
+    {
+      be_valuetype *be_parent = be_valuetype::narrow_from_decl (parent);
+      
+      if (be_parent->has_member ())
+        {
+          *os << be_parent->full_obv_skel_name () << " ("
+              << be_idt << be_idt;
+              
+          unsigned long p_index = 0;         
+          this->gen_obv_init_base_constructor_args (be_parent, p_index);
+          
+          *os << be_uidt_nl
+              << ")" << be_uidt;
+              
+          // data_members_counts checks only for non-inherited members.
+          if (node->data_members_count () > 0)
+            {
+              *os << "," << be_nl;
+            }
+        }
+    }
+    
+  unsigned long index = 0;
+    
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next())
+    {
+      AST_Field *f = AST_Field::narrow_from_decl (si.item ());
+      
+      if (f == 0)
+        {
+          continue;
+        }
+        
+      if (index++ != 0)
+        {
+          *os << "," << be_nl;
+        }
+        
+      *os << node->field_pd_prefix () << f->local_name () 
+          << " (_tao_init_" << f->local_name ()
+          << ")";
+    }
+}
+
+void
+be_visitor_valuetype_obv_cs::gen_obv_init_base_constructor_args (
+    be_valuetype *node,
+    unsigned long &index
+  )
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  AST_ValueType *parent = node->inherits_concrete ();
+  
+  // Generate for inherited members first.
+  if (parent != 0)
+    {
+      be_valuetype *be_parent =
+        be_valuetype::narrow_from_decl (parent);
+      this->gen_obv_init_base_constructor_args (be_parent, index);
+    }
+    
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next())
+    {
+      be_field *f = be_field::narrow_from_decl (si.item ());
+      
+      if (f == 0)
+        {
+          continue;
+        }
+        
+      *os << (index++ != 0 ? "," : "") << be_nl
+          << "_tao_init_" << f->local_name ();          
+    }
+}
+

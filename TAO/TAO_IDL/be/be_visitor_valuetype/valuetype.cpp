@@ -52,16 +52,6 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
                             -1);
         }
 
-      AST_Field *field = AST_Field::narrow_from_decl (d);
-
-      if (field && field->visibility () == AST_Field::vis_PRIVATE)
-        {
-          continue;      
-          // Ignore private fields in this run
-          // AST_Attribute derives from AST_Field, so test for
-          // vis_PRIVATE is ok (the attribute has it set to vis_NA)
-        }
-
       be_decl *bd = be_decl::narrow_from_decl (d);
       // Set the scope node as "node" in which the code is being
       // generated so that elements in the node's scope can use it
@@ -71,6 +61,17 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
       this->ctx_->node (bd);
       this->elem_number_++;
 
+      AST_Field *field = AST_Field::narrow_from_decl (d);
+      
+      if (field != 0 && field->visibility () == AST_Field::vis_PRIVATE)
+        {
+          this->begin_private ();
+        }
+      else
+        {
+          this->begin_public ();
+        }
+      
       if (bd == 0 || bd->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -78,56 +79,6 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
                              "codegen for scope failed\n"), 
                             -1);
           
-        }
-    }
-
-  this->elem_number_ = 0;
-
-  for (UTL_ScopeActiveIterator sj (node, UTL_Scope::IK_decls);
-       !sj.is_done ();
-       sj.next())
-    {
-      AST_Decl *d = sj.item ();
-
-      if (!d)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_scope::visit_scope - "
-                             "bad node in this scope\n"), 
-                            -1);
-        }
-
-      AST_Field *field = AST_Field::narrow_from_decl (d);
-
-      if (!field 
-          || (field && field->visibility () != AST_Field::vis_PRIVATE))
-        {
-          // Only private fields.
-          continue;
-        }
-
-      ++ n_processed;
-
-      if (n_processed == 1)
-        {
-          this->begin_private ();
-        }
-
-      be_decl *bd = be_decl::narrow_from_decl (d);
-      // Set the scope node as "node" in which the code is being
-      // generated so that elements in the node's scope can use it
-      // for code generation.
-
-      this->ctx_->scope (node->decl ());
-      this->ctx_->node (bd);
-      this->elem_number_++;
-
-      if (bd == 0 || bd->accept (this) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_scope::visit_scope - "
-                             "codegen for scope failed\n"),
-                            -1);
         }
     }
 
@@ -817,6 +768,54 @@ be_visitor_valuetype::gen_field_pd (be_field *node)
   return 0;
 }
 
+void
+be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
+                                                     unsigned long &index)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  AST_ValueType *parent = node->inherits_concrete ();
+  
+  // Generate for inherited members first.
+  if (parent != 0)
+    {
+      be_valuetype *be_parent =
+        be_valuetype::narrow_from_decl (parent);
+      this->gen_obv_init_constructor_args (be_parent, index);
+    }
+    
+  be_visitor_context ctx (*this->ctx_);
+  be_visitor_args_arglist visitor (&ctx);
+
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next())
+    {
+      be_field *f = be_field::narrow_from_decl (si.item ());
+      
+      if (f == 0)
+        {
+          continue;
+        }
+        
+      *os << (index++ != 0 ? "," : "") << be_nl;
+      
+      ACE_CString arg_name ("_tao_init_");
+      arg_name += f->local_name ()->get_string ();
+      Identifier id (arg_name.c_str ());
+      UTL_ScopedName sn (&id, 0);
+      be_type *ft = be_type::narrow_from_decl (f->field_type ());
+      idl_bool seen = ft->seen_in_operation ();
+      
+      // This sets ft->seen_in_operation (I_TRUE), so we have to
+      // restore the original value below.
+      be_argument arg (AST_Argument::dir_IN,
+                       ft,
+                       &sn);       
+      ft->seen_in_operation (seen);             
+      visitor.visit_argument (&arg);
+      id.destroy ();             
+    }
+}
 
 // Generate the _init definition.
 int
