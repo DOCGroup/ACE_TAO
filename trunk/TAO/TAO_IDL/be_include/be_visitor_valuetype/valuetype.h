@@ -97,6 +97,10 @@ public:
   virtual int gen_init_impl (be_valuetype *node);
   // generate the _init implementation
 
+  void gen_obv_init_constructor_args (be_valuetype *node,
+                                      unsigned long &index);
+  // Recursively generate args for the initializing constuctor.
+  
 protected:
   static idl_bool obv_need_ref_counter (be_valuetype *node);
   // check is VT needs a RefCounter mix-in in OBV_ class

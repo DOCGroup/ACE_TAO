@@ -265,7 +265,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   // instantiate us.
   *os << be_uidt_nl << be_nl << "protected:" << be_idt_nl
       << node->local_name ()
-      << " (void);" << be_nl << be_nl;
+      << " (void);" << be_nl;
 
   if (!is_an_amh_exception_holder)
     {
@@ -482,7 +482,8 @@ be_visitor_valuetype_ch::begin_public (void)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << "public:" << be_idt_nl;
+  *os << be_uidt_nl << be_nl << "public:"
+      << be_idt;
 }
 
 void
@@ -490,7 +491,8 @@ be_visitor_valuetype_ch::begin_private (void)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_uidt_nl << be_nl << "protected:" << be_idt;
+  *os << be_uidt_nl << be_nl << "protected:"
+      << be_idt;
 }
 
 int
