@@ -1,3 +1,11 @@
+Mon Oct 31 13:38:07 MST 2005  Yan Dai  <dai_y@ociweb.com>
+        
+        * bin/msvc_static_order.lst:
+        
+          Moved the TAO/tests/CSD_Strategy_Tests/TP_Common/CSD_TP_Test_Lib
+          before TAO/tests/Collocation/Collocation_Test_Stub. This should 
+          resolve the TP_Foo_* libs compilation errors on static build. 
+          
 Mon Oct 31 09:54:18 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/Makefile.am:
