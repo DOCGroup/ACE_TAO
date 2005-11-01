@@ -5,7 +5,7 @@
 #include "TestS.h"
 
 class MyInterfaceImpl
-  : public virtual POA_MyInterface, public virtual PortableServer::RefCountServantBase
+  : public virtual POA_MyInterface
 {
   public:
   MyInterfaceImpl (CORBA::ORB_ptr orb);
