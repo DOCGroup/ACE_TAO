@@ -411,6 +411,32 @@ struct Tester
     BOOST_CHECK_MESSAGE(r.expect(8), r);
   }
 
+  void test_regression_2201()
+  {
+    value_type * buffer = alloc_and_init_buffer();
+    expected_calls a(tested_allocation_traits::allocbuf_calls);
+    expected_calls f(tested_allocation_traits::freebuf_calls);
+    expected_calls r(tested_element_traits::release_calls);
+    {
+      tested_sequence a(8, 4, buffer);
+      BOOST_CHECK_EQUAL(CORBA::ULong(8), a.maximum());
+      BOOST_CHECK_EQUAL(CORBA::ULong(4), a.length());
+      BOOST_CHECK_EQUAL(buffer, a.get_buffer());
+      BOOST_CHECK_EQUAL(false, a.release());
+      check_values(a);
+      a.length (3);
+      BOOST_CHECK_EQUAL(CORBA::ULong(3), a.length());
+      a.length (4);
+      BOOST_CHECK_EQUAL(CORBA::ULong(4), a.length());
+      BOOST_CHECK(helper::compare_empty(a[3]));
+    }
+    BOOST_CHECK_MESSAGE(a.expect(0), a);
+    BOOST_CHECK_MESSAGE(f.expect(0), f);
+    tested_sequence::freebuf(buffer);
+    BOOST_CHECK_MESSAGE(r.expect(8), r);
+  }
+
+
   void add_all(test_suite * ts)
   {
     typedef string_sequence_tester<tested_sequence> common;
@@ -472,6 +498,9 @@ struct Tester
                 shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_get_buffer_true_with_release_true,
+                shared_this));
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &Tester::test_regression_2201,
                 shared_this));
   }
 
