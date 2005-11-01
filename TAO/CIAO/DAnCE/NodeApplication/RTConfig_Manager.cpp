@@ -9,11 +9,24 @@
 #endif /* __ACE_INLINE__ */
 
 void
+CIAO::RTResource_Config_Manager::init (RTCORBA::RTORB_ptr rtorb)
+{
+  this->rtorb_ = RTCORBA::RTORB::_duplicate (rtorb);
+}
+
+void
 CIAO::RTResource_Config_Manager::init_resources
 (const CIAO::DAnCE::ServerResource &server_resource
  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  if (CORBA::is_nil (this->rtorb_.in()))
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "RTResource_Config_Manager has not been properly initialized.\n"));
+      ACE_THROW (CORBA::INTERNAL ());
+    }
+
   const CIAO::DAnCE::ORBResource &orb_resource
     = server_resource.orb_config.orb_resources[0];
 
