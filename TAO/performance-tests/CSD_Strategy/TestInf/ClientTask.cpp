@@ -36,7 +36,7 @@ ClientTask::num_loops(unsigned num_loops)
 int
 ClientTask::open(void*)
 {
-  unsigned num_threads = this->engines_.size();
+  size_t num_threads = this->engines_.size();
 
   if (num_threads == 0)
     {
@@ -90,13 +90,13 @@ ClientTask::svc()
     this->failure_count_ ++;
   }
   ACE_CATCHALL
-  { 
-    ACE_ERROR((LM_ERROR, 
+  {
+    ACE_ERROR((LM_ERROR,
                "(%P|%t) ClientTask::svc caught unknown (...) exception "\
-               "in execute() " )); 
+               "in execute() " ));
     GuardType guard(this->lock_);
     this->failure_count_++;
-  } 
+  }
   ACE_ENDTRY;
 
   return 0;
@@ -110,7 +110,7 @@ ClientTask::close(u_long)
 }
 
 
-unsigned 
+unsigned
 ClientTask::failure_count() const
 {
   return this->failure_count_;
