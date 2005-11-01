@@ -1,5 +1,5 @@
-#ifndef guard_unbounded_value_sequence_hpp
-#define guard_unbounded_value_sequence_hpp
+#ifndef guard_bounded_value_sequence_hpp
+#define guard_bounded_value_sequence_hpp
 /**
  * @file
  *
@@ -22,8 +22,6 @@ template<class T, CORBA::ULong MAX>
 class bounded_value_sequence
 {
 public:
-  // static CORBA::ULong const MAXIMUM = MAX;
-
   typedef T value_type;
   typedef T const const_value_type;
 
@@ -92,4 +90,4 @@ private:
 
 } // namespace TAO
 
-#endif // guard_unbounded_string_sequence_hpp
+#endif // guard_bounded_string_sequence_hpp
