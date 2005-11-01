@@ -19,6 +19,7 @@ template<class tested_sequence,
 struct value_sequence_tester
 {
   typedef typename tested_sequence::value_type value_type;
+  typedef typename tested_sequence::const_value_type const_value_type;
 
   void test_default_constructor()
   {
@@ -66,7 +67,7 @@ struct value_sequence_tester
     x.length(8);
 
     tested_sequence const & y = x;
-    int const & z = y[4];
+    const_value_type & z = y[4];
     BOOST_CHECK_EQUAL(z, y[4]);
   }
 
@@ -76,7 +77,7 @@ struct value_sequence_tester
     x.length(8);
 
     tested_sequence const & y = x;
-    int const & z = y[4];
+    const_value_type & z = y[4];
     x[4] = 4;
     BOOST_CHECK_EQUAL(4, x[4]);
     BOOST_CHECK_EQUAL(4, y[4]);
