@@ -1,3 +1,11 @@
+Tue Nov  1 09:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1495_Regression/Client_Task.cpp:
+          Extended this test to do multiple calls. It will fail now
+
+        * tests/Bug_2289_Regression/MyStruct*.{h,cpp,inl}:
+          Removed generated files, shouldn't be in the repo
+
 Tue Nov  1 09:35:36 2005  Simon McQueen  <sm@prismtech.com>
 
         * tests/Bug_2289_Regression/Bug_2289_Regression.mpc:
