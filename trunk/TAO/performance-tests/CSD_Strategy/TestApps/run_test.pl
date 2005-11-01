@@ -157,7 +157,8 @@ for ($i = 0; $i < $num_servants; $i++) {
   unlink $iorfile[$i];
 }
 
-$SV = new PerlACE::Process("server_main",
+if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("server_main",
                            "-p $iorfname_prefix "        .
                            "-s $num_servants "           .
                            "-n $num_csd_threads "        .
@@ -168,6 +169,22 @@ $SV = new PerlACE::Process("server_main",
                            "-u $use_csd " .
                            "-x $scenario_id " .
                            "-z $trial_id");
+}
+else {
+    $SV = new PerlACE::Process("server_main",
+                           "-p $iorfname_prefix "        .
+                           "-s $num_servants "           .
+                           "-n $num_csd_threads "        .
+                           "-t $num_orb_threads "        .
+                           "-r $num_remote_clients "     .
+                           "-c $num_collocated_clients " .
+                           "-l $num_loops " .
+                           "-u $use_csd " .
+                           "-x $scenario_id " .
+                           "-z $trial_id");
+
+}
+
 
 $SV->Spawn();
 
