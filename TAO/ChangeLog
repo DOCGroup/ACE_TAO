@@ -1,3 +1,12 @@
+Tue Nov  1 19:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
+        * tests/Sequence_Unit_Tests/run_test.pl:
+        * tests/Sequence_Unit_Tests/Unbounded_Octet.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_octet_sequence_ut.cpp:
+          Added new tests for unbounded octet sequences, a specialization
+          for octet sequences will follow in the near future
+
 Tue Nov  1 18:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Sequence_Unit_Tests/bounded_value_sequence.hpp:
