@@ -196,6 +196,7 @@ be_visitor_valuetype_obv_cs::gen_obv_init_constructor_init_list (
 {
   TAO_OutStream *os = this->ctx_->stream ();
   AST_ValueType *parent = node->inherits_concrete ();
+  bool colon_generated = false;
 
   // Generate for inherited members first.
   if (parent != 0)
@@ -204,9 +205,12 @@ be_visitor_valuetype_obv_cs::gen_obv_init_constructor_init_list (
       
       if (be_parent->has_member ())
         {
-          *os << be_parent->full_obv_skel_name () << " ("
+          *os << be_nl 
+              << ": " << be_idt
+              << be_parent->full_obv_skel_name () << " ("
               << be_idt << be_idt;
-              
+            
+          colon_generated = true;    
           unsigned long p_index = 0;         
           this->gen_obv_init_base_constructor_args (be_parent, p_index);
           
@@ -248,8 +252,13 @@ be_visitor_valuetype_obv_cs::gen_obv_init_constructor_init_list (
         
       if (0 == index++)
         {
-          *os << be_nl 
-              << ": " << be_idt;
+          if (!colon_generated)
+            {
+              *os << be_nl 
+                  << ": " << be_idt;
+                  
+              colon_generated = true;
+            }
         }
       else
         {
