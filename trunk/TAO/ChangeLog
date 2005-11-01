@@ -1,3 +1,12 @@
+Tue Nov  1 19:06:48 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/driver/drv_preproc.cpp:
+        
+          Fixed addition of default paths to preprocess command line,
+          for the case where only $ACE_ROOT, and not $TAO_ROOT, is
+          defined in the environment. Thanks to Chris Cleeland
+          <cleeland_c@ociweb.cpm> for reporting the problem.
+
 Tue Nov  1 19:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
