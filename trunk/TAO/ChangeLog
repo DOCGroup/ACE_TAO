@@ -1,3 +1,9 @@
+Tue Nov  1 12:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2074_Regression/*:
+        * orbsvcs/tests/Bug_2074_Regression/*:
+          Moved test to orbsvs
+
 Tue Nov  1 11:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Sequence_Unit_Tests/generic_sequence.hpp:
