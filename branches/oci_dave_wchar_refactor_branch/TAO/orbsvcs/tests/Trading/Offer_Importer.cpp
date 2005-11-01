@@ -99,7 +99,7 @@ TAO_Offer_Importer::perform_directed_queries (ACE_ENV_SINGLE_ARG_DECL)
           CORBA::ULong length = link_name_seq2->length ();
           for (i = 0; i < length; i++)
             {
-              if (ACE_OS::strcmp (link_name_seq2[i], "Bootstrap") != 0)
+              if (ACE_OS::strcmp (link_name_seq2[i].in(), "Bootstrap") != 0)
                 break;
             }
 

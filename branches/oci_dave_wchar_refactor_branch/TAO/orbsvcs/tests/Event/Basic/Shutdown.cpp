@@ -9,6 +9,8 @@ ACE_RCSID(EC_Tests_Basic, Shutdown, "$Id$")
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   EC_Shutdown driver;
   return driver.run (argc, argv);
 }

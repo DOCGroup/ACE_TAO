@@ -24,10 +24,11 @@
 #include "StructuredEvent.h"
 #include "ace/Task.h"
 #include "ace/Barrier.h"
+#include "ace/Arg_Shifter.h"
+#include "ace/Argv_Type_Converter.h"
 
 class TAO_Notify_Tests_Task_Callback;
 class ACE_Barrier;
-class ACE_Arg_Shifter;
 
 /**
  * @class TAO_Notify_Tests_Periodic_Supplier
@@ -48,7 +49,7 @@ public:
   void task_callback(TAO_Notify_Tests_Task_Callback* client);
 
   /// Init the state of this object.
-  int init_state (ACE_Arg_Shifter& arg_shifter);
+  int init_state (ACE_TArg_Shifter< char >& arg_shifter);
 
   /// Activate this task, synch on the given barrier.
   virtual int activate_task (ACE_Barrier* barrier);

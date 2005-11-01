@@ -5,6 +5,8 @@
 int 
 ACE_TMAIN (int argc, ACE_TCHAR ** argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   Gateway_EC test;
 
   if (test.run (argc, argv) == -1)

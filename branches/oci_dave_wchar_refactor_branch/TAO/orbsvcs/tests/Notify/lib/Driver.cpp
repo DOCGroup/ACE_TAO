@@ -177,13 +177,13 @@ TAO_Notify_Tests_Driver::~TAO_Notify_Tests_Driver ()
 int
 TAO_Notify_Tests_Driver::parse_args (int argc, char *argv[])
 {
-  ACE_Arg_Shifter arg_shifter (argc, argv);
+  ACE_TArg_Shifter< char > arg_shifter (argc, argv);
 
   const ACE_TCHAR *current_arg = 0;
 
   while (arg_shifter.is_anything_left ())
     {
-      if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Timeout")))) // -Timeout timeout_period_S
+      if ((current_arg = arg_shifter.get_the_parameter ("-Timeout"))) // -Timeout timeout_period_S
         {
           if (current_arg != 0)
             {
@@ -226,7 +226,7 @@ TAO_Notify_Tests_Driver::parse_args (int argc, char *argv[])
 }
 
 int
-TAO_Notify_Tests_Driver::init (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_Driver::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
 {
   ACE_Argv_Type_Converter command_line(argc, argv);
 

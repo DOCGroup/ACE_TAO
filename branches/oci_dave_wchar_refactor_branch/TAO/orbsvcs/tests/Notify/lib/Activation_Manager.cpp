@@ -45,7 +45,7 @@ TAO_Notify_Tests_Activation_Manager::ior_output_file (const ACE_TCHAR *file_name
 }
 
 int
-TAO_Notify_Tests_Activation_Manager::ior_input_file (const ACE_TCHAR *file_name)
+TAO_Notify_Tests_Activation_Manager::ior_input_file (const char *file_name)
 {
   this->ior_input_file_ = file_name;
   return 0;

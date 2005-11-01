@@ -2,6 +2,7 @@
 
 #include "distributer.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 
 typedef ACE_Unmanaged_Singleton<Distributer, ACE_Null_Mutex> DISTRIBUTER;
@@ -236,13 +237,14 @@ int
 ACE_TMAIN (int argc,
       ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Initialize the ORB first.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
                          0
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -273,8 +275,7 @@ ACE_TMAIN (int argc,
 
       // Initialize the Distributer
       int result =
-        DISTRIBUTER::instance ()->init (argc,
-                                        argv
+        DISTRIBUTER::instance ()->init (convert.get_argc(), convert.get_ASCII_argv()
                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

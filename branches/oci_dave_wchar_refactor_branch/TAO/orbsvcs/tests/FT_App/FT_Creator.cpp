@@ -257,10 +257,12 @@ int FTAPP::FT_Creator::fini ()
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   int result = 0;
   ACE_TRY_NEW_ENV
   {
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+    CORBA::ORB_var orb = CORBA::ORB_init(convert.get_argc(), convert.get_ASCII_argv());
     ACE_TRY_CHECK;
     FTAPP::FT_Creator app;
     result = app.parse_args(argc, argv);

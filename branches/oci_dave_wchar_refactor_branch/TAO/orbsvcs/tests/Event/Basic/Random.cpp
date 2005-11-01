@@ -6,6 +6,7 @@
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "ace/Arg_Shifter.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_unistd.h"
 
@@ -16,6 +17,8 @@ ACE_RCSID (EC_Tests,
 int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   RND_Driver driver;
   return driver.run (argc, argv);
 }
@@ -57,12 +60,12 @@ RND_Driver::run (int argc, char *argv[])
   ACE_TRY
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
 
-      ACE_Arg_Shifter arg_shifter (argc, argv);
+      ACE_TArg_Shifter< char > arg_shifter (argc, argv);
 
       while (arg_shifter.is_anything_left ())
         {

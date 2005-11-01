@@ -22,6 +22,7 @@
 #include "ncontextext_client_i.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Read_Buffer.h"
 
 // FUZZ: disable check_for_streams_include
@@ -322,10 +323,11 @@ NContextExt_Client_i::print_values (CosNaming::Name name,
                                     CORBA::String_var url_string)
 {
 
-  ACE_DEBUG((LM_DEBUG, ACE_TEXT ("The first component id is %s,"
-             "The first component kind is %s,"
-             "The second component id is %s,"
-             "The second component kind is %s\n\n"),
+  ACE_DEBUG((LM_DEBUG, 
+        ACE_TEXT ("The first component id is %s,")
+        ACE_TEXT ("The first component kind is %s,")
+        ACE_TEXT ("The second component id is %s,")
+        ACE_TEXT ("The second component kind is %s\n\n"),
              name[0].id.in (),
              name[0].kind.in (),
              name[1].id.in (),
@@ -334,19 +336,21 @@ NContextExt_Client_i::print_values (CosNaming::Name name,
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The string form of the input name is: \n%s\n\n"),
               str_name.in ()));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The unstringified version of the name components are:,"
-              "The first component id is %s,"
-              "The first component kind is %s,"
-              "The second component id is %s,"
-              "The second component kind is %s\n\n"),
+  ACE_DEBUG ((LM_DEBUG,
+      ACE_TEXT ("The unstringified version of the name components are:,")
+      ACE_TEXT ("The first component id is %s,")
+      ACE_TEXT ("The first component kind is %s,")
+      ACE_TEXT ("The second component id is %s,")
+      ACE_TEXT ("The second component kind is %s\n\n"),
               nm[0].id.in (),
               nm[0].kind.in (),
               nm[1].id.in (),
               nm[1].kind.in ()));
 
- ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("When the address of the NamingContext is:"
-             "myhost.555xyz.com:9999"
-             "and the Object name is \n%s\n"),
+ ACE_DEBUG ((LM_DEBUG,
+      ACE_TEXT ("When the address of the NamingContext is:")
+      ACE_TEXT ("myhost.555xyz.com:9999")
+      ACE_TEXT ("and the Object name is \n%s\n"),
              obj_name.in ()));
 
  ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("The URL form of the string is \n %s\n"),

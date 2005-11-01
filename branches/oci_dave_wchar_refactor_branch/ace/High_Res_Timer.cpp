@@ -512,12 +512,12 @@ ACE_High_Res_Timer::print_total (const ACE_TCHAR *str,
 #endif /* !ACE_HAS_WINCE */
 
 int
-ACE_High_Res_Timer::get_env_global_scale_factor (const ACE_TCHAR *env)
+ACE_High_Res_Timer::get_env_global_scale_factor (const char *env)
 {
 #if !defined (ACE_HAS_WINCE)
   if (env != 0)
     {
-      const ACE_TCHAR *env_value = ACE_OS::getenv (env);
+      const char *env_value = ACE_OS::getenv (env);
       if (env_value != 0)
         {
           int value = ACE_OS::atoi (env_value);

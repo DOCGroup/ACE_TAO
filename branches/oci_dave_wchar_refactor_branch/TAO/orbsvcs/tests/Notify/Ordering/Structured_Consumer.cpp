@@ -7,6 +7,7 @@
 #include "orbsvcs/CosNamingC.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_unistd.h"
 
 static const char* ior = "file://supplier.ior";
@@ -18,7 +19,7 @@ static bool use_ordering = false;
 class Consumer_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, ACE_TCHAR* argv[]);
+  virtual int parse_args (int argc, char* argv[]);
 };
 
 int
@@ -124,11 +125,13 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
 
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
   {
     Consumer_Client client;
 
-    int status = client.init (argc, argv ACE_ENV_ARG_PARAMETER);
+    int status = client.init (convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
     ACE_UNUSED_ARG(status);
     ACE_ASSERT(status == 0);

@@ -269,9 +269,8 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
             ACE_OS::exit (errno);
           --arg_count;    // Back to 0-indexed
           cargv[arg_count] = 0;
-// WHAT!
           while (--arg_count >= 0)
-            cargv[arg_count] = ACE_TEXT_TO_CHAR_IN::convert (argv[arg_count]);
+            cargv[arg_count] = ACE_TEXT_TO_CHAR_OUT::convert (argv[arg_count]);
           // Don't worry about freeing the cargv or the strings it points to.
           // Either the process will be replaced, or we'll exit.
           if (ACE_OS::execv (cargv[0], cargv) == -1)

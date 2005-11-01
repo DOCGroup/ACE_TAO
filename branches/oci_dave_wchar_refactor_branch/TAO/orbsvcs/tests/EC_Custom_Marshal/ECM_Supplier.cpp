@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Sched_Params.h"
 #include "ace/ACE.h"
@@ -38,7 +39,7 @@ ECMS_Driver::run (int argc, ACE_TCHAR* argv[])
   ACE_TRY
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
@@ -81,7 +82,7 @@ ECMS_Driver::run (int argc, ACE_TCHAR* argv[])
 
       if (this->pid_file_name_ != 0)
         {
-          FILE* pid = ACE_OS::fopen (this->pid_file_name_, "w");
+          FILE* pid = ACE_OS::fopen (this->pid_file_name_, ACE_TEXT("w"));
           if (pid != 0)
             {
               ACE_OS::fprintf (pid, "%ld\n",
@@ -329,7 +330,7 @@ ECMS_Driver::disconnect_suppliers (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-ECMS_Driver::parse_args (int argc, ACE_TCHAR *argv[])
+ECMS_Driver::parse_args (int argc, char *argv[])
 {
   ACE_Get_Arg_Opt<char> get_opt (argc, argv, "ds:n:t:h:p:b:");
   int opt;
@@ -524,6 +525,8 @@ Test_Supplier::consumer_proxy (void)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ECMS_Driver driver;
   return driver.run (argc, argv);
 }

@@ -53,7 +53,10 @@ public:
    * high resolution timer samples are acquired in clock ticks, but often
    * presented in microseconds.
    */
-  void dump_results (const ACE_TCHAR *msg,
+  void dump_results (const char *msg,
+                     ACE_UINT32 scale_factor) const;
+
+  void dump_results (const wchar_t *msg,
                      ACE_UINT32 scale_factor) const;
 
   /// The number of samples

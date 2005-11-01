@@ -519,7 +519,7 @@ ACE_Throughput_Stats::accumulate (const ACE_Throughput_Stats &rhs)
 }
 
 void
-ACE_Throughput_Stats::dump_results (const ACE_TCHAR* msg,
+ACE_Throughput_Stats::dump_results (const char* msg,
                                     ACE_UINT32 sf)
 {
   if (this->samples_count () == 0u)
@@ -582,7 +582,14 @@ ACE_Throughput_Stats::dump_results (const ACE_TCHAR* msg,
 }
 
 void
-ACE_Throughput_Stats::dump_throughput (const ACE_TCHAR *msg,
+ACE_Throughput_Stats::dump_results (const wchar_t* msg,
+                                    ACE_UINT32 sf)
+{
+  // TODO
+}
+
+void
+ACE_Throughput_Stats::dump_throughput (const char *msg,
                                        ACE_UINT32 sf,
                                        ACE_UINT64 elapsed_time,
                                        ACE_UINT32 samples_count)
@@ -610,6 +617,15 @@ ACE_Throughput_Stats::dump_throughput (const ACE_TCHAR *msg,
   ACE_UNUSED_ARG (elapsed_time);
   ACE_UNUSED_ARG (samples_count);
 #endif /* ACE_NLOGGING */
+}
+
+void
+ACE_Throughput_Stats::dump_throughput (const wchar_t *msg,
+                                       ACE_UINT32 sf,
+                                       ACE_UINT64 elapsed_time,
+                                       ACE_UINT32 samples_count)
+{
+  // TODO
 }
 
 // ****************************************************************

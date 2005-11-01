@@ -13,6 +13,7 @@
 #include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_unistd.h"
 
 ACE_RCSID (EC_MT_Mcast,
@@ -69,6 +70,8 @@ int parse_args (int argc, char *argv[]);
 int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   // Register the default factory in the Service Configurator.
   // If your platform supports static constructors then you can
   // simply using the ACE_STATIC_SVC_DEFINE() macro, unfortunately TAO
@@ -82,7 +85,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       // **************** HERE IS THE ORB SETUP
 
       // Create the ORB, pass the argv list for parsing.
-      orb = CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+      orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Parse the arguments, you usually want to do this after

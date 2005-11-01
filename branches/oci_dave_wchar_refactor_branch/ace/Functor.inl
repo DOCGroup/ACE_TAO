@@ -53,7 +53,7 @@ ACE_Hash<char>::operator () (char t) const
   return t;
 }
 
-#if defined (ACE_LACKS_BUILTIN_WCHAR_T)
+#if !defined (ACE_LACKS_BUILTIN_WCHAR_T)
 ACE_INLINE unsigned long
 ACE_Hash<wchar_t>::operator () (wchar_t t) const
 {

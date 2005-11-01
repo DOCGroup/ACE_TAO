@@ -76,7 +76,7 @@ public:
     // Maximum number of consumers.
   };
 
-  int run (int argc, ACE_TCHAR* argv[]);
+  int run (int argc, char* argv[]);
   // Execute the test.
 
   void push_consumer (void* consumer_cookie,
@@ -87,7 +87,7 @@ public:
   // received events it will invoke this method.
 
 private:
-  int parse_args (int argc, ACE_TCHAR* argv[]);
+  int parse_args (int argc, char* argv[]);
   // parse the command line args
 
   void connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec

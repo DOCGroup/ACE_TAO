@@ -8,6 +8,7 @@
 #include "tao/PortableServer/Root_POA.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_stdio.h"
 
@@ -46,7 +47,7 @@ Nestea_Server_i::parse_args (void)
         TAO_debug_level++;
         break;
       case 'o':  // output the IOR to a file.
-        this->ior_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), "w");
+        this->ior_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), ACE_TEXT("w"));
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
@@ -96,7 +97,7 @@ Nestea_Server_i::init (int argc, char** argv ACE_ENV_ARG_DECL)
   ACE_TRY
     {
       // Initialize the ORB
-      this->orb_ = CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
+      this->orb_ = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), 0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Save pointers to the command line arguments

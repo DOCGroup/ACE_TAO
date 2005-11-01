@@ -21,10 +21,11 @@
 
 #include "Task_Stats.h"
 #include "Notify_StructuredPushConsumer.h"
+#include "ace/Arg_Shifter.h"
+#include "ace/Argv_Type_Converter.h"
 
 class TAO_Notify_Tests_Task_Callback;
 class ACE_Barrier;
-class ACE_Arg_Shifter;
 
 /**
  * @class TAO_Notify_Tests_Periodic_Consumer
@@ -45,7 +46,7 @@ public:
   void task_callback(TAO_Notify_Tests_Task_Callback* client);
 
   /// Init the state of this object.
-  virtual int init_state (ACE_Arg_Shifter& arg_shifter);
+  virtual int init_state (ACE_TArg_Shifter< char >& arg_shifter);
 
   /// dump stats
   void dump_stats (ACE_TCHAR* msg, int dump_samples);

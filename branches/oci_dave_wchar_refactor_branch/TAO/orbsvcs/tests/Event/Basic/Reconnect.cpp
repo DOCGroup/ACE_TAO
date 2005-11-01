@@ -5,6 +5,7 @@
 #include "Supplier.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/High_Res_Timer.h"
 
 ACE_RCSID (EC_Tests_Basic,
@@ -14,6 +15,8 @@ ACE_RCSID (EC_Tests_Basic,
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   EC_Reconnect driver;
   return driver.run (argc, argv);
 }
@@ -28,7 +31,7 @@ EC_Reconnect::EC_Reconnect (void)
 }
 
 int
-EC_Reconnect::parse_args (int& argc, ACE_TCHAR* argv[])
+EC_Reconnect::parse_args (int& argc, char* argv[])
 {
   if (this->EC_Driver::parse_args (argc, argv) != 0)
     return -1;

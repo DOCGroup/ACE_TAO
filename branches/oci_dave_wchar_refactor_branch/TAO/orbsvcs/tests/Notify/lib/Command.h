@@ -20,6 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Arg_Shifter.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/CORBA_macros.h"
 
 namespace CORBA
@@ -44,7 +45,7 @@ public:
   virtual ~TAO_Notify_Tests_Command ();
 
   /// Parse args and populate options.
-  virtual void init (ACE_Arg_Shifter& arg_shifter);
+  virtual void init (ACE_TArg_Shifter< char >& arg_shifter);
 
     /// Implement command execution.
   virtual void execute_i (ACE_ENV_SINGLE_ARG_DECL) = 0;

@@ -33,9 +33,9 @@ TAO_Notify_Tests_RT_POA_Command::name (void)
 }
 
 void
-TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
+TAO_Notify_Tests_RT_POA_Command::init (ACE_TArg_Shifter< char >& arg_shifter)
 {
-  const ACE_TCHAR *current_arg = 0;
+  const char *current_arg = 0;
 
   if (arg_shifter.is_anything_left ())
     {

@@ -7,6 +7,7 @@
 #include "tao/CDR.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/SString.h"
 
 ACE_RCSID (IFR_Test,
@@ -60,8 +61,7 @@ Admin_Client::init (int argc,
 {
   ACE_TRY_NEW_ENV
     {
-      this->orb_ = CORBA::ORB_init (argc,
-                                    argv,
+      this->orb_ = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
                                     0
                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -470,7 +470,7 @@ Admin_Client::enum_test (ACE_ENV_SINGLE_ARG_DECL)
                   td->name.in ()));
     }
 
-  ACE_ASSERT (ACE_OS::strcmp (td->name, "my_enum") == 0);
+  ACE_ASSERT (ACE_OS::strcmp (td->name.in(), "my_enum") == 0);
 
   if (this->debug_)
     {
@@ -479,7 +479,7 @@ Admin_Client::enum_test (ACE_ENV_SINGLE_ARG_DECL)
                   td->id.in ()));
     }
 
-  ACE_ASSERT (ACE_OS::strcmp (td->id, "IDL:my_enum:1.0") == 0);
+  ACE_ASSERT (ACE_OS::strcmp (td->id.in(), "IDL:my_enum:1.0") == 0);
 
   if (this->debug_)
     {
@@ -488,7 +488,7 @@ Admin_Client::enum_test (ACE_ENV_SINGLE_ARG_DECL)
                   td->defined_in.in ()));
     }
 
-  ACE_ASSERT (ACE_OS::strcmp (td->defined_in, "") == 0);
+  ACE_ASSERT (ACE_OS::strcmp (td->defined_in.in(), "") == 0);
 
   if (this->debug_)
     {
@@ -497,7 +497,7 @@ Admin_Client::enum_test (ACE_ENV_SINGLE_ARG_DECL)
                   td->version.in ()));
     }
 
-  ACE_ASSERT (ACE_OS::strcmp (td->version, "1.0") == 0);
+  ACE_ASSERT (ACE_OS::strcmp (td->version.in(), "1.0") == 0);
 
   CORBA::TCKind kind = td->type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -566,7 +566,7 @@ Admin_Client::enum_test (ACE_ENV_SINGLE_ARG_DECL)
                       str.in ()));
         }
 
-      ACE_ASSERT (ACE_OS::strcmp (str.in (), members[i]) == 0);
+      ACE_ASSERT (ACE_OS::strcmp (str.in (), members[i].in()) == 0);
     }
 
 
@@ -606,7 +606,7 @@ Admin_Client::enum_test (ACE_ENV_SINGLE_ARG_DECL)
                       tmp));
         }
 
-      ACE_ASSERT (ACE_OS::strcmp (fellows[i], members[i]) == 0);
+      ACE_ASSERT (ACE_OS::strcmp (fellows[i].in(), members[i].in()) == 0);
     }
 
   evar->name ("another_enum"
@@ -846,7 +846,7 @@ Admin_Client::alias_test (ACE_ENV_SINGLE_ARG_DECL)
                   td->name.in ()));
     }
 
-  ACE_ASSERT (ACE_OS::strcmp (td->name, "my_alias") == 0);
+  ACE_ASSERT (ACE_OS::strcmp (td->name.in(), "my_alias") == 0);
 
   if (this->debug_)
     {
@@ -855,7 +855,7 @@ Admin_Client::alias_test (ACE_ENV_SINGLE_ARG_DECL)
                   td->version.in ()));
     }
 
-  ACE_ASSERT (ACE_OS::strcmp (td->version, "1.1") == 0);
+  ACE_ASSERT (ACE_OS::strcmp (td->version.in(), "1.1") == 0);
 
   kind = td->type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -1085,7 +1085,7 @@ Admin_Client::struct_test (ACE_ENV_SINGLE_ARG_DECL)
                       str.in ()));
         }
 
-      ACE_ASSERT (ACE_OS::strcmp (str.in (), members[i].name) == 0);
+      ACE_ASSERT (ACE_OS::strcmp (str.in (), members[i].name.in()) == 0);
     }
 
   CORBA::Contained::Description_var desc =
@@ -1102,7 +1102,7 @@ Admin_Client::struct_test (ACE_ENV_SINGLE_ARG_DECL)
                   td->name.in ()));
     }
 
-  ACE_ASSERT (ACE_OS::strcmp (td->name, "my_struct") == 0);
+  ACE_ASSERT (ACE_OS::strcmp (td->name.in(), "my_struct") == 0);
 
   if (this->debug_)
     {
@@ -1111,7 +1111,7 @@ Admin_Client::struct_test (ACE_ENV_SINGLE_ARG_DECL)
                   td->id.in ()));
     }
 
-  ACE_ASSERT (ACE_OS::strcmp (td->id, "IDL:my_struct:1.0") == 0);
+  ACE_ASSERT (ACE_OS::strcmp (td->id.in(), "IDL:my_struct:1.0") == 0);
 
   if (this->debug_)
     {
@@ -1120,7 +1120,7 @@ Admin_Client::struct_test (ACE_ENV_SINGLE_ARG_DECL)
                   td->version.in ()));
     }
 
-  ACE_ASSERT (ACE_OS::strcmp (td->version, "1.0") == 0);
+  ACE_ASSERT (ACE_OS::strcmp (td->version.in(), "1.0") == 0);
 
   members.length (2);
   members[0].name = CORBA::string_dup ("long_mem");
@@ -1180,13 +1180,13 @@ Admin_Client::struct_test (ACE_ENV_SINGLE_ARG_DECL)
       if (i == length - 1)
         {
           cmp_result =
-            ACE_OS::strcmp (out_members[i].name, "my_enum");
+            ACE_OS::strcmp (out_members[i].name.in(), "my_enum");
           ACE_ASSERT (cmp_result == 0);
         }
       else
         {
           cmp_result =
-            ACE_OS::strcmp (out_members[i].name, members[i].name);
+            ACE_OS::strcmp (out_members[i].name.in(), members[i].name.in());
           ACE_ASSERT (cmp_result == 0);
         }
     }
@@ -1624,7 +1624,7 @@ Admin_Client::union_test (ACE_ENV_SINGLE_ARG_DECL)
         }
 
       // Multiple labels for first member shifts index by 1.
-      ACE_ASSERT (ACE_OS::strcmp (str.in (), u_members[i + 1].name) == 0);
+      ACE_ASSERT (ACE_OS::strcmp (str.in (), u_members[i + 1].name.in()) == 0);
 
       CORBA::Any_var label = tc->member_label (i
                                                ACE_ENV_ARG_PARAMETER);
@@ -1765,7 +1765,7 @@ Admin_Client::exception_test (ACE_ENV_SINGLE_ARG_DECL)
                       str.in ()));
         }
 
-      ACE_ASSERT (ACE_OS::strcmp (str.in (), members[i].name) == 0);
+      ACE_ASSERT (ACE_OS::strcmp (str.in (), members[i].name.in()) == 0);
     }
 
   CORBA::Contained::Description_var desc =
@@ -1782,7 +1782,7 @@ Admin_Client::exception_test (ACE_ENV_SINGLE_ARG_DECL)
                   ed->name.in ()));
     }
 
-  ACE_ASSERT (ACE_OS::strcmp (ed->name, "my_exception") == 0);
+  ACE_ASSERT (ACE_OS::strcmp (ed->name.in(), "my_exception") == 0);
 
   if (this->debug_)
     {
@@ -1791,7 +1791,7 @@ Admin_Client::exception_test (ACE_ENV_SINGLE_ARG_DECL)
                   ed->id.in ()));
     }
 
-  ACE_ASSERT (ACE_OS::strcmp (ed->id, "IDL:my_exception:1.0") == 0);
+  ACE_ASSERT (ACE_OS::strcmp (ed->id.in(), "IDL:my_exception:1.0") == 0);
 
   if (this->debug_)
     {
@@ -1800,7 +1800,7 @@ Admin_Client::exception_test (ACE_ENV_SINGLE_ARG_DECL)
                   ed->defined_in.in ()));
     }
 
-  ACE_ASSERT (ACE_OS::strcmp (ed->defined_in, "") == 0);
+  ACE_ASSERT (ACE_OS::strcmp (ed->defined_in.in(), "") == 0);
 
   if (this->debug_)
     {
@@ -1809,7 +1809,7 @@ Admin_Client::exception_test (ACE_ENV_SINGLE_ARG_DECL)
                   ed->version.in ()));
     }
 
-  ACE_ASSERT (ACE_OS::strcmp (ed->version, "1.0") == 0);
+  ACE_ASSERT (ACE_OS::strcmp (ed->version.in(), "1.0") == 0);
 
   members.length (2);
   members[0].name = CORBA::string_dup ("long_mem");
@@ -1872,13 +1872,13 @@ Admin_Client::exception_test (ACE_ENV_SINGLE_ARG_DECL)
       if (i == 2)
         {
           cmp_result =
-            ACE_OS::strcmp (out_members[i].name, "my_enum");
+            ACE_OS::strcmp (out_members[i].name.in(), "my_enum");
           ACE_ASSERT (cmp_result == 0);
         }
       else
         {
           cmp_result =
-            ACE_OS::strcmp (out_members[i].name, members[i].name);
+            ACE_OS::strcmp (out_members[i].name.in(), members[i].name.in());
           ACE_ASSERT (cmp_result == 0);
         }
     }
@@ -1909,13 +1909,13 @@ Admin_Client::exception_test (ACE_ENV_SINGLE_ARG_DECL)
       if (i == 1)
         {
           cmp_result =
-            ACE_OS::strcmp (out_members[i].name, "my_enum");
+            ACE_OS::strcmp (out_members[i].name.in(), "my_enum");
           ACE_ASSERT (cmp_result == 0);
         }
       else
         {
           cmp_result =
-            ACE_OS::strcmp (out_members[i].name, members[i].name);
+            ACE_OS::strcmp (out_members[i].name.in(), members[i].name.in());
           ACE_ASSERT (cmp_result == 0);
         }
     }
@@ -2092,7 +2092,7 @@ Admin_Client::exception_test (ACE_ENV_SINGLE_ARG_DECL)
                           ed->name.in ()));
             }
 
-          ACE_ASSERT (ACE_OS::strcmp (ed->name, "my_exception") == 0);
+          ACE_ASSERT (ACE_OS::strcmp (ed->name.in(), "my_exception") == 0);
         }
       else
         {
@@ -2122,7 +2122,7 @@ Admin_Client::exception_test (ACE_ENV_SINGLE_ARG_DECL)
                           td->name.in ()));
             }
 
-          ACE_ASSERT (ACE_OS::strcmp (td->name, "my_enum") == 0);
+          ACE_ASSERT (ACE_OS::strcmp (td->name.in(), "my_enum") == 0);
         }
     }
 
@@ -2524,7 +2524,7 @@ Admin_Client::interface_test (ACE_ENV_SINGLE_ARG_DECL)
                   od->defined_in.in ()));
     }
 
-  ACE_ASSERT (ACE_OS::strcmp (od->defined_in, "IDL:p_iface:1.0") == 0);
+  ACE_ASSERT (ACE_OS::strcmp (od->defined_in.in(), "IDL:p_iface:1.0") == 0);
 
   CORBA::TypeCode_var result = od->result;
   CORBA::TCKind kind = result->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -2986,7 +2986,7 @@ Admin_Client::move_test (ACE_ENV_SINGLE_ARG_DECL)
                       tmp));
         }
 
-      ACE_ASSERT (ACE_OS::strcmp (tmp, u_members[i].name) == 0);
+      ACE_ASSERT (ACE_OS::strcmp (tmp, u_members[i].name.in()) == 0);
     }
 
   CORBA::ContainedSeq_var out_contents =
@@ -3050,7 +3050,7 @@ Admin_Client::move_test (ACE_ENV_SINGLE_ARG_DECL)
         }
       else
         {
-          ACE_ASSERT (ACE_OS::strcmp (tmp, u_members[i].name) == 0);
+          ACE_ASSERT (ACE_OS::strcmp (tmp, u_members[i].name.in()) == 0);
         }
     }
 

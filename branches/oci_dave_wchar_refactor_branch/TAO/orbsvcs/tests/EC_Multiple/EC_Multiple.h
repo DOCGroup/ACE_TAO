@@ -180,7 +180,7 @@ public:
     // Maximum number of suppliers.
   };
 
-  int run (int argc, ACE_TCHAR* argv[]);
+  int run (int argc, char* argv[]);
   // Execute the test.
 
   void push_supplier (void* supplier_cookie,
@@ -236,7 +236,7 @@ private:
   // Called when the main thread (i.e. not the scavenger thread) is
   // shutting down.
 
-  int parse_args (int argc, ACE_TCHAR* argv[]);
+  int parse_args (int argc, char* argv[]);
   // parse the command line args
 
   void dump_results (void);

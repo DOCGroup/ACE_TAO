@@ -6,11 +6,13 @@
 int
 ACE_TMAIN (int argc, char *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   TAO_Notify_Tests_Driver driver;
 
   ACE_TRY_NEW_ENV
     {
-      int result = driver.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      int result = driver.init (convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (result == -1)

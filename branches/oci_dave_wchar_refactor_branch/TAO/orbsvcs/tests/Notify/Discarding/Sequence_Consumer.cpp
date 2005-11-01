@@ -5,6 +5,7 @@
 // ******************************************************************
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_unistd.h"
 
 #include "orbsvcs/CosNotifyCommC.h"
@@ -30,7 +31,7 @@ static Notify_Sequence_Push_Consumer* consumer_1 = 0;
 class Consumer_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, ACE_TCHAR* argv[]);
+  virtual int parse_args (int argc, char* argv[]);
 };
 
 
@@ -135,12 +136,14 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
 
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   int status = 0;
   ACE_TRY_NEW_ENV
   {
     Consumer_Client client;
 
-    status = client.init (argc, argv ACE_ENV_ARG_PARAMETER);
+    status = client.init (convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
     ACE_UNUSED_ARG(status);
     ACE_ASSERT(status == 0);

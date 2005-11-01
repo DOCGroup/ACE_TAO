@@ -15,6 +15,7 @@
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Sched_Params.h"
 #include "ace/High_Res_Timer.h"
@@ -28,6 +29,8 @@ ACE_RCSID (EC_Throughput,
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   TAO_EC_Default_Factory::init_svcs ();
 
   ECT_Throughput driver;
@@ -70,7 +73,7 @@ ECT_Throughput::run (int argc, ACE_TCHAR* argv[])
       ACE_High_Res_Timer::calibrate ();
 
       this->orb_ =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
@@ -136,7 +139,7 @@ ECT_Throughput::run (int argc, ACE_TCHAR* argv[])
 
       if (this->pid_file_name_ != 0)
         {
-          FILE* pid = ACE_OS::fopen (this->pid_file_name_, "w");
+          FILE* pid = ACE_OS::fopen (this->pid_file_name_, ACE_TEXT("w"));
           if (pid != 0)
             {
               ACE_OS::fprintf (pid, "%ld\n",
@@ -475,7 +478,7 @@ ECT_Throughput::dump_results (void)
 }
 
 int
-ECT_Throughput::parse_args (int argc, ACE_TCHAR *argv[])
+ECT_Throughput::parse_args (int argc, char *argv[])
 {
   ACE_Get_Arg_Opt<char> get_opt (argc, argv, "dc:s:u:n:t:b:h:l:p:w:");
   int opt;

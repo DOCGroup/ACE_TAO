@@ -14,6 +14,7 @@
 
 #include "ace/Array_Base.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Reactor.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
@@ -599,6 +600,8 @@ parse_args (int argc, char ** argv)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   // We may want this to be alive beyond the next block.
   TAO_EC_Servant_Var<Heartbeat_Application> app;
 
@@ -606,7 +609,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       // Initialize ORB and POA, POA Manager, parse args.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) == -1)

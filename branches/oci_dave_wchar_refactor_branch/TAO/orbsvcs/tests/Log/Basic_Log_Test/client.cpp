@@ -9,6 +9,8 @@ ACE_RCSID (Basic_Log_Test,
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   BasicLog_Test log_test;
 
   ACE_DEBUG((LM_DEBUG, "\nBasic Log test \n\n"));

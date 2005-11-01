@@ -37,7 +37,8 @@
  * has placed all the unknown arguments in their original order at
  * the front of original @a argv.
  */
-class ACE_Export ACE_Arg_Shifter
+template < typename CHAR_TYPE = char >
+class ACE_TArg_Shifter
 {
 public:
   // = Initialization and termination methods.
@@ -55,28 +56,28 @@ public:
    * @param argv The argument vector to shift. The string pointers in
    *    the vector will be reordered to place the @a argc unconsumed
    *    arguments at the front of the vector.
-   * @param temp A vector of @c ACE_TCHAR pointers at least @a argc
+   * @param temp A vector of @c CHAR_TYPE pointers at least @a argc
    *    elements long. The vector will be used for argument shifting as
    *    the specified @a argv vector is consumed. The vector must not
    *    be modified while this object exists. If this argument is 0
    *    (the default) the object will allocate and free the temporary
    *    vector transparently.
    */
-  ACE_Arg_Shifter (int& argc,
-                   const ACE_TCHAR **argv,
-                   const ACE_TCHAR **temp = 0);
+  ACE_TArg_Shifter (int& argc,
+                   const CHAR_TYPE **argv,
+                   const CHAR_TYPE **temp = 0);
 
   /// Same behavior as the preceding constructor, but without the
   /// "const" qualifier.
-  ACE_Arg_Shifter (int& argc,
-                   ACE_TCHAR **argv,
-                   ACE_TCHAR **temp = 0);
+  ACE_TArg_Shifter (int& argc,
+                   CHAR_TYPE **argv,
+                   CHAR_TYPE **temp = 0);
 
   /// Destructor.
-  ~ACE_Arg_Shifter (void);
+  ~ACE_TArg_Shifter (void);
 
   /// Get the current head of the vector.
-  const ACE_TCHAR *get_current (void) const;
+  const CHAR_TYPE *get_current (void) const;
 
   /**
    * If the @a flag matches the current_arg of arg shifter
@@ -110,7 +111,7 @@ public:
    * together '-foobarflagVALUE', the flag is NOT consumed
    * and the cur arg is left pointing to the entire flag/value pair
    */
-  const ACE_TCHAR *get_the_parameter (const ACE_TCHAR* flag);
+  const CHAR_TYPE *get_the_parameter (const CHAR_TYPE* flag);
 
   /**
    * Check if the current argument matches (case insensitive) <flag>
@@ -141,7 +142,7 @@ public:
    * Case C: If neither of Case A or B is met (no match)
    * then -1 is returned
    */
-  int cur_arg_strncasecmp (const ACE_TCHAR *flag);
+  int cur_arg_strncasecmp (const CHAR_TYPE *flag);
 
   /// Consume @a number argument(s) by sticking them/it on the end of
   /// the vector.
@@ -167,10 +168,10 @@ public:
 
 private:
   /// Copy Constructor should not be used.
-  ACE_Arg_Shifter (const ACE_Arg_Shifter&);
+  ACE_TArg_Shifter (const ACE_TArg_Shifter&);
 
   /// Assignment '=' operator should not be used.
-  ACE_Arg_Shifter operator= (const ACE_Arg_Shifter&);
+  ACE_TArg_Shifter operator= (const ACE_TArg_Shifter&);
 
   /// Refactor the constructor logic.
   void init (void);
@@ -182,10 +183,10 @@ private:
   int total_size_;
 
   /// The temporary array over which we traverse.
-  const ACE_TCHAR **temp_;
+  const CHAR_TYPE **temp_;
 
   /// The array in which the arguments are reordered.
-  const ACE_TCHAR **argv_;
+  const CHAR_TYPE **argv_;
 
   /// The element in <temp_> we're currently examining.
   int current_index_;
@@ -198,6 +199,10 @@ private:
   /// argument.
   int front_;
 };
+
+typedef ACE_TArg_Shifter< ACE_TCHAR > ACE_Arg_Shifter;
+
+#include "ace/Arg_Shifter.inl"
 
 #include /**/ "ace/post.h"
 

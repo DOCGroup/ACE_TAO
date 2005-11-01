@@ -260,6 +260,8 @@ DynSched_Test::run_schedule (ACE_Scheduler_Strategy &strategy,
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   int result = 0;
 
   // create a bunch of different strategies, indicating the minimum critical

@@ -272,7 +272,7 @@ Client::init (int argc,char **argv)
                            "the TAO_Naming_Client. \n"),
                           -1);
 
-      this->fp_ = ACE_OS::fopen (this->filename_,"r");
+      this->fp_ = ACE_OS::fopen (this->filename_,ACE_TEXT("r"));
       if (this->fp_ != 0)
         {
           ACE_DEBUG ((LM_DEBUG,"file opened successfully\n"));
@@ -385,9 +385,9 @@ int
 ACE_TMAIN (int argc,
       char *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
 
-  CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                        argv);
+  CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv());
 
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -414,7 +414,7 @@ ACE_TMAIN (int argc,
   ACE_CHECK_RETURN (-1);
 
   int result = 0;
-  result = CLIENT::instance ()->init (argc,argv);
+  result = CLIENT::instance ()->init (convert.get_argc(), convert.get_ASCII_argv());
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"client::init failed\n"),1);
   result = CLIENT::instance ()->run ();

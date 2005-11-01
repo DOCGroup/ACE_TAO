@@ -21,6 +21,7 @@
 #include "orbsvcs/Naming/Naming_Server.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (Simple_Naming,
@@ -85,6 +86,8 @@ My_Test_Object::id (CORBA::Short id ACE_ENV_ARG_DECL_NOT_USED)
 int
 ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   int c_breath = 4;
   int c_depth = 4;
   int o_breath = 4;

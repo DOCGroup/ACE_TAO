@@ -18,6 +18,8 @@
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   TAO::Utils::Server_Main<StubFaultNotifier> server_main("FaultNotifier");
   return server_main.run(argc, argv);
 }

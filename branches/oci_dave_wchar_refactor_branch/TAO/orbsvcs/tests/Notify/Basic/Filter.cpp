@@ -2,6 +2,7 @@
 
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "tao/debug.h"
 #include "Filter.h"
 
@@ -220,6 +221,8 @@ Filter::create_EC (ACE_ENV_SINGLE_ARG_DECL)
 int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   Filter events;
 
   if (events.parse_args (argc, argv) == -1)
@@ -229,8 +232,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
   ACE_TRY_NEW_ENV
     {
-      events.init (argc,
-                   argv
+      events.init (convert.get_argc(), convert.get_ASCII_argv()
                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

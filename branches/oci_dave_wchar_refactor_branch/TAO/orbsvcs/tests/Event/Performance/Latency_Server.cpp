@@ -8,6 +8,7 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Sample_History.h"
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
@@ -22,6 +23,8 @@ static int parse_args (int argc, char *argv[]);
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   TAO_EC_Default_Factory::init_svcs ();
 
   int priority =
@@ -49,7 +52,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
@@ -122,7 +125,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (ior_file_name != 0)
         {
-          FILE *output_file= ACE_OS::fopen (ior_file_name, "w");
+          FILE *output_file= ACE_OS::fopen (ior_file_name, ACE_TEXT("w"));
           if (output_file == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",

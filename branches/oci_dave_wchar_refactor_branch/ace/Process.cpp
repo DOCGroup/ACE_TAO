@@ -360,7 +360,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
         procargv[vcount] = 0;
 
         for (i = 0; i < vcount; ++i)
-          procargv[i] = ACE_TEXT_TO_CHAR_IN_OUT (wargv[i]); // memory allocated!
+          procargv[i] = ACE_TEXT_TO_CHAR_OUT (wargv[i]); // memory allocated!
 
         wargv = options.env_argv ();
         for (vcount = 0; wargv[vcount] != 0; ++vcount)
@@ -368,7 +368,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
         char **procenv = new char *[vcount + 1];  // Need 0 at the end
         procenv[vcount] = 0;
         for (i = 0; i < vcount; ++i)
-          procenv[i] = ACE_TEXT_TO_CHAR_IN_OUT (wargv[i]); // memory allocated!
+          procenv[i] = ACE_TEXT_TO_CHAR_OUT (wargv[i]); // memory allocated!
 # else
         const char *procname = options.process_name ();
         char *const *procargv = options.command_line_argv ();

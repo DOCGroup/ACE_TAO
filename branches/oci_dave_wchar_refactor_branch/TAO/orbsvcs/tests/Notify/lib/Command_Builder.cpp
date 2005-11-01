@@ -3,6 +3,7 @@
 #include "Command_Builder.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "Command.h"
 #include "Command_Factory.h"
 #include "Name.h"
@@ -21,7 +22,7 @@ TAO_Notify_Tests_Command_Builder::~TAO_Notify_Tests_Command_Builder ()
 int
 TAO_Notify_Tests_Command_Builder::init (int argc, char *argv[])
 {
-  ACE_Arg_Shifter arg_shifter (argc, argv);
+  ACE_TArg_Shifter< char > arg_shifter (argc, argv);
 
   ACE_CString current_arg;
   TAO_Notify_Tests_Command_Factory* factory = 0;

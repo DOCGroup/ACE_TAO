@@ -181,7 +181,7 @@ FTClientMain::parse_args (int argc, char *argv[])
       case 'c':
       {
         this->inFileName_ = get_opts.opt_arg ();
-        this->inFile_ = ACE_OS::fopen (this->inFileName_, "r");
+        this->inFile_ = ACE_OS::fopen (this->inFileName_, ACE_TEXT("r"));
         if(this->inFile_ && !ferror (this->inFile_))
         {
           ACE_OS::fprintf (stdout, "FT Client: Reading commands from %s\n", this->inFileName_);
@@ -530,7 +530,7 @@ int FTClientMain::next_replica (ACE_ENV_SINGLE_ARG_DECL)
   else
   {
     ACE_OS::fprintf (stderr, "***OUT_OF_REPLICAS*** "
-                             ACE_SIZE_T_FORMAT_SPECIFIER
+                             ACE_SIZE_T_FORMAT_SPECIFIER_A
                              "\n", this->replica_pos_);
   }
   return result;
@@ -626,6 +626,8 @@ int FTClientMain::run (ACE_ENV_SINGLE_ARG_DECL)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   FTClientMain app;
   int result = app.parse_args(argc, argv);
   if (result == 0)

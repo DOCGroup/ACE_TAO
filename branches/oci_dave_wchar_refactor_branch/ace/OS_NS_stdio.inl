@@ -743,7 +743,7 @@ ACE_OS::fopen (const wchar_t *filename, const ACE_TCHAR *mode)
 #else
   // Non-Windows doesn't use wchar_t file systems.
   ACE_OSCALL_RETURN
-    (::fopen (ACE_TEXT_TO_CHAR_IN (filename).c_str (), 
+    (::fopen (ACE_TEXT_TO_CHAR_IN (filename), 
               ACE_TEXT_TO_CHAR_IN (mode)), FILE*, 0);
 #endif /* ACE_HAS_WINCE */
 }

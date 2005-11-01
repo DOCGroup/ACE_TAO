@@ -1,6 +1,7 @@
 // -*- C++ -*-
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "test_i.h"
 #include "ace/OS_NS_stdio.h"
 
@@ -123,6 +124,8 @@ add_ft_prop (CORBA::ORB_ptr o,
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
@@ -138,7 +141,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_TRY_CHECK;
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "Server ORB" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "Server ORB" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
@@ -236,7 +239,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Write each IOR to a file.
 
       // IOR 1
-      FILE *output_file= ACE_OS::fopen (ior_file, "w");
+      FILE *output_file= ACE_OS::fopen (ior_file, ACE_TEXT("w"));
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file <%s> for writing "

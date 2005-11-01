@@ -53,7 +53,7 @@ TAO_Notify_Tests_RT_Test_Filter::add_constraints (const CosNotifyFilter::Constra
       // Check Poolid
       if (ACE_OS::strncmp (constraint_list[i].constraint_expr.in (), PoolId_prefix, poolId_index) == 0)
         {
-          if (ACE_OS::strlen (constraint_list[i].constraint_expr) > poolId_index)
+          if (ACE_OS::strlen (constraint_list[i].constraint_expr.in()) > poolId_index)
             {
               this->expected_pool_id_ = ACE_OS::atoi (&constraint_list[i].constraint_expr[poolId_index]);
 
@@ -64,7 +64,7 @@ TAO_Notify_Tests_RT_Test_Filter::add_constraints (const CosNotifyFilter::Constra
       // Check Poolid
       else if (ACE_OS::strncmp (constraint_list[i].constraint_expr.in (), LaneId_prefix, laneId_index) == 0)
         {
-          if (ACE_OS::strlen (constraint_list[i].constraint_expr) > laneId_index)
+          if (ACE_OS::strlen (constraint_list[i].constraint_expr.in()) > laneId_index)
             {
               this->expected_lane_id_ = ACE_OS::atoi (&constraint_list[i].constraint_expr[laneId_index]);
 

@@ -3,6 +3,7 @@
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
 #include "PushSupplier.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Auto_Ptr.h"
 #include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
 #include "orbsvcs/FtRtEvent/Utils/FTEC_Gateway.h"
@@ -94,9 +95,11 @@ get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
 
 int ACE_TMAIN(int argc, ACE_TCHAR** argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY {
-    orb = CORBA::ORB_init(argc, argv, ""
+    orb = CORBA::ORB_init(convert.get_argc(), convert.get_ASCII_argv(), ""
                           ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 

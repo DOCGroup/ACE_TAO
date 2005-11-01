@@ -96,7 +96,7 @@ TAO_Notify_Tests_ConsumerAdmin_Command::handle_status (ACE_ENV_SINGLE_ARG_DECL_N
 }
 
 void
-TAO_Notify_Tests_ConsumerAdmin_Command::init (ACE_Arg_Shifter& arg_shifter)
+TAO_Notify_Tests_ConsumerAdmin_Command::init (ACE_TArg_Shifter< char >& arg_shifter)
 {
   if (arg_shifter.is_anything_left ())
     {

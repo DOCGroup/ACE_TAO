@@ -42,7 +42,7 @@ public:
 
   /// Parse args and populate options.
   /// The arg_shifter options are read in the following manner: -Create <name> -PriorityModel <CLIENT|SERVER> <priority> -Lanes <count> (-Lane <priority> ,<static_threads> <dynamic_threads>)* -Bands <count> (-Band <low> <high>)*
-  virtual void init (ACE_Arg_Shifter& arg_shifter);
+  virtual void init (ACE_TArg_Shifter< char >& arg_shifter);
 
   /// Execute the command.
   virtual void execute_i (ACE_ENV_SINGLE_ARG_DECL);

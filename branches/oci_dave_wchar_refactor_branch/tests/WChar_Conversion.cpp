@@ -9,6 +9,31 @@
 
 ACE_RCSID(tests, WChar_Conversion, "$Id$")
 
+// Typical pattern for C-style system call
+template < typename CHAR_TYPE >
+CHAR_TYPE* system_call( CHAR_TYPE* bucket, size_t bucket_size )
+{
+  size_t i = 0;
+  for( ; i < bucket_size/2; ++i )
+  {
+    bucket[ i ] = 'a' + (i % 6);
+  }
+  bucket[ i ] = 0;
+  return ( bucket[ 0 ] == 0 ? 0 : bucket );
+}
+
+// The following would be a typical emulation pattern where the system
+// call takes an out param. Dta may be lost if the two representations
+// require a different number of characters
+template < typename ANTI_TYPE, typename CHAR_TYPE >
+CHAR_TYPE* system_call_emulation( CHAR_TYPE* bucket, size_t bucket_size )
+{
+  bucket[ 0 ] = 0;
+  ACE::String_Conversion::Convert_InOut< ANTI_TYPE, CHAR_TYPE > convert( bucket, bucket_size );
+  const ANTI_TYPE* result = system_call( convert.c_str(), convert.size() );
+  return ( result ? bucket : 0 );
+}
+
 int
 run_main (int, ACE_TCHAR *[])
 {
@@ -252,6 +277,13 @@ run_main (int, ACE_TCHAR *[])
       result[0] = 'T';
     }
     ACE_ASSERT( ACE_OS::strcmp( L"Tource", source ) == 0 );
+  }
+
+// Emulation pattern
+  {
+    wchar_t source[ 16 ] = { 6, 3, 7, 3, 2 }; // garbage
+    wchar_t* result = system_call_emulation< char >( source, 16 );
+    ACE_ASSERT( result == source && source[ 0 ] != 6 && source[ 15 ] == 0 );
   }
 
   ACE_END_TEST;

@@ -6,6 +6,7 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "ace/Arg_Shifter.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/High_Res_Timer.h"
 
 ACE_RCSID (EC_Tests_Basic,
@@ -15,6 +16,8 @@ ACE_RCSID (EC_Tests_Basic,
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   TAO_EC_Default_Factory::init_svcs ();
   EC_Master master;
   return master.run (argc, argv);
@@ -165,7 +168,7 @@ EC_Master::initialize_orb_and_poa (int &argc, ACE_TCHAR* argv[]
                                    ACE_ENV_ARG_DECL)
 {
   this->orb_ =
-    CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+    CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::Object_var poa_object =
@@ -194,7 +197,7 @@ EC_Master::initialize_orb_and_poa (int &argc, ACE_TCHAR* argv[]
 int
 EC_Master::parse_args (int &argc, ACE_TCHAR *argv[])
 {
-  ACE_Arg_Shifter arg_shifter (argc, argv);
+  ACE_TArg_Shifter< char > arg_shifter (argc, argv);
 
   while (arg_shifter.is_anything_left ())
     {

@@ -7,6 +7,7 @@
 #include "tao/ImR_Client/ImR_Client.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Read_Buffer.h"
 #include "ace/streams.h"
 
@@ -99,7 +100,7 @@ Server_i::init (int argc, char** argv ACE_ENV_ARG_DECL)
 {
   ACE_TRY
   {
-    this->orb_ = CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
+    this->orb_ = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), 0 ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     int retval = this->parse_args (argc, argv);

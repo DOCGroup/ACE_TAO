@@ -20,6 +20,7 @@
 #include "tests/test_config.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Task.h"
 #include "ami_testC.h"
 #include "ami_testS.h"
@@ -177,12 +178,14 @@ Handler handler;
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_START_TEST (ACE_TEXT ("HTIOP_AMI_client"));
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)

@@ -5,6 +5,7 @@
 #include "orbsvcs/Event/ECG_Mcast_Gateway.h"
 #include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_stdio.h"
 
@@ -26,7 +27,7 @@ Gateway_EC::check_for_nil (CORBA::Object_ptr obj, const char *message)
 }
 
 int
-Gateway_EC::parse_args (int argc, ACE_TCHAR *argv[])
+Gateway_EC::parse_args (int argc, char *argv[])
 {
   ACE_Get_Arg_Opt<char> get_opt (argc, argv, "i:");
   int opt;
@@ -63,7 +64,7 @@ Gateway_EC::write_ior_file (CORBA::ORB_ptr orb,
   str = orb->object_to_string (ec ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  FILE *output_file= ACE_OS::fopen (this->ec_ior_file_, "w");
+  FILE *output_file= ACE_OS::fopen (this->ec_ior_file_, ACE_TEXT("w"));
   if (output_file == 0)
     {
       ACE_ERROR ((LM_ERROR,
@@ -90,7 +91,7 @@ Gateway_EC::run (int argc, char ** argv)
     {
       // Initialize ORB and POA, POA Manager, parse args.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       orb_destroyer.init (orb);
 

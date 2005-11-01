@@ -13,6 +13,7 @@
 
 #include "ace/Sched_Params.h"
 #include "ace/Arg_Shifter.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
 #include "ace/OS_NS_errno.h"
@@ -59,7 +60,7 @@ EC_Driver::~EC_Driver (void)
 }
 
 int
-EC_Driver::run (int argc, ACE_TCHAR* argv[])
+EC_Driver::run (int argc, char* argv[])
 {
   ACE_TRY_NEW_ENV
     {
@@ -67,7 +68,7 @@ EC_Driver::run (int argc, ACE_TCHAR* argv[])
       // test.
       ACE_High_Res_Timer::calibrate ();
 
-      this->run_init (argc, argv ACE_ENV_ARG_PARAMETER);
+      this->run_init (convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->execute_test (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -91,7 +92,7 @@ EC_Driver::run (int argc, ACE_TCHAR* argv[])
 }
 
 void
-EC_Driver::run_init (int &argc, ACE_TCHAR* argv[]
+EC_Driver::run_init (int &argc, char* argv[]
                      ACE_ENV_ARG_DECL)
 {
   this->initialize_orb_and_poa (argc, argv ACE_ENV_ARG_PARAMETER);
@@ -106,7 +107,7 @@ EC_Driver::run_init (int &argc, ACE_TCHAR* argv[]
 
   if (this->pid_file_name_ != 0)
     {
-      FILE* pid = ACE_OS::fopen (this->pid_file_name_, "w");
+      FILE* pid = ACE_OS::fopen (this->pid_file_name_, ACE_TEXT("w"));
       if (pid != 0)
         {
           ACE_OS::fprintf (pid, "%ld\n",
@@ -170,11 +171,11 @@ EC_Driver::run_cleanup (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-EC_Driver::initialize_orb_and_poa (int &argc, ACE_TCHAR* argv[]
+EC_Driver::initialize_orb_and_poa (int &argc, char* argv[]
                                    ACE_ENV_ARG_DECL)
 {
   this->orb_ =
-    CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+    CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),, "" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::Object_var poa_object =
@@ -727,9 +728,9 @@ EC_Driver::dump_results (void)
 }
 
 int
-EC_Driver::parse_args (int &argc, ACE_TCHAR *argv[])
+EC_Driver::parse_args (int &argc, char *argv[])
 {
-  ACE_Arg_Shifter arg_shifter (argc, argv);
+  ACE_TArg_Shifter< char > arg_shifter (argc, argv);
 
   while (arg_shifter.is_anything_left ())
     {

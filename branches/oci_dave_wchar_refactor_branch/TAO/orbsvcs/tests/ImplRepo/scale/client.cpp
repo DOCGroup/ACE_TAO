@@ -7,7 +7,9 @@
 
 using namespace CORBA;
 
-int ACE_TMAIN(int argc, ACE_TCHAR* argv[]) {
+int ACE_TMAIN(int argc, ACE_TCHAR* argv[])
+{
+  ACE_Argv_Type_Converter convert (argc, argv);
 
   ACE_TRY_NEW_ENV
   {

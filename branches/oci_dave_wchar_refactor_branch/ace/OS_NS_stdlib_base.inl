@@ -6,6 +6,8 @@
 #ifndef OS_NS_STDLIB_BASE_INL
 #define OS_NS_STDLIB_BASE_INL
 
+#include "OS_NS_string_base.h"
+
 namespace ACE_OS
 {
 

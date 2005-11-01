@@ -2,6 +2,7 @@
 
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "tao/debug.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/CosNotifyCommC.h"
@@ -27,7 +28,7 @@ int
 IdAssignment::parse_args (int argc,
                           char *argv[])
 {
-    ACE_Arg_Shifter arg_shifter (argc, argv);
+    ACE_TArg_Shifter< char > arg_shifter (argc, argv);
 
     const char *current_arg = 0;
 
@@ -83,8 +84,7 @@ IdAssignment::init (int argc,
                     char *argv[]
                     ACE_ENV_ARG_DECL)
 {
-  CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                        argv,
+  CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
                                         ""
                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -460,16 +460,16 @@ IdAssignment::run_test(ACE_ENV_SINGLE_ARG_DECL)
 
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       IdAssignment test;
 
-      test.parse_args (argc,
-                       argv);
+      test.parse_args (convert.get_argc(), convert.get_ASCII_argv());
 
-      test.init (argc,
-                 argv
+      test.init (convert.get_argc(), convert.get_ASCII_argv()
                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

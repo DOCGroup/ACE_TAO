@@ -318,8 +318,8 @@ ACE::ldfind (const ACE_TCHAR* filename,
 #    else
           // Wide-char, non-Windows only offers char * getenv. So capture
           // it, translate to wide-char, and continue.
-          ACE::String_Conversion::Convert_In< wchar_t, char >( STRING ) wide_ldpath(ACE_OS::getenv (ACE_LD_SEARCH_PATH_A);
-          ld_path = wide_ldpath.c_str ();
+          ACE::String_Conversion::Convert_In< ACE_TCHAR, ACE_ANTI_TCHAR > wide_ldpath(ACE_OS::getenv (ACE_LD_SEARCH_PATH_A));
+          ld_path = const_cast<ACE_TCHAR*>(wide_ldpath.c_str ());
 #    endif /* ACE_WIN32 || !ACE_USES_WCHAR */
 #  endif /* ACE_DEFAULT_LD_SEARCH_PATH */
 

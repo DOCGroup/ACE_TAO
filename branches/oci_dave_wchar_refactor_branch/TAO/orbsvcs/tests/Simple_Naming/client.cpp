@@ -21,6 +21,7 @@
 #include "client.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(Simple_Naming, client, "$Id$")
 
@@ -146,7 +147,7 @@ CosNaming_Client::parse_args (void)
         if (this->test_ == 0)
           {
             FILE * ior_output_file =
-              ACE_OS::fopen (get_opts.opt_arg (), "w");
+              ACE_OS::fopen (get_opts.opt_arg (), ACE_TEXT("w"));
 
             if (ior_output_file == 0)
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -1270,9 +1271,11 @@ Persistent_Test_End::execute (TAO_Naming_Client &root_context)
 int
 ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   CosNaming_Client cosnaming_client;
 
-  if (cosnaming_client.init (argc, argv) == -1)
+  if (cosnaming_client.init (convert.get_argc(), convert.get_ASCII_argv()) == -1)
     return 1;
 
   return cosnaming_client.run ();

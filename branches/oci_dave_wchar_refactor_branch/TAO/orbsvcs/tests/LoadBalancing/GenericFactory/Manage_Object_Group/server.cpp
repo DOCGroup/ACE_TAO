@@ -9,6 +9,8 @@ ACE_RCSID (Manage_object_group,
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
     {
       const char *location1 = "MyLocation 1";

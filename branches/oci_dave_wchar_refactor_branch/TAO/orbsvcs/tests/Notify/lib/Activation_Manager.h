@@ -91,7 +91,7 @@ public:
   int ior_output_file (const ACE_TCHAR *file_name);
 
   // Returns 1 if the file could be opened for read.
-  int ior_input_file (const ACE_TCHAR *file_name);
+  int ior_input_file (const char *file_name);
 
   void write_ior (ACE_ENV_SINGLE_ARG_DECL);
   void wait_for_start_signal (ACE_ENV_SINGLE_ARG_DECL);

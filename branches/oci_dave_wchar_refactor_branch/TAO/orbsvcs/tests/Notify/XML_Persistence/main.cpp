@@ -54,6 +54,8 @@ class TestConsumer
 
 int ACE_TMAIN(int ac, ACE_TCHAR **av)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   int retval = 1;
 
   bool pass1 = false;
@@ -68,7 +70,7 @@ int ACE_TMAIN(int ac, ACE_TCHAR **av)
     ACE_TRY_CHECK;
     ACE_ASSERT(! CORBA::is_nil (orb.in ()));
 
-    if (ac > 2 && ACE_OS::strcmp (av[1], "-pass") == 0)
+    if (ac > 2 && ACE_OS::strcmp (av[1], ACE_TEXT("-pass")) == 0)
     {
       int pn = av[2][0] - '0';
       switch (pn)

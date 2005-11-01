@@ -6,6 +6,8 @@
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_High_Res_Timer::calibrate ();
 
   RedGreen_Test client;
@@ -14,7 +16,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_TRY_NEW_ENV
     {
-      client.init (argc, argv
+      client.init (convert.get_argc(), convert.get_ASCII_argv()
                    ACE_ENV_ARG_PARAMETER); //Init the Client
       ACE_TRY_CHECK;
 
