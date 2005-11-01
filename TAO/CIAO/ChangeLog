@@ -1,3 +1,12 @@
+Tue Nov 01 13:44:58 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
+
+	* DAnCE/NodeApplication/RTConfig_Manager.cpp:
+	* DAnCE/NodeApplication/RTConfig_Manager.h:
+	* DAnCE/NodeApplication/RTConfig_Manager.inl:
+	* DAnCE/NodeApplication/RTNodeApp_Configurator.cpp:
+	* DAnCE/NodeApplication/RTNodeApp_Configurator.h: Integrated
+	  RTConfig_Manager with the RTNodeApp_Configurator.  
+
 Mon Oct 31 22:37:42 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
 	* DAnCE/NodeApplication/NodeApplication/NodeApplication.mpc:

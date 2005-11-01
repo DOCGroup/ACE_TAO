@@ -25,6 +25,8 @@ CIAO::RTNodeApp_Configurator::post_orb_initialize (CORBA::ORB_ptr o)
   this->rtorb_ =
     RTCORBA::RTORB::_narrow (object.in ());
 
+  this->config_manager_.init (this->rtorb_.in ());
+
   return 0;
 }
 
@@ -45,11 +47,15 @@ CIAO::RTNodeApp_Configurator::init_resource_manager
 
       if (ACE_OS::strcmp ("CIAOServerResources", properties[i].name) == 0)
         {              
-          CIAO::DAnCE::ServerResource *svr_resource;
+          CIAO::DAnCE::ServerResource_var svr_resource;
           if (properties[i].value >>= svr_resource)
             {
+              this->config_manager_.init_resources (svr_resource);
               //  Now we have the information to initialize the manager.
             }
+          else
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "ERROR: RTNodeApp_Configurator::init_resource_manager unable to extract CIAOServerResources\n"), -1);
         }
       
       // Ignore other stuff
@@ -69,6 +75,18 @@ CIAO::RTNodeApp_Configurator::find_container_policies
     {
       ACE_DEBUG ((LM_DEBUG, "RTNodeApp_Configurator::find_container_policies processing property: %s\n",
                   properties[i].name.in ()));
+
+      if (ACE_OS::strcmp ("ContainerPolicySet", properties[i].name) == 0)
+        {
+          const char *policy_name;
+          if (properties[i].value >>= policy_name)
+            {
+              return this->config_manager_.find_policies_by_name (policy_name);
+            }
+          else
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "ERROR: RTNodeApp_Configurator::find_container_policies unable to extract ContainerPolicySet\n"), 0);
+        }
     }
 
   return 0;

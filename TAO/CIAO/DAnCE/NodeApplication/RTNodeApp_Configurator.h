@@ -24,6 +24,7 @@
 #include "NodeApp_Configurator.h"
 #include "RTNA_Configurator_Export.h"
 #include "tao/RTCORBA/RTCORBA.h"
+#include "RTConfig_Manager.h"
 
 namespace CIAO
 {
@@ -68,6 +69,8 @@ namespace CIAO
     CORBA::ORB_var orb_;
 
     RTCORBA::RTORB_var rtorb_;
+
+    RTResource_Config_Manager config_manager_;
   };
 }
 

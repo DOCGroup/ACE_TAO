@@ -50,8 +50,10 @@ namespace CIAO
   class RTResource_Config_Manager
   {
   public:
-    RTResource_Config_Manager (RTCORBA::RTORB_ptr rtorb);
-    ~RTResource_Config_Manager ();
+    RTResource_Config_Manager (void);
+    ~RTResource_Config_Manager (void);
+
+    void init (RTCORBA::RTORB_ptr rtorb);
 
     /// Initializing the RTResource_Config_Manager
     void init_resources (const CIAO::DAnCE::ServerResource &info
