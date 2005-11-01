@@ -19,5 +19,6 @@ project(RTNA_Configurator): ciao_component_dnc, rt_server {
 
   Source_Files {
     RTNodeApp_Configurator.cpp
+    RTConfig_Manager.cpp
   }
 }
