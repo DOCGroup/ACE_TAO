@@ -22,7 +22,7 @@
  *
  * Oh, and let us not forget the type that the sequences encapsulates.
  *
- * The intent is not for sequences to simply derive or intantiate this
+ * The intent is not for sequences to simply derive or instantiate this
  * type.  Instead, different each sequence type is written using
  * composition.  They instantiate a generic sequence with the correct
  * traits, and implement the adapt the generic sequence interface to
