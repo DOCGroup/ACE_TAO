@@ -30,6 +30,12 @@ TAO_String_Manager::TAO_String_Manager (const TAO_String_Manager &rhs)
 {
 }
 
+ACE_INLINE
+TAO_String_Manager::TAO_String_Manager (const char *s)
+  : ptr_ (CORBA::string_dup (s))
+{
+}
+
 // destructor
 ACE_INLINE
 TAO_String_Manager::~TAO_String_Manager (void)
@@ -205,6 +211,12 @@ TAO_WString_Manager::TAO_WString_Manager (void)
 ACE_INLINE
 TAO_WString_Manager::TAO_WString_Manager (const TAO_WString_Manager &rhs)
   :  ptr_ (CORBA::wstring_dup (rhs.ptr_))
+{
+}
+
+ACE_INLINE
+TAO_WString_Manager::TAO_WString_Manager (const CORBA::WChar *ws)
+  : ptr_ (CORBA::wstring_dup (ws))
 {
 }
 

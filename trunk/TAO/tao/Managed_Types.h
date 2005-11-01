@@ -46,6 +46,9 @@ public:
 
   /// copy constructor
   TAO_String_Manager (const TAO_String_Manager &);
+  
+  /// constructor from const char* makes a copy.
+  TAO_String_Manager (const char *);
 
   /// destructor
   ~TAO_String_Manager (void);
@@ -196,6 +199,9 @@ public:
 
   /// copy constructor
   TAO_WString_Manager (const TAO_WString_Manager &);
+
+  /// constructor from const whar* makes a copy.
+  TAO_WString_Manager (const CORBA::WChar *);
 
   /// destructor
   ~TAO_WString_Manager (void);
