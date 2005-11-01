@@ -1,0 +1,8 @@
+// $Id$
+
+#include "MyStruct.idl"
+
+interface MyInterface
+{
+    void myMethod (in MyStruct structParam);
+};
