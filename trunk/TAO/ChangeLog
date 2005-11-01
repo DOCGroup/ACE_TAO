@@ -1,7 +1,16 @@
+Tue Nov  1 14:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Sequence_Unit_Tests/unbounded_value_sequence_ut.cpp:
+          Added a regression for bug 2201
+
+        * tests/Sequence_Unit_Tests/value_traits.hpp:
+          Implement initialize_range and zero_range as fix for bug
+          2201 which also seemed to exist in the new sequence implementation
+
 Tue Nov  1 14:42:14 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
-        
+
           Fixed bug in generation of constructor initializing member
           values that failed to screen out attributes when traversing
           the valuetype's scope for stub source file generation.
@@ -10,13 +19,13 @@ Tue Nov  1 14:14:31 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Managed_Types.h:
         * tao/Managed_Types.i:
-        
+
           Added constructors for TAO_String_Manager and
           TAO_WString_Manager from const char* and const CORBA::WChar*
           respectively (each constructor makes a copy). These new
           constructors are used in generated code for valuetypes, in
           the initializing constructor added in
-          
+
           Fri Oct 28 23:55:14 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Nov  1 12:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
