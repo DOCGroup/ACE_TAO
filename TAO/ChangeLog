@@ -1,3 +1,13 @@
+Tue Nov  1 15:37:04 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype_obv_cs.h:
+        
+          Fixed generation of valuetype initializing constructor for
+          array members. These cannot be handled in the constructor's
+          initialization list, so they are handled in the constructor
+          body.
+
 Tue Nov  1 14:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Sequence_Unit_Tests/unbounded_value_sequence_ut.cpp:

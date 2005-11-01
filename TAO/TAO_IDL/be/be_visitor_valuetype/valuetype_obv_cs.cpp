@@ -84,14 +84,17 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
       this->gen_obv_init_constructor_args (node, index);
 
       *os << be_uidt_nl
-          << ")" << be_nl
-          << ": " << be_idt;
+          << ")";
           
-      index = 0;    
       this->gen_obv_init_constructor_init_list (node);
       
       *os << be_uidt << be_uidt_nl
-          << "{}" << be_nl << be_nl;
+          << "{" << be_idt;
+          
+      this->gen_obv_init_constructor_array_inits (node);
+      
+      *os << be_uidt_nl
+          << "}" << be_nl << be_nl;
     }
 
   // Destructor.
@@ -232,8 +235,23 @@ be_visitor_valuetype_obv_cs::gen_obv_init_constructor_init_list (
         {
           continue;
         }
+      
+      AST_Decl::NodeType nt =
+        f->field_type ()->unaliased_type ()->node_type ();
+      
+      // Arrays can't be done in the initialization list, they're done
+      // later in the constructor body.  
+      if (nt == AST_Decl::NT_array)
+        {
+          continue;
+        }
         
-      if (index++ != 0)
+      if (0 == index++)
+        {
+          *os << be_nl 
+              << ": " << be_idt;
+        }
+      else
         {
           *os << "," << be_nl;
         }
@@ -278,4 +296,41 @@ be_visitor_valuetype_obv_cs::gen_obv_init_base_constructor_args (
           << "_tao_init_" << f->local_name ();          
     }
 }
+
+void
+be_visitor_valuetype_obv_cs::gen_obv_init_constructor_array_inits (
+    be_valuetype *node
+  )
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next())
+    {
+      // be_attribute doesn't inherit from be_field (unlike the
+      // AST_* counterparts, so this screens attributes and operations.
+      be_field *f = be_field::narrow_from_decl (si.item ());
+      
+      if (f == 0)
+        {
+          continue;
+        }
+        
+      AST_Decl::NodeType nt =
+        f->field_type ()->unaliased_type ()->node_type ();
+      
+      // All other members are handled in the initialization list.
+      if (nt != AST_Decl::NT_array)
+        {
+          continue;
+        }
+        
+      *os << be_nl
+          << f->field_type ()->name () << "_copy ("
+          << node->field_pd_prefix () << f->local_name () 
+          << ", _tao_init_" << f->local_name () << ");";
+    }
+}
+
 
