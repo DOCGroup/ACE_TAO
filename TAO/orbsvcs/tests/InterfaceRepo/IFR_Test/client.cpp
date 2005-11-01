@@ -9,10 +9,11 @@ ACE_RCSID (IFR_Test,
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   Admin_Client admin_client;
 
-  int retval = admin_client.init (argc, 
-                                  argv);
+  int retval = admin_client.init (convert.get_argc(), convert.get_ASCII_argv());
 
   if (retval == -1)
     {

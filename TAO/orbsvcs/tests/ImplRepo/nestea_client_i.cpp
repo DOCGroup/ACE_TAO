@@ -3,6 +3,7 @@
 #include "nestea_client_i.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Read_Buffer.h"
 #include "ace/ACE.h"
 

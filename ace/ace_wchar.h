@@ -18,8 +18,11 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined(ACE_SIZEOF_WCHAR) || !defined (ACE_WCHAR_MAX)
-  #error Must (Un)define ACE_SIZEOF_WCHAR, ACE_WCHAR_MAX, \
-         and ACE_LACKS_BUILTIN_WCHAR_T in the config-<platform>.h
+#error Must define ACE_SIZEOF_WCHAR, ACE_WCHAR_MAX, \
+and (maybe undefine) ACE_LACKS_BUILTIN_WCHAR_T in the config-<platform>.h. \
+Typedef wchar_t, wint_t, and/or wctype_t in the config-<platform>.h \
+or within the conditional #includes below if the platform does \
+not supply them.
 #endif
 
 // Add includes and/or typedefs to get wchar_t, wint_t, and wctype_t.
@@ -123,7 +126,7 @@ using std::size_t;
   #define ACE_WCHAR_T_TYPE wchar_t
   #define ACE_LACKS_NATIVR_WCHAR_T ACE_LACKS_BUILTIN_WCHAR_T
   namespace ACE_OS { typedef wchar_t WChar; }
-#endif
+#endif /* ACE_LACKS_DEPRECATED_MACROS */
 
 // This package should only be included in the implementation files
 // that use it.

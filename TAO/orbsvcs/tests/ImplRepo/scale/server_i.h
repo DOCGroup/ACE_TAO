@@ -20,7 +20,7 @@ public:
   int run (ACE_ENV_SINGLE_ARG_DECL);
 
 private:
-  int parse_args (int argc, ACE_TCHAR* argv[]);
+  int parse_args (int argc, char* argv[]);
 
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;

@@ -2,6 +2,7 @@
 
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "tao/debug.h"
 #include "MultiTypes.h"
 
@@ -377,6 +378,8 @@ MultiTypes::check_results (void)
 int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   MultiTypes client;
 
   if (client.parse_args (argc, argv) == -1)
@@ -386,8 +389,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
   ACE_TRY_NEW_ENV
     {
-      client.init (argc,
-                   argv
+      client.init (convert.get_argc(), convert.get_ASCII_argv()
                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

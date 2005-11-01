@@ -2,6 +2,7 @@
 
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "tao/debug.h"
 #include "ConnectDisconnect.h"
 
@@ -142,7 +143,7 @@ ConnectDisconnect::init (int argc,
 int
 ConnectDisconnect::parse_args(int argc, char *argv[])
 {
-  ACE_Arg_Shifter arg_shifter (argc,
+  ACE_TArg_Shifter< char > arg_shifter (argc,
                               argv);
 
     const char *current_arg = 0;
@@ -352,6 +353,8 @@ ConnectDisconnect::check_results (void)
 int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ConnectDisconnect client;
 
   if (client.parse_args (argc, argv) == -1)
@@ -361,7 +364,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
   ACE_TRY_NEW_ENV
     {
-      client.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      client.init (convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       client.run_test (ACE_ENV_SINGLE_ARG_PARAMETER);

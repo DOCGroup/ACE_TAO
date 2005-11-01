@@ -90,7 +90,7 @@ public:
     // Maximum number of suppliers.
   };
 
-  int run (int argc, ACE_TCHAR* argv[]);
+  int run (int argc, char* argv[]);
   // Execute the test.
 
   int supplier_task (Test_Supplier *supplier,
@@ -107,7 +107,7 @@ public:
   // testing the short-circuit case.
 
 private:
-  int parse_args (int argc, ACE_TCHAR* argv[]);
+  int parse_args (int argc, char* argv[]);
   // parse the command line args
 
   void connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec

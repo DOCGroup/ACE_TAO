@@ -100,8 +100,7 @@ TAO::ORB::open_services (int &argc, ACE_TCHAR **argv)
 
   if (argc > 0 && argv != 0)
     {
-// what!
-      argv0 = ACE_TEXT_TO_CHAR_IN (argv[0]);
+      argv0 = ACE_TEXT_TO_CHAR_OUT (argv[0]);
     }
 
   CORBA::ULong len = 0;

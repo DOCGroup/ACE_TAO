@@ -75,7 +75,7 @@ public:
                   char *argv[]) ;
 
   int init (int argc,
-            ACE_TCHAR *argv[])
+            ACE_TCHAR *argv[]
             ACE_ENV_ARG_DECL);
   // initialization.
 

@@ -2,6 +2,7 @@
 
 #include "ior_mcast_client_i.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Read_Buffer.h"
 
 ior_mcast_Client_i::ior_mcast_Client_i (void)
@@ -23,8 +24,7 @@ ior_mcast_Client_i::init (int& argc,
     {
       // First initialize the ORB, that will remove some arguments...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
                          "" /* the ORB name, it can be anything! */
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

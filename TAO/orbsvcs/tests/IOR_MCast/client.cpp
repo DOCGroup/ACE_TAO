@@ -4,6 +4,7 @@
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
 
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -13,7 +14,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ior_mcast_Client_i client;
 
       int init_result;
-      init_result = client.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      init_result = client.init (convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       return 0;

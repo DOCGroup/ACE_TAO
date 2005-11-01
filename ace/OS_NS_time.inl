@@ -124,8 +124,7 @@ ACE_OS::ctime (const time_t *t)
   static wchar_t *wide_time = 0;
   if (wide_time != 0)
     delete [] wide_time;
-  wide_time = ACE_TEXT_TO_WCHAR_IN::convert (narrow_time);
-// WHAT!
+  wide_time = ACE_TEXT_TO_WCHAR_OUT(narrow_time);
   return wide_time;
 #  else
   ACE_OSCALL_RETURN (::ctime (t), char *, 0);
@@ -176,7 +175,7 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
     return 0;
 
 #   if defined (ACE_USES_WCHAR)
-  ACE_OS::string_copy (buf, wide_buf, buflen);
+  ACE_OS::string_copy (buf, bufp, buflen);
   return buf;
 #   else
   return bufp;

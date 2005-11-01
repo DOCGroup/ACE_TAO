@@ -3,6 +3,7 @@
 #include "Periodic_Supplier.h"
 
 #include "ace/Arg_Shifter.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Barrier.h"
 #include "ace/OS_NS_unistd.h"
@@ -45,13 +46,13 @@ TAO_Notify_Tests_Periodic_Supplier::task_callback(TAO_Notify_Tests_Task_Callback
 }
 
 int
-TAO_Notify_Tests_Periodic_Supplier::init_state (ACE_Arg_Shifter& arg_shifter)
+TAO_Notify_Tests_Periodic_Supplier::init_state (ACE_TArg_Shifter< char >& arg_shifter)
 {
   // First, let the base class look for options.
   if (TAO_Notify_Tests_StructuredPushSupplier::init_state (arg_shifter) == -1)
     return -1;
 
-  const ACE_TCHAR *current_arg = 0;
+  const char *current_arg = 0;
 
   while (arg_shifter.is_anything_left ())
     {

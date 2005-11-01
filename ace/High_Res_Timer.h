@@ -136,8 +136,7 @@ public:
    * This is basically a no-op on CE because there is no concept of
    * environment variable on CE.
    */
-  static int get_env_global_scale_factor (const ACE_TCHAR *env
-                                          = ACE_LIB_TEXT ("ACE_SCALE_FACTOR"));
+  static int get_env_global_scale_factor (const char *env = "ACE_SCALE_FACTOR");
 
   /**
    * Set (and return, for info) the global scale factor by sleeping

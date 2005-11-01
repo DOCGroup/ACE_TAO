@@ -3,6 +3,7 @@
 #include "AdminProperties.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_unistd.h"
 #include "tao/debug.h"
 
@@ -24,7 +25,7 @@ AdminProperties_Task::init (TAO_Notify_Tests_StructuredPushSupplier *supplier, A
 int
 AdminProperties_Task::init (int argc, ACE_TCHAR *argv[])
 {
-  return ACE_Task_Base::init (argc, argv);
+  return ACE_Task_Base::init (convert.get_argc(), convert.get_ASCII_argv());
 }
 
 int
@@ -146,7 +147,7 @@ AdminProperties::~AdminProperties (void)
 int
 AdminProperties::parse_args(int argc, char *argv[])
 {
-  ACE_Arg_Shifter arg_shifter (argc, argv);
+  ACE_TArg_Shifter< char > arg_shifter (argc, argv);
 
   const char *current_arg = 0;
 
@@ -470,11 +471,13 @@ AdminProperties::create_consumers (ACE_ENV_SINGLE_ARG_DECL)
 int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   AdminProperties test;
 
   ACE_TRY_NEW_ENV
     {
-      test.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      test.init (convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       test.run_test (ACE_ENV_SINGLE_ARG_PARAMETER);

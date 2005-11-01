@@ -7,11 +7,13 @@
 int
 ACE_TMAIN (int argc, char *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
     {
       // Initialize the base class.
       Notify_Test_Client client;
-      client.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      client.init (convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       CosNotifyChannelAdmin::EventChannelFactory_ptr ecf = client.notify_factory ();

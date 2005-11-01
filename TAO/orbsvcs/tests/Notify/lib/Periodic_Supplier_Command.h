@@ -41,7 +41,7 @@ public:
   ~TAO_Notify_Tests_Periodic_Supplier_Command ();
 
   /// Parse args and populate options.
-  virtual void init (ACE_Arg_Shifter& arg_shifter);
+  virtual void init (ACE_TArg_Shifter< char >& arg_shifter);
 
   /// Execute the command.
   virtual void execute_i (ACE_ENV_SINGLE_ARG_DECL);

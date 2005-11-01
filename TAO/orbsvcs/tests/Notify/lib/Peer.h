@@ -22,8 +22,8 @@
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "ace/SString.h"
-
-class ACE_Arg_Shifter;
+#include "ace/Arg_Shifter.h"
+#include "ace/Argv_Type_Converter.h"
 
 /**
  * @class TAO_Notify_Tests_Peer
@@ -44,7 +44,7 @@ public:
   void init (PortableServer::POA_ptr poa  ACE_ENV_ARG_DECL_NOT_USED);
 
   /// Init this object.
-  virtual int init_state (ACE_Arg_Shifter& arg_shifter);
+  virtual int init_state (ACE_TArg_Shifter< char >& arg_shifter);
 
   /// Set POA
   void set_poa (PortableServer::POA_ptr poa  ACE_ENV_ARG_DECL);

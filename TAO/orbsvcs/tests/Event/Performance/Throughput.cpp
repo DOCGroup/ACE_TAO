@@ -5,6 +5,7 @@
 #include "Supplier.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (EC_Tests_Performance,
            Throughput,
@@ -13,6 +14,8 @@ ACE_RCSID (EC_Tests_Performance,
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   EC_Throughput driver;
   return driver.run (argc, argv);
 }

@@ -173,7 +173,7 @@ Server::parse_args (int argc,char **argv)
       switch (c)
         {
         case 'f':
-          this->fp_ = ACE_OS::fopen (opts.opt_arg (),"w");
+          this->fp_ = ACE_OS::fopen (opts.opt_arg (),ACE_TEXT("w"));
           if (this->fp_ != 0)
             {
               ACE_DEBUG ((LM_DEBUG,"file opened successfully\n"));
@@ -199,8 +199,10 @@ int
 ACE_TMAIN (int argc,
       char **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   int result = 0;
-  CORBA::ORB_var orb = CORBA::ORB_init (argc,
+  CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv()
                                         argv);
 
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -227,7 +229,7 @@ ACE_TMAIN (int argc,
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
-  result = FTP_SERVER::instance ()->init (argc,argv);
+  result = FTP_SERVER::instance ()->init (convert.get_argc(), convert.get_ASCII_argv());
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"FTP_SERVER::init failed\n"),1);
   result = FTP_SERVER::instance ()->run ();

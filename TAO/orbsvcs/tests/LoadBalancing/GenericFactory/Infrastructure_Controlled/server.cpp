@@ -9,6 +9,8 @@ ACE_RCSID (Infrastructure_Controlled,
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   const char *location1 = "MyLocation 1";
   const char *location2 = "MyLocation 2";
 

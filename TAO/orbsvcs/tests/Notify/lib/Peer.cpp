@@ -11,6 +11,7 @@ ACE_RCSID (lib,
            "$Id$")
 
 #include "ace/Arg_Shifter.h"
+#include "ace/Argv_Type_Converter.h"
 #include "Name.h"
 #include "LookupManager.h"
 #include "Options_Parser.h"
@@ -33,7 +34,7 @@ TAO_Notify_Tests_Peer::init (PortableServer::POA_ptr poa  ACE_ENV_ARG_DECL_NOT_U
 }
 
 int
-TAO_Notify_Tests_Peer::init_state (ACE_Arg_Shifter& arg_shifter)
+TAO_Notify_Tests_Peer::init_state (ACE_TArg_Shifter< char >& arg_shifter)
 {
   while (arg_shifter.is_anything_left ())
     {

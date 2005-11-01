@@ -11,6 +11,7 @@
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_unistd.h"
@@ -68,7 +69,7 @@ private:
 class Supplier_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, ACE_TCHAR* argv[]);
+  virtual int parse_args (int argc, char* argv[]);
 };
 
 
@@ -203,11 +204,13 @@ void add_admin_filter (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
 
 int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_Auto_Ptr< sig_i > sig_impl;
   ACE_TRY_NEW_ENV;
   {
     Supplier_Client client;
-    int status = client.init (argc, argv ACE_ENV_ARG_PARAMETER);
+    int status = client.init (convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
     ACE_UNUSED_ARG(status);
     ACE_ASSERT(status == 0);
@@ -243,7 +246,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
         client.orb ()->object_to_string (sig.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      FILE *output_file= ACE_OS::fopen (ior_file, "w");
+      FILE *output_file= ACE_OS::fopen (ior_file, ACE_TEXT("w"));
       ACE_ASSERT (output_file != 0);
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);

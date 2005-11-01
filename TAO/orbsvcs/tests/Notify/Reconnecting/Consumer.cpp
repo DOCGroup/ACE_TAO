@@ -1040,7 +1040,7 @@ void
 Consumer_Main::save_ids()
 {
   FILE *idf =
-    ACE_OS::fopen (this->id_file_.c_str (), "w");
+    ACE_OS::fopen (this->id_file_.c_str (), ACE_TEXT("w"));
 
   if (idf != 0)
   {
@@ -1064,7 +1064,7 @@ Consumer_Main::load_ids()
 {
   bool ok = false;
   FILE *idf =
-    ACE_OS::fopen (this->id_file_.c_str (), "r");
+    ACE_OS::fopen (this->id_file_.c_str (), ACE_TEXT("r"));
 
   if (idf != 0)
   {
@@ -1267,7 +1267,7 @@ Consumer_Main::init_event_channel (ACE_ENV_SINGLE_ARG_DECL)
   // try to read from it
   if (!ok && this->channel_file_.length () > 0)
   {
-    FILE * chf = ACE_OS::fopen (this->channel_file_.c_str (), "r");
+    FILE * chf = ACE_OS::fopen (this->channel_file_.c_str (), ACE_TEXT("r"));
     if (chf != 0)
     {
       char buffer[100];
@@ -1359,7 +1359,7 @@ Consumer_Main::init_event_channel (ACE_ENV_SINGLE_ARG_DECL)
   // save channel id
   if (ok && this->channel_file_.length() > 0)
   {
-    FILE * chf = ACE_OS::fopen (this->channel_file_.c_str (), "w");
+    FILE * chf = ACE_OS::fopen (this->channel_file_.c_str (), ACE_TEXT("w"));
     if (chf != 0)
     {
       ACE_OS::fprintf (chf, "%d\n", static_cast<int> (this->ec_id_));
@@ -1874,6 +1874,8 @@ int Consumer_Main::run (ACE_ENV_SINGLE_ARG_DECL)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   int result = -1;
   Consumer_Main app;
   ACE_TRY_NEW_ENV

@@ -8,10 +8,12 @@ ACE_RCSID(Trading, import_test, "$Id$")
 int
 ACE_TMAIN (int argc, ACE_TCHAR** argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
     {
       TAO_ORB_Manager orb_manager;
-      orb_manager.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      orb_manager.init (convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Command line argument interpretation.

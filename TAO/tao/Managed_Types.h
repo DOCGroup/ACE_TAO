@@ -24,6 +24,10 @@
 #include "tao/Basic_Types.h"
 #include "tao/CORBA_String.h"
 
+#if !defined (ACE_LACKS_DEPRECATED_MACROS)
+# include "ace/OS_NS_string.h"
+#endif
+
 /****************************************************************/
 
 /**
@@ -322,6 +326,43 @@ private:
   TAO_SeqElem_WString_Manager (void);
 
 };
+
+// Allows for the implicit conversion of TAO_String_Manager to const char*
+#if !defined (ACE_LACKS_DEPRECATED_MACROS)
+namespace ACE_OS
+{
+  template <> inline size_t
+  strlen( const TAO_String_Manager& str )
+  {
+    return ACE_OS::strlen( str.in() );
+  }
+  template <> inline int
+  strcmp( const TAO_String_Manager& lhs, const char* rhs )
+  {
+    return ACE_OS::strcmp( lhs.in(), rhs );
+  }
+  template <> inline int
+  strcmp( const TAO_String_Manager& lhs, const TAO_String_Manager& rhs )
+  {
+    return ACE_OS::strcmp( lhs.in(), rhs.in() );
+  }
+  template <> inline size_t
+  strlen( const TAO_WString_Manager& str )
+  {
+    return ACE_OS::strlen( str.in() );
+  }
+  template <> inline int
+  strcmp( const TAO_WString_Manager& lhs, const char* rhs )
+  {
+    return ACE_OS::strcmp( lhs.in(), rhs );
+  }
+  template <> inline int
+  strcmp( const TAO_WString_Manager& lhs, const TAO_WString_Manager& rhs )
+  {
+    return ACE_OS::strcmp( lhs.in(), rhs.in() );
+  }
+}
+#endif /* ACE_LACKS_DEPRECATED_MACROS */
 
 #if defined (__ACE_INLINE__)
 #include "tao/Managed_Types.i"

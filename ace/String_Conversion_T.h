@@ -1,8 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
-#ifndef ACE_CHAR_CONVERT_T_H
-#define ACE_CHAR_CONVERT_T_H
+#ifndef STRING_CONVERTER_T_H
+#define STRING_CONVERTER_T_H
 #include /**/ "ace/pre.h"
 #include /**/ "ace/ace_wchar.h"
 
@@ -85,7 +85,7 @@ public:
   }
 
   // Make certain we provide a counter to the allocation
-  static free( DestT* ptr )
+  static void free( DestT* ptr )
   {
     Allocator().free( ptr );
   }
@@ -180,16 +180,33 @@ private:
  * The if a temp string is created, it is copied
  * back to the src on destruction.
  *
+ * NOTE: Make certain src points to a NULL teminated string.
+ *
  * NOTE: The size passed in at construction is buffer size,
  * including space for the NULL char.
+ *
+ * NOTE: encode_factor is used when we believe that the number
+ * of characters required differs between the two representations.
+ * To avoid data loss, we default to an oversized buffer of size*3.
  */
 template < typename DestT, typename SrcT >
 class Convert_InOut
 {
 public:
   //template < typename SrcT >
-  explicit Convert_InOut( SrcT* src, size_t size = calc_len )
-  : len_(size==calc_len ? calc_len : size-1)
+  explicit Convert_InOut( SrcT* src, size_t size, size_t encode_factor = 3 )
+  : len_((size-1)*encode_factor)
+  , encode_factor_(encode_factor)
+  , str_(0)
+  , orig_(src)
+  , ownstr_( duplicate<DestT, SrcT, Allocator_cpp<DestT> >(src, &len_))
+  {
+  }
+
+  //template < typename SrcT >
+  explicit Convert_InOut( SrcT* src )
+  : len_(calc_len)
+  , encode_factor_(1)
   , str_(0)
   , orig_(src)
   , ownstr_( duplicate<DestT, SrcT, Allocator_cpp<DestT> >(src, &len_))
@@ -226,6 +243,7 @@ public:
 private:
   /// Internal pointer to the converted string.
   size_t  len_;
+  size_t  encode_factor_;
   DestT*  str_;
   SrcT*   orig_;
   DestT*  ownstr_;
@@ -321,4 +339,4 @@ typedef ACE_Wide_To_Ascii ACE_OS_WString;
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
-#endif /* ACE_CHAR_CONVERT_T_H */
+#endif /* STRING_CONVERTER_T_H */

@@ -330,8 +330,7 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
                         ACE_TEXT ("cannot cache hostname\n")));
           return -1;
         }
-// what!
-      this->host_ = ACE_TEXT_TO_CHAR_IN(tmp_host);
+      this->host_ = ACE_TEXT_TO_CHAR_OUT(tmp_host);
     }
 
   // This avoids having child processes acquire the listen socket thereby

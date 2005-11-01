@@ -3,6 +3,7 @@
 
 #include "Ptest.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_string.h"
 
 ACE_RCSID(Persistence_Test, Ptest, "$Id$")
@@ -23,8 +24,7 @@ Ptest::init (int argc,
 {
   ACE_TRY_NEW_ENV
     {
-      this->orb_ = CORBA::ORB_init (argc,
-                                    argv,
+      this->orb_ = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
                                     0
                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -252,11 +252,11 @@ Ptest::query (ACE_ENV_SINGLE_ARG_DECL)
 
       if (i == length - 1)
         {
-          ACE_ASSERT (ACE_OS::strcmp (out_members[i].name, "my_enum") == 0);
+          ACE_ASSERT (ACE_OS::strcmp (out_members[i].name.in(), "my_enum") == 0);
         }
       else
         {
-          ACE_ASSERT (ACE_OS::strcmp (out_members[i].name, members[i]) == 0);
+          ACE_ASSERT (ACE_OS::strcmp (out_members[i].name.in(), members[i]) == 0);
         }
     }
 

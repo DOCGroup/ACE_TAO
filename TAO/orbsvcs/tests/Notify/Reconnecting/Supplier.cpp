@@ -444,7 +444,7 @@ void
 Supplier_Main::save_ids()
 {
   FILE *idf =
-    ACE_OS::fopen (this->id_file_.c_str (), "w");
+    ACE_OS::fopen (this->id_file_.c_str (), ACE_TEXT("w"));
 
   if (idf != 0)
   {
@@ -468,7 +468,7 @@ Supplier_Main::load_ids()
 {
   bool ok = false;
   FILE *idf =
-    ACE_OS::fopen (this->id_file_.c_str (), "r");
+    ACE_OS::fopen (this->id_file_.c_str (), ACE_TEXT("r"));
 
   if (idf != 0)
   {
@@ -657,7 +657,7 @@ Supplier_Main::init_event_channel (ACE_ENV_SINGLE_ARG_DECL)
   // try to read from it
   if (!ok && this->channel_file_.length () > 0)
   {
-    FILE * chf = ACE_OS::fopen (this->channel_file_.c_str (), "r");
+    FILE * chf = ACE_OS::fopen (this->channel_file_.c_str (), ACE_TEXT("r"));
     if (chf != 0)
     {
       char buffer[100];
@@ -749,7 +749,7 @@ Supplier_Main::init_event_channel (ACE_ENV_SINGLE_ARG_DECL)
   // save channel id
   if (ok && this->channel_file_.length() > 0)
   {
-    FILE * chf = ACE_OS::fopen (this->channel_file_.c_str (), "w");
+    FILE * chf = ACE_OS::fopen (this->channel_file_.c_str (), ACE_TEXT("w"));
     if (chf != 0)
     {
       ACE_OS::fprintf (chf, "%d\n", static_cast<int> (this->ec_id_));
@@ -1285,7 +1285,7 @@ int Supplier_Main::run (ACE_ENV_SINGLE_ARG_DECL)
           ));
       }
       reconnections = this->reconnection_callback_.reconnect_count ();
-      FILE * pause_file = ACE_OS::fopen ("Supplier.paused", "w");
+      FILE * pause_file = ACE_OS::fopen ("Supplier.paused", ACE_TEXT("w"));
       if (pause_file != 0)
       {
         ACE_OS::fputs (ACE_TEXT ("paused\n"), pause_file);
@@ -1343,6 +1343,8 @@ int Supplier_Main::run (ACE_ENV_SINGLE_ARG_DECL)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   int result = -1;
   Supplier_Main app;
   ACE_TRY_NEW_ENV

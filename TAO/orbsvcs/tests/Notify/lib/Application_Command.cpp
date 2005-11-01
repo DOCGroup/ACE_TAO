@@ -33,7 +33,7 @@ TAO_Notify_Tests_Application_Command::name (void)
 }
 
 void
-TAO_Notify_Tests_Application_Command::init (ACE_Arg_Shifter& arg_shifter)
+TAO_Notify_Tests_Application_Command::init (ACE_TArg_Shifter< char >& arg_shifter)
 {
   if (arg_shifter.is_anything_left ())
     {

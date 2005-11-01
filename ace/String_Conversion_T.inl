@@ -33,9 +33,8 @@ Allocator_cpp< T >::free( T* str ) const
 template < typename T > ACE_INLINE 
 T*
 Allocator_malloc< T >::alloc( size_t len ) const
-: str_( 0 )
 {
-  T* result = static_cast<T*>::malloc((len+1)*sizeof(T));
+  T* result = static_cast<T*>(::malloc((len+1)*sizeof(T)));
   result[ 0 ] = 0;
   return result;
 }
@@ -44,7 +43,7 @@ template < typename T > ACE_INLINE
 void
 Allocator_malloc< T >::free( T* str ) const
 {
-  ::free (str_);
+  ::free (str);
 }
 
 template < typename DestT, typename SrcT, typename Allocator > ACE_INLINE
@@ -58,19 +57,28 @@ duplicate( const SrcT* src, size_t* dest_len )
     return dest;
   }
 
-  size_t len = ACE_OS::string_copy( static_cast<DestT*>(0), src, 0 );
+  size_t required_len = ACE_OS::string_copy( static_cast<DestT*>(0), src, 0 );
+  size_t alloc_len = required_len;
+  size_t copy_len = required_len;
 
   if ( dest_len != 0 )
   {
-    if ( *dest_len < len && *dest_len != calc_len )
-      len = *dest_len;
-    else
-      *dest_len = len;
+    // If we are calculating len
+    if ( *dest_len == calc_len )
+      *dest_len = required_len;
+
+    // alloc_len is the greater
+    else if ( *dest_len > required_len )
+      alloc_len = *dest_len;
+
+    // copy_len is the lesser
+    else if ( *dest_len < required_len )
+      copy_len = *dest_len;
   }
 
-  dest = Allocator().alloc( len );
+  dest = Allocator().alloc( alloc_len );
 
-  copy( dest, src, len );
+  copy( dest, src, copy_len );
 
   return dest;
 }
@@ -132,7 +140,7 @@ Convert_InOut< DestT, SrcT >::~Convert_InOut( void )
 {
   if (ownstr_ != 0)
   {
-    copy(orig_, ownstr_, len_);
+    copy(orig_, ownstr_, (len_/encode_factor_));
     Allocator_cpp<DestT>().free( ownstr_ );
   }
 }

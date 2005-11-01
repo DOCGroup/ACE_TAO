@@ -5,6 +5,7 @@
 #include "tests/test_config.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "tao/IORTable/IORTable.h"
 #include "orbsvcs/CosNamingC.h"
 
@@ -43,6 +44,8 @@ parse_args (int argc, char *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_START_TEST (ACE_TEXT ("Hello_server"));
 
   ACE_TRY_NEW_ENV
@@ -50,7 +53,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "Begin of Hello_Server test\n"));
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       //------ Get Root POA & POA Manager references
@@ -124,7 +127,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ior_table->bind("HelloObj", ior.in() ACE_ENV_ARG_PARAMETER);
 
       // Output the IOR to the <ior_output_file>
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+      FILE *output_file= ACE_OS::fopen (ior_output_file, ACE_TEXT("w"));
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",

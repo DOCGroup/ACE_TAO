@@ -139,11 +139,13 @@ parse_args (int /* argc */, char ** /* argv */)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
     {
       // Initialize ORB and POA, POA Manager, parse args.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) == -1)

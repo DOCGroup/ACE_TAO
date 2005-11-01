@@ -518,9 +518,9 @@ ACE_OS::getcwd (wchar_t *buf, size_t size)
 #  elif defined (ACE_WIN32)
   return ::_wgetcwd (buf, static_cast<int> (size));
 #  else
-  ACE::String_Conversion::Convert_InOut< char, wchar_t > convert (buf, size);
-  result = ACE_OS::getcwd (convert.c_str(), convert.size());
-  return result == 0 ? 0 : buf;
+  ACE::String_Conversion::Convert_InOut< char, wchar_t > convert( buf, size  );
+  char* result = ACE_OS::getcwd( convert.c_str(), convert.size() );
+  return ( result ? buf : 0 );
 #  endif /* ACE_WIN32 */
 }
 
@@ -684,10 +684,7 @@ ACE_OS::hostname (wchar_t name[], size_t maxnamelen)
 #else /* ACE_WIN32 && !ACE_HAS_WINCE */
   // Emulate using the char version
   ACE::String_Conversion::Convert_InOut< char, wchar_t > convert (name, maxnamelen);
-  result = ACE_OS::hostname (convert.c_str(), convert.size());
-
-  delete [] char_name;
-  return result;
+  return ACE_OS::hostname (convert.c_str(), convert.size());
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE */
 }
 

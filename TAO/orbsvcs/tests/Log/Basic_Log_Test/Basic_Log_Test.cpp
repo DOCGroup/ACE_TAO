@@ -5,6 +5,7 @@
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Log_Msg.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_stdio.h"
@@ -36,8 +37,7 @@ BasicLog_Test::init (int argc, char *argv[])
   ACE_TRY
     {
       // Initialize the ORB
-      orb_ = CORBA::ORB_init (argc,
-                              argv,
+      orb_ = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
                               "internet"
                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

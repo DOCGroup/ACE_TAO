@@ -35,7 +35,7 @@ TAO_Notify_Tests_Periodic_Supplier_Command::name (void)
 }
 
 void
-TAO_Notify_Tests_Periodic_Supplier_Command::init (ACE_Arg_Shifter& arg_shifter)
+TAO_Notify_Tests_Periodic_Supplier_Command::init (ACE_TArg_Shifter< char >& arg_shifter)
 {
   if (arg_shifter.is_anything_left ())
     {

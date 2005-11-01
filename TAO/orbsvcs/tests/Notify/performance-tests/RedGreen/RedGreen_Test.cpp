@@ -3,6 +3,7 @@
 #include "RedGreen_Test.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_unistd.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "tao/debug.h"
@@ -29,7 +30,7 @@ int
 RedGreen_Test::parse_args (int argc,
                            char *argv[])
 {
-  ACE_Arg_Shifter arg_shifter (argc, argv);
+  ACE_TArg_Shifter< char > arg_shifter (argc, argv);
 
     const char *current_arg = 0;
 
@@ -83,7 +84,7 @@ RedGreen_Test::~RedGreen_Test ()
 
 void
 RedGreen_Test::init (int argc,
-                     ACE_TCHAR *argv[])
+                     ACE_TCHAR *argv[]
                      ACE_ENV_ARG_DECL)
 {
   this->init_ORB (argc,
@@ -146,10 +147,10 @@ RedGreen_Test::done (void)
 
 void
 RedGreen_Test::init_ORB (int argc,
-                         char *argv[])
+                         char *argv[]
                          ACE_ENV_ARG_DECL)
 {
-  this->orb_ = CORBA::ORB_init (argc,
+  this->orb_ = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv()
                                 argv,
                                 ""
                                 ACE_ENV_ARG_PARAMETER);

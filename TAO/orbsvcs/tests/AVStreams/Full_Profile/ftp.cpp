@@ -246,7 +246,7 @@ Client::init (int argc,char **argv)
 
       ACE_DEBUG ((LM_DEBUG, "(%N,%l) Added flowendpoint named: %s\n", s1.in() ));
 
-      this->fp_ = ACE_OS::fopen (this->filename_,"r");
+      this->fp_ = ACE_OS::fopen (this->filename_,ACE_TEXT("r"));
 
       if (this->fp_ != 0)
         {
@@ -346,11 +346,12 @@ int
 ACE_TMAIN (int argc,
       char **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv());
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -365,7 +366,7 @@ ACE_TMAIN (int argc,
 
 
       int result = 0;
-      result = CLIENT::instance ()->init (argc,argv);
+      result = CLIENT::instance ()->init (convert.get_argc(), convert.get_ASCII_argv());
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,"client::init failed\n"),1);
       result = CLIENT::instance ()->run ();

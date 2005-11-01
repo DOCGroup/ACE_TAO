@@ -3,6 +3,7 @@
 #include "Client_i.h"
 #include "testC.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Read_Buffer.h"
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include "tao/PortableServer/PortableServer.h"
@@ -62,6 +63,8 @@ int
 ACE_TMAIN (int argc,
       char *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
 
   Manager manager;
@@ -119,8 +122,7 @@ Manager::init (int argc,
                char *argv[]
                ACE_ENV_ARG_DECL)
 {
-  this->orb_ = CORBA::ORB_init (argc,
-                                argv,
+  this->orb_ = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
                                 0
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -260,7 +262,7 @@ Manager::write_to_file (void)
 
   if (ior_output_file != 0)
     {
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+      FILE *output_file= ACE_OS::fopen (ior_output_file, ACE_TEXT("w"));
       if (output_file == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
@@ -311,8 +313,7 @@ Client_i::init (ACE_ENV_SINGLE_ARG_DECL)
 
   int argc = 0;
   char **argv = 0;
-  this->orb_ = CORBA::ORB_init (argc,
-                                argv,
+  this->orb_ = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
                                 0
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;

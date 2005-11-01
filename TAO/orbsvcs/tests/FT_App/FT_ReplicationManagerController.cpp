@@ -63,7 +63,7 @@ int TAO_FT_ReplicationManagerController::init (int & argc, char * argv[])
   ACE_TRY_NEW_ENV
   {
     // Initialize the ORB.
-    this->orb_ = CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+    this->orb_ = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     // Parse arguments.
@@ -89,9 +89,8 @@ int TAO_FT_ReplicationManagerController::init (int & argc, char * argv[])
       if (CORBA::is_nil (this->replication_manager_.in()))
       {
         ACE_ERROR ((LM_ERROR,
-          ACE_TEXT (
-            "TAO_FT_ReplicationManagerController::init: "
-            "Could not get Replication Manager's IOR.\n")
+          ACE_TEXT ("TAO_FT_ReplicationManagerController::init: ")
+          ACE_TEXT ("Could not get Replication Manager's IOR.\n")
         ));
         result = -1;
       }
@@ -188,9 +187,11 @@ int TAO_FT_ReplicationManagerController::run ()
 
 int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   int result = 0;
   TAO_FT_ReplicationManagerController rmctrl;
-  result = rmctrl.init (argc, argv);
+  result = rmctrl.init (convert.get_argc(), convert.get_ASCII_argv());
   if (result == 0)
   {
     result = rmctrl.run ();

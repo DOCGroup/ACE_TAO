@@ -42,7 +42,7 @@ ACE_Basic_Stats::accumulate (const ACE_Basic_Stats &rhs)
 }
 
 void
-ACE_Basic_Stats::dump_results (const ACE_TCHAR *msg,
+ACE_Basic_Stats::dump_results (const char *msg,
                                ACE_UINT32 sf) const
 {
 #ifndef ACE_NLOGGING
@@ -67,4 +67,11 @@ ACE_Basic_Stats::dump_results (const ACE_TCHAR *msg,
               l_max, this->max_at_));
 
 #endif /* ACE_NLOGGING */
+}
+
+void
+ACE_Basic_Stats::dump_results (const wchar_t *msg,
+                               ACE_UINT32 sf) const
+{
+  // TODO
 }

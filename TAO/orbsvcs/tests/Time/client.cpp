@@ -10,12 +10,14 @@ ACE_RCSID(Time, client, "$Id$")
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   Client_i client;
 
   ACE_DEBUG ((LM_DEBUG,
               "[CLIENT] Process/Thread Id : (%P/%t) Time Service Client\n"));
 
-  if (client.init (argc, argv) == -1)
+  if (client.init (convert.get_argc(), convert.get_ASCII_argv()) == -1)
     return -1;
   else
     return client.run ();

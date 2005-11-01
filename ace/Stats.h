@@ -238,10 +238,19 @@ public:
   void accumulate (const ACE_Throughput_Stats &throughput);
 
   /// Print down the stats
-  void dump_results (const ACE_TCHAR* msg, ACE_UINT32 scale_factor);
+  void dump_results (const char* msg, ACE_UINT32 scale_factor);
+
+  /// Print down the stats
+  void dump_results (const wchar_t* msg, ACE_UINT32 scale_factor);
 
   /// Dump the average throughput stats.
-  static void dump_throughput (const ACE_TCHAR *msg,
+  static void dump_throughput (const char *msg,
+                               ACE_UINT32 scale_factor,
+                               ACE_UINT64 elapsed_time,
+                               ACE_UINT32 samples_count);
+
+  /// Dump the average throughput stats.
+  static void dump_throughput (const wchar_t *msg,
                                ACE_UINT32 scale_factor,
                                ACE_UINT64 elapsed_time,
                                ACE_UINT32 samples_count);

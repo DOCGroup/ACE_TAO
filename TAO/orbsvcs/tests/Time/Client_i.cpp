@@ -5,6 +5,7 @@
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"

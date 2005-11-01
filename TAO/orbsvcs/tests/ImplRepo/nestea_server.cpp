@@ -7,6 +7,8 @@ ACE_RCSID(ImplRepo, nestea_server, "$Id$")
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   Nestea_Server_i server;
 
   ACE_DEBUG ((LM_DEBUG, "\n\tNestea Bookshelf Server\n\n"));
@@ -14,7 +16,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      int retval = server.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      int retval = server.init (convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (retval == -1)

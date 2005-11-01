@@ -3,6 +3,7 @@
 
 #include "Latency_Query_Client.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
 #include "ace/Sample_History.h"
@@ -30,8 +31,7 @@ Latency_Query_Client::init (int argc,
 {
   ACE_TRY_NEW_ENV
     {
-      this->orb_ = CORBA::ORB_init (argc,
-                                    argv,
+      this->orb_ = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
                                     0
                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

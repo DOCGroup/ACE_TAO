@@ -13,7 +13,7 @@ Connection_Manager::~Connection_Manager (void)
 void
 Connection_Manager::load_ep_addr (const char* file_name)
 {
-  FILE* addr_file = ACE_OS::fopen (file_name, "r");
+  FILE* addr_file = ACE_OS::fopen (file_name, ACE_TEXT("r"));
 
   if (addr_file == 0)
     {
