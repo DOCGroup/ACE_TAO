@@ -1,3 +1,27 @@
+Tue Nov  1 09:35:36 2005  Simon McQueen  <sm@prismtech.com>
+
+        * tests/Bug_2289_Regression/Bug_2289_Regression.mpc:
+        * tests/Bug_2289_Regression/MyInterfaceImpl.cpp:
+        * tests/Bug_2289_Regression/MyInterfaceImpl.h:
+        * tests/Bug_2289_Regression/MyStruct.idl:
+        * tests/Bug_2289_Regression/MyStructC.cpp:
+        * tests/Bug_2289_Regression/MyStructC.h:
+        * tests/Bug_2289_Regression/MyStructC.inl:
+        * tests/Bug_2289_Regression/MyStructS.cpp:
+        * tests/Bug_2289_Regression/MyStructS.h:
+        * tests/Bug_2289_Regression/MyStructS.inl:
+        * tests/Bug_2289_Regression/MyStructS_T.cpp:
+        * tests/Bug_2289_Regression/MyStructS_T.h:
+        * tests/Bug_2289_Regression/MyStructS_T.inl:
+        * tests/Bug_2289_Regression/README:
+        * tests/Bug_2289_Regression/Test.idl:
+        * tests/Bug_2289_Regression/client.cpp:
+        * tests/Bug_2289_Regression/run_test.pl:
+        * tests/Bug_2289_Regression/server.cpp:
+
+          Added regression test for this bug. Bug is not yet fixed so it
+          *will* fail.
+
 Mon Oct 31 15:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Sequence_Unit_Tests/mock_reference.hpp:
