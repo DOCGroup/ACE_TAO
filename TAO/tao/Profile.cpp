@@ -85,7 +85,7 @@ CORBA::ULong
 TAO_Profile::_incr_refcnt (void)
 {
   ACE_GUARD_RETURN (ACE_Lock, guard, *this->refcount_lock_, 0);
-  return this->refcount_++;
+  return ++this->refcount_;
 }
 
 CORBA::ULong
@@ -93,7 +93,7 @@ TAO_Profile::_decr_refcnt (void)
 {
   {
     ACE_GUARD_RETURN (ACE_Lock, mon, *this->refcount_lock_, 0);
-    this->refcount_--;
+    --this->refcount_;
 
     if (this->refcount_ != 0)
       {
