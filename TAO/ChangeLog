@@ -1,3 +1,11 @@
+Tue Nov  1 17:55:43 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
+        
+          Fixed bug in code generation of valuetype initialzing
+          constructor when there is a generated call to the
+          valuetype's base class constrcutor.
+
 Tue Nov  1 15:44:41 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ch.cpp:
