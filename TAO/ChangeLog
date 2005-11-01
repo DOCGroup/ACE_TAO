@@ -1,3 +1,11 @@
+Tue Nov  1 14:42:14 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
+        
+          Fixed bug in generation of constructor initializing member
+          values that failed to screen out attributes when traversing
+          the valuetype's scope for stub source file generation.
+
 Tue Nov  1 14:14:31 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Managed_Types.h:
