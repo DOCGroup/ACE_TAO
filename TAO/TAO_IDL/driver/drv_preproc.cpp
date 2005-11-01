@@ -261,8 +261,10 @@ DRV_cpp_init (void)
               ACE_OS::strcat (option1, ACE_ROOT);
               ACE_OS::strcat (option2, ACE_ROOT);
 #if defined (ACE_WIN32)
+              ACE_OS::strcat (option1, "\\TAO");
               ACE_OS::strcat (option2, "\\TAO\\tao");
 #else
+              ACE_OS::strcat (option1, "/TAO");
               ACE_OS::strcat (option2, "/TAO/tao");
 #endif
             }
