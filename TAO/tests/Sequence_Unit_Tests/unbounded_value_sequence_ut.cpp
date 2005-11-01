@@ -162,6 +162,35 @@ struct Tester
     return buf;
   }
 
+  void test_regression_2201 ()
+  {
+    value_type * buffer = alloc_and_init_buffer();
+
+    expected_calls a(tested_allocation_traits::allocbuf_calls);
+    expected_calls f(tested_allocation_traits::freebuf_calls);
+    expected_calls i(tested_element_traits::default_initializer_calls);
+    {
+      tested_sequence a(8, 4, buffer);
+      BOOST_CHECK_EQUAL(CORBA::ULong(8), a.maximum());
+      BOOST_CHECK_EQUAL(CORBA::ULong(4), a.length());
+      BOOST_CHECK_EQUAL(buffer, a.get_buffer());
+      BOOST_CHECK_EQUAL(int( 1), a[0]);
+      BOOST_CHECK_EQUAL(int( 4), a[1]);
+      BOOST_CHECK_EQUAL(int( 9), a[2]);
+      BOOST_CHECK_EQUAL(int(16), a[3]);
+      BOOST_CHECK_EQUAL(false, a.release());
+      a.length (3);
+      BOOST_CHECK_EQUAL(CORBA::ULong(3), a.length());
+      a.length (4);
+      BOOST_CHECK_EQUAL(CORBA::ULong(4), a.length());
+      BOOST_CHECK_EQUAL(int(0), a[3]);
+    }
+    BOOST_CHECK_MESSAGE(a.expect(0), a);
+    BOOST_CHECK_MESSAGE(f.expect(0), f);
+    BOOST_CHECK_MESSAGE(i.expect(5), i);
+    tested_sequence::freebuf(buffer);
+  }
+
   void test_buffer_constructor_default()
   {
     value_type * buffer = alloc_and_init_buffer();
@@ -377,6 +406,10 @@ struct Tester
 
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_exception_in_set_length,
+                shared_this));
+
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &Tester::test_regression_2201 ,
                 shared_this));
 
     ts->add(BOOST_CLASS_TEST_CASE(
