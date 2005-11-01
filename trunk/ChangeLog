@@ -1,3 +1,10 @@
+Tue Nov  1 14:28:51 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* ace/config-macosx-tiger.h
+
+	Some changes to fix compile errors in JAWS.  Thanks to Johnny for
+	suggesting a fix. 
+
 Tue Nov  1 15:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
