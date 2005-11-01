@@ -1,3 +1,9 @@
+Tue Nov  1 10:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/CSD_Strategy/TestInf/ClientTask.cpp:
+        * tests/CSD_Strategy_Tests/TP_Common/ClientTask.cpp:
+          Fixed 64bit conversion warnings
+
 Tue Nov  1 10:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Profile.cpp:
