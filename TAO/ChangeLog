@@ -1,3 +1,25 @@
+Tue Nov  1 14:27:36 USMST 2005  Yan Dai  <dai_y@ociweb.com>
+
+        * examples/CSD_Strategy/ThreadPool/run_test.pl:
+        * examples/CSD_Strategy/ThreadPool2/run_test.pl:
+        * examples/CSD_Strategy/ThreadPool3/run_test.pl:
+        * examples/CSD_Strategy/ThreadPool4/run_test.pl:
+        * examples/CSD_Strategy/ThreadPool5/run_test.pl:
+        * examples/CSD_Strategy/ThreadPool6/run_test.pl:
+        * performance-tests/CSD_Strategy/TestApps/run_test.pl:
+        * tests/CSD_Strategy_Tests/Broken/run_test.pl:
+        * tests/CSD_Strategy_Tests/TP_Test_1/run_test.pl:
+        * tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl:
+        * tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl:
+        * tests/CSD_Strategy_Tests/TP_Test_4/run_test.pl:
+        * tests/CSD_Strategy_Tests/TP_Test_Static/run_test.pl:
+
+          Changed to enable these scripts to run from autobuild for VxWorks builds.
+
+        * tests/CSD_Strategy_Tests/TP_Test_1/ServerApp.cpp:
+        
+          Removed duplicated log message.
+
 Tue Nov  1 14:30:05 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc
@@ -523,18 +545,7 @@ Tue Oct 25 07:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tao/PortableServer/POA_Current_Impl.cpp:
           Implemented POA_Current::get_reference. This is the last item
           of bugzilla bug 1917, which is now totally fixed
-
-Mon Oct 24 14:40:43 MST 2005  Yan Dai  <dai_y@ociweb.com>
-
-        * tests/CSD_Strategy_Tests/TP_Test_1/ServerApp.cpp:
-
-          Removed duplicated log message.
-
-        * tests/CSD_Strategy_Tests/TP_Test_3/ServerApp.cpp:
-        * tests/CSD_Strategy_Tests/TP_Test_3/ClientApp.cpp:
-
-          Added ACE_DEBUG log message to help debugging.
-
+          
 Mon Oct 24 19:08:06 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_scope.cpp:

@@ -23,7 +23,13 @@ else {
   exit 1;
 }
 
-$SV  = new PerlACE::Process ("server_main", "$synch_with_server_option");
+if (PerlACE::is_vxworks_test()) {
+    $SV  = new PerlACE::ProcessVX ("server_main", "$synch_with_server_option");
+}
+else {
+    $SV  = new PerlACE::Process ("server_main", "$synch_with_server_option");
+}
+
 
 $SV->Spawn ();
 

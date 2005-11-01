@@ -122,9 +122,6 @@ ServerApp::run_i(int argc, char* argv[] ACE_ENV_ARG_DECL)
   ACE_DEBUG((LM_DEBUG,
              "(%P|%t) ServerApp is destroying the Root POA.\n"));
 
-  ACE_DEBUG((LM_DEBUG,
-             "(%P|%t) ServerApp is destroying the Root POA.\n"));
-
   root_poa->destroy(1, 1 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
