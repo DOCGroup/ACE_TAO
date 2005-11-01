@@ -144,9 +144,6 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
 
       *os << "{";
 
-      be_valuetype::FactoryStyle factory_style =
-        node->determine_factory_style ();
-
       // Generate code for the OBV_ class definition.
       if (this->visit_valuetype_scope (node) == -1)
         {
