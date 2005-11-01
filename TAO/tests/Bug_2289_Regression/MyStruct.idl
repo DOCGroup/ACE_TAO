@@ -1,0 +1,7 @@
+// $Id$
+
+struct MyStruct
+{
+    string myString;
+};
+
