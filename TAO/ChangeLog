@@ -1,3 +1,10 @@
+Tue Nov  1 14:30:05 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc
+
+	Added missing project dependancies to fix errors/warnings for the
+	strict OS X linker. 
+
 Tue Nov  1 19:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2289_Regression/MyInterfaceImpl.h:
