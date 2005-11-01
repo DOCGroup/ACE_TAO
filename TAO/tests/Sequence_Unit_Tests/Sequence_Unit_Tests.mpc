@@ -7,6 +7,12 @@ project(*Unbounded_Simple_Types) : taoexe {
   }
 }
 
+project(*Unbounded_Octet) : taoexe {
+  Source_Files {
+    Unbounded_Octet.cpp
+  }
+}
+
 project(*Bounded_Simple_Types) : taoexe {
   Source_Files {
     Bounded_Simple_Types.cpp
@@ -38,6 +44,14 @@ project(*Unbounded_Object_Reference_Sequence): taoexe, boost_unit_test_framework
   Source_Files {
     mock_reference.cpp
     unbounded_object_reference_sequence_ut.cpp
+  }
+}
+
+project(*Unbounded_Octet_Sequence): taoexe, boost_unit_test_framework {
+  exename = unbounded_octet_sequence_ut
+  Source_Files {
+    mock_reference.cpp
+    unbounded_octet_sequence_ut.cpp
   }
 }
 
