@@ -25,12 +25,16 @@ struct value_traits
   typedef T const const_value_type;
 
   inline static void zero_range(
-      value_type * /* begin */, value_type * /* end */)
-  {}
+      value_type * begin , value_type * end)
+  {
+    std::fill(begin, end, value_type ());
+  }
 
   inline static void initialize_range(
-      value_type * /* begin */, value_type * /* end */)
-  {}
+      value_type * begin, value_type * end)
+  {
+    std::fill(begin, end, value_type ());
+  }
 
   inline static void copy_range(
       value_type * begin, value_type * end, value_type *dst)
