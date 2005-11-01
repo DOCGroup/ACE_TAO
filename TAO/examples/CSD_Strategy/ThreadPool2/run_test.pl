@@ -23,7 +23,12 @@ for (my $i = 0; $i < $num_servants; $i++) {
   unlink $iorfile[$i];
 }
 
-$SV  = new PerlACE::Process ("server_main", "-p $iorfname_prefix -s $num_servants -c $num_clients");
+if (PerlACE::is_vxworks_test()) {
+    $SV  = new PerlACE::ProcessVX ("server_main", "-p $iorfname_prefix -s $num_servants -c $num_clients");
+}
+else {
+    $SV  = new PerlACE::Process ("server_main", "-p $iorfname_prefix -s $num_servants -c $num_clients");
+}
 
 $SV->Spawn ();
 

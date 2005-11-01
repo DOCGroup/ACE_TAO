@@ -14,7 +14,13 @@ $status = 0;
 
 $num_clients=40;
 
-$SV  = new PerlACE::Process ("server_main", "-o $iorfile -n $num_clients");
+if (PerlACE::is_vxworks_test()) {
+    $SV  = new PerlACE::ProcessVX ("server_main", "-o $iorfile -n $num_clients");
+}
+else {
+    $SV  = new PerlACE::Process ("server_main", "-o $iorfile -n $num_clients");
+}
+
 
 $SV->Spawn ();
 
