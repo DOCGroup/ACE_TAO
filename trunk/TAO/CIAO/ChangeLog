@@ -1,3 +1,13 @@
+Mon Oct 31 22:37:42 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
+
+	* DAnCE/NodeApplication/NodeApplication/NodeApplication.mpc:
+	* DAnCE/NodeApplication/NodeApplication/RTConfig_Manager.cpp:
+	* DAnCE/NodeApplication/NodeApplication/RTConfig_Manager.h:
+	* DAnCE/NodeApplication/NodeApplication/RTConfig_Manager.inl:
+	  Added the RT configuration manager that keep track of all the RT
+	  resources and policy sets in a NodeApplication.  We still need
+	  to hook this up in the RTNodeApp_Configurator.
+
 Mon Oct 31 11:22:41 2005    <Gan Deng@SKYLINENETGEAR>
 
 	* examples/Hello/descriptors/rt-config-example.csr
