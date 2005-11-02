@@ -39,13 +39,13 @@
 # undef IOR
 #endif /* HPUX && IOR */
 
+class ACE_Lock;
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Stub;
 class TAO_Abstract_ServantBase;
 class TAO_ORB_Core;
-
-class ACE_Lock;
 
 namespace TAO
 {

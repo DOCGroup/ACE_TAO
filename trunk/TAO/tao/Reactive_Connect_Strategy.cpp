@@ -10,6 +10,9 @@ ACE_RCSID(tao,
           Reactive_Connect_Strategy,
           "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Reactive_Connect_Strategy::TAO_Reactive_Connect_Strategy (
     TAO_ORB_Core *orb_core)
   : TAO_Connect_Strategy (orb_core)
@@ -89,7 +92,6 @@ TAO_Reactive_Connect_Strategy::wait (TAO_Connection_Handler *ch,
   return result;
 }
 
-
 int
 TAO_Reactive_Connect_Strategy::wait (TAO_Transport *t,
                                      ACE_Time_Value *val)
@@ -100,3 +102,5 @@ TAO_Reactive_Connect_Strategy::wait (TAO_Transport *t,
   return this->wait (t->connection_handler (),
                      val);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

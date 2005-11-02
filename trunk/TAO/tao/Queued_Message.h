@@ -25,6 +25,9 @@
 struct iovec;
 class ACE_Message_Block;
 class ACE_Allocator;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_ORB_Core;
 
 /**
@@ -212,6 +215,8 @@ private:
   TAO_Queued_Message *next_;
   TAO_Queued_Message *prev_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

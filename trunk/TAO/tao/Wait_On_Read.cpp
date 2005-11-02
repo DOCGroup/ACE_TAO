@@ -13,6 +13,8 @@ ACE_RCSID (tao,
            Wait_On_Read,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Constructor.
 TAO_Wait_On_Read::TAO_Wait_On_Read (TAO_Transport *transport)
   : TAO_Wait_Strategy (transport)
@@ -136,3 +138,5 @@ TAO_Wait_On_Read::can_process_upcalls (void) const
 /*
  * End copy hook.
  */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

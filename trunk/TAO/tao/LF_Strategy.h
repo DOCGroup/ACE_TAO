@@ -23,9 +23,10 @@
 
 #include "tao/Versioned_Namespace.h"
 
+class ACE_Time_Value;
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class ACE_Time_Value;
 class TAO_Leader_Follower;
 
 /**

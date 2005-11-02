@@ -14,6 +14,8 @@ ACE_RCSID (tao,
            Remote_Invocation,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   Remote_Invocation::Remote_Invocation (
@@ -200,3 +202,5 @@ namespace TAO
     return TAO_INVOKE_SUCCESS;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

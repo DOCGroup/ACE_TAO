@@ -25,9 +25,9 @@
 #include "tao/SystemException.h"
 #include "tao/PI_ForwardC.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 template <class T> class ACE_Array_Base;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableInterceptor
 {

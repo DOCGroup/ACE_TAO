@@ -19,11 +19,16 @@
 
 #include "tao/TAO_Export.h"
 
-#include "ace/os_include/os_stddef.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Versioned_Namespace.h"
+
+#include "ace/os_include/os_stddef.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations.
 class TAO_ORB_Core;
@@ -76,6 +81,8 @@ private:
   size_t size_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
 #include "tao/Parser_Registry.i"

@@ -25,15 +25,15 @@
 
 #include "tao/IOP_IORC.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-class TAO_Pluggable_Reply_Params;
-class TAO_ORB_Core ;
 class ACE_Time_Value;
-class TAO_Transport;
 class ACE_Lock;
 class ACE_Allocator;
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_Pluggable_Reply_Params;
+class TAO_ORB_Core;
+class TAO_Transport;
 /**
  * @class TAO_Asynch_Reply_Dispatcher_Base
  *

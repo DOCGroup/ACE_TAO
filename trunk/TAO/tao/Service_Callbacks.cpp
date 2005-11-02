@@ -8,6 +8,9 @@ ACE_RCSID (tao,
            Service_Callbacks,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Service_Callbacks::~TAO_Service_Callbacks (void)
 {
 }
@@ -83,3 +86,5 @@ TAO_Service_Callbacks::raise_transient_failure (
       CORBA::COMPLETED_MAYBE),
       TAO::TAO_INVOKE_FAILURE);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

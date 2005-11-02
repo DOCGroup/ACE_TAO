@@ -42,6 +42,7 @@
 #include "ace/Lock_Adapter_T.h"
 #include "ace/TSS_T.h"
 
+class ACE_Data_Block;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -54,9 +55,6 @@ namespace TAO
 }
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1  */
-
-// Forward declarations
-class ACE_Data_Block;
 
 class TAO_Adapter;
 class TAO_Acceptor;

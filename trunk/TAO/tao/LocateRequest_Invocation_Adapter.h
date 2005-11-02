@@ -22,13 +22,13 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+class ACE_Time_Value;
+
 namespace CORBA
 {
   class Object;
   typedef Object *Object_ptr;
 }
-
-class ACE_Time_Value;
 
 namespace TAO
 {

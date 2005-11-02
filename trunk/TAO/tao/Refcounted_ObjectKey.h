@@ -23,6 +23,8 @@
 
 #include "tao/Object_KeyC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   /**
@@ -62,6 +64,8 @@ namespace TAO
     long ref_count_;
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "Refcounted_ObjectKey.inl"

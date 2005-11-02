@@ -27,6 +27,9 @@
 #include "Basic_Types.h"
 
 class ACE_Time_Value;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Transport_Descriptor_Interface;
 class TAO_InputCDR;
 class TAO_Endpoint;
@@ -187,7 +190,7 @@ protected:
 private:
 
   /// IOP protocol tag.
-  CORBA::ULong tag_;
+  CORBA::ULong const tag_;
 
   /// Pointer to our ORB core
   TAO_ORB_Core *orb_core_;
@@ -196,6 +199,8 @@ private:
 };
 
 //@@ TAO_CONNECTOR_SPL_EXTERN_ADD_HOOK
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "Transport_Connector.inl"

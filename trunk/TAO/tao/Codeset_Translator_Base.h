@@ -25,14 +25,13 @@
 #include "tao/Codeset_Translator_Base.h"
 #include "ace/Service_Object.h"
 
+class ACE_Char_Codeset_Translator;
+class ACE_WChar_Codeset_Translator;
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_InputCDR;
 class TAO_OutputCDR;
-
-class ACE_Char_Codeset_Translator;
-class ACE_WChar_Codeset_Translator;
-
 
 // ****************************************************************
 

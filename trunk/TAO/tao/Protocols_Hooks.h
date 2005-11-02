@@ -27,6 +27,9 @@
 #include "IOP_IORC.h"
 #include "ace/SString.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace CORBA
 {
   class Policy;
@@ -199,6 +202,8 @@ public:
 
   //@}
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

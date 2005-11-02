@@ -15,10 +15,12 @@
 #endif /* __ACE_INLINE__ */
 
 
-
 ACE_RCSID (tao,
            Transport_Cache_Manager,
            "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -717,3 +719,5 @@ namespace TAO
   }
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

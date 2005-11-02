@@ -23,6 +23,8 @@
 
 #include "tao/Objref_VarOut_T.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Unbounded_Sequence
  *
@@ -1202,6 +1204,8 @@ public:
                 CORBA::WChar ** value,
                 CORBA::Boolean release = 0);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // *************************************************************
 

@@ -29,6 +29,7 @@
 #include "ace/SString.h"
 #include "ace/CDR_Base.h"
 
+class ACE_Lock;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -40,8 +41,6 @@ class TAO_Flushing_Strategy;
 class TAO_Connection_Purging_Strategy;
 class TAO_LF_Strategy;
 class TAO_Codeset_Manager;
-
-class ACE_Lock;
 
 // ****************************************************************
 

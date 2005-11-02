@@ -28,6 +28,10 @@
 #include "tao/Incoming_Message_Queue.h"
 #include "ace/Time_Value.h"
 
+struct iovec;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_ORB_Core;
 class TAO_Target_Specification;
 class TAO_Operation_Details;
@@ -41,7 +45,6 @@ class TAO_Queued_Message;
 class TAO_Synch_Queued_Message;
 class TAO_Resume_Handle;
 class TAO_Stub;
-struct iovec;
 
 namespace TAO
 {
@@ -1063,6 +1066,8 @@ private:
  */
 
 //@@ TAO_TRANSPORT_SPL_EXTERN_ADD_HOOK
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "Transport.inl"

@@ -7,6 +7,8 @@ ACE_RCSID( TAO_QtResource,
            QtResource_Loader,
            "$Id$");
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   QtResource_Loader::QtResource_Loader (QApplication *qapp)
@@ -23,3 +25,5 @@ namespace TAO
   {
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

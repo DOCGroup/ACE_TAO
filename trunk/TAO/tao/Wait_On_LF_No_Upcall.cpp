@@ -11,6 +11,8 @@ ACE_RCSID(tao,
           Wait_On_LF_No_Upcall,
           "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Transport;
 namespace TAO
 {
@@ -100,3 +102,5 @@ namespace TAO
     return true;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

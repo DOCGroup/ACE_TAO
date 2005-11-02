@@ -22,7 +22,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Object_KeyC.h"
+#include "tao/Versioned_Namespace.h"
 #include "ace/SString.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -140,6 +143,8 @@ private:
   /// GIOP::IORAddressingInfo information.
   ACE_CString type_id_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/Tagged_Profile.i"

@@ -21,9 +21,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+class ACE_Time_Value;
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class ACE_Time_Value;
 class TAO_Transport;
 class TAO_Queued_Message;
 

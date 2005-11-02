@@ -2,6 +2,8 @@
 //
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE int
 TAO_ORB_Parameters::sock_rcvbuf_size (void) const
 {
@@ -228,3 +230,5 @@ TAO_ORB_Parameters::negotiate_codesets (bool x)
 {
   this->negotiate_codesets_ = x;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

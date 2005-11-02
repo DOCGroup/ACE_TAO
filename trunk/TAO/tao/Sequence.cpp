@@ -23,6 +23,8 @@ ACE_RCSID (tao,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // *************************************************************
 // Operations for class TAO_Base_Sequence
 // *************************************************************
@@ -1110,3 +1112,5 @@ operator!= (const TAO_Unbounded_Sequence<CORBA::Octet> & lhs,
 {
   return !(lhs == rhs);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

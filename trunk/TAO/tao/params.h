@@ -24,8 +24,10 @@
 
 #include "ace/SString.h"
 
-#include "objectid.h"
-#include "CORBA_String.h"
+#include "tao/objectid.h"
+#include "tao/CORBA_String.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decls.
 
@@ -37,7 +39,6 @@
 //    footprint by using this container.
 typedef ACE_Unbounded_Queue<ACE_CString> TAO_EndpointSet;
 typedef ACE_Unbounded_Queue_Const_Iterator<ACE_CString> TAO_EndpointSetIterator;
-
 
 // -------------------------------------------------------------------
 
@@ -312,6 +313,8 @@ private:
   /// Enable the use of codeset negotiation
   bool negotiate_codesets_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/params.i"

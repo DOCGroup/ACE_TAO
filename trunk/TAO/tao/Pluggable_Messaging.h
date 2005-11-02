@@ -26,6 +26,10 @@
 
 #include "tao/Basic_Types.h"
 
+class ACE_Time_Value;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace CORBA
 {
   class Exception;
@@ -39,8 +43,6 @@ class TAO_Operation_Details;
 class TAO_Target_Specification;
 class TAO_OutputCDR;
 class TAO_Queued_Data;
-
-class ACE_Time_Value;
 
 // @@ The more I think I about this class, I feel that this class need
 // not be a ABC as it is now. Instead we have these options
@@ -177,6 +179,8 @@ public:
   /// Accessor for the output CDR stream
   virtual TAO_OutputCDR &out_stream (void) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

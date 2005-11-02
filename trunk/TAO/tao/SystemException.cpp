@@ -30,6 +30,8 @@ ACE_RCSID (tao,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @name @c errno Encoding
  *
@@ -814,6 +816,8 @@ CORBA::SystemException::_tao_get_omg_exception_description (
   return "*unknown description*";
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO)
 #undef THREAD_CANCELLED
 #endif /* ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO */
@@ -877,6 +881,7 @@ static const char *repo_id_array[] = {
 static const CORBA::ULong array_sz =
   (sizeof (repo_id_array) / sizeof (char const *)) - 1;
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::excp_factory excp_array [] = {
 #define TAO_SYSTEM_EXCEPTION(name) \
@@ -975,3 +980,5 @@ CORBA::name ::_tao_create (void) \
 
 STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
+
+TAO_END_VERSIONED_NAMESPACE_DECL

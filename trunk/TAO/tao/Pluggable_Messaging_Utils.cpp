@@ -12,10 +12,12 @@ ACE_RCSID (tao,
            "$Id$")
 
 
-TAO_Pluggable_Reply_Params::TAO_Pluggable_Reply_Params (
-    TAO_Transport *t
-  )
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_Pluggable_Reply_Params::TAO_Pluggable_Reply_Params (TAO_Transport *t)
   : input_cdr_ (0)
-  ,  transport_ (t)
+  , transport_ (t)
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

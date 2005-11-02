@@ -33,6 +33,8 @@ ACE_RCSID (tao,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   Synch_Twoway_Invocation::Synch_Twoway_Invocation (
@@ -787,3 +789,5 @@ namespace TAO
     return s;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -22,10 +22,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+class ACE_Allocator;
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/// Forward declarations
-class ACE_Allocator;
 class TAO_ORB_Core;
 class TAO_Queued_Data;
 class TAO_Transport;

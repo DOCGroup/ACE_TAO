@@ -10,6 +10,9 @@ ACE_RCSID (tao,
            Reactive_Flushing_Strategy, 
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 int
 TAO_Reactive_Flushing_Strategy::schedule_output (TAO_Transport *transport)
 {
@@ -76,3 +79,5 @@ TAO_Reactive_Flushing_Strategy::flush_transport (TAO_Transport *transport)
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

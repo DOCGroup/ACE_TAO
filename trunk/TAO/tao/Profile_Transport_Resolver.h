@@ -25,11 +25,14 @@
 
 #include "tao/SystemException.h"
 
+class ACE_Time_Value;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Stub;
 class TAO_Profile;
 class TAO_Transport;
 class TAO_Endpoint;
-class ACE_Time_Value;
 class TAO_Transport_Descriptor_Interface;
 
 namespace CORBA
@@ -180,6 +183,8 @@ namespace TAO
     bool const blocked_;
   };
 } // TAO namespace end
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "Profile_Transport_Resolver.inl"

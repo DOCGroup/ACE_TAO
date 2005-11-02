@@ -1,5 +1,9 @@
 // -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   ACE_INLINE
@@ -22,3 +26,5 @@ namespace TAO
     this->status_ = s;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

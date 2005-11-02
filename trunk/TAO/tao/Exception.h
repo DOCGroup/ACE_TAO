@@ -39,9 +39,9 @@
 #include "ace/iosfwd.h"
 #include "ace/CORBA_macros.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class ACE_Allocator;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_OutputCDR;
 class TAO_InputCDR;
