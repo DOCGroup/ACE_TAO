@@ -499,20 +499,6 @@ protected:
   static int wchar_maxbytes_;
 };
 
-/**
-* @class ACE_OutputCDR_Auto_Reset
-*
-* @brief This class will call the reset() method on an
-* output CDR when it goes out of scope.
-*/
-class ACE_Export ACE_OutputCDR_Auto_Reset {
-public:
-  ACE_OutputCDR_Auto_Reset (ACE_OutputCDR& cdr);
-  ~ACE_OutputCDR_Auto_Reset (void);
-private:
-  ACE_OutputCDR& cdr_;
-};
-
 
 // ****************************************************************
 

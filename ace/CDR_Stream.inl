@@ -1706,16 +1706,4 @@ ACE_WChar_Codeset_Translator::minor_version (ACE_OutputCDR& output)
   return output.minor_version_;
 }
 
-ACE_INLINE
-ACE_OutputCDR_Auto_Reset::ACE_OutputCDR_Auto_Reset (ACE_OutputCDR& cdr)
-  : cdr_ (cdr)
-{
-}
-
-ACE_INLINE
-ACE_OutputCDR_Auto_Reset::~ACE_OutputCDR_Auto_Reset (void)
-{
-  this->cdr_.reset ();
-}
-
 ACE_END_VERSIONED_NAMESPACE_DECL
