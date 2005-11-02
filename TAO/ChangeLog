@@ -1,3 +1,10 @@
+Wed Nov  2 13:19:02 2005  Simon McQueen  <sm@prismtech.com>
+
+        * tests/Bug_2287_Regression/ServerRequest_Interceptor2.cpp:
+
+          Add explicit exclude of forward request exception header to
+          try and fix Solaris build error.
+
 Wed Nov  2 12:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Intrusive_Ref_Count_Handle_T.inl:
