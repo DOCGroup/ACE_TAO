@@ -1,3 +1,11 @@
+Wed Nov  2 09:19:04 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/ACE.h (strdelete):
+
+	  Declare wchar version of ACE::strdelete() with
+	  ACE_NAMESPACE_INLINE_FUNCTION macro since it is now inlined.
+	  Addresses duplicate definition errors in wchar-enabled builds.
+
 Wed Nov  2 08:51:29 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
 
  	* ace/CDR_Stream.h:
