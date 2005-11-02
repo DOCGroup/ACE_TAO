@@ -309,7 +309,6 @@ nobase_include_HEADERS = \
   CORBALOC_Parser.h \
   CORBALOC_Parser.i \
   CORBANAME_Parser.h \
-  CORBANAME_Parser.i \
   CORBA_String.h \
   CORBA_String.inl \
   CORBA_methods.h \
@@ -347,7 +346,6 @@ nobase_include_HEADERS = \
   CurrentC.h \
   CurrentS.h \
   DLL_Parser.h \
-  DLL_Parser.i \
   Default_Collocation_Resolver.h \
   Default_Endpoint_Selector_Factory.h \
   Default_Protocols_Hooks.h \
@@ -370,7 +368,6 @@ nobase_include_HEADERS = \
   Exception_Data.h \
   Exclusive_TMS.h \
   FILE_Parser.h \
-  FILE_Parser.i \
   Fault_Tolerance_Service.h \
   Fault_Tolerance_Service.i \
   Fixed_Array_Argument_T.cpp \
@@ -686,6 +683,7 @@ nobase_include_HEADERS = \
   Var_Size_Argument_T.h \
   Var_Size_Argument_T.inl \
   Version.h \
+  Version_Namespace.h \
   WCharSeq.pidl \
   WCharSeqC.h \
   WCharSeqS.h \

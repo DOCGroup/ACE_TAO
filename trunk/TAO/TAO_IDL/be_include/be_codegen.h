@@ -272,11 +272,20 @@ public:
   // Set the anyop source stream.
 
   int end_client_header (void);
-  // Generate code at the end such as the <<= and >>= operators alongwith the
-  // ending #endif statement.
+  // Generate code at the end such as the <<= and >>= operators along
+  // with the ending #endif statement.
+
+  /// Generate necessary code at end of client inline file.
+  void end_client_inline (void);
+
+  /// Generate necessary code at end of client stub file.
+  void end_client_stubs (void);
 
   int end_server_header (void);
   // Put a last #endif in the server header.
+
+  /// Generate necessary code at end of server inline file.
+  void end_server_inline (void);
 
   int end_implementation_header (const char *fname);
   // Put a last #endif in the server header.
