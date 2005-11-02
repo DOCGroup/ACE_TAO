@@ -53,28 +53,23 @@ namespace CIAO
     // be hosted in the same container, and in our map the key is an empty string ""
     for (CORBA::ULong i = 0; i < instance_len; ++i)
       {
-        char my_resource_id[256];
-        char *my_policy_set_id;
+        CORBA::String_var my_resource_id ("");
+        const char *my_policy_set_id = "";
 
         if (this->plan_.instance[i].deployedResource.length () != 0)
           {
-            ACE_OS::strcpy (my_resource_id,
-              this->plan_.instance[i].deployedResource[0].resourceName.in ());
+            my_resource_id =
+              this->plan_.instance[i].deployedResource[0].resourceName.in ();
               
             this->plan_.instance[i].deployedResource[0].resourceValue >>=
               my_policy_set_id;
-          }
-        else
-          {
-            my_policy_set_id = new char[256];
-            ACE_OS::strcpy (my_resource_id, "");
-            ACE_OS::strcpy (my_policy_set_id, "");
           }
 
         // If we find a different policy_set_id, then we bind it to the map.
         if (this->map_.find (my_policy_set_id) == 0)
           continue;
-        else if (ACE_OS::strcmp (my_policy_set_id, "") == 0)
+
+        if (ACE_OS::strcmp (my_policy_set_id, "") == 0)
           {
             // empty policy_set_id
             Deployment::ContainerImplementationInfo * info;
@@ -99,7 +94,7 @@ namespace CIAO
                 CIAO::DAnCE::ServerResource *server_resource_def = 0;
                 this->plan_.infoProperty[j].value >>= server_resource_def;
                 if (ACE_OS::strcmp ((*server_resource_def).Id,
-                                    my_resource_id) == 0)
+                                    my_resource_id.in ()) == 0)
                   {
                     // Iterate over the policy_sets
                     CORBA::ULong k;
@@ -133,7 +128,7 @@ namespace CIAO
                         // No Server Resource Def found?
                         ACE_DEBUG ((LM_DEBUG,
                             "No matching policy set def found in resource def: %s!\n",
-                            my_resource_id));
+                            my_resource_id.in ()));
                       }
                   }
 
