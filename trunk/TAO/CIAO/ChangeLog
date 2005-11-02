@@ -1,3 +1,21 @@
+Wed Nov 02 14:55:14 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
+
+	* DAnCE/NodeApplication/RTNodeApp_Configurator.cpp: Fixed strings
+	  comparisons syntax.
+
+	* DAnCE/NodeApplication/RTConfig_Manager.cpp:
+	* DAnCE/NodeApplication/RTConfig_Manager.h: Added a new
+	  print_resource method and a bunch of debugging print out to help
+	  debugging XML parsing and propagating.
+
+	* examples/Hello/descriptors/RTsvc.conf:
+	* examples/Hello/descriptors/rt_run_test.pl: Added a RTsvc.conf
+	  file to start up the NodeApplication in RT mode.
+	
+	* examples/Hello/descriptors/rt-config-example.csr: Made RT
+	  resource definitions more realistic and added a new policy set
+	  for debugging XML parsing.
+
 Wed Nov 02 07:09:10 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
 	* DAnCE/NodeApplicationManager/Containers_Info_Map.cpp: Fixed
