@@ -1,3 +1,18 @@
+Wed Nov  2 08:30:41 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
+
+	* tao/Synch_Invocation.cpp:
+        * tao/LocalRequest_Invocation.cpp:
+	
+	  Reverted "Fri Aug 26 11:33:07 2005  Justin Michel
+	  <michel_j@ociweb.com>" since the change was wrong. Chris
+	  Cleeland is informed, and he has accepted to do a right fix
+	  when he gets time.
+	  
+	* tao/orbconf.h:
+
+	  Removed TAO_RESET_OUTPUT_CDR_AFTER_SEND #define, since it is of no
+	  use anymore.
+
 Wed Nov  2 14:17:47 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
