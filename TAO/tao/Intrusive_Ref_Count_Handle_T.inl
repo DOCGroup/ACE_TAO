@@ -72,7 +72,7 @@ TAO_Intrusive_Ref_Count_Handle<T>::operator=
 
   T * old_ptr = this->ptr_;
   this->ptr_ = tmp.ptr_;
-  tmp.ptr_ = old_tmp;
+  tmp.ptr_ = old_ptr;
 
   return *this;
 }
