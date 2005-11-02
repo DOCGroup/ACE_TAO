@@ -65,9 +65,6 @@ namespace TAO
       this->resolver_.transport ();
 
     TAO_OutputCDR &cdr = transport->out_stream ();
-#if TAO_RESET_OUTPUT_CDR_AFTER_SEND == 1
-    ACE_OutputCDR_Auto_Reset cdr_reset(cdr);
-#endif /* TAO_RESET_OUTPUT_CDR_AFTER_SEND */
 
     int retval =
       transport->generate_locate_request (tspec,
