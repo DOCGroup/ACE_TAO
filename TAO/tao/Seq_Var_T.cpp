@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef TAO_SEQ_VAR_T_C
-#define TAO_SEQ_VAR_T_C
+#ifndef TAO_SEQ_VAR_T_CPP
+#define TAO_SEQ_VAR_T_CPP
 
 #include "tao/Seq_Var_T.h"
 
@@ -9,26 +9,15 @@
 #include "tao/Seq_Var_T.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/OS_Memory.h"
 
-ACE_RCSID (tao,
-           Seq_VarOut_T,
-           "$Id$")
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename T, typename T_elem>
 TAO_Seq_Var_Base_T<T,T_elem>::TAO_Seq_Var_Base_T (
-    const TAO_Seq_Var_Base_T<T,T_elem> & p
-  )
+    const TAO_Seq_Var_Base_T<T,T_elem> & p)
+  : ptr_ (p.ptr_ ? new T (*p.ptr_) : 0)
 {
-  if (p.ptr_)
-    {
-      ACE_NEW (this->ptr_,
-               T (*p.ptr_));
-    }
-  else
-    {
-      this->ptr_ = 0;
-    }
 }
 
 // ****************************************************************************
@@ -36,34 +25,15 @@ TAO_Seq_Var_Base_T<T,T_elem>::TAO_Seq_Var_Base_T (
 template<typename T, typename T_elem>
 TAO_FixedSeq_Var_T<T,T_elem> &
 TAO_FixedSeq_Var_T<T,T_elem>::operator= (
-    const TAO_FixedSeq_Var_T<T,T_elem> & p
-  )
+    const TAO_FixedSeq_Var_T<T,T_elem> & p)
 {
-  if (this != &p)
-    {
-      if (p.ptr_ == 0)
-        {
-          delete this->ptr_;
-          this->ptr_ = 0;
-        }
-      else
-        {
-          T * deep_copy = 0;
-          ACE_NEW_RETURN (
-              deep_copy,
-              T (*p.ptr_),
-              *this
-            );
+  // Strongly exception safe assignment using copy and non-throwing
+  // swap technique.
+  TAO_FixedSeq_Var_T<T,T_elem> tmp (p);
 
-          if (deep_copy != 0)
-            {
-              T * tmp = deep_copy;
-              deep_copy = this->ptr_;
-              this->ptr_ = tmp;
-              delete deep_copy;
-            }
-        }
-    }
+  T * old_ptr = this->ptr_;
+  this->ptr_ = tmp.ptr_;
+  tmp.ptr_ = old_ptr;
 
   return *this;
 }
@@ -73,13 +43,13 @@ template<typename T, typename T_elem>
 TAO_FixedSeq_Var_T<T,T_elem> &
 TAO_FixedSeq_Var_T<T,T_elem>::operator= (const T & p)
 {
-  if (this->ptr_ != &p)
-    {
-      delete this->ptr_;
-      ACE_NEW_RETURN (this->ptr_,
-                      T (p),
-                      *this);
-    }
+  // Strongly exception safe assignment using copy and non-throwing
+  // swap technique.
+  TAO_FixedSeq_Var_T<T,T_elem> tmp (p);
+
+  T * old_ptr = this->ptr_;
+  this->ptr_ = tmp.ptr_;
+  tmp.ptr_ = old_ptr;
 
   return *this;
 }
@@ -88,35 +58,15 @@ TAO_FixedSeq_Var_T<T,T_elem>::operator= (const T & p)
 
 template<typename T, typename T_elem>
 TAO_VarSeq_Var_T<T,T_elem> &
-TAO_VarSeq_Var_T<T,T_elem>::operator= (
-    const TAO_VarSeq_Var_T<T,T_elem> & p
-  )
+TAO_VarSeq_Var_T<T,T_elem>::operator= (const TAO_VarSeq_Var_T<T,T_elem> & p)
 {
-  if (this != &p)
-    {
-      if (p.ptr_ == 0)
-        {
-          delete this->ptr_;
-          this->ptr_ = 0;
-        }
-      else
-        {
-          T * deep_copy = 0;
-          ACE_NEW_RETURN (
-              deep_copy,
-              T (*p.ptr_),
-              *this
-            );
+  // Strongly exception safe assignment using copy and non-throwing
+  // swap technique.
+  TAO_VarSeq_Var_T<T,T_elem> tmp (p);
 
-          if (deep_copy != 0)
-            {
-              T * tmp = deep_copy;
-              deep_copy = this->ptr_;
-              this->ptr_ = tmp;
-              delete deep_copy;
-            }
-        }
-    }
+  T * old_ptr = this->ptr_;
+  this->ptr_ = tmp.ptr_;
+  tmp.ptr_ = old_ptr;
 
   return *this;
 }
@@ -129,33 +79,17 @@ TAO_MngSeq_Var_T<T,T_elem>::operator= (
     const TAO_MngSeq_Var_T<T,T_elem> & p
   )
 {
-  if (this != &p)
-    {
-      if (p.ptr_ == 0)
-        {
-          delete this->ptr_;
-          this->ptr_ = 0;
-        }
-      else
-        {
-          T * deep_copy = 0;
-          ACE_NEW_RETURN (
-              deep_copy,
-              T (*p.ptr_),
-              *this
-            );
+  // Strongly exception safe assignment using copy and non-throwing
+  // swap technique.
+  TAO_MngSeq_Var_T<T,T_elem> tmp (p);
 
-          if (deep_copy != 0)
-            {
-              T * tmp = deep_copy;
-              deep_copy = this->ptr_;
-              this->ptr_ = tmp;
-              delete deep_copy;
-            }
-        }
-    }
+  T * old_ptr = this->ptr_;
+  this->ptr_ = tmp.ptr_;
+  tmp.ptr_ = old_ptr;
 
   return *this;
 }
 
-#endif /* TAO_SEQ_VAR_T_C */
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_SEQ_VAR_T_CPP */

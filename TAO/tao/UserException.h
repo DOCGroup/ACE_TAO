@@ -26,6 +26,8 @@
 
 #include "tao/Exception.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace CORBA
 {
   /**
@@ -77,6 +79,8 @@ namespace CORBA
   };
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/UserException.inl"

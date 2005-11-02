@@ -27,9 +27,10 @@
 #include "ace/Service_Object.h"
 
 
+class ACE_Lock;
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class ACE_Lock;
 class TAO_Transport_Mux_Strategy;
 class TAO_Wait_Strategy;
 class TAO_Transport;

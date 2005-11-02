@@ -28,13 +28,13 @@
 #include "ace/Intrusive_List_Node.h"
 #include "ace/OS_NS_Thread.h"
 
+class ACE_Reactor;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_LF_Event;
 class TAO_Transport;
 class TAO_ORB_Core;
-class ACE_Reactor;
 class TAO_ORB_Core_TSS_Resources;
 
 /**

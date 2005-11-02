@@ -26,9 +26,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Tagged_Profile.h"
-#include "Service_Context.h"
-#include "Object.h"
+#include "tao/Tagged_Profile.h"
+#include "tao/Service_Context.h"
+#include "tao/Object.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if TAO_HAS_INTERCEPTORS == 1
 namespace TAO
@@ -366,6 +368,8 @@ private:
   PortableInterceptor::ReplyStatus reply_status_;
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "TAO_Server_Request.i"

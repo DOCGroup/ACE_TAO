@@ -13,12 +13,16 @@
 
 #ifndef TAO_TKRESOURCE_LOADER_H
 #define TAO_TKRESOURCE_LOADER_H
+
 #include /**/ "ace/pre.h"
+
 #include "tao/TAO_TkResource_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -38,12 +42,17 @@ namespace TAO
    */
   class TAO_TkResource_Export TkResource_Loader
   {
-
   public:
-    TkResource_Loader ( );
 
-    virtual ~TkResource_Loader ();
+    TkResource_Loader (void);
+
+    virtual ~TkResource_Loader (void);
+
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
+
 #endif /* TAO_TKRESOURCE_LOADER_H */

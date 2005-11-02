@@ -23,14 +23,15 @@
 
 #include "tao/Versioned_Namespace.h"
 
+class ACE_Synch_Options;
+class ACE_Time_Value;
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 class TAO_Connector;
 class TAO_Connection_Handler;
 class TAO_Transport;
-class ACE_Synch_Options;
-class ACE_Time_Value;
 
 /**
  * @class TAO_Connect_Strategy

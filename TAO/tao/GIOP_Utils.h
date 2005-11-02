@@ -27,10 +27,11 @@
 
 #include "tao/IOP_IORC.h"
 
+class ACE_Time_Value;
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Transport;
-class ACE_Time_Value;
 
 /**
  * All GIOP messages include a header and message type.  Not
@@ -48,7 +49,7 @@ typedef enum GIOP_Messages
   TAO_GIOP_CLOSECONNECTION = 5,
   TAO_GIOP_MESSAGERROR = 6,           // by both.
   TAO_GIOP_FRAGMENT = 7                // by both.
-}TAO_GIOP_Message_Type;
+}  TAO_GIOP_Message_Type;
 
 
 typedef enum GIOP_LocateStatusType

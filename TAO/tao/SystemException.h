@@ -29,6 +29,8 @@
 #include "tao/Exception.h"
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_OutputCDR;
 class TAO_InputCDR;
 
@@ -236,6 +238,7 @@ namespace CORBA
 
 } // End CORBA namespace
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/SystemException.inl"

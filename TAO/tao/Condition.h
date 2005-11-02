@@ -24,9 +24,9 @@
 #include "ace/Condition_T.h"
 #include "ace/Global_Macros.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class ACE_Time_Value;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Condition

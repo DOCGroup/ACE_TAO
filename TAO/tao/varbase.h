@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -16,6 +16,10 @@
 #ifndef TAO_VARBASE_H
 #define TAO_VARBASE_H
 #include /**/ "ace/pre.h"
+
+#include "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Base_var
@@ -38,6 +42,8 @@ private:
   TAO_Base_var & operator= (const TAO_Base_var &);
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_VARBASE_H */

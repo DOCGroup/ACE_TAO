@@ -361,13 +361,195 @@ Tue Nov  1 14:49:40 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* tao/Object_T.h:
 	* tao/Objref_VarOut_T.cpp:
 	* tao/Objref_VarOut_T.h:
+	* tao/Parser_Registry.cpp:
+	* tao/Parser_Registry.h:
+	* tao/Parser_Registry.i:
+	* tao/Pluggable_Messaging.cpp:
+	* tao/Pluggable_Messaging.h:
+	* tao/Pluggable_Messaging_Utils.cpp:
+	* tao/Pluggable_Messaging_Utils.h:
+	* tao/Pluggable_Messaging_Utils.i:
+	* tao/PolicyFactory_Registry_Adapter.cpp:
+	* tao/PolicyFactory_Registry_Adapter.h:
+	* tao/Policy_Current.cpp:
+	* tao/Policy_Current.h:
+	* tao/Policy_Current.inl:
+	* tao/Policy_Current_Impl.cpp:
+	* tao/Policy_Current_Impl.h:
+	* tao/Policy_Current_Impl.inl:
+	* tao/Policy_Manager.cpp:
+	* tao/Policy_Manager.h:
+	* tao/Policy_Manager.i:
+	* tao/Policy_Set.cpp:
+	* tao/Policy_Set.h:
+	* tao/Policy_Set.i:
+	* tao/Policy_Validator.cpp:
+	* tao/Policy_Validator.h:
+	* tao/Principal.cpp:
+	* tao/Principal.h:
+	* tao/Principal.i:
+	* tao/Profile.cpp:
+	* tao/Profile.h:
+	* tao/Profile.i:
+	* tao/Profile_Transport_Resolver.cpp:
+	* tao/Profile_Transport_Resolver.h:
+	* tao/Profile_Transport_Resolver.inl:
 	* tao/Protocol_Factory.cpp:
 	* tao/Protocol_Factory.h:
+	* tao/Protocols_Hooks.cpp:
+	* tao/Protocols_Hooks.h:
+	* tao/Pseudo_VarOut_T.cpp:
+	* tao/Pseudo_VarOut_T.h:
+	* tao/Pseudo_VarOut_T.inl:
+	* tao/QtResource_Factory.cpp:
+	* tao/QtResource_Factory.h:
+	* tao/QtResource_Loader.cpp:
+	* tao/QtResource_Loader.h:
+	* tao/Queued_Message.cpp:
+	* tao/Queued_Message.h:
+	* tao/Reactive_Connect_Strategy.cpp:
+	* tao/Reactive_Connect_Strategy.h:
+	* tao/Reactive_Flushing_Strategy.cpp:
+	* tao/Reactive_Flushing_Strategy.h:
+	* tao/Refcounted_ObjectKey.cpp:
+	* tao/Refcounted_ObjectKey.h:
+	* tao/Refcounted_ObjectKey.inl:
+	* tao/Remote_Invocation.cpp:
+	* tao/Remote_Invocation.h:
+	* tao/Remote_Object_Proxy_Broker.cpp:
+	* tao/Remote_Object_Proxy_Broker.h:
+	* tao/Reply_Dispatcher.cpp:
+	* tao/Reply_Dispatcher.h:
+	* tao/Reply_Dispatcher.i:
+	* tao/Request_Dispatcher.cpp:
+	* tao/Request_Dispatcher.h:
 	* tao/Resource_Factory.cpp:
 	* tao/Resource_Factory.h:
+	* tao/Resume_Handle.cpp:
+	* tao/Resume_Handle.h:
+	* tao/Resume_Handle.inl:
+	* tao/Seq_Out_T.cpp:
+	* tao/Seq_Out_T.h:
+	* tao/Seq_Out_T.inl:
+	* tao/Seq_Var_T.cpp:
+	* tao/Seq_Var_T.h:
+	* tao/Seq_Var_T.inl:
+	* tao/Sequence.cpp:
+	* tao/Sequence.h:
+	* tao/Sequence.i:
+	* tao/Sequence_T.cpp:
+	* tao/Sequence_T.h:
+	* tao/Sequence_T.i:
+	* tao/ServerRequestInterceptor_Adapter.cpp:
+	* tao/ServerRequestInterceptor_Adapter.h:
+	* tao/ServerRequestInterceptor_Adapter_Factory.cpp:
+	* tao/ServerRequestInterceptor_Adapter_Factory.h:
+	* tao/Server_Strategy_Factory.cpp:
+	* tao/Server_Strategy_Factory.h:
+	* tao/Service_Callbacks.cpp:
+	* tao/Service_Callbacks.h:
+	* tao/Service_Context.cpp:
+	* tao/Service_Context.h:
+	* tao/Service_Context.inl:
+	* tao/Services_Activate.cpp:
+	* tao/Services_Activate.h:
+	* tao/Special_Basic_Argument_T.cpp:
+	* tao/Special_Basic_Argument_T.h:
+	* tao/Special_Basic_Argument_T.inl:
+	* tao/Special_Basic_Arguments.h:
+	* tao/Stub.cpp:
+	* tao/Stub.h:
+	* tao/Stub.i:
 	* tao/Stub_Factory.cpp:
 	* tao/Stub_Factory.h:
+	* tao/Synch_Invocation.cpp:
+	* tao/Synch_Invocation.h:
+	* tao/Synch_Invocation.inl:
+	* tao/Synch_Queued_Message.cpp:
+	* tao/Synch_Queued_Message.h:
+	* tao/Synch_Reply_Dispatcher.cpp:
+	* tao/Synch_Reply_Dispatcher.h:
+	* tao/SystemException.cpp:
+	* tao/SystemException.h:
+	* tao/SystemException.inl:
+	* tao/TAO_Internal.cpp:
+	* tao/TAO_Server_Request.cpp:
+	* tao/TAO_Server_Request.h:
+	* tao/TAO_Server_Request.i:
+	* tao/TAO_Singleton.cpp:
+	* tao/TAO_Singleton.h:
+	* tao/TAO_Singleton.inl:
+	* tao/TAO_Singleton_Manager.cpp:
+	* tao/TAO_Singleton_Manager.h:
+	* tao/TAO_Singleton_Manager.inl:
+	* tao/TSS_Resources.cpp:
+	* tao/TSS_Resources.h:
+	* tao/Tagged_Components.cpp:
+	* tao/Tagged_Components.h:
+	* tao/Tagged_Components.i:
+	* tao/Tagged_Profile.cpp:
+	* tao/Tagged_Profile.h:
+	* tao/Tagged_Profile.i:
+	* tao/Thread_Lane_Resources.cpp:
+	* tao/Thread_Lane_Resources.h:
+	* tao/Thread_Lane_Resources_Manager.cpp:
 	* tao/Thread_Lane_Resources_Manager.h:
+	* tao/Thread_Per_Connection_Handler.cpp:
+	* tao/Thread_Per_Connection_Handler.h:
+	* tao/TkResource_Factory.cpp:
+	* tao/TkResource_Factory.h:
+	* tao/TkResource_Loader.cpp:
+	* tao/TkResource_Loader.h:
+	* tao/Transport.cpp:
+	* tao/Transport.h:
+	* tao/Transport.inl:
+	* tao/Transport_Acceptor.cpp:
+	* tao/Transport_Acceptor.h:
+	* tao/Transport_Acceptor.inl:
+	* tao/Transport_Cache_Manager.cpp:
+	* tao/Transport_Cache_Manager.h:
+	* tao/Transport_Cache_Manager.inl:
+	* tao/Transport_Connector.cpp:
+	* tao/Transport_Connector.h:
+	* tao/Transport_Connector.inl:
+	* tao/Transport_Descriptor_Interface.cpp:
+	* tao/Transport_Descriptor_Interface.h:
+	* tao/Transport_Descriptor_Interface.inl:
+	* tao/Transport_Mux_Strategy.cpp:
+	* tao/Transport_Mux_Strategy.h:
+	* tao/Transport_Queueing_Strategies.cpp:
+	* tao/Transport_Queueing_Strategies.h:
+	* tao/Transport_Timer.cpp:
+	* tao/Transport_Timer.h:
+	* tao/TypeCodeFactory_Adapter.h:
+	* tao/UB_String_Argument_T.cpp:
+	* tao/UB_String_Argument_T.h:
+	* tao/UB_String_Argument_T.inl:
+	* tao/UB_String_Arguments.h:
+	* tao/UserException.cpp:
+	* tao/UserException.h:
+	* tao/UserException.inl:
+	* tao/Valuetype_Adapter.cpp:
+	* tao/Valuetype_Adapter.h:
+	* tao/VarOut_T.cpp:
+	* tao/VarOut_T.h:
+	* tao/VarOut_T.inl:
+	* tao/Var_Array_Argument_T.cpp:
+	* tao/Var_Array_Argument_T.h:
+	* tao/Var_Array_Argument_T.inl:
+	* tao/Var_Size_Argument_T.cpp:
+	* tao/Var_Size_Argument_T.h:
+	* tao/Var_Size_Argument_T.inl:
+	* tao/Wait_On_LF_No_Upcall.cpp:
+	* tao/Wait_On_LF_No_Upcall.h:
+	* tao/Wait_On_Leader_Follower.cpp:
+	* tao/Wait_On_Leader_Follower.h:
+	* tao/Wait_On_Reactor.cpp:
+	* tao/Wait_On_Reactor.h:
+	* tao/Wait_On_Read.cpp:
+	* tao/Wait_On_Read.h:
+	* tao/Wait_Strategy.cpp:
+	* tao/Wait_Strategy.h:
 	* tao/corba.h:
 	* tao/corbafwd.cpp:
 	* tao/debug.cpp:
@@ -383,6 +565,10 @@ Tue Nov  1 14:49:40 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* tao/operation_details.h:
 	* tao/operation_details.i:
 	* tao/orbconf.h:
+	* tao/params.cpp:
+	* tao/params.h:
+	* tao/params.i:
+	* tao/varbase.h:
 
 	  Added versioned namespace support.
 

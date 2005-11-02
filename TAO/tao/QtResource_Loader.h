@@ -21,7 +21,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Versioned_Namespace.h"
+
 #include <qapplication.h>
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -43,10 +47,12 @@ namespace TAO
   class TAO_QtResource_Export QtResource_Loader
   {
   public:
-    QtResource_Loader  (QApplication *qapp);
-
+    QtResource_Loader (QApplication *qapp);
     virtual ~QtResource_Loader (void);
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
 #endif /* TAO_QTRESOURCE_LOADER_H */

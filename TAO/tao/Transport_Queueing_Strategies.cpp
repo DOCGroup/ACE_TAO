@@ -12,6 +12,9 @@ ACE_RCSID (tao,
            Transport_Queueing_Strategies,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   Transport_Queueing_Strategy::~Transport_Queueing_Strategy (void)
@@ -224,3 +227,5 @@ namespace TAO
   #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

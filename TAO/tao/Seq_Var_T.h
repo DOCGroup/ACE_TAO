@@ -19,7 +19,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS_Memory.h"
+#include "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Seq_Var_Base_T
@@ -139,7 +141,7 @@ public:
   T_elem operator[] (CORBA::ULong index);
 };
 
-
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "Seq_Var_T.inl"

@@ -10,6 +10,8 @@ ACE_RCSID (tao,
            Thread_Lane_Resources_Manager,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Thread_Lane_Resources_Manager::TAO_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core)
   : orb_core_ (&orb_core),
     lf_strategy_ (0)
@@ -33,3 +35,4 @@ TAO_Thread_Lane_Resources_Manager_Factory::~TAO_Thread_Lane_Resources_Manager_Fa
 {
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

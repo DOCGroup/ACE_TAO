@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -25,6 +25,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Basic_Types.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward Declarations.
 class TAO_GIOP_Message_State;
@@ -86,6 +88,8 @@ protected:
   /// Reply or LocateReply status.
   CORBA::ULong reply_status_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "tao/Reply_Dispatcher.i"

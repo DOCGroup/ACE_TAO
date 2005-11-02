@@ -24,13 +24,14 @@
 
 #include "tao/Resource_Factory.h"
 
+class ACE_Reactor_Impl;
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Object_Adapter;
 class TAO_IOR_Parser;
 class TAO_LF_Strategy;
 class TAO_Codeset_Descriptor_Base;
-class ACE_Reactor_Impl;
 
 /**
  * @class TAO_Default_Resource_Factory

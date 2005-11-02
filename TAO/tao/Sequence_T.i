@@ -1,5 +1,8 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ***************************************************
 // Operations on the generic unbounded sequence class.
@@ -600,3 +603,5 @@ TAO_Bounded_WString_Sequence (CORBA::ULong length,
   : TAO_Bounded_Base_Sequence (MAX, length, value, release)
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -21,11 +21,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+class ACE_Time_Value;
+class ACE_Synch_Options;
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Connector;
-class ACE_Time_Value;
-class ACE_Synch_Options;
 
 /**
  * @class TAO_LF_Connect_Strategy

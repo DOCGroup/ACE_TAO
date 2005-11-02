@@ -25,9 +25,9 @@
 
 #include "tao/CONV_FRAMEC.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 class ACE_WChar_Codeset_Translator;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Profile;
 class TAO_Transport;

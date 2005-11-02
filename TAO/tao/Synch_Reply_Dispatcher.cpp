@@ -10,6 +10,8 @@ ACE_RCSID (tao,
            Synch_Reply_Dispatcher,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Constructor.
 TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (
     TAO_ORB_Core *orb_core,
@@ -104,3 +106,5 @@ TAO_Synch_Reply_Dispatcher::connection_closed (void)
   this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED,
                        this->orb_core_->leader_follower ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -112,6 +112,8 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
   ACE_Log_Msg::instance ()->release ();
 }
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Transport::TAO_Transport (CORBA::ULong tag,
                               TAO_ORB_Core *orb_core)
   : tag_ (tag)
@@ -2498,3 +2500,5 @@ TAO_Transport::allocate_partial_message_block (void)
  */
 
 //@@ TAO_TRANSPORT_SPL_METHODS_ADD_HOOK
+
+TAO_END_VERSIONED_NAMESPACE_DECL

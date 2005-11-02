@@ -2,6 +2,8 @@
 //
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE
 TAO_Service_Context::TAO_Service_Context (void)
   : service_context_ ()
@@ -37,7 +39,6 @@ TAO_Service_Context::set_context (IOP::ServiceContext &context,
                        cdr);
 }
 
-
 ACE_INLINE int
 TAO_Service_Context::is_service_id (IOP::ServiceId id)
 {
@@ -52,3 +53,5 @@ TAO_Service_Context::is_service_id (IOP::ServiceId id)
     }
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

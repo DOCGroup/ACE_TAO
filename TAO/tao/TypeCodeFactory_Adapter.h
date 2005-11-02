@@ -26,6 +26,8 @@
 
 template<class T> class ACE_Array_Base;
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace CORBA
 {
   class EnumMemberSeq;
@@ -270,6 +272,8 @@ public:
   //@}
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

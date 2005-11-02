@@ -11,6 +11,9 @@ ACE_RCSID (tao,
            Resume_Handle, 
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 void
 TAO_Resume_Handle::resume_handle (void)
 {
@@ -27,3 +30,5 @@ TAO_Resume_Handle::resume_handle (void)
   // Set the flag, so that we dont resume again..
   this->flag_ = TAO_HANDLE_ALREADY_RESUMED;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

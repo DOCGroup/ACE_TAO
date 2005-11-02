@@ -23,6 +23,8 @@
 
 #include "tao/Invocation_Base.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Operation_Details;
 class TAO_Target_Specification;
 class TAO_OutputCDR;
@@ -92,6 +94,8 @@ namespace TAO
     Profile_Transport_Resolver &resolver_;
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

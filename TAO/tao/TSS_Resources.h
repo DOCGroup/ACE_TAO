@@ -27,6 +27,8 @@
 
 #include "tao/Policy_Current_Impl.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward declarations
 namespace TAO
 {
@@ -104,6 +106,8 @@ public:
    */
   TAO::GUIResource_Factory * gui_resource_factory_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -1,5 +1,8 @@
 // -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::ULong
 TAO_Profile::tag (void) const
@@ -60,3 +63,5 @@ TAO_Profile::object_key (void) const
 {
   return this->ref_object_key_->object_key ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

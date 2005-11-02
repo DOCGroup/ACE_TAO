@@ -10,6 +10,8 @@ ACE_RCSID (tao,
 #include "tao/Reply_Dispatcher.i"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Constructor.
 TAO_Reply_Dispatcher::TAO_Reply_Dispatcher (void)
   // Just an invalid reply status.
@@ -21,3 +23,5 @@ TAO_Reply_Dispatcher::TAO_Reply_Dispatcher (void)
 TAO_Reply_Dispatcher::~TAO_Reply_Dispatcher (void)
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

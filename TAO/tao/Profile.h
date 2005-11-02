@@ -26,6 +26,9 @@
 #include "tao/Service_Callbacks.h"
 
 class ACE_Lock;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_MProfile;
 class TAO_Stub;
 class TAO_Endpoint;
@@ -414,6 +417,8 @@ private:
 };
 
 //@@ TAO_PROFILE_SPL_EXTERN_HOOK
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "Profile.i"

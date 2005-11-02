@@ -29,12 +29,12 @@
 #include "tao/CORBA_methods.h"
 #include "tao/Pseudo_VarOut_T.h"
 
+class ACE_Time_Value;
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Operation_Details;
 class TAO_Stub;
-class ACE_Time_Value;
-
 
 namespace  CORBA
 {

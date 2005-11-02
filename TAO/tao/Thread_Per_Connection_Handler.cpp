@@ -10,6 +10,8 @@ ACE_RCSID (tao,
            Thread_Per_Connection_Handler,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Thread_Per_Connection_Handler::TAO_Thread_Per_Connection_Handler (
     TAO_Connection_Handler *ch,
     TAO_ORB_Core *oc)
@@ -81,3 +83,5 @@ TAO_Thread_Per_Connection_Handler::close (u_long)
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

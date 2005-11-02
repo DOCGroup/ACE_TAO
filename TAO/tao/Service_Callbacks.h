@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    Service_Callbacks.h
@@ -7,7 +9,6 @@
  * This is a generic interface that would be used to override many
  * of the default functionalities that the ORB provides by the
  * services if they have been loaded in to the ORB_Core
- *
  *
  *  @author Bala Natarajan <bala@cs.wustl.edu>
  */
@@ -26,6 +27,8 @@
 #include "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
 #include "tao/Invocation_Utils.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Profile;
 class TAO_MProfile;
@@ -109,6 +112,8 @@ public:
       TAO_Profile *profile
       ACE_ENV_ARG_DECL);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

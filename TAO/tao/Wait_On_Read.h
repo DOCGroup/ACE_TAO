@@ -21,6 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Wait_On_Read
  *
@@ -45,6 +47,8 @@ public:
   virtual bool non_blocking (void) const;
   virtual bool can_process_upcalls (void) const;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 
