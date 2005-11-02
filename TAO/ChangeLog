@@ -1,3 +1,10 @@
+Wed Nov  2 09:39:27 MST 2005  Yan Dai  <dai_y@ociweb.com>
+
+        * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp:
+
+          Commented the if/endif with TAO_HAS_INTERCEPTORS because the code
+          guarded by the macro is commented out already.
+          
 Wed Nov  2 08:30:41 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
 
 	* tao/Synch_Invocation.cpp:
