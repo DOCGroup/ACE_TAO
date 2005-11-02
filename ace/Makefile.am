@@ -1053,6 +1053,7 @@ nobase_include_HEADERS = \
   Vector_T.h \
   Vector_T.inl \
   Version.h \
+  Versioned_Namespace.h \
   WFMO_Reactor.h \
   WFMO_Reactor.inl \
   WIN32_Asynch_IO.h \

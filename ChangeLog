@@ -1,3 +1,13 @@
+Tue Nov  1 22:19:03 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Makefile.am (nobase_include_HEADERS):
+
+	  Added missing "Versioned_Namespace.h" header.
+
+	* ace/Versioned_Namespace.h:
+
+	  Clarified preprocessor error message.
+
 Tue Nov  1 14:28:51 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* ace/config-macosx-tiger.h
