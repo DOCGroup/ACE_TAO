@@ -53,7 +53,7 @@ CIAO::RTResource_Config_Manager::print_resources
                   "-RTResource_Config_Manager::print_resource threadpool_with %d, lanes: %s\n",
                   orb_resource.threadpool_with_lanes_list[i].threadpool_lanes.length (),
                   orb_resource.threadpool_with_lanes_list[i].Id.in ()));
-      /*
+
       for (CORBA::ULong l = 0;
            l < orb_resource.threadpool_with_lanes_list[i].threadpool_lanes.length ();
            ++l)
@@ -66,7 +66,7 @@ CIAO::RTResource_Config_Manager::print_resources
                       orb_resource.threadpool_with_lanes_list[i].threadpool_lanes[l].lane_priority,
                       orb_resource.threadpool_with_lanes_list[i].threadpool_lanes[l].static_threads,
                       orb_resource.threadpool_with_lanes_list[i].threadpool_lanes[l].dynamic_threads));
-                      }*/
+                      }
       ACE_DEBUG ((LM_DEBUG,
                   "\tStack size: %d\n"
                   "\tBorrowing: %s\n"
