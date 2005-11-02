@@ -12,6 +12,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "Hello.h"
 #include "ace/OS_NS_sys_time.h"
+#include "tao/PI/PIForwardRequestC.h"
 
 ACE_RCSID (FaultTolerance,
            TAO249_ServerRequest_Interceptor2,
