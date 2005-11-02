@@ -52,7 +52,7 @@ Tue Nov  1 14:27:36 USMST 2005  Yan Dai  <dai_y@ociweb.com>
           Changed to enable these scripts to run from autobuild for VxWorks builds.
 
         * tests/CSD_Strategy_Tests/TP_Test_1/ServerApp.cpp:
-        
+
           Removed duplicated log message.
 
 Tue Nov  1 14:30:05 2005  William Otte  <wotte@dre.vanderbilt.edu>
@@ -60,7 +60,7 @@ Tue Nov  1 14:30:05 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc
 
 	Added missing project dependancies to fix errors/warnings for the
-	strict OS X linker. 
+	strict OS X linker.
 
 Tue Nov  1 19:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -580,7 +580,7 @@ Tue Oct 25 07:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tao/PortableServer/POA_Current_Impl.cpp:
           Implemented POA_Current::get_reference. This is the last item
           of bugzilla bug 1917, which is now totally fixed
-          
+
 Mon Oct 24 19:08:06 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_scope.cpp:

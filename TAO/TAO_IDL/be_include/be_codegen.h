@@ -264,7 +264,7 @@ public:
 
   int start_server_template_skeletons (const char *fname);
   // Set the server template skeletons stream.
-  
+
   int start_anyop_header (const char *fname);
   // Set the anyop header stream.
 
@@ -304,7 +304,7 @@ public:
 
   int end_server_skeletons (void);
   // Put a last #endif in the server skeletons.
-  
+
   int end_anyop_header (void);
   // Put a last #endif in the anyop header.
 
@@ -346,7 +346,7 @@ public:
 
   TAO_OutStream *anyop_header (void);
   // Get the anyop header stream.
-  
+
   TAO_OutStream *anyop_source (void);
   // Get the anyop source stream.
 
@@ -444,7 +444,7 @@ private:
 
   TAO_OutStream *server_template_inline_;
   // Server side template inline file.
-  
+
   TAO_OutStream *anyop_header_;
   // Anyop header file.
 
