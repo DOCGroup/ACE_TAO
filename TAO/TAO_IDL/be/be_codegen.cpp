@@ -30,7 +30,17 @@ ACE_RCSID (be,
            be_codegen,
            "$Id$")
 
-TAO_IDL_BE_Export TAO_CodeGen *tao_cg = 0;
+
+namespace
+{
+  char const TAO_BEGIN_VERSIONED_NAMESPACE_DECL[] =
+    "\n\nTAO_BEGIN_VERSIONED_NAMESPACE_DECL\n\n";
+
+  char const TAO_END_VERSIONED_NAMESPACE_DECL[] =
+    "\n\nTAO_END_VERSIONED_NAMESPACE_DECL\n\n";
+}
+
+TAO_CodeGen * tao_cg = 0;
 
 TAO_CodeGen::TAO_CodeGen (void)
   : client_header_ (0),
@@ -100,15 +110,15 @@ TAO_CodeGen::upcase (const char *str)
   static char upcase_str [NAMEBUFSIZE];
 
   ACE_OS::memset (upcase_str,
-                  '\0',
-                  NAMEBUFSIZE);
+		  '\0',
+		  NAMEBUFSIZE);
 
   // Convert letters in str to upper case.
   for (unsigned int i = 0; i < ACE_OS::strlen (str); ++i)
     {
-      if (isalpha (str [i]))
+      if (isalpha (str[i]))
         {
-          upcase_str[i] = (char) toupper (str[i]);
+          upcase_str[i] = static_cast<char> (toupper (str[i]));
         }
       else
         {
@@ -243,6 +253,11 @@ TAO_CodeGen::start_client_header (const char *fname)
   *this->client_header_ << "#define TAO_EXPORT_MACRO "
                         << be_global->stub_export_macro ();
 
+  // Begin versioned namespace support after initial headers have been
+  // included, but before the inline file and post include
+  // directives.
+  *this->client_header_ << TAO_BEGIN_VERSIONED_NAMESPACE_DECL;
+
   return 0;
 }
 
@@ -294,6 +309,10 @@ TAO_CodeGen::start_client_stubs (const char *fname)
       *this->client_stubs_ << "\n#endif /* !defined INLINE */";
     }
 
+  // Begin versioned namespace support after all headers have been
+  // included, but before any code is generated.
+  *this->client_stubs_ << TAO_BEGIN_VERSIONED_NAMESPACE_DECL;
+
   return 0;
 }
 
@@ -326,6 +345,10 @@ TAO_CodeGen::start_client_inline (const char *fname)
 
   // Generate the ident string, if any.
   this->gen_ident_string (this->client_inline_);
+
+  // Begin versioned namespace support after initial headers, if any,
+  // have been included.
+  *this->client_inline_ << TAO_BEGIN_VERSIONED_NAMESPACE_DECL;
 
   return 0;
 }
@@ -464,6 +487,11 @@ TAO_CodeGen::start_server_header (const char *fname)
                             << be_global->skel_export_macro ();
     }
 
+  // Begin versioned namespace support after initial headers have been
+  // included, but before the inline file and post include
+  // directives.
+  *this->server_header_ << TAO_BEGIN_VERSIONED_NAMESPACE_DECL;
+
   return 0;
 }
 
@@ -516,6 +544,11 @@ TAO_CodeGen::start_server_template_header (const char *fname)
                                      << be_global->pre_include ()
                                      << "\"";
     }
+
+  // Begin versioned namespace support after initial headers have been
+  // included, but before the inline file and post include
+  // directives.
+  *this->server_template_header_ << TAO_BEGIN_VERSIONED_NAMESPACE_DECL;
 
   return 0;
 }
@@ -590,6 +623,11 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
       *this->server_skeletons_ << "#endif /* !defined INLINE */";
     }
 
+  // Begin versioned namespace support after initial headers have been
+  // included, but before the inline file and post include
+  // directives.
+  *this->server_skeletons_ << TAO_BEGIN_VERSIONED_NAMESPACE_DECL;
+
   return 0;
 }
 
@@ -651,6 +689,11 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
       << "\"";
   *this->server_template_skeletons_ << "\n#endif /* !defined INLINE */\n\n";
 
+  // Begin versioned namespace support after initial headers have been
+  // included, but before the inline file and post include
+  // directives.
+  *this->server_template_skeletons_ << TAO_BEGIN_VERSIONED_NAMESPACE_DECL;
+
   return 0;
 }
 
@@ -683,6 +726,10 @@ TAO_CodeGen::start_server_inline (const char *fname)
 
   // Generate the ident string, if any.
   this->gen_ident_string (this->server_inline_);
+
+  // Begin versioned namespace support after initial headers, if any, have been
+  // included.
+  *this->server_inline_ << TAO_BEGIN_VERSIONED_NAMESPACE_DECL;
 
   return 0;
 }
@@ -718,6 +765,11 @@ TAO_CodeGen::start_server_template_inline (const char *fname)
 
   // Generate the ident string, if any.
   this->gen_ident_string (this->server_template_inline_);
+
+  // Begin versioned namespace support after initial headers have been
+  // included, but before the inline file and post include
+  // directives.
+  *this->server_template_inline_ << TAO_BEGIN_VERSIONED_NAMESPACE_DECL;
 
   return 0;
 }
@@ -866,6 +918,11 @@ TAO_CodeGen::start_anyop_header (const char *fname)
     }
   *this->anyop_header_ << "\n";
 
+  // Begin versioned namespace support after initial headers have been
+  // included, but before the inline file and post include
+  // directives.
+  *this->anyop_header_ << TAO_BEGIN_VERSIONED_NAMESPACE_DECL;
+
   return 0;
 }
 
@@ -905,6 +962,11 @@ TAO_CodeGen::start_anyop_source (const char *fname)
                        << "\"";
 
   this->gen_typecode_includes (this->anyop_source_);
+
+  // Begin versioned namespace support after initial headers have been
+  // included, but before the inline file and post include
+  // directives.
+  *this->anyop_source_ << TAO_BEGIN_VERSIONED_NAMESPACE_DECL;
 
   return 0;
 }
@@ -1022,7 +1084,6 @@ TAO_CodeGen::start_implementation_skeleton (const char *fname)
   return 0;
 }
 
-
 // Get the implementation header stream.
 TAO_OutStream *
 TAO_CodeGen::implementation_skeleton (void)
@@ -1039,19 +1100,23 @@ TAO_CodeGen::end_client_header (void)
   *this->client_header_ << be_nl << be_nl << "// TAO_IDL - Generated from"
                         << be_nl << "// " << __FILE__ << ":" << __LINE__;
 
+
+  // End versioned namespace support before remaining include
+  // directives at end of file.
+  *this->client_header_ << TAO_END_VERSIONED_NAMESPACE_DECL;
+
   // Only when we generate a client inline file generate the include
   if (be_global->gen_client_inline ())
     {
       // Insert the code to include the inline file.
-      *this->client_header_ << "\n\n#if defined (__ACE_INLINE__)\n";
+      *this->client_header_ << "#if defined (__ACE_INLINE__)\n";
       *this->client_header_ << "#include \""
                             << be_global->be_get_client_inline_fname (1)
                             << "\"\n";
-      *this->client_header_ << "#endif /* defined INLINE */";
+      *this->client_header_ << "#endif /* defined INLINE */\n\n";
     }
 
   // Code to put the last #endif.
-  *this->client_header_ << "\n\n";
 
   if (be_global->post_include () != 0)
     {
@@ -1065,12 +1130,36 @@ TAO_CodeGen::end_client_header (void)
   return 0;
 }
 
+void
+TAO_CodeGen::end_client_inline (void)
+{
+  *this->client_inline_ << "\n";
+
+  // End versioned namespace support.  Do not place include directives
+  // before this.
+  *this->client_inline_ << TAO_END_VERSIONED_NAMESPACE_DECL;
+}
+
+void
+TAO_CodeGen::end_client_stubs (void)
+{
+  *this->client_stubs_ << "\n";
+
+  // End versioned namespace support.  Do not place include directives
+  // before this.
+  *this->client_stubs_ << TAO_END_VERSIONED_NAMESPACE_DECL;
+}
+
 int
 TAO_CodeGen::end_server_header (void)
 {
   *this->server_header_ << be_nl << be_nl << "// TAO_IDL - Generated from "
                         << be_nl << "// " << __FILE__ << ":" << __LINE__
                         << be_nl << be_nl;
+
+  // End versioned namespace support.  Do not place include directives
+  // before this.
+  *this->server_header_ << TAO_END_VERSIONED_NAMESPACE_DECL;
 
   // Insert the template header.
   if (be_global->gen_tie_classes ())
@@ -1105,14 +1194,20 @@ TAO_CodeGen::end_server_header (void)
   return 0;
 }
 
+void
+TAO_CodeGen::end_server_inline (void)
+{
+  *this->server_inline_ << "\n";
+
+  // End versioned namespace support.  Do not place include directives
+  // before this.
+  *this->server_inline_ << TAO_END_VERSIONED_NAMESPACE_DECL;
+}
+
 int
 TAO_CodeGen::end_implementation_header (const char *fname)
 {
-  static char macro_name [NAMEBUFSIZE];
-
-  ACE_OS::memset (macro_name,
-                  '\0',
-                  NAMEBUFSIZE);
+  char macro_name [NAMEBUFSIZE] = { 0 };
 
   const char *suffix = ACE_OS::strrchr (fname, '.');
 
@@ -1136,7 +1231,7 @@ TAO_CodeGen::end_implementation_header (const char *fname)
     {
       if (isalpha (fname [i]))
         {
-          macro_name[i] = (char) toupper (fname [i]);
+          macro_name[i] = static_cast<char> (toupper (fname [i]));
         }
       else if (isdigit (fname [i]))
         {
@@ -1162,10 +1257,14 @@ TAO_CodeGen::end_server_template_header (void)
 {
   *this->server_template_header_ << be_nl << be_nl << "// TAO_IDL - Generated from "
                                  << be_nl << "// "
-                                 << __FILE__ << ":" << __LINE__;
+                                 << __FILE__ << ":" << __LINE__ << "\n";
+
+  // End versioned namespace support.  Do not place include directives
+  // before this.
+  *this->server_template_header_ << TAO_END_VERSIONED_NAMESPACE_DECL;
 
   // Insert the code to include the inline file.
-  *this->server_template_header_ << "\n\n#if defined (__ACE_INLINE__)";
+  *this->server_template_header_ << "#if defined (__ACE_INLINE__)";
   *this->server_template_header_
       << "\n#include \""
       << be_global->be_get_server_template_inline_fname (1)
@@ -1207,7 +1306,11 @@ TAO_CodeGen::end_server_template_header (void)
 int
 TAO_CodeGen::end_server_template_inline (void)
 {
-  *this->server_template_inline_ << "\n\n";
+  *this->server_template_inline_ << "\n";
+
+  // End versioned namespace support.  Do not place include directives
+  // before this.
+  *this->server_template_inline_ << TAO_END_VERSIONED_NAMESPACE_DECL;
 
   return 0;
 }
@@ -1215,6 +1318,10 @@ TAO_CodeGen::end_server_template_inline (void)
 int
 TAO_CodeGen::end_server_template_skeletons (void)
 {
+  // End versioned namespace support.  Do not place include directives
+  // before this.
+  *this->server_template_skeletons_ << TAO_END_VERSIONED_NAMESPACE_DECL;
+
   // Code to put the last #endif.
   *this->server_template_skeletons_ << "\n#endif /* ifndef */\n";
 
@@ -1224,6 +1331,10 @@ TAO_CodeGen::end_server_template_skeletons (void)
 int
 TAO_CodeGen::end_server_skeletons (void)
 {
+  // End versioned namespace support.  Do not place include directives
+  // before this.
+  *this->server_skeletons_ << TAO_END_VERSIONED_NAMESPACE_DECL;
+
   // Code to put the last #endif.
   *this->server_skeletons_ << "\n\n#endif /* ifndef */\n";
 
@@ -1233,6 +1344,11 @@ TAO_CodeGen::end_server_skeletons (void)
 int
 TAO_CodeGen::end_anyop_header (void)
 {
+  // End versioned namespace support.  Do not place include directives
+  // before this.
+  *this->anyop_header_ << TAO_END_VERSIONED_NAMESPACE_DECL;
+
+
   if (be_global->post_include () != 0)
     {
       *this->anyop_header_ << "\n\n#include /**/ \""
@@ -1249,6 +1365,10 @@ TAO_CodeGen::end_anyop_header (void)
 int
 TAO_CodeGen::end_anyop_source (void)
 {
+  // End versioned namespace support.  Do not place include directives
+  // before this.
+  *this->anyop_source_ << TAO_END_VERSIONED_NAMESPACE_DECL;
+
   *this->anyop_source_ << "\n";
 
   return 0;
@@ -1335,11 +1455,7 @@ TAO_CodeGen::gen_ifndef_string (const char *fname,
                                 const char *prefix,
                                 const char *suffix)
 {
-  static char macro_name [NAMEBUFSIZE];
-
-  ACE_OS::memset (macro_name,
-                  '\0',
-                  NAMEBUFSIZE);
+  char macro_name [NAMEBUFSIZE] = { 0 };
 
   const char *extension = ACE_OS::strrchr (fname, '.');
 
@@ -1359,7 +1475,7 @@ TAO_CodeGen::gen_ifndef_string (const char *fname,
     {
       if (isalpha (fname [i]))
         {
-          macro_name[i + offset] = (char) toupper (fname [i]);
+          macro_name[i + offset] = static_cast<char> (toupper (fname [i]));
         }
       else if (isdigit (fname [i]))
         {
@@ -1607,6 +1723,10 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
 
   // _vars and _outs are typedefs of template class instantiations.
   this->gen_var_file_includes ();
+
+  // Versioned namespace support.
+  this->gen_standard_include (this->client_header_,
+                              "tao/Versioned_Namespace.h");
 }
 
 void
