@@ -20,6 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Blocked_Connect_Strategy
  *
@@ -51,6 +53,7 @@ public:
                      ACE_Time_Value *val);
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /*TAO_BLOCKED_CONNECT_STRATEGY_H*/

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/LF_Strategy_Complete.h"
@@ -14,6 +13,8 @@
 ACE_RCSID (tao,
            LF_Strategy_Complete,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LF_Strategy_Complete::~TAO_LF_Strategy_Complete (void)
 {
@@ -43,10 +44,12 @@ TAO_LF_Strategy_Complete::reset_event_loop_thread (int call_reset,
   if (call_reset)
     lf.reset_event_loop_thread ();
 
-  int result = lf.elect_new_leader ();
+  int const result = lf.elect_new_leader ();
 
   if (result == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("TAO (%P|%t) Failed to wake up ")
                 ACE_TEXT ("a follower thread\n")));
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -15,11 +15,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "TAO_Export.h"
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 class TAO_Connector;
@@ -72,10 +76,13 @@ public:
                     ACE_Time_Value *val) = 0;
 
 protected:
+
   /// Cached copy of the ORB core pointer
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core * const orb_core_;
+
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /*TAO_CONNECT_STRATEGY_H*/

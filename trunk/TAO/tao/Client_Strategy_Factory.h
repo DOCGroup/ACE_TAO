@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -13,15 +13,21 @@
 
 #ifndef TAO_CLIENT_STRATEGY_FACTORY_H
 #define TAO_CLIENT_STRATEGY_FACTORY_H
+
 #include /**/ "ace/pre.h"
 
-#include "ace/Service_Object.h"
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "TAO_Export.h"
+#include "tao/Versioned_Namespace.h"
+
+#include "ace/Service_Object.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Lock;
 class TAO_Transport_Mux_Strategy;
@@ -39,9 +45,6 @@ class TAO_Connect_Strategy;
 class TAO_Export TAO_Client_Strategy_Factory : public ACE_Service_Object
 {
 public:
-  // = Intialization and termination methods.
-  /// Constructor.
-  TAO_Client_Strategy_Factory (void);
 
   /// Destructor
   virtual ~TAO_Client_Strategy_Factory (void);
@@ -79,6 +82,8 @@ public:
   */
   virtual bool use_cleanup_options (void) const;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_CLIENT_STRATEGY_FACTORY_H */

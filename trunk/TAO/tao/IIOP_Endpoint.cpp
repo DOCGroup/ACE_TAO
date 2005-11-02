@@ -32,6 +32,8 @@ ACE_RCSID (tao,
 
 //@@ TAO_ENDPOINT_SPL_COPY_HOOK_END
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 //@@ TAO_ENDPOINT_SPL_COPY_HOOK_START
 TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const ACE_INET_Addr &addr,
                                       int use_dotted_decimal_addresses)
@@ -512,3 +514,5 @@ TAO_IIOP_Endpoint::preferred_network (void) const
 }
 
 //@@ TAO_ENDPOINT_SPL_COPY_HOOK_END
+
+TAO_END_VERSIONED_NAMESPACE_DECL

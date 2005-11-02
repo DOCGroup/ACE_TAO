@@ -39,6 +39,8 @@
 #include "ace/iosfwd.h"
 #include "ace/CORBA_macros.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Allocator;
 
 class TAO_OutputCDR;
@@ -230,6 +232,8 @@ public:
   /// Create a CORBA::SystemException given the interface repository ID.
   static CORBA::SystemException *create_system_exception (const char *id);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/Exception.i"

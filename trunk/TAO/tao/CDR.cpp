@@ -44,6 +44,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_CDR_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_OutputCDR::TAO_OutputCDR (size_t size,
                               int byte_order,
                               ACE_Allocator *buffer_allocator,
@@ -229,3 +231,5 @@ TAO_InputCDR::throw_skel_exception (int error_num ACE_ENV_ARG_DECL)
 
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

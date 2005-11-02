@@ -21,6 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Time_Value;
 class TAO_Transport;
 class TAO_Queued_Message;
@@ -66,6 +68,8 @@ public:
   /// Wait until the transport has no messages queued.
   virtual int flush_transport (TAO_Transport *transport) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

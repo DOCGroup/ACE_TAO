@@ -3,6 +3,8 @@
 // $Id$
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE
 TAO_MProfile::TAO_MProfile (CORBA::ULong sz)
   :  policy_list_ (0),
@@ -196,3 +198,5 @@ TAO_MProfile::policy_list (CORBA::PolicyList *policy_list)
 {
   this->policy_list_ = policy_list;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -21,6 +21,8 @@ ACE_RCSID (tao,
            Invocation_Adapter,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   Invocation_Adapter::~Invocation_Adapter (void)
@@ -393,3 +395,5 @@ namespace TAO
     return;
   }
 } // End namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL

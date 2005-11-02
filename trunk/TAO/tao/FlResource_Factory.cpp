@@ -8,11 +8,12 @@ ACE_RCSID( TAO_FlResource,
            FlResource_Factory,
            "$Id$");
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
-
-  FlResource_Factory::FlResource_Factory ():
-    reactor_impl_( 0 )
+  FlResource_Factory::FlResource_Factory (void)
+    : reactor_impl_( 0 )
   {
   }
 
@@ -34,3 +35,5 @@ namespace TAO
     return this->reactor_impl_;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

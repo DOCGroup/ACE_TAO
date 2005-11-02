@@ -7,6 +7,7 @@ ACE_RCSID (tao,
            Default_Protocols_Hooks,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Default_Protocols_Hooks::~TAO_Default_Protocols_Hooks (void)
 {
@@ -168,6 +169,7 @@ TAO_Default_Protocols_Hooks::get_dscp_codepoint (void)
   return 0;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

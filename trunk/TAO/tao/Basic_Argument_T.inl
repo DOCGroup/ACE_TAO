@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename S, typename Insert_Policy>
 ACE_INLINE
@@ -78,3 +82,4 @@ TAO::Ret_Basic_Argument_T<S, Insert_Policy>::retn (void)
   return this->x_;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

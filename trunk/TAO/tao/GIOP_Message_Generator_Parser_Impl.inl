@@ -2,6 +2,8 @@
 //
 //$Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE CORBA::Boolean
 TAO_GIOP_Message_Generator_Parser_Impl::check_revision (
   CORBA::Octet incoming_major,
@@ -29,3 +31,5 @@ TAO_GIOP_Message_Generator_Parser_Impl::check_revision (
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

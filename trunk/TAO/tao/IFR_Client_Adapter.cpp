@@ -1,4 +1,4 @@
-// @(#) $Id$
+// $Id$
 
 #include "tao/IFR_Client_Adapter.h"
 

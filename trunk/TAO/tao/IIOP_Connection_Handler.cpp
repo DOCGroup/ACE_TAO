@@ -16,6 +16,8 @@ ACE_RCSID (tao,
            IIOP_Connection_Handler,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_IIOP_SVC_HANDLER (t, 0 , 0),
     TAO_Connection_Handler (0),
@@ -404,7 +406,7 @@ TAO_IIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_prio
       CORBA::Long codepoint =
         tph->get_dscp_codepoint ();
 
-      tos = (int)(codepoint) << 2;
+      tos = static_cast<int> (codepoint) << 2;
     }
 
   if (tos != this->dscp_codepoint_)
@@ -462,3 +464,5 @@ TAO_IIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_prio
 /*
  * End copy hook
  */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

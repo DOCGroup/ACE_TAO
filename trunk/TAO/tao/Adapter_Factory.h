@@ -16,11 +16,17 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/TAO_Export.h"
-#include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Versioned_Namespace.h"
+
+#include "ace/Service_Object.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Adapter;
 class TAO_ORB_Core;
@@ -34,6 +40,8 @@ public:
   /// Create a new adapter
   virtual TAO_Adapter *create (TAO_ORB_Core *orb_core) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

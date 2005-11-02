@@ -5,6 +5,7 @@
 #include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/ORB_Table.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::ULong
 TAO_ORB_Core::_incr_refcnt (void)
@@ -638,3 +639,5 @@ TAO_ORB_Core::serverrequestinterceptor_adapter (void)
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -21,6 +21,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+
+
+
 /**
  * @brief A concrete TAO_LF_Strategy for ORB configurations that use
  * the Leader/Followers event loop.
@@ -44,6 +50,8 @@ public:
   virtual void reset_event_loop_thread (int call_reset,
                                         TAO_Leader_Follower &);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/LF_Strategy_Complete.inl"

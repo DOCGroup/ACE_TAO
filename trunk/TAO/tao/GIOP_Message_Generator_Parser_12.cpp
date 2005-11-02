@@ -21,6 +21,8 @@ ACE_RCSID (tao,
 // scope.
 static const size_t TAO_GIOP_MESSAGE_ALIGN_PTR = 8;
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 int
 TAO_GIOP_Message_Generator_Parser_12::write_request_header (
     const TAO_Operation_Details &opdetails,
@@ -566,3 +568,5 @@ TAO_GIOP_Message_Generator_Parser_12::fragment_header_length (void) const
 {
   return TAO_GIOP_MESSAGE_FRAGMENT_HEADER;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

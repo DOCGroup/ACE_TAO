@@ -24,8 +24,9 @@
 #include "ace/Condition_T.h"
 #include "ace/Global_Macros.h"
 
-class ACE_Time_Value;
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+class ACE_Time_Value;
 
 /**
  * @class TAO_Condition
@@ -105,6 +106,8 @@ private:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Condition<MUTEX> &))
   ACE_UNIMPLEMENTED_FUNC (TAO_Condition (const TAO_Condition<MUTEX> &))
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "Condition.inl"

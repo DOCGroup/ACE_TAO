@@ -22,6 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// Forward declarations
 class ACE_Allocator;
 class TAO_ORB_Core;
@@ -237,6 +239,7 @@ private:
   ACE_Allocator *allocator_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "Incoming_Message_Queue.inl"

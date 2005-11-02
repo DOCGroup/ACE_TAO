@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 // ============================================================================
@@ -15,6 +16,8 @@
 // ============================================================================
 
 // ****************************************************************
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // default CTOR initializes to empty string
 ACE_INLINE
@@ -47,11 +50,14 @@ TAO_String_Manager::~TAO_String_Manager (void)
 ACE_INLINE TAO_String_Manager&
 TAO_String_Manager::operator= (const TAO_String_Manager &rhs)
 {
-  if (this == &rhs)
-    return *this;
+  // Strongly exception safe by means of copy and non-throwing swap
+  // technique.
+  TAO_String_Manager tmp (rhs);
 
-  CORBA::string_free (this->ptr_);
-  this->ptr_ = CORBA::string_dup (rhs.ptr_);
+  char * old_ptr = this->ptr_;
+  this->ptr_ = tmp.ptr_;
+  tmp.ptr_  = old_ptr;
+
   return *this;
 }
 
@@ -59,8 +65,14 @@ TAO_String_Manager::operator= (const TAO_String_Manager &rhs)
 ACE_INLINE TAO_String_Manager &
 TAO_String_Manager::operator= (const char * p)
 {
-  CORBA::string_free (this->ptr_);
-  this->ptr_ = CORBA::string_dup (p);
+  // Strongly exception safe by means of copy and non-throwing swap
+  // technique.
+  TAO_String_Manager tmp (p);
+
+  char * old_ptr = this->ptr_;
+  this->ptr_ = tmp.ptr_;
+  tmp.ptr_ = old_ptr;
+
   return *this;
 }
 
@@ -231,11 +243,14 @@ TAO_WString_Manager::~TAO_WString_Manager (void)
 ACE_INLINE TAO_WString_Manager&
 TAO_WString_Manager::operator= (const TAO_WString_Manager &rhs)
 {
-  if (this == &rhs)
-    return *this;
+  // Strongly exception safe by means of copy and non-throwing swap
+  // technique.
+  TAO_WString_Manager tmp (rhs);
 
-  CORBA::wstring_free (this->ptr_);
-  this->ptr_ = CORBA::wstring_dup (rhs.ptr_);
+  CORBA::WChar * old_ptr = this->ptr_;
+  this->ptr_ = tmp.ptr_;
+  tmp.ptr_  = old_ptr;
+
   return *this;
 }
 
@@ -243,8 +258,14 @@ TAO_WString_Manager::operator= (const TAO_WString_Manager &rhs)
 ACE_INLINE TAO_WString_Manager &
 TAO_WString_Manager::operator= (const CORBA::WChar * p)
 {
-  CORBA::wstring_free (this->ptr_);
-  this->ptr_ = CORBA::wstring_dup (p);
+  // Strongly exception safe by means of copy and non-throwing swap
+  // technique.
+  TAO_WString_Manager tmp (p);
+
+  CORBA::WChar * old_ptr = this->ptr_;
+  this->ptr_ = tmp.ptr_;
+  tmp.ptr_ = old_ptr;
+
   return *this;
 }
 
@@ -382,3 +403,5 @@ TAO_SeqElem_WString_Manager::_retn (void)
   *this->ptr_ = 0;
   return temp;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

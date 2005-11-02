@@ -21,6 +21,9 @@ ACE_RCSID (tao,
            Leader_Follower,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Leader_Follower::~TAO_Leader_Follower (void)
 {
   while (!this->follower_free_list_.empty ())
@@ -485,3 +488,4 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
   return result;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -10,12 +10,14 @@ ACE_RCSID (tao,
            LocateRequest_Invocation_Adapter,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   LocateRequest_Invocation_Adapter::LocateRequest_Invocation_Adapter (
-      CORBA::Object *target)
+    CORBA::Object *target)
     : target_ (target)
-      , list_ (0)
+    , list_ (0)
   {
   }
 
@@ -111,3 +113,5 @@ namespace TAO
     return has_timeout;
   }
 } // End namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL

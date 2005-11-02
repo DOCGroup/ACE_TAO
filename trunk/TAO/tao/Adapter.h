@@ -24,6 +24,8 @@
 #include "tao/CORBA_methods.h"
 #include "tao/Pseudo_VarOut_T.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace CORBA
 {
   typedef TAO_Pseudo_Var_T<Object> Object_var;
@@ -107,6 +109,8 @@ public:
   virtual CORBA::Long initialize_collocated_object (TAO_Stub *,
                                                     CORBA::Object_ptr) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

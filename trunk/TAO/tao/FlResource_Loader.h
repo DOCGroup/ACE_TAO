@@ -13,12 +13,16 @@
 
 #ifndef TAO_FLRESOURCE_LOADER_H
 #define TAO_FLRESOURCE_LOADER_H
+
 #include /**/ "ace/pre.h"
+
 #include "tao/TAO_FlResource_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -41,10 +45,14 @@ namespace TAO
   {
 
   public:
-    FlResource_Loader ( );
+    FlResource_Loader (void);
 
-    virtual ~FlResource_Loader ();
+    virtual ~FlResource_Loader (void);
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
+
 #endif /* TAO_FLRESOURCE_LOADER_H */

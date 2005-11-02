@@ -1,3 +1,4 @@
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -22,6 +23,8 @@
 
 #include "tao/IOR_Parser.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_FILE_Parser
  *
@@ -32,11 +35,9 @@
  * read its contents and then interepret the file as an IOR (that
  * can be in any valid format).
  */
-class TAO_Export TAO_FILE_Parser : public TAO_IOR_Parser
+class TAO_FILE_Parser : public TAO_IOR_Parser
 {
 public:
-  /// Constructor
-  TAO_FILE_Parser (void);
 
   /// The destructor
   virtual ~TAO_FILE_Parser (void);
@@ -50,9 +51,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
-#if defined (__ACE_INLINE__)
-# include "FILE_Parser.i"
-#endif /* __ACE_INLINE__ */
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_FILE_Parser)
 ACE_FACTORY_DECLARE (TAO, TAO_FILE_Parser)

@@ -25,6 +25,8 @@
 #include "tao/Invocation_Base.h"
 #include "tao/Exception.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Operation_Details;
 class TAO_Stub;
 
@@ -89,6 +91,8 @@ namespace TAO
 
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /*TAO_COLLOCATED_INVOCATION_H*/

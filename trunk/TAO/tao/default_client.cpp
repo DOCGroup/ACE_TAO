@@ -23,6 +23,8 @@ ACE_RCSID (tao,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
   : profile_lock_type_ (TAO_THREAD_LOCK)
   , transport_mux_strategy_ (TAO_MUXED_TMS)
@@ -382,6 +384,8 @@ TAO_Default_Client_Strategy_Factory::use_cleanup_options (void) const
 {
   return this->use_cleanup_options_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -19,8 +19,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Versioned_Namespace.h"
+
 #include "ace/Atomic_Op.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Intrusive_Ref_Count_Base<ACE_LOCK>
@@ -38,25 +41,27 @@ class TAO_Intrusive_Ref_Count_Base
 {
 public:
 
-  virtual ~TAO_Intrusive_Ref_Count_Base();
+  virtual ~TAO_Intrusive_Ref_Count_Base (void);
 
-  void _add_ref();
-  void _remove_ref();
+  void _add_ref (void);
+  void _remove_ref (void);
 
 
 protected:
 
-  TAO_Intrusive_Ref_Count_Base();
+  TAO_Intrusive_Ref_Count_Base (void);
 
 
 private:
 
   ACE_Atomic_Op<ACE_LOCK, long> ref_count_;
 
-  // Not implemented.
-  TAO_Intrusive_Ref_Count_Base(const TAO_Intrusive_Ref_Count_Base&);
-  TAO_Intrusive_Ref_Count_Base& operator=(const TAO_Intrusive_Ref_Count_Base&);
+  // Prevent copying/assignment.
+  TAO_Intrusive_Ref_Count_Base (const TAO_Intrusive_Ref_Count_Base&);
+  TAO_Intrusive_Ref_Count_Base& operator= (const TAO_Intrusive_Ref_Count_Base&);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "Intrusive_Ref_Count_Base_T.inl"

@@ -1,4 +1,5 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
+//
 // $Id$
 
 // ===========================================================================
@@ -15,6 +16,7 @@
 #include "tao/Reply_Dispatcher.h"
 #include "tao/Transport_Mux_Strategy.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
 TAO_Bind_Dispatcher_Guard::status (int s)
@@ -40,3 +42,5 @@ TAO_Bind_Dispatcher_Guard::unbind_dispatcher (void)
 
   return retval;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

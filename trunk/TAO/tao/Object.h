@@ -39,6 +39,8 @@
 # undef IOR
 #endif /* HPUX && IOR */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Stub;
 class TAO_Abstract_ServantBase;
 class TAO_ORB_Core;
@@ -458,6 +460,7 @@ operator<< (TAO_OutputCDR&, const CORBA::Object*);
 TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR&, CORBA::Object *&);
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/Object.i"

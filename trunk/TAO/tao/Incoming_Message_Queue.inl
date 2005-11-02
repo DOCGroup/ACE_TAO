@@ -1,6 +1,9 @@
 // -*- C++ -*-
+//
 //$Id$
-// -*- C++ -*-
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /************************************************************************/
 // Methods for TAO_Incoming_Message_Queue
 /************************************************************************/
@@ -90,3 +93,5 @@ TAO_Queued_Data::replace_data_block (ACE_Message_Block &mb)
   // Remove the DONT_DELETE flags from mb
   mb.clr_self_flags (ACE_Message_Block::DONT_DELETE);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

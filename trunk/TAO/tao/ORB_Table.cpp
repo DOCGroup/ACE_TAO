@@ -17,6 +17,8 @@ ACE_RCSID (tao,
 
 // ****************************************************************
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::ORB_Table::ORB_Table (void)
   : lock_ (),
     first_orb_not_default_ (false),
@@ -180,3 +182,5 @@ TAO::ORB_Table::instance (void)
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template TAO_Singleton<TAO::ORB_Table,TAO_SYNCH_MUTEX> * TAO_Singleton<TAO::ORB_Table,TAO_SYNCH_MUTEX>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

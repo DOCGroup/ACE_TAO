@@ -13,6 +13,8 @@ ACE_RCSID (tao,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_GIOP_Message_Generator_Parser::~TAO_GIOP_Message_Generator_Parser (void)
 {
 }
@@ -168,3 +170,5 @@ TAO_GIOP_Message_Generator_Parser::marshal_reply_status (
       break;
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

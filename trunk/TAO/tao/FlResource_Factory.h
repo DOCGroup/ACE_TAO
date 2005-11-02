@@ -12,14 +12,19 @@
 //=============================================================================
 #ifndef TAO_FLRESOURCE_FACTORY_H
 #define TAO_FLRESOURCE_FACTORY_H
+
 #include /**/ "ace/pre.h"
-#include "ace/FlReactor.h"
+
 #include "tao/TAO_FlResource_Export.h"
 #include "tao/GUIResource_Factory.h"
+
+#include "ace/FlReactor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+
 
 namespace TAO
 {
@@ -51,5 +56,8 @@ namespace TAO
     ACE_FlReactor *reactor_impl_;
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
 #endif /* TAO_FLRESOURCE_FACTORY_H */
