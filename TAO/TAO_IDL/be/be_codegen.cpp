@@ -110,8 +110,8 @@ TAO_CodeGen::upcase (const char *str)
   static char upcase_str [NAMEBUFSIZE];
 
   ACE_OS::memset (upcase_str,
-		  '\0',
-		  NAMEBUFSIZE);
+                  '\0',
+                  NAMEBUFSIZE);
 
   // Convert letters in str to upper case.
   for (unsigned int i = 0; i < ACE_OS::strlen (str); ++i)
