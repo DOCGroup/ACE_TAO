@@ -21,6 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Var_Base_T
@@ -151,6 +152,8 @@ private:
   // Assignment from T_var not allowed.
   void operator= (const T_var &);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "tao/VarOut_T.inl"

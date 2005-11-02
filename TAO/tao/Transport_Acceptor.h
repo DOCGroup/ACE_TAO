@@ -29,6 +29,9 @@
 // Forward declarations.
 class ACE_Addr;
 class ACE_Reactor;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_ORB_Core;
 class TAO_MProfile;
 class TAO_Endpoint;
@@ -139,7 +142,7 @@ public:
 
 private:
   /// IOP protocol tag.
-  CORBA::ULong tag_;
+  CORBA::ULong const tag_;
 
   /*
    * Hook to add data members from concrete acceptor implementations onto
@@ -149,6 +152,8 @@ private:
 };
 
 //@@ TAO_ACCEPTOR_SPL_EXTERN_ADD_HOOK
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "Transport_Acceptor.inl"

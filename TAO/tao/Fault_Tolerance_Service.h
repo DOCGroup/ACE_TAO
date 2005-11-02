@@ -28,12 +28,12 @@
 #include "tao/Basic_Types.h"
 #include "ace/SString.h"
 
+class ACE_Lock;
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class ACE_Lock;
 class TAO_Service_Callbacks;
 class TAO_ORB_Core;
-class ACE_Lock;
 
 /**
  * @class TAO_Fault_Tolerance_Service

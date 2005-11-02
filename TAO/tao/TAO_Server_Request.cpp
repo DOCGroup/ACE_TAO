@@ -46,6 +46,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Server_Request_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
                                       TAO_InputCDR &input,
                                       TAO_OutputCDR &output,
@@ -562,4 +564,6 @@ TAO_ServerRequest::pi_current_copy_callback (void)
   return this->pi_current_copy_callback_;
 }
 
-#endif /*TAO_HAS_INTERCEPTORS*/
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_HAS_INTERCEPTORS */

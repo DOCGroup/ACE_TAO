@@ -25,10 +25,13 @@ ACE_RCSID (tao,
            Connector,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Connector
 TAO_Connector::TAO_Connector (CORBA::ULong tag)
   : active_connect_strategy_ (0),
-    tag_(tag),
+    tag_ (tag),
     orb_core_ (0)
 {
 }
@@ -527,3 +530,5 @@ TAO_Connector::check_connection_closure (
 }
 
 //@@ TAO_CONNECTOR_SPL_METHODS_ADD_HOOK
+
+TAO_END_VERSIONED_NAMESPACE_DECL

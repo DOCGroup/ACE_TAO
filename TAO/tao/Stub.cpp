@@ -28,6 +28,7 @@ ACE_RCSID (tao,
            TAO_Stub,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Stub::TAO_Stub (const char *repository_id,
                     const TAO_MProfile &profiles,
@@ -581,3 +582,4 @@ TAO_Stub::transport_queueing_strategy (void)
   return this->orb_core_->default_transport_queueing_strategy ();
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

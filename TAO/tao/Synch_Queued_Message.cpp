@@ -11,11 +11,13 @@ ACE_RCSID (tao,
            Synch_Queued_Message,
            "$Id$")
 
-TAO_Synch_Queued_Message::
-    TAO_Synch_Queued_Message (const ACE_Message_Block *contents,
-                              TAO_ORB_Core *oc,
-                              ACE_Allocator *alloc,
-                              int is_heap_allocated)
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_Synch_Queued_Message::TAO_Synch_Queued_Message (
+  const ACE_Message_Block *contents,
+  TAO_ORB_Core *oc,
+  ACE_Allocator *alloc,
+  int is_heap_allocated)
   : TAO_Queued_Message (oc, alloc, is_heap_allocated)
   , contents_ (const_cast<ACE_Message_Block*> (contents))
   , current_block_ (contents_)
@@ -178,3 +180,5 @@ TAO_Synch_Queued_Message::destroy (void)
         }
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

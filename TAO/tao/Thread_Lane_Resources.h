@@ -27,6 +27,9 @@
 #include "params.h"
 
 class ACE_Allocator;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_ORB_Core;
 class TAO_Acceptor_Registry;
 class TAO_Leader_Follower;
@@ -206,6 +209,8 @@ private:
   ACE_Allocator *ami_response_handler_allocator_;
   //@}
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

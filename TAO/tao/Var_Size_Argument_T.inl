@@ -1,3 +1,5 @@
+// -*- C++ -*-
+//
 // $Id$
 
 template<typename S,
@@ -96,3 +98,4 @@ TAO::Ret_Var_Size_Argument_T<S,S_var,Insert_Policy>::retn (void)
   return this->x_._retn ();
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

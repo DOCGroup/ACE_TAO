@@ -15,6 +15,8 @@ ACE_RCSID (tao,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_ORB_Parameters::TAO_ORB_Parameters (void)
   : endpoints_map_ (10)
   , mcast_discovery_endpoint_ ()
@@ -302,3 +304,5 @@ TAO_ORB_Parameters::connect_ipv6_only (void) const
   return this->connect_ipv6_only_;
 }
 #endif /* ACE_HAS_IPV6 */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -33,6 +33,8 @@
 # undef IOR
 #endif /* HPUX && IOR */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward declarations.
 class TAO_Policy_Set;
 class TAO_Profile;
@@ -382,6 +384,8 @@ protected:
   TAO_Stub *p_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/Stub.i"

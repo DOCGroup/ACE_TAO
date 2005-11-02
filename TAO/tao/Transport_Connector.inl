@@ -1,5 +1,9 @@
 // -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE TAO_ORB_Core *
 TAO_Connector::orb_core (void)
 {
@@ -17,3 +21,5 @@ TAO_Connector::tag (void) const
 {
   return this->tag_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

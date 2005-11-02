@@ -1,6 +1,4 @@
-//
 // $Id$
-//
 
 #include "tao/Service_Context.h"
 #include "tao/CDR.h"
@@ -14,6 +12,9 @@
 ACE_RCSID (tao,
            Service_Context,
            "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO_Service_Context::set_context_i (IOP::ServiceId id,
@@ -219,3 +220,5 @@ TAO_Service_Context::decode (TAO_InputCDR& cdr)
 
   return 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

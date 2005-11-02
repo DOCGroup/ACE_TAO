@@ -19,13 +19,11 @@
 
 #include /**/ "ace/pre.h"
 
-#include "TAO_Export.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/orbconf.h"
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
@@ -39,9 +37,9 @@
 
 class TAO_Policy_Current_Impl;
 
-class TAO_Export TAO_Policy_Current :
-  public CORBA::PolicyCurrent,
-  public TAO_Local_RefCounted_Object
+class TAO_Policy_Current
+  : public CORBA::PolicyCurrent
+  , public TAO_Local_RefCounted_Object
 {
 public:
   /// Constructor

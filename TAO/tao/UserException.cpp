@@ -14,6 +14,8 @@ ACE_RCSID (tao,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Virtual.  Do not inline.
 CORBA::UserException::~UserException (void)
 {
@@ -44,3 +46,5 @@ CORBA::UserException::_info (void) const
   user_exception_info += "'";
   return user_exception_info;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

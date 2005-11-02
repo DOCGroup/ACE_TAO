@@ -18,7 +18,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "TAO_Export.h"
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,6 +26,9 @@
 
 #include "ace/CORBA_macros.h"
 #include "tao/SystemException.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableInterceptor
 {
@@ -158,9 +161,11 @@ namespace TAO
         TAO_ServerRequest &server_request,
         TAO::Upcall_Command &command
         ACE_ENV_ARG_DECL) = 0;
-};
-
+  };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
 
 #endif /* TAO_SERVER_REQUEST_INTERCEPTOR_ADAPTER_H */

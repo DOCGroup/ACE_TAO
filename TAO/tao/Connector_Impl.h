@@ -22,10 +22,11 @@
 
 #include "tao/Basic_Types.h"
 
+class ACE_Thread_Manager;
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
-class ACE_Thread_Manager;
 
 /**
  * @class TAO_Connect_Creation_Strategy

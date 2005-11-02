@@ -27,11 +27,11 @@
 #include "tao/Exception.h"
 #include "tao/params.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-// Forward declarations.
 class ACE_Addr;
 class ACE_Reactor;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_ORB_Core;
 class TAO_Acceptor;
 class TAO_Acceptor_Filter;

@@ -1,4 +1,8 @@
-//$Id$
+// -*- C++ -*-
+//
+// $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename T>
 ACE_INLINE
@@ -259,3 +263,4 @@ TAO_Out_T<T,T_var>::operator-> (void)
   return this->ptr_;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

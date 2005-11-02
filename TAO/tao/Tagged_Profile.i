@@ -1,5 +1,8 @@
 // -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_Tagged_Profile::TAO_Tagged_Profile (TAO_ORB_Core *orb_core)
@@ -12,7 +15,6 @@ TAO_Tagged_Profile::TAO_Tagged_Profile (TAO_ORB_Core *orb_core)
 {
 
 }
-
 
 ACE_INLINE TAO::ObjectKey &
 TAO_Tagged_Profile::object_key (void)
@@ -61,3 +63,5 @@ TAO_Tagged_Profile::discriminator (void) const
 {
   return this->discriminator_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

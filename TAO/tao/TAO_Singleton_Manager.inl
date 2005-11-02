@@ -2,10 +2,12 @@
 //
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE
 int
 TAO_Singleton_Manager::at_exit (ACE_Cleanup *object,
-                             void *param)
+				void *param)
 {
   return TAO_Singleton_Manager::instance ()->at_exit_i (
     object,
@@ -16,11 +18,13 @@ TAO_Singleton_Manager::at_exit (ACE_Cleanup *object,
 ACE_INLINE
 int
 TAO_Singleton_Manager::at_exit (void *object,
-                             ACE_CLEANUP_FUNC cleanup_hook,
-                             void *param)
+				ACE_CLEANUP_FUNC cleanup_hook,
+				void *param)
 {
   return TAO_Singleton_Manager::instance ()->at_exit_i (
     object,
     cleanup_hook,
     param);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

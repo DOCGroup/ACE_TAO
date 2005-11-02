@@ -23,13 +23,14 @@
 
 #include "tao/Basic_Types.h"
 
+class ACE_SOCK;
+class ACE_Lock;
+class ACE_Event_Handler;
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 class TAO_Transport;
-class ACE_SOCK;
-class ACE_Lock;
-class ACE_Event_Handler;
 
 /*
  * Hook to specialize the connection handler with the

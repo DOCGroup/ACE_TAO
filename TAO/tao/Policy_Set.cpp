@@ -15,6 +15,15 @@ ACE_RCSID (tao,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_Policy_Set::TAO_Policy_Set (TAO_Policy_Scope scope)
+  : scope_ (scope)
+{
+  for (unsigned int i = 0; i < TAO_CACHED_POLICY_MAX_CACHED; ++i)
+    this->cached_policies_[i] = 0;
+}
+
 TAO_Policy_Set::~TAO_Policy_Set (void)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -367,3 +376,5 @@ TAO_Policy_Set::get_cached_policy (TAO_Cached_Policy_Type type
 
   return CORBA::Policy::_nil ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

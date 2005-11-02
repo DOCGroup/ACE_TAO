@@ -28,11 +28,11 @@
 
 #include "ace/CORBA_macros.h"
 
+class ACE_Time_Value;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_MProfile;
-class ACE_Time_Value;
 
 namespace TAO
 {

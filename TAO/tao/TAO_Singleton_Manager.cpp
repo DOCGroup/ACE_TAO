@@ -29,13 +29,15 @@ ACE_RCSID (tao,
            "$Id$")
 
 extern "C" void
-TAO_Singleton_Manager_cleanup_destroyer (void *, void *)
+TAO_SINGLETON_MANAGER_CLEANUP_DESTROY_NAME (void *, void *)
 {
   if (TAO_Singleton_Manager::instance_)
     {
       (void) TAO_Singleton_Manager::instance ()->fini ();
     }
 }
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Singleton_Manager *TAO_Singleton_Manager::instance_ = 0;
 
@@ -338,3 +340,5 @@ TAO_Singleton_Manager::at_exit_i (void *object,
 
   return this->exit_info_.at_exit_i (object, cleanup_hook, param);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

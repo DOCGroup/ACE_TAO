@@ -1,10 +1,10 @@
 // $Id$
 
-#ifndef TAO_SEQUENCE_T_C
-#define TAO_SEQUENCE_T_C
+#ifndef TAO_SEQUENCE_T_CPP
+#define TAO_SEQUENCE_T_CPP
 
-#include "Sequence_T.h"
-#include "Array_VarOut_T.h"
+#include "tao/Sequence_T.h"
+#include "tao/Array_VarOut_T.h"
 
 #include "ace/OS_Memory.h"
 
@@ -14,9 +14,7 @@
 #endif /* __ACE_INLINE__ */
 
 
-ACE_RCSID (tao,
-           Sequence_T,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename T>
 TAO_Unbounded_Sequence<T>::TAO_Unbounded_Sequence (
@@ -2158,4 +2156,6 @@ TAO_Bounded_WString_Sequence<MAX>::replace (CORBA::ULong length,
   this->release_ = release;
 }
 
-#endif /* TAO_SEQUENCE_T_C */
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* tao/TAO_SEQUENCE_T_CPP */

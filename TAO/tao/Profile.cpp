@@ -26,6 +26,9 @@ ACE_RCSID (tao,
 
 
 // ****************************************************************
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Profile::TAO_Profile (CORBA::ULong tag,
                           TAO_ORB_Core *orb_core,
                           const TAO::ObjectKey &obj_key,
@@ -948,3 +951,5 @@ operator>>(TAO_InputCDR& cdr, TAO_opaque& x)
 
   return (CORBA::Boolean) cdr.good_bit ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

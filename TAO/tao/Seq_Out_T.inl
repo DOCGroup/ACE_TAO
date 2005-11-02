@@ -1,5 +1,9 @@
 // -*- C++ -*-
+//
 //$Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template<typename T, typename T_var, typename T_elem>
 ACE_INLINE
 TAO_Seq_Out_T<T,T_var,T_elem>::TAO_Seq_Out_T (T *& p)
@@ -152,3 +156,5 @@ TAO_MngSeq_Out_T<T,T_var,T_elem>::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

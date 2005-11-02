@@ -2,6 +2,8 @@
 //
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE CORBA::ULong
 CORBA::SystemException::minor (void) const
 {
@@ -110,3 +112,5 @@ CORBA::name ::_tao_any_destructor (void * x) \
 
 TAO_STANDARD_SYSTEM_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -23,6 +23,8 @@ ACE_RCSID (tao,
            Profile_Transport_Resolver,
            "$Id$")
 
+
+
 namespace TAO
 {
 
@@ -216,3 +218,5 @@ namespace TAO
                       CORBA::COMPLETED_NO));
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

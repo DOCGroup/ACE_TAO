@@ -2,6 +2,8 @@
 //
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE void
 TAO_Stub::reset_base (void)
 {
@@ -313,3 +315,5 @@ TAO_Stub_Auto_Ptr::operator *() const
   // @@ Potential problem if this->p_ is zero!
   return *this->get ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

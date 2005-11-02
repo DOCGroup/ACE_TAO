@@ -21,9 +21,7 @@
 #include "tao/TAO_Singleton.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           TAO_Singleton,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TYPE, class ACE_LOCK> void
 TAO_Singleton<TYPE, ACE_LOCK>::dump (void)
@@ -205,5 +203,7 @@ TAO_TSS_Singleton<TYPE, ACE_LOCK>::cleanup (void *)
   delete this;
   TAO_TSS_Singleton<TYPE, ACE_LOCK>::instance_i () = 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_SINGLETON_CPP */
