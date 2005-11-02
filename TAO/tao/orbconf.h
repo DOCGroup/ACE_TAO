@@ -25,11 +25,15 @@
 #include "ace/Global_Macros.h"
 #include "ace/Synch_Traits.h"
 
-#define TAO_INVALID_PRIORITY -1
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+#define TAO_INVALID_PRIORITY -1
 
 #if !defined (TAO_REACTOR)
 #define TAO_REACTOR ACE_Select_Reactor
@@ -875,6 +879,8 @@ enum TAO_Policy_Scope
 #if !defined (TAO_RESET_OUTPUT_CDR_AFTER_SEND)
 #define TAO_RESET_OUTPUT_CDR_AFTER_SEND 0
 #endif /* TAO_RESET_OUTPUT_CDR_AFTER_SEND */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

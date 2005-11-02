@@ -18,6 +18,8 @@ ACE_RCSID (tao,
            IIOP_Connector,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_IIOP_Connector::~TAO_IIOP_Connector (void)
 {
 }
@@ -396,3 +398,5 @@ TAO_IIOP_Connector::cancel_svc_handler (
   return -1;
 }
 //@@ TAO_CONNECTOR_SPL_COPY_HOOK_END
+
+TAO_END_VERSIONED_NAMESPACE_DECL

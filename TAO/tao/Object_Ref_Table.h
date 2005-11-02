@@ -28,6 +28,8 @@
 
 #include "ace/Array_Map.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace CORBA
 {
   class Environment;
@@ -118,6 +120,7 @@ private:
 
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #ifdef __ACE_INLINE__
 # include "tao/Object_Ref_Table.inl"

@@ -23,6 +23,8 @@
 
 #include "tao/Synch_Invocation.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Synch_Reply_Dispatcher;
 
 namespace CORBA
@@ -74,6 +76,8 @@ namespace TAO
 
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

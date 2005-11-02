@@ -14,6 +14,8 @@ ACE_RCSID (tao,
            Asynch_Reply_Dispatcher_Base,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Constructor.
 TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (
     TAO_ORB_Core *orb_core,
@@ -144,3 +146,5 @@ TAO_Asynch_Reply_Dispatcher_Base::try_dispatch_reply (void)
 
   return false;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

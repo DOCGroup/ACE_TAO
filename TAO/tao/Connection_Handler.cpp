@@ -21,6 +21,8 @@ ACE_RCSID (tao,
            Connection_Handler,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
   : orb_core_ (orb_core)
   , transport_ (0)
@@ -421,3 +423,5 @@ TAO_Connection_Handler::close_handler (void)
 }
 
 //@@ CONNECTION_HANDLER_SPL_METHODS_ADD_HOOK
+
+TAO_END_VERSIONED_NAMESPACE_DECL

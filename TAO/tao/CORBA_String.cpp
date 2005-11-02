@@ -16,6 +16,8 @@ ACE_RCSID (tao,
            CORBA_String,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 char *
 CORBA::string_dup (const char *str)
 {
@@ -74,7 +76,7 @@ CORBA::wstring_dup (const WChar *const str)
       return 0;
     }
 
-  CORBA::WChar* retval = 
+  CORBA::WChar* retval =
     CORBA::wstring_alloc (static_cast <CORBA::ULong> (ACE_OS::strlen (str)));
 
   // The wscpy() below assumes that the destination is a valid buffer.
@@ -273,7 +275,7 @@ operator>> (istream &is, CORBA::String_out &so)
 ostream &
 operator<< (ostream &os, const CORBA::WString_var &wsv)
 {
-  const CORBA::ULong len = 
+  const CORBA::ULong len =
     static_cast <CORBA::ULong> (ACE_OS::strlen (wsv.in ()));
 
   for (CORBA::ULong i = 0; i < len; ++i)
@@ -349,3 +351,5 @@ operator>> (istream &is, CORBA::WString_out &wso)
 }
 
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

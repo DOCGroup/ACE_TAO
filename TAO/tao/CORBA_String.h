@@ -26,6 +26,8 @@
 // For the (W)String_var and (W)String_out iostream operators.
 #include "ace/iosfwd.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_String_Manager;
 class TAO_WString_Manager;
 
@@ -330,6 +332,8 @@ TAO_Export istream &
 operator>> (istream &, CORBA::WString_out &);
 
 # endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/CORBA_String.inl"

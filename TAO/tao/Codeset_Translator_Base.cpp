@@ -23,7 +23,11 @@ ACE_RCSID (tao,
            Codeset_Translator_Base,
            "$Id$")
 
-TAO_Codeset_Translator_Base::~TAO_Codeset_Translator_Base ()
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_Codeset_Translator_Base::~TAO_Codeset_Translator_Base (void)
 {
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

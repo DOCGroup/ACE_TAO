@@ -21,6 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @brief Helper class to enter and exit the Leader/Followers event
  * loop.
@@ -53,6 +55,8 @@ private:
   /// loop.
   int event_loop_return_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/LF_Event_Loop_Thread_Helper.inl"

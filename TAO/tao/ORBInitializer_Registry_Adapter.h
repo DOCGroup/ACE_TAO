@@ -15,16 +15,18 @@
 
 #include /**/ "ace/pre.h"
 
-#include "TAO_Export.h"
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Object.h"
-#include "ace/CORBA_macros.h"
 #include "tao/Basic_Types.h"
 #include "tao/SystemException.h"
+#include "ace/Service_Object.h"
+#include "ace/CORBA_macros.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 
@@ -94,6 +96,8 @@ namespace TAO
         ACE_ENV_ARG_DECL) = 0;
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

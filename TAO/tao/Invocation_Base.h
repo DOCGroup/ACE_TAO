@@ -29,6 +29,8 @@
 #include "tao/ClientRequestInterceptor_Adapter.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Service_Context;
 class TAO_Operation_Details;
 class TAO_Stub;
@@ -227,6 +229,8 @@ namespace TAO
     //@}
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "Invocation_Base.inl"

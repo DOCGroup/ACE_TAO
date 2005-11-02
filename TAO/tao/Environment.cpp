@@ -15,6 +15,8 @@ ACE_RCSID (tao,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 CORBA::Environment::Environment (void)
   : exception_ (0)
   , previous_ (0)
@@ -207,3 +209,4 @@ CORBA::Environment::print_exception (const char *info,
                 ACE_TEXT ("TAO: (%P|%t) no exception, %s\n"), ACE_TEXT_CHAR_TO_TCHAR (info)));
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

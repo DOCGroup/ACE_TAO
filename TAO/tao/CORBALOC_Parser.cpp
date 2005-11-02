@@ -20,16 +20,18 @@ ACE_RCSID (tao,
            CORBALOC_Parser,
            "$Id$")
 
-TAO_CORBALOC_Parser::~TAO_CORBALOC_Parser (void)
-{
-}
-
 static const char prefix[] = "corbaloc:";
 static const size_t prefix_len = sizeof prefix - 1;
 static const char rir_token[] = "rir:";
 static const size_t rir_token_len = sizeof rir_token - 1;
 static const char iiop_token[] = "iiop:";
 static const char iiop_token_len = sizeof iiop_token - 1;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_CORBALOC_Parser::~TAO_CORBALOC_Parser (void)
+{
+}
 
 int
 TAO_CORBALOC_Parser::match_prefix (const char *ior_string) const
@@ -373,6 +375,8 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
 
   canonical_endpoint += raw_port;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_CORBALOC_Parser,
                        ACE_TEXT ("CORBALOC_Parser"),

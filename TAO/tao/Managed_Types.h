@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -26,6 +26,8 @@
 
 /****************************************************************/
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_String_Manager
  *
@@ -46,7 +48,7 @@ public:
 
   /// copy constructor
   TAO_String_Manager (const TAO_String_Manager &);
-  
+
   /// constructor from const char* makes a copy.
   TAO_String_Manager (const char *);
 
@@ -328,6 +330,8 @@ private:
   TAO_SeqElem_WString_Manager (void);
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "tao/Managed_Types.i"

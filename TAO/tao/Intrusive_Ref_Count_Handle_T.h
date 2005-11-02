@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -15,10 +15,15 @@
 
 #include /**/ "ace/pre.h"
 
+#include "ace/config-all.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Intrusive_Ref_Count_Handle<T>
@@ -29,23 +34,23 @@
  *  difference is that this class provides a "bool is_nil() const" method,
  *  and xxx_var types don't (they use the "bool CORBA::is_nil(xxx_ptr ptr)"
  *  method instead). For example,
- *  
- *  typedef TAO_Intrusive_Ref_Count_Handle<PortableServer::ServantBase> 
- *      MyServantBase_var;
- *  
- *  The MyServantBase_var and the PortableServer::ServantBase_var are 
- *  nearly idenitical.  The only difference is that the MyServantBase_var 
- *  has a "isNil()" method that indicates whether or not the smart pointer
- *  is in the 'nil' state or not. 
  *
- *  This class can be used to "safely" deal with an instance of a servant. 
- *  For example, we can use a single variable 
+ *  typedef TAO_Intrusive_Ref_Count_Handle<PortableServer::ServantBase>
+ *      MyServantBase_var;
+ *
+ *  The MyServantBase_var and the PortableServer::ServantBase_var are
+ *  nearly idenitical.  The only difference is that the MyServantBase_var
+ *  has a "isNil()" method that indicates whether or not the smart pointer
+ *  is in the 'nil' state or not.
+ *
+ *  This class can be used to "safely" deal with an instance of a servant.
+ *  For example, we can use a single variable
  *  TAO_Intrusive_Ref_Count_Handle<Foo_i>
  *
  *      typedef TAO_Intrusive_Ref_Count_Handle<Foo_i> Foo_i_var;
  *      Foo_i_var servant_;
  *
- *  instead of using two variables 
+ *  instead of using two variables
  *
  *      PortableServer::ServantBase_var servant_holder_;
  *      Foo_i* servant_;
@@ -54,15 +59,15 @@
  *
  *  The Foo_i_var type does everything that the PortableServer::ServantBase_var
  *  type does. In addition, the Foo_i_var type can provide access to the servant
- *  as derived class via the arrow operator.  
+ *  as derived class via the arrow operator.
  */
 template <typename T>
 class TAO_Intrusive_Ref_Count_Handle
 {
 public:
 
-  /// Default Ctor - enters the "nil" state.
-  TAO_Intrusive_Ref_Count_Handle();
+  /// Default Constructor - enters the "nil" state.
+  TAO_Intrusive_Ref_Count_Handle (void);
 
   /// Ctor - By default, takes ownership of passed-in "copy" of reference
   ///        to T.  But the second argument (bool) can be changed from
@@ -74,17 +79,17 @@ public:
   ///        ownership (false value for second arg), then the reference
   ///        counter of the T object will be incremented so that this
   ///        handle object has its own "copy".
-  TAO_Intrusive_Ref_Count_Handle(T* p, bool take_ownership = true);
+  TAO_Intrusive_Ref_Count_Handle (T* p, bool take_ownership = true);
 
-  /// Copy Ctor - claims a "copy" of rhs object's reference to T.
-  TAO_Intrusive_Ref_Count_Handle(const TAO_Intrusive_Ref_Count_Handle& b);
+  /// Copy Constructor - claims a "copy" of rhs object's reference to T.
+  TAO_Intrusive_Ref_Count_Handle (const TAO_Intrusive_Ref_Count_Handle& b);
 
-  /// Dtor
-  ~TAO_Intrusive_Ref_Count_Handle();
+  /// Destructor
+  ~TAO_Intrusive_Ref_Count_Handle (void);
 
   /// Assignment Operator with T* argument.
   /// Takes ownership of passed-in "copy" of reference to T.
-  TAO_Intrusive_Ref_Count_Handle& operator=(T* p);
+  TAO_Intrusive_Ref_Count_Handle& operator= (T* p);
 
   /// Assignment Operator with const TAO_Smart_Ptr<T>& argument.
   /// Claims a "copy" of rhs object's reference to T.
@@ -96,21 +101,21 @@ public:
 
   /// Returns true if underlying pointer is NULL (0).
   /// Returns false otherwise.
-  bool is_nil() const;
+  bool is_nil (void) const;
 
   /// Used to pass the underlying pointer as an "IN" argument to a method.
-  T* in() const;
+  T* in (void) const;
 
   /// Used to pass the underlying pointer as an "IN/OUT" argument to a method.
-  T*& inout();
+  T*& inout (void);
 
   /// Used to pass the underlying pointer as an "OUT" argument to a method.
-  T*& out();
+  T*& out (void);
 
   /// Used to take-away the underlying pointer from this smart pointer object.
   /// Caller becomes responsibe for the returned "copy" to the reference.
   /// Always leaves the smart pointer in the "nil" state upon return.
-  T* _retn();
+  T* _retn (void);
 
 
 private:
@@ -118,14 +123,14 @@ private:
   /// Claim a "copy" of the reference-counted object by adding
   /// one to its reference counter.  Do nothing if this smart pointer
   /// object is currently in the "nil" state.
-  void claim();
+  void claim (void);
 
   /// Drop our "copy" of the reference-counted object by removing
   /// one from its reference counter.  Do nothing if this smart pointer
   /// object is currently in the "nil" state.
   /// Note that this method will always leave this smart pointer
   /// in the "nil" state upon its return.
-  void drop();
+  void drop (void);
 
 
   /// The underlying pointer to the (intrusively) reference-counted object.
@@ -134,6 +139,8 @@ private:
   /// object pointed to by the ptr_ data member.
   T* ptr_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "Intrusive_Ref_Count_Handle_T.inl"

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "tao/Leader_Follower_Flushing_Strategy.h"
@@ -11,6 +10,9 @@
 ACE_RCSID (tao,
            Leader_Follower_Flushing_Strategy,
            "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO_Leader_Follower_Flushing_Strategy::schedule_output (TAO_Transport *transport)
@@ -67,3 +69,5 @@ TAO_Leader_Follower_Flushing_Strategy::flush_transport (
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

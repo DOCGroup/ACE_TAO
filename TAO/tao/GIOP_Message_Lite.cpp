@@ -1,5 +1,3 @@
-// -*- C++ -*-
-//
 //$Id$
 
 #include "GIOP_Message_Lite.h"
@@ -23,6 +21,8 @@ ACE_RCSID (tao,
 static const size_t TAO_GIOP_LITE_HEADER_LEN = 5;
 static const size_t TAO_GIOP_LITE_MESSAGE_SIZE_OFFSET = 0;
 static const size_t TAO_GIOP_LITE_MESSAGE_TYPE_OFFSET = 4;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_GIOP_Message_Lite::TAO_GIOP_Message_Lite (TAO_ORB_Core *orb_core,
                                               size_t /*input_cdr_size*/)
@@ -1689,3 +1689,5 @@ TAO_GIOP_Message_Lite::init_queued_data (TAO_Queued_Data* qd) const
   qd->minor_version_ = TAO_DEF_GIOP_MINOR;
   qd->msg_type_      = this->message_type ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

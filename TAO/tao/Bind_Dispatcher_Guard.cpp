@@ -11,6 +11,8 @@ ACE_RCSID (tao,
            Bind_Dispatcher_Guard,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Bind_Dispatcher_Guard::TAO_Bind_Dispatcher_Guard (
                                          CORBA::ULong request_id,
                                          TAO_Reply_Dispatcher* rd,
@@ -36,3 +38,5 @@ TAO_Bind_Dispatcher_Guard::~TAO_Bind_Dispatcher_Guard (void)
   if (this->status_ == TAO_Bind_Dispatcher_Guard::UNBIND)
     (void) this->tms_->unbind_dispatcher (this->request_id_);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

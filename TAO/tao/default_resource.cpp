@@ -31,6 +31,8 @@ ACE_RCSID (tao,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   : use_locked_data_blocks_ (1)
   , parser_names_count_ (0)
@@ -1082,6 +1084,8 @@ TAO_Default_Resource_Factory::drop_replies_during_shutdown (void) const
 {
   return this->drop_replies_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

@@ -15,6 +15,8 @@ ACE_RCSID (tao,
            IIOP_Transport,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
                                         TAO_ORB_Core *orb_core,
                                         CORBA::Boolean )
@@ -421,3 +423,5 @@ TAO_IIOP_Transport::get_listen_point (
 /*
  * End of copy hook.
  */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

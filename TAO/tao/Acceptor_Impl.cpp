@@ -33,9 +33,7 @@
 #include "Transport.h"
 #include "debug.h"
 
-ACE_RCSID (tao,
-           Acceptor_Impl,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //////////////////////////////////////////////////////////////////////////////
 
@@ -212,5 +210,7 @@ TAO_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_H
 
 
 /////////////////////////////////////////////////////////////////////
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_ACCEPTOR_IMPL_CPP */

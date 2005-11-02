@@ -14,6 +14,7 @@ ACE_RCSID (tao,
            Asynch_Queued_Message,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (
   const ACE_Message_Block *contents,
@@ -181,3 +182,5 @@ TAO_Asynch_Queued_Message::destroy (void)
     }
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

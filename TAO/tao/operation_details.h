@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 //=============================================================================
 /**
  *  @file    operation_details.h
@@ -24,6 +24,8 @@
 #include "TimeBaseC.h"
 #include "target_specification.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Forward declarations
 namespace Dynamic
@@ -209,6 +211,8 @@ private:
   CORBA::Long ft_retention_id_;
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "operation_details.i"

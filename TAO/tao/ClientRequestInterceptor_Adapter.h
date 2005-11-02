@@ -30,6 +30,8 @@
 #include "tao/SystemException.h"
 #include "tao/Invocation_Utils.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_ClientRequestInfo;
 
 namespace PortableInterceptor
@@ -101,6 +103,9 @@ namespace TAO
   };
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
 
 #endif /* TAO_CLIENT_REQUEST_INTERCEPTOR_ADAPTER_H */

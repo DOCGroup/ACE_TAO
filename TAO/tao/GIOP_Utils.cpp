@@ -9,12 +9,13 @@ ACE_RCSID (tao,
            GIOP_Utils,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 int
-TAO_GIOP_Utils::
-  read_bytes_input (TAO_Transport *transport,
-                    TAO_InputCDR &input,
-                    CORBA::ULong read_size,
-                    ACE_Time_Value *value)
+TAO_GIOP_Utils::read_bytes_input (TAO_Transport *transport,
+                                  TAO_InputCDR &input,
+                                  CORBA::ULong read_size,
+                                  ACE_Time_Value *value)
 {
   // Grow the size of CDR stream
   if (input.grow (read_size) == -1)
@@ -76,3 +77,5 @@ TAO_GIOP_Utils::read_buffer (TAO_Transport *transport,
 
   return bytes_read;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

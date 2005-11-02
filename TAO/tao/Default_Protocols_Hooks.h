@@ -1,4 +1,3 @@
-
 // -*- C++ -*-
 
 // ===================================================================
@@ -22,6 +21,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Protocols_Hooks.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_POA;
 
@@ -112,6 +113,8 @@ public:
   int set_thread_native_priority (CORBA::Short
                                   ACE_ENV_ARG_DECL);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Protocols_Hooks)
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Protocols_Hooks)

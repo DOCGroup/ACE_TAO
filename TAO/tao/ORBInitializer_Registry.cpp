@@ -19,6 +19,8 @@ ACE_RCSID (tao,
 
 // ****************************************************************
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace PortableInterceptor
 {
   void
@@ -84,3 +86,4 @@ namespace PortableInterceptor
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

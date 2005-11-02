@@ -25,13 +25,14 @@
 
 #include "ace/OS_NS_stdio.h"
 
-
 ACE_RCSID (tao,
            Exception,
            "$Id$")
 
 
 // ****************************************************************
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Exception::Exception (const char * repository_id,
                              const char * local_name)
@@ -139,3 +140,4 @@ namespace CORBA
 
 #endif /* (ACE_LACKS_IOSTREAM_TOTALLY) */
 
+TAO_END_VERSIONED_NAMESPACE_DECL

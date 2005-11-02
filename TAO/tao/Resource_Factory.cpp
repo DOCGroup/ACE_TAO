@@ -13,6 +13,8 @@ ACE_RCSID (tao,
 
 // ****************************************************************
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Protocol_Item::TAO_Protocol_Item (const ACE_CString &name)
   : name_ (name),
     factory_ (0),
@@ -216,3 +218,4 @@ TAO_Resource_Factory::load_default_protocols (void)
   return 0;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

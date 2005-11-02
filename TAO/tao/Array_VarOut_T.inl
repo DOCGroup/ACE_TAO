@@ -2,6 +2,8 @@
 //
 //$Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
 TAO_Array_Var_Base_T<T,T_slice,TAG>::TAO_Array_Var_Base_T (void)
@@ -409,3 +411,5 @@ TAO_Array_Forany_T<T,T_slice,TAG>::tao_alloc (void)
 {
   return TAO::Array_Traits<T,T_slice,TAG>::alloc ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

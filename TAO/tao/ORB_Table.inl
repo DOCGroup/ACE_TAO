@@ -4,6 +4,7 @@
 
 #include "tao/ORB_Core.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE TAO_ORB_Core *
 TAO::ORB_Table::first_orb (void)
@@ -83,3 +84,5 @@ TAO::ORB_Core_Ref_Counter::operator= (TAO::ORB_Core_Ref_Counter const & rhs)
   TAO::ORB_Core_Ref_Counter tmp (rhs);
   std::swap (this->core_, tmp.core_);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

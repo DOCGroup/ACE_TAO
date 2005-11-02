@@ -21,6 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_GIOP_Message_Generator_Parser_11
  *
@@ -30,9 +32,8 @@
  *  the 1.0 class.
  *
  */
-
-class TAO_Export TAO_GIOP_Message_Generator_Parser_11:
-  public TAO_GIOP_Message_Generator_Parser_10
+class TAO_Export TAO_GIOP_Message_Generator_Parser_11
+  : public TAO_GIOP_Message_Generator_Parser_10
 {
 public:
 
@@ -41,5 +42,8 @@ public:
 
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
-#endif /*TAO_GIOP_MESSAGE_GENERATOR_PARSER_11_H*/
+
+#endif  /* TAO_GIOP_MESSAGE_GENERATOR_PARSER_11_H */

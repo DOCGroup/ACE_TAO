@@ -1,4 +1,5 @@
 // -*- C++ -*-
+
 // ===================================================================
 /**
  *  @file   Connector_Impl.h
@@ -20,6 +21,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Basic_Types.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 class ACE_Thread_Manager;
@@ -54,10 +57,10 @@ public:
 private:
 
   /// Pointer to the ORB_Core on which we are activated
-  TAO_ORB_Core* orb_core_;
+  TAO_ORB_Core * const orb_core_;
 
   /// Are we using GIOP lite?
-  CORBA::Boolean lite_flag_;
+  CORBA::Boolean const lite_flag_;
 };
 
 
@@ -90,9 +93,12 @@ public:
 private:
 
   /// Pointer to the ORB Core.
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core * const orb_core_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Connector_Impl.cpp"

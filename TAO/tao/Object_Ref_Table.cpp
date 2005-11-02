@@ -22,6 +22,8 @@ ACE_RCSID (tao,
 
 // ****************************************************************
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 int
 TAO_Object_Ref_Table::bind (const char *id,
                             CORBA::Object_ptr obj)
@@ -81,3 +83,5 @@ TAO_Object_Ref_Table::find (const char *id)
 
   return CORBA::Object::_duplicate ((*found).second.in ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

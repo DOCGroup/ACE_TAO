@@ -9,6 +9,8 @@ ACE_RCSID (tao,
            Exclusive_TMS,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Exclusive_TMS::TAO_Exclusive_TMS (TAO_Transport *transport)
   : TAO_Transport_Mux_Strategy (transport),
     request_id_generator_ (0),
@@ -126,3 +128,4 @@ TAO_Exclusive_TMS::connection_closed (void)
     this->rd_->connection_closed ();
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

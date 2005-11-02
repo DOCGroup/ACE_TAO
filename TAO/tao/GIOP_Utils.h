@@ -27,6 +27,8 @@
 
 #include "tao/IOP_IORC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Transport;
 class ACE_Time_Value;
 
@@ -143,6 +145,8 @@ public:
                               size_t len,
                               ACE_Time_Value *max_wait_time = 0);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /*TAO_GIOP_UTILS_H */

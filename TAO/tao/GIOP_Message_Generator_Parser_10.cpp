@@ -14,8 +14,10 @@
 #include "ace/Log_Msg.h"
 
 ACE_RCSID (tao,
-           GIOP_Message_Gen_Parser_10,
+           GIOP_Message_Generator_Parser_10,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO_GIOP_Message_Generator_Parser_10::write_request_header (
@@ -467,7 +469,7 @@ CORBA::Octet
 TAO_GIOP_Message_Generator_Parser_10::major_version (void)
 {
   // Any harm in hardcoding??
-  return (CORBA::Octet) 1;
+  return static_cast<CORBA::Octet> (1);
 }
 
 CORBA::Octet
@@ -482,3 +484,5 @@ TAO_GIOP_Message_Generator_Parser_10::fragment_header_length (void) const
 {
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
