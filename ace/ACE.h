@@ -432,7 +432,7 @@ namespace ACE
 
   extern ACE_Export wchar_t *strnew (const wchar_t *s);
 
-  extern ACE_Export void strdelete (wchar_t *s);
+  ACE_NAMESPACE_INLINE_FUNCTION void strdelete (wchar_t *s);
 
   extern ACE_Export wchar_t *strndup (const wchar_t *str, size_t n);
 
