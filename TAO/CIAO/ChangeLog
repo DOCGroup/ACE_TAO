@@ -1,3 +1,8 @@
+Wed Nov 02 07:09:10 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
+
+	* DAnCE/NodeApplicationManager/Containers_Info_Map.cpp: Fixed
+	  usage of strings.
+
 Tue Nov 01 22:41:04 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
 	* DAnCE/NodeApplicationManager/Containers_Info_Map.cpp: Changed to
