@@ -26,7 +26,7 @@ Policy_Verifier::init (int argc,
     CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (false);
 
-  ACE_Arg_Shifter arg_shifter (argc, argv);
+  ACE_TArg_Shifter<char> arg_shifter (argc, argv);
 
   while (arg_shifter.is_anything_left ())
     {
@@ -40,13 +40,13 @@ Policy_Verifier::init (int argc,
           this->priority_bands_ =
             this->rt_poa_properties_->priority_bands ().length ();
         }
-      else if ((arg = arg_shifter.get_the_parameter (ACE_TEXT("-ObjectConfigFile"))))
+      else if ((arg = arg_shifter.get_the_parameter ("-ObjectConfigFile")))
         {
           this->rt_object_properties_ =
             RT_Properties::read_from (arg ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (false);
         }
-      else if ((arg = arg_shifter.get_the_parameter (ACE_TEXT("-BaseObjectIOR"))))
+      else if ((arg = arg_shifter.get_the_parameter ("-BaseObjectIOR")))
         {
           if (this->rt_poa_properties_ == 0)
             {
@@ -61,7 +61,7 @@ Policy_Verifier::init (int argc,
           ACE_OS::strcat (this->base_object_ref_,
                           this->rt_poa_properties_->ior_source ());
         }
-      else if ((arg = arg_shifter.get_the_parameter (ACE_TEXT("-OverriddenIOR"))))
+      else if ((arg = arg_shifter.get_the_parameter ("-OverriddenIOR")))
         {
           if (this->rt_object_properties_ == 0)
             {

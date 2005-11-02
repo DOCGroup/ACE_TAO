@@ -218,6 +218,7 @@ public:
   //template <>
   explicit Convert_InOut( DestT* src, size_t size = calc_len )
   : len_(size==calc_len ? calc_len : size-1)
+  , encode_factor_(1)
   , str_(src)
   , orig_(0)
   , ownstr_(0)

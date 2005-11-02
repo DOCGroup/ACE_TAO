@@ -1,3 +1,7 @@
+here is the linux config file need to be in.
+
+
+
 /* -*- C++ -*- */
 // $Id$
 
@@ -219,7 +223,7 @@
 # error unsupported compiler in ace/config-linux-common.h
 #endif /* ! __GNUG__ && ! __KCC */
 
-// Completely common part :-)
+// Completely common part  :-) 
 
 // Platform/compiler has the sigwait(2) prototype
 # define ACE_HAS_SIGWAIT
@@ -273,6 +277,12 @@
 #define ACE_HAS_GETRUSAGE_PROTOTYPE
 
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
+
+// ACE WChar support
+#define ACE_SIZEOF_WCHAR 4
+#define ACE_WCHAR_MAX    0x7FFFFFFF
+#define ACE_LACKS_BUILTIN_WCHAR_T
+
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT

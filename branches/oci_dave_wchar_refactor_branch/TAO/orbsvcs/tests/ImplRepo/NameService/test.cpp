@@ -3,6 +3,7 @@
 //
 
 #include "orbsvcs/CosNamingC.h"
+#include "ace/Argv_Type_Converter.h"
 
 #include "ace/Log_Msg.h"
 

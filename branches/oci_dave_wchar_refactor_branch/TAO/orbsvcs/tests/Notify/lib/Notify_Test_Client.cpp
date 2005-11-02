@@ -60,7 +60,7 @@ Notify_Test_Client::init_ORB (int argc,
                               char *argv[]
                               ACE_ENV_ARG_DECL)
 {
-  this->orb_ = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
+  this->orb_ = CORBA::ORB_init (argc, argv,
                                 ""
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);

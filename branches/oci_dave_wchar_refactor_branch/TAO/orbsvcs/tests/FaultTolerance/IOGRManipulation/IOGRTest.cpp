@@ -20,6 +20,7 @@
 #include "tao/ORB.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(IOGRManipluation,
           IOGRTest,

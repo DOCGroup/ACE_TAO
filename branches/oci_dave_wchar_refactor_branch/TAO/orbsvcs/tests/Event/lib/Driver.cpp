@@ -68,7 +68,7 @@ EC_Driver::run (int argc, char* argv[])
       // test.
       ACE_High_Res_Timer::calibrate ();
 
-      this->run_init (convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
+      this->run_init (argc, argv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->execute_test (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -175,7 +175,7 @@ EC_Driver::initialize_orb_and_poa (int &argc, char* argv[]
                                    ACE_ENV_ARG_DECL)
 {
   this->orb_ =
-    CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),, "" ACE_ENV_ARG_PARAMETER);
+    CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::Object_var poa_object =

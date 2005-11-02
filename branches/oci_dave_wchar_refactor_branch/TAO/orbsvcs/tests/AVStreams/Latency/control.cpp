@@ -8,6 +8,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/INET_Addr.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Latency,
            ping,

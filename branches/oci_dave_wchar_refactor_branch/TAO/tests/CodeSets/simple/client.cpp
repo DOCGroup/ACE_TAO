@@ -74,7 +74,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       else
         {
-          ACE_OS::strcpy (buf, AC_TEXT_TO_CHAR_IN(argv[1]));
+          ACE_OS::strcpy (buf, ACE_TEXT_TO_CHAR_IN(argv[1]));
         }
 
       // The first arg should be the IOR

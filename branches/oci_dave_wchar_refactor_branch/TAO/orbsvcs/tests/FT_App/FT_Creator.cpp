@@ -19,6 +19,7 @@
 
 #include <ace/Get_Opt.h>
 #include <ace/OS_NS_stdio.h>
+#include "ace/Argv_Type_Converter.h"
 
 FTAPP::FT_Creator::FT_Creator ()
   : creator_ ()

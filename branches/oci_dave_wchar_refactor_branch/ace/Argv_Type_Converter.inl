@@ -13,7 +13,7 @@ ACE_Argv_Type_Converter::get_TCHAR_argv (void)
 #endif
 }
 
-wchar_t**
+ACE_INLINE wchar_t**
 ACE_Argv_Type_Converter::get_Wide_argv (void)
 {
   if (this->char_passed_)

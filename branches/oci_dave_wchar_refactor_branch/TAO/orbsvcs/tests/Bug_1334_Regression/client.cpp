@@ -2,6 +2,7 @@
 // $Id$
 //
 #include "tao/corba.h"
+#include "ace/Argv_Type_Converter.h"
 
 // Attempts to resolve the NameService.
 // Returns:
