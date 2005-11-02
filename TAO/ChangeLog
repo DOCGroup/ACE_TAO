@@ -1,3 +1,8 @@
+Wed Nov  2 12:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Intrusive_Ref_Count_Handle_T.inl:
+          Fixed compile error
+
 Wed Nov  2 12:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2289_Regression/MyStruct*.*:
