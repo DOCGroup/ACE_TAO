@@ -5,6 +5,7 @@
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "orbsvcs/CosNamingC.h"
 #include "tao/AnyTypeCode/Any.h"
+#include "ace/Argv_Type_Converter.h"
 
 class Time_impl :
   public POA_TimeModule::Time

@@ -4,6 +4,7 @@
 #include "Counting_Supplier.h"
 
 #include "ace/OS_NS_unistd.h"
+#include "ace/Argv_Type_Converter.h"
 
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Event_Utilities.h"

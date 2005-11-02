@@ -6,6 +6,7 @@
 #include "ace/streams.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/Argv_Type_Converter.h"
 
 // A simple class for building a client that "controls' the
 // Replication Manager (right now it just shuts it down).

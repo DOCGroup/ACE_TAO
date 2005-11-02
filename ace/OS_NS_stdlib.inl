@@ -140,18 +140,23 @@ ACE_OS::getenv (const char *symbol)
 #endif /* ACE_LACKS_ENV */
 }
 
-#if defined (ACE_WIN32)
 ACE_INLINE wchar_t *
 ACE_OS::getenv (const wchar_t *symbol)
 {
 #if defined (ACE_LACKS_ENV)
   ACE_UNUSED_ARG (symbol);
   ACE_NOTSUP_RETURN (0);
-#else
+#elif defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::_wgetenv (symbol), wchar_t *, 0);
+#else
+  const wchar_t* init = 0;
+  static ACE_TSS< wchar_t* > wvalue (&init);
+  ACE::String_Conversion::Allocator_malloc().free(*wvalue);
+  *wvalue.ts_object() = ACE_TEXT_TO_MALLOC_WCHAR_OUT (
+                ACE_OS::getenv (ACE_TEXT_TO_CHAR_IN (symbol)));
+  return *wvalue;
 #endif /* ACE_LACKS_ENV */
 }
-#endif /* ACE_WIN32 */
 
 ACE_INLINE char *
 ACE_OS::itoa (int value, char *string, int radix)
@@ -181,6 +186,7 @@ ACE_OS::mkstemp (char *s)
 #if !defined (ACE_LACKS_MKSTEMP)
   return ::mkstemp (s);
 #else
+  s[0] = 0;
   return ACE_OS::mkstemp_emulation (ACE_TEXT_TO_TCHAR_INOUT (s) );
 #endif  /* !ACE_LACKS_MKSTEMP */
 }
@@ -188,10 +194,13 @@ ACE_OS::mkstemp (char *s)
 ACE_INLINE ACE_HANDLE
 ACE_OS::mkstemp (wchar_t *s)
 {
+  s[0] = 0;
 #  if !defined (ACE_LACKS_MKSTEMP)
-  return ::mkstemp (ACE_TEXT_TO_CHAR_INOUT (s));
+  ACE::String_Conversion::Convert_InOut<char, wchar_t> convert( s, MAX_PATH );
+  return ::mkstemp (convert.c_str());
 #  else
-  return ACE_OS::mkstemp_emulation (ACE_TEXT_TO_TCHAR_INOUT (s));
+  ACE::String_Conversion::Convert_InOut<ACE_TCHAR, ACE_ANTI_TCHAR> convert( s, MAX_PATH );
+  return ACE_OS::mkstemp_emulation (convert.c_str());
 #  endif  /* !ACE_LACKS_MKSTEMP */
 }
 
@@ -221,7 +230,9 @@ ACE_OS::mktemp (wchar_t *s)
   // For narrow-char filesystems, we must convert the wide-char input to
   // a narrow-char string for mktemp(), then convert the name back to
   // wide-char for the caller.
-  if (::mktemp (ACE_TEXT_TO_CHAR_INOUT (s)) == 0)
+  s[0] = 0;
+  ACE::String_Conversion::Convert_InOut<char, wchar_t> convert( s, MAX_PATH );
+  if (::mktemp (convert.c_str()) == 0)
     return 0;
   return s;
 #endif

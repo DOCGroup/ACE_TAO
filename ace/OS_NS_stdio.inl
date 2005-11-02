@@ -1007,12 +1007,18 @@ ACE_OS::tempnam (const wchar_t *dir, const wchar_t *pfx)
                                 ACE_TEXT_TO_CHAR_IN (pfx));
   // ACE_OS::tempnam returns a pointer to a malloc()-allocated space.
   // Convert that string to wide-char and free() the original.
-  wchar_t *wname = 0;
+  const wchar_t* init = 0;
+  static ACE_TSS< wchar_t* > wname (&init);
+  ACE::String_Conversion::Allocator_malloc().free(*wname);
   if (name != 0)
     {
-      wname = ACE_TEXT_TO_WCHAR_OUT( name );
+      *wname.ts_object() = ACE_TEXT_TO_MALLOC_WCHAR_OUT( name ); // memory allocated!
     }
-  return wname;
+  else
+    {
+      *wname.ts_object() = 0;
+    }
+  return *wname;
 #endif /* ACE_LACKS_TEMPNAM */
 }
 

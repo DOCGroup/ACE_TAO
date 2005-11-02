@@ -69,25 +69,25 @@ Policy_Tester::init (int argc,
   // Here we parse the command line paramether passed
   // to the application.
 
-  ACE_Arg_Shifter arg_shifter (argc, argv);
+  ACE_TArg_Shifter<char> arg_shifter (argc, argv);
 
   while (arg_shifter.is_anything_left ())
     {
       const char *arg = 0;
       // IOR File Name Option.
-      if ((arg = arg_shifter.get_the_parameter (ACE_TEXT("-POAConfigFile"))))
+      if ((arg = arg_shifter.get_the_parameter ("-POAConfigFile")))
         {
           this->rt_poa_properties_ =
             RT_Properties::read_from (arg ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
         }
-      else if ((arg = arg_shifter.get_the_parameter (ACE_TEXT("-ObjectConfigFile"))))
+      else if ((arg = arg_shifter.get_the_parameter ("-ObjectConfigFile")))
         {
           this->rt_object_properties_ =
             RT_Properties::read_from (arg ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
         }
-      else if ((arg = arg_shifter.get_the_parameter (ACE_TEXT("-BaseObjectIOR"))))
+      else if ((arg = arg_shifter.get_the_parameter ("-BaseObjectIOR")))
         {
           if (this->rt_poa_properties_ == 0)
             {
@@ -99,7 +99,7 @@ Policy_Tester::init (int argc,
             }
           this->rt_poa_properties_->ior_source (arg);
         }
-      else if ((arg = arg_shifter.get_the_parameter (ACE_TEXT("-OverriddenIOR"))))
+      else if ((arg = arg_shifter.get_the_parameter ("-OverriddenIOR")))
         {
           if (this->rt_object_properties_ == 0)
             {

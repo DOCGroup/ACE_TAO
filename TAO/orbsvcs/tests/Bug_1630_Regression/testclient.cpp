@@ -6,6 +6,7 @@
 #include "tao/IFR_Client/IFR_Client_Adapter_Impl.h"
 #include "tao/AnyTypeCode/NVList.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Argv_Type_Converter.h"
 
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {

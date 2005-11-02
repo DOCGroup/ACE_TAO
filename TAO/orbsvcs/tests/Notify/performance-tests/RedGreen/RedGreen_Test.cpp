@@ -150,8 +150,7 @@ RedGreen_Test::init_ORB (int argc,
                          char *argv[]
                          ACE_ENV_ARG_DECL)
 {
-  this->orb_ = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv()
-                                argv,
+  this->orb_ = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
                                 ""
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;

@@ -3,6 +3,7 @@
 #include "nestea_client_i.h"
 
 #include "ace/Log_Msg.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (ImplRepo, 
            nestea_client, 

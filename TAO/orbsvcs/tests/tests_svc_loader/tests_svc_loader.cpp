@@ -29,6 +29,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Log_Msg.h"
 #include "ace/CORBA_macros.h"
+#include "ace/Argv_Type_Converter.h"
 
 
 ACE_RCSID (tests_svc_loader,

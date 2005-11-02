@@ -3,6 +3,7 @@
 #include "../lib/Notify_Test_Client.h"
 #include "orbsvcs/NotifyExtC.h"
 #include "ace/OS_main.h"
+#include "ace/Argv_Type_Converter.h"
 
 int
 ACE_TMAIN (int argc, char *argv[])

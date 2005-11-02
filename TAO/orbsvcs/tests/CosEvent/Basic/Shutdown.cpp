@@ -4,6 +4,7 @@
 #include "Counting_Supplier.h"
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
 #include "orbsvcs/CosEvent/CEC_Default_Factory.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID( CEC_Tests_Basic,
            Shutdown,

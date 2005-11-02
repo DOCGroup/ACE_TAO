@@ -1,6 +1,7 @@
 // $Id$
 
 #include "nestea_server_i.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(ImplRepo, nestea_server, "$Id$")
 

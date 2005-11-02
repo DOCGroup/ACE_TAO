@@ -1,6 +1,7 @@
 // $Id$
 
 #include "server.h"
+#include "ace/Argv_Type_Converter.h"
 
 FTP_Server_FlowEndPoint::FTP_Server_FlowEndPoint (void)
   :TAO_FlowConsumer ("Data",FTP_SERVER::instance ()->protocols (), FTP_SERVER::instance ()->format ())

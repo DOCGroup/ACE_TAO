@@ -105,10 +105,8 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   char *getenv (const char *symbol);
 
-# if defined (ACE_WIN32)
   ACE_NAMESPACE_INLINE_FUNCTION
   wchar_t *getenv (const wchar_t *symbol);
-# endif /* ACE_WIN32 */
 
   // not in spec
   extern ACE_Export

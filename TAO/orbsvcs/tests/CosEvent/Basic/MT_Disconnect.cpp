@@ -3,6 +3,7 @@
 #include "MT_Disconnect.h"
 #include "Counting_Consumer.h"
 #include "Counting_Supplier.h"
+#include "ace/Argv_Type_Converter.h"
 
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
 #include "orbsvcs/CosEvent/CEC_Default_Factory.h"
