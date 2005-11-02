@@ -120,7 +120,8 @@ namespace CIAO
                             info->container_config[0].name =
                               CORBA::string_dup ("ContainerPolicySet");
                             info->container_config[0].value <<=
-                              (*server_resource_def).orb_config.policy_set[k];
+                              my_policy_set_id;
+                              //                              (*server_resource_def).orb_config.policy_set[k];
 
                             ACE_DEBUG ((LM_DEBUG, "Found matching rt policy set*****\n\n"));
                             found = true;

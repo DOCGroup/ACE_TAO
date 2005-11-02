@@ -1,3 +1,10 @@
+Tue Nov 01 22:41:04 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
+
+	* DAnCE/NodeApplicationManager/Containers_Info_Map.cpp: Changed to
+	  insert policy set name into ContainerPolicySet property instead
+	  of the actual policy since we already have the policy set
+	  definitions when creating the NodeApplication.
+
 Tue Nov 01 13:44:58 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
 	* DAnCE/NodeApplication/RTConfig_Manager.cpp:
