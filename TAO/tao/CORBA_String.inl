@@ -10,6 +10,8 @@
 // #include "ace/OS_NS_wchar.h"
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE
 CORBA::String_var::String_var (void)
   : ptr_ (0)
@@ -289,3 +291,5 @@ TAO::String_Var_Equal_To::operator() (CORBA::WString_var const & lhs,
 {
   return (ACE_OS::strcmp (lhs.in (), rhs.in ()) == 0);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

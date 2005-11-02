@@ -1,3 +1,4 @@
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -23,6 +24,8 @@
 
 #include "ace/Service_Config.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_CORBANAME_Parser
  *
@@ -33,11 +36,9 @@
  * to a naming service at the given address and port and then resolve an
  * object in that context.
  */
-class TAO_Export TAO_CORBANAME_Parser : public TAO_IOR_Parser
+class TAO_CORBANAME_Parser : public TAO_IOR_Parser
 {
 public:
-  /// Constructor
-  TAO_CORBANAME_Parser (void);
 
   /// The destructor
   virtual ~TAO_CORBANAME_Parser (void);
@@ -58,9 +59,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
-#if defined (__ACE_INLINE__)
-# include "CORBANAME_Parser.i"
-#endif /* __ACE_INLINE__ */
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_CORBANAME_Parser)
 ACE_FACTORY_DECLARE (TAO, TAO_CORBANAME_Parser)

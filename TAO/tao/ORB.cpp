@@ -51,7 +51,6 @@ void TAO_unexpected_exception_handler (void)
 }
 #endif  /* ACE_HAS_EXCEPTIONS */
 
-
 static const char ior_prefix[] = "IOR:";
 
 // = Static initialization.
@@ -63,6 +62,8 @@ namespace
 }
 
 // ****************************************************************
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::ORB::InvalidName::InvalidName (void)
   : CORBA::UserException ("IDL:omg.org/CORBA/ORB/InvalidName:1.0",
@@ -2021,3 +2022,4 @@ CORBA::ORB::lookup_value_factory (const char *repository_id
   return this->orb_core ()->valuetype_adapter ()->vf_map_find (repository_id);
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,3 +1,4 @@
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -21,6 +22,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/IOR_Parser.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_DLL_Parser
@@ -71,11 +74,9 @@
  * loaded without any modifications to the application code.
  *
  */
-class TAO_Export TAO_DLL_Parser : public TAO_IOR_Parser
+class TAO_DLL_Parser : public TAO_IOR_Parser
 {
 public:
-  /// Constructor
-  TAO_DLL_Parser (void);
 
   /// The destructor
   virtual ~TAO_DLL_Parser (void);
@@ -89,9 +90,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
-#if defined (__ACE_INLINE__)
-# include "DLL_Parser.i"
-#endif /* __ACE_INLINE__ */
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_DLL_Parser)
 ACE_FACTORY_DECLARE (TAO, TAO_DLL_Parser)

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 //$Id$
 #include "tao/Invocation_Endpoint_Selectors.h"
 #include "tao/Stub.h"
@@ -14,19 +13,14 @@ ACE_RCSID (tao,
            Invocation_Endpoint_Selectors,
            "$Id$")
 
-TAO_Invocation_Endpoint_Selector::TAO_Invocation_Endpoint_Selector (void)
-{
-}
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Invocation_Endpoint_Selector::~TAO_Invocation_Endpoint_Selector (void)
 {
 }
 
 // ****************************************************************
-
-TAO_Default_Endpoint_Selector::TAO_Default_Endpoint_Selector (void)
-{
-}
 
 TAO_Default_Endpoint_Selector::~TAO_Default_Endpoint_Selector (void)
 {
@@ -166,3 +160,5 @@ TAO_Default_Endpoint_Selector::select_endpoint (
   ACE_THROW (CORBA::TRANSIENT (CORBA::OMGVMCID | 2,
                                CORBA::COMPLETED_NO));
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

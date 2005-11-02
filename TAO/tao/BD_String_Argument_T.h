@@ -25,6 +25,8 @@
 #include "tao/Argument.h"
 #include "tao/Any_Insert_Policy_T.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   /**
@@ -197,6 +199,8 @@ namespace TAO
     typedef BD_String_Tag                         idl_tag;
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "tao/BD_String_Argument_T.inl"

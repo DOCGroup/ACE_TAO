@@ -23,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Transport;
 
@@ -197,6 +197,7 @@ namespace TAO
   };
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/Cache_Entries.inl"

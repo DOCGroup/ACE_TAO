@@ -17,7 +17,16 @@
 
 #include /**/ "ace/pre.h"
 
+#include "ace/config-all.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Versioned_Namespace.h"
 #include "ace/CORBA_macros.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -57,6 +66,8 @@ namespace TAO
     static T_ptr lazy_evaluation (CORBA::Object_ptr);
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Object_T.cpp"

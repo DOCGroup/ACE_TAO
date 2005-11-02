@@ -29,6 +29,7 @@
 #include "ace/Array_Map.h"
 #include "ace/Thread_Mutex.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations.
 class TAO_ORB_Core;
@@ -197,6 +198,8 @@ namespace TAO
   };
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/ORB_Table.inl"

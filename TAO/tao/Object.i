@@ -4,6 +4,8 @@
 
 // ****************************************************************
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE
 CORBA::Object::Object (int)
   : servant_ (0),
@@ -104,3 +106,5 @@ CORBA::Object::ior (void) const
 {
   return this->ior_.in ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

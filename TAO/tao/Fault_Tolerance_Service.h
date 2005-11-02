@@ -1,4 +1,5 @@
 //-*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    Fault_Tolerance_Service.h
@@ -17,14 +18,17 @@
 #define TAO_FAULT_TOLERANCE_SERVICE_H
 
 #include /**/ "ace/pre.h"
-#include "ace/SString.h"
+
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
+#include "ace/SString.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Lock;
 class TAO_Service_Callbacks;
@@ -93,6 +97,7 @@ private:
   // this.
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/Fault_Tolerance_Service.i"

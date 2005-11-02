@@ -1,5 +1,8 @@
 // -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 TAO_LF_Event::bind (TAO_LF_Follower *follower)
@@ -30,3 +33,5 @@ TAO_LF_Event::keep_waiting (void)
 {
   return (this->successful () == 0) && (this->error_detected () == 0);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

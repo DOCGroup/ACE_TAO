@@ -15,6 +15,8 @@ ACE_RCSID (tao,
            LocateRequest_Invocation,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   LocateRequest_Invocation::LocateRequest_Invocation (
@@ -189,3 +191,5 @@ namespace TAO
     return TAO_INVOKE_SUCCESS;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,5 +1,5 @@
 // -*- C++ -*-
-//
+
 // ===================================================================
 /**
  *  @file GIOP_Message_Base.h
@@ -27,6 +27,8 @@
 #include "tao/GIOP_Utils.h"
 #include "tao/GIOP_Message_State.h"
 #include "tao/CDR.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Pluggable_Reply_Params;
 class TAO_Queued_Data;
@@ -264,5 +266,8 @@ protected:
  */
 //@@ MESSAGING_SPL_EXTERN_ADD_HOOK
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
-#endif /*TAO_GIOP_MESSAGE_BASE_H*/
+
+#endif  /* TAO_GIOP_MESSAGE_BASE_H */

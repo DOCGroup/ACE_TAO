@@ -14,6 +14,8 @@ ACE_RCSID (tao,
            Incoming_Message_Queue,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Incoming_Message_Queue::TAO_Incoming_Message_Queue (TAO_ORB_Core *orb_core)
   : last_added_ (0),
     size_ (0),
@@ -424,3 +426,4 @@ TAO_Queued_Data::consolidate (void)
     }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

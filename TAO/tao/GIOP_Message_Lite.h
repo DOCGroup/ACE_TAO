@@ -27,6 +27,8 @@
 #include "tao/SystemException.h"
 #include "tao/CDR.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Operation_Details;
 class TAO_Pluggable_Reply_Params;
 class TAO_GIOP_Locate_Request_Header;
@@ -274,6 +276,8 @@ private:
 
   TAO_OutputCDR cdr_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /*TAO_GIOP_MESSAGE_LITE_H*/

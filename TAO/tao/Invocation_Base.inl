@@ -1,5 +1,9 @@
 // -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   ACE_INLINE TAO_ORB_Core *
@@ -80,7 +84,7 @@ namespace TAO
   {
     return this->invoke_status_;
   }
-#endif /*TAO_HAS_INTERCEPTORS*/
-
-
+#endif /* TAO_HAS_INTERCEPTORS */
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

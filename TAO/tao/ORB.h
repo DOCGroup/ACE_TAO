@@ -37,6 +37,8 @@
 #include "ace/Thread_Mutex.h"
 #include "ace/Guard_T.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 typedef enum
 {
   TAO_SERVICEID_NAMESERVICE,
@@ -670,6 +672,7 @@ namespace TAO
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "tao/ORB.i"

@@ -15,17 +15,22 @@
 #define TAO_RESOURCE_FACTORY_H
 
 #include /**/ "ace/pre.h"
-#include "ace/Service_Object.h"
+
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Versioned_Namespace.h"
+
+#include "ace/Service_Object.h"
 #include "ace/Unbounded_Set.h"
 #include "ace/SString.h"
 #include "ace/CDR_Base.h"
 
-#include "tao/TAO_Export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Protocol_Factory;
 class TAO_Acceptor_Registry;
@@ -252,6 +257,8 @@ protected:
   virtual int load_default_protocols (void);
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

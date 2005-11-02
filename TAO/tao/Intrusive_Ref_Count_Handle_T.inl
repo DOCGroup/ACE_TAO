@@ -1,9 +1,12 @@
+// -*- C++ -*-
+//
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename T>
 ACE_INLINE
-TAO_Intrusive_Ref_Count_Handle<T>::TAO_Intrusive_Ref_Count_Handle()
+TAO_Intrusive_Ref_Count_Handle<T>::TAO_Intrusive_Ref_Count_Handle (void)
   : ptr_(0)
 {
 }
@@ -11,22 +14,22 @@ TAO_Intrusive_Ref_Count_Handle<T>::TAO_Intrusive_Ref_Count_Handle()
 
 template <typename T>
 ACE_INLINE
-TAO_Intrusive_Ref_Count_Handle<T>::TAO_Intrusive_Ref_Count_Handle
-                                              (T*   p,
-                                               bool take_ownership)
+TAO_Intrusive_Ref_Count_Handle<T>::TAO_Intrusive_Ref_Count_Handle (
+  T*   p,
+  bool take_ownership)
   : ptr_(p)
 {
   if (!take_ownership)
     {
-      this->claim();
+      this->claim ();
     }
 }
 
 
 template <typename T>
 ACE_INLINE
-TAO_Intrusive_Ref_Count_Handle<T>::TAO_Intrusive_Ref_Count_Handle
-                                (const TAO_Intrusive_Ref_Count_Handle<T>& b)
+TAO_Intrusive_Ref_Count_Handle<T>::TAO_Intrusive_Ref_Count_Handle (
+  const TAO_Intrusive_Ref_Count_Handle<T>& b)
   : ptr_(b.ptr_)
 {
   this->claim();
@@ -62,12 +65,14 @@ TAO_Intrusive_Ref_Count_Handle<T>&
 TAO_Intrusive_Ref_Count_Handle<T>::operator=
                                  (const TAO_Intrusive_Ref_Count_Handle<T>& b)
 {
-  if (this->ptr_ != b.ptr_)
-    {
-      this->drop();
-      this->ptr_ = b.ptr_;
-      this->claim();
-    }
+  // Strongly exception-safe assignment through the usual copy and
+  // swap technique.
+
+  TAO_Intrusive_Ref_Count_Handle<T> tmp (b);
+
+  T * old_ptr = this->ptr_;
+  this->ptr_ = tmp.ptr_;
+  tmp.ptr_ = old_tmp;
 
   return *this;
 }
@@ -153,3 +158,5 @@ TAO_Intrusive_Ref_Count_Handle<T>::drop()
       this->ptr_ = 0;
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

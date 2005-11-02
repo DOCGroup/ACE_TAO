@@ -21,6 +21,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Time_Value;
 class TAO_Leader_Follower;
 
@@ -67,6 +71,8 @@ public:
   virtual void reset_event_loop_thread (int call_reset,
                                         TAO_Leader_Follower &) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

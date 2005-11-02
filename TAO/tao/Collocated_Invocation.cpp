@@ -15,6 +15,8 @@ ACE_RCSID (tao,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   Collocated_Invocation::Collocated_Invocation (CORBA::Object_ptr t,
@@ -164,3 +166,5 @@ namespace TAO
   }
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

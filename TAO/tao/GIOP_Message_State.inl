@@ -2,6 +2,8 @@
 
 //$Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE CORBA::ULong
 TAO_GIOP_Message_State::message_size (void) const
 {
@@ -52,3 +54,5 @@ TAO_GIOP_Message_State::header_received (void) const
 }
 
 #endif
+
+TAO_END_VERSIONED_NAMESPACE_DECL

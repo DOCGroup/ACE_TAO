@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /*
@@ -8,7 +8,7 @@
  *
  *  Interface for the TAO CodeSet Manager.
  *
- *  @author  Mahesh Vedantam <mahesh#ociweb.com>
+ *  @author  Mahesh Vedantam <mahesh@ociweb.com>
  */
 //=============================================================================
 
@@ -17,13 +17,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/CONV_FRAMEC.h"
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "TAO_Export.h"
+#include "tao/CONV_FRAMEC.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_WChar_Codeset_Translator;
 
@@ -55,12 +57,13 @@ class TAO_Codeset_Descriptor_Base;
  * context attached to the first request sent on the new connection.
  *
  */
-
 class TAO_Export TAO_Codeset_Manager
 {
 
 public:
-  virtual ~TAO_Codeset_Manager();
+
+  /// Destructor.
+  virtual ~TAO_Codeset_Manager (void);
 
   /// Called by an object of TAO_Acceptor to set NCS and CCS values for
   /// Char/Wchar in to the Object Reference.
@@ -90,6 +93,8 @@ public:
   virtual void get_ncs (CONV_FRAME::CodeSetId &ncsc,
                         CONV_FRAME::CodeSetId &ncsw) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -22,6 +22,8 @@ ACE_RCSID (tao,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   Invocation_Base::Invocation_Base (CORBA::Object_ptr ot,
@@ -269,3 +271,5 @@ namespace TAO
   }
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

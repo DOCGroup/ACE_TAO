@@ -33,6 +33,8 @@ ACE_RCSID (tao,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 CORBA::Object::~Object (void)
 {
   if (this->protocol_proxy_)
@@ -1014,3 +1016,5 @@ TAO::Object_Proxy_Broker * (*_TAO_Object_Proxy_Broker_Factory_function_pointer) 
     CORBA::Object_ptr obj
     ) = 0;
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL

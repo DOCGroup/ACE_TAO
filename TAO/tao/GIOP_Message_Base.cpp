@@ -22,22 +22,24 @@ ACE_RCSID (tao,
            GIOP_Message_Base,
            "$Id$")
 
-TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
-                                              size_t /*input_cdr_size*/)
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core * orb_core,
+                                              size_t /* input_cdr_size */)
   : orb_core_ (orb_core)
-    , message_state_ ()
-    , out_stream_ (this->buffer_,
-                   sizeof this->buffer_, /* ACE_CDR::DEFAULT_BUFSIZE */
-                   TAO_ENCAP_BYTE_ORDER,
-                   orb_core->output_cdr_buffer_allocator (),
-                   orb_core->output_cdr_dblock_allocator (),
-                   orb_core->output_cdr_msgblock_allocator (),
-                   orb_core->orb_params ()->cdr_memcpy_tradeoff (),
-                   TAO_DEF_GIOP_MAJOR,
-                   TAO_DEF_GIOP_MINOR)
+  , message_state_ ()
+  , out_stream_ (this->buffer_,
+                 sizeof this->buffer_, /* ACE_CDR::DEFAULT_BUFSIZE */
+                 TAO_ENCAP_BYTE_ORDER,
+                 orb_core->output_cdr_buffer_allocator (),
+                 orb_core->output_cdr_dblock_allocator (),
+                 orb_core->output_cdr_msgblock_allocator (),
+                 orb_core->orb_params ()->cdr_memcpy_tradeoff (),
+                 TAO_DEF_GIOP_MAJOR,
+                 TAO_DEF_GIOP_MINOR)
 {
 #if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
-  ACE_OS::memset(buffer_, 0, sizeof (buffer_));
+  ACE_OS::memset (this->buffer_, 0, sizeof (buffer_));
 #endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
 }
 
@@ -830,11 +832,11 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
       CORBA::Object_var forward_to;
 
 /*
- * Hook to specialize request processing within TAO 
+ * Hook to specialize request processing within TAO
  * This hook will be replaced by specialized request
  * processing implementation.
  */
-//@@ TAO_DISPATCH_RESOLUTION_OPT_COMMENT_HOOK_START 
+//@@ TAO_DISPATCH_RESOLUTION_OPT_COMMENT_HOOK_START
 
       // Do this before the reply is sent.
       this->orb_core_->request_dispatcher ()->dispatch (
@@ -1570,8 +1572,8 @@ TAO_GIOP_Message_Base::fragment_header_length (CORBA::Octet major,
 
 void
 TAO_GIOP_Message_Base::init_queued_data (
-                               TAO_Queued_Data* qd,
-                               const TAO_GIOP_Message_State& state) const
+  TAO_Queued_Data* qd,
+  const TAO_GIOP_Message_State& state) const
 {
   qd->byte_order_     = state.byte_order_;
   qd->major_version_  = state.giop_version_.major;
@@ -1580,3 +1582,5 @@ TAO_GIOP_Message_Base::init_queued_data (
   qd->request_id_     = state.request_id_;
   qd->msg_type_       = this->message_type (state);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

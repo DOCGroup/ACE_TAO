@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -25,6 +25,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Endpoint_Selector_Factory.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward references
 class TAO_Default_Endpoint_Selector;
@@ -62,11 +64,21 @@ public:
   virtual TAO_Invocation_Endpoint_Selector *get_selector (
                              ACE_ENV_SINGLE_ARG_DECL);
 
+private:
+
+  // Prevent copying/assignment.
+  TAO_Default_Endpoint_Selector_Factory (TAO_Default_Endpoint_Selector_Factory const &);
+  void operator= (TAO_Default_Endpoint_Selector_Factory const &);
+
 protected:
+
   /// The possible endpoint selector strategies that can be
   /// returned by this factory
-  TAO_Default_Endpoint_Selector *default_endpoint_selector_;
+  TAO_Default_Endpoint_Selector * const default_endpoint_selector_;
+
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Endpoint_Selector_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Endpoint_Selector_Factory)

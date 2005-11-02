@@ -25,6 +25,8 @@ ACE_RCSID (tao,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (CORBA::Boolean flag)
   : TAO_Acceptor (IOP::TAG_INTERNET_IOP),
     addrs_ (0),
@@ -554,8 +556,8 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
                                      this->creation_strategy_,
                                      this->accept_strategy_,
                                      this->concurrency_strategy_,
-				     0, 0, 0, 1,
-				     this->reuse_addr_) == -1)
+                                     0, 0, 0, 1,
+                                     this->reuse_addr_) == -1)
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
@@ -590,8 +592,8 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
                                          this->creation_strategy_,
                                          this->accept_strategy_,
                                          this->concurrency_strategy_,
-					 0, 0, 0, 1,
-					 this->reuse_addr_) != -1)
+                                         0, 0, 0, 1,
+                                         this->reuse_addr_) != -1)
             {
               found_a_port = true;
               break;
@@ -1164,9 +1166,9 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
           this->hostname_in_ior_ = value.rep ();
         }
       else if (name == "reuse_addr")
-	{
-	  this->reuse_addr_ = ACE_OS::atoi (value.c_str ());
-	}
+        {
+          this->reuse_addr_ = ACE_OS::atoi (value.c_str ());
+        }
       else
         {
           // the name is not known, skip to the next option
@@ -1185,5 +1187,7 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
     }
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 //@@ TAO_ACCEPTOR_SPL_COPY_HOOK_END

@@ -16,6 +16,8 @@ ACE_RCSID (tao,
 #include "tao/Buffering_Constraint_Policy.i"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO::BufferingConstraint &buffering_constraint)
   : ACE_NESTED_CLASS (CORBA, Object) ()
   , ACE_NESTED_CLASS (CORBA, Policy) ()
@@ -85,5 +87,7 @@ TAO_Buffering_Constraint_Policy::_tao_cached_type (void) const
 {
   return TAO_CACHED_POLICY_BUFFERING_CONSTRAINT;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */

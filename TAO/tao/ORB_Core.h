@@ -38,6 +38,13 @@
 #include "tao/ORB_Core_TSS_Resources.h"
 #include "ace/Array_Map.h"
 
+#include "ace/Thread_Manager.h"
+#include "ace/Lock_Adapter_T.h"
+#include "ace/TSS_T.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #if TAO_HAS_INTERCEPTORS == 1
 
 namespace TAO
@@ -47,10 +54,6 @@ namespace TAO
 }
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1  */
-
-#include "ace/Thread_Manager.h"
-#include "ace/Lock_Adapter_T.h"
-#include "ace/TSS_T.h"
 
 // Forward declarations
 class ACE_Data_Block;
@@ -1367,6 +1370,8 @@ private:
 TAO_Export TAO_ORB_Core * TAO_ORB_Core_instance (void);
 
 // ****************************************************************
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "ORB_Core.i"

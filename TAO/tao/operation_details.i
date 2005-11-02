@@ -2,6 +2,8 @@
 //
 //$Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE
 TAO_Operation_Details::TAO_Operation_Details (const char *name,
                                               CORBA::ULong len,
@@ -194,3 +196,5 @@ TAO_Operation_Details::ft_retention_id (void) const
   return this->ft_retention_id_;
 }
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
+
+TAO_END_VERSIONED_NAMESPACE_DECL

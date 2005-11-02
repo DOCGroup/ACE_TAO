@@ -2,6 +2,8 @@
 //
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE
 TAO_Object_Ref_Table::TAO_Object_Ref_Table (void)
   : table_ (TAO_DEFAULT_OBJECT_REF_TABLE_SIZE)
@@ -60,3 +62,5 @@ TAO_Object_Ref_Table::unbind (const char *id)
   return
     (this->table_.erase (CORBA::String_var (id)) == 0 ? -1 : 0);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -10,3 +14,5 @@ namespace TAO
     (void) ardb->decr_refcount ();
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

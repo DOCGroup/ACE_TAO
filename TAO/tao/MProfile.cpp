@@ -19,6 +19,7 @@ ACE_RCSID (tao,
 # include "tao/MProfile.i"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_MProfile::~TAO_MProfile (void)
 {
@@ -360,3 +361,5 @@ TAO_MProfile::policy_list (ACE_ENV_SINGLE_ARG_DECL)
 
   return ret_val;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

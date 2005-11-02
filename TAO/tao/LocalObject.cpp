@@ -1,5 +1,3 @@
-// -*- C++ -*-
-//
 // $Id$
 
 #include "LocalObject.h"
@@ -18,6 +16,8 @@
 ACE_RCSID (tao,
            LocalObject,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::LocalObject::~LocalObject (void)
 {
@@ -42,12 +42,12 @@ CORBA::ULong
 CORBA::LocalObject::_hash (CORBA::ULong maximum
                            ACE_ENV_ARG_DECL_NOT_USED)
 {
-  // Note that we reinterpret_cast to an "unsigned long" instead of
+  // Note that we reinterpret_cast to an "ptrdiff_t" instead of
   // CORBA::ULong since we need to first cast to an integer large
   // enough to hold an address to avoid compile-time warnings on some
   // 64-bit platforms.
 
-  const CORBA::ULong hash =
+  CORBA::ULong const hash =
     static_cast<CORBA::ULong> (reinterpret_cast<ptrdiff_t> (this));
 
   return hash % maximum;
@@ -220,6 +220,10 @@ CORBA::LocalObject::_get_orb (ACE_ENV_SINGLE_ARG_DECL)
 
 // ****************************************************************
 
+TAO_Local_RefCounted_Object::~TAO_Local_RefCounted_Object (void)
+{
+}
+
 void
 TAO_Local_RefCounted_Object::_add_ref (void)
 {
@@ -235,3 +239,4 @@ TAO_Local_RefCounted_Object::_remove_ref (void)
     delete this;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

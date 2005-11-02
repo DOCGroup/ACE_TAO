@@ -27,6 +27,8 @@
 #include "tao/Exception.h"
 #include "tao/params.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward declarations.
 class ACE_Addr;
 class ACE_Reactor;
@@ -134,9 +136,10 @@ private:
               ACE_ENV_ARG_DECL);
 
 private:
+
   // The acceptor registry should not be copied.
-  ACE_UNIMPLEMENTED_FUNC (TAO_Acceptor_Registry (const TAO_Acceptor_Registry&))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Acceptor_Registry&))
+  TAO_Acceptor_Registry (const TAO_Acceptor_Registry&);
+  void operator= (const TAO_Acceptor_Registry&);
 
 private:
   /// List of acceptors that are currently open.
@@ -145,6 +148,8 @@ private:
   /// Number of acceptors that are currently open.
   size_t size_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
 #include "tao/Acceptor_Registry.i"

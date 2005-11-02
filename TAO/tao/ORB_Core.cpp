@@ -75,6 +75,8 @@ ACE_RCSID (tao,
            ORB_Core,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // ****************************************************************
 
 CORBA::Environment&
@@ -3121,3 +3123,4 @@ TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object
   return TAO::TAO_CS_REMOTE_STRATEGY;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

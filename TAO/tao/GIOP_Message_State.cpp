@@ -14,6 +14,8 @@ ACE_RCSID (tao,
            GIOP_Message_State,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_GIOP_Message_State::TAO_GIOP_Message_State (void)
   : giop_version_ (TAO_DEF_GIOP_MAJOR,
                    TAO_DEF_GIOP_MINOR),
@@ -266,11 +268,13 @@ TAO_GIOP_Message_State::read_ulong (const char *rd_ptr)
   // as SunCC) have a problem in deferencing from the
   // reinterpret_cast pointer of the <rd_ptr>, as the <rd_ptr> can be
   // on stack. So let us go ahead with this copying...
-  char buf [4];
-  buf[0] = *rd_ptr;
-  buf[1] = *(rd_ptr + 1);
-  buf[2] = *(rd_ptr + 2);
-  buf[3] = *(rd_ptr + 3);
+  char buf[] =
+    {
+      *rd_ptr,
+      *(rd_ptr + 1),
+      *(rd_ptr + 2),
+      *(rd_ptr + 3)
+    };
 
 #if !defined (ACE_DISABLE_SWAP_ON_READ)
   if (!(this->byte_order_ != ACE_CDR_BYTE_ORDER))
@@ -287,3 +291,5 @@ TAO_GIOP_Message_State::read_ulong (const char *rd_ptr)
 
   return x;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

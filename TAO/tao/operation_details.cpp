@@ -17,6 +17,8 @@ ACE_RCSID (tao,
            operation_details,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 CORBA::Exception *
 TAO_Operation_Details::corba_exception (const char *id
                                         ACE_ENV_ARG_DECL)
@@ -75,3 +77,4 @@ TAO_Operation_Details::demarshal_args (TAO_InputCDR &cdr)
   return true;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

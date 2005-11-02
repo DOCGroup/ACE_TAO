@@ -1,5 +1,9 @@
 // -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   ACE_INLINE
@@ -12,7 +16,6 @@ namespace TAO
       Collocation_Proxy_Broker *p,
       Invocation_Type type,
       Invocation_Mode mode)
-
     : target_ (target)
     , args_ (args)
     , number_args_  (arg_number)
@@ -24,3 +27,5 @@ namespace TAO
   {
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

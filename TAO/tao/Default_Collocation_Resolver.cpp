@@ -9,12 +9,16 @@ ACE_RCSID (tao,
 #include "tao/Object.h"
 #include "ace/Log_Msg.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 CORBA::Boolean
 TAO_Default_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
                                                  ACE_ENV_ARG_DECL_NOT_USED) const
 {
   return object->_is_collocated ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_Default_Collocation_Resolver,
                        ACE_TEXT ("Default_Collocation_Resolver"),

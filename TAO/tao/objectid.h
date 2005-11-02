@@ -23,6 +23,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /*
  *
  * This file is a break away from orbconf.h. Basically orbconf.h is
@@ -102,6 +106,8 @@ namespace TAO
 
 /// No. of services locatable through multicast.
 #define TAO_NO_OF_MCAST_SERVICES 4
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /*TAO_OBJECTID_H*/

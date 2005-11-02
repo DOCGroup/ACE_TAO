@@ -10,6 +10,9 @@ ACE_RCSID(tao,
           LF_Connect_Strategy,
           "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_LF_Connect_Strategy::TAO_LF_Connect_Strategy (
     TAO_ORB_Core *orb_core)
   : TAO_Connect_Strategy (orb_core)
@@ -74,3 +77,5 @@ TAO_LF_Connect_Strategy::wait (TAO_Transport *transport,
 
   return result;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

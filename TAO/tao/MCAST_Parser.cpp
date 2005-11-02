@@ -22,10 +22,12 @@ ACE_RCSID (tao,
 
 static const char mcast_prefix[] = "mcast:";
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_MCAST_Parser::~TAO_MCAST_Parser (void)
 {
 }
-
 
 int
 TAO_MCAST_Parser::match_prefix (const char *ior_string) const
@@ -507,6 +509,8 @@ TAO_MCAST_Parser::assign_to_variables (const char * &mcast_name)
                                   mcast_name_cstring.length()
                                   -1).c_str ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_MCAST_Parser,
                        ACE_TEXT ("MCAST_Parser"),

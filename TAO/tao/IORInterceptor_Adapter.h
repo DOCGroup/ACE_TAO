@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Array_Base.h"
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,6 +24,10 @@
 
 #include "tao/SystemException.h"
 #include "tao/PI_ForwardC.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+template <class T> class ACE_Array_Base;
 
 namespace PortableInterceptor
 {
@@ -94,6 +98,8 @@ public:
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_IORINTERCEPTOR_ADAPTER_H */
