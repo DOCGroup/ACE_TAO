@@ -244,7 +244,7 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_ServerRequest*& request)
   // ACTION: Primitive data type assignment.
   clone_obj->argument_flag_ = request->argument_flag_;
 
-#if TAO_HAS_INTERCEPTORS == 1
+  //#if TAO_HAS_INTERCEPTORS == 1
   // TYPE: size_t
   // ACTION: Primitive data type assignment.
   //         Just leave this alone for a clone.
@@ -269,7 +269,7 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_ServerRequest*& request)
   //         Just leave this alone for a clone.
   //
   //clone_obj->result_seq_ = request->result_seq_;
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+  //#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
   if (clone_obj->transport_ != 0)
     {
