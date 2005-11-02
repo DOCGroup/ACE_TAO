@@ -1,3 +1,11 @@
+Wed Nov  2 14:17:47 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
+        
+          Fixed logic for generating commas separating base
+          constructor call and member inits in generated valuetype
+          initializing constructor.
+
 Wed Nov  2 13:19:02 2005  Simon McQueen  <sm@prismtech.com>
 
         * tests/Bug_2287_Regression/ServerRequest_Interceptor2.cpp:

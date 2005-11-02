@@ -216,12 +216,6 @@ be_visitor_valuetype_obv_cs::gen_obv_init_constructor_init_list (
           
           *os << be_uidt_nl
               << ")" << be_uidt;
-              
-          // data_members_counts checks only for non-inherited members.
-          if (node->data_members_count () > 0)
-            {
-              *os << "," << be_nl;
-            }
         }
     }
     
@@ -252,7 +246,11 @@ be_visitor_valuetype_obv_cs::gen_obv_init_constructor_init_list (
         
       if (0 == index++)
         {
-          if (!colon_generated)
+          if (colon_generated)
+            {
+              *os << "," << be_nl;
+            }
+          else
             {
               *os << be_nl 
                   << ": " << be_idt;
