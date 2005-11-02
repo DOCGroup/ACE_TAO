@@ -1,0 +1,25 @@
+// -*- MPC -*-
+// $Id$
+
+workspace {
+  ../ace
+  ../ACEXML/common
+  ../ACEXML/parser/parser
+  ../ACEXML/apps/svcconf
+  ../Kokyu/Kokyu.mpc
+  ../protocols/ace/HTBP
+  tao
+  utils
+  orbsvcs
+  exclude {
+    ../apps/gperf/src
+    TAO_IDL
+    orbsvcs/PSS
+    orbsvcs/tests
+    orbsvcs/performance-tests
+    orbsvcs/examples
+    orbsvcs/IFR_Service
+    tao/IFR_Client.mpc
+    orbsvcs/orbsvcs/IFRService.mpc 
+  }
+}
