@@ -17,7 +17,8 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . Fix Notification Service detection of dead consumers.
 
-. (Remedy) Integrate new sequence implementation made by Carlos O'Ryan
+. (Remedy) Finish and integrate new sequence implementation made by
+  Carlos O'Ryan
 
 . (Remedy) Add possibility to set customer allocators to be used by the ORB for
   marshaling and demarshaling
