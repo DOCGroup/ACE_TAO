@@ -61,7 +61,7 @@ sub run_node_daemons {
       $node_app = "$DAnCE/NodeApplication/NodeApplication";
 
       $d_cmd = "$DAnCE/NodeManager/NodeManager";
-      $d_param = "-ORBEndpoint $iiop -s $node_app -a \"-r\" -o $iorfile";
+      $d_param = "-ORBEndpoint $iiop -s $node_app -a \"-r -ORBSvcconf RTsvc.conf\" -o $iorfile";
 
       $Daemons[$i] = new PerlACE::Process ($d_cmd, $d_param);
       $result = $Daemons[$i]->Spawn ();

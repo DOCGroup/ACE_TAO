@@ -71,6 +71,10 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   protected:
+    void print_resources (const CIAO::DAnCE::ServerResource &info
+                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
     /// Query a thread pool by name.
     RTCORBA::ThreadpoolId find_threadpool_by_name (const char *name
                                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
