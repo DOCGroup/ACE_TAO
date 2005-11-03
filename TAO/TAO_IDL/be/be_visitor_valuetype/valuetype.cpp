@@ -19,8 +19,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_valuetype, 
-           valuetype, 
+ACE_RCSID (be_visitor_valuetype,
+           valuetype,
            "$Id$")
 
 be_visitor_valuetype::be_visitor_valuetype (be_visitor_context *ctx)
@@ -47,7 +47,7 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_scope::visit_scope - "
-                             "bad node in this scope\n"), 
+                             "bad node in this scope\n"),
                             -1);
         }
 
@@ -61,7 +61,7 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
       this->elem_number_++;
 
       AST_Field *field = AST_Field::narrow_from_decl (d);
-      
+
       if (field != 0 && field->visibility () == AST_Field::vis_PRIVATE)
         {
           this->begin_private ();
@@ -70,14 +70,14 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
         {
           this->begin_public ();
         }
-      
+
       if (bd == 0 || bd->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_scope::visit_scope - "
-                             "codegen for scope failed\n"), 
+                             "codegen for scope failed\n"),
                             -1);
-          
+
         }
     }
 
@@ -206,7 +206,7 @@ be_visitor_valuetype::visit_constant (be_constant *node)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_valuetype::"
                            "visit_constant - "
-                           "Bad context state\n"), 
+                           "Bad context state\n"),
                           -1);
       }
     }
@@ -283,7 +283,7 @@ be_visitor_valuetype::visit_enum (be_enum *node)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_valuetype::"
                            "visit_enum - "
-                           "Bad context state\n"), 
+                           "Bad context state\n"),
                           -1);
       }
     }
@@ -293,7 +293,7 @@ be_visitor_valuetype::visit_enum (be_enum *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype::"
                          "visit_enum - "
-                         "failed to accept visitor\n"),  
+                         "failed to accept visitor\n"),
                         -1);
     }
 
@@ -316,7 +316,7 @@ be_visitor_valuetype::visit_exception (be_exception *node)
         break;
       }
     case TAO_CodeGen::TAO_ROOT_CI:
-      {        
+      {
         be_visitor_exception_ci visitor (&ctx);
         status = node->accept (&visitor);
         break;
@@ -360,7 +360,7 @@ be_visitor_valuetype::visit_exception (be_exception *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface::"
                          "visit_exception - "
-                         "failed to accept visitor\n"),  
+                         "failed to accept visitor\n"),
                         -1);
     }
 
@@ -427,7 +427,7 @@ be_visitor_valuetype::visit_structure (be_structure *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype::"
                          "visit_structure - "
-                         "failed to accept visitor\n"),  
+                         "failed to accept visitor\n"),
                         -1);
     }
 
@@ -460,7 +460,7 @@ be_visitor_valuetype::visit_structure_fwd (be_structure_fwd *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype::"
                          "visit_structure_fwd - "
-                         "failed to accept visitor\n"),  
+                         "failed to accept visitor\n"),
                         -1);
     }
 
@@ -532,7 +532,7 @@ be_visitor_valuetype::visit_union (be_union *node)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_valuetype::"
                            "visit_union - "
-                           "Bad context state\n"), 
+                           "Bad context state\n"),
                           -1);
       }
     }
@@ -542,7 +542,7 @@ be_visitor_valuetype::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype::"
                          "visit_union - "
-                         "failed to accept visitor\n"),  
+                         "failed to accept visitor\n"),
                         -1);
     }
 
@@ -575,7 +575,7 @@ be_visitor_valuetype::visit_union_fwd (be_union_fwd *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype::"
                          "visit_union_fwd - "
-                         "failed to accept visitor\n"),  
+                         "failed to accept visitor\n"),
                         -1);
     }
 
@@ -647,7 +647,7 @@ be_visitor_valuetype::visit_typedef (be_typedef *node)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_valuetype::"
                            "visit_typedef - "
-                           "Bad context state\n"), 
+                           "Bad context state\n"),
                           -1);
       }
     }
@@ -657,7 +657,7 @@ be_visitor_valuetype::visit_typedef (be_typedef *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype::"
                          "visit_typedef - "
-                         "failed to accept visitor\n"),  
+                         "failed to accept visitor\n"),
                         -1);
     }
 
@@ -689,7 +689,7 @@ be_visitor_valuetype::gen_pd (be_valuetype *node)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_scope::visit_scope - "
-                             "bad node in this scope\n"), 
+                             "bad node in this scope\n"),
                             -1);
         }
 
@@ -715,7 +715,7 @@ be_visitor_valuetype::gen_pd (be_valuetype *node)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_scope::visit_scope - "
-                             "codegen for scope failed\n"), 
+                             "codegen for scope failed\n"),
                             -1);
         }
     }
@@ -738,7 +738,7 @@ be_visitor_valuetype::gen_field_pd (be_field *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_ch::"
                          "visit_field - "
-                         "Bad field type\n"), 
+                         "Bad field type\n"),
                         -1);
     }
 
@@ -755,11 +755,11 @@ be_visitor_valuetype::gen_field_pd (be_field *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_ch::"
                          "visit_field - "
-                         "codegen for field type failed\n"), 
+                         "codegen for field type failed\n"),
                         -1);
     }
 
-  // Now output the field name.  
+  // Now output the field name.
   *os << " " << vt->field_pd_prefix ()
       << node->local_name ()
       << vt->field_pd_postfix () << ";";
@@ -773,7 +773,7 @@ be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
 {
   TAO_OutStream *os = this->ctx_->stream ();
   AST_ValueType *parent = node->inherits_concrete ();
-  
+
   // Generate for inherited members first.
   if (parent != 0)
     {
@@ -781,7 +781,7 @@ be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
         be_valuetype::narrow_from_decl (parent);
       this->gen_obv_init_constructor_args (be_parent, index);
     }
-    
+
   be_visitor_context ctx (*this->ctx_);
   be_visitor_args_arglist visitor (&ctx);
 
@@ -790,29 +790,29 @@ be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
        si.next())
     {
       be_field *f = be_field::narrow_from_decl (si.item ());
-      
+
       if (f == 0)
         {
           continue;
         }
-        
+
       *os << (index++ != 0 ? "," : "") << be_nl;
-      
+
       ACE_CString arg_name ("_tao_init_");
       arg_name += f->local_name ()->get_string ();
       Identifier id (arg_name.c_str ());
       UTL_ScopedName sn (&id, 0);
       be_type *ft = be_type::narrow_from_decl (f->field_type ());
       idl_bool seen = ft->seen_in_operation ();
-      
+
       // This sets ft->seen_in_operation (I_TRUE), so we have to
       // restore the original value below.
       be_argument arg (AST_Argument::dir_IN,
                        ft,
-                       &sn);       
-      ft->seen_in_operation (seen);             
+                       &sn);
+      ft->seen_in_operation (seen);
       visitor.visit_argument (&arg);
-      id.destroy ();             
+      id.destroy ();
     }
 }
 
@@ -860,18 +860,18 @@ be_visitor_valuetype::gen_init_impl (be_valuetype *node)
   char fname [NAMEBUFSIZE];  // to hold the full and
   char lname [NAMEBUFSIZE];  // local _out names
 
-  ACE_OS::memset (fname, 
-                  '\0', 
+  ACE_OS::memset (fname,
+                  '\0',
                   NAMEBUFSIZE);
-  ACE_OS::sprintf (fname, 
-                   "%s_init", 
+  ACE_OS::sprintf (fname,
+                   "%s_init",
                    node->full_name ());
 
-  ACE_OS::memset (lname, 
-                  '\0', 
+  ACE_OS::memset (lname,
+                  '\0',
                   NAMEBUFSIZE);
-  ACE_OS::sprintf (lname, 
-                   "%s_init", 
+  ACE_OS::sprintf (lname,
+                   "%s_init",
                    node->local_name ());
 
   // Destructor.
@@ -903,7 +903,7 @@ be_visitor_valuetype::obv_need_ref_counter (be_valuetype* node)
   // Now go thru our base VTs and see if one has already.
   for (int i = 0; i < node->n_inherits (); ++i)
     {
-      be_valuetype *vt = 
+      be_valuetype *vt =
         be_valuetype::narrow_from_decl (node->inherits ()[i]);
 
       if (vt != 0)
@@ -955,7 +955,7 @@ be_visitor_valuetype::is_amh_exception_holder (be_valuetype *node)
 {
  if (ACE_OS::strncmp (node->local_name (), "AMH_", 4) == 0)
    {
-     const char *last_E = 
+     const char *last_E =
       ACE_OS::strrchr (node->full_name (), 'E');
 
      if (last_E != 0
