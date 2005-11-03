@@ -1,6 +1,7 @@
 #include "LB_server.h"
 #include "Factory.h"
 #include "Simple.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Infrastructure_Controlled,
            server,
@@ -14,7 +15,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   const char *location1 = "MyLocation 1";
   const char *location2 = "MyLocation 2";
 
-  LB_server lb_server (argc, argv);
+  LB_server lb_server (convert.get_argc(), convert.get_ASCII_argv());
 
   if (lb_server.start_orb_and_poa () == -1)
     return 1;

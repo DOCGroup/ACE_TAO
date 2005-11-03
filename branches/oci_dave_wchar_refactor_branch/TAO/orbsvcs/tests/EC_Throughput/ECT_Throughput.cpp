@@ -34,7 +34,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   TAO_EC_Default_Factory::init_svcs ();
 
   ECT_Throughput driver;
-  return driver.run (argc, argv);
+  return driver.run (convert.get_argc(), convert.get_ASCII_argv());
 }
 
 // ****************************************************************
@@ -64,7 +64,7 @@ ECT_Throughput::~ECT_Throughput (void)
 }
 
 int
-ECT_Throughput::run (int argc, ACE_TCHAR* argv[])
+ECT_Throughput::run (int argc, char* argv[])
 {
   ACE_TRY_NEW_ENV
     {
@@ -73,7 +73,7 @@ ECT_Throughput::run (int argc, ACE_TCHAR* argv[])
       ACE_High_Res_Timer::calibrate ();
 
       this->orb_ =
-        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =

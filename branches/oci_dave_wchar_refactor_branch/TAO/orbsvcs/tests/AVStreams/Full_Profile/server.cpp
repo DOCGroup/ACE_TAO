@@ -102,7 +102,7 @@ Server::format (void)
 
 int
 Server::init (int argc,
-              char **argv)
+             char **argv)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -222,7 +222,7 @@ Server::file (void)
 
 int
 ACE_TMAIN (int argc,
-      char **argv)
+     ACE_TCHAR **argv)
 {
   ACE_Argv_Type_Converter convert (argc, argv);
 

@@ -91,10 +91,10 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
   int c_breath = 4;
   int c_depth = 4;
   int o_breath = 4;
-  ACE_TCHAR *ns1ref = 0;
-  ACE_TCHAR *ns2ref = 0;
+  char *ns1ref = 0;
+  char *ns2ref = 0;
 
-  ACE_Get_Arg_Opt<char> get_opts (argc, argv, ACE_TEXT ("b:d:o:p:q:"));
+  ACE_Get_Arg_Opt<char> get_opts (convert.get_argc(), convert.get_ASCII_argv(), "b:d:o:p:q:");
   int c;
   int i;
 
@@ -156,7 +156,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
   ACE_TRY_EX(bl_a)
   {
     // Initialize orb
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, 0 ACE_ENV_ARG_PARAMETER);
+    CORBA::ORB_var orb = CORBA::ORB_init(convert.get_argc(), convert.get_ASCII_argv(), 0 ACE_ENV_ARG_PARAMETER);
 
     // ior's are specified for the name servers through a commandline
     // option or a file.

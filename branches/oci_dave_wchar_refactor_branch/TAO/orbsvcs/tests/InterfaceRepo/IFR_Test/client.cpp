@@ -2,6 +2,7 @@
 // $Id$
 
 #include "Admin_Client.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (IFR_Test,
            client,

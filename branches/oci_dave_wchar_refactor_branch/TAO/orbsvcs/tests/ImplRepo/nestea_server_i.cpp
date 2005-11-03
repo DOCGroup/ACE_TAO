@@ -97,7 +97,7 @@ Nestea_Server_i::init (int argc, char** argv ACE_ENV_ARG_DECL)
   ACE_TRY
     {
       // Initialize the ORB
-      this->orb_ = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), 0 ACE_ENV_ARG_PARAMETER);
+      this->orb_ = CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Save pointers to the command line arguments

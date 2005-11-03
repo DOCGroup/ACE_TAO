@@ -6,6 +6,7 @@
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_time.h"
+#include "ace/TSS_T.h"
 
 ACE_INLINE char *
 ACE_OS::asctime (const struct tm *t)
@@ -112,7 +113,7 @@ ACE_OS::ctime (const time_t *t)
 #elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
   ACE_OSCALL_RETURN (::_wctime (t), wchar_t *, 0);
 #else
-#  if defined (ACE_USES_WCHAR)   /* Not Win32, else it would do the above */
+#  if defined (ACE_USES_WCHAR) // Wide and not Win32
   char *narrow_time;
   ACE_OSCALL (::ctime (t), char *, 0, narrow_time);
   if (narrow_time == 0)
@@ -121,15 +122,15 @@ ACE_OS::ctime (const time_t *t)
   // we've done this before, free the previous one. Yes, this leaves a
   // small memory leak (26 characters) but there's no way around this
   // that I know of. (Steve Huston, 12-Feb-2003).
-  const wchar_t* init = 0;
+  wchar_t* init = 0;
   static ACE_TSS< wchar_t* > wide_time (&init);
-  ACE::String_Conversion::Allocator_malloc().free(*wide_time);
+  ACE::String_Conversion::Allocator_malloc<wchar_t>().free(*wide_time);
   *wide_time.ts_object() = ACE_TEXT_TO_MALLOC_WCHAR_OUT (narrow_time);
   return *wide_time;
 #  else
   ACE_OSCALL_RETURN (::ctime (t), char *, 0);
-#  endif /* ACE_USES_WCHAR */
-# endif /* ACE_HAS_BROKEN_CTIME */
+#  endif // ACE_USES_WCHAR
+# endif // ACE_HAS_BROKEN_CTIME
 }
 
 #if !defined (ACE_HAS_WINCE)  /* CE version in OS.cpp */

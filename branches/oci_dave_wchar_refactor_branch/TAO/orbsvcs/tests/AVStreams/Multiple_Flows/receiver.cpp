@@ -140,8 +140,7 @@ Receiver::protocol_object (TAO_AV_Protocol_Object *object)
 }
 
 int
-Receiver::parse_args (int argc,
-                      char **argv)
+Receiver::parse_args (int argc, char **argv)
 {
   // Parse command line arguments
   ACE_Get_Arg_Opt<char> opts (argc, argv, "f:r:d");
@@ -231,7 +230,7 @@ Receiver::protocol_object (void)
 
 int
 ACE_TMAIN (int argc,
-      char **argv)
+     ACE_TCHAR **argv)
 {
   ACE_Argv_Type_Converter convert (argc, argv);
 

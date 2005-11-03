@@ -142,15 +142,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_TRY_NEW_ENV
     {
-      ACE_TString env ("SSL_CERT_FILE=");
-      env += cert_file;
+      ACE_TString env (ACE_TEXT("SSL_CERT_FILE="));
+      env += ACE_TEXT_TO_TCHAR_IN(cert_file);
       ACE_OS::putenv (env.c_str ());
 
       CORBA::ORB_var orb =
         CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
         return 1;
 
       CORBA::Object_var object =

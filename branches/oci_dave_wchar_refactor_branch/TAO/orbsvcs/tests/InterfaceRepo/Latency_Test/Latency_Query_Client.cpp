@@ -31,13 +31,12 @@ Latency_Query_Client::init (int argc,
 {
   ACE_TRY_NEW_ENV
     {
-      this->orb_ = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
+      this->orb_ = CORBA::ORB_init (argc, argv,
                                     0
                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      int retval = this->parse_args (argc,
-                                     argv);
+      int retval = this->parse_args (argc, argv);
 
       if (retval != 0)
         {
@@ -162,8 +161,7 @@ Latency_Query_Client::run (void)
 }
 
 int
-Latency_Query_Client::parse_args (int argc,
-                                  char *argv[])
+Latency_Query_Client::parse_args (int argc, char *argv[])
 {
   ACE_Get_Arg_Opt<char> opts (argc, argv, "dhi:");
   int c;

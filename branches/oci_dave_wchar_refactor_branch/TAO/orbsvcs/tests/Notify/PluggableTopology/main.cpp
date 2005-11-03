@@ -82,8 +82,6 @@ namespace {
 
 int ACE_TMAIN(int, ACE_TCHAR**)
 {
-  ACE_Argv_Type_Converter convert (argc, argv);
-
   try
   {
     setUp();

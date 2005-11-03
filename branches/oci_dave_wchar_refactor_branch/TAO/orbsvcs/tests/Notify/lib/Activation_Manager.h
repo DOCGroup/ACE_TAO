@@ -88,7 +88,7 @@ public:
   void dump_stats (int dump_samples);
 
   // Returns 0 if the file could be opened for write.
-  int ior_output_file (const ACE_TCHAR *file_name);
+  int ior_output_file (const char *file_name);
 
   // Returns 1 if the file could be opened for read.
   int ior_input_file (const char *file_name);

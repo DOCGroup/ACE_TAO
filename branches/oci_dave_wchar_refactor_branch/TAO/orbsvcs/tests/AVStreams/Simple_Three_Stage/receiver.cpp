@@ -141,12 +141,10 @@ Receiver::init (int,
 
 int
 parse_args (int argc,
-            char **argv)
+           char **argv)
 {
   // Parse the command line arguments
-  ACE_Get_Arg_Opt<char> opts (argc,
-                    argv,
-                    "f:");
+  ACE_Get_Arg_Opt<char> opts (argc, argv, "f:");
 
   int c;
   while ((c = opts ()) != -1)
@@ -168,7 +166,7 @@ parse_args (int argc,
 
 int
 ACE_TMAIN (int argc,
-      char **argv)
+     ACE_TCHAR **argv)
 {
   ACE_Argv_Type_Converter convert (argc, argv);
 
@@ -207,8 +205,7 @@ ACE_TMAIN (int argc,
       ACE_TRY_CHECK;
 
       int result =
-        parse_args (argc,
-                    argv);
+        parse_args (convert.get_argc(), convert.get_ASCII_argv());
 
       if (result == -1)
         return -1;

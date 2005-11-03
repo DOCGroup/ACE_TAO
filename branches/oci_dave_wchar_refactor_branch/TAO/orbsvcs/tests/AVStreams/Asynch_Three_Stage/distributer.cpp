@@ -113,8 +113,7 @@ Distributer::connection_manager (void)
 }
 
 int
-Distributer::parse_args (int argc,
-                         char **argv)
+Distributer::parse_args (int argc, char **argv)
 {
   // Parse command line arguments
   ACE_Get_Arg_Opt<char> opts (argc, argv, "s:r:a:");

@@ -268,8 +268,7 @@ Distributer::connection_manager (void)
 }
 
 int
-Distributer::parse_args (int argc,
-                         char **argv)
+Distributer::parse_args (int argc, char **argv)
 {
   /// Parse command line arguments
   ACE_Get_Arg_Opt<char> opts (argc, argv, "s:r:");
@@ -428,7 +427,7 @@ Distributer::done (int done)
 
 int
 ACE_TMAIN (int argc,
-      char **argv)
+      ACE_TCHAR **argv)
 {
   ACE_Argv_Type_Converter convert (argc, argv);
 
@@ -437,7 +436,7 @@ ACE_TMAIN (int argc,
     {
       /// Initialize the ORB first.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv()
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
                          0
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

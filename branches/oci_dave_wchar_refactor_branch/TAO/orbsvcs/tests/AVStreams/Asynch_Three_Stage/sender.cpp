@@ -54,8 +54,7 @@ Sender::Sender (void)
 }
 
 int
-Sender::parse_args (int argc,
-                    char **argv)
+Sender::parse_args (int argc, char **argv)
 {
   // Parse command line arguments
   ACE_Get_Arg_Opt<char> opts (argc, argv, "s:f:r:da:");
@@ -292,7 +291,7 @@ Sender::connection_manager (void)
 
 int
 ACE_TMAIN (int argc,
-      char **argv)
+      ACE_TCHAR **argv)
 {
   ACE_Argv_Type_Converter convert (argc, argv);
 

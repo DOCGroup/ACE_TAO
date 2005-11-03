@@ -54,7 +54,8 @@ parse_args (int argc, char *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  if (parse_args (argc, argv) != 0)
+  ACE_Argv_Type_Converter convert (argc, argv);
+  if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
   {
     return 1;
   }

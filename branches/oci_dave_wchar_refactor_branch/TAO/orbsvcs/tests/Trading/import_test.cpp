@@ -17,7 +17,7 @@ ACE_TMAIN (int argc, ACE_TCHAR** argv)
       ACE_TRY_CHECK;
 
       // Command line argument interpretation.
-      TT_Parse_Args parse_args (argc, argv);
+      TT_Parse_Args parse_args (convert.get_argc(), convert.get_ASCII_argv());
 
       // Initialize the ORB and bootstrap to the Lookup interface.
       CORBA::ORB_var orb = orb_manager.orb ();

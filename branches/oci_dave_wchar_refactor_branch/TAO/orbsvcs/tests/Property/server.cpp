@@ -17,6 +17,7 @@
 // ============================================================================
 
 #include "server.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(CosPropertyService, server, "$Id$")
 
@@ -34,8 +35,7 @@ ACE_TMAIN (int argc, ACE_TCHAR ** argv)
       TAO_ORB_Manager m;
 
       // Initialize the ORB.
-      m.init_child_poa (argc,
-                        argv,
+      m.init_child_poa (convert.get_argc(), convert.get_ASCII_argv(),
                         "child_poa"
                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

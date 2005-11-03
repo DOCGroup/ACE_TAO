@@ -1000,23 +1000,18 @@ ACE_OS::tempnam (const wchar_t *dir, const wchar_t *pfx)
   ACE_OSCALL_RETURN (::_wtempnam (const_cast <wchar_t*> (dir), const_cast <wchar_t*> (pfx)), wchar_t *, 0);
 #  else
   ACE_OSCALL_RETURN (::_wtempnam (dir, pfx), wchar_t *, 0);
-#  endif /* __BORLANDC__ */
-#else /* ACE_LACKS_TEMPNAM */
+#  endif // __BORLANDC__
+#else // ACE_LACKS_TEMPNAM
   // No native wide-char support; convert to narrow and call the char* variant.
   char *name = ACE_OS::tempnam (ACE_TEXT_TO_CHAR_IN (dir), 
                                 ACE_TEXT_TO_CHAR_IN (pfx));
   // ACE_OS::tempnam returns a pointer to a malloc()-allocated space.
   // Convert that string to wide-char and free() the original.
-  const wchar_t* init = 0;
-  static ACE_TSS< wchar_t* > wname (&init);
-  ACE::String_Conversion::Allocator_malloc().free(*wname);
+  wchar_t* wname = 0;
   if (name != 0)
     {
-      *wname.ts_object() = ACE_TEXT_TO_MALLOC_WCHAR_OUT( name ); // memory allocated!
-    }
-  else
-    {
-      *wname.ts_object() = 0;
+	::free( name );
+      wname = ACE_TEXT_TO_MALLOC_WCHAR_OUT( name );
     }
   return *wname;
 #endif /* ACE_LACKS_TEMPNAM */

@@ -62,7 +62,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Use the first argument to create the object reference.
       CORBA::Object_var object =
-        orb->string_to_object (argv[1] ACE_ENV_ARG_PARAMETER);
+        orb->string_to_object (convert.get_ASCII_argv()[1] ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Check if this object reference is a valid one..

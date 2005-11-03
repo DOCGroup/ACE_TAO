@@ -225,7 +225,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
   Filter events;
 
-  if (events.parse_args (argc, argv) == -1)
+  if (events.parse_args (convert.get_argc(), convert.get_ASCII_argv()) == -1)
     {
       return 1;
     }

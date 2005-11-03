@@ -125,8 +125,7 @@ Simple_Test::init (int argc,
 }
 
 int
-Simple_Test::parse_args (int argc,
-                         char *argv[])
+Simple_Test::parse_args (int argc, char *argv[])
 {
     ACE_TArg_Shifter< char > arg_shifter (argc,
                                  argv);
@@ -245,7 +244,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
   Simple_Test events;
 
-  if (events.parse_args (argc, argv) == -1)
+  if (events.parse_args (convert.get_argc(), convert.get_ASCII_argv()) == -1)
     {
       return 1;
     }

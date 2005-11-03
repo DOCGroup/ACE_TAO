@@ -21,6 +21,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/ARGV.h"
+#include "ace/Argv_Type_Converter.h"
 
 class TestSupplier
 : public POA_CosNotifyComm::StructuredPushSupplier
@@ -52,7 +53,7 @@ class TestConsumer
   }
 };
 
-int ACE_TMAIN(int ac, ACE_TCHAR **av)
+int ACE_TMAIN(int argc, ACE_TCHAR **argv)
 {
   ACE_Argv_Type_Converter convert (argc, argv);
 
@@ -66,13 +67,13 @@ int ACE_TMAIN(int ac, ACE_TCHAR **av)
     CORBA::ORB_var orb;
     PortableServer::POA_var poa;
 
-    orb = CORBA::ORB_init(ac, av, "" ACE_ENV_ARG_PARAMETER);
+    orb = CORBA::ORB_init(convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
     ACE_ASSERT(! CORBA::is_nil (orb.in ()));
 
-    if (ac > 2 && ACE_OS::strcmp (av[1], ACE_TEXT("-pass")) == 0)
+    if (convert.get_argc() > 2 && ACE_OS::strcmp (convert.get_ASCII_argv()[1], "-pass") == 0)
     {
-      int pn = av[2][0] - '0';
+      int pn = argv[2][0] - '0';
       switch (pn)
       {
       case 1:

@@ -45,7 +45,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_TRY_CHECK;
 
       // We do the command line parsing first
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
         return 1;
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);

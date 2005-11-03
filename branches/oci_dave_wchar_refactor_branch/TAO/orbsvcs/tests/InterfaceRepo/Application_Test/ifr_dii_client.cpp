@@ -27,7 +27,7 @@ IFR_DII_Client::init (int argc,
                       char *argv[]
                       ACE_ENV_ARG_DECL)
 {
-  this->orb_ = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
+  this->orb_ = CORBA::ORB_init (argc, argv,
                                 0
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
@@ -98,8 +98,7 @@ IFR_DII_Client::run (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-IFR_DII_Client::parse_args (int argc,
-                            char *argv[])
+IFR_DII_Client::parse_args (int argc, char *argv[])
 {
   ACE_Get_Arg_Opt<char> opts (argc, argv, "dn");
   int c;

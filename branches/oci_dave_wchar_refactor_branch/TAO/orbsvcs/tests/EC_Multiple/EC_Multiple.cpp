@@ -126,13 +126,13 @@ print_priority_info (const char *const name)
 }
 
 int
-Test_ECG::run (int argc, ACE_TCHAR* argv[])
+Test_ECG::run (int argc, char* argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
@@ -1608,7 +1608,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   Test_ECG,
                   -1);
 
-  const int status = test->run (argc, argv);
+  const int status = test->run (convert.get_argc(), convert.get_ASCII_argv());
 
   delete test;
   return status;

@@ -4,6 +4,7 @@
 
 #include "testC.h"
 #include "ace/Log_Msg.h"
+#include "ace/Argv_Type_Converter.h"
 
 using namespace CORBA;
 
@@ -14,7 +15,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR* argv[])
   ACE_TRY_NEW_ENV
   {
  
-    ORB_var orb = ORB_init(argc, argv, 0 ACE_ENV_ARG_PARAMETER);
+    ORB_var orb = ORB_init(convert.get_argc(), convert.get_ASCII_argv(), 0 ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     Object_var obj = orb->resolve_initial_references("Test" ACE_ENV_ARG_PARAMETER);

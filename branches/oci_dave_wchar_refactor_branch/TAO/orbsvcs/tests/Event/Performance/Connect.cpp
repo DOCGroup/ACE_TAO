@@ -38,7 +38,7 @@ EC_Connect::execute_test (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 int
 EC_Connect::parse_args (int& argc, ACE_TCHAR* argv[])
 {
-  if (this->EC_Driver::parse_args (argc, argv) != 0)
+  if (this->EC_Driver::parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
     return -1;
 
   ACE_TArg_Shifter< char > arg_shifter (argc, argv);

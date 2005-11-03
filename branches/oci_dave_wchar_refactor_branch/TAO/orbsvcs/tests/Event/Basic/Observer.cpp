@@ -43,7 +43,7 @@ EC_Master::~EC_Master (void)
 }
 
 int
-EC_Master::run (int argc, ACE_TCHAR* argv[])
+EC_Master::run (int argc, char* argv[])
 {
   ACE_TRY_NEW_ENV
     {
@@ -56,7 +56,7 @@ EC_Master::run (int argc, ACE_TCHAR* argv[])
       this->initialize_orb_and_poa (argc, argv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (this->parse_args (argc, argv))
+      if (this->parse_args (convert.get_argc(), convert.get_ASCII_argv()))
         return 1;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -195,7 +195,7 @@ EC_Master::initialize_orb_and_poa (int &argc, ACE_TCHAR* argv[]
 }
 
 int
-EC_Master::parse_args (int &argc, ACE_TCHAR *argv[])
+EC_Master::parse_args (int &argc, char *argv[])
 {
   ACE_TArg_Shifter< char > arg_shifter (argc, argv);
 
@@ -262,7 +262,7 @@ EC_Observer::initialize_orb_and_poa (int&, char*[]
 int
 EC_Observer::parse_args (int& argc, ACE_TCHAR* argv[])
 {
-  return this->EC_Driver::parse_args (argc, argv);
+  return this->EC_Driver::parse_args (convert.get_argc(), convert.get_ASCII_argv());
 }
 
 void

@@ -264,9 +264,9 @@ private:
 # define ACE_TEXT_TO_WCHAR_OUT(STRING) ACE::String_Conversion::Convert_Out< wchar_t >( STRING ).c_str()
 # define ACE_TEXT_TO_TCHAR_OUT(STRING) ACE::String_Conversion::Convert_Out< ACE_TCHAR >( STRING ).c_str()
 
-# define ACE_TEXT_TO_MALLOC_CHAR_OUT(STRING) ACE::String_Conversion::Convert_Out< char, ACE::String_Conversion::Allocator_malloc >( STRING ).c_str()
-# define ACE_TEXT_TO_MALLOC_WCHAR_OUT(STRING) ACE::String_Conversion::Convert_Out< wchar_t, ACE::String_Conversion::Allocator_malloc >( STRING ).c_str()
-# define ACE_TEXT_TO_MALLOC_TCHAR_OUT(STRING) ACE::String_Conversion::Convert_Out< ACE_TCHAR, ACE::String_Conversion::Allocator_malloc >( STRING ).c_str()
+# define ACE_TEXT_TO_MALLOC_CHAR_OUT(STRING) ACE::String_Conversion::Convert_Out< char, ACE::String_Conversion::Allocator_malloc<char> >( STRING ).c_str()
+# define ACE_TEXT_TO_MALLOC_WCHAR_OUT(STRING) ACE::String_Conversion::Convert_Out< wchar_t, ACE::String_Conversion::Allocator_malloc<wchar_t> >( STRING ).c_str()
+# define ACE_TEXT_TO_MALLOC_TCHAR_OUT(STRING) ACE::String_Conversion::Convert_Out< ACE_TCHAR, ACE::String_Conversion::Allocator_malloc<ACE_TCHAR> >( STRING ).c_str()
 
 # define ACE_TEXT_TO_CHAR_IN(STRING) ACE::String_Conversion::Convert_In< char, wchar_t  >( STRING ).c_str()
 # define ACE_TEXT_TO_WCHAR_IN(STRING) ACE::String_Conversion::Convert_In< wchar_t, char >( STRING ).c_str()

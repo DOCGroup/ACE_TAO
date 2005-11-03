@@ -39,13 +39,13 @@ ECM_Driver::ECM_Driver (void)
 }
 
 int
-ECM_Driver::run (int argc, ACE_TCHAR* argv[])
+ECM_Driver::run (int argc, char* argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       this->orb_ =
-        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
@@ -1158,5 +1158,5 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   TAO_EC_Default_Factory::init_svcs ();
 
   ECM_Driver driver;
-  return driver.run (argc, argv);
+  return driver.run (convert.get_argc(), convert.get_ASCII_argv());
 }

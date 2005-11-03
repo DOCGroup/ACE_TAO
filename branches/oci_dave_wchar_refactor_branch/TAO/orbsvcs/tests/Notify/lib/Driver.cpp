@@ -179,7 +179,7 @@ TAO_Notify_Tests_Driver::parse_args (int argc, char *argv[])
 {
   ACE_TArg_Shifter< char > arg_shifter (argc, argv);
 
-  const ACE_TCHAR *current_arg = 0;
+  const char *current_arg = 0;
 
   while (arg_shifter.is_anything_left ())
     {
@@ -192,7 +192,7 @@ TAO_Notify_Tests_Driver::parse_args (int argc, char *argv[])
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORoutput")))) // -IORoutput file_name
+      else if ((current_arg = arg_shifter.get_the_parameter ("-IORoutput"))) // -IORoutput file_name
         {
           if (this->activation_manager_->ior_output_file (current_arg) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -201,7 +201,7 @@ TAO_Notify_Tests_Driver::parse_args (int argc, char *argv[])
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORinput")))) // -IORinput file_name
+      else if ((current_arg = arg_shifter.get_the_parameter ("-IORinput"))) // -IORinput file_name
         {
           if (this->activation_manager_->ior_input_file (current_arg) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -236,7 +236,7 @@ TAO_Notify_Tests_Driver::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  if (this->parse_args (argc, argv) == -1)
+  if (this->parse_args (convert.get_argc(), convert.get_ASCII_argv()) == -1)
     return -1;
 
   // Make sure we can support multiple priorities that are required
