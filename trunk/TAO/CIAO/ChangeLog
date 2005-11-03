@@ -1,3 +1,12 @@
+Wed Nov 02 19:28:14 2005  Gan Deng  <gan.deng@vanderbilt.edu>
+
+	* tools/Config_Handlers/RT-CCM/CB_Handler.cpp
+	* tools/Config_Handlers/RT-CCM/TPL_Handler.cpp
+	* DAnCE/NodeApplication/RTConfig_Manager.cpp:
+
+	  Fixed some bugs related to populating/displaying ServerResource 
+	  data structure.
+
 Wed Nov 02 14:55:14 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
 	* DAnCE/NodeApplication/RTNodeApp_Configurator.cpp: Fixed strings
