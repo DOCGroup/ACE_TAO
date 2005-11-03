@@ -70,8 +70,9 @@ public:
   int dispatch_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_EH_Dispatch_Info (const ACE_EH_Dispatch_Info &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_EH_Dispatch_Info &operator= (const ACE_EH_Dispatch_Info &))
+  // Disallow copying and assignment.
+  ACE_EH_Dispatch_Info (const ACE_EH_Dispatch_Info &);
+  ACE_EH_Dispatch_Info &operator= (const ACE_EH_Dispatch_Info &);
 };
 
 
@@ -119,6 +120,11 @@ public:
 
 private:
 
+  // Disallow default construction.
+  ACE_TP_Token_Guard (void);
+
+private:
+
   /// The Select Reactor token.
   ACE_Select_Reactor_Token &token_;
 
@@ -128,9 +134,6 @@ private:
   /// vice-versa.
   int owner_;
 
-private:
-
-  ACE_UNIMPLEMENTED_FUNC (ACE_TP_Token_Guard (void))
 };
 
 /**

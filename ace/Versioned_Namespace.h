@@ -18,14 +18,16 @@
 #define ACE_VERSIONED_NAMESPACE_H
 
 #ifndef ACE_CONFIG_LITE_H
-# error This header is only meant to be included by "ace/config-lite.h".
-#endif  /* !ACE_MAJOR_VERSION */
+# error This header is only meant to be included by or after "ace/config-lite.h".
+#endif  /* !ACE_CONFIG_LITE_H */
 
 
 #if defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1 \
   && !(defined (_MSC_VER) && _MSC_VER <= 1200)
 
 # ifndef ACE_VERSIONED_NAMESPACE_NAME
+//#  include "ace/Version.h"
+
 // Preprocessor symbols will not be expanded if they are
 // concatenated.  Force the preprocessor to expand them during the
 // argument prescan by calling a macro that itself calls another that

@@ -92,6 +92,12 @@ public:
   void dump (void) const;
 
 private:
+
+  // Disallow copying and assignment...
+  void operator= (const ACE_Read_Buffer &);
+  ACE_Read_Buffer (const ACE_Read_Buffer &);
+
+private:
   /// Recursive helper method that does the work...
   char *rec_read (int term, int search, int replace);
 
@@ -111,9 +117,6 @@ private:
   /// Pointer to the allocator.
   ACE_Allocator *allocator_;
 
-  // = Disallow copying and assignment...
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Read_Buffer &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Read_Buffer (const ACE_Read_Buffer &))
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
