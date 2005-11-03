@@ -106,7 +106,7 @@ CIAO::NodeManager_Impl_Base::preparePlan (const Deployment::DeploymentPlan &plan
 
   if (! this->validate_plan (plan))
     {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) NodeManager <%s>:prepare_plan:Plan_Error.\n", 
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) NodeManager <%s>:prepare_plan:Plan_Error.\n",
         plan.instance[0].node.in ()));
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) All component instances hosted in the "
         "same component server must have the "
@@ -139,7 +139,7 @@ CIAO::NodeManager_Impl_Base::preparePlan (const Deployment::DeploymentPlan &plan
           //   become 2. so we can leave the safeservant along and be
           //   dead. Also note that I added
           PortableServer::ObjectId_var oid  =
-            app_mgr->init (this->nodeapp_location_,
+            app_mgr->init (this->nodeapp_location_.in (),
                            this->nodeapp_options_.in (),
                            this->spawn_delay_,
                            plan,
