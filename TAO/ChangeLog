@@ -1,3 +1,9 @@
+Thu Nov  3 12:17:09 MST 2005  Yan Dai  <dai_y@ociweb.com>
+
+        * tao/CSD_Framework.mpc:
+
+          Removed interceptor as the base project since it's not needed.
+          
 Thu Nov  3 09:26:21 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Concurrency/Concurrency_Loader.h:
