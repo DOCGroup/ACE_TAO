@@ -1,6 +1,10 @@
 // -*- C++ -*-
+//
 // $Id$
+
 #include "tao/debug.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO::CSD::Strategy_Base::Strategy_Base()
@@ -136,3 +140,5 @@ TAO::CSD::Strategy_Base::servant_deactivated_event
   this->servant_deactivated_event_i(servant, oid ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

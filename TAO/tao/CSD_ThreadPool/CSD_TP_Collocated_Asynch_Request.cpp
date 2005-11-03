@@ -11,6 +11,8 @@ ACE_RCSID (CSD_ThreadPool,
 #endif /* ! __ACE_INLINE__ */
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::CSD::TP_Collocated_Asynch_Request::~TP_Collocated_Asynch_Request()
 {
 }
@@ -49,9 +51,10 @@ TAO::CSD::TP_Collocated_Asynch_Request::dispatch_i()
   ACE_ENDTRY;
 }
 
-
 void
 TAO::CSD::TP_Collocated_Asynch_Request::cancel_i()
 {
   this->do_cancel();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

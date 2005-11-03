@@ -16,6 +16,7 @@ ACE_RCSID (CSD_Framework,
 # include "CSD_Strategy_Base.inl"
 #endif /* ! __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::CSD::Strategy_Base::~Strategy_Base()
 {
@@ -127,3 +128,5 @@ TAO::CSD::Strategy_Base::servant_deactivated_event_i
 {
   // do nothing.
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

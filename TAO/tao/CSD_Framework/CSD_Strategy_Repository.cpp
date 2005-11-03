@@ -8,6 +8,8 @@ ACE_RCSID (CSD_Framework,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_CSD_Strategy_Repository::TAO_CSD_Strategy_Repository()
 {
 }
@@ -101,6 +103,7 @@ TAO_CSD_Strategy_Repository::Strategy_Node::find(const ACE_CString &name)
   return 0;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 /////////////////////////////////////////////////////////////////////
 

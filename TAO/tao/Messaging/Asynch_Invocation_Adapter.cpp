@@ -19,6 +19,8 @@ ACE_RCSID (Messaging,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   Asynch_Invocation_Adapter::Asynch_Invocation_Adapter (
@@ -182,3 +184,5 @@ namespace TAO
   }
 
 } // End namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL

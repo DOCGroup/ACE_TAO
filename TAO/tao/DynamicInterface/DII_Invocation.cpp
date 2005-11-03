@@ -27,6 +27,8 @@ ACE_RCSID (DynamicInterface,
            DII_Invocation,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   DII_Invocation::DII_Invocation (CORBA::Object_ptr otarget,
@@ -228,3 +230,5 @@ namespace TAO
         ACE_ENV_ARG_PARAMETER);
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

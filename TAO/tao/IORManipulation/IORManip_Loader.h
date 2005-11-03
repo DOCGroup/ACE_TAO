@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 // $Id$
 
@@ -27,6 +27,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_IORManip_Export TAO_IORManip_Loader : public TAO_Object_Loader
 {
 public:
@@ -44,11 +46,13 @@ public:
   static int Initializer (void);
 };
 
-ACE_STATIC_SVC_DECLARE (TAO_IORManip_Loader)
-ACE_FACTORY_DECLARE (TAO_IORManip, TAO_IORManip_Loader)
-
 static int
 TAO_Requires_IORManip_Initializer = TAO_IORManip_Loader::Initializer ();
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DECLARE (TAO_IORManip_Loader)
+ACE_FACTORY_DECLARE (TAO_IORManip, TAO_IORManip_Loader)
 
 #define TAO_IORMANIP_SAFE_INCLUDE
 #include "IORC.h"

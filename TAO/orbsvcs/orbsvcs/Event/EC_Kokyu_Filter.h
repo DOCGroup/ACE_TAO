@@ -87,10 +87,8 @@ public:
                              ACE_ENV_ARG_DECL);
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Kokyu_Filter
-                              (const TAO_EC_Kokyu_Filter&))
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Kokyu_Filter& operator=
-                              (const TAO_EC_Kokyu_Filter&))
+  TAO_EC_Kokyu_Filter (const TAO_EC_Kokyu_Filter&);
+  TAO_EC_Kokyu_Filter& operator= (const TAO_EC_Kokyu_Filter&);
 
   /// Initialize our RT_Info handle and dependencies
   void init_rt_info (ACE_ENV_SINGLE_ARG_DECL);

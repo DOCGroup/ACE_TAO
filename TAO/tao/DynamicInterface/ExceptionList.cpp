@@ -12,6 +12,7 @@ ACE_RCSID (DynamicInterface,
 # include "ExceptionList.inl"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::ExceptionList::ExceptionList (CORBA::ULong len,
                                      CORBA::TypeCode_ptr *tc_list)
@@ -104,4 +105,4 @@ CORBA::ExceptionList::_decr_refcnt (void)
     }
 }
 
-
+TAO_END_VERSIONED_NAMESPACE_DECL

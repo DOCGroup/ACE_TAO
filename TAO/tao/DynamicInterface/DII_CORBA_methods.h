@@ -31,6 +31,7 @@
 
 #define TAO_EXPORT_MACRO TAO_DynamicInterface_Export
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -59,6 +60,8 @@ namespace CORBA
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Request_ptr);
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

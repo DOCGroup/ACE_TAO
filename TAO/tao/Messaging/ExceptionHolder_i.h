@@ -27,6 +27,8 @@
 #include "tao/Messaging/ExceptionHolderA.h"
 #include "tao/Messaging/ExceptionHolderC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace Dynamic
 {
   class ExceptionList;
@@ -54,19 +56,25 @@ namespace TAO
       ::CORBA::ULong exceptions_count
     );
 
-    virtual ~ExceptionHolder ();
-
     virtual void raise_exception (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
     virtual void raise_exception_with_list (
         const ::Dynamic::ExceptionList & exc_list ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
+  protected:
+
+    virtual ~ExceptionHolder (void);
+
   private:
-    TAO::Exception_Data* data_;
-    CORBA::ULong count_;
+
+    TAO::Exception_Data* const data_;
+    CORBA::ULong const count_;
+
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif
 

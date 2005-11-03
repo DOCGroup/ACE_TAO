@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -24,6 +24,7 @@
 #include "CSD_TP_Custom_Request.h"
 #include "CSD_TP_Synch_Helper.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -79,6 +80,8 @@ namespace TAO
 
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "CSD_TP_Custom_Synch_Request.inl"

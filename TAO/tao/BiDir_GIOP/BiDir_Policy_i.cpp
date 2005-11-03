@@ -10,6 +10,8 @@ ACE_RCSID (TAO,
            BiDir_Policy_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_BidirectionalPolicy::TAO_BidirectionalPolicy (
     const BiDirPolicy::BidirectionalPolicyValue  val)
   : ACE_NESTED_CLASS (CORBA, Object) ()
@@ -30,7 +32,6 @@ TAO_BidirectionalPolicy::TAO_BidirectionalPolicy (const TAO_BidirectionalPolicy 
   , value_ (rhs.value_)
 {
 }
-
 
 CORBA::PolicyType
 TAO_BidirectionalPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -74,7 +75,6 @@ TAO_BidirectionalPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
 }
 
-
 BiDirPolicy::BidirectionalPolicyValue
 TAO_BidirectionalPolicy::value (
     ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -90,3 +90,5 @@ TAO_BidirectionalPolicy::_tao_cached_type (void) const
 {
   return TAO_CACHED_POLICY_BIDIRECTIONAL_GIOP;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -30,12 +30,13 @@
 
 #include "CSD_FrameworkC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Root_POA;
 namespace PortableServer
 {
   class POAManager;
 }
-
 
 namespace TAO
 {
@@ -162,6 +163,7 @@ namespace TAO
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "CSD_Strategy_Base.inl"

@@ -40,6 +40,8 @@
 #  define TAO_EXPORT_NESTED_MACRO TAO_DynamicInterface_Export
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace CORBA
 {
   /**
@@ -103,6 +105,7 @@ namespace CORBA
 
 } // End CORBA namespace.
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

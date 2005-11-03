@@ -15,6 +15,7 @@ ACE_RCSID (DynamicInterface,
 # include "Context.inl"
 #endif /* ! __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Context::Context (void)
   : refcount_ (1)
@@ -199,4 +200,4 @@ CORBA::ContextList::_decr_refcnt (void)
     }
 }
 
-
+TAO_END_VERSIONED_NAMESPACE_DECL

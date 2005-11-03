@@ -1,4 +1,4 @@
-// @(#) $Id$
+// $Id$
 
 #include "tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.h"
 #include "tao/AnyTypeCode/SystemExceptionA.h"
@@ -6,9 +6,11 @@
 #include "tao/AnyTypeCode/PolicyA.h"
 #include "tao/AnyTypeCode/Any.h"
 
-ACE_RCSID (tao,
+ACE_RCSID (AnyTypeCode,
            TAO_AnyTypeCode_Adapter,
            "$Id$")
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #define STANDARD_EXCEPTION_LIST \
     TAO_SYSTEM_EXCEPTION (UNKNOWN) \
@@ -139,6 +141,7 @@ TAO_AnyTypeCode_Adapter_Impl::Initializer (void)
       );
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (
   TAO_AnyTypeCode_Adapter_Impl,

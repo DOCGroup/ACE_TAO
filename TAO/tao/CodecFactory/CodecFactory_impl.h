@@ -30,6 +30,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Codeset_Translator_Base;
 
 /**
@@ -65,9 +67,8 @@ public:
 private:
   /// Prevent copying through the copy constructor and the assignment
   /// operator.
-  ACE_UNIMPLEMENTED_FUNC (
-    TAO_CodecFactory (const TAO_CodecFactory &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_CodecFactory &))
+  TAO_CodecFactory (const TAO_CodecFactory &);
+  void operator= (const TAO_CodecFactory &);
 
   IOP::Codec_ptr create_codec_i (CORBA::Octet major,
                                  CORBA::Octet minor,
@@ -87,6 +88,8 @@ private:
   TAO_ORB_Core * const orb_core_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

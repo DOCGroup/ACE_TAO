@@ -1,6 +1,8 @@
 // -*- C++ -*-
+//
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO::CSD::TP_Custom_Request_Operation::TP_Custom_Request_Operation
@@ -45,3 +47,5 @@ TAO::CSD::TP_Custom_Request_Operation::servant()
 {
   return this->servant_.in();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

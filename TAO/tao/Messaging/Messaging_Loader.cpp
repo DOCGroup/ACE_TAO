@@ -8,8 +8,10 @@
 #include "tao/ORB_Core.h"
 #include "tao/ORBInitializer_Registry.h"
 
-ACE_RCSID (TAO, Messaging_Loader, "$Id$")
+ACE_RCSID (Messaging, Messaging_Loader, "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Messaging_Loader::TAO_Messaging_Loader (void)
 {
@@ -17,7 +19,6 @@ TAO_Messaging_Loader::TAO_Messaging_Loader (void)
 
 TAO_Messaging_Loader::~TAO_Messaging_Loader (void)
 {
-
 }
 
 int
@@ -69,6 +70,8 @@ TAO_Messaging_Loader::init (int,
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 /////////////////////////////////////////////////////////////////////
 

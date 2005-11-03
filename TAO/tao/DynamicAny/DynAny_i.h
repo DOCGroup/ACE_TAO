@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 //=============================================================================
@@ -29,6 +30,8 @@
 # pragma warning(push)
 # pragma warning (disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_DynAny_i
@@ -118,6 +121,8 @@ private:
   TAO_DynAny_i (const TAO_DynAny_i &src);
   TAO_DynAny_i &operator= (const TAO_DynAny_i &src);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 # pragma warning(pop)

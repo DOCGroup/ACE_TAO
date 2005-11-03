@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 /**
  * @file CEC_Event_Loader.h
  *
@@ -94,8 +96,9 @@ protected:
   CosNaming::Name channel_name_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_CEC_Event_Loader (const TAO_CEC_Event_Loader &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_CEC_Event_Loader &operator= (const TAO_CEC_Event_Loader &))
+  // Disallow copying and assignment.
+  TAO_CEC_Event_Loader (const TAO_CEC_Event_Loader &);
+  TAO_CEC_Event_Loader &operator= (const TAO_CEC_Event_Loader &);
 };
 
 ACE_FACTORY_DECLARE (TAO_Event_Serv, TAO_CEC_Event_Loader)

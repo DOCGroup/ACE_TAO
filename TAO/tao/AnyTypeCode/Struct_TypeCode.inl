@@ -2,6 +2,7 @@
 //
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename StringType,
           typename TypeCodeType,
@@ -45,3 +46,5 @@ TAO::TypeCode::Struct<StringType,
   // CORBA::tk_except is not allowed in the recursive TypeCode case.
   // ACE_ASSERT (kind == CORBA::tk_struct);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

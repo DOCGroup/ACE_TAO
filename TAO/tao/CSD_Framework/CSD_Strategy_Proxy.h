@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -26,8 +26,10 @@
 
 #include "CSD_Strategy_Base.h"
 
-class TAO_ServerRequest;
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_ServerRequest;
 
 namespace TAO
 {
@@ -100,6 +102,8 @@ namespace TAO
     };
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "CSD_Strategy_Proxy.inl"

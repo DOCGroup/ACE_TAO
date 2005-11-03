@@ -18,6 +18,7 @@ ACE_RCSID (tao,
            Value_TypeCode_Static,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
 TAO::TypeCode::Value<char const *,
@@ -420,3 +421,5 @@ TAO::TypeCode::Value<char const *,
     CORBA::TypeCode::_duplicate (
       Traits<char const *>::get_typecode (this->concrete_base_));
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

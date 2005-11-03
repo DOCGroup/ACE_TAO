@@ -21,6 +21,8 @@ ACE_RCSID (tao,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::Any_SystemException::Any_SystemException (_tao_destructor destructor,
                                                CORBA::TypeCode_ptr tc,
                                                CORBA::SystemException * const val)
@@ -204,3 +206,5 @@ TAO::Any_SystemException::demarshal_value (TAO_InputCDR &cdr)
   ACE_ENDTRY;
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

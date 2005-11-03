@@ -114,9 +114,8 @@ private:
   /// Prevent copying through the copy constructor and the assignment
   /// operator.
   //@{
-  ACE_UNIMPLEMENTED_FUNC (
-    TAO_Security_Current (const TAO_Security_Current &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Security_Current &))
+  TAO_Security_Current (const TAO_Security_Current &);
+  void operator= (const TAO_Security_Current &);
   //@}
 
 private:

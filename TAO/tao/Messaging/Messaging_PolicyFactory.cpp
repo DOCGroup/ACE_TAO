@@ -12,6 +12,8 @@ ACE_RCSID (Messaging,
 #include "tao/AnyTypeCode/TAOA.h"
 #include "tao/AnyTypeCode/Any.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
 CORBA::Policy_ptr
@@ -105,3 +107,5 @@ TAO_Messaging_PolicyFactory::create_policy (
   ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                     CORBA::Policy::_nil ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

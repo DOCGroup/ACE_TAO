@@ -59,10 +59,8 @@ public:
                                 ACE_ENV_ARG_DECL);
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Type_Filter
-                              (const TAO_EC_Type_Filter&))
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Type_Filter& operator=
-                              (const TAO_EC_Type_Filter&))
+  TAO_EC_Type_Filter (const TAO_EC_Type_Filter&);
+  TAO_EC_Type_Filter& operator= (const TAO_EC_Type_Filter&);
 
   /// Filter an EventSet that contains more than one event.
   int filter_set (const RtecEventComm::EventSet& event,

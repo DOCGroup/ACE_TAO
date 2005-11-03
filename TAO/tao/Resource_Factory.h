@@ -66,9 +66,10 @@ public:
   void factory (TAO_Protocol_Factory *factory, int owner = 0);
 
 private:
-  // Prohibited
-  ACE_UNIMPLEMENTED_FUNC (TAO_Protocol_Item (const TAO_Protocol_Item&))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Protocol_Item&))
+
+  // Disallow copying and assignment.
+  TAO_Protocol_Item (const TAO_Protocol_Item&);
+  void operator= (const TAO_Protocol_Item&);
 
 private:
   /// Protocol factory name.

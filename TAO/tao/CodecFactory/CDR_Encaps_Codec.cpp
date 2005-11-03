@@ -1,5 +1,3 @@
-// -*- C++ -*-
-//
 // $Id$
 
 #include "CDR_Encaps_Codec.h"
@@ -20,16 +18,18 @@
 #include "ace/OS_NS_string.h"
 
 
-ACE_RCSID (tao,
+ACE_RCSID (CodecFactory,
            CDR_Encaps_Codec,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_CDR_Encaps_Codec::TAO_CDR_Encaps_Codec (CORBA::Octet major,
-                                            CORBA::Octet minor,
-                                            TAO_ORB_Core * orb_core,
-                                            TAO_Codeset_Translator_Base * char_trans,
-                                            TAO_Codeset_Translator_Base * wchar_trans)
+TAO_CDR_Encaps_Codec::TAO_CDR_Encaps_Codec (
+  CORBA::Octet major,
+  CORBA::Octet minor,
+  TAO_ORB_Core * orb_core,
+  TAO_Codeset_Translator_Base * char_trans,
+  TAO_Codeset_Translator_Base * wchar_trans)
   : major_ (major),
     minor_ (minor),
     orb_core_ (orb_core),
@@ -364,3 +364,5 @@ TAO_CDR_Encaps_Codec::check_type_for_encoding (
       && typecode->equivalent (CORBA::_tc_wstring ACE_ENV_ARG_PARAMETER))
     ACE_THROW (IOP::Codec::InvalidTypeForEncoding ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

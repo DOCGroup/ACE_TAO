@@ -20,6 +20,8 @@ ACE_RCSID (Messaging,
            Asynch_Invocation,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   Asynch_Remote_Invocation::Asynch_Remote_Invocation (
@@ -184,3 +186,4 @@ namespace TAO
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

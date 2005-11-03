@@ -29,6 +29,8 @@
 
 // ****************************************************************
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Codeset_Manager_Factory
  *
@@ -45,6 +47,7 @@ public:
 
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_Codeset_Manager_Factory)
 ACE_FACTORY_DECLARE (TAO_Codeset, TAO_Codeset_Manager_Factory)

@@ -13,6 +13,7 @@ ACE_RCSID (CSD_Framework,
 # include "CSD_Strategy_Proxy.inl"
 #endif /* ! __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
 TAO::CSD::Strategy_Proxy::custom_strategy
@@ -45,3 +46,5 @@ TAO::CSD::Strategy_Proxy::custom_strategy
 
   return true;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

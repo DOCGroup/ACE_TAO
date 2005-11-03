@@ -36,6 +36,8 @@ ACE_RCSID (tao,
            skip,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::traverse_status
 TAO_Marshal_Primitive::skip (CORBA::TypeCode_ptr  tc,
                              TAO_InputCDR *stream
@@ -1040,3 +1042,5 @@ TAO_Marshal_Value::skip (CORBA::TypeCode_ptr  tc,
                                     CORBA::COMPLETED_MAYBE),
                     TAO::TRAVERSE_STOP);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -983,7 +983,6 @@ nobase_include_HEADERS += \
   AnyTypeCode/SystemExceptionA.h \
   AnyTypeCode/TAOA.h \
   AnyTypeCode/TAO_AnyTypeCode_Export.h \
-  AnyTypeCode/TC_Constants_Forward.h \
   AnyTypeCode/TimeBaseA.h \
   AnyTypeCode/True_RefCount_Policy.h \
   AnyTypeCode/True_RefCount_Policy.inl \

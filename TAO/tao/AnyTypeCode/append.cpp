@@ -38,6 +38,8 @@ ACE_RCSID (tao,
            append,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Encode instances of arbitrary data types based only on typecode.
 // "data" points to the data type; if it's not a primitve data type,
 // the TypeCode interpreter is used to recursively encode its
@@ -1319,3 +1321,5 @@ TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
                                     CORBA::COMPLETED_MAYBE),
                     TAO::TRAVERSE_STOP);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

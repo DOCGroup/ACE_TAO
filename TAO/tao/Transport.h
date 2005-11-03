@@ -915,9 +915,9 @@ private:
   /// partial_message_ data member.
   void allocate_partial_message_block (void);
 
-  /// Prohibited
-  ACE_UNIMPLEMENTED_FUNC (TAO_Transport (const TAO_Transport&))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Transport&))
+  // Disallow copying and assignment.
+  TAO_Transport (const TAO_Transport&);
+  void operator= (const TAO_Transport&);
 
   /*
    * Specialization hook to add concrete private methods from

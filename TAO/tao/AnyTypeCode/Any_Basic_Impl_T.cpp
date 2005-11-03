@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef TAO_ANY_BASIC_IMPL_T_C
-#define TAO_ANY_BASIC_IMPL_T_C
+#ifndef TAO_ANY_BASIC_IMPL_T_CPP
+#define TAO_ANY_BASIC_IMPL_T_CPP
 
 #include "tao/AnyTypeCode/Any_Basic_Impl_T.h"
 #include "tao/AnyTypeCode/Any.h"
@@ -18,10 +18,7 @@
 # include "tao/AnyTypeCode/Any_Basic_Impl_T.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Any_Basic_Impl_T,
-           "$Id$")
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename T>
 TAO::Any_Basic_Impl_T<T>::Any_Basic_Impl_T (CORBA::TypeCode_ptr tc,
@@ -142,4 +139,6 @@ TAO::Any_Basic_Impl_T<T>::_tao_decode (TAO_InputCDR &cdr
     }
 }
 
-#endif /* TAO_ANY_BASIC_IMPL_T_C */
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_ANY_BASIC_IMPL_T_CPP */

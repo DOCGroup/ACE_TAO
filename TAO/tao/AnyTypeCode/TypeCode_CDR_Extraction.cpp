@@ -30,6 +30,7 @@ ACE_RCSID (tao,
            TypeCode_CDR_Extraction,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -1323,3 +1324,5 @@ operator>> (TAO_InputCDR & cdr,
 
   return tc_demarshal (cdr, tc, infos);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

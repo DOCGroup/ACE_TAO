@@ -1,5 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO::CSD::TP_Servant_State::TP_Servant_State()
@@ -22,3 +25,5 @@ TAO::CSD::TP_Servant_State::busy_flag(bool new_value)
 {
   this->busy_flag_ = new_value;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

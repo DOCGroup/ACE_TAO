@@ -15,6 +15,7 @@
 
 #include "ace/Value_Ptr.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename StringType,
           typename TypeCodeType,
@@ -445,5 +446,7 @@ TAO::TypeCode::Union<StringType,
 {
   return this->default_index_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_UNION_TYPECODE_CPP */

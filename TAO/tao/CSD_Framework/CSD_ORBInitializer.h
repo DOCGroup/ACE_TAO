@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -37,10 +37,12 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// CSD ORB initializer.
-class TAO_CSD_FW_Export TAO_CSD_ORBInitializer :
-  public virtual PortableInterceptor::ORBInitializer,
-  public virtual TAO_Local_RefCounted_Object
+class TAO_CSD_ORBInitializer
+  : public virtual PortableInterceptor::ORBInitializer
+  , public virtual TAO_Local_RefCounted_Object
 {
 public:
   
@@ -54,6 +56,8 @@ public:
                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

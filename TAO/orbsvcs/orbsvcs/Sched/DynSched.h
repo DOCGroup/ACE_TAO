@@ -460,8 +460,8 @@ private:
   // calculate utilization, frame size, etc.
 
   // the following functions are not implememented
-  ACE_UNIMPLEMENTED_FUNC(ACE_DynScheduler (const ACE_DynScheduler &))
-  ACE_UNIMPLEMENTED_FUNC(ACE_DynScheduler &operator= (const ACE_DynScheduler &))
+  ACE_DynScheduler (const ACE_DynScheduler &);
+  ACE_DynScheduler &operator= (const ACE_DynScheduler &);
 
   //////////////////////////
   // private data members //

@@ -15,6 +15,8 @@
 
 #include "ace/Copy_Disabled.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_AMH_Response_Handler::TAO_AMH_Response_Handler ()
   : mesg_base_ (0)
   , request_id_ (0)
@@ -239,9 +241,9 @@ TAO_AMH_Response_Handler::_remove_ref (void)
 
   if (this->allocator_)
     {
-      TAO::TAO_Buffer_Allocator<TAO_AMH_Response_Handler, TAO_AMH_BUFFER_ALLOCATOR> allocator (allocator_);
+      TAO::TAO_Buffer_Allocator<TAO_AMH_Response_Handler, TAO_AMH_BUFFER_ALLOCATOR> allocator (this->allocator_);
 
-      allocator.release(this);
+      allocator.release (this);
     }
   else
     {
@@ -259,3 +261,5 @@ namespace TAO
     (void) arh->_remove_ref ();
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

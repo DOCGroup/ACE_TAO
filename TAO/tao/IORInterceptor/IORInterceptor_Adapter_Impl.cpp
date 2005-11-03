@@ -13,6 +13,8 @@ ACE_RCSID (IORInterceptor,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_IORInterceptor_Adapter_Impl::~TAO_IORInterceptor_Adapter_Impl (void)
 {
 }
@@ -235,3 +237,5 @@ TAO_IORInterceptor_Adapter_Impl::adapter_manager_state_changed (
         }
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -24,6 +24,8 @@
 #include "tao/TAO_Server_Request.h"
 #include "tao/operation_details.h"
 #include "tao/PortableServer/Servant_Base.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -117,6 +119,8 @@ namespace TAO
 
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "CSD_FW_Server_Request_Wrapper.inl"

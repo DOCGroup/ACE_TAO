@@ -10,6 +10,7 @@ ACE_RCSID (CSD_ThreadPool,
 # include "CSD_TP_Remote_Request.inl"
 #endif /* ! __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::CSD::TP_Remote_Request::~TP_Remote_Request()
 {
@@ -55,3 +56,5 @@ TAO::CSD::TP_Remote_Request::cancel_i()
 {
   this->do_cancel();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

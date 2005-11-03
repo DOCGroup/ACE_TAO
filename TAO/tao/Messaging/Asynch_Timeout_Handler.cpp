@@ -11,6 +11,7 @@ ACE_RCSID (Messaging,
            Asynch_Timeout_Handler,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Asynch_Timeout_Handler::TAO_Asynch_Timeout_Handler (
   TAO_Asynch_Reply_Dispatcher_Base *rd,
@@ -73,3 +74,5 @@ TAO_Asynch_Timeout_Handler::cancel ()
       this->reactor_->cancel_timer (this);
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
