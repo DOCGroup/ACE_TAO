@@ -59,7 +59,6 @@ CIAO::RTResource_Config_Manager::print_resources
            ++l)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "\tLane: %s\n"
                       "\t\tPriority: %d\n"
                       "\t\tStatic: %d\n"
                       "\t\tDynamic: %d\n",
@@ -67,7 +66,7 @@ CIAO::RTResource_Config_Manager::print_resources
                       orb_resource.threadpool_with_lanes_list[i].threadpool_lanes[l].static_threads,
                       orb_resource.threadpool_with_lanes_list[i].threadpool_lanes[l].dynamic_threads));
                       }
-      ACE_DEBUG ((LM_DEBUG,
+          ACE_DEBUG ((LM_DEBUG,
                   "\tStack size: %d\n"
                   "\tBorrowing: %s\n"
                   "\tBuffering %s\n"

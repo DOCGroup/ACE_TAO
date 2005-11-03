@@ -37,6 +37,8 @@ namespace CIAO
 		        static_cast <ACE_UINT32> (loc->dynamic_threads ());
 	      }
 
+        dest.stacksize = static_cast <const ACE_INT16> (src.stacksize ());
+
         dest.allow_borrowing = src.allow_borrowing ();
 
         dest.allow_request_buffering = src.allow_request_buffering ();
