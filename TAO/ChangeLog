@@ -1,3 +1,10 @@
+Thu Nov  3 05:30:41 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Makefile.am:
+	* tao/tao.mpc:
+
+	  Fix tipo.  Change Version_Namespace.h to Versioned_Namespace.h.
+
 Wed Nov  2 09:07:48 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/TAO_Singleton.h:
@@ -17,12 +24,12 @@ Wed Nov  2 08:30:41 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
 
 	* tao/Synch_Invocation.cpp:
         * tao/LocalRequest_Invocation.cpp:
-	
+
 	  Reverted "Fri Aug 26 11:33:07 2005  Justin Michel
 	  <michel_j@ociweb.com>" since the change was wrong. Chris
 	  Cleeland is informed, and he has accepted to do a right fix
 	  when he gets time.
-	
+
 	* tao/orbconf.h:
 
 	  Removed TAO_RESET_OUTPUT_CDR_AFTER_SEND #define, since it is of no
