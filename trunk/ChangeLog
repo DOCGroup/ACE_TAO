@@ -1,3 +1,33 @@
+Thu Nov  3 09:16:23 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Activation_Queue.h:
+	* ace/Atomic_Op.h:
+	* ace/Condition_Recursive_Thread_Mutex.h:
+	* ace/DLL.h:
+	* ace/DLL_Manager.h:
+	* ace/Dev_Poll_Reactor.h:
+	* ace/Framework_Component.h:
+	* ace/Get_Opt.h:
+	* ace/Mem_Map.h:
+	* ace/Message_Queue.cpp:
+	* ace/Message_Queue.h:
+	* ace/Method_Request.h:
+	* ace/Null_Mutex.h:
+	* ace/PI_Malloc.h:
+	* ace/Process.h:
+	* ace/Read_Buffer.h:
+	* ace/Select_Reactor.h:
+	* ace/Stats.h:
+	* ace/TP_Reactor.h:
+
+	  Removed unnecessary uses of ACE_UNIMPLEMENTED_FUNC macro.  It is
+	  only meant to be used for private unimplemented member functions
+	  in class templates.
+
+	* ace/Versioned_Namespace.h:
+
+	  Clarified preprocessor error message.
+
 Wed Nov  2 09:19:04 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/ACE.h (strdelete):

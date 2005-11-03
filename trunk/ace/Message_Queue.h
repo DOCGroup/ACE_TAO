@@ -208,15 +208,16 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+private:
+  // = Disallow copying and assignment.
+  ACE_Message_Queue_Base (const ACE_Message_Queue_Base &);
+  void operator= (const ACE_Message_Queue_Base &);
+
 protected:
   /// Indicates the state of the queue, which can be
   /// <ACTIVATED>, <DEACTIVATED>, or <PULSED>.
   int state_;
 
-private:
-  // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Message_Queue_Base &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Message_Queue_Base (const ACE_Message_Queue_Base &))
 };
 
 // Include the templates here.
@@ -390,6 +391,16 @@ protected:
   MSG_Q_ID msgq (void);
 
 private:
+
+  // Disallow copying and assignment.
+  ACE_Message_Queue_Vx (const ACE_Message_Queue_Vx &);
+  void operator= (const ACE_Message_Queue_Vx &);
+  
+  ACE_UNIMPLEMENTED_FUNC (virtual int peek_dequeue_head
+                            (ACE_Message_Block *&first_item,
+                             ACE_Time_Value *tv = 0))
+
+private:
   /// Maximum number of messages that can be queued.
   int max_messages_;
 
@@ -399,13 +410,6 @@ private:
   /// Native message queue options.
   int options_;
 
-  // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Message_Queue_Vx &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Message_Queue_Vx (const ACE_Message_Queue_Vx &))
-
-  ACE_UNIMPLEMENTED_FUNC (virtual int peek_dequeue_head
-                            (ACE_Message_Block *&first_item,
-                             ACE_Time_Value *tv = 0))
 };
 #endif /* VXWORKS */
 
@@ -567,6 +571,12 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
+
+  // Disallow copying and assignment.
+  ACE_Message_Queue_NT (const ACE_Message_Queue_NT &);
+  void operator= (const ACE_Message_Queue_NT &);
+
+private:
   // = Internal states.
 
   /// Maximum threads that can be released (and run) concurrently.
@@ -594,9 +604,6 @@ private:
   /// Underlying NT IoCompletionPort.
   ACE_HANDLE completion_port_;
 
-  // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Message_Queue_NT &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Message_Queue_NT (const ACE_Message_Queue_NT &))
 };
 #endif /* ACE_WIN32 && ACE_HAS_WINNT4 != 0 */
 

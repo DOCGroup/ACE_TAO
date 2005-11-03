@@ -145,7 +145,14 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+private:
+
+  // = Prevent copying and assignment.
+  ACE_Activation_Queue (const ACE_Activation_Queue &);
+  void operator= (const ACE_Activation_Queue &);
+
 protected:
+
   /// Stores the Method_Requests.
   ACE_Message_Queue<ACE_SYNCH> *queue_;
 
@@ -153,15 +160,13 @@ protected:
   int delete_queue_;
 
 private:
+
   /// Allocation strategy of the queue.
   ACE_Allocator *allocator_;
 
   /// Allocation strategy of the message blocks.
   ACE_Allocator *data_block_allocator_;
 
-  // = Prevent assignment and initialization.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Activation_Queue &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Activation_Queue (const ACE_Activation_Queue &))
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -149,9 +149,11 @@ public:
   void dump (void) const {}
 
 private:
-  // = Prevent assignment and initialization.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Guard<ACE_Null_Mutex> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Guard (const ACE_Guard<ACE_Null_Mutex> &))
+
+  // Disallow copying and assignment.
+  ACE_Guard (const ACE_Guard<ACE_Null_Mutex> &);
+  void operator= (const ACE_Guard<ACE_Null_Mutex> &);
+
 };
 
 template <class ACE_LOCK>

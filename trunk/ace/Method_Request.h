@@ -86,13 +86,16 @@ public:
    */
   virtual int call (void) = 0;
 
+private:
+
+  /// Disallow copying and assignment.
+  ACE_Method_Request (const ACE_Method_Request &);
+  void operator= (const ACE_Method_Request &);
+
 protected:
   /// The priority of the request.
   unsigned long priority_;
 
-private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Method_Request &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Method_Request (const ACE_Method_Request &))
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -147,11 +147,12 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-private:
-  // = Initialization and termination methods.
+protected:
 
   /// Initialize the repository.
   ACE_Framework_Repository (int size = ACE_Framework_Repository::DEFAULT_SIZE);
+
+private:
 
   /// Actually removes the dll components, must be called with locks held.
   int remove_dll_components_i (const ACE_TCHAR *dll_name);
@@ -159,6 +160,12 @@ private:
   /// Compact component_vector_ after components have been removed__maintains
   /// order.
   void compact (void);
+
+  /// Disallow copying and assignment.
+  ACE_Framework_Repository (const ACE_Framework_Repository &);
+  ACE_Framework_Repository &operator= (const ACE_Framework_Repository &);
+
+private:
 
   /// Contains all the framework components.
   ACE_Framework_Component **component_vector_;
@@ -183,9 +190,6 @@ private:
   ACE_Thread_Mutex lock_;
 #endif /* ACE_MT_SAFE */
 
-  /// Don't allow these to be called.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Framework_Repository (const ACE_Framework_Repository &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Framework_Repository &operator= (const ACE_Framework_Repository &))
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

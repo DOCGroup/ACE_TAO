@@ -180,6 +180,23 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
+
+  /// This method does the dirty work of actually calling ::mmap to map
+  /// the file into memory.
+  int map_it (ACE_HANDLE handle,
+              int len = -1,
+              int prot = PROT_RDWR,
+              int share = MAP_SHARED,
+              void *addr = 0,
+              off_t offset = 0,
+              LPSECURITY_ATTRIBUTES sa = 0);
+
+  // = Disallow copying and assignment.
+  ACE_Mem_Map (const ACE_Mem_Map &);
+  void operator = (const ACE_Mem_Map &);
+
+private:
+
   /// Base address of the memory-mapped file.
   void *base_addr_;
 
@@ -204,22 +221,9 @@ private:
   /// if we opened the file.
   int close_handle_;
 
-  /// This method does the dirty work of actually calling ::mmap to map
-  /// the file into memory.
-  int map_it (ACE_HANDLE handle,
-              int len = -1,
-              int prot = PROT_RDWR,
-              int share = MAP_SHARED,
-              void *addr = 0,
-              off_t offset = 0,
-              LPSECURITY_ATTRIBUTES sa = 0);
-
-  // = Disallow copying and assignment.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Mem_Map (const ACE_Mem_Map &))
-  ACE_UNIMPLEMENTED_FUNC (void operator = (const ACE_Mem_Map &))
 };
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Mem_Map.inl"
