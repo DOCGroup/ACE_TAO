@@ -13,6 +13,8 @@ ACE_RCSID (Messaging,
            Messaging_Policy_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
 TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (
@@ -339,3 +341,5 @@ TAO_Sync_Scope_Policy::_tao_cached_type (void) const
 }
 
 #endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

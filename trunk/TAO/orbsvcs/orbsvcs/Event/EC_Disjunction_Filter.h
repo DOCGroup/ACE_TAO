@@ -70,10 +70,8 @@ public:
                                 ACE_ENV_ARG_DECL);
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Disjunction_Filter
-                              (const TAO_EC_Disjunction_Filter&))
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Disjunction_Filter& operator=
-                              (const TAO_EC_Disjunction_Filter&))
+  TAO_EC_Disjunction_Filter (const TAO_EC_Disjunction_Filter&);
+  TAO_EC_Disjunction_Filter& operator= (const TAO_EC_Disjunction_Filter&);
 
 private:
   /// The children

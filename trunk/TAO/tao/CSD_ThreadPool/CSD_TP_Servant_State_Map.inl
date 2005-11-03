@@ -1,5 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO::CSD::TP_Servant_State_Map::TP_Servant_State_Map()
@@ -64,3 +67,4 @@ TAO::CSD::TP_Servant_State_Map::remove(PortableServer::Servant servant
     }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

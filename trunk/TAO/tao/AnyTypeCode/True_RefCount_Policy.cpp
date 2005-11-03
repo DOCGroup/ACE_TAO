@@ -11,7 +11,10 @@ ACE_RCSID (tao,
            True_RefCount_Policy,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::True_RefCount_Policy::~True_RefCount_Policy (void)
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

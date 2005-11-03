@@ -32,9 +32,10 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Messaging ORB initializer.
-class TAO_Messaging_Export TAO_Messaging_ORBInitializer
+class TAO_Messaging_ORBInitializer
   : public virtual PortableInterceptor::ORBInitializer,
     public virtual TAO_Local_RefCounted_Object
 {
@@ -64,13 +65,14 @@ private:
   void register_policy_factories (
     PortableInterceptor::ORBInitInfo_ptr info
     ACE_ENV_ARG_DECL);
+
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
-
 
 #include /**/ "ace/post.h"
 

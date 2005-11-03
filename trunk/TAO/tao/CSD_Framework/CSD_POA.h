@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -24,6 +24,7 @@
 #include "tao/PortableServer/Regular_POA.h"
 #include "CSD_Strategy_Proxy.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_CSD_POA
@@ -96,6 +97,8 @@ private:
 
   TAO::CSD::Strategy_Proxy* sds_proxy_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 #if defined (__ACE_INLINE__)

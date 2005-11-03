@@ -15,6 +15,7 @@
 # include "tao/AnyTypeCode/Enum_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename StringType, class EnumeratorArrayType, class RefCountPolicy>
 bool
@@ -217,5 +218,7 @@ TAO::TypeCode::Enum<StringType,
 
   return Traits<StringType>::get_string (this->enumerators_[index]);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_ENUM_TYPECODE_CPP */

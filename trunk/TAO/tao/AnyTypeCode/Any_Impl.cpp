@@ -14,6 +14,8 @@ ACE_RCSID (tao,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::Any_Impl::Any_Impl (_tao_destructor destructor,
                          CORBA::TypeCode_ptr tc,
                          bool encoded)
@@ -135,3 +137,4 @@ TAO::Any_Impl::encoded (void) const
   return this->encoded_;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

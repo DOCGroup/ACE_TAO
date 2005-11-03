@@ -2,6 +2,9 @@
 //
 // $Id$
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE TAO::Any_Impl *
 CORBA::Any::impl (void) const
 {
@@ -366,3 +369,5 @@ CORBA::Any_out::operator-> (void)
 {
   return this->ptr_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

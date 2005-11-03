@@ -11,6 +11,8 @@ ACE_RCSID (ObjRefTemplate,
            ORT_Adapter_Impl,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 char *
 TAO::ORT_Adapter_Impl::tao_server_id (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -111,3 +113,5 @@ TAO::ORT_Adapter_Impl::activate (
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

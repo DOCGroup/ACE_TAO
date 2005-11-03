@@ -1,4 +1,4 @@
-// @(#) $Id$
+// $Id$
 
 #include "CSD_Default_Servant_Dispatcher.h"
 #include "CSD_POA.h"
@@ -9,6 +9,8 @@ ACE_RCSID(CSD_Framework,
           CSD_Default_Servant_Dispatcher,
           "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CSD_Default_Servant_Dispatcher::~TAO_CSD_Default_Servant_Dispatcher (void)
 {
@@ -54,3 +56,5 @@ TAO_CSD_Default_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
 
   return poa;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

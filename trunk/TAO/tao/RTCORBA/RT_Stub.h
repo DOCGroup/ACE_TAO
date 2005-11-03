@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    RT_Stub.h
@@ -34,8 +36,6 @@ class TAO_PriorityModelPolicy;
 class TAO_PriorityBandedConnectionPolicy;
 class TAO_ClientProtocolPolicy;
 class TAO_PrivateConnectionPolicy;
-
-
 
 /**
  * @class TAO_RT_Stub
@@ -123,15 +123,10 @@ private:
   CORBA::Boolean are_policies_parsed_;
 
 private:
-  // = Disallow copy constructor and assignment operator.
-  ACE_UNIMPLEMENTED_FUNC (TAO_RT_Stub (const TAO_RT_Stub &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_RT_Stub &operator = (const TAO_RT_Stub &))
+  // = Disallow copying and assignment.
+  TAO_RT_Stub (const TAO_RT_Stub &);
+  TAO_RT_Stub &operator = (const TAO_RT_Stub &);
 
-#if defined (__GNUG__)
-  // G++ (even 2.6.3) stupidly thinks instances can't be created.
-  // This de-warns.
-  friend class everyone_needs_a_friend;
-#endif /* __GNUG__ */
 };
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

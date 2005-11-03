@@ -10,6 +10,7 @@
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================
+
 #ifndef TAO_COLLOCATED_INVOCATION_H
 #define TAO_COLLOCATED_INVOCATION_H
 
@@ -87,7 +88,9 @@ namespace TAO
                               ACE_ENV_ARG_DECL);
 
   private:
-    ACE_UNIMPLEMENTED_FUNC (Collocated_Invocation (void))
+
+    // Disallow default construction.
+    Collocated_Invocation (void);
 
   };
 }

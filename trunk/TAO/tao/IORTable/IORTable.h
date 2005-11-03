@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 
 //=============================================================================
@@ -23,6 +23,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_IORTable_Export TAO_IORTable_Initializer
 {
 public:
@@ -32,6 +36,8 @@ public:
 
 static int
 TAO_Requires_IORTable_Initializer = TAO_IORTable_Initializer::init ();
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #define TAO_IORTABLE_SAFE_INCLUDE
 #include "IORTableC.h"

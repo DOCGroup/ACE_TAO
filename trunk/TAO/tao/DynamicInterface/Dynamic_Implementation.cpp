@@ -16,6 +16,8 @@ ACE_RCSID (DynamicInterface,
 #include "ace/OS_NS_string.h"
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 CORBA::Boolean
 TAO_DynamicImplementation::_is_a (const char *logical_type_id
                                   ACE_ENV_ARG_DECL)
@@ -215,3 +217,5 @@ TAO_DynamicImplementation::get_id_from_primary_interface (
                                    poa.in ()
                                    ACE_ENV_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -24,6 +24,7 @@
 #include "tao/Adapter_Factory.h"
 #include "ace/Service_Config.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CSD_FW_Export TAO_CSD_Object_Adapter_Factory : public TAO_Adapter_Factory
 {
@@ -38,6 +39,8 @@ public:
   virtual int init (int argc,
                     ACE_TCHAR* argv[]);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_CSD_FW, TAO_CSD_Object_Adapter_Factory)
 ACE_FACTORY_DECLARE (TAO_CSD_FW, TAO_CSD_Object_Adapter_Factory)

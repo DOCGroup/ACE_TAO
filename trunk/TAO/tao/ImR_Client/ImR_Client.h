@@ -26,6 +26,8 @@
 
 #include "ace/Service_Config.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ServerObject_i;
 
 namespace TAO
@@ -62,12 +64,20 @@ namespace TAO
       ServerObject_i *server_object_;
     };
 
-    ACE_STATIC_SVC_DECLARE (ImR_Client_Adapter_Impl)
-    ACE_FACTORY_DECLARE (TAO_IMR_Client, ImR_Client_Adapter_Impl)
-
     static int
     TAO_Requires_ImR_Client_Initializer =
       TAO::ImR_Client::ImR_Client_Adapter_Impl::Initializer ();
+  }
+}
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+namespace TAO
+{
+  namespace ImR_Client
+  {
+    ACE_STATIC_SVC_DECLARE (ImR_Client_Adapter_Impl)
+    ACE_FACTORY_DECLARE (TAO_IMR_Client, ImR_Client_Adapter_Impl)
   }
 }
 

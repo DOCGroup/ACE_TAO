@@ -86,10 +86,8 @@ public:
                                 ACE_ENV_ARG_DECL);
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Bitmask_Filter
-                              (const TAO_EC_Bitmask_Filter&))
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Bitmask_Filter& operator=
-                              (const TAO_EC_Bitmask_Filter&))
+  TAO_EC_Bitmask_Filter (const TAO_EC_Bitmask_Filter&);
+  TAO_EC_Bitmask_Filter& operator= (const TAO_EC_Bitmask_Filter&);
 
 private:
   /// The bitmasks

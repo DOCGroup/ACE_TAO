@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 // =================================================================
 /**
@@ -7,7 +7,6 @@
  * $Id$
  *
  * @author Phil Mesnier <mesnier_p@ociweb.com>
- *
  */
 // =================================================================
 
@@ -21,6 +20,7 @@
 
 ACE_RCSID (Codeset, Codeset, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO_Codeset_Initializer::init (void)
@@ -40,7 +40,9 @@ TAO_Codeset_Initializer::init (void)
       return result;
     }
 
-  result +=  ACE_Service_Config::process_directive
+  result += ACE_Service_Config::process_directive
     (ace_svc_desc_TAO_Codeset_Manager_Factory,1); // force replacement
   return result;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

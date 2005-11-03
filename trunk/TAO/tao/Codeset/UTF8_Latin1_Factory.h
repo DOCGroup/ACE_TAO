@@ -11,8 +11,10 @@
 
 #include "UTF8_Latin1_Translator.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Codeset_Export TAO_UTF8_Latin1_Factory
-  : public  TAO_Codeset_Translator_Factory
+  : public TAO_Codeset_Translator_Factory
 {
 public:
   TAO_UTF8_Latin1_Factory ();
@@ -41,6 +43,8 @@ private:
 private:
   TAO_UTF8_Latin1_Translator *translator_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Codeset, TAO_UTF8_Latin1_Factory)
 ACE_FACTORY_DECLARE (TAO_Codeset, TAO_UTF8_Latin1_Factory)

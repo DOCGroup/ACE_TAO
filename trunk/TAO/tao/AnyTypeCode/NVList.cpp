@@ -25,6 +25,8 @@ ACE_RCSID (tao,
            NVList,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Reference counting for DII Request object
 
 CORBA::ULong
@@ -496,3 +498,4 @@ CORBA::NVList::_lazy_has_arguments (void) const
     }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

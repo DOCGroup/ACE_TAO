@@ -1,5 +1,4 @@
-/* -*- C++ -*- */
-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -30,6 +29,8 @@
 #include "tao/Object_Loader.h"
 #include "ace/Service_Config.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_CodecFactory_Export TAO_CodecFactory_Loader
   : public TAO_Object_Loader
 {
@@ -45,11 +46,13 @@ public:
   static int Initializer (void);
 };
 
-ACE_STATIC_SVC_DECLARE (TAO_CodecFactory_Loader)
-ACE_FACTORY_DECLARE (TAO_CodecFactory, TAO_CodecFactory_Loader)
-
 static int
 TAO_Requires_CodecFactory_Initializer = TAO_CodecFactory_Loader::Initializer ();
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_STATIC_SVC_DECLARE (TAO_CodecFactory_Loader)
+ACE_FACTORY_DECLARE (TAO_CodecFactory, TAO_CodecFactory_Loader)
 
 #include /**/ "ace/post.h"
 

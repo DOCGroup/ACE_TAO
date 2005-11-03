@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef TAO_ANY_ARRAY_IMPL_T_C
-#define TAO_ANY_ARRAY_IMPL_T_C
+#ifndef TAO_ANY_ARRAY_IMPL_T_CPP
+#define TAO_ANY_ARRAY_IMPL_T_CPP
 
 #include "tao/AnyTypeCode/Any_Array_Impl_T.h"
 #include "tao/AnyTypeCode/Any.h"
@@ -18,9 +18,7 @@
 # include "tao/AnyTypeCode/Any_Array_Impl_T.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Any_Array_Impl_T,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename T_slice, typename T_forany>
 TAO::Any_Array_Impl_T<T_slice, T_forany>::Any_Array_Impl_T (
@@ -160,4 +158,6 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::_tao_decode (TAO_InputCDR &cdr
     }
 }
 
-#endif /* TAO_ANY_ARRAY_IMPL_T_C */
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_ANY_ARRAY_IMPL_T_CPP */

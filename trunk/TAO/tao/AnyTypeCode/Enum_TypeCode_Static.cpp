@@ -13,10 +13,11 @@
 #endif  /* !__ACE_INLINE__ */
 
 
-ACE_RCSID (tao,
+ACE_RCSID (AnyTypeCode,
            Enum_TypeCode_Static,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
 TAO::TypeCode::Enum<char const *,
@@ -212,3 +213,5 @@ TAO::TypeCode::Enum<char const *,
 
   return Traits<char const *>::get_string (this->enumerators_[index]);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

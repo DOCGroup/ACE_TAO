@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "CSD_POA.h"
 #include "CSD_Strategy_Repository.h"
 #include "CSD_Strategy_Base.h"
@@ -14,6 +13,8 @@ ACE_RCSID (CSD_Framework,
 #if !defined (__ACE_INLINE__)
 # include "CSD_POA.inl"
 #endif /* ! __ACE_INLINE__ */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Implementation skeleton constructor
 TAO_CSD_POA::TAO_CSD_POA (const String &name,
@@ -129,3 +130,5 @@ void TAO_CSD_POA::servant_deactivated_hook (PortableServer::Servant servant,
   this->sds_proxy_->servant_deactivated_event (servant, oid ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

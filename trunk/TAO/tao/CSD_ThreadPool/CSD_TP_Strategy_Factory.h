@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -16,6 +16,7 @@
 #include /**/ "ace/pre.h"
 
 #include "CSD_TP_Export.h"
+#include "tao/Versioned_Namespace.h"
 #include "ace/Service_Object.h"
 #include "ace/Service_Config.h"
 
@@ -24,6 +25,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -52,6 +54,8 @@ namespace TAO
     };
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT(TAO_CSD_TP, TAO_CSD_TP_Strategy_Factory)
 ACE_FACTORY_DECLARE(TAO_CSD_TP, TAO_CSD_TP_Strategy_Factory)

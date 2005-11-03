@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-
 // =================================================================
 /**
  * @file CodecFactory.cpp
@@ -7,7 +5,6 @@
  * $Id$
  *
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
- *
  */
 // =================================================================
 
@@ -20,6 +17,8 @@
 ACE_RCSID (CodecFactory,
            CodecFactory,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Object_ptr
 TAO_CodecFactory_Loader::create_object (
@@ -41,6 +40,8 @@ TAO_CodecFactory_Loader::Initializer (void)
 {
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_CodecFactory_Loader);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_CodecFactory_Loader,
                        ACE_TEXT ("CodecFactory_Loader"),

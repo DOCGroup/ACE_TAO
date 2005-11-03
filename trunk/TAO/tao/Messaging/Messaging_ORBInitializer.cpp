@@ -11,6 +11,8 @@ ACE_RCSID (Messaging,
            Messaging_ORBInitializer,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 void
 TAO_Messaging_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr
@@ -144,3 +146,5 @@ TAO_Messaging_ORBInitializer::register_policy_factories (
       ACE_CHECK;
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -24,6 +24,9 @@
 
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   class Null_RefCount_Policy;
@@ -100,6 +103,8 @@ namespace TAO
 #endif  /* !_MSC_VER || _MSC_VER >= 1310 */
 
 }  // End namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

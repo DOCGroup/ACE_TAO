@@ -1,15 +1,18 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    ServerObject_i.h
  *
  *  $Id$
  *
- *  @author  Darrell Brunsch and Irfan Pyarali
+ *  @author  Darrell Brunsch
+ *  @author  Irfan Pyarali
  */
 // ===================================================================
 
-#ifndef TAO_IMPLREPO_I_H
-#define TAO_IMPLREPO_I_H
+#ifndef TAO_SERVEROBJECT_I_H
+#define TAO_SERVEROBJECT_I_H
 
 #include /**/ "ace/pre.h"
 
@@ -21,6 +24,8 @@
 
 #include "tao/ImR_Client/ServerObjectS.h"
 #include "tao/ImR_Client/imr_client_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ServerObject_i
@@ -59,6 +64,8 @@ protected:
   PortableServer::POA_var poa_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
 
-#endif /* TAO_IMPLREPO_I_H */
+#endif /* TAO_SERVEROBJECT_I_H */

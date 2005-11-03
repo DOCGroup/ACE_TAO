@@ -12,6 +12,7 @@ ACE_RCSID (CSD_ThreadPool,
            TP_Strategy_Factory,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::CSD::TP_Strategy_Factory::TP_Strategy_Factory()
 {
@@ -104,6 +105,8 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_NAMESPACE_DEFINE(TAO_CSD_TP,
                   TAO_CSD_TP_Strategy_Factory,

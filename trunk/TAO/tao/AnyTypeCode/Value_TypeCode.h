@@ -28,6 +28,7 @@
 #include "tao/AnyTypeCode/ValueModifierC.h"
 #include "tao/AnyTypeCode/VisibilityC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -160,6 +161,7 @@ namespace TAO
   }  // End namespace TypeCode
 }  // End namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #ifdef __ACE_INLINE__
 # include "tao/AnyTypeCode/Value_TypeCode.inl"

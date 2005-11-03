@@ -28,6 +28,9 @@
 #include "codeset_export.h"
 #include "Codeset_Descriptor.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Profile;
 class TAO_Transport;
 class TAO_Operation_Details;
@@ -140,6 +143,7 @@ private:
   TAO_Codeset_Descriptor wchar_descriptor_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

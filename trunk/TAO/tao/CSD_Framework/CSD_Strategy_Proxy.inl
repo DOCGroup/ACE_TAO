@@ -1,13 +1,14 @@
 // -*- C++ -*-
+//
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO::CSD::Strategy_Proxy::Strategy_Proxy()
   : strategy_impl_(0)
 {
 }
-
 
 ACE_INLINE
 TAO::CSD::Strategy_Proxy::~Strategy_Proxy()
@@ -41,7 +42,6 @@ TAO::CSD::Strategy_Proxy::dispatch_request
     }
 }
 
-
 ACE_INLINE
 bool
 TAO::CSD::Strategy_Proxy::poa_activated_event()
@@ -65,7 +65,6 @@ TAO::CSD::Strategy_Proxy::poa_deactivated_event()
     }
 }
 
-
 ACE_INLINE
 void
 TAO::CSD::Strategy_Proxy::servant_activated_event
@@ -84,7 +83,6 @@ TAO::CSD::Strategy_Proxy::servant_activated_event
     }
 }
 
-
 ACE_INLINE
 void
 TAO::CSD::Strategy_Proxy::servant_deactivated_event
@@ -102,3 +100,5 @@ TAO::CSD::Strategy_Proxy::servant_deactivated_event
       ACE_CHECK;
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -10,6 +10,7 @@
 # include "tao/AnyTypeCode/String_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class RefCountPolicy>
 bool
@@ -87,5 +88,6 @@ TAO::TypeCode::String<RefCountPolicy>::length_i (
   return this->length_;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_STRING_TYPECODE_CPP */

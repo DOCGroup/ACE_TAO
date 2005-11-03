@@ -1,6 +1,6 @@
 // $Id$
 
-// ===========================================================================================
+// ===========================================================================
 // FILENAME
 //   Concurrency_Loader.h
 //
@@ -12,7 +12,7 @@
 //   Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
 //   Priyanka Gontla <pgontla<ece.uci.edu>
 //
-// ==========================================================================================
+// ===========================================================================
 
 #ifndef TAO_CONCURRENCY_LOADER_H
 #define TAO_CONCURRENCY_LOADER_H
@@ -57,8 +57,10 @@ public:
 
 private:
 
-ACE_UNIMPLEMENTED_FUNC (TAO_Concurrency_Loader (const TAO_Concurrency_Loader &))
-ACE_UNIMPLEMENTED_FUNC (TAO_Concurrency_Loader &operator = (const TAO_Concurrency_Loader &))
+  // Disallow copying and assignment.
+  TAO_Concurrency_Loader (const TAO_Concurrency_Loader &);
+  TAO_Concurrency_Loader &operator = (const TAO_Concurrency_Loader &);
+
 };
 
 ACE_FACTORY_DECLARE (TAO_Concurrency, TAO_Concurrency_Loader)

@@ -18,6 +18,7 @@ ACE_RCSID (tao,
 
 #include "ace/OS_NS_string.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::TypeCode::~TypeCode (void)
 {
@@ -485,3 +486,4 @@ TAO::unaliased_kind (CORBA::TypeCode_ptr tc
   return unaliased_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

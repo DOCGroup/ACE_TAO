@@ -6,6 +6,8 @@
 #include "tao/debug.h"
 #include "ace/Dynamic_Service.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 int
 TAO_CSD_ThreadPool::init (void)
 {
@@ -17,3 +19,5 @@ TAO_CSD_ThreadPool::init (void)
   TAO_CSD_Framework_Loader::init();
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_CSD_TP_Strategy_Factory);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

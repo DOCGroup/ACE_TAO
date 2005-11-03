@@ -27,8 +27,10 @@
 
 class ACE_Allocator;
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// Reply dispatcher for Asynchoronous Method Invocation (AMI)s.
-class TAO_Messaging_Export TAO_Asynch_Reply_Dispatcher
+class TAO_Asynch_Reply_Dispatcher
   : public TAO_Asynch_Reply_Dispatcher_Base
 {
 public:
@@ -68,6 +70,8 @@ private:
   /// Timeout Handler in case of AMI timeouts
   TAO_Asynch_Timeout_Handler *timeout_handler_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ASYNCH_REPLY_DISPATCHER_H */

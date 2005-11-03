@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "DynUnion_i.h"
@@ -11,6 +10,7 @@ ACE_RCSID (DynamicAny,
            DynUnion_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DynUnion_i::TAO_DynUnion_i (void)
 {
@@ -1121,3 +1121,5 @@ TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
       return 0;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

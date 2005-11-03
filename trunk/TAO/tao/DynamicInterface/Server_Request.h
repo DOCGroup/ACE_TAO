@@ -42,6 +42,8 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_DynamicInterface_Export
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace CORBA
 {
   class ServerRequest;
@@ -171,6 +173,8 @@ namespace CORBA
     int sent_gateway_exception_;
   };
 } // End CORBA namespace
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "Server_Request.inl"

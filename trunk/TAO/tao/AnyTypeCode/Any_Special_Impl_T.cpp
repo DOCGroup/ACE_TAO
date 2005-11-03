@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef TAO_ANY_SPECIAL_IMPL_T_C
-#define TAO_ANY_SPECIAL_IMPL_T_C
+#ifndef TAO_ANY_SPECIAL_IMPL_T_CPP
+#define TAO_ANY_SPECIAL_IMPL_T_CPP
 
 #include "tao/AnyTypeCode/Any_Special_Impl_T.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
@@ -15,9 +15,7 @@
 # include "tao/AnyTypeCode/Any_Special_Impl_T.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Any_Special_Impl_T,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename T, typename from_T, typename to_T>
 TAO::Any_Special_Impl_T<T, from_T, to_T>::Any_Special_Impl_T (
@@ -205,4 +203,6 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::_tao_decode (
     }
 }
 
-#endif /* TAO_ANY_T_C */
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_ANY_T_CPP */

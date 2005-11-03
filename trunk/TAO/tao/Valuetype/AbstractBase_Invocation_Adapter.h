@@ -54,14 +54,18 @@ namespace TAO
         TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION);
 
   private:
-    /// Dont allow default initializations
-    ACE_UNIMPLEMENTED_FUNC (AbstractBase_Invocation_Adapter (void))
+    // Don't allow default initializations
+    AbstractBase_Invocation_Adapter (void);
 
-    ACE_UNIMPLEMENTED_FUNC (AbstractBase_Invocation_Adapter & operator= (
-        const AbstractBase_Invocation_Adapter &))
+    // Disallow copying and assignment.
+    AbstractBase_Invocation_Adapter (const AbstractBase_Invocation_Adapter &);
+    AbstractBase_Invocation_Adapter & operator= (
+	const AbstractBase_Invocation_Adapter &);
+
   };
 } // End namespace TAO
 
 
 #include /**/ "ace/post.h"
-#endif /*TAO_INVOCATION_ADAPTER_H*/
+
+#endif  /* TAO_INVOCATION_ADAPTER_H */

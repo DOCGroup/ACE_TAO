@@ -10,7 +10,10 @@ ACE_RCSID (CSD_ThreadPool,
 # include "CSD_TP_Custom_Request.inl"
 #endif /* ! __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::CSD::TP_Custom_Request::~TP_Custom_Request()
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

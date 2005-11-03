@@ -2,6 +2,7 @@
 //
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename StringType,
           typename TypeCodeType,
@@ -55,3 +56,5 @@ TAO::TypeCode::Value<StringType,
   , fields_ ()
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

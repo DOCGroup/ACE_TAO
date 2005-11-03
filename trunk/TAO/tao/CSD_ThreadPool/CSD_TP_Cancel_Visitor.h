@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -25,11 +25,12 @@
 #include "CSD_TP_Queue_Visitor.h"
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace CSD
   {
-
     /**
      * @class TP_Cancel_Visitor
      *
@@ -64,7 +65,6 @@ namespace TAO
       /// be removed from the queue as a result of the visit.  Leaves the
       /// remove_flag alone otherwise.
       virtual bool visit_request(TP_Request* request, bool& remove_flag);
-   
 
     private:
 
@@ -75,6 +75,8 @@ namespace TAO
 
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "CSD_TP_Cancel_Visitor.inl"

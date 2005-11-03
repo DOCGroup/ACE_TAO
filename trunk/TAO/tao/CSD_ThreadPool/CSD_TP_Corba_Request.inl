@@ -1,5 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO::CSD::TP_Corba_Request::TP_Corba_Request
@@ -17,7 +20,6 @@ TAO::CSD::TP_Corba_Request::TP_Corba_Request
   this->poa_ = PortableServer::POA::_duplicate(poa);
 }
 
-
 ACE_INLINE
 void
 TAO::CSD::TP_Corba_Request::do_clone()
@@ -33,10 +35,11 @@ TAO::CSD::TP_Corba_Request::do_dispatch(ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 }
 
-
 ACE_INLINE
 void
 TAO::CSD::TP_Corba_Request::do_cancel()
 {
   this->server_request_.cancel();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

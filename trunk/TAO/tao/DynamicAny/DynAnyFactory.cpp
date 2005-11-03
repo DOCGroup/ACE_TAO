@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    DynAnyFactory.cpp
@@ -24,6 +23,8 @@
 ACE_RCSID (DynamicAny,
            DynAnyFactory,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Constructor from typecode
 TAO_DynAnyFactory::TAO_DynAnyFactory (void)
@@ -377,3 +378,4 @@ TAO_DynAnyFactory::make_dyn_any (CORBA::TypeCode_ptr tc
   return DynamicAny::DynAny::_nil ();
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

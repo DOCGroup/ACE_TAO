@@ -52,10 +52,8 @@ public:
                                ACE_ENV_ARG_DECL);
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Priority_Scheduling
-                              (const TAO_EC_Priority_Scheduling&))
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Priority_Scheduling& operator=
-                              (const TAO_EC_Priority_Scheduling&))
+  TAO_EC_Priority_Scheduling (const TAO_EC_Priority_Scheduling&);
+  TAO_EC_Priority_Scheduling& operator= (const TAO_EC_Priority_Scheduling&);
 
   /// Initialize our RT_Info handle and dependencies
   void init_rt_info (ACE_ENV_SINGLE_ARG_DECL);

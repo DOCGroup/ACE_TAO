@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO::CSD::TP_Collocated_Synch_With_Server_Request::TP_Collocated_Synch_With_Server_Request
@@ -25,3 +29,4 @@ TAO::CSD::TP_Collocated_Synch_With_Server_Request::wait(ACE_ENV_SINGLE_ARG_DECL_
   return this->synch_helper_.wait_while_pending();
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

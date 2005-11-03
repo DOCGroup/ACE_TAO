@@ -24,6 +24,8 @@
 
 #include "tao/Codeset_Descriptor_Base.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Codeset_Translator_Factory;
 
 class TAO_Codeset_Export TAO_Codeset_Descriptor
@@ -55,6 +57,8 @@ private:
   int num_translators_;
   Translator_Node *trans_base_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

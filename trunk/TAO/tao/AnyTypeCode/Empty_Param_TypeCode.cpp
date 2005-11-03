@@ -12,6 +12,8 @@ ACE_RCSID (tao,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 bool
 TAO::TypeCode::Empty_Param::tao_marshal (TAO_OutputCDR &,
                                          CORBA::ULong) const
@@ -81,3 +83,5 @@ TAO::TypeCode::Empty_Param::get_compact_typecode_i (
 
   return &compact_typecode;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

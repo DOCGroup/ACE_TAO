@@ -15,6 +15,8 @@ ACE_RCSID (ImR_Client,
            ImR_Client,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace ImR_Client
@@ -247,7 +249,15 @@ namespace TAO
 
       return ACE_Service_Config::process_directive (ace_svc_desc_ImR_Client_Adapter_Impl);
     }
+  }
+}
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+namespace TAO
+{
+  namespace ImR_Client
+  {
     ACE_STATIC_SVC_DEFINE (
         ImR_Client_Adapter_Impl,
         ACE_TEXT ("Concrete_ImR_Client_Adapter"),

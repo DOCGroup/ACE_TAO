@@ -13,10 +13,12 @@
 #include "ace/Value_Ptr.h"
 
 
-ACE_RCSID (tao,
+ACE_RCSID (AnyTypeCode,
            Union_TypeCode_Static,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
 TAO::TypeCode::Union<char const *,
@@ -406,3 +408,5 @@ TAO::TypeCode::Union<char const *,
 {
   return this->default_index_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

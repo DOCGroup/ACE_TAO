@@ -44,10 +44,8 @@ public:
                                ACE_ENV_ARG_DECL);
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Group_Scheduling
-                              (const TAO_EC_Group_Scheduling&))
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Group_Scheduling& operator=
-                              (const TAO_EC_Group_Scheduling&))
+  TAO_EC_Group_Scheduling (const TAO_EC_Group_Scheduling&);
+  TAO_EC_Group_Scheduling& operator= (const TAO_EC_Group_Scheduling&);
 };
 
 #if defined (__ACE_INLINE__)

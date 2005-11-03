@@ -8,6 +8,8 @@ ACE_RCSID (ORT,
            ORT_Adapter_Factory_Impl,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   ORT_Adapter *
@@ -38,7 +40,12 @@ namespace TAO
           ace_svc_desc_ORT_Adapter_Factory_Impl
         );
   }
+}
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+namespace TAO
+{
   ACE_STATIC_SVC_DEFINE (
     ORT_Adapter_Factory_Impl,
     ACE_TEXT ("Concrete_ORT_Adapter_Factory"),

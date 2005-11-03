@@ -14,6 +14,8 @@ ACE_RCSID (CodecFactory_impl,
            CodecFactory,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_CodecFactory::TAO_CodecFactory (TAO_ORB_Core * orb_core)
   : orb_core_ (orb_core)
 {
@@ -146,3 +148,4 @@ TAO_CodecFactory::create_codec_i (CORBA::Octet major,
   return codec;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

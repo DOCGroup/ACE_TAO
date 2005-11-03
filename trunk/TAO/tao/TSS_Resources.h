@@ -60,8 +60,8 @@ private:
 
   /// Do not copy TSS resources
   //@{
-  ACE_UNIMPLEMENTED_FUNC (TAO_TSS_Resources(const TAO_TSS_Resources&))
-  ACE_UNIMPLEMENTED_FUNC (void operator=(const TAO_TSS_Resources&))
+  TAO_TSS_Resources (const TAO_TSS_Resources&);
+  void operator= (const TAO_TSS_Resources&);
   //@}
 
 public:
