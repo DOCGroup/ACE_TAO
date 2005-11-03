@@ -59,9 +59,11 @@ CIAO::RTResource_Config_Manager::print_resources
            ++l)
         {
           ACE_DEBUG ((LM_DEBUG,
+                      "\tLane %d:\n"
                       "\t\tPriority: %d\n"
                       "\t\tStatic: %d\n"
                       "\t\tDynamic: %d\n",
+                      l,
                       orb_resource.threadpool_with_lanes_list[i].threadpool_lanes[l].lane_priority,
                       orb_resource.threadpool_with_lanes_list[i].threadpool_lanes[l].static_threads,
                       orb_resource.threadpool_with_lanes_list[i].threadpool_lanes[l].dynamic_threads));
