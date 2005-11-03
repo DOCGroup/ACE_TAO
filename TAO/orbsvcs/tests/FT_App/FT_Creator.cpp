@@ -266,7 +266,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CORBA::ORB_var orb = CORBA::ORB_init(convert.get_argc(), convert.get_ASCII_argv());
     ACE_TRY_CHECK;
     FTAPP::FT_Creator app;
-    result = app.parse_args(argc, argv);
+    result = app.parse_args(convert.get_argc(), convert.get_ASCII_argv());
     if (result == 0)
     {
       result = app.init (orb.in () ACE_ENV_ARG_PARAMETER);

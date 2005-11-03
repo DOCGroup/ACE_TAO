@@ -42,7 +42,7 @@ ACE_TMAIN (int argc, ACE_TCHAR** argv)
 
       // Command line argument interpretation.
       CORBA::Boolean verbose = 0;
-      ::parse_args (argc, argv, verbose);
+      ::parse_args (convert.get_argc(), convert.get_ASCII_argv(), verbose);
 
       // Initialize ORB.
       CORBA::ORB_var orb = orb_manager.orb ();

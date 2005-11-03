@@ -26,7 +26,7 @@ RtecEventChannelAdmin::EventChannel_ptr
 get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
 {
     FtRtecEventChannelAdmin::EventChannel_var channel;
-    ACE_Get_Arg_Opt<char> get_opt (argc, argv, ACE_TEXT("hi:nt:?"));
+    ACE_Get_Arg_Opt<char> get_opt (argc, argv, "hi:nt:?");
     int opt;
     int use_gateway = 1;
 

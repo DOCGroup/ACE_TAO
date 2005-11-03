@@ -2,6 +2,7 @@
 // $Id$
 
 #include "Ptest.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Persistence_Test,
            test,

@@ -2,6 +2,7 @@
 
 #include "Client_i.h"
 #include "ace/Log_Msg.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(Time, client, "$Id$")
 

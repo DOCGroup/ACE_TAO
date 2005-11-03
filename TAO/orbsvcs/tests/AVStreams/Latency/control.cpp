@@ -87,7 +87,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
 
       CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv());
-      parse_args (argc, argv);
+      parse_args (convert.get_argc(), convert.get_ASCII_argv());
 
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);

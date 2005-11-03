@@ -357,7 +357,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
   ConnectDisconnect client;
 
-  if (client.parse_args (argc, argv) == -1)
+  if (client.parse_args (convert.get_argc(), convert.get_ASCII_argv()) == -1)
     {
       return 1;
     }

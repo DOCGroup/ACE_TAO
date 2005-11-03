@@ -103,7 +103,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
         return 1;
 
       Simple_Server_i server_impl (orb.in (),

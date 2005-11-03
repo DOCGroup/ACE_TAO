@@ -77,7 +77,7 @@ parse_args (int argc, char *argv[])
 
 int
 ACE_TMAIN (int argc,
-      char *argv[])
+      ACE_TCHAR *argv[])
 {
   ACE_Argv_Type_Converter convert (argc, argv);
 
@@ -93,7 +93,7 @@ ACE_TMAIN (int argc,
       ACE_TRY_CHECK;
 
       // the command line arguments
-      if (parse_args (argc, argv) == -1)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) == -1)
         return -1;
 
       // Merge the different IORS
@@ -140,7 +140,7 @@ Manager::init (int argc,
                char *argv[]
                ACE_ENV_ARG_DECL)
 {
-  this->orb_ = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
+  this->orb_ = CORBA::ORB_init (argc, argv,
                                 0
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -574,7 +574,7 @@ Client_i::init (ACE_ENV_SINGLE_ARG_DECL)
 
   int argc = 0;
   char **argv = 0;
-  this->orb_ = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
+  this->orb_ = CORBA::ORB_init (argc, argv,
                                 0
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);

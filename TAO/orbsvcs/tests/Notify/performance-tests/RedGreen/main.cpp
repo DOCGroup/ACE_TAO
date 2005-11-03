@@ -12,7 +12,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   RedGreen_Test client;
 
-  client.parse_args (argc, argv);
+  client.parse_args (convert.get_argc(), convert.get_ASCII_argv());
 
   ACE_TRY_NEW_ENV
     {

@@ -1,7 +1,3 @@
-here is the linux config file need to be in.
-
-
-
 /* -*- C++ -*- */
 // $Id$
 
@@ -410,3 +406,4 @@ here is the linux config file need to be in.
 #include /**/ "ace/post.h"
 
 #endif /* ACE_LINUX_COMMON_H */
+

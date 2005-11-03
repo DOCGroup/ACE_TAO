@@ -78,7 +78,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
         return 1;
 
       // Get the group IOR.

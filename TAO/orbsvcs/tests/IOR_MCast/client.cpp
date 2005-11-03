@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ior_mcast_client_i.h"
+#include "ace/Argv_Type_Converter.h"
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

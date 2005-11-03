@@ -19,7 +19,7 @@ public:
   virtual ~TAO_FT_ReplicationManagerController ();
 
   int init (int & argc, char * argv[]);
-  int parse_args (int & argc, ACE_TCHAR* argv[]);
+  int parse_args (int & argc, char* argv[]);
   int run ();
 
 /////////////////////////////
@@ -64,7 +64,7 @@ int TAO_FT_ReplicationManagerController::init (int & argc, char * argv[])
   ACE_TRY_NEW_ENV
   {
     // Initialize the ORB.
-    this->orb_ = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
+    this->orb_ = CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     // Parse arguments.

@@ -531,7 +531,7 @@ int FTClientMain::next_replica (ACE_ENV_SINGLE_ARG_DECL)
   else
   {
     ACE_OS::fprintf (stderr, "***OUT_OF_REPLICAS*** "
-                             ACE_SIZE_T_FORMAT_SPECIFIER_A
+                             ACE_SIZE_T_FORMAT_SPECIFIER
                              "\n", this->replica_pos_);
   }
   return result;

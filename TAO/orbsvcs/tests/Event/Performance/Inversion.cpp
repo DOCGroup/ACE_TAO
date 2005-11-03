@@ -30,7 +30,7 @@ EC_Inversion::EC_Inversion (void)
 }
 
 int
-EC_Inversion::parse_args (int &argc, ACE_TCHAR *argv[])
+EC_Inversion::parse_args (int &argc, char *argv[])
 {
   ACE_TArg_Shifter< char > arg_shifter (argc, argv);
 
@@ -50,7 +50,7 @@ EC_Inversion::parse_args (int &argc, ACE_TCHAR *argv[])
         }
     }
 
-  int r = this->EC_Driver::parse_args (argc, argv);
+  int r = this->EC_Driver::parse_args (convert.get_argc(), convert.get_ASCII_argv());
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG,
                 "EC_Inversion (%P|%t) "

@@ -45,7 +45,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
         return 1;
 
       CORBA::Object_var tmp =

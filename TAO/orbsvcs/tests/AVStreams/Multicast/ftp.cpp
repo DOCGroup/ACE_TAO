@@ -124,8 +124,7 @@ Endpoint_Reactive_Strategy::make_stream_endpoint (FTP_Client_StreamEndPoint *&en
 }
 
 int
-Client::parse_args (int argc,
-                    char **argv)
+Client::parse_args (int argc, char **argv)
 {
   ACE_Get_Arg_Opt<char> opts (argc,argv,"f:a:p:s");
 
@@ -348,7 +347,7 @@ Client::run (void)
 
 int
 ACE_TMAIN (int argc,
-      char **argv)
+     ACE_TCHAR **argv)
 {
   ACE_Argv_Type_Converter convert (argc, argv);
 
@@ -369,7 +368,7 @@ ACE_TMAIN (int argc,
       ACE_TRY_CHECK;
 
       int result = 0;
-      result = CLIENT::instance ()->init (argc,argv);
+      result = CLIENT::instance ()->init (convert.get_argc(), convert.get_ASCII_argv());
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,"client::init failed\n"),1);
       result = CLIENT::instance ()->run ();

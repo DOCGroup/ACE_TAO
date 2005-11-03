@@ -3,6 +3,7 @@
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
+#include "ace/Argv_Type_Converter.h"
 
 int ACE_TMAIN(int argc, ACE_TCHAR** argv)
 {

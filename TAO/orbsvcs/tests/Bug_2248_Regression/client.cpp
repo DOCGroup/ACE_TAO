@@ -26,7 +26,7 @@ CORBA::Object_var object_secondary = 0;
 // Reference to the IOR manipulator
 
 int
-parse_args (int argc, ACE_TCHAR* argv[])
+parse_args (int argc, char* argv[])
 {
   ACE_Get_Arg_Opt<char> get_opts (argc, argv, "a:k:b:l:g:h:");
   int c;
@@ -87,7 +87,7 @@ ACE_TMAIN (int argc,
       ACE_TRY_CHECK;
 
       // the command line arguments
-      if (parse_args (argc, argv) == -1)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) == -1)
         return -1;
 
       // Merge the different IORS
@@ -125,7 +125,7 @@ Manager::init (int& argc,
                char**& argv
                ACE_ENV_ARG_DECL)
 {
-  this->orb_ = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
+  this->orb_ = CORBA::ORB_init (argc, argv,
                                 0
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -390,8 +390,8 @@ int run_remote_test (Simple_Server_ptr server, const char* execute_key ACE_ENV_A
   if (ACE_OS::strcmp (expected, received))
     {
       ACE_DEBUG ((LM_DEBUG,
-		  ACE_TEXT ("... FAIL\n"
-			    "CLIENT>          received: '%s'\n"),
+		    ACE_TEXT ("... FAIL\n")
+			  ACE_TEXT ("CLIENT>          received: '%s'\n"),
 		  received));
       return -1;
     }
@@ -488,7 +488,7 @@ Client_i::init (ACE_ENV_SINGLE_ARG_DECL)
 
   int argc = 0;
   char **argv = 0;
-  this->orb_ = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
+  this->orb_ = CORBA::ORB_init (argc, argv,
 			        0
 			        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);

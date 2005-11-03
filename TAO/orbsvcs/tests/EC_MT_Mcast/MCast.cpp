@@ -91,7 +91,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       // Parse the arguments, you usually want to do this after
       // invoking ORB_init() because ORB_init() will remove all the
       // -ORB options from the command line.
-      if (parse_args (argc, argv) == -1)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       "Usage: Service [-m udp_mcast_addr]\n"));

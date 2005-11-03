@@ -64,7 +64,7 @@ Server::Server (void)
 
 int
 Server::init (int argc,
-              char **argv)
+             char **argv)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -197,13 +197,12 @@ Server::file (void)
 
 int
 ACE_TMAIN (int argc,
-      char **argv)
+     ACE_TCHAR **argv)
 {
   ACE_Argv_Type_Converter convert (argc, argv);
 
   int result = 0;
-  CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv()
-                                        argv);
+  CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv());
 
   ACE_DECLARE_NEW_CORBA_ENV;
 

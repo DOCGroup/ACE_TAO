@@ -223,8 +223,7 @@ Receiver::init (int,
 }
 
 int
-Receiver::parse_args (int argc,
-                      char **argv)
+Receiver::parse_args (int argc, char **argv)
 {
   /// Parse the command line arguments
   ACE_Get_Arg_Opt<char> opts (argc,
@@ -287,7 +286,7 @@ Receiver::shut_down (ACE_ENV_SINGLE_ARG_DECL)
 
 int
 ACE_TMAIN (int argc,
-      char **argv)
+      ACE_TCHAR **argv)
 {
   ACE_Argv_Type_Converter convert (argc, argv);
 
@@ -346,8 +345,7 @@ ACE_TMAIN (int argc,
                     "File Opened Successfully\n"));
 
       result =
-        receiver.init (argc,
-                       argv
+        receiver.init (convert.get_argc(), convert.get_ASCII_argv()
                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

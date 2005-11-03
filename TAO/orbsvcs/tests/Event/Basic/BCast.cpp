@@ -31,9 +31,9 @@ EC_BCast::EC_BCast (void)
 }
 
 int
-EC_BCast::parse_args (int& argc, ACE_TCHAR* argv[])
+EC_BCast::parse_args (int& argc, char **argv)
 {
-  if (this->EC_Driver::parse_args (argc, argv) != 0)
+  if (this->EC_Driver::parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
     return -1;
 
   ACE_TArg_Shifter< char > arg_shifter (argc, argv);

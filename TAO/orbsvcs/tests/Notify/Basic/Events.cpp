@@ -146,8 +146,7 @@ Events::init (int argc,
 }
 
 int
-Events::parse_args (int argc,
-                         char *argv[])
+Events::parse_args (int argc, char *argv[])
 {
     ACE_TArg_Shifter< char > arg_shifter (argc,
                                  argv);
@@ -329,7 +328,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
   Events events;
 
-  if (events.parse_args (argc, argv) == -1)
+  if (events.parse_args (convert.get_argc(), convert.get_ASCII_argv()) == -1)
     {
       return 1;
     }

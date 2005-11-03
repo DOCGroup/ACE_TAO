@@ -2,6 +2,7 @@
 // $Id$
 
 #include "Latency_Query_Client.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Latency__Test, 
            client, 

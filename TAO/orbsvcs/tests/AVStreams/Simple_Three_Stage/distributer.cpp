@@ -304,7 +304,7 @@ Distributer::done (int done)
 
 int
 ACE_TMAIN (int argc,
-      char **argv)
+     ACE_TCHAR **argv)
 {
   ACE_Argv_Type_Converter convert (argc, argv);
 

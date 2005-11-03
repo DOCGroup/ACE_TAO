@@ -5,6 +5,7 @@
 #include "orbsvcs/RtecEventCommC.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "ace/Log_Msg.h"
+#include "ace/Argv_Type_Converter.h"
 
 void
 send_events (RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer
@@ -66,7 +67,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (parse_args (argc, argv) == -1)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) == -1)
         return 1;
 
       // Obtain reference to EC.

@@ -98,7 +98,7 @@ EC_Driver::run_init (int &argc, char* argv[]
   this->initialize_orb_and_poa (argc, argv ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (this->parse_args (argc, argv))
+  if (this->parse_args (convert.get_argc(), convert.get_ASCII_argv()))
     ACE_THROW (CORBA::INTERNAL (TAO::VMCID,
                                 CORBA::COMPLETED_NO));
 
@@ -175,7 +175,7 @@ EC_Driver::initialize_orb_and_poa (int &argc, char* argv[]
                                    ACE_ENV_ARG_DECL)
 {
   this->orb_ =
-    CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
+    CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::Object_var poa_object =

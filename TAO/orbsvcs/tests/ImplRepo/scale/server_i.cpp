@@ -55,7 +55,7 @@ Server_i::~Server_i()
 }
 
 int
-Server_i::parse_args (int argc, ACE_TCHAR* argv[])
+Server_i::parse_args (int argc, char* argv[])
 {
   ACE_Get_Arg_Opt<char> get_opts (argc, argv, "p:c:h");
   int c;
@@ -100,7 +100,7 @@ Server_i::init (int argc, char** argv ACE_ENV_ARG_DECL)
 {
   ACE_TRY
   {
-    this->orb_ = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), 0 ACE_ENV_ARG_PARAMETER);
+    this->orb_ = CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     int retval = this->parse_args (argc, argv);

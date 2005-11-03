@@ -100,8 +100,7 @@ FTP_Client_Producer::get_callback (const char *,
 }
 
 int
-Client::parse_args (int argc,
-                    char **argv)
+Client::parse_args (int argc, char **argv)
 {
   ACE_Get_Arg_Opt<char> opts (argc,argv,"f:a:p:sd");
 
@@ -383,7 +382,7 @@ Client::run (void)
 
 int
 ACE_TMAIN (int argc,
-      char *argv[])
+      ACE_TCHAR *argv[])
 {
   ACE_Argv_Type_Converter convert (argc, argv);
 

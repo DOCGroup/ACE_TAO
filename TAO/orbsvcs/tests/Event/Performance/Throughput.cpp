@@ -29,7 +29,7 @@ EC_Throughput::EC_Throughput (void)
 int
 EC_Throughput::parse_args (int& argc, ACE_TCHAR* argv[])
 {
-  if (this->EC_Driver::parse_args (argc, argv) != 0)
+  if (this->EC_Driver::parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
     return -1;
   return 0;
 }

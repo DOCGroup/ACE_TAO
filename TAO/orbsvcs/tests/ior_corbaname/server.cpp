@@ -2,6 +2,7 @@
 
 #include "status_i.h"
 #include "orbsvcs/CosNamingC.h"
+#include "ace/Argv_Type_Converter.h"
 
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {

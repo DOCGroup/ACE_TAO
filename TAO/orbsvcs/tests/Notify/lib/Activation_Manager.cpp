@@ -34,7 +34,7 @@ TAO_Notify_Tests_Activation_Manager::~TAO_Notify_Tests_Activation_Manager ()
 }
 
 int
-TAO_Notify_Tests_Activation_Manager::ior_output_file (const ACE_TCHAR *file_name)
+TAO_Notify_Tests_Activation_Manager::ior_output_file (const char *file_name)
 {
   this->ior_output_file_ = ACE_OS::fopen (file_name, ACE_TEXT("w"));
 

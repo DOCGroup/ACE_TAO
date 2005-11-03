@@ -118,7 +118,7 @@ Nestea_i::save_data (void)
   ACE_FILE_Connector connector;
 
   if (connector.connect (file,
-                         ACE_FILE_Addr (this->data_filename_),
+                         ACE_FILE_Addr (ACE_TEXT_TO_TCHAR_IN(this->data_filename_)),
                          0,
                          ACE_Addr::sap_any) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -144,7 +144,7 @@ Nestea_i::load_data (void)
   ACE_FILE_Connector connector;
 
   if (connector.connect (file,
-                         ACE_FILE_Addr (this->data_filename_),
+                         ACE_FILE_Addr (ACE_TEXT_TO_TCHAR_IN(this->data_filename_)),
                          0,
                          ACE_Addr::sap_any) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

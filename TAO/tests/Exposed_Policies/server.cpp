@@ -30,7 +30,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       Policy_Tester policy_tester;
 
-      int result = policy_tester.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      int result = policy_tester.init (convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (result != 0)

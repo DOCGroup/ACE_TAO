@@ -24,7 +24,7 @@ ior_mcast_Client_i::init (int& argc,
     {
       // First initialize the ORB, that will remove some arguments...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
+        CORBA::ORB_init (argc, argv,
                          "" /* the ORB name, it can be anything! */
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

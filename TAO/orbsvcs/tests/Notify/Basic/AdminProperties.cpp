@@ -25,7 +25,7 @@ AdminProperties_Task::init (TAO_Notify_Tests_StructuredPushSupplier *supplier, A
 int
 AdminProperties_Task::init (int argc, ACE_TCHAR *argv[])
 {
-  return ACE_Task_Base::init (convert.get_argc(), convert.get_ASCII_argv());
+  return ACE_Task_Base::init (argc, argv);
 }
 
 int

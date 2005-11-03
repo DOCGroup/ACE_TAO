@@ -4,6 +4,8 @@
 #ifndef OS_NS_STRING_BASE_INL
 #define OS_NS_STRING_BASE_INL
 
+#include <string.h>
+
 namespace ACE_OS
 {
 

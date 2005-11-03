@@ -24,8 +24,7 @@ LifeCycle::~LifeCycle (void)
 }
 
 int
-LifeCycle::parse_args (int argc,
-                           char *argv[])
+LifeCycle::parse_args (int argc, char *argv[])
 {
     ACE_TArg_Shifter< char > arg_shifter (argc,
                                  argv);
@@ -66,7 +65,7 @@ LifeCycle::init (int argc,
                      char* argv[]
                      ACE_ENV_ARG_DECL)
 {
-  CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
+  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv,
                                         ""
                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;

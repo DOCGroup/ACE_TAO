@@ -397,7 +397,7 @@ namespace ACE_OS {
 
 } /* namespace ACE_OS */
 
-#include "ace/OS_NS_string_base.inl"
+#include "ace/OS_NS_string_base.h"
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

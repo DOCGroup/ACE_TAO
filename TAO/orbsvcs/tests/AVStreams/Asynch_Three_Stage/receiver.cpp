@@ -143,8 +143,7 @@ Receiver::init (int,
 }
 
 int
-Receiver::parse_args (int argc,
-                      char **argv)
+Receiver::parse_args (int argc, char **argv)
 {
   // Parse the command line arguments
   ACE_Get_Arg_Opt<char> opts (argc,

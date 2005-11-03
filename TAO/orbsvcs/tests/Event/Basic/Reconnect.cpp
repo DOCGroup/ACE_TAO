@@ -33,7 +33,7 @@ EC_Reconnect::EC_Reconnect (void)
 int
 EC_Reconnect::parse_args (int& argc, char* argv[])
 {
-  if (this->EC_Driver::parse_args (argc, argv) != 0)
+  if (this->EC_Driver::parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
     return -1;
 
   ACE_Get_Arg_Opt<char> get_opt (argc, argv, "scd:");
