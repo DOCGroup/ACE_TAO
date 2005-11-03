@@ -23,8 +23,6 @@ namespace CIAO
            i != src.end_band ();
            ++i)
         {
-          CORBA::ULong low = i->low ();
-          CORBA::ULong high = i->high ();
           dest.bands[num].low = static_cast <ACE_INT32> ((i->low ()));
           dest.bands[num].high = static_cast < ACE_INT32 > (i->high ());
           num++;
