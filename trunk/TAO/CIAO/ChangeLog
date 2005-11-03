@@ -1,3 +1,10 @@
+Thu Nov 03 15:34:39 2005  Gan Deng  <gan.deng@vanderbilt.edu>
+
+	* DAnCE/NodeApplicationManager/ImplementationInfo.cpp
+
+	  Fixed a bug which causes unknow exception when calling
+	  startLaunch on NodeApplicationManager.
+
 Thu Nov  3 19:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeManager/NodeManager_Impl.cpp:

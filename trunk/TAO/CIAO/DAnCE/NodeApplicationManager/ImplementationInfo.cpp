@@ -42,10 +42,7 @@ CIAO::NodeImplementationInfoHandler::populate_server_resource_def (void)
         {
           target_resource_id = 
             this->plan_.instance[i].deployedResource[0].resourceName.in ();
-        }
 
-      if (i != instance_len)
-        {
           // Some component instance has server resource usage defined, so we
           // set the <nodeapp_config> field of the NodeImplementationInfo struct.
           for (CORBA::ULong j = 0; j < this->plan_.infoProperty.length (); ++j)
