@@ -35,7 +35,6 @@ be_visitor_valuetype::~be_visitor_valuetype (void)
 int
 be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
 {
-  int n_processed = 0;
   this->elem_number_ = 0;
 
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
