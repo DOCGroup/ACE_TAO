@@ -22,7 +22,6 @@ Hello::get_string (::CORBA::Long caller_threadid ACE_ENV_ARG_DECL)
               "(%P|%t) Upcall in process ..\n"));
 
   // Use portable thread IDs
-  ACE_Thread_ID self_ID;
   ACE_Thread_ID this_ID;
   this_ID.id(this->thr_id_);
 
