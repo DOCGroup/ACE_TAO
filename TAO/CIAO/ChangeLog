@@ -1,3 +1,12 @@
+Thu Nov  3 19:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+          Fixed implicit conversion warning in VxWorks build
+
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp:
+          Renamed global variable count to counter to fix clash with STL count
+          algoritm on VxWorks
+
 Thu Nov 03 11:14:52 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
 	* DAnCE/NodeApplication/RTConfig_Manager.cpp: Added a tad more and
@@ -15,7 +24,7 @@ Wed Nov 02 19:28:14 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 	* tools/Config_Handlers/RT-CCM/PS_Handler.cpp
 	* DAnCE/NodeApplication/RTConfig_Manager.cpp:
 
-	  Fixed some bugs related to populating/displaying ServerResource 
+	  Fixed some bugs related to populating/displaying ServerResource
 	  data structure.
 
 Wed Nov 02 14:55:14 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
@@ -31,7 +40,7 @@ Wed Nov 02 14:55:14 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 	* examples/Hello/descriptors/RTsvc.conf:
 	* examples/Hello/descriptors/rt_run_test.pl: Added a RTsvc.conf
 	  file to start up the NodeApplication in RT mode.
-	
+
 	* examples/Hello/descriptors/rt-config-example.csr: Made RT
 	  resource definitions more realistic and added a new policy set
 	  for debugging XML parsing.
@@ -55,7 +64,7 @@ Tue Nov 01 13:44:58 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 	* DAnCE/NodeApplication/RTConfig_Manager.inl:
 	* DAnCE/NodeApplication/RTNodeApp_Configurator.cpp:
 	* DAnCE/NodeApplication/RTNodeApp_Configurator.h: Integrated
-	  RTConfig_Manager with the RTNodeApp_Configurator.  
+	  RTConfig_Manager with the RTNodeApp_Configurator.
 
 Mon Oct 31 22:37:42 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
@@ -82,7 +91,7 @@ Sun Oct 30 22:49:52 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 	  command line flags for the NodeApplication.  The logic was there
 	  in the Get_Opt loop but the Get_Opt object was not set to parse
 	  the flag and the usage text for Node_Manager didn't mention the
-	  flag either.  
+	  flag either.
 
 	  Eventually, the optional command line flags should really come
 	  from the ServerResource XML file.
@@ -93,13 +102,13 @@ Sun Oct 30 22:49:52 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 	  commandline flags are presented.
 
 	* ciao/Deployment_Core.idl: Removed "init" method from the
-	  Container interface since it is really implementation specific. 
-	
+	  Container interface since it is really implementation specific.
+
 	* DAnCE/NodeApplication/Container_Impl.cpp:
 	* DAnCE/NodeApplication/Container_Impl.h: Changed the signature of
 	  init method to take a PolicyList pointer directly since this is
 	  what we really need to initialize a container.
-	  
+
 	* DAnCE/NodeApplication/Configurator_Factory.h: Added comments
 	  documentating how we should really support multiple external
 	  configurator module and how it could be done.
@@ -107,13 +116,13 @@ Sun Oct 30 22:49:52 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 	* DAnCE/NodeApplication/Configurator_Factory.cpp: Changed DLL open
 	  to not closing down the DLL handle on exit.  Otherwise,
 	  NodeApplication can not shut down cleanly.
-	
+
 	* DAnCE/NodeApplication/NodeApp_Configurator.h: Commented on the
 	  potential need for a finalizer method, or two.
-	
+
 	* DAnCE/NodeApplication/NodeApplication_Impl.cpp: Added actual
 	  hooks to process optional policies for RT support.
-	
+
 	* DAnCE/NodeApplication/RTNodeApp_Configurator.cpp: Added code to
 	  parse the optional properties and manipulate RT resources and
 	  policies.
@@ -129,8 +138,8 @@ Fri Oct 28 12:30:06 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* DAnCE/NodeApplication/RTNodeApp_Configurator.cpp
 	* DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
 
-	Scoreboard fixes. 
-	
+	Scoreboard fixes.
+
 Thu Oct 27 21:06:39 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* CCF/CCF/CodeGenerationKit/IndentationCxx.hpp:
