@@ -1,3 +1,9 @@
+Thu Nov  3 12:34:30 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Service_Config.h (ACE_DYNAMIC_SERVICE_DIRECTIVE): Added a
+	  missing '\' at near the end of a macro.  Thanks to Lothar
+ 	  Werzinger for this fix.
+
 Thu Nov  3 09:16:23 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Activation_Queue.h:

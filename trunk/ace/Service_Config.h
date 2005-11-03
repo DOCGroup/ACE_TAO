@@ -67,7 +67,7 @@ class ACE_Svc_Conf_Param;
   ACE_LIB_TEXT (objectclass) \
   ACE_LIB_TEXT ("\"") \
   ACE_LIB_TEXT (" params=\"") \
-  ACE_LIB_TEXT (parameters)
+  ACE_LIB_TEXT (parameters) \
   ACE_LIB_TEXT ("\"/></dynamic></ACE_Svc_Conf>")
 #define ACE_REMOVE_SERVICE_DIRECTIVE(ident) \
   ACE_LIB_TEXT ("<ACE_Svc_Conf><remove id=\"") \
