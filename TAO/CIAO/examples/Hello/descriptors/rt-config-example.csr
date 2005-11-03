@@ -59,11 +59,9 @@
     </resources>
     
     <policySet id="test_policy_set_id">
-      <priorityModel server_priority="10">
+      <priorityModel server_priority="1">
         <priority_model>SERVER_DECLARED</priority_model>
       </priorityModel>
-      <threadpool>threadpool-1</threadpool> 
-      <priorityBandedConnection>cb-1</priorityBandedConnection>
     </policySet>
 
     <policySet id="test_policy_set_2">
