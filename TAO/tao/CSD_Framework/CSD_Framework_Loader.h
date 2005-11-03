@@ -22,6 +22,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_CSD_Framework_Loader
  *
@@ -36,6 +40,8 @@ class TAO_CSD_FW_Export TAO_CSD_Framework_Loader
   /// Used to force the initialization of the ORB code.
   static int init (void);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_CSD_FRAMEWORK_LOADER_H */

@@ -2,6 +2,8 @@
 //
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class TypeCodeBase, typename TypeCodeType, typename MemberArrayType>
 ACE_INLINE
 TAO::TypeCode::Recursive_Type<TypeCodeBase,
@@ -147,3 +149,5 @@ TAO::TypeCode::Recursive_Type<TypeCodeBase,
   this->fields_        = fields;
   this->nfields_       = nfields;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

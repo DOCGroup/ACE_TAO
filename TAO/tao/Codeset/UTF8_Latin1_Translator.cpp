@@ -23,6 +23,7 @@
 
 // ****************************************************************
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /////////////////////////////
 // UTF8_Latin1_Translator implementation
@@ -219,3 +220,5 @@ TAO_UTF8_Latin1_Translator::write_char_array (ACE_OutputCDR & cdr,
 
   return 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

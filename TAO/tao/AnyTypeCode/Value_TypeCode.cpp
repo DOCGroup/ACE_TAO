@@ -16,6 +16,7 @@
 # include "tao/AnyTypeCode/Value_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename StringType,
           typename TypeCodeType,
@@ -459,5 +460,6 @@ TAO::TypeCode::Value<StringType,
       Traits<StringType>::get_typecode (this->concrete_base_));
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_VALUE_TYPECODE_CPP */

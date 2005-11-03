@@ -11,6 +11,8 @@ ACE_RCSID (CSD_Framework,
 
 #include "tao/ORB_Core.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 int
 TAO_CSD_Framework_Loader::init (void)
 {
@@ -24,3 +26,5 @@ TAO_CSD_Framework_Loader::init (void)
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

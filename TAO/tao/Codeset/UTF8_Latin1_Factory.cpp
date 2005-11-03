@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 #include "ace/Dynamic_Service.h"
 #include "UTF8_Latin1_Factory.h"
@@ -11,6 +10,8 @@ ACE_STATIC_SVC_DEFINE (TAO_UTF8_Latin1_Factory,
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO_Codeset, TAO_UTF8_Latin1_Factory)
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UTF8_Latin1_Factory::TAO_UTF8_Latin1_Factory()
   : translator_ (0)
@@ -84,3 +85,5 @@ TAO_UTF8_Latin1_Factory::create_translator () const
     }
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

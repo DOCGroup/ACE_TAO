@@ -1,5 +1,3 @@
-// -*- C++ -*-
-//
 // $Id$
 
 #include "BiDir_ORBInitializer.h"
@@ -11,6 +9,8 @@
 ACE_RCSID (BiDir_GIOP,
            BiDir_ORBInitializer,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO_BiDir_ORBInitializer::pre_init (
@@ -65,3 +65,5 @@ TAO_BiDir_ORBInitializer::register_policy_factories (
   ACE_CHECK;
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

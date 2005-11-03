@@ -26,6 +26,8 @@
 #include "tao/IORInterceptor_Adapter.h"
 #include "tao/PI/Interceptor_List_T.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   typedef Interceptor_List< ::PortableInterceptor::IORInterceptor>
@@ -43,7 +45,7 @@ class TAO_Root_POA;
  * interfaces IORInfo and IORInterceptor. This is the derived class
  * that contains the actual implementations.
  */
-class TAO_IORInterceptor_Export TAO_IORInterceptor_Adapter_Impl
+class TAO_IORInterceptor_Adapter_Impl
   : public TAO_IORInterceptor_Adapter
 {
 public:
@@ -80,6 +82,8 @@ private:
   /// List of IOR interceptors maintained
   TAO::IORInterceptor_List ior_interceptor_list_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

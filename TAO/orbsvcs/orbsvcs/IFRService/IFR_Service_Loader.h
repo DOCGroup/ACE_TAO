@@ -1,6 +1,8 @@
+// -*- C++ -*-
+
 // $Id$
 
-// ===========================================================================================
+// ===========================================================================
 // FILENAME
 //   IFR_Service_Loader.h
 //
@@ -12,7 +14,7 @@
 //   Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
 //   Priyanka Gontla <pgontla@ece.uci.edu>
 //
-// ==========================================================================================
+// ===========================================================================
 
 #ifndef TAO_IFR_SERVICE_LOADER_H
 #define TAO_IFR_SERVICE_LOADER_H
@@ -52,14 +54,15 @@ public:
      ACE_THROW_SPEC ((CORBA::SystemException));
 
 
- protected:
+protected:
   TAO_IFR_Server ifr_server_;
   // Instance of the TAO_IFR_Server
 
 private:
 
-ACE_UNIMPLEMENTED_FUNC (TAO_IFR_Service_Loader (const TAO_IFR_Service_Loader &))
-ACE_UNIMPLEMENTED_FUNC (TAO_IFR_Service_Loader &operator = (const TAO_IFR_Service_Loader &))
+  TAO_IFR_Service_Loader (const TAO_IFR_Service_Loader &);
+  TAO_IFR_Service_Loader &operator = (const TAO_IFR_Service_Loader &);
+
 };
 
 ACE_FACTORY_DECLARE (TAO_IFRService, TAO_IFR_Service_Loader)

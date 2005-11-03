@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "DynSequence_i.h"
@@ -11,6 +10,7 @@ ACE_RCSID (DynamicAny,
            DynSequence_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DynSequence_i::TAO_DynSequence_i (void)
 {
@@ -829,3 +829,5 @@ TAO_DynSequence_i::current_component (ACE_ENV_SINGLE_ARG_DECL)
             this->da_members_[index].in ()
           );
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

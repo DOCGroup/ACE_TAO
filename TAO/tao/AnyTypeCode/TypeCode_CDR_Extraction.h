@@ -26,6 +26,8 @@
 
 template <class T> class ACE_Array_Base;
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace TypeCodeFactory
@@ -190,6 +192,7 @@ namespace TAO
   }  // End namespace TypeCodeFactory
 }  // End namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

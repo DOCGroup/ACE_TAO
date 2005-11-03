@@ -47,6 +47,8 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_DynamicInterface_Export
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace CORBA
 {
   typedef TAO_Pseudo_Var_T<ExceptionList> ExceptionList_var;
@@ -122,6 +124,8 @@ namespace CORBA
     ACE_Unbounded_Queue<CORBA::TypeCode_ptr> tc_list_;
   };
 }  // End CORBA namespace
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "ExceptionList.inl"

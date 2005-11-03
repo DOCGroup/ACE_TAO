@@ -2,6 +2,8 @@
 //
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE
 TAO::TypeCode::Union<char const *,
                      CORBA::TypeCode_ptr const *,
@@ -23,3 +25,5 @@ TAO::TypeCode::Union<char const *,
   , cases_ (cases)
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

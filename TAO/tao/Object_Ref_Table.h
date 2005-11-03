@@ -106,9 +106,9 @@ private:
 
 private:
 
-  /// Prevent copying
-  ACE_UNIMPLEMENTED_FUNC (TAO_Object_Ref_Table (const TAO_Object_Ref_Table &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Object_Ref_Table &))
+  // Disallow copying and assignment.
+  TAO_Object_Ref_Table (const TAO_Object_Ref_Table &);
+  void operator= (const TAO_Object_Ref_Table &);
 
 private:
 

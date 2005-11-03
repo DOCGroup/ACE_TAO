@@ -1,5 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO::CSD::FW_Server_Request_Wrapper::FW_Server_Request_Wrapper
@@ -40,3 +43,4 @@ TAO::CSD::FW_Server_Request_Wrapper::cancel()
     }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

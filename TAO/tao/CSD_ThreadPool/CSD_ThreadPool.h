@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -16,6 +16,7 @@
 #include /**/ "ace/pre.h"
 
 #include "CSD_TP_Export.h"
+#include "tao/Versioned_Namespace.h"
 #include "ace/Service_Object.h"
 #include "ace/Service_Config.h"
 
@@ -23,6 +24,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TP_Strategy_Factory
@@ -54,6 +57,8 @@ TAO_Requires_CSD_Threadpool =
   TAO_CSD_ThreadPool::init ();
 
 #endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

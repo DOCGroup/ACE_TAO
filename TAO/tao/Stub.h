@@ -275,8 +275,8 @@ private:
 private:
 
   // = Disallow copy construction and assignment.
-  ACE_UNIMPLEMENTED_FUNC (TAO_Stub (const TAO_Stub &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Stub &operator = (const TAO_Stub &))
+  TAO_Stub (const TAO_Stub &);
+  TAO_Stub &operator = (const TAO_Stub &);
 
 protected:
   /// Automatically manage the ORB_Core reference count

@@ -19,6 +19,8 @@ ACE_RCSID (DynamicInterface,
 # include "Server_Request.inl"
 #endif /* ! __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Reference counting for DSI ServerRequest object.
 
 CORBA::ULong
@@ -238,3 +240,4 @@ CORBA::ServerRequest::gateway_exception_reply (ACE_CString &raw_exception)
   this->orb_server_request_.tao_send_reply ();
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

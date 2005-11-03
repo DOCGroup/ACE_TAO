@@ -12,6 +12,7 @@ ACE_RCSID (CSD_ThreadPool,
 # include "CSD_TP_Collocated_Synch_With_Server_Request.inl"
 #endif /* ! __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::CSD::TP_Collocated_Synch_With_Server_Request::~TP_Collocated_Synch_With_Server_Request()
 {
@@ -62,10 +63,10 @@ TAO::CSD::TP_Collocated_Synch_With_Server_Request::dispatch_i()
   ACE_ENDTRY;
 }
 
-
 void
 TAO::CSD::TP_Collocated_Synch_With_Server_Request::cancel_i()
 {
   this->synch_helper_.cancelled();
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

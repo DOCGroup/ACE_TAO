@@ -17,6 +17,8 @@ ACE_RCSID (DynamicInterface,
 # include "DII_Arguments.inl"
 #endif /* ! __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   CORBA::Boolean
@@ -140,3 +142,5 @@ namespace TAO
       }
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

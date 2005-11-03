@@ -30,6 +30,8 @@ static const size_t ACE_UTF16_CODEPOINT_SIZE = sizeof (ACE_UTF16_T);
 static const unsigned short ACE_UNICODE_BOM_CORRECT = 0xFEFFU;
 static const unsigned short ACE_UNICODE_BOM_SWAPPED = 0xFFFEU;
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /////////////////////////////
 // TAO_UTF16_BOM_Translator implementation
 
@@ -434,3 +436,5 @@ TAO_UTF16_BOM_Translator::write_swapped_wchar_array_i (ACE_OutputCDR & cdr,
     }
   return 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

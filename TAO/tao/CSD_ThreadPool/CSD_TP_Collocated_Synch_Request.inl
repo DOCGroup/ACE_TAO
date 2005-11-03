@@ -1,5 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO::CSD::TP_Collocated_Synch_Request::TP_Collocated_Synch_Request
@@ -50,3 +53,5 @@ TAO::CSD::TP_Collocated_Synch_Request::wait(ACE_ENV_SINGLE_ARG_DECL)
   return dispatched;
     
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

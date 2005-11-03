@@ -1,11 +1,13 @@
 // -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    Any_Impl.h
  *
  *  $Id$
  *
- *  @authors  Carlos O'Ryan and Jeff Parsons
+ *  @author Carlos O'Ryan
+ *  @author Jeff Parsons
  */
 //=============================================================================
 
@@ -29,10 +31,12 @@
 #include "ace/Thread_Mutex.h"
 #include "ace/Atomic_Op.h"
 
+class ACE_Message_Block;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_OutputCDR;
 class TAO_InputCDR;
-class ACE_Message_Block;
 
 namespace CORBA
 {
@@ -107,6 +111,8 @@ namespace TAO
     ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong> refcount_;
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

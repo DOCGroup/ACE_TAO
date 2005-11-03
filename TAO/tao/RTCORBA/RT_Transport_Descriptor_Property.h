@@ -50,9 +50,9 @@ protected:
   TAO_RT_Transport_Descriptor_Property* next_;
 
 private:
-  // = Disallow copy constructor and assignment operator.
-  ACE_UNIMPLEMENTED_FUNC (TAO_RT_Transport_Descriptor_Property (const TAO_RT_Transport_Descriptor_Property &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_RT_Transport_Descriptor_Property &operator = (const TAO_RT_Transport_Descriptor_Property &))
+  // = Disallow copying and assignment.
+  TAO_RT_Transport_Descriptor_Property (const TAO_RT_Transport_Descriptor_Property &);
+  TAO_RT_Transport_Descriptor_Property & operator= (const TAO_RT_Transport_Descriptor_Property &);
 };
 
 /**

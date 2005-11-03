@@ -25,6 +25,8 @@ ACE_RCSID (tao,
            Any,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 using namespace TAO;
 
 CORBA::Any::Any (void)
@@ -770,4 +772,4 @@ namespace TAO
   }
 }
 
-
+TAO_END_VERSIONED_NAMESPACE_DECL

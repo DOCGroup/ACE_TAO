@@ -53,10 +53,8 @@ public:
                                ACE_ENV_ARG_DECL);
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Kokyu_Scheduling
-                              (const TAO_EC_Kokyu_Scheduling&))
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Kokyu_Scheduling& operator=
-                              (const TAO_EC_Kokyu_Scheduling&))
+  TAO_EC_Kokyu_Scheduling (const TAO_EC_Kokyu_Scheduling&);
+  TAO_EC_Kokyu_Scheduling& operator= (const TAO_EC_Kokyu_Scheduling&);
 
   /// Initialize our RT_Info handle and dependencies
   void init_rt_info (ACE_ENV_SINGLE_ARG_DECL);

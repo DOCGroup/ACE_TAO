@@ -55,7 +55,7 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request_service_contexts (
   //          SecTargetSecureInvocationPolicy so that we can
   //          accept or reject requests on a per-object basis
   //          instead on a per-endpoint basis.
-  CORBA::Boolean no_ssl =
+  CORBA::Boolean const no_ssl =
     this->ssliop_current_->no_context (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 

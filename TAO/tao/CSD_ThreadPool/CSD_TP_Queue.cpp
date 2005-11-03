@@ -12,6 +12,7 @@ ACE_RCSID (CSD_ThreadPool,
 # include "CSD_TP_Queue.inl"
 #endif /* ! __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO::CSD::TP_Queue::put(TP_Request* request)
@@ -122,3 +123,5 @@ TAO::CSD::TP_Queue::accept_visitor(TP_Queue_Visitor& visitor)
       cur = next;
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

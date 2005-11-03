@@ -13,6 +13,7 @@ ACE_RCSID (IORManipulation,
            IORManipulation,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IOR_Manipulation_impl::TAO_IOR_Manipulation_impl (void)
 {
@@ -366,3 +367,4 @@ TAO_IOR_Manipulation_impl::get_profile_count (
   return count;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -69,10 +69,8 @@ public:
                                 ACE_ENV_ARG_DECL);
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Negation_Filter
-                              (const TAO_EC_Negation_Filter&))
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Negation_Filter& operator=
-                              (const TAO_EC_Negation_Filter&))
+  TAO_EC_Negation_Filter (const TAO_EC_Negation_Filter&);
+  TAO_EC_Negation_Filter& operator= (const TAO_EC_Negation_Filter&);
 
 private:
   /// The child

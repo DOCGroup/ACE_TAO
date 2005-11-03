@@ -9,6 +9,8 @@ ACE_RCSID (CSD_Framework,
 
 #include "CSD_Object_Adapter_Factory.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_CSD_ORBInitializer::TAO_CSD_ORBInitializer ()
 {
 }
@@ -29,5 +31,6 @@ TAO_CSD_ORBInitializer::post_init (
 {
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

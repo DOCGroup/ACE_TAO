@@ -1,9 +1,10 @@
 // $Id$
 
+#include "ServerObject_i.h"
+#include "tao/PortableServer/Root_POA.h"
 #include "tao/orbconf.h"
 
-#include "tao/ImR_Client/ServerObject_i.h"
-#include "tao/PortableServer/Root_POA.h"
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ServerObject_i::ServerObject_i (CORBA::ORB_ptr orb,
                                 PortableServer::POA_ptr poa)
@@ -36,3 +37,5 @@ ServerObject_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL

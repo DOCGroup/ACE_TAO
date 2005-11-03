@@ -21,9 +21,7 @@
 # include "tao/AnyTypeCode/Any_Dual_Impl_T.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Any_Dual_Impl_T,
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename T>
 TAO::Any_Dual_Impl_T<T>::Any_Dual_Impl_T (_tao_destructor destructor,
@@ -198,5 +196,7 @@ TAO::Any_Dual_Impl_T<T>::_tao_decode (TAO_InputCDR &cdr
       ACE_THROW (CORBA::MARSHAL ());
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_ANY_DUAL_IMPL_T_CPP */

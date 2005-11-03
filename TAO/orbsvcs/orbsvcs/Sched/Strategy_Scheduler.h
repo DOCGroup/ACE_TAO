@@ -76,9 +76,8 @@ private:
   ACE_Scheduler_Strategy &strategy_;
     // = Strategy for comparing and sorting dispatch entries.
 
-  ACE_UNIMPLEMENTED_FUNC (ACE_Strategy_Scheduler (const ACE_Strategy_Scheduler &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Strategy_Scheduler &operator= (
-    const ACE_Strategy_Scheduler &))
+  ACE_Strategy_Scheduler (const ACE_Strategy_Scheduler &);
+  ACE_Strategy_Scheduler &operator= (const ACE_Strategy_Scheduler &);
 };
 
 

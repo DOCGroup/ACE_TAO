@@ -14,6 +14,8 @@ ACE_RCSID (CSD_Framework,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_CSD_Object_Adapter_Factory::TAO_CSD_Object_Adapter_Factory (void)
 {
 }
@@ -83,6 +85,7 @@ TAO_CSD_Object_Adapter_Factory::init (int /* argc */,
   return 0;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_CSD_FW, TAO_CSD_Object_Adapter_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_CSD_Object_Adapter_Factory,

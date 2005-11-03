@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -24,6 +24,8 @@
 #include "tao/Adapter.h"
 #include "tao/Adapter_Factory.h"
 #include "ace/Service_Config.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_IOR_Table_Impl;
 
@@ -76,6 +78,8 @@ public:
   // details.
   virtual TAO_Adapter *create (TAO_ORB_Core *orb_core);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_Table_Adapter_Factory)
 ACE_FACTORY_DECLARE (TAO_IORTable, TAO_Table_Adapter_Factory)

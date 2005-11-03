@@ -52,6 +52,8 @@ ACE_RCSID (Codeset,
 
 // ****************************************************************
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// NCS for char is defaulted to ISO 8859-1:1987; Latin Alphabet No. 1
 CONV_FRAME::CodeSetId
 TAO_Codeset_Manager_i::default_char_codeset = TAO_DEFAULT_CHAR_CODESET_ID;
@@ -401,8 +403,7 @@ TAO_Codeset_Manager_i::open(void)
     }
 }
 
-
-/// Initialise the specific type codeset factories
+// Initialise the specific type codeset factories
 int
 TAO_Codeset_Manager_i::init_ccs (TAO_Codeset_Descriptor& cd,
                                  CONV_FRAME::CodeSetComponent& cs_comp)
@@ -466,7 +467,6 @@ TAO_Codeset_Manager_i::init_ccs (TAO_Codeset_Descriptor& cd,
   return 0;
 }
 
-
 TAO_Codeset_Translator_Base *
 TAO_Codeset_Manager_i::get_char_trans (CONV_FRAME::CodeSetId tcs)
 {
@@ -506,3 +506,4 @@ TAO_Codeset_Manager_i::get_ncs (CONV_FRAME::CodeSetId &ncsc,
    ncsw = this->wchar_descriptor_.ncs();
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

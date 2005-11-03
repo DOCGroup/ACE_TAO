@@ -1,5 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO::CSD::TP_Synch_Helper::TP_Synch_Helper()
@@ -48,3 +51,5 @@ TAO::CSD::TP_Synch_Helper::cancelled()
   this->state_ = CANCELLED;
   this->condition_.signal();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

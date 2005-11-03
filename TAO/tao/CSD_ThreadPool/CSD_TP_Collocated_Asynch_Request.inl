@@ -1,5 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO::CSD::TP_Collocated_Asynch_Request::TP_Collocated_Asynch_Request
@@ -18,3 +21,4 @@ TAO::CSD::TP_Collocated_Asynch_Request::TP_Collocated_Asynch_Request
 {
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

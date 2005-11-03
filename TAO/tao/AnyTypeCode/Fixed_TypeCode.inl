@@ -2,6 +2,8 @@
 //
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class RefCountPolicy>
 ACE_INLINE
 TAO::TypeCode::Fixed<RefCountPolicy>::Fixed (CORBA::UShort digits,
@@ -12,3 +14,5 @@ TAO::TypeCode::Fixed<RefCountPolicy>::Fixed (CORBA::UShort digits,
   , scale_ (scale)
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

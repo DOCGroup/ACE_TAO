@@ -12,6 +12,8 @@ ACE_RCSID (Messaging,
 
 #if (TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1)
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_ConnectionTimeoutPolicy::TAO_ConnectionTimeoutPolicy (
   const TimeBase::TimeT& relative_expiry)
   : ACE_NESTED_CLASS (CORBA, Object) ()
@@ -186,11 +188,13 @@ TAO_ConnectionTimeoutPolicy::set_time_value (ACE_Time_Value &time_value)
 
   if (TAO_debug_level > 0)
     {
-      CORBA::ULong msecs = time_value.msec ();
+      CORBA::ULong const msecs = time_value.msec ();
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Timeout is <%u>\n"),
                   msecs));
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */

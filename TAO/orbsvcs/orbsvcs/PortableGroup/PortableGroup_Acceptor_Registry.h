@@ -97,13 +97,11 @@ protected:
             Entry *&entry);
 
 private:
+
   // The acceptor registry should not be copied.
-  ACE_UNIMPLEMENTED_FUNC (TAO_PortableGroup_Acceptor_Registry (
-                              const TAO_PortableGroup_Acceptor_Registry&
-                            ))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (
-                              const TAO_PortableGroup_Acceptor_Registry&
-                            ))
+  TAO_PortableGroup_Acceptor_Registry (
+    const TAO_PortableGroup_Acceptor_Registry&);
+  void operator= (const TAO_PortableGroup_Acceptor_Registry&);
 
 private:
   /// List of acceptors that are currently open.

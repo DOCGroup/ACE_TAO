@@ -12,6 +12,8 @@ ACE_RCSID (CSD_TP,
 #endif /* ! __ACE_INLINE__ */
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::CSD::TP_Cancel_Visitor::~TP_Cancel_Visitor()
 {
 }
@@ -42,3 +44,5 @@ TAO::CSD::TP_Cancel_Visitor::visit_request(TP_Request* request,
    // specific servant, always continue visitation.
    return true;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

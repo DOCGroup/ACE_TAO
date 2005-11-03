@@ -15,6 +15,7 @@ ACE_RCSID (CSD_Framework,
 # include "CSD_FW_Server_Request_Wrapper.inl"
 #endif /* ! __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::CSD::FW_Server_Request_Wrapper::~FW_Server_Request_Wrapper()
 {
@@ -460,3 +461,4 @@ TAO::CSD::FW_Server_Request_Wrapper::create_new_output_cdr ()
   return cdr;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

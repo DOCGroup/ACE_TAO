@@ -23,6 +23,8 @@ ACE_RCSID (DynamicInterface,
 #endif /* ! __ACE_INLINE__ */
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Reference counting for DII Request object.
 
 CORBA::ULong
@@ -353,3 +355,4 @@ CORBA::Request::handle_response (TAO_InputCDR &incoming,
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

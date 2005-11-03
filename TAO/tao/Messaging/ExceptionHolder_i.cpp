@@ -11,6 +11,8 @@ ACE_RCSID (Messaging,
 
 #include "tao/Messaging/Messaging.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   ExceptionHolder::ExceptionHolder (
@@ -56,5 +58,7 @@ namespace TAO
       this->raise_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif

@@ -17,6 +17,8 @@ ACE_RCSID (IORTable,
            Table_Adapter,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Table_Adapter::TAO_Table_Adapter (TAO_ORB_Core *orb_core)
   :  orb_core_ (orb_core)
   ,  root_ (0)
@@ -120,6 +122,8 @@ TAO_Table_Adapter_Factory::create (TAO_ORB_Core *oc)
 {
   return new TAO_Table_Adapter (oc);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_IORTable, TAO_Table_Adapter_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_Table_Adapter_Factory,

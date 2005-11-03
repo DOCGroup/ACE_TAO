@@ -1,6 +1,8 @@
+// -*- C++
+
 // $Id$
 
-// ===========================================================================================
+// ============================================================================
 // FILENAME
 //   Naming_Loader.h
 //
@@ -11,7 +13,7 @@
 // AUTHORS
 //   Priyanka Gontla <pgontla@ece.uci.edu>
 //
-// ==========================================================================================
+// ============================================================================
 
 #ifndef TAO_NAMING_LOADER_H
 #define TAO_NAMING_LOADER_H
@@ -56,8 +58,8 @@ public:
   TAO_Naming_Server naming_server_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_Naming_Loader (const TAO_Naming_Loader &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Naming_Loader &operator = (const TAO_Naming_Loader &))
+  TAO_Naming_Loader (const TAO_Naming_Loader &);
+  TAO_Naming_Loader &operator = (const TAO_Naming_Loader &);
 };
 
 ACE_FACTORY_DECLARE (TAO_Naming_Serv, TAO_Naming_Loader)

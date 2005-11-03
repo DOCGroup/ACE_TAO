@@ -12,6 +12,8 @@
 
 ACE_RCSID(Messaging, Asynch_Reply_Dispatcher, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Constructor.
 TAO_Asynch_Reply_Dispatcher::TAO_Asynch_Reply_Dispatcher (
     const TAO_Reply_Handler_Skeleton &reply_handler_skel,
@@ -276,3 +278,5 @@ TAO_Asynch_Reply_Dispatcher::schedule_timer (CORBA::ULong request_id,
       request_id,
       max_wait_time);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

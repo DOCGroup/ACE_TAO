@@ -58,10 +58,13 @@ namespace TAO
 
   private:
 
-    ACE_UNIMPLEMENTED_FUNC (Nested_Upcall_Guard (void))
+    Nested_Upcall_Guard (void) {}
 
-    ACE_UNIMPLEMENTED_FUNC (Nested_Upcall_Guard (
-                              const Nested_Upcall_Guard&))
+    /// Disallow copying and assignment.
+    Nested_Upcall_Guard (const Nested_Upcall_Guard&);
+    Nested_Upcall_Guard & operator= (const Nested_Upcall_Guard&);
+
+  private:
 
     /// Pointer to the transport that we plan to use.
     TAO_Transport* t_;

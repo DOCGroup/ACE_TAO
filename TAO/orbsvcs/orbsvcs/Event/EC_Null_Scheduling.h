@@ -47,10 +47,8 @@ public:
                                ACE_ENV_ARG_DECL);
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Null_Scheduling
-                              (const TAO_EC_Null_Scheduling&))
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_Null_Scheduling& operator=
-                              (const TAO_EC_Null_Scheduling&))
+  TAO_EC_Null_Scheduling (const TAO_EC_Null_Scheduling&);
+  TAO_EC_Null_Scheduling& operator= (const TAO_EC_Null_Scheduling&);
 };
 
 #if defined (__ACE_INLINE__)

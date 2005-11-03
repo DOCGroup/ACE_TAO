@@ -8,7 +8,8 @@
  *
  *  @author   Phil Mesnier <mesnier_p@ociweb.com>
  */
-// =========================
+// ===================================================================
+
 #ifndef TAO_CODESET_TRANSLATOR_FACTORY_T_H
 #define TAO_CODESET_TRANSLATOR_FACTORY_T_H
 
@@ -19,6 +20,9 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Codeset_Translator_Factory_T
@@ -62,6 +66,8 @@ public:
 private:
   NCS_TO_TCS *translator_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

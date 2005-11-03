@@ -1,5 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO::CSD::TP_Request::TP_Request(PortableServer::Servant servant,
@@ -90,3 +93,5 @@ TAO::CSD::TP_Request::cancel()
 {
   this->cancel_i();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

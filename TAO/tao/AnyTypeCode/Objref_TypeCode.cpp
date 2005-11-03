@@ -13,6 +13,7 @@
 
 #include "ace/OS_NS_string.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename StringType, class RefCountPolicy>
 bool
@@ -149,5 +150,7 @@ TAO::TypeCode::Objref<StringType, RefCountPolicy>::name_i (
   // mapping.
   return this->attributes_.name ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /*  TAO_OBJREF_TYPECODE_CPP */

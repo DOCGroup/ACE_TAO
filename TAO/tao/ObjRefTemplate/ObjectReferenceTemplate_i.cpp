@@ -8,6 +8,8 @@ ACE_RCSID (ORT,
            ObjectReferenceTemplate_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   ObjectReferenceTemplate::ObjectReferenceTemplate (
@@ -74,3 +76,5 @@ namespace TAO
     return tao_poa->invoke_key_to_object (ACE_ENV_SINGLE_ARG_PARAMETER);
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

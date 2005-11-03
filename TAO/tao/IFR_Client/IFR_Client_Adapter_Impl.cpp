@@ -15,6 +15,8 @@ ACE_RCSID (IFR_Client,
            IFR_Client_Adapter_Impl,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   template<>
@@ -213,6 +215,8 @@ TAO_IFR_Client_Adapter_Impl::Initializer (void)
 
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_IFR_Client_Adapter_Impl);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (
     TAO_IFR_Client_Adapter_Impl,

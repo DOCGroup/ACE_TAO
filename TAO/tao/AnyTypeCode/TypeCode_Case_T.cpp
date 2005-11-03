@@ -13,6 +13,7 @@
 # include "tao/AnyTypeCode/TypeCode_Case_T.inl"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -158,5 +159,6 @@ TAO::TypeCode::Case_T<DiscriminatorType,
   return safe_value._retn ();
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_TYPECODE_CASE_T_CPP */

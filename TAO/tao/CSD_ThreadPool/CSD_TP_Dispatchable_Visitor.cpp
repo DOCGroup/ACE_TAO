@@ -10,6 +10,7 @@ ACE_RCSID (CSD_TP,
 # include "CSD_TP_Dispatchable_Visitor.inl"
 #endif /* ! __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::CSD::TP_Dispatchable_Visitor::~TP_Dispatchable_Visitor()
 {
@@ -48,3 +49,5 @@ TAO::CSD::TP_Dispatchable_Visitor::visit_request(TP_Request* request,
   // Return true to visit the next request in the queue (if there is one).
   return true;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

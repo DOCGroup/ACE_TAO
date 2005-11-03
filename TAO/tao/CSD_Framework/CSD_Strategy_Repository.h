@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -25,6 +25,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
   * @class TAO_CSD_Strategy_Factory
@@ -66,6 +67,8 @@ private:
   };
   Strategy_Node * strategy_list_head_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_CSD_FW, TAO_CSD_Strategy_Repository)
 ACE_FACTORY_DECLARE (TAO_CSD_FW, TAO_CSD_Strategy_Repository)

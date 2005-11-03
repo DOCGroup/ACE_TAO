@@ -69,10 +69,8 @@ public:
                                 ACE_ENV_ARG_DECL);
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_And_Filter
-                              (const TAO_EC_And_Filter&))
-  ACE_UNIMPLEMENTED_FUNC (TAO_EC_And_Filter& operator=
-                              (const TAO_EC_And_Filter&))
+  TAO_EC_And_Filter (const TAO_EC_And_Filter&);
+  TAO_EC_And_Filter& operator= (const TAO_EC_And_Filter&);
 
 private:
   /// The children

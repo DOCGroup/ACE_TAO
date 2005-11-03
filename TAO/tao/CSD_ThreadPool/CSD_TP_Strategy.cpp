@@ -17,6 +17,7 @@ ACE_RCSID (CSD_ThreadPool,
 # include "CSD_TP_Strategy.inl"
 #endif /* ! __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::CSD::TP_Strategy::~TP_Strategy()
 {
@@ -268,3 +269,4 @@ TAO::CSD::TP_Strategy::cancel_requests(PortableServer::Servant servant
   ACE_CHECK;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

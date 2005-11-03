@@ -14,6 +14,8 @@ ACE_RCSID (tao,
            Any_Basic_Impl,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   Any_Basic_Impl::Any_Basic_Impl (CORBA::TypeCode_ptr tc,
@@ -380,3 +382,5 @@ namespace TAO
       }
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

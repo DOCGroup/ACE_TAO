@@ -2,6 +2,7 @@
 //
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename StringType, class RefCountPolicy>
 ACE_INLINE
@@ -14,3 +15,5 @@ TAO::TypeCode::Objref<StringType, RefCountPolicy>::Objref (
   , attributes_ (id, name)
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -125,9 +125,8 @@ private:
   void print_schedule ();
   // Display the schedule, task-by-task.
 
-  ACE_UNIMPLEMENTED_FUNC (Scheduler_Generic (const Scheduler_Generic &))
-  ACE_UNIMPLEMENTED_FUNC (Scheduler_Generic &operator= (
-    const Scheduler_Generic &))
+  Scheduler_Generic (const Scheduler_Generic &);
+  Scheduler_Generic &operator= (const Scheduler_Generic &);
 };
 
 #include /**/ "ace/post.h"

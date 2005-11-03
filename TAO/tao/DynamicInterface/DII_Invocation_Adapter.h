@@ -109,10 +109,10 @@ namespace TAO
   private:
 
     /// Dont allow default initializations
-    ACE_UNIMPLEMENTED_FUNC (DII_Invocation_Adapter (void))
+    DII_Invocation_Adapter (void);
 
-    ACE_UNIMPLEMENTED_FUNC (
-        DII_Invocation_Adapter & operator= (const DII_Invocation_Adapter &))
+    DII_Invocation_Adapter (const DII_Invocation_Adapter &);
+    DII_Invocation_Adapter & operator= (const DII_Invocation_Adapter &);
   };
 
   /**

@@ -91,9 +91,9 @@ public:
   TAO_ConnectorSetIterator end (void);
 
 private:
-  // Prohibited
-  ACE_UNIMPLEMENTED_FUNC (TAO_Connector_Registry (const TAO_Connector_Registry&))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Connector_Registry&))
+  // Disallow copying and assignment.
+  TAO_Connector_Registry (const TAO_Connector_Registry&);
+  void operator= (const TAO_Connector_Registry&);
 
 private:
   /// List of connectors that are currently open.
