@@ -61,7 +61,7 @@ sub run_node_daemons {
       $node_app = "$DAnCE/NodeApplication/NodeApplication";
 
       $d_cmd = "$DAnCE/NodeManager/NodeManager";
-      $d_param = "-ORBEndpoint $iiop -s $node_app -a \"-r -ORBSvcconf RTsvc.conf\" -o $iorfile";
+      $d_param = "-ORBEndpoint $iiop -s $node_app -o $iorfile";
 
       $Daemons[$i] = new PerlACE::Process ($d_cmd, $d_param);
       $result = $Daemons[$i]->Spawn ();
@@ -114,7 +114,7 @@ $em_running = 1;
 print "Invoking executor - start the application -\n";
 $E =
   new PerlACE::Process ("$DAnCE/Plan_Launcher/plan_launcher",
-                        "-p rt-config-example.cdp -k file://EM.ior -o DAM.ior");
+                        "-p rt-example.cdp -k file://EM.ior -o DAM.ior");
  
 $E->SpawnWaitKill (5000);
 

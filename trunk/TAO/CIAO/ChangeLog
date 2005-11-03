@@ -1,3 +1,13 @@
+Thu Nov 03 11:14:52 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
+
+	* DAnCE/NodeApplication/RTConfig_Manager.cpp: Added a tad more and
+	  improve existing debugging print out.
+
+	* examples/Hello/descriptors/rt-example.cdp:
+	* examples/Hello/descriptors/rt-config-example.csr:
+	* examples/Hello/descriptors/rt_run_test.pl: Changed to use a
+	  simpler version of DeploymentPlan for the test for now.
+
 Wed Nov 02 19:28:14 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
 	* tools/Config_Handlers/RT-CCM/CB_Handler.cpp
