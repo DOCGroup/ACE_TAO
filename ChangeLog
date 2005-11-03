@@ -43,7 +43,7 @@ Wed Nov  2 08:51:29 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
 
 	  Removed ACE_OutputCDR_Auto_Reset. Firstly
 	  ACE_Utils::Auto_Functor should be used and secondly such classes
-	  don't serve any purpose beyond Output_CDR. 
+	  don't serve any purpose beyond Output_CDR.
 
 Tue Nov  1 22:19:03 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
