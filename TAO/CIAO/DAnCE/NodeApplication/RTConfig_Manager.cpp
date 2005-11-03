@@ -383,6 +383,8 @@ CIAO::RTResource_Config_Manager::find_policies_by_name (const char *name
   CORBA::PolicyList_var retv =
     new CORBA::PolicyList (entry->int_id_.in ());
 
+  ACE_DEBUG ((LM_DEBUG, "RTResource_Config_Manager::find_policies_by_name ok.\n"));
+
   return retv._retn ();
 }
 
@@ -411,7 +413,7 @@ CIAO::RTResource_Config_Manager::create_single_policy
                                                            ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
-        //        if (! CORBA::is_nil (retv.in ()))
+        if (! CORBA::is_nil (retv.in ()))
         ACE_DEBUG ((LM_DEBUG,
                     "Create PriorityModel policy: %d - %d\n",
                     tmp.priority_model, tmp.server_priority));
@@ -429,7 +431,7 @@ CIAO::RTResource_Config_Manager::create_single_policy
                                                        ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
-        //        if (! CORBA::is_nil (retv.in ()))
+        if (! CORBA::is_nil (retv.in ()))
         ACE_DEBUG ((LM_DEBUG,
                     "Create Threadpool policy: %s, TPid: %d\n",
                     policy_def.ThreadpoolDef().Id.in (), tpid));
@@ -448,7 +450,7 @@ CIAO::RTResource_Config_Manager::create_single_policy
                                                                   ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
-        //        if (! CORBA::is_nil (retv.in ()))
+        if (! CORBA::is_nil (retv.in ()))
         ACE_DEBUG ((LM_DEBUG,
                     "Created Banded Connection policy: %s\n",
                     policy_def.PriorityBandedConnectionDef().Id.in ()));
@@ -458,7 +460,7 @@ CIAO::RTResource_Config_Manager::create_single_policy
     default:
       ACE_DEBUG ((LM_DEBUG,
                   "Invalid policy type - RTPolicy_Set_Manager::create_single_policy\n"));
-      //      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
     }
 
   return retv._retn ();
