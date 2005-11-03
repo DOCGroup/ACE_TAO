@@ -510,7 +510,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     VarOut_T.h
     Var_Size_Argument_T.h
     Version.h
-    Version_Namespace.h
+    Versioned_Namespace.h
     Wait_On_Leader_Follower.h
     Wait_On_LF_No_Upcall.h
     Wait_On_Reactor.h

@@ -683,7 +683,7 @@ nobase_include_HEADERS = \
   Var_Size_Argument_T.h \
   Var_Size_Argument_T.inl \
   Version.h \
-  Version_Namespace.h \
+  Versioned_Namespace.h \
   WCharSeq.pidl \
   WCharSeqC.h \
   WCharSeqS.h \
