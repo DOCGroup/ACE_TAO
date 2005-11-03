@@ -14,7 +14,7 @@
 
 const char *ior = "file://test.ior";
 int comp_number = 4;
-int count = 0;
+int counter = 0;
 
 int parse_args (int argc, char *argv[])
 {
@@ -95,8 +95,8 @@ main (int argc, char *argv[])
           Deployment::ComponentImplementationInfo info;
 
           std::stringstream tmp;
-          tmp << "NodeAppTest_RoundTrip:" << count;
-          count = count + 1;
+          tmp << "NodeAppTest_RoundTrip:" << counter;
+          counter = counter + 1;
 
           // Add the names and entry points of each of the DLLs
           info.component_instance_name =
@@ -141,8 +141,8 @@ main (int argc, char *argv[])
           Deployment::ComponentImplementationInfo info;
 
           std::stringstream tmp;
-          tmp << "NodeAppTest_RoundTrip:" << count;
-          count = count + 1;
+          tmp << "NodeAppTest_RoundTrip:" << counter;
+          counter = counter + 1;
 
           // Add the names and entry points of each of the DLLs
           info.component_instance_name =
