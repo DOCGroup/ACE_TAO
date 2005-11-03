@@ -28,9 +28,9 @@ namespace CIAO
         {
           ::CIAO::DAnCE::PriorityModelPolicyDef pmd;
 
-          PM_Handler::priority_model_pd (*i, dest.policies[len++].PriorityModelDef ());
+          PM_Handler::priority_model_pd (*i, pmd);
 
-          dest.policies[len].PriorityModelDef (pmd);
+          dest.policies[len++].PriorityModelDef (pmd);
         }
       
       for (PolicySet::threadpool_const_iterator i = src.begin_threadpool ();
