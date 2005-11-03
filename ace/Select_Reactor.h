@@ -56,9 +56,10 @@ public:
   void dump (void) const {}
 
 private:
-  // = Prevent assignment and initialization.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> > &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Guard (const ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> > &))
+  // Disallow copying and assignment.
+  ACE_Guard (const ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> > &);
+  void operator= (const ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> > &);
+
 };
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE == 0 */
 

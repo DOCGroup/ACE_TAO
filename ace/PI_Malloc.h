@@ -88,7 +88,10 @@ public:
     void dump (void) const;
 
   private:
-    ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Malloc_Header &))
+
+    // Disallow assignment.
+    void operator= (const ACE_Malloc_Header &);
+
   };
 
   /**
@@ -147,7 +150,9 @@ public:
     void dump (void) const;
 
   private:
-    ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Name_Node &))
+
+    // Disallow assignment.
+    void operator= (const ACE_Name_Node &);
   };
 
   /// Print out a bunch of size info for debugging.
@@ -194,7 +199,9 @@ public:
   void dump (void) const;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Control_Block &))
+
+  // Disallow assignment.
+  void operator= (const ACE_Control_Block &);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

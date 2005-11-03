@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -128,10 +128,13 @@ public:
   static void init_functions (void);
 
 private:
+
   // This function cannot be supported by this template specialization.
   // If you need access to an underlying lock, use the ACE_Atomic_Op_Ex
   // template instead.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Thread_Mutex &mutex (void))
+  ACE_Thread_Mutex &mutex (void);
+
+private:
 
   /// Current object decorated by the atomic op.
   volatile long value_;
@@ -224,10 +227,13 @@ public:
   static void init_functions (void);
 
 private:
+
   // This function cannot be supported by this template specialization.
   // If you need access to an underlying lock, use the ACE_Atomic_Op_Ex
   // template instead.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Thread_Mutex &mutex (void))
+  ACE_Thread_Mutex &mutex (void);
+
+private:
 
   /// Current object decorated by the atomic op.
   volatile unsigned long value_;

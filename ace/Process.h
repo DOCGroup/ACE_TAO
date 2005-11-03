@@ -552,6 +552,12 @@ public:
   PROCESS_INFORMATION process_info (void);
 #endif /* ACE_WIN32 */
 
+private:
+
+  // Disallow copying and assignment since we don't support this (yet).
+  ACE_Process (const ACE_Process &);
+  void operator= (const ACE_Process &);
+
 protected:
   /// Set this process' <exit_code_>.  ACE_Process_Manager uses this
   /// method to set the <exit_code_> after successfully waiting for
@@ -571,9 +577,6 @@ protected:
   /// Handle duplicates made for the child process.
   ACE_Handle_Set dup_handles_;
 
-  // = Disallow copying and assignment since we don't support this (yet).
-  ACE_UNIMPLEMENTED_FUNC (ACE_Process (const ACE_Process &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Process &))
 };
 
 

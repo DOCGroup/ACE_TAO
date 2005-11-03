@@ -1203,7 +1203,12 @@ protected:
     /// does wake the current token holder.
     int acquire (ACE_Time_Value *max_wait = 0);
 
+  protected:
+
+    Token_Guard (void) {}
+
   private:
+
     /// The Reactor token.
     ACE_Dev_Poll_Reactor_Token &token_;
 
@@ -1213,9 +1218,6 @@ protected:
     /// vice-versa.
     int owner_;
 
-  private:
-
-    ACE_UNIMPLEMENTED_FUNC (Token_Guard (void))
   };
 
 };

@@ -105,6 +105,7 @@ public:
   ACE_SHLIB_HANDLE get_handle (int become_owner = 0);
 
 private:
+
   /// Returns a pointer to a string explaining why <symbol> or <open>
   /// failed.  This is used internal to print out the error to the log,
   /// but since this object is shared, we can't store or return the error
@@ -116,6 +117,12 @@ private:
   // Returns the array of names to try in try_names.
   void get_dll_names (const ACE_TCHAR *dll_name,
                       ACE_Array<ACE_TString> &try_names);
+
+  // Disallow copying and assignment since we don't handle them.
+  ACE_DLL_Handle (const ACE_DLL_Handle &);
+  void operator= (const ACE_DLL_Handle &);
+
+private:
 
   // Keep track of how many ACE_DLL objects have a reference to this
   // dll.
@@ -137,11 +144,6 @@ private:
   /// Synchronization variable for the MT_SAFE Repository
   ACE_Thread_Mutex lock_;
 #endif /* ACE_MT_SAFE */
-
-  // = Disallow copying and assignment since we don't handle these.
-  ACE_UNIMPLEMENTED_FUNC (ACE_DLL_Handle (const ACE_DLL_Handle &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_DLL_Handle &))
-
 };
 
 class ACE_Framework_Repository;
@@ -182,8 +184,6 @@ class ACE_Framework_Repository;
 class ACE_Export ACE_DLL_Manager
 {
 public:
-  // This if to silence the compiler warnings, even though ACE_Framework_Repository
-  // always uses the instance method.
   friend class ACE_Framework_Repository;
 
   enum
@@ -212,6 +212,13 @@ public:
   void unload_policy (u_long unload_policy);
 
 protected:
+
+  /// Default constructor.
+  ACE_DLL_Manager (int size = ACE_DLL_Manager::DEFAULT_SIZE);
+
+  /// Destructor.
+  ~ACE_DLL_Manager (void);
+
   // Allocate handle_vector_.
   int open (int size);
 
@@ -225,14 +232,15 @@ protected:
   int unload_dll (ACE_DLL_Handle *dll_handle, int force_unload = 0);
 
 private:
-  /// Default constructor.
-  ACE_DLL_Manager (int size = ACE_DLL_Manager::DEFAULT_SIZE);
-
-  /// Destructor.
-  ~ACE_DLL_Manager (void);
 
   /// Close the singleton instance.
   static void close_singleton (void);
+
+  // Disallow copying and assignment since we don't handle these.
+  ACE_DLL_Manager (const ACE_DLL_Manager &);
+  void operator= (const ACE_DLL_Manager &);
+
+private:
 
   /// Vector containing all loaded handle objects.
   ACE_DLL_Handle **handle_vector_;
@@ -254,9 +262,6 @@ private:
   ACE_Thread_Mutex lock_;
 #endif /* ACE_MT_SAFE */
 
- // = Disallow copying and assignment since we don't handle these.
-  ACE_UNIMPLEMENTED_FUNC (ACE_DLL_Manager (const ACE_DLL_Manager &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_DLL_Manager &))
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

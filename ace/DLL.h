@@ -126,6 +126,11 @@ private:
               ACE_SHLIB_HANDLE handle = 0);
 
 
+  // Disallow assignment since we don't handle it.
+  void operator= (const ACE_DLL &);
+
+private:
+
   /// Open mode.
   int open_mode_;
 
@@ -143,8 +148,6 @@ private:
   /// Flag to record if the last operation had an error.
   int error_;
 
-  // = Disallow copying and assignment since we don't handle these.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_DLL &))
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

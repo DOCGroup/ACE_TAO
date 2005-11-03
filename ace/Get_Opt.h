@@ -369,7 +369,7 @@ private:
                              int has_arg,
                              int val = 0);
 
-    /// Default dtor.
+    /// Dtor.
     ~ACE_Get_Opt_Long_Option (void);
 
     bool operator < (const ACE_Get_Opt_Long_Option &rhs);
@@ -408,6 +408,12 @@ private:
 
   /// Set last_option.
   void last_option (const ACE_TString &s);
+
+  // Disallow copying and assignment.
+  ACE_Get_Opt (const ACE_Get_Opt &);
+  ACE_Get_Opt &operator= (const ACE_Get_Opt &);
+
+private:
 
   /// Holds the option string.
   ACE_TString *optstring_;
@@ -456,8 +462,6 @@ private:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  ACE_UNIMPLEMENTED_FUNC (ACE_Get_Opt (const ACE_Get_Opt &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Get_Opt &operator= (const ACE_Get_Opt &))
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

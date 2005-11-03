@@ -81,6 +81,10 @@ public:
   void dump (void) const;
 
 private:
+
+  ACE_Stats_Value (void) {}
+
+private:
   /// The integer portion of the value.
   ACE_UINT32 whole_;
 
@@ -94,7 +98,6 @@ private:
    */
   u_int precision_;
 
-  ACE_UNIMPLEMENTED_FUNC (ACE_Stats_Value (void))
 };
 
 /**
