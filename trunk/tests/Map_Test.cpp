@@ -28,7 +28,7 @@ ACE_RCSID(tests, Map_Test, "$Id$")
 typedef size_t VALUE;
 
 // Generic map type.
-typedef ACE_Map<KEY, VALUE> MAP;
+typedef ACE_Map<KEY, VALUE> TEST_MAP;
 
 // Manager Manager adapter.
 typedef ACE_Map_Manager_Adapter<KEY, VALUE, Key_Generator> MAP_MANAGER_ADAPTER;
@@ -40,7 +40,7 @@ typedef ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, Hash_Key, ACE_Equal_To<KEY>,
 typedef ACE_Active_Map_Manager_Adapter<KEY, VALUE, Key_Adapter> ACTIVE_MAP_MANAGER_ADAPTER;
 
 static void
-functionality_test (MAP &map,
+functionality_test (TEST_MAP &map,
                     size_t iterations)
 {
   size_t counter;
@@ -78,13 +78,13 @@ functionality_test (MAP &map,
   // Forward iteration...
   {
     counter = 0;
-    MAP::iterator end = map.end ();
+    TEST_MAP::iterator end = map.end ();
 
-    for (MAP::iterator iter = map.begin ();
+    for (TEST_MAP::iterator iter = map.begin ();
          iter != end;
          ++iter, ++counter)
       {
-        MAP::value_type entry = *iter;
+        TEST_MAP::value_type entry = *iter;
 
         // Recover original key.
         KEY original_key;
@@ -116,14 +116,14 @@ functionality_test (MAP &map,
   // Reverse iteration...
   {
     counter = iterations;
-    MAP::reverse_iterator end = map.rend ();
+    TEST_MAP::reverse_iterator end = map.rend ();
 
-    for (MAP::reverse_iterator iter = map.rbegin ();
+    for (TEST_MAP::reverse_iterator iter = map.rbegin ();
          iter != end;
          ++iter)
       {
         --counter;
-        MAP::value_type entry = *iter;
+        TEST_MAP::value_type entry = *iter;
 
         // Recover original key.
         KEY original_key;
@@ -175,7 +175,7 @@ functionality_test (MAP &map,
 }
 
 static void
-insert_test (MAP &map,
+insert_test (TEST_MAP &map,
              size_t iterations,
              KEY *keys)
 {
@@ -190,7 +190,7 @@ insert_test (MAP &map,
 }
 
 static void
-find_test (MAP &map,
+find_test (TEST_MAP &map,
            size_t iterations,
            KEY *keys)
 {
@@ -204,7 +204,7 @@ find_test (MAP &map,
 }
 
 static void
-unbind_test (MAP &map,
+unbind_test (TEST_MAP &map,
              size_t iterations,
              KEY *keys)
 {
@@ -219,8 +219,8 @@ unbind_test (MAP &map,
 }
 
 static void
-performance_test (void (*ptf) (MAP &, size_t, KEY *),
-                  MAP &map,
+performance_test (void (*ptf) (TEST_MAP &, size_t, KEY *),
+                  TEST_MAP &map,
                   size_t iterations,
                   KEY *keys,
                   size_t table_size,
