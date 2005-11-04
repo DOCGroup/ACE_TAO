@@ -1,3 +1,8 @@
+Fri Nov  4 10:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.h:
+          Only define VX_FP_TASK when it is not defined yet
+
 Fri Nov  4 08:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Global_Macros.h:
