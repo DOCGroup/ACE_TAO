@@ -941,15 +941,9 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
 #     define ACE_SEH_EXCEPT(X) while (0)
 #     define ACE_SEH_FINALLY if (1)
 #   elif defined(__BORLANDC__)
-#     if (__BORLANDC__ >= 0x0530) /* Borland C++ Builder 3.0 */
-#       define ACE_SEH_TRY try
-#       define ACE_SEH_EXCEPT(X) __except(X)
-#       define ACE_SEH_FINALLY __finally
-#     else
-#       define ACE_SEH_TRY if (1)
-#       define ACE_SEH_EXCEPT(X) while (0)
-#       define ACE_SEH_FINALLY if (1)
-#     endif
+#     define ACE_SEH_TRY try
+#     define ACE_SEH_EXCEPT(X) __except(X)
+#     define ACE_SEH_FINALLY __finally
 #   elif defined (__IBMCPP__) && (__IBMCPP__ >= 400)
 #     define ACE_SEH_TRY if (1)
 #     define ACE_SEH_EXCEPT(X) while (0)
