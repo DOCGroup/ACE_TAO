@@ -195,8 +195,8 @@ class Convert_InOut
 public:
   //template < typename SrcT >
   explicit Convert_InOut( SrcT* src, size_t size, size_t encode_factor = 3 )
-  : len_((size-1)*encode_factor)
-  , encode_factor_(encode_factor)
+  : len_( size == calc_len ? calc_len : (size - 1) * encode_factor )
+  , encode_factor_( size == calc_len ? 1 : encode_factor )
   , str_(0)
   , orig_(src)
   , ownstr_( duplicate<DestT, SrcT, Allocator_cpp<DestT> >(src, &len_))
@@ -217,7 +217,7 @@ public:
   // where src and dest are the same type
   //template <>
   explicit Convert_InOut( DestT* src, size_t size = calc_len )
-  : len_(size==calc_len ? calc_len : size-1)
+  : len_( size == calc_len ? calc_len : size - 1 )
   , encode_factor_(1)
   , str_(src)
   , orig_(0)

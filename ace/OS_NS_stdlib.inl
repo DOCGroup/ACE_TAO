@@ -8,7 +8,7 @@
 #include "ace/os_include/os_errno.h"
 #include "ace/os_include/os_search.h"
 #include "ace/os_include/os_limits.h"
-#include "ace/TSS_T.h"
+//#include "ace/TSS_T.h"
 
 #if defined(ACE_WCHAR_IN_STD_NAMESPACE)
 # define ACE_WCHAR_STD_NAMESPACE std
@@ -150,12 +150,20 @@ ACE_OS::getenv (const wchar_t *symbol)
 #elif defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::_wgetenv (symbol), wchar_t *, 0);
 #else
+// Including ACE_TSS_T.h causes error!
+/*
   wchar_t* init = 0;
   static ACE_TSS< wchar_t* > wvalue (&init);
   ACE::String_Conversion::Allocator_malloc<wchar_t>().free(*wvalue);
   *wvalue.ts_object() = ACE_TEXT_TO_MALLOC_WCHAR_OUT (
                 ACE_OS::getenv (ACE_TEXT_TO_CHAR_IN (symbol)));
   return *wvalue;
+*/
+  static wchar_t* wvalue = 0;
+  ACE::String_Conversion::Allocator_malloc<wchar_t>().free(wvalue);
+  wvalue = ACE_TEXT_TO_MALLOC_WCHAR_OUT (
+                ACE_OS::getenv (ACE_TEXT_TO_CHAR_IN (symbol)));
+  return wvalue;
 #endif /* ACE_LACKS_ENV */
 }
 
