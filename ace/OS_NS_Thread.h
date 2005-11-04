@@ -303,7 +303,9 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 // task options:  the other options are either obsolete, internal, or for
 // Fortran or Ada support
 #     define VX_UNBREAKABLE        0x0002  /* breakpoints ignored */
-#     define VX_FP_TASK            0x0008  /* floating point coprocessor */
+#     if !defined (VX_FP_TASK)
+#       define VX_FP_TASK            0x0008  /* floating point coprocessor */
+#     endif
 #     define VX_PRIVATE_ENV        0x0080  /* private environment support */
 #     define VX_NO_STACK_FILL      0x0100  /* do not stack fill for
                                               checkstack () */
