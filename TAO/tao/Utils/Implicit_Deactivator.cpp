@@ -4,6 +4,9 @@
 ACE_RCSID (Utils,
            Implicit_Deactivator,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 void
 TAO::Utils::Implicit_Deactivation_Functor::operator () (
    PortableServer::ServantBase * servant)
@@ -31,3 +34,5 @@ TAO::Utils::Implicit_Deactivation_Functor::operator () (
     }
   ACE_ENDTRY;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

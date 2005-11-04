@@ -34,6 +34,8 @@
 #include "tao/Resource_Factory.h"
 #include "tao/Connector_Impl.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_SHMIOP_Endpoint;
 
 // ****************************************************************
@@ -126,6 +128,8 @@ private:
   /// Are we using GIOP lite?
   CORBA::Boolean lite_flag_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 

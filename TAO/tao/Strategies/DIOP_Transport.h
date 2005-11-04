@@ -1,5 +1,5 @@
-// This may look like C, but it's really -*- C++ -*-
 // -*- C++ -*-
+
 // ===================================================================
 /**
  *  @file   DIOP_Transport.h
@@ -29,6 +29,12 @@
 #include "ace/Svc_Handler.h"
 #include "strategies_export.h"
 
+#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
+template class TAO_Strategies_Export ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward decls.
 class TAO_DIOP_Connection_Handler;
 class TAO_ORB_Core;
@@ -39,10 +45,6 @@ class TAO_Acceptor;
 // Service Handler for this transport
 typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
         TAO_DIOP_SVC_HANDLER;
-
-#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
-template class TAO_Strategies_Export ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
 /**
  * @class TAO_DIOP_Transport
@@ -134,6 +136,8 @@ private:
   /// Our messaging object.
   TAO_Pluggable_Messaging *messaging_object_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */
 

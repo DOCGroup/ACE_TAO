@@ -20,6 +20,8 @@ ACE_RCSID (Strategies,
 
 static const char prefix_[] = "uiop";
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 const char TAO_UIOP_Profile::object_key_delimiter_ = '|';
 
 char
@@ -446,5 +448,7 @@ TAO_UIOP_Profile::decode_endpoints (void)
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_UIOP == 1 */

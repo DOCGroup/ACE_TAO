@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 // $Id$
 
 #include "SHMIOP_Transport.h"
@@ -19,6 +18,9 @@
 #include "tao/GIOP_Message_Lite.h"
 
 ACE_RCSID (Strategies, SHMIOP_Transport, "$Id$")
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SHMIOP_Transport::TAO_SHMIOP_Transport (TAO_SHMIOP_Connection_Handler *handler,
                                             TAO_ORB_Core *orb_core,
@@ -257,5 +259,7 @@ TAO_SHMIOP_Transport::messaging_init (CORBA::Octet major,
                                  minor);
   return 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */

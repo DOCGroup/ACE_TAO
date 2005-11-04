@@ -1,3 +1,4 @@
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -25,6 +26,8 @@
 
 #include "utils_export.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_OutputCDR;
 class TAO_InputCDR;
 
@@ -51,6 +54,8 @@ public:
   ///  Returns true on success and false on failure.
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

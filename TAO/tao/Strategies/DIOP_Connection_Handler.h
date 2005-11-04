@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 // ===================================================================
 /**
@@ -33,6 +33,9 @@
 #include "ace/SOCK_Dgram.h"
 #include "strategies_export.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward Decls
 class TAO_Pluggable_Messaging;
 
@@ -46,11 +49,9 @@ class TAO_Pluggable_Messaging;
  * The Connection handler which is common for the Acceptor and
  * the Connector
  */
-
-
-class TAO_Strategies_Export TAO_DIOP_Connection_Handler :
-  public TAO_DIOP_SVC_HANDLER,
-  public TAO_Connection_Handler
+class TAO_Strategies_Export TAO_DIOP_Connection_Handler
+  : public TAO_DIOP_SVC_HANDLER
+  , public TAO_Connection_Handler
 {
 
 public:
@@ -159,6 +160,8 @@ private:
   /// Stores the type of service value.
   int dscp_codepoint_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */
 

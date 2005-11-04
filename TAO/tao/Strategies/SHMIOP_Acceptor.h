@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 // $Id$
 
 // ============================================================================
@@ -37,6 +37,8 @@
 #include "ace/MEM_Acceptor.h"
 #include "tao/GIOP_Message_Version.h"
 // TAO SHMIOP_Acceptor concrete call definitions
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_SHMIOP_Acceptor
@@ -147,6 +149,8 @@ private:
   /// Should we use GIOP lite??
   CORBA::Boolean lite_flag_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 

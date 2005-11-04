@@ -21,6 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template<typename T, typename T_var>
 class TAO_Unbounded_Valuetype_Sequence;
 
@@ -232,6 +234,8 @@ public:
   virtual void _shrink_buffer (CORBA::ULong new_length,
                                CORBA::ULong old_length);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "Sequence_T.inl"

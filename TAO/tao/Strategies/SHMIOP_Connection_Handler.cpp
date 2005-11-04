@@ -24,6 +24,8 @@ ACE_RCSID (Strategies,
            SHMIOP_Connection_Handler,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_SHMIOP_Connection_Handler::TAO_SHMIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_SHMIOP_SVC_HANDLER (t, 0 , 0),
     TAO_Connection_Handler (0)
@@ -157,7 +159,7 @@ TAO_SHMIOP_Connection_Handler::open (void*)
 
   // Not needed, anyway
   this->state_changed (TAO_LF_Event::LFS_SUCCESS,
-		       this->orb_core ()->leader_follower ());
+                       this->orb_core ()->leader_follower ());
 
   return 0;
 }
@@ -249,5 +251,7 @@ TAO_SHMIOP_Connection_Handler::add_transport_to_cache (void)
   return cache.cache_idle_transport (&prop,
                                      this->transport ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /*(TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0) */

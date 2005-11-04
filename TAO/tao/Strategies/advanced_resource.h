@@ -13,6 +13,8 @@
 
 #include "tao/ORB_Core.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Connection_Purging_Strategy;
 
 class TAO_Strategies_Export TAO_Resource_Factory_Changer
@@ -132,10 +134,12 @@ protected:
 
 };
 
+static TAO_Resource_Factory_Changer TAO_changer;
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Strategies, TAO_Advanced_Resource_Factory)
 ACE_FACTORY_DECLARE (TAO_Strategies, TAO_Advanced_Resource_Factory)
-
-static TAO_Resource_Factory_Changer TAO_changer;
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ADVANCED_RESOURCE_H */

@@ -5,6 +5,8 @@
 #include "tao/Exception.h"
 #include "ace/Swap.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class T>
 ACE_INLINE T *
 TAO::Utils::Servant_Var<T>::_duplicate (T * p)
@@ -202,3 +204,5 @@ operator!= (typename TAO::Utils::Servant_Var<X> const & x,
 {
   return x.in () != y.in ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

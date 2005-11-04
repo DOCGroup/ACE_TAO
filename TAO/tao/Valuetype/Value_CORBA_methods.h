@@ -30,6 +30,8 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_Valuetype_Export
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace CORBA
 {
   class ValueBase;
@@ -45,6 +47,8 @@ namespace CORBA
 
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

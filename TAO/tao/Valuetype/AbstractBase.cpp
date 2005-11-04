@@ -17,6 +17,8 @@ ACE_RCSID (Valuetype,
            AbstractBase,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // ************************************************************
 // These are in CORBA namespace
 
@@ -425,3 +427,5 @@ CORBA::AbstractBase::equivalent_objref (void)
   return this->equivalent_obj_.in ();
 }
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL

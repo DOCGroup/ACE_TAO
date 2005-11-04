@@ -12,6 +12,8 @@ ACE_RCSID (TypeCodeFactory,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_TypeCodeFactory_Adapter_Impl::~TAO_TypeCodeFactory_Adapter_Impl (void)
 {
 }
@@ -406,6 +408,8 @@ TAO_TypeCodeFactory_Adapter_Impl::Initializer (void)
 
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_TypeCodeFactory_Adapter_Impl);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (
     TAO_TypeCodeFactory_Adapter_Impl,

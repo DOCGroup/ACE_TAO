@@ -27,6 +27,7 @@
 #include "strategies_export.h"
 #include "ace/UNIX_Addr.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_UIOP_Endpoint
@@ -90,6 +91,8 @@ private:
   /// endpoint in the list, if any.
   TAO_UIOP_Endpoint *next_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "UIOP_Endpoint.i"

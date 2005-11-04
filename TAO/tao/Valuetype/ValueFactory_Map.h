@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -27,6 +27,7 @@
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/RW_Thread_Mutex.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
@@ -89,6 +90,8 @@ private:
  * @todo Remove this legacy ValueFactory_Map typedef.
  */
 typedef TAO_ValueFactory_Map TAO_VALUEFACTORY_MAP;
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

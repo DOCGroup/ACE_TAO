@@ -22,6 +22,9 @@ ACE_RCSID (Strategies,
            DIOP_Connector,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_DIOP_Connector::TAO_DIOP_Connector (CORBA::Boolean flag)
   : TAO_Connector (TAO_TAG_DIOP_PROFILE),
     lite_flag_ (flag)
@@ -232,11 +235,11 @@ TAO_DIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
 
 int
 TAO_DIOP_Connector::cancel_svc_handler (
-  TAO_Connection_Handler * svc_handler)
+  TAO_Connection_Handler * /* svc_handler */)
 {
-  ACE_UNUSED_ARG(svc_handler);
-
-  // Noop
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */

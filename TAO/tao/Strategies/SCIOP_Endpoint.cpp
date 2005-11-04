@@ -22,6 +22,7 @@ ACE_RCSID (Strategies,
 # include "SCIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (const ACE_INET_Addr &addr,
                                       int use_dotted_decimal_addresses)
@@ -363,5 +364,7 @@ TAO_SCIOP_Endpoint::preferred_network (void) const
 {
   return this->preferred_path_.host.in ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SCIOP == 1 */
