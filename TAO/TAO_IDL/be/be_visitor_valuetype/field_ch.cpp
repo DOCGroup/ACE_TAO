@@ -136,10 +136,10 @@ be_visitor_valuetype_field_ch::visit_array (be_array *node)
     {
       // Now use this array as a "type" for the subsequent declarator.
       // The set method.
-      *os << pre_op () << "void " << ub->local_name () << " ("
+      *os << pre_op () << "void " << ub->local_name () << " (const "
           << bt->name () << ")" << post_op () << be_nl;
       // The get method.
-      *os << pre_op()
+      *os << pre_op ()
           << bt->name () << "_slice *" << ub->local_name ()
           << " (void)" << post_op () << be_nl;
       // The get (read/write) method.
