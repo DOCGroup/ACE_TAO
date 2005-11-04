@@ -98,11 +98,28 @@
         </value>
       </value>
     </configProperty>
+
+<!-- #1 -->
+<!--
+    <deployedResource>
+      <resourceUsage>InstanceUsesResource</resourceUsage>
+      <requirementName>CIAO:PolicySet</requirementName>
+      <resourceName>test_server_resource_id</resourceName>
+      <resourceValue>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>test_policy_set_id</string>
+        </value>
+      </resourceValue>
+    </deployedResource>
+-->
   </instance>
 
   <instance id="Hello-Receiver-idd">
     <name>Hello-Receiver-idd</name>
-    <node>ReceiverNode</node>
+    <node>SenderNode</node>
     <source><!-- @@ What goes here --></source>
     <implementation>Hello-Receiver-mdd</implementation>
     <configProperty>
@@ -116,6 +133,23 @@
         </value>
       </value>
     </configProperty>
+
+<!-- #2 -->
+<!--
+    <deployedResource>
+      <resourceUsage>InstanceUsesResource</resourceUsage>
+      <requirementName>CIAO:PolicySet</requirementName>
+      <resourceName>test_server_resource_id</resourceName>
+      <resourceValue>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>test_policy_set_id</string>
+        </value>
+      </resourceValue>
+    </deployedResource>
+-->
   </instance>
 
 
@@ -220,8 +254,6 @@
     </execParameter>
   </artifact>
 
-<!-- Uncomment the following and rt_run_test.pl will fail. -->
-<!--
   <infoProperty>
     <name>CIAOServerResources</name>
     <value>
@@ -233,5 +265,5 @@
       </value>
     </value>
   </infoProperty>
--->
+
 </Deployment:deploymentPlan>  
