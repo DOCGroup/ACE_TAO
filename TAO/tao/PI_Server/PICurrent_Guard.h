@@ -25,6 +25,8 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// Forward declarations.
 class TAO_ServerRequest;
 
@@ -98,6 +100,8 @@ namespace TAO
     const bool tsc_to_rsc_;
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 

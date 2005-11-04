@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    RT_POA.h
@@ -38,13 +39,15 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Thread_Pool;
 class TAO_Thread_Lane;
 class TAO_PriorityBandedConnectionPolicy;
 
-class TAO_RTPortableServer_Export TAO_RT_POA :
-  public virtual RTPortableServer::POA,
-  public virtual TAO_Regular_POA
+class TAO_RTPortableServer_Export TAO_RT_POA
+  : public virtual RTPortableServer::POA
+  , public virtual TAO_Regular_POA
 {
 public:
 
@@ -309,6 +312,8 @@ protected:
   TAO_Thread_Pool *thread_pool_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

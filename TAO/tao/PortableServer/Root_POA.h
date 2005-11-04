@@ -23,14 +23,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SString.h"
-#include "ace/Hash_Map_Manager_T.h"
-#include "ace/Array_Base.h"
-#include "ace/Synch_Traits.h"
-#include "ace/Thread_Mutex.h"
-#include "ace/Recursive_Thread_Mutex.h"
-#include "ace/Null_Mutex.h"
-
 // Object Adapter
 #include "Object_Adapter.h"
 
@@ -57,12 +49,22 @@
 // OctetSeq
 #include "tao/OctetSeqC.h"
 
+#include "ace/SString.h"
+#include "ace/Hash_Map_Manager_T.h"
+#include "ace/Array_Base.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Thread_Mutex.h"
+#include "ace/Recursive_Thread_Mutex.h"
+#include "ace/Null_Mutex.h"
+
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward Declaration
 class TAO_Acceptor_Filter;
@@ -1007,6 +1009,8 @@ private:
   /// at initialization time.
   static TAO_POA_Static_Resources* initialization_reference_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

@@ -21,6 +21,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_PortableServer_Export TAO_POA_Initializer
 {
 public:
@@ -30,6 +34,8 @@ public:
 
 static int
 TAO_Requires_POA_Initializer = TAO_POA_Initializer::init ();
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #define TAO_PORTABLESERVER_SAFE_INCLUDE
 #include "PortableServerC.h"

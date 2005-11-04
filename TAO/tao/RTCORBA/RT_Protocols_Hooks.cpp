@@ -26,10 +26,14 @@ ACE_RCSID (RTCORBA,
            RT_Protocols_Hooks,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RT_Protocols_Hooks::TAO_RT_Protocols_Hooks (void)
+  : orb_core_ (0)
+  , current_ ()
 {
 }
+
 
 TAO_RT_Protocols_Hooks::~TAO_RT_Protocols_Hooks (void)
 {
@@ -810,6 +814,8 @@ TAO_RT_Protocols_Hooks::set_thread_native_priority (
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_RT_Protocols_Hooks,
                        ACE_TEXT ("RT_Protocols_Hooks"),

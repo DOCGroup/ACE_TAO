@@ -99,6 +99,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Object_Adapter_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /* static */
 CORBA::ULong TAO_Object_Adapter::transient_poa_name_size_ = 0;
 
@@ -1251,3 +1253,4 @@ TAO_Object_Adapter::do_dispatch (TAO_ServerRequest& req,
   ACE_CHECK;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

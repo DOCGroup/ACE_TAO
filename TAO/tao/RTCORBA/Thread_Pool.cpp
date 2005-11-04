@@ -22,6 +22,8 @@ ACE_RCSID (RTCORBA,
 #include "tao/Leader_Follower.h"
 #include "ace/Auto_Ptr.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_RT_New_Leader_Generator::TAO_RT_New_Leader_Generator (
   TAO_Thread_Lane &lane)
   : lane_ (lane)
@@ -866,5 +868,7 @@ TAO_Thread_Pool_Manager::orb_core (void) const
 {
   return this->orb_core_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

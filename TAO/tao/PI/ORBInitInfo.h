@@ -35,6 +35,8 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_ORB_Core;
 class TAO_ORBInitInfo;
 typedef TAO_ORBInitInfo *TAO_ORBInitInfo_ptr;
@@ -292,6 +294,8 @@ namespace TAO
       );
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ORBInitInfo.inl"

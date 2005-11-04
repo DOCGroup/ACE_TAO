@@ -15,6 +15,8 @@ ACE_RCSID (RTCORBA,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_RT_Stub::TAO_RT_Stub (const char *repository_id,
                           const TAO_MProfile &profiles,
                           TAO_ORB_Core *orb_core)
@@ -296,5 +298,7 @@ TAO_RT_Stub::effective_client_protocol (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_RETURN (CORBA::INV_POLICY (),
                     0);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING  && TAO_HAS_CORBA_MESSAGING != 0 */

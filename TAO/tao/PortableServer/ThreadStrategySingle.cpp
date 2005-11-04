@@ -10,6 +10,8 @@ ACE_RCSID (PortableServer,
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace Portable_Server
@@ -31,7 +33,15 @@ namespace TAO
     {
       return ::PortableServer::SINGLE_THREAD_MODEL;
     }
+  }
+}
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+namespace TAO
+{
+  namespace Portable_Server
+  {
     ACE_FACTORY_DEFINE (ACE_Local_Service, ThreadStrategySingle)
 
     ACE_STATIC_SVC_DEFINE (

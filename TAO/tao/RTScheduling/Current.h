@@ -28,10 +28,10 @@
 #include "ace/Task.h"
 #include "ace/Atomic_Op.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_RTScheduler_Current_i;
 class TAO_TSS_Resources;
-
 
 /**
  * @class TAO_DTId_Hash
@@ -382,6 +382,8 @@ public:
   CORBA::Policy_var sched_param_;
   CORBA::Policy_var implicit_sched_param_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

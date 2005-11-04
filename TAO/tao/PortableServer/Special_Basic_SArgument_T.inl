@@ -2,6 +2,8 @@
 //
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template<typename S,
          typename to_S,
          typename from_S,
@@ -91,3 +93,4 @@ TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::arg (void)
   return this->x_;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

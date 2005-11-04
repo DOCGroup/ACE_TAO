@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -27,6 +27,8 @@
 
 #include "tao/Policy_ForwardC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   class Profile_Transport_Resolver;
@@ -50,6 +52,8 @@ private:
   /// ctor.
   TAO_RT_Endpoint_Utils ();
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

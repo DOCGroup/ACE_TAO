@@ -8,6 +8,8 @@
 
 ACE_RCSID(RTCORBA, Continuous_Priority_Mapping, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Continuous_Priority_Mapping::TAO_Continuous_Priority_Mapping (int policy)
   :  policy_ (policy)
 {
@@ -127,5 +129,7 @@ TAO_Continuous_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priori
 #endif /* ACE_WIN32 */
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

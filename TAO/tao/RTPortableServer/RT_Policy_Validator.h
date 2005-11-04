@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    RT_Policy_Validator.h
@@ -27,6 +29,8 @@
 #include "rtportableserver_export.h"
 #include "tao/Policy_Validator.h"
 #include "tao/RTCORBA/RTCORBA.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 class TAO_Acceptor_Registry;
@@ -88,6 +92,8 @@ private:
   TAO_Thread_Pool *thread_pool_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 

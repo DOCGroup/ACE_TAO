@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   RTScheduler_Manager.h
@@ -16,6 +17,7 @@
 #include "RTScheduler.h"
 #include "tao/LocalObject.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_RTScheduler_Manager;
 class TAO_RTScheduler_Manager_var;
@@ -131,6 +133,8 @@ public:
 private:
   TAO_RTScheduler_Manager_ptr &ptr_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "RTScheduler_Manager.i"

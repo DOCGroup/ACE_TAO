@@ -25,6 +25,8 @@
 
 #include "tao/PortableServer/Root_POA.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Regular_POA
  *
@@ -64,6 +66,7 @@ protected:
   TAO_Root_POA *parent_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

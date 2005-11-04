@@ -17,6 +17,8 @@ ACE_RCSID (PI,
            ClientRequestInterceptorAdapter_Impl,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   void
@@ -265,5 +267,7 @@ namespace TAO
     return reply_status;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

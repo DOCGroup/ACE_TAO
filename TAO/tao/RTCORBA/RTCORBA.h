@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // $Id$
 
 //=============================================================================
@@ -29,6 +31,8 @@
 
 #if TAO_HAS_CORBA_MESSAGING == 1
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_RTCORBA_Export TAO_RTCORBA_Initializer
 {
 public:
@@ -37,6 +41,8 @@ public:
 };
 
 static TAO_RTCORBA_Initializer TAO_RTCORBA_initializer;
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #define TAO_RTCORBA_SAFE_INCLUDE
 #include "RTCORBAC.h"

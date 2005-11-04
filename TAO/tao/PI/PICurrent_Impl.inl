@@ -2,6 +2,8 @@
 //
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE void
 TAO::PICurrent_Impl::copy_callback (TAO::PICurrent_Copy_Callback *cb)
 {
@@ -53,3 +55,5 @@ TAO::PICurrent_Impl::lc_slot_table (void) const
 {
   return this->lc_slot_table_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

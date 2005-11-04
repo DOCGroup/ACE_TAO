@@ -22,6 +22,8 @@ ACE_RCSID (RTCORBA,
            RT_Invocation_Endpoint_Selectors,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 void
 TAO_RT_Invocation_Endpoint_Selector::select_endpoint (
     TAO::Profile_Transport_Resolver *r,
@@ -372,5 +374,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

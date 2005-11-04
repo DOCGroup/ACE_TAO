@@ -16,13 +16,10 @@ ACE_RCSID (RTScheduling,
            Request_Interceptor,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const IOP::ServiceId
 Client_Interceptor::SchedulingInfo = 30;
-
-Client_Interceptor::Client_Interceptor (void)
-{
-}
 
 void
 Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
@@ -497,3 +494,5 @@ Server_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

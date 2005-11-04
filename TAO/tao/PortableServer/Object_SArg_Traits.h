@@ -26,6 +26,8 @@
 #include "tao/Pseudo_VarOut_T.h"
 #include "tao/Any_Insert_Policy_T.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace CORBA
 {
   class Object;
@@ -50,6 +52,8 @@ namespace TAO
   {
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -18,6 +18,8 @@ ACE_RCSID (RTCORBA,
            RT_Current,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_RT_Current::TAO_RT_Current (TAO_ORB_Core *orb_core)
   : orb_core_ (orb_core)
 {
@@ -64,5 +66,7 @@ TAO_RT_Current::the_priority (RTCORBA::Priority the_priority
   if (result == -1)
     ACE_THROW (CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO));
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

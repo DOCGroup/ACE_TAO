@@ -25,6 +25,9 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   class PICurrent_Impl;
@@ -64,6 +67,8 @@ namespace TAO
 
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 

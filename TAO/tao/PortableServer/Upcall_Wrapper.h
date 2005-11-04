@@ -28,6 +28,8 @@
 #include "ace/CORBA_macros.h"
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_ServantBase;
 class TAO_ServerRequest;
 class TAO_InputCDR;
@@ -122,6 +124,7 @@ namespace TAO
 
 }  // End namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

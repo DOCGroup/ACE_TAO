@@ -5,6 +5,7 @@
 #include "tao/Environment.h"
 #include "tao/SystemException.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_Lock &
 TAO_POA_Manager::lock (void)
@@ -127,3 +128,5 @@ TAO_POA_Manager::generate_manager_id (void) const
 
   return id;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

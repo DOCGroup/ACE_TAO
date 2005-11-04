@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -34,6 +34,8 @@
 
 #include "tao/Invocation_Endpoint_Selectors.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_RT_Invocation_Endpoint_Selector
  *
@@ -43,8 +45,8 @@
  * private connection policy.
  *
  **/
-class TAO_RTCORBA_Export TAO_RT_Invocation_Endpoint_Selector :
-  public TAO_Invocation_Endpoint_Selector
+class TAO_RTCORBA_Export TAO_RT_Invocation_Endpoint_Selector
+  : public TAO_Invocation_Endpoint_Selector
 {
 public:
 
@@ -65,6 +67,8 @@ protected:
                              ACE_Time_Value *v
                              ACE_ENV_ARG_DECL);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 

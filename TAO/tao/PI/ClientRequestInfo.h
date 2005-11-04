@@ -41,6 +41,7 @@
 #include "tao/Invocation_Utils.h"
 #include "tao/TimeBaseC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Service_Context;
 
@@ -68,7 +69,7 @@ namespace Messaging
  * @brief Implementation of the PortableInterceptor::ClientRequestInfo
  *        interface.
  */
-class TAO_PI_Export TAO_ClientRequestInfo
+class TAO_ClientRequestInfo
   : public virtual PortableInterceptor::ClientRequestInfo,
     public virtual TAO_Local_RefCounted_Object
 {
@@ -289,6 +290,8 @@ private:
    */
   TAO::PICurrent_Copy_Callback copy_callback_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

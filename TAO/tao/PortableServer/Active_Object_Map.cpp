@@ -14,6 +14,8 @@ ACE_RCSID(PortableServer,
           Active_Object_Map,
           "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /* static */
 size_t TAO_Active_Object_Map::system_id_size_ = 0;
 
@@ -933,3 +935,4 @@ TAO_No_Hint_Strategy::system_id (PortableServer::ObjectId_out system_id,
   return 0;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

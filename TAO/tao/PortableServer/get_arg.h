@@ -31,6 +31,7 @@
 
 #include "tao/operation_details.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -134,6 +135,8 @@ namespace TAO
 
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

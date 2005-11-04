@@ -1,12 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file RT_Transport_Descriptor_Property.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_RT_TRANSPORT_DESCRIPTOR_PROPERTY_H
@@ -23,6 +22,8 @@
 #include "tao/Basic_Types.h"
 
 #include "ace/Global_Macros.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_RT_Transport_Descriptor_Property
@@ -93,7 +94,7 @@ private:
 
 };
 
-/*************************************************************************************************/
+/*****************************************************************************/
 
 /**
  * @class TAO_RT_Transport_Descriptor_Banded_Connection_Property
@@ -130,7 +131,9 @@ protected:
   CORBA::Short high_priority_;
 };
 
-/*************************************************************************************************/
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+/*****************************************************************************/
 
 #if defined (__ACE_INLINE__)
 #include "RT_Transport_Descriptor_Property.inl"

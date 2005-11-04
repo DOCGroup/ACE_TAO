@@ -1,5 +1,6 @@
+// -*- C++ -*-
+
 // $Id$
-// Multi_Priority_Mapping.h,v 1.0
 
 // ============================================================================
 //
@@ -30,6 +31,8 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Multi_Priority_Mapping
  *
@@ -41,7 +44,8 @@
  * ACE_SCHED_FIFO, ACE_SCHED_RR) and the valid range of CORBA
  * priorities (0...32767)
  */
-class TAO_RTCORBA_Export TAO_Multi_Priority_Mapping : public TAO_Priority_Mapping
+class TAO_RTCORBA_Export TAO_Multi_Priority_Mapping
+: public TAO_Priority_Mapping
 {
 public:
   /// Default constructor
@@ -82,10 +86,12 @@ private:
   /// The scheduling policy
   int policy_;
 
-  int min_;
-  int max_;
+  int const min_;
+  int const max_;
   // The range
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 

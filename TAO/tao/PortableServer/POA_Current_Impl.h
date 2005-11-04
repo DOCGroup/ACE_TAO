@@ -23,6 +23,8 @@
 
 #include "PS_ForwardC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace Portable_Server
@@ -57,7 +59,7 @@ namespace TAO
      * execution thread so that the proper <TAO_POA_Current> pointer
      * is obtained from TSS.
      */
-    class TAO_PortableServer_Export POA_Current_Impl
+    class POA_Current_Impl
     {
     public:
       friend class ::TAO_Root_POA;
@@ -134,6 +136,12 @@ namespace TAO
       void setup (::TAO_Root_POA *impl,
                   const TAO::ObjectKey &key);
 
+    private:
+
+      // = Hidden because we don't allow these
+      POA_Current_Impl (const POA_Current_Impl &);
+      void operator= (const POA_Current_Impl &);
+
     protected:
       /// The POA implementation invoking an upcall
       ::TAO_Root_POA *poa_;
@@ -163,12 +171,11 @@ namespace TAO
       /// Pointer to tss resources.
       TAO_TSS_Resources *tss_resources_;
 
-      // = Hidden because we don't allow these
-      POA_Current_Impl (const POA_Current_Impl &);
-      void operator= (const POA_Current_Impl &);
     };
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "POA_Current_Impl.inl"

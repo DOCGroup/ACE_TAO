@@ -12,6 +12,7 @@
 
 #ifndef TAO_PORTABLESERVER_THREADPOLICYSTRATEGYFACTORY_H
 #define TAO_PORTABLESERVER_THREADPOLICYSTRATEGYFACTORY_H
+
 #include /**/ "ace/pre.h"
 
 #include "StrategyFactory.h"
@@ -21,6 +22,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ThreadPolicyC.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -44,5 +47,8 @@ namespace TAO
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
+
 #endif /* TAO_PORTABLESERVER_THREADPOLICYSTRATEGYFACTORY_H */

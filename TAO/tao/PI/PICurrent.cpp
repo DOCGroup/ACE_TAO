@@ -18,6 +18,7 @@ ACE_RCSID (tao,
 #include "tao/TAO_Server_Request.h"
 #include "tao/SystemException.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::PICurrent::PICurrent (TAO_ORB_Core &orb_core)
   : orb_core_ (orb_core),
@@ -120,5 +121,6 @@ TAO::PICurrent::initialize (PortableInterceptor::SlotId sc
   return 0;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

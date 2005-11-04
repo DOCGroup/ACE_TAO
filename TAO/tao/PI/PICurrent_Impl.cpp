@@ -17,6 +17,9 @@ ACE_RCSID (tao,
 #include "tao/SystemException.h"
 #include "ace/Log_Msg.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::PICurrent_Impl::PICurrent_Impl (void)
   : slot_table_ (),
     lc_slot_table_ (0),
@@ -111,5 +114,7 @@ TAO::PICurrent_Impl::execute_destruction_callback (
 {
   this->lc_slot_table_ = old_lc_slot_table;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

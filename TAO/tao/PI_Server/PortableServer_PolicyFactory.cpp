@@ -15,6 +15,8 @@ ACE_RCSID (PortableServer,
            PortableServer_PolicyFactory,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 CORBA::Policy_ptr
 TAO_PortableServer_PolicyFactory::create_policy (
     CORBA::PolicyType type,
@@ -111,3 +113,5 @@ TAO_PortableServer_PolicyFactory::create_policy (
   ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                     CORBA::Policy::_nil ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
