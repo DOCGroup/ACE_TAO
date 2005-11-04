@@ -29,6 +29,8 @@
 #include "tao/Pseudo_VarOut_T.h"
 #include "ace/CORBA_macros.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Stub;
 class TAO_Abstract_ServantBase;
 
@@ -164,6 +166,8 @@ namespace TAO
   {
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "AbstractBase.inl"

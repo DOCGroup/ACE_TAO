@@ -9,6 +9,8 @@ ACE_RCSID (Utils,
            PolicyList_Deactivator,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::Utils::PolicyList_Destroyer::~PolicyList_Destroyer()
   ACE_THROW_SPEC (())
 {
@@ -35,3 +37,5 @@ TAO::Utils::PolicyList_Destroyer::~PolicyList_Destroyer()
       (*this)[i] = CORBA::Policy::_nil();
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

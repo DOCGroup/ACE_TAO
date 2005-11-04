@@ -25,6 +25,8 @@ ACE_RCSID (tao,
            SCIOP_Transport,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_SCIOP_Transport::TAO_SCIOP_Transport (TAO_SCIOP_Connection_Handler *handler,
                                         TAO_ORB_Core *orb_core,
                                         CORBA::Boolean )
@@ -379,5 +381,7 @@ TAO_SCIOP_Transport::get_listen_point (
 
   return 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SCIOP == 1 */

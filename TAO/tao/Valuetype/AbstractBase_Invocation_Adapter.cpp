@@ -6,6 +6,8 @@ ACE_RCSID (Valuetype,
            AbstractBase_Invocation_Adapter,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   AbstractBase_Invocation_Adapter::AbstractBase_Invocation_Adapter (
@@ -28,3 +30,5 @@ namespace TAO
   {
   }
 } // End namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL

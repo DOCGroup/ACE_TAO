@@ -20,6 +20,9 @@ ACE_RCSID (Strategies,
            UIOP_Transport,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_UIOP_Transport::TAO_UIOP_Transport (TAO_UIOP_Connection_Handler *handler,
                                         TAO_ORB_Core *orb_core,
                                         CORBA::Boolean flag)
@@ -183,7 +186,6 @@ TAO_UIOP_Transport::send_message (TAO_OutputCDR &stream,
   return 1;
 }
 
-
 int
 TAO_UIOP_Transport::messaging_init (CORBA::Octet major,
                                     CORBA::Octet minor)
@@ -192,5 +194,7 @@ TAO_UIOP_Transport::messaging_init (CORBA::Octet major,
                                  minor);
   return 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_UIOP */

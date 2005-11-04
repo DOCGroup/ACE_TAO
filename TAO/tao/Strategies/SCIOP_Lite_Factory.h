@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // $Id$
 //==========================================================================
 /**
@@ -27,6 +29,7 @@
 #include "ace/Service_Config.h"
 #include "tao/Protocol_Factory.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Acceptor;
 class TAO_Connector;
@@ -64,6 +67,8 @@ private:
   int major_;
   int minor_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Strategies, TAO_SCIOP_Lite_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO_Strategies, TAO_SCIOP_Lite_Protocol_Factory)

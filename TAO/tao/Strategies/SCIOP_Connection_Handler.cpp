@@ -32,6 +32,8 @@ ACE_RCSID (tao,
            SCIOP_Connection_Handler,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_SCIOP_Connection_Handler::TAO_SCIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_SCIOP_SVC_HANDLER (t, 0 , 0),
     TAO_Connection_Handler (0),
@@ -203,7 +205,7 @@ TAO_SCIOP_Connection_Handler::open (void*)
     return -1;
 
   this->state_changed (TAO_LF_Event::LFS_SUCCESS,
-		       this->orb_core ()->leader_follower ());
+                       this->orb_core ()->leader_follower ());
 
   return 0;
 }
@@ -382,5 +384,7 @@ TAO_SCIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_pri
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SCIOP == 1 */

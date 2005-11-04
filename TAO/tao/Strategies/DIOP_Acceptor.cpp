@@ -26,6 +26,8 @@ ACE_RCSID (Strategies,
            DIOP_Acceptor,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_DIOP_Acceptor::TAO_DIOP_Acceptor (CORBA::Boolean flag)
   : TAO_Acceptor (TAO_TAG_DIOP_PROFILE),
     addrs_ (0),
@@ -746,5 +748,7 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
     }
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */

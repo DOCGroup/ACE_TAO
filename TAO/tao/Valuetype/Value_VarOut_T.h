@@ -23,6 +23,8 @@
 
 #include "tao/varbase.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   /**
@@ -118,6 +120,8 @@ private:
   typedef TAO_Value_Out_T<T> THIS_OUT_TYPE;
   T *& ptr_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Value_VarOut_T.cpp"

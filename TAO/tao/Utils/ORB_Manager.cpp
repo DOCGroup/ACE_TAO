@@ -25,6 +25,9 @@ ACE_RCSID (PortableServer,
            ORB_Manager,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // constructor
 TAO_ORB_Manager::TAO_ORB_Manager (CORBA::ORB_ptr orb,
                                   PortableServer::POA_ptr poa,
@@ -364,3 +367,5 @@ TAO_ORB_Manager::~TAO_ORB_Manager (void)
     }
   ACE_ENDTRY;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

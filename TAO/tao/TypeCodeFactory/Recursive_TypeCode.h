@@ -20,6 +20,8 @@
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/True_RefCount_Policy.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace TypeCodeFactory
@@ -118,6 +120,7 @@ namespace TAO
   }  // End namespace TypeCodeFactory
 }  // End namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #ifdef __ACE_INLINE__
 # include "tao/TypeCodeFactory/Recursive_TypeCode.inl"

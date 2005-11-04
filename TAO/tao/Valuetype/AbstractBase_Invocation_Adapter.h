@@ -21,6 +21,8 @@
 
 #include "tao/Invocation_Adapter.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace CORBA
 {
   class AbstractBase;
@@ -60,11 +62,12 @@ namespace TAO
     // Disallow copying and assignment.
     AbstractBase_Invocation_Adapter (const AbstractBase_Invocation_Adapter &);
     AbstractBase_Invocation_Adapter & operator= (
-	const AbstractBase_Invocation_Adapter &);
+        const AbstractBase_Invocation_Adapter &);
 
   };
 } // End namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -12,11 +12,7 @@ ACE_RCSID (Valuetype,
            Valuetype_Adapter_Impl,
            "$Id$")
 
-
-TAO_Valuetype_Adapter_Impl::TAO_Valuetype_Adapter_Impl (void)
-{
-
-}
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Valuetype_Adapter_Impl::~TAO_Valuetype_Adapter_Impl (void)
 {
@@ -95,6 +91,8 @@ TAO_Valuetype_Adapter_Impl::Initializer (void)
         ace_svc_desc_TAO_Valuetype_Adapter_Impl
       );
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (
     TAO_Valuetype_Adapter_Impl,

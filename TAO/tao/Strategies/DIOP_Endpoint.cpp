@@ -25,6 +25,8 @@ ACE_RCSID (Strategies,
 
 #include "ace/os_include/os_netdb.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (const ACE_INET_Addr &addr,
                                       int use_dotted_decimal_addresses)
 
@@ -243,4 +245,7 @@ TAO_DIOP_Endpoint::object_addr (void) const
     }
   return this->object_addr_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */

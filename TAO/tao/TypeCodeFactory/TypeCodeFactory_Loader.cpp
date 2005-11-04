@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 
 // =================================================================
@@ -18,6 +19,8 @@
 #include "TypeCodeFactory_i.h"
 
 ACE_RCSID(TypeCodeFactory, TypeCodeFactory_Loader, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_TypeCodeFactory_Loader::TAO_TypeCodeFactory_Loader (void)
 {
@@ -42,6 +45,9 @@ TAO_TypeCodeFactory_Loader::Initializer (void)
 {
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_TypeCodeFactory_Loader);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 
 ACE_STATIC_SVC_DEFINE (
     TAO_TypeCodeFactory_Loader,

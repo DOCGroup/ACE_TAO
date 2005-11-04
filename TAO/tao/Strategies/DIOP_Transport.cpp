@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 // $Id$
 
 #include "DIOP_Transport.h"
@@ -22,6 +21,8 @@
 #include "tao/GIOP_Message_Lite.h"
 
 ACE_RCSID (tao, DIOP_Transport, "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DIOP_Transport::TAO_DIOP_Transport (TAO_DIOP_Connection_Handler *handler,
                                         TAO_ORB_Core *orb_core,
@@ -332,9 +333,10 @@ int
 TAO_DIOP_Transport::messaging_init (CORBA::Octet major,
                                     CORBA::Octet minor)
 {
-  this->messaging_object_->init (major,
-                                 minor);
+  this->messaging_object_->init (major, minor);
   return 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */

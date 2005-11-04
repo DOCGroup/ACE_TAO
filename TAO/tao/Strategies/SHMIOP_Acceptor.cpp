@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 // $Id$
 
 #include "SHMIOP_Acceptor.h"
@@ -19,6 +18,8 @@
 ACE_RCSID (Strategies,
            SHMIOP_Acceptor,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SHMIOP_Acceptor::TAO_SHMIOP_Acceptor (CORBA::Boolean flag)
   : TAO_Acceptor (TAO_TAG_SHMEM_PROFILE),
@@ -505,5 +506,7 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
     }
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */

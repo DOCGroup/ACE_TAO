@@ -5,6 +5,8 @@ ACE_RCSID (Valuetype,
            ValueFactory,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Static operations in namespace CORBA.
 
 void
@@ -81,3 +83,5 @@ namespace TAO
     CORBA::remove_ref (p);
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

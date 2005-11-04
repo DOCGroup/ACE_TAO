@@ -1,5 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_Smart_Proxy_Base::TAO_Smart_Proxy_Base (void)
@@ -16,3 +19,5 @@ ACE_INLINE
 TAO_Smart_Proxy_Base::~TAO_Smart_Proxy_Base (void)
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

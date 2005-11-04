@@ -44,6 +44,7 @@ ACE_RCSID (TypeCodeFactory,
            TypeCodeFactory_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TCF
 {
@@ -2097,3 +2098,5 @@ TAO_TypeCodeFactory_i::make_recursive_tc (CORBA::TCKind kind,
   return tc;
 }
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 // ===================================================================
 /**
@@ -29,6 +29,12 @@
 #include "ace/MEM_Stream.h"
 #include "tao/Transport.h"
 
+#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
+template class TAO_Strategies_Export ACE_Svc_Handler<ACE_MEM_STREAM, ACE_NULL_SYNCH>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_SHMIOP_Connection_Handler;
 class TAO_Pluggable_Messaging;
 class TAO_Target_Specification;
@@ -36,10 +42,6 @@ class Tao_Operation_Details;
 
 typedef ACE_Svc_Handler<ACE_MEM_STREAM, ACE_NULL_SYNCH>
          TAO_SHMIOP_SVC_HANDLER;
-
-#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
-template class TAO_Strategies_Export ACE_Svc_Handler<ACE_MEM_STREAM, ACE_NULL_SYNCH>;
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
 /**
  * @class TAO_SHMIOP_Transport
@@ -115,6 +117,8 @@ private:
   /// Our messaging object.
   TAO_Pluggable_Messaging *messaging_object_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 

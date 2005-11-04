@@ -1,4 +1,3 @@
-// This may look like C, but it's really
 // -*- C++ -*-
 
 //=============================================================================
@@ -27,6 +26,8 @@
 
 class ACE_Lock;
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Synch_Refcountable
  *
@@ -48,6 +49,7 @@ protected:
   ACE_Lock *refcount_lock_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "Synch_Refcountable.inl"

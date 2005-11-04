@@ -21,6 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_LF_Strategy_Null
  *
@@ -47,6 +49,8 @@ public:
                                         TAO_Leader_Follower &);
   //@}
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "LF_Strategy_Null.inl"
