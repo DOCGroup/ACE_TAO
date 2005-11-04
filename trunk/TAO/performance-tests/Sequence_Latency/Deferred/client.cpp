@@ -6,7 +6,7 @@
 #include "TestC.h"
 
 #include "tao/Strategies/advanced_resource.h"
-#include "tao/AnyTypeCode/TC_Constants_Forward.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"

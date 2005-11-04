@@ -18,7 +18,7 @@
 // ============================================================================
 
 #include "tao/AnyTypeCode/TypeCode.h"
-#include "tao/AnyTypeCode/TC_Constants_Forward.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
 #include "tao/debug.h"

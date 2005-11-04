@@ -1,3 +1,19 @@
+Thu Nov  3 22:17:27 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* performance-tests/Cubit/TAO/DII_Cubit/client.cpp:
+	* performance-tests/Latency/DII/client.cpp: 
+	* performance-tests/Latency/DSI/Roundtrip.cpp: 
+	* performance-tests/Latency/Deferred/client.cpp: 
+	* performance-tests/Sequence_Latency/DII/client.cpp:
+	* performance-tests/Sequence_Latency/DSI/Roundtrip.cpp: 
+	* performance-tests/Sequence_Latency/Deferred/client.cpp: 
+	* tests/CDR/tc.cpp:
+	* tests/DynAny_Test/data.h:
+	* tests/Portable_Interceptors/IORInterceptor/FOO_ClientRequestInterceptor.cpp:
+
+	  Include "TypeCode_Constants.h" instead of
+	  "TC_Constants_Forward.h".  The latter is deprecated.
+
 Thu Nov  3 22:06:44 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/AnyTypeCode/TC_Constants_Forward.h:
