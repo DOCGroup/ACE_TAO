@@ -1,3 +1,8 @@
+Fri Nov  4 08:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Global_Macros.h:
+          Removed check for BCB3, that is ancient
+
 Thu Nov  3 12:34:30 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/Service_Config.h (ACE_DYNAMIC_SERVICE_DIRECTIVE): Added a
