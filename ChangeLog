@@ -1,3 +1,9 @@
+Fri Nov  4 12:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Cache_Map_Manager_T.{h,cpp,inl}:
+          Changed MAP to MAP_TYPE to resolve conflicts with VxWorks 6.1
+          MAP define
+
 Fri Nov  4 11:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_unistd.inl:
