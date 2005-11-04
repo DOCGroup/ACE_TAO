@@ -25,6 +25,8 @@ ACE_RCSID (PI,
            PICurrent_Loader,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 CORBA::Object_ptr
 TAO_PICurrent_Loader::create_object (
   CORBA::ORB_ptr orb,
@@ -39,6 +41,8 @@ TAO_PICurrent_Loader::create_object (
                   CORBA::Object::_nil ());
   return obj;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_PICurrent_Loader,
                        ACE_TEXT ("PICurrent_Loader"),

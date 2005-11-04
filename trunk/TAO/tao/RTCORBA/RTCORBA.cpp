@@ -8,9 +8,13 @@
 
 ACE_RCSID (RTCORBA, RTCORBA, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_RTCORBA_Initializer::TAO_RTCORBA_Initializer (void)
 {
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_RT_ORB_Loader);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

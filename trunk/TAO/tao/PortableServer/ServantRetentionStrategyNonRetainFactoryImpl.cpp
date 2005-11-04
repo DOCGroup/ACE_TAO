@@ -12,6 +12,8 @@ ACE_RCSID (PortableServer,
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace Portable_Server
@@ -49,7 +51,15 @@ namespace TAO
 
       delete strategy;
     }
+  }
+}
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+namespace TAO
+{
+  namespace Portable_Server
+  {
     ACE_STATIC_SVC_DEFINE (
         ServantRetentionStrategyNonRetainFactoryImpl,
         ACE_TEXT ("ServantRetentionStrategyNonRetainFactory"),

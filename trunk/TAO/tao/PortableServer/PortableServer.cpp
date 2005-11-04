@@ -46,6 +46,9 @@ ACE_RCSID (PortableServer,
            PortableServer,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 int
 TAO_POA_Initializer::init (void)
 {
@@ -170,3 +173,5 @@ TAO_POA_Initializer::init (void)
         ace_svc_desc_TAO_Object_Adapter_Factory
       );
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

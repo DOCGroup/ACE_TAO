@@ -25,6 +25,8 @@
 #include "ServantRetentionPolicyC.h"
 #include "PortableServer.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Root_POA;
 class TAO_Active_Object_Map;
 struct TAO_Active_Object_Map_Entry;
@@ -150,6 +152,8 @@ namespace TAO
     };
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_SERVANTRETENTIONSTRATEGY_H */

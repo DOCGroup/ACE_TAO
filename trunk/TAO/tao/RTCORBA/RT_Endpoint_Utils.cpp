@@ -14,6 +14,8 @@ ACE_RCSID (RTCORBA,
 
 // ****************************************************************
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 CORBA::Policy *
 TAO_RT_Endpoint_Utils::policy (TAO_Cached_Policy_Type type,
                                TAO::Profile_Transport_Resolver &r
@@ -48,5 +50,7 @@ TAO_RT_Endpoint_Utils::policy (TAO_Cached_Policy_Type type,
 
   return policy;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

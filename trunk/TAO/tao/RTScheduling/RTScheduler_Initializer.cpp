@@ -18,6 +18,8 @@ ACE_RCSID (TAO, RTScheduler_Initializer, "$Id$")
 #include "ace/Service_Repository.h"
 #include "ace/Svc_Conf.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 void
  TAO_RTScheduler_ORB_Initializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr info
@@ -172,3 +174,5 @@ TAO_RTScheduler_ORB_Initializer::post_init (PortableInterceptor::ORBInitInfo_ptr
 
   this->current_->rt_current (rt_current.in ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

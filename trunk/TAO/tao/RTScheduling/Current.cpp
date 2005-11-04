@@ -13,6 +13,7 @@ ACE_RCSID (RTScheduling,
            Current,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> TAO_RTScheduler_Current::guid_counter;
 
@@ -27,7 +28,6 @@ TAO_RTScheduler_Current::TAO_RTScheduler_Current (void)
 {
 
 }
-
 
 void
 TAO_RTScheduler_Current::init (TAO_ORB_Core* orb
@@ -980,3 +980,4 @@ const char* TAO_RTScheduler_Current::_interface_repository_id (void) const
   return "IDL:TAO_RTScheduler_Current:1.0";
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

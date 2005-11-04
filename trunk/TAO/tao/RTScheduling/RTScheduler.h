@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // $Id$
 
 //=============================================================================
@@ -19,10 +21,13 @@
 
 #include "rtscheduler_export.h"
 
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_RTScheduler_Export TAO_RTScheduler_Initializer
 {
@@ -32,6 +37,8 @@ public:
 };
 
 static TAO_RTScheduler_Initializer TAO_RTScheduler_initializer;
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #define TAO_RTSCHEDULER_SAFE_INCLUDE
 #include "RTSchedulerC.h"

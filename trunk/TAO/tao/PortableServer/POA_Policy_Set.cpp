@@ -15,9 +15,10 @@ ACE_RCSID (PortableServer,
            POA_Policy_Set,
            "$Id$")
 
-TAO_POA_Policy_Set::TAO_POA_Policy_Set ()
-  :
-    impl_ (TAO_POLICY_POA_SCOPE)
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_POA_Policy_Set::TAO_POA_Policy_Set (void)
+  : impl_ (TAO_POLICY_POA_SCOPE)
 {
 }
 
@@ -89,3 +90,5 @@ TAO_POA_Policy_Set::validate_policies (TAO_Policy_Validator &validator,
         }
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

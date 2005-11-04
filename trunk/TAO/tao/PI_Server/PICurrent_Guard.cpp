@@ -14,6 +14,8 @@ ACE_RCSID (PortableServer,
 #include "tao/PI/PICurrent.h"
 #include "tao/PI/PICurrent_Impl.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::PICurrent_Guard::PICurrent_Guard (TAO_ServerRequest &server_request,
                                        bool tsc_to_rsc)
   : src_ (0),
@@ -81,5 +83,6 @@ TAO::PICurrent_Guard::~PICurrent_Guard (void)
     }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

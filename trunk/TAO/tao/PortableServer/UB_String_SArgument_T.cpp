@@ -9,6 +9,7 @@
 #include "tao/PortableServer/UB_String_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename S, typename S_var>
 CORBA::Boolean
@@ -98,5 +99,7 @@ TAO::Ret_UB_String_SArgument_T<S,S_var>::interceptor_value (
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_UB_STRING_SARGUMENT_T_CPP */

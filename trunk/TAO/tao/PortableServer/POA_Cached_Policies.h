@@ -30,6 +30,8 @@
 #include "ServantRetentionPolicyC.h"
 #include "RequestProcessingPolicyC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward references.
 class TAO_POA_Policy_Set;
 
@@ -101,6 +103,8 @@ namespace TAO
     };
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "POA_Cached_Policies.i"

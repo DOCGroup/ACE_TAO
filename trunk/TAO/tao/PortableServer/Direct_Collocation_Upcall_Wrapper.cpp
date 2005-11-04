@@ -16,6 +16,8 @@ ACE_RCSID (PortableServer,
            Direct_Collocation_Upcall_Wrapper,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 void
 TAO::Direct_Collocation_Upcall_Wrapper::upcall (
   CORBA::Object_ptr obj,
@@ -68,3 +70,4 @@ ACE_THROW_SPEC ((CORBA::Exception))
   ACE_CHECK;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

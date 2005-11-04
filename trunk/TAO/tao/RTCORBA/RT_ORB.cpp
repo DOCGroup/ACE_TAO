@@ -17,6 +17,8 @@ ACE_RCSID(RTCORBA,
           RT_ORB,
           "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_RT_ORB::TAO_RT_ORB (TAO_ORB_Core *orb_core)
   : orb_core_ (orb_core),
     mutex_mgr_ (),
@@ -546,6 +548,8 @@ TAO_RT_ORB::modify_thread_scheduling_policy (CORBA::ORB_ptr orb)
 
 }
 
-////////////////////////////////////////////////////////////////////////////////
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+///////////////////////////////////////////////////////////////////////////////
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

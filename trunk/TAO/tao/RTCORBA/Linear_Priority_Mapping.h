@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // $Id$
 
 // ============================================================================
@@ -32,6 +34,8 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Linear_Priority_Mapping
  *
@@ -51,21 +55,21 @@ public:
   /// The destructor
   virtual ~TAO_Linear_Priority_Mapping (void);
 
-  virtual CORBA::Boolean
-      to_native (RTCORBA::Priority corba_priority,
-                 RTCORBA::NativePriority &native_priority);
-  virtual CORBA::Boolean
-      to_CORBA (RTCORBA::NativePriority native_priority,
-                RTCORBA::Priority &corba_priority);
+  virtual CORBA::Boolean to_native (RTCORBA::Priority corba_priority,
+				    RTCORBA::NativePriority &native_priority);
+  virtual CORBA::Boolean to_CORBA (RTCORBA::NativePriority native_priority,
+				   RTCORBA::Priority &corba_priority);
 
 private:
   /// The scheduling policy
   long policy_;
 
   // The range
-  int min_;
-  int max_;
+  int const min_;
+  int const max_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 

@@ -24,6 +24,8 @@ ACE_RCSID (TAO,
 
 #include "ace/OS_NS_string.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Traits specializations for TAO_ORBInitInfo.
 
 TAO_ORBInitInfo_ptr
@@ -383,3 +385,4 @@ const char* TAO_ORBInitInfo::_interface_repository_id (void) const
   return "IDL:TAO_ORBInitInfo:1.0";
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

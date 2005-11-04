@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -38,8 +38,6 @@ class TAO_PortableServer_Export TAO_Binary_Search_OpTable
   : public TAO_Operation_Table
 {
 public:
-  /// Do nothing constructor.
-  TAO_Binary_Search_OpTable (void);
 
   /// Do nothing destrctor.
   virtual ~TAO_Binary_Search_OpTable (void);

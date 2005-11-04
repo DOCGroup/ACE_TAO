@@ -19,6 +19,8 @@ ACE_RCSID (PortableServer,
 #include "tao/PortableServer/Upcall_Command.h"
 #include "tao/PortableInterceptor.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::ServerRequestInterceptor_Adapter_Impl::ServerRequestInterceptor_Adapter_Impl (void)
 {
 }
@@ -497,17 +499,17 @@ TAO::ServerRequestInterceptor_Adapter_Impl::allocate_pi_current (void)
   TAO::PICurrent_Impl *pi = 0;
   ACE_NEW_RETURN (pi,
                   TAO::PICurrent_Impl,
-                  0);
+                  pi);
   return pi;
 }
 
 TAO::PICurrent_Copy_Callback *
 TAO::ServerRequestInterceptor_Adapter_Impl::allocate_pi_current_callback (void)
 {
-  TAO::PICurrent_Copy_Callback *pi = 0;
+  TAO::PICurrent_Copy_Callback * pi = 0;
   ACE_NEW_RETURN (pi,
                   TAO::PICurrent_Copy_Callback,
-                  0);
+                  pi);
   return pi;
 }
 
@@ -520,15 +522,15 @@ TAO::ServerRequestInterceptor_Adapter_Impl::deallocate_pi_current (
 
 void
 TAO::ServerRequestInterceptor_Adapter_Impl::deallocate_pi_current_callback (
-  TAO::PICurrent_Copy_Callback *callback)
+  TAO::PICurrent_Copy_Callback * callback)
 {
   delete callback;
 }
 
 void
 TAO::ServerRequestInterceptor_Adapter_Impl::execute_command (
-  TAO_ServerRequest &server_request,
-  TAO::Upcall_Command &command
+  TAO_ServerRequest & server_request,
+  TAO::Upcall_Command & command
   ACE_ENV_ARG_DECL)
 {
   TAO::PICurrent_Guard pi_guard (server_request,
@@ -539,5 +541,6 @@ TAO::ServerRequestInterceptor_Adapter_Impl::execute_command (
   ACE_CHECK;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

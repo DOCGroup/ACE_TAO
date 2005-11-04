@@ -105,6 +105,7 @@ class TAO_RTCORBA_Export TAO_RT_ORB
     public TAO_Local_RefCounted_Object
 {
 public:
+
   /// Constructor.
   TAO_RT_ORB (TAO_ORB_Core *orb_core);
 
@@ -302,12 +303,15 @@ public:
   static int modify_thread_scheduling_policy (CORBA::ORB_ptr orb);
 
 protected:
+
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
   virtual ~TAO_RT_ORB (void);
 
+protected:
+
   /// Reference to our creating ORB Core.
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core * const orb_core_;
 
   /// mutex_mgr_ manages the names associated with named mutexes.
   TAO_Named_RT_Mutex_Manager mutex_mgr_;

@@ -31,6 +31,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward references.
 class TAO_PriorityModelPolicy;
 class TAO_PriorityBandedConnectionPolicy;
@@ -128,6 +130,8 @@ private:
   TAO_RT_Stub &operator = (const TAO_RT_Stub &);
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 

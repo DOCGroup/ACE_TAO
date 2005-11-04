@@ -16,17 +16,19 @@
 
 #include /**/ "ace/pre.h"
 
-#include "pi_export.h"
+#include "tao/Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Basic_Types.h"
+#include "tao/PolicyFactory_Registry_Adapter.h"
 #include "ace/Map_Manager.h"
 #include "ace/Null_Mutex.h"
 #include "ace/CORBA_macros.h"
-#include "tao/Basic_Types.h"
-#include "tao/PolicyFactory_Registry_Adapter.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_PolicyFactory_Registry
@@ -36,7 +38,7 @@
  * ORB-specific registry that contains all portable interceptor
  * policy factories.
  */
-class TAO_PI_Export TAO_PolicyFactory_Registry
+class TAO_PolicyFactory_Registry
   : public TAO::PolicyFactory_Registry_Adapter
 {
 public:
@@ -92,6 +94,8 @@ private:
   TABLE factories_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

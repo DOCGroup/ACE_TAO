@@ -7,13 +7,11 @@
 // -- TAO Include --
 #include "tao/TSS_Resources.h"
 
-#if !defined (__ACE_INLINE__)
-# include "POA_Current.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID (PortableServer,
            POA_Current,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -93,3 +91,4 @@ namespace TAO
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

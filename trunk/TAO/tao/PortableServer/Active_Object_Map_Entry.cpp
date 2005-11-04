@@ -6,6 +6,8 @@ ACE_RCSID(PortableServer,
           Active_Object_Map_Entry,
           "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Active_Object_Map_Entry::TAO_Active_Object_Map_Entry (void)
   : user_id_ (),
     system_id_ (),
@@ -16,3 +18,4 @@ TAO_Active_Object_Map_Entry::TAO_Active_Object_Map_Entry (void)
 {
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

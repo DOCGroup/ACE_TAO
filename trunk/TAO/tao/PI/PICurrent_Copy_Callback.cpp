@@ -9,6 +9,8 @@ ACE_RCSID (tao,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::PICurrent_Copy_Callback::PICurrent_Copy_Callback (void)
   : src_ (0),
     dst_ (0)
@@ -55,5 +57,7 @@ TAO::PICurrent_Copy_Callback::src_and_dst (PICurrent_Impl * src,
   this->src_ = src;
   this->dst_ = dst;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

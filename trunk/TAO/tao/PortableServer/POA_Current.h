@@ -21,13 +21,15 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/LocalObject.h"
 #include "tao/PortableServer/PS_CurrentC.h"
+#include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -35,13 +37,11 @@ namespace TAO
   {
     class POA_Current_Impl;
 
-    class TAO_PortableServer_Export POA_Current
-      : public PortableServer::Current,
-        public TAO_Local_RefCounted_Object
+    class POA_Current
+      : public PortableServer::Current
+      , public TAO_Local_RefCounted_Object
     {
     public:
-      /// Constructor
-      POA_Current (void);
 
       /**
        * Returns the POA on which the current request is being invoked.
@@ -93,13 +93,11 @@ namespace TAO
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
-#if defined (__ACE_INLINE__)
-# include "POA_Current.inl"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 

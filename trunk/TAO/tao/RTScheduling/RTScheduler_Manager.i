@@ -5,6 +5,8 @@
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // *************************************************************
 // Inline operations for class TAO_RTScheduler_Manager_var
 // *************************************************************
@@ -228,3 +230,5 @@ TAO_RTScheduler_Manager::rtscheduler (RTScheduling::Scheduler_ptr rtscheduler
     ACE_ENV_ARG_PARAMETER);
  ACE_CHECK;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

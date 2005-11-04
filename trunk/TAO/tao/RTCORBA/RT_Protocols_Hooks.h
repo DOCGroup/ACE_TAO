@@ -1,4 +1,3 @@
-
 // -*- C++ -*-
 
 // ===================================================================
@@ -8,7 +7,6 @@
  *  $Id$
  *
  *  @author Priyanka Gontla <pgontla@ece.uci.edu>
- *
  */
 // ===================================================================
 
@@ -32,9 +30,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_RTCORBA_Export TAO_RT_Protocols_Hooks : public TAO_Protocols_Hooks
 {
 public:
+
   /// Constructor
   TAO_RT_Protocols_Hooks (void);
 
@@ -174,6 +175,8 @@ protected:
                                        RTCORBA::ProtocolProperties_ptr protocol_properties
                                        ACE_ENV_ARG_DECL);
 
+protected:
+
   TAO_ORB_Core *orb_core_;
 
   // Save a reference to the priority mapping manager.
@@ -182,6 +185,8 @@ protected:
 
   RTCORBA::Current_var current_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTCORBA, TAO_RT_Protocols_Hooks)
 ACE_FACTORY_DECLARE (TAO_RTCORBA, TAO_RT_Protocols_Hooks)

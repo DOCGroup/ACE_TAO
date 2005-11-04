@@ -1,5 +1,4 @@
 // $Id$
-// Multi_Priority_Mapping.cpp,v 1.0
 
 #include "tao/orbconf.h"
 
@@ -14,20 +13,22 @@ ACE_RCSID (RTCORBA,
            Multi_Priority_Mapping,
            "$Id$")
 
-TAO_Multi_Priority_Mapping::TAO_Multi_Priority_Mapping (int base_native_priority,
-                                                        int base_corba_priority,
-                                                        int priority_spacing,
-                                                        int priorities_contiguous,
-                                                        int policy)
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_Multi_Priority_Mapping::TAO_Multi_Priority_Mapping (
+  int base_native_priority,
+  int base_corba_priority,
+  int priority_spacing,
+  int priorities_contiguous,
+  int policy)
   :  base_native_priority_ (base_native_priority)
   ,  base_corba_priority_ (base_corba_priority)
   ,  priority_spacing_ (priority_spacing)
   ,  priorities_contiguous_(priorities_contiguous)
   ,  policy_ (policy)
+  ,  min_ (ACE_Sched_Params::priority_min (this->policy_))
+  ,  max_ (ACE_Sched_Params::priority_max (this->policy_))
 {
-  this->min_ = ACE_Sched_Params::priority_min (this->policy_);
-  this->max_ = ACE_Sched_Params::priority_max (this->policy_);
-
   if ( this->min_ < this->max_ )
   {
      if (base_native_priority_ < this->min_)
@@ -230,5 +231,7 @@ TAO_Multi_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
 
   return 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

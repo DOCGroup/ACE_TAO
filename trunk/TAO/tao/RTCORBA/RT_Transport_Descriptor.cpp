@@ -12,6 +12,8 @@ ACE_RCSID(RTCORBA, TAO_RT_Transport_Descriptor, "$Id$")
 #include "RT_Transport_Descriptor_Property.h"
 #include "tao/Endpoint.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_RT_Transport_Descriptor::~TAO_RT_Transport_Descriptor ()
 {
   if (this->delete_properties_ == 1)
@@ -112,3 +114,5 @@ TAO_RT_Transport_Descriptor::hash (void) const
 {
   return this->endpoint_->hash ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

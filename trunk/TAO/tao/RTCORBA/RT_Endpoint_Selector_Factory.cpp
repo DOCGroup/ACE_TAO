@@ -18,6 +18,8 @@ ACE_RCSID (RTCORBA,
 
 // ****************************************************************
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 RT_Endpoint_Selector_Factory::RT_Endpoint_Selector_Factory (void)
 {
   ACE_NEW (this->rt_invocation_endpoint_selector_,
@@ -34,6 +36,8 @@ RT_Endpoint_Selector_Factory::get_selector (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return this->rt_invocation_endpoint_selector_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

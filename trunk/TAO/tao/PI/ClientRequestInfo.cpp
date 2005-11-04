@@ -4,7 +4,7 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-ACE_RCSID (tao,
+ACE_RCSID (PI,
            ClientRequestInfo,
            "$Id$")
 
@@ -23,6 +23,8 @@ ACE_RCSID (tao,
 #include "tao/debug.h"
 #include "tao/Service_Context.h"
 #include "tao/Exception_Data.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ClientRequestInfo::TAO_ClientRequestInfo (TAO::Invocation_Base *inv)
   : invocation_ (inv),
@@ -745,5 +747,7 @@ TAO_ClientRequestInfo::tao_ft_retention_id (void) const
 {
   return this->invocation_->operation_details ().ft_retention_id ();
 }
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_INTERCEPTORS == 1 */

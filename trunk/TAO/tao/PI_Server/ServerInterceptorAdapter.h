@@ -20,13 +20,12 @@
 
 #include /**/ "ace/pre.h"
 
-#include "pi_server_export.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/orbconf.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
@@ -35,6 +34,9 @@
 #include "tao/PI/Interceptor_List_T.h"
 #include "tao/ServerRequestInterceptor_Adapter.h"
 #include "tao/Basic_Types.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -56,8 +58,8 @@ namespace TAO
    * A convenient helper class to invoke registered server request
    * interceptor(s).
    */
-  class TAO_PI_Server_Export ServerRequestInterceptor_Adapter_Impl :
-    public ServerRequestInterceptor_Adapter
+  class ServerRequestInterceptor_Adapter_Impl
+    : public ServerRequestInterceptor_Adapter
   {
   public:
 
@@ -177,6 +179,8 @@ namespace TAO
   };
 
 }  // End namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_INTERCEPTORS */
 

@@ -36,13 +36,15 @@ ACE_RCSID (RTCORBA,
 #include "ace/Svc_Conf.h"
 #include "ace/Sched_Params.h"
 
-static const char *rt_poa_factory_name = "TAO_RT_Object_Adapter_Factory";
-static const ACE_TCHAR *rt_poa_factory_directive =
+static const char rt_poa_factory_name[] = "TAO_RT_Object_Adapter_Factory";
+static const ACE_TCHAR rt_poa_factory_directive[] =
   ACE_DYNAMIC_SERVICE_DIRECTIVE(
     "TAO_RT_Object_Adapter_Factory",
     "TAO_RTPortableServer",
     "_make_TAO_RT_Object_Adapter_Factory",
     "");
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RT_ORBInitializer::TAO_RT_ORBInitializer (int priority_mapping_type,
                                               int network_priority_mapping_type,
@@ -257,7 +259,7 @@ TAO_RT_ORBInitializer::register_policy_factories (
   // Bind the same policy factory to all RTCORBA related policy
   // types since a single policy factory is used to create each of
   // the different types of RTCORBA policies.
-  CORBA::PolicyType type[] = {
+  static CORBA::PolicyType const type[] = {
     RTCORBA::PRIORITY_MODEL_POLICY_TYPE,
     RTCORBA::THREADPOOL_POLICY_TYPE,
     RTCORBA::SERVER_PROTOCOL_POLICY_TYPE,
@@ -269,7 +271,7 @@ TAO_RT_ORBInitializer::register_policy_factories (
   const CORBA::PolicyType *end =
     type + sizeof (type) / sizeof (type[0]);
 
-  for (CORBA::PolicyType *i = type;
+  for (CORBA::PolicyType const * i = type;
        i != end;
        ++i)
     {
@@ -302,5 +304,7 @@ TAO_RT_ORBInitializer::register_policy_factories (
       ACE_CHECK;
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

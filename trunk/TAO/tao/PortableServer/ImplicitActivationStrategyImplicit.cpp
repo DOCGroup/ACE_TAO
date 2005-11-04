@@ -6,6 +6,9 @@ ACE_RCSID (PortableServer,
            ImplicitActivationStrategyImplicit,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace Portable_Server
@@ -15,7 +18,15 @@ namespace TAO
     {
       return true;
     }
+  }
+}
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+namespace TAO
+{
+  namespace Portable_Server
+  {
     ACE_FACTORY_DEFINE (ACE_Local_Service, ImplicitActivationStrategyImplicit)
 
     ACE_STATIC_SVC_DEFINE (

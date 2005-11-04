@@ -17,6 +17,8 @@ ACE_RCSID(RTPortableServer,
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "tao/Profile.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 CORBA::Boolean
 TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
                                             ACE_ENV_ARG_DECL) const
@@ -118,6 +120,8 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
   else
     return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_RT_Collocation_Resolver,
                        ACE_TEXT ("RT_Collocation_Resolver"),

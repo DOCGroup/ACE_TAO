@@ -26,6 +26,8 @@
 
 #include "tao/Object_Proxy_Broker.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   /**
@@ -72,6 +74,8 @@ namespace TAO
 /// This function is used to access the unique instance of strategized
 /// proxy broker. All the CORBA::Object share the proxy broker.
 TAO::Collocated_Object_Proxy_Broker *the_tao_collocated_object_proxy_broker (void);
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

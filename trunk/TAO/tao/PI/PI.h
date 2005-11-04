@@ -21,6 +21,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_PI_Init
  *
@@ -36,6 +40,8 @@ public:
 static int
 TAO_Requires_PI_Initializer =
   TAO_PI_Init::Initializer ();
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

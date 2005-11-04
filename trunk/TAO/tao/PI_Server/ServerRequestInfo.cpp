@@ -4,7 +4,7 @@
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
-ACE_RCSID (PortableServer,
+ACE_RCSID (PI_Server,
            ServerRequestInfo,
            "$Id$")
 
@@ -29,6 +29,7 @@ ACE_RCSID (PortableServer,
 #   include "ServerRequestInfo.inl"
 # endif /* !__ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::ULong
 TAO::ServerRequestInfo::request_id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -585,5 +586,7 @@ TAO::ServerRequestInfo::add_reply_service_context (
                                        CORBA::COMPLETED_NO));
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

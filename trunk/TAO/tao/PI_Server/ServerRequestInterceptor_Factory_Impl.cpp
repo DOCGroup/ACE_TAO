@@ -24,6 +24,9 @@ ACE_RCSID (PI_Server,
            PolicyFactory_Loader,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::ServerRequestInterceptor_Adapter*
 TAO_ServerRequestInterceptor_Adapter_Factory_Impl::create (void)
 {
@@ -33,6 +36,8 @@ TAO_ServerRequestInterceptor_Adapter_Factory_Impl::create (void)
                   0);
   return obj;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_ServerRequestInterceptor_Adapter_Factory_Impl,
                        ACE_TEXT ("ServerRequestInterceptor_Adapter_Factory"),

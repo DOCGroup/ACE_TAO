@@ -22,6 +22,8 @@
 
 #include "Servant_Location.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Root_POA;
 
 namespace TAO
@@ -157,6 +159,8 @@ namespace TAO
     };
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_SERVANT_RETENTION_STRATEGY_NON_RETAIN_H */

@@ -1,12 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file RT_Transport_Descriptor.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_RT_TRANSPORT_DESCRIPTOR_H
@@ -23,6 +22,8 @@
 #include "RT_Transport_Descriptor_Property.h"
 
 #include "tao/Transport_Descriptor_Interface.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_RT_Transport_Descriptor
@@ -67,6 +68,8 @@ private:
   /// Flag to delete properties.
   int delete_properties_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "RT_Transport_Descriptor.inl"

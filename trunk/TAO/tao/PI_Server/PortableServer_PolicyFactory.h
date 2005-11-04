@@ -15,17 +15,18 @@
 
 #include /**/ "ace/pre.h"
 
-#include "pi_server_export.h"
+#include "tao/PI/PI.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PI/PI.h"
 #include "tao/LocalObject.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// Policy factory for all PortableServer related policies.
-class TAO_PI_Server_Export TAO_PortableServer_PolicyFactory
+class TAO_PortableServer_PolicyFactory
   : public virtual PortableInterceptor::PolicyFactory,
     public virtual TAO_Local_RefCounted_Object
 {
@@ -36,6 +37,8 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CORBA::PolicyError));
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

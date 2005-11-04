@@ -14,10 +14,7 @@ ACE_RCSID (RTCORBA,
            RT_ORB_Loader,
            "$Id$")
 
-
-TAO_RT_ORB_Loader::TAO_RT_ORB_Loader (void)
-{
-}
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RT_ORB_Loader::~TAO_RT_ORB_Loader (void)
 {
@@ -193,6 +190,8 @@ TAO_RT_ORB_Loader::init (int argc,
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 /////////////////////////////////////////////////////////////////////
 

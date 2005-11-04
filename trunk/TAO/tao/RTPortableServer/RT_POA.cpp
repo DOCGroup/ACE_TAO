@@ -1,4 +1,4 @@
-// @(#) $Id$
+// $Id$
 
 #include "RT_POA.h"
 
@@ -34,6 +34,8 @@
 ACE_RCSID (RTPortableServer,
            RT_POA,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RT_POA::TAO_RT_POA (const TAO_Root_POA::String &name,
                         TAO_POA_Manager &poa_manager,
@@ -950,5 +952,7 @@ TAO_RT_POA::id (ACE_ENV_SINGLE_ARG_DECL)
 {
   return this->TAO_Regular_POA::id (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
