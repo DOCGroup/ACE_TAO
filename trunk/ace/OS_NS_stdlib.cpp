@@ -337,8 +337,10 @@ ACE_OS::realpath (const char *file_name,
       dest = rpath;
     }
 
+#if !defined (ACE_LACKS_SYMLINKS)
   char expand_buf[PATH_MAX]; // Extra buffer needed to expand symbolic links
   int nlinks = 0;
+#endif
 
   while (*file_name)
     {
