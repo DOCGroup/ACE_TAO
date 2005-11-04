@@ -1,3 +1,8 @@
+Fri Nov  4 11:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_unistd.inl:
+          For VxWorks 6.1 also include os_string.h to get swab
+
 Fri Nov  4 10:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Capabilities.{h,cpp}:
