@@ -5,7 +5,7 @@
 
 #include "TestC.h"
 
-#include "tao/AnyTypeCode/TC_Constants_Forward.h"
+#include "tao/AnyTypeCode/TypeCode_Constants.h"
 
 #include "tao/Strategies/advanced_resource.h"
 
