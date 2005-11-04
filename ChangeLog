@@ -3,6 +3,9 @@ Fri Nov  4 12:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tests/Lazy_Map_Manager_Test.cpp:
           Changed MAP to LAZY_MAP
 
+        * tests/Map_Test.cpp:
+          Changed MAP to TEST_MAP
+
 Fri Nov  4 12:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Cache_Map_Manager_T.{h,cpp,inl}:
