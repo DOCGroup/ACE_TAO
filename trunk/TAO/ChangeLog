@@ -1,3 +1,10 @@
+Thu Nov  3 22:06:44 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/AnyTypeCode/TC_Constants_Forward.h:
+
+	  Reintroduced this header as a backward compatibility header that
+	  includes "tao/AnyTypeCode/TypeCode_Constants.h".
+
 Thu Nov  3 19:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2084_Regression/Hello.cpp:
