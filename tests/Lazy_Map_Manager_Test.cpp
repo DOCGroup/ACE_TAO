@@ -25,20 +25,20 @@
 ACE_RCSID(tests, Map_Manager_Test, "$Id$")
 
 // Simple map manager.
-typedef ACE_Map_Manager<int, int, ACE_Null_Mutex> MAP;
+typedef ACE_Map_Manager<int, int, ACE_Null_Mutex> LAZY_MAP;
 
 // Displaying the contents of a map manager.
 
 void
-display_map (MAP &map)
+display_map (LAZY_MAP &map)
 {
   {
     // Simple iteration printing the entries.
-    for (MAP::iterator iter = map.begin ();
+    for (LAZY_MAP::iterator iter = map.begin ();
          iter != map.end ();
          ++iter)
       {
-        MAP::ENTRY &entry = *iter;
+        LAZY_MAP::ENTRY &entry = *iter;
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%d "),
                     entry.int_id_));
@@ -49,11 +49,11 @@ display_map (MAP &map)
 
   {
     // Simple reverse iteration printing the entries.
-    for (MAP::reverse_iterator iter = map.rbegin ();
+    for (LAZY_MAP::reverse_iterator iter = map.rbegin ();
          iter != map.rend ();
          ++iter)
       {
-        MAP::ENTRY &entry = *iter;
+        LAZY_MAP::ENTRY &entry = *iter;
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%d "),
                     entry.int_id_));
@@ -73,7 +73,7 @@ void
 map_test (void)
 {
   // Map of size 3.
-  MAP map (3);
+  LAZY_MAP map (3);
   int i = 0;
 
   // Insert a few entries.
@@ -111,11 +111,11 @@ map_test (void)
   // Remove middle one.
   {
     // Deletion while iterating.
-    for (MAP::iterator iter = map.begin ();
+    for (LAZY_MAP::iterator iter = map.begin ();
          iter != map.end ();
          ++iter)
     {
-      MAP::ENTRY &entry = *iter;
+      LAZY_MAP::ENTRY &entry = *iter;
       if (entry.int_id_ == 1)
         map.unbind (1);
     }
@@ -126,11 +126,11 @@ map_test (void)
   // Remove the entry on one end.
   {
     // Deletion while iterating.
-    for (MAP::iterator iter = map.begin ();
+    for (LAZY_MAP::iterator iter = map.begin ();
          iter != map.end ();
          ++iter)
       {
-        MAP::ENTRY &entry = *iter;
+        LAZY_MAP::ENTRY &entry = *iter;
         if (entry.int_id_ == 0)
           map.unbind (0);
       }
@@ -141,11 +141,11 @@ map_test (void)
   // Remove the entry on the other end.
   {
     // Deletion while iterating.
-    for (MAP::iterator iter = map.begin ();
+    for (LAZY_MAP::iterator iter = map.begin ();
          iter != map.end ();
          ++iter)
       {
-        MAP::ENTRY &entry = *iter;
+        LAZY_MAP::ENTRY &entry = *iter;
         if (entry.int_id_ == 2)
           map.unbind (2);
       }
