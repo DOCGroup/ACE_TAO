@@ -1,3 +1,25 @@
+Fri Nov  4 08:59:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/ORB_Core.i (add_tss_cleanup_func):
+	* tao/ORB_Core.cpp (add_tss_cleanup_func):
+
+	  Moved this method out of line.  Allows the
+	  TAO_Cleanup_Func_Registry class to remain unexported from the
+	  TAO DLL.
+
+	* tao/AnyTypeCode/TypeCode_Constants.h (_tc_UnknownUserException):
+
+	  Removed this forward declaration.  It's DLL linkage ends up
+	  differing from the same declaration in the DynamicInterface
+	  library.  Addresses "inconsistent dll linkage" warnings from
+	  VC++.
+
+	* tao/PortableServer/POA_Current_Impl.h (POA_Current_Impl):
+
+	  Re-exported this class.  Unfortunately, some TAO other libraries
+	  make direct calls on this class.  Addresses unresolved symbol
+	  errors.
+
 Fri Nov  4 16:56:06 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
