@@ -2707,6 +2707,14 @@ TAO_ORB_Core::set_sync_scope_hook (Sync_Scope_Hook hook)
   TAO_ORB_Core_Static_Resources::instance ()-> sync_scope_hook_ = hook;
 }
 
+int
+TAO_ORB_Core::add_tss_cleanup_func (ACE_CLEANUP_FUNC cleanup,
+                                    size_t &slot_id)
+{
+  return this->tss_cleanup_funcs_.register_cleanup_function (cleanup,
+                                                             slot_id);
+}
+
 void
 TAO_ORB_Core::call_timeout_hook (TAO_Stub *stub,
                                  bool &has_timeout,
