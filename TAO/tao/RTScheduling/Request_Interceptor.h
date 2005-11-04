@@ -17,7 +17,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 extern ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> server_guid_counter;
 
-class Client_Interceptor
+class TAO_RTScheduler_Export Client_Interceptor
   : public PortableInterceptor::ClientRequestInterceptor
 {
 public:
