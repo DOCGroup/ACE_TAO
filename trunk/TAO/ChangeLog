@@ -1,3 +1,10 @@
+Fri Nov  4 10:13:43 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/RTScheduling/Request_Interceptor.h (Client_Interceptor):
+
+	  Re-exported this class.  The export declaration was
+	  inadvertently removed.
+
 Fri Nov  4 08:59:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/ORB_Core.i (add_tss_cleanup_func):
