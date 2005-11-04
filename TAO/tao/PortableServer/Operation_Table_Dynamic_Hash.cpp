@@ -29,6 +29,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Operation_Table_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // constructor
 TAO_Dynamic_Hash_OpTable::TAO_Dynamic_Hash_OpTable (
   TAO_operation_db_entry const * db,
@@ -128,3 +130,4 @@ TAO_Dynamic_Hash_OpTable::find (const char *opname,
   return retval;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

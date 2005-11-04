@@ -62,6 +62,8 @@ ACE_RCSID (PortableServer,
            POA,
              "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // This is the TAO_Object_key-prefix that is appended to all TAO Object keys.
 // It's an array of octets representing ^t^a^o/0 in octal.
 CORBA::Octet const
@@ -2899,13 +2901,11 @@ TAO_POA_Static_Resources::TAO_POA_Static_Resources (void)
 void 
 TAO_Root_POA::poa_activated_hook ()
 {
-  //no-ops
 }
 
 void 
 TAO_Root_POA::poa_deactivated_hook ()
 {
-  //no-ops
 }
 
 void 
@@ -2913,7 +2913,6 @@ TAO_Root_POA::servant_activated_hook (PortableServer::Servant,
                                       const PortableServer::ObjectId&
                                       ACE_ENV_ARG_DECL)
 {
-  //no-ops
 }
 
 void 
@@ -2921,6 +2920,6 @@ TAO_Root_POA::servant_deactivated_hook (PortableServer::Servant,
                                         const PortableServer::ObjectId&
                                         ACE_ENV_ARG_DECL)
 {
-  //no-ops
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

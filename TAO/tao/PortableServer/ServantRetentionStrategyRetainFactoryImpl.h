@@ -23,6 +23,8 @@
 #include "ace/Service_Config.h"
 #include "tao/PortableServer/ServantRetentionStrategyFactory.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace Portable_Server
@@ -39,7 +41,15 @@ namespace TAO
         ServantRetentionStrategy *strategy
         ACE_ENV_ARG_DECL);
     };
+  }
+}
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+namespace TAO
+{
+  namespace Portable_Server
+  {
     ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, ServantRetentionStrategyRetainFactoryImpl)
     ACE_FACTORY_DECLARE (TAO_PortableServer, ServantRetentionStrategyRetainFactoryImpl)
   }

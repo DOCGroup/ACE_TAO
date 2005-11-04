@@ -25,6 +25,8 @@
 #include "tao/Argument.h"
 #include "tao/Any_Insert_Policy_T.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   /**
@@ -192,6 +194,8 @@ namespace TAO
 
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "tao/PortableServer/BD_String_SArgument_T.inl"

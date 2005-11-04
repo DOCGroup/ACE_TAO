@@ -16,6 +16,7 @@ ACE_RCSID (PortableServer,
            Collocated_Object_Proxy_Broker,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -329,3 +330,5 @@ _TAO_collocation_Object_Proxy_Broker_Factory_Initializer (
     reinterpret_cast<size_t> (_TAO_collocation_Object_Proxy_Broker_Factory_Initializer
       )
   );
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -11,6 +11,8 @@ ACE_RCSID (PortableServer,
 # include "Local_Servant_Base.inl"
 #endif /* ! __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 void
 TAO_Local_ServantBase::_dispatch (TAO_ServerRequest &,
                                   void *
@@ -18,3 +20,5 @@ TAO_Local_ServantBase::_dispatch (TAO_ServerRequest &,
 {
   ACE_THROW (CORBA::BAD_OPERATION ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -18,8 +18,11 @@ ACE_RCSID (RTCORBA,
 
 // ****************************************************************
 
-TAO_PriorityModelPolicy::TAO_PriorityModelPolicy (RTCORBA::PriorityModel priority_model,
-                                                  RTCORBA::Priority server_priority)
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_PriorityModelPolicy::TAO_PriorityModelPolicy (
+  RTCORBA::PriorityModel priority_model,
+  RTCORBA::Priority server_priority)
   : ACE_NESTED_CLASS (CORBA, Object) ()
   , ACE_NESTED_CLASS (CORBA, Policy) ()
   , ACE_NESTED_CLASS (CORBA, LocalObject) ()
@@ -1401,5 +1404,7 @@ TAO_Protocol_Properties_Factory::create_orb_protocol_property (IOP::ProfileId id
                     0);
   return property;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

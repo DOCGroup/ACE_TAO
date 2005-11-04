@@ -6,6 +6,8 @@ ACE_RCSID (PortableServer,
 
 #include "ace/OS_NS_string.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace PortableServer
 {
   PortableServer::ObjectId *
@@ -54,3 +56,5 @@ namespace PortableServer
   }
 }
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL

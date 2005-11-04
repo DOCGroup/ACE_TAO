@@ -12,6 +12,8 @@
 
 // ============================================================
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template<typename S,
          typename to_S,
          typename from_S,
@@ -137,5 +139,7 @@ interceptor_value (CORBA::Any *any) const
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_SPECIAL_BASIC_SARGUMENT_T_CPP */

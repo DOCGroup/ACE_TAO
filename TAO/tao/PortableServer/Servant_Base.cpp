@@ -46,6 +46,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Servant_Base_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_ServantBase::TAO_ServantBase (void)
   : TAO_Abstract_ServantBase ()
   , ref_count_ (1)
@@ -477,3 +479,4 @@ TAO_ServantBase_var::_retn (void)
   return retval;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

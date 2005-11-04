@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_Thread_Lane &
@@ -147,5 +151,4 @@ TAO_Thread_Pool::number_of_lanes (void) const
   return this->number_of_lanes_;
 }
 
-
-
+TAO_END_VERSIONED_NAMESPACE_DECL

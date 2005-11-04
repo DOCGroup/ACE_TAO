@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -22,9 +22,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Map_T.h"
-#include "tao/Server_Strategy_Factory.h"
 #include "Servant_Base.h"
+#include "tao/Server_Strategy_Factory.h"
+#include "ace/Map_T.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations.
 class TAO_Id_Uniqueness_Strategy;
@@ -612,6 +614,8 @@ public:
   virtual int system_id (PortableServer::ObjectId_out system_id,
                          TAO_Active_Object_Map_Entry &entry);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "Active_Object_Map.i"

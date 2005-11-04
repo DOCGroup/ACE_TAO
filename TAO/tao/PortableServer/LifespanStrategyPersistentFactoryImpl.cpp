@@ -8,6 +8,8 @@ ACE_RCSID (PortableServer,
            LifespanStrategyFactoryImpl,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace Portable_Server
@@ -45,7 +47,15 @@ namespace TAO
 
       delete strategy;
     }
+  }
+}
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+namespace TAO
+{
+  namespace Portable_Server
+  {
     ACE_STATIC_SVC_DEFINE (
         LifespanStrategyPersistentFactoryImpl,
         ACE_TEXT ("LifespanStrategyPersistentFactory"),

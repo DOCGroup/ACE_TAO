@@ -1,4 +1,4 @@
-// @(#) $Id$
+// $Id$
 
 #include "Default_Servant_Dispatcher.h"
 #include "Root_POA.h"
@@ -6,6 +6,8 @@
 ACE_RCSID(PortableServer,
           Default_Servant_Dispatcher,
           "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Default_Servant_Dispatcher::~TAO_Default_Servant_Dispatcher (void)
 {
@@ -63,3 +65,5 @@ TAO_Default_Servant_Dispatcher::post_invoke (
   TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &)
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

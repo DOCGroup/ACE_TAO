@@ -10,6 +10,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   template <typename InterceptorType>
@@ -147,3 +149,5 @@ namespace TAO
     ACE_CHECK;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

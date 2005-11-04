@@ -23,6 +23,8 @@
 #include "PortableServer.h"
 #include "Servant_Location.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace PortableServer
 {
   class ServantManager;
@@ -136,6 +138,8 @@ namespace TAO
     };
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_REQUEST_PROCESSING_STRATEGY_H */

@@ -1,9 +1,13 @@
+// -*- C++ -*-
+
 //$Id$
 
 #ifndef DISTRIBUTABLE_THREAD_H
 #define DISTRIBUTABLE_THREAD_H
 
 #include "tao/RTScheduling/RTScheduler.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_RTScheduler_Export TAO_DistributableThread
 : public RTScheduling::DistributableThread
@@ -31,5 +35,7 @@ class TAO_DistributableThread_Factory
 public:
   static RTScheduling::DistributableThread_ptr create_DT (void);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /*DISTRIBUTABLE_THREAD_H*/

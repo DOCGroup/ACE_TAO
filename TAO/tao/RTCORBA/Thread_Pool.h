@@ -33,6 +33,8 @@
 #include "ace/Task.h"
 #include "ace/Null_Mutex.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Thread_Lane;
 
 /**
@@ -418,12 +420,16 @@ private:
 
   // @}
 
+private:
+
   TAO_ORB_Core &orb_core_;
 
   THREAD_POOLS thread_pools_;
   RTCORBA::ThreadpoolId thread_pool_id_counter_;
   ACE_SYNCH_MUTEX lock_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "Thread_Pool.inl"

@@ -15,6 +15,8 @@ ACE_RCSID (PortableServer,
            POAManager,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_POA_Manager::TAO_POA_Manager (TAO_Object_Adapter &object_adapter)
   : state_ (PortableServer::POAManager::HOLDING),
     lock_ (object_adapter.lock ()),
@@ -389,3 +391,4 @@ TAO_POA_Manager::_get_orb (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return CORBA::ORB::_duplicate (this->object_adapter_.orb_core ().orb ());
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

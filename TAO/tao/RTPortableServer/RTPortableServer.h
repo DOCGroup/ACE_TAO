@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    RTPortableServer.h
@@ -25,6 +26,8 @@
 
 #include "tao/RTCORBA/RTCORBA.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_RTPortableServer_Export TAO_RTPortableServer_Initializer
 {
 public:
@@ -33,6 +36,8 @@ public:
 };
 
 static TAO_RTPortableServer_Initializer TAO_RTPortableServer_initializer;
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #define TAO_RT_PORTABLESERVER_SAFE_INCLUDE
 #include "RTPortableServerC.h"

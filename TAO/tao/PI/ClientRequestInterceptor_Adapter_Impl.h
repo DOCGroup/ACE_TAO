@@ -34,6 +34,7 @@
 #include "ClientRequestInterceptorC.h"
 #include "tao/ClientRequestInterceptor_Adapter.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -119,6 +120,8 @@ namespace TAO
     ClientRequestInterceptor_List interceptor_list_;
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ClientRequestInterceptor_Adapter_Impl.inl"

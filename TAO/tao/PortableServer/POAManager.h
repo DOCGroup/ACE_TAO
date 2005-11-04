@@ -30,16 +30,19 @@
 #include "tao/PI_ForwardC.h"
 #include "ace/Unbounded_Set.h"
 
-// Forward decl.
-class TAO_Root_POA;
-class TAO_Object_Adapter;
-
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+// Forward decl.
+class TAO_Root_POA;
+class TAO_Object_Adapter;
+
 
 class TAO_PortableServer_Export TAO_POA_Manager :
   public PortableServer::POAManager,
@@ -153,6 +156,8 @@ protected:
   PortableInterceptor::AdapterManagerId poa_manager_id_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

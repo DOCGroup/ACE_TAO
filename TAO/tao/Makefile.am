@@ -1333,7 +1333,6 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/LifespanStrategyTransientFactoryImpl.cpp \
   PortableServer/Local_Servant_Base.cpp \
   PortableServer/Non_Servant_Upcall.cpp \
-  PortableServer/ORT_Adapter.cpp \
   PortableServer/ORT_Adapter_Factory.cpp \
   PortableServer/Object_Adapter.cpp \
   PortableServer/Object_Adapter_Factory.cpp \

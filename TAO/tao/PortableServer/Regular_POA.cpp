@@ -9,6 +9,8 @@ ACE_RCSID (PortableServer,
 # include "Regular_POA.inl"
 #endif /* ! __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Regular_POA::TAO_Regular_POA (const TAO_Root_POA::String &name,
                   TAO_POA_Manager &poa_manager,
                   const TAO_POA_Policy_Set &policies,
@@ -67,3 +69,5 @@ TAO_Regular_POA::root_key_type (void)
       return TAO_Root_POA::root_key_type ();
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

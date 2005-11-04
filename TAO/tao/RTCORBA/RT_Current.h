@@ -34,6 +34,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_RT_Current
  *
@@ -42,8 +44,8 @@
  * Allows setting/getting the priority of the current thread.
  */
 class TAO_RTCORBA_Export TAO_RT_Current
-  : public RTCORBA::Current,
-    public TAO_Local_RefCounted_Object
+  : public RTCORBA::Current
+  , public TAO_Local_RefCounted_Object
 {
 public:
 
@@ -66,9 +68,11 @@ protected:
 private:
 
   /// ORB Core that owns us.
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core * const orb_core_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

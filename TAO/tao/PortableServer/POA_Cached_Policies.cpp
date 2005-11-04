@@ -1,4 +1,4 @@
-// @(#) $Id$
+// $Id$
 
 #include "POA_Cached_Policies.h"
 #include "POA_Policy_Set.h"
@@ -17,6 +17,8 @@
 ACE_RCSID(PortableServer,
           POA_Cached_Policies,
           "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -160,3 +162,5 @@ namespace TAO
     }
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

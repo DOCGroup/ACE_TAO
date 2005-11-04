@@ -20,6 +20,7 @@ ACE_RCSID (PortableServer,
            Upcall_Wrapper,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
@@ -266,3 +267,5 @@ TAO::Upcall_Wrapper::post_upcall (TAO_OutputCDR & cdr,
         }
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

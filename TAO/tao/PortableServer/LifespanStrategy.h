@@ -23,6 +23,8 @@
 #include "LifespanPolicyC.h"
 #include "tao/Object_KeyC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace Portable_Server
@@ -80,6 +82,8 @@ namespace TAO
 
   } /* namespace Portable_Server */
 } /* namespace TAO */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_PORTABLESERVER_LIFESPANPOLICY_H */

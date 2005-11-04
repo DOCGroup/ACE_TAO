@@ -14,6 +14,9 @@ ACE_RCSID (PI,
            ORBInitializer_Registry,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::ORBInitializer_Registry::ORBInitializer_Registry (void)
   : lock_ (),
     initializers_ ()
@@ -177,6 +180,8 @@ TAO::ORBInitializer_Registry::post_init (
       orb_init_info_temp->invalidate ();
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (ORBInitializer_Registry,
                        ACE_TEXT ("ORBInitializer_Registry"),

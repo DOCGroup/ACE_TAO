@@ -24,6 +24,9 @@ ACE_RCSID (RTPortableServer,
            RT_Servant_Dispatcher,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_RT_Servant_Dispatcher::~TAO_RT_Servant_Dispatcher (void)
 {
 }
@@ -394,5 +397,7 @@ TAO_RT_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
 
   return poa;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

@@ -8,6 +8,8 @@ ACE_RCSID (PI,
            PI,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 int
 TAO_PI_Init::Initializer (void)
 {
@@ -20,3 +22,4 @@ TAO_PI_Init::Initializer (void)
   return ACE_Service_Config::process_directive (ace_svc_desc_ORBInitializer_Registry);
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
