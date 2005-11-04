@@ -17,9 +17,9 @@
 #ifndef TAO_VERSIONED_NAMESPACE_H
 #define TAO_VERSIONED_NAMESPACE_H
 
-#ifndef ACE_CONFIG_LITE_H
-# error This header is only meant to be included after "ace/config-lite.h".
-#endif  /* !ACE_CONFIG_LITE_H */
+#if !defined (TAO_ORBCONF_H) && !defined (ACE_CONFIG_LITE_H)
+# error This header is only meant to be included after "tao/orbconf.h".
+#endif  /* !TAO_ORBCONF_H */
 
 
 #if !defined (TAO_HAS_VERSIONED_NAMESPACE) \

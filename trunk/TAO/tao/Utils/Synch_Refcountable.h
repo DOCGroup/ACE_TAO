@@ -23,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "utils_export.h"
+#include "tao/Versioned_Namespace.h"
 
 class ACE_Lock;
 

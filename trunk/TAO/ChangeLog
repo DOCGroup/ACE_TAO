@@ -1,3 +1,14 @@
+Fri Nov  4 11:57:12 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Versioned_Namespace.h:
+
+	  Added TAO_ORBCONF_H include/define sanity check.
+
+	* tao/Utils/Synch_Refcountable.h:
+
+	  Include "tao/Versioned_Namespace.h" to pull in versioned
+	  namespace macros.
+
 Fri Nov  4 10:31:15 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/SmartProxies/Smart_Proxies.h:
