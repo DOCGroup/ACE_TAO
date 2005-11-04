@@ -1,3 +1,10 @@
+Fri Nov  4 09:18:17 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Dev_Poll_Reactor.h (Token_Guard):
+
+	  Fixed incorrect unimplemented constructor related error that was
+	  introduced when removing ACE_UNIMPLEMENTED_FUNC macro usage.
+
 Fri Nov  4 14:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/compiler.bor:
