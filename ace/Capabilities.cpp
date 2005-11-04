@@ -103,11 +103,11 @@ ACE_Capabilities::parse (const ACE_TCHAR *buf, int &cap)
 void
 ACE_Capabilities::resetcaps (void)
 {
-  for (MAP::ITERATOR iter (this->caps_);
+  for (CAPABILITIES_MAP::ITERATOR iter (this->caps_);
        !iter.done ();
        iter.advance ())
     {
-      MAP::ENTRY *entry = 0;
+      CAPABILITIES_MAP::ENTRY *entry = 0;
       iter.next (entry);
       delete entry->int_id_;
     }
