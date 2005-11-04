@@ -1,3 +1,13 @@
+Fri Nov  4 10:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.1.h:
+        * include/makeinclude/platform_vxworks6.1.GNU:
+          New files for VxWorks 6.1. This is just a first draft version, a lot
+          of porting work has to be done
+
+        * ace/OS_NS_stdlib.cpp:
+          Fixed variable not used warning with VxWorks 6.1
+
 Fri Nov  4 10:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.h:
