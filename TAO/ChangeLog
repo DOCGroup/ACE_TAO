@@ -1,3 +1,23 @@
+Fri Nov  4 16:56:06 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+        
+          Added a 'const' qualifier to the generated member mutator
+          argument for array member types, since this arguement has
+          the same semantics as an 'in' operation argument.
+          
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype_obv_cs.h:
+        
+          Change generation of the initializing constructor definition to
+          simply call the corresponding member mutators in the constructor
+          body. This change allows reuse of the copy semantics already
+          generated in the various member mutator methods, and as a side
+          effect, avoids a VC6 compiler bug that complained when we had
+          a call to the base class initializing constructor in the
+          derived constructor's initialization list.
+
 Thu Nov  3 22:17:27 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* performance-tests/Cubit/TAO/DII_Cubit/client.cpp:

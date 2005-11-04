@@ -46,15 +46,12 @@ public:
   virtual int visit_field (be_field *node);
   
 private:
-  void gen_obv_init_constructor_init_list (be_valuetype *node);
+  void gen_obv_init_constructor_inits (be_valuetype *node);
   // Generate member assignments for the initializing constructor.
   
   void gen_obv_init_base_constructor_args (be_valuetype *node,
                                            unsigned long &index);
   // Called by method above to generate base class constructor call.
-  
-  void gen_obv_init_constructor_array_inits (be_valuetype *node);
-  // Must generate array member initialization in the body.
 };
 
 #endif /* _BE_VALUETYPE_VALUETYPE_OBV_CS_H_ */

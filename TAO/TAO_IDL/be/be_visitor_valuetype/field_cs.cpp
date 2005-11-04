@@ -158,7 +158,7 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
   this->op_name (bu,
                  os); 
   
-  *os << "::" << ub->local_name () << " (" << fname
+  *os << "::" << ub->local_name () << " (const " << fname
       << " val)" << be_nl
       << "{" << be_idt_nl;
   *os << fname << "_copy ("
