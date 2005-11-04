@@ -18,8 +18,11 @@
 #  include "ace/OS_NS_stdio.h"
 #endif /* ACE_LACKS_ACCESS */
 
-#if defined (VXWORKS) || defined (ACE_HAS_WINCE)
+#if defined (ACE_VXWORKS) || defined (ACE_HAS_WINCE)
 #  include "ace/os_include/os_unistd.h"
+#  if defined (ACE_VXWORKS) && (ACE_VXWORKS == 0x610)
+#    include "ace/os_include/string.h"
+#  endif
 #endif /* VXWORKS || ACE_HAS_WINCE */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
