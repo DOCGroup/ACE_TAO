@@ -1203,9 +1203,9 @@ protected:
     /// does wake the current token holder.
     int acquire (ACE_Time_Value *max_wait = 0);
 
-  protected:
+  private:
 
-    Token_Guard (void) {}
+    Token_Guard (void);
 
   private:
 
