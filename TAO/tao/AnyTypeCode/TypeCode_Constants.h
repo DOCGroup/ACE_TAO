@@ -112,8 +112,6 @@ namespace CORBA
 #undef  TAO_SYSTEM_EXCEPTION
   //@}
 
-  extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_UnknownUserException;
-
   extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_Current;
 
   extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_NamedValue;

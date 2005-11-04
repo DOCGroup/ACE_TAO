@@ -59,7 +59,7 @@ namespace TAO
      * execution thread so that the proper <TAO_POA_Current> pointer
      * is obtained from TSS.
      */
-    class POA_Current_Impl
+    class TAO_PortableServer_Export POA_Current_Impl
     {
     public:
       friend class ::TAO_Root_POA;
