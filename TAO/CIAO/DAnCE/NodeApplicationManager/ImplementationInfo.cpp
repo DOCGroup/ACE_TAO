@@ -36,6 +36,10 @@ CIAO::NodeImplementationInfoHandler::populate_server_resource_def (void)
 
   // Iterate over the instance list to find whether any server resource
   // has been specified
+  // TODO: We shoud do some sanity check here, since all the component
+  // instance in this NodeApplication should have the same "server_resource_def"
+  // defined. Since currently we ignored this sanity check, then will allow 
+  // users to specify some self-conflicting configuration in the descriptor.
   for (i = 0; i < instance_len; ++i)
     {
       if (this->plan_.instance[i].deployedResource.length () != 0)
@@ -60,7 +64,7 @@ CIAO::NodeImplementationInfoHandler::populate_server_resource_def (void)
                     CORBA::string_dup ("CIAOServerResource");
 
                   this->node_info_->nodeapp_config[0].value <<= 
-                    server_resource_def;
+                    *server_resource_def;
                   break;
                 }
             }
