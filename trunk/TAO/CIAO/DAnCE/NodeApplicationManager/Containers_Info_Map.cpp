@@ -65,87 +65,87 @@ namespace CIAO
               my_policy_set_id;
           }
 
-        // If we find a different policy_set_id, then we bind it to the map.
+        // If we find a existing policy_set_id, then do nothing.
         if (this->map_.find (my_policy_set_id) == 0)
           continue;
-
         if (ACE_OS::strcmp (my_policy_set_id, "") == 0)
           {
-            // empty policy_set_id
+            // no policy set id has been specified
             Deployment::ContainerImplementationInfo * info;
             ACE_NEW (info, Deployment::ContainerImplementationInfo);
             this->map_.bind (my_policy_set_id, info);
             continue;
           }
         else
-          {
-            Deployment::ContainerImplementationInfo * info;
-            ACE_NEW (info, Deployment::ContainerImplementationInfo);
+          
+    {
+      Deployment::ContainerImplementationInfo * info;
+      ACE_NEW (info, Deployment::ContainerImplementationInfo);
 
-            // Fetch the actual policy_set_def from the infoProperty
-            // Ugly due to the IDL data structure definition! :(
-            CORBA::ULong j;
-            bool found = false;
+      // Fetch the actual policy_set_def from the infoProperty
+      // Ugly due to the IDL data structure definition! :(
+      CORBA::ULong j;
+      CORBA::ULong infoProperty_length = this->plan_.infoProperty.length ();
+      bool found = false;
 
-            for (j = 0;
-                  j < this->plan_.infoProperty.length ();
-                  ++j)
-              {
-                CIAO::DAnCE::ServerResource *server_resource_def = 0;
-                this->plan_.infoProperty[j].value >>= server_resource_def;
-                if (ACE_OS::strcmp ((*server_resource_def).Id,
-                                    my_resource_id.in ()) == 0)
-                  {
-                    // Iterate over the policy_sets
-                    CORBA::ULong k;
-                    for (k = 0;
-                          k < (*server_resource_def).orb_config.policy_set.length ();
-                          ++k)
-                      {
-                        ACE_DEBUG ((LM_DEBUG, "Looking for policy set id: %s\n", my_policy_set_id));
-                        ACE_DEBUG ((LM_DEBUG, "Compare against policy set id: %s\n\n", 
-                                    (*server_resource_def).orb_config.policy_set[k].Id.in ()));
+      for (j = 0; j < infoProperty_length; ++j)
+        {
+          CIAO::DAnCE::ServerResource *server_resource_def = 0;
+          this->plan_.infoProperty[j].value >>= server_resource_def;
 
+          if (ACE_OS::strcmp ((*server_resource_def).Id,
+                              my_resource_id.in ()) == 0)
+            {
+              // Iterate over the policy_sets
+              CORBA::ULong k;
+              CORBA::ULong policy_sets_length =
+                (*server_resource_def).orb_config.policy_set.length ();
+              for (k = 0; k < policy_sets_length; ++k)
+                {
+                  ACE_DEBUG ((LM_DEBUG, "Looking for policy set id: %s\n", my_policy_set_id));
+                  ACE_DEBUG ((LM_DEBUG, "Compare against policy set id: %s\n\n", 
+                              (*server_resource_def).orb_config.policy_set[k].Id.in ()));
 
-                        if (ACE_OS::strcmp (my_policy_set_id,
+                  if (ACE_OS::strcmp (my_policy_set_id,
                           (*server_resource_def).orb_config.policy_set[k].Id) == 0)
-                          {
-                            // Foud the target policy set def
-                            info->container_config.length (1);
-                            info->container_config[0].name =
-                              CORBA::string_dup ("ContainerPolicySet");
-                            info->container_config[0].value <<=
-                              my_policy_set_id;
-                              //                              (*server_resource_def).orb_config.policy_set[k];
+                    {
+                      // Foud the target policy set def
+                      info->container_config.length (1);
+                      info->container_config[0].name =
+                        CORBA::string_dup ("ContainerPolicySet");
+                      info->container_config[0].value <<=
+                        my_policy_set_id;
+                        // (*server_resource_def).orb_config.policy_set[k];
 
-                            ACE_DEBUG ((LM_DEBUG, "Found matching rt policy set*****\n\n"));
-                            found = true;
-                            break;
-                          }
-                      }
-                    if (k == (*server_resource_def).orb_config.policy_set.length ())
-                      {
-                        // No Server Resource Def found?
-                        ACE_DEBUG ((LM_DEBUG,
-                            "No matching policy set def found in resource def: %s!\n",
-                            my_resource_id.in ()));
-                      }
-                  }
+                      ACE_DEBUG ((LM_DEBUG, "Found matching rt policy set*****\n\n"));
+                      found = true;
+                      break;
+                    }
+                }
+              if (k == policy_sets_length)
+                {
+                  // No Server Resource Def found?
+                  ACE_DEBUG ((LM_DEBUG,
+                      "No matching policy set def found in resource def: %s!\n",
+                      my_resource_id.in ()));
+                }
+            }
 
-                // if we successfully found the policy_set_id
-                if (found)
-                  break;
-              } // end of for loop for fetching policy_set_def
+          // if we successfully found the policy_set_id
+          if (found)
+            break;
+        } // end of for loop for fetching policy_set_def
 
-            if (j == this->plan_.infoProperty.length ())
-              {
-                // No Server Resource Def found?! Inconsistent descriptor files.
-                ACE_DEBUG ((LM_ERROR, "(%P|%t) Descriptor error: "
-                    "No matching server resource def found for component: %s!\n",
-                    this->plan_.instance[i].name.in ()));
-              }
-            this->map_.bind (my_policy_set_id, info);
-          }
+      if (j == this->plan_.infoProperty.length ())
+        {
+          // No Server Resource Def found?! Inconsistent descriptor files.
+          ACE_DEBUG ((LM_ERROR, "(%P|%t) Descriptor error: "
+              "No matching server resource def found for component: %s!\n",
+              this->plan_.instance[i].name.in ()));
+        }
+      else
+        this->map_.bind (my_policy_set_id, info);
+    }
       }
   }
 
