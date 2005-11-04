@@ -18,6 +18,9 @@ ACE_RCSID(tao,
           SCIOP_Acceptor,
           "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_SCIOP_Acceptor::TAO_SCIOP_Acceptor (CORBA::Boolean flag)
   : TAO_Acceptor (TAO_TAG_SCIOP_PROFILE),
     addrs_ (0),
@@ -1027,5 +1030,7 @@ TAO_SCIOP_Acceptor::parse_options (const char *str)
     }
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SCIOP == 1 */

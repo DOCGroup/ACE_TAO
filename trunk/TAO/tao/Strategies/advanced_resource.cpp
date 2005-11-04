@@ -37,6 +37,8 @@
 
 ACE_RCSID(Strategies, advanced_resource, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Resource_Factory_Changer::TAO_Resource_Factory_Changer (void)
 {
 
@@ -877,6 +879,8 @@ TAO_Advanced_Resource_Factory::report_unsupported_error (
              ACE_TEXT(" not supported on this platform\n"),
              option_name));
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

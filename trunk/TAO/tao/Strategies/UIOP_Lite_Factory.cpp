@@ -18,6 +18,8 @@ ACE_RCSID (Strategies,
 
 static const char prefix_[] = "uiop";
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_UIOP_Lite_Protocol_Factory::TAO_UIOP_Lite_Protocol_Factory (void)
   :  TAO_Protocol_Factory (TAO_TAG_UIOP_PROFILE),
      major_ (TAO_DEF_GIOP_MAJOR),
@@ -88,6 +90,8 @@ TAO_UIOP_Lite_Protocol_Factory::requires_explicit_endpoint (void) const
 {
   return 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_UIOP_Lite_Protocol_Factory,
                        ACE_TEXT ("UIOP_Lite_Factory"),

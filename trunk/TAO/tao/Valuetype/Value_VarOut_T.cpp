@@ -8,6 +8,8 @@
 
 #include <algorithm>  /* For std::swap<>() */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template<typename T>
 void
 TAO::Value_Traits<T>::add_ref (T * p)
@@ -205,5 +207,7 @@ TAO_Value_Out_T<T>::operator-> (void)
 {
   return this->ptr_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_VALUE_VAROUT_T_CPP */

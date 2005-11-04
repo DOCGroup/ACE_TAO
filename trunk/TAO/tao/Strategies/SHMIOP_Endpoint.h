@@ -31,6 +31,7 @@
 #include "ace/MEM_Addr.h"
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_SHMIOP_Endpoint
@@ -134,6 +135,8 @@ private:
   /// endpoint in the list, if any.
   TAO_SHMIOP_Endpoint *next_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "SHMIOP_Endpoint.i"

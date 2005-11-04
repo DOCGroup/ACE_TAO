@@ -1,4 +1,5 @@
 // -*- C++ -*-
+
 //=============================================================================
 /**
  * @file RIR_Narrow.h
@@ -22,6 +23,8 @@
 
 #include "tao/PI/PI.h"
 #include "tao/ORB.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -59,6 +62,9 @@ namespace TAO
 
   } // namespace Utils
 } // namespace TAO
+
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 # include "RIR_Narrow.cpp"

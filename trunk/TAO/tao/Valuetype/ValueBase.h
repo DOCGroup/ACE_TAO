@@ -41,6 +41,8 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_Valuetype_Export
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace CORBA
 {
   class ValueFactoryBase;
@@ -231,7 +233,6 @@ namespace TAO
   {
   };
 
-
   template<>
   struct TAO_Valuetype_Export Value_Traits<CORBA::ValueBase>
   {
@@ -243,6 +244,8 @@ namespace TAO
     static void release (CORBA::ValueBase *);
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "ValueBase.inl"

@@ -19,6 +19,8 @@ ACE_RCSID (Strategies,
            UIOP_Acceptor,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (CORBA::Boolean flag)
   : TAO_Acceptor (TAO_TAG_UIOP_PROFILE),
     base_acceptor_ (),
@@ -476,5 +478,7 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
     }
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_UIOP == 1 */

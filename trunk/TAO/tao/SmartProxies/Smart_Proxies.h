@@ -1,5 +1,4 @@
-// $Id$
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -27,6 +26,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Smart_Proxy_Base
  *
@@ -34,10 +35,9 @@
  *
  * Contains the _var pointer to the real proxy.
  */
-class TAO_SmartProxies_Export TAO_Smart_Proxy_Base :
-  public TAO_Local_RefCounted_Object
+class TAO_SmartProxies_Export TAO_Smart_Proxy_Base
+  : public TAO_Local_RefCounted_Object
 {
-
 public:
   /// Destructor
   virtual ~TAO_Smart_Proxy_Base (void);
@@ -52,6 +52,8 @@ protected:
   /// The proxy to which remote/collocated calls are made.
   CORBA::Object_var base_proxy_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "Smart_Proxies.inl"

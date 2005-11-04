@@ -21,6 +21,8 @@
 #include "ace/CORBA_macros.h"
 #include "tao/Environment.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace Utils
@@ -150,6 +152,8 @@ namespace TAO
 
   } // namespace Utils
 } // namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "Servant_Var.inl"

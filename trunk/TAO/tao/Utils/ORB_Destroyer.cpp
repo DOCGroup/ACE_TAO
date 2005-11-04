@@ -4,6 +4,9 @@
 ACE_RCSID (Utils,
            ORB_Destroyer,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 void
 TAO::Utils::ORB_Destroyer_Functor::operator() (CORBA::ORB_ptr orb)
   ACE_THROW_SPEC (())
@@ -20,3 +23,5 @@ TAO::Utils::ORB_Destroyer_Functor::operator() (CORBA::ORB_ptr orb)
     }
   ACE_ENDTRY;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

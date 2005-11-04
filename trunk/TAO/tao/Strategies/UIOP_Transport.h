@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 // ===================================================================
 /**
@@ -29,6 +29,8 @@
 #include "ace/LSOCK_Acceptor.h"
 #include "ace/Svc_Handler.h"
 #include "tao/Transport.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decls.
 
@@ -109,6 +111,8 @@ private:
   /// Our messaging object.
   TAO_Pluggable_Messaging *messaging_object_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 # endif  /* TAO_HAS_UIOP == 1 */
 

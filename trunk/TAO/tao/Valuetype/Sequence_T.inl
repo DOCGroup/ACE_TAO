@@ -6,6 +6,8 @@
 #include "ace/Log_Msg.h" // for ACE_ASSERT
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // *************************************************************
 // Inline operations for class TAO_Valuetype_Manager
 // *************************************************************
@@ -165,3 +167,5 @@ TAO_Bounded_Valuetype_Sequence<T,T_var,MAX>::operator[] (
   T ** const tmp = reinterpret_cast<T ** ACE_CAST_CONST> (this->buffer_);
   return TAO_Valuetype_Manager<T,T_var> (tmp + slot, this->release_);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

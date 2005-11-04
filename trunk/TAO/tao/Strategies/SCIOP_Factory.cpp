@@ -13,6 +13,8 @@ ACE_RCSID (tao,
 
 static const char prefix_[] = "sciop";
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_SCIOP_Protocol_Factory::TAO_SCIOP_Protocol_Factory (void)
   :  TAO_Protocol_Factory (TAO_TAG_SCIOP_PROFILE),
      major_ (TAO_DEF_SCIOP_MAJOR),
@@ -78,6 +80,8 @@ TAO_SCIOP_Protocol_Factory::requires_explicit_endpoint (void) const
 {
   return 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_SCIOP_Protocol_Factory,
                        ACE_TEXT ("SCIOP_Factory"),

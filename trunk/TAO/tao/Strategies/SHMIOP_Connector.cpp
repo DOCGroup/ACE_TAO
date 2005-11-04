@@ -21,6 +21,8 @@ ACE_RCSID (Strategies,
            SHMIOP_Connector,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_SHMIOP_Connector::TAO_SHMIOP_Connector (CORBA::Boolean flag)
   : TAO_Connector (TAO_TAG_SHMEM_PROFILE),
     connect_strategy_ (),
@@ -32,7 +34,6 @@ TAO_SHMIOP_Connector::TAO_SHMIOP_Connector (CORBA::Boolean flag)
 TAO_SHMIOP_Connector::~TAO_SHMIOP_Connector (void)
 {
 }
-
 
 int
 TAO_SHMIOP_Connector::open (TAO_ORB_Core *orb_core)
@@ -348,5 +349,6 @@ TAO_SHMIOP_Connector::cancel_svc_handler (
   return -1;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */

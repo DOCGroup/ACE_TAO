@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // $Id$
 // ===================================================================
 /*
@@ -33,6 +35,8 @@
 #include "SCIOP_Connection_Handler.h"
 #include "tao/Acceptor_Impl.h"
 #include "tao/GIOP_Message_Version.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO SCIOP_Acceptor concrete call defination
 
@@ -217,6 +221,8 @@ private:
   TAO_SCIOP_ACCEPT_STRATEGY *accept_strategy_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
 #include "SCIOP_Acceptor.i"

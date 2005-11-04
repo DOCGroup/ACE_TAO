@@ -34,6 +34,8 @@
 #include "ace/INET_Addr.h"
 #include "tao/IIOP_EndpointsC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_SCIOP_Connection_Handler;
 
 /**
@@ -160,6 +162,7 @@ private:
   TAO_SCIOP_Endpoint *next_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "SCIOP_Endpoint.i"
