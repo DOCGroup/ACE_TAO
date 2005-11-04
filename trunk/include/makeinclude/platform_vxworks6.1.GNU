@@ -1,5 +1,5 @@
 # $Id$
-# VxWorks 5.5.x (x > 0).
+# VxWorks 6.1
 
 #### Notes:
 #### 1) This file requires that the WIND_BASE and WIND_HOST_TYPE environment
@@ -70,7 +70,7 @@ ifeq (,$(PERL_PATH))
 endif # ! PERL_PATH
 
 ifeq ($(VXWORKS_VERSION_FLAG),)
-  VXWORKS_VERSION_FLAG = -DACE_VXWORKS=0x551
+  VXWORKS_VERSION_FLAG = -DACE_VXWORKS=0x610
 endif # VXWORKS_VERSION_FLAG
 
 ifeq ($(TOOL),)
