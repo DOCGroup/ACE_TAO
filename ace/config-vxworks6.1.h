@@ -89,12 +89,8 @@
 #define ACE_HAS_SIZET_PTR_ASCTIME_R_AND_CTIME_R
 #define ACE_MKDIR_LACKS_MODE
 #define ACE_HAS_NONCONST_GETBY
-#define ACE_HAS_NONCONST_STAT
 #define ACE_HAS_NONCONST_SWAB
 #define ACE_HAS_NONCONST_READV
-#define ACE_HAS_NONCONST_CHDIR
-#define ACE_HAS_NONCONST_UNLINK
-#define ACE_HAS_NONCONST_OPENDIR
 #define ACE_LACKS_UNIX_SYSLOG
 #define ACE_DEFAULT_MAX_SOCKET_BUFSIZ 32768
 #define ACE_DEFAULT_THREAD_KEYS 16
@@ -252,9 +248,6 @@
 // work with the pthread support, so only set it for the time being when pthread
 // is disabled
 # define ACE_HAS_RECURSIVE_MUTEXES
-// VxWorks does not have the pthread_mutex_timedlock operation, but there is
-// an emulation for this when not using the pthread mapping
-#define ACE_HAS_MUTEX_TIMEOUTS
 #define ACE_HAS_TSS_EMULATION
 #endif
 
