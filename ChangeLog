@@ -1,3 +1,12 @@
+Sat Nov  5 13:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Cache_Map_Manager_T.{h,cpp,inl}:
+          Replaced MAP_TYPE with CMAP_TYPE, MAP_TYPE is also used on some
+          platforms already
+
+        * include/makeinclude/compiler.bor:
+          Fixed typo
+
 Fri Nov  4 09:18:17 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Dev_Poll_Reactor.h (Token_Guard):
