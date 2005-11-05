@@ -19,22 +19,22 @@ typedef ACE_Allocator_Adapter<ACE_Malloc_T <ACE_MMAP_MEMORY_POOL,
                                             ACE_Process_Mutex,
                                             ACE_Control_Block>
                              > ALLOCATOR;
-typedef ACE_Hash_Map_With_Allocator<int, Record> MAP;
+typedef ACE_Hash_Map_With_Allocator<int, Record> HASH_MAP;
 
 ACE_Process_Mutex coordMutex("Coord-Mutex");
 // Listing 1
 
 // Listing 2 code/ch17
-MAP* smap (ALLOCATOR *shmem_allocator)
+HASH_MAP* smap (ALLOCATOR *shmem_allocator)
 {
   void *db = 0;
   if (shmem_allocator->find (MAP_NAME, db) == 0)
-    return (MAP *) db;
-  size_t hash_table_size = sizeof (MAP);
+    return (HASH_MAP *) db;
+  size_t hash_table_size = sizeof (HASH_MAP);
   void *hash_map = shmem_allocator->malloc (hash_table_size);
   if (hash_map == 0)
     return 0;
-  new (hash_map) MAP (hash_table_size, shmem_allocator);
+  new (hash_map) HASH_MAP (hash_table_size, shmem_allocator);
   if (shmem_allocator->bind (MAP_NAME, hash_map) == -1)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
@@ -42,11 +42,11 @@ MAP* smap (ALLOCATOR *shmem_allocator)
       shmem_allocator->remove ();
       return 0;
     }
-  return (MAP*)hash_map;
+  return (HASH_MAP*)hash_map;
 }
 // Listing 2
 // Listing 6 code/ch17
-int processRecords (MAP *map, ALLOCATOR *shmem_allocator)
+int processRecords (HASH_MAP *map, ALLOCATOR *shmem_allocator)
 {
   ACE_TRACE ("processRecords");
 
@@ -58,7 +58,7 @@ int processRecords (MAP *map, ALLOCATOR *shmem_allocator)
   int *todelete = new int[mapLength];
   int i = 0;
 
-  for (MAP::iterator iter = map->begin ();
+  for (HASH_MAP::iterator iter = map->begin ();
       iter != map->end ();
       iter++)
     {
@@ -105,7 +105,7 @@ int processRecords (MAP *map, ALLOCATOR *shmem_allocator)
 }
 // Listing 6
 // Listing 4 code/ch17
-int addRecords(MAP *map, ALLOCATOR *shmem_allocator)
+int addRecords(HASH_MAP *map, ALLOCATOR *shmem_allocator)
 {
   ACE_TRACE ("addRecords");
 
@@ -151,7 +151,7 @@ int handle_child (void)
                              &options),
                   -1);
 
-  MAP *map = smap (shmem_allocator);
+  HASH_MAP *map = smap (shmem_allocator);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Map has %d entries\n"),
@@ -182,7 +182,7 @@ int handle_parent (ACE_TCHAR *cmdLine)
      ALLOCATOR (BACKING_STORE, BACKING_STORE, &options),
      -1);
 
-  MAP *map = smap (shmem_allocator);
+  HASH_MAP *map = smap (shmem_allocator);
 
   ACE_Process processa, processb;
   ACE_Process_Options poptions;
