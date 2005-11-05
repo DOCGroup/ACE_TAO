@@ -1,3 +1,10 @@
+Sat Nov  5 01:43:59 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/PI/ClientRequestInfo.h (TAO_ClientRequestInfo):
+
+	  Re-exported this class.  TAO's FT client side requires access to
+	  it.
+
 Fri Nov  4 11:57:12 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Versioned_Namespace.h:
