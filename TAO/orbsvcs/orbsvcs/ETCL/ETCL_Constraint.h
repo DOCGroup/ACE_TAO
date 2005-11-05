@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 //
 // ============================================================================
@@ -27,6 +28,8 @@
 #include "ace/SString.h"
 
 #include "tao/Basic_Types.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef unsigned short TAO_Literal_Type;
 #define TAO_UNKNOWN 999
@@ -418,6 +421,8 @@ private:
   int type_;
   TAO_ETCL_Constraint *subexpr_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ETCL_Constraint.inl"
