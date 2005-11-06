@@ -483,8 +483,8 @@ be_visitor_valuetype_field_ch::visit_predefined_type (be_predefined_type *node)
       break;
     case AST_PredefinedType::PT_any:
       // Set method.
-      *os << pre_op () << "void " << ub->local_name () << " ( ::"
-          << bt->name () << " &)"
+      *os << pre_op () << "void " << ub->local_name ()
+          << " (const ::"  << bt->name () << " &)"
           << post_op () << be_nl;
       // Get method (read-only).
       *os << pre_op () << "const ::" << bt->name () << " &"
@@ -499,11 +499,12 @@ be_visitor_valuetype_field_ch::visit_predefined_type (be_predefined_type *node)
       break;
     default:
       // Set method.
-      *os << pre_op () << "void " << ub->local_name () << " (::"
-          << bt->name () << ")"
+      *os << pre_op () << "void " << ub->local_name ()
+          << " (const ::" << bt->name () << ")"
           << post_op () << be_nl;
       // Get method.
-      *os << pre_op () << "::" << bt->name () << " " << ub->local_name ()
+      *os << pre_op () << "::" << bt->name ()
+          << " " << ub->local_name ()
           << " (void) const" << post_op ();
     }
 
