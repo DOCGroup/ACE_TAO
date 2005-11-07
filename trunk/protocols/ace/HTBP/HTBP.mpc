@@ -2,7 +2,6 @@
 // $Id$
 
 project(HTBP) : acelib, core {
-  avoids       = ace_for_tao
   sharedname   = ACE_HTBP
   dynamicflags = HTBP_BUILD_DLL
 

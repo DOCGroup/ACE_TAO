@@ -16,6 +16,7 @@ project(ACE_Sockets_FOR_TAO) : acedefaults, core, pkgconfig, ace_for_tao {
     LSOCK_Connector.cpp
     LSOCK_Dgram.cpp
     LSOCK_Stream.cpp
+    UNIX_Addr.cpp
     Multihomed_INET_Addr.cpp
     SOCK_CODgram.cpp
     SOCK_Dgram_Bcast.cpp
