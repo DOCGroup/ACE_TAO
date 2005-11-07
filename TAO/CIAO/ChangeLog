@@ -1,3 +1,13 @@
+Mon Nov  7 16:23:41 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/ExecutionManager/ExecutionManager.mpc
+	* DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
+	* performance-tests/Benchmark/Benchmark.mpc
+	* performance-tests/Benchmark/RoundTripClient/RoundTripClient.mpc
+	* performance-tests/Benchmark/RoundTripServer/RoundTripServer.mpc
+
+	Resolving linking errors on OS X.
+	
 Mon Nov  7 14:00:31 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
 	* NEWS: Added some new TO-DO items.

@@ -15,7 +15,7 @@ project(Benchmark_stub): ciao_client_dnc {
   }
 }
 
-project(Benchmark_svnt) : ciao_server_dnc {
+project(Benchmark_svnt) : ciao_component_dnc {
   after +=  Benchmark_stub
   sharedname = Benchmark_svnt
   libs    += Benchmark_stub
@@ -28,7 +28,7 @@ project(Benchmark_svnt) : ciao_server_dnc {
   }
 }
 
-project (*server) : taoserver, strategies,ciao_server_dnc {
+project (*server) : taoserver, strategies,ciao_component_dnc {
   after += Benchmark_svnt
   libs += Benchmark_svnt Benchmark_stub 
 
