@@ -12,6 +12,13 @@ Mon Nov 07 10:23:09 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 	* DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp: Minor enhancement to
 	  the debug messages.
 
+Fri Nov 04 16:44:29 2005  Gan Deng  <gan.deng@vanderbilt.edu>
+
+	* DAnCE/NodeApplicationManager/ImplementtionInfo.cpp
+
+	  Changed to use the "copying" version of the Any insertion
+	  operator. Thanks Jeff Parsons for the help on this.
+
 Thu Nov 03 15:34:39 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
 	* DAnCE/NodeApplicationManager/ImplementationInfo.cpp
