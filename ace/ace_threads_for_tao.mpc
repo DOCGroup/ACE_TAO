@@ -24,7 +24,11 @@ project(ACE_Threads_FOR_TAO) : acedefaults, core, pkgconfig, ace_for_tao {
     conditional(!vc6,!vc71,!vc8,!bmake) {
       Semaphore.cpp
       Process_Mutex.cpp
+      SV_Semaphore_Simple.cpp
+      SV_Semaphore_Complex.cpp
+      ACE_crc32.cpp
     }
+
   }
 
   Inline_Files {

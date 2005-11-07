@@ -163,6 +163,9 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, pkgconfig {
       Semaphore.cpp
       Process_Mutex.cpp
       WFMO_Reactor.cpp
+      SV_Semaphore_Simple.cpp
+      SV_Semaphore_Complex.cpp
+      ACE_crc32.cpp
     }
   }
 
