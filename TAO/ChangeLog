@@ -1,3 +1,11 @@
+Mon Nov  7 19:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Sequence_Unit_Tests/bounded_string_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_value_sequence_ut.cpp:
+          Extended test_get_buffer_true_with_release_true test
+
 Mon Nov  7 08:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.cpp:
