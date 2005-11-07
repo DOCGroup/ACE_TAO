@@ -1,3 +1,9 @@
+Mon Nov  7 15:24:30 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* include/makeinclude/platform_macosx_tiger_gcc3.3.GNU
+
+	Added a macros file for Tiger with GCC 3.3.
+
 Mon Nov  7 14:45:05 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/Stats.h:
