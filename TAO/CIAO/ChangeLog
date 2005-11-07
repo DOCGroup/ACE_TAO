@@ -1,3 +1,17 @@
+Mon Nov 07 10:23:09 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
+
+	* DAnCE/NodeApplication/RTNodeApp_Configurator.cpp: Fixed
+	  incorrect usage of extracting a struct from an any.  Thanks much
+	  to Gan for helping with the debugging effort.
+
+	* examples/Hello/descriptors/rt_run_test.pl:
+	* examples/Hello/descriptors/rt-example.cdp: Enabled the use of RT
+	  policy sets and RT-enabled NodeApplication in the example by
+	  default.
+
+	* DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp: Minor enhancement to
+	  the debug messages.
+
 Thu Nov 03 15:34:39 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
 	* DAnCE/NodeApplicationManager/ImplementationInfo.cpp
