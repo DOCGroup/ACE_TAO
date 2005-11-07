@@ -1,15 +1,22 @@
+Mon Nov  7 08:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTCORBA/Thread_Pool.{h,inl}:
+          Don't export TAO_Thread_Pool_Threads and removed
+          threads accessor it exposes internal data
+          and current_threads modifier which just is invalid todo
+
 Mon Nov  7 00:54:58 MST 2005  Yan Dai  <dai_y@ociweb.com>
 
         * examples/CSD_Strategy/ThreadPool4/Foo_i.cpp:
         * examples/CSD_Strategy/ThreadPool5/Foo_i.cpp:
 
-          Fixed warnings that complains mis-use of throw expression. 
-          
+          Fixed warnings that complains mis-use of throw expression.
+
 Sun Nov  6 14:34:51 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
         * TAO_IDLbe/be_visitor_valuetype/field_cs.cpp:
-        
+
           Made the generated signature of member mutators
           consistent with IN parameter semantics.
 
