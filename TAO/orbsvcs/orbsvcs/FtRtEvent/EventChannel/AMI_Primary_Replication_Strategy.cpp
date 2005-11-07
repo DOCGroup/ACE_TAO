@@ -104,7 +104,7 @@ AMI_Primary_Replication_Strategy::replicate_request(
   ACE_ENV_ARG_DECL)
 {
    ACE_Auto_Event event;
-   Update_Manager* manager;
+   Update_Manager* manager = 0;
    bool success;
 
     FTRT::TransactionDepth transaction_depth =
