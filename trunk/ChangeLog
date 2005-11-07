@@ -1,9 +1,14 @@
+Mon Nov  7 09:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/compiler.bor:
+          Added -L$(BCB)\lib\psdk always to the linker flags
+
 Sun Nov  6 21:19:44 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
 
 	* ace/ace_sockets_for_tao.mpc:
 
-	  Fixed another bug with th eMPC file. 
-	
+	  Fixed another bug with th eMPC file.
+
 	* protocols/ace/HTBP/HTBP.mpc:
 
 	  Reverted the avoids declaration.
