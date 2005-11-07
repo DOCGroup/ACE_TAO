@@ -99,8 +99,6 @@
       </value>
     </configProperty>
 
-<!-- #1 -->
-<!--
     <deployedResource>
       <resourceUsage>InstanceUsesResource</resourceUsage>
       <requirementName>CIAO:PolicySet</requirementName>
@@ -114,7 +112,7 @@
         </value>
       </resourceValue>
     </deployedResource>
--->
+
   </instance>
 
   <instance id="Hello-Receiver-idd">
@@ -134,8 +132,6 @@
       </value>
     </configProperty>
 
-<!-- #2 -->
-<!--
     <deployedResource>
       <resourceUsage>InstanceUsesResource</resourceUsage>
       <requirementName>CIAO:PolicySet</requirementName>
@@ -149,7 +145,7 @@
         </value>
       </resourceValue>
     </deployedResource>
--->
+
   </instance>
 
 
