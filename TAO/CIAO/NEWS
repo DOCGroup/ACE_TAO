@@ -40,6 +40,15 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (Remedy) support for using CIAO with VxWorks as target
 
+. Decouple dependencies to NodeApplication from other DAnCE tools.
+  These dependencies were added to support static configurator.  We
+  need to have these tools in both conventional version and static
+  configuration version.
+
+. Support tool-specific debug levels and added CIAO_DEBUG macros to
+  simplify adding debug printouts based on various tool-specific debug
+  levels.
+
 PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
 ==========================================
 
