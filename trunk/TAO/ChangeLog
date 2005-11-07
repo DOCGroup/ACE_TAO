@@ -1,3 +1,15 @@
+Mon Nov  7 16:25:38 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/CosEC_RtEC_Based_Mult.mpc
+	* orbsvcs/tests/Notify/lib/Notify_lib.mpc
+	* orbsvcs/tests/Security/Crash_Test/Security_Crash_Test.mpc
+	* orbsvcs/tests/Security/MT_IIOP_SSL/MT_IIOP_SSL.mpc
+	* orbsvcs/tests/Security/Secure_Invocation/Secure_Invocation.mpc
+	* orbsvcs/tests/Trading/Trading.mpc
+	* performance-tests/CSD_Strategy/TestInf/csd_pt_testinf.mpc
+
+	Fixes for linking problems on OS X.
+	
 Mon Nov  7 12:07:44 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/PortableServer/POA_Current.h (POA_Current):
