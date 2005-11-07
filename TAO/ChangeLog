@@ -1,6 +1,7 @@
 Mon Nov  7 08:51:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
           Fixed warning in MinGW build
 
 Mon Nov  7 08:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
