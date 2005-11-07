@@ -1,3 +1,11 @@
+Mon Nov  7 16:27:12 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/csd_framework.mpb
+	* bin/MakeProjectCreator/config/notifytest.mpb
+	* bin/MakeProjectCreator/config/rteventlogadmin.mpb
+
+	Fixes for linking errors on OS X. 
+	
 Mon Nov  7 15:24:30 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* include/makeinclude/platform_macosx_tiger_gcc3.3.GNU
