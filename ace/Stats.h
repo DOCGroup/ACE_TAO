@@ -193,7 +193,7 @@ public:
   /// Print summary statistics to stdout.
   void dump (void) const;
 
-private:
+protected:
   /// Internal indication of whether there has been overflow.  Contains
   /// the errno corresponding to the cause of overflow.
   u_int overflow_;
