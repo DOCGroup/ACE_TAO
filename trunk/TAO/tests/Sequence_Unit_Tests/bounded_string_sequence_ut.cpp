@@ -286,6 +286,7 @@ struct Tester
       BOOST_CHECK_EQUAL(CORBA::ULong(MAXIMUM), b.maximum());
       BOOST_CHECK_EQUAL(CORBA::ULong(0), b.length());
       BOOST_CHECK(0 != b.get_buffer());
+      BOOST_CHECK_EQUAL(true, b.release());
 
       BOOST_CHECK_MESSAGE(c.expect(0), c);
 
