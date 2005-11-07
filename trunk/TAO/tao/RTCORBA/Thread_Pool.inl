@@ -61,20 +61,6 @@ TAO_Thread_Lane::current_threads (void) const
 }
 
 ACE_INLINE
-void
-TAO_Thread_Lane::current_threads (CORBA::ULong current_threads)
-{
-  this->current_threads_ = current_threads;
-}
-
-ACE_INLINE
-TAO_Thread_Pool_Threads &
-TAO_Thread_Lane::threads (void)
-{
-  return this->threads_;
-}
-
-ACE_INLINE
 TAO_Thread_Lane_Resources &
 TAO_Thread_Lane::resources (void)
 {

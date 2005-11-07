@@ -71,7 +71,7 @@ private:
  * \nosubgrouping
  *
  **/
-class TAO_RTCORBA_Export TAO_Thread_Pool_Threads : public ACE_Task_Base
+class TAO_Thread_Pool_Threads : public ACE_Task_Base
 {
 public:
 
@@ -165,11 +165,8 @@ public:
   CORBA::ULong dynamic_threads (void) const;
 
   CORBA::ULong current_threads (void) const;
-  void current_threads (CORBA::ULong);
 
   CORBA::Short native_priority (void) const;
-
-  TAO_Thread_Pool_Threads &threads (void);
 
   TAO_Thread_Lane_Resources &resources (void);
 
