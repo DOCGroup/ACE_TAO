@@ -2,6 +2,7 @@
 // $Id$
 
 project(RMCast) : acelib, core, threads {
+  avoids = ace_for_tao
   sharedname   = ACE_RMCast
   dynamicflags = ACE_RMCAST_BUILD_DLL
 
