@@ -93,7 +93,7 @@ TAO_Notify_Tests_EventChannel_Command::create_collocated_ecf (ACE_ENV_SINGLE_ARG
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory;
 
   // The Service Object.
-  TAO_Notify_Service* notify_service;
+  TAO_Notify_Service* notify_service = 0;
 
   notify_service = ACE_Dynamic_Service<TAO_Notify_Service>::instance (TAO_NOTIFICATION_SERVICE_NAME);
 
