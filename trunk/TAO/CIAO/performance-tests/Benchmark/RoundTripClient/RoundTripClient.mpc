@@ -55,7 +55,7 @@ project(RoundTripClient_exec) : ciao_component_dnc {
 
   sharedname = RoundTripClient_exec
 
-  libs      += RoundTripClient_stub Benchmark_stub RoundTripClient_svnt
+  libs      += RoundTripClient_stub Benchmark_stub Benchmark_svnt RoundTripClient_svnt
 
   libpaths += ..
 
