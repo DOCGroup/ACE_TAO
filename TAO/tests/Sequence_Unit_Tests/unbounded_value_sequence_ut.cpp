@@ -364,6 +364,7 @@ struct Tester
       BOOST_CHECK_EQUAL(0UL, b.maximum());
       BOOST_CHECK_EQUAL(0UL, b.length());
       BOOST_CHECK(0 != b.get_buffer());
+      BOOST_CHECK_EQUAL(true, b.release());
 
       BOOST_CHECK_MESSAGE(c.expect(1), c);
 
