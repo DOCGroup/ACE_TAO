@@ -205,10 +205,10 @@ ACE_OS::mkstemp (wchar_t *s)
 {
   s[0] = 0;
 #  if !defined (ACE_LACKS_MKSTEMP)
-  ACE::String_Conversion::Convert_InOut<char, wchar_t> convert( s, MAX_PATH );
+  ACE::String_Conversion::Convert_InOut<char, wchar_t> convert( s, PATH_MAX );
   return ::mkstemp (convert.c_str());
 #  else
-  ACE::String_Conversion::Convert_InOut<ACE_TCHAR, ACE_ANTI_TCHAR> convert( s, MAX_PATH );
+  ACE::String_Conversion::Convert_InOut<ACE_TCHAR, ACE_ANTI_TCHAR> convert( s, PATH_MAX );
   return ACE_OS::mkstemp_emulation (convert.c_str());
 #  endif  /* !ACE_LACKS_MKSTEMP */
 }
@@ -240,7 +240,7 @@ ACE_OS::mktemp (wchar_t *s)
   // a narrow-char string for mktemp(), then convert the name back to
   // wide-char for the caller.
   s[0] = 0;
-  ACE::String_Conversion::Convert_InOut<char, wchar_t> convert( s, MAX_PATH );
+  ACE::String_Conversion::Convert_InOut<char, wchar_t> convert( s, PATH_MAX );
   if (::mktemp (convert.c_str()) == 0)
     return 0;
   return s;
@@ -427,7 +427,7 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
 #  else
       // Use char * for environment on non-Windows.
       char *temp = 0;
-      if ((temp = ACE_OS::getenv (ACE_TEXT_TO_CHAR_IN(&str[1])) != 0)
+      if ((temp = ACE_OS::getenv (ACE_TEXT_TO_CHAR_IN(&str[1]))) != 0)
         return ACE_OS::strdup (ACE_TEXT_TO_TCHAR_IN (temp));
 #  endif /* ACE_WIN32 */
       return ACE_OS::strdup (str);
