@@ -1,3 +1,13 @@
+Sun Nov  6 21:19:44 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
+
+	* ace/ace_sockets_for_tao.mpc:
+
+	  Fixed another bug with th eMPC file. 
+	
+	* protocols/ace/HTBP/HTBP.mpc:
+
+	  Reverted the avoids declaration.
+
 Sun Nov  6 21:02:17 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
 
 	* ace/ace_for_tao.mpc:
