@@ -277,7 +277,7 @@ ACE_THROW_SPEC ((
 {
   if (CORBA::is_nil (this->callback_.in ()))
     {
-      ACE_THROW_SPEC (TestException ());
+      ACE_THROW (TestException ());
     }
   else
     {
