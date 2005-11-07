@@ -126,7 +126,7 @@ namespace CIAO
       
       if (CIAO::debug_level ())
         ACE_DEBUG ((LM_DEBUG,
-                    "CIAO_PlanLauncher: start Launch application..."));
+                    "CIAO_PlanLauncher: start Launch application...\n"));
       
       // Dont not start the Application immediately since it vialtes
       // the semantics of component activation sequence
@@ -142,7 +142,7 @@ namespace CIAO
           // Call finish Launch to complete the connections
           if (CIAO::debug_level ())
             ACE_DEBUG ((LM_DEBUG,
-                        "CIAO_PlanLauncher: finish Launch application..."));
+                        "CIAO_PlanLauncher: finish Launch application...\n"));
           dam->finishLaunch (start);
       
           if (CIAO::debug_level ())
@@ -151,7 +151,7 @@ namespace CIAO
           // Call start to activate components
           if (CIAO::debug_level ())
             ACE_DEBUG ((LM_DEBUG,
-                        "CIAO_PlanLauncher: start activating components..."));
+                        "CIAO_PlanLauncher: start activating components...\n"));
           dam->start ();
       
           if (CIAO::debug_level ())
@@ -248,7 +248,7 @@ namespace CIAO
     {
       if (CIAO::debug_level ())
         ACE_DEBUG ((LM_DEBUG,
-                    "CIAO_PlanLauncher: destroy the application....."));
+                    "CIAO_PlanLauncher: destroy the application.....\n"));
       dam->destroyApplication ();
       
       if (CIAO::debug_level ())
@@ -265,7 +265,7 @@ namespace CIAO
     {
       if (CIAO::debug_level ())
         ACE_DEBUG ((LM_DEBUG,
-                    "CIAO_PlanLauncher: destroy the manager....."));
+                    "CIAO_PlanLauncher: destroy the manager.....\n"));
 
       this->em_->destroyManager (dam);
 
