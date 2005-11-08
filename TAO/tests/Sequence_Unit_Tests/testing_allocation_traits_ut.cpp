@@ -175,27 +175,27 @@ struct Foo { int y; };
 test_suite *
 init_unit_test_suite(int, char*[])
 {
-  std::auto_ptr<test_suite> ts(
-      BOOST_TEST_SUITE("testing allocation traits unit test"));
+  test_suite * ts =
+      BOOST_TEST_SUITE("testing allocation traits unit test");
 
   {
     boost::shared_ptr<Tester<int> > tester(
         Tester<int>::allocate());
-    tester->add_all(ts.get());
+    tester->add_all(ts);
   }
 
   {
     boost::shared_ptr<Tester<Foo> > tester(
         Tester<Foo>::allocate());
-    tester->add_all(ts.get());
+    tester->add_all(ts);
   }
 
   {
     boost::shared_ptr<Tester<char*> > tester(
         Tester<char*>::allocate());
-    tester->add_all(ts.get());
+    tester->add_all(ts);
   }
 
-  return ts.release();
+  return ts;
 }
 

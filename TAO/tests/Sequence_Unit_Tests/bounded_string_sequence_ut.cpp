@@ -370,22 +370,22 @@ private:
 test_suite *
 init_unit_test_suite(int, char*[])
 {
-  std::auto_ptr<test_suite> ts(
-      BOOST_TEST_SUITE("bounded string sequence unit test"));
+  test_suite * ts =
+      BOOST_TEST_SUITE("bounded string sequence unit test");
 
   {
     typedef TAO::bounded_string_sequence<MAXIMUM> s_sequence;
     typedef Tester<s_sequence> nTester;
     boost::shared_ptr<nTester> tester(nTester::allocate());
-    tester->add_all(ts.get());
+    tester->add_all(ts);
   }
 
   {
     typedef TAO::bounded_wstring_sequence<MAXIMUM> w_sequence;
     typedef Tester<w_sequence> wTester;
     boost::shared_ptr<wTester> tester(wTester::allocate());
-    tester->add_all(ts.get());
+    tester->add_all(ts);
   }
 
-  return ts.release();
+  return ts;
 }
