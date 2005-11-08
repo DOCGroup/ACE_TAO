@@ -219,108 +219,42 @@ public:
 
   unbounded_value_sequence<CORBA::Octet> (
     const unbounded_value_sequence<CORBA::Octet> &rhs)
-    : maximum_ (rhs.maximum_)
-    , length_ (rhs.length_)
+    : maximum_ (0)
+    , length_ (0)
     , buffer_(0)
-    , release_(true)
+    , release_(false)
     , mb_ (0)
   {
-    if (rhs.buffer_ != 0)
+    unbounded_value_sequence<CORBA::Octet> tmp(rhs.maximum_);
+    tmp.length_ = rhs.length_;
+    if (rhs.mb_ == 0)
       {
-        CORBA::Octet * tmp1 = allocbuf (this->maximum_);
-        CORBA::Octet * const tmp2 = rhs.buffer_;
-
-        if (rhs.mb_ == 0)
-          {
-            ACE_OS::memcpy (tmp1,
-                            tmp2,
-                            this->length_);
-          }
-        else
-          {
-            size_t offset = 0;
-
-            for (const ACE_Message_Block *i = rhs.mb_; i != 0; i = i->cont ())
-              {
-                ACE_OS::memcpy (tmp1 + offset,
-                                i->rd_ptr (),
-                                i->length ());
-
-                offset += i->length ();
-              }
-          }
-        ACE_OS::memcpy (tmp1, tmp2, this->length_);
-
-        this->buffer_ = tmp1;
+        ACE_OS::memcpy (tmp.buffer_,
+                        rhs.buffer_,
+                        rhs.length_);
       }
+    else
+      {
+        size_t offset = 0;
+        for (const ACE_Message_Block *i = rhs.mb_; i != 0; i = i->cont ())
+          {
+            ACE_OS::memcpy (tmp.buffer_ + offset,
+                            i->rd_ptr (),
+                            i->length ());
+
+            offset += i->length ();
+          }
+      }
+    swap(tmp);
   }
 
   unbounded_value_sequence<CORBA::Octet> &
     unbounded_value_sequence<CORBA::Octet>::operator= (
       const unbounded_value_sequence<CORBA::Octet> & rhs)
   {
-    if (this == &rhs)
-      {
-        return *this;
-      }
-
-    if (this->mb_ != 0)
-      {
-        ACE_Message_Block::release (mb_);
-        mb_ = 0;
-        buffer_ = allocbuf (rhs.length_);
-      }
-    else
-      if (release_)
-        {
-          if (this->maximum_ < rhs.length_)
-            {
-              // free the old buffer
-              freebuf (buffer_);
-              this->buffer_ = allocbuf (rhs.length_);
-            }
-        }
-      else
-        {
-          if (rhs.maximum_ == 0)
-            {
-              this->buffer_ = 0;
-            }
-          else
-            {
-              this->buffer_ =
-                allocbuf (rhs.maximum_);
-            }
-        }
-
-    maximum_ = rhs.maximum_;
-    length_ = rhs.length_;
-    release_ = true;
-
-    CORBA::Octet * tmp1 = buffer_;
-    CORBA::Octet * const tmp2 = rhs.buffer_;
-
-    if (rhs.mb_ == 0)
-      {
-        ACE_OS::memcpy (tmp1,
-                        tmp2,
-                        this->length_);
-      }
-    else
-      {
-        size_t offset = 0;
-
-        for (const ACE_Message_Block *i = rhs.mb_; i != 0; i = i->cont ())
-          {
-            ACE_OS::memcpy (tmp1 + offset,
-                            i->rd_ptr (),
-                            i->length ());
-            offset += i->length ();
-          }
-        ACE_OS::memcpy (tmp1, tmp2, this->length_);
-      }
-
-    return *this;
+    unbounded_value_sequence<CORBA::Octet> tmp(rhs);
+    swap(tmp);
+    return * this;
   }
 
 private:
