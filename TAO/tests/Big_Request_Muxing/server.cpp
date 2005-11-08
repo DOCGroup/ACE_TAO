@@ -109,13 +109,19 @@ main (int argc, char *argv[])
           break;
       }
 
-      ACE_DEBUG((LM_DEBUG, "Server waiting for extra messages...\n"));
-
-      ACE_Time_Value tv(3);
-      orb->run(tv ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
       int count = payload_receiver_impl->count();
+
+      if (count != expected)
+        {
+          ACE_DEBUG((LM_DEBUG, "Server waiting for extra messages, "
+                               "have now %d messages already...\n", count));
+
+          ACE_Time_Value tv(5);
+          orb->run(tv ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          count = payload_receiver_impl->count();
+        }
 
       int result = 0;
 
