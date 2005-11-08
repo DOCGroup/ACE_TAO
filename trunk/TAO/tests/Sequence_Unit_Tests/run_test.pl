@@ -18,6 +18,7 @@ my @tests = qw(unbounded_value_sequence_ut
                bounded_string_sequence_ut
                testing_allocation_traits_ut
                unbounded_octet_sequence_ut
+               unbounded_octet_sequence_no_copy_ut
                object_reference_sequence_element_ut
                unbounded_object_reference_sequence_ut
                bounded_object_reference_sequence_ut
