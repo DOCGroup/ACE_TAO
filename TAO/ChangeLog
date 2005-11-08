@@ -1,5 +1,32 @@
 Tue Nov  8 08:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
+        * tests/Sequence_Unit_Tests/bounded_string_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_value_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_octet_sequence_ut.cpp:
+          Changed test_get_buffer_true_with_release_false to use
+          a BOOST_CHECK to chekd that we correctly return a null pointer
+
+        * tests/Sequence_Unit_Tests/unbounded_octet_sequence_ut.cpp:
+          Trying to test the normal sequence behaviour and the special
+          TAO optimization when TAO_NO_COPY_OCTET_SEQUENCES in one file
+          will make things hard to maintain, this file now just tests
+          the default behaviour, the special behaviour is now done in the
+          new unit test listed below.
+
+        * tests/Sequence_Unit_Tests/unbounded_octet_sequence_nocopy_ut.cpp:
+          New unit test file
+
+        * tests/Sequence_Unit_Tests/unbounded_octet_sequence.hpp:
+          Fixed get_buffer()
+
+        * tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
+        * tests/Sequence_Unit_Tests/run_test.pl:
+          Added the new unit test
+
+Tue Nov  8 08:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
         * tests/Sequence_Unit_Tests/unbounded_octet_sequence.hpp:
           Specialization for unbounded octet sequences, enabled when
           TAO_NO_COPY_OCTET_SEQUENCES is defined to 1. This is not
