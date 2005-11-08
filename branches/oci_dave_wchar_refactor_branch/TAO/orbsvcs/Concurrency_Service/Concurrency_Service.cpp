@@ -126,7 +126,7 @@ Concurrency_Service::init (int argc,
         {
 	  ACE_ERROR_RETURN ((LM_ERROR,
 			     "Cannot open output file for writing IOR: %s",
-			     ior_file_name_),
+			     ior_file_name_.c_str()),
 			    -1);
         }
 

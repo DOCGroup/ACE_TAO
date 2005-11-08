@@ -15,7 +15,7 @@ template <typename DCHAR, typename SCHAR> inline
 size_t string_copy (DCHAR* dest, const SCHAR* src, size_t len)
 {
   // We must have a source and a valid length with a dest
-  if ( src == 0 || ( dest != 0 && len < 0 ) )
+  if ( src == 0 || ( dest != 0 && static_cast<signed int>(len) < 0 ) )
   {
     return -1;
   }

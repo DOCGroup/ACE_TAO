@@ -147,7 +147,7 @@ Basic_Logging_Service::init (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
       if (iorf == 0) {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
-                           ior_file_name_),
+                           ior_file_name_.c_str()),
                           -1);
       }
 
