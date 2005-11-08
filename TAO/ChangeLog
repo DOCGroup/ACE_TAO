@@ -1,3 +1,8 @@
+Tue Nov  8 08:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_2287_Regression/ServerRequest_Interceptor2.cpp:
+          Fixed compile error on Solaris
+
 Mon Nov  7 16:25:38 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/CosEC_RtEC_Based_Mult.mpc
@@ -9,7 +14,7 @@ Mon Nov  7 16:25:38 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* performance-tests/CSD_Strategy/TestInf/csd_pt_testinf.mpc
 
 	Fixes for linking problems on OS X.
-	
+
 Mon Nov  7 12:07:44 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/PortableServer/POA_Current.h (POA_Current):

@@ -64,12 +64,12 @@ ACE_THROW_SPEC ((CORBA::SystemException,
 
   if (ACE_OS::strcmp (op.in (), "throw_location_forward"))
   {
-    // bail if not the op we are interested in - 
+    // bail if not the op we are interested in -
     // avoid excess spurious error clutter when client calls ::shutdown
     return;
   }
 
-  
+
   IOP::ServiceContext_var sc =
     ri->get_request_service_context (IOP::FT_REQUEST
                                    ACE_ENV_ARG_PARAMETER);
@@ -109,7 +109,7 @@ ACE_THROW_SPEC ((CORBA::SystemException,
           ACE_DEBUG ((LM_ERROR, "Test Failed - REGRESSION !!! Client ORB is still retrying LOCATION_FORWARDs after the expiration time!!\n"));
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Expiration time  : %Q\n"), ftrsc.expiration_time));
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Time now         : %Q\n"), now));
-        
+
           // Let the request 'succeed' rather than throwing a forward exception.
           return;
         }
@@ -122,13 +122,13 @@ ACE_THROW_SPEC ((CORBA::SystemException,
           ACE_DEBUG ((LM_DEBUG, "The expiration time has now passed !!\n"));
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Expiration time  : %Q\n"), ftrsc.expiration_time));
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Time now         : %Q\n"), now));
-        }            
+        }
     }
-      
+
   // Let's forward the client back to us again. I would like to be able to make this a PERM
   // but there's no such animal in the PortableInterceptor module. Plus as we (currently) transform
   // and marshal *all* forward requests as vanilla LOCATION_FORWARD it doesn't really matter.
-  ACE_THROW ((PortableInterceptor::ForwardRequest::ForwardRequest (server_iogr_.in ()))); 
+  ACE_THROW (PortableInterceptor::ForwardRequest (server_iogr_.in ()));
 }
 
 TimeBase::TimeT
@@ -139,7 +139,7 @@ TAO249_ServerRequest_Interceptor2::get_now (void)
 
   // Now in posix
   ACE_Time_Value time_value = ACE_OS::gettimeofday ();
-  
+
   TimeBase::TimeT sec_part  = time_value.sec ();
   sec_part = sec_part  * 10000000;
   TimeBase::TimeT usec_part = time_value.usec ();
@@ -172,4 +172,4 @@ ACE_THROW_SPEC ((CORBA::SystemException,
                  PortableInterceptor::ForwardRequest))
 {
 }
-  
+
