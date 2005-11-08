@@ -20,8 +20,14 @@
 
 #define ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lu")
 
-// Proper size of long double on both G4/G5 is 16
+
+// Size of long double in GCC 3.3 is 8.
+#if (__GNUC__ == 3 && __GNUC_MINOR__ == 3)
+#define ACE_SIZEOF_LONG_DOUBLE 8
+#else // Else, the compiler is GCC4
+// For GCC4, the size is 16.
 #define ACE_SIZEOF_LONG_DOUBLE 16
+#endif // GCC 3.3
 
 #if defined (ACE_HAS_PENTIUM)
 # undef ACE_HAS_PENTIUM
