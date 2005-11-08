@@ -1,3 +1,13 @@
+Tue Nov  8 20:11:47 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/constants.idl:
+        
+          Changed the literal rhs for one of the constants
+          to a value that won't challenge compilers that are not
+          compliant with the ANSI/IEEE minimum positive value for
+          double. This change should eliminate a warning on
+          SuSE 9.3 ICC90.
+
 Tue Nov  8 11:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_2074_Regression/Bug_2074_Regression.mpc:
