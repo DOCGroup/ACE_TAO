@@ -32,7 +32,7 @@ public:
   inline unbounded_value_sequence()
     : impl_()
   {}
-  inline /* explicit */ unbounded_value_sequence(CORBA::ULong maximum)
+  inline explicit unbounded_value_sequence(CORBA::ULong maximum)
     : impl_(maximum)
   {}
   inline unbounded_value_sequence(

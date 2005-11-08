@@ -58,7 +58,7 @@ struct Tester
       BOOST_CHECK_MESSAGE(r.expect(1), r);
       BOOST_CHECK_MESSAGE(mr.expect(1), mr);
     }
-    
+
     BOOST_CHECK_MESSAGE(d.expect(0), d);
     BOOST_CHECK_MESSAGE(r.expect(0), r);
     BOOST_CHECK_MESSAGE(md.expect(0), md);
@@ -94,7 +94,7 @@ struct Tester
       BOOST_CHECK_MESSAGE(r.expect(2), r);
       BOOST_CHECK_MESSAGE(mr.expect(2), mr);
     }
-    
+
     BOOST_CHECK_MESSAGE(d.expect(0), d);
     BOOST_CHECK_MESSAGE(r.expect(0), r);
     BOOST_CHECK_MESSAGE(md.expect(0), md);
@@ -131,7 +131,7 @@ struct Tester
       BOOST_CHECK_MESSAGE(r.expect(1), r);
       BOOST_CHECK_MESSAGE(mr.expect(1), mr);
     }
-    
+
     BOOST_CHECK_MESSAGE(d.expect(0), d);
     BOOST_CHECK_MESSAGE(r.expect(0), r);
     BOOST_CHECK_MESSAGE(md.expect(0), md);
@@ -168,7 +168,7 @@ struct Tester
       BOOST_CHECK_MESSAGE(r.expect(2), r);
       BOOST_CHECK_MESSAGE(mr.expect(2), mr);
     }
-    
+
     BOOST_CHECK_MESSAGE(d.expect(0), d);
     BOOST_CHECK_MESSAGE(r.expect(0), r);
     BOOST_CHECK_MESSAGE(md.expect(0), md);
@@ -207,7 +207,7 @@ struct Tester
       BOOST_CHECK_MESSAGE(r.expect(3), r);
       BOOST_CHECK_MESSAGE(mr.expect(3), mr);
     }
-    
+
     BOOST_CHECK_MESSAGE(d.expect(0), d);
     BOOST_CHECK_MESSAGE(r.expect(0), r);
     BOOST_CHECK_MESSAGE(md.expect(0), md);
@@ -242,7 +242,7 @@ struct Tester
       BOOST_CHECK_MESSAGE(r.expect(1), r);
       BOOST_CHECK_MESSAGE(mr.expect(1), mr);
     }
-    
+
     BOOST_CHECK_MESSAGE(d.expect(0), d);
     BOOST_CHECK_MESSAGE(r.expect(0), r);
     BOOST_CHECK_MESSAGE(md.expect(0), md);
@@ -279,7 +279,7 @@ struct Tester
       BOOST_CHECK_MESSAGE(r.expect(2), r);
       BOOST_CHECK_MESSAGE(mr.expect(2), mr);
     }
-    
+
     BOOST_CHECK_MESSAGE(d.expect(0), d);
     BOOST_CHECK_MESSAGE(r.expect(0), r);
     BOOST_CHECK_MESSAGE(md.expect(0), md);
@@ -330,13 +330,13 @@ private:
 test_suite *
 init_unit_test_suite(int, char*[])
 {
-  std::auto_ptr<test_suite> ts(
-      BOOST_TEST_SUITE("object reference sequence element unit test"));
+  test_suite * ts =
+      BOOST_TEST_SUITE("object reference sequence element unit test");
 
   boost::shared_ptr<Tester > mock_reference_tester(
       Tester::allocate());
-  mock_reference_tester->add_all(ts.get());
+  mock_reference_tester->add_all(ts);
 
-  return ts.release();
+  return ts;
 }
 

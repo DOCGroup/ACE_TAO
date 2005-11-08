@@ -399,12 +399,12 @@ private:
 test_suite *
 init_unit_test_suite(int, char*[])
 {
-  std::auto_ptr<test_suite> ts(
-      BOOST_TEST_SUITE("unbounded object reference sequence unit test"));
+  test_suite * ts =
+      BOOST_TEST_SUITE("unbounded object reference sequence unit test");
 
   boost::shared_ptr<Tester> tester(Tester::allocate());
-  tester->add_all(ts.get());
+  tester->add_all(ts);
 
-  return ts.release();
+  return ts;
 }
 
