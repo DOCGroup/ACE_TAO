@@ -322,7 +322,7 @@ struct Tester
   {
     value_type * buffer = alloc_and_init_buffer();
     tested_sequence a(8, 4, buffer, false);
-    BOOST_CHECK_EQUAL(static_cast<CORBA::Octet*>(0), a.get_buffer(true));
+    BOOST_CHECK(0 == a.get_buffer(true));
     tested_sequence::freebuf(buffer);
   }
 
@@ -350,45 +350,9 @@ struct Tester
     tested_sequence::freebuf(buffer);
   }
 
-  void test_no_copy_octet()
-  {
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-    char buf[256];
-    sprintf (buf, "%s", "this is a test");
-    size_t n = (strlen (buf) + 1) * sizeof (char);
-    ACE_Message_Block * mb = 0;
-    ACE_NEW (mb,
-             ACE_Message_Block (n));
-
-    // Copy buf into the Message_Block and update the wr_ptr ().
-    mb->copy ((char *) buf, n);
-
-    tested_sequence a (n, mb);
-    BOOST_CHECK_EQUAL(CORBA::Octet( 't'), a[0]);
-    BOOST_CHECK_EQUAL(CORBA::Octet( 's'), a[6]);
-
-    char upperbuf[256];
-    sprintf (upperbuf, "%s", "THIS IS A TEST");
-    n = (strlen (upperbuf) + 1) * sizeof (char);
-    ACE_Message_Block * upper_mb = 0;
-    ACE_NEW (upper_mb,
-             ACE_Message_Block (n));
-    // Copy buf into the Message_Block and update the wr_ptr ().
-    upper_mb->copy ((char *) upperbuf, n);
-    a.replace (n, upper_mb);
-    BOOST_CHECK_EQUAL(CORBA::Octet( 'T'), a[0]);
-    BOOST_CHECK_EQUAL(CORBA::Octet( 'S'), a[6]);
-#endif
-  }
-
   void add_all(test_suite * ts)
   {
     boost::shared_ptr<Tester> shared_this(self_);
-
-
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &Tester::test_no_copy_octet,
-                shared_this));
 
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_ulong_constructor,

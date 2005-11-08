@@ -171,58 +171,24 @@ public:
     return buffer_;
   }
   inline value_type * get_buffer(CORBA::Boolean orphan = false) {
-    CORBA::Octet * result = 0;
+    if (orphan && !release_)
+    {
+      return 0;
+    }
+    if (buffer_ == 0)
+    {
+      buffer_ = allocbuf(maximum_);
+    }
+    if (!orphan)
+    {
+      return buffer_;
+    }
 
-    if (orphan == 0)
-      {
-        // We retain ownership.
-        if (this->buffer_ == 0)
-          {
-            // The buffer was not allocated, we must allocate it now.
-            buffer_ = allocbuf(maximum_);
-            release_ = true;
-          }
-        result = buffer_;
-      }
-    else if (this->mb_ != 0) // (orphan == 1)
-      {
-        // We must create a copy anyway:
-        //   the user is supposed to call freebuf() to release the
-        //   buffer, but the buffer is inside a Message_Block...
-        //   We thought about storing the pointer to the Message_Block
-        //   somewhere at the beginning of the buffer (before the actual
-        //   data), but that will not work in 64 bit machines when the
-        //   buffer comes from a CDR stream.
-        //
-        result = allocbuf(length_);
-        ACE_OS::memcpy (result, buffer_, length_);
-      }
-    else if (this->release_ == true)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = buffer_;
-        maximum_ = 0;
-        length_ = 0;
-        buffer_ = 0;
-        release_ = false;
-      }
-    else
-      {
-        result = buffer_;
+    unbounded_value_sequence<CORBA::Octet> tmp;
+    swap(tmp);
+    tmp.release_ = false;
 
-        if (this->release_ == true)
-          {
-            // We set the state back to default and relinquish
-            // ownership.
-            this->maximum_ = 0;
-            this->length_ = 0;
-            this->buffer_ = 0;
-            this->release_ = false;
-          }
-      }
-
-    return result;
+    return tmp.buffer_;
   }
   inline void swap(unbounded_value_sequence & rhs) throw() {
     std::swap (mb_, rhs.mb_);

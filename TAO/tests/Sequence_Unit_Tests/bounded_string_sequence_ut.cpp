@@ -268,7 +268,7 @@ struct Tester
   {
     value_type * buffer = alloc_and_init_buffer();
     tested_sequence a(4, buffer, false);
-    BOOST_CHECK_EQUAL(static_cast<value_type*>(0), a.get_buffer(true));
+    BOOST_CHECK(0 == a.get_buffer(true));
     tested_sequence::freebuf(buffer);
   }
 
