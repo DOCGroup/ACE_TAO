@@ -53,6 +53,7 @@ project(*Unbounded_Octet_Sequence): taoexe, boost_unit_test_framework {
     mock_reference.cpp
     unbounded_octet_sequence_ut.cpp
   }
+}
 
 project(*Unbounded_Octet_Sequence_No_Copy): taoexe, boost_unit_test_framework {
   exename = unbounded_octet_sequence_no_copy_ut
