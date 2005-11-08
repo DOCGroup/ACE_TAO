@@ -1,3 +1,18 @@
+Tue Nov  8 08:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Sequence_Unit_Tests/unbounded_octet_sequence.hpp:
+          Specialization for unbounded octet sequences, enabled when
+          TAO_NO_COPY_OCTET_SEQUENCES is defined to 1. This is not
+          ready yet, but this way it is easier to share the code
+          and build it on multiple systems
+
+        * tests/Sequence_Unit_Tests/Unbounded_Octet.cpp:
+          Include unbounded_octet_sequences.hpp
+
+        * tests/Sequence_Unit_Tests/unbounded_octet_sequence_ut.cpp:
+          Added a first extra test for when TAO_NO_COPY_OCTET_SEQUENCES
+          is defined
+
 Tue Nov  8 08:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Sequence_Unit_Tests/bounded_object_reference_sequence_ut.cpp:
