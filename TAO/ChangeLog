@@ -1,3 +1,8 @@
+Tue Nov  8 10:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Makefile.am:
+          Removed POA_Current.inl
+
 Tue Nov  8 08:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Sequence_Unit_Tests/bounded_string_sequence_ut.cpp:
