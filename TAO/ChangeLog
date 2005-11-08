@@ -1,3 +1,22 @@
+Tue Nov  8 08:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Sequence_Unit_Tests/bounded_object_reference_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/bounded_string_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/object_reference_sequence_element_ut.cpp:
+        * tests/Sequence_Unit_Tests/string_sequence_element_ut.cpp:
+        * tests/Sequence_Unit_Tests/testing_allocation_traits_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_object_reference_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_value_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
+          Made these unit tests working with boost 1.33
+
+        * tests/Sequence_Unit_Tests/unbounded_value_sequence.hpp:
+          Enabled the explicit for the single argument constructor
+
+        * tests/Sequence_Unit_Tests/run_test.pl:
+          Reduced test time to 10 seconds, long enough
+
 Tue Nov  8 08:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_2287_Regression/ServerRequest_Interceptor2.cpp:
@@ -1048,7 +1067,7 @@ Thu Nov  3 09:26:21 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* tao/RTScheduling/Request_Interceptor.h:
 	* tao/RTScheduling/ThreadAction.h:
 	* tao/Valuetype/AbstractBase_Invocation_Adapter.h:
-	
+
 	  Added versioned namespace support.
 
 	  Removed unnecessary *_Export keywords from symbols that need not
