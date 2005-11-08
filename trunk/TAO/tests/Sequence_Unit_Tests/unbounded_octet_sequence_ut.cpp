@@ -10,7 +10,7 @@
 #include "testing_allocation_traits.hpp"
 #include "testing_range_checking.hpp"
 
-#include "unbounded_octet_sequence.hpp"
+#include "unbounded_value_sequence.hpp"
 
 #include "value_sequence_tester.hpp"
 

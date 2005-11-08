@@ -1511,7 +1511,6 @@ nobase_include_HEADERS += \
   PortableServer/POA_Cached_Policies.h \
   PortableServer/POA_Cached_Policies.i \
   PortableServer/POA_Current.h \
-  PortableServer/POA_Current.inl \
   PortableServer/POA_Current_Factory.h \
   PortableServer/POA_Current_Impl.h \
   PortableServer/POA_Current_Impl.inl \
