@@ -10,7 +10,7 @@
 #include "testing_allocation_traits.hpp"
 #include "testing_range_checking.hpp"
 
-#include "unbounded_value_sequence.hpp"
+#include "unbounded_octet_sequence.hpp"
 
 #include "value_sequence_tester.hpp"
 
@@ -19,6 +19,7 @@
 #include <boost/weak_ptr.hpp>
 
 #include "tao/Basic_Types.h"
+#include "tao/CDR.h"
 
 using namespace boost::unit_test_framework;
 using namespace TAO;
@@ -338,6 +339,7 @@ struct Tester
       BOOST_CHECK_EQUAL(0UL, b.maximum());
       BOOST_CHECK_EQUAL(0UL, b.length());
       BOOST_CHECK(0 != b.get_buffer());
+      BOOST_CHECK_EQUAL(true, b.release());
 
       BOOST_CHECK_MESSAGE(c.expect(1), c);
 
@@ -348,9 +350,45 @@ struct Tester
     tested_sequence::freebuf(buffer);
   }
 
+  void test_no_copy_octet()
+  {
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+    char buf[256];
+    sprintf (buf, "%s", "this is a test");
+    size_t n = (strlen (buf) + 1) * sizeof (char);
+    ACE_Message_Block * mb = 0;
+    ACE_NEW (mb,
+             ACE_Message_Block (n));
+
+    // Copy buf into the Message_Block and update the wr_ptr ().
+    mb->copy ((char *) buf, n);
+
+    tested_sequence a (n, mb);
+    BOOST_CHECK_EQUAL(CORBA::Octet( 't'), a[0]);
+    BOOST_CHECK_EQUAL(CORBA::Octet( 's'), a[6]);
+
+    char upperbuf[256];
+    sprintf (upperbuf, "%s", "THIS IS A TEST");
+    n = (strlen (upperbuf) + 1) * sizeof (char);
+    ACE_Message_Block * upper_mb = 0;
+    ACE_NEW (upper_mb,
+             ACE_Message_Block (n));
+    // Copy buf into the Message_Block and update the wr_ptr ().
+    upper_mb->copy ((char *) upperbuf, n);
+    a.replace (n, upper_mb);
+    BOOST_CHECK_EQUAL(CORBA::Octet( 'T'), a[0]);
+    BOOST_CHECK_EQUAL(CORBA::Octet( 'S'), a[6]);
+#endif
+  }
+
   void add_all(test_suite * ts)
   {
     boost::shared_ptr<Tester> shared_this(self_);
+
+
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &Tester::test_no_copy_octet,
+                shared_this));
 
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_ulong_constructor,
@@ -427,20 +465,20 @@ private:
 test_suite *
 init_unit_test_suite(int, char*[])
 {
-  std::auto_ptr<test_suite> ts(
-      BOOST_TEST_SUITE("unbounded octet sequence unit test"));
+  test_suite * ts =
+      BOOST_TEST_SUITE("unbounded octet sequence unit test");
 
   {
     boost::shared_ptr<Tester> tester(Tester::allocate());
-    tester->add_all(ts.get());
+    tester->add_all(ts);
   }
 
   {
     typedef value_sequence_tester<tested_sequence,tested_allocation_traits> common;
     boost::shared_ptr<common> tester(common::allocate());
-    tester->add_all(ts.get());
+    tester->add_all(ts);
   }
 
-  return ts.release();
+  return ts;
 }
 
