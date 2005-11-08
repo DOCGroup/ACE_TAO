@@ -59,7 +59,7 @@ foreach my $process (@tests) {
     $final_result = 1;
     next;
   }
-  $result = $P->WaitKill(30);
+  $result = $P->WaitKill(10);
   if ($result != 0) {
     print "FAILED\n";
     $final_result = 1;

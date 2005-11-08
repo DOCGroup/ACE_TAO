@@ -458,20 +458,20 @@ private:
 test_suite *
 init_unit_test_suite(int, char*[])
 {
-  std::auto_ptr<test_suite> ts(
-      BOOST_TEST_SUITE("unbounded value sequence unit test"));
+  test_suite * ts =
+      BOOST_TEST_SUITE("unbounded value sequence unit test");
 
   {
     boost::shared_ptr<Tester> tester(Tester::allocate());
-    tester->add_all(ts.get());
+    tester->add_all(ts);
   }
 
   {
     typedef value_sequence_tester<tested_sequence,tested_allocation_traits> common;
     boost::shared_ptr<common> tester(common::allocate());
-    tester->add_all(ts.get());
+    tester->add_all(ts);
   }
 
-  return ts.release();
+  return ts;
 }
 
