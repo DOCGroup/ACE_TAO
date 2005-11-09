@@ -267,12 +267,12 @@ Foo_i::test_callback (
   ACE_ENV_SINGLE_ARG_DECL
 )
 ACE_THROW_SPEC ((
-  CORBA::SystemException
+  CORBA::SystemException, FooException
 ))
 {
   if (CORBA::is_nil (this->callback_.in ()))
     {
-      ACE_THROW (TestException ());
+      ACE_THROW (FooException ());
     }
   else
     {

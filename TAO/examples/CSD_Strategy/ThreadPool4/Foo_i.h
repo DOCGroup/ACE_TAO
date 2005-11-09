@@ -133,7 +133,7 @@ class Foo_i : public virtual POA_Foo
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException
+        CORBA::SystemException, FooException
       ));
   
     virtual void done(ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)   
