@@ -3,73 +3,24 @@
 This test checks that collocation optimisation takes effect after a location forward is received to an in process servant.
 
 It comprises:
-1/ A trivial IDL interface (Test.idl) with a single method that passes a struct, this interface is implemented with a No-op servant (MyInterfaceImpl).
-2/ A definition of the struct (MyStruct.idl). The stub / skel code for this has been pre-generated and altered such that it will fail to marshal to / from a CDR stream (see MyStructC.cpp).
-3/ A server which initialises a listener and binds a file:// type IOR for the client's servant into its IORTable against a name.
+1/ A trivial IDL interface (Test.idl) with a single method that passes a string and returns a boolean, this interface is implemented with a servant (MyInterfaceImpl) that returns true if the address of the string passed matches the address of a static string defined as a public member of the servant.
+2/ A server which initialises a listener and binds a file:// type IOR for the client's servant into its IORTable against a name.
 4/ A client which initialises an in process MyInterfaceImpl servant.
 
 The client uses a corbaloc based on the server's endpoint and the name that its (the client's) reference is bound against in the server IORTable.
 
 Narrowing this results in a remote is_a which causes the server ORB to send a locate_forward to the client directing it to the 'in process' servant.
 
-If the fix is present the client ORB will pass the MyStruct object by reference - if the fix is not present it will attempt to marshal it and the hand-broken stub code will fail, causing the test to fail.
-
-N.B. If this test starts to fail to compile the most likely culprit is that the IDL compiler generated code has changed substantially. If this happens the MyStruct.idl will have to be used to generate some up to date code stub/skel which will then have to be 'broken' and committed.
-
-To generate the code do:
-
-tao_idl -Ge 1 -I$(TAO_ROOT) -Gp -Gd MyStruct.idl
-
-To break the stub demarshalling code do something like:
-
-$ diff -u MyStructC.cpp.orig MyStructC.cpp
---- MyStructC.cpp.orig  2005-10-31 15:50:22.000000000 +0000
-+++ MyStructC.cpp       2005-10-31 15:53:16.000000000 +0000
-@@ -152,19 +152,23 @@
- // E:\doc_cvs\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_cs.cpp:61
-
- ::CORBA::Boolean operator<< (
--    TAO_OutputCDR &strm,
--    const MyStruct &_tao_aggregate
-+    TAO_OutputCDR &,
-+    const MyStruct &
-   )
- {
--  return
--    (strm << _tao_aggregate.myString.in ());
-+  ACE_DEBUG ((LM_ERROR, "Test Failed - attempt to marshal a MyStruct - optimisation is not working !!\n"));
-+  return 0;
-+//  return
-+//    (strm << _tao_aggregate.myString.in ());
- }
-
- ::CORBA::Boolean operator>> (
--    TAO_InputCDR &strm,
--    MyStruct &_tao_aggregate
-+    TAO_InputCDR &,
-+    MyStruct &
-   )
- {
--  return
--    (strm >> _tao_aggregate.myString.out ());
-+  ACE_DEBUG ((LM_ERROR, "Test Failed - attempt to demarshal a MyStruct - optimisation is not working !!\n"));
-+  return 0;
-+//  return
-+//    (strm >> _tao_aggregate.myString.out ());
- }
+If the fix is present the client ORB will pass the string by reference and the addresses will be equal in the servant - if the fix is not present it will attempt to marshal and demarshal the string, the addresses will differ, causing the test to fail.
 
 __Regression Output__
 
-E:\doc_cvs\ACE_wrappers\TAO\tests\Bug_nnnn_Regression>run_test.pl
-Test Failed - attempt to marshal a MyStruct - optimisation is not working !!
-(2468|2960) EXCEPTION, Exception caught:
-system exception, ID 'IDL:omg.org/CORBA/MARSHAL:1.0'
-Unknown vendor minor code id (0), minor code = 0, completed = NO
-
+[sm@beatrice Bug_2289_Regression]$ ./run_test.pl
+Test failed
 ERROR: Bug #TAO135 Regression failed. Non zero result from client.
 
 __Successful Output__
 
-E:\doc_cvs\ACE_wrappers\TAO\tests\Bug_nnnn_Regression>run_test.pl
+[sm@beatrice Bug_2289_Regression]$ ./run_test.pl
 Test succeeded
-INFO: E:\doc_cvs\ACE_wrappers\TAO\tests\Bug_nnnn_Regression\server being killed.
+INFO: /home/sm/doc_cvs/ACE_wrappers/TAO/tests/Bug_2289_Regression/server being killed.
