@@ -1,3 +1,9 @@
+Wed Nov  9 15:59:01 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* tests/Bug_2234_Regression/client.cpp
+
+	Fixed a warning on the OS X build. 	
+
 Wed Nov  9 13:39:13 USMST 2005  Yan Dai  <dai_y@ociweb.com>
 
         * TAO/examples/CSD_Strategy/ThreadPool4/Foo.idl:
