@@ -1,3 +1,15 @@
+Wed Nov  9 14:25:41 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/IDL_Test/constants.idl:
+        
+          Reverted the change of
+          
+          Tue Nov  8 20:11:47 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          since that constant value is being used to address an Intel compiler
+          bug, and the value itself is a legal one. Thanks to Johnny Willemsen
+          <jwillemsen@remedy.nl> for pointing this out.
+
 Tue Nov  8 20:11:47 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL_Test/constants.idl:
