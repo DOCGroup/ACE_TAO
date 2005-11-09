@@ -1,3 +1,20 @@
+Wed Nov  9 17:05:59 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* ace/config-macosx-tiger.h
+
+	Corrected wchar support for Tiger. 
+	
+	* include/makeinclude/platform_macosx_tiger_gcc3.3.GNU
+	* include/makeinclude/platform_macosx_tiger_gcc4.GNU
+
+	Removed the versioned platform_macros because there were no
+	significant changes needed to support GCC3.3 on OS X.
+
+	* include/makeinclude/platform_macosx_tiger.GNU
+
+	Merged platform_macros file.  Set CC and CXX to the desired
+	compiler if you wish to use the non-default compiler. 
+	
 Tue Nov  8 15:27:25 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* ace/config-macosx-tiger.h
