@@ -1,3 +1,14 @@
+Tue Nov  8 22:13:50 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/NodeManager/NodeManager_Impl.cpp
+	* ciao/Container_Base.cpp
+	* ciao/Servant_Impl_Base.cpp
+	* ciao/Swapping_Servant_Home_Impl_T.cpp
+	* ciao/Upgradeable_Context_Impl_T.cpp
+	* examples/BasicSP/EC/EC.mpc
+
+	Resolved some warnings in OS X relating to ambiguous conversions.
+	
 Mon Nov  7 16:23:41 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/ExecutionManager/ExecutionManager.mpc

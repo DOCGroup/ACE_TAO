@@ -203,7 +203,7 @@ CIAO::NodeManager_Impl_Base::destroyManager
                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (!this->map_.remove_nam (id))
+      if (!this->map_.remove_nam (id.in ()))
         {
           ACE_ERROR ((LM_ERROR,
                       "NodeManager_Impl::destroyManager: "
