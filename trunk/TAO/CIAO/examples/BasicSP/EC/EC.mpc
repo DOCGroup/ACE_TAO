@@ -57,7 +57,7 @@ project(EC_DnC_exec) : ciao_component_dnc {
   after    += EC_DnC_svnt
   sharedname = EC_exec
 
-  libs     += EC_stub BasicSP_stub EC_svnt
+  libs     += EC_stub BasicSP_stub BasicSP_svnt EC_svnt
 
   libpaths += ..
 

@@ -620,7 +620,7 @@ namespace CIAO
       PortableServer::string_to_ObjectId (obj_id);
 
     CORBA::String_var str =
-      PortableServer::ObjectId_to_string (oid);
+      PortableServer::ObjectId_to_string (oid.in ());
 
     if (t == Container::Facet_Consumer)
     {
