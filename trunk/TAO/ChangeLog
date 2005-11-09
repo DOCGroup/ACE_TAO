@@ -1,3 +1,11 @@
+Wed Nov  9 10:20:05 USMST 2005  Yan Dai  <dai_y@ociweb.com>
+
+        * performance-tests/CSD_Strategy/TestInf/csd_pt_testinf.mpc:
+          
+          Removed duplicated dependency on pi and codecfactory and removed
+          dependency on interceptors since it's not needed and it makes the 
+          test library not built on minumum corba build.
+
 Wed Nov  9 14:57:54 2005  Simon McQueen  <sm@prismtech.com>
 
         * tests/Bug_2289_Regression/Bug_2289_Regression.mpc:
