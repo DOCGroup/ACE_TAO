@@ -46,7 +46,19 @@
 #define ACE_HAS_MEMCHR
 
 #define ACE_LACKS_STROPTS_H
-#define ACE_LACKS_WCHAR_H
+
+// Wcharness....
+//#define ACE_LACKS_WCHAR_H
+#define ACE_HAS_WCHAR
+#define ACE_SIZEOF_WCHAR 4
+
+
+#define ACE_HAS_3_PARAM_WCSTOK
+#define ACE_LACKS_ITOW
+#define ACE_LACKS_WCSICMP
+#define ACE_LACKS_WCSNICMP
+#define ACE_LACKS_WCSDUP
+// #define ACE_LACKS_WCSLEN
 
 // Mac lacks the following pthread features
 #define ACE_LACKS_MUTEXATTR_PSHARED
