@@ -1,3 +1,15 @@
+Wed Nov  9 13:39:13 USMST 2005  Yan Dai  <dai_y@ociweb.com>
+
+        * TAO/examples/CSD_Strategy/ThreadPool4/Foo.idl:
+        * TAO/examples/CSD_Strategy/ThreadPool4/Foo_i.cpp:
+        * TAO/examples/CSD_Strategy/ThreadPool4/Foo_i.h:
+        * TAO/examples/CSD_Strategy/ThreadPool5/Foo.idl:
+        * TAO/examples/CSD_Strategy/ThreadPool5/Foo_i.cpp:
+        * TAO/examples/CSD_Strategy/ThreadPool5/Foo_i.h:
+
+          Added exception raise to test_callback() in idl. This would fix the 
+          warnings on borland builds.
+          
 Wed Nov  9 10:20:05 USMST 2005  Yan Dai  <dai_y@ociweb.com>
 
         * performance-tests/CSD_Strategy/TestInf/csd_pt_testinf.mpc:
