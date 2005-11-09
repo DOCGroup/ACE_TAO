@@ -63,7 +63,7 @@ interface Foo
 
   /// Operation that invoke remote operation on
   //  callback object.
-  void test_callback ();
+  void test_callback () raises (FooException);
 
   /// Client calls this last.  It will shutdown the server.
   void done();
