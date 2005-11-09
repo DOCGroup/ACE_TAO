@@ -66,10 +66,10 @@ namespace CIAO
          (reference ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
     
-    this->update_port_activator (oid ACE_ENV_ARG_PARAMETER);
+    this->update_port_activator (oid.in () ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
     
-    this->deactivate_facet (oid ACE_ENV_ARG_PARAMETER);
+    this->deactivate_facet (oid.in () ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
   }
 

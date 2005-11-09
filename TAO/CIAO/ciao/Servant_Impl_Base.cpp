@@ -84,7 +84,7 @@ namespace CIAO
         CIAO::Servant_Activator *sa =
           this->container_->ports_servant_activator ();
 
-        sa->update_port_activator (facet_id ACE_ENV_ARG_PARAMETER);
+        sa->update_port_activator (facet_id.in () ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
         this->container_->the_facet_cons_POA ()->deactivate_object
@@ -110,7 +110,7 @@ namespace CIAO
 
         CIAO::Servant_Activator *sa =
           this->container_->ports_servant_activator ();
-        sa->update_port_activator (cons_id ACE_ENV_ARG_PARAMETER);
+        sa->update_port_activator (cons_id.in () ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
         this->container_->the_facet_cons_POA ()->deactivate_object
