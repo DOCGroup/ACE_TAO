@@ -1,7 +1,12 @@
 # $Id$
 # platform_macosx.GNU
 # support for Mac OS X 10.4 (Tiger)
+# By default, this uses the default compiler selected using gcc_select. 
 
+cidl = 1
+boost = 1
+zzip = 1
+zlib = 1
 ifndef exceptions
   exceptions = 1
 endif
@@ -36,7 +41,6 @@ CXX             = g++
 CFLAGS          += -Wall -Wpointer-arith -Wno-long-double  
 
 DCFLAGS         += -g
-DLD             = g++
 DLD				= $(CXX)
 LD				= $(CXX)
 #LIBS += -lstdc++.6 -lSystem -lSystemStubs
