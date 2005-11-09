@@ -41,6 +41,7 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
+  int result = 0;
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
@@ -111,12 +112,20 @@ main (int argc, char *argv[])
                              ior.in()),
                             1);
         }
-      MyStruct myStruct;
+      
 
-      server->myMethod (myStruct ACE_ENV_ARG_PARAMETER);
+      CORBA::Boolean temp = server->myMethod (MyInterfaceImpl::my_string ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
-      ACE_DEBUG ((LM_DEBUG, "Test succeeded\n"));
+      
+      if (temp)
+        {
+          ACE_DEBUG ((LM_DEBUG, "Test succeeded\n"));
+	}
+      else
+        {
+	  ACE_DEBUG ((LM_ERROR, "Test failed\n"));
+	  result = 1;
+	}	
 
       //hello->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       //ACE_TRY_CHECK;
@@ -132,5 +141,5 @@ main (int argc, char *argv[])
     }
   ACE_ENDTRY;
 
-  return 0;
+  return result;
 }

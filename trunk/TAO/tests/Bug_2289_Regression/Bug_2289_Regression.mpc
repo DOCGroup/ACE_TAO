@@ -3,34 +3,19 @@
 
 project(*Server): taoserver, iortable {
   exename = server
-  idlflags += -Gp -Gd
-  libpaths += $(TAO_ROOT)/tao/Strategies $(TAO_ROOT)/tao $(ACE_ROOT)/ace $(TAO_ROOT)/orbsvcs/orbsvcs $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL $(TAO_ROOT)/tao/IORManipulation $(TAO_ROOT)/tao/ObjRefTemplate $(TAO_ROOT)/tao/IORInterceptor $(TAO_ROOT)/tao/IORTable $(TAO_ROOT)/tao/PortableServer $(TAO_ROOT)/tao/DynamicAny $(TAO_ROOT)/tao/Messaging $(TAO_ROOT)/tao/Valuetype
+  idlflags += -Gp -Gd -Sa -St
   Source_Files {
     server.cpp
     MyInterfaceImpl.cpp
-    MyStructC.cpp
-    MyStructS.cpp
-  }
-
-  IDL_Files {
-    Test.idl
   }
 }
 
 project(*Client): taoserver, iortable {
   exename = client
-  includes += $(TAO_ROOT)
-  idlflags += -Gp -Gd
+  idlflags += -Gp -Gd -Sa -St
   after += *Server
-  libpaths += $(TAO_ROOT)/tao $(ACE_ROOT)/ace $(TAO_ROOT)/orbsvcs/orbsvcs $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL $(TAO_ROOT)/tao/IORManipulation $(TAO_ROOT)/tao/ObjRefTemplate $(TAO_ROOT)/tao/IORInterceptor $(TAO_ROOT)/tao/IORTable $(TAO_ROOT)/tao/PortableServer $(TAO_ROOT)/tao/DynamicAny $(TAO_ROOT)/tao/Messaging $(TAO_ROOT)/tao/Valuetype
   Source_Files {
     client.cpp
     MyInterfaceImpl.cpp
-    MyStructC.cpp
-    MyStructS.cpp
-  }
-
-  IDL_Files {
-    Test.idl
   }
 }

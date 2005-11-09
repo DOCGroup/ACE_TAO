@@ -1,8 +1,8 @@
 // $Id$
 
-#include "MyStruct.idl"
+typedef string MyString;
 
 interface MyInterface
 {
-    void myMethod (in MyStruct structParam);
+    boolean myMethod (in MyString stringParam);
 };
