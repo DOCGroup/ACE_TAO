@@ -49,6 +49,14 @@ ACE_INLINE
 bool
 TAO::CSD::TP_Request::is_ready() const
 {
+  if (this->servant_state_.is_nil())
+    {
+      // This means that the serialization of servants is off.
+      // We always answer true here to indicate that the servant is
+      // never busy.
+      return true;
+    }
+
   return !this->servant_state_->busy_flag();
 }
 
@@ -57,7 +65,10 @@ ACE_INLINE
 void
 TAO::CSD::TP_Request::mark_as_busy()
 {
-  this->servant_state_->busy_flag(true);
+  if (!this->servant_state_.is_nil())
+    {
+      this->servant_state_->busy_flag(true);
+    }
 }
 
 
@@ -65,7 +76,10 @@ ACE_INLINE
 void
 TAO::CSD::TP_Request::mark_as_ready()
 {
-  this->servant_state_->busy_flag(false);
+  if (!this->servant_state_.is_nil())
+    {
+      this->servant_state_->busy_flag(false);
+    }
 }
 
 

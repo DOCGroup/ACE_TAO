@@ -45,6 +45,7 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
 
   ACE_CString poa_name;
   unsigned long num_threads = 1;
+  bool serialize_servants = true;
 
   // Parse any service configurator parameters.
   for (int curarg = 0; curarg < argc; curarg++)
@@ -57,8 +58,7 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
             // Parse the parameter
             ACE_CString arg ((const char *)argv[curarg]);
             ssize_t pos = arg.find (':');
-            // If the number of threads is not specified then use the default value
-            // which is 1.
+
             if (pos == ACE_CString::npos)
               {
                 poa_name = arg;
@@ -66,13 +66,47 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
             else
               {
                 poa_name = arg.substr (0, pos);
-                ACE_CString num_thread_str = arg.substr (pos + 1, arg.length () - pos);
+
+                ACE_CString arg_remainder =
+                                   arg.substr (pos + 1, arg.length () - pos);
+
+                ACE_CString num_thread_str;
+
+                pos = arg_remainder.find (':');
+
+                if (pos == ACE_CString::npos)
+                  {
+                    num_thread_str = arg_remainder;
+                  }
+                else
+                  {
+                    num_thread_str = arg_remainder.substr (0, pos);
+
+                    ACE_CString off_str =
+                                     arg.substr (pos + 1, arg.length () - pos);
+
+                    // Case-insensitive string comparison.
+                    if (ACE_OS::strcasecmp (off_str.c_str(),
+                                            ACE_TEXT("OFF")) == 0)
+                      {
+                        serialize_servants = false;
+                      }
+                  }
+
                 num_threads = ACE_OS::strtoul (num_thread_str.c_str (), 0, 10);
+
+                if (num_threads == 0)
+                  {
+                    // Minimum of 1 thread required.
+                    num_threads = 1;
+                  }
               }
 
             // Create the ThreadPool strategy for each named poa.
             TP_Strategy* strategy = 0;
-            ACE_NEW_RETURN (strategy, TP_Strategy (num_threads), -1);
+            ACE_NEW_RETURN (strategy,
+                            TP_Strategy (num_threads, serialize_servants),
+                            -1);
             CSD_Framework::Strategy_var objref = strategy;
 
             TAO_CSD_Strategy_Repository *repo =

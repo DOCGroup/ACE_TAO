@@ -29,8 +29,9 @@ TAO::CSD::TP_Strategy::CustomRequestOutcome
 TAO::CSD::TP_Strategy::custom_synch_request(TP_Custom_Request_Operation* op
                                             ACE_ENV_ARG_DECL)
 {
-  TP_Servant_State::HandleType servant_state 
-    = this->servant_state_map_.find(op->servant() ACE_ENV_ARG_PARAMETER);
+  TP_Servant_State::HandleType servant_state =
+                        this->get_servant_state(op->servant() 
+                                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (REQUEST_REJECTED);
 
   TP_Custom_Synch_Request_Handle request = new
@@ -51,8 +52,9 @@ TAO::CSD::TP_Strategy::CustomRequestOutcome
 TAO::CSD::TP_Strategy::custom_asynch_request(TP_Custom_Request_Operation* op
                                              ACE_ENV_ARG_DECL)
 {
-  TP_Servant_State::HandleType servant_state 
-    = this->servant_state_map_.find(op->servant() ACE_ENV_ARG_PARAMETER);
+  TP_Servant_State::HandleType servant_state =
+                        this->get_servant_state(op->servant() 
+                                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (REQUEST_REJECTED);
 
   TP_Custom_Asynch_Request_Handle request = new
@@ -92,12 +94,9 @@ TAO::CSD::TP_Strategy::dispatch_remote_request_i
                               PortableServer::Servant         servant
                               ACE_ENV_ARG_DECL)
 {
-  // Obtain the TP_Servant_State object associated with the servant object.
-  // The find() either return a non nil handle or already thrown 
-  // ServantNotActive exception.
-
-  TP_Servant_State::HandleType servant_state 
-    = this->servant_state_map_.find(servant ACE_ENV_ARG_PARAMETER);
+  TP_Servant_State::HandleType servant_state =
+                        this->get_servant_state(servant
+                                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DISPATCH_REJECTED);
 
   // Now we can create the TP_Remote_Request object, and then add it to our
@@ -136,12 +135,9 @@ TAO::CSD::TP_Strategy::dispatch_collocated_request_i
                               PortableServer::Servant         servant
                               ACE_ENV_ARG_DECL)
 {
-  // Obtain the TP_Servant_State object associated with the servant object.
-  // The find() either return a non nil handle or already thrown 
-  // ServantNotActive exception.
-
-  TP_Servant_State::HandleType servant_state 
-    = this->servant_state_map_.find(servant ACE_ENV_ARG_PARAMETER);
+  TP_Servant_State::HandleType servant_state =
+                        this->get_servant_state(servant
+                                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DISPATCH_REJECTED);
 
   bool is_sync_with_server = server_request.sync_with_server();
@@ -236,9 +232,12 @@ TAO::CSD::TP_Strategy::servant_activated_event_i
 {
   ACE_UNUSED_ARG(oid);
 
-  // Add the servant to the servant state map.
-  this->servant_state_map_.insert(servant ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  if (this->serialize_servants_)
+    {
+      // Add the servant to the servant state map.
+      this->servant_state_map_.insert(servant ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
 }
 
 
@@ -254,9 +253,12 @@ TAO::CSD::TP_Strategy::servant_deactivated_event_i
   this->task_.cancel_servant(servant ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  // Remove the servant from the servant state map.
-  this->servant_state_map_.remove(servant ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  if (this->serialize_servants_)
+    {
+      // Remove the servant from the servant state map.
+      this->servant_state_map_.remove(servant ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
 }
 
 
@@ -269,4 +271,19 @@ TAO::CSD::TP_Strategy::cancel_requests(PortableServer::Servant servant
   ACE_CHECK;
 }
 
+
+TAO::CSD::TP_Servant_State::HandleType
+TAO::CSD::TP_Strategy::get_servant_state(PortableServer::Servant servant
+                                         ACE_ENV_ARG_DECL)
+{
+  TP_Servant_State::HandleType servant_state;
+
+  if (this->serialize_servants_)
+    {
+      servant_state = this->servant_state_map_.find(servant
+                                                    ACE_ENV_ARG_PARAMETER);
+    }
+
+  return servant_state;
+}
 TAO_END_VERSIONED_NAMESPACE_DECL
