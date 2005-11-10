@@ -1,3 +1,8 @@
+Thu Nov 10 06:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Port_Activator_T.cpp:
+          Fixed warning in VxWorks build
+
 Tue Nov  8 22:13:50 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/NodeManager/NodeManager_Impl.cpp
@@ -8,7 +13,7 @@ Tue Nov  8 22:13:50 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* examples/BasicSP/EC/EC.mpc
 
 	Resolved some warnings in OS X relating to ambiguous conversions.
-	
+
 Mon Nov  7 16:23:41 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/ExecutionManager/ExecutionManager.mpc
@@ -18,7 +23,7 @@ Mon Nov  7 16:23:41 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* performance-tests/Benchmark/RoundTripServer/RoundTripServer.mpc
 
 	Resolving linking errors on OS X.
-	
+
 Mon Nov  7 14:00:31 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
 	* NEWS: Added some new TO-DO items.
