@@ -60,13 +60,17 @@ namespace TAO
     public:
 
       /// Constructor.
-      TP_Strategy(unsigned num_threads = 1);
+      TP_Strategy(unsigned int num_threads = 1,
+                  bool     serialize_servants = true);
 
       /// Virtual Destructor.
       virtual ~TP_Strategy();
 
       /// Set the number of threads in the pool (must be > 0).
-      void set_num_threads(unsigned num_threads);
+      void set_num_threads(unsigned int num_threads);
+
+      /// Turn on/off serialization of servants.
+      void set_servant_serialization(bool serialize_servants);
 
       /// Return codes for the custom dispatch_request() methods.
       enum CustomRequestOutcome
@@ -155,6 +159,25 @@ namespace TAO
 
     private:
 
+      /**
+      * Helper method that is responsible for looking up the servant
+      * state object in the servant state map *if* the "serialize
+      * servants" flag is set to true.  In the case where the
+      * "serialize servants" flag is set to false, then a "nil"
+      * servant state handle object is returned.
+      *
+      * @param servant - input - a pointer to the servant object.
+      *
+      * @returns a handle to a servant state object.
+      *
+      * @throw PortableServer::POA::ServantNotActive if the servant
+      *        state cannot be determined.
+      */
+      TP_Servant_State::HandleType get_servant_state
+                                      (PortableServer::Servant servant
+                                       ACE_ENV_ARG_DECL);
+
+
       /// This is the active object used by the worker threads.
       /// The request queue is owned/managed by the task object.
       /// The strategy object puts requests into the task's request
@@ -163,9 +186,13 @@ namespace TAO
       TP_Task task_;
 
       /// The number of worker threads to use for the task.
-      unsigned num_threads_;
+      unsigned int num_threads_;
 
-      /// The map of servant state objects.
+      /// The "serialize servants" flag.
+      bool serialize_servants_;
+
+      /// The map of servant state objects - only used when the
+      /// "serialize servants" flag is set to true.
       TP_Servant_State_Map servant_state_map_;
     };
 
