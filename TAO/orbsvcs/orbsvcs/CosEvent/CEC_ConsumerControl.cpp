@@ -59,4 +59,4 @@ TAO_CEC_ConsumerControl::successful_transmission (PortableServer::ServantBase*)
 {
 }
 
-TAO_ENDBEGIN_VERSIONED_NAMESPACE_DECL
+TAO_END_VERSIONED_NAMESPACE_DECL
