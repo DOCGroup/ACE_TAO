@@ -42,7 +42,7 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_SERVICEOPTIONSEQ_CS_)
@@ -54,7 +54,7 @@ CORBA::ServiceOptionSeq::ServiceOptionSeq (void)
 CORBA::ServiceOptionSeq::ServiceOptionSeq (
     CORBA::ULong max
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         ServiceOption
       >
     (max)
@@ -66,7 +66,7 @@ CORBA::ServiceOptionSeq::ServiceOptionSeq (
     CORBA::ULong * buffer,
     CORBA::Boolean release
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         ServiceOption
       >
     (max, length, buffer, release)
@@ -75,7 +75,7 @@ CORBA::ServiceOptionSeq::ServiceOptionSeq (
 CORBA::ServiceOptionSeq::ServiceOptionSeq (
     const ServiceOptionSeq &seq
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         ServiceOption
       >
     (seq)
@@ -95,10 +95,10 @@ void CORBA::ServiceOptionSeq::_tao_any_destructor (
 
 #endif /* end #if !defined */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 CORBA::ServiceDetail::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -108,7 +108,7 @@ CORBA::ServiceDetail::_tao_any_destructor (
   delete _tao_tmp_pointer;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_SERVICEDETAILSEQ_CS_)
@@ -120,7 +120,7 @@ CORBA::ServiceDetailSeq::ServiceDetailSeq (void)
 CORBA::ServiceDetailSeq::ServiceDetailSeq (
     CORBA::ULong max
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         ServiceDetail
       >
     (max)
@@ -132,7 +132,7 @@ CORBA::ServiceDetailSeq::ServiceDetailSeq (
     CORBA::ServiceDetail * buffer,
     CORBA::Boolean release
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         ServiceDetail
       >
     (max, length, buffer, release)
@@ -141,7 +141,7 @@ CORBA::ServiceDetailSeq::ServiceDetailSeq (
 CORBA::ServiceDetailSeq::ServiceDetailSeq (
     const ServiceDetailSeq &seq
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         ServiceDetail
       >
     (seq)
@@ -161,10 +161,10 @@ void CORBA::ServiceDetailSeq::_tao_any_destructor (
 
 #endif /* end #if !defined */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 CORBA::ServiceInformation::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -186,13 +186,13 @@ CORBA::Boolean operator<< (
   )
 {
   const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-  
+
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
       return strm.write_ulong_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
     }
-  
+
   return false;
 }
 
