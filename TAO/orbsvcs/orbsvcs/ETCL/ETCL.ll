@@ -1,7 +1,7 @@
 %option noyywrap
 
 %{
-// ETCL.ll,v 1.3 2002/01/14 19:52:28 parsons Exp
+// ETCL.ll,v 1.4 2005/11/10 06:47:23 ossama Exp
 // ========================================================================
 //
 // = LIBRARY
@@ -16,7 +16,7 @@
 //
 // ========================================================================
 
-#include "ace/OS.h"
+#include "ace/OS_NS_stdlib.h"
 
 #include "ETCL_Constraint.h"
 #include "ETCL_y.h"

@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_DynamicImplementation.h
@@ -18,6 +19,9 @@
 #include "tao/DynamicInterface/Server_Request.h"
 #include "tao/DynamicInterface/Dynamic_Implementation.h"
 #include "tao/ORB.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CEC_DynamicImplementationServer : public TAO_DynamicImplementation
 {
@@ -70,6 +74,8 @@ private:
   // The RepositoryId
   CORBA::RepositoryId repository_id_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
 #include "CEC_DynamicImplementation.i"

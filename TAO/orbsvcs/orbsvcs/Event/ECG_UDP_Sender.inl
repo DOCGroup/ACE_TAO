@@ -1,7 +1,10 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
 #include "ace/Null_Mutex.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE TAO_EC_Servant_Var<TAO_ECG_UDP_Sender>
 TAO_ECG_UDP_Sender::create (CORBA::Boolean crc)
@@ -89,3 +92,5 @@ TAO_ECG_UDP_Sender_Disconnect_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
   release_proxy->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -32,6 +32,8 @@
 /// way to set this constant dynamically because the nuber of lock
 /// modes are not stated as part of the IDL.
 #define NUMBER_OF_LOCK_MODES 5
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class CC_Lock
@@ -139,6 +141,8 @@ public:
 private:
   CosConcurrencyControl::lock_mode current_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* !defined (_CC_LOCK_H) */

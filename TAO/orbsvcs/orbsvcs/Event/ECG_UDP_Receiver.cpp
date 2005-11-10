@@ -15,6 +15,8 @@ ACE_RCSID (Event,
 
 // ****************************************************************
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_ECG_UDP_Receiver::~TAO_ECG_UDP_Receiver (void)
 {
   this->consumer_proxy_ =
@@ -244,3 +246,5 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
   ACE_ENDTRY;
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

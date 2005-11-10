@@ -9,7 +9,7 @@
 #include "ESF_Peer_Workers.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ESF, ESF_Peer_Workers, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class P, class R> void
 TAO_ESF_Peer_Connected<P,R>::work (P *proxy
@@ -47,5 +47,7 @@ TAO_ESF_Peer_Disconnected<P,R>::work (P *proxy
   this->peer_->disconnected (proxy ACE_ENV_ARG_PARAMETER);
   ACE_CHECK; // Shouldn't happen, just following the discipline
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_ESF_PEER_WORKERS_CPP */

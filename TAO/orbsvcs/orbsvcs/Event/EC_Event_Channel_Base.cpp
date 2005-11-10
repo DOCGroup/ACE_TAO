@@ -16,6 +16,8 @@
 
 ACE_RCSID(Event, EC_Event_Channel_Base, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_EC_Event_Channel_Base::
 TAO_EC_Event_Channel_Base (const TAO_EC_Event_Channel_Attributes& attr,
                            TAO_EC_Factory* factory,
@@ -347,3 +349,5 @@ TAO_EC_Event_Channel_Base::for_each_supplier (
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

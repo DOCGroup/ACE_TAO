@@ -2,6 +2,7 @@
 //
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class PROXY> ACE_INLINE
 TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>::
@@ -64,3 +65,5 @@ TAO_ESF_Proxy_RB_Tree<PROXY>::size (void) const
 {
   return this->impl_.current_size ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

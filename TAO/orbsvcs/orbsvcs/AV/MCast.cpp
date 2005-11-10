@@ -8,6 +8,8 @@
 #include "MCast.i"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 //------------------------------------------------------------
 //TAO_AV_UDP_MCast_Flow_Handler
 //------------------------------------------------------------
@@ -207,7 +209,6 @@ TAO_AV_UDP_MCast_Transport::recv (char *buf,
                                                     timeout);
 }
 
-
 ssize_t
 TAO_AV_UDP_MCast_Transport::recv (iovec *iov,
                                   int /*iovcnt*/,
@@ -215,3 +216,5 @@ TAO_AV_UDP_MCast_Transport::recv (iovec *iov,
 {
   return handler_->get_mcast_socket ()->recv (iov,this->peer_addr_,0,timeout);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -4,6 +4,8 @@
 
 #include "ace/Time_Value.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE TimeBase::TimeT
 ORBSVCS_Time::zero ()
 {
@@ -97,3 +99,5 @@ ORBSVCS_Time::to_Absolute_Time_Value (const TimeBase::TimeT& t)
   ORBSVCS_Time::Absolute_TimeT_to_Time_Value (r, t);
   return r;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

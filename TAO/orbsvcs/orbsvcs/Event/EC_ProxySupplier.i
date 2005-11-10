@@ -1,3 +1,5 @@
+// -*- C++ -*-
+//
 // $Id$
 
 ACE_INLINE void
@@ -91,3 +93,5 @@ TAO_EC_ProxyPushSupplier::subscriptions (void) const
 
   return this->qos_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

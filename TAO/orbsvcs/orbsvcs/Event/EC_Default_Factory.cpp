@@ -40,6 +40,8 @@
 
 ACE_RCSID(Event, EC_Default_Factory, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_EC_Default_Factory::~TAO_EC_Default_Factory (void)
 {
 }
@@ -987,6 +989,8 @@ TAO_EC_Default_Factory::destroy_supplier_control (TAO_EC_SupplierControl* x)
 {
   delete x;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

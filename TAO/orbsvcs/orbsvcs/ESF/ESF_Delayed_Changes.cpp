@@ -15,10 +15,7 @@
 
 #include "ace/Functor.h"
 
-ACE_RCSID(ESF,
-          ESF_Delayed_Changes,
-          "$Id$")
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 
@@ -213,5 +210,7 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
       this->write_delay_count_++;
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_ESF_DELAYED_CHANGES_CPP */

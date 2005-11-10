@@ -15,6 +15,8 @@ ACE_RCSID (CosEvent,
            CEC_ProxyPushConsumer,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_CEC_Unlock;
 
 TAO_CEC_ProxyPushConsumer::
@@ -363,3 +365,4 @@ TAO_CEC_ProxyPushConsumer_Guard::
   this->event_channel_->destroy_proxy (this->proxy_);
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

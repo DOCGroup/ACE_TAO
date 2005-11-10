@@ -1,4 +1,5 @@
 // -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file     FT_ClientRequest_Interceptor.h
@@ -37,6 +38,8 @@ namespace ACE_Utils
   class UUID;
 }
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   /**
@@ -63,15 +66,13 @@ namespace TAO
    *
    *  @@TODO
    */
-  class TAO_FT_ClientORB_Export FT_ClientRequest_Interceptor
+  class FT_ClientRequest_Interceptor
     : public virtual PortableInterceptor::ClientRequestInterceptor,
       public virtual TAO_Local_RefCounted_Object
   {
   public:
 
     FT_ClientRequest_Interceptor (void);
-
-    ~FT_ClientRequest_Interceptor (void);
 
     /// Canonical name of the interceptor.
     virtual char * name (ACE_ENV_SINGLE_ARG_DECL)
@@ -104,6 +105,10 @@ namespace TAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        PortableInterceptor::ForwardRequest));
 
+  protected:
+
+    ~FT_ClientRequest_Interceptor (void);
+
   private:
 
     void group_version_context (PortableInterceptor::ClientRequestInfo_ptr ri
@@ -133,6 +138,9 @@ namespace TAO
     CORBA::Long retention_id_;
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */

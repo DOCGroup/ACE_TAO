@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_Reactive_ConsumerControl.h
@@ -32,6 +33,7 @@
 #include "ace/Event_Handler.h"
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CEC_EventChannel;
 
@@ -199,6 +201,8 @@ public:
 private:
   TAO_CEC_ConsumerControl *control_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "CEC_Reactive_ConsumerControl.i"

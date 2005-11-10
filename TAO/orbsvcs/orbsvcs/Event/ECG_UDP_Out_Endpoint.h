@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file ECG_UDP_Out_Endpoint.h
  *
@@ -27,6 +28,8 @@
 #include "ace/Atomic_Op.h"
 
 class ACE_INET_Addr;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_ECG_UDP_Out_Endpoint
@@ -91,6 +94,8 @@ private:
  * to manage their lifetime automatically.
  */
 typedef ACE_Refcounted_Auto_Ptr<TAO_ECG_UDP_Out_Endpoint,ACE_Null_Mutex> TAO_ECG_Refcounted_Endpoint;
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
 #include "ECG_UDP_Out_Endpoint.i"

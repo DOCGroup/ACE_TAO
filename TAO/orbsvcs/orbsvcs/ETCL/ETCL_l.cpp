@@ -20,7 +20,7 @@
 
 #ifdef __cplusplus
 
-#include "ace/OS.h"
+#include "ace/OS_NS_stdlib.h"
 
 /* Use prototypes in function declarations. */
 #define YY_USE_PROTOS

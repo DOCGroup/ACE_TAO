@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -19,6 +19,8 @@
 #include "FlowSpec_Entry.h"
 
 #include "ace/Service_Config.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_AV_TCP_Factory
@@ -267,6 +269,8 @@ public:
                                                 TAO_AV_Flow_Handler *handler,
                                                 TAO_AV_Transport *transport);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_AV_TCP_Flow_Factory)
 ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_TCP_Flow_Factory)

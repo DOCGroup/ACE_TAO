@@ -28,6 +28,8 @@
 
 #include "event_serv_export.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_CEC_EventChannel;
 class TAO_CEC_ProxyPullConsumer;
 
@@ -156,6 +158,8 @@ private:
   TAO_SYNCH_CONDITION wait_not_empty_;
   ACE_Unbounded_Queue<CORBA::Any> queue_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "CEC_ProxyPullSupplier.i"

@@ -11,7 +11,7 @@
 
 #include "ESF_Worker.h"
 
-ACE_RCSID(ESF, ESF_Immediate_Changes, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 
@@ -43,5 +43,7 @@ TAO_ESF_Immediate_Changes<PROXY,C,ITERATOR,ACE_LOCK>::
       ACE_CHECK;
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_ESF_IMMEDIATE_CHANGES_CPP */

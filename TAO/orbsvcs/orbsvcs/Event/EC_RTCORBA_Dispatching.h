@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 /**
  *  @file EC_RTCORBA_Dispatching.h
  *
@@ -26,6 +26,7 @@
 #include "EC_Dispatching_Task.h"
 #include "tao/RTCORBA/RTCORBA.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_RTCORBA_Dispatching
@@ -74,6 +75,8 @@ private:
   /// The dispatching task(s), one per lane
   TAO_EC_Dispatching_Task *tasks_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_RTCORBA_DISPATCHING_H */

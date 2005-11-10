@@ -24,6 +24,8 @@ ACE_RCSID (Concurrency,
            CC_Lock, 
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 CC_Lock::CC_Lock (void)
   : mode_ (CosConcurrencyControl::intention_read),
     lock_held_ (0)
@@ -229,7 +231,7 @@ void CC_LockModeIterator::Next (ACE_ENV_SINGLE_ARG_DECL)
 CORBA::Boolean
 CC_LockModeIterator::IsDone (void)
 {
-  if (current_==CosConcurrencyControl::write)
+  if (current_ == CosConcurrencyControl::write)
     return 1;
   else
     return 0;
@@ -240,3 +242,5 @@ CC_LockModeIterator::GetLockMode (void)
 {
   return current_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

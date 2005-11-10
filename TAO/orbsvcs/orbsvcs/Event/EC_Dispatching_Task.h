@@ -32,6 +32,8 @@
 #include "ace/Service_Config.h"
 #include "ace/Global_Macros.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward decl
 class TAO_EC_Dispatching_Task;
 
@@ -182,6 +184,8 @@ private:
   /// The event
   RtecEventComm::EventSet event_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "EC_Dispatching_Task.i"

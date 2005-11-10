@@ -15,6 +15,8 @@ ACE_RCSID (Event,
            EC_ProxyConsumer,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_EC_Unlock;
 
 TAO_EC_ProxyPushConsumer::
@@ -304,3 +306,5 @@ TAO_EC_ProxyPushConsumer_Guard::
 
   this->proxy_->refcount_zero_hook ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

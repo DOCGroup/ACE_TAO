@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   ECG_UDP_EH.h
  *
@@ -24,8 +25,9 @@
 #include "ECG_Adapters.h"
 #include "ace/SOCK_Dgram.h"
 
-class TAO_ECG_UDP_Receiver;
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+class TAO_ECG_UDP_Receiver;
 
 /**
  * @class TAO_ECG_UDP_EH
@@ -97,6 +99,8 @@ private:
    */
   TAO_ECG_Dgram_Handler* receiver_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
 #include "ECG_UDP_EH.i"

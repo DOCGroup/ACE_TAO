@@ -14,6 +14,8 @@ ACE_RCSID (CosEvent,
            CEC_ProxyPullSupplier,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_CEC_Unlock;
 
 TAO_CEC_ProxyPullSupplier::TAO_CEC_ProxyPullSupplier (TAO_CEC_EventChannel* ec)
@@ -355,3 +357,5 @@ TAO_CEC_ProxyPullSupplier::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   this->_decr_refcnt ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

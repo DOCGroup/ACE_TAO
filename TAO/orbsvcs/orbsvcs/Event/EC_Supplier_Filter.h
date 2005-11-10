@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Supplier_Filter.h
  *
@@ -25,6 +26,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_ProxyPushSupplier;
 class TAO_EC_ProxyPushConsumer;
@@ -136,6 +139,8 @@ private:
   /// The QoS info propagated on each event.
   const TAO_EC_QOS_Info &event_info_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "EC_Supplier_Filter.i"

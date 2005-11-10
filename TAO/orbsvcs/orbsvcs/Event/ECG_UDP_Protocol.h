@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  * @file ECG_UDP_Protocol.h
  *
@@ -17,6 +18,8 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_ECG_UDP_Protocol
@@ -66,6 +69,8 @@ public:
     ECG_DEFAULT_MTU = 1024
   };
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ECG_UDP_PROTOCOL_H */

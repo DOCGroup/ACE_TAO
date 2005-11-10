@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   FT_Policy_i.h
@@ -21,6 +22,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 /**
  * @class TAO_FT_Request_Duration_Policy
  *
@@ -36,7 +39,7 @@
  * to keep trying to connect to server object groups under certain
  * conditions.
  */
-class TAO_FT_Export TAO_FT_Request_Duration_Policy
+class TAO_FT_Request_Duration_Policy
   : public FT::RequestDurationPolicy,
     public TAO_Local_RefCounted_Object
 {
@@ -197,6 +200,8 @@ private:
   /// indicates whether heartbeating is enabled or not.
   CORBA::Boolean heartbeat_enabled_value_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

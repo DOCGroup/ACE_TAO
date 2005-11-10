@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_ECG_CDR_Message_Receiver::Requests::Requests (void)
@@ -44,3 +48,4 @@ TAO_ECG_CDR_Message_Receiver::init (TAO_ECG_Refcounted_Endpoint ignore_from
 //      }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

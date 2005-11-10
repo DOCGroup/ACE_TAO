@@ -21,6 +21,8 @@ ACE_RCSID (Event,
            EC_ProxySupplier,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_EC_Unlock;
 
 TAO_EC_ProxyPushSupplier::TAO_EC_ProxyPushSupplier (TAO_EC_Event_Channel_Base* ec, int validate_connection)
@@ -529,3 +531,5 @@ TAO_EC_ProxyPushSupplier::add_dependencies (
                                          qos_info
                                          ACE_ENV_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

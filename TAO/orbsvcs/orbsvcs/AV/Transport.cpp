@@ -22,6 +22,9 @@
 #include "Transport.i"
 #endif /* __ACE_INLINE__ */
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 //------------------------------------------------------------
 // TAO_AV_Transport_Item
 //------------------------------------------------------------
@@ -675,3 +678,5 @@ TAO_AV_Transport_Factory::make_connector (void)
 {
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

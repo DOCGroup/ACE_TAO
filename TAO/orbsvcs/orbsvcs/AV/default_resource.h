@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   default_resource.h
@@ -22,6 +24,8 @@
 
 #include "ace/Service_Config.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_AV_Default_Resource_Factory
  *
@@ -34,7 +38,7 @@
  */
 
 class TAO_AV_Export TAO_AV_Default_Resource_Factory
-: public TAO_AV_Resource_Factory
+  : public TAO_AV_Resource_Factory
 {
 public:
 
@@ -52,6 +56,8 @@ public:
   virtual int init (int argc, char *argv[]);
   
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_AV, TAO_AV_Default_Resource_Factory)
 ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_Default_Resource_Factory)

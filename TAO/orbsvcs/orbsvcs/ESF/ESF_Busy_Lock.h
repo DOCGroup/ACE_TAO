@@ -18,6 +18,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// Adapt classes that implement the "busy lock" protocol, to conform
 /// to the ACE Lock interface.
 /**
@@ -60,6 +62,8 @@ public:
 private:
   Adaptee* adaptee_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ESF_Busy_Lock.i"

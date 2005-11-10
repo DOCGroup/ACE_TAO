@@ -23,6 +23,8 @@
 
 #include "EC_Lifetime_Utils_T.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_ECG_Complex_Address_Server
  *
@@ -104,6 +106,8 @@ private:
   /// mapped.
   ACE_INET_Addr default_addr_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
 #include "ECG_Complex_Address_Server.i"

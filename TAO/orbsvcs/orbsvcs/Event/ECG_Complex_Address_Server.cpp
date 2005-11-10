@@ -8,6 +8,8 @@
 #include "ECG_Complex_Address_Server.i"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_ECG_Complex_Address_Server::TAO_ECG_Complex_Address_Server (
                                               int is_source_mapping)
   : is_source_mapping_ (is_source_mapping)
@@ -164,3 +166,5 @@ TAO_ECG_Complex_Address_Server::dump_content (void)
                   this->default_addr_.get_port_number ()));
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

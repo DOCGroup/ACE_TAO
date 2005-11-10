@@ -11,7 +11,6 @@ project(RTEvent_Serv) : orbsvcslib, core, rtevent_skel, svc_utils, messaging {
 
   Source_Files {
     Event/ECG_Adapters.cpp
-    Event/ECG_Address_Server_Base.cpp
     Event/ECG_CDR_Message_Receiver.cpp
     Event/ECG_CDR_Message_Sender.cpp
     Event/ECG_Complex_Address_Server.cpp

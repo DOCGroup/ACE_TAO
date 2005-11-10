@@ -32,6 +32,8 @@ ACE_RCSID (AV,
            AVStreams_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 //------------------------------------------------------------
 // TAO_AV_Qos
 //------------------------------------------------------------
@@ -5296,3 +5298,5 @@ TAO_Tokenizer::operator [] (size_t index) const
 
   return this->token_array_[index];
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

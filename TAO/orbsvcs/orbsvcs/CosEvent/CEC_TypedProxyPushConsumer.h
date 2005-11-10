@@ -1,9 +1,10 @@
-// $Id$
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_TypedProxyPushConsumer.h
  *
+ *  $Id$
  *
  *  @author Jon Astle (jon@astle45.fsnet.co.uk)
  *
@@ -24,6 +25,8 @@
 
 #include "orbsvcs/ESF/ESF_Worker.h"
 #include "event_serv_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CEC_TypedEvent;
 class TAO_CEC_TypedEventChannel;
@@ -182,6 +185,8 @@ private:
   /// acquired.
   int locked_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "CEC_TypedProxyPushConsumer.i"

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 /**
  *  @file   EC_Gateway_Sched.h
  *
@@ -24,6 +24,8 @@
 
 // ****************************************************************
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_EC_Gateway_Sched
  *
@@ -48,8 +50,10 @@ public:
              RtecScheduler::Scheduler_ptr consumer_sched,
              const char* consumer_name,
              const char* supplier_name
-             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+             ACE_ENV_ARG_DECL);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_EC_GATEWAY_SCHED_H */

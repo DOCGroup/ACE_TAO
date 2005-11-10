@@ -1,10 +1,12 @@
-// $Id$
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_TypedEventChannel.h
  *
  *  @author Jon Astle (jon@astle45.fsnet.co.uk)
+ *
+ *  $Id$
  *
  * A new implementation of the COS Typed Event Channel, based on
  * the untyped version by Carlos O'Ryan (coryan@cs.wustl.edu)
@@ -34,6 +36,8 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
 #include "ace/SString.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_CEC_TypedEventChannel_Attributes
@@ -374,6 +378,7 @@ private:
   TAO_CEC_Param * parameters_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "CEC_TypedEventChannel.i"

@@ -38,6 +38,9 @@ ACE_RCSID (CosEvent,
            CEC_Default_Factory,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_CEC_Default_Factory::~TAO_CEC_Default_Factory (void)
 {
     if (orbid_dupped_ != 0)
@@ -1315,6 +1318,8 @@ TAO_CEC_Default_Factory::destroy_supplier_control (TAO_CEC_SupplierControl* x)
 {
   delete x;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

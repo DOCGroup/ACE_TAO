@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Priority_Scheduling.h
  *
@@ -24,6 +25,8 @@
 
 #include "orbsvcs/RtecSchedulerC.h"
 #include "sched_event_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_Priority_Scheduling
@@ -62,6 +65,8 @@ private:
   /// The scheduler we are going to use
   RtecScheduler::Scheduler_var scheduler_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "EC_Priority_Scheduling.i"

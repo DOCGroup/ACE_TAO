@@ -21,6 +21,8 @@
 static int resv_error = 0;
 static int resv_confirm = 0;
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 int
 FillQoSParams (ACE_QoS_Params &qos_params,
                iovec* iov,
@@ -1510,6 +1512,8 @@ TAO_AV_UDP_QoS_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
                                  object);
   return object;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_AV, TAO_AV_UDP_QoS_Flow_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_AV_UDP_QoS_Flow_Factory,

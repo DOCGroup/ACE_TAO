@@ -1,9 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
-// Transport.i
-
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //------------------------------------------------------------
 // TAO_AV_Transport_Item
@@ -108,3 +107,5 @@ TAO_AV_Connector::flowname (void)
 {
   return this->flowname_.c_str ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -10,6 +10,8 @@ ACE_RCSID (orbsvcs,
            IOR_Multicast,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_HANDLE
 TAO_IOR_Multicast::get_handle (void) const
 {
@@ -315,4 +317,4 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   return 0;
 }
 
-
+TAO_END_VERSIONED_NAMESPACE_DECL

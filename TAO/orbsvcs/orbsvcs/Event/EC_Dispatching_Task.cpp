@@ -16,6 +16,9 @@ ACE_RCSID (Event,
            EC_Dispatching,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_EC_Simple_Queue_Full_Action::TAO_EC_Simple_Queue_Full_Action (void)
   : queue_full_action_return_value_ (WAIT_TO_EMPTY)
 {
@@ -207,3 +210,4 @@ TAO_EC_Push_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
   return 0;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

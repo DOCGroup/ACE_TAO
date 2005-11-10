@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Event_Channel_Base.h
  *
@@ -28,6 +29,8 @@
 #include "EC_Defaults.h"
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class> class TAO_ESF_Worker;
 
@@ -362,6 +365,8 @@ protected:
   };
   int status_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "EC_Event_Channel_Base.i"

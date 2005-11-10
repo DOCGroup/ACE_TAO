@@ -7,6 +7,8 @@
 
 ACE_RCSID(Event, EC_RTCORBA_Factory, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_EC_RTCORBA_Factory::
     TAO_EC_RTCORBA_Factory (TAO_EC_Factory *body,
                             const RTCORBA::ThreadpoolLanes &lanes)
@@ -271,3 +273,4 @@ TAO_EC_RTCORBA_Factory::destroy_supplier_control (TAO_EC_SupplierControl* x)
   this->body_->destroy_supplier_control (x);
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -32,6 +32,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace IOP
 {
   struct ServiceContext;
@@ -45,9 +47,9 @@ namespace TAO
    *
    *
    */
-  class TAO_FT_ServerORB_Export FT_ServerRequest_Interceptor
-    : public virtual PortableInterceptor::ServerRequestInterceptor,
-      public virtual TAO_Local_RefCounted_Object
+  class FT_ServerRequest_Interceptor
+    : public virtual PortableInterceptor::ServerRequestInterceptor
+    , public virtual TAO_Local_RefCounted_Object
   {
   public:
 
@@ -128,6 +130,9 @@ namespace TAO
   };
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */

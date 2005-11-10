@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Timeout_Generator.h
  *
@@ -25,6 +26,8 @@
 #include /**/ "event_serv_export.h"
 
 #include "EC_Timeout_Filter.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_QOS_Info;
 
@@ -86,6 +89,8 @@ private:
   virtual int handle_timeout (const ACE_Time_Value &tv,
                               const void *act);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "EC_Timeout_Generator.i"

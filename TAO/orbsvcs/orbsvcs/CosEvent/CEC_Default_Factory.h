@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_Default_Factory.h
@@ -25,6 +26,8 @@
 
 #include "ace/Service_Config.h"
 #include "ace/Time_Value.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_CEC_Default_Factory
@@ -203,6 +206,8 @@ private:
   /// The number of retries before disconnecting a proxy
   unsigned int proxy_disconnect_retries_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "CEC_Default_Factory.i"

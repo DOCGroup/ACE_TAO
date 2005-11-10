@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -19,6 +19,8 @@
 #include "Protocol_Factory.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram_Mcast.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_AV_UDP_MCast_Flow_Handler;
 
@@ -104,6 +106,8 @@ protected:
   ACE_INET_Addr *peer_addr_;
   ACE_SOCK_Dgram_Mcast *dgram_mcast_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
 #include "MCast.i"

@@ -12,6 +12,8 @@
 
 ACE_RCSID(Event, EC_Kokyu_Scheduling, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_EC_Kokyu_Scheduling::~TAO_EC_Kokyu_Scheduling (void)
 {
 }
@@ -93,3 +95,5 @@ TAO_EC_Kokyu_Scheduling::schedule_event (const RtecEventComm::EventSet &event,
       ACE_CHECK;
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

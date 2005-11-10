@@ -8,6 +8,8 @@
 
 #include "EC_Channel_Destroyer.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 void
 TAO_EC_Channel_Destroyer_Functor::operator() (
                            TAO_EC_Event_Channel_Base * event_channel)
@@ -24,3 +26,5 @@ TAO_EC_Channel_Destroyer_Functor::operator() (
     }
   ACE_ENDTRY;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
