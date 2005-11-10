@@ -1,3 +1,8 @@
+Thu Nov 10 10:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.cpp:
+          Fixed incorrect macro
+
 Wed Nov  9 22:34:24 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Channel_Clients_T.cpp:
@@ -453,7 +458,7 @@ Wed Nov  9 22:54:43 USMST 2005  Yan Dai  <dai_y@ociweb.com>
         * TAO/tao/CSD_ThreadPool/CSD_TP_Strategy.inl:
         * TAO/tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.cpp:
 
-        Merged changes from OCI TAO 1.4a that optionally supports the 
+        Merged changes from OCI TAO 1.4a that optionally supports the
         serialization of requests. (See OCIChangeLog entry
         "Mon Nov  7 09:31:11 MST 2005  Tim Bradley  <bradley_t@ociweb.com>"
         for details.)
@@ -462,7 +467,7 @@ Wed Nov  9 15:59:01 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* tests/Bug_2234_Regression/client.cpp
 
-	Fixed a warning on the OS X build. 	
+	Fixed a warning on the OS X build.
 
 Wed Nov  9 13:39:13 USMST 2005  Yan Dai  <dai_y@ociweb.com>
 
@@ -473,15 +478,15 @@ Wed Nov  9 13:39:13 USMST 2005  Yan Dai  <dai_y@ociweb.com>
         * TAO/examples/CSD_Strategy/ThreadPool5/Foo_i.cpp:
         * TAO/examples/CSD_Strategy/ThreadPool5/Foo_i.h:
 
-          Added exception raise to test_callback() in idl. This would fix the 
+          Added exception raise to test_callback() in idl. This would fix the
           warnings on borland builds.
-          
+
 Wed Nov  9 10:20:05 USMST 2005  Yan Dai  <dai_y@ociweb.com>
 
         * performance-tests/CSD_Strategy/TestInf/csd_pt_testinf.mpc:
-          
+
           Removed duplicated dependency on pi and codecfactory and removed
-          dependency on interceptors since it's not needed and it makes the 
+          dependency on interceptors since it's not needed and it makes the
           test library not built on minumum corba build.
 
 Wed Nov  9 14:57:54 2005  Simon McQueen  <sm@prismtech.com>
