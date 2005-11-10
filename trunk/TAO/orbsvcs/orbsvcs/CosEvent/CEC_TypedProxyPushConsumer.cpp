@@ -14,6 +14,8 @@
 
 #include "ace/Reverse_Lock_T.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_CEC_Unlock;
 
 // Implementation skeleton constructor
@@ -417,3 +419,4 @@ TAO_CEC_TypedProxyPushConsumer_Guard::
   this->typed_event_channel_->destroy_proxy (this->proxy_);
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

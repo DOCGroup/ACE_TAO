@@ -15,6 +15,8 @@
 
 ACE_RCSID(CosEvent, CEC_EventChannel, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_CEC_EventChannel::
 TAO_CEC_EventChannel (const TAO_CEC_EventChannel_Attributes& attr,
                       TAO_CEC_Factory* factory,
@@ -229,3 +231,5 @@ TAO_CEC_EventChannel::destroy (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

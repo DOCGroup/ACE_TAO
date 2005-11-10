@@ -5,6 +5,8 @@
 
 ACE_RCSID(Event, EC_RTCORBA_Dispatching, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_EC_RTCORBA_Dispatching::
   TAO_EC_RTCORBA_Dispatching (const RTCORBA::ThreadpoolLanes &lanes,
                               RTCORBA::PriorityMapping *mapping,
@@ -100,3 +102,5 @@ TAO_EC_RTCORBA_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
       break;
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  * @file ECG_UDP_Sender.h
  *
@@ -52,6 +53,9 @@
 #include "ECG_CDR_Message_Sender.h"
 
 class ACE_SOCK_Dgram;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_ECG_UDP_Out_Endpoint;
 
 /**
@@ -213,6 +217,8 @@ private:
   /// Manages our connection to Supplier Proxy.
   ECG_Sender_Auto_Proxy_Disconnect auto_proxy_disconnect_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
 #include "ECG_UDP_Sender.inl"

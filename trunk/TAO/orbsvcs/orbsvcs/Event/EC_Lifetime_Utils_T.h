@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Lifetime_Utils_T.h
  *
@@ -21,6 +22,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @brief Helper for activating objects.
@@ -182,6 +185,8 @@ template <class X, class Y>
 bool operator!=(TAO_EC_Servant_Var<X> const & x,
                 TAO_EC_Servant_Var<Y> const & y);
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "EC_Lifetime_Utils_T.i"

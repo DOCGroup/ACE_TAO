@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_ProxyPullConsumer.h
@@ -8,7 +9,6 @@
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================
-
 
 #ifndef TAO_CEC_PROXYPULLCONSUMER_H
 #define TAO_CEC_PROXYPULLCONSUMER_H
@@ -23,6 +23,8 @@
 
 #include "orbsvcs/ESF/ESF_Worker.h"
 #include "event_serv_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CEC_EventChannel;
 class TAO_CEC_Dispatching;
@@ -132,6 +134,8 @@ private:
   /// Store the default POA.
   PortableServer::POA_var default_POA_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "CEC_ProxyPullConsumer.i"

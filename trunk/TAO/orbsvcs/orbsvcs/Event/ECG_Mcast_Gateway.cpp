@@ -22,6 +22,9 @@
 
 ACE_RCSID(Event, ECG_Mcast_Gateway, "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 typedef TAO_EC_Shutdown_Command<TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> >
 UDP_Sender_Shutdown;
 
@@ -688,6 +691,8 @@ TAO_ECG_Mcast_Gateway::run (CORBA::ORB_ptr orb,
   receiver_shutdown.disallow_command ();
   sender_shutdown.disallow_command ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

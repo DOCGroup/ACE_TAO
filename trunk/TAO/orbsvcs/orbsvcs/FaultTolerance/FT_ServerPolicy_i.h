@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   FT_ServerPolicy_i.h
@@ -24,6 +25,7 @@
 #include "FT_ServerORB_export.h"
 #include "tao/LocalObject.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_FT_Heart_Beat_Enabled_Policy
@@ -34,9 +36,9 @@
  * the TAG_FT_HEARTBEAT_ENABLED component in the IOP profile of
  * the IOR that it exposes
  */
-class TAO_FT_ServerORB_Export TAO_FT_Heart_Beat_Enabled_Policy
-  : public FT::HeartbeatEnabledPolicy,
-    public TAO_Local_RefCounted_Object
+class TAO_FT_Heart_Beat_Enabled_Policy
+  : public FT::HeartbeatEnabledPolicy
+  , public TAO_Local_RefCounted_Object
 {
 public:
 
@@ -78,6 +80,8 @@ private:
   /// indicates whether heartbeating is enabled or not.
   CORBA::Boolean heartbeat_enabled_value_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

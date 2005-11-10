@@ -29,6 +29,8 @@
 
 #include "ace/Service_Config.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_CEC_Event_Loader
  *
@@ -100,6 +102,8 @@ private:
   TAO_CEC_Event_Loader (const TAO_CEC_Event_Loader &);
   TAO_CEC_Event_Loader &operator= (const TAO_CEC_Event_Loader &);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DECLARE (TAO_Event_Serv, TAO_CEC_Event_Loader)
 

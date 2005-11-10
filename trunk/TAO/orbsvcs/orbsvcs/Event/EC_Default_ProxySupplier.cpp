@@ -10,6 +10,8 @@ ACE_RCSID (Event,
            EC_ProxySupplier,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_EC_Unlock;
 
 TAO_EC_Default_ProxyPushSupplier::TAO_EC_Default_ProxyPushSupplier (
@@ -222,3 +224,5 @@ TAO_EC_Default_ProxyPushSupplier::object_id (ACE_ENV_SINGLE_ARG_DECL)
 
   return result.in ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

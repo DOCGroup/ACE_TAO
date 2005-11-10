@@ -3715,7 +3715,6 @@ libTAO_RTEvent_Serv_la_CPPFLAGS = \
 
 libTAO_RTEvent_Serv_la_SOURCES = \
   Event/ECG_Adapters.cpp \
-  Event/ECG_Address_Server_Base.cpp \
   Event/ECG_CDR_Message_Receiver.cpp \
   Event/ECG_CDR_Message_Sender.cpp \
   Event/ECG_Complex_Address_Server.cpp \

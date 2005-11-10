@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Sched_Filter_Builder.h
  *
@@ -23,6 +24,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "sched_event_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Filter;
 class TAO_EC_Event_Channel_Base;
@@ -75,6 +78,8 @@ private:
   /// The event channel.
   TAO_EC_Event_Channel_Base* event_channel_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "EC_Sched_Filter_Builder.i"

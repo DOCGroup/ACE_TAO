@@ -7,6 +7,8 @@ ACE_RCSID(Event, EC_TPC_ProxyConsumer, "$Id$")
 #include "EC_Event_Channel_Base.h"
 #include "EC_TPC_Dispatching.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 extern unsigned long EC_TPC_debug_level;
 
 TAO_EC_TPC_ProxyPushConsumer::TAO_EC_TPC_ProxyPushConsumer (TAO_EC_Event_Channel_Base* ec)
@@ -49,3 +51,5 @@ TAO_EC_TPC_ProxyPushConsumer::disconnect_push_consumer (
   BASECLASS::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

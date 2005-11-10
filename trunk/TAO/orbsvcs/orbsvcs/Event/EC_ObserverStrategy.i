@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_EC_Null_ObserverStrategy::TAO_EC_Null_ObserverStrategy (void)
@@ -73,3 +77,5 @@ TAO_EC_Accumulate_Consumer_Headers::
   : headers_ (h)
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

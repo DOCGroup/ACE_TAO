@@ -10,8 +10,7 @@
 
 ACE_RCSID (FaultTolerance, FT_PolicyFactory, "$Id$")
 
-
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Policy_ptr
 TAO_FT_PolicyFactory::create_policy (
@@ -35,3 +34,5 @@ TAO_FT_PolicyFactory::create_policy (
   ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                     CORBA::Policy::_nil ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

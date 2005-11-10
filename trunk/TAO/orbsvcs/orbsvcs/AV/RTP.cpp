@@ -41,6 +41,8 @@
 #include "ace/OS_NS_arpa_inet.h"
 #include "ace/OS_NS_strings.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // RTP_Packet
 
 // Constructor for RTP packets received
@@ -770,6 +772,8 @@ TAO_AV_RTP_Flow_Factory::control_flow_factory (void)
 {
   return "RTCP";
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_AV, TAO_AV_RTP_Flow_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_AV_RTP_Flow_Factory,

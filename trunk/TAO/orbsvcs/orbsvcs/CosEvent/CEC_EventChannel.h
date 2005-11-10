@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_EventChannel.h
@@ -31,6 +32,8 @@
 #include "CEC_Defaults.h"
 #include "event_serv_export.h"
 #include "ace/Hash_Map_Manager.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_CEC_EventChannel_Attributes
@@ -297,6 +300,8 @@ private:
 
   ServantRetryMap retry_map_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "CEC_EventChannel.i"

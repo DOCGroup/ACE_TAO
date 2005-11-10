@@ -1,12 +1,16 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // ****************************************************************
 
 ACE_INLINE
 TAO_EC_Kokyu_Shutdown_Command::
-TAO_EC_Kokyu_Shutdown_Command (ACE_Allocator* allocator)
+TAO_EC_Kokyu_Shutdown_Command (ACE_Allocator*)
   :  Kokyu::Dispatch_Command ()
 {
-  ACE_UNUSED_ARG (allocator);
 }
 
 // ****************************************************************
@@ -34,3 +38,5 @@ TAO_EC_Kokyu_Push_Command::TAO_EC_Kokyu_Push_Command (
 
   this->proxy_->_incr_refcnt ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -16,6 +16,8 @@ ACE_RCSID (CosEvent,
            CEC_ConsumerAdmin,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_CEC_ConsumerAdmin::TAO_CEC_ConsumerAdmin (TAO_CEC_EventChannel *ec)
   :  event_channel_ (ec),
      push_admin_ (ec),
@@ -135,3 +137,5 @@ TAO_CEC_Propagate_Event_Pull::work (TAO_CEC_ProxyPullSupplier *supplier
 {
   supplier->push (this->event_ ACE_ENV_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

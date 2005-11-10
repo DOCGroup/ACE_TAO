@@ -17,6 +17,8 @@
 
 ACE_RCSID(Event, EC_Per_Supplier_Filter, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_EC_Per_Supplier_Filter::
     TAO_EC_Per_Supplier_Filter (TAO_EC_Event_Channel_Base* ec)
   :  event_channel_ (ec),
@@ -207,3 +209,5 @@ TAO_EC_Per_Supplier_Filter_Builder::destroy (
 {
   delete x;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

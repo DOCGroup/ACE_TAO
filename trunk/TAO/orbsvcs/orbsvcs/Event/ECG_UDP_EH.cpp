@@ -10,6 +10,8 @@
 
 ACE_RCSID(Event, ECG_UDP_EH, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_ECG_UDP_EH::TAO_ECG_UDP_EH (TAO_ECG_Dgram_Handler *recv)
   :  receiver_ (recv)
 {
@@ -81,5 +83,7 @@ TAO_ECG_UDP_EH::handle_input (ACE_HANDLE)
 {
   return this->receiver_->handle_input (this->dgram_);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************

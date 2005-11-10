@@ -1,8 +1,10 @@
-// $Id$
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_TypedEvent.h
+ *
+ *  $Id$
  *
  *  @author Jon Astle (jon@astle45.fsnet.co.uk)
  */
@@ -23,6 +25,9 @@
 #include "tao/CORBA_methods.h"
 
 // ****************************************************************
+
+// $Id$
+
 /**
  * @class TAO_CEC_TypedEvent
  *
@@ -52,6 +57,8 @@ private:
   CORBA::NVList_ptr list_;
   CORBA::String_var operation_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "CEC_TypedEvent.i"

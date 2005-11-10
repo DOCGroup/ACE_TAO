@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_EC_Queue::
@@ -87,3 +91,5 @@ TAO_EC_Push_Command::TAO_EC_Push_Command (
 
   this->proxy_->_incr_refcnt ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

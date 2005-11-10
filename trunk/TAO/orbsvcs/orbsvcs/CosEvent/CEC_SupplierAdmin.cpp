@@ -14,6 +14,9 @@ ACE_RCSID (CosEvent,
            CEC_SupplierAdmin,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_CEC_SupplierAdmin::TAO_CEC_SupplierAdmin (TAO_CEC_EventChannel *ec)
   :  event_channel_ (ec),
      push_admin_ (ec),
@@ -98,3 +101,5 @@ TAO_CEC_SupplierAdmin::obtain_pull_consumer (ACE_ENV_SINGLE_ARG_DECL)
 {
   return this->pull_admin_.obtain (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

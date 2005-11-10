@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Kokyu_Scheduling.h
  *
@@ -25,6 +26,8 @@
 
 #include "orbsvcs/RtecSchedulerC.h"
 #include "rtkokyu_event_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_Kokyu_Scheduling
@@ -63,6 +66,8 @@ private:
   /// The scheduler we are going to use
   RtecScheduler::Scheduler_var scheduler_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "EC_Kokyu_Scheduling.i"

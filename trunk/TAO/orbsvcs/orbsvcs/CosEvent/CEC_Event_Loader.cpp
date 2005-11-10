@@ -32,6 +32,8 @@ ACE_RCSID (CosEvent,
            CEC_Event_Loader,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_CEC_Event_Loader::TAO_CEC_Event_Loader (void)
 {
   // Constructor
@@ -509,5 +511,7 @@ TAO_CEC_Event_Loader::fini (void)
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_Event_Serv, TAO_CEC_Event_Loader)

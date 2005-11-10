@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    Concurrency_Utils.cpp
@@ -18,6 +17,8 @@
 ACE_RCSID (Concurrency,
            Concurrency_Utils,
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Default constructor
 TAO_Concurrency_Server::TAO_Concurrency_Server (void)
@@ -121,3 +122,5 @@ TAO_Concurrency_Server::GetLockSetFactory(void)
 TAO_Concurrency_Server::~TAO_Concurrency_Server (void)
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

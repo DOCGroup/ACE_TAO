@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_Pulling_Strategy.h
@@ -23,6 +24,7 @@
 
 #include "tao/Basic_Types.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_CEC_Pulling_Strategy
@@ -62,6 +64,8 @@ public:
                             ACE_ENV_ARG_DECL_NOT_USED) = 0;
 #endif /* 0 */
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_CEC_PULLING_STRATEGY_H */

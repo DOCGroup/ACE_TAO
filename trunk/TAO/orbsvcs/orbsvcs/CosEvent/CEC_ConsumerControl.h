@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_ConsumerControl.h
@@ -22,6 +23,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/PortableServer.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CEC_EventChannel;
 class TAO_CEC_ProxyPushSupplier;
@@ -89,6 +92,8 @@ public:
   /// Allow others to inform us when a send or receive was successful.
   virtual void successful_transmission (PortableServer::ServantBase* proxy);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_CEC_CONSUMERCONTROL_H */

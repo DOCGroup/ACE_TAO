@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_TPC_Dispatching.h
  *
@@ -21,6 +22,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "EC_TPC_Dispatching_Task.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Event_Channel_Base;
 
@@ -74,6 +77,8 @@ private:
   TAO_EC_Queue_Full_Service_Object* queue_full_service_object_;  // @@ who will release?
                                 // @@ check to see how the factory gets released...
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_TPC_DISPATCHING_H */

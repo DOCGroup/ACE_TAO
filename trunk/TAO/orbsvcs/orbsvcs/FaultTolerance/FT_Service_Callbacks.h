@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  * @file FT_Service_Callbacks.h
@@ -22,6 +24,8 @@
 
 #include "tao/Service_Callbacks.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Profile;
 class TAO_MProfile;
@@ -89,5 +93,8 @@ private:
   ACE_Lock* profile_lock_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
+
 #endif /*TAO_FT_CALLBACKS_H*/

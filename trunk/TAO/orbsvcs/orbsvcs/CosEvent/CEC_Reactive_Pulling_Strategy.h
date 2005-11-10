@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_Reactive_Pulling_Strategy.h
@@ -27,6 +28,9 @@
 #include "tao/PolicyC.h"
 
 #include "ace/Event_Handler.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CEC_ProxyPullConsumer;
 class TAO_CEC_EventChannel;
@@ -135,6 +139,8 @@ private:
   /// To report failed or dead suppliers
   TAO_CEC_SupplierControl *supplier_control_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "CEC_Reactive_Pulling_Strategy.i"

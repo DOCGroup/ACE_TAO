@@ -35,6 +35,8 @@ ACE_RCSID (CosEvent,
            CEC_Reactive_SupplierControl,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // TAO_CEC_Reactive_SupplierControl constructor for the Un-typed EC
 TAO_CEC_Reactive_SupplierControl::
      TAO_CEC_Reactive_SupplierControl (const ACE_Time_Value &rate,
@@ -528,3 +530,4 @@ TAO_CEC_Ping_Pull_Supplier::work (TAO_CEC_ProxyPullConsumer *consumer
   ACE_ENDTRY;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   ECG_Mcast_Gateway.h
  *
@@ -27,6 +28,8 @@
 #include "ace/os_include/os_stdint.h"
 
 class ACE_Event_Handler;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_ECG_Mcast_Gateway
@@ -271,6 +274,8 @@ private:
   RtecEventChannelAdmin::ConsumerQOS consumer_qos_;
   //@}
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ECG_Mcast_Gateway.i"

@@ -11,6 +11,8 @@
 
 ACE_RCSID(FaultTolerance, FT_ServerPolicy_i, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 CORBA::Boolean
 TAO_FT_Heart_Beat_Enabled_Policy::heartbeat_enabled_policy_value (
     ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -71,9 +73,10 @@ TAO_FT_Heart_Beat_Enabled_Policy::clone (void) const
   return copy;
 }
 
-
 void
 TAO_FT_Heart_Beat_Enabled_Policy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -19,6 +19,8 @@ ACE_RCSID (Event,
            EC_Kokyu_Factory,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_EC_Kokyu_Factory::~TAO_EC_Kokyu_Factory (void)
 {
 }
@@ -256,6 +258,8 @@ TAO_EC_Kokyu_Factory::create_scheduling_strategy (TAO_EC_Event_Channel_Base* ec)
     }
   return this->TAO_EC_Default_Factory::create_scheduling_strategy (ec);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

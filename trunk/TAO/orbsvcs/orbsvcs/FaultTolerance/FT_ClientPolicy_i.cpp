@@ -12,6 +12,8 @@
 
 ACE_RCSID(FaultTolerance, FT_ClientPolicy_i, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TimeBase::TimeT
 TAO_FT_Request_Duration_Policy::request_duration_policy_value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -188,3 +190,4 @@ TAO_FT_Heart_Beat_Policy::set_time_value (ACE_Time_Value &time_value,
     }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

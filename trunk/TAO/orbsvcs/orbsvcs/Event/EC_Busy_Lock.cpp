@@ -9,7 +9,7 @@
 #include "EC_Busy_Lock.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, EC_Busy_Lock, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class T>
 int TAO_EC_Busy_Lock_Adapter<T>::remove (void)
@@ -58,5 +58,7 @@ int TAO_EC_Busy_Lock_Adapter<T>::tryacquire_write (void)
 {
   return this->adaptee_->busy ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_EC_BUSY_LOCK_CPP */

@@ -16,6 +16,8 @@
 #endif /* __ACE_INLINE__ */
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Implementation skeleton constructor
 TAO_CEC_TypedEventChannel::
 TAO_CEC_TypedEventChannel (const TAO_CEC_TypedEventChannel_Attributes& attr,
@@ -567,3 +569,4 @@ TAO_CEC_TypedEventChannel::destroy (ACE_ENV_SINGLE_ARG_DECL)
     }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

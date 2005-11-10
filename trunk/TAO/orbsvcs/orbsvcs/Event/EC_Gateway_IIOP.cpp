@@ -14,6 +14,8 @@ ACE_RCSID (Event,
            EC_Gateway_IIOP,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_EC_Gateway_IIOP::TAO_EC_Gateway_IIOP (void)
   :  busy_count_ (0),
      update_posted_ (0),
@@ -709,3 +711,5 @@ TAO_EC_Gateway_IIOP::resume_supplier_ec (ACE_ENV_SINGLE_ARG_DECL)
       supplier_ec_suspended_ = 0;
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

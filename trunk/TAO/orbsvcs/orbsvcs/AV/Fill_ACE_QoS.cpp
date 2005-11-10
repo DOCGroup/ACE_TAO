@@ -1,4 +1,3 @@
-// Fill_ACE_QoS.cpp
 // $Id$
 
 #include "Fill_ACE_QoS.h"
@@ -6,6 +5,8 @@
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
 
 ACE_RCSID(QOS, Fill_ACE_QoS,"$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const iovec Fill_ACE_QoS::iov_ = {0,0};
 
@@ -68,5 +69,7 @@ Fill_ACE_QoS::map (void)
 {
   return this->flow_spec_map_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_RAPI || ACE_HAS_WINSOCK2_GQOS */

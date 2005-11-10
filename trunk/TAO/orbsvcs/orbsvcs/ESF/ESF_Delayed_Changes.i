@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class PROXY, class C, class I,ACE_SYNCH_DECL> void
 TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
@@ -30,3 +34,5 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
 {
   this->collection_.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

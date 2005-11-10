@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // $Id$
 
 // ===========================================================================
@@ -24,6 +26,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/Concurrency/Concurrency_Utils.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Concurrency_Export TAO_Concurrency_Loader : public TAO_Object_Loader
 {
@@ -62,6 +66,8 @@ private:
   TAO_Concurrency_Loader &operator = (const TAO_Concurrency_Loader &);
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DECLARE (TAO_Concurrency, TAO_Concurrency_Loader)
 

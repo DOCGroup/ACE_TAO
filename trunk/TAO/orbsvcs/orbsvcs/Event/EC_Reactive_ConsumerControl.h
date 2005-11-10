@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 /**
  *  @file   EC_Reactive_ConsumerControl.h
  *
@@ -29,6 +29,8 @@
 #include "tao/PolicyC.h"
 
 #include "ace/Event_Handler.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Event_Channel_Base;
 
@@ -141,6 +143,8 @@ public:
 private:
   TAO_EC_ConsumerControl *control_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "EC_Reactive_ConsumerControl.i"

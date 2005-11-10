@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   ESF_Shutdown_Proxy.h
  *
@@ -19,6 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// A worker to invoke the shutdown method of each proxy.
 template<class PROXY>
 class TAO_ESF_Shutdown_Proxy : public TAO_ESF_Worker<PROXY>
@@ -31,6 +34,8 @@ public:
 };
 
 // ****************************************************************
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ESF_Shutdown_Proxy.i"

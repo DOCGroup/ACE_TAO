@@ -9,7 +9,7 @@
 #include "ESF_Proxy_RefCount_Guard.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ESF, ESF_Proxy_RefCount_Guard, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class EC, class P>
 TAO_ESF_Proxy_RefCount_Guard<EC,P>::~TAO_ESF_Proxy_RefCount_Guard (void)
@@ -23,5 +23,7 @@ TAO_ESF_Proxy_RefCount_Guard<EC,P>::~TAO_ESF_Proxy_RefCount_Guard (void)
       this->event_channel_->destroy_proxy (this->proxy_);
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_ESF_PROXY_REFCOUNT_GUARD_CPP */

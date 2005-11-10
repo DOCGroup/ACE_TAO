@@ -17,6 +17,8 @@
 
 ACE_RCSID(Event, EC_Reactive_SupplierControl, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_EC_Reactive_SupplierControl::
      TAO_EC_Reactive_SupplierControl (const ACE_Time_Value &rate,
                                       const ACE_Time_Value &timeout,
@@ -260,3 +262,5 @@ TAO_EC_Ping_Supplier::work (TAO_EC_ProxyPushConsumer *consumer
     }
   ACE_ENDTRY;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

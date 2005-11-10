@@ -1,11 +1,10 @@
-// $Id$
+// -*- C++ -*-
 
-/* -*- C++ -*- */
 //=============================================================================
 /**
  *  @file   CEC_TypedSupplierAdmin.h
  *
- *  $Id:
+ *  $Id$
  *
  *  @author Jon Astle (jon@astle45.fsnet.co.uk)
  *
@@ -28,6 +27,8 @@
 #include "orbsvcs/ESF/ESF_Proxy_Admin.h"
 
 #include "CEC_TypedProxyPushConsumer.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CEC_TypedEventChannel;
 
@@ -96,6 +97,8 @@ private:
                       CosTypedEventChannelAdmin::TypedProxyPushConsumer>
     typed_push_admin_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "CEC_TypedSupplierAdmin.i"

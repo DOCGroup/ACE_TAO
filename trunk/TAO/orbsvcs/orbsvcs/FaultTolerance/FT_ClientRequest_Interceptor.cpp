@@ -20,6 +20,8 @@ ACE_RCSID (FaultTolerance,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   FT_ClientRequest_Interceptor::FT_ClientRequest_Interceptor (void)
@@ -435,3 +437,5 @@ namespace TAO
     return t;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

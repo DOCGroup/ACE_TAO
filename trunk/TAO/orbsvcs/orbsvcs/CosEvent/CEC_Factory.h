@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_Factory.h
@@ -24,6 +25,8 @@
 #include "ace/Service_Object.h"
 
 class ACE_Lock;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CEC_EventChannel;
 
@@ -213,6 +216,8 @@ public:
   virtual void
       destroy_supplier_control (TAO_CEC_SupplierControl*) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_CEC_FACTORY_H */

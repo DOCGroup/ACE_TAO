@@ -1,5 +1,3 @@
-// -*- C++ -*-
-//
 // $Id$
 
 #include "CEC_TypedSupplierAdmin.h"
@@ -9,6 +7,8 @@
 #if ! defined (__ACE_INLINE__)
 #include "CEC_TypedSupplierAdmin.i"
 #endif /* __ACE_INLINE__ */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Implementation skeleton constructor
 TAO_CEC_TypedSupplierAdmin::TAO_CEC_TypedSupplierAdmin (TAO_CEC_TypedEventChannel *ec)
@@ -107,3 +107,5 @@ TAO_CEC_TypedSupplierAdmin::obtain_pull_consumer (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -33,10 +33,12 @@
 
 #include "FT_ServerORB_export.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// Policy factory for all FTCORBA related policies.
-class TAO_FT_ServerORB_Export TAO_FT_ServerPolicyFactory :
-  public PortableInterceptor::PolicyFactory,
-  public TAO_Local_RefCounted_Object
+class TAO_FT_ServerPolicyFactory
+  : public PortableInterceptor::PolicyFactory
+  , public TAO_Local_RefCounted_Object
 {
 public:
 
@@ -47,10 +49,11 @@ public:
                      CORBA::PolicyError));
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
 
 #include /**/ "ace/post.h"
 

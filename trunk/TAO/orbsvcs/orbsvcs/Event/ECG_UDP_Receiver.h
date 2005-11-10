@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   ECG_UDP_Receiver.h
  *
@@ -51,8 +52,11 @@
 #include "EC_Lifetime_Utils_T.h"
 #include "ECG_CDR_Message_Receiver.h"
 
-class TAO_ECG_UDP_Out_Endpoint;
 class ACE_Reactor;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_ECG_UDP_Out_Endpoint;
 
 /**
  * @class TAO_ECG_UDP_Receiver_Disconnect_Command
@@ -223,6 +227,7 @@ private:
   ECG_Receiver_Auto_Proxy_Disconnect auto_proxy_disconnect_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
 #include "ECG_UDP_Receiver.i"

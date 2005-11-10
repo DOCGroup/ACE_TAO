@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   ECG_Reactive_ConsumerEC_Control.h
  *
@@ -22,8 +23,9 @@
 #include "tao/ORB.h"
 #include "tao/PolicyC.h"
 
-
 #include "ace/Event_Handler.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ECG_Reactive_ConsumerEC_Control;
 class TAO_EC_Gateway_IIOP;
@@ -123,6 +125,8 @@ private:
   long timer_id_;
 #endif /* TAO_HAS_CORBA_MESSAGING */
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

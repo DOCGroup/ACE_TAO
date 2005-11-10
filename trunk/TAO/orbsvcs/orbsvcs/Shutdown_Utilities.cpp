@@ -6,6 +6,8 @@ ACE_RCSID(orbsvcs,
           Shutdown_Utilities,
           "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 Service_Shutdown::Service_Shutdown (Shutdown_Functor& sf)
   : functor_(sf)
 {
@@ -80,3 +82,5 @@ Service_Shutdown::handle_signal (int signum,
   this->functor_(signum);
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

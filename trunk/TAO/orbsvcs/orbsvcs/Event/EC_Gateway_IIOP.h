@@ -29,6 +29,8 @@
 #include "ace/Map_Manager.h"
 #include "ace/Null_Mutex.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_ECG_ConsumerEC_Control;
 class TAO_EC_Gateway_IIOP_Factory;
 
@@ -245,6 +247,8 @@ protected:
   int use_consumer_proxy_map_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 
