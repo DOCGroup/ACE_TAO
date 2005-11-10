@@ -1,0 +1,16 @@
+/**
+
+@page Create_Reference Performance Test README File
+
+	This test measures the time required to create an object
+reference using create_reference_with_id().  The test should be
+extended to include POAs with the NO_RETAIN policy.
+
+	To run the test use the run_test.pl script:
+
+$ ./run_test.pl
+
+	the script returns 0 if the test was successful, and prints
+out the performance numbers.
+
+*/
