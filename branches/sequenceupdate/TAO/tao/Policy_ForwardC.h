@@ -43,7 +43,8 @@
 #include "tao/TAO_Export.h"
 #include "tao/ORB.h"
 #include "tao/Environment.h"
-#include "tao/Sequence_T.h"
+#include "tao/unbounded_object_reference_sequence.hpp"
+#include "tao/unbounded_value_sequence.hpp"
 #include "tao/Objref_VarOut_T.h"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
@@ -58,28 +59,28 @@
 
 namespace CORBA
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typedef/typedef_ch.cpp:379
-  
+
   typedef CORBA::ULong PolicyType;
   typedef CORBA::ULong_out PolicyType_out;
-  
+
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
 
 #if !defined (_CORBA_POLICY__VAR_OUT_CH_)
 #define _CORBA_POLICY__VAR_OUT_CH_
-  
+
   class Policy;
   typedef Policy *Policy_ptr;
-  
+
   typedef
     TAO_Objref_Var_T<
         Policy
       >
     Policy_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Policy
@@ -87,41 +88,33 @@ namespace CORBA
     Policy_out;
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_CORBA_POLICYLIST_CH_)
 #define _CORBA_POLICYLIST_CH_
-  
+
   class PolicyList;
-  
+
   typedef
-    TAO_MngSeq_Var_T<
+    TAO_VarSeq_Var_T<
         PolicyList,
-        TAO_Object_Manager<
-            Policy,
-            Policy_var
-          >
+        Policy
       >
     PolicyList_var;
-  
+
   typedef
-    TAO_MngSeq_Out_T<
+    TAO_VarSeq_Var_T<
         PolicyList,
-        PolicyList_var,
-        TAO_Object_Manager<
-            Policy,
-            Policy_var
-          >
+        PolicyList_var
       >
     PolicyList_out;
-  
+
   class TAO_Export PolicyList
     : public
-        TAO_Unbounded_Object_Sequence<
-            Policy,
-            Policy_var
+        TAO::unbounded_object_reference_sequence<
+            Policy
           >
   {
   public:
@@ -130,34 +123,34 @@ namespace CORBA
     PolicyList (
         CORBA::ULong max,
         CORBA::ULong length,
-        Policy_ptr* buffer, 
+        Policy_ptr* buffer,
         CORBA::Boolean release = 0
       );
     PolicyList (const PolicyList &);
     ~PolicyList (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     typedef PolicyList_var _var_type;
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_CORBA_POLICYTYPESEQ_CH_)
 #define _CORBA_POLICYTYPESEQ_CH_
-  
+
   class PolicyTypeSeq;
-  
+
   typedef
     TAO_FixedSeq_Var_T<
         PolicyTypeSeq,
         PolicyType
       >
     PolicyTypeSeq_var;
-  
+
   typedef
     TAO_Seq_Out_T<
         PolicyTypeSeq,
@@ -165,10 +158,10 @@ namespace CORBA
         PolicyType
       >
     PolicyTypeSeq_out;
-  
+
   class TAO_Export PolicyTypeSeq
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             PolicyType
           >
   {
@@ -178,34 +171,34 @@ namespace CORBA
     PolicyTypeSeq (
         CORBA::ULong max,
         CORBA::ULong length,
-        CORBA::ULong* buffer, 
+        CORBA::ULong* buffer,
         CORBA::Boolean release = 0
       );
     PolicyTypeSeq (const PolicyTypeSeq &);
     ~PolicyTypeSeq (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     typedef PolicyTypeSeq_var _var_type;
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
 
 #if !defined (_CORBA_POLICYCURRENT__VAR_OUT_CH_)
 #define _CORBA_POLICYCURRENT__VAR_OUT_CH_
-  
+
   class PolicyCurrent;
   typedef PolicyCurrent *PolicyCurrent_ptr;
-  
+
   typedef
     TAO_Objref_Var_T<
         PolicyCurrent
       >
     PolicyCurrent_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         PolicyCurrent
@@ -213,16 +206,16 @@ namespace CORBA
     PolicyCurrent_out;
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_enum/enum_ch.cpp:57
-  
+
   enum SetOverrideType
   {
     SET_OVERRIDE,
     ADD_OVERRIDE
   };
-  
+
   typedef SetOverrideType &SetOverrideType_out;
 
 // TAO_IDL - Generated from
@@ -239,7 +232,7 @@ namespace TAO
 
 #if !defined (_CORBA_POLICY__TRAITS_)
 #define _CORBA_POLICY__TRAITS_
-  
+
   template<>
   struct TAO_Export Objref_Traits< ::CORBA::Policy>
   {
@@ -251,7 +244,7 @@ namespace TAO
       );
     static ::CORBA::Policy_ptr nil (void);
     static CORBA::Boolean marshal (
-        ::CORBA::Policy_ptr p,
+        const ::CORBA::Policy_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -260,9 +253,9 @@ namespace TAO
 
 #if !defined (_CORBA_POLICYCURRENT__TRAITS_)
 #define _CORBA_POLICYCURRENT__TRAITS_
-  
+
   template<>
-  struct TAO_Export Objref_Traits< ::CORBA::PolicyCurrent>
+  struct TAO_Export TAO::Objref_Traits< ::CORBA::PolicyCurrent>
   {
     static ::CORBA::PolicyCurrent_ptr duplicate (
         ::CORBA::PolicyCurrent_ptr
@@ -272,7 +265,7 @@ namespace TAO
       );
     static ::CORBA::PolicyCurrent_ptr nil (void);
     static CORBA::Boolean marshal (
-        ::CORBA::PolicyCurrent_ptr p,
+        const ::CORBA::PolicyCurrent_ptr p,
         TAO_OutputCDR & cdr
       );
   };

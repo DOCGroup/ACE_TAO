@@ -43,7 +43,7 @@
 #include "tao/TAO_Export.h"
 #include "tao/ORB.h"
 #include "tao/Environment.h"
-#include "tao/Sequence_T.h"
+#include "tao/unbounded_octet_sequence.hpp"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 
@@ -88,7 +88,7 @@ namespace CORBA
 
   class TAO_Export OctetSeq
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             CORBA::Octet
           >
   {
@@ -113,7 +113,7 @@ namespace CORBA
         CORBA::ULong length,
         const ACE_Message_Block* mb
       )
-      : TAO_Unbounded_Sequence<CORBA::Octet> (length, mb) {}
+      : TAO::unbounded_value_sequence<CORBA::Octet> (length, mb) {}
 #endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */
   };
 

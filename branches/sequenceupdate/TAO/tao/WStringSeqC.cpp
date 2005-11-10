@@ -41,7 +41,7 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_WSTRINGSEQ_CS_)
@@ -53,7 +53,7 @@ CORBA::WStringSeq::WStringSeq (void)
 CORBA::WStringSeq::WStringSeq (
     ::CORBA::ULong max
   )
-  : TAO_Unbounded_WString_Sequence
+  : TAO::unbounded_wstring_sequence
     (max)
 {}
 
@@ -63,14 +63,14 @@ CORBA::WStringSeq::WStringSeq (
     ::CORBA::WChar * * buffer,
     ::CORBA::Boolean release
   )
-  : TAO_Unbounded_WString_Sequence
+  : TAO::unbounded_wstring_sequence
     (max, length, buffer, release)
 {}
 
 CORBA::WStringSeq::WStringSeq (
     const WStringSeq &seq
   )
-  : TAO_Unbounded_WString_Sequence
+  : TAO::unbounded_wstring_sequence
     (seq)
 {}
 
@@ -100,20 +100,20 @@ void CORBA::WStringSeq::_tao_any_destructor (
   )
 {
   const ::CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-  
+
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
       ::CORBA::Boolean _tao_marshal_flag = true;
-      
+
       for ( ::CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
-          _tao_marshal_flag = (strm << _tao_sequence[i].in ());
+          _tao_marshal_flag = (strm << _tao_sequence[i]);
         }
-      
+
       return _tao_marshal_flag;
     }
-  
+
   return false;
 }
 
@@ -123,7 +123,7 @@ void CORBA::WStringSeq::_tao_any_destructor (
   )
 {
   ::CORBA::ULong _tao_seq_len;
-  
+
   if (strm >> _tao_seq_len)
     {
       // Add a check to the length of the sequence
@@ -133,27 +133,27 @@ void CORBA::WStringSeq::_tao_any_destructor (
         {
           return false;
         }
-      
+
       // Set the length of the sequence.
       _tao_sequence.length (_tao_seq_len);
-      
+
       // If length is 0 we return true.
-      if (0 >= _tao_seq_len) 
+      if (0 >= _tao_seq_len)
         {
           return true;
         }
-      
+
       // Retrieve all the elements.
       ::CORBA::Boolean _tao_marshal_flag = true;
-      
+
       for ( ::CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
-          _tao_marshal_flag = (strm >> _tao_sequence[i].out ());
-        
+          _tao_marshal_flag = (strm >> _tao_sequence[i]);
+
       }
-    
+
     return _tao_marshal_flag;
-  
+
   }
 
 return false;

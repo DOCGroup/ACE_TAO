@@ -31,7 +31,7 @@
 #include "VarOut_T.h"
 #include "Seq_Var_T.h"
 #include "Seq_Out_T.h"
-#include "Sequence_T.h"
+#include "unbounded_object_reference_sequence.hpp"
 #include "Policy_ForwardC.h"
 
 #include "ace/Thread_Mutex.h"
@@ -237,7 +237,7 @@ namespace CORBA
     // send_multiple_requests_*().
 
     typedef
-      TAO_Unbounded_Pseudo_Sequence<
+      TAO::unbounded_object_reference_sequence<
           CORBA::Request
         >
       RequestSeq;
@@ -245,9 +245,7 @@ namespace CORBA
     typedef
       TAO_VarSeq_Var_T<
           RequestSeq,
-          TAO_Pseudo_Object_Manager<
-              CORBA::Request
-            >
+          CORBA::Request
         >
       RequestSeq_var;
 
@@ -255,9 +253,7 @@ namespace CORBA
       TAO_Seq_Out_T<
           RequestSeq,
           RequestSeq_var,
-          TAO_Pseudo_Object_Manager<
-              CORBA::Request
-            >
+          CORBA::Request
         >
       RequestSeq_out;
 

@@ -41,7 +41,7 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CONV_FRAME_CODESETIDSEQ_CS_)
@@ -53,7 +53,7 @@ CONV_FRAME::CodeSetIdSeq::CodeSetIdSeq (void)
 CONV_FRAME::CodeSetIdSeq::CodeSetIdSeq (
     CORBA::ULong max
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         CodeSetId
       >
     (max)
@@ -65,7 +65,7 @@ CONV_FRAME::CodeSetIdSeq::CodeSetIdSeq (
     CORBA::ULong * buffer,
     CORBA::Boolean release
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         CodeSetId
       >
     (max, length, buffer, release)
@@ -74,7 +74,7 @@ CONV_FRAME::CodeSetIdSeq::CodeSetIdSeq (
 CONV_FRAME::CodeSetIdSeq::CodeSetIdSeq (
     const CodeSetIdSeq &seq
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         CodeSetId
       >
     (seq)
@@ -94,10 +94,10 @@ void CONV_FRAME::CodeSetIdSeq::_tao_any_destructor (
 
 #endif /* end #if !defined */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 CONV_FRAME::CodeSetComponent::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -107,10 +107,10 @@ CONV_FRAME::CodeSetComponent::_tao_any_destructor (
   delete _tao_tmp_pointer;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 CONV_FRAME::CodeSetComponentInfo::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -120,10 +120,10 @@ CONV_FRAME::CodeSetComponentInfo::_tao_any_destructor (
   delete _tao_tmp_pointer;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 CONV_FRAME::CodeSetContext::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -145,13 +145,13 @@ CORBA::Boolean operator<< (
   )
 {
   const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-  
+
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
       return strm.write_ulong_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
     }
-  
+
   return false;
 }
 
@@ -161,7 +161,7 @@ CORBA::Boolean operator>> (
   )
 {
   CORBA::ULong _tao_seq_len;
-  
+
   if (strm >> _tao_seq_len)
     {
       // Add a check to the length of the sequence
@@ -171,21 +171,21 @@ CORBA::Boolean operator>> (
         {
           return false;
         }
-      
+
       // Set the length of the sequence.
       _tao_sequence.length (_tao_seq_len);
-      
+
       // If length is 0 we return true.
-      if (0 >= _tao_seq_len) 
+      if (0 >= _tao_seq_len)
         {
           return true;
         }
-      
+
       // Retrieve all the elements.
       return strm.read_ulong_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-    
+
     }
-  
+
   return false;
 }
 

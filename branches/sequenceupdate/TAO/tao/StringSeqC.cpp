@@ -41,7 +41,7 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_STRINGSEQ_CS_)
@@ -53,7 +53,7 @@ CORBA::StringSeq::StringSeq (void)
 CORBA::StringSeq::StringSeq (
     CORBA::ULong max
   )
-  : TAO_Unbounded_String_Sequence
+  : TAO::unbounded_string_sequence
     (max)
 {}
 
@@ -63,14 +63,14 @@ CORBA::StringSeq::StringSeq (
     char * * buffer,
     CORBA::Boolean release
   )
-  : TAO_Unbounded_String_Sequence
+  : TAO::unbounded_string_sequence
     (max, length, buffer, release)
 {}
 
 CORBA::StringSeq::StringSeq (
     const StringSeq &seq
   )
-  : TAO_Unbounded_String_Sequence
+  : TAO::unbounded_string_sequence
     (seq)
 {}
 
@@ -100,20 +100,20 @@ CORBA::Boolean operator<< (
   )
 {
   const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-  
+
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
       CORBA::Boolean _tao_marshal_flag = true;
-      
+
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag = (strm << _tao_sequence[i].in ());
         }
-      
+
       return _tao_marshal_flag;
     }
-  
+
   return false;
 }
 
@@ -123,7 +123,7 @@ CORBA::Boolean operator>> (
   )
 {
   CORBA::ULong _tao_seq_len;
-  
+
   if (strm >> _tao_seq_len)
     {
       // Add a check to the length of the sequence
@@ -133,27 +133,27 @@ CORBA::Boolean operator>> (
         {
           return false;
         }
-      
+
       // Set the length of the sequence.
       _tao_sequence.length (_tao_seq_len);
-      
+
       // If length is 0 we return true.
-      if (0 >= _tao_seq_len) 
+      if (0 >= _tao_seq_len)
         {
           return true;
         }
-      
+
       // Retrieve all the elements.
       CORBA::Boolean _tao_marshal_flag = true;
-      
+
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag = (strm >> _tao_sequence[i].out ());
-        
+
       }
-    
+
     return _tao_marshal_flag;
-  
+
   }
 
 return false;

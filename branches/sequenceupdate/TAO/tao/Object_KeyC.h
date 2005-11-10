@@ -43,7 +43,7 @@
 #include "tao/TAO_Export.h"
 #include "tao/ORB.h"
 #include "tao/Environment.h"
-#include "tao/Sequence_T.h"
+#include "tao/unbounded_octet_sequence.hpp"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 
@@ -66,22 +66,22 @@
 
 namespace TAO
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_TAO_OBJECTKEY_CH_)
 #define _TAO_OBJECTKEY_CH_
-  
+
   class ObjectKey;
-  
+
   typedef
     TAO_FixedSeq_Var_T<
         ObjectKey,
         CORBA::Octet
       >
     ObjectKey_var;
-  
+
   typedef
     TAO_Seq_Out_T<
         ObjectKey,
@@ -89,10 +89,10 @@ namespace TAO
         CORBA::Octet
       >
     ObjectKey_out;
-  
+
   class TAO_Export ObjectKey
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             CORBA::Octet
           >
   {
@@ -102,12 +102,12 @@ namespace TAO
     ObjectKey (
         CORBA::ULong max,
         CORBA::ULong length,
-        CORBA::Octet* buffer, 
+        CORBA::Octet* buffer,
         CORBA::Boolean release = 0
       );
     ObjectKey (const ObjectKey &);
     ~ObjectKey (void);
-    
+
     typedef ObjectKey_var _var_type;
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
@@ -115,17 +115,17 @@ namespace TAO
         CORBA::ULong length,
         const ACE_Message_Block* mb
       )
-      : TAO_Unbounded_Sequence<CORBA::Octet> (length, mb) {}
+      : TAO::unbounded_value_sequence<CORBA::Octet> (length, mb) {}
 #endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */
 
     // Hand crafted.
 
     static void encode_sequence_to_string (
         char * &str,
-        const TAO_Unbounded_Sequence<CORBA::Octet> &seq
+        const TAO::unbounded_value_sequence<CORBA::Octet> &seq
       );
     static void decode_string_to_sequence (
-        TAO_Unbounded_Sequence<CORBA::Octet> &seq,
+        TAO::unbounded_value_sequence<CORBA::Octet> &seq,
         const char *str
       );
     static int is_legal (u_char & c);

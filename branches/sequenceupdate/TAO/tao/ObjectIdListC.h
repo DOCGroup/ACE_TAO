@@ -43,7 +43,7 @@
 #include "tao/TAO_Export.h"
 #include "tao/ORB.h"
 #include "tao/Environment.h"
-#include "tao/Sequence_T.h"
+#include "tao/unbounded_string_sequence.hpp"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 
@@ -99,7 +99,7 @@ namespace CORBA
 
   class TAO_Export ORB_ObjectIdList
     : public
-        TAO_Unbounded_String_Sequence
+        TAO::unbounded_string_sequence
   {
   public:
     ORB_ObjectIdList (void);

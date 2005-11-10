@@ -45,7 +45,7 @@
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/Object.h"
-#include "tao/Sequence_T.h"
+#include "tao/unbounded_object_reference_sequence.hpp"
 #include "tao/Objref_VarOut_T.h"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
@@ -328,31 +328,22 @@ namespace CORBA
   class DomainManagerList;
 
   typedef
-    TAO_MngSeq_Var_T<
-        DomainManagerList,
-        TAO_Object_Manager<
-            DomainManager,
-            DomainManager_var
-          >
+    TAO_Pseudo_Var_T<
+        DomainManagerList
       >
     DomainManagerList_var;
 
   typedef
-    TAO_MngSeq_Out_T<
+    TAO_Pseudo_Out_T<
         DomainManagerList,
-        DomainManagerList_var,
-        TAO_Object_Manager<
-            DomainManager,
-            DomainManager_var
-          >
+        DomainManager
       >
     DomainManagerList_out;
 
   class TAO_Export DomainManagerList
     : public
-        TAO_Unbounded_Object_Sequence<
-            DomainManager,
-            DomainManager_var
+        TAO::unbounded_object_reference_sequence<
+            DomainManager
           >
   {
   public:

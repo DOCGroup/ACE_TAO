@@ -43,7 +43,7 @@
 #include "tao/TAO_Export.h"
 #include "tao/ORB.h"
 #include "tao/Environment.h"
-#include "tao/Sequence_T.h"
+#include "tao/unbounded_value_sequence.hpp"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 
@@ -57,22 +57,22 @@
 
 namespace CORBA
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_CORBA_DOUBLESEQ_CH_)
 #define _CORBA_DOUBLESEQ_CH_
-  
+
   class DoubleSeq;
-  
+
   typedef
     TAO_FixedSeq_Var_T<
         DoubleSeq,
         CORBA::Double
       >
     DoubleSeq_var;
-  
+
   typedef
     TAO_Seq_Out_T<
         DoubleSeq,
@@ -80,10 +80,10 @@ namespace CORBA
         CORBA::Double
       >
     DoubleSeq_out;
-  
+
   class TAO_Export DoubleSeq
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             CORBA::Double
           >
   {
@@ -93,14 +93,14 @@ namespace CORBA
     DoubleSeq (
         ::CORBA::ULong max,
         ::CORBA::ULong length,
-        ::CORBA::Double* buffer, 
+        ::CORBA::Double* buffer,
         ::CORBA::Boolean release = 0
       );
     DoubleSeq (const DoubleSeq &);
     ~DoubleSeq (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     typedef DoubleSeq_var _var_type;
   };
 

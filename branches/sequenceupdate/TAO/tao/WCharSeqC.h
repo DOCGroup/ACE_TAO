@@ -43,7 +43,7 @@
 #include "tao/TAO_Export.h"
 #include "tao/ORB.h"
 #include "tao/Environment.h"
-#include "tao/Sequence_T.h"
+#include "tao/unbounded_value_sequence.hpp"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 
@@ -57,22 +57,22 @@
 
 namespace CORBA
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_CORBA_WCHARSEQ_CH_)
 #define _CORBA_WCHARSEQ_CH_
-  
+
   class WCharSeq;
-  
+
   typedef
     TAO_FixedSeq_Var_T<
         WCharSeq,
         CORBA::WChar
       >
     WCharSeq_var;
-  
+
   typedef
     TAO_Seq_Out_T<
         WCharSeq,
@@ -80,10 +80,10 @@ namespace CORBA
         CORBA::WChar
       >
     WCharSeq_out;
-  
+
   class TAO_Export WCharSeq
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             CORBA::WChar
           >
   {
@@ -93,14 +93,14 @@ namespace CORBA
     WCharSeq (
         ::CORBA::ULong max,
         ::CORBA::ULong length,
-        ::CORBA::WChar* buffer, 
+        ::CORBA::WChar* buffer,
         ::CORBA::Boolean release = 0
       );
     WCharSeq (const WCharSeq &);
     ~WCharSeq (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     typedef WCharSeq_var _var_type;
   };
 

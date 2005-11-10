@@ -43,7 +43,7 @@
 #include "tao/TAO_Export.h"
 #include "tao/ORB.h"
 #include "tao/Environment.h"
-#include "tao/Sequence_T.h"
+#include "tao/unbounded_value_sequence.hpp"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 
@@ -57,22 +57,22 @@
 
 namespace CORBA
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_sequence/sequence_ch.cpp:101
 
 #if !defined (_CORBA_FLOATSEQ_CH_)
 #define _CORBA_FLOATSEQ_CH_
-  
+
   class FloatSeq;
-  
+
   typedef
     TAO_FixedSeq_Var_T<
         FloatSeq,
         CORBA::Float
       >
     FloatSeq_var;
-  
+
   typedef
     TAO_Seq_Out_T<
         FloatSeq,
@@ -80,10 +80,10 @@ namespace CORBA
         CORBA::Float
       >
     FloatSeq_out;
-  
+
   class TAO_Export FloatSeq
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             CORBA::Float
           >
   {
@@ -93,14 +93,14 @@ namespace CORBA
     FloatSeq (
         ::CORBA::ULong max,
         ::CORBA::ULong length,
-        ::CORBA::Float* buffer, 
+        ::CORBA::Float* buffer,
         ::CORBA::Boolean release = 0
       );
     FloatSeq (const FloatSeq &);
     ~FloatSeq (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     typedef FloatSeq_var _var_type;
   };
 

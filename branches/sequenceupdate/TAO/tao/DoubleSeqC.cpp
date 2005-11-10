@@ -41,7 +41,7 @@ namespace TAO
 }
 
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_DOUBLESEQ_CS_)
@@ -53,7 +53,7 @@ CORBA::DoubleSeq::DoubleSeq (void)
 CORBA::DoubleSeq::DoubleSeq (
     ::CORBA::ULong max
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         CORBA::Double
       >
     (max)
@@ -65,7 +65,7 @@ CORBA::DoubleSeq::DoubleSeq (
     ::CORBA::Double * buffer,
     ::CORBA::Boolean release
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         CORBA::Double
       >
     (max, length, buffer, release)
@@ -74,7 +74,7 @@ CORBA::DoubleSeq::DoubleSeq (
 CORBA::DoubleSeq::DoubleSeq (
     const DoubleSeq &seq
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         CORBA::Double
       >
     (seq)
@@ -106,13 +106,13 @@ void CORBA::DoubleSeq::_tao_any_destructor (
   )
 {
   const ::CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-  
+
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
       return strm.write_double_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
     }
-  
+
   return false;
 }
 
@@ -122,7 +122,7 @@ void CORBA::DoubleSeq::_tao_any_destructor (
   )
 {
   ::CORBA::ULong _tao_seq_len;
-  
+
   if (strm >> _tao_seq_len)
     {
       // Add a check to the length of the sequence
@@ -132,21 +132,21 @@ void CORBA::DoubleSeq::_tao_any_destructor (
         {
           return false;
         }
-      
+
       // Set the length of the sequence.
       _tao_sequence.length (_tao_seq_len);
-      
+
       // If length is 0 we return true.
-      if (0 >= _tao_seq_len) 
+      if (0 >= _tao_seq_len)
         {
           return true;
         }
-      
+
       // Retrieve all the elements.
       return strm.read_double_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-    
+
     }
-  
+
   return false;
 }
 

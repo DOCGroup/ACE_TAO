@@ -42,7 +42,7 @@ namespace TAO
     static T * duplicate (T *);
     static void release (T *);
     static T * nil (void);
-    static CORBA::Boolean marshal (T *,
+    static CORBA::Boolean marshal (const T *,
                                    TAO_OutputCDR &);
   };
 }

@@ -43,7 +43,8 @@
 #include "tao/TAO_Export.h"
 #include "tao/ORB.h"
 #include "tao/Environment.h"
-#include "tao/Sequence_T.h"
+#include "tao/unbounded_value_sequence.hpp"
+#include "tao/Managed_Types.h"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 #include "tao/VarOut_T.h"
@@ -124,7 +125,7 @@ namespace TAO
 
   class TAO_Export IIOPEndpointSequence
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             IIOP_Endpoint_Info
           >
   {

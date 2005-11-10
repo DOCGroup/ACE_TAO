@@ -174,7 +174,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Request_Dispatcher.cpp
     Resource_Factory.cpp
     Resume_Handle.cpp
-    Sequence.cpp
     Server_Strategy_Factory.cpp
     ServerRequestInterceptor_Adapter_Factory.cpp
     Service_Callbacks.cpp
@@ -446,8 +445,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Resource_Factory.h
     Resume_Handle.h
     Seq_Out_T.h
-    Sequence.h
-    Sequence_T.h
     Seq_Var_T.h
     Server_Strategy_Factory.h
     Service_Callbacks.h
@@ -536,6 +533,26 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Connector_Impl.cpp
     TAO_Singleton.cpp
     orb.idl
+ bounded_basic_string_sequence.hpp
+ bounded_object_reference_sequence.hpp
+ bounded_string_sequence.hpp
+ bounded_value_allocation_traits.hpp
+ bounded_value_sequence.hpp
+ bounded_wstring_sequence.hpp
+ generic_sequence.hpp
+ object_reference_traits.hpp
+ string_sequence_element.hpp
+ string_traits.hpp
+ string_traits_base.hpp
+ unbounded_basic_string_sequence.hpp
+ unbounded_object_reference_sequence.hpp
+ unbounded_octet_sequence.hpp
+ unbounded_reference_allocation_traits.hpp
+ unbounded_string_sequence.hpp
+ unbounded_value_allocation_traits.hpp
+ unbounded_value_sequence.hpp
+ unbounded_wstring_sequence.hpp
+ value_traits.hpp
   }
 
   Pkgconfig_Files {
