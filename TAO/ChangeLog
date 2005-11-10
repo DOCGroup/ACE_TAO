@@ -1,3 +1,16 @@
+Wed Nov  9 22:54:43 USMST 2005  Yan Dai  <dai_y@ociweb.com>
+
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Request.inl:
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Strategy.cpp:
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Strategy.h:
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Strategy.inl:
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.cpp:
+
+        Merged changes from OCI TAO 1.4a that optionally supports the 
+        serialization of requests. (See OCIChangeLog entry
+        "Mon Nov  7 09:31:11 MST 2005  Tim Bradley  <bradley_t@ociweb.com>"
+        for details.)
+
 Wed Nov  9 15:59:01 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* tests/Bug_2234_Regression/client.cpp
