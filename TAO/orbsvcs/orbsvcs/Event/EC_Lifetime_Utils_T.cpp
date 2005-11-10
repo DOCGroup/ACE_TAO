@@ -9,6 +9,8 @@
 #include "EC_Lifetime_Utils_T.i"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <typename T>
 void
 activate (T & obj_ref,
@@ -44,5 +46,6 @@ activate (T & obj_ref,
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_EC_LIFETIME_UTILS_T_CPP */

@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file ECG_CDR_Message_Sender.h
  *
@@ -25,6 +26,8 @@
 #include "tao/Environment.h"
 
 #include "ace/INET_Addr.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_ECG_CDR_Message_Sender
@@ -175,6 +178,8 @@ private:
   /// Should crc checksum be caluclated and sent?
   CORBA::Boolean checksum_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
 #include "ECG_CDR_Message_Sender.i"

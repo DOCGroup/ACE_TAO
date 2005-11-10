@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_CEC_TypedEventChannel_Attributes::
@@ -197,3 +201,5 @@ TAO_CEC_Operation_Params::~TAO_CEC_Operation_Params (void)
 {
   delete [] parameters_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

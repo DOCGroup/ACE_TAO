@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 #include "FT_ServerRequest_Interceptor.h"
 #include "tao/IOP_IORC.h"
 #include "tao/ORB_Constants.h"
@@ -14,6 +12,8 @@ ACE_RCSID (FaultTolerance,
            FT_ServerRequest_Interceptor,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   FT_ServerRequest_Interceptor::FT_ServerRequest_Interceptor (void)
@@ -27,7 +27,6 @@ namespace TAO
   FT_ServerRequest_Interceptor::~FT_ServerRequest_Interceptor (void)
   {
   }
-
 
   char *
   FT_ServerRequest_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -233,3 +232,5 @@ namespace TAO
       ACE_THROW (CORBA::TRANSACTION_ROLLEDBACK ());
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -6,6 +6,8 @@
 
 ACE_RCSID(Event, EC_Event_Channel, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_EC_Event_Channel::
 TAO_EC_Event_Channel (const TAO_EC_Event_Channel_Attributes& attr,
                       TAO_EC_Factory* factory,
@@ -31,3 +33,5 @@ TAO_EC_Event_Channel (const TAO_EC_Event_Channel_Attributes& attr,
 
   this->create_strategies ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

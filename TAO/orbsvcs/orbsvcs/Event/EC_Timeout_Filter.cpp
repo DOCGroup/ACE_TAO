@@ -15,6 +15,8 @@ ACE_RCSID (Event,
            EC_Timeout_Filter, 
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_EC_Timeout_Filter::TAO_EC_Timeout_Filter (
       TAO_EC_Event_Channel_Base *event_channel,
       TAO_EC_ProxyPushSupplier *supplier,
@@ -165,3 +167,5 @@ TAO_EC_Timeout_Filter::add_dependencies (
 {
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

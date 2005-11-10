@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  * @file ECG_Simple_Mcast_EH.h
  *
@@ -20,6 +21,9 @@
 #include /**/ "event_serv_export.h"
 #include "ECG_Adapters.h"
 #include "ace/SOCK_Dgram_Mcast.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_ECG_Simple_Mcast_EH
@@ -85,6 +89,8 @@ private:
    */
   TAO_ECG_Dgram_Handler* receiver_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ECG_SIMPLE_Mcast_EH_H */

@@ -17,6 +17,8 @@
 
 ACE_RCSID(Event, EC_Prefix_Filter_Builder, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_EC_Prefix_Filter_Builder::~TAO_EC_Prefix_Filter_Builder (void)
 {
 }
@@ -152,3 +154,5 @@ TAO_EC_Prefix_Filter_Builder:: recursive_build (
   pos++; // Consume the event
   return new TAO_EC_Type_Filter (e.header);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -55,6 +55,8 @@
 /// way to set this constant dynamically because the nuber of lock
 /// modes are not stated as part of the IDL.
 #define NUMBER_OF_LOCK_MODES 5
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Enummeration representing the lock modes. The incoming request is
 /// always converted to this representation. There are two reasons for
@@ -181,7 +183,7 @@ private:
 
   /// Mapping between requested and held lock modes. Used by compatible
   /// (...).  Uses the internal enumeration as indices.
-  static CORBA::Boolean compatible_[NUMBER_OF_LOCK_MODES][NUMBER_OF_LOCK_MODES];
+  static CORBA::Boolean const compatible_[NUMBER_OF_LOCK_MODES][NUMBER_OF_LOCK_MODES];
 
   /// Lock to ensure that race conditions does not occur.
   TAO_SYNCH_MUTEX mlock_;
@@ -189,6 +191,8 @@ private:
   /// Queue to hold the requested locks not yet granted.
   ACE_Unbounded_Queue <CC_LockModeEnum> lock_queue_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

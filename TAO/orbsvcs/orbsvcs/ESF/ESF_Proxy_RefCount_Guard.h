@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   ESF_Proxy_RefCount_Guard.h
  *
@@ -17,6 +18,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_ESF_Proxy_RefCount_Guard
@@ -58,6 +61,8 @@ protected:
   /// The proxy whose lifetime is controlled by the reference count
   PROXY *proxy_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ESF_Proxy_RefCount_Guard.i"

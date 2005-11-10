@@ -14,6 +14,8 @@
 
 ACE_RCSID(Event, EC_TPC_Factory, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 unsigned long EC_TPC_debug_level;
 
 TAO_EC_TPC_Factory::TAO_EC_TPC_Factory (void)
@@ -106,6 +108,7 @@ TAO_EC_TPC_Factory::create_proxy_push_consumer (TAO_EC_Event_Channel_Base *ec)
   return new TAO_EC_TPC_ProxyPushConsumer (ec);
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

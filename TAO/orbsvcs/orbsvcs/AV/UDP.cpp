@@ -15,6 +15,8 @@ ACE_RCSID (AV,
            UDP,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 //------------------------------------------------------------
 // TAO_AV_UDP_Flow_Handler
 //------------------------------------------------------------
@@ -1070,6 +1072,8 @@ TAO_AV_UDP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
 
   return object;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_AV, TAO_AV_UDP_Flow_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_AV_UDP_Flow_Factory,

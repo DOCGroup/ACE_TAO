@@ -35,6 +35,9 @@
 #include /**/ "event_serv_export.h"
 
 class ACE_Lock;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_EC_Event_Channel_Base;
 class TAO_EC_ProxyPushConsumer;
 class TAO_EC_ProxyPushSupplier;
@@ -345,6 +348,8 @@ public:
 private:
   TAO_EC_Basic_ObserverStrategy::Headers &headers_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "EC_ObserverStrategy.i"

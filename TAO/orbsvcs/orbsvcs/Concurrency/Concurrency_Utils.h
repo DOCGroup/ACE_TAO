@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -25,6 +25,9 @@
 #include "orbsvcs/CosConcurrencyControlC.h"
 #include "CC_LockSetFactory.h"
 #include "concurrency_export.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Concurrency_Server
@@ -67,6 +70,8 @@ private:
   /// The POA which the lock set factory servant was registered.
   PortableServer::POA_var poa_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* _CONCURRENCY_SERVER_H */

@@ -1,6 +1,8 @@
+// -*- C++ -*-
 //
 // $Id$
-//
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_ECG_UDP_Out_Endpoint::TAO_ECG_UDP_Out_Endpoint (void)
@@ -32,3 +34,4 @@ TAO_ECG_UDP_Out_Endpoint::next_request_id (void)
   return this->request_id_generator_++;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

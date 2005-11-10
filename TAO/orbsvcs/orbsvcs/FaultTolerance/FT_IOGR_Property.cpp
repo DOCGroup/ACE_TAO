@@ -19,6 +19,7 @@ ACE_RCSID (FaultTolerance,
 # include "FT_IOGR_Property.inl"
 #endif /* ! __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Boolean
 TAO_FT_IOGR_Property::set_property (
@@ -423,3 +424,5 @@ TAO_FT_IOGR_Property::remove_primary_tag (
     }
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

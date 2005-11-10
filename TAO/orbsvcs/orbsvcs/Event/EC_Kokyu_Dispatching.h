@@ -32,6 +32,8 @@
 
 #include "Kokyu/Kokyu.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_EC_Event_Channel_Base;
 
 /**
@@ -134,6 +136,8 @@ private:
   /// The event
   RtecEventComm::EventSet event_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "EC_Kokyu_Dispatching.i"

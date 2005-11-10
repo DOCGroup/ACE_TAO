@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -24,6 +24,8 @@
 
 #include "tao/orbconf.h"
 #include "ace/Thread_Mutex.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ETCL_Constraint;
 
@@ -92,6 +94,8 @@ private:
   static char* current_;
   static char* end_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 /// The union used by lex and bison to build the Abstract Syntax Tree.
 typedef union

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 /**
  *  @file   ECG_Address_Server_Base.h
  *
@@ -17,6 +17,8 @@
 #include "EC_Lifetime_Utils.h"
 #include "ace/Auto_Ptr.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_ECG_Address_Server_Base
  *
@@ -26,13 +28,15 @@
  * Adds init () virtual method so that all AddrServer implementations can be
  * initialized in the same fasion.
  */
-class TAO_RTEvent_Serv_Export TAO_ECG_Address_Server_Base :
-  public virtual POA_RtecUDPAdmin::AddrServer
+class TAO_RTEvent_Serv_Export TAO_ECG_Address_Server_Base
+  : public virtual POA_RtecUDPAdmin::AddrServer
 {
 public:
 
   virtual int init (const char *arg) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ECG_ADDRESS_SERVER_BASE_H */

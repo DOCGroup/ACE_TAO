@@ -13,6 +13,8 @@ ACE_RCSID(Event, EC_TPC_Dispatching, "$Id$")
 #define TAO_EC_TPC_DISPATCHING_DEFAULT_MAP_SIZE 32
 #endif
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_EC_TPC_Dispatching::TAO_EC_TPC_Dispatching (TAO_EC_Queue_Full_Service_Object* so)
   : consumer_task_map_(TAO_EC_TPC_DISPATCHING_DEFAULT_MAP_SIZE)
   , queue_full_service_object_(so)
@@ -192,3 +194,5 @@ TAO_EC_TPC_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
       ACE_CHECK;
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

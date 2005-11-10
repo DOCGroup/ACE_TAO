@@ -9,11 +9,10 @@
 #include "ESF_Proxy_List.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ESF, ESF_Proxy_List, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class PROXY>
-TAO_ESF_Proxy_List<PROXY>::
-      TAO_ESF_Proxy_List (void)
+TAO_ESF_Proxy_List<PROXY>::TAO_ESF_Proxy_List (void)
 {
 }
 
@@ -88,5 +87,7 @@ TAO_ESF_Proxy_List<PROXY>::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     }
   this->impl_.reset ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_ESF_PROXY_LIST_CPP */

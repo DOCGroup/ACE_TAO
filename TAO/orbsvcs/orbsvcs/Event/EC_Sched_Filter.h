@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 /**
  *  @file   EC_Sched_Filter.h
  *
@@ -25,6 +25,8 @@
 #include "orbsvcs/RtecSchedulerC.h"
 #include "sched_event_export.h"
 #include "ace/SString.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_Sched_Filter
@@ -120,6 +122,8 @@ private:
   /// Required for the scheduling service
   RtecScheduler::Info_Type_t info_type_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_SCHED_FILTER_H */

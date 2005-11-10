@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class COLLECTION, class ITERATOR> ACE_INLINE
 TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR>::
@@ -34,3 +38,4 @@ TAO_ESF_Copy_On_Write_Read_Guard<COLLECTION,ITERATOR,ACE_LOCK>::
 
 // ****************************************************************
 
+TAO_END_VERSIONED_NAMESPACE_DECL

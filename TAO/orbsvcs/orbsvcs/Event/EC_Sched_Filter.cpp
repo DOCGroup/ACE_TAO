@@ -6,6 +6,8 @@
 
 ACE_RCSID(Event, EC_Sched_Filter, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_EC_Sched_Filter::
     TAO_EC_Sched_Filter (const char* name,
                          RtecScheduler::handle_t rt_info,
@@ -277,3 +279,5 @@ TAO_EC_Sched_Filter::init_rt_info (ACE_ENV_SINGLE_ARG_DECL)
 
   this->rt_info_computed_ = 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

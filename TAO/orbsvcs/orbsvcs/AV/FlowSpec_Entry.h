@@ -1,5 +1,4 @@
-/* -*- C++ -*- */
-
+// -*- C++ -*-
 
 // ============================================================================
 /**
@@ -21,6 +20,9 @@
 #include "ace/Addr.h"
 #include "ace/Containers.h"
 #include "ace/SString.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Tokenizer
@@ -345,6 +347,8 @@ public:
   /// construct the entry from a string specified by the flowSpec grammar.
   virtual int parse (const char* flowSpec_entry);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include "Transport.h"
 

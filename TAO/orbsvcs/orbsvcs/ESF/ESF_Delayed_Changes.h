@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 /**
  *  @file   ESF_Delayed_Changes.h
  *
@@ -23,6 +23,8 @@
 #include "ace/Containers.h"
 
 class ACE_Command_Base;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class Target,class Object> class TAO_ESF_Connected_Command;
 template<class Target,class Object> class TAO_ESF_Disconnected_Command;
@@ -140,6 +142,8 @@ private:
 };
 
 // ****************************************************************
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ESF_Delayed_Changes.i"

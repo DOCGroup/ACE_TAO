@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 /**
  *  @file   EC_Factory.h
  *
@@ -23,9 +23,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Versioned_Namespace.h"
+
 #include "ace/Service_Object.h"
 
 class ACE_Lock;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Event_Channel_Base;
 
@@ -155,6 +159,8 @@ public:
   virtual void
       destroy_supplier_control (TAO_EC_SupplierControl*) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

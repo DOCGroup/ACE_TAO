@@ -16,6 +16,8 @@ ACE_RCSID (CosEvent,
            CEC_Dispatching,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 int
 TAO_CEC_Dispatching_Task::svc (void)
 {
@@ -150,3 +152,5 @@ TAO_CEC_Invoke_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
   return 0;
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

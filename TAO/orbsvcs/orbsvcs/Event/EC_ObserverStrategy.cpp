@@ -15,6 +15,8 @@
 
 ACE_RCSID(Event, EC_ObserverStrategy, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_EC_ObserverStrategy::~TAO_EC_ObserverStrategy (void)
 {
 }
@@ -510,3 +512,5 @@ TAO_EC_Accumulate_Consumer_Headers::work (TAO_EC_ProxyPushConsumer *consumer
       this->headers_.insert (event.header, 1);
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

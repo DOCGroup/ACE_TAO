@@ -1,5 +1,4 @@
-/* -*- C++ -*- */
-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -17,6 +16,8 @@
 #include /**/ "ace/pre.h"
 
 #include "AVStreams_i.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_FDev
@@ -115,6 +116,7 @@ protected:
   CORBA::String_var flowname_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Flows_T.cpp"

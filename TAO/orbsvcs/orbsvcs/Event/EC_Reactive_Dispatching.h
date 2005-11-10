@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Reactive_Dispatching.h
  *
@@ -24,6 +25,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_EC_Reactive_Dispatching
@@ -54,6 +57,8 @@ public:
                             TAO_EC_QOS_Info &qos_info
                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

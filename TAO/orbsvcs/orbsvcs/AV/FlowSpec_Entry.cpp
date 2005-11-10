@@ -15,6 +15,8 @@
 #include "FlowSpec_Entry.i"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // constructor.
 TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (void)
   :address_ (0),
@@ -1012,3 +1014,5 @@ TAO_Reverse_FlowSpec_Entry::entry_to_string (void)
   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"Reverse entry_to_string: entry = %s\n",this->entry_.c_str() ));
   return this->entry_.c_str();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

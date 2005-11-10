@@ -9,9 +9,7 @@
 #include "ESF_Delayed_Command.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (ESF, 
-           ESF_Delayed_Command, 
-           "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class Target, class Object> int
 TAO_ESF_Connected_Command<Target,Object>::execute (void* arg)
@@ -93,5 +91,7 @@ TAO_ESF_Shutdown_Command<Target>::execute (void* arg)
     }
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_ESF_DELAYED_COMMAND_CPP */

@@ -13,6 +13,8 @@ ACE_RCSID (Event,
            EC_Filter,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_EC_Filter::~TAO_EC_Filter (void)
 {
 }
@@ -124,3 +126,5 @@ TAO_EC_Null_Filter::add_dependencies (
 {
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -4,6 +4,8 @@
 
 ACE_RCSID(Event, EC_Masked_Type_Filter, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_EC_Masked_Type_Filter::
     TAO_EC_Masked_Type_Filter (CORBA::ULong source_mask,
                                CORBA::ULong type_mask,
@@ -122,3 +124,5 @@ TAO_EC_Masked_Type_Filter::add_dependencies (
 {
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

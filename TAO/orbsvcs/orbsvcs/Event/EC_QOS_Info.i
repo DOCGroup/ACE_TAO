@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_EC_QOS_Info::TAO_EC_QOS_Info (void)
@@ -15,3 +19,5 @@ TAO_EC_QOS_Info::TAO_EC_QOS_Info (const TAO_EC_QOS_Info &rhs)
      timer_id_ (rhs.timer_id_)
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

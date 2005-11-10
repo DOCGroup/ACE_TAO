@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Timeout_Filter.h
  *
@@ -24,6 +25,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "EC_QOS_Info.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Event_Channel_Base;
 class TAO_EC_ProxyPushSupplier;
@@ -105,6 +108,8 @@ private:
   /// cancellation.
   long id_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "EC_Timeout_Filter.i"

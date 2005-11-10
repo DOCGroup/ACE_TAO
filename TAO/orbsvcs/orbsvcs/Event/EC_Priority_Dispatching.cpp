@@ -12,6 +12,8 @@
 
 ACE_RCSID(Event, EC_Priority_Dispatching, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_EC_Priority_Dispatching::TAO_EC_Priority_Dispatching (TAO_EC_Event_Channel_Base *ec)
   :  ntasks_ (0),
      tasks_ (0)
@@ -135,3 +137,5 @@ TAO_EC_Priority_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
 
   this->tasks_[i]->push (proxy, consumer, event ACE_ENV_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

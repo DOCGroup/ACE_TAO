@@ -22,6 +22,9 @@
 
 ACE_RCSID(CosEvent, CEC_Reactive_Pulling_Strategy, "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_CEC_Reactive_Pulling_Strategy::
     TAO_CEC_Reactive_Pulling_Strategy (const ACE_Time_Value &rate,
                                        const ACE_Time_Value &relative_timeout,
@@ -198,3 +201,4 @@ TAO_CEC_Pull_Event::work (TAO_CEC_ProxyPullConsumer *consumer
     }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

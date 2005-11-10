@@ -22,6 +22,8 @@ ACE_RCSID (Event,
            EC_Gateway_IIOP_Factory,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 int
 TAO_EC_Gateway_IIOP_Factory::init_svcs (void)
 {
@@ -198,6 +200,8 @@ TAO_EC_Gateway_IIOP_Factory::destroy_consumerec_control (
 {
    delete x;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_EC_Gateway_IIOP_Factory,
                        ACE_TEXT ("EC_Gateway_IIOP_Factory"),

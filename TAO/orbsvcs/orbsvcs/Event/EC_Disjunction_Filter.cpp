@@ -4,6 +4,8 @@
 
 ACE_RCSID(Event, EC_Disjunction_Filter, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_EC_Disjunction_Filter::
     TAO_EC_Disjunction_Filter (TAO_EC_Filter* children[],
                                size_t n)
@@ -157,3 +159,5 @@ TAO_EC_Disjunction_Filter::add_dependencies (
 {
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

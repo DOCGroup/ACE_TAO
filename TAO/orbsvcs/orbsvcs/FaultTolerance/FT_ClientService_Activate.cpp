@@ -11,6 +11,8 @@ ACE_RCSID(FaultTolerance, FT_ClientService_Activate, "$Id$")
 
 static bool initialized = false;
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_FT_ClientService_Activate::TAO_FT_ClientService_Activate (void)
 {
 }
@@ -66,6 +68,8 @@ TAO_FT_ClientService_Activate::Initializer (void)
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_FT_ClientORB,TAO_FT_ClientService_Activate)
 

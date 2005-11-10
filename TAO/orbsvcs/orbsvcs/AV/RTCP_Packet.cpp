@@ -2,6 +2,8 @@
 #include "RTCP_Packet.h"
 #include "RTP.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 RTCP_Packet::RTCP_Packet(void)
 {
   this->chd_.ver_ = 2;
@@ -1202,3 +1204,5 @@ RTCP_SR_Packet::dump (void)
       ++count;
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

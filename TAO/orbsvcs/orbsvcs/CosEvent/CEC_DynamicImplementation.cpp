@@ -12,6 +12,8 @@
 #include "CEC_DynamicImplementation.i"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Destructor
 TAO_CEC_DynamicImplementationServer::~TAO_CEC_DynamicImplementationServer (void)
 {
@@ -173,3 +175,5 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request
   request->set_result (result_any ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

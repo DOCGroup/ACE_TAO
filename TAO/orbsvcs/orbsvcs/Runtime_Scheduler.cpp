@@ -8,7 +8,9 @@ ACE_RCSID (orbsvcs,
            Runtime_Scheduler,
            "$Id$")
 
-  // Constructor. Initialize the data from the POD_RT_Info array.
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+// Constructor. Initialize the data from the POD_RT_Info array.
 
 ACE_Runtime_Scheduler::
 ACE_Runtime_Scheduler (int config_count,
@@ -548,3 +550,5 @@ ACE_Runtime_Scheduler::get_config_infos (RtecScheduler::Config_Info_Set_out /*co
   // or a proprietary ACE_NOTSUP; -- Bala
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T>
 ACE_INLINE
@@ -328,3 +332,5 @@ operator!=(TAO_EC_Servant_Var<X> const & x,
 {
   return x.in() != y.in();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

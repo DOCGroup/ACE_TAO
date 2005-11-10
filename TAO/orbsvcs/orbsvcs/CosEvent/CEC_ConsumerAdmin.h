@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 //=============================================================================
 /**
  *  @file   CEC_ConsumerAdmin.h
@@ -26,6 +26,8 @@
 #include "CEC_ProxyPushSupplier.h"
 #include "CEC_ProxyPullSupplier.h"
 #include "event_serv_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CEC_EventChannel;
 
@@ -143,6 +145,8 @@ private:
   /// The event
   CORBA::Any event_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "CEC_ConsumerAdmin.i"

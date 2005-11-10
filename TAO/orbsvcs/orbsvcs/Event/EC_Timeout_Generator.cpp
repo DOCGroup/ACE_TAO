@@ -12,6 +12,8 @@ ACE_RCSID (Event,
            EC_Timeout_Generator, 
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_EC_Timeout_Generator::~TAO_EC_Timeout_Generator (void)
 {
 }
@@ -55,3 +57,5 @@ TAO_EC_Timeout_Adapter::handle_timeout (const ACE_Time_Value & /* tv */,
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

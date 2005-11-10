@@ -1,20 +1,21 @@
 // $Id$
 
 #include "sfp.h"
-#include "ace/ARGV.h"
-
 #include "tao/debug.h"
+#include "ace/ARGV.h"
 #include "ace/OS_NS_strings.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // default arguments to pass to use for the ORB
-const char *TAO_SFP_Base::TAO_SFP_ORB_ARGUMENTS = "-ORBObjRefStyle URL";
+const char TAO_SFP_Base::TAO_SFP_ORB_ARGUMENTS[] = "-ORBObjRefStyle URL";
 
 // SFP magic numbers
-const char *TAO_SFP_Base::TAO_SFP_MAGIC_NUMBER = "=SFP";
-const char *TAO_SFP_Base::TAO_SFP_FRAGMENT_MAGIC_NUMBER = "FRAG";
-const char *TAO_SFP_Base::TAO_SFP_START_MAGIC_NUMBER = "=STA";
-const char *TAO_SFP_Base::TAO_SFP_CREDIT_MAGIC_NUMBER = "=CRE";
-const char *TAO_SFP_Base::TAO_SFP_STARTREPLY_MAGIC_NUMBER = "=STR";
+const char TAO_SFP_Base::TAO_SFP_MAGIC_NUMBER[] = "=SFP";
+const char TAO_SFP_Base::TAO_SFP_FRAGMENT_MAGIC_NUMBER[] = "FRAG";
+const char TAO_SFP_Base::TAO_SFP_START_MAGIC_NUMBER[] = "=STA";
+const char TAO_SFP_Base::TAO_SFP_CREDIT_MAGIC_NUMBER[] = "=CRE";
+const char TAO_SFP_Base::TAO_SFP_STARTREPLY_MAGIC_NUMBER[] = "=STR";
 
 // SFP version 1.0
 const unsigned char TAO_SFP_Base::TAO_SFP_MAJOR_VERSION = 1;
@@ -1322,6 +1323,8 @@ TAO_SFP_Frame_State::reset (void)
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template ACE_Singleton<TAO_SFP_Base, ACE_Thread_Mutex> *ACE_Singleton<TAO_SFP_Base, ACE_Thread_Mutex>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_AV, TAO_AV_SFP_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_AV_SFP_Factory,

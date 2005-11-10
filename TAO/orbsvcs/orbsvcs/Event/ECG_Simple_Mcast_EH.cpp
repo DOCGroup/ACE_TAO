@@ -5,6 +5,8 @@
 #include "ace/Reactor.h"
 #include "ace/os_include/os_fcntl.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_ECG_Simple_Mcast_EH::TAO_ECG_Simple_Mcast_EH (TAO_ECG_Dgram_Handler *recv)
   : receiver_ (recv)
 {
@@ -92,3 +94,5 @@ TAO_ECG_Simple_Mcast_EH::handle_input (ACE_HANDLE /* fd */)
 {
   return this->receiver_->handle_input (this->dgram_);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

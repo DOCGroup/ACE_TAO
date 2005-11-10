@@ -12,6 +12,8 @@
 
 ACE_RCSID(Event, ECG_CDR_Message_Sender, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 void
 TAO_ECG_CDR_Message_Sender::init (
       TAO_ECG_Refcounted_Endpoint endpoint_rptr
@@ -334,3 +336,5 @@ TAO_ECG_CDR_Message_Sender::compute_fragment_count (const ACE_Message_Block* beg
     }
   return fragment_count;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

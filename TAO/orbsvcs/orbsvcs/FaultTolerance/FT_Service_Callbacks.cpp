@@ -18,6 +18,9 @@ ACE_RCSID (FaultTolerance,
            FT_Service_Callbacks,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_FT_Service_Callbacks::TAO_FT_Service_Callbacks (
     TAO_ORB_Core *orb_core)
 
@@ -253,3 +256,5 @@ TAO_FT_Service_Callbacks::now (void)
   // Add the offset to convert from posix time.
   return (sec_part + usec_part + ACE_UINT64_LITERAL (0x1B21DD213814000));
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

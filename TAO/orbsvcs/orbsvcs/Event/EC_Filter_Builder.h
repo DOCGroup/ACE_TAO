@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 /**
  *  @file   EC_Filter_Builder.h
  *
@@ -24,6 +24,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Filter;
 class TAO_EC_ProxyPushSupplier;
@@ -76,6 +78,8 @@ public:
                         RtecEventChannelAdmin::ConsumerQOS& qos
                         ACE_ENV_ARG_DECL) const;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

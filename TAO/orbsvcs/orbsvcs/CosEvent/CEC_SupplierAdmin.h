@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   CEC_SupplierAdmin.h
@@ -12,7 +13,6 @@
  * http://doc.ece.uci.edu/~coryan/EC/
  */
 //=============================================================================
-
 
 #ifndef TAO_CEC_SUPPLIERADMIN_H
 #define TAO_CEC_SUPPLIERADMIN_H
@@ -30,6 +30,8 @@
 #include "CEC_ProxyPushConsumer.h"
 #include "CEC_ProxyPullConsumer.h"
 #include "event_serv_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CEC_EventChannel;
 
@@ -113,6 +115,8 @@ private:
   /// Store the default POA.
   PortableServer::POA_var default_POA_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "CEC_SupplierAdmin.i"
