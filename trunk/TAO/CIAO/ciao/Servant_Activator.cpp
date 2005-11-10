@@ -181,8 +181,10 @@ namespace CIAO
 
         if (CIAO::debug_level () > 9)
           ACE_DEBUG ((LM_DEBUG,
-                      "CIAO (%P|%t) - Servant_Activator::register_port_activator,"
+                      "CIAO (%P|%t) - Servant_Activator::register_port_activator"
+                      " with port name [%s],"
                       " the slot_index_ is [%d] \n",
+                      pa->name (),
                       this->slot_index_));
 
         return true;
