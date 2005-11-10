@@ -1,3 +1,10 @@
+Thu Nov 10 10:18:20 USMST 2005  Yan Dai  <dai_y@ociweb.com>
+
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.cpp:
+
+          Merged a bug fix from OCI 1.4a.
+          "Thu Nov 10 02:34:04 2005  Ciju John  <john_c@ociweb.com>"
+
 Thu Nov 10 10:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.cpp:
