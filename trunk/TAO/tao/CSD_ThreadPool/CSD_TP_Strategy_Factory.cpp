@@ -43,15 +43,15 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
   if (repo != 0)
     repo->init(0,0);
 
-  ACE_CString poa_name;
-  unsigned long num_threads = 1;
-  bool serialize_servants = true;
-
   // Parse any service configurator parameters.
   for (int curarg = 0; curarg < argc; curarg++)
     if (ACE_OS::strcasecmp (argv[curarg],
                             ACE_TEXT("-CSDtp")) == 0)
       {
+        ACE_CString poa_name;
+        unsigned long num_threads = 1;
+        bool serialize_servants = true;
+
         curarg++;
         if (curarg < argc)
           {
@@ -83,7 +83,7 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
                     num_thread_str = arg_remainder.substr (0, pos);
 
                     ACE_CString off_str =
-                                     arg.substr (pos + 1, arg.length () - pos);
+                                     arg_remainder.substr (pos + 1, arg.length () - pos);
 
                     // Case-insensitive string comparison.
                     if (ACE_OS::strcasecmp (off_str.c_str(),
