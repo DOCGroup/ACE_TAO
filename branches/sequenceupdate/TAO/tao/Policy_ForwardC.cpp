@@ -31,6 +31,7 @@
 
 #include "Policy_ForwardC.h"
 #include "tao/CDR.h"
+#include "tao/unbounded_object_sequence_cdr.hpp"
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
@@ -158,25 +159,7 @@ CORBA::Boolean operator<< (
     const CORBA::PolicyList &_tao_sequence
   )
 {
-  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-
-  if (strm << _tao_seq_len)
-    {
-      // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag =
-            TAO::Objref_Traits<CORBA::Policy>::marshal (
-                const_cast <CORBA::Policy*>(_tao_sequence[i]), strm
-              );
-        }
-
-      return _tao_marshal_flag;
-    }
-
-  return false;
+  return TAO::details::insert_unbounded_object_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -184,40 +167,7 @@ CORBA::Boolean operator>> (
     CORBA::PolicyList &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len;
-
-  if (strm >> _tao_seq_len)
-    {
-      // Add a check to the length of the sequence
-      // to make sure it does not exceed the length
-      // of the stream. (See bug 58.)
-      if (_tao_seq_len > strm.length ())
-        {
-          return false;
-        }
-
-      // Set the length of the sequence.
-      _tao_sequence.length (_tao_seq_len);
-
-      // If length is 0 we return true.
-      if (0 >= _tao_seq_len)
-        {
-          return true;
-        }
-
-      // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm >> _tao_sequence[i].out ());
-        }
-
-      return _tao_marshal_flag;
-
-    }
-
-  return false;
+  return TAO::details::extract_unbounded_object_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CORBA_PolicyList_CPP_ */
