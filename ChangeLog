@@ -1,3 +1,12 @@
+Wed Nov  9 19:44:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/acecodecslib_for_tao.mpb:
+	* ace/ace_codecs_for_tao.mpc:
+	* ace/QoS/qos.mpc:
+	* ACEXML/common/common.mpc:
+
+	  Fixed "ace_for_tao" subset related unresolved symbol errors.
+
 Wed Nov  9 17:05:59 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* ace/config-macosx-tiger.h
@@ -51,7 +60,7 @@ Sun Nov  6 21:19:44 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
 
 	* ace/ace_sockets_for_tao.mpc:
 
-	  Fixed another bug with th eMPC file.
+	  Fixed another bug with the MPC file.
 
 	* protocols/ace/HTBP/HTBP.mpc:
 
