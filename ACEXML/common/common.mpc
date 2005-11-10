@@ -1,7 +1,7 @@
 //  -*- MPC -*-
 // $Id$
 
-project(ACEXML): acelib, codecs, core {
+project(ACEXML): acelib, acememorylib_for_tao, acecodecslib_for_tao, codecs, core {
   sharedname    = ACEXML
   dynamicflags += ACEXML_BUILD_DLL
 
