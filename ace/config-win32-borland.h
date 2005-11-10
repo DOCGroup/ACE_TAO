@@ -86,7 +86,7 @@
 # endif /* !_MT && !ACE_HAS_WINCE */
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 
-#if (__BORLANDC__ <= 0x580)
+#if (__BORLANDC__ < 0x580)
 # define ACE_LACKS_INTPTR_T
 #endif
 
