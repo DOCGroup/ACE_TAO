@@ -1,3 +1,20 @@
+Fri Nov 11 12:37:00 2005  Gan Deng  <gan.deng@vanderbilt.edu>
+
+	* DAnCE/ExecutionManager/Execution_Manager_Impl.cpp
+	* DAnCE/ExecutionManager/Execution_Manager_Impl.h
+	* DAnCE/NodeApplication/NodeApplication_Impl.cpp
+	* DAnCE/NodeApplication/NodeApplication_Impl.h
+	* DAnCE/NodeManager/NodeManager_Impl.cpp
+	* DAnCE/NodeManager/NodeManager_Impl.h
+	* DAnCE/tests/NodeApplicationTest/NodeAppTest.mpc
+	* ciao/Deployment.idl
+	* ciao/Deployment_Core.idl
+
+	  Added the DAnCE enhancements to support dynamic
+	  assembly management and reconfiguration. No actual
+	  implementation is there except some capability
+	  in NodeApplication_Impl servant class.
+
 Thu Nov 10 17:13:20 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
 	* ciao/Servant_Activator.cpp

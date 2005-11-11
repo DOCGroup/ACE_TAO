@@ -75,6 +75,17 @@ namespace CIAO
       virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
+      virtual void 
+      perform_redeployment (
+        const Deployment::DeploymentPlan &plan
+        ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         Deployment::InstallationFailure,
+                         Deployment::UnknownImplId,
+                         Deployment::ImplEntryPointNotFound,
+                         Deployment::InvalidConnection,
+                         ::Components::RemoveFailure));
+
     protected:
       /// Destructor.
       ~Execution_Manager_Impl (void);
