@@ -5,6 +5,7 @@ project(JAWS3) : acelib {
     sharedname = JAWS3
     dynamicflags = JAWS_BUILD_DLL
     avoids += uses_wchar
+    avoids += ace_for_tao
     includes += ..
     Source_Files {
         Asynch_IO.cpp
@@ -70,6 +71,7 @@ project(JAWS3) : acelib {
 
 project(JAWS3_server) : aceexe {
     avoids += uses_wchar
+    avoids += ace_for_tao
     includes += ..
     exename = main
     after += JAWS3

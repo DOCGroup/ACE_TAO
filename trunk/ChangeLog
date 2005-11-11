@@ -1,3 +1,30 @@
+Fri Nov 11 11:06:31 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ACEXML/common/common.mpc:
+	* ace/ACE_Codecs_export.h:
+	* ace/Codecs.h:
+	* ace/ace.mwc:
+	* ace/ace_codecs_for_tao.mpc:
+	* apps/JAWS/server/server.mpc:
+	* apps/JAWS3/jaws3/jaws3.mpc:
+	* examples/Service_Configurator/IPC-tests/server/Svc_Cfg_IPC_Server.mpc:
+	* examples/Threads/Threads.mpc:
+	* examples/Web_Crawler/Web_Crawler.mpc:
+	* netsvcs/clients/Naming/Client/Client.mpc:
+	* netsvcs/clients/Naming/Dump_Restore/Dump_Restore.mpc:
+	* netsvcs/lib/lib.mpc:
+	* performance-tests/Misc/Misc.mpc:
+	* performance-tests/SCTP/SCTP.mpc:
+	* performance-tests/Server_Concurrency/Leader_Follower/Svr_Conc_Leader_Follower.mpc:
+	* performance-tests/Server_Concurrency/Queue_Based_Workers/Svr_Conc_Queue_Based_Workers.mpc:
+	* performance-tests/Synch-Benchmarks/Base_Test/Synch_Benchmarks_Base_Test.mpc:
+	* performance-tests/Synch-Benchmarks/Perf_Test/Synch_Benchmarks_Perf_Test.mpc:
+	* performance-tests/TCP/TCP.mpc:
+	* performance-tests/UDP/UDP.mpc:
+	* tests/tests.mpc:
+
+	  Addressed some "ace_for_tao" link-time failures.
+
 Fri Nov 11 09:21:53 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* include/makeinclude/wrapper_macros.GNU:
