@@ -2,7 +2,7 @@
 //
 // $Id$
 
-project(ACE_Codecs_FOR_TAO) : acedefaults, core, pkgconfig {
+project(ACE_Codecs_FOR_TAO) : acedefaults, core, pkgconfig, ace_for_tao {
 
   requires     = ace_for_tao
   libout       = $(ACE_ROOT)/lib
