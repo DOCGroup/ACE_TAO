@@ -178,5 +178,23 @@ namespace CIAO
       this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
+
+    void 
+    Execution_Manager_Impl::perform_redeployment (
+      const Deployment::DeploymentPlan &plan
+      ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((Deployment::InstallationFailure,
+                       Deployment::UnknownImplId,
+                       Deployment::ImplEntryPointNotFound,
+                       Deployment::InvalidConnection,
+                       ::Components::RemoveFailure))
+
+    {
+      CIAO_TRACE ("CIAO::Execution_Manager_Impl::perform_redeployment");
+    
+      ACE_DEBUG ((LM_DEBUG,
+                  "CIAO (%P|%t) Dynamic Redeployment: "
+                  "invoked CIAO::Execution_Manager_Impl::perform_redeployment \n"));
+    }
   }
 }

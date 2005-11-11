@@ -63,9 +63,9 @@ CIAO::NodeApplication_Impl::finishLaunch (
       for (CORBA::ULong i = 0; i < length; ++i)
         {
           ACE_CString name = providedReference[i].instanceName.in ();
-          Components::CCMObject_ptr comp;
+          Components::CCMObject_var comp;
 
-          if (this->component_map_.find (name, comp) != 0)
+          if (this->component_objref_map_.find (name, comp) != 0)
             {
               ACE_ERROR ((LM_ERROR,
                           "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
@@ -229,8 +229,8 @@ CIAO::NodeApplication_Impl::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError))
 {
-  Component_Iterator end = this->component_map_.end ();
-  for (Component_Iterator iter (this->component_map_.begin ());
+  Component_Iterator end = this->component_objref_map_.end ();
+  for (Component_Iterator iter (this->component_objref_map_.begin ());
        iter != end;
        ++iter)
   {
@@ -244,8 +244,8 @@ CIAO::NodeApplication_Impl::start (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError))
 {
-  Component_Iterator end = this->component_map_.end ();
-  for (Component_Iterator iter (this->component_map_.begin ());
+  Component_Iterator end = this->component_objref_map_.end ();
+  for (Component_Iterator iter (this->component_objref_map_.begin ());
        iter != end;
        ++iter)
   {
@@ -259,8 +259,8 @@ CIAO::NodeApplication_Impl::ciao_postactivate (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError))
 {
-  Component_Iterator end = this->component_map_.end ();
-  for (Component_Iterator iter (this->component_map_.begin ());
+  Component_Iterator end = this->component_objref_map_.end ();
+  for (Component_Iterator iter (this->component_objref_map_.begin ());
        iter != end;
        ++iter)
   {
@@ -274,8 +274,8 @@ CIAO::NodeApplication_Impl::ciao_passivate (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StopError))
 {
-  Component_Iterator end = this->component_map_.end ();
-  for (Component_Iterator iter (this->component_map_.begin ());
+  Component_Iterator end = this->component_objref_map_.end ();
+  for (Component_Iterator iter (this->component_objref_map_.begin ());
        iter != end;
        ++iter)
   {
@@ -359,7 +359,8 @@ CIAO::NodeApplication_Impl::install (
           ++len)
       {
         //Since we know the type ahead of time...narrow is omitted here.
-        if (this->component_map_.bind (retv[len].component_instance_name.in(),
+        if (this->component_objref_map_.bind (
+        	  retv[len].component_instance_name.in(),
               Components::CCMObject::_duplicate (retv[len].
                 component_ref.in ())))
           {
@@ -385,6 +386,31 @@ CIAO::NodeApplication_Impl::install (
   ACE_CHECK_RETURN (0);
 
   return retv._retn ();
+}
+
+void
+CIAO::NodeApplication_Impl::remove_component (const char * inst_name
+                                              ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((::CORBA::SystemException,
+                   ::Components::RemoveFailure))
+{
+  // Fetch the container object reference from the componet_container_map
+  ::Deployment::Container_var container_ref;
+  if (this->component_container_map_.find (inst_name, container_ref) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
+                  "CIAO::NodeApplication_Impl::remove_component, "
+                  "invalid instance [%s] in the component_container_map.\n",
+                  inst_name));
+      ACE_TRY_THROW (::Components::RemoveFailure ());
+    }
+  
+  // Remove this component instance from the node application
+  ACE_CString name (inst_name);
+  this->component_container_map_.unbind (name);
+  this->component_objref_map_.unbind (name);
+  container_ref->remove_component (inst_name);
 }
 
 void
@@ -414,8 +440,9 @@ CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
 
 // Create a container interface, which will be hosted in this NodeApplication.
 ::Deployment::Container_ptr
-CIAO::NodeApplication_Impl::create_container (const ::Deployment::Properties &properties
-                                              ACE_ENV_ARG_DECL)
+CIAO::NodeApplication_Impl::create_container (
+	const ::Deployment::Properties &properties
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                   ::Components::CreateFailure,
                   ::Components::InvalidConfiguration))
@@ -471,6 +498,18 @@ CIAO::NodeApplication_Impl::create_container (const ::Deployment::Properties &pr
 
     this->container_set_.add (ci.in ());
   }
+
+  /*
+  // Build the Component_Container_Map
+  for (CORBA::ULong j = 0; 
+       j < container_info.impl_infos.length ();
+       ++j)
+    {
+      this->component_container_map_.bind (
+        container_info.impl_infos[j].component_instance_name.in (),
+        ::Deployment::Container::_duplicate (ci.in ()));
+    }
+*/
 
   if (CIAO::debug_level () > 1)
     ACE_DEBUG ((LM_DEBUG,

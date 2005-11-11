@@ -71,6 +71,17 @@ module Deployment {
     DomainApplicationManagers getManagers ();
     void destroyManager (in DomainApplicationManager manager)
       raises (StopError);
+
+    // This operation could handle dynamic redeployment, and this
+    // is the operation exposed to clients directly. Other 
+    // "perform_redeployment" operation defined on DAM and NA
+    // are implementaion details within DAnCE.
+    void perform_redeployment (in DeploymentPlan new_plan)
+      raises (InstallationFailure,
+              UnknownImplId,
+              ImplEntryPointNotFound,
+              InvalidConnection,
+              ::Components::RemoveFailure);
   };
 
   interface TargetManager {
@@ -97,6 +108,15 @@ module Deployment {
       raises (StartError, PlanError);
     void destroyManager (in NodeApplicationManager appManager)
       raises (StopError, InvalidReference);
+
+    // This operation could handle dynamic redeployment for
+    // a node-level deployment plan within a node
+    void perform_redeployment (in DeploymentPlan new_plan)
+      raises (InstallationFailure,
+              UnknownImplId,
+              ImplEntryPointNotFound,
+              InvalidConnection,
+              ::Components::RemoveFailure);
   };
 
   interface RepositoryManager {

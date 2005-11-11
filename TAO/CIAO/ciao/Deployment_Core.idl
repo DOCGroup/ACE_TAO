@@ -183,6 +183,10 @@ module Deployment
     /// Remove all homes and components
     void remove ()
       raises (::Components::RemoveFailure);
+
+    /// Remove a component instance
+    void remove_component (in string inst_name)
+      raises (::Components::RemoveFailure);
   };
 
   typedef sequence<Container> Containers;
@@ -206,7 +210,7 @@ module Deployment
               ::Components::InvalidConfiguration,
               ::Components::RemoveFailure);
 
-    ///@@ We know that Dployment::NodeApplicationManager will be returned,
+    ///@@ We know that Deployment::NodeApplicationManager will be returned,
     ///   however to avoid the size of the shared object of CIAO_Server.
     ///   we return an Object.
     Object get_node_application_manager ();
@@ -219,6 +223,10 @@ module Deployment
       raises (::Components::RemoveFailure);
 
     Containers get_containers ();
+
+    /// Remove a component instance from the NodeApplication
+    void remove_component (in string inst_name)
+      raises (::Components::RemoveFailure);
 
     /// Remove all containers, components and component homes.
     /// Shuts down the ORB of the NodeApplication to terminate the process.
