@@ -8,6 +8,7 @@
 #include "tao/debug.h"
 
 #include "ace/Process_Semaphore.h"
+#include "ace/OS_NS_unistd.h"
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
