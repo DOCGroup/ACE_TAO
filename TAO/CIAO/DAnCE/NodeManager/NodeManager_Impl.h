@@ -98,6 +98,16 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::StopError,
                        Deployment::InvalidReference));
+    virtual void 
+    perform_redeployment (
+      const Deployment::DeploymentPlan &plan
+      ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Deployment::InstallationFailure,
+                       Deployment::UnknownImplId,
+                       Deployment::ImplEntryPointNotFound,
+                       Deployment::InvalidConnection,
+                       ::Components::RemoveFailure));
 
   private:
     /// Validate the child deployment plan. In particular, we are

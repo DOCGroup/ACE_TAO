@@ -152,6 +152,12 @@ namespace CIAO
     properties (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    /// Remove a component instance from the NodeApplication
+    virtual void remove_component (const char * inst_name
+                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((::CORBA::SystemException,
+                       ::Components::RemoveFailure));
+                       
     /// Remove everything inside including all components and homes.
     virtual void remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
@@ -195,24 +201,33 @@ namespace CIAO
         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    /// To build a map between a component instance and  its container
+    typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+                                    Deployment::Container_var,
+                                    ACE_Hash<ACE_CString>,
+                                    ACE_Equal_To<ACE_CString>,
+                                    ACE_Null_Mutex> Component_Container_Map;
+    typedef Component_Container_Map::iterator Component_Container_Iterator;
+    Component_Container_Map component_container_map_;
+
+
     /// To store all created Component object.
     // @@Gan/Jai, as we discussed before this is simply a BAD
     //idea. These need to moved into the container.
-    // @@ Jai/Gan, how about using CCMObject_var instead of
-    //CCMObject_ptr's?
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-                                    Components::CCMObject_ptr,
+                                    Components::CCMObject_var,
                                     ACE_Hash<ACE_CString>,
                                     ACE_Equal_To<ACE_CString>,
                                     ACE_Null_Mutex> CCMComponent_Map;
     typedef CCMComponent_Map::iterator Component_Iterator;
-    CCMComponent_Map component_map_;
+    CCMComponent_Map component_objref_map_;
 
     /// Synchronize access to the object set.
     TAO_SYNCH_MUTEX lock_;
 
     /// Keep a list of managed Container objects.
     Object_Set<Deployment::Container, Deployment::Container_var> container_set_;
+
     /// Keep a pointer to the managing ORB serving this servant.
     CORBA::ORB_var orb_;
 

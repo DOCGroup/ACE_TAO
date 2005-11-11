@@ -283,6 +283,25 @@ CIAO::NodeManager_Impl_Base::validate_plan (const Deployment::DeploymentPlan &pl
   return true;
 }
 
+void 
+CIAO::NodeManager_Impl_Base::perform_redeployment (
+  const Deployment::DeploymentPlan &plan
+  ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((Deployment::InstallationFailure,
+                    Deployment::UnknownImplId,
+                    Deployment::ImplEntryPointNotFound,
+                    Deployment::InvalidConnection,
+                    ::Components::RemoveFailure))
+
+{
+  CIAO_TRACE ("CIAO::NodeManager_Impl_Base::perform_redeployment");
+
+  ACE_DEBUG ((LM_DEBUG,
+              "CIAO (%P|%t) NodeManager_Impl_Base: "
+              "invoked CIAO::NodeManager_Impl_Base::perform_redeployment \n"));
+}
+
+
 CIAO::NodeManager_Impl::~NodeManager_Impl ()
 {
 }
