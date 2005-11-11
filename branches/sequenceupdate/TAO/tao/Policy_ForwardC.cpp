@@ -31,7 +31,7 @@
 
 #include "Policy_ForwardC.h"
 #include "tao/CDR.h"
-#include "tao/unbounded_object_sequence_cdr.hpp"
+#include "tao/unbounded_sequence_cdr.hpp"
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
@@ -55,7 +55,7 @@ CORBA::PolicyList::PolicyList (
     CORBA::ULong max
   )
   : TAO::unbounded_object_reference_sequence<
-        CORBA::Policy
+        CORBA::Policy, CORBA::Policy_var
       >
     (max)
 {}
@@ -67,7 +67,7 @@ CORBA::PolicyList::PolicyList (
     CORBA::Boolean release
   )
   : TAO::unbounded_object_reference_sequence<
-        CORBA::Policy
+        CORBA::Policy, CORBA::Policy_var
       >
     (max, length, buffer, release)
 {}
@@ -76,7 +76,7 @@ CORBA::PolicyList::PolicyList (
     const PolicyList &seq
   )
   : TAO::unbounded_object_reference_sequence<
-        CORBA::Policy
+        CORBA::Policy, CORBA::Policy_var
       >
     (seq)
 {}
@@ -159,7 +159,7 @@ CORBA::Boolean operator<< (
     const CORBA::PolicyList &_tao_sequence
   )
 {
-  return TAO::details::insert_unbounded_object_sequence(strm, _tao_sequence);
+  return TAO::details::insert_unbounded_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -167,7 +167,7 @@ CORBA::Boolean operator>> (
     CORBA::PolicyList &_tao_sequence
   )
 {
-  return TAO::details::extract_unbounded_object_sequence(strm, _tao_sequence);
+  return TAO::details::extract_unbounded_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CORBA_PolicyList_CPP_ */

@@ -9,15 +9,15 @@
  *
  * @author Carlos O'Ryan
  */
-#include "tao/unbounded_reference_allocation_traits.hpp"
-#include "tao/object_reference_traits.hpp"
-#include "tao/generic_sequence.hpp"
-#include "tao/object_reference_sequence_element.hpp"
+#include "unbounded_reference_allocation_traits.hpp"
+#include "object_reference_traits.hpp"
+#include "generic_sequence.hpp"
+#include "object_reference_sequence_element.hpp"
 
 namespace TAO
 {
 
-template<typename object_t>
+template<typename object_t, typename object_t_var>
 class unbounded_object_reference_sequence
 {
 public:
@@ -25,7 +25,7 @@ public:
   typedef object_type * value_type;
   typedef object_type const * const_value_type;
 
-  typedef details::object_reference_traits<object_type,true> element_traits;
+  typedef details::object_reference_traits<object_type,object_t_var,true> element_traits;
   typedef details::unbounded_reference_allocation_traits<value_type,element_traits,true> allocation_traits;
 
   typedef details::object_reference_sequence_element<element_traits> element_type;
@@ -82,6 +82,7 @@ public:
   inline void swap(unbounded_object_reference_sequence & rhs) throw() {
     impl_.swap(rhs.impl_);
   }
+
   static value_type * allocbuf(CORBA::ULong maximum)
   {
     return implementation_type::allocbuf(maximum);
@@ -90,6 +91,8 @@ public:
   {
     implementation_type::freebuf(buffer);
   }
+
+
 private:
   implementation_type impl_;
 };

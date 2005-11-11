@@ -114,7 +114,8 @@ namespace CORBA
   class TAO_Export PolicyList
     : public
         TAO::unbounded_object_reference_sequence<
-            Policy
+            Policy,
+            Policy_var
           >
   {
   public:
@@ -180,6 +181,7 @@ namespace CORBA
     static void _tao_any_destructor (void *);
 
     typedef PolicyTypeSeq_var _var_type;
+    typedef PolicyTypeSeq_out _out_type;
   };
 
 #endif /* end #if !defined */

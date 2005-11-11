@@ -343,7 +343,7 @@ namespace CORBA
   class TAO_Export DomainManagerList
     : public
         TAO::unbounded_object_reference_sequence<
-            DomainManager
+            DomainManager, DomainManager_var
           >
   {
   public:

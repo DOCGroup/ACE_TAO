@@ -9,23 +9,24 @@
  *
  * @author Carlos O'Ryan
  */
-#include "tao/bounded_reference_allocation_traits.hpp"
-#include "tao/object_reference_traits.hpp"
-#include "tao/generic_sequence.hpp"
-#include "tao/object_reference_sequence_element.hpp"
+#include "bounded_reference_allocation_traits.hpp"
+#include "object_reference_traits.hpp"
+#include "generic_sequence.hpp"
+#include "object_reference_sequence_element.hpp"
 
 namespace TAO
 {
 
-template<typename object_t, CORBA::ULong MAX>
+template<typename object_t, typename object_t_var, CORBA::ULong MAX>
 class bounded_object_reference_sequence
 {
 public:
   typedef object_t object_type;
   typedef object_type * value_type;
   typedef object_type const * const_value_type;
+  typedef object_t_var object_type_var;
 
-  typedef details::object_reference_traits<object_type,true> element_traits;
+  typedef details::object_reference_traits<object_type,object_type_var,true> element_traits;
   typedef details::bounded_reference_allocation_traits<value_type,element_traits,MAX,true> allocation_traits;
 
   typedef details::object_reference_sequence_element<element_traits> element_type;

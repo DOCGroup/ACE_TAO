@@ -36,7 +36,7 @@
 #include "tao/Basic_Arguments.h"
 #include "tao/Object_Argument_T.h"
 #include "tao/Special_Basic_Arguments.h"
-#include "tao/unbounded_object_sequence_cdr.hpp"
+#include "tao/unbounded_sequence_cdr.hpp"
 #include "ace/OS_NS_string.h"
 
 #include "tao/ORB_Core.h"
@@ -547,7 +547,7 @@ CORBA::DomainManagerList::DomainManagerList (
     CORBA::ULong max
   )
   : TAO::unbounded_object_reference_sequence<
-        CORBA::DomainManager
+        CORBA::DomainManager, CORBA::DomainManager_var
       >
     (max)
 {}
@@ -559,7 +559,7 @@ CORBA::DomainManagerList::DomainManagerList (
     CORBA::Boolean release
   )
   : TAO::unbounded_object_reference_sequence<
-        CORBA::DomainManager
+        CORBA::DomainManager, CORBA::DomainManager_var
       >
     (max, length, buffer, release)
 {}
@@ -568,7 +568,7 @@ CORBA::DomainManagerList::DomainManagerList (
     const DomainManagerList &seq
   )
   : TAO::unbounded_object_reference_sequence<
-        CORBA::DomainManager
+        CORBA::DomainManager, CORBA::DomainManager_var
       >
     (seq)
 {}
@@ -670,7 +670,7 @@ CORBA::Boolean operator<< (
     const CORBA::DomainManagerList &_tao_sequence
   )
 {
-  return TAO::details::insert_unbounded_object_sequence(strm, _tao_sequence);
+  return TAO::details::insert_unbounded_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -678,7 +678,7 @@ CORBA::Boolean operator>> (
     CORBA::DomainManagerList &_tao_sequence
   )
 {
-  return TAO::details::extract_unbounded_object_sequence(strm, _tao_sequence);
+  return TAO::details::extract_unbounded_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CORBA_DomainManagerList_CPP_ */

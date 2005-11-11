@@ -1,10 +1,9 @@
-#ifndef unbounded_object_sequence_cdr
-#define unbounded_object_sequence_cdr
+#ifndef unbounded_sequence_cdr
+#define unbounded_sequence_cdr
 /**
  * @file
  *
- * @brief Extract the seqyebce
- * sequences.
+ * @brief Extract the sequence
  *
  * $Id$
  *
@@ -12,13 +11,10 @@
  * @author Johnny Willemsen
  */
 
-class TAO_InputCDR;
-class TAO_OutputCDR;
-
 namespace TAO {
   namespace details {
     template <class sequence>
-    bool extract_unbounded_object_sequence(TAO_InputCDR & strm, sequence & target) {
+    bool extract_unbounded_sequence(TAO_InputCDR & strm, sequence & target) {
       ::CORBA::ULong new_length;
       if (!(strm >> new_length)) {
         return false;
@@ -39,13 +35,15 @@ namespace TAO {
     }
 
     template <class sequence>
-    bool insert_unbounded_object_sequence(TAO_OutputCDR & strm, const sequence & source) {
+    bool insert_unbounded_sequence(TAO_OutputCDR & strm, const sequence & source) {
       const ::CORBA::ULong length = source.length ();
       if (!(strm << length)) {
         return false;
       }
       for(CORBA::ULong i = 0; i < length; ++i) {
-        if (!(strm << source[i])) {
+// Check this
+        sequence::value_type element = const_cast <sequence::value_type> (source[i]);
+        if (!(strm << element)) {
           return false;
         }
       }
@@ -54,4 +52,4 @@ namespace TAO {
   }
 }
 
-#endif /* unbounded_object_sequence_cdr */
+#endif /* unbounded_sequence_cdr */

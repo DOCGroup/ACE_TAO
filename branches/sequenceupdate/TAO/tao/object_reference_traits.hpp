@@ -10,7 +10,7 @@
  *
  * @author Carlos O'Ryan
  */
-#include "tao/object_reference_traits_base.hpp"
+#include "object_reference_traits_base.hpp"
 
 #include <algorithm>
 #include <functional>
@@ -20,14 +20,13 @@ namespace TAO
 namespace details
 {
 
-template<class object_t, class derived>
+template<class object_t, class object_t_var, class derived>
 struct object_reference_traits_decorator
 {
   typedef object_t object_type;
   typedef object_type * value_type;
   typedef object_type const * const_value_type;
-
-//  typedef typename object_type::_var_type object_type_var;
+  typedef object_t_var object_type_var;
 
   inline static void zero_range(
       object_type ** begin, object_type ** end)
@@ -63,14 +62,17 @@ struct object_reference_traits_decorator
   }
 };
 
-template<typename object_t, bool dummy>
+template<typename object_t, typename object_t_var, bool dummy>
 struct object_reference_traits
-  : public object_reference_traits_base<object_t>
-  , public object_reference_traits_decorator<object_t, object_reference_traits<object_t,dummy> >
+  : public object_reference_traits_base<object_t, object_t_var>
+  , public object_reference_traits_decorator<object_t, object_t_var, object_reference_traits<object_t,object_t_var,dummy> >
 {
+#if defined __BORLANDC__ && __BORLANDC__ < 0x580
   typedef object_t object_type;
   typedef object_type * value_type;
   typedef object_type const * const_value_type;
+  typedef object_t_var object_type_var;
+#endif
 };
 
 } // namespace details

@@ -238,7 +238,7 @@ namespace CORBA
 
     typedef
       TAO::unbounded_object_reference_sequence<
-          CORBA::Request
+          CORBA::Request, CORBA::Request_var
         >
       RequestSeq;
 
