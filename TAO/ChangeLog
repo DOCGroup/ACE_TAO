@@ -1,3 +1,9 @@
+Fri Nov 11 08:50:02 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
+
+	  Include "ace/OS_NS_unistd.h" for ACE_OS::getgid() prototype.
+
 Thu Nov 10 10:18:20 USMST 2005  Yan Dai  <dai_y@ociweb.com>
 
         * TAO/tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.cpp:
