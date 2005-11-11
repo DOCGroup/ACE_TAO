@@ -50,6 +50,9 @@
 #  static_link      Link only static libs to executables, e.g., uses "-static"
 #                   flag with the GNU ld linker.
 #  threads          Build with thread support.
+#  ace_for_tao      Build "ace_for_tao" subset.  Primarily useful for
+#                   reducing the size of the ACE shared library when
+#                   using TAO.
 #  xt               Build with Xt (X11 Toolkit) support.
 #  fl               Build with FlTk (Fast Light Toolkit) support.
 #  tk               Build with Tk (Tcl/Tk) support.
@@ -438,6 +441,17 @@ ifeq ($(threads),0)
   override threads =
 endif # threads
 
+# ace_for_tao subsetting is disabled by default.
+ace_for_tao ?=
+ifeq ($(ace_for_tao),0)
+  override ace_for_tao =
+endif # fl
+
+ifneq ($(ace_for_tao),)
+  ACE_MAKE_OPTIONS += ace_for_tao
+endif # fl
+
+
 ifeq ($(xt),0)
   override xt =
 endif # xt
@@ -547,15 +561,14 @@ ifeq ($(ssl),0)
   override ssl =
 else
   ifneq ($(SSL_ROOT),)
-      # Don't do a thing..
-    else
-      CPPFLAGS += $(PLATFORM_SSL_CPPFLAGS)
-      LDFLAGS  += $(PLATFORM_SSL_LDFLAGS)
-      LIBS     += $(PLATFORM_SSL_LIBS)
-  ACE_MAKE_OPTIONS += ssl
+    # Don't do a thing..
+  else
+    CPPFLAGS += $(PLATFORM_SSL_CPPFLAGS)
+    LDFLAGS  += $(PLATFORM_SSL_LDFLAGS)
+    LIBS     += $(PLATFORM_SSL_LIBS)
+    ACE_MAKE_OPTIONS += ssl
   endif
 endif
-
 ec_typed_events ?= 1
 
 ifeq ($(exceptions),0)

@@ -1,3 +1,10 @@
+Fri Nov 11 09:21:53 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* include/makeinclude/wrapper_macros.GNU:
+
+	  Added missing "ace_for_tao" support.  Addresses "ace_for_tao"
+	  build errors in GNU Make based builds.
+
 Fri Nov 11 12:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_sunos5_g++.GNU:
