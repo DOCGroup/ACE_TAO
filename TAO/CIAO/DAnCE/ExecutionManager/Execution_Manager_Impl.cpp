@@ -181,9 +181,11 @@ namespace CIAO
 
     void 
     Execution_Manager_Impl::perform_redeployment (
-      const Deployment::DeploymentPlan &plan
+      const Deployment::DeploymentPlan & plan
       ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((Deployment::InstallationFailure,
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Deployment::PlanError,
+                       Deployment::InstallationFailure,
                        Deployment::UnknownImplId,
                        Deployment::ImplEntryPointNotFound,
                        Deployment::InvalidConnection,
@@ -195,6 +197,40 @@ namespace CIAO
       ACE_DEBUG ((LM_DEBUG,
                   "CIAO (%P|%t) Dynamic Redeployment: "
                   "invoked CIAO::Execution_Manager_Impl::perform_redeployment \n"));
+
+      Deployment::DomainApplicationManager_var dam;
+
+      if (this->map_.is_plan_available (plan.UUID.in ()))
+        dam = this->map_.fetch_dam_reference (plan.UUID.in ());
+      else
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      "DAnCE (%P|%t) ExecutionManager_Impl.cpp -"
+                      "CIAO::Execution_Manager_Impl::perform_redeployment -"
+                      "Invalid plan uuid: %s!\n", plan.UUID.in ()));
+          ACE_THROW (Deployment::PlanError (
+                        "Execution_Manager_Impl::perform_redeployment",
+                        "Invalid plan uuid specified."));
+        }
+
+      ACE_TRY
+        {
+          // Reset the plan_ private instance variable of the DAM servant
+          //dam->set_plan (plan);
+
+          // Call perform_redeployment() on the DAM, which will do the
+          // actual redeployment and reconfiguration on the dommain level.
+          dam->perform_redeployment (plan);
+
+        }
+      ACE_CATCHANY
+        {
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                               "Execution_Manager_Impl::perform_redeployment\t\n");
+          ACE_RE_THROW;
+        }
+      ACE_ENDTRY;
+      ACE_CHECK;
     }
   }
 }

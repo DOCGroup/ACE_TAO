@@ -56,7 +56,7 @@ namespace CIAO
       virtual Deployment::DomainApplicationManager_ptr
       preparePlan (const Deployment::DeploymentPlan & plan,
                    CORBA::Boolean commitResources
-                   ACE_ENV_ARG_DECL)
+                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          Deployment::ResourceNotAvailable,
                          Deployment::PlanError,
@@ -68,18 +68,21 @@ namespace CIAO
 
       virtual void
       destroyManager (Deployment::DomainApplicationManager_ptr manager
-                      ACE_ENV_ARG_DECL)
+                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          Deployment::StopError));
 
-      virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+      virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
+      // The input parameter is a *new_plan* which has the
+      // same UUID of the existing running plan.
       virtual void 
       perform_redeployment (
-        const Deployment::DeploymentPlan &plan
-        ACE_ENV_ARG_DECL)
+        const Deployment::DeploymentPlan & plan
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException,
+                         Deployment::PlanError,
                          Deployment::InstallationFailure,
                          Deployment::UnknownImplId,
                          Deployment::ImplEntryPointNotFound,
