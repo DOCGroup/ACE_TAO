@@ -286,6 +286,30 @@ startLaunch (const Deployment::Properties & configProperty,
   return Deployment::NodeApplication::_duplicate (this->nodeapp_.in ());
 }
 
+
+Deployment::Application_ptr
+CIAO::NodeApplicationManager_Impl_Base::
+perform_redeployment (const Deployment::Properties & configProperty,
+                      Deployment::Connections_out providedReference,
+                      CORBA::Boolean start
+                      ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((Deployment::InstallationFailure,
+                    Deployment::UnknownImplId,
+                    Deployment::ImplEntryPointNotFound,
+                    Deployment::InvalidConnection,
+                    Deployment::InvalidProperty,
+                    ::Components::RemoveFailure))
+
+{
+  CIAO_TRACE ("CIAO::NodeApplicationManager_Impl_Base::perform_redeployment");
+
+  ACE_DEBUG ((LM_DEBUG,
+              "CIAO (%P|%t) NodeApplicationManager_Impl_Base: "
+              "invoked CIAO::NodeApplicationManager_Impl_Base::perform_redeployment \n"));
+
+  return 0;
+}
+
 void
 CIAO::NodeApplicationManager_Impl_Base::
 destroyApplication (Deployment::Application_ptr app

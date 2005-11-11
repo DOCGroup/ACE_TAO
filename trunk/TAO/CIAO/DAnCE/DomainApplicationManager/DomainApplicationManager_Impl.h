@@ -180,6 +180,20 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::StopError));
 
+    // The input parameter is a *new_plan* which has the
+    // same UUID of the existing running plan.
+    virtual void 
+    perform_redeployment (
+      const Deployment::DeploymentPlan & plan
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                        Deployment::PlanError,
+                        Deployment::InstallationFailure,
+                        Deployment::UnknownImplId,
+                        Deployment::ImplEntryPointNotFound,
+                        Deployment::InvalidConnection,
+                        ::Components::RemoveFailure));
+
   protected:
     /// Destructor
     virtual ~DomainApplicationManager_Impl (void);
@@ -286,6 +300,10 @@ namespace CIAO
     /// calling the startLaunch() method on the NodeApplicationManager object.
     ::Deployment::Connections_var all_connections_;
 
+    /// This variable is used to control the execution path of some
+    /// member function implementations. The reason is because we want
+    /// to avoid unnecessary code duplicate. The default value is "false".
+    bool is_redeployment;
   };
 }
 

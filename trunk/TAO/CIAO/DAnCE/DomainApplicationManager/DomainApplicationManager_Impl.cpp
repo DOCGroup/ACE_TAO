@@ -36,7 +36,8 @@ DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
   // Need to initialize chained artifacts here.
   //
     deployment_file_ (CORBA::string_dup (deployment_file)),
-    deployment_config_ (orb)
+    deployment_config_ (orb),
+    is_redeployment (false)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_NEW_THROW_EX (this->all_connections_,
@@ -110,7 +111,7 @@ init (ACE_ENV_SINGLE_ARG_DECL)
           ACE_TRY_THROW (Deployment::PlanError ());
         }
 
-      // Invoke preparePlan for each child deployment plan.
+      // Invoke preparePlan on each NodeManager by giving child plan.
       for (CORBA::ULong i = 0; i < this->num_child_plans_; ++i)
         {
           // Get the NodeManager object reference.
@@ -512,10 +513,21 @@ startLaunch (const ::Deployment::Properties & configProperty,
 
           // Obtained the returned NodeApplication object reference
           // and the returned Connections variable.
-          ::Deployment::Application_var temp_application =
-            my_nam->startLaunch (configProperty,
-                                 retn_connections.out (),
-                                 0);
+          ::Deployment::Application_var temp_application;
+          if (!is_redeployment)
+            {
+              temp_application =
+                my_nam->startLaunch (configProperty,
+                                    retn_connections.out (),
+                                    0);
+            }
+          else
+            {
+              temp_application =
+                my_nam->perform_redeployment (configProperty,
+                                              retn_connections.out (),
+                                              0);
+            }
 
           // Narrow down to NodeApplication object reference
           ::Deployment::NodeApplication_var my_na =
@@ -925,6 +937,64 @@ destroyManager (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 }
 
+void
+CIAO::DomainApplicationManager_Impl::
+perform_redeployment (
+  const Deployment::DeploymentPlan & plan
+  ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                    Deployment::PlanError,
+                    Deployment::InstallationFailure,
+                    Deployment::UnknownImplId,
+                    Deployment::ImplEntryPointNotFound,
+                    Deployment::InvalidConnection,
+                    ::Components::RemoveFailure))
+{
+  // Currently we could dynamically update the NodeManagerMap topology,
+  // but later maybe we could add another parameter to this operation,
+  // which allows the user to specify the new NodeManagerMap data file.
+  Deployment::DeploymentPlan backup_plan = this->plan_;
+  this->is_redeployment = true;
+  this->plan_ = plan;
+
+  ACE_TRY
+    {
+      // Call init() on the myself, which will validate/split the plan and
+      // call preparePlan on each NodeManager, by this, we shall get
+      // all the object references of NM and NAM associated with each
+      // component instance populated. 
+      this->init ();
+
+      // Call startLaunch on each NM for each child plan, this should not only
+      // install all the new components specified, but should also remove
+      // the components that are no longer in the new deployment plan.
+      // Meanwhile, we should set up the container configurations appropriately,
+      // whose information is fully captured in the node-level deployment plan.
+      ::Deployment::Properties_var properties;
+      ACE_NEW (properties,
+               Deployment::Properties);
+
+      this->startLaunch (properties.in (), false);
+
+      // finishLaunch() will not only establish necessary connections, but also
+      // should get rid of those non-existing connections. As we know, in the
+      // node level, the connections are cached within the NodeApplication *and*
+      // Container, then we should modify the implementation of the
+      // <finishLaunch> on the NodeApplication to accomplish this.
+      this->finishLaunch (true);  // yes, start activtion also.
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                            "DomainApplicationManager_Impl::perform_redeployment\t\n");
+      this->plan_ = backup_plan;
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+
 // Returns the DeploymentPlan associated with this ApplicationManager.
 ::Deployment::DeploymentPlan *
 CIAO::DomainApplicationManager_Impl::
@@ -1065,8 +1135,8 @@ get_outgoing_connections_i (const char * instname,
                   error += curr_conn.name.in ();
                   ACE_THROW_RETURN (Deployment::StartError
                     ("DomainApplicationManager_Impl::create_connections_i",
-		      error.c_str ()),
-		      false);
+		                  error.c_str ()),
+		                  false);
                 }
 
               break;
@@ -1084,45 +1154,45 @@ dump_connections (const ::Deployment::Connections & connections)
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::dump_connections");
   const CORBA::ULong conn_len = connections.length ();
   for (CORBA::ULong i = 0; i < conn_len; ++i)
-  {
-    ACE_DEBUG ((LM_DEBUG,
-                "instanceName: %s\n", connections[i].instanceName.in ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "instanceName: %s\n", connections[i].instanceName.in ()));
 
-    ACE_DEBUG ((LM_DEBUG, "portName: %s\n", connections[i].portName.in ()));
+      ACE_DEBUG ((LM_DEBUG, "portName: %s\n", connections[i].portName.in ()));
 
-    ACE_DEBUG ((LM_DEBUG, "portkind: "));
+      ACE_DEBUG ((LM_DEBUG, "portkind: "));
 
-    switch (connections[i].kind)
-      {
-        case Deployment::Facet:
+      switch (connections[i].kind)
+        {
+          case Deployment::Facet:
 
-           ACE_DEBUG ((LM_DEBUG, "Facet\n"));
-           break;
+            ACE_DEBUG ((LM_DEBUG, "Facet\n"));
+            break;
 
-        case Deployment::SimplexReceptacle:
+          case Deployment::SimplexReceptacle:
 
-           ACE_DEBUG ((LM_DEBUG, "SimplexReceptacle\n"));
-           break;
+            ACE_DEBUG ((LM_DEBUG, "SimplexReceptacle\n"));
+            break;
 
-        case Deployment::MultiplexReceptacle:
+          case Deployment::MultiplexReceptacle:
 
-           ACE_DEBUG ((LM_DEBUG, "MultiplexReceptacle\n"));
-           break;
+            ACE_DEBUG ((LM_DEBUG, "MultiplexReceptacle\n"));
+            break;
 
-        case Deployment::EventEmitter:
+          case Deployment::EventEmitter:
 
-           ACE_DEBUG ((LM_DEBUG, "EventEmitter\n"));
-           break;
+            ACE_DEBUG ((LM_DEBUG, "EventEmitter\n"));
+            break;
 
-        case Deployment::EventPublisher:
+          case Deployment::EventPublisher:
 
-           ACE_DEBUG ((LM_DEBUG, "EventPublisher\n"));
-           break;
+            ACE_DEBUG ((LM_DEBUG, "EventPublisher\n"));
+            break;
 
-        case Deployment::EventConsumer:
+          case Deployment::EventConsumer:
 
-           ACE_DEBUG ((LM_DEBUG, "EventConsumer\n"));
-           break;
-      }
-  }
+            ACE_DEBUG ((LM_DEBUG, "EventConsumer\n"));
+            break;
+        }
+    }
 }
