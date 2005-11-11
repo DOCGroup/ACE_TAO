@@ -7,7 +7,7 @@ project(*auto_event) : aceexe {
     auto_event.cpp
   }
 }
-project(*barrier1) : aceexe {
+project(*barrier1) : aceexe, acethreadslib_for_tao {
   exename = barrier1
   Source_Files {
     barrier1.cpp
@@ -25,13 +25,13 @@ project(*cancel) : aceexe {
     cancel.cpp
   }
 }
-project(*future1) : aceexe {
+project(*future1) : aceexe, acethreadslib_for_tao {
   exename = future1
   Source_Files {
     future1.cpp
   }
 }
-project(*future2) : aceexe {
+project(*future2) : aceexe, acethreadslib_for_tao {
   exename = future2
   Source_Files {
     future2.cpp
@@ -49,7 +49,7 @@ project(*process_mutex) : aceexe {
     process_mutex.cpp
   }
 }
-project(*process_semaphore) : aceexe {
+project(*process_semaphore) : aceexe, acethreadslib_for_tao {
   exename = process_semaphore
   Source_Files {
     process_semaphore.cpp
@@ -91,7 +91,7 @@ project(*task_two) : aceexe {
     task_two.cpp
   }
 }
-project(*task_one) : aceexe {
+project(*task_one) : aceexe, acethreadslib_for_tao {
   exename = task_one
   Source_Files {
     task_one.cpp
