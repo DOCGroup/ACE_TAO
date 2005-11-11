@@ -1,3 +1,19 @@
+Fri Nov 11 17:49:40 2005  Gan Deng  <gan.deng@vanderbilt.edu>
+
+	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h
+	* DAnCE/ExecutionManager/Execution_Manager_Impl.cpp
+	* DAnCE/ExecutionManager/Execution_Manager_Impl.h
+	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h
+	* DAnCE/NodeManager/NodeManager_Impl.cpp
+	* DAnCE/NodeManager/NodeManager_Impl.h
+	* ciao/Deployment.idl
+
+	  More stuff regarding dynamic assembly management. These
+	  changes won't break existing initial deployment and 
+	  configuration.
+
 Fri Nov 11 12:37:00 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
 	* DAnCE/ExecutionManager/Execution_Manager_Impl.cpp

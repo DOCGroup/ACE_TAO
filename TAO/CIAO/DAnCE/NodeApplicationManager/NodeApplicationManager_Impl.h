@@ -54,9 +54,9 @@ namespace CIAO
     //@@ The return type is NodeApplication_ptr actually.
     virtual Deployment::Application_ptr
     startLaunch (const Deployment::Properties & configProperty,
-                    Deployment::Connections_out providedReference,
-                                 CORBA::Boolean start
-                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                 Deployment::Connections_out providedReference,
+                 CORBA::Boolean start
+                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                               Deployment::ResourceNotAvailable,
                               Deployment::StartError,
@@ -67,6 +67,18 @@ namespace CIAO
                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                               Deployment::StopError));
+
+    virtual Deployment::Application_ptr
+    perform_redeployment (const Deployment::Properties & configProperty,
+                          Deployment::Connections_out providedReference,
+                          CORBA::Boolean start
+                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Deployment::InstallationFailure,
+                       Deployment::UnknownImplId,
+                       Deployment::ImplEntryPointNotFound,
+                       Deployment::InvalidConnection,
+                       ::Components::RemoveFailure));
 
     /**
      * A factory operation to create NodeApplicationManager interface, and return
