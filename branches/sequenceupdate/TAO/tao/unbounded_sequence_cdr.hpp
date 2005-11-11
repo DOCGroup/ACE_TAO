@@ -42,7 +42,7 @@ namespace TAO {
       }
       for(CORBA::ULong i = 0; i < length; ++i) {
 // Check this
-        sequence::value_type element = const_cast <sequence::value_type> (source[i]);
+       typename sequence::value_type element = const_cast <sequence::value_type> (source[i]);
         if (!(strm << element)) {
           return false;
         }
