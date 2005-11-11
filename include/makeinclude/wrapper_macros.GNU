@@ -445,11 +445,11 @@ endif # threads
 ace_for_tao ?=
 ifeq ($(ace_for_tao),0)
   override ace_for_tao =
-endif # fl
+endif # ace_for_tao
 
 ifneq ($(ace_for_tao),)
   ACE_MAKE_OPTIONS += ace_for_tao
-endif # fl
+endif # ace_for_tao
 
 
 ifeq ($(xt),0)
