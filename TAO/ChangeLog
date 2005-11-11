@@ -1,3 +1,10 @@
+Fri Nov 11 08:55:05 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/CosEvent/CEC_Factory.h:
+
+	  Include "tao/Versioned_Namespace.h" for
+	  TAO_BEGIN_VERSIONED_NAMESPACE_DECL macro definition.
+
 Fri Nov 11 08:50:02 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:

@@ -24,6 +24,8 @@
 
 #include "ace/Service_Object.h"
 
+#include "tao/Versioned_Namespace.h"
+
 class ACE_Lock;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
