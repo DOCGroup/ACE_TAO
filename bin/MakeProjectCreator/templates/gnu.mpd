@@ -573,9 +573,9 @@ endif
 
 <%endif%>
 <%if(idl_files)%>
-<%if(source_files)%>
 ADDITIONAL_IDL_TARGETS +=<%foreach(idl_files)%> <%if(flag_overrides(idl_file, gendir))%><%flag_overrides(idl_file, gendir)%>/<%basenoextension(idl_file)%>$(IDL_CLIENT_HDR_EXT)<%else%><%noextension(idl_file)%>$(IDL_CLIENT_HDR_EXT)<%endif%><%endfor%>
 idl_stubs: $(ADDITIONAL_IDL_TARGETS)
+<%if(source_files)%>
 
 # This assignment forces make to run the idl_stubs
 # target before building any of the source files.

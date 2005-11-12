@@ -1,3 +1,11 @@
+Fri Nov 11 16:04:44 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/MakeProjectCreator/templates/gnu.mpd:
+
+	  Emit "idl_stubs" target for IDL projects defining MPC's
+	  custom_only variable.  Fixes problems with some of the
+	  scoreboard statistics builds.
+
 Fri Nov 11 11:06:31 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ACEXML/common/common.mpc:
