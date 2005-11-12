@@ -11,6 +11,7 @@ ACE_RCSID (IFRService,
            AliasDef_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_AliasDef_i::TAO_AliasDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -136,3 +137,5 @@ TAO_AliasDef_i::original_type_def_i (CORBA::IDLType_ptr original_type_def
                                             "original_type",
                                             original_type);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

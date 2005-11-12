@@ -12,6 +12,7 @@ ACE_RCSID (IFRService,
            EventPortDef_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EventPortDef_i::TAO_EventPortDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -194,3 +195,5 @@ TAO_EventPortDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return CORBA::dk_none;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

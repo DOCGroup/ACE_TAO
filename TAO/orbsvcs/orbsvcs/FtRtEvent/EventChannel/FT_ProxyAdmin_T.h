@@ -20,6 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class EC_PROXY_ADMIN, class Proxy,
           class ProxyInterface, class State>
 class FT_ProxyAdmin : public FT_ProxyAdmin_Base
@@ -31,8 +33,7 @@ public:
   FT_ProxyAdmin(EC_PROXY_ADMIN* admin,
               PortableServer::POA_var poa);
 
-  ProxyInterface_ptr
-      obtain_proxy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  ProxyInterface_ptr obtain_proxy (ACE_ENV_SINGLE_ARG_DECL);
 
   /// this is used for updating the state
   void obtain_proxy (const FtRtecEventChannelAdmin::Operation& op
@@ -43,6 +44,8 @@ public:
 private:
   EC_PROXY_ADMIN* admin_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "FT_ProxyAdmin_T.cpp"

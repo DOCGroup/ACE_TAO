@@ -11,6 +11,7 @@ ACE_RCSID (IFRService,
            UsesDef_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UsesDef_i::TAO_UsesDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -208,3 +209,5 @@ TAO_UsesDef_i::is_multiple_i (
                                              "is_multiple",
                                              is_multiple);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

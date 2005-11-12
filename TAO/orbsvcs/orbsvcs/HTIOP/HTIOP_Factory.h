@@ -32,6 +32,8 @@ namespace ACE
   }
 }
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace HTIOP
@@ -80,6 +82,8 @@ namespace TAO
     };
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // Note that these declarations are placed outside of the scope of the
 // namespace. The generated functions use a C style signature which does

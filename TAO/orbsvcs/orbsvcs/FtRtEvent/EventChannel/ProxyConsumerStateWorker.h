@@ -21,7 +21,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class ProxyConsumerStateWorker : public TAO_ESF_Worker<TAO_EC_ProxyPushConsumer>
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class ProxyConsumerStateWorker
+  : public TAO_ESF_Worker<TAO_EC_ProxyPushConsumer>
 {
 public:
   ProxyConsumerStateWorker(FtRtecEventChannelAdmin::ProxyConsumerStates& states);
@@ -29,10 +32,12 @@ public:
 
   virtual void set_size(size_t size);
   virtual void work(TAO_EC_ProxyPushConsumer* object
-            ACE_ENV_ARG_DECL);
+                    ACE_ENV_ARG_DECL);
 private:
   int index_;
   FtRtecEventChannelAdmin::ProxyConsumerStates& consumerStates_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif

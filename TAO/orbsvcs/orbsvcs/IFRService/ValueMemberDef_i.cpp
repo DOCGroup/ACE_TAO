@@ -12,6 +12,7 @@ ACE_RCSID (IFRService,
            ValueMemberDef_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ValueMemberDef_i::TAO_ValueMemberDef_i (
     TAO_Repository_i *repo
@@ -218,3 +219,5 @@ TAO_ValueMemberDef_i::access_i (CORBA::Visibility access
                                              "access",
                                              access);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

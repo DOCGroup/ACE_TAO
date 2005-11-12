@@ -21,6 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_FTEC_ProxyPushConsumer : public TAO_EC_Default_ProxyPushConsumer
 {
   typedef TAO_EC_Default_ProxyPushConsumer Inherited;
@@ -59,5 +61,7 @@ public:
 private:
   FtRtecEventChannelAdmin::ObjectId_var object_id_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif

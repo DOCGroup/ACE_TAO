@@ -27,6 +27,7 @@ ACE_RCSID (LoadBalancing,
            LB_LoadManager,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LB_LoadManager::TAO_LB_LoadManager (void)
   : reactor_ (0),
@@ -1290,3 +1291,5 @@ TAO_LB_LoadManager::make_strategy (CosLoadBalancing::StrategyInfo * info
 //     this->poa_->reference_to_id (
 //   this->poa_->deactivate_object ();
 // }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

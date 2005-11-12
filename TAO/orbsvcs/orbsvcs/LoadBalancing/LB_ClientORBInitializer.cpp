@@ -7,6 +7,8 @@ ACE_RCSID (LoadBalancing,
            LB_ClientORBInitializer,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 void
 TAO_LB_ClientORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr
@@ -37,3 +39,5 @@ TAO_LB_ClientORBInitializer::post_init (
                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

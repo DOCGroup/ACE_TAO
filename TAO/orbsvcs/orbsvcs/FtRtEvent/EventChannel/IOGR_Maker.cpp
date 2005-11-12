@@ -16,8 +16,9 @@ ACE_RCSID (EventChannel,
            IOGR_Maker,
            "$Id$")
 
-
 static IOGR_Maker* maker;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 IOGR_Maker::IOGR_Maker()
 {
@@ -265,3 +266,4 @@ IOGR_Maker::set_tag_components(
 
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

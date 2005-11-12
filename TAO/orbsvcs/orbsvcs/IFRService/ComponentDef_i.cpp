@@ -17,6 +17,7 @@ ACE_RCSID (IFRService,
            ComponentDef_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Specialization.
 template<>
@@ -789,3 +790,5 @@ TAO_ComponentDef_i::name_clash (const char *name)
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

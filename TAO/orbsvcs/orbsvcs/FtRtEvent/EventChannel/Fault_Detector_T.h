@@ -19,6 +19,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class ACCEPTOR, class CONNECTOR, class DETECTION_HANDLER>
 class Fault_Detector_T : public Fault_Detector
 {
@@ -32,6 +34,8 @@ protected:
 private:
   virtual int init_acceptor();
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Fault_Detector_T.cpp"

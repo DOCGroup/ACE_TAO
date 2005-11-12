@@ -12,6 +12,7 @@ ACE_RCSID (IFRService,
            SequenceDef_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SequenceDef_i::TAO_SequenceDef_i (
     TAO_Repository_i *repo
@@ -264,3 +265,5 @@ TAO_SequenceDef_i::destroy_element_type (
       break;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

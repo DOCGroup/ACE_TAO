@@ -11,6 +11,7 @@ ACE_RCSID (IFRService,
            ExceptionDef_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ExceptionDef_i::TAO_ExceptionDef_i (
     TAO_Repository_i *repo
@@ -346,3 +347,5 @@ TAO_ExceptionDef_i::members_i (const CORBA::StructMemberSeq &members
                                                  count);
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

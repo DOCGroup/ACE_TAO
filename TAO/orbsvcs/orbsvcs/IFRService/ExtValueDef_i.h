@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 
 // ============================================================================
@@ -31,6 +32,8 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_IFRService_Export TAO_ExtValueDef_i : public virtual TAO_ValueDef_i
 {
@@ -123,10 +126,10 @@ private:
                    const CORBA::ExceptionDefSeq &exceptions);
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
 #endif /* TAO_EXTVALUEDEF_I_H */
-
-

@@ -15,6 +15,8 @@ ACE_RCSID (EventChannel,
            Fault_Detector_Loader,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace FTRTEC {
   typedef Fault_Detector_T<
     ACE_Acceptor<ConnectionAcceptHandler<ACE_SOCK_STREAM> , ACE_SOCK_ACCEPTOR>,
@@ -67,9 +69,13 @@ namespace FTRTEC {
   {
     return detector_.get();
   }
+}
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
   /////////////////////////////////////////////////////////////////////
 
+namespace FTRTEC {
   ACE_FACTORY_DEFINE (TAO_FTRTEC, Fault_Detector_Loader)
 
   ACE_STATIC_SVC_DEFINE (Fault_Detector_Loader,

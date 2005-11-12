@@ -25,6 +25,8 @@
 
 #include "orbsvcs/Event/EC_SupplierAdmin.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_FTEC_Event_Channel_Impl;
 
 namespace FtRtecEventChannelAdmin {
@@ -70,6 +72,8 @@ public:
 
   void disconnect(RtecEventChannelAdmin::ProxyPushConsumer_ptr obj);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_FTEC_SUPPLIERADMIN_H */

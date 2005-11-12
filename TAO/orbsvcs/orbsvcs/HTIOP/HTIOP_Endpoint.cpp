@@ -17,6 +17,8 @@ ACE_RCSID (HTIOP,
 # include "HTIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::HTIOP::Endpoint::Endpoint (const ACE::HTBP::Addr &addr,
                                         int use_dotted_decimal_addresses)
   : TAO_Endpoint (OCI_TAG_HTIOP_PROFILE),
@@ -218,3 +220,5 @@ TAO::HTIOP::Endpoint::hash (void)
     return ACE::hash_pjw(this->htid_.in());
   return this->object_addr ().get_ip_address () + this->port ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

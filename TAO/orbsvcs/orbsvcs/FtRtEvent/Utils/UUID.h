@@ -13,6 +13,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ftrtevent_export.h"
+#include "tao/Versioned_Namespace.h"
 #include "ace/OS.h"
 #include "ace/SString.h"
 
@@ -27,6 +28,8 @@
 #endif /* defined (TAO_EXPORT_NESTED_MACRO) */
 #define TAO_EXPORT_NESTED_MACRO FtRtEvent_Export
 #endif /* TAO_EXPORT_NESTED_CLASSES */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * This is an implementation of Global Unique Identifier
@@ -109,6 +112,8 @@ class TAO_FtRtEvent_Export  UUID
       unsigned char uuid[BINRARY_LENGTH];
     } rep_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
 #include "UUID.inl"

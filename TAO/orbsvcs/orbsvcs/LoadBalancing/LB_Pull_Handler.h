@@ -26,10 +26,10 @@
 
 #include "ace/Event_Handler.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Forward declarations.
 class TAO_LB_LoadManager;
-
 
 /**
  * @class TAO_LB_Pull_Handler
@@ -65,6 +65,9 @@ private:
   TAO_LB_LoadManager * load_manager_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
 
 #endif  /* TAO_LB_PULL_HANDLER_H */

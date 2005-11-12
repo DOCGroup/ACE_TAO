@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "ComponentContainer_i.h"
@@ -12,6 +11,8 @@
 ACE_RCSID (IFRService, 
            ComponentContainer_i, 
            "$Id$")
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
            
 const char *TAO_ComponentContainer_i::tmp_name_holder_ = 0;
 
@@ -563,3 +564,5 @@ TAO_ComponentContainer_i::same_as_tmp_name (const char *name)
   return 
     ACE_OS::strcmp (TAO_ComponentContainer_i::tmp_name_holder_, name) == 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

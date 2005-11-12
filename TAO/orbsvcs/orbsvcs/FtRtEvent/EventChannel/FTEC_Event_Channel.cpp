@@ -19,11 +19,13 @@ ACE_RCSID (EventChannel,
            TAO_FTEC_Event_Channel,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_FTEC_Event_Channel::TAO_FTEC_Event_Channel(CORBA::ORB_var orb,
                                                PortableServer::POA_var poa)
-:    orb_(orb)
-,    poa_(poa)
-,    ec_impl_(NULL)
+  : orb_(orb)
+  , poa_(poa)
+  , ec_impl_(NULL)
 {
 }
 
@@ -404,7 +406,7 @@ TAO_FTEC_Event_Channel::resume_push_supplier (
       ))
 {
   ec_impl_->resume_push_supplier(oid
-                       ACE_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -418,7 +420,9 @@ TAO_FTEC_Event_Channel::push (
         , FtRtecEventComm::InvalidObjectID
       ))
 {
-  ec_impl_->push(oid, data
-       ACE_ENV_ARG_PARAMETER);
+  ec_impl_->push(oid,
+                 data
+                 ACE_ENV_ARG_PARAMETER);
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

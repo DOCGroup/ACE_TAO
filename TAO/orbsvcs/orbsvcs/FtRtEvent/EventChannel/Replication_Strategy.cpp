@@ -8,6 +8,8 @@ ACE_RCSID (EventChannel,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 Replication_Strategy::Replication_Strategy()
 {
 }
@@ -29,3 +31,5 @@ Replication_Strategy::make_primary_strategy()
 {
   return this;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

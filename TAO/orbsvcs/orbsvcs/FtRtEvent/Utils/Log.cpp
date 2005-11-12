@@ -5,6 +5,8 @@
 #include "Log.inl"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO_FTRTEC {
 
 unsigned int Log::log_level_;
@@ -23,3 +25,5 @@ unsigned int Log::log_level_;
   }
 #endif
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

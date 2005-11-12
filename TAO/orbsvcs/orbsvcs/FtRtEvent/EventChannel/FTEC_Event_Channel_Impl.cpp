@@ -18,6 +18,8 @@ ACE_RCSID (EventChannel,
            FTEC_Event_Channel_Impl,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 void obtain_push_supplier(TAO_FTEC_Event_Channel_Impl* ec,
                           FtRtecEventChannelAdmin::Operation& op
                           ACE_ENV_ARG_DECL)
@@ -215,7 +217,7 @@ typedef void (*Set_update_fun)(TAO_FTEC_Event_Channel_Impl* ec,
                                FtRtecEventChannelAdmin::Operation& op
                                ACE_ENV_ARG_DECL);
 
-Set_update_fun update_table[] = {
+Set_update_fun const update_table[] = {
     &obtain_push_supplier,
     &obtain_push_consumer,
     &disconnect_push_supplier,
@@ -576,3 +578,5 @@ TAO_FTEC_Event_Channel_Impl::find_proxy_push_consumer(const FtRtecEventChannelAd
   ACE_ENDTRY;
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

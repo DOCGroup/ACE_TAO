@@ -8,6 +8,8 @@ ACE_RCSID (EventChannel,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace FTRTEC {
 
   namespace {
@@ -79,7 +81,11 @@ namespace FTRTEC {
   {
     return name_;
   }
+}
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+namespace FTRTEC {
   ACE_FACTORY_DEFINE (TAO_FTRTEC, Identification_Service)
 
   ACE_STATIC_SVC_DEFINE (Identification_Service,

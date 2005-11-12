@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 
 // ============================================================================
@@ -34,6 +35,8 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_IFRService_Export TAO_ComponentDef_i
   : public virtual TAO_ExtInterfaceDef_i
@@ -233,6 +236,8 @@ public:
   // Called from TAO_IFR_Service_Utils::name_exists() when we
   // are a base component.
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

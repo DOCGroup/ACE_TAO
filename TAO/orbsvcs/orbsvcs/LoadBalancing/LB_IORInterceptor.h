@@ -29,6 +29,8 @@
 #endif /* _MSC_VER */
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// Forward declarations.
 class TAO_LB_LoadAlert;
 
@@ -140,6 +142,8 @@ private:
   TAO_SYNCH_MUTEX lock_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

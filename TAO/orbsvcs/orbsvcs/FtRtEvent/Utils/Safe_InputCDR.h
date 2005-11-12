@@ -15,6 +15,8 @@
 #include "ftrtevent_export.h"
 #include "tao/CDR.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_FtRtEvent_Export Safe_InputCDR : public TAO_InputCDR
 {
 public:
@@ -27,6 +29,8 @@ public:
    */
   Safe_InputCDR(const char* buf, int size);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
 #include "Safe_InputCDR.inl"

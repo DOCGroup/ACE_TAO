@@ -23,6 +23,8 @@ ACE_RCSID(HTIOP,
           TAO_HTIOP_Acceptor,
           "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::HTIOP::Acceptor::Acceptor (ACE::HTBP::Environment *ht_env,
                                 int is_inside)
   : TAO_Acceptor (OCI_TAG_HTIOP_PROFILE),
@@ -881,3 +883,5 @@ TAO::HTIOP::Acceptor::parse_options (const char *str)
     }
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

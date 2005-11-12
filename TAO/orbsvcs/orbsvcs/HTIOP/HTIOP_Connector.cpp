@@ -23,6 +23,8 @@ ACE_RCSID (HTIOP,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::HTIOP::Connector::Connector (ACE::HTBP::Environment *ht_env)
   : TAO_Connector (OCI_TAG_HTIOP_PROFILE),
     connect_creation_strategy_ (),
@@ -414,3 +416,5 @@ TAO::HTIOP::Connector::remote_endpoint (TAO_Endpoint *endpoint)
 
   return htiop_endpoint;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -17,6 +17,8 @@ ACE_RCSID (IFRService,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_HomeDef_i::TAO_HomeDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
     TAO_Container_i (repo),
@@ -1051,3 +1053,5 @@ TAO_HomeDef_i::fill_attr_desc (ACE_Configuration_Section_Key &key,
 
   ead.mode = impl.mode_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -19,6 +19,7 @@ ACE_RCSID (IFRService,
            Container_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const char *TAO_Container_i::tmp_name_holder_ = 0;
 
@@ -2679,3 +2680,5 @@ TAO_Container_i::create_value_common (
 
   return path;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

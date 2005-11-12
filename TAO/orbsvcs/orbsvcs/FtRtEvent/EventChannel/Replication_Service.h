@@ -23,6 +23,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace FTRTEC
 {
   class TAO_FTRTEC_Export Replication_Service
@@ -72,8 +74,12 @@ namespace FTRTEC
 
     int threads() const;
   };
+}
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
+namespace FTRTEC
+{
   ACE_STATIC_SVC_DECLARE_EXPORT (TAO_FTRTEC, Replication_Service)
   ACE_STATIC_SVC_REQUIRE(Replication_Service)
   ACE_FACTORY_DECLARE (TAO_FTRTEC, Replication_Service)

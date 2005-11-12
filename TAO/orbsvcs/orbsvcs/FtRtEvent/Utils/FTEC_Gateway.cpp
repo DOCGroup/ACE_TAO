@@ -13,6 +13,7 @@ ACE_RCSID (Utils,
 #include "FTEC_Gateway.inl"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_FTRTEC {
 class FTEC_Gateway_ConsumerAdmin
@@ -511,8 +512,12 @@ void PushConsumerHandler::push (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
 }
 
-void PushConsumerHandler::push_excep (::Messaging::ExceptionHolder * ACE_ENV_ARG_DECL_NOT_USED)
+void PushConsumerHandler::push_excep (::Messaging::ExceptionHolder *
+                                      ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
-}
+
+}  // TAO_FTRTEC
+
+TAO_END_VERSIONED_NAMESPACE_DECL

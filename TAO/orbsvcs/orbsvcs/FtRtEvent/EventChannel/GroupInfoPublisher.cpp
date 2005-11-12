@@ -14,9 +14,10 @@ ACE_RCSID (EventChannel,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 GroupInfoPublisherBase::GroupInfoPublisherBase()
-: info_(new Info)
+  : info_(new Info)
 {
   info_->primary = false;
 }
@@ -170,3 +171,5 @@ GroupInfoPublisherBase::update_info(GroupInfoPublisherBase::Info_ptr& info)
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template ACE_Singleton<GroupInfoPublisherBase, ACE_Thread_Mutex> *ACE_Singleton<GroupInfoPublisherBase, ACE_Thread_Mutex>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

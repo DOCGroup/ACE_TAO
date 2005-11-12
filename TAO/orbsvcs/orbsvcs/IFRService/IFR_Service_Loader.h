@@ -27,6 +27,8 @@
 
 #include "IFR_Service_Utils.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_IFRService_Export TAO_IFR_Service_Loader : public TAO_Object_Loader
 {
 public:
@@ -60,10 +62,14 @@ protected:
 
 private:
 
+  // Disallowing copying/assignment.
   TAO_IFR_Service_Loader (const TAO_IFR_Service_Loader &);
-  TAO_IFR_Service_Loader &operator = (const TAO_IFR_Service_Loader &);
+  TAO_IFR_Service_Loader & operator= (const TAO_IFR_Service_Loader &);
 
 };
+
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DECLARE (TAO_IFRService, TAO_IFR_Service_Loader)
 

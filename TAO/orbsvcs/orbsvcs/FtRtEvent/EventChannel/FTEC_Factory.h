@@ -18,6 +18,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_FTEC_Basic_Factory : public TAO_EC_Default_Factory
 {
 public:
@@ -39,6 +42,8 @@ public:
   virtual void
       destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer*);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif
 
