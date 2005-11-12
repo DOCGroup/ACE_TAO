@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_FTRTEC {
 #ifndef NDEBUG
@@ -43,3 +47,5 @@ namespace TAO_FTRTEC {
   }
 #endif
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

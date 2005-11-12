@@ -28,6 +28,9 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO_LB
 {
   /**
@@ -194,6 +197,7 @@ private:
 
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "LB_LoadMinimum.inl"

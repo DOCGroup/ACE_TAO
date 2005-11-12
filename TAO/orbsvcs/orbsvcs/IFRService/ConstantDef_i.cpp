@@ -16,6 +16,8 @@ ACE_RCSID (IFRService,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_ConstantDef_i::TAO_ConstantDef_i (
     TAO_Repository_i *repo
   )
@@ -307,3 +309,5 @@ TAO_ConstantDef_i::value_i (const CORBA::Any &value
                                             mb->base (),
                                             mb->length ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

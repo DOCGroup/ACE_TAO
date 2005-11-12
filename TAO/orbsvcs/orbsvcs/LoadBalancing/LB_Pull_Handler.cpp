@@ -9,6 +9,8 @@ ACE_RCSID (LoadBalancing,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_LB_Pull_Handler::TAO_LB_Pull_Handler (void)
   : monitor_map_ (0),
     load_manager_ (0)
@@ -78,3 +80,5 @@ TAO_LB_Pull_Handler::handle_timeout (
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

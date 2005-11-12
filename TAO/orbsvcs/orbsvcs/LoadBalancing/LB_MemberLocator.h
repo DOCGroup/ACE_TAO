@@ -25,6 +25,8 @@
 #include "tao/PortableServer/ServantLocatorC.h"
 #include "tao/LocalObject.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward declarations.
 class TAO_LB_LoadManager;
 
@@ -82,6 +84,8 @@ private:
   TAO_LB_LoadManager * load_manager_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

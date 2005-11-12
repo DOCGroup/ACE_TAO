@@ -1,5 +1,5 @@
-
 // -*- C++ -*-
+
 // ===================================================================
 /**
  *  @file   HTIOP_Connector_Impl.h
@@ -23,8 +23,11 @@
 #include "tao/corbafwd.h"
 #include "ace/Strategies_T.h"
 
-class TAO_ORB_Core;
 class ACE_Thread_Manager;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_ORB_Core;
 
 namespace TAO
 {
@@ -108,6 +111,8 @@ namespace TAO
     };
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "HTIOP_Connector_Impl.cpp"

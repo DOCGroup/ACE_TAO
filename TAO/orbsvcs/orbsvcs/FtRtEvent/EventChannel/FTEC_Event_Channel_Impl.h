@@ -23,6 +23,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_FTEC_ProxyPushSupplier;
 class TAO_FTEC_ProxyPushConsumer;
 class TAO_FTEC_SupplierAdmin;
@@ -127,5 +129,7 @@ protected:
 private:
   IOGR_Maker iogr_maker_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif

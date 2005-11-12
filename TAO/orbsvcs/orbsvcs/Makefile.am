@@ -1438,16 +1438,11 @@ libTAO_CosLoadBalancing_la_SOURCES = \
   LoadBalancing/LB_LeastLoaded.cpp \
   LoadBalancing/LB_LoadAlert.cpp \
   LoadBalancing/LB_LoadAlertInfo.cpp \
-  LoadBalancing/LB_LoadAlertMap.cpp \
   LoadBalancing/LB_LoadAlert_Handler.cpp \
   LoadBalancing/LB_LoadAverage.cpp \
-  LoadBalancing/LB_LoadListMap.cpp \
   LoadBalancing/LB_LoadManager.cpp \
-  LoadBalancing/LB_LoadMap.cpp \
   LoadBalancing/LB_LoadMinimum.cpp \
-  LoadBalancing/LB_Location_Index_Map.cpp \
   LoadBalancing/LB_MemberLocator.cpp \
-  LoadBalancing/LB_MonitorMap.cpp \
   LoadBalancing/LB_ORBInitializer.cpp \
   LoadBalancing/LB_ObjectReferenceFactory.cpp \
   LoadBalancing/LB_Pull_Handler.cpp \

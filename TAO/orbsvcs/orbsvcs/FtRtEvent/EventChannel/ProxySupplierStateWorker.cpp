@@ -9,10 +9,11 @@ ACE_RCSID (EventChannel,
            ProxySupplierStateWorker,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ProxySupplierStateWorker::ProxySupplierStateWorker
-  (FtRtecEventChannelAdmin::ProxySupplierStates& states)
-: supplierStates_(states)
+ProxySupplierStateWorker::ProxySupplierStateWorker (
+  FtRtecEventChannelAdmin::ProxySupplierStates& states)
+  : supplierStates_(states)
 {
 }
 
@@ -33,3 +34,5 @@ void ProxySupplierStateWorker::work(TAO_EC_ProxyPushSupplier* object
     static_cast<TAO_FTEC_ProxyPushSupplier*> (object);
   proxy->get_state(supplierStates_[index_++]);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

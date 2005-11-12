@@ -19,6 +19,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_FTEC_Event_Channel_Impl;
 class TAO_FTEC_Become_Primary_Listener;
 
@@ -176,5 +178,7 @@ private:
   PortableServer::POA_var poa_, persistent_poa_;
   TAO_FTEC_Event_Channel_Impl* ec_impl_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif

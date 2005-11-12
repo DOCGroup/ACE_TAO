@@ -29,6 +29,7 @@
 
 #include "ace/Hash_Map_Manager_T.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// LoadList hash map.
 typedef ACE_Hash_Map_Manager_Ex<
@@ -37,6 +38,8 @@ typedef ACE_Hash_Map_Manager_Ex<
   TAO_PG_Location_Hash,
   TAO_PG_Location_Equal_To,
   ACE_Null_Mutex> TAO_LB_LoadListMap;
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

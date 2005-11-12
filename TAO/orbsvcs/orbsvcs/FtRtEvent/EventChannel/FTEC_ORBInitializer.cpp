@@ -11,6 +11,8 @@ ACE_RCSID (EventChannel,
            FTEC_ORBInitializer,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 void
 FTEC_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr
@@ -33,8 +35,9 @@ FTEC_ORBInitializer::post_init (
   PortableInterceptor::ClientRequestInterceptor_ptr ctmp;
 
   ACE_NEW_THROW_EX(ctmp,
-                TAO_Set_Update_Interceptor,
-                CORBA::NO_MEMORY());
+                   TAO_Set_Update_Interceptor,
+                   CORBA::NO_MEMORY());
+  ACE_CHECK;
 
   client_interceptor = ctmp;
 
@@ -61,3 +64,5 @@ FTEC_ORBInitializer::post_init (
   info->add_server_request_interceptor (server_interceptor.in()
                                         ACE_ENV_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

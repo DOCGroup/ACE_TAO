@@ -20,6 +20,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 struct TAO_FTEC_Group_Manager_Impl;
 
 class TAO_FTEC_Group_Manager : private TAO_FTEC_Fault_Listener
@@ -71,5 +74,7 @@ protected:
   FTRT::FaultListener_var listener_;
   TAO_FTEC_Group_Manager_Impl* impl_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif // TAO_FTEC_GROUP_MANAGER_H

@@ -18,6 +18,8 @@ ACE_RCSID (IFR_Service,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Repository_i::TAO_Repository_i (CORBA::ORB_ptr orb,
                                     PortableServer::POA_ptr poa,
                                     ACE_Configuration *config)
@@ -1100,7 +1102,7 @@ TAO_Repository_i::lock (void) const
   return *this->lock_;
 }
 
-const char *TAO_Repository_i::TAO_IFR_primitive_kinds[] =
+const char * TAO_Repository_i::TAO_IFR_primitive_kinds[] =
   {
     "pk_null",
     "pk_void",
@@ -1144,3 +1146,5 @@ TAO_Repository_i::shutdown (void)
 {
   this->orb_->shutdown (0);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

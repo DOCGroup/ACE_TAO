@@ -8,6 +8,8 @@ ACE_RCSID (Utils,
 #include "UUID.inl"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 static union
 {
   struct
@@ -161,3 +163,5 @@ UUID::create (unsigned char *buffer)
 
   memcpy(buffer + 10, &node, 6);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

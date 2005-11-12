@@ -25,6 +25,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_FTEC_Event_Channel_Impl;
 typedef FtRtecEventChannelAdmin::CachedResult CachedRequestInfo;
 
@@ -93,6 +95,6 @@ private:
   CachedRequestTable request_table_;
 };
 
-
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif

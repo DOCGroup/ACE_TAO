@@ -20,6 +20,7 @@ ACE_RCSID (LoadBalancing,
 #include "LB_LeastLoaded.inl"
 #endif /* defined INLINE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LB_LeastLoaded::TAO_LB_LeastLoaded (PortableServer::POA_ptr poa)
   : poa_ (PortableServer::POA::_duplicate (poa)),
@@ -636,3 +637,5 @@ TAO_LB_LeastLoaded::extract_float_property (
     ACE_THROW (PortableGroup::InvalidProperty (property.nam,
                                                property.val));
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -23,6 +23,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace FTRTEC
 {
   class Identification_Service : public ACE_Service_Object
@@ -44,7 +46,11 @@ namespace FTRTEC
     FtRtecEventComm::ObjectId object_id_;
     CosNaming::Name name_;
   };
+}
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+namespace FTRTEC {
 
   ACE_STATIC_SVC_DECLARE_EXPORT (TAO_FTRTEC, Identification_Service)
   ACE_STATIC_SVC_REQUIRE(Identification_Service)

@@ -26,6 +26,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_ORB_Core;
 
 namespace TAO_FTRT {
@@ -43,8 +45,11 @@ namespace TAO_FTRT {
     virtual int init (int argc,
       ACE_TCHAR* []);
   };
+}
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
+namespace TAO_FTRT {
   ACE_STATIC_SVC_DECLARE_EXPORT (TAO_FTRT, FTRT_ClientORB_Loader)
   ACE_STATIC_SVC_REQUIRE(FTRT_ClientORB_Loader)
   ACE_FACTORY_DECLARE (TAO_FTRT, FTRT_ClientORB_Loader)

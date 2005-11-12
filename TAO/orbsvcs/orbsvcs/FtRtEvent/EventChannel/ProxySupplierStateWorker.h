@@ -21,7 +21,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class ProxySupplierStateWorker : public TAO_ESF_Worker<TAO_EC_ProxyPushSupplier>
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class ProxySupplierStateWorker
+  : public TAO_ESF_Worker<TAO_EC_ProxyPushSupplier>
 {
 public:
   ProxySupplierStateWorker(FtRtecEventChannelAdmin::ProxySupplierStates& states);
@@ -34,5 +37,7 @@ private:
   int index_;
   FtRtecEventChannelAdmin::ProxySupplierStates& supplierStates_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif

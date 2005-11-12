@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 
 // ============================================================================
@@ -28,6 +29,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ComponentContainer_i.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ModuleDef_i;
 class TAO_ComponentDef_i;
@@ -115,6 +119,8 @@ protected:
 #undef GEN_IR_OBJECT
   // Servants for each IR Object type, created at startup.
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

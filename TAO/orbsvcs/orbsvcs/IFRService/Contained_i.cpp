@@ -12,6 +12,8 @@ ACE_RCSID (IFRService,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 const char *TAO_Contained_i::tmp_name_holder_ = 0;
 
 TAO_Contained_i::TAO_Contained_i (
@@ -1253,3 +1255,5 @@ TAO_Contained_i::move_contents (CORBA::Container_ptr new_container
         }
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

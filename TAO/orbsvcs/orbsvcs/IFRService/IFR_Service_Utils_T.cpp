@@ -9,7 +9,7 @@
 
 #include "ace/SString.h"
 
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename T>
 void
@@ -276,17 +276,13 @@ TAO_Port_Desc_Seq_Utils<T_desc_seq>::port_descriptions (
 template<typename T_desc_seq>
 void
 TAO_Port_Desc_Seq_Utils<T_desc_seq>::get_is_multiple (
-    T_desc_seq &desc_seq,
-    ACE_Configuration *config,
-    ACE_Configuration_Section_Key &key,
-    CORBA::ULong index
+    T_desc_seq & /* desc_seq */,
+    ACE_Configuration * /* config */,
+    ACE_Configuration_Section_Key & /* key */,
+    CORBA::ULong /* index */
   )
 {
   // All types except UsesDescription have no is_multiple member.
-  ACE_UNUSED_ARG (desc_seq);
-  ACE_UNUSED_ARG (config);
-  ACE_UNUSED_ARG (key);
-  ACE_UNUSED_ARG (index);
 }
 
 template<typename T_desc_seq>
@@ -363,14 +359,13 @@ TAO_Port_Utils<T>::create_entry (const char *id,
 
 template<typename T>
 void
-TAO_Port_Utils<T>::set_is_multiple (CORBA::Boolean is_multiple,
-                                    ACE_Configuration *config,
-                                    ACE_Configuration_Section_Key &key)
+TAO_Port_Utils<T>::set_is_multiple (CORBA::Boolean /* is_multiple */,
+                                    ACE_Configuration * /* config */,
+                                    ACE_Configuration_Section_Key & /* key */)
 {
-  /// Do nothing for eveything except UsesDef.
-  ACE_UNUSED_ARG (is_multiple);
-  ACE_UNUSED_ARG (config);
-  ACE_UNUSED_ARG (key);
+  // Do nothing for everything except UsesDef.
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_IFR_SERVICE_UTILS_T_CPP */

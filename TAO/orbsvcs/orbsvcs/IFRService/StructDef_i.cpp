@@ -13,6 +13,7 @@ ACE_RCSID (IFRService,
            StructDef_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_StructDef_i::TAO_StructDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -304,3 +305,5 @@ TAO_StructDef_i::members_i (const CORBA::StructMemberSeq &members
                                              "count",
                                              count);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

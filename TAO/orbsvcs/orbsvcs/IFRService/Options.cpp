@@ -6,7 +6,8 @@
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
 
-// Default Constructor
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 Options::Options ()
   : ior_output_file_ (ACE_OS::strdup ("if_repo.ior")),
     persistent_ (0),
@@ -117,3 +118,5 @@ Options::support_multicast_discovery (void) const
 {
   return this->support_multicast_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

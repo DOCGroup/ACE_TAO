@@ -12,6 +12,8 @@ ACE_RCSID (LoadBalancing,
 #include "ace/OS_NS_string.h"
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // The number of different object groups to support.
 #ifndef TAO_LB_ORF_GROUP_TABLE_SIZE
 const size_t TAO_LB_ORF_GROUP_TABLE_SIZE = 16;
@@ -253,3 +255,5 @@ TAO_LB_ObjectReferenceFactory::load_managed_object (const char * repository_id,
   return 0;
 }
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -27,6 +27,7 @@
 #include "ace/Functor.h"
 #include "ace/Hash_Map_Manager_T.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Location index map.
 typedef ACE_Hash_Map_Manager_Ex<
@@ -35,6 +36,8 @@ typedef ACE_Hash_Map_Manager_Ex<
   ACE_Hash<ACE_UINT64>,
   ACE_Equal_To<ACE_UINT64>,
   ACE_Null_Mutex> TAO_LB_Location_Index_Map;
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 
