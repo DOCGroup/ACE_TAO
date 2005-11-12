@@ -1938,7 +1938,6 @@ libTAO_ETCL_la_LIBADD = \
 
 nobase_include_HEADERS += \
   ETCL/ETCL_Constraint.h \
-  ETCL/ETCL_Constraint.i \
   ETCL/ETCL_Constraint.inl \
   ETCL/ETCL_Constraint_Visitor.h \
   ETCL/ETCL_Interpreter.h \
@@ -3453,7 +3452,7 @@ nobase_include_HEADERS += \
   FT_CORBA_ORBS_T.inl \
   FT_CORBA_ORBS_T.inl \
   FaultTolerance/FT_IOGR_Property.h \
-  FaultTolerance/FT_IOGR_Property.i \
+  FaultTolerance/FT_IOGR_Property.inl \
   FaultTolerance/FT_ORB_Utils_export.h
 
 pkgconfig_DATA += \
