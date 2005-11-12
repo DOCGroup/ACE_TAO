@@ -10,6 +10,8 @@ ACE_RCSID (EventChannel,
            TAO_FTEC_ConsumerAdmin,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 const FtRtecEventChannelAdmin::OperationType
 TAO_FTEC_ConsumerAdmin::OBTAIN_ID = FtRtecEventChannelAdmin::OBTAIN_PUSH_SUPPLIER;
 
@@ -46,3 +48,4 @@ TAO_FTEC_ConsumerAdmin::disconnect(RtecEventChannelAdmin::ProxyPushSupplier_ptr 
   ACE_ENDTRY;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

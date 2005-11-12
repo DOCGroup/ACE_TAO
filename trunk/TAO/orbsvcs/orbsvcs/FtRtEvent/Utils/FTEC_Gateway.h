@@ -1,4 +1,5 @@
 // -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file  FTEC_Gateway.h
@@ -15,6 +16,8 @@
 
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
 #include "orbsvcs/RtecEventChannelAdminS.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_FTRTEC
 {
@@ -68,6 +71,8 @@ namespace TAO_FTRTEC
       struct FTEC_Gateway_Impl  *impl_;
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
 #include "FTEC_Gateway.inl"

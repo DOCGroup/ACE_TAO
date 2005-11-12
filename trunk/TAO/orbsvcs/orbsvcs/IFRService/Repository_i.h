@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 
 // ============================================================================
@@ -35,6 +36,8 @@
 #include "IFR_macro.h"
 #include "tao/TypeCodeFactory/TypeCodeFactory_Loader.h"
 #include "tao/CORBA_String.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class IFR_Servant_Factory;
 
@@ -362,7 +365,7 @@ protected:
 #undef GEN_IR_OBJECT
 
 private:
-  static const char *TAO_IFR_primitive_kinds[];
+  static const char * TAO_IFR_primitive_kinds[];
   // Set of strings corresponding to the CORBA::PrimitiveKind
   // enum values.
 
@@ -373,6 +376,8 @@ private:
   // Return the number of entries in the CORBA::PrimitiveKind enum.
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

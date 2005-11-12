@@ -12,6 +12,7 @@ ACE_RCSID (IFRService,
            ValueBoxDef_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ValueBoxDef_i::TAO_ValueBoxDef_i (
     TAO_Repository_i *repo
@@ -135,3 +136,5 @@ TAO_ValueBoxDef_i::original_type_def_i (CORBA::IDLType_ptr original_type_def
                                             "boxed_type",
                                             boxed_type);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

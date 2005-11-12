@@ -11,6 +11,7 @@ ACE_RCSID (IFRService,
            EnumDef_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EnumDef_i::TAO_EnumDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -158,3 +159,5 @@ TAO_EnumDef_i::members_i (const CORBA::EnumMemberSeq &members
                                                 member_name);
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

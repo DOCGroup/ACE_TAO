@@ -11,6 +11,10 @@
 #ifndef RESOVLE_INIT_H
 #define RESOVLE_INIT_H
 
+#include "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template<class T>
 typename T::_ptr_type
 resolve_init (CORBA::ORB_ptr orb,
@@ -63,4 +67,7 @@ resolve (CosNaming::NamingContext_ptr context,
     return ref._retn();
 }
 #endif
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #endif

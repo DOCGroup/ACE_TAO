@@ -11,6 +11,8 @@ ACE_RCSID (EventChannel,
            FtEventServiceInterceptor,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 bool
 CachedRequestTable::is_new_request(const ACE_CString& client_id, CORBA::Long retention_id)
 {
@@ -334,3 +336,5 @@ FtEventServiceInterceptor::set_state(const FtRtecEventChannelAdmin::CachedOption
 {
   request_table_.set_state(state);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

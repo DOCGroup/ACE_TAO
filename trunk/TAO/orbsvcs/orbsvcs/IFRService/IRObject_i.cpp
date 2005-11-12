@@ -16,6 +16,8 @@ ACE_RCSID (IFR_Service,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_IRObject_i::TAO_IRObject_i (TAO_Repository_i *repo)
   : repo_ (repo)
 {
@@ -83,3 +85,5 @@ TAO_IRObject_i::update_key (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

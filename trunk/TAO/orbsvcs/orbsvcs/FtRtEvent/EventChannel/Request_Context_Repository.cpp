@@ -24,6 +24,7 @@ CORBA::ORB_ptr orb;
 ACE_TSS<FtRtecEventChannelAdmin::ObjectId> oid;
 }
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 Request_Context_Repository::allocate_slots(PortableInterceptor::ORBInitInfo_ptr info
@@ -311,3 +312,5 @@ Request_Context_Repository::get_transaction_depth(
   return result;
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

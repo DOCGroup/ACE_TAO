@@ -13,6 +13,8 @@ inline unsigned ceil(unsigned numerator, unsigned denominator)
   return numerator/denominator+ (numerator%denominator ? 1 : 0);
 }
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 Dynamic_Bitset::Dynamic_Bitset(Dynamic_Bitset::size_type size)
   : buffer_size_(ceil(size,BITS_PER_BLOCK))
   , bit_size_(size)
@@ -119,3 +121,5 @@ bool operator == (const Dynamic_Bitset& lhs, const Dynamic_Bitset& rhs)
   mask >>= (Dynamic_Bitset::BITS_PER_BLOCK-bit_pos);
   return ((lhs.buffer_[i] ^ rhs.buffer_[i]) & mask ) == 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

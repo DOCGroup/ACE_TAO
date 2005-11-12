@@ -14,6 +14,7 @@ ACE_RCSID (IFRService,
            ValueDef_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ValueDef_i::TAO_ValueDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -1852,3 +1853,5 @@ TAO_ValueDef_i::fill_value_description (CORBA::ValueDescription &desc
                                             holder);
   desc.base_value = holder.fast_rep ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

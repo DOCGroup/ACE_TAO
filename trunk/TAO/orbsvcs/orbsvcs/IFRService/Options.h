@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 
 // ============================================================================
@@ -23,6 +24,9 @@
 
 #include "ace/Singleton.h"
 #include "ifr_service_export.h"
+#include "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_IFRService_Export Options
 {
@@ -83,6 +87,8 @@ private:
 
 // Typedef an Options Singleton.
 typedef ACE_Singleton <Options, ACE_Null_Mutex> OPTIONS;
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* OPTIONS_H */
 

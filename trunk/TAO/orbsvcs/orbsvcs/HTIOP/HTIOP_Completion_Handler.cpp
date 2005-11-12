@@ -21,6 +21,8 @@ ACE_RCSID (HTIOP,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::HTIOP::Completion_Handler::Completion_Handler (ACE_Thread_Manager *t)
   : COMPLETION_BASE(t,0,0),
     orb_core_ (0),
@@ -175,3 +177,5 @@ TAO::HTIOP::Completion_Handler::handle_close (ACE_HANDLE,
   delete this;
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -7,6 +7,7 @@ ACE_RCSID (LoadBalancing,
            LB_LoadAlert_Handler,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LB_LoadAlert_Handler::~TAO_LB_LoadAlert_Handler (void)
 {
@@ -47,3 +48,5 @@ TAO_LB_LoadAlert_Handler::disable_alert_excep (
                 ACE_TEXT ("Exception caught when invoking ")
                 ACE_TEXT ("LoadAlert::disable_alert()\n")));
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

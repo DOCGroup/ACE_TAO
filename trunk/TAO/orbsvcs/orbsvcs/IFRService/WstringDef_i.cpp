@@ -10,6 +10,7 @@ ACE_RCSID (IFRService,
            WstringDef_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_WstringDef_i::TAO_WstringDef_i (
     TAO_Repository_i *repo
@@ -126,3 +127,5 @@ TAO_WstringDef_i::bound_i (CORBA::ULong bound
                                              "bound",
                                              bound);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

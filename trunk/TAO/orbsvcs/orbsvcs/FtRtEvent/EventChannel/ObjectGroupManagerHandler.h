@@ -15,7 +15,10 @@
 #include "orbsvcs/FTRT_GroupManagerS.h"
 #include "ace/Auto_Event.h"
 
-class ObjectGroupManagerHandler : public POA_FTRT::AMI_ObjectGroupManagerHandler
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class ObjectGroupManagerHandler
+  : public POA_FTRT::AMI_ObjectGroupManagerHandler
 {
 public:
   ObjectGroupManagerHandler(ACE_Auto_Event& evt, int num_backups);
@@ -52,5 +55,7 @@ private:
   ACE_Auto_Event& evt_;
   ACE_Atomic_Op< ACE_SYNCH_MUTEX, int > num_backups_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif

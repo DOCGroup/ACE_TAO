@@ -11,6 +11,8 @@ ACE_RCSID (LoadBalancing,
            LB_CPU_Utilization_Monitor,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 double calc_cpu_loading (void)
 {
   static char buf[1024];
@@ -164,3 +166,5 @@ TAO_LB_CPU_Utilization_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
 #endif  /* linux || sun */
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

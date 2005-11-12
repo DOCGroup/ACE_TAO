@@ -9,6 +9,8 @@ ACE_RCSID (LoadBalancing,
            LB_IORInterceptor,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_LB_IORInterceptor::TAO_LB_IORInterceptor (
   const CORBA::StringSeq & object_groups,
   const CORBA::StringSeq & repository_ids,
@@ -183,3 +185,5 @@ TAO_LB_IORInterceptor::register_load_alert (ACE_ENV_SINGLE_ARG_DECL)
   ACE_ENDTRY;
   ACE_CHECK;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

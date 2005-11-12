@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 
 // ============================================================================
@@ -32,6 +33,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_IFRService_Export TAO_ComponentModuleDef_i
   : public virtual TAO_ComponentContainer_i
 {
@@ -49,6 +52,8 @@ public:
   virtual ~TAO_ComponentModuleDef_i (void);
   // Destructor
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

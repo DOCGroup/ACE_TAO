@@ -20,6 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class FTEC_ORBInitializer
   : public virtual PortableInterceptor::ORBInitializer
   , public virtual TAO_Local_RefCounted_Object
@@ -33,6 +35,8 @@ public:
                           ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* FTEC_ORBINITIALIZER__H_ */

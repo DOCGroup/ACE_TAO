@@ -16,6 +16,7 @@ ACE_RCSID (IFRService,
            UnionDef_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UnionDef_i::TAO_UnionDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -473,3 +474,5 @@ TAO_UnionDef_i::fetch_label (const ACE_Configuration_Section_Key member_key,
       break;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

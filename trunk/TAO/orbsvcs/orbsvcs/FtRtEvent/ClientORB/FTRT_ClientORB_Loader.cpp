@@ -14,6 +14,8 @@ ACE_RCSID (ClientORB,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO_FTRT {
   FTRT_ClientORB_Loader::FTRT_ClientORB_Loader (void)
   {
@@ -82,9 +84,13 @@ namespace TAO_FTRT {
 
       return 0;
   }
+}
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
   /////////////////////////////////////////////////////////////////////
 
+namespace TAO_FTRT {
   ACE_FACTORY_DEFINE (TAO_FTRT, FTRT_ClientORB_Loader)
   ACE_STATIC_SVC_DEFINE (FTRT_ClientORB_Loader,
     ACE_TEXT ("FTRT_ClientORB_Service"),

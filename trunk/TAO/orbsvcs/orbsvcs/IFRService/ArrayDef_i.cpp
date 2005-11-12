@@ -11,6 +11,7 @@ ACE_RCSID (IFRService,
            ArrayDef_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ArrayDef_i::TAO_ArrayDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -274,3 +275,5 @@ TAO_ArrayDef_i::destroy_element_type (
       break;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

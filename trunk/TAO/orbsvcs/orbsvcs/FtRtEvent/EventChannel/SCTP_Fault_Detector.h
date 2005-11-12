@@ -45,6 +45,7 @@ extern "C" {
 #define SCTP_NODELAY 1
 #endif // SCTP_NODELAY
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef ACE_Acceptor<ConnectionAcceptHandler<ACE_SOCK_SEQPACK_ASSOCIATION>, ACE_SOCK_SEQPACK_ACCEPTOR>
                       SCTP_ConnectionAcceptHandler;
@@ -77,6 +78,8 @@ public:
 private:
     virtual int parse_conf(int argc, char** argv);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SCIOP */
 

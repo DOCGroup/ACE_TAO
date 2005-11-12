@@ -18,6 +18,8 @@ ACE_RCSID (IFR_Service,
            IFR_Service_Loader,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_IFR_Service_Loader::TAO_IFR_Service_Loader (void)
 {
   // Constructor
@@ -92,5 +94,7 @@ TAO_IFR_Service_Loader::create_object (CORBA::ORB_ptr orb,
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_IFRService, TAO_IFR_Service_Loader)

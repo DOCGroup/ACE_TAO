@@ -11,6 +11,8 @@ ACE_RCSID (EventChannel,
            FTEC_Factory,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_FTEC_Basic_Factory::TAO_FTEC_Basic_Factory (void)
 {
 }
@@ -51,3 +53,4 @@ TAO_FTEC_Basic_Factory::destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer* p
   delete proxy;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

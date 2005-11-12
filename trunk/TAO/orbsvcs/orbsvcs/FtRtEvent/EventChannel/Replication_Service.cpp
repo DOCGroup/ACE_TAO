@@ -17,6 +17,7 @@ ACE_RCSID (EventChannel,
            Replication_Service,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace FTRTEC
 {
@@ -190,7 +191,12 @@ namespace FTRTEC
   int Replication_Service::threads() const {
     return FTRTEC::threads;
   }
+}
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+namespace FTRTEC
+{
   ACE_FACTORY_DEFINE (TAO_FTRTEC, Replication_Service)
 
   ACE_STATIC_SVC_DEFINE (Replication_Service,

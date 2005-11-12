@@ -10,8 +10,10 @@ ACE_RCSID (EventChannel,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 UpdateableHandler::UpdateableHandler(AMI_Primary_Replication_Strategy* strategy)
-: strategy_(strategy)
+  : strategy_(strategy)
 {
 }
 
@@ -94,3 +96,5 @@ void UpdateableHandler::set_update_excep (
 
   dispatch(&Update_Manager::handle_exception ACE_ENV_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

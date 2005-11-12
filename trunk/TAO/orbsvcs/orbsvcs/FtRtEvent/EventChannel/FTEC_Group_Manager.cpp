@@ -15,6 +15,7 @@ ACE_RCSID (EventChannel,
            TAO_FTEC_Group_Manager,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int find_by_location(const FTRT::ManagerInfoList& list,
                 const FTRT::Location & location)
@@ -374,4 +375,4 @@ void TAO_FTEC_Group_Manager::connection_closed()
 
 }
 
-
+TAO_END_VERSIONED_NAMESPACE_DECL

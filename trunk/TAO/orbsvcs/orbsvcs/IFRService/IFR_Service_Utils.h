@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 
 // ============================================================================
@@ -31,9 +32,11 @@
 
 #include "ace/Configuration.h"
 
-// Forward decl;
-class TAO_IOR_Multicast;
 class ACE_Configuration;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_IOR_Multicast;
 class TAO_Repository_i;
 class TAO_IDLType_i;
 class TAO_Container_i;
@@ -245,6 +248,8 @@ public:
   /// all over the place now that it's here.
   static TAO_Repository_i *repo_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

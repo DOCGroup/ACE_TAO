@@ -18,6 +18,9 @@ ACE_RCSID (IFRService,
            ComponentRepository_i, 
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_ComponentRepository_i::TAO_ComponentRepository_i (
     CORBA::ORB_ptr orb,
     PortableServer::POA_ptr poa,
@@ -239,4 +242,4 @@ TAO_ComponentRepository_i::select_poa (
   }
 }
 
-
+TAO_END_VERSIONED_NAMESPACE_DECL

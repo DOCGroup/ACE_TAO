@@ -21,6 +21,8 @@ ACE_RCSID (IFR_Service,
            IFR_Service,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Repository_i *TAO_IFR_Service_Utils::repo_ = 0;
 
 TAO_IFR_Server::TAO_IFR_Server (void)
@@ -1433,3 +1435,4 @@ TAO_IFR_Service_Utils::oid_to_string (PortableServer::ObjectId &oid)
   return oid_string;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -15,6 +15,8 @@ ACE_RCSID (IFRService,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_OperationDef_i::TAO_OperationDef_i (
     TAO_Repository_i *repo
   )
@@ -745,3 +747,5 @@ TAO_OperationDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
 {
   return this->result_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

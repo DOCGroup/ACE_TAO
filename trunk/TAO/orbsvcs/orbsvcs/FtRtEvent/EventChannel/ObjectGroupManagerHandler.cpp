@@ -1,6 +1,8 @@
 // $Id$
 #include "ObjectGroupManagerHandler.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ObjectGroupManagerHandler::ObjectGroupManagerHandler(
   ACE_Auto_Event& evt, int num_backups)
 : evt_(evt), num_backups_(num_backups)
@@ -65,3 +67,5 @@ ObjectGroupManagerHandler::set_state_excep (::Messaging::ExceptionHolder *
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

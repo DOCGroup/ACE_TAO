@@ -15,9 +15,9 @@ ACE_RCSID (IFRService,
            InterfaceAttrExtension_i,
            "$Id$")
 
-
-
 // =====================================================================
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_InterfaceAttrExtension_i::TAO_InterfaceAttrExtension_i (
     TAO_Repository_i *repo
@@ -317,3 +317,5 @@ TAO_InterfaceAttrExtension_i::create_ext_attribute_i (
 
   return retval._retn ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

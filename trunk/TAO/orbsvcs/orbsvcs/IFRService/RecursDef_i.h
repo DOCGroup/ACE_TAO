@@ -34,6 +34,9 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 //-----------------------------------------------------------------------------
 // Class TAO_RecursiveDef_OuterScopes is a support class for StructDef_i.h and
 // UnionDef_i.h files. It creates a stack of outer structure definitions, used
@@ -55,6 +58,8 @@ private: // Data
 
   static const TAO_RecursiveDef_OuterScopes *pIDsSeenAlready;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

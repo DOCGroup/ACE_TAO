@@ -9,6 +9,8 @@ ACE_RCSID (EventChannel,
            TAO_FTEC_ProxyPushSupplier,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 const TAO_FTEC_ProxyPushSupplier::RollbackOperation
   TAO_FTEC_ProxyPushSupplier::rollback_obtain =
     &FtRtecEventChannelAdmin::EventChannelFacade::disconnect_push_supplier;
@@ -196,3 +198,5 @@ void TAO_FTEC_ProxyPushSupplier::set_state(const FtRtecEventChannelAdmin::ProxyP
       Inherited::suspend_connection(ACE_ENV_SINGLE_ARG_PARAMETER);
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
