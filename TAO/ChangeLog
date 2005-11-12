@@ -1,3 +1,12 @@
+Sat Nov 12 09:55:33 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Change "FaultTolerance/FT_IOGR_Property.i" to
+	  "FaultTolerance/FT_IOGR_Property.inl".
+
+	  Remove "ETCL/ETCL_Constraint.i".
+
 Sat Nov 12 01:34:26 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/CosLoadBalancing.mpc:
