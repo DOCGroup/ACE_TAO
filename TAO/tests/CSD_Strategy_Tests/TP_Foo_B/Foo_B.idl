@@ -63,7 +63,7 @@ interface Foo_B
 
   /// Client calls this last.  The last client to claim that it is
   /// done will cause the server to shutdown.
-  void done();
+  oneway void done();
 };
 
 
