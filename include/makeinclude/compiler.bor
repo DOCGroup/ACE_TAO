@@ -91,7 +91,7 @@ DEBUG_CFLAGS = -v -y -Od -r- -vi- -k -D_DEBUG -DACE_NO_INLINE=1
 DEBUG_LFLAGS = -v
 !endif
 !else
-!if $(BCBVER) == 6 || $(BCBVER) == 5 || $(BCBVER) == 8
+!if $(BCBVER) == 6 || $(BCBVER) == 5
 DEBUG_CFLAGS = -OS -Ov -Og -DNDEBUG
 !else
 DEBUG_CFLAGS = -O2 -DNDEBUG
