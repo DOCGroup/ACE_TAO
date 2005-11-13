@@ -22,9 +22,9 @@ else {
 }
 
 $SV->Spawn ();
-
+print STDERR "timeout $PerlACE::wait_interval_for_process_creation\n";
 if (PerlACE::waitforfile_timed ($iorfile,
-                        $PerlACE::wait_interval_for_process_creation) == -1) {
+                        2 * $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
