@@ -28,7 +28,7 @@ namespace CIDL_Sender_Impl
   Sender_exec_i::local_message (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    return CORBA::string_dup (message_);
+    return CORBA::string_dup (message_.in ());
   }
 
   void
@@ -69,7 +69,7 @@ namespace CIDL_Sender_Impl
   Sender_exec_i::get_push_message (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
         ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    ACE_DEBUG ((LM_DEBUG, 
+    ACE_DEBUG ((LM_DEBUG,
                 "Sender_exec.i::get_push_message called\n "));
     return ( new Message_Impl (*this) );
   }
@@ -82,30 +82,30 @@ namespace CIDL_Sender_Impl
     ACE_DEBUG ((LM_DEBUG, "Sender initiates the process.\n"));
     this->context_->push_click_out (event ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
-    
+
     ACE_DEBUG ((LM_DEBUG, "My current color is:"));
-    
+
     switch (this->color_)
       {
       case ::Hello::empty:
         ACE_DEBUG ((LM_DEBUG, "ERROR: Enum attribute initialization failed.\n"));
         break;
-        
+
       case ::Hello::white:
         ACE_DEBUG ((LM_DEBUG, "white\n"));
         break;
-        
+
       case ::Hello::red:
         ACE_DEBUG ((LM_DEBUG, "red\n"));
         break;
-        
+
       case ::Hello::yellow:
         ACE_DEBUG ((LM_DEBUG, "yellow\n"));
         break;
-        
+
       default:
         ACE_DEBUG ((LM_DEBUG, "Unknown color!\n"));
-        
+
       }
   }
 
@@ -184,7 +184,7 @@ namespace CIDL_Sender_Impl
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CCMException))
   {
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) creating SenderHome \n")); 
+    ACE_DEBUG ((LM_DEBUG, "(%P|%t) creating SenderHome \n"));
     return new Sender_exec_i;
   }
 
