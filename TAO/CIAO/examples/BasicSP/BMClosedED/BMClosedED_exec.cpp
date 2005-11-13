@@ -67,7 +67,7 @@ MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *
                   str.in ()));
     }
 
-  if (ACE_OS::strcmp (str, "BM DEVICE DATA") == 0)
+  if (ACE_OS::strcmp (str.in (), "BM DEVICE DATA") == 0)
     {
       this->str_ = CORBA::string_dup ("BM CLOSED ED DATA");
     }

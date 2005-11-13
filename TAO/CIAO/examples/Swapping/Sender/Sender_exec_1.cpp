@@ -30,7 +30,7 @@ namespace CIDL_Sender_Impl
   Sender_exec_1_i::local_message (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    return CORBA::string_dup(message_);
+    return CORBA::string_dup(message_.in ());
   }
 
   Hello::CCM_ReadMessage_ptr
@@ -113,7 +113,7 @@ namespace CIDL_Sender_Impl
       this->context_->get_registered_consumers ("click_out"
         ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
-    
+
     this->base_exec_->consumers (retval._retn ());
 
     CORBA::Object_var o =
@@ -131,7 +131,7 @@ namespace CIDL_Sender_Impl
 
     const CORBA::ULong facet_len = facets->length ();
       CORBA::ULong i = 0;
-      
+
       for (i = 0; i < facet_len; ++i)
       {
         this->context_->remove_facet (facets[i]->facet_ref ()
