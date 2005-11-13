@@ -1,3 +1,15 @@
+Sun Nov 13 12:15:58 USMST 2005  Yan Dai  <dai_y@ociweb.com>
+
+        * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B.idl:
+        
+          Changed the done() method to be oneway to see if this fixes TRANSIENT
+          exception caught on VXWORKS builds.
+          
+        * tests/CSD_Strategy_Tests/TP_Test_1/run_test.pl:
+
+          Extended timeout for server process startup to see if this fixes
+          server.ior not found problem on VXWORKS builds.
+          
 Sat Nov 12 09:55:33 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:
@@ -309,7 +321,7 @@ Fri Nov 11 08:50:02 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 Thu Nov 10 10:18:20 USMST 2005  Yan Dai  <dai_y@ociweb.com>
 
-        * TAO/tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.cpp:
 
           Merged a bug fix from OCI 1.4a.
           "Thu Nov 10 02:34:04 2005  Ciju John  <john_c@ociweb.com>"
