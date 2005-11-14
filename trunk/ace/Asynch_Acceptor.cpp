@@ -369,14 +369,13 @@ ACE_Asynch_Acceptor<HANDLER>::cancel (void)
   // ERROR_OPERATION_ABORTED. All completion notifications for the I/O
   // operations will occur normally.
 #if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) \
-    && (    defined (_MSC_VER) \
-        || (defined (__BORLANDC__) && (__BORLANDC__ >= 0x530)))
+    && (    defined (_MSC_VER) || (defined (__BORLANDC__)))
   return (int) ::CancelIo (this->listen_handle_);
 #else
   // Supported now
   return this->asynch_accept_.cancel();
 
-#endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) && ((defined (_MSC_VER)) || (defined (__BORLANDC__) && (__BORLANDC__ >= 0x530))) */
+#endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) && ((defined (_MSC_VER)) || (defined (__BORLANDC__))) */
 }
 
 template <class HANDLER> void

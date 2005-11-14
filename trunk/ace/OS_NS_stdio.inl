@@ -649,7 +649,7 @@ ACE_OS::fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode)
   if (crt_handle != -1)
     {
 #   if defined(__BORLANDC__) /* VSB */
-      file = ::_fdopen (crt_handle, (char *) mode);
+      file = ::_fdopen (crt_handle, const_cast<char *> (mode));
 #   elif defined (ACE_USES_WCHAR)
       file = ::_wfdopen (crt_handle, mode);
 #   else
