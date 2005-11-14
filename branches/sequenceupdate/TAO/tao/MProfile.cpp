@@ -31,7 +31,8 @@ TAO_MProfile::~TAO_MProfile (void)
         {
           ACE_TRY
             {
-              (*this->policy_list_)[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+              CORBA::Policy_ptr policy = (*this->policy_list_)[i];
+              policy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
           ACE_CATCHANY
