@@ -73,16 +73,14 @@ namespace CORBA
 
   typedef
     TAO_FixedSeq_Var_T<
-        OctetSeq,
-        CORBA::Octet
+        OctetSeq
       >
     OctetSeq_var;
 
   typedef
     TAO_Seq_Out_T<
         OctetSeq,
-        OctetSeq_var,
-        CORBA::Octet
+        OctetSeq_var
       >
     OctetSeq_out;
 

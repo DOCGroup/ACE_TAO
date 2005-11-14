@@ -68,16 +68,14 @@ namespace CORBA
 
   typedef
     TAO_MngSeq_Var_T<
-        WStringSeq,
-        TAO_SeqElem_WString_Manager
+        WStringSeq
       >
     WStringSeq_var;
 
   typedef
     TAO_MngSeq_Out_T<
         WStringSeq,
-        WStringSeq_var,
-        TAO_SeqElem_WString_Manager
+        WStringSeq_var
       >
     WStringSeq_out;
 

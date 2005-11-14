@@ -77,16 +77,14 @@ namespace CORBA
 
   typedef
     TAO_FixedSeq_Var_T<
-        UShortSeq,
-        CORBA::UShort
+        UShortSeq
       >
     UShortSeq_var;
 
   typedef
     TAO_Seq_Out_T<
         UShortSeq,
-        UShortSeq_var,
-        CORBA::UShort
+        UShortSeq_var
       >
     UShortSeq_out;
 

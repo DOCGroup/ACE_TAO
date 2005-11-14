@@ -80,16 +80,14 @@ namespace CONV_FRAME
 
   typedef
     TAO_FixedSeq_Var_T<
-        CodeSetIdSeq,
-        CodeSetId
+        CodeSetIdSeq
       >
     CodeSetIdSeq_var;
 
   typedef
     TAO_Seq_Out_T<
         CodeSetIdSeq,
-        CodeSetIdSeq_var,
-        CodeSetId
+        CodeSetIdSeq_var
       >
     CodeSetIdSeq_out;
 

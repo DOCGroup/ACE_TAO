@@ -23,6 +23,7 @@ class unbounded_value_sequence
 {
 public:
   typedef T value_type;
+  typedef T element_type;
   typedef T const const_value_type;
 
   typedef details::unbounded_value_allocation_traits<value_type,true> allocation_traits;

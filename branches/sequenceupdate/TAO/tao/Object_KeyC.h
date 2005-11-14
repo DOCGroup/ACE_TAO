@@ -77,16 +77,14 @@ namespace TAO
 
   typedef
     TAO_FixedSeq_Var_T<
-        ObjectKey,
-        CORBA::Octet
+        ObjectKey
       >
     ObjectKey_var;
 
   typedef
     TAO_Seq_Out_T<
         ObjectKey,
-        ObjectKey_var,
-        CORBA::Octet
+        ObjectKey_var
       >
     ObjectKey_out;
 

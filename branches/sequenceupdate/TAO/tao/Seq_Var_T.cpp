@@ -13,23 +13,23 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template<typename T, typename T_elem>
-TAO_Seq_Var_Base_T<T,T_elem>::TAO_Seq_Var_Base_T (
-    const TAO_Seq_Var_Base_T<T,T_elem> & p)
+template<typename T>
+TAO_Seq_Var_Base_T<T>::TAO_Seq_Var_Base_T (
+    const TAO_Seq_Var_Base_T<T> & p)
   : ptr_ (p.ptr_ ? new T (*p.ptr_) : 0)
 {
 }
 
 // ****************************************************************************
 
-template<typename T, typename T_elem>
-TAO_FixedSeq_Var_T<T,T_elem> &
-TAO_FixedSeq_Var_T<T,T_elem>::operator= (
-    const TAO_FixedSeq_Var_T<T,T_elem> & p)
+template<typename T>
+TAO_FixedSeq_Var_T<T> &
+TAO_FixedSeq_Var_T<T>::operator= (
+    const TAO_FixedSeq_Var_T<T> & p)
 {
   // Strongly exception safe assignment using copy and non-throwing
   // swap technique.
-  TAO_FixedSeq_Var_T<T,T_elem> tmp (p);
+  TAO_FixedSeq_Var_T<T> tmp (p);
 
   T * old_ptr = this->ptr_;
   this->ptr_ = tmp.ptr_;
@@ -39,13 +39,13 @@ TAO_FixedSeq_Var_T<T,T_elem>::operator= (
 }
 
 // Fixed-size types only.
-template<typename T, typename T_elem>
-TAO_FixedSeq_Var_T<T,T_elem> &
-TAO_FixedSeq_Var_T<T,T_elem>::operator= (const T & p)
+template<typename T>
+TAO_FixedSeq_Var_T<T> &
+TAO_FixedSeq_Var_T<T>::operator= (const T & p)
 {
   // Strongly exception safe assignment using copy and non-throwing
   // swap technique.
-  TAO_FixedSeq_Var_T<T,T_elem> tmp (p);
+  TAO_FixedSeq_Var_T<T> tmp (p);
 
   T * old_ptr = this->ptr_;
   this->ptr_ = tmp.ptr_;
@@ -56,13 +56,13 @@ TAO_FixedSeq_Var_T<T,T_elem>::operator= (const T & p)
 
 // ****************************************************************************
 
-template<typename T, typename T_elem>
-TAO_VarSeq_Var_T<T,T_elem> &
-TAO_VarSeq_Var_T<T,T_elem>::operator= (const TAO_VarSeq_Var_T<T,T_elem> & p)
+template<typename T>
+TAO_VarSeq_Var_T<T> &
+TAO_VarSeq_Var_T<T>::operator= (const TAO_VarSeq_Var_T<T> & p)
 {
   // Strongly exception safe assignment using copy and non-throwing
   // swap technique.
-  TAO_VarSeq_Var_T<T,T_elem> tmp (p);
+  TAO_VarSeq_Var_T<T> tmp (p);
 
   T * old_ptr = this->ptr_;
   this->ptr_ = tmp.ptr_;
@@ -73,15 +73,15 @@ TAO_VarSeq_Var_T<T,T_elem>::operator= (const TAO_VarSeq_Var_T<T,T_elem> & p)
 
 // ****************************************************************************
 
-template<typename T, typename T_elem>
-TAO_MngSeq_Var_T<T,T_elem> &
-TAO_MngSeq_Var_T<T,T_elem>::operator= (
-    const TAO_MngSeq_Var_T<T,T_elem> & p
+template<typename T>
+TAO_MngSeq_Var_T<T> &
+TAO_MngSeq_Var_T<T>::operator= (
+    const TAO_MngSeq_Var_T<T> & p
   )
 {
   // Strongly exception safe assignment using copy and non-throwing
   // swap technique.
-  TAO_MngSeq_Var_T<T,T_elem> tmp (p);
+  TAO_MngSeq_Var_T<T> tmp (p);
 
   T * old_ptr = this->ptr_;
   this->ptr_ = tmp.ptr_;

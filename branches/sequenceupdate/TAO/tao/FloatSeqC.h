@@ -68,16 +68,14 @@ namespace CORBA
 
   typedef
     TAO_FixedSeq_Var_T<
-        FloatSeq,
-        CORBA::Float
+        FloatSeq
       >
     FloatSeq_var;
 
   typedef
     TAO_Seq_Out_T<
         FloatSeq,
-        FloatSeq_var,
-        CORBA::Float
+        FloatSeq_var
       >
     FloatSeq_out;
 

@@ -105,16 +105,14 @@ namespace IIOP
 
   typedef
     TAO_VarSeq_Var_T<
-        ListenPointList,
-        ListenPoint
+        ListenPointList
       >
     ListenPointList_var;
 
   typedef
     TAO_Seq_Out_T<
         ListenPointList,
-        ListenPointList_var,
-        ListenPoint
+        ListenPointList_var
       >
     ListenPointList_out;
 

@@ -98,14 +98,13 @@ namespace CORBA
   class PolicyList;
 
   typedef
-    TAO_VarSeq_Var_T<
-        PolicyList,
-        Policy
+    TAO_MngSeq_Var_T<
+        PolicyList
       >
     PolicyList_var;
 
   typedef
-    TAO_VarSeq_Var_T<
+    TAO_MngSeq_Out_T<
         PolicyList,
         PolicyList_var
       >
@@ -147,16 +146,14 @@ namespace CORBA
 
   typedef
     TAO_FixedSeq_Var_T<
-        PolicyTypeSeq,
-        PolicyType
+        PolicyTypeSeq
       >
     PolicyTypeSeq_var;
 
   typedef
     TAO_Seq_Out_T<
         PolicyTypeSeq,
-        PolicyTypeSeq_var,
-        PolicyType
+        PolicyTypeSeq_var
       >
     PolicyTypeSeq_out;
 

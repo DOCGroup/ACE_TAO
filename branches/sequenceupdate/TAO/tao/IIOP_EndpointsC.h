@@ -110,16 +110,14 @@ namespace TAO
 
   typedef
     TAO_VarSeq_Var_T<
-        IIOPEndpointSequence,
-        IIOP_Endpoint_Info
+        IIOPEndpointSequence
       >
     IIOPEndpointSequence_var;
 
   typedef
     TAO_Seq_Out_T<
         IIOPEndpointSequence,
-        IIOPEndpointSequence_var,
-        IIOP_Endpoint_Info
+        IIOPEndpointSequence_var
       >
     IIOPEndpointSequence_out;
 

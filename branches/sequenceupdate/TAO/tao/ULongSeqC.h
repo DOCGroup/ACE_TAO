@@ -73,16 +73,14 @@ namespace CORBA
 
   typedef
     TAO_FixedSeq_Var_T<
-        ULongSeq,
-        CORBA::ULong
+        ULongSeq
       >
     ULongSeq_var;
 
   typedef
     TAO_Seq_Out_T<
         ULongSeq,
-        ULongSeq_var,
-        CORBA::ULong
+        ULongSeq_var
       >
     ULongSeq_out;
 

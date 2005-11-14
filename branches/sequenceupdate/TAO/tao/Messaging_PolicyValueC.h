@@ -107,16 +107,14 @@ namespace Messaging
 
   typedef
     TAO_VarSeq_Var_T<
-        PolicyValueSeq,
-        PolicyValue
+        PolicyValueSeq
       >
     PolicyValueSeq_var;
 
   typedef
     TAO_Seq_Out_T<
         PolicyValueSeq,
-        PolicyValueSeq_var,
-        PolicyValue
+        PolicyValueSeq_var
       >
     PolicyValueSeq_out;
 

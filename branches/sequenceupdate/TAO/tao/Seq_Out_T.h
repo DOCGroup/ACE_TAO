@@ -26,25 +26,27 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief Parametrized implementation of _out class for sequences.
  *
  */
-template <typename T, typename T_var, typename T_elem>
+template <typename T, typename T_var>
 class TAO_Seq_Out_T
 {
 public:
+  typedef typename T::element_type element_type;
+
   TAO_Seq_Out_T (T *&);
   TAO_Seq_Out_T (T_var &);
-  TAO_Seq_Out_T (const TAO_Seq_Out_T<T,T_var,T_elem> &);
+  TAO_Seq_Out_T (const TAO_Seq_Out_T<T,T_var> &);
 
-  TAO_Seq_Out_T &operator= (const TAO_Seq_Out_T<T,T_var,T_elem> &);
+  TAO_Seq_Out_T &operator= (const TAO_Seq_Out_T<T,T_var> &);
   TAO_Seq_Out_T &operator= (T *);
 
   operator T *& ();
   T *& ptr (void);
   T * operator-> (void);
 
-  T_elem & operator[] (CORBA::ULong index);
+  element_type & operator[] (CORBA::ULong index);
 
 private:
-  typedef TAO_Seq_Out_T<T,T_var,T_elem> THIS_OUT_TYPE;
+  typedef TAO_Seq_Out_T<T,T_var> THIS_OUT_TYPE;
   T *& ptr_;
   // Assignment from T_var not allowed.
   void operator= (const T_var &);
@@ -58,25 +60,27 @@ private:
  * having managed types.
  *
  */
-template <typename T, typename T_var, typename T_elem>
+template <typename T, typename T_var>
 class TAO_MngSeq_Out_T
 {
 public:
+  typedef typename T::element_type element_type;
+
   TAO_MngSeq_Out_T (T *&);
   TAO_MngSeq_Out_T (T_var &);
-  TAO_MngSeq_Out_T (const TAO_MngSeq_Out_T<T,T_var,T_elem> &);
+  TAO_MngSeq_Out_T (const TAO_MngSeq_Out_T<T,T_var> &);
 
-  TAO_MngSeq_Out_T &operator= (const TAO_MngSeq_Out_T<T,T_var,T_elem> &);
+  TAO_MngSeq_Out_T &operator= (const TAO_MngSeq_Out_T<T,T_var> &);
   TAO_MngSeq_Out_T &operator= (T *);
 
   operator T *& ();
   T *& ptr (void);
   T * operator-> (void);
 
-  T_elem operator[] (CORBA::ULong index);
+  element_type operator[] (CORBA::ULong index);
 
 private:
-  typedef TAO_MngSeq_Out_T<T,T_var,T_elem> THIS_OUT_TYPE;
+  typedef TAO_MngSeq_Out_T<T,T_var> THIS_OUT_TYPE;
   T *& ptr_;
   // Assignment from T_var not allowed.
   void operator= (const T_var &);

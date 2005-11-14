@@ -123,16 +123,14 @@ namespace IOP
 
   typedef
     TAO_VarSeq_Var_T<
-        TaggedProfileSeq,
-        TaggedProfile
+        TaggedProfileSeq
       >
     TaggedProfileSeq_var;
 
   typedef
     TAO_Seq_Out_T<
         TaggedProfileSeq,
-        TaggedProfileSeq_var,
-        TaggedProfile
+        TaggedProfileSeq_var
       >
     TaggedProfileSeq_out;
 
@@ -237,16 +235,14 @@ namespace IOP
 
   typedef
     TAO_VarSeq_Var_T<
-        MultipleComponentProfile,
-        TaggedComponent
+        MultipleComponentProfile
       >
     MultipleComponentProfile_var;
 
   typedef
     TAO_Seq_Out_T<
         MultipleComponentProfile,
-        MultipleComponentProfile_var,
-        TaggedComponent
+        MultipleComponentProfile_var
       >
     MultipleComponentProfile_out;
 
@@ -285,16 +281,14 @@ namespace IOP
 
   typedef
     TAO_VarSeq_Var_T<
-        TaggedComponentList,
-        TaggedComponent
+        TaggedComponentList
       >
     TaggedComponentList_var;
 
   typedef
     TAO_Seq_Out_T<
         TaggedComponentList,
-        TaggedComponentList_var,
-        TaggedComponent
+        TaggedComponentList_var
       >
     TaggedComponentList_out;
 
@@ -333,16 +327,14 @@ namespace IOP
 
   typedef
     TAO_VarSeq_Var_T<
-        TaggedComponentSeq,
-        TaggedComponent
+        TaggedComponentSeq
       >
     TaggedComponentSeq_var;
 
   typedef
     TAO_Seq_Out_T<
         TaggedComponentSeq,
-        TaggedComponentSeq_var,
-        TaggedComponent
+        TaggedComponentSeq_var
       >
     TaggedComponentSeq_out;
 
@@ -467,16 +459,14 @@ namespace IOP
 
   typedef
     TAO_VarSeq_Var_T<
-        ServiceContextList,
-        ServiceContext
+        ServiceContextList
       >
     ServiceContextList_var;
 
   typedef
     TAO_Seq_Out_T<
         ServiceContextList,
-        ServiceContextList_var,
-        ServiceContext
+        ServiceContextList_var
       >
     ServiceContextList_out;
 

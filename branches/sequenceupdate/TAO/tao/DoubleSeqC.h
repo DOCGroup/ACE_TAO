@@ -68,16 +68,14 @@ namespace CORBA
 
   typedef
     TAO_FixedSeq_Var_T<
-        DoubleSeq,
-        CORBA::Double
+        DoubleSeq
       >
     DoubleSeq_var;
 
   typedef
     TAO_Seq_Out_T<
         DoubleSeq,
-        DoubleSeq_var,
-        CORBA::Double
+        DoubleSeq_var
       >
     DoubleSeq_out;
 

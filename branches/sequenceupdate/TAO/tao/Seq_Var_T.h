@@ -29,13 +29,15 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief Parametrized implementation of _var base class for sequences
  *
  */
-template <typename T, typename T_elem>
+template <typename T>
 class TAO_Seq_Var_Base_T
 {
 public:
+  typedef typename T::element_type element_type;
+
   TAO_Seq_Var_Base_T (void);
   TAO_Seq_Var_Base_T (T *);
-  TAO_Seq_Var_Base_T (const TAO_Seq_Var_Base_T<T,T_elem> &);
+  TAO_Seq_Var_Base_T (const TAO_Seq_Var_Base_T<T> &);
 
   ~TAO_Seq_Var_Base_T (void);
 
@@ -69,23 +71,24 @@ protected:
  *
  * @brief Parametrized implementation of _var class for sequences
  * whose element is of fixed size..
- *
  */
-template <typename T, typename T_elem>
-class TAO_FixedSeq_Var_T : public TAO_Seq_Var_Base_T<T,T_elem>
+template <typename T>
+class TAO_FixedSeq_Var_T : public TAO_Seq_Var_Base_T<T>
 {
 public:
+  typedef typename T::element_type element_type;
+
   TAO_FixedSeq_Var_T (void);
   TAO_FixedSeq_Var_T (T *);
-  TAO_FixedSeq_Var_T (const TAO_FixedSeq_Var_T<T,T_elem> &);
+  TAO_FixedSeq_Var_T (const TAO_FixedSeq_Var_T<T> &);
 
   // Fixed-size base types only.
   TAO_FixedSeq_Var_T (const T &);
 
   TAO_FixedSeq_Var_T & operator= (T *);
-  TAO_FixedSeq_Var_T & operator= (const TAO_FixedSeq_Var_T<T,T_elem> &);
+  TAO_FixedSeq_Var_T & operator= (const TAO_FixedSeq_Var_T<T> &);
 
-  T_elem & operator[] (CORBA::ULong index);
+  element_type & operator[] (CORBA::ULong index);
 
   // Fixed-size base types only.
   TAO_FixedSeq_Var_T & operator= (const T &);
@@ -98,18 +101,20 @@ public:
  * whose element is of variable size..
  *
  */
-template <typename T, typename T_elem>
-class TAO_VarSeq_Var_T : public TAO_Seq_Var_Base_T<T,T_elem>
+template <typename T>
+class TAO_VarSeq_Var_T : public TAO_Seq_Var_Base_T<T>
 {
 public:
+  typedef typename T::element_type element_type;
+
   TAO_VarSeq_Var_T (void);
   TAO_VarSeq_Var_T (T *);
-  TAO_VarSeq_Var_T (const TAO_VarSeq_Var_T<T,T_elem> &);
+  TAO_VarSeq_Var_T (const TAO_VarSeq_Var_T<T> &);
 
   TAO_VarSeq_Var_T & operator= (T *);
-  TAO_VarSeq_Var_T & operator= (const TAO_VarSeq_Var_T<T,T_elem> &);
+  TAO_VarSeq_Var_T & operator= (const TAO_VarSeq_Var_T<T> &);
 
-  T_elem & operator[] (CORBA::ULong index);
+  element_type & operator[] (CORBA::ULong index);
 
   // Variable-size base types only.
   operator T *& ();
@@ -121,24 +126,25 @@ public:
  * @brief Parametrized implementation of _var class for sequences
  * whose element is of a managed type - string, wstring, valuetype,
  * interface, abstract interface and pseudo object.
- *
  */
-template <typename T, typename T_elem>
-class TAO_MngSeq_Var_T : public TAO_Seq_Var_Base_T<T,T_elem>
+template <typename T>
+class TAO_MngSeq_Var_T : public TAO_Seq_Var_Base_T<T>
 {
 public:
+  typedef typename T::element_type element_type;
+
   TAO_MngSeq_Var_T (void);
   TAO_MngSeq_Var_T (T *);
-  TAO_MngSeq_Var_T (const TAO_MngSeq_Var_T<T,T_elem> &);
+  TAO_MngSeq_Var_T (const TAO_MngSeq_Var_T<T> &);
 
   TAO_MngSeq_Var_T & operator= (T *);
-  TAO_MngSeq_Var_T & operator= (const TAO_MngSeq_Var_T<T,T_elem> &);
+  TAO_MngSeq_Var_T & operator= (const TAO_MngSeq_Var_T<T> &);
 
-  // Variable-size base types only.
+  /// Variable-size base types only.
   operator T *& ();
 
-  // Managed base types only.
-  T_elem operator[] (CORBA::ULong index);
+  /// Managed base types only.
+  element_type operator[] (CORBA::ULong index);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

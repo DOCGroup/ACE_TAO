@@ -68,16 +68,14 @@ namespace CORBA
 
   typedef
     TAO_FixedSeq_Var_T<
-        WCharSeq,
-        CORBA::WChar
+        WCharSeq
       >
     WCharSeq_var;
 
   typedef
     TAO_Seq_Out_T<
         WCharSeq,
-        WCharSeq_var,
-        CORBA::WChar
+        WCharSeq_var
       >
     WCharSeq_out;
 

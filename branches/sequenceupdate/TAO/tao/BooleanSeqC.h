@@ -68,16 +68,14 @@ namespace CORBA
 
   typedef
     TAO_FixedSeq_Var_T<
-        BooleanSeq,
-        CORBA::Boolean
+        BooleanSeq
       >
     BooleanSeq_var;
 
   typedef
     TAO_Seq_Out_T<
         BooleanSeq,
-        BooleanSeq_var,
-        CORBA::Boolean
+        BooleanSeq_var
       >
     BooleanSeq_out;
 

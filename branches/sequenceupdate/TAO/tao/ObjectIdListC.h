@@ -84,16 +84,14 @@ namespace CORBA
 
   typedef
     TAO_MngSeq_Var_T<
-        ORB_ObjectIdList,
-        TAO_SeqElem_String_Manager
+        ORB_ObjectIdList
       >
     ORB_ObjectIdList_var;
 
   typedef
     TAO_MngSeq_Out_T<
         ORB_ObjectIdList,
-        ORB_ObjectIdList_var,
-        TAO_SeqElem_String_Manager
+        ORB_ObjectIdList_var
       >
     ORB_ObjectIdList_out;
 

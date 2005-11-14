@@ -101,16 +101,14 @@ namespace CORBA
 
   typedef
     TAO_FixedSeq_Var_T<
-        ServiceOptionSeq,
-        ServiceOption
+        ServiceOptionSeq
       >
     ServiceOptionSeq_var;
 
   typedef
     TAO_Seq_Out_T<
         ServiceOptionSeq,
-        ServiceOptionSeq_var,
-        ServiceOption
+        ServiceOptionSeq_var
       >
     ServiceOptionSeq_out;
 
@@ -184,16 +182,14 @@ namespace CORBA
 
   typedef
     TAO_VarSeq_Var_T<
-        ServiceDetailSeq,
-        ServiceDetail
+        ServiceDetailSeq
       >
     ServiceDetailSeq_var;
 
   typedef
     TAO_Seq_Out_T<
         ServiceDetailSeq,
-        ServiceDetailSeq_var,
-        ServiceDetail
+        ServiceDetailSeq_var
       >
     ServiceDetailSeq_out;
 
