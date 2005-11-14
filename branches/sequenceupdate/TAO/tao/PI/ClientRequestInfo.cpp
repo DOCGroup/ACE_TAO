@@ -546,8 +546,8 @@ TAO_ClientRequestInfo::exception_list (Dynamic::ExceptionList &exception_list)
             this->invocation_->operation_details ().ex_data ()[i].tc_ptr;
           if (!CORBA::is_nil (tcp))
             {
-              TAO_Pseudo_Object_Manager<CORBA::TypeCode> tcp_object (&tcp, 1);
-              exception_list[i] = tcp_object;
+//              TAO_Pseudo_Object_Manager<CORBA::TypeCode> tcp_object (&tcp, 1);
+              exception_list[i] = tcp;
             }
         }
     }

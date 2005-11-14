@@ -392,12 +392,9 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (
                 << "strm.orb_core ()->resource_factory ()->" << be_nl
                 << "input_cdr_allocator_type_locked () == 1)" << be_nl
                 << "{" << be_idt_nl
-                << "TAO_Unbounded_Sequence< ::CORBA::Octet> *oseq = " << be_nl
-                << "  static_cast<TAO_Unbounded_Sequence< ::CORBA::Octet> *> ("
-                << "&_tao_sequence);" << be_nl
-                << "oseq->replace (_tao_seq_len, strm.start ());"
+                << "_tao_sequence.replace (_tao_seq_len, strm.start ());"
                 << be_nl
-                << "oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + "
+                << "_tao_sequence.mb ()->wr_ptr (_tao_sequence.mb()->rd_ptr () + "
                 << "_tao_seq_len);" << be_nl
                 << "strm.skip_bytes (_tao_seq_len);" << be_nl
                 << "return 1;" << be_uidt_nl
@@ -410,11 +407,8 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (
         case TAO_CodeGen::TAO_CDR_OUTPUT:
           {
             *os << "{" << be_idt_nl
-                << "TAO_Unbounded_Sequence< ::CORBA::Octet> *_tao_octet_seq = " << be_nl
-                << "  static_cast<TAO_Unbounded_Sequence< ::CORBA::Octet> *> "
-                << "(const_cast<" << sequence->name () << " *> (&_tao_sequence));" << be_nl
-                << "if (_tao_octet_seq->mb ())" << be_idt_nl
-                << "return strm.write_octet_array_mb (_tao_octet_seq->mb ());"
+                << "if (_tao_sequence.mb ())" << be_idt_nl
+                << "return strm.write_octet_array_mb (_tao_sequene.mb ());"
                 << be_uidt_nl
                 << "else" << be_idt_nl
                 << "return strm.write_octet_array ("
@@ -847,7 +841,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
           *os << "_tao_marshal_flag =" << be_idt_nl
               << "TAO::Objref_Traits<" << bt->name () << ">::marshal ("
               << be_idt << be_idt_nl
-              << "_tao_sequence[i].in (), strm" << be_uidt_nl
+              << "_tao_sequence[i], strm" << be_uidt_nl
               << ");" << be_uidt << be_uidt;
 
           break;

@@ -433,13 +433,13 @@ be_sequence::instance_name ()
       if (this->unbounded ())
         {
           ACE_OS::sprintf (namebuf,
-                           "_TAO_Unbounded_Object_Sequence_%s",
+                           "_TAO_unbounded_object_reference_sequence_%s",
                            prim_type->local_name ()->get_string ());
         }
       else
         {
           ACE_OS::sprintf (namebuf,
-                           "_TAO_Bounded_Object_Sequence_%s_%lu",
+                           "_TAO_bounded_object_reference_sequence_%s_%lu",
                            prim_type->local_name ()->get_string (),
                            this->max_size ()->ev ()->u.ulval);
         }
@@ -501,19 +501,19 @@ be_sequence::instance_name ()
               && predef->pt() == AST_PredefinedType::PT_octet)
             {
               ACE_OS::sprintf (namebuf,
-                               "TAO_Unbounded_Sequence<CORBA::Octet>");
+                               "TAO::unbounded_value_sequence<CORBA::Octet>");
             }
           else
             {
               ACE_OS::sprintf (namebuf,
-                               "_TAO_Unbounded_Sequence_%s",
+                               "_TAO_unbounded_value_sequence_%s",
                                prim_type->local_name ()->get_string ());
             }
         }
       else
         {
           ACE_OS::sprintf (namebuf,
-                           "_TAO_Bounded_Sequence_%s_%lu",
+                           "_TAO_bounded_value_sequence_%s_%lu",
                             prim_type->local_name ()->get_string (),
                             this->max_size ()->ev ()->u.ulval);
         }
@@ -537,7 +537,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
     case be_sequence::MNG_OBJREF:
       if (this->unbounded ())
         {
-          *os << "TAO_Unbounded_Object_Sequence<" << linebreak
+          *os << "TAO::unbounded_object_reference_sequence<" << linebreak
               << be_idt << be_idt_nl
               << elem->nested_type_name (ctx_scope) << "," << linebreak
               << be_nl;
@@ -547,7 +547,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
         }
       else
         {
-          *os << "TAO_Bounded_Object_Sequence<" << linebreak
+          *os << "TAO::bounded_object_reference_sequence<" << linebreak
               << be_idt << be_idt_nl
               << elem->nested_type_name (ctx_scope) << "," << linebreak << be_nl;
           *os << elem->nested_type_name (ctx_scope, "_var") << ","
@@ -660,7 +660,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
           default:
             if (this->unbounded ())
               {
-                *os << "TAO_Unbounded_Sequence<" << linebreak
+                *os << "TAO::unbounded_value_sequence<" << linebreak
                     << be_idt << be_idt_nl
                     << elem->nested_type_name (ctx_scope) << linebreak
                     << be_uidt_nl
@@ -668,7 +668,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
               }
             else
               {
-                *os << "TAO_Bounded_Sequence<" << linebreak
+                *os << "TAO::bounded_value_sequence<" << linebreak
                     << be_idt << be_idt_nl
                     << elem->nested_type_name (ctx_scope) << "," << linebreak
                     << be_nl

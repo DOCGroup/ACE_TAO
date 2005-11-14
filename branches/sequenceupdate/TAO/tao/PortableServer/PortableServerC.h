@@ -96,28 +96,20 @@ namespace PortableServer
 
   typedef
     TAO_MngSeq_Var_T<
-        POAList,
-        TAO_Object_Manager<
-            POA,
-            POA_var
-          >
+        POAList
       >
     POAList_var;
 
   typedef
     TAO_MngSeq_Out_T<
         POAList,
-        POAList_var,
-        TAO_Object_Manager<
-            POA,
-            POA_var
-          >
+        POAList_var
       >
     POAList_out;
 
   class TAO_PortableServer_Export POAList
     : public
-        TAO_Unbounded_Object_Sequence<
+        TAO::unbounded_object_reference_sequence<
             POA,
             POA_var
           >

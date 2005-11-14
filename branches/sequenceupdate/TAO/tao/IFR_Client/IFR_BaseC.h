@@ -792,28 +792,20 @@ namespace CORBA
 
   typedef
     TAO_MngSeq_Var_T<
-        InterfaceDefSeq,
-        TAO_Object_Manager<
-            InterfaceDef,
-            InterfaceDef_var
-          >
+        InterfaceDefSeq
       >
     InterfaceDefSeq_var;
 
   typedef
     TAO_MngSeq_Out_T<
         InterfaceDefSeq,
-        InterfaceDefSeq_var,
-        TAO_Object_Manager<
-            InterfaceDef,
-            InterfaceDef_var
-          >
+        InterfaceDefSeq_var
       >
     InterfaceDefSeq_out;
 
   class TAO_IFR_Client_Export InterfaceDefSeq
     : public
-        TAO_Unbounded_Object_Sequence<
+        TAO::unbounded_object_reference_sequence<
             InterfaceDef,
             InterfaceDef_var
           >
@@ -921,28 +913,20 @@ namespace CORBA
 
   typedef
     TAO_MngSeq_Var_T<
-        ValueDefSeq,
-        TAO_Object_Manager<
-            ValueDef,
-            ValueDef_var
-          >
+        ValueDefSeq
       >
     ValueDefSeq_var;
 
   typedef
     TAO_MngSeq_Out_T<
         ValueDefSeq,
-        ValueDefSeq_var,
-        TAO_Object_Manager<
-            ValueDef,
-            ValueDef_var
-          >
+        ValueDefSeq_var
       >
     ValueDefSeq_out;
 
   class TAO_IFR_Client_Export ValueDefSeq
     : public
-        TAO_Unbounded_Object_Sequence<
+        TAO::unbounded_object_reference_sequence<
             ValueDef,
             ValueDef_var
           >
@@ -1027,28 +1011,20 @@ namespace CORBA
 
   typedef
     TAO_MngSeq_Var_T<
-        AbstractInterfaceDefSeq,
-        TAO_Object_Manager<
-            AbstractInterfaceDef,
-            AbstractInterfaceDef_var
-          >
+        AbstractInterfaceDefSeq
       >
     AbstractInterfaceDefSeq_var;
 
   typedef
     TAO_MngSeq_Out_T<
         AbstractInterfaceDefSeq,
-        AbstractInterfaceDefSeq_var,
-        TAO_Object_Manager<
-            AbstractInterfaceDef,
-            AbstractInterfaceDef_var
-          >
+        AbstractInterfaceDefSeq_var
       >
     AbstractInterfaceDefSeq_out;
 
   class TAO_IFR_Client_Export AbstractInterfaceDefSeq
     : public
-        TAO_Unbounded_Object_Sequence<
+        TAO::unbounded_object_reference_sequence<
             AbstractInterfaceDef,
             AbstractInterfaceDef_var
           >
@@ -1110,28 +1086,20 @@ namespace CORBA
 
   typedef
     TAO_MngSeq_Var_T<
-        LocalInterfaceDefSeq,
-        TAO_Object_Manager<
-            LocalInterfaceDef,
-            LocalInterfaceDef_var
-          >
+        LocalInterfaceDefSeq
       >
     LocalInterfaceDefSeq_var;
 
   typedef
     TAO_MngSeq_Out_T<
         LocalInterfaceDefSeq,
-        LocalInterfaceDefSeq_var,
-        TAO_Object_Manager<
-            LocalInterfaceDef,
-            LocalInterfaceDef_var
-          >
+        LocalInterfaceDefSeq_var
       >
     LocalInterfaceDefSeq_out;
 
   class TAO_IFR_Client_Export LocalInterfaceDefSeq
     : public
-        TAO_Unbounded_Object_Sequence<
+        TAO::unbounded_object_reference_sequence<
             LocalInterfaceDef,
             LocalInterfaceDef_var
           >
@@ -1193,28 +1161,20 @@ namespace CORBA
 
   typedef
     TAO_MngSeq_Var_T<
-        ExtInterfaceDefSeq,
-        TAO_Object_Manager<
-            ExtInterfaceDef,
-            ExtInterfaceDef_var
-          >
+        ExtInterfaceDefSeq
       >
     ExtInterfaceDefSeq_var;
 
   typedef
     TAO_MngSeq_Out_T<
         ExtInterfaceDefSeq,
-        ExtInterfaceDefSeq_var,
-        TAO_Object_Manager<
-            ExtInterfaceDef,
-            ExtInterfaceDef_var
-          >
+        ExtInterfaceDefSeq_var
       >
     ExtInterfaceDefSeq_out;
 
   class TAO_IFR_Client_Export ExtInterfaceDefSeq
     : public
-        TAO_Unbounded_Object_Sequence<
+        TAO::unbounded_object_reference_sequence<
             ExtInterfaceDef,
             ExtInterfaceDef_var
           >
@@ -1276,28 +1236,20 @@ namespace CORBA
 
   typedef
     TAO_MngSeq_Var_T<
-        ExtValueDefSeq,
-        TAO_Object_Manager<
-            ExtValueDef,
-            ExtValueDef_var
-          >
+        ExtValueDefSeq
       >
     ExtValueDefSeq_var;
 
   typedef
     TAO_MngSeq_Out_T<
         ExtValueDefSeq,
-        ExtValueDefSeq_var,
-        TAO_Object_Manager<
-            ExtValueDef,
-            ExtValueDef_var
-          >
+        ExtValueDefSeq_var
       >
     ExtValueDefSeq_out;
 
   class TAO_IFR_Client_Export ExtValueDefSeq
     : public
-        TAO_Unbounded_Object_Sequence<
+        TAO::unbounded_object_reference_sequence<
             ExtValueDef,
             ExtValueDef_var
           >
@@ -1359,28 +1311,20 @@ namespace CORBA
 
   typedef
     TAO_MngSeq_Var_T<
-        ExtAbstractInterfaceDefSeq,
-        TAO_Object_Manager<
-            ExtAbstractInterfaceDef,
-            ExtAbstractInterfaceDef_var
-          >
+        ExtAbstractInterfaceDefSeq
       >
     ExtAbstractInterfaceDefSeq_var;
 
   typedef
     TAO_MngSeq_Out_T<
         ExtAbstractInterfaceDefSeq,
-        ExtAbstractInterfaceDefSeq_var,
-        TAO_Object_Manager<
-            ExtAbstractInterfaceDef,
-            ExtAbstractInterfaceDef_var
-          >
+        ExtAbstractInterfaceDefSeq_var
       >
     ExtAbstractInterfaceDefSeq_out;
 
   class TAO_IFR_Client_Export ExtAbstractInterfaceDefSeq
     : public
-        TAO_Unbounded_Object_Sequence<
+        TAO::unbounded_object_reference_sequence<
             ExtAbstractInterfaceDef,
             ExtAbstractInterfaceDef_var
           >
@@ -1442,28 +1386,20 @@ namespace CORBA
 
   typedef
     TAO_MngSeq_Var_T<
-        ExtLocalInterfaceDefSeq,
-        TAO_Object_Manager<
-            ExtLocalInterfaceDef,
-            ExtLocalInterfaceDef_var
-          >
+        ExtLocalInterfaceDefSeq
       >
     ExtLocalInterfaceDefSeq_var;
 
   typedef
     TAO_MngSeq_Out_T<
         ExtLocalInterfaceDefSeq,
-        ExtLocalInterfaceDefSeq_var,
-        TAO_Object_Manager<
-            ExtLocalInterfaceDef,
-            ExtLocalInterfaceDef_var
-          >
+        ExtLocalInterfaceDefSeq_var
       >
     ExtLocalInterfaceDefSeq_out;
 
   class TAO_IFR_Client_Export ExtLocalInterfaceDefSeq
     : public
-        TAO_Unbounded_Object_Sequence<
+        TAO::unbounded_object_reference_sequence<
             ExtLocalInterfaceDef,
             ExtLocalInterfaceDef_var
           >
@@ -1502,28 +1438,20 @@ namespace CORBA
 
   typedef
     TAO_MngSeq_Var_T<
-        ContainedSeq,
-        TAO_Object_Manager<
-            Contained,
-            Contained_var
-          >
+        ContainedSeq
       >
     ContainedSeq_var;
 
   typedef
     TAO_MngSeq_Out_T<
         ContainedSeq,
-        ContainedSeq_var,
-        TAO_Object_Manager<
-            Contained,
-            Contained_var
-          >
+        ContainedSeq_var
       >
     ContainedSeq_out;
 
   class TAO_IFR_Client_Export ContainedSeq
     : public
-        TAO_Unbounded_Object_Sequence<
+        TAO::unbounded_object_reference_sequence<
             Contained,
             Contained_var
           >
@@ -1598,22 +1526,20 @@ namespace CORBA
 
   typedef
     TAO_VarSeq_Var_T<
-        StructMemberSeq,
-        StructMember
+        StructMemberSeq
       >
     StructMemberSeq_var;
 
   typedef
     TAO_Seq_Out_T<
         StructMemberSeq,
-        StructMemberSeq_var,
-        StructMember
+        StructMemberSeq_var
       >
     StructMemberSeq_out;
 
   class TAO_IFR_Client_Export StructMemberSeq
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             StructMember
           >
   {
@@ -1686,22 +1612,20 @@ namespace CORBA
 
   typedef
     TAO_VarSeq_Var_T<
-        InitializerSeq,
-        Initializer
+        InitializerSeq
       >
     InitializerSeq_var;
 
   typedef
     TAO_Seq_Out_T<
         InitializerSeq,
-        InitializerSeq_var,
-        Initializer
+        InitializerSeq_var
       >
     InitializerSeq_out;
 
   class TAO_IFR_Client_Export InitializerSeq
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             Initializer
           >
   {

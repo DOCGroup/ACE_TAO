@@ -96,22 +96,20 @@ namespace Dynamic
 
   typedef
     TAO_VarSeq_Var_T<
-        ParameterList,
-        Parameter
+        ParameterList
       >
     ParameterList_var;
 
   typedef
     TAO_Seq_Out_T<
         ParameterList,
-        ParameterList_var,
-        Parameter
+        ParameterList_var
       >
     ParameterList_out;
 
   class TAO_AnyTypeCode_Export ParameterList
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             Parameter
           >
   {
@@ -152,28 +150,20 @@ namespace Dynamic
 
   typedef
     TAO_MngSeq_Var_T<
-        ExceptionList,
-        TAO_Object_Manager<
-            CORBA::TypeCode,
-            CORBA::TypeCode_var
-          >
+        ExceptionList
       >
     ExceptionList_var;
 
   typedef
     TAO_MngSeq_Out_T<
         ExceptionList,
-        ExceptionList_var,
-        TAO_Object_Manager<
-            CORBA::TypeCode,
-            CORBA::TypeCode_var
-          >
+        ExceptionList_var
       >
     ExceptionList_out;
 
   class TAO_AnyTypeCode_Export ExceptionList
     : public
-        TAO_Unbounded_Object_Sequence<
+        TAO::unbounded_object_reference_sequence<
             CORBA::TypeCode,
             CORBA::TypeCode_var
           >

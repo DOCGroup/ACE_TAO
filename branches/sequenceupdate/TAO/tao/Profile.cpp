@@ -29,35 +29,6 @@ ACE_RCSID (tao,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-bool
-operator== (const TAO::unbounded_value_sequence<CORBA::Octet> & lhs,
-            const TAO::unbounded_value_sequence<CORBA::Octet> & rhs)
-{
-  const CORBA::ULong rlen = rhs.length ();
-
-  if (rlen != lhs.length ())
-    {
-      return false;
-    }
-
-  for (CORBA::ULong i = 0; i < rlen; ++i)
-    {
-      if (rhs[i] != lhs[i])
-        {
-          return false;
-        }
-    }
-
-  return true;
-}
-
-bool
-operator!= (const TAO::unbounded_value_sequence<CORBA::Octet> & lhs,
-            const TAO::unbounded_value_sequence<CORBA::Octet> & rhs)
-{
-  return !(lhs == rhs);
-}
-
 TAO_Profile::TAO_Profile (CORBA::ULong tag,
                           TAO_ORB_Core *orb_core,
                           const TAO::ObjectKey &obj_key,
