@@ -168,7 +168,7 @@ ACE_WIN32_Asynch_Operation::cancel (void)
 {
 #if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) \
     && (   (defined (_MSC_VER)) \
-        || (defined (__BORLANDC__) && (__BORLANDC__ >= 0x530)) \
+        || (defined (__BORLANDC__)) \
         || (defined (__MINGW32)))
   // All I/O operations that are canceled will complete with the error
   // ERROR_OPERATION_ABORTED. All completion notifications for the I/O
