@@ -317,8 +317,7 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
           << "typedef" << be_idt_nl
           << "TAO_MngSeq_Out_T<" << be_idt << be_idt_nl
           << node->local_name () << "," << be_nl
-          << node->local_name () << "_var," << be_nl
-          << "TAO_SeqElem_String_Manager" << be_uidt_nl
+          << node->local_name () << "_var" << be_uidt_nl
           << ">" << be_uidt_nl
           << node->local_name () << "_out;" << be_uidt;
 
@@ -326,8 +325,7 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
     case be_sequence::MNG_WSTRING:
       *os << "typedef" << be_idt_nl
           << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
-          << node->local_name () << "," << be_nl
-          << "TAO_SeqElem_WString_Manager" << be_uidt_nl
+          << node->local_name () << be_uidt_nl
           << ">" << be_uidt_nl
           << node->local_name () << "_var;" << be_uidt;
 
@@ -335,8 +333,7 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
           << "typedef" << be_idt_nl
           << "TAO_MngSeq_Out_T<" << be_idt << be_idt_nl
           << node->local_name () << "," << be_nl
-          << node->local_name () << "_var," << be_nl
-          << "TAO_SeqElem_WString_Manager" << be_uidt_nl
+          << node->local_name () << "_var" << be_uidt_nl
           << ">" << be_uidt_nl
           << node->local_name () << "_out;" << be_uidt;
 
