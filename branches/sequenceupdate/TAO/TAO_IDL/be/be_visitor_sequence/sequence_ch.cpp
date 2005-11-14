@@ -255,7 +255,7 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
           << "typedef" << be_idt_nl
           << "TAO_MngSeq_Out_T<" << be_idt << be_idt_nl
           << node->local_name () << "," << be_nl
-          << node->local_name () << "_var" << be_nl;
+          << node->local_name () << "_var";
       *os << be_uidt_nl << ">"
           << node->local_name () << "_out;" << be_uidt;
 
