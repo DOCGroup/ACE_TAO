@@ -43,7 +43,7 @@ namespace TAO {
       for(CORBA::ULong i = 0; i < length; ++i) {
 // @todo, check why cast
         typename sequence::value_type element = const_cast <typename sequence::value_type> (source[i]);
-        if (!TAO::Objref_Traits<sequence::object_type>::marshal (element, strm)) {
+        if (!TAO::Objref_Traits<typename sequence::object_type>::marshal (element, strm)) {
           return false;
         }
       }
