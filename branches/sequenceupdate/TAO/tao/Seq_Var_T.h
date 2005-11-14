@@ -33,7 +33,7 @@ template <typename T>
 class TAO_Seq_Var_Base_T
 {
 public:
-  typedef typename T::element_type element_type;
+  typedef typename T::element_type T_elem;
 
   TAO_Seq_Var_Base_T (void);
   TAO_Seq_Var_Base_T (T *);
@@ -76,7 +76,7 @@ template <typename T>
 class TAO_FixedSeq_Var_T : public TAO_Seq_Var_Base_T<T>
 {
 public:
-  typedef typename T::element_type element_type;
+  typedef typename T::element_type T_elem;
 
   TAO_FixedSeq_Var_T (void);
   TAO_FixedSeq_Var_T (T *);
@@ -88,7 +88,7 @@ public:
   TAO_FixedSeq_Var_T & operator= (T *);
   TAO_FixedSeq_Var_T & operator= (const TAO_FixedSeq_Var_T<T> &);
 
-  element_type & operator[] (CORBA::ULong index);
+  T_elem & operator[] (CORBA::ULong index);
 
   // Fixed-size base types only.
   TAO_FixedSeq_Var_T & operator= (const T &);
@@ -105,7 +105,7 @@ template <typename T>
 class TAO_VarSeq_Var_T : public TAO_Seq_Var_Base_T<T>
 {
 public:
-  typedef typename T::element_type element_type;
+  typedef typename T::element_type T_elem;
 
   TAO_VarSeq_Var_T (void);
   TAO_VarSeq_Var_T (T *);
@@ -114,7 +114,7 @@ public:
   TAO_VarSeq_Var_T & operator= (T *);
   TAO_VarSeq_Var_T & operator= (const TAO_VarSeq_Var_T<T> &);
 
-  element_type & operator[] (CORBA::ULong index);
+  T_elem & operator[] (CORBA::ULong index);
 
   // Variable-size base types only.
   operator T *& ();
@@ -131,7 +131,7 @@ template <typename T>
 class TAO_MngSeq_Var_T : public TAO_Seq_Var_Base_T<T>
 {
 public:
-  typedef typename T::element_type element_type;
+  typedef typename T::element_type T_elem;
 
   TAO_MngSeq_Var_T (void);
   TAO_MngSeq_Var_T (T *);
@@ -144,7 +144,7 @@ public:
   operator T *& ();
 
   /// Managed base types only.
-  element_type operator[] (CORBA::ULong index);
+  T_elem operator[] (CORBA::ULong index);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -146,7 +146,7 @@ TAO_FixedSeq_Var_T<T>::operator= (T * p)
 
 template<typename T>
 ACE_INLINE
-T::element_type &
+TAO_FixedSeq_Var_T<T>::T_elem &
 TAO_FixedSeq_Var_T<T>::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
@@ -194,7 +194,7 @@ TAO_VarSeq_Var_T<T>::operator T *& ()
 
 template<typename T>
 ACE_INLINE
-T::element_type &
+TAO_VarSeq_Var_T<T>::T_elem &
 TAO_VarSeq_Var_T<T>::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
@@ -241,7 +241,7 @@ TAO_MngSeq_Var_T<T>::operator T *& ()
 
 template<typename T>
 ACE_INLINE
-TAO_MngSeq_Var_T<T>::element_type
+TAO_MngSeq_Var_T<T>::T_elem
 TAO_MngSeq_Var_T<T>::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
