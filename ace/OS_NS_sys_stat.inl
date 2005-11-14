@@ -360,7 +360,7 @@ namespace ACE_OS
 # if defined (ACE_LACKS_UMASK)
     ACE_UNUSED_ARG (cmask);
     ACE_NOTSUP_RETURN ((mode_t)-1);
-# elif defined (ACE_WIN32)
+# elif defined (ACE_WIN32) && !defined (__BORLANDC__)
     ACE_OSCALL_RETURN (::_umask (cmask), mode_t, -1);
 # else
     return ::umask (cmask); // This call shouldn't fail...
