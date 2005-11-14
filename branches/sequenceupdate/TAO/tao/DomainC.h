@@ -408,7 +408,7 @@ namespace TAO
       );
     static ::CORBA::DomainManager_ptr nil (void);
     static CORBA::Boolean marshal (
-        ::CORBA::DomainManager_ptr p,
+        const ::CORBA::DomainManager_ptr p,
         TAO_OutputCDR & cdr
       );
   };
@@ -429,7 +429,7 @@ namespace TAO
       );
     static ::CORBA::ConstructionPolicy_ptr nil (void);
     static CORBA::Boolean marshal (
-        ::CORBA::ConstructionPolicy_ptr p,
+        const ::CORBA::ConstructionPolicy_ptr p,
         TAO_OutputCDR & cdr
       );
   };

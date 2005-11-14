@@ -393,7 +393,7 @@ TAO::Objref_Traits<CORBA::Policy>::nil (void)
 
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::Policy>::marshal (
-    CORBA::Policy_ptr p,
+    const CORBA::Policy_ptr p,
     TAO_OutputCDR & cdr
   )
 {
@@ -672,7 +672,7 @@ TAO::Objref_Traits<CORBA::PolicyManager>::nil (void)
 
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::PolicyManager>::marshal (
-    CORBA::PolicyManager_ptr p,
+    const CORBA::PolicyManager_ptr p,
     TAO_OutputCDR & cdr
   )
 {
@@ -801,7 +801,7 @@ TAO::Objref_Traits<CORBA::PolicyCurrent>::nil (void)
 
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::PolicyCurrent>::marshal (
-    CORBA::PolicyCurrent_ptr p,
+    const CORBA::PolicyCurrent_ptr p,
     TAO_OutputCDR & cdr
   )
 {

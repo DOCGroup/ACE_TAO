@@ -35,20 +35,6 @@ namespace TAO {
     }
 
     template <class stream, class sequence>
-    bool insert_unbounded_sequence(TAO_OutputCDR & strm, const TAO::unbounded_value_sequence <typename sequence::value_type> & source) {
-      const ::CORBA::ULong length = source.length ();
-      if (!(strm << length)) {
-        return false;
-      }
-      for(CORBA::ULong i = 0; i < length; ++i) {
-        if (!(strm << source[i])) {
-          return false;
-        }
-      }
-      return true;
-    }
-
-    template <class stream, class sequence>
     bool insert_unbounded_sequence(stream & strm, const sequence & source) {
       const ::CORBA::ULong length = source.length ();
       if (!(strm << length)) {

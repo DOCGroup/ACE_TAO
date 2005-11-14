@@ -71,7 +71,7 @@ TAO::Objref_Traits<CORBA::Current>::nil (void)
 
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::Current>::marshal (
-    CORBA::Current_ptr p,
+    const CORBA::Current_ptr p,
     TAO_OutputCDR & cdr
   )
 {
@@ -113,7 +113,7 @@ CORBA::Current::_duplicate (Current_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 

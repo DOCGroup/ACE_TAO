@@ -356,7 +356,7 @@ TAO::Objref_Traits<CORBA::ConstructionPolicy>::nil (void)
 
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::ConstructionPolicy>::marshal (
-    CORBA::ConstructionPolicy_ptr p,
+    const CORBA::ConstructionPolicy_ptr p,
     TAO_OutputCDR & cdr
   )
 {

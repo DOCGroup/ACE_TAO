@@ -61,22 +61,22 @@
 
 namespace CORBA
 {
-  
+
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
 
 #if !defined (_CORBA_CURRENT__VAR_OUT_CH_)
 #define _CORBA_CURRENT__VAR_OUT_CH_
-  
+
   class Current;
   typedef Current *Current_ptr;
-  
+
   typedef
     TAO_Objref_Var_T<
         Current
       >
     Current_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Current
@@ -84,63 +84,63 @@ namespace CORBA
     Current_out;
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_CORBA_CURRENT_CH_)
 #define _CORBA_CURRENT_CH_
-  
+
   class TAO_Export Current
     : public virtual CORBA::Object
   {
   public:
     typedef Current_ptr _ptr_type;
     typedef Current_var _var_type;
-    
+
     // The static operations.
     static Current_ptr _duplicate (Current_ptr obj);
-    
+
     static void _tao_release (Current_ptr obj);
-    
+
     static Current_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static Current_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     static Current_ptr _nil (void)
     {
       return static_cast<Current_ptr> (0);
     }
-    
-    
-    
+
+
+
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
-    
+
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Abstract or local interface only.
     Current (void);
-    
+
     virtual ~Current (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Current (const Current &);
-    
+
     void operator= (const Current &);
   };
 
@@ -160,7 +160,7 @@ namespace TAO
 
 #if !defined (_CORBA_CURRENT__TRAITS_)
 #define _CORBA_CURRENT__TRAITS_
-  
+
   template<>
   struct TAO_Export Objref_Traits< ::CORBA::Current>
   {
@@ -172,7 +172,7 @@ namespace TAO
       );
     static ::CORBA::Current_ptr nil (void);
     static CORBA::Boolean marshal (
-        ::CORBA::Current_ptr p,
+        const ::CORBA::Current_ptr p,
         TAO_OutputCDR & cdr
       );
   };
