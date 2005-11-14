@@ -21,7 +21,7 @@
 
 namespace TAO_Notify_Extensions
 {
-  TAO_NAMESPACE_STORAGE_CLASS const char *const BlockingPolicy;
+  TAO_NAMESPACE_STORAGE_CLASS const char BlockingPolicy[];
 }
 
 #include /**/ "ace/post.h"

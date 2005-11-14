@@ -7,6 +7,8 @@ ACE_RCSID (Log,
 #if (TAO_HAS_MINIMUM_POA == 0)
 #include "orbsvcs/Log/LogMgr_i.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_LogActivator::TAO_LogActivator (TAO_LogMgr_i &logmgr_i)
   : logmgr_i_ (logmgr_i)
 {
@@ -50,5 +52,7 @@ TAO_LogActivator::etherealize (const PortableServer::ObjectId&,
      delete servant;
    }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif

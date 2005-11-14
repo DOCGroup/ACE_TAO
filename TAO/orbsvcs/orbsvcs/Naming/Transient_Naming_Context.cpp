@@ -19,6 +19,8 @@
 
 ACE_RCSID(Naming, Transient_Naming_Context, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 int
 TAO_Transient_Bindings_Map::unbind (const char *id,
                                     const char *kind)
@@ -338,3 +340,5 @@ TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
       ACE_CHECK;
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

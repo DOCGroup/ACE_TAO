@@ -19,6 +19,7 @@ ACE_RCSID (Naming,
            Persistent_Naming_Context,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO_Persistent_Bindings_Map::unbind (const char *id,
@@ -536,3 +537,5 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
       ACE_CHECK;
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

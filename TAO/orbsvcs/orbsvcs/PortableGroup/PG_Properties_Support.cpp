@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    PG_Properties_Support.cpp
@@ -12,6 +13,8 @@
 //=============================================================================
 
 #include "PG_Properties_Support.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::PG_Properties_Support::PG_Properties_Support ()
 {
@@ -144,3 +147,5 @@ TAO::PG_Properties_Support::find_typeid_properties (
   }
   return typeid_properties;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

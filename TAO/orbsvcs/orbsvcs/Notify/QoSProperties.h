@@ -1,12 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file QoSProperties.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_QOSPROPERTIES_H
@@ -24,6 +23,8 @@
 #include "Property_T.h"
 #include "Property_Boolean.h"
 #include "Property.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_QoSProperties
@@ -107,6 +108,8 @@ protected:
   TAO_Notify_Property_ThreadPoolLanes thread_pool_lane_;
   TAO_Notify_Property_Time blocking_policy_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "QoSProperties.inl"

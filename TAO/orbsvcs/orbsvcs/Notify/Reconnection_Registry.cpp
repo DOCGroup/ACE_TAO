@@ -1,11 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Reconnection_Registry.cpp
  *
  *  $Id$
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
- *
  */
 #include "Reconnection_Registry.h"
 #include "tao/debug.h"
@@ -16,6 +16,9 @@
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
 #endif
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
@@ -242,5 +245,6 @@ namespace TAO_Notify
     //@@ inform factory
   }
 
-
 } // namespace TAO_Notify
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -25,6 +25,7 @@
 #include "portablegroup_export.h"
 #include "orbsvcs/PortableGroupC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_PG
 {
@@ -49,6 +50,8 @@ namespace TAO_PG
     PortableGroup::Properties &properties);
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif  /* TAO_PG_PROPERTY_UTILS_H */

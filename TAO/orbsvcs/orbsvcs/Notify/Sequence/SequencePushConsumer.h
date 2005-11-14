@@ -27,6 +27,8 @@
 #include "../AdminProperties.h"
 #include "ace/Null_Condition.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Notify_ProxySupplier;
 class TAO_Notify_QoSProperties;
 class TAO_Notify_Timer;
@@ -85,6 +87,8 @@ private:
   /// TAO_Notify_Destroy_Callback methods.
   virtual void release (void);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_SEQUENCEPUSHCONSUMER_H */

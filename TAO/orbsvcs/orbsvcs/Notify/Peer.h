@@ -1,12 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Peer.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_PEER_H
@@ -21,6 +20,8 @@
 
 #include "orbsvcs/CosNotificationC.h"
 #include "EventTypeSeq.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_Proxy;
 class TAO_Notify_QoSProperties;
@@ -77,6 +78,8 @@ private:
   /// Release
   virtual void release (void) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_PEER_H */

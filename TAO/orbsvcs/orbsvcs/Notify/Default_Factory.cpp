@@ -25,6 +25,9 @@ ACE_RCSID (Notify,
 #include "orbsvcs/ESF/ESF_Proxy_List.h"
 #include "orbsvcs/ESF/ESF_Copy_On_Write.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class PROXY>
 class COW_Collection_Default_Factory
 {
@@ -187,6 +190,8 @@ TAO_Notify_Default_Factory::create (TAO_Notify_SequenceProxyPushSupplier*& proxy
                     TAO_Notify_SequenceProxyPushSupplier (),
                     CORBA::NO_MEMORY ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_Notify_Serv, TAO_Notify_Default_Factory)
 

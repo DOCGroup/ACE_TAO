@@ -27,6 +27,7 @@
 #define TODO int todo;
 //#define TODO
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::PG_Object_Group::MemberInfo::MemberInfo (
     CORBA::Object_ptr member,
@@ -885,6 +886,8 @@ TAO::PG_Object_Group::has_member_at (const PortableGroup::Location & location)
 {
   return (0 == this->members_.find (location));
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // Restore original compiler flags.
 #if defined (__BORLANDC__) && (__BORLANDC__ <= 0x564)

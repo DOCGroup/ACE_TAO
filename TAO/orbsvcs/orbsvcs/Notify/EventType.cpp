@@ -16,6 +16,8 @@ ACE_RCSID (Notify,
            TAO_Notify_EventType,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Notify_EventType
 TAO_Notify_EventType::special (void)
 {
@@ -174,3 +176,5 @@ TAO_Notify_EventType::save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV
   saver.end_object(0, "subscription" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -6,6 +6,7 @@ ACE_RCSID (Log,
            Log_Constraint_Interpreter,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Log_Constraint_Interpreter::TAO_Log_Constraint_Interpreter (
     const char *constraints
@@ -44,3 +45,5 @@ TAO_Log_Constraint_Interpreter::evaluate (
 
   return retval;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

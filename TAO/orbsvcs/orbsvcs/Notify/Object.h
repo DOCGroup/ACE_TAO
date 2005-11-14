@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Object.h
  *
@@ -30,6 +31,8 @@
 #include "orbsvcs/NotifyExtC.h"
 
 #include "tao/PortableServer/Servant_Base.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_POA_Helper;
 class TAO_Notify_Timer;
@@ -202,6 +205,8 @@ private:
   /// Are we shutdown (i,e. scheduled for destroy).
   bool shutdown_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "Object.inl"

@@ -31,6 +31,8 @@
 #include "ace/Bound_Ptr.h"
 #include "ace/Condition_Thread_Mutex.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Notify_AdminProperties
  *
@@ -119,6 +121,8 @@ protected:
   TAO_Notify_Atomic_Property_Long suppliers_;
 };
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "AdminProperties.inl"

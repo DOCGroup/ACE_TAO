@@ -12,6 +12,8 @@
 #include "tao/PortableServer/POAManagerC.h"
 #include "PG_Operators.h" // operator == on CosNaming::Name
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Use this macro at the beginning of CORBA methods
 // to aid in debugging.
 #define METHOD_ENTRY(name)            \
@@ -726,3 +728,5 @@ int TAO::PG_FactoryRegistry::write_ior_file(const char * outputFile, const char 
   }
   return result;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -9,6 +9,8 @@ ACE_RCSID (PortableGroup,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_PG_Group_Guard::TAO_PG_Group_Guard (
   TAO_PG_GenericFactory & generic_factory,
   TAO_PG_Factory_Set & factory_set,
@@ -54,3 +56,4 @@ TAO_PG_Group_Guard::release (void)
   this->released_ = 1;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

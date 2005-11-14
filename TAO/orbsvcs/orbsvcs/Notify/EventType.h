@@ -23,6 +23,9 @@
 #include "orbsvcs/CosNotificationC.h"
 #include "Topology_Object.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Notify_EventType
  *
@@ -92,6 +95,8 @@ protected:
   u_long hash_value_;
   // The hash value computed.
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "EventType.inl"

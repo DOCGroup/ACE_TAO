@@ -14,7 +14,9 @@ ACE_RCSID(Notify, TAO_Notify_Event_Manager, "$Id$")
 
 #include "tao/debug.h"
 
-/********************************************************************************/
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+/*****************************************************************************/
 
 /**
  * @class TAO_Notify_ProxyConsumer_Update_Worker
@@ -281,7 +283,7 @@ TAO_Notify_ProxyConsumer_Update_Worker::work (TAO_Notify_ProxyConsumer* proxy AC
   proxy->types_changed (added_, removed_ ACE_ENV_ARG_PARAMETER);
 }
 
-/********************************************************************************/
+/*****************************************************************************/
 
 TAO_Notify_ProxySupplier_Update_Worker::TAO_Notify_ProxySupplier_Update_Worker (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed)
   :added_ (added), removed_ (removed)
@@ -294,4 +296,6 @@ TAO_Notify_ProxySupplier_Update_Worker::work (TAO_Notify_ProxySupplier* proxy AC
   proxy->types_changed (added_, removed_ ACE_ENV_ARG_PARAMETER);
 }
 
-/********************************************************************************/
+/*****************************************************************************/
+
+TAO_END_VERSIONED_NAMESPACE_DECL

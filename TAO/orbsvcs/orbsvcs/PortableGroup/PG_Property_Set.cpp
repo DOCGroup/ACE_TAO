@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 //=============================================================================
 /**
  *  @file    PG_Property_Set.cpp
@@ -17,6 +16,8 @@
 #include "PG_Property_Set.h"
 #include "tao/debug.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 //////////////////////
 // PG_Property_Set
 
@@ -24,7 +25,6 @@ TAO::PG_Property_Set::PG_Property_Set()
   : defaults_ (0)
 {
 }
-
 
 TAO::PG_Property_Set::PG_Property_Set (
   const PortableGroup::Properties & property_set
@@ -351,3 +351,5 @@ int TAO_PG::test_encode_decode ()
   return result;
 }
 #endif // PG_PS_UNIT_TEST
+
+TAO_END_VERSIONED_NAMESPACE_DECL

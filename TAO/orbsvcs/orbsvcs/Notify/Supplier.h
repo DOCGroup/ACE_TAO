@@ -1,12 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Supplier.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_SUPPLIER_H
@@ -22,6 +21,9 @@
 #include "Peer.h"
 
 #include "orbsvcs/CosNotifyCommC.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Notify_ProxyConsumer;
 
 /**
@@ -57,6 +59,8 @@ protected:
   /// Interface that accepts subscription_changes
   CosNotifyComm::NotifySubscribe_var subscribe_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "Supplier.inl"

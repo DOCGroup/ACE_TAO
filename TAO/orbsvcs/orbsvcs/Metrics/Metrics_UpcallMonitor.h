@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // $Id$
 
 #ifndef METRICS_UPCALL_MONITOR_H
@@ -25,6 +27,8 @@
 #include "Metrics_LocalCache.h"
 #include "Metrics_FrameManager.h"
 #include "Metrics_Utils.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Metrics_Export TAO_Metrics_UpcallMonitor
   : public POA_Metrics::QoSMonitor
@@ -248,6 +252,8 @@ typedef TAO_METRICS_REPORTING_MONITOR_SINGLETON_TYPE TAO_METRICS_MONITOR_SINGLET
 typedef TAO_METRICS_MONITOR_ADAPTER_TYPE TAO_METRICS_MONITOR_ADAPTER;
 typedef TAO_METRICS_MONITOR_SINGLETON_TYPE TAO_METRICS_MONITOR_SINGLETON;
 #endif
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_ENABLE_TIMEPROBES & ACE_COMPILE_TIMEPROBES */
 #endif /* ACE_METRICS_COLLECTION */

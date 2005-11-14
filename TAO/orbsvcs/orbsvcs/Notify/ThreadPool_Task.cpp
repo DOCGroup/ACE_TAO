@@ -13,9 +13,11 @@ ACE_RCSID(Notify, TAO_Notify_ThreadPool_Task, "$Id$")
 
 #include "ace/OS_NS_errno.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Notify_ThreadPool_Task::TAO_Notify_ThreadPool_Task (void)
   : shutdown_ (false)
-  , shutdown_handler_(this)
+  , shutdown_handler_ (this)
 {
 }
 
@@ -211,3 +213,5 @@ TAO_Notify_ThreadPool_Task::update_qos_properties (const TAO_Notify_QoSPropertie
 {
   this->buffering_strategy_->update_qos_properties (qos_properties);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

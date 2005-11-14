@@ -7,6 +7,8 @@
 
 ACE_RCSID(Notify, TAO_Notify_Refcountable, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Notify_Refcountable::TAO_Notify_Refcountable (void)
 {
 }
@@ -57,3 +59,5 @@ TAO_Notify_Refcountable::_decr_refcnt (void)
 
   return static_cast< CORBA::ULong >( refcount );
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

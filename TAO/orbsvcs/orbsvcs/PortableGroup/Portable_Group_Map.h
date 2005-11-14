@@ -28,6 +28,7 @@
 #include "ace/Null_Mutex.h"
 #include "ace/Hash_Map_Manager_T.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ServerRequest;
 
@@ -127,6 +128,8 @@ protected:
   /// Id map.
   GroupId_Table map_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 //#if defined (__ACE_INLINE__)
 //# include "Portable_Group_Map.i"

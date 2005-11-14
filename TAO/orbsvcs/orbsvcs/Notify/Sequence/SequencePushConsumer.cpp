@@ -20,6 +20,8 @@ ACE_RCSID (Notify, TAO_Notify_SequencePushConsumer, "$Id$")
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Notify_SequencePushConsumer::TAO_Notify_SequencePushConsumer (TAO_Notify_ProxySupplier* proxy)
 : TAO_Notify_Consumer (proxy)
 {
@@ -233,3 +235,5 @@ TAO_Notify_SequencePushConsumer::reconnect_from_consumer (TAO_Notify_Consumer* o
   ACE_CHECK;
   this->schedule_timer(false);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

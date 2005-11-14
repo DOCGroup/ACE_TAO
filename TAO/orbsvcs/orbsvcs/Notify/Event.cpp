@@ -17,6 +17,8 @@ ACE_RCSID (Notify,
 #include "Any/AnyEvent.h"
 #include "Structured/StructuredEvent.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Notify_Event::TAO_Notify_Event (void)
 : priority_ (CosNotification::Priority, CosNotification::DefaultPriority)
 , timeout_ (CosNotification::Timeout)
@@ -79,3 +81,4 @@ TAO_Notify_Event::unmarshal (TAO_InputCDR & cdr)
   return result;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

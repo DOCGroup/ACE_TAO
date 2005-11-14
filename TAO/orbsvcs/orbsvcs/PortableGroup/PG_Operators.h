@@ -25,6 +25,8 @@
 
 #include "orbsvcs/CosNamingC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// Global CosNaming::Name equality operator.
 /**
  * Used for checking equality of PortableGroup::Location and
@@ -41,6 +43,7 @@ bool TAO_PortableGroup_Export operator== (const CosNaming::Name & lhs,
 bool TAO_PortableGroup_Export operator!= (const CosNaming::Name & lhs,
                                           const CosNaming::Name & rhs);
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

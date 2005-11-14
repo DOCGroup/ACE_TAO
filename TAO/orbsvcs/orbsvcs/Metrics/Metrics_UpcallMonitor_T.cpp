@@ -9,8 +9,9 @@
 #include "Metrics_UpcallMonitor_T.i"
 #endif /* __ACE_INLINE__ */
 
-// Virtual destructor: destroy actual consumer if we own it.
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+// Virtual destructor: destroy actual consumer if we own it.
 template <class ACE_LOCK, class ALLOCATOR>
 TAO_Metrics_UpcallMonitorAdapter<ACE_LOCK, ALLOCATOR>::
 ~TAO_Metrics_UpcallMonitorAdapter ()
@@ -20,6 +21,8 @@ TAO_Metrics_UpcallMonitorAdapter<ACE_LOCK, ALLOCATOR>::
       delete (& consumer_);
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* METRICS_UPCALL_MONITOR_T_CPP */
 

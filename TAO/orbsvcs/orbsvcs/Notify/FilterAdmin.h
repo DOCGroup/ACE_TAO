@@ -1,3 +1,4 @@
+// -*- C++ -*-
 //=============================================================================
 /**
  *  @file   FilterAdmin.h
@@ -23,6 +24,8 @@
 #include "Event.h"
 #include "notify_serv_export.h"
 #include "Topology_Object.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_FilterAdmin
@@ -102,6 +105,8 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
   /// Id generator for proxy suppliers
   TAO_Notify_ID_Factory filter_ids_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "FilterAdmin.inl"

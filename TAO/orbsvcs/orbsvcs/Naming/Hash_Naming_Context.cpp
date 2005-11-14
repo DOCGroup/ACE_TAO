@@ -22,6 +22,8 @@ ACE_RCSID (Naming,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // -------------------------------------------------
 
 TAO_Bindings_Map::~TAO_Bindings_Map (void)
@@ -686,3 +688,5 @@ TAO_Hash_Naming_Context::interface (void)
 {
   return this->interface_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

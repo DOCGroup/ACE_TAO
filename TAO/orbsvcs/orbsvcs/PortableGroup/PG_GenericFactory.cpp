@@ -13,6 +13,9 @@ ACE_RCSID (PortableGroup,
            PG_GenericFactory,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_PG_GenericFactory::TAO_PG_GenericFactory (
   TAO_PG_ObjectGroupManager & object_group_manager,
   TAO_PG_PropertyManager & property_manager)
@@ -773,3 +776,5 @@ TAO_PG_GenericFactory::create_member (
 
   return fcid._retn ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

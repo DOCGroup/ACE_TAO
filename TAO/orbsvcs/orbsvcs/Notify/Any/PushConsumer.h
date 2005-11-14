@@ -22,6 +22,8 @@
 #include "orbsvcs/CosNotifyCommC.h"
 #include "../Consumer.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Notify_PushConsumer
  *
@@ -70,6 +72,8 @@ private:
   /// TAO_Notify_Destroy_Callback methods.
   virtual void release (void);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_PUSHCONSUMER_H */

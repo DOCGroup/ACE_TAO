@@ -7,6 +7,9 @@
 
 ACE_RCSID(Notify, TAO_Notify_Method_Request_Queueable, "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Notify_Method_Request::~TAO_Notify_Method_Request (void)
 {
 }
@@ -55,3 +58,5 @@ TAO_Notify_Method_Request_Queueable::init (const TAO_Notify_Event* event)
     this->msg_deadline_time (deadline);
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

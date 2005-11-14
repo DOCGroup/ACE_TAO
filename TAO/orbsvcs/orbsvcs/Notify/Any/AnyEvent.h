@@ -25,6 +25,9 @@
 
 #include "orbsvcs/CosNotificationC.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Notify_Consumer;
 class TAO_Notify_AnyEvent;
 /**
@@ -88,7 +91,7 @@ protected:
   static TAO_Notify_EventType event_type_;
 };
 
-/*****************************************************************************************************/
+/****************************************************************************/
 
 /**
  * @class TAO_Notify_AnyEvent
@@ -109,6 +112,8 @@ protected:
   /// Copy of the Event.
   CORBA::Any any_copy_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

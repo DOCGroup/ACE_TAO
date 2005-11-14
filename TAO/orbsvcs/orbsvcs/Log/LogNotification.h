@@ -27,6 +27,7 @@
 #include "orbsvcs/DsLogNotificationS.h"
 #include "log_serv_export.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_LogNotification
@@ -176,6 +177,8 @@ public:
                                   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

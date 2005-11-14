@@ -28,6 +28,8 @@
 #include "tao/Transport_Connector.h"
 #include "ace/Null_Mutex.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // ****************************************************************
 
 /**
@@ -89,6 +91,8 @@ private:
                                      ACE_Null_Mutex >
     SvcHandlerIterator;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

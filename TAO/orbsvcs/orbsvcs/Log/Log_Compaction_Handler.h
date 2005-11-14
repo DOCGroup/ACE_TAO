@@ -12,12 +12,21 @@
 #ifndef TAO_TLS_COMPACTION_HANDLER_H
 #define TAO_TLS_COMPACTION_HANDLER_H
 
-#include "ace/Event_Handler.h"
-#include "ace/Time_Value.h"
 #include "log_serv_export.h"
 
-// forward decls
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Versioned_Namespace.h"
+
+#include "ace/Event_Handler.h"
+#include "ace/Time_Value.h"
+
 class ACE_Reactor;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Log_i;
 
 /// @class TAO_Log_Compaction_Handler
@@ -49,5 +58,7 @@ private:
   TAO_Log_i*                    log_;
   const ACE_Time_Value          interval_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_LOG_COMPACTION_HANDLER_H */

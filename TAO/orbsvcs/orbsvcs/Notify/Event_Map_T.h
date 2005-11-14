@@ -26,6 +26,8 @@
 #include "Event_Map_Entry_T.h"
 #include "EventTypeSeq.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Notify_Event_Map_T
  *
@@ -102,6 +104,8 @@ protected:
   /// The event types that are available in this map.
   TAO_Notify_EventTypeSeq event_types_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "Event_Map_T.inl"

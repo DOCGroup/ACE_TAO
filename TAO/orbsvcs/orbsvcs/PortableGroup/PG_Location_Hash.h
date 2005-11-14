@@ -26,6 +26,8 @@
 #include "orbsvcs/PortableGroupC.h"
 #include "ace/ACE.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_PG_Location_Hash
  *
@@ -40,6 +42,7 @@ public:
   CORBA::ULong operator() (const PortableGroup::Location &) const;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "PG_Location_Hash.inl"

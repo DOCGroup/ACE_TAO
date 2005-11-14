@@ -12,6 +12,8 @@ ACE_RCSID (Notify,
 
 #include "orbsvcs/CosNotificationC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Notify_AdminProperties::TAO_Notify_AdminProperties (void)
   : max_global_queue_length_ (CosNotification::MaxQueueLength, 0)
   , max_consumers_ (CosNotification::MaxConsumers, 0)
@@ -88,3 +90,5 @@ TAO_Notify_AdminProperties::queue_full (void)
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

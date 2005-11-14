@@ -30,6 +30,8 @@
 #include "tao/PortableServer/PortableServerC.h"
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// Forward declarations
 class TAO_PG_GenericFactory;
 
@@ -305,6 +307,7 @@ private:
 
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

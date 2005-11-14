@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // $Id$
 
 #ifndef METRICS_UTILS_H
@@ -25,6 +27,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Metrics_Export TAO_Metrics_Utils
 {
@@ -171,8 +175,7 @@ PROBE_TYPE, \
 METRICS_LOGGER_REF); \
 } } while (0)
 
-
-
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "Metrics_Utils.i"

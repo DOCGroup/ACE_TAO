@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 
 // ============================================================================
@@ -25,6 +26,8 @@
 #if (TAO_HAS_MINIMUM_POA == 0)
 
 #include "naming_serv_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Naming_Service_Persistence_Factory;
 
@@ -79,6 +82,8 @@ private:
   const ACE_TCHAR *persistence_directory_;
   size_t context_size_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MINIMUM_POA */
 

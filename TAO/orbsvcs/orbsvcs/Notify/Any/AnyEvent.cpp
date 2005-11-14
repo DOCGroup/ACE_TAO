@@ -14,6 +14,8 @@ ACE_RCSID (Notify, TAO_Notify_AnyEvent, "$Id$")
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Notify_EventType TAO_Notify_AnyEvent_No_Copy::event_type_;
 
 TAO_Notify_AnyEvent_No_Copy::TAO_Notify_AnyEvent_No_Copy (const CORBA::Any &event)
@@ -122,7 +124,7 @@ TAO_Notify_AnyEvent_No_Copy::copy (ACE_ENV_SINGLE_ARG_DECL) const
 }
 
 
-/*****************************************************************************************************/
+/*****************************************************************************/
 
 TAO_Notify_AnyEvent::TAO_Notify_AnyEvent (const CORBA::Any &event)
   : TAO_Notify_AnyEvent_No_Copy (event)
@@ -134,3 +136,5 @@ TAO_Notify_AnyEvent::TAO_Notify_AnyEvent (const CORBA::Any &event)
 TAO_Notify_AnyEvent::~TAO_Notify_AnyEvent ()
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

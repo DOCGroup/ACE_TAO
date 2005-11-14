@@ -29,6 +29,8 @@ ACE_RCSID (Notify,
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Notify_Admin::TAO_Notify_Admin ()
   : ec_ (0)
   , filter_operator_ (CosNotifyChannelAdmin::OR_OP)
@@ -205,3 +207,4 @@ TAO_Notify_Admin::reconnect (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

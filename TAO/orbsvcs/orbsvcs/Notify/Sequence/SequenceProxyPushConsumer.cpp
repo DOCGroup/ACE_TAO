@@ -10,6 +10,8 @@ ACE_RCSID (Notify, TAO_Notify_SequenceProxyPushConsumer, "$Id$")
 #include "../Structured/StructuredEvent.h"
 #include "../Properties.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Notify_SequenceProxyPushConsumer::TAO_Notify_SequenceProxyPushConsumer (void)
 :pacing_interval_ (CosNotification::PacingInterval)
 {
@@ -132,3 +134,4 @@ TAO_Notify_SequenceProxyPushConsumer::load_attrs (const TAO_Notify::NVPList& att
   }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

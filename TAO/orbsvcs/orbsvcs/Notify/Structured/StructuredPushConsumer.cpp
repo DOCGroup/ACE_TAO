@@ -7,6 +7,8 @@ ACE_RCSID(RT_Notify, TAO_Notify_StructuredPushConsumer, "$Id$")
 #include "../Event.h"
 #include "ace/Bound_Ptr.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Notify_StructuredPushConsumer::TAO_Notify_StructuredPushConsumer (TAO_Notify_ProxySupplier* proxy)
   :TAO_Notify_Consumer (proxy)
 {
@@ -90,3 +92,5 @@ TAO_Notify_StructuredPushConsumer::get_ior (ACE_CString & iorstr) const
   ACE_ENDTRY;
   return result;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

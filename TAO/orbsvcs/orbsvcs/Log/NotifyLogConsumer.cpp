@@ -6,19 +6,21 @@ ACE_RCSID (Log,
            NotifyLogConsumer,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Notify_LogConsumer::TAO_Notify_LogConsumer (TAO_NotifyLog_i *log)
 : log_ (log)
 {
-  // No-Op.
 }
 
 TAO_Notify_LogConsumer::~TAO_Notify_LogConsumer (void)
 {
-  // No-Op.
 }
 
 void
-TAO_Notify_LogConsumer::connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin ACE_ENV_ARG_DECL)
+TAO_Notify_LogConsumer::connect (
+  CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin
+  ACE_ENV_ARG_DECL)
 {
   // Activate the consumer with the default_POA_
   CosNotifyComm::PushConsumer_var objref =
@@ -137,6 +139,6 @@ TAO_Notify_LogConsumer::disconnect_push_consumer
                    CORBA::SystemException
                    ))
 {
-  // No-Op.
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -15,6 +15,8 @@ ACE_RCSID (Notify,
            TAO_CosNotify_Service,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_CosNotify_Service::TAO_CosNotify_Service (void)
 {
 }
@@ -284,6 +286,8 @@ TAO_CosNotify_Service::builder (void)
   ACE_ASSERT( this->builder_.get() != 0 );
   return *this->builder_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 /*********************************************************************************************************************/

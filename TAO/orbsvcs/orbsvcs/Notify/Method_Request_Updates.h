@@ -1,12 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Method_Request_Updates.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_METHOD_REQUEST_UPDATES_H
@@ -23,6 +22,8 @@
 #include "Method_Request.h"
 #include "EventTypeSeq.h"
 #include "Proxy.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef TAO_Notify_Method_Request_Updates_T<const TAO_Notify_EventTypeSeq
                                         , TAO_Notify_Proxy::Ptr
@@ -64,8 +65,9 @@ typedef TAO_Notify_Method_Request_Updates_T<const TAO_Notify_EventTypeSeq&
  * @brief Command Object to send updates to proxys.
  *
  */
-class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Updates_No_Copy : public TAO_Notify_Method_Request_Updates_No_Copy_Base
-                                                                ,public TAO_Notify_Method_Request
+class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Updates_No_Copy
+  : public TAO_Notify_Method_Request_Updates_No_Copy_Base
+  , public TAO_Notify_Method_Request
 {
 public:
   /// Constuctor
@@ -80,6 +82,8 @@ public:
   /// Execute the Request
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_METHOD_REQUEST_UPDATES_H */

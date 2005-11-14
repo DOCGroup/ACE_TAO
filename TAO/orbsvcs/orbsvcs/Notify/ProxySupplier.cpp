@@ -6,7 +6,7 @@
 #include "ProxySupplier.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_Notify_ProxySupplier, "$Id$")
+ACE_RCSID(Notify, TAO_Notify_ProxySupplier, "$Id$")
 
 #include "Event_Manager.h"
 #include "AdminProperties.h"
@@ -16,6 +16,8 @@ ACE_RCSID(RT_Notify, TAO_Notify_ProxySupplier, "$Id$")
 #include "Buffering_Strategy.h"
 #include "Properties.h"
 #include "ConsumerAdmin.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_ProxySupplier::TAO_Notify_ProxySupplier (void)
   : consumer_admin_ (0)
@@ -154,3 +156,5 @@ TAO_Notify_ProxySupplier::qos_changed (const TAO_Notify_QoSProperties& qos_prope
 {
   TAO_Notify_Proxy::qos_changed (qos_properties);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

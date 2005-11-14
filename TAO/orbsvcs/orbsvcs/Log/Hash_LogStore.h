@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -8,7 +8,7 @@
  *
  *  @author Matthew Braun <mjb2@cs.wustl.edu>
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
- *  @David A. Hanvey <d.hanvey@qub.ac.uk>
+ *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
 //=============================================================================
 
@@ -30,6 +30,9 @@
 #include "log_serv_export.h"
 
 class ACE_Reactor;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_LogMgr_i;
 class TAO_Hash_LogRecordStore;
 
@@ -119,6 +122,8 @@ private:
 
   TAO_LogMgr_i*         mgr_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 
