@@ -30,7 +30,7 @@ template <typename T, typename T_var>
 class TAO_Seq_Out_T
 {
 public:
-  typedef typename T::element_type element_type;
+  typedef typename T::element_type T_elem;
 
   TAO_Seq_Out_T (T *&);
   TAO_Seq_Out_T (T_var &);
@@ -43,7 +43,7 @@ public:
   T *& ptr (void);
   T * operator-> (void);
 
-  element_type & operator[] (CORBA::ULong index);
+  T_elem & operator[] (CORBA::ULong index);
 
 private:
   typedef TAO_Seq_Out_T<T,T_var> THIS_OUT_TYPE;
@@ -64,7 +64,7 @@ template <typename T, typename T_var>
 class TAO_MngSeq_Out_T
 {
 public:
-  typedef typename T::element_type element_type;
+  typedef typename T::element_type T_elem;
 
   TAO_MngSeq_Out_T (T *&);
   TAO_MngSeq_Out_T (T_var &);
@@ -77,7 +77,7 @@ public:
   T *& ptr (void);
   T * operator-> (void);
 
-  element_type operator[] (CORBA::ULong index);
+  T_elem operator[] (CORBA::ULong index);
 
 private:
   typedef TAO_MngSeq_Out_T<T,T_var> THIS_OUT_TYPE;
