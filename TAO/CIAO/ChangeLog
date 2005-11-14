@@ -1,3 +1,12 @@
+Mon Nov 14 11:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Display/RateGen/RateGen_exec.h:
+        * examples/BasicSP/EC/EC_exec.h:
+          Timer id's are long, not int
+
+        * ciao/Servant_Activator.cpp:
+          Fixed 64bit conversion warnings
+
 Sun Nov 13 12:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Swapping/Sender/Sender_exec_2.cpp:
