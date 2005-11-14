@@ -328,13 +328,13 @@ namespace CORBA
   class DomainManagerList;
 
   typedef
-    TAO_Pseudo_Var_T<
+    TAO_MngSeq_Var_T<
         DomainManagerList
       >
     DomainManagerList_var;
 
   typedef
-    TAO_Pseudo_Out_T<
+    TAO_MngSeq_Out_T<
         DomainManagerList,
         DomainManager
       >
