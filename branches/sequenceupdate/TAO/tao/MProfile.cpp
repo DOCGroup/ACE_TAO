@@ -155,7 +155,8 @@ TAO_MProfile::grow (CORBA::ULong sz)
     return 0;
 
   // get the additional space
-  TAO_Profile **new_pfiles, **old_pfiles;
+  TAO_Profile **new_pfiles = 0;
+  TAO_Profile **old_pfiles = 0;
   ACE_NEW_RETURN (new_pfiles,
                   TAO_Profile *[sz],
                   -1);

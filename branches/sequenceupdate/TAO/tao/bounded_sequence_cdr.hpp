@@ -1,5 +1,5 @@
-#ifndef guard_unbounded_sequence_cdr
-#define guard_unbounded_sequence_cdr
+#ifndef guard_bounded_sequence_cdr
+#define guard_bounded_sequence_cdr
 /**
  * @file
  *
@@ -14,7 +14,7 @@
 namespace TAO {
   namespace details {
     template <typename stream, typename sequence>
-    bool extract_unbounded_sequence(stream & strm, sequence & target) {
+    bool extract_bounded_sequence(stream & strm, sequence & target) {
       ::CORBA::ULong new_length;
       if (!(strm >> new_length)) {
         return false;
@@ -22,7 +22,10 @@ namespace TAO {
       if (new_length > strm.length()) {
          return false;
       }
-      sequence tmp(new_length);
+      if (new_length > target.maximum ()) {
+         return false;
+      }
+      sequence tmp;
       tmp.length(new_length);
       typename sequence::value_type * buffer = tmp.get_buffer();
       for(CORBA::ULong i = 0; i < new_length; ++i) {
@@ -35,7 +38,7 @@ namespace TAO {
     }
 
     template <typename stream, typename sequence>
-    bool insert_unbounded_sequence(stream & strm, const sequence & source) {
+    bool insert_bounded_sequence(stream & strm, const sequence & source) {
       const ::CORBA::ULong length = source.length ();
       if (!(strm << length)) {
         return false;
@@ -50,4 +53,4 @@ namespace TAO {
   }
 }
 
-#endif /* guard_unbounded_sequence_cdr */
+#endif /* guard_bounded_sequence_cdr */

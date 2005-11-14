@@ -249,8 +249,7 @@ public:
   }
 
   unbounded_value_sequence<CORBA::Octet> &
-    unbounded_value_sequence<CORBA::Octet>::operator= (
-      const unbounded_value_sequence<CORBA::Octet> & rhs)
+  operator= (const unbounded_value_sequence<CORBA::Octet> & rhs)
   {
     unbounded_value_sequence<CORBA::Octet> tmp(rhs);
     swap(tmp);
