@@ -22,6 +22,8 @@
 #include "EventType.h"
 #include "ace/Unbounded_Set.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Notify_EventTypeSeq
  *
@@ -79,6 +81,8 @@ private:
 
   virtual void release (void);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_EVENTTYPESEQ_H */

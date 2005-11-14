@@ -30,6 +30,8 @@ class TAO_Notify_ProxySupplier;
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Notify_ConsumerAdmin
  *
@@ -239,6 +241,8 @@ private:
   /// Release this object.
   virtual void release (void);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

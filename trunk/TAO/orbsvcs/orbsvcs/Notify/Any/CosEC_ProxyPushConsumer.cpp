@@ -11,6 +11,8 @@ ACE_RCSID (Notify, TAO_Notify_CosEC_ProxyPushConsumer, "$Id$")
 #include "AnyEvent.h"
 #include "PushSupplier.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Notify_CosEC_ProxyPushConsumer::TAO_Notify_CosEC_ProxyPushConsumer (void)
 {
 }
@@ -84,3 +86,5 @@ TAO_Notify_CosEC_ProxyPushConsumer::get_proxy_type_name (void) const
 {
   return "ec_proxy_push_consumer";
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

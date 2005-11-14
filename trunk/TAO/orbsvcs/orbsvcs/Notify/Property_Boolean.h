@@ -1,12 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Property_Boolean.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_PROPERTY_BOOLEAN_H
@@ -21,6 +20,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosNotificationC.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_PropertySeq;
 
@@ -76,6 +77,8 @@ protected:
   /// Is the value valid
   CORBA::Boolean valid_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "Property_Boolean.inl"

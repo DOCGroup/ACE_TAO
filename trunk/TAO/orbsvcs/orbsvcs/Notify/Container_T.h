@@ -22,6 +22,8 @@
 
 #include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Notify_Container_T
  *
@@ -60,6 +62,8 @@ protected:
   /// The collection data structure that we add objects to.
   COLLECTION* collection_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "Container_T.inl"

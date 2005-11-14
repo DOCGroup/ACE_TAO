@@ -10,6 +10,9 @@
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO_Notify
 {
   Routing_Slip_Queue::Routing_Slip_Queue (size_t allowed)
@@ -105,3 +108,5 @@ namespace TAO_Notify
     }
   }
 } // namespace
+
+TAO_END_VERSIONED_NAMESPACE_DECL

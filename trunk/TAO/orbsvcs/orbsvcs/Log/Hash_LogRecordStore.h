@@ -33,6 +33,8 @@
 
 #define LOG_DEFAULT_MAX_REC_LIST_LEN 100
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Hash_LogRecordStore
  *
@@ -312,6 +314,8 @@ protected:
 
   mutable ACE_SYNCH_RW_MUTEX		lock_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /*TAO_HASH_LOG_RECORD_STORE_H*/

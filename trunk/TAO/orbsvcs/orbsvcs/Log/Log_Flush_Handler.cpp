@@ -5,6 +5,8 @@ ACE_RCSID (Log,
            Log_Flush_Handler,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Log_Flush_Handler::TAO_Log_Flush_Handler (ACE_Reactor* reactor,
                                               TAO_Log_i* log,
                                               const ACE_Time_Value& interval)
@@ -53,3 +55,5 @@ TAO_Log_Flush_Handler::handle_timeout (const ACE_Time_Value&, const void *)
   
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

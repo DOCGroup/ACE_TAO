@@ -4,6 +4,8 @@
 #include "Standard_Event_Persistence.h"
 #include "Persistent_File_Allocator.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO_Notify
 {
 
@@ -795,3 +797,5 @@ Routing_Slip_Persistence_Manager::remove_from_dllist()
 }
 
 } /* namespace TAO_Notify */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

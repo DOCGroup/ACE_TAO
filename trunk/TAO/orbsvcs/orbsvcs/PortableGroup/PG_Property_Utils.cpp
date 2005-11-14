@@ -5,6 +5,8 @@ ACE_RCSID (PortableGroup,
            PG_Property_Utils,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 CORBA::Boolean
 TAO_PG::get_property_value (const PortableGroup::Name & property_name,
                             const PortableGroup::Properties & properties,
@@ -76,3 +78,5 @@ TAO_PG::override_properties (
         }
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

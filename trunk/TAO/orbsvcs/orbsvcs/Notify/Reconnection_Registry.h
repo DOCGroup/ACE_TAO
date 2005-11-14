@@ -1,11 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Reconnection_Registry.h
  *
  *  $Id$
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
- *
  */
 
 #ifndef TAO_NOTIFY_RECONNECTION_REGISTRY_H
@@ -23,6 +23,8 @@
 
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
@@ -91,6 +93,8 @@ namespace TAO_Notify
     ::NotifyExt::ReconnectionRegistry::ReconnectionID highest_id_;
   };
 } // namespace TAO_Notify
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ <ace/post.h>
 #endif /* TAO_NOTIFY_RECONNECTION_REGISTRY_H */

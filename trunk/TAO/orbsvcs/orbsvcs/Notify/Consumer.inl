@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_Notify_Consumer::Request_Queue&
@@ -19,3 +23,5 @@ TAO_Notify_Consumer::suspend (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   this->is_suspended_ = 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

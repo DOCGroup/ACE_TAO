@@ -31,6 +31,8 @@
 
 #include "ace/Copy_Disabled.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Notify_Consumer;
 class TAO_Notify_EventType;
 
@@ -125,6 +127,8 @@ private:
   mutable Ptr clone_;
   bool        is_on_heap_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "Event.inl"

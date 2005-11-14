@@ -1213,18 +1213,14 @@ libTAO_PortableGroup_la_SOURCES = \
   PortableGroup/MIOP.cpp \
   PortableGroup/PG_Default_Property_Validator.cpp \
   PortableGroup/PG_FactoryRegistry.cpp \
-  PortableGroup/PG_Factory_Map.cpp \
-  PortableGroup/PG_Factory_Set.cpp \
   PortableGroup/PG_GenericFactory.cpp \
   PortableGroup/PG_Group_Factory.cpp \
   PortableGroup/PG_Group_Guard.cpp \
   PortableGroup/PG_Location_Equal_To.cpp \
   PortableGroup/PG_Location_Hash.cpp \
-  PortableGroup/PG_Location_Map.cpp \
   PortableGroup/PG_MemberInfo.cpp \
   PortableGroup/PG_Null_Property_Validator.cpp \
   PortableGroup/PG_ObjectGroupManager.cpp \
-  PortableGroup/PG_ObjectGroup_Map.cpp \
   PortableGroup/PG_Object_Adapter_Factory.cpp \
   PortableGroup/PG_Object_Group.cpp \
   PortableGroup/PG_Object_Group_Manipulator.cpp \

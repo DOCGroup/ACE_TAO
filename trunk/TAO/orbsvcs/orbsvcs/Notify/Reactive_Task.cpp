@@ -10,6 +10,8 @@ ACE_RCSID(Notify, TAO_Notify_Reactive_Task, "$Id$")
 
 #include "Timer_Reactor.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Notify_Reactive_Task::TAO_Notify_Reactive_Task (void)
   :timer_ (0)
 {
@@ -53,3 +55,5 @@ TAO_Notify_Reactive_Task::timer (void)
 {
   return this->timer_.get();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

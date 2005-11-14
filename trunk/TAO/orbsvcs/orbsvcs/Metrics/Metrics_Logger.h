@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // $Id$
 
 #ifndef METRICS_LOGGER_H
@@ -40,6 +42,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Metrics_Export TAO_Metrics_Logger_Data
 {
@@ -211,6 +215,8 @@ TAO_METRICS_LOGGER_REF_SINGLETON;
 
 typedef ACE_Singleton<TAO_Metrics_Logger, ACE_SYNCH_MUTEX>
 TAO_METRICS_LOGGER_SINGLETON;
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_ENABLE_TIMEPROBES & ACE_COMPILE_TIMEPROBES */
 #endif /* ACE_METRICS_COLLECTION */

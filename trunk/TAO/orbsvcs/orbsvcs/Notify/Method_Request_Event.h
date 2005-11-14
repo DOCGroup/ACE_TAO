@@ -1,12 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Method_Request_Event.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_METHOD_REQUEST_EVENT_H
@@ -25,6 +24,8 @@
 #include "tao/Basic_Types.h"
 #include "ace/CORBA_macros.h"
 #include "Delivery_Request.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_Method_Request_Event
@@ -96,6 +97,8 @@ public:
 private:
   TAO_Notify_Event::Ptr event_var_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_METHOD_REQUEST_EVENT_H */

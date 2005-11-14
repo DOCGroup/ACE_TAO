@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -8,10 +8,8 @@
  *
  *  Implementation of the DsLogAdmin::Iterator interface.
  *
- *
  *  @author Matthew Braun <mjb2@cs.wustl.edu>
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
- *
  */
 //=============================================================================
 
@@ -33,6 +31,8 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Hash_Iterator_i
@@ -81,6 +81,8 @@ private:
   /// Max rec list length.
   CORBA::ULong max_rec_list_len_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

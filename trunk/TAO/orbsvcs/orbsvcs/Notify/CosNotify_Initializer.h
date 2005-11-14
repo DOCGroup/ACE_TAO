@@ -19,6 +19,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Notify_CosNotify_Initializer
  *
@@ -33,6 +37,8 @@ public:
 };
 
 static TAO_Notify_CosNotify_Initializer TAO_Notify_CosNotify_initializer;
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_COSNOTIFY_INITIALIZER_H */

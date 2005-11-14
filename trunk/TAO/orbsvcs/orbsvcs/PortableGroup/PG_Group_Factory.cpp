@@ -22,6 +22,8 @@ ACE_RCSID (PortableGroup,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::PG_Group_Factory::PG_Group_Factory ()
   : orb_ (CORBA::ORB::_nil())
   , poa_ (PortableServer::POA::_nil())
@@ -226,3 +228,5 @@ TAO::PG_Group_Factory::groups_at_location (
   result->length (group_count);
   return result;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

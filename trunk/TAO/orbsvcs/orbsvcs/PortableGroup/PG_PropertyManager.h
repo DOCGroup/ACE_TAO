@@ -30,6 +30,8 @@
 #include "ace/Functor.h"
 #include "ace/Hash_Map_Manager_T.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// Forward declarations.
 class TAO_PG_ObjectGroupManager;
 
@@ -182,6 +184,8 @@ private:
   TAO_PG_Default_Property_Validator property_validator_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

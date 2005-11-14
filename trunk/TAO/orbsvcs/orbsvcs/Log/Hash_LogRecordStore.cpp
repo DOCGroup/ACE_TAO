@@ -12,12 +12,14 @@ ACE_RCSID (Log,
            Hash_LogRecordStore,
            "$Id$")
 
-TAO_Hash_LogRecordStore::TAO_Hash_LogRecordStore (CORBA::ORB_ptr orb,
-                                                  DsLogAdmin::LogId logid,
-                                                  DsLogAdmin::LogFullActionType log_full_action,
-                                                  CORBA::ULongLong max_size,
-                                                  const DsLogAdmin::CapacityAlarmThresholdList* thresholds
-                                                  )
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_Hash_LogRecordStore::TAO_Hash_LogRecordStore (
+  CORBA::ORB_ptr orb,
+  DsLogAdmin::LogId logid,
+  DsLogAdmin::LogFullActionType log_full_action,
+  CORBA::ULongLong max_size,
+  const DsLogAdmin::CapacityAlarmThresholdList* thresholds)
   : maxid_ (0),
     max_size_ (max_size),
     id_ (logid),
@@ -786,3 +788,5 @@ TAO_Hash_LogRecordStore::set_max_size (CORBA::ULongLong size
 
   this->max_size_ = size;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

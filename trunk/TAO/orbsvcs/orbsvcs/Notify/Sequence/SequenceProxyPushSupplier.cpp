@@ -8,6 +8,8 @@ ACE_RCSID (Notify, TAO_Notify_SequenceProxyPushSupplier, "$Id$")
 #include "SequencePushConsumer.h"
 #include "../Properties.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Notify_SequenceProxyPushSupplier::TAO_Notify_SequenceProxyPushSupplier (void)
 {
 }
@@ -100,3 +102,5 @@ TAO_Notify_SequenceProxyPushSupplier::load_attrs (const TAO_Notify::NVPList& att
     ACE_ENDTRY;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

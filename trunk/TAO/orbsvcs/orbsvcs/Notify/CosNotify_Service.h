@@ -23,6 +23,8 @@
 #include "Builder.h"
 #include "Factory.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Notify_Properties;
 class TAO_Notify_EventChannelFactory;
 
@@ -81,6 +83,8 @@ private:
   /// Service component for building NS participants.
   ACE_Auto_Ptr< TAO_Notify_Builder > builder_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_CosNotify_Service)
 ACE_FACTORY_DECLARE (TAO_Notify_Serv, TAO_CosNotify_Service)

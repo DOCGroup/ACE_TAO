@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -8,10 +8,7 @@
  *
  *  Methods to enable log-generated events.
  *
- *
  *  @author D A Hanvey <d.hanvey@qub.ac.uk>
- *
- *
  */
 //=============================================================================
 
@@ -36,6 +33,8 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_NotifyLogNotification
@@ -98,6 +97,8 @@ private:
   /// This channel is contained in the NotifyLogFactory.
   CosNotifyChannelAdmin::EventChannel_var event_channel_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

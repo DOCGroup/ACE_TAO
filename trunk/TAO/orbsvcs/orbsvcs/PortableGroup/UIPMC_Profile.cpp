@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-//
 // $Id$
 
 #include "UIPMC_Profile.h"
@@ -19,11 +17,13 @@ ACE_RCSID (PortableGroup,
            UIPMC_Profile,
            "$Id$")
 
-static const char prefix_[] = "uipmc";
+static const char the_prefix[] = "uipmc";
 
 // UIPMC doesn't support object keys, so send profiles by default in the GIOP 1.2 target
 // specification.
 static const CORBA::Short default_addressing_mode_ = TAO_Target_Specification::Profile_Addr;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const char TAO_UIPMC_Profile::object_key_delimiter_ = '/';
 
@@ -398,7 +398,7 @@ TAO_UIPMC_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   // @@ Frank: Update to pull out GroupID information...
 
-  size_t buflen = (ACE_OS::strlen (::prefix_) +
+  size_t buflen = (ACE_OS::strlen (::the_prefix) +
                    3 /* "loc" */ +
                    1 /* colon separator */ +
                    2 /* double-slash separator */ +
@@ -414,7 +414,7 @@ TAO_UIPMC_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
   ACE_OS::sprintf (buf,
                    "corbaloc:%s://1.0@%s:%d",
-                   ::prefix_,
+                   ::the_prefix,
                    this->endpoint_.get_host_addr (),
                    this->endpoint_.port ());
   return buf;
@@ -423,7 +423,7 @@ TAO_UIPMC_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 const char *
 TAO_UIPMC_Profile::prefix (void)
 {
-  return ::prefix_;
+  return ::the_prefix;
 }
 
 IOP::TaggedProfile &
@@ -742,3 +742,5 @@ TAO_UIPMC_Profile::extract_group_component (const IOP::TaggedProfile &profile,
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -26,6 +26,8 @@
 #include "tao/ORB_Constants.h"
 #include "tao/orbconf.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class PROXY, class ACE_LOCK> class TAO_Notify_Event_Map_T;
 template <class PROXY> class TAO_ESF_Proxy_Collection;
 
@@ -79,6 +81,8 @@ protected:
   /// Count of users accessing this entry.
   ACE_Atomic_Op<TAO_SYNCH_MUTEX,int> usage_count_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "Event_Map_Entry_T.inl"

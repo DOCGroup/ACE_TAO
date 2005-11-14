@@ -18,6 +18,8 @@ ACE_RCSID (PortableGroup,
 
 #include "ace/Auto_Ptr.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 PortableServer::ObjectId *
 TAO_GOA::create_id_for_reference (CORBA::Object_ptr the_ref
                                   ACE_ENV_ARG_DECL)
@@ -705,3 +707,5 @@ TAO_GOA::associate_group_with_ref (
   ACE_CHECK;
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

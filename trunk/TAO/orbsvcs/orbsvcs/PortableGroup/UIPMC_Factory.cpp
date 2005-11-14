@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-//
 // $Id$
 
 #include "UIPMC_Factory.h"
@@ -11,7 +9,9 @@ ACE_RCSID (PortableGroup,
            UIPMC_Factory, 
            "$Id$")
 
-static const char prefix_[] = "uipmc";
+static const char the_prefix[] = "uipmc";
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIPMC_Protocol_Factory::TAO_UIPMC_Protocol_Factory (void)
   :  TAO_Protocol_Factory (TAO_TAG_UIPMC_PROFILE),
@@ -28,13 +28,13 @@ int
 TAO_UIPMC_Protocol_Factory::match_prefix (const ACE_CString &prefix)
 {
   // Check for the proper prefix for this protocol.
-  return (ACE_OS::strcasecmp (prefix.c_str (), ::prefix_) == 0);
+  return (ACE_OS::strcasecmp (prefix.c_str (), ::the_prefix) == 0);
 }
 
 const char *
 TAO_UIPMC_Protocol_Factory::prefix (void) const
 {
-  return ::prefix_;
+  return ::the_prefix;
 }
 
 char
@@ -84,6 +84,8 @@ TAO_UIPMC_Protocol_Factory::requires_explicit_endpoint (void) const
   // interface.
   return 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_UIPMC_Protocol_Factory,
                        ACE_TEXT ("UIPMC_Factory"),

@@ -1,4 +1,5 @@
 // -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    PG_Object_Group.h
@@ -37,6 +38,8 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/ACE.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /////////////////////
 // Forward references
@@ -371,6 +374,8 @@ namespace TAO
 
   };
 } // namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

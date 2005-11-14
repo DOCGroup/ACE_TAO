@@ -28,6 +28,7 @@
 #include "orbsvcs/PortableGroupC.h"
 #include "ace/Null_Mutex.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Forward declarations.
 class TAO_PG_ObjectGroupManager;
@@ -240,6 +241,7 @@ private:
 
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

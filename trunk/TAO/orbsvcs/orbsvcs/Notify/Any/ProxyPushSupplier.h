@@ -30,6 +30,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
 template class TAO_Notify_Serv_Export
 TAO_Notify_ProxySupplier_T<POA_Event_Forwarder::ProxyPushSupplier>;
@@ -84,6 +86,8 @@ private:
   /// TAO_Notify_Destroy_Callback methods
   virtual void release (void);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

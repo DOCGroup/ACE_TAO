@@ -17,6 +17,8 @@ ACE_RCSID (Log,
            Log_Constraint_Visitors,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (
   DsLogAdmin::LogRecord &rec)
   :rec_ (rec)
@@ -1377,3 +1379,5 @@ TAO_Log_Constraint_Visitor::simple_type_match (int expr_type,
       return 0;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

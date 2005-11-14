@@ -8,6 +8,8 @@ ACE_RCSID (PortableGroup,
            UIPMC_Factory,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   /*static*/ int
@@ -23,3 +25,5 @@ namespace TAO
       ace_svc_desc_TAO_UIPMC_Protocol_Factory);
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

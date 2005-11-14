@@ -22,6 +22,8 @@
 #include "orbsvcs/CosNotifyCommC.h"
 #include "../Consumer.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Notify_ProxySupplier;
 
 /**
@@ -72,6 +74,8 @@ private:
   /// Release
   virtual void release (void);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_STRUCTUREDPUSHCONSUMER_H */

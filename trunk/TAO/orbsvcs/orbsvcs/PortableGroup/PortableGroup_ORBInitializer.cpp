@@ -16,6 +16,8 @@ static const char pg_poa_factory_name[] = "TAO_PG_POA";
 static const char pg_poa_factory_directive[] = ACE_DYNAMIC_SERVICE_DIRECTIVE(
   "TAO_PG_POA", "TAO_PortableGroup", "_make_TAO_PG_Object_Adapter_Factory", "");
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 void
 TAO_PortableGroup_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr info
@@ -65,3 +67,5 @@ TAO_PortableGroup_ORBInitializer::post_init (
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

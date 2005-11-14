@@ -5,6 +5,8 @@
 ACE_RCSID (Notify, TAO_Notify_PushSupplier, "$Id$")
 #include "../Properties.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Notify_PushSupplier::TAO_Notify_PushSupplier (TAO_Notify_ProxyConsumer* proxy)
   :TAO_Notify_Supplier (proxy)
 {
@@ -59,3 +61,5 @@ TAO_Notify_PushSupplier::get_ior (ACE_CString & iorstr) const
   ACE_ENDTRY;
   return result;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,12 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file RT_Factory.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_RT_FACTORY_H
@@ -20,6 +19,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Default_Factory.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_RT_Factory
@@ -90,6 +91,8 @@ public:
   /// Create SequenceProxyPushSupplier
   virtual void create (TAO_Notify_SequenceProxyPushSupplier*& proxy ACE_ENV_ARG_DECL);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DECLARE (TAO_RT_Notify, TAO_Notify_RT_Factory)
 

@@ -17,6 +17,8 @@ ACE_RCSID (Notify, Buffering_Strategy, "$Id$")
 
 #include "ace/Message_Queue.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Notify_Buffering_Strategy::TAO_Notify_Buffering_Strategy (
   TAO_Notify_Message_Queue& msg_queue,
   TAO_Notify_AdminProperties::Ptr& admin_properties)
@@ -257,3 +259,5 @@ TAO_Notify_Buffering_Strategy::discard (TAO_Notify_Method_Request_Queueable& met
 
   return false;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

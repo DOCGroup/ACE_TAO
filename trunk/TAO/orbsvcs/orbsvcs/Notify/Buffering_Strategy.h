@@ -29,6 +29,8 @@
 #include "Property_T.h"
 #include "AdminProperties.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Notify_Method_Request_Queueable;
 class TAO_Notify_QoSProperties;
 
@@ -112,6 +114,8 @@ private:
   /// Flag to shutdown.
   bool shutdown_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

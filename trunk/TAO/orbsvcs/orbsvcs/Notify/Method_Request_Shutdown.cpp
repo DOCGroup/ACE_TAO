@@ -5,6 +5,8 @@
 
 ACE_RCSID(Notify, TAO_Notify_Method_Request_Shutdown, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Notify_Method_Request_Shutdown::TAO_Notify_Method_Request_Shutdown (TAO_Notify_ThreadPool_Task* task)
   : task_ (task)
 {
@@ -29,3 +31,5 @@ TAO_Notify_Method_Request_Shutdown::execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   this->task_->msg_queue ()->deactivate ();
   return -1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -12,6 +12,8 @@ ACE_RCSID(Notify, FilterAdmin, "$Id$")
 #include "Properties.h"
 #include "ace/Bound_Ptr.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Implementation skeleton constructor
 TAO_Notify_FilterAdmin::TAO_Notify_FilterAdmin (void)
 {
@@ -198,3 +200,5 @@ TAO_Notify_FilterAdmin::release (void)
 {
   delete this;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

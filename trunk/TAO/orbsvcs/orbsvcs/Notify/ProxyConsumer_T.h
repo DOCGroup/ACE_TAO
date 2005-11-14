@@ -1,12 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file ProxyConsumer_T.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_PROXYCONSUMER_T_H
@@ -22,6 +21,8 @@
 
 #include "Proxy_T.h"
 #include "ProxyConsumer.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_ProxyConsumer_T
@@ -70,6 +71,8 @@ public:
   ));
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ProxyConsumer_T.cpp"

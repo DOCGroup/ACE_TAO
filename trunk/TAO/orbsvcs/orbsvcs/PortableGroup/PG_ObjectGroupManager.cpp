@@ -14,6 +14,8 @@ ACE_RCSID (PortableGroup,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_PG_ObjectGroupManager::TAO_PG_ObjectGroupManager (void)
   : poa_ (),
     object_group_map_ (TAO_PG_MAX_OBJECT_GROUPS),
@@ -865,3 +867,5 @@ TAO_PG_ObjectGroupManager::generic_factory (
 {
   this->generic_factory_ = generic_factory;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

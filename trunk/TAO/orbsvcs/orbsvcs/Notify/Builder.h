@@ -28,6 +28,7 @@
 
 #include "tao/PortableServer/PortableServer.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_EventChannelFactory;
 class TAO_Notify_EventChannel;
@@ -166,6 +167,8 @@ public:
       ACE_ENV_ARG_DECL
     );
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

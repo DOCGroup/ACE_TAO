@@ -11,6 +11,8 @@ ACE_RCSID (Notify,
 #include "../Event.h"
 #include "../Properties.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Notify_PushConsumer::TAO_Notify_PushConsumer (TAO_Notify_ProxySupplier* proxy)
   :TAO_Notify_Consumer (proxy)
 {
@@ -104,3 +106,5 @@ TAO_Notify_PushConsumer::reconnect_from_consumer (TAO_Notify_Consumer* old_consu
   ACE_CHECK;
   this->schedule_timer(false);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

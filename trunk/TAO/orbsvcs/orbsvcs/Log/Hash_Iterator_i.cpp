@@ -7,13 +7,15 @@ ACE_RCSID (Log,
            Hash_Iterator_i,
            "$Id$")
 
-TAO_Hash_Iterator_i::TAO_Hash_Iterator_i (ACE_Reactor* reactor,
-                                          TAO_Hash_LogRecordStore::LOG_RECORD_STORE_ITER iter,
-                                          TAO_Hash_LogRecordStore::LOG_RECORD_STORE_ITER iter_end,
-                                          CORBA::ULong start,
-                                          const char *constraint,
-                                          CORBA::ULong max_rec_list_len
-                                          )
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_Hash_Iterator_i::TAO_Hash_Iterator_i (
+  ACE_Reactor* reactor,
+  TAO_Hash_LogRecordStore::LOG_RECORD_STORE_ITER iter,
+  TAO_Hash_LogRecordStore::LOG_RECORD_STORE_ITER iter_end,
+  CORBA::ULong start,
+  const char *constraint,
+  CORBA::ULong max_rec_list_len)
   : TAO_Iterator_i(reactor),
     iter_ (iter),
     iter_end_ (iter_end),
@@ -95,3 +97,5 @@ TAO_Hash_Iterator_i::get (CORBA::ULong position,
 
   return rec_list;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

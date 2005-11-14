@@ -2,6 +2,8 @@
 //
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class TYPE> ACE_INLINE const TYPE&
 TAO_Notify_PropertyBase_T<TYPE>::value (void) const
 {
@@ -71,3 +73,5 @@ TAO_Notify_StructProperty_T<TYPE>::is_valid (void) const
 {
   return this->valid_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

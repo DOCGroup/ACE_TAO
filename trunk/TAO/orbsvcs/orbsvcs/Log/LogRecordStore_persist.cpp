@@ -10,6 +10,8 @@ ACE_RCSID (Log,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_LogRecordStore::TAO_LogRecordStore (CORBA::ULongLong max_size,
                                         DsLogAdmin::LogId logid,
                                         CORBA::ULong max_rec_list_len)
@@ -204,3 +206,5 @@ TAO_LogRecordStore::get_storage (void)
 {
   return rec_hash_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -11,7 +11,6 @@ ACE_RCSID(Notify, TAO_Notify_Method_Request_Dispatch, "$Id$")
 #include "EventChannelFactory.h"
 
 #include "tao/debug.h"
-#include "tao/corba.h"
 
 #include "ace/OS_NS_stdio.h"
 
@@ -19,6 +18,8 @@ ACE_RCSID(Notify, TAO_Notify_Method_Request_Dispatch, "$Id$")
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Constuct from event
 TAO_Notify_Method_Request_Dispatch::TAO_Notify_Method_Request_Dispatch (
@@ -299,3 +300,4 @@ TAO_Notify_Method_Request_Dispatch_No_Copy::copy (ACE_ENV_SINGLE_ARG_DECL)
   return request;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

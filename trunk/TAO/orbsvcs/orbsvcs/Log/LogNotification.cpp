@@ -8,14 +8,14 @@ ACE_RCSID (Log,
            LogNotification,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_LogNotification::TAO_LogNotification (void)
 {
-  // No-Op.
 }
 
 TAO_LogNotification::~TAO_LogNotification (void)
 {
-  // No-Op.
 }
 
 void
@@ -413,3 +413,5 @@ TAO_LogNotification::send_notification (const CORBA::Any & /* any */
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

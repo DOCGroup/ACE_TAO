@@ -5,6 +5,8 @@ ACE_RCSID (PortableGroup,
            PG_Operators,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 bool
 operator== (const CosNaming::Name & lhs, const CosNaming::Name & rhs)
 {
@@ -27,3 +29,5 @@ operator!= (const CosNaming::Name & lhs, const CosNaming::Name & rhs)
 {
   return !(lhs == rhs);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -30,14 +30,15 @@
 #include "ace/ACE.h"
 #include "ace/Hash_Map_Manager.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 //////////////////
 // Forward reference
 namespace TAO
 {
   class PG_Property_Set;
 } // namespace TAO_PG
-
-
 
 namespace TAO
 {
@@ -175,6 +176,8 @@ namespace TAO
 
   };
 } // namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

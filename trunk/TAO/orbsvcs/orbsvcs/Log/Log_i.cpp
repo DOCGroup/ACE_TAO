@@ -12,6 +12,8 @@ ACE_RCSID (Log,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Log Compaction Interval
 const ACE_Time_Value
 TAO_Log_i::log_compaction_interval_ = ACE_Time_Value(60);
@@ -1283,3 +1285,5 @@ TAO_Log_i::validate_capacity_alarm_thresholds (
 
   return true;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

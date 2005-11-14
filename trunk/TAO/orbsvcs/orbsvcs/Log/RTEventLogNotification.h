@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -8,10 +8,7 @@
  *
  *  Methods to enable log-generated events.
  *
- *
  *  @author D A Hanvey <d.hanvey@qub.ac.uk>
- *
- *
  */
 //=============================================================================
 
@@ -39,6 +36,8 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_RTEventLogNotification
@@ -83,6 +82,8 @@ private:
   /// The ProxyPushConsumer used to connect to the event channel.
   RtecEventChannelAdmin::ProxyPushConsumer_var consumer_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

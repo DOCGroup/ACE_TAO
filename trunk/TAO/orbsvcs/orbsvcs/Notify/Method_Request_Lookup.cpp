@@ -15,7 +15,8 @@ ACE_RCSID(Notify, TAO_Notify_Method_Request_Lookup, "$Id$")
 #include "EventChannelFactory.h"
 
 #include "tao/debug.h"
-#include "tao/corba.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Method_Request_Lookup::TAO_Notify_Method_Request_Lookup (
       const TAO_Notify_Event * event,
@@ -216,3 +217,5 @@ TAO_Notify_Method_Request_Lookup_No_Copy::copy (ACE_ENV_SINGLE_ARG_DECL)
 
   return request;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

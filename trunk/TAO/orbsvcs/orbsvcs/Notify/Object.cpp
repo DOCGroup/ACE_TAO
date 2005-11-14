@@ -15,7 +15,7 @@
 
 ACE_RCSID(Notify, TAO_Notify_Object, "$Id$")
 
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Object::TAO_Notify_Object (void)
   : poa_ (0)
@@ -358,3 +358,5 @@ TAO_Notify_Object::load_attrs(const TAO_Notify::NVPList& attrs)
   this->qos_properties_.init ();
 }
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Method_Request.h
  *
@@ -23,6 +24,8 @@
 #include "ace/OS_NS_sys_time.h"
 
 #include "Event.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_Method_Request_Queueable;
 
@@ -64,6 +67,8 @@ public:
   virtual TAO_Notify_Method_Request_Queueable* copy (ACE_ENV_SINGLE_ARG_DECL);
   void init (const TAO_Notify_Event * event);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

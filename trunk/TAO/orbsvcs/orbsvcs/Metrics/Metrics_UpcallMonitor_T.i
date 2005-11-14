@@ -16,6 +16,8 @@
 # endif /* ! METRICS_USES_OP_CANCELLATION */
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ////////////////////////////////////////////
 // class TAO_Metrics_UpcallMonitorAdapter //
 ////////////////////////////////////////////
@@ -255,5 +257,7 @@ TAO_Metrics_ReportingUpcallMonitorAdapter (
                                      this->is_critical_,
                                      this->logger_);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* METRICS_UPCALL_MONITOR_T_I */

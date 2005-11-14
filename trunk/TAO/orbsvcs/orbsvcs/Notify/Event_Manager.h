@@ -26,6 +26,8 @@
 
 #include "ace/CORBA_macros.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Notify_ProxySupplier;
 class TAO_Notify_ProxyConsumer;
 class TAO_Notify_EventTypeSeq;
@@ -118,6 +120,8 @@ private:
   /// Supplier Map
   ACE_Auto_Ptr< TAO_Notify_Supplier_Map > supplier_map_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

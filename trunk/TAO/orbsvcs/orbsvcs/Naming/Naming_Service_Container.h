@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    Naming_Service_Container.h
@@ -31,6 +32,7 @@ class ACE_Allocator;
 template <class T> class ACE_Unbounded_List;
 template <class T> class ACE_Unbounded_List_Iterator;
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_NS_Node
@@ -221,6 +223,7 @@ private:
   ACE_Allocator *allocator_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Naming_Service_Container.cpp"

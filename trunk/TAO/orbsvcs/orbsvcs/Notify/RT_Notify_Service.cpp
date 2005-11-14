@@ -10,6 +10,8 @@ ACE_RCSID(RT_Notify, TAO_Notify_RT_Notify_Service, "$Id$")
 #include "RT_Factory.h"
 #include "RT_Builder.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_RT_Notify_Service::TAO_RT_Notify_Service (void)
 {
 }
@@ -90,5 +92,7 @@ TAO_RT_Notify_Service::create_builder (ACE_ENV_SINGLE_ARG_DECL)
 
   return builder;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DEFINE (TAO_RT_Notify,TAO_RT_Notify_Service)

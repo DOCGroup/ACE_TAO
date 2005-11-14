@@ -24,6 +24,8 @@
 
 ACE_RCSID(Notify, TAO_Notify_EventChannel, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 typedef TAO_Notify_Find_Worker_T<TAO_Notify_ConsumerAdmin
                              , CosNotifyChannelAdmin::ConsumerAdmin
                              , CosNotifyChannelAdmin::ConsumerAdmin_ptr
@@ -671,3 +673,4 @@ TAO_Notify_EventChannel::sa_container()
   return *sa_container_;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

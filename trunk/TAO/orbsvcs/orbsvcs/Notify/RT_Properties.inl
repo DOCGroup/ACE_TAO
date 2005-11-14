@@ -1,5 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE RTCORBA::RTORB_ptr
 TAO_Notify_RT_Properties::rt_orb (void)
@@ -24,3 +27,5 @@ TAO_Notify_RT_Properties::current (RTCORBA::Current_ptr current)
 {
   current_ = RTCORBA::Current::_duplicate (current);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

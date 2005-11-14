@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   Bindings_Iterator_T.h
@@ -15,6 +16,9 @@
 #include /**/ "ace/pre.h"
 
 #include "Hash_Naming_Context.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Bindings_Iterator
@@ -126,6 +130,8 @@ private:
   /// Implement a different _default_POA().
   PortableServer::POA_var poa_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Bindings_Iterator_T.cpp"

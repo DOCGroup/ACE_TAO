@@ -7,6 +7,8 @@
 
 ACE_RCSID(tao, Wait_On_Leader_Follower, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_UIPMC_Wait_Never::TAO_UIPMC_Wait_Never (TAO_Transport *transport)
   : TAO_Wait_Strategy (transport)
 {
@@ -47,3 +49,5 @@ TAO_UIPMC_Wait_Never::wait (ACE_Time_Value *,
 {
   return -1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

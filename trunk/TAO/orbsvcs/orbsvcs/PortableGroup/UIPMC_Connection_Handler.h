@@ -32,6 +32,8 @@
 #include "ace/SOCK_Dgram.h"
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward Decls
 class TAO_Pluggable_Messaging;
 
@@ -45,8 +47,6 @@ class TAO_Pluggable_Messaging;
  * The Connection handler which is common for the Acceptor and
  * the Connector
  */
-
-
 class TAO_PortableGroup_Export TAO_UIPMC_Connection_Handler :
   public TAO_UIPMC_SVC_HANDLER,
   public TAO_Connection_Handler
@@ -142,6 +142,8 @@ protected:
   //@}
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_UIPMC_CONNECTION_HANDLER_H */

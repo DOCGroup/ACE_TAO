@@ -21,6 +21,8 @@
 
 #include "StructuredProxyPushSupplier.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Notify_RT_StructuredProxyPushSupplier
  *
@@ -54,6 +56,8 @@ private:
   /// Our ref.
   Event_Forwarder::StructuredProxyPushSupplier_var event_forwarder_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_RT_STRUCTUREDPROXYPUSHSUPPLIER_H */

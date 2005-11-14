@@ -25,6 +25,7 @@
 #include "Object.h"
 #include "EventChannelFactory.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_ConsumerAdmin;
 class TAO_Notify_SupplierAdmin;
@@ -242,6 +243,8 @@ private:
   /// Release
   virtual void release (void);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

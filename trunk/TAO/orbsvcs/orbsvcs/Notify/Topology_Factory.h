@@ -1,12 +1,13 @@
+// -*- C++ -*-
+
 /**
  *  @file Topology_Factory.h
  *
  *  $Id$
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
- *
- *
  */
+
 #ifndef TAO_NOTIFY_TOPOLOGY_FACTORY_H
 #define TAO_NOTIFY_TOPOLOGY_FACTORY_H
 #include /**/ "ace/pre.h"
@@ -18,6 +19,10 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
@@ -41,6 +46,8 @@ namespace TAO_Notify
     virtual Topology_Loader* create_loader () = 0;
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif

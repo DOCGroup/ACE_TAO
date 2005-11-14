@@ -1,12 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Proxy.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_PROXY_H
@@ -24,6 +23,8 @@
 #include "EventTypeSeq.h"
 #include "FilterAdmin.h"
 #include "Admin.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_Admin;
 class TAO_Notify_Peer;
@@ -126,6 +127,8 @@ protected:
   /// True if updates have been turned off.
   CORBA::Boolean updates_off_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "Proxy.inl"

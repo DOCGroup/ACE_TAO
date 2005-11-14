@@ -33,6 +33,7 @@
 
 #include "ace/SString.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO UIPMC_Profile concrete Profile definitions
 /**
@@ -152,6 +153,8 @@ private:
   PortableGroup::ObjectGroupRefVersion ref_version_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif  /* TAO_UIPMC_PROFILE_H */

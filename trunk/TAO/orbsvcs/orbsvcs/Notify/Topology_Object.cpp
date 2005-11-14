@@ -13,6 +13,8 @@
 // children have been saved in Topology_Object::save_persistent ().
 // If these rules are followed, the only risk is a (harmless) extra save.
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO_Notify
 {
   Topology_Savable::~Topology_Savable (void)
@@ -143,3 +145,5 @@ namespace TAO_Notify
     return -1;
   }
 } // namespace TAO_Notify
+
+TAO_END_VERSIONED_NAMESPACE_DECL

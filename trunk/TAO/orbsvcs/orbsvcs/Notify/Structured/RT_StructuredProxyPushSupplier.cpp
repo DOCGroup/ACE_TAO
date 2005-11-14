@@ -8,6 +8,8 @@
 
 ACE_RCSID (Notify, TAO_Notify_RT_StructuredProxyPushSupplier, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Notify_RT_StructuredProxyPushSupplier::TAO_Notify_RT_StructuredProxyPushSupplier (void)
 {
 }
@@ -76,3 +78,4 @@ TAO_Notify_RT_StructuredProxyPushSupplier::push_no_filtering (const TAO_Notify_E
   ACE_ENDTRY;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

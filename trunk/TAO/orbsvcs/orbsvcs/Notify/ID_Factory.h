@@ -24,6 +24,8 @@
 
 #include "Object.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Notify_ID_Factory
  *
@@ -49,6 +51,7 @@ private:
   TAO_SYNCH_MUTEX mtx_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ID_Factory.inl"

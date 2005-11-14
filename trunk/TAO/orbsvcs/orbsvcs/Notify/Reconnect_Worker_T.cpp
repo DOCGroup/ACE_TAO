@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-
 //=============================================================================
 /**
 *  @file    Reconnect_Worker_T.cpp
@@ -19,6 +17,8 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO_Notify
 {
   template<class TOPOOBJ>
@@ -35,5 +35,7 @@ namespace TAO_Notify
     ACE_CHECK;
   }
 } // namespace TAO_Notify
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* RECONNECT_WORKER_CPP */
