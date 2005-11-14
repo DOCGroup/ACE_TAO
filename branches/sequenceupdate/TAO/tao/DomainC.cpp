@@ -156,7 +156,7 @@ TAO::Objref_Traits<CORBA::DomainManager>::nil (void)
 
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::DomainManager>::marshal (
-    CORBA::DomainManager_ptr p,
+    const CORBA::DomainManager_ptr p,
     TAO_OutputCDR & cdr
   )
 {

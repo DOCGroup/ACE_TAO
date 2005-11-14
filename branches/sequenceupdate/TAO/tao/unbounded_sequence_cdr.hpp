@@ -13,7 +13,7 @@
 
 namespace TAO {
   namespace details {
-    template <typename stream, typename sequence>
+    template <class stream, class sequence>
     bool extract_unbounded_sequence(stream & strm, sequence & target) {
       ::CORBA::ULong new_length;
       if (!(strm >> new_length)) {
@@ -34,14 +34,16 @@ namespace TAO {
       return true;
     }
 
-    template <typename stream, typename sequence>
+    template <class stream, class sequence>
     bool insert_unbounded_sequence(stream & strm, const sequence & source) {
       const ::CORBA::ULong length = source.length ();
       if (!(strm << length)) {
         return false;
       }
       for(CORBA::ULong i = 0; i < length; ++i) {
-        if (!(strm << source[i])) {
+// @todo, check why cast
+        sequence::value_type element = const_cast <sequence::value_type> (source[i]);
+        if (!TAO::Objref_Traits<sequence::object_type>::marshal (element, strm)) {
           return false;
         }
       }
