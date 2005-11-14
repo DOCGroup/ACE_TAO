@@ -1,5 +1,8 @@
 // -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE TAO_Notify_Property_Boolean&
 TAO_Notify_Property_Boolean::operator= (const TAO_Notify_Property_Boolean& rhs)
@@ -55,3 +58,5 @@ TAO_Notify_Property_Boolean::is_valid (void) const
 {
   return this->valid_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

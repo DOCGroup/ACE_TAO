@@ -13,6 +13,7 @@ ACE_RCSID (PortableGroup,
            PG_Utils,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -171,3 +172,5 @@ namespace TAO
     return cdr.good_bit ();
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

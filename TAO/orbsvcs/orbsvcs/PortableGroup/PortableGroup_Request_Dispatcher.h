@@ -24,6 +24,8 @@
 #include "Portable_Group_Map.h"
 #include "PortableGroup_Acceptor_Registry.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward declarations.
 class TAO_PortableGroup_Loader;
 
@@ -60,6 +62,8 @@ private:
   TAO_PortableGroup_Acceptor_Registry acceptor_registry_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

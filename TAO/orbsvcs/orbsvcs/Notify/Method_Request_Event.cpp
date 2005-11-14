@@ -5,6 +5,8 @@
 
 ACE_RCSID (Notify, TAO_Notify_Method_Request_Event_Queueable, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Notify_Method_Request_Event::TAO_Notify_Method_Request_Event (
       const TAO_Notify_Event * event)
   : event_ (event)
@@ -96,3 +98,5 @@ TAO_Notify_Method_Request_Event::event() const
 {
   return this->event_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

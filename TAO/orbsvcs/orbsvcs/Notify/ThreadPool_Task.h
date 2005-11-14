@@ -1,12 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file ThreadPool_Task.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_THREADPOOL_TASK_H
@@ -28,6 +27,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Notify_Buffering_Strategy;
 
 /**
@@ -36,7 +37,8 @@ class TAO_Notify_Buffering_Strategy;
  * @brief Implements a Thread Pool Worker Task.
  *
  */
-class TAO_Notify_Serv_Export TAO_Notify_ThreadPool_Task : public TAO_Notify_Worker_Task, public ACE_Task<ACE_NULL_SYNCH>
+class TAO_Notify_Serv_Export TAO_Notify_ThreadPool_Task
+  : public TAO_Notify_Worker_Task, public ACE_Task<ACE_NULL_SYNCH>
 {
   friend class TAO_Notify_Method_Request_Shutdown;
 
@@ -112,6 +114,8 @@ private:
   Shutdown_Handler shutdown_handler_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

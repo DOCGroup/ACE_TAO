@@ -16,6 +16,8 @@
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO_Notify
 {
 
@@ -98,3 +100,4 @@ Delivery_Request::routing_slip () const
 
 } // namespace
 
+TAO_END_VERSIONED_NAMESPACE_DECL

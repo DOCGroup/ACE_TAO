@@ -14,6 +14,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations of referenced classes
 class TAO_Notify_EventChannelFactory;
@@ -123,6 +124,8 @@ private:
 };
 
 } // namespace
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "Delivery_Request.inl"

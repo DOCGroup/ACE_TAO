@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    PG_Property_Set.h
@@ -26,6 +27,8 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/SString.h"
 #include "ace/Null_Mutex.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -185,6 +188,8 @@ namespace TAO
   int test_encode_decode();
 #endif // PG_PS_UNIT_TEST
 } //namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ////////////////////////////////////
 // include templated helper function

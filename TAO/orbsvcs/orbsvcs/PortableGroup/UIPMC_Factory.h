@@ -25,6 +25,8 @@
 
 #include "portablegroup_export.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Acceptor;
 class TAO_Connector;
 
@@ -59,6 +61,8 @@ private:
   int major_;
   int minor_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_UIPMC_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO_PortableGroup, TAO_UIPMC_Protocol_Factory)

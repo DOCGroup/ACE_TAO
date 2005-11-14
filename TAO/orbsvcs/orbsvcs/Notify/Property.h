@@ -26,6 +26,9 @@
 #include "tao/TimeBaseC.h"
 
 template <class LOCK, class TYPE> class ACE_Atomic_Op;
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class TYPE> class TAO_Notify_Property_T;
 template <class TYPE> class TAO_Notify_StructProperty_T;
 
@@ -36,6 +39,8 @@ typedef TAO_Notify_Property_T<CORBA::Short> TAO_Notify_Property_Short;
 typedef TAO_Notify_Property_T<TimeBase::TimeT> TAO_Notify_Property_Time;
 typedef TAO_Notify_StructProperty_T<NotifyExt::ThreadPoolParams> TAO_Notify_Property_ThreadPool;
 typedef TAO_Notify_StructProperty_T<NotifyExt::ThreadPoolLanesParams> TAO_Notify_Property_ThreadPoolLanes;
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -8,7 +8,6 @@
  *
  *  Implements the Factory for NotifyLog Objects.
  *
- *
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
 //=============================================================================
@@ -36,6 +35,8 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_RTEventLog_i;
 class TAO_RTEventLogNotification;
@@ -129,6 +130,8 @@ protected:
   /// The ConsumerAdmin that the EventLogFactory supports.
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

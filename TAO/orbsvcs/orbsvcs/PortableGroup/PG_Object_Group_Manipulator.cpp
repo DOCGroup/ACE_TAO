@@ -20,6 +20,9 @@ ACE_RCSID (PortableGroup,
            PG_Object_Group_Manipulator,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::PG_Object_Group_Manipulator::PG_Object_Group_Manipulator ()
   : orb_ (CORBA::ORB::_nil ())
   , poa_ (PortableServer::POA::_nil ())
@@ -183,3 +186,5 @@ void dump_membership (const char * label, PortableGroup::ObjectGroup_ptr member)
   }
 #endif
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

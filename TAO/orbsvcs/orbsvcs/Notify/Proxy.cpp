@@ -6,7 +6,7 @@
 #include "Proxy.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_Notify_Proxy, "$Id$")
+ACE_RCSID(Notify, TAO_Notify_Proxy, "$Id$")
 
 #include "Peer.h"
 #include "Proxy.h"
@@ -16,8 +16,10 @@ ACE_RCSID(RT_Notify, TAO_Notify_Proxy, "$Id$")
 #include "POA_Helper.h"
 #include "Topology_Saver.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Notify_Proxy::TAO_Notify_Proxy (void)
-  :updates_off_ (0)
+  : updates_off_ (0)
 {
 }
 
@@ -195,3 +197,5 @@ TAO_Notify_Proxy::load_child (const ACE_CString &type, CORBA::Long id,
   }
   return result;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

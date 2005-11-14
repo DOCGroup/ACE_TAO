@@ -2,6 +2,8 @@
 
 #include "UIPMC_Message_Block_Data_Iterator.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 UIPMC_Message_Block_Data_Iterator::UIPMC_Message_Block_Data_Iterator (iovec *iov, int iovcnt) :
   iov_ (iov),
   iovcnt_ (iovcnt),
@@ -83,3 +85,5 @@ UIPMC_Message_Block_Data_Iterator::next_block (size_t max_length,
         }
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

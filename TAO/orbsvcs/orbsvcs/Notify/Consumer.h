@@ -28,6 +28,9 @@
 #include "Timer.h"
 #include "ace/Event_Handler.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Notify_ProxySupplier;
 class TAO_Notify_Proxy;
 class TAO_Notify_Method_Request_Event_Queueable;
@@ -184,6 +187,8 @@ private:
   /// Events pending to be delivered.
   ACE_Auto_Ptr< Request_Queue > pending_events_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "Consumer.inl"

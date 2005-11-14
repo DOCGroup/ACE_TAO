@@ -22,6 +22,7 @@ ACE_RCSID (PortableGroup,
            UIPMC_Acceptor,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIPMC_Acceptor::TAO_UIPMC_Acceptor (CORBA::Boolean /*flag*/)
   : TAO_Acceptor (TAO_TAG_UIPMC_PROFILE),
@@ -347,3 +348,5 @@ TAO_UIPMC_Acceptor::parse_options (const char *str)
     }
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

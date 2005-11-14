@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 // $Id$
 
 #include "UIPMC_Profile.h"
@@ -59,12 +58,15 @@ ACE_RCSID (PortableGroup,
 
 static const CORBA::Octet miop_magic[4] = { 0x4d, 0x49, 0x4f, 0x50 }; // 'M', 'I', 'O', 'P'
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 struct MIOP_Packet
 {
   iovec iov[ACE_IOV_MAX];
   int iovcnt;
   int length;
 };
+
 
 TAO_UIPMC_Transport::TAO_UIPMC_Transport (TAO_UIPMC_Connection_Handler *handler,
                                           TAO_ORB_Core *orb_core,
@@ -586,8 +588,6 @@ TAO_UIPMC_Transport::send_message (TAO_OutputCDR &stream,
   return 1;
 }
 
-
-
 int
 TAO_UIPMC_Transport::messaging_init (CORBA::Octet major,
                                     CORBA::Octet minor)
@@ -596,3 +596,5 @@ TAO_UIPMC_Transport::messaging_init (CORBA::Octet major,
                                  minor);
   return 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

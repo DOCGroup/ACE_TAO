@@ -26,6 +26,7 @@
 #include "portablegroup_export.h"
 #include "orbsvcs/PortableGroupC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_PG_Location_Equal_To
@@ -47,6 +48,7 @@ public:
 
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "PG_Location_Equal_To.inl"

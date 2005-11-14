@@ -24,6 +24,8 @@
 
 #define QUEUE_ALLOWED 1
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO_Notify
 {
 ///////////////////////
@@ -925,6 +927,6 @@ Routing_Slip::should_retry () const
   return this->state_ != rssTRANSIENT;
 }
 
-
-
 } // namespace
+
+TAO_END_VERSIONED_NAMESPACE_DECL

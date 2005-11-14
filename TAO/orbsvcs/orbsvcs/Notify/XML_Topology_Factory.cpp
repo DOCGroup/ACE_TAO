@@ -8,6 +8,9 @@
 #include "ace/OS_NS_strings.h"
 //#include "ace/Service_Object.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO_Notify
 {
 
@@ -144,6 +147,10 @@ namespace TAO_Notify
     // nothing to do yet
     return 0;
   }
-
-  ACE_FACTORY_DEFINE (TAO_Notify_Persist, XML_Topology_Factory)
 } /* namespace TAO_Notify */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_FACTORY_NAMESPACE_DEFINE (TAO_Notify_Persist,
+                              TAO_Notify_XML_Topology_Factory,
+                              TAO_Notify::XML_Topology_Factory)

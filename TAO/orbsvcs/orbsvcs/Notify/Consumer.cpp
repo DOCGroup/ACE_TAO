@@ -27,6 +27,8 @@ ACE_RCSID (RT_Notify, TAO_Notify_Consumer, "$Id$")
 
 static const int DEFAULT_RETRY_TIMEOUT = 10;//120; // Note : This should be a config param or qos setting
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Notify_Consumer::TAO_Notify_Consumer (TAO_Notify_ProxySupplier* proxy)
   : proxy_ (proxy)
   , is_suspended_ (0)
@@ -572,3 +574,5 @@ TAO_Notify_Consumer::proxy_supplier (void)
 {
   return this->proxy_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

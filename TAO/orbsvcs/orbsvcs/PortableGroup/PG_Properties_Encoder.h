@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    PG_Properties_Encoder.h
@@ -25,6 +26,8 @@
 
 #include "ace/Vector_T.h"
 #include "ace/SString.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_PG
 {
@@ -88,6 +91,8 @@ namespace TAO_PG
   };
 
 } //namespace TAO_PG
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "PG_Properties_Encoder.inl"

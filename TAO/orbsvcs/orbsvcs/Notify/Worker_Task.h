@@ -1,12 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Worker_Task.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_WORKER_TASK_H
@@ -22,6 +21,8 @@
 
 #include "Method_Request.h"
 #include "Refcountable.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_AdminProperties;
 class TAO_Notify_QoSProperties;
@@ -63,6 +64,8 @@ protected:
   /// Destructor
   virtual ~TAO_Notify_Worker_Task ();
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_WORKER_TASK_H */

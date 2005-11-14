@@ -6,7 +6,7 @@
 #include "ProxyConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_Notify_ProxyConsumer, "$Id$")
+ACE_RCSID(Notify, TAO_Notify_ProxyConsumer, "$Id$")
 
 #include "tao/debug.h"
 #include "ace/Atomic_Op.h"
@@ -21,10 +21,13 @@ ACE_RCSID(RT_Notify, TAO_Notify_ProxyConsumer, "$Id$")
 #include "SupplierAdmin.h"
 #include "EventChannel.h"
 #include "Routing_Slip.h"
+
 //#define DEBUG_LEVEL 10
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_ProxyConsumer::TAO_Notify_ProxyConsumer (void)
   : supplier_admin_ (0)
@@ -193,3 +196,5 @@ TAO_Notify_ProxyConsumer::destroy (ACE_ENV_SINGLE_ARG_DECL)
   this->supplier_admin_->remove (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

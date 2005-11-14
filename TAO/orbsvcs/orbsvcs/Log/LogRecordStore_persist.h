@@ -38,6 +38,8 @@
 
 #define LOG_DEFAULT_MAX_REC_LIST_LEN 100
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_LogRecordStore
  *
@@ -151,6 +153,8 @@ class TAO_Log_Serv_Export TAO_LogRecordStore
   /// Persistent log file name.
   char file_name_[256];
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /*TAO_LOG_RECORD_STORE_PERSIST_H*/

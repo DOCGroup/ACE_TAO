@@ -17,6 +17,8 @@ ACE_RCSID (Notify,
 #include "Properties.h"
 #include "Factory.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class PROXY>
 TAO_Notify_Event_Map_Entry_T<PROXY>::TAO_Notify_Event_Map_Entry_T (void)
   : collection_ (0), count_ (0), usage_count_ (1)
@@ -50,5 +52,7 @@ TAO_Notify_Event_Map_Entry_T<PROXY>::disconnected (PROXY* proxy ACE_ENV_ARG_DECL
   this->collection_->disconnected (proxy ACE_ENV_ARG_PARAMETER);
   --count_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_Notify_EVENT_MAP_ENTRY_CPP */

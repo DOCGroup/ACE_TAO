@@ -10,6 +10,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_NS_FlatFileStream::TAO_NS_FlatFileStream (const ACE_CString & file,
                                               const char * mode)
   : fl_ (0)
@@ -344,9 +346,9 @@ TAO_NS_FlatFileStream::operator >>(
 }
 
 
-TAO_Storable_Base *TAO_NS_FlatFileFactory::create_stream(
-                                                       const ACE_CString & file,
-                                                       const ACE_TCHAR * mode)
+TAO_Storable_Base *
+TAO_NS_FlatFileFactory::create_stream (const ACE_CString & file,
+                                       const ACE_TCHAR * mode)
 {
   ACE_TRACE("TAO_NS_FlatFileFactory::create_stream");
   TAO_Storable_Base *stream = 0;
@@ -356,3 +358,5 @@ TAO_Storable_Base *TAO_NS_FlatFileFactory::create_stream(
                   0);
   return stream;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

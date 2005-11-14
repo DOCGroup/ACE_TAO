@@ -1,10 +1,10 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   Notify_Constraint_Visitors.h
  *
  *  $Id$
- *
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
@@ -28,6 +28,8 @@
 #include "orbsvcs/CosNotificationC.h"
 
 #include "notify_serv_export.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_Property_Constraint;
 
@@ -143,6 +145,8 @@ protected:
   /// variable_header, or filterable_data.
   CORBA::String_var current_name_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* NOTIFY_CONSTRAINT_VISITORS_H */

@@ -24,6 +24,8 @@
 #include "Container_T.h"
 #include "Object.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Notify_Find_Worker_T
  *
@@ -56,6 +58,8 @@ protected:
   /// The result
   TYPE* result_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "Find_Worker_T.inl"

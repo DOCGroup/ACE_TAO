@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 const TAO_Notify_Property_Short&
@@ -155,3 +159,5 @@ TAO_Notify_QoSProperties::order_policy(void)
 {
   return this->order_policy_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

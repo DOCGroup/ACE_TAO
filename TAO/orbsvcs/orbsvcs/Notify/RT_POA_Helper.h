@@ -1,12 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file RT_POA_Helper.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_RT_POA_Helper_H
@@ -21,6 +20,8 @@
 
 #include "POA_Helper.h"
 #include "orbsvcs/NotifyExtC.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_RT_POA_Helper
@@ -55,6 +56,8 @@ public:
   /// The CLIENT_PROPAGATED policy is applied to the new POA.
   void init (PortableServer::POA_ptr parent_poa ACE_ENV_ARG_DECL);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_RT_POA_Helper_H */

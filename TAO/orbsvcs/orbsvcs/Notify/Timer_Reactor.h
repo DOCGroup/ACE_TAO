@@ -1,12 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Timer_Reactor.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_TIMER_REACTOR_H
@@ -22,11 +21,13 @@
 
 class ACE_Reactor;
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Notify_Timer_Reactor
  *
- * @brief Reactor::instance based timer. The timers are dispatched by the main thread.
- *
+ * @brief Reactor::instance based timer. The timers are dispatched by
+ *        the main thread.
  */
 class TAO_Notify_Serv_Export TAO_Notify_Timer_Reactor : public TAO_Notify_Timer
 {
@@ -56,6 +57,8 @@ private:
   /// Release
   virtual void release (void);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_TIMER_REACTOR_H */

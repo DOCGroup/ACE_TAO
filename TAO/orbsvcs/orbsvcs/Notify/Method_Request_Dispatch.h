@@ -1,12 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Method_Request_Dispatch.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_DISPATCH_METHOD_REQUEST_H
@@ -24,6 +23,8 @@
 #include "Method_Request_Event.h"
 #include "ProxySupplier.h"
 #include "Delivery_Request.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_EventChannelFactory;
 class TAO_InputCDR;
@@ -126,7 +127,7 @@ private:
   TAO_Notify_ProxySupplier::Ptr proxy_guard_;
 };
 
-/*******************************************************************************************************/
+/*****************************************************************************/
 
 /**
  * @class TAO_Notify_Method_Request_Dispatch_No_Copy
@@ -161,7 +162,9 @@ public:
   virtual TAO_Notify_Method_Request_Queueable* copy (ACE_ENV_SINGLE_ARG_DECL);
 };
 
-/*******************************************************************************************************/
+/*****************************************************************************/
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_DISPATCH_METHOD_REQUEST_H */

@@ -36,6 +36,8 @@ ACE_RCSID (Notify,
 #include "ETCL_FilterFactory.h"
 #include "Container_T.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class PROXY_IMPL,
           class PROXY,
           class PROXY_PTR,
@@ -586,3 +588,5 @@ TAO_Notify_Builder::apply_lane_concurrency (TAO_Notify_Object& /*object*/, const
   // No lane support
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

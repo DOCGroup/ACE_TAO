@@ -8,6 +8,8 @@ ACE_RCSID (Naming,
            Naming_Client,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 CosNaming::NamingContext_ptr
 TAO_Naming_Client::operator -> (void) const
 {
@@ -61,3 +63,5 @@ TAO_Naming_Client::~TAO_Naming_Client (void)
 {
   // Do nothing
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

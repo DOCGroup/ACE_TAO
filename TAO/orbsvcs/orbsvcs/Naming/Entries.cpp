@@ -17,6 +17,9 @@
 
 ACE_RCSID(Naming, Entries, "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_IntId::TAO_IntId (void)
   : type_ (CosNaming::nobject)
 {
@@ -120,3 +123,5 @@ TAO_ExtId::hash (void) const
 
   return temp.hash ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

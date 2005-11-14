@@ -7,6 +7,8 @@ ACE_RCSID (PortableGroup,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_PG_Default_Property_Validator::TAO_PG_Default_Property_Validator (void)
   : membership_ (1),
     factories_ (1)
@@ -145,3 +147,5 @@ TAO_PG_Default_Property_Validator::validate_criteria (
       ACE_THROW (PortableGroup::InvalidCriteria (invalid_criteria));
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,12 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Supplier_Map.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_SUPPLIER_MAP_H
@@ -22,14 +21,17 @@
 #include "Event_Map_T.h"
 #include "ProxyConsumer.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
- * @class TAO_Notify_Supplier_Map
+ * @typedef TAO_Notify_Supplier_Map
  *
  * @brief The Event Map for Suppliers.
  *
  */
-
 typedef TAO_Notify_Event_Map_T<TAO_Notify_ProxyConsumer, TAO_SYNCH_RW_MUTEX> TAO_Notify_Supplier_Map;
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_SUPPLIER_MAP_H */

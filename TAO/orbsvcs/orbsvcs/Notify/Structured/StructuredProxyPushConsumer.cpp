@@ -12,6 +12,8 @@ ACE_RCSID(RT_Notify, TAO_Notify_StructuredProxyPushConsumer, "$Id$")
 #include "../AdminProperties.h"
 #include "../Properties.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Notify_StructuredProxyPushConsumer::TAO_Notify_StructuredProxyPushConsumer (void)
 {
 }
@@ -125,3 +127,5 @@ TAO_Notify_StructuredProxyPushConsumer::load_attrs (const TAO_Notify::NVPList& a
     ACE_ENDTRY;
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

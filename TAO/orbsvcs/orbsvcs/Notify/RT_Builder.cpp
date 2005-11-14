@@ -14,6 +14,8 @@ ACE_RCSID (RT_Notify,
            TAO_Notify_RT_Builder,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Notify_RT_Builder::TAO_Notify_RT_Builder (void)
 {
 }
@@ -66,5 +68,6 @@ TAO_Notify_RT_Builder::apply_lane_concurrency (TAO_Notify_Object& object
 
   // Give ownership of proxy_poa
   object.set_proxy_poa (auto_proxy_poa.release ());
-
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

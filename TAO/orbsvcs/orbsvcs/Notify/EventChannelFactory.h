@@ -28,13 +28,15 @@
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/NotifyExtS.h"
 
-class TAO_Notify_EventChannel;
-template <class TYPE> class TAO_Notify_Container_T;
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+class TAO_Notify_EventChannel;
+template <class TYPE> class TAO_Notify_Container_T;
 
 /**
  * @class TAO_Notify_EventChannelFactory
@@ -193,6 +195,8 @@ private:
   virtual void release (void);
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

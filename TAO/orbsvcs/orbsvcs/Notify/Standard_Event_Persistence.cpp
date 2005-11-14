@@ -6,6 +6,8 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_strings.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO_Notify
 {
 
@@ -223,5 +225,10 @@ Standard_Event_Persistence_Factory::root()
   return this->root_;
 }
 
-ACE_FACTORY_DEFINE (TAO_Notify_Serv, Standard_Event_Persistence)
-}
+} // End TAO_Notify_Namespace
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_FACTORY_NAMESPACE_DEFINE (TAO_Notify_Serv,
+                              TAO_Notify_Standard_Event_Persistence,
+                              TAO_Notify::Standard_Event_Persistence)

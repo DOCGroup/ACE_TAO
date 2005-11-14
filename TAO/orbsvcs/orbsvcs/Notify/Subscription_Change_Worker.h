@@ -1,12 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Subscription_Change_Worker.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_SUBSCRIPTION_CHANGE_WORKER_H
@@ -21,6 +20,8 @@
 
 #include "orbsvcs/CosNotificationC.h"
 #include "orbsvcs/ESF/ESF_Worker.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_Proxy;
 
@@ -46,6 +47,8 @@ protected:
   const CosNotification::EventTypeSeq & added_;
   const CosNotification::EventTypeSeq & removed_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_SUBSCRIPTION_CHANGE_WORKER_H */

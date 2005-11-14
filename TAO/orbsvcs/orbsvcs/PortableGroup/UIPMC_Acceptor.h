@@ -32,6 +32,8 @@
 
 #include "portablegroup_export.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // TAO UIPMC_Acceptor concrete call defination
 
 /**
@@ -147,6 +149,8 @@ private:
 
   TAO_UIPMC_Connection_Handler *connection_handler_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
 #include "UIPMC_Acceptor.i"

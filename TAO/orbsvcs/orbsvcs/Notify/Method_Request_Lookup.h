@@ -1,14 +1,12 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file Method_Request_Lookup.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
-
 #ifndef TAO_Notify_LOOKUP_METHOD_REQUEST_H
 #define TAO_Notify_LOOKUP_METHOD_REQUEST_H
 #include /**/ "ace/pre.h"
@@ -26,6 +24,8 @@
 #include "Delivery_Request.h"
 
 #include "orbsvcs/ESF/ESF_Worker.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_Method_Request_Lookup_Queueable;
 class TAO_Notify_Event;
@@ -132,6 +132,8 @@ public:
   /// Create a copy of this object.
   virtual TAO_Notify_Method_Request_Queueable* copy (ACE_ENV_SINGLE_ARG_DECL);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_LOOKUP_METHOD_REQUEST_H */

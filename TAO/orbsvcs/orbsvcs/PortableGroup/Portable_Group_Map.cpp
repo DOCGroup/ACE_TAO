@@ -9,6 +9,7 @@ ACE_RCSID (PortableGroup,
            Portable_Group_Map,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Constructor.
 TAO_Portable_Group_Map::TAO_Portable_Group_Map ()
@@ -175,3 +176,5 @@ TAO_GroupId_Equal_To::operator () (
     && lhs->object_group_id == rhs->object_group_id
     && lhs->object_group_ref_version == rhs->object_group_ref_version;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

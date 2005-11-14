@@ -1,4 +1,8 @@
+// -*- C++ -*-
+//
 // $Id$
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::Long
 TAO_Notify_Object::id (void) const
@@ -89,3 +93,5 @@ TAO_Notify_Object::admin_properties (void)
   ACE_ASSERT( this->admin_properties_.get() != 0 );
   return *this->admin_properties_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

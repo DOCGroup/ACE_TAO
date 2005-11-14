@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -30,9 +30,10 @@
 #include "ace/Unbounded_Queue.h"
 #include "ace/Thread_Manager.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO_Notify
 {
-
 
 /// \brief An interface to allow callbacks on completion of persistent storage
 /// requests.
@@ -200,6 +201,8 @@ private:
 };
 
 } /* namespace TAO_Notify */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* PERSISTENT_FILE_ALLOCATOR_H */

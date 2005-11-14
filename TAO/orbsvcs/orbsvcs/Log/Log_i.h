@@ -34,6 +34,8 @@
 #include "ace/Reactor.h"
 #include "log_serv_export.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_LogMgr_i;
 
 /**
@@ -397,6 +399,8 @@ protected:
   /// Log Flush Interval
   static const ACE_Time_Value	log_flush_interval_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -11,20 +11,22 @@ ACE_RCSID(Notify, TAO_Notify_QoSProperties, "$Id$")
 #include "Property.h"
 #include "Notify_Extensions.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Notify_QoSProperties::TAO_Notify_QoSProperties (void)
-: event_reliability_(CosNotification::EventReliability)
-, connection_reliability_(CosNotification::ConnectionReliability)
-, priority_ (CosNotification::Priority)
-, timeout_ (CosNotification::Timeout)
-, stop_time_supported_ (CosNotification::StopTimeSupported)
-, maximum_batch_size_ (CosNotification::MaximumBatchSize)
-, pacing_interval_ (CosNotification::PacingInterval)
-, max_events_per_consumer_ (CosNotification::MaxEventsPerConsumer)
-, discard_policy_ (CosNotification::DiscardPolicy)
-, order_policy_ (CosNotification::OrderPolicy)
-, thread_pool_ (NotifyExt::ThreadPool)
-, thread_pool_lane_ (NotifyExt::ThreadPoolLanes)
-, blocking_policy_(TAO_Notify_Extensions::BlockingPolicy)
+  : event_reliability_(CosNotification::EventReliability)
+  , connection_reliability_(CosNotification::ConnectionReliability)
+  , priority_ (CosNotification::Priority)
+  , timeout_ (CosNotification::Timeout)
+  , stop_time_supported_ (CosNotification::StopTimeSupported)
+  , maximum_batch_size_ (CosNotification::MaximumBatchSize)
+  , pacing_interval_ (CosNotification::PacingInterval)
+  , max_events_per_consumer_ (CosNotification::MaxEventsPerConsumer)
+  , discard_policy_ (CosNotification::DiscardPolicy)
+  , order_policy_ (CosNotification::OrderPolicy)
+  , thread_pool_ (NotifyExt::ThreadPool)
+  , thread_pool_lane_ (NotifyExt::ThreadPoolLanes)
+  , blocking_policy_(TAO_Notify_Extensions::BlockingPolicy)
 {
   unsupported_[0] = CosNotification::StartTimeSupported;
 }
@@ -212,3 +214,5 @@ TAO_Notify_QoSProperties::transfer (TAO_Notify_QoSProperties& qos_properties)
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

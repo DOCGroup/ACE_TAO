@@ -1,4 +1,4 @@
-/* $Id$ */
+// $Id$
 
 #include "Notify_Constraint_Visitors.h"
 #include "orbsvcs/ETCL/ETCL_Constraint.h"
@@ -11,6 +11,8 @@
 #include "tao/DynamicAny/DynEnum_i.h"
 #include "tao/DynamicAny/DynAnyFactory.h"
 #include "tao/CDR.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Constraint_Visitor::TAO_Notify_Constraint_Visitor (void)
   : implicit_id_ (TAO_Notify_Constraint_Visitor::EMPTY)
@@ -1462,3 +1464,5 @@ TAO_Notify_Constraint_Visitor::simple_type_match (int expr_type,
   }
   return 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

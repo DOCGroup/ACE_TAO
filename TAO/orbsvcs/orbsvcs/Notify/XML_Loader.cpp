@@ -36,6 +36,8 @@ namespace {
   }
 }
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO_Notify
 {
   XML_Loader::XML_Loader ()
@@ -219,3 +221,5 @@ namespace TAO_Notify
   }
 
 } /* namespace TAO_Notify */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

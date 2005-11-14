@@ -8,6 +8,8 @@ ACE_RCSID(Notify, TAO_Notify_Peer, "$Id$")
 
 #include "tao/debug.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Notify_Peer::TAO_Notify_Peer (void)
 {
 }
@@ -118,3 +120,5 @@ TAO_Notify_Peer::_decr_refcnt (void)
 {
   return this->proxy ()->_decr_refcnt ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

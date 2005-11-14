@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -26,6 +26,9 @@
 #include "Persistent_File_Allocator.h"
 #include "Routing_Slip_Persistence_Manager.h"
 #include <ace/SString.h>
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
@@ -121,9 +124,11 @@ namespace TAO_Notify
     ACE_UINT32 block_size_; // set via -block_size
     Standard_Event_Persistence_Factory * factory_;
   };
-
-  ACE_FACTORY_DECLARE (TAO_Notify_Serv, Standard_Event_Persistence)
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+ACE_FACTORY_DECLARE (TAO_Notify_Serv, TAO_Notify_Standard_Event_Persistence)
 
 #include /**/ "ace/post.h"
 #endif /* STANDARD_EVENT_PERSISTENCE_H */

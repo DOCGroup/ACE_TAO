@@ -1,12 +1,11 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file ProxySupplier_T.h
  *
  *  $Id$
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_PROXYSUPPLIER_T_H
@@ -21,6 +20,8 @@
 
 #include "Proxy_T.h"
 #include "ProxySupplier.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_ProxySupplier_T
@@ -145,6 +146,8 @@ protected:
     CosNotifyComm::InvalidEventType
   ));
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ProxySupplier_T.cpp"

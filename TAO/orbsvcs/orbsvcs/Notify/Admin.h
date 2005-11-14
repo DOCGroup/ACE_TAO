@@ -25,6 +25,7 @@
 #include "Topology_Object.h"
 #include "EventChannel.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_Proxy;
 template <class TYPE> class TAO_Notify_Container_T;
@@ -113,6 +114,8 @@ private:
   /// The Proxy Container.
   ACE_Auto_Ptr< TAO_Notify_Proxy_Container > proxy_container_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "Admin.inl"

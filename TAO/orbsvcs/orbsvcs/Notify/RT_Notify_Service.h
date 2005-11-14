@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file RT_Notify_Service.h
  *
@@ -20,6 +21,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "CosNotify_Service.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_RT_Notify_Service
@@ -51,6 +54,8 @@ protected:
   /// Creates the Builder for RT Notify objects.
   virtual TAO_Notify_Builder* create_builder (ACE_ENV_SINGLE_ARG_DECL);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DECLARE (TAO_RT_Notify,TAO_RT_Notify_Service)
 

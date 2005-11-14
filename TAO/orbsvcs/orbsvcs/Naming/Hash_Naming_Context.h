@@ -35,6 +35,8 @@
 #undef interface
 #endif  // interface
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Bindings_Map
  *
@@ -270,6 +272,8 @@ protected:
    */
   ACE_CString poa_id_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

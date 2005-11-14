@@ -29,6 +29,8 @@ ACE_RCSID (Naming,
            Naming_Server,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Naming_Server::TAO_Naming_Server (void)
   : naming_context_ (),
     ior_multicast_ (0),
@@ -762,3 +764,5 @@ TAO_Naming_Server::~TAO_Naming_Server (void)
     delete this->servant_activator_;
 #endif /* TAO_HAS_MINIMUM_POA */
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
