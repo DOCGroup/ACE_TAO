@@ -1,3 +1,11 @@
+Mon Nov 14 15:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+          The first argument of Objref_Traits::marshal should be
+          a const argument
+
 Mon Nov 14 09:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Sequence_Unit_Tests/unbounded_octet_sequence.hpp:
