@@ -31,7 +31,7 @@
 
 #include "ObjectIdListC.h"
 #include "tao/CDR.h"
-#include "tao/unbounded_sequence_cdr.hpp"
+#include "tao/unbounded_value_sequence_cdr.hpp"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -95,7 +95,7 @@ CORBA::Boolean operator<< (
     const CORBA::ORB_ObjectIdList &_tao_sequence
   )
 {
-  return TAO::details::insert_unbounded_sequence(strm, _tao_sequence);
+  return TAO::details::insert_unbounded_value_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -103,7 +103,7 @@ CORBA::Boolean operator>> (
     CORBA::ORB_ObjectIdList &_tao_sequence
   )
 {
-  return TAO::details::extract_unbounded_sequence(strm, _tao_sequence);
+  return TAO::details::extract_unbounded_value_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CORBA_ORB_ObjectIdList_CPP_ */

@@ -1,9 +1,9 @@
-#ifndef guard_unbounded_sequence_cdr
-#define guard_unbounded_sequence_cdr
+#ifndef guard_unbounded_value_sequence_cdr
+#define guard_unbounded_value_sequence_cdr
 /**
  * @file
  *
- * @brief Extract the sequence
+ * @brief Extract the value sequence
  *
  * $Id$
  *
@@ -14,7 +14,7 @@
 namespace TAO {
   namespace details {
     template <class stream, class sequence>
-    bool extract_unbounded_sequence(stream & strm, sequence & target) {
+    bool extract_unbounded_value_sequence(stream & strm, sequence & target) {
       ::CORBA::ULong new_length;
       if (!(strm >> new_length)) {
         return false;
@@ -35,7 +35,7 @@ namespace TAO {
     }
 
     template <class stream, class sequence>
-    bool insert_unbounded_sequence(TAO_OutputCDR & strm, const TAO::unbounded_value_sequence <typename sequence::value_type> & source) {
+    bool insert_unbounded_value_sequence(stream & strm, sequence & source) {
       const ::CORBA::ULong length = source.length ();
       if (!(strm << length)) {
         return false;
@@ -47,23 +47,7 @@ namespace TAO {
       }
       return true;
     }
-
-    template <class stream, class sequence>
-    bool insert_unbounded_sequence(stream & strm, const sequence & source) {
-      const ::CORBA::ULong length = source.length ();
-      if (!(strm << length)) {
-        return false;
-      }
-      for(CORBA::ULong i = 0; i < length; ++i) {
-// @todo, check why cast
-        typename sequence::value_type element = const_cast <typename sequence::value_type> (source[i]);
-        if (!TAO::Objref_Traits<typename sequence::object_type>::marshal (element, strm)) {
-          return false;
-        }
-      }
-      return true;
-    }
   }
 }
 
-#endif /* guard_unbounded_sequence_cdr */
+#endif /* guard_unbounded_value_sequence_cdr */

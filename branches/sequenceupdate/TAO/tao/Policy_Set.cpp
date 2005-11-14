@@ -55,7 +55,7 @@ TAO_Policy_Set::TAO_Policy_Set (const TAO_Policy_Set &rhs)
     {
       for (CORBA::ULong i = 0; i < rhs.policy_list_.length (); ++i)
         {
-          CORBA::Policy_ptr const policy = rhs.policy_list_[i];
+          CORBA::Policy_var policy = const_cast <CORBA::Policy_ptr> (rhs.policy_list_[i]);
 
           if (CORBA::is_nil (policy))
             {
@@ -186,7 +186,7 @@ TAO_Policy_Set::set_policy_overrides (const CORBA::PolicyList &policies,
       CORBA::Policy_ptr temp = policies[i];
       CORBA::Policy_var policy = CORBA::Policy::_duplicate (temp);
 #else
-      CORBA::Policy_var policy = policies[i];
+      CORBA::Policy_var policy = const_cast <CORBA::Policy_ptr> (policies[i]);
 #endif
 
       if (CORBA::is_nil (policy.in ()))
@@ -319,7 +319,7 @@ TAO_Policy_Set::get_policy_overrides (const CORBA::PolicyTypeSeq &types
             }
 
           policy_list[n++] =
-            CORBA::Policy::_duplicate (this->policy_list_[i].in ());
+            CORBA::Policy::_duplicate (this->policy_list_[i]);
           break;
         }
     }
@@ -346,7 +346,7 @@ TAO_Policy_Set::get_policy (CORBA::PolicyType type
           continue;
         }
 
-      return CORBA::Policy::_duplicate (this->policy_list_[i].in ());
+      return CORBA::Policy::_duplicate (this->policy_list_[i]);
     }
 
   return CORBA::Policy::_nil ();

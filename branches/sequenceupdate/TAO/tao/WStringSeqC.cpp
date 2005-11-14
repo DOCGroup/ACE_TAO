@@ -31,7 +31,7 @@
 
 #include "WStringSeqC.h"
 #include "tao/CDR.h"
-#include "tao/unbounded_sequence_cdr.hpp"
+#include "tao/unbounded_value_sequence_cdr.hpp"
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
@@ -100,7 +100,7 @@ void CORBA::WStringSeq::_tao_any_destructor (
     const CORBA::WStringSeq &_tao_sequence
   )
 {
-  return TAO::details::insert_unbounded_sequence(strm, _tao_sequence);
+  return TAO::details::insert_unbounded_value_sequence(strm, _tao_sequence);
 /*
   const ::CORBA::ULong _tao_seq_len = _tao_sequence.length ();
 
@@ -125,7 +125,7 @@ void CORBA::WStringSeq::_tao_any_destructor (
     CORBA::WStringSeq &_tao_sequence
   )
 {
-  return TAO::details::extract_unbounded_sequence(strm, _tao_sequence);
+  return TAO::details::extract_unbounded_value_sequence(strm, _tao_sequence);
   /*
   ::CORBA::ULong _tao_seq_len;
 
