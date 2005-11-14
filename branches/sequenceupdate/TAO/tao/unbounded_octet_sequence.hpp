@@ -278,7 +278,7 @@ private:
 
 #endif
 
-TAO_Export
+inline
 bool
 operator== (const TAO::unbounded_value_sequence<CORBA::Octet> & lhs,
             const TAO::unbounded_value_sequence<CORBA::Octet> & rhs)
@@ -301,7 +301,7 @@ operator== (const TAO::unbounded_value_sequence<CORBA::Octet> & lhs,
   return true;
 }
 
-TAO_Export
+inline
 bool
 operator!= (const TAO::unbounded_value_sequence<CORBA::Octet> & lhs,
             const TAO::unbounded_value_sequence<CORBA::Octet> & rhs)
