@@ -1,15 +1,22 @@
+Mon Nov 14 07:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Sequence_Unit_Tests/mock_stream.{hpp,cpp}:
+        * tests/Sequence_Unit_Tests/fwd_mock_reference.{hpp,cpp}:
+          New mock_stream and fwd_mock_reference, needed for some more unit
+          tests
+
 Sun Nov 13 12:15:58 USMST 2005  Yan Dai  <dai_y@ociweb.com>
 
         * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B.idl:
-        
+
           Changed the done() method to be oneway to see if this fixes TRANSIENT
           exception caught on VXWORKS builds.
-          
+
         * tests/CSD_Strategy_Tests/TP_Test_1/run_test.pl:
 
           Extended timeout for server process startup to see if this fixes
           server.ior not found problem on VXWORKS builds.
-          
+
 Sat Nov 12 09:55:33 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:
