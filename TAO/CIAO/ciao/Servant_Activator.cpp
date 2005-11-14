@@ -25,9 +25,9 @@ namespace CIAO
                  guard,
                  this->mutex_);
 
-      const unsigned int sz =  this->slot_index_;
+      const size_t sz =  this->slot_index_;
 
-      for (unsigned int t = 0; t != sz; ++t)
+      for (size_t t = 0; t != sz; ++t)
         {
           Port_Activator *&tmp = this->pa_[t];
 
@@ -49,8 +49,8 @@ namespace CIAO
                         guard,
                         this->mutex_,
                         0);
-      const unsigned int sz = this->slot_index_;
-      for (unsigned int t = 0; t != sz; ++t)
+      const size_t sz = this->slot_index_;
+      for (size_t t = 0; t != sz; ++t)
         {
           Port_Activator *&tmp = this->pa_[t];
           if (ACE_OS::strcmp (tmp->name (), str.in ()) == 0)
@@ -86,11 +86,11 @@ namespace CIAO
                         this->mutex_,
                         0);
 
-      const unsigned int sz = this->slot_index_;
+      const size_t sz = this->slot_index_;
 
       Port_Activator *tmp = 0;
 
-      for (unsigned int t = 0; t != sz; ++t)
+      for (size_t t = 0; t != sz; ++t)
         {
           if (this->pa_.get (tmp, t) == -1)
             ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
@@ -133,11 +133,11 @@ namespace CIAO
     CORBA::String_var str =
       PortableServer::ObjectId_to_string (oid);
 
-    const unsigned int sz = this->slot_index_;
+    const size_t sz = this->slot_index_;
 
     Port_Activator *tmp = 0;
 
-    for (unsigned int t = 0; t != sz; ++t)
+    for (size_t t = 0; t != sz; ++t)
       {
         if (this->pa_.get (tmp, t) == -1)
           {
