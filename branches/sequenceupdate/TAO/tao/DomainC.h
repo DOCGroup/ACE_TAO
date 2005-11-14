@@ -336,7 +336,7 @@ namespace CORBA
   typedef
     TAO_MngSeq_Out_T<
         DomainManagerList,
-        DomainManager
+        DomainManager_var
       >
     DomainManagerList_out;
 
