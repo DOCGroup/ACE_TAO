@@ -61,7 +61,7 @@ namespace MyImpl
     int done_;
 
     /// The timer id we are waiting.
-    int tid_;
+    long tid_;
 
     RateGen_exec_i *pulse_callback_;
 
