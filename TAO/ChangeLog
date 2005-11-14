@@ -1,3 +1,8 @@
+Mon Nov 14 09:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Sequence_Unit_Tests/unbounded_octet_sequence.hpp:
+          Fixed compile error with HPUX
+
 Mon Nov 14 07:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Sequence_Unit_Tests/mock_stream.{hpp,cpp}:
