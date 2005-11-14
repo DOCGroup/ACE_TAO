@@ -125,7 +125,7 @@ be_visitor_traits::visit_interface (be_interface *node)
           << ");" << be_uidt_nl
           << "static ::" << node->name () << "_ptr nil (void);" << be_nl
           << "static ::CORBA::Boolean marshal (" << be_idt << be_idt_nl
-          << "::" << node->name () << "_ptr p," << be_nl
+          << "const ::" << node->name () << "_ptr p," << be_nl
           << "TAO_OutputCDR & cdr" << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl
           << "};";
