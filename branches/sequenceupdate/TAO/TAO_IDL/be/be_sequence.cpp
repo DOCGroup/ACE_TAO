@@ -484,7 +484,7 @@ be_sequence::instance_name ()
       else
         {
           ACE_OS::sprintf (namebuf,
-                           "_TAO_bounded_string_sequence_%s",
+                           "_TAO_bounded_wstring_sequence_%s",
                            prim_type->local_name ()->get_string ());
         }
 
@@ -620,7 +620,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
         }
       else
         {
-          *os << "TAO::unbounded_wstring_sequence<"
+          *os << "TAO::bounded_wstring_sequence<"
               << this->max_size ()->ev ()->u.ulval << ">";
         }
 
