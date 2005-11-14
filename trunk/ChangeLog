@@ -1,3 +1,18 @@
+Mon Nov 14 08:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/WIN32_Asynch_IO.cpp:
+        * ace/Asynch_Acceptor.cpp:
+          Removed check for >= BCB3
+
+        * ace/OS_NS_sys_stat.inl:
+          BCB has the normal umask
+
+        * ace/OS_NS_stdio.inl:
+          Replaced c-style cast with C++ cast
+
+        * ace/os_include/os_string.h:
+          Some BCB specific defines are not needed with BCB6 or newer
+
 Mon Nov 14 07:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/boost_unit_test.mpb:
