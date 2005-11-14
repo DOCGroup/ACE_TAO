@@ -1,6 +1,6 @@
 // $Id$
 
-project: boost_base {
+project: boost_filesystem, boost_regex {
   requires += cidl exceptions
   includes += $(CIAO_ROOT) $(CIAO_ROOT)/CCF $(ACE_ROOT)/contrib/utility
   libpaths += $(CIAO_ROOT)/CCF/CCF $(ACE_ROOT)/lib
@@ -11,11 +11,5 @@ project: boost_base {
 
   verbatim(gnuace, top) {
     include $(CIAO_ROOT)/CCF/Config.rules
-  }
-
-  verbatim(gnuace, local) {
-    LIBS += $(BOOST_LD_FLAGS)	\
-            -lboost_regex 	\
-            -lboost_filesystem
   }
 }
