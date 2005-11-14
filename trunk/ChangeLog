@@ -1,3 +1,13 @@
+Mon Nov 14 07:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/boost_unit_test.mpb:
+          Removed this file, not used anymore
+
+        * bin/MakeProjectCreator/config/cidlc.mpb:
+          Use base projects for boost_filesystem, boost_regex and
+          exceptions, will resolve the link errors in the icc
+          linux build
+
 Fri Nov 11 16:04:44 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/MakeProjectCreator/templates/gnu.mpd:
