@@ -620,7 +620,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
         }
       else
         {
-          *os << "TAO_unbounded_wstring_sequence<"
+          *os << "TAO::unbounded_wstring_sequence<"
               << this->max_size ()->ev ()->u.ulval << ">";
         }
 
