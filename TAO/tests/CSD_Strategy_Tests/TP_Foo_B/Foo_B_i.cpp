@@ -75,6 +75,7 @@ Foo_B_i::op6(const TimeOfDay& t,
   this->op_count_[5] ++;
   char buf [20];
   ACE_OS::sprintf (buf, "%s %d:%d:%d", message, t.hour, t.minute, t.second);
+  CORBA::string_free (message);
   message = CORBA::string_dup (buf);
     
   return 1;

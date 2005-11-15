@@ -92,6 +92,7 @@ ACE_THROW_SPEC ((
 {
   ACE_CString str(message);
   str += user_name;
+  CORBA::string_free (message);
   message = CORBA::string_dup (str.c_str ());
   return 1;
 }
