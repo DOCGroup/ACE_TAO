@@ -15,6 +15,12 @@ mock_stream::
 {
 }
 
+CORBA::ULong
+mock_stream::length () const
+{
+  return 100;
+}
+
 CORBA::Boolean operator<< (mock_stream &, const CORBA::ULong)
 {
   return true;

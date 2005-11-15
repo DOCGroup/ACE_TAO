@@ -17,13 +17,14 @@
 /**
  * @class mock_stream
  *
- * @brief Implement a concrete class with the right interface for an
- *        object reference.
+ * @brief Implement a concrete class with the right interface for a stream.
  */
 class mock_stream
 {
 public:
-  virtual ~mock_stream();
+  ~mock_stream();
+
+  CORBA::ULong length () const;
 
   static call_counter serialize_calls;
   static call_counter deserialize_calls;
