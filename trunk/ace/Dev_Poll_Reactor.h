@@ -382,8 +382,9 @@ public:
             ACE_Event_Handler *handler,
             ACE_Reactor_Mask mask);
 
-  /// Remove the binding of @c ACE_HANDLE in accordance with the <mask>.
-  int unbind (ACE_HANDLE handle);
+  /// Remove the binding for @c ACE_HANDLE; optionally decrement the associated
+  /// handler's reference count.
+  int unbind (ACE_HANDLE handle, bool decr_refcnt = true);
 
   /// Remove all the (@c ACE_HANDLE, @c ACE_Event_Handler) tuples.
   int unbind_all (void);
