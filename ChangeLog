@@ -1,3 +1,11 @@
+Tue Nov 15 12:44:37 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/cidlc.mpb
+
+	Added a directive to remove runtime dependancy on VC71
+	runtime libraries on Windows.  Thanks to Kitty for suggesting
+	the fix.
+
 Tue Nov 15 09:31:29 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/Dev_Poll_Reactor.{h cpp}: Add an optional decr_refcnt parameter
