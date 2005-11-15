@@ -65,10 +65,10 @@ RTCORBA::ProtocolProperties::_tao_decode (TAO_InputCDR &)
   return 1;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 RTCORBA::ThreadpoolLane::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -78,7 +78,7 @@ RTCORBA::ThreadpoolLane::_tao_any_destructor (
   delete _tao_tmp_pointer;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_RTCORBA_THREADPOOLLANES_CS_)
@@ -90,7 +90,7 @@ RTCORBA::ThreadpoolLanes::ThreadpoolLanes (void)
 RTCORBA::ThreadpoolLanes::ThreadpoolLanes (
     CORBA::ULong max
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         RTCORBA::ThreadpoolLane
       >
     (max)
@@ -102,7 +102,7 @@ RTCORBA::ThreadpoolLanes::ThreadpoolLanes (
     RTCORBA::ThreadpoolLane * buffer,
     CORBA::Boolean release
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         RTCORBA::ThreadpoolLane
       >
     (max, length, buffer, release)
@@ -111,7 +111,7 @@ RTCORBA::ThreadpoolLanes::ThreadpoolLanes (
 RTCORBA::ThreadpoolLanes::ThreadpoolLanes (
     const ThreadpoolLanes &seq
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         RTCORBA::ThreadpoolLane
       >
     (seq)
@@ -173,7 +173,7 @@ RTCORBA::PriorityModelPolicy::PriorityModelPolicy (void)
 RTCORBA::PriorityModelPolicy::~PriorityModelPolicy (void)
 {}
 
-void 
+void
 RTCORBA::PriorityModelPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   PriorityModelPolicy *_tao_tmp_pointer =
@@ -210,7 +210,7 @@ RTCORBA::PriorityModelPolicy::_duplicate (PriorityModelPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -306,7 +306,7 @@ RTCORBA::ThreadpoolPolicy::ThreadpoolPolicy (void)
 RTCORBA::ThreadpoolPolicy::~ThreadpoolPolicy (void)
 {}
 
-void 
+void
 RTCORBA::ThreadpoolPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   ThreadpoolPolicy *_tao_tmp_pointer =
@@ -343,7 +343,7 @@ RTCORBA::ThreadpoolPolicy::_duplicate (ThreadpoolPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -439,7 +439,7 @@ RTCORBA::ProtocolProperties::ProtocolProperties (void)
 RTCORBA::ProtocolProperties::~ProtocolProperties (void)
 {}
 
-void 
+void
 RTCORBA::ProtocolProperties::_tao_any_destructor (void *_tao_void_pointer)
 {
   ProtocolProperties *_tao_tmp_pointer =
@@ -476,7 +476,7 @@ RTCORBA::ProtocolProperties::_duplicate (ProtocolProperties_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -526,10 +526,10 @@ RTCORBA::ProtocolProperties::marshal (TAO_OutputCDR &)
   return false;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 RTCORBA::Protocol::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -539,7 +539,7 @@ RTCORBA::Protocol::_tao_any_destructor (
   delete _tao_tmp_pointer;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_RTCORBA_PROTOCOLLIST_CS_)
@@ -551,7 +551,7 @@ RTCORBA::ProtocolList::ProtocolList (void)
 RTCORBA::ProtocolList::ProtocolList (
     CORBA::ULong max
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         RTCORBA::Protocol
       >
     (max)
@@ -563,7 +563,7 @@ RTCORBA::ProtocolList::ProtocolList (
     RTCORBA::Protocol * buffer,
     CORBA::Boolean release
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         RTCORBA::Protocol
       >
     (max, length, buffer, release)
@@ -572,7 +572,7 @@ RTCORBA::ProtocolList::ProtocolList (
 RTCORBA::ProtocolList::ProtocolList (
     const ProtocolList &seq
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         RTCORBA::Protocol
       >
     (seq)
@@ -634,7 +634,7 @@ RTCORBA::ServerProtocolPolicy::ServerProtocolPolicy (void)
 RTCORBA::ServerProtocolPolicy::~ServerProtocolPolicy (void)
 {}
 
-void 
+void
 RTCORBA::ServerProtocolPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   ServerProtocolPolicy *_tao_tmp_pointer =
@@ -671,7 +671,7 @@ RTCORBA::ServerProtocolPolicy::_duplicate (ServerProtocolPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -767,7 +767,7 @@ RTCORBA::ClientProtocolPolicy::ClientProtocolPolicy (void)
 RTCORBA::ClientProtocolPolicy::~ClientProtocolPolicy (void)
 {}
 
-void 
+void
 RTCORBA::ClientProtocolPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   ClientProtocolPolicy *_tao_tmp_pointer =
@@ -804,7 +804,7 @@ RTCORBA::ClientProtocolPolicy::_duplicate (ClientProtocolPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -900,7 +900,7 @@ RTCORBA::PrivateConnectionPolicy::PrivateConnectionPolicy (void)
 RTCORBA::PrivateConnectionPolicy::~PrivateConnectionPolicy (void)
 {}
 
-void 
+void
 RTCORBA::PrivateConnectionPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   PrivateConnectionPolicy *_tao_tmp_pointer =
@@ -937,7 +937,7 @@ RTCORBA::PrivateConnectionPolicy::_duplicate (PrivateConnectionPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -1033,7 +1033,7 @@ RTCORBA::TCPProtocolProperties::TCPProtocolProperties (void)
 RTCORBA::TCPProtocolProperties::~TCPProtocolProperties (void)
 {}
 
-void 
+void
 RTCORBA::TCPProtocolProperties::_tao_any_destructor (void *_tao_void_pointer)
 {
   TCPProtocolProperties *_tao_tmp_pointer =
@@ -1070,7 +1070,7 @@ RTCORBA::TCPProtocolProperties::_duplicate (TCPProtocolProperties_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -1166,7 +1166,7 @@ RTCORBA::GIOPProtocolProperties::GIOPProtocolProperties (void)
 RTCORBA::GIOPProtocolProperties::~GIOPProtocolProperties (void)
 {}
 
-void 
+void
 RTCORBA::GIOPProtocolProperties::_tao_any_destructor (void *_tao_void_pointer)
 {
   GIOPProtocolProperties *_tao_tmp_pointer =
@@ -1203,7 +1203,7 @@ RTCORBA::GIOPProtocolProperties::_duplicate (GIOPProtocolProperties_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -1299,7 +1299,7 @@ RTCORBA::UnixDomainProtocolProperties::UnixDomainProtocolProperties (void)
 RTCORBA::UnixDomainProtocolProperties::~UnixDomainProtocolProperties (void)
 {}
 
-void 
+void
 RTCORBA::UnixDomainProtocolProperties::_tao_any_destructor (void *_tao_void_pointer)
 {
   UnixDomainProtocolProperties *_tao_tmp_pointer =
@@ -1336,7 +1336,7 @@ RTCORBA::UnixDomainProtocolProperties::_duplicate (UnixDomainProtocolProperties_
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -1432,7 +1432,7 @@ RTCORBA::SharedMemoryProtocolProperties::SharedMemoryProtocolProperties (void)
 RTCORBA::SharedMemoryProtocolProperties::~SharedMemoryProtocolProperties (void)
 {}
 
-void 
+void
 RTCORBA::SharedMemoryProtocolProperties::_tao_any_destructor (void *_tao_void_pointer)
 {
   SharedMemoryProtocolProperties *_tao_tmp_pointer =
@@ -1469,7 +1469,7 @@ RTCORBA::SharedMemoryProtocolProperties::_duplicate (SharedMemoryProtocolPropert
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -1565,7 +1565,7 @@ RTCORBA::UserDatagramProtocolProperties::UserDatagramProtocolProperties (void)
 RTCORBA::UserDatagramProtocolProperties::~UserDatagramProtocolProperties (void)
 {}
 
-void 
+void
 RTCORBA::UserDatagramProtocolProperties::_tao_any_destructor (void *_tao_void_pointer)
 {
   UserDatagramProtocolProperties *_tao_tmp_pointer =
@@ -1602,7 +1602,7 @@ RTCORBA::UserDatagramProtocolProperties::_duplicate (UserDatagramProtocolPropert
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -1698,7 +1698,7 @@ RTCORBA::StreamControlProtocolProperties::StreamControlProtocolProperties (void)
 RTCORBA::StreamControlProtocolProperties::~StreamControlProtocolProperties (void)
 {}
 
-void 
+void
 RTCORBA::StreamControlProtocolProperties::_tao_any_destructor (void *_tao_void_pointer)
 {
   StreamControlProtocolProperties *_tao_tmp_pointer =
@@ -1735,7 +1735,7 @@ RTCORBA::StreamControlProtocolProperties::_duplicate (StreamControlProtocolPrope
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -1789,10 +1789,10 @@ RTCORBA::StreamControlProtocolProperties::marshal (TAO_OutputCDR &)
   return false;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_structure/structure_cs.cpp:66
 
-void 
+void
 RTCORBA::PriorityBand::_tao_any_destructor (
     void *_tao_void_pointer
   )
@@ -1802,7 +1802,7 @@ RTCORBA::PriorityBand::_tao_any_destructor (
   delete _tao_tmp_pointer;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_RTCORBA_PRIORITYBANDS_CS_)
@@ -1814,7 +1814,7 @@ RTCORBA::PriorityBands::PriorityBands (void)
 RTCORBA::PriorityBands::PriorityBands (
     CORBA::ULong max
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         RTCORBA::PriorityBand
       >
     (max)
@@ -1826,7 +1826,7 @@ RTCORBA::PriorityBands::PriorityBands (
     RTCORBA::PriorityBand * buffer,
     CORBA::Boolean release
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         RTCORBA::PriorityBand
       >
     (max, length, buffer, release)
@@ -1835,7 +1835,7 @@ RTCORBA::PriorityBands::PriorityBands (
 RTCORBA::PriorityBands::PriorityBands (
     const PriorityBands &seq
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         RTCORBA::PriorityBand
       >
     (seq)
@@ -1897,7 +1897,7 @@ RTCORBA::PriorityBandedConnectionPolicy::PriorityBandedConnectionPolicy (void)
 RTCORBA::PriorityBandedConnectionPolicy::~PriorityBandedConnectionPolicy (void)
 {}
 
-void 
+void
 RTCORBA::PriorityBandedConnectionPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
   PriorityBandedConnectionPolicy *_tao_tmp_pointer =
@@ -1934,7 +1934,7 @@ RTCORBA::PriorityBandedConnectionPolicy::_duplicate (PriorityBandedConnectionPol
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -2030,7 +2030,7 @@ RTCORBA::Current::Current (void)
 RTCORBA::Current::~Current (void)
 {}
 
-void 
+void
 RTCORBA::Current::_tao_any_destructor (void *_tao_void_pointer)
 {
   Current *_tao_tmp_pointer =
@@ -2067,7 +2067,7 @@ RTCORBA::Current::_duplicate (Current_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -2163,7 +2163,7 @@ RTCORBA::Mutex::Mutex (void)
 RTCORBA::Mutex::~Mutex (void)
 {}
 
-void 
+void
 RTCORBA::Mutex::_tao_any_destructor (void *_tao_void_pointer)
 {
   Mutex *_tao_tmp_pointer =
@@ -2200,7 +2200,7 @@ RTCORBA::Mutex::_duplicate (Mutex_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -2286,7 +2286,7 @@ TAO::Objref_Traits<RTCORBA::RTORB>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 RTCORBA::RTORB::MutexNotFound::MutexNotFound (void)

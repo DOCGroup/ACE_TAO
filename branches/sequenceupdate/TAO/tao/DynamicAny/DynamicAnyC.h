@@ -1156,22 +1156,20 @@ namespace DynamicAny
 
   typedef
     TAO_VarSeq_Var_T<
-        NameValuePairSeq,
-        NameValuePair
+        NameValuePairSeq
       >
     NameValuePairSeq_var;
 
   typedef
     TAO_Seq_Out_T<
         NameValuePairSeq,
-        NameValuePairSeq_var,
-        NameValuePair
+        NameValuePairSeq_var
       >
     NameValuePairSeq_out;
 
   class TAO_DynamicAny_Export NameValuePairSeq
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             NameValuePair
           >
   {
@@ -1232,22 +1230,20 @@ namespace DynamicAny
 
   typedef
     TAO_VarSeq_Var_T<
-        NameDynAnyPairSeq,
-        NameDynAnyPair
+        NameDynAnyPairSeq
       >
     NameDynAnyPairSeq_var;
 
   typedef
     TAO_Seq_Out_T<
         NameDynAnyPairSeq,
-        NameDynAnyPairSeq_var,
-        NameDynAnyPair
+        NameDynAnyPairSeq_var
       >
     NameDynAnyPairSeq_out;
 
   class TAO_DynamicAny_Export NameDynAnyPairSeq
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             NameDynAnyPair
           >
   {
@@ -1613,22 +1609,20 @@ namespace DynamicAny
 
   typedef
     TAO_VarSeq_Var_T<
-        AnySeq,
-        CORBA::Any
+        AnySeq
       >
     AnySeq_var;
 
   typedef
     TAO_Seq_Out_T<
         AnySeq,
-        AnySeq_var,
-        CORBA::Any
+        AnySeq_var
       >
     AnySeq_out;
 
   class TAO_DynamicAny_Export AnySeq
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             CORBA::Any
           >
   {
@@ -1659,28 +1653,20 @@ namespace DynamicAny
 
   typedef
     TAO_MngSeq_Var_T<
-        DynAnySeq,
-        TAO_Object_Manager<
-            DynAny,
-            DynAny_var
-          >
+        DynAnySeq
       >
     DynAnySeq_var;
 
   typedef
     TAO_MngSeq_Out_T<
         DynAnySeq,
-        DynAnySeq_var,
-        TAO_Object_Manager<
-            DynAny,
-            DynAny_var
-          >
+        DynAnySeq_var
       >
     DynAnySeq_out;
 
   class TAO_DynamicAny_Export DynAnySeq
     : public
-        TAO_Unbounded_Object_Sequence<
+        TAO::unbounded_object_reference_sequence<
             DynAny,
             DynAny_var
           >
