@@ -183,14 +183,14 @@ namespace CIAO
     Execution_Manager_Impl::perform_redeployment (
       const Deployment::DeploymentPlan & plan
       ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::PlanError,
-                       Deployment::InstallationFailure,
-                       Deployment::UnknownImplId,
-                       Deployment::ImplEntryPointNotFound,
-                       Deployment::InvalidConnection,
+      ACE_THROW_SPEC ((::CORBA::SystemException,
+                       ::Deployment::PlanError,
+                       ::Deployment::InstallationFailure,
+                       ::Deployment::UnknownImplId,
+                       ::Deployment::ImplEntryPointNotFound,
+                       ::Deployment::InvalidConnection,
+                       ::Deployment::InvalidProperty,
                        ::Components::RemoveFailure))
-
     {
       CIAO_TRACE ("CIAO::Execution_Manager_Impl::perform_redeployment");
     
