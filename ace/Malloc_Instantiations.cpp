@@ -1,7 +1,10 @@
 // $Id$
 
-#include "ace/Malloc.h"
+#include "ace/Local_Memory_Pool.h"
+#include "ace/Malloc_T.h"
 #include "ace/Null_Mutex.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Thread_Mutex.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
