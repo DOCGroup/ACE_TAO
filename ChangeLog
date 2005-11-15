@@ -1,3 +1,14 @@
+Tue Nov 15 15:41:19 2005  Steve Huston  <shuston@riverace.com>
+
+	* NEWS: Added WinCE, VC8, ACE_Dev_Poll_Reactor, and ACE_RB_Tree notes.
+
+	* bin/make_release: Generate VC8 files for both Win32 and WinCE.
+	  Since VC8 uses the same suffixes as VC71, the Win32 files have
+	  _vc8 appended, and WinCE files have _WinCE appended. WinCE files
+	  are generated with feature uses_wchar=1, vc8 uses defaults.
+
+	* docs/CE-status.txt: Added some info on CE support under VC8.
+
 Tue Nov 15 12:44:37 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/cidlc.mpb
