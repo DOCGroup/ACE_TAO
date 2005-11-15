@@ -1,6 +1,11 @@
+Tue Nov 15 13:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.{cpp.inl}:
+          Fixed compile errors in BCB Unicode build
+
 Tue Nov 15 07:28:35 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Service_Config.cpp (initialize): Added a check to avoid 
+	* ace/Service_Config.cpp (initialize): Added a check to avoid
 	  overwriting a service that's already installed without having it
  	  explicitly removed first.  Thanks to Domingos Monteiro <d dot
 	  monteiro at netia dot net> for this fix.
