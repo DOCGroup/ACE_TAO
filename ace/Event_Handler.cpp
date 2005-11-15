@@ -6,6 +6,8 @@
 #include "ace/OS_Errno.h"
 #include "ace/Reactor.h"
 #include "ace/Thread_Manager.h"
+/* Need to see if ACE_HAS_BUILTIN_ATOMIC_OP defined */
+#include "ace/Atomic_Op.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Event_Handler.inl"
@@ -406,5 +408,17 @@ ACE_Notification_Buffer::ACE_Notification_Buffer (ACE_Event_Handler *eh,
 {
   ACE_TRACE ("ACE_Notification_Buffer::ACE_Notification_Buffer");
 }
+
+// ACE_HAS_BUILTIN_ATOMIC_OP triggers specialization of these, so the
+// instantiations aren't needed here.
+#if !defined (ACE_HAS_BUILTIN_ATOMIC_OP)
+#  if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Atomic_Op<ACE_SYNCH_MUTEX, long>;
+template class ACE_Atomic_Op_Ex<ACE_SYNCH_MUTEX, long>;
+#  elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#    pragma instantiate ACE_Atomic_Op<ACE_SYNCH_MUTEX, long>
+#    pragma instantiate ACE_Atomic_Op_Ex<ACE_SYNCH_MUTEX, long>
+#  endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_BUILTIN_ATOMIC_OP */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
