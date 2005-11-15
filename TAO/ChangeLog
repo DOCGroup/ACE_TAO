@@ -1,3 +1,9 @@
+Tue Nov 15 07:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Sequence_Unit_Tests/*:
+          Handle sequences of forward declared object references and
+          added some more unit tests
+
 Mon Nov 14 23:37:09 USMST 2005  Yan Dai  <dai_y@ociweb.com>
 
         * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp:
@@ -6,7 +12,7 @@ Mon Nov 14 23:37:09 USMST 2005  Yan Dai  <dai_y@ociweb.com>
         * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B_i.cpp:
 
           Fixed memory leaks.
-          
+
 Mon Nov 14 13:54:08 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Makefile.am (libTAO_PortableGroup_la_SOURCES):
