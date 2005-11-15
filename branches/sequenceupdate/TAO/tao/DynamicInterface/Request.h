@@ -33,12 +33,10 @@
 
 #include "tao/ORB.h"
 #include "tao/Environment.h"
-#include "tao/Sequence.h"
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/NVList.h"
 
 #include "ace/SString.h"
-
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
