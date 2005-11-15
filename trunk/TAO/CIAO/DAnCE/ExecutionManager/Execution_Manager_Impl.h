@@ -81,12 +81,13 @@ namespace CIAO
       perform_redeployment (
         const Deployment::DeploymentPlan & plan
         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException,
-                         Deployment::PlanError,
-                         Deployment::InstallationFailure,
-                         Deployment::UnknownImplId,
-                         Deployment::ImplEntryPointNotFound,
-                         Deployment::InvalidConnection,
+        ACE_THROW_SPEC ((::CORBA::SystemException,
+                         ::Deployment::PlanError,
+                         ::Deployment::InstallationFailure,
+                         ::Deployment::UnknownImplId,
+                         ::Deployment::ImplEntryPointNotFound,
+                         ::Deployment::InvalidConnection,
+                         ::Deployment::InvalidProperty,
                          ::Components::RemoveFailure));
 
     protected:

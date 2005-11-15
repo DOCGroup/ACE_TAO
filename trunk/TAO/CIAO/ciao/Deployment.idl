@@ -71,6 +71,7 @@ module Deployment {
               UnknownImplId,
               ImplEntryPointNotFound,
               InvalidConnection,
+              InvalidProperty,
               ::Components::RemoveFailure);
   };
 
@@ -89,10 +90,12 @@ module Deployment {
     // "perform_redeployment" operation defined on DAM and NA
     // are implementaion details within DAnCE.
     void perform_redeployment (in DeploymentPlan new_plan)
-      raises (InstallationFailure,
+      raises (PlanError,
+              InstallationFailure,
               UnknownImplId,
               ImplEntryPointNotFound,
               InvalidConnection,
+              InvalidProperty,
               ::Components::RemoveFailure);
   };
 
