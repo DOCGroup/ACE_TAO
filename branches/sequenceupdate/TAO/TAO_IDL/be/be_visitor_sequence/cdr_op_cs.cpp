@@ -712,17 +712,20 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
               {
                 if (str->width () == (long) sizeof (char))
                   {
-                    *os << "_tao_marshal_flag = (strm >> "
-                        << "::ACE_InputCDR::to_string (_tao_sequence[i].out (), ";
+                    *os << "CORBA::String_var tmp;" << be_nl
+                        << "_tao_marshal_flag = (strm >> "
+                        << "::ACE_InputCDR::to_string (tmp.out (), ";
+                    *os << str->max_size ()->ev ()->u.ulval << "));" << be_nl
+                        << "_tao_sequence[i] = tmp._retn();";
                   }
                 else
                   {
-                    *os << "_tao_marshal_flag = (strm >> "
-                        << "::ACE_InputCDR::to_wstring (_tao_sequence[i].out (), ";
+                    *os << "CORBA::WString_var tmp;" << be_nl
+                        << "_tao_marshal_flag = (strm >> "
+                        << "::ACE_InputCDR::to_wstring (tmp.out (), ";
+                    *os << str->max_size ()->ev ()->u.ulval << "));" << be_nl
+                        << "_tao_sequence[i] = tmp._retn();";
                   }
-
-                *os << str->max_size ()->ev ()->u.ulval << "));"
-                    << be_uidt_nl;
               }
           }
           break;
