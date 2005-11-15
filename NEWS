@@ -20,6 +20,17 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.7 and ACE-5.4.8
 
 . Support for Intel C++ 9.0 on Windows and Linux
 
+. Support for Microsoft Visual Studio 2005 (aka VC8) for Win32 as well as the
+  Windows CE platforms Pocket PC 2003 and Windows Mobile 5. Solution/project
+  files are generated with an appended "_vc8" for Win32 and "_WinCE" for
+  the CE platforms. See ACE_wrappers/docs/CE-status.txt for more information.
+
+. Completed implementation of ACE_Dev_Poll_Reactor using the Linux epoll
+  facility; tested on Red Hat Enterprise Linux 4.
+
+. The in-memory size of an ACE_RB_Tree will be smaller due to rearranged
+  placement of pointers.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.4.6 and ACE-5.4.7
 ====================================================
 
