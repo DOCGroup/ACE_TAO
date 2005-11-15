@@ -1,3 +1,12 @@
+Tue Nov 15 07:44:59 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/tests/Bug_2285_Regression/Makefile.am:
+	* orbsvcs/tests/Bug_2287_Regression/Makefile.am:
+
+	  Regenerate with a separate project for compiling *.idl files.
+	  The corresponding *.mpc changes will be committed at a later
+	  date since the repo is frozen.
+
 Tue Nov 15 06:56:51 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* examples/Makefile.am:
