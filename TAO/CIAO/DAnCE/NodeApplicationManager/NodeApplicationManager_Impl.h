@@ -73,11 +73,13 @@ namespace CIAO
                           Deployment::Connections_out providedReference,
                           CORBA::Boolean start
                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::InstallationFailure,
-                       Deployment::UnknownImplId,
-                       Deployment::ImplEntryPointNotFound,
-                       Deployment::InvalidConnection,
+      ACE_THROW_SPEC ((::CORBA::SystemException,
+                       ::Deployment::PlanError,
+                       ::Deployment::InstallationFailure,
+                       ::Deployment::UnknownImplId,
+                       ::Deployment::ImplEntryPointNotFound,
+                       ::Deployment::InvalidConnection,
+                       ::Deployment::InvalidProperty,
                        ::Components::RemoveFailure));
 
     /**

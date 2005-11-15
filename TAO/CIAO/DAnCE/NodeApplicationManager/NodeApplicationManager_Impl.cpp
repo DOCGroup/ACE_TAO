@@ -293,13 +293,14 @@ perform_redeployment (const Deployment::Properties & configProperty,
                       Deployment::Connections_out providedReference,
                       CORBA::Boolean start
                       ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((Deployment::InstallationFailure,
-                    Deployment::UnknownImplId,
-                    Deployment::ImplEntryPointNotFound,
-                    Deployment::InvalidConnection,
-                    Deployment::InvalidProperty,
-                    ::Components::RemoveFailure))
-
+  ACE_THROW_SPEC ((::CORBA::SystemException,
+                   ::Deployment::PlanError,
+                   ::Deployment::InstallationFailure,
+                   ::Deployment::UnknownImplId,
+                   ::Deployment::ImplEntryPointNotFound,
+                   ::Deployment::InvalidConnection,
+                   ::Deployment::InvalidProperty,
+                   ::Components::RemoveFailure))
 {
   CIAO_TRACE ("CIAO::NodeApplicationManager_Impl_Base::perform_redeployment");
 
