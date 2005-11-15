@@ -93,7 +93,7 @@ TAO_UIOPEndpointSequence::TAO_UIOPEndpointSequence (void)
 TAO_UIOPEndpointSequence::TAO_UIOPEndpointSequence (
     CORBA::ULong max
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         TAO_UIOP_Endpoint_Info
       >
     (max)
@@ -105,7 +105,7 @@ TAO_UIOPEndpointSequence::TAO_UIOPEndpointSequence (
     TAO_UIOP_Endpoint_Info * buffer,
     CORBA::Boolean release
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         TAO_UIOP_Endpoint_Info
       >
     (max, length, buffer, release)
@@ -114,7 +114,7 @@ TAO_UIOPEndpointSequence::TAO_UIOPEndpointSequence (
 TAO_UIOPEndpointSequence::TAO_UIOPEndpointSequence (
     const TAO_UIOPEndpointSequence &seq
   )
-  : TAO_Unbounded_Sequence<
+  : TAO::unbounded_value_sequence<
         TAO_UIOP_Endpoint_Info
       >
     (seq)

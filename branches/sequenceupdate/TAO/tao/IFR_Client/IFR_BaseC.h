@@ -1701,22 +1701,20 @@ namespace CORBA
 
   typedef
     TAO_VarSeq_Var_T<
-        ExcDescriptionSeq,
-        ExceptionDescription
+        ExcDescriptionSeq
       >
     ExcDescriptionSeq_var;
 
   typedef
     TAO_Seq_Out_T<
         ExcDescriptionSeq,
-        ExcDescriptionSeq_var,
-        ExceptionDescription
+        ExcDescriptionSeq_var
       >
     ExcDescriptionSeq_out;
 
   class TAO_IFR_Client_Export ExcDescriptionSeq
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             ExceptionDescription
           >
   {
@@ -1790,22 +1788,20 @@ namespace CORBA
 
   typedef
     TAO_VarSeq_Var_T<
-        ExtInitializerSeq,
-        ExtInitializer
+        ExtInitializerSeq
       >
     ExtInitializerSeq_var;
 
   typedef
     TAO_Seq_Out_T<
         ExtInitializerSeq,
-        ExtInitializerSeq_var,
-        ExtInitializer
+        ExtInitializerSeq_var
       >
     ExtInitializerSeq_out;
 
   class TAO_IFR_Client_Export ExtInitializerSeq
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             ExtInitializer
           >
   {
@@ -1880,22 +1876,20 @@ namespace CORBA
 
   typedef
     TAO_VarSeq_Var_T<
-        UnionMemberSeq,
-        UnionMember
+        UnionMemberSeq
       >
     UnionMemberSeq_var;
 
   typedef
     TAO_Seq_Out_T<
         UnionMemberSeq,
-        UnionMemberSeq_var,
-        UnionMember
+        UnionMemberSeq_var
       >
     UnionMemberSeq_out;
 
   class TAO_IFR_Client_Export UnionMemberSeq
     : public
-        TAO_Unbounded_Sequence<
+        TAO::unbounded_value_sequence<
             UnionMember
           >
   {
@@ -1933,22 +1927,20 @@ namespace CORBA
 
   typedef
     TAO_MngSeq_Var_T<
-        EnumMemberSeq,
-        TAO_SeqElem_String_Manager
+        EnumMemberSeq
       >
     EnumMemberSeq_var;
 
   typedef
     TAO_MngSeq_Out_T<
         EnumMemberSeq,
-        EnumMemberSeq_var,
-        TAO_SeqElem_String_Manager
+        EnumMemberSeq_var
       >
     EnumMemberSeq_out;
 
   class TAO_IFR_Client_Export EnumMemberSeq
     : public
-        TAO_Unbounded_String_Sequence
+        TAO::unbounded_string_sequence
   {
   public:
     EnumMemberSeq (void);
@@ -2093,22 +2085,20 @@ namespace CORBA
 
     typedef
       TAO_VarSeq_Var_T<
-          DescriptionSeq,
-          Description
+          DescriptionSeq
         >
       DescriptionSeq_var;
 
     typedef
       TAO_Seq_Out_T<
           DescriptionSeq,
-          DescriptionSeq_var,
-          Description
+          DescriptionSeq_var
         >
       DescriptionSeq_out;
 
     class TAO_IFR_Client_Export DescriptionSeq
       : public
-          TAO_Unbounded_Sequence<
+          TAO::unbounded_value_sequence<
               Description
             >
     {
