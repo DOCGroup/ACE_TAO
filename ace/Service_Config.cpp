@@ -356,10 +356,10 @@ ACE_Service_Config::initialize (const ACE_Service_Type *sr,
   if (ACE_Service_Repository::instance ()->find
       (sr->name (),
        (const ACE_Service_Type **) &srp) >= 0)
-    ACE_RETURN ((LM_DEBUG,
-                 ACE_LIB_TEXT ("%s already installed, please remove first before reinstalling\n"),
-                 sr->name ()),
-                0);
+    ACE_ERROR_RETURN ((LM_DEBUG,
+                       ACE_LIB_TEXT ("%s already installed, please remove first before reinstalling\n"),
+                       sr->name ()),
+                      0);
 
   if (sr->type ()->init (args.argc (),
                          args.argv ()) == -1)
