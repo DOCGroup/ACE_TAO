@@ -408,7 +408,7 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (
           {
             *os << "{" << be_idt_nl
                 << "if (_tao_sequence.mb ())" << be_idt_nl
-                << "return strm.write_octet_array_mb (_tao_sequene.mb ());"
+                << "return strm.write_octet_array_mb (_tao_sequence.mb ());"
                 << be_uidt_nl
                 << "else" << be_idt_nl
                 << "return strm.write_octet_array ("
