@@ -778,10 +778,6 @@ sub diff () {
 ########
 sub generate_makefiles () {
 
-    # At this point, the only mwc/mpc files are in ace and tests. When more
-    # are available, this needs to be updated, maybe by cycling through
-    # all non-TAO directories looking for mwc (or mpc?) files.
-    #
     # The current ACE_ROOT setting is where this script started from, not
     # the staging area we want to generate files in. So, we need to
     # specifically set the -relative option on mwc to replace ACE_ROOT
@@ -802,11 +798,27 @@ sub generate_makefiles () {
 
     my $static_option = $tmp_static_option.$mpc_option;
 
+    # Visual Studio 2005 (aka VC8) uses the same file suffixes as VC7.1, so
+    # append _vc8 to the names.
+    my $vc8_option = '-name_modifier *_vc8';
+
+    # Additionally, VC8 can do Windows CE builds and these can be
+    # configured in. However, the CE builds have uses_wchar turned on,
+    # so we don't mix them with the Win32 VC8 files. The complete list of
+    # available platforms known at this point is in
+    # $MPC_ROOT/template/vc8_platforms.mpt - since the default is Win32
+    # and we're generating only CE builds, replace it instead of adding to it.
+    my $tmp_ce = '-value_template platforms=\'"Pocket PC 2003 (ARMV4)"\' ';
+    $tmp_ce = $tmp_ce.'-value_template platforms+=\'"Windows Mobile 5.0 Pocket PC SDK (ARMV4I)"\'';
+    my $ce_option = '-name_modifier *_WinCE -features uses_wchar=1 '.$tmp_ce;
+
     &ex ("cd ACE_wrappers; \
           bin/mwc.pl $exclude_option $mpc_option; \
           find ./ -name 'GNUmake*' | /usr/bin/xargs chmod 0644");
 
     &ex ("cd ACE_wrappers; \
+          bin/mwc.pl -type vc8 $mpc_option $exclude_option $vc8_option; \
+          bin/mwc.pl -type vc8 $mpc_option $exclude_option $ce_option; \
           bin/mwc.pl -type vc71 $mpc_option $exclude_option; \
           bin/mwc.pl -type vc6  $mpc_option $exclude_option; \
           bin/mwc.pl -type borland  $mpc_option $exclude_option; \
