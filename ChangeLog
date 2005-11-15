@@ -1,3 +1,10 @@
+Tue Nov 15 07:28:35 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Service_Config.cpp (initialize): Added a check to avoid 
+	  overwriting a service that's already installed without having it
+ 	  explicitly removed first.  Thanks to Domingos Monteiro <d dot
+	  monteiro at netia dot net> for this fix.
+
 Mon Nov 14 08:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/WIN32_Asynch_IO.cpp:
