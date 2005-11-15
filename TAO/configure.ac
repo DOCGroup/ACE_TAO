@@ -368,9 +368,12 @@ AC_CONFIG_FILES([
   orbsvcs/tests/Bug_1393_Regression/Makefile
   orbsvcs/tests/Bug_1395_Regression/Makefile
   orbsvcs/tests/Bug_1630_Regression/Makefile
+  orbsvcs/tests/Bug_2074_Regression/Makefile
   orbsvcs/tests/Bug_2137_Regression/Makefile
   orbsvcs/tests/Bug_2247_Regression/Makefile
   orbsvcs/tests/Bug_2248_Regression/Makefile
+  orbsvcs/tests/Bug_2285_Regression/Makefile
+  orbsvcs/tests/Bug_2287_Regression/Makefile
   orbsvcs/tests/Concurrency/Makefile
   orbsvcs/tests/CosEvent/Basic/Makefile
   orbsvcs/tests/CosEvent/Makefile
@@ -462,48 +465,52 @@ AC_CONFIG_FILES([
   orbsvcs/tests/Trading/Makefile
   orbsvcs/tests/ior_corbaname/Makefile
   orbsvcs/tests/tests_svc_loader/Makefile
-  performance-tests/Makefile
   performance-tests/Anyop/Makefile
+  performance-tests/CSD_Strategy/Makefile
+  performance-tests/CSD_Strategy/TestApps/Makefile
+  performance-tests/CSD_Strategy/TestInf/Makefile
+  performance-tests/CSD_Strategy/TestServant/Makefile
   performance-tests/Callback/Makefile
   performance-tests/Cubit/Makefile
-  performance-tests/Cubit/TAO/Makefile
-  performance-tests/Cubit/TAO/IDL_Cubit/Makefile
   performance-tests/Cubit/TAO/DII_Cubit/Makefile
+  performance-tests/Cubit/TAO/IDL_Cubit/Makefile
   performance-tests/Cubit/TAO/MT_Cubit/Makefile
-  performance-tests/Latency/Makefile
+  performance-tests/Cubit/TAO/Makefile
   performance-tests/Latency/AMH_Single_Threaded/Makefile
   performance-tests/Latency/AMI/Makefile
   performance-tests/Latency/Collocation/Makefile
   performance-tests/Latency/DII/Makefile
   performance-tests/Latency/DSI/Makefile
   performance-tests/Latency/Deferred/Makefile
+  performance-tests/Latency/Makefile
   performance-tests/Latency/Single_Threaded/Makefile
   performance-tests/Latency/Thread_Per_Connection/Makefile
   performance-tests/Latency/Thread_Pool/Makefile
-  performance-tests/Memory/Makefile
+  performance-tests/Makefile
   performance-tests/Memory/IORsize/Makefile
+  performance-tests/Memory/Makefile
   performance-tests/Memory/Single_Threaded/Makefile
-  performance-tests/POA/Makefile
   performance-tests/POA/Create_Reference/Makefile
   performance-tests/POA/Demux/Makefile
   performance-tests/POA/Implicit_Activation/Makefile
+  performance-tests/POA/Makefile
   performance-tests/POA/Object_Creation_And_Registration/Makefile
   performance-tests/Pluggable/Makefile
   performance-tests/Protocols/Makefile
   performance-tests/RTCorba/Makefile
-  performance-tests/RTCorba/Multiple_Endpoints/Makefile
   performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile
+  performance-tests/RTCorba/Multiple_Endpoints/Makefile
   performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile
   performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile
   performance-tests/RTCorba/Oneways/Makefile
   performance-tests/RTCorba/Oneways/Reliable/Makefile
   performance-tests/RTCorba/Thread_Pool/Makefile
-  performance-tests/Sequence_Latency/Makefile
   performance-tests/Sequence_Latency/AMH_Single_Threaded/Makefile
   performance-tests/Sequence_Latency/AMI/Makefile
   performance-tests/Sequence_Latency/DII/Makefile
   performance-tests/Sequence_Latency/DSI/Makefile
   performance-tests/Sequence_Latency/Deferred/Makefile
+  performance-tests/Sequence_Latency/Makefile
   performance-tests/Sequence_Latency/Single_Threaded/Makefile
   performance-tests/Sequence_Latency/Thread_Per_Connection/Makefile
   performance-tests/Sequence_Latency/Thread_Pool/Makefile

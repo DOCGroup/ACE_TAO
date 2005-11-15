@@ -16,11 +16,43 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-noinst_PROGRAMS =
+CLEANFILES =
+BUILT_SOURCES =
 
-## Makefile.Secure_Invocation_Idl.am
+## Makefile.CSD_Test_ThreadPool4_Server.am
 
-BUILT_SOURCES = \
+if BUILD_CORBA_MESSAGING
+
+BUILT_SOURCES += \
+  CallbackC.cpp \
+  CallbackC.h \
+  CallbackC.inl \
+  CallbackS.cpp \
+  CallbackS.h \
+  CallbackS.inl \
+  CallbackS_T.cpp \
+  CallbackS_T.h \
+  CallbackS_T.inl
+
+CLEANFILES += \
+  Callback-stamp \
+  CallbackC.cpp \
+  CallbackC.h \
+  CallbackC.inl \
+  CallbackS.cpp \
+  CallbackS.h \
+  CallbackS.inl \
+  CallbackS_T.cpp \
+  CallbackS_T.h \
+  CallbackS_T.inl
+
+CallbackC.cpp CallbackC.h CallbackC.inl CallbackS.cpp CallbackS.h CallbackS.inl CallbackS_T.cpp CallbackS_T.h CallbackS_T.inl: Callback-stamp
+
+Callback-stamp: $(srcdir)/Callback.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Callback.idl
+	@touch $@
+
+BUILT_SOURCES += \
   FooC.cpp \
   FooC.h \
   FooC.inl \
@@ -31,7 +63,7 @@ BUILT_SOURCES = \
   FooS_T.h \
   FooS_T.inl
 
-CLEANFILES = \
+CLEANFILES += \
   Foo-stamp \
   FooC.cpp \
   FooC.h \
@@ -46,87 +78,56 @@ CLEANFILES = \
 FooC.cpp FooC.h FooC.inl FooS.cpp FooS.h FooS.inl FooS_T.cpp FooS_T.h FooS_T.inl: Foo-stamp
 
 Foo-stamp: $(srcdir)/Foo.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Foo.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Foo.idl
 	@touch $@
 
+noinst_PROGRAMS = server_main
 
-## Makefile.Secure_Invocation_Security_Client.am
-
-if BUILD_CORBA_MESSAGING
-if BUILD_INTERCEPTORS
-
-noinst_PROGRAMS += client
-
-client_CPPFLAGS = \
+server_main_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs
+  -I$(TAO_BUILDDIR)
 
-client_SOURCES = \
+server_main_SOURCES = \
+  CallbackC.cpp \
+  CallbackS.cpp \
+  Callback_i.cpp \
+  ClientTask.cpp \
   FooC.cpp \
-  client.cpp \
-  Foo_i.h
+  FooS.cpp \
+  Foo_i.cpp \
+  OrbShutdownTask.cpp \
+  ServerApp.cpp \
+  server_main.cpp \
+  CallbackC.h \
+  CallbackC.inl \
+  CallbackS.h \
+  CallbackS_T.h \
+  CallbackS_T.inl \
+  Callback_i.h \
+  ClientTask.h \
+  FooC.h \
+  FooC.inl \
+  FooS.h \
+  FooS_T.h \
+  FooS_T.inl \
+  Foo_i.h \
+  OrbShutdownTask.h \
+  ServerApp.h
 
-client_LDADD = \
+server_main_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CSD_ThreadPool.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CSD_Framework.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Security.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-endif BUILD_INTERCEPTORS
-endif BUILD_CORBA_MESSAGING
-
-## Makefile.Secure_Invocation_Security_Server.am
-
-if BUILD_CORBA_MESSAGING
-if BUILD_INTERCEPTORS
-if BUILD_SSL
-
-noinst_PROGRAMS += server
-
-server_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs \
-  -DACE_HAS_SSL=1 \
-  @ACE_TLS_CPPFLAGS@
-
-server_SOURCES = \
-  FooC.cpp \
-  FooS.cpp \
-  Foo_i.cpp \
-  server.cpp \
-  Foo_i.h
-
-server_LDFLAGS = \
- @ACE_TLS_LDFLAGS@
-
-server_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_SSLIOP.la \
-  $(ACE_BUILDDIR)/ace/SSL/libACE_SSL.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Security.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la \
-  @ACE_TLS_LIBS@
-
-endif BUILD_SSL
-endif BUILD_INTERCEPTORS
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

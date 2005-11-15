@@ -983,6 +983,7 @@ nobase_include_HEADERS += \
   AnyTypeCode/SystemExceptionA.h \
   AnyTypeCode/TAOA.h \
   AnyTypeCode/TAO_AnyTypeCode_Export.h \
+  AnyTypeCode/TC_Constants_Forward.h \
   AnyTypeCode/TimeBaseA.h \
   AnyTypeCode/True_RefCount_Policy.h \
   AnyTypeCode/True_RefCount_Policy.inl \
@@ -1740,6 +1741,8 @@ libTAO_CSD_ThreadPool_la_LDFLAGS = \
 
 libTAO_CSD_ThreadPool_la_LIBADD = \
   libTAO_CSD_Framework.la \
+  libTAO_PI.la \
+  libTAO_CodecFactory.la \
   libTAO_PortableServer.la \
   libTAO_AnyTypeCode.la \
   libTAO.la \
