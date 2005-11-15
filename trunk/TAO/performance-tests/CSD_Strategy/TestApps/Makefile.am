@@ -13,68 +13,58 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_ROOT = $(top_srcdir)
 
-## Makefile.NT_Naming_Service.am
+## Makefile.csd_test_client.am
 
-bin_PROGRAMS = NT_Naming_Service
+noinst_PROGRAMS = client_main
 
-NT_Naming_Service_CPPFLAGS = \
+client_main_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs
+  -I$(TAO_ROOT)/performance-tests/CSD_Strategy
 
-NT_Naming_Service_SOURCES = \
-  NT_Naming_Server.cpp \
-  NT_Naming_Service.cpp \
-  Naming_Service.cpp \
-  NT_Naming_Service.h \
-  Naming_Service.h
+client_main_SOURCES = \
+  ClientApp.cpp \
+  client_main.cpp \
+  ClientApp.h
 
-NT_Naming_Service_LDADD = \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming_Serv.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+client_main_LDADD = \
+  $(top_builddir)/performance-tests/CSD_Strategy/TestServant/libCSD_PT_TestServant.la \
+  $(top_builddir)/performance-tests/CSD_Strategy/TestInf/libCSD_PT_TestInf.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CSD_ThreadPool.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CSD_Framework.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-## Makefile.Naming_Service.am
+## Makefile.csd_test_server.am
 
-bin_PROGRAMS += Naming_Service
+noinst_PROGRAMS += server_main
 
-Naming_Service_CPPFLAGS = \
+server_main_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs
+  -I$(TAO_ROOT)/performance-tests/CSD_Strategy
 
-Naming_Service_SOURCES = \
-  Naming_Server.cpp \
-  Naming_Service.cpp \
-  Naming_Service.h
+server_main_SOURCES = \
+  ServerApp.cpp \
+  server_main.cpp \
+  ServerApp.h
 
-Naming_Service_LDADD = \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming_Serv.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+server_main_LDADD = \
+  $(top_builddir)/performance-tests/CSD_Strategy/TestServant/libCSD_PT_TestServant.la \
+  $(top_builddir)/performance-tests/CSD_Strategy/TestInf/libCSD_PT_TestInf.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CSD_ThreadPool.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CSD_Framework.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la

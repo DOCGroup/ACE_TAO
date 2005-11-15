@@ -19,6 +19,7 @@ TAO_ROOT = $(top_srcdir)
 
 ## Makefile.NotifyTests_Lib.am
 
+if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
 
 BUILT_SOURCES = \
@@ -168,6 +169,7 @@ noinst_HEADERS = \
   notify_test_export.h
 
 endif !BUILD_MINIMUM_CORBA
+endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.
 clean-local:

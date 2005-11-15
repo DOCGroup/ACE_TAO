@@ -1273,8 +1273,6 @@ nobase_include_HEADERS += \
   PortableGroup/MIOP.h \
   PortableGroup/PG_Default_Property_Validator.h \
   PortableGroup/PG_FactoryRegistry.h \
-  PortableGroup/PG_Factory_Map.h \
-  PortableGroup/PG_Factory_Set.h \
   PortableGroup/PG_GenericFactory.h \
   PortableGroup/PG_Group_Factory.h \
   PortableGroup/PG_Group_Guard.h \
@@ -1282,11 +1280,9 @@ nobase_include_HEADERS += \
   PortableGroup/PG_Location_Equal_To.inl \
   PortableGroup/PG_Location_Hash.h \
   PortableGroup/PG_Location_Hash.inl \
-  PortableGroup/PG_Location_Map.h \
   PortableGroup/PG_MemberInfo.h \
   PortableGroup/PG_Null_Property_Validator.h \
   PortableGroup/PG_ObjectGroupManager.h \
-  PortableGroup/PG_ObjectGroup_Map.h \
   PortableGroup/PG_Object_Adapter_Factory.h \
   PortableGroup/PG_Object_Group.h \
   PortableGroup/PG_Object_Group_Manipulator.h \
@@ -1492,18 +1488,13 @@ nobase_include_HEADERS += \
   LoadBalancing/LB_LoadAlert.h \
   LoadBalancing/LB_LoadAlert.inl \
   LoadBalancing/LB_LoadAlertInfo.h \
-  LoadBalancing/LB_LoadAlertMap.h \
   LoadBalancing/LB_LoadAlert_Handler.h \
   LoadBalancing/LB_LoadAverage.h \
   LoadBalancing/LB_LoadAverage.inl \
-  LoadBalancing/LB_LoadListMap.h \
   LoadBalancing/LB_LoadManager.h \
-  LoadBalancing/LB_LoadMap.h \
   LoadBalancing/LB_LoadMinimum.h \
   LoadBalancing/LB_LoadMinimum.inl \
-  LoadBalancing/LB_Location_Index_Map.h \
   LoadBalancing/LB_MemberLocator.h \
-  LoadBalancing/LB_MonitorMap.h \
   LoadBalancing/LB_ORBInitializer.h \
   LoadBalancing/LB_ObjectReferenceFactory.h \
   LoadBalancing/LB_Pull_Handler.h \
@@ -1579,8 +1570,6 @@ EXTRA_DIST += \
 
 ## Makefile.CosNaming_Serv.am
 
-if BUILD_CORBA_MESSAGING
-
 lib_LTLIBRARIES += libTAO_CosNaming_Serv.la
 
 libTAO_CosNaming_Serv_la_CPPFLAGS = \
@@ -1650,8 +1639,6 @@ CLEANFILES += \
 
 TAO_CosNaming_Serv.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosNaming_Serv.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosNaming_Serv.pc.in
-
-endif BUILD_CORBA_MESSAGING
 
 EXTRA_DIST += \
   CosNaming_Serv.rc \
@@ -3796,7 +3783,6 @@ nobase_include_HEADERS += \
   Channel_Clients_T.h \
   Channel_Clients_T.i \
   Event/ECG_Adapters.h \
-  Event/ECG_Address_Server_Base.h \
   Event/ECG_CDR_Message_Receiver.h \
   Event/ECG_CDR_Message_Receiver.i \
   Event/ECG_CDR_Message_Sender.h \

@@ -14,45 +14,33 @@ TAO_BUILDDIR = $(top_builddir)
 TAO_ROOT = $(top_srcdir)
 
 
-## Makefile.Notify_Test_Driver.am
+## Makefile.Bug_2074_Regression_Test.am
 
 if BUILD_CORBA_MESSAGING
 if !BUILD_MINIMUM_CORBA
 
-noinst_PROGRAMS = Notify_Tests_Driver
+noinst_PROGRAMS = test
 
-Notify_Tests_Driver_CPPFLAGS = \
+test_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs \
-  -I$(TAO_ROOT)/orbsvcs/tests/Notify/lib \
-  -DTAO_HAS_TYPED_EVENT_CHANNEL
+  -I$(TAO_BUILDDIR)/orbsvcs
 
-Notify_Tests_Driver_SOURCES = \
-  main.cpp
+test_SOURCES = \
+  ORB_Task.cpp \
+  test.cpp \
+  ORB_Task.h
 
-Notify_Tests_Driver_LDADD = \
-  $(TAO_BUILDDIR)/orbsvcs/tests/Notify/lib/libTAO_NotifyTests.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Serv.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IFR_Client.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicInterface.la \
+test_LDADD = \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Serv.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification_Skel.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent_Skel.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la

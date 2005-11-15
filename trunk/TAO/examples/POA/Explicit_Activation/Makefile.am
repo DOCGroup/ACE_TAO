@@ -14,8 +14,8 @@ TAO_BUILDDIR = $(top_builddir)
 TAO_ROOT = $(top_srcdir)
 
 SUBDIRS = \
-        Alt_Resources \
-        .
+        . \
+        Alt_Resources
 
 
 ## Makefile.POA_Explicit_Activation_Server.am
