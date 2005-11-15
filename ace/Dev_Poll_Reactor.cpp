@@ -700,18 +700,22 @@ ACE_Dev_Poll_Reactor_Handler_Repository::bind (
 
   this->handlers_[handle].event_handler = event_handler;
   this->handlers_[handle].mask = mask;
+  event_handler->add_reference ();
 
   return 0;
 }
 
 int
-ACE_Dev_Poll_Reactor_Handler_Repository::unbind (ACE_HANDLE handle)
+ACE_Dev_Poll_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
+						 bool decr_refcnt)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::unbind");
 
   if (this->find (handle) == 0)
     return -1;
 
+  if (decr_refcnt)
+    this->handlers_[handle].event_handler->remove_reference ();
   this->handlers_[handle].event_handler = 0;
   this->handlers_[handle].mask = ACE_Event_Handler::NULL_MASK;
   this->handlers_[handle].suspended = 0;
@@ -1542,7 +1546,7 @@ ACE_Dev_Poll_Reactor::register_handler_i (ACE_HANDLE handle,
 #if defined (ACE_HAS_EVENT_POLL)
 
      struct epoll_event epev;
-
+     ACE_OS::memset (&epev, 0, sizeof (epev));
      static const int op = EPOLL_CTL_ADD;
 
      epev.events  = this->reactor_mask_to_poll_event (mask);
@@ -1564,11 +1568,7 @@ ACE_Dev_Poll_Reactor::register_handler_i (ACE_HANDLE handle,
      // current one.
      ACE_DEBUG ((LM_DEBUG, "Adding mask 0x%x for handle %d\n", mask, handle));
      if (this->mask_ops_i (handle, mask, ACE_Reactor::ADD_MASK) == -1)
-       {
-         ACE_ERROR ((LM_ERROR, "%p\n", "mask_ops_i"));
-         (void) this->handler_rep_.unbind (handle);
-         return -1;
-       }
+       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "mask_ops_i"), -1);
    }
 
 #ifndef  ACE_HAS_EVENT_POLL
@@ -1583,7 +1583,6 @@ ACE_Dev_Poll_Reactor::register_handler_i (ACE_HANDLE handle,
   if (ACE_OS::write (this->poll_fd_, &pfd, sizeof (pfd)) != sizeof (pfd))
     {
       (void) this->handler_rep_.unbind (handle);
-
       return -1;
     }
 #endif /*ACE_HAS_EVENT_POLL*/
@@ -1706,27 +1705,22 @@ ACE_Dev_Poll_Reactor::remove_handler_i (ACE_HANDLE handle,
 
   ACE_Event_Handler *eh = this->handler_rep_.find (handle);
 
-  if (eh == 0
-      || this->mask_ops_i (handle, mask, ACE_Reactor::CLR_MASK) == -1)
+  if (eh == 0 ||
+      this->mask_ops_i (handle, mask, ACE_Reactor::CLR_MASK) == -1)
     return -1;
+
+  // Check for ref counting now - handle_close() may delete eh.
+  int requires_reference_counting =
+    eh->reference_counting_policy ().value () ==
+    ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
+
+  if (ACE_BIT_DISABLED (mask, ACE_Event_Handler::DONT_CALL))
+    (void) eh->handle_close (handle, mask);
 
   // If there are no longer any outstanding events on the given handle
   // then remove it from the handler repository.
-  if (this->handler_rep_.mask (handle) == ACE_Event_Handler::NULL_MASK
-      && this->handler_rep_.unbind (handle) != 0)
-    return -1;
-
-  if (ACE_BIT_DISABLED (mask, ACE_Event_Handler::DONT_CALL))
-    {
-      // Release the lock during the "close" upcall.
-      ACE_Reverse_Lock<ACE_Dev_Poll_Reactor_Token> reverse_lock (this->token_);
-      ACE_GUARD_RETURN (ACE_Reverse_Lock<ACE_Dev_Poll_Reactor_Token>,
-                        reverse_guard,
-                        reverse_lock,
-                        -1);
-
-      (void) eh->handle_close (handle, mask);
-    }
+  if (this->handler_rep_.mask (handle) == ACE_Event_Handler::NULL_MASK)
+    this->handler_rep_.unbind (handle, requires_reference_counting);
 
   // Note the fact that we've changed the state of the wait_set,
   // i.e. the "interest set," which is used by the dispatching loop to
@@ -1880,7 +1874,7 @@ ACE_Dev_Poll_Reactor::suspend_handler_i (ACE_HANDLE handle)
 #if defined (ACE_HAS_EVENT_POLL)
 
   struct epoll_event epev;
-
+  ACE_OS::memset (&epev, 0, sizeof (epev));
   static const int op = EPOLL_CTL_DEL;
 
   epev.events  = 0;
@@ -1990,7 +1984,7 @@ ACE_Dev_Poll_Reactor::resume_handler_i (ACE_HANDLE handle)
 #if defined (ACE_HAS_EVENT_POLL)
 
   struct epoll_event epev;
-
+  ACE_OS::memset (&epev, 0, sizeof (epev));
   static const int op = EPOLL_CTL_ADD;
 
   epev.events  = this->reactor_mask_to_poll_event (mask);
@@ -2432,7 +2426,7 @@ ACE_Dev_Poll_Reactor::mask_ops_i (ACE_HANDLE handle,
 #elif defined (ACE_HAS_EVENT_POLL)
 
       struct epoll_event epev;
-
+      ACE_OS::memset (&epev, 0, sizeof (epev));
       int op;
 
       // ACE_Event_Handler::NULL_MASK ???

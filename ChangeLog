@@ -1,3 +1,14 @@
+Tue Nov 15 09:31:29 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/Dev_Poll_Reactor.{h cpp}: Add an optional decr_refcnt parameter
+	  to ACE_Dev_Poll_Rector_Repository::unbind () to control whether or
+	  not the unbound event handler's refcount is to be decremented.
+	  When registering a handler, remember to increment its refcount if
+	  needed; conversely, decrement it when all events are removed.
+	  Be sure to initialize epoll_event structs.
+
+	* tests/Dev_Poll_Reactor_Test.cpp (handle_input): Fix buffer overrun.
+
 Tue Nov 15 13:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_stdio.{cpp.inl}:
