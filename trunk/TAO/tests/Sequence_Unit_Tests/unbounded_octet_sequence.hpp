@@ -30,6 +30,7 @@ class unbounded_value_sequence<CORBA::Octet>
 {
 public:
   typedef CORBA::Octet value_type;
+  typedef CORBA::Octet element_type;
   typedef CORBA::Octet const const_value_type;
 
   typedef details::unbounded_value_allocation_traits<value_type,true> allocation_traits;

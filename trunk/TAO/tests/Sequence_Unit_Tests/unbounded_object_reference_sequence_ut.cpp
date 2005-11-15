@@ -25,7 +25,7 @@ using namespace TAO;
 
 struct Tester
 {
-  typedef unbounded_object_reference_sequence<mock_reference> tested_sequence;
+  typedef unbounded_object_reference_sequence<mock_reference, mock_reference_var> tested_sequence;
   typedef tested_sequence::value_type value_type;
   typedef tested_sequence::const_value_type const_value_type;
 
