@@ -139,7 +139,7 @@ namespace TAO
 // but we put the instantiation here because the application will
 // need to see it in *C.h to avoid the error.
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
-  template class TAO_Export TAO_Unbounded_Sequence<CORBA::OctetSeq>;
+//  template class TAO_Export TAO_Unbounded_Sequence<CORBA::OctetSeq>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
 

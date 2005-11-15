@@ -23,7 +23,7 @@ class bounded_object_reference_sequence
 public:
   typedef object_t object_type;
   typedef object_type * value_type;
-  typedef object_type const * const_value_type;
+  typedef value_type const const_value_type;
   typedef object_t_var object_type_var;
 
   typedef details::object_reference_traits<object_type,object_type_var,true> element_traits;
@@ -64,7 +64,7 @@ public:
   inline element_type operator[](CORBA::ULong i) {
     return element_type(impl_[i], release());
   }
-  inline const_value_type const * get_buffer() const {
+  inline const_value_type * const get_buffer() const {
     return impl_.get_buffer();
   }
   inline void replace(

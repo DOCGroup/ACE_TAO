@@ -39,10 +39,11 @@ namespace TAO
   template<typename T>
   struct Objref_Traits
   {
-    static T * duplicate (T *);
-    static void release (T *);
+    typedef T * T_ptr;
+    static T * duplicate (T_ptr);
+    static void release (T_ptr);
     static T * nil (void);
-    static CORBA::Boolean marshal (const T *,
+    static CORBA::Boolean marshal (T_ptr const,
                                    TAO_OutputCDR &);
   };
 }

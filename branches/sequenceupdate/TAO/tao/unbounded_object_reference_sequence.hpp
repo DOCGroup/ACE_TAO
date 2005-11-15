@@ -23,7 +23,7 @@ class unbounded_object_reference_sequence
 public:
   typedef object_t object_type;
   typedef object_type * value_type;
-  typedef object_type const * const_value_type;
+  typedef value_type const const_value_type;
 
   typedef details::object_reference_traits<object_type,object_t_var,true> element_traits;
   typedef details::unbounded_reference_allocation_traits<value_type,element_traits,true> allocation_traits;
@@ -66,7 +66,7 @@ public:
   inline element_type operator[](CORBA::ULong i) {
     return element_type(impl_[i], release());
   }
-  inline const_value_type const * get_buffer() const {
+  inline const_value_type * const get_buffer() const {
     return impl_.get_buffer();
   }
   inline void replace(
