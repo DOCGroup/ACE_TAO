@@ -850,7 +850,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
         case AST_Decl::NT_valuetype:
         case AST_Decl::NT_valuetype_fwd:
         case AST_Decl::NT_valuebox:
-          *os << "_tao_marshal_flag = (strm << _tao_sequence[i].in ());";
+          *os << "_tao_marshal_flag = (strm << _tao_sequence[i]);";
 
           break;
         case AST_Decl::NT_pre_defined:
@@ -874,7 +874,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                 case AST_PredefinedType::PT_pseudo:
                 case AST_PredefinedType::PT_object:
                 case AST_PredefinedType::PT_value:
-                  *os << "_tao_marshal_flag = (strm << _tao_sequence[i].in ());";
+                  *os << "_tao_marshal_flag = (strm << _tao_sequence[i]);";
                   break;
                 case AST_PredefinedType::PT_char:
                   *os << "_tao_marshal_flag =" << be_idt_nl
