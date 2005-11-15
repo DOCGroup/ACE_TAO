@@ -136,9 +136,9 @@ ACE_OS::fopen (const char *filename,
       if (fd != -1)
         {
 #   if defined (__BORLANDC__) && !defined (ACE_USES_WCHAR)
-          FILE *fp = ::_fdopen (fd, const_cast<char *> (mode));
+          FILE *fp = ::_fdopen (fd, const_cast<ACE_TCHAR *> (mode));
 #   elif defined (__BORLANDC__) && defined (ACE_USES_WCHAR)
-          FILE *fp = ::_wfdopen (fd, const_cast<wchar_t *> (mode));
+          FILE *fp = ::_wfdopen (fd, const_cast<ACE_TCHAR *> (mode));
 #   elif defined (ACE_USES_WCHAR)
           FILE *fp = ::_wfdopen (fd, mode);
 #   else
