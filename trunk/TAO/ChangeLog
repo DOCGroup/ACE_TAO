@@ -1,3 +1,12 @@
+Mon Nov 14 23:37:09 USMST 2005  Yan Dai  <dai_y@ociweb.com>
+
+        * tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.cpp:
+        * examples/CSD_Strategy/ThreadPool4/Foo_i.cpp:
+        * examples/CSD_Strategy/ThreadPool5/Foo_i.cpp:
+        * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B_i.cpp:
+
+          Fixed memory leaks.
+          
 Mon Nov 14 13:54:08 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Makefile.am (libTAO_PortableGroup_la_SOURCES):

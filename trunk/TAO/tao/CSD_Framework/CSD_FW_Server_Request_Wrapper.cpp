@@ -41,6 +41,7 @@ TAO::CSD::FW_Server_Request_Wrapper::~FW_Server_Request_Wrapper()
         {
           char* opname = (char*)this->request_->operation_details_->opname_;
           delete [] opname;
+          delete this->request_->operation_details_;
         }
       delete this->request_;
     }
