@@ -66,7 +66,7 @@ public:
   inline element_type operator[](CORBA::ULong i) {
     return element_type(impl_[i], release());
   }
-  inline const_value_type * const get_buffer() const {
+  inline value_type const * get_buffer() const {
     return impl_.get_buffer();
   }
   inline void replace(
