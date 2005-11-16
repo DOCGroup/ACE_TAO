@@ -15,6 +15,8 @@ ACE_RCSID (SSLIOP,
 #include "SSLIOP_X509.h"
 #include "SSLIOP_ClientCredentials.h"
 
+#include "tao/ORB_Constants.h"
+
 #include <openssl/x509.h>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

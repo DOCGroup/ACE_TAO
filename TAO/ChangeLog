@@ -1,3 +1,15 @@
+Wed Nov 16 09:14:21 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.cpp:
+
+	  Include "tao/ORB_Constants.h" to pull TAO::VMCID constant.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_CredentialsAcquirer.h
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.h:
+
+	  Corrected typos in versioned namespace macros.
+
 Wed Nov 16 09:05:08 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.h (Current):

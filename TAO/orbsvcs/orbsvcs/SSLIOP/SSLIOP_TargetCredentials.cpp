@@ -1,5 +1,4 @@
 #include "SSLIOP_TargetCredentials.h"
-#include "tao/ORB_Constants.h"
 
 
 ACE_RCSID (SSLIOP,
@@ -132,4 +131,4 @@ TAO::SSLIOP::TargetCredentials::release (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
-TAO_ENDBEGIN_VERSIONED_NAMESPACE_DECL
+TAO_END_VERSIONED_NAMESPACE_DECL
