@@ -1,3 +1,17 @@
+Wed Nov 16 21:53:08 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/lex.yy.cpp.diff:
+        
+          Since the change of
+          
+          Wed Nov 16 11:23:15 2005  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+          checked in a version of lex.yy.cpp that had been generated
+          elsewhere, regenerated this file with the version of flex
+          that's on tango.dre.vanderbilt.edu, and updated the
+          corresponding diff file.
+
 Wed Nov 16 14:12:08 USMST 2005  Yan Dai  <dai_y@ociweb.com>
 
         * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B.idl:
@@ -19,7 +33,7 @@ Wed Nov 16 11:23:15 2005  Jeff Parsons  <j.parsons@vanderbilt.edu>
           Applied patches submitted by Thomas Lockhart
           <Thomas.Lockhar@jpl.nasa.gov> to enable the IDL compiler's
           lexer to handle extra numeric fields produced by the gcc
-          4.0.1 perprocessor.
+          4.0.1 preprocessor. Closes [BUGID:2294].
 
 Wed Nov 16 09:14:21 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
