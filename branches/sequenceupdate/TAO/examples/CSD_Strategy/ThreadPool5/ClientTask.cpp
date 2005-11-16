@@ -16,7 +16,7 @@
 
 
 ClientTask::ClientTask(CORBA::ORB_ptr orb,
-                       Foo_ptr foo, 
+                       Foo_ptr foo,
                        Callback_ptr callback,
                        bool         collocated)
 : orb_ (CORBA::ORB::_duplicate (orb)),
@@ -57,7 +57,7 @@ ClientTask::svc()
 
   ACE_TRY_NEW_ENV
   {
-    // Make sure the connection is established before making  
+    // Make sure the connection is established before making
     // remote invocations.
     if (this->validate_connection () == false)
       {
@@ -99,13 +99,13 @@ ClientTask::svc()
       {
         ACE_DEBUG((LM_DEBUG,
                    "(%P|%t) ===> Caught FooException - as expected.\n"));
-        
+
       }
       ACE_ENDTRY;
 
       // Two-Way calls with inout parameters.
       CORBA::String_var message = CORBA::string_dup( "Hello! " );
-      CORBA::Boolean result 
+      CORBA::Boolean result
         = this->foo_->op6( "TAO User", message.inout() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -130,7 +130,7 @@ ClientTask::svc()
 
       // One-Way calls with various arguments.
       CORBA::String_var ub_string = CORBA::string_dup( "UNBOUNDED STRING" );
-      this->foo_->test_unbounded_string_arg (ub_string.in () 
+      this->foo_->test_unbounded_string_arg (ub_string.in ()
                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -157,18 +157,17 @@ ClientTask::svc()
 
       Bounded_Var_Size_var bd_var_size_string = new Bounded_Var_Size();
       const char* buffer1 = "BOUNDED VAR SIZE CHAR";
-      bd_var_size_string->replace (bd_var_size_string->maximum (),
-                            ACE_OS::strlen (buffer1) + 1, 
-                            (CORBA::Char*)buffer1);
-      this->foo_->test_bounded_var_size_arg (bd_var_size_string.in () 
+      bd_var_size_string->replace (ACE_OS::strlen (buffer1) + 1,
+                                   buffer1);
+      this->foo_->test_bounded_var_size_arg (bd_var_size_string.in ()
                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       const char* buffer2 = "UNBOUNDED VAR SIZE CHAR";
       Unbounded_Var_Size_var ub_var_size_string = new Unbounded_Var_Size(100);
       ub_var_size_string->replace (ub_var_size_string->maximum (),
-                                ACE_OS::strlen (buffer2) + 1, 
-                                (CORBA::Char*)buffer2);
+                                   ACE_OS::strlen (buffer2) + 1,
+                                   buffer2);
       this->foo_->test_unbounded_var_size_arg (ub_var_size_string.in ()
                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -186,31 +185,31 @@ ClientTask::svc()
       CORBA::Boolean special_value = 1;
       this->foo_->test_special_basic_arg (special_value ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       this->foo_->test_objref_arg (this->callback_.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
-   
+
     ACE_DEBUG((LM_DEBUG,
                "(%P|%t) ClientTask::svc - Invoke foo->done()\n"));
 
     this->foo_->done (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
-    
+
     ACE_DEBUG((LM_DEBUG,
                "(%P|%t) ClientTask::svc - Back from foo->done()\n"));
   }
-  ACE_CATCHANY 
-  { 
-     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
-                           "Caught exception in ClientTask::svc:"); 
-  } 
-  ACE_CATCHALL 
-  { 
-    ACE_ERROR((LM_ERROR, 
+  ACE_CATCHANY
+  {
+     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Caught exception in ClientTask::svc:");
+  }
+  ACE_CATCHALL
+  {
+    ACE_ERROR((LM_ERROR,
                "(%P|%t) Unknown (...) exception caught in ClientTask::svc()\n"));
-  } 
-  ACE_ENDTRY; 
+  }
+  ACE_ENDTRY;
 
   if (! collocated_)
     {
