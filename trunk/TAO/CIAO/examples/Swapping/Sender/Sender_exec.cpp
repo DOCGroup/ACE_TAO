@@ -33,7 +33,7 @@ namespace CIDL_Sender_Impl
   Sender_exec_i::local_message (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    return CORBA::string_dup(message_);
+    return CORBA::string_dup(message_. in());
   }
 
   Hello::CCM_ReadMessage_ptr
