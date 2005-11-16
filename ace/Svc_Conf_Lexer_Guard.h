@@ -21,6 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// Forward declarations
 class ACE_Svc_Conf_Param;
 
@@ -72,6 +74,8 @@ private:
   ace_yy_buffer_state *buffer_;
 
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

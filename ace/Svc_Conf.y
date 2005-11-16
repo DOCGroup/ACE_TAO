@@ -16,6 +16,7 @@ ACE_RCSID (ace,
            Svc_Conf_y,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Prototypes.
 static ACE_Module_Type *ace_get_module (ACE_Static_Node *str_rec,
@@ -428,4 +429,7 @@ main (int argc, char *argv[])
   return ::yyparse (&param);
 }
 #endif /* DEBUGGING */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #endif  /* ACE_USES_CLASSIC_SVC_CONF == 1 */
