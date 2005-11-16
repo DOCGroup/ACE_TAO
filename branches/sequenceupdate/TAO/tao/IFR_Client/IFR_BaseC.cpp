@@ -7153,7 +7153,7 @@ CORBA::Boolean operator<< (
         {
           _tao_marshal_flag =
             TAO::Objref_Traits<CORBA::InterfaceDef>::marshal (
-                _tao_sequence[i].in (), strm
+                _tao_sequence[i], strm
               );
         }
 

@@ -7,6 +7,7 @@
 #include "tao/unbounded_object_reference_sequence.hpp"
 #include "tao/unbounded_sequence_cdr.hpp"
 #include "tao/unbounded_value_sequence_cdr.hpp"
+#include "tao/unbounded_array_sequence.hpp"
 #include "tao/bounded_value_sequence.hpp"
 #include "tao/bounded_wstring_sequence.hpp"
 #include "tao/bounded_string_sequence.hpp"

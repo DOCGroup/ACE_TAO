@@ -11,20 +11,21 @@
  */
 #include "unbounded_array_allocation_traits.hpp"
 #include "generic_sequence.hpp"
+#include "array_traits.hpp"
 
 namespace TAO
 {
 
-template<typename array_traits>
+template<typename T_array, typename T_slice, typename T_tag>
 class unbounded_array_sequence
 {
 public:
-  typedef typename array_traits::value_type underlying_type;
-  typedef typename array_traits::value_type * value_type;
-  typedef typename array_traits::value_type const * const_value_type;
+  typedef T_array * value_type;
+  typedef T_slice * T_slice_ptr;
+  typedef T_slice_ptr * const_value_type;
 
   typedef details::unbounded_array_allocation_traits<value_type,true> allocation_traits;
-  typedef array_traits element_traits;
+  typedef details::array_traits <T_array, T_slice, T_tag> element_traits;
   typedef details::generic_sequence<value_type, allocation_traits, element_traits> implementation_type;
 
   inline unbounded_array_sequence()
@@ -36,7 +37,7 @@ public:
   inline unbounded_array_sequence(
       CORBA::ULong maximum,
       CORBA::ULong length,
-      value_type * data,
+      value_type data,
       CORBA::Boolean release = false)
     : impl_(maximum, length, data, release)
   {}

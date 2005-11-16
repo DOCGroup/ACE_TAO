@@ -38,6 +38,7 @@ namespace TAO
     static T_slice * dup (const T_slice * _tao_slice);
     static void copy (T_slice * _tao_to,
                       const T_slice * _tao_from);
+    static void zero (T_slice * _tao_slice);
   };
 }
 
