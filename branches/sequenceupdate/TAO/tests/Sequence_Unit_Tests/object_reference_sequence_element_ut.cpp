@@ -10,7 +10,7 @@
  */
 #include "testing_object_reference_traits.hpp"
 #include "mock_reference.hpp"
-#include "object_reference_sequence_element.hpp"
+#include "tao/object_reference_sequence_element.hpp"
 
 #include <sstream>
 #include <stdexcept>
@@ -26,7 +26,7 @@ using namespace boost::unit_test_framework;
 
 struct Tester
 {
-  typedef object_reference_traits<mock_reference,true> tested_element_traits;
+  typedef object_reference_traits<mock_reference,mock_reference_var,true> tested_element_traits;
   typedef object_reference_sequence_element<tested_element_traits> tested_element;
   typedef mock_reference * reference_type;
   typedef tested_element_traits::object_type_var reference_var;

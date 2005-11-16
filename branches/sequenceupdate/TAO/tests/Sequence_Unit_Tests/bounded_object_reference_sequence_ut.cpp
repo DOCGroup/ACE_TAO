@@ -8,13 +8,13 @@
  * @author Carlos O'Ryan
  */
 #include "testing_object_reference_traits.hpp"
-#include "object_reference_traits.hpp"
+#include "tao/object_reference_traits.hpp"
 #include "testing_allocation_traits.hpp"
 #include "testing_range_checking.hpp"
 
 #include "mock_reference.hpp"
 
-#include "bounded_object_reference_sequence.hpp"
+#include "tao/bounded_object_reference_sequence.hpp"
 
 #include <boost/test/unit_test.hpp>
 #include <boost/shared_ptr.hpp>
@@ -27,7 +27,7 @@ CORBA::ULong const TMAX = 64;
 
 struct Tester
 {
-  typedef bounded_object_reference_sequence<mock_reference,TMAX> tested_sequence;
+  typedef bounded_object_reference_sequence<mock_reference,mock_reference_var,TMAX> tested_sequence;
   typedef tested_sequence::value_type value_type;
   typedef tested_sequence::const_value_type const_value_type;
 

@@ -31,6 +31,14 @@ project(*Bounded_String) : taoexe {
   }
 }
 
+project(*Unbounded_Array_Sequence): taoexe, boost_unit_test_framework {
+  exename = unbounded_array_sequence_ut
+  Source_Files {
+    mock_array.cpp
+    unbounded_array_sequence_ut.cpp
+  }
+}
+
 project(*Object_Reference_Sequence_Element): taoexe, boost_unit_test_framework {
   exename = object_reference_sequence_element_ut
   Source_Files {
@@ -44,6 +52,32 @@ project(*Unbounded_Object_Reference_Sequence): taoexe, boost_unit_test_framework
   Source_Files {
     mock_reference.cpp
     unbounded_object_reference_sequence_ut.cpp
+  }
+}
+
+project(*Unbounded_Sequence_CDR): taoexe, boost_unit_test_framework {
+  exename = unbounded_sequence_cdr_ut
+  Source_Files {
+    mock_reference.cpp
+    mock_stream.cpp
+    unbounded_sequence_cdr_ut.cpp
+  }
+}
+
+project(*Bounded_Sequence_CDR): taoexe, boost_unit_test_framework {
+  exename = bounded_sequence_cdr_ut
+  Source_Files {
+    mock_reference.cpp
+    mock_stream.cpp
+    bounded_sequence_cdr_ut.cpp
+  }
+}
+
+project(*Unbounded_Fwd_Object_Reference_Sequence): taoexe, boost_unit_test_framework {
+  exename = unbounded_fwd_object_reference_sequence_ut
+  Source_Files {
+    fwd_mock_reference.cpp
+    unbounded_fwd_object_reference_sequence_ut.cpp
   }
 }
 

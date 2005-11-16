@@ -8,7 +8,7 @@
  *
  * @author Carlos O'Ryan
  */
-#include "unbounded_string_sequence.hpp"
+#include "tao/unbounded_string_sequence.hpp"
 
 typedef TAO::unbounded_string_sequence s_sequence;
 

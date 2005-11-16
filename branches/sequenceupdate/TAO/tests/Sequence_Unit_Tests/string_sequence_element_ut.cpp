@@ -9,7 +9,7 @@
  * @author Carlos O'Ryan
  */
 #include "testing_string_traits.hpp"
-#include "string_sequence_element.hpp"
+#include "tao/string_sequence_element.hpp"
 
 #include "ace/OS_NS_string.h"
 

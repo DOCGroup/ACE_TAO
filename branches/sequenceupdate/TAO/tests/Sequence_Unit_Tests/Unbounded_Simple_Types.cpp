@@ -8,7 +8,7 @@
  *
  * @author Carlos O'Ryan
  */
-#include "unbounded_value_sequence.hpp"
+#include "tao/unbounded_value_sequence.hpp"
 
 struct Foo
 {

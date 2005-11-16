@@ -12,6 +12,7 @@ use strict;
 my $final_result = 0;
 
 my @tests = qw(unbounded_value_sequence_ut
+               unbounded_array_sequence_ut
                bounded_value_sequence_ut
                string_sequence_element_ut
                unbounded_string_sequence_ut
@@ -21,7 +22,10 @@ my @tests = qw(unbounded_value_sequence_ut
                unbounded_octet_sequence_no_copy_ut
                object_reference_sequence_element_ut
                unbounded_object_reference_sequence_ut
+               unbounded_fwd_object_reference_sequence_ut
                bounded_object_reference_sequence_ut
+               bounded_sequence_cdr_ut
+               unbounded_sequence_cdr_ut
                Unbounded_Octet
                Unbounded_Simple_Types
                Bounded_Simple_Types

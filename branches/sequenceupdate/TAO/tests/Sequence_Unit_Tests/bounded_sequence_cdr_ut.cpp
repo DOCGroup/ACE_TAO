@@ -8,15 +8,15 @@
  * @author Carlos O'Ryan
  */
 #include "testing_object_reference_traits.hpp"
-#include "object_reference_traits.hpp"
+#include "tao/object_reference_traits.hpp"
 #include "testing_allocation_traits.hpp"
 #include "testing_range_checking.hpp"
 
 #include "mock_reference.hpp"
 #include "mock_stream.hpp"
 
-#include "bounded_object_reference_sequence.hpp"
-#include "bounded_sequence_cdr.hpp"
+#include "tao/bounded_object_reference_sequence.hpp"
+#include "tao/bounded_sequence_cdr.hpp"
 
 #include <boost/test/unit_test.hpp>
 #include <boost/shared_ptr.hpp>

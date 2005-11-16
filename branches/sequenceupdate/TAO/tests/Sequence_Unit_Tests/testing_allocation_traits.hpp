@@ -11,10 +11,10 @@
  * @author Carlos O'Ryan
  */
 
-#include "unbounded_value_allocation_traits.hpp"
-#include "bounded_value_allocation_traits.hpp"
-#include "unbounded_reference_allocation_traits.hpp"
-#include "bounded_reference_allocation_traits.hpp"
+#include "tao/unbounded_value_allocation_traits.hpp"
+#include "tao/bounded_value_allocation_traits.hpp"
+#include "tao/unbounded_reference_allocation_traits.hpp"
+#include "tao/bounded_reference_allocation_traits.hpp"
 #include "testing_exception.hpp"
 #include "testing_counters.hpp"
 
