@@ -1,3 +1,10 @@
+Wed Nov 16 14:52:32 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/NestedUpcall/Simple/Simple.mpc:
+        
+          Added 'after' line to one of the two projects in the MPC file,
+          so VC8 doesn't execute the IDL compiler concurrently.
+
 Tue Nov 15 23:48:47 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Makefile.am:
