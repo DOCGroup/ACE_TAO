@@ -11,11 +11,11 @@
         "testing_range_checking.hpp"
 
 #include "testing_string_traits.hpp"
-#include "string_traits.hpp"
+#include "tao/string_traits.hpp"
 #include "testing_allocation_traits.hpp"
 
-#include "bounded_string_sequence.hpp"
-#include "bounded_wstring_sequence.hpp"
+#include "tao/bounded_string_sequence.hpp"
+#include "tao/bounded_wstring_sequence.hpp"
 
 #include "string_sequence_tester.hpp"
 

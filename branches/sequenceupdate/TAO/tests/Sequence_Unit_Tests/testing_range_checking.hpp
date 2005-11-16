@@ -11,7 +11,7 @@
  * @author Carlos O'Ryan
  */
 
-#include "range_checking.hpp"
+#include "tao/range_checking.hpp"
 
 #include <sstream>
 #include <stdexcept>

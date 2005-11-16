@@ -13,7 +13,7 @@
 
 #include "testing_exception.hpp"
 #include "testing_counters.hpp"
-#include "object_reference_traits.hpp"
+#include "tao/object_reference_traits.hpp"
 
 template<typename object_t, typename object_t_var>
 struct testing_object_reference_traits

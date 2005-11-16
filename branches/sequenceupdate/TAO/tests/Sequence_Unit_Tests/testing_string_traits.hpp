@@ -11,7 +11,7 @@
  */
 
 #include "testing_exception.hpp"
-#include "string_traits.hpp"
+#include "tao/string_traits.hpp"
 #include "testing_counters.hpp"
 
 template<typename charT>
