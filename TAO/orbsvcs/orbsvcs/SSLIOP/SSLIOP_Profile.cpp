@@ -9,6 +9,9 @@ ACE_RCSID (SSLIOP,
            SSLIOP_Profile,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (const ACE_INET_Addr & addr,
                                const TAO::ObjectKey & object_key,
                                const TAO_GIOP_Message_Version & version,
@@ -350,3 +353,5 @@ TAO_SSLIOP_Profile::parse_string (const char * ior
             Security::NoProtection);
    }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

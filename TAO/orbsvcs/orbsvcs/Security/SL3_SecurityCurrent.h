@@ -33,6 +33,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 
@@ -129,13 +130,14 @@ namespace TAO
 
       /// Pointer to the ORB Core corresponding to the ORB with which
       /// this object is registered.
-      TAO_ORB_Core *orb_core_;
+      TAO_ORB_Core * const orb_core_;
 
     };
 
   } // End SL3 namespace
 }  // End TAO namespace
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "SL3_SecurityCurrent.inl"

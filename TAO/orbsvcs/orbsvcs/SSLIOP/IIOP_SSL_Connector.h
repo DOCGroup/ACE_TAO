@@ -26,6 +26,8 @@
 
 #include "tao/IIOP_Connector.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   /**
@@ -94,6 +96,8 @@ namespace TAO
   };
 
 } // End TAO namespace.
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -39,6 +39,7 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #ifndef RTCOSSCHEDULING_SERVER_CONTAINERS
 #define RTCOSSCHEDULING_SERVER_CONTAINERS
@@ -294,6 +295,8 @@ typedef ACE_Hash_Map_Manager_Ex_Adapter<
                   CosSchedulingResourceMap * resource_map);
   };
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "RTCosScheduling_ServerScheduler_i.i"

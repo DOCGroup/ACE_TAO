@@ -5,6 +5,7 @@ ACE_RCSID (SSLIOP,
            SSLIOP_Accept_Strategy,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Accept_Strategy::Accept_Strategy (
   TAO_ORB_Core * orb_core,
@@ -58,3 +59,4 @@ TAO::SSLIOP::Accept_Strategy::accept_svc_handler (handler_type * svc_handler)
     return 0;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

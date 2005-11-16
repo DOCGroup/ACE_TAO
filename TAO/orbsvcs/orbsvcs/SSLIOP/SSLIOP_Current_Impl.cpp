@@ -17,6 +17,7 @@ ACE_RCSID (SSLIOP,
 
 #include <openssl/x509.h>
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Current_Impl::~Current_Impl (void)
 {
@@ -121,3 +122,5 @@ TAO::SSLIOP::Current_Impl::tag (void) const
 {
   return ::SSLIOP::TAG_SSL_SEC_TRANS;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

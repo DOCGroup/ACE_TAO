@@ -9,6 +9,8 @@ ACE_RCSID (SSLIOP,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 SecurityLevel3::CredentialsAcquirer_ptr
 TAO::SSLIOP::CredentialsAcquirerFactory::make (
   TAO::SL3::CredentialsCurator_ptr curator,
@@ -24,3 +26,5 @@ TAO::SSLIOP::CredentialsAcquirerFactory::make (
 
   return ca;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

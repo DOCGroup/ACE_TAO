@@ -10,6 +10,8 @@ ACE_RCSID (Trader,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Service_Type_Repository::
 TAO_Service_Type_Repository (ACE_Lock* lock)
   : lock_ (lock)
@@ -689,3 +691,5 @@ update_type_map (const char *name,
   TAO_String_Hash_Key type_name (name);
   this->type_map_.bind (type_name, type);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

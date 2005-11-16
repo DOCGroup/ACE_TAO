@@ -24,6 +24,7 @@
 
 #include "tao/IIOP_Transport.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 class TAO_Resume_Handle;
@@ -81,6 +82,8 @@ namespace TAO
   };
 
 }  // End TAO namespace.
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

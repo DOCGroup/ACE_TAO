@@ -10,6 +10,8 @@ ACE_RCSID (Security,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 CORBA::Policy_ptr
 TAO::SL3::PolicyFactory::create_policy (CORBA::PolicyType type,
                                         const CORBA::Any & value
@@ -57,3 +59,5 @@ TAO::SL3::PolicyFactory::create_policy (CORBA::PolicyType type,
 
   return policy;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

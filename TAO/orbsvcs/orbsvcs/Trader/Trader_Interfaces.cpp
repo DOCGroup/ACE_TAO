@@ -1,7 +1,7 @@
 // $Id$
 
-#if !defined (TAO_TRADER_INTERFACES_C)
-#define TAO_TRADER_INTERFACES_C
+#ifndef TAO_TRADER_INTERFACES_CPP
+#define TAO_TRADER_INTERFACES_CPP
 
 #include "Trader_Interfaces.h"
 #include "Trader_T.h"
@@ -10,7 +10,7 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_RCSID(Trader, Trader_Interfaces, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
@@ -1926,13 +1926,15 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 void
 TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 list_proxies (CORBA::ULong,
-                CosTrading::OfferIdSeq*&,
-                CosTrading::OfferIdIterator_ptr&
-                ACE_ENV_ARG_DECL)
+              CosTrading::OfferIdSeq*&,
+              CosTrading::OfferIdIterator_ptr&
+              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::NotImplemented))
 {
   ACE_THROW (CORBA::UNKNOWN ());
 }
 
-#endif /* TAO_TRADER_INTERFACES_C */
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_TRADER_INTERFACES_CPP */

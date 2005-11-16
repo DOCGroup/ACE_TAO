@@ -11,6 +11,8 @@ ACE_RCSID (Time,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_UTO::TAO_UTO (TimeBase::TimeT time,
                   TimeBase::InaccuracyT inaccuracy,
                   TimeBase::TdfT tdf)
@@ -240,3 +242,5 @@ TAO_UTO::interval (ACE_ENV_SINGLE_ARG_DECL)
 
   return tio->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

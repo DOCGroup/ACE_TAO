@@ -12,6 +12,7 @@ ACE_RCSID (Security,
 # include "SL3_SecurityCurrent.inl"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SL3::SecurityCurrent::SecurityCurrent (size_t tss_slot,
                                             TAO_ORB_Core * oc)
@@ -55,3 +56,5 @@ TAO::SL3::SecurityCurrent::request_is_local (ACE_ENV_SINGLE_ARG_DECL)
 
   return impl->request_is_local (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -18,6 +18,8 @@
 #include "Constraint_Nodes.h"
 #include "Constraint_Tokens.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 static TAO_Literal_Constraint* extract_string(const char*);
 
 #define TAO_YY_LEX_DEBUG
@@ -130,3 +132,5 @@ extract_string(const char* total)
   str[ctr - 1] = '\0';
   return new TAO_Literal_Constraint(str);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

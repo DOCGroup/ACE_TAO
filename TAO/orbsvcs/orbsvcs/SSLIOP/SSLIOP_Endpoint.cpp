@@ -17,6 +17,8 @@ ACE_RCSID (SSLIOP,
 # include "SSLIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const ::SSLIOP::SSL *ssl_component,
                                           TAO_IIOP_Endpoint *iiop_endp)
   : TAO_Endpoint (IOP::TAG_INTERNET_IOP),
@@ -377,3 +379,4 @@ TAO_SSLIOP_Synthetic_Endpoint::duplicate (void)
   return endpoint;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

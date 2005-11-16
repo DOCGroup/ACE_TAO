@@ -14,6 +14,8 @@ ACE_RCSID (Trader,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Constraint_Evaluator::Operand_Queue::Operand_Queue (void)
 {
 }
@@ -1198,3 +1200,5 @@ TAO_Constraint_Validator::expr_returns_string (TAO_Expression_Type expr_type)
 
   return return_value;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

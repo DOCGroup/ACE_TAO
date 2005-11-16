@@ -10,6 +10,8 @@ ACE_RCSID (Security,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::SL3::SecurityManager::SecurityManager (
   SecurityLevel3::CredentialsCurator_ptr cc)
   : credentials_curator_ (SecurityLevel3::CredentialsCurator::_duplicate (cc))
@@ -78,3 +80,5 @@ TAO::SL3::SecurityManager::create_object_creds_policy (
 
   return policy;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

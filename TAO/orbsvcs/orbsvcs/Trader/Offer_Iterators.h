@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -23,12 +23,14 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
   // *************************************************************
   // TAO_Offer_Iterator
   // *************************************************************
 
-class TAO_Offer_Iterator :
-  public virtual POA_CosTrading::OfferIterator
+class TAO_Offer_Iterator
+  : public virtual POA_CosTrading::OfferIterator
 {
   // = TITLE
   //     This class implements CosTrading::OfferIterator IDL
@@ -285,6 +287,8 @@ class TAO_Offer_Id_Iterator :
 
   TAO_String_Queue ids_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

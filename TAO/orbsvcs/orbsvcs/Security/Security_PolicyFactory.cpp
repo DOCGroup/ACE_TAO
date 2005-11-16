@@ -17,6 +17,8 @@ ACE_RCSID (Security,
 
 #include "tao/ORB_Constants.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 CORBA::Policy_ptr
 TAO::Security::PolicyFactory::create_policy (
     CORBA::PolicyType type,
@@ -153,3 +155,5 @@ TAO::Security::PolicyFactory::create_policy (
     ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                       CORBA::Policy::_nil ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

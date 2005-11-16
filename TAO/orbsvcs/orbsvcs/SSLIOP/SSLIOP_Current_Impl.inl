@@ -3,6 +3,8 @@
 // $Id$
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE
 TAO::SSLIOP::Current_Impl::Current_Impl (void)
   : ssl_ (0)
@@ -20,3 +22,5 @@ TAO::SSLIOP::Current_Impl::ssl (void)
 {
   return this->ssl_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

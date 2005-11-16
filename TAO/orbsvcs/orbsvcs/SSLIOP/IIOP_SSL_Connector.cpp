@@ -18,6 +18,8 @@ ACE_RCSID (SSLIOP,
            IIOP_SSL_Connector,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::IIOP_SSL_Connector::IIOP_SSL_Connector (CORBA::Boolean flag)
   : TAO_IIOP_Connector (flag),
     connect_strategy_ (),
@@ -282,3 +284,5 @@ TAO::IIOP_SSL_Connector::cancel_svc_handler (
 
   return -1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

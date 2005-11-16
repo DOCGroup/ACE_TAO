@@ -33,6 +33,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // =  Classes to deal with the ACE_Hash_Map_Manager.
 
 class TAO_Property_Export CosProperty_Hash_Key
@@ -607,6 +609,8 @@ private:
   COSPROPERTY_HASH_ITERATOR iterator_;
   // The iterator object.
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

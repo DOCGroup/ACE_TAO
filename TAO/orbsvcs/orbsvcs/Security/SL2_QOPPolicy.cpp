@@ -10,6 +10,8 @@ ACE_RCSID (Security,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::Security::QOPPolicy::QOPPolicy (::Security::QOP qop)
   : qop_ (qop)
 {
@@ -55,3 +57,5 @@ TAO::Security::QOPPolicy::qop (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return this->qop_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -19,6 +19,8 @@
 #include "tao/LocalObject.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/CodecFactory/CodecFactory.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -518,3 +520,5 @@ ACE_THROW_SPEC ((CORBA::SystemException,
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

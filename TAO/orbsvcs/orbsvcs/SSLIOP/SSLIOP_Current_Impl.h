@@ -23,9 +23,10 @@
 
 #include "orbsvcs/SSLIOPC.h"
 #include "orbsvcs/Security/SL3_SecurityCurrent_Impl.h"
-#include "tao/ORB_Core.h"
 
 #include <openssl/ssl.h>
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -100,6 +101,8 @@ namespace TAO
     };
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "SSLIOP_Current_Impl.inl"

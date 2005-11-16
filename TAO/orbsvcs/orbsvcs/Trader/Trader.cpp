@@ -15,6 +15,8 @@ ACE_RCSID (Trader,
            Trader,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Trader_Base::TAO_Trader_Base (void)
   : trading_components_ (*this),
     import_attributes_ (*this),
@@ -856,3 +858,5 @@ TAO_Trader_Factory::parse_args (int& argc, ACE_TCHAR** argv)
         arg_shifter.ignore_arg ();
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

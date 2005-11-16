@@ -11,6 +11,8 @@ ACE_RCSID (Time,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 Timer_Helper::Timer_Helper (void)
   : clerk_ (0)
 {
@@ -150,3 +152,5 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

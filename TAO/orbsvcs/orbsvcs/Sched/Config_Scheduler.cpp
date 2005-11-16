@@ -11,6 +11,8 @@
 
 ACE_RCSID(Sched, Config_Scheduler, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_Config_Scheduler::ACE_Config_Scheduler (void)
 #if defined (TAO_USES_STRATEGY_SCHEDULER)
   : scheduler_strategy_ (static_cast<RtecScheduler::Preemption_Priority_t> (TAO_MIN_CRITICAL_PRIORITY))
@@ -668,3 +670,5 @@ void ACE_Config_Scheduler::get_config_info_set (RtecScheduler::Config_Info_Set_o
 {
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

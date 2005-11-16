@@ -34,6 +34,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -53,7 +54,7 @@ namespace TAO
      * SSL peer certificate chains for the current request can be
      * obtained from this object.
      */
-    class TAO_SSLIOP_Export Current
+    class Current
       : public ::SSLIOP::Current,
         public TAO_Local_RefCounted_Object
     {
@@ -141,23 +142,25 @@ namespace TAO
       /// Prevent copying through the copy constructor and the assignment
       /// operator.
       //@{
-      ACE_UNIMPLEMENTED_FUNC (Current (const Current &))
-      ACE_UNIMPLEMENTED_FUNC (void operator= (const Current &))
+      Current (const Current &);
+      void operator= (const Current &);
       //@}
 
     private:
 
       /// TSS slot assigned to this object.
-      size_t tss_slot_;
+      size_t const tss_slot_;
 
       /// Pointer to the ORB Core corresponding to the ORB with which this
       /// object is registered.
-      TAO_ORB_Core *orb_core_;
+      TAO_ORB_Core * const orb_core_;
 
     };
 
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "SSLIOP_Current.inl"
