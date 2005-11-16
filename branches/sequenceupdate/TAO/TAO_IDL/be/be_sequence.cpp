@@ -535,6 +535,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
   switch (this->managed_type ())
     {
     case be_sequence::MNG_OBJREF:
+    case be_sequence::MNG_PSEUDO:
       if (this->unbounded ())
         {
           *os << "TAO::unbounded_object_reference_sequence<" << linebreak
@@ -557,7 +558,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
         }
 
       break;
-    case be_sequence::MNG_PSEUDO:
+/*    case be_sequence::MNG_PSEUDO:
       if (this->unbounded ())
         {
           *os << "TAO_Unbounded_Pseudo_Sequence<" << linebreak
@@ -576,7 +577,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
               << ">" << be_uidt;
         }
 
-      break;
+      break;*/
     case be_sequence::MNG_VALUE:
       if (this->unbounded ())
         {

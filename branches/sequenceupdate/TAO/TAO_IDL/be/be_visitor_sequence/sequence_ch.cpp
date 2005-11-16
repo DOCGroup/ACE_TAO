@@ -246,6 +246,10 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
   switch (node->managed_type ())
     {
     case be_sequence::MNG_OBJREF:
+    case be_sequence::MNG_PSEUDO:
+    case be_sequence::MNG_VALUE:
+    case be_sequence::MNG_STRING:
+    case be_sequence::MNG_WSTRING:
       *os << "typedef" << be_idt_nl
           << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
           << node->local_name () << be_uidt_nl << ">"
@@ -257,53 +261,6 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
           << node->local_name () << "," << be_nl
           << node->local_name () << "_var";
       *os << be_uidt_nl << ">"
-          << node->local_name () << "_out;" << be_uidt;
-
-      break;
-    case be_sequence::MNG_PSEUDO:
-    case be_sequence::MNG_VALUE:
-      *os << "typedef" << be_idt_nl
-          << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
-          << node->local_name () << be_uidt_nl << ">"
-          << node->local_name () << "_var;" << be_uidt;
-
-      *os << be_nl << be_nl
-          << "typedef" << be_idt_nl
-          << "TAO_MngSeq_Out_T<" << be_idt << be_idt_nl
-          << node->local_name () << "," << be_nl
-          << node->local_name () << "_var" << be_uidt_nl
-          << ">" << node->local_name () << "_out;" << be_uidt;
-
-      break;
-    case be_sequence::MNG_STRING:
-      *os << "typedef" << be_idt_nl
-          << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
-          << node->local_name ()
-          << ">" << be_uidt_nl
-          << node->local_name () << "_var;" << be_uidt;
-
-      *os << be_nl << be_nl
-          << "typedef" << be_idt_nl
-          << "TAO_MngSeq_Out_T<" << be_idt << be_idt_nl
-          << node->local_name () << "," << be_nl
-          << node->local_name () << "_var" << be_uidt_nl
-          << ">" << be_uidt_nl
-          << node->local_name () << "_out;" << be_uidt;
-
-      break;
-    case be_sequence::MNG_WSTRING:
-      *os << "typedef" << be_idt_nl
-          << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
-          << node->local_name () << be_uidt_nl
-          << ">" << be_uidt_nl
-          << node->local_name () << "_var;" << be_uidt;
-
-      *os << be_nl << be_nl
-          << "typedef" << be_idt_nl
-          << "TAO_MngSeq_Out_T<" << be_idt << be_idt_nl
-          << node->local_name () << "," << be_nl
-          << node->local_name () << "_var" << be_uidt_nl
-          << ">" << be_uidt_nl
           << node->local_name () << "_out;" << be_uidt;
 
       break;
