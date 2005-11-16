@@ -1,3 +1,15 @@
+Wed Nov 16 09:05:08 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.h (Current):
+
+	  Removed "const" qualifier for tss_slot_ member.  It must
+	  currently remain mutable.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_OpenSSL_st_T.h:
+
+	  Include "tao/Versioned_Namespace.h" to pull in versioned
+	  namespace macro definitions.
+
 Wed Nov 16 14:52:32 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/NestedUpcall/Simple/Simple.mpc:
