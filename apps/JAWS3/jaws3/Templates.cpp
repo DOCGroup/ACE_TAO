@@ -72,7 +72,7 @@ template class ACE_Singleton<JAWS_TPR_Concurrency, ACE_SYNCH_MUTEX>;
 template class ACE_Singleton<JAWS_THYBRID_Concurrency, ACE_SYNCH_MUTEX>;
 template class ACE_Singleton<JAWS_Concurrency, ACE_SYNCH_MUTEX>;
 template class ACE_Singleton<JAWS_Options, ACE_SYNCH_MUTEX>;
-template class ACE_Select_Reactor_Token_T<ACE_Noop_Token>;
+template class ACE_Reactor_Token_T<ACE_Noop_Token>;
 template class ACE_Select_Reactor_T<ACE_Select_Reactor_Noop_Token>;
 template class ACE_Lock_Adapter<ACE_Select_Reactor_Noop_Token>;
 template class ACE_EHHTU_RW;
