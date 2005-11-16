@@ -12,6 +12,7 @@
  */
 
 #include <algorithm>
+#include "tao/Array_VarOut_T.h"
 
 namespace TAO
 {

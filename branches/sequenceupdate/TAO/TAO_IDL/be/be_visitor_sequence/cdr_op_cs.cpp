@@ -110,35 +110,79 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
 
-  // First encode the sequence length.
-  *os << "const ::CORBA::ULong _tao_seq_len = _tao_sequence.length ();"
-      << be_nl << be_nl;
-  *os << "if (strm << _tao_seq_len)" << be_idt_nl
-      << "{" << be_idt_nl;
-
-  // Now encode the sequence elements.
-  *os << "// Encode all elements." << be_nl;
-
-
-  if (bt->node_type () == AST_Decl::NT_sequence)
+  switch (bt->node_type ())
     {
-      this->visit_node (node);
-    }
-  else
-    {
-      if (bt->accept (this) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_sequence_cdr_op_cs::"
-                             "visit_sequence - "
-                             "Base type codegen failed\n"),
-                            -1);
-        }
-    }
+    case AST_Decl::NT_interface:
+    case AST_Decl::NT_interface_fwd:
+    case AST_Decl::NT_valuetype:
+    case AST_Decl::NT_valuetype_fwd:
+    case AST_Decl::NT_valuebox:
+      {
+        AST_Expression *expr = node->max_size ();
 
-  *os << "}" << be_uidt_nl << be_nl
-      << "return false;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
+        if (expr == 0 || (expr != 0 && expr->ev () == 0))
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                                "(%N:%l) be_visitor_sequence_cdr_op_cs::"
+                                "visit_sequence - "
+                                "bad sequence dimension\n"),
+                              -1);
+          }
+
+          if (expr->ev ()->et == AST_Expression::EV_ulong)
+            {
+              if (expr->ev ()->u.ulval > 0)
+                {
+                  *os << "return TAO::details::insert_bounded_sequence(strm, _tao_sequence);" << be_uidt_nl;
+                }
+              else
+                {
+                  *os << "return TAO::details::insert_unbounded_sequence(strm, _tao_sequence);" << be_uidt_nl;
+                }
+            }
+          else
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                  "(%N:%l) be_visitor_sequence_cdr_op_cs::"
+                                  "visit_sequence - "
+                                  "bad sequence dimension value\n"),
+                                -1);
+            }
+          *os << "}" << be_nl;
+        break;
+      }
+    default:
+      {
+        // First encode the sequence length.
+        *os << "const ::CORBA::ULong _tao_seq_len = _tao_sequence.length ();"
+            << be_nl << be_nl;
+        *os << "if (strm << _tao_seq_len)" << be_idt_nl
+            << "{" << be_idt_nl;
+
+        // Now encode the sequence elements.
+        *os << "// Encode all elements." << be_nl;
+
+        if (bt->node_type () == AST_Decl::NT_sequence)
+          {
+            this->visit_node (node);
+          }
+        else
+          {
+            if (bt->accept (this) == -1)
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "be_visitor_sequence_cdr_op_cs::"
+                                   "visit_sequence - "
+                                   "Base type codegen failed\n"),
+                                  -1);
+              }
+          }
+
+        *os << "}" << be_uidt_nl << be_nl
+            << "return false;" << be_uidt_nl
+            << "}" << be_nl << be_nl;
+      }
+    }
 
   //  Set the sub state as generating code for the input operator.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
@@ -165,92 +209,137 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
 
   if (! bt->is_local ())
     {
-      // First retrieve the length and adjust the sequence length accordingly.
-      *os << "::CORBA::ULong _tao_seq_len;" << be_nl << be_nl;
-      *os << "if (strm >> _tao_seq_len)" << be_idt_nl
-          << "{" << be_idt_nl;
-
-      // Add a sanity check for the length of a sequence.
-      *os << "// Add a check to the length of the sequence" << be_nl;
-      *os << "// to make sure it does not exceed the length" << be_nl;
-      *os << "// of the stream. (See bug 58.)" << be_nl;
-      *os << "if (_tao_seq_len > strm.length ())" << be_idt_nl
-          << "{" << be_idt_nl;
-      *os << "return false;" << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl;
-
-      // Now check if the length does not exceed the maximum. We do this only
-      // for bounded sequences
-      AST_Expression *expr = node->max_size ();
-
-      if (expr == 0 || (expr != 0 && expr->ev () == 0))
+      switch (bt->node_type ())
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_sequence_cdr_op_cs::"
-                             "visit_sequence - "
-                             "bad sequence dimension\n"),
-                            -1);
-        }
-
-      if (expr->ev ()->et == AST_Expression::EV_ulong)
+        case AST_Decl::NT_interface:
+        case AST_Decl::NT_interface_fwd:
+        case AST_Decl::NT_valuetype:
+        case AST_Decl::NT_valuetype_fwd:
+        case AST_Decl::NT_valuebox:
         {
-          if (expr->ev ()->u.ulval > 0)
-            {
-              // We are dealing with a bounded sequence. Check if we are within
-              // bounds.
-              *os << "if (_tao_seq_len <= _tao_sequence.maximum ())" << be_idt_nl
-                  << "{" << be_idt_nl;
-            }
-        }
-      else
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_sequence_cdr_op_cs::"
-                             "visit_sequence - "
-                             "bad sequence dimension value\n"),
-                            -1);
-        }
+          AST_Expression *expr = node->max_size ();
 
-      *os << "// Set the length of the sequence." << be_nl
-          << "_tao_sequence.length (_tao_seq_len);" << be_nl << be_nl;
-
-      // Now we do a check for the sequence length to be non zero.
-      // If length is 0 we return true.
-      *os << "// If length is 0 we return true." << be_nl;
-      *os << "if (0 >= _tao_seq_len) " << be_idt_nl
-          << "{" << be_idt_nl;
-      *os << "return true;" << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl;
-
-      *os << "// Retrieve all the elements." << be_nl;
-
-      if (bt->node_type () == AST_Decl::NT_sequence)
-        {
-          this->visit_node (node);
-        }
-      else
-        {
-          if (bt->accept (this) == -1)
+          if (expr == 0 || (expr != 0 && expr->ev () == 0))
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "be_visitor_sequence_cdr_op_cs::"
-                                 "visit_sequence - "
-                                 "Base type codegen failed\n"),
+                                  "(%N:%l) be_visitor_sequence_cdr_op_cs::"
+                                  "visit_sequence - "
+                                  "bad sequence dimension\n"),
                                 -1);
             }
-        }
 
-      if (expr->ev ()->u.ulval > 0)
-        {
-          // We are dealing with a bounded sequence.
-          *os << be_nl << "}" << be_uidt << be_uidt;
+            if (expr->ev ()->et == AST_Expression::EV_ulong)
+              {
+                if (expr->ev ()->u.ulval > 0)
+                  {
+                    *os << "return TAO::details::extract_bounded_sequence(strm, _tao_sequence);" << be_uidt_nl;
+                  }
+                else
+                  {
+                    *os << "return TAO::details::extract_unbounded_sequence(strm, _tao_sequence);" << be_uidt_nl;
+                  }
+              }
+            else
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "(%N:%l) be_visitor_sequence_cdr_op_cs::"
+                                   "visit_sequence - "
+                                   "bad sequence dimension value\n"),
+                                  -1);
+              }
+            *os << "}" << be_nl;
+          break;
         }
+        default:
+          {
+            // First retrieve the length and adjust the sequence length accordingly.
+            *os << "::CORBA::ULong _tao_seq_len;" << be_nl << be_nl;
+            *os << "if (strm >> _tao_seq_len)" << be_idt_nl
+                << "{" << be_idt_nl;
 
-      *os << be_nl << "}" << be_uidt_nl << be_nl;
+            // Add a sanity check for the length of a sequence.
+            *os << "// Add a check to the length of the sequence" << be_nl;
+            *os << "// to make sure it does not exceed the length" << be_nl;
+            *os << "// of the stream. (See bug 58.)" << be_nl;
+            *os << "if (_tao_seq_len > strm.length ())" << be_idt_nl
+                << "{" << be_idt_nl;
+            *os << "return false;" << be_uidt_nl
+                << "}" << be_uidt_nl << be_nl;
+
+            // Now check if the length does not exceed the maximum. We do this only
+            // for bounded sequences
+            AST_Expression *expr = node->max_size ();
+
+            if (expr == 0 || (expr != 0 && expr->ev () == 0))
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "(%N:%l) be_visitor_sequence_cdr_op_cs::"
+                                   "visit_sequence - "
+                                   "bad sequence dimension\n"),
+                                  -1);
+              }
+
+            if (expr->ev ()->et == AST_Expression::EV_ulong)
+              {
+                if (expr->ev ()->u.ulval > 0)
+                  {
+                    // We are dealing with a bounded sequence. Check if we are within
+                    // bounds.
+                    *os << "if (_tao_seq_len <= _tao_sequence.maximum ())" << be_idt_nl
+                        << "{" << be_idt_nl;
+                  }
+              }
+            else
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "(%N:%l) be_visitor_sequence_cdr_op_cs::"
+                                   "visit_sequence - "
+                                   "bad sequence dimension value\n"),
+                                  -1);
+              }
+
+            *os << "// Set the length of the sequence." << be_nl
+                << "_tao_sequence.length (_tao_seq_len);" << be_nl << be_nl;
+
+            // Now we do a check for the sequence length to be non zero.
+            // If length is 0 we return true.
+            *os << "// If length is 0 we return true." << be_nl;
+            *os << "if (0 >= _tao_seq_len) " << be_idt_nl
+                << "{" << be_idt_nl;
+            *os << "return true;" << be_uidt_nl
+                << "}" << be_uidt_nl << be_nl;
+
+            *os << "// Retrieve all the elements." << be_nl;
+
+            if (bt->node_type () == AST_Decl::NT_sequence)
+              {
+                this->visit_node (node);
+              }
+            else
+              {
+                if (bt->accept (this) == -1)
+                  {
+                    ACE_ERROR_RETURN ((LM_ERROR,
+                                       "be_visitor_sequence_cdr_op_cs::"
+                                       "visit_sequence - "
+                                       "Base type codegen failed\n"),
+                                      -1);
+                  }
+              }
+
+            if (expr->ev ()->u.ulval > 0)
+              {
+                // We are dealing with a bounded sequence.
+                *os << be_nl << "}" << be_uidt << be_uidt;
+              }
+
+            *os << be_nl << "}" << be_uidt_nl << be_nl;
+          }
+
+        *os << "return false;" << be_uidt_nl
+            << "}";
+        }
     }
-
-  *os << "return false;" << be_uidt_nl
-      << "}";
 
   *os << be_nl << be_nl
       << "#endif /* _TAO_CDR_OP_"
@@ -587,6 +676,15 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                         -1);
     }
 
+  AST_Decl::NodeType nt = bt->node_type ();
+  be_typedef *td = 0;
+
+  if (nt == AST_Decl::NT_typedef)
+    {
+      td = be_typedef::narrow_from_decl (bt);
+      nt = td->base_node_type ();
+    }
+
   be_visitor_context ctx (*this->ctx_);
   be_visitor_sequence_base visitor (&ctx);
 
@@ -622,15 +720,6 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                          "visit_node - "
                          "bad sequence dimension value\n"),
                         -1);
-    }
-
-  AST_Decl::NodeType nt = bt->node_type ();
-  be_typedef *td = 0;
-
-  if (nt == AST_Decl::NT_typedef)
-    {
-      td = be_typedef::narrow_from_decl (bt);
-      nt = td->base_node_type ();
     }
 
   switch (this->ctx_->sub_state ())
