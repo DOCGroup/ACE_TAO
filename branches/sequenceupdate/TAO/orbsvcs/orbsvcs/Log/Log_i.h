@@ -371,7 +371,7 @@ protected:
   DsLogAdmin::WeekMask weekmask_;
 
   /// A Sequence of the weekly intervals when the log is in operation.
-  TAO_Unbounded_Sequence<DsLogAdmin::TimeInterval> weekly_intervals_;
+  DsLogAdmin::TimeIntervalSeq weekly_intervals_;
 
   /// The QoS type of the log
   DsLogAdmin::QoSType qostype_;
