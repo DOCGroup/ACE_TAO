@@ -66,6 +66,11 @@ USER VISIBLE CHANGES BETWEEN TAO-1.4.7 and TAO-1.4.8
   and IORInterceptor_3_0. If you use IORInterceptors read the ChangeLog for
   the details, maybe you have to update your code!
 
+. Added the new Custom Servant Dispatching (CSD) feature to provide user 
+  applications with the ability to implement and "plug-in" custom strategies
+  to handle the dispatching of requests to servants. This new feature is not  
+  currently tested for VxWorks. See TAO release notes for more information. 
+
 USER VISIBLE CHANGES BETWEEN TAO-1.4.6 and TAO-1.4.7
 ====================================================
 
