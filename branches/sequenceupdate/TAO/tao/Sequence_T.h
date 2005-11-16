@@ -13,3 +13,4 @@
 #include "tao/bounded_string_sequence.hpp"
 #include "tao/bounded_object_reference_sequence.hpp"
 #include "tao/bounded_sequence_cdr.hpp"
+#include "tao/bounded_array_sequence.hpp"
