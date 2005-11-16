@@ -473,8 +473,8 @@ private:
   // = Disallow these operations.
   // Hack alert... Sun C++ 5.4 can't hack explicit templates with this
   // in place. Please remove this when taking out explicit templates.
-#if defined (__SUNPRO_CC) && (__SUNPRO_CC <= 0x540) && \
-   !defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+#if !(defined (__SUNPRO_CC) && (__SUNPRO_CC <= 0x540) && \
+      defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID,  HASH_KEY, COMPARE_KEYS, ACE_LOCK> &))
 #endif /* __SUNPRO_CC <= 0x540 && !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
