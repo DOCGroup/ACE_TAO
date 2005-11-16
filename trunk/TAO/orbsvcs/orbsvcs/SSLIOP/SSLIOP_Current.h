@@ -149,7 +149,7 @@ namespace TAO
     private:
 
       /// TSS slot assigned to this object.
-      size_t const tss_slot_;
+      size_t tss_slot_;
 
       /// Pointer to the ORB Core corresponding to the ORB with which this
       /// object is registered.
