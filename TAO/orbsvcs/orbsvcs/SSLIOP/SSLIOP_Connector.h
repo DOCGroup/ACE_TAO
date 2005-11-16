@@ -30,6 +30,8 @@
 
 #include "ace/SSL/SSL_SOCK_Connector.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// Forward declarations.
 class TAO_Base_Transport_Property;
 
@@ -50,7 +52,7 @@ namespace TAO
      * for establishing a connection with a server and is called from
      * the Connector_Registry.
      */
-    class TAO_SSLIOP_Export Connector : public TAO::IIOP_SSL_Connector
+    class Connector : public TAO::IIOP_SSL_Connector
     {
     public:
 
@@ -152,6 +154,8 @@ namespace TAO
 
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

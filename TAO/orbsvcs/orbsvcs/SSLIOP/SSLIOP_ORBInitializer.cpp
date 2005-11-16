@@ -24,6 +24,8 @@ ACE_RCSID (SSLIOP,
 #include "ace/Auto_Ptr.h"
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::SSLIOP::ORBInitializer::ORBInitializer (
   ::Security::QOP qop,
   CSIIOP::AssociationOptions csiv2_target_supports,
@@ -243,3 +245,4 @@ TAO::SSLIOP::ORBInitializer::get_tss_slot_id (
   return security_current->tss_slot ();
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

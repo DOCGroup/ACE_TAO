@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // $Id$
 
 #ifndef TAO_INTERPRETER_UTILS_T_H
@@ -6,8 +8,12 @@
 
 #include "tao/Basic_Types.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template <class OPERAND_TYPE>
 CORBA::Boolean TAO_find (const CORBA::Any& sequence, const OPERAND_TYPE& operand);
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Interpreter_Utils_T.cpp"

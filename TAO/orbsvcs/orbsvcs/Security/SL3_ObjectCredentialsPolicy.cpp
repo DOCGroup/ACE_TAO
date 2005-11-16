@@ -8,6 +8,8 @@ ACE_RCSID (Security,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::SL3::ObjectCredentialsPolicy::ObjectCredentialsPolicy (
   const SecurityLevel3::OwnCredentialsList & creds)
   : creds_list_ (creds)
@@ -59,3 +61,5 @@ TAO::SL3::ObjectCredentialsPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   this->creds_list_.length (0);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

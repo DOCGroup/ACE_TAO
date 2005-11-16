@@ -32,6 +32,8 @@
 #include "tao/IIOP_Endpoint.h"
 #include "ace/INET_Addr.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   /// Tag for storing multiple ssl endpoints within a single profile.
@@ -242,6 +244,8 @@ namespace TAO
 
 //   }  // End SSLIOP namespace.
 // }  // End TAO namespace.
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "SSLIOP_Endpoint.i"

@@ -13,6 +13,8 @@ ACE_RCSID (SSLIOP,
 #include "tao/debug.h"
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::SSLIOP::Current_ptr
 TAO::SSLIOP::Util::current (
   TAO_ORB_Core *orb_core)
@@ -52,3 +54,5 @@ TAO::SSLIOP::Util::current (
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

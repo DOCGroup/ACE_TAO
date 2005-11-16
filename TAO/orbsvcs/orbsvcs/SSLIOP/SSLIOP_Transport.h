@@ -35,6 +35,9 @@
 
 #include "ace/Svc_Handler.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward decls.
 class TAO_ORB_Core;
 class TAO_Pluggable_Messaging;
@@ -56,7 +59,7 @@ namespace TAO
      *
      * SSLIOP-specific transport implementation.
      */
-    class TAO_SSLIOP_Export Transport : public TAO_Transport
+    class Transport : public TAO_Transport
     {
     public:
 
@@ -149,6 +152,8 @@ namespace TAO
 
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif  /* TAO_SSLIOP_TRANSPORT_H */

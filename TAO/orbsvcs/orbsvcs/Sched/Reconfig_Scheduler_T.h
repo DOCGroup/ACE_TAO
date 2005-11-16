@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 // ============================================================================
 //
@@ -24,6 +25,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 class TAO_Reconfig_Scheduler :
@@ -758,6 +761,8 @@ maintain_scheduling_array (ARRAY_ELEMENT_TYPE ** & current_ptr_array,
 // Helper function: makes sure there is room in the scheduling pointer
 // arrays.  This function expands the array eagerly, to minimize time
 // overhead for memory allocation (at a cost of some unused space).
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Reconfig_Scheduler_T.cpp"

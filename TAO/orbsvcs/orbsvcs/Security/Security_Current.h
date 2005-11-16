@@ -34,6 +34,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Security_Current
  *
@@ -121,14 +123,14 @@ private:
 private:
 
   /// TSS slot assigned to this object.
-  size_t tss_slot_;
+  size_t const tss_slot_;
 
   /// The ORBid of the ORB with which this object is registered.
   CORBA::String_var orb_id_;
 
   /// Pointer to the ORB Core corresponding to the ORB with which this
   /// object is registered.
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core * orb_core_;
 
 };
 

@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // $Id$
 //
 // ============================================================================
@@ -16,6 +18,7 @@
 //
 // ============================================================================
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ////////////////////////////
 // Class ACE_DynScheduler //
@@ -107,5 +110,4 @@ ACE_DynScheduler::max_dispatch_id () const
   return max_dispatch_id_;
 }
 
-
-// EOF
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -7,6 +7,9 @@ ACE_RCSID (Trader,
            Constraint_Interpreter,
            "$Id$")
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Constraint_Interpreter::TAO_Constraint_Interpreter (
     const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
     const char* constraints
@@ -248,3 +251,5 @@ TAO_Preference_Interpreter::num_offers (void)
 {
   return this->offers_.size ();
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

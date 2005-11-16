@@ -26,6 +26,9 @@
 #include "orbsvcs/SecurityLevel3C.h"
 #include "tao/LocalObject.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   class SSLIOP_Credentials;
@@ -168,6 +171,8 @@ namespace TAO
 
 //   } // End SSLIOP namespace
 }   // End TAO namespace
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 # include "SSLIOP_Credentials.inl"

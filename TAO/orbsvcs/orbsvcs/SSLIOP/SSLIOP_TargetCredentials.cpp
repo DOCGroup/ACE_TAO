@@ -6,6 +6,7 @@ ACE_RCSID (SSLIOP,
            SSLIOP_TargetCredentials,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::TargetCredentials::TargetCredentials (::X509 *cert,
                                                    ::EVP_PKEY *evp)
@@ -130,3 +131,5 @@ TAO::SSLIOP::TargetCredentials::release (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
+
+TAO_ENDBEGIN_VERSIONED_NAMESPACE_DECL

@@ -17,6 +17,8 @@
 #include "Constraint_Interpreter.h"
 #include "Constraint_Nodes.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 //#define YYDEBUG 1
 # define TAO_GT 257
 # define TAO_GE 258
@@ -895,3 +897,4 @@ case 37:
 	goto yystack;		/* reset registers in driver code */
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

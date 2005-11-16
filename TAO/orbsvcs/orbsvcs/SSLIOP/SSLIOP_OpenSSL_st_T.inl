@@ -5,6 +5,7 @@
 
 #include <openssl/crypto.h>
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename T> ACE_INLINE T *
 TAO::SSLIOP::_duplicate (T * st)
@@ -160,3 +161,5 @@ TAO::SSLIOP::OpenSSL_st_var<T>::ptr (void) const
 {
   return this->st_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

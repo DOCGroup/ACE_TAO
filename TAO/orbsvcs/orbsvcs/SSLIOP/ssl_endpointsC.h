@@ -63,6 +63,8 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // TAO_IDL - Generated from
 // be\be_visitor_sequence/sequence_ch.cpp:101
 
@@ -138,6 +140,8 @@ TAO_SSLIOP_Export CORBA::Boolean operator>> (
   );
 
 #endif /* _TAO_CDR_OP_TAO_SSLEndpointSequence_H_ */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:955

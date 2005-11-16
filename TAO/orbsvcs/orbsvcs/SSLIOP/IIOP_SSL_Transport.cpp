@@ -12,6 +12,7 @@ ACE_RCSID (SSLIOP,
            IIOP_SSL_Transport,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::IIOP_SSL_Transport::IIOP_SSL_Transport (
     IIOP_SSL_Connection_Handler *handler,
@@ -49,3 +50,5 @@ TAO::IIOP_SSL_Transport::handle_input (TAO_Resume_Handle &rh,
                                             max_wait_time,
                                             block);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

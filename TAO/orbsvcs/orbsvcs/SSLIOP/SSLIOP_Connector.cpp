@@ -24,6 +24,8 @@ ACE_RCSID (SSLIOP,
            SSLIOP_Connector,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::SSLIOP::Connector::Connector (::Security::QOP qop)
   : TAO::IIOP_SSL_Connector (),
     qop_ (qop),
@@ -856,3 +858,5 @@ TAO::SSLIOP::Connector::cancel_svc_handler (
 
   return -1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

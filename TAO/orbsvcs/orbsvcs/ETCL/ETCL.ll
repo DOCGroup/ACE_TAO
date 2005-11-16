@@ -1,7 +1,7 @@
 %option noyywrap
 
 %{
-// ETCL.ll,v 1.4 2005/11/10 06:47:23 ossama Exp
+// ETCL.ll,v 1.5 2005/11/16 07:53:24 ossama Exp
 // ========================================================================
 //
 // = LIBRARY
@@ -16,10 +16,12 @@
 //
 // ========================================================================
 
-#include "ace/OS_NS_stdlib.h"
+#include "ace/OS.h"
 
 #include "ETCL_Constraint.h"
 #include "ETCL_y.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 static const char * extract_string(char*);
 
@@ -155,3 +157,5 @@ yywrap (void)
 {
   return 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 //
 // ============================================================================
@@ -25,6 +26,8 @@
 #include "ace/Unbounded_Set.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Recursive_Thread_Mutex.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_RTSched_Export Scheduler_Generic : public ACE_Scheduler
   // = TITLE
@@ -128,6 +131,8 @@ private:
   Scheduler_Generic (const Scheduler_Generic &);
   Scheduler_Generic &operator= (const Scheduler_Generic &);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* SCHEDULER_INTERNAL_H */

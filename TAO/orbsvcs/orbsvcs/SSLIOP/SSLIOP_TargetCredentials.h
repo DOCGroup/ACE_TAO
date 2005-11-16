@@ -23,6 +23,8 @@
 
 #include "SSLIOP_Credentials.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace SSLIOP
@@ -119,6 +121,8 @@ namespace TAO
     };
   }
 }
+
+TAO_ENDBEGIN_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

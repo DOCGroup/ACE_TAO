@@ -11,6 +11,7 @@ ACE_RCSID (Time,
            TAO_Time_Service_Server,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Constructor.
 TAO_Time_Service_Server::TAO_Time_Service_Server (void)
@@ -122,3 +123,5 @@ TAO_Time_Service_Server::new_interval (TimeBase::TimeT lower,
 
   return tio->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

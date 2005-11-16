@@ -35,6 +35,8 @@
 #endif /* _MSC_VER */
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace SSLIOP
@@ -46,7 +48,7 @@ namespace TAO
      *
      *
      */
-    class TAO_SSLIOP_Export ClientCredentials
+    class ClientCredentials
       : public virtual SecurityLevel3::ClientCredentials,
         public virtual SSLIOP_Credentials
     {
@@ -140,6 +142,7 @@ namespace TAO
   } // End SSLIOP namespace
 }  // End TAO namespace
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

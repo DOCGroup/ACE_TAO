@@ -26,6 +26,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Hack because g++ forced this inane circular dependecy!
 
 class TAO_Constraint_Interpreter;
@@ -998,6 +1000,8 @@ private:
 
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>& trader_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Trader_Interfaces.cpp"

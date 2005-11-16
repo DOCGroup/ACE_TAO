@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -11,6 +11,8 @@
  *  @author University of Rhode Island
  */
 //=============================================================================
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * Returns a pointer to the node containing the highest ceiling (the
@@ -93,3 +95,4 @@ TAO::CosSchedulingLockNode::operator=(const CosSchedulingLockNode& L)
   return *this;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

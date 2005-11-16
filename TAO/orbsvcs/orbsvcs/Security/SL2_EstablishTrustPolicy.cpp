@@ -10,6 +10,8 @@ ACE_RCSID (Security,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::Security::EstablishTrustPolicy::EstablishTrustPolicy (
   const ::Security::EstablishTrust &trust)
   : trust_ (trust)
@@ -57,3 +59,5 @@ TAO::Security::EstablishTrustPolicy::trust (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return this->trust_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
