@@ -194,7 +194,7 @@ TAO_VarSeq_Var_T<T>::operator T *& ()
 
 template<typename T>
 ACE_INLINE
-typename TAO_VarSeq_Var_T<T>::T_elem &
+typename TAO_VarSeq_Var_T<T>::T_elem
 TAO_VarSeq_Var_T<T>::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);

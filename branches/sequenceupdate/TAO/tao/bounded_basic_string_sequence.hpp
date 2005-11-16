@@ -26,6 +26,7 @@ public:
   typedef charT character_type;
   typedef charT * value_type;
   typedef charT const * const_value_type;
+  typedef value_type const & subscript_type;
 
   typedef details::string_traits<charT,true> element_traits;
   typedef details::bounded_reference_allocation_traits<value_type,element_traits,MAX,true> allocation_traits;
@@ -58,7 +59,7 @@ public:
     implementation_type::range::check_length(length, MAX);
     impl_.length(length);
   }
-  inline const_value_type operator[](CORBA::ULong i) const {
+  inline value_type const & operator[](CORBA::ULong i) const {
     return impl_[i];
   }
   inline element_type operator[](CORBA::ULong i) {

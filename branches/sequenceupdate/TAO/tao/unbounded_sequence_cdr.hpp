@@ -15,7 +15,7 @@ namespace TAO {
   namespace details {
     template <class stream, class sequence>
     bool extract_unbounded_sequence(stream & strm, sequence & target) {
-      ::CORBA::ULong new_length;
+      ::CORBA::ULong new_length = 0;
       if (!(strm >> new_length)) {
         return false;
       }
@@ -33,6 +33,35 @@ namespace TAO {
       tmp.swap(target);
       return true;
     }
+
+/*    template <class stream>
+    bool extract_unbounded_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::Short> & target) {
+      ::CORBA::ULong new_length = 0;
+      if (!(strm >> new_length)) {
+        return false;
+      }
+      if (new_length > strm.length()) {
+         return false;
+      }
+      sequence tmp(new_length);
+      tmp.length(new_length);
+      typename sequence::value_type * buffer = tmp.get_buffer();
+      if (!strm.read_short_array (buffer, new_length)) {
+        return false;
+      }
+      tmp.swap(target);
+      return true;
+    }*/
+
+/*    template <>
+    bool insert_unbounded_sequence(TAO_OutputCDR & strm, const TAO::unbounded_value_sequence <CORBA::Short> & source) {
+      const ::CORBA::ULong length = source.length ();
+      if (!(strm << length)) {
+        return false;
+      }
+      // Encode all elements.
+      return strm.write_short_array (source.get_buffer (), source.length ());
+    }*/
 
     template <class stream, class sequence>
     bool insert_unbounded_sequence(stream & strm, const sequence & source) {

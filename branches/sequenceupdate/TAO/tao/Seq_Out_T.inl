@@ -74,7 +74,7 @@ TAO_Seq_Out_T<T,T_var>::operator-> (void)
 
 template<typename T, typename T_var>
 ACE_INLINE
-typename TAO_Seq_Out_T<T,T_var>::T_elem &
+typename TAO_Seq_Out_T<T,T_var>::T_elem
 TAO_Seq_Out_T<T,T_var>::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);

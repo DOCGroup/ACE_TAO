@@ -24,6 +24,7 @@ public:
   typedef T_array * value_type;
   typedef T_slice * T_slice_ptr;
   typedef T_slice_ptr * const_value_type;
+  typedef value_type const & subscript_type;
 
   typedef details::bounded_array_allocation_traits<value_type,MAX,true> allocation_traits;
   typedef details::array_traits <T_array, T_slice, T_tag> element_traits;

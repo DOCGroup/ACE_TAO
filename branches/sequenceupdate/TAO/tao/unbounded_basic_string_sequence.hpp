@@ -34,6 +34,8 @@ public:
 
   typedef details::generic_sequence<value_type, allocation_traits, element_traits> implementation_type;
 
+  typedef element_type subscript_type;
+
   inline unbounded_basic_string_sequence()
     : impl_()
   {}
@@ -62,7 +64,7 @@ public:
   inline void length(CORBA::ULong length) {
     impl_.length(length);
   }
-  inline const_value_type operator[](CORBA::ULong i) const {
+  inline value_type const & operator[](CORBA::ULong i) const {
     return impl_[i];
   }
   inline element_type operator[](CORBA::ULong i) {

@@ -32,6 +32,7 @@ public:
   typedef CORBA::Octet value_type;
   typedef CORBA::Octet element_type;
   typedef CORBA::Octet const const_value_type;
+  typedef value_type const & subscript_type;
 
   typedef details::unbounded_value_allocation_traits<value_type,true> allocation_traits;
   typedef details::value_traits<value_type,true> element_traits;
