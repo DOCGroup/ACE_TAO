@@ -122,7 +122,7 @@ namespace TAO
   }
 }
 
-TAO_ENDBEGIN_VERSIONED_NAMESPACE_DECL
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 
