@@ -1,3 +1,13 @@
+Wed Nov 16 11:23:15 2005  Jeff Parsons  <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/idl.yy.cpp:
+
+          Applied patches submitted by Thomas Lockhart
+          <Thomas.Lockhar@jpl.nasa.gov> to enable the IDL compiler's
+          lexer to handle extra numeric fields produced by the gcc
+          4.0.1 perprocessor.
+
 Wed Nov 16 09:14:21 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.cpp:
