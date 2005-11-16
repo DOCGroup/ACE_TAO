@@ -93,7 +93,7 @@ namespace TAO
     static mock_reference_ptr duplicate (mock_reference_ptr);
     static void release (mock_reference_ptr);
     static mock_reference_ptr nil (void);
-    static CORBA::Boolean marshal (mock_reference_ptr p, TAO_OutputCDR & cdr);
+    static CORBA::Boolean marshal (const mock_reference_ptr p, TAO_OutputCDR & cdr);
   };
 }
 

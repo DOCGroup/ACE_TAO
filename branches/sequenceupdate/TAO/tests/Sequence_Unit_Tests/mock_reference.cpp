@@ -76,7 +76,7 @@ TAO::Objref_Traits<mock_reference>::nil (void)
 
 CORBA::Boolean
 TAO::Objref_Traits<mock_reference>::marshal (
-    mock_reference_ptr,
+    const mock_reference_ptr,
     TAO_OutputCDR &
   )
 {
