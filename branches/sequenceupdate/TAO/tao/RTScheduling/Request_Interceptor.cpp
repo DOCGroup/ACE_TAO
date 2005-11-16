@@ -310,7 +310,7 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
   CORBA::Policy_ptr sched_param = 0;
   CORBA::Policy_ptr implicit_sched_param = 0;
 
-  TAO_RTScheduler_Current_i* new_current;
+  TAO_RTScheduler_Current_i* new_current = 0;
   ACE_NEW_THROW_EX (new_current,
                     TAO_RTScheduler_Current_i (this->current_->orb (),
                                                this->current_->dt_hash ()),
@@ -330,7 +330,7 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
                                              sched_param,
                                              implicit_sched_param);
 
-  if (guid_var.in () == 0)
+  if (guid_var->length () == 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "The scheduler MUST retreive and return the "

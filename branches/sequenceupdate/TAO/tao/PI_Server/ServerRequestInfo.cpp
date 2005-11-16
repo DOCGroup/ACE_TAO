@@ -146,8 +146,7 @@ TAO::ServerRequestInfo::exceptions (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::ULong e = 0;
   for (CORBA::TypeCode_ptr const * i = begin; i != end; ++i, ++e)
     {
-      TAO_Pseudo_Object_Manager<CORBA::TypeCode> tcp_object (
-        const_cast<CORBA::TypeCode_ptr *> (i), 1);
+      CORBA::TypeCode_ptr tcp_object = *i;
       (*exception_list)[e] = tcp_object;
     }
 
