@@ -34,6 +34,27 @@ Tue Nov 15 12:44:37 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	runtime libraries on Windows.  Thanks to Kitty for suggesting
 	the fix.
 
+Tue Nov 15 11:31:41 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/Atomic_Op.{h inl} (ACE_Atomic_Op (TYPE c)): Changed the signature
+	  to be const TYPE& for long and unsigned long. This aligns it with the
+	  ACE_Atomic_Op template's (const TYPE&) constructor signature and
+	  resolves undefined references to it in the explicit template builds.
+
+	* ace/Event_Handler.cpp: Added explicit instantiation of
+	  ACE_Atomic_Op<ACE_SYNCH_MUTEX,long> when ACE_HAS_BUILTIN_ATOMIC_OP
+	  is not defined. This covers the event handler reference counting
+	  use of ACE_Atomic_Op.
+
+	* ace/Malloc_Instantiations.cpp: Corrected header file inclusions.
+
+	* protocols/ace/RMCast/Makefile.am:
+	* protocols/ace/RMCast/Template_Instantiations.cpp: New file to
+	  hold all explicit template instantiations needed for RMCast.
+	  This is a temporary file, only for the ACE 5.5 release. Then it
+	  can be expunged with the test of the explicit template
+	  instantiation support.
+
 Tue Nov 15 09:31:29 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/Dev_Poll_Reactor.{h cpp}: Add an optional decr_refcnt parameter
