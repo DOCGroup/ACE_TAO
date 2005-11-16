@@ -17,6 +17,8 @@ ACE_RCSID (SSLIOP,
            SSLIOP_Acceptor,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::SSLIOP::Acceptor::Acceptor (::Security::QOP qop,
                                  const ACE_Time_Value & timeout)
   : TAO::IIOP_SSL_Acceptor (),
@@ -674,3 +676,5 @@ TAO::SSLIOP::Acceptor::verify_secure_configuration (TAO_ORB_Core *orb_core,
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

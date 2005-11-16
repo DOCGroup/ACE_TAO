@@ -33,6 +33,8 @@
 #include "orbsvcs/SSLIOPC.h"  /* CSIv1 */
 #include "orbsvcs/CSIIOPC.h"  /* CSIv2 */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace SSLIOP
@@ -43,7 +45,7 @@ namespace TAO
      *
      * @brief The SSLIOP-specific bridge class for the concrete acceptor.
      */
-    class TAO_SSLIOP_Export Acceptor
+    class Acceptor
       : public IIOP_SSL_Acceptor
     {
     public:
@@ -155,6 +157,8 @@ namespace TAO
 
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
 #include "SSLIOP_Acceptor.i"

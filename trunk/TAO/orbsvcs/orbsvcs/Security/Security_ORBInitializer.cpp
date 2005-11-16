@@ -18,6 +18,7 @@ ACE_RCSID (Security,
 #include "tao/ORB_Constants.h"
 #include "tao/debug.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO::Security::ORBInitializer::pre_init (
@@ -235,3 +236,5 @@ TAO::Security::ORBInitializer::register_policy_factories (
 
   // ----------------------------------------------------------------
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

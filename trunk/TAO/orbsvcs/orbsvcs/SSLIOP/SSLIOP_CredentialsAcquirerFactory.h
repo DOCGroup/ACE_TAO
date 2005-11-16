@@ -27,6 +27,8 @@
 #include "orbsvcs/SecurityLevel3C.h"
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace SSLIOP
@@ -56,6 +58,7 @@ namespace TAO
   } // End SSLIOP namespace
 }  // End TAO namespace
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

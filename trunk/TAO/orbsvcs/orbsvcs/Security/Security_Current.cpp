@@ -11,6 +11,8 @@ ACE_RCSID (Security,
 # include "Security_Current.inl"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Security_Current::TAO_Security_Current (size_t tss_slot,
                                             const char *orb_id)
   : tss_slot_ (tss_slot),
@@ -91,3 +93,5 @@ TAO_Security_Current::init (void)
 
   return result;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -423,6 +423,8 @@ char *yytext;
 #include "Constraint_Nodes.h"
 #include "Constraint_Tokens.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 static TAO_Literal_Constraint* extract_string(const char*);
 
 #define TAO_YY_LEX_DEBUG
@@ -1775,3 +1777,5 @@ yywrap (void)
 {
   return 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

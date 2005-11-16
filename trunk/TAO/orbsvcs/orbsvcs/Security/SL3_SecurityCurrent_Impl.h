@@ -24,6 +24,9 @@
 #include "security_export.h"
 #include "orbsvcs/SecurityLevel3C.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace SL3
@@ -74,6 +77,8 @@ namespace TAO
 
   }  // End Security namespace.
 }  // End TAO namespace.
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

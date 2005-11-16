@@ -70,6 +70,8 @@
 #include "ETCL_Constraint.h"
 #include "ETCL_Interpreter.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 extern int yylex (void);
 extern void yyflush_current_buffer (void);
 
@@ -1282,3 +1284,4 @@ yyerrhandle:
 //#line 257 "ETCL/ETCL.yy"
 
 
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -26,6 +26,7 @@
 
 #include "orbsvcs/SecurityLevel3C.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -41,7 +42,7 @@ namespace TAO
      * All concrete CredentialsAcquirerFactory classes must implement
      * this interface.
      */
-    class TAO_Security_Export CredentialsAcquirerFactory
+    class CredentialsAcquirerFactory
     {
     public:
 
@@ -58,6 +59,8 @@ namespace TAO
 
   } // End SL3 namespace
 }  // End TAO namespace
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 #include /**/ "ace/post.h"

@@ -14,6 +14,8 @@ ACE_RCSID (SSLIOP,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ::EVP_PKEY *
 TAO::SSLIOP::OpenSSL_traits< ::EVP_PKEY >::copy (::EVP_PKEY const & key)
 {
@@ -71,3 +73,4 @@ TAO::SSLIOP::OpenSSL_traits< ::EVP_PKEY >::copy (::EVP_PKEY const & key)
   return p._retn ();
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

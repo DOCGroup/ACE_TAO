@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 //
 // ============================================================================
@@ -16,6 +17,8 @@
 //    Chris Gill
 //
 // ============================================================================
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //////////////////////
 // Class Task_Entry //
@@ -437,6 +440,8 @@ TimeLine_Entry_Link::entry () const
 ACE_INLINE bool
 TimeLine_Entry_Link::operator < (const TimeLine_Entry_Link &l) const
 {
-  return (entry_ < l.entry_) ? true : false;
+  return (entry_ < l.entry_);
 }
   // comparison operator
+
+TAO_END_VERSIONED_NAMESPACE_DECL

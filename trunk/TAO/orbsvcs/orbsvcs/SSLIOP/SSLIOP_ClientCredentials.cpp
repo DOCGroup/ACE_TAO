@@ -9,6 +9,8 @@ ACE_RCSID (SSLIOP,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::SSLIOP::ClientCredentials::ClientCredentials (
   X509 * cert,
   EVP_PKEY *evp,
@@ -136,3 +138,5 @@ TAO::SSLIOP::ClientCredentials::integrity (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
   return true;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

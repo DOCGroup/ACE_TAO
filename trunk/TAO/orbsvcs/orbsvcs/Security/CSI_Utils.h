@@ -18,6 +18,11 @@
 // the declared types/variables are not meant to be used outside TAO's
 // CSIv2 implementation.
 
+#include "tao/orbconf.h"
+#include "tao/Versioned_Namespace.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward declarations
 namespace IOP
 {
@@ -45,5 +50,7 @@ namespace TAO
                                       CSI::SASContextBody & sas_context);
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_CSI_UTILS_H */

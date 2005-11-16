@@ -15,8 +15,8 @@
 //
 // ============================================================================
 
-#ifndef TAO_RECONFIG_SCHED_UTILS_T_C
-#define TAO_RECONFIG_SCHED_UTILS_T_C
+#ifndef TAO_RECONFIG_SCHED_UTILS_T_CPP
+#define TAO_RECONFIG_SCHED_UTILS_T_CPP
 
 #include "Reconfig_Sched_Utils_T.h"
 #include "ace/Sched_Params.h"
@@ -26,7 +26,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_RCSID(Sched, Reconfig_Sched_Utils_T, "$Id$")
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ////////////////////////////////
 // TAO_RSE_Dependency_Visitor //
@@ -168,19 +168,18 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
   return 0;
 }
 
-/* WSOA merge - commented out
-// Performs an unconditional action when the entry is first reached.
-// Returns 0 for success, and -1 if an error occurred.
+// WSOA merge - commented out
+// // Performs an unconditional action when the entry is first reached.
+// // Returns 0 for success, and -1 if an error occurred.
 
-template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
-TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-unconditional_action (TAO_Reconfig_Scheduler_Entry &rse)
-{
-  // Default behavior: just return success.
-  ACE_UNUSED_ARG (rse);
-  return 0;
-}
-*/
+// template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
+// TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
+// unconditional_action (TAO_Reconfig_Scheduler_Entry & /* rse */)
+// {
+//   // Default behavior: just return success.
+//   return 0;
+// }
+//
 
 // Tests whether or not any conditional actions should be taken for
 // the entry.  Returns 0 if the actions should be applied, 1 if the
@@ -202,10 +201,9 @@ precondition (TAO_Reconfig_Scheduler_Entry &rse)
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-prefix_action (TAO_Reconfig_Scheduler_Entry &rse)
+prefix_action (TAO_Reconfig_Scheduler_Entry & /* rse */)
 {
   // Default behavior: just return success.
-  ACE_UNUSED_ARG (rse);
   return 0;
 }
 
@@ -215,14 +213,11 @@ prefix_action (TAO_Reconfig_Scheduler_Entry &rse)
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
-                    TAO_Reconfig_Scheduler_Entry &successor,
-                    const RtecScheduler::Dependency_Info &di)
+pre_recurse_action (TAO_Reconfig_Scheduler_Entry & /* entry */,
+                    TAO_Reconfig_Scheduler_Entry & /* successor */,
+                    const RtecScheduler::Dependency_Info & /* di */)
 {
   // Default behavior: just return success.
-  ACE_UNUSED_ARG (entry);
-  ACE_UNUSED_ARG (successor);
-  ACE_UNUSED_ARG (di);
   return 0;
 }
 
@@ -232,10 +227,9 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-postfix_action (TAO_Reconfig_Scheduler_Entry &rse)
+postfix_action (TAO_Reconfig_Scheduler_Entry & /* rse */)
 {
   // Default behavior: just return success.
-  ACE_UNUSED_ARG (rse);
   return 0;
 }
 
@@ -297,13 +291,10 @@ prefix_action (TAO_Reconfig_Scheduler_Entry &rse)
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_DFS_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
-                    TAO_Reconfig_Scheduler_Entry &successor,
-                    const RtecScheduler::Dependency_Info &di)
+pre_recurse_action (TAO_Reconfig_Scheduler_Entry & /* entry */,
+                    TAO_Reconfig_Scheduler_Entry & successor,
+                    const RtecScheduler::Dependency_Info & /* di */)
 {
-  ACE_UNUSED_ARG (entry);
-  ACE_UNUSED_ARG (di);
-
   // Enabled operations we reached via a dependency and that do not
   // specify a period are not thread delineators.
   if (successor.enabled_state () != RtecScheduler::RT_INFO_DISABLED
@@ -445,10 +436,8 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_SCC_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                     TAO_Reconfig_Scheduler_Entry &successor,
-                    const RtecScheduler::Dependency_Info &di)
+                    const RtecScheduler::Dependency_Info & /* di */)
 {
-  ACE_UNUSED_ARG (di);
-
   if  (successor.enabled_state () !=
          RtecScheduler::RT_INFO_DISABLED
        && successor.rev_dfs_status () ==
@@ -504,10 +493,8 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Reverse_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                     TAO_Reconfig_Scheduler_Entry &successor,
-                    const RtecScheduler::Dependency_Info &di)
+                    const RtecScheduler::Dependency_Info & /* di */)
 {
-  ACE_UNUSED_ARG (di);
-
   // @TODO - check for conjunction nodes here and perform conjunctive
   // function on existing rate tuples.  Idea: treat conjunctive tuples
   // as skolem functions over the possible rates of their incedent
@@ -697,14 +684,13 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Forward_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                     TAO_Reconfig_Scheduler_Entry &successor,
-                    const RtecScheduler::Dependency_Info &di)
+                    const RtecScheduler::Dependency_Info & /* di */)
 {
   if (successor.enabled_state () == RtecScheduler::RT_INFO_DISABLED)
     {
       return 1;
     }
 
-  ACE_UNUSED_ARG (di);
   TAO_RT_Info_Tuple **tuple_ptr_ptr;
 
   TUPLE_SET_ITERATOR orig_tuple_iter (entry.orig_tuple_subset ());
@@ -1060,10 +1046,8 @@ template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Criticality_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
                     TAO_Reconfig_Scheduler_Entry &successor,
-                    const RtecScheduler::Dependency_Info &di)
+                    const RtecScheduler::Dependency_Info & /* di */)
 {
-  ACE_UNUSED_ARG (di);
-
 #ifdef SCHEDULER_LOGGING
   ACE_DEBUG ((LM_DEBUG,
               "Crit Prop_Visitor visiting %s[%d], successor is %s[%d]\n",
@@ -1098,4 +1082,4 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
 }
 
 
-#endif /* TAO_RECONFIG_SCHED_UTILS_T_C */
+#endif /* TAO_RECONFIG_SCHED_UTILS_T_CPP */

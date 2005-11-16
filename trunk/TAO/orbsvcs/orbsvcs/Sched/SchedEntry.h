@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 //
 // ============================================================================
@@ -25,6 +26,8 @@
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "ace/Containers.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //////////////////////
 // Helper Functions //
@@ -633,6 +636,7 @@ private:
 
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "SchedEntry.i"

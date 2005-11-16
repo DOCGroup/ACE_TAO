@@ -21,12 +21,27 @@ ACE_RCSID (SSLIOP,
 
 // -------------------------------------------------------
 
+#if (defined (TAO_HAS_VERSIONED_NAMESPACE) \
+     && TAO_HAS_VERSIONED_NAMESPACE == 1) \
+  && !(defined (_MSC_VER) && _MSC_VER <= 1200)
+// MSVC++ 6's preprocessor can't handle macro expansions required by
+// the versioned namespace support.  *sigh*
+
+# define TAO_SSLIOP_PASSWORD_CALLBACK_NAME ACE_PREPROC_CONCATENATE(TAO_VERSIONED_NAMESPACE_NAME, _TAO_SSLIOP_password_callback)
+
+#else
+
+# define TAO_SSLIOP_PASSWORD_CALLBACK_NAME TAO_SSLIOP_password_callback
+
+#endif  /* TAO_HAS_VERSIONED_NAMESPACE == 1 */
+
+
 extern "C"
 int
-TAO_SSLIOP_password_callback (char *buf,
-                              int size,
-                              int /* rwflag */,
-                              void *userdata)
+TAO_SSLIOP_PASSWORD_CALLBACK_NAME (char *buf,
+                                   int size,
+                                   int /* rwflag */,
+                                   void *userdata)
 {
   // @@ I'm probably over complicating this implementation, but that's
   //    what you get when you try to be overly efficient.  :-)
@@ -65,6 +80,8 @@ TAO_SSLIOP_password_callback (char *buf,
 }
 
 // -------------------------------------------------------
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::CredentialsAcquirer::CredentialsAcquirer (
    TAO::SL3::CredentialsCurator_ptr curator,
@@ -286,7 +303,7 @@ TAO::SSLIOP::CredentialsAcquirer::make_X509 (const ::SSLIOP::File &certificate)
       // it to OpenSSL's internal X.509 format.
       x = PEM_read_X509 (fp,
                          0,
-                         TAO_SSLIOP_password_callback,
+                         TAO_SSLIOP_PASSWORD_CALLBACK_NAME,
                          const_cast<char *> (password));
     }
 
@@ -364,7 +381,7 @@ TAO::SSLIOP::CredentialsAcquirer::make_EVP_PKEY (const ::SSLIOP::File &key)
       // OpenSSL's internal private key format.
       evp = PEM_read_PrivateKey (fp,
                                  0,
-                                 TAO_SSLIOP_password_callback,
+                                 TAO_SSLIOP_PASSWORD_CALLBACK_NAME,
                                  const_cast<char *> (password));
     }
 
@@ -375,3 +392,5 @@ TAO::SSLIOP::CredentialsAcquirer::make_EVP_PKEY (const ::SSLIOP::File &key)
 
   return evp;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

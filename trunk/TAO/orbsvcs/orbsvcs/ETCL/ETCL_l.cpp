@@ -20,7 +20,7 @@
 
 #ifdef __cplusplus
 
-#include "ace/OS_NS_stdlib.h"
+#include "ace/OS.h"
 
 /* Use prototypes in function declarations. */
 #define YY_USE_PROTOS
@@ -463,6 +463,8 @@ char *yytext;
 #include "ETCL_Interpreter.h"
 #include "ETCL_Constraint.h"
 #include "ETCL_y.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 static const char* extract_string(char*);
 //static const char * extract_string(char*);
@@ -1868,3 +1870,5 @@ yywrap (void)
 {
   return 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

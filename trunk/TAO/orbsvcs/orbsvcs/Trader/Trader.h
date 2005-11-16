@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -34,6 +34,8 @@
 #pragma warning(push)
 #pragma warning (disable:4250)
 #endif /* _MSC_VER */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward Declaration.
 class TAO_Trader_Base;
@@ -512,6 +514,8 @@ operator< (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
 bool
 operator== (const CosTrading::Admin::OctetSeq& left,
             const CosTrading::Admin::OctetSeq& right);
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

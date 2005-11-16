@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 
 // ============================================================================
@@ -31,6 +32,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 struct TAO_RTSched_Export TAO_RT_Info_Ex
   : public RtecScheduler::RT_Info
@@ -656,6 +659,8 @@ public:
   // Fills in a static dispatch configuration for a priority level, based
   // on the operation characteristics of a representative scheduling entry.
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // Include the templates here.
 #include "Reconfig_Sched_Utils_T.h"

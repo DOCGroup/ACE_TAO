@@ -20,6 +20,8 @@ ACE_RCSID (SSLIOP,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::SSLIOP::Transport::Transport (
   TAO::SSLIOP::Connection_Handler *handler,
   TAO_ORB_Core *orb_core,
@@ -378,3 +380,5 @@ TAO::SSLIOP::Transport::get_listen_point (
 
   return 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

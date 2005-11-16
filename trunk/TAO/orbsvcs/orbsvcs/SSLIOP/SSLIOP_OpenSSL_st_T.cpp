@@ -10,11 +10,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-ACE_RCSID (SSLIOP,
-           SSLIOP_OpenSSL_st_T,
-           "$Id$")
-
-
 #if !defined (__ACE_INLINE__)
 #include "SSLIOP_OpenSSL_st_T.inl"
 #endif  /* !__ACE_INLINE__ */

@@ -28,6 +28,8 @@
 
 ACE_RCSID(Sched, DynSched, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 //////////////////////
 // Helper functions //
 //////////////////////
@@ -2417,3 +2419,5 @@ ACE_DynScheduler::output_timeline (const char *filename, const char *heading)
   return status;
 }
   // this prints the entire set of timeline outputs to the specified file
+
+TAO_END_VERSIONED_NAMESPACE_DECL

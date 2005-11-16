@@ -22,6 +22,8 @@
 #include "orbsvcs/CosTradingS.h"
 #include "orbsvcs/CosTradingReposS.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Constraint_Evaluator;
 class TAO_Constraint_Validator;
 
@@ -157,6 +159,8 @@ private:
   /// The ordered list of offers.
   Ordered_Offers offers_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_CONSTRAINT_INTERPRETER_H */

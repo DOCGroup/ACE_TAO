@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 // $Id$
 //
 // ============================================================================
@@ -33,6 +34,9 @@
 #include "SchedEntry.h"
 #include "sched_export.h"
 #include "ace/Recursive_Thread_Mutex.h"
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_RTSched_Export ACE_DynScheduler
   // = TITLE
@@ -527,6 +531,8 @@ private:
   u_long max_dispatch_id_;
 
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "DynSched.i"

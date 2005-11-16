@@ -4958,7 +4958,6 @@ libTAO_RTSched_la_SOURCES = \
   Sched/Config_Scheduler.cpp \
   Sched/DynSched.cpp \
   Sched/Reconfig_Sched_Utils.cpp \
-  Sched/Reconfig_Scheduler.cpp \
   Sched/SchedEntry.cpp \
   Sched/Scheduler.cpp \
   Sched/Scheduler_Generic.cpp \
@@ -5621,11 +5620,9 @@ libTAO_SSLIOP_la_SOURCES = \
   SSLIOP/SSLIOP_ORBInitializer.cpp \
   SSLIOP/SSLIOP_OwnCredentials.cpp \
   SSLIOP/SSLIOP_Profile.cpp \
-  SSLIOP/SSLIOP_SSL.cpp \
   SSLIOP/SSLIOP_TargetCredentials.cpp \
   SSLIOP/SSLIOP_Transport.cpp \
   SSLIOP/SSLIOP_Util.cpp \
-  SSLIOP/SSLIOP_X509.cpp \
   SSLIOP/params_dup.c \
   SSLIOP/ssl_endpointsC.cpp \
   SSLIOPC.cpp

@@ -20,6 +20,8 @@
 #include "RTCosScheduling_PCP_Manager.i"
 #endif /* __ACE_INLINE__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO {
 
 CosSchedulingLockList::CosSchedulingLockList(CosSchedulingLockNode *lock_array,
@@ -513,3 +515,5 @@ PCP_Manager_Factory::~PCP_Manager_Factory()
 }
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

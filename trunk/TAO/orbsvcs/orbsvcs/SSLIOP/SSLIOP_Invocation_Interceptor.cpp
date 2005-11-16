@@ -10,6 +10,8 @@ ACE_RCSID (SSLIOP,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::SSLIOP::Server_Invocation_Interceptor::Server_Invocation_Interceptor (
    ::SSLIOP::Current_ptr current,
    ::Security::QOP qop)
@@ -84,7 +86,7 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request_service_contexts (
           X509 *peer = ::d2i_X509 (0, &der_cert, cert->length ());
           if (peer != 0)
             {
-              char buf[BUFSIZ];
+              char buf[BUFSIZ] = { 0 };
 
               ::X509_NAME_oneline (::X509_get_subject_name (peer),
                                    buf,
@@ -160,3 +162,5 @@ TAO::SSLIOP::Server_Invocation_Interceptor::send_other (
                    PortableInterceptor::ForwardRequest))
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

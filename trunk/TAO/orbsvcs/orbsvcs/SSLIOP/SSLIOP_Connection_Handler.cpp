@@ -24,6 +24,8 @@ ACE_RCSID (SSLIOP,
 
 // ****************************************************************
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::SSLIOP::Connection_Handler::Connection_Handler (
     ACE_Thread_Manager *t)
   : SVC_HANDLER (t, 0 , 0),
@@ -440,3 +442,4 @@ TAO::SSLIOP::Connection_Handler::teardown_ssl_state (
                             setup_done);
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -6,13 +6,14 @@
 
 
 DSA *
-DSAparams_dup_wrapper (DSA *dsa)
+DSAPARAMS_DUP_WRAPPER_NAME (DSA *dsa)
 {
 	return DSAparams_dup (dsa);
 }
 
 DH *
-DHparams_dup_wrapper (DH *dh)
+DHPARAMS_DUP_WRAPPER_NAME (DH *dh)
 {
 	return DHparams_dup (dh);
 }
+

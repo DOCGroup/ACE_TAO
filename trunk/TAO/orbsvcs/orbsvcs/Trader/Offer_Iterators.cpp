@@ -4,6 +4,8 @@
 
 ACE_RCSID(Trader, Offer_Iterators, "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_Offer_Iterator::TAO_Offer_Iterator (const TAO_Property_Filter& pfilter)
   : pfilter_ (pfilter)
 {
@@ -316,3 +318,5 @@ TAO_Offer_Id_Iterator::insert_id (CosTrading::OfferId new_id)
 {
   this->ids_.enqueue_tail (new_id);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
