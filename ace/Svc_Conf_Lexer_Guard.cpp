@@ -10,6 +10,8 @@ ACE_RCSID (ace,
            Svc_Conf_Lexer_Guard,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_Svc_Conf_Lexer_Guard::ACE_Svc_Conf_Lexer_Guard (ACE_Svc_Conf_Param *param)
   : buffer_ (0)
 {
@@ -36,5 +38,7 @@ ACE_Svc_Conf_Lexer_Guard::~ACE_Svc_Conf_Lexer_Guard (void)
 
   ::ace_yy_pop_buffer (this->buffer_);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */

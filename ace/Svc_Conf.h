@@ -30,6 +30,8 @@
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward declarations.
 struct ace_yy_buffer_state;
 
@@ -199,6 +201,8 @@ ace_create_service_type (const ACE_TCHAR *,
                          unsigned int,
                          ACE_Service_Object_Exterminator = 0);
 
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

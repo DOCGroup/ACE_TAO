@@ -12,6 +12,8 @@ ACE_RCSID (ace,
 	   Svc_Conf_l,
 	   "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #define token(x)  x
 %}
 
@@ -132,3 +134,5 @@ yy_pop_buffer (yy_buffer_state *buffer)
 
   yy_switch_to_buffer (buffer);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

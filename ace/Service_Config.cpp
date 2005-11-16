@@ -46,13 +46,6 @@ ACE_Service_Config::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-// All the factory functions that allocate default statically linked
-// services should be placed below.
-
-// Allocate a Service Manager.
-
-ACE_FACTORY_DEFINE (ACE, ACE_Service_Manager)
-
 // ----------------------------------------
 
 // Set the signal handler to point to the handle_signal() function.
@@ -927,3 +920,10 @@ ACE_Service_Config::start_daemon (void)
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+// All the factory functions that allocate default statically linked
+// services should be placed below.
+
+// Allocate a Service Manager.
+
+ACE_FACTORY_DEFINE (ACE, ACE_Service_Manager)

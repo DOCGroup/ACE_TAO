@@ -522,6 +522,8 @@ ACE_RCSID (ace,
            Svc_Conf_l,
            "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #define token(x)  x
 #define PARAMETERS 1
 
@@ -1847,4 +1849,7 @@ ace_yy_pop_buffer (ace_yy_buffer_state *buffer)
 
   ace_yy_switch_to_buffer (buffer);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* ACE_USES_CLASSIC_SVC_CONF = 1 */
