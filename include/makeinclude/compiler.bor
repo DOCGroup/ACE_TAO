@@ -92,11 +92,11 @@ DEBUG_LFLAGS = -v -L$(BCB)\lib\debug
 !endif
 !else
 !if $(BCBVER) == 6 || $(BCBVER) == 5
-DEBUG_CFLAGS = -OS -Ov -Og -DNDEBUG -L$(BCB)\lib\release
+DEBUG_CFLAGS = -OS -Ov -Og -DNDEBUG
 !else
-DEBUG_CFLAGS = -O2 -DNDEBUG -L$(BCB)\lib\release
+DEBUG_CFLAGS = -O2 -DNDEBUG
 !endif
-DEBUG_LFLAGS =
+DEBUG_LFLAGS = -L$(BCB)\lib\release
 !endif
 
 !ifdef STATIC
