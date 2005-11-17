@@ -1,3 +1,12 @@
+Thu Nov 17 13:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Borland/ChatClient.mpc:
+          New MPC file, add vcl=1 to your default.features and pass VCL=1
+          to the make flags to build this
+
+        * examples/Borland/README:
+          Updated
+
 Thu Nov 17 12:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Borland/ChatClient.bpr:
