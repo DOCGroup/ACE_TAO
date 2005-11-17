@@ -1,3 +1,9 @@
+Thu Nov 17 09:53:35 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+
+	Fixed warning about unused arguments
+
 Wed Nov 16 11:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Swapping/Sender/Sender_exec.cpp:
