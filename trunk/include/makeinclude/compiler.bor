@@ -88,13 +88,13 @@ DEBUG_CFLAGS = -v -y -Od -vi- -k -D_DEBUG -DACE_NO_INLINE=1
 DEBUG_LFLAGS = -v
 !else
 DEBUG_CFLAGS = -v -y -Od -r- -vi- -k -D_DEBUG -DACE_NO_INLINE=1
-DEBUG_LFLAGS = -v
+DEBUG_LFLAGS = -v -L$(BCB)\lib\debug
 !endif
 !else
 !if $(BCBVER) == 6 || $(BCBVER) == 5
-DEBUG_CFLAGS = -OS -Ov -Og -DNDEBUG
+DEBUG_CFLAGS = -OS -Ov -Og -DNDEBUG -L$(BCB)\lib\release
 !else
-DEBUG_CFLAGS = -O2 -DNDEBUG
+DEBUG_CFLAGS = -O2 -DNDEBUG -L$(BCB)\lib\release
 !endif
 DEBUG_LFLAGS =
 !endif
