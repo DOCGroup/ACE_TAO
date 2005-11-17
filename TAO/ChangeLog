@@ -1,10 +1,16 @@
+Thu Nov 17 12:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Borland/ChatClient.bpr:
+        * examples/Borland/ChatClient.res:
+          Updated to BCB6 format
+
 Wed Nov 16 21:53:08 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/lex.yy.cpp:
         * TAO_IDL/fe/lex.yy.cpp.diff:
-        
+
           Since the change of
-          
+
           Wed Nov 16 11:23:15 2005  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
           checked in a version of lex.yy.cpp that had been generated
@@ -16,15 +22,15 @@ Wed Nov 16 14:12:08 USMST 2005  Yan Dai  <dai_y@ociweb.com>
 
         * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B.idl:
         * tests/CSD_Strategy_Tests/TP_Test_1/run_test.pl:
-        
-          Rolled back the changes 
+
+          Rolled back the changes
           "Sun Nov 13 12:15:58 USMST 2005  Yan Dai  <dai_y@ociweb.com>"
           made for debugging test failures on VxWorks build.
-            
+
         * NEWS:
 
           Added description for CSD feature.
-          
+
 Wed Nov 16 11:23:15 2005  Jeff Parsons  <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/idl.ll:
