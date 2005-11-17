@@ -1,0 +1,17 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Client) : taoserver, utils, iortable, vcl {
+  exename = chatclient
+  IDL_Files {
+    Broadcaster.idl
+    Receiver.idl
+  }
+  Source_Files {
+    ReceiverImpl.cpp
+    ChatClient.cpp
+    ORBThread.cpp
+    ChatClientWnd.cpp
+  }
+}
+
