@@ -57,7 +57,7 @@ namespace TAO
      * This class provides a means for creating and managing
      * OwnCredentials.
      */
-    class CredentialsCurator
+    class TAO_Security_Export CredentialsCurator
       : public virtual SecurityLevel3::CredentialsCurator,
         public virtual TAO_Local_RefCounted_Object
     {
