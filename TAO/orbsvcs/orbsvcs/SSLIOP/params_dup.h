@@ -31,8 +31,8 @@
 extern "C" {
 #endif
 
-extern DSA *DSAparams_dup_wrapper (DSA *dsa);
-extern DH  *DHparams_dup_wrapper (DH *dh);
+extern DSA *DSAPARAMS_DUP_WRAPPER_NAME (DSA *dsa);
+extern DH  *DHPARAMS_DUP_WRAPPER_NAME (DH *dh);
 
 #ifdef __cplusplus
 }
