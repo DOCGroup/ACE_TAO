@@ -60,6 +60,9 @@ release</a> of <a href="http://www.dre.vanderbilt.edu/TAO">TAO</a>:
 <a href="#ami">Asynchronous Method Invocation (AMI)</a></li>
 
 <li>
+<a href="#csd">Custom Servant Dispatching (CSD)</a></li>
+
+<li>
 <a href="../dynany/index.html">Dynamic Any</a></li>
 
 <li>
@@ -2317,7 +2320,61 @@ Future Work:
 <li>
 Implementation of the poller model.</li>
 </ul>
+<hr>
+<h3>
+<a NAME="csd"></a>Custom Servant Dispatching</h3>
+Points of contact: <a href="mailto:bradley_t@ociweb.com">Tim Bradley</a>
+<h4>
+Current Status:</h4>
+<ul>This Custom Servant Dispatching (CSD) feature provides user applications with the ability to implement and "plug-in" custom strategies to handle the dispatching of requests to servants.
+<p>A concrete CSD Strategy implementation has also been added to serve as a "reference implementation".  This is being called the CSD Thread Pool Strategy (TP_Strategy).  The TP_Strategy provides a means to decouple the threads (ORB threads) that receive requests from the underlying transport from the thread that will ultimately dispatch the request to the target servant object.  The TP_Strategy implements a "request queue" as the integral part of the mechanism that allows an ORB thread to "hand-off" a request to one of the TP_Strategy object's worker threads.  The TP_Strategy reference implementation is provided as an example of how concrete CSD Strategy could be implemented.
+<p>Two approaches are supported for applying CSD strategy to an application.
+<ol>
+<li>Explicitly calling CSD interfaces. 
+<p>Here is an example application code showing how a TP_Strategy object can be created and applied to a POA:
 
+<pre>
+
+  PortableServer::POA_var poa = ...; // create the poa.
+
+  // Create a new TP_Strategy object and save it into a "smart pointer" variable.
+  TAO::CSD::TP_Strategy_Handle csd_strategy = new TAO::CSD::TP_Strategy();
+
+  // Set the number of threads before calling apply_to().
+  csd_strategy->set_num_threads(2);
+
+  // Set the servant serialization flag before calling apply_to().
+  csd_strategy->set_servant_serialization (false);
+
+  // Tell the strategy to apply itself to the poa.
+  if (csd_strategy->apply_to(poa.in()) == false) 
+    {
+      ACE_ERROR((LM_ERROR, "Failed to apply CSD strategy to the poa.\n"));
+      return -1;
+    }
+</pre>
+<li>Service Configurator
+
+ <p>The format of the CSD specific parameters for creating the TP_Strategy service object is:          
+ <pre>-CSDtp &lt;poa_name&gt;:&lt;csd_thread_number&gt;:[OFF]</pre>
+
+ <p>The last portion of the parameter is the servant serialization flag. It's only needed when the servant serialization needs be turned off, otherwise the servant serialization is always on. When servant serialization is on (the default), the TP_Strategy will serialize requests to any particular servant.  Requests to different servant objects can occur in parallel, but requests to any particular servant will be dispatched serially (ie, one at a time).
+
+ <p>Here is an example of the svc.conf file.
+
+ <pre>
+  dynamic TAO_CSD_TP_Strategy_Factory Service_Object * 
+	TAO_CSD_ThreadPool:_make_TAO_CSD_TP_Strategy_Factory() "-CSDtp RootPOA:2"
+ </pre>
+</ol>
+</ul>
+<h4>
+Known Issues:</h4>
+<ul>
+<li>
+This feature is not currently tested for VxWorks.
+</li>
+</ul>
 <hr>
 <h3>
 <a NAME="interceptor"></a>Portable Interceptors</h3>

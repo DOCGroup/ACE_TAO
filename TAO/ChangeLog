@@ -1,3 +1,9 @@
+Thu Nov 17 07:57:13 USMST 2005  Yan Dai  <dai_y@ociweb.com>
+
+        * docs/releasenotes/index.html:
+
+          Added CSD feature to ORB related section.
+          
 Thu Nov 17 06:55:53 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Security/SL3_CredentialsAcquirerFactory.h:
