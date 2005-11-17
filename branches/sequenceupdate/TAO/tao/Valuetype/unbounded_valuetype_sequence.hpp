@@ -9,7 +9,7 @@
  *
  * @author Carlos O'Ryan
  */
-#include "unbounded_reference_allocation_traits.hpp"
+#include "unbounded_valuetype_allocation_traits.hpp"
 #include "valuetype_traits.hpp"
 #include "generic_sequence.hpp"
 #include "valuetype_sequence_element.hpp"
