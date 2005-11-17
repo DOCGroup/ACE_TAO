@@ -1,3 +1,15 @@
+Thu Nov 16 12:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/compiler.bor:
+          Added extra linker paths
+
+        * bin/MakeProjectCreator/config/vcl.mpb:
+          New base project, usable for building VCL application with Borland
+          C++ Builder
+
+        * bin/MakeProjectCreator/config/global.features:
+          Disable vcl by default
+
 Wed Nov 16 15:48:29 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/Hash_Map_Manager_T.h: For Sun CC 5.4 and earlier with explicit
@@ -15,8 +27,8 @@ Wed Nov 16 14:12:08 USMST 2005  Yan Dai  <dai_y@ociweb.com>
 
         * bin/tao_orb_tests.lst:
 
-          Disabled CSD tests on VxWorks builds. 
-          
+          Disabled CSD tests on VxWorks builds.
+
 Tue Nov 15 23:41:39 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Service_Config.cpp (ACE_FACTORY_DEFINE):
