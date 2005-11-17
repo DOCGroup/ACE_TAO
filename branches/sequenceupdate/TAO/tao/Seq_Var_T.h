@@ -120,33 +120,6 @@ public:
   operator T *& ();
 };
 
-/**
- * @class TAO_MngSeq_Var_T
- *
- * @brief Parametrized implementation of _var class for sequences
- * whose element is of a managed type - string, wstring, valuetype,
- * interface, abstract interface and pseudo object.
- */
-template <typename T>
-class TAO_MngSeq_Var_T : public TAO_Seq_Var_Base_T<T>
-{
-public:
-  typedef typename T::subscript_type T_elem;
-
-  TAO_MngSeq_Var_T (void);
-  TAO_MngSeq_Var_T (T *);
-  TAO_MngSeq_Var_T (const TAO_MngSeq_Var_T<T> &);
-
-  TAO_MngSeq_Var_T & operator= (T *);
-  TAO_MngSeq_Var_T & operator= (const TAO_MngSeq_Var_T<T> &);
-
-  /// Variable-size base types only.
-  operator T *& ();
-
-  /// Managed base types only.
-  T_elem operator[] (CORBA::ULong index);
-};
-
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)

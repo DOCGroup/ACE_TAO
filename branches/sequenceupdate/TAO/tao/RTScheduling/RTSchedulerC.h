@@ -592,13 +592,13 @@ namespace RTScheduling
     class NameList;
 
     typedef
-      TAO_MngSeq_Var_T<
+      TAO_VarSeq_Var_T<
           NameList
         >
       NameList_var;
 
     typedef
-      TAO_MngSeq_Out_T<
+      TAO_Seq_Out_T<
           NameList,
           NameList_var
         >
@@ -1001,10 +1001,10 @@ namespace RTScheduling
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void send_request (
         ::PortableInterceptor::ClientRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1013,10 +1013,10 @@ namespace RTScheduling
         CORBA::SystemException,
         ::PortableInterceptor::ForwardRequest
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void receive_request (
         ::PortableInterceptor::ServerRequestInfo_ptr ri,
         ::RTScheduling::Current::IdType_out guid,
@@ -1029,10 +1029,10 @@ namespace RTScheduling
         CORBA::SystemException,
         ::PortableInterceptor::ForwardRequest
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void send_reply (
         ::PortableInterceptor::ServerRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1040,10 +1040,10 @@ namespace RTScheduling
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void send_exception (
         ::PortableInterceptor::ServerRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1052,10 +1052,10 @@ namespace RTScheduling
         CORBA::SystemException,
         ::PortableInterceptor::ForwardRequest
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void send_other (
         ::PortableInterceptor::ServerRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1064,10 +1064,10 @@ namespace RTScheduling
         CORBA::SystemException,
         ::PortableInterceptor::ForwardRequest
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void send_poll (
         ::PortableInterceptor::ClientRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1076,10 +1076,10 @@ namespace RTScheduling
         CORBA::SystemException,
         ::PortableInterceptor::ForwardRequest
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void receive_reply (
         ::PortableInterceptor::ClientRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1087,10 +1087,10 @@ namespace RTScheduling
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void receive_exception (
         ::PortableInterceptor::ClientRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1099,10 +1099,10 @@ namespace RTScheduling
         CORBA::SystemException,
         ::PortableInterceptor::ForwardRequest
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void receive_other (
         ::PortableInterceptor::ClientRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1111,10 +1111,10 @@ namespace RTScheduling
         CORBA::SystemException,
         ::PortableInterceptor::ForwardRequest
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
-    
+
     virtual void cancel (
         const ::RTScheduling::Current::IdType & guid
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1122,36 +1122,36 @@ namespace RTScheduling
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
+
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
-    
+
     virtual CORBA::Boolean _is_a (
         const char *type_id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    
+
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Abstract or local interface only.
     Scheduler (void);
-    
+
     virtual ~Scheduler (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Scheduler (const Scheduler &);
-    
+
     void operator= (const Scheduler &);
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   extern TAO_RTScheduler_Export ::CORBA::TypeCode_ptr const _tc_Scheduler;
 
 // TAO_IDL - Generated from
@@ -1168,7 +1168,7 @@ namespace TAO
 
 #if !defined (_RTSCHEDULING_THREADACTION__TRAITS_CH_)
 #define _RTSCHEDULING_THREADACTION__TRAITS_CH_
-  
+
   template<>
   struct TAO_RTScheduler_Export Objref_Traits< ::RTScheduling::ThreadAction>
   {
@@ -1189,7 +1189,7 @@ namespace TAO
 
 #if !defined (_RTSCHEDULING_DISTRIBUTABLETHREAD__TRAITS_CH_)
 #define _RTSCHEDULING_DISTRIBUTABLETHREAD__TRAITS_CH_
-  
+
   template<>
   struct TAO_RTScheduler_Export Objref_Traits< ::RTScheduling::DistributableThread>
   {
@@ -1210,7 +1210,7 @@ namespace TAO
 
 #if !defined (_RTSCHEDULING_CURRENT__TRAITS_CH_)
 #define _RTSCHEDULING_CURRENT__TRAITS_CH_
-  
+
   template<>
   struct TAO_RTScheduler_Export Objref_Traits< ::RTScheduling::Current>
   {
@@ -1231,7 +1231,7 @@ namespace TAO
 
 #if !defined (_RTSCHEDULING_RESOURCEMANAGER__TRAITS_CH_)
 #define _RTSCHEDULING_RESOURCEMANAGER__TRAITS_CH_
-  
+
   template<>
   struct TAO_RTScheduler_Export Objref_Traits< ::RTScheduling::ResourceManager>
   {
@@ -1252,7 +1252,7 @@ namespace TAO
 
 #if !defined (_RTSCHEDULING_SCHEDULER__TRAITS_CH_)
 #define _RTSCHEDULING_SCHEDULER__TRAITS_CH_
-  
+
   template<>
   struct TAO_RTScheduler_Export Objref_Traits< ::RTScheduling::Scheduler>
   {

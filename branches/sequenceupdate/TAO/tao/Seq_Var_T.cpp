@@ -71,25 +71,6 @@ TAO_VarSeq_Var_T<T>::operator= (const TAO_VarSeq_Var_T<T> & p)
   return *this;
 }
 
-// ****************************************************************************
-
-template<typename T>
-TAO_MngSeq_Var_T<T> &
-TAO_MngSeq_Var_T<T>::operator= (
-    const TAO_MngSeq_Var_T<T> & p
-  )
-{
-  // Strongly exception safe assignment using copy and non-throwing
-  // swap technique.
-  TAO_MngSeq_Var_T<T> tmp (p);
-
-  T * old_ptr = this->ptr_;
-  this->ptr_ = tmp.ptr_;
-  tmp.ptr_ = old_ptr;
-
-  return *this;
-}
-
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_SEQ_VAR_T_CPP */

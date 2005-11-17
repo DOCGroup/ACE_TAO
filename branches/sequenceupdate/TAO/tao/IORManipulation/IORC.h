@@ -541,13 +541,13 @@ namespace TAO_IOP
     class IORList;
 
     typedef
-      TAO_MngSeq_Var_T<
+      TAO_VarSeq_Var_T<
           IORList
         >
       IORList_var;
 
     typedef
-      TAO_MngSeq_Out_T<
+      TAO_Seq_Out_T<
           IORList,
           IORList_var
         >

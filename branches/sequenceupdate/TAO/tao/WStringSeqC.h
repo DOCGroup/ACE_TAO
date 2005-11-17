@@ -67,13 +67,13 @@ namespace CORBA
   class WStringSeq;
 
   typedef
-    TAO_MngSeq_Var_T<
+    TAO_VarSeq_Var_T<
         WStringSeq
       >
     WStringSeq_var;
 
   typedef
-    TAO_MngSeq_Out_T<
+    TAO_Seq_Out_T<
         WStringSeq,
         WStringSeq_var
       >

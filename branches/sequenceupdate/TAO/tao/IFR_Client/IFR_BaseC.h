@@ -791,13 +791,13 @@ namespace CORBA
   class InterfaceDefSeq;
 
   typedef
-    TAO_MngSeq_Var_T<
+    TAO_VarSeq_Var_T<
         InterfaceDefSeq
       >
     InterfaceDefSeq_var;
 
   typedef
-    TAO_MngSeq_Out_T<
+    TAO_Seq_Out_T<
         InterfaceDefSeq,
         InterfaceDefSeq_var
       >
@@ -912,13 +912,13 @@ namespace CORBA
   class ValueDefSeq;
 
   typedef
-    TAO_MngSeq_Var_T<
+    TAO_VarSeq_Var_T<
         ValueDefSeq
       >
     ValueDefSeq_var;
 
   typedef
-    TAO_MngSeq_Out_T<
+    TAO_Seq_Out_T<
         ValueDefSeq,
         ValueDefSeq_var
       >
@@ -1010,13 +1010,13 @@ namespace CORBA
   class AbstractInterfaceDefSeq;
 
   typedef
-    TAO_MngSeq_Var_T<
+    TAO_VarSeq_Var_T<
         AbstractInterfaceDefSeq
       >
     AbstractInterfaceDefSeq_var;
 
   typedef
-    TAO_MngSeq_Out_T<
+    TAO_Seq_Out_T<
         AbstractInterfaceDefSeq,
         AbstractInterfaceDefSeq_var
       >
@@ -1085,13 +1085,13 @@ namespace CORBA
   class LocalInterfaceDefSeq;
 
   typedef
-    TAO_MngSeq_Var_T<
+    TAO_VarSeq_Var_T<
         LocalInterfaceDefSeq
       >
     LocalInterfaceDefSeq_var;
 
   typedef
-    TAO_MngSeq_Out_T<
+    TAO_Seq_Out_T<
         LocalInterfaceDefSeq,
         LocalInterfaceDefSeq_var
       >
@@ -1160,13 +1160,13 @@ namespace CORBA
   class ExtInterfaceDefSeq;
 
   typedef
-    TAO_MngSeq_Var_T<
+    TAO_VarSeq_Var_T<
         ExtInterfaceDefSeq
       >
     ExtInterfaceDefSeq_var;
 
   typedef
-    TAO_MngSeq_Out_T<
+    TAO_Seq_Out_T<
         ExtInterfaceDefSeq,
         ExtInterfaceDefSeq_var
       >
@@ -1235,13 +1235,13 @@ namespace CORBA
   class ExtValueDefSeq;
 
   typedef
-    TAO_MngSeq_Var_T<
+    TAO_VarSeq_Var_T<
         ExtValueDefSeq
       >
     ExtValueDefSeq_var;
 
   typedef
-    TAO_MngSeq_Out_T<
+    TAO_Seq_Out_T<
         ExtValueDefSeq,
         ExtValueDefSeq_var
       >
@@ -1310,13 +1310,13 @@ namespace CORBA
   class ExtAbstractInterfaceDefSeq;
 
   typedef
-    TAO_MngSeq_Var_T<
+    TAO_VarSeq_Var_T<
         ExtAbstractInterfaceDefSeq
       >
     ExtAbstractInterfaceDefSeq_var;
 
   typedef
-    TAO_MngSeq_Out_T<
+    TAO_Seq_Out_T<
         ExtAbstractInterfaceDefSeq,
         ExtAbstractInterfaceDefSeq_var
       >
@@ -1385,13 +1385,13 @@ namespace CORBA
   class ExtLocalInterfaceDefSeq;
 
   typedef
-    TAO_MngSeq_Var_T<
+    TAO_VarSeq_Var_T<
         ExtLocalInterfaceDefSeq
       >
     ExtLocalInterfaceDefSeq_var;
 
   typedef
-    TAO_MngSeq_Out_T<
+    TAO_Seq_Out_T<
         ExtLocalInterfaceDefSeq,
         ExtLocalInterfaceDefSeq_var
       >
@@ -1437,13 +1437,13 @@ namespace CORBA
   class ContainedSeq;
 
   typedef
-    TAO_MngSeq_Var_T<
+    TAO_VarSeq_Var_T<
         ContainedSeq
       >
     ContainedSeq_var;
 
   typedef
-    TAO_MngSeq_Out_T<
+    TAO_Seq_Out_T<
         ContainedSeq,
         ContainedSeq_var
       >
@@ -1926,13 +1926,13 @@ namespace CORBA
   class EnumMemberSeq;
 
   typedef
-    TAO_MngSeq_Var_T<
+    TAO_VarSeq_Var_T<
         EnumMemberSeq
       >
     EnumMemberSeq_var;
 
   typedef
-    TAO_MngSeq_Out_T<
+    TAO_Seq_Out_T<
         EnumMemberSeq,
         EnumMemberSeq_var
       >

@@ -52,43 +52,7 @@ private:
   void operator= (const T_var &);
 };
 
-
-/**
- * @class TAO_MngSeq_Out_T
- *
- * @brief Parametrized implementation of _out class for sequences
- * having managed types.
- *
- */
-template <typename T, typename T_var>
-class TAO_MngSeq_Out_T
-{
-public:
-  typedef typename T::subscript_type T_elem;
-
-  TAO_MngSeq_Out_T (T *&);
-  TAO_MngSeq_Out_T (T_var &);
-  TAO_MngSeq_Out_T (const TAO_MngSeq_Out_T<T,T_var> &);
-
-  TAO_MngSeq_Out_T &operator= (const TAO_MngSeq_Out_T<T,T_var> &);
-  TAO_MngSeq_Out_T &operator= (T *);
-
-  operator T *& ();
-  T *& ptr (void);
-  T * operator-> (void);
-
-  T_elem operator[] (CORBA::ULong index);
-
-private:
-  typedef TAO_MngSeq_Out_T<T,T_var> THIS_OUT_TYPE;
-  T *& ptr_;
-  // Assignment from T_var not allowed.
-  void operator= (const T_var &);
-};
-
-
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #if defined (__ACE_INLINE__)
 #include "Seq_Out_T.inl"
