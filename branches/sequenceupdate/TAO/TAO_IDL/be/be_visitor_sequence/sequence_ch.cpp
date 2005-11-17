@@ -264,5 +264,4 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
     *os << be_uidt_nl
         << ">" << be_uidt_nl
         << node->local_name () << "_out;" << be_uidt;
-  }
 }
