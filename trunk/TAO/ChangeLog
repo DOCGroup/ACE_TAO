@@ -1,3 +1,15 @@
+Thu Nov 17 06:49:02 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/params_dup.h:
+
+	  Declare wrap per functions with their versioned namespace macro
+	  counterparts.
+
+	* orbsvcs/orbsvcs/SSLIOP/params_dup.c:
+
+	  Include "params_dup.h" to pull in wrapper function names with
+	  versioned namespace support.
+
 Thu Nov 17 13:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Borland/ChatClient.mpc:
