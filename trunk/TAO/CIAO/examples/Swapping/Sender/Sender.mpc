@@ -35,7 +35,7 @@ project(Hello_Base_Sender_DnC_Upgradeable_svnt) : ciao_servant_dnc {
   }
 
   IDL_Files {
-    SenderE.idl
+    SenderE.idl << SenderE.idl
   }
 
   Source_Files {
