@@ -1,3 +1,11 @@
+Thu Nov 17 06:55:53 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Security/SL3_CredentialsAcquirerFactory.h:
+	* orbsvcs/orbsvcs/Security/SL3_CredentialsCurator.h:
+
+	  Re-export the classes in these files.  Addresses unresolved
+	  symbol errors in g++ 4.x builds.
+
 Thu Nov 17 06:49:02 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/params_dup.h:
