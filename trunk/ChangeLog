@@ -1,3 +1,12 @@
+Thu Nov 16 13:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/compiler.bor:
+          When VCL is defined, set different startup obj and also define
+          PACKAGES
+
+        * include/makeinclude/build_exe.bor:
+          Added PACKAGES to the compiler flags
+
 Thu Nov 16 12:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/compiler.bor:
