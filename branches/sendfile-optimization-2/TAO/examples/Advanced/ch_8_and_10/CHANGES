@@ -1,0 +1,51 @@
+$Id$
+
+Changelog for chapter 8 and 10  example in "Advanced CORBA 
+Programming with C++" by Michi Henning and Steve Vinoski, 
+Copyright 1999, Addison-Wesley, Reading, MA.  The following 
+changes have been made to the book's source code to make the 
+example work with TAO and with various platforms and compilers.
+
+_______________________________________________________________________________
+ESSENTIAL CHANGES:
+  1. Changed filenames from .cc to .cpp and .hh to.h, 
+     and modified #includes appropriatly
+
+  2. a) Unnecessary standard includes of <iostreams.h> and <assert.h> must 
+        be removed or moved to follow the local includes in
+        server.h, server.cpp, client.cpp, and icp.cpp.
+     
+     b) The following files may need their includes further rearranged 
+        to avoid warnings and errors (g++). The following orderings 
+        seem to work fine: 
+            -server.cpp:  "server.h", <algorithm>, "icp.h"
+            -server.h:  "CCSS.h", <map>
+
+  3. removed if 0 code surrounding
+     operator<<(ostream & os, const CCS::Controller::EChange & ec)
+     definition in server.cpp and client.cpp.
+
+_______________________________________________________________________________
+ADDITIONAL CHANGES:
+  4. Added .in() to _var parameters wherever needed:
+       -client.cpp: 
+          -4 changes in operator<<(ostream & os, CCS::Thermometer_ptr t)
+          -6 changes in main():  5 calls to is_nil(), 1 call to _narrow
+          -2 additions in main() of .inout() to _var parameters of set_temp(). 
+             Note: .inout() is functionally the same as .in() in this case
+       
+       -server.cpp: 
+          3 changes in main()
+          
+_______________________________________________________________________________
+TO DO:
+   -discrepancy in temperatures in my output vs. sample output
+    in book.
+_____________________________________________________
+
+
+
+
+
+
+

@@ -1,0 +1,16 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Server): taoserver {
+  Source_Files {
+    server.cpp
+  }
+}
+
+project(*Client): taoclient, anytypecode {
+  Source_Files {
+    timeC.cpp
+    client.cpp
+  }
+}
+

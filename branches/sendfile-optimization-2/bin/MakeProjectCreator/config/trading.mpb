@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : orbsvcslib {
+  after     += CosTrading 
+  libs      += TAO_CosTrading
+}

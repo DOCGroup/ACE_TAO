@@ -1,0 +1,42 @@
+# $Id$
+
+Description:
+
+This is a simple test for buffered AMI calls.  It invokes multiple AMI
+calls.  Due to buffering in the ORB, the calls are automatically
+bunched together instead of being delivered to the server upon every
+invocation.
+
+Expected output:
+
+The client invokes an AMI after <interval> amount of time.  Implicit
+flushing occurs every <message count> invocations.
+
+The server prints out the time and the number of the AMI request.  The
+client prints out the time and the number of the reply.  The output
+should show a batch of invocations received on the server.
+
+How to run:
+
+You can use the run_test.pl script to run it or:
+
+$ server
+$ client
+
+Notes:
+
+- Use TAO_HAS_CORBA_MESSAGING and TAO_HAS_AMI_CALLBACK to compile
+  TAO. This enables the AMI code in it.
+
+- Use -GC on the TAO IDL compiler if you want to generate code for AMI
+  callbacks. The IDL compiler needs to be compiled with IDL_HAS_VALUETYPE
+  defined.
+
+- You should also use the muxed TransportMuxStrategy since the
+  exclusive strategy will result in multiple queues, one for each
+  exclusive connection.  Since there will be many queues, the
+  buffering constraits will not be met and the queues will not get
+  flushed.
+
+- Remember that the AMI callbacks are like nested upcalls.  Therefore,
+  they will not work with the RW ClientConnectionHandler strategy.

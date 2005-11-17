@@ -1,0 +1,33 @@
+/**
+
+@page OBV/TC_ALignment Test README File
+
+	This is a test of the traversal of the typecode tree for valuetypes.
+Specifically, elements of the valuetypes typecode that are respresent CORBA
+Short values, for example the value modifier, have been known to cause errors
+when traversing the typecode tree if the previous quantity inserted (in this
+case the repository id) has left the write pointer with an odd offset from
+an 8-byte boundary. This problem has been fixed - the test is to ensure that
+the problem does not recur as a result of future changes to the TAO TypeCode
+class.
+
+        Four valuetypes are declared in an IDL file, named in such a way 
+that their repository IDs (including the terminal null byte) have lengths
+of 25, 27, 29, and 31. The test method is called 4 times. In each call,
+one of these valuetypes is inserted into an Any and returned to the client,
+who extracts it from the Any and checks the state member for the
+correct value.
+
+	To run the test use the run_test.pl script:
+
+$ ./run_test.pl
+
+The script returns 0 if the test was successful.
+
+The command line option -d turns on debugging information for any
+errors that may occur. The script will automatically shut down the
+server by means of a client call. If the test is run by hand, this
+will not happen automatically - the command line option -x must be
+passed to the client.
+
+*/
