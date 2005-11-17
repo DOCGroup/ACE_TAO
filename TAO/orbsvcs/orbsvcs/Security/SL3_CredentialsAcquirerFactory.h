@@ -42,7 +42,7 @@ namespace TAO
      * All concrete CredentialsAcquirerFactory classes must implement
      * this interface.
      */
-    class CredentialsAcquirerFactory
+    class TAO_Security_Export CredentialsAcquirerFactory
     {
     public:
 
