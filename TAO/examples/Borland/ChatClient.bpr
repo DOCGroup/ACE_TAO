@@ -4,8 +4,8 @@
   <MACROS>
     <VERSION value="BCB.06.00"/>
     <PROJECT value="ChatClient.exe"/>
-    <OBJFILES value="obj\ChatClient.obj obj\ChatClientWnd.obj obj\BroadcasterC.obj 
-      obj\BroadcasterS.obj obj\ReceiverC.obj obj\ReceiverS.obj 
+    <OBJFILES value="obj\ChatClient.obj obj\ChatClientWnd.obj obj\BroadcasterC.obj
+      obj\BroadcasterS.obj obj\ReceiverC.obj obj\ReceiverS.obj
       obj\ReceiverImpl.obj obj\ORBThread.obj"/>
     <RESFILES value="ChatClient.res"/>
     <IDLFILES value=""/>
@@ -13,10 +13,10 @@
     <DEFFILE value=""/>
     <RESDEPEN value="$(RESFILES) ChatClientWnd.dfm"/>
     <LIBFILES value=""/>
-    <LIBRARIES value="ACE_bd.lib TAO_bd.lib TAO_PortableServer_bd.lib"/>
-    <SPARELIBS value="rtl.lib vcl.lib TAO_PortableServer_bd.lib TAO_bd.lib ACE_bd.lib"/>
-    <PACKAGES value="rtl.bpi vcl.bpi vclx.bpi vcljpg.bpi bcbsmp.bpi qrpt.bpi dbrtl.bpi 
-      vcldb.bpi bdertl.bpi ibsmp.bpi vcldbx.bpi teeui.bpi teedb.bpi tee.bpi 
+    <LIBRARIES value="ACE_bd.lib TAO_bd.lib TAO_PortableServer_bd.lib TAO_AnyTypeCode_bd.lib"/>
+    <SPARELIBS value="rtl.lib vcl.lib TAO_AnyTypeCode_bd.lib TAO_PortableServer_bd.lib TAO_bd.lib ACE_bd.lib"/>
+    <PACKAGES value="rtl.bpi vcl.bpi vclx.bpi vcljpg.bpi bcbsmp.bpi qrpt.bpi dbrtl.bpi
+      vcldb.bpi bdertl.bpi ibsmp.bpi vcldbx.bpi teeui.bpi teedb.bpi tee.bpi
       nmfast.bpi dclocx.bpi"/>
     <PATHCPP value=".;"/>
     <PATHPAS value=".;"/>
@@ -35,9 +35,9 @@
     <OTHERFILES value=""/>
   </MACROS>
   <OPTIONS>
-    <IDLCFLAGS value="-I$(BCB)\include -I$(BCB)\include\vcl -I..\..\.. -I..\.. -src_suffix cpp 
+    <IDLCFLAGS value="-I$(BCB)\include -I$(BCB)\include\vcl -I..\..\.. -I..\.. -src_suffix cpp
       -DACE_HAS_VCL=1 -boa"/>
-    <CFLAG1 value="-Og -Ov -OS -H=obj\ChatClient.csm -Hh=pch.h -Hc -Vx -Ve -X- -a8 -b- -k- 
+    <CFLAG1 value="-Og -Ov -OS -H=obj\ChatClient.csm -Hh=pch.h -Hc -Vx -Ve -X- -a8 -b- -k-
       -vi -c -tW -tWM"/>
     <PFLAGS value="-N2obj -N0obj -$Y- -$L- -$D- -$A8 -v -JPHNE -M"/>
     <RFLAGS value=""/>
@@ -98,11 +98,9 @@ Count=1
 Item0=$(BCB)\include;$(BCB)\include\vcl;..\..\..;..\..
 
 [HistoryLists\hlLibraryPath]
-Count=4
+Count=2
 Item0=$(BCB)\lib\debug;$(BCB)\lib\obj;$(BCB)\lib;..\..\..\lib
 Item1=$(BCB)\lib\obj;$(BCB)\lib;..\..\..\lib
-Item2=$(BCB)\lib\obj;$(BCB)\lib;..\..\..\bin\Dynamic\Debug
-Item3=$(BCB)\lib\obj;$(BCB)\lib;..\..\..\bin\Dynamic\Release\Pascal
 
 [HistoryLists\hlConditionals]
 Count=2
