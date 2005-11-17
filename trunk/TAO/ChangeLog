@@ -1,3 +1,10 @@
+Thu Nov 17 16:38:27 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/RTCORBA/MT_Client_Protocol_Priority/RTCORBA_MT_Client_Proto_Prio.mpc:
+        
+          Added 'after' line to one project to avoid concurrency clashes
+          in IDL compiler execution when compiling with VC8.
+
 Thu Nov 17 07:57:13 USMST 2005  Yan Dai  <dai_y@ociweb.com>
 
         * docs/releasenotes/index.html:
@@ -72,7 +79,7 @@ Wed Nov 16 11:23:15 2005  Jeff Parsons  <j.parsons@vanderbilt.edu>
         * TAO_IDL/fe/idl.yy.cpp:
 
           Applied patches submitted by Thomas Lockhart
-          <Thomas.Lockhar@jpl.nasa.gov> to enable the IDL compiler's
+          <Thomas.Lockhart@jpl.nasa.gov> to enable the IDL compiler's
           lexer to handle extra numeric fields produced by the gcc
           4.0.1 preprocessor. Closes [BUGID:2294].
 
