@@ -1,0 +1,8 @@
+// $Id$
+
+interface Simple_Server
+{
+  boolean test_is_a (in string type);
+
+  oneway void shutdown ();
+};

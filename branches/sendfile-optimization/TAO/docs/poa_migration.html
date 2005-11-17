@@ -1,0 +1,208 @@
+<HTML>
+<HEAD>
+  <META NAME="GENERATOR" CONTENT="Adobe PageMill 2.0 Mac">
+  <TITLE>Migrating from the BOA to the POA</TITLE>
+  <!-- $Id$ -->
+</HEAD>
+
+<BODY text = "#000000"
+link="#0000ff"
+vlink="#cc0000"
+bgcolor="#ffffff">
+
+<HR><P>
+<H3>Migrating CORBA Applications from BOA to POA</H3>
+
+Starting with the CORBA 2.2, the Basic Object Adapter (BOA) has been
+deprecated in favor of the <A
+HREF="http://www.cs.wustl.edu/~schmidt/POA.ps.gz">Portable Object
+Adapter</A> (POA).  This document explains the changes required to
+migrate CORBA applications based on the BOA to use TAO's POA
+implementation, which is the only Object Adapter supported by TAO.
+For more information on the benefits of the POA please see the <A
+HREF="http://www.cs.wustl.edu/~schmidt/report-doc.html">Object
+Interconnection</A> columns written by <A
+HREF="http://www.cs.wustl.edu/~schmidt/">Doug Schmidt</A> and <A
+HREF="http://www.iona.com/hyplan/vinoski/">Steve Vinoski</a>.
+
+<h3>Contents</h3>
+<ul>
+  <li><a href="#Client-side Changes">Client-side Changes</a>
+  <li><a href="#Server-side Changes">Server-side Changes</a>
+  <li><a href="#Reference counting Servants">Reference counting Servants</a>
+</ul>
+
+<H4><a name="Client-side Changes">Client-side Changes</a></h4>
+
+<ul>
+<li>Very little has changed.  Thus, many applications require no changes.</li><P>
+</ul>
+
+<h4><a name="Server-side Changes">Server-side Changes</a></h4>
+
+<UL>
+<li><CODE>POA_init</CODE> is replaced with <CODE>resolve_initial_references("RootPOA")</CODE> followed
+by a <CODE>_narrow</CODE> operation.</li><P>
+
+<li>The implementation no longer inherits from the client-side stub.
+Instead, they inherit from <CODE>PortableServer::ServantBase</CODE>.
+The implications of this are (a) if you want a object reference for
+that, you must use the <CODE>_this</CODE> method.</li><P>
+
+<li>Object ID's are assigned by the POA unless you activate the
+servant with a specific ID.  <A
+HREF="../performance-tests/Cubit/TAO/IDL_Cubit">IDL_Cubit</A>
+has examples on how to do this.</li><P>
+
+<li>Unlike the BOA, the POA explicitly addresses the temporal nature
+of servants and declares that a POA can service either transient or
+persistent servants (not both).  The root POA's (mandated,
+unchangeable) policy is "transient".  The implications of this are
+that in order for a client to be able to manufacture an object
+reference on its own and use that to access an object, the servant for
+that object must be registered with a POA whose policy is
+"persistent".  Thus, you must create a child POA with that policy and
+register the servant with that POA.  NOTE: when the POA declares
+something as "persistent", it is only stating that the key is valid
+between different runs of the server; it makes no claims that state or
+anything else is persistent.</li><P>
+
+<ul>
+	<li> Servants are not automatically activated, hence you must register
+	them by calling some of the <CODE>activate_object*</CODE> methods on a POA or
+	calling <CODE>_this</CODE> on the servant; with the latest you have no control on
+	the ObjectId (which sometimes is good), and the POA must support the
+	right policies (the RootPOA does).</li><P>
+
+	<li>Servant constructors use to take a <CODE>const
+char*</CODE> parameter to set
+	they object id, this is not needed now, in fact in many cases they use
+	to pass this argument to the skeleton class: this will fail
+now.</li><P> </ul> This list is not intended to be exhaustive, but
+should give you a good starting point.  If you find things along the
+way that change your applications and I didn't note them, please send
+them to me.  Perhaps we can work together on the ultimate migration
+document. <P> </UL>
+
+<h4><a name="Reference counting Servants">Reference counting Servants</h4>
+
+The new POA/servant <a
+href="ftp://ftp.omg.org/pub/docs/orbos/98-07-12.pdf">reference
+counting rules</a> of the CORBA 2.3 spec are somewhat tricky. Here are
+two main reasons why: <p>
+
+<ul>
+
+<li> If a servant is deleted without deactivating from the POA, the
+application will crash because the POA will try to access the still
+registered (but now non-existent) servant when the POA is destroyed. <p>
+
+The solution to this is to make sure that the servant is deleted after
+the POA is deleted or make sure that the servant is deactivated from
+the POA before the servant is deleted. </li> <p>
+
+<li> You cannot delete a servant which is the target of the current
+upcall/request.  A good example of this is the typical destroy()
+method, usually written like this:
+
+<PRE>
+
+class TAO_Export TAO_Thread_Policy : public POA_PortableServer::ThreadPolicy
+{
+  void destroy (CORBA_Environment &ACE_TRY_ENV);
+};
+
+void
+TAO_Thread_Policy::destroy (CORBA::Environment &ACE_TRY_ENV)
+{
+  PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  PortableServer::ObjectId_var id = poa->servant_to_id (this,
+                                                        ACE_TRY_ENV);
+  ACE_CHECK;
+
+  poa->deactivate_object (id.in (),
+                          ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Commit suicide: must have been dynamically allocated.
+  delete this;
+}
+
+</PRE>
+
+The correct implementation is:
+
+<PRE>
+
+class TAO_Export TAO_Thread_Policy : public virtual PortableServer::RefCountServantBase,
+                                     public virtual POA_PortableServer::ThreadPolicy
+{
+  void destroy (CORBA_Environment &ACE_TRY_ENV);
+};
+
+void
+TAO_Thread_Policy::destroy (CORBA::Environment &ACE_TRY_ENV)
+{
+  //
+  // Remove self from POA.  Because of reference counting, the POA
+  // will automatically delete the servant when all pending requests
+  // on this servant are complete.
+  //
+
+  PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  PortableServer::ObjectId_var id = poa->servant_to_id (this,
+                                                        ACE_TRY_ENV);
+  ACE_CHECK;
+
+  poa->deactivate_object (id.in (),
+                          ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+</PRE>
+
+One additional step required is to make the POA responsible for the
+servant after it has been registered with the POA:
+
+<PRE>
+
+  // Register with the POA.
+  PortableServer::ThreadPolicy_var result = new_thread_policy->_this (ACE_TRY_ENV);
+
+  // Give ownership of this servant to the POA.
+  new_thread_policy->_remove_ref (ACE_TRY_ENV);
+
+</PRE>
+
+If you use the above approach of multiple inheritance, you must add
+the following to your header file:
+
+<PRE>
+
+// This is to remove "inherits via dominance" warnings from MSVC.
+// MSVC is being a little too paranoid.
+#if defined (_MSC_VER)
+# pragma warning (disable : 4250)
+#endif /* _MSC_VER */
+
+</PRE>
+
+To see the above example in detail, checkout <A
+HREF="../examples/POA/Reference_Counted_Servant">TAO/examples/POA/Reference_Counted_Servant</A>
+and/or <A HREF="../tao/PortableServer/POA.cpp">POA.cpp</A> and <A
+HREF="../tao/PortableServer/POA.h">POA.h</A>. </li> <p>
+
+</ul>
+
+<hr><P>
+
+Back to the <A HREF="index.html">TAO
+documentation</A> page.
+
+<!--#include virtual="/~schmidt/cgi-sig.html" -->
+</BODY>
+</html>

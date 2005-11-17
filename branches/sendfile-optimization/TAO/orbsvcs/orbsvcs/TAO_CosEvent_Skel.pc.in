@@ -1,0 +1,11 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: TAO_CosEvent_Skel
+Description: TAO CosEvent Skeleton Library
+Requires: TAO_CosEvent, TAO_PortableServer
+Version: @VERSION@
+Libs: -L${libdir} -lTAO_CosEvent_Skel
+Cflags: -I${includedir}

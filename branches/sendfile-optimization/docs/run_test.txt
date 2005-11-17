@@ -1,0 +1,172 @@
+/**
+@page run_test_howto How to write a run_test.pl
+
+ACE/TAO's auto_builds expect run_test.pl's to follow some guidelines
+that are needed to keep the auto_builds from hanging and to make
+sure the run_test.pl works on all platforms
+
+- The run_test must not hang or block.
+- The run_test must clean up any temporary files when it is done.  
+- The run_test must not require any user input
+- The run_test should return a non-zero value if the test failed
+
+Following is an example
+
+@subsection example Example
+
+@verbatim
+eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
+
+# $Id$
+# -*- perl -*-
+
+use lib '../../../bin';
+use PerlACE::Run_Test;
+
+$status = 0;
+
+$server_ior = PerlACE::LocalFile ("server.ior");
+unlink $server_ior;
+
+$SV = new PerlACE::Process ("server", "-o $server_ior");
+$CL = new PerlACE::Process ("client", "-k file://$server_ior");
+
+$SV->Spawn ();
+
+if (PerlACE::waitforfile_timed ($server_ior, 5) == -1) {
+    print STDERR "ERROR: cannot find file <$server_ior>\n";
+    $SV->Kill ();
+    exit 1;
+} 
+
+$client = $CL->SpawnWaitKill (60);
+
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
+}
+
+$server = $SV->TerminateWaitKill (5);
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    $status = 1;
+}
+
+unlink $server_ior;
+ 
+exit $status;
+@endverbatim
+
+@subsection details Example Details
+
+@verbatim
+eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
+
+# $Id$
+@endverbatim
+
+This is the standard header stuff.  The eval is a trick used
+to get the perl script to run if it a unix shell treats it as
+a shell script.
+
+The CVS ID string is the usual one we put in.
+
+@verbatim
+use lib '../../../bin';
+use PerlACE::Run_Test;
+@endverbatim
+
+The use lib line is used to tell Perl where the PerlACE modules are.
+It should be a relative path to the bin directory.
+
+And PerlACE::Run_Test is a module to be used by all run_test.pl's.
+It does a couple of things, including parsing some common command
+line arguments (like -Config and -ExeSubDir) and also brings in
+the PerlACE::Process module.
+
+@verbatim
+$status = 0;
+
+$server_ior = PerlACE::LocalFile ("server.ior");
+
+unlink $server_ior;
+@endverbatim
+
+Because of the way tests work on chorus, we need to have a fully 
+qualified path to all *.ior and *.conf files.  We unlink the file
+immediately because we use PerlACE::waitforfile_timed later.
+
+@verbatim
+$SV = new PerlACE::Process ("server", "-o $server_ior");
+$CL = new PerlACE::Process ("client", " -k file://$server_ior ");
+
+$SV->Spawn ();
+@endverbatim
+
+The PerlACE::Process is constructed with an executable and 
+arguments.  @note Unlike the old Process module, the process
+isn't started until one of the Spawn methods is used.
+
+@verbatim
+if (PerlACE::waitforfile_timed ($server_ior, 5) == -1) {
+    print STDERR "ERROR: cannot find file <$server_ior>\n";
+    $SV->Kill (); 
+    exit 1;
+} 
+@endverbatim
+
+The PerlACE::waitforfile_timed method waits until the file is
+created.  In this way, we know when to start the client.  If
+no IOR file is used, then you'd need to use Perl's sleep 
+method. 
+
+@verbatim
+$client = $CL->SpawnWaitKill (60);
+
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
+}
+@endverbatim
+
+Here is an example of starting the client.  SpawnWaitKill will start 
+the process and wait for the specified number of seconds for the 
+process to end.  If the time limit is reached, it will kill the 
+process and return -1.  
+
+The return value of SpawnWaitKill is the return value of the 
+process, unless it timed out.  You don't need to check for the 
+timeout, since SpawnWaitKill will print out a timeout error.  
+Instead, just check for != 0.
+
+@verbatim
+$server = $SV->TerminateWaitKill (5);
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    $status = 1;
+}
+@endverbatim
+
+Here is the termination of the server.  Servers are usually terminated
+either by TerminateWaitKill or just WaitKill.  TerminateWaitKill is 
+used when the server doesn't shut down itself.  WaitKill is used when
+it does (such as when the client calls a shutdown method).  Once
+again, we check the return status.
+
+
+@verbatim
+unlink $server_ior;
+ 
+exit $status;
+@endverbatim
+
+And finally, we unlink any files that were created and then just
+exit with $status.  
+
+*/

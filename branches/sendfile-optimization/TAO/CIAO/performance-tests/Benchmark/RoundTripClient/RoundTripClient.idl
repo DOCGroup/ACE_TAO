@@ -1,0 +1,30 @@
+// $Id$
+//=============================================================================
+/**
+ * @file RoundTripClient.idl
+ *
+ * Definition of the Component that uses the LatencyTest interface
+ * provided by RoundTrip component
+ */
+//=============================================================================
+
+#ifndef CIAO_ROUNDTRIPCLIENT_IDL
+#define CIAO_ROUNDTRIPCLIENT_IDL
+
+#include <Components.idl>
+#include "../Benchmark.idl"
+
+module Benchmark
+{
+  component RoundTripClient
+  {
+    uses LatencyTest latency;
+    provides Controller controller;
+  };
+
+  home RoundTripClientHome manages RoundTripClient
+  {
+  };
+};
+
+#endif /* CIAO_ROUNDTRIPCLIENT_IDL*/
