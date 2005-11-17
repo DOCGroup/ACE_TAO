@@ -302,6 +302,10 @@ perform_redeployment (const Deployment::Properties & configProperty,
                    ::Deployment::InvalidProperty,
                    ::Components::RemoveFailure))
 {
+  ACE_UNUSED_ARG (configProperty);
+  ACE_UNUSED_ARG (providedReference);
+  ACE_UNUSED_ARG (start);
+  
   CIAO_TRACE ("CIAO::NodeApplicationManager_Impl_Base::perform_redeployment");
 
   ACE_DEBUG ((LM_DEBUG,
