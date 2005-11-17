@@ -274,7 +274,7 @@ PortableInterceptor::ObjectReferenceTemplateSeq::ObjectReferenceTemplateSeq (voi
 PortableInterceptor::ObjectReferenceTemplateSeq::ObjectReferenceTemplateSeq (
     CORBA::ULong max
   )
-  : TAO::unbounded_object_reference_sequence<
+  : TAO::unbounded_valuetype_sequence<
         PortableInterceptor::ObjectReferenceTemplate,
         PortableInterceptor::ObjectReferenceTemplate_var
       >
@@ -287,7 +287,7 @@ PortableInterceptor::ObjectReferenceTemplateSeq::ObjectReferenceTemplateSeq (
     PortableInterceptor::ObjectReferenceTemplate * * buffer,
     CORBA::Boolean release
   )
-  : TAO::unbounded_object_reference_sequence<
+  : TAO::unbounded_valuetype_sequence<
         PortableInterceptor::ObjectReferenceTemplate,
         PortableInterceptor::ObjectReferenceTemplate_var
       >
@@ -297,7 +297,7 @@ PortableInterceptor::ObjectReferenceTemplateSeq::ObjectReferenceTemplateSeq (
 PortableInterceptor::ObjectReferenceTemplateSeq::ObjectReferenceTemplateSeq (
     const ObjectReferenceTemplateSeq &seq
   )
-  : TAO::unbounded_object_reference_sequence<
+  : TAO::unbounded_valuetype_sequence<
         PortableInterceptor::ObjectReferenceTemplate,
         PortableInterceptor::ObjectReferenceTemplate_var
       >
@@ -436,7 +436,7 @@ CORBA::Boolean operator<< (
 
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
-          _tao_marshal_flag = (strm << _tao_sequence[i].in ());
+          _tao_marshal_flag = (strm << _tao_sequence[i]);
         }
 
       return _tao_marshal_flag;
@@ -476,7 +476,10 @@ CORBA::Boolean operator>> (
 
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
-          _tao_marshal_flag = (strm >> _tao_sequence[i].out ());
+
+          PortableInterceptor::ObjectReferenceTemplate_var tmp;
+          _tao_marshal_flag = (strm >> tmp.out ());
+          _tao_sequence[i] = tmp._retn();
         }
 
       return _tao_marshal_flag;

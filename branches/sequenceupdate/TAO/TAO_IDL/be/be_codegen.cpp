@@ -1984,6 +1984,12 @@ TAO_CodeGen::gen_seq_file_includes (void)
   // files have been split up.
 
   this->gen_cond_file_include (
+      idl_global->vt_seq_seen_,
+      "tao/Valuetype/Sequence_T.h",
+      this->client_header_
+    );
+
+  this->gen_cond_file_include (
       idl_global->seq_seen_,
       "tao/Sequence_T.h",
       this->client_header_

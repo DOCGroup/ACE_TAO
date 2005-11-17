@@ -51,6 +51,7 @@
 #include "tao/Environment.h"
 #include "tao/Object.h"
 #include "tao/Sequence_T.h"
+#include "tao/Valuetype/Sequence_T.h"
 #include "tao/Valuetype/Value_VarOut_T.h"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
@@ -274,7 +275,7 @@ namespace PortableInterceptor
 
   class TAO_ORT_Export ObjectReferenceTemplateSeq
     : public
-        TAO::unbounded_object_reference_sequence<
+        TAO::unbounded_valuetype_sequence<
             ObjectReferenceTemplate,
             ObjectReferenceTemplate_var
           >
