@@ -11,7 +11,7 @@
  */
 #include "bounded_valuetype_allocation_traits.hpp"
 #include "valuetype_traits.hpp"
-#include "generic_sequence.hpp"
+#include "tao/generic_sequence.hpp"
 #include "valuetype_sequence_element.hpp"
 
 namespace TAO
