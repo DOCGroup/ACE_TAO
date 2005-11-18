@@ -1,3 +1,14 @@
+Fri Nov 18 23:07:09 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * include/makeinclude/wrapper_macros.GNU:
+        
+          Applied a syntax submitted by Martin Corino <mcorino@rememdy.nl>
+          to the setting of $LEX and $YACC. The existing syntax set
+          these variables only if they were not already set, but
+          unfortunately, GNU make sets them by default. For DOC
+          Group purposes, they need to be set to 'flex' and
+          'bison' respectively.
+
 Fri Nov 18 17:22:19 2005  Steve Huston  <shuston@riverace.com>
 
 	* protocols/ace/RMCast/Template_Instantiations.cpp: Completed

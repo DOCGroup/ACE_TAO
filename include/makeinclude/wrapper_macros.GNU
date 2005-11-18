@@ -341,7 +341,10 @@ INSMAN          ?= $(ACE_ROOT)/man
 ifeq (,$(findstring -L$(ACE_ROOT)/ace,$(LDFLAGS)))
   LDFLAGS         += -L$(ACE_ROOT)/ace -L./
 endif
-LEX             ?= flex
+
+ifeq (default,$(origin LEX))
+LEX = flex
+endif
 
 EXEEXT ?=
 
@@ -373,7 +376,9 @@ ACELIB ?= -lACE
 
 # NOTE: VLDLIBS is defined below, in case it is overridden for static-
 #       or shared-only builds.
-YACC          ?= bison
+ifeq (default,$(origin YACC))
+YACC = bison
+endif
 
 #----------------------------------------------------------------------------
 #      Platform-dependent macros that require platform_macros.GNU.
