@@ -19,7 +19,7 @@
 #include "test_config.h"
 #include "ace/Containers.h"
 #include "ace/SString.h"
-#include "ace/Malloc.h"
+#include "ace/Malloc_T.h"
 
 typedef ACE_TCHAR *ACE_STRING;
 typedef ACE_DLList<ACE_STRING> STRLIST;
