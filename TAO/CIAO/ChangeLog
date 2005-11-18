@@ -1,3 +1,9 @@
+Fri Nov 18 10:28:31 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* performance-tests/Benchmark/RoundTrip/RoundTrip.mpc
+
+	Quashed a link time warning on OS X.
+
 Thu Nov 17 18:13:28 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/Swapping/Sender/Sender.mpc:
