@@ -25,7 +25,7 @@ public:
   typedef T value_type;
   typedef T element_type;
   typedef T const const_value_type;
-  typedef value_type const & subscript_type;
+  typedef value_type & subscript_type;
 
   typedef details::bounded_value_allocation_traits<value_type,MAX,true> allocation_traits;
   typedef details::value_traits<value_type,true> element_traits;
