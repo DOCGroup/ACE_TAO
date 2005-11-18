@@ -9,6 +9,7 @@ project(*server): taoserver {
 }
 
 project(*client): taoclient, anytypecode {
+  after += *server
   Source_Files {
     testC.cpp
     client.cpp
