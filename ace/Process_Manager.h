@@ -22,7 +22,6 @@
 # define ACE_Threads_Export ACE_Export
 #endif  /* ACE_THREADS_BUILD_DLL */
 
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
