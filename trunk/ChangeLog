@@ -1,3 +1,10 @@
+Fri Nov 18 14:16:45 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/WIN32_Asynch_IO.cpp (shared_read): Added a new case for
+	  ERROR_MORE_DATA, which isn't actually an error after all.
+  	  Thanks to Yongming Wang <wangym@gmail.com> for contributing
+ 	  this.
+
 Fri Nov 18 10:39:01 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/cidlc.mpb

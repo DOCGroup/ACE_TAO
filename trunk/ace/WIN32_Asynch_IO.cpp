@@ -595,7 +595,9 @@ ACE_WIN32_Asynch_Read_Stream::shared_read (ACE_WIN32_Asynch_Read_Stream_Result *
   ACE_OS::set_errno_to_last_error ();
   switch (errno)
     {
-    case ERROR_IO_PENDING:
+    case ERROR_IO_PENDING: 
+      /* FALLTHRU */
+    case ERROR_MORE_DATA:
       // The IO will complete proactively: the OVERLAPPED will still
       // get queued.
       return 0;
