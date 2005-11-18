@@ -1,3 +1,20 @@
+Fri Nov 18 17:22:19 2005  Steve Huston  <shuston@riverace.com>
+
+	* protocols/ace/RMCast/Template_Instantiations.cpp: Completed
+	  template instantiations.
+
+	* protocols/ace/RMCast/Makefile.am:
+	* protocols/ace/TMCast/Template_Instantiations.cpp: Explicit
+	  instantiations needed for TMCast.
+
+	* tests/Based_Pointer_Test.cpp: Added explicit instantiation for
+	  ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex,
+	  ACE_PI_Control_Block>.
+
+	* tests/DLList_Test.cpp: #include "ace/Malloc_T.h" rather than
+	  "ace/Malloc.h" to pick up ACE_Allocator<> before the explicit
+	  instantiation needs it.
+
 Fri Nov 18 14:16:45 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/WIN32_Asynch_IO.cpp (shared_read): Added a new case for
@@ -9,8 +26,8 @@ Fri Nov 18 10:39:01 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/cidlc.mpb
 
-	Added rest of change intended for:
-	Thu Nov 17 18:08:45 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+	  Added rest of change intended for:
+	  Thu Nov 17 18:08:45 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Nov 17 18:08:45 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
