@@ -152,7 +152,7 @@ TAO_EnumDef_i::members_i (const CORBA::EnumMemberSeq &members
                                             1,
                                             member_key);
 
-      ACE_TString member_name (members[i].in ());
+      ACE_TString member_name (members[i]);
       this->repo_->config ()->set_string_value (member_key,
                                                 "name",
                                                 member_name);

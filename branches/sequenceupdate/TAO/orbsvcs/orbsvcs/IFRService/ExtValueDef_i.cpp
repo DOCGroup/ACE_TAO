@@ -962,7 +962,7 @@ TAO_ExtValueDef_i::exceptions (ACE_Configuration_Section_Key &key,
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       type_path =
-        TAO_IFR_Service_Utils::reference_to_path (exceptions[i].in ());
+        TAO_IFR_Service_Utils::reference_to_path (exceptions[i]);
 
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->set_string_value (excepts_key,
