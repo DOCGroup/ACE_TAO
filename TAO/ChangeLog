@@ -1,3 +1,10 @@
+Fri Nov 18 15:08:19 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Typedef_String_Array/typedef_string_array.mpc:
+        
+          Added 'after' line to one of two projects that share an IDL
+          file, to avoid concurrency problems with the VC8 build.
+
 Thu Nov 17 16:38:27 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/RTCORBA/MT_Client_Protocol_Priority/RTCORBA_MT_Client_Proto_Prio.mpc:
