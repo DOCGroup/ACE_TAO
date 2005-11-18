@@ -1,3 +1,12 @@
+Fri Nov 18 17:05:49 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * specializations/Reactor_Family/Select_Reactor_ST.spl:
+        * specializations/Reactor_Family/Select_Reactor_MT.spl:
+
+          Reverted the include file in ace/Select_Reactor_T.inl as g++ 4.0
+          seems to balk when this is not there. This does not seem to
+          happen with g++ 3.2 or later versions
+
 Thu Oct 27 09:47:32 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * specializations/iiop.spl:
