@@ -25,21 +25,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   /**
-   * struct Array_Traits
+   * @struct Array_Traits
    *
    * @brief Specialized for each array in generated code.
    *
    */
   template<typename T, typename T_slice, typename TAG>
-  struct Array_Traits
-  {
-    static T_slice * alloc (void);
-    static void free (T_slice * _tao_slice);
-    static T_slice * dup (const T_slice * _tao_slice);
-    static void copy (T_slice * _tao_to,
-                      const T_slice * _tao_from);
-    static void zero (T_slice * _tao_slice);
-  };
+  struct Array_Traits;
 }
 
 /**

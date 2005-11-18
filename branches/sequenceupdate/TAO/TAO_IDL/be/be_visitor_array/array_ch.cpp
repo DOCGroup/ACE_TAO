@@ -122,7 +122,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
         }
     }
 
-  *os << be_nl << be_nl 
+  *os << be_nl << be_nl
       << "typedef ";
 
   if (bt->accept (this) == -1)
@@ -199,9 +199,9 @@ int be_visitor_array_ch::visit_array (be_array *node)
     }
 
   *os << ";";
-  
+
   *os << be_nl
-      << "struct " << anon_p << node->nested_type_name (scope, "_tag") 
+      << "struct " << anon_p << node->nested_type_name (scope, "_tag")
       << " {};";
 
   // No _var or _out class for an anonymous (non-typedef'd) array.
@@ -308,6 +308,12 @@ int be_visitor_array_ch::visit_array (be_array *node)
       *os << node->nested_type_name (scope, "_slice")
           << " *_tao_from" << be_uidt_nl
           << ");" << be_uidt;
+      *os << storage_class << "void" << be_nl
+          << node->nested_type_name (scope, "_zero")
+          << " (" << be_idt << be_idt_nl;
+      *os << node->nested_type_name (scope, "_slice") << " *_tao_slice"
+          << be_uidt_nl
+          << ");" << be_uidt;
     }
   else
     {
@@ -338,6 +344,12 @@ int be_visitor_array_ch::visit_array (be_array *node)
           << "const ";
       *os << node->nested_type_name (scope, "_slice", "_")
           << " *_tao_from" << be_uidt_nl
+          << ");" << be_uidt;
+      *os << storage_class << "void" << be_nl
+          << node->nested_type_name (scope, "_zero", "_")
+          << " (" << be_idt << be_idt_nl;
+      *os << node->nested_type_name (scope, "_slice", "_")
+          << " *_tao_slice" << be_uidt_nl
           << ");" << be_uidt;
     }
 

@@ -21,7 +21,7 @@ class unbounded_array_sequence
 {
 public:
   typedef T_array * element_type;
-  typedef T_array * value_type;
+  typedef T_array value_type;
   typedef T_slice * T_slice_ptr;
   typedef T_slice_ptr * const_value_type;
   typedef value_type & subscript_type;
@@ -39,7 +39,7 @@ public:
   inline unbounded_array_sequence(
       CORBA::ULong maximum,
       CORBA::ULong length,
-      value_type data,
+      value_type * data,
       CORBA::Boolean release = false)
     : impl_(maximum, length, data, release)
   {}

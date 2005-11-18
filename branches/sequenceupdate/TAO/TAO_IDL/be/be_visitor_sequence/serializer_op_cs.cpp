@@ -1011,7 +1011,7 @@ switch (this->ctx_->sub_state ())
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       {
     // Initialize a boolean variable.
-  *os << "::CORBA::Boolean _tao_marshal_flag = 1;" << be_nl << be_nl;
+  *os << "::CORBA::Boolean _tao_marshal_flag = true;" << be_nl << be_nl;
 
 
   if (expr->ev ()->et == AST_Expression::EV_ulong)

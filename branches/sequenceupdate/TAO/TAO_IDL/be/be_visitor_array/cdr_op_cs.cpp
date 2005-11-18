@@ -19,8 +19,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_array, 
-           cdr_op_cs, 
+ACE_RCSID (be_visitor_array,
+           cdr_op_cs,
            "$Id$")
 
 // ***************************************************************************
@@ -44,13 +44,13 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
 {
   if (this->ctx_->alias ())
     {
-      // We are here because we are visiting base type 
+      // We are here because we are visiting base type
       // of the array node which is itself an
       // array, i.e., this is a case of array of array.
       return this->visit_node (node);
     }
 
-  if (node->cli_stub_cdr_op_gen () 
+  if (node->cli_stub_cdr_op_gen ()
       || node->imported ()
       || node->is_local ())
     {
@@ -136,8 +136,8 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
 
   // Save the node's local name and full name in a buffer for quick use later
   // on.
-  ACE_OS::memset (fname, 
-                  '\0', 
+  ACE_OS::memset (fname,
+                  '\0',
                   NAMEBUFSIZE);
 
   if (this->ctx_->tdef ())
@@ -148,22 +148,22 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
     {
       // For anonymous arrays ...
       // We have to generate a name for us that has an underscope prepended
-      // to our local name. This needs to be inserted after the parents's 
+      // to our local name. This needs to be inserted after the parents's
       // name.
 
       if (node->is_nested ())
         {
-          be_decl *parent = 
+          be_decl *parent =
             be_scope::narrow_from_scope (node->defined_in ())->decl ();
-          ACE_OS::sprintf (fname, 
-                           "%s::_%s", 
+          ACE_OS::sprintf (fname,
+                           "%s::_%s",
                            parent->full_name (),
                            node->local_name ()->get_string ());
         }
       else
         {
-          ACE_OS::sprintf (fname, 
-                           "_%s", 
+          ACE_OS::sprintf (fname,
+                           "_%s",
                            node->full_name ());
         }
     }
@@ -273,7 +273,7 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_array_cdr_op_cs::"
                          "visit_predefined_type - "
-                         "Bad primitive type\n"), 
+                         "Bad primitive type\n"),
                         -1);
     default:
       // All other primitive types. Handle them as shown below.
@@ -540,7 +540,7 @@ be_visitor_array_cdr_op_cs::visit_typedef (be_typedef *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_array_cdr_op_cs::"
                          "visit_typedef - "
-                         "Bad primitive type\n"), 
+                         "Bad primitive type\n"),
                         -1);
     }
 
@@ -567,7 +567,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
     }
 
   // Initialize a boolean variable.
-  *os << "CORBA::Boolean _tao_marshal_flag = 1;" << be_nl;
+  *os << "CORBA::Boolean _tao_marshal_flag = true;" << be_nl;
 
   unsigned long ndims = node->n_dims ();
 
@@ -593,10 +593,10 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
       if (expr->ev ()->et == AST_Expression::EV_ulong)
         {
           // Generate a loop for each dimension.
-          *os << be_nl << "for ( ::CORBA::ULong i" << i 
+          *os << be_nl << "for ( ::CORBA::ULong i" << i
               << " = 0; i" << i << " < "
-              << expr->ev ()->u.ulval << " && _tao_marshal_flag; i" << i
-              << "++)" << be_idt_nl
+              << expr->ev ()->u.ulval << " && _tao_marshal_flag; ++i" << i
+              << ")" << be_idt_nl
               << "{" << be_idt;
         }
       else
@@ -704,13 +704,13 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
           *os << bt->name () << "_forany tmp (tmp_var.inout ());" << be_nl;
           *os << "_tao_marshal_flag = (strm << tmp);";
         }
-      else if (nt == AST_Decl::NT_interface 
+      else if (nt == AST_Decl::NT_interface
                || nt == AST_Decl::NT_interface_fwd)
         {
           *os << "_tao_marshal_flag = " << be_idt_nl
               << "TAO::Objref_Traits<" << bt->name () << ">::"
               << "marshal (_tao_array";
-          
+
           for (i = 0; i < ndims; ++i)
             {
               *os << "[i" << i << "]";

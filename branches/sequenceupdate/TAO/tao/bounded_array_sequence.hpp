@@ -16,12 +16,12 @@
 namespace TAO
 {
 
-template<typename T_underlying_type, typename T_array, typename T_slice, typename T_tag, CORBA::ULong MAX>
+template<typename T_array, typename T_slice, typename T_tag, CORBA::ULong MAX>
 class bounded_array_sequence
 {
 public:
-  typedef T_underlying_type element_type;
-  typedef T_array * value_type;
+  typedef T_array element_type;
+  typedef T_array value_type;
   typedef T_slice * T_slice_ptr;
   typedef T_slice_ptr * const_value_type;
   typedef value_type const & subscript_type;
@@ -35,7 +35,7 @@ public:
   {}
   inline bounded_array_sequence(
       CORBA::ULong length,
-      value_type data,
+      value_type * data,
       CORBA::Boolean release = false)
     : impl_(MAX, length, data, release)
   {}
