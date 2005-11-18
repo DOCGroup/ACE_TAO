@@ -56,7 +56,7 @@ project(RoundTrip_exec) : ciao_component_dnc {
   after += RoundTrip_svnt
   sharedname = RoundTrip_exec
 
-  libs     += RoundTrip_stub Benchmark_stub RoundTrip_svnt
+  libs     += RoundTrip_stub Benchmark_stub Benchmark_svnt RoundTrip_svnt
   libpaths += ..
 
   idlflags +=  -Wb,export_macro=ROUNDTRIP_EXEC_Export 
