@@ -117,6 +117,8 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
     case AST_Decl::NT_valuetype:
     case AST_Decl::NT_valuetype_fwd:
     case AST_Decl::NT_valuebox:
+    case AST_Decl::NT_string:
+    case AST_Decl::NT_wstring:
       {
         AST_Expression *expr = node->max_size ();
 
@@ -148,7 +150,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
                                   "bad sequence dimension value\n"),
                                 -1);
             }
-          *os << "}" << be_nl;
+          *os << "}" << be_nl << be_nl;
         break;
       }
     default:
@@ -216,6 +218,8 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
         case AST_Decl::NT_valuetype:
         case AST_Decl::NT_valuetype_fwd:
         case AST_Decl::NT_valuebox:
+        case AST_Decl::NT_string:
+        case AST_Decl::NT_wstring:
         {
           AST_Expression *expr = node->max_size ();
 
@@ -247,7 +251,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
                                    "bad sequence dimension value\n"),
                                   -1);
               }
-            *os << "}" << be_nl;
+            *os << "}" << be_nl << be_nl;
           break;
         }
         default:

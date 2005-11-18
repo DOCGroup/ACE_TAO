@@ -37,19 +37,52 @@ namespace TAO {
       return true;
     }
 
-    template <class stream, class sequence>
+    template <typename stream, CORBA::ULong MAX>
+    bool insert_bounded_sequence(TAO_OutputCDR & strm, const TAO::bounded_value_sequence <CORBA::Short, MAX> & source) {
+      const ::CORBA::ULong length = source.length ();
+      if (!(strm << length)) {
+        return false;
+      }
+      return strm.write_short_array (source.get_buffer (), source.length ());
+    }
+
+    template <typename stream, CORBA::ULong MAX>
+    bool insert_bounded_sequence(TAO_OutputCDR & strm, const TAO::bounded_value_sequence <CORBA::Long, MAX> & source) {
+      const ::CORBA::ULong length = source.length ();
+      if (!(strm << length)) {
+        return false;
+      }
+      return strm.write_long_array (source.get_buffer (), source.length ());
+    }
+
+    template <typename stream, typename object_t, typename object_t_var, CORBA::ULong MAX>
+    bool insert_bounded_sequence(stream & strm, const TAO::bounded_object_reference_sequence<object_t, object_t_var, MAX> & source) {
+      const ::CORBA::ULong length = source.length ();
+      if (!(strm << length)) {
+        return false;
+      }
+      for(CORBA::ULong i = 0; i < length; ++i) {
+        if (!TAO::Objref_Traits<typename TAO::unbounded_object_reference_sequence<object_t, object_t_var, MAX>::object_type>::marshal (source[i], strm)) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    template <typename stream, typename sequence>
     bool insert_bounded_sequence(stream & strm, const sequence & source) {
       const ::CORBA::ULong length = source.length ();
       if (!(strm << length)) {
         return false;
       }
       for(CORBA::ULong i = 0; i < length; ++i) {
-        if (!TAO::Objref_Traits<typename sequence::object_type>::marshal (source[i], strm)) {
+        if (!(strm << source[i])) {
           return false;
         }
       }
       return true;
     }
+
   }
 }
 
