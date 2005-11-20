@@ -27,19 +27,6 @@ TAO_String_Manager::operator= (const CORBA::String_var &var)
   return *this;
 }
 
-// assignment from String_var
-TAO_SeqElem_String_Manager&
-TAO_SeqElem_String_Manager::operator= (const CORBA::String_var &var)
-{
-  if (this->release_)
-    {
-      CORBA::string_free (*this->ptr_);
-    }
-
-  *this->ptr_ = CORBA::string_dup (var.in ());
-  return *this;
-}
-
 // ****************************************************************
 
 // assignment from CORBA::WString_var makes a copy
@@ -54,19 +41,6 @@ TAO_WString_Manager::operator= (const CORBA::WString_var &var)
   this->ptr_ = tmp.ptr_;
   tmp.ptr_  = old_ptr;
 
-  return *this;
-}
-
-// assignment from WString_var
-TAO_SeqElem_WString_Manager&
-TAO_SeqElem_WString_Manager::operator= (const CORBA::WString_var &var)
-{
-  if (this->release_)
-    {
-      CORBA::wstring_free (*this->ptr_);
-    }
-
-  *this->ptr_ = CORBA::wstring_dup (var.in ());
   return *this;
 }
 

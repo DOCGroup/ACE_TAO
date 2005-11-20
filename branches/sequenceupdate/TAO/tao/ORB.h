@@ -57,7 +57,6 @@ class TAO_OutputCDR;
 class TAO_Stub;
 class TAO_Valuetype_Adapter;
 class TAO_Acceptor_Filter;
-class TAO_SeqElem_String_Manager;
 
 // ****************************************************************
 
