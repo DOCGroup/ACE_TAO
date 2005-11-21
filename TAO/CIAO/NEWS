@@ -72,6 +72,13 @@ PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.8 and CIAO-0.4.9
 ======================================================
 
+. The CIDL compiler frontend now supports constants, const expressions,
+  bounded strings, bounded sequences, and arrays.
+
+. The CIDL compiler frontend now supports automatic indentation of
+  function arguments (both "new line" and "same line" styles are
+  supported).
+
 . Added backend CIDL compiler support for constants, arrays, bounded
   strings, bounded sequences, and attribute exceptions, corresponding
   to frontend support added by Boris Kolpackov <boris@kolpackov.net>.
