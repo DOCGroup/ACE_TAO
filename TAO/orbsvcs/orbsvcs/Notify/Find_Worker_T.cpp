@@ -32,6 +32,7 @@ template<class TYPE, class INTERFACE, class INTERFACE_PTR, class EXCEPTION> INTE
 TAO_Notify_Find_Worker_T<TYPE,INTERFACE,INTERFACE_PTR,EXCEPTION>::resolve (const TAO_Notify_Object::ID id, CONTAINER& container ACE_ENV_ARG_DECL)
 {
   this->find (id, container ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (INTERFACE::_nil ());
 
   if (this->result_ == 0)
     ACE_THROW_RETURN (EXCEPTION ()

@@ -2,8 +2,8 @@
 
 #include "Periodic_Consumer_Command.h"
 
-ACE_RCSID (lib, 
-           TAO_Periodic_Consumer_Command, 
+ACE_RCSID (lib,
+           TAO_Periodic_Consumer_Command,
            "$Id$")
 
 #include "LookupManager.h"
@@ -243,25 +243,31 @@ TAO_Notify_Tests_Periodic_Consumer_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
   if (this->command_ == CREATE)
     {
       this->handle_create (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
   else if (this->command_ == SUBSCRIPTION)
     {
       this->handle_subscriptions (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
   else if (this->command_ == DISCONNECT)
     {
       this->handle_disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
   else if (this->command_ == DEACTIVATE)
     {
       this->handle_deactivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
   else  if (this->command_ == DUMP_STATE)
     {
       this->handle_status (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
   else if (this->command_ == SET_QOS)
     {
       this->handle_set_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
 }

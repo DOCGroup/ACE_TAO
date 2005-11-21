@@ -13,7 +13,6 @@ $notifyior = PerlACE::LocalFile ("notify.ior");
 $notify_conf = PerlACE::LocalFile ("notify$PerlACE::svcconf_ext");
 $status = 0;
 
-unlink $notifyior;
 
 $port = PerlACE::uniqueid () + 10001;
 $NS = new PerlACE::Process ("../../../Naming_Service/Naming_Service",
@@ -31,8 +30,9 @@ $SEC = new PerlACE::Process ("Sequence_Consumer");
 $client_args = "-ORBInitRef NameService=iioploc://localhost:" .
                "$port/NameService";
 $NS->Spawn ();
-$TS->Spawn ();
 
+unlink $notifyior;
+$TS->Spawn ();
 if (PerlACE::waitforfile_timed ($notifyior, 20) == -1) {
     print STDERR "ERROR: waiting for the notify service to start\n";
     $TS->Kill ();
@@ -40,54 +40,46 @@ if (PerlACE::waitforfile_timed ($notifyior, 20) == -1) {
     exit 1;
 }
 
-if ($status == 0) {
-    $discard_policy = fifo;
-
-@low = (6, 3, 6, 3, 1);
-@high = (7, 4, 7, 4, 2);
+@low = (40, 20, 20, 20);
+@high = (40, 21, 21, 21);
 @constraintList = (
   "\"Number == 20 or Number == 10\"",
   "\"Number == 20 or Index == 7\"",
-  "\"Number == 20 or Number == 10\"",
   "\"Number == 20 or Index == 4\"",
-  "\"Number == 20 and Index == 1\"",
+  "\"Number == 10 or (Number == 20 and Index == 1)\"",
 );
 
-    $i = 0;
-    print "************** Running Sequence Consumer with the " .
-          "$discard_policy policy ************\n";
+$i = 0;
 
 foreach $constraintString (@constraintList) {
-       print "<*><*><*> Constraint String: $constraintString  <*><*><*>\n";
+  print "<*><*><*> Constraint String: $constraintString  <*><*><*>\n";
 
-    unlink $ior;
-    $SES->Spawn ();
-
-    if (PerlACE::waitforfile_timed ($ior, 20) == -1) {
-        print STDERR "ERROR: waiting for the supplier to start\n";
-        $SES->Kill ();
-        $TS->Kill ();
-        $NS->Kill ();
-        $status = 1;
-        last;
-    }
-
-    $SEC->Arguments($client_args . " -l $low[$i] -h $high[$i] -d $discard_policy -c $constraintString");
-
-    $i = $i + 1;
-
-    $client = $SEC->SpawnWaitKill (60);
-    if ($client != 0) {
-      print STDERR "ERROR: Sequence_Consumer did not run properly\n";
-      $status = 1;
-      last;
-    }
-    $server = $SES->WaitKill(5);
-    if ($server != 0) {
+  unlink $ior;
+  $SES->Spawn ();
+  if (PerlACE::waitforfile_timed ($ior, 20) == -1) {
+      print STDERR "ERROR: waiting for the supplier to start\n";
+      $SES->Kill ();
       $TS->Kill ();
       $NS->Kill ();
-      exit 1;
-    }
+      $status = 1;
+      last;
+  }
+
+  $SEC->Arguments($client_args . " -l $low[$i] -h $high[$i] -c $constraintString");
+
+  $i = $i + 1;
+
+  $client = $SEC->SpawnWaitKill (60);
+  if ($client != 0) {
+    print STDERR "ERROR: Sequence_Consumer did not run properly\n";
+    $status = 1;
+    last;
+  }
+  $server = $SES->WaitKill(5);
+  if ($server != 0) {
+    $TS->Kill ();
+    $NS->Kill ();
+    exit 1;
   }
 }
 

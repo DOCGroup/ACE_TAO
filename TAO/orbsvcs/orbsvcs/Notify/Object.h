@@ -174,14 +174,18 @@ private:
   /// Shutdown the current poa.
   void destroy_poa (void);
 
-  ///= Private data members.
+protected:
+
+  /// The mutex to serialize access to state variables.
+  TAO_SYNCH_MUTEX lock_;
+
+private:
 
   /// The POA in which the object is activated.
   TAO_Notify_POA_Helper* poa_;
 
   /// The POA in which the proxys are activated.
   TAO_Notify_POA_Helper* proxy_poa_;
-
   bool own_proxy_poa_;
 
   /// The POA in which the object's children are activated.

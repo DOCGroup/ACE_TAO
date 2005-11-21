@@ -123,7 +123,7 @@ public:
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
 
 private:
-  const TAO_Notify_Event::Ptr event_var_;
+  TAO_Notify_Event::Ptr event_var_;
   TAO_Notify_ProxySupplier::Ptr proxy_guard_;
 };
 

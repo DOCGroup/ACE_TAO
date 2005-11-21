@@ -17,6 +17,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "orbsvcs/ESF/ESF_Worker.h"
 #include "Method_Request_Event.h"
 #include "ProxySupplier.h"
 #include "ProxyConsumer.h"
@@ -101,7 +102,7 @@ public:
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
 
 private:
-  const TAO_Notify_Event::Ptr event_var_;
+  TAO_Notify_Event::Ptr event_var_;
   TAO_Notify_ProxyConsumer::Ptr proxy_guard_;
 };
 

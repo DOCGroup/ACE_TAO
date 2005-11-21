@@ -181,6 +181,7 @@ int main (int argc, char * argv[])
     {
       ACE_DEBUG((LM_DEBUG, "+"));
       send_event (i);
+      ACE_TRY_CHECK;
     }
     ACE_DEBUG((LM_DEBUG, "\nSupplier sent %d events.\n", num_events));
 

@@ -71,7 +71,7 @@ public:
   virtual void push (const CosNotification::EventBatch& event ACE_ENV_ARG_DECL);
 
   /// Retrieve the ior of this peer
-  virtual bool get_ior (ACE_CString & iorstr) const;
+  virtual ACE_CString get_ior (void) const;
 
   /// on reconnect we need to move events from the old consumer
   /// to the new one

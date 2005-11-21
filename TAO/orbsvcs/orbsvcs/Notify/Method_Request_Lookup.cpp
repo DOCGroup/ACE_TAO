@@ -13,6 +13,7 @@ ACE_RCSID(Notify, TAO_Notify_Method_Request_Lookup, "$Id$")
 #include "Method_Request_Dispatch.h"
 #include "Delivery_Request.h"
 #include "EventChannelFactory.h"
+#include "Event_Manager.h"
 
 #include "tao/debug.h"
 
@@ -39,6 +40,7 @@ TAO_Notify_Method_Request_Lookup::work (
   {
     TAO_Notify_Method_Request_Dispatch_No_Copy request (*this, proxy_supplier, true);
     proxy_supplier->deliver (request ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
   }
   else
   {
@@ -58,6 +60,7 @@ int TAO_Notify_Method_Request_Lookup::execute_i (ACE_ENV_SINGLE_ARG_DECL)
                                                              parent.filter_admin (),
                                                              parent.filter_operator ()
                                                              ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
 
   if (TAO_debug_level > 1)
     ACE_DEBUG ((LM_DEBUG, "Proxyconsumer %x filter eval result = %d",&this->proxy_consumer_ , val));
@@ -79,7 +82,10 @@ int TAO_Notify_Method_Request_Lookup::execute_i (ACE_ENV_SINGLE_ARG_DECL)
     consumers = entry->collection ();
 
     if (consumers != 0)
-      consumers->for_each (this ACE_ENV_ARG_PARAMETER);
+      {
+        consumers->for_each (this ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (0);
+      }
 
     map.release (entry);
   }
@@ -88,7 +94,10 @@ int TAO_Notify_Method_Request_Lookup::execute_i (ACE_ENV_SINGLE_ARG_DECL)
   consumers = map.broadcast_collection ();
 
   if (consumers != 0)
-    consumers->for_each (this ACE_ENV_ARG_PARAMETER);
+    {
+      consumers->for_each (this ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+    }
   this->complete ();
   return 0;
 }
@@ -207,12 +216,11 @@ TAO_Notify_Method_Request_Lookup_No_Copy::copy (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_Notify_Method_Request_Queueable* request;
 
-  TAO_Notify_Event::Ptr event_var (
-    this->event_->queueable_copy (ACE_ENV_SINGLE_ARG_PARAMETER) );
+  TAO_Notify_Event::Ptr event(this->event_->queueable_copy(ACE_ENV_SINGLE_ARG_PARAMETER));
   ACE_CHECK_RETURN (0);
 
   ACE_NEW_THROW_EX (request,
-                    TAO_Notify_Method_Request_Lookup_Queueable (event_var, this->proxy_consumer_),
+                    TAO_Notify_Method_Request_Lookup_Queueable (event, this->proxy_consumer_),
                     CORBA::INTERNAL ());
 
   return request;

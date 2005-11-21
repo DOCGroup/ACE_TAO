@@ -118,11 +118,11 @@ protected:
     implicit_ids_;
 
     /// Used to lookup names and values in the event's 'filterable_data' field.
-  ACE_Hash_Map_Manager <ACE_CString, CORBA::Any *, TAO_SYNCH_MUTEX>
+  ACE_Hash_Map_Manager <ACE_CString, CORBA::Any, TAO_SYNCH_MUTEX>
     filterable_data_;
 
     /// Used to lookup names and values in the event's 'variable_header' field.
-  ACE_Hash_Map_Manager <ACE_CString, CORBA::Any *, TAO_SYNCH_MUTEX>
+  ACE_Hash_Map_Manager <ACE_CString, CORBA::Any, TAO_SYNCH_MUTEX>
     variable_header_;
 
   /// Storage for string names under the structured event's

@@ -48,7 +48,6 @@ public:
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
 
-
   /// Shutdown the peer.
   virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
 
@@ -67,13 +66,14 @@ public:
   void handle_dispatch_exception (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Retrieve the ior of this peer
-  virtual bool get_ior (ACE_CString & iorstr) const = 0;
+  virtual ACE_CString get_ior (void) const = 0;
 
 protected:
   /// Implementation of Peer specific dispatch_updates
   virtual void dispatch_updates_i (const CosNotification::EventTypeSeq& added,
                                    const CosNotification::EventTypeSeq& removed
                                    ACE_ENV_ARG_DECL) = 0;
+
 private:
   /// Release
   virtual void release (void) = 0;
