@@ -19,8 +19,8 @@
 #include "helper.h"
 #include "big_union.h"
 
-ACE_RCSID (Param_Test, 
-           big_union, 
+ACE_RCSID (Param_Test,
+           big_union,
            "$Id$")
 
 // ************************************************************************
@@ -490,12 +490,12 @@ Test_Big_Union::check_validity (void)
         CORBA::ULong len = in.seq.length ();
         for (CORBA::ULong i = 0; i != len; ++i)
           {
-            if (ACE_OS::strcmp (in.seq[i].in (),
-                                inout.seq[i].in ())
-                || ACE_OS::strcmp (in.seq[i].in (),
-                                   out.seq[i].in ())
-                || ACE_OS::strcmp (in.seq[i].in (),
-                                   ret.seq[i].in ()))
+            if (ACE_OS::strcmp (in.seq[i],
+                                inout.seq[i])
+                || ACE_OS::strcmp (in.seq[i],
+                                   out.seq[i])
+                || ACE_OS::strcmp (in.seq[i],
+                                   ret.seq[i]))
               return 0;
           }
       }

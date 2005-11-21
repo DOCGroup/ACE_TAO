@@ -150,7 +150,7 @@ Thread_Task::svc (void)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "%s\n",
-                        (*segment_name_list)[i].in ()));
+                        (*segment_name_list)[i]));
           }
       }
 
