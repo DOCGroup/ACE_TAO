@@ -159,7 +159,7 @@ Identity_Client::run (ACE_ENV_SINGLE_ARG_DECL)
               id_list->length ()));
   for (CORBA::ULong i = 0; i < id_list->length (); ++i)
     ACE_DEBUG ((LM_DEBUG, "                 <%s>\n",
-                (id_list[i]).in ()));
+                (id_list[i])));
 
   // Perform <number_of_invocations_> method calls on <Identity>
   // objects, which are members of the <Object_Group>.  Before each

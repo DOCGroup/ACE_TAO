@@ -69,7 +69,7 @@ print_poa (PortableServer::POA_ptr poa
        index != children->length ();
        ++index)
     {
-      print_poa (children[index].in ()
+      print_poa (children[index]
                  ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }

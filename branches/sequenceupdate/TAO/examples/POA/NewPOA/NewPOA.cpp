@@ -28,8 +28,8 @@
 #include "ace/SString.h"
 #include "ace/Log_Msg.h"
 
-ACE_RCSID (NewPOA, 
-           NewPOA, 
+ACE_RCSID (NewPOA,
+           NewPOA,
            "$Id$")
 
 void
@@ -71,7 +71,7 @@ print_poa (PortableServer::POA_ptr poa
        index != children->length ();
        ++index)
     {
-      print_poa (children[index].in ()
+      print_poa (children[index]
                  ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
