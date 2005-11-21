@@ -69,8 +69,37 @@ PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
 . Integrate various Pub/Sub services into CIAO and DAnCE.
 
 
+USER VISIBLE CHANGES BETWEEN CIAO-0.4.8 and CIAO-0.4.9
+======================================================
+
+. Added backend CIDL compiler support for constants, arrays, bounded
+  strings, bounded sequences, and attribute exceptions, corresponding
+  to frontend support added by Boris Kolpackov <boris@kolpackov.net>.
+
+. Updated documentation to include instructions for building
+  the CIDL compiler using MakeProjectCreator (MPC).
+
+. Fixed a bug in the CIDL compiler's determination if an IDL
+  type is of fixed or variable size type, when it is declared
+  in the scope of an interface, valuetype or home.
+
+. Changes to generated servant code to support component
+  swapping.
+
+. Added capability to pass a base class event consumer to a
+  subscribe() operation generated for a derived event type.
+
+. Added support for .cdl file extension, which was belatedly
+  standardized by the OMG.
+
+. Added documentation on using Rational Purify with CIAO and
+  DAnCE.
+
+. Added tests and documentation for the IDL3-to-IDL2 converter tool.
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.7 and CIAO-0.4.8
 ======================================================
+
 . The XSC based config handlers have been heavily optimized, resulting
   in greatly reduced parsing overhead for large deployments.
 
