@@ -501,7 +501,7 @@ namespace TAO {
 
   template <typename stream, typename object_t, typename object_t_var, CORBA::ULong MAX>
   bool insert_sequence(stream & strm, const TAO::bounded_object_reference_sequence<object_t, object_t_var, MAX> & source) {
-    typedef TAO::bounded_object_reference_sequence<object_t, object_t_var, MAX>::object_type object_t;
+    typedef typename TAO::bounded_object_reference_sequence<object_t, object_t_var, MAX>::object_type object_t;
     const ::CORBA::ULong length = source.length ();
     if (!(strm << length)) {
       return false;
