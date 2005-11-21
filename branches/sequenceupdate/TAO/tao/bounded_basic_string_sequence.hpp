@@ -26,12 +26,12 @@ public:
   typedef charT character_type;
   typedef charT * value_type;
   typedef charT const * const_value_type;
-  typedef value_type const & subscript_type;
 
   typedef details::string_traits<charT,true> element_traits;
   typedef details::bounded_reference_allocation_traits<value_type,element_traits,MAX,true> allocation_traits;
 
   typedef details::string_sequence_element<element_traits> element_type;
+  typedef element_type subscript_type;
 
   typedef details::generic_sequence<value_type, allocation_traits, element_traits> implementation_type;
 

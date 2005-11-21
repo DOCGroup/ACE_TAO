@@ -94,7 +94,7 @@ protected:
   int value_;
 };
 
-typedef TAO_Unbounded_Sequence<TAO_AV_Policy*> TAO_AV_PolicyList;
+typedef TAO::unbounded_value_sequence<TAO_AV_Policy*> TAO_AV_PolicyList;
 
 class ACE_Message_Block;
 class TAO_AV_Protocol_Object;
