@@ -35,10 +35,6 @@ namespace TAO {
   template <typename stream, CORBA::ULong MAX>
   bool extract_sequence(stream & strm, TAO::bounded_value_sequence <CORBA::Long, MAX> & target) {
     typedef TAO::bounded_value_sequence <CORBA::Long, MAX> sequence;
-    ::CORBA::ULong const length = source.length ();
-    if (!(strm << length)) {
-      return false;
-    }
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
       return false;
