@@ -188,7 +188,7 @@ be_visitor_typedef_ch::visit_array (be_array *node)
 
       // Base type is simply an alias to an array node. Simply output the
       // required typedefs.
-      
+
       // Typedef the type and the _slice type.
       *os << "typedef " << bt->nested_type_name (scope)
           << " " << tdef->nested_type_name (scope) << ";" << be_nl;
@@ -212,16 +212,16 @@ be_visitor_typedef_ch::visit_array (be_array *node)
 
       const char *static_decl = "";
       AST_Module *scope = AST_Module::narrow_from_scope (tdef->defined_in ());
-      
-      // If the typedef is not declared globally or in a module, the 
+
+      // If the typedef is not declared globally or in a module, the
       // associated array memory management function must be static.
       if (scope == 0)
         {
           static_decl = "static ";
         }
-        
+
       const char *td_name = tdef->nested_type_name (scope);
-      
+
       // If the array and the typedef are both declared inside
       // an interface or valuetype, for example, nested_type_name()
       // generates the scoped name, which, for the header file,
@@ -252,6 +252,12 @@ be_visitor_typedef_ch::visit_array (be_array *node)
           << "void " << td_name << "_copy (" << be_idt << be_idt_nl
           << td_name << "_slice *_tao_to," << be_nl
           << "const " << td_name << "_slice *_tao_from" << be_uidt_nl
+          << ");" << be_uidt_nl;
+      // _zero
+      *os << be_nl
+          << "ACE_INLINE " << static_decl << be_nl
+          << "void " << td_name << "_zero (" << be_idt << be_idt_nl
+          << td_name << "_slice *_tao_slice" << be_nl
           << ");" << be_uidt_nl;
       // _free
       *os << be_nl
