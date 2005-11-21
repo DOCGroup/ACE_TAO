@@ -1139,7 +1139,7 @@ DynamicAny::DynSequence::_narrow (
 
   DynSequence_ptr proxy =
     dynamic_cast<DynSequence_ptr> (_tao_objref);
-  
+
   return DynSequence::_duplicate (proxy);
 }
 
@@ -1153,10 +1153,10 @@ DynamicAny::DynSequence::_unchecked_narrow (
     {
       return DynSequence::_nil ();
     }
-  
+
   DynSequence_ptr proxy =
     dynamic_cast<DynSequence_ptr> (_tao_objref);
-  
+
   return DynSequence::_duplicate (proxy);
 }
 
@@ -1167,7 +1167,7 @@ DynamicAny::DynSequence::_duplicate (DynSequence_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -1273,10 +1273,10 @@ DynamicAny::DynArray::_narrow (
     {
       return DynArray::_nil ();
     }
-  
+
   DynArray_ptr proxy =
     dynamic_cast<DynArray_ptr> (_tao_objref);
-  
+
   return DynArray::_duplicate (proxy);
 }
 
@@ -1290,10 +1290,10 @@ DynamicAny::DynArray::_unchecked_narrow (
     {
       return DynArray::_nil ();
     }
-  
+
   DynArray_ptr proxy =
     dynamic_cast<DynArray_ptr> (_tao_objref);
-  
+
   return DynArray::_duplicate (proxy);
 }
 
@@ -1304,7 +1304,7 @@ DynamicAny::DynArray::_duplicate (DynArray_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -1410,10 +1410,10 @@ DynamicAny::DynValue::_narrow (
     {
       return DynValue::_nil ();
     }
-  
+
   DynValue_ptr proxy =
     dynamic_cast<DynValue_ptr> (_tao_objref);
-  
+
   return DynValue::_duplicate (proxy);
 }
 
@@ -1427,10 +1427,10 @@ DynamicAny::DynValue::_unchecked_narrow (
     {
       return DynValue::_nil ();
     }
-  
+
   DynValue_ptr proxy =
     dynamic_cast<DynValue_ptr> (_tao_objref);
-  
+
   return DynValue::_duplicate (proxy);
 }
 
@@ -1441,7 +1441,7 @@ DynamicAny::DynValue::_duplicate (DynValue_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -1531,7 +1531,7 @@ TAO::Objref_Traits<DynamicAny::DynAnyFactory>::marshal (
   return CORBA::Object::marshal (p, cdr);
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 DynamicAny::DynAnyFactory::InconsistentTypeCode::InconsistentTypeCode (void)
@@ -1631,10 +1631,10 @@ DynamicAny::DynAnyFactory::_narrow (
     {
       return DynAnyFactory::_nil ();
     }
-  
+
   DynAnyFactory_ptr proxy =
     dynamic_cast<DynAnyFactory_ptr> (_tao_objref);
-  
+
   return DynAnyFactory::_duplicate (proxy);
 }
 
@@ -1648,10 +1648,10 @@ DynamicAny::DynAnyFactory::_unchecked_narrow (
     {
       return DynAnyFactory::_nil ();
     }
-  
+
   DynAnyFactory_ptr proxy =
     dynamic_cast<DynAnyFactory_ptr> (_tao_objref);
-  
+
   return DynAnyFactory::_duplicate (proxy);
 }
 
@@ -1662,7 +1662,7 @@ DynamicAny::DynAnyFactory::_duplicate (DynAnyFactory_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -1746,22 +1746,7 @@ CORBA::Boolean operator<< (
     const DynamicAny::NameValuePairSeq &_tao_sequence
   )
 {
-  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-  
-  if (strm << _tao_seq_len)
-    {
-      // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-      
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm << _tao_sequence[i]);
-        }
-      
-      return _tao_marshal_flag;
-    }
-  
-  return false;
+  return TAO::insert_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -1769,40 +1754,7 @@ CORBA::Boolean operator>> (
     DynamicAny::NameValuePairSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len;
-  
-  if (strm >> _tao_seq_len)
-    {
-      // Add a check to the length of the sequence
-      // to make sure it does not exceed the length
-      // of the stream. (See bug 58.)
-      if (_tao_seq_len > strm.length ())
-        {
-          return false;
-        }
-      
-      // Set the length of the sequence.
-      _tao_sequence.length (_tao_seq_len);
-      
-      // If length is 0 we return true.
-      if (0 >= _tao_seq_len) 
-        {
-          return true;
-        }
-      
-      // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-      
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm >> _tao_sequence[i]);
-        }
-      
-      return _tao_marshal_flag;
-    
-    }
-  
-  return false;
+  return TAO::extract_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_DynamicAny_NameValuePairSeq_CPP_ */
@@ -1818,22 +1770,7 @@ CORBA::Boolean operator<< (
     const DynamicAny::AnySeq &_tao_sequence
   )
 {
-  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-  
-  if (strm << _tao_seq_len)
-    {
-      // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-      
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm << _tao_sequence[i]);
-        }
-      
-      return _tao_marshal_flag;
-    }
-  
-  return false;
+  return TAO::insert_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -1841,40 +1778,7 @@ CORBA::Boolean operator>> (
     DynamicAny::AnySeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len;
-  
-  if (strm >> _tao_seq_len)
-    {
-      // Add a check to the length of the sequence
-      // to make sure it does not exceed the length
-      // of the stream. (See bug 58.)
-      if (_tao_seq_len > strm.length ())
-        {
-          return false;
-        }
-      
-      // Set the length of the sequence.
-      _tao_sequence.length (_tao_seq_len);
-      
-      // If length is 0 we return true.
-      if (0 >= _tao_seq_len) 
-        {
-          return true;
-        }
-      
-      // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-      
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm >> _tao_sequence[i]);
-        }
-      
-      return _tao_marshal_flag;
-    
-    }
-  
-  return false;
+  return TAO::extract_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_DynamicAny_AnySeq_CPP_ */

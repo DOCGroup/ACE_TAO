@@ -98,6 +98,42 @@ private:
   implementation_type impl_;
 };
 
+  template <typename stream, typename object_t, typename object_t_var>
+  bool insert_sequence(stream & strm, const TAO::unbounded_valuetype_sequence<object_t, object_t_var> & source) {
+    ::CORBA::ULong const length = source.length ();
+    if (!(strm << length)) {
+      return false;
+    }
+    for(CORBA::ULong i = 0; i < length; ++i) {
+      if (!(strm << source[i])) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  template <typename stream, typename object_t, typename object_t_var>
+  bool extract_sequence(stream & strm, TAO::unbounded_valuetype_sequence <object_t, object_t_var> & target) {
+    typedef TAO::unbounded_valuetype_sequence <object_t, object_t_var> sequence;
+    ::CORBA::ULong new_length = 0;
+    if (!(strm >> new_length)) {
+      return false;
+    }
+    if (new_length > strm.length()) {
+        return false;
+    }
+    sequence tmp(new_length);
+    tmp.length(new_length);
+    typename sequence::value_type * buffer = tmp.get_buffer();
+    for(CORBA::ULong i = 0; i < new_length; ++i) {
+      if (!(strm >> buffer[i])) {
+        return false;
+      }
+    }
+    tmp.swap(target);
+    return true;
+  }
+
 } // namespace TAO
 
 #endif // guard_unbounded_valuetype_sequence_hpp

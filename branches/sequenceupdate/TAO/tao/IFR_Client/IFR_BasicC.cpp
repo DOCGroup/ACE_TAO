@@ -12507,7 +12507,7 @@ CORBA::Boolean operator<< (
     const CORBA::ExceptionDefSeq &_tao_sequence
   )
 {
-  return TAO::details::insert_unbounded_sequence(strm, _tao_sequence);
+  return TAO::insert_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -12515,7 +12515,7 @@ CORBA::Boolean operator>> (
     CORBA::ExceptionDefSeq &_tao_sequence
   )
 {
-  return TAO::details::extract_unbounded_sequence(strm, _tao_sequence);
+  return TAO::extract_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CORBA_ExceptionDefSeq_CPP_ */
@@ -12741,22 +12741,7 @@ CORBA::Boolean operator<< (
     const CORBA::ParDescriptionSeq &_tao_sequence
   )
 {
-  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-
-  if (strm << _tao_seq_len)
-    {
-      // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm << _tao_sequence[i]);
-        }
-
-      return _tao_marshal_flag;
-    }
-
-  return false;
+  return TAO::insert_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -12764,40 +12749,7 @@ CORBA::Boolean operator>> (
     CORBA::ParDescriptionSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len;
-
-  if (strm >> _tao_seq_len)
-    {
-      // Add a check to the length of the sequence
-      // to make sure it does not exceed the length
-      // of the stream. (See bug 58.)
-      if (_tao_seq_len > strm.length ())
-        {
-          return false;
-        }
-
-      // Set the length of the sequence.
-      _tao_sequence.length (_tao_seq_len);
-
-      // If length is 0 we return true.
-      if (0 >= _tao_seq_len)
-        {
-          return true;
-        }
-
-      // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm >> _tao_sequence[i]);
-        }
-
-      return _tao_marshal_flag;
-
-    }
-
-  return false;
+  return TAO::extract_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CORBA_ParDescriptionSeq_CPP_ */
@@ -12813,22 +12765,7 @@ CORBA::Boolean operator<< (
     const CORBA::ContextIdSeq &_tao_sequence
   )
 {
-  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-
-  if (strm << _tao_seq_len)
-    {
-      // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm << _tao_sequence[i]);
-        }
-
-      return _tao_marshal_flag;
-    }
-
-  return false;
+  return TAO::insert_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -12836,42 +12773,7 @@ CORBA::Boolean operator>> (
     CORBA::ContextIdSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len;
-
-  if (strm >> _tao_seq_len)
-    {
-      // Add a check to the length of the sequence
-      // to make sure it does not exceed the length
-      // of the stream. (See bug 58.)
-      if (_tao_seq_len > strm.length ())
-        {
-          return false;
-        }
-
-      // Set the length of the sequence.
-      _tao_sequence.length (_tao_seq_len);
-
-      // If length is 0 we return true.
-      if (0 >= _tao_seq_len)
-        {
-          return true;
-        }
-
-      // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          CORBA::String_var tmp;
-          _tao_marshal_flag = (strm >> tmp.out ());
-          _tao_sequence[i] = tmp._retn();
-      }
-
-    return _tao_marshal_flag;
-
-  }
-
-return false;
+  return TAO::extract_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CORBA_ContextIdSeq_CPP_ */
@@ -12960,22 +12862,7 @@ CORBA::Boolean operator<< (
     const CORBA::RepositoryIdSeq &_tao_sequence
   )
 {
-  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-
-  if (strm << _tao_seq_len)
-    {
-      // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm << _tao_sequence[i]);
-        }
-
-      return _tao_marshal_flag;
-    }
-
-  return false;
+  return TAO::insert_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -12983,43 +12870,7 @@ CORBA::Boolean operator>> (
     CORBA::RepositoryIdSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len;
-
-  if (strm >> _tao_seq_len)
-    {
-      // Add a check to the length of the sequence
-      // to make sure it does not exceed the length
-      // of the stream. (See bug 58.)
-      if (_tao_seq_len > strm.length ())
-        {
-          return false;
-        }
-
-      // Set the length of the sequence.
-      _tao_sequence.length (_tao_seq_len);
-
-      // If length is 0 we return true.
-      if (0 >= _tao_seq_len)
-        {
-          return true;
-        }
-
-      // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          CORBA::String_var tmp;
-          _tao_marshal_flag = (strm >> tmp.out ());
-          _tao_sequence[i] = tmp._retn();
-
-      }
-
-    return _tao_marshal_flag;
-
-  }
-
-return false;
+  return TAO::extract_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CORBA_RepositoryIdSeq_CPP_ */
@@ -13035,22 +12886,7 @@ CORBA::Boolean operator<< (
     const CORBA::OpDescriptionSeq &_tao_sequence
   )
 {
-  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-
-  if (strm << _tao_seq_len)
-    {
-      // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm << _tao_sequence[i]);
-        }
-
-      return _tao_marshal_flag;
-    }
-
-  return false;
+  return TAO::insert_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -13058,40 +12894,7 @@ CORBA::Boolean operator>> (
     CORBA::OpDescriptionSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len;
-
-  if (strm >> _tao_seq_len)
-    {
-      // Add a check to the length of the sequence
-      // to make sure it does not exceed the length
-      // of the stream. (See bug 58.)
-      if (_tao_seq_len > strm.length ())
-        {
-          return false;
-        }
-
-      // Set the length of the sequence.
-      _tao_sequence.length (_tao_seq_len);
-
-      // If length is 0 we return true.
-      if (0 >= _tao_seq_len)
-        {
-          return true;
-        }
-
-      // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm >> _tao_sequence[i]);
-        }
-
-      return _tao_marshal_flag;
-
-    }
-
-  return false;
+  return TAO::extract_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CORBA_OpDescriptionSeq_CPP_ */
@@ -13107,22 +12910,7 @@ CORBA::Boolean operator<< (
     const CORBA::AttrDescriptionSeq &_tao_sequence
   )
 {
-  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-
-  if (strm << _tao_seq_len)
-    {
-      // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm << _tao_sequence[i]);
-        }
-
-      return _tao_marshal_flag;
-    }
-
-  return false;
+  return TAO::insert_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -13130,40 +12918,7 @@ CORBA::Boolean operator>> (
     CORBA::AttrDescriptionSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len;
-
-  if (strm >> _tao_seq_len)
-    {
-      // Add a check to the length of the sequence
-      // to make sure it does not exceed the length
-      // of the stream. (See bug 58.)
-      if (_tao_seq_len > strm.length ())
-        {
-          return false;
-        }
-
-      // Set the length of the sequence.
-      _tao_sequence.length (_tao_seq_len);
-
-      // If length is 0 we return true.
-      if (0 >= _tao_seq_len)
-        {
-          return true;
-        }
-
-      // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm >> _tao_sequence[i]);
-        }
-
-      return _tao_marshal_flag;
-
-    }
-
-  return false;
+  return TAO::extract_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CORBA_AttrDescriptionSeq_CPP_ */
@@ -13179,22 +12934,7 @@ CORBA::Boolean operator<< (
     const CORBA::ExtAttrDescriptionSeq &_tao_sequence
   )
 {
-  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-
-  if (strm << _tao_seq_len)
-    {
-      // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm << _tao_sequence[i]);
-        }
-
-      return _tao_marshal_flag;
-    }
-
-  return false;
+  return TAO::insert_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -13202,40 +12942,7 @@ CORBA::Boolean operator>> (
     CORBA::ExtAttrDescriptionSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len;
-
-  if (strm >> _tao_seq_len)
-    {
-      // Add a check to the length of the sequence
-      // to make sure it does not exceed the length
-      // of the stream. (See bug 58.)
-      if (_tao_seq_len > strm.length ())
-        {
-          return false;
-        }
-
-      // Set the length of the sequence.
-      _tao_sequence.length (_tao_seq_len);
-
-      // If length is 0 we return true.
-      if (0 >= _tao_seq_len)
-        {
-          return true;
-        }
-
-      // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm >> _tao_sequence[i]);
-        }
-
-      return _tao_marshal_flag;
-
-    }
-
-  return false;
+  return TAO::extract_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CORBA_ExtAttrDescriptionSeq_CPP_ */
@@ -13472,14 +13179,14 @@ CORBA::Boolean operator>> (
     }
 
   typedef ::CORBA::AbstractInterfaceDef RHS_SCOPED_NAME;
-  
+
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (
         obj.in (),
         CORBA__TAO_AbstractInterfaceDef_Proxy_Broker_Factory_function_pointer
       );
-    
+
   return 1;
 }
 
@@ -13501,21 +13208,21 @@ CORBA::Boolean operator>> (
   )
 {
   CORBA::Object_var obj;
-  
+
   if (!(strm >> obj.inout ()))
     {
       return false;
     }
-  
+
   typedef ::CORBA::ExtAbstractInterfaceDef RHS_SCOPED_NAME;
-  
+
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (
         obj.in (),
         CORBA__TAO_ExtAbstractInterfaceDef_Proxy_Broker_Factory_function_pointer
       );
-    
+
   return 1;
 }
 
@@ -13537,21 +13244,21 @@ CORBA::Boolean operator>> (
   )
 {
   CORBA::Object_var obj;
-  
+
   if (!(strm >> obj.inout ()))
     {
       return false;
     }
-  
+
   typedef ::CORBA::LocalInterfaceDef RHS_SCOPED_NAME;
-  
+
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (
         obj.in (),
         CORBA__TAO_LocalInterfaceDef_Proxy_Broker_Factory_function_pointer
       );
-    
+
   return 1;
 }
 
@@ -13573,20 +13280,20 @@ CORBA::Boolean operator>> (
   )
 {
   CORBA::Object_var obj;
-  
+
   if (!(strm >> obj.inout ()))
     {
       return false;
     }
-  
+
   typedef ::CORBA::ExtLocalInterfaceDef RHS_SCOPED_NAME;
-  
+
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (
         obj.in (),
         CORBA__TAO_ExtLocalInterfaceDef_Proxy_Broker_Factory_function_pointer
       );
-    
+
   return 1;
 }

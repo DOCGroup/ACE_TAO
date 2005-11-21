@@ -105,15 +105,7 @@ void CORBA::WCharSeq::_tao_any_destructor (
     const CORBA::WCharSeq &_tao_sequence
   )
 {
-  const ::CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-
-  if (strm << _tao_seq_len)
-    {
-      // Encode all elements.
-      return strm.write_wchar_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-    }
-
-  return false;
+  return TAO::insert_sequence(strm, _tao_sequence);
 }
 
 ::CORBA::Boolean operator>> (
@@ -121,33 +113,7 @@ void CORBA::WCharSeq::_tao_any_destructor (
     CORBA::WCharSeq &_tao_sequence
   )
 {
-  ::CORBA::ULong _tao_seq_len;
-
-  if (strm >> _tao_seq_len)
-    {
-      // Add a check to the length of the sequence
-      // to make sure it does not exceed the length
-      // of the stream. (See bug 58.)
-      if (_tao_seq_len > strm.length ())
-        {
-          return false;
-        }
-
-      // Set the length of the sequence.
-      _tao_sequence.length (_tao_seq_len);
-
-      // If length is 0 we return true.
-      if (0 >= _tao_seq_len)
-        {
-          return true;
-        }
-
-      // Retrieve all the elements.
-      return strm.read_wchar_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-
-    }
-
-  return false;
+  return TAO::extract_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CORBA_WCharSeq_CPP_ */

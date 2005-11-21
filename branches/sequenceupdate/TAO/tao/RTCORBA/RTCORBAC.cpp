@@ -2381,7 +2381,7 @@ CORBA::TypeCode_ptr RTCORBA::RTORB::MutexNotFound::_tao_type (void) const
   return ::RTCORBA::RTORB::_tc_MutexNotFound;
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
 RTCORBA::RTORB::InvalidThreadpool::InvalidThreadpool (void)
@@ -2482,7 +2482,7 @@ RTCORBA::RTORB::RTORB (void)
 RTCORBA::RTORB::~RTORB (void)
 {}
 
-void 
+void
 RTCORBA::RTORB::_tao_any_destructor (void *_tao_void_pointer)
 {
   RTORB *_tao_tmp_pointer =
@@ -2519,7 +2519,7 @@ RTCORBA::RTORB::_duplicate (RTORB_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -2605,22 +2605,7 @@ CORBA::Boolean operator<< (
     const RTCORBA::ThreadpoolLanes &_tao_sequence
   )
 {
-  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-  
-  if (strm << _tao_seq_len)
-    {
-      // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-      
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm << _tao_sequence[i]);
-        }
-      
-      return _tao_marshal_flag;
-    }
-  
-  return false;
+  return TAO::insert_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -2628,40 +2613,7 @@ CORBA::Boolean operator>> (
     RTCORBA::ThreadpoolLanes &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len;
-  
-  if (strm >> _tao_seq_len)
-    {
-      // Add a check to the length of the sequence
-      // to make sure it does not exceed the length
-      // of the stream. (See bug 58.)
-      if (_tao_seq_len > strm.length ())
-        {
-          return false;
-        }
-      
-      // Set the length of the sequence.
-      _tao_sequence.length (_tao_seq_len);
-      
-      // If length is 0 we return true.
-      if (0 >= _tao_seq_len) 
-        {
-          return true;
-        }
-      
-      // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = true;
-      
-      for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
-        {
-          _tao_marshal_flag = (strm >> _tao_sequence[i]);
-        }
-      
-      return _tao_marshal_flag;
-    
-    }
-  
-  return false;
+  return TAO::extract_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_RTCORBA_ThreadpoolLanes_CPP_ */
@@ -2678,12 +2630,12 @@ CORBA::Boolean operator>> (TAO_InputCDR & strm, RTCORBA::PriorityModel & _tao_en
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<RTCORBA::PriorityModel> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 

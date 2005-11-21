@@ -43,7 +43,7 @@
 #include "tao/TAO_Export.h"
 #include "tao/ORB.h"
 #include "tao/Environment.h"
-#include "tao/unbounded_value_sequence.hpp"
+#include "tao/Sequence_T.h"
 #include "tao/Managed_Types.h"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"

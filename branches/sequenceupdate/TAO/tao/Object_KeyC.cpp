@@ -247,27 +247,7 @@ CORBA::Boolean operator<< (
     const TAO::ObjectKey &_tao_sequence
   )
 {
-  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-
-  if (strm << _tao_seq_len)
-    {
-      // Encode all elements.
-
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-      {
-        if (_tao_sequence.mb ())
-          return strm.write_octet_array_mb (_tao_sequence.mb ());
-        else
-          return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-      }
-
-#else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
-      return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
-    }
-
-  return false;
+  return TAO::insert_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -275,53 +255,7 @@ CORBA::Boolean operator>> (
     TAO::ObjectKey &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len;
-
-  if (strm >> _tao_seq_len)
-    {
-      // Add a check to the length of the sequence
-      // to make sure it does not exceed the length
-      // of the stream. (See bug 58.)
-      if (_tao_seq_len > strm.length ())
-        {
-          return false;
-        }
-
-      // Set the length of the sequence.
-      _tao_sequence.length (_tao_seq_len);
-
-      // If length is 0 we return true.
-      if (0 >= _tao_seq_len)
-        {
-          return true;
-        }
-
-      // Retrieve all the elements.
-
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-      if (ACE_BIT_DISABLED (strm.start ()->flags (),
-      ACE_Message_Block::DONT_DELETE))
-      {
-        TAO_ORB_Core* orb_core = strm.orb_core ();
-        if (orb_core != 0 &&
-        strm.orb_core ()->resource_factory ()->
-        input_cdr_allocator_type_locked () == 1)
-        {
-          _tao_sequence.replace (_tao_seq_len, strm.start ());
-          _tao_sequence.mb ()->wr_ptr (_tao_sequence.mb()->rd_ptr () + _tao_seq_len);
-          strm.skip_bytes (_tao_seq_len);
-          return 1;
-        }
-      }
-      return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_seq_len);
-#else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
-      return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
-
-    }
-
-  return false;
+  return TAO::extract_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_TAO_ObjectKey_CPP_ */

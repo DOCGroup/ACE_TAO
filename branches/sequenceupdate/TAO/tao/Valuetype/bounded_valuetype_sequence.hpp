@@ -95,6 +95,47 @@ private:
   implementation_type impl_;
 };
 
+
+  template <typename stream, typename object_t, typename object_t_var, CORBA::ULong MAX>
+  bool insert_sequence(stream & strm, const TAO::bounded_valuetype_sequence<object_t, object_t_var, MAX> & source) {
+    typedef TAO::bounded_valuetype_sequence<object_t, object_t_var, MAX>::object_type object_t;
+    const ::CORBA::ULong length = source.length ();
+    if (!(strm << length)) {
+      return false;
+    }
+    for(CORBA::ULong i = 0; i < length; ++i) {
+      if (!TAO::Objref_Traits<object_t>::marshal (source[i], strm)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  template <typename stream, typename object_t, typename object_t_var, CORBA::ULong MAX>
+  bool extract_sequence(stream & strm, TAO::bounded_valuetype_sequence<object_t, object_t_var, MAX> & target) {
+    typedef TAO::bounded_valuetype_sequence<object_t, object_t_var, MAX> sequence;
+    ::CORBA::ULong new_length = 0;
+    if (!(strm >> new_length)) {
+      return false;
+    }
+    if (new_length > strm.length()) {
+        return false;
+    }
+    if (new_length > target.maximum ()) {
+        return false;
+    }
+    sequence tmp(new_length);
+    tmp.length(new_length);
+    typename sequence::value_type * buffer = tmp.get_buffer();
+    for(CORBA::ULong i = 0; i < new_length; ++i) {
+      if (!(strm >> buffer[i])) {
+        return false;
+      }
+    }
+    tmp.swap(target);
+    return true;
+  }
+
 } // namespace TAO
 
 #endif // guard_bounded_valuetype_sequence_hpp

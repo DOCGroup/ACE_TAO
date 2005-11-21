@@ -43,7 +43,7 @@
 #include "tao/TAO_Export.h"
 #include "tao/ORB.h"
 #include "tao/Environment.h"
-#include "tao/unbounded_value_sequence.hpp"
+#include "tao/Sequence_T.h"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 #include "tao/VarOut_T.h"
@@ -197,7 +197,7 @@ namespace CONV_FRAME
   struct TAO_Export CodeSetContext
   {
     typedef CodeSetContext_var _var_type;
-    
+
     static void _tao_any_destructor (void *);
     CONV_FRAME::CodeSetId char_data;
     CONV_FRAME::CodeSetId wchar_data;
