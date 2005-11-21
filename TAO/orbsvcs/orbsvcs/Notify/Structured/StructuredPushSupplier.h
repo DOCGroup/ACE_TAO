@@ -44,9 +44,8 @@ public:
   /// Init
   void init (CosNotifyComm::StructuredPushSupplier_ptr push_supplier ACE_ENV_ARG_DECL);
 
-
   /// Retrieve the ior of this peer
-  virtual bool get_ior (ACE_CString & iorstr) const;
+  virtual ACE_CString get_ior (void) const;
 
 protected:
   /// The Supplier

@@ -34,6 +34,7 @@ TAO_Notify_ProxySupplier::init (TAO_Notify_ConsumerAdmin* consumer_admin ACE_ENV
   ACE_ASSERT (consumer_admin != 0 && this->consumer_admin_.get() == 0);
 
   TAO_Notify_Proxy::initialize (consumer_admin ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   this->consumer_admin_.reset (consumer_admin);
 
@@ -41,6 +42,7 @@ TAO_Notify_ProxySupplier::init (TAO_Notify_ConsumerAdmin* consumer_admin ACE_ENV
     TAO_Notify_PROPERTIES::instance ()->default_proxy_supplier_qos_properties ();
 
   this->set_qos (default_ps_qos ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 TAO_Notify_Peer*
@@ -75,8 +77,8 @@ TAO_Notify_ProxySupplier::connect (TAO_Notify_Consumer *consumer ACE_ENV_ARG_DEC
     // if consumer is set and reconnect not allowed we get out.
     if (this->is_connected () && TAO_Notify_PROPERTIES::instance()->allow_reconnect() == false)
       {
-            ACE_THROW (CosEventChannelAdmin::AlreadyConnected ());
-          }
+          ACE_THROW (CosEventChannelAdmin::AlreadyConnected ());
+      }
 
     // Adopt the consumer
     this->consumer_ = auto_consumer;
@@ -92,6 +94,7 @@ TAO_Notify_ProxySupplier::connect (TAO_Notify_Consumer *consumer ACE_ENV_ARG_DEC
   TAO_Notify_EventTypeSeq removed;
 
   this->event_manager().subscription_change (this, this->subscribed_types_, removed ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   this->event_manager().connect (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -136,13 +139,16 @@ TAO_Notify_ProxySupplier::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 void
 TAO_Notify_ProxySupplier::destroy (ACE_ENV_SINGLE_ARG_DECL)
 {
-  if (this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER) == 1)
-    return;
-
+  int result = this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
+  if ( result == 1)
+    return;
 
   this->consumer_admin_->remove (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+
+  // Do not reset this->consumer_.
+  // It is not safe to delete the non-refcounted consumer here.
 }
 
 void

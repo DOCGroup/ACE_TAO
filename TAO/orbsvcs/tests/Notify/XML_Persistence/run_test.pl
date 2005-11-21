@@ -31,7 +31,7 @@ cleanup();
 
 $ret = 0;
 
-$UTEST = new PerlACE::Process("main", "-ORBEndpoint iiop://:$port -pass 3");
+$UTEST = new PerlACE::Process("main", "-orbobjrefstyle url -ORBEndpoint iiop://:$port -pass 3");
 $ret = $UTEST->SpawnWaitKill(20);
 if ($ret != 0) {
   print "ERROR : main returned $ret\n";
@@ -44,7 +44,6 @@ if ($different) {
   exit 1;
 } else {
   print "Success : loadtest.xml == abc.xml\n";
-  cleanup();
 }
 
 

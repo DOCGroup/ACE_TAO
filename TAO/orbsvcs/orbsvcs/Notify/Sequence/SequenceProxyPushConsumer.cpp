@@ -24,7 +24,6 @@ TAO_Notify_SequenceProxyPushConsumer::~TAO_Notify_SequenceProxyPushConsumer ()
 void
 TAO_Notify_SequenceProxyPushConsumer::release (void)
 {
-
   delete this;
   //@@ inform factory
 }
@@ -108,17 +107,20 @@ TAO_Notify_SequenceProxyPushConsumer::load_attrs (const TAO_Notify::NVPList& att
 {
   SuperClass::load_attrs(attrs);
   ACE_CString ior;
-  if (attrs.load("PeerIOR", ior) && ior.length() > 0)
+  if (attrs.load("PeerIOR", ior))
   {
     CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb();
     ACE_DECLARE_NEW_CORBA_ENV;
     ACE_TRY
     {
-      CORBA::Object_var obj = orb->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-      CosNotifyComm::SequencePushSupplier_var ps =
-        CosNotifyComm::SequencePushSupplier::_unchecked_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      CosNotifyComm::SequencePushSupplier_var ps = CosNotifyComm::SequencePushSupplier::_nil();
+      if ( ior.length() > 0 )
+      {
+        CORBA::Object_var obj = orb->string_to_object(ior.c_str() ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+        ps = CosNotifyComm::SequencePushSupplier::_unchecked_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+      }
       // minor hack: suppress generating subscription updates during reload.
       bool save_updates = this->updates_off_;
       this->updates_off_ = true;

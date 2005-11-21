@@ -76,10 +76,12 @@ TAO_Notify_Proxy::types_changed (const TAO_Notify_EventTypeSeq& added, const TAO
   if (TAO_Notify_PROPERTIES::instance()->asynch_updates () == 1) // if we should send the updates synchronously.
     {
       this->execute_task (request ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
     }
   else // execute in the current thread context.
     {
       request.execute (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
 }
 
@@ -168,11 +170,7 @@ TAO_Notify_Proxy::save_attrs (TAO_Notify::NVPList& attrs)
   TAO_Notify_Peer * peer = this->peer();
   if (peer != 0)
   {
-    ACE_CString ior;
-    if (peer->get_ior(ior))
-    {
-      attrs.push_back (TAO_Notify::NVP("PeerIOR", ior));
-    }
+    attrs.push_back (TAO_Notify::NVP("PeerIOR", peer->get_ior()));
   }
 }
 

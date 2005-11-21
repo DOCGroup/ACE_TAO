@@ -51,6 +51,7 @@ namespace TAO_Notify
   public:
     /// The constructor.
     XML_Topology_Factory ();
+    virtual ~XML_Topology_Factory ();
 
     ////////////////////////////////////
     // Override Topology_Factory methods

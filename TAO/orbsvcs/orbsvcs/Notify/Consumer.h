@@ -175,10 +175,6 @@ protected:
   /// Timer Id.
   long timer_id_;
 
-// todo find some way to use this rather than Request_Queue
-//  /// The Buffering Strategy
-//  TAO_Notify_Batch_Buffering_Strategy* buffering_strategy_;
-//
   /// The Timer Manager that we use.
   TAO_Notify_Timer::Ptr timer_;
 

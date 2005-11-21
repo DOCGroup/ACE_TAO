@@ -84,7 +84,7 @@ public:
   /// exceptions from the constructor if it's necessary to copy the event.
   TAO_Notify_Method_Request_Event_Queueable (
     const TAO_Notify_Method_Request_Event & prev_request,
-    const TAO_Notify_Event::Ptr & event_var);
+    const TAO_Notify_Event::Ptr & event);
 
   TAO_Notify_Method_Request_Event_Queueable (
     TAO_Notify::Delivery_Request_Ptr & request);

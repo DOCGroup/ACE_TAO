@@ -85,10 +85,10 @@ TAO_Notify_SupplierAdmin::destroy (ACE_ENV_SINGLE_ARG_DECL)
                    CORBA::SystemException
                    ))
 {
-  if (this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER) == 1)
-    return;
-
+  int result = this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
+  if ( result == 1)
+    return;
 
   this->ec_->remove (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;

@@ -42,7 +42,6 @@ public:
   /// Destructor
   virtual ~TAO_Notify_Reactive_Task ();
 
-
   /// Init the reactive task.
   void init (ACE_ENV_SINGLE_ARG_DECL);
 
@@ -58,10 +57,10 @@ public:
   /// Returns NULL.
   virtual TAO_Notify_Buffering_Strategy* buffering_strategy (void);
 
-protected:
+private:
   /// The timer.
   TAO_Notify_Timer_Reactor::Ptr timer_;
-private:
+
   /// Release
   virtual void release (void);
 };

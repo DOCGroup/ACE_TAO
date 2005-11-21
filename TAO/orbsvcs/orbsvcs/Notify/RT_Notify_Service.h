@@ -27,8 +27,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class TAO_RT_Notify_Service
  *
- * @brief Implementation of the TAO_Notify_Service interface for
- * RT Notification.
+ * @brief Implemetation of the TAO_Notify_Service interface for RT Notification.
  *
  */
 class TAO_RT_Notify_Export TAO_RT_Notify_Service : public TAO_CosNotify_Service
@@ -39,7 +38,6 @@ public:
 
   /// Destructor
   ~TAO_RT_Notify_Service ();
-
 
   /// Init the service.
   virtual void init_service (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);

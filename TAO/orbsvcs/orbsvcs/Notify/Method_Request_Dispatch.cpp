@@ -14,7 +14,6 @@ ACE_RCSID(Notify, TAO_Notify_Method_Request_Dispatch, "$Id$")
 
 #include "ace/OS_NS_stdio.h"
 
-//#define DEBUG_LEVEL 10
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
@@ -78,6 +77,7 @@ int TAO_Notify_Method_Request_Dispatch::execute_i (ACE_ENV_SINGLE_ARG_DECL)
                                                                   parent.filter_admin (),
                                                                   parent.filter_operator ()
                                                                   ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
 
       if (TAO_debug_level > 1)
         ACE_DEBUG ((LM_DEBUG, "Proxysupplier %x filter eval result = %d",&this->proxy_supplier_ , val));

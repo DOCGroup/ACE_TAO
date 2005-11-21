@@ -92,10 +92,10 @@ TAO_Notify_ConsumerAdmin::destroy (ACE_ENV_SINGLE_ARG_DECL)
                    CORBA::SystemException
                    ))
 {
-  if (this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER) == 1)
-    return;
-
+  int result = this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
+  if ( result == 1)
+    return;
 
   this->ec_->remove (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -325,8 +325,10 @@ TAO_Notify_ConsumerAdmin::subscription_change (const CosNotification::EventTypeS
     TAO_Notify_Subscription_Change_Worker worker (added, removed);
 
     this->proxy_container().collection()->for_each (&worker ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
   }
   this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 CosNotifyFilter::FilterID
