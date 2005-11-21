@@ -368,8 +368,17 @@ int be_visitor_array_cs::visit_array (be_array *node)
         }
 
       *os << " = ";
-      *os << "0";
-      *os << ";";
+
+      if (bt->accept (this) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_array_ch::"
+                             "visit_array - "
+                             "base type decl failed\n"),
+                            -1);
+        }
+
+      *os << " ();";
     }
 
   for (i = 0; i < ndims; ++i)
