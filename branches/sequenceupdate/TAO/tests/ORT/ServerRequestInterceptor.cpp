@@ -106,7 +106,7 @@ ServerRequestInterceptor::receive_request (
 
       ACE_DEBUG ((LM_INFO,
                   "%s\n",
-                  name[i].in ()));
+                  name[i]));
     }
 
   ACE_DEBUG ((LM_INFO,
