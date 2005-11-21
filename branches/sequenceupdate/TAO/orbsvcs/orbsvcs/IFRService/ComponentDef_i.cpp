@@ -431,7 +431,7 @@ TAO_ComponentDef_i::supported_interfaces_i (
     {
       supported_path =
         TAO_IFR_Service_Utils::reference_to_path (
-            supported_interfaces[i].in ()
+            supported_interfaces[i]
           );
 
       // Get the servant's key into the temporary key holder, because

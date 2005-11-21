@@ -1167,7 +1167,7 @@ TAO_Container_i::create_enum_i (const char *id,
 
       this->repo_->config ()->set_string_value (member_key,
                                                 "name",
-                                                members[i].in ());
+                                                members[i]);
     }
 
   CORBA::DefinitionKind def_kind =
@@ -1319,7 +1319,7 @@ TAO_Container_i::create_interface_i (const char *id,
         {
           inherited_path =
             TAO_IFR_Service_Utils::reference_to_path (
-                base_interfaces[i].in ()
+                base_interfaces[i]
               );
           char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (inherited_key,
@@ -2575,7 +2575,7 @@ TAO_Container_i::create_value_common (
         {
           base_path =
             TAO_IFR_Service_Utils::reference_to_path (
-                abstract_base_values[i].in ()
+                abstract_base_values[i]
               );
 
           // Get the servant's key into the temporary key holder, because
@@ -2628,7 +2628,7 @@ TAO_Container_i::create_value_common (
         {
           supported_path =
             TAO_IFR_Service_Utils::reference_to_path (
-                supported_interfaces[i].in ()
+                supported_interfaces[i]
               );
 
           // Get the servant's key into the temporary key holder, because

@@ -1002,7 +1002,7 @@ TAO_IFR_Service_Utils::set_exceptions (
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       type_path =
-        TAO_IFR_Service_Utils::reference_to_path (exceptions[i].in ());
+        TAO_IFR_Service_Utils::reference_to_path (exceptions[i]);
 
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       config->set_string_value (excepts_key,

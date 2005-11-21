@@ -310,7 +310,7 @@ TAO_InterfaceDef_i::base_interfaces_i (const CORBA::InterfaceDefSeq &base_interf
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       inherited_path =
-        TAO_IFR_Service_Utils::reference_to_path (base_interfaces[i].in ());
+        TAO_IFR_Service_Utils::reference_to_path (base_interfaces[i]);
 
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            inherited_path,
@@ -856,7 +856,7 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
       for (i = 0; i < length; ++i)
         {
           type_path =
-            TAO_IFR_Service_Utils::reference_to_path (exceptions[i].in ());
+            TAO_IFR_Service_Utils::reference_to_path (exceptions[i]);
 
           char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (excepts_key,
@@ -882,7 +882,7 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
           char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (contexts_key,
                                                     stringified,
-                                                    contexts[i].in ());
+                                                    contexts[i]);
         }
     }
 

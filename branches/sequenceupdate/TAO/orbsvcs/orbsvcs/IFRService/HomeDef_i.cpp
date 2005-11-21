@@ -385,7 +385,7 @@ TAO_HomeDef_i::supported_interfaces_i (
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       path =
         TAO_IFR_Service_Utils::reference_to_path (
-            supported_interfaces[i].in ()
+            supported_interfaces[i]
           );
       this->repo_->config ()->set_string_value (supported_key,
                                                 stringified,
@@ -732,7 +732,7 @@ TAO_HomeDef_i::create_common (CORBA::DefinitionKind created_kind,
       for (i = 0; i < length; ++i)
         {
           type_path =
-            TAO_IFR_Service_Utils::reference_to_path (exceptions[i].in ());
+            TAO_IFR_Service_Utils::reference_to_path (exceptions[i]);
 
           char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (excepts_key,

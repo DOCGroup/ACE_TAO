@@ -248,7 +248,7 @@ TAO_ValueDef_i::supported_interfaces_i (
     {
       supported_path =
         TAO_IFR_Service_Utils::reference_to_path (
-            supported_interfaces[i].in ()
+            supported_interfaces[i]
           );
 
       // Get the servant's key into the temporary key holder, because
@@ -641,7 +641,7 @@ TAO_ValueDef_i::abstract_base_values_i (
     {
       base_path =
         TAO_IFR_Service_Utils::reference_to_path (
-            abstract_base_values[i].in ()
+            abstract_base_values[i]
           );
 
       // Get the servant's key into the temporary key holder, because
@@ -1760,7 +1760,7 @@ TAO_ValueDef_i::create_operation_i (
           char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (contexts_key,
                                                     stringified,
-                                                    contexts[i].in ());
+                                                    contexts[i]);
         }
     }
 
