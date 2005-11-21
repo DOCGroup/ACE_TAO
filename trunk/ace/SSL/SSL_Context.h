@@ -84,7 +84,7 @@ private:
  */
 class ACE_SSL_Export ACE_SSL_Context
 {
-  friend void ::ACE_SSL_locking_callback (int, int, const char *, int);
+  friend void ACE_SSL_locking_callback (int, int, const char *, int);
 
 public:
 
