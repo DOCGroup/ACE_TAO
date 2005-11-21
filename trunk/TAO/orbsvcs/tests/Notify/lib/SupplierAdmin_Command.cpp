@@ -159,17 +159,21 @@ TAO_Notify_Tests_SupplierAdmin_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
   if (this->command_ == CREATE)
     {
       this->handle_create (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
   else if (this->command_ == OFFER)
     {
       this->handle_offers (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
   else if (this->command_ == SET_QOS)
     {
       this->handle_set_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
   else if (this->command_ == DUMP_STATE)
     {
       this->handle_status (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
 }

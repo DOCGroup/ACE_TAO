@@ -28,6 +28,16 @@ ACE_RCSID(Notify, TAO_Notify_EventChannelFactory, "$Id$")
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+// Include this here since this is the only file that
+// requires Topology_Factory.
+namespace TAO_Notify
+{
+  // virtual
+  Topology_Factory::~Topology_Factory ()
+  {
+  }
+}
+
 typedef TAO_Notify_Find_Worker_T<TAO_Notify_EventChannel
                              , CosNotifyChannelAdmin::EventChannel
                              , CosNotifyChannelAdmin::EventChannel_ptr
@@ -41,7 +51,6 @@ TAO_Notify_EventChannelFactory::TAO_Notify_EventChannelFactory (void)
   , topology_factory_(0)
   , reconnect_registry_(*this)
   , loading_topology_ (false)
-
 {
 }
 
@@ -55,7 +64,9 @@ TAO_Notify_EventChannelFactory::destroy (ACE_ENV_SINGLE_ARG_DECL)
                    CORBA::SystemException
                    ))
 {
-  if (this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER) == 1)
+  int result = this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+  if ( result == 1)
     return;
 
   TAO_Notify_Properties* properties = TAO_Notify_PROPERTIES::instance();
@@ -63,6 +74,8 @@ TAO_Notify_EventChannelFactory::destroy (ACE_ENV_SINGLE_ARG_DECL)
   // Reset references to CORBA objects.
   properties->orb (CORBA::ORB::_nil ());
   properties->default_poa (PortableServer::POA::_nil ());
+
+  ec_container_.reset( 0 );
 }
 
 void
@@ -93,7 +106,7 @@ TAO_Notify_EventChannelFactory::init (PortableServer::POA_ptr poa ACE_ENV_ARG_DE
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
 
-  auto_ptr<TAO_Notify_POA_Helper> auto_object_poa (object_poa);
+  ACE_Auto_Ptr<TAO_Notify_POA_Helper> auto_object_poa (object_poa);
 
   object_poa->init (poa ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -142,7 +155,10 @@ TAO_Notify_EventChannelFactory::remove (TAO_Notify_EventChannel* event_channel A
 int
 TAO_Notify_EventChannelFactory::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
-  if (TAO_Notify_Object::shutdown (ACE_ENV_SINGLE_ARG_PARAMETER) == 1)
+  int sd_ret = TAO_Notify_Object::shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (1);
+
+  if (sd_ret == 1)
     return 1;
 
   this->ec_container().shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -174,9 +190,9 @@ TAO_Notify_EventChannelFactory::get_default_filter_factory (ACE_ENV_SINGLE_ARG_D
                                                                         , initial_admin
                                                                         , id
                                                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (ec._retn ());
+  ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannel::_nil());
   this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (ec._retn ());
+  ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannel::_nil());
   return ec._retn ();
 }
 
@@ -221,6 +237,7 @@ TAO_Notify_EventChannelFactory::load_topology (ACE_ENV_SINGLE_ARG_DECL)
   this->loading_topology_ = true;
   if (this->topology_factory_ != 0)
   {
+    // create_loader will open and load the persistence file for validation
     auto_ptr<TAO_Notify::Topology_Loader> tl(this->topology_factory_->create_loader());
     if (tl.get () != 0)
     {
@@ -339,6 +356,7 @@ TAO_Notify_EventChannelFactory::change_to_parent (ACE_ENV_SINGLE_ARG_DECL)
           this->save_persistent(*saver ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN(false);
           saver->close (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK_RETURN (false);
         }
         this->topology_save_seq_ += 1;
       }
@@ -507,7 +525,10 @@ TAO_Notify_EventChannelFactory::activate_self (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannelFactory::_nil ());
   this->channel_factory_
     = CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in() ACE_ENV_ARG_PARAMETER);
-                           CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in() ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannelFactory::_nil ());
+  CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in() ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannelFactory::_nil ());
+
   ACE_TRY_NEW_ENV
   {
     if (DEBUG_LEVEL > 9)

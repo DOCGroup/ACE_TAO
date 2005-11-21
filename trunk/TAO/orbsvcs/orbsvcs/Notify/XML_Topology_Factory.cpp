@@ -23,6 +23,11 @@ namespace TAO_Notify
   }
 
   // virtual
+  XML_Topology_Factory::~XML_Topology_Factory ()
+  {
+  }
+
+  // virtual
   Topology_Saver*
   XML_Topology_Factory::create_saver ()
   {

@@ -113,10 +113,12 @@ void
 TAO_Notify_Event_Manager::connect (TAO_Notify_ProxySupplier* proxy_supplier ACE_ENV_ARG_DECL)
 {
   this->consumer_map().connect (proxy_supplier ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   // Inform about offered types.
   TAO_Notify_EventTypeSeq removed;
   proxy_supplier->types_changed (this->offered_types (), removed ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
@@ -166,14 +168,19 @@ TAO_Notify_Event_Manager::subscription_change (TAO_Notify_ProxySupplier* proxy_s
   TAO_Notify_EventTypeSeq new_added, last_removed;
 
   this->subscribe (proxy_supplier, added, new_added ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
   this->un_subscribe (proxy_supplier, removed, last_removed ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   TAO_Notify_Supplier_Map::ENTRY::COLLECTION* updates_collection = this->supplier_map().updates_collection ();
 
   TAO_Notify_ProxyConsumer_Update_Worker worker (new_added, last_removed);
 
   if (updates_collection != 0)
-    updates_collection->for_each (&worker ACE_ENV_ARG_PARAMETER);
+    {
+      updates_collection->for_each (&worker ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
 }
 
 void

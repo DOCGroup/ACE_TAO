@@ -8,6 +8,7 @@
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 #include "Reconnection_Registry.h"
+
 #include "tao/debug.h"
 #include "Properties.h"
 #include "Topology_Saver.h"
@@ -83,6 +84,7 @@ namespace TAO_Notify
       //@@todo  throw something
     }
     this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
   }
 
   CORBA::Boolean

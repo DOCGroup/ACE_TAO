@@ -119,7 +119,7 @@ Routing_Slip::create (
       {
         TAO_InputCDR cdr_event (event_mb);
         TAO_Notify_Event::Ptr event (TAO_Notify_Event::unmarshal (cdr_event));
-        if (event.get () != 0)
+        if (event.isSet())
         {
           result = create (event ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -909,6 +909,7 @@ Routing_Slip::reconnect (ACE_ENV_SINGLE_ARG_DECL)
   for (size_t nmethod = 0; nmethod < count; ++nmethod)
   {
     this->delivery_methods_[nmethod]->execute (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
   }
   this->delivery_methods_.clear ();
 }

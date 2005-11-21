@@ -35,7 +35,7 @@ class TAO_Notify_ProxySupplier;
 template <class TYPE> class TAO_Notify_Container_T;
 
 #if defined(_MSC_VER)
-  #pragma warning(push)
+#pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -95,7 +95,6 @@ public:
 
   TAO_Notify_ProxyConsumer * find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position  ACE_ENV_ARG_DECL);
   TAO_Notify_ProxySupplier * find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position  ACE_ENV_ARG_DECL);
-
 
   /// Shutdown
   virtual int shutdown (ACE_ENV_SINGLE_ARG_DECL);
@@ -249,6 +248,10 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
+
+#if defined (__ACE_INLINE__)
+#include "EventChannel.inl"
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 

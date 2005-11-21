@@ -28,7 +28,7 @@ their push methods to be invoked. To decouple the consumers from one
 another we can deploy dispatching threads using this option.
 
 
--ListenerThreads
+-SourceThreads
 Deploys a thread pool after event receipt from the supplier.  All subsequent
 notification channel processing can happen on this thread and the original
 publishing push() can be ended.  Separates server side processing of the 

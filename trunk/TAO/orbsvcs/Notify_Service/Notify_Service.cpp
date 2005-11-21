@@ -1,26 +1,29 @@
 // $Id$
 
 #include "Notify_Service.h"
+
+#include "orbsvcs/Notify/Service.h"
+
 #include "tao/debug.h"
 #include "tao/IORTable/IORTable.h"
+#include "tao/ORB_Core.h"
+
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 #include "ace/Synch.h"
 #include "ace/Argv_Type_Converter.h"
-#include "tao/ORB_Core.h"
 #include "ace/Dynamic_Service.h"
-#include "orbsvcs/Notify/Service.h"
 
 TAO_Notify_Service_Driver::TAO_Notify_Service_Driver (void)
-  : notify_service_ (0),
-    bootstrap_ (0),
-    use_name_svc_ (1),
-    ior_output_file_ (0),
-    notify_factory_name_ (NOTIFY_KEY),
-    notify_channel_name_ (NOTIFY_CHANNEL_NAME),
-    register_event_channel_ (0),
-    nthreads_ (1)
+: notify_service_ (0)
+, bootstrap_ (0)
+, use_name_svc_ (1)
+, ior_output_file_ (0)
+, notify_factory_name_ (NOTIFY_KEY)
+, notify_channel_name_ (NOTIFY_CHANNEL_NAME)
+, register_event_channel_ (0)
+, nthreads_ (1)
 {
   // No-Op.
 }
@@ -33,7 +36,7 @@ TAO_Notify_Service_Driver::~TAO_Notify_Service_Driver (void)
 
 int
 TAO_Notify_Service_Driver::init_ORB (int& argc, ACE_TCHAR *argv []
-                              ACE_ENV_ARG_DECL)
+                                     ACE_ENV_ARG_DECL)
 {
   // Copy command line parameter.
   ACE_Argv_Type_Converter command_line(argc, argv);
@@ -71,7 +74,7 @@ TAO_Notify_Service_Driver::init_ORB (int& argc, ACE_TCHAR *argv []
 
 int
 TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
-                          ACE_ENV_ARG_DECL)
+                                 ACE_ENV_ARG_DECL)
 {
   if (this->parse_args(argc, argv) != 0)
     return -1;
@@ -79,7 +82,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
   // initalize the ORB.
   if (this->init_ORB (argc, argv
                       ACE_ENV_ARG_PARAMETER) != 0)
-  return -1;
+    return -1;
 
   this->notify_service_ = ACE_Dynamic_Service<TAO_Notify_Service>::instance (TAO_NOTIFICATION_SERVICE_NAME);
 
@@ -89,17 +92,17 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
     }
 
   if (this->notify_service_ == 0)
-  {
-      ACE_DEBUG ((LM_DEBUG, "Service not found! check conf.file\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG, "Service not found. Check service configurator file.\n"));
       return -1;
-  }
+    }
 
   this->notify_service_->init_service (this->orb_.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (this->nthreads_ > 0) // we have chosen to run in a thread pool.
     {
-      ACE_DEBUG ((LM_DEBUG, "Running %d server threads\n", this->nthreads_));
+      ACE_DEBUG ((LM_DEBUG, "Running %d ORB threads\n", this->nthreads_));
       worker_.orb (this->orb_.in ());
 
       // Task activation flags.
@@ -108,8 +111,9 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
         THR_JOINABLE |
         this->orb_->orb_core ()->orb_params ()->thread_creation_flags ();
 
-      int priority = ACE_Sched_Params::priority_min (this->orb_->orb_core ()->orb_params ()->sched_policy (),
-                                                     this->orb_->orb_core ()->orb_params ()->scope_policy ());
+      int priority =
+        ACE_Sched_Params::priority_min (this->orb_->orb_core ()->orb_params ()->sched_policy (),
+                                        this->orb_->orb_core ()->orb_params ()->scope_policy ());
 
       if (worker_.activate (flags,
                             this->nthreads_, 0, priority) != 0)
@@ -133,14 +137,12 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
 
   // Activate the factory
   this->notify_factory_ =
-    notify_service_->create (this->poa_.in ()
-                               ACE_ENV_ARG_PARAMETER);
+    notify_service_->create (this->poa_.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_ASSERT (!CORBA::is_nil (this->notify_factory_.in ()));
 
-  // Make it bootstrappable, if asked.
-  if (this->bootstrap_)
+  if (this->bootstrap_) // Enable corbaloc usage
     {
       CORBA::Object_var table_object =
         this->orb_->resolve_initial_references ("IORTable"
@@ -152,7 +154,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
       ACE_CHECK_RETURN (-1);
       if (CORBA::is_nil (adapter.in ()))
         {
-          ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
+          ACE_ERROR ((LM_ERROR, "Nil IORTable. corbaloc support not enabled.\n"));
         }
       else
         {
@@ -170,9 +172,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
   // Register with the Name service, if asked
   if (this->use_name_svc_)
     {
-      // Register the Factory
       ACE_ASSERT (!CORBA::is_nil (this->naming_.in ()));
-
 
       CosNaming::Name_var name =
         this->naming_->to_name (this->notify_factory_name_.c_str ()
@@ -181,8 +181,8 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
 
 
       this->naming_->rebind (name.in (),
-                            this->notify_factory_.in ()
-                            ACE_ENV_ARG_PARAMETER);
+                             this->notify_factory_.in ()
+                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       ACE_DEBUG ((LM_DEBUG,
@@ -199,19 +199,18 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
 
           CosNotifyChannelAdmin::EventChannel_var ec =
             this->notify_factory_->create_channel (initial_qos,
-                                                  initial_admin,
-                                                  id
-                                                  ACE_ENV_ARG_PARAMETER);
+                                                   initial_admin,
+                                                   id
+                                                   ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
-          name = this->naming_->to_name (
-            this->notify_channel_name_.c_str ()
-            ACE_ENV_ARG_PARAMETER);
+          name = this->naming_->to_name (this->notify_channel_name_.c_str ()
+                                         ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
           this->naming_->rebind (name.in (),
-                                ec.in ()
-                                ACE_ENV_ARG_PARAMETER);
+                                 ec.in ()
+                                 ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
           ACE_DEBUG ((LM_DEBUG,
@@ -224,21 +223,22 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
   // Write IOR to a file, if asked.
   // Note: do this last to ensure that we're up and running before the file is written
   CORBA::String_var str =
-    this->orb_->object_to_string (this->notify_factory_.in () ACE_ENV_ARG_PARAMETER);
+    this->orb_->object_to_string (this->notify_factory_.in ()
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (this->ior_output_file_)
     {
-      ACE_OS::fprintf (this->ior_output_file_,
-                       "%s",
-                       str.in ());
+      ACE_OS::fprintf (this->ior_output_file_, "%s", str.in ());
       ACE_OS::fclose (this->ior_output_file_);
       this->ior_output_file_ = 0;
-  }
+    }
   else if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "The Notification Event Channel Factory IOR is <%s>\n",
-                str.in ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "The Notification Event Channel Factory IOR is <%s>\n",
+                  str.in ()));
+    }
 
   return 0;
 }
@@ -258,8 +258,7 @@ TAO_Notify_Service_Driver::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
                       -1);
 
   this->naming_ =
-    CosNaming::NamingContextExt::_narrow (naming_obj.in ()
-                                       ACE_ENV_ARG_PARAMETER);
+    CosNaming::NamingContextExt::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
@@ -289,17 +288,17 @@ TAO_Notify_Service_Driver::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Deactivate.
   if (this->use_name_svc_)
-  {
-    // Unbind from the naming service.
-    CosNaming::Name_var name =
-      this->naming_->to_name (this->notify_factory_name_.c_str ()
-                              ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    {
+      // Unbind from the naming service.
+      CosNaming::Name_var name =
+        this->naming_->to_name (this->notify_factory_name_.c_str ()
+                                ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
 
-    this->naming_->unbind (name.in ()
-                           ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-  }
+      this->naming_->unbind (name.in ()
+                             ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
 
   // shutdown the ORB.
   if (!CORBA::is_nil (this->orb_.in ()))
@@ -309,10 +308,10 @@ TAO_Notify_Service_Driver::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 int
 TAO_Notify_Service_Driver::parse_args (int &argc, ACE_TCHAR *argv[])
 {
-    ACE_Arg_Shifter arg_shifter (argc, argv);
+  ACE_Arg_Shifter arg_shifter (argc, argv);
 
-    const ACE_TCHAR* current_arg = 0;
-    while (arg_shifter.is_anything_left ())
+  const ACE_TCHAR* current_arg = 0;
+  while (arg_shifter.is_anything_left ())
     {
       if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Factory"))))
         {
@@ -379,10 +378,10 @@ TAO_Notify_Service_Driver::parse_args (int &argc, ACE_TCHAR *argv[])
                      "usage: %s -Factory factory_name "
                      "-Boot -[No]NameSvc "
                      "-IORoutput file_name "
-                     "-Channel -ChannelName channel_name\n"
+                     "-Channel -ChannelName channel_name "
+                     "-ORBRunThreads threads\n"
                      "default: %s -Factory NotifyEventChannelFactory "
-                     "-NameSvc -Channel NotifyEventChannel\n",
-                     "-ORBRunThreads [threads]\n",
+                     "-NameSvc -Channel NotifyEventChannel -ORBRunThreads 1\n",
                      argv[0], argv[0]));
 
           arg_shifter.consume_arg ();
@@ -391,12 +390,10 @@ TAO_Notify_Service_Driver::parse_args (int &argc, ACE_TCHAR *argv[])
         }
       else
         {
-          /*ACE_DEBUG((LM_DEBUG, "Unrecognized command %s",
-            arg_shifter.get_current ()));*/
-            arg_shifter.ignore_arg ();
+          arg_shifter.ignore_arg ();
         }
     }
-    return 0;
+  return 0;
 }
 
 /*****************************************************************/

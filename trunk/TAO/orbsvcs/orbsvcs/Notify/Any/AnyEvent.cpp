@@ -94,7 +94,7 @@ TAO_Notify_AnyEvent_No_Copy::push_no_filtering (Event_Forwarder::ProxyPushSuppli
 void
 TAO_Notify_AnyEvent_No_Copy::marshal (TAO_OutputCDR & cdr) const
 {
-  static const ACE_CDR::Octet ANY_CODE = MARSHAL_ANY;
+  const ACE_CDR::Octet ANY_CODE = MARSHAL_ANY;
   cdr.write_octet (ANY_CODE);
   cdr << (*this->event_);
 }
