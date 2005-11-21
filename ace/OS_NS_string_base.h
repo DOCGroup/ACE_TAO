@@ -17,7 +17,7 @@ namespace ACE_OS
 template <typename CHAR> inline
 size_t strlen (const CHAR* s);
 
-/// Finds the length of a string (emulated version).
+/// Finds the length of a string (char version).
 template <> inline
 size_t strlen (const char* s);
 

@@ -331,32 +331,33 @@ private:
 #if !defined (ACE_LACKS_DEPRECATED_MACROS)
 namespace ACE_OS
 {
-  template <> inline size_t
-  strlen( const TAO_String_Manager& str )
+  inline size_t
+  strlen (const TAO_String_Manager& str)
   {
     return ACE_OS::strlen( str.in() );
   }
-  template <> inline int
+  inline int
   strcmp( const TAO_String_Manager& lhs, const char* rhs )
   {
     return ACE_OS::strcmp( lhs.in(), rhs );
   }
-  template <> inline int
+  inline int
   strcmp( const TAO_String_Manager& lhs, const TAO_String_Manager& rhs )
   {
     return ACE_OS::strcmp( lhs.in(), rhs.in() );
   }
-  template <> inline size_t
+
+  inline size_t
   strlen( const TAO_WString_Manager& str )
   {
     return ACE_OS::strlen( str.in() );
   }
-  template <> inline int
-  strcmp( const TAO_WString_Manager& lhs, const char* rhs )
+  inline int
+  strcmp( const TAO_WString_Manager& lhs, const CORBA::WChar* rhs )
   {
     return ACE_OS::strcmp( lhs.in(), rhs );
   }
-  template <> inline int
+  inline int
   strcmp( const TAO_WString_Manager& lhs, const TAO_WString_Manager& rhs )
   {
     return ACE_OS::strcmp( lhs.in(), rhs.in() );
