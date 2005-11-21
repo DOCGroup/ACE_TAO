@@ -82,8 +82,8 @@ private:
   int id_;
 };
 
-CORBA::Boolean operator<< (mock_stream &, const mock_reference *);
-CORBA::Boolean operator>> (mock_stream &, mock_reference *&);
+CORBA::Boolean operator<< (TAO_OutputCDR &, const mock_reference *);
+CORBA::Boolean operator>> (TAO_InputCDR &, mock_reference *&);
 
 namespace TAO
 {

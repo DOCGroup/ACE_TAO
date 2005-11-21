@@ -109,7 +109,7 @@ Sender_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &flowspec)
        i++)
     {
       TAO_Forward_FlowSpec_Entry entry;
-      entry.parse (flowspec[i].in ());
+      entry.parse (flowspec[i]);
 
       ACE_CString flowname (entry.flowname ());
 

@@ -398,7 +398,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
                                                   ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
 
-                  if (CORBA::is_nil (bases[i].in ()))
+                  if (CORBA::is_nil (bases[i]))
                     {
                       ACE_ERROR_RETURN ((
                           LM_ERROR,
@@ -2858,7 +2858,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node
               ACE_CHECK_RETURN (-1);
             }
 
-          if (CORBA::is_nil (abs_bases[i].in ()))
+          if (CORBA::is_nil (abs_bases[i]))
             {
               ACE_ERROR_RETURN ((
                   LM_ERROR,
@@ -2913,7 +2913,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node
               ACE_CHECK_RETURN (-1);
             }
 
-          if (CORBA::is_nil (bases[i].in ()))
+          if (CORBA::is_nil (bases[i]))
             {
               ACE_ERROR_RETURN ((
                   LM_ERROR,

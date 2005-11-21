@@ -28,12 +28,12 @@ using namespace TAO;
 
 typedef unbounded_object_reference_sequence<mock_reference, mock_reference_var> tested_sequence;
 
-CORBA::Boolean operator<< (mock_stream &strm, const tested_sequence &sequence)
+CORBA::Boolean operator<< (TAO_OutputCDR &strm, const tested_sequence &sequence)
 {
   return TAO::insert_sequence(strm, sequence);
 }
 
-CORBA::Boolean operator>> (mock_stream &strm, tested_sequence &sequence)
+CORBA::Boolean operator>> (TAO_InputCDR &strm, tested_sequence &sequence)
 {
   return TAO::extract_sequence(strm, sequence);
 }
