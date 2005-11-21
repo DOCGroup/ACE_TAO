@@ -7,6 +7,7 @@ project(TAO_IDL_EXE) : aceexe, acethreadslib_for_tao, core, tao_output, crosscom
   includes    += include be_include fe
   install      = $(ACE_ROOT)/bin
   after       += TAO_IDL_BE TAO_IDL_FE gperf
+  avoids      += uses_wchar
 
   specific {
     // Override the template value for optimize.  Building the exe
