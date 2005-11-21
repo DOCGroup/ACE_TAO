@@ -13,7 +13,7 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.7 and ACE-5.4.8
 . TTY_IO overhaul
   - Improved documentation.
   - It is now possible to request infinite timeout in portable manner.
-    This can be achived by setting negative value to readtimeoutmsec.
+    This can be achieved by setting negative value to readtimeoutmsec.
   - Various bugs fixed and portability issues resolved.
 
 . Subset ACE for TAO and TAO Services
@@ -30,6 +30,21 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.7 and ACE-5.4.8
 
 . The in-memory size of an ACE_RB_Tree will be smaller due to rearranged
   placement of pointers.
+
+. Added an optimization to CDR stream to ignores alignment when marshaling
+  data. Use this option only when ACE_DISABLE_SWAP_ON_READ can be enabled.
+  This option requires ACE CDR engine to do both marshaling and
+  demarshaling.
+
+. Developed Feature Oriented Customizer (FOCUS) tool to enable
+  specialization of middleware frameworks such as Reactor and Protocol framework. 
+  FOCUS provides an XML based transformation engine, where the transformations to 
+  specialize the components are captured in XML file and a weaver specializes the 
+  code.
+
+. Added support for unrolling ACE_OS::memcpy copy loop where applicable to improve
+  performance. Autoconf tests empirically determine whether loop unrolling 
+  is at least 10% better than default version.
 
 USER VISIBLE CHANGES BETWEEN ACE-5.4.6 and ACE-5.4.7
 ====================================================
