@@ -119,30 +119,17 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
 
   *os << "::CORBA::Boolean operator>> (" << be_idt << be_idt_nl
-      << "TAO_InputCDR &";
-
-  if (! bt->is_local ())
-    {
-      *os << "strm";
-    }
+      << "TAO_InputCDR &strm";
 
   *os << "," << be_nl
-      << node->name () << " &";
-
-  if (! bt->is_local ())
-    {
-      *os << "_tao_sequence";
-    }
+      << node->name () << " &_tao_sequence";
 
   *os << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
 
-  if (! bt->is_local ())
-    {
-      *os << "return TAO::extract_sequence(strm, _tao_sequence);"
-          << be_uidt_nl;
-    }
+  *os << "return TAO::extract_sequence(strm, _tao_sequence);"
+      << be_uidt_nl;
 
   *os << "}" << be_nl << be_nl;
 
