@@ -18,6 +18,7 @@
 #include "tao/unbounded_value_sequence.hpp"
 #include "tao/unbounded_object_reference_sequence.hpp"
 #include "tao/unbounded_sequence_cdr.hpp"
+#include "tao/CDR.hpp"
 
 #include <boost/test/unit_test.hpp>
 #include <boost/shared_ptr.hpp>
