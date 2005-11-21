@@ -1,3 +1,9 @@
+Mon Nov 21 13:26:53 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * NEWS:
+
+          Updated NEWS file to reflect additions to the latest beta.
+
 Mon Nov 21 11:00:02 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/cidlc.mpb
@@ -13,7 +19,7 @@ Mon Nov 21 08:16:29 2005  Steve Huston  <shuston@riverace.com>
 Fri Nov 18 23:07:09 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * include/makeinclude/wrapper_macros.GNU:
-        
+
           Applied a syntax submitted by Martin Corino <mcorino@rememdy.nl>
           to the setting of $LEX and $YACC. The existing syntax set
           these variables only if they were not already set, but
@@ -55,10 +61,10 @@ Fri Nov 18 10:39:01 2005  William Otte  <wotte@dre.vanderbilt.edu>
 Thu Nov 17 18:08:45 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * bin/MakeProjectCreator/config/cidlc.mpb:
-        
+
           Fix submitted by Will Otte <wotte@dre.vanderbilt.edu> intended
           to be part of
-          
+
           Tue Nov 15 12:44:37 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 Thu Nov 16 13:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
