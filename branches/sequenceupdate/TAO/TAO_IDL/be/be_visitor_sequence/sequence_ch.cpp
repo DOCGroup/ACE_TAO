@@ -239,7 +239,6 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
                                              be_type *elem)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_decl *scope = this->ctx_->scope ();
 
   *os << be_nl << be_nl;
 

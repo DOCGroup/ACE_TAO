@@ -19,13 +19,10 @@ namespace TAO {
     if (!(strm >> new_length)) {
       return false;
     }
-    if (new_length > strm.length()) {
+    if ((new_length > strm.length()) || (new_length > target.maximum ())) {
         return false;
     }
-    if (new_length > target.maximum ()) {
-        return false;
-    }
-    sequence tmp(new_length);
+    sequence tmp;
     tmp.length(new_length);
     typename sequence::value_type * buffer = tmp.get_buffer();
     if (!strm.read_short_array (buffer, new_length)) {
@@ -46,13 +43,10 @@ namespace TAO {
     if (!(strm >> new_length)) {
       return false;
     }
-    if (new_length > strm.length()) {
+    if ((new_length > strm.length()) || (new_length > target.maximum ())) {
         return false;
     }
-    if (new_length > target.maximum ()) {
-        return false;
-    }
-    sequence tmp(new_length);
+    sequence tmp;
     tmp.length(new_length);
     typename sequence::value_type * buffer = tmp.get_buffer();
     if (!strm.read_long_array (buffer, new_length)) {
@@ -69,13 +63,10 @@ namespace TAO {
     if (!(strm >> new_length)) {
       return false;
     }
-    if (new_length > strm.length()) {
+    if ((new_length > strm.length()) || (new_length > target.maximum ())) {
         return false;
     }
-    if (new_length > target.maximum ()) {
-        return false;
-    }
-    sequence tmp(new_length);
+    sequence tmp;
     tmp.length(new_length);
     typename sequence::value_type * buffer = tmp.get_buffer();
     if (!strm.read_ulong_array (buffer, new_length)) {
@@ -92,13 +83,10 @@ namespace TAO {
     if (!(strm >> new_length)) {
       return false;
     }
-    if (new_length > strm.length()) {
+    if ((new_length > strm.length()) || (new_length > target.maximum ())) {
         return false;
     }
-    if (new_length > target.maximum ()) {
-        return false;
-    }
-    sequence tmp(new_length);
+    sequence tmp;
     tmp.length(new_length);
     typename sequence::value_type * buffer = tmp.get_buffer();
     if (!strm.read_ushort_array (buffer, new_length)) {
@@ -115,13 +103,10 @@ namespace TAO {
     if (!(strm >> new_length)) {
       return false;
     }
-    if (new_length > strm.length()) {
+    if ((new_length > strm.length()) || (new_length > target.maximum ())) {
         return false;
     }
-    if (new_length > target.maximum ()) {
-        return false;
-    }
-    sequence tmp(new_length);
+    sequence tmp;
     tmp.length(new_length);
     typename sequence::value_type * buffer = tmp.get_buffer();
     if (!strm.read_octet_array (buffer, new_length)) {
@@ -138,13 +123,10 @@ namespace TAO {
     if (!(strm >> new_length)) {
       return false;
     }
-    if (new_length > strm.length()) {
+    if ((new_length > strm.length()) || (new_length > target.maximum ())) {
         return false;
     }
-    if (new_length > target.maximum ()) {
-        return false;
-    }
-    sequence tmp(new_length);
+    sequence tmp;
     tmp.length(new_length);
     typename sequence::value_type * buffer = tmp.get_buffer();
     if (!strm.read_char_array (buffer, new_length)) {
@@ -161,13 +143,10 @@ namespace TAO {
     if (!(strm >> new_length)) {
       return false;
     }
-    if (new_length > strm.length()) {
+    if ((new_length > strm.length()) || (new_length > target.maximum ())) {
         return false;
     }
-    if (new_length > target.maximum ()) {
-        return false;
-    }
-    sequence tmp(new_length);
+    sequence tmp;
     tmp.length(new_length);
     typename sequence::value_type * buffer = tmp.get_buffer();
     if (!strm.read_wchar_array (buffer, new_length)) {
@@ -184,13 +163,10 @@ namespace TAO {
     if (!(strm >> new_length)) {
       return false;
     }
-    if (new_length > strm.length()) {
+    if ((new_length > strm.length()) || (new_length > target.maximum ())) {
         return false;
     }
-    if (new_length > target.maximum ()) {
-        return false;
-    }
-    sequence tmp(new_length);
+    sequence tmp;
     tmp.length(new_length);
     typename sequence::value_type * buffer = tmp.get_buffer();
     if (!strm.read_float_array (buffer, new_length)) {
@@ -207,13 +183,10 @@ namespace TAO {
     if (!(strm >> new_length)) {
       return false;
     }
-    if (new_length > strm.length()) {
+    if ((new_length > strm.length()) || (new_length > target.maximum ())) {
         return false;
     }
-    if (new_length > target.maximum ()) {
-        return false;
-    }
-    sequence tmp(new_length);
+    sequence tmp;
     tmp.length(new_length);
     typename sequence::value_type * buffer = tmp.get_buffer();
     if (!strm.read_double_array (buffer, new_length)) {
@@ -230,13 +203,10 @@ namespace TAO {
     if (!(strm >> new_length)) {
       return false;
     }
-    if (new_length > strm.length()) {
+    if ((new_length > strm.length()) || (new_length > target.maximum ())) {
         return false;
     }
-    if (new_length > target.maximum ()) {
-        return false;
-    }
-    sequence tmp(new_length);
+    sequence tmp;
     tmp.length(new_length);
     typename sequence::value_type * buffer = tmp.get_buffer();
     if (!strm.read_ulonglong_array (buffer, new_length)) {
@@ -253,13 +223,10 @@ namespace TAO {
     if (!(strm >> new_length)) {
       return false;
     }
-    if (new_length > strm.length()) {
+    if ((new_length > strm.length()) || (new_length > target.maximum ())) {
         return false;
     }
-    if (new_length > target.maximum ()) {
-        return false;
-    }
-    sequence tmp(new_length);
+    sequence tmp;
     tmp.length(new_length);
     typename sequence::value_type * buffer = tmp.get_buffer();
     if (!strm.read_longdouble_array (buffer, new_length)) {
@@ -276,13 +243,10 @@ namespace TAO {
     if (!(strm >> new_length)) {
       return false;
     }
-    if (new_length > strm.length()) {
+    if ((new_length > strm.length()) || (new_length > target.maximum ())) {
         return false;
     }
-    if (new_length > target.maximum ()) {
-        return false;
-    }
-    sequence tmp(new_length);
+    sequence tmp;
     tmp.length(new_length);
     typename sequence::value_type * buffer = tmp.get_buffer();
     if (!strm.read_boolean_array (buffer, new_length)) {
@@ -299,10 +263,7 @@ namespace TAO {
     if (!(strm >> new_length)) {
       return false;
     }
-    if (new_length > strm.length()) {
-        return false;
-    }
-    if (new_length > target.maximum ()) {
+    if ((new_length > strm.length()) || (new_length > target.maximum ())) {
         return false;
     }
     sequence tmp;
@@ -324,10 +285,7 @@ namespace TAO {
     if (!(strm >> new_length)) {
       return false;
     }
-    if (new_length > strm.length()) {
-        return false;
-    }
-    if (new_length > target.maximum ()) {
+    if ((new_length > strm.length()) || (new_length > target.maximum ())) {
         return false;
     }
     sequence tmp;
@@ -349,13 +307,10 @@ namespace TAO {
     if (!(strm >> new_length)) {
       return false;
     }
-    if (new_length > strm.length()) {
+    if ((new_length > strm.length()) || (new_length > target.maximum ())) {
         return false;
     }
-    if (new_length > target.maximum ()) {
-        return false;
-    }
-    sequence tmp(new_length);
+    sequence tmp;
     tmp.length(new_length);
     typename sequence::value_type * buffer = tmp.get_buffer();
     for(CORBA::ULong i = 0; i < new_length; ++i) {

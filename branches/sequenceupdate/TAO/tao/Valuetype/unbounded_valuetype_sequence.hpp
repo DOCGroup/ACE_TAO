@@ -114,7 +114,7 @@ private:
 
   template <typename stream, typename object_t, typename object_t_var>
   bool extract_sequence(stream & strm, TAO::unbounded_valuetype_sequence <object_t, object_t_var> & target) {
-    typedef TAO::unbounded_valuetype_sequence <object_t, object_t_var> sequence;
+    typedef typename TAO::unbounded_valuetype_sequence <object_t, object_t_var> sequence;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
       return false;
