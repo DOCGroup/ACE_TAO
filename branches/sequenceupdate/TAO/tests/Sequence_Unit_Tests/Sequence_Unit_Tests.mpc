@@ -59,7 +59,6 @@ project(*Unbounded_Sequence_CDR): taoexe, boost_unit_test_framework {
   exename = unbounded_sequence_cdr_ut
   Source_Files {
     mock_reference.cpp
-    mock_stream.cpp
     unbounded_sequence_cdr_ut.cpp
   }
 }
@@ -68,7 +67,6 @@ project(*Bounded_Sequence_CDR): taoexe, boost_unit_test_framework {
   exename = bounded_sequence_cdr_ut
   Source_Files {
     mock_reference.cpp
-    mock_stream.cpp
     bounded_sequence_cdr_ut.cpp
   }
 }

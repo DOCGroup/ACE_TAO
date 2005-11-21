@@ -13,11 +13,11 @@
 #include "testing_range_checking.hpp"
 
 #include "mock_reference.hpp"
-#include "mock_stream.hpp"
 
 #include "tao/bounded_object_reference_sequence.hpp"
 #include "tao/bounded_value_sequence.hpp"
 #include "tao/bounded_sequence_cdr.hpp"
+#include "tao/CDR.h"
 
 #include <boost/test/unit_test.hpp>
 #include <boost/shared_ptr.hpp>
@@ -30,12 +30,12 @@ CORBA::ULong const TMAX = 64;
 
 typedef bounded_object_reference_sequence<mock_reference, mock_reference_var,TMAX> tested_sequence;
 
-CORBA::Boolean operator<< (mock_stream &strm, const tested_sequence &sequence)
+CORBA::Boolean operator<< (TAO_OutputCDR &strm, const tested_sequence &sequence)
 {
   return TAO::insert_sequence(strm, sequence);
 }
 
-CORBA::Boolean operator>> (mock_stream &strm, tested_sequence &sequence)
+CORBA::Boolean operator>> (TAO_InputCDR &strm, tested_sequence &sequence)
 {
   return TAO::extract_sequence(strm, sequence);
 }
@@ -83,7 +83,7 @@ struct Tester
       BOOST_CHECK_EQUAL(false, a.release());
       check_values(a);
 
-      mock_stream stream;
+      TAO_OutputCDR stream;
       stream << a;
       BOOST_CHECK_MESSAGE(s.expect(4), s);
     }
