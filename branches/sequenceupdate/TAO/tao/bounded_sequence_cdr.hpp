@@ -11,6 +11,8 @@
  * @author Johnny Willemsen
  */
 
+#include "tao/bounded_basic_string_sequence.hpp"
+
 namespace TAO {
   template <typename stream, CORBA::ULong MAX>
   bool extract_sequence(stream & strm, TAO::bounded_value_sequence <CORBA::Short, MAX> & target) {

@@ -11,6 +11,8 @@
  * @author Johnny Willemsen
  */
 
+  #include "tao/unbounded_basic_string_sequence.hpp"
+
 namespace TAO {
   template <class stream>
   bool extract_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::Short> & target) {

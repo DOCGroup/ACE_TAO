@@ -307,7 +307,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
           << "const ";
       *os << node->nested_type_name (scope, "_slice")
           << " *_tao_from" << be_uidt_nl
-          << ");" << be_uidt;
+          << ");" << be_uidt << be_nl;
       *os << storage_class << "void" << be_nl
           << node->nested_type_name (scope, "_zero")
           << " (" << be_idt << be_idt_nl;

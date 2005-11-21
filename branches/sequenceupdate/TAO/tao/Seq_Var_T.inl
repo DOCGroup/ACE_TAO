@@ -146,7 +146,7 @@ TAO_FixedSeq_Var_T<T>::operator= (T * p)
 
 template<typename T>
 ACE_INLINE
-typename TAO_FixedSeq_Var_T<T>::T_elem &
+typename TAO_FixedSeq_Var_T<T>::T_elem
 TAO_FixedSeq_Var_T<T>::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);

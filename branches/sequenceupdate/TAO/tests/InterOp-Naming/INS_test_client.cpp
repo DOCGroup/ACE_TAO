@@ -53,7 +53,7 @@ main (int argc, char *argv[])
                       ACE_DEBUG ((LM_DEBUG,
                                   "  Reference %u: %s\n",
                                   n,
-                                  list[n].in ()));
+                                  list[n]));
                     }
                 }
               else

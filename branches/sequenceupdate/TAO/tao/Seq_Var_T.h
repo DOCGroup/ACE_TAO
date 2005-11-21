@@ -33,7 +33,7 @@ template <typename T>
 class TAO_Seq_Var_Base_T
 {
 public:
-  typedef typename T::element_type T_elem;
+  typedef typename T::subscript_type T_elem;
 
   TAO_Seq_Var_Base_T (void);
   TAO_Seq_Var_Base_T (T *);
@@ -76,7 +76,7 @@ template <typename T>
 class TAO_FixedSeq_Var_T : public TAO_Seq_Var_Base_T<T>
 {
 public:
-  typedef typename T::element_type T_elem;
+  typedef typename T::subscript_type T_elem;
 
   TAO_FixedSeq_Var_T (void);
   TAO_FixedSeq_Var_T (T *);
@@ -88,7 +88,7 @@ public:
   TAO_FixedSeq_Var_T & operator= (T *);
   TAO_FixedSeq_Var_T & operator= (const TAO_FixedSeq_Var_T<T> &);
 
-  T_elem & operator[] (CORBA::ULong index);
+  T_elem operator[] (CORBA::ULong index);
 
   // Fixed-size base types only.
   TAO_FixedSeq_Var_T & operator= (const T &);
