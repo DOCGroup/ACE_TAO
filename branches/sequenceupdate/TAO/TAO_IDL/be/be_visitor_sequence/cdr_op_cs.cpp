@@ -131,9 +131,9 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
   *os << "return TAO::extract_sequence(strm, _tao_sequence);"
       << be_uidt_nl;
 
-  *os << "}" << be_nl << be_nl;
+  *os << "}";
 
-  *os << be_nl << be_nl
+  *os << be_nl
       << "#endif /* _TAO_CDR_OP_"
       << node->flat_name () << "_CPP_ */";
 
