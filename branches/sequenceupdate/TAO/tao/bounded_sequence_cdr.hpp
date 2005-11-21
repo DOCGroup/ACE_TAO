@@ -323,7 +323,7 @@ namespace TAO {
 
 namespace TAO {
   template <typename stream, CORBA::ULong MAX>
-  bool insert_sequence(TAO_OutputCDR & strm, const TAO::bounded_value_sequence <CORBA::Short, MAX> & source) {
+  bool insert_sequence(stream & strm, const TAO::bounded_value_sequence <CORBA::Short, MAX> & source) {
     const ::CORBA::ULong length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -332,7 +332,7 @@ namespace TAO {
   }
 
   template <typename stream, CORBA::ULong MAX>
-  bool insert_sequence(TAO_OutputCDR & strm, const TAO::bounded_value_sequence <CORBA::Long, MAX> & source) {
+  bool insert_sequence(stream & strm, const TAO::bounded_value_sequence <CORBA::Long, MAX> & source) {
     const ::CORBA::ULong length = source.length ();
     if (!(strm << length)) {
       return false;
