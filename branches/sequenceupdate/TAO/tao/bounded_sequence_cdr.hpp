@@ -501,13 +501,13 @@ namespace TAO {
 
   template <typename stream, typename object_t, typename object_t_var, CORBA::ULong MAX>
   bool insert_sequence(stream & strm, const TAO::bounded_object_reference_sequence<object_t, object_t_var, MAX> & source) {
-    typedef typename TAO::bounded_object_reference_sequence<object_t, object_t_var, MAX>::object_type object_t;
+    typedef typename TAO::bounded_object_reference_sequence<object_t, object_t_var, MAX>::object_type object_type;
     const ::CORBA::ULong length = source.length ();
     if (!(strm << length)) {
       return false;
     }
     for(CORBA::ULong i = 0; i < length; ++i) {
-      if (!TAO::Objref_Traits<object_t>::marshal (source[i], strm)) {
+      if (!TAO::Objref_Traits<object_type>::marshal (source[i], strm)) {
         return false;
       }
     }
