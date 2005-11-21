@@ -17,6 +17,7 @@
 #include "be_root.h"
 #include "be_module.h"
 #include "be_interface.h"
+#include "be_valuebox.h"
 #include "be_valuetype.h"
 #include "be_interface_fwd.h"
 #include "be_valuetype_fwd.h"
@@ -164,6 +165,41 @@ be_visitor_traits::visit_interface_fwd (be_interface_fwd *node)
                          "(%N:%l) be_visitor_traits::"
                          "visit_interface_fwd - code generation failed\n"),
                         -1);
+    }
+
+  node->cli_traits_gen (I_TRUE);
+  return 0;
+}
+
+int
+be_visitor_traits::visit_valuebox (be_valuebox *node)
+{
+  if (node->cli_traits_gen ())
+    {
+      return 0;
+    }
+
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  // I think we need to generate this only for non-defined forward
+  // declarations.
+  if (!node->imported ())
+    {
+      os->gen_ifdef_macro (node->flat_name (), "traits", false);
+
+      *os << be_nl << be_nl
+          << "template<>" << be_nl
+          << "struct " << be_global->stub_export_macro () << " Value_Traits<"
+          << node->name () << ">" << be_nl
+          << "{" << be_idt_nl
+          << "static void add_ref (" << node->name () << " *);" << be_nl
+          << "static void remove_ref (" << node->name () << " *);"
+          << be_nl
+          << "static void release (" << node->name () << " *);"
+          << be_uidt_nl
+          << "};";
+
+      os->gen_endif ();
     }
 
   node->cli_traits_gen (I_TRUE);
