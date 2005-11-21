@@ -59,7 +59,7 @@ namespace TAO
      *
      * SSLIOP-specific transport implementation.
      */
-    class Transport : public TAO_Transport
+    class TAO_SSLIOP_Export Transport : public TAO_Transport
     {
     public:
 

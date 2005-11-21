@@ -1,9 +1,17 @@
+Mon Nov 21 07:23:46 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
+
+	  Re-export TAO_SSLIOP_Transport class.  It is currently used
+	  outside of the TAO_SSLIOP shared library by some of our
+	  regression tests.
+
 Fri Nov 18 19:27:29 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/lex.yy.cpp:
-        
+
           Reverted change of
-          
+
           Wed Nov 16 21:53:08 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           since it caused problems with Borland and Intel compilers.
@@ -13,14 +21,14 @@ Fri Nov 18 19:27:29 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 Fri Nov 18 15:08:19 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Typedef_String_Array/typedef_string_array.mpc:
-        
+
           Added 'after' line to one of two projects that share an IDL
           file, to avoid concurrency problems with the VC8 build.
 
 Thu Nov 17 16:38:27 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/RTCORBA/MT_Client_Protocol_Priority/RTCORBA_MT_Client_Proto_Prio.mpc:
-        
+
           Added 'after' line to one project to avoid concurrency clashes
           in IDL compiler execution when compiling with VC8.
 
@@ -29,7 +37,7 @@ Thu Nov 17 07:57:13 USMST 2005  Yan Dai  <dai_y@ociweb.com>
         * docs/releasenotes/index.html:
 
           Added CSD feature to ORB related section.
-          
+
 Thu Nov 17 06:55:53 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Security/SL3_CredentialsAcquirerFactory.h:
@@ -42,7 +50,7 @@ Thu Nov 17 06:49:02 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/params_dup.h:
 
-	  Declare wrap per functions with their versioned namespace macro
+	  Declare wrapper functions with their versioned namespace macro
 	  counterparts.
 
 	* orbsvcs/orbsvcs/SSLIOP/params_dup.c:
