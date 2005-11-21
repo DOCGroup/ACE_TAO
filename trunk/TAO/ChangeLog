@@ -1,3 +1,11 @@
+Mon Nov 21 20:14:09 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/RTCORBA/Private_Connection/RTCORBA_Private_Connection.mpc:
+        
+          Added an 'after' line for one of the two projects, since they
+          share an IDL file and VC8 concurrency features need an
+          ordering.
+
 Mon Nov 21 13:21:03 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	  This entry is the result of an accumulation of many changes in
