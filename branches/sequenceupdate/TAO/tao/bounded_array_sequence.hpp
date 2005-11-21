@@ -12,6 +12,7 @@
 #include "bounded_array_allocation_traits.hpp"
 #include "generic_sequence.hpp"
 #include "array_traits.hpp"
+#include "CDR.h"
 
 namespace TAO
 {
@@ -82,7 +83,10 @@ public:
 private:
   implementation_type impl_;
 };
+}
 
+namespace TAO
+{
   template <typename stream, typename T_array, typename T_slice, typename T_tag, CORBA::ULong MAX>
   bool extract_sequence(stream & strm, TAO::bounded_array_sequence<T_array, T_slice, T_tag, MAX> & target) {
     typedef TAO::bounded_array_sequence<T_array, T_slice, T_tag, MAX> sequence;
@@ -116,12 +120,17 @@ private:
 
   template <typename stream, typename T_array, typename T_slice, typename T_tag, CORBA::ULong MAX>
   bool insert_sequence(stream & strm, const TAO::bounded_array_sequence<T_array, T_slice, T_tag, MAX> & source) {
+    typedef TAO_FixedArray_Var_T <T_array, T_slice, T_tag> fixed_array;
+    typedef TAO::Array_Traits<T_array, T_slice, T_tag> array_traits;
+    typedef TAO_Array_Forany_T <T_array, T_slice, T_tag> forany;
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
     }
     for(CORBA::ULong i = 0; i < length; ++i) {
-      if (!(strm << source[i])) {
+      fixed_array tmp_array = array_traits::dup (source[i]);
+      forany tmp (tmp_array.inout ());
+      if (!(strm << tmp)) {
         return false;
       }
     }
