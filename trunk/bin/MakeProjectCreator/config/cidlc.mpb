@@ -12,4 +12,10 @@ project: boost_base, exceptions {
   verbatim(gnuace, top) {
     include $(CIAO_ROOT)/CCF/Config.rules
   }
+
+  verbatim(gnuace, local) {
+     LIBS += $(BOOST_LD_FLAGS) \
+             -lboost_regex     \
+             -lboost_filesystem
+  }
 }

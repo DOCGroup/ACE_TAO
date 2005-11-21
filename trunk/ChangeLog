@@ -1,3 +1,10 @@
+Mon Nov 21 11:00:02 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/cidlc.mpb
+
+	Added a verbatim section for gnuace targets to pull in the
+	boost_filesystem and boost_regex libraries.
+
 Mon Nov 21 08:16:29 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/SSL/SSL_Context.h: Removed "::" from friend declaration to
