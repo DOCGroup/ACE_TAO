@@ -23,7 +23,7 @@ using namespace TAO;
 
 struct Tester
 {
-  typedef unbounded_array_sequence<unsigned long, my_array, my_array_slice, my_array_tag> tested_sequence;
+  typedef unbounded_array_sequence<my_array, my_array_slice, my_array_tag> tested_sequence;
   typedef tested_sequence::value_type value_type;
   typedef tested_sequence::const_value_type const_value_type;
 

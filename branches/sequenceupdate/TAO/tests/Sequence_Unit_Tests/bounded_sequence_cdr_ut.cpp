@@ -16,6 +16,7 @@
 #include "mock_stream.hpp"
 
 #include "tao/bounded_object_reference_sequence.hpp"
+#include "tao/bounded_value_sequence.hpp"
 #include "tao/bounded_sequence_cdr.hpp"
 
 #include <boost/test/unit_test.hpp>
