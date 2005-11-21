@@ -12,7 +12,6 @@
 #include "bounded_array_allocation_traits.hpp"
 #include "generic_sequence.hpp"
 #include "array_traits.hpp"
-#include "CDR.h"
 
 namespace TAO
 {
