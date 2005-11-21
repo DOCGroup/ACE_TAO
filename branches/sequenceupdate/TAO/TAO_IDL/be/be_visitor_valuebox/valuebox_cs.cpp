@@ -62,6 +62,39 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
+  if (node->is_defined ())
+    {
+      *os << be_nl << be_nl
+          << "void" << be_nl
+          << "TAO::Value_Traits<" << node->name  () << ">::add_ref ("
+          << be_idt << be_idt_nl
+          << node->name () << " * p" << be_uidt_nl
+          << ")" << be_uidt_nl
+          << "{" << be_idt_nl
+          << "::CORBA::add_ref (p);" << be_uidt_nl
+          << "}";
+
+      *os << be_nl << be_nl
+          << "void" << be_nl
+          << "TAO::Value_Traits<" << node->name () << ">::remove_ref ("
+          << be_idt << be_idt_nl
+          << node->name () << " * p" << be_uidt_nl
+          << ")" << be_uidt_nl
+          << "{" << be_idt_nl
+          << "::CORBA::remove_ref (p);" << be_uidt_nl
+          << "}";
+
+      *os << be_nl << be_nl
+          << "void" << be_nl
+          << "TAO::Value_Traits<" << node->name () << ">::release ("
+          << be_idt << be_idt_nl
+          << node->name () << " * p" << be_uidt_nl
+          << ")" << be_uidt_nl
+          << "{" << be_idt_nl
+          << "::CORBA::remove_ref (p);" << be_uidt_nl
+          << "}";
+    }
+
   // The _downcast method.
   *os << be_nl << node->name () << " *" << be_nl
       << node->name () << "::_downcast ( ::CORBA::ValueBase *v)" << be_nl
