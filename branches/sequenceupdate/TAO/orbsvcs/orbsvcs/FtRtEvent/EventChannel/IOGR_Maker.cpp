@@ -51,7 +51,7 @@ IOGR_Maker::merge_iors(const TAO_IOP::TAO_IOR_Manipulation::IORList& list
   if (list.length() != 1)
     obj = iorm_->merge_iors(list ACE_ENV_ARG_PARAMETER);
   else
-    obj = CORBA::Object::_duplicate(list[0].in());
+    obj = CORBA::Object::_duplicate(list[0]);
   return obj._retn();
 }
 
@@ -66,7 +66,7 @@ IOGR_Maker::make_iogr(const TAO_IOP::TAO_IOR_Manipulation::IORList& list,
   ACE_CHECK_RETURN(CORBA::Object::_nil());
 
   FT::TagFTGroupTaggedComponent ft_tag_component(ft_tag_component_);
-  /// the generated IOGR should use a new object_group_ref_version 
+  /// the generated IOGR should use a new object_group_ref_version
   ft_tag_component.object_group_ref_version = object_group_ref_version;
   set_tag_components(obj.in(), list[0], ft_tag_component
                      ACE_ENV_ARG_PARAMETER);
@@ -86,7 +86,7 @@ CORBA::Object_ptr
 IOGR_Maker::forge_iogr(CORBA::Object_ptr obj
                        ACE_ENV_ARG_DECL)
 {
-  /// forge an IOGR whose object_key is the same with that of \a obj. 
+  /// forge an IOGR whose object_key is the same with that of \a obj.
   CORBA::Object_var merged;
   // make a copy of the object
   FtRtecEventChannelAdmin::EventChannel_var successor
