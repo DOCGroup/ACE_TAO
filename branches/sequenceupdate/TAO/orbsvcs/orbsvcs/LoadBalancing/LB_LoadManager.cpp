@@ -99,7 +99,7 @@ TAO_LB_LoadManager::push_loads (
   for (CORBA::ULong i = 0; i < len; ++i)
     {
       PortableGroup::ObjectGroup_ptr object_group =
-        groups[i].in ();
+        groups[i];
 
       ACE_TRY
         {
