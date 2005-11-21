@@ -1,6 +1,12 @@
 PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 ===========================================================================
 
+. Enhance Execution Manager and Domain Application Manager to make calls
+  on the Target Manager to get resource information.
+
+. Enhance Node Manager to integrate resource monitoring capacity within
+  individual Nodes.
+
 . Add assembly-wide component activation/deactivation feature.
 
     - This should allow system deployers to specify the dependencies
@@ -64,10 +70,11 @@ PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
 . Seamless integration of swapping into the main line programming model,
   so that DAnCE can actually kickstart swapping.
 
+. Integrate TargetManager into the DAnCE toolchain.
+
 . Integrate RepositoryManager into the DAnCE toolchain.
 
 . Integrate various Pub/Sub services into CIAO and DAnCE.
-
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.8 and CIAO-0.4.9
 ======================================================
