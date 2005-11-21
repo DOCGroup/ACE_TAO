@@ -81,7 +81,7 @@ struct Tester
       BOOST_CHECK_EQUAL(false, a.release());
       check_values(a);
 
-      mock_stream stream;
+      TAO_OutputCDR stream;
       stream << a;
       BOOST_CHECK_MESSAGE(s.expect(4), s);
     }
