@@ -88,6 +88,51 @@ private:
   implementation_type impl_;
 };
 
+  template <typename stream, typename T_array, typename T_slice, typename T_tag>
+  bool extract_sequence(stream & strm, TAO::unbounded_array_sequence<T_array, T_slice, T_tag> & target) {
+    typedef TAO::unbounded_array_sequence<T_array, T_slice, T_tag> sequence;
+    typedef TAO::Array_Traits<T_array, T_slice, T_tag> array_traits;
+    typedef TAO_Array_Forany_T <T_array, T_slice, T_tag> forany;
+
+    ::CORBA::ULong new_length = 0;
+    if (!(strm >> new_length)) {
+      return false;
+    }
+    if (new_length > strm.length()) {
+        return false;
+    }
+    sequence tmp(new_length);
+    tmp.length(new_length);
+    typename sequence::value_type * buffer = tmp.get_buffer();
+    for(CORBA::ULong i = 0; i < new_length; ++i) {
+      forany tmp (array_traits::alloc ());
+      bool _tao_marshal_flag = (strm >> tmp);
+      if (_tao_marshal_flag) {
+        array_traits::copy (buffer[i], tmp.in ());
+      }
+      array_traits::free (tmp.inout ());
+      if (!_tao_marshal_flag) {
+        return false;
+      }
+    }
+    tmp.swap(target);
+    return true;
+  }
+
+  template <typename stream, typename T_array, typename T_slice, typename T_tag>
+  bool insert_sequence(stream & strm, const TAO::unbounded_array_sequence<T_array, T_slice, T_tag> & source) {
+    ::CORBA::ULong const length = source.length ();
+    if (!(strm << length)) {
+      return false;
+    }
+    for(CORBA::ULong i = 0; i < length; ++i) {
+      if (!(strm << source[i])) {
+        return false;
+      }
+    }
+    return true;
+  }
+
 } // namespace TAO
 
 
