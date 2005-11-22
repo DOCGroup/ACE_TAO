@@ -47,7 +47,7 @@
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 #include "tao/VarOut_T.h"
-#include "tao/Managed_Types.h"
+#include "tao/String_Manager_T.h"
 
 #include "tao/OctetSeqC.h"
 

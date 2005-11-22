@@ -78,7 +78,7 @@ public:
     , length_ (length)
     , buffer_ (reinterpret_cast <CORBA::Octet *>(mb->rd_ptr ()))
     , release_ (false)
-    ,  mb_(0) {
+    , mb_(0) {
     // Get the message block flags.
     ACE_Message_Block::Message_Flags flg = mb->self_flags ();
 

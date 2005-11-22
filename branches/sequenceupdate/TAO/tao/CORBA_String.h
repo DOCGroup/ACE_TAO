@@ -28,8 +28,13 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class TAO_String_Manager;
-class TAO_WString_Manager;
+namespace TAO
+{
+  template <typename charT> class String_Manager;  // Forward declaration.
+}
+
+typedef TAO::String_Manager<CORBA::Char> TAO_String_Manager;
+typedef TAO::String_Manager<CORBA::WChar> TAO_WString_Manager;
 
 namespace CORBA
 {

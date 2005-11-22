@@ -12,10 +12,12 @@
  */
 
 #include "tao/CORBA_String.h"
-#include "tao/Managed_Types.h"
 
 namespace TAO
 {
+template<typename charT>
+class String_Manager;
+
 namespace details
 {
 
@@ -29,7 +31,7 @@ struct string_traits_base<char>
 {
   typedef char char_type;
   typedef CORBA::String_var string_var;
-  typedef TAO_String_Manager string_mgr;
+  typedef TAO::String_Manager <char_type> string_mgr;
 
   inline static char_type * default_initializer()
   {
@@ -52,7 +54,7 @@ struct string_traits_base<CORBA::WChar>
 {
   typedef CORBA::WChar char_type;
   typedef CORBA::WString_var string_var;
-  typedef TAO_WString_Manager string_mgr;
+  typedef TAO::String_Manager <char_type> string_mgr;
 
   inline static char_type * default_initializer()
   {

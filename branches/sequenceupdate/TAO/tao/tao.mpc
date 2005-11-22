@@ -118,7 +118,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     LongLongSeqC.cpp
     LongSeqC.cpp
     LRU_Connection_Purging_Strategy.cpp
-    Managed_Types.cpp
     MCAST_Parser.cpp
     Messaging_PolicyValueC.cpp
     Messaging_SyncScopeC.cpp
@@ -376,7 +375,6 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     LongSeqC.h
     LongSeqS.h
     LRU_Connection_Purging_Strategy.h
-    Managed_Types.h
     MCAST_Parser.h
     Messaging_PolicyValueC.h
     Messaging_SyncScopeC.h
