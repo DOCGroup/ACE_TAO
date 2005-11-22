@@ -21,7 +21,7 @@ public:
   inline unbounded_string_sequence()
     : details::unbounded_basic_string_sequence<char>()
   {}
-  inline /* explicit */ unbounded_string_sequence(CORBA::ULong maximum)
+  inline explicit unbounded_string_sequence(CORBA::ULong maximum)
     : details::unbounded_basic_string_sequence<char>(maximum)
   {}
   inline unbounded_string_sequence(

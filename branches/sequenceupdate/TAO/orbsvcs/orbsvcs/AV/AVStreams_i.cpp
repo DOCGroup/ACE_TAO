@@ -812,7 +812,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
               ACE_TRY_CHECK_EX (set_source_id);
               AVStreams::flowSpec_var flows;
               *flows_any >>= flows.out ();
-              for (u_int i=0; i< flows->length ();i++)
+              for (CORBA::ULong i=0; i< flows->length ();++i)
                 {
                   CORBA::Object_var fep_obj =
                     this->sep_a_->get_fep (flows [i] ACE_ENV_ARG_PARAMETER);
