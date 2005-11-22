@@ -124,6 +124,7 @@ public:
     return * this;
   }
 
+  /// Destructor.
   ~generic_sequence()
   {
     if (release_)
@@ -132,11 +133,13 @@ public:
     }
   }
 
+  /// Return the maximum length of the sequence
   inline CORBA::ULong maximum() const
   {
     return maximum_;
   }
 
+  /// Returns the state of the sequence release flag.
   inline CORBA::Boolean release() const
   {
     return release_;
@@ -248,9 +251,14 @@ public:
   }
 
 private:
+  /// The maximum number of elements the buffer can contain.
   CORBA::ULong maximum_;
+  /// The current number of elements in the buffer.
   CORBA::ULong length_;
+  /// The buffer with all the elements
   mutable value_type * buffer_;
+  /// If true then the sequence should release the buffer when it is
+  /// destroyed.
   CORBA::Boolean release_;
 };
 
