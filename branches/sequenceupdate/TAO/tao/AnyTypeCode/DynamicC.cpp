@@ -165,7 +165,7 @@ CORBA::Boolean operator<< (
     const Dynamic::ParameterList &_tao_sequence
   )
 {
-  return TAO::insert_sequence(strm, _tao_sequence);
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -173,7 +173,7 @@ CORBA::Boolean operator>> (
     Dynamic::ParameterList &_tao_sequence
   )
 {
-  return TAO::extract_sequence(strm, _tao_sequence);
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_Dynamic_ParameterList_CPP_ */
@@ -190,7 +190,7 @@ CORBA::Boolean operator<< (
     const Dynamic::ExceptionList &_tao_sequence
   )
 {
-  return TAO::insert_sequence(strm, _tao_sequence);
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -198,7 +198,7 @@ CORBA::Boolean operator>> (
     Dynamic::ExceptionList &_tao_sequence
   )
 {
-  return TAO::extract_sequence(strm, _tao_sequence);
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_Dynamic_ExceptionList_CPP_ */

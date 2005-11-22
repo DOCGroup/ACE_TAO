@@ -100,7 +100,7 @@ CORBA::Boolean operator<< (
     const CORBA::StringSeq &_tao_sequence
   )
 {
-  return TAO::insert_sequence(strm, _tao_sequence);
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -108,7 +108,7 @@ CORBA::Boolean operator>> (
     CORBA::StringSeq &_tao_sequence
   )
 {
-  return TAO::extract_sequence(strm, _tao_sequence);
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CORBA_StringSeq_CPP_ */

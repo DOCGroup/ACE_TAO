@@ -159,7 +159,7 @@ CORBA::Boolean operator<< (
     const CORBA::PolicyList &_tao_sequence
   )
 {
-  return TAO::insert_sequence(strm, _tao_sequence);
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -167,7 +167,7 @@ CORBA::Boolean operator>> (
     CORBA::PolicyList &_tao_sequence
   )
 {
-  return TAO::extract_sequence(strm, _tao_sequence);
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CORBA_PolicyList_CPP_ */
@@ -183,7 +183,7 @@ CORBA::Boolean operator<< (
     const CORBA::PolicyTypeSeq &_tao_sequence
   )
 {
-  return TAO::insert_sequence(strm, _tao_sequence);
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -191,7 +191,7 @@ CORBA::Boolean operator>> (
     CORBA::PolicyTypeSeq &_tao_sequence
   )
 {
-  return TAO::extract_sequence(strm, _tao_sequence);
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CORBA_PolicyTypeSeq_CPP_ */

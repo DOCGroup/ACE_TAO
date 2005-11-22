@@ -393,7 +393,7 @@ CORBA::Boolean operator<< (
     const IOP::TaggedProfileSeq &_tao_sequence
   )
 {
-  return TAO::insert_sequence(strm, _tao_sequence);
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -401,7 +401,7 @@ CORBA::Boolean operator>> (
     IOP::TaggedProfileSeq &_tao_sequence
   )
 {
-  return TAO::extract_sequence(strm, _tao_sequence);
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_IOP_TaggedProfileSeq_CPP_ */
@@ -463,7 +463,7 @@ CORBA::Boolean operator<< (
     const IOP::MultipleComponentProfile &_tao_sequence
   )
 {
-  return TAO::insert_sequence(strm, _tao_sequence);
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -471,7 +471,7 @@ CORBA::Boolean operator>> (
     IOP::MultipleComponentProfile &_tao_sequence
   )
 {
-  return TAO::extract_sequence(strm, _tao_sequence);
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_IOP_MultipleComponentProfile_CPP_ */
@@ -487,7 +487,7 @@ CORBA::Boolean operator<< (
     const IOP::TaggedComponentList &_tao_sequence
   )
 {
-  return TAO::insert_sequence(strm, _tao_sequence);
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -495,7 +495,7 @@ CORBA::Boolean operator>> (
     IOP::TaggedComponentList &_tao_sequence
   )
 {
-  return TAO::extract_sequence(strm, _tao_sequence);
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_IOP_TaggedComponentList_CPP_ */
@@ -511,7 +511,7 @@ CORBA::Boolean operator<< (
     const IOP::TaggedComponentSeq &_tao_sequence
   )
 {
-  return TAO::insert_sequence(strm, _tao_sequence);
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -519,7 +519,7 @@ CORBA::Boolean operator>> (
     IOP::TaggedComponentSeq &_tao_sequence
   )
 {
-  return TAO::extract_sequence(strm, _tao_sequence);
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_IOP_TaggedComponentSeq_CPP_ */
@@ -558,7 +558,7 @@ CORBA::Boolean operator<< (
     const IOP::ServiceContextList &_tao_sequence
   )
 {
-  return TAO::insert_sequence(strm, _tao_sequence);
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -566,7 +566,7 @@ CORBA::Boolean operator>> (
     IOP::ServiceContextList &_tao_sequence
   )
 {
-  return TAO::extract_sequence(strm, _tao_sequence);
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_IOP_ServiceContextList_CPP_ */

@@ -2808,7 +2808,7 @@ operator>>= (
     const ImplementationRepository::EnvironmentList &_tao_sequence
   )
 {
-  return TAO::insert_sequence(strm, _tao_sequence);
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 ::CORBA::Boolean operator>> (
@@ -2816,7 +2816,7 @@ operator>>= (
     ImplementationRepository::EnvironmentList &_tao_sequence
   )
 {
-  return TAO::extract_sequence(strm, _tao_sequence);
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_ImplementationRepository_EnvironmentList_CPP_ */
@@ -2909,7 +2909,7 @@ operator>>= (
     const ImplementationRepository::ServerInformationList &_tao_sequence
   )
 {
-  return TAO::insert_sequence(strm, _tao_sequence);
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 ::CORBA::Boolean operator>> (
@@ -2917,7 +2917,7 @@ operator>>= (
     ImplementationRepository::ServerInformationList &_tao_sequence
   )
 {
-  return TAO::extract_sequence(strm, _tao_sequence);
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_ImplementationRepository_ServerInformationList_CPP_ */

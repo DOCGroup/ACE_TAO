@@ -87,7 +87,7 @@ private:
 namespace TAO
 {
   template <typename stream, typename T_array, typename T_slice, typename T_tag, CORBA::ULong MAX>
-  bool extract_sequence(stream & strm, TAO::bounded_array_sequence<T_array, T_slice, T_tag, MAX> & target) {
+  bool demarshal_sequence(stream & strm, TAO::bounded_array_sequence<T_array, T_slice, T_tag, MAX> & target) {
     typedef TAO::bounded_array_sequence<T_array, T_slice, T_tag, MAX> sequence;
     typedef TAO::Array_Traits<T_array, T_slice, T_tag> array_traits;
     typedef TAO_Array_Forany_T <T_array, T_slice, T_tag> forany;
@@ -118,7 +118,7 @@ namespace TAO
   }
 
   template <typename stream, typename T_array, typename T_slice, typename T_tag, CORBA::ULong MAX>
-  bool insert_sequence(stream & strm, const TAO::bounded_array_sequence<T_array, T_slice, T_tag, MAX> & source) {
+  bool marshal_sequence(stream & strm, const TAO::bounded_array_sequence<T_array, T_slice, T_tag, MAX> & source) {
     typedef TAO_FixedArray_Var_T <T_array, T_slice, T_tag> fixed_array;
     typedef TAO::Array_Traits<T_array, T_slice, T_tag> array_traits;
     typedef TAO_Array_Forany_T <T_array, T_slice, T_tag> forany;

@@ -99,7 +99,7 @@ private:
 };
 
   template <typename stream, typename object_t, typename object_t_var>
-  bool insert_sequence(stream & strm, const TAO::unbounded_valuetype_sequence<object_t, object_t_var> & source) {
+  bool marshal_sequence(stream & strm, const TAO::unbounded_valuetype_sequence<object_t, object_t_var> & source) {
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -113,7 +113,7 @@ private:
   }
 
   template <typename stream, typename object_t, typename object_t_var>
-  bool extract_sequence(stream & strm, TAO::unbounded_valuetype_sequence <object_t, object_t_var> & target) {
+  bool demarshal_sequence(stream & strm, TAO::unbounded_valuetype_sequence <object_t, object_t_var> & target) {
     typedef typename TAO::unbounded_valuetype_sequence <object_t, object_t_var> sequence;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {

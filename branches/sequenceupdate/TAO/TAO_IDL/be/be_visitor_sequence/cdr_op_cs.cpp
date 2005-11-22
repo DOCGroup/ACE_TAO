@@ -110,7 +110,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
 
-  *os << "return TAO::insert_sequence(strm, _tao_sequence);"
+  *os << "return TAO::marshal_sequence(strm, _tao_sequence);"
       << be_uidt_nl;
 
   *os << "}" << be_nl << be_nl;
@@ -128,7 +128,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
 
-  *os << "return TAO::extract_sequence(strm, _tao_sequence);"
+  *os << "return TAO::demarshal_sequence(strm, _tao_sequence);"
       << be_uidt_nl;
 
   *os << "}";

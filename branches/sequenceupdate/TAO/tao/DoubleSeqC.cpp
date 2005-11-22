@@ -105,7 +105,7 @@ void CORBA::DoubleSeq::_tao_any_destructor (
     const CORBA::DoubleSeq &_tao_sequence
   )
 {
-  return TAO::insert_sequence(strm, _tao_sequence);
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 ::CORBA::Boolean operator>> (
@@ -113,7 +113,7 @@ void CORBA::DoubleSeq::_tao_any_destructor (
     CORBA::DoubleSeq &_tao_sequence
   )
 {
-  return TAO::extract_sequence(strm, _tao_sequence);
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CORBA_DoubleSeq_CPP_ */

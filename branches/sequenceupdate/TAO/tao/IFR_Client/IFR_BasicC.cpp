@@ -12507,7 +12507,7 @@ CORBA::Boolean operator<< (
     const CORBA::ExceptionDefSeq &_tao_sequence
   )
 {
-  return TAO::insert_sequence(strm, _tao_sequence);
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -12515,7 +12515,7 @@ CORBA::Boolean operator>> (
     CORBA::ExceptionDefSeq &_tao_sequence
   )
 {
-  return TAO::extract_sequence(strm, _tao_sequence);
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CORBA_ExceptionDefSeq_CPP_ */
@@ -12741,7 +12741,7 @@ CORBA::Boolean operator<< (
     const CORBA::ParDescriptionSeq &_tao_sequence
   )
 {
-  return TAO::insert_sequence(strm, _tao_sequence);
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -12749,7 +12749,7 @@ CORBA::Boolean operator>> (
     CORBA::ParDescriptionSeq &_tao_sequence
   )
 {
-  return TAO::extract_sequence(strm, _tao_sequence);
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CORBA_ParDescriptionSeq_CPP_ */
@@ -12765,7 +12765,7 @@ CORBA::Boolean operator<< (
     const CORBA::ContextIdSeq &_tao_sequence
   )
 {
-  return TAO::insert_sequence(strm, _tao_sequence);
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -12773,7 +12773,7 @@ CORBA::Boolean operator>> (
     CORBA::ContextIdSeq &_tao_sequence
   )
 {
-  return TAO::extract_sequence(strm, _tao_sequence);
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CORBA_ContextIdSeq_CPP_ */
@@ -12862,7 +12862,7 @@ CORBA::Boolean operator<< (
     const CORBA::RepositoryIdSeq &_tao_sequence
   )
 {
-  return TAO::insert_sequence(strm, _tao_sequence);
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -12870,7 +12870,7 @@ CORBA::Boolean operator>> (
     CORBA::RepositoryIdSeq &_tao_sequence
   )
 {
-  return TAO::extract_sequence(strm, _tao_sequence);
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CORBA_RepositoryIdSeq_CPP_ */
@@ -12886,7 +12886,7 @@ CORBA::Boolean operator<< (
     const CORBA::OpDescriptionSeq &_tao_sequence
   )
 {
-  return TAO::insert_sequence(strm, _tao_sequence);
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -12894,7 +12894,7 @@ CORBA::Boolean operator>> (
     CORBA::OpDescriptionSeq &_tao_sequence
   )
 {
-  return TAO::extract_sequence(strm, _tao_sequence);
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CORBA_OpDescriptionSeq_CPP_ */
@@ -12910,7 +12910,7 @@ CORBA::Boolean operator<< (
     const CORBA::AttrDescriptionSeq &_tao_sequence
   )
 {
-  return TAO::insert_sequence(strm, _tao_sequence);
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -12918,7 +12918,7 @@ CORBA::Boolean operator>> (
     CORBA::AttrDescriptionSeq &_tao_sequence
   )
 {
-  return TAO::extract_sequence(strm, _tao_sequence);
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CORBA_AttrDescriptionSeq_CPP_ */
@@ -12934,7 +12934,7 @@ CORBA::Boolean operator<< (
     const CORBA::ExtAttrDescriptionSeq &_tao_sequence
   )
 {
-  return TAO::insert_sequence(strm, _tao_sequence);
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -12942,7 +12942,7 @@ CORBA::Boolean operator>> (
     CORBA::ExtAttrDescriptionSeq &_tao_sequence
   )
 {
-  return TAO::extract_sequence(strm, _tao_sequence);
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CORBA_ExtAttrDescriptionSeq_CPP_ */

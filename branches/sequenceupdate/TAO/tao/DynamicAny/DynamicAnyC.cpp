@@ -1746,7 +1746,7 @@ CORBA::Boolean operator<< (
     const DynamicAny::NameValuePairSeq &_tao_sequence
   )
 {
-  return TAO::insert_sequence(strm, _tao_sequence);
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -1754,7 +1754,7 @@ CORBA::Boolean operator>> (
     DynamicAny::NameValuePairSeq &_tao_sequence
   )
 {
-  return TAO::extract_sequence(strm, _tao_sequence);
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_DynamicAny_NameValuePairSeq_CPP_ */
@@ -1770,7 +1770,7 @@ CORBA::Boolean operator<< (
     const DynamicAny::AnySeq &_tao_sequence
   )
 {
-  return TAO::insert_sequence(strm, _tao_sequence);
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -1778,7 +1778,7 @@ CORBA::Boolean operator>> (
     DynamicAny::AnySeq &_tao_sequence
   )
 {
-  return TAO::extract_sequence(strm, _tao_sequence);
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_DynamicAny_AnySeq_CPP_ */

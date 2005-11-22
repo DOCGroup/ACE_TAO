@@ -15,7 +15,7 @@
 
 namespace TAO {
   template <typename stream>
-  bool extract_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::Short> & target) {
+  bool demarshal_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::Short> & target) {
     typedef TAO::unbounded_value_sequence <CORBA::Short> sequence;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
@@ -35,7 +35,7 @@ namespace TAO {
   }
 
   template <typename stream>
-  bool extract_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::Long> & target) {
+  bool demarshal_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::Long> & target) {
     typedef TAO::unbounded_value_sequence <CORBA::Long> sequence;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
@@ -55,7 +55,7 @@ namespace TAO {
   }
 
   template <typename stream>
-  bool extract_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::ULong> & target) {
+  bool demarshal_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::ULong> & target) {
     typedef TAO::unbounded_value_sequence <CORBA::ULong> sequence;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
@@ -75,7 +75,7 @@ namespace TAO {
   }
 
   template <typename stream>
-  bool extract_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::UShort> & target) {
+  bool demarshal_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::UShort> & target) {
     typedef TAO::unbounded_value_sequence <CORBA::UShort> sequence;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
@@ -96,7 +96,7 @@ namespace TAO {
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
   template <typename stream>
-  bool extract_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::Octet> & target) {
+  bool demarshal_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::Octet> & target) {
     typedef TAO::unbounded_value_sequence <CORBA::Octet> sequence;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
@@ -129,7 +129,7 @@ namespace TAO {
   }
 #else
   template <typename stream>
-  bool extract_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::Octet> & target) {
+  bool demarshal_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::Octet> & target) {
     typedef TAO::unbounded_value_sequence <CORBA::Octet> sequence;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
@@ -150,7 +150,7 @@ namespace TAO {
 #endif
 
   template <typename stream>
-  bool extract_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::Char> & target) {
+  bool demarshal_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::Char> & target) {
     typedef TAO::unbounded_value_sequence <CORBA::Char> sequence;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
@@ -170,7 +170,7 @@ namespace TAO {
   }
 
   template <typename stream>
-  bool extract_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::WChar> & target) {
+  bool demarshal_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::WChar> & target) {
     typedef TAO::unbounded_value_sequence <CORBA::WChar> sequence;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
@@ -190,7 +190,7 @@ namespace TAO {
   }
 
   template <typename stream>
-  bool extract_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::Float> & target) {
+  bool demarshal_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::Float> & target) {
     typedef TAO::unbounded_value_sequence <CORBA::Float> sequence;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
@@ -210,7 +210,7 @@ namespace TAO {
   }
 
   template <typename stream>
-  bool extract_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::Double> & target) {
+  bool demarshal_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::Double> & target) {
     typedef TAO::unbounded_value_sequence <CORBA::Double> sequence;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
@@ -230,7 +230,7 @@ namespace TAO {
   }
 
   template <typename stream>
-  bool extract_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::ULongLong> & target) {
+  bool demarshal_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::ULongLong> & target) {
     typedef TAO::unbounded_value_sequence <CORBA::ULongLong> sequence;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
@@ -250,7 +250,7 @@ namespace TAO {
   }
 
   template <typename stream>
-  bool extract_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::LongDouble> & target) {
+  bool demarshal_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::LongDouble> & target) {
     typedef TAO::unbounded_value_sequence <CORBA::LongDouble> sequence;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
@@ -270,7 +270,7 @@ namespace TAO {
   }
 
   template <typename stream>
-  bool extract_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::Boolean> & target) {
+  bool demarshal_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::Boolean> & target) {
     typedef TAO::unbounded_value_sequence <CORBA::Boolean> sequence;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
@@ -290,7 +290,7 @@ namespace TAO {
   }
 
   template <typename stream, typename value_t>
-  bool extract_sequence(stream & strm, TAO::unbounded_value_sequence <value_t> & target) {
+  bool demarshal_sequence(stream & strm, TAO::unbounded_value_sequence <value_t> & target) {
     typedef TAO::unbounded_value_sequence <value_t> sequence;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
@@ -312,7 +312,7 @@ namespace TAO {
   }
 
   template <typename stream, typename charT>
-  bool extract_sequence(stream & strm, TAO::details::unbounded_basic_string_sequence <charT> & target) {
+  bool demarshal_sequence(stream & strm, TAO::details::unbounded_basic_string_sequence <charT> & target) {
     typedef TAO::details::unbounded_basic_string_sequence <charT> sequence;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
@@ -334,7 +334,7 @@ namespace TAO {
   }
 
   template <typename stream, typename object_t, typename object_t_var>
-  bool extract_sequence(stream & strm, TAO::unbounded_object_reference_sequence<object_t, object_t_var> & target) {
+  bool demarshal_sequence(stream & strm, TAO::unbounded_object_reference_sequence<object_t, object_t_var> & target) {
     typedef TAO::unbounded_object_reference_sequence<object_t, object_t_var> sequence;
     ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
@@ -358,7 +358,7 @@ namespace TAO {
 
 namespace TAO {
   template <typename stream>
-  bool insert_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::Short> & source) {
+  bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::Short> & source) {
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -367,7 +367,7 @@ namespace TAO {
   }
 
   template <typename stream>
-  bool insert_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::Long> & source) {
+  bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::Long> & source) {
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -376,7 +376,7 @@ namespace TAO {
   }
 
   template <typename stream>
-  bool insert_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::ULong> & source) {
+  bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::ULong> & source) {
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -385,7 +385,7 @@ namespace TAO {
   }
 
   template <typename stream>
-  bool insert_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::UShort> & source) {
+  bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::UShort> & source) {
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -395,7 +395,7 @@ namespace TAO {
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
   template <typename stream>
-  bool insert_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::Octet> & source) {
+  bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::Octet> & source) {
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -407,7 +407,7 @@ namespace TAO {
   }
 #else
   template <typename stream>
-  bool insert_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::Octet> & source) {
+  bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::Octet> & source) {
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -417,7 +417,7 @@ namespace TAO {
 #endif
 
   template <typename stream>
-  bool insert_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::Char> & source) {
+  bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::Char> & source) {
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -426,7 +426,7 @@ namespace TAO {
   }
 
   template <typename stream>
-  bool insert_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::WChar> & source) {
+  bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::WChar> & source) {
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -435,7 +435,7 @@ namespace TAO {
   }
 
   template <typename stream>
-  bool insert_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::Float> & source) {
+  bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::Float> & source) {
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -444,7 +444,7 @@ namespace TAO {
   }
 
   template <typename stream>
-  bool insert_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::Double> & source) {
+  bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::Double> & source) {
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -453,7 +453,7 @@ namespace TAO {
   }
 
   template <typename stream>
-  bool insert_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::ULongLong> & source) {
+  bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::ULongLong> & source) {
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -462,7 +462,7 @@ namespace TAO {
   }
 
   template <typename stream>
-  bool insert_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::LongDouble> & source) {
+  bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::LongDouble> & source) {
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -471,7 +471,7 @@ namespace TAO {
   }
 
   template <typename stream>
-  bool insert_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::Boolean> & source) {
+  bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::Boolean> & source) {
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -480,7 +480,7 @@ namespace TAO {
   }
 
   template <typename stream, typename value_t>
-  bool insert_sequence(stream & strm, const TAO::unbounded_value_sequence <value_t> & source) {
+  bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <value_t> & source) {
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -494,7 +494,7 @@ namespace TAO {
   }
 
   template <typename stream, typename charT>
-  bool insert_sequence(stream & strm, const TAO::details::unbounded_basic_string_sequence <charT> & source) {
+  bool marshal_sequence(stream & strm, const TAO::details::unbounded_basic_string_sequence <charT> & source) {
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
       return false;
@@ -508,7 +508,7 @@ namespace TAO {
   }
 
   template <typename stream, typename object_t, typename object_t_var>
-  bool insert_sequence(stream & strm, const TAO::unbounded_object_reference_sequence<object_t, object_t_var> & source) {
+  bool marshal_sequence(stream & strm, const TAO::unbounded_object_reference_sequence<object_t, object_t_var> & source) {
     typedef typename TAO::unbounded_object_reference_sequence<object_t, object_t_var>::object_type objec_t;
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length)) {
