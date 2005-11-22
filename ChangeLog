@@ -1,3 +1,8 @@
+Mon Nov 21 19:16:30 2005  Steve Huston  <shuston@riverace.com>
+
+	* m4/tls.m4: Make sure we don't lose the user's specified OpenSSL
+	  location when searching for Kerberos files.
+
 Mon Nov 21 13:26:53 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * NEWS:
