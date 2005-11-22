@@ -32,12 +32,12 @@ typedef bounded_object_reference_sequence<mock_reference, mock_reference_var,TMA
 
 CORBA::Boolean operator<< (TAO_OutputCDR &strm, const tested_sequence &sequence)
 {
-  return TAO::insert_sequence(strm, sequence);
+  return TAO::marshal_sequence(strm, sequence);
 }
 
 CORBA::Boolean operator>> (TAO_InputCDR &strm, tested_sequence &sequence)
 {
-  return TAO::extract_sequence(strm, sequence);
+  return TAO::demarshal_sequence(strm, sequence);
 }
 
 struct Tester
