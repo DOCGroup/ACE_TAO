@@ -180,16 +180,9 @@ TAO_Policy_Set::set_policy_overrides (const CORBA::PolicyList &policies,
 
   for (CORBA::ULong i = 0; i < plen; ++i)
     {
-#if defined (__INTEL_COMPILER) && defined (_MSC_VER) && (_MSC_VER <= 1200)
-      // The XICL6 compiler (Intel C++ 7.1 in Visual C++ compatible
-      // mode) has a bug and can't handle the normal construct
-      CORBA::Policy_ptr temp = policies[i];
-      CORBA::Policy_var policy = CORBA::Policy::_duplicate (temp);
-#else
-      CORBA::Policy_var policy = const_cast <CORBA::Policy_ptr> (policies[i]);
-#endif
+      CORBA::Policy_ptr policy = policies[i];
 
-      if (CORBA::is_nil (policy.in ()))
+      if (CORBA::is_nil (policy))
         {
           continue;
         }
@@ -214,14 +207,14 @@ TAO_Policy_Set::set_policy_overrides (const CORBA::PolicyList &policies,
           server_protocol_set = true;
         }
 
-      this->set_policy (policy.in () ACE_ENV_ARG_PARAMETER);
+      this->set_policy (policy ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 void
 TAO_Policy_Set::set_policy (const CORBA::Policy_ptr policy
-                                     ACE_ENV_ARG_DECL)
+                            ACE_ENV_ARG_DECL)
 {
   if (! this->compatible_scope (policy->_tao_scope()))
     {
