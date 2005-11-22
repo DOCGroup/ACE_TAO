@@ -12,7 +12,6 @@ ACE_RCSID (PI,
 #include "RequestInfo_Util.h"
 
 #include "tao/AnyTypeCode/Any.h"
-#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/AnyTypeCode/ExceptionA.h"
 #include "tao/PolicyC.h"
 #include "tao/PortableInterceptorC.h"
