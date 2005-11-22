@@ -3,12 +3,6 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (Remedy) VxWorks 6.x support
 
-. RepositoryManager:
-  - implement the missing rest of the fuctions to support type-based queries
-    and retrievals
-  - fully integrate with the DAnCE toolchain
-  - stress-testing
-
 USER VISIBLE CHANGES BETWEEN ACE-5.4.7 and ACE-5.4.8
 ====================================================
 
@@ -43,37 +37,15 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.7 and ACE-5.4.8
   demarshaling.
 
 . Developed Feature Oriented Customizer (FOCUS) tool to enable
-  specialization of middleware frameworks such as Reactor and Protocol framework. 
-  FOCUS provides an XML based transformation engine, where the transformations to 
-  specialize the components are captured in XML file and a weaver specializes the 
-  code.
-
-. Added support for unrolling ACE_OS::memcpy copy loop where applicable to improve
-  performance. Autoconf tests empirically determine whether loop unrolling 
-  is at least 10% better than default version.
-
-. Added an optimization to CDR stream to ignores alignment when marshaling
-  data. Use this option only when ACE_DISABLE_SWAP_ON_READ can be enabled.
-  This option requires ACE CDR engine to do both marshaling and
-  demarshaling.
-                                                                                         
-. Developed Feature Oriented Customizer (FOCUS) tool to enable
   specialization of middleware frameworks such as Reactor and Protocol framework.
   FOCUS provides an XML based transformation engine, where the transformations to
   specialize the components are captured in XML file and a weaver specializes the
   code.
-                                                                                         
+
 . Added support for unrolling ACE_OS::memcpy copy loop where applicable to improve
   performance. Autoconf tests empirically determine whether loop unrolling
   is at least 10% better than default version.
 
-. RepositoryManager:
-  - enhanced the implementation to use various optimization techniques
-  - added HTTP support
-  - added PackageConfiguration visitor to update the locations of the
-    implementation artifacts with relevant HTTP URLs
-  - refactored some of the code and added a number of helpers functions
- 
 USER VISIBLE CHANGES BETWEEN ACE-5.4.6 and ACE-5.4.7
 ====================================================
 
