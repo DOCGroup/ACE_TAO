@@ -15,13 +15,13 @@ Tue Nov 22 09:33:30 (IST) 2005  Bala Natarajan <bala_natarajan@symantec.com>
 Mon Nov 21 22:22:41 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuebox/valuebox_cs.cpp:
-        
+
           Removed commented out code.
-          
+
         * TAO_IDL/be/be_visitor_traits.cpp:
         * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
         * TAO_IDL/be_include/be_visitor_traits.h:
-        
+
           Added code generation of Value_Traits<> template
           specialization for boxed valuetypes. Thanks to
           Johnny Willemse <jwillemsen@remedy.nl> for reporting
@@ -30,7 +30,7 @@ Mon Nov 21 22:22:41 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 Mon Nov 21 20:14:09 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/RTCORBA/Private_Connection/RTCORBA_Private_Connection.mpc:
-        
+
           Added an 'after' line for one of the two projects, since they
           share an IDL file and VC8 concurrency features need an
           ordering.
@@ -62,12 +62,12 @@ Mon Nov 21 13:21:03 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 	  Fri Apr 22 15:24:43 2005  David Giovannini <giovanninid@ociweb.com>
 
         * orbsvcs/Notify_Service/Notify_Server.cpp:
-	  
+
 	  Added #include of valuetype header file to that the service can
 	  use valuetypes portably.
-	
+
         * orbsvcs/Notify_Service/Notify_Service.cpp:
-        
+
           Made some error messages more informative and removed dead code.
 
         * orbsvcs/orbsvcs/Notify/Admin.cpp:
@@ -102,7 +102,7 @@ Mon Nov 21 13:21:03 2005  Chris Cleeland  <cleeland_c@ociweb.com>
         * orbsvcs/tests/Notify/performance-tests/Filter/Sequence_Supplier.cpp:
 
 	  Emulated exception cleanup.
-	
+
         * orbsvcs/orbsvcs/Notify/Consumer.h:
         * orbsvcs/orbsvcs/Notify/Peer.cpp:
         * orbsvcs/orbsvcs/Notify/RT_Notify_Service.h:
@@ -123,18 +123,18 @@ Mon Nov 21 13:21:03 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 	  a pointer rather than a reference.  This improves expectations
 	  in areas of code that take the address of the reference and
 	  store it or treat it as a pointer.
-	
+
         * orbsvcs/orbsvcs/Notify/Consumer.cpp (dispatch_request):
         * orbsvcs/orbsvcs/Notify/CosNotify_Service.cpp:
 
           Handle COMM_FAILURE and TIMEOUT exceptions when pushing to a
 	  consumer. These exceptions used to result in simply discarding
 	  the event, but now they are considered a failure, and consumer
-	  resources will be released.	
-	
+	  resources will be released.
+
 	* orbsvcs/orbsvcs/Notify/Consumer.cpp (dispatch_batch):
 	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
-	
+
           Fixed the detection of dead consumers for batches of events, so
 	  that killing (or crashing) a consumer will correctly discard
 	  remaining queued events for that consumer, and prevent new
@@ -150,14 +150,14 @@ Mon Nov 21 13:21:03 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 	  indicate that -DispatchingThreads threads are used
 	  *per-consumer_admin*.  Previously it indicated that the thread
 	  pool was per-channel.
-	
+
         * orbsvcs/orbsvcs/Notify/EventChannel.h:
         * orbsvcs/orbsvcs/Notify/EventChannel.cpp (destroy):
 
 	  Fixed a memory leak where event channel destroy was not cleaning
 	  up the admins.  This avoids circular reference counting problems
 	  similar to those described in the next entry.
-	
+
         * orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp (destroy):
         * orbsvcs/orbsvcs/Notify/EventChannel.cpp (destroy):
         * orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp (destroy):
@@ -168,28 +168,28 @@ Mon Nov 21 13:21:03 2005  Chris Cleeland  <cleeland_c@ociweb.com>
           Fixed exceptions=0 builds logical error in destroy methods and
 	  made certain all owned circular refcounted members are released
 	  in class::destroy methods.
-	
+
         * orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp (init):
 
 	  Prefer ACE_Auto_Ptr<> to auto_ptr<>.
-	
+
         * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.h (event_var_):
 
 	  Eliminated 'const'.
-	
+
         * orbsvcs/orbsvcs/Notify/Method_Request_Event.h (CTOR):
         * orbsvcs/orbsvcs/Notify/Method_Request_Event.cpp (CTOR):
 
 	  Changed potentially confusing name of argument; it had "_var"
 	  appended when it was really a pointer of sorts.
-	
+
         * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.h:
         * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.cpp:
 
 	  Eliminated 'const' on event_var_ data member and changed
 	  potentially confusing name of local variable in copy() b/c it
 	  had "_var" appended when it was really a pointer of sorts.
-	  
+
         * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h:
         * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
 
@@ -213,7 +213,7 @@ Mon Nov 21 13:21:03 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 	  objects properly, these scopes occasionally crossed, creating
 	  deadlocks, race conditions, and all other sorts of mayhem
 	  associated with misuse of mutexes.
-	
+
         * orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
         * orbsvcs/orbsvcs/Notify/Peer.h:
         * orbsvcs/orbsvcs/Notify/Proxy.cpp:
@@ -245,12 +245,12 @@ Mon Nov 21 13:21:03 2005  Chris Cleeland  <cleeland_c@ociweb.com>
         * orbsvcs/orbsvcs/Notify/README:
 
 	  Changed "ListenerThreads" to "SourceThreads".
-	
+
         * orbsvcs/orbsvcs/Notify/Reactive_Task.h (timer_):
 
 	  Changed to private scope.  There was no need for it to be
 	  anything but private.
-	
+
         * orbsvcs/orbsvcs/Notify/Refcountable.h (TAO_Notify_Tracker):
         * orbsvcs/orbsvcs/Notify/Refcountable.cpp (TAO_Notify_Tracker):
 
@@ -263,7 +263,7 @@ Mon Nov 21 13:21:03 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	  Use CORBA::Long for reference count rather than compilation
 	  environment's 'long'.
-	
+
         * orbsvcs/orbsvcs/Notify/Routing_Slip.cpp:
 
 	  Updates to use isSet() predicate on TAO_Notify_Event::Ptr.
@@ -273,10 +273,10 @@ Mon Nov 21 13:21:03 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	  Remove the fix for zombie threads, and instead use THR_DETACHED
 	  to avoid the problem entirely.
-	
+
         * orbsvcs/orbsvcs/Notify/Topology_Factory.h (DTOR):
 	* orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
-	
+
 	  Add explicit virtual destructor to get around the problem in g++
 	  4.0 where inlines get hidden.  Without the virtual DTOR, this
 	  class does not get exported and code that dynamically loads
@@ -290,25 +290,25 @@ Mon Nov 21 13:21:03 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 	  code that uses Topology_Factory is already in that file, and it
 	  didn't seem terribly reasonable to create a completely new file
 	  to hold a do-nothing implementation of a destructor.
-	
+
         * orbsvcs/orbsvcs/Notify/XML_Topology_Factory.h:
         * orbsvcs/orbsvcs/Notify/XML_Topology_Factory.cpp:
 
 	  Added explicit virtual destructor for the same reasons as
 	  described immediately above.
-        
+
         * orbsvcs/orbsvcs/Notify/Any/AnyEvent.cpp:
 
 	  Changed ANY_CODE from being static to being
 	  scope-local.
-	
+
         * orbsvcs/orbsvcs/Notify/Any/PushConsumer.cpp:
         * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
         * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.cpp:
 
           Removed asserts associated with parameters. If a param is not
 	  optional we throw a BAD_PARAM exception.
-	
+
         * orbsvcs/tests/Notify/Basic/Basic.mpc:
         * orbsvcs/tests/Notify/XML_Persistence/XML_Persistence.mpc:
 
@@ -316,7 +316,7 @@ Mon Nov 21 13:21:03 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 	  required, this is "best practice" because it eliminates the need
 	  for MPC to open each source file and search for the pattern
 	  "*main*" to intuit an exename.
-	
+
         * orbsvcs/tests/Notify/Basic/Sequence.cpp:
         * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Notify_Sequence_Push_Consumer.cpp:
         * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Sequence_Consumer.cpp:
