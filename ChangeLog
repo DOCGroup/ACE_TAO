@@ -1,3 +1,8 @@
+Tue Nov 22 18:27:30 2005  Steve Huston  <shuston@riverace.com>
+
+	* m4/tls.m4: Correct botched assignment to ace_TLS_CPPFLAGS when
+	  additional Kerberos directory is needed.
+
 Tue Nov 22 03:33:14 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
 
 	* ace/ace_configuration_for_tao.mpc:
