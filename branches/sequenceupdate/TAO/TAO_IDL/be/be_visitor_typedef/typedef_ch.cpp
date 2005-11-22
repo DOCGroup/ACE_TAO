@@ -257,7 +257,7 @@ be_visitor_typedef_ch::visit_array (be_array *node)
       *os << be_nl
           << "ACE_INLINE " << static_decl << be_nl
           << "void " << td_name << "_zero (" << be_idt << be_idt_nl
-          << td_name << "_slice *_tao_slice" << be_nl
+          << td_name << "_slice *_tao_slice" << be_uidt_nl
           << ");" << be_uidt_nl;
       // _free
       *os << be_nl
