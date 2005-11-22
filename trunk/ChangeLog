@@ -1,3 +1,9 @@
+Tue Nov 22 09:33:30 (IST) 2005  Bala Natarajan <bala_natarajan@symantec.com>
+
+	* bin/MakeProjectCreator/config/portablegroup.mpb:
+
+          Do not build in ACE_FOR_TAO configuration. 
+
 Tue Nov 22 09:27:30 (IST) 2005  Bala Natarajan <bala_natarajan@symantec.com>
 
 	* ace/OS_NS_sys_utsname.cpp:
