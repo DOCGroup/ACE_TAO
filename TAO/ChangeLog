@@ -1,3 +1,9 @@
+Tue Nov 22 09:33:30 (IST) 2005  Bala Natarajan <bala_natarajan@symantec.com>
+
+	* orbsvcs/orbsvcs/PortableGroup.mpc:
+
+          Do not build in ACE_FOR_TAO configuration.
+
 Mon Nov 21 22:22:41 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuebox/valuebox_cs.cpp:

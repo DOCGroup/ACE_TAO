@@ -2,6 +2,7 @@
 // $Id$
 
 project(PortableGroup) : orbsvcslib, core, naming, iormanip, messaging, minimum_corba {
+  avoids       = ace_for_tao
   sharedname   = TAO_PortableGroup
   idlflags    += -Wb,export_macro=TAO_PortableGroup_Export \
                  -Wb,export_include=orbsvcs/PortableGroup/portablegroup_export.h
