@@ -10,6 +10,7 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, pkgconfig {
 
   Source_Files(ACE_COMPONENTS) {
     ACE.cpp
+    ACE_crc32.cpp
     Active_Map_Manager.cpp
     Addr.cpp
     Arg_Shifter.cpp
@@ -34,6 +35,8 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, pkgconfig {
     Dynamic.cpp
     Event.cpp
     Event_Handler.cpp
+    FILE.cpp
+    FILE_Addr.cpp
     Flag_Manip.cpp
     Framework_Component.cpp
     Functor.cpp
@@ -130,6 +133,11 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, pkgconfig {
     SOCK_Dgram.cpp
     SOCK_IO.cpp
     SOCK_Stream.cpp
+    SPIPE.cpp
+    SPIPE_Acceptor.cpp
+    SPIPE_Connector.cpp
+    SPIPE_Addr.cpp
+    SPIPE_Stream.cpp
     SString.cpp
     String_Base_Const.cpp
     Synch_Options.cpp
@@ -165,7 +173,6 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, pkgconfig {
       WFMO_Reactor.cpp
       SV_Semaphore_Simple.cpp
       SV_Semaphore_Complex.cpp
-      ACE_crc32.cpp
     }
   }
 

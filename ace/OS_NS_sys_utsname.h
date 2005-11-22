@@ -60,11 +60,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
 
-#if !defined (ACE_WIN32) && !defined (VXWORKS) && !defined (CHORUS) && !defined (ACE_PSOS)
-  ACE_NAMESPACE_INLINE_FUNCTION
-#else
   extern ACE_Export
-#endif /* ! ACE_WIN32 && ! VXWORKS && ! CHORUS */
   int uname (ACE_utsname *name);
 
 } /* namespace ACE_OS */

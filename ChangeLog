@@ -1,3 +1,19 @@
+Tue Nov 22 09:27:30 (IST) 2005  Bala Natarajan <bala_natarajan@symantec.com>
+
+	* ace/OS_NS_sys_utsname.cpp:
+	* ace/OS_NS_sys_utsname.h:
+	* ace/OS_NS_sys_utsname.inl:
+
+          Uninlined uname (). Compiling it on Solaris 9 with Studio9, 
+          and inline enabled is a pain. DOC's scoreboard uses inline=0 
+          on corona, and hence doesn't show the error. Uninlining solves
+          the problem.
+
+	* ace/ace_for_tao.mpc:
+
+          Added a few files to be built in ACE_FOR_TAO config. This fixes
+          many errors in gperf and orbsvcs on Solaris. 
+
 Mon Nov 21 19:16:30 2005  Steve Huston  <shuston@riverace.com>
 
 	* m4/tls.m4: Make sure we don't lose the user's specified OpenSSL
