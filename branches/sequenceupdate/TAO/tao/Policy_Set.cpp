@@ -55,7 +55,7 @@ TAO_Policy_Set::TAO_Policy_Set (const TAO_Policy_Set &rhs)
     {
       for (CORBA::ULong i = 0; i < rhs.policy_list_.length (); ++i)
         {
-          CORBA::Policy_var policy = const_cast <CORBA::Policy_ptr> (rhs.policy_list_[i]);
+          CORBA::Policy_ptr policy = rhs.policy_list_[i];
 
           if (CORBA::is_nil (policy))
             {
