@@ -27,6 +27,7 @@
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
+#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "ServerRequestInfoC.h"
 #include "tao/LocalObject.h"
 #include "tao/OctetSeqC.h"
