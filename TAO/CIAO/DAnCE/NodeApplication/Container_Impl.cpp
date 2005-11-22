@@ -425,7 +425,7 @@ CIAO::Container_Impl::remove_components (ACE_ENV_SINGLE_ARG_DECL)
     home->remove_component (((*iter).int_id_).in ());
     ACE_CHECK;
 
-    CORBA::release (((*iter).int_id_).in ());
+    //CORBA::release (((*iter).int_id_).in ());
   }
 
   this->component_map_.unbind_all ();
@@ -465,7 +465,6 @@ CIAO::Container_Impl::remove_component (const char * comp_ins_name
   ACE_CHECK;
 
   // If the previous calls failed, what should we do here??
-  CORBA::release (comp.in ());
 
   // @@ Still need to remove the home if the previous operation fails?
   if (this->component_map_.unbind (str) == -1)
