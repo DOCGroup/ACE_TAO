@@ -158,7 +158,7 @@ SSL_shutdown (ssl);
         AC_SUBST([ACE_KERBEROS_INCLUDES],[.])
        ],
        [
-        $ace_TLS_CPPFLAGS="$ace_TLS_CPPFLAGS -I${ac_cv_kerberos_dir}"
+        ace_TLS_CPPFLAGS="$ace_TLS_CPPFLAGS -I${ac_cv_kerberos_dir}"
         AC_SUBST([ACE_KERBEROS_INCLUDES],[$ac_cv_kerberos_dir])
        ])
 
