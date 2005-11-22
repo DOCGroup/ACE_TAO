@@ -190,7 +190,7 @@ Test_DynSequence::run_test (void)
           ACE_TRY_CHECK;
 
           CORBA::Boolean equal =
-            out_elems[i]->equal (elements[i].in ()
+            out_elems[i]->equal (elements[i]
                                  ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 

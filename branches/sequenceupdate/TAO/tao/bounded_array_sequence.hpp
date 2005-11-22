@@ -20,7 +20,7 @@ template<typename T_array, typename T_slice, typename T_tag, CORBA::ULong MAX>
 class bounded_array_sequence
 {
 public:
-  typedef T_array element_type;
+  typedef T_array * element_type;
   typedef T_array value_type;
   typedef T_slice * T_slice_ptr;
   typedef T_slice_ptr * const_value_type;
