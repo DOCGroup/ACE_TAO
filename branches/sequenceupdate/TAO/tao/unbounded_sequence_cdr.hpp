@@ -169,6 +169,7 @@ namespace TAO {
     return true;
   }
 
+# if defined (ACE_HAS_WCHAR) || defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
   template <typename stream>
   bool demarshal_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::WChar> & target) {
     typedef TAO::unbounded_value_sequence <CORBA::WChar> sequence;
@@ -188,6 +189,7 @@ namespace TAO {
     tmp.swap(target);
     return true;
   }
+#endif
 
   template <typename stream>
   bool demarshal_sequence(stream & strm, TAO::unbounded_value_sequence <CORBA::Float> & target) {
@@ -425,6 +427,7 @@ namespace TAO {
     return strm.write_char_array (source.get_buffer (), length);
   }
 
+# if defined (ACE_HAS_WCHAR) || defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
   template <typename stream>
   bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::WChar> & source) {
     ::CORBA::ULong const length = source.length ();
@@ -433,6 +436,7 @@ namespace TAO {
     }
     return strm.write_wchar_array (source.get_buffer (), length);
   }
+#endif
 
   template <typename stream>
   bool marshal_sequence(stream & strm, const TAO::unbounded_value_sequence <CORBA::Float> & source) {

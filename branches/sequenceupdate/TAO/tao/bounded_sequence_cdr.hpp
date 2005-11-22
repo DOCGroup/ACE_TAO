@@ -22,7 +22,7 @@ namespace TAO {
       return false;
     }
     if ((new_length > strm.length()) || (new_length > target.maximum ())) {
-        return false;
+      return false;
     }
     sequence tmp;
     tmp.length(new_length);
@@ -42,7 +42,7 @@ namespace TAO {
       return false;
     }
     if ((new_length > strm.length()) || (new_length > target.maximum ())) {
-        return false;
+      return false;
     }
     sequence tmp;
     tmp.length(new_length);
@@ -62,7 +62,7 @@ namespace TAO {
       return false;
     }
     if ((new_length > strm.length()) || (new_length > target.maximum ())) {
-        return false;
+      return false;
     }
     sequence tmp;
     tmp.length(new_length);
@@ -82,7 +82,7 @@ namespace TAO {
       return false;
     }
     if ((new_length > strm.length()) || (new_length > target.maximum ())) {
-        return false;
+      return false;
     }
     sequence tmp;
     tmp.length(new_length);
@@ -102,7 +102,7 @@ namespace TAO {
       return false;
     }
     if ((new_length > strm.length()) || (new_length > target.maximum ())) {
-        return false;
+      return false;
     }
     sequence tmp;
     tmp.length(new_length);
@@ -122,7 +122,7 @@ namespace TAO {
       return false;
     }
     if ((new_length > strm.length()) || (new_length > target.maximum ())) {
-        return false;
+      return false;
     }
     sequence tmp;
     tmp.length(new_length);
@@ -142,7 +142,7 @@ namespace TAO {
       return false;
     }
     if ((new_length > strm.length()) || (new_length > target.maximum ())) {
-        return false;
+      return false;
     }
     sequence tmp;
     tmp.length(new_length);
@@ -162,7 +162,7 @@ namespace TAO {
       return false;
     }
     if ((new_length > strm.length()) || (new_length > target.maximum ())) {
-        return false;
+      return false;
     }
     sequence tmp;
     tmp.length(new_length);
@@ -182,7 +182,7 @@ namespace TAO {
       return false;
     }
     if ((new_length > strm.length()) || (new_length > target.maximum ())) {
-        return false;
+      return false;
     }
     sequence tmp;
     tmp.length(new_length);
@@ -202,7 +202,7 @@ namespace TAO {
       return false;
     }
     if ((new_length > strm.length()) || (new_length > target.maximum ())) {
-        return false;
+      return false;
     }
     sequence tmp;
     tmp.length(new_length);
@@ -222,7 +222,7 @@ namespace TAO {
       return false;
     }
     if ((new_length > strm.length()) || (new_length > target.maximum ())) {
-        return false;
+      return false;
     }
     sequence tmp;
     tmp.length(new_length);
@@ -242,7 +242,7 @@ namespace TAO {
       return false;
     }
     if ((new_length > strm.length()) || (new_length > target.maximum ())) {
-        return false;
+      return false;
     }
     sequence tmp;
     tmp.length(new_length);
@@ -257,12 +257,12 @@ namespace TAO {
   template <typename stream, typename value_t, CORBA::ULong MAX>
   bool demarshal_sequence(stream & strm, TAO::bounded_value_sequence <value_t, MAX> & target) {
     typedef TAO::bounded_value_sequence <value_t, MAX> sequence;
-    ::CORBA::ULong new_length;
+    ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
       return false;
     }
     if ((new_length > strm.length()) || (new_length > target.maximum ())) {
-        return false;
+      return false;
     }
     sequence tmp;
     tmp.length(new_length);
@@ -279,12 +279,12 @@ namespace TAO {
   template <typename stream, typename charT, CORBA::ULong MAX>
   bool demarshal_sequence(stream & strm, TAO::details::bounded_basic_string_sequence <charT, MAX> & target) {
     typedef typename TAO::details::bounded_basic_string_sequence <charT, MAX> sequence;
-    ::CORBA::ULong new_length;
+    ::CORBA::ULong new_length = 0;
     if (!(strm >> new_length)) {
       return false;
     }
     if ((new_length > strm.length()) || (new_length > target.maximum ())) {
-        return false;
+      return false;
     }
     sequence tmp;
     tmp.length(new_length);
@@ -306,7 +306,7 @@ namespace TAO {
       return false;
     }
     if ((new_length > strm.length()) || (new_length > target.maximum ())) {
-        return false;
+      return false;
     }
     sequence tmp;
     tmp.length(new_length);
@@ -433,6 +433,9 @@ namespace TAO {
   template <typename stream, typename value_t, CORBA::ULong MAX>
   bool marshal_sequence(stream & strm, const TAO::bounded_value_sequence <value_t, MAX> & source) {
     ::CORBA::ULong const length = source.length ();
+    if (!(strm << length)) {
+      return false;
+    }
     for(CORBA::ULong i = 0; i < length; ++i) {
       if (!(strm << source[i])) {
         return false;
@@ -444,6 +447,9 @@ namespace TAO {
   template <typename stream, typename charT, CORBA::ULong MAX>
   bool marshal_sequence(stream & strm, const TAO::details::bounded_basic_string_sequence <charT, MAX> & source) {
     ::CORBA::ULong const length = source.length ();
+    if (!(strm << length)) {
+      return false;
+    }
     for(CORBA::ULong i = 0; i < length; ++i) {
       if (!(strm << source[i])) {
         return false;

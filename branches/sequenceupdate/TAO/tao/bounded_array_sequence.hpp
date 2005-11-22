@@ -96,8 +96,8 @@ namespace TAO
     if (!(strm >> new_length)) {
       return false;
     }
-    if (new_length > strm.length()) {
-        return false;
+    if ((new_length > strm.length()) || (new_length > target.maximum ())) {
+      return false;
     }
     sequence tmp;
     tmp.length(new_length);
@@ -135,7 +135,6 @@ namespace TAO
     }
     return true;
   }
-
 } // namespace TAO
 
 
