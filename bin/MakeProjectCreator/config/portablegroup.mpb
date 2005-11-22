@@ -2,6 +2,7 @@
 // $Id$
 
 project : naming, messaging, minimum_corba, iormanip {
+  avoids  = ace_for_tao
   libs      += TAO_PortableGroup
   after     += PortableGroup
   tagchecks += PortableGroup
