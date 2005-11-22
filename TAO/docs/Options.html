@@ -409,8 +409,7 @@ preferences over normal I/O, thereby causing priority inversion.</p>
         </td>
       </tr>
       <tr>
-       <td><code>-ORBDisableRTCollocation</code> <em>boolean
-       (0|1)</em></td> <td><a name="-ORBDisableRTCollocation"></a>This
+       <td><code>-ORBDisableRTCollocation</code> <em>boolean (0|1)</em></td> <td><a name="-ORBDisableRTCollocation"></a>This
        option controls whether the application wants to use or discard
        RT collocation decisions made by the RT ORB. A value of
        <CODE>1</CODE> (true) disables RT collocation decisions and falls back on the default
@@ -498,14 +497,16 @@ is <code>0</code>. This option is disabled (<code>0</code>) by default.</td>
         </tr>
       <tr>
         <td><code>-ORBEnforcePreferredInterfaces</code>
-        <em>Yes/No</em></td>
-        <td><a name="-ORBEnforcePreferredInterfaces"></a> If this option is specified, then TAO will only try to use the interfaces
-    specified by the -ORBPreferredInterfaces option. By default, if a connection
-    cannot be made using a preferred interface, then TAO will attempt to use
-    the default interface. (INADDR_ANY)
-    Note : If none of the preferred interfaces apply to an outgoing connection
-    then they will not be enforced. Therefore, for this option to have any effect,
-    the connection through a legal preferred interface must fail.
+        <em>boolean (0|1)</em></td>
+        <td><a name="-ORBEnforcePreferredInterfaces"></a> If this
+            option is set to <CODE>1</CODE> (true), then TAO will only try to use the
+            interfaces specified by the <CODE>-ORBPreferredInterfaces</CODE> option. 
+            The default is <CODE>0</CODE> (false), in which case if a connection
+            cannot be made using a preferred interface, TAO will
+            attempt to use the default interface (<CODE>INADDR_ANY</CODE>).
+            Note: If none of the preferred interfaces apply to an outgoing connection
+            then they will not be enforced.  For this option to have
+            any effect, therefore, the connection through a legal preferred interface must fail.
         </tr>
       <tr>
         <td><code>-ORBLingerTimeout</code> <em>timeout</em></td>
@@ -675,21 +676,21 @@ is set. The default is true. </td>
         </td>
       </tr>
       <tr>
-        <td><code>-ORBPreferIPV6Interfaces</code> <em>Yes/No</em></td>
+        <td><code>-ORBPreferIPV6Interfaces</code> <em>boolean (0|1)</em></td>
         <td><a name="-ORBPreferIPV6Interfaces"></a>
-          This option directs the default endpoint selector for client connections
-          to first attempt to connect any IIOP endpoints from a provided IOR specifying
-          IPv6 interfaces.
-          Only when none of these can be found or sucessfully connected IPv4
-          interfaces will be tried.
+          If option is <CODE>1</CODE> (true) it directs the default
+          endpoint selector for client connections to first attempt to
+          connect any IIOP endpoints from a provided IOR specifying 
+          IPv6 interfaces.  Only when none of these can be found or sucessfully connected IPv4
+          interfaces will be tried.  The default is <CODE>0</CODE> (false).
           <p>
-          This option is only available for IPv6 enabled builds of TAO (ACE_HAS_IPV6).
+          This option is only available for IPv6 enabled builds of TAO (<CODE>ACE_HAS_IPV6</CODE>).
         </td>
       </tr>
       <tr>
-        <td><code>-ORBConnectIPV6Only</code> <em>Yes/No</em></td>
+        <td><code>-ORBConnectIPV6Only</code> <em>boolean (0|1)</em></td>
         <td><a name="-ORBConnectIPV6Only"></a>
-          This option directs a server ORB to:<br><p>
+          If this option is <CODE>1</CODE> (true) it directs a server ORB to:<br><p>
           <li>allow only IPv6 interfaces as listening endpoints</li>
           <li>encode only IPv6 interfaces in the IOR profile</li>
           <li>prevent (depending on availability of IPV6_V6ONLY socket option)
@@ -697,8 +698,8 @@ is set. The default is true. </td>
           <p>
           This option directs the default endpoint selector for client connections
           to only attempt to connect any IIOP endpoints from a provided IOR specifying
-          IPv6 interfaces.
-          Any available IPv4 interfaces will be ignored.
+          IPv6 interfaces.  Any available IPv4 interfaces will be
+              ignored.  The default setting is <CODE>0</CODE> (false).
           <p>
           This option is only available for IPv6 enabled builds of TAO (ACE_HAS_IPV6).
         </td>
@@ -999,7 +1000,7 @@ until all the data is sent.
         </td>
       </tr>
       <tr>
-        <td><code>-ORBDropRepliesDuringShutdown</code> <em>0|1</em></td>
+        <td><code>-ORBDropRepliesDuringShutdown</code> <em>boolean (0|1)</em></td>
         <td><a name="-ORBDropRepliesDuringShutdown"></a> Strategy to
         make the ORB wait for replies to show up even if the ORB is
         shutdown. The default is to drop replies. For example, clients
