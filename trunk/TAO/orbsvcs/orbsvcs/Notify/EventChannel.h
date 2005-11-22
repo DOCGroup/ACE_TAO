@@ -249,10 +249,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#if defined (__ACE_INLINE__)
-#include "EventChannel.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_Notify_EVENTCHANNEL_H */
