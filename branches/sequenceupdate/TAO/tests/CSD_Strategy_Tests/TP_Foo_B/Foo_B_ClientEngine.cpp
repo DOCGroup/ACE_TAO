@@ -143,17 +143,16 @@ Foo_B_ClientEngine::execute(ACE_ENV_SINGLE_ARG_DECL)
 
   Bounded_Var_Size_var bd_var_size_string = new Bounded_Var_Size();
 
-  bd_var_size_string->replace (bd_var_size_string->maximum (),
-                        ACE_OS::strlen (test_str) + 1,
-                        test_str);
+  bd_var_size_string->replace (ACE_OS::strlen (test_str) + 1,
+                               test_str);
   this->obj_->test_bounded_var_size_arg (bd_var_size_string.in ()
                                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (false);
 
   Unbounded_Var_Size_var ub_var_size_string = new Unbounded_Var_Size(100);
   ub_var_size_string->replace (ub_var_size_string->maximum (),
-                            ACE_OS::strlen (test_str) + 1,
-                            test_str);
+                               ACE_OS::strlen (test_str) + 1,
+                               test_str);
   this->obj_->test_unbounded_var_size_arg (ub_var_size_string.in ()
                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (false);

@@ -53,7 +53,7 @@ main (int argc, char *argv[])
                       ACE_DEBUG ((LM_DEBUG,
                                   "  Reference %u: %s\n",
                                   n,
-                                  list[n]));
+                                  static_cast<char const*>(list[n])));
                     }
                 }
               else
