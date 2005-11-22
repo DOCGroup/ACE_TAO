@@ -55,6 +55,12 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
   simplify adding debug printouts based on various tool-specific debug
   levels.
 
+. RepositoryManager:
+  - implement the missing rest of the fuctions to support type-based queries
+    and retrievals
+  - fully integrate with the DAnCE toolchain
+  - stress-testing
+
 PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
 ==========================================
 
@@ -76,7 +82,7 @@ PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
 
 . Integrate various Pub/Sub services into CIAO and DAnCE.
 
-USER VISIBLE CHANGES BETWEEN CIAO-0.4.8 and CIAO-0.4.9
+USER VISIBLE CHANGES BETWEEN CIAO-0.4.7 and CIAO-0.4.8
 ======================================================
 
 . The CIDL compiler frontend now supports constants, const expressions,
@@ -111,8 +117,12 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.4.8 and CIAO-0.4.9
 
 . Added tests and documentation for the IDL3-to-IDL2 converter tool.
 
-USER VISIBLE CHANGES BETWEEN CIAO-0.4.7 and CIAO-0.4.8
-======================================================
+. RepositoryManager:
+  - enhanced the implementation to use various optimization techniques
+  - added HTTP support
+  - added PackageConfiguration visitor to update the locations of the
+    implementation artifacts with relevant HTTP URLs
+  - refactored some of the code and added a number of helpers functions
 
 . The XSC based config handlers have been heavily optimized, resulting
   in greatly reduced parsing overhead for large deployments.
@@ -162,7 +172,6 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.4.7 and CIAO-0.4.8
 
 . DAnCE has been enhanced to support deploying multiple assemblies
   with the same set of ExecutionManager and NodeMangers.
-
 
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.6 and CIAO-0.4.7
 ======================================================
