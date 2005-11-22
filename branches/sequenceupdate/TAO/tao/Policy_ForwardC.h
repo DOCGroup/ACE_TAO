@@ -43,7 +43,6 @@
 #include "tao/TAO_Export.h"
 #include "tao/ORB.h"
 #include "tao/Environment.h"
-#include "tao/unbounded_object_reference_sequence.hpp"
 #include "tao/Sequence_T.h"
 #include "tao/Objref_VarOut_T.h"
 #include "tao/Seq_Var_T.h"
@@ -254,7 +253,7 @@ namespace TAO
 #define _CORBA_POLICYCURRENT__TRAITS_
 
   template<>
-  struct TAO_Export TAO::Objref_Traits< ::CORBA::PolicyCurrent>
+  struct TAO_Export Objref_Traits< ::CORBA::PolicyCurrent>
   {
     static ::CORBA::PolicyCurrent_ptr duplicate (
         ::CORBA::PolicyCurrent_ptr
