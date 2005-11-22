@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Hash Map) : aceexe {
+project(*Hash Map) : aceexe, acethreadslib_for_tao, acememorylib_for_tao {
   exename = Hash_Map
   Source_Files {
     Hash_Map.cpp
@@ -29,7 +29,7 @@ project(PI Malloc) : aceexe {
   }
 }
 
-project(Pool Growth) : aceexe {
+project(Pool Growth) : aceexe, acethreadslib_for_tao, acememorylib_for_tao {
   exename = Pool_Growth
   Source_Files {
     Pool_Growth.cpp

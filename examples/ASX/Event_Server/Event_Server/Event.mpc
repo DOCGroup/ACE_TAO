@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server) : aceexe {
+project(*Server) : aceexe, acetimerlib_for_tao {
   exename = Event_Server
   Source_Files {
     Consumer_Router.cpp

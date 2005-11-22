@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(Futures) : aceexe {
+project(Futures) : aceexe, acethreadslib_for_tao {
   exename = Futures
   Source_Files {
     Futures.cpp

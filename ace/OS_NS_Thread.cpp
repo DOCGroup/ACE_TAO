@@ -912,7 +912,7 @@ ACE_TSS_Cleanup::thread_exit (void)
 extern "C" void
 ACE_TSS_Cleanup_keys_destroyer (void *tss_keys)
 {
-  delete reinterpret_cast <ACE_TSS_Keys *> (tss_keys);
+  delete static_cast <ACE_TSS_Keys *> (tss_keys);
 }
 
 ACE_TSS_Cleanup::ACE_TSS_Cleanup (void)

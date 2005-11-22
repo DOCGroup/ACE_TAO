@@ -7,6 +7,7 @@
  *  $Id$
  *
  *  @author Carlos O'Ryan <coryan@ece.uci.edu>
+ *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================
 
@@ -24,23 +25,8 @@
 
 #include "ace/SString.h"
 
-#ifdef ACE_HAS_THREADS
-# include "ace/OS_NS_Thread.h"
-#endif  /* ACE_HAS_THREADS */
-
 #include <openssl/ssl.h>
 
-#ifdef ACE_HAS_THREADS
-extern "C"
-{
-  /// Mutex locking/unlocking callback for OpenSSL multithread
-  /// support.
-  void ACE_SSL_locking_callback (int mode,
-                                 int type,
-                                 const char * file,
-                                 int line);
-}
-#endif  /* ACE_HAS_THREADS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -84,8 +70,6 @@ private:
  */
 class ACE_SSL_Export ACE_SSL_Context
 {
-  friend void ACE_SSL_locking_callback (int, int, const char *, int);
-
 public:
 
   enum {
@@ -332,21 +316,6 @@ private:
 
   /// count of successful CA load attempts
   int have_ca_;
-
-  /// Reference count of the number of times the ACE_SSL_Context was
-  /// initialized.
-  static int library_init_count_;
-
-  // @@ This should also be done with a singleton, otherwise it is not
-  //    thread safe and/or portable to some weird platforms...
-
-#ifdef ACE_HAS_THREADS
-  /// Array of mutexes used internally by OpenSSL when the SSL
-  /// application is multithreaded.
-  static ACE_mutex_t * lock_;
-
-  // @@ This should also be managed by a singleton.
-#endif
 
 };
 
