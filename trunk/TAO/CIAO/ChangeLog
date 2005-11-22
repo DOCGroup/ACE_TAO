@@ -1,3 +1,11 @@
+Tue Nov 22 16:03:24 2005  Gan Deng  <gan.deng@vanderbilt.edu>
+
+	* DAnCE/NodeApplication/Container_Impl.cpp
+
+	  Fixed a memory management related bug, we should not
+	  explicitly call release() on the component object
+	  reference of var type.
+	
 Mon Nov 21 17:24:42 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* NEWS:
