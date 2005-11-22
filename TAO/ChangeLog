@@ -1,3 +1,13 @@
+Tue Nov 22 07:49:59 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp (init): Updated the code to use 1 or 0 for
+ 	  options, rather than YES or NO.  Thanks to Abhi Sachdev for
+ 	  motivating this cleanup.
+
+	* docs/Options.html: Updated the documentation to remove the use of 
+	  YES and NO as options and replace them with 1 or 0 to be
+ 	  consistent with the other options.
+
 Tue Nov 22 04:14:05 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
 
  	* TAO_IDL/be_include/be_visitor_traits.h:

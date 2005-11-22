@@ -567,12 +567,11 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
       else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBEnforcePreferredInterfaces"))))
         {
-          if (ACE_OS::strcasecmp (current_arg,
-                                  ACE_TEXT("YES")) == 0)
-            this->orb_params ()->enforce_pref_interfaces (true);
-          else if (ACE_OS::strcasecmp (current_arg,
-                                       ACE_TEXT("NO")) == 0)
+          int enforce_pref_interfaces = ACE_OS::atoi (current_arg);
+          if (enforce_pref_interfaces)
             this->orb_params ()->enforce_pref_interfaces (false);
+          else
+            this->orb_params ()->enforce_pref_interfaces (true);
 
           arg_shifter.consume_arg ();
         }
@@ -580,11 +579,10 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
       else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBPreferIPV6Interfaces"))))
         {
-          if (ACE_OS::strcasecmp (current_arg,
-                                  ACE_TEXT("YES")) == 0)
+          int prefer_ipv6_interfaces = ACE_OS::atoi (current_arg);
+          if (prefer_ipv6_interfaces)
             this->orb_params ()->prefer_ipv6_interfaces (true);
-          else if (ACE_OS::strcasecmp (current_arg,
-                                       ACE_TEXT("NO")) == 0)
+          else
             this->orb_params ()->prefer_ipv6_interfaces (false);
 
           arg_shifter.consume_arg ();
@@ -592,11 +590,10 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
       else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBConnectIPV6Only"))))
         {
-          if (ACE_OS::strcasecmp (current_arg,
-                                  ACE_TEXT("YES")) == 0)
+          int connect_ipv6_only = ACE_OS::atoi (current_arg);
+          if (connect_ipv6_only)
             this->orb_params ()->connect_ipv6_only (true);
-          else if (ACE_OS::strcasecmp (current_arg,
-                                       ACE_TEXT("NO")) == 0)
+          else
             this->orb_params ()->connect_ipv6_only (false);
 
           arg_shifter.consume_arg ();
@@ -910,21 +907,11 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
       else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBDisableRTCollocation"))))
         {
-          const ACE_TCHAR *popt = current_arg;
-          if (ACE_OS::strcasecmp (popt, ACE_TEXT("NO")) == 0)
-            {
-              this->orb_params ()->disable_rt_collocation_resolver (false);
-            }
-          else if (ACE_OS::strcasecmp (popt, ACE_TEXT("YES")) == 0)
-            {
-              this->orb_params ()->disable_rt_collocation_resolver (true);
-            }
+          int disable_rt_collocation = ACE_OS::atoi (current_arg);
+          if (disable_rt_collocation)
+            this->orb_params ()->disable_rt_collocation_resolver (true);
           else
-            {
-              // Should we print an error mesg?? Probably we
-              // should. We will look into this after 1.4 and make all
-              // the options consistent.
-            }
+            this->orb_params ()->disable_rt_collocation_resolver (false);
 
           arg_shifter.consume_arg ();
         }
