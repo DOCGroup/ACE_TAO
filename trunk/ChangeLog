@@ -1,3 +1,67 @@
+Mon Nov 21 23:56:06 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/ace_for_tao.mpc:
+	* ace/ace_threads_for_tao.mpc:
+
+	  Moved ACE_crc32.cpp to ace_threads_for_tao subset within
+	  Windows compiler conditional.  It is only needed by the
+	  SV_Semaphore_Simple listed within that conditional block.
+
+	* ace/ace_timer_for_tao.mpc:
+	* bin/MakeProjectCreator/config/acetimerlib_for_tao.mpb:
+
+	  New ACE_FOR_TAO timer library subset.
+
+	* ace/Obchunk.cpp:
+	* ace/Obchunk.h:
+	* ace/Obchunk.inl:
+	* ace/Object_Manager.cpp:
+	* ace/Object_Manager.h:
+	* ace/Object_Manager.inl:
+	* ace/Object_Manager_Base.cpp:
+	* ace/Object_Manager_Base.h:
+	* ace/Obstack.cpp:
+	* ace/Obstack.h:
+	* ace/Obstack_T.cpp:
+	* ace/Obstack_T.h:
+	* ace/Obstack_T.inl:
+
+	  Added missing versioned namespace support.
+
+	* ace/SSL/SSL_Context.h:
+
+	  Removed ACE_SSL_locking_callback prototype since it is not part
+	  of the public interface, and since a prototype (and definition)
+	  already exists in the SSL_Context.cpp implementation file.
+
+	  Removed static class members and placed them in anonymous
+	  namespace in the implementation file.
+
+	* ace/SSL_Context.cpp:
+
+	  Static class members are now in an anonymous namespace.  There's
+	  no need to expose them in the corresponding header.
+
+	  Mangle global SSL callback functions with the appropriate
+	  versioned namespace name, if enabled.
+
+	  Improved exception safety of lock memory management and
+	  lock acquisition/release by taking advantage of an
+	  ACE_Auto_Basic_Array_Ptr and ACE_Mutex, respectively.
+
+	* Kokyu/tests/DSRT_MIF/DSRT_MIF.mpc:
+	* apps/drwho/drwho.mpc:
+	* apps/soreduce/soreduce.mpc:
+	* examples/APG/Active_Objects/active_objects.mpc:
+	* examples/APG/Misc_IPC/misc_ipc.mpc:
+	* examples/APG/Shared_Memory/shared_memory.mpc:
+	* examples/APG/ThreadPools/threadpools.mpc:
+	* examples/APG/ThreadSafety/threadsafety.mpc:
+	* examples/ASX/Event_Server/Event_Server/Event.mpc:
+
+	  Inherit from the appropriate ACE_FOR_TAO subset MPC base
+	  project.  Addresses unresolved symbol errors.
+
 Tue Nov 22 09:33:30 (IST) 2005  Bala Natarajan <bala_natarajan@symantec.com>
 
 	* bin/MakeProjectCreator/config/portablegroup.mpb:

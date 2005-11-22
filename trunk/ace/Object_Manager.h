@@ -38,6 +38,8 @@ class ACE_Sig_Set;
 #  include "ace/Recursive_Thread_Mutex.h"
 #endif /* ACE_MT_SAFE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // only used by ACE_OS_Object_Manager::ctor
 # if defined (ACE_WIN32)
 // Default WIN32 structured exception handler.
@@ -423,6 +425,7 @@ private:
   ACE_Object_Manager &operator= (const ACE_Object_Manager &);
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include "ace/Static_Object_Lock.h"
 
@@ -437,9 +440,7 @@ private:
 // needs to be in the ACE_Export context rather than the
 // ACE_Svc_Export context.
 class ACE_Service_Object;
-extern "C" ACE_Export
-ACE_Service_Object *
-_make_ACE_Service_Manager (ACE_Service_Object_Exterminator *);
+ACE_FACTORY_DECLARE (ACE, ACE_Service_Manager)
 #endif /* ! ACE_LACKS_ACE_SVCCONF */
 
 

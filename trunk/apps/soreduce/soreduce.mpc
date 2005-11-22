@@ -1,6 +1,6 @@
 // $Id$
 
-project(soreduce) : aceexe {
+project(soreduce) : aceexe, acethreadslib_for_tao {
   avoids += uses_wchar
   exename = soreduce
   Source_Files {

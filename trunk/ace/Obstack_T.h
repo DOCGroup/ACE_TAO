@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// #include "ace/Basic_Types.h"
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Allocator;
 
@@ -115,6 +115,8 @@ protected:
   /// Pointer to the current Obchunk.
   class ACE_Obchunk *curr_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Obstack_T.inl"
