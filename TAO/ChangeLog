@@ -1,3 +1,9 @@
+Tue Nov 22 04:14:05 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
+
+ 	* TAO_IDL/be_include/be_visitor_traits.h:
+
+	  Added missing operation declaration. 
+
 Tue Nov 22 01:42:48 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup.mpc:
