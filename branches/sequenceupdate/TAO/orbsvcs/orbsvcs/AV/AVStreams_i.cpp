@@ -828,7 +828,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
                   ACE_CATCHANY
                     {
                       if (TAO_debug_level > 0)
-                        ACE_DEBUG ((LM_DEBUG, " %s ", flows[i]));
+                        ACE_DEBUG ((LM_DEBUG, " %s ", static_cast<char const*>(flows[i])));
 
                       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "producer_check: not a producer");
 
@@ -2321,12 +2321,16 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr /*initiato
                           0);
 
           if(TAO_debug_level > 0)
-             ACE_DEBUG(( LM_DEBUG, "%N:%l Parsing flow spec: %s\n", flow_spec[i]));
+             ACE_DEBUG(( LM_DEBUG,
+                         "%N:%l Parsing flow spec: %s\n",
+                         static_cast<char const*>(flow_spec[i])));
 
           if (entry->parse (flow_spec[i]) == -1)
           {
             if (TAO_debug_level > 0)
-              ACE_DEBUG ((LM_DEBUG, "%N:%l Error parsing flow_spec: %s\n", flow_spec[i]));
+              ACE_DEBUG ((LM_DEBUG,
+                          "%N:%l Error parsing flow_spec: %s\n",
+                          static_cast<char const*>(flow_spec[i])));
             return 0;
           }
           if (TAO_debug_level > 0)
@@ -4463,7 +4467,10 @@ TAO_FlowEndPoint::open (const char *flowname,
           CORBA::String_var address = CORBA::string_dup (protocols [i]);
           TAO_Forward_FlowSpec_Entry entry ("", "", "", "", address.in ());
           protocol_spec [i] = CORBA::string_dup (entry.carrier_protocol_str ());
-          if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG, "%s\n", protocol_spec[i]));
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        "%s\n",
+                        static_cast<char const*>(protocol_spec[i])));
         }
       this->set_protocol_restriction (protocol_spec
                                       ACE_ENV_ARG_PARAMETER);
