@@ -13,7 +13,6 @@
 #include "testing_range_checking.hpp"
 
 #include "mock_reference.hpp"
-#include "mock_stream.hpp"
 
 #include "tao/unbounded_value_sequence.hpp"
 #include "tao/unbounded_object_reference_sequence.hpp"
