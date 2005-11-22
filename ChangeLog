@@ -1,3 +1,11 @@
+Tue Nov 22 03:33:14 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
+
+	* ace/ace_configuration_for_tao.mpc:
+
+	  Some groups require ACE_Configuration. This MPC should probably
+	  help those groups with a smaller library to use instead of
+	  pulling in the whole ACE library. 
+
 Tue Nov 22 01:43:52 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/portablegroup.mpb:
