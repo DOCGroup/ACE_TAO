@@ -1,3 +1,11 @@
+Tue Nov 22 01:42:48 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup.mpc:
+
+	  Rather than disable this project in the ACE_FOR_TAO
+	  configuration, inherit from acesocketslib_for_tao to allow it to
+	  be used.
+
 Tue Nov 22 09:33:30 (IST) 2005  Bala Natarajan <bala_natarajan@symantec.com>
 
 	* orbsvcs/orbsvcs/PortableGroup.mpc:
