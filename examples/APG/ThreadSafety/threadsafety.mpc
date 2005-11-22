@@ -8,7 +8,7 @@ project(Atomic Op) : aceexe {
   }
 }
 
-project(Barrier) : aceexe {
+project(Barrier) : aceexe, acethreadslib_for_tao {
   exename = Barrier
   Source_Files {
     Barrier.cpp
@@ -29,7 +29,7 @@ project(RW Lock) : aceexe {
   }
 }
 
-project(Semaphore) : aceexe {
+project(Semaphore) : aceexe, acethreadslib_for_tao {
   exename = Semaphore
   Source_Files {
     Semaphore.cpp

@@ -1,5 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 int
@@ -33,3 +36,5 @@ ACE_Object_Manager::default_mask (void)
   return
     *reinterpret_cast<ACE_Sig_Set *> (ACE_OS_Object_Manager::default_mask ());
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

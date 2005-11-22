@@ -10,7 +10,6 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, pkgconfig {
 
   Source_Files(ACE_COMPONENTS) {
     ACE.cpp
-    ACE_crc32.cpp
     Active_Map_Manager.cpp
     Addr.cpp
     Arg_Shifter.cpp
@@ -168,6 +167,7 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, pkgconfig {
 
     // ACE_Token implementation uses semaphores on Windows and VxWorks.
     conditional(vc6,vc71,vc8,bmake) {
+      ACE_crc32.cpp  // Required by SV_Semaphore_Simple
       Semaphore.cpp
       Process_Mutex.cpp
       WFMO_Reactor.cpp

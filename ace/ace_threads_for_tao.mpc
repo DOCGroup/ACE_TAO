@@ -26,7 +26,7 @@ project(ACE_Threads_FOR_TAO) : acedefaults, core, pkgconfig, ace_for_tao {
       Process_Mutex.cpp
       SV_Semaphore_Simple.cpp
       SV_Semaphore_Complex.cpp
-      ACE_crc32.cpp
+      ACE_crc32.cpp  // Required by SV_Semaphore_Simple
     }
 
   }

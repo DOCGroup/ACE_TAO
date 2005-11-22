@@ -1,5 +1,3 @@
-#include "ace/OS_NS_string.h"
-#include "ace/ACE.h"
 #include "SSL_Context.h"
 
 #include "sslconf.h"
@@ -8,12 +6,20 @@
 #include "SSL_Context.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Mutex.h"
 #include "ace/Guard_T.h"
 #include "ace/Object_Manager.h"
 #include "ace/Log_Msg.h"
 #include "ace/Singleton.h"
 #include "ace/Synch_Traits.h"
+#include "ace/ACE.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_string.h"
+
+#ifdef ACE_HAS_THREADS
+# include "ace/Auto_Ptr.h"
+# include "ace/OS_NS_Thread.h"
+#endif  /* ACE_HAS_THREADS */
 
 #include <openssl/x509.h>
 #include <openssl/err.h>
@@ -24,54 +30,86 @@ ACE_RCSID (ACE_SSL,
            "$Id$")
 
 
-#ifdef ACE_HAS_THREADS
-void
-ACE_SSL_locking_callback (int mode,
-                          int type,
-                          const char * /* file */,
-                          int /* line */)
+namespace
 {
-  // #ifdef undef
-  //   fprintf(stderr,"thread=%4d mode=%s lock=%s %s:%d\n",
-  //           CRYPTO_thread_id(),
-  //           (mode&CRYPTO_LOCK)?"l":"u",
-  //           (type&CRYPTO_READ)?"r":"w",file,line);
-  // #endif
-  //   /*
-  //     if (CRYPTO_LOCK_SSL_CERT == type)
-  //     fprintf(stderr,"(t,m,f,l) %ld %d %s %d\n",
-  //     CRYPTO_thread_id(),
-  //     mode,file,line);
-  //   */
-  if (mode & CRYPTO_LOCK)
-    ACE_OS::mutex_lock (&(ACE_SSL_Context::lock_[type]));
-  else
-    ACE_OS::mutex_unlock (&(ACE_SSL_Context::lock_[type]));
+  /// Reference count of the number of times the ACE_SSL_Context was
+  /// initialized.
+  int ssl_library_init_count = 0;
+
+  // @@ This should also be done with a singleton, otherwise it is not
+  //    thread safe and/or portable to some weird platforms...
+
+#ifdef ACE_HAS_THREADS
+  /// Array of mutexes used internally by OpenSSL when the SSL
+  /// application is multithreaded.
+  ACE_Auto_Basic_Array_Ptr<ACE_Mutex> ssl_locks;
+
+  // @@ This should also be managed by a singleton.
+#endif
 }
 
-// -------------------------------
+#ifdef ACE_HAS_THREADS
+
+# if (defined (ACE_HAS_VERSIONED_NAMESPACE) \
+     && ACE_HAS_VERSIONED_NAMESPACE == 1) \
+  && !(defined (_MSC_VER) && _MSC_VER <= 1200)
+// MSVC++ 6's preprocessor can't handle macro expansions required by
+// the versioned namespace support.  *sigh*
+
+#  define ACE_SSL_LOCKING_CALLBACK_NAME ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _ACE_SSL_locking_callback)
+#  define ACE_SSL_THREAD_ID_NAME ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _ACE_SSL_thread_id)
+
+# else
+
+#  define ACE_SSL_LOCKING_CALLBACK_NAME ACE_SSL_locking_callback
+#  define ACE_SSL_THREAD_ID_NAME ACE_SSL_thread_id
+
+# endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
+
+
 
 extern "C"
 {
-  /// Return the current thread ID.  OpenSSL uses this on platforms
-  /// that need it.
+  void
+  ACE_SSL_LOCKING_CALLBACK_NAME (int mode,
+                                 int type,
+                                 const char * /* file */,
+                                 int /* line */)
+  {
+    // #ifdef undef
+    //   fprintf(stderr,"thread=%4d mode=%s lock=%s %s:%d\n",
+    //           CRYPTO_thread_id(),
+    //           (mode&CRYPTO_LOCK)?"l":"u",
+    //           (type&CRYPTO_READ)?"r":"w",file,line);
+    // #endif
+    //   /*
+    //     if (CRYPTO_LOCK_SSL_CERT == type)
+    //     fprintf(stderr,"(t,m,f,l) %ld %d %s %d\n",
+    //     CRYPTO_thread_id(),
+    //     mode,file,line);
+    //   */
+    if (mode & CRYPTO_LOCK)
+      (void) ssl_locks[type].acquire ();
+    else
+      (void) ssl_locks[type].release ();
+  }
+
+  // -------------------------------
+
+  // Return the current thread ID.  OpenSSL uses this on platforms
+  // that need it.
   unsigned long
-  ACE_SSL_thread_id (void)
+  ACE_SSL_THREAD_ID_NAME (void)
   {
     return (unsigned long) ACE_OS::thr_self ();
   }
 }
 #endif  /* ACE_HAS_THREADS */
 
+
 // ****************************************************************
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-#ifdef ACE_HAS_THREADS
-ACE_mutex_t * ACE_SSL_Context::lock_ = 0;
-#endif  /* ACE_HAS_THREADS */
-
-int ACE_SSL_Context::library_init_count_ = 0;
 
 ACE_SSL_Context::ACE_SSL_Context (void)
   : context_ (0),
@@ -106,34 +144,21 @@ ACE_SSL_Context::ssl_library_init (void)
                      ace_ssl_mon,
                      *ACE_Static_Object_Lock::instance ()));
 
-  if (ACE_SSL_Context::library_init_count_ == 0)
+  if (ssl_library_init_count == 0)
     {
       // Initialize the locking callbacks before initializing anything
       // else.
 #ifdef ACE_HAS_THREADS
-      int num_locks = ::CRYPTO_num_locks ();
+      int const num_locks = ::CRYPTO_num_locks ();
 
-      ACE_NEW (ACE_SSL_Context::lock_,
-               ACE_mutex_t[num_locks]);
-
-      for (int i = 0; i < num_locks; ++i)
-        {
-          // rwlock_init(&(ACE_SSL_Context::lock_[i]), USYNC_THREAD,
-          // 0);
-          if (ACE_OS::mutex_init (&(ACE_SSL_Context::lock_[i]),
-                                  USYNC_THREAD) != 0)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) ACE_SSL_Context::ssl_library_init ")
-                        ACE_TEXT ("- %p\n"),
-                        ACE_TEXT ("mutex_init")));
-        }
+      ssl_locks.reset (new ACE_Mutex[num_locks]);
 
 # if !defined (WIN32)
       // This call isn't necessary on some platforms.  See the CRYPTO
       // library's threads(3) man page for details.
-      ::CRYPTO_set_id_callback (ACE_SSL_thread_id);
-# endif  /* WIN32 */
-      ::CRYPTO_set_locking_callback (ACE_SSL_locking_callback);
+      ::CRYPTO_set_id_callback (ACE_SSL_THREAD_ID_NAME);
+# endif  /* !WIN32 */
+      ::CRYPTO_set_locking_callback (ACE_SSL_LOCKING_CALLBACK_NAME);
 #endif  /* ACE_HAS_THREADS */
 
       ::SSLeay_add_ssl_algorithms ();
@@ -169,7 +194,7 @@ ACE_SSL_Context::ssl_library_init (void)
 
     }
 
-  ++ACE_SSL_Context::library_init_count_;
+  ++ssl_library_init_count;
 }
 
 void
@@ -179,8 +204,8 @@ ACE_SSL_Context::ssl_library_fini (void)
                      ace_ssl_mon,
                      *ACE_Static_Object_Lock::instance ()));
 
-  --ACE_SSL_Context::library_init_count_;
-  if (ACE_SSL_Context::library_init_count_ == 0)
+  --ssl_library_init_count;
+  if (ssl_library_init_count == 0)
     {
       ::ERR_free_strings ();
       ::EVP_cleanup ();
@@ -188,13 +213,7 @@ ACE_SSL_Context::ssl_library_fini (void)
       // Clean up the locking callbacks after everything else has been
       // cleaned up.
 #ifdef ACE_HAS_THREADS
-      int num_locks = ::CRYPTO_num_locks ();
-
       ::CRYPTO_set_locking_callback (0);
-      for (int i = 0; i < num_locks; ++i)
-        ACE_OS::mutex_destroy (&(ACE_SSL_Context::lock_[i]));
-
-      delete [] ACE_SSL_Context::lock_;
 #endif  /* ACE_HAS_THREADS */
     }
 }
