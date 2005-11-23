@@ -31,7 +31,6 @@
 
 #include "ObjectIdListC.h"
 #include "tao/CDR.h"
-#include "tao/unbounded_value_sequence_cdr.hpp"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
