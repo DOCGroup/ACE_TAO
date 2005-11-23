@@ -1,3 +1,9 @@
+Wed Nov 23 11:00:46 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* docs/ACE-guidelines.html: Updated the guidelines to explain how 
+	  TAO binary options should be specified, i.e. as the integral
+ 	  values 0 or 1.
+
 Wed Nov 23 09:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_icc.GNU:
