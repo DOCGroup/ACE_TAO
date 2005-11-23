@@ -1,11 +1,12 @@
 Tue Nov 22 17:42:13 2005  Kobi Cohen-Arazi  <kobi.cohenarazi at gmail dot com>
 
 	* ace/Select_Reactor_T.cpp (dispatch): 
-	Fixed a bug which derived from bug #1890. active_handle_count
-	must be updated when state is changed. Every time some handler remove
-	add or suspend itself of another handle, state is changed, and that
-	should be reflected in the active_handle_count. 
-	Thanks for Vadim Iosevich <viosevich at gmail dot com>
+	  Fixed a bug which derived from bug #1890. active_handle_count
+ 	  must be updated when state is changed. Every time some handler
+ 	  remove add or suspend itself of another handle, state is
+ 	  changed, and that should be reflected in the
+ 	  active_handle_count.  Thanks for Vadim Iosevich <viosevich at
+ 	  gmail dot com>.
 
 Tue Nov 22 18:27:30 2005  Steve Huston  <shuston@riverace.com>
 
