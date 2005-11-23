@@ -27,7 +27,7 @@ TAO_Notify_PushConsumer::init (CosEventComm::PushConsumer_ptr push_consumer
                                ACE_ENV_ARG_DECL)
 {
   // Initialize only once
-  ACE_ASSERT( CORBA::is_nil (this->push_consumer_) );
+  ACE_ASSERT( CORBA::is_nil (this->push_consumer_.in()) );
 
   // push_consumer not optional
   if (CORBA::is_nil (push_consumer))

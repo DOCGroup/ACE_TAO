@@ -35,7 +35,7 @@ void
 TAO_Notify_SequencePushConsumer::init (CosNotifyComm::SequencePushConsumer_ptr push_consumer ACE_ENV_ARG_DECL)
 {
   // Initialize only once
-  ACE_ASSERT( CORBA::is_nil (this->push_consumer_) );
+  ACE_ASSERT( CORBA::is_nil (this->push_consumer_.in()) );
 
   if (CORBA::is_nil (push_consumer))
   {
