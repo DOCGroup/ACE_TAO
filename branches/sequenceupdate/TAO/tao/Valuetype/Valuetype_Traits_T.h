@@ -10,7 +10,7 @@
  *
  * @author Carlos O'Ryan
  */
-#include "Valuetype_Traits_Base.hpp"
+#include "Valuetype_Traits_Base_T.h"
 
 #include <algorithm>
 #include <functional>
