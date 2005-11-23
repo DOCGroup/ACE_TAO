@@ -109,7 +109,7 @@ ifeq ($(optimize),0)
   ifeq ($(SYSARCH),ia64)
     CPPFLAGS += -mp
   else
-    CPPFLAGS += --fp-model double
+    CPPFLAGS += -fp-model double
   endif
 endif
 
