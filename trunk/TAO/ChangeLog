@@ -11,7 +11,7 @@ Wed Nov 23 09:20:03 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 	
 Wed Nov 23 14:53:09 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
-        * tests/Portable_Interceptors/IORInterceptor/PI_ForwardRequest.mpc:
+        * tests/Portable_Interceptors/ForwardRequest/PI_ForwardRequest.mpc:
         
           Added an 'after' line to one project to avoid concurrency
           collisions in VC8 builds, since the 2 projects in this file
