@@ -801,6 +801,7 @@ ace_svcconf   ?= 1
 ace_uuid      ?= 1
 ace_filecache ?= 1
 acexml        ?= 1
+xerces        ?= 1
 
 #----------------------------------------------------------------------------
 #      Conditional macro definitions
