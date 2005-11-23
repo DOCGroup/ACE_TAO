@@ -46,12 +46,12 @@ public:
   {
   }
 
-  /// copy constructor
+  /// Copy constructor
   inline String_Manager (const String_Manager &rhs) : ptr_ (s_traits::duplicate (rhs.ptr_))
   {
   }
 
-  /// constructor from const char* makes a copy.
+  /// Constructor from const char* makes a copy.
   inline String_Manager (const character_type *s) : ptr_ (s_traits::duplicate (s))
   {
   }
@@ -66,9 +66,7 @@ public:
     // Strongly exception safe by means of copy and non-throwing swap
     // technique.
     String_Manager <character_type> tmp (rhs);
-    character_type * old_ptr = this->ptr_;
-    this->ptr_ = tmp.ptr_;
-    tmp.ptr_  = old_ptr;
+    std::swap (this->ptr_, tmp.ptr_);
     return *this;
   }
 
@@ -77,7 +75,7 @@ public:
     // Strongly exception safe by means of copy and non-throwing swap
     // technique.
     String_Manager <character_type> tmp (value.in ());
-    std::swap (ptr_, tmp.ptr_);
+    std::swap (this->ptr_, tmp.ptr_);
     return *this;
   }
 
@@ -86,7 +84,7 @@ public:
     // Strongly exception safe by means of copy and non-throwing swap
     // technique.
     String_Manager <character_type> tmp (p);
-    std::swap (ptr_, tmp.ptr_);
+    std::swap (this->ptr_, tmp.ptr_);
     return *this;
   }
 

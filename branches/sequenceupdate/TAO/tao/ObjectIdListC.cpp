@@ -94,7 +94,7 @@ CORBA::Boolean operator<< (
     const CORBA::ORB_ObjectIdList &_tao_sequence
   )
 {
-  return TAO::details::insert_unbounded_value_sequence(strm, _tao_sequence);
+  return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
@@ -102,7 +102,7 @@ CORBA::Boolean operator>> (
     CORBA::ORB_ObjectIdList &_tao_sequence
   )
 {
-  return TAO::details::extract_unbounded_value_sequence(strm, _tao_sequence);
+  return TAO::demarshal_sequence(strm, _tao_sequence);
 }
 
 #endif /* _TAO_CDR_OP_CORBA_ORB_ObjectIdList_CPP_ */
