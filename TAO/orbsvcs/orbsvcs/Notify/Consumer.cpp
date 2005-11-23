@@ -402,7 +402,7 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
             }
           break;
 
-        case TAO_DEFAULT_MINOR_CODE:
+        case TAO::VMCID:
         default:
           switch (ex.minor () & BITS_5_THRU_12_MASK)
             {

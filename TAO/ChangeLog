@@ -1,3 +1,14 @@
+Wed Nov 23 09:20:03 2005  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	  Fix a few things I should have caught in the Great Merge, but
+	  missed.
+
+	* orbsvcs/orbsvcs/Notify/Consumer.cpp (dispatch_request): Change
+	  from using deprecated TAO_DEFAULT_MINOR_CODE to TAO::VMCID.
+
+	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp: Use
+	  real C++ static_cast<> rather than deprecated ACE_static_cast().
+	
 Wed Nov 23 14:53:09 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Portable_Interceptors/IORInterceptor/PI_IORInterceptor.mpc:
