@@ -35,7 +35,6 @@ typedef unsigned short TAO_Literal_Type;
 #define TAO_UNKNOWN 999
 
 class TAO_ETCL_Constraint_Visitor;
-class TAO_String_Manager;
 
 namespace CORBA
 {
