@@ -11,7 +11,7 @@
  * @author Carlos O'Ryan
  */
 
-#include "tao/Bounded_Value_allocation_Traits_T.h"
+#include "tao/Bounded_Value_Allocation_Traits_T.h"
 #include "tao/Value_Traits_T.h"
 #include "tao/Generic_Sequence_T.h"
 

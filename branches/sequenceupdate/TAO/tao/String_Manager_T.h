@@ -37,26 +37,26 @@ class String_Manager
 {
 public:
   typedef charT character_type;
-  typedef TAO::details::string_traits_base <charT> string_traits;
+  typedef TAO::details::string_traits_base <charT> s_traits;
 
   /// Default CTOR will initialize the underlying ptr_ to empty string.
-  inline String_Manager (void) : ptr_ (string_traits::default_initializer())
+  inline String_Manager (void) : ptr_ (s_traits::default_initializer())
   {
   }
 
   /// copy constructor
-  inline String_Manager (const String_Manager &rhs) : ptr_ (string_traits::duplicate (rhs.ptr_))
+  inline String_Manager (const String_Manager &rhs) : ptr_ (s_traits::duplicate (rhs.ptr_))
   {
   }
 
   /// constructor from const char* makes a copy.
-  inline String_Manager (const character_type *s) : ptr_ (string_traits::duplicate (s))
+  inline String_Manager (const character_type *s) : ptr_ (s_traits::duplicate (s))
   {
   }
 
   /// destructor
   inline ~String_Manager (void) {
-    string_traits::release (this->ptr_);
+    s_traits::release (this->ptr_);
   }
 
   /// Assignment from another managed type
@@ -71,7 +71,7 @@ public:
   }
 
   /// Assignment from var type will make a copy
-  inline String_Manager &operator= (const string_traits::string_var& var) {
+  inline String_Manager &operator= (const s_traits::string_var& var) {
     // Strongly exception safe by means of copy and non-throwing swap
     // technique.
     String_Manager <character_type> tmp (var.in ());
@@ -95,7 +95,7 @@ public:
   /// assignment from char* will not make a copy. The String_Manager will now
   /// own the string.
   inline String_Manager &operator= (character_type *p) {
-    string_traits::release (this->ptr_);
+    s_traits::release (this->ptr_);
     this->ptr_ = p;
     return *this;
   }
@@ -117,7 +117,7 @@ public:
 
   /// for out parameter.
   inline character_type *&out (void) {
-    string_traits::release (this->ptr_);
+    s_traits::release (this->ptr_);
     this->ptr_ = 0;
     return this->ptr_;
   }
