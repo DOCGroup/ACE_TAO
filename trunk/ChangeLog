@@ -1,6 +1,11 @@
+Wed Nov 23 19:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Set xerces to 1 by default if it is not set
+
 Wed Nov 23 11:00:46 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* docs/ACE-guidelines.html: Updated the guidelines to explain how 
+	* docs/ACE-guidelines.html: Updated the guidelines to explain how
 	  TAO binary options should be specified, i.e. as the integral
  	  values 0 or 1.
 
