@@ -1,43 +1,47 @@
-#ifndef guard_bounded_value_sequence_hpp
-#define guard_bounded_value_sequence_hpp
+#ifndef guard_bounded_basic_string_sequence_hpp
+#define guard_bounded_basic_string_sequence_hpp
 /**
  * @file
  *
- * @brief Implement bounded sequences for types with value-like
- * semantics.
+ * @brief Implement bounded sequences for strings and wide-strings.
  *
  * $Id$
  *
  * @author Carlos O'Ryan
  */
-
-#include "tao/bounded_value_allocation_traits.hpp"
-#include "tao/value_traits.hpp"
-#include "tao/generic_sequence.hpp"
+#include "tao/Bounded_Reference_Allocation_Traits_T.h"
+#include "tao/String_Traits_T.h"
+#include "tao/Generic_Sequence_T.h"
+#include "tao/String_Sequence_Element_T.h"
 
 namespace TAO
 {
+namespace details
+{
 
-template<class T, CORBA::ULong MAX>
-class bounded_value_sequence
+template<typename charT, CORBA::ULong MAX>
+class bounded_basic_string_sequence
 {
 public:
-  typedef T value_type;
-  typedef T element_type;
-  typedef T const const_value_type;
-  typedef value_type & subscript_type;
+  typedef charT character_type;
+  typedef charT * value_type;
+  typedef charT const * const_value_type;
 
-  typedef details::bounded_value_allocation_traits<value_type,MAX,true> allocation_traits;
-  typedef details::value_traits<value_type,true> element_traits;
+  typedef details::string_traits<charT,true> element_traits;
+  typedef details::bounded_reference_allocation_traits<value_type,element_traits,MAX,true> allocation_traits;
+
+  typedef details::string_sequence_element<element_traits> element_type;
+  typedef element_type subscript_type;
+
   typedef details::generic_sequence<value_type, allocation_traits, element_traits> implementation_type;
 
-  inline bounded_value_sequence()
+  inline bounded_basic_string_sequence()
     : impl_()
   {}
-  inline bounded_value_sequence(
+  inline bounded_basic_string_sequence(
       CORBA::ULong length,
       value_type * data,
-      CORBA::Boolean release = false)
+      CORBA::Boolean release)
     : impl_(MAX, length, data, release)
   {}
   /* Use default ctor, operator= and dtor */
@@ -50,6 +54,7 @@ public:
   inline CORBA::ULong length() const {
     return impl_.length();
   }
+
   inline void length(CORBA::ULong length) {
     implementation_type::range::check_length(length, MAX);
     impl_.length(length);
@@ -57,8 +62,11 @@ public:
   inline value_type const & operator[](CORBA::ULong i) const {
     return impl_[i];
   }
-  inline value_type & operator[](CORBA::ULong i) {
-    return impl_[i];
+  inline element_type operator[](CORBA::ULong i) {
+    return element_type(impl_[i], release());
+  }
+  inline const_value_type const * get_buffer() const {
+    return impl_.get_buffer();
   }
   inline void replace(
       CORBA::ULong length,
@@ -66,16 +74,15 @@ public:
       CORBA::Boolean release = false) {
     impl_.replace(MAX, length, data, release);
   }
-  inline value_type const * get_buffer() const {
-    return impl_.get_buffer();
-  }
   inline value_type * get_buffer(CORBA::Boolean orphan = false) {
     return impl_.get_buffer(orphan);
   }
-  inline void swap(bounded_value_sequence & rhs) throw() {
+  inline void swap(bounded_basic_string_sequence & rhs) throw() {
     impl_.swap(rhs.impl_);
   }
-  static value_type * allocbuf(CORBA::ULong maximum) {
+
+  static value_type * allocbuf(CORBA::ULong maximum)
+  {
     return implementation_type::allocbuf(maximum);
   }
   static value_type * allocbuf() {
@@ -90,6 +97,7 @@ private:
   implementation_type impl_;
 };
 
+} // namespace details
 } // namespace TAO
 
-#endif // guard_bounded_string_sequence_hpp
+#endif // guard_bounded_basic_string_sequence_hpp

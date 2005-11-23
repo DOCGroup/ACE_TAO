@@ -45,7 +45,7 @@
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/Object.h"
-#include "tao/unbounded_object_reference_sequence.hpp"
+#include "tao/Sequence_T.h"
 #include "tao/Objref_VarOut_T.h"
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"

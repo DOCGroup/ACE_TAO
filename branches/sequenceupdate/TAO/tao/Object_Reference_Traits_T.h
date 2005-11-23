@@ -10,7 +10,7 @@
  *
  * @author Carlos O'Ryan
  */
-#include "object_reference_traits_base.hpp"
+#include "Object_Reference_Traits_Base_T.h"
 
 #include <algorithm>
 #include <functional>

@@ -9,10 +9,10 @@
  *
  * @author Carlos O'Ryan
  */
-#include "bounded_reference_allocation_traits.hpp"
-#include "object_reference_traits.hpp"
-#include "generic_sequence.hpp"
-#include "object_reference_sequence_element.hpp"
+#include "Bounded_Reference_Allocation_Traits_T.h"
+#include "Object_Reference_Traits_T.h"
+#include "Generic_Sequence_T.h"
+#include "Object_Reference_Sequence_Element_T.h"
 
 namespace TAO
 {

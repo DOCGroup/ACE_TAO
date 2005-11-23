@@ -10,7 +10,7 @@
  * @author Carlos O'Ryan
  */
 
-#include "string_traits_base.hpp"
+#include "String_Traits_Base_T.h"
 
 #include <algorithm>
 #include <functional>

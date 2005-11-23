@@ -11,7 +11,7 @@
  * @author Johnny Willemsen
  */
 
-  #include "tao/unbounded_basic_string_sequence.hpp"
+  #include "tao/Unbounded_Basic_String_Sequence_T.h"
 
 namespace TAO {
   template <typename stream>

@@ -13,10 +13,10 @@
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
 
-#include "tao/unbounded_value_allocation_traits.hpp"
-#include "tao/value_traits.hpp"
-#include "tao/unbounded_value_sequence.hpp"
-#include "tao/range_checking.hpp"
+#include "tao/Unbounded_Value_Allocation_Traits_T.h"
+#include "tao/Value_Traits_T.h"
+#include "tao/Unbounded_Value_Sequence_T.h"
+#include "tao/Range_Checking_T.h"
 
 #include "tao/Basic_Types.h"
 #include "ace/Message_Block.h"

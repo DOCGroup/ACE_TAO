@@ -10,7 +10,7 @@
  * @author Carlos O'Ryan
  */
 
-#include "tao/bounded_basic_string_sequence.hpp"
+#include "tao/Bounded_Basic_String_Sequence_T.h"
 
 namespace TAO
 {

@@ -1,5 +1,5 @@
-#ifndef guard_bounded_array_sequence_hpp
-#define guard_bounded_array_sequence_hpp
+#ifndef guard_unbounded_array_sequence_hpp
+#define guard_unbounded_array_sequence_hpp
 /**
  * @file
  *
@@ -9,15 +9,15 @@
  *
  * @author Carlos O'Ryan
  */
-#include "bounded_array_allocation_traits.hpp"
-#include "generic_sequence.hpp"
-#include "array_traits.hpp"
+#include "Unbounded_Array_Allocation_Traits_T.h"
+#include "Generic_Sequence_T.h"
+#include "Array_Traits_T.h"
 
 namespace TAO
 {
 
-template<typename T_array, typename T_slice, typename T_tag, CORBA::ULong MAX>
-class bounded_array_sequence
+template<typename T_array, typename T_slice, typename T_tag>
+class unbounded_array_sequence
 {
 public:
   typedef T_array * element_type;
@@ -26,18 +26,22 @@ public:
   typedef T_slice_ptr * const_value_type;
   typedef value_type & subscript_type;
 
-  typedef details::bounded_array_allocation_traits<value_type,MAX,true> allocation_traits;
+  typedef details::unbounded_array_allocation_traits<value_type,true> allocation_traits;
   typedef details::array_traits <T_array, T_slice, T_tag> element_traits;
   typedef details::generic_sequence<value_type, allocation_traits, element_traits> implementation_type;
 
-  inline bounded_array_sequence()
+  inline unbounded_array_sequence()
     : impl_()
   {}
-  inline bounded_array_sequence(
+  inline explicit unbounded_array_sequence(CORBA::ULong maximum)
+    : impl_(maximum)
+  {}
+  inline unbounded_array_sequence(
+      CORBA::ULong maximum,
       CORBA::ULong length,
       value_type * data,
       CORBA::Boolean release = false)
-    : impl_(MAX, length, data, release)
+    : impl_(maximum, length, data, release)
   {}
   inline CORBA::ULong maximum() const {
     return impl_.maximum();
@@ -58,10 +62,11 @@ public:
     return impl_[i];
   }
   inline void replace(
+      CORBA::ULong maximum,
       CORBA::ULong length,
       value_type * data,
       CORBA::Boolean release = false) {
-    impl_.replace(MAX, length, data, release);
+    impl_.replace(maximum, length, data, release);
   }
   inline value_type const * get_buffer() const {
     return impl_.get_buffer();
@@ -69,7 +74,7 @@ public:
   inline value_type * get_buffer(CORBA::Boolean orphan = false) {
     return impl_.get_buffer(orphan);
   }
-  inline void swap(bounded_array_sequence & rhs) throw() {
+  inline void swap(unbounded_array_sequence & rhs) throw() {
     impl_.swap(rhs.impl_);
   }
   static value_type * allocbuf(CORBA::ULong maximum) {
@@ -86,9 +91,9 @@ private:
 
 namespace TAO
 {
-  template <typename stream, typename T_array, typename T_slice, typename T_tag, CORBA::ULong MAX>
-  bool demarshal_sequence(stream & strm, TAO::bounded_array_sequence<T_array, T_slice, T_tag, MAX> & target) {
-    typedef TAO::bounded_array_sequence<T_array, T_slice, T_tag, MAX> sequence;
+  template <typename stream, typename T_array, typename T_slice, typename T_tag>
+  bool demarshal_sequence(stream & strm, TAO::unbounded_array_sequence<T_array, T_slice, T_tag> & target) {
+    typedef TAO::unbounded_array_sequence<T_array, T_slice, T_tag> sequence;
     typedef TAO::Array_Traits<T_array, T_slice, T_tag> array_traits;
     typedef TAO_Array_Forany_T <T_array, T_slice, T_tag> forany;
 
@@ -96,10 +101,10 @@ namespace TAO
     if (!(strm >> new_length)) {
       return false;
     }
-    if ((new_length > strm.length()) || (new_length > target.maximum ())) {
-      return false;
+    if (new_length > strm.length()) {
+        return false;
     }
-    sequence tmp;
+    sequence tmp(new_length);
     tmp.length(new_length);
     typename sequence::value_type * buffer = tmp.get_buffer();
     for(CORBA::ULong i = 0; i < new_length; ++i) {
@@ -117,8 +122,8 @@ namespace TAO
     return true;
   }
 
-  template <typename stream, typename T_array, typename T_slice, typename T_tag, CORBA::ULong MAX>
-  bool marshal_sequence(stream & strm, const TAO::bounded_array_sequence<T_array, T_slice, T_tag, MAX> & source) {
+  template <typename stream, typename T_array, typename T_slice, typename T_tag>
+  bool marshal_sequence(stream & strm, const TAO::unbounded_array_sequence<T_array, T_slice, T_tag> & source) {
     typedef TAO_FixedArray_Var_T <T_array, T_slice, T_tag> fixed_array;
     typedef TAO::Array_Traits<T_array, T_slice, T_tag> array_traits;
     typedef TAO_Array_Forany_T <T_array, T_slice, T_tag> forany;
@@ -138,4 +143,4 @@ namespace TAO
 } // namespace TAO
 
 
-#endif // guard_bounded_array_sequence_hpp
+#endif // guard_unbounded_array_sequence_hpp

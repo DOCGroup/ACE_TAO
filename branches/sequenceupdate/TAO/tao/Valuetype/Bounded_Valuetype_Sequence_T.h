@@ -9,10 +9,10 @@
  *
  * @author Carlos O'Ryan
  */
-#include "bounded_valuetype_allocation_traits.hpp"
-#include "valuetype_traits.hpp"
-#include "tao/generic_sequence.hpp"
-#include "valuetype_sequence_element.hpp"
+#include "Bounded_Valuetype_Allocation_Traits_T.h"
+#include "Valuetype_Traits_T.h"
+#include "tao/Generic_Sequence_T.h"
+#include "Valuetype_Sequence_Element_T.h"
 
 namespace TAO
 {

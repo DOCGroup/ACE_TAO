@@ -1,6 +1,6 @@
 // $Id$
 //
 
-#include "tao/Valuetype/bounded_valuetype_sequence.hpp"
-#include "tao/Valuetype/unbounded_valuetype_sequence.hpp"
+#include "tao/Valuetype/Bounded_Valuetype_Sequence_T.h"
+#include "tao/Valuetype/Unbounded_Valuetype_Sequence_T.h"
 

@@ -9,10 +9,10 @@
  *
  * @author Carlos O'Ryan
  */
-#include "tao/unbounded_reference_allocation_traits.hpp"
-#include "tao/string_traits.hpp"
-#include "tao/generic_sequence.hpp"
-#include "tao/string_sequence_element.hpp"
+#include "tao/Unbounded_Reference_Allocation_Traits_T.h"
+#include "tao/String_Traits_T.h"
+#include "tao/Generic_Sequence_T.h"
+#include "tao/String_Sequence_Element_T.h"
 
 namespace TAO
 {

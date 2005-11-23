@@ -24,7 +24,7 @@
 
 #include "tao/Basic_Types.h"
 #include "tao/CORBA_String.h"
-#include "tao/string_traits_base.hpp"
+#include "tao/String_Traits_Base_T.h"
 
 /****************************************************************/
 
