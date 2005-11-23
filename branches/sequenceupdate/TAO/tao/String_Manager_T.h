@@ -38,6 +38,7 @@ class String_Manager
 public:
   typedef charT character_type;
   typedef TAO::details::string_traits_base <charT> s_traits;
+  typedef s_traits::string_var s_var;
 
   /// Default CTOR will initialize the underlying ptr_ to empty string.
   inline String_Manager (void) : ptr_ (s_traits::default_initializer())
@@ -71,7 +72,7 @@ public:
   }
 
   /// Assignment from var type will make a copy
-  inline String_Manager &operator= (const s_traits::string_var& var) {
+  inline String_Manager &operator= (const s_var& var) {
     // Strongly exception safe by means of copy and non-throwing swap
     // technique.
     String_Manager <character_type> tmp (var.in ());
