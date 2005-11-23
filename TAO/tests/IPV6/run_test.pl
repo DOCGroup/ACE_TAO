@@ -24,25 +24,25 @@ $clt_arg = "-k file://$iorfile ";
 @configurations =
     (
      {
-         description => "Testing server with '-ORBConnectIPV6Only YES'.\n",
-         server => "$srv_arg -ORBConnectIPV6Only YES",
+         description => "Testing server with '-ORBConnectIPV6Only 1'.\n",
+         server => "$srv_arg -ORBConnectIPV6Only 1",
          client => "$clt_arg",
          error => 0,
          url => 0,
          url_address => "",
      },
      {
-         description => "Testing client with '-ORBPreferIPV6Interfaces YES'.\n",
+         description => "Testing client with '-ORBPreferIPV6Interfaces 1'.\n",
          server => "$srv_arg ",
-         client => "$clt_arg -ORBPreferIPV6Interfaces YES",
+         client => "$clt_arg -ORBPreferIPV6Interfaces 1",
          error => 0,
          url => 0,
          url_address => "",
      },
      {
-         description => "Testing IPV4 server with client with '-ORBConnectIPV6Only YES'.\n",
+         description => "Testing IPV4 server with client with '-ORBConnectIPV6Only 1'.\n",
          server => "$srv_arg -ORBListenEndpoints iiop://127.0.0.1",
-         client => "$clt_arg -x -ORBConnectIPV6Only YES",
+         client => "$clt_arg -x -ORBConnectIPV6Only 1",
          error => 1,
          url => 0,
          url_address => "",
@@ -73,7 +73,7 @@ $clt_arg = "-k file://$iorfile ";
      },
      {
          description => "Testing IPV6Only server with client and IPV4-forced URL",
-         server => "$srv_arg -ORBConnectIPV6Only YES -ORBObjRefStyle url",
+         server => "$srv_arg -ORBConnectIPV6Only 1 -ORBObjRefStyle url",
          client => "-x",
          error => 1,
          url => 1,
