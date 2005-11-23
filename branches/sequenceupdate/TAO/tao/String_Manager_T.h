@@ -26,6 +26,8 @@
 #include "tao/CORBA_String.h"
 #include "tao/String_Traits_Base_T.h"
 
+#include <algorithm>
+
 /****************************************************************/
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -71,13 +73,11 @@ public:
   }
 
   /// Assignment from var type will make a copy
-  inline String_Manager &operator= (const s_traits::string_var& value) {
+  inline String_Manager &operator= (const typename s_traits::string_var& value) {
     // Strongly exception safe by means of copy and non-throwing swap
     // technique.
     String_Manager <character_type> tmp (value.in ());
-    character_type * old_ptr = this->ptr_;
-    this->ptr_ = tmp.ptr_;
-    tmp.ptr_  = old_ptr;
+    std::swap (ptr_, tmp.ptr_);
     return *this;
   }
 
@@ -86,13 +86,11 @@ public:
     // Strongly exception safe by means of copy and non-throwing swap
     // technique.
     String_Manager <character_type> tmp (p);
-    character_type * old_ptr = this->ptr_;
-    this->ptr_ = tmp.ptr_;
-    tmp.ptr_ = old_ptr;
+    std::swap (ptr_, tmp.ptr_);
     return *this;
   }
 
-  /// assignment from char* will not make a copy. The String_Manager will now
+  /// Assignment from char* will not make a copy. The String_Manager will now
   /// own the string.
   inline String_Manager &operator= (character_type *p) {
     s_traits::release (this->ptr_);

@@ -31,7 +31,6 @@
 
 #include "WStringSeqC.h"
 #include "tao/CDR.h"
-#include "tao/unbounded_value_sequence_cdr.hpp"
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
