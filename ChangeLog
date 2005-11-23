@@ -1,6 +1,14 @@
+Wed Nov 23 09:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_icc.GNU:
+          When optimize=0, disable floating point optimizations. This way we
+          don't get floating point overflows in the TAO IDL test. If someone
+          enables optimize then we just let the compiler optimize things and
+          we could get overflows.
+
 Tue Nov 22 17:42:13 2005  Kobi Cohen-Arazi  <kobi.cohenarazi at gmail dot com>
 
-	* ace/Select_Reactor_T.cpp (dispatch): 
+	* ace/Select_Reactor_T.cpp (dispatch):
 	  Fixed a bug which derived from bug #1890. active_handle_count
  	  must be updated when state is changed. Every time some handler
  	  remove add or suspend itself of another handle, state is
@@ -19,7 +27,7 @@ Tue Nov 22 03:33:14 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
 
 	  Some groups require ACE_Configuration. This MPC should probably
 	  help those groups with a smaller library to use instead of
-	  pulling in the whole ACE library. 
+	  pulling in the whole ACE library.
 
 Tue Nov 22 01:43:52 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
