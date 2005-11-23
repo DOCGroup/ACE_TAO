@@ -750,7 +750,7 @@ be_visitor_valuebox_ci::emit_default_constructor_alloc (be_decl *node)
   *os << "ACE_INLINE " << be_nl
       << vb_node->name () << "::" << vb_node->local_name () << " (void)"
       << be_nl << "{" << be_idt_nl
-      << node->full_name () << "* p;" << be_nl
+      << node->full_name () << "* p = 0;" << be_nl
       << "ACE_NEW (" << be_idt_nl
       << "p," << be_nl
       << node->full_name () << " ());" << be_uidt_nl
@@ -805,7 +805,7 @@ be_visitor_valuebox_ci::emit_constructor_one_arg_alloc (be_decl *node)
       << vb_node->name () << "::" << vb_node->local_name ()
       << " (const " << node->full_name () << "& value)" << be_nl
       << "{" << be_idt_nl
-      << node->full_name () << "* p;" << be_nl
+      << node->full_name () << "* p = 0;" << be_nl
       << "ACE_NEW (" << be_idt_nl
       << "p," << be_nl
       << node->full_name () << " (value));" << be_uidt_nl
@@ -849,7 +849,7 @@ be_visitor_valuebox_ci::emit_copy_constructor_alloc (be_decl *node)
       << "  ACE_NESTED_CLASS ( ::CORBA, DefaultValueRefCountBase) (val)"
       << be_uidt_nl
       << "{" << be_idt_nl
-      << node->full_name () << "* p;" << be_nl
+      << node->full_name () << "* p = 0;" << be_nl
       << "ACE_NEW (" << be_idt_nl
       << "p," << be_nl
       << node->full_name () << " (val._pd_value.in ()));" << be_uidt_nl
@@ -890,7 +890,7 @@ be_visitor_valuebox_ci::emit_assignment_alloc (be_decl *node)
       << vb_node->name () << "::operator= (const "
       << node->full_name () << "& value)" << be_nl
       << "{" << be_idt_nl
-      << node->full_name () << "* p;" << be_nl
+      << node->full_name () << "* p = 0;" << be_nl
       << "ACE_NEW_RETURN (" << be_idt_nl
       << "p," << be_nl
       << node->full_name () << " (value)," << be_nl
@@ -928,7 +928,7 @@ be_visitor_valuebox_ci::emit_accessor_modifier (be_decl *node)
       << vb_node->name () << "::_value (const "
       << node->full_name () << "& value)" << be_nl
       << "{" << be_idt_nl
-      << node->full_name () << "* p;" << be_nl
+      << node->full_name () << "* p = 0;" << be_nl
       << "ACE_NEW (" << be_idt_nl
       << "p," << be_nl
       << node->full_name () << " (value));" << be_uidt_nl
