@@ -1201,7 +1201,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_io_set
 
       // clear the bit from that dispatch mask,
       // so when we need to restart the iteration (rebuilding the iterator...)
-      // we will not dispatch the already dipatched handlers
+      // we will not dispatch the already dispatched handlers
       this->clear_dispatch_mask (handle, mask);
 
       if (this->state_changed_)
@@ -1354,6 +1354,15 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch
                 io_handlers_dispatched) == -1)
         // State has changed, so exit loop.
         break;
+
+      // if state changed, we need to re-eval active_handle_count,
+      // so we will not end with an endless loop
+      if (this->state_changed_)
+      {
+          active_handle_count = this->dispatch_set_.rd_mask_.num_set ()
+              + this->dispatch_set_.wr_mask_.num_set ()
+              + this->dispatch_set_.ex_mask_.num_set ();
+      }
     }
   while (active_handle_count > 0);
 
