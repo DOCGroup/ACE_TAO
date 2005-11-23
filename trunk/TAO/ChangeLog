@@ -1,3 +1,9 @@
+Wed Nov 23 14:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/OBV/ValueBox/client.cpp:
+          This test was doing a few release calls to much causing it to
+          crash.
+
 Wed Nov 23 14:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_valuebox/valuebox_ci.cpp:
