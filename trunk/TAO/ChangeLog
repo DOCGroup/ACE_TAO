@@ -1,3 +1,11 @@
+Wed Nov 23 14:53:09 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Portable_Interceptors/IORInterceptor/PI_IORInterceptor.mpc:
+        
+          Added an 'after' line to one project to avoid concurrency
+          collisions in VC8 builds, since the 2 projects in this file
+          share IDL.
+
 Wed Nov 23 14:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/OBV/ValueBox/client.cpp:
