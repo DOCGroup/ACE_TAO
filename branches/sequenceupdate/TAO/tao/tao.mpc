@@ -179,6 +179,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Service_Context.cpp
     Services_Activate.cpp
     ShortSeqC.cpp
+    String_Alloc.cpp
     StringSeqC.cpp
     Stub.cpp
     Stub_Factory.cpp
@@ -456,6 +457,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     Special_Basic_Argument_T.h
     StringSeqC.h
     StringSeqS.h
+    String_Alloc.h
     Stub_Factory.h
     Stub.h
     Synch_Invocation.h

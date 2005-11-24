@@ -6,7 +6,6 @@
  *
  *  $Id$
  *
- *  @author Aniruddha Gokhale
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================
@@ -47,7 +46,7 @@ public:
   }
 
   /// Copy constructor
-  inline String_Manager (const String_Manager &rhs) : ptr_ (s_traits::duplicate (rhs.ptr_))
+  inline String_Manager (const String_Manager<charT> &rhs) : ptr_ (s_traits::duplicate (rhs.ptr_))
   {
   }
 
@@ -62,7 +61,7 @@ public:
   }
 
   /// Assignment from another managed type
-  inline String_Manager &operator= (const String_Manager &rhs) {
+  inline String_Manager &operator= (const String_Manager<charT> &rhs) {
     // Strongly exception safe by means of copy and non-throwing swap
     // technique.
     String_Manager <character_type> tmp (rhs);
@@ -114,14 +113,14 @@ public:
   /// for out parameter.
   inline character_type *&out (void) {
     s_traits::release (this->ptr_);
-    this->ptr_ = 0;
+    this->ptr_ = s_traits::default_initializer();
     return this->ptr_;
   }
 
   /// for string of return type.
   character_type *_retn (void) {
     character_type *temp = this->ptr_;
-    this->ptr_ = 0;
+    this->ptr_ = s_traits::default_initializer();
     return temp;
   }
 

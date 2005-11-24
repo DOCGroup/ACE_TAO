@@ -11,7 +11,7 @@
  * @author Carlos O'Ryan
  */
 
-#include "tao/CORBA_String.h"
+#include "tao/String_Alloc.h"
 
 namespace TAO
 {
