@@ -1,3 +1,10 @@
+Thu Nov 24 11:25:09 2005  Gan Deng  <gan.deng@vanderbilt.edu>
+
+	* DAnCE/Old_Config_Handlers/XercesString.h
+
+	  Fixed a warning, since declaring function return type
+	  to be const is meaningless.
+
 Tue Nov 22 16:03:24 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
 	* DAnCE/NodeApplication/Container_Impl.cpp
