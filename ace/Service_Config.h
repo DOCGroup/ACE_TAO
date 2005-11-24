@@ -40,8 +40,6 @@ class ACE_Reactor;
 class ACE_Thread_Manager;
 class ACE_DLL;
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
 #define ACE_DYNAMIC_SERVICE_DIRECTIVE(ident, libpathname, objectclass, parameters) \
   ACE_LIB_TEXT ("dynamic ") \
@@ -75,6 +73,8 @@ class ACE_Svc_Conf_Param;
   ACE_LIB_TEXT ("\"></remove></ACE_Svc_Conf>")
 class ACE_XML_Svc_Conf;
 #endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 extern "C"
 {

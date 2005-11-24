@@ -52,11 +52,11 @@ typedef struct timespec timespec_t;
 // needed for ACE_UINT64
 #include "ace/Basic_Types.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 // This forward declaration is needed by the set() and FILETIME() functions
 #if defined (ACE_LACKS_LONGLONG_T)
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_U_LongLong;
+ACE_END_VERSIONED_NAMESPACE_DECL
 #endif  /* ACE_LACKS_LONGLONG_T */
 
 // -------------------------------------------------------------------
@@ -80,6 +80,9 @@ class ACE_Export ACE_U_LongLong;
 //    - Steve Huston, 23-Aug-2004
 extern "C++" {
 #endif
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Export ACE_Time_Value
 {
 public:
@@ -333,6 +336,8 @@ private:
   timeval tv_;
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
 #include "ace/Time_Value.inl"
 #endif /* __ACE_INLINE__ */
@@ -342,14 +347,14 @@ private:
 #endif
 
 #if defined (__MINGW32__)
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // The MingW linker has problems with the exported statics
 // zero and max_time with these two statics the linker will be able to
 // resolve the static exported symbols.
 static const ACE_Time_Value& __zero_time = ACE_Time_Value::zero;
 static const ACE_Time_Value& __max_time = ACE_Time_Value::max_time;
-#endif /* __MINGW32__ */
-
 ACE_END_VERSIONED_NAMESPACE_DECL
+#endif /* __MINGW32__ */
 
 #include /**/ "ace/post.h"
 

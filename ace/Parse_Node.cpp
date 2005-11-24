@@ -520,11 +520,11 @@ ACE_Function_Node::make_func_name (ACE_TCHAR const * func_name)
   // name as is done in the ACE macros.  Otherwise, leave the function
   // name as is.
 
-  static ACE_TCHAR const make_prefix = ACE_LIB_TEXT ("_make_");
+  static ACE_TCHAR const make_prefix[] = ACE_LIB_TEXT ("_make_");
   static size_t const make_prefix_len =
     sizeof (make_prefix) / sizeof (make_prefix[0]);
 
-  if (ACE_OS::strncmp (make, func_name, make_len) == 0)
+  if (ACE_OS::strncmp (make_prefix, func_name, make_prefix_len) == 0)
     {
       static ACE_TCHAR const versioned_namespace_name[] =
         ACE_LIB_TEXT (ACE_VERSIONED_NAMESPACE_NAME_STRING) ACE_LIB_TEXT("_") ;
@@ -541,13 +541,13 @@ ACE_Function_Node::make_func_name (ACE_TCHAR const * func_name)
 
       // @note Variable length array lengths are only supported by
       //       conforming/modern compilers.
-      ACE_TCHAR mangled_func_name[len] = { 0 };
+      ACE_TCHAR mangled_func_name[len];
 
       ACE_OS::snprintf (mangled_func_name,
                         len,
-                        make_prefix
-                        versioned_namespace_name
-                        ACE_LIB_TEXT ("%s"),
+                        ACE_LIB_TEXT ("%s%s%s"),
+                        make_prefix,
+                        versioned_namespace_name,
                         func_name + make_prefix_len);
 
       return ACE::strnew (mangled_func_name);

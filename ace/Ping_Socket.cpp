@@ -23,6 +23,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Ping_Socket)
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 //---------------------------------------------------------------------------
 // Better to arrange some os_include/netinet/ip.h and
 // os_include/netinet/icmp.h files ?
@@ -75,6 +77,8 @@ struct icmp
 
 #endif /* #if ! defined (ACE_WIN32) */
 
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int const ICMP_MIN = 8;  // Minimal size of ICMP packet, header only
 int const ICMP_DATA_LENGTH = 56;  // For ICMP data with Echo request

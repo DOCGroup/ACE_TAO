@@ -1191,12 +1191,15 @@ template class auto_ptr<ACE_Asynch_Result_Impl>;
 #pragma instanstiate auto_ptr<ACE_Asynch_Result_Impl>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #else /* !ACE_WIN32 || !ACE_HAS_AIO_CALLS */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_Proactor *
-ACE_Proactor::instance (size_t threads)
+ACE_Proactor::instance (size_t /* threads */)
 {
-  ACE_UNUSED_ARG (threads);
   return 0;
 }
 

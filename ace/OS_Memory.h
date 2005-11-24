@@ -54,11 +54,15 @@
 #  define ACE_REALLOC_FUNC ::realloc
 #endif
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #if defined (ACE_HAS_OLD_MALLOC)
-typedef char *ACE_MALLOC_T;
+typedef char * ACE_MALLOC_T;
 #else
-typedef void *ACE_MALLOC_T;
+typedef void * ACE_MALLOC_T;
 #endif /* ACE_HAS_OLD_MALLOC */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 // ============================================================================
 // ACE_NEW macros

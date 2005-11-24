@@ -187,11 +187,15 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
 
 #endif /* VXWORKS */
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 // Include if_arp so that getmacaddr can use the
 // arp structure.
 #if defined (sun)
 # include /**/ <net/if_arp.h>
 #endif
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 ACE_OS::getmacaddress (struct macaddr_node_t *node)
@@ -369,9 +373,14 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 #endif
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) && defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
 #   include "ace/OS_NS_Thread.h"
 #   include "ace/Object_Manager_Base.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 int
 ACE_OS::netdb_acquire (void)
 {
@@ -387,6 +396,8 @@ ACE_OS::netdb_release (void)
     ACE_OS_Object_Manager::preallocated_object[
       ACE_OS_Object_Manager::ACE_OS_MONITOR_LOCK]);
 }
-# endif /* defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS) */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+# endif /* defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS) */
+

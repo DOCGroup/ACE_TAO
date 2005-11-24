@@ -24,4 +24,4 @@ ACE_LSOCK_Connector::connect (ACE_LSOCK_Stream &new_stream,
   return result;
 }
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_END_VERSIONED_NAMESPACE_DECL

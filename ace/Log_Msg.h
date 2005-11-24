@@ -721,7 +721,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 // MSVC++ 6's preprocessor can't handle macro expansions required by
 // the versioned namespace support.  *sigh*
 
-# define ACE_TSS_CLEANUP_NAME ACE_ ## ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _TSS_cleanup)
+# define ACE_TSS_CLEANUP_NAME ACE_PREPROC_CONCATENATE(ACE_,ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _TSS_cleanup))
 
 #else
 

@@ -104,10 +104,14 @@
 /* Size of default input buffer. */
 #define ACE_YY_BUF_SIZE 16384
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 typedef struct ace_yy_buffer_state *ACE_YY_BUFFER_STATE;
 
 extern int ace_yyleng;
 extern FILE *ace_yyin, *ace_yyout;
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #define EOB_ACT_CONTINUE_SCAN 0
 #define EOB_ACT_END_OF_FILE 1
@@ -141,6 +145,8 @@ extern FILE *ace_yyin, *ace_yyout;
         while ( 0 )
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /* The following is because we cannot portably get our hands on size_t
  * (without autoconf's help, which isn't available because we want
@@ -509,6 +515,9 @@ static ACE_TCHAR *ace_yy_last_accepting_cpos;
 #define ACE_YY_RESTORE_ACE_YY_MORE_OFFSET
 ACE_TCHAR *ace_yytext;
 #define INITIAL 0
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 // $Id$
 // Sample lexical analysis for regular expression subset.  Must be
 // compiled with FLEX and an ANSI C++ compiler.
@@ -587,7 +596,9 @@ ACE_YY_MALLOC_DECL
 #else
 #if __STDC__
 #ifndef __cplusplus
+ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/OS_NS_stdlib.h"
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 #endif
 #else
 /* Just try to get by without declaring the routines.  This will fail

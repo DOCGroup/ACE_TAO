@@ -64,6 +64,8 @@
 
 #if defined (ACE_HAS_DEV_POLL)
 struct pollfd;
+#elif defined (ACE_HAS_EVENT_POLL)
+struct epoll_event;
 #endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

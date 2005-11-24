@@ -77,8 +77,6 @@ private:
   static DWORD errno_key_;
 };
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 # define errno (* (ACE_CE_Errno::instance ()))
 #endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
 
@@ -87,6 +85,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #else
 #  define ACE_ERRNO_TYPE int
 #endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

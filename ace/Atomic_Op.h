@@ -245,7 +245,7 @@ private:
   static long (*exchange_add_fn_) (volatile long *, long);
 };
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_BUILTIN_ATOMIC_OP */
 

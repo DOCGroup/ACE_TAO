@@ -676,8 +676,11 @@ extern "C" u_long CLS##_Export _get_dll_unload_policy (void) \
 #  define ACE_STD_NAMESPACE
 #endif
 
-// empty ACE_OS namespace to help identify compiler errors more easily.
+// empty ACE_OS namespace to help identify compiler errors more
+// easily.
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE_OS {}
+ACE_END_VERSIONED_NAMESPACE_DECL
 #if !defined (ACE_OS_String)
 #  define ACE_OS_String ACE_OS
 #endif /* ACE_OS_String */
