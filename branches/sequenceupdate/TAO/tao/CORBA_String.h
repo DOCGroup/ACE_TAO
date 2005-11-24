@@ -190,6 +190,8 @@ namespace TAO
 
     /// Construction from a var.
     inline String_out (String_var <character_type> &p) : ptr_ (p.out ())
+    {
+    }
 
     /// Construction from a TAO_String_Manager.
     inline String_out (string_mgr &p) : ptr_ (p.out ())
