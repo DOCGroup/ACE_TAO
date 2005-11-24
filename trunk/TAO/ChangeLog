@@ -1,7 +1,14 @@
+Thu Nov 24 19:07:56 2005  Simon McQueen  <sm@prismtech.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+
+          Fix calculation of protocol name length. This fixes the
+          failure in orbsvcs/tests/Miop/McastHello.
+
 Thu Nov 24 15:56:31 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Bug_1670_Regression/Bug_1670_Regression.mpc:
-        
+
           Added 'after' line in one project to avoid concurrently
           clashes in VC8 builds, since the two projects share an
           IDL file.
@@ -234,7 +241,7 @@ Wed Nov 23 22:24:38 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 	  This change should eliminate warnings from Windows-based
 	  compilers (e.g., VC8) about calling delete through a pointer to
 	  an incomplete type while instantiating ACE_Auto_Ptr<> methods.
-	
+
         * orbsvcs/orbsvcs/Notify/Object.h:
         * orbsvcs/orbsvcs/Notify/Object.cpp:
 
