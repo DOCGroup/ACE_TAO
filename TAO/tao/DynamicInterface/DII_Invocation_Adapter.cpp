@@ -18,6 +18,8 @@ ACE_RCSID (tao,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   DII_Invocation_Adapter::DII_Invocation_Adapter (CORBA::Object *target,
@@ -181,3 +183,5 @@ namespace TAO
     return status;
   }
 } // End namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL

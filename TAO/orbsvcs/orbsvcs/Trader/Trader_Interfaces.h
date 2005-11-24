@@ -41,7 +41,11 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> class TAO_Admin;
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> class TAO_Proxy;
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> class TAO_Link;
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include "Trader_T.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Lookup

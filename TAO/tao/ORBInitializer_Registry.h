@@ -41,7 +41,7 @@ namespace PortableInterceptor
     );
 }
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

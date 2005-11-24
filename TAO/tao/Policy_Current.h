@@ -35,6 +35,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_Policy_Current_Impl;
 
 class TAO_Policy_Current
@@ -74,6 +76,8 @@ public:
   TAO_Policy_Current_Impl &implementation (void) const;
   TAO_Policy_Current_Impl &implementation (TAO_Policy_Current_Impl &);
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

@@ -26,6 +26,8 @@
 
 #include "tao/Valuetype_Adapter.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Valuetype_Adapter_Impl
  *

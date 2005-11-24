@@ -87,7 +87,11 @@ public:
   virtual int visit_property (TAO_Property_Constraint* literal) = 0;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include "orbsvcs/Trader/Constraint_Nodes.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Constraint_Validator

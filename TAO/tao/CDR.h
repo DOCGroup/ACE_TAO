@@ -287,9 +287,13 @@ private:
   TAO_ORB_Core* orb_core_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #if defined(__ACE_INLINE__)
 # include "tao/CDR.i"
 #else
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // CDR output operators for CORBA types
 
@@ -340,9 +344,10 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       CORBA::Char* &x);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       CORBA::WChar* &x);
-#endif /* __ACE_INLINE */
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* __ACE_INLINE */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_CDR_H */

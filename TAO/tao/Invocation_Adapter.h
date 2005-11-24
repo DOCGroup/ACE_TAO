@@ -29,7 +29,9 @@
 #include "tao/CORBA_methods.h"
 #include "tao/Pseudo_VarOut_T.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

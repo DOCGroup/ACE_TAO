@@ -23,7 +23,8 @@
 #endif /* _MSC_VER */
 
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_FT_Request_Duration_Policy
  *
