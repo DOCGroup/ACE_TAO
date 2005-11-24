@@ -8,13 +8,13 @@
 
 ACE_RCSID(Notify, TAO_Notify_Refcountable, "$Id$")
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 #if ( TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0 )
 
 #include <map>
 #include <string>
 #include <typeinfo.h>
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_Tracker
@@ -247,6 +247,6 @@ TAO_Notify_Tracker::find( const TAO_Notify_Refcountable* p ) const
   return e;
 }
 
-#endif /* TAO_NOTIFY_REFCOUNT_DIAGNOSTICS */
-
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* TAO_NOTIFY_REFCOUNT_DIAGNOSTICS */

@@ -55,6 +55,8 @@
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:49
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace CORBA
 {
   
@@ -135,6 +137,8 @@ TAO_Export CORBA::Boolean operator>> (
   );
 
 #endif /* _TAO_CDR_OP_CORBA_ShortSeq_H_ */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:1028

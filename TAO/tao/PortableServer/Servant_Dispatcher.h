@@ -23,7 +23,9 @@
 #include "Servant_Upcall.h"
 #include "ace/SStringfwd.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Lock;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

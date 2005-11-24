@@ -36,6 +36,8 @@
 // TAO_IDL - Generated from
 // be\be_visitor_union/discriminant_ci.cpp:164
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE
 void 
 GIOP::TargetAddress::_default ()
@@ -157,3 +159,5 @@ GIOP::TargetAddress::ior (void)
 {
   return *this->u_.ior_;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

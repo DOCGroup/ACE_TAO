@@ -32,6 +32,8 @@
 
 #if (TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1)
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /*
  * @class TAO_ConnectionTimeoutPolicy
  *

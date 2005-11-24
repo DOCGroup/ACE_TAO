@@ -27,8 +27,10 @@
 #include "tao/Basic_Types.h"
 
 // Forward declarations.
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Addr;
 class ACE_Reactor;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

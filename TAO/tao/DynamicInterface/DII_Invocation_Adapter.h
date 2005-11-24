@@ -22,9 +22,14 @@
 
 #include "tao/Invocation_Adapter.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_Time_Value;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Operation_Details;
 class TAO_Stub;
-class ACE_Time_Value;
 class TAO_ORB_Core;
 class TAO_DII_Deferred_Reply_Dispatcher;
 namespace  CORBA
@@ -158,6 +163,7 @@ namespace TAO
   };
 } // End namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /*TAO_INVOCATION_ADAPTER_H*/

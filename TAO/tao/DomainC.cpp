@@ -54,6 +54,8 @@
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // TAO specific stuff.
 namespace CORBA
 {
@@ -735,3 +737,5 @@ CORBA::Boolean operator>> (
 }
 
 #endif /* _TAO_CDR_OP_CORBA_DomainManagerList_CPP_ */
+
+TAO_END_VERSIONED_NAMESPACE_DECL

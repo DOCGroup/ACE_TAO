@@ -1456,7 +1456,12 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
     }
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include "Naming_Service_Container.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all(
                                CORBA::ORB_ptr orb,
                                PortableServer::POA_ptr poa,

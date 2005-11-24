@@ -17,12 +17,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
+#include "tao/orbconf.h"
+#include "tao/Versioned_Namespace.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -63,6 +65,7 @@ namespace TAO
 
   }
 }
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

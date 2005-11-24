@@ -246,9 +246,13 @@ int TAO::PG_Property_Set::find (
   return found;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 //#define PG_PS_UNIT_TEST
 #ifdef PG_PS_UNIT_TEST
 #include "PG_Properties_Encoder.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int TAO_PG::test_encode_decode ()
 {
@@ -350,6 +354,7 @@ int TAO_PG::test_encode_decode ()
 
   return result;
 }
-#endif // PG_PS_UNIT_TEST
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#endif // PG_PS_UNIT_TEST

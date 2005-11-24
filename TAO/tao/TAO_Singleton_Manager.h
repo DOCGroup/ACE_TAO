@@ -34,11 +34,11 @@
 // MSVC++ 6's preprocessor can't handle macro expansions required by
 // the versioned namespace support.  *sigh*
 
-# define TAO_SINGLETON_MANAGER_CLEANUP_DESTROY_NAME ACE_PREPROC_CONCATENATE(TAO_VERSIONED_NAMESPACE_NAME, _TAO_Singleton_Manager_cleanup_destroyer)
+# define TAO_SINGLETON_MANAGER_CLEANUP_DESTROYER_NAME ACE_PREPROC_CONCATENATE(TAO_VERSIONED_NAMESPACE_NAME, _TAO_Singleton_Manager_cleanup_destroyer)
 
 #else
 
-# define TAO_SINGLETON_MANAGER_CLEANUP_DESTROY_NAME TAO_Singleton_Manager_cleanup_destroyer
+# define TAO_SINGLETON_MANAGER_CLEANUP_DESTROYER_NAME TAO_Singleton_Manager_cleanup_destroyer
 
 #endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
 
@@ -46,7 +46,7 @@
 /// ACE_Object_Manager.
 extern "C"
 void
-TAO_SINGLETON_MANAGER_CLEANUP_DESTROY_NAME (void *, void *);
+TAO_SINGLETON_MANAGER_CLEANUP_DESTROYER_NAME (void *, void *);
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -76,7 +76,7 @@ typedef void (*TAO_unexpected_handler)(void);
 class TAO_Export TAO_Singleton_Manager : public ACE_Object_Manager_Base
 {
 
-  friend void TAO_SINGLETON_MANAGER_CLEANUP_DESTROY_NAME (void *, void *);
+  friend void ::TAO_SINGLETON_MANAGER_CLEANUP_DESTROYER_NAME (void *, void *);
 
 public:
   /// Explicitly initialize.

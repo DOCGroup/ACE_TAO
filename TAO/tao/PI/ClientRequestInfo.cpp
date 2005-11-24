@@ -748,6 +748,6 @@ TAO_ClientRequestInfo::tao_ft_retention_id (void) const
   return this->invocation_->operation_details ().ft_retention_id ();
 }
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_INTERCEPTORS == 1 */

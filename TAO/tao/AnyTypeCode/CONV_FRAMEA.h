@@ -41,6 +41,8 @@
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:59
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace CONV_FRAME
 {
 
@@ -105,6 +107,8 @@ TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const CONV_FRAME::CodeSet
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CONV_FRAME::CodeSetContext*); // noncopying version
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, CONV_FRAME::CodeSetContext *&); // deprecated
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CONV_FRAME::CodeSetContext *&);
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

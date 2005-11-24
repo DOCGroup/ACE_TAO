@@ -67,4 +67,6 @@ TAO_Var_Var_T<T>::operator= (const TAO_Var_Var_T<T> & p)
   return *this;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* TAO_VAROUT_T_CPP */

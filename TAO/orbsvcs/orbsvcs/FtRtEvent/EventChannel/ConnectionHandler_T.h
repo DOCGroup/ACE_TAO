@@ -40,7 +40,11 @@ private:
    ACE_Reactor* reactor_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include "FTEC_Group_Manager.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <ACE_PEER_STREAM_1>
 class ConnectionDetectHandler : public ACE_Svc_Handler <ACE_PEER_STREAM_2, ACE_NULL_SYNCH>
