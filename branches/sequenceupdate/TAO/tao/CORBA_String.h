@@ -77,11 +77,8 @@ namespace TAO
     /// assignment operator.
     inline String_var &operator= (character_type *p)
     {
-      if (this->ptr_ != p)
-        {
-          s_traits::release (this->ptr_);
-          this->ptr_ = p;
-        }
+      String_var <charT> tmp (p);
+      std::swap (this->ptr_, tmp.ptr_);
       return *this;
     }
 
