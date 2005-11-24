@@ -1,3 +1,27 @@
+Thu Nov 24 19:50:35 2005  Simon McQueen  <sm@prismtech.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.h:
+
+          Override the base class ::decode method with one that
+          doesn't try and extract an object key from the CDR encoding.
+          MIOP profiles don't have an object key marshalled between
+          the address info and the tagged components.
+
+          This fixes bug #2316.
+
+        * orbsvcs/tests/Bug_2316_Regression/Bug_2316_Regression.mpc:
+        * orbsvcs/tests/Bug_2316_Regression/README:
+        * orbsvcs/tests/Bug_2316_Regression/Test.idl:
+        * orbsvcs/tests/Bug_2316_Regression/Test_impl.cpp:
+        * orbsvcs/tests/Bug_2316_Regression/Test_impl.h:
+        * orbsvcs/tests/Bug_2316_Regression/client.cpp:
+        * orbsvcs/tests/Bug_2316_Regression/run_test.pl:
+        * orbsvcs/tests/Bug_2316_Regression/server.cpp:
+        * orbsvcs/tests/Bug_2316_Regression/svc.conf:
+
+          Regression test for the above.
+
 Thu Nov 24 19:07:56 2005  Simon McQueen  <sm@prismtech.com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
