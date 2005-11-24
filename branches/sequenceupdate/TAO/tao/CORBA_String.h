@@ -184,7 +184,7 @@ namespace TAO
     typedef typename s_traits::string_mgr string_mgr;
 
     /// Construction from a reference to a string.
-    inline String_out (character_type *&p) : ptr_ (s)
+    inline String_out (character_type *&p) : ptr_ (p)
     {
       this->ptr_ = 0;
     }
