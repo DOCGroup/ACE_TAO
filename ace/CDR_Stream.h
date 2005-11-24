@@ -62,6 +62,8 @@
 #endif /* ! ACE_LITTLE_ENDIAN */
 
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Char_Codeset_Translator;
 class ACE_WChar_Codeset_Translator;
 
@@ -1172,9 +1174,13 @@ extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CString &x);
 
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
 # include "ace/CDR_Stream.inl"
 #else /* __ACE_INLINE__ */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Not used by CORBA or TAO
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
@@ -1261,6 +1267,8 @@ extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::Char*& x);
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::WChar*& x);
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* __ACE_INLINE__ */
 

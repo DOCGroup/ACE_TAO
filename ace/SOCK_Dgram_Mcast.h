@@ -42,6 +42,8 @@
 # endif /* ACE_SDM_LOCK */
 #endif /* ACE_SOCK_DGRAM_MCAST_DUMPABLE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_SOCK_Dgram_Mcast
  *
@@ -409,6 +411,8 @@ private:
 #endif /* ACE_SOCK_DGRAM_MCAST_DUMPABLE */
 
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/SOCK_Dgram_Mcast.inl"

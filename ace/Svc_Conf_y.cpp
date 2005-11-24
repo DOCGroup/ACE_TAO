@@ -300,7 +300,9 @@ static const short ace_yycheck[] =
 #  define ACE_YYSTACK_FREE(Ptr) do { /* empty */; } while (0)
 # else
 #  if defined (__STDC__) || defined (__cplusplus)
+ACE_END_VERSIONED_NAMESPACE_DECL
 #   include <stdlib.h> /* INFRINGES ON USER NAME SPACE */
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 #   define ACE_YYSIZE_T size_t
 #  endif
 #  define ACE_YYSTACK_ALLOC malloc
@@ -383,7 +385,9 @@ union ace_yyalloc
 #endif
 #if ! defined (ACE_YYSIZE_T)
 # if defined (__STDC__) || defined (__cplusplus)
+ACE_END_VERSIONED_NAMESPACE_DECL
 #  include <stddef.h> /* INFRINGES ON USER NAME SPACE */
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 #  define ACE_YYSIZE_T size_t
 # endif
 #endif
@@ -463,7 +467,9 @@ while (0)
 #if ACE_YYDEBUG
 
 # ifndef ACE_YYFPRINTF
+ACE_END_VERSIONED_NAMESPACE_DECL
 #  include <stdio.h> /* INFRINGES ON USER NAME SPACE */
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 #  define ACE_YYFPRINTF ACE_OS::fprintf
 # endif
 

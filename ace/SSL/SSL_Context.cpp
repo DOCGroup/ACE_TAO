@@ -6,7 +6,6 @@
 #include "SSL_Context.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Mutex.h"
 #include "ace/Guard_T.h"
 #include "ace/Object_Manager.h"
 #include "ace/Log_Msg.h"
@@ -17,6 +16,7 @@
 #include "ace/OS_NS_string.h"
 
 #ifdef ACE_HAS_THREADS
+# include "ace/Mutex.h"
 # include "ace/Auto_Ptr.h"
 # include "ace/OS_NS_Thread.h"
 #endif  /* ACE_HAS_THREADS */
@@ -101,7 +101,7 @@ extern "C"
   unsigned long
   ACE_SSL_THREAD_ID_NAME (void)
   {
-    return (unsigned long) ACE_OS::thr_self ();
+    return (unsigned long) ACE_VERSIONED_NAMESPACE_NAME::ACE_OS::thr_self ();
   }
 }
 #endif  /* ACE_HAS_THREADS */
@@ -546,8 +546,6 @@ ACE_SSL_Context::dh_params (const char *file_name,
   return 0;
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 // ****************************************************************
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -564,3 +562,5 @@ template ACE_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX> *
   ACE_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX>::singleton_;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+ACE_END_VERSIONED_NAMESPACE_DECL

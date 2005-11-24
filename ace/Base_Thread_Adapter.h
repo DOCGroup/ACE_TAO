@@ -33,6 +33,8 @@
 // MSVC++ 6's preprocessor can't handle macro expansions required by
 // the versioned namespace support.  *sigh*
 
+#include "ace/Global_Macros.h"
+
 # define ACE_THREAD_ADAPTER_NAME ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _ace_thread_adapter)
 
 #else

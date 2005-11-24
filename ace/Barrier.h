@@ -50,9 +50,13 @@ public:
   void dump (void) const {}
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #else /* ACE_HAS_THREADS */
 
 #include "ace/Condition_Thread_Mutex.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 struct ACE_Threads_Export ACE_Sub_Barrier
 {

@@ -220,6 +220,8 @@ protected:
 
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 // Include the templates here.
 #include "ace/Message_Queue_T.h"
 
@@ -227,6 +229,8 @@ protected:
 # include /**/ <msgQLib.h>
 # include "ace/Null_Mutex.h"
 # include "ace/Null_Condition.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Message_Queue_Vx
@@ -411,7 +415,12 @@ private:
   int options_;
 
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* VXWORKS */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0)
 /**

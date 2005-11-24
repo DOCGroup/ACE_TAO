@@ -68,6 +68,8 @@ protected:
   X *p_;
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #if !defined (ACE_LACKS_AUTO_PTR) && \
      defined (ACE_HAS_STANDARD_CPP_LIBRARY) && \
             (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
@@ -96,6 +98,7 @@ public:
 
 #endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @brief Implements the draft C++ standard auto_ptr abstraction.

@@ -264,7 +264,11 @@ ACE_Profile_Timer::elapsed_time (ACE_Elapsed_Time &et)
   return 0;
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #elif defined (ACE_WIN32) /* defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE) */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 ACE_Profile_Timer::dump (void) const
@@ -370,7 +374,11 @@ ACE_Profile_Timer::subtract (timeval &tdiff, timeval &t1, timeval &t0)
 }
 #  endif /* ACE_HAS_GETRUSAGE */
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #else
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 ACE_Profile_Timer::dump (void) const

@@ -32,6 +32,8 @@ ACE_RCSID (ace,
 #define IMR_MULTIADDR imr_multiaddr
 #endif /* ! defined (IMR_MULTIADDR) */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Helper (inline) functions.
 class ACE_SDM_helpers
 {
@@ -988,3 +990,5 @@ ACE_SOCK_Dgram_Mcast::clear_subs_list (void)
 #endif /* ACE_SOCK_DGRAM_MCAST_DUMPABLE */
   return result;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

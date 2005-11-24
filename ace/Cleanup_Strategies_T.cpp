@@ -90,4 +90,6 @@ ACE_Null_Cleanup_Strategy<KEY, VALUE, CONTAINER>::cleanup (CONTAINER &,
   return 0;
 }
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* ACE_CLEANUP_STRATEGIES_T_CPP */
