@@ -90,6 +90,7 @@ namespace TAO
     {
       String_var <charT> tmp (p);
       std::swap (this->ptr_, tmp.ptr_);
+      return *this;
     }
 
     /// assignment operator.
