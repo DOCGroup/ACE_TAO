@@ -30,17 +30,23 @@
 #include "tao/Service_Context.h"
 #include "tao/Object.h"
 
+#if TAO_HAS_INTERCEPTORS == 1
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#if TAO_HAS_INTERCEPTORS == 1
 namespace TAO
 {
   class PICurrent;
   class PICurrent_Impl;
   class PICurrent_Copy_Callback;
 }
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include "PortableInterceptorC.h"
+
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Pluggable_Messaging;
 class TAO_Transport;

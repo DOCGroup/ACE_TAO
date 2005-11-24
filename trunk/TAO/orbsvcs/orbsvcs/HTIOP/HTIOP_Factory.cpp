@@ -14,7 +14,7 @@ ACE_RCSID (HTIOP,
 
 static const char the_prefix[] = "htiop";
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::HTIOP::Protocol_Factory::Protocol_Factory (void)
   :  TAO_Protocol_Factory (OCI_TAG_HTIOP_PROFILE),

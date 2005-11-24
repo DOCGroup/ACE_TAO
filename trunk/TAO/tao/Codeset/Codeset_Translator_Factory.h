@@ -25,8 +25,10 @@
 #include "codeset_export.h"
 
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Char_Codeset_Translator;
 class ACE_WChar_Codeset_Translator;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1081,5 +1081,6 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
   return 1;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_RECONFIG_SCHED_UTILS_T_CPP */

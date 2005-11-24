@@ -24,6 +24,14 @@
 
 #include "tao/Versioned_Namespace.h"
 
+/////////////////////////////////
+// Includes needed by this header
+#include "portablegroup_export.h"
+#include "orbsvcs/PortableGroupS.h"
+#include "ace/Hash_Map_Manager.h"
+#include "ace/SString.h"
+#include "ace/Null_Mutex.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //////////////////////////////////
@@ -32,14 +40,6 @@ namespace TAO
 {
   class PG_FactoryRegistry;
 }
-
-/////////////////////////////////
-// Includes needed by this header
-#include "portablegroup_export.h"
-#include "orbsvcs/PortableGroupS.h"
-#include "ace/Hash_Map_Manager.h"
-#include "ace/SString.h"
-#include "ace/Null_Mutex.h"
 
 /////////////////////
 // Forward references

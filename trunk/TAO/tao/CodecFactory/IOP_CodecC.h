@@ -70,6 +70,8 @@
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:49
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace IOP
 {
 
@@ -739,8 +741,8 @@ TAO_CodecFactory_Export ::CORBA::Boolean operator>> (TAO_InputCDR &, IOP::Encodi
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:1040
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
-
-

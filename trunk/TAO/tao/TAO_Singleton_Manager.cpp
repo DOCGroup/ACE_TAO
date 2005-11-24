@@ -28,9 +28,15 @@ ACE_RCSID (tao,
            TAO_Singleton_Manager,
            "$Id$")
 
+
 extern "C" void
-TAO_SINGLETON_MANAGER_CLEANUP_DESTROY_NAME (void *, void *)
+TAO_SINGLETON_MANAGER_CLEANUP_DESTROYER_NAME (void *, void *)
 {
+#if defined (TAO_HAS_VERSIONED_NAMESPACE) \
+    && TAO_HAS_VERSIONED_NAMESPACE == 1
+  using namespace TAO_VERSIONED_NAMESPACE_NAME;
+#endif  /* TAO_HAS_VERSIONED_NAMESPACE */
+
   if (TAO_Singleton_Manager::instance_)
     {
       (void) TAO_Singleton_Manager::instance ()->fini ();
@@ -187,7 +193,7 @@ TAO_Singleton_Manager::init (int register_with_object_manager)
       if (register_with_object_manager == 1
           && ACE_Object_Manager::at_exit (
                this,
-               (ACE_CLEANUP_FUNC) TAO_Singleton_Manager_cleanup_destroyer,
+               (ACE_CLEANUP_FUNC) TAO_SINGLETON_MANAGER_CLEANUP_DESTROYER_NAME,
                0) != 0)
         return -1;
 

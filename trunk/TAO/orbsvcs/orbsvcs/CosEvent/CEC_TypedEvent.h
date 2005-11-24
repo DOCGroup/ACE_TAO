@@ -26,7 +26,7 @@
 
 // ****************************************************************
 
-// $Id$
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_CEC_TypedEvent

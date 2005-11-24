@@ -226,12 +226,15 @@ private:
   // The monitor we're wrapping.
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "Metrics_UpcallMonitor.i"
 #endif /* __ACE_INLINE__ */
 
 #include "orbsvcs/Metrics/Metrics_UpcallMonitor_T.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef TAO_Metrics_UpcallMonitorAdapter<ACE_SYNCH_MUTEX, ACE_New_Allocator>
 TAO_METRICS_MONITOR_ADAPTER_TYPE;

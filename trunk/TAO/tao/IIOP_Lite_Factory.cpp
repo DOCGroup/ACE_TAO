@@ -13,6 +13,8 @@ ACE_RCSID (tao,
 
 static const char the_prefix[] = "iiop";
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_IIOP_Lite_Protocol_Factory::TAO_IIOP_Lite_Protocol_Factory (void)
   :  TAO_Protocol_Factory (IOP::TAG_INTERNET_IOP),
      major_ (TAO_DEF_GIOP_MAJOR),

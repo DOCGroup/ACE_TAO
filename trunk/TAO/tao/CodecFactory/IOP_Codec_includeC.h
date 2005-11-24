@@ -53,10 +53,14 @@
 // TAO_IDL - Generated from
 // be\be_visitor_traits.cpp:61
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Traits specializations.
 namespace TAO
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:1040

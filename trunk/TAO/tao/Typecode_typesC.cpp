@@ -39,6 +39,8 @@
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Arg traits specializations.
 namespace TAO
 {
@@ -65,3 +67,5 @@ CORBA::Boolean operator>> (TAO_InputCDR & strm, CORBA::TCKind & _tao_enumerator)
   
   return _tao_success;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

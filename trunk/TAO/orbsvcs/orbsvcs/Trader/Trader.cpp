@@ -634,8 +634,12 @@ operator== (const CosTrading::Admin::OctetSeq& left,
   return return_value;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include "ace/Arg_Shifter.h"
 #include "Trader_T.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Trader_Factory::TAO_TRADER*
 TAO_Trader_Factory::create_trader (int& argc, ACE_TCHAR** argv)

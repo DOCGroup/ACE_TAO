@@ -523,6 +523,8 @@ static void yy_pop_state YY_PROTO(( void ));
 static int yy_top_state YY_PROTO(( void ));
 #endif
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #else
 #define YY_NO_PUSH_STATE 1
 #define YY_NO_POP_STATE 1
@@ -619,6 +621,8 @@ YY_MALLOC_DECL
 
 #define YY_RULE_SETUP \
 	YY_USER_ACTION
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 YY_DECL
 	{
