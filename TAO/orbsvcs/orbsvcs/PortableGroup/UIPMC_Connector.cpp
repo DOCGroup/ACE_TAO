@@ -182,7 +182,7 @@ TAO_UIPMC_Connector::check_prefix (const char *endpoint)
     return -1;  // Failure
 
   static const char protocol[] = "miop";
-  static size_t const len = sizeof (protocol);
+  static size_t const len = sizeof (protocol) - 1;
 
   size_t const slot = ACE_OS::strchr (endpoint, ':') - endpoint;
 
