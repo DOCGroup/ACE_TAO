@@ -1,3 +1,11 @@
+Thu Nov 24 15:56:31 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Bug_1670_Regression/Bug_1670_Regression.mpc:
+        
+          Added 'after' line in one project to avoid concurrently
+          clashes in VC8 builds, since the two projects share an
+          IDL file.
+
 Thu Nov 24 03:01:29 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/CosEvent/CEC_TypedEvent.h:
