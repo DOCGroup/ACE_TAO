@@ -47,6 +47,11 @@ struct string_traits_base<char>
   {
     CORBA::string_free(s);
   }
+
+  inline static char_type * allocate (CORBA::ULong len)
+  {
+    return CORBA::string_alloc (len);
+  }
 };
 
 template<>
@@ -75,6 +80,11 @@ struct string_traits_base<CORBA::WChar>
   inline static void release(char_type * s)
   {
     CORBA::wstring_free(s);
+  }
+
+  inline static char_type * allocate (CORBA::ULong len)
+  {
+    return CORBA::wstring_alloc (len);
   }
 };
 
