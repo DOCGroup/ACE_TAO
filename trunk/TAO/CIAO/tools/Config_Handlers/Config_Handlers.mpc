@@ -25,7 +25,7 @@ project (XSC_XML_Handlers) : acelib, xerces {
   }
 }
 
-project (XSC_Config_Handlers) : ciao_deployment_stub, xerces, dynamicany {
+project (XSC_Config_Handlers) : ciao_deployment_stub, xerces, dynamicany, typecodefactory {
   after += RT_CCM_Config_Handlers XSC_XML_Handlers XSC_DynAny_Handler
   sharedname = XSC_Config_Handlers
   dynamicflags   = CONFIG_HANDLERS_BUILD_DLL
