@@ -105,6 +105,59 @@ TAO_UIPMC_Profile::~TAO_UIPMC_Profile (void)
 }
 
 int
+TAO_UIPMC_Profile::decode (TAO_InputCDR& cdr)
+{
+  // The following is a selective reproduction of TAO_Profile::decode
+  
+  CORBA::ULong encap_len = cdr.length ();
+
+  // Read and verify major, minor versions, ignoring profiles
+  // whose versions we don't understand.
+  if (!(cdr.read_octet (this->version_.major)
+        && this->version_.major == TAO_DEF_GIOP_MAJOR
+        && cdr.read_octet (this->version_.minor)
+        && this->version_.minor <= TAO_DEF_GIOP_MINOR))
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) - Profile::decode - v%d.%d\n"),
+                      this->version_.major,
+                      this->version_.minor));
+        }
+
+      return -1;
+    }
+
+  // Transport specific details
+  if (this->decode_profile (cdr) < 0)
+    {
+      return -1;
+    }
+
+  // UIPMC profiles must have tagged components.
+  if (this->tagged_components_.decode (cdr) == 0)
+    {
+      return -1;
+    }
+
+  if (cdr.length () != 0 && TAO_debug_level)
+    {
+      // If there is extra data in the profile we are supposed to
+      // ignore it, but print a warning just in case...
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("%d bytes out of %d left after profile data\n"),
+                  cdr.length (),
+                  encap_len));
+    }
+
+  // We don't call ::decode_endpoints because it is implemented 
+  // as ACE_NOTSUP_RETURN (-1) for this profile
+
+  return 1;
+}
+
+int
 TAO_UIPMC_Profile::decode_endpoints (void)
 {
   ACE_NOTSUP_RETURN (-1);
