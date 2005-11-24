@@ -180,6 +180,8 @@ namespace TAO
   public:
     typedef charT character_type;
     typedef TAO::details::string_traits_base <character_type> s_traits;
+    typedef typename String_var <charT> string_var;
+    typedef typename String_Manager <charT> string_mgr;
 
     /// Construction from a reference to a string.
     inline String_out (character_type *&p) : ptr_ (s)
@@ -188,10 +190,10 @@ namespace TAO
     }
 
     /// Construction from a var.
-    inline String_out (typename s_traits::string_var &p) : ptr_ (p.out ())
+    inline String_out (string_var &p) : ptr_ (p.out ())
 
     /// Construction from a TAO_String_Manager.
-    inline String_out (typename s_traits::string_mgr &p) : ptr_ (p.out ())
+    inline String_out (string_mgr &p) : ptr_ (p.out ())
     {
     }
 

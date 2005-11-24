@@ -22,7 +22,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Basic_Types.h"
-#include "tao/CORBA_String.h"
 #include "tao/String_Traits_Base_T.h"
 
 #include <algorithm>
