@@ -1,3 +1,68 @@
+Thu Nov 24 01:38:57 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* bin/fuzz.pl:
+
+	  Added a test that flags common versioned namespace related
+	  errors/misuses.
+
+	* bin/MakeProjectCreator/config/global.features:
+
+	  Disable versioned namespace support by default.
+
+	* ace/Atomic_Op.h:
+	* ace/Auto_Ptr.h:
+	* ace/Barrier.h:
+	* ace/Base_Thread_Adapter.h:
+	* ace/CDR_Stream.h:
+	* ace/Cleanup_Strategies_T.cpp:
+	* ace/Dev_Poll_Reactor.h:
+	* ace/Functor_String.h:
+	* ace/High_Res_Timer.cpp:
+	* ace/LSOCK_Connector.inl:
+	* ace/Local_Name_Space_T.h:
+	* ace/Log_Msg.h:
+	* ace/Malloc.h:
+	* ace/Malloc_Allocator.h:
+	* ace/Message_Queue.h:
+	* ace/OS_Memory.h:
+	* ace/OS_NS_Thread.cpp:
+	* ace/OS_NS_Thread.h:
+	* ace/OS_NS_errno.h:
+	* ace/OS_NS_math.inl:
+	* ace/OS_NS_netdb.cpp:
+	* ace/OS_NS_netdb.h:
+	* ace/OS_NS_sys_msg.h:
+	* ace/OS_NS_time.h:
+	* ace/OS_main.cpp:
+	* ace/Object_Manager.h:
+	* ace/Parse_Node.cpp:
+	* ace/Ping_Socket.cpp:
+	* ace/Proactor.cpp:
+	* ace/Proactor.h:
+	* ace/Profile_Timer.cpp:
+	* ace/Profile_Timer.inl:
+	* ace/SOCK_Dgram_Mcast.cpp:
+	* ace/SOCK_Dgram_Mcast.h:
+	* ace/SOCK_Dgram_Mcast.inl:
+	* ace/SPIPE_Stream.h:
+	* ace/Select_Reactor_T.cpp:
+	* ace/Service_Config.h:
+	* ace/Service_Templates.cpp:
+	* ace/Sock_Connect.cpp:
+	* ace/Svc_Conf_l.cpp:
+	* ace/Svc_Conf_y.cpp:
+	* ace/Thread_Manager.cpp:
+	* ace/Time_Value.h:
+	* ace/Timeprobe.h:
+	* ace/Timer_Hash_T.h:
+	* ace/Timer_List.cpp:
+	* ace/Timer_Queue.cpp:
+	* ace/config-lite.h:
+	* ace/SSL/SSL_Asynch_BIO.cpp:
+	* ace/SSL/SSL_Context.cpp:
+
+	  Corrected build errors in versioned namespace builds.
+
 Wed Nov 23 19:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/wrapper_macros.GNU:

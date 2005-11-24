@@ -215,7 +215,6 @@ typedef long long ACE_hrtime_t;
 #   endif /* ! ACE_HAS_HI_RES_TIMER  ||  ACE_LACKS_LONGLONG_T */
 # endif /* ACE_WIN32 */
 
-
 # if defined (ACE_HRTIME_T_IS_BASIC_TYPE)
 #   define ACE_HRTIME_CONVERSION(VAL) (VAL)
 #   define ACE_HRTIME_TO_U64(VAL) ACE_U_LongLong(VAL)
@@ -223,8 +222,6 @@ typedef long long ACE_hrtime_t;
 #   define ACE_HRTIME_CONVERSION(VAL) ACE_U64_TO_U32(VAL)
 #   define ACE_HRTIME_TO_U64(VAL) (VAL)
 # endif
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS
 {
@@ -361,7 +358,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
     && defined (ghs) \
     && defined (ACE_HAS_PENTIUM) \
     && !defined (ACE_WIN32)
-#define ACE_GETHRTIME_NAME ACE_ ## ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _gethrtime)
+#define ACE_GETHRTIME_NAME ACE_PREPROC_CONCATENATE(ACE_,ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _gethrtime))
 #else
 # define ACE_GETHRTIME_NAME ACE_gethrtime
 #endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */

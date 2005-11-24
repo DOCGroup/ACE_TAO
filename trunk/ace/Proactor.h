@@ -635,6 +635,8 @@ private:
   ACE_Proactor &operator= (const ACE_Proactor &);
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #  if defined (__ACE_INLINE__)
 #    include "ace/Proactor.inl"
 #  endif /* __ACE_INLINE__ */
@@ -643,6 +645,8 @@ private:
 
 #  include "ace/os_include/os_stddef.h"
 #  include "ace/os_include/os_signal.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Time_Value;
 

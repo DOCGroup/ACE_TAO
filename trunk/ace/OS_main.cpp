@@ -117,11 +117,15 @@ ace_os_main_i (ACE_Main_Base &mbase, int argc, char *argv[]) /* user's entry poi
 
 #  else /* ACE_HAS_WINCE */
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 // CE only gets a command line string;  no argv. So we need to convert it
 // when the main entrypoint expects argc/argv. ACE_ARGV supports this.
 #    include "ace/OS_NS_string.h"
 #    include "ace/ACE.h"
 #    include "ace/ARGV.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int ACE_Main_Base::run (HINSTANCE,
                         HINSTANCE,

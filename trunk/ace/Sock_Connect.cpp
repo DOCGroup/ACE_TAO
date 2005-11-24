@@ -51,13 +51,13 @@ extern "C" {
 #    include "ace/Object_Manager.h"
 #  endif /* ACE_HAS_THREADS */
 
-namespace ACE
+namespace
 {
   // private:
   //  Used internally so not exported.
 
   /// Does this box have ipv6 turned on?
-  int ipv6_enabled_ = -1;
+  int ace_ipv6_enabled = -1;
 }
 #endif /* ACE_HAS_IPV6 */
 
@@ -1496,30 +1496,30 @@ int
 ACE::ipv6_enabled (void)
 {
 #if defined (ACE_HAS_IPV6)
-  if (ACE::ipv6_enabled_ == -1)
+  if (ace_ipv6_enabled == -1)
     {
       // Perform Double-Checked Locking Optimization.
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
                                 *ACE_Static_Object_Lock::instance (), 0));
 
-      if (ACE::ipv6_enabled_ == -1)
+      if (ace_ipv6_enabled == -1)
         {
           // Determine if the kernel has IPv6 support by attempting to
           // create a PF_INET6 socket and see if it fails.
           ACE_HANDLE s = ACE_OS::socket (PF_INET6, SOCK_DGRAM, 0);
           if (s == ACE_INVALID_HANDLE)
             {
-              ACE::ipv6_enabled_ = 0;
+              ace_ipv6_enabled = 0;
             }
           else
             {
-              ACE::ipv6_enabled_ = 1;
+              ace_ipv6_enabled = 1;
               ACE_OS::closesocket (s);
             }
         }
     }
 
-  return ACE::ipv6_enabled_;
+  return ace_ipv6_enabled;
 #else /* ACE_HAS_IPV6 */
   return 0;
 #endif /* !ACE_HAS_IPV6 */

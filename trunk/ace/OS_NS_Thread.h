@@ -188,7 +188,7 @@ struct ACE_Export ACE_mutexattr_t
 typedef ACE_thread_t ACE_hthread_t;
 typedef ACE_mutex_t ACE_thread_mutex_t;
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #     define THR_CANCEL_DISABLE      0
 #     define THR_CANCEL_ENABLE       0
@@ -417,7 +417,7 @@ public:
 #       endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 #     endif /* defined (ACE_WIN32) */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 // These need to be different values, neither of which can be 0...
 #     define USYNC_THREAD 1
@@ -556,7 +556,7 @@ public:
   ACE_cond_t waiting_important_writer_;
 };
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #   elif defined (ACE_HAS_PTHREADS_UNIX98_EXT)
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -1179,7 +1179,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 # if defined (ACE_HAS_THR_C_FUNC)
 // This is necessary to work around nasty problems with MVS C++.
 extern "C" ACE_Export void ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args);
-#   define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ace_mutex_lock_cleanup_adapter, (void *) A);
+#   define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME, (void *) A);
 #   define ACE_PTHREAD_CLEANUP_POP(A) pthread_cleanup_pop(A)
 # elif defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_CLEANUP)
 // Though we are defining a extern "C" function to match the prototype of
@@ -1187,7 +1187,7 @@ extern "C" ACE_Export void ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args);
 // /usr/include/pthread.h. So this macro generates a warning under Solaris
 // with SunCC. This is a bug in the Solaris header file.
 extern "C" ACE_Export void ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args);
-#   define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ace_mutex_lock_cleanup_adapter, (void *) A);
+#   define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME, (void *) A);
 #   define ACE_PTHREAD_CLEANUP_POP(A) pthread_cleanup_pop(A)
 # else
 #   define ACE_PTHREAD_CLEANUP_PUSH(A)

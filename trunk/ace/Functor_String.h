@@ -129,9 +129,10 @@ public:
                    const ACE_WString &rhs) const;
 };
 
+#endif /*ACE_USES_WCHAR*/
+
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /*ACE_USES_WCHAR*/
 #if defined (__ACE_INLINE__)
 #include "ace/Functor_String.inl"
 #endif /* __ACE_INLINE__ */

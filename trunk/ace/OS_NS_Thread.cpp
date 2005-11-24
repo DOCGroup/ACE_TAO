@@ -27,7 +27,7 @@ ACE_RCSID (ace,
 extern "C" void
 ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args)
 {
-  ACE_OS::mutex_lock_cleanup (args);
+  ACE_VERSIONED_NAMESPACE_NAME::ACE_OS::mutex_lock_cleanup (args);
 }
 
 
@@ -3995,14 +3995,14 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
     ACE_NEW_RETURN (thread_args,
                     ACE_OS_Thread_Adapter (func, args,
-                                           (ACE_THR_C_FUNC) ace_thread_adapter,
+                                           (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME,
                                            ACE_OS_Object_Manager::seh_except_selector(),
                                            ACE_OS_Object_Manager::seh_except_handler()),
                     -1);
 #else
   ACE_NEW_RETURN (thread_args,
                   ACE_OS_Thread_Adapter (func, args,
-                                         (ACE_THR_C_FUNC) ace_thread_adapter),
+                                         (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME),
                   -1);
 
 #endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */

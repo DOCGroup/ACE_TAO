@@ -22,8 +22,6 @@
 // For timer_queue_
 #include "ace/Recursive_Thread_Mutex.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
 /*
  * ACE Reactor specialization hook.
  */
@@ -39,6 +37,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_RCSID (ace,
            Select_Reactor_T,
            "$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Select_Reactor_T)
 

@@ -201,6 +201,9 @@ struct ACE_Export ACE_Malloc_Stats
   /// Number of blocks in use
   ACE_INT ninuse_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #  define ACE_MALLOC_STATS(X) X
 #else
 #  define ACE_MALLOC_STATS(X)
@@ -214,6 +217,8 @@ struct ACE_Export ACE_Malloc_Stats
 
 #  define ACE_MALLOC_PADDING 1
 #endif /* ACE_MALLOC_PADDING */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 union ACE_max_align_info
 {
