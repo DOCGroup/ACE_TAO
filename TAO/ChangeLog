@@ -1,18 +1,40 @@
+Wed Nov 23 22:24:38 2005  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Event_Manager.h:
+
+	  Explicitly declared a private copy constructor and assignment
+	  operator for TAO_Notify_Event_Manager.  By not declaring them,
+	  the compiler has to generate them.  In generating them, it needs
+	  to be able to know the complete type for the template arguments
+	  to its ACE_Auto_Ptr<> private instances.  Various circular
+	  dependencies make that difficult to impossible without
+	  restructuring, so we take this approach instead.
+
+	  This change should eliminate warnings from Windows-based
+	  compilers (e.g., VC8) about calling delete through a pointer to
+	  an incomplete type while instantiating ACE_Auto_Ptr<> methods.
+	
+        * orbsvcs/orbsvcs/Notify/Object.h:
+        * orbsvcs/orbsvcs/Notify/Object.cpp:
+
+	  Only needed a forward decl in Object.h; we only needed the
+	  complete type in Object.cpp.  Maybe this will help footprint.
+
 Wed Nov 23 09:20:03 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	  Fix a few things I should have caught in the Great Merge, but
-	  missed.
+          Fix a few things I should have caught in the Great Merge, but
+          missed.
 
-	* orbsvcs/orbsvcs/Notify/Consumer.cpp (dispatch_request): Change
-	  from using deprecated TAO_DEFAULT_MINOR_CODE to TAO::VMCID.
+        * orbsvcs/orbsvcs/Notify/Consumer.cpp (dispatch_request): Change
+          from using deprecated TAO_DEFAULT_MINOR_CODE to TAO::VMCID.
 
-	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp: Use
-	  real C++ static_cast<> rather than deprecated ACE_static_cast().
-	
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp: Use
+          real C++ static_cast<> rather than deprecated ACE_static_cast().
+
 Wed Nov 23 14:53:09 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Portable_Interceptors/ForwardRequest/PI_ForwardRequest.mpc:
-        
+
           Added an 'after' line to one project to avoid concurrency
           collisions in VC8 builds, since the 2 projects in this file
           share IDL.
@@ -44,8 +66,8 @@ Tue Nov 22 22:58:55 2005  Chris Cleeland  <cleeland@ociweb.com>
         * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
         * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.cpp:
 
-	  Fixed warnings about preferring one conversion over another
-	  from a _var that appeared on a couple of platforms.
+          Fixed warnings about preferring one conversion over another
+          from a _var that appeared on a couple of platforms.
 
 Tue Nov 22 07:49:59 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 

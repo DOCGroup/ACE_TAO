@@ -16,6 +16,7 @@
 #include "ace/Auto_Ptr.h"
 
 #include "Refcountable.h"
+
 #include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -114,6 +115,13 @@ protected:
   void un_publish (TAO_Notify_ProxyConsumer* proxy_consumer, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& last_seq ACE_ENV_ARG_DECL);
 
 private:
+  // Disallow copying and assignment; we don't need them
+  // and if we let the compiler generate them it needs the
+  // full declaration of the template arguments for ACE_Auto_Ptr<>
+  // below.
+  TAO_Notify_Event_Manager (TAO_Notify_Event_Manager&);
+  TAO_Notify_Event_Manager& operator= (TAO_Notify_Event_Manager&);
+
   /// Consumer Map
   ACE_Auto_Ptr< TAO_Notify_Consumer_Map > consumer_map_;
 

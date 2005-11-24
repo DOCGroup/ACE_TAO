@@ -8,6 +8,7 @@
 #include "ThreadPool_Task.h"
 #include "Reactive_Task.h"
 #include "tao/debug.h"
+#include "Event_Manager.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "Object.inl"
