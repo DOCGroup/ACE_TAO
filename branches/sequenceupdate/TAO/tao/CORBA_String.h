@@ -39,6 +39,12 @@ typedef TAO::String_Manager<CORBA::WChar> TAO_WString_Manager;
 
 namespace TAO
 {
+  /**
+   * @class String_var
+   *
+   * Provides automatic deallocation of storage for the string once it
+   * goes out of scope.
+   */
   template <typename charT>
   class String_var
   {
@@ -169,8 +175,7 @@ namespace TAO
    * @brief String_out
    *
    * To support the memory management for "out" parameter passing
-   * mode.  ORBOS/97-05-15, Appendix C.2 defines a CORBA::String_out
-   * class
+   * mode.
    */
   template <typename charT>
   class String_out
