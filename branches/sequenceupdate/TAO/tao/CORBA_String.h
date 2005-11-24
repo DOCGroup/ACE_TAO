@@ -180,7 +180,7 @@ namespace TAO
   public:
     typedef charT character_type;
     typedef TAO::details::string_traits_base <character_type> s_traits;
-    typedef s_traits::string_mgr string_mgr;
+    typedef typename s_traits::string_mgr string_mgr;
 
     /// Construction from a reference to a string.
     inline String_out (character_type *&p) : ptr_ (s)
