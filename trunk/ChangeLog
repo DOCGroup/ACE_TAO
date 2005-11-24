@@ -1,3 +1,8 @@
+Thu Nov 24 14:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_icc.GNU:
+          For Intel C++ 9.1 also disable warning 1684
+
 Thu Nov 24 01:38:57 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* bin/fuzz.pl:
