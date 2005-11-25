@@ -1,8 +1,0 @@
-<?xml version='1.0'?>
-<!-- Converted from ./performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/client.conf by svcconf-convert.pl -->
-<ACE_Svc_Conf>
- <!--  $Id$ -->
- <!--  -->
- <static id="RT_ORB_Loader" params="-ORBSchedPolicy SCHED_FIFO -ORBPriorityMapping direct"/>
- <static id="Client_Strategy_Factory" params="-ORBClientConnectionHandler RW"/>
-</ACE_Svc_Conf>

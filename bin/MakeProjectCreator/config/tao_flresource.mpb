@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project: taolib, ace_flreactor {
-  requires += tao_flresource
-  after    += TAO_FlResource
-  libs     += TAO_FlResource
-}

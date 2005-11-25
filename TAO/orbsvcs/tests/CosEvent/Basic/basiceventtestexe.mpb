@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : orbsvcsexe, messaging, taoserver, event_serv, naming, svc_utils, iortable {
-  after    += CosEvent_Test_Lib
-  libs     += CECTests
-  includes += ../lib
-}

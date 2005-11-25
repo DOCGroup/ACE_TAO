@@ -1,9 +1,0 @@
-//
-// $Id$
-//
-
-interface Test
-{
-  oneway void shutdown ();
-  // Shut down the ORB.
-};

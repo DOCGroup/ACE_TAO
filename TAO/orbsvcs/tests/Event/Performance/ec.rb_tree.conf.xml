@@ -1,6 +1,0 @@
-<?xml version='1.0'?>
-<!-- Converted from ./orbsvcs/tests/Event/Performance/ec.rb_tree.conf by svcconf-convert.pl -->
-<ACE_Svc_Conf>
- <!--  $Id$ -->
- <static id="EC_Factory" params="-ECProxyPushConsumerCollection st:delayed:rb_tree -ECProxyPushSupplierCollection st:delayed:rb_tree -ECdispatching reactive -ECfiltering null -ECproxyconsumerlock null -ECproxysupplierlock null -ECsupplierfiltering null"/>
-</ACE_Svc_Conf>
