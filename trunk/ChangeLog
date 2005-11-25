@@ -1,3 +1,9 @@
+Fri Nov 25 12:45:20 2005  Steve Huston  <shuston@riverace.com>
+
+	* tests/Proactor_Test.cpp:
+	* tests/Proactor_Test_IPV6.cpp: Corrected ACE_Atomic_Op instantiations
+	  for size_t.
+
 Fri Nov 25 10:00:21 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/POSIX_Proactor.cpp (ACE_POSIX_Asynch_Timer): Don't explicitly
