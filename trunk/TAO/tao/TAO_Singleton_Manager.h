@@ -176,11 +176,15 @@ public:
   void _set_unexpected (TAO_unexpected_handler u);
 #endif /* ACE_HAS_EXCEPTIONS */
 
-private:
+protected:
+
   /// Force allocation on the heap.
+  ~TAO_Singleton_Manager (void);
+
+private:
+
   //@{
   TAO_Singleton_Manager (void);
-  ~TAO_Singleton_Manager (void);
   //@}
 
   /// Disallow copying by not implementing the following ...
