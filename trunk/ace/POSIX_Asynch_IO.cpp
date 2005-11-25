@@ -120,9 +120,7 @@ ACE_POSIX_Asynch_Result::ACE_POSIX_Asynch_Result
    u_long offset_high,
    int priority,
    int signal_number)
-  : ACE_Asynch_Result_Impl (),
-    aiocb (),
-    handler_proxy_ (handler_proxy),
+  : handler_proxy_ (handler_proxy),
     act_ (act),
     bytes_transferred_ (0),
     success_ (0),
@@ -208,8 +206,7 @@ ACE_POSIX_Asynch_Operation::~ACE_POSIX_Asynch_Operation (void)
 }
 
 ACE_POSIX_Asynch_Operation::ACE_POSIX_Asynch_Operation (ACE_POSIX_Proactor *posix_proactor)
-  : ACE_Asynch_Operation_Impl (),
-    posix_proactor_ (posix_proactor),
+  : posix_proactor_ (posix_proactor),
     handle_  (ACE_INVALID_HANDLE)
 {
 }
@@ -243,9 +240,7 @@ ACE_POSIX_Asynch_Read_Stream_Result::ACE_POSIX_Asynch_Read_Stream_Result
    ACE_HANDLE event,
    int priority,
    int signal_number)
-  : ACE_Asynch_Result_Impl (),
-    ACE_Asynch_Read_Stream_Result_Impl (),
-    ACE_POSIX_Asynch_Result
+  : ACE_POSIX_Asynch_Result
       (handler_proxy, act, event, 0, 0, priority, signal_number),
     message_block_ (message_block)
 {
@@ -287,9 +282,7 @@ ACE_POSIX_Asynch_Read_Stream_Result::~ACE_POSIX_Asynch_Read_Stream_Result (void)
 // ************************************************************
 
 ACE_POSIX_Asynch_Read_Stream::ACE_POSIX_Asynch_Read_Stream (ACE_POSIX_Proactor  *posix_proactor)
-  : ACE_Asynch_Operation_Impl (),
-    ACE_Asynch_Read_Stream_Impl (),
-    ACE_POSIX_Asynch_Operation (posix_proactor)
+  : ACE_POSIX_Asynch_Operation (posix_proactor)
 {
 }
 
@@ -364,9 +357,7 @@ ACE_POSIX_Asynch_Write_Stream_Result::ACE_POSIX_Asynch_Write_Stream_Result
    ACE_HANDLE event,
    int priority,
    int signal_number)
-  : ACE_Asynch_Result_Impl (),
-    ACE_Asynch_Write_Stream_Result_Impl (),
-    ACE_POSIX_Asynch_Result
+  : ACE_POSIX_Asynch_Result
       (handler_proxy, act, event, 0, 0, priority, signal_number),
     message_block_ (message_block)
 {
@@ -409,9 +400,7 @@ ACE_POSIX_Asynch_Write_Stream_Result::~ACE_POSIX_Asynch_Write_Stream_Result (voi
 // *********************************************************************
 
 ACE_POSIX_Asynch_Write_Stream::ACE_POSIX_Asynch_Write_Stream (ACE_POSIX_Proactor *posix_proactor)
-  : ACE_Asynch_Operation_Impl (),
-    ACE_Asynch_Write_Stream_Impl (),
-    ACE_POSIX_Asynch_Operation (posix_proactor)
+  : ACE_POSIX_Asynch_Operation (posix_proactor)
 {
 }
 
@@ -470,10 +459,7 @@ ACE_POSIX_Asynch_Read_File_Result::ACE_POSIX_Asynch_Read_File_Result
    ACE_HANDLE event,
    int priority,
    int signal_number)
-  : ACE_Asynch_Result_Impl (),
-    ACE_Asynch_Read_Stream_Result_Impl (),
-    ACE_Asynch_Read_File_Result_Impl (),
-    ACE_POSIX_Asynch_Read_Stream_Result (handler_proxy,
+  : ACE_POSIX_Asynch_Read_Stream_Result (handler_proxy,
                                          handle,
                                          message_block,
                                          bytes_to_read,
@@ -523,10 +509,7 @@ ACE_POSIX_Asynch_Read_File_Result::~ACE_POSIX_Asynch_Read_File_Result (void)
 // *********************************************************************
 
 ACE_POSIX_Asynch_Read_File::ACE_POSIX_Asynch_Read_File (ACE_POSIX_Proactor *posix_proactor)
-  : ACE_Asynch_Operation_Impl (),
-    ACE_Asynch_Read_Stream_Impl (),
-    ACE_Asynch_Read_File_Impl (),
-    ACE_POSIX_Asynch_Read_Stream (posix_proactor)
+  : ACE_POSIX_Asynch_Read_Stream (posix_proactor)
 {
 }
 
@@ -603,10 +586,7 @@ ACE_POSIX_Asynch_Write_File_Result::ACE_POSIX_Asynch_Write_File_Result
    ACE_HANDLE event,
    int priority,
    int signal_number)
-  : ACE_Asynch_Result_Impl (),
-    ACE_Asynch_Write_Stream_Result_Impl (),
-    ACE_Asynch_Write_File_Result_Impl (),
-    ACE_POSIX_Asynch_Write_Stream_Result (handler_proxy,
+  : ACE_POSIX_Asynch_Write_Stream_Result (handler_proxy,
                                           handle,
                                           message_block,
                                           bytes_to_write,
@@ -656,10 +636,7 @@ ACE_POSIX_Asynch_Write_File_Result::~ACE_POSIX_Asynch_Write_File_Result  (void)
 // *********************************************************************
 
 ACE_POSIX_Asynch_Write_File::ACE_POSIX_Asynch_Write_File (ACE_POSIX_Proactor *posix_proactor)
-  : ACE_Asynch_Operation_Impl (),
-    ACE_Asynch_Write_Stream_Impl (),
-    ACE_Asynch_Write_File_Impl (),
-    ACE_POSIX_Asynch_Write_Stream (posix_proactor)
+  : ACE_POSIX_Asynch_Write_Stream (posix_proactor)
 {
 }
 
@@ -761,9 +738,7 @@ ACE_POSIX_Asynch_Accept_Result::ACE_POSIX_Asynch_Accept_Result
    int priority,
    int signal_number)
 
-  : ACE_Asynch_Result_Impl (),
-    ACE_Asynch_Accept_Result_Impl (),
-    ACE_POSIX_Asynch_Result
+  : ACE_POSIX_Asynch_Result
       (handler_proxy, act, event, 0, 0, priority, signal_number),
     message_block_ (message_block),
     listen_handle_ (listen_handle)
@@ -803,9 +778,7 @@ ACE_POSIX_Asynch_Accept_Result::~ACE_POSIX_Asynch_Accept_Result (void)
 // *********************************************************************
 
 ACE_POSIX_Asynch_Accept::ACE_POSIX_Asynch_Accept (ACE_POSIX_Proactor * posix_proactor)
-  : ACE_Asynch_Operation_Impl (),
-    ACE_Asynch_Accept_Impl (),
-    ACE_POSIX_Asynch_Operation (posix_proactor),
+  : ACE_POSIX_Asynch_Operation (posix_proactor),
     flg_open_ (false)
 {
 }
@@ -1182,10 +1155,7 @@ ACE_POSIX_Asynch_Connect_Result::ACE_POSIX_Asynch_Connect_Result
    ACE_HANDLE event,
    int priority,
    int signal_number)
-
-  : ACE_Asynch_Result_Impl (),
-    ACE_Asynch_Connect_Result_Impl (),
-    ACE_POSIX_Asynch_Result
+  : ACE_POSIX_Asynch_Result
       (handler_proxy, act, event, 0, 0, priority, signal_number)
 {
   this->aio_fildes = connect_handle;
@@ -1220,9 +1190,7 @@ ACE_POSIX_Asynch_Connect_Result::~ACE_POSIX_Asynch_Connect_Result (void)
 // *********************************************************************
 
 ACE_POSIX_Asynch_Connect::ACE_POSIX_Asynch_Connect (ACE_POSIX_Proactor * posix_proactor)
-  : ACE_Asynch_Operation_Impl (),
-    ACE_Asynch_Connect_Impl (),
-    ACE_POSIX_Asynch_Operation (posix_proactor),
+  : ACE_POSIX_Asynch_Operation (posix_proactor),
     flg_open_ (false)
 {
 }
@@ -1699,10 +1667,7 @@ ACE_POSIX_Asynch_Transmit_File_Result::ACE_POSIX_Asynch_Transmit_File_Result
    ACE_HANDLE event,
    int priority,
    int signal_number)
-
-  : ACE_Asynch_Result_Impl (),
-    ACE_Asynch_Transmit_File_Result_Impl (),
-    ACE_POSIX_Asynch_Result
+  : ACE_POSIX_Asynch_Result
      (handler_proxy, act, event, offset, offset_high, priority, signal_number),
     socket_ (socket),
     header_and_trailer_ (header_and_trailer),
@@ -2089,9 +2054,7 @@ ACE_POSIX_Asynch_Transmit_Handler::initiate_read_file (void)
 // *********************************************************************
 
 ACE_POSIX_Asynch_Transmit_File::ACE_POSIX_Asynch_Transmit_File (ACE_POSIX_Proactor *posix_proactor)
-  : ACE_Asynch_Operation_Impl (),
-    ACE_Asynch_Transmit_File_Impl (),
-    ACE_POSIX_Asynch_Operation (posix_proactor)
+  : ACE_POSIX_Asynch_Operation (posix_proactor)
 {
 }
 
@@ -2154,8 +2117,8 @@ ACE_POSIX_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
   ACE_POSIX_Asynch_Transmit_Handler *transmit_handler = 0;
 
   ACE_NEW_RETURN (transmit_handler,
-                  ::ACE_POSIX_Asynch_Transmit_Handler (this->posix_proactor (),
-                                                             result),
+                  ACE_POSIX_Asynch_Transmit_Handler (this->posix_proactor (),
+                                                     result),
                   -1);
 
   ssize_t return_val = transmit_handler->transmit ();
@@ -2230,10 +2193,7 @@ ACE_POSIX_Asynch_Read_Dgram_Result::ACE_POSIX_Asynch_Read_Dgram_Result
    ACE_HANDLE event,
    int priority,
    int signal_number)
-
-  : ACE_Asynch_Result_Impl (),
-    ACE_Asynch_Read_Dgram_Result_Impl(),
-    ACE_POSIX_Asynch_Result
+  : ACE_POSIX_Asynch_Result
       (handler_proxy, act, event, 0, 0, priority, signal_number),
     bytes_to_read_ (bytes_to_read),
     message_block_ (message_block),
@@ -2315,10 +2275,7 @@ ACE_POSIX_Asynch_Write_Dgram_Result::ACE_POSIX_Asynch_Write_Dgram_Result
    ACE_HANDLE event,
    int priority,
    int signal_number)
-
-  : ACE_Asynch_Result_Impl (),
-    ACE_Asynch_Write_Dgram_Result_Impl(),
-    ACE_POSIX_Asynch_Result
+  : ACE_POSIX_Asynch_Result
      (handler_proxy, act, event, 0, 0, priority, signal_number),
     bytes_to_write_ (bytes_to_write),
     message_block_ (message_block),
@@ -2400,9 +2357,7 @@ ACE_POSIX_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
 }
 
 ACE_POSIX_Asynch_Read_Dgram::ACE_POSIX_Asynch_Read_Dgram (ACE_POSIX_Proactor *posix_proactor)
-  : ACE_Asynch_Operation_Impl (),
-    ACE_Asynch_Read_Dgram_Impl (),
-    ACE_POSIX_Asynch_Operation (posix_proactor)
+  : ACE_POSIX_Asynch_Operation (posix_proactor)
 {
 }
 
@@ -2452,9 +2407,7 @@ ACE_POSIX_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
 
 ACE_POSIX_Asynch_Write_Dgram::ACE_POSIX_Asynch_Write_Dgram
   (ACE_POSIX_Proactor *posix_proactor)
-  : ACE_Asynch_Operation_Impl (),
-    ACE_Asynch_Write_Dgram_Impl (),
-    ACE_POSIX_Asynch_Operation (posix_proactor)
+  : ACE_POSIX_Asynch_Operation (posix_proactor)
 {
 }
 

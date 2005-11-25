@@ -508,7 +508,7 @@ ACE_POSIX_Proactor::create_asynch_timer
    int priority,
    int signal_number)
 {
-  ACE_Asynch_Result_Impl *implementation;
+  ACE_POSIX_Asynch_Timer *implementation;
   ACE_NEW_RETURN (implementation,
                   ACE_POSIX_Asynch_Timer (handler_proxy,
                                           act,
@@ -2005,8 +2005,7 @@ ACE_POSIX_Asynch_Timer::ACE_POSIX_Asynch_Timer
    ACE_HANDLE event,
    int priority,
    int signal_number)
-  : ACE_Asynch_Result_Impl (),
-    ACE_POSIX_Asynch_Result
+  : ACE_POSIX_Asynch_Result
      (handler_proxy, act, event, 0, 0, priority, signal_number),
     time_ (tv)
 {

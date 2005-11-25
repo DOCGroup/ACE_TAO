@@ -30,7 +30,7 @@ endif
 # from the vacpp compiler newsgroup.
 # It relies on the preprocessor defining __xlC__ to the proper version
 # number of the compiler.
-XLCVERSION := $(shell echo "__xlC__" > ./testxlCvers.cpp;xlC -E ./testxlCvers.cpp | tail -1;$(RM) testxlCvers.cpp)
+XLCVERSION := $(shell echo "__xlC__" > ./testxlCvers.cpp;xlC -E ./testxlCvers.cpp | tail -n 1;$(RM) testxlCvers.cpp)
 #XLCVERSION := $(shell xlC -E ./testAIXCompilerVersion.cpp | tail -1')
 #ACE_AIX_CLEAN := $(shell $(RM) ./testAIXCompilerVersion.cpp)
 
