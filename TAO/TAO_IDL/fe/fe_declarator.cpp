@@ -162,7 +162,17 @@ FE_Declarator::compose (AST_Decl *d)
   if (this->pd_complex_part->node_type () == AST_Decl::NT_array)
     {
       arr = AST_Array::narrow_from_decl (this->pd_complex_part);
-      arr->set_base_type (ct);
+      
+      // The base type of an array isn't set until after the array
+      // has been created, so the check below gets done at this point.
+      arr->set_base_type (ct);      
+      AST_Decl::NodeType nt = ct->unaliased_type ()->node_type ();
+      
+      if (nt == AST_Decl::NT_string || nt == AST_Decl::NT_wstring)
+        {
+          idl_global->string_member_seen_ = true;
+        }
+        
       return arr;
     }
 
