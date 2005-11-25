@@ -1,3 +1,11 @@
+Fri Nov 25 15:06:43 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/fe_interface_header.cpp:
+        
+          Applied a patch submitted by Max Khon <mkhon@swsoft.com>
+          to fix a bug in computing the inheritance list of an IDL
+          interface.
+
 Fri Nov 25 13:01:23 2005  Simon McQueen  <sm@prismtech.com>
 
         * orbsvcs/tests/ImplRepo/run_test.pl:
