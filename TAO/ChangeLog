@@ -1,3 +1,10 @@
+Fri Nov 25 07:43:56 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/TAO_Singleton_Manager.h (~TAO_Singleton_Manager):
+
+	  Made destructor protected to address warnings about a class with
+	  a private destructor and no friends.
+
 Fri Nov 25 15:06:43 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/fe_interface_header.cpp:
