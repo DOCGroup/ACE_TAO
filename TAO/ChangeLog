@@ -1,3 +1,10 @@
+Fri Nov 25 11:18:12 2005  Simon McQueen  <sm@prismtech.com>
+
+        * orsbvcs/tests/Bug_2074_Regression/run_test.pl:
+
+          Correct the use lib path to give this a sporting chance.
+          Can't have ever been run from this location.
+
 Thu Nov 24 19:50:35 2005  Simon McQueen  <sm@prismtech.com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
