@@ -1,3 +1,9 @@
+Fri Nov 25 10:50:00 UTC 2005  Simon Massey  <sma@prismtech.com>
+
+        * DAnCE/Old_Config_Handlers/XercesString.cpp
+
+          Fixed prototype return type qualifier missmatch
+
 Thu Nov 24 16:04:05 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
 	* tools/Config_Handlers/Config_Handlers.mpc
