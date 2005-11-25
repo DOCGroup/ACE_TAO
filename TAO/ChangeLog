@@ -1,3 +1,9 @@
+Fri Nov 25 13:01:23 2005  Simon McQueen  <sm@prismtech.com>
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+
+          Added time parameter to WaitKill to fix spurious test error.
+
 Fri Nov 25 11:18:12 2005  Simon McQueen  <sm@prismtech.com>
 
         * orsbvcs/tests/Bug_2074_Regression/run_test.pl:
