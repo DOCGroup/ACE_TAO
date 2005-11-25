@@ -1,3 +1,22 @@
+Fri Nov 25 10:00:21 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/POSIX_Proactor.cpp (ACE_POSIX_Asynch_Timer): Don't explicitly
+	  call ACE_Asynch_Result_Impl() - it's pointless and isn't listed
+	  as an ancestor of this class.
+	  (create_asynch_timer): Use a ACE_POSIX_Asynch_Timer * to match
+	  the created object type.
+
+	* ace/POSIX_Asynch_IO.cpp: Remove explicit calls to base-class
+	  constructors from all constructors. It's not needed and seems to
+	  cause problems on 64-bit code, at least on AIX.
+
+	* include/makeinclude/platform_aix_ibm.GNU: AIX now uses the XPG4 tail
+	  command syntax, requiring "-n 1" to read the last line; refuses "-1".
+	  Thanks to Mike Knight <mike dot knight at compuware dot com> for
+	  alerting us to this.
+
+	* THANKS: Added Mike Knight to the Hall of Fame.
+
 Thu Nov 24 20:00:37 2005  Simon McQueen  <sm@prismtech.com>
 
         * bin/tao_other_tests.lst:
