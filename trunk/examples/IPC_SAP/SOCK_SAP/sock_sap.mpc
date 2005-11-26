@@ -23,6 +23,7 @@ project(*CPP_inclient) : aceexe {
 }
 
 project(*CPP_inserver) : aceexe {
+  avoids += ace_for_tao
   exename = CPP-inserver
   Source_Files {
     CPP-inserver.cpp
@@ -30,6 +31,7 @@ project(*CPP_inserver) : aceexe {
 }
 
 project(*CPP_memclient) : aceexe {
+  avoids += ace_for_tao
   exename = CPP-memclient
   Source_Files {
     CPP-memclient.cpp
@@ -37,6 +39,7 @@ project(*CPP_memclient) : aceexe {
 }
 
 project(*CPP_memserver) : aceexe {
+  avoids += ace_for_tao
   exename = CPP-memserver
   Source_Files {
     CPP-memserver.cpp
@@ -44,6 +47,7 @@ project(*CPP_memserver) : aceexe {
 }
 
 project(*FD_unclient) : aceexe {
+  avoids += ace_for_tao
   exename = FD-unclient
   Source_Files {
     FD-unclient.cpp
@@ -51,6 +55,7 @@ project(*FD_unclient) : aceexe {
 }
 
 project(*CPP_unclient) : aceexe {
+  avoids += ace_for_tao
   exename = CPP-unclient
   Source_Files {
     CPP-unclient.cpp
@@ -58,6 +63,7 @@ project(*CPP_unclient) : aceexe {
 }
 
 project(*CPP_unserver) : aceexe {
+  avoids += ace_for_tao
   exename = CPP-unserver
   Source_Files {
     CPP-unserver.cpp

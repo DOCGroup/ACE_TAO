@@ -16,13 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#ifdef ACE_MEMORY_BUILD_DLL
-# include "ace/ACE_Memory_export.h"
-#else
-# include "ace/ACE_export.h"
-# define ACE_Memory_Export ACE_Export
-# define ACE_MEMORY_SINGLETON_DECLARE ACE_SINGLETON_DECLARE
-#endif  /* ACE_MEMORY_BUILD_DLL */
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -44,7 +38,7 @@ class ACE_Based_Pointer_Repository_Rep;
  * @brief Maps pointers to the base address of the region to which each
  * pointer belongs.
  */
-class ACE_Memory_Export ACE_Based_Pointer_Repository
+class ACE_Export ACE_Based_Pointer_Repository
 {
 public:
   // = Use <ACE_Null_Mutex> to allow locking while iterating.
@@ -82,9 +76,9 @@ private:
 // ----------------------------------
 
 /// Declare a process wide singleton
-ACE_MEMORY_SINGLETON_DECLARE (ACE_Singleton,
-                              ACE_Based_Pointer_Repository,
-                              ACE_SYNCH_RW_MUTEX)
+ACE_SINGLETON_DECLARE (ACE_Singleton,
+                       ACE_Based_Pointer_Repository,
+                       ACE_SYNCH_RW_MUTEX)
 
 /// Provide a Singleton access point to the based pointer repository.
 typedef ACE_Singleton<ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX>

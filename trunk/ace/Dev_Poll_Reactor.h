@@ -19,12 +19,7 @@
 
 #include /**/ "ace/pre.h"
 
-#ifdef ACE_REACTOR_BUILD_DLL
-# include "ace/ACE_Reactor_export.h"
-#else
-# include "ace/ACE_export.h"
-# define ACE_Reactor_Export ACE_Export
-#endif  /* ACE_REACTOR_BUILD_DLL */
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -476,7 +471,7 @@ typedef ACE_Noop_Token ACE_DEV_POLL_TOKEN;
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 typedef ACE_Reactor_Token_T<ACE_DEV_POLL_TOKEN> ACE_Dev_Poll_Reactor_Token;
 
-class ACE_Reactor_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
+class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
 {
 public:
 

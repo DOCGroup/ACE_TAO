@@ -43,7 +43,8 @@ project(*SOCK_SEQPACK_clt) : aceexe {
   }
 }
 
-project(*SOCK_SEQPACK_srv) : aceexe, acesocketslib_for_tao {
+project(*SOCK_SEQPACK_srv) : aceexe {
+  avoids += ace_for_tao
   exename = SOCK_SEQPACK_srv
   source_files {
     SOCK_SEQPACK_srv.cpp
@@ -51,7 +52,8 @@ project(*SOCK_SEQPACK_srv) : aceexe, acesocketslib_for_tao {
   }
 }
 
-project(*SOCK_SEQPACK_Association_Test) : aceexe, acesocketslib_for_tao {
+project(*SOCK_SEQPACK_Association_Test) : aceexe {
+  avoids += ace_for_tao
   exename = SOCK_SEQPACK_Association_Test
   source_files {
     SOCK_SEQPACK_Association_Test.cpp

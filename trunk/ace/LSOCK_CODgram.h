@@ -35,7 +35,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief Defines the member functions for the <ACE_LSOCK> connected
  * datagram abstraction.
  */
-class ACE_Sockets_Export ACE_LSOCK_CODgram : public ACE_SOCK_CODgram, public ACE_LSOCK
+class ACE_Export ACE_LSOCK_CODgram : public ACE_SOCK_CODgram, public ACE_LSOCK
 {
 public:
   // = Initialization methods.

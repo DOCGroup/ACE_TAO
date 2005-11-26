@@ -2,6 +2,7 @@
 // $Id$
 
 project : aceexe {
+  avoids += ace_for_tao
   exename = reader
   Source_Files {
     reader.cpp

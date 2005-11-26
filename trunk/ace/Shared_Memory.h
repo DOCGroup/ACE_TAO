@@ -16,12 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#ifdef ACE_MEMORY_BUILD_DLL
-# include "ace/ACE_Memory_export.h"
-#else
-# include "ace/ACE_export.h"
-# define ACE_Memory_Export ACE_Export
-#endif  /* ACE_MEMORY_BUILD_DLL */
+#include "ace/ACE_export.h"
 
 #include "ace/os_include/os_stddef.h"
 
@@ -42,7 +37,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * memory.  For a much more sophisticated version, please check
  * out the <ACE_Malloc> class.
  */
-class ACE_Memory_Export ACE_Shared_Memory
+class ACE_Export ACE_Shared_Memory
 {
 public:
   virtual ~ACE_Shared_Memory (void);

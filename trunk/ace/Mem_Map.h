@@ -15,12 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#ifdef ACE_MEMORY_BUILD_DLL
-# include "ace/ACE_Memory_export.h"
-#else
-# include "ace/ACE_export.h"
-# define ACE_Memory_Export ACE_Export
-#endif  /* ACE_MEMORY_BUILD_DLL */
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -42,7 +37,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * This class works with both the mmap(2) UNIX system and the
  * Win32 family of memory mapping system calls.
  */
-class ACE_Memory_Export ACE_Mem_Map
+class ACE_Export ACE_Mem_Map
 {
 public:
   // = Initialization and termination methods.

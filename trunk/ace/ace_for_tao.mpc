@@ -17,7 +17,9 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, pkgconfig {
     Argv_Type_Converter.cpp
     Atomic_Op.cpp
     Auto_Event.cpp
+    Barrier.cpp             // Required by orbsvcs/tests/Notify/lib
     Base_Thread_Adapter.cpp
+    Basic_Stats.cpp         // Required by ace/Stats
     Basic_Types.cpp
     CDR_Base.cpp
     CDR_Stream.cpp
@@ -44,6 +46,7 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, pkgconfig {
     Handle_Ops.cpp
     Handle_Set.cpp
     Hashable.cpp
+    High_Res_Timer.cpp  // Required by orbsvcs/tests/Notify/lib
     INET_Addr.cpp
     Init_ACE.cpp
     IO_SAP.cpp
@@ -112,6 +115,7 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, pkgconfig {
     OS_TLI.cpp
     Parse_Node.cpp
     Pipe.cpp
+    Process.cpp
     Reactor.cpp
     Reactor_Impl.cpp
     Reactor_Notification_Strategy.cpp
@@ -130,6 +134,7 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, pkgconfig {
     Sock_Connect.cpp
     SOCK_Connector.cpp
     SOCK_Dgram.cpp
+    SOCK_Dgram_Mcast.cpp
     SOCK_IO.cpp
     SOCK_Stream.cpp
     SPIPE.cpp
@@ -138,6 +143,7 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, pkgconfig {
     SPIPE_Addr.cpp
     SPIPE_Stream.cpp
     SString.cpp
+    Stats.cpp            // Required by orbsvcs/tests/Notify
     String_Base_Const.cpp
     Synch_Options.cpp
     Task.cpp
