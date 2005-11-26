@@ -29,12 +29,10 @@
 // TAO_IDL - Generated from
 // c:\projects\ace_cvs\ace_wrappers\tao\tao_idl\be\be_visitor_valuebox/valuebox_ci.cpp:332
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE
 CORBA::StringValue::StringValue (void)
-{}
-
-ACE_INLINE 
-CORBA::StringValue::~StringValue (void)
 {}
 
 ACE_INLINE 
@@ -170,10 +168,6 @@ CORBA::WStringValue::WStringValue (void)
 {}
 
 ACE_INLINE 
-CORBA::WStringValue::~WStringValue (void)
-{}
-
-ACE_INLINE 
 CORBA::WStringValue::WStringValue (CORBA::WChar * val)
 {
   this->_pd_value = val;
@@ -297,3 +291,4 @@ CORBA::WStringValue::_tao_unmarshal_v (TAO_InputCDR & )
 }
 
 
+TAO_END_VERSIONED_NAMESPACE_DECL

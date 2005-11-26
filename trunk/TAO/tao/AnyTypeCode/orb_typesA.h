@@ -37,6 +37,7 @@
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/orb_typesC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:59
@@ -68,6 +69,8 @@ namespace CORBA
 // be\be_visitor_module/module_ch.cpp:86
 
 } // module CORBA
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

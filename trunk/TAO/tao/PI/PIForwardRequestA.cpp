@@ -35,6 +35,8 @@
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // TAO extension - the virtual _type method.
 ::CORBA::TypeCode_ptr PortableInterceptor::ForwardRequest::_tao_type (void) const
 {
@@ -155,3 +157,5 @@ void operator<<= (
         _tao_elem
       );
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

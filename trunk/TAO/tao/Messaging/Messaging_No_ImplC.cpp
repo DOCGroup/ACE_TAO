@@ -36,6 +36,8 @@
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Arg traits specializations.
 namespace TAO
 {
@@ -1488,3 +1490,5 @@ Messaging::QueueOrderPolicy::marshal (TAO_OutputCDR &)
     (strm >> _tao_aggregate.min) &&
     (strm >> _tao_aggregate.max);
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

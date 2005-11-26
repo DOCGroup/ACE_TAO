@@ -20,6 +20,8 @@ ACE_RCSID (tao,
            "$Id$")
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Specializations for CORBA::Exception Any operators.
 namespace TAO
 {
@@ -116,3 +118,5 @@ operator<<= (CORBA::Any &any, CORBA::Exception *exception)
     );
 }
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -69,6 +69,8 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // TAO_IDL - Generated from 
 // be\be_visitor_root/root_ch.cpp:62
 
@@ -3101,6 +3103,8 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::Componen
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:1136
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "IFR_ComponentsC.inl"

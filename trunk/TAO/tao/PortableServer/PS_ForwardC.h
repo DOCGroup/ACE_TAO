@@ -52,6 +52,8 @@
 #endif
 #define TAO_EXPORT_MACRO TAO_PortableServer_Export
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_ServantBase;
 class TAO_ServantBase_var;
 class TAO_Local_ServantBase;
@@ -116,6 +118,8 @@ namespace TAO
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:1028
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

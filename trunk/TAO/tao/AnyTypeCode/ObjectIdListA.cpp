@@ -32,6 +32,8 @@
 #include "tao/AnyTypeCode/Sequence_TypeCode_Static.h"
 #include "tao/AnyTypeCode/String_TypeCode_Static.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/alias_typecode.cpp:50
 
@@ -98,3 +100,5 @@ namespace CORBA
     &_tao_tc_CORBA_ORB_ObjectIdList;
 }
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL

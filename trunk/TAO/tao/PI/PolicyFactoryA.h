@@ -37,6 +37,7 @@
 #include "tao/PI/PolicyFactoryC.h"
 #include "tao/AnyTypeCode/PolicyA.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:59
@@ -53,6 +54,8 @@ namespace PortableInterceptor
 // be\be_visitor_module/module_ch.cpp:86
 
 } // module PortableInterceptor
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

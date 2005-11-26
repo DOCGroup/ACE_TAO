@@ -40,6 +40,8 @@
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:59
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace CORBA
 {
   
@@ -60,6 +62,8 @@ TAO_AnyTypeCode_Export void operator<<= ( ::CORBA::Any &, const CORBA::FloatSeq 
 TAO_AnyTypeCode_Export void operator<<= ( ::CORBA::Any &, CORBA::FloatSeq*); // noncopying version
 TAO_AnyTypeCode_Export ::CORBA::Boolean operator>>= (const ::CORBA::Any &, CORBA::FloatSeq *&); // deprecated
 TAO_AnyTypeCode_Export ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const CORBA::FloatSeq *&);
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

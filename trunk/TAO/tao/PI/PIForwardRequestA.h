@@ -40,6 +40,8 @@
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:59
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace PortableInterceptor
 {
 
@@ -60,6 +62,8 @@ TAO_PI_Export void operator<<= (::CORBA::Any &, const PortableInterceptor::Forwa
 TAO_PI_Export void operator<<= (::CORBA::Any &, PortableInterceptor::ForwardRequest*); // noncopying version
 TAO_PI_Export ::CORBA::Boolean operator>>= (const ::CORBA::Any &, PortableInterceptor::ForwardRequest *&); // deprecated
 TAO_PI_Export ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const PortableInterceptor::ForwardRequest *&);
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

@@ -44,6 +44,8 @@
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Arg traits specializations.
 namespace TAO
 {
@@ -303,5 +305,7 @@ OBV_Messaging::ExceptionHolder::_tao_unmarshal_state (TAO_InputCDR &strm)
     (strm >> _pd_marshaled_exception)
   );
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif
