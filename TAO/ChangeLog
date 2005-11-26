@@ -308,10 +308,10 @@ Fri Nov 25 19:26:03 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_codegen.cpp:
         * TAO_IDL/be/be_field.cpp:
         * TAO_IDL/fe/fe_declarator.cpp:
-        
+
           Added code generation for explicit inclusionn of
           tao/Managed_Types.h if TAO_(W)String_Manager is seen
-          anywhere in the generated code. This inclusion is 
+          anywhere in the generated code. This inclusion is
           redundant now, but will make it easier to merge the
           new sequence implementation branch, where managed_Types.h
           will be changed to the name of a new file, into which
@@ -328,7 +328,7 @@ Fri Nov 25 07:43:56 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 Fri Nov 25 15:06:43 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/fe/fe_interface_header.cpp:
-        
+
           Applied a patch submitted by Max Khon <mkhon@swsoft.com>
           to fix a bug in computing the inheritance list of an IDL
           interface. This fix closes [BUGID:2318].

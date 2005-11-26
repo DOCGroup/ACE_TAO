@@ -37,6 +37,8 @@
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // TAO extension - the virtual _type method.
 CORBA::TypeCode_ptr PortableServer::ForwardRequest::_tao_type (void) const
 {
@@ -155,5 +157,7 @@ CORBA::Boolean operator>>= (
         _tao_elem
       );
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

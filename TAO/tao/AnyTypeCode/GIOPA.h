@@ -39,6 +39,7 @@
 #include "tao/AnyTypeCode/IOP_IORA.h"
 #include "tao/AnyTypeCode/OctetSeqA.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:59
@@ -94,6 +95,8 @@ TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const GIOP::TargetAddress
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, GIOP::TargetAddress*); // noncopying version
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, GIOP::TargetAddress *&); // deprecated
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, const GIOP::TargetAddress *&);
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

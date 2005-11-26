@@ -59,6 +59,8 @@
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace PortableServer
 {
   // TAO_IDL - Generated from
@@ -190,6 +192,8 @@ namespace TAO
 
 #endif /* end #if !defined */
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 

@@ -62,6 +62,8 @@
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace PortableServer
 {
   
@@ -219,6 +221,8 @@ namespace TAO
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:1028
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

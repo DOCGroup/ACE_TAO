@@ -39,6 +39,8 @@
 
 #include "tao/AnyTypeCode/UShortSeqA.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/alias_typecode.cpp:50
 
@@ -555,3 +557,5 @@ operator>>= (
         _tao_elem
       );
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -65,6 +65,8 @@
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_sh.cpp:49
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace POA_CORBA
 {
 
@@ -305,6 +307,8 @@ namespace POA_CORBA
 
 // TAO_IDL - Generated from
 // be\be_codegen.cpp:995
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include "PolicyS_T.h"
 

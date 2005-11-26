@@ -36,6 +36,8 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Impl_T.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/value_typecode.cpp:50
 
@@ -121,4 +123,4 @@ operator>>= (
       );
 }
 
-
+TAO_END_VERSIONED_NAMESPACE_DECL

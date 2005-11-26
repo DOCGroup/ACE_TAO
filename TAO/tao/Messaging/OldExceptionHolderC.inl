@@ -31,6 +31,8 @@
 
 #if defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_INLINE
 Messaging::ExceptionHolder::ExceptionHolder (void)
 {}
@@ -40,5 +42,7 @@ Messaging::ExceptionHolder::_tao_obv_static_repository_id ()
 {
   return "IDL:omg.org/Messaging/ExceptionHolder:1.0";
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* */

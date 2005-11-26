@@ -36,6 +36,8 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Impl_T.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // TAO_IDL - Generated from
 // c:\csd\ace_wrappers\tao\tao_idl\be\be_visitor_typecode/objref_typecode.cpp:76
 
@@ -71,3 +73,4 @@ namespace CSD_Framework
 }
 
 
+TAO_END_VERSIONED_NAMESPACE_DECL

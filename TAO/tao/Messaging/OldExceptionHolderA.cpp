@@ -43,6 +43,8 @@
 
 #if defined (TAO_HAS_DEPRECATED_EXCEPTION_HOLDER)
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/typecode_defn.cpp:937
 
@@ -186,5 +188,7 @@ operator>>= (
 
 
 #endif
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* */

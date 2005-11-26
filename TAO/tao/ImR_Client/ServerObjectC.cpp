@@ -50,6 +50,8 @@
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Arg traits specializations.
 namespace TAO
 {
@@ -457,3 +459,5 @@ operator>>= (
     
   return 1;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
