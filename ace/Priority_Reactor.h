@@ -14,12 +14,7 @@
 #define ACE_PRIORITY_REACTOR_H
 #include /**/ "ace/pre.h"
 
-#ifdef ACE_REACTOR_BUILD_DLL
-# include "ace/ACE_Reactor_export.h"
-#else
-# include "ace/ACE_export.h"
-# define ACE_Reactor_Export ACE_Export
-#endif  /* ACE_REACTOR_BUILD_DLL */
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -39,7 +34,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * Select_Reactor by taking advantage of the priority method on
  * ACE_Event_Handler.
  */
-class ACE_Reactor_Export ACE_Priority_Reactor : public ACE_Select_Reactor
+class ACE_Export ACE_Priority_Reactor : public ACE_Select_Reactor
 {
 public:
   // = Initialization and termination methods.

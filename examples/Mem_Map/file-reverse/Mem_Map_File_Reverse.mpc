@@ -2,5 +2,6 @@
 // $Id$
 
 project : aceexe {
+  avoids += ace_for_tao
   exename = file-reverse
 }

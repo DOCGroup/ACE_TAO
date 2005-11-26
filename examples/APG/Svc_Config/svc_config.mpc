@@ -17,6 +17,7 @@ project(HA Configurable Server Dynamic) : aceexe {
 }
 
 project(HA Configurable Server Static) : aceexe {
+  avoids += ace_for_tao
   exename = HA_Configurable_Server_Static
   Source_Files {
     HA_Configurable_Server_Static.cpp

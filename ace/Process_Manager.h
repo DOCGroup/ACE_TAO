@@ -15,12 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#ifdef ACE_THREADS_BUILD_DLL
-# include "ace/ACE_Threads_export.h"
-#else
-# include "ace/ACE_export.h"
-# define ACE_Threads_Export ACE_Export
-#endif  /* ACE_THREADS_BUILD_DLL */
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -44,7 +39,7 @@ class ACE_Reactor;
  * @brief Information describing each process that's controlled by an
  * \<ACE_Process_Manager\>.
  */
-class ACE_Threads_Export ACE_Process_Descriptor
+class ACE_Export ACE_Process_Descriptor
 {
 private:
   friend class ACE_Process_Manager;
@@ -126,7 +121,7 @@ private:
  * + The <handle_input> method collects all available exit
  *   statuses.
  */
-class ACE_Threads_Export ACE_Process_Manager : protected ACE_Event_Handler
+class ACE_Export ACE_Process_Manager : protected ACE_Event_Handler
 {
 public:
   friend class ACE_Process_Control;

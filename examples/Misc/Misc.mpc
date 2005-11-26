@@ -16,6 +16,7 @@ project(*test_get_opt) : aceexe {
 }
 
 project(*test_profile_timer) : aceexe {
+  avoids += ace_for_tao
   exename = test_profile_timer
   Source_Files {
     test_profile_timer.cpp
