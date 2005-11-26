@@ -10,6 +10,13 @@ Fri Nov 25 19:04:10 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* ace/ACE_Sockets_export.h:
 	* ace/ACE_Threads_export.h:
 	* ace/ace.mwc:
+	* ace/ace_codecs_for_tao.mpc:
+	* ace/ace_configuration_for_tao.mpc:
+	* ace/ace_memory_for_tao.mpc:
+	* ace/ace_reactor_for_tao.mpc:
+	* ace/ace_sockets_for_tao.mpc:
+	* ace/ace_threads_for_tao.mpc:
+	* ace/ace_timer_for_tao.mpc:
 	* bin/MakeProjectCreator/config/acecodecslib_for_tao.mpb:
 	* bin/MakeProjectCreator/config/acememorylib_for_tao.mpb:
 	* bin/MakeProjectCreator/config/acereactorlib_for_tao.mpb:
