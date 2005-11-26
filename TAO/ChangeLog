@@ -1,3 +1,12 @@
+Sat Nov 26 14:57:56 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/include/idl_global.h:
+        
+          Modified files overlooked in the checkin of
+          
+          Fri Nov 25 19:26:03 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Fri Nov 25 18:54:19 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* NEWS:
@@ -302,6 +311,7 @@ Fri Nov 25 18:54:19 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  Added missing versioned namespace support.
 
+>>>>>>> 1.7235
 Fri Nov 25 19:26:03 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
