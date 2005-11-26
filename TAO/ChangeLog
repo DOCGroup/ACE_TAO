@@ -4,7 +4,6 @@ Fri Nov 25 18:54:19 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  Updated with latest versioned namespace information.
 
-
 	* TAO_IDL/tao_idl.mpc:
 	* orbsvcs/orbsvcs/CosNaming_Serv.mpc:
 	* orbsvcs/orbsvcs/FTORB.mpc:
