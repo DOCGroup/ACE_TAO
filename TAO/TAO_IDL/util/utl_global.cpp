@@ -129,7 +129,8 @@ IDL_GlobalData::IDL_GlobalData (void)
     preserve_cpp_keywords_ (I_TRUE),
     pass_orb_idl_ (I_FALSE),
     using_ifr_backend_ (false),
-    ignore_idl3_ (false)
+    ignore_idl3_ (false),
+    recursion_start_ (0)
 {
   // Path for the perfect hash generator(gperf) program.
   // Default is $ACE_ROOT/bin/gperf unless ACE_GPERF is defined.
@@ -237,6 +238,7 @@ IDL_GlobalData::reset_flag_seen (void)
   short_seq_seen_ = false;
   special_basic_arg_seen_ = false;
   string_seen_ = false;
+  string_member_seen_ = false;
   string_seq_seen_ = false;
   typecode_seen_ = false;
   ub_string_arg_seen_ = false;
@@ -1062,6 +1064,9 @@ IDL_GlobalData::destroy (void)
   this->n_included_idl_files_ = 0;
 
   this->pd_root->destroy ();
+  
+  ACE::strdelete (this->recursion_start_);
+  this->recursion_start_ = 0;
 }
 
 void
@@ -1628,6 +1633,19 @@ IDL_GlobalData::check_primary_keys (void)
           this->pd_err->illegal_primary_key (holder);
         }
     }
+}
+
+const char *
+IDL_GlobalData::recursion_start (void) const
+{
+  return this->recursion_start_;
+}
+
+void
+IDL_GlobalData::recursion_start (const char *val)
+{
+  ACE::strdelete (this->recursion_start_);
+  this->recursion_start_ = ACE::strnew (val);
 }
 
 void
