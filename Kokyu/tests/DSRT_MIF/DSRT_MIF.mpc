@@ -1,6 +1,7 @@
 //  -*- MPC -*-
 // $Id$
 
-project: kokyu, acethreadslib_for_tao, acetimerlib_for_tao {
+project: kokyu {
+  avoids += ace_for_tao
   exename = MIF
 }
