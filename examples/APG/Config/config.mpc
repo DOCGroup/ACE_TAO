@@ -2,6 +2,7 @@
 // $Id$
 
 project(*HA Status) : aceexe {
+  avoids += ace_for_tao
   exename = HA_Status
   Source_Files {
     HA_Status.cpp

@@ -15,18 +15,7 @@
 #define ACE_MEM_IO_H
 #include /**/ "ace/pre.h"
 
-#ifdef ACE_MEMORY_BUILD_DLL
-# include "ace/ACE_Memory_export.h"
-#else
-# include "ace/ACE_export.h"
-# define ACE_Memory_Export ACE_Export
-#endif  /* ACE_MEMORY_BUILD_DLL */
-
-#include "ace/SOCK.h"
-#include "ace/MEM_SAP.h"
-#include "ace/Message_Block.h"
-#include "ace/Process_Semaphore.h"
-#include "ace/Process_Mutex.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -34,9 +23,16 @@
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
+#include "ace/SOCK.h"
+#include "ace/MEM_SAP.h"
+#include "ace/Message_Block.h"
+#include "ace/Process_Semaphore.h"
+#include "ace/Process_Mutex.h"
+
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class ACE_Memory_Export ACE_Reactive_MEM_IO : public ACE_MEM_SAP
+class ACE_Export ACE_Reactive_MEM_IO : public ACE_MEM_SAP
 {
 public:
   ACE_Reactive_MEM_IO (void);
@@ -79,7 +75,7 @@ public:
 };
 
 #if defined (ACE_WIN32) || !defined (_ACE_USE_SV_SEM)
-class ACE_Memory_Export ACE_MT_MEM_IO : public ACE_MEM_SAP
+class ACE_Export ACE_MT_MEM_IO : public ACE_MEM_SAP
 {
 public:
   typedef struct
@@ -171,7 +167,7 @@ private:
  * the other end.  The receiving side then reverses the
  * procedures and copies the information into user buffer.
  */
-class ACE_Memory_Export ACE_MEM_IO : public ACE_SOCK
+class ACE_Export ACE_MEM_IO : public ACE_SOCK
 {
 public:
   // = Initialization and termination methods.

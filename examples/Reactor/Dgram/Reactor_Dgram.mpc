@@ -2,6 +2,7 @@
 // $Id$
 
 project(*CO) : aceexe {
+  avoids += ace_for_tao
   exename = codgram
   Source_Files {
     CODgram.cpp

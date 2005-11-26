@@ -39,7 +39,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * \todo For systems with pthread_rwlockattr_setpshared one
  * may consider using them to make the mutex faster.
  */
-class ACE_Threads_Export ACE_RW_Process_Mutex
+class ACE_Export ACE_RW_Process_Mutex
 {
 public:
   /// Create a readers/writer <Process_Mutex>, passing in the optional

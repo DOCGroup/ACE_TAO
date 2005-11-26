@@ -1,3 +1,136 @@
+Fri Nov 25 19:04:10 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* NEWS:
+
+	  Updated with latest versioned namespace information.
+
+	* ace/ACE_Codecs_export.h:
+	* ace/ACE_Memory_export.h:
+	* ace/ACE_Reactor_export.h:
+	* ace/ACE_Sockets_export.h:
+	* ace/ACE_Threads_export.h:
+	* ace/ace.mwc:
+	* bin/MakeProjectCreator/config/acecodecslib_for_tao.mpb:
+	* bin/MakeProjectCreator/config/acememorylib_for_tao.mpb:
+	* bin/MakeProjectCreator/config/acereactorlib_for_tao.mpb:
+	* bin/MakeProjectCreator/config/acesocketslib_for_tao.mpb:
+	* bin/MakeProjectCreator/config/acethreadslib_for_tao.mpb:
+	* bin/MakeProjectCreator/config/acetimerlib_for_tao.mpb:
+
+	  Removed smaller ace_for_tao subsets.  Only a single ace_for_tao
+	  subset library was originally intended.
+
+	* ace/Activation_Queue.h:
+	* ace/Barrier.h:
+	* ace/Based_Pointer_Repository.h:
+	* ace/Codecs.h:
+	* ace/Dev_Poll_Reactor.h:
+	* ace/File_Lock.h:
+	* ace/LSOCK.h:
+	* ace/LSOCK_Acceptor.h:
+	* ace/LSOCK_CODgram.h:
+	* ace/LSOCK_Connector.h:
+	* ace/LSOCK_Dgram.h:
+	* ace/LSOCK_Stream.h:
+	* ace/MEM_Acceptor.h:
+	* ace/MEM_Addr.h:
+	* ace/MEM_Connector.h:
+	* ace/MEM_IO.h:
+	* ace/MEM_SAP.h:
+	* ace/MEM_Stream.h:
+	* ace/MMAP_Memory_Pool.h:
+	* ace/Mem_Map.h:
+	* ace/Method_Request.h:
+	* ace/Msg_WFMO_Reactor.h:
+	* ace/Multihomed_INET_Addr.h:
+	* ace/PI_Malloc.h:
+	* ace/Pagefile_Memory_Pool.h:
+	* ace/Priority_Reactor.h:
+	* ace/Process.h:
+	* ace/Process_Manager.h:
+	* ace/Process_Semaphore.h:
+	* ace/RW_Process_Mutex.h:
+	* ace/SOCK_CODgram.h:
+	* ace/SOCK_Dgram_Bcast.h:
+	* ace/SOCK_Dgram_Mcast.h:
+	* ace/SOCK_SEQPACK_Acceptor.h:
+	* ace/SOCK_SEQPACK_Association.h:
+	* ace/SOCK_SEQPACK_Connector.h:
+	* ace/SV_Shared_Memory.h:
+	* ace/Sbrk_Memory_Pool.h:
+	* ace/Shared_Memory.h:
+	* ace/Shared_Memory_MM.h:
+	* ace/Shared_Memory_Pool.h:
+	* ace/Shared_Memory_SV.h:
+	* ace/Thread_Semaphore.h:
+	* ace/UNIX_Addr.h:
+
+	  Removed ace_for_tao subset-specific export macro calls and
+	  include directives.  They are no longer needed.
+
+	* ace/ace_for_tao.mpc:
+
+	  Added a number of source files required to build the
+	  Notification Service and its tests.
+
+	* Kokyu/tests/DSRT_MIF/DSRT_MIF.mpc:
+	* ace/QoS/qos.mpc:
+	* apps/soreduce/soreduce.mpc:
+	* bin/MakeProjectCreator/config/ftclientorb.mpb:
+	* bin/MakeProjectCreator/config/htbp.mpb:
+	* bin/MakeProjectCreator/config/ifrservice.mpb:
+	* bin/MakeProjectCreator/config/naming_serv.mpb:
+	* bin/MakeProjectCreator/config/portablegroup.mpb:
+	* bin/MakeProjectCreator/config/rtevent_serv.mpb:
+	* bin/MakeProjectCreator/config/ssl.mpb:
+	* bin/MakeProjectCreator/config/strategies.mpb:
+	* bin/MakeProjectCreator/config/tmcast.mpb:
+	* examples/APG/Active_Objects/active_objects.mpc:
+	* examples/APG/Config/config.mpc:
+	* examples/APG/Misc_IPC/misc_ipc.mpc:
+	* examples/APG/Naming/naming.mpc:
+	* examples/APG/Proactor/proactor.mpc:
+	* examples/APG/Processes/processes.mpc:
+	* examples/APG/Shared_Memory/shared_memory.mpc:
+	* examples/APG/Streams/streams.mpc:
+	* examples/APG/Svc_Config/svc_config.mpc:
+	* examples/APG/ThreadPools/threadpools.mpc:
+	* examples/APG/ThreadSafety/threadsafety.mpc:
+	* examples/ASX/Event_Server/Event_Server/Event.mpc:
+	* examples/ASX/UPIPE_Event_Server/UPIPE_Event.mpc:
+	* examples/C++NPv1/C++NPv1.mpc:
+	* examples/C++NPv2/C++NPv2.mpc:
+	* examples/Connection/blocking/Connection_Blocking.mpc:
+	* examples/Connection/misc/Connection_Misc.mpc:
+	* examples/Connection/non_blocking/Connection_Non_Blocking.mpc:
+	* examples/IPC_SAP/DEV_SAP/reader/dev_sap_reader.mpc:
+	* examples/IPC_SAP/DEV_SAP/writer/dev_sap_writer.mpc:
+	* examples/IPC_SAP/FIFO_SAP/fifo_sap.mpc:
+	* examples/IPC_SAP/FILE_SAP/file_sap_client.mpc:
+	* examples/IPC_SAP/SOCK_SAP/sock_sap.mpc:
+	* examples/IPC_SAP/UPIPE_SAP/UPIPE_SAP.mpc:
+	* examples/Mem_Map/IO-tests/Mem_Map_IO_Tests.mpc:
+	* examples/Mem_Map/file-reverse/Mem_Map_File_Reverse.mpc:
+	* examples/Misc/Misc.mpc:
+	* examples/Naming/Naming.mpc:
+	* examples/OS/Process/OS_Process.mpc:
+	* examples/Reactor/Dgram/Reactor_Dgram.mpc:
+	* examples/Reactor/FIFO/Reactor_FIFO.mpc:
+	* examples/Reactor/Proactor/Proactor.mpc:
+	* examples/Service_Configurator/IPC-tests/client/Svc_Cfg_IPC_Client.mpc:
+	* examples/Shared_Malloc/Shared_Malloc.mpc:
+	* examples/Shared_Memory/Shared_Memory.mpc:
+	* examples/Synch/Synch.mpc:
+	* examples/System_V_IPC/SV_Message_Queues/SV_Message_Queues.mpc:
+	* examples/System_V_IPC/SV_Semaphores/SV_Semaphores.mpc:
+	* examples/Threads/Threads.mpc:
+	* performance-tests/SCTP/SCTP.mpc:
+	* tests/tests.mpc:
+
+	  Added "avoids += ace_for_tao" to projects that require features
+	  of ACE not found in the ace_for_tao subset.  Addresses link-time
+	  errors.
+
 Fri Nov 25 12:45:20 2005  Steve Huston  <shuston@riverace.com>
 
 	* tests/Proactor_Test.cpp:

@@ -16,12 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#ifdef ACE_MEMORY_BUILD_DLL
-# include "ace/ACE_Memory_export.h"
-#else
-# include "ace/ACE_export.h"
-# define ACE_Memory_Export ACE_Export
-#endif  /* ACE_MEMORY_BUILD_DLL */
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -46,7 +41,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * processes sharing the memory.  The tradoff of this flexibility
  * is more expensive malloc/free operations.
  */
-class ACE_Memory_Export ACE_PI_Control_Block
+class ACE_Export ACE_PI_Control_Block
 {
 public:
   class ACE_Malloc_Header;
@@ -63,7 +58,7 @@ public:
    * to keep track of each chunk of data when it's in the free
    * list or in use.
    */
-  class ACE_Memory_Export ACE_Malloc_Header
+  class ACE_Export ACE_Malloc_Header
   {
   public:
     ACE_Malloc_Header (void);
@@ -104,7 +99,7 @@ public:
    * it easy to iterate over the items in the list in both FIFO
    * and LIFO order.
    */
-  class ACE_Memory_Export ACE_Name_Node
+  class ACE_Export ACE_Name_Node
   {
   public:
     // = Initialization methods.

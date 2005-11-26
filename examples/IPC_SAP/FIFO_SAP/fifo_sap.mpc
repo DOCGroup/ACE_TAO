@@ -2,6 +2,7 @@
 // $Id$
 
 project(*client) : aceexe {
+  avoids += ace_for_tao
   exename = FIFO-client
   Source_Files {
     FIFO-client.cpp
@@ -9,6 +10,7 @@ project(*client) : aceexe {
 }
 
 project(*server) : aceexe {
+  avoids += ace_for_tao
   exename = FIFO-server
   Source_Files {
     FIFO-server.cpp
@@ -30,6 +32,7 @@ project(*Msg_Server) : aceexe {
 }
 
 project(*test) : aceexe {
+  avoids += ace_for_tao
   exename = FIFO-test
   Source_Files {
     FIFO-test.cpp

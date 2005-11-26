@@ -20,19 +20,13 @@
 
 #include /**/ "ace/pre.h"
 
-#ifdef ACE_SOCKETS_BUILD_DLL
-# include "ace/ACE_Sockets_export.h"
-#else
-# include "ace/ACE_export.h"
-# define ACE_Sockets_Export ACE_Export
-#endif  /* ACE_SOCKETS_BUILD_DLL */
-
-#include "ace/SOCK_IO.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/SOCK_IO.h"
 #include "ace/Multihomed_INET_Addr.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -81,7 +75,7 @@ class ACE_Message_Block;
  * will result in <send> getting called on Win32 platforms, and
  * <write> getting called on non-Win32 platforms.
  */
-class ACE_Sockets_Export ACE_SOCK_SEQPACK_Association : public ACE_SOCK_IO
+class ACE_Export ACE_SOCK_SEQPACK_Association : public ACE_SOCK_IO
 {
 public:
   // Initialization and termination methods.

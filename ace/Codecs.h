@@ -21,13 +21,7 @@
 
 #include /**/ "ace/pre.h"
 
-#ifdef ACE_THREADS_BUILD_DLL
-# include "ace/ACE_Codecs_export.h"
-#else
-# include "ace/ACE_export.h"
-# define ACE_Codecs_Export ACE_Export
-#endif  /* ACE_THREADS_BUILD_DLL */
-
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -49,7 +43,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * canonical form before encoding.
  *
  */
-class ACE_Codecs_Export ACE_Base64
+class ACE_Export ACE_Base64
 {
 public:
 
