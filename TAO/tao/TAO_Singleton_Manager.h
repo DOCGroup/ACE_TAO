@@ -179,13 +179,12 @@ public:
 protected:
 
   /// Force allocation on the heap.
-  ~TAO_Singleton_Manager (void);
-
-private:
-
   //@{
   TAO_Singleton_Manager (void);
+  ~TAO_Singleton_Manager (void);
   //@}
+
+private:
 
   /// Disallow copying by not implementing the following ...
   //@{

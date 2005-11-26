@@ -38,6 +38,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from 
 // be\be_visitor_root/root_sth.cpp:116
@@ -201,6 +202,8 @@ namespace POA_CORBA
 
 // TAO_IDL - Generated from 
 // be\be_codegen.cpp:1096
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "DomainS_T.inl"

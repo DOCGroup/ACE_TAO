@@ -54,6 +54,8 @@
 // TAO_IDL - Generated from
 // .\be\be_visitor_arg_traits.cpp:70
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Arg traits specializations.
 namespace TAO
 {
@@ -78,18 +80,16 @@ namespace CORBA
     &_tao_tc_CORBA_StringValue;
 }
 
-
-
 // TAO_IDL - Generated from
 // c:\projects\ace_cvs\ace_wrappers\tao\tao_idl\be\be_visitor_valuebox/valuebox_cs.cpp:63
+
+CORBA::StringValue::~StringValue (void)
+{
+}
+
 CORBA::StringValue *
 CORBA::StringValue::_downcast (CORBA::ValueBase *v)
 {
-  if (v == 0)
-    {
-      return 0;
-    }
-
   return dynamic_cast< ::CORBA::StringValue * > (v);
 }
 
@@ -166,14 +166,13 @@ namespace CORBA
 
 // TAO_IDL - Generated from
 // c:\projects\ace_cvs\ace_wrappers\tao\tao_idl\be\be_visitor_valuebox/valuebox_cs.cpp:63
+CORBA::WStringValue::~WStringValue (void)
+{
+}
+
 CORBA::WStringValue *
 CORBA::WStringValue::_downcast (CORBA::ValueBase *v)
 {
-  if (v == 0)
-    {
-      return 0;
-    }
-
   return dynamic_cast< ::CORBA::WStringValue * > (v);
 }
 
@@ -402,3 +401,4 @@ operator>> (
   return CORBA::WStringValue::_tao_unmarshal (strm, _tao_valuebox);
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

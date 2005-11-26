@@ -42,6 +42,8 @@
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:59
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
 
@@ -54,6 +56,8 @@ namespace TAO
 // be\be_visitor_module/module_ch.cpp:86
 
 } // module TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

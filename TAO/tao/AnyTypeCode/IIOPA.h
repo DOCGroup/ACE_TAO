@@ -41,6 +41,8 @@
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:59
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace IIOP
 {
 
@@ -87,6 +89,8 @@ TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const IIOP::BiDirIIOPServ
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, IIOP::BiDirIIOPServiceContext*); // noncopying version
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, IIOP::BiDirIIOPServiceContext *&); // deprecated
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, const IIOP::BiDirIIOPServiceContext *&);
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

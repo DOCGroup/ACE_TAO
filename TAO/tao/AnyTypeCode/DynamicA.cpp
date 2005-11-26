@@ -38,6 +38,8 @@
 #include "tao/AnyTypeCode/StringSeqA.h"
 #include "tao/AnyTypeCode/Dynamic_ParameterA.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 #ifndef _TAO_TYPECODE_Dynamic_ParameterList_GUARD
 #define _TAO_TYPECODE_Dynamic_ParameterList_GUARD
 namespace TAO
@@ -285,3 +287,5 @@ CORBA::Boolean operator>>= (
         _tao_elem
       );
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

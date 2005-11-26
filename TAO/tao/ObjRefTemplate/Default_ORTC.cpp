@@ -44,6 +44,8 @@
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:69
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Arg traits specializations.
 namespace TAO
 {
@@ -239,3 +241,5 @@ OBV_TAO_Default_ORT::ObjectReferenceTemplate::_tao_unmarshal_state (TAO_InputCDR
     true
   );
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

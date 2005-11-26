@@ -36,6 +36,8 @@
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Arg traits specializations.
 namespace TAO
 {
@@ -174,3 +176,5 @@ PortableInterceptor::PolicyFactory::_create_policy (CORBA::PolicyType
                     CORBA::Policy::_nil ());
 }
 
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -70,6 +70,8 @@
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Arg traits specializations.
 namespace TAO
 {
@@ -3103,6 +3105,8 @@ POA_ImplementationRepository::Administration::_this (ACE_ENV_SINGLE_ARG_DECL)
         ImplementationRepository__TAO_Administration_Proxy_Broker_Factory_function_pointer
       );
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ifndef */
 

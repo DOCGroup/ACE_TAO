@@ -37,6 +37,8 @@
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/objref_typecode.cpp:76
 
@@ -52,5 +54,7 @@ namespace PortableServer
   ::CORBA::TypeCode_ptr const _tc_ServantLocator =
     &_tao_tc_PortableServer_ServantLocator;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

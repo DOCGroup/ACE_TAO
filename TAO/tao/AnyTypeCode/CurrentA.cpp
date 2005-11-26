@@ -37,6 +37,8 @@
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/objref_typecode.cpp:76
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 static TAO::TypeCode::Objref<char const *,
                              TAO::Null_RefCount_Policy>
   _tao_tc_CORBA_Current (
@@ -51,3 +53,4 @@ namespace CORBA
 }
 
 
+TAO_END_VERSIONED_NAMESPACE_DECL
