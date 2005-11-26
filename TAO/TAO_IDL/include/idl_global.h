@@ -306,6 +306,7 @@ public:
   bool short_seq_seen_;
   bool special_basic_arg_seen_;
   bool string_seen_;
+  bool string_member_seen_;
   bool string_seq_seen_;
   bool typecode_seen_;
   bool ub_string_arg_seen_;
@@ -586,6 +587,10 @@ public:
   // of primary keys. Must be called this late so that we can
   // be sure that all forward declared stucts or unions that
   // might be used in such a valuetype are fully defined.
+  
+  const char *recursion_start (void) const;
+  void recursion_start (const char *val);
+  // Accessors for the member.
 
 private:
   // Data
@@ -682,6 +687,9 @@ private:
   
   ACE_Unbounded_Queue<AST_ValueType *>primary_keys_;
   // List of valuetypes used as a primary key.
+  
+  char *recursion_start_;
+  // Path to directory subtree we are iterating/recursing over.
 };
 
 
