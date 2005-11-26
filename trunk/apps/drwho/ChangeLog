@@ -1,3 +1,11 @@
+Sat Nov 26 06:58:23 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* drwho.mpc:
+
+  	  Added "avoids += ace_for_tao" since this project requires
+	  features of ACE not found in the ace_for_tao subset.  Addresses
+	  build errors.
+
 Sat Apr 30 08:16:42 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* Select_Manager.cpp:
