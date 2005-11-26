@@ -1,9 +1,9 @@
 // -*- MPC -*-
 // $Id$
 
-project(*-client) : aceexe, acememorylib_for_tao {
+project(*-client) : aceexe {
   requires += rwho
-  avoids += uses_wchar
+  avoids += uses_wchar ace_for_tao
   Source_Files {
     Comm_Manager.cpp
     Select_Manager.cpp
