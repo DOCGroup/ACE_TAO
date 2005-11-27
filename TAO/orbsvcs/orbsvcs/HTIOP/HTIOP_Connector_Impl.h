@@ -23,7 +23,9 @@
 #include "tao/corbafwd.h"
 #include "ace/Strategies_T.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Thread_Manager;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

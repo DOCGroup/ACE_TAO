@@ -86,19 +86,15 @@ namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-namespace TAO
-{
-  namespace Portable_Server
-  {
-    ACE_STATIC_SVC_DEFINE (
-        IdUniquenessStrategyFactoryImpl,
-        ACE_TEXT ("IdUniquenessStrategyFactory"),
-        ACE_SVC_OBJ_T,
-        &ACE_SVC_NAME (IdUniquenessStrategyFactoryImpl),
-        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
-        0
-      )
+ACE_STATIC_SVC_DEFINE (
+  IdUniquenessStrategyFactoryImpl,
+  ACE_TEXT ("IdUniquenessStrategyFactory"),
+  ACE_SVC_OBJ_T,
+  &ACE_SVC_NAME (IdUniquenessStrategyFactoryImpl),
+  ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+  0)
 
-    ACE_FACTORY_DEFINE (ACE_Local_Service, IdUniquenessStrategyFactoryImpl)
-  }
-}
+ACE_FACTORY_NAMESPACE_DEFINE (
+  ACE_Local_Service,
+  IdUniquenessStrategyFactoryImpl,
+  TAO::Portable_Server::IdUniquenessStrategyFactoryImpl)

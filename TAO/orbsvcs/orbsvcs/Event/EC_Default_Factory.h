@@ -29,6 +29,8 @@
 #include "ace/SString.h"
 #include "ace/Time_Value.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class TAO_EC_Queue_Full_Service_Object;
 
 /**
@@ -184,6 +186,8 @@ protected:
   /// Validate the connection to consumer on connect
   int consumer_validate_connection_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "EC_Default_Factory.i"

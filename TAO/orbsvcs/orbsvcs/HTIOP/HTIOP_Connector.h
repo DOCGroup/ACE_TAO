@@ -32,7 +32,7 @@
 #include "ace/Connector.h"
 #include "ace/OS.h"
 
-
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE
 {
   namespace HTBP
@@ -40,6 +40,7 @@ namespace ACE
     class Environment;
   }
 }
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************
 

@@ -6,6 +6,8 @@ ACE_RCSID (Log,
            BasicLog_i,
            "$Id$")
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO_BasicLog_i::TAO_BasicLog_i (CORBA::ORB_ptr orb,
 				PortableServer::POA_ptr poa,
                                 TAO_LogMgr_i &logmgr_i,
@@ -88,3 +90,5 @@ TAO_BasicLog_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
 				 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -47,14 +47,9 @@ namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-namespace TAO
-{
-  namespace Portable_Server
-  {
-    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, RequestProcessingStrategyAOMOnlyFactoryImpl)
-    ACE_FACTORY_DECLARE (TAO_PortableServer, RequestProcessingStrategyAOMOnlyFactoryImpl)
-  }
-}
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, RequestProcessingStrategyAOMOnlyFactoryImpl)
+ACE_FACTORY_DECLARE (TAO_PortableServer, RequestProcessingStrategyAOMOnlyFactoryImpl)
+
 
 #include /**/ "ace/post.h"
 #endif /* TAO_PORTABLESERVER_REQUESTPROCESSINGSTRATEGYAOMONLYFACTORYIMPL_H*/

@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Versioned_Namespace.h"
+#include "tao/orbconf.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -62,7 +62,7 @@ namespace TAO
     protected:
 
       TAO_Object_Adapter &object_adapter_;
-      ::TAO_Root_POA &poa_;
+      TAO_Root_POA &poa_;
       Non_Servant_Upcall *previous_;
     };
   }

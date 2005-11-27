@@ -53,114 +53,114 @@ int
 TAO_POA_Initializer::init (void)
 {
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_IdAssignmentStrategySystem
+      ace_svc_desc_IdAssignmentStrategySystem
     );
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_IdAssignmentStrategyUser
+      ace_svc_desc_IdAssignmentStrategyUser
     );
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_IdUniquenessStrategyMultiple
+      ace_svc_desc_IdUniquenessStrategyMultiple
     );
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_IdUniquenessStrategyUnique
+      ace_svc_desc_IdUniquenessStrategyUnique
     );
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_IdUniquenessStrategyUniqueFactoryImpl
+      ace_svc_desc_IdUniquenessStrategyUniqueFactoryImpl
     );
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_ImplicitActivationStrategyExplicit
+      ace_svc_desc_ImplicitActivationStrategyExplicit
     );
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_ImplicitActivationStrategyImplicit
+      ace_svc_desc_ImplicitActivationStrategyImplicit
     );
 
   // Strategy factories
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_ThreadStrategyFactoryImpl
+      ace_svc_desc_ThreadStrategyFactoryImpl
     );
 
 #if (TAO_HAS_MINIMUM_POA == 0)
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_ThreadStrategySingleFactoryImpl
+      ace_svc_desc_ThreadStrategySingleFactoryImpl
     );
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_LifespanStrategyFactoryImpl
+      ace_svc_desc_LifespanStrategyFactoryImpl
     );
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_LifespanStrategyPersistentFactoryImpl
+      ace_svc_desc_LifespanStrategyPersistentFactoryImpl
     );
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_LifespanStrategyTransientFactoryImpl
+      ace_svc_desc_LifespanStrategyTransientFactoryImpl
     );
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_IdAssignmentStrategyFactoryImpl
+      ace_svc_desc_IdAssignmentStrategyFactoryImpl
     );
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_IdUniquenessStrategyFactoryImpl
+      ace_svc_desc_IdUniquenessStrategyFactoryImpl
     );
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_ImplicitActivationStrategyFactoryImpl
+      ace_svc_desc_ImplicitActivationStrategyFactoryImpl
     );
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_RequestProcessingStrategyFactoryImpl
+      ace_svc_desc_RequestProcessingStrategyFactoryImpl
     );
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_RequestProcessingStrategyAOMOnlyFactoryImpl
+      ace_svc_desc_RequestProcessingStrategyAOMOnlyFactoryImpl
     );
 
 #if (TAO_HAS_MINIMUM_POA == 0)
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_RequestProcessingStrategyDefaultServantFactoryImpl
+      ace_svc_desc_RequestProcessingStrategyDefaultServantFactoryImpl
     );
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_RequestProcessingStrategyServantActivatorFactoryImpl
+      ace_svc_desc_RequestProcessingStrategyServantActivatorFactoryImpl
     );
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_RequestProcessingStrategyServantLocatorFactoryImpl
+      ace_svc_desc_RequestProcessingStrategyServantLocatorFactoryImpl
     );
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_ServantRetentionStrategyFactoryImpl
+      ace_svc_desc_ServantRetentionStrategyFactoryImpl
     );
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_ServantRetentionStrategyRetainFactoryImpl
+      ace_svc_desc_ServantRetentionStrategyRetainFactoryImpl
     );
 
 #if (TAO_HAS_MINIMUM_POA == 0)
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_ServantRetentionStrategyNonRetainFactoryImpl
+      ace_svc_desc_ServantRetentionStrategyNonRetainFactoryImpl
     );
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   // Strategy implementations
 
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_ThreadStrategyORBControl
+      ace_svc_desc_ThreadStrategyORBControl
     );
 
 #if (TAO_HAS_MINIMUM_POA == 0)
   ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_ThreadStrategySingle
+      ace_svc_desc_ThreadStrategySingle
     );
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 

@@ -90,14 +90,18 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
   /////////////////////////////////////////////////////////////////////
 
-namespace TAO_FTRT {
-  ACE_FACTORY_DEFINE (TAO_FTRT, FTRT_ClientORB_Loader)
-  ACE_STATIC_SVC_DEFINE (FTRT_ClientORB_Loader,
-    ACE_TEXT ("FTRT_ClientORB_Service"),
-    ACE_SVC_OBJ_T,
-    &ACE_SVC_NAME (FTRT_ClientORB_Loader),
-    ACE_Service_Type::DELETE_THIS
-    | ACE_Service_Type::DELETE_OBJ,
-    0)
-}
+ACE_FACTORY_NAMESPACE_DEFINE (
+  TAO_FTRT,
+  FTRT_ClientORB_Loader,
+  TAO_FTRT::FTRT_ClientORB_Loader)
+
+ACE_STATIC_SVC_DEFINE (
+  FTRT_ClientORB_Loader,
+  ACE_TEXT ("FTRT_ClientORB_Service"),
+  ACE_SVC_OBJ_T,
+  &ACE_SVC_NAME (FTRT_ClientORB_Loader),
+  ACE_Service_Type::DELETE_THIS
+  | ACE_Service_Type::DELETE_OBJ,
+  0)
+
 

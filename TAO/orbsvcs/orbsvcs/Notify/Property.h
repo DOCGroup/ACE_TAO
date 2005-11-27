@@ -25,7 +25,9 @@
 #include "tao/orbconf.h"
 #include "tao/TimeBaseC.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class LOCK, class TYPE> class ACE_Atomic_Op;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

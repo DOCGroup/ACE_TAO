@@ -75,14 +75,16 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
   /////////////////////////////////////////////////////////////////////
 
-namespace FTRTEC {
-  ACE_FACTORY_DEFINE (TAO_FTRTEC, Fault_Detector_Loader)
+ACE_FACTORY_NAMESPACE_DEFINE (
+  TAO_FTRTEC,
+  Fault_Detector_Loader,
+  FTRTEC::Fault_Detector_Loader)
 
-  ACE_STATIC_SVC_DEFINE (Fault_Detector_Loader,
-    ACE_TEXT ("FTRTEC_Fault_Detector"),
-    ACE_SVC_OBJ_T,
-    &ACE_SVC_NAME (Fault_Detector_Loader),
-    ACE_Service_Type::DELETE_THIS
-    | ACE_Service_Type::DELETE_OBJ,
-    0)
-}
+ACE_STATIC_SVC_DEFINE (
+  Fault_Detector_Loader,
+  ACE_TEXT ("FTRTEC_Fault_Detector"),
+  ACE_SVC_OBJ_T,
+  &ACE_SVC_NAME (Fault_Detector_Loader),
+  ACE_Service_Type::DELETE_THIS
+  | ACE_Service_Type::DELETE_OBJ,
+  0)

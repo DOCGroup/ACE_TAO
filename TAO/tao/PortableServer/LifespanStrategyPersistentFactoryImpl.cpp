@@ -52,20 +52,16 @@ namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-namespace TAO
-{
-  namespace Portable_Server
-  {
-    ACE_STATIC_SVC_DEFINE (
-        LifespanStrategyPersistentFactoryImpl,
-        ACE_TEXT ("LifespanStrategyPersistentFactory"),
-        ACE_SVC_OBJ_T,
-        &ACE_SVC_NAME (LifespanStrategyPersistentFactoryImpl),
-        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
-        0
-      )
+ACE_STATIC_SVC_DEFINE (
+  LifespanStrategyPersistentFactoryImpl,
+  ACE_TEXT ("LifespanStrategyPersistentFactory"),
+  ACE_SVC_OBJ_T,
+  &ACE_SVC_NAME (LifespanStrategyPersistentFactoryImpl),
+  ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+  0)
 
-    ACE_FACTORY_DEFINE (ACE_Local_Service, LifespanStrategyPersistentFactoryImpl)
-  }
-}
+ACE_FACTORY_NAMESPACE_DEFINE (
+  ACE_Local_Service,
+  LifespanStrategyPersistentFactoryImpl,
+  TAO::Portable_Server::LifespanStrategyPersistentFactoryImpl)
 

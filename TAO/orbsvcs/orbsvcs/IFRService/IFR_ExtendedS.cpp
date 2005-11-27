@@ -73,6 +73,8 @@
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Arg traits specializations.
 namespace TAO
 {
@@ -7769,3 +7771,4 @@ POA_CORBA::ValueBoxDef::_this (ACE_ENV_SINGLE_ARG_DECL)
 
 #endif /* ifndef */
 
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -37,6 +37,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Forward reference for TAO_Named_RT_Mutex_Manager
 class TAO_RT_Mutex;
 class TAO_Thread_Pool_Manager;
@@ -319,6 +321,8 @@ protected:
   /// Thread Pool Manager
   TAO_Thread_Pool_Manager *tp_manager_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

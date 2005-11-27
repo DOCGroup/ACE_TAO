@@ -37,8 +37,9 @@ typedef TAO_Notify_Method_Request_Updates_T<const TAO_Notify_EventTypeSeq
  * @brief Command Object to send updates to proxys.
  *
  */
-class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Updates : public TAO_Notify_Method_Request_Updates_Base
-                                                        ,public TAO_Notify_Method_Request_Queueable
+class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Updates
+  : public TAO_Notify_Method_Request_Updates_Base
+  , public TAO_Notify_Method_Request_Queueable
 {
 public:
   /// Constuctor
@@ -51,7 +52,7 @@ public:
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
 };
 
-/***********************************************************************************************************************/
+/*****************************************************************************/
 
 typedef TAO_Notify_Method_Request_Updates_T<const TAO_Notify_EventTypeSeq&
                                         , TAO_Notify_Proxy*

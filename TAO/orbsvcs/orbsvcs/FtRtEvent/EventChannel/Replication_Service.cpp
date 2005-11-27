@@ -195,15 +195,16 @@ namespace FTRTEC
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-namespace FTRTEC
-{
-  ACE_FACTORY_DEFINE (TAO_FTRTEC, Replication_Service)
+ACE_FACTORY_NAMESPACE_DEFINE (
+  TAO_FTRTEC,
+  Replication_Service,
+  FTRTEC::Replication_Service)
 
-  ACE_STATIC_SVC_DEFINE (Replication_Service,
-    ACE_TEXT ("FTRTEC_Replication"),
-    ACE_SVC_OBJ_T,
-    &ACE_SVC_NAME (Replication_Service),
-    ACE_Service_Type::DELETE_THIS
-    | ACE_Service_Type::DELETE_OBJ,
-    0)
-}
+ACE_STATIC_SVC_DEFINE (
+  Replication_Service,
+  ACE_TEXT ("FTRTEC_Replication"),
+  ACE_SVC_OBJ_T,
+  &ACE_SVC_NAME (Replication_Service),
+  ACE_Service_Type::DELETE_THIS
+  | ACE_Service_Type::DELETE_OBJ,
+  0)
