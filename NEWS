@@ -53,7 +53,8 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.7 and ACE-5.4.8
   choice or a namespace of the form ACE_5_4_7 by default, where
   "5_4_7" is the ACE major, minor and beta versions.  The default may
   be overridden by defining the ACE_VERSIONED_NAMESPACE_NAME
-  preprocessor symbol.
+  preprocessor symbol.  Enable overall versioned namespace support by
+  adding "versioned_namespace=1" to your MPC default.features file.
 
 USER VISIBLE CHANGES BETWEEN ACE-5.4.6 and ACE-5.4.7
 ====================================================
