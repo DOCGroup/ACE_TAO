@@ -28,7 +28,7 @@ ACE_Cleanup::~ACE_Cleanup (void)
 /*****************************************************************************/
 
 extern "C" void
-ace_cleanup_destroyer (ACE_Cleanup *object, void *param)
+ACE_CLEANUP_DESTROYER_NAME (ACE_Cleanup *object, void *param)
 {
   object->cleanup (param);
 }
@@ -175,10 +175,12 @@ ACE_OS_Exit_Info::call_hooks (void)
        iter = iter->next_)
     {
       ACE_Cleanup_Info &info = iter->cleanup_info_;
-      if (info.cleanup_hook_ == reinterpret_cast<ACE_CLEANUP_FUNC> (ace_cleanup_destroyer))
+      if (info.cleanup_hook_ == reinterpret_cast<ACE_CLEANUP_FUNC> (
+            ACE_CLEANUP_DESTROYER_NAME))
         // The object is an ACE_Cleanup.
-        ace_cleanup_destroyer (reinterpret_cast<ACE_Cleanup *> (info.object_),
-                               info.param_);
+        ACE_CLEANUP_DESTROYER_NAME (
+          reinterpret_cast<ACE_Cleanup *> (info.object_),
+          info.param_);
       else if (info.object_ == &ace_exit_hook_marker)
         // The hook is an ACE_EXIT_HOOK.
         (* reinterpret_cast<ACE_EXIT_HOOK> (info.cleanup_hook_)) ();

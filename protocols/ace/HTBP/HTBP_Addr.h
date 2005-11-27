@@ -24,6 +24,8 @@
 #include "ace/Synch.h"
 #include "ace/SString.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace ACE
 {
   namespace HTBP
@@ -82,6 +84,8 @@ namespace ACE
 
   }
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_HTBP_ADDR_H */

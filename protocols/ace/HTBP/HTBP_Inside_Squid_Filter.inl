@@ -1,9 +1,12 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
-// ACE_HTBP_Inside_Squid_Filter.i
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE::HTBP::Inside_Squid_Filter::~Inside_Squid_Filter (void)
 {
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -24,8 +24,6 @@
 
 #include "kokyu_export.h"
 
-class ACE_Allocator;
-
 namespace Kokyu
 {
   typedef long Priority_t;

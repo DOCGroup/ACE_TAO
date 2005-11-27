@@ -88,7 +88,7 @@ void *ACE_Object_Manager::preallocated_array[
       preallocated_array[ID] = array_p;\
     }
 # define ACE_DELETE_PREALLOCATED_OBJECT(TYPE, ID)\
-    ace_cleanup_destroyer (\
+    ACE_CLEANUP_DESTROYER_NAME (\
       (ACE_Cleanup_Adapter<TYPE> *) preallocated_object[ID], 0);\
     preallocated_object[ID] = 0;
 # define ACE_DELETE_PREALLOCATED_ARRAY(TYPE, ID, COUNT)\

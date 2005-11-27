@@ -13,6 +13,8 @@ ACE_RCSID(HTBP,
           ACE_HTBP_ID_Requestor,
           "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_TString ACE::HTBP::ID_Requestor::htid_;
 ACE_SYNCH_MUTEX ACE::HTBP::ID_Requestor::htid_lock_;
 
@@ -133,3 +135,5 @@ ACE::HTBP::ID_Requestor::get_HTID ()
     }
   return htid;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

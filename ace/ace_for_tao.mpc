@@ -2,7 +2,7 @@
 //
 // $Id$
 
-project(ACE_FOR_TAO) : acedefaults, core, svcconf, pkgconfig {
+project(ACE_FOR_TAO) : acedefaults, core, svcconf, versioned_namespace, pkgconfig {
   requires     = ace_for_tao
   libout       = $(ACE_ROOT)/lib
   sharedname   = ACE_FOR_TAO

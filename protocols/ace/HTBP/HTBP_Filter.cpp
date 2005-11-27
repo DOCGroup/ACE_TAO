@@ -1,4 +1,3 @@
-// ACE_HTBP_Filter.cpp
 // $Id$
 
 #include "ace/Log_Msg.h"
@@ -10,7 +9,9 @@
 #include "HTBP_Filter.inl"
 #endif
 
-ACE_RCSID(HTBP,ACE_HTBP_Filter,"$ID: $")
+ACE_RCSID(HTBP,ACE_HTBP_Filter,"$Id$")
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE::HTBP::Filter::Filter (void)
   :http_code_ (0)
@@ -52,3 +53,5 @@ ACE::HTBP::Filter::header_complete (ACE::HTBP::Channel *ch)
     }
   return 0;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -76,7 +76,11 @@
 
 #include "ace/Time_Value.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_Timeout_Manager;
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 // Here are all ACE-specific default constants, needed throughout ACE
 // and its applications.  The values can be over written by user
@@ -328,6 +332,9 @@ class ACE_Timeout_Manager;
 # include "ace/os_include/os_syslog.h"
 # endif /* !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SYSLOG) */
 
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @namespace ACE_OS
  *
@@ -349,6 +356,8 @@ namespace ACE_OS
 {
   // = A set of wrappers for miscellaneous operations.
 }  /* namespace ACE_OS */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)
