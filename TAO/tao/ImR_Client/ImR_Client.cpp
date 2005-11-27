@@ -254,19 +254,15 @@ namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-namespace TAO
-{
-  namespace ImR_Client
-  {
-    ACE_STATIC_SVC_DEFINE (
-        ImR_Client_Adapter_Impl,
-        ACE_TEXT ("Concrete_ImR_Client_Adapter"),
-        ACE_SVC_OBJ_T,
-        &ACE_SVC_NAME (ImR_Client_Adapter_Impl),
-        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
-        0
-      )
+ACE_STATIC_SVC_DEFINE (
+  ImR_Client_Adapter_Impl,
+  ACE_TEXT ("Concrete_ImR_Client_Adapter"),
+  ACE_SVC_OBJ_T,
+  &ACE_SVC_NAME (ImR_Client_Adapter_Impl),
+  ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+  0)
 
-    ACE_FACTORY_DEFINE (TAO_IMR_Client, ImR_Client_Adapter_Impl)
-  }
-}
+ACE_FACTORY_NAMESPACE_DEFINE (
+  TAO_IMR_Client,
+  ImR_Client_Adapter_Impl,
+  TAO::ImR_Client::ImR_Client_Adapter_Impl)

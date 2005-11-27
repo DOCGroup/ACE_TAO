@@ -28,6 +28,9 @@
 #include "tao/AnyTypeCode/String_TypeCode.h"
 #include "tao/AnyTypeCode/True_RefCount_Policy.h"
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace TypeCodeFactory
@@ -71,6 +74,7 @@ namespace TAO
   }  // End namespace TypeCodeFactory
 }  // End namespace TAO
 
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

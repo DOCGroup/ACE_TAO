@@ -32,11 +32,12 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE_Utils
 {
   class UUID;
 }
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

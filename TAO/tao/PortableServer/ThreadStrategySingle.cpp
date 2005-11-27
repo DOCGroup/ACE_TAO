@@ -38,21 +38,17 @@ namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-namespace TAO
-{
-  namespace Portable_Server
-  {
-    ACE_FACTORY_DEFINE (ACE_Local_Service, ThreadStrategySingle)
+ACE_FACTORY_NAMESPACE_DEFINE (
+  ACE_Local_Service,
+  ThreadStrategySingle,
+  TAO::Portable_Server::ThreadStrategySingle)
 
-    ACE_STATIC_SVC_DEFINE (
-        ThreadStrategySingle,
-        ACE_TEXT ("ThreadStrategySingle"),
-        ACE_SVC_OBJ_T,
-        &ACE_SVC_NAME (ThreadStrategySingle),
-        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
-        0
-      )
-  }
-}
+ACE_STATIC_SVC_DEFINE (
+  ThreadStrategySingle,
+  ACE_TEXT ("ThreadStrategySingle"),
+  ACE_SVC_OBJ_T,
+  &ACE_SVC_NAME (ThreadStrategySingle),
+  ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+  0)
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */

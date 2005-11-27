@@ -23,20 +23,17 @@ namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-namespace TAO
-{
-  namespace Portable_Server
-  {
-    ACE_FACTORY_DEFINE (ACE_Local_Service, ImplicitActivationStrategyImplicit)
+ACE_FACTORY_NAMESPACE_DEFINE (
+  ACE_Local_Service,
+  ImplicitActivationStrategyImplicit,
+  TAO::Portable_Server::ImplicitActivationStrategyImplicit)
 
-    ACE_STATIC_SVC_DEFINE (
-        ImplicitActivationStrategyImplicit,
-        ACE_TEXT ("ImplicitActivationStrategyImplicit"),
-        ACE_SVC_OBJ_T,
-        &ACE_SVC_NAME (ImplicitActivationStrategyImplicit),
-        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
-        0
-      )
-  }
-}
+ACE_STATIC_SVC_DEFINE (
+  ImplicitActivationStrategyImplicit,
+  ACE_TEXT ("ImplicitActivationStrategyImplicit"),
+  ACE_SVC_OBJ_T,
+  &ACE_SVC_NAME (ImplicitActivationStrategyImplicit),
+  ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+  0)
+
 

@@ -56,22 +56,19 @@ namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-namespace TAO
-{
-  namespace Portable_Server
-  {
-    ACE_STATIC_SVC_DEFINE (
-        RequestProcessingStrategyDefaultServantFactoryImpl,
-        ACE_TEXT ("RequestProcessingStrategyDefaultServantFactory"),
-        ACE_SVC_OBJ_T,
-        &ACE_SVC_NAME (RequestProcessingStrategyDefaultServantFactoryImpl),
-        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
-        0
-      )
+ACE_STATIC_SVC_DEFINE (
+  RequestProcessingStrategyDefaultServantFactoryImpl,
+  ACE_TEXT ("RequestProcessingStrategyDefaultServantFactory"),
+  ACE_SVC_OBJ_T,
+  &ACE_SVC_NAME (RequestProcessingStrategyDefaultServantFactoryImpl),
+  ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+  0)
 
-    ACE_FACTORY_DEFINE (ACE_Local_Service, RequestProcessingStrategyDefaultServantFactoryImpl)
-  }
-}
+ACE_FACTORY_NAMESPACE_DEFINE (
+  ACE_Local_Service,
+  RequestProcessingStrategyDefaultServantFactoryImpl,
+  TAO::Portable_Server::RequestProcessingStrategyDefaultServantFactoryImpl)
+
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 

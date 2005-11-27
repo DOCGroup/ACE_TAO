@@ -14,6 +14,7 @@ ACE_RCSID (tao,
 #include "Objref_TypeCode_Static.h"
 #include "String_TypeCode_Static.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -109,3 +110,5 @@ namespace CORBA
   TypeCode_ptr const _tc_Home       = &TAO::TypeCode::tc_Home;
 
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

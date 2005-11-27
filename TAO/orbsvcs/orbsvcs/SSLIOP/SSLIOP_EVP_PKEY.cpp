@@ -47,7 +47,7 @@ TAO::SSLIOP::OpenSSL_traits< ::EVP_PKEY >::copy (::EVP_PKEY const & key)
         if (dsa != 0)
           {
             // Not exception safe!
-            ::EVP_PKEY_set1_DSA (p.in (), DSAparams_dup_wrapper (dsa));
+            ::EVP_PKEY_set1_DSA (p.in (), DSAPARAMS_DUP_WRAPPER_NAME (dsa));
             ::DSA_free (dsa);
           }
       }
@@ -59,7 +59,7 @@ TAO::SSLIOP::OpenSSL_traits< ::EVP_PKEY >::copy (::EVP_PKEY const & key)
         if (dh != 0)
           {
             // Not exception safe!
-            ::EVP_PKEY_set1_DH (p.in (), DHparams_dup_wrapper (dh));
+            ::EVP_PKEY_set1_DH (p.in (), DHPARAMS_DUP_WRAPPER_NAME (dh));
             ::DH_free (dh);
           }
       }

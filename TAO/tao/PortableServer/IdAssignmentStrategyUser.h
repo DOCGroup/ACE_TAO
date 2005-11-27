@@ -42,14 +42,8 @@ namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-namespace TAO
-{
-  namespace Portable_Server
-  {
-    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, IdAssignmentStrategyUser)
-    ACE_FACTORY_DECLARE (TAO_PortableServer, IdAssignmentStrategyUser)
-  }
-}
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, IdAssignmentStrategyUser)
+ACE_FACTORY_DECLARE (TAO_PortableServer, IdAssignmentStrategyUser)
 
 #include /**/ "ace/post.h"
 #endif /* TAO_IDASSIGNMENTSTRATEGYUSER_H */

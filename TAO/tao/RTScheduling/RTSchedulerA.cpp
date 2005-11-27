@@ -36,6 +36,8 @@
 #include "tao/AnyTypeCode/Struct_TypeCode_Static.h"
 #include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/objref_typecode.cpp:76
 
@@ -268,3 +270,4 @@ namespace RTScheduling
     &_tao_tc_RTScheduling_Scheduler;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
