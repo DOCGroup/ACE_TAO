@@ -23,6 +23,8 @@
 #include "tao/PortableServer/StrategyFactory.h"
 #include "tao/PortableServer/ServantRetentionPolicyC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO
 {
   namespace Portable_Server
@@ -43,6 +45,8 @@ namespace TAO
     };
   }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_PORTABLESERVER_SERVANTRETENTIONSTRATEGYFACTORY_H */

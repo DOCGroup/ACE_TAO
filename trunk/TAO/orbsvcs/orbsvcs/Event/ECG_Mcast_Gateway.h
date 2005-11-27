@@ -27,7 +27,9 @@
 #include "ace/SString.h"
 #include "ace/os_include/os_stdint.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Event_Handler;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

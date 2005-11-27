@@ -82,20 +82,15 @@ namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-namespace TAO
-{
-  namespace Portable_Server
-  {
-    ACE_STATIC_SVC_DEFINE (
-        ServantRetentionStrategyFactoryImpl,
-        ACE_TEXT ("ServantRetentionStrategyFactory"),
-        ACE_SVC_OBJ_T,
-        &ACE_SVC_NAME (ServantRetentionStrategyFactoryImpl),
-        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
-        0
-      )
+ACE_STATIC_SVC_DEFINE (
+  ServantRetentionStrategyFactoryImpl,
+  ACE_TEXT ("ServantRetentionStrategyFactory"),
+  ACE_SVC_OBJ_T,
+  &ACE_SVC_NAME (ServantRetentionStrategyFactoryImpl),
+  ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+  0)
 
-    ACE_FACTORY_DEFINE (ACE_Local_Service, ServantRetentionStrategyFactoryImpl)
-  }
-}
-
+ACE_FACTORY_NAMESPACE_DEFINE (
+  ACE_Local_Service,
+  ServantRetentionStrategyFactoryImpl,
+  TAO::Portable_Server::ServantRetentionStrategyFactoryImpl)

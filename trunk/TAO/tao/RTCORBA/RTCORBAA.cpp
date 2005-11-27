@@ -43,6 +43,8 @@
 #include "tao/AnyTypeCode/Any_Basic_Impl_T.h"
 #include "tao/AnyTypeCode/IOP_IORA.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/alias_typecode.cpp:50
 
@@ -2465,3 +2467,5 @@ CORBA::Boolean operator>>= (
         _tao_elem
       );
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -10,6 +10,8 @@
 #endif /* __ACE_INLINE__ */
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template<typename S,
          typename Insert_Policy>
 CORBA::Boolean
@@ -109,5 +111,7 @@ TAO::Ret_Var_Size_SArgument_T<S,S_var,Insert_Policy>::interceptor_value (
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_VAR_SIZE_SARGUMENT_T_CPP */

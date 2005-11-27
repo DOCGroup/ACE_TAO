@@ -2,6 +2,8 @@
 //
 // $Id$
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 template<typename S,
          typename Insert_Policy>
 S const &
@@ -66,3 +68,4 @@ TAO::Ret_Var_Size_SArgument_T<S,S_var,Insert_Policy>::arg (void)
   return this->x_.out ();
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

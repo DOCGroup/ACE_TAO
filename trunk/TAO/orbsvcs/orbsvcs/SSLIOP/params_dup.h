@@ -3,6 +3,12 @@
 #ifndef TAO_SSLIOP_PARAMS_DUP_H
 #define TAO_SSLIOP_PARAMS_DUP_H
 
+#include "ace/pre.h"
+
+#include "tao/orbconf.h"
+
+#include "ace/Global_Macros.h"
+
 // As of 0.9.7e, OpenSSL's DSAparams_dup() and DHparams_dup() macros
 // contain casts that are invalid in C++.  These C wrapper functions
 // allows them to be called from C++.
@@ -37,5 +43,7 @@ extern DH  *DHPARAMS_DUP_WRAPPER_NAME (DH *dh);
 #ifdef __cplusplus
 }
 #endif
+
+#include "ace/post.h"
 
 #endif

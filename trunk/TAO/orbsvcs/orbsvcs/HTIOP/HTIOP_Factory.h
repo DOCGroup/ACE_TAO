@@ -24,6 +24,7 @@
 #include "tao/Protocol_Factory.h"
 #include "ace/Service_Config.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE
 {
   namespace HTBP
@@ -31,6 +32,7 @@ namespace ACE
     class Environment;
   }
 }
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

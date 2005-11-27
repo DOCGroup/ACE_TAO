@@ -8,6 +8,7 @@
 #define YY_FLEX_MAJOR_VERSION 2
 #define YY_FLEX_MINOR_VERSION 5
 
+#include "tao/orbconf.h"
 #include "ace/OS.h"
 
 /* cfront 1.2 defines "c_plusplus" instead of "__cplusplus" */
@@ -82,6 +83,8 @@
 
 /* Size of default input buffer. */
 #define YY_BUF_SIZE 16384
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef struct yy_buffer_state *YY_BUFFER_STATE;
 
@@ -404,6 +407,8 @@ static char *yy_last_accepting_cpos;
 char *yytext;
 
 #define INITIAL 0
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 // $Id$
 // ========================================================================

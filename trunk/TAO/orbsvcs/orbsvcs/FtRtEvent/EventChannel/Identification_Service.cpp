@@ -85,14 +85,16 @@ namespace FTRTEC {
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-namespace FTRTEC {
-  ACE_FACTORY_DEFINE (TAO_FTRTEC, Identification_Service)
+ACE_FACTORY_NAMESPACE_DEFINE (
+  TAO_FTRTEC,
+  Identification_Service,
+  FTRTEC::Identification_Service)
 
-  ACE_STATIC_SVC_DEFINE (Identification_Service,
-    ACE_TEXT ("FTRTEC_Identification"),
-    ACE_SVC_OBJ_T,
-    &ACE_SVC_NAME (Identification_Service),
-    ACE_Service_Type::DELETE_THIS
-    | ACE_Service_Type::DELETE_OBJ,
-    0)
-}
+ACE_STATIC_SVC_DEFINE (
+  Identification_Service,
+  ACE_TEXT ("FTRTEC_Identification"),
+  ACE_SVC_OBJ_T,
+  &ACE_SVC_NAME (Identification_Service),
+  ACE_Service_Type::DELETE_THIS
+  | ACE_Service_Type::DELETE_OBJ,
+  0)

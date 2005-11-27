@@ -49,14 +49,9 @@ namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-namespace TAO
-{
-  namespace Portable_Server
-  {
-    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, RequestProcessingStrategyServantActivatorFactoryImpl)
-    ACE_FACTORY_DECLARE (TAO_PortableServer, RequestProcessingStrategyServantActivatorFactoryImpl)
-  }
-}
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, RequestProcessingStrategyServantActivatorFactoryImpl)
+ACE_FACTORY_DECLARE (TAO_PortableServer, RequestProcessingStrategyServantActivatorFactoryImpl)
+
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
