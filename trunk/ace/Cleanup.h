@@ -27,6 +27,23 @@
 
 #include "ace/ACE_export.h"
 
+#if (defined (ACE_HAS_VERSIONED_NAMESPACE) \
+     && ACE_HAS_VERSIONED_NAMESPACE == 1) \
+  && !(defined (_MSC_VER) && _MSC_VER <= 1200)
+// MSVC++ 6's preprocessor can't handle macro expansions required by
+// the versioned namespace support.  *sigh*
+
+# include "ace/Global_Macros.h"
+
+# define ACE_CLEANUP_DESTROYER_NAME ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _ace_cleanup_destroyer)
+
+#else
+
+# define ACE_CLEANUP_DESTROYER_NAME ace_cleanup_destroyer
+
+#endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
+
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -49,7 +66,7 @@ public:
 
 // Adapter for cleanup, used by ACE_Object_Manager.
 extern "C" ACE_Export
-void ace_cleanup_destroyer (ACE_Cleanup *, void *param = 0);
+void ACE_CLEANUP_DESTROYER_NAME (ACE_Cleanup *, void *param = 0);
 
 /**
  * @class ACE_Cleanup_Info

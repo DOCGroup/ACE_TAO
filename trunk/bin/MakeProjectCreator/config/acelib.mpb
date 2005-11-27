@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project: acedefaults, acenosubsets, ace_for_tao, pkgconfig {
+project: acedefaults, acenosubsets, ace_for_tao, versioned_namespace, pkgconfig {
   libout    = $(ACE_ROOT)/lib
 
   specific(automake) {

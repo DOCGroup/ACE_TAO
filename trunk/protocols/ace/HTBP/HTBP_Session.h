@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -28,6 +28,8 @@
 #include "HTBP_Channel.h"
 
 #include "HTBP_Stream.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations.
 class ACE_HTBP_Filter;
@@ -185,6 +187,9 @@ namespace ACE
     };
   }
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #if defined (__ACE_INLINE__)
 #include "HTBP_Session.inl"
 #endif

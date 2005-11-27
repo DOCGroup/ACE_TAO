@@ -1,8 +1,8 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
 
-// ACE::HTBP::Channel.i
-
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE::HTBP::Session *
@@ -120,3 +120,5 @@ ACE::HTBP::Channel::set_handle (ACE_HANDLE h)
     return;
   this->ace_stream_.set_handle (h);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
