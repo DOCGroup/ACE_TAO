@@ -22,6 +22,8 @@
 #include "ace/Reactor.h"
 
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Initialization and termination methods.
 /// Constructor.
 ACE::HTBP::Channel::Channel (ACE::HTBP::Session *s)
@@ -531,3 +533,5 @@ ACE::HTBP::Channel::get_filter ()
   int inside = (this->session_ != 0);
   return factory->get_filter (inside);
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

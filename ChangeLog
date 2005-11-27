@@ -1,3 +1,61 @@
+Sun Nov 27 04:05:52 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/ace.mpc:
+	* ace/ace_for_tao.mpc:
+	* bin/MakeProjectCreator/config/aceexe.mpb:
+	* bin/MakeProjectCreator/config/acelib.mpb:
+	* bin/MakeProjectCreator/config/versioned_namespace.mpb:
+
+	  Added versioned namespace MPC support.  Disabled by default.
+	  Add "versioned_namespace=1" to default.features to enable.
+
+	* Kokyu/Kokyu_defs.h:
+	* ace/Asynch_Connector.h:
+	* ace/Cleanup.cpp:
+	* ace/Cleanup.h:
+	* ace/If_Then_Else.h:
+	* ace/OS.h:
+	* ace/Object_Manager.cpp:
+	* ace/Object_Manager.inl:
+	* ace/Value_Ptr.h:
+	* ace/SSL/SSL_Asynch_Stream.h:
+	* ace/SSL/SSL_SOCK_Acceptor.cpp:
+	* protocols/ace/HTBP/HTBP_Addr.cpp:
+	* protocols/ace/HTBP/HTBP_Addr.h:
+	* protocols/ace/HTBP/HTBP_Channel.cpp:
+	* protocols/ace/HTBP/HTBP_Channel.h:
+	* protocols/ace/HTBP/HTBP_Channel.inl:
+	* protocols/ace/HTBP/HTBP_Environment.cpp:
+	* protocols/ace/HTBP/HTBP_Environment.h:
+	* protocols/ace/HTBP/HTBP_Filter.cpp:
+	* protocols/ace/HTBP/HTBP_Filter.h:
+	* protocols/ace/HTBP/HTBP_Filter.inl:
+	* protocols/ace/HTBP/HTBP_Filter_Factory.cpp:
+	* protocols/ace/HTBP/HTBP_Filter_Factory.h:
+	* protocols/ace/HTBP/HTBP_ID_Requestor.cpp:
+	* protocols/ace/HTBP/HTBP_ID_Requestor.h:
+	* protocols/ace/HTBP/HTBP_Inside_Squid_Filter.cpp:
+	* protocols/ace/HTBP/HTBP_Inside_Squid_Filter.h:
+	* protocols/ace/HTBP/HTBP_Inside_Squid_Filter.inl:
+	* protocols/ace/HTBP/HTBP_Notifier.cpp:
+	* protocols/ace/HTBP/HTBP_Notifier.h:
+	* protocols/ace/HTBP/HTBP_Outside_Squid_Filter.cpp:
+	* protocols/ace/HTBP/HTBP_Outside_Squid_Filter.h:
+	* protocols/ace/HTBP/HTBP_Outside_Squid_Filter.inl:
+	* protocols/ace/HTBP/HTBP_Session.cpp:
+	* protocols/ace/HTBP/HTBP_Session.h:
+	* protocols/ace/HTBP/HTBP_Session.inl:
+	* protocols/ace/HTBP/HTBP_Stream.cpp:
+	* protocols/ace/HTBP/HTBP_Stream.h:
+	* tests/ACE_Init_Test.cpp:
+	* tests/Process_Strategy_Test.h:
+
+	  Corrected build errors in versioned namespace builds.
+
+	* bin/MakeProjectCreator/config/acexml.mpb:
+
+	  Disable ACEXML libraries when "ace_for_tao" is enabled.
+
 Fri Nov 25 19:04:10 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* NEWS:

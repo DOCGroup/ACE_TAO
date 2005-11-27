@@ -12,8 +12,6 @@
 #include "ace/Time_Value.h"
 #include "ace/Countdown_Time.h"
 
-ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Acceptor)
-
 #if !defined (__ACE_INLINE__)
 #include "SSL_SOCK_Acceptor.i"
 #endif /* __ACE_INLINE__ */
@@ -23,6 +21,8 @@ ACE_RCSID (ACE_SSL,
            "$Id$")
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Acceptor)
 
 ACE_SSL_SOCK_Acceptor::~ACE_SSL_SOCK_Acceptor (void)
 {

@@ -14,6 +14,8 @@ ACE_RCSID(HTBP,
           ACE_HTBP_Outside_Squid_Filter,
           "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ssize_t
 ACE::HTBP::Outside_Squid_Filter::recv_data_header (ACE::HTBP::Channel *ch)
 {
@@ -190,3 +192,5 @@ ACE::HTBP::Outside_Squid_Filter::recv_ack (ACE::HTBP::Channel *)
 {
   return 1;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL
