@@ -16,7 +16,7 @@ Sun Nov 27 22:37:44 2005  Bala Natarajan <bala_natarajan at symantec dot com>
 	* ace/Array_Map.h:
 
 	  Included the Sun CC 5.8, as an additional CC compiler that
-	  requires complete specification for a trait declaration. 
+	  requires complete specification for a trait declaration.
 
 	  Just for information. Sun CC 5.8 comes with Studio 11, which is
 	  free (as in FREE BEER!!).
