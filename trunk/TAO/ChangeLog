@@ -1,3 +1,20 @@
+Mon Nov 28 12:09:12 USMST 2005  Yan Dai  <dai_y@ociweb.com>
+
+        * performance-tests/CSD_Strategy/TestApps/ServerApp.cpp:
+        * tests/CSD_Strategy_Tests/Broken/ClientApp.cpp:
+        * tests/CSD_Strategy_Tests/Broken/ServerApp.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_1/ServerApp.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_2/ServerApp.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_3/ClientApp.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_3/ServerApp.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_4/ServerApp.cpp:
+        * tests/CSD_Strategy_Tests/TP_Test_Static/ServerApp.cpp:
+
+          Made main thread call ACE_Object_Manager::instance()->wait()
+          after orb shutdown. This would avoid the problem that the main 
+          thread possiably exit before all CSD threads exit and crash 
+          upon exit.
+
 Mon Nov 28 07:30:58 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/params_dup.h:
