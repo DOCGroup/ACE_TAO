@@ -1,3 +1,9 @@
+Mon Nov 28 07:24:01 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* drwho.mpc:
+
+	  Added missing "avoid += ace_for_tao" for "server" project.
+
 Sat Nov 26 06:58:23 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* drwho.mpc:
