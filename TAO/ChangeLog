@@ -1,3 +1,10 @@
+Mon Nov 28 22:22:11 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Nested_Upcall_Crash/Nested_Upcall_Crash.mpc:
+        * tests/RTCORBA/Linear_Priority/RTCORBA_Linear_Priority.mpc:
+        
+          Added 'after' lines to order the builds for VC8.
+
 Mon Nov 28 12:09:12 USMST 2005  Yan Dai  <dai_y@ociweb.com>
 
         * performance-tests/CSD_Strategy/TestApps/ServerApp.cpp:
