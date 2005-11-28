@@ -485,7 +485,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
   // profile does not (and cannot) contain the desired QOP, trust, or
   // credential information which is necesary to uniquely identify
   // this connection.
-  if (!ssl_endpoint->credentials_set())
+  if (!ssl_endpoint->credentials_set ())
     {
       if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_ERROR,
