@@ -18,8 +18,6 @@
 
 #include "test_config.h"
 
-using namespace ACE_VERSIONED_NAMESPACE_NAME;
-
 // If this is not a WIN32 platform do not even try to compile the
 // test, many of the #includes make little sense.
 int
