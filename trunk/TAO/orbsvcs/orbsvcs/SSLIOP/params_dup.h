@@ -3,7 +3,7 @@
 #ifndef TAO_SSLIOP_PARAMS_DUP_H
 #define TAO_SSLIOP_PARAMS_DUP_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
 
@@ -44,6 +44,6 @@ extern DH  *DHPARAMS_DUP_WRAPPER_NAME (DH *dh);
 }
 #endif
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif

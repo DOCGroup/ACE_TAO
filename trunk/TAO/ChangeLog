@@ -1,3 +1,13 @@
+Mon Nov 28 07:30:58 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/params_dup.h:
+
+	  Added missing "/**/ between "include" and "{pre,post}.h".
+
+	* tao/Utils/Server_Main.h:
+
+	  Fixed "obsolete #pragma once" warning.
+
 Sun Nov 27 04:00:27 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Makefile.am:
