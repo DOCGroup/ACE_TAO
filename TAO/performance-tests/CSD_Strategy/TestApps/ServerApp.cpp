@@ -69,6 +69,12 @@ ServerApp::run_i(int argc, char* argv[] ACE_ENV_ARG_DECL)
   ACE_Time_Value tv;
   timer.elapsed_time(tv);
 
+  // Calling wait on ACE_Thread_Manager singleton to avoid the problem
+  // that the main thread might exit before all CSD Threads exit.
+
+  // Wait for all CSD task threads exit.
+  ACE_Thread_Manager::instance ()->wait ();
+
   unsigned num_operations = this->stats_.total();
 
   double ops_per_msec = (1.0 * num_operations) / tv.msec();

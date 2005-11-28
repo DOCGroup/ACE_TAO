@@ -102,8 +102,11 @@ ServerApp::run_i(int argc, char* argv[] ACE_ENV_ARG_DECL)
 
   TheAppShutdown->wait ();
 
-  ACE_DEBUG((LM_DEBUG,
-             "(%P|%t) ServerApp is destroying the Root POA.\n"));
+  // Calling wait on ACE_Thread_Manager singleton to avoid the problem
+  // that the main thread might exit before all CSD Threads exit.
+
+  // Wait for all CSD task threads exit.
+  ACE_Thread_Manager::instance ()->wait ();
 
   ACE_DEBUG((LM_DEBUG,
              "(%P|%t) ServerApp is destroying the Root POA.\n"));

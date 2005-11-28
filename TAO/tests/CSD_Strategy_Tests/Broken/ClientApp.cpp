@@ -51,6 +51,13 @@ ClientApp::run_i(int argc, char* argv[] ACE_ENV_ARG_DECL)
   ACE_CHECK_RETURN (-1);
   this->run_orb_event_loop(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
+
+  // Calling wait on ACE_Thread_Manager singleton to avoid the problem
+  // that the main thread might exit before all CSD Threads exit.
+
+  // Wait for all CSD task threads exit.
+  ACE_Thread_Manager::instance ()->wait ();
+
   this->cleanup();
 
   return this->check_validity () ? 0 : -1;
