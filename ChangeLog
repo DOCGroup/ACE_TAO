@@ -1,3 +1,9 @@
+Mon Nov 28 07:26:31 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* protocols/ace/HTBP/HTBP.mpc:
+
+	  Added missing "avoids += ace_for_tao".
+
 Mon Nov 28 06:50:04 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/ACE_Init_Test.cpp (run_main):
