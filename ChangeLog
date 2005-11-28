@@ -5,6 +5,9 @@ Sun Nov 27 22:37:44 2005  Bala Natarajan <bala_natarajan at symantec dot com>
 	  Included the Sun CC 5.8, as an additional CC compiler that
 	  requires complete specification for a trait declaration. 
 
+	  Just for information. Sun CC 5.8 comes with Studio 11, which is
+	  free (as in FREE BEER!!).
+
 Sun Nov 27 04:05:52 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/ace.mpc:
