@@ -1644,6 +1644,12 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
       this->client_header_
     );
 
+  // Generated if (w)string member of struct/union/exception/array/valuetype
+  // has been seen.
+  this->gen_cond_file_include (idl_global->string_member_seen_,
+                               "tao/String_Manager_T.h",
+                               this->client_header_);
+
   // Include the Messaging library entry point, if AMI is enabled.
   if (be_global->ami_call_back () == I_TRUE)
     {
