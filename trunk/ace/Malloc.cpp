@@ -123,27 +123,11 @@ ACE_Control_Block::ACE_Name_Node::ACE_Name_Node (const char *name,
     next->prev_ = this;
 }
 
-ACE_Control_Block::ACE_Name_Node::ACE_Name_Node (const ACE_Name_Node &)
-{
-  ACE_TRACE ("ACE_Control_Block::ACE_Name_Node::ACE_Name_Node");
-#if !defined (ACE_PSOS)
-  ACE_ASSERT (!"not implemented!");
-#endif /* ! ACE_PSOS */
-}
-
 const char *
 ACE_Control_Block::ACE_Name_Node::name (void) const
 {
   const char *c = this->name_;
   return c;
-}
-
-void
-ACE_Control_Block::ACE_Name_Node::name (const char *)
-{
-#if !defined (ACE_PSOS)
-  ACE_ASSERT (!"not implemented!");
-#endif /* ! ACE_PSOS */
 }
 
 ACE_Control_Block::ACE_Malloc_Header::ACE_Malloc_Header (void)
