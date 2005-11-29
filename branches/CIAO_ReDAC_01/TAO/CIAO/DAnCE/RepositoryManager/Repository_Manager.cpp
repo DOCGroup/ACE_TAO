@@ -235,7 +235,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Call finish Launch to complete the connections
       ACE_DEBUG ((LM_DEBUG, "Executor: finish Launch application....."));
-      dapp_mgr->finishLaunch (start);
+      dapp_mgr->finishLaunch (start, true);
       ACE_DEBUG ((LM_DEBUG, "[success]\n"));
 
       // Call start to activate components

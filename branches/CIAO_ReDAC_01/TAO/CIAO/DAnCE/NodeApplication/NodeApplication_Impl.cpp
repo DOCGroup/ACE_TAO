@@ -39,6 +39,16 @@ CIAO::NodeApplication_Impl::create_all_containers (
       // to the set for us.
       ::Deployment::Container_var cref =
         this->create_container (container_infos[i].container_config);
+
+      // Build the Component_Container_Map
+      for (CORBA::ULong j = 0; 
+          j < container_infos[i].impl_infos.length ();
+          ++j)
+        {
+          this->component_container_map_.bind (
+            container_infos[i].impl_infos[j].component_instance_name.in (),
+            ::Deployment::Container::_duplicate (cref.in ()));
+        }
     }
   
   return 0;
@@ -47,7 +57,25 @@ CIAO::NodeApplication_Impl::create_all_containers (
 void
 CIAO::NodeApplication_Impl::finishLaunch (
     const Deployment::Connections & providedReference,
-    CORBA::Boolean start
+    CORBA::Boolean start,
+    CORBA::Boolean is_ReDAC
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::StartError,
+                   Deployment::InvalidConnection))
+{
+  ACE_UNUSED_ARG (start);
+
+  // parameter "true" means we want to establish new connections
+  // instead of "remove" existing connections.
+  this->finishLaunch_i (providedReference, start, is_ReDAC);
+}
+
+void
+CIAO::NodeApplication_Impl::finishLaunch_i (
+    const Deployment::Connections & providedReference,
+    CORBA::Boolean start,
+    bool is_ReDAC
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError,
@@ -97,20 +125,39 @@ CIAO::NodeApplication_Impl::finishLaunch (
                               name.c_str ()));
                 }
 
-              comp->connect (providedReference[i].portName.in (),
-                             providedReference[i].endpoint.in ()
-                             ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-
-              if (CIAO::debug_level () > 9)
+              if (!is_ReDAC)
                 {
-                  ACE_DEBUG ((LM_DEBUG,
-                              "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
-                              "CIAO::NodeApplication_Impl::finishLaunch, "
-                              "success connecting port name [%s] in "
-                              "instance [%s] \n",
-                              providedReference[i].portName.in (),
-                              name.c_str ()));
+                  // We don't care about the returned "cookie" here for
+                  // SimplexReceptable type, but what about MultiplexReceptable?
+                  comp->connect (providedReference[i].portName.in (),
+                                 providedReference[i].endpoint.in ()
+                                 ACE_ENV_ARG_PARAMETER);
+                  ACE_TRY_CHECK;
+
+                  if (CIAO::debug_level () > 9)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                  "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
+                                  "CIAO::NodeApplication_Impl::finishLaunch, "
+                                  "success connecting port name [%s] in "
+                                  "instance [%s] \n",
+                                  providedReference[i].portName.in (),
+                                  name.c_str ()));
+                    }
+                }
+              else
+                {
+                  comp->disconnect (providedReference[i].portName.in (), 0);
+                  if (CIAO::debug_level () > 9)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                  "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
+                                  "CIAO::NodeApplication_Impl::finishLaunch, "
+                                  "success disconnecting port name [%s] in "
+                                  "instance [%s] \n",
+                                  providedReference[i].portName.in (),
+                                  name.c_str ()));
+                    }
                 }
               break;
 
@@ -146,20 +193,42 @@ CIAO::NodeApplication_Impl::finishLaunch (
                               name.c_str ()));
                 }
 
-              comp->connect_consumer (providedReference[i].portName.in (),
-                                      consumer.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-
-              if (CIAO::debug_level () > 9)
+              if (!is_ReDAC)
                 {
-                  ACE_DEBUG ((LM_DEBUG,
-                              "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
-                              "CIAO::NodeApplication_Impl::finishLaunch, "
-                              "success connecting port name [%s] in "
-                              "instance [%s] \n",
-                              providedReference[i].portName.in (),
-                              name.c_str ()));
+                  comp->connect_consumer (providedReference[i].portName.in (),
+                                          consumer.in ()
+                                         ACE_ENV_ARG_PARAMETER);
+                  ACE_TRY_CHECK;
+
+                  if (CIAO::debug_level () > 9)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                  "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
+                                  "CIAO::NodeApplication_Impl::finishLaunch, "
+                                  "success connecting port name [%s] in "
+                                  "instance [%s] \n",
+                                  providedReference[i].portName.in (),
+                                  name.c_str ()));
+                    }
+                }
+              else
+                {
+// Operation not implemented by the CIDLC.
+//                  comp->disconnect_consumer (providedReference[i].portName.in (),
+//                                             0
+//                                             ACE_ENV_ARG_PARAMETER);
+                  ACE_TRY_CHECK;
+
+                  if (CIAO::debug_level () > 9)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                  "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
+                                  "CIAO::NodeApplication_Impl::finishLaunch, "
+                                  "success disconnecting port name [%s] in "
+                                  "instance [%s] \n",
+                                  providedReference[i].portName.in (),
+                                  name.c_str ()));
+                    }
                 }
               break;
 
@@ -192,20 +261,41 @@ CIAO::NodeApplication_Impl::finishLaunch (
                               name.c_str ()));
                 }
 
-              comp->subscribe (providedReference[i].portName.in (),
-                               consumer.in ()
-                               ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-
-              if (CIAO::debug_level () > 9)
+              if (!is_ReDAC)
                 {
-                  ACE_DEBUG ((LM_DEBUG,
-                              "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
-                              "CIAO::NodeApplication_Impl::finishLaunch, "
-                              "success connecting port name [%s] in "
-                              "instance [%s] \n",
-                              providedReference[i].portName.in (),
-                              name.c_str ()));
+                  comp->subscribe (providedReference[i].portName.in (),
+                                   consumer.in ()
+                                   ACE_ENV_ARG_PARAMETER);
+                  ACE_TRY_CHECK;
+
+                  if (CIAO::debug_level () > 9)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                  "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
+                                  "CIAO::NodeApplication_Impl::finishLaunch, "
+                                  "success connecting port name [%s] in "
+                                  "instance [%s] \n",
+                                  providedReference[i].portName.in (),
+                                  name.c_str ()));
+                    }
+                }
+              else
+                {
+                  comp->unsubscribe (providedReference[i].portName.in (),
+                                     0
+                                     ACE_ENV_ARG_PARAMETER);
+                  ACE_TRY_CHECK;
+
+                  if (CIAO::debug_level () > 9)
+                    {
+                      ACE_DEBUG ((LM_DEBUG,
+                                  "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
+                                  "CIAO::NodeApplication_Impl::finishLaunch, "
+                                  "success disconnecting port name [%s] in "
+                                  "instance [%s] \n",
+                                  providedReference[i].portName.in (),
+                                  name.c_str ()));
+                    }
                 }
               break;
 
@@ -351,8 +441,7 @@ CIAO::NodeApplication_Impl::install (
       // Cache a copy of the component object references for all the components
       // installed on this NodeApplication. I know we can delegates these to the
       // undelying containers, but in that case, we should loop 
-      // all the containers
-      // to find the component object reference. - Gan
+      // all the containers to find the component object reference. - Gan
       const CORBA::ULong comp_len = retv->length ();
       for (CORBA::ULong len = 0;
           len < comp_len;
@@ -498,18 +587,6 @@ CIAO::NodeApplication_Impl::create_container (
 
     this->container_set_.add (ci.in ());
   }
-
-  /*
-  // Build the Component_Container_Map
-  for (CORBA::ULong j = 0; 
-       j < container_info.impl_infos.length ();
-       ++j)
-    {
-      this->component_container_map_.bind (
-        container_info.impl_infos[j].component_instance_name.in (),
-        ::Deployment::Container::_duplicate (ci.in ()));
-    }
-*/
 
   if (CIAO::debug_level () > 1)
     ACE_DEBUG ((LM_DEBUG,

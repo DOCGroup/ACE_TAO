@@ -85,7 +85,8 @@ namespace CIAO
      */
     virtual void
     finishLaunch (const Deployment::Connections & providedReference,
-                  CORBA::Boolean start
+                  CORBA::Boolean start,
+                  CORBA::Boolean is_ReDAC
                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::StartError,
@@ -195,6 +196,15 @@ namespace CIAO
     get_objref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   protected:
+    virtual void
+    finishLaunch_i (const Deployment::Connections & providedReference,
+                    CORBA::Boolean start,
+                    bool is_establishing_connection
+                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       Deployment::StartError,
+                       Deployment::InvalidConnection));
+
     /// Create and initialize all the containers
     virtual CORBA::Long create_all_containers (
         const ::Deployment::ContainerImplementationInfos & container_infos

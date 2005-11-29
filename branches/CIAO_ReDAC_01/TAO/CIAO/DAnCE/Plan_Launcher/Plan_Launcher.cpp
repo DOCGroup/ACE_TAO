@@ -13,6 +13,7 @@ namespace CIAO
   {
     // deployment plan URL
     const char* package_url = 0;
+    const char* new_package_url = 0;
     bool use_naming = false;
     const char* ior_file = "file://em.ior";
     const char* dap_ior_filename = 0;
@@ -37,6 +38,7 @@ namespace CIAO
                   ACE_TEXT (" Execution Manager IOR Alternative to -k\n")
                   ACE_TEXT ("-o <DOMAIN_APPLICATION_MANAGER_IOR_OUTPUT_FILE>\n")
                   ACE_TEXT ("-i <DOMAIN_APPLICATION_MANAGER_IOR_FOR_INPUT>\n")
+                  ACE_TEXT ("-r <NEW_PLAN_DESCRIPTOR_FOR_REDEPLOYMENT>\n")
                   ACE_TEXT ("-h : Show this usage information\n"),
                   program));
     }
@@ -47,7 +49,7 @@ namespace CIAO
     {
       ACE_Get_Opt get_opt (argc,
                            argv,
-                           ACE_TEXT ("p:nk:o:i:h"));
+                           ACE_TEXT ("p:nk:o:i:r:h"));
       int c;
 
       while ((c = get_opt ()) != EOF)
@@ -71,6 +73,9 @@ namespace CIAO
               dap_ior = get_opt.opt_arg ();
               mode = pl_mode_stop;
               break;
+            case 'r':
+              new_package_url = get_opt.opt_arg ();
+              break;
             case 'h':
             default:
               usage(argv[0]);
@@ -78,7 +83,9 @@ namespace CIAO
             }
         }
 
-      if ((mode != pl_mode_stop) && (package_url == 0))
+      if ((mode != pl_mode_stop) && 
+          (package_url == 0) && 
+          (new_package_url ==0))
         {
           usage (argv[0]);
           return false;
@@ -147,7 +154,7 @@ namespace CIAO
           
           ::Deployment::DomainApplicationManager_var dapp_mgr;
           
-          if (mode != pl_mode_stop)
+          if (mode != pl_mode_stop && new_package_url == 0) // do initial deployment
             {
               const char* uuid = launcher.launch_plan (package_url);
               
@@ -169,6 +176,16 @@ namespace CIAO
                               "Press <Enter> to tear down application\n"));
                   char dummy [256];
                   std::cin.getline (dummy, 256);
+                }
+            }
+          else if (mode != pl_mode_stop && new_package_url != 0) // do redeployment
+            {
+              const char* uuid = launcher.re_launch_plan (new_package_url);
+              
+              if (uuid == 0)
+                {
+                  ACE_ERROR ((LM_ERROR, "(%P|%t) Plan_Launcher: Error re-launching plan\n"));
+                  return -1;
                 }
             }
           else
