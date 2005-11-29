@@ -28,18 +28,13 @@
 
 #include <ace/Manual_Event.h>
 
-//////////////////////////////////
-// Classes declared in this header
-namespace TAO
-{
-  class  Fault_Detector_i;
-}
-
 
 #include "orbsvcs/FT_NotifierC.h"
 #include "orbsvcs/FT_ReplicaC.h"
 #include "ace/Time_Value.h"
 
+// Classes declared in this header
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -181,5 +176,8 @@ namespace TAO
     int quit_requested_;
   };
 }   // namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 #include /**/ <ace/post.h>
 #endif // FAULT_DETECTOR_I_H_

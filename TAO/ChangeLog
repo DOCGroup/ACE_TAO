@@ -1,3 +1,35 @@
+Tue Nov 29 06:44:35 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/FTRT_Event_Service/Event_Service/FT_EventService.h:
+	* orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.cpp:
+	* orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.h:
+	* orbsvcs/FT_ReplicationManager/FT_FaultAnalyzer.cpp:
+	* orbsvcs/FT_ReplicationManager/FT_FaultAnalyzer.h:
+	* orbsvcs/FT_ReplicationManager/FT_FaultConsumer.cpp:
+	* orbsvcs/FT_ReplicationManager/FT_FaultConsumer.h:
+	* orbsvcs/FT_ReplicationManager/FT_FaultEventDescriptor.cpp:
+	* orbsvcs/FT_ReplicationManager/FT_FaultEventDescriptor.h:
+	* orbsvcs/FT_ReplicationManager/FT_Property_Validator.cpp:
+	* orbsvcs/FT_ReplicationManager/FT_Property_Validator.h:
+	* orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+	* orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
+	* orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.cpp:
+	* orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.h:
+	* orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+	* orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
+	* orbsvcs/Fault_Detector/Fault_Detector_i.cpp:
+	* orbsvcs/Fault_Detector/Fault_Detector_i.h:
+	* orbsvcs/Fault_Notifier/FT_Notifier_i.cpp:
+	* orbsvcs/Fault_Notifier/FT_Notifier_i.h:
+	* orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+	* orbsvcs/Notify_Service/Notify_Service.h:
+	* orbsvcs/orbsvcs/ETCL/ETCL_Interpreter.h:
+	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
+	* orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Extensions.h:
+
+	  More versioned namespace build fixes.
+
 Tue Nov 29 13:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/LRU_Connection_Purging_Strategy.cpp:

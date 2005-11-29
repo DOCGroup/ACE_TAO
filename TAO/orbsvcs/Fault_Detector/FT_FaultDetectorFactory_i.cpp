@@ -42,6 +42,8 @@
     return /* value goes here */
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 //////////////////////////////////////////////////////
 // FT_FaultDetectorFactory_i  Construction/destruction
 
@@ -708,3 +710,4 @@ CORBA::Boolean TAO::FT_FaultDetectorFactory_i::is_alive (ACE_ENV_SINGLE_ARG_DECL
     1;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

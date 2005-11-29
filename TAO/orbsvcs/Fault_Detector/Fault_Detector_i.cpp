@@ -15,6 +15,8 @@
 #include "FT_FaultDetectorFactory_i.h"
 #include "tao/debug.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ///////////////////////////////
 // Fault_Detector_i static data
 
@@ -201,3 +203,4 @@ ACE_THR_FUNC_RETURN TAO::Fault_Detector_i::thr_func (void * arg)
   return 0;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL

@@ -95,8 +95,6 @@ private:
   static char* end_;
 };
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 /// The union used by lex and bison to build the Abstract Syntax Tree.
 typedef union
 {
@@ -105,6 +103,8 @@ typedef union
 
 extern YYSTYPE yylval;
 extern YYSTYPE yyval;
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ETCL_INTERPRETER_H */
