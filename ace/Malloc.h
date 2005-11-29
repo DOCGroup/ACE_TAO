@@ -309,9 +309,6 @@ public:
                    char *pointer,
                    ACE_Name_Node *head);
 
-    /// Copy constructor.
-    ACE_Name_Node (const ACE_Name_Node &);
-
     /// Constructor.
     ACE_Name_Node (void);
 
@@ -325,9 +322,6 @@ public:
 
     /// Return a pointer to the name of this node.
     const char *name (void) const;
-
-    /// Assign a name;
-    void name (const char *);
 
     /// Name of the Node.
     char *name_;
@@ -343,6 +337,9 @@ public:
 
     /// Dump the state of the object.
     void dump (void) const;
+  private:
+    /// Copy constructor.
+    ACE_Name_Node (const ACE_Name_Node &);
   };
 
   /// Print out a bunch of size info for debugging.
