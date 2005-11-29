@@ -1,3 +1,8 @@
+Tue Nov 29 11:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Timer_Queue_T.cpp:
+          Use prefix increment operator instead of postfix
+
 Tue Nov 29 07:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Malloc.{h,cpp}:
