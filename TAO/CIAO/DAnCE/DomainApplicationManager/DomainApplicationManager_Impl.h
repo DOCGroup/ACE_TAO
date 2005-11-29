@@ -140,7 +140,8 @@ namespace CIAO
      * is started as well.  Raises the StartError exception if
      * launching or starting the application fails.
      */
-    virtual void finishLaunch (::CORBA::Boolean start
+    virtual void finishLaunch (CORBA::Boolean start,
+                               CORBA::Boolean is_ReDAC
                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Deployment::StartError));
@@ -229,18 +230,28 @@ namespace CIAO
      * child deployment plan as Receiver side.
      */
     Deployment::Connections *
-    get_outgoing_connections (const Deployment::DeploymentPlan &plan
-			      ACE_ENV_ARG_DECL);
+    get_outgoing_connections (const Deployment::DeploymentPlan &plan,
+                              bool is_ReDAC
+			                        ACE_ENV_ARG_DECL);
 
     /// This is a helper function to find the connection for a component.
     bool
     get_outgoing_connections_i (const char * instname,
-                                Deployment::Connections & retv
-				ACE_ENV_ARG_DECL)
+                                Deployment::Connections & retv,
+                                bool is_ReDAC
+				                        ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((Deployment::StartError));
 
     /// Dump connections, a static method
     void dump_connections (const ::Deployment::Connections & connections);
+
+    /// Check whether a connection already exists in the cached old plan
+    bool already_exists (const Deployment::PlanConnectionDescription & conn);
+
+    /// Remove those appeared in <right> from the <left>
+    Deployment::Connections *
+    subtract_connections (const Deployment::Connections & left,
+                          const Deployment::Connections & right);
 
   protected:
     /// location of the Domainapplication
@@ -264,6 +275,9 @@ namespace CIAO
     /// Cached deployment plan for the particular domain.
     /// The plan will be initialized when init is called.
     Deployment::DeploymentPlan plan_;
+
+    /// Cached old deployment plan, i.e., before redeployment
+    Deployment::DeploymentPlan old_plan_;
 
     /// Cached child plans.
     //Deployment::DeploymentPlan * child_plan_;
@@ -303,7 +317,7 @@ namespace CIAO
     /// This variable is used to control the execution path of some
     /// member function implementations. The reason is because we want
     /// to avoid unnecessary code duplicate. The default value is "false".
-    bool is_redeployment;
+    bool is_redeployment_;
   };
 }
 

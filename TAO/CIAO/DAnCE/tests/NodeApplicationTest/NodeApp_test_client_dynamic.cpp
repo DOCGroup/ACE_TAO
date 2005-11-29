@@ -144,11 +144,10 @@ main (int argc, char *argv[])
       node_app->remove_component ("NodeAppTest_RoundTrip");
       ACE_DEBUG ((LM_DEBUG, "Component and Home removed successfully\n"));
 
-/*
       ACE_DEBUG ((LM_DEBUG, "=====Try removing all remaining components and homes\n"));
       node_app->remove ();
       ACE_DEBUG ((LM_DEBUG, "=====Components and Homes removed successfully\n"));
-*/
+
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG, "=====Test success!!\n"));
