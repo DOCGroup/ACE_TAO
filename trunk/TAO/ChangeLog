@@ -1,3 +1,8 @@
+Tue Nov 29 13:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/LRU_Connection_Purging_Strategy.cpp:
+          Use prefix increment instead of postfix
+
 Tue Nov 29 11:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB.h:
