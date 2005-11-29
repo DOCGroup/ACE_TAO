@@ -1,3 +1,13 @@
+Tue Nov 29 07:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Malloc.{h,cpp}:
+          Removed copy constructor and name assign methods from ACE_Name_Node,
+          these where implemented with an assert saying not implemented. This
+          is not a good thing to do and also fixes some warnings in our
+          Intel 9.1 beta build. If someone used these methods they would get
+          an assert in runtime, now they get a compile error meaning we
+          have to implement them
+
 Mon Nov 28 07:26:31 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* protocols/ace/HTBP/HTBP.mpc:
