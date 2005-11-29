@@ -18,10 +18,12 @@
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Become_Primary_Listener.h"
 #include "TP_Task.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace POA_RtecScheduler
 {
     class Scheduler;
 }
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 class FT_EventService : private TAO_FTEC_Become_Primary_Listener
 {

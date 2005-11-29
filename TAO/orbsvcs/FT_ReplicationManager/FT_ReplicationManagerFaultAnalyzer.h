@@ -27,8 +27,12 @@
 #include "orbsvcs/FT_CORBAC.h"
 
 // Forward declarations.
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class T> class ACE_Unbounded_Set;
 template <class T> class ACE_Unbounded_Set_Iterator;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -187,6 +191,8 @@ namespace TAO
   };
 
 } // namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 
