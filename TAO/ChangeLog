@@ -1,3 +1,9 @@
+Tue Nov 29 11:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB.h:
+          Added argument names to perform_work methods, improves doxygen
+          docu
+
 Tue Nov 29 09:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/PluggableUDP/tests/Performance/Performance.mpc:
