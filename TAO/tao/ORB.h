@@ -483,9 +483,9 @@ namespace CORBA
      * appropriate @c ACE_Time_Value as described in run().
      **/
     void perform_work (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-    void perform_work (ACE_Time_Value &
+    void perform_work (ACE_Time_Value &tv
                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-    void perform_work (ACE_Time_Value *
+    void perform_work (ACE_Time_Value *tv
                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     /**
