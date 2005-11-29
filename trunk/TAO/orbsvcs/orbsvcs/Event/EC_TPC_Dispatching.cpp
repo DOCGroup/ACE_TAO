@@ -1,7 +1,5 @@
 // $Id$
 
-extern unsigned long EC_TPC_debug_level;
-
 #include "EC_TPC_Dispatching.h"
 #include "EC_Defaults.h"
 
@@ -14,6 +12,8 @@ ACE_RCSID(Event, EC_TPC_Dispatching, "$Id$")
 #endif
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+extern unsigned long EC_TPC_debug_level;
 
 TAO_EC_TPC_Dispatching::TAO_EC_TPC_Dispatching (TAO_EC_Queue_Full_Service_Object* so)
   : consumer_task_map_(TAO_EC_TPC_DISPATCHING_DEFAULT_MAP_SIZE)

@@ -25,7 +25,9 @@
 #include "../orbsvcs/Notify/CosNotify_Initializer.h"
 #include "ace/SString.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Service;
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #define NOTIFY_KEY "NotifyEventChannelFactory"
 #define NOTIFY_CHANNEL_NAME "NotifyEventChannel"

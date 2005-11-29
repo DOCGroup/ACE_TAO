@@ -49,6 +49,8 @@
   return /* value goes here */
 
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 // Implementation skeleton constructor
 TAO::FT_FaultNotifier_i::FT_FaultNotifier_i ()
   : orb_ (0)
@@ -768,3 +770,5 @@ TAO::FT_FaultNotifier_i::ProxyInfo::ProxyInfo (const ProxyInfo & rhs)
   , proxyVar_ (rhs.proxyVar_)
 {
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

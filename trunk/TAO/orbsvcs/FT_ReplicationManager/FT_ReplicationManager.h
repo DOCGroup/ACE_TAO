@@ -34,6 +34,7 @@
 #include <orbsvcs/PortableGroup/PG_FactoryRegistry.h>
 #include <orbsvcs/FT_ReplicationManager/FT_FaultConsumer.h>
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
@@ -518,6 +519,8 @@ namespace TAO
   };
 
 } // namespace TAO
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

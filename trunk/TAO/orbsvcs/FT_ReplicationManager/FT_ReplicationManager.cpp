@@ -69,6 +69,8 @@ ACE_RCSID (FT_ReplicationManager,
 #define TODO
 //#define TODO int todo; // warn on todos
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 TAO::FT_ReplicationManager::FT_ReplicationManager ()
   : orb_ (CORBA::ORB::_nil ())
   , poa_ (PortableServer::POA::_nil ())
@@ -1091,69 +1093,4 @@ int TAO::FT_ReplicationManager::write_ior ()
   return result;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+TAO_END_VERSIONED_NAMESPACE_DECL

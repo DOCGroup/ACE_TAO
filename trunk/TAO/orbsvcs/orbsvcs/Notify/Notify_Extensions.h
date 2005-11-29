@@ -19,10 +19,14 @@
 #endif /* TAO_EXPORT_MACRO */
 #define TAO_EXPORT_MACRO TAO_Notify_Export
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 namespace TAO_Notify_Extensions
 {
   TAO_NAMESPACE_STORAGE_CLASS const char BlockingPolicy[];
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 

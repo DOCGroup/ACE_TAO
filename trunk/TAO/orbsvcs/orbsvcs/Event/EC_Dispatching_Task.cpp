@@ -78,6 +78,8 @@ TAO_EC_Simple_Queue_Full_Action::queue_full_action (TAO_EC_Dispatching_Task * /*
   return this->queue_full_action_return_value_;
 }
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 ACE_STATIC_SVC_DEFINE (TAO_EC_Simple_Queue_Full_Action,
                        ACE_TEXT (TAO_EC_DEFAULT_QUEUE_FULL_SERVICE_OBJECT_NAME),
                        ACE_SVC_OBJ_T,
@@ -87,7 +89,7 @@ ACE_STATIC_SVC_DEFINE (TAO_EC_Simple_Queue_Full_Action,
 ACE_FACTORY_DEFINE (TAO_RTEvent_Serv, TAO_EC_Simple_Queue_Full_Action)
 
 
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 int
 TAO_EC_Queue::is_full_i (void)
 {
