@@ -27,6 +27,8 @@
 // For the (W)String_var and (W)String_out iostream operators.
 #include "ace/iosfwd.h"
 
+#include <algorithm>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -68,10 +70,8 @@ namespace TAO
     }
 
     /// copy constructor.
-    inline String_var (const String_var<charT> &s)
+    inline String_var (const String_var<charT> &s) : ptr_(s_traits::duplicate(s.ptr_))
     {
-      String_var <charT> tmp (s.ptr_);
-      std::swap (this->ptr_, tmp.ptr_);
     }
 
     /// destructor.
