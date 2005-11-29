@@ -228,17 +228,20 @@ namespace CIAO
      * Given a child deployment plan, find the <Connections> sequence
      * of the "providedReference" for the component instances in the
      * child deployment plan as Receiver side.
+     * By default, we search in the new plan.
      */
     Deployment::Connections *
     get_outgoing_connections (const Deployment::DeploymentPlan &plan,
-                              bool is_ReDAC
+                              bool is_getting_all_connections = true,
+                              bool is_search_new_plan = true
 			                        ACE_ENV_ARG_DECL);
 
     /// This is a helper function to find the connection for a component.
     bool
     get_outgoing_connections_i (const char * instname,
                                 Deployment::Connections & retv,
-                                bool is_ReDAC
+                                bool is_ReDAC,
+                                bool is_search_new_plan
 				                        ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((Deployment::StartError));
 
