@@ -14,6 +14,8 @@
 
 #include "tao/Unbounded_String_Sequence_T.h"
 #include "tao/Unbounded_Wstring_Sequence_T.h"
+#include "tao/Unbounded_Wstring_Sequence_T.h"
+#include "tao/CORBA_String.h"
 
 #include "string_sequence_tester.hpp"
 

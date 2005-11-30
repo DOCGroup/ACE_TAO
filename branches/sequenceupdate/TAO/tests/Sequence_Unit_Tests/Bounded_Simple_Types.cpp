@@ -8,7 +8,7 @@
  *
  * @author Carlos O'Ryan
  */
-#include "tao/bounded_value_sequence.hpp"
+#include "tao/Bounded_Value_Sequence_T.h"
 
 struct Foo
 {
