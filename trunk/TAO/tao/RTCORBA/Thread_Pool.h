@@ -223,7 +223,7 @@ private:
   CORBA::ULong const static_threads_number_;
 
   /// Maximum number of threads we are allowed to create
-  CORBA::ULong dynamic_threads_number_;
+  CORBA::ULong const dynamic_threads_number_;
 
   /// Array with all static threads
   TAO_Thread_Pool_Threads static_threads_;
