@@ -8,15 +8,15 @@
  * @author Carlos O'Ryan
  */
 #include "testing_object_reference_traits.hpp"
-#include "tao/object_reference_traits.hpp"
+#include "tao/Object_Reference_Traits_T.h"
 #include "testing_allocation_traits.hpp"
 #include "testing_range_checking.hpp"
 
 #include "mock_reference.hpp"
 
-#include "tao/bounded_object_reference_sequence.hpp"
-#include "tao/bounded_value_sequence.hpp"
-#include "tao/bounded_sequence_cdr.hpp"
+#include "tao/Bounded_Object_Reference_Sequence_T.h"
+#include "tao/Bounded_Value_Sequence_T.h"
+#include "tao/Bounded_Sequence_CDR_T.h"
 #include "tao/CDR.h"
 
 #include <boost/test/unit_test.hpp>

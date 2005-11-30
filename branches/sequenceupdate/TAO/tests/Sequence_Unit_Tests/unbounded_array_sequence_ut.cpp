@@ -12,7 +12,7 @@
 #include "testing_allocation_traits.hpp"
 #include "testing_range_checking.hpp"
 
-#include "tao/unbounded_array_sequence.hpp"
+#include "tao/Unbounded_Array_Sequence_T.h"
 
 #include <boost/test/unit_test.hpp>
 #include <boost/shared_ptr.hpp>

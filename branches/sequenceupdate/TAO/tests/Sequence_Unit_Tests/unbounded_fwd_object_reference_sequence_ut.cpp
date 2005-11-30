@@ -9,13 +9,12 @@
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 #include "testing_object_reference_traits.hpp"
-//#include "object_reference_traits.hpp"
 #include "testing_allocation_traits.hpp"
 #include "testing_range_checking.hpp"
 
 #include "fwd_mock_reference.hpp"
 
-#include "tao/unbounded_object_reference_sequence.hpp"
+#include "tao/Unbounded_Object_Reference_Sequence_T.h"
 
 #include <boost/test/unit_test.hpp>
 #include <boost/shared_ptr.hpp>
