@@ -50,12 +50,14 @@ TAO_RT_ORBInitializer::TAO_RT_ORBInitializer (int priority_mapping_type,
                                               int network_priority_mapping_type,
                                               int ace_sched_policy,
                                               long sched_policy,
-                                              long scope_policy)
+                                              long scope_policy,
+                                              ACE_Time_Value const &dynamic_thread_idle_timeout)
   : priority_mapping_type_ (priority_mapping_type),
     network_priority_mapping_type_ (network_priority_mapping_type),
     ace_sched_policy_ (ace_sched_policy),
     sched_policy_ (sched_policy),
-    scope_policy_ (scope_policy)
+    scope_policy_ (scope_policy),
+    dynamic_thread_idle_timeout_ (dynamic_thread_idle_timeout)
 {
 }
 
@@ -119,7 +121,6 @@ TAO_RT_ORBInitializer::pre_init (
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;
-
 
   TAO_Priority_Mapping_Manager_var safe_manager = manager;
 
@@ -186,7 +187,8 @@ TAO_RT_ORBInitializer::pre_init (
   // Create the RT_ORB.
   CORBA::Object_ptr rt_orb = CORBA::Object::_nil ();
   ACE_NEW_THROW_EX (rt_orb,
-                    TAO_RT_ORB (tao_info->orb_core ()),
+                    TAO_RT_ORB (tao_info->orb_core (),
+                    dynamic_thread_idle_timeout_),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO::VMCID,
