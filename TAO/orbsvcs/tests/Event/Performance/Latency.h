@@ -25,7 +25,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Sample_History;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 /// Simple consumer, receives events and record roundtrip delays.
 class EC_Latency_Consumer : public POA_RtecEventComm::PushConsumer
