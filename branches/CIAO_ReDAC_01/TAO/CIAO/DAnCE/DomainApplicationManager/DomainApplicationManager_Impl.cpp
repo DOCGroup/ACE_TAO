@@ -331,8 +331,16 @@ split_plan (void)
       this->deployment_config_.get_node_manager
               (this->node_manager_names_[i].c_str ());
 
-    // In case we are doing redeployment, we could clean up the old
-    // child plan through the "rebind" mechanism.
+    ACE_Hash_Map_Entry
+      <ACE_CString,
+      Chained_Artifacts> *entry = 0;
+
+    if (this->artifact_map_.find
+        (node_manager_names_[i], entry) == 0)
+      artifacts.old_child_plan_ = (entry->int_id_).child_plan_;
+
+    // In case we are doing redeployment, rebind will help replace the 
+    // old child plan with the new child plan.
     this->artifact_map_.rebind (node_manager_names_[i], artifacts);
   }
 
@@ -342,7 +350,7 @@ split_plan (void)
   //     plans one by one.
   for ( i = 0; i < (this->plan_.instance).length (); ++i)
     {
-      // Fill in the child deployment plan in the map.
+      // @@TODO Fill in the child deployment plan in the map.
       // If the component instance already exists in the child plan,
       // then we overwrite the existing instance, since the new instance
       // might have different resource usage requirements.
@@ -694,13 +702,13 @@ finishLaunch (CORBA::Boolean start,
               // Get all the connections in the old deployment plan
               Deployment::Connections * connections_in_old_plan =
                 this->get_outgoing_connections (
-                        this->old_plan_,
+                        (entry->int_id_).old_child_plan_.in (),
                         true, // yes, get *all* the connections
                         false // search in the *old* plan
 					              ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
-              // Pass in the "false" parameter and get *all* the connections in
+              // Pass in the "false" parameter to get *all* the connections in
               // the new deployment plan, regardless those in old plan
               Deployment::Connections * connections_in_new_plan =
                 this->get_outgoing_connections (

@@ -62,6 +62,7 @@ namespace CIAO
       ::Deployment::DeploymentPlan_var child_plan_;
       ::Deployment::NodeApplicationManager_var node_application_manager_;
       ::Deployment::NodeApplication_var node_application_;
+      ::Deployment::DeploymentPlan_var old_child_plan_;
     } Chained_Artifacts;
 
     /// Constructor
