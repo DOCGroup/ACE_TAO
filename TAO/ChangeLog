@@ -1,3 +1,11 @@
+Wed Nov 30 12:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Security/MT_SSLIOP/run_test_heavy.pl:
+          New regression test script. Test the TAO SSLIOP under heavy load
+          and it will fail. This test takes a long time to succeed so
+          didn't put it in the standard test suite. We have no idea why
+          it fails, but something is buggy in the SSLIOP support
+
 Wed Nov 30 11:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTCORBA/RT_ORB.{h,cpp}:
