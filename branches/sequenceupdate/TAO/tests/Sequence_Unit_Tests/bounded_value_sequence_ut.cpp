@@ -11,7 +11,7 @@
 #include "testing_allocation_traits.hpp"
 #include "testing_range_checking.hpp"
 
-#include "tao/bounded_value_sequence.hpp"
+#include "tao/Bounded_Value_Sequence_T.h"
 
 #include "value_sequence_tester.hpp"
 

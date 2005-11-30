@@ -16,6 +16,7 @@
 
 #include "tao/Bounded_String_Sequence_T.h"
 #include "tao/Bounded_Wstring_Sequence_T.h"
+#include "tao/CORBA_String.h"
 
 #include "string_sequence_tester.hpp"
 

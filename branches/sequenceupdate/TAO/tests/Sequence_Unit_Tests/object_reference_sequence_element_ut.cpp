@@ -10,7 +10,7 @@
  */
 #include "testing_object_reference_traits.hpp"
 #include "mock_reference.hpp"
-#include "tao/object_reference_sequence_element.hpp"
+#include "tao/Object_Reference_Sequence_Element_T.h"
 
 #include <sstream>
 #include <stdexcept>
