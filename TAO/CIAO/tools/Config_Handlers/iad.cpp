@@ -20,7 +20,7 @@ namespace CIAO
 
     NamedImplementationArtifact::
     NamedImplementationArtifact (::XMLSchema::string< ACE_TCHAR > const& name__,
-    ::CIAO::Config_Handlers::ImplementationArtifactDescription const& referencedArtifact__)
+                                 ::CIAO::Config_Handlers::ImplementationArtifactDescription const& referencedArtifact__)
     : 
     ::XSCRT::Type (), 
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
@@ -110,15 +110,11 @@ namespace CIAO
       if (label_.get ()) label_->container (this);
       if (UUID_.get ()) UUID_->container (this);
       {
-        for (location_const_iterator i (s.location_.begin ());
-        i != s.location_.end ();
-        ++i) add_location (*i);
+        for (location_const_iterator i (s.location_.begin ());i != s.location_.end ();++i) add_location (*i);
       }
 
       {
-        for (dependsOn_const_iterator i (s.dependsOn_.begin ());
-        i != s.dependsOn_.end ();
-        ++i) add_dependsOn (*i);
+        for (dependsOn_const_iterator i (s.dependsOn_.begin ());i != s.dependsOn_.end ();++i) add_dependsOn (*i);
       }
 
       if (execParameter_.get ()) execParameter_->container (this);
@@ -139,16 +135,12 @@ namespace CIAO
 
       location_.clear ();
       {
-        for (location_const_iterator i (s.location_.begin ());
-        i != s.location_.end ();
-        ++i) add_location (*i);
+        for (location_const_iterator i (s.location_.begin ());i != s.location_.end ();++i) add_location (*i);
       }
 
       dependsOn_.clear ();
       {
-        for (dependsOn_const_iterator i (s.dependsOn_.begin ());
-        i != s.dependsOn_.end ();
-        ++i) add_dependsOn (*i);
+        for (dependsOn_const_iterator i (s.dependsOn_.begin ());i != s.dependsOn_.end ();++i) add_dependsOn (*i);
       }
 
       if (s.execParameter_.get ()) execParameter (*(s.execParameter_));
@@ -814,9 +806,7 @@ namespace CIAO
         if (b != e)
         {
           location_pre (o);
-          for (;
-           b != e;
-          )
+          for (; b != e;)
           {
             dispatch (*b);
             if (++b != e) location_next (o);
@@ -838,9 +828,7 @@ namespace CIAO
         if (b != e)
         {
           location_pre (o);
-          for (;
-           b != e;
-          )
+          for (; b != e;)
           {
             dispatch (*b);
             if (++b != e) location_next (o);
@@ -902,9 +890,7 @@ namespace CIAO
         if (b != e)
         {
           dependsOn_pre (o);
-          for (;
-           b != e;
-          )
+          for (; b != e;)
           {
             dispatch (*b);
             if (++b != e) dependsOn_next (o);
@@ -926,9 +912,7 @@ namespace CIAO
         if (b != e)
         {
           dependsOn_pre (o);
-          for (;
-           b != e;
-          )
+          for (; b != e;)
           {
             dispatch (*b);
             if (++b != e) dependsOn_next (o);
