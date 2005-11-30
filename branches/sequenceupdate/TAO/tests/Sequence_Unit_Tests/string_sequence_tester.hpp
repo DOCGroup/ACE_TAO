@@ -9,7 +9,7 @@
  *
  * @author Carlos O'Ryan
  */
-#include "tao/string_traits.hpp"
+#include "tao/String_Traits_T.h"
 
 #include "ace/OS_NS_string.h"
 
