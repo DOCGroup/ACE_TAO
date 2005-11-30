@@ -19,16 +19,18 @@ ACE_RCSID(RTCORBA,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RT_ORB::TAO_RT_ORB (TAO_ORB_Core *orb_core)
+TAO_RT_ORB::TAO_RT_ORB (TAO_ORB_Core *orb_core,
+                        ACE_Time_Value const &dynamic_thread_idle_timeout)
   : orb_core_ (orb_core),
     mutex_mgr_ (),
-    tp_manager_ (0)
+    tp_manager_ (0),
+    dynamic_thread_idle_timeout_ (dynamic_thread_idle_timeout)
 {
   TAO_Thread_Lane_Resources_Manager *thread_lane_resources_manager =
     &this->orb_core_->thread_lane_resources_manager ();
 
   TAO_RT_Thread_Lane_Resources_Manager *rt_thread_lane_resources_manager =
-    (TAO_RT_Thread_Lane_Resources_Manager *) thread_lane_resources_manager;
+    dynamic_cast <TAO_RT_Thread_Lane_Resources_Manager *> (thread_lane_resources_manager);
 
   this->tp_manager_ =
     &rt_thread_lane_resources_manager->tp_manager ();
@@ -368,7 +370,8 @@ TAO_RT_ORB::create_threadpool (CORBA::ULong stacksize,
                                                default_priority,
                                                allow_request_buffering,
                                                max_buffered_requests,
-                                               max_request_buffer_size
+                                               max_request_buffer_size,
+                                               this->dynamic_thread_idle_timeout_
                                                ACE_ENV_ARG_PARAMETER);
 }
 
@@ -387,7 +390,8 @@ TAO_RT_ORB::create_threadpool_with_lanes (CORBA::ULong stacksize,
                                                           allow_borrowing,
                                                           allow_request_buffering,
                                                           max_buffered_requests,
-                                                          max_request_buffer_size
+                                                          max_request_buffer_size,
+                                                          this->dynamic_thread_idle_timeout_
                                                           ACE_ENV_ARG_PARAMETER);
 }
 
