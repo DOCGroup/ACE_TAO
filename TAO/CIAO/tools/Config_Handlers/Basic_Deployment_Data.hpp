@@ -116,7 +116,7 @@ namespace CIAO
 
       enum Value
       {
-        tk_null_l,tk_void_l,tk_short_l,tk_long_l,tk_ushort_l,tk_ulong_l,tk_float_l,tk_double_l,tk_boolean_l,tk_char_l,tk_octet_l,tk_any_l,tk_TypeCode_l,tk_Principal_l,tk_objref_l,tk_struct_l,tk_union_l,tk_enum_l,tk_string_l,tk_sequence_l,tk_array_l,tk_alias_l,tk_except_l,tk_longlong_l,tk_ulonglong_l,tk_longdouble_l,tk_wchar_l,tk_wstring_l,tk_wfixed_l,tk_value_l,tk_value_box_l,tk_native_l,tk_abstract_interface_l,tk_local_interface_l,tk_component_l,tk_home_l,tk_event_l
+        tk_null_l,tk_void_l,tk_short_l,tk_long_l,tk_ushort_l,tk_ulong_l,tk_float_l,tk_double_l,tk_boolean_l,tk_char_l,tk_octet_l,tk_any_l,tk_TypeCode_l,tk_Principal_l,tk_objref_l,tk_struct_l,tk_union_l,tk_enum_l,tk_string_l,tk_sequence_l,tk_array_l,tk_alias_l,tk_except_l,tk_longlong_l,tk_ulonglong_l,tk_longdouble_l,tk_wchar_l,tk_wstring_l,tk_wfixed_l,tk_value_l,tk_value_box_l,tk_native_l,tk_abstract_interface_l,tk_local_interface_l,tk_component_l,tk_home_l,tk_event_l,
       };
 
 
@@ -432,7 +432,7 @@ namespace CIAO
 
       public:
       EnumType (::XMLSchema::string< ACE_TCHAR > const& name__,
-      ::XMLSchema::string< ACE_TCHAR > const& typeId__);
+                ::XMLSchema::string< ACE_TCHAR > const& typeId__);
 
       EnumType (::XSCRT::XML::Element< ACE_TCHAR > const&);
       EnumType (EnumType const& s);
@@ -470,7 +470,7 @@ namespace CIAO
 
       public:
       Any (::CIAO::Config_Handlers::DataType const& type__,
-      ::CIAO::Config_Handlers::DataValue const& value__);
+           ::CIAO::Config_Handlers::DataValue const& value__);
 
       Any (::XSCRT::XML::Element< ACE_TCHAR > const&);
       Any (Any const& s);
@@ -508,7 +508,7 @@ namespace CIAO
 
       public:
       Property (::XMLSchema::string< ACE_TCHAR > const& name__,
-      ::CIAO::Config_Handlers::Any const& value__);
+                ::CIAO::Config_Handlers::Any const& value__);
 
       Property (::XSCRT::XML::Element< ACE_TCHAR > const&);
       Property (Property const& s);
@@ -536,7 +536,7 @@ namespace CIAO
 
       enum Value
       {
-        Quantity_l,Capacity_l,Minimum_l,Maximum_l,Attribute_l,Selection_l
+        Quantity_l,Capacity_l,Minimum_l,Maximum_l,Attribute_l,Selection_l,
       };
 
 
@@ -594,8 +594,8 @@ namespace CIAO
 
       public:
       SatisfierProperty (::XMLSchema::string< ACE_TCHAR > const& name__,
-      ::CIAO::Config_Handlers::SatisfierPropertyKind const& kind__,
-      ::CIAO::Config_Handlers::Any const& value__);
+                         ::CIAO::Config_Handlers::SatisfierPropertyKind const& kind__,
+                         ::CIAO::Config_Handlers::Any const& value__);
 
       SatisfierProperty (::XSCRT::XML::Element< ACE_TCHAR > const&);
       SatisfierProperty (SatisfierProperty const& s);
@@ -642,8 +642,8 @@ namespace CIAO
 
       public:
       Resource (::XMLSchema::string< ACE_TCHAR > const& name__,
-      ::XMLSchema::string< ACE_TCHAR > const& resourceType__,
-      ::CIAO::Config_Handlers::SatisfierProperty const& property__);
+                ::XMLSchema::string< ACE_TCHAR > const& resourceType__,
+                ::CIAO::Config_Handlers::SatisfierProperty const& property__);
 
       Resource (::XSCRT::XML::Element< ACE_TCHAR > const&);
       Resource (Resource const& s);
@@ -690,8 +690,8 @@ namespace CIAO
 
       public:
       Requirement (::XMLSchema::string< ACE_TCHAR > const& resourceType__,
-      ::XMLSchema::string< ACE_TCHAR > const& name__,
-      ::CIAO::Config_Handlers::Property const& property__);
+                   ::XMLSchema::string< ACE_TCHAR > const& name__,
+                   ::CIAO::Config_Handlers::Property const& property__);
 
       Requirement (::XSCRT::XML::Element< ACE_TCHAR > const&);
       Requirement (Requirement const& s);
@@ -738,8 +738,8 @@ namespace CIAO
 
       public:
       ResourceDeploymentDescription (::XMLSchema::string< ACE_TCHAR > const& requirementName__,
-      ::XMLSchema::string< ACE_TCHAR > const& resourceName__,
-      ::CIAO::Config_Handlers::Any const& resourceValue__);
+                                     ::XMLSchema::string< ACE_TCHAR > const& resourceName__,
+                                     ::CIAO::Config_Handlers::Any const& resourceValue__);
 
       ResourceDeploymentDescription (::XSCRT::XML::Element< ACE_TCHAR > const&);
       ResourceDeploymentDescription (ResourceDeploymentDescription const& s);
@@ -863,7 +863,7 @@ namespace CIAO
 
       public:
       ArtifactDeploymentDescription (::XMLSchema::string< ACE_TCHAR > const& name__,
-      ::XMLSchema::string< ACE_TCHAR > const& node__);
+                                     ::XMLSchema::string< ACE_TCHAR > const& node__);
 
       ArtifactDeploymentDescription (::XSCRT::XML::Element< ACE_TCHAR > const&);
       ArtifactDeploymentDescription (ArtifactDeploymentDescription const& s);
@@ -989,7 +989,7 @@ namespace CIAO
 
       enum Value
       {
-        None_l,InstanceUsesResource_l,ResourceUsesInstance_l,PortUsesResource_l,ResourceUsesPort_l
+        None_l,InstanceUsesResource_l,ResourceUsesInstance_l,PortUsesResource_l,ResourceUsesPort_l,
       };
 
 
@@ -1056,9 +1056,9 @@ namespace CIAO
 
       public:
       InstanceResourceDeploymentDescription (::CIAO::Config_Handlers::ResourceUsageKind const& resourceUsage__,
-      ::XMLSchema::string< ACE_TCHAR > const& requirementName__,
-      ::XMLSchema::string< ACE_TCHAR > const& resourceName__,
-      ::CIAO::Config_Handlers::Any const& resourceValue__);
+                                             ::XMLSchema::string< ACE_TCHAR > const& requirementName__,
+                                             ::XMLSchema::string< ACE_TCHAR > const& resourceName__,
+                                             ::CIAO::Config_Handlers::Any const& resourceValue__);
 
       InstanceResourceDeploymentDescription (::XSCRT::XML::Element< ACE_TCHAR > const&);
       InstanceResourceDeploymentDescription (InstanceResourceDeploymentDescription const& s);
@@ -1160,9 +1160,9 @@ namespace CIAO
 
       public:
       InstanceDeploymentDescription (::XMLSchema::string< ACE_TCHAR > const& name__,
-      ::XMLSchema::string< ACE_TCHAR > const& node__,
-      ::XMLSchema::string< ACE_TCHAR > const& source__,
-      ::XMLSchema::IDREF< ACE_TCHAR > const& implementation__);
+                                     ::XMLSchema::string< ACE_TCHAR > const& node__,
+                                     ::XMLSchema::string< ACE_TCHAR > const& source__,
+                                     ::XMLSchema::IDREF< ACE_TCHAR > const& implementation__);
 
       InstanceDeploymentDescription (::XSCRT::XML::Element< ACE_TCHAR > const&);
       InstanceDeploymentDescription (InstanceDeploymentDescription const& s);
@@ -1190,7 +1190,7 @@ namespace CIAO
 
       enum Value
       {
-        Facet_l,SimplexReceptacle_l,MultiplexReceptacle_l,EventEmitter_l,EventPublisher_l,EventConsumer_l
+        Facet_l,SimplexReceptacle_l,MultiplexReceptacle_l,EventEmitter_l,EventPublisher_l,EventConsumer_l,
       };
 
 
@@ -1293,13 +1293,13 @@ namespace CIAO
 
       public:
       ComponentPortDescription (::XMLSchema::string< ACE_TCHAR > const& name__,
-      ::XMLSchema::string< ACE_TCHAR > const& specificType__,
-      ::XMLSchema::string< ACE_TCHAR > const& supportedType__,
-      ::XMLSchema::string< ACE_TCHAR > const& provider__,
-      ::XMLSchema::string< ACE_TCHAR > const& exclusiveProvider__,
-      ::XMLSchema::string< ACE_TCHAR > const& exclusiveUser__,
-      ::XMLSchema::string< ACE_TCHAR > const& optional__,
-      ::CIAO::Config_Handlers::CCMComponentPortKind const& kind__);
+                                ::XMLSchema::string< ACE_TCHAR > const& specificType__,
+                                ::XMLSchema::string< ACE_TCHAR > const& supportedType__,
+                                ::XMLSchema::string< ACE_TCHAR > const& provider__,
+                                ::XMLSchema::string< ACE_TCHAR > const& exclusiveProvider__,
+                                ::XMLSchema::string< ACE_TCHAR > const& exclusiveUser__,
+                                ::XMLSchema::string< ACE_TCHAR > const& optional__,
+                                ::CIAO::Config_Handlers::CCMComponentPortKind const& kind__);
 
       ComponentPortDescription (::XSCRT::XML::Element< ACE_TCHAR > const&);
       ComponentPortDescription (ComponentPortDescription const& s);
@@ -1337,7 +1337,7 @@ namespace CIAO
 
       public:
       ComponentPropertyDescription (::XMLSchema::string< ACE_TCHAR > const& name__,
-      ::CIAO::Config_Handlers::DataType const& type__);
+                                    ::CIAO::Config_Handlers::DataType const& type__);
 
       ComponentPropertyDescription (::XSCRT::XML::Element< ACE_TCHAR > const&);
       ComponentPropertyDescription (ComponentPropertyDescription const& s);
@@ -1422,8 +1422,8 @@ namespace CIAO
 
       public:
       PlanSubcomponentPortEndpoint (::XMLSchema::string< ACE_TCHAR > const& portName__,
-      ::CIAO::Config_Handlers::CCMComponentPortKind const& kind__,
-      ::XMLSchema::IDREF< ACE_TCHAR > const& instance__);
+                                    ::CIAO::Config_Handlers::CCMComponentPortKind const& kind__,
+                                    ::XMLSchema::IDREF< ACE_TCHAR > const& instance__);
 
       PlanSubcomponentPortEndpoint (::XSCRT::XML::Element< ACE_TCHAR > const&);
       PlanSubcomponentPortEndpoint (PlanSubcomponentPortEndpoint const& s);
@@ -1507,9 +1507,9 @@ namespace CIAO
 
       public:
       ConnectionResourceDeploymentDescription (::XMLSchema::string< ACE_TCHAR > const& targetName__,
-      ::XMLSchema::string< ACE_TCHAR > const& requirementName__,
-      ::XMLSchema::string< ACE_TCHAR > const& resourceName__,
-      ::CIAO::Config_Handlers::Any const& resourceValue__);
+                                               ::XMLSchema::string< ACE_TCHAR > const& requirementName__,
+                                               ::XMLSchema::string< ACE_TCHAR > const& resourceName__,
+                                               ::CIAO::Config_Handlers::Any const& resourceValue__);
 
       ConnectionResourceDeploymentDescription (::XSCRT::XML::Element< ACE_TCHAR > const&);
       ConnectionResourceDeploymentDescription (ConnectionResourceDeploymentDescription const& s);
@@ -1697,8 +1697,8 @@ namespace CIAO
 
       public:
       Capability (::XMLSchema::string< ACE_TCHAR > const& name__,
-      ::XMLSchema::string< ACE_TCHAR > const& resourceType__,
-      ::CIAO::Config_Handlers::SatisfierProperty const& property__);
+                  ::XMLSchema::string< ACE_TCHAR > const& resourceType__,
+                  ::CIAO::Config_Handlers::SatisfierProperty const& property__);
 
       Capability (::XSCRT::XML::Element< ACE_TCHAR > const&);
       Capability (Capability const& s);
@@ -1772,11 +1772,11 @@ namespace CIAO
 
       public:
       ImplementationRequirement (::CIAO::Config_Handlers::ResourceUsageKind const& resourceUsage__,
-      ::XMLSchema::string< ACE_TCHAR > const& resourcePort__,
-      ::XMLSchema::string< ACE_TCHAR > const& componentPort__,
-      ::XMLSchema::string< ACE_TCHAR > const& resourceType__,
-      ::XMLSchema::string< ACE_TCHAR > const& name__,
-      ::CIAO::Config_Handlers::Property const& property__);
+                                 ::XMLSchema::string< ACE_TCHAR > const& resourcePort__,
+                                 ::XMLSchema::string< ACE_TCHAR > const& componentPort__,
+                                 ::XMLSchema::string< ACE_TCHAR > const& resourceType__,
+                                 ::XMLSchema::string< ACE_TCHAR > const& name__,
+                                 ::CIAO::Config_Handlers::Property const& property__);
 
       ImplementationRequirement (::XSCRT::XML::Element< ACE_TCHAR > const&);
       ImplementationRequirement (ImplementationRequirement const& s);
@@ -1823,8 +1823,8 @@ namespace CIAO
 
       public:
       ComponentPackageReference (::XMLSchema::string< ACE_TCHAR > const& requiredUUID__,
-      ::XMLSchema::string< ACE_TCHAR > const& requiredName__,
-      ::XMLSchema::string< ACE_TCHAR > const& requiredType__);
+                                 ::XMLSchema::string< ACE_TCHAR > const& requiredName__,
+                                 ::XMLSchema::string< ACE_TCHAR > const& requiredType__);
 
       ComponentPackageReference (::XSCRT::XML::Element< ACE_TCHAR > const&);
       ComponentPackageReference (ComponentPackageReference const& s);
@@ -1862,7 +1862,7 @@ namespace CIAO
 
       public:
       SubcomponentPortEndpoint (::XMLSchema::string< ACE_TCHAR > const& portName__,
-      ::XMLSchema::IDREF< ACE_TCHAR > const& instance__);
+                                ::XMLSchema::IDREF< ACE_TCHAR > const& instance__);
 
       SubcomponentPortEndpoint (::XSCRT::XML::Element< ACE_TCHAR > const&);
       SubcomponentPortEndpoint (SubcomponentPortEndpoint const& s);
@@ -3986,14 +3986,12 @@ namespace CIAO
       {
         TCKind (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
         virtual void TCKind::
         traverse (Type &o)
         {
           this->traverse (const_cast <Type const &> (o));
         }
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
@@ -4007,7 +4005,6 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::DataType Type;
         DataType (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
         virtual void 
         traverse (Type &o)
         {
@@ -4016,12 +4013,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         kind (Type &o)
         {
@@ -4030,12 +4024,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         kind (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         enum_ (Type &o)
         {
@@ -4044,7 +4035,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         enum_ (Type const&);
 
@@ -4058,7 +4048,6 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::DataValue Type;
         DataValue (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
         virtual void 
         traverse (Type &o)
         {
@@ -4067,12 +4056,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         short_pre (Type &o)
         {
@@ -4081,12 +4067,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         short_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         short_next (Type &o)
         {
@@ -4095,12 +4078,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         short_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         short_post (Type &o)
         {
@@ -4109,12 +4089,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         short_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         long_pre (Type &o)
         {
@@ -4123,12 +4100,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         long_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         long_next (Type &o)
         {
@@ -4137,12 +4111,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         long_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         long_post (Type &o)
         {
@@ -4151,12 +4122,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         long_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         ushort_pre (Type &o)
         {
@@ -4165,12 +4133,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         ushort_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         ushort_next (Type &o)
         {
@@ -4179,12 +4144,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         ushort_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         ushort_post (Type &o)
         {
@@ -4193,12 +4155,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         ushort_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         ulong_pre (Type &o)
         {
@@ -4207,12 +4166,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         ulong_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         ulong_next (Type &o)
         {
@@ -4221,12 +4177,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         ulong_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         ulong_post (Type &o)
         {
@@ -4235,12 +4188,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         ulong_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         float_pre (Type &o)
         {
@@ -4249,12 +4199,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         float_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         float_next (Type &o)
         {
@@ -4263,12 +4210,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         float_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         float_post (Type &o)
         {
@@ -4277,12 +4221,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         float_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         double_pre (Type &o)
         {
@@ -4291,12 +4232,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         double_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         double_next (Type &o)
         {
@@ -4305,12 +4243,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         double_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         double_post (Type &o)
         {
@@ -4319,12 +4254,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         double_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         boolean_pre (Type &o)
         {
@@ -4333,12 +4265,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         boolean_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         boolean_next (Type &o)
         {
@@ -4347,12 +4276,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         boolean_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         boolean_post (Type &o)
         {
@@ -4361,12 +4287,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         boolean_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         octet_pre (Type &o)
         {
@@ -4375,12 +4298,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         octet_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         octet_next (Type &o)
         {
@@ -4389,12 +4309,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         octet_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         octet_post (Type &o)
         {
@@ -4403,12 +4320,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         octet_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         enum_pre (Type &o)
         {
@@ -4417,12 +4331,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         enum_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         enum_next (Type &o)
         {
@@ -4431,12 +4342,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         enum_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         enum_post (Type &o)
         {
@@ -4445,12 +4353,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         enum_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         string_pre (Type &o)
         {
@@ -4459,12 +4364,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         string_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         string_next (Type &o)
         {
@@ -4473,12 +4375,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         string_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         string_post (Type &o)
         {
@@ -4487,12 +4386,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         string_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         longlong_pre (Type &o)
         {
@@ -4501,12 +4397,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         longlong_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         longlong_next (Type &o)
         {
@@ -4515,12 +4408,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         longlong_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         longlong_post (Type &o)
         {
@@ -4529,12 +4419,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         longlong_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         ulonglong_pre (Type &o)
         {
@@ -4543,12 +4430,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         ulonglong_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         ulonglong_next (Type &o)
         {
@@ -4557,12 +4441,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         ulonglong_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         ulonglong_post (Type &o)
         {
@@ -4571,12 +4452,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         ulonglong_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         longdouble_pre (Type &o)
         {
@@ -4585,12 +4463,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         longdouble_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         longdouble_next (Type &o)
         {
@@ -4599,12 +4474,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         longdouble_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         longdouble_post (Type &o)
         {
@@ -4613,7 +4485,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         longdouble_post (Type const&);
 
@@ -4627,7 +4498,6 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::EnumType Type;
         EnumType (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
         virtual void 
         traverse (Type &o)
         {
@@ -4636,12 +4506,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         name (Type &o)
         {
@@ -4650,12 +4517,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         name (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         typeId (Type &o)
         {
@@ -4664,12 +4528,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         typeId (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         member_pre (Type &o)
         {
@@ -4678,12 +4539,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         member_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         member_next (Type &o)
         {
@@ -4692,12 +4550,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         member_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         member_post (Type &o)
         {
@@ -4706,7 +4561,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         member_post (Type const&);
 
@@ -4720,7 +4574,6 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::Any Type;
         Any (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
         virtual void 
         traverse (Type &o)
         {
@@ -4729,12 +4582,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         type (Type &o)
         {
@@ -4743,12 +4593,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         type (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         value (Type &o)
         {
@@ -4757,7 +4604,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         value (Type const&);
 
@@ -4771,7 +4617,6 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::Property Type;
         Property (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
         virtual void 
         traverse (Type &o)
         {
@@ -4780,12 +4625,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         name (Type &o)
         {
@@ -4794,12 +4636,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         name (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         value (Type &o)
         {
@@ -4808,7 +4647,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         value (Type const&);
 
@@ -4821,14 +4659,12 @@ namespace CIAO
       {
         SatisfierPropertyKind (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
         virtual void SatisfierPropertyKind::
         traverse (Type &o)
         {
           this->traverse (const_cast <Type const &> (o));
         }
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
@@ -4842,7 +4678,6 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::SatisfierProperty Type;
         SatisfierProperty (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
         virtual void 
         traverse (Type &o)
         {
@@ -4851,12 +4686,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         name (Type &o)
         {
@@ -4865,12 +4697,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         name (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         kind (Type &o)
         {
@@ -4879,12 +4708,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         kind (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         value (Type &o)
         {
@@ -4893,7 +4719,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         value (Type const&);
 
@@ -4907,7 +4732,6 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::Resource Type;
         Resource (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
         virtual void 
         traverse (Type &o)
         {
@@ -4916,12 +4740,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         name (Type &o)
         {
@@ -4930,12 +4751,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         name (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         resourceType (Type &o)
         {
@@ -4944,12 +4762,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         resourceType (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         property (Type &o)
         {
@@ -4958,7 +4773,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         property (Type const&);
 
@@ -4972,7 +4786,6 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::Requirement Type;
         Requirement (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
         virtual void 
         traverse (Type &o)
         {
@@ -4981,12 +4794,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         resourceType (Type &o)
         {
@@ -4995,12 +4805,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         resourceType (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         name (Type &o)
         {
@@ -5009,12 +4816,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         name (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         property (Type &o)
         {
@@ -5023,7 +4827,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         property (Type const&);
 
@@ -5037,7 +4840,6 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::ResourceDeploymentDescription Type;
         ResourceDeploymentDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
         virtual void 
         traverse (Type &o)
         {
@@ -5046,12 +4848,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         requirementName (Type &o)
         {
@@ -5060,12 +4859,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         requirementName (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         resourceName (Type &o)
         {
@@ -5074,12 +4870,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         resourceName (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         resourceValue (Type &o)
         {
@@ -5088,7 +4881,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         resourceValue (Type const&);
 
@@ -5102,7 +4894,6 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::ArtifactDeploymentDescription Type;
         ArtifactDeploymentDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
         virtual void 
         traverse (Type &o)
         {
@@ -5111,12 +4902,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         name (Type &o)
         {
@@ -5125,12 +4913,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         name (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         source_pre (Type &o)
         {
@@ -5139,12 +4924,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         source_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         source_next (Type &o)
         {
@@ -5153,12 +4935,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         source_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         source_post (Type &o)
         {
@@ -5167,12 +4946,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         source_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         node (Type &o)
         {
@@ -5181,12 +4957,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         node (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         location_pre (Type &o)
         {
@@ -5195,12 +4968,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         location_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         location_next (Type &o)
         {
@@ -5209,12 +4979,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         location_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         location_post (Type &o)
         {
@@ -5223,12 +4990,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         location_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         execParameter_pre (Type &o)
         {
@@ -5237,12 +5001,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         execParameter_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         execParameter_next (Type &o)
         {
@@ -5251,12 +5012,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         execParameter_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         execParameter_post (Type &o)
         {
@@ -5265,12 +5023,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         execParameter_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         deployRequirement_pre (Type &o)
         {
@@ -5279,12 +5034,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         deployRequirement_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         deployRequirement_next (Type &o)
         {
@@ -5293,12 +5045,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         deployRequirement_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         deployRequirement_post (Type &o)
         {
@@ -5307,12 +5056,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         deployRequirement_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         deployedResource_pre (Type &o)
         {
@@ -5321,12 +5067,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         deployedResource_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         deployedResource_next (Type &o)
         {
@@ -5335,12 +5078,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         deployedResource_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         deployedResource_post (Type &o)
         {
@@ -5349,12 +5089,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         deployedResource_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         id (Type &o)
         {
@@ -5363,7 +5100,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         id (Type const&);
 
@@ -5377,7 +5113,6 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::MonolithicDeploymentDescription Type;
         MonolithicDeploymentDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
         virtual void 
         traverse (Type &o)
         {
@@ -5386,12 +5121,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         name (Type &o)
         {
@@ -5400,12 +5132,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         name (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         source_pre (Type &o)
         {
@@ -5414,12 +5143,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         source_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         source_next (Type &o)
         {
@@ -5428,12 +5154,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         source_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         source_post (Type &o)
         {
@@ -5442,12 +5165,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         source_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         artifact_pre (Type &o)
         {
@@ -5456,12 +5176,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         artifact_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         artifact_next (Type &o)
         {
@@ -5470,12 +5187,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         artifact_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         artifact_post (Type &o)
         {
@@ -5484,12 +5198,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         artifact_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         execParameter_pre (Type &o)
         {
@@ -5498,12 +5209,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         execParameter_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         execParameter_next (Type &o)
         {
@@ -5512,12 +5220,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         execParameter_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         execParameter_post (Type &o)
         {
@@ -5526,12 +5231,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         execParameter_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         deployRequirement_pre (Type &o)
         {
@@ -5540,12 +5242,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         deployRequirement_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         deployRequirement_next (Type &o)
         {
@@ -5554,12 +5253,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         deployRequirement_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         deployRequirement_post (Type &o)
         {
@@ -5568,12 +5264,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         deployRequirement_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         id (Type &o)
         {
@@ -5582,7 +5275,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         id (Type const&);
 
@@ -5595,14 +5287,12 @@ namespace CIAO
       {
         ResourceUsageKind (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
         virtual void ResourceUsageKind::
         traverse (Type &o)
         {
           this->traverse (const_cast <Type const &> (o));
         }
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
@@ -5616,7 +5306,6 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription Type;
         InstanceResourceDeploymentDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
         virtual void 
         traverse (Type &o)
         {
@@ -5625,12 +5314,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         resourceUsage (Type &o)
         {
@@ -5639,12 +5325,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         resourceUsage (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         requirementName (Type &o)
         {
@@ -5653,12 +5336,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         requirementName (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         resourceName (Type &o)
         {
@@ -5667,12 +5347,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         resourceName (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         resourceValue (Type &o)
         {
@@ -5681,7 +5358,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         resourceValue (Type const&);
 
@@ -5695,7 +5371,6 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::InstanceDeploymentDescription Type;
         InstanceDeploymentDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
         virtual void 
         traverse (Type &o)
         {
@@ -5704,12 +5379,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         name (Type &o)
         {
@@ -5718,12 +5390,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         name (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         node (Type &o)
         {
@@ -5732,12 +5401,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         node (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         source (Type &o)
         {
@@ -5746,12 +5412,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         source (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         implementation (Type &o)
         {
@@ -5760,12 +5423,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         implementation (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         configProperty_pre (Type &o)
         {
@@ -5774,12 +5434,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         configProperty_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         configProperty_next (Type &o)
         {
@@ -5788,12 +5445,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         configProperty_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         configProperty_post (Type &o)
         {
@@ -5802,12 +5456,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         configProperty_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         deployedResource (Type &o)
         {
@@ -5816,12 +5467,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         deployedResource (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         deployedSharedResource (Type &o)
         {
@@ -5830,12 +5478,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         deployedSharedResource (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         id (Type &o)
         {
@@ -5844,7 +5489,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         id (Type const&);
 
@@ -5857,14 +5501,12 @@ namespace CIAO
       {
         CCMComponentPortKind (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
         virtual void CCMComponentPortKind::
         traverse (Type &o)
         {
           this->traverse (const_cast <Type const &> (o));
         }
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
@@ -5878,7 +5520,6 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::ComponentPortDescription Type;
         ComponentPortDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
         virtual void 
         traverse (Type &o)
         {
@@ -5887,12 +5528,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         name (Type &o)
         {
@@ -5901,12 +5539,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         name (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         specificType (Type &o)
         {
@@ -5915,12 +5550,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         specificType (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         supportedType (Type &o)
         {
@@ -5929,12 +5561,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         supportedType (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         provider (Type &o)
         {
@@ -5943,12 +5572,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         provider (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         exclusiveProvider (Type &o)
         {
@@ -5957,12 +5583,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         exclusiveProvider (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         exclusiveUser (Type &o)
         {
@@ -5971,12 +5594,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         exclusiveUser (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         optional (Type &o)
         {
@@ -5985,12 +5605,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         optional (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         kind (Type &o)
         {
@@ -5999,7 +5616,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         kind (Type const&);
 
@@ -6013,7 +5629,6 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::ComponentPropertyDescription Type;
         ComponentPropertyDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
         virtual void 
         traverse (Type &o)
         {
@@ -6022,12 +5637,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         name (Type &o)
         {
@@ -6036,12 +5648,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         name (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         type (Type &o)
         {
@@ -6050,7 +5659,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         type (Type const&);
 
@@ -6064,7 +5672,6 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::ComponentExternalPortEndpoint Type;
         ComponentExternalPortEndpoint (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
         virtual void 
         traverse (Type &o)
         {
@@ -6073,12 +5680,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         portName (Type &o)
         {
@@ -6087,7 +5691,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         portName (Type const&);
 
@@ -6101,7 +5704,6 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::PlanSubcomponentPortEndpoint Type;
         PlanSubcomponentPortEndpoint (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
         virtual void 
         traverse (Type &o)
         {
@@ -6110,12 +5712,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         portName (Type &o)
         {
@@ -6124,12 +5723,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         portName (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         provider (Type &o)
         {
@@ -6138,12 +5734,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         provider (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         kind (Type &o)
         {
@@ -6152,12 +5745,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         kind (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         instance (Type &o)
         {
@@ -6166,7 +5756,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         instance (Type const&);
 
@@ -6180,7 +5769,6 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::ExternalReferenceEndpoint Type;
         ExternalReferenceEndpoint (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
         virtual void 
         traverse (Type &o)
         {
@@ -6189,12 +5777,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         location (Type &o)
         {
@@ -6203,7 +5788,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         location (Type const&);
 
@@ -6217,7 +5801,6 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription Type;
         ConnectionResourceDeploymentDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
         virtual void 
         traverse (Type &o)
         {
@@ -6226,12 +5809,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         targetName (Type &o)
         {
@@ -6240,12 +5820,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         targetName (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         requirementName (Type &o)
         {
@@ -6254,12 +5831,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         requirementName (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         resourceName (Type &o)
         {
@@ -6268,12 +5842,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         resourceName (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         resourceValue (Type &o)
         {
@@ -6282,7 +5853,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         resourceValue (Type const&);
 
@@ -6296,7 +5866,6 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::PlanConnectionDescription Type;
         PlanConnectionDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
         virtual void 
         traverse (Type &o)
         {
@@ -6305,12 +5874,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         name (Type &o)
         {
@@ -6319,12 +5885,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         name (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         source (Type &o)
         {
@@ -6333,12 +5896,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         source (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         deployRequirement_pre (Type &o)
         {
@@ -6347,12 +5907,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         deployRequirement_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         deployRequirement_next (Type &o)
         {
@@ -6361,12 +5918,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         deployRequirement_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         deployRequirement_post (Type &o)
         {
@@ -6375,12 +5929,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         deployRequirement_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         externalEndpoint_pre (Type &o)
         {
@@ -6389,12 +5940,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         externalEndpoint_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         externalEndpoint_next (Type &o)
         {
@@ -6403,12 +5951,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         externalEndpoint_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         externalEndpoint_post (Type &o)
         {
@@ -6417,12 +5962,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         externalEndpoint_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         internalEndpoint_pre (Type &o)
         {
@@ -6431,12 +5973,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         internalEndpoint_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         internalEndpoint_next (Type &o)
         {
@@ -6445,12 +5984,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         internalEndpoint_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         internalEndpoint_post (Type &o)
         {
@@ -6459,12 +5995,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         internalEndpoint_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         externalReference_pre (Type &o)
         {
@@ -6473,12 +6006,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         externalReference_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         externalReference_next (Type &o)
         {
@@ -6487,12 +6017,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         externalReference_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         externalReference_post (Type &o)
         {
@@ -6501,12 +6028,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         externalReference_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         deployedResource_pre (Type &o)
         {
@@ -6515,12 +6039,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         deployedResource_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         deployedResource_next (Type &o)
         {
@@ -6529,12 +6050,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         deployedResource_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         deployedResource_post (Type &o)
         {
@@ -6543,7 +6061,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         deployedResource_post (Type const&);
 
@@ -6557,7 +6074,6 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::ImplementationDependency Type;
         ImplementationDependency (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
         virtual void 
         traverse (Type &o)
         {
@@ -6566,12 +6082,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         requiredType (Type &o)
         {
@@ -6580,7 +6093,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         requiredType (Type const&);
 
@@ -6594,7 +6106,6 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::Capability Type;
         Capability (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
         virtual void 
         traverse (Type &o)
         {
@@ -6603,12 +6114,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         name (Type &o)
         {
@@ -6617,12 +6125,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         name (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         resourceType (Type &o)
         {
@@ -6631,12 +6136,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         resourceType (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         property (Type &o)
         {
@@ -6645,7 +6147,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         property (Type const&);
 
@@ -6659,7 +6160,6 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::ImplementationRequirement Type;
         ImplementationRequirement (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
         virtual void 
         traverse (Type &o)
         {
@@ -6668,12 +6168,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         resourceUsage (Type &o)
         {
@@ -6682,12 +6179,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         resourceUsage (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         resourcePort (Type &o)
         {
@@ -6696,12 +6190,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         resourcePort (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         componentPort (Type &o)
         {
@@ -6710,12 +6201,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         componentPort (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         resourceType (Type &o)
         {
@@ -6724,12 +6212,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         resourceType (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         name (Type &o)
         {
@@ -6738,12 +6223,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         name (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         property (Type &o)
         {
@@ -6752,7 +6234,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         property (Type const&);
 
@@ -6766,7 +6247,6 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::ComponentPackageReference Type;
         ComponentPackageReference (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
         virtual void 
         traverse (Type &o)
         {
@@ -6775,12 +6255,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         requiredUUID (Type &o)
         {
@@ -6789,12 +6266,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         requiredUUID (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         requiredName (Type &o)
         {
@@ -6803,12 +6277,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         requiredName (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         requiredType (Type &o)
         {
@@ -6817,7 +6288,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         requiredType (Type const&);
 
@@ -6831,7 +6301,6 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::SubcomponentPortEndpoint Type;
         SubcomponentPortEndpoint (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
         virtual void 
         traverse (Type &o)
         {
@@ -6840,12 +6309,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         portName (Type &o)
         {
@@ -6854,12 +6320,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         portName (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         instance (Type &o)
         {
@@ -6868,7 +6331,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         instance (Type const&);
 
@@ -6882,7 +6344,6 @@ namespace CIAO
         typedef ::CIAO::Config_Handlers::AssemblyConnectionDescription Type;
         AssemblyConnectionDescription (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        #ifdef __BORLANDC__
         virtual void 
         traverse (Type &o)
         {
@@ -6891,12 +6352,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         traverse (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         name (Type &o)
         {
@@ -6905,12 +6363,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         name (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         deployRequirement (Type &o)
         {
@@ -6919,12 +6374,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         deployRequirement (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         externalEndpoint_pre (Type &o)
         {
@@ -6933,12 +6385,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         externalEndpoint_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         externalEndpoint_next (Type &o)
         {
@@ -6947,12 +6396,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         externalEndpoint_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         externalEndpoint_post (Type &o)
         {
@@ -6961,12 +6407,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         externalEndpoint_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         internalEndpoint_pre (Type &o)
         {
@@ -6975,12 +6418,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         internalEndpoint_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         internalEndpoint_next (Type &o)
         {
@@ -6989,12 +6429,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         internalEndpoint_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         internalEndpoint_post (Type &o)
         {
@@ -7003,12 +6440,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         internalEndpoint_post (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         externalReference_pre (Type &o)
         {
@@ -7017,12 +6451,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         externalReference_pre (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         externalReference_next (Type &o)
         {
@@ -7031,12 +6462,9 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         externalReference_next (Type const&);
 
-        // Hack to make borland stop complaining.  
-        #ifdef __BORLANDC__
         virtual void 
         externalReference_post (Type &o)
         {
@@ -7045,7 +6473,6 @@ namespace CIAO
         }
 
 
-        #endif /* __BORLANDC__ */
         virtual void
         externalReference_post (Type const&);
 

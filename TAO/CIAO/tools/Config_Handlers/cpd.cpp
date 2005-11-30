@@ -20,7 +20,7 @@ namespace CIAO
 
     PackagedComponentImplementation::
     PackagedComponentImplementation (::XMLSchema::string< ACE_TCHAR > const& name__,
-    ::CIAO::Config_Handlers::ComponentImplementationDescription const& referencedImplementation__)
+                                     ::CIAO::Config_Handlers::ComponentImplementationDescription const& referencedImplementation__)
     : 
     ::XSCRT::Type (), 
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),

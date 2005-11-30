@@ -34,48 +34,38 @@ namespace CIAO
     UUID_ (s.UUID_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.UUID_) : 0),
     specificType_ (s.specificType_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.specificType_) : 0),
     contentLocation_ (s.contentLocation_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.contentLocation_) : 0),
+    href_ (s.href_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.href_) : 0),
     regulator__ ()
     {
       if (label_.get ()) label_->container (this);
       if (UUID_.get ()) UUID_->container (this);
       if (specificType_.get ()) specificType_->container (this);
       {
-        for (supportedType_const_iterator i (s.supportedType_.begin ());
-        i != s.supportedType_.end ();
-        ++i) add_supportedType (*i);
+        for (supportedType_const_iterator i (s.supportedType_.begin ());i != s.supportedType_.end ();++i) add_supportedType (*i);
       }
 
       {
-        for (idlFile_const_iterator i (s.idlFile_.begin ());
-        i != s.idlFile_.end ();
-        ++i) add_idlFile (*i);
+        for (idlFile_const_iterator i (s.idlFile_.begin ());i != s.idlFile_.end ();++i) add_idlFile (*i);
       }
 
       {
-        for (configProperty_const_iterator i (s.configProperty_.begin ());
-        i != s.configProperty_.end ();
-        ++i) add_configProperty (*i);
+        for (configProperty_const_iterator i (s.configProperty_.begin ());i != s.configProperty_.end ();++i) add_configProperty (*i);
       }
 
       {
-        for (port_const_iterator i (s.port_.begin ());
-        i != s.port_.end ();
-        ++i) add_port (*i);
+        for (port_const_iterator i (s.port_.begin ());i != s.port_.end ();++i) add_port (*i);
       }
 
       {
-        for (property_const_iterator i (s.property_.begin ());
-        i != s.property_.end ();
-        ++i) add_property (*i);
+        for (property_const_iterator i (s.property_.begin ());i != s.property_.end ();++i) add_property (*i);
       }
 
       {
-        for (infoProperty_const_iterator i (s.infoProperty_.begin ());
-        i != s.infoProperty_.end ();
-        ++i) add_infoProperty (*i);
+        for (infoProperty_const_iterator i (s.infoProperty_.begin ());i != s.infoProperty_.end ();++i) add_infoProperty (*i);
       }
 
       if (contentLocation_.get ()) contentLocation_->container (this);
+      if (href_.get ()) href_->container (this);
     }
 
     ::CIAO::Config_Handlers::ComponentInterfaceDescription& ComponentInterfaceDescription::
@@ -92,48 +82,39 @@ namespace CIAO
 
       supportedType_.clear ();
       {
-        for (supportedType_const_iterator i (s.supportedType_.begin ());
-        i != s.supportedType_.end ();
-        ++i) add_supportedType (*i);
+        for (supportedType_const_iterator i (s.supportedType_.begin ());i != s.supportedType_.end ();++i) add_supportedType (*i);
       }
 
       idlFile_.clear ();
       {
-        for (idlFile_const_iterator i (s.idlFile_.begin ());
-        i != s.idlFile_.end ();
-        ++i) add_idlFile (*i);
+        for (idlFile_const_iterator i (s.idlFile_.begin ());i != s.idlFile_.end ();++i) add_idlFile (*i);
       }
 
       configProperty_.clear ();
       {
-        for (configProperty_const_iterator i (s.configProperty_.begin ());
-        i != s.configProperty_.end ();
-        ++i) add_configProperty (*i);
+        for (configProperty_const_iterator i (s.configProperty_.begin ());i != s.configProperty_.end ();++i) add_configProperty (*i);
       }
 
       port_.clear ();
       {
-        for (port_const_iterator i (s.port_.begin ());
-        i != s.port_.end ();
-        ++i) add_port (*i);
+        for (port_const_iterator i (s.port_.begin ());i != s.port_.end ();++i) add_port (*i);
       }
 
       property_.clear ();
       {
-        for (property_const_iterator i (s.property_.begin ());
-        i != s.property_.end ();
-        ++i) add_property (*i);
+        for (property_const_iterator i (s.property_.begin ());i != s.property_.end ();++i) add_property (*i);
       }
 
       infoProperty_.clear ();
       {
-        for (infoProperty_const_iterator i (s.infoProperty_.begin ());
-        i != s.infoProperty_.end ();
-        ++i) add_infoProperty (*i);
+        for (infoProperty_const_iterator i (s.infoProperty_.begin ());i != s.infoProperty_.end ();++i) add_infoProperty (*i);
       }
 
       if (s.contentLocation_.get ()) contentLocation (*(s.contentLocation_));
       else contentLocation_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+
+      if (s.href_.get ()) href (*(s.href_));
+      else href_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
 
       return *this;
     }
@@ -482,6 +463,41 @@ namespace CIAO
         contentLocation_->container (this);
       }
     }
+
+    // ComponentInterfaceDescription
+    // 
+    bool ComponentInterfaceDescription::
+    href_p () const
+    {
+      return href_.get () != 0;
+    }
+
+    ::XMLSchema::string< ACE_TCHAR > const& ComponentInterfaceDescription::
+    href () const
+    {
+      return *href_;
+    }
+
+    ::XMLSchema::string< ACE_TCHAR >& ComponentInterfaceDescription::
+    href ()
+    {
+      return *href_;
+    }
+
+    void ComponentInterfaceDescription::
+    href (::XMLSchema::string< ACE_TCHAR > const& e)
+    {
+      if (href_.get ())
+      {
+        *href_ = e;
+      }
+
+      else
+      {
+        href_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (new ::XMLSchema::string< ACE_TCHAR > (e));
+        href_->container (this);
+      }
+    }
   }
 }
 
@@ -568,6 +584,21 @@ namespace CIAO
         {
         }
       }
+
+      while (p.more_attributes ())
+      {
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a (p.next_attribute ());
+        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (a.name ()));
+        if (n == "href")
+        {
+          ::XMLSchema::string< ACE_TCHAR > t (a);
+          href (t);
+        }
+
+        else 
+        {
+        }
+      }
     }
   }
 }
@@ -634,6 +665,8 @@ namespace CIAO
         infoProperty (o);
         if (o.contentLocation_p ()) contentLocation (o);
         else contentLocation_none (o);
+        if (o.href_p ()) href (o);
+        else href_none (o);
         post (o);
       }
 
@@ -655,6 +688,8 @@ namespace CIAO
         infoProperty (o);
         if (o.contentLocation_p ()) contentLocation (o);
         else contentLocation_none (o);
+        if (o.href_p ()) href (o);
+        else href_none (o);
         post (o);
       }
 
@@ -744,9 +779,7 @@ namespace CIAO
         if (b != e)
         {
           supportedType_pre (o);
-          for (;
-           b != e;
-          )
+          for (; b != e;)
           {
             dispatch (*b);
             if (++b != e) supportedType_next (o);
@@ -768,9 +801,7 @@ namespace CIAO
         if (b != e)
         {
           supportedType_pre (o);
-          for (;
-           b != e;
-          )
+          for (; b != e;)
           {
             dispatch (*b);
             if (++b != e) supportedType_next (o);
@@ -832,9 +863,7 @@ namespace CIAO
         if (b != e)
         {
           idlFile_pre (o);
-          for (;
-           b != e;
-          )
+          for (; b != e;)
           {
             dispatch (*b);
             if (++b != e) idlFile_next (o);
@@ -856,9 +885,7 @@ namespace CIAO
         if (b != e)
         {
           idlFile_pre (o);
-          for (;
-           b != e;
-          )
+          for (; b != e;)
           {
             dispatch (*b);
             if (++b != e) idlFile_next (o);
@@ -920,9 +947,7 @@ namespace CIAO
         if (b != e)
         {
           configProperty_pre (o);
-          for (;
-           b != e;
-          )
+          for (; b != e;)
           {
             dispatch (*b);
             if (++b != e) configProperty_next (o);
@@ -944,9 +969,7 @@ namespace CIAO
         if (b != e)
         {
           configProperty_pre (o);
-          for (;
-           b != e;
-          )
+          for (; b != e;)
           {
             dispatch (*b);
             if (++b != e) configProperty_next (o);
@@ -1008,9 +1031,7 @@ namespace CIAO
         if (b != e)
         {
           port_pre (o);
-          for (;
-           b != e;
-          )
+          for (; b != e;)
           {
             dispatch (*b);
             if (++b != e) port_next (o);
@@ -1032,9 +1053,7 @@ namespace CIAO
         if (b != e)
         {
           port_pre (o);
-          for (;
-           b != e;
-          )
+          for (; b != e;)
           {
             dispatch (*b);
             if (++b != e) port_next (o);
@@ -1096,9 +1115,7 @@ namespace CIAO
         if (b != e)
         {
           property_pre (o);
-          for (;
-           b != e;
-          )
+          for (; b != e;)
           {
             dispatch (*b);
             if (++b != e) property_next (o);
@@ -1120,9 +1137,7 @@ namespace CIAO
         if (b != e)
         {
           property_pre (o);
-          for (;
-           b != e;
-          )
+          for (; b != e;)
           {
             dispatch (*b);
             if (++b != e) property_next (o);
@@ -1184,9 +1199,7 @@ namespace CIAO
         if (b != e)
         {
           infoProperty_pre (o);
-          for (;
-           b != e;
-          )
+          for (; b != e;)
           {
             dispatch (*b);
             if (++b != e) infoProperty_next (o);
@@ -1208,9 +1221,7 @@ namespace CIAO
         if (b != e)
         {
           infoProperty_pre (o);
-          for (;
-           b != e;
-          )
+          for (; b != e;)
           {
             dispatch (*b);
             if (++b != e) infoProperty_next (o);
@@ -1281,6 +1292,28 @@ namespace CIAO
 
       void ComponentInterfaceDescription::
       contentLocation_none (Type const&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      href (Type& o)
+      {
+        dispatch (o.href ());
+      }
+
+      void ComponentInterfaceDescription::
+      href (Type const& o)
+      {
+        dispatch (o.href ());
+      }
+
+      void ComponentInterfaceDescription::
+      href_none (Type&)
+      {
+      }
+
+      void ComponentInterfaceDescription::
+      href_none (Type const&)
       {
       }
 
@@ -1468,6 +1501,15 @@ namespace CIAO
         push_ (::XSCRT::XML::Element< ACE_TCHAR > ("contentLocation", top_ ()));
         Traversal::ComponentInterfaceDescription::contentLocation (o);
         pop_ ();
+      }
+
+      void ComponentInterfaceDescription::
+      href (Type const& o)
+      {
+        ::XSCRT::XML::Attribute< ACE_TCHAR > a ("href", "", top_ ());
+        attr_ (&a);
+        Traversal::ComponentInterfaceDescription::href (o);
+        attr_ (0);
       }
     }
   }
