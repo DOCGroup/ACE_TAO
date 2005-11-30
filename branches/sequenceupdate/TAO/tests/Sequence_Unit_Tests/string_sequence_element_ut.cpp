@@ -10,6 +10,7 @@
  */
 #include "testing_string_traits.hpp"
 #include "tao/String_Sequence_Element_T.h"
+#include "tao/CORBA_String.h"
 
 #include "ace/OS_NS_string.h"
 
