@@ -1,3 +1,21 @@
+Wed Nov 30 10:23:05 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/performance-tests/RTEvent/lib/Client_Options.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Low_Priority_Setup.h:
+	* orbsvcs/performance-tests/RTEvent/lib/RTEC_Initializer.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Send_Task.h:
+	* orbsvcs/tests/EC_Throughput/ECT_Driver.h:
+	* orbsvcs/tests/Event/Basic/BCast.h:
+	* orbsvcs/tests/Event/Mcast/Common/EC_Wrapper.h:
+	* orbsvcs/tests/Event/Performance/Latency.h:
+	* orbsvcs/tests/Event/lib/Driver.h:
+	* orbsvcs/tests/FT_App/FT_Creator.h:
+	* orbsvcs/tests/FT_App/TAO_Object_Group_Creator.h:
+	* orbsvcs/tests/FtRtEvent/PushSupplier.h:
+
+	  Fixed forward declarations so that they take into account
+	  versioned namespace support.
+
 Wed Nov 30 00:33:21 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/Content_Server/AMI_Iterator/AMI_Iterator.mpc:
