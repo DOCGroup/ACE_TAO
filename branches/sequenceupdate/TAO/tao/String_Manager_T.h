@@ -129,7 +129,7 @@ private:
 };
 }
 
-typedef TAO::String_Manager<CORBA::Char> TAO_String_Manager;
+typedef TAO::String_Manager<char> TAO_String_Manager;
 typedef TAO::String_Manager<CORBA::WChar> TAO_WString_Manager;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
