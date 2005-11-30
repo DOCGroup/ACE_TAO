@@ -401,6 +401,9 @@ CIAO::NodeApplication_Impl::install (
       retv->length (0UL);
 
       // Call create_all_containers to create all the necessary containers..
+      // @@(GD): The "create_all_containers" mechanism needs to be refined, so
+      // we should always try to reuse existing containers as much as possible!
+      // We need not only factory pattern, but also finder pattern here as well.
       if (CIAO::debug_level () > 9)
         {
           ACE_DEBUG ((LM_DEBUG,
