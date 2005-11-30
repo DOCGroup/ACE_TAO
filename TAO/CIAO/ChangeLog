@@ -1,3 +1,9 @@
+Wed Nov 30 12:30:59 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* examples/Hello/descriptors/flattened_deploymentplan.cdp
+
+	Added metadata necessary to initialize an enum attribute.
+
 Wed Nov 30 08:06:00 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/RepositoryManager/RepositoryManager.mpc:
