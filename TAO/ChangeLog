@@ -1,3 +1,8 @@
+Wed Nov 30 08:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/RequestProcessingStrategyAOMOnly.h:
+          Added brief class description
+
 Tue Nov 29 06:44:35 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/FTRT_Event_Service/Event_Service/FT_EventService.h:
