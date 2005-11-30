@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Server): messaging, taoexe, portableserver, ami, namingexe {
+  avoids += ace_for_tao
   Source_Files {
     Callback_Handler.cpp
     Push_Iterator_Factory_i.cpp
@@ -10,6 +11,7 @@ project(*Server): messaging, taoexe, portableserver, ami, namingexe {
 }
  
 project(*Client): messaging, taoexe, portableserver, ami, namingexe {
+  avoids += ace_for_tao
   Source_Files {
     client.cpp
     Callback_i.cpp

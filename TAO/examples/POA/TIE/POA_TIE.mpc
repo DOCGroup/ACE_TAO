@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Client) : taoclient, anytypecode, minimum_corba {
+  avoids += ace_for_tao
   source_files {
     client.cpp
     testC.cpp

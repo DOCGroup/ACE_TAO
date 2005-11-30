@@ -11,6 +11,7 @@ project(*IDL): rteventexe, rtsched, naming, iortable, messaging {
 }
 
 project(ECM Supplier): rteventexe, rtsched, naming, iortable, messaging {
+  avoids  += ace_for_tao
   exename  = ECM_Supplier
   Source_Files {
     ECM_Data.cpp

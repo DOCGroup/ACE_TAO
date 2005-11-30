@@ -2,6 +2,7 @@
 // $Id$
 
 project(*server): taoserver, utils {
+  avoids += ace_for_tao
   Source_Files {
     Grid_i.cpp
     Simple_util.cpp

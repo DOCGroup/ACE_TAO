@@ -2,7 +2,7 @@
 // $Id$
 
 project(*balancer): taoexe, utils, portableserver, minimum_corba {
-  avoids += repo
+  avoids += repo ace_for_tao
   exename = load_balancer
 
   IDL_Files {

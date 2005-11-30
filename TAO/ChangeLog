@@ -1,3 +1,28 @@
+Wed Nov 30 00:33:21 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* examples/Content_Server/AMI_Iterator/AMI_Iterator.mpc:
+	* examples/Content_Server/AMI_Observer/AMI_Observer.mpc:
+	* examples/Content_Server/SMI_Iterator/SMI_Iterator.mpc:
+	* examples/Load_Balancing_persistent/Load_Balancing_persistent.mpc:
+	* examples/POA/Generic_Servant/POA_Generic_Servant.mpc:
+	* examples/POA/TIE/POA_TIE.mpc:
+	* examples/Persistent_Grid/Persistent_Grid.mpc:
+	* orbsvcs/examples/LoadBalancing/LoadBalancing.mpc:
+	* orbsvcs/orbsvcs/AV.mpc:
+	* orbsvcs/tests/EC_Custom_Marshal/EC_Custom_Marshal.mpc:
+	* orbsvcs/tests/EC_Throughput/EC_Throughput.mpc:
+	* orbsvcs/tests/ImplRepo/ImplRepo.mpc:
+	* orbsvcs/tests/InterfaceRepo/Latency_Test/Latency_Test.mpc:
+
+	  Disable these projects when "ace_for_tao" is enabled.
+
+	* tao/GIOP_Message_Generator_Parser_Impl.inl:
+
+	  Removed "static" keywork from constant variable declaration.
+	  Corrected semantics are not supported in shared libraries on
+	  VxWorks.  Thanks to Frank Rehberger for suggesting the change,
+	  and to Johnny for pointing out the VxWorks issue.  [Bug 2304]
+
 Wed Nov 30 14:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTCORBA/RT_ORB_Loader.cpp:
