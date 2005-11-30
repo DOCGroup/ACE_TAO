@@ -9,6 +9,7 @@
  * @author Carlos O'Ryan
  */
 #include "tao/Unbounded_String_Sequence_T.h"
+#include "tao/CORBA_String.h"
 
 typedef TAO::unbounded_string_sequence s_sequence;
 
