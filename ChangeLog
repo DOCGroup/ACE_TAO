@@ -1,3 +1,9 @@
+Wed Nov 30 08:58:35 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* html/index.html
+
+	Removed obsolete CIAO components, cleaned up the HTML a bit.
+
 Tue Nov 29 11:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Timer_Queue_T.cpp:
