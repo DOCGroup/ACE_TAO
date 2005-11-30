@@ -522,26 +522,30 @@ ACE_Function_Node::make_func_name (ACE_TCHAR const * func_name)
 
   static ACE_TCHAR const make_prefix[] = ACE_LIB_TEXT ("_make_");
   static size_t const make_prefix_len =
-    sizeof (make_prefix) / sizeof (make_prefix[0]);
+    sizeof (make_prefix) / sizeof (make_prefix[0]) - 1;
 
   if (ACE_OS::strncmp (make_prefix, func_name, make_prefix_len) == 0)
     {
       static ACE_TCHAR const versioned_namespace_name[] =
         ACE_LIB_TEXT (ACE_VERSIONED_NAMESPACE_NAME_STRING) ACE_LIB_TEXT("_") ;
 
+      // Null terminator included in versioned_namespace_name_len since
+      // it is static constant.
       static size_t const versioned_namespace_name_len =
         sizeof (versioned_namespace_name)
-        / sizeof (versioned_namespace_name[0]);
+        / sizeof (versioned_namespace_name[0]); // - 1;
 
       size_t const len =
         ACE_OS::strlen (func_name)
-        + versioned_namespace_name_len
-        - 1;  // Null terminator included in
-              // versioned_namespace_name_len since it is static constant.
+        + versioned_namespace_name_len;
+        // + 1;  // Null terminator.
 
-      // @note Variable length array lengths are only supported by
-      //       conforming/modern compilers.
-      ACE_TCHAR mangled_func_name[len];
+      ACE_TCHAR * mangled_func_name;
+      ACE_NEW_RETURN (mangled_func_name,
+                      ACE_TCHAR[len],
+                      0);
+
+      ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> safe (mangled_func_name);
 
       ACE_OS::snprintf (mangled_func_name,
                         len,
@@ -550,7 +554,7 @@ ACE_Function_Node::make_func_name (ACE_TCHAR const * func_name)
                         versioned_namespace_name,
                         func_name + make_prefix_len);
 
-      return ACE::strnew (mangled_func_name);
+      return safe.release ();
     }
 #endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
 
