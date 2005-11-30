@@ -2,6 +2,7 @@
 // $Id$
 
 project: property, naming, qos {
+  avoids    += ace_for_tao
   after     += AV
   libs      += TAO_AV
   tagchecks += AV
