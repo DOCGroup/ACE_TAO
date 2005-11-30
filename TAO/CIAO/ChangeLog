@@ -1,3 +1,10 @@
+Wed Nov 30 08:06:00 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/RepositoryManager/RepositoryManager.mpc:
+          This project is deprecated according to Will, so added
+          requires+=dummy_label, it is up to the DAnCE people to
+          decide when they zap this from the archive
+
 Fri Nov 25 10:50:00 UTC 2005  Simon Massey  <sma@prismtech.com>
 
         * DAnCE/Old_Config_Handlers/XercesString.cpp
@@ -26,7 +33,7 @@ Tue Nov 22 16:03:24 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 	  Fixed a memory management related bug, we should not
 	  explicitly call release() on the component object
 	  reference of var type.
-	
+
 Mon Nov 21 17:24:42 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* NEWS:

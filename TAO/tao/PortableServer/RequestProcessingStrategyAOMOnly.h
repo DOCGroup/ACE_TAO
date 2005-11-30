@@ -29,6 +29,11 @@ namespace TAO
 {
   namespace Portable_Server
   {
+    /**
+     * @class RequestProcessingStrategyAOMOnly
+     *
+     * Request Processing Strategy which only uses the Active Object Map (AOM)
+     */
     class RequestProcessingStrategyAOMOnly
       : public RequestProcessingStrategy
     {
