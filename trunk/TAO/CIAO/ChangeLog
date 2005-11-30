@@ -1,3 +1,33 @@
+Wed Nov 30 16:24:43 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* docs/schema/xsc-banner.h
+
+	Updated this file to reflect recent export macro changes. 
+	
+	* tools/Config_Handlers/Basic_Deployment_Data.cpp
+	* tools/Config_Handlers/Basic_Deployment_Data.hpp
+	* tools/Config_Handlers/Deployment.cpp
+	* tools/Config_Handlers/Deployment.hpp
+	* tools/Config_Handlers/ccd.cpp
+	* tools/Config_Handlers/ccd.hpp
+	* tools/Config_Handlers/cdp.cpp
+	* tools/Config_Handlers/cdp.hpp
+	* tools/Config_Handlers/cid.cpp
+	* tools/Config_Handlers/cid.hpp
+	* tools/Config_Handlers/cpd.cpp
+	* tools/Config_Handlers/cpd.hpp
+	* tools/Config_Handlers/iad.cpp
+	* tools/Config_Handlers/iad.hpp
+	* tools/Config_Handlers/pcd.cpp
+	* tools/Config_Handlers/pcd.hpp
+	* tools/Config_Handlers/toplevel.cpp
+	* tools/Config_Handlers/toplevel.hpp
+	* tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp
+	* tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
+
+	Made a borland specific fix apply to all compilers, hopefully
+	fixing ICC builds. 
+	
 Wed Nov 30 12:30:59 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* examples/Hello/descriptors/flattened_deploymentplan.cdp

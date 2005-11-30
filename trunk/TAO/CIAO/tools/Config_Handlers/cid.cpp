@@ -20,7 +20,7 @@ namespace CIAO
 
     SubcomponentInstantiationDescription::
     SubcomponentInstantiationDescription (::XMLSchema::string< ACE_TCHAR > const& name__,
-    ::CIAO::Config_Handlers::ComponentPackageDescription const& package__)
+                                          ::CIAO::Config_Handlers::ComponentPackageDescription const& package__)
     : 
     ::XSCRT::Type (), 
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
@@ -230,7 +230,7 @@ namespace CIAO
 
     SubcomponentPropertyReference::
     SubcomponentPropertyReference (::XMLSchema::string< ACE_TCHAR > const& propertyName__,
-    ::CIAO::Config_Handlers::SubcomponentInstantiationDescription const& instance__)
+                                   ::CIAO::Config_Handlers::SubcomponentInstantiationDescription const& instance__)
     : 
     ::XSCRT::Type (), 
     propertyName_ (new ::XMLSchema::string< ACE_TCHAR > (propertyName__)),
@@ -298,8 +298,8 @@ namespace CIAO
 
     AssemblyPropertyMapping::
     AssemblyPropertyMapping (::XMLSchema::string< ACE_TCHAR > const& name__,
-    ::XMLSchema::string< ACE_TCHAR > const& externalName__,
-    ::CIAO::Config_Handlers::SubcomponentPropertyReference const& delegatesTo__)
+                             ::XMLSchema::string< ACE_TCHAR > const& externalName__,
+                             ::CIAO::Config_Handlers::SubcomponentPropertyReference const& delegatesTo__)
     : 
     ::XSCRT::Type (), 
     name_ (new ::XMLSchema::string< ACE_TCHAR > (name__)),
@@ -401,15 +401,11 @@ namespace CIAO
     regulator__ ()
     {
       {
-        for (instance_const_iterator i (s.instance_.begin ());
-        i != s.instance_.end ();
-        ++i) add_instance (*i);
+        for (instance_const_iterator i (s.instance_.begin ());i != s.instance_.end ();++i) add_instance (*i);
       }
 
       {
-        for (connection_const_iterator i (s.connection_.begin ());
-        i != s.connection_.end ();
-        ++i) add_connection (*i);
+        for (connection_const_iterator i (s.connection_.begin ());i != s.connection_.end ();++i) add_connection (*i);
       }
 
       if (externalProperty_.get ()) externalProperty_->container (this);
@@ -420,16 +416,12 @@ namespace CIAO
     {
       instance_.clear ();
       {
-        for (instance_const_iterator i (s.instance_.begin ());
-        i != s.instance_.end ();
-        ++i) add_instance (*i);
+        for (instance_const_iterator i (s.instance_.begin ());i != s.instance_.end ();++i) add_instance (*i);
       }
 
       connection_.clear ();
       {
-        for (connection_const_iterator i (s.connection_.begin ());
-        i != s.connection_.end ();
-        ++i) add_connection (*i);
+        for (connection_const_iterator i (s.connection_.begin ());i != s.connection_.end ();++i) add_connection (*i);
       }
 
       if (s.externalProperty_.get ()) externalProperty (*(s.externalProperty_));
@@ -566,9 +558,7 @@ namespace CIAO
     {
       if (execParameter_.get ()) execParameter_->container (this);
       {
-        for (primaryArtifact_const_iterator i (s.primaryArtifact_.begin ());
-        i != s.primaryArtifact_.end ();
-        ++i) add_primaryArtifact (*i);
+        for (primaryArtifact_const_iterator i (s.primaryArtifact_.begin ());i != s.primaryArtifact_.end ();++i) add_primaryArtifact (*i);
       }
 
       if (deployRequirement_.get ()) deployRequirement_->container (this);
@@ -582,9 +572,7 @@ namespace CIAO
 
       primaryArtifact_.clear ();
       {
-        for (primaryArtifact_const_iterator i (s.primaryArtifact_.begin ());
-        i != s.primaryArtifact_.end ();
-        ++i) add_primaryArtifact (*i);
+        for (primaryArtifact_const_iterator i (s.primaryArtifact_.begin ());i != s.primaryArtifact_.end ();++i) add_primaryArtifact (*i);
       }
 
       if (s.deployRequirement_.get ()) deployRequirement (*(s.deployRequirement_));
@@ -1889,9 +1877,7 @@ namespace CIAO
         if (b != e)
         {
           instance_pre (o);
-          for (;
-           b != e;
-          )
+          for (; b != e;)
           {
             dispatch (*b);
             if (++b != e) instance_next (o);
@@ -1911,9 +1897,7 @@ namespace CIAO
         if (b != e)
         {
           instance_pre (o);
-          for (;
-           b != e;
-          )
+          for (; b != e;)
           {
             dispatch (*b);
             if (++b != e) instance_next (o);
@@ -1963,9 +1947,7 @@ namespace CIAO
         if (b != e)
         {
           connection_pre (o);
-          for (;
-           b != e;
-          )
+          for (; b != e;)
           {
             dispatch (*b);
             if (++b != e) connection_next (o);
@@ -1985,9 +1967,7 @@ namespace CIAO
         if (b != e)
         {
           connection_pre (o);
-          for (;
-           b != e;
-          )
+          for (; b != e;)
           {
             dispatch (*b);
             if (++b != e) connection_next (o);
@@ -2129,9 +2109,7 @@ namespace CIAO
         if (b != e)
         {
           primaryArtifact_pre (o);
-          for (;
-           b != e;
-          )
+          for (; b != e;)
           {
             dispatch (*b);
             if (++b != e) primaryArtifact_next (o);
@@ -2151,9 +2129,7 @@ namespace CIAO
         if (b != e)
         {
           primaryArtifact_pre (o);
-          for (;
-           b != e;
-          )
+          for (; b != e;)
           {
             dispatch (*b);
             if (++b != e) primaryArtifact_next (o);

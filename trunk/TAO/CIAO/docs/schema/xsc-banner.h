@@ -19,4 +19,4 @@
 # include <string.h>
 #endif
 
-#include "Config_Handlers_Export.h"
+#include "XSC_XML_Handlers_Export.h"
