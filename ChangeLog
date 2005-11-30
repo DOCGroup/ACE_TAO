@@ -1,3 +1,10 @@
+Wed Nov 30 13:37:59 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/cidlc.mpb
+
+	Updated to make thie base project consistent with the semantics
+	of the boost base projects from MPC.
+
 Tue Nov 29 11:20:12 UTC 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Parse_Node.cpp (make_func_name):
