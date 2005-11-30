@@ -16,7 +16,9 @@
 #include "Driver.h"
 #include "orbsvcs/RtecUDPAdminS.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_INET_Addr;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
