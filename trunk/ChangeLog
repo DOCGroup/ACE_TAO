@@ -1,3 +1,16 @@
+Tue Nov 29 11:20:12 UTC 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Parse_Node.cpp (make_func_name):
+
+	  Do not use a stack instantiated variable length array.  Use a
+	  dynamically allocated array instead.  Saves us a copy, and
+	  fixes g++ build errors when using its "-pedantic" command line
+	  option.
+
+	  Fixed string length calculation.  Addresses Service
+	  Configurator failures when versioned namespace support is
+	  enabled.
+
 Wed Nov 30 00:33:21 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ACEXML/parser/parser/parser.mpc:
