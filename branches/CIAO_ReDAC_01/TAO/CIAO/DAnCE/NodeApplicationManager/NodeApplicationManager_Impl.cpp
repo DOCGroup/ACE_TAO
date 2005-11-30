@@ -416,7 +416,11 @@ perform_redeployment (const Deployment::Properties & configProperty,
       else // This is a new NodeApplication process, then we need to install
            // all the components. We should try to reuse much of the above code.
         {
-
+            this->startLaunch (configProperty, 
+                               providedReference, 
+                               start
+                               ACE_ENV_ARG_PARAMETER);
+            ACE_TRY_CHECK;
         }
     }
   ACE_CATCH (Deployment::UnknownImplId, e)

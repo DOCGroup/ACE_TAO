@@ -338,6 +338,8 @@ split_plan (void)
     if (this->artifact_map_.find
         (node_manager_names_[i], entry) == 0)
       artifacts.old_child_plan_ = (entry->int_id_).child_plan_;
+    else
+      artifacts.old_child_plan_ = 0;
 
     // In case we are doing redeployment, rebind will help replace the 
     // old child plan with the new child plan.
@@ -699,6 +701,10 @@ finishLaunch (CORBA::Boolean start,
 
           if (is_ReDAC) // We should also remove unnecessary connections
             {
+              // If this is a brand new child plan, then continue.
+              if ((entry->int_id_).old_child_plan_ == 0)
+                continue;
+
               // Get all the connections in the old deployment plan
               Deployment::Connections * connections_in_old_plan =
                 this->get_outgoing_connections (
