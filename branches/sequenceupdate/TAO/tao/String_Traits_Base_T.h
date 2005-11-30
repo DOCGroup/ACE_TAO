@@ -21,6 +21,9 @@ class String_Manager;
 template<typename charT>
 class String_var;
 
+template<typename charT>
+class String_out;
+
 namespace details
 {
 
@@ -34,6 +37,7 @@ struct string_traits_base<char>
 {
   typedef char char_type;
   typedef TAO::String_var <char_type> string_var;
+  typedef TAO::String_out <char_type> string_out;
   typedef TAO::String_Manager <char_type> string_mgr;
 
   inline static char_type * default_initializer()
@@ -62,6 +66,7 @@ struct string_traits_base<CORBA::WChar>
 {
   typedef CORBA::WChar char_type;
   typedef TAO::String_var <char_type> string_var;
+  typedef TAO::String_out <char_type> string_out;
   typedef TAO::String_Manager <char_type> string_mgr;
 
   inline static char_type * default_initializer()
