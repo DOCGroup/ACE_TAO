@@ -2,6 +2,7 @@
 // $Id$
 
 project : acelib, threads {
+  avoids   += ace_for_tao
   after    += RMCast
   libs     += ACE_RMCast
   includes += $(ACE_ROOT)/protocols

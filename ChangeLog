@@ -1,3 +1,13 @@
+Wed Nov 30 00:33:21 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ACEXML/parser/parser/parser.mpc:
+	* bin/MakeProjectCreator/config/avstreams.mpb:
+	* bin/MakeProjectCreator/config/rmcast.mpb:
+	* netsvcs/clients/Logger/Logger.mpc:
+	* netsvcs/servers/servers.mpc:
+
+	  Disable these projects when "ace_for_tao" is enabled.
+
 Wed Nov 30 08:58:35 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* html/index.html

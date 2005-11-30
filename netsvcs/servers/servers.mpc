@@ -2,9 +2,10 @@
 // $Id$
 
 project(Netsvcs_server) : aceexe {
-  exename = main
-  libs    += netsvcs
-  after   += netsvcs
+  avoids   += ace_for_tao
+  exename  = main
+  libs     += netsvcs
+  after    += netsvcs
   includes += $(ACE_ROOT)/netsvcs/lib
   Source_Files {
     main.cpp
