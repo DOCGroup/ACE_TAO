@@ -1,3 +1,24 @@
+Wed Nov 30 11:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTCORBA/RT_ORB.{h,cpp}:
+        * tao/RTCORBA/RT_ORB_Loader.cpp:
+        * tao/RTCORBA/RT_ORBInitializer.{h,cpp}:
+        * tao/RTCORBA/Thread_Pool.{h,cpp,inl}:
+        * docs/rtcorba/features.html:
+          When using RTCorba threadpools dynamic threads can be used, these
+          will be created on demand but will life forever after that. A new
+          option has been added to the RT_ORB_Loader:
+          RTORBDynamicThreadIdleTimeout. With this option a number of micro
+          seconds can be specified. If a dynamic thread has not performed
+          anywork in that time it will end itself. This way dynamic threads
+          can go away if the load reduces again on the server, at the moment
+          they are needed they are recreated. Because of this some internal
+          administration has been updated, argument parsing has been updated
+          and the timeout is passed through several interfacs.
+
+        * docs/releasenotes/index.html:
+          Fixed RTCorba link
+
 Wed Nov 30 08:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/RequestProcessingStrategyAOMOnly.h:
