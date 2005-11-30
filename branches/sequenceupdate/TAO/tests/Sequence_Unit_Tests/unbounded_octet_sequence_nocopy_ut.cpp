@@ -11,7 +11,7 @@
 #include "testing_allocation_traits.hpp"
 #include "testing_range_checking.hpp"
 
-#include "tao/unbounded_octet_sequence.hpp"
+#include "tao/Unbounded_Octet_Sequence_T.h"
 
 #include "value_sequence_tester.hpp"
 

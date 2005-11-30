@@ -9,7 +9,7 @@
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 #include "tao/Basic_Types.h"
-#include "tao/unbounded_octet_sequence.hpp"
+#include "tao/Unbounded_Octet_Sequence_T.h"
 
 typedef TAO::unbounded_value_sequence <CORBA::Octet> s_sequence;
 
