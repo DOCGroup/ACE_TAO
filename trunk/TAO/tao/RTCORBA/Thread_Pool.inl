@@ -43,21 +43,14 @@ ACE_INLINE
 CORBA::ULong
 TAO_Thread_Lane::static_threads (void) const
 {
-  return this->static_threads_;
+  return this->static_threads_number_;
 }
 
 ACE_INLINE
 CORBA::ULong
 TAO_Thread_Lane::dynamic_threads (void) const
 {
-  return this->dynamic_threads_;
-}
-
-ACE_INLINE
-CORBA::ULong
-TAO_Thread_Lane::current_threads (void) const
-{
-  return this->current_threads_;
+  return this->dynamic_threads_number_;
 }
 
 ACE_INLINE
@@ -65,6 +58,13 @@ TAO_Thread_Lane_Resources &
 TAO_Thread_Lane::resources (void)
 {
   return this->resources_;
+}
+
+ACE_INLINE
+ACE_Time_Value const &
+TAO_Thread_Lane::dynamic_thread_idle_timeout (void) const
+{
+  return this->dynamic_thread_idle_timeout_;
 }
 
 ACE_INLINE

@@ -109,7 +109,7 @@ class TAO_RTCORBA_Export TAO_RT_ORB
 public:
 
   /// Constructor.
-  TAO_RT_ORB (TAO_ORB_Core *orb_core);
+  TAO_RT_ORB (TAO_ORB_Core *orb_core, ACE_Time_Value const &dynamic_thread_idle_timeout);
 
   /**
    * Create a new mutex.  Mutexes returned by this method
@@ -320,6 +320,9 @@ protected:
 
   /// Thread Pool Manager
   TAO_Thread_Pool_Manager *tp_manager_;
+
+  /// Dynamic thread idle timeout
+  ACE_Time_Value const dynamic_thread_idle_timeout_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
