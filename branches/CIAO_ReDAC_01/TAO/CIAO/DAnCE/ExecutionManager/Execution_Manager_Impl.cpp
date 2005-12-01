@@ -51,8 +51,7 @@ namespace CIAO
       if (this->map_.is_plan_available (plan.UUID.in ()))
         return this->map_.fetch_dam_reference (plan.UUID.in ());
 
-      // We are about to begin working on a new
-      // DeploymentPlan.
+      // We are about to begin working on a new DeploymentPlan.
       // Create a DAM servant, which will be populated
       // to be sent back to the PlanLauncher.
       //
@@ -97,10 +96,6 @@ namespace CIAO
       //
       ACE_CHECK_RETURN (::Deployment::DomainApplicationManager::_nil ());
 
-      /// @@ Can be removed -- Bala
-      /// Gan, have you addressed this comment by Bala?
-      /// Do we still need this code lying around?
-      ///
       dam_servant->set_uuid (plan.UUID.in ());
 
       Deployment::DomainApplicationManager_var dam =

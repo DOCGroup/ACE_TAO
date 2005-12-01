@@ -211,6 +211,10 @@ namespace CIAO
         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    /// Create a "key" for the connection
+    virtual const char *
+    create_connection_key (const Deployment::Connection & connection);
+
     /// To build a map between a component instance and  its container
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
                                     Deployment::Container_var,
@@ -222,8 +226,6 @@ namespace CIAO
 
 
     /// To store all created Component object.
-    // @@Gan/Jai, as we discussed before this is simply a BAD
-    //idea. These need to moved into the container.
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
                                     Components::CCMObject_var,
                                     ACE_Hash<ACE_CString>,
@@ -231,6 +233,15 @@ namespace CIAO
                                     ACE_Null_Mutex> CCMComponent_Map;
     typedef CCMComponent_Map::iterator Component_Iterator;
     CCMComponent_Map component_objref_map_;
+
+    /// A Map which stores all the connection cookies
+    typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+                                    ::Components::Cookie_var,
+                                    ACE_Hash<ACE_CString>,
+                                    ACE_Equal_To<ACE_CString>,
+                                    ACE_Null_Mutex> Cookie_Map;
+    typedef Cookie_Map::iterator Cookie_Map_Iterator;
+    Cookie_Map cookie_map_;
 
     /// Synchronize access to the object set.
     TAO_SYNCH_MUTEX lock_;

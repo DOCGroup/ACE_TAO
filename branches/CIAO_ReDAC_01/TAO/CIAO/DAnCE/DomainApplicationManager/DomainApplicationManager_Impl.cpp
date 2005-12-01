@@ -650,7 +650,7 @@ finishLaunch (CORBA::Boolean start,
             }
 
           // Get the Connections variable, if ReDAC is true, then we get
-          // those new connections only. NOTE: get_out_going_connections
+          // those new connections only. NOTE: get_outgoing_connections
           // by default will get *all* connections.
           Deployment::Connections * my_connections =
             this->get_outgoing_connections (
@@ -750,7 +750,7 @@ finishLaunch (CORBA::Boolean start,
                   entry->int_id_.node_application_->finishLaunch
                     (*unnecessary_connections,
                       start,
-                      is_ReDAC  // true ==> remove unnecessary connections
+                      true  // true ==> remove unnecessary connections
                       ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
                 }
@@ -908,6 +908,10 @@ get_outgoing_connections_i (const char * instname,
                     retv[len].kind = endpoint.kind;
                     retv[len].endpoint =
                        CORBA::Object::_duplicate(curr_rev_conn.endpoint.in ());
+
+                    retv[len].endpointInstanceName = name.c_str ();
+                    retv[len].endpointPortName = port_name.c_str ();
+
                     ++len;
                     found = true;
                     break;
