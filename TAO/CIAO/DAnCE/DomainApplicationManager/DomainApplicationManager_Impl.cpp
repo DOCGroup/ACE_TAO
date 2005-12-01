@@ -258,13 +258,13 @@ get_plan_info (void)
                (this->plan_.instance [index].node.in ());
 
           if (CORBA::is_nil (mgr.in ()))
-            return 0; /* Failure */
+            return false; /* Failure */
 
           // Add this unique node_name to the list of NodeManager names
           this->node_manager_names_.push_back (this->plan_.instance [index].node.in ());
 
           // Increment the number of plans
-          ++ num_plans;
+          ++num_plans;
         }
     }
 
@@ -462,7 +462,7 @@ startLaunch (const ::Deployment::Properties & configProperty,
           // Get the NodeApplicationManager object reference.
           ACE_Hash_Map_Entry
             <ACE_CString,
-            Chained_Artifacts> *entry;
+            Chained_Artifacts> *entry = 0;
 
           if (this->artifact_map_.find (this->node_manager_names_[i],
                                         entry) != 0)
@@ -830,7 +830,7 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
       for (i = 0; i < this->num_child_plans_; ++i)
         {
           // Get the NodeApplication object references.
-          ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry;
+          ACE_Hash_Map_Entry <ACE_CString, Chained_Artifacts> *entry = 0;
 
           if (this->artifact_map_.find (this->node_manager_names_[i],
                                         entry) != 0)
@@ -909,7 +909,7 @@ destroyManager (ACE_ENV_SINGLE_ARG_DECL)
           // Get the NodeManager and NodeApplicationManager object references.
           ACE_Hash_Map_Entry
             <ACE_CString,
-            Chained_Artifacts> *entry;
+            Chained_Artifacts> *entry = 0;
 
           if (this->artifact_map_.find (this->node_manager_names_[i],
                                         entry) != 0)
@@ -962,7 +962,7 @@ perform_redeployment (
       // Call init() on the myself, which will validate/split the plan and
       // call preparePlan on each NodeManager, by this, we shall get
       // all the object references of NM and NAM associated with each
-      // component instance populated. 
+      // component instance populated.
       this->init ();
 
       // Call startLaunch on each NM for each child plan, this should not only
