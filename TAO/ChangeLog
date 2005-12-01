@@ -120,7 +120,7 @@ Thu Dec  1 18:10:48 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
           Added 'after += ...' lines to files where projects share one or
           more IDL files. This change will order the builds and eliminate
           concurrency problems in VC8 builds. This is a temporary solution
-          until there is time to apply J.T. Conklin's <jtc@acrontoolworks.com>
+          until there is time to apply J.T. Conklin's <jtc@acorntoolworks.com>
           approach of creating a separate project in each file that just
           executes the IDL compiler on the shared files, and ordering all
           other projects that build the resulting generated files to
