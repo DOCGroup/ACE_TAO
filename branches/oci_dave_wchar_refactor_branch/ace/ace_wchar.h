@@ -34,7 +34,10 @@ not supply them.
 #   include /**/ <types/vxTypes.h>  /* For wchar_t */
     typedef wchar_t wint_t;
     typedef wchar_t wctype_t;
-
+# elif defined (__Lynx__)
+#   include /**/ <stdlib.h>  /* For wchar_t */
+    typedef unsigned int wint_t;
+    typedef wchar_t wctype_t;
 # elif defined (ACE_OPENVMS)
 #   include /**/ <wchar.h>
 #   include /**/ <wctype.h>
