@@ -212,7 +212,7 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Create a "key" for the connection
-    virtual const char *
+    virtual ACE_CString *
     create_connection_key (const Deployment::Connection & connection);
 
     /// To build a map between a component instance and  its container
