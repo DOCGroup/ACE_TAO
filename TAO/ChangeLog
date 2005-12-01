@@ -1,7 +1,12 @@
+Thu Dec  1 16:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/RTCORBA/Thread_Pool.cpp:
+          Fixed bug in thread pool id calculation
+
 Thu Dec  1 16:02:36 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/MT_Timeout/MT_Timeout.mpc:
-        
+
           Added 'after' line in one project to order the builds (which
           share an IDL file) for VC8.
 
