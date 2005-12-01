@@ -26,6 +26,7 @@
 #include "Worker_Task.h"
 #include "Refcountable.h"
 #include "Name_Value_Pair.h"
+#include "Event_Manager.h"
 
 #include "orbsvcs/NotifyExtC.h"
 
@@ -36,7 +37,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_POA_Helper;
 class TAO_Notify_Timer;
 class TAO_Notify_RT_Builder;
-class TAO_Notify_Event_Manager;
 
 /**
  * @class TAO_Notify_Object
