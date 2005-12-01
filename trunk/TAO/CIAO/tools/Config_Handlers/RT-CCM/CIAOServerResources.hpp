@@ -2478,7 +2478,7 @@ namespace CIAO
       {
         PriorityModel (::XSCRT::XML::Element< ACE_TCHAR >&);
 
-        virtual void PriorityModel::
+        virtual void
         traverse (Type &o)
         {
           this->traverse (const_cast <Type const &> (o));
