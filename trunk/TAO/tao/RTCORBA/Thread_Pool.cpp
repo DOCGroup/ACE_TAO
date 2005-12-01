@@ -920,7 +920,7 @@ TAO_Thread_Pool_Manager::create_threadpool_helper (TAO_Thread_Pool *thread_pool
   safe_thread_pool.release ();
 
   // Return current counter and perform post-increment.
-  return ++this->thread_pool_id_counter_;
+  return this->thread_pool_id_counter_++;
 }
 
 TAO_Thread_Pool *
