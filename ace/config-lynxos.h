@@ -28,6 +28,11 @@
 # define ACE_NEEDS_IPC_1C_H
 #endif /* ACE_LYNXOS_MAJOR */
 
+// Describe the native wchar_t
+#define ACE_SIZEOF_WCHAR 4
+#define ACE_WCHAR_MAX 0x7fffffff
+#define ACE_LACKS_BUILTIN_WCHAR_T
+
 #if defined (__x86__)
 # define ACE_HAS_PENTIUM
 #elif defined (__powerpc__)
