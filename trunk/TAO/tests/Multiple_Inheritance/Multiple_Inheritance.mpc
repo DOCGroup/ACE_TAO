@@ -8,6 +8,7 @@ project(*Server): taoserver, utils {
 }
 
 project(*Client): taoclient, anytypecode {
+  after += *Server
   Source_Files {
     Multiple_InheritanceC.cpp
     client.cpp

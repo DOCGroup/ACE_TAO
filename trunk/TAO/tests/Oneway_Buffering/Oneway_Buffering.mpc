@@ -18,6 +18,7 @@ project(*Server): messaging, taoexe, portableserver {
 // succeeds.
 project(*Client): messaging, taoexe, portableserver {
   requires += corba_messaging
+  after += *Server
 
   Source_Files {
     TestC.cpp
@@ -26,6 +27,7 @@ project(*Client): messaging, taoexe, portableserver {
 }
 
 project(*Admin): messaging, taoexe, portableserver {
+  after += *Client
   Source_Files {
     Oneway_Buffering_Admin.cpp
     admin.cpp

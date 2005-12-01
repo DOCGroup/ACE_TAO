@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(Bug_1482_Server): taoserver, amh, ami, iortable, portableserver {
+project(*Server): taoserver, amh, ami, iortable, portableserver {
   Source_Files {
     Hello.cpp
     Server_Task.cpp
@@ -9,8 +9,9 @@ project(Bug_1482_Server): taoserver, amh, ami, iortable, portableserver {
   }
 }
 
-project(Bug_1482_Client): taoserver, amh, ami {
+project(*Client): taoserver, amh, ami {
   exename = client
+  after += *Server
   Source_Files {
     Client_Task.cpp
     Reply_Handler.cpp

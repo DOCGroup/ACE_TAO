@@ -23,6 +23,7 @@ project(*Server): taoexe, portableserver, valuetype {
 }
 
 project(*Client): taoexe, valuetype {
+  after += *Server
   Source_Files {
     vb_basicC.cpp
     vb_structC.cpp

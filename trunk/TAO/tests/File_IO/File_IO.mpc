@@ -9,6 +9,7 @@ project(*Server): taoserver, minimum_corba {
 }
 
 project(*Client): taoclient, anytypecode, minimum_corba {
+  after += *Server
   Source_Files {
     FileC.cpp
     client.cpp

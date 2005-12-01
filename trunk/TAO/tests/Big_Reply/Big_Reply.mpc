@@ -3,6 +3,7 @@
 
 project(*Server): taoserver {
   idlflags += -Sa -St
+  after += *Client
   Source_Files {
     Big_Reply_i.cpp
     server.cpp

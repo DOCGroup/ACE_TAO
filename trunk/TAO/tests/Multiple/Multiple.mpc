@@ -13,6 +13,7 @@ project(*Server): taoserver {
 
 project(*Client): taoexe, portableserver {
   idlflags += -Gd
+  after += *Server
 
   Source_Files {
     Multiple_Impl.cpp

@@ -11,6 +11,7 @@ project(*Server): taoexe, portableserver, tao_xtresource, ace_motif {
 }
 
 project(*Client): taoexe, tao_xtresource, ace_motif {
+  after += *Server
   Source_Files {
     testC.cpp
     Control.cpp

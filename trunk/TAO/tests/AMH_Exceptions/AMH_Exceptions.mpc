@@ -8,6 +8,7 @@ project(*Server): taoserver, amh, strategies {
 }
 
 project(*Client): taoexe, amh, portableserver, strategies {
+  after += *Server
   Source_Files {
     client.cpp
   }

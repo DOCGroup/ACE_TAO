@@ -12,6 +12,7 @@ project(*Server): csd_tp_test_exe_a {
 
 project(*Client): csd_tp_test_exe_a {
   exename=client_main
+  after += *Server
 
   Source_Files {
     ClientApp.cpp
