@@ -115,7 +115,7 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
             case Deployment::SimplexReceptacle:
             case Deployment::MultiplexReceptacle:
 
-              if (CIAO::debug_level () > 9)
+              if (CIAO::debug_level () > 6)
                 {
                   ACE_DEBUG ((LM_DEBUG,
                               "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
@@ -133,10 +133,11 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
                                    ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
 
-                  ACE_CString key (create_connection_key (providedReference[i]));
-                  this->cookie_map_.bind (key, cookie);
+                  ACE_CString key = (*create_connection_key (providedReference[i]));
+                  ACE_DEBUG ((LM_ERROR, "[BINGDING KEY]: %s\n", key.c_str ()));
+                  this->cookie_map_.rebind (key, cookie);
 
-                  if (CIAO::debug_level () > 9)
+                  if (CIAO::debug_level () > 6)
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                   "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
@@ -150,8 +151,9 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
                 }
               else
                 {
-                  ACE_CString key (create_connection_key (providedReference[i]));
+                  ACE_CString key = (*create_connection_key (providedReference[i]));
                   ::Components::Cookie_var cookie;
+                  ACE_DEBUG ((LM_ERROR, "[FINDING KEY]: %s\n", key.c_str ()));
                   if (this->cookie_map_.find (key, cookie) != 0)
                     {
                       ACE_DEBUG ((LM_ERROR, "Error: Cookie Not Found!\n"));
@@ -161,7 +163,7 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
                   comp->disconnect (providedReference[i].portName.in (), 
                                     cookie.in ());
                   this->cookie_map_.unbind (key);
-                  if (CIAO::debug_level () > 9)
+                  if (CIAO::debug_level () > 6)
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                   "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
@@ -197,7 +199,7 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
                   ACE_TRY_THROW (Deployment::InvalidConnection ());
                 }
 
-              if (CIAO::debug_level () > 9)
+              if (CIAO::debug_level () > 6)
                 {
                   ACE_DEBUG ((LM_DEBUG,
                               "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
@@ -214,7 +216,7 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
                                           ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
 
-                  if (CIAO::debug_level () > 9)
+                  if (CIAO::debug_level () > 6)
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                   "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
@@ -234,7 +236,7 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
 //                                             ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
 
-                  if (CIAO::debug_level () > 9)
+                  if (CIAO::debug_level () > 6)
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                   "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
@@ -267,7 +269,7 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
                   ACE_TRY_THROW (Deployment::InvalidConnection ());
                 }
 
-              if (CIAO::debug_level () > 9)
+              if (CIAO::debug_level () > 6)
                 {
                   ACE_DEBUG ((LM_DEBUG,
                               "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
@@ -285,14 +287,14 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
                                      ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
 
-                  ACE_CString key (create_connection_key (providedReference[i]));
-                  this->cookie_map_.bind (key, cookie);
+                  ACE_CString key = (*create_connection_key (providedReference[i]));
+                  this->cookie_map_.rebind (key, cookie);
+                  ACE_DEBUG ((LM_ERROR, "[BINGDING KEY]: %s\n", key.c_str ()));
 
-                  if (CIAO::debug_level () > 9)
+                  if (CIAO::debug_level () > 6)
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                   "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
-                                  "CIAO::NodeApplication_Impl::finishLaunch, "
                                   "CIAO::NodeApplication_Impl::finishLaunch\n"
                                   "[INSTANCE:PORT] : [%s:%s] --> [%s:%s] connected.\n",
                                   providedReference[i].instanceName.in (),
@@ -303,8 +305,9 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
                 }
               else
                 {
-                  ACE_CString key (create_connection_key (providedReference[i]));
+                  ACE_CString key = (*create_connection_key (providedReference[i]));
                   ::Components::Cookie_var cookie;
+                  ACE_DEBUG ((LM_ERROR, "[FINDING KEY]: %s\n", key.c_str ()));
                   if (this->cookie_map_.find (key, cookie) != 0)
                     {
                       ACE_DEBUG ((LM_ERROR, "Error: Cookie Not Found!\n"));
@@ -317,7 +320,7 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
                   ACE_TRY_CHECK;
                   this->cookie_map_.unbind (key);
 
-                  if (CIAO::debug_level () > 9)
+                  if (CIAO::debug_level () > 6)
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                   "CIAO (%P|%t) - NodeApplication_Impl.cpp, "
@@ -675,13 +678,17 @@ CIAO::NodeApplication_Impl::get_containers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return 0;
 }
 
-const char *
+ACE_CString *
 CIAO::NodeApplication_Impl::
 create_connection_key (const Deployment::Connection & connection)
 {
-  ACE_CString retv (connection.instanceName.in ());
-  retv += connection.portName.in ();
-  retv += connection.endpointInstanceName.in ();
-  retv += connection.endpointPortName.in ();
-  return retv.c_str ();
+  ACE_CString * retv;
+  ACE_NEW_RETURN (retv, ACE_CString, 0);
+    
+  (*retv) += connection.instanceName.in ();
+  (*retv) += connection.portName.in ();
+  (*retv) += connection.endpointInstanceName.in ();
+  (*retv) += connection.endpointPortName.in ();
+  ACE_DEBUG ((LM_ERROR, "The key is: %s\n", (*retv).c_str ()));
+  return retv;
 }
