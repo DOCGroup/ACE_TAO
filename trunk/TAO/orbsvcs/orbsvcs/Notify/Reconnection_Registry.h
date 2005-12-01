@@ -28,10 +28,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-  static const char REGISTRY_TYPE[] = "reconnect_registry";
-  static const char RECONNECT_ID[] = "ReconnectId";
-  static const char RECONNECT_IOR[] = "IOR";
-  static const char REGISTRY_CALLBACK_TYPE[] = "reconnect_callback";
+  extern const char REGISTRY_TYPE[];
+  extern const char RECONNECT_ID[];
+  extern const char RECONNECT_IOR[];
+  extern const char REGISTRY_CALLBACK_TYPE[];
 
   /**
    * @class Reconnection_Registry

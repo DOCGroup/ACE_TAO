@@ -17,6 +17,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
+  const char TOPOLOGY_ID_NAME[] = "TopologyID";
+
   Topology_Savable::~Topology_Savable (void)
   {
   }
