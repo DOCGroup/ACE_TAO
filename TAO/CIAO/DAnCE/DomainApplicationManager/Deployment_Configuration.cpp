@@ -30,7 +30,7 @@ CIAO::Deployment_Configuration::init (const char *filename)
 
   FILE *inf = ACE_OS::fopen (filename, "r");
 
-  if (inf == NULL)
+  if (inf == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "DAnCE (%P|%t) Deployment_Configuration.cpp:"

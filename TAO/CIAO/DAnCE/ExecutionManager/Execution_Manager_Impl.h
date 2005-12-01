@@ -25,11 +25,6 @@
 #include "DAM_Map.h"
 #include "ace/SString.h"
 
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 namespace CIAO
 {
   namespace Execution_Manager
@@ -77,7 +72,7 @@ namespace CIAO
 
       // The input parameter is a *new_plan* which has the
       // same UUID of the existing running plan.
-      virtual void 
+      virtual void
       perform_redeployment (
         const Deployment::DeploymentPlan & plan
         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -107,10 +102,6 @@ namespace CIAO
     };
   }
 }
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* EXECUTIONMANAGER_IMPL_H */
