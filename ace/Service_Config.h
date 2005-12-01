@@ -161,7 +161,11 @@ public:
 
   // = Initialization and termination methods.
 
-  /// Initialize the Service Repository.
+  /**
+   * Initialize the Service Repository. Note that initialising @a
+   * signum to a negative number will prevent a signal handler being
+   * registered when the repository is opened.
+   */
   ACE_Service_Config (int ignore_static_svcs = 1,
                       size_t size = ACE_Service_Config::MAX_SERVICES,
                       int signum = SIGHUP);
