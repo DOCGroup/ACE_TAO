@@ -46,7 +46,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //
 namespace TAO_Notify
 {
-  static const char TOPOLOGY_ID_NAME[] = "TopologyID";
+  extern const char TOPOLOGY_ID_NAME[];
 
   class Topology_Saver;
   class Topology_Parent;

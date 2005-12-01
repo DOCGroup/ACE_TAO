@@ -1,3 +1,20 @@
+Thu Dec  1 12:08:17 2005  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Object.h: Revert previous change as it
+	  apparently confused Borland BC6.
+
+	* orbsvcs/orbsvcs/Notify/Topology_Object.*:
+	* orbsvcs/orbsvcs/Notify/Reconnection_Registry.*:
+
+	  Changed manifest constants for TOPOLOGY_ID_NAME, REGISTRY_TYPE,
+	  RECONNECT_ID, RECONNECT_IOR, and REGISTRY_CALLBACK_TYPE from
+	  statics within the namespace to being declared in the namespace
+	  in the header, but defined in the .cpp file.  This de-warns on
+	  OS X Tiger G++ 3.3 builds, but may also have a minor reduction
+	  in footprint everywhere since now there will be only one
+	  instance of these rather than an instance everywhere the
+	  relevant header gets #included.
+
 Thu Dec  1 18:10:48 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/AMH_Exceptions/AMH_Exceptions.mpc:

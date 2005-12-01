@@ -23,6 +23,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
+  const char REGISTRY_TYPE[] = "reconnect_registry";
+  const char RECONNECT_ID[] = "ReconnectId";
+  const char RECONNECT_IOR[] = "IOR";
+  const char REGISTRY_CALLBACK_TYPE[] = "reconnect_callback";
+
   Reconnection_Registry::Reconnection_Registry (Topology_Parent & parent)
     : highest_id_(0)
   {
