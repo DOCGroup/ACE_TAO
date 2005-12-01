@@ -6,6 +6,7 @@ project(*Server): rt_server, strategies, portableserver, minimum_corba {
 }
 
 project(*Client): rt_client, strategies, portableserver, minimum_corba {
+  after += *Server
   Source_Files {
     client.cpp
   }

@@ -10,6 +10,7 @@ project(*Server): taoexe, portableserver, valuetype {
 }
 
 project(*Client): taoexe, valuetype {
+  after += *Server
   Source_Files {
     FactoryC.cpp
     FactoryC_impl.cpp

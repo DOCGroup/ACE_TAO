@@ -8,6 +8,7 @@ project(*Server): strategies, rt_server {
 }
 
 project(*Client): strategies, rt_client {
+  after += *Server
   Source_Files {
     testC.cpp
     client.cpp

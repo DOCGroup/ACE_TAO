@@ -9,6 +9,7 @@ project(*Server): taoserver {
 }
 
 project(*Client): taoclient, anytypecode {
+  after += *Server
   Source_Files {
     testC.cpp
     client.cpp
@@ -17,6 +18,7 @@ project(*Client): taoclient, anytypecode {
 
 project(*OctetSeq): taoclient, anytypecode {
   exename = OctetSeq
+  after += *Client
   Source_Files {
     testC.cpp
     OctetSeq.cpp
