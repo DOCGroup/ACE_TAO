@@ -302,7 +302,9 @@ namespace CIAO
         ACE_DEBUG ((LM_DEBUG,
                     "CIAO_PlanLauncher: new plan redeployed ...\n"));
 
-      return 0;
+      std::string * retv = new std::string (plan.UUID.in ());
+      
+      return (*retv).c_str (); 
     }
   }
 }
