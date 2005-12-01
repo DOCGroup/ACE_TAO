@@ -1,9 +1,24 @@
+Thu Dec  1 12:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/DomainApplicationManager/Deployment_Configuration.cpp:
+          Use 0 instead of NULL, NULL is not portable
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * DAnCE/NodeManager/NAM_Map.cpp:
+          Initialise pointers with 0 and return false instead of 0
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.h:
+          Removed not needed msvc pragma push/pop
+
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+          Initialise pointers with 0 and removed some printf that seems some
+          left over debugging statements
+
 Wed Nov 30 16:24:43 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* docs/schema/xsc-banner.h
 
-	Updated this file to reflect recent export macro changes. 
-	
+	Updated this file to reflect recent export macro changes.
+
 	* tools/Config_Handlers/Basic_Deployment_Data.cpp
 	* tools/Config_Handlers/Basic_Deployment_Data.hpp
 	* tools/Config_Handlers/Deployment.cpp
@@ -26,8 +41,8 @@ Wed Nov 30 16:24:43 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
 
 	Made a borland specific fix apply to all compilers, hopefully
-	fixing ICC builds. 
-	
+	fixing ICC builds.
+
 Wed Nov 30 12:30:59 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* examples/Hello/descriptors/flattened_deploymentplan.cdp
