@@ -1,3 +1,8 @@
+Thu Dec  1 14:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO-INSTALL.html:
+          Updated VxWorks part
+
 Wed Nov 30 10:23:05 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/performance-tests/RTEvent/lib/Client_Options.h:
