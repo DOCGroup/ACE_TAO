@@ -9,6 +9,7 @@ project(*client) : taoexe, portableserver, rtcorba, minimum_corba {
 }
 
 project(*server) : taoexe, rtportableserver, rtcorba, minimum_corba {
+  after += *client
   source_files {
     server.cpp
     Custom_Network_Priority_Mapping.cpp

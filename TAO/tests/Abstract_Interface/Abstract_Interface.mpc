@@ -19,6 +19,7 @@ project(*client) : taoclient, valuetype {
 }
 
 project(*server) : taoserver, valuetype {
+  after += *client
   idlflags += -Sc
 
   IDL_Files {

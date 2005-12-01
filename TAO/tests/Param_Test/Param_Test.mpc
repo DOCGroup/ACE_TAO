@@ -10,7 +10,7 @@ project(*Server): taoserver, minimum_corba {
 
 project(*Client): taoserver, minimum_corba, dynamicinterface {
   exename  = client
-  after += Param_Test_Server
+  after += *Server
 
   Source_Files {
     any.cpp
@@ -59,7 +59,7 @@ project(*Client): taoserver, minimum_corba, dynamicinterface {
 
 project(*Anyop): taoserver, minimum_corba {
   exename = anyop
-  after += Param_Test_Client
+  after += *Client
 
   Source_Files {
     param_testC.cpp

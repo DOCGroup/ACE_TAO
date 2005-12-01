@@ -9,6 +9,7 @@ project(*Server): taoserver, messaging {
 }
 
 project(*Client): taoclient, portableserver, messaging {
+  after += *Server
   Source_Files {
     Crashed_Callback.cpp
     client.cpp

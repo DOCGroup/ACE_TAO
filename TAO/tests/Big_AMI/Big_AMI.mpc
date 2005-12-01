@@ -10,6 +10,7 @@ project(*Server): taoserver, messaging, ami {
 
 project(*Client): taoserver, messaging, ami {
   exename = client
+  after += *Server
   Source_Files {
     client.cpp
   }

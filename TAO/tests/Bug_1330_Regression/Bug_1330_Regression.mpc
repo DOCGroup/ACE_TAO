@@ -1,14 +1,15 @@
 // -*- MPC -*-
 // $Id$
 
-project(Bug 1330 Server): taoserver, iortable {
+project(*Server): taoserver, iortable {
   Source_Files {
     Test_i.cpp
     server.cpp
   }
 }
 
-project(Bug 1330 Client): taoclient, anytypecode {
+project(*Client): taoclient, anytypecode {
+  after += *Server
   Source_Files {
     TestC.cpp
     client.cpp

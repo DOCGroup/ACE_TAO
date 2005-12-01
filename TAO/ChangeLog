@@ -1,3 +1,131 @@
+Thu Dec  1 18:10:48 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/AMH_Exceptions/AMH_Exceptions.mpc:
+        * tests/AMH_Oneway/AMH_Oneway.mpc:
+        * tests/AMI_Buffering/AMI_Buffering.mpc:
+        * tests/Abstract_Interface/Abstract_Interface.mpc:
+        * tests/Any/Recursive/RecursiveHello.mpc:
+        * tests/BiDirectional/BiDirectional.mpc:
+        * tests/BiDirectional_NestedUpcall/BiDir_NestedUpcall.mpc:
+        * tests/Big_AMI/Big_AMI.mpc:
+        * tests/Big_Oneways/Big_Oneways.mpc:
+        * tests/Big_Reply/Big_Reply.mpc:
+        * tests/Big_Request_Muxing/Big_Request_Muxing.mpc:
+        * tests/Big_Twoways/Big_Twoways.mpc:
+        * tests/Blocking_Sync_None/Blocking_Sync_None.mpc:
+        * tests/Bug_1020_Basic_Regression/Bug_1020_Basic_Regression.mpc:
+        * tests/Bug_1269_Regression/Bug_1269_Regression.mpc:
+        * tests/Bug_1270_Regression/Bug_1270_Regression.mpc:
+        * tests/Bug_1330_Regression/Bug_1330_Regression.mpc:
+        * tests/Bug_1361_Regression/Bug_1361_Regression.mpc:
+        * tests/Bug_1476_Regression/Bug_1476_Regression.mpc:
+        * tests/Bug_1482_Regression/test.mpc:
+        * tests/Bug_1495_Regression/Bug_1495.mpc:
+        * tests/Bug_1551_Regression/test.mpc:
+        * tests/Bug_1568_Regression/Bug_1568_Regression.mpc:
+        * tests/Bug_1627_Regression/test.mpc:
+        * tests/Bug_2174_Regression/Bug_2174_Regression.mpc:
+        * tests/Bug_2183_Regression/Bug_2183_Regression.mpc:
+        * tests/Bug_2234_Regression/Bug_2234_Regression.mpc:
+        * tests/CSD_Strategy_Tests/TP_Common/CSD_TP_Test_Lib.mpc:
+        * tests/CSD_Strategy_Tests/TP_Test_Dynamic/CSD_TP_Test_Dynamic.mpc:
+        * tests/CSD_Strategy_Tests/TP_Test_Static/CSD_TP_Test_Static.mpc:
+        * tests/Cache_Growth_Test/Cache_Growth_Test.mpc:
+        * tests/CallbackTest/CallbackTest.mpc:
+        * tests/Client_Leaks/Client_Leaks.mpc:
+        * tests/Collocation/Collocation.mpc:
+        * tests/Connect_Strategy_Test/Connect_Strategy_Test.mpc:
+        * tests/Connection_Purging/Connection_Purging.mpc:
+        * tests/Crash_On_Write/Crash_On_Write.mpc:
+        * tests/Crashed_Callback/Crashed_Callback.mpc:
+        * tests/DLL_ORB/DLL_ORB.mpc:
+        * tests/DSI_Gateway/DSI_Gateway.mpc:
+        * tests/Explicit_Event_Loop/Explicit_Event_Loop.mpc:
+        * tests/Exposed_Policies/Exposed_Policies.mpc:
+        * tests/FL_Cube/FL_Cube.mpc:
+        * tests/Faults/Faults.mpc:
+        * tests/File_IO/File_IO.mpc:
+        * tests/Forwarding/Forwarding.mpc:
+        * tests/Hang_Shutdown/Hang.mpc:
+        * tests/Hello/Hello.mpc:
+        * tests/ICMG_Any_Bug/Hello.mpc:
+        * tests/IPV6/IPV6_Hello.mpc:
+        * tests/InterOp-Naming/InterOp-Naming.mpc:
+        * tests/Leader_Followers/Leader_Followers.mpc:
+        * tests/LongUpcalls/LongUpcalls.mpc:
+        * tests/MProfile/MProfile.mpc:
+        * tests/MProfile_Connection_Timeout/MProfile_Connection_Timeout.mpc:
+        * tests/MProfile_Forwarding/MProfile_Forwarding.mpc:
+        * tests/MT_BiDir/MT_BiDir.mpc:
+        * tests/MT_Client/MT_Client.mpc:
+        * tests/MT_Server/MT_Server.mpc:
+        * tests/Multiple/Multiple.mpc:
+        * tests/Multiple_Inheritance/Multiple_Inheritance.mpc:
+        * tests/Muxed_GIOP_Versions/Muxed_GIOP_Versions.mpc:
+        * tests/Muxing/Muxing.mpc:
+        * tests/Native_Exceptions/Native_Exceptions.mpc:
+        * tests/NestedUpcall/MT_Client_Test/MT_Client_Test.mpc:
+        * tests/NestedUpcall/Triangle_Test/TT.mpc:
+        * tests/Nested_Event_Loop/Nested_Event_Loop.mpc:
+        * tests/No_Server_MT_Connect_Test/No_Server_Connect_Test.mpc:
+        * tests/OBV/Any/OBV_Any.mpc:
+        * tests/OBV/Factory/OBV_Factory.mpc:
+        * tests/OBV/Forward/OBV_Forward.mpc:
+        * tests/OBV/Supports/Supports_Test.mpc:
+        * tests/OBV/TC_Alignment/OBV_TC_Alignment.mpc:
+        * tests/OBV/ValueBox/valuebox.mpc:
+        * tests/Object_Loader/Object_Loader.mpc:
+        * tests/Objref_Sequence_Test/Objref_Sequence_Test.mpc:
+        * tests/OctetSeq/OctetSeq.mpc:
+        * tests/Oneway_Buffering/Oneway_Buffering.mpc:
+        * tests/Oneways_Invoking_Twoways/Oneways_Invoking_Twoways.mpc:
+        * tests/POA/Persistent_ID/Persistent_ID.mpc:
+        * tests/Param_Test/Param_Test.mpc:
+        * tests/Portable_Interceptors/AMI/PI_AMI.mpc:
+        * tests/Portable_Interceptors/Benchmark/PI_Benchmark.mpc:
+        * tests/Portable_Interceptors/Bug_1559/Bug_1559.mpc:
+        * tests/Portable_Interceptors/Dynamic/PI_Dynamic.mpc:
+        * tests/Portable_Interceptors/IORInterceptor/PI_IORInterceptor.mpc:
+        * tests/Portable_Interceptors/ORB_Shutdown/PI_ORB_Shutdown.mpc:
+        * tests/Portable_Interceptors/PICurrent/PI_PICurrent.mpc:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/PI_Request_Interceptor_Flow.mpc:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/PI_Svc_Context_Manip.mpc:
+        * tests/QtTests/QtTests.mpc:
+        * tests/RTCORBA/Banded_Connections/RTCORBA_Banded_Conn.mpc:
+        * tests/RTCORBA/Client_Propagated/RTCORBA_Client_Propagated.mpc:
+        * tests/RTCORBA/Client_Protocol/RTCORBA_Client_Protocol.mpc:
+        * tests/RTCORBA/Diffserv/RTCORBA_Diffserv.mpc:
+        * tests/RTCORBA/Explicit_Binding/RTCORBA_Explicit_Binding.mpc:
+        * tests/RTCORBA/Persistent_IOR/RTCORBA_Persistent_IOR.mpc:
+        * tests/RTCORBA/Policy_Combinations/RTCORBA_Policy_Combinations.mpc:
+        * tests/RTCORBA/Priority_Inversion_With_Bands/Priority_Inversion_With_Bands.mpc:
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/PaE_Selection.mpc:
+        * tests/RTCORBA/Server_Declared/RTCORBA_Server_Declared.mpc:
+        * tests/RTCORBA/Server_Protocol/RTCORBA_Server_Protocol.mpc:
+        * tests/RTCORBA/Thread_Pool/RTCORBA_Thread_Pool.mpc:
+        * tests/RTScheduling/Scheduling_Interceptor/Scheduler_Interceptor.mpc:
+        * tests/Reliable_Oneways/Reliable_Oneways.mpc:
+        * tests/Server_Connection_Purging/Server_Connection_Purging.mpc:
+        * tests/Server_Leaks/Server_Leaks.mpc:
+        * tests/Single_Read/Single_Read.mpc:
+        * tests/Smart_Proxies/Smart_Proxies.mpc:
+        * tests/Stack_Recursion/Stack_Recursion.mpc:
+        * tests/Strategies/Strategies.mpc:
+        * tests/Timed_Buffered_Oneways/Timed_Buffered_Oneways.mpc:
+        * tests/Timeout/Timeout.mpc:
+        * tests/Two_Objects/Two_Objects.mpc:
+        * tests/UNKNOWN_Exception/UNKNOWN_Exception.mpc:
+        * tests/Xt_Stopwatch/Xt_Stopwatch.mpc:
+        
+          Added 'after += ...' lines to files where projects share one or
+          more IDL files. This change will order the builds and eliminate
+          concurrency problems in VC8 builds. This is a temporary solution
+          until there is time to apply J.T. Conklin's <jtc@acrontoolworks.com>
+          approach of creating a separate project in each file that just
+          executes the IDL compiler on the shared files, and ordering all
+          other projects that build the resulting generated files to
+          come after this step.
+
 Thu Dec  1 16:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTCORBA/Thread_Pool.cpp:

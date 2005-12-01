@@ -10,6 +10,7 @@ project(*Server): taoserver, exceptions {
 
 project(*Client): taoclient, anytypecode, exceptions {
   idlflags  = -Ge 0
+  after += *Server
   Source_Files {
     testC.cpp
     client.cpp

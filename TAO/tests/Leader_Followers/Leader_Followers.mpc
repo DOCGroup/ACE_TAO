@@ -9,6 +9,7 @@ project(*Server): taoserver, strategies {
 }
 
 project(*Client): taoclient, strategies {
+  after += *Server
   Source_Files {
     testC.cpp
     client.cpp
