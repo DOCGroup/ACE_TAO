@@ -197,7 +197,6 @@ CIAO::NodeManager_Impl_Base::destroyManager
   CIAO_TRACE("CIAO::NodeManager_Impl::destroyManager");
   ACE_TRY
     {
-      printf("Entering NM_Impl::destroyManager\n");
       // Deactivate this object
       PortableServer::ObjectId_var id =
         this->poa_->reference_to_id (manager
@@ -214,14 +213,13 @@ CIAO::NodeManager_Impl_Base::destroyManager
       this->poa_->deactivate_object (id.in ()
                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      printf("Exiting NM_Impl::destroyManager\n");
     }
   ACE_CATCH (PortableServer::POA::WrongAdapter, ex)
     {
-      ACE_ERROR ((LM_ERROR, 
+      ACE_ERROR ((LM_ERROR,
                   "NodeManager_Impl::destroyManager: EXCEPTION -  "
                   "Invalid reference passed to destroyManager\n"));
-      
+
       ACE_THROW (::Deployment::InvalidReference ());
     }
   ACE_CATCH (PortableServer::POA::ObjectNotActive, ex)
@@ -254,7 +252,7 @@ CIAO::NodeManager_Impl_Base::validate_plan (const Deployment::DeploymentPlan &pl
           // the "resourceValue" field represents the policy_set_id, so we
           // are checking to make sure that all component instances have
           // the same server_resource_id.
-          resource_id = 
+          resource_id =
             plan.instance[i].deployedResource[0].resourceName.in ();
           break;
         }
@@ -264,14 +262,14 @@ CIAO::NodeManager_Impl_Base::validate_plan (const Deployment::DeploymentPlan &pl
 
   for (i = 0; i < plan.instance.length (); ++i)
     {
-      const char * my_resource_id;
+      const char * my_resource_id = 0;
       if (plan.instance[i].deployedResource.length () == 0)
         {
           continue;
         }
       else
         {
-          my_resource_id = 
+          my_resource_id =
             plan.instance[i].deployedResource[0].resourceName.in ();;
           if (ACE_OS::strcmp (resource_id, my_resource_id) != 0)
             {
@@ -300,12 +298,12 @@ NodeManager_Impl (const char *name,
 
 ::CIAO::NodeApplicationManager_Impl_Base *
 ::CIAO::NodeManager_Impl::
-create_node_app_manager (CORBA::ORB_ptr orb, 
+create_node_app_manager (CORBA::ORB_ptr orb,
                          PortableServer::POA_ptr poa
                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CIAO::NodeApplicationManager_Impl_Base *app_mgr;
+  CIAO::NodeApplicationManager_Impl_Base *app_mgr = 0;
   ACE_NEW_THROW_EX (app_mgr,
                     CIAO::NodeApplicationManager_Impl (orb,
                                                        poa),
@@ -331,13 +329,13 @@ Static_NodeManager_Impl (const char *name,
 
 ::CIAO::NodeApplicationManager_Impl_Base *
 ::CIAO::Static_NodeManager_Impl::
-create_node_app_manager (CORBA::ORB_ptr orb, 
+create_node_app_manager (CORBA::ORB_ptr orb,
                          PortableServer::POA_ptr poa
                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "creating static_node_app_manager\n"));
-  CIAO::NodeApplicationManager_Impl_Base *app_mgr;
+  CIAO::NodeApplicationManager_Impl_Base *app_mgr = 0;
   ACE_NEW_THROW_EX (app_mgr,
     CIAO::Static_NodeApplicationManager_Impl (orb,
       poa,
@@ -360,7 +358,7 @@ CIAO::Static_NodeManager_Impl::destroyManager
       CIAO::NodeManager_Impl_Base::destroyManager (manager ACE_ENV_ARG_PARAMETER);
 
       this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-      
+
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
