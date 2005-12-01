@@ -204,7 +204,7 @@ href="../ACE-INSTALL.html#vxworks">$ACE_ROOT/ACE-INSTALL.html</a>.<p>
     <H4>Modifying the default location for the IDL compiler</H4>
 
     <P>By default TAO assumes that the IDL compiler is located in:
-      <CODE>$TAO_ROOT/TAO_IDL/tao_idl</CODE> and that the GPERF tool
+      <CODE>$TAO_ROOT/bin/tao_idl</CODE> and that the GPERF tool
       is located in <CODE>$ACE_ROOT/bin/gperf</CODE>, this is fine for
       hosted builds, but not for cross-compilation.
       Unfortunately there is no good default for cross-compilation
@@ -212,23 +212,14 @@ href="../ACE-INSTALL.html#vxworks">$ACE_ROOT/ACE-INSTALL.html</a>.<p>
       their tools.
     </P>
     <P>You can override the default values by adding several new lines in your
-      platform_macros.GNU file, as follows:
-<!-- Johnny/Martin, can you please check if the following ~10 lines are -->
-<!-- correct? -->
+      platform_macros.GNU file assuming $(HOST_ROOT) is set to the location
+      of your host build where you have build gperf and tao_idl, as follows:
 <PRE>
-$ echo 'TAO_IDL := /your/path/tao_idl' \
-$ echo 'TAO_IDLFLAGS += -g /your/path/gperf' \
-$ echo 'TAO_IDL_DEP := /your/path/tao_idl$(EXEEXT)' \
+$ echo 'TAO_IDL := $(HOST_ROOT)/bin/tao_idl' \
+$ echo 'TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/gperf' \
+$ echo 'TAO_IDL_DEP := $(HOST_ROOT)/bin/tao_idl$(EXEEXT)' \
      >> platform_macros.GNU
 </PRE>
-    <P>You could even use:
-<PRE>
-$ echo 'TAO_IDL := tao_idl' \
-$ echo 'TAO_IDLFLAGS += -g gperf' \
-$ echo 'TAO_IDL_DEP := tao_idl$(EXEEXT)' \
-     >> platform_macros.GNU
-</PRE>
-    if the tools are in your path.
 
     <P>Obviously you must first build the tools for the host platform,
       typically you would do this as follows:
@@ -294,9 +285,9 @@ $ echo 'include $(ACE_ROOT)/include/makeinclude/platform_TARGET.GNU' \
   <li><code>cd ACE_wrappers</code>
   <li><code>bin/create_ace_build SunOS5_g++</code>
   <li><code>bin/create_ace_build vxworks</code>
-  <li><code>cd build/vxworks/TAO</code>
-  <li><code>/bin/rm -r TAO_IDL</code>
-  <li><code>ln -s ../../SunOS5_g++/TAO/TAO_IDL</code>
+  <li><code>cd build/vxworks/bin</code>
+  <li><code>/bin/rm -r tao_idl</code>
+  <li><code>ln -s ../../SunOS5_g++/bin/tao_idl</code>
 </ol>
 
       <P>To build on the host:
