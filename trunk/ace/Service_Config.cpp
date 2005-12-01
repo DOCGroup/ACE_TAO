@@ -739,12 +739,14 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
       // There's no point in dealing with this on NT since it doesn't
       // really support signals very well...
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
-      // @@ This really ought to be a Singleton.
-      if (ACE_Reactor::instance ()->register_handler
-          (ACE_Service_Config::signum_,
-           ACE_Service_Config::signal_handler_) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_LIB_TEXT ("can't register signal handler\n")));
+      // Only attempt to register a signal handler for positive
+      // signal numbers.
+      if (ACE_Service_Config::signum_ > 0)
+        if (ACE_Reactor::instance ()->register_handler
+            (ACE_Service_Config::signum_,
+             ACE_Service_Config::signal_handler_) == -1)
+          ACE_ERROR ((LM_ERROR,
+                      ACE_LIB_TEXT ("can't register signal handler\n")));
 #endif /* ACE_LACKS_UNIX_SIGNALS */
 
       // See if we need to load the static services.
