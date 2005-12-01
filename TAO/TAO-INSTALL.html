@@ -211,18 +211,22 @@ href="../ACE-INSTALL.html#vxworks">$ACE_ROOT/ACE-INSTALL.html</a>.<p>
       builds because different sites choose a different location for
       their tools.
     </P>
-    <P>You can override the default values by adding two lines in your
+    <P>You can override the default values by adding several new lines in your
       platform_macros.GNU file, as follows:
+<!-- Johnny/Martin, can you please check if the following ~10 lines are -->
+<!-- correct? -->
 <PRE>
 $ echo 'TAO_IDL := /your/path/tao_idl' \
+$ echo 'TAO_IDLFLAGS += -g /your/path/gperf' \
+$ echo 'TAO_IDL_DEP := /your/path/tao_idl$(EXEEXT)' \
      >> platform_macros.GNU
-$ echo 'TAO_IDLFLAGS := -g /your/path/gperf' \
 </PRE>
     <P>You could even use:
 <PRE>
 $ echo 'TAO_IDL := tao_idl' \
+$ echo 'TAO_IDLFLAGS += -g gperf' \
+$ echo 'TAO_IDL_DEP := tao_idl$(EXEEXT)' \
      >> platform_macros.GNU
-$ echo 'TAO_IDLFLAGS := -g gperf' \
 </PRE>
     if the tools are in your path.
 
