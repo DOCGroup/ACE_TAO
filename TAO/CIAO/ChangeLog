@@ -1,3 +1,11 @@
+Thu Dec  1 10:16:46 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* tools/Config_Handlers/Basic_Deployment_Data.hpp
+	* tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp
+	* tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
+
+	Fixed some errors caused by previous commit. 
+	
 Thu Dec  1 12:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/DomainApplicationManager/Deployment_Configuration.cpp:
