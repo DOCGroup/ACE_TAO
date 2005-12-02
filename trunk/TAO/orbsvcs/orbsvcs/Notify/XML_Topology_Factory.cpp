@@ -13,6 +13,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
+  const char TOPOLOGY_ID_NAME[] = "TopologyID";
 
   XML_Topology_Factory::XML_Topology_Factory()
     : save_base_path_ ("./Notification_Service_Topology")
