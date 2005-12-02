@@ -1,3 +1,8 @@
+Fri Dec  2 11:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/SSLIOP/params_dup.h:
+          Added missing include of ace/pre.h
+
 Fri Dec  2 11:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1627_Regression/test.mpc:
