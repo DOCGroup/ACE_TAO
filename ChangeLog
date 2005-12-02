@@ -1,3 +1,8 @@
+Fri Dec  2 13:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Task.inl:
+          Replaced c-style casts with C++ const_cast
+
 Fri Dec  2 11:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/sys/os_stat.h:
