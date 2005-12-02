@@ -1,3 +1,42 @@
+Fri Dec  2 01:25:52 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Versioned_Namespace.h:
+
+	  Update preprocessor check to use new config-macros.h specific
+	  include guard preprocessor symbol.
+
+	* ace/config-macros.h:
+	* ace/config-lite.h:
+
+	  Moved all macros, preprocessor symbols and some non-C++-specific
+	  typedefs to the new `config-macros.h' header.  Allows
+	  configuration macros/values to be used in C sources.
+
+	* ace/config-all.h:
+
+	  Removed redundant "ace/ace_wchar.h" include directive.  It's
+	  already included by `config-lite.h'.
+
+	* ace/config-aix-4.x.h:
+	* ace/config-chorus.h:
+	* ace/config-cygwin32.h:
+	* ace/config-linux-common.h:
+	* ace/config-osf1-4.0.h:
+	* ace/config-rtems.h:
+	* ace/config-sunos5.5.h:
+	* ace/config-vxworks5.x.h:
+	* ace/config-vxworks6.1.h:
+
+	  Relaxed unsupported compiler preprocessor error for non-C++
+	  compilers. Simplifies use of configuration macros/values in
+	  presence of C compiler.
+
+	* ace/Makefile.am:
+	* ace/ace.mpc:
+
+	  Added new config-macros.h header to the appropriate header
+	  lists.
+
 Fri Dec  2 00:43:12 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Module.h:

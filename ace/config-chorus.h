@@ -38,7 +38,9 @@
 # define ACE_LACKS_ACE_IOSTREAM  /* MVME lacks signed and unsigned char */
 # define ACE_LACKS_FLOATING_POINT
 #else  /* ! __GNUG__ && ! ghs */
-# error unsupported compiler for ACE on Chorus
+#  ifdef __cplusplus  /* Let it slide for C compilers. */
+#   error unsupported compiler for ACE on Chorus
+#  endif  /* __cplusplus */
 #endif /* ! __GNUG__ && ! ghs */
 
 // OS-specific configuration

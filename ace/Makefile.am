@@ -1067,6 +1067,7 @@ nobase_include_HEADERS = \
   config-all.h \
   config-borland-common.h \
   config-lite.h \
+  config-macros.h \
   config-minimal.h \
   config-win32-borland.h \
   config-win32-common.h \

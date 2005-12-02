@@ -69,7 +69,9 @@
 # define ACE_HAS_STRING_CLASS
 # include "ace/config-kcc-common.h"
 #else
-# error unsupported compiler on Digital Unix
+#  ifdef __cplusplus  /* Let it slide for C compilers. */
+#   error unsupported compiler on Digital Unix
+#  endif  /* __cplusplus */
 #endif /* ! __GNUG__ && ! __DECCXX && ! __rational__ && !_KCC */
 
 #if (DIGITAL_UNIX >= 0x400) && (DIGITAL_UNIX < 0x500)
