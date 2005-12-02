@@ -70,7 +70,7 @@ namespace TAO
     }
 
     /// copy constructor.
-    inline String_var (const String_var<charT> &s) : ptr_(s_traits::duplicate(s.ptr_))
+    inline String_var (String_var<charT> const &s) : ptr_(s_traits::duplicate(s.ptr_))
     {
     }
 
