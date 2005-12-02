@@ -60,12 +60,12 @@ namespace TAO
     }
 
     /// Constructor, owns p.
-    inline explicit String_var (character_type *p) : ptr_ (p)
+    inline String_var (character_type *p) : ptr_ (p)
     {
     }
 
     /// constructor. Makes a copy of p.
-    inline explicit String_var (const character_type *p) : ptr_ (s_traits::duplicate (p))
+    inline String_var (const character_type *p) : ptr_ (s_traits::duplicate (p))
     {
     }
 
