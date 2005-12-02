@@ -1,3 +1,8 @@
+Fri Dec  2 11:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/constants.idl:
+          Added several wstring constants for test
+
 Fri Dec  2 01:35:31 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Makefile.am:
