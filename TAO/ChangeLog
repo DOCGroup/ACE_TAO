@@ -41,7 +41,7 @@ Thu Dec  1 20:17:29 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	  Removed TOPOLOGY_ID from here.  It should have been nmoved when
 	  the persistence stuff was broken into a separate library.
-	
+
         * orbsvcs/orbsvcs/Notify/XML_Loader.cpp:
         * orbsvcs/orbsvcs/Notify/XML_Saver.cpp:
         * orbsvcs/orbsvcs/Notify/XML_Topology_Factory.cpp:
