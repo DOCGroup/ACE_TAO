@@ -234,7 +234,7 @@ public:
   const char * supported_interface (void) const;
 
   /// Function to return the base_interfaces_
-  CORBA::RepositoryId base_interfaces (CORBA::ULong index) const;
+  CORBA::RepositoryId const base_interfaces (CORBA::ULong index) const;
 
   /// Function to return the number of base_interfaces_
   CORBA::ULong number_of_base_interfaces (void) const;
