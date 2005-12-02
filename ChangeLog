@@ -23,7 +23,7 @@ Fri Dec  2 00:43:12 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 Thu Dec  1 08:07:23 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Service_Config.cpp (open_i): 
+	* ace/Service_Config.cpp (open_i):
 	* ace/Service_Config.h (ACE_Service_Config): Don't try to
 	  register a signal handler if the signal number is < 0!  Thanks
  	  to Brian Raven <brianr at liffe dot com> for this fix.
