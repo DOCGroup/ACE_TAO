@@ -1,3 +1,20 @@
+Fri Dec  2 11:25:48 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/RepositoryManager/RepositoryManager.idl
+	* DAnCE/RepositoryManager/RepositoryManager.mpc
+	* DAnCE/RepositoryManager/RepositoryManager_Impl.cpp
+	* DAnCE/RepositoryManager/RepositoryManager_Impl.h
+	* DAnCE/RepositoryManager/Repository_Manager.cpp
+	* DAnCE/RepositoryManager/Repository_Manager_conf.h
+	* DAnCE/RepositoryManager/Update_Plan.cpp
+	* DAnCE/RepositoryManager/Update_Plan.h
+
+	Removed the deprecated RepositoryManager implementation. 
+	
+	* NEWS
+	
+	Updated the NEWS file to reflect this. 
+
 Thu Dec  1 10:16:46 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* tools/Config_Handlers/Basic_Deployment_Data.hpp
