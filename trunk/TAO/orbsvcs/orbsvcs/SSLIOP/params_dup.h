@@ -3,9 +3,10 @@
 #ifndef TAO_SSLIOP_PARAMS_DUP_H
 #define TAO_SSLIOP_PARAMS_DUP_H
 
+#include /**/ "ace/pre.h"
+
 #include "ace/config-macros.h"
 #include "tao/Versioned_Namespace.h"
-
 
 // As of 0.9.7e, OpenSSL's DSAparams_dup() and DHparams_dup() macros
 // contain casts that are invalid in C++.  These C wrapper functions
