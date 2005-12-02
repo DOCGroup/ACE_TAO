@@ -10,7 +10,9 @@
 #include "ace/FILE_IO.h"
 #include "ace/SOCK_Acceptor.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_SOCK_Stream;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 class Logging_Server
 {
