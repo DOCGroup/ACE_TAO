@@ -1,3 +1,14 @@
+Fri Dec  2 16:18:15 2005  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp (DTOR): 
+	  Add try/catch block around call to ec->destroy() because it
+	  seems that often in this test the EC is gone by the time
+	  destroy() gets called.  This raises a COMM_FAILURE which now
+	  gets caught and noticed printed.  We also now catch and print
+	  any exception raised in the DTOR since there's little chance of
+	  doing anything about it, and at least this way we get
+	  information.
+
 Fri Dec  2 10:26:33 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* orbsvcs/orbsvcs/Notify/XML_Topology_Factory.h: Added 'extern'
