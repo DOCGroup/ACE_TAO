@@ -1,13 +1,32 @@
+Fri Dec  2 00:43:12 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Module.h:
+	* apps/JAWS/server/HTTP_Request.h:
+	* apps/JAWS/server/IO.h:
+	* apps/JAWS2/JAWS/Cache_Object.h:
+	* apps/JAWS2/JAWS/IO.h:
+	* apps/JAWS2/JAWS/IO_Acceptor.h:
+	* apps/JAWS2/JAWS/IO_Handler.h:
+	* apps/soreduce/Obj_Module.h:
+	* examples/APG/Containers/Hash_Map_Hash.h:
+	* examples/APG/Containers/RB_Tree_Functors.h:
+	* examples/APG/ThreadPools/Request_Handler.h:
+	* examples/ASX/Event_Server/Event_Server/Options.h:
+	* examples/ASX/Event_Server/Event_Server/event_server.cpp:
+	* examples/C++NPv1/Iterative_Logging_Server.h:
+	* examples/C++NPv1/Logging_Handler.h:
+	* examples/C++NPv1/Logging_Server.h:
+	* examples/C++NPv2/Logging_Handler.h:
+	* examples/Shared_Malloc/Malloc.h:
+
+	  More versioned namespace build fixes.
+
 Thu Dec  1 08:07:23 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/Service_Config.cpp (open_i): 
 	* ace/Service_Config.h (ACE_Service_Config): Don't try to
 	  register a signal handler if the signal number is < 0!  Thanks
  	  to Brian Raven <brianr at liffe dot com> for this fix.
-
-	* TAO/TAO-INSTALL.html: Updated this file for VxWorks.
-	  Thanks to Nathan Anderson <nathan dot l dot anderson at lmco dot
- 	  com> for these suggestions.
 
 Wed Nov 30 13:37:59 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
