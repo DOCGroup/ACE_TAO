@@ -75,8 +75,6 @@ template <ACE_SYNCH_DECL>
 class ACE_Module : public ACE_Module_Base
 {
 public:
-  friend class ACE_Shutup_GPlusPlus;  // Turn off g++ warning
-
   // = Initialization and termination methods.
   /// Create an empty Module.
   ACE_Module (void);

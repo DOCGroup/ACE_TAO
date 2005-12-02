@@ -40,7 +40,9 @@ class JAWS_Data_Block;
 class JAWS_Pipeline_Handler;
 class JAWS_Waiter;
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Message_Block;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 class JAWS_Export JAWS_Abstract_IO_Handler
   // = TITLE
