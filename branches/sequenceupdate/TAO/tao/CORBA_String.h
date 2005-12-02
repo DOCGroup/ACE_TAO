@@ -97,7 +97,7 @@ namespace TAO
     }
 
     /// assignment operator.
-    inline String_var &operator= (const String_var<character_type> &s)
+    inline String_var &operator= (String_var<character_type> const &s)
     {
       // Do const cast to make sure we get the const constructor
       String_var <charT> tmp (const_cast <const charT*>(s.ptr_));
