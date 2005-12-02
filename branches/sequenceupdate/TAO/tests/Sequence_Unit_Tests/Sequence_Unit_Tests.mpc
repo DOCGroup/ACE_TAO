@@ -31,6 +31,13 @@ project(*Bounded_String) : taoexe {
   }
 }
 
+project(*String): taoexe, boost_unit_test_framework {
+  exename = string_ut
+  Source_Files {
+    string_ut.cpp
+  }
+}
+
 project(*Unbounded_Array_Sequence): taoexe, boost_unit_test_framework {
   exename = unbounded_array_sequence_ut
   Source_Files {
