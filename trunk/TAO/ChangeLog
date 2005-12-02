@@ -1,3 +1,14 @@
+Fri Dec  2 11:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1627_Regression/test.mpc:
+        * tests/Bug_1551_Regression/test.mpc:
+        * tests/Bug_1482_Regression/test.mpc:
+        * tests/Bug_1627_Regression/Bug_1627_Regression.mpc:
+        * tests/Bug_1551_Regression/Bug_1551_Regression.mpc:
+        * tests/Bug_1482_Regression/Bug_1482_Regression.mpc:
+          Renamed test.mpc to a more specific name to fix duplicate errors
+          in the MPC generation
+
 Fri Dec  2 11:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/IDL_Test/constants.idl:
