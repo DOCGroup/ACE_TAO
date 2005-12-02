@@ -60,12 +60,12 @@ namespace TAO
     }
 
     /// Constructor, owns p.
-    inline String_var (character_type *p) : ptr_ (p)
+    inline explicit String_var (character_type *p) : ptr_ (p)
     {
     }
 
     /// constructor. Makes a copy of p.
-    inline String_var (const character_type *p) : ptr_ (s_traits::duplicate (p))
+    inline explicit String_var (const character_type *p) : ptr_ (s_traits::duplicate (p))
     {
     }
 
@@ -99,7 +99,8 @@ namespace TAO
     /// assignment operator.
     inline String_var &operator= (const String_var<character_type> &s)
     {
-      String_var <charT> tmp (s.ptr_);
+      // Do const cast to make sure we get the const constructor
+      String_var <charT> tmp (const_cast <const charT*>(s.ptr_));
       std::swap (this->ptr_, tmp.ptr_);
       return *this;
     }

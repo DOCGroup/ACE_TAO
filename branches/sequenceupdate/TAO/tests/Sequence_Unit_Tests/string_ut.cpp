@@ -79,14 +79,14 @@ struct Tester
   typedef string_traits<charT,true> tested_string_traits;
   typedef charT * string_type;
   typedef charT const * const_string_type;
-  typedef typename tested_element_traits::string_var string_var;
-  typedef typename tested_element_traits::string_mgr string_mgr;
-  typedef typename tested_element_traits::string_out string_out;
+  typedef typename tested_string_traits::string_var string_var;
+  typedef typename tested_string_traits::string_mgr string_mgr;
+  typedef typename tested_string_traits::string_out string_out;
 
   void test_copy_constructor()
   {
-    expected_calls d(tested_element_traits::duplicate_calls);
-    expected_calls r(tested_element_traits::release_calls);
+    expected_calls d(tested_string_traits::duplicate_calls);
+    expected_calls r(tested_string_traits::release_calls);
 
     {
       string_var xe = helper<charT>::dup_sample0();
