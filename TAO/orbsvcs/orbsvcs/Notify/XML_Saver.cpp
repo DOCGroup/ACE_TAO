@@ -12,6 +12,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
+  extern const char TOPOLOGY_ID_NAME[];
+
   XML_Saver::XML_Saver(bool timestamp)
     : output_ (0)
     , close_out_ (false)

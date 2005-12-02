@@ -1,19 +1,33 @@
+Thu Dec  1 20:17:29 2005  Chris Cleeland  <cleeland_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Topology_Object.h:
+        * orbsvcs/orbsvcs/Notify/Topology_Object.cpp:
+
+	  Removed TOPOLOGY_ID from here.  It should have been nmoved when
+	  the persistence stuff was broken into a separate library.
+	
+        * orbsvcs/orbsvcs/Notify/XML_Loader.cpp:
+        * orbsvcs/orbsvcs/Notify/XML_Saver.cpp:
+        * orbsvcs/orbsvcs/Notify/XML_Topology_Factory.cpp:
+
+	  Moved TOPOLOGY_ID into here since that's all that uses it.
+
 Thu Dec  1 12:08:17 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Object.h: Revert previous change as it
-	  apparently confused Borland BC6.
+          apparently confused Borland BC6.
 
-	* orbsvcs/orbsvcs/Notify/Topology_Object.*:
-	* orbsvcs/orbsvcs/Notify/Reconnection_Registry.*:
+        * orbsvcs/orbsvcs/Notify/Topology_Object.*:
+        * orbsvcs/orbsvcs/Notify/Reconnection_Registry.*:
 
-	  Changed manifest constants for TOPOLOGY_ID_NAME, REGISTRY_TYPE,
-	  RECONNECT_ID, RECONNECT_IOR, and REGISTRY_CALLBACK_TYPE from
-	  statics within the namespace to being declared in the namespace
-	  in the header, but defined in the .cpp file.  This de-warns on
-	  OS X Tiger G++ 3.3 builds, but may also have a minor reduction
-	  in footprint everywhere since now there will be only one
-	  instance of these rather than an instance everywhere the
-	  relevant header gets #included.
+          Changed manifest constants for TOPOLOGY_ID_NAME, REGISTRY_TYPE,
+          RECONNECT_ID, RECONNECT_IOR, and REGISTRY_CALLBACK_TYPE from
+          statics within the namespace to being declared in the namespace
+          in the header, but defined in the .cpp file.  This de-warns on
+          OS X Tiger G++ 3.3 builds, but may also have a minor reduction
+          in footprint everywhere since now there will be only one
+          instance of these rather than an instance everywhere the
+          relevant header gets #included.
 
 Thu Dec  1 18:10:48 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -133,7 +147,7 @@ Thu Dec  1 18:10:48 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tests/Two_Objects/Two_Objects.mpc:
         * tests/UNKNOWN_Exception/UNKNOWN_Exception.mpc:
         * tests/Xt_Stopwatch/Xt_Stopwatch.mpc:
-        
+
           Added 'after += ...' lines to files where projects share one or
           more IDL files. This change will order the builds and eliminate
           concurrency problems in VC8 builds. This is a temporary solution
@@ -162,46 +176,46 @@ Thu Dec  1 14:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Nov 30 10:23:05 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/performance-tests/RTEvent/lib/Client_Options.h:
-	* orbsvcs/performance-tests/RTEvent/lib/Low_Priority_Setup.h:
-	* orbsvcs/performance-tests/RTEvent/lib/RTEC_Initializer.h:
-	* orbsvcs/performance-tests/RTEvent/lib/Send_Task.h:
-	* orbsvcs/tests/EC_Throughput/ECT_Driver.h:
-	* orbsvcs/tests/Event/Basic/BCast.h:
-	* orbsvcs/tests/Event/Mcast/Common/EC_Wrapper.h:
-	* orbsvcs/tests/Event/Performance/Latency.h:
-	* orbsvcs/tests/Event/lib/Driver.h:
-	* orbsvcs/tests/FT_App/FT_Creator.h:
-	* orbsvcs/tests/FT_App/TAO_Object_Group_Creator.h:
-	* orbsvcs/tests/FtRtEvent/PushSupplier.h:
+        * orbsvcs/performance-tests/RTEvent/lib/Client_Options.h:
+        * orbsvcs/performance-tests/RTEvent/lib/Low_Priority_Setup.h:
+        * orbsvcs/performance-tests/RTEvent/lib/RTEC_Initializer.h:
+        * orbsvcs/performance-tests/RTEvent/lib/Send_Task.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Driver.h:
+        * orbsvcs/tests/Event/Basic/BCast.h:
+        * orbsvcs/tests/Event/Mcast/Common/EC_Wrapper.h:
+        * orbsvcs/tests/Event/Performance/Latency.h:
+        * orbsvcs/tests/Event/lib/Driver.h:
+        * orbsvcs/tests/FT_App/FT_Creator.h:
+        * orbsvcs/tests/FT_App/TAO_Object_Group_Creator.h:
+        * orbsvcs/tests/FtRtEvent/PushSupplier.h:
 
-	  Fixed forward declarations so that they take into account
-	  versioned namespace support.
+          Fixed forward declarations so that they take into account
+          versioned namespace support.
 
 Wed Nov 30 00:33:21 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* examples/Content_Server/AMI_Iterator/AMI_Iterator.mpc:
-	* examples/Content_Server/AMI_Observer/AMI_Observer.mpc:
-	* examples/Content_Server/SMI_Iterator/SMI_Iterator.mpc:
-	* examples/Load_Balancing_persistent/Load_Balancing_persistent.mpc:
-	* examples/POA/Generic_Servant/POA_Generic_Servant.mpc:
-	* examples/POA/TIE/POA_TIE.mpc:
-	* examples/Persistent_Grid/Persistent_Grid.mpc:
-	* orbsvcs/examples/LoadBalancing/LoadBalancing.mpc:
-	* orbsvcs/orbsvcs/AV.mpc:
-	* orbsvcs/tests/EC_Custom_Marshal/EC_Custom_Marshal.mpc:
-	* orbsvcs/tests/EC_Throughput/EC_Throughput.mpc:
-	* orbsvcs/tests/ImplRepo/ImplRepo.mpc:
-	* orbsvcs/tests/InterfaceRepo/Latency_Test/Latency_Test.mpc:
+        * examples/Content_Server/AMI_Iterator/AMI_Iterator.mpc:
+        * examples/Content_Server/AMI_Observer/AMI_Observer.mpc:
+        * examples/Content_Server/SMI_Iterator/SMI_Iterator.mpc:
+        * examples/Load_Balancing_persistent/Load_Balancing_persistent.mpc:
+        * examples/POA/Generic_Servant/POA_Generic_Servant.mpc:
+        * examples/POA/TIE/POA_TIE.mpc:
+        * examples/Persistent_Grid/Persistent_Grid.mpc:
+        * orbsvcs/examples/LoadBalancing/LoadBalancing.mpc:
+        * orbsvcs/orbsvcs/AV.mpc:
+        * orbsvcs/tests/EC_Custom_Marshal/EC_Custom_Marshal.mpc:
+        * orbsvcs/tests/EC_Throughput/EC_Throughput.mpc:
+        * orbsvcs/tests/ImplRepo/ImplRepo.mpc:
+        * orbsvcs/tests/InterfaceRepo/Latency_Test/Latency_Test.mpc:
 
-	  Disable these projects when "ace_for_tao" is enabled.
+          Disable these projects when "ace_for_tao" is enabled.
 
-	* tao/GIOP_Message_Generator_Parser_Impl.inl:
+        * tao/GIOP_Message_Generator_Parser_Impl.inl:
 
-	  Removed "static" keywork from constant variable declaration.
-	  Corrected semantics are not supported in shared libraries on
-	  VxWorks.  Thanks to Frank Rehberger for suggesting the change,
-	  and to Johnny for pointing out the VxWorks issue.  [Bug 2304]
+          Removed "static" keywork from constant variable declaration.
+          Corrected semantics are not supported in shared libraries on
+          VxWorks.  Thanks to Frank Rehberger for suggesting the change,
+          and to Johnny for pointing out the VxWorks issue.  [Bug 2304]
 
 Wed Nov 30 14:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -245,35 +259,35 @@ Wed Nov 30 08:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Nov 29 06:44:35 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/FTRT_Event_Service/Event_Service/FT_EventService.h:
-	* orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.cpp:
-	* orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.h:
-	* orbsvcs/FT_ReplicationManager/FT_FaultAnalyzer.cpp:
-	* orbsvcs/FT_ReplicationManager/FT_FaultAnalyzer.h:
-	* orbsvcs/FT_ReplicationManager/FT_FaultConsumer.cpp:
-	* orbsvcs/FT_ReplicationManager/FT_FaultConsumer.h:
-	* orbsvcs/FT_ReplicationManager/FT_FaultEventDescriptor.cpp:
-	* orbsvcs/FT_ReplicationManager/FT_FaultEventDescriptor.h:
-	* orbsvcs/FT_ReplicationManager/FT_Property_Validator.cpp:
-	* orbsvcs/FT_ReplicationManager/FT_Property_Validator.h:
-	* orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
-	* orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
-	* orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.cpp:
-	* orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.h:
-	* orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
-	* orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
-	* orbsvcs/Fault_Detector/Fault_Detector_i.cpp:
-	* orbsvcs/Fault_Detector/Fault_Detector_i.h:
-	* orbsvcs/Fault_Notifier/FT_Notifier_i.cpp:
-	* orbsvcs/Fault_Notifier/FT_Notifier_i.h:
-	* orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
-	* orbsvcs/Notify_Service/Notify_Service.h:
-	* orbsvcs/orbsvcs/ETCL/ETCL_Interpreter.h:
-	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
-	* orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_Extensions.h:
+        * orbsvcs/FTRT_Event_Service/Event_Service/FT_EventService.h:
+        * orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.h:
+        * orbsvcs/FT_ReplicationManager/FT_FaultAnalyzer.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_FaultAnalyzer.h:
+        * orbsvcs/FT_ReplicationManager/FT_FaultConsumer.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_FaultConsumer.h:
+        * orbsvcs/FT_ReplicationManager/FT_FaultEventDescriptor.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_FaultEventDescriptor.h:
+        * orbsvcs/FT_ReplicationManager/FT_Property_Validator.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_Property_Validator.h:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.h:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
+        * orbsvcs/Fault_Detector/Fault_Detector_i.cpp:
+        * orbsvcs/Fault_Detector/Fault_Detector_i.h:
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.cpp:
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/Notify_Service/Notify_Service.h:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Interpreter.h:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
+        * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Extensions.h:
 
-	  More versioned namespace build fixes.
+          More versioned namespace build fixes.
 
 Tue Nov 29 13:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -317,176 +331,176 @@ Mon Nov 28 12:09:12 USMST 2005  Yan Dai  <dai_y@ociweb.com>
 
 Mon Nov 28 07:30:58 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/params_dup.h:
+        * orbsvcs/orbsvcs/SSLIOP/params_dup.h:
 
-	  Added missing "/**/ between "include" and "{pre,post}.h".
+          Added missing "/**/ between "include" and "{pre,post}.h".
 
-	* tao/Utils/Server_Main.h:
+        * tao/Utils/Server_Main.h:
 
-	  Fixed "obsolete #pragma once" warning.
+          Fixed "obsolete #pragma once" warning.
 
 Sun Nov 27 04:00:27 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Makefile.am:
-	* orbsvcs/orbsvcs/Scheduler_Factory.cpp:
-	* orbsvcs/orbsvcs/Scheduler_Factory.h:
-	* orbsvcs/orbsvcs/Scheduler_Factory.i:
-	* orbsvcs/orbsvcs/AV/AV_Core.h:
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.h:
-	* orbsvcs/orbsvcs/AV/Policy.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_Factory.h:
-	* orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.h:
-	* orbsvcs/orbsvcs/ETCL/ETCL_l.cpp:
-	* orbsvcs/orbsvcs/Event/ECG_Adapters.h:
-	* orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.h:
-	* orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.h:
-	* orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.h:
-	* orbsvcs/orbsvcs/Event/ECG_UDP_Sender.h:
-	* orbsvcs/orbsvcs/Event/EC_ConsumerControl.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ConsumerControl.h:
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_Factory.h:
-	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.h:
-	* orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.h:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.h:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Identification_Service.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Identification_Service.h:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Replication_Service.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Replication_Service.h:
-	* orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.h:
-	* orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.h:
-	* orbsvcs/orbsvcs/HTIOP/HTIOP_Connector_Impl.h:
-	* orbsvcs/orbsvcs/HTIOP/HTIOP_Factory.h:
-	* orbsvcs/orbsvcs/IFRService/IFR_BaseS.cpp:
-	* orbsvcs/orbsvcs/IFRService/IFR_BaseS.h:
-	* orbsvcs/orbsvcs/IFRService/IFR_BaseS.inl:
-	* orbsvcs/orbsvcs/IFRService/IFR_BaseS_T.h:
-	* orbsvcs/orbsvcs/IFRService/IFR_BaseS_T.inl:
-	* orbsvcs/orbsvcs/IFRService/IFR_BasicS.cpp:
-	* orbsvcs/orbsvcs/IFRService/IFR_BasicS.h:
-	* orbsvcs/orbsvcs/IFRService/IFR_BasicS.inl:
-	* orbsvcs/orbsvcs/IFRService/IFR_BasicS_T.h:
-	* orbsvcs/orbsvcs/IFRService/IFR_BasicS_T.inl:
-	* orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.cpp:
-	* orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.h:
-	* orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.inl:
-	* orbsvcs/orbsvcs/IFRService/IFR_ComponentsS_T.h:
-	* orbsvcs/orbsvcs/IFRService/IFR_ComponentsS_T.inl:
-	* orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.cpp:
-	* orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.h:
-	* orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.inl:
-	* orbsvcs/orbsvcs/IFRService/IFR_ExtendedS_T.h:
-	* orbsvcs/orbsvcs/IFRService/IFR_ExtendedS_T.inl:
-	* orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h:
-	* orbsvcs/orbsvcs/IFRService/ProvidesDef_i.h:
-	* orbsvcs/orbsvcs/IFRService/PublishesDef_i.h:
-	* orbsvcs/orbsvcs/Log/BasicLog_i.cpp:
-	* orbsvcs/orbsvcs/Log/BasicLog_i.h:
-	* orbsvcs/orbsvcs/Log/Hash_LogStore.h:
-	* orbsvcs/orbsvcs/Log/Log_Compaction_Handler.h:
-	* orbsvcs/orbsvcs/Log/Log_Flush_Handler.h:
-	* orbsvcs/orbsvcs/Naming/Naming_Service_Container.h:
-	* orbsvcs/orbsvcs/Notify/Factory.h:
-	* orbsvcs/orbsvcs/Notify/Method_Request_Updates.cpp:
-	* orbsvcs/orbsvcs/Notify/Method_Request_Updates.h:
-	* orbsvcs/orbsvcs/Notify/Method_Request_Updates_T.h:
-	* orbsvcs/orbsvcs/Notify/Property.h:
-	* orbsvcs/orbsvcs/Notify/Timer.h:
-	* orbsvcs/orbsvcs/Notify/Timer_Reactor.h:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/params_dup.c:
-	* orbsvcs/orbsvcs/SSLIOP/params_dup.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/params_dup.h:
-	* orbsvcs/orbsvcs/Trader/Constraint_l.cpp:
-	* tao/Basic_Types.h:
-	* tao/TAO_Singleton_Manager.inl:
-	* tao/AnyTypeCode/String_TypeCode_Traits.h:
-	* tao/AnyTypeCode/TAOA.h:
-	* tao/AnyTypeCode/TypeCodeA.cpp:
-	* tao/AnyTypeCode/TypeCode_Case_Base_T.h:
-	* tao/AnyTypeCode/TypeCode_Constants.cpp:
-	* tao/IFR_Client/IFR_BasicC.cpp:
-	* tao/ImR_Client/ImR_Client.cpp:
-	* tao/ImR_Client/ImR_Client.h:
-	* tao/ObjRefTemplate/ORT_Adapter_Factory_Impl.cpp:
-	* tao/ObjRefTemplate/ORT_Adapter_Factory_Impl.h:
-	* tao/PI/InvalidSlotA.cpp:
-	* tao/PI/ORBInitInfoC.cpp:
-	* tao/PI/ORBInitInfoC.h:
-	* tao/PI/PICurrentC.cpp:
-	* tao/PortableServer/IdAssignmentStrategyFactoryImpl.cpp:
-	* tao/PortableServer/IdAssignmentStrategyFactoryImpl.h:
-	* tao/PortableServer/IdAssignmentStrategySystem.cpp:
-	* tao/PortableServer/IdAssignmentStrategySystem.h:
-	* tao/PortableServer/IdAssignmentStrategyUser.cpp:
-	* tao/PortableServer/IdAssignmentStrategyUser.h:
-	* tao/PortableServer/IdUniquenessStrategyFactoryImpl.cpp:
-	* tao/PortableServer/IdUniquenessStrategyFactoryImpl.h:
-	* tao/PortableServer/IdUniquenessStrategyMultiple.cpp:
-	* tao/PortableServer/IdUniquenessStrategyMultiple.h:
-	* tao/PortableServer/IdUniquenessStrategyUnique.cpp:
-	* tao/PortableServer/IdUniquenessStrategyUnique.h:
-	* tao/PortableServer/IdUniquenessStrategyUniqueFactoryImpl.cpp:
-	* tao/PortableServer/IdUniquenessStrategyUniqueFactoryImpl.h:
-	* tao/PortableServer/ImplicitActivationStrategyExplicit.cpp:
-	* tao/PortableServer/ImplicitActivationStrategyExplicit.h:
-	* tao/PortableServer/ImplicitActivationStrategyFactoryImpl.cpp:
-	* tao/PortableServer/ImplicitActivationStrategyFactoryImpl.h:
-	* tao/PortableServer/ImplicitActivationStrategyImplicit.cpp:
-	* tao/PortableServer/ImplicitActivationStrategyImplicit.h:
-	* tao/PortableServer/LifespanStrategyFactoryImpl.cpp:
-	* tao/PortableServer/LifespanStrategyFactoryImpl.h:
-	* tao/PortableServer/LifespanStrategyPersistentFactoryImpl.cpp:
-	* tao/PortableServer/LifespanStrategyPersistentFactoryImpl.h:
-	* tao/PortableServer/LifespanStrategyTransientFactoryImpl.cpp:
-	* tao/PortableServer/LifespanStrategyTransientFactoryImpl.h:
-	* tao/PortableServer/Non_Servant_Upcall.h:
-	* tao/PortableServer/PortableServer.cpp:
-	* tao/PortableServer/PortableServerA.cpp:
-	* tao/PortableServer/RequestProcessingStrategyAOMOnlyFactoryImpl.cpp:
-	* tao/PortableServer/RequestProcessingStrategyAOMOnlyFactoryImpl.h:
-	* tao/PortableServer/RequestProcessingStrategyDefaultServantFI.cpp:
-	* tao/PortableServer/RequestProcessingStrategyDefaultServantFI.h:
-	* tao/PortableServer/RequestProcessingStrategyFactoryImpl.cpp:
-	* tao/PortableServer/RequestProcessingStrategyFactoryImpl.h:
-	* tao/PortableServer/RequestProcessingStrategyServantActivatorFI.cpp:
-	* tao/PortableServer/RequestProcessingStrategyServantActivatorFI.h:
-	* tao/PortableServer/RequestProcessingStrategyServantLocatorFI.cpp:
-	* tao/PortableServer/RequestProcessingStrategyServantLocatorFI.h:
-	* tao/PortableServer/ServantRetentionStrategyFactory.h:
-	* tao/PortableServer/ServantRetentionStrategyFactoryImpl.cpp:
-	* tao/PortableServer/ServantRetentionStrategyFactoryImpl.h:
-	* tao/PortableServer/ServantRetentionStrategyNonRetainFactoryImpl.cpp:
-	* tao/PortableServer/ServantRetentionStrategyNonRetainFactoryImpl.h:
-	* tao/PortableServer/ServantRetentionStrategyRetainFactoryImpl.cpp:
-	* tao/PortableServer/ServantRetentionStrategyRetainFactoryImpl.h:
-	* tao/PortableServer/StrategyFactory.h:
-	* tao/PortableServer/ThreadStrategyFactoryImpl.cpp:
-	* tao/PortableServer/ThreadStrategyFactoryImpl.h:
-	* tao/PortableServer/ThreadStrategyORBControl.cpp:
-	* tao/PortableServer/ThreadStrategyORBControl.h:
-	* tao/PortableServer/ThreadStrategySingle.cpp:
-	* tao/PortableServer/ThreadStrategySingle.h:
-	* tao/PortableServer/ThreadStrategySingleFactoryImpl.cpp:
-	* tao/PortableServer/ThreadStrategySingleFactoryImpl.h:
-	* tao/PortableServer/Var_Size_SArgument_T.cpp:
-	* tao/PortableServer/Var_Size_SArgument_T.h:
-	* tao/PortableServer/Var_Size_SArgument_T.inl:
-	* tao/RTCORBA/Network_Priority_Mapping_Manager.h:
-	* tao/RTCORBA/RTCORBAA.cpp:
-	* tao/RTCORBA/RT_ORB.h:
-	* tao/RTPortableServer/RTPortableServerA.cpp:
-	* tao/RTScheduling/RTSchedulerA.cpp:
-	* tao/TypeCodeFactory/TypeCodeFactoryA.cpp:
-	* tao/Utils/PolicyList_Destroyer.h:
-	* tao/Utils/Server_Main.cpp:
-	* tao/Utils/Server_Main.h:
+        * orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp:
+        * orbsvcs/orbsvcs/Scheduler_Factory.h:
+        * orbsvcs/orbsvcs/Scheduler_Factory.i:
+        * orbsvcs/orbsvcs/AV/AV_Core.h:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy.h:
+        * orbsvcs/orbsvcs/AV/Policy.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Factory.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.h:
+        * orbsvcs/orbsvcs/ETCL/ETCL_l.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Adapters.h:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.h:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.h:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.h:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.h:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerControl.h:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.h:
+        * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Identification_Service.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Identification_Service.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Replication_Service.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Replication_Service.h:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.h:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.h:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Connector_Impl.h:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Factory.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS.inl:
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS_T.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS_T.inl:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS.inl:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS_T.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS_T.inl:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.inl:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS_T.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS_T.inl:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.inl:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS_T.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS_T.inl:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h:
+        * orbsvcs/orbsvcs/IFRService/ProvidesDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/PublishesDef_i.h:
+        * orbsvcs/orbsvcs/Log/BasicLog_i.cpp:
+        * orbsvcs/orbsvcs/Log/BasicLog_i.h:
+        * orbsvcs/orbsvcs/Log/Hash_LogStore.h:
+        * orbsvcs/orbsvcs/Log/Log_Compaction_Handler.h:
+        * orbsvcs/orbsvcs/Log/Log_Flush_Handler.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Service_Container.h:
+        * orbsvcs/orbsvcs/Notify/Factory.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Updates.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Updates.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Updates_T.h:
+        * orbsvcs/orbsvcs/Notify/Property.h:
+        * orbsvcs/orbsvcs/Notify/Timer.h:
+        * orbsvcs/orbsvcs/Notify/Timer_Reactor.h:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/params_dup.c:
+        * orbsvcs/orbsvcs/SSLIOP/params_dup.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/params_dup.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_l.cpp:
+        * tao/Basic_Types.h:
+        * tao/TAO_Singleton_Manager.inl:
+        * tao/AnyTypeCode/String_TypeCode_Traits.h:
+        * tao/AnyTypeCode/TAOA.h:
+        * tao/AnyTypeCode/TypeCodeA.cpp:
+        * tao/AnyTypeCode/TypeCode_Case_Base_T.h:
+        * tao/AnyTypeCode/TypeCode_Constants.cpp:
+        * tao/IFR_Client/IFR_BasicC.cpp:
+        * tao/ImR_Client/ImR_Client.cpp:
+        * tao/ImR_Client/ImR_Client.h:
+        * tao/ObjRefTemplate/ORT_Adapter_Factory_Impl.cpp:
+        * tao/ObjRefTemplate/ORT_Adapter_Factory_Impl.h:
+        * tao/PI/InvalidSlotA.cpp:
+        * tao/PI/ORBInitInfoC.cpp:
+        * tao/PI/ORBInitInfoC.h:
+        * tao/PI/PICurrentC.cpp:
+        * tao/PortableServer/IdAssignmentStrategyFactoryImpl.cpp:
+        * tao/PortableServer/IdAssignmentStrategyFactoryImpl.h:
+        * tao/PortableServer/IdAssignmentStrategySystem.cpp:
+        * tao/PortableServer/IdAssignmentStrategySystem.h:
+        * tao/PortableServer/IdAssignmentStrategyUser.cpp:
+        * tao/PortableServer/IdAssignmentStrategyUser.h:
+        * tao/PortableServer/IdUniquenessStrategyFactoryImpl.cpp:
+        * tao/PortableServer/IdUniquenessStrategyFactoryImpl.h:
+        * tao/PortableServer/IdUniquenessStrategyMultiple.cpp:
+        * tao/PortableServer/IdUniquenessStrategyMultiple.h:
+        * tao/PortableServer/IdUniquenessStrategyUnique.cpp:
+        * tao/PortableServer/IdUniquenessStrategyUnique.h:
+        * tao/PortableServer/IdUniquenessStrategyUniqueFactoryImpl.cpp:
+        * tao/PortableServer/IdUniquenessStrategyUniqueFactoryImpl.h:
+        * tao/PortableServer/ImplicitActivationStrategyExplicit.cpp:
+        * tao/PortableServer/ImplicitActivationStrategyExplicit.h:
+        * tao/PortableServer/ImplicitActivationStrategyFactoryImpl.cpp:
+        * tao/PortableServer/ImplicitActivationStrategyFactoryImpl.h:
+        * tao/PortableServer/ImplicitActivationStrategyImplicit.cpp:
+        * tao/PortableServer/ImplicitActivationStrategyImplicit.h:
+        * tao/PortableServer/LifespanStrategyFactoryImpl.cpp:
+        * tao/PortableServer/LifespanStrategyFactoryImpl.h:
+        * tao/PortableServer/LifespanStrategyPersistentFactoryImpl.cpp:
+        * tao/PortableServer/LifespanStrategyPersistentFactoryImpl.h:
+        * tao/PortableServer/LifespanStrategyTransientFactoryImpl.cpp:
+        * tao/PortableServer/LifespanStrategyTransientFactoryImpl.h:
+        * tao/PortableServer/Non_Servant_Upcall.h:
+        * tao/PortableServer/PortableServer.cpp:
+        * tao/PortableServer/PortableServerA.cpp:
+        * tao/PortableServer/RequestProcessingStrategyAOMOnlyFactoryImpl.cpp:
+        * tao/PortableServer/RequestProcessingStrategyAOMOnlyFactoryImpl.h:
+        * tao/PortableServer/RequestProcessingStrategyDefaultServantFI.cpp:
+        * tao/PortableServer/RequestProcessingStrategyDefaultServantFI.h:
+        * tao/PortableServer/RequestProcessingStrategyFactoryImpl.cpp:
+        * tao/PortableServer/RequestProcessingStrategyFactoryImpl.h:
+        * tao/PortableServer/RequestProcessingStrategyServantActivatorFI.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantActivatorFI.h:
+        * tao/PortableServer/RequestProcessingStrategyServantLocatorFI.cpp:
+        * tao/PortableServer/RequestProcessingStrategyServantLocatorFI.h:
+        * tao/PortableServer/ServantRetentionStrategyFactory.h:
+        * tao/PortableServer/ServantRetentionStrategyFactoryImpl.cpp:
+        * tao/PortableServer/ServantRetentionStrategyFactoryImpl.h:
+        * tao/PortableServer/ServantRetentionStrategyNonRetainFactoryImpl.cpp:
+        * tao/PortableServer/ServantRetentionStrategyNonRetainFactoryImpl.h:
+        * tao/PortableServer/ServantRetentionStrategyRetainFactoryImpl.cpp:
+        * tao/PortableServer/ServantRetentionStrategyRetainFactoryImpl.h:
+        * tao/PortableServer/StrategyFactory.h:
+        * tao/PortableServer/ThreadStrategyFactoryImpl.cpp:
+        * tao/PortableServer/ThreadStrategyFactoryImpl.h:
+        * tao/PortableServer/ThreadStrategyORBControl.cpp:
+        * tao/PortableServer/ThreadStrategyORBControl.h:
+        * tao/PortableServer/ThreadStrategySingle.cpp:
+        * tao/PortableServer/ThreadStrategySingle.h:
+        * tao/PortableServer/ThreadStrategySingleFactoryImpl.cpp:
+        * tao/PortableServer/ThreadStrategySingleFactoryImpl.h:
+        * tao/PortableServer/Var_Size_SArgument_T.cpp:
+        * tao/PortableServer/Var_Size_SArgument_T.h:
+        * tao/PortableServer/Var_Size_SArgument_T.inl:
+        * tao/RTCORBA/Network_Priority_Mapping_Manager.h:
+        * tao/RTCORBA/RTCORBAA.cpp:
+        * tao/RTCORBA/RT_ORB.h:
+        * tao/RTPortableServer/RTPortableServerA.cpp:
+        * tao/RTScheduling/RTSchedulerA.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactoryA.cpp:
+        * tao/Utils/PolicyList_Destroyer.h:
+        * tao/Utils/Server_Main.cpp:
+        * tao/Utils/Server_Main.h:
 
-  	  Corrected build errors in versioned namespace builds.
+          Corrected build errors in versioned namespace builds.
 
 Sat Nov 26 14:57:56 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -499,307 +513,307 @@ Sat Nov 26 14:57:56 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Nov 25 18:54:19 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* NEWS:
+        * NEWS:
 
-	  Updated with latest versioned namespace information.
+          Updated with latest versioned namespace information.
 
-	* TAO_IDL/tao_idl.mpc:
-	* orbsvcs/orbsvcs/CosNaming_Serv.mpc:
-	* orbsvcs/orbsvcs/FTORB.mpc:
-	* orbsvcs/orbsvcs/IFRService.mpc:
-	* orbsvcs/orbsvcs/PortableGroup.mpc:
-	* orbsvcs/orbsvcs/RTEvent_Serv.mpc:
-	* orbsvcs/orbsvcs/Svc_Utils.mpc:
-	* tao/Strategies.mpc:
+        * TAO_IDL/tao_idl.mpc:
+        * orbsvcs/orbsvcs/CosNaming_Serv.mpc:
+        * orbsvcs/orbsvcs/FTORB.mpc:
+        * orbsvcs/orbsvcs/IFRService.mpc:
+        * orbsvcs/orbsvcs/PortableGroup.mpc:
+        * orbsvcs/orbsvcs/RTEvent_Serv.mpc:
+        * orbsvcs/orbsvcs/Svc_Utils.mpc:
+        * tao/Strategies.mpc:
 
-	  Updated to take into account latest "ace_for_tao" subset
-	  changes.
+          Updated to take into account latest "ace_for_tao" subset
+          changes.
 
-	* tao/TAO_Singleton_Manager.h:
-	* tao/AnyTypeCode/CharSeqA.cpp:
-	* tao/AnyTypeCode/CharSeqA.h:
-	* tao/AnyTypeCode/CurrentA.cpp:
-	* tao/AnyTypeCode/CurrentA.h:
-	* tao/AnyTypeCode/DomainA.cpp:
-	* tao/AnyTypeCode/DomainA.h:
-	* tao/AnyTypeCode/DoubleSeqA.cpp:
-	* tao/AnyTypeCode/DoubleSeqA.h:
-	* tao/AnyTypeCode/DynamicA.cpp:
-	* tao/AnyTypeCode/DynamicA.h:
-	* tao/AnyTypeCode/Dynamic_ParameterA.cpp:
-	* tao/AnyTypeCode/Dynamic_ParameterA.h:
-	* tao/AnyTypeCode/ExceptionA.cpp:
-	* tao/AnyTypeCode/ExceptionA.h:
-	* tao/AnyTypeCode/FloatSeqA.cpp:
-	* tao/AnyTypeCode/FloatSeqA.h:
-	* tao/AnyTypeCode/GIOPA.cpp:
-	* tao/AnyTypeCode/GIOPA.h:
-	* tao/AnyTypeCode/IIOPA.cpp:
-	* tao/AnyTypeCode/IIOPA.h:
-	* tao/AnyTypeCode/IIOP_EndpointsA.cpp:
-	* tao/AnyTypeCode/IIOP_EndpointsA.h:
-	* tao/AnyTypeCode/IOP_IORA.cpp:
-	* tao/AnyTypeCode/IOP_IORA.h:
-	* tao/AnyTypeCode/LongDoubleSeqA.cpp:
-	* tao/AnyTypeCode/LongDoubleSeqA.h:
-	* tao/AnyTypeCode/LongLongSeqA.cpp:
-	* tao/AnyTypeCode/LongLongSeqA.h:
-	* tao/AnyTypeCode/LongSeqA.cpp:
-	* tao/AnyTypeCode/LongSeqA.h:
-	* tao/AnyTypeCode/Messaging_PolicyValueA.cpp:
-	* tao/AnyTypeCode/Messaging_PolicyValueA.h:
-	* tao/AnyTypeCode/ObjectIdListA.cpp:
-	* tao/AnyTypeCode/ObjectIdListA.h:
-	* tao/AnyTypeCode/PI_ForwardA.cpp:
-	* tao/AnyTypeCode/PI_ForwardA.h:
-	* tao/AnyTypeCode/ParameterModeA.cpp:
-	* tao/AnyTypeCode/ParameterModeA.h:
-	* tao/AnyTypeCode/PolicyA.cpp:
-	* tao/AnyTypeCode/PolicyA.h:
-	* tao/AnyTypeCode/Policy_ForwardA.cpp:
-	* tao/AnyTypeCode/Policy_ForwardA.h:
-	* tao/AnyTypeCode/PortableInterceptorA.h:
-	* tao/AnyTypeCode/ServicesA.cpp:
-	* tao/AnyTypeCode/ServicesA.h:
-	* tao/AnyTypeCode/ShortSeqA.cpp:
-	* tao/AnyTypeCode/ShortSeqA.h:
-	* tao/AnyTypeCode/StringSeqA.cpp:
-	* tao/AnyTypeCode/StringSeqA.h:
-	* tao/AnyTypeCode/SystemExceptionA.cpp:
-	* tao/AnyTypeCode/SystemExceptionA.h:
-	* tao/AnyTypeCode/TAOA.cpp:
-	* tao/AnyTypeCode/TimeBaseA.cpp:
-	* tao/AnyTypeCode/TimeBaseA.h:
-	* tao/AnyTypeCode/ULongLongSeqA.cpp:
-	* tao/AnyTypeCode/ULongLongSeqA.h:
-	* tao/AnyTypeCode/ULongSeqA.cpp:
-	* tao/AnyTypeCode/ULongSeqA.h:
-	* tao/AnyTypeCode/UShortSeqA.cpp:
-	* tao/AnyTypeCode/UShortSeqA.h:
-	* tao/AnyTypeCode/ValueModifierA.cpp:
-	* tao/AnyTypeCode/ValueModifierA.h:
-	* tao/AnyTypeCode/VisibilityA.cpp:
-	* tao/AnyTypeCode/VisibilityA.h:
-	* tao/AnyTypeCode/WCharSeqA.cpp:
-	* tao/AnyTypeCode/WCharSeqA.h:
-	* tao/AnyTypeCode/WStringSeqA.cpp:
-	* tao/AnyTypeCode/WStringSeqA.h:
-	* tao/AnyTypeCode/WrongTransactionA.cpp:
-	* tao/AnyTypeCode/WrongTransactionA.h:
-	* tao/AnyTypeCode/orb_typesA.cpp:
-	* tao/AnyTypeCode/orb_typesA.h:
-	* tao/CSD_Framework/CSD_FrameworkA.cpp:
-	* tao/CSD_Framework/CSD_FrameworkA.h:
-	* tao/CSD_Framework/CSD_FrameworkC.cpp:
-	* tao/CSD_Framework/CSD_FrameworkC.h:
-	* tao/Domain/DomainS.cpp:
-	* tao/Domain/DomainS.h:
-	* tao/Domain/DomainS.inl:
-	* tao/Domain/DomainS_T.h:
-	* tao/Domain/DomainS_T.inl:
-	* tao/DynamicAny/DynamicAnyC.cpp:
-	* tao/DynamicAny/DynamicAnyC.h:
-	* tao/IFR_Client/IFR_BaseC.cpp:
-	* tao/IFR_Client/IFR_BaseC.h:
-	* tao/IFR_Client/IFR_BaseC.inl:
-	* tao/IFR_Client/IFR_BaseS.h:
-	* tao/IFR_Client/IFR_BasicC.h:
-	* tao/IFR_Client/IFR_BasicC.inl:
-	* tao/IFR_Client/IFR_ComponentsC.cpp:
-	* tao/IFR_Client/IFR_ComponentsC.h:
-	* tao/IFR_Client/IFR_ComponentsC.inl:
-	* tao/IFR_Client/IFR_ExtendedC.cpp:
-	* tao/IFR_Client/IFR_ExtendedC.h:
-	* tao/IFR_Client/IFR_ExtendedC.inl:
-	* tao/IORInterceptor/IORInfoC.cpp:
-	* tao/IORInterceptor/IORInfoC.h:
-	* tao/IORInterceptor/IORInterceptorC.cpp:
-	* tao/IORInterceptor/IORInterceptorC.h:
-	* tao/IORManipulation/IORA.cpp:
-	* tao/IORManipulation/IORC.cpp:
-	* tao/IORManipulation/IORC.h:
-	* tao/IORTable/IORTableC.cpp:
-	* tao/IORTable/IORTableC.h:
-	* tao/ImR_Client/ImplRepoC.cpp:
-	* tao/ImR_Client/ImplRepoC.h:
-	* tao/ImR_Client/ImplRepoC.inl:
-	* tao/ImR_Client/ImplRepoS.cpp:
-	* tao/ImR_Client/ImplRepoS.h:
-	* tao/ImR_Client/ServerObjectC.cpp:
-	* tao/ImR_Client/ServerObjectC.h:
-	* tao/ImR_Client/ServerObjectC.inl:
-	* tao/ImR_Client/ServerObjectS.cpp:
-	* tao/ImR_Client/ServerObjectS.h:
-	* tao/Messaging/ExceptionHolderA.cpp:
-	* tao/Messaging/ExceptionHolderA.h:
-	* tao/Messaging/ExceptionHolderC.cpp:
-	* tao/Messaging/ExceptionHolderC.h:
-	* tao/Messaging/ExceptionHolderC.inl:
-	* tao/Messaging/MessagingA.cpp:
-	* tao/Messaging/MessagingA.h:
-	* tao/Messaging/MessagingC.cpp:
-	* tao/Messaging/MessagingC.h:
-	* tao/Messaging/MessagingC.inl:
-	* tao/Messaging/MessagingS.cpp:
-	* tao/Messaging/MessagingS.h:
-	* tao/Messaging/MessagingS_T.h:
-	* tao/Messaging/MessagingS_T.inl:
-	* tao/Messaging/Messaging_No_ImplA.cpp:
-	* tao/Messaging/Messaging_No_ImplA.h:
-	* tao/Messaging/Messaging_No_ImplC.cpp:
-	* tao/Messaging/Messaging_No_ImplC.h:
-	* tao/Messaging/Messaging_RT_PolicyA.cpp:
-	* tao/Messaging/Messaging_RT_PolicyA.h:
-	* tao/Messaging/Messaging_RT_PolicyC.cpp:
-	* tao/Messaging/Messaging_RT_PolicyC.h:
-	* tao/Messaging/Messaging_SyncScope_PolicyA.cpp:
-	* tao/Messaging/Messaging_SyncScope_PolicyA.h:
-	* tao/Messaging/Messaging_SyncScope_PolicyC.cpp:
-	* tao/Messaging/Messaging_SyncScope_PolicyC.h:
-	* tao/Messaging/OldExceptionHolderA.cpp:
-	* tao/Messaging/OldExceptionHolderA.h:
-	* tao/Messaging/OldExceptionHolderC.cpp:
-	* tao/Messaging/OldExceptionHolderC.h:
-	* tao/Messaging/OldExceptionHolderC.inl:
-	* tao/Messaging/PollableC.cpp:
-	* tao/Messaging/PollableC.h:
-	* tao/Messaging/TAO_ExtA.cpp:
-	* tao/Messaging/TAO_ExtA.h:
-	* tao/Messaging/TAO_ExtC.cpp:
-	* tao/Messaging/TAO_ExtC.h:
-	* tao/ObjRefTemplate/Default_ORTA.cpp:
-	* tao/ObjRefTemplate/Default_ORTC.cpp:
-	* tao/ObjRefTemplate/Default_ORTC.h:
-	* tao/ObjRefTemplate/ObjectReferenceTemplateA.cpp:
-	* tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
-	* tao/ObjRefTemplate/ObjectReferenceTemplateC.h:
-	* tao/ObjRefTemplate/ObjectReferenceTemplate_includeC.h:
-	* tao/PI/ClientRequestInfoA.cpp:
-	* tao/PI/ClientRequestInfoA.h:
-	* tao/PI/ClientRequestInfoC.cpp:
-	* tao/PI/ClientRequestInterceptorA.cpp:
-	* tao/PI/ClientRequestInterceptorA.h:
-	* tao/PI/ClientRequestInterceptorC.cpp:
-	* tao/PI/InterceptorA.cpp:
-	* tao/PI/InterceptorA.h:
-	* tao/PI/InterceptorC.cpp:
-	* tao/PI/InterceptorC.h:
-	* tao/PI/InvalidSlotA.h:
-	* tao/PI/InvalidSlotC.cpp:
-	* tao/PI/InvalidSlotC.h:
-	* tao/PI/ORBInitializerA.cpp:
-	* tao/PI/ORBInitializerA.h:
-	* tao/PI/ORBInitializerC.cpp:
-	* tao/PI/ORBInitializerC.h:
-	* tao/PI/PICurrentA.cpp:
-	* tao/PI/PICurrentA.h:
-	* tao/PI/PICurrentC.h:
-	* tao/PI/PIForwardRequestA.cpp:
-	* tao/PI/PIForwardRequestA.h:
-	* tao/PI/PIForwardRequestC.cpp:
-	* tao/PI/PIForwardRequestC.h:
-	* tao/PI/PolicyFactoryA.cpp:
-	* tao/PI/PolicyFactoryA.h:
-	* tao/PI/PolicyFactoryC.cpp:
-	* tao/PI/PolicyFactoryC.h:
-	* tao/PI/RequestInfoA.cpp:
-	* tao/PI/RequestInfoA.h:
-	* tao/PI/RequestInfoC.cpp:
-	* tao/PI/RequestInfoC.h:
-	* tao/PI_Server/ServerRequestInfoA.cpp:
-	* tao/PI_Server/ServerRequestInfoA.h:
-	* tao/PI_Server/ServerRequestInfoC.cpp:
-	* tao/PI_Server/ServerRequestInfoC.h:
-	* tao/PI_Server/ServerRequestInterceptorA.cpp:
-	* tao/PI_Server/ServerRequestInterceptorA.h:
-	* tao/PI_Server/ServerRequestInterceptorC.cpp:
-	* tao/PI_Server/ServerRequestInterceptorC.h:
-	* tao/PortableServer/AdapterActivatorA.cpp:
-	* tao/PortableServer/AdapterActivatorA.h:
-	* tao/PortableServer/AdapterActivatorC.cpp:
-	* tao/PortableServer/AdapterActivatorC.h:
-	* tao/PortableServer/ForwardRequestA.cpp:
-	* tao/PortableServer/ForwardRequestA.h:
-	* tao/PortableServer/ForwardRequestC.cpp:
-	* tao/PortableServer/ForwardRequestC.h:
-	* tao/PortableServer/IdAssignmentPolicyA.cpp:
-	* tao/PortableServer/IdAssignmentPolicyA.h:
-	* tao/PortableServer/IdAssignmentPolicyC.cpp:
-	* tao/PortableServer/IdAssignmentPolicyC.h:
-	* tao/PortableServer/IdUniquenessPolicyA.cpp:
-	* tao/PortableServer/IdUniquenessPolicyA.h:
-	* tao/PortableServer/IdUniquenessPolicyC.cpp:
-	* tao/PortableServer/IdUniquenessPolicyC.h:
-	* tao/PortableServer/ImplicitActivationPolicyA.cpp:
-	* tao/PortableServer/ImplicitActivationPolicyA.h:
-	* tao/PortableServer/ImplicitActivationPolicyC.cpp:
-	* tao/PortableServer/ImplicitActivationPolicyC.h:
-	* tao/PortableServer/LifespanPolicyA.cpp:
-	* tao/PortableServer/LifespanPolicyA.h:
-	* tao/PortableServer/LifespanPolicyC.cpp:
-	* tao/PortableServer/LifespanPolicyC.h:
-	* tao/PortableServer/POAManagerC.cpp:
-	* tao/PortableServer/POAManagerC.h:
-	* tao/PortableServer/PS_CurrentC.cpp:
-	* tao/PortableServer/PS_CurrentC.h:
-	* tao/PortableServer/PS_ForwardA.cpp:
-	* tao/PortableServer/PS_ForwardA.h:
-	* tao/PortableServer/PS_ForwardC.cpp:
-	* tao/PortableServer/PS_ForwardC.h:
-	* tao/PortableServer/PolicyS.cpp:
-	* tao/PortableServer/PolicyS.h:
-	* tao/PortableServer/PolicyS_T.h:
-	* tao/PortableServer/PolicyS_T.inl:
-	* tao/PortableServer/PortableServerC.cpp:
-	* tao/PortableServer/PortableServerC.h:
-	* tao/PortableServer/PortableServerS.h:
-	* tao/PortableServer/PortableServer_includeC.h:
-	* tao/PortableServer/RequestProcessingPolicyA.cpp:
-	* tao/PortableServer/RequestProcessingPolicyA.h:
-	* tao/PortableServer/RequestProcessingPolicyC.cpp:
-	* tao/PortableServer/RequestProcessingPolicyC.h:
-	* tao/PortableServer/ServantActivatorA.cpp:
-	* tao/PortableServer/ServantActivatorA.h:
-	* tao/PortableServer/ServantActivatorC.cpp:
-	* tao/PortableServer/ServantActivatorC.h:
-	* tao/PortableServer/ServantLocatorA.cpp:
-	* tao/PortableServer/ServantLocatorA.h:
-	* tao/PortableServer/ServantLocatorC.cpp:
-	* tao/PortableServer/ServantLocatorC.h:
-	* tao/PortableServer/ServantManagerA.cpp:
-	* tao/PortableServer/ServantManagerA.h:
-	* tao/PortableServer/ServantManagerC.cpp:
-	* tao/PortableServer/ServantManagerC.h:
-	* tao/PortableServer/ServantRetentionPolicyA.cpp:
-	* tao/PortableServer/ServantRetentionPolicyA.h:
-	* tao/PortableServer/ServantRetentionPolicyC.cpp:
-	* tao/PortableServer/ServantRetentionPolicyC.h:
-	* tao/PortableServer/ThreadPolicyA.cpp:
-	* tao/PortableServer/ThreadPolicyA.h:
-	* tao/PortableServer/ThreadPolicyC.cpp:
-	* tao/PortableServer/ThreadPolicyC.h:
-	* tao/RTCORBA/RTCORBAC.cpp:
-	* tao/RTCORBA/RTCORBAC.h:
-	* tao/RTCORBA/RTCORBA_includeC.h:
-	* tao/RTPortableServer/RTPortableServerC.cpp:
-	* tao/RTPortableServer/RTPortableServerC.h:
-	* tao/RTPortableServer/RTPortableServerS.h:
-	* tao/RTPortableServer/RTPortableServer_includeC.h:
-	* tao/RTScheduling/RTSchedulerC.cpp:
-	* tao/RTScheduling/RTSchedulerC.h:
-	* tao/RTScheduling/RTScheduler_includeA.h:
-	* tao/RTScheduling/RTScheduler_includeC.h:
-	* tao/Strategies/sciop_endpointsC.cpp:
-	* tao/Strategies/sciop_endpointsC.h:
-	* tao/Strategies/uiop_endpointsC.cpp:
-	* tao/Strategies/uiop_endpointsC.h:
-	* tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
-	* tao/TypeCodeFactory/TypeCodeFactoryC.h:
-	* tao/Valuetype/StringValueC.cpp:
-	* tao/Valuetype/StringValueC.h:
-	* tao/Valuetype/StringValueC.inl:
+        * tao/TAO_Singleton_Manager.h:
+        * tao/AnyTypeCode/CharSeqA.cpp:
+        * tao/AnyTypeCode/CharSeqA.h:
+        * tao/AnyTypeCode/CurrentA.cpp:
+        * tao/AnyTypeCode/CurrentA.h:
+        * tao/AnyTypeCode/DomainA.cpp:
+        * tao/AnyTypeCode/DomainA.h:
+        * tao/AnyTypeCode/DoubleSeqA.cpp:
+        * tao/AnyTypeCode/DoubleSeqA.h:
+        * tao/AnyTypeCode/DynamicA.cpp:
+        * tao/AnyTypeCode/DynamicA.h:
+        * tao/AnyTypeCode/Dynamic_ParameterA.cpp:
+        * tao/AnyTypeCode/Dynamic_ParameterA.h:
+        * tao/AnyTypeCode/ExceptionA.cpp:
+        * tao/AnyTypeCode/ExceptionA.h:
+        * tao/AnyTypeCode/FloatSeqA.cpp:
+        * tao/AnyTypeCode/FloatSeqA.h:
+        * tao/AnyTypeCode/GIOPA.cpp:
+        * tao/AnyTypeCode/GIOPA.h:
+        * tao/AnyTypeCode/IIOPA.cpp:
+        * tao/AnyTypeCode/IIOPA.h:
+        * tao/AnyTypeCode/IIOP_EndpointsA.cpp:
+        * tao/AnyTypeCode/IIOP_EndpointsA.h:
+        * tao/AnyTypeCode/IOP_IORA.cpp:
+        * tao/AnyTypeCode/IOP_IORA.h:
+        * tao/AnyTypeCode/LongDoubleSeqA.cpp:
+        * tao/AnyTypeCode/LongDoubleSeqA.h:
+        * tao/AnyTypeCode/LongLongSeqA.cpp:
+        * tao/AnyTypeCode/LongLongSeqA.h:
+        * tao/AnyTypeCode/LongSeqA.cpp:
+        * tao/AnyTypeCode/LongSeqA.h:
+        * tao/AnyTypeCode/Messaging_PolicyValueA.cpp:
+        * tao/AnyTypeCode/Messaging_PolicyValueA.h:
+        * tao/AnyTypeCode/ObjectIdListA.cpp:
+        * tao/AnyTypeCode/ObjectIdListA.h:
+        * tao/AnyTypeCode/PI_ForwardA.cpp:
+        * tao/AnyTypeCode/PI_ForwardA.h:
+        * tao/AnyTypeCode/ParameterModeA.cpp:
+        * tao/AnyTypeCode/ParameterModeA.h:
+        * tao/AnyTypeCode/PolicyA.cpp:
+        * tao/AnyTypeCode/PolicyA.h:
+        * tao/AnyTypeCode/Policy_ForwardA.cpp:
+        * tao/AnyTypeCode/Policy_ForwardA.h:
+        * tao/AnyTypeCode/PortableInterceptorA.h:
+        * tao/AnyTypeCode/ServicesA.cpp:
+        * tao/AnyTypeCode/ServicesA.h:
+        * tao/AnyTypeCode/ShortSeqA.cpp:
+        * tao/AnyTypeCode/ShortSeqA.h:
+        * tao/AnyTypeCode/StringSeqA.cpp:
+        * tao/AnyTypeCode/StringSeqA.h:
+        * tao/AnyTypeCode/SystemExceptionA.cpp:
+        * tao/AnyTypeCode/SystemExceptionA.h:
+        * tao/AnyTypeCode/TAOA.cpp:
+        * tao/AnyTypeCode/TimeBaseA.cpp:
+        * tao/AnyTypeCode/TimeBaseA.h:
+        * tao/AnyTypeCode/ULongLongSeqA.cpp:
+        * tao/AnyTypeCode/ULongLongSeqA.h:
+        * tao/AnyTypeCode/ULongSeqA.cpp:
+        * tao/AnyTypeCode/ULongSeqA.h:
+        * tao/AnyTypeCode/UShortSeqA.cpp:
+        * tao/AnyTypeCode/UShortSeqA.h:
+        * tao/AnyTypeCode/ValueModifierA.cpp:
+        * tao/AnyTypeCode/ValueModifierA.h:
+        * tao/AnyTypeCode/VisibilityA.cpp:
+        * tao/AnyTypeCode/VisibilityA.h:
+        * tao/AnyTypeCode/WCharSeqA.cpp:
+        * tao/AnyTypeCode/WCharSeqA.h:
+        * tao/AnyTypeCode/WStringSeqA.cpp:
+        * tao/AnyTypeCode/WStringSeqA.h:
+        * tao/AnyTypeCode/WrongTransactionA.cpp:
+        * tao/AnyTypeCode/WrongTransactionA.h:
+        * tao/AnyTypeCode/orb_typesA.cpp:
+        * tao/AnyTypeCode/orb_typesA.h:
+        * tao/CSD_Framework/CSD_FrameworkA.cpp:
+        * tao/CSD_Framework/CSD_FrameworkA.h:
+        * tao/CSD_Framework/CSD_FrameworkC.cpp:
+        * tao/CSD_Framework/CSD_FrameworkC.h:
+        * tao/Domain/DomainS.cpp:
+        * tao/Domain/DomainS.h:
+        * tao/Domain/DomainS.inl:
+        * tao/Domain/DomainS_T.h:
+        * tao/Domain/DomainS_T.inl:
+        * tao/DynamicAny/DynamicAnyC.cpp:
+        * tao/DynamicAny/DynamicAnyC.h:
+        * tao/IFR_Client/IFR_BaseC.cpp:
+        * tao/IFR_Client/IFR_BaseC.h:
+        * tao/IFR_Client/IFR_BaseC.inl:
+        * tao/IFR_Client/IFR_BaseS.h:
+        * tao/IFR_Client/IFR_BasicC.h:
+        * tao/IFR_Client/IFR_BasicC.inl:
+        * tao/IFR_Client/IFR_ComponentsC.cpp:
+        * tao/IFR_Client/IFR_ComponentsC.h:
+        * tao/IFR_Client/IFR_ComponentsC.inl:
+        * tao/IFR_Client/IFR_ExtendedC.cpp:
+        * tao/IFR_Client/IFR_ExtendedC.h:
+        * tao/IFR_Client/IFR_ExtendedC.inl:
+        * tao/IORInterceptor/IORInfoC.cpp:
+        * tao/IORInterceptor/IORInfoC.h:
+        * tao/IORInterceptor/IORInterceptorC.cpp:
+        * tao/IORInterceptor/IORInterceptorC.h:
+        * tao/IORManipulation/IORA.cpp:
+        * tao/IORManipulation/IORC.cpp:
+        * tao/IORManipulation/IORC.h:
+        * tao/IORTable/IORTableC.cpp:
+        * tao/IORTable/IORTableC.h:
+        * tao/ImR_Client/ImplRepoC.cpp:
+        * tao/ImR_Client/ImplRepoC.h:
+        * tao/ImR_Client/ImplRepoC.inl:
+        * tao/ImR_Client/ImplRepoS.cpp:
+        * tao/ImR_Client/ImplRepoS.h:
+        * tao/ImR_Client/ServerObjectC.cpp:
+        * tao/ImR_Client/ServerObjectC.h:
+        * tao/ImR_Client/ServerObjectC.inl:
+        * tao/ImR_Client/ServerObjectS.cpp:
+        * tao/ImR_Client/ServerObjectS.h:
+        * tao/Messaging/ExceptionHolderA.cpp:
+        * tao/Messaging/ExceptionHolderA.h:
+        * tao/Messaging/ExceptionHolderC.cpp:
+        * tao/Messaging/ExceptionHolderC.h:
+        * tao/Messaging/ExceptionHolderC.inl:
+        * tao/Messaging/MessagingA.cpp:
+        * tao/Messaging/MessagingA.h:
+        * tao/Messaging/MessagingC.cpp:
+        * tao/Messaging/MessagingC.h:
+        * tao/Messaging/MessagingC.inl:
+        * tao/Messaging/MessagingS.cpp:
+        * tao/Messaging/MessagingS.h:
+        * tao/Messaging/MessagingS_T.h:
+        * tao/Messaging/MessagingS_T.inl:
+        * tao/Messaging/Messaging_No_ImplA.cpp:
+        * tao/Messaging/Messaging_No_ImplA.h:
+        * tao/Messaging/Messaging_No_ImplC.cpp:
+        * tao/Messaging/Messaging_No_ImplC.h:
+        * tao/Messaging/Messaging_RT_PolicyA.cpp:
+        * tao/Messaging/Messaging_RT_PolicyA.h:
+        * tao/Messaging/Messaging_RT_PolicyC.cpp:
+        * tao/Messaging/Messaging_RT_PolicyC.h:
+        * tao/Messaging/Messaging_SyncScope_PolicyA.cpp:
+        * tao/Messaging/Messaging_SyncScope_PolicyA.h:
+        * tao/Messaging/Messaging_SyncScope_PolicyC.cpp:
+        * tao/Messaging/Messaging_SyncScope_PolicyC.h:
+        * tao/Messaging/OldExceptionHolderA.cpp:
+        * tao/Messaging/OldExceptionHolderA.h:
+        * tao/Messaging/OldExceptionHolderC.cpp:
+        * tao/Messaging/OldExceptionHolderC.h:
+        * tao/Messaging/OldExceptionHolderC.inl:
+        * tao/Messaging/PollableC.cpp:
+        * tao/Messaging/PollableC.h:
+        * tao/Messaging/TAO_ExtA.cpp:
+        * tao/Messaging/TAO_ExtA.h:
+        * tao/Messaging/TAO_ExtC.cpp:
+        * tao/Messaging/TAO_ExtC.h:
+        * tao/ObjRefTemplate/Default_ORTA.cpp:
+        * tao/ObjRefTemplate/Default_ORTC.cpp:
+        * tao/ObjRefTemplate/Default_ORTC.h:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateA.cpp:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.h:
+        * tao/ObjRefTemplate/ObjectReferenceTemplate_includeC.h:
+        * tao/PI/ClientRequestInfoA.cpp:
+        * tao/PI/ClientRequestInfoA.h:
+        * tao/PI/ClientRequestInfoC.cpp:
+        * tao/PI/ClientRequestInterceptorA.cpp:
+        * tao/PI/ClientRequestInterceptorA.h:
+        * tao/PI/ClientRequestInterceptorC.cpp:
+        * tao/PI/InterceptorA.cpp:
+        * tao/PI/InterceptorA.h:
+        * tao/PI/InterceptorC.cpp:
+        * tao/PI/InterceptorC.h:
+        * tao/PI/InvalidSlotA.h:
+        * tao/PI/InvalidSlotC.cpp:
+        * tao/PI/InvalidSlotC.h:
+        * tao/PI/ORBInitializerA.cpp:
+        * tao/PI/ORBInitializerA.h:
+        * tao/PI/ORBInitializerC.cpp:
+        * tao/PI/ORBInitializerC.h:
+        * tao/PI/PICurrentA.cpp:
+        * tao/PI/PICurrentA.h:
+        * tao/PI/PICurrentC.h:
+        * tao/PI/PIForwardRequestA.cpp:
+        * tao/PI/PIForwardRequestA.h:
+        * tao/PI/PIForwardRequestC.cpp:
+        * tao/PI/PIForwardRequestC.h:
+        * tao/PI/PolicyFactoryA.cpp:
+        * tao/PI/PolicyFactoryA.h:
+        * tao/PI/PolicyFactoryC.cpp:
+        * tao/PI/PolicyFactoryC.h:
+        * tao/PI/RequestInfoA.cpp:
+        * tao/PI/RequestInfoA.h:
+        * tao/PI/RequestInfoC.cpp:
+        * tao/PI/RequestInfoC.h:
+        * tao/PI_Server/ServerRequestInfoA.cpp:
+        * tao/PI_Server/ServerRequestInfoA.h:
+        * tao/PI_Server/ServerRequestInfoC.cpp:
+        * tao/PI_Server/ServerRequestInfoC.h:
+        * tao/PI_Server/ServerRequestInterceptorA.cpp:
+        * tao/PI_Server/ServerRequestInterceptorA.h:
+        * tao/PI_Server/ServerRequestInterceptorC.cpp:
+        * tao/PI_Server/ServerRequestInterceptorC.h:
+        * tao/PortableServer/AdapterActivatorA.cpp:
+        * tao/PortableServer/AdapterActivatorA.h:
+        * tao/PortableServer/AdapterActivatorC.cpp:
+        * tao/PortableServer/AdapterActivatorC.h:
+        * tao/PortableServer/ForwardRequestA.cpp:
+        * tao/PortableServer/ForwardRequestA.h:
+        * tao/PortableServer/ForwardRequestC.cpp:
+        * tao/PortableServer/ForwardRequestC.h:
+        * tao/PortableServer/IdAssignmentPolicyA.cpp:
+        * tao/PortableServer/IdAssignmentPolicyA.h:
+        * tao/PortableServer/IdAssignmentPolicyC.cpp:
+        * tao/PortableServer/IdAssignmentPolicyC.h:
+        * tao/PortableServer/IdUniquenessPolicyA.cpp:
+        * tao/PortableServer/IdUniquenessPolicyA.h:
+        * tao/PortableServer/IdUniquenessPolicyC.cpp:
+        * tao/PortableServer/IdUniquenessPolicyC.h:
+        * tao/PortableServer/ImplicitActivationPolicyA.cpp:
+        * tao/PortableServer/ImplicitActivationPolicyA.h:
+        * tao/PortableServer/ImplicitActivationPolicyC.cpp:
+        * tao/PortableServer/ImplicitActivationPolicyC.h:
+        * tao/PortableServer/LifespanPolicyA.cpp:
+        * tao/PortableServer/LifespanPolicyA.h:
+        * tao/PortableServer/LifespanPolicyC.cpp:
+        * tao/PortableServer/LifespanPolicyC.h:
+        * tao/PortableServer/POAManagerC.cpp:
+        * tao/PortableServer/POAManagerC.h:
+        * tao/PortableServer/PS_CurrentC.cpp:
+        * tao/PortableServer/PS_CurrentC.h:
+        * tao/PortableServer/PS_ForwardA.cpp:
+        * tao/PortableServer/PS_ForwardA.h:
+        * tao/PortableServer/PS_ForwardC.cpp:
+        * tao/PortableServer/PS_ForwardC.h:
+        * tao/PortableServer/PolicyS.cpp:
+        * tao/PortableServer/PolicyS.h:
+        * tao/PortableServer/PolicyS_T.h:
+        * tao/PortableServer/PolicyS_T.inl:
+        * tao/PortableServer/PortableServerC.cpp:
+        * tao/PortableServer/PortableServerC.h:
+        * tao/PortableServer/PortableServerS.h:
+        * tao/PortableServer/PortableServer_includeC.h:
+        * tao/PortableServer/RequestProcessingPolicyA.cpp:
+        * tao/PortableServer/RequestProcessingPolicyA.h:
+        * tao/PortableServer/RequestProcessingPolicyC.cpp:
+        * tao/PortableServer/RequestProcessingPolicyC.h:
+        * tao/PortableServer/ServantActivatorA.cpp:
+        * tao/PortableServer/ServantActivatorA.h:
+        * tao/PortableServer/ServantActivatorC.cpp:
+        * tao/PortableServer/ServantActivatorC.h:
+        * tao/PortableServer/ServantLocatorA.cpp:
+        * tao/PortableServer/ServantLocatorA.h:
+        * tao/PortableServer/ServantLocatorC.cpp:
+        * tao/PortableServer/ServantLocatorC.h:
+        * tao/PortableServer/ServantManagerA.cpp:
+        * tao/PortableServer/ServantManagerA.h:
+        * tao/PortableServer/ServantManagerC.cpp:
+        * tao/PortableServer/ServantManagerC.h:
+        * tao/PortableServer/ServantRetentionPolicyA.cpp:
+        * tao/PortableServer/ServantRetentionPolicyA.h:
+        * tao/PortableServer/ServantRetentionPolicyC.cpp:
+        * tao/PortableServer/ServantRetentionPolicyC.h:
+        * tao/PortableServer/ThreadPolicyA.cpp:
+        * tao/PortableServer/ThreadPolicyA.h:
+        * tao/PortableServer/ThreadPolicyC.cpp:
+        * tao/PortableServer/ThreadPolicyC.h:
+        * tao/RTCORBA/RTCORBAC.cpp:
+        * tao/RTCORBA/RTCORBAC.h:
+        * tao/RTCORBA/RTCORBA_includeC.h:
+        * tao/RTPortableServer/RTPortableServerC.cpp:
+        * tao/RTPortableServer/RTPortableServerC.h:
+        * tao/RTPortableServer/RTPortableServerS.h:
+        * tao/RTPortableServer/RTPortableServer_includeC.h:
+        * tao/RTScheduling/RTSchedulerC.cpp:
+        * tao/RTScheduling/RTSchedulerC.h:
+        * tao/RTScheduling/RTScheduler_includeA.h:
+        * tao/RTScheduling/RTScheduler_includeC.h:
+        * tao/Strategies/sciop_endpointsC.cpp:
+        * tao/Strategies/sciop_endpointsC.h:
+        * tao/Strategies/uiop_endpointsC.cpp:
+        * tao/Strategies/uiop_endpointsC.h:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.h:
+        * tao/Valuetype/StringValueC.cpp:
+        * tao/Valuetype/StringValueC.h:
+        * tao/Valuetype/StringValueC.inl:
 
-	  Added missing versioned namespace support.
+          Added missing versioned namespace support.
 
 Fri Nov 25 19:26:03 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -818,10 +832,10 @@ Fri Nov 25 19:26:03 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Nov 25 07:43:56 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/TAO_Singleton_Manager.h (~TAO_Singleton_Manager):
+        * tao/TAO_Singleton_Manager.h (~TAO_Singleton_Manager):
 
-	  Made destructor protected to address warnings about a class with
-	  a private destructor and no friends.
+          Made destructor protected to address warnings about a class with
+          a private destructor and no friends.
 
 Fri Nov 25 15:06:43 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -885,238 +899,238 @@ Thu Nov 24 15:56:31 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Nov 24 03:01:29 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/CosEvent/CEC_TypedEvent.h:
-	* orbsvcs/orbsvcs/ETCL/ETCL_l.cpp:
-	* orbsvcs/orbsvcs/ETCL/ETCL_y.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.i:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.i:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.h:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/ConnectionHandler_T.h:
-	* orbsvcs/orbsvcs/HTIOP/HTIOP_Factory.cpp:
-	* orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor.h:
-	* orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
-	* orbsvcs/orbsvcs/Notify/Refcountable.cpp:
-	* orbsvcs/orbsvcs/Notify/XML_Topology_Factory.h:
-	* orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.h:
-	* orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.cpp:
-	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp:
-	* orbsvcs/orbsvcs/Security/Security_Current.h:
-	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.h:
-	* orbsvcs/orbsvcs/Trader/Constraint_l.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.h:
-	* tao/Acceptor_Registry.h:
-	* tao/Asynch_Reply_Dispatcher_Base.h:
-	* tao/BooleanSeqC.cpp:
-	* tao/BooleanSeqC.h:
-	* tao/CDR.h:
-	* tao/CONV_FRAMEC.cpp:
-	* tao/CONV_FRAMEC.h:
-	* tao/CORBA_methods.h:
-	* tao/CharSeqC.cpp:
-	* tao/CharSeqC.h:
-	* tao/Client_Strategy_Factory.h:
-	* tao/Codeset_Manager.h:
-	* tao/Codeset_Translator_Base.h:
-	* tao/Collocation_Strategy.h:
-	* tao/Condition.h:
-	* tao/Connect_Strategy.h:
-	* tao/Connection_Handler.h:
-	* tao/Connection_Handler.inl:
-	* tao/Connector_Impl.h:
-	* tao/CurrentC.cpp:
-	* tao/CurrentC.h:
-	* tao/DomainC.cpp:
-	* tao/DomainC.h:
-	* tao/DomainC.inl:
-	* tao/DoubleSeqC.cpp:
-	* tao/DoubleSeqC.h:
-	* tao/Exception.h:
-	* tao/Fault_Tolerance_Service.h:
-	* tao/FlResource_Factory.h:
-	* tao/FloatSeqC.cpp:
-	* tao/FloatSeqC.h:
-	* tao/Flushing_Strategy.h:
-	* tao/GIOPC.cpp:
-	* tao/GIOPC.h:
-	* tao/GIOPC.inl:
-	* tao/GIOP_Utils.h:
-	* tao/GUIResource_Factory.h:
-	* tao/IIOPC.cpp:
-	* tao/IIOPC.h:
-	* tao/IIOP_EndpointsC.cpp:
-	* tao/IIOP_EndpointsC.h:
-	* tao/IIOP_Lite_Factory.cpp:
-	* tao/IOPC.cpp:
-	* tao/IOPC.h:
-	* tao/IOP_IORC.cpp:
-	* tao/IOP_IORC.h:
-	* tao/IORInterceptor_Adapter.h:
-	* tao/Incoming_Message_Queue.h:
-	* tao/Invocation_Adapter.h:
-	* tao/Invocation_Endpoint_Selectors.h:
-	* tao/LF_Connect_Strategy.h:
-	* tao/LF_Strategy.h:
-	* tao/Leader_Follower.h:
-	* tao/LocateRequest_Invocation_Adapter.h:
-	* tao/LongDoubleSeqC.cpp:
-	* tao/LongDoubleSeqC.h:
-	* tao/LongLongSeqC.cpp:
-	* tao/LongLongSeqC.h:
-	* tao/LongSeqC.cpp:
-	* tao/LongSeqC.h:
-	* tao/Messaging_PolicyValueC.cpp:
-	* tao/Messaging_PolicyValueC.h:
-	* tao/Messaging_SyncScopeC.cpp:
-	* tao/Messaging_SyncScopeC.h:
-	* tao/ORBInitializer_Registry.h:
-	* tao/ORB_Core.h:
-	* tao/Object.h:
-	* tao/ObjectIdListC.cpp:
-	* tao/ObjectIdListC.h:
-	* tao/Object_KeyC.cpp:
-	* tao/Object_KeyC.h:
-	* tao/OctetSeqC.cpp:
-	* tao/OctetSeqC.h:
-	* tao/PI_ForwardC.cpp:
-	* tao/PI_ForwardC.h:
-	* tao/ParameterModeC.cpp:
-	* tao/ParameterModeC.h:
-	* tao/Pluggable_Messaging.h:
-	* tao/PolicyC.cpp:
-	* tao/PolicyC.h:
-	* tao/PolicyC.inl:
-	* tao/Policy_Current.h:
-	* tao/Policy_ForwardC.cpp:
-	* tao/Policy_ForwardC.h:
-	* tao/PortableInterceptorC.cpp:
-	* tao/PortableInterceptorC.h:
-	* tao/Profile.h:
-	* tao/Profile_Transport_Resolver.cpp:
-	* tao/Profile_Transport_Resolver.h:
-	* tao/Queued_Message.h:
-	* tao/Reactive_Connect_Strategy.h:
-	* tao/Resource_Factory.h:
-	* tao/Sequence.h:
-	* tao/ServicesC.cpp:
-	* tao/ServicesC.h:
-	* tao/ShortSeqC.cpp:
-	* tao/ShortSeqC.h:
-	* tao/StringSeqC.cpp:
-	* tao/StringSeqC.h:
-	* tao/Synch_Invocation.h:
-	* tao/TAOC.cpp:
-	* tao/TAOC.h:
-	* tao/TAO_Internal.h:
-	* tao/TAO_Server_Request.h:
-	* tao/TAO_Singleton_Manager.cpp:
-	* tao/TAO_Singleton_Manager.h:
-	* tao/Thread_Lane_Resources.h:
-	* tao/TimeBaseC.cpp:
-	* tao/TimeBaseC.h:
-	* tao/Transport_Acceptor.h:
-	* tao/Transport_Cache_Manager.h:
-	* tao/Transport_Connector.h:
-	* tao/Transport_Mux_Strategy.h:
-	* tao/Transport_Queueing_Strategies.h:
-	* tao/TypeCodeFactory_Adapter.h:
-	* tao/Typecode_typesC.cpp:
-	* tao/Typecode_typesC.h:
-	* tao/ULongLongSeqC.cpp:
-	* tao/ULongLongSeqC.h:
-	* tao/ULongSeqC.cpp:
-	* tao/ULongSeqC.h:
-	* tao/UShortSeqC.cpp:
-	* tao/UShortSeqC.h:
-	* tao/VarOut_T.cpp:
-	* tao/Var_Size_Argument_T.inl:
-	* tao/Versioned_Namespace.h:
-	* tao/WCharSeqC.cpp:
-	* tao/WCharSeqC.h:
-	* tao/WStringSeqC.cpp:
-	* tao/WStringSeqC.h:
-	* tao/Wait_Strategy.h:
-	* tao/WrongTransactionC.cpp:
-	* tao/WrongTransactionC.h:
-	* tao/default_resource.h:
-	* tao/orb_typesC.cpp:
-	* tao/orb_typesC.h:
-	* tao/target_specification.h:
-	* tao/target_specification.i:
-	* tao/AnyTypeCode/AnySeqA.cpp:
-	* tao/AnyTypeCode/AnySeqA.h:
-	* tao/AnyTypeCode/AnySeqC.cpp:
-	* tao/AnyTypeCode/AnySeqC.h:
-	* tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.cpp:
-	* tao/AnyTypeCode/Any_Impl.h:
-	* tao/AnyTypeCode/Any_Impl_T.h:
-	* tao/AnyTypeCode/Any_Impl_T.inl:
-	* tao/AnyTypeCode/Any_Unknown_IDL_Type.h:
-	* tao/AnyTypeCode/BooleanSeqA.cpp:
-	* tao/AnyTypeCode/BooleanSeqA.h:
-	* tao/AnyTypeCode/BoundsA.cpp:
-	* tao/AnyTypeCode/BoundsA.h:
-	* tao/AnyTypeCode/BoundsC.cpp:
-	* tao/AnyTypeCode/BoundsC.h:
-	* tao/AnyTypeCode/CONV_FRAMEA.cpp:
-	* tao/AnyTypeCode/CONV_FRAMEA.h:
-	* tao/AnyTypeCode/DynamicC.cpp:
-	* tao/AnyTypeCode/DynamicC.h:
-	* tao/AnyTypeCode/Dynamic_ParameterC.cpp:
-	* tao/AnyTypeCode/Dynamic_ParameterC.h:
-	* tao/AnyTypeCode/OctetSeqA.cpp:
-	* tao/AnyTypeCode/OctetSeqA.h:
-	* tao/AnyTypeCode/TypeCode_CDR_Extraction.h:
-	* tao/AnyTypeCode/ValueModifierC.cpp:
-	* tao/AnyTypeCode/ValueModifierC.h:
-	* tao/AnyTypeCode/VisibilityC.cpp:
-	* tao/AnyTypeCode/VisibilityC.h:
-	* tao/BiDir_GIOP/BiDirPolicyC.cpp:
-	* tao/BiDir_GIOP/BiDirPolicyC.h:
-	* tao/CodecFactory/IOP_CodecC.cpp:
-	* tao/CodecFactory/IOP_CodecC.h:
-	* tao/CodecFactory/IOP_Codec_includeC.h:
-	* tao/Codeset/Codeset_Translator_Factory.h:
-	* tao/DynamicInterface/DII_Invocation_Adapter.cpp:
-	* tao/DynamicInterface/DII_Invocation_Adapter.h:
-	* tao/Messaging/AMH_Response_Handler.h:
-	* tao/Messaging/Asynch_Invocation.h:
-	* tao/Messaging/Asynch_Invocation_Adapter.h:
-	* tao/Messaging/Asynch_Reply_Dispatcher.h:
-	* tao/Messaging/Connection_Timeout_Policy_i.h:
-	* tao/PI/ClientRequestInfo.cpp:
-	* tao/PI/ClientRequestInfoC.h:
-	* tao/PI/ClientRequestInterceptorC.h:
-	* tao/PortableServer/IdUniquenessStrategyUnique.h:
-	* tao/PortableServer/Key_Adapters.h:
-	* tao/PortableServer/Servant_Dispatcher.cpp:
-	* tao/PortableServer/Servant_Dispatcher.h:
-	* tao/Utils/Synch_Refcountable.h:
-	* tao/Valuetype/Valuetype_Adapter_Impl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEvent.h:
+        * orbsvcs/orbsvcs/ETCL/ETCL_l.cpp:
+        * orbsvcs/orbsvcs/ETCL/ETCL_y.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.i:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.i:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.h:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ConnectionHandler_T.h:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Factory.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_UpcallMonitor.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Notify/Refcountable.cpp:
+        * orbsvcs/orbsvcs/Notify/XML_Topology_Factory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp:
+        * orbsvcs/orbsvcs/Security/Security_Current.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_l.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.h:
+        * tao/Acceptor_Registry.h:
+        * tao/Asynch_Reply_Dispatcher_Base.h:
+        * tao/BooleanSeqC.cpp:
+        * tao/BooleanSeqC.h:
+        * tao/CDR.h:
+        * tao/CONV_FRAMEC.cpp:
+        * tao/CONV_FRAMEC.h:
+        * tao/CORBA_methods.h:
+        * tao/CharSeqC.cpp:
+        * tao/CharSeqC.h:
+        * tao/Client_Strategy_Factory.h:
+        * tao/Codeset_Manager.h:
+        * tao/Codeset_Translator_Base.h:
+        * tao/Collocation_Strategy.h:
+        * tao/Condition.h:
+        * tao/Connect_Strategy.h:
+        * tao/Connection_Handler.h:
+        * tao/Connection_Handler.inl:
+        * tao/Connector_Impl.h:
+        * tao/CurrentC.cpp:
+        * tao/CurrentC.h:
+        * tao/DomainC.cpp:
+        * tao/DomainC.h:
+        * tao/DomainC.inl:
+        * tao/DoubleSeqC.cpp:
+        * tao/DoubleSeqC.h:
+        * tao/Exception.h:
+        * tao/Fault_Tolerance_Service.h:
+        * tao/FlResource_Factory.h:
+        * tao/FloatSeqC.cpp:
+        * tao/FloatSeqC.h:
+        * tao/Flushing_Strategy.h:
+        * tao/GIOPC.cpp:
+        * tao/GIOPC.h:
+        * tao/GIOPC.inl:
+        * tao/GIOP_Utils.h:
+        * tao/GUIResource_Factory.h:
+        * tao/IIOPC.cpp:
+        * tao/IIOPC.h:
+        * tao/IIOP_EndpointsC.cpp:
+        * tao/IIOP_EndpointsC.h:
+        * tao/IIOP_Lite_Factory.cpp:
+        * tao/IOPC.cpp:
+        * tao/IOPC.h:
+        * tao/IOP_IORC.cpp:
+        * tao/IOP_IORC.h:
+        * tao/IORInterceptor_Adapter.h:
+        * tao/Incoming_Message_Queue.h:
+        * tao/Invocation_Adapter.h:
+        * tao/Invocation_Endpoint_Selectors.h:
+        * tao/LF_Connect_Strategy.h:
+        * tao/LF_Strategy.h:
+        * tao/Leader_Follower.h:
+        * tao/LocateRequest_Invocation_Adapter.h:
+        * tao/LongDoubleSeqC.cpp:
+        * tao/LongDoubleSeqC.h:
+        * tao/LongLongSeqC.cpp:
+        * tao/LongLongSeqC.h:
+        * tao/LongSeqC.cpp:
+        * tao/LongSeqC.h:
+        * tao/Messaging_PolicyValueC.cpp:
+        * tao/Messaging_PolicyValueC.h:
+        * tao/Messaging_SyncScopeC.cpp:
+        * tao/Messaging_SyncScopeC.h:
+        * tao/ORBInitializer_Registry.h:
+        * tao/ORB_Core.h:
+        * tao/Object.h:
+        * tao/ObjectIdListC.cpp:
+        * tao/ObjectIdListC.h:
+        * tao/Object_KeyC.cpp:
+        * tao/Object_KeyC.h:
+        * tao/OctetSeqC.cpp:
+        * tao/OctetSeqC.h:
+        * tao/PI_ForwardC.cpp:
+        * tao/PI_ForwardC.h:
+        * tao/ParameterModeC.cpp:
+        * tao/ParameterModeC.h:
+        * tao/Pluggable_Messaging.h:
+        * tao/PolicyC.cpp:
+        * tao/PolicyC.h:
+        * tao/PolicyC.inl:
+        * tao/Policy_Current.h:
+        * tao/Policy_ForwardC.cpp:
+        * tao/Policy_ForwardC.h:
+        * tao/PortableInterceptorC.cpp:
+        * tao/PortableInterceptorC.h:
+        * tao/Profile.h:
+        * tao/Profile_Transport_Resolver.cpp:
+        * tao/Profile_Transport_Resolver.h:
+        * tao/Queued_Message.h:
+        * tao/Reactive_Connect_Strategy.h:
+        * tao/Resource_Factory.h:
+        * tao/Sequence.h:
+        * tao/ServicesC.cpp:
+        * tao/ServicesC.h:
+        * tao/ShortSeqC.cpp:
+        * tao/ShortSeqC.h:
+        * tao/StringSeqC.cpp:
+        * tao/StringSeqC.h:
+        * tao/Synch_Invocation.h:
+        * tao/TAOC.cpp:
+        * tao/TAOC.h:
+        * tao/TAO_Internal.h:
+        * tao/TAO_Server_Request.h:
+        * tao/TAO_Singleton_Manager.cpp:
+        * tao/TAO_Singleton_Manager.h:
+        * tao/Thread_Lane_Resources.h:
+        * tao/TimeBaseC.cpp:
+        * tao/TimeBaseC.h:
+        * tao/Transport_Acceptor.h:
+        * tao/Transport_Cache_Manager.h:
+        * tao/Transport_Connector.h:
+        * tao/Transport_Mux_Strategy.h:
+        * tao/Transport_Queueing_Strategies.h:
+        * tao/TypeCodeFactory_Adapter.h:
+        * tao/Typecode_typesC.cpp:
+        * tao/Typecode_typesC.h:
+        * tao/ULongLongSeqC.cpp:
+        * tao/ULongLongSeqC.h:
+        * tao/ULongSeqC.cpp:
+        * tao/ULongSeqC.h:
+        * tao/UShortSeqC.cpp:
+        * tao/UShortSeqC.h:
+        * tao/VarOut_T.cpp:
+        * tao/Var_Size_Argument_T.inl:
+        * tao/Versioned_Namespace.h:
+        * tao/WCharSeqC.cpp:
+        * tao/WCharSeqC.h:
+        * tao/WStringSeqC.cpp:
+        * tao/WStringSeqC.h:
+        * tao/Wait_Strategy.h:
+        * tao/WrongTransactionC.cpp:
+        * tao/WrongTransactionC.h:
+        * tao/default_resource.h:
+        * tao/orb_typesC.cpp:
+        * tao/orb_typesC.h:
+        * tao/target_specification.h:
+        * tao/target_specification.i:
+        * tao/AnyTypeCode/AnySeqA.cpp:
+        * tao/AnyTypeCode/AnySeqA.h:
+        * tao/AnyTypeCode/AnySeqC.cpp:
+        * tao/AnyTypeCode/AnySeqC.h:
+        * tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.cpp:
+        * tao/AnyTypeCode/Any_Impl.h:
+        * tao/AnyTypeCode/Any_Impl_T.h:
+        * tao/AnyTypeCode/Any_Impl_T.inl:
+        * tao/AnyTypeCode/Any_Unknown_IDL_Type.h:
+        * tao/AnyTypeCode/BooleanSeqA.cpp:
+        * tao/AnyTypeCode/BooleanSeqA.h:
+        * tao/AnyTypeCode/BoundsA.cpp:
+        * tao/AnyTypeCode/BoundsA.h:
+        * tao/AnyTypeCode/BoundsC.cpp:
+        * tao/AnyTypeCode/BoundsC.h:
+        * tao/AnyTypeCode/CONV_FRAMEA.cpp:
+        * tao/AnyTypeCode/CONV_FRAMEA.h:
+        * tao/AnyTypeCode/DynamicC.cpp:
+        * tao/AnyTypeCode/DynamicC.h:
+        * tao/AnyTypeCode/Dynamic_ParameterC.cpp:
+        * tao/AnyTypeCode/Dynamic_ParameterC.h:
+        * tao/AnyTypeCode/OctetSeqA.cpp:
+        * tao/AnyTypeCode/OctetSeqA.h:
+        * tao/AnyTypeCode/TypeCode_CDR_Extraction.h:
+        * tao/AnyTypeCode/ValueModifierC.cpp:
+        * tao/AnyTypeCode/ValueModifierC.h:
+        * tao/AnyTypeCode/VisibilityC.cpp:
+        * tao/AnyTypeCode/VisibilityC.h:
+        * tao/BiDir_GIOP/BiDirPolicyC.cpp:
+        * tao/BiDir_GIOP/BiDirPolicyC.h:
+        * tao/CodecFactory/IOP_CodecC.cpp:
+        * tao/CodecFactory/IOP_CodecC.h:
+        * tao/CodecFactory/IOP_Codec_includeC.h:
+        * tao/Codeset/Codeset_Translator_Factory.h:
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+        * tao/DynamicInterface/DII_Invocation_Adapter.h:
+        * tao/Messaging/AMH_Response_Handler.h:
+        * tao/Messaging/Asynch_Invocation.h:
+        * tao/Messaging/Asynch_Invocation_Adapter.h:
+        * tao/Messaging/Asynch_Reply_Dispatcher.h:
+        * tao/Messaging/Connection_Timeout_Policy_i.h:
+        * tao/PI/ClientRequestInfo.cpp:
+        * tao/PI/ClientRequestInfoC.h:
+        * tao/PI/ClientRequestInterceptorC.h:
+        * tao/PortableServer/IdUniquenessStrategyUnique.h:
+        * tao/PortableServer/Key_Adapters.h:
+        * tao/PortableServer/Servant_Dispatcher.cpp:
+        * tao/PortableServer/Servant_Dispatcher.h:
+        * tao/Utils/Synch_Refcountable.h:
+        * tao/Valuetype/Valuetype_Adapter_Impl.h:
 
-  	  Corrected build errors in versioned namespace builds.
+          Corrected build errors in versioned namespace builds.
 
 Wed Nov 23 22:24:38 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Event_Manager.h:
 
-	  Explicitly declared a private copy constructor and assignment
-	  operator for TAO_Notify_Event_Manager.  By not declaring them,
-	  the compiler has to generate them.  In generating them, it needs
-	  to be able to know the complete type for the template arguments
-	  to its ACE_Auto_Ptr<> private instances.  Various circular
-	  dependencies make that difficult to impossible without
-	  restructuring, so we take this approach instead.
+          Explicitly declared a private copy constructor and assignment
+          operator for TAO_Notify_Event_Manager.  By not declaring them,
+          the compiler has to generate them.  In generating them, it needs
+          to be able to know the complete type for the template arguments
+          to its ACE_Auto_Ptr<> private instances.  Various circular
+          dependencies make that difficult to impossible without
+          restructuring, so we take this approach instead.
 
-	  This change should eliminate warnings from Windows-based
-	  compilers (e.g., VC8) about calling delete through a pointer to
-	  an incomplete type while instantiating ACE_Auto_Ptr<> methods.
+          This change should eliminate warnings from Windows-based
+          compilers (e.g., VC8) about calling delete through a pointer to
+          an incomplete type while instantiating ACE_Auto_Ptr<> methods.
 
         * orbsvcs/orbsvcs/Notify/Object.h:
         * orbsvcs/orbsvcs/Notify/Object.cpp:
 
-	  Only needed a forward decl in Object.h; we only needed the
-	  complete type in Object.cpp.  Maybe this will help footprint.
+          Only needed a forward decl in Object.h; we only needed the
+          complete type in Object.cpp.  Maybe this will help footprint.
 
 Wed Nov 23 09:20:03 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
