@@ -1,3 +1,9 @@
+Fri Dec  2 10:26:33 2005  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* orbsvcs/orbsvcs/Notify/XML_Topology_Factory.h: Added 'extern'
+	  declaration in here as this seems to placate the VC8 compiler's
+	  errors.
+
 Fri Dec  2 11:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/SSLIOP/params_dup.h:
