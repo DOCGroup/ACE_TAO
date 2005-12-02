@@ -10,7 +10,9 @@
 #include "ace/FILE_IO.h"
 #include "ace/SOCK_Stream.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Message_Block;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 class Logging_Handler
 {

@@ -14,7 +14,9 @@
 #include "Logging_Handler.h"
 #include "Logging_Server.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_SOCK_Stream;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 class Iterative_Logging_Server : public Logging_Server
 {

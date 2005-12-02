@@ -18,9 +18,6 @@
 #ifndef JAWS_IO_H
 #define JAWS_IO_H
 
-class ACE_Message_Block;
-class JAWS_IO_Handler;
-
 #include "ace/ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -28,6 +25,13 @@ class JAWS_IO_Handler;
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Asynch_IO.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+class ACE_Message_Block;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+class JAWS_IO_Handler;
+
 
 class JAWS_IO
   // = TITLE
