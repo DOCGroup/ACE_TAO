@@ -99,8 +99,7 @@ namespace TAO
     /// assignment operator.
     inline String_var &operator= (String_var<character_type> const &s)
     {
-      // Do const cast to make sure we get the const constructor
-      String_var <charT> tmp (const_cast <const charT*>(s.ptr_));
+      String_var <charT> tmp (s);
       std::swap (this->ptr_, tmp.ptr_);
       return *this;
     }
@@ -208,7 +207,7 @@ namespace TAO
     }
 
     /// Assignment from a string_out.
-    inline String_out &operator= (const String_out<charT> &s)
+    inline String_out &operator= (String_out<charT> const &s)
     {
       this->ptr_ = s.ptr_;
       return *this;
