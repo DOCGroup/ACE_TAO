@@ -5623,7 +5623,7 @@ libTAO_SSLIOP_la_SOURCES = \
   SSLIOP/SSLIOP_TargetCredentials.cpp \
   SSLIOP/SSLIOP_Transport.cpp \
   SSLIOP/SSLIOP_Util.cpp \
-  SSLIOP/params_dup.cpp \
+  SSLIOP/params_dup.c \
   SSLIOP/ssl_endpointsC.cpp \
   SSLIOPC.cpp
 

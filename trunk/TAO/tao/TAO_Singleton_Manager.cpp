@@ -29,6 +29,28 @@ ACE_RCSID (tao,
            "$Id$")
 
 
+namespace
+{
+  // Singleton instance pointer.
+  TAO_Singleton_Manager * the_instance = 0;
+}
+
+#if (defined (ACE_HAS_VERSIONED_NAMESPACE) \
+     && ACE_HAS_VERSIONED_NAMESPACE == 1) \
+  && !(defined (_MSC_VER) && _MSC_VER <= 1200)
+// MSVC++ 6's preprocessor can't handle macro expansions required by
+// the versioned namespace support.  *sigh*
+
+# define TAO_SINGLETON_MANAGER_CLEANUP_DESTROYER_NAME ACE_PREPROC_CONCATENATE(TAO_VERSIONED_NAMESPACE_NAME, _TAO_Singleton_Manager_cleanup_destroyer)
+
+#else
+
+# define TAO_SINGLETON_MANAGER_CLEANUP_DESTROYER_NAME TAO_Singleton_Manager_cleanup_destroyer
+
+#endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
+
+// Adapter for cleanup, used to register cleanup function with the
+// ACE_Object_Manager.
 extern "C" void
 TAO_SINGLETON_MANAGER_CLEANUP_DESTROYER_NAME (void *, void *)
 {
@@ -37,18 +59,13 @@ TAO_SINGLETON_MANAGER_CLEANUP_DESTROYER_NAME (void *, void *)
   using namespace TAO_VERSIONED_NAMESPACE_NAME;
 #endif  /* TAO_HAS_VERSIONED_NAMESPACE */
 
-  if (TAO_Singleton_Manager::instance_)
+  if (the_instance)
     {
       (void) TAO_Singleton_Manager::instance ()->fini ();
     }
 }
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-TAO_Singleton_Manager *TAO_Singleton_Manager::instance_ = 0;
-
-void *TAO_Singleton_Manager::preallocated_object[
-  TAO_Singleton_Manager::TAO_PREALLOCATED_OBJECTS] = { 0 };
 
 TAO_Singleton_Manager::TAO_Singleton_Manager (void)
   // default_mask_ isn't initialized, because it's defined by <init>.
@@ -63,9 +80,9 @@ TAO_Singleton_Manager::TAO_Singleton_Manager (void)
 #endif  /* ACE_HAS_EXCEPTIONS */
 {
   // Be sure that no further instances are created via instance ().
-  if (instance_ == 0)
+  if (the_instance == 0)
     {
-      instance_ = this;
+      the_instance = this;
     }
 
   // @@ This is a hack.  Allow the TAO_Singleton_Manager to be registered
@@ -110,14 +127,14 @@ TAO_Singleton_Manager::instance (void)
   // instances, or before any other threads have been created in the
   // process.  So, it's not thread safe.
 
-  if (instance_ == 0)
+  if (the_instance == 0)
     {
       TAO_Singleton_Manager *instance_pointer;
 
       ACE_NEW_RETURN (instance_pointer,
                       TAO_Singleton_Manager,
                       0);
-      ACE_ASSERT (instance_pointer == instance_);
+      ACE_ASSERT (instance_pointer == the_instance);
 
       instance_pointer->dynamically_allocated_ = 1;
 
@@ -125,7 +142,7 @@ TAO_Singleton_Manager::instance (void)
     }
   else
     {
-      return instance_;
+      return the_instance;
     }
 }
 
@@ -153,7 +170,7 @@ TAO_Singleton_Manager::init (int register_with_object_manager)
       // initialized.
       this->object_manager_state_ = OBJ_MAN_INITIALIZING;
 
-      if (this == instance_)
+      if (this == the_instance)
         {
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
           // @@ No MT-specific pre-allocated objects.
@@ -213,7 +230,7 @@ TAO_Singleton_Manager::init (int register_with_object_manager)
 int
 TAO_Singleton_Manager::fini (void)
 {
-  if (instance_ == 0  ||  this->shutting_down_i ())
+  if (the_instance == 0  ||  this->shutting_down_i ())
     // Too late.  Or, maybe too early.  Either fini () has already
     // been called, or init () was never called.
     return this->object_manager_state_ == OBJ_MAN_SHUT_DOWN  ?  1  :  -1;
@@ -237,18 +254,18 @@ TAO_Singleton_Manager::fini (void)
   // registration.
   this->exit_info_.call_hooks ();
 
-  // Only clean up preallocated objects when the singleton Instance is being
-  // destroyed.
-  if (this == instance_)
-    {
-#if ! defined (ACE_HAS_STATIC_PREALLOCATION)
-      // Cleanup the dynamically preallocated objects.
-# if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-      // @@ No MT-specific preallocated objects yet.
-# endif  /* ACE_MT_SAFE */
-      // @@ No preallocated objects yet.
-#endif  /* ! ACE_HAS_STATIC_PREALLOCATION */
-    }
+//   // Only clean up preallocated objects when the singleton Instance is being
+//   // destroyed.
+//   if (this == the_instance)
+//     {
+// #if ! defined (ACE_HAS_STATIC_PREALLOCATION)
+//       // Cleanup the dynamically preallocated objects.
+// # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+//       // @@ No MT-specific preallocated objects yet.
+// # endif  /* ACE_MT_SAFE */
+//       // @@ No preallocated objects yet.
+// #endif  /* ! ACE_HAS_STATIC_PREALLOCATION */
+//     }
 
   delete this-> default_mask_;
   this->default_mask_ = 0;
@@ -274,8 +291,8 @@ TAO_Singleton_Manager::fini (void)
   // Indicate that this TAO_Singleton_Manager instance has been shut down.
   this->object_manager_state_ = OBJ_MAN_SHUT_DOWN;
 
-  if (this == instance_)
-    instance_ = 0;
+  if (this == the_instance)
+    the_instance = 0;
 
   if (this->dynamically_allocated_)
     {
@@ -288,16 +305,18 @@ TAO_Singleton_Manager::fini (void)
 int
 TAO_Singleton_Manager::starting_up (void)
 {
-  return TAO_Singleton_Manager::instance_
-    ? instance_->starting_up_i ()
+  return
+    the_instance
+    ? the_instance->starting_up_i ()
     : 1;
 }
 
 int
 TAO_Singleton_Manager::shutting_down (void)
 {
-  return TAO_Singleton_Manager::instance_
-    ? instance_->shutting_down_i ()
+  return
+    the_instance
+    ? the_instance->shutting_down_i ()
     : 1;
 }
 
@@ -328,7 +347,7 @@ TAO_Singleton_Manager::at_exit_i (void *object,
 {
   ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
                             ace_mon,
-                            *instance_->internal_lock_,
+                            *the_instance->internal_lock_,
                             -1));
 
   if (this->shutting_down_i ())
