@@ -1,3 +1,11 @@
+Fri Dec  2 11:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/sys/os_stat.h:
+        * ace/os_include/sys/os_timeb.h:
+          Made some workarounds for Borland specific on the BCB version.
+          That way we can remove them easier in the future when we
+          deprecated certain releases
+
 Fri Dec  2 01:25:52 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Versioned_Namespace.h:
