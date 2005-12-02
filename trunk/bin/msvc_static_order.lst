@@ -87,6 +87,7 @@ TAO/orbsvcs/orbsvcs/CosLoadBalancing
 TAO/orbsvcs/orbsvcs/IFRService
 TAO/orbsvcs/orbsvcs/RTCORBAEvent
 TAO/orbsvcs/orbsvcs/RT_Notification
+TAO/orbsvcs/orbsvcs/RTEventLogAdmin
 TAO/orbsvcs/orbsvcs/Security
 TAO/orbsvcs/Naming_Service/Naming_Service
 TAO/orbsvcs/ImplRepo_Service/ImR_Activator_IDL
