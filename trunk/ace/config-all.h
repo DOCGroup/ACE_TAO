@@ -23,13 +23,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// ============================================================================
-// UNICODE macros (to be added later)
-// ============================================================================
-
-// Get the unicode (i.e. ACE_TCHAR) defines
-# include "ace/ace_wchar.h"
-
 # if defined (VXWORKS)
 #   if defined (ghs)
     // GreenHills 1.8.8 needs the stdarg.h #include before the #include of

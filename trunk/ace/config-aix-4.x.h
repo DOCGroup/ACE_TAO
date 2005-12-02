@@ -86,7 +86,9 @@
 # endif /* !ACE_MT_SAFE */
 
 #else  /* ! __xlC__ && ! __GNUG__ */
-# error unsupported compiler in ace/config-aix-4.x.h
+#  ifdef __cplusplus  /* Let it slide for C compilers. */
+#    error unsupported compiler in ace/config-aix-4.x.h
+#  endif  /* __cplusplus */
 #endif /* ! __xlC__ && ! __GNUG__ */
 
 

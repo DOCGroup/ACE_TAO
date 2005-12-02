@@ -130,7 +130,9 @@
 # include "ace/config-kcc-common.h"
 
 #else  /* ! __SUNPRO_CC && ! __GNUG__  && ! ghs */
-# error unsupported compiler in ace/config-sunos5.5.h
+#  ifdef __cplusplus  /* Let it slide for C compilers. */
+#    error unsupported compiler in ace/config-sunos5.5.h
+#  endif /* __cplusplus */
 #endif /* ! __SUNPRO_CC && ! __GNUG__  && ! ghs */
 
 #if !defined (__ACE_INLINE__)

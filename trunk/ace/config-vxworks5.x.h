@@ -95,7 +95,9 @@
 # define ACE_TEMPLATES_REQUIRE_SOURCE
 
 #else  /* ! __GNUG__ && ! ghs && !__DCC__ */
-# error unsupported compiler on VxWorks
+#  ifdef __cplusplus  /* Let it slide for C compilers. */
+#    error unsupported compiler on VxWorks
+#  endif  /* __cplusplus */
 #endif /* ! __GNUG__ && ! ghs */
 
 // OS-specific configuration

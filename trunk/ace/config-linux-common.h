@@ -215,8 +215,19 @@
 # define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 # define ACE_LACKS_SWAB
 # undef ACE_HAS_CLOCK_GETTIME
+#elif defined (__GNUC__)
+/**
+ * GNU C compiler.
+ *
+ * We need to recognize the GNU C compiler since TAO has at least one
+ * C source header and file
+ * (TAO/orbsvcs/orbsvcs/SSLIOP/params_dup.{h,c}) that may indirectly
+ * include this
+ */
 #else  /* ! __GNUG__ && ! __KCC && !__DECCXX && !__INTEL_COMPILER && !__BORLANDC__ && !__PGI */
-# error unsupported compiler in ace/config-linux-common.h
+#  ifdef __cplusplus  /* Let it slide for C compilers. */
+#    error unsupported compiler in ace/config-linux-common.h
+#  endif  /* __cplusplus */
 #endif /* ! __GNUG__ && ! __KCC */
 
 // Completely common part :-)
