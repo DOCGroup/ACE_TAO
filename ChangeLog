@@ -45,7 +45,7 @@ Sat Dec  3 11:51:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* ace/SSL/SSL_Asynch_Stream.cpp (open):
 
 	  Updated name of BIO factory function.
-	  
+
 	* ace/SSL/SSL_Asynch_Stream.h:
 
 	  Removed unnecessary free function prototypes.
