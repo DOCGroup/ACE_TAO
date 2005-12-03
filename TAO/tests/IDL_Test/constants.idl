@@ -48,7 +48,7 @@ const char fivebits = '\x32';
 const char maybe_minus = '\xAf';
 const char max_char_hex = '\xff';
 
-const wstring wstr = L"wstr";
+// const wstring wstr = L"wstr";
 
 // unsigned longs greater than LONG_MAX
 
@@ -97,14 +97,14 @@ module ClassConstants
   {
     const long iface_long = 55;
     const string iface_str = "iface_str";
-    const wstring iface_wstr = L"iface_wstr";
+//    const wstring iface_wstr = L"iface_wstr";
   };
 
   valuetype Vt
   {
     const double vt_long = 66.66;
     const string vt_str = "vt_str";
-    const wstring vt_wstr = L"vt_wstr";
+//    const wstring vt_wstr = L"vt_wstr";
   };
 };
 
