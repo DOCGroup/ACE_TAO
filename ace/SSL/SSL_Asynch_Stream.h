@@ -29,11 +29,6 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
 
-extern "C"
-{
-  BIO_METHOD * BIO_s_ACE_Asynch (void);
-  BIO * BIO_new_ACE_Asynch (void *ssl_asynch_stream);
-}
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -42,6 +37,8 @@ class ACE_SSL_Asynch_Result;
 class ACE_SSL_Asynch_Read_Stream_Result;
 class ACE_SSL_Asynch_Write_Stream_Result;
 
+struct ACE_SSL_bio_read;
+struct ACE_SSL_bio_write;
 
 /**
  * @class ACE_SSL_Asynch_Stream
@@ -60,10 +57,15 @@ class ACE_SSL_Export ACE_SSL_Asynch_Stream
   : public ACE_Asynch_Operation,
     public ACE_Service_Handler
 {
-  friend int ::ACE_Asynch_BIO_read (BIO * pBIO, char * buf, int len);
-  friend int ::ACE_Asynch_BIO_write (BIO * pBIO, const char * buf, int len);
-
 public:
+
+  // Use a class/struct instead of function to work around scoping
+  // problems in some compilers.  For example, some can't handle
+  //
+  //   friend ::some_free_function (...)
+  //
+  friend struct ACE_SSL_bio_read;
+  friend struct ACE_SSL_bio_write;
 
   enum Stream_Type
     {

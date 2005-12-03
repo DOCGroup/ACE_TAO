@@ -1,3 +1,61 @@
+Sat Dec  3 11:51:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Base_Thread_Adapter.h:
+
+	  Removed unnecessary "ace/Global_Macros.h" include directive in
+	  versioned namespace case.
+
+	* ace/SSL/SSL_Asynch_BIO.cpp:
+
+	  Fixed versioned namespace support for free functions in this
+	  file.
+
+	  (BIO_s_Asynch):
+
+	  Removed this unnecessary function.  It simply returned the
+	  address of a global object.  Just take the address directly in
+	  the calling code.
+
+	  (BIO_new_ACE_Asynch, ACE_SSL_make_BIO):
+
+	  Renamed BIO factory function to "ACE_SSL_make_BIO", which is
+	  more consistent with ACE naming conventions.  Removed extern "C"
+	  declaration, as well, since there's no need for it to be so.
+
+	  (ACE_SSL_bio_read, ACE_SSL_bio_write):
+
+	  New functors that that make the necessary calls on the
+	  ACE_SSL_Asynch_Stream object.
+
+	  (ACE_Asynch_BIO_read, ACE_Asynch_BIO_write):
+
+	  Use new ACE_SSL_bio_{read,write} functors instead of making
+	  direct calls on the ACE_SSL_Asynch_Stream object.
+
+	* ace/SSL/SSL_Asynch_BIO.h:
+
+	  Moved extern "C" BIO callback function prototypes to
+	  SSL_Asynch_BIO.cpp.  There's no need for them to be visibile to
+	  the user.
+
+	  Renamed BIO factory function to "ACE_SSL_make_BIO", which is
+	  more consistent with ACE naming conventions.  Removed extern "C"
+	  declaration, as well, since there's no need for it to be so.
+
+	* ace/SSL/SSL_Asynch_Stream.cpp (open):
+
+	  Updated name of BIO factory function.
+	  
+	* ace/SSL/SSL_Asynch_Stream.h:
+
+	  Removed unnecessary free function prototypes.
+
+	  (ACE_SSL_Asynch_Stream):
+
+	  Replaced friend function declarations with friend structure
+	  (used as functors) declarations.  Works around scope qualifier
+	  problems in Sun compilers when used on free functions.
+
 Fri Dec  2 10:27:47 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/msvc_static_order.lst:

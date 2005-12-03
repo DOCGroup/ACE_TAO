@@ -223,7 +223,6 @@ ACE_SSL_Asynch_Stream::~ACE_SSL_Asynch_Stream (void)
                   ACE_TEXT("if proactor still handles events\n")));
 
   ::SSL_free (this->ssl_);
-  this->ssl_ = 0;
 
   // Was honestly copied from ACE_SSL_SOCK_Stream :)
 
@@ -348,7 +347,7 @@ ACE_SSL_Asynch_Stream::open (ACE_Handler & handler,
                                this->proactor_) != 0)
     return -1;
 
-  this->bio_ = ::BIO_new_ACE_Asynch (this);
+  this->bio_ = ACE_SSL_make_BIO (this);
 
   if (this->bio_ == 0)
     ACE_ERROR_RETURN
@@ -783,15 +782,15 @@ ACE_SSL_Asynch_Stream::notify_read (int bytes_transferred,
   if (ext_read_result_ == 0) //nothing to notify
     return 1;
 
-  ext_read_result_->set_bytes_transferred (bytes_transferred);
-  ext_read_result_->set_error (error);
+  this->ext_read_result_->set_bytes_transferred (bytes_transferred);
+  this->ext_read_result_->set_error (error);
 
-  int retval =  ext_read_result_->post_completion
-                   (proactor_->implementation());
+  int retval =
+    this->ext_read_result_->post_completion (proactor_->implementation ());
 
   if (retval == 0)
     {
-      ext_read_result_ = 0;
+      this->ext_read_result_ = 0;
       return 0;  // success
     }
 
