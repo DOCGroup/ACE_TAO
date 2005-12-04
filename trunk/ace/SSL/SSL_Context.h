@@ -287,18 +287,13 @@ private:
   void ssl_library_init ();
   void ssl_library_fini ();
 
-  // = Prevent assignment and initialization.
+  // = Prevent assignment and copy initialization.
   //@{
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_SSL_Context &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_SSL_Context (const ACE_SSL_Context &))
+  ACE_SSL_Context (const ACE_SSL_Context &);
+  ACE_SSL_Context & operator= (const ACE_SSL_Context &);
   //@}
 
 private:
-  // @@ Carlos, I protected this variable with an ACE_GUARD, just like
-  //    what we do for the orb_init_count_ variable in
-  //    tao/ORB.cpp.   The code isn't pretty but it should suffice
-  //    until the SSL context is stored in a Singleton.
-  //       -Ossama
 
   /// The SSL_CTX structure
   SSL_CTX *context_;

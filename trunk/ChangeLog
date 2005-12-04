@@ -1,4 +1,4 @@
-Sat Dec  3 17:47:29 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+Sat Dec  3 17:56:04 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/SSL/SSL_Asynch_BIO.cpp:
 	* ace/SSL/SSL_Asynch_Stream.h:
@@ -9,6 +9,10 @@ Sat Dec  3 17:47:29 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  Documented why a structure is used instead of a free
 	  function.
+
+	* ace/SSL/SSL_Context.h:
+
+	  Removed obsolete comment.
 
 Sat Dec  3 11:51:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
