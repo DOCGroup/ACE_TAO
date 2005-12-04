@@ -18,6 +18,14 @@
 
 using namespace TAO_Notify;
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace TAO_Notify {
+  extern const char TOPOLOGY_ID_NAME[];
+}
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
 namespace {
   CORBA::Long makeNVPList (NVPList& nvp, ACEXML_Attributes* attrs)
   {
@@ -26,7 +34,8 @@ namespace {
     {
       const char * name = attrs->getQName (i);
       const char * value = attrs->getValue (i);
-      if (ACE_OS::strcmp (name, TOPOLOGY_ID_NAME) == 0)
+      if (ACE_OS::strcmp (name, 
+                         TAO_VERSIONED_NAMESPACE_NAME::TAO_Notify::TOPOLOGY_ID_NAME) == 0)
       {
         id = ACE_OS::atoi (value);
       }
@@ -37,10 +46,6 @@ namespace {
 }
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-namespace TAO_Notify {
-  extern const char TOPOLOGY_ID_NAME[];
-}
 
 namespace TAO_Notify
 {
