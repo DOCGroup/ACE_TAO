@@ -57,6 +57,7 @@ static const char copyright[] =
 
 TAO_NL::TAO_NL (void)
 {
+  ACE_UNUSED_ARG (copyright);
 }
 
 TAO_INDENT::TAO_INDENT (int do_now)
