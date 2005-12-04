@@ -1,3 +1,10 @@
+Sun Dec  4 11:13:32 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/StaticConfigurator/StaticDAnCEParser.mpc
+	* DAnCE/tests/Config_Handlers/handler_test.mpb
+
+	Fix linking errors on Tiger. 
+
 Fri Dec  2 11:25:48 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/RepositoryManager/RepositoryManager.idl

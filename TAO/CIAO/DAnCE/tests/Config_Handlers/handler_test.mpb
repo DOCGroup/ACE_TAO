@@ -1,6 +1,6 @@
 //$Id$
 
-project : taoexe, ciao_server_dnc, ciao_deployment_stub, xerces  {
+project : taoexe, ciao_component_dnc, xerces  {
   dynamicflags   = CONFIG_HANDLER_BUILD_DLL
   requires += exceptions
   includes += $(ACE_ROOT)/TAO/CIAO/DAnCE
