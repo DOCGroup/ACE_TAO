@@ -37,8 +37,10 @@ class ACE_SSL_Asynch_Result;
 class ACE_SSL_Asynch_Read_Stream_Result;
 class ACE_SSL_Asynch_Write_Stream_Result;
 
-struct ACE_SSL_bio_read;
-struct ACE_SSL_bio_write;
+
+// Only provide forward declarations to prevent possible abuse of the
+// friend declarations in ACE_SSL_Asynch_Stream.
+struct ACE_SSL_Asynch_Stream_Accessor;
 
 /**
  * @class ACE_SSL_Asynch_Stream
@@ -59,13 +61,17 @@ class ACE_SSL_Export ACE_SSL_Asynch_Stream
 {
 public:
 
-  // Use a class/struct instead of function to work around scoping
-  // problems in some compilers.  For example, some can't handle
+  // Use a class/struct to work around scoping
+  // problems for extern "C" free functions with some compilers.  For
+  // example, some can't handle 
   //
-  //   friend ::some_free_function (...)
+  //   friend ::some_extern_c_free_function (...)
   //
-  friend struct ACE_SSL_bio_read;
-  friend struct ACE_SSL_bio_write;
+  // Note that we could use a straight C++ (i.e. not extern "C") free
+  // function, but using a class or struct allows us to hide the
+  // interface from the user, which prevents abuse of this friend
+  // relationship.
+  friend struct ACE_SSL_Asynch_Stream_Accessor;
 
   enum Stream_Type
     {

@@ -1,3 +1,15 @@
+Sat Dec  3 17:47:29 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/SSL/SSL_Asynch_BIO.cpp:
+	* ace/SSL/SSL_Asynch_Stream.h:
+
+	  Replaced ACE_SSL_bio_{read,write} functors with a single
+	  structure containing static read() and write() methods.
+	  Functors are overkill in this case.
+
+	  Documented why a structure is used instead of a free
+	  function.
+
 Sat Dec  3 11:51:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Base_Thread_Adapter.h:

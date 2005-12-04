@@ -85,35 +85,36 @@ ACE_SSL_make_BIO (void * ssl_asynch_stream)
   return pBIO;
 }
 
-// Have some fun with functors.  :-)
-struct ACE_SSL_bio_read
+/**
+ * @struct @c ACE_SSL_Asynch_Stream_Accessor
+ *
+ * @brief Privileged @c ACE_SSL_Asynch_Stream accessor.
+ *
+ * This structure is a @c friend to the @c ACE_SSL_Asynch_Stream
+ * class so that it can gain access to the protected
+ * ssl_bio_{read,write}() methods in that class.  It is full declared
+ * in this implementation file to hide its interface from users to
+ * prevent potential abuse of the friend relationship between it and
+ * the @c ACE_SSL_Asynch_Stream class.
+ */
+struct ACE_SSL_Asynch_Stream_Accessor
 {
-  int operator () (ACE_SSL_Asynch_Stream * stream,
-                   char * buf,
-                   size_t len,
-                   int & errval)
+  static int read (ACE_SSL_Asynch_Stream * stream,
+               char * buf,
+               size_t len,
+               int & errval)
   {
     return stream->ssl_bio_read (buf, len, errval);
   }
-};
 
-struct ACE_SSL_bio_write
-{
-  int operator () (ACE_SSL_Asynch_Stream * stream,
-                   const char * buf,
-                   size_t len,
-                   int & errval)
+  static int write (ACE_SSL_Asynch_Stream * stream,
+                    const char * buf,
+                    size_t len,
+                    int & errval)
   {
     return stream->ssl_bio_write (buf, len, errval);
   }
 };
-
-namespace
-{
-  // Global instances are okay since the they are stateless.
-  ACE_SSL_bio_read  ace_ssl_bio_reader;
-  ACE_SSL_bio_write ace_ssl_bio_writer;
-}
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
@@ -160,10 +161,10 @@ ACE_ASYNCH_BIO_READ_NAME (BIO * pBIO, char * buf, int len)
   int errval = 0;
 
   int retval =
-    ace_ssl_bio_reader (p_stream,
-                        buf,
-                        len,
-                        errval);
+    ACE_SSL_Asynch_Stream_Accessor::read (p_stream,
+                                          buf,
+                                          len,
+                                          errval);
 
   if (retval >= 0)
     return retval;
@@ -190,10 +191,10 @@ ACE_ASYNCH_BIO_WRITE_NAME (BIO * pBIO, const char * buf, int len)
   int errval = 0;
 
   int retval =
-    ace_ssl_bio_writer (p_stream,
-                        buf,
-                        len,
-                        errval);
+        ACE_SSL_Asynch_Stream_Accessor::write (p_stream,
+                                               buf,
+                                               len,
+                                               errval);
 
   if (retval >= 0)
     return retval;
