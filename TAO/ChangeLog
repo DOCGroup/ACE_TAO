@@ -1,3 +1,10 @@
+Sun Dec  4 11:34:11 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Notify/XML_Loader.cpp
+
+	Moved definition of TOPOLOGY_ID_NAME earier in the file to avoid
+	undefined argument error.
+
 Sun Dec  4 11:14:45 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_helper.cpp
