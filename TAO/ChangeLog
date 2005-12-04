@@ -1,3 +1,10 @@
+Sat Dec  3 20:54:28 2005  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* orbsvcs/orbsvcs/Notify/XML_Loader.cpp: Moved the namespace decl
+	  for TOPOLOGY_ID_NAME inside the VERSIONED_NAMESPACE_DECL block
+	  to fix broken versioned namespace builds.  Thanks to Ossama for
+	  pointing this out.
+
 Sat Dec  3 19:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/QtTests/QtTests.mpc:

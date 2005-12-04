@@ -18,10 +18,6 @@
 
 using namespace TAO_Notify;
 
-namespace TAO_Notify {
-  extern const char TOPOLOGY_ID_NAME[];
-}
-
 namespace {
   CORBA::Long makeNVPList (NVPList& nvp, ACEXML_Attributes* attrs)
   {
@@ -41,6 +37,10 @@ namespace {
 }
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace TAO_Notify {
+  extern const char TOPOLOGY_ID_NAME[];
+}
 
 namespace TAO_Notify
 {
