@@ -1,3 +1,10 @@
+Sun Dec  4 06:49:59 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/SSL/SSL_Context.cpp:
+
+	  Use an ACE_Thread_Mutex instead of ACE_Mutex.  The former is
+	  faster and lighter weight.
+
 Sat Dec  3 17:56:04 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/SSL/SSL_Asynch_BIO.cpp:
