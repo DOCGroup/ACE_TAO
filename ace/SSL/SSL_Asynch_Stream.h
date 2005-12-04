@@ -176,6 +176,12 @@ protected:
   int ssl_bio_write (const char * buf, size_t len, int & errval);
   //@}
 
+private:
+
+  // Preventing copying through construction or assignment.
+  ACE_SSL_Asynch_Stream (ACE_SSL_Asynch_Stream const &);
+  ACE_SSL_Asynch_Stream & operator= (ACE_SSL_Asynch_Stream const &);
+
 protected:
 
   /// Stream Type ST_CLIENT/ST_SERVER
