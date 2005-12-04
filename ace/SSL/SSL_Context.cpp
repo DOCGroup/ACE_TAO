@@ -337,7 +337,7 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file, const char* ca_dir)
           || mode_ == SSLv2_server)
         {
           STACK_OF (X509_NAME) * cert_names;
-          cert_names = ::SSL_CTX_get_client_CA_list(this->context_);
+          cert_names = ::SSL_CTX_get_client_CA_list (this->context_);
 
           if (cert_names == 0)
             {
@@ -526,8 +526,8 @@ ACE_SSL_Context::dh_params (const char *file_name,
       return -1;
 
     // Swiped from Rescorla's examples and the OpenSSL s_server.c app
-    DH *ret=0;
-    BIO *bio = 0;
+    DH * ret=0;
+    BIO * bio = 0;
 
     if ((bio = ::BIO_new_file (this->dh_params_.file_name (), "r")) == NULL)
       return -1;

@@ -191,10 +191,10 @@ ACE_ASYNCH_BIO_WRITE_NAME (BIO * pBIO, const char * buf, int len)
   int errval = 0;
 
   int retval =
-        ACE_SSL_Asynch_Stream_Accessor::write (p_stream,
-                                               buf,
-                                               len,
-                                               errval);
+    ACE_SSL_Asynch_Stream_Accessor::write (p_stream,
+                                           buf,
+                                           len,
+                                           errval);
 
   if (retval >= 0)
     return retval;
