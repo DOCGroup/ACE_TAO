@@ -16,7 +16,8 @@
 #include "ace/OS_NS_string.h"
 
 #ifdef ACE_HAS_THREADS
-# include "ace/Mutex.h"
+# include "ace/Thread_Mutex.h"
+# include "ace/Synch_Traits.h"
 # include "ace/Auto_Ptr.h"
 # include "ace/OS_NS_Thread.h"
 #endif  /* ACE_HAS_THREADS */
@@ -42,7 +43,7 @@ namespace
 #ifdef ACE_HAS_THREADS
   /// Array of mutexes used internally by OpenSSL when the SSL
   /// application is multithreaded.
-  ACE_Auto_Basic_Array_Ptr<ACE_Mutex> ssl_locks;
+  ACE_Auto_Basic_Array_Ptr<ACE_SYNCH_MUTEX> ssl_locks;
 
   // @@ This should also be managed by a singleton.
 #endif
@@ -151,7 +152,7 @@ ACE_SSL_Context::ssl_library_init (void)
 #ifdef ACE_HAS_THREADS
       int const num_locks = ::CRYPTO_num_locks ();
 
-      ssl_locks.reset (new ACE_Mutex[num_locks]);
+      ssl_locks.reset (new ACE_SYNCH_MUTEX[num_locks]);
 
 # if !defined (WIN32)
       // This call isn't necessary on some platforms.  See the CRYPTO
