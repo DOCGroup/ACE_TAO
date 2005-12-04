@@ -82,8 +82,14 @@ PLANNED MAJOR CHANGES FOR THE NEXT RELEASE
 
 . Integrate various Pub/Sub services into CIAO and DAnCE.
 
+. Move new_RepositoryManager to RepositoryManager
+
 USER VISIBLE CHANGES BETWEEN CIAO-0.4.7 and CIAO-0.4.8
 ======================================================
+. The deprecated RepositoryManager implementation, under
+  DAnCE/RepositoryManager, has been removed from this release. Please
+  use the Plan_Launcher and flattened deployment plans to deploy
+  component assemblies.  
 
 . The CIDL compiler frontend now supports constants, const expressions,
   bounded strings, bounded sequences, and arrays.
