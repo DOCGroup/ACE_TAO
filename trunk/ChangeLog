@@ -1,3 +1,16 @@
+Mon Dec  5 08:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-borland.h:
+        * ace/config-win32-dmc.h:
+        * ace/OS_NS_stdio.inl:
+          Introduced new macros ACE_HAS_NONCONST_TEMPNAM and
+          ACE_HAS_NONCONST_FDOPEN. Borland C++ Builder 6 and previous had
+          non compliant non const methods but this is now corrected in
+          BDS2006, so instead of hacking also a version check in the
+          OS_NS_stdio.inl just check for a define and set this in the borland
+          config file. Also DMC seems to have one incorrect signature
+          so also set it there.
+
 Sun Dec  4 06:49:59 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/SSL/SSL_Context.cpp:
