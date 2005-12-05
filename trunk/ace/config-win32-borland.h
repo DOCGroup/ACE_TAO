@@ -88,6 +88,9 @@
 
 #if (__BORLANDC__ < 0x580)
 # define ACE_LACKS_INTPTR_T
+# define ACE_HAS_NONCONST_SWAB
+# define ACE_HAS_NONCONST_TEMPNAM
+# define ACE_HAS_NONCONST_FDOPEN
 #endif
 
 #if (__BORLANDC__ >= 0x600)
@@ -104,7 +107,6 @@
 # define ACE_STRCASECMP_EQUIVALENT ::stricmp
 # define ACE_STRNCASECMP_EQUIVALENT ::strnicmp
 # define ACE_HAS_ITOA 1
-# define ACE_HAS_NONCONST_SWAB
 #endif
 
 #include /**/ "ace/post.h"
