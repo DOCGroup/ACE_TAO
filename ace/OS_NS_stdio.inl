@@ -989,8 +989,8 @@ ACE_OS::tempnam (const char *dir, const char *pfx)
   // pSOS only considers the directory prefix
   ACE_UNUSED_ARG (pfx);
   ACE_OSCALL_RETURN (::tmpnam (const_cast <char *> (dir)), char *, 0);
-#elif defined (ACE_WIN32) && defined (ACE_HAS_NONCONST_TEMPNAM)
-  ACE_OSCALL_RETURN (::_tempnam (const_cast <char *> (dir), const_cast<char *> (pfx)), char *, 0);
+#elif defined (ACE_HAS_NONCONST_TEMPNAM)
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::tempnam (const_cast <char *> (dir), const_cast<char *> (pfx)), char *, 0);
 #else /* ACE_LACKS_TEMPNAM */
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::tempnam (dir, pfx), char *, 0);
 #endif /* ACE_LACKS_TEMPNAM */
