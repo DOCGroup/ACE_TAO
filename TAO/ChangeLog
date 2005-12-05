@@ -1,3 +1,8 @@
+Mon Dec  5 19:43:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_2137_Regression/client.cpp:
+          Added include of PI/PI.h to fix test failures in static builds
+
 Mon Dec  5 14:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/releasenotes/index.html:
