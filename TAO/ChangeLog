@@ -1,3 +1,8 @@
+Mon Dec  5 14:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/releasenotes/index.html:
+          Small improvements
+
 Sun Dec  4 11:34:11 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Notify/XML_Loader.cpp
