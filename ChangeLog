@@ -2682,16 +2682,16 @@ Thu Oct 20 08:53:47 2005  Arvind S. Krishna  <arvindk@doc.dre.vanderbilt.edu>
         * ace/Message_Block.cpp:
 
           CORBA specification mandates alignment of basic types to their
-          natural boundaries. However, in certain situations (1) where
-          such alignment is not needed by the platform and/or (2)
-          homogeneous systems exists on the client and server sides, this
-          alignment can be ignored to improve (de)marshaling
-          efficiency. This commit adds the ACE_LACKS_CDR_ALIGNMENT flag to
-          the CDR streams that enables applications to ignore alignment
-          during (de)marshaling. This macro should be used when ACE_CDR is
-          both the (de)marshaler. Additionally, use this option only when
-          byte orders of the two machines are the same.  This restriction
-          is temporary and will be removed in a subsequent commit.
+ 	  natural boundaries. However, in certain situations (1) where
+ 	  such alignment is not needed by the platform and/or (2)
+ 	  homogeneous systems exists on the client and server sides, this
+ 	  alignment can be ignored to improve (de)marshaling
+ 	  efficiency. This commit adds the ACE_LACKS_CDR_ALIGNMENT flag to
+ 	  the CDR streams that enables applications to ignore alignment
+ 	  during (de)marshaling. This macro should be used when ACE_CDR is
+ 	  both the (de)marshaler. Additionally, use this option only when
+ 	  byte orders of the two machines are the same.  This restriction
+ 	  is temporary and will be removed in a subsequent commit.
 
 Thu Oct 29 11:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
