@@ -157,7 +157,7 @@ TAO_CEC_TypedEventChannel::supported_interface (void) const
   return this->supported_interface_.c_str ();
 }
 
-ACE_INLINE CORBA::RepositoryId const
+ACE_INLINE const CORBA::RepositoryId
 TAO_CEC_TypedEventChannel::base_interfaces (CORBA::ULong index) const
 {
   return const_cast <CORBA::RepositoryId const>(this->base_interfaces_[index]);
