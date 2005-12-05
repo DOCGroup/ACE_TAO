@@ -4,6 +4,7 @@
 #include "ace/Get_Opt.h"
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
 #include "tao/corba.h"
+#include "tao/PI/PI.h"
 
 CORBA::ORB_var orb = CORBA::ORB::_nil ();
 
