@@ -19,7 +19,7 @@ project (ExecutionManager_stub): ciao_component_dnc {
   }
 }
 
-project(ExecutionManager): ciao_component_dnc, ciao_config_handlers {
+project(ExecutionManager): ciao_component_dnc {
 
   exename = Execution_Manager
 
