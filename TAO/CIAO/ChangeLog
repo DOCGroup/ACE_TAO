@@ -1,3 +1,9 @@
+Mon Dec  5 14:43:48 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/ExecutionManager/ExecutionManager.mpc
+
+	Removed superfluous dependancy on Xerces. 
+
 Sun Dec  4 11:13:32 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/StaticConfigurator/StaticDAnCEParser.mpc
