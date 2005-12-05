@@ -64,23 +64,23 @@ namespace TAO
     {
     }
 
-    /// constructor. Makes a copy of p.
+    /// Constructor. Makes a copy of p.
     inline String_var (const character_type *p) : ptr_ (s_traits::duplicate (p))
     {
     }
 
-    /// copy constructor.
+    /// Copy constructor.
     inline String_var (String_var<charT> const &s) : ptr_(s_traits::duplicate(s.ptr_))
     {
     }
 
-    /// destructor.
+    /// Destructor.
     inline ~String_var (void)
     {
       s_traits::release (this->ptr_);
     }
 
-    /// assignment operator.
+    /// Assignment operator.
     inline String_var &operator= (character_type *p)
     {
       String_var <charT> tmp (p);
@@ -88,7 +88,7 @@ namespace TAO
       return *this;
     }
 
-    /// assignment to a const char*.  Makes a copy.
+    /// Assignment to a const char*.  Makes a copy.
     inline String_var &operator= (const character_type *p)
     {
       String_var <charT> tmp (p);
@@ -96,7 +96,7 @@ namespace TAO
       return *this;
     }
 
-    /// assignment operator.
+    /// Assignment operator.
     inline String_var &operator= (String_var<character_type> const &s)
     {
       String_var <charT> tmp (s);
@@ -110,39 +110,39 @@ namespace TAO
       return this->ptr_;
     }
 
-    /// only read privileges.
+    /// Only read privileges.
     inline operator const character_type *() const
     {
       return this->ptr_;
     }
 
-    /// allows access and modification using an slot.
+    /// Allows access and modification using an slot.
     inline character_type &operator[] (CORBA::ULong slot)
     {
       // We need to verify bounds else raise some exception.
       return this->ptr_[slot];
     }
 
-    /// allows only accessing thru an slot.
+    /// Allows only accessing thru an slot.
     inline character_type operator[] (CORBA::ULong slot) const
     {
       // We need to verify bounds else raise some exception.
       return this->ptr_[slot];
     }
 
-    /// for in parameter.
+    /// For in parameter.
     inline const character_type *in (void) const
     {
       return this->ptr_;
     }
 
-    /// for inout parameter.
+    /// For inout parameter.
     inline character_type *&inout (void)
     {
       return this->ptr_;
     }
 
-    /// for out parameter.
+    /// For out parameter.
     inline character_type *&out (void)
     {
       s_traits::release (this->ptr_);
@@ -150,7 +150,7 @@ namespace TAO
       return this->ptr_;
     }
 
-    /// for string of return type.
+    /// For string of return type.
     inline character_type *_retn (void)
     {
       character_type *temp = this->ptr_;
@@ -158,14 +158,8 @@ namespace TAO
       return temp;
     }
 
-    /// TAO extension.
-    inline character_type *ptr (void)
-    {
-      return this->ptr_;
-    }
-
   private:
-    /// instance.
+    /// Instance.
     character_type *ptr_;
   };
 
@@ -243,7 +237,7 @@ namespace TAO
     /// Instance.
     character_type *&ptr_;
 
-    // assignment from _var disallowed
+    // Assignment from _var disallowed
     void operator= (const typename s_traits::string_var &);
   };
 

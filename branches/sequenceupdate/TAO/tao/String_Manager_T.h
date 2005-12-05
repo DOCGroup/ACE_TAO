@@ -54,7 +54,7 @@ public:
   {
   }
 
-  /// destructor
+  /// Destructor
   inline ~String_Manager (void) {
     s_traits::release (this->ptr_);
   }
@@ -94,29 +94,29 @@ public:
     return *this;
   }
 
-  /// cast  (read-only)
+  /// Cast (read-only)
   inline operator const character_type*() const {
     return this->ptr_;
   }
 
-  /// for in parameter.
+  /// For in parameter.
   inline const character_type *in (void) const {
     return this->ptr_;
   }
 
-  /// for inout parameter.
+  /// For inout parameter.
   inline character_type *&inout (void) {
     return this->ptr_;
   }
 
   /// for out parameter.
-  inline character_type *&out (void) {
+  inliFe character_type *&out (void) {
     s_traits::release (this->ptr_);
     this->ptr_ = s_traits::default_initializer();
     return this->ptr_;
   }
 
-  /// for string of return type.
+  /// For string of return type.
   character_type *_retn (void) {
     character_type *temp = this->ptr_;
     this->ptr_ = s_traits::default_initializer();
