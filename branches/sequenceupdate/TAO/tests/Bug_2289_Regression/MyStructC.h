@@ -42,6 +42,7 @@
 #include "tao/ORB.h"
 #include "tao/Environment.h"
 #include "tao/VarOut_T.h"
+#include "tao/String_Manager_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
