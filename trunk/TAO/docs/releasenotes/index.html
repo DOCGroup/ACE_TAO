@@ -1058,12 +1058,14 @@ POA. This also allows multiple threads to dispatch requests on the same
 POA simultaneous.</li>
 
 <li>
-TAO now supports reference counting between POA and servants, including
+Before 1.4.6 TAO supports reference counting between POA and servants, including
 the new RefCountServantBase and ServantBase_var classes. RefCountServantBase
 is a reference counted base class that was added to the CORBA specification
 to avoid race conditions for servant deletion in threaded servers. <a href="ftp://ftp.omg.org/pub/docs/orbos/98-07-12.pdf">ftp://ftp.omg.org/pub/docs/orbos/98-07-12.pdf</a>
 contains the relevant text. Check <a href="../poa_migration.html#Reference counting Servants">here</a>
-on some hints to avoid trouble.</li>
+on some hints to avoid trouble. From TAO 1.4.6 reference counting is always
+enabled for servants and RefCountServantBase is a noop struct you don't
+need anymore.</li>
 
 <li>
 The POA now supports active demultiplexing of servants in the SYSTEM_ID
@@ -2314,6 +2316,9 @@ Parsons</a></li>
 <li>
 Support for timeouts in combination with AMI calls, response handler gets
 CORBA::TIMEOUT exception on timeout</li>
+<li>
+The AMI support in TAO 1.4.7 is as described in the 2.6 spec, from 1.4.8 we support
+by default the 3.0.3 described mapping.</li>
 </ul>
 Future Work:
 <ul>
