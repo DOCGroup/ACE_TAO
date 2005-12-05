@@ -33,9 +33,11 @@ USER VISIBLE CHANGES BETWEEN ACE-5.4.7 and ACE-5.4.8
   placement of pointers.
 
 . Added an optimization to CDR stream to ignores alignment when marshaling
-  data. Use this option only when ACE_DISABLE_SWAP_ON_READ can be enabled.
-  This option requires ACE CDR engine to do both marshaling and
-  demarshaling.
+  data.  Use this new ACE_LACKS_CDR_ALIGNMENT compile-time option only
+  when the ACE_DISABLE_SWAP_ON_READ macro is enabled.  This new option
+  requires ACE CDR engine to do both marshaling and demarshaling, and
+  when this option is enabled the encoded streams are no longer
+  compliant with the CORBA CDR specification.
 
 . Developed Feature Oriented Customizer (FOCUS) tool to enable
   specialization of middleware frameworks such as Reactor and Protocol
