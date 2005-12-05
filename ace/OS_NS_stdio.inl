@@ -648,9 +648,9 @@ ACE_OS::fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode)
 
   if (crt_handle != -1)
     {
-#   if defined(__BORLANDC__) && !defined (ACE_USES_WCHAR)
+#   if defined(ACE_HAS_NONCONST_FDOPEN) && !defined (ACE_USES_WCHAR)
       file = ::_fdopen (crt_handle, const_cast<ACE_TCHAR *> (mode));
-#   elif defined (__BORLANDC__) && defined (ACE_USES_WCHAR)
+#   elif defined (ACE_HAS_NONCONST_FDOPEN) && defined (ACE_USES_WCHAR)
       file = ::_wfdopen (crt_handle, const_cast<ACE_TCHAR *> (mode));
 #   elif defined (ACE_USES_WCHAR)
       file = ::_wfdopen (crt_handle, mode);
@@ -989,7 +989,7 @@ ACE_OS::tempnam (const char *dir, const char *pfx)
   // pSOS only considers the directory prefix
   ACE_UNUSED_ARG (pfx);
   ACE_OSCALL_RETURN (::tmpnam (const_cast <char *> (dir)), char *, 0);
-#elif (defined (ACE_WIN32) && ((defined (__BORLANDC__) && (__BORLANDC__ < 0x600)) || defined (__DMC__)))
+#elif defined (ACE_WIN32) && defined (ACE_HAS_NONCONST_TEMPNAM)
   ACE_OSCALL_RETURN (::_tempnam (const_cast <char *> (dir), const_cast<char *> (pfx)), char *, 0);
 #else /* ACE_LACKS_TEMPNAM */
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::tempnam (dir, pfx), char *, 0);
@@ -1006,7 +1006,7 @@ ACE_OS::tempnam (const wchar_t *dir, const wchar_t *pfx)
   ACE_UNUSED_ARG (pfx);
   ACE_NOTSUP_RETURN (0);
 #elif defined(ACE_WIN32)
-#  if (defined (__BORLANDC__) && (__BORLANDC__ < 0x600)) || defined (__DMC__)
+#  if defined (ACE_HAS_NONCONST_TEMPNAM)
   ACE_OSCALL_RETURN (::_wtempnam (const_cast <wchar_t*> (dir), const_cast <wchar_t*> (pfx)), wchar_t *, 0);
 #  else
   ACE_OSCALL_RETURN (::_wtempnam (dir, pfx), wchar_t *, 0);

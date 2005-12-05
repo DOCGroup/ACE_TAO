@@ -96,6 +96,7 @@
 #define ACE_LACKS_UNISTD_H
 #define ACE_LACKS_TERMIOS_H
 #define ACE_LACKS_ACE_IOSTREAM
+#define ACE_HAS_NONCONST_TEMPNAM
 
 // Typedefs which we expect DMC to do, but they don't do that
 typedef long o_uid_t;
