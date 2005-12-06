@@ -2,7 +2,8 @@
 // $Id$
 
 project(*Client): taoserver, ftclientorb {
- exename = client 
+ after += *Server
+ exename = client
   Source_Files {
     client.cpp
     Hello.cpp
