@@ -1,3 +1,13 @@
+Tue Dec  6 01:55:12 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/config-macros.h:
+
+	  Removed "#pragma once" directive.  The necessary preprocessor
+	  symbol definitions necessary to disable this directive
+	  are generally C++ preprocessor/compiler-specific.  This
+	  prevents proper configuration of this #pragma in the
+	  presence of a C compiler.
+
 Mon Dec  5 14:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_stdio.inl:
