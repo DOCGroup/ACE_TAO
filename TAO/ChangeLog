@@ -1,3 +1,9 @@
+Tue Dec  6 15:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Security/BiDirectional/client.cpp:
+        * orbsvcs/tests/Security/BiDirectional/test_i.cpp:
+          Fixed 64bit conversion warnings
+
 Tue Dec  6 08:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_2287_Regression/Bug_2287_Regression.mpc:
