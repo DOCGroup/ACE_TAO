@@ -53,8 +53,15 @@ ServerApp::run_i(int argc, char* argv[] ACE_ENV_ARG_DECL)
   ACE_CHECK_RETURN (-1);
   this->run_collocated_clients(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
+
+  ACE_DEBUG((LM_DEBUG,
+             "(%P|%t) ServerApp is ready.  Running the ORB event loop.\n"));
+
   this->run_orb_event_loop(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
+
+  ACE_DEBUG((LM_DEBUG,
+             "(%P|%t) ServerApp ORB event loop has completed.\n"));
 
   // Calling wait on ACE_Thread_Manager singleton to avoid the problem
   // that the main thread might exit before all CSD Threads exit.
@@ -63,7 +70,12 @@ ServerApp::run_i(int argc, char* argv[] ACE_ENV_ARG_DECL)
   ACE_Thread_Manager::instance ()->wait ();
 
   this->cleanup();
-  return this->check_validity () ? 0 : -1;
+  result = this->check_validity () ? 0 : -1;
+
+  ACE_DEBUG((LM_DEBUG,
+    "(%P|%t) ServerApp check_validity returned %d .\n", result));
+
+  return result;
 }
 
 
