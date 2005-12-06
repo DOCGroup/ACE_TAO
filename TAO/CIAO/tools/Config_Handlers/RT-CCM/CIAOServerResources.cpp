@@ -4565,7 +4565,6 @@ namespace CIAO
       void Priority::
       traverse (Type const& o)
       {
-        ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >::traverse (o);
         Traversal::Priority::traverse (o);
       }
 

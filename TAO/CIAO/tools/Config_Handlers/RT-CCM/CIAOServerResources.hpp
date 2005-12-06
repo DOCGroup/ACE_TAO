@@ -1930,12 +1930,11 @@ namespace CIAO
       };
 
       struct Priority : Traversal::Priority, 
-      virtual ::XMLSchema::Writer::FundamentalType< ::XMLSchema::int_, ACE_TCHAR >,
       virtual ::XSCRT::Writer< ACE_TCHAR >
       {
         typedef ::CIAO::Config_Handlers::Priority Type;
         Priority (::XSCRT::XML::Element< ACE_TCHAR >&);
-
+	
         virtual void 
         traverse (Type &o)
         {
