@@ -1,3 +1,11 @@
+Tue Dec  6 08:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_2287_Regression/Bug_2287_Regression.mpc:
+        * examples/OBV/Typed_Events/Typed_Events.mpc:
+        * examples/Load_Balancing/Load_Balancing.mpc:
+          Added 'after += ...' lines to files where projects share one or
+          more IDL files.
+
 Tue Dec  6 08:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Trader/Trader.h:
