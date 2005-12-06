@@ -18,9 +18,9 @@ namespace CIAO
       Session_Container * c
     )
     : Servant_Impl_Base (home, home_servant, c),
-      activated_ (0),
-      pre_activated_ (0),
-      post_activated_ (0),
+      activated_ (false),
+      pre_activated_ (false),
+      post_activated_ (false),
       executor_ (EXEC::_duplicate (exe))
   {
   }
