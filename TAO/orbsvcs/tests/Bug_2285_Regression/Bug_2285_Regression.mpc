@@ -2,7 +2,8 @@
 // $Id$
 
 project(*Client): taoserver, ftclientorb {
- exename = client 
+ after += *Server2
+ exename = client
   Source_Files {
     client.cpp
     Hello.cpp
@@ -19,7 +20,8 @@ project (*Server) : taoserver, ftclientorb, pi_server {
 }
 
 project(*Client2): taoclient, ftclientorb, iormanip {
- exename = client2 
+ after += *Client2
+ exename = client2
   Source_Files {
     client2.cpp
     TestC.cpp
@@ -27,6 +29,7 @@ project(*Client2): taoclient, ftclientorb, iormanip {
 }
 
 project (*Server2) : taoserver, pi_server, ftclientorb {
+  after += *Server
   exename = server2
   Source_Files {
      server2.cpp
