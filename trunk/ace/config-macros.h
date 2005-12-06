@@ -23,10 +23,6 @@
 
 #include "ace/config.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "ace/Version.h"
 #include "ace/Versioned_Namespace.h"
 
