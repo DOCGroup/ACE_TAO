@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*server): taoserver, utils {
+project(*Server): taoserver, utils {
   avoids += repo
 
   IDL_Files {
@@ -20,6 +20,7 @@ project(*server): taoserver, utils {
 
 project(*Client): taoclient, utils, portableserver {
   avoids += repo
+  after += *Server
 
   IDL_Files {
     Identity.idl
@@ -33,7 +34,7 @@ project(*Client): taoclient, utils, portableserver {
   }
 }
 
-project(*Balancer): taoexe, utils, portableserver {
+project(*Balancer): taoserver, utils  {
   exename = load_balancer
   avoids += repo
 
