@@ -15,8 +15,13 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (OCI) Fix Notification Service detection of dead consumers.
 
+PLANNED MAJOR CHANGES TARGETED FOR TAO-1.5.2
+====================================================
+
 . (Remedy) Finish and integrate new sequence implementation made by
-  Carlos O'Ryan
+  Carlos O'Ryan. This also includes a rework of the TAO_String_Managers
+  and CORBA::(W)String implementations. This is ready in the sequenceupdate
+  branch but can't be merged until 1.5.2 because it breaks with vc6.
 
 . (Remedy) Add possibility to set customer allocators to be used by the ORB for
   marshaling and demarshaling
