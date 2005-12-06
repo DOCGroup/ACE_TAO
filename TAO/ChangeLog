@@ -1,3 +1,9 @@
+Tue Dec  6 15:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_2285_Regression/Bug_2285_Regression.mpc:
+          Added 'after += ...' lines to files where projects share one or
+          more IDL files.
+
 Tue Dec  6 15:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Security/BiDirectional/client.cpp:
