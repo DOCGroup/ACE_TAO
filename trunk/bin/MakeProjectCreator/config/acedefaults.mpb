@@ -17,4 +17,9 @@ project: zzip, ipv6 {
     am_version = @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
     includes += $(ACE_BUILDDIR)
   }
+
+  specific(vc8) {
+    // Enable structured exception handling
+    ExceptionHandling = 2
+  }
 }
