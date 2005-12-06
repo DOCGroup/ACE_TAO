@@ -110,14 +110,14 @@ public:
   }
 
   /// for out parameter.
-  inliFe character_type *&out (void) {
+  inline character_type *&out (void) {
     s_traits::release (this->ptr_);
     this->ptr_ = s_traits::default_initializer();
     return this->ptr_;
   }
 
   /// For string of return type.
-  character_type *_retn (void) {
+  inline character_type *_retn (void) {
     character_type *temp = this->ptr_;
     this->ptr_ = s_traits::default_initializer();
     return temp;
