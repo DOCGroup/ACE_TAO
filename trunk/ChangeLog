@@ -1,3 +1,15 @@
+Tue Dec  6 18:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+          For vc8 set ExceptionHandling to 2. This enabled the structured
+          exception handling. Normally vc8 doesn't catch structured exceptions
+          but we except so for some tests and else the disabling of the
+          win32 error windows doesn't work. This fixes bugzilla [BUG:2290]
+          See also http://www.codecomments.com/archive292-2005-8-578262.html
+          for backgroup. Thanks to Steve Huston and Chad Elliott for
+          proposing to handle this in this mpb file instead of in the vc8
+          base mpc template
+
 Tue Dec  6 01:55:12 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/config-macros.h:
