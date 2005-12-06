@@ -154,6 +154,8 @@ for ($i = 0; $i < $num_remote_clients; $i++)
                                   "-i file://$iorfile[$j] ".
                                   "-k $client_kind ".
                                   "-n $client_id");
+  print STDERR $CLS[$i]->CommandLine() . "\n";
+  
   $CLS[$i]->Spawn();
 }
 

@@ -1,3 +1,11 @@
+Tue Dec  6 14:55:41 USMST 2005  Yan Dai  <dai_y@ociweb.com>
+
+        * tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl:
+        * tests/CSD_Strategy_Tests/TP_Test_3/ServerApp.cpp:
+
+          Added debug message to help debugging the problem of 
+          "<server_main> failed: No such file or directory".
+          
 Tue Dec  6 15:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_2285_Regression/Bug_2285_Regression.mpc:
