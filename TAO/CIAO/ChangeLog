@@ -1,3 +1,15 @@
+Tue Dec  6 16:14:01 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ciao/Servant_Impl_T.cpp:
+        
+          Changed initialization of boolean class members from '0'
+          to 'false'.
+          
+        * ciao/Servant_Impl_T.h:
+        
+          Added comments to the executor and context class members,
+          providing info about where they are initialized.
+
 Mon Dec  5 14:43:48 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/ExecutionManager/ExecutionManager.mpc
