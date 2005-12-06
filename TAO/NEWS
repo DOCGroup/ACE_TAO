@@ -6,14 +6,14 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
 . (JTC) autoconf support for tests and examples subdirectories.
 
-. Reenable support in the Notification service for BlockingPolicy,
+. (OCI) Reenable support in the Notification service for BlockingPolicy,
   DiscardPolicy, and OrderPolicy. (Note: BlockingPolicy requires -ORBWaitStrategy rw)
 
-. Fix various memory and thread leaks in the Notification Service.
+. (OCI) Fix various memory and thread leaks in the Notification Service.
 
-. Fix Notification Service use of PacingInterval and MaximumBatchSize.
+. (OCI) Fix Notification Service use of PacingInterval and MaximumBatchSize.
 
-. Fix Notification Service detection of dead consumers.
+. (OCI) Fix Notification Service detection of dead consumers.
 
 . (Remedy) Finish and integrate new sequence implementation made by
   Carlos O'Ryan
@@ -24,8 +24,60 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.9
 ====================================================
 
-USER VISIBLE CHANGES BETWEEN TAO-1.4.8 and TAO-1.4.9
+. (OCI) Made TAO compilable when ACE_USES_WCHAR is set
+
+USER VISIBLE CHANGES BETWEEN TAO-1.4.7 and TAO-1.4.8
 ====================================================
+
+. Fixed bugs in code generation for interfaces that inherit from both
+  concrete and abstract interfaces.
+
+. Subset Anys and TypeCodes to a separate library. If you use Any/TypeCode
+  or one of the core TAO libs uses it you should link the AnyTypeCode
+  library with your application
+
+. PICurrent is moved to the PI library
+
+. POACurrent has been moved back from PI_Server to PortableServer
+
+. Added IPv6 support for IIOP
+
+. When Any and TypeCode generation is suppressed when compiling IDL
+  no typecodes are generated anymore for user exceptions, they are not
+  needed for the operation of the ORB
+
+. When making AMI invocation and the send blocks we buffer the message
+  and send it out when the transport is available again
+
+. Emulated C++ exceptions are not maintained anymore. We are keeping
+  the macros in the TAO code until x.5.1 is out, if nobody sponsors
+  maintenance at that moment the macros will be removed from TAO.
+  See also http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2256
+
+. Support the latest AMI mapping, the old mapping will be kept working
+  until 1.5.1 has been released. If you need the old mapping add
+  the define TAO_HAS_DEPRECATED_EXCEPTION_HOLDER to your config.h
+  file before you build TAO and the TAO_IDL compiler
+
+. Added CodecFactory::create_codec_with_codesets to create a codec with
+  a specific codeset. See OMG issue 6050 for the background.
+
+. PortableInterceptor::IORInterceptor has been splitted in IORInterceptor
+  and IORInterceptor_3_0. If you use IORInterceptors read the ChangeLog for
+  the details, maybe you have to update your code!
+
+. Added the new Custom Servant Dispatching (CSD) feature to provide user
+  applications with the ability to implement and "plug-in" custom strategies
+  to handle the dispatching of requests to servants. This new feature is not
+  currently tested for VxWorks. See TAO release notes for more information.
+
+. Added support for an TAO "versioned" namespace.  When enabled, TAO
+  library sources will be placed within a namespace of the user's
+  choice or a namespace of the form TAO_1_4_7 by default, where
+  "1_4_7" is the TAO major, minor and beta versions.  The default may
+  be overridden by defining the TAO_VERSIONED_NAMESPACE_NAME
+  preprocessor symbol.  Enable overall versioned namespace support by
+  adding "versioned_namespace=1" to your MPC default.features file.
 
 . Changed generated signatures of some valuetype member
   accessor/mutator pairs to be consistent with IN
@@ -68,7 +120,7 @@ USER VISIBLE CHANGES BETWEEN TAO-1.4.8 and TAO-1.4.9
   Closes Bugzilla #2219.
 
 . Many changes related to refactoring of Anys and Typecodes
-  into a separate library (POC is Johnny Willemsen 
+  into a separate library (POC is Johnny Willemsen
   <jwillemsen@remedy.nl>).
 
 . Merging of many Notification Service changes/fixes from OCITAO to
@@ -79,59 +131,6 @@ USER VISIBLE CHANGES BETWEEN TAO-1.4.8 and TAO-1.4.9
   factory function used for dynamically loading the Notification
   Service persistence mechanisms.  See the service configurator file
   in orbsvcs/tests/Notify/XML_Persistence for an example.
-
-USER VISIBLE CHANGES BETWEEN TAO-1.4.7 and TAO-1.4.8
-====================================================
-
-. Fixed bugs in code generation for interfaces that inherit from both
-  concrete and abstract interfaces.
-
-. Subset Anys and TypeCodes to a separate library. If you use Any/TypeCode
-  or one of the core TAO libs uses it you should link the AnyTypeCode
-  library with your application
-
-. PICurrent is moved to the PI library
-
-. POACurrent has been moved back from PI_Server to PortableServer
-
-. Added IPv6 support for IIOP
-
-. When Any and TypeCode generation is suppressed when compiling IDL
-  no typecodes are generated anymore for user exceptions, they are not
-  needed for the operation of the ORB
-
-. When making AMI invocation and the send blocks we buffer the message
-  and send it out when the transport is available again
-
-. Emulated C++ exceptions are not maintained anymore. We are keeping
-  the macros in the TAO code until x.5.1 is out, if nobody sponsors
-  maintenance at that moment the macros will be removed from TAO.
-  See also http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2256
-
-. Support the latest AMI mapping, the old mapping will be kept working
-  until 1.5.1 has been released. If you need the old mapping add
-  the define TAO_HAS_DEPRECATED_EXCEPTION_HOLDER to your config.h
-  file before you build TAO and the TAO_IDL compiler
-
-. Added CodecFactory::create_codec_with_codesets to create a codec with
-  a specific codeset. See OMG issue 6050 for the background.
-
-. PortableInterceptor::IORInterceptor has been splitted in IORInterceptor
-  and IORInterceptor_3_0. If you use IORInterceptors read the ChangeLog for
-  the details, maybe you have to update your code!
-
-. Added the new Custom Servant Dispatching (CSD) feature to provide user 
-  applications with the ability to implement and "plug-in" custom strategies
-  to handle the dispatching of requests to servants. This new feature is not  
-  currently tested for VxWorks. See TAO release notes for more information. 
-
-. Added support for an TAO "versioned" namespace.  When enabled, TAO
-  library sources will be placed within a namespace of the user's
-  choice or a namespace of the form TAO_1_4_7 by default, where
-  "1_4_7" is the TAO major, minor and beta versions.  The default may
-  be overridden by defining the TAO_VERSIONED_NAMESPACE_NAME
-  preprocessor symbol.  Enable overall versioned namespace support by
-  adding "versioned_namespace=1" to your MPC default.features file.
 
 USER VISIBLE CHANGES BETWEEN TAO-1.4.6 and TAO-1.4.7
 ====================================================
