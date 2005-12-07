@@ -396,7 +396,7 @@ Output_Task::put (ACE_Message_Block *mb, ACE_Time_Value *)
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT ("m:s:t:d:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT ("m:s:t:d:"));
   int c;
 
   while ((c = get_opt ()) != -1)

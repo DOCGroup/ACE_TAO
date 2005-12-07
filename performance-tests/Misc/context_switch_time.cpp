@@ -1085,7 +1085,7 @@ static
 u_int
 get_options (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT("c:n?"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT("c:n?"));
   int opt;
   while ((opt = get_opt ()) != EOF) {
     switch (opt) {

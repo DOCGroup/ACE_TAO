@@ -528,7 +528,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
 
-  ACE_Get_Arg_Opt getopt (argc, argv, ACE_TEXT("hxwvb:I:p:sci:m:at:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> getopt (argc, argv, ACE_TEXT("hxwvb:I:p:sci:m:at:"));
 
   while ((c = getopt ()) != -1)
     {

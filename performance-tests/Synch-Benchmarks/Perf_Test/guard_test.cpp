@@ -37,7 +37,7 @@ ACE_Thread_Mutex Guard_Test::mutex_;
 int
 Guard_Test::init (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Arg_Opt getopt (argc, argv, ACE_TEXT("gt"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> getopt (argc, argv, ACE_TEXT("gt"));
   int c;
 
   while ((c = getopt()) != -1)
