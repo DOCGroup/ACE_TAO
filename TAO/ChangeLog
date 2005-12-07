@@ -1,6 +1,6 @@
 Tue Dec  6 21:16:05 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/ServerRequestInterceptor.h: 
+	* orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/ServerRequestInterceptor.h:
 	* orbsvcs/tests/Notify/lib/Activation_Manager.h:
 	* orbsvcs/tests/Notify/lib/Command.h:
 	* orbsvcs/tests/Notify/lib/EventChannel_Command.h:
