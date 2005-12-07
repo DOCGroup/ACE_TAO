@@ -14,10 +14,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
   static const ACE_TCHAR options[] = ACE_TEXT (":f:");
-  ACE_Get_Arg_Opt cmd_opts
-    (argc, argv, options, 1, 0, ACE_Get_Arg_Opt::PERMUTE_ARGS, 1);
+  ACE_Get_Arg_Opt<ACE_TCHAR> cmd_opts
+    (argc, argv, options, 1, 0, ACE_Get_Arg_Opt<ACE_TCHAR>::PERMUTE_ARGS, 1);
   if (cmd_opts.long_option
-      (ACE_TEXT ("config"), 'f', ACE_Get_Arg_Opt::ARG_REQUIRED) == -1)
+      (ACE_TEXT ("config"), 'f', ACE_Get_Arg_Opt<ACE_TCHAR>::ARG_REQUIRED) == -1)
     return -1;
 
   int option;

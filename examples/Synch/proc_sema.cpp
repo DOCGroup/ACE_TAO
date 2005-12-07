@@ -46,7 +46,7 @@ int consumer (ACE_SYNCH_PROCESS_SEMAPHORE &sema,
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Arg_Opt getopt (argc, argv, ACE_TEXT ("csn:xi:d:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> getopt (argc, argv, ACE_TEXT ("csn:xi:d:"));
 
   int is_consumer = 1;          // By default, make us a consumer.
   int delete_sema = 0;

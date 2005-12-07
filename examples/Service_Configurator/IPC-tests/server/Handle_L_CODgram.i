@@ -45,7 +45,7 @@ ACE_INLINE int
 Handle_L_CODgram::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_UNIX_Addr  sucd;
-  ACE_Get_Arg_Opt    get_opt (argc, argv, ACE_TEXT ("r:"), 0);
+  ACE_Get_Arg_Opt<ACE_TCHAR>   get_opt (argc, argv, ACE_TEXT ("r:"), 0);
   const ACE_TCHAR *r = Handle_L_CODgram::DEFAULT_RENDEZVOUS;
 
   for (int c; (c = get_opt ()) != -1; )

@@ -39,7 +39,7 @@ void
 parse_args (int argc, char *argv[])
 {
   program_name = argv[0];
-  ACE_Get_Arg_Opt get_opt (argc, argv, "f:h:p:");
+  ACE_Get_Arg_Opt<char> get_opt (argc, argv, "f:h:p:");
 
   for (int c; (c = get_opt ()) != -1; )
     switch (c)

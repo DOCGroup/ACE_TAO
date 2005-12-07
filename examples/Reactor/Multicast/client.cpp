@@ -32,7 +32,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   ACE_LOG_MSG->open (argv[0]);
 
   // Start at argv[1]
-  ACE_Get_Arg_Opt getopt (argc, argv, ACE_TEXT("m:ui:"), 1);
+  ACE_Get_Arg_Opt<ACE_TCHAR> getopt (argc, argv, ACE_TEXT("m:ui:"), 1);
 
   for (int c; (c = getopt ()) != -1; )
     switch (c)

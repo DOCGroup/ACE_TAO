@@ -16,7 +16,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Example for a long option without a corresponding short option.
   // Just put some context here so the following compiles and runs.
   static const ACE_TCHAR options[] = ACE_TEXT (":f:");
-  ACE_Get_Arg_Opt cmd_opts (argc, argv, options);
+  ACE_Get_Arg_Opt<ACE_TCHAR> cmd_opts (argc, argv, options);
 
   // Listing 1 code/ch04
   cmd_opts.long_option (ACE_TEXT ("cool_option"));

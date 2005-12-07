@@ -19,7 +19,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   static const ACE_TCHAR cmdline[] =
     ACE_TEXT ("-f /home/managed.cfg -h $HOSTNAME");
   ACE_ARGV cmdline_args (cmdline);
-  ACE_Get_Arg_Opt cmd_opts (cmdline_args.argc (),
+  ACE_Get_Arg_Opt<ACE_TCHAR> cmd_opts (cmdline_args.argc (),
                         cmdline_args.argv (),
                         options,
                         0);          // Don't skip any args

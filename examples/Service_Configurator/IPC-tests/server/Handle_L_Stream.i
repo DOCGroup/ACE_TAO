@@ -55,7 +55,7 @@ Handle_L_Stream::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_UNIX_Addr sus;
   const ACE_TCHAR *r = Handle_L_Stream::DEFAULT_RENDEZVOUS;
-  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT ("r:"), 0);
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT ("r:"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
      switch (c)

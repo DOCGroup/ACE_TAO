@@ -368,7 +368,7 @@ Sender::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT("h:p:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT("h:p:"));
   int c;
 
   while ((c = get_opt ()) != EOF)

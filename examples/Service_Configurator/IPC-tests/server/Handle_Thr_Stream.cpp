@@ -61,7 +61,7 @@ Handle_Thr_Acceptor<SVH, PR_AC_2>::init (int argc, ACE_TCHAR *argv[])
   ACE_INET_Addr local_addr (ACE_DEFAULT_THR_PORT);
   int n_threads = ACE_DEFAULT_THREADS;
 
-  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT("p:t:"), 0);
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT("p:t:"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
     switch (c)

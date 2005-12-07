@@ -17,9 +17,9 @@ int
 HA_Status::init (int argc, ACE_TCHAR *argv[])
 {
   static const ACE_TCHAR options[] = ACE_TEXT (":f:");
-  ACE_Get_Arg_Opt cmd_opts (argc, argv, options, 0);
+  ACE_Get_Arg_Opt<ACE_TCHAR> cmd_opts (argc, argv, options, 0);
   if (cmd_opts.long_option
-      (ACE_TEXT ("config"), 'f', ACE_Get_Arg_Opt::ARG_REQUIRED) == -1)
+      (ACE_TEXT ("config"), 'f', ACE_Get_Arg_Opt<ACE_TCHAR>::ARG_REQUIRED) == -1)
     return -1;
   int option;
   ACE_TCHAR config_file[MAXPATHLEN];

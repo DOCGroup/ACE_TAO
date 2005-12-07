@@ -11,7 +11,7 @@ ACE_RCSID(Misc, test_get_opt, "$Id$")
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT("ab:cd:ef:gh:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT("ab:cd:ef:gh:"));
   int c;
 
   while ((c = get_opt ()) != EOF)
