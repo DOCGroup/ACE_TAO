@@ -375,7 +375,7 @@ namespace
     traverse (UnconstrainedInterface& i)
     {
       if (i.context ().count ("facet_impl_hdr_gen")) return;
-    
+
       os << "class " << ctx.export_macro () << " "
          << i.name () << "_exec_i" << endl
          << ": public virtual " << i.scoped_name ().scope_name ()
@@ -438,9 +438,9 @@ namespace
         inherits (i, inherits_);
         names (i, defines_);
       }
-      
+
       os << "};";
-      
+
       i.context ().set ("facet_impl_hdr_gen", true);
     }
   };
@@ -466,11 +466,11 @@ namespace
       os << "virtual ";
 
       Traversal::ProviderData::belongs (p, enclosing_belongs_);
-      
+
       os << "::CCM_";
 
       Traversal::ProviderData::belongs (p, simple_belongs_);
-      
+
       os << "_ptr" << endl
           << "get_" << p.name () << " (" << endl
           << STRS[ENV_SNGL_HDR] << ")" << endl
@@ -629,7 +629,7 @@ namespace
       }
 
       os << "// Port operations." << endl << endl;
-      
+
       {
         Traversal::Component component_emitter;
 
@@ -646,7 +646,7 @@ namespace
 
         component_emitter.traverse (t);
       }
-      
+
       os << "// Operations from Components::SessionComponent" << endl << endl;
 
       os << "virtual void" << endl
@@ -700,7 +700,7 @@ namespace
          << t.name () << "_Context *context_;" << endl
          << "};";
     }
-    
+
   private:
     ComponentExecutor& exec_;
   };
@@ -716,17 +716,17 @@ namespace
     implements (Type& i)
     {
       Traversal::ComponentExecutor component_executor;
-      
+
       Traversal::Implements implements;
       component_executor.edge_traverser (implements);
-      
+
       ComponentExecImplEmitter component_exec_impl_emitter (ctx, i);
       implements.node_traverser (component_exec_impl_emitter);
-      
+
       component_executor.traverse (i);
     }
   };
-  
+
   // HomeFactory and HomeFinder are tied to Operation in
   // the front end. Since we want to treat them differently
   // than regular operations in a home (we want to generate
@@ -1133,11 +1133,11 @@ namespace
          << " ::Components::HomeExecutorBase_ptr" << endl
          << "create" << t.name () << "_Impl (void);" << endl;
     }
-    
+
   private:
     HomeExecutor& exec_;
   };
-  
+
   struct HomeExecutorEmitter : Traversal::HomeExecutor, EmitterBase
   {
     HomeExecutorEmitter (Context& c)
@@ -1149,13 +1149,13 @@ namespace
     implements (Type& i)
     {
       Traversal::HomeExecutor home_executor;
-      
+
       Traversal::Implements implements;
       home_executor.edge_traverser (implements);
-      
+
       HomeExecImplEmitter home_exec_impl_emitter (ctx, i);
       implements.node_traverser (home_exec_impl_emitter);
-      
+
       home_executor.traverse (i);
     }
   };
@@ -1201,7 +1201,9 @@ ExecImplHeaderEmitter::pre (TranslationUnit&)
   string guard =
     "CIAO_"
     + regex::perl_s (uc_file_name,
-                       "/(\\.(IDL|CIDL|CDL))?$/" +  uc_file_suffix + "/");
+                     "/^(.+?)(\\.(IDL|CIDL|CDL))?$/$1"
+                     + uc_file_suffix
+                     + "/");
 
   // Replace any remaining '.' with '_'.
   guard = regex::perl_s (guard, "/\\./_/");
@@ -1214,7 +1216,7 @@ ExecImplHeaderEmitter::pre (TranslationUnit&)
                                       "_svnt.h");
 
   string svnt_file_name = regex::perl_s (file_name,
-                                         "/(\\.(idl|cidl|cdl))?$/"
+                                         "/^(.+?)(\\.(idl|cidl|cdl))?$/$1"
                                          + file_suffix
                                          + "/");
 
@@ -1223,10 +1225,10 @@ ExecImplHeaderEmitter::pre (TranslationUnit&)
   os << "#if !defined (ACE_LACKS_PRAGMA_ONCE)" << endl
      << "# pragma once" << endl
      << "#endif /* ACE_LACKS_PRAGMA_ONCE */" << endl << endl;
-     
+
   string default_export_include =
     regex::perl_s (file_name,
-                   "/(\\.(idl|cidl|cdl))?$/_exec_export.h/");
+                   "/^(.+?)(\\.(idl|cidl|cdl))?$/$1_exec_export.h/");
 
   string export_include = cl_.get_value ("exec-export-include",
                                          default_export_include);
@@ -1303,7 +1305,7 @@ void
 ExecImplHeaderEmitter::post (TranslationUnit&)
 {
   if (file_.empty ()) return;
-  
+
   string uc_file_name = file_.leaf ();
 
   std::transform (uc_file_name.begin (),
@@ -1322,7 +1324,7 @@ ExecImplHeaderEmitter::post (TranslationUnit&)
   string guard =
     "CIAO_"
     + regex::perl_s (uc_file_name,
-                     "/(\\.(IDL|CIDL))?$/" +  uc_file_suffix + "/");
+                     "/^(.+?)(\\.(IDL|CIDL))?$/$1" +  uc_file_suffix + "/");
 
   guard = regex::perl_s (guard, "/\\./_/");
 
