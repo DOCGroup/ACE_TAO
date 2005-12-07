@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): csd_threadpool, taoexe, portableserver, minimum_corba, pi {
+project(*Server): csd_threadpool, taoserver, minimum_corba, pi {
   exename = server_main
   idlflags -= -Sc
 
@@ -15,6 +15,7 @@ project(*Server): csd_threadpool, taoexe, portableserver, minimum_corba, pi {
 
 project(*Client): taoexe, anytypecode {
   exename = client_main
+  after += *Server
 
   Source_Files {
     FooC.cpp
