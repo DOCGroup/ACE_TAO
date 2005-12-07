@@ -24,7 +24,6 @@ ACE_RCSID (UPIPE_Event_Server,
 
 #if defined (ACE_HAS_THREADS)
 
-typedef ACE_Stream<ACE_MT_SYNCH> MT_Stream;
 typedef ACE_Module<ACE_MT_SYNCH> MT_Module;
 
 // Handle SIGINT and terminate the entire application.
