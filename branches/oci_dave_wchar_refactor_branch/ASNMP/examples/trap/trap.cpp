@@ -98,9 +98,9 @@ trapapp::trapapp(int argc, char *argv[]): valid_(0)
    }
 
    ACE_Argv_Type_Converter to_tchar (argc, argv);
-   ACE_Get_Arg_Opt get_opt (argc,
-                        to_tchar.get_TCHAR_argv (),
-                        ACE_TEXT ("c:e:t:"));
+   ACE_Get_Arg_Opt<char> get_opt (argc,
+                         to_tchar.get_TCHAR_argv (),
+                         ACE_TEXT ("c:e:t:"));
    for (int c; (c = get_opt ()) != -1; )
      switch (c)
        {

@@ -95,9 +95,9 @@ getapp::getapp(int argc, char *argv[]): valid_(0)
    }
 
    ACE_Argv_Type_Converter to_tchar (argc, argv);
-   ACE_Get_Arg_Opt get_opt (argc,
-                        to_tchar.get_TCHAR_argv (),
-                        ACE_TEXT ("o:c:r:t:p:"));
+   ACE_Get_Arg_Opt<char> get_opt (argc,
+                         to_tchar.get_TCHAR_argv (),
+                         ACE_TEXT ("o:c:r:t:p:"));
    for (int c; (c = get_opt ()) != -1; )
      switch (c)
        {
