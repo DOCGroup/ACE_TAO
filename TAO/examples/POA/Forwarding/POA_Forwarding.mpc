@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Client) : taoclient, anytypecode, minimum_corba {
+  after += *Server
   source_files {
     client.cpp
     testC.cpp
