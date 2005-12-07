@@ -1,3 +1,17 @@
+Wed Dec  7 10:59:55 USMST 2005  Yan Dai  <dai_y@ociweb.com>
+
+        * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B_i.cpp:
+        * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B_Statistics.cpp:
+
+          Added more logging in test results checking to help debug the 
+          TP_Test_3 failure on RHEL3_Minimum build.
+          
+        * tests/CSD_Strategy_Tests/TP_Foo_B/Callback_i.cpp:
+        * tests/CSD_Strategy_Tests/TP_Foo_B/Callback_i.h:
+        
+          Removed the ACE_Atomic_Op for num_callbacks_ data member since the 
+          CSD synchronizes the request dispatching.
+          
 Wed Dec  7 17:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Bug_2316_Regression/Bug_2316_Regression.mpc:

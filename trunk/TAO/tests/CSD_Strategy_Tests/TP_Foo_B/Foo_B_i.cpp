@@ -93,6 +93,8 @@ Foo_B_i::op7(Callback_ptr cb
   if (CORBA::is_nil (cb))
     {
       error_count_ ++;
+      ACE_ERROR((LM_ERROR, "(%P|%t)Foo_B_i::op7  nil callback error_count %u\n",
+        error_count_));
       ACE_THROW (FooException ());
     }
   else
@@ -145,6 +147,9 @@ Foo_B_i::test_fixed_array_arg(const Fixed_Array message
       if (message[i] != message[i + 1] -1)
         {
           error_count_ ++;
+          ACE_ERROR((LM_ERROR, "(%P|%t)Foo_B_i::test_fixed_array_arg:  value checking failed "
+            "- message[%u]=%d message[%u]=%d error_count=%u\n",
+            i, message[i], i+1, message[i + 1], error_count_));
           break;
         }
     }
@@ -218,6 +223,8 @@ Foo_B_i::test_var_array_arg(const Var_Array messages
     if (str_id != i)
     {
       error_count_ ++;
+      ACE_ERROR((LM_ERROR, "(%P|%t)Foo_B_i::test_var_array_arg:  str_id checking failed "
+        "- str_id=%u i=%u error_count_=%u\n", str_id, i, error_count_));
     }
 
     if (i == 0)
@@ -227,6 +234,9 @@ Foo_B_i::test_var_array_arg(const Var_Array messages
     else if (client_id != cur_client_id) 
     {
        error_count_ ++;
+       ACE_ERROR((LM_ERROR, "(%P|%t)Foo_B_i::test_var_array_arg:  client_id checking failed "
+        "- client_id=%u cur_client_id=%u error_count_=%u\n", 
+        client_id, cur_client_id, error_count_));
     }
   }
   this->in_string_[13].push_back (messages[0].in ());
@@ -247,6 +257,9 @@ Foo_B_i::test_special_basic_arg(CORBA::Boolean value,
   if (expected_special_value != value)
     {
       error_count_ ++;
+      ACE_ERROR((LM_ERROR, "(%P|%t)Foo_B_i::test_special_basic_arg  "
+        "value checking failed - client_id %d got value %d error_count=%u\n",
+        client_id, value, error_count_));
     }
 }
 
