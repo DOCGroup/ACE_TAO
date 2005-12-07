@@ -173,7 +173,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Reactor::instance ()->register_handler (SIGINT, signal_handler);
   ACE_OS::signal (SIGPIPE, SIG_IGN);
 
-  ACE_Get_Arg_Opt options (argc, argv, "f:r:n:w:");
+  ACE_Get_Arg_Opt<ACE_TCHAR> options (argc, argv, "f:r:n:w:");
 
   // f -- file list
   // r -- request rate in requests per second

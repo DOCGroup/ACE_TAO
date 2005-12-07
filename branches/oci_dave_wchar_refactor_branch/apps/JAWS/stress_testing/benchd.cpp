@@ -174,7 +174,7 @@ Handle_Events::serve (char *buf)
 static void
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Arg_Opt get_opt (argc, argv, "i:u:q");
+  ACE_Get_Arg_Opt<char> get_opt (argc, argv, "i:u:q");
 
   int c;
 

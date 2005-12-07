@@ -37,7 +37,7 @@ JAWS_HTTP_Service_Handler::close (unsigned long)
 int
 JAWS_HTTP_Acceptor::init (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Arg_Opt opt (argc, argv, "p:");
+  ACE_Get_Arg_Opt<ACE_TCHAR> opt (argc, argv, "p:");
 
   unsigned short p = 0;
 
