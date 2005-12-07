@@ -26,7 +26,9 @@
 #include "Periodic_Consumer.h"
 #include "Activation_ManagerS.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Barrier;
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Notify_Tests_Activation_Manager

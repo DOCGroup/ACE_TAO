@@ -1,3 +1,18 @@
+Tue Dec  6 21:16:05 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/Notify/lib/Activation_Manager.h:
+	* orbsvcs/tests/Notify/lib/Command.h:
+	* orbsvcs/tests/Notify/lib/EventChannel_Command.h:
+	* orbsvcs/tests/Notify/lib/Options_Parser.cpp:
+	* orbsvcs/tests/Notify/lib/Options_Parser.h:
+	* orbsvcs/tests/Notify/lib/Peer.h:
+	* orbsvcs/tests/Notify/lib/Periodic_Consumer.h:
+	* orbsvcs/tests/Notify/lib/Periodic_Supplier.h:
+
+	  Fixed versioned namespace build errors, predominantly caused by
+	  forwared declarations not being placed within the appropriate
+	  {ACE,TAO}_{BEGIN,END}_VERSIONED_NAMESPACE_DECL block.
+
 Tue Dec  6 14:55:41 USMST 2005  Yan Dai  <dai_y@ociweb.com>
 
         * tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl:
