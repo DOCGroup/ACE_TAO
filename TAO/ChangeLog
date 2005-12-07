@@ -1,3 +1,11 @@
+Wed Dec  7 17:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Bug_2316_Regression/Bug_2316_Regression.mpc:
+        * examples/POA/Forwarding/POA_Forwarding.mpc:
+        * examples/Kokyu_dsrt_schedulers/mif_example/mif_example.mpc:
+          Added 'after += ...' lines to files where projects share one or
+          more IDL files.
+
 Wed Dec  7 12:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Trader/Trader.h:
