@@ -52,7 +52,7 @@ ACE_Name_Acceptor::parse_args (int argc, ACE_TCHAR *argv[])
 
   ACE_LOG_MSG->open (ACE_TEXT ("Name Service"));
 
-  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT ("p:"), 0);
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT ("p:"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
     {

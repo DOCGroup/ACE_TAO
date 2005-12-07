@@ -249,7 +249,7 @@ ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::parse_args (int argc, ACE_TCHAR *a
 
   ACE_LOG_MSG->open (ACE_TEXT ("Logging Service"));
 
-  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT ("p:"), 0);
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT ("p:"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
     {
