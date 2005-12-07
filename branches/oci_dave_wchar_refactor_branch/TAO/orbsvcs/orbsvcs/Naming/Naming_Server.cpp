@@ -204,7 +204,7 @@ TAO_Naming_Server::parse_args (int argc,
       case 'b':
         result = ::sscanf (ACE_TEXT_TO_CHAR_IN (get_opts.opt_arg ()),
 #if ACE_SIZEOF_VOID_P == ACE_SIZEOF_LONG_LONG
-                           ACE_INT64_FORMAT_SPECIFIER,
+                           ACE_UINT64_FORMAT_SPECIFIER_A,
 #else
                            "%ld",
 #endif /* ACE_SIZEOF_VOID_P */
