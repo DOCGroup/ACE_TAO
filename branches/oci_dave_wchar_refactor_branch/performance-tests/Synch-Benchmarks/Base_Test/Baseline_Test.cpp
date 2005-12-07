@@ -40,7 +40,7 @@ Baseline_Test_Base::init (int argc, ACE_TCHAR *argv[])
 int
 Baseline_Test_Base::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Arg_Opt getopt (argc, argv, ACE_TEXT("i:ylrw"), 0);
+  ACE_Get_Arg_Opt<ACE_TCHAR> getopt (argc, argv, ACE_TEXT("i:ylrw"), 0);
   int c;
 
   while ((c = getopt ()) != -1)
@@ -102,7 +102,7 @@ Baseline_Test_Options::Baseline_Test_Options (void)
 int
 Baseline_Test_Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Arg_Opt getopt (argc, argv, ACE_TEXT("tv"), 0);
+  ACE_Get_Arg_Opt<ACE_TCHAR> getopt (argc, argv, ACE_TEXT("tv"), 0);
   int c;
 
   while ((c = getopt ()) != -1)

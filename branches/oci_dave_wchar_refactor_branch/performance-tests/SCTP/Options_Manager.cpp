@@ -69,43 +69,43 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
 
     // Declare options with ACE_Get_Arg_Opt
     int c;
-    ACE_Get_Arg_Opt * get_opt = 0;
+    ACE_Get_Arg_Opt<ACE_TCHAR> * get_opt = 0;
     if (!ACE_OS::strcmp(ACE_TEXT ("client-opts"), opts_set)){
-      get_opt = new ACE_Get_Arg_Opt(argc, argv, ACE_TEXT("c:nt:m:M:x:b:C:i:p:H:s:h"));
+      get_opt = new ACE_Get_Arg_Opt<ACE_TCHAR>(argc, argv, ACE_TEXT("c:nt:m:M:x:b:C:i:p:H:s:h"));
 
       get_opt->long_option (ACE_TEXT ("test_iterations"),         'c',
-                            ACE_Get_Arg_Opt::ARG_REQUIRED);
+                            ACE_Get_Arg_Opt<ACE_TCHAR>::ARG_REQUIRED);
       get_opt->long_option (ACE_TEXT ("test_enable_nagle"),       'n');
       get_opt->long_option (ACE_TEXT ("test_transport_protocol"), 't',
-                            ACE_Get_Arg_Opt::ARG_REQUIRED);
+                            ACE_Get_Arg_Opt<ACE_TCHAR>::ARG_REQUIRED);
       get_opt->long_option (ACE_TEXT ("histogram_min_bin"),       'm',
-                            ACE_Get_Arg_Opt::ARG_REQUIRED);
+                            ACE_Get_Arg_Opt<ACE_TCHAR>::ARG_REQUIRED);
       get_opt->long_option (ACE_TEXT ("histogram_max_bin"),       'M',
-                            ACE_Get_Arg_Opt::ARG_REQUIRED);
+                            ACE_Get_Arg_Opt<ACE_TCHAR>::ARG_REQUIRED);
       get_opt->long_option (ACE_TEXT ("histogram_num_outliers"),  'x',
-                            ACE_Get_Arg_Opt::ARG_REQUIRED);
+                            ACE_Get_Arg_Opt<ACE_TCHAR>::ARG_REQUIRED);
       get_opt->long_option (ACE_TEXT ("histogram_bin_count"),     'b',
-                            ACE_Get_Arg_Opt::ARG_REQUIRED);
+                            ACE_Get_Arg_Opt<ACE_TCHAR>::ARG_REQUIRED);
       get_opt->long_option (ACE_TEXT ("client_port"),             'C',
-                            ACE_Get_Arg_Opt::ARG_REQUIRED);
+                            ACE_Get_Arg_Opt<ACE_TCHAR>::ARG_REQUIRED);
       get_opt->long_option (ACE_TEXT ("client_accept_addr"),      'i',
-                            ACE_Get_Arg_Opt::ARG_REQUIRED);
+                            ACE_Get_Arg_Opt<ACE_TCHAR>::ARG_REQUIRED);
       get_opt->long_option (ACE_TEXT ("server_port"),             'p',
-                            ACE_Get_Arg_Opt::ARG_REQUIRED);
+                            ACE_Get_Arg_Opt<ACE_TCHAR>::ARG_REQUIRED);
       get_opt->long_option (ACE_TEXT ("server_host"),             'H',
-                            ACE_Get_Arg_Opt::ARG_REQUIRED);
+                            ACE_Get_Arg_Opt<ACE_TCHAR>::ARG_REQUIRED);
       get_opt->long_option (ACE_TEXT ("payload_size_power_of_2"), 's',
-                            ACE_Get_Arg_Opt::ARG_REQUIRED);
+                            ACE_Get_Arg_Opt<ACE_TCHAR>::ARG_REQUIRED);
       get_opt->long_option (ACE_TEXT ("help"),                    'h');
     } else if (!ACE_OS::strcmp (ACE_TEXT ("server-opts"), opts_set)){
-      get_opt = new ACE_Get_Arg_Opt(argc, argv, ACE_TEXT("nt:p:a:u"));
+      get_opt = new ACE_Get_Arg_Opt<ACE_TCHAR>(argc, argv, ACE_TEXT("nt:p:a:u"));
       get_opt->long_option (ACE_TEXT ("test_enable_nagle"),       'n');
       get_opt->long_option (ACE_TEXT ("test_transport_protocol"), 't',
-                            ACE_Get_Arg_Opt::ARG_REQUIRED);
+                            ACE_Get_Arg_Opt<ACE_TCHAR>::ARG_REQUIRED);
       get_opt->long_option (ACE_TEXT ("server_port"),             'p',
-                            ACE_Get_Arg_Opt::ARG_REQUIRED);
+                            ACE_Get_Arg_Opt<ACE_TCHAR>::ARG_REQUIRED);
       get_opt->long_option (ACE_TEXT ("server_accept_addr"),      'a',
-                            ACE_Get_Arg_Opt::ARG_REQUIRED);
+                            ACE_Get_Arg_Opt<ACE_TCHAR>::ARG_REQUIRED);
       get_opt->long_option (ACE_TEXT ("help"),                    'h');
     } else {
       _error = 1;

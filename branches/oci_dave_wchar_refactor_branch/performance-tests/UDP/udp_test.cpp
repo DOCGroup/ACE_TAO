@@ -609,7 +609,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   cmd = argv;
 
-  ACE_Get_Arg_Opt getopt (argc, argv, ACE_TEXT("x:w:f:vs:I:p:rtn:b:a"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> getopt (argc, argv, ACE_TEXT("x:w:f:vs:I:p:rtn:b:a"));
 
   while ((c = getopt ()) != -1)
     {
