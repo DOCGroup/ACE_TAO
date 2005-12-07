@@ -1,3 +1,16 @@
+Wed Dec  7 18:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/CSD_Strategy/ThreadPool/CSD_Test_ThreadPool.mpc:
+        * examples/CSD_Strategy/ThreadPool2/CSD_Test_ThreadPool2.mpc:
+        * examples/CSD_Strategy/ThreadPool3/CSD_Test_ThreadPool3.mpc:
+        * examples/CSD_Strategy/ThreadPool3/CSD_Test_ThreadPool5.mpc:
+        * examples/CSD_Strategy/ThreadPool3/CSD_Test_ThreadPool6.mpc:
+          Added 'after += ...' lines to files where projects share one or
+          more IDL files.
+
+        * examples/CSD_Strategy/ThreadPool4/CSD_Test_ThreadPool4.mpc:
+          Simplified
+
 Wed Dec  7 05:43:53 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Connection_Timeout/Connection_Timeout.mpc:
