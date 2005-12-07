@@ -2,6 +2,7 @@
 // $Id$
 
 project(cinset): gperf_test {
+  avoids      += uses_wchar
   exename = cout
 
   verbatim(gnuace, bottom) {
@@ -26,6 +27,7 @@ project(cinset): gperf_test {
 }
 
 project(adainset): gperf_test {
+  avoids      += uses_wchar
   exename = aout
 
   verbatim(gnuace, bottom) {
@@ -50,6 +52,7 @@ project(adainset): gperf_test {
 }
 
 project(cppinset): gperf_test {
+  avoids      += uses_wchar
   exename = cppout
 
   verbatim(gnuace, bottom) {
@@ -74,6 +77,7 @@ project(cppinset): gperf_test {
 }
 
 project(preinset): gperf_test {
+  avoids      += uses_wchar
   exename = preout
 
   verbatim(gnuace, bottom) {
@@ -98,6 +102,7 @@ project(preinset): gperf_test {
 }
 
 project(m3inset): gperf_test {
+  avoids      += uses_wchar
   exename = m3out
 
   verbatim(gnuace, bottom) {
@@ -122,6 +127,7 @@ project(m3inset): gperf_test {
 }
 
 project(pinset): gperf_test {
+  avoids      += uses_wchar
   exename = pout
 
   verbatim(gnuace, bottom) {
@@ -146,6 +152,7 @@ project(pinset): gperf_test {
 }
 
 project(iinset): gperf_test {
+  avoids      += uses_wchar
   exename = iout
 
   verbatim(gnuace, bottom) {
@@ -170,6 +177,7 @@ project(iinset): gperf_test {
 }
 
 project(iinset2): gperf_test {
+  avoids      += uses_wchar
   exename = iout2
   after  += iinset
 
@@ -196,6 +204,7 @@ project(iinset2): gperf_test {
 }
 
 project(tinset): gperf_test {
+  avoids      += uses_wchar
   exename = tout
 
   verbatim(gnuace, bottom) {
@@ -220,6 +229,7 @@ project(tinset): gperf_test {
 }
 
 project(taoinset): gperf_test {
+  avoids      += uses_wchar
   exename = taoout
 
   verbatim(gnuace, bottom) {
