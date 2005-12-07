@@ -30,7 +30,7 @@ Handle_Timeout::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_Time_Value delta (10);
   ACE_Time_Value interval (1);
-  ACE_Get_Arg_Opt    get_opt (argc, argv, ACE_TEXT("a:d:i:"), 0);
+  ACE_Get_Arg_Opt<ACE_TCHAR>   get_opt (argc, argv, ACE_TEXT("a:d:i:"), 0);
   int        arg = 0;
 
   for (int c; (c = get_opt ()) != -1; )

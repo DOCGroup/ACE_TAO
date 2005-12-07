@@ -133,7 +133,7 @@ Options::Options (void)
 void
 Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT ("dehlL:mn:pst:T"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT ("dehlL:mn:pst:T"));
 
   ACE_OS::strcpy (this->program_name_, ACE_TEXT_TO_CHAR_IN (argv[0]));
   ACE_LOG_MSG->open (argv[0]);

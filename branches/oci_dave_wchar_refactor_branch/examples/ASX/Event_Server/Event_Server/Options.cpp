@@ -108,7 +108,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_LOG_MSG->open (argv[0]);
 
-  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT ("c:bdH:i:L:l:M:ns:t:T:v"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT ("c:bdH:i:L:l:M:ns:t:T:v"));
   int c;
 
   while ((c = get_opt ()) != EOF)

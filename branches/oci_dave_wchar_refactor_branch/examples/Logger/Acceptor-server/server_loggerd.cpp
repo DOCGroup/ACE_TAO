@@ -42,7 +42,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
   this->port_ = ACE_DEFAULT_SERVER_PORT;
 
-  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT ("p:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT ("p:"));
 
   for (int c; (c = get_opt ()) != -1; )
     switch (c)

@@ -129,7 +129,7 @@ static int exit_code = 0;
 static void
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT("i:e:cu"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT("i:e:cu"));
 
   int c;
 

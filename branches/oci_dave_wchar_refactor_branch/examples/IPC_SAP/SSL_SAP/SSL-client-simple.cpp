@@ -105,7 +105,7 @@ Options::read (void *buf, size_t len, size_t &iteration)
 int
 Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Arg_Opt getopt (argc, argv, ACE_TEXT ("2h:i:m:p:q:sT:"), 1);
+  ACE_Get_Arg_Opt<ACE_TCHAR> getopt (argc, argv, ACE_TEXT ("2h:i:m:p:q:sT:"), 1);
 
   for (int c; (c = getopt ()) != -1; )
     switch (c)

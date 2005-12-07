@@ -20,10 +20,10 @@ int Service_Reporter::init (int argc, ACE_TCHAR *argv[]) {
   ACE_INET_Addr local_addr (Service_Reporter::DEFAULT_PORT);
 
   // Start at argv[0].
-  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT ("p:"), 0);
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT ("p:"), 0);
   get_opt.long_option (ACE_TEXT ("port"),
                        'p',
-                       ACE_Get_Arg_Opt::ARG_REQUIRED);
+                       ACE_Get_Arg_Opt<ACE_TCHAR>::ARG_REQUIRED);
 
   for (int c; (c = get_opt ()) != -1; )
     switch (c) {

@@ -36,7 +36,7 @@ static void
 parse_arguments (int argc, char *argv[])
 {
   program_name = argv[0];
-  ACE_Get_Arg_Opt get_opt (argc, argv, "dr:");
+  ACE_Get_Arg_Opt<char> get_opt (argc, argv, "dr:");
 
   for (int c; (c = get_opt ()) != -1; )
     switch (c)

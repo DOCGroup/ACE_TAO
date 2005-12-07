@@ -637,7 +637,7 @@ Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT("n:p:d:h:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT("n:p:d:h:"));
   int c;
 
   while ((c = get_opt ()) != EOF)
