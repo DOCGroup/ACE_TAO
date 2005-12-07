@@ -25,9 +25,12 @@
 #include "ace/Task.h"
 #include "ace/Barrier.h"
 
-class TAO_Notify_Tests_Task_Callback;
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Barrier;
 class ACE_Arg_Shifter;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+class TAO_Notify_Tests_Task_Callback;
 
 /**
  * @class TAO_Notify_Tests_Periodic_Supplier
