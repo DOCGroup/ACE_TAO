@@ -24,7 +24,7 @@ class CSD_TP_Foo_B_Export Callback_i
 
   private:
 
-     ACE_Atomic_Op <ACE_SYNCH_MUTEX, unsigned> num_callbacks_;
+     unsigned num_callbacks_;
 };
 
 

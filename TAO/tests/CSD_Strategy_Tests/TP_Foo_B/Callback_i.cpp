@@ -23,6 +23,6 @@ Callback_i::test_method(ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 void
 Callback_i::gather_stats(Foo_B_Statistics& stats) 
 {
-  stats.actual_callbacks(this->num_callbacks_.value ());
+  stats.actual_callbacks(this->num_callbacks_);
 }
 
