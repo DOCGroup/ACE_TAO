@@ -9,8 +9,9 @@ project(*Server): taoserver, minimum_corba {
 }
 
 project(*Client): taoserver, minimum_corba, dynamicinterface {
-  exename  = client
-  after += *Server
+  avoids += ace_for_tao
+  exename = client
+  after  += *Server
 
   Source_Files {
     any.cpp
