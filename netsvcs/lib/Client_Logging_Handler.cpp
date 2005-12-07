@@ -500,7 +500,7 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
 int
 ACE_Client_Logging_Acceptor::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT ("h:k:p:"), 0);
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT ("h:k:p:"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
     {

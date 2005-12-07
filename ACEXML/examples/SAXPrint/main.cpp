@@ -37,7 +37,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   int zip = 0;
   ACEXML_Char* url = 0;
 
-  ACE_Get_Arg_Opt get_opt (argc, argv, ACE_TEXT ("sf:lu:z"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opt (argc, argv, ACE_TEXT ("sf:lu:z"));
   int c;
 
   while ((c = get_opt ()) != EOF)
