@@ -1,3 +1,20 @@
+Wed Dec  7 05:50:01 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* apps/JAWS/clients/Caching/caching.mpc:
+	* apps/JAWS2/JAWS/jaws2.mpc:
+	* bin/MakeProjectCreator/config/winregistry.mpb:
+	* examples/APG/Containers/containers.mpc:
+	* examples/APG/Svc_Config/svc_config.mpc:
+	* examples/APG/ThreadSafety/threadsafety.mpc:
+	* examples/C++NPv2/C++NPv2.mpc:
+	* examples/QOS/Diffserv/QOS_Diffserv.mpc:
+	* examples/Reactor/Proactor/Proactor.mpc:
+	* examples/Reactor/WFMO_Reactor/WFMO_Reactor.mpc:
+	* tests/tests.mpc:
+
+          Disable some projects in these MPC files when "ace_for_tao" is
+	  enabled.
+
 Tue Dec  6 21:34:03 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/ASX/Event_Server/Event_Server/event_server.cpp:
