@@ -96,7 +96,7 @@ namespace
       os << "}";
     }
   };
-  
+
   template <typename T>
   struct OperationEmitter : Traversal::Operation, EmitterBase
   {
@@ -295,7 +295,7 @@ namespace
          << STRS[EXCP_SNGL] << endl
          << "{"
          << STRS[YCH] << endl;
-         
+
       Traversal::ReadWriteAttribute::belongs (a, return_belongs_);
 
       os << "}";
@@ -353,7 +353,7 @@ namespace
          << STRS[EXCP_SNGL] << endl
          << "{"
          << STRS[YCH] << endl;
-         
+
       Traversal::ReadAttribute::belongs (a, return_belongs_);
 
       os << "}";
@@ -407,17 +407,17 @@ namespace
     traverse (UnconstrainedInterface& i)
     {
       if (i.context ().count ("facet_impl_src_gen")) return;
-      
+
       os << STRS[SEP] << endl
          << "// Facet Executor Implementation Class:   "
          << i.name () << "_exec_i" << endl
          << STRS[SEP] << endl << endl;
-    
-      os << i.name () << "_exec_i::" 
+
+      os << i.name () << "_exec_i::"
          << i.name () << "_exec_i (void)" << endl
          << "{"
          << "}"
-         << i.name () << "_exec_i::~" 
+         << i.name () << "_exec_i::~"
          << i.name () << "_exec_i (void)" << endl
          << "{"
          << "}"
@@ -474,7 +474,7 @@ namespace
         inherits (i, inherits_);
         names (i, defines_);
       }
-      
+
       i.context ().set ("facet_impl_src_gen", true);
     }
   };
@@ -499,13 +499,13 @@ namespace
     traverse (SemanticGraph::Provider& p)
     {
       Traversal::ProviderData::belongs (p, enclosing_belongs_);
-      
+
       os << "::CCM_";
 
       Traversal::ProviderData::belongs (p, simple_belongs_);
-      
+
       os << "_ptr" << endl
-         << scope_.name () << "_exec_i::get_" 
+         << scope_.name () << "_exec_i::get_"
          << p.name () << " (" << endl
          << STRS[ENV_SNGL_SRC_NOTUSED] << ")" << endl
          << STRS[EXCP_SNGL] << endl
@@ -514,11 +514,11 @@ namespace
          << "return ";
 
       Traversal::ProviderData::belongs (p, enclosing_belongs_);
-      
+
       os << "::CCM_";
 
       Traversal::ProviderData::belongs (p, simple_belongs_);
-      
+
       os << "::_nil ();" << endl
          << "}";
     }
@@ -530,7 +530,7 @@ namespace
       // as well (the spec is vague on this point). If so, we need the
       // CIDL compiler to support valuetype/eventtype inheritance.
       os << "void" << endl
-         << scope_.name () << "_exec_i::push_" 
+         << scope_.name () << "_exec_i::push_"
          << c.name () << " (" << endl;
 
       Traversal::ConsumerData::belongs (c, belongs_);
@@ -590,12 +590,12 @@ namespace
          << "// Component Executor Implementation Class:   "
          << t.name () << "_exec_i" << endl
          << STRS[SEP] << endl << endl;
-    
-      os << t.name () << "_exec_i::" 
+
+      os << t.name () << "_exec_i::"
          << t.name () << "_exec_i (void)" << endl
          << "{"
          << "}"
-         << t.name () << "_exec_i::~" 
+         << t.name () << "_exec_i::~"
          << t.name () << "_exec_i (void)" << endl
          << "{"
          << "}";
@@ -684,7 +684,7 @@ namespace
       }
 
       os << "// Port operations." << endl << endl;
-      
+
       {
         Traversal::Component component_emitter;
 
@@ -701,7 +701,7 @@ namespace
 
         component_emitter.traverse (t);
       }
-      
+
       os << "// Operations from Components::SessionComponent" << endl << endl;
 
       os << "void" << endl
@@ -876,13 +876,13 @@ namespace
       os << "{"
          << STRS[YCH] << endl
          << "return ";
-         
+
       Traversal::HomeFactory::returns (hf, enclosing_returns_);
-      
+
       os << "::CCM_";
-      
+
       Traversal::HomeFactory::returns (hf, simple_returns_);
-      
+
       os << "::_nil ();"
          << "}";
     }
@@ -892,7 +892,7 @@ namespace
     {
       os << "," << endl;
     }
-    
+
   private:
     EnclosingTypeNameEmitter enclosing_type_name_emitter_;
     SimpleTypeNameEmitter simple_type_name_emitter_;
@@ -970,13 +970,13 @@ namespace
       os << "{"
          << STRS[YCH] << endl
          << "return ";
-         
+
       Traversal::HomeFinder::returns (hf, enclosing_returns_);
-      
+
       os << "::CCM_";
-      
+
       Traversal::HomeFinder::returns (hf, simple_returns_);
-      
+
       os << "::_nil ();"
          << "}";
     }
@@ -986,7 +986,7 @@ namespace
     {
       os << "," << endl;
     }
-    
+
   private:
     EnclosingTypeNameEmitter enclosing_type_name_emitter_;
     SimpleTypeNameEmitter simple_type_name_emitter_;
@@ -1009,12 +1009,12 @@ namespace
          << "// Home Executor Implementation Class:   "
          << t.name () << "_exec_i" << endl
          << STRS[SEP] << endl << endl;
-    
-      os << t.name () << "_exec_i::" 
+
+      os << t.name () << "_exec_i::"
          << t.name () << "_exec_i (void)" << endl
          << "{"
          << "}"
-         << t.name () << "_exec_i::~" 
+         << t.name () << "_exec_i::~"
          << t.name () << "_exec_i (void)" << endl
          << "{"
          << "}";
@@ -1220,25 +1220,25 @@ namespace
          << STRS[COMP_EC] << "::_nil ();" << endl
          << "ACE_NEW_THROW_EX (" << endl
          << "retval," << endl;
-         
+
        Traversal::Home home_emitter;
-       
+
        Traversal::Manages manages_;
        home_emitter.edge_traverser (manages_);
-       
+
        SimpleTypeNameEmitter manages_emitter (os);
        manages_.node_traverser (manages_emitter);
-       
+
        home_emitter.traverse (t);
-       
+
        os << "_exec_i," << endl
           << "CORBA::NO_MEMORY ());"
           << STRS[ACE_CR] << " (" << STRS[COMP_EC]
           << "::_nil ());" << endl
-          << "return retval;" 
+          << "return retval;"
           << "}";
     }
-    
+
     virtual void
     post (Type& t)
     {
@@ -1284,7 +1284,7 @@ ExecImplSourceEmitter::pre (TranslationUnit&)
                                       "_exec.h");
 
   file_name = regex::perl_s (file_name,
-                             "/(\\.(idl|cidl|cdl))?$/"
+                             "/^(.+?)(\\.(idl|cidl|cdl))?$/$1"
                              + file_suffix
                              + "/");
 
@@ -1346,7 +1346,7 @@ ExecImplSourceEmitter::generate (TranslationUnit& u)
   Traversal::Implements implements;
   component_executor.edge_traverser (implements);
   home_executor.edge_traverser (implements);
-  
+
   //--
   ComponentExecImplEmitter component_exec_impl_emitter (c);
   HomeExecImplEmitter home_exec_impl_emitter (c);
@@ -1354,7 +1354,7 @@ ExecImplSourceEmitter::generate (TranslationUnit& u)
   implements.node_traverser (home_exec_impl_emitter);
 
   unit.traverse (u);
-  
+
   post (u);
 }
 

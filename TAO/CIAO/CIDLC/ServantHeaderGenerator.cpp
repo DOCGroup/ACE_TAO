@@ -2250,7 +2250,7 @@ namespace
     {
       os << "#include \""
          << regex::perl_s (qi.file ().string (),
-                           "/(\\.(idl|cidl|cdl))?$/S.h/")
+                           "/^(.+?)(\\.(idl|cidl|cdl))?$/$1S.h/")
          << "\"" << endl << endl;
     }
 
@@ -2259,7 +2259,7 @@ namespace
     {
       os << "#include \""
          << regex::perl_s (bi.file ().string (),
-                           "/(\\.(idl|cidl|cdl))?$/S.h/")
+                           "/^(.+?)(\\.(idl|cidl|cdl))?$/$1S.h/")
          << "\""
          << endl;
     }
@@ -2306,7 +2306,9 @@ ServantHeaderEmitter::pre (TranslationUnit&)
   string guard =
       "CIAO_GLUE_SESSION_"
       + regex::perl_s (uc_file_name,
-                       "/(\\.(IDL|CIDL|CDL))?$/" +  uc_file_suffix + "/");
+                       "/^(.+?)(\\.(IDL|CIDL|CDL))?$/$1"
+                       + uc_file_suffix
+                       + "/");
 
   // Replace any remaining '.' with '_'.
   guard = regex::perl_s (guard, "/\\./_/");
@@ -2327,8 +2329,7 @@ ServantHeaderEmitter::pre (TranslationUnit&)
   // @@@ (JP) I guess it's a safe assumption that the tail of the
   // suffix will be .idl.
   string suffix = cl_.get_value ("lem-file-suffix", "E.idl");
-  suffix = regex::perl_s (suffix,
-                          "/(\\.idl)?$//");
+  suffix = regex::perl_s (suffix, "/^(.+?)(\\.idl)?$/$1/");
 
   // @@@ (JP) No way of knowing if the IDL compiler had command line
   // option(s) to change C.h and/or S.h. We could add command line options
@@ -2336,7 +2337,7 @@ ServantHeaderEmitter::pre (TranslationUnit&)
   // they are in synch with the IDL compiler's options.
   os << "#include \""
      << regex::perl_s (file_name,
-                       "/(\\.(idl|cidl|cdl))?$/" + suffix + "C.h/")
+                       "/^(.+?)(\\.(idl|cidl|cdl))?$/$1" + suffix + "C.h/")
      << "\""
      << endl << endl;
 
@@ -2474,7 +2475,9 @@ ServantHeaderEmitter::post (TranslationUnit&)
   string guard =
     "CIAO_GLUE_SESSION_"
     + regex::perl_s (uc_file_name,
-                     "/(\\.(IDL|CIDL|CDL))?$/" +  uc_file_suffix + "/");
+                     "/^(.+?)(\\.(IDL|CIDL|CDL))?$/$1"
+                     + uc_file_suffix
+                     + "/");
 
   guard = regex::perl_s (guard, "/\\./_/");
 

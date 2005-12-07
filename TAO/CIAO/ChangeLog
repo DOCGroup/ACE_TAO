@@ -1,19 +1,33 @@
-Tue Dec 06 12:33:27 2005    <wotte@dre.vanderbilt.edu>
+Wed Dec  7 12:41:22 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* CIDLC/ExecImplGenerator.cpp:
+	* CIDLC/ExecImplHeaderGenerator.cpp:
+	* CIDLC/ExecImplSourceGenerator.cpp:
+	* CIDLC/ExecutorMappingGenerator.cpp:
+	* CIDLC/ServantGenerator.cpp:
+	* CIDLC/ServantHeaderGenerator.cpp:
+	* CIDLC/ServantSourceGenerator.cpp:
+	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
+
+	Fixed a bug in regular expressions that are used to get rid of
+	file suffixes.
+
+Tue Dec 06 12:33:27 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp
 	* tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
 
-	Fixed warnings in Borland. 
+	Fixed warnings in Borland.
 
 Tue Dec  6 16:14:01 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/Servant_Impl_T.cpp:
-        
+
           Changed initialization of boolean class members from '0'
           to 'false'.
-          
+
         * ciao/Servant_Impl_T.h:
-        
+
           Added comments to the executor and context class members,
           providing info about where they are initialized.
 
@@ -21,14 +35,14 @@ Mon Dec  5 14:43:48 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/ExecutionManager/ExecutionManager.mpc
 
-	Removed superfluous dependancy on Xerces. 
+	Removed superfluous dependancy on Xerces.
 
 Sun Dec  4 11:13:32 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* DAnCE/StaticConfigurator/StaticDAnCEParser.mpc
 	* DAnCE/tests/Config_Handlers/handler_test.mpb
 
-	Fix linking errors on Tiger. 
+	Fix linking errors on Tiger.
 
 Fri Dec  2 11:25:48 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
@@ -41,11 +55,11 @@ Fri Dec  2 11:25:48 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* DAnCE/RepositoryManager/Update_Plan.cpp
 	* DAnCE/RepositoryManager/Update_Plan.h
 
-	Removed the deprecated RepositoryManager implementation. 
-	
+	Removed the deprecated RepositoryManager implementation.
+
 	* NEWS
-	
-	Updated the NEWS file to reflect this. 
+
+	Updated the NEWS file to reflect this.
 
 Thu Dec  1 10:16:46 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
@@ -53,8 +67,8 @@ Thu Dec  1 10:16:46 2005  William Otte  <wotte@dre.vanderbilt.edu>
 	* tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp
 	* tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
 
-	Fixed some errors caused by previous commit. 
-	
+	Fixed some errors caused by previous commit.
+
 Thu Dec  1 12:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/DomainApplicationManager/Deployment_Configuration.cpp:
