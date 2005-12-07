@@ -12,17 +12,17 @@
 #include "ace/Vector_T.h"
 
 
-// Borland C++ 6 Update Pack 4 and earlier give a warning about comparing
+// Borland Developer Studio 2006 and earlier give a warning about comparing
 // signed and unsigned values in the minimum_polulate() and
 // initial_populate() warnings. The comparison uses a unsigned long and
 // unsigned short and it seems that the compiler promotes the unsigned
 // short of an int and this then gives the warning. Just for Borland
 // disabled the warning in this file.
-#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x564)
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x581)
 # pragma option push -w-csu
 # pragma nopushoptwarn
 # pragma nopackwarning
-#endif /* __BORLANDC__ && __BORLANDC__ <= 0x564 */
+#endif /* __BORLANDC__ && __BORLANDC__ <= 0x581 */
 
 #define TODO int todo;
 //#define TODO
@@ -890,8 +890,8 @@ TAO::PG_Object_Group::has_member_at (const PortableGroup::Location & location)
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 // Restore original compiler flags.
-#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x564)
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x581)
 # pragma option pop
 # pragma nopushoptwarn
 # pragma nopackwarning
-#endif /* __BORLANDC__ && __BORLANDC__ <= 0x564 */
+#endif /* __BORLANDC__ && __BORLANDC__ <= 0x581 */
