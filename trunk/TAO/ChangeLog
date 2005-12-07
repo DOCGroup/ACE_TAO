@@ -1,3 +1,8 @@
+Wed Dec  7 12:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Trader/Trader.h:
+          Work around for TAO_Lockable is also needed for BCB2006 Update 1
+
 Tue Dec  6 21:16:05 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/ServerRequestInterceptor.h:
