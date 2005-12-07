@@ -23,7 +23,7 @@ project(Mutex) : aceexe {
 }
 
 project(RW Lock) : aceexe {
-  exename = RW_Lock
+  exename = RW_Lock ace_for_tao
   Source_Files {
     RW_Lock.cpp
   }

@@ -4,7 +4,7 @@
 project(JAWS2) : acelib {
     sharedname = JAWS2
     dynamicflags = JAWS_BUILD_DLL
-    avoids += uses_wchar
+    avoids += uses_wchar ace_for_tao
     includes += ..
     Source_Files {
         Assoc_Array.cpp
