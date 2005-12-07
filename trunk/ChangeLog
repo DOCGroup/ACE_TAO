@@ -1,3 +1,11 @@
+Tue Dec  6 21:34:03 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* examples/ASX/Event_Server/Event_Server/event_server.cpp:
+
+	  Removed duplicate "MT_Stream" typedef that made the same typedef
+	  in `ace/UPIPE_Stream.h' ambiguous.  Fixes a versioned namespace
+	  build error.
+
 Tue Dec  6 18:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/acedefaults.mpb:
