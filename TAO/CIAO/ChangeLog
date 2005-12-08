@@ -1,3 +1,8 @@
+Thu Dec 08 08:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeManager/NodeManager_Impl.cpp:
+          Fixed compile errors with VxWorks
+
 Wed Dec 07 18:05:35 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
 	* ciao/Deployment.idl
