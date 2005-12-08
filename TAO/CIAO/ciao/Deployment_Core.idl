@@ -74,6 +74,7 @@ module Deployment
     EventConsumer
   };
 
+  // CIAO's specific <Connection> type defition. 
   // To avoid the connection info in the plan being passed to the
   // local node and to make the implementation not very cumbersome
   // I changed the connection struct to include some extra informations.
@@ -151,6 +152,8 @@ module Deployment
   interface NodeApplication; // Forward decl.
   typedef sequence<NodeApplication> NodeApplications;
 
+  /// CIAO specific interface, which could deal with installing multiple
+  /// containers into a single NodeApplication.
   interface Container
   {
     readonly attribute ::Deployment::Properties properties;
@@ -195,6 +198,8 @@ module Deployment
   {
     readonly attribute ::Deployment::Properties properties;
 
+    /// CIAO specific operation to handle dynamic system redeployment
+    /// and reconfiguration
     /// @@ Initialize the nodeapplication, so it will know what
     ///    components it will create and home many of them are
     ///    there. However the real create action will take place when
@@ -210,24 +215,30 @@ module Deployment
               ::Components::InvalidConfiguration,
               ::Components::RemoveFailure);
 
+    /// CIAO specific extensions
     ///@@ We know that Deployment::NodeApplicationManager will be returned,
     ///   however to avoid the size of the shared object of CIAO_Server.
     ///   we return an Object.
     Object get_node_application_manager ();
 
+    /// CIAO specific extensions
     Container create_container (in ::Deployment::Properties properties)
       raises (::Components::CreateFailure,
               ::Components::InvalidConfiguration);
 
+    /// CIAO specific extensions
     void remove_container (in Container cref)
       raises (::Components::RemoveFailure);
 
+    /// CIAO specific extensions
     Containers get_containers ();
 
+    /// CIAO specific extensions
     /// Remove a component instance from the NodeApplication
     void remove_component (in string inst_name)
       raises (::Components::RemoveFailure);
 
+    /// CIAO specific extensions
     /// Remove all containers, components and component homes.
     /// Shuts down the ORB of the NodeApplication to terminate the process.
     oneway void remove ();
@@ -238,9 +249,11 @@ module Deployment
     void ciao_preactivate ()
       raises (StartError);
 
+    /// CIAO specific extensions
     void ciao_postactivate ()
       raises (StartError);
 
+    /// CIAO specific extensions
     void ciao_passivate ()
       raises (StopError);
   };
