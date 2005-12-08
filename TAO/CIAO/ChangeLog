@@ -2717,53 +2717,53 @@ Mon Jul  11 11:44:57 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
 
 Fri Jul  8 17:42:57 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
 
-        * CIAO/docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base.mpc
-        * CIAO/docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base.idl
-        * CIAO/docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base_svnt_export.h
-        * CIAO/docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base_stub_export.h
-        * CIAO/docs/tutorials/Quoter/Simple/Broker/Broker.mpc
-        * CIAO/docs/tutorials/Quoter/Simple/Broker/Broker.idl
-        * CIAO/docs/tutorials/Quoter/Simple/Broker/Broker.cidl
-        * CIAO/docs/tutorials/Quoter/Simple/Broker/Broker.cpp
-        * CIAO/docs/tutorials/Quoter/Simple/Broker/Broker_exec.h
-        * CIAO/docs/tutorials/Quoter/Simple/Broker/Broker_exec.cpp
-        * CIAO/docs/tutorials/Quoter/Simple/Broker/Broker_svnt_export.h
-        * CIAO/docs/tutorials/Quoter/Simple/Broker/Broker_stub_export.h
-        * CIAO/docs/tutorials/Quoter/Simple/Broker/Broker_exec_export.h
-        * CIAO/docs/tutorials/Quoter/Simple/Distributor/Distributor.mpc
-        * CIAO/docs/tutorials/Quoter/Simple/Distributor/Distributor.idl
-        * CIAO/docs/tutorials/Quoter/Simple/Distributor/Distributor.cidl
-        * CIAO/docs/tutorials/Quoter/Simple/Distributor/Distributor.cpp
-        * CIAO/docs/tutorials/Quoter/Simple/Distributor/Distributor_exec.h
-        * CIAO/docs/tutorials/Quoter/Simple/Distributor/Distributor_exec.cpp
-        * CIAO/docs/tutorials/Quoter/Simple/Distributor/Distributor_svnt_export.h
-        * CIAO/docs/tutorials/Quoter/Simple/Distributor/Distributor_stub_export.h
-        * CIAO/docs/tutorials/Quoter/Simple/Distributor/Distributor_exec_export.h
-        * CIAO/docs/tutorials/Quoter/Simple/descriptors/Broker.ccd
-        * CIAO/docs/tutorials/Quoter/Simple/descriptors/Broker.cid
-        * CIAO/docs/tutorials/Quoter/Simple/descriptors/Broker.cpd
-        * CIAO/docs/tutorials/Quoter/Simple/descriptors/Broker_Exec.iad
-        * CIAO/docs/tutorials/Quoter/Simple/descriptors/Broker_Stub.iad
-        * CIAO/docs/tutorials/Quoter/Simple/descriptors/Broker_Svnt.iad
-        * CIAO/docs/tutorials/Quoter/Simple/descriptors/Deployment.xsd
-        * CIAO/docs/tutorials/Quoter/Simple/descriptors/Distributor.ccd
-        * CIAO/docs/tutorials/Quoter/Simple/descriptors/Distributor.cid
-        * CIAO/docs/tutorials/Quoter/Simple/descriptors/Distributor.cpd
-        * CIAO/docs/tutorials/Quoter/Simple/descriptors/Distributor_Exec.iad
-        * CIAO/docs/tutorials/Quoter/Simple/descriptors/Distributor_Stub.iad
-        * CIAO/docs/tutorials/Quoter/Simple/descriptors/Distributor_Svnt.iad
-        * CIAO/docs/tutorials/Quoter/Simple/descriptors/Domain.cdd
-        * CIAO/docs/tutorials/Quoter/Simple/descriptors/flattened_deploymentplan.cdp
-        * CIAO/docs/tutorials/Quoter/Simple/descriptors/Libraries.iad
-        * CIAO/docs/tutorials/Quoter/Simple/descriptors/Modified_Deployment.xsd
-        * CIAO/docs/tutorials/Quoter/Simple/descriptors/package.tpd
-        * CIAO/docs/tutorials/Quoter/Simple/descriptors/runNodeDaemons.pl
-        * CIAO/docs/tutorials/Quoter/Simple/descriptors/Stock.cdp
-        * CIAO/docs/tutorials/Quoter/Simple/descriptors/Stock.cid
-        * CIAO/docs/tutorials/Quoter/Simple/descriptors/Stock.cpd
-        * CIAO/docs/tutorials/Quoter/Simple/descriptors/Stock.dat
-        * CIAO/docs/tutorials/Quoter/Simple/descriptors/Stock.pcd
-        * CIAO/docs/tutorials/Quoter/Simple/descriptors/XMI.xsd
+        * docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base.mpc
+        * docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base.idl
+        * docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base_svnt_export.h
+        * docs/tutorials/Quoter/Simple/Stock_Base/Stock_Base_stub_export.h
+        * docs/tutorials/Quoter/Simple/Broker/Broker.mpc
+        * docs/tutorials/Quoter/Simple/Broker/Broker.idl
+        * docs/tutorials/Quoter/Simple/Broker/Broker.cidl
+        * docs/tutorials/Quoter/Simple/Broker/Broker.cpp
+        * docs/tutorials/Quoter/Simple/Broker/Broker_exec.h
+        * docs/tutorials/Quoter/Simple/Broker/Broker_exec.cpp
+        * docs/tutorials/Quoter/Simple/Broker/Broker_svnt_export.h
+        * docs/tutorials/Quoter/Simple/Broker/Broker_stub_export.h
+        * docs/tutorials/Quoter/Simple/Broker/Broker_exec_export.h
+        * docs/tutorials/Quoter/Simple/Distributor/Distributor.mpc
+        * docs/tutorials/Quoter/Simple/Distributor/Distributor.idl
+        * docs/tutorials/Quoter/Simple/Distributor/Distributor.cidl
+        * docs/tutorials/Quoter/Simple/Distributor/Distributor.cpp
+        * docs/tutorials/Quoter/Simple/Distributor/Distributor_exec.h
+        * docs/tutorials/Quoter/Simple/Distributor/Distributor_exec.cpp
+        * docs/tutorials/Quoter/Simple/Distributor/Distributor_svnt_export.h
+        * docs/tutorials/Quoter/Simple/Distributor/Distributor_stub_export.h
+        * docs/tutorials/Quoter/Simple/Distributor/Distributor_exec_export.h
+        * docs/tutorials/Quoter/Simple/descriptors/Broker.ccd
+        * docs/tutorials/Quoter/Simple/descriptors/Broker.cid
+        * docs/tutorials/Quoter/Simple/descriptors/Broker.cpd
+        * docs/tutorials/Quoter/Simple/descriptors/Broker_Exec.iad
+        * docs/tutorials/Quoter/Simple/descriptors/Broker_Stub.iad
+        * docs/tutorials/Quoter/Simple/descriptors/Broker_Svnt.iad
+        * docs/tutorials/Quoter/Simple/descriptors/Deployment.xsd
+        * docs/tutorials/Quoter/Simple/descriptors/Distributor.ccd
+        * docs/tutorials/Quoter/Simple/descriptors/Distributor.cid
+        * docs/tutorials/Quoter/Simple/descriptors/Distributor.cpd
+        * docs/tutorials/Quoter/Simple/descriptors/Distributor_Exec.iad
+        * docs/tutorials/Quoter/Simple/descriptors/Distributor_Stub.iad
+        * docs/tutorials/Quoter/Simple/descriptors/Distributor_Svnt.iad
+        * docs/tutorials/Quoter/Simple/descriptors/Domain.cdd
+        * docs/tutorials/Quoter/Simple/descriptors/flattened_deploymentplan.cdp
+        * docs/tutorials/Quoter/Simple/descriptors/Libraries.iad
+        * docs/tutorials/Quoter/Simple/descriptors/Modified_Deployment.xsd
+        * docs/tutorials/Quoter/Simple/descriptors/package.tpd
+        * docs/tutorials/Quoter/Simple/descriptors/runNodeDaemons.pl
+        * docs/tutorials/Quoter/Simple/descriptors/Stock.cdp
+        * docs/tutorials/Quoter/Simple/descriptors/Stock.cid
+        * docs/tutorials/Quoter/Simple/descriptors/Stock.cpd
+        * docs/tutorials/Quoter/Simple/descriptors/Stock.dat
+        * docs/tutorials/Quoter/Simple/descriptors/Stock.pcd
+        * docs/tutorials/Quoter/Simple/descriptors/XMI.xsd
 
         Created a new directory tutorials to hold multiple tutorial examples, added quoter
         to this directory as simple quoter example. Will add a multiple receptacle quoter
@@ -3143,34 +3143,34 @@ Fri Jun 24 14:21:31 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Jun 22 23:20:04 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
-        * CIAO/CIDLC/ExecImplHeaderGenerator.cpp:
-        * CIAO/CIDLC/ExecImplSourceGenerator.cpp:
-        * CIAO/CIDLC/ExecutorMappingGenerator.cpp:
-        * CIAO/CIDLC/Literals.cpp:
-        * CIAO/CIDLC/Literals.hpp:
-        * CIAO/CIDLC/ServantHeaderGenerator.cpp:
-        * CIAO/CIDLC/ServantSourceGenerator.cpp:
-        * CIAO/DAnCE/examples/Display/NavDisplay/NavDisplay_exec.h:
-        * CIAO/DAnCE/examples/Display/RateGen/RateGen_exec.h:
-        * CIAO/DAnCE/examples/Hello/Receiver/Receiver_exec.cpp:
-        * CIAO/DAnCE/examples/Hello/Receiver/Receiver_exec.h:
-        * CIAO/DAnCE/examples/Hello/Sender/Sender_exec.cpp:
-        * CIAO/DAnCE/examples/Hello/Sender/Sender_exec.h:
-        * CIAO/DAnCE/examples/Quoter/Broker/Broker_exec.cpp:
-        * CIAO/DAnCE/examples/Quoter/Broker/Broker_exec.h:
-        * CIAO/DAnCE/examples/Quoter/Distributor/Distributor_exec.cpp:
-        * CIAO/DAnCE/examples/Quoter/Distributor/Distributor_exec.h:
-        * CIAO/DAnCE/examples/Swapping/Receiver/Receiver_exec.cpp:
-        * CIAO/DAnCE/examples/Swapping/Receiver/Receiver_exec.h:
-        * CIAO/DAnCE/examples/Swapping/Sender/Sender_exec.cpp:
-        * CIAO/DAnCE/examples/Swapping/Sender/Sender_exec.h:
-        * CIAO/DAnCE/examples/Swapping/Sender/Sender_exec_1.cpp:
-        * CIAO/DAnCE/examples/Swapping/Sender/Sender_exec_1.h:
-        * CIAO/DAnCE/examples/Swapping/Sender/Sender_exec_2.cpp:
-        * CIAO/DAnCE/examples/Swapping/Sender/Sender_exec_2.h:
-        * CIAO/DAnCE/tests/NodeApplicationTest/RoundTrip_exec.cpp:
-        * CIAO/DAnCE/tests/NodeApplicationTest/RoundTrip_exec.h:
-        * CIAO/docs/releasenotes/index.html:
+        * CIDLC/ExecImplHeaderGenerator.cpp:
+        * CIDLC/ExecImplSourceGenerator.cpp:
+        * CIDLC/ExecutorMappingGenerator.cpp:
+        * CIDLC/Literals.cpp:
+        * CIDLC/Literals.hpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        * DAnCE/examples/Display/NavDisplay/NavDisplay_exec.h:
+        * DAnCE/examples/Display/RateGen/RateGen_exec.h:
+        * DAnCE/examples/Hello/Receiver/Receiver_exec.cpp:
+        * DAnCE/examples/Hello/Receiver/Receiver_exec.h:
+        * DAnCE/examples/Hello/Sender/Sender_exec.cpp:
+        * DAnCE/examples/Hello/Sender/Sender_exec.h:
+        * DAnCE/examples/Quoter/Broker/Broker_exec.cpp:
+        * DAnCE/examples/Quoter/Broker/Broker_exec.h:
+        * DAnCE/examples/Quoter/Distributor/Distributor_exec.cpp:
+        * DAnCE/examples/Quoter/Distributor/Distributor_exec.h:
+        * DAnCE/examples/Swapping/Receiver/Receiver_exec.cpp:
+        * DAnCE/examples/Swapping/Receiver/Receiver_exec.h:
+        * DAnCE/examples/Swapping/Sender/Sender_exec.cpp:
+        * DAnCE/examples/Swapping/Sender/Sender_exec.h:
+        * DAnCE/examples/Swapping/Sender/Sender_exec_1.cpp:
+        * DAnCE/examples/Swapping/Sender/Sender_exec_1.h:
+        * DAnCE/examples/Swapping/Sender/Sender_exec_2.cpp:
+        * DAnCE/examples/Swapping/Sender/Sender_exec_2.h:
+        * DAnCE/tests/NodeApplicationTest/RoundTrip_exec.cpp:
+        * DAnCE/tests/NodeApplicationTest/RoundTrip_exec.h:
+        * docs/releasenotes/index.html:
 
           Eliminated generation of the CIAO_GLUE_-prefixed namespace
           and replaced it with a namespace constructed from the
@@ -3680,11 +3680,11 @@ Sat May 21 14:39:48 2005  Gan Deng <gan.deng@vanderbilt.edu>
 
 Tue May 17 20:49:48 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
-        * CIAO/tests/IDL3/ImpliedIDL/All/all.mpc:
-        * CIAO/tests/IDL3/ImpliedIDL/All/convert.idl:
-        * CIAO/tests/IDL3/ImpliedIDL/All/pass_through.idl:
-        * CIAO/tests/IDL3/ImpliedIDL/All/include.idl:
-        * CIAO/tests/IDL3/ImpliedIDL/All/README:
+        * tests/IDL3/ImpliedIDL/All/all.mpc:
+        * tests/IDL3/ImpliedIDL/All/convert.idl:
+        * tests/IDL3/ImpliedIDL/All/pass_through.idl:
+        * tests/IDL3/ImpliedIDL/All/include.idl:
+        * tests/IDL3/ImpliedIDL/All/README:
 
           New files comprising a test for the tao_idl3_to_idl2
           executable. The test executes tao_idl3_to_idl2 on the
