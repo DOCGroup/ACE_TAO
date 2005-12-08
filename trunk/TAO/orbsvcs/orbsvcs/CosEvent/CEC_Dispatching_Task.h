@@ -35,6 +35,8 @@
 #include "CEC_TypedEvent.h"
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_CEC_Dispatching_Task
  *
@@ -151,6 +153,8 @@ private:
   TAO_CEC_TypedEvent typed_event_;
 };
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "CEC_Dispatching_Task.i"
