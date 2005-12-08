@@ -7,6 +7,8 @@
 
 ACE_RCSID(ace, QoS_Session_Factory, "$Id$")
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_ALLOC_HOOK_DEFINE(ACE_QoS_Session_Factory)
 
 #if defined(ACE_HAS_RAPI)
@@ -99,3 +101,5 @@ ACE_QoS_Session_Factory::remove_session (ACE_QoS_Session *qos_session)
 
   return 0;
 }
+
+ACE_END_VERSIONED_NAMESPACE_DECL

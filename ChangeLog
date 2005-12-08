@@ -4,6 +4,19 @@ Thu Dec  8 07:20:25 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* ace/OS_main.cpp:
 	* ace/OS_main.h:
 	* ace/TSS_Adapter.h:
+	* ace/QoS/QoS_Decorator.cpp:
+	* ace/QoS/QoS_Decorator.h:
+	* ace/QoS/QoS_Manager.cpp:
+	* ace/QoS/QoS_Manager.h:
+	* ace/QoS/QoS_Session.h:
+	* ace/QoS/QoS_Session_Factory.cpp:
+	* ace/QoS/QoS_Session_Factory.h:
+	* ace/QoS/QoS_Session_Impl.cpp:
+	* ace/QoS/QoS_Session_Impl.h:
+	* ace/QoS/QoS_Session_Impl.i:
+	* ace/QoS/SOCK_Dgram_Mcast_QoS.cpp:
+	* ace/QoS/SOCK_Dgram_Mcast_QoS.h:
+	* ace/QoS/SOCK_Dgram_Mcast_QoS.i:
 
 	  Fixed versioned namespace support.  The versioning macros calls
 	  were missing.
