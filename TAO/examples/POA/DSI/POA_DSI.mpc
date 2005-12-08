@@ -1,5 +1,6 @@
 //$Id$
 project(*Client) : taoclient, messaging, minimum_corba {
+  after += *Server
   source_files {
     DatabaseC.cpp
     client.cpp
