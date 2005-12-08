@@ -87,7 +87,11 @@ int ace_os_main_i (int argc, char *argv[]) /* user's entry point, e.g., main */
 }
 #    endif
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #  elif !defined (ACE_HAS_WINCE)
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #    if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
 int ACE_Main_Base::run (int argc, ACE_TCHAR *argv[])
@@ -115,9 +119,9 @@ ace_os_main_i (ACE_Main_Base &mbase, int argc, char *argv[]) /* user's entry poi
 }
 #    endif /* ACE_WIN32 && ACE_USES_WCHAR */
 
-#  else /* ACE_HAS_WINCE */
-
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#  else /* ACE_HAS_WINCE */
 
 // CE only gets a command line string;  no argv. So we need to convert it
 // when the main entrypoint expects argc/argv. ACE_ARGV supports this.
@@ -142,9 +146,8 @@ int ACE_Main_Base::run (HINSTANCE,
   ACE::fini ();
   return i;
 }
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #  endif   /* !ACE_HAS_WINCE */
-
-ACE_END_VERSIONED_NAMESPACE_DECL
 
 # endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
