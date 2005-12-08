@@ -18,6 +18,9 @@
 #pragma once
 #endif /* ! ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/orbconf.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class ORB;
@@ -33,8 +36,9 @@ namespace CIAO
    * should be call right after ORB initialization but we should try
    * to register these stuff automatically.
    */
-  CIAO_CLIENT_Export int Client_init (CORBA::ORB_ptr o);
+	CIAO_CLIENT_Export int Client_init (CORBA::ORB_ptr o);
 }
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* CIAO_CLIENT_INIT_H */

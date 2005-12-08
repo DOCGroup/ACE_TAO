@@ -1,3 +1,16 @@
+Thu Dec  8 15:38:02 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* DAnCE/Old_Config_Handlers/DT_Handler.h:
+	* ciao/Client_init.h:
+	* ciao/Context_Impl_T.h:
+	* ciao/Server_init.h:
+	* ciao/Upgradeable_Context_Impl_T.h:
+	* tools/Config_Handlers/Any_Handler.h:
+
+	  Fixed versioned namespace support.  The versioning macros calls
+	  around forward declarations in the CORBA namespace were
+	  missing.
+
 Thu Dec 08 08:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeManager/NodeManager_Impl.cpp:

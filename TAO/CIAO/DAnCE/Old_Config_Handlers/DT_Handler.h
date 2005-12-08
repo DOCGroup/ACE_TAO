@@ -30,11 +30,14 @@ using xercesc::DOMText;
 using xercesc::DOMNodeIterator;
 using xercesc::DOMNode;
 
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class ORB;
   typedef ORB* ORB_ptr;
 }
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace CIAO
 {
