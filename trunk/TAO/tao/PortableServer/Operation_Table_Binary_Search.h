@@ -23,6 +23,8 @@
 
 #include "Operation_Table.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class TAO_Binary_Search_OpTable
  *
@@ -60,6 +62,8 @@ private:
   /// will generate this routine routines.
   virtual const TAO_operation_db_entry* lookup (const char *str) = 0;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_OPERATION_TABLE_BINARY_SEARCH_H */
