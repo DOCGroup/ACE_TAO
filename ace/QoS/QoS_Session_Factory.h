@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -23,6 +23,8 @@
 
 #include "ace/Containers_T.h"
 #include "ACE_QoS_Export.h"
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declare this, so the factory uses only references to this.
 class ACE_QoS_Session;
@@ -87,6 +89,8 @@ private:
   QOS_SESSION_SET qos_session_set_;
 
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_QOS_SESSION_FACTORY_H */

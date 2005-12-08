@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -26,6 +26,8 @@
 #include "rapi_lib.h"
 
 #define DEFAULT_SOURCE_SENDER_PORT 10001
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_RAPI_Session
@@ -146,7 +148,11 @@ private:
 
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 #endif /* ACE_HAS_RAPI */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_GQoS_Session
@@ -248,6 +254,8 @@ private:
   ACE_GQoS_Session (void);
 
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "QoS_Session_Impl.i"
