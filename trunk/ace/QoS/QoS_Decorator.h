@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -26,7 +26,7 @@
 #include "SOCK_Dgram_Mcast_QoS.h"
 #include "ACE_QoS_Export.h"
 
-ACE_RCSID(QOS_Decorator, QOS_Decorator, "$Id$")
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_QoS_Decorator_Base
@@ -172,6 +172,8 @@ private:
   ACE_Reactor *reactor_;
 
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif  /* QOS_DECORATOR_H */

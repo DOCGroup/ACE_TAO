@@ -23,6 +23,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_SOCK;
 class ACE_QoS_Manager;
 
@@ -174,6 +176,8 @@ protected:
   //Has the last rsvp event that occured
 
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_QOS_SESSION_H */
