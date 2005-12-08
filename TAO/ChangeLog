@@ -1,3 +1,11 @@
+Thu Dec  8 14:19:52 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlert_Handler.h:
+
+	  Fixed versioned namespace support.  The versioning macros calls
+	  were missing.
+
 Thu Dec  8 20:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * interop-tests/wchar/interop_wchar.mpc:
@@ -3484,11 +3492,11 @@ Wed Nov  9 22:34:24 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 Wed Nov  9 22:54:43 USMST 2005  Yan Dai  <dai_y@ociweb.com>
 
-        * TAO/tao/CSD_ThreadPool/CSD_TP_Request.inl:
-        * TAO/tao/CSD_ThreadPool/CSD_TP_Strategy.cpp:
-        * TAO/tao/CSD_ThreadPool/CSD_TP_Strategy.h:
-        * TAO/tao/CSD_ThreadPool/CSD_TP_Strategy.inl:
-        * TAO/tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Request.inl:
+        * tao/CSD_ThreadPool/CSD_TP_Strategy.cpp:
+        * tao/CSD_ThreadPool/CSD_TP_Strategy.h:
+        * tao/CSD_ThreadPool/CSD_TP_Strategy.inl:
+        * tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.cpp:
 
         Merged changes from OCI TAO 1.4a that optionally supports the
         serialization of requests. (See OCIChangeLog entry
@@ -3503,12 +3511,12 @@ Wed Nov  9 15:59:01 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 Wed Nov  9 13:39:13 USMST 2005  Yan Dai  <dai_y@ociweb.com>
 
-        * TAO/examples/CSD_Strategy/ThreadPool4/Foo.idl:
-        * TAO/examples/CSD_Strategy/ThreadPool4/Foo_i.cpp:
-        * TAO/examples/CSD_Strategy/ThreadPool4/Foo_i.h:
-        * TAO/examples/CSD_Strategy/ThreadPool5/Foo.idl:
-        * TAO/examples/CSD_Strategy/ThreadPool5/Foo_i.cpp:
-        * TAO/examples/CSD_Strategy/ThreadPool5/Foo_i.h:
+        * examples/CSD_Strategy/ThreadPool4/Foo.idl:
+        * examples/CSD_Strategy/ThreadPool4/Foo_i.cpp:
+        * examples/CSD_Strategy/ThreadPool4/Foo_i.h:
+        * examples/CSD_Strategy/ThreadPool5/Foo.idl:
+        * examples/CSD_Strategy/ThreadPool5/Foo_i.cpp:
+        * examples/CSD_Strategy/ThreadPool5/Foo_i.h:
 
           Added exception raise to test_callback() in idl. This would fix the
           warnings on borland builds.
@@ -8555,24 +8563,24 @@ Mon Oct  3 18:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Oct  3 10:48:45 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-        * TAO/TAO_IDL/tao_idl.mpc:
-        * TAO/orbsvcs/orbsvcs/CosNaming_Serv.mpc:
-        * TAO/orbsvcs/orbsvcs/Svc_Utils.mpc:
-        * TAO/tao/Strategies.mpc:
+        * TAO_IDL/tao_idl.mpc:
+        * orbsvcs/orbsvcs/CosNaming_Serv.mpc:
+        * orbsvcs/orbsvcs/Svc_Utils.mpc:
+        * tao/Strategies.mpc:
 
           Added "ace_for_tao" ACE library subset support.
 
-        * TAO/TAO_IDL/driver/drv_preproc.cpp:
-        * TAO/TAO_IDL/fe/fe_extern.cpp:
-        * TAO/TAO_IDL/fe/fe_init.cpp:
-        * TAO/TAO_IDL/include/fe_extern.h:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * TAO_IDL/fe/fe_extern.cpp:
+        * TAO_IDL/fe/fe_init.cpp:
+        * TAO_IDL/include/fe_extern.h:
 
           Removed use of ACE_UUID.  Rely on ACE_OS::mkstemp() instead to
           avoid depending on more areas of ACE than necessary.
 
-        * TAO/orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h:
-        * TAO/tao/default_resource.cpp:
-        * TAO/tao/Strategies/advanced_resource.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h:
+        * tao/default_resource.cpp:
+        * tao/Strategies/advanced_resource.cpp:
 
           Include appropriate headers to address incomplete type
           definition related compile-time errors.  Necessitated by header
@@ -8795,11 +8803,11 @@ Fri Sep 30 12:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Sep 30 12:22:51 2005  Simon McQueen  <sm@prismtech.com>
 
-        * TAO/orbsvcs/tests/Bug_2247_Regression/Bug_2247_Regression.mpc:
+        * orbsvcs/tests/Bug_2247_Regression/Bug_2247_Regression.mpc:
 
           Add minimum_corba.
 
-        * TAO/orbsvcs/tests/Bug_2247_Regression/Manager.cpp:
+        * orbsvcs/tests/Bug_2247_Regression/Manager.cpp:
 
           ACE_CHECK to ACE_CHECK_RETURN.
 
@@ -11269,8 +11277,8 @@ Wed Aug 24 09:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
           Only store and use the typecode of an user exception when
           interceptors are enabled
 
-        * TAO/tao/ImR_Client/ImplRepo.pidl:
-        * TAO/tao/ImR_Client/ServerObject.pidl:
+        * tao/ImR_Client/ImplRepo.pidl:
+        * tao/ImR_Client/ServerObject.pidl:
           Updated regeneration instructions to not use -GA
 
         * tao/ImR_Client/ImplRepoA.h
@@ -11287,8 +11295,8 @@ Wed Aug 24 09:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tao/ImR_Client/ServerObjectS.h
           Regenerated
 
-        * TAO/tao/ImR_Client/ImplRepoA.cpp
-        * TAO/tao/ImR_Client/ServerObjectA.cpp
+        * tao/ImR_Client/ImplRepoA.cpp
+        * tao/ImR_Client/ServerObjectA.cpp
           Removed
 
         * tao/Makefile.am:
