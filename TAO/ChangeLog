@@ -1,3 +1,11 @@
+Thu Dec  8 06:54:31 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/examples/LoadBalancing/ServerRequestInterceptor.h:
+
+	  Fixed versioned namespace build errors, predominantly caused by
+	  forwared declarations not being placed within the appropriate
+	  {ACE,TAO}_{BEGIN,END}_VERSIONED_NAMESPACE_DECL block.
+
 Thu Dec  8 06:45:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/OctetSeq/OctetSeq.mpc:
