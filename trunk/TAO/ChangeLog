@@ -1,3 +1,10 @@
+Thu Dec  8 13:10:42 USMST 2005  Yan Dai  <dai_y@ociweb.com>
+
+        * tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl:
+
+          Commented the client command line output previously added for 
+          debugging.
+          
 Thu Dec  8 07:17:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Asynch_Queued_Message.h:
