@@ -1,3 +1,15 @@
+Thu Dec  8 06:45:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/OctetSeq/OctetSeq.mpc:
+	* performance-tests/Anyop/Anyop.mpc:
+	* performance-tests/POA/Create_Reference/Create_Reference.mpc:
+	* performance-tests/POA/Implicit_Activation/Implicit_Activation.mpc:
+	* performance-tests/POA/Object_Creation_And_Registration/Object_Creation_And_Registration.mpc:
+	* performance-tests/Protocols/Protocols.mpc:
+	* performance-tests/RTCorba/Thread_Pool/Thread_Pool.mpc:
+
+	  Disable these projects when "ace_for_tao" is enabled.
+
 Wed Dec  7 19:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:

@@ -2,6 +2,7 @@
 // $Id$
 
 project(*Server): taoserver {
+  avoids += ace_for_tao
   Source_Files {
     test_i.cpp
     server.cpp
@@ -9,6 +10,7 @@ project(*Server): taoserver {
 }
 
 project(*Client): taoclient, anytypecode {
+  avoids += ace_for_tao
   after += *Server
   Source_Files {
     testC.cpp

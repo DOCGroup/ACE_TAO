@@ -20,7 +20,8 @@ project(*RTCorba server): rt_server, minimum_corba {
 }
 
 project(*RTCorba client): rt_client, minimum_corba {
-  after += *RTCorba_idl
+  avoids += ace_for_tao
+  after  += *RTCorba_idl
   Source_Files {
     testC.cpp
     client.cpp
