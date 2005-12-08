@@ -1,10 +1,25 @@
+Thu Dec  8 20:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * interop-tests/wchar/interop_wchar.mpc:
+        * examples/PluggableUDP/tests/Basic/Basic.mpc:
+        * examples/PluggableUDP/tests/SimplePerformance/SimplePerformance.mpc:
+        * examples/POA/Default_Servant/POA_Default_Servant.mpc:
+        * examples/POA/DSI/POA_DSI.mpc:
+        * examples/Content_Server/AMI_Iterator/AMI_Iterator.mpc:
+        * examples/Content_Server/AMI_Observer/AMI_Observer.mpc:
+        * examples/Content_Server/SMI_Iterator/SMI_Iterator.mpc:
+        * examples/Buffered_Oneways/Buffered_Oneways.mpc:
+        * examples/Buffered_AMI/Buffered_AMI.mpc:
+          Added 'after += ...' lines to files where projects share one or
+          more IDL files.
+
 Thu Dec  8 13:10:42 USMST 2005  Yan Dai  <dai_y@ociweb.com>
 
         * tests/CSD_Strategy_Tests/TP_Test_3/run_test.pl:
 
-          Commented the client command line output previously added for 
+          Commented the client command line output previously added for
           debugging.
-          
+
 Thu Dec  8 07:17:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Asynch_Queued_Message.h:
