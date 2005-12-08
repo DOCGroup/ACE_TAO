@@ -1,3 +1,9 @@
+Thu Dec  8 08:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/ThreadSafety/threadsafety.mpc:
+          Fixed error in this mpc project which caused build errors with
+          borland
+
 Wed Dec  7 05:50:01 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* apps/JAWS/clients/Caching/caching.mpc:
