@@ -22,6 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class ACE_TSS_Adapter
  *
@@ -52,6 +54,8 @@ public:
   /// The real cleanup routine for ts_obj;
   ACE_THR_DEST func_;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* ACE_TSS_ADAPTER_H */
