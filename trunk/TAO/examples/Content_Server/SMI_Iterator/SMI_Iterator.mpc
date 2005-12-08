@@ -11,6 +11,7 @@ project(*Server): namingexe, portableserver {
 }
 
 project(*Client): namingexe {
+  after += *Server
   avoids += ace_for_tao
   Source_Files {
     Web_ServerC.cpp

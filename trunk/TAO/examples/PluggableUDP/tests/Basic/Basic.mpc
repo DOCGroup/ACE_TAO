@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*server): taoexe, portableserver, strategies {
+project(*server): taoserver, strategies {
   idlflags += -Sp -Sd
 
   Source_Files {
@@ -11,7 +11,9 @@ project(*server): taoexe, portableserver, strategies {
   }
 }
 
-project(*client): taoexe, portableserver, strategies {
+project(*client): taoserver, strategies {
+  exename = client
+  after += *server
   idlflags += -Sp -Sd
 
   Source_Files {
