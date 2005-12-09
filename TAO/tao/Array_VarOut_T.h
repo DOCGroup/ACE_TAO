@@ -172,7 +172,7 @@ class TAO_Array_Forany_T
 public:
   TAO_Array_Forany_T (void);
   TAO_Array_Forany_T (T_slice *,
-                      CORBA::Boolean nocopy = 0);
+                      CORBA::Boolean nocopy = false);
   TAO_Array_Forany_T (const TAO_Array_Forany_T<T,T_slice,TAG> &);
   ~TAO_Array_Forany_T (void);
 
@@ -200,7 +200,7 @@ public:
   static T_slice * tao_alloc (void);
 private:
   T_slice * ptr_;
-  const CORBA::Boolean nocopy_;
+  CORBA::Boolean nocopy_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

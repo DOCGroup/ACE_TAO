@@ -245,7 +245,7 @@ template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
 TAO_Array_Forany_T<T,T_slice,TAG>::TAO_Array_Forany_T (void)
   : ptr_ (0),
-    nocopy_ (0)
+    nocopy_ (false)
 {}
 
 template<typename T, typename T_slice, typename TAG>
