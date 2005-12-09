@@ -17,7 +17,10 @@
 #include "Task_Stats.h"
 #include "ace/SString.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Arg_Shifter;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 class DT_Creator;
 
 /**
