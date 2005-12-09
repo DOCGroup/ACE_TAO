@@ -16,16 +16,19 @@
 #include "orbsvcs/CosNamingC.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 
-class Periodic_Task;
-class Job_i;
-class POA_Holder;
-
 #include "ace/Service_Config.h"
 #include "ace/Service_Object.h"
 #include "activity_export.h"
 
-class Activity;
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Arg_Shifter;
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+class Activity;
+class Periodic_Task;
+class Job_i;
+class POA_Holder;
 
 typedef POA_Holder** POA_LIST;
 typedef Periodic_Task** TASK_LIST;
