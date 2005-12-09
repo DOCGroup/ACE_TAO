@@ -87,12 +87,15 @@ Foo_B_Statistics::servant_error_count (unsigned error_count)
 bool
 Foo_B_Statistics::actual_vs_expected()
 {
+  bool ret = true;
+
   // Verify the checking results in servant operation code.
   if (this->servant_error_count_ > 0)
     {
       ACE_ERROR((LM_ERROR, "(%P|%t)Foo_B_Statistics::actual_vs_expected  "
         "servant_error_count_=%u\n", servant_error_count_));
-      return false;
+      if (ret) 
+        ret = false;
     }
 
   // Verify the number of callbacks received for the collocated
@@ -102,7 +105,8 @@ Foo_B_Statistics::actual_vs_expected()
       ACE_ERROR((LM_ERROR, "(%P|%t)Foo_B_Statistics::actual_vs_expected  "
         "actual_callbacks_=%u expected_callbacks_=%u \n", 
         actual_callbacks_, expected_callbacks_));
-      return false;
+      if (ret) 
+        ret = false;
     }
 
   // Verify the number of operations server received.
@@ -113,7 +117,8 @@ Foo_B_Statistics::actual_vs_expected()
           ACE_ERROR((LM_ERROR, "(%P|%t)Foo_B_Statistics::actual_vs_expected  "
             "expected_op_count_[%u]=%u actual_op_count_[%u]=%u \n", 
             z, expected_op_count_[z], z, actual_op_count_[z]));
-          return false;
+          if (ret) 
+            ret = false;
         }
     }
 
@@ -134,7 +139,8 @@ Foo_B_Statistics::actual_vs_expected()
               {
                 ACE_ERROR((LM_ERROR, "(%P|%t)Foo_B_Statistics::actual_vs_expected  "
                   "actual_size=%u expected_size=%u\n", actual_size, expected_size));
-                return false;
+                if (ret) 
+                  ret = false;
               }
             sort (this->actual_in_long_[i]);
 
@@ -145,7 +151,8 @@ Foo_B_Statistics::actual_vs_expected()
                     ACE_ERROR((LM_ERROR, "(%P|%t)Foo_B_Statistics::actual_vs_expected  "
                       "actual_in_long_[%u][%u]=%d actual_in_long_[%u][%u]=%d\n", 
                       i, j, actual_in_long_[i][j], i, j+1, actual_in_long_[i][j + 1]));
-                    return false;
+                    if (ret) 
+                      ret = false;
                   }
               }
           }
@@ -161,7 +168,8 @@ Foo_B_Statistics::actual_vs_expected()
               {
                 ACE_ERROR((LM_ERROR, "(%P|%t)Foo_B_Statistics::actual_vs_expected  "
                   "actual_size=%u expected_size=%u\n", actual_size, expected_size));
-                return false;
+                if (ret) 
+                  ret = false;
               }
 
             LongVector lvec;
@@ -176,7 +184,8 @@ Foo_B_Statistics::actual_vs_expected()
                     ACE_ERROR((LM_ERROR, "(%P|%t)Foo_B_Statistics::actual_vs_expected  "
                       "actual_in_string_[%u][%u]=%s \n", 
                       i, k, actual_in_string_[i][k].c_str()));
-                    return false;
+                    if (ret) 
+                      ret = false;
                   }
                 lvec.push_back (client_id);
               }
@@ -190,7 +199,8 @@ Foo_B_Statistics::actual_vs_expected()
                     ACE_ERROR((LM_ERROR, "(%P|%t)Foo_B_Statistics::actual_vs_expected  "
                       "lvec[%u]=%d lvec[%u]=%d\n", 
                       j, lvec[j], j+1, lvec[j + 1]));
-                    return false;
+                    if (ret) 
+                      ret = false;
                   }
               }
           }
@@ -203,6 +213,6 @@ Foo_B_Statistics::actual_vs_expected()
          
     }   
 
-  return true;
+  return ret;
 }
 
