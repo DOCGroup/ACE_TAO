@@ -1,3 +1,21 @@
+Fri Dec  9 21:48:48 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Array_VarOut_T.h:
+        * tao/Array_VarOut_T.inl:
+        
+          In the TAO_Array_Forany_T<> template class:
+        
+          - Changed initialization values for the CORBA::Boolean
+            nocopy_ member from '0' to 'false'.
+            
+          - Removed the 'const' qualifier from the nocopy_ member.
+            This member gets assigned to in the class assignment
+            operator, and because of this, tools like insure++
+            complain. It's a mystery why C++ compilers don't
+            complain as well. This fix closes [BUGID:2326]. Thanks
+            to Brian Buesker <bbuesker@qualcomm.com> for reporting
+            the problem.
+
 Thu Dec  8 16:37:06 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/RTCORBA/Activity/Activity.mpc:
