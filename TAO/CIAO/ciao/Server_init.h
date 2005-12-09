@@ -14,6 +14,7 @@
 #include /**/ "ace/pre.h"
 
 #include "CIAO_Server_Export.h"
+#include "tao/Versioned_Namespace.h"
 
 #if !defined ACE_LACKS_PRAGMA_ONCE
 #pragma once
