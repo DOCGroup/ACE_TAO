@@ -1,3 +1,9 @@
+Fri Dec  9 13:39:10 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* tools/Config_Handlers/Any_Handler.h
+
+	Added a missing include for the versioned namespace macros.
+
 Fri Dec  9 09:18:01 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* ciao/Server_init.h
