@@ -1,3 +1,9 @@
+Mon Dec 12 13:20:00 UTC 2005  Simon Massey  <sma@prismtech.com>
+
+        * NEWS:
+
+        Added Nanbor's changes from the release notes.
+
 Fri Dec  9 13:39:10 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 	* tools/Config_Handlers/Any_Handler.h
