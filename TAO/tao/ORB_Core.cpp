@@ -1133,7 +1133,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
   else
     if  (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("(%P|%t) ORB_Core: ")
+                    ACE_TEXT("TAO (%P|%t) ORB_Core: ")
                     ACE_TEXT("Codeset Manager not available\n")));
 
   // Set up the pluggable protocol infrastructure.  First get a
