@@ -1,3 +1,9 @@
+Mon Dec 12 14:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/compiler.bor:
+          Only when we build without VCL support add _NO_VCL to the compiler
+          flags
+
 Mon Dec 12 13:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/vcl.mpb:
