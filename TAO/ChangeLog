@@ -34,7 +34,7 @@ Thu Dec  8 16:37:06 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/RTCORBA/Activity/Activity.mpc:
 
-	  Do override "macros" variable.  Add to it instead.  Fixes
+	  Do not override "macros" variable.  Add to it instead.  Fixes
 	  problem where versioned namespace preprocessor symbols were not
 	  added to generated Makefiles/projects.
 
