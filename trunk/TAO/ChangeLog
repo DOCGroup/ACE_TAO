@@ -1,3 +1,16 @@
+Mon Dec 12 15:20:10 2005    <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/Notify_Service/Notify_Service.mpc:
+
+	  Disable NT_Notify_Service project in ace_for_tao configuration.
+	  It depends on ace/NT_Service.*, which is currently not part of
+	the ace_for_tao subset.
+
+	* examples/Load_Balancing/Load_Balancing.mpc:
+
+	  Disable in ace_for_tao configuration.  It requires ACE_DLList,
+	  which is not part of the ace_for_tao subset.
+
 Mon Dec 12 09:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ORB_Core.cpp:
