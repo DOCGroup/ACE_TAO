@@ -169,6 +169,10 @@ Foo_B_ClientEngine::execute(ACE_ENV_SINGLE_ARG_DECL)
   this->obj_->test_objref_arg (this->callback_.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (false);
 
+  // Sleep for 5 seconds before invoking done().  
+  // This is a workaround with the problem that some oneway requests lost 
+  // when the server has multiple orb threads.
+  ACE_OS::sleep (5);
   this->obj_->done(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (false);
 
