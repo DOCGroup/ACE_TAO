@@ -36,7 +36,7 @@ project(*Client): taoclient, utils, portableserver {
 
 project(*Balancer): taoserver, utils  {
   exename = load_balancer
-  avoids += repo
+  avoids += repo ace_for_tao
 
   IDL_Files {
     Load_Balancer.idl
