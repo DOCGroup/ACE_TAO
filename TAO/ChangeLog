@@ -1,27 +1,32 @@
+Mon Dec 12 09:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.cpp:
+          Minor formatting improvement in debug logging
+
 Sun Dec 11 17:39:54 USMST 2005  Yan Dai  <dai_y@ociweb.com>
 
         * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B_ClientEngine.cpp:
 
-          Added sleep before client call done(). This is workaround with 
-          the problem that some oneway requests lost when the server has 
+          Added sleep before client call done(). This is workaround with
+          the problem that some oneway requests lost when the server has
           multiple orb threads.
-          
+
 Fri Dec  9 16:36:27 USMST 2005  Yan Dai  <dai_y@ociweb.com>
 
         * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B_Statistics.cpp:
 
           Made actual_vs_expected() dump more details with the failure.
-          
+
 Fri Dec  9 21:48:48 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Array_VarOut_T.h:
         * tao/Array_VarOut_T.inl:
-        
+
           In the TAO_Array_Forany_T<> template class:
-        
+
           - Changed initialization values for the CORBA::Boolean
             nocopy_ member from '0' to 'false'.
-            
+
           - Removed the 'const' qualifier from the nocopy_ member.
             This member gets assigned to in the class assignment
             operator, and because of this, tools like insure++
