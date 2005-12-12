@@ -1,3 +1,11 @@
+Sun Dec 11 17:39:54 USMST 2005  Yan Dai  <dai_y@ociweb.com>
+
+        * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B_ClientEngine.cpp:
+
+          Added sleep before client call done(). This is workaround with 
+          the problem that some oneway requests lost when the server has 
+          multiple orb threads.
+          
 Fri Dec  9 16:36:27 USMST 2005  Yan Dai  <dai_y@ociweb.com>
 
         * tests/CSD_Strategy_Tests/TP_Foo_B/Foo_B_Statistics.cpp:
