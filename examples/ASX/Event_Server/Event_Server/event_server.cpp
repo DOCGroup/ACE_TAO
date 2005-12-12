@@ -17,6 +17,7 @@ ACE_RCSID (Event_Server,
            "$Id$")
 
 // Typedef these components to handle multi-threading correctly.
+typedef ACE_Stream<ACE_SYNCH> MT_Stream;
 typedef ACE_Module<ACE_SYNCH> MT_Module;
 
 

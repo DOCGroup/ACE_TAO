@@ -30,9 +30,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Use a typedef to make life easier later on.
-typedef ACE_Stream<ACE_SYNCH> MT_Stream;
-
 /**
  * @class ACE_UPIPE_Stream
  *
@@ -43,6 +40,8 @@ class ACE_Export ACE_UPIPE_Stream : public ACE_SPIPE
 public:
   friend class ACE_UPIPE_Acceptor;
   friend class ACE_UPIPE_Connector;
+
+  typedef ACE_Stream<ACE_SYNCH> MT_Stream;
 
   // = Initialization and Termination.
 

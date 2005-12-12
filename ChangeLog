@@ -1,3 +1,18 @@
+Sun Dec 11 18:03:05 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/UPIPE_Stream.h (MT_Stream):
+
+	  Moved this typedef out of the global namespace to the
+	  ACE_UPIPE_Stream class.  It is only used within this class.
+	  Doing so also addresses global namespace pollution issues.
+
+	* examples/ASX/Event_Server/Event_Server/event_server.cpp:
+	* examples/ASX/UPIPE_Event_Server/event_server.cpp:
+
+	  Reinstated local MT_Stream typedefs.  The global namespace
+	  pollution fix described above allows this.  Fixes compile-time
+	  error in single threaded builds.
+
 Thu Dec  8 07:20:25 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Dynamic.h:
