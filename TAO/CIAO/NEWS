@@ -120,7 +120,7 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.4.7 and CIAO-0.4.8
   type is of fixed or variable size type, when it is declared
   in the scope of an interface, valuetype or home.
 
-. Changes to generated servant code to support component
+. Changes to generate servant code to support component
   swapping.
 
 . Added capability to pass a base class event consumer to a
@@ -150,13 +150,15 @@ USER VISIBLE CHANGES BETWEEN CIAO-0.4.7 and CIAO-0.4.8
   flattened_deploymentplan_without_ns.cdp for an example of how to
   populate enumerated attributes.
 
-. Integrated Real-time QoS support to CIAO based on OMG's new
-  Deployment and Configuration (D&C) specification. Such effort
-  allows application developers to use real-time CORBA 1.0 features
-  within their CCM appliation through meta-programming (via XML
-  metadata through DAnCE toolchain). Particularly, we added support
-  for server-side RT policies, including extension for schema,
-  container, and NodeApplication.
+. Integrated Real-time QoS support into the DAnCE-based runtime and
+  deployment tools based on the new OMG Deployment and Configuration
+  (D&C) specification.  Such effort allows application developers to
+  use real-time CORBA 1.0 features within their CCM appliation through
+  meta-programming (via XML metadata through DAnCE toolchain).  The old
+  run-time and deployment tools based on original Packaging and Deployment
+  section of the CCM specification have been completely removed.  This
+  work includes extensions to D&C schema, schema parsers, container and
+  NodeApplication.
 
 . Added functionality in XML parsing code to resolve schema in
   $CIAO_ROOT/docs/schema instead of the local directory only. All
