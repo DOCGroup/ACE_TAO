@@ -992,6 +992,7 @@ project(Vector Test) : acetest {
 }
 
 project(UPIPE SAP Test) : acetest {
+  avoids += ace_for_tao
   exename = UPIPE_SAP_Test
   Source_Files {
     UPIPE_SAP_Test.cpp
