@@ -1,3 +1,11 @@
+Mon Dec 12 15:31:50 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/ace_for_tao.mpc:
+
+	  Added "nmake" to the list of Windows-based build types that
+	  should be considered when adding Windows-specific sources to the
+	  ace_for_tao subset.
+
 Mon Dec 12 15:23:29 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/tests.mpc (UPIPE_SAP_Test):
