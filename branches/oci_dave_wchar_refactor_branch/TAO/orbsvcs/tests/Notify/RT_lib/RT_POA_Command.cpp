@@ -20,13 +20,13 @@ TAO_Notify_Tests_RT_POA_Command::~TAO_Notify_Tests_RT_POA_Command ()
 {
 }
 
-const char*
+const ACE_TCHAR*
 TAO_Notify_Tests_RT_POA_Command::get_name (void)
 {
   return TAO_Notify_Tests_RT_POA_Command::name ();
 }
 
-const char*
+const ACE_TCHAR*
 TAO_Notify_Tests_RT_POA_Command::name (void)
 {
   return TAO_Notify_Tests_Name::poa_command;
