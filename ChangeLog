@@ -1,3 +1,9 @@
+Tue Dec 13 18:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/tao_cosnotification.doxygen:
+          Also parse the subdirectories below Notify and also add inline
+          files, the generated doxygen docu was not complete
+
 Tue Dec 13 00:54:04 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/tao_versioning_idl_defaults.mpb:
