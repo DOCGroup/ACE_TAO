@@ -1,3 +1,11 @@
+Tue Dec 13 00:54:04 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/tao_versioning_idl_defaults.mpb:
+
+	  New MPC base project containing necessary versioned namespace
+	  related TAO_IDL flags for PIDL and IDL files in core TAO
+	  libraries and TAO orbsvcs libraries.
+
 Mon Dec 12 15:31:50 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/ace_for_tao.mpc:
