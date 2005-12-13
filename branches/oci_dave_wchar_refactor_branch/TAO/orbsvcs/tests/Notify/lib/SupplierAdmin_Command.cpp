@@ -17,13 +17,13 @@ TAO_Notify_Tests_SupplierAdmin_Command::~TAO_Notify_Tests_SupplierAdmin_Command 
 {
 }
 
-const char*
+const ACE_TCHAR*
 TAO_Notify_Tests_SupplierAdmin_Command::get_name (void)
 {
   return TAO_Notify_Tests_SupplierAdmin_Command::name ();
 }
 
-const char*
+const ACE_TCHAR*
 TAO_Notify_Tests_SupplierAdmin_Command::name (void)
 {
   return TAO_Notify_Tests_Name::supplier_admin_command;

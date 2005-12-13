@@ -279,7 +279,7 @@ ACE_Blob_Writer::send_request (void)
 
   // Create the header, store the actual length in mesglen.
   // NOTE! %lu is really what's wanted. ACE_SIZE_T_FORMAT_SPECIFIER is
-  // defined in terms of ACE_LIB_TEXT which is NOT what we want here.
+  // defined in terms of ACE_TEXT which is NOT what we want here.
   mesglen = ACE_OS::sprintf (mesg, "%s /%s %s %lu\n\n",
                              request_prefix_, filename_, request_suffix_,
                              (unsigned long)length_);

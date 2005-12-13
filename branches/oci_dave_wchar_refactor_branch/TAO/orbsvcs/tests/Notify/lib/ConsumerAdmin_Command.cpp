@@ -17,13 +17,13 @@ TAO_Notify_Tests_ConsumerAdmin_Command::~TAO_Notify_Tests_ConsumerAdmin_Command 
 {
 }
 
-const char*
+const ACE_TCHAR*
 TAO_Notify_Tests_ConsumerAdmin_Command::get_name (void)
 {
   return TAO_Notify_Tests_ConsumerAdmin_Command::name ();
 }
 
-const char*
+const ACE_TCHAR*
 TAO_Notify_Tests_ConsumerAdmin_Command::name (void)
 {
   return TAO_Notify_Tests_Name::consumer_admin_command;

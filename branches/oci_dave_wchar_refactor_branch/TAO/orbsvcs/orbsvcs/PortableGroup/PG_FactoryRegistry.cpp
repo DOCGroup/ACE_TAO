@@ -711,7 +711,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
 int TAO::PG_FactoryRegistry::write_ior_file(const char * outputFile, const char * ior)
 {
   int result = -1;
-  FILE* out = ACE_OS::fopen (outputFile, ACE_LIB_TEXT("w"));
+  FILE* out = ACE_OS::fopen (outputFile, ACE_TEXT("w"));
   if (out)
   {
     ACE_OS::fprintf (out, "%s", ior);

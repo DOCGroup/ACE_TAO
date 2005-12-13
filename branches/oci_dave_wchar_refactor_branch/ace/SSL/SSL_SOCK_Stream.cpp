@@ -42,7 +42,7 @@ ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream (ACE_SSL_Context *context)
       ACE_ERROR ((LM_ERROR,
                   "(%P|%t) ACE_SSL_SOCK_Stream "
                   "- cannot allocate new SSL structure %p\n",
-                  ACE_TEXT ("")));
+                  ACE_LIB_TEXT ("")));
     }
 }
 

@@ -16,13 +16,13 @@ TAO_Notify_Tests_Filter_Command::~TAO_Notify_Tests_Filter_Command ()
 {
 }
 
-const char*
+const ACE_TCHAR*
 TAO_Notify_Tests_Filter_Command::get_name (void)
 {
   return TAO_Notify_Tests_Filter_Command::name ();
 }
 
-const char*
+const ACE_TCHAR*
 TAO_Notify_Tests_Filter_Command::name (void)
 {
   return TAO_Notify_Tests_Name::filter_command;

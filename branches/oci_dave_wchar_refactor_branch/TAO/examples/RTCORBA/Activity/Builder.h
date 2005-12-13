@@ -23,9 +23,9 @@ class POA_Holder;
 #include "ace/Service_Config.h"
 #include "ace/Service_Object.h"
 #include "activity_export.h"
+#include "ace/Arg_Shifter.h"
 
 class Activity;
-class ACE_Arg_Shifter;
 
 typedef POA_Holder** POA_LIST;
 typedef Periodic_Task** TASK_LIST;

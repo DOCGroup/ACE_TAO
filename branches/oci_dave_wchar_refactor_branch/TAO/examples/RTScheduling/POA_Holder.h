@@ -19,8 +19,7 @@
 #include "tao/PortableServer/PortableServer.h"
 //#include "activity_export.h"
 #include "ace/SString.h"
-
-class ACE_Arg_Shifter;
+#include "ace/Arg_Shifter.h"
 
 /**
  * @class POA_Holder

@@ -40,23 +40,23 @@ run_test (SVC_HANDLER &svc_handler,
     {
       ACE_Message_Block *mb;
       ACE_NEW (mb,
-               ACE_Message_Block (sizeof (ACE_LIB_TEXT("hello "))));
+               ACE_Message_Block (sizeof (ACE_TEXT("hello "))));
 
       ACE_Message_Block *cb1;
       ACE_NEW (cb1,
-               ACE_Message_Block (sizeof (ACE_LIB_TEXT("there\n"))));
+               ACE_Message_Block (sizeof (ACE_TEXT("there\n"))));
 
       ACE_Message_Block *cb2;
       ACE_NEW (cb2,
-               ACE_Message_Block (sizeof (ACE_LIB_TEXT("there\n"))));
+               ACE_Message_Block (sizeof (ACE_TEXT("there\n"))));
 
       mb->copy ("hello ",
-                ACE_OS::strlen (ACE_LIB_TEXT("hello ")));
+                ACE_OS::strlen (ACE_TEXT("hello ")));
       cb1->copy ("there ",
-                 ACE_OS::strlen (ACE_LIB_TEXT("there ")));
+                 ACE_OS::strlen (ACE_TEXT("there ")));
       mb->cont (cb1);
       cb2->copy ("doug\n",
-                ACE_OS::strlen (ACE_LIB_TEXT("doug\n")));
+                ACE_OS::strlen (ACE_TEXT("doug\n")));
       cb1->cont (cb2);
 
       // Note that this is a buffered call!
@@ -132,15 +132,15 @@ run_main (int argc, ACE_TCHAR *argv[])
 
     ACE_FILE_Info info;
     file_io.get_info (info);
-    ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("file size = %d\n"), info.size_));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("file size = %d\n"), info.size_));
 
     for (ssize_t n_bytes; (n_bytes = file_io.recv (buf, ACE_MAXLOGMSGLEN)) > 0; )
       {
         buf[n_bytes] = '\0';
-        ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("%s"), ACE_TEXT_TO_TCHAR_IN(buf)));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT("%s"), ACE_TEXT_TO_TCHAR_IN(buf)));
       }
 
-    ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("\n")));
 
     file_io.close ();
 

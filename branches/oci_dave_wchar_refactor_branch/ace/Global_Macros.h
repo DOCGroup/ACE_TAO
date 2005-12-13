@@ -70,7 +70,7 @@ private:
 # define ACE_ITOA(X) #X
 
 // Create a string of a server address with a "host:port" format.
-# define ACE_SERVER_ADDRESS(H,P) H ACE_TEXT(":") P
+# define ACE_SERVER_ADDRESS(H,P) H ACE_LIB_TEXT(":") P
 
 // A couple useful inline functions for checking whether bits are
 // enabled or disabled.

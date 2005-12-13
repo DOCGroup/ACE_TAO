@@ -416,7 +416,7 @@ extern VOID WINAPI ace_nt_svc_main_##SVCNAME (DWORD dwArgc,                \
 #define ACE_NT_SERVICE_RUN(SVCNAME, SVCINSTANCE, RET)                      \
   ACE_TEXT_SERVICE_TABLE_ENTRY _ace_nt_svc_table[2] =                      \
   {                                                                        \
-    ACE_NT_SERVICE_ENTRY(ACE_TEXT (#SVCNAME), SVCNAME),                    \
+    ACE_NT_SERVICE_ENTRY(ACE_LIB_TEXT (#SVCNAME), SVCNAME),                    \
     { 0, 0 }                                                               \
   };                                                                       \
   _ace_nt_svc_obj_##SVCNAME = SVCINSTANCE;                                 \

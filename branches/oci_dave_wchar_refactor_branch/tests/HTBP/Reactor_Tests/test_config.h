@@ -43,7 +43,7 @@
 #undef ACE_NDEBUG
 
 #undef ACE_TEXT
-#define ACE_TEXT ACE_LIB_TEXT
+#define ACE_TEXT ACE_TEXT
 
 #if defined (ACE_HAS_WINCE)
 // Note that Pocket PC 2002 will NOT create a directory if it does not start with a leading '\'.

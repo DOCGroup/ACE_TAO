@@ -13,7 +13,6 @@ project(ACE_FOR_TAO) : acedefaults, core, svcconf, pkgconfig {
     Active_Map_Manager.cpp
     Addr.cpp
     Arg_Shifter.cpp
-    ARGV.cpp
     Argv_Type_Converter.cpp
     Atomic_Op.cpp
     Auto_Event.cpp

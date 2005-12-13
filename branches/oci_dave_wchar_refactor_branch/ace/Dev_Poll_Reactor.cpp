@@ -1376,7 +1376,7 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
         }
       else
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) dispatch_io h %d unknown events 0x%x\n"), handle, revents));
+          ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("(%t) dispatch_io h %d unknown events 0x%x\n"), handle, revents));
           // ACE_ASSERT (0);
         }
 

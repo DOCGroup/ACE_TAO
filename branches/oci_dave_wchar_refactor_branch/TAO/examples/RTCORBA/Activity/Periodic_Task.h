@@ -19,9 +19,9 @@
 #include "ace/SString.h"
 #include "JobC.h"
 #include "activity_export.h"
+#include "ace/Arg_Shifter.h"
 
 class ACE_Barrier;
-class ACE_Arg_Shifter;
 class Task_Stats;
 
 /**

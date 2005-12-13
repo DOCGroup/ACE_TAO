@@ -30,7 +30,7 @@
 #include "CE_Screen_Output.h"
 
 #define ACE_TCHAR wchar_t
-#define ACE_LIB_TEXT(STRING) L##STRING
+#define ACE_TEXT(STRING) L##STRING
 #define ACE_CE_Screen_Output CE_Screen_Output
 
 int main_i(int, wchar_t**);

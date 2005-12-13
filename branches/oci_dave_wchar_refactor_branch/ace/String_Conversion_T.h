@@ -321,7 +321,7 @@ typedef ACE_Wide_To_Ascii ACE_OS_WString;
 // These are defined to get older stuff to compile
 // FUZZ: disable check_for_tchar
 # define ASYS_TCHAR ACE_TCHAR
-# define ASYS_TEXT ACE_TEXT
+# define ASYS_TEXT ACE_LIB_TEXT
 # define ACE_TEXT_STRING ACE_TString
 #endif /* ACE_LEGACY_MODE */
 

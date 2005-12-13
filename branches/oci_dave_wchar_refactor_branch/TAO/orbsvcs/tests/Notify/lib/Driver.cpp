@@ -228,10 +228,10 @@ TAO_Notify_Tests_Driver::parse_args (int argc, char *argv[])
 int
 TAO_Notify_Tests_Driver::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
 {
-  ACE_Argv_Type_Converter command_line(argc, argv);
+  ACE_Argv_Type_Converter convert(argc, argv);
 
-  this->orb_ = CORBA::ORB_init (command_line.get_argc(),
-                                command_line.get_ASCII_argv(),
+  this->orb_ = CORBA::ORB_init (convert.get_argc(),
+                                convert.get_ASCII_argv(),
                                 ""
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);

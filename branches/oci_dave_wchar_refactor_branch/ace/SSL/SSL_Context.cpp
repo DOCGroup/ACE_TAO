@@ -82,9 +82,9 @@ ACE_SSL_Context::ssl_library_init (void)
           if (ACE_OS::mutex_init (&(ACE_SSL_Context::lock_[i]),
                                   USYNC_THREAD) != 0)
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) ACE_SSL_Context::ssl_library_init ")
-                        ACE_TEXT ("- %p\n"),
-                        ACE_TEXT ("mutex_init")));
+                        ACE_LIB_TEXT ("(%P|%t) ACE_SSL_Context::ssl_library_init ")
+                        ACE_LIB_TEXT ("- %p\n"),
+                        ACE_LIB_TEXT ("mutex_init")));
         }
 
 # if !defined (WIN32)
@@ -436,7 +436,7 @@ ACE_SSL_Context::report_error (unsigned long error_code)
   (void) ::ERR_error_string (error_code, error_string);
 
   ACE_ERROR ((LM_ERROR,
-              ACE_TEXT ("ACE_SSL (%P|%t) error code: %u - %C\n"),
+              ACE_LIB_TEXT ("ACE_SSL (%P|%t) error code: %u - %C\n"),
               error_code,
               error_string));
 }

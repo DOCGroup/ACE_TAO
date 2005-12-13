@@ -257,7 +257,7 @@ TAO_Notify_Tests_Periodic_Consumer::push_structured_event (const CosNotification
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer::dump_stats (ACE_TCHAR* msg, int dump_samples)
+TAO_Notify_Tests_Periodic_Consumer::dump_stats (const ACE_TCHAR* msg, int dump_samples)
 {
   char buf[BUFSIZ];
   ACE_OS::sprintf (buf, "%s.dat", this->name_.c_str ());

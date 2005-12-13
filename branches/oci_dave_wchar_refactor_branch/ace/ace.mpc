@@ -24,7 +24,6 @@ project(ACE) : acedefaults, core, other, codecs, token, svcconf, uuid, filecache
     Active_Map_Manager.cpp
     Addr.cpp
     Arg_Shifter.cpp
-    ARGV.cpp
     Argv_Type_Converter.cpp
     Asynch_IO.cpp
     Asynch_IO_Impl.cpp
