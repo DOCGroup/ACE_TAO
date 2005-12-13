@@ -12,6 +12,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Log_Record.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Argv_Type_Converter.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -39,7 +40,7 @@ int operator<< (ACE_OutputCDR &cdr, const ACE_Log_Record &log_record)
   cdr << ACE_CDR::Long (log_record.time_stamp ().sec ());
   cdr << ACE_CDR::Long (log_record.time_stamp ().usec ());
   cdr << ACE_CDR::ULong (msglen);
-  cdr.write_char_array (nonconst_record.msg_data (), msglen);
+  cdr.write_char_array (ACE_TEXT_TO_CHAR_IN(nonconst_record.msg_data ()), msglen);
   return cdr.good_bit ();
 }
 
@@ -91,11 +92,15 @@ public:
 };
 
 
-int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *targv[])
 {
+  ACE_Argv_Type_Converter convert (argc, targv);
+  argc = convert.get_argc();
+  char** argv = convert.get_ASCII_argv();
+
   u_short logger_port = argc > 1 ? atoi (argv[1]) : 0;
   const char *logger_host =
-    argc > 2 ? argv[2] : ACE_DEFAULT_SERVER_HOST;
+    argc > 2 ? argv[2] : ACE_DEFAULT_SERVER_HOST_A;
   int result;
 
   ACE_INET_Addr server_addr;
@@ -150,7 +155,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     ACE_Time_Value now (ACE_OS::gettimeofday ());
     ACE_Log_Record log_record (LM_INFO, now, ACE_OS::getpid ());
-    log_record.msg_data (user_input.c_str ());
+    log_record.msg_data (ACE_TEXT_TO_TCHAR_IN(user_input.c_str ()));
     if (logging_client.send (log_record) == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n", "logging_client.send()"), 1);
