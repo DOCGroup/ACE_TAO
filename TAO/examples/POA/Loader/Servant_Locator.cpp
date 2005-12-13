@@ -36,7 +36,7 @@ ServantLocator::ServantLocator (CORBA::ORB_ptr orb,
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
   // The dll is opened using the dllname passed.
-  if (this->dll_.open (dllname) == -1)
+  if (this->dll_.open (ACE_TEXT_TO_TCHAR_IN(dllname)) == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p",
                 this->dll_.error ()));
@@ -48,7 +48,7 @@ ServantLocator::ServantLocator (CORBA::ORB_ptr orb,
   // Cannot go from void* to function pointer directly. Cast the void*
   // to long first.
   //
-  void *symbol = this->dll_.symbol (factory_function);
+  void *symbol = this->dll_.symbol (ACE_TEXT_TO_TCHAR_IN(factory_function));
   long function = reinterpret_cast<long> (symbol);
 
   servant_supplier_ =
@@ -56,7 +56,7 @@ ServantLocator::ServantLocator (CORBA::ORB_ptr orb,
 
   // Obtain the symbol for the function which will destroy the
   // servant.
-  symbol = this->dll_.symbol (garbage_collection_function);
+  symbol = this->dll_.symbol (ACE_TEXT_TO_TCHAR_IN(garbage_collection_function));
   function = reinterpret_cast<long> (symbol);
 
   servant_garbage_collector_ =

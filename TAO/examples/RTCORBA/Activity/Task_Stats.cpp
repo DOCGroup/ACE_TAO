@@ -55,7 +55,7 @@ Task_Stats::end_time (ACE_hrtime_t time)
 }
 
 void
-Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
+Task_Stats::dump_samples (const char *file_name, const char *msg,
                           ACE_UINT32 scale_factor)
 {
   FILE* output_file = ACE_OS::fopen (file_name, ACE_TEXT("w"));
@@ -67,7 +67,7 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
 
   // calc throughput.
 
-  ACE_TCHAR out_msg[BUFSIZ];
+  char out_msg[BUFSIZ];
 
   ACE_hrtime_t elapsed_microseconds = (end_time_ - base_time_) / scale_factor;
   double elapsed_seconds =
@@ -99,12 +99,12 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
 }
 
 void
-Task_Stats::dump_latency_stats (ACE_TCHAR *out_msg, ACE_UINT32 sf)
+Task_Stats::dump_latency_stats (char *out_msg, ACE_UINT32 sf)
 {
   if (this->samples_count_ == 0u)
     {
       ACE_OS::sprintf (out_msg,
-                       ACE_TEXT ("# no data collected\n"));
+                       "# no data collected\n");
       return;
     }
 
@@ -141,7 +141,7 @@ Task_Stats::dump_latency_stats (ACE_TCHAR *out_msg, ACE_UINT32 sf)
     ACE_UINT32 tmax = ACE_CU64_TO_CU32 (tmax_);
 
     ACE_OS::sprintf(out_msg,
-                  ACE_TEXT ("#latency   : %u[%d]/%.2f/%u[%d]/%.2f (min/avg/max/var^2)\n #first invocation time = %u, last invocation time = %u\n"),
+                  "#latency   : %u[%d]/%.2f/%u[%d]/%.2f (min/avg/max/var^2)\n #first invocation time = %u, last invocation time = %u\n",
                   l_min, this->exec_time_min_at_,
                   l_avg,
                   l_max, this->exec_time_max_at_,

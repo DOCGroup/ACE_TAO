@@ -118,12 +118,12 @@ Server_i::init (int argc, char **argv)
   ACE_TRY
     {
       // Initialize the ORB.
-      orb_ = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
+      orb_ = CORBA::ORB_init (argc, argv,
                               0
                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      int result = parse_args (convert.get_argc(), convert.get_ASCII_argv());
+      int result = parse_args (argc, argv);
       if (result != 0)
         return result;
 

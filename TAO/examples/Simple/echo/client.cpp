@@ -15,8 +15,8 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
               "\nEcho client\n\n"));
 
   if (client.run ("Echo",
-                  argc, 
-                  argv) == -1)
+                  convert.get_argc(), 
+                  convert.get_ASCII_argv()) == -1)
     return -1; 
   else
     return 0;

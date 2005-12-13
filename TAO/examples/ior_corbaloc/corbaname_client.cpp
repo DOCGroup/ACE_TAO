@@ -40,7 +40,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Get an object reference using a corbaname: style URL
       CORBA::Object_var obj =
-        orb->string_to_object (argv[1]
+        orb->string_to_object (convert.get_ASCII_argv()[1]
                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

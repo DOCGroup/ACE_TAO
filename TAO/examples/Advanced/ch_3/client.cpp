@@ -44,7 +44,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv());
 
       // Destringify argv[1]
-      CORBA::Object_var obj = orb->string_to_object (argv[1]);
+      CORBA::Object_var obj = orb->string_to_object (convert.get_ASCII_argv()[1]);
       if  (CORBA::is_nil (obj.in ())) 
         {
           cerr << "Nil Time reference" << endl;

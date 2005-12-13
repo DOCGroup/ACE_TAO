@@ -32,7 +32,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Argv_Type_Converter convert (argc, argv);
 
-  if (ACE_Service_Config::open (convert.get_argc(), convert.get_ASCII_argv()) == -1
+  if (ACE_Service_Config::open (convert.get_argc(), convert.get_TCHAR_argv()) == -1
       && errno != ENOENT)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),

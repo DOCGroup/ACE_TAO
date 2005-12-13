@@ -44,7 +44,7 @@ class activity_Export Periodic_Task : public ACE_Task <ACE_SYNCH>
   virtual int activate_task (ACE_Barrier* barrier, RTCORBA::PriorityMapping *priority_mapping) = 0;
 
   /// Dump the stats collected.
-  void dump_stats (ACE_TCHAR* msg);
+  void dump_stats (char* msg);
 
   /// = Job get/set
   /// Returns the name of the Job exec'ed by this Task.

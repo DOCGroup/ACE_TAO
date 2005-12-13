@@ -81,8 +81,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int request_count = 0;
 
       // Activate and run the reply handlers.
-      ::invoke_requests (argc,
-                         argv,
+      ::invoke_requests (convert.get_argc(), convert.get_ASCII_argv(),
                          &request_count,
                          factory.in ()
                          ACE_ENV_ARG_PARAMETER);
