@@ -60,6 +60,7 @@ public:
 protected:
   Shutdown_Functor& functor_;
   ACE_Sig_Handler   shutdown_;
+  ACE_Sig_Set       registered_signals_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
