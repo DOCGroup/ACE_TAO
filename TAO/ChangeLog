@@ -1,3 +1,12 @@
+Tue Dec 13 09:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Shutdown_Utilities.{h,cpp}:
+          The vc8 runtime seems to check wether a signal number is a valid
+          one, if not it asserts. The Shutdown_Utilities where just
+          calling remove_handler for all signal numbers, changed this to just
+          call it for the signals we registered. This way we can end the
+          orbsvcs executable with ctrl-c again.
+
 Mon Dec 12 15:20:10 2005    <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/Notify_Service/Notify_Service.mpc:
