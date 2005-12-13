@@ -1,3 +1,11 @@
+Tue Dec 13 09:07:21 2005  William Otte  <wotte@dre.vanderbilt.edu>
+
+	* CCF/Documentation/Build.html
+	* CIDLC/README.html
+
+	Updates to the CIDLC build documentation.  Thanks to James  Hill
+	<hillj at isis dot vanderbilt dot edu> for completing this update.
+	
 Mon Dec 12 13:20:00 UTC 2005  Simon Massey  <sma@prismtech.com>
 
         * NEWS:
