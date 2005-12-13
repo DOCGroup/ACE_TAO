@@ -1,3 +1,8 @@
+Tue Dec 13 13:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Sequence_Unit_Tests/string_traits_base.hpp:
+          Removed static from the declaration of empty to fix VxWorks warnings
+
 Tue Dec 13 12:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/Discarding/notify.conf:
