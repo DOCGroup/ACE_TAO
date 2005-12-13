@@ -1,3 +1,8 @@
+Tue Dec 13 10:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Codeset_Manager_Factory_Base.h:
+          Fixed typo in comment
+
 Tue Dec 13 09:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Shutdown_Utilities.{h,cpp}:
