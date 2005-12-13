@@ -12,7 +12,7 @@ cvs-id    : $Id$
 
 <head>
 
-  <title>Building CCF Libraries</title>
+  <title>Building CORBA Compiler Framework (CCF) Libraries</title>
 
   <meta name="author" content="Boris Kolpackov"/>
   <meta name="keywords" content="build,compile,make,CCF,CORBA,compiler,framework,library"/>
@@ -22,7 +22,6 @@ cvs-id    : $Id$
   <style type="text/css">
   body {
     font-family      : sans-serif;
-
     color            : black;
     background       : white;
 
@@ -36,9 +35,10 @@ cvs-id    : $Id$
     font-weight      : 500;
   }
 
-  h1 { font-size     : 170%; }
-  h2 { font-size     : 125%; }
-
+  h1 { font-size         : 170%; }
+  h2 { font-size         : 125%;
+       text-decoration : underline
+  }
   ul.toc li {
     padding          : .4em 0em 0em 0em;
   }
@@ -53,37 +53,42 @@ cvs-id    : $Id$
 </head>
 
 <body>
-
+<h1>Building CORBA Compiler Framework (CCF) Libraries</h1>
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#prereqs">Prerequisite Libraries</a></li>
 <ul class="toc">
 <li><a href="#debian">Debian GNU/Linux [i386.deb]</a></li>
 
 <li><a href="#redhat">RedHat OS family [i386.rpm]</a></li>
 
-<li><a href="#linux">Other GNU/Linux or UNIX Distributions</a>
+<li><a href="#other_platforms">Other GNU/Linux or UNIX Distributions &amp; Windows</a>
 <ul>
-<li><a href="#linux_cxx">C++</a></li>
-<li><a href="#linux_boost">Boost Libraries</a></li>
-<li><a href="#linux_utility">Utility Library</a></li>
-<li><a href="#linux_build">Building CCF</a></li>
+<li><a href="#cxx">C++</a></li>
+<li><a href="#boost">Boost Libraries</a></li>
+<li><a href="#utility">Utility Library</a></li>
 </ul></li>
 
-<li><a href="#windows">Windows</a>
+<!--li><a href="#windows">Windows</a>
 <ul>
 <li><a href="#windows_cxx">C++</a></li>
 <li><a href="#windows_boost">Boost Libraries</a></li>
 <li><a href="#windows_utility">Utility Library</a></li>
-<li><a href="#windows_build">Building CCF</a></li>
-</ul></li>
+</ul></li -->
 </ul>
 
+<li><a href="#initial_setup">Configuring the Build Environment</a></li>
+<li><a href="#building_ccf">Building CORBA Compiler Framework (CCF)</a></li>
+</ol>
+
+<hr />
+<h1><a name="prereqs">Prerequisite Libraries</a></h1>
 
 <!-- Debian -->
 
+<h2><a name="debian">Debian GNU/Linux [i386.deb]</a></h2>
 
-<h1><a name="debian">Debian GNU/Linux [i386.deb]</a></h1>
-
-<p>You will need to install the following packages from the
-Debian package repository:
+<p>You will need to install the following packages from the Debian package repository:
 
 <ol>
 <li><code>libboost-dev-1.30.2-2</code> or better</li>
@@ -107,16 +112,9 @@ $ dpkg -i libutility*.deb
 </pre>
 </p>
 
-<p>Now you are ready to build CCF libraries:</p>
-<pre>$ cd $CIAO_ROOT/CCF/CCF
-$ make
-</pre>
-
-
 <!-- RedHat -->
 
-
-<h1><a name="redhat">RedHat OS family [i386.rpm]</a></h1>
+<h2><a name="redhat">RedHat OS family [i386.rpm]</a></h2>
 
 <p>You will need to install the following RedHat packages:</p>
 
@@ -138,16 +136,9 @@ $ rpm -Uhv Utility-1.2.2-3.i386.rpm
 </pre>
 </p>
 
-<p>Now you are ready to build CCF libraries:</p>
-<pre>$ cd $CIAO_ROOT/CCF/CCF
-$ make
-</pre>
-
-
 <!-- Linux -->
 
-
-<h1><a name="linux">Other GNU/Linux or UNIX Distributions</a></h1>
+<h2><a name="other_platforms">Other GNU/Linux or UNIX Distributions &amp; Windows</a></h2>
 
 <!--
 
@@ -176,11 +167,16 @@ you will need to upgrade.</p>
 
 -->
 
-<h2><a name="linux_cxx">C++</a></h2>
-<p>You can use any standard-conformant C++ compiler.
-<a href="http://gcc.gnu.org">GNU G++</a> 3.3 is known to work.</p>
+<h3><a name="cxx">C++</a></h3>
+<p>On the Lunix/UNIX platforms, you can use any standard-conformant C++ compiler.
+We recommend you use the lastest stable release of the <a href="http://gcc.gnu.org">GNU C++</a>
 
-<h2><a name="linux_boost">Boost Libraries</a></h2>
+compiler.</p>
+
+<p>On the Windows platform, VC++ 7.1 or better is required to build CCF. We do not
+support VC++ 6 or VC++ 7.0.</p>
+
+<h3><a name="boost">Boost Libraries</a></h3>
 <p>In order to build CCF you will need the following libraries from the
 <a href="http://www.boost.org">Boost distribution</a>:</p>
 
@@ -198,82 +194,37 @@ section.</p>
 
 </p>If you choose to compile Boost Libraries yourself please refer to the
 <a href="http://www.boost.org/more/getting_started.html">Boost Building
-Instructions</a>.<p>
+Instructions</a>. Please remember the install locations of the boost libraries
+because they will be needed to properly configure your environment for building
+CCF.<p>
 
-<p>After you have successfully compiled necessary libraries in the boost
+<!--p>After you have successfully compiled necessary libraries in the boost
 distribution you need to do one more thing. Inside the boost distribution
 directory (e.g. <code>boost-1.30.2</code>) create a directory with the name
 <code>lib</code> and copy (or soft link) <code>libboost_filesystem.a</code>
-and <code>libboost_regex.a</code> into it.</p>
+and <code>libboost_regex.a</code> into it.</p-->
 
-
-<h2><a name="linux_utility">Utility Library</a></h2>
+<h3><a name="utility">Utility Library</a></h3>
 
 <p>Another prerequisite for CCF is the Utility Library. You don't need
 to build anything in this library. The Utility library is available in
-the following two different forms for convinience:
+the following two different forms for convinience:</p>
 
 <ol>
-<li><a href="http://www.dre.vanderbilt.edu/cidlc/prerequisites/Utility-1.2.2.tar.bz2"> A bz2 package </a> for unix based platforms including Unix.</li>
-<li><ahref="http://www.dre.vanderbilt.edu/cidlc/prerequisites/Utility-1.2.2.tar.zip"> A zip package</a> for Win32 based platforms. </li>
+<li>A <a href="http://www.dre.vanderbilt.edu/cidlc/prerequisites/Utility-1.2.2.tar.bz2">bz2 package</a> for unix based platforms including Unix.</li>
+<li>A <a href="http://www.dre.vanderbilt.edu/cidlc/prerequisites/Utility-1.2.2.tar.zip">zip package</a> for Win32 based platforms. </li>
 </ol>
 
-Just unpack it to some convenient place. </p>
-
-<h2><a name="linux_build">Building CCF</a></h2>
-
-<p>Before you can start building CCF you need to specify the location
-of Boost Libraries and Utility Library. There are two ways you can do
-this. The first way is to specify environment variables <code>BOOST_ROOT,
-</code> <code>BOOST_INCLUDE,</code> <code>BOOST_LIB</code> and
-<code>UTILITY_ROOT</code>. If <code>BOOST_INCLUDE</code> and
-<code>BOOST_LIB</code> are not initialized then their values are derived
-from <code>BOOST_ROOT</code> as follows:<p>
-
-<pre>
-BOOST_LIB     := $(BOOST_ROOT)/lib
-BOOST_INCLUDE := $(BOOST_ROOT)
-</pre>
-
-<p>Below are some examples of how you may do that.</p>
-
-<p>If you would like to use Boost/Utility from the build directory:</p>
-
-<pre>$ export BOOST_ROOT=~/build/boost-1.30.2
-$ export UTILITY_ROOT=~/build/Utility-1.2.2
-</pre>
-
-<p>If Boost was installed in <code>/usr/local</code> and compiler doesn't
-search there by default:</p>
-
-<pre>$ export BOOST_LIB=/usr/local/lib
-$ export BOOST_INCLUDE=/usr/local/include
-$ export UTILITY_ROOT=~/build/Utility-1.2.2
-</pre>
-
-<p>If Boost was installed in let's say <code>/usr/{include,lib}</code> and
-compiler searches there by default you may leave <code>BOOST_*</code>
-uninitialized.</p>
-
-<p>Alternatively, you can specify values for <code>BOOST_*</code> and
-<code>UTILITY_*</code> in <code>$CIAO_ROOT/CCF/Config.rules</code></p>
-
-<p>Finally, you can start the build process:</p>
-
-<pre>$ cd CCF/CCF
-$ make</pre>
-
+<p>Just unpack it to some convenient place and remember its location because it will be need
+to properly configure the build environment for CCF.</p>
 
 <!-- Windows -->
 
+<!--h2><a name="windows">Windows</a></h2>
 
-<h1><a name="windows">Windows</a></h1>
+<h3><a name="windows_cxx">C++</a></h3>
 
-<h2><a name="windows_cxx">C++</a></h2>
-<p>VC++ 7.1 is required to build CCF on Windows. Note that neither
-VC++ 6 nor VC++ 7.0 is supported. </p>
-
-<h2><a name="windows_boost">Boost Libraries</a></h2>
+<h3><a name="windows_boost">Boost Libraries</a></h3>
 <p>In order to build CCF you will need the following libraries from
 the <a href="http://www.boost.org">Boost distribution</a>:
 
@@ -292,9 +243,9 @@ an example, I assume that the installation directory is <code>D:\lib</code>.
 <li>Download boost source distribution version <code>1.30.2</code> (<code>boost-1.30.2.zip</code>)
 from the <a href="http://sourceforge.net/project/showfiles.php?group_id=7586">Boost web site</a>.
 After downloading unzip the file in <code>D:\lib</code> so that you get
-<code>D:\lib\boost-1.30.2</code>. Note that boost version <code>1.31.0</code> 
-will not work.</li>
+<code>D:\lib\boost-1.30.2</code>. Note that boost version <code>1.31.0</code>
 
+will not work.</li>
 
 <li>Download the latest pre-built
 <a href="http://sourceforge.net/project/showfiles.php?group_id=7586&package_id=72941">
@@ -333,8 +284,7 @@ search list.</li>
 <a href="http://www.boost.org/more/getting_started.html">Boost Building
 Instructions</a> if you have any questions.<p>
 
-
-<h2><a name="windows_utility">Utility Library</a></h2>
+<h3><a name="windows_utility">Utility Library</a></h3>
 
 <p>Another prerequisite for CCF is
 <a href="http://www.dre.vanderbilt.edu/cidlc/prerequisites/Utility-1.2.2.tar.bz2">Utility
@@ -342,12 +292,111 @@ Library</a>. You don't need to build anything in this library. Just unpack
 it to some convenient place and add it to your VC7.1 include directory search
 list. For example if you unpacked <code>Utility-1.2.2.tar.bz2</code> in
 <code>D:\lib</code> then add <code>D:\lib\Utility-1.2.2</code> to your
-search list.</p>
+search list.</p -->
 
+<hr />
 
-<h2><a name="windows_build">Building CCF</a></h2>
+<!-- Configuring the Build Environment -->
 
-<p>Now you are ready to build CCF libraries. Just open VC7.1 solution file
-in <code>CCF\CCF\</code> and proceed as usual.</p>
+<h1><a name="initial_setup">Configuring the Build Environment</a></h1>
+
+<p>Before you can start building CCF you need to specify the location
+of Boost Libraries and Utility Library. There are two ways you can do
+this. The first way is to specify the environment variables
+
+<code>BOOST_ROOT, BOOST_INCLUDE, BOOST_LIB, BOOST_VERSION, BOOST_CFG</code>
+and <code>UTILITY_ROOT</code>.
+
+<p>To configure <code>BOOST_ROOT</code> and <code>UTILITY_ROOT</code>,
+
+set both enviroment variables to the root directory for the respective
+libraries as follows:</p>
+<ul>
+<li>On Linux/UNIX
+<pre>
+%> export BOOST_ROOT=&lt;path_to_boost&gt;
+%> export UTILITY_ROOT=&lt;path_to_utility&gt;
+</pre>
+</li>
+<li>On Windows
+<pre>
+%> set BOOST_ROOT=&lt;path_to_boost&gt;
+%> set UTILITY_ROOT=&lt;path_to_utility&gt;
+</pre>
+</li>
+</ul>
+
+<p>If <code>BOOST_INCLUDE</code> and <code>BOOST_LIB</code> are not initialized,
+
+then their values are derived from <code>BOOST_ROOT</code> as follows:<p>
+
+<pre>
+BOOST_LIB     := $(BOOST_ROOT)/lib
+BOOST_INCLUDE := $(BOOST_ROOT)
+</pre>
+
+<p><code>BOOST_VERSION</code> and <code>BOOST_CFG</code> are two environment variables that
+depend on the version and configuration of Boost that you are using. <code>BOOST_VERSION</code>
+is initialized as follows:</p>
+<ol>
+<li>Look in <code>$BOOST_ROOT/include/boost</code> directory</li>
+<li>If there is another boost directory, e.g. <code>boost-1_32</code> for building boost-1.32, then this is your version
+  <ul>
+    <li>On Linux/UNIX:
+
+      <pre><code>%> export BOOST_VERSION=boost-1_32</code></pre></li>
+    <li>On Windows:
+
+      <pre><code>%> set BOOST_VERSION=boost-1_32</code></pre></li>
+  </ul>
+</li>
+</ol>
+<p>
+<code>BOOST_CFG</code> depends on which configuration of the boost libraries you want use for CCF. If
+you look in <code>$BOOST_ROOT/lib</code>, you will notice all the Boost libraries. Each library has
+the compiler and threading support, e.g. <code>-vc71-mt</code> for VC++ 7.1 and multi-threaded, as part
+
+of the filename. If this is not the case for your libraries, then you can
+
+<a href="#building_ccf">skip</a> this section and continue at
+
+<a href="#building_ccf">Building CORBA Compiler Framework (CCF)</a>. This part of
+
+the filename is known as the <code>BOOST_CFG</code> and needs to be specified. For example, if you are
+
+using VC++ 7.1 and want to use the multi-threaded version of the libraries for CCF, your would do the
+following:
+<blockquote><code>%> set BOOST_CFG=-vc71-mt</code></blockquote>
+This can be done similarly on the Linux/UNIX platforms depending on your compiler version and the
+
+Boost configuration you want to use.</p>
+
+<p>Alternatively, you can specify all values for <code>BOOST_*</code> and
+<code>UTILITY_*</code> in <code>$CIAO_ROOT/CCF/Config.rules</code></p>
+
+<!-- Building CORBA Compiler Framework (CCF) -->
+
+<hr />
+<h1><a name="building_ccf">Building CORBA Compiler Framework (CCF)</a></h1>
+
+Now that you have built and installed the required libraries, you are now ready
+to build the CCF libraries. If there are any makefiles or project solutions
+in the CCF directory we recommend that you disgard those and regenerate
+all the projects files using MPC. To build all project files and CCF, please use the
+following steps:
+<ol>
+<li><code>%> cd $CIAO_ROOT/CCF/CCF</code></li>
+<li><code>%> $ACE_ROOT/bin/mwc.pl -type &lt;project-type&gt; -static -features cidl=1, exceptions=1, boost=1</code></li>
+</ol>
+On Linux/UNIX, if you are building with a make utility, e.g., gmake, use the following command
+to build CCF:
+
+<pre>%> gmake cidl=1 exceptions=1 boost=1</pre>
+<p>If you are building on Windows, just open the generated solution file.</p>
+
+<p><b>Note:</b> If you are building CCF on a Windows platform, use <code>%ACE_ROOT%\bin\mwc.pl</code> instead
+
+<code>of $ACE_ROOT/bin/mwc.pl</code>. Also, for a list of project types and other command-line options
+supported by MPC, type <code>$ACE_ROOT/bin/mwc.pl --help</code>.</p>
 </body>
 </html>
