@@ -53,8 +53,11 @@ INPUT                 = \
 	TAO/orbsvcs/orbsvcs/CosNotifyFilter.idl \
 	TAO/orbsvcs/orbsvcs/CosNotifyComm.idl \
 	TAO/orbsvcs/orbsvcs/CosNotifyChannelAdmin.idl \
-	TAO/orbsvcs/orbsvcs/Notify
-FILE_PATTERNS         = *.cpp *.h CEC_*.i CEC_*.inl CEC_*.pidl *.idl
+        TAO/orbsvcs/orbsvcs/Notify \
+        TAO/orbsvcs/orbsvcs/Notify/Any \
+        TAO/orbsvcs/orbsvcs/Notify/Sequence \
+        TAO/orbsvcs/orbsvcs/Notify/Structured
+FILE_PATTERNS         = *.cpp *.h *.i *.inl *.idl
 RECURSIVE             =
 EXCLUDE               =
 EXCLUDE_PATTERNS      =
