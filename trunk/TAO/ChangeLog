@@ -1,3 +1,9 @@
+Tue Dec 13 12:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/Discarding/notify.conf:
+          Use DispatchingThreads instead of ListeningThreads, the last one
+          is deprecated
+
 Tue Dec 13 12:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/Notify/Subscribe/Notify_Subscribe.mpc:
