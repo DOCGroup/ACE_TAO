@@ -11,9 +11,9 @@ POA_Holder::POA_Holder (void)
   }
 
 int
-POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
+POA_Holder::init (ACE_TArg_Shifter<char>& arg_shifter)
 {
-  const ACE_TCHAR *current_arg = 0;
+  const char *current_arg = 0;
 
   POA_name_ = arg_shifter.get_current (); // Read the name of the POA
   arg_shifter.consume_arg ();

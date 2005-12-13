@@ -14,7 +14,7 @@ Checkpoint_Client_i::run (const char *name,
                           char *argv[])
 {
   // Initialize the client (read ior...).
-  if (checkpoint.init (name,argc, argv) == -1)
+  if (checkpoint.init (name, argc, argv) == -1)
     return -1;
 
   // Set random seed

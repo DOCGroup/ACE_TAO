@@ -61,7 +61,7 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
                           ACE_UINT32)
 {
 
-  FILE* output_file = ACE_OS::fopen (file_name, "w");
+  FILE* output_file = ACE_OS::fopen (file_name, ACE_TEXT("w"));
 
   if (output_file == 0)
     {

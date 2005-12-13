@@ -19,6 +19,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
+#include "ace/Argv_Type_Converter.h"
 
 Identity_Client::Identity_Client (void)
   : group_factory_ior_ (0),
@@ -88,7 +89,7 @@ Identity_Client::init (int argc,
         return result;
 
       // Check the non-ORB arguments.
-      result = this->parse_args (argc, argv);
+      result = this->parse_args (convert.get_argc(), convert.get_ASCII_argv());
       if (result < 0)
         return result;
     }
@@ -247,10 +248,11 @@ Identity_Client::~Identity_Client (void)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
   int result = 0;
   Identity_Client client;
 
-  if (client.init (argc, argv) == -1)
+  if (client.init (convert.get_argc(), convert.get_ASCII_argv()) == -1)
     return 1;
 
   ACE_DECLARE_NEW_CORBA_ENV;

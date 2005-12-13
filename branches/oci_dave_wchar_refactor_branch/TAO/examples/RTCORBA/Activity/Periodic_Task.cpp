@@ -26,9 +26,9 @@ Periodic_Task::~Periodic_Task ()
 }
 
 int
-Periodic_Task::init_task (ACE_Arg_Shifter& arg_shifter)
+Periodic_Task::init_task (ACE_TArg_Shifter<char>& arg_shifter)
 {
-  const ACE_TCHAR *current_arg = 0;
+  const char *current_arg = 0;
 
   while (arg_shifter.is_anything_left ())
     {

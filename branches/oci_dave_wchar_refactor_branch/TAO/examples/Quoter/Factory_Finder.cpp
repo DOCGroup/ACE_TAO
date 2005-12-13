@@ -15,6 +15,7 @@
 // ============================================================================
 
 #include "Factory_Finder.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Quoter,
 
@@ -222,11 +223,12 @@ Quoter_Factory_Finder_Server::parse_args (void)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
   Quoter_Factory_Finder_Server quoter_Factory_Finder_Server;
 
   ACE_TRY_NEW_ENV
     {
-      int result = quoter_Factory_Finder_Server.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      int result = quoter_Factory_Finder_Server.init (convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (result == -1)

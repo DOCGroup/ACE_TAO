@@ -29,9 +29,9 @@ Builder::~Builder(void)
 int
 Builder::init (int argc, char *argv[])
 {
-  ACE_Arg_Shifter arg_shifter (argc, argv);
+  ACE_TArg_Shifter<char> arg_shifter (argc, argv);
 
-  const ACE_TCHAR* current_arg = 0;
+  const char* current_arg = 0;
 
   int task_count = 0;
   int poa_count = 0;

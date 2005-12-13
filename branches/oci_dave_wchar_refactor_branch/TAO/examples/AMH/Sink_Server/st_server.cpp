@@ -2,6 +2,7 @@
 
 #include "AMH_Servant.h"
 #include "Base_Server.h"
+#include "ace/Argv_Type_Converter.h"
 
 void
 usage (const char *message)
@@ -21,7 +22,8 @@ usage (const char *message)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  Base_Server amh_server (argc, argv);
+  ACE_Argv_Type_Converter convert (argc, argv);
+  Base_Server amh_server (convert.get_argc(), convert.get_ASCII_argv());
   amh_server.try_RT_scheduling();
   amh_server.start_orb_and_poa ();
 
@@ -33,7 +35,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   AMH_Servant servant (amh_server.orb ());
 
-  if (servant.parse_args (argc, argv) != 1)
+  if (servant.parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 1)
     {
       usage ("Sleep time unspecified \n");
       ACE_OS::exit (1);

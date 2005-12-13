@@ -65,10 +65,9 @@ Activity::init (int& argc, char *argv []
                 ACE_ENV_ARG_DECL)
 {
   // Copy command line parameter.
-  ACE_Argv_Type_Converter command_line(argc, argv);
+  ACE_Argv_Type_Converter convert(argc, argv);
 
-  this->orb_ = CORBA::ORB_init (command_line.get_argc(),
-                                command_line.get_ASCII_argv(),
+  this->orb_ = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
                                 ""
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
@@ -402,9 +401,9 @@ Activity::run (int argc, char *argv[] ACE_ENV_ARG_DECL)
 void
 Activity::create_started_flag_file (int argc, char *argv[])
 {
-  ACE_Arg_Shifter arg_shifter (argc, argv);
+  ACE_TArg_Shifter<char> arg_shifter (argc, argv);
 
-  const ACE_TCHAR* current_arg = 0;
+  const char* current_arg = 0;
 
   while (arg_shifter.is_anything_left ())
     {
@@ -433,6 +432,7 @@ Activity::create_started_flag_file (int argc, char *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
   ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_Builder);
 
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGHUP);
@@ -442,7 +442,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_TRY_NEW_ENV
     {
-      ACTIVITY::instance()->run (argc, argv ACE_ENV_ARG_PARAMETER);
+      ACTIVITY::instance()->run (convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

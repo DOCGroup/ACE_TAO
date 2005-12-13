@@ -335,7 +335,7 @@ Supplier::reactor_used (void) const
 int
 Supplier::read_file (char *filename)
 {
-  f_ptr_ = ACE_OS::fopen (filename, "r");
+  f_ptr_ = ACE_OS::fopen (filename, ACE_TEXT("r"));
 
   ACE_DEBUG ((LM_DEBUG,
               "filename = %s\n",filename));

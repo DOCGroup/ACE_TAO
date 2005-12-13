@@ -2,12 +2,14 @@
 
 #include "Simple_util.h"
 #include "Grid_i.h"
+#include "ace/Argv_Type_Converter.h"
 
 // This is the main driver program for the time and date server.
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
   Server<Grid_Factory_i> server;
 
   ACE_DEBUG ((LM_DEBUG,

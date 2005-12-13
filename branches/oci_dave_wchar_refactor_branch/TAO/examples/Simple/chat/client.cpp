@@ -17,15 +17,17 @@
 // ===========================================================
 
 #include "Client_i.h"
+#include "ace/Argv_Type_Converter.h"
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
   ACE_TRY_NEW_ENV
     {
       Client_i client_i;
 
-      if (client_i.init (argc, argv) == -1
+      if (client_i.init (convert.get_argc(), convert.get_ASCII_argv()) == -1
 	  || client_i.run () == -1)
 	return -1;
 

@@ -19,6 +19,7 @@
 #include "ace/Profile_Timer.h"
 #include "testC.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(TIE, client, "$Id$")
 
@@ -174,15 +175,16 @@ public:
 int
 ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
         // Initialize the ORB
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
+      CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), 0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Initialize options based on command-line arguments.
-      int parse_args_result = parse_args (argc, argv);
+      int parse_args_result = parse_args (convert.get_argc(), convert.get_ASCII_argv());
       if (parse_args_result != 0)
         return parse_args_result;
 

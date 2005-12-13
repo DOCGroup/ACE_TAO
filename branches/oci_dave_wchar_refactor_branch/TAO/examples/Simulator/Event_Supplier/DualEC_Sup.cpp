@@ -37,6 +37,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Event_Supplier,
            DualEC_Sup,
@@ -824,7 +825,7 @@ DualEC_Supplier::load_schedule_data ()
       FILE *input_file;
 
       int scan_count = 0;
-      input_file = ACE_OS::fopen(this->input_file_name_, "r");
+      input_file = ACE_OS::fopen(this->input_file_name_, ACE_TEXT("r"));
 
       if (input_file)
         {
@@ -1086,6 +1087,8 @@ DualEC_Supplier::get_options (int argc, char *argv [])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
   int min_priority =
     ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
@@ -1111,8 +1114,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Initialize ORB.
       TAO_ORB_Manager orb_Manager;
 
-      orb_Manager.init (argc,
-                        argv
+      orb_Manager.init (convert.get_argc(),
+                        convert.get_ASCII_argv()
                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -1121,7 +1124,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       DualEC_Supplier *event_Supplier_ptr;
 
       ACE_NEW_RETURN (event_Supplier_ptr,
-                      DualEC_Supplier(argc, argv),
+                      DualEC_Supplier(convert.get_argc(), convert.get_ASCII_argv()),
                       -1);
 
       // Initialize everthing

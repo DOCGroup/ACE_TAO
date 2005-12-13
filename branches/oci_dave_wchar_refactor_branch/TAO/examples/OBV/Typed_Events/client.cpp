@@ -1,12 +1,14 @@
 //$Id$
 
 # include "Client_i.h"
+#include "ace/Argv_Type_Converter.h"
 
 // The client program for the application.
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
   Checkpoint_Client_i client;
 
 

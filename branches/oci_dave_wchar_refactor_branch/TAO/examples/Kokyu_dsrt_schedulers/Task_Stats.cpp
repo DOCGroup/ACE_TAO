@@ -70,7 +70,7 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
     }
 
   // first dump what the caller has to say.
-  ACE_OS::fprintf (output_file, "%s\n",msg);
+  ACE_OS::fprintf (output_file, ACE_TEXT("%s\n"),msg);
 
   // next, compose and dump what we want to say.
   ACE_UINT32 val_1;

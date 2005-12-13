@@ -18,12 +18,14 @@
 #include "ace/SString.h"
 #include "test_i.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(TIE, server, "$Id$")
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
   ACE_DECLARE_NEW_CORBA_ENV;
 
   char str[256];
@@ -33,7 +35,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
       ACE_OS::strcpy (str, "CORBA::ORB_init");
 
       // Initialize the ORB first.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
+      CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), 0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Obtain the RootPOA.
@@ -175,10 +177,10 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
         orb->object_to_string (a_tie.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      FILE *output_file_1 = ACE_OS::fopen ("ior_1", "w");
-      FILE *output_file_2 = ACE_OS::fopen ("ior_2", "w");
-      FILE *output_file_3 = ACE_OS::fopen ("ior_3", "w");
-      FILE *output_file_4 = ACE_OS::fopen ("ior_4", "w");
+      FILE *output_file_1 = ACE_OS::fopen ("ior_1", ACE_TEXT("w"));
+      FILE *output_file_2 = ACE_OS::fopen ("ior_2", ACE_TEXT("w"));
+      FILE *output_file_3 = ACE_OS::fopen ("ior_3", ACE_TEXT("w"));
+      FILE *output_file_4 = ACE_OS::fopen ("ior_4", ACE_TEXT("w"));
 
       if (output_file_1)
         ACE_OS::fprintf (output_file_1,
@@ -214,8 +216,8 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
         orb->object_to_string (c_tie.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      FILE *output_file_5 = ACE_OS::fopen ("ior_5", "w");
-      FILE *output_file_6 = ACE_OS::fopen ("ior_6", "w");
+      FILE *output_file_5 = ACE_OS::fopen ("ior_5", ACE_TEXT("w"));
+      FILE *output_file_6 = ACE_OS::fopen ("ior_6", ACE_TEXT("w"));
 
       if (output_file_5)
         ACE_OS::fprintf (output_file_5,

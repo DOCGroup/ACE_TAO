@@ -27,6 +27,7 @@
 
 #include "ace/SString.h"
 #include "ace/Log_Msg.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (NewPOA, 
            NewPOA, 
@@ -80,13 +81,13 @@ print_poa (PortableServer::POA_ptr poa
 int
 ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       // The first step Initialize the ORB
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
+      CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
                                             0
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

@@ -2,6 +2,7 @@
 
 #include "Consumer_Handler.h"
 #include "Consumer_Input_Handler.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(Consumer, consumer, "$Id$")
 
@@ -112,10 +113,11 @@ Consumer::initialize (int argc, char *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
   // Initialize the supplier and consumer object references.
   Consumer consumer;
 
-  if (consumer.initialize (argc, argv) == -1)
+  if (consumer.initialize (convert.get_argc(), convert.get_ASCII_argv()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "%p\n",
 		       "Consumer init failed\n"),

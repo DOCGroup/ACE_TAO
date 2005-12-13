@@ -22,6 +22,7 @@
 #include "tao/ORB.h"
 #include "ace/Log_Msg.h"
 #include "ace/SString.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (FindPOA,
            FindPOA,
@@ -59,12 +60,13 @@ find_non_existant_POA (PortableServer::POA_ptr parent,
 int
 ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
   ACE_DECLARE_NEW_CORBA_ENV;
 
   // Initialize the ORB
   ACE_TRY
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
+      CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), 0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Obtain the RootPOA.
