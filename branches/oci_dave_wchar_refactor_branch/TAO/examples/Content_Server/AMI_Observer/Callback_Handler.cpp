@@ -11,7 +11,7 @@ ACE_RCSID (AMI_Observer, Callback_Handler, "$Id$")
 
 Callback_Handler::Callback_Handler (const char *pathname,
                                     Web_Server::Callback_ptr client_callback)
-  : file_ (pathname),
+  : file_ (ACE_TEXT_TO_TCHAR_IN(pathname)),
     file_io_ (),
     callback_ (Web_Server::Callback::_duplicate (client_callback)),
     ami_handler_ (),
