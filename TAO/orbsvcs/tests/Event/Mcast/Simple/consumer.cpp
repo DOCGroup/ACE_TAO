@@ -5,6 +5,7 @@
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/RtecEventCommS.h"
+#include "ace/Argv_Type_Converter.h"
 
 class EC_Consumer:
   public POA_RtecEventComm::PushConsumer

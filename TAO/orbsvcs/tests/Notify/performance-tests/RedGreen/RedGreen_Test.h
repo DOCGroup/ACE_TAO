@@ -76,7 +76,7 @@ class RedGreen_Test
   void dump_results (void);
 
   void init (int argc,
-             ACE_TCHAR *argv[]
+             char *argv[]
              ACE_ENV_ARG_DECL);
   // Initialize the Client.
 

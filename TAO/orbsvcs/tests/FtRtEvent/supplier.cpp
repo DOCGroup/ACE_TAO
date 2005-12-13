@@ -23,7 +23,7 @@ CORBA::ORB_var orb;
 auto_ptr<TAO_FTRTEC::FTEC_Gateway> gateway;
 
 RtecEventChannelAdmin::EventChannel_ptr
-get_event_channel(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
+get_event_channel(int argc, char** argv ACE_ENV_ARG_DECL)
 {
     FtRtecEventChannelAdmin::EventChannel_var channel;
     ACE_Get_Arg_Opt<char> get_opt (argc, argv, "hi:nt:?");
@@ -105,7 +105,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR** argv)
 
 
     RtecEventChannelAdmin::EventChannel_var channel
-      = get_event_channel(argc, argv ACE_ENV_ARG_PARAMETER);
+      = get_event_channel(convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
 

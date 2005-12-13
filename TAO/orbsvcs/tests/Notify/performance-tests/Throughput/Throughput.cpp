@@ -335,7 +335,7 @@ Notify_Throughput::parse_args(int argc, char *argv[])
 {
     ACE_TArg_Shifter< char > arg_shifter (argc, argv);
 
-    const ACE_TCHAR* current_arg = 0;
+    const char* current_arg = 0;
     while (arg_shifter.is_anything_left ())
     {
       if (arg_shifter.cur_arg_strncasecmp ("-collocated_ec") == 0)
