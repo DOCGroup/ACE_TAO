@@ -285,7 +285,7 @@ TAO_IMR_Op_Activate::parse (int argc, ACE_TCHAR **argv)
   }
 
   // Skip both the program name and the "activate" command
-  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_LIB_TEXT("h"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_TEXT("h"));
 
   this->server_name_.set (ACE_TEXT_TO_CHAR_IN (argv[1]));
   int c;
@@ -317,7 +317,7 @@ int
 TAO_IMR_Op_Autostart::parse (int argc, ACE_TCHAR **argv)
 {
   // Skip the "autostart" command
-  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_LIB_TEXT("h"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_TEXT("h"));
 
   int c;
 
@@ -362,7 +362,7 @@ TAO_IMR_Op_IOR::parse (int argc, ACE_TCHAR **argv)
   }
 
   // Skip both the program name and the "ior" command
-  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_LIB_TEXT("hf:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_TEXT("hf:"));
 
   this->server_name_.set (ACE_TEXT_TO_CHAR_IN (argv[1]));
   if (this->server_name_.length() == 0 || this->server_name_[0] == '-')
@@ -418,7 +418,7 @@ TAO_IMR_Op_List::parse (int argc, ACE_TCHAR **argv)
   }
 
   // Skip both the program name and the "list" command
-  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_LIB_TEXT("vh"), server_flag);
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_TEXT("vh"), server_flag);
 
   int c;
 
@@ -462,7 +462,7 @@ TAO_IMR_Op_Remove::parse (int argc, ACE_TCHAR **argv)
   }
 
   // Skip both the program name and the "remove" command
-  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_LIB_TEXT("h"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_TEXT("h"));
 
   this->server_name_.set (ACE_TEXT_TO_CHAR_IN (argv[1]));
   int c;
@@ -504,7 +504,7 @@ TAO_IMR_Op_Shutdown::parse (int argc, ACE_TCHAR **argv)
   }
 
   // Skip both the program name and the "shutdown" command
-  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_LIB_TEXT("h"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_TEXT("h"));
 
   this->server_name_.set (ACE_TEXT_TO_CHAR_IN (argv[1]));
   int c;
@@ -551,7 +551,7 @@ TAO_IMR_Op_ShutdownRepo::parse (int argc, ACE_TCHAR **argv)
   }
 
   // Skip both the program name and the "shutdown-repo" command
-  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_LIB_TEXT("ha"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_TEXT("ha"));
 
   int c;
 
@@ -582,7 +582,7 @@ TAO_IMR_Op_Register::addenv (ACE_TCHAR *opt)
   // Increase the length of the sequence
   this->environment_vars_.length (length + 1);
   ACE_TString tokens (opt);
-  int index = tokens.find (ACE_LIB_TEXT("="));
+  int index = tokens.find (ACE_TEXT("="));
   // Insert at position length since that is our new element
   this->environment_vars_ [length].name =
     CORBA::string_dup (tokens.substr (0, index).c_str ());
@@ -621,7 +621,7 @@ TAO_IMR_Op_Register::parse (int argc, ACE_TCHAR **argv)
   }
 
   // Skip both the program name and the "update" command
-  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_LIB_TEXT("hc:w:a:e:r:R:l:"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_TEXT("hc:w:a:e:r:R:l:"));
 
   this->server_name_.set (ACE_TEXT_TO_CHAR_IN (argv[1]));
   int c;

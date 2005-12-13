@@ -979,7 +979,7 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                             // we're not equal if we cannot get rhs int
                             rc = false;
 
-                          ACE_OS::sprintf (int_value, ACE_LIB_TEXT ("%08x"), intValue);
+                          ACE_OS::sprintf (int_value, ACE_TEXT ("%08x"), intValue);
                           originalString = int_value;
                         }
                       else if (originalType == ACE_Configuration::BINARY)
@@ -1001,10 +1001,10 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                               while (binary_length)
                                 {
                                   if (ptr != binary_data)
-                                    originalString += ACE_LIB_TEXT (",");
+                                    originalString += ACE_TEXT (",");
 
                                   ACE_OS::sprintf (bin_value,
-                                                   ACE_LIB_TEXT ("%02x"),
+                                                   ACE_TEXT ("%02x"),
                                                    *ptr);
                                   originalString += bin_value;
                                   --binary_length;

@@ -20,13 +20,13 @@ TAO_Notify_Tests_Application_Command::~TAO_Notify_Tests_Application_Command ()
 {
 }
 
-const char*
+const ACE_TCHAR*
 TAO_Notify_Tests_Application_Command::get_name (void)
 {
   return TAO_Notify_Tests_Application_Command::name ();
 }
 
-const char*
+const ACE_TCHAR*
 TAO_Notify_Tests_Application_Command::name (void)
 {
   return TAO_Notify_Tests_Name::application_command;

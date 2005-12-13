@@ -531,7 +531,7 @@ int FTClientMain::next_replica (ACE_ENV_SINGLE_ARG_DECL)
   else
   {
     ACE_OS::fprintf (stderr, "***OUT_OF_REPLICAS*** "
-                             ACE_SIZE_T_FORMAT_SPECIFIER
+                             ACE_SIZE_T_FORMAT_SPECIFIER_A
                              "\n", this->replica_pos_);
   }
   return result;
@@ -630,7 +630,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Argv_Type_Converter convert (argc, argv);
 
   FTClientMain app;
-  int result = app.parse_args(argc, argv);
+  int result = app.parse_args(convert.get_argc(), convert.get_ASCII_argv());
   if (result == 0)
   {
     ACE_TRY_NEW_ENV

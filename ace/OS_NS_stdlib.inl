@@ -195,7 +195,6 @@ ACE_OS::mkstemp (char *s)
 #if !defined (ACE_LACKS_MKSTEMP)
   return ::mkstemp (s);
 #else
-  s[0] = 0;
   return ACE_OS::mkstemp_emulation (ACE_TEXT_TO_TCHAR_INOUT (s) );
 #endif  /* !ACE_LACKS_MKSTEMP */
 }

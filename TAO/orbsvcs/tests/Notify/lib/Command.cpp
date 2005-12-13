@@ -19,7 +19,7 @@ TAO_Notify_Tests_Command::~TAO_Notify_Tests_Command ()
 }
 
 void
-TAO_Notify_Tests_Command::init (ACE_TArg_Shifter< char >& /*arg_shifter*/)
+TAO_Notify_Tests_Command::init (ACE_TArg_Shifter< ACE_TCHAR >& /*arg_shifter*/)
 {
   // default: do nothing.
 }

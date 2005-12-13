@@ -147,7 +147,7 @@ Time_Date_Servant::parse_args (int argc, char *argv[])
         TAO_debug_level++;
         break;
       case 'o':  // output the IOR to a file.
-        this->ior_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), "w");
+        this->ior_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), ACE_TEXT("w"));
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",

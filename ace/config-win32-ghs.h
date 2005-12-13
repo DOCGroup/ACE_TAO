@@ -28,7 +28,6 @@
 # define ACE_CONFIG_INCLUDE_GHS_COMMON
 # include "ace/config-ghs-common.h"
 
-// Changed ACE_TEXT to ACE_LIB_TEXT in the following line
 # define ACE_CC_NAME ACE_LIB_TEXT ("Green Hills C++")
 # define ACE_CC_MAJOR_VERSION (1)
 # define ACE_CC_MINOR_VERSION (8)
@@ -77,7 +76,6 @@
 //# define ACE_NEW_THROWS_EXCEPTIONS 1
 # define ACE_SIZEOF_LONG_DOUBLE 10
 # define ACE_TEMPLATES_REQUIRE_SOURCE 1
-// Changed ACE_TEXT to ACE_LIB_TEXT in the following two lines
 # define ACE_UINT64_FORMAT_SPECIFIER_A "%I64u"
 # define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT (ACE_UINT64_FORMAT_SPECIFIER_A)
 # define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64d")

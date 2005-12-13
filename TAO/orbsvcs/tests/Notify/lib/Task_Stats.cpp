@@ -55,8 +55,18 @@ Task_Stats::end_time (ACE_UINT64 time)
   end_time_ = time;
 }
 
+void Task_Stats::dump_samples (const char *file_name, const char *msg, int dump_samples)
+{
+  dump_samples_i(ACE_TEXT_TO_TCHAR_IN(file_name), ACE_TEXT_TO_TCHAR_IN(msg), dump_samples);
+}
+
+void Task_Stats::dump_samples (const wchar_t *file_name, const wchar_t *msg, int dump_samples)
+{
+  dump_samples_i(ACE_TEXT_TO_TCHAR_IN(file_name), ACE_TEXT_TO_TCHAR_IN(msg), dump_samples);
+}
+
 void
-Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg, int dump_samples)
+Task_Stats::dump_samples_i (const ACE_TCHAR *file_name, const ACE_TCHAR *msg, int dump_samples)
 {
   FILE* output_file = ACE_OS::fopen (file_name, ACE_TEXT("w"));
 

@@ -20,13 +20,13 @@ TAO_Notify_Tests_EventChannel_Command::~TAO_Notify_Tests_EventChannel_Command ()
 {
 }
 
-const char*
+const ACE_TCHAR*
 TAO_Notify_Tests_EventChannel_Command::get_name (void)
 {
   return TAO_Notify_Tests_EventChannel_Command::name ();
 }
 
-const char*
+const ACE_TCHAR*
 TAO_Notify_Tests_EventChannel_Command::name (void)
 {
   return TAO_Notify_Tests_Name::event_channel_command;

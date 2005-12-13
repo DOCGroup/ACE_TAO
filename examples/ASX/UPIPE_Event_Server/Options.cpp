@@ -176,13 +176,13 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 	break;
       }
 
-  // HACK! This needs to be done to avoid the mismatch from ACE_LIB_TEXT
+  // HACK! This needs to be done to avoid the mismatch from ACE_TEXT
   // in ACE_SIZE_T_FORMAT_SPECIFIER to narrow-char on wide-char builds.
   // It only works because it's at the end of the file.
-# if defined (ACE_LIB_TEXT)
-#  undef ACE_LIB_TEXT
+# if defined (ACE_TEXT)
+#  undef ACE_TEXT
 # endif
-# define ACE_LIB_TEXT(X) X
+# define ACE_TEXT(X) X
   if (this->verbose ())
     ACE_OS::printf ("%8d = initial concurrency hint\n"
 	      ACE_SIZE_T_FORMAT_SPECIFIER " = total iterations\n"

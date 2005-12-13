@@ -47,8 +47,8 @@ public:
   virtual void execute_i (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Name of object
-  virtual const char* get_name (void);
-  static const char* name (void);
+  virtual const ACE_TCHAR* get_name (void);
+  static const ACE_TCHAR* name (void);
 
 protected:
   ///= Data Members

@@ -66,13 +66,13 @@ ACE_Get_Arg_Opt<CHAR_TYPE>::ACE_Get_Arg_Opt (int argc,
     {
       switch (optstring[offset++])
         {
-        case ACE_TEXT('+'):
+        case ACE_LIB_TEXT('+'):
           this->ordering_ = REQUIRE_ORDER;
           break;
-        case ACE_TEXT('-'):
+        case ACE_LIB_TEXT('-'):
           this->ordering_ = RETURN_IN_ORDER;
           break;
-        case ACE_TEXT(':'):
+        case ACE_LIB_TEXT(':'):
           this->has_colon_ = 1;
           break;
         default:
@@ -127,8 +127,8 @@ ACE_Get_Arg_Opt<CHAR_TYPE>::nextchar_i (void)
       this->nextchar_ = 0;
       return eof();
     }
-  else if (*(this->nextchar_ = this->argv_[this->optind]) != ACE_TEXT('-')
-            || this->nextchar_[1] == ACE_TEXT('\0'))
+  else if (*(this->nextchar_ = this->argv_[this->optind]) != ACE_LIB_TEXT('-')
+            || this->nextchar_[1] == ACE_LIB_TEXT('\0'))
     {
       // We didn't get an option.
 
@@ -143,8 +143,8 @@ ACE_Get_Arg_Opt<CHAR_TYPE>::nextchar_i (void)
       return 1;
     }
   else if (this->nextchar_[1] != 0
-           && *++this->nextchar_ == ACE_TEXT('-')
-           && this->nextchar_[1] == ACE_TEXT('\0'))
+           && *++this->nextchar_ == ACE_LIB_TEXT('-')
+           && this->nextchar_[1] == ACE_LIB_TEXT('\0'))
     {
       // Found "--" so we're done...
       ++this->optind;
@@ -153,10 +153,10 @@ ACE_Get_Arg_Opt<CHAR_TYPE>::nextchar_i (void)
     }
 
   // If it's a long option, and we allow long options advance nextchar_.
-  if (*this->nextchar_ == ACE_TEXT('-') && this->long_opts_.size () != 0)
+  if (*this->nextchar_ == ACE_LIB_TEXT('-') && this->long_opts_.size () != 0)
     this->nextchar_++;
 
-  return ACE_TEXT('\0');
+  return ACE_LIB_TEXT('\0');
 }
 
 template < typename CHAR_TYPE >
@@ -174,7 +174,7 @@ ACE_Get_Arg_Opt<CHAR_TYPE>::long_option_i (void)
 
   // Advance to the end of the long option name so we can use
   // it to get the length for a string compare.
-  while (*s && *s != ACE_TEXT('='))
+  while (*s && *s != ACE_LIB_TEXT('='))
     s++;
 
   size_t len = s - this->nextchar_;
@@ -213,7 +213,7 @@ ACE_Get_Arg_Opt<CHAR_TYPE>::long_option_i (void)
                     this->argv_[0], this->argv_[this->optind]));
       this->nextchar_ = 0;
       this->optind++;
-      return ACE_TEXT('?');
+      return ACE_LIB_TEXT('?');
     }
 
   if (pfound != 0)
@@ -260,7 +260,7 @@ ACE_Get_Arg_Opt<CHAR_TYPE>::long_option_i (void)
                             this->argv_[0], pfound->name_));
               this->nextchar_ = 0;
               this->optopt_ = pfound->val_;   // Remember matching short equiv
-              return this->has_colon_ ? ACE_TEXT(':') : ACE_TEXT('?');
+              return this->has_colon_ ? ACE_LIB_TEXT(':') : ACE_LIB_TEXT('?');
             }
         }
       this->nextchar_ = 0;
@@ -270,7 +270,7 @@ ACE_Get_Arg_Opt<CHAR_TYPE>::long_option_i (void)
       this->optopt_ = pfound->val_;
       return pfound->val_;
     }
-  if (!this->long_only_ || this->argv_[this->optind][1] == ACE_TEXT('-')
+  if (!this->long_only_ || this->argv_[this->optind][1] == ACE_LIB_TEXT('-')
       || this->optstring_->find (*this->nextchar_) == String::npos)
     {
       // Okay, we couldn't find a long option.  If it isn't long_only (which
@@ -283,7 +283,7 @@ ACE_Get_Arg_Opt<CHAR_TYPE>::long_option_i (void)
                     this->argv_[0], this->nextchar_));
       this->nextchar_ = 0;
       this->optind++;
-      return ACE_TEXT('?');
+      return ACE_LIB_TEXT('?');
     }
   return this->short_option_i ();
 }
@@ -304,32 +304,32 @@ ACE_Get_Arg_Opt<CHAR_TYPE>::short_option_i (void)
     const_cast<Char*> (ACE_OS::strchr (this->optstring_->c_str (), opt));
 
   /* Increment `optind' when we start to process its last character.  */
-  if (*this->nextchar_ == ACE_TEXT('\0'))
+  if (*this->nextchar_ == ACE_LIB_TEXT('\0'))
     ++this->optind;
 
-  if (oli == 0 || opt == ACE_TEXT(':'))
+  if (oli == 0 || opt == ACE_LIB_TEXT(':'))
     {
       if (this->opterr)
         ACE_ERROR ((LM_ERROR,
                     ACE_LIB_TEXT ("%s: illegal short option -- %c\n"),
                     this->argv_[0], opt));
-      return ACE_TEXT('?');
+      return ACE_LIB_TEXT('?');
     }
-  if (opt == ACE_TEXT('W') && oli[1] == ACE_TEXT(';'))
+  if (opt == ACE_LIB_TEXT('W') && oli[1] == ACE_LIB_TEXT(';'))
     {
       if (this->nextchar_[0] == 0)
         this->nextchar_ = this->argv_[this->optind];
       return long_option_i ();
     }
   this->optopt_ = oli[0];      // Remember the option that matched
-  if (oli[1] == ACE_TEXT(':'))
+  if (oli[1] == ACE_LIB_TEXT(':'))
     {
-      if (oli[2] == ACE_TEXT(':'))
+      if (oli[2] == ACE_LIB_TEXT(':'))
         {
           // Takes an optional argument, and since short option args must
           // must follow directly in the same argument, a NULL nextchar_
           // means we didn't get one.
-          if (*this->nextchar_ != ACE_TEXT('\0'))
+          if (*this->nextchar_ != ACE_LIB_TEXT('\0'))
             {
               this->optarg = this->nextchar_;
               this->optind++;
@@ -341,7 +341,7 @@ ACE_Get_Arg_Opt<CHAR_TYPE>::short_option_i (void)
       else
         {
           // Takes a required argument.
-          if (*this->nextchar_ != ACE_TEXT('\0'))
+          if (*this->nextchar_ != ACE_LIB_TEXT('\0'))
             {
               // Found argument in same argv-element.
               this->optarg = this->nextchar_;
@@ -355,7 +355,7 @@ ACE_Get_Arg_Opt<CHAR_TYPE>::short_option_i (void)
                             ACE_LIB_TEXT ("%s: short option requires ")
                             ACE_LIB_TEXT ("an argument -- %c\n"),
                             this->argv_[0], opt));
-              opt = this->has_colon_ ? ACE_TEXT(':') : ACE_TEXT('?');
+              opt = this->has_colon_ ? ACE_LIB_TEXT(':') : ACE_LIB_TEXT('?');
             }
           else
             // Use the next argv-element as the argument.
@@ -385,15 +385,15 @@ ACE_Get_Arg_Opt<CHAR_TYPE>::operator () (void)
 
   // We check this because we can string short options together if the
   // preceding one doesn't take an argument.
-  if (this->nextchar_ == 0 || *this->nextchar_ == ACE_TEXT('\0'))
+  if (this->nextchar_ == 0 || *this->nextchar_ == ACE_LIB_TEXT('\0'))
     {
       int retval = this->nextchar_i ();
       if (retval != 0)
         return retval;
     }
 
-  if (((this->argv_[this->optind][0] == ACE_TEXT('-'))
-       && (this->argv_[this->optind][1] == ACE_TEXT('-'))) || this->long_only_)
+  if (((this->argv_[this->optind][0] == ACE_LIB_TEXT('-'))
+       && (this->argv_[this->optind][1] == ACE_LIB_TEXT('-'))) || this->long_only_)
     return this->long_option_i ();
 
   return this->short_option_i ();
@@ -439,9 +439,9 @@ ACE_Get_Arg_Opt<CHAR_TYPE>::long_option (const Char *name,
                                  short_option))) != 0)
         {
           // Short option exists, so verify the argument options
-          if (s[1] == ACE_TEXT(':'))
+          if (s[1] == ACE_LIB_TEXT(':'))
             {
-              if (s[2] == ACE_TEXT(':'))
+              if (s[2] == ACE_LIB_TEXT(':'))
                 {
                   if (has_arg != ARG_OPTIONAL)
                     {
@@ -630,8 +630,8 @@ ACE_Get_Arg_Opt<CHAR_TYPE>::permute (void)
 
   // Skip over args untill we find the next option.
   while (this->optind < this->argc_
-         && (this->argv_[this->optind][0] != ACE_TEXT('-')
-             || this->argv_[this->optind][1] == ACE_TEXT('\0')))
+         && (this->argv_[this->optind][0] != ACE_LIB_TEXT('-')
+             || this->argv_[this->optind][1] == ACE_LIB_TEXT('\0')))
     this->optind++;
 
   // Got an option, so mark this as the end of the non options.

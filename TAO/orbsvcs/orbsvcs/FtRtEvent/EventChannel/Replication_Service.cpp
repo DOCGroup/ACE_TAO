@@ -107,7 +107,7 @@ namespace FTRTEC
 
   void Replication_Service::become_primary()
   {
-    TAO_FTRTEC::Log(3, ACE_LIB_TEXT("become_primary\n"));
+    TAO_FTRTEC::Log(3, ACE_TEXT("become_primary\n"));
 
     Replication_Strategy* strategy =
       replication_strategy->make_primary_strategy();
@@ -169,21 +169,21 @@ namespace FTRTEC
   int  Replication_Service::acquire_read (void)
   {
     int r =  replication_strategy->acquire_read();
-    TAO_FTRTEC::Log(3, ACE_LIB_TEXT("Read Lock acquired %d\n"), r);
+    TAO_FTRTEC::Log(3, ACE_TEXT("Read Lock acquired %d\n"), r);
     return r;
   }
 
   int  Replication_Service::acquire_write (void)
   {
     int r= replication_strategy->acquire_write();
-    TAO_FTRTEC::Log(3, ACE_LIB_TEXT("Write Lock acqured %d\n"), r);
+    TAO_FTRTEC::Log(3, ACE_TEXT("Write Lock acqured %d\n"), r);
     return r;
   }
 
   int  Replication_Service::release (void)
   {
     int r= replication_strategy->release();
-    TAO_FTRTEC::Log(3, ACE_LIB_TEXT("Lock Released %d\n"), r);
+    TAO_FTRTEC::Log(3, ACE_TEXT("Lock Released %d\n"), r);
     return r;
   }
 

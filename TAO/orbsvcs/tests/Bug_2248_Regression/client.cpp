@@ -446,8 +446,8 @@ int run_abort_test (Simple_Server_ptr server,
   if (ACE_OS::strcmp (expected, received))
   {
     ACE_DEBUG ((LM_DEBUG,
-	        ACE_TEXT ("... FAIL\n"
-			  "CLIENT>          received: '%s'\n"),
+	        ACE_TEXT ("... FAIL\n")
+			    ACE_TEXT ("CLIENT>          received: '%s'\n"),
 	        received));
     return -1;
   }

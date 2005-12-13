@@ -70,9 +70,13 @@ class TAO_NOTIFY_TEST_Export Task_Stats
   /// Record a sample
   int sample (ACE_UINT64 inv_start_time, ACE_UINT64 inv_end_time);
 
-  void dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg, int dump_samples);
+  void dump_samples (const char *file_name, const char *msg, int dump_samples);
 
- protected:
+  void dump_samples (const wchar_t *file_name, const wchar_t *msg, int dump_samples);
+
+ private:
+  void dump_samples_i (const ACE_TCHAR *file_name, const ACE_TCHAR *msg, int dump_samples);
+
   /// Base and end times
   ACE_UINT64 base_time_;
   ACE_UINT64 end_time_;

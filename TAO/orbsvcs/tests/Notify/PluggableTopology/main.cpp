@@ -61,7 +61,7 @@ namespace {
   }
   void setUp()
   {
-    ACE_ARGV av;
+    ACE_TARGV<char> av;
     int ac = 0;
     orb = ORB_init(ac, av.argv());
     ACE_ASSERT(! is_nil(orb.in()));

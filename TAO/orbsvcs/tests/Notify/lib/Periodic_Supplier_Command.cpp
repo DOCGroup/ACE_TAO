@@ -22,13 +22,13 @@ TAO_Notify_Tests_Periodic_Supplier_Command::~TAO_Notify_Tests_Periodic_Supplier_
 {
 }
 
-const char*
+const ACE_TCHAR*
 TAO_Notify_Tests_Periodic_Supplier_Command::get_name (void)
 {
   return TAO_Notify_Tests_Periodic_Supplier_Command::name ();
 }
 
-const char*
+const ACE_TCHAR*
 TAO_Notify_Tests_Periodic_Supplier_Command::name (void)
 {
   return TAO_Notify_Tests_Name::periodic_supplier_command;

@@ -24,20 +24,21 @@
 #include "ace/Unbounded_Queue.h"
 
 /**
- * @class ACE_ARGV
+ * @class ACE_TARGV
  *
  * @brief Builds a counted argument vector (ala argc/argv) from either
  * a string or a set of separate tokens. Can substitute environment
  * variable values for tokens that are environment variable references.
  */
-class ACE_Export ACE_ARGV
+template < typename CHAR_TYPE = char >
+class ACE_TARGV
 {
 public:
   // = Initialization and termination.
   /**
    * Splits the specified string into an argument vector, split at whitespace.
    *
-   * @param buf   An ACE_TCHAR array to split into tokens for the vector.
+   * @param buf   An CHAR_TYPE array to split into tokens for the vector.
    *
    * @param substitute_env_args  If non-zero, any token that is an
    *              an environment variable reference ($VAR) will have
@@ -48,57 +49,57 @@ public:
    *              references within a token. For example, @c $HOME/file will
    *              not substitute the value of the HOME environment variable.
    */
-  ACE_ARGV (const ACE_TCHAR buf[],
+  ACE_TARGV (const CHAR_TYPE buf[],
             int substitute_env_args = 1);
 
   /**
    * Converts @a argv into a linear string.  If @a substitute_env_args
    * is enabled then we'll substitute the environment variables for
    * each $ENV encountered in the string.  The <buf> operation is not
-   * allowed on an ACE_ARGV created this way.
+   * allowed on an ACE_TARGV created this way.
    */
-  ACE_ARGV (ACE_TCHAR *argv[],
+  ACE_TARGV (CHAR_TYPE *argv[],
             int substitute_env_args = 1);
 
   /**
-   * Creates an ACE_ARGV which is the concatenation of the first_argv
+   * Creates an ACE_TARGV which is the concatenation of the first_argv
    * and the second argv. The argv arguments should be null pointer
    * terminated.
    */
-  ACE_ARGV (ACE_TCHAR *first_argv[],
-            ACE_TCHAR *second_argv[],
+  ACE_TARGV (CHAR_TYPE *first_argv[],
+            CHAR_TYPE *second_argv[],
             int substitute_env_args =1);
 
   /**
-   * Entry point for creating an ACE_TCHAR *[] command line
+   * Entry point for creating an CHAR_TYPE *[] command line
    * iteratively via the <add> method.  When this constructor is used,
    * the <ITERATIVE> state is enabled.  The <argv> and <buf> methods
    * are allowed, and the result is recreated when called multiple
    * times.  The subscript operator is not allowed.
    */
-  ACE_ARGV (int substitute_env_args = 1);
+  ACE_TARGV (int substitute_env_args = 1);
 
   /// Destructor.
-  ~ACE_ARGV (void);
+  ~ACE_TARGV (void);
 
   // = Accessor arguments.
   /// Returns the <index>th string in the ARGV array.
-  const ACE_TCHAR *operator[] (size_t index);
+  const CHAR_TYPE *operator[] (size_t index);
 
   /**
    * Returns the @c argv array.  Caller should not delete this memory
-   * since the ACE_ARGV destructor will delete it.  If the caller
+   * since the ACE_TARGV destructor will delete it.  If the caller
    * modifies the array in the iterative mode, the changes are not
    * saved to the queue.
    */
-  ACE_TCHAR **argv (void);
+  CHAR_TYPE **argv (void);
 
   /// Returns @c argc.
   int argc (void) const;
 
   /// Returns the @c buf.  Caller should not delete this memory since
-  /// the ACE_ARGV destructor will delete it.
-  const ACE_TCHAR *buf (void);
+  /// the ACE_TARGV destructor will delete it.
+  const CHAR_TYPE *buf (void);
 
   /// Dump the state of an object.
   void dump (void) const;
@@ -111,45 +112,45 @@ public:
   /// assume ownership of managing its memory, i.e., the caller is
   /// responsible for memory management.  Returns -1 on failure and 0
   /// on success.
-  int add (const ACE_TCHAR *next_arg);
+  int add (const CHAR_TYPE *next_arg);
 
   /**
    * Add another @a argv array.  The @a argv parameter must be NULL
    * terminated.  This only works in the <ITERATIVE> state.  Returns
    * -1 on failure and 0 on success.
    */
-  int add (ACE_TCHAR *argv[]);
+  int add (CHAR_TYPE *argv[]);
 
-  /// What state is this ACE_ARGV in?
+  /// What state is this ACE_TARGV in?
   int state (void) const;
 
   // These are the states possible via the different constructors.
   enum States
   {
-    /// ACE_ARGV converts buf[] to ACE_TCHAR *argv[]
+    /// ACE_TARGV converts buf[] to CHAR_TYPE *argv[]
     TO_STRING = 1,
-    /// ACE_ARGV converts ACE_TCHAR *argv[] to buf[]
+    /// ACE_TARGV converts CHAR_TYPE *argv[] to buf[]
     TO_PTR_ARRAY = 2,
-    /// Builds buf[] or ACE_TCHAR *argv[] iteratively with <add>.
+    /// Builds buf[] or CHAR_TYPE *argv[] iteratively with <add>.
     ITERATIVE = 3
   };
 
 private:
   /// Copy Constructor not implemented
-  ACE_ARGV (const ACE_ARGV&);
+  ACE_TARGV (const ACE_TARGV&);
 
   /// Assignment '=' operator not implemented
-  ACE_ARGV operator= (const ACE_ARGV&);
+  ACE_TARGV operator= (const ACE_TARGV&);
 
   /// Creates buf_ from the queue, deletes previous buf_.
   int create_buf_from_queue (void);
 
-  /// Converts buf_ into the ACE_TCHAR *argv[] format.
+  /// Converts buf_ into the CHAR_TYPE *argv[] format.
   int string_to_argv (void);
 
   /// Returns the string created from argv in buf and
   /// returns the number of arguments.
-  int argv_to_string (ACE_TCHAR **argv, ACE_TCHAR *&buf);
+  int argv_to_string (CHAR_TYPE **argv, CHAR_TYPE *&buf);
 
   /// Replace args with environment variable values?
   int substitute_env_args_;
@@ -161,10 +162,10 @@ private:
   int argc_;
 
   /// The array of string arguments.
-  ACE_TCHAR **argv_;
+  CHAR_TYPE **argv_;
 
   /// Buffer containing the <argv> contents.
-  ACE_TCHAR *buf_;
+  CHAR_TYPE *buf_;
 
   /// Total length of the arguments in the queue, not counting
   /// separating spaces
@@ -172,12 +173,12 @@ private:
 
   /// Queue which keeps user supplied arguments.  This is only
   /// active in the "iterative" mode.
-  ACE_Unbounded_Queue<ACE_TCHAR *> queue_;
+  ACE_Unbounded_Queue<CHAR_TYPE *> queue_;
 };
 
-#if defined (__ACE_INLINE__)
+typedef ACE_TARGV<ACE_TCHAR> ACE_ARGV;
+
 #include "ace/ARGV.inl"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_ARGUMENT_VECTOR_H */

@@ -181,9 +181,9 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
   // This is a major hack to get the size_t format spec to be a narrow
   // char, same as the other strings for printf() here. It only works
   // because this is the end of the source file. It makes the
-  // ACE_SIZE_T_FORMAT_SPECIFIER not use ACE_LIB_TEXT, effectively.
-#undef ACE_LIB_TEXT
-#define ACE_LIB_TEXT(A) A
+  // ACE_SIZE_T_FORMAT_SPECIFIER not use ACE_TEXT, effectively.
+#undef ACE_TEXT
+#define ACE_TEXT(A) A
   if (this->verbose ())
     ACE_OS::printf ("%8d = initial concurrency hint\n"
 	      ACE_SIZE_T_FORMAT_SPECIFIER " = total iterations\n"

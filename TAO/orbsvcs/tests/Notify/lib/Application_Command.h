@@ -46,8 +46,8 @@ public:
   virtual void execute_i (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Get the command name.
-  virtual const char* get_name (void);
-  static const char* name (void);
+  virtual const ACE_TCHAR* get_name (void);
+  static const ACE_TCHAR* name (void);
 
 protected:
 #ifdef HPUX_11

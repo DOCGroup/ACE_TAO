@@ -307,7 +307,7 @@ ACE_OS::shm_open (const ACE_TCHAR *filename,
   ACE_UNUSED_ARG (sa);
   ACE_OSCALL_RETURN (::shm_open (ACE_TEXT_TO_CHAR_IN(filename), mode, perms), ACE_HANDLE, ACE_INVALID_HANDLE);
 # elif defined (ACE_OPENVMS)
-  ACE_OSCALL_RETURN (::open (filename, mode, perms, ACE_TEXT("shr=get,put,upd")), ACE_HANDLE, ACE_INVALID_HANDLE);
+  ACE_OSCALL_RETURN (::open (filename, mode, perms, ACE_LIB_TEXT("shr=get,put,upd")), ACE_HANDLE, ACE_INVALID_HANDLE);
 # else  /* ! ACE_HAS_SHM_OPEN */
   // Just use ::open.
   return ACE_OS::open (filename, mode, perms, sa);

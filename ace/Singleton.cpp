@@ -523,7 +523,7 @@ ACE_DLL_Singleton_Adapter_T<TYPE>::dll_name (void)
 {
   // @todo make this a constant somewhere (or it there already is one
   // then use it.
-  return ACE_TEXT("ACE");
+  return ACE_LIB_TEXT("ACE");
 }
 
 #endif /* ACE_SINGLETON_C */

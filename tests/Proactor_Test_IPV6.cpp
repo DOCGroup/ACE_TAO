@@ -1104,8 +1104,8 @@ Connector::start (const ACE_INET_Addr& addr, int num)
   if (this->open (1, 0, 1) != 0)
   {
      ACE_ERROR ((LM_ERROR,
-                 ACE_LIB_TEXT ("(%t) %p\n"),
-                 ACE_LIB_TEXT ("Connector::open failed")));
+                 ACE_TEXT ("(%t) %p\n"),
+                 ACE_TEXT ("Connector::open failed")));
      return rc;
   }
 

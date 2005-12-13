@@ -137,7 +137,7 @@ Logging_Supplier::load_schedule_data
       FILE *input_file;
 
       int scan_count = 0;
-      input_file = ACE_OS::fopen(this->input_file_name_, "r");
+      input_file = ACE_OS::fopen(this->input_file_name_, ACE_TEXT("r"));
 
       if (input_file)
         {

@@ -230,7 +230,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
 
       if (pid_file != 0)
         {
-          FILE *pidf = ACE_OS::fopen (pid_file, ACE_LIB_TEXT("w"));
+          FILE *pidf = ACE_OS::fopen (pid_file, ACE_TEXT("w"));
           if (pidf != 0)
             {
               ACE_OS::fprintf (pidf,
@@ -359,7 +359,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
                 orb->object_to_string (event_channel.in () ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
-              FILE *iorf = ACE_OS::fopen (ior_file, ACE_LIB_TEXT("w"));
+              FILE *iorf = ACE_OS::fopen (ior_file, ACE_TEXT("w"));
               if (iorf != 0)
                 {
                   ACE_OS::fprintf (iorf, "%s\n", ior.in ());
@@ -369,7 +369,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
 
           if (pid_file != 0)
             {
-              FILE *pidf = ACE_OS::fopen (pid_file, ACE_LIB_TEXT("w"));
+              FILE *pidf = ACE_OS::fopen (pid_file, ACE_TEXT("w"));
               if (pidf != 0)
                 {
                   ACE_OS::fprintf (pidf,
