@@ -60,7 +60,7 @@ struct string_traits_base<CORBA::WChar>
     return CORBA::wstring_dup(L"");
 #else
 #warning "platform not configured with native wchar_t support"
-    static CORBA::WChar empty[] = { 0 };
+    CORBA::WChar empty[] = { 0 };
     return CORBA::wstring_dup(empty);
 #endif /* 0 */
   }
