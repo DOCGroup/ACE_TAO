@@ -1,3 +1,9 @@
+Tue Dec 13 12:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Notify_Service/Notify_Service.cpp (shutdown):
+          Only unbind from the naming service when we have a valid object
+          reference to it.
+
 Tue Dec 13 10:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Codeset_Manager_Factory_Base.h:
