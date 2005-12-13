@@ -2,6 +2,7 @@
 
 #include "../lib/Driver.h"
 #include "ace/OS_main.h"
+#include "ace/Argv_Type_Converter.h"
 
 int
 ACE_TMAIN (int argc, char *argv[])

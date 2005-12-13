@@ -7,6 +7,7 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_stdio.h"
 #include "tao/AnyTypeCode/Any.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Notify_Tests, Consumer_Main, "$Id$")
 
@@ -1880,7 +1881,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Consumer_Main app;
   ACE_TRY_NEW_ENV
   {
-    result = app.init(argc, argv ACE_ENV_ARG_PARAMETER);
+    result = app.init(convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK
 
     if (result == 0)

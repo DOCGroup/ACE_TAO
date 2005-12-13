@@ -38,7 +38,7 @@ public:
   virtual ~EC_Master (void);
 
   /// Execute the test.
-  virtual int run (int argc, ACE_TCHAR* argv[]);
+  virtual int run (int argc, char* argv[]);
 
   /// Obtain the orb and the poa pointers
   virtual void initialize_orb_and_poa (int& argc, char* argv[]
@@ -49,7 +49,7 @@ public:
   EC_Observer* channel (int i) const;
 
 private:
-  int parse_args (int &argc, ACE_TCHAR *argv[]);
+  int parse_args (int &argc, char *argv[]);
 
 private:
   /// The seed
@@ -89,7 +89,7 @@ public:
   /// add some command line args to enable/disable observerions
   virtual void initialize_orb_and_poa (int& argc, char* argv[]
                                        ACE_ENV_ARG_DECL);
-  virtual int parse_args (int& argc, ACE_TCHAR* argv[]);
+  virtual int parse_args (int& argc, char* argv[]);
   virtual void print_args (void) const;
   virtual void print_usage (void);
 

@@ -19,7 +19,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Argv_Type_Converter convert (argc, argv);
 
   EC_BCast driver;
-  return driver.run (argc, argv);
+  return driver.run (convert.get_argc(), convert.get_ASCII_argv());
 }
 
 // ****************************************************************
@@ -33,7 +33,7 @@ EC_BCast::EC_BCast (void)
 int
 EC_BCast::parse_args (int& argc, char **argv)
 {
-  if (this->EC_Driver::parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
+  if (this->EC_Driver::parse_args (argc, argv) != 0)
     return -1;
 
   ACE_TArg_Shifter< char > arg_shifter (argc, argv);
@@ -88,7 +88,7 @@ EC_BCast::execute_test (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 
   // Obtain UDP address in the string format for Gateway initialization.
-  char address_server_arg [256];
+  ACE_TCHAR address_server_arg [256];
   ACE_INET_Addr udp_addr;
   if (udp_addr.set (this->bcast_port_, this->bcast_address_) == -1
       || udp_addr.addr_to_string (address_server_arg, 256) == -1)
@@ -106,7 +106,7 @@ EC_BCast::execute_test (ACE_ENV_SINGLE_ARG_DECL)
 
   TAO_ECG_Mcast_Gateway gateway;
   if (gateway.init (sub,
-                    address_server_arg,
+                    ACE_TEXT_TO_CHAR_IN(address_server_arg),
                     lAttributes)
       == -1)
     return;

@@ -20,7 +20,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
   ACE_Argv_Type_Converter convert (argc, argv);
 
   RND_Driver driver;
-  return driver.run (argc, argv);
+  return driver.run (convert.get_argc(), convert.get_ASCII_argv());
 }
 
 // ****************************************************************
@@ -60,7 +60,7 @@ RND_Driver::run (int argc, char *argv[])
   ACE_TRY
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************

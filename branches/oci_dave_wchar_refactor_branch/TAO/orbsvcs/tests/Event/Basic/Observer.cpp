@@ -20,7 +20,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   TAO_EC_Default_Factory::init_svcs ();
   EC_Master master;
-  return master.run (argc, argv);
+  return master.run (convert.get_argc(), convert.get_ASCII_argv());
 }
 
 // ****************************************************************
@@ -56,7 +56,7 @@ EC_Master::run (int argc, char* argv[])
       this->initialize_orb_and_poa (argc, argv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (this->parse_args (convert.get_argc(), convert.get_ASCII_argv()))
+      if (this->parse_args (argc, argv))
         return 1;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -164,11 +164,11 @@ EC_Master::run (int argc, char* argv[])
 }
 
 void
-EC_Master::initialize_orb_and_poa (int &argc, ACE_TCHAR* argv[]
+EC_Master::initialize_orb_and_poa (int &argc, char* argv[]
                                    ACE_ENV_ARG_DECL)
 {
   this->orb_ =
-    CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
+    CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::Object_var poa_object =
@@ -260,9 +260,9 @@ EC_Observer::initialize_orb_and_poa (int&, char*[]
 }
 
 int
-EC_Observer::parse_args (int& argc, ACE_TCHAR* argv[])
+EC_Observer::parse_args (int& argc, char* argv[])
 {
-  return this->EC_Driver::parse_args (convert.get_argc(), convert.get_ASCII_argv());
+  return this->EC_Driver::parse_args (argc, argv);
 }
 
 void
