@@ -101,7 +101,7 @@ Periodic_Task::job (Job_ptr job)
 }
 
 void
-Periodic_Task::dump_stats (ACE_TCHAR* msg)
+Periodic_Task::dump_stats (char* msg)
 {
   char buf[BUFSIZ];
   ACE_OS::sprintf (buf, "%s%s", name_.c_str (),".dat");

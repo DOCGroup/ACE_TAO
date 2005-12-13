@@ -78,7 +78,7 @@ Load_Balancing_Service::init (int argc,
         return result;
 
       // Check the non-ORB arguments.
-      result = this->parse_args (convert.get_argc(), convert.get_ASCII_argv());
+      result = this->parse_args (argc, argv);
       if (result < 0)
         return result;
 

@@ -17,8 +17,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_TRY_NEW_ENV
     {
       if (server.init ("Bank",
-                       argc,
-                       argv
+                       convert.get_argc(), convert.get_ASCII_argv()
                        ACE_ENV_ARG_PARAMETER) == -1)
         return 1;
       else

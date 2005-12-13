@@ -46,7 +46,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
       // Create the servant
       corbaloc_Status_i status_i;
-      status_i.set_name (argv[1]);
+      status_i.set_name (convert.get_ASCII_argv()[1]);
       // Activate it to obtain the reference
       corbaloc::Status_var status =
         status_i._this ();

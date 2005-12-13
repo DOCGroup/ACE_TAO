@@ -151,7 +151,7 @@ Logger_i::logv (const Logger::Log_Record &log_rec,
 
   // Create a temporary buffer for manipulating the logging message,
   // adding additional space for formatting characters..
-  ACE_TCHAR msgbuf [ACE_MAXLOGMSGLEN + 4];
+  char msgbuf [ACE_MAXLOGMSGLEN + 4];
 
   // Format the message for proper display.
   ACE_OS::strcpy (msgbuf, "::");
@@ -162,7 +162,7 @@ Logger_i::logv (const Logger::Log_Record &log_rec,
                    ACE_MAXLOGMSGLEN);
 
   // Set <ACE_Log_Record.msg_data> to the value stored in <msgbuf>.
-  rec.msg_data (msgbuf);
+  rec.msg_data (ACE_TEXT_TO_TCHAR_IN(msgbuf));
 
   CORBA::Long addr = log_rec.host_addr;
 
@@ -172,13 +172,13 @@ Logger_i::logv (const Logger::Log_Record &log_rec,
                       static_cast<ACE_UINT32> (addr));
 
   // Create a buffer and fill it with the host name of the logger
-  ACE_TCHAR namebuf[MAXHOSTNAMELEN + 1];
+  char namebuf[MAXHOSTNAMELEN + 1];
 
   ACE_OS::strncpy (namebuf, addy.get_host_addr (), MAXHOSTNAMELEN);
 
   u_long verb_level = this->verbosity_conversion (verbosity);
 
-  rec.print (namebuf,
+  rec.print (ACE_TEXT_TO_TCHAR_IN(namebuf),
              verb_level,
              stderr);
   // Print out the logging message to stderr with the given level of

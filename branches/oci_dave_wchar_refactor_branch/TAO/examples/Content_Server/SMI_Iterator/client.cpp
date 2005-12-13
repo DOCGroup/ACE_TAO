@@ -92,7 +92,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       // Get a Content_Iterator
-      const char *pathname = argv[1];
+      const char *pathname = convert.get_ASCII_argv()[1];
       Web_Server::Content_Iterator_var contents;
       Web_Server::Metadata_Type_var metadata;
       factory->get_iterator (pathname,
@@ -211,7 +211,7 @@ int retrieve_data (const char *content_type,
 
   // Now spawn a view to display the retrieved data.
   if (::spawn_viewer (content_type,
-                      file_addr.get_path_name ()) != 0)
+                      ACE_TEXT_TO_CHAR_IN(file_addr.get_path_name ())) != 0)
     return -1;
 
   return 0;

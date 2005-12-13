@@ -213,7 +213,7 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
       char msg [BUFSIZ];
       ACE_OS::sprintf (msg,
                        "The Guid is "
-                       ACE_SIZE_T_FORMAT_SPECIFIER
+                       ACE_SIZE_T_FORMAT_SPECIFIER_A
                        "\n", gu_id);
 
       DT_TEST::instance ()->dt_creator ()->log_msg (msg);
