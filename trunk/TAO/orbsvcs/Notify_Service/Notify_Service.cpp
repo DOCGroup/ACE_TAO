@@ -287,7 +287,7 @@ void
 TAO_Notify_Service_Driver::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Deactivate.
-  if (this->use_name_svc_)
+  if (this->use_name_svc_ && !CORBA::is_nil (this->naming_.in ()))
     {
       // Unbind from the naming service.
       CosNaming::Name_var name =
