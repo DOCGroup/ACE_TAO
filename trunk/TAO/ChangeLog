@@ -3969,7 +3969,7 @@ Fri Nov  4 08:59:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
         * tao/PortableServer/POA_Current_Impl.h (POA_Current_Impl):
 
-          Re-exported this class.  Unfortunately, some TAO other libraries
+          Re-exported this class.  Unfortunately, some other TAO libraries
           make direct calls on this class.  Addresses unresolved symbol
           errors.
 
@@ -7024,7 +7024,7 @@ Tue Oct 18 00:08:30 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
         * tao/ORB.cpp (resolve_service):
 
-          Use snprintf() to simplify integer to-tring conversion and
+          Use snprintf() to simplify integer-to-string conversion and
           string concatenation.  Thanks to Jiang Wei <jw dot tao at sduept
           dot com> for providing a patch.
 
@@ -7035,8 +7035,8 @@ Tue Oct 18 00:08:30 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
           (resolve_initial_references):
 
-          Updated to calls to resolve_service() to reflect new signature
-          and void return type.
+          Updated calls to resolve_service() to reflect new signature and
+	  void return type.
 
         * tao/ORB_Core.cpp (init):
 
