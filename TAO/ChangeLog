@@ -1,3 +1,8 @@
+Tue Dec 13 12:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/Notify/Subscribe/Notify_Subscribe.mpc:
+          Set exename to Subscribe to match the run_test perl script
+
 Tue Dec 13 12:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Notify_Service/Notify_Service.cpp (shutdown):
