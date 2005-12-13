@@ -9,6 +9,7 @@
 #include "ace/Signal.h"
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_fcntl.h"
+#include "ace/Argv_Type_Converter.h"
 
 #include "Process_Per_Connection_Logging_Server.h"
 #include "Logging_Handler.h"
@@ -166,13 +167,15 @@ Process_Per_Connection_Logging_Server::run_worker (int, char *argv[])
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   // Register to receive the <SIGTERM> signal.
   ACE_Sig_Action sa ((ACE_SignalHandler)sigterm_handler,
                      SIGTERM);
 
   Process_Per_Connection_Logging_Server server;
 
-  if (server.run (argc, argv) == -1 && errno != EINTR)
+  if (server.run (convert.get_argc(), convert.get_ASCII_argv()) == -1 && errno != EINTR)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "server.run()"), 1);
 
   // Barrier synchronization.

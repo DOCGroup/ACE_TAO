@@ -186,12 +186,12 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 #define ACE_TEXT(A) A
   if (this->verbose ())
     ACE_OS::printf ("%8d = initial concurrency hint\n"
-	      ACE_SIZE_T_FORMAT_SPECIFIER " = total iterations\n"
-	      ACE_SIZE_T_FORMAT_SPECIFIER " = thread count\n"
-	      ACE_SIZE_T_FORMAT_SPECIFIER " = low water mark\n"
-	      ACE_SIZE_T_FORMAT_SPECIFIER " = high water mark\n"
-	      ACE_SIZE_T_FORMAT_SPECIFIER " = message_size\n"
-	      ACE_SIZE_T_FORMAT_SPECIFIER " = initial queue length\n"
+	      ACE_SIZE_T_FORMAT_SPECIFIER_A " = total iterations\n"
+	      ACE_SIZE_T_FORMAT_SPECIFIER_A " = thread count\n"
+	      ACE_SIZE_T_FORMAT_SPECIFIER_A " = low water mark\n"
+	      ACE_SIZE_T_FORMAT_SPECIFIER_A " = high water mark\n"
+	      ACE_SIZE_T_FORMAT_SPECIFIER_A " = message_size\n"
+	      ACE_SIZE_T_FORMAT_SPECIFIER_A " = initial queue length\n"
 	      "%8d = THR_BOUND\n"
 	      "%8d = THR_NEW_LWP\n",
 	      ACE_Thread::getconcurrency (),
