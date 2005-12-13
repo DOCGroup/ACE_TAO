@@ -39,7 +39,7 @@ class TAO_Codeset_Manager;
  *
  * @description The base also provides a default implementation which
  * instantiates nothing. This default impl is replaced by the actual
- * implementation is libTAO_Codeset is loaded.
+ * implementation if libTAO_Codeset is loaded.
  *
  */
 
