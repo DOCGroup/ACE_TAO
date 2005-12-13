@@ -7,6 +7,7 @@
 #include "tao/TimeBaseC.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Notify_Tests, Supplier_Main, "$Id$")
 
@@ -220,7 +221,7 @@ Supplier_Main::Supplier_Main ()
   , use_naming_service_ (true)
   , serial_number_ (0)
   , disconnect_on_exit_ (false)
-  , id_file_ (ACE_TEXT ("supplier.ids"))
+  , id_file_ ("supplier.ids")
   , pause_ (0)
   , ec_id_ (0)
   , sa_id_(0)
@@ -276,47 +277,47 @@ int
 Supplier_Main::parse_single_arg (int argc, char *argv[])
 {
   int consumed = 0;
-  if (ACE_OS::strcasecmp (argv[0], ACE_TEXT ("-v")) == 0)
+  if (ACE_OS::strcasecmp (argv[0], "-v") == 0)
   {
     this->verbose_ = true;
     consumed = 1;
   }
-  else if (ACE_OS::strcasecmp (argv[0], ACE_TEXT ("-any")) == 0)
+  else if (ACE_OS::strcasecmp (argv[0], "-any") == 0)
   {
     this->mode_ = MODE_ANY;
     consumed = 1;
   }
-  else if (ACE_OS::strcasecmp (argv[0], ACE_TEXT ("-structured")) == 0)
+  else if (ACE_OS::strcasecmp (argv[0], "-structured") == 0)
   {
     this->mode_ = MODE_STRUCTURED;
     consumed = 1;
   }
-  else if (ACE_OS::strcasecmp (argv[0], ACE_TEXT ("-sequence")) == 0)
+  else if (ACE_OS::strcasecmp (argv[0], "-sequence") == 0)
   {
     this->mode_ = MODE_SEQUENCE;
     consumed = 1;
   }
-  else if (ACE_OS::strcasecmp (argv[0], ACE_TEXT ("-channel")) == 0)
+  else if (ACE_OS::strcasecmp (argv[0], "-channel") == 0)
   {
     this->channel_file_= argv[1];
     consumed = 2;
   }
-  else if (ACE_OS::strcasecmp (argv[0], ACE_TEXT ("-send")) == 0 && argc > 1)
+  else if (ACE_OS::strcasecmp (argv[0], "-send") == 0 && argc > 1)
   {
     this->send_ = ACE_OS::atoi (argv[1]);
     consumed = 2;
   }
-  else if (ACE_OS::strcasecmp (argv[0], ACE_TEXT ("-pause")) == 0 && argc > 1)
+  else if (ACE_OS::strcasecmp (argv[0], "-pause") == 0 && argc > 1)
   {
     this->pause_ = ACE_OS::atoi (argv[1]);
     consumed = 2;
   }
-  else if (ACE_OS::strcasecmp (argv[0], ACE_TEXT ("-serial_number")) == 0)
+  else if (ACE_OS::strcasecmp (argv[0], "-serial_number") == 0)
   {
     this->serial_number_= ACE_OS::atoi (argv[1]);
     consumed = 2;
   }
-  else if (ACE_OS::strcasecmp (argv[0], ACE_TEXT ("-nonamesvc")) == 0)
+  else if (ACE_OS::strcasecmp (argv[0], "-nonamesvc") == 0)
   {
     this->use_naming_service_ = false;
     consumed = 1;
@@ -1349,7 +1350,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Supplier_Main app;
   ACE_TRY_NEW_ENV
   {
-    result = app.init(argc, argv ACE_ENV_ARG_PARAMETER);
+    result = app.init(convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK
 
     if (result == 0)

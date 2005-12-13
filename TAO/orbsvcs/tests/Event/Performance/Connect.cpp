@@ -19,7 +19,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Argv_Type_Converter convert (argc, argv);
 
   EC_Connect driver;
-  return driver.run (argc, argv);
+  return driver.run (convert.get_argc(), convert.get_ASCII_argv());
 }
 
 // ****************************************************************
@@ -36,9 +36,9 @@ EC_Connect::execute_test (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 int
-EC_Connect::parse_args (int& argc, ACE_TCHAR* argv[])
+EC_Connect::parse_args (int& argc, char* argv[])
 {
-  if (this->EC_Driver::parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
+  if (this->EC_Driver::parse_args (argc, argv) != 0)
     return -1;
 
   ACE_TArg_Shifter< char > arg_shifter (argc, argv);

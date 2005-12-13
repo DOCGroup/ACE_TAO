@@ -17,7 +17,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Argv_Type_Converter convert (argc, argv);
 
   EC_Throughput driver;
-  return driver.run (argc, argv);
+  return driver.run (convert.get_argc(), convert.get_ASCII_argv());
 }
 
 // ****************************************************************
@@ -27,9 +27,9 @@ EC_Throughput::EC_Throughput (void)
 }
 
 int
-EC_Throughput::parse_args (int& argc, ACE_TCHAR* argv[])
+EC_Throughput::parse_args (int& argc, char* argv[])
 {
-  if (this->EC_Driver::parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
+  if (this->EC_Driver::parse_args (argc, argv) != 0)
     return -1;
   return 0;
 }

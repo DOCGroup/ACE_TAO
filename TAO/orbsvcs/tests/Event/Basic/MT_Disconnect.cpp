@@ -8,6 +8,7 @@
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (EC_Tests,
            MT_Disconnect,

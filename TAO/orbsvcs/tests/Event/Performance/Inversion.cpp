@@ -19,7 +19,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Argv_Type_Converter convert (argc, argv);
 
   EC_Inversion driver;
-  return driver.run (argc, argv);
+  return driver.run (convert.get_argc(), convert.get_ASCII_argv());
 }
 
 // ****************************************************************
@@ -50,7 +50,7 @@ EC_Inversion::parse_args (int &argc, char *argv[])
         }
     }
 
-  int r = this->EC_Driver::parse_args (convert.get_argc(), convert.get_ASCII_argv());
+  int r = this->EC_Driver::parse_args (argc, argv);
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG,
                 "EC_Inversion (%P|%t) "
