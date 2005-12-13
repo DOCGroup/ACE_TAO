@@ -37,7 +37,7 @@ Job_i::poa (void)
 }
 
 int
-Job_i::init (ACE_Arg_Shifter& arg_shifter)
+Job_i::init (ACE_TArg_Shifter<char>& arg_shifter)
 {
   job_name_ = arg_shifter.get_current (); // Read the name of the Job
   arg_shifter.consume_arg ();
@@ -77,7 +77,7 @@ Job_i::work (CORBA::ULong work,
   char msg [BUFSIZ];
   ACE_OS::sprintf (msg,
                    "Guid is "
-                   ACE_SIZE_T_FORMAT_SPECIFIER
+                   ACE_SIZE_T_FORMAT_SPECIFIER_A
                    "\n", guid_);
 
   dt_creator_->log_msg (msg);
@@ -139,7 +139,7 @@ Job_i::dump_stats (void)
   char fname [BUFSIZ];
   ACE_OS::sprintf (fname,
                    "Job_"
-                   ACE_SIZE_T_FORMAT_SPECIFIER
+                   ACE_SIZE_T_FORMAT_SPECIFIER_A
                    ".dat",
                    guid_);
 
@@ -152,7 +152,7 @@ Job_i::dump_stats (void)
   char msg [BUFSIZ];
   ACE_OS::sprintf (msg,
                    "#Schedule Output for DT "
-                   ACE_SIZE_T_FORMAT_SPECIFIER,
+                   ACE_SIZE_T_FORMAT_SPECIFIER_A,
                    guid_);
 
   task_stats_->dump_samples (fname,

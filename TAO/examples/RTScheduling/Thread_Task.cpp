@@ -45,7 +45,7 @@ Thread_Task::svc (void)
       char msg [BUFSIZ];
       ACE_OS::sprintf (msg,
                        "Thread_Task::svc Imp=%d Guid="
-                       ACE_SIZE_T_FORMAT_SPECIFIER
+                       ACE_SIZE_T_FORMAT_SPECIFIER_A
                        "\n",
                        importance_,
                        count_);
@@ -112,7 +112,7 @@ Thread_Task::dump_stats (void)
   char fname [BUFSIZ];
   ACE_OS::sprintf (fname,
                    "DT_"
-                   ACE_SIZE_T_FORMAT_SPECIFIER
+                   ACE_SIZE_T_FORMAT_SPECIFIER_A
                    ".dat",count_);
 
   if (TAO_debug_level > 0)
@@ -123,7 +123,7 @@ Thread_Task::dump_stats (void)
   char msg [BUFSIZ];
   ACE_OS::sprintf (msg,
                    "#Schedule Output for DT "
-                   ACE_SIZE_T_FORMAT_SPECIFIER,
+                   ACE_SIZE_T_FORMAT_SPECIFIER_A,
                    count_);
 
   task_stats_->dump_samples (fname,

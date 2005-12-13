@@ -2,12 +2,14 @@
 
 #include "Logging_Service_i.h"
 #include "tao/debug.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(Logging_Service, Logging_Service, "$Id$")
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
   // Set TAO_debug_level to 0 to ensure silent running unless
   // debugging is explicitly invoked
   TAO_debug_level = 0;
@@ -17,7 +19,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      int ret = log_server.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      int ret = log_server.init (convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (ret == -1)
         return 1;

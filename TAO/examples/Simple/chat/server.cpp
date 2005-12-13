@@ -18,16 +18,17 @@
 // ===========================================================
 
 #include "Server_i.h"
+#include "ace/Argv_Type_Converter.h"
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
+  ACE_Argv_Type_Converter convert (argc, argv);
   ACE_TRY_NEW_ENV
     {
       Server_i server_i;
 
-      int ret = server_i.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      int ret = server_i.init (convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (ret != 0)
         ACE_ERROR_RETURN ((LM_ERROR,

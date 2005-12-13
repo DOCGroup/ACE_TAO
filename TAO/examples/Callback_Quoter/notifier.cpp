@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Notifier_Input_Handler.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(notifier, Callback_Quoter, "$Id$")
 
@@ -9,6 +10,7 @@ ACE_RCSID(notifier, Callback_Quoter, "$Id$")
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
   Notifier_Input_Handler notifier;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -17,7 +19,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      int rc = notifier.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      int rc = notifier.init (convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (rc == -1)

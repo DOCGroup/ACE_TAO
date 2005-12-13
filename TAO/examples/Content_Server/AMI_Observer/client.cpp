@@ -8,6 +8,7 @@
 #include "orbsvcs/CosNamingC.h"
 #include "Push_Web_ServerC.h"
 #include "Push_Iterator_Handler.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (AMI_Observer,
            client,
@@ -28,6 +29,7 @@ void invoke_requests (int argc,
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
@@ -38,8 +40,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           -1);
 
       // Initialize the ORB.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
+      CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
                                             "Mighty ORB"
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

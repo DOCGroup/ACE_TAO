@@ -37,6 +37,7 @@
 #include "ace/streams.h"
 
 #include "ace/os_include/os_limits.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(Event_Supplier, Event_Con, "$Id$")
 
@@ -291,12 +292,14 @@ get_options (int argc, char *argv [])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
     {
       // Initialize ORB.
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "internet" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "internet" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
@@ -334,7 +337,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_Scheduler_Factory::use_config (naming_context.in ());
 
-      if (get_options (argc, argv))
+      if (get_options (convert.get_argc(), convert.get_ASCII_argv()))
         ACE_OS::exit (-1);
 
       // Get the Event Channel.

@@ -35,7 +35,7 @@ class Job_i : public POA_Job
   ~Job_i (void);
 
   /// Init the state of this object.
-  int init (ACE_Arg_Shifter& arg_shifter);
+  int init (ACE_TArg_Shifter<char>& arg_shifter);
 
   /// = Accessors
   const ACE_CString& name (void);

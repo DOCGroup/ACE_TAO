@@ -36,6 +36,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Argv_Type_Converter.h"
 
 #include "ace/os_include/os_ctype.h"
 
@@ -491,13 +492,15 @@ Logging_Supplier::get_options (int argc, char *argv [])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
     {
       // Initialize ORB.
       TAO_ORB_Manager orb_Manager;
 
-      orb_Manager.init (argc,
-                        argv
+      orb_Manager.init (convert.get_argc(),
+                        convert.get_ASCII_argv()
                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -506,7 +509,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Logging_Supplier *event_Supplier_ptr;
 
       ACE_NEW_RETURN (event_Supplier_ptr,
-                      Logging_Supplier(argc, argv),
+                      Logging_Supplier(convert.get_argc(), convert.get_ASCII_argv()),
                       -1);
 
       // Initialize everthing

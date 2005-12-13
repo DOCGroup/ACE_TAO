@@ -16,6 +16,7 @@
 #include "Generic_Factory.h"
 
 #include "orbsvcs/LifeCycleServiceC.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Quoter, 
            Generic_Factory, 
@@ -280,6 +281,7 @@ Quoter_Generic_Factory_Server::parse_args (void)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
   Quoter_Generic_Factory_Server quoter_Generic_Factory_Server;
 
   ACE_TRY_NEW_ENV

@@ -14,15 +14,17 @@
 //=============================================================================
 
 #include "Server_Manager.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(Loader, server, "$Id$")
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
   Server_i server;
 
-  if (server.init (argc, argv) != 0)
+  if (server.init (convert.get_argc(), convert.get_ASCII_argv()) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Failure during Initialisation: init ()\n"),
                       -1);

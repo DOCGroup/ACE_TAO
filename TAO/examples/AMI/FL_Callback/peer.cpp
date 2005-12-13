@@ -5,6 +5,7 @@
 #include "ace/Task.h"
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (FL_Callback, 
            peer, 
@@ -73,6 +74,7 @@ private:
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
      + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
@@ -102,7 +104,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
@@ -125,7 +127,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
         return 1;
 
       CORBA::Object_var progress_object =

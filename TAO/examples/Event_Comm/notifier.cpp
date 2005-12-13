@@ -2,6 +2,7 @@
 
 #include "Notifier_Server.h"
 #include "notifier.h"
+#include "ace/Argv_Type_Converter.h"
 ACE_RCSID(Notifier, notifier, "$Id$")
 
 
@@ -63,8 +64,9 @@ Notifier::~Notifier (void)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
   // Initialize server daemon.
-  Notifier notifier (argc, argv);
+  Notifier notifier (convert.get_argc(), convert.get_ASCII_argv());
 
   // Loop forever handling events.
   notifier.run ();

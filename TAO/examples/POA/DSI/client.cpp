@@ -21,6 +21,7 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(DSI, client, "$Id$")
 
@@ -102,6 +103,7 @@ read_IOR_from_file (void)
 int
 ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
   ACE_DECLARE_NEW_CORBA_ENV;
 
   char str [255];
@@ -110,15 +112,13 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
     {
       ACE_OS::strcpy (str,
                       "CORBA::ORB_init");
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-
+      CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
                                             0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Parse the command-line arguments to get the location of the
       // IOR
-      if (parse_args (argc, argv) == -1)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) == -1)
         return -1;
 
       if (IOR == 0)

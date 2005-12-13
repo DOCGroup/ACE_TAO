@@ -19,6 +19,7 @@
 #include "Servant_Activator.h"
 #include "Servant_Locator.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(On_Demand_Activation, server, "$Id$")
 
@@ -61,8 +62,8 @@ write_iors_to_file (const char *first_ior,
   ACE_OS::sprintf (ior_output_file_1, "%s_1", ior_output_file);
   ACE_OS::sprintf (ior_output_file_2, "%s_2", ior_output_file);
 
-  FILE *output_file_1 = ACE_OS::fopen (ior_output_file_1, "w");
-  FILE *output_file_2 = ACE_OS::fopen (ior_output_file_2, "w");
+  FILE *output_file_1 = ACE_OS::fopen (ior_output_file_1, ACE_TEXT("w"));
+  FILE *output_file_2 = ACE_OS::fopen (ior_output_file_2, ACE_TEXT("w"));
 
   if (output_file_1 == 0 ||
       output_file_2 == 0)
@@ -102,15 +103,17 @@ write_iors_to_file (const char *first_ior,
 int
 ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       // Initialize the ORB.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
+      CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), 
+                                            0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      int result = parse_args (argc, argv);
+      int result = parse_args (convert.get_argc(), convert.get_ASCII_argv());
       if (result != 0)
         return result;
 

@@ -8,6 +8,7 @@
 #include "../Thread_Task.h"
 #include "../Task_Stats.h"
 #include "../Synch_i.h"
+#include "ace/Argv_Type_Converter.h"
 
 DT_Test::DT_Test (void)
 {
@@ -157,13 +158,14 @@ DT_Test::current (void)
 int
 ACE_TMAIN (int argc, ACE_TCHAR* argv [])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
   ACE_TRY_NEW_ENV
     {
       ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_MIF_DT_Creator);
 
 	  ACE_DEBUG ((LM_DEBUG,
 				 "%t\n"));
-      DT_TEST::instance ()->run (argc, argv
+      DT_TEST::instance ()->run (convert.get_argc(), convert.get_ASCII_argv()
 				 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

@@ -3,6 +3,7 @@
 #include "Notifier_Handler.h"
 #include "Supplier_Input_Handler.h"
 #include "supplier.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(Supplier, supplier, "$Id$")
 Supplier::Supplier (void)
@@ -69,10 +70,11 @@ Supplier::init (int argc, char *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
   // Initialize server daemon.
   Supplier supplier;
 
-  if (supplier.init (argc, argv) == -1)
+  if (supplier.init (convert.get_argc(), convert.get_ASCII_argv()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "supplier init failed"),

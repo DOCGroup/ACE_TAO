@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/Read_Buffer.h"
+#include "ace/Argv_Type_Converter.h"
 
 #include "orbsvcs/CosNamingC.h"
 
@@ -374,6 +375,7 @@ Quoter_Client::init (int argc, char **argv)
 int
 ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
   ACE_Thread_Manager thr_mgr;
 
   int i;
@@ -386,7 +388,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
   Quoter_Task **clients = new Quoter_Task*[threads];
 
   for (i = 0; i < threads; i++)
-    clients[i] = new Quoter_Task (argc, argv);
+    clients[i] = new Quoter_Task (convert.get_argc(), convert.get_ASCII_argv());
 
 
   for (i = 0; i < threads; i++)

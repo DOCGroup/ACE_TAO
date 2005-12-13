@@ -109,7 +109,7 @@ int
 Server_i::write_IOR(const char* ior)
 {
   FILE* ior_output_file_ =
-    ACE_OS::fopen (this->ior_file_name_, "w");
+    ACE_OS::fopen (this->ior_file_name_, ACE_TEXT("w"));
 
   if (ior_output_file_)
     {

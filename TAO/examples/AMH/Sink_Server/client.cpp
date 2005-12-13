@@ -3,11 +3,13 @@
 //
 
 #include "Client_Task.h"
+#include "ace/Argv_Type_Converter.h"
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  Client_Task task (argc, argv);
+  ACE_Argv_Type_Converter convert (argc, argv);
+  Client_Task task (convert.get_argc(), convert.get_ASCII_argv());
 
   if (task.parse_args () != 1)
     {

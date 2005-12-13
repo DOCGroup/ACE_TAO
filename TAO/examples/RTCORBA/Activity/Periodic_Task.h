@@ -38,7 +38,7 @@ class activity_Export Periodic_Task : public ACE_Task <ACE_SYNCH>
   ~Periodic_Task ();
 
   /// Init the state of this object.
-  int init_task (ACE_Arg_Shifter& arg_shifter);
+  int init_task (ACE_TArg_Shifter<char>& arg_shifter);
 
   /// Activate this task, synch on the given barrier.
   virtual int activate_task (ACE_Barrier* barrier, RTCORBA::PriorityMapping *priority_mapping) = 0;
