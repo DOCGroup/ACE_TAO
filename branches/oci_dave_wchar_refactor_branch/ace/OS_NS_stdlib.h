@@ -234,11 +234,9 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   unsigned long strtoul (const char *s, char **ptr, int base);
 
-#if !defined (ACE_LACKS_WCSTOUL)
   /// Converts a string to an unsigned long value (wchar_t version).
   ACE_NAMESPACE_INLINE_FUNCTION
   unsigned long strtoul (const wchar_t *s, wchar_t **ptr, int base);
-#endif /* !ACE_LACKS_WCSTOUL */
 
 #if defined (ACE_LACKS_STRTOUL)
   extern ACE_Export

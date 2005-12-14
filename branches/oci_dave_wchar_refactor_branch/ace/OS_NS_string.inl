@@ -385,8 +385,7 @@ ACE_OS::strtok (wchar_t *s, const wchar_t *tokens)
   return ::wcstok (s, tokens);
 #else
     ACE_UNUSED_ARG( s );
-    ACE_UNUSED_ARG( ptr );
-    ACE_UNUSED_ARG( base );
+    ACE_UNUSED_ARG( tokens );
     ACE_NOTSUP_RETURN (0);
 #endif /* ACE_HAS_3_PARAM_WCSTOK */
 }

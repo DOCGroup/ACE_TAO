@@ -32,7 +32,7 @@ not supply them.
 
 # if defined (VXWORKS)
 #   include /**/ <types/vxTypes.h>  /* For wchar_t */
-    typedef wchar_t wint_t;
+#   include <stddef.h> /* For wint_t */
     typedef wchar_t wctype_t;
 # elif defined (__Lynx__)
 #   include /**/ <stdlib.h>  /* For wchar_t */

@@ -3500,7 +3500,7 @@ ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
   return ACE_OS::mutex_init (m, USYNC_THREAD, name, arg, 0, lock_type);
 
 # elif defined (VXWORKS) || defined (ACE_PSOS)
-  return mutex_init (m, type, name, arg);
+  return mutex_init (m, lock_type, name, arg);
 
 # endif /* ACE_HAS_STHREADS || ACE_HAS_PTHREADS */
 
