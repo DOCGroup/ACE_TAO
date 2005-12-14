@@ -269,10 +269,10 @@ namespace ACE_OS {
   int sleep (const ACE_Time_Value &tv);
 
   // used by ARGV::string_to_argv
-  extern ACE_Export
-  int string_to_argv (ACE_TCHAR *buf,
+  template <typename CHAR_TYPE>
+  int string_to_argv (CHAR_TYPE *buf,
                       int &argc,
-                      ACE_TCHAR **&argv,
+                      CHAR_TYPE **&argv,
                       int substitute_env_args = 1);
 
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -337,6 +337,8 @@ namespace ACE_OS {
 #   define ACE_INLINE inline
 #   include "ace/OS_NS_unistd.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
+
+#include "ace/OS_NS_unistd_T.inl"
 
 # include /**/ "ace/post.h"
 #endif /* ACE_OS_NS_UNISTD_H */

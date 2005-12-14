@@ -47,48 +47,48 @@ namespace ACE_OS {
   //@{
 
   /// Returns true if the character is an alphanumeric character.
-  ACE_NAMESPACE_INLINE_FUNCTION
-  int ace_isalnum (ACE_TCHAR c);
+  template <typename CHAR_TYPE> inline
+  int ace_isalnum (CHAR_TYPE c);
 
   /// Returns true if the character is an alphabetic character.
-  ACE_NAMESPACE_INLINE_FUNCTION
-  int ace_isalpha (ACE_TCHAR c);
+  template <typename CHAR_TYPE> inline
+  int ace_isalpha (CHAR_TYPE c);
 
   /// Returns true if the character is a control character.
-  ACE_NAMESPACE_INLINE_FUNCTION
-  int ace_iscntrl (ACE_TCHAR c);
+  template <typename CHAR_TYPE> inline
+  int ace_iscntrl (CHAR_TYPE c);
 
   /// Returns true if the character is a decimal-digit character.
-  ACE_NAMESPACE_INLINE_FUNCTION
-  int ace_isdigit (ACE_TCHAR c);
+  template <typename CHAR_TYPE> inline
+  int ace_isdigit (CHAR_TYPE c);
 
   /// Returns true if the character is a printable character other than a space.
-  ACE_NAMESPACE_INLINE_FUNCTION
-  int ace_isgraph (ACE_TCHAR c);
+  template <typename CHAR_TYPE> inline
+  int ace_isgraph (CHAR_TYPE c);
 
   /// Returns true if the character is a lowercase character.
-  ACE_NAMESPACE_INLINE_FUNCTION
-  int ace_islower (ACE_TCHAR c);
+  template <typename CHAR_TYPE> inline
+  int ace_islower (CHAR_TYPE c);
 
   /// Returns true if the character is a printable character.
-  ACE_NAMESPACE_INLINE_FUNCTION
-  int ace_isprint (ACE_TCHAR c);
+  template <typename CHAR_TYPE> inline
+  int ace_isprint (CHAR_TYPE c);
 
   /// Returns true if the character is a punctuation character.
-  ACE_NAMESPACE_INLINE_FUNCTION
-  int ace_ispunct (ACE_TCHAR c);
+  template <typename CHAR_TYPE> inline
+  int ace_ispunct (CHAR_TYPE c);
 
   /// Returns true if the character is a space character.
-  ACE_NAMESPACE_INLINE_FUNCTION
-  int ace_isspace (ACE_TCHAR c);
+  template <typename CHAR_TYPE> inline
+  int ace_isspace (CHAR_TYPE c);
 
   /// Returns true if the character is an uppercase character.
-  ACE_NAMESPACE_INLINE_FUNCTION
-  int ace_isupper (ACE_TCHAR c);
+  template <typename CHAR_TYPE> inline
+  int ace_isupper (CHAR_TYPE c);
 
   /// Returns true if the character is a hexadecimal-digit character.
-  ACE_NAMESPACE_INLINE_FUNCTION
-  int ace_isxdigit (ACE_TCHAR c);
+  template <typename CHAR_TYPE> inline
+  int ace_isxdigit (CHAR_TYPE c);
 
   /// Converts a character to lower case (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -117,6 +117,8 @@ namespace ACE_OS {
 #   define ACE_INLINE inline
 #   include "ace/OS_NS_ctype.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
+
+#include "ace/OS_NS_ctype_T.inl"
 
 # include /**/ "ace/post.h"
 #endif /* ACE_OS_NS_CTYPE_H */
