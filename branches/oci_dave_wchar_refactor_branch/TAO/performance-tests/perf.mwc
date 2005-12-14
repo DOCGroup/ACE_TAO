@@ -2,4 +2,5 @@
 // $Id$
 
 workspace {
+  avoids += uses_wchar
 }

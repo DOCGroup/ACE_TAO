@@ -27,7 +27,7 @@ int
 parse_args (int argc, ACE_TCHAR* argv[])
 {
 
-  ACE_Get_Arg_Opt<char> get_opts (argc, argv, ACE_TEXT("o:v"));
+  ACE_Get_Arg_Opt<ACE_TCHAR> get_opts (argc, argv, ACE_TEXT("o:v"));
   int c;
 
   while ((c = get_opts ()) != -1)
