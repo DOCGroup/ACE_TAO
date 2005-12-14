@@ -1,3 +1,9 @@
+Tue Dec 13 12:13:26 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* COPYING: Updated this file to mention compliance issues wrt the
+	  new "The Energy Policy Act of 2005".  Thanks to Malcolm Spence
+ 	  for providing this.
+  
 Wed Dec 14 09:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Borland/README:
