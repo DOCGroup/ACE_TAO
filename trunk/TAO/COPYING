@@ -9,10 +9,10 @@
    Schmidt and his [6]research group at [7]Washington University,
    [8]University of California, Irvine, and [9]Vanderbilt University,
    Copyright (c) 1993-2005, all rights reserved. Since DOC software is
-   open-source, free software, you are free to use, modify, copy, and
-   distribute--perpetually and irrevocably--the DOC software source code
-   and object code produced from the source, as well as copy and
-   distribute modified versions of this software. You must, however,
+   open-source, freely available software, you are free to use, modify,
+   copy, and distribute--perpetually and irrevocably--the DOC software
+   source code and object code produced from the source, as well as copy
+   and distribute modified versions of this software. You must, however,
    include this copyright statement along with code built using DOC
    software.
    
@@ -67,9 +67,16 @@
    the part of Washington University, UC Irvine, Vanderbilt University,
    their employees, or students to assist in its use, correction,
    modification, or enhancement. A [19]number of companies around the
-   world provide commercial support for DOC software, however. DOC
-   software is Y2K-compliant, as long as the underlying OS platform is
-   Y2K-compliant.
+   world provide commercial support for DOC software, however.
+   
+   DOC software is Y2K-compliant, as long as the underlying OS platform
+   is Y2K-compliant. Likewise, DOC software is compliant with the new US
+   daylight savings rule passed by Congress as "The Energy Policy Act of
+   2005," which established new daylight savings times (DST) rules for
+   the United States that expand DST as of March 2007. Since DOC software
+   obtains time/date and calendaring information from operating systems
+   users will not be affected by the new DST rules as long as they
+   upgrade their operating systems accordingly.
    
    The names ACE(TM), TAO(TM), CIAO(TM), CoSMIC(TM), Washington
    University, UC Irvine, and Vanderbilt University, may not be used to
