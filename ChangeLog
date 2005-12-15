@@ -1,3 +1,8 @@
+Thu Dec 15 08:08:31 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/Asynch_IO.h: Clarified arguments and return value for
+	  ACE_Asynch_Read_Stream::open.
+
 Thu Dec 15 08:06:29 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/Service_Templates.cpp: Only #include headers if we need to
