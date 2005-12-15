@@ -6,6 +6,7 @@
 #include <ace/streams.h>
 #include <ace/SString.h>
 #include <ace/Log_Msg.h>
+#include "ace/Argv_Type_Converter.h"
 
 using namespace CORBA;
 
@@ -18,7 +19,7 @@ namespace {
       "(e.g. dynamic mysvc Service_Object * MySvc:_make_MySvc() \"-arg1 one\"\n\n"));
   }
 
-  bool parse_args(int argc, ACE_TCHAR* argv[]) {
+  bool parse_args(int argc, char* argv[]) {
     if (argc != 2 && argc != 3) {
       ACE_ERROR((LM_ERROR, "Controller: wrong number of arguments. %d\n", argc - 1));
       return false;
@@ -39,13 +40,15 @@ namespace {
   }
 }
 
-int ACE_TMAIN(int argc, ACE_TCHAR* argv[]) {
+int ACE_TMAIN(int argc, ACE_TCHAR* argv[])
+{
+  ACE_Argv_Type_Converter convert (argc, argv);
 
   try {
 
-    ORB_var orb = ORB_init(argc, argv);
+    ORB_var orb = ORB_init(convert.get_argc(), convert.get_ASCII_argv());
 
-    if (! parse_args(argc, argv)) {
+    if (! parse_args(convert.get_argc(), convert.get_ASCII_argv())) {
       showusage();
       return 1;
     }

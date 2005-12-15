@@ -7,6 +7,7 @@
 #include "ace/SString.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/Argv_Type_Converter.h"
 
 #define assertTrue(CONDITION) \
     if (CONDITION == false) { \
@@ -18,11 +19,13 @@
 
 using namespace CORBA;
 
-int ACE_TMAIN(int argc, ACE_TCHAR* argv[]) {
+int ACE_TMAIN(int argc, ACE_TCHAR* argv[])
+{
+  ACE_Argv_Type_Converter convert (argc, argv);
 
   try {
  
-    ORB_var orb = ORB_init(argc, argv);
+    ORB_var orb = ORB_init(convert.get_argc(), convert.get_ASCII_argv());
 
     Object_var obj = orb->resolve_initial_references("Test");
     test_var test = test::_narrow(obj.in());

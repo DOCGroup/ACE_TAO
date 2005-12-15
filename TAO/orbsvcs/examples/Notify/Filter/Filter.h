@@ -40,7 +40,7 @@ class FilterClient
   ~FilterClient ();
   // Destructor
 
-  void init (int argc, ACE_TCHAR *argv[]) ACE_ENV_ARG_DECL);
+  void init (int argc, char *argv[] ACE_ENV_ARG_DECL);
   // Init the Client.
 
   void run (ACE_ENV_SINGLE_ARG_DECL);
@@ -50,7 +50,7 @@ class FilterClient
   // Consumer calls done, We're done.
 
  protected:
-  void init_ORB (int argc, char *argv[]) ACE_ENV_ARG_DECL);
+  void init_ORB (int argc, char *argv[] ACE_ENV_ARG_DECL);
   // Initializes the ORB.
 
   void resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);

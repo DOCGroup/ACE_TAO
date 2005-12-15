@@ -32,7 +32,7 @@ public:
   Consumer (void);
 
   /// Run the test
-  int run (int argc, ACE_TCHAR* argv[]);
+  int run (int argc, char* argv[]);
 
   // = The RtecEventComm::PushConsumer methods
 

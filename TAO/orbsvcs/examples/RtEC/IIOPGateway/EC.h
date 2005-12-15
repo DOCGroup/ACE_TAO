@@ -30,7 +30,7 @@ public:
   EC (void);
 
   /// Run the test
-  int run (int argc, ACE_TCHAR* argv[]);
+  int run (int argc, char* argv[]);
 
 private:
   int parse_args (int argc, char *argv[]);

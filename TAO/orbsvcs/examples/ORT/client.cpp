@@ -2,6 +2,7 @@
 
 #include "sum_serverC.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (ORT,
            client,
@@ -35,14 +36,17 @@ parse_args (int argc, char *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "client_sum_orb", ACE_TRY_ENV);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), 
+                         "client_sum_orb", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
         return 1;
 
       CORBA::Object_var obj =

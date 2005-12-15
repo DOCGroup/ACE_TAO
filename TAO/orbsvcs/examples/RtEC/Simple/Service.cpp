@@ -5,6 +5,7 @@
 #include "ace/Get_Opt.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (EC_Examples,
            Service,
@@ -17,6 +18,8 @@ int parse_args (int argc, char *argv[]);
 int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   TAO_EC_Default_Factory::init_svcs ();
 
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -24,7 +27,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     {
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 	  CORBA::Object_var object =
@@ -82,7 +85,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
         {
-          FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+          FILE *output_file= ACE_OS::fopen (ior_output_file, ACE_TEXT("w"));
           if (output_file == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",

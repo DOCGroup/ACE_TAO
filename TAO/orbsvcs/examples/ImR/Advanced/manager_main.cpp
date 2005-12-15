@@ -3,15 +3,18 @@
 
 #include <ace/Get_Opt.h>
 #include <ace/streams.h>
+#include "ace/Argv_Type_Converter.h"
 
 int ACE_TMAIN(int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   try
   {
     long retryCount = 0;
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+    CORBA::ORB_var orb = CORBA::ORB_init(convert.get_argc(), convert.get_ASCII_argv());
 
-    ACE_Get_Arg_Opt<char> get_opts(argc, argv, "r:");
+    ACE_Get_Arg_Opt<char> get_opts(convert.get_argc(), convert.get_ASCII_argv(), "r:");
     int c;
     while ((c = get_opts()) != -1)
     {

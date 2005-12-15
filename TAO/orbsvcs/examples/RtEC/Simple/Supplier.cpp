@@ -5,6 +5,7 @@
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (EC_Examples,
            Supplier,
@@ -13,9 +14,11 @@ ACE_RCSID (EC_Examples,
 int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   Supplier supplier;
 
-  return supplier.run (argc, argv);
+  return supplier.run (convert.get_argc(), convert.get_ASCII_argv());
 }
 
 // ****************************************************************
@@ -25,7 +28,7 @@ Supplier::Supplier (void)
 }
 
 int
-Supplier::run (int argc, ACE_TCHAR* argv[])
+Supplier::run (int argc, char* argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY

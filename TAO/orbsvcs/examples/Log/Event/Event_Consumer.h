@@ -37,7 +37,7 @@ public:
   Consumer (void);
   // Constructor
 
-  int run (int argc, ACE_TCHAR* argv[]);
+  int run (int argc, char* argv[]);
   // Run the test
 
   // = The CosEventComm::PushConsumer methods

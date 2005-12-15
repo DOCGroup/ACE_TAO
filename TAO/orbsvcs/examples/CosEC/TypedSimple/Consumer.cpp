@@ -4,6 +4,7 @@
 #include "orbsvcs/CosTypedEventChannelAdminC.h"
 #include "Country_i.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (CosEC_Examples, 
            Consumer, 
@@ -12,13 +13,14 @@ ACE_RCSID (CosEC_Examples,
 int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // ORB initialization...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_obj =
@@ -79,8 +81,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
       const char* ior_file_name = "Consumer.ior";
       FILE *output_file=
-	ACE_OS::fopen (ACE_TEXT_TO_TCHAR_IN(ior_file_name),
-		       ACE_TEXT("w"));
+	ACE_OS::fopen (ior_file_name, ACE_TEXT("w"));
       if (output_file == 0)
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   "Cannot open output file for writing IOR: %s",

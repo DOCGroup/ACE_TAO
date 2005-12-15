@@ -3,16 +3,19 @@
 
 #include "Basic.h"
 #include "CosEvent_Utilities.h"
+#include "ace/Argv_Type_Converter.h"
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   Basic basic;
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      basic.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      basic.init (convert.get_argc(), convert.get_ASCII_argv() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       basic.run (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -61,7 +64,7 @@ Basic::init (int argc, char *argv[]
 }
 
 void
-Basic::init_ORB  (int argc, char *argv[])
+Basic::init_ORB  (int argc, char *argv[]
                         ACE_ENV_ARG_DECL)
 {
   this->orb_ = CORBA::ORB_init (argc,

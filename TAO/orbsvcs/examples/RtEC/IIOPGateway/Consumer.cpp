@@ -7,6 +7,7 @@
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (EC_Examples,
            Consumer,
@@ -20,9 +21,11 @@ static const char* ecname = 0;
 int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   Consumer consumer;
 
-  return consumer.run (argc, argv);
+  return consumer.run (convert.get_argc(), convert.get_ASCII_argv());
 }
 
 // ****************************************************************
@@ -33,7 +36,7 @@ Consumer::Consumer (void)
 }
 
 int
-Consumer::run (int argc, ACE_TCHAR* argv[])
+Consumer::run (int argc, char* argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -179,7 +182,7 @@ Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
 int
 Consumer::parse_args (int argc, char *argv[])
 {
-  ACE_Arg_Shifter arg_shifter (argc, argv);
+  ACE_TArg_Shifter<char> arg_shifter (argc, argv);
 
   while (arg_shifter.is_anything_left ())
     {
