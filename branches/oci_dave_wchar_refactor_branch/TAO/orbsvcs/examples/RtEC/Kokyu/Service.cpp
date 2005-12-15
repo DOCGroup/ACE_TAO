@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/Argv_Type_Converter.h"
 #include "orbsvcs/Sched/Reconfig_Scheduler.h"
 #include "orbsvcs/Runtime_Scheduler.h"
 //#include "orbsvcs/Event/Module_Factory.h"
@@ -44,6 +45,8 @@ typedef TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_M
 int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   //TAO_EC_Default_Factory::init_svcs ();
 
   TAO_EC_Kokyu_Factory::init_svcs ();
@@ -54,10 +57,10 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     {
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (parse_args (argc, argv) == -1)
+      if (parse_args (convert.get_argc(), convert.get_ASCII_argv()) == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       "Usage: Service [-o IOR_file_name]\n"));

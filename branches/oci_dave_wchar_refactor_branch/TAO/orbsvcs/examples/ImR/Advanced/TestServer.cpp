@@ -123,7 +123,7 @@ string normalizePath(const string& dir, char delim, bool toLower)
   return string(buffer);
 }
 
-TestServer::TestServer(CORBA::ORB_ptr orb, int argc, ACE_TCHAR* argv[])
+TestServer::TestServer(CORBA::ORB_ptr orb, int argc, char* argv[])
 : serverID_(1)
 , serverInstanceID_(-1)
 , useIORTable_(false)
@@ -162,7 +162,7 @@ TestServer::~TestServer()
 //  TestServer::parseCommands
 //  Reads params from command line
 //
-int TestServer::parseCommands(int argc, ACE_TCHAR* argv[])
+int TestServer::parseCommands(int argc, char* argv[])
 {
   ACE_Get_Arg_Opt<char> get_opts(argc, argv, "w:e:d:t:o:s:c:a:r:p:n:x:z:q:b:");
   int c;

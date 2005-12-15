@@ -11,14 +11,14 @@
 class TestServer
 {
 public:
-  TestServer(CORBA::ORB_ptr, int argc, ACE_TCHAR* argv[]);
+  TestServer(CORBA::ORB_ptr, int argc, char* argv[]);
 
   ~TestServer();
 
   void run();
 
 private:
-  int parseCommands(int argc, ACE_TCHAR* argv[]);
+  int parseCommands(int argc, char* argv[]);
   bool verifyEnvironment() const;
   bool registerWithManager();
   void buildObjects();

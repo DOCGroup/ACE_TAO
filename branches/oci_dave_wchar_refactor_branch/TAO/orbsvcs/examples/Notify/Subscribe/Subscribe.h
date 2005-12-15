@@ -35,7 +35,7 @@ class Subscribe
   Subscribe (void);
   ~Subscribe ();
 
-  void init (int argc, ACE_TCHAR *argv[]) ACE_ENV_ARG_DECL);
+  void init (int argc, char *argv[] ACE_ENV_ARG_DECL);
   // Init the Client.
 
   void run (ACE_ENV_SINGLE_ARG_DECL);
@@ -45,7 +45,7 @@ class Subscribe
   // Called when all events we are waiting for have occured.
 
  protected:
-  void init_ORB (int argc, char *argv[]) ACE_ENV_ARG_DECL);
+  void init_ORB (int argc, char *argv[] ACE_ENV_ARG_DECL);
   // Initializes the ORB.
 
   void resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);

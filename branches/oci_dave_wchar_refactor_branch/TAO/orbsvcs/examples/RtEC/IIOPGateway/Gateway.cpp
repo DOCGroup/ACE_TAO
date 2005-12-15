@@ -8,6 +8,7 @@
 #include "orbsvcs/Event/EC_Gateway_IIOP_Factory.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (EC_Examples,
            Supplier,
@@ -19,9 +20,11 @@ static const char* consumerec = 0;
 int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   Gateway gateway;
 
-  return gateway.run (argc, argv);
+  return gateway.run (convert.get_argc(), convert.get_ASCII_argv());
 }
 
 // ****************************************************************
@@ -31,7 +34,7 @@ Gateway::Gateway (void)
 }
 
 int
-Gateway::run (int argc, ACE_TCHAR* argv[])
+Gateway::run (int argc, char* argv[])
 {
   TAO_EC_Gateway_IIOP_Factory::init_svcs ();
 
@@ -160,7 +163,7 @@ Gateway::run (int argc, ACE_TCHAR* argv[])
 int
 Gateway::parse_args (int argc, char *argv[])
 {
-  ACE_Arg_Shifter arg_shifter (argc, argv);
+  ACE_TArg_Shifter<char> arg_shifter (argc, argv);
 
   while (arg_shifter.is_anything_left ())
     {

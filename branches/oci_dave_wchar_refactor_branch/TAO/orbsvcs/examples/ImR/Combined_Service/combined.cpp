@@ -8,7 +8,7 @@
 #include "ace/Service_Config.h"
 #include "ace/streams.h"
 #include "ace/OS_NS_string.h"
-
+#include "ace/Argv_Type_Converter.h"
 
 using namespace CORBA;
 using namespace PortableServer;
@@ -27,7 +27,7 @@ public:
   {
     ACE_ASSERT(s != 0);
     ACE_ASSERT(ACE_OS::strlen(s) > 0);
-    return asc_.process_directive(s);
+    return asc_.process_directive(ACE_TEXT_TO_TCHAR_IN(s));
   }
 
   virtual void reconfigure() ACE_THROW_SPEC ((CORBA::SystemException))
@@ -38,12 +38,14 @@ public:
 
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   try {
 
     ACE_Service_Config config;
     config.open(argc, argv);
 
-    ORB_var orb = ORB_init(argc, argv);
+    ORB_var orb = ORB_init(convert.get_argc(), convert.get_ASCII_argv());
 
     Object_var obj = orb->resolve_initial_references("RootPOA");
     POA_var poa = POA::_narrow(obj.in());

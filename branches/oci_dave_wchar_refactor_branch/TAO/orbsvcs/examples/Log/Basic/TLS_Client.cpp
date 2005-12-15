@@ -25,7 +25,7 @@ TLS_Client::~TLS_Client ()
 }
 
 void
-TLS_Client::init (int argc, char *argv[]) ACE_ENV_ARG_DECL)
+TLS_Client::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
 {
   init_ORB (argc, argv ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -37,7 +37,7 @@ TLS_Client::init (int argc, char *argv[]) ACE_ENV_ARG_DECL)
 
 void
 TLS_Client::init_ORB (int argc,
-                      char *argv[])
+                      char *argv[]
                       ACE_ENV_ARG_DECL)
 {
   this->orb_ = CORBA::ORB_init (argc,

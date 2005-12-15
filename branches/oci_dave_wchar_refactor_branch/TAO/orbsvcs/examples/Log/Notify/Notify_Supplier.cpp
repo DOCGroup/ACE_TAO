@@ -1,6 +1,7 @@
 #include "Notify_Supplier.h"
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "ace/OS_main.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Notify,
            Notify_Supplier,
@@ -20,9 +21,11 @@ ACE_RCSID (Notify,
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   Supplier supplier;
 
-  return supplier.run (argc, argv);
+  return supplier.run (convert.get_argc(), convert.get_ASCII_argv());
 }
 
 // ****************************************************************
@@ -37,7 +40,7 @@ Supplier::~Supplier ()
 }
 
 int
-Supplier::run (int argc, ACE_TCHAR* argv[])
+Supplier::run (int argc, char* argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY

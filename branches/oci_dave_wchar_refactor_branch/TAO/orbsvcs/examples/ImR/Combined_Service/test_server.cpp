@@ -9,6 +9,7 @@
 
 #include "ace/streams.h"
 #include "ace/ARGV.h"
+#include "ace/Argv_Type_Converter.h"
 
 using namespace CORBA;
 using namespace PortableServer;
@@ -38,11 +39,13 @@ POA_ptr createPersistPOA(const char* name, POA_ptr root_poa, POAManager_ptr poam
   return poa._retn();
 }
 
-int ACE_TMAIN(int argc, ACE_TCHAR* argv[]) {
+int ACE_TMAIN(int argc, ACE_TCHAR* argv[])
+{
+  ACE_Argv_Type_Converter convert (argc, argv);
 
   try {
  
-    ORB_var orb = ORB_init(argc, argv);
+    ORB_var orb = ORB_init(convert.get_argc(), convert.get_ASCII_argv());
 
     Object_var obj = orb->resolve_initial_references("RootPOA");
     POA_var root_poa = POA::_narrow(obj.in());

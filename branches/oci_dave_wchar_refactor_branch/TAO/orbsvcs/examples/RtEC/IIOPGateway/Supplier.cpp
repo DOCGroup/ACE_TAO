@@ -8,6 +8,7 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (EC_Examples,
            Supplier,
@@ -21,9 +22,11 @@ static const char* ecname = 0;
 int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   Supplier supplier;
 
-  return supplier.run (argc, argv);
+  return supplier.run (convert.get_argc(), convert.get_ASCII_argv());
 }
 
 // ****************************************************************
@@ -33,7 +36,7 @@ Supplier::Supplier (void)
 }
 
 int
-Supplier::run (int argc, ACE_TCHAR* argv[])
+Supplier::run (int argc, char* argv[])
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -174,7 +177,7 @@ Supplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 int
 Supplier::parse_args (int argc, char *argv[])
 {
-  ACE_Arg_Shifter arg_shifter (argc, argv);
+  ACE_TArg_Shifter<char> arg_shifter (argc, argv);
 
   while (arg_shifter.is_anything_left ())
     {

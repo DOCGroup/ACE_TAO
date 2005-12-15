@@ -9,6 +9,7 @@
 #include "tao/ORB_Core.h"
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Notify, TAO_Notify_ThreadPool_Consumer_Client, "$Id$")
 
@@ -28,25 +29,25 @@ TAO_Notify_ThreadPool_Consumer_Client::~TAO_Notify_ThreadPool_Consumer_Client ()
 int
 TAO_Notify_ThreadPool_Consumer_Client::parse_args (int argc, char *argv[])
 {
-  ACE_Arg_Shifter arg_shifter (argc, argv);
+  ACE_TArg_Shifter<char> arg_shifter (argc, argv);
 
-  const ACE_TCHAR *current_arg = 0;
+  const char *current_arg = 0;
 
   while (arg_shifter.is_anything_left ())
     {
-      if ((current_arg = arg_shifter.get_the_parameter(ACE_TEXT("-ProxySupplier_ThreadPool")))) // Specify a threadpool.
+      if ((current_arg = arg_shifter.get_the_parameter("-ProxySupplier_ThreadPool"))) // Specify a threadpool.
         {
           this->proxy_supplier_thread_count_ = ACE_OS::atoi (arg_shifter.get_current ());
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter(ACE_TEXT("-MaxEvents")))) // Max Events
+      else if ((current_arg = arg_shifter.get_the_parameter("-MaxEvents"))) // Max Events
         {
           this->max_events_ = ACE_OS::atoi (arg_shifter.get_current ());
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter(ACE_TEXT("-Delay")))) // seconds wait in consumer per push.
+      else if ((current_arg = arg_shifter.get_the_parameter("-Delay"))) // seconds wait in consumer per push.
         {
           this->delay_ = ACE_OS::atoi (current_arg);
 
@@ -217,11 +218,12 @@ TAO_Notify_ThreadPool_Consumer_Client::svc (void)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
     {
       // Initialize an ORB
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
+      CORBA::ORB_var orb = CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(),
                                             ""
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -235,7 +237,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       TAO_Notify_ThreadPool_Consumer_Client client (orb_objects);
 
-      if (client.parse_args (argc, argv) != 0)
+      if (client.parse_args (convert.get_argc(), convert.get_ASCII_argv()) != 0)
         {
           ACE_DEBUG ((LM_DEBUG, "Consumer_Client::Error parsing options\n"));
           return -1;

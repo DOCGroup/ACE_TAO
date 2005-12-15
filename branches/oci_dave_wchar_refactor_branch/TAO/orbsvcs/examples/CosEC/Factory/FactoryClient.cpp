@@ -4,6 +4,7 @@
 #include "CosEventChannelFactoryC.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Log_Msg.h"
+#include "ace/Argv_Type_Converter.h"
 
 class FactoryClient
 {
@@ -21,7 +22,7 @@ public:
   virtual ~FactoryClient (void);
   // destructor.
 
-  void init_ORB (int argc, char *argv[]) ACE_ENV_ARG_DECL);
+  void init_ORB (int argc, char *argv[] ACE_ENV_ARG_DECL);
   // Initializes the ORB.
 
   void resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
@@ -87,7 +88,7 @@ FactoryClient::~FactoryClient (void)
 
 void
 FactoryClient::init_ORB (int argc,
-                       char *argv[])
+                       char *argv[]
                        ACE_ENV_ARG_DECL)
 {
   this->orb_ = CORBA::ORB_init (argc,
@@ -366,14 +367,15 @@ FactoryClient::run_test (ACE_ENV_SINGLE_ARG_DECL)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_DEBUG ((LM_DEBUG,
               "The FactoryClient will test the Cos Event Channel Factory\n"));
   ACE_TRY_NEW_ENV
     {
       FactoryClient ft;
 
-      ft.init_ORB (argc,
-                   argv
+      ft.init_ORB (convert.get_argc(), convert.get_ASCII_argv()
                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

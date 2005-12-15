@@ -3,19 +3,21 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/CosTypedEventChannelAdminC.h"
 #include "CountryC.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID(CosEC_Examples, Supplier, "$Id:")
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (convert.get_argc(), convert.get_ASCII_argv(), "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Obtain the event channel using the Naming Service.

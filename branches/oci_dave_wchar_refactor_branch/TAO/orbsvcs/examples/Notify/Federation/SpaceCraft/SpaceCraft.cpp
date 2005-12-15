@@ -17,6 +17,7 @@
 // For in-process Notification Service.
 //
 #include "ace/Dynamic_Service.h"
+#include "ace/Argv_Type_Converter.h"
 #include "orbsvcs/Notify/Service.h"
 #include "orbsvcs/Notify/CosNotify_Initializer.h" // NS static link helper.
 
@@ -35,9 +36,11 @@ using namespace CosNotifyChannelAdmin;
 int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   ACE_TRY_NEW_ENV
   {
-    ORB_var orb (ORB_init (argc, argv));
+    ORB_var orb (ORB_init (convert.get_argc(), convert.get_ASCII_argv()));
 
     if (argc < 2)
     {
@@ -134,7 +137,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     ACE_INET_Addr space_craft_addr;
     char const* space_craft_name = 0;
 
-    space_craft_name = argv[1];
+    space_craft_name = convert.get_ASCII_argv()[1];
 
     // Do a quick mapping to mcast addresses.
     //

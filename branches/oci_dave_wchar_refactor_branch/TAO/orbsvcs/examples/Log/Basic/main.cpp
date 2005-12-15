@@ -1,5 +1,6 @@
 #include "TLS_Client.h"
 #include "ace/OS_main.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (Basic,
            main,
@@ -9,11 +10,13 @@ ACE_RCSID (Basic,
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   TLS_Client client; // Telecom Log Service Client
 
   ACE_TRY_NEW_ENV
     {
-      client.init (argc, argv
+      client.init (convert.get_argc(), convert.get_ASCII_argv()
                    ACE_ENV_ARG_PARAMETER); //Init the Client
       ACE_TRY_CHECK;
 

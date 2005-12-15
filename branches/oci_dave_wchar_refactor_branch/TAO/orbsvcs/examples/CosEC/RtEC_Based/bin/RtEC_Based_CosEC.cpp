@@ -3,6 +3,7 @@
 #include "RtEC_Based_CosEC.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "ace/Get_Opt.h"
+#include "ace/Argv_Type_Converter.h"
 
 RtEC_Based_CosEC::RtEC_Based_CosEC (void)
   : service_name ("CosEventService"),
@@ -18,7 +19,7 @@ RtEC_Based_CosEC::~RtEC_Based_CosEC (void)
 }
 
 void
-RtEC_Based_CosEC::init_ORB  (int& argc, char *argv[])
+RtEC_Based_CosEC::init_ORB  (int& argc, char *argv[]
                              ACE_ENV_ARG_DECL)
 {
   this->orb_ = CORBA::ORB_init (argc,
@@ -46,7 +47,7 @@ RtEC_Based_CosEC::init_ORB  (int& argc, char *argv[])
 }
 
 int
-RtEC_Based_CosEC::parse_args (int argc, ACE_TCHAR *argv[])
+RtEC_Based_CosEC::parse_args (int argc, char *argv[])
 {
   ACE_Get_Arg_Opt<char> get_opt (argc, argv, "t:n:e:o:p:r");
   int opt;
@@ -278,14 +279,15 @@ RtEC_Based_CosEC::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_Argv_Type_Converter convert (argc, argv);
+
   TAO_EC_Default_Factory::init_svcs ();
 
   RtEC_Based_CosEC service;
 
   ACE_TRY_NEW_ENV
     {
-      service.startup (argc,
-                       argv
+      service.startup (convert.get_argc(), convert.get_ASCII_argv()
                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

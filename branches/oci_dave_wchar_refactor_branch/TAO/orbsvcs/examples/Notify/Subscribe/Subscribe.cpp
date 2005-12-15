@@ -31,7 +31,7 @@ Subscribe::~Subscribe ()
 }
 
 void
-Subscribe::init (int argc, ACE_TCHAR *argv[]) ACE_ENV_ARG_DECL)
+Subscribe::init (int argc, char *argv[] ACE_ENV_ARG_DECL)
 {
   init_ORB (argc, argv ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -73,11 +73,10 @@ Subscribe::done (void)
 
 void
 Subscribe::init_ORB (int argc,
-                      char *argv[])
+                      char *argv[]
                       ACE_ENV_ARG_DECL)
 {
-  this->orb_ = CORBA::ORB_init (argc,
-                                argv,
+  this->orb_ = CORBA::ORB_init (argc, argv,
                                 ""
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;

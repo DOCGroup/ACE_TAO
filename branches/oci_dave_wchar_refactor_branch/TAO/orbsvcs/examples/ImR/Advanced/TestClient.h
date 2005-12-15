@@ -9,14 +9,14 @@
 class TestClient : public ACE_Task_Base
 {
 public:
-  TestClient(CORBA::ORB_ptr orb, int argc, ACE_TCHAR* argv[]);
+  TestClient(CORBA::ORB_ptr orb, int argc, char* argv[]);
 
   virtual ~TestClient();
 
   void run();
 
 private:
-  int parseCommands(int argc, ACE_TCHAR* argv[]);
+  int parseCommands(int argc, char* argv[]);
   void buildIORList();
   void pause(int milliseconds);
   virtual int svc();
