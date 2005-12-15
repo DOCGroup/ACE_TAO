@@ -301,9 +301,17 @@ public:
 
   /**
    * Initializes the factory with information which will be used with
-   * each asynchronous call. If ({handle} == ACE_INVALID_HANDLE),
-   * {ACE_Handler::handle} will be called on the {handler} to get the
-   * correct handle.
+   * each asynchronous call.
+   *
+   * @arg handler The ACE_Handler that will be called to handle completions
+   *              for operations initiated using this factory.
+   * @arg handle  The handle that future read operations will use.
+   *              If handle == @c ACE_INVALID_HANDLE,
+   *              ACE_Handler::handle() will be called on @ handler
+   *              to get the correct handle.
+   *
+   * @retval 0    for success.
+   * @retval -1   for failure; consult @c errno for further information.
    */
   int open (ACE_Handler &handler,
             ACE_HANDLE handle = ACE_INVALID_HANDLE,
