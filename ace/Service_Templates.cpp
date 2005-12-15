@@ -1,7 +1,14 @@
 // $Id$
 
-#include "ace/Service_Templates.h"
-#include "ace/SString.h"
+#include "ace/config-lite.h"
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
+    defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#  include "ace/Service_Templates.h"
+#  include "ace/SString.h"
+
+#endif
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

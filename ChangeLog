@@ -1,3 +1,10 @@
+Thu Dec 15 08:06:29 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/Service_Templates.cpp: Only #include headers if we need to
+	  instantiate templates; i.e., if using either form of explicit
+	  template instantiation. This avoids the sigaction issue with
+	  HP aC++ A.03.56.
+
 Tue Dec 13 12:13:26 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* COPYING: Updated this file to mention compliance issues wrt the
