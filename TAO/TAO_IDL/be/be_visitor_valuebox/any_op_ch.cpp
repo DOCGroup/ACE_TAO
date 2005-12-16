@@ -69,7 +69,7 @@ be_visitor_valuebox_any_op_ch::visit_valuebox (be_valuebox *node)
                             -1);
         }
 
-      // Some compilers handle "any" operators in a namespace
+      // Some compilers handle "any" operatorrs in a namespace
       // corresponding to their module, others do not.
       *os << "\n\n#if defined (ACE_ANY_OPS_USE_NAMESPACE)\n";
 
@@ -94,6 +94,8 @@ be_visitor_valuebox_any_op_ch::visit_valuebox (be_valuebox *node)
       *os << "#else\n\n";
     }
 
+  *os << be_global->core_versioning_begin () << be_nl;
+  
   *os << macro << " void operator<<= (::CORBA::Any &, " << node->name ()
       << " *); // copying" << be_nl;
 
@@ -103,6 +105,8 @@ be_visitor_valuebox_any_op_ch::visit_valuebox (be_valuebox *node)
   *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, "
       << node->name () << " *&);";
 
+  *os << be_global->core_versioning_end () << be_nl;
+  
   if (module != 0)
     {
       *os << "\n\n#endif";

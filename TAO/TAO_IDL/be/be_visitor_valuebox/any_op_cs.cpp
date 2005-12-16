@@ -55,6 +55,8 @@ be_visitor_valuebox_any_op_cs::visit_valuebox (be_valuebox *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
+  *os << be_global->core_versioning_begin () << be_nl;
+
   // All template specializations must be generated before the instantiations
   // in the operators.
   *os << be_nl << be_nl
@@ -73,6 +75,7 @@ be_visitor_valuebox_any_op_cs::visit_valuebox (be_valuebox *node)
       << "}" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
+  *os << be_global->core_versioning_end () << be_nl;
 
   be_module *module = 0;
  
@@ -146,6 +149,8 @@ be_visitor_valuebox_any_op_cs::visit_valuebox (be_valuebox *node)
       *os << "#else\n\n";
     }
 
+  *os << be_global->core_versioning_begin () << be_nl;
+  
   *os << "// Copying insertion." << be_nl
       << "void" << be_nl
       << "operator<<= (" << be_idt << be_idt_nl
@@ -188,6 +193,8 @@ be_visitor_valuebox_any_op_cs::visit_valuebox (be_valuebox *node)
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
+
+  *os << be_global->core_versioning_end () << be_nl;
 
   if (module != 0)
     {

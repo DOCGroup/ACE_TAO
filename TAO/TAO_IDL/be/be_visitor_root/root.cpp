@@ -197,6 +197,8 @@ int be_visitor_root::visit_root (be_root *node)
           *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
               << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+          *os << be_global->core_versioning_begin () << be_nl;
+          
           *os << "// Overrides of CORBA::release and CORBA::is_nil for"
               << be_nl
               << "// interfaces that inherit from both CORBA::Object" << be_nl
@@ -220,6 +222,8 @@ int be_visitor_root::visit_root (be_root *node)
         {
           *os << be_uidt_nl
               << "}";
+
+          *os << be_global->core_versioning_end () << be_nl;
         }
     }
 

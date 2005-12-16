@@ -115,6 +115,8 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  *os << be_global->core_versioning_begin () << be_nl;
+
   // Generate the CDR << and >> operator declarations.
   *os << be_global->stub_export_macro () << " CORBA::Boolean"
       << " operator<< (TAO_OutputCDR &, const ";
@@ -149,6 +151,8 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
     {
       *os << node->name () << "_forany &);";
     }
+
+  *os << be_global->core_versioning_end () << be_nl;
 
   node->cli_hdr_cdr_op_gen (1);
   return 0;

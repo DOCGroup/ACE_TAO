@@ -206,6 +206,26 @@ public:
   // set the name of the include file to be put at the bottom of every
   // header file.
 
+  /// Set text that opens a "versioned" namespace.
+  void versioning_begin (const char* s);
+  
+  /// Get text that opens a "versioned" namespace.
+  const char * versioning_begin (void) const;
+
+  /// Get text that opens a "versioned" namespace for core TAO/orbsvcs
+  /// related code.
+  const char * core_versioning_begin (void) const;
+
+  /// Set text that closes a "versioned" namespace.
+  void versioning_end (const char* s);
+  
+  /// Get text that closes a "versioned" namespace.
+  const char * versioning_end (void) const;
+
+  /// Get text that closes a "versioned" namespace for core TAO/orbsvcs
+  /// related code.
+  const char * core_versioning_end (void) const;
+
   // = Set and get methods for different file name endings.
 
   void client_hdr_ending (const char* s);
@@ -521,6 +541,20 @@ private:
   char* pch_include_;
   char* pre_include_;
   char* post_include_;
+
+  /// Text that opens a "versioned" namespace for core TAO/orbsvcs
+  /// related code.
+  ACE_CString core_versioning_begin_;
+
+  /// Text that closes a "versioned" namespace for core TAO/orbsvcs
+  /// related code.
+  ACE_CString core_versioning_end_;
+  
+  /// Text that opens a "versioned" namepace.
+  ACE_CString versioning_begin_;
+
+  /// Text that closes a "versioned" namepace.
+  ACE_CString versioning_end_;
 
   // Client's header file name ending. Default is "C.h".
   char* client_hdr_ending_;
