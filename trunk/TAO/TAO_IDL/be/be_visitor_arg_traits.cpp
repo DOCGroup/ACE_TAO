@@ -69,6 +69,8 @@ be_visitor_arg_traits::visit_root (be_root *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
+  *os << be_global->core_versioning_begin () << be_nl;
+  
   *os << be_nl << be_nl
       << "// Arg traits specializations." << be_nl
       << "namespace TAO" << be_nl
@@ -85,6 +87,8 @@ be_visitor_arg_traits::visit_root (be_root *node)
   *os << be_uidt_nl
       << "}" << be_nl;
 
+  *os << be_global->core_versioning_end () << be_nl;
+  
   return 0;
 }
 

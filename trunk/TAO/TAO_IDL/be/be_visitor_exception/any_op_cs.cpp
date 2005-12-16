@@ -49,6 +49,8 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
       << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
+  *os << be_global->core_versioning_begin () << be_nl;
+  
   if (!node->is_local ())
     {
       *os << be_nl << be_nl
@@ -173,6 +175,8 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}";
+
+  *os << be_global->core_versioning_end () << be_nl;
 
   // all we have to do is to visit the scope and generate code
   if (this->visit_scope (node) == -1)

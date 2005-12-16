@@ -53,6 +53,8 @@ be_visitor_union_cdr_op_ch::visit_union (be_union *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  *os << be_global->core_versioning_begin () << be_nl;
+
   *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator<< (TAO_OutputCDR &, const " << node->name ()
       << " &);" << be_nl;
@@ -60,6 +62,7 @@ be_visitor_union_cdr_op_ch::visit_union (be_union *node)
       << " operator>> (TAO_InputCDR &, "
       << node->name () << " &);";
 
+  *os << be_global->core_versioning_end () << be_nl;
 
   // Set the substate as generating code for the types defined in our scope.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_SCOPE);

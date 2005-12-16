@@ -1,3 +1,53 @@
+Thu Dec 15 16:19:48 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_codegen.cpp:
+	* TAO_IDL/be/be_global.cpp:
+	* TAO_IDL/be/be_valuetype.cpp:
+	* TAO_IDL/be/be_visitor_arg_traits.cpp:
+	* TAO_IDL/be/be_visitor_traits.cpp:
+	* TAO_IDL/be/be_visitor_array/any_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_array/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_array/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_enum/any_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_enum/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_enum/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_exception/any_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_exception/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_exception/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_root/root.cpp:
+	* TAO_IDL/be/be_visitor_root/root_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_structure/any_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_structure/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_structure/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+	* TAO_IDL/be/be_visitor_union/any_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_union/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_valuebox/any_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuebox/any_op_cs.cpp:
+	* TAO_IDL/be/be_visitor_valuebox/cdr_op_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuebox/cdr_op_cs.cpp:
+	* TAO_IDL/be_include/be_global.h:
+	* TAO_IDL/driver/drv_args.cpp:
+
+	  Added ability to set "versioned" namespace opening and closing
+	  text.  Addresses problem where applications that do not enable
+	  versioned namespace support in their own code need not get
+	  "versioned" stubs/skeletons.
+
 Tue Dec 13 12:13:26 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* COPYING: Updated this file to mention compliance issues wrt the
