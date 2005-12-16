@@ -49,6 +49,8 @@ be_visitor_valuebox_cdr_op_ch::visit_valuebox (be_valuebox *node)
       << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  *os << be_global->core_versioning_begin () << be_nl;
+
   *os << be_global->stub_export_macro () << " "
       << "::CORBA::Boolean operator<< (TAO_OutputCDR &, const "
       << node->full_name () << " *);" << be_nl;
@@ -56,6 +58,8 @@ be_visitor_valuebox_cdr_op_ch::visit_valuebox (be_valuebox *node)
   *os << be_global->stub_export_macro () << " "
       << "::CORBA::Boolean operator>> (TAO_InputCDR &, "
       << node->full_name () << " *&);";
+
+  *os << be_global->core_versioning_end () << be_nl;
 
   node->cli_hdr_cdr_op_gen (1);
   return 0;

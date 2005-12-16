@@ -457,6 +457,8 @@ be_valuetype::gen_helper_header (char *, char *)
       << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  *os << be_global->core_versioning_begin () << be_nl;
+  
   *os << "namespace CORBA" << be_nl
       << "{"
       << be_idt_nl
@@ -468,6 +470,8 @@ be_valuetype::gen_helper_header (char *, char *)
   *os <<  be_uidt_nl
       << "}";
 
+  *os << be_global->core_versioning_end () << be_nl;
+  
   return 0;
 }
 
@@ -484,6 +488,7 @@ be_valuetype::gen_helper_inline (char *, char *)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "#if defined (__ACE_INLINE__)" << be_nl << be_nl
+      << be_global->core_versioning_begin () << be_nl
       << "namespace CORBA" << be_nl
       << "{"
       << be_idt_nl
@@ -493,6 +498,7 @@ be_valuetype::gen_helper_inline (char *, char *)
       << this->full_name () << " *);"
       <<  be_uidt_nl
       << "}" << be_nl << be_nl
+      << be_global->core_versioning_end () << be_nl
       << "#endif /*__ACE_INLINE__*/";
 
   return 0;

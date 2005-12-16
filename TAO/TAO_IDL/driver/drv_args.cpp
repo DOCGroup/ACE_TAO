@@ -248,6 +248,16 @@ DRV_usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
+      ACE_TEXT (" -Wb,versioning_begin\t\t\tSet text that opens a ")
+      ACE_TEXT ("a \"versioned\" namespace\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,versioning_end\t\t\tSet text that closes a ")
+      ACE_TEXT ("a \"versioned\" namespace\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
       ACE_TEXT (" -Yp,path\t\tdefines location of preprocessor\n")
     ));
     

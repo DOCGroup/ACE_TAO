@@ -31,15 +31,6 @@ ACE_RCSID (be,
            "$Id$")
 
 
-namespace
-{
-  char const TAO_BEGIN_VERSIONED_NAMESPACE_DECL[] =
-    "\n\nTAO_BEGIN_VERSIONED_NAMESPACE_DECL\n\n";
-
-  char const TAO_END_VERSIONED_NAMESPACE_DECL[] =
-    "\n\nTAO_END_VERSIONED_NAMESPACE_DECL\n\n";
-}
-
 TAO_CodeGen * tao_cg = 0;
 
 TAO_CodeGen::TAO_CodeGen (void)
@@ -256,7 +247,7 @@ TAO_CodeGen::start_client_header (const char *fname)
   // Begin versioned namespace support after initial headers have been
   // included, but before the inline file and post include
   // directives.
-  *this->client_header_ << TAO_BEGIN_VERSIONED_NAMESPACE_DECL;
+  *this->client_header_ << be_global->versioning_begin ();
 
   return 0;
 }
@@ -311,7 +302,7 @@ TAO_CodeGen::start_client_stubs (const char *fname)
 
   // Begin versioned namespace support after all headers have been
   // included, but before any code is generated.
-  *this->client_stubs_ << TAO_BEGIN_VERSIONED_NAMESPACE_DECL;
+  *this->client_stubs_ << be_global->versioning_begin ();
 
   return 0;
 }
@@ -348,7 +339,7 @@ TAO_CodeGen::start_client_inline (const char *fname)
 
   // Begin versioned namespace support after initial headers, if any,
   // have been included.
-  *this->client_inline_ << TAO_BEGIN_VERSIONED_NAMESPACE_DECL;
+  *this->client_inline_ << be_global->versioning_begin ();
 
   return 0;
 }
@@ -490,7 +481,7 @@ TAO_CodeGen::start_server_header (const char *fname)
   // Begin versioned namespace support after initial headers have been
   // included, but before the inline file and post include
   // directives.
-  *this->server_header_ << TAO_BEGIN_VERSIONED_NAMESPACE_DECL;
+  *this->server_header_ << be_global->versioning_begin ();
 
   return 0;
 }
@@ -548,7 +539,7 @@ TAO_CodeGen::start_server_template_header (const char *fname)
   // Begin versioned namespace support after initial headers have been
   // included, but before the inline file and post include
   // directives.
-  *this->server_template_header_ << TAO_BEGIN_VERSIONED_NAMESPACE_DECL;
+  *this->server_template_header_ << be_global->versioning_begin ();
 
   return 0;
 }
@@ -626,7 +617,7 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
   // Begin versioned namespace support after initial headers have been
   // included, but before the inline file and post include
   // directives.
-  *this->server_skeletons_ << TAO_BEGIN_VERSIONED_NAMESPACE_DECL;
+  *this->server_skeletons_ << be_global->versioning_begin ();
 
   return 0;
 }
@@ -692,7 +683,7 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
   // Begin versioned namespace support after initial headers have been
   // included, but before the inline file and post include
   // directives.
-  *this->server_template_skeletons_ << TAO_BEGIN_VERSIONED_NAMESPACE_DECL;
+  *this->server_template_skeletons_ << be_global->versioning_begin ();
 
   return 0;
 }
@@ -729,7 +720,7 @@ TAO_CodeGen::start_server_inline (const char *fname)
 
   // Begin versioned namespace support after initial headers, if any, have been
   // included.
-  *this->server_inline_ << TAO_BEGIN_VERSIONED_NAMESPACE_DECL;
+  *this->server_inline_ << be_global->versioning_begin ();
 
   return 0;
 }
@@ -769,7 +760,7 @@ TAO_CodeGen::start_server_template_inline (const char *fname)
   // Begin versioned namespace support after initial headers have been
   // included, but before the inline file and post include
   // directives.
-  *this->server_template_inline_ << TAO_BEGIN_VERSIONED_NAMESPACE_DECL;
+  *this->server_template_inline_ << be_global->versioning_begin ();
 
   return 0;
 }
@@ -921,7 +912,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
   // Begin versioned namespace support after initial headers have been
   // included, but before the inline file and post include
   // directives.
-  *this->anyop_header_ << TAO_BEGIN_VERSIONED_NAMESPACE_DECL;
+  *this->anyop_header_ << be_global->versioning_begin ();
 
   return 0;
 }
@@ -966,7 +957,7 @@ TAO_CodeGen::start_anyop_source (const char *fname)
   // Begin versioned namespace support after initial headers have been
   // included, but before the inline file and post include
   // directives.
-  *this->anyop_source_ << TAO_BEGIN_VERSIONED_NAMESPACE_DECL;
+  *this->anyop_source_ << be_global->versioning_begin ();
 
   return 0;
 }
@@ -1098,12 +1089,12 @@ TAO_CodeGen::end_client_header (void)
   // Generate the <<= and >>= operators here.
 
   *this->client_header_ << be_nl << be_nl << "// TAO_IDL - Generated from"
-                        << be_nl << "// " << __FILE__ << ":" << __LINE__;
-
+                        << be_nl << "// " << __FILE__ << ":" <<
+    __LINE__ << be_nl;
 
   // End versioned namespace support before remaining include
   // directives at end of file.
-  *this->client_header_ << TAO_END_VERSIONED_NAMESPACE_DECL;
+  *this->client_header_ << be_global->versioning_end ();
 
   // Only when we generate a client inline file generate the include
   if (be_global->gen_client_inline ())
@@ -1137,7 +1128,7 @@ TAO_CodeGen::end_client_inline (void)
 
   // End versioned namespace support.  Do not place include directives
   // before this.
-  *this->client_inline_ << TAO_END_VERSIONED_NAMESPACE_DECL;
+  *this->client_inline_ << be_global->versioning_end ();
 }
 
 void
@@ -1147,7 +1138,7 @@ TAO_CodeGen::end_client_stubs (void)
 
   // End versioned namespace support.  Do not place include directives
   // before this.
-  *this->client_stubs_ << TAO_END_VERSIONED_NAMESPACE_DECL;
+  *this->client_stubs_ << be_global->versioning_end ();
 }
 
 int
@@ -1159,7 +1150,7 @@ TAO_CodeGen::end_server_header (void)
 
   // End versioned namespace support.  Do not place include directives
   // before this.
-  *this->server_header_ << TAO_END_VERSIONED_NAMESPACE_DECL;
+  *this->server_header_ << be_global->versioning_end ();
 
   // Insert the template header.
   if (be_global->gen_tie_classes ())
@@ -1201,7 +1192,7 @@ TAO_CodeGen::end_server_inline (void)
 
   // End versioned namespace support.  Do not place include directives
   // before this.
-  *this->server_inline_ << TAO_END_VERSIONED_NAMESPACE_DECL;
+  *this->server_inline_ << be_global->versioning_end ();
 }
 
 int
@@ -1261,7 +1252,7 @@ TAO_CodeGen::end_server_template_header (void)
 
   // End versioned namespace support.  Do not place include directives
   // before this.
-  *this->server_template_header_ << TAO_END_VERSIONED_NAMESPACE_DECL;
+  *this->server_template_header_ << be_global->versioning_end ();
 
   // Insert the code to include the inline file.
   *this->server_template_header_ << "#if defined (__ACE_INLINE__)";
@@ -1310,7 +1301,7 @@ TAO_CodeGen::end_server_template_inline (void)
 
   // End versioned namespace support.  Do not place include directives
   // before this.
-  *this->server_template_inline_ << TAO_END_VERSIONED_NAMESPACE_DECL;
+  *this->server_template_inline_ << be_global->versioning_end ();
 
   return 0;
 }
@@ -1320,7 +1311,7 @@ TAO_CodeGen::end_server_template_skeletons (void)
 {
   // End versioned namespace support.  Do not place include directives
   // before this.
-  *this->server_template_skeletons_ << TAO_END_VERSIONED_NAMESPACE_DECL;
+  *this->server_template_skeletons_ << be_global->versioning_end ();
 
   // Code to put the last #endif.
   *this->server_template_skeletons_ << "\n#endif /* ifndef */\n";
@@ -1333,7 +1324,7 @@ TAO_CodeGen::end_server_skeletons (void)
 {
   // End versioned namespace support.  Do not place include directives
   // before this.
-  *this->server_skeletons_ << TAO_END_VERSIONED_NAMESPACE_DECL;
+  *this->server_skeletons_ << be_global->versioning_end ();
 
   // Code to put the last #endif.
   *this->server_skeletons_ << "\n\n#endif /* ifndef */\n";
@@ -1346,7 +1337,7 @@ TAO_CodeGen::end_anyop_header (void)
 {
   // End versioned namespace support.  Do not place include directives
   // before this.
-  *this->anyop_header_ << TAO_END_VERSIONED_NAMESPACE_DECL;
+  *this->anyop_header_ << be_global->versioning_end ();
 
 
   if (be_global->post_include () != 0)
@@ -1367,7 +1358,7 @@ TAO_CodeGen::end_anyop_source (void)
 {
   // End versioned namespace support.  Do not place include directives
   // before this.
-  *this->anyop_source_ << TAO_END_VERSIONED_NAMESPACE_DECL;
+  *this->anyop_source_ << be_global->versioning_end ();
 
   *this->anyop_source_ << "\n";
 

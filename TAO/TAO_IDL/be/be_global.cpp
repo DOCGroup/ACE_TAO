@@ -45,6 +45,10 @@ BE_GlobalData::BE_GlobalData (void)
     pch_include_ (0),
     pre_include_ (0),
     post_include_ (0),
+    core_versioning_begin_ ("\nTAO_BEGIN_VERSIONED_NAMESPACE_DECL\n"),
+    core_versioning_end_   ("\nTAO_END_VERSIONED_NAMESPACE_DECL\n"),
+    versioning_begin_ (),
+    versioning_end_ (),
     client_hdr_ending_ (ACE::strnew ("C.h")),
     client_stub_ending_ (ACE::strnew ("C.cpp")),
     client_inline_ending_ (ACE::strnew ("C.inl")),
@@ -560,6 +564,54 @@ void
 BE_GlobalData::post_include (const char *s)
 {
   this->post_include_ = ACE_OS::strdup (s);
+}
+
+void
+BE_GlobalData::versioning_begin (const char * s)
+{
+  this->versioning_begin_ =
+    ACE_CString ("\n\n")
+    + ACE_CString (s)
+    + ACE_CString ("\n\n");
+
+  this->core_versioning_end_ += this->versioning_begin_;  // Yes, "begin".
+}
+
+const char *
+BE_GlobalData::versioning_begin (void) const
+{
+  return this->versioning_begin_.c_str ();
+}
+
+const char *
+BE_GlobalData::core_versioning_begin (void) const
+{
+  return this->core_versioning_begin_.c_str ();
+}
+
+void
+BE_GlobalData::versioning_end (const char * s)
+{
+  this->versioning_end_ =
+    ACE_CString ("\n\n")
+    + ACE_CString (s)
+    + ACE_CString ("\n\n");
+
+  this->core_versioning_begin_ =
+    this->versioning_end_  // Yes, "end".
+    + this->core_versioning_begin_;  // Initialized in constructor.
+}
+
+const char *
+BE_GlobalData::versioning_end (void) const
+{
+  return this->versioning_end_.c_str ();
+}
+
+const char *
+BE_GlobalData::core_versioning_end (void) const
+{
+  return this->core_versioning_end_.c_str ();
 }
 
 // Set the client_hdr_ending.
