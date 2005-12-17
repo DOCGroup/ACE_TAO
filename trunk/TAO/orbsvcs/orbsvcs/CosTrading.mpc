@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(CosTrading_IDL) : orbsvcslib, core {
+project(CosTrading_IDL) : orbsvcslib, core, tao_versioning_idl_defaults {
 
   custom_only = 1
 

@@ -206,9 +206,14 @@ public:
   // set the name of the include file to be put at the bottom of every
   // header file.
 
+#if (defined (ACE_HAS_VERSIONED_NAMESPACE)      \
+     && ACE_HAS_VERSIONED_NAMESPACE == 1)       \
+  || (defined (TAO_HAS_VERSIONED_NAMESPACE)      \
+     && TAO_HAS_VERSIONED_NAMESPACE == 1)
   /// Set text that opens a "versioned" namespace.
   void versioning_begin (const char* s);
-  
+#endif  /* ACE_HAS_VERSIONED_NAMESPACE || TAO_HAS_VERSIONED_NAMESPACE */  
+
   /// Get text that opens a "versioned" namespace.
   const char * versioning_begin (void) const;
 
@@ -216,9 +221,14 @@ public:
   /// related code.
   const char * core_versioning_begin (void) const;
 
+#if (defined (ACE_HAS_VERSIONED_NAMESPACE)      \
+     && ACE_HAS_VERSIONED_NAMESPACE == 1)       \
+  || (defined (TAO_HAS_VERSIONED_NAMESPACE)      \
+     && TAO_HAS_VERSIONED_NAMESPACE == 1)
   /// Set text that closes a "versioned" namespace.
   void versioning_end (const char* s);
-  
+#endif  /* ACE_HAS_VERSIONED_NAMESPACE || TAO_HAS_VERSIONED_NAMESPACE */
+
   /// Get text that closes a "versioned" namespace.
   const char * versioning_end (void) const;
 
@@ -542,19 +552,24 @@ private:
   char* pre_include_;
   char* post_include_;
 
-  /// Text that opens a "versioned" namespace for core TAO/orbsvcs
+  /// Text that opens a "versioned" namespace for core TAO and orbsvcs
   /// related code.
   ACE_CString core_versioning_begin_;
 
-  /// Text that closes a "versioned" namespace for core TAO/orbsvcs
-  /// related code.
+  /// Text that closes a "versioned" namespace for core TAO and
+  /// orbsvcs related code.
   ACE_CString core_versioning_end_;
-  
+
+#if (defined (ACE_HAS_VERSIONED_NAMESPACE)      \
+     && ACE_HAS_VERSIONED_NAMESPACE == 1)       \
+  || (defined (TAO_HAS_VERSIONED_NAMESPACE)      \
+     && TAO_HAS_VERSIONED_NAMESPACE == 1)  
   /// Text that opens a "versioned" namepace.
   ACE_CString versioning_begin_;
 
   /// Text that closes a "versioned" namepace.
   ACE_CString versioning_end_;
+#endif  /* ACE_HAS_VERSIONED_NAMESPACE || TAO_HAS_VERSIONED_NAMESPACE */
 
   // Client's header file name ending. Default is "C.h".
   char* client_hdr_ending_;
