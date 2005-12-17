@@ -310,6 +310,7 @@ namespace CIAO
 
     /// Create POA for the facets and consumers alone.
     void create_facet_consumer_POA (const char *name,
+                                    const CORBA::PolicyList *p,
                                     PortableServer::POA_ptr root
                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
