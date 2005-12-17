@@ -7,9 +7,6 @@ Fri Dec 16 18:06:27 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  Added missing code that sets versioned namespace opening and
 	  closing text.
 
-	  Disable some versioned namespace code when versioned namespaces
-	  are not enabled in ACE and TAO.
-
 	* TAO_IDL/be/be_visitor_union/any_op_ch.cpp:
 
 	  Fixed typo that caused generated versioned namespace to be
