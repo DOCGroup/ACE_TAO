@@ -47,13 +47,8 @@ BE_GlobalData::BE_GlobalData (void)
     post_include_ (0),
     core_versioning_begin_ ("\nTAO_BEGIN_VERSIONED_NAMESPACE_DECL\n"),
     core_versioning_end_   ("\nTAO_END_VERSIONED_NAMESPACE_DECL\n"),
-#if (defined (ACE_HAS_VERSIONED_NAMESPACE)      \
-     && ACE_HAS_VERSIONED_NAMESPACE == 1)       \
-  || (defined (TAO_HAS_VERSIONED_NAMESPACE)      \
-      && TAO_HAS_VERSIONED_NAMESPACE == 1)
     versioning_begin_ (),
     versioning_end_ (),
-#endif  /* ACE_HAS_VERSIONED_NAMESPACE || TAO_HAS_VERSIONED_NAMESPACE */
     client_hdr_ending_ (ACE::strnew ("C.h")),
     client_stub_ending_ (ACE::strnew ("C.cpp")),
     client_inline_ending_ (ACE::strnew ("C.inl")),
@@ -571,10 +566,6 @@ BE_GlobalData::post_include (const char *s)
   this->post_include_ = ACE_OS::strdup (s);
 }
 
-#if (defined (ACE_HAS_VERSIONED_NAMESPACE)      \
-     && ACE_HAS_VERSIONED_NAMESPACE == 1)       \
-  || (defined (TAO_HAS_VERSIONED_NAMESPACE)      \
-     && TAO_HAS_VERSIONED_NAMESPACE == 1)
 void
 BE_GlobalData::versioning_begin (const char * s)
 {
@@ -585,20 +576,11 @@ BE_GlobalData::versioning_begin (const char * s)
 
   this->core_versioning_end_ += this->versioning_begin_;  // Yes, "begin".
 }
-#endif  /* ACE_HAS_VERSIONED_NAMESPACE || TAO_HAS_VERSIONED_NAMESPACE */
 
 const char *
 BE_GlobalData::versioning_begin (void) const
 {
-#if (defined (ACE_HAS_VERSIONED_NAMESPACE)      \
-     && ACE_HAS_VERSIONED_NAMESPACE == 1)       \
-  || (defined (TAO_HAS_VERSIONED_NAMESPACE)      \
-     && TAO_HAS_VERSIONED_NAMESPACE == 1)
   return this->versioning_begin_.c_str ();
-#else
-  static char const empty_string[] = "";
-  return empty_string;
-#endif  /* ACE_HAS_VERSIONED_NAMESPACE || TAO_HAS_VERSIONED_NAMESPACE */
 }
 
 const char *
@@ -607,10 +589,6 @@ BE_GlobalData::core_versioning_begin (void) const
   return this->core_versioning_begin_.c_str ();
 }
 
-#if (defined (ACE_HAS_VERSIONED_NAMESPACE)      \
-     && ACE_HAS_VERSIONED_NAMESPACE == 1)       \
-  || (defined (TAO_HAS_VERSIONED_NAMESPACE)      \
-     && TAO_HAS_VERSIONED_NAMESPACE == 1)
 void
 BE_GlobalData::versioning_end (const char * s)
 {
@@ -623,20 +601,11 @@ BE_GlobalData::versioning_end (const char * s)
     this->versioning_end_  // Yes, "end".
     + this->core_versioning_begin_;  // Initialized in constructor.
 }
-#endif  /* ACE_HAS_VERSIONED_NAMESPACE || TAO_HAS_VERSIONED_NAMESPACE */
 
 const char *
 BE_GlobalData::versioning_end (void) const
 {
-#if (defined (ACE_HAS_VERSIONED_NAMESPACE)      \
-     && ACE_HAS_VERSIONED_NAMESPACE == 1)       \
-  || (defined (TAO_HAS_VERSIONED_NAMESPACE)      \
-     && TAO_HAS_VERSIONED_NAMESPACE == 1)
   return this->versioning_end_.c_str ();
-#else
-  static char const empty_string[] = "";
-  return empty_string;
-#endif  /* ACE_HAS_VERSIONED_NAMESPACE || TAO_HAS_VERSIONED_NAMESPACE */
 }
 
 const char *
@@ -1867,26 +1836,21 @@ BE_GlobalData::parse_args (long &i, char **av)
 void
 BE_GlobalData::prep_be_arg (char *s)
 {
-  static const char arg_macro[]         = "export_macro=";
-  static const char arg_include[]       = "export_include=";
-  static const char skel_arg_macro[]    = "skel_export_macro=";
-  static const char skel_arg_include[]  = "skel_export_include=";
-  static const char stub_arg_macro[]    = "stub_export_macro=";
-  static const char stub_arg_include[]  = "stub_export_include=";
-  static const char anyop_arg_macro[]   = "anyop_export_macro=";
-  static const char anyop_arg_include[] = "anyop_export_include=";
-  static const char arg_pch_include[]   = "pch_include=";
-  static const char arg_pre_include[]   = "pre_include=";
-  static const char arg_post_include[]  = "post_include=";
-  static const char obv_opt_accessor[]  = "obv_opt_accessor";
+  static const char arg_macro[]            = "export_macro=";
+  static const char arg_include[]          = "export_include=";
+  static const char skel_arg_macro[]       = "skel_export_macro=";
+  static const char skel_arg_include[]     = "skel_export_include=";
+  static const char stub_arg_macro[]       = "stub_export_macro=";
+  static const char stub_arg_include[]     = "stub_export_include=";
+  static const char anyop_arg_macro[]      = "anyop_export_macro=";
+  static const char anyop_arg_include[]    = "anyop_export_include=";
+  static const char arg_pch_include[]      = "pch_include=";
+  static const char arg_pre_include[]      = "pre_include=";
+  static const char arg_post_include[]     = "post_include=";
+  static const char arg_versioning_begin[] = "versioning_begin=";
+  static const char arg_versioning_end[]   = "versioning_end=";
+  static const char obv_opt_accessor[]     = "obv_opt_accessor";
 
-#if (defined (ACE_HAS_VERSIONED_NAMESPACE)      \
-     && ACE_HAS_VERSIONED_NAMESPACE == 1)       \
-  || (defined (TAO_HAS_VERSIONED_NAMESPACE)      \
-      && TAO_HAS_VERSIONED_NAMESPACE == 1)
-  static const char arg_versioning_begin[]  = "versioning_begin=";
-  static const char arg_versioning_end[]    = "versioning_end=";
-#endif  /* ACE_HAS_VERSIONED_NAMESPACE || TAO_HAS_VERSIONED_NAMESPACE */
 
   char* last = 0;
 
@@ -1955,10 +1919,6 @@ BE_GlobalData::prep_be_arg (char *s)
         {
           be_global->obv_opt_accessor (1);
         }
-#if (defined (ACE_HAS_VERSIONED_NAMESPACE)      \
-     && ACE_HAS_VERSIONED_NAMESPACE == 1)       \
-  || (defined (TAO_HAS_VERSIONED_NAMESPACE)      \
-      && TAO_HAS_VERSIONED_NAMESPACE == 1)
       else if (ACE_OS::strstr (arg, arg_versioning_begin) == arg)
         {
           char const * const val = arg + sizeof (arg_versioning_begin) - 1;
@@ -1969,7 +1929,6 @@ BE_GlobalData::prep_be_arg (char *s)
           char const * const val = arg + sizeof (arg_versioning_end) - 1;
           be_global->versioning_end (val);
         }
-#endif  /* ACE_HAS_VERSIONED_NAMESPACE || TAO_HAS_VERSIONED_NAMESPACE */
       else
         {
           ACE_ERROR ((LM_ERROR,
