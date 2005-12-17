@@ -125,6 +125,7 @@ namespace CIAO
     ACE_CString port_poa_name (name);
     port_poa_name += ":Port_POA";
     this->create_facet_consumer_POA (port_poa_name.c_str (),
+                                     more_policies,
                                      root_poa.in ()
                                      ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
@@ -172,6 +173,7 @@ namespace CIAO
   void
   Session_Container::create_facet_consumer_POA (
       const char *name,
+      const CORBA::PolicyList *p,
       PortableServer::POA_ptr root
       ACE_ENV_ARG_DECL)
   {
@@ -179,14 +181,25 @@ namespace CIAO
       root->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
-    TAO::Utils::PolicyList_Destroyer policies (3);
-    policies.length (3);
+    CORBA::ULong p_length;
+    if (p != 0)
+      {
+        p_length = p->length ();
+      }
+    else
+      {
+        p_length = 0;
+      }
+
+    TAO::Utils::PolicyList_Destroyer policies (p_length + 3);
+    policies.length (p_length + 3);
 
     policies[0] =
       root->create_id_assignment_policy (PortableServer::USER_ID
                                          ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
+    // Servant Manager Policy
     policies[1] =
       root->create_request_processing_policy 
           (PortableServer::USE_SERVANT_MANAGER
@@ -198,6 +211,11 @@ namespace CIAO
       root->create_servant_retention_policy (PortableServer::RETAIN
                                              ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
+
+    for (CORBA::ULong i = 0; i < p_length; ++i)
+      {
+        policies[i+3] = (*p)[i];
+      }
 
     this->facet_cons_poa_ =
       root->create_POA (name,
