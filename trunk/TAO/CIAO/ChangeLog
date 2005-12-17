@@ -1,3 +1,26 @@
+Fri Dec 16 15:58:27 2005  Gan Deng  <gan.deng@vanderbilt.edu>
+
+	* DAnCE/NodeApplicationManager/Containers_Info_Map.cpp
+
+	  Modified to fix a bug reported by Will Otte regarding
+	  DAnCE's parsing of deployment plan to find component
+	  servant and executor libraries. This is a temporary
+	  workaround so even if a component name happens to
+	  have "_exec" string inside it, DAnCE could still
+	  work correctly to find the corresponding servant
+	  and executor libraries.
+
+Fri Dec 16 14:57:21 2005  Gan Deng  <gan.deng@vanderbilt.edu>
+
+	* ciao/Container_Base.cpp
+	* ciao/Container_Base.h
+
+	  Fixed a bug about RT-CCM. The bug creeped out when the
+	  facet_consumer_poa_ is not configured properly to use
+	  application specific real-time policies. Thanks to
+	  Roland Schimmack <Roland.Schimmack @ gmx.de> for
+	  reporting this bug.
+
 Tue Dec 13 12:13:26 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* COPYING: Updated this file to mention compliance issues wrt the

@@ -220,7 +220,7 @@ namespace CIAO
     bool svnt_found = false;
     bool exec_found = false;
 
-    // For svnt artifact
+    // For svnt/exec artifacts
     for (CORBA::ULong j = 0; j < artifact_num; ++j)
       {
         const Deployment::ArtifactDeploymentDescription & arti =
@@ -235,7 +235,7 @@ namespace CIAO
         //         should have only 1 _svnt and 1 _exec libs.
         if (!svnt_found &&
                 ((pos  = tmp.find ("_svnt")) != ACE_CString::npos ||
-                (pos  = tmp.find ("_Svnt")) != ACE_CString::npos))
+                 (pos  = tmp.find ("_Svnt")) != ACE_CString::npos))
           {
             if (arti.location.length() < 1 )
               {
@@ -253,8 +253,8 @@ namespace CIAO
 		        const CORBA::ULong prop_length = arti.execParameter.length ();
 
             for (CORBA::ULong prop_num = 0;
-                prop_num < prop_length;
-                ++prop_num)
+                 prop_num < prop_length;
+                 ++prop_num)
               {
                 ACE_CString name (arti.execParameter[prop_num].name.in ());
                 if (name == ACE_CString ("entryPoint"))
@@ -269,13 +269,15 @@ namespace CIAO
                     ACE_DEBUG ((LM_DEBUG, "We only support entrypoint at this point in CIAO.\n"));
                   }
               }
+
+            continue; // continue for the next artifact
           }
 
         // As one can see, code is duplicated here. I will come back for this later.
         // For exec artifact
         if (!exec_found &&
                 ((pos  = tmp.find ("_exec")) != ACE_CString::npos ||
-                (pos  = tmp.find ("_Exec")) != ACE_CString::npos))
+                 (pos  = tmp.find ("_Exec")) != ACE_CString::npos))
           {
             if (arti.location.length() < 1 )
               {
@@ -293,8 +295,8 @@ namespace CIAO
             // Get the entry point.
             const CORBA::ULong prop_length = arti.execParameter.length ();
             for (CORBA::ULong prop_num = 0;
-                prop_num < prop_length;
-                ++prop_num)
+                 prop_num < prop_length;
+                 ++prop_num)
               {
                 ACE_CString name (arti.execParameter[prop_num].name.in ());
                 if (name == ACE_CString ("entryPoint"))
