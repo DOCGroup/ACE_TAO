@@ -1,3 +1,83 @@
+Fri Dec 16 18:06:27 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_global.cpp:
+	* TAO_IDL/be_include/be_global.h:
+	* TAO_IDL/driver/drv_args.cpp:
+
+	  Added missing code that sets versioned namespace opening and
+	  closing text.
+
+	  Disable some versioned namespace code when versioned namespaces
+	  are not enabled in ACE and TAO.
+
+	* TAO_IDL/be/be_visitor_union/any_op_ch.cpp:
+
+	  Fixed typo that caused generated versioned namespace to be
+	  reopened before it was closed.
+
+	* orbsvcs/orbsvcs/AV.mpc:
+	* orbsvcs/orbsvcs/CosConcurrency.mpc:
+	* orbsvcs/orbsvcs/CosEvent.mpc:
+	* orbsvcs/orbsvcs/CosLifeCycle.mpc:
+	* orbsvcs/orbsvcs/CosLoadBalancing.mpc:
+	* orbsvcs/orbsvcs/CosNaming.mpc:
+	* orbsvcs/orbsvcs/CosNotification.mpc:
+	* orbsvcs/orbsvcs/CosProperty.mpc:
+	* orbsvcs/orbsvcs/CosTime.mpc:
+	* orbsvcs/orbsvcs/CosTrading.mpc:
+	* orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
+	* orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+	* orbsvcs/orbsvcs/FTORB.mpc:
+	* orbsvcs/orbsvcs/FaultTolerance.mpc:
+	* orbsvcs/orbsvcs/FtRtEvent.mpc:
+	* orbsvcs/orbsvcs/HTIOP.mpc:
+	* orbsvcs/orbsvcs/PortableGroup.mpc:
+	* orbsvcs/orbsvcs/RTCosScheduling.mpc:
+	* orbsvcs/orbsvcs/RTEvent.mpc:
+	* orbsvcs/orbsvcs/RTEventLogAdmin.mpc:
+	* orbsvcs/orbsvcs/RTSched.mpc:
+	* orbsvcs/orbsvcs/RT_Notification.mpc:
+	* orbsvcs/orbsvcs/SSLIOP.mpc:
+	* orbsvcs/orbsvcs/Security.mpc:
+	* orbsvcs/orbsvcs/Svc_Utils.mpc:
+
+	  Core orbsvcs stubs/skeletons must have ability to support
+	  versioned namespaces.  IDL-capable MPC projects now inherit from
+	  the "tao_versioning_idl_defaults" MPC base project.
+
+	* tao/CONV_FRAME.pidl:
+	* tao/CharSeq.pidl:
+	* tao/Current.pidl:
+	* tao/Domain.pidl:
+	* tao/DoubleSeq.pidl:
+	* tao/FloatSeq.pidl:
+	* tao/GIOP.pidl:
+	* tao/IIOP.pidl:
+	* tao/AnyTypeCode/AnySeq.pidl:
+	* tao/AnyTypeCode/Bounds.pidl:
+	* tao/AnyTypeCode/Dynamic.pidl:
+	* tao/AnyTypeCode/Dynamic_Parameter.pidl:
+	* tao/AnyTypeCode/ValueModifier.pidl:
+	* tao/AnyTypeCode/Visibility.pidl:
+	* tao/BiDir_GIOP/BiDirPolicy.pidl:
+	* tao/CSD_Framework/CSD_Framework.pidl:
+	* tao/CodecFactory/IOP_Codec.pidl:
+	* tao/CodecFactory/IOP_Codec_include.pidl:
+	* tao/DynamicAny/DynamicAny.pidl:
+	* tao/IFR_Client/IFR_Base.pidl:
+	* tao/IFR_Client/IFR_Basic.pidl:
+	* tao/IFR_Client/IFR_Components.pidl:
+	* tao/IFR_Client/IFR_Extended.pidl:
+
+	  Added versioned namespace related TAO_IDL command line options
+	  to the stub/skeleton generation documentation.
+
+	* tests/Param_Test/results.h:
+
+	  Wrap forward declaration of class in CORBA namespace within a
+	  TAO versioned namespace since the core TAO library does so.
+
 Thu Dec 15 16:19:48 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_codegen.cpp:

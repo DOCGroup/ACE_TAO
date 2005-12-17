@@ -1,9 +1,9 @@
 // -*- MPC -*-
 // $Id$
 
-project(DsEventLogAdmin_IDL) : orbsvcslib, core, dslogadmin, event {
+project(DsEventLogAdmin_IDL) : orbsvcslib, core, dslogadmin, event, tao_versioning_idl_defaults {
 
-  custom_only = 1
+custom_only = 1
 
   idlflags += -Wb,stub_export_macro=TAO_EventLog_Export -Wb,stub_export_include=orbsvcs/Log/eventlog_export.h -Wb,skel_export_macro=TAO_EventLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/eventlog_skel_export.h
 
