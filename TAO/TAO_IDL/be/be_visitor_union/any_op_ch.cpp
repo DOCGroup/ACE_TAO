@@ -63,7 +63,7 @@ be_visitor_union_any_op_ch::visit_union (be_union *node)
   *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const "
       << node->name () << " *&);";
 
-  *os << be_global->core_versioning_begin () << be_nl;
+  *os << be_global->core_versioning_end () << be_nl;
 
   if (this->visit_scope (node) == -1)
     {

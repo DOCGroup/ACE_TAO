@@ -28,10 +28,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace CORBA
 {
   class Environment;
 }
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 class Results
 {

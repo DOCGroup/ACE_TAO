@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(DsNotifyLogAdmin_IDL) : orbsvcslib, core, dslogadmin, dseventlogadmin, event, notification {
+project(DsNotifyLogAdmin_IDL) : orbsvcslib, core, dslogadmin, dseventlogadmin, event, notification, tao_versioning_idl_defaults {
 
   custom_only = 1
 

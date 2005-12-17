@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(CosNotification_IDL) : orbsvcslib, core, event {
+project(CosNotification_IDL) : orbsvcslib, core, event, tao_versioning_idl_defaults {
 
   custom_only = 1
 
