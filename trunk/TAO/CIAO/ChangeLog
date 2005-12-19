@@ -1,40 +1,40 @@
 Fri Dec 16 15:58:27 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
-	* DAnCE/NodeApplicationManager/Containers_Info_Map.cpp
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp
 
-	  Modified to fix a bug reported by Will Otte regarding
-	  DAnCE's parsing of deployment plan to find component
-	  servant and executor libraries. This is a temporary
-	  workaround so even if a component name happens to
-	  have "_exec" string inside it, DAnCE could still
-	  work correctly to find the corresponding servant
-	  and executor libraries.
+          Modified to fix a bug reported by Will Otte regarding
+          DAnCE's parsing of deployment plan to find component
+          servant and executor libraries. This is a temporary
+          workaround so even if a component name happens to
+          have "_exec" string inside it, DAnCE could still
+          work correctly to find the corresponding servant
+          and executor libraries.
 
 Fri Dec 16 14:57:21 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
-	* ciao/Container_Base.cpp
-	* ciao/Container_Base.h
+        * ciao/Container_Base.cpp
+        * ciao/Container_Base.h
 
-	  Fixed a bug about RT-CCM. The bug creeped out when the
-	  facet_consumer_poa_ is not configured properly to use
-	  application specific real-time policies. Thanks to
-	  Roland Schimmack <Roland.Schimmack @ gmx.de> for
-	  reporting this bug.
+          Fixed a bug about RT-CCM. The bug creeped out when the
+          facet_consumer_poa_ is not configured properly to use
+          application specific real-time policies. Thanks to
+          Roland Schimmack <Roland.Schimmack @ gmx.de> for
+          reporting this bug.
 
 Tue Dec 13 12:13:26 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* COPYING: Updated this file to mention compliance issues wrt the
-	  new "The Energy Policy Act of 2005".  Thanks to Malcolm Spence
- 	  for providing this.
-  
+        * COPYING: Updated this file to mention compliance issues wrt the
+          new "The Energy Policy Act of 2005".  Thanks to Malcolm Spence
+          for providing this.
+
 Tue Dec 13 09:07:21 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* CCF/Documentation/Build.html
-	* CIDLC/README.html
+        * CCF/Documentation/Build.html
+        * CIDLC/README.html
 
-	Updates to the CIDLC build documentation.  Thanks to James  Hill
-	<hillj at isis dot vanderbilt dot edu> for completing this update.
-	
+        Updates to the CIDLC build documentation.  Thanks to James  Hill
+        <hillj at isis dot vanderbilt dot edu> for completing this update.
+        
 Mon Dec 12 13:20:00 UTC 2005  Simon Massey  <sma@prismtech.com>
 
         * NEWS:
@@ -43,34 +43,34 @@ Mon Dec 12 13:20:00 UTC 2005  Simon Massey  <sma@prismtech.com>
 
 Fri Dec  9 13:39:10 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* tools/Config_Handlers/Any_Handler.h
+        * tools/Config_Handlers/Any_Handler.h
 
-	Added a missing include for the versioned namespace macros.
+        Added a missing include for the versioned namespace macros.
 
 Fri Dec  9 09:18:01 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* ciao/Server_init.h
-	
-	Added a missing include for the versioned namespace macros.
-	
+        * ciao/Server_init.h
+        
+        Added a missing include for the versioned namespace macros.
+        
 Thu Dec 08 21:34:36 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
-	* NEWS
+        * NEWS
 
           Updated the NEWS file to capture ReDaC stuff.
 
 Thu Dec  8 15:38:02 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* DAnCE/Old_Config_Handlers/DT_Handler.h:
-	* ciao/Client_init.h:
-	* ciao/Context_Impl_T.h:
-	* ciao/Server_init.h:
-	* ciao/Upgradeable_Context_Impl_T.h:
-	* tools/Config_Handlers/Any_Handler.h:
+        * DAnCE/Old_Config_Handlers/DT_Handler.h:
+        * ciao/Client_init.h:
+        * ciao/Context_Impl_T.h:
+        * ciao/Server_init.h:
+        * ciao/Upgradeable_Context_Impl_T.h:
+        * tools/Config_Handlers/Any_Handler.h:
 
-	  Fixed versioned namespace support.  The versioning macros calls
-	  around forward declarations in the CORBA namespace were
-	  missing.
+          Fixed versioned namespace support.  The versioning macros calls
+          around forward declarations in the CORBA namespace were
+          missing.
 
 Thu Dec 08 08:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -79,32 +79,32 @@ Thu Dec 08 08:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Dec 07 18:05:35 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
-	* ciao/Deployment.idl
-	* ciao/Deployment_Core.idl
-	* doc/index.html
+        * ciao/Deployment.idl
+        * ciao/Deployment_Core.idl
+        * doc/index.html
 
-	Document CIAO specific interface extension/modifications.
+        Document CIAO specific interface extension/modifications.
 
 Wed Dec  7 12:41:22 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* CIDLC/ExecImplGenerator.cpp:
-	* CIDLC/ExecImplHeaderGenerator.cpp:
-	* CIDLC/ExecImplSourceGenerator.cpp:
-	* CIDLC/ExecutorMappingGenerator.cpp:
-	* CIDLC/ServantGenerator.cpp:
-	* CIDLC/ServantHeaderGenerator.cpp:
-	* CIDLC/ServantSourceGenerator.cpp:
-	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
+        * CIDLC/ExecImplGenerator.cpp:
+        * CIDLC/ExecImplHeaderGenerator.cpp:
+        * CIDLC/ExecImplSourceGenerator.cpp:
+        * CIDLC/ExecutorMappingGenerator.cpp:
+        * CIDLC/ServantGenerator.cpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        * CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
 
-	Fixed a bug in regular expressions that are used to get rid of
-	file suffixes.
+        Fixed a bug in regular expressions that are used to get rid of
+        file suffixes.
 
 Tue Dec 06 12:33:27 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp
-	* tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
+        * tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp
+        * tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
 
-	Fixed warnings in Borland.
+        Fixed warnings in Borland.
 
 Tue Dec  6 16:14:01 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -120,41 +120,41 @@ Tue Dec  6 16:14:01 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Dec  5 14:43:48 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/ExecutionManager/ExecutionManager.mpc
+        * DAnCE/ExecutionManager/ExecutionManager.mpc
 
-	Removed superfluous dependancy on Xerces.
+        Removed superfluous dependancy on Xerces.
 
 Sun Dec  4 11:13:32 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/StaticConfigurator/StaticDAnCEParser.mpc
-	* DAnCE/tests/Config_Handlers/handler_test.mpb
+        * DAnCE/StaticConfigurator/StaticDAnCEParser.mpc
+        * DAnCE/tests/Config_Handlers/handler_test.mpb
 
-	Fix linking errors on Tiger.
+        Fix linking errors on Tiger.
 
 Fri Dec  2 11:25:48 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/RepositoryManager/RepositoryManager.idl
-	* DAnCE/RepositoryManager/RepositoryManager.mpc
-	* DAnCE/RepositoryManager/RepositoryManager_Impl.cpp
-	* DAnCE/RepositoryManager/RepositoryManager_Impl.h
-	* DAnCE/RepositoryManager/Repository_Manager.cpp
-	* DAnCE/RepositoryManager/Repository_Manager_conf.h
-	* DAnCE/RepositoryManager/Update_Plan.cpp
-	* DAnCE/RepositoryManager/Update_Plan.h
+        * DAnCE/RepositoryManager/RepositoryManager.idl
+        * DAnCE/RepositoryManager/RepositoryManager.mpc
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.cpp
+        * DAnCE/RepositoryManager/RepositoryManager_Impl.h
+        * DAnCE/RepositoryManager/Repository_Manager.cpp
+        * DAnCE/RepositoryManager/Repository_Manager_conf.h
+        * DAnCE/RepositoryManager/Update_Plan.cpp
+        * DAnCE/RepositoryManager/Update_Plan.h
 
-	Removed the deprecated RepositoryManager implementation.
+        Removed the deprecated RepositoryManager implementation.
 
-	* NEWS
+        * NEWS
 
-	Updated the NEWS file to reflect this.
+        Updated the NEWS file to reflect this.
 
 Thu Dec  1 10:16:46 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* tools/Config_Handlers/Basic_Deployment_Data.hpp
-	* tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp
-	* tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp
+        * tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp
+        * tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
 
-	Fixed some errors caused by previous commit.
+        Fixed some errors caused by previous commit.
 
 Thu Dec  1 12:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -173,39 +173,39 @@ Thu Dec  1 12:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Nov 30 16:24:43 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* docs/schema/xsc-banner.h
+        * docs/schema/xsc-banner.h
 
-	Updated this file to reflect recent export macro changes.
+        Updated this file to reflect recent export macro changes.
 
-	* tools/Config_Handlers/Basic_Deployment_Data.cpp
-	* tools/Config_Handlers/Basic_Deployment_Data.hpp
-	* tools/Config_Handlers/Deployment.cpp
-	* tools/Config_Handlers/Deployment.hpp
-	* tools/Config_Handlers/ccd.cpp
-	* tools/Config_Handlers/ccd.hpp
-	* tools/Config_Handlers/cdp.cpp
-	* tools/Config_Handlers/cdp.hpp
-	* tools/Config_Handlers/cid.cpp
-	* tools/Config_Handlers/cid.hpp
-	* tools/Config_Handlers/cpd.cpp
-	* tools/Config_Handlers/cpd.hpp
-	* tools/Config_Handlers/iad.cpp
-	* tools/Config_Handlers/iad.hpp
-	* tools/Config_Handlers/pcd.cpp
-	* tools/Config_Handlers/pcd.hpp
-	* tools/Config_Handlers/toplevel.cpp
-	* tools/Config_Handlers/toplevel.hpp
-	* tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp
-	* tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
+        * tools/Config_Handlers/Basic_Deployment_Data.cpp
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp
+        * tools/Config_Handlers/Deployment.cpp
+        * tools/Config_Handlers/Deployment.hpp
+        * tools/Config_Handlers/ccd.cpp
+        * tools/Config_Handlers/ccd.hpp
+        * tools/Config_Handlers/cdp.cpp
+        * tools/Config_Handlers/cdp.hpp
+        * tools/Config_Handlers/cid.cpp
+        * tools/Config_Handlers/cid.hpp
+        * tools/Config_Handlers/cpd.cpp
+        * tools/Config_Handlers/cpd.hpp
+        * tools/Config_Handlers/iad.cpp
+        * tools/Config_Handlers/iad.hpp
+        * tools/Config_Handlers/pcd.cpp
+        * tools/Config_Handlers/pcd.hpp
+        * tools/Config_Handlers/toplevel.cpp
+        * tools/Config_Handlers/toplevel.hpp
+        * tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp
+        * tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
 
-	Made a borland specific fix apply to all compilers, hopefully
-	fixing ICC builds.
+        Made a borland specific fix apply to all compilers, hopefully
+        fixing ICC builds.
 
 Wed Nov 30 12:30:59 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* examples/Hello/descriptors/flattened_deploymentplan.cdp
+        * examples/Hello/descriptors/flattened_deploymentplan.cdp
 
-	Added metadata necessary to initialize an enum attribute.
+        Added metadata necessary to initialize an enum attribute.
 
 Wed Nov 30 08:06:00 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -222,38 +222,38 @@ Fri Nov 25 10:50:00 UTC 2005  Simon Massey  <sma@prismtech.com>
 
 Thu Nov 24 16:04:05 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
-	* tools/Config_Handlers/Config_Handlers.mpc
+        * tools/Config_Handlers/Config_Handlers.mpc
 
-	  Added the MPC base project dependency to typecodefactory,
-	  and hopefully this should fix some linking erros on the
-	  scoreboard.
+          Added the MPC base project dependency to typecodefactory,
+          and hopefully this should fix some linking erros on the
+          scoreboard.
 
 Thu Nov 24 11:25:09 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
-	* DAnCE/Old_Config_Handlers/XercesString.h
+        * DAnCE/Old_Config_Handlers/XercesString.h
 
-	  Fixed a warning, since declaring function return type
-	  to be const is meaningless.
+          Fixed a warning, since declaring function return type
+          to be const is meaningless.
 
 Tue Nov 22 16:03:24 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
-	* DAnCE/NodeApplication/Container_Impl.cpp
+        * DAnCE/NodeApplication/Container_Impl.cpp
 
-	  Fixed a memory management related bug, we should not
-	  explicitly call release() on the component object
-	  reference of var type.
+          Fixed a memory management related bug, we should not
+          explicitly call release() on the component object
+          reference of var type.
 
 Mon Nov 21 17:24:42 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* NEWS:
+        * NEWS:
 
-	Updated with information about changes in CCF.
+        Updated with information about changes in CCF.
 
 Fri Nov 18 10:28:31 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* performance-tests/Benchmark/RoundTrip/RoundTrip.mpc
+        * performance-tests/Benchmark/RoundTrip/RoundTrip.mpc
 
-	Quashed a link time warning on OS X.
+        Quashed a link time warning on OS X.
 
 Thu Nov 17 18:13:28 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -265,9 +265,9 @@ Thu Nov 17 18:13:28 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Nov 17 09:53:35 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
 
-	Fixed warning about unused arguments
+        Fixed warning about unused arguments
 
 Wed Nov 16 11:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -276,14 +276,14 @@ Wed Nov 16 11:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Nov 14 22:43:09 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
-	* DAnCE/ExecutionManager/Execution_Manager_Impl.cpp
-	* DAnCE/ExecutionManager/Execution_Manager_Impl.h
-	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
-	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h
-	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client_dynamic.cpp
-	* ciao/Deployment.idl
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.h
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_dynamic.cpp
+        * ciao/Deployment.idl
 
-	  Fixed some errors and warnings on the builds.
+          Fixed some errors and warnings on the builds.
 
 Mon Nov 14 11:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -304,42 +304,42 @@ Sun Nov 13 12:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Nov 11 17:49:40 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
-	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
-	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h
-	* DAnCE/ExecutionManager/Execution_Manager_Impl.cpp
-	* DAnCE/ExecutionManager/Execution_Manager_Impl.h
-	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
-	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h
-	* DAnCE/NodeManager/NodeManager_Impl.cpp
-	* DAnCE/NodeManager/NodeManager_Impl.h
-	* ciao/Deployment.idl
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.h
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h
+        * DAnCE/NodeManager/NodeManager_Impl.cpp
+        * DAnCE/NodeManager/NodeManager_Impl.h
+        * ciao/Deployment.idl
 
-	  More stuff regarding dynamic assembly management. These
-	  changes won't break existing initial deployment and
-	  configuration.
+          More stuff regarding dynamic assembly management. These
+          changes won't break existing initial deployment and
+          configuration.
 
 Fri Nov 11 12:37:00 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
-	* DAnCE/ExecutionManager/Execution_Manager_Impl.cpp
-	* DAnCE/ExecutionManager/Execution_Manager_Impl.h
-	* DAnCE/NodeApplication/NodeApplication_Impl.cpp
-	* DAnCE/NodeApplication/NodeApplication_Impl.h
-	* DAnCE/NodeManager/NodeManager_Impl.cpp
-	* DAnCE/NodeManager/NodeManager_Impl.h
-	* DAnCE/tests/NodeApplicationTest/NodeAppTest.mpc
-	* ciao/Deployment.idl
-	* ciao/Deployment_Core.idl
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.h
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp
+        * DAnCE/NodeApplication/NodeApplication_Impl.h
+        * DAnCE/NodeManager/NodeManager_Impl.cpp
+        * DAnCE/NodeManager/NodeManager_Impl.h
+        * DAnCE/tests/NodeApplicationTest/NodeAppTest.mpc
+        * ciao/Deployment.idl
+        * ciao/Deployment_Core.idl
 
-	  Added the DAnCE enhancements to support dynamic
-	  assembly management and reconfiguration. No actual
-	  implementation is there except some capability
-	  in NodeApplication_Impl servant class.
+          Added the DAnCE enhancements to support dynamic
+          assembly management and reconfiguration. No actual
+          implementation is there except some capability
+          in NodeApplication_Impl servant class.
 
 Thu Nov 10 17:13:20 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
-	* ciao/Servant_Activator.cpp
+        * ciao/Servant_Activator.cpp
 
-	  Enhanced a debug output message.
+          Enhanced a debug output message.
 
 Thu Nov 10 06:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -348,56 +348,56 @@ Thu Nov 10 06:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Nov  8 22:13:50 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/NodeManager/NodeManager_Impl.cpp
-	* ciao/Container_Base.cpp
-	* ciao/Servant_Impl_Base.cpp
-	* ciao/Swapping_Servant_Home_Impl_T.cpp
-	* ciao/Upgradeable_Context_Impl_T.cpp
-	* examples/BasicSP/EC/EC.mpc
+        * DAnCE/NodeManager/NodeManager_Impl.cpp
+        * ciao/Container_Base.cpp
+        * ciao/Servant_Impl_Base.cpp
+        * ciao/Swapping_Servant_Home_Impl_T.cpp
+        * ciao/Upgradeable_Context_Impl_T.cpp
+        * examples/BasicSP/EC/EC.mpc
 
-	Resolved some warnings in OS X relating to ambiguous conversions.
+        Resolved some warnings in OS X relating to ambiguous conversions.
 
 Mon Nov  7 16:23:41 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/ExecutionManager/ExecutionManager.mpc
-	* DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
-	* performance-tests/Benchmark/Benchmark.mpc
-	* performance-tests/Benchmark/RoundTripClient/RoundTripClient.mpc
-	* performance-tests/Benchmark/RoundTripServer/RoundTripServer.mpc
+        * DAnCE/ExecutionManager/ExecutionManager.mpc
+        * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
+        * performance-tests/Benchmark/Benchmark.mpc
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.mpc
+        * performance-tests/Benchmark/RoundTripServer/RoundTripServer.mpc
 
-	Resolving linking errors on OS X.
+        Resolving linking errors on OS X.
 
 Mon Nov  7 14:00:31 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
-	* NEWS: Added some new TO-DO items.
+        * NEWS: Added some new TO-DO items.
 
 Mon Nov 07 10:23:09 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
-	* DAnCE/NodeApplication/RTNodeApp_Configurator.cpp: Fixed
-	  incorrect usage of extracting a struct from an any.  Thanks much
-	  to Gan for helping with the debugging effort.
+        * DAnCE/NodeApplication/RTNodeApp_Configurator.cpp: Fixed
+          incorrect usage of extracting a struct from an any.  Thanks much
+          to Gan for helping with the debugging effort.
 
-	* examples/Hello/descriptors/rt_run_test.pl:
-	* examples/Hello/descriptors/rt-example.cdp: Enabled the use of RT
-	  policy sets and RT-enabled NodeApplication in the example by
-	  default.
+        * examples/Hello/descriptors/rt_run_test.pl:
+        * examples/Hello/descriptors/rt-example.cdp: Enabled the use of RT
+          policy sets and RT-enabled NodeApplication in the example by
+          default.
 
-	* DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp: Minor enhancement to
-	  the debug messages.
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp: Minor enhancement to
+          the debug messages.
 
 Fri Nov 04 16:44:29 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
-	* DAnCE/NodeApplicationManager/ImplementtionInfo.cpp
+        * DAnCE/NodeApplicationManager/ImplementtionInfo.cpp
 
-	  Changed to use the "copying" version of the Any insertion
-	  operator. Thanks Jeff Parsons for the help on this.
+          Changed to use the "copying" version of the Any insertion
+          operator. Thanks Jeff Parsons for the help on this.
 
 Thu Nov 03 15:34:39 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
-	* DAnCE/NodeApplicationManager/ImplementationInfo.cpp
+        * DAnCE/NodeApplicationManager/ImplementationInfo.cpp
 
-	  Fixed a bug which causes unknow exception when calling
-	  startLaunch on NodeApplicationManager.
+          Fixed a bug which causes unknow exception when calling
+          startLaunch on NodeApplicationManager.
 
 Thu Nov  3 19:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -410,155 +410,155 @@ Thu Nov  3 19:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Nov 03 11:14:52 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
-	* DAnCE/NodeApplication/RTConfig_Manager.cpp: Added a tad more and
-	  improve existing debugging print out.
+        * DAnCE/NodeApplication/RTConfig_Manager.cpp: Added a tad more and
+          improve existing debugging print out.
 
-	* examples/Hello/descriptors/rt-example.cdp:
-	* examples/Hello/descriptors/rt-config-example.csr:
-	* examples/Hello/descriptors/rt_run_test.pl: Changed to use a
-	  simpler version of DeploymentPlan for the test for now.
+        * examples/Hello/descriptors/rt-example.cdp:
+        * examples/Hello/descriptors/rt-config-example.csr:
+        * examples/Hello/descriptors/rt_run_test.pl: Changed to use a
+          simpler version of DeploymentPlan for the test for now.
 
 Wed Nov 02 19:28:14 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
-	* tools/Config_Handlers/RT-CCM/CB_Handler.cpp
-	* tools/Config_Handlers/RT-CCM/TPL_Handler.cpp
-	* tools/Config_Handlers/RT-CCM/PS_Handler.cpp
-	* DAnCE/NodeApplication/RTConfig_Manager.cpp:
+        * tools/Config_Handlers/RT-CCM/CB_Handler.cpp
+        * tools/Config_Handlers/RT-CCM/TPL_Handler.cpp
+        * tools/Config_Handlers/RT-CCM/PS_Handler.cpp
+        * DAnCE/NodeApplication/RTConfig_Manager.cpp:
 
-	  Fixed some bugs related to populating/displaying ServerResource
-	  data structure.
+          Fixed some bugs related to populating/displaying ServerResource
+          data structure.
 
 Wed Nov 02 14:55:14 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
-	* DAnCE/NodeApplication/RTNodeApp_Configurator.cpp: Fixed strings
-	  comparisons syntax.
+        * DAnCE/NodeApplication/RTNodeApp_Configurator.cpp: Fixed strings
+          comparisons syntax.
 
-	* DAnCE/NodeApplication/RTConfig_Manager.cpp:
-	* DAnCE/NodeApplication/RTConfig_Manager.h: Added a new
-	  print_resource method and a bunch of debugging print out to help
-	  debugging XML parsing and propagating.
+        * DAnCE/NodeApplication/RTConfig_Manager.cpp:
+        * DAnCE/NodeApplication/RTConfig_Manager.h: Added a new
+          print_resource method and a bunch of debugging print out to help
+          debugging XML parsing and propagating.
 
-	* examples/Hello/descriptors/RTsvc.conf:
-	* examples/Hello/descriptors/rt_run_test.pl: Added a RTsvc.conf
-	  file to start up the NodeApplication in RT mode.
+        * examples/Hello/descriptors/RTsvc.conf:
+        * examples/Hello/descriptors/rt_run_test.pl: Added a RTsvc.conf
+          file to start up the NodeApplication in RT mode.
 
-	* examples/Hello/descriptors/rt-config-example.csr: Made RT
-	  resource definitions more realistic and added a new policy set
-	  for debugging XML parsing.
+        * examples/Hello/descriptors/rt-config-example.csr: Made RT
+          resource definitions more realistic and added a new policy set
+          for debugging XML parsing.
 
 Wed Nov 02 07:09:10 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
-	* DAnCE/NodeApplicationManager/Containers_Info_Map.cpp: Fixed
-	  usage of strings.
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp: Fixed
+          usage of strings.
 
 Tue Nov 01 22:41:04 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
-	* DAnCE/NodeApplicationManager/Containers_Info_Map.cpp: Changed to
-	  insert policy set name into ContainerPolicySet property instead
-	  of the actual policy since we already have the policy set
-	  definitions when creating the NodeApplication.
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp: Changed to
+          insert policy set name into ContainerPolicySet property instead
+          of the actual policy since we already have the policy set
+          definitions when creating the NodeApplication.
 
 Tue Nov 01 13:44:58 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
-	* DAnCE/NodeApplication/RTConfig_Manager.cpp:
-	* DAnCE/NodeApplication/RTConfig_Manager.h:
-	* DAnCE/NodeApplication/RTConfig_Manager.inl:
-	* DAnCE/NodeApplication/RTNodeApp_Configurator.cpp:
-	* DAnCE/NodeApplication/RTNodeApp_Configurator.h: Integrated
-	  RTConfig_Manager with the RTNodeApp_Configurator.
+        * DAnCE/NodeApplication/RTConfig_Manager.cpp:
+        * DAnCE/NodeApplication/RTConfig_Manager.h:
+        * DAnCE/NodeApplication/RTConfig_Manager.inl:
+        * DAnCE/NodeApplication/RTNodeApp_Configurator.cpp:
+        * DAnCE/NodeApplication/RTNodeApp_Configurator.h: Integrated
+          RTConfig_Manager with the RTNodeApp_Configurator.
 
 Mon Oct 31 22:37:42 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
-	* DAnCE/NodeApplication/NodeApplication/NodeApplication.mpc:
-	* DAnCE/NodeApplication/NodeApplication/RTConfig_Manager.cpp:
-	* DAnCE/NodeApplication/NodeApplication/RTConfig_Manager.h:
-	* DAnCE/NodeApplication/NodeApplication/RTConfig_Manager.inl:
-	  Added the RT configuration manager that keep track of all the RT
-	  resources and policy sets in a NodeApplication.  We still need
-	  to hook this up in the RTNodeApp_Configurator.
+        * DAnCE/NodeApplication/NodeApplication/NodeApplication.mpc:
+        * DAnCE/NodeApplication/NodeApplication/RTConfig_Manager.cpp:
+        * DAnCE/NodeApplication/NodeApplication/RTConfig_Manager.h:
+        * DAnCE/NodeApplication/NodeApplication/RTConfig_Manager.inl:
+          Added the RT configuration manager that keep track of all the RT
+          resources and policy sets in a NodeApplication.  We still need
+          to hook this up in the RTNodeApp_Configurator.
 
 Mon Oct 31 11:22:41 2005    <Gan Deng@SKYLINENETGEAR>
 
-	* examples/Hello/descriptors/rt-config-example.csr
-	* DAnCE/NodeApplicationManager/Containers_Info_Map.cpp
-	* DAnCE/NodeApplicationManager/ImplementationInfo.cpp
+        * examples/Hello/descriptors/rt-config-example.csr
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp
+        * DAnCE/NodeApplicationManager/ImplementationInfo.cpp
 
-	  Fixed the descriptor by adding the server resource id tag.
+          Fixed the descriptor by adding the server resource id tag.
 
 Sun Oct 30 22:49:52 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
-	* DAnCE/NodeManager/Node_Manager.cpp: Fixed missing -a Get_Opt
-	  parameter and usage text.  "-a" is used to set the optional
-	  command line flags for the NodeApplication.  The logic was there
-	  in the Get_Opt loop but the Get_Opt object was not set to parse
-	  the flag and the usage text for Node_Manager didn't mention the
-	  flag either.
+        * DAnCE/NodeManager/Node_Manager.cpp: Fixed missing -a Get_Opt
+          parameter and usage text.  "-a" is used to set the optional
+          command line flags for the NodeApplication.  The logic was there
+          in the Get_Opt loop but the Get_Opt object was not set to parse
+          the flag and the usage text for Node_Manager didn't mention the
+          flag either.
 
-	  Eventually, the optional command line flags should really come
-	  from the ServerResource XML file.
+          Eventually, the optional command line flags should really come
+          from the ServerResource XML file.
 
-	* NodeApplicationManager/NodeApplicationManager_Impl.cpp: Added a
-	  missing space to separate optional command line flags from the
-	  default ones.  The old one worked only when no optional
-	  commandline flags are presented.
+        * NodeApplicationManager/NodeApplicationManager_Impl.cpp: Added a
+          missing space to separate optional command line flags from the
+          default ones.  The old one worked only when no optional
+          commandline flags are presented.
 
-	* ciao/Deployment_Core.idl: Removed "init" method from the
-	  Container interface since it is really implementation specific.
+        * ciao/Deployment_Core.idl: Removed "init" method from the
+          Container interface since it is really implementation specific.
 
-	* DAnCE/NodeApplication/Container_Impl.cpp:
-	* DAnCE/NodeApplication/Container_Impl.h: Changed the signature of
-	  init method to take a PolicyList pointer directly since this is
-	  what we really need to initialize a container.
+        * DAnCE/NodeApplication/Container_Impl.cpp:
+        * DAnCE/NodeApplication/Container_Impl.h: Changed the signature of
+          init method to take a PolicyList pointer directly since this is
+          what we really need to initialize a container.
 
-	* DAnCE/NodeApplication/Configurator_Factory.h: Added comments
-	  documentating how we should really support multiple external
-	  configurator module and how it could be done.
+        * DAnCE/NodeApplication/Configurator_Factory.h: Added comments
+          documentating how we should really support multiple external
+          configurator module and how it could be done.
 
-	* DAnCE/NodeApplication/Configurator_Factory.cpp: Changed DLL open
-	  to not closing down the DLL handle on exit.  Otherwise,
-	  NodeApplication can not shut down cleanly.
+        * DAnCE/NodeApplication/Configurator_Factory.cpp: Changed DLL open
+          to not closing down the DLL handle on exit.  Otherwise,
+          NodeApplication can not shut down cleanly.
 
-	* DAnCE/NodeApplication/NodeApp_Configurator.h: Commented on the
-	  potential need for a finalizer method, or two.
+        * DAnCE/NodeApplication/NodeApp_Configurator.h: Commented on the
+          potential need for a finalizer method, or two.
 
-	* DAnCE/NodeApplication/NodeApplication_Impl.cpp: Added actual
-	  hooks to process optional policies for RT support.
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp: Added actual
+          hooks to process optional policies for RT support.
 
-	* DAnCE/NodeApplication/RTNodeApp_Configurator.cpp: Added code to
-	  parse the optional properties and manipulate RT resources and
-	  policies.
+        * DAnCE/NodeApplication/RTNodeApp_Configurator.cpp: Added code to
+          parse the optional properties and manipulate RT resources and
+          policies.
 
 Sun Oct 30 10:27:27 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
-	* DAnCE/NodeApplication/Configurator_Factory.cpp: Fixed a typo in
-	  command line option flag.
+        * DAnCE/NodeApplication/Configurator_Factory.cpp: Fixed a typo in
+          command line option flag.
 
 Fri Oct 28 12:30:06 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/NodeApplication/Configurator_Factory.cpp
-	* DAnCE/NodeApplication/RTNodeApp_Configurator.cpp
-	* DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
+        * DAnCE/NodeApplication/Configurator_Factory.cpp
+        * DAnCE/NodeApplication/RTNodeApp_Configurator.cpp
+        * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
 
-	Scoreboard fixes.
+        Scoreboard fixes.
 
 Thu Oct 27 21:06:39 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* CCF/CCF/CodeGenerationKit/IndentationCxx.hpp:
+        * CCF/CCF/CodeGenerationKit/IndentationCxx.hpp:
 
-	  Added support for indentation of function arguments.
+          Added support for indentation of function arguments.
 
 Thu Oct 27 00:29:11 2005  Gan Deng <gan.deng@vanderbilt.edu>
 
-	* DAnCE/DomainApplicationManager/DomainApplicationManager.mpc
-	* DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
-	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
-	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h
-	* DAnCE/NodeApplicationManager/Containers_Info_Map.h
-	* DAnCE/NodeApplicationManager/ImplementationInfo.h
-	* DAnCE/StaticConfigurator/StaticDAnCEParser.mpc
+        * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc
+        * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.h
+        * DAnCE/NodeApplicationManager/ImplementationInfo.h
+        * DAnCE/StaticConfigurator/StaticDAnCEParser.mpc
 
-	  Fixed some compilation and linking errors shown on the scoreboard,
-	  particularly for Windows builds.
+          Fixed some compilation and linking errors shown on the scoreboard,
+          particularly for Windows builds.
 
 Thu Oct 27 07:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -578,131 +578,131 @@ Wed Oct 26 23:07:59 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Oct 26 16:16:32 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
-	* DAnCE/NodeApplication/NodeApp_Configurator.cpp:
-	* DAnCE/NodeApplication/NodeApp_Configurator.h: Updated the
-	  NodeApp_Configurator to support pre_orb_initialize and
-	  post_orb_initialize methods which will be invoked before and
-	  after ORB_init is called.
+        * DAnCE/NodeApplication/NodeApp_Configurator.cpp:
+        * DAnCE/NodeApplication/NodeApp_Configurator.h: Updated the
+          NodeApp_Configurator to support pre_orb_initialize and
+          post_orb_initialize methods which will be invoked before and
+          after ORB_init is called.
 
-	* DAnCE/NodeApplication/NodeApplication.cpp: Moved ORB_init into
-	  NodeApplication_Core object.
+        * DAnCE/NodeApplication/NodeApplication.cpp: Moved ORB_init into
+          NodeApplication_Core object.
 
-	* DAnCE/NodeApplication/NodeApplication_Core.cpp:
-	* DAnCE/NodeApplication/NodeApplication_Core.h:
-	* DAnCE/NodeApplication/NodeApplication_Core.inl: Moved the
-	  NodeApplication_Options and NoOp_Configurator classes into
-	  Configurator_Factory.* file.  Refactored NodeApplication_Core to
-	  enable pre_orb_initialize and post_orb_initialize.
+        * DAnCE/NodeApplication/NodeApplication_Core.cpp:
+        * DAnCE/NodeApplication/NodeApplication_Core.h:
+        * DAnCE/NodeApplication/NodeApplication_Core.inl: Moved the
+          NodeApplication_Options and NoOp_Configurator classes into
+          Configurator_Factory.* file.  Refactored NodeApplication_Core to
+          enable pre_orb_initialize and post_orb_initialize.
 
-	* DAnCE/NodeApplication/Configurator_Factory.cpp:
-	* DAnCE/NodeApplication/Configurator_Factory.h: Factored all the
-	  NodeApp_Configurtor creation strategies and NodeApplication
-	  configuration managements into these files.  It also includes
-	  the no-ops NodeApp_Configurator used by non-RT NodeApplication.
+        * DAnCE/NodeApplication/Configurator_Factory.cpp:
+        * DAnCE/NodeApplication/Configurator_Factory.h: Factored all the
+          NodeApp_Configurtor creation strategies and NodeApplication
+          configuration managements into these files.  It also includes
+          the no-ops NodeApp_Configurator used by non-RT NodeApplication.
 
-	  We should extend the argument parsing logic to support
-	  user-supplied NodeApp_Configurator at some point.
+          We should extend the argument parsing logic to support
+          user-supplied NodeApp_Configurator at some point.
 
-	* DAnCE/NodeApplication/NodeApplication.mpc:
-	* DAnCE/NodeApplication/RTNA_Configurator_Export.h:
-	* DAnCE/NodeApplication/RTNodeApp_Configurator.cpp:
-	* DAnCE/NodeApplication/RTNodeApp_Configurator.h: Added the
-	  dynamic library for real-time configuration.  The current
-	  implementation set up the NodeApplication process by enabling
-	  the RTCORBA support.  We still need to add the capability to
-	  parse and allocate RT resources and policies.
+        * DAnCE/NodeApplication/NodeApplication.mpc:
+        * DAnCE/NodeApplication/RTNA_Configurator_Export.h:
+        * DAnCE/NodeApplication/RTNodeApp_Configurator.cpp:
+        * DAnCE/NodeApplication/RTNodeApp_Configurator.h: Added the
+          dynamic library for real-time configuration.  The current
+          implementation set up the NodeApplication process by enabling
+          the RTCORBA support.  We still need to add the capability to
+          parse and allocate RT resources and policies.
 
 Wed Oct 26 18:37:00 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* CCF/CCF/IDL2/SemanticAction/Impl/Typedef.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Array.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/Elements.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Elements.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/Sequence.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/String.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/Union.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Typedef.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Array.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Elements.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Elements.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Sequence.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/String.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Union.hpp:
 
-	Corrected a left/right node mismatch in
-	type-arguments->specialization relation.
+        Corrected a left/right node mismatch in
+        type-arguments->specialization relation.
 
 Wed Oct 26 16:37:26 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* CCF/CCF/IDL2/SemanticAction/Impl/Typedef.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Typedef.cpp:
 
-	Clear array type before starting sequence, string, etc.,
-	declarations.
+        Clear array type before starting sequence, string, etc.,
+        declarations.
 
 Tue Oct 25 14:08:44 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* CCF/CCF/IDL2/Parser.cpp:
-	* CCF/CCF/IDL2/Parser.hpp:
-	* CCF/CCF/IDL2/SemanticGraph.hpp:
-	* CCF/CCF/IDL2/Traversal.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Typedef.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Typedef.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Typedef.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Union.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Array.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Array.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/Elements.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Elements.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/Sequence.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Sequence.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/String.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/String.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/Union.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Union.hpp:
-	* CCF/CCF/IDL2/Traversal/Array.cpp:
-	* CCF/CCF/IDL2/Traversal/Array.hpp:
-	* CCF/CCF/IDL2/Traversal/Elements.hpp:
-	* CCF/CCF/IDL2/Traversal/IntExpression.hpp:
-	* CCF/CCF/IDL2/Traversal/Sequence.cpp:
-	* CCF/CCF/IDL2/Traversal/Sequence.hpp:
-	* CCF/CCF/IDL2/Traversal/String.cpp:
-	* CCF/CCF/IDL2/Traversal/String.hpp:
+        * CCF/CCF/IDL2/Parser.cpp:
+        * CCF/CCF/IDL2/Parser.hpp:
+        * CCF/CCF/IDL2/SemanticGraph.hpp:
+        * CCF/CCF/IDL2/Traversal.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Typedef.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Typedef.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Typedef.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Union.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Array.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Array.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Elements.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Elements.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Sequence.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Sequence.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/String.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/String.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Union.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Union.hpp:
+        * CCF/CCF/IDL2/Traversal/Array.cpp:
+        * CCF/CCF/IDL2/Traversal/Array.hpp:
+        * CCF/CCF/IDL2/Traversal/Elements.hpp:
+        * CCF/CCF/IDL2/Traversal/IntExpression.hpp:
+        * CCF/CCF/IDL2/Traversal/Sequence.cpp:
+        * CCF/CCF/IDL2/Traversal/Sequence.hpp:
+        * CCF/CCF/IDL2/Traversal/String.cpp:
+        * CCF/CCF/IDL2/Traversal/String.hpp:
 
-	Implemented the second part of the const expression support.
-	This includes bounded sequences, strings, and arrays.
+        Implemented the second part of the const expression support.
+        This includes bounded sequences, strings, and arrays.
 
 Mon Oct 24 09:36:28 2005  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* docs/static_dance.html:
+        * docs/static_dance.html:
 
-	Corrected minor error with display of figures.
+        Corrected minor error with display of figures.
 
 Mon Oct 24 08:10:29 2005  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* DAnCE/NodeApplication/NodeApplication_Impl.{h,inl,cpp}:
-	* DAnCE/NodeApplication/Container_Impl.{h,inl,cpp}:
-	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.{cpp,inl,h}:
-	* DAnCE/NodeManager/NodeManager_Impl.{cpp,h}:
-	* DAnCE/NodeApplicationManager/NodeApplicationManager.mpc:
-	* DAnCE/NodeManager/NodeManager.mpc:
-	* DAnCE/StaticConfigurator/README:
-	* DAnCE/StaticConfigurator/StaticDAnCEParser.{cpp,mpc}:
-	* DAnCE/StaticConfigurator/StaticDAnCEApp.{cpp.tmpl,mpc.tmpl}:
-	* docs/static_dance.html:
-	* docs/imgs/dance_arch.{vsd,jpg}:
-	* docs/imgs/static_dance_arch.{vsd,jpg}:
-	* docs/imgs/static_dance_impl.{vsd,jpg}:
+        * DAnCE/NodeApplication/NodeApplication_Impl.{h,inl,cpp}:
+        * DAnCE/NodeApplication/Container_Impl.{h,inl,cpp}:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.{cpp,inl,h}:
+        * DAnCE/NodeManager/NodeManager_Impl.{cpp,h}:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc:
+        * DAnCE/NodeManager/NodeManager.mpc:
+        * DAnCE/StaticConfigurator/README:
+        * DAnCE/StaticConfigurator/StaticDAnCEParser.{cpp,mpc}:
+        * DAnCE/StaticConfigurator/StaticDAnCEApp.{cpp.tmpl,mpc.tmpl}:
+        * docs/static_dance.html:
+        * docs/imgs/dance_arch.{vsd,jpg}:
+        * docs/imgs/static_dance_arch.{vsd,jpg}:
+        * docs/imgs/static_dance_impl.{vsd,jpg}:
 
-	Added Static D&C capability to CIAO. See
-	  $CIAO_ROOT/docs/static_dance.html for further details.
+        Added Static D&C capability to CIAO. See
+          $CIAO_ROOT/docs/static_dance.html for further details.
 
 Fri Oct 21 13:58:13 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* tools/Config_Handlers/DynAny_Handler.mpc
+        * tools/Config_Handlers/DynAny_Handler.mpc
 
-	Modified to make this not build on systems built with minimum
-	corba.
+        Modified to make this not build on systems built with minimum
+        corba.
 
 Fri Oct 21 09:56:10 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
-	* DAnCE/RTNodeApplication/RTNodeApplication.mpc:  Removed the MPC
-	  file to prevent it from being built.
+        * DAnCE/RTNodeApplication/RTNodeApplication.mpc:  Removed the MPC
+          file to prevent it from being built.
 
-	* DAnCE/RTNodeApplication/REAME: Stated the directory has been
-	  depricated.
+        * DAnCE/RTNodeApplication/REAME: Stated the directory has been
+          depricated.
 
 Fri Oct 21 13:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -717,9 +717,9 @@ Fri Oct 21 10:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Oct 20 09:07:21 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
-	* DAnCE/NodeApplication/NodeApp_Configurator.{h,cpp}:
-	  Actually, destructors can be pure virtual.  They just can't be
-	  defined in header files.
+        * DAnCE/NodeApplication/NodeApp_Configurator.{h,cpp}:
+          Actually, destructors can be pure virtual.  They just can't be
+          defined in header files.
 
 Thu Oct 20 09:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -728,93 +728,93 @@ Thu Oct 20 09:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Oct 19 15:03:56 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
-	  These changes are made to add support for RT-capable
-	  NodeApplication.
+          These changes are made to add support for RT-capable
+          NodeApplication.
 
-	* ciao/CCM_Core.mpc:
-	* ciao/Container_Impl.h:
-	* ciao/Container_Impl.inl:
-	* ciao/Container_Impl.cpp:
-	* ciao/NodeApplication_Impl.h:
-	* ciao/NodeApplication_Impl.inl:
-	* ciao/NodeApplication_Impl.cpp: Moved NodeApplication and
-	  Container interface implementations under DAnCE/NodeApplication/
-	  subdir.  They are coupled with NodeApplication implementation
-	  now.
+        * ciao/CCM_Core.mpc:
+        * ciao/Container_Impl.h:
+        * ciao/Container_Impl.inl:
+        * ciao/Container_Impl.cpp:
+        * ciao/NodeApplication_Impl.h:
+        * ciao/NodeApplication_Impl.inl:
+        * ciao/NodeApplication_Impl.cpp: Moved NodeApplication and
+          Container interface implementations under DAnCE/NodeApplication/
+          subdir.  They are coupled with NodeApplication implementation
+          now.
 
-	* DAnCE/NodeApplication/NodeApplication.mpc: Changed to
-	  incorporate the following files/changes.
+        * DAnCE/NodeApplication/NodeApplication.mpc: Changed to
+          incorporate the following files/changes.
 
-	* DAnCE/NodeApplication/NodeApp_Configurator.h:
-	* DAnCE/NodeApplication/NodeApp_Configurator.cpp: Added abstract,
-	  base NodeApp_Configurator class to define the interface for
-	  configuring NodeApplication internal.
+        * DAnCE/NodeApplication/NodeApp_Configurator.h:
+        * DAnCE/NodeApplication/NodeApp_Configurator.cpp: Added abstract,
+          base NodeApp_Configurator class to define the interface for
+          configuring NodeApplication internal.
 
-	* DAnCE/NodeApplication/Container_Impl.h:
-	* DAnCE/NodeApplication/Container_Impl.inl:
-	* DAnCE/NodeApplication/Container_Impl.cpp: Moved from ciao/
-	  subdir.
+        * DAnCE/NodeApplication/Container_Impl.h:
+        * DAnCE/NodeApplication/Container_Impl.inl:
+        * DAnCE/NodeApplication/Container_Impl.cpp: Moved from ciao/
+          subdir.
 
-	* DAnCE/NodeApplication/NodeApplication_Impl.h:
-	* DAnCE/NodeApplication/NodeApplication_Impl.inl:
-	* DAnCE/NodeApplication/NodeApplication_Impl.cpp: Changed to
-	  depend on a concrete NodeApp_Configurator to perform the
-	  configuration.
+        * DAnCE/NodeApplication/NodeApplication_Impl.h:
+        * DAnCE/NodeApplication/NodeApplication_Impl.inl:
+        * DAnCE/NodeApplication/NodeApplication_Impl.cpp: Changed to
+          depend on a concrete NodeApp_Configurator to perform the
+          configuration.
 
-	* DAnCE/NodeApplication/NodeApplication_Core.h:
-	* DAnCE/NodeApplication/NodeApplication_Core.inl:
-	* DAnCE/NodeApplication/NodeApplication_Core.cpp:
-	* DAnCE/NodeApplication/NodeApplication.cpp:  Restructured the
-	  NodeApplication implementation so that the ORB event loop can be
-	  run on the main thread or on a separate thread, using the FIFO
-	  scheduling class.
+        * DAnCE/NodeApplication/NodeApplication_Core.h:
+        * DAnCE/NodeApplication/NodeApplication_Core.inl:
+        * DAnCE/NodeApplication/NodeApplication_Core.cpp:
+        * DAnCE/NodeApplication/NodeApplication.cpp:  Restructured the
+          NodeApplication implementation so that the ORB event loop can be
+          run on the main thread or on a separate thread, using the FIFO
+          scheduling class.
 
-	  A new create_configurator method in NodeApplication_Core will
-	  create the "right" concrete configurator based on the command
-	  line flags.  We will support a RT configuration soon.
-	  Currently, there's only a NoOp_Configurator for running
-	  NodeApplication without RT support.
+          A new create_configurator method in NodeApplication_Core will
+          create the "right" concrete configurator based on the command
+          line flags.  We will support a RT configuration soon.
+          Currently, there's only a NoOp_Configurator for running
+          NodeApplication without RT support.
 
-	  We will add the RT configuration as a dynamic library and will
-	  hook it up via ACE_DLL in a few days.
+          We will add the RT configuration as a dynamic library and will
+          hook it up via ACE_DLL in a few days.
 
 Tue Oct 18 16:50:24 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* NEWS
+        * NEWS
 
-	Updated release notes.
+        Updated release notes.
 
 Mon Oct 17 13:21:59 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* docs/schema/ccd.xsd
+        * docs/schema/ccd.xsd
 
-	Updated to work with expected format for Repoman/ComponentPackager
+        Updated to work with expected format for Repoman/ComponentPackager
 
 Fri Oct 14 17:22:59 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* tools/Config_Handlers/Basic_Deployment_Data.cpp
-	* tools/Config_Handlers/Basic_Deployment_Data.hpp
-	* tools/Config_Handlers/Deployment.cpp
-	* tools/Config_Handlers/Deployment.hpp
-	* tools/Config_Handlers/ccd.cpp
-	* tools/Config_Handlers/ccd.hpp
-	* tools/Config_Handlers/cdd.cpp
-	* tools/Config_Handlers/cdd.hpp
-	* tools/Config_Handlers/cdp.cpp
-	* tools/Config_Handlers/cdp.hpp
-	* tools/Config_Handlers/cid.cpp
-	* tools/Config_Handlers/cid.hpp
-	* tools/Config_Handlers/cpd.cpp
-	* tools/Config_Handlers/cpd.hpp
-	* tools/Config_Handlers/iad.cpp
-	* tools/Config_Handlers/iad.hpp
-	* tools/Config_Handlers/pcd.cpp
-	* tools/Config_Handlers/pcd.hpp
-	* tools/Config_Handlers/toplevel.cpp
-	* tools/Config_Handlers/toplevel.hpp
+        * tools/Config_Handlers/Basic_Deployment_Data.cpp
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp
+        * tools/Config_Handlers/Deployment.cpp
+        * tools/Config_Handlers/Deployment.hpp
+        * tools/Config_Handlers/ccd.cpp
+        * tools/Config_Handlers/ccd.hpp
+        * tools/Config_Handlers/cdd.cpp
+        * tools/Config_Handlers/cdd.hpp
+        * tools/Config_Handlers/cdp.cpp
+        * tools/Config_Handlers/cdp.hpp
+        * tools/Config_Handlers/cid.cpp
+        * tools/Config_Handlers/cid.hpp
+        * tools/Config_Handlers/cpd.cpp
+        * tools/Config_Handlers/cpd.hpp
+        * tools/Config_Handlers/iad.cpp
+        * tools/Config_Handlers/iad.hpp
+        * tools/Config_Handlers/pcd.cpp
+        * tools/Config_Handlers/pcd.hpp
+        * tools/Config_Handlers/toplevel.cpp
+        * tools/Config_Handlers/toplevel.hpp
 
-	Regerated with new version of XSC which implements some heavy
-	optimizations.
+        Regerated with new version of XSC which implements some heavy
+        optimizations.
 
 Fri Oct 14 14:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -840,12 +840,12 @@ Thu Oct 13 15:42:12 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 Wed Oct 12 14:13:09 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* examples/Hello/Sender/Sender.idl
-	* examples/Hello/Sender/Sender_exec.cpp
-	* examples/Hello/Sender/Sender_exec.h
-	* examples/Hello/descriptors/flattened_deploymentplan_without_ns.cdp
+        * examples/Hello/Sender/Sender.idl
+        * examples/Hello/Sender/Sender_exec.cpp
+        * examples/Hello/Sender/Sender_exec.h
+        * examples/Hello/descriptors/flattened_deploymentplan_without_ns.cdp
 
-	Example of initializing enumerated attributes.
+        Example of initializing enumerated attributes.
 
 Wed Oct 12 15:08:31 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -870,55 +870,55 @@ Wed Oct 12 08:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Oct 11 16:37:01 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* tools/Config_Handlers/Basic_Deployment_Data.cpp
-	* tools/Config_Handlers/Basic_Deployment_Data.hpp
-	* tools/Config_Handlers/Deployment.cpp
-	* tools/Config_Handlers/Deployment.hpp
-	* tools/Config_Handlers/ccd.cpp
-	* tools/Config_Handlers/ccd.hpp
-	* tools/Config_Handlers/cdd.cpp
-	* tools/Config_Handlers/cdd.hpp
-	* tools/Config_Handlers/cdp.cpp
-	* tools/Config_Handlers/cdp.hpp
-	* tools/Config_Handlers/cid.cpp
-	* tools/Config_Handlers/cid.hpp
-	* tools/Config_Handlers/cpd.cpp
-	* tools/Config_Handlers/cpd.hpp
-	* tools/Config_Handlers/iad.cpp
-	* tools/Config_Handlers/iad.hpp
-	* tools/Config_Handlers/pcd.cpp
-	* tools/Config_Handlers/pcd.hpp
-	* tools/Config_Handlers/toplevel.cpp
-	* tools/Config_Handlers/toplevel.hpp
-	* tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp
-	* tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
+        * tools/Config_Handlers/Basic_Deployment_Data.cpp
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp
+        * tools/Config_Handlers/Deployment.cpp
+        * tools/Config_Handlers/Deployment.hpp
+        * tools/Config_Handlers/ccd.cpp
+        * tools/Config_Handlers/ccd.hpp
+        * tools/Config_Handlers/cdd.cpp
+        * tools/Config_Handlers/cdd.hpp
+        * tools/Config_Handlers/cdp.cpp
+        * tools/Config_Handlers/cdp.hpp
+        * tools/Config_Handlers/cid.cpp
+        * tools/Config_Handlers/cid.hpp
+        * tools/Config_Handlers/cpd.cpp
+        * tools/Config_Handlers/cpd.hpp
+        * tools/Config_Handlers/iad.cpp
+        * tools/Config_Handlers/iad.hpp
+        * tools/Config_Handlers/pcd.cpp
+        * tools/Config_Handlers/pcd.hpp
+        * tools/Config_Handlers/toplevel.cpp
+        * tools/Config_Handlers/toplevel.hpp
+        * tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp
+        * tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
 
-	Fixed a bug which broke the gaurantee that element order in the
-	XSC type would be the same as the element order in the instance
-	document.
+        Fixed a bug which broke the gaurantee that element order in the
+        XSC type would be the same as the element order in the instance
+        document.
 
-	* tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp
-	* tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.cpp
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp
+        * tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.cpp
 
-	Fixed a runtime error and removed some debugging information.
+        Fixed a runtime error and removed some debugging information.
 
 Mon Oct 10 17:37:20 2005 Stoyan Paunov spaunov@isis.vanderbilt.edu
 
-	* DAnCE/spec_RepositoryManager/ZIP_Wrapper.cpp
+        * DAnCE/spec_RepositoryManager/ZIP_Wrapper.cpp
 
-	reverted a change we made earlier to accomodate older verisons of ZZIPLIB
+        reverted a change we made earlier to accomodate older verisons of ZZIPLIB
 
 
 Mon Oct 10 15:46:57 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/spec_RepositoryManager/RepositoryManager_Impl.cpp
-	* DAnCE/spec_RepositoryManager/ZIP_Wrapper.cpp
+        * DAnCE/spec_RepositoryManager/RepositoryManager_Impl.cpp
+        * DAnCE/spec_RepositoryManager/ZIP_Wrapper.cpp
 
-	Trivial corrections for portability problems.
+        Trivial corrections for portability problems.
 
-	* DAnCE/spec_RepositoryManager/spec_RepositoryManager.mpc
+        * DAnCE/spec_RepositoryManager/spec_RepositoryManager.mpc
 
-	Updated to properlly use base projects.
+        Updated to properlly use base projects.
 
 Mon Oct 10 20:07:39 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -935,128 +935,128 @@ Mon Oct 10 20:07:39 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Oct 10 15:05:00 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* docs/schema/Basic_Deployment_Data.xsd
-	* docs/schema/cdd.xsd
+        * docs/schema/Basic_Deployment_Data.xsd
+        * docs/schema/cdd.xsd
 
-	Checking in some updated schema for domain information.
+        Checking in some updated schema for domain information.
 
 Mon Oct 10 13:53:15 2005  Will Otte <wotte@dre.vanderbilt.edu>
 
-	* tools/Config_Handlers/Basic_Deployment_Data.hpp
-	* tools/Config_Handlers/Config_Handlers.mpc
-	* tools/Config_Handlers/Deployment.hpp
-	* tools/Config_Handlers/DynAny_Handler.mpc
-	* tools/Config_Handlers/IDREF_Base.h
-	* tools/Config_Handlers/XSC_XML_Handlers_Export.h
-	* tools/Config_Handlers/ccd.hpp
-	* tools/Config_Handlers/cdd.hpp
-	* tools/Config_Handlers/cdp.hpp
-	* tools/Config_Handlers/cid.hpp
-	* tools/Config_Handlers/cpd.hpp
-	* tools/Config_Handlers/iad.hpp
-	* tools/Config_Handlers/pcd.hpp
-	* tools/Config_Handlers/toplevel.hpp
-	* tools/Config_Handlers/DynAny_Handler/DynAny_Handler.h
-	* tools/Config_Handlers/DynAny_Handler/DynAny_Handler_Export.h
-	* tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.h
-	* tools/Config_Handlers/RT-CCM/CB_Handler.h
-	* tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
-	* tools/Config_Handlers/RT-CCM/CLA_Handler.h
-	* tools/Config_Handlers/RT-CCM/OC_Handler.h
-	* tools/Config_Handlers/RT-CCM/OR_Handler.h
-	* tools/Config_Handlers/RT-CCM/PM_Handler.h
-	* tools/Config_Handlers/RT-CCM/PS_Handler.h
-	* tools/Config_Handlers/RT-CCM/RT-CCM-Handlers.mpc
-	* tools/Config_Handlers/RT-CCM/RT_CCM_Handlers_Export.h
-	* tools/Config_Handlers/RT-CCM/SRD_Handler.h
-	* tools/Config_Handlers/RT-CCM/TPL_Handler.h
-	* tools/Config_Handlers/RT-CCM/TP_Handler.h
-	* tools/Config_Handlers/RT-CCM/input.csr
-	* tools/Config_Handlers/Utils/CIAO_XML_Utils_Export.h
-	* tools/Config_Handlers/Utils/Utils.mpc
-	* tools/Config_Handlers/Utils/XML_Error_Handler.h
-	* tools/Config_Handlers/Utils/XML_Helper.h
-	* tools/Config_Handlers/Utils/XML_Schema_Resolver.h
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp
+        * tools/Config_Handlers/Config_Handlers.mpc
+        * tools/Config_Handlers/Deployment.hpp
+        * tools/Config_Handlers/DynAny_Handler.mpc
+        * tools/Config_Handlers/IDREF_Base.h
+        * tools/Config_Handlers/XSC_XML_Handlers_Export.h
+        * tools/Config_Handlers/ccd.hpp
+        * tools/Config_Handlers/cdd.hpp
+        * tools/Config_Handlers/cdp.hpp
+        * tools/Config_Handlers/cid.hpp
+        * tools/Config_Handlers/cpd.hpp
+        * tools/Config_Handlers/iad.hpp
+        * tools/Config_Handlers/pcd.hpp
+        * tools/Config_Handlers/toplevel.hpp
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.h
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler_Export.h
+        * tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.h
+        * tools/Config_Handlers/RT-CCM/CB_Handler.h
+        * tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
+        * tools/Config_Handlers/RT-CCM/CLA_Handler.h
+        * tools/Config_Handlers/RT-CCM/OC_Handler.h
+        * tools/Config_Handlers/RT-CCM/OR_Handler.h
+        * tools/Config_Handlers/RT-CCM/PM_Handler.h
+        * tools/Config_Handlers/RT-CCM/PS_Handler.h
+        * tools/Config_Handlers/RT-CCM/RT-CCM-Handlers.mpc
+        * tools/Config_Handlers/RT-CCM/RT_CCM_Handlers_Export.h
+        * tools/Config_Handlers/RT-CCM/SRD_Handler.h
+        * tools/Config_Handlers/RT-CCM/TPL_Handler.h
+        * tools/Config_Handlers/RT-CCM/TP_Handler.h
+        * tools/Config_Handlers/RT-CCM/input.csr
+        * tools/Config_Handlers/Utils/CIAO_XML_Utils_Export.h
+        * tools/Config_Handlers/Utils/Utils.mpc
+        * tools/Config_Handlers/Utils/XML_Error_Handler.h
+        * tools/Config_Handlers/Utils/XML_Helper.h
+        * tools/Config_Handlers/Utils/XML_Schema_Resolver.h
 
-	Fixed messy export macro usage.  This will clean up builds on
-	Windows.
+        Fixed messy export macro usage.  This will clean up builds on
+        Windows.
 
 Sun Oct 9 19:22:44 CDT 2005 Stoyan Paunov spaunov@isis.vanderbilt.edu
 
-	* DAnCE/spec_RepositoryManager/RepositoryManager_Impl.cpp
-	* DAnCE/spec_RepositoryManager/spec_RepositoryManager.mpc
+        * DAnCE/spec_RepositoryManager/RepositoryManager_Impl.cpp
+        * DAnCE/spec_RepositoryManager/spec_RepositoryManager.mpc
 
-	Fixing a few includes after Will Otte's latest changes.
+        Fixing a few includes after Will Otte's latest changes.
 
 
 Sun Oct  9 09:51:41 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* tools/Config_Handlers/DynAny_Handler.mpc
+        * tools/Config_Handlers/DynAny_Handler.mpc
 
-	Moved this file down a level to make MPC stop complaining.
+        Moved this file down a level to make MPC stop complaining.
 
 Fri Oct  7 18:22:40 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* tools/Config_Handlers/Any_Handler.cpp
-	* tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp
-	* tools/Config_Handlers/DynAny_Handler/DynAny_Handler.h
-	* tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.cpp
+        * tools/Config_Handlers/Any_Handler.cpp
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.h
+        * tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.cpp
 
-	*Hopefully* fix compile problem on Windows.
+        *Hopefully* fix compile problem on Windows.
 
 Fri Oct  7 18:25:11 2005  Will Otte <wotte@dre.vanderbilt.edu>
 
-	* tools/Config_Handlers/ADD_Handler.cpp
-	* tools/Config_Handlers/DP_Handler.cpp
-	* tools/Config_Handlers/IDD_Handler.cpp
-	* tools/Config_Handlers/MDD_Handler.cpp
+        * tools/Config_Handlers/ADD_Handler.cpp
+        * tools/Config_Handlers/DP_Handler.cpp
+        * tools/Config_Handlers/IDD_Handler.cpp
+        * tools/Config_Handlers/MDD_Handler.cpp
 
-	Fix runtime error.
+        Fix runtime error.
 
 Fri Oct  7 16:18:40 2005  Will Otte <wotte@dre.vanderbilt.edu>
 
-	* tools/Config_Handlers/Config_Handlers.mpc
-	* tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.cpp
-	* tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.h
+        * tools/Config_Handlers/Config_Handlers.mpc
+        * tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.cpp
+        * tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.h
 
-	Fix for a compile problem.
+        Fix for a compile problem.
 
 Fri Oct  7 14:25:09 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
         * tools/Config_Handlers/DynAny_Handler/DataType_Handler.cpp
-	* tools/Config_Handlers/DynAny_Handler/DataType_Handler.h
-	* tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp
-	* tools/Config_Handlers/DynAny_Handler/DynAny_Handler.h
-	* tools/Config_Handlers/DynAny_Handler/DynAny_Handler.mpc
-	* tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.cpp
-	* tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.h
-	* tools/Config_Handlers/Any_Handler.cpp
+        * tools/Config_Handlers/DynAny_Handler/DataType_Handler.h
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.h
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.mpc
+        * tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.cpp
+        * tools/Config_Handlers/DynAny_Handler/DynEnum_Handler.h
+        * tools/Config_Handlers/Any_Handler.cpp
 
-	Add support for using Dynamic Any.  This will evolve in the coming
-	weeks into more complete support for complex types.
+        Add support for using Dynamic Any.  This will evolve in the coming
+        weeks into more complete support for complex types.
 
-	* tools/Config_Handlers/ADD_Handler.cpp
-	* tools/Config_Handlers/ADD_Handler.h
-	* tools/Config_Handlers/Basic_Deployment_Data.cpp
-	* tools/Config_Handlers/Basic_Deployment_Data.hpp
-	* tools/Config_Handlers/CCD_Handler.cpp
-	* tools/Config_Handlers/CCD_Handler.h
-	* tools/Config_Handlers/CEPE_Handler.cpp
-	* tools/Config_Handlers/CEPE_Handler.h
-	* tools/Config_Handlers/DP_Handler.cpp
-	* tools/Config_Handlers/DP_PCD_Handler.cpp
-	* tools/Config_Handlers/DP_PCD_Handler.h
-	* tools/Config_Handlers/ERE_Handler.cpp
-	* tools/Config_Handlers/ERE_Handler.h
-	* tools/Config_Handlers/ADD_Handler.cpp
-	* tools/Config_Handlers/IDD_Handler.h
-	* tools/Config_Handlers/MDD_Handler.cpp
-	* tools/Config_Handlers/MDD_Handler.h
-	* tools/Config_Handlers/PCD_Handler.cpp
-	* tools/Config_Handlers/PSPE_Handler.cpp
-	* tools/Config_Handlers/PSPE_Handler.h
+        * tools/Config_Handlers/ADD_Handler.cpp
+        * tools/Config_Handlers/ADD_Handler.h
+        * tools/Config_Handlers/Basic_Deployment_Data.cpp
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp
+        * tools/Config_Handlers/CCD_Handler.cpp
+        * tools/Config_Handlers/CCD_Handler.h
+        * tools/Config_Handlers/CEPE_Handler.cpp
+        * tools/Config_Handlers/CEPE_Handler.h
+        * tools/Config_Handlers/DP_Handler.cpp
+        * tools/Config_Handlers/DP_PCD_Handler.cpp
+        * tools/Config_Handlers/DP_PCD_Handler.h
+        * tools/Config_Handlers/ERE_Handler.cpp
+        * tools/Config_Handlers/ERE_Handler.h
+        * tools/Config_Handlers/ADD_Handler.cpp
+        * tools/Config_Handlers/IDD_Handler.h
+        * tools/Config_Handlers/MDD_Handler.cpp
+        * tools/Config_Handlers/MDD_Handler.h
+        * tools/Config_Handlers/PCD_Handler.cpp
+        * tools/Config_Handlers/PSPE_Handler.cpp
+        * tools/Config_Handlers/PSPE_Handler.h
 
-	Optimization made possible by improvements in XSC.
+        Optimization made possible by improvements in XSC.
 
 Fri Oct  7 14:20:36 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
@@ -1097,22 +1097,22 @@ Thu Oct  6 16:11:56 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
 Thu Oct  6 15:32:41 CDT 2005 Stoyan Paunov spaunov@isis.vanderbilt.edu
 
-	* DAnCE/spec_RepositoryManager/PC_Updater.cpp
-	* DAnCE/spec_RepositoryManager/PC_Updater.h
-	* DAnCE/spec_RepositoryManager/PC_Updater_T.cpp
-	* DAnCE/spec_RepositoryManager/PC_Updater_T.h
+        * DAnCE/spec_RepositoryManager/PC_Updater.cpp
+        * DAnCE/spec_RepositoryManager/PC_Updater.h
+        * DAnCE/spec_RepositoryManager/PC_Updater_T.cpp
+        * DAnCE/spec_RepositoryManager/PC_Updater_T.h
 
-	Added these files which implement a PackageConfiguration visitor.
-	The visitor helps deal with the internal complexity of the PackageConfiguration
-	and helps preseve my sanity ;)
+        Added these files which implement a PackageConfiguration visitor.
+        The visitor helps deal with the internal complexity of the PackageConfiguration
+        and helps preseve my sanity ;)
 
-	* DAnCE/spec_RepositoryManager/RepositoryManager_Impl.cpp
-	* DAnCE/spec_RepositoryManager/RepositoryManager_Impl.h
-	* DAnCE/spec_RepositoryManager/ZIP_Wrapper.cpp
-	* DAnCE/spec_RepositoryManager/ZIP_Wrapper.h
+        * DAnCE/spec_RepositoryManager/RepositoryManager_Impl.cpp
+        * DAnCE/spec_RepositoryManager/RepositoryManager_Impl.h
+        * DAnCE/spec_RepositoryManager/ZIP_Wrapper.cpp
+        * DAnCE/spec_RepositoryManager/ZIP_Wrapper.h
 
-	Some more code. With this the package distribution part of the RM
-	is ready. I still need to clean up a few details. This is coming soon.
+        Some more code. With this the package distribution part of the RM
+        is ready. I still need to clean up a few details. This is coming soon.
 
 
 Thu Oct  6 15:05:30 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
@@ -1156,47 +1156,47 @@ Thu Oct  6 08:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Oct  5 17:42:24 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* tools/Config_Handlers/Any_Handler.cpp
+        * tools/Config_Handlers/Any_Handler.cpp
 
-	Part of previous commit.
+        Part of previous commit.
 
 Wed Oct  5 17:07:07 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* docs/schema/Basic_Deployment_Data.xsd
-	* docs/schema/cdd.xsd
+        * docs/schema/Basic_Deployment_Data.xsd
+        * docs/schema/cdd.xsd
 
-	Moved recursive Domain data into cdd.xsd.  This will hopefully
-	lessen the time required to compile.
+        Moved recursive Domain data into cdd.xsd.  This will hopefully
+        lessen the time required to compile.
 
-	* tools/Config_Handlers/CPD_Handler.cpp
-	* tools/Config_Handlers/DataType_Handler.cpp
+        * tools/Config_Handlers/CPD_Handler.cpp
+        * tools/Config_Handlers/DataType_Handler.cpp
 
-	Fixed some potential run-time bugs in Borland.  Style
-	corrections.
+        Fixed some potential run-time bugs in Borland.  Style
+        corrections.
 
-	* tools/Config_Handlers/Basic_Deployment_Data.cpp
-	* tools/Config_Handlers/Basic_Deployment_Data.hpp
-	* tools/Config_Handlers/Deployment.cpp
-	* tools/Config_Handlers/Deployment.hpp
-	* tools/Config_Handlers/ccd.cpp
-	* tools/Config_Handlers/ccd.hpp
-	* tools/Config_Handlers/cdd.cpp
-	* tools/Config_Handlers/cdd.hpp
-	* tools/Config_Handlers/cdp.cpp
-	* tools/Config_Handlers/cdp.hpp
-	* tools/Config_Handlers/cid.cpp
-	* tools/Config_Handlers/cid.hpp
-	* tools/Config_Handlers/iad.cpp
-	* tools/Config_Handlers/iad.hpp
-	* tools/Config_Handlers/pcd.cpp
-	* tools/Config_Handlers/pcd.hpp
-	* tools/Config_Handlers/test.cdp
-	* tools/Config_Handlers/toplevel.cpp
-	* tools/Config_Handlers/toplevel.hpp
+        * tools/Config_Handlers/Basic_Deployment_Data.cpp
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp
+        * tools/Config_Handlers/Deployment.cpp
+        * tools/Config_Handlers/Deployment.hpp
+        * tools/Config_Handlers/ccd.cpp
+        * tools/Config_Handlers/ccd.hpp
+        * tools/Config_Handlers/cdd.cpp
+        * tools/Config_Handlers/cdd.hpp
+        * tools/Config_Handlers/cdp.cpp
+        * tools/Config_Handlers/cdp.hpp
+        * tools/Config_Handlers/cid.cpp
+        * tools/Config_Handlers/cid.hpp
+        * tools/Config_Handlers/iad.cpp
+        * tools/Config_Handlers/iad.hpp
+        * tools/Config_Handlers/pcd.cpp
+        * tools/Config_Handlers/pcd.hpp
+        * tools/Config_Handlers/test.cdp
+        * tools/Config_Handlers/toplevel.cpp
+        * tools/Config_Handlers/toplevel.hpp
 
-	Regerated with new version of XSC.  Major changes:
-	  * Now only one accessor and one mutator per document element
-	  * Changes in schema above.
+        Regerated with new version of XSC.  Major changes:
+          * Now only one accessor and one mutator per document element
+          * Changes in schema above.
 
 Wed Oct  5 14:44:31 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
@@ -1209,29 +1209,29 @@ Wed Oct  5 14:44:31 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
 Tue Oct  4 14:08:24 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* docs/schema/Basic_Deployment_Data.xsd
-	* docs/schema/unused_elements.xsd
-	* tools/Config_Handlers/Basic_Deployment_Data.cpp
-	* tools/Config_Handlers/Basic_Deployment_Data.hpp
+        * docs/schema/Basic_Deployment_Data.xsd
+        * docs/schema/unused_elements.xsd
+        * tools/Config_Handlers/Basic_Deployment_Data.cpp
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp
 
-	Updated to include domain information (ie, bridge, interconnect).
+        Updated to include domain information (ie, bridge, interconnect).
 
-	* tools/Config_Handlers/RT-CCM/SRD_Handler.h
+        * tools/Config_Handlers/RT-CCM/SRD_Handler.h
 
-	Cosmetic changes.
+        Cosmetic changes.
 
 Mon Oct  3 14:27:39 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* CIAO-INSTALL.html
+        * CIAO-INSTALL.html
 
-	Updated install documentation to reflect the restructuring.
+        Updated install documentation to reflect the restructuring.
 
 Mon Oct  3 12:48:26 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/DomainApplicationManager/DomainApplicationManager.mpc
-	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
 
-	Commented out some debugging information.
+        Commented out some debugging information.
 
 Mon Oct  3 15:44:15 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1242,26 +1242,26 @@ Mon Oct  3 15:44:15 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Oct  3 10:14:19 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
 
-	Corrected a bug in parameter checking.
+        Corrected a bug in parameter checking.
 
-	* DAnCE/NodeManager/Node_Manager.cpp
+        * DAnCE/NodeManager/Node_Manager.cpp
 
-	Added documentation for the -d command line options.
+        Added documentation for the -d command line options.
 
-	* tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp
-	* tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
-	* tools/Config_Handlers/RT-CCM/SRD_Handler.cpp
-	* tools/Config_Handlers/RT-CCM/SRD_Handler.h
+        * tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp
+        * tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
+        * tools/Config_Handlers/RT-CCM/SRD_Handler.cpp
+        * tools/Config_Handlers/RT-CCM/SRD_Handler.h
 
-	New functionality in the Config_Handlers.
+        New functionality in the Config_Handlers.
 
 Mon Oct  3 10:00:08 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* bin/valgrind_nodedaemon.py
+        * bin/valgrind_nodedaemon.py
 
-	Script to help launch nodemanager/nodeapplication under Valgrind.
+        Script to help launch nodemanager/nodeapplication under Valgrind.
 
 Mon Oct  3 000:31:09 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1304,44 +1304,44 @@ Friday Sep 30 15:12:43 2005  William Otte <wotte@dre.vanderbilt.edu>
 
 Fri Sep 30 15:11:47 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* NEWS
+        * NEWS
 
-	  Updated the NEWS file.
+          Updated the NEWS file.
 
 Fri Sep 30 07:53:47 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* tools/Config_Handlers/RT-CCM/SRD_Handler.cpp
+        * tools/Config_Handlers/RT-CCM/SRD_Handler.cpp
 
-	Should have been part of the previous commit.
+        Should have been part of the previous commit.
 
 Thu Sep 29 18:11:25 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
-	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
-	* ciao/Container_Impl.cpp
-	* ciao/NodeApplication_Impl.cpp
-	* ciao/Upgradeable_Context_Impl_T.cpp
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+        * ciao/Container_Impl.cpp
+        * ciao/NodeApplication_Impl.cpp
+        * ciao/Upgradeable_Context_Impl_T.cpp
 
-	Fuzz errors.
+        Fuzz errors.
 
-	* DAnCE/DomainApplicationManager/DomainApplicationManager.mpc
-	* tools/Config_Handlers/RT-CCM/Config_Handlers_Export.h
-	* tools/Config_Handlers/RT-CCM/SRD_Handler.h
-	* tools/Config_Handlers/Utils/Config_Handlers_Export.h
+        * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc
+        * tools/Config_Handlers/RT-CCM/Config_Handlers_Export.h
+        * tools/Config_Handlers/RT-CCM/SRD_Handler.h
+        * tools/Config_Handlers/Utils/Config_Handlers_Export.h
 
-	Correction for a emulated exception error.
+        Correction for a emulated exception error.
 
 Thu Sep 29 13:01:23 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* ciao/Version.h
+        * ciao/Version.h
 
-	Corrected the version number.
+        Corrected the version number.
 
 Thu Sep 29 11:34:55 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* ciao/Swapping_Servant_Home_Impl_T.cpp
+        * ciao/Swapping_Servant_Home_Impl_T.cpp
 
-	Fixed build problem on non-exception systems.
+        Fixed build problem on non-exception systems.
 
 Thu Sep 29 07:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1355,115 +1355,115 @@ Thu Sep 29 06:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Sep 28 16:44:39 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* docs/schema/CIAOServerResources.xsd
+        * docs/schema/CIAOServerResources.xsd
 
-	  Updated to support RT-CCM.
+          Updated to support RT-CCM.
 
 Wed Sep 28 14:44:39 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp
-	* tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
+        * tools/Config_Handlers/RT-CCM/CIAOServerResources.cpp
+        * tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
 
-	New version of the XSC including additional features needed for
-	RT-CCM.
+        New version of the XSC including additional features needed for
+        RT-CCM.
 
 Wed Sep 28 08:24:32 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* tools/Config_Handlers/Utils/Utils.mpc
-	* tools/Config_Handlers/Utils/XML_Helper.cpp
-	* tools/Config_Handlers/Utils/XML_Schema_Resolver.cpp
-	* tools/Config_Handlers/Utils/XML_Schema_Resolver.h
+        * tools/Config_Handlers/Utils/Utils.mpc
+        * tools/Config_Handlers/Utils/XML_Helper.cpp
+        * tools/Config_Handlers/Utils/XML_Schema_Resolver.cpp
+        * tools/Config_Handlers/Utils/XML_Schema_Resolver.h
 
-	Implemented a schema resolver so that the XML parser till grab the
-	schemata from $CIAO_ROOT/docs/schema.
+        Implemented a schema resolver so that the XML parser till grab the
+        schemata from $CIAO_ROOT/docs/schema.
 
-	* docs/tutorials/Quoter/Simple/descriptors/Deployment.xsd
-	* docs/tutorials/Quoter/Simple/descriptors/Modified_Deployment.xsd
-	* examples/BasicSP/descriptors/Deployment.xsd
-	* examples/Display/descriptors/Deployment.xsd
-	* examples/Display/descriptors/Modified_Deployment.xsd
-	* examples/Hello/descriptors/Deployment.xsd
-	* examples/Hello/descriptors/Modified_Deployment.xsd
-	* examples/Hello/descriptors/XMI.xsd
-	* examples/Hello/descriptors/Deployment.xsd
-	* examples/Hello/descriptors/Modified_Deployment.xsd
-	* examples/Hello/descriptors/XMI.xsd
+        * docs/tutorials/Quoter/Simple/descriptors/Deployment.xsd
+        * docs/tutorials/Quoter/Simple/descriptors/Modified_Deployment.xsd
+        * examples/BasicSP/descriptors/Deployment.xsd
+        * examples/Display/descriptors/Deployment.xsd
+        * examples/Display/descriptors/Modified_Deployment.xsd
+        * examples/Hello/descriptors/Deployment.xsd
+        * examples/Hello/descriptors/Modified_Deployment.xsd
+        * examples/Hello/descriptors/XMI.xsd
+        * examples/Hello/descriptors/Deployment.xsd
+        * examples/Hello/descriptors/Modified_Deployment.xsd
+        * examples/Hello/descriptors/XMI.xsd
 
-	Removed obsolete schemata.
+        Removed obsolete schemata.
 
-	* examples/Display/descriptors/flattened_deploymentplan.cdp
-	* examples/Hello/descriptors/flattened_deploymentplan.cdp
-	* examples/Hello/descriptors/flattened_deploymentplan_without_ns.cdp
-	* docs/tutorials/Quoter/Simple/descriptors/flattened_deploymentplan.cdp
+        * examples/Display/descriptors/flattened_deploymentplan.cdp
+        * examples/Hello/descriptors/flattened_deploymentplan.cdp
+        * examples/Hello/descriptors/flattened_deploymentplan_without_ns.cdp
+        * docs/tutorials/Quoter/Simple/descriptors/flattened_deploymentplan.cdp
 
-	Migrated these deployment plans to use Deployment.xsd and friends,
-	instead of Modified_Deployment.xsd.
+        Migrated these deployment plans to use Deployment.xsd and friends,
+        instead of Modified_Deployment.xsd.
 
-	* NEWS
+        * NEWS
 
-	Updated the NEWS to include this feature.
+        Updated the NEWS to include this feature.
 
 Tue Sep 27 13:16:43 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/ExecutionManager/ExecutionManager.mpc
-	* DAnCE/NodeApplication/NodeApplication.mpc
-	* DAnCE/NodeManager/NodeManager.mpc
-	* DAnCE/Old_Config_Handlers/Config_Handlers.mpc
-	* DAnCE/Plan_Launcher/Plan_Launcher.mpc
-	* DAnCE/RTNodeApplication/RTNodeApplication.mpc
-	* DAnCE/spec_RepositoryManager/spec_RepositoryManager.mpc
-	* RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc
-	* RACE/Output_Adapters/Base/Output_Adapter.mpc
-	* RACE/Planners/SimpleBinPacker/SimpleBinPacker.mpc
-	* ciao/CCM_Core.mpc
-	* examples/BasicSP/BasicSP.mpc
+        * DAnCE/ExecutionManager/ExecutionManager.mpc
+        * DAnCE/NodeApplication/NodeApplication.mpc
+        * DAnCE/NodeManager/NodeManager.mpc
+        * DAnCE/Old_Config_Handlers/Config_Handlers.mpc
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc
+        * DAnCE/RTNodeApplication/RTNodeApplication.mpc
+        * DAnCE/spec_RepositoryManager/spec_RepositoryManager.mpc
+        * RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc
+        * RACE/Output_Adapters/Base/Output_Adapter.mpc
+        * RACE/Planners/SimpleBinPacker/SimpleBinPacker.mpc
+        * ciao/CCM_Core.mpc
+        * examples/BasicSP/BasicSP.mpc
 
-	Fixed a large number of deficiencies in our build structure.
-	More changes to come later.
+        Fixed a large number of deficiencies in our build structure.
+        More changes to come later.
 
 Tue Sep 27 11:10:37 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* NEWS
+        * NEWS
 
-	Updated the news file.
+        Updated the news file.
 
 Tue Sep 27 10:51:20 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* bin/generate_component_mpc.pl
+        * bin/generate_component_mpc.pl
 
-	Updated this script to bring it in line with modern CIAO. This
-	includes:
+        Updated this script to bring it in line with modern CIAO. This
+        includes:
 
-	  - Base projects are now the _dnc variants
-	  - Export files are now automatically generated.
+          - Base projects are now the _dnc variants
+          - Export files are now automatically generated.
 
 Tue Sep 27 14:26:44 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
-	* CCF/CCF/IDL2/Parser.cpp:
-	* CCF/CCF/IDL2/Parser.hpp:
-	* CCF/CCF/IDL2/SemanticAction.hpp:
-	* CCF/CCF/IDL2/SemanticGraph.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Const.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Factory.hpp:
-	* CCF/CCF/IDL2/SemanticAction/NumericExpression.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Const.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Const.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Elements.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Factory.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/Factory.hpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/NumericExpression.cpp:
-	* CCF/CCF/IDL2/SemanticAction/Impl/NumericExpression.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/Elements.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/Elements.hpp:
-	* CCF/CCF/IDL2/SemanticGraph/IntExpression.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/IntExpression.hpp:
-	* CCF/CCF/IDL3/Parser.cpp:
-	* CCF/CCF/CIDL/Parser.cpp:
+        * CCF/CCF/IDL2/LexicalAnalyzer.cpp:
+        * CCF/CCF/IDL2/Parser.cpp:
+        * CCF/CCF/IDL2/Parser.hpp:
+        * CCF/CCF/IDL2/SemanticAction.hpp:
+        * CCF/CCF/IDL2/SemanticGraph.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Const.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Factory.hpp:
+        * CCF/CCF/IDL2/SemanticAction/NumericExpression.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Const.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Const.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Elements.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Factory.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/Factory.hpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/NumericExpression.cpp:
+        * CCF/CCF/IDL2/SemanticAction/Impl/NumericExpression.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/Elements.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/Elements.hpp:
+        * CCF/CCF/IDL2/SemanticGraph/IntExpression.cpp:
+        * CCF/CCF/IDL2/SemanticGraph/IntExpression.hpp:
+        * CCF/CCF/IDL3/Parser.cpp:
+        * CCF/CCF/CIDL/Parser.cpp:
 
-	Implemented first part of the const expression support. This
-	includes parser rules, semantic graph types and semantic
-	actions. Traversal types are still to be implemented.
+        Implemented first part of the const expression support. This
+        includes parser rules, semantic graph types and semantic
+        actions. Traversal types are still to be implemented.
 
 Tue Sep 27 06:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1483,18 +1483,18 @@ Mon Sep 26 11:06:40 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 Mon Sep 26 11:06:40 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/NodeApplicationManager/ImplementationInfo.cpp
-	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
-	* DAnCE/NodeManager/NodeManager_Impl.cpp
+        * DAnCE/NodeApplicationManager/ImplementationInfo.cpp
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+        * DAnCE/NodeManager/NodeManager_Impl.cpp
 
-	Cleared up some scoreboard errors.
+        Cleared up some scoreboard errors.
 
 Sat Sep 24 20:44:20 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* DAnCE/DomainApplicationManager/DomainApplicationManager.mpc
-	* tools/Config_Handlers/Config_Handlers.mpc
+        * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc
+        * tools/Config_Handlers/Config_Handlers.mpc
 
-	  Fixed linking errors.
+          Fixed linking errors.
 
 Sat Sep 24 08:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1503,162 +1503,162 @@ Sat Sep 24 08:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Sep 24 02:37:20 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* ciao/Deployment.idl
-	* ciao/Deployment_Core.idl
-	* ciao/ServerResources.idl
+        * ciao/Deployment.idl
+        * ciao/Deployment_Core.idl
+        * ciao/ServerResources.idl
 
-	  Enhanced to support RT-CCM feature.
+          Enhanced to support RT-CCM feature.
 
-	* DAnCE/NodeApplicationManager/ImplementationInfo.cpp
-	* DAnCE/NodeApplicationManager/ImplementationInfo.h
-	* DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
-	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
-	* DAnCE/NodeApplicationManager/Containers_Info_Map.cpp
-	* DAnCE/NodeApplicationManager/Containers_Info_Map.h
+        * DAnCE/NodeApplicationManager/ImplementationInfo.cpp
+        * DAnCE/NodeApplicationManager/ImplementationInfo.h
+        * DAnCE/NodeApplicationManager/NodeApplicationManager.mpc
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.h
 
-	  Refactor the NodeApplicationManager to populate the correct
-	  node level deployment plan info, while taking into account
-	  of the RT-CCM feature.
+          Refactor the NodeApplicationManager to populate the correct
+          node level deployment plan info, while taking into account
+          of the RT-CCM feature.
 
-	* ciao/NodeApplication_Impl.cpp
-	* ciao/NodeApplication_Impl.h
+        * ciao/NodeApplication_Impl.cpp
+        * ciao/NodeApplication_Impl.h
 
-	  Modified to accomodate the change in IDL files.
+          Modified to accomodate the change in IDL files.
 
-	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp
-	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp
-	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp
 
-	  Fixed these tests to make them run with the modified IDL
-	  files.
+          Fixed these tests to make them run with the modified IDL
+          files.
 
-	* DAnCE/examples/Hello/descriptors/rt-config-example.csr
-	* DAnCE/examples/Hello/descriptors/rt-config-example.cdp
+        * DAnCE/examples/Hello/descriptors/rt-config-example.csr
+        * DAnCE/examples/Hello/descriptors/rt-config-example.cdp
 
-	  An example descriptor files to describe server resource,
-	  and associate server resources and policy set defs with
-	  the deployment plan.
+          An example descriptor files to describe server resource,
+          and associate server resources and policy set defs with
+          the deployment plan.
 
-	  NOTE: All above code are tested working fine with the existing
-	  examples.
+          NOTE: All above code are tested working fine with the existing
+          examples.
 
 Fri Sep 23 10:05:18 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/tests/NodeApplicationTest/NodeAppTest.mpc
-	* tools/Config_Handlers/Config_Handlers.mpc
+        * DAnCE/tests/NodeApplicationTest/NodeAppTest.mpc
+        * tools/Config_Handlers/Config_Handlers.mpc
 
-	  fixes for build problems.
+          fixes for build problems.
 
 Thu Sep 22 16:21:12 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* DAnCE/NodeManager/NodeManager_Impl.cpp
+        * DAnCE/NodeManager/NodeManager_Impl.cpp
 
-	  Added error report message from the tool.
+          Added error report message from the tool.
 
-	* ciao/Container_Base.cpp
+        * ciao/Container_Base.cpp
 
-	  Cosmetic change.
+          Cosmetic change.
 
 Thu Sep 22 14:45:32 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* tools/Config_Handlers/Config_Handlers.mpc
-	* tools/Config_Handlers/STD_CID_Handler.cpp
-	* tools/Config_Handlers/STD_CID_Handler.h
-	* tools/Config_Handlers/STD_CPD_Handler.cpp
-	* tools/Config_Handlers/STD_CPD_Handler.h
-	* tools/Config_Handlers/STD_PCD_Handler.cpp
-	* tools/Config_Handlers/STD_PCD_Handler.h
-	* tools/Config_Handlers/STD_PC_Intf.cpp
-	* tools/Config_Handlers/XML_File_Intf.cpp
-	* tools/Config_Handlers/RT-CCM/SRD_Handler.h
-	* tools/Config_Handlers/RT-CCM/RT-CCM-Handlers.mpc
+        * tools/Config_Handlers/Config_Handlers.mpc
+        * tools/Config_Handlers/STD_CID_Handler.cpp
+        * tools/Config_Handlers/STD_CID_Handler.h
+        * tools/Config_Handlers/STD_CPD_Handler.cpp
+        * tools/Config_Handlers/STD_CPD_Handler.h
+        * tools/Config_Handlers/STD_PCD_Handler.cpp
+        * tools/Config_Handlers/STD_PCD_Handler.h
+        * tools/Config_Handlers/STD_PC_Intf.cpp
+        * tools/Config_Handlers/XML_File_Intf.cpp
+        * tools/Config_Handlers/RT-CCM/SRD_Handler.h
+        * tools/Config_Handlers/RT-CCM/RT-CCM-Handlers.mpc
 
-	Made these files consistent with the new Utils directory.
+        Made these files consistent with the new Utils directory.
 
-	* tools/Config_Handlers/Utils/Utils.mpc
-	* tools/Config_Handlers/Utils/XML_Error_Handler.cpp
-	* tools/Config_Handlers/Utils/XML_Error_Handler.h
-	* tools/Config_Handlers/Utils/XML_Helper.cpp
-	* tools/Config_Handlers/Utils/XML_Helper.h
-	* tools/Config_Handlers/Utils/XercesString.cpp
-	* tools/Config_Handlers/Utils/XercesString.h
+        * tools/Config_Handlers/Utils/Utils.mpc
+        * tools/Config_Handlers/Utils/XML_Error_Handler.cpp
+        * tools/Config_Handlers/Utils/XML_Error_Handler.h
+        * tools/Config_Handlers/Utils/XML_Helper.cpp
+        * tools/Config_Handlers/Utils/XML_Helper.h
+        * tools/Config_Handlers/Utils/XercesString.cpp
+        * tools/Config_Handlers/Utils/XercesString.h
 
-	Moved common XML  utilities to a separate directory.
+        Moved common XML  utilities to a separate directory.
 
 Thu Sep 22 13:21:12 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* ciao/CCM_Core.mpc
-	* DAnCE/DomainApplicationManager/DomainApplicationManager.mpc
-	* tools/Config_Handlers/RT-CCM/RT-CCM-Handlers.mpc
+        * ciao/CCM_Core.mpc
+        * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc
+        * tools/Config_Handlers/RT-CCM/RT-CCM-Handlers.mpc
 
-	  Put the ServerResources.idl into Deployment_stub project. Modified
-	  other MPC project files to reflect this change.
+          Put the ServerResources.idl into Deployment_stub project. Modified
+          other MPC project files to reflect this change.
 
-	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
 
-	  Pass the infoProperty which contains the entire server resource
-	  definitions to each individual child deployment plans.
+          Pass the infoProperty which contains the entire server resource
+          definitions to each individual child deployment plans.
 
-	* DAnCE/NodeManager/NodeManager_Impl.cpp
-	* DAnCE/NodeManager/NodeManager_Impl.h
+        * DAnCE/NodeManager/NodeManager_Impl.cpp
+        * DAnCE/NodeManager/NodeManager_Impl.h
 
-	  NodeManager now validates the correctness of the individual local
-	  dpeloyment plan. In particular,  it tries to verify that all the
-	  component instances within this child deployment plan have the same
-	  "server_resource_id" assigned.
+          NodeManager now validates the correctness of the individual local
+          dpeloyment plan. In particular,  it tries to verify that all the
+          component instances within this child deployment plan have the same
+          "server_resource_id" assigned.
 
-	* DAnCE/tests/NodeApplicationTest/NodeAppTest.mpc
-	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client_dynamic.cpp
+        * DAnCE/tests/NodeApplicationTest/NodeAppTest.mpc
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_dynamic.cpp
 
-	  Added a NodeApplication test case, where multiple components could
-	  be installed one-by-one through a serious of "install" invocations.
+          Added a NodeApplication test case, where multiple components could
+          be installed one-by-one through a serious of "install" invocations.
 
-	* examples/Hello/descriptors/flattened_deploymentplan_without_ns.cdp
+        * examples/Hello/descriptors/flattened_deploymentplan_without_ns.cdp
 
-	  Fixed a typo.
+          Fixed a typo.
 
 
 
 Thu Sep 22 12:26:45 CDT 2005 Stoyan spaunov@isis.vanderbilt.edu
 
-	* DAnCE/spec_RepositoryManager/
-	* DAnCE/new_RepositoryManager/
+        * DAnCE/spec_RepositoryManager/
+        * DAnCE/new_RepositoryManager/
 
-	Added the former, removed the latter.
+        Added the former, removed the latter.
 
 
 Thu Sep 22 10:50:45 CDT 2005 Stoyan spaunov@isis.vanderbilt.edu
 
 
-	* DAnCE/spec_RepositoryManager/HTTP_Client.cpp
-	* DAnCE/spec_RepositoryManager/HTTP_Client.h
-	* DAnCE/spec_RepositoryManager/HTTP_Handler.cpp
-	* DAnCE/spec_RepositoryManager/HTTP_Handler.h
-	* DAnCE/spec_RepositoryManager/Options.cpp
-	* DAnCE/spec_RepositoryManager/Options.h
-	* DAnCE/spec_RepositoryManager/README.txt
-	* DAnCE/spec_RepositoryManager/RepositoryManager.cpp
-	* DAnCE/spec_RepositoryManager/RepositoryManager.idl
-	* DAnCE/spec_RepositoryManager/RepositoryManager_Impl.cpp
-	* DAnCE/spec_RepositoryManager/RepositoryManager_Impl.h
-	* DAnCE/spec_RepositoryManager/RMadmin.cpp
-	* DAnCE/spec_RepositoryManager/RM_Helper.cpp
-	* DAnCE/spec_RepositoryManager/RM_Helper.h
-	* DAnCE/spec_RepositoryManager/spec_RepositoryManager.mpc
-	* DAnCE/spec_RepositoryManager/spec_RepositoryManager.ncb
-	* DAnCE/spec_RepositoryManager/URL_Parser.cpp
-	* DAnCE/spec_RepositoryManager/URL_Parser.h
-	* DAnCE/spec_RepositoryManager/ZIP_Wrapper.cpp
-	* DAnCE/spec_RepositoryManager/ZIP_Wrapper.h
+        * DAnCE/spec_RepositoryManager/HTTP_Client.cpp
+        * DAnCE/spec_RepositoryManager/HTTP_Client.h
+        * DAnCE/spec_RepositoryManager/HTTP_Handler.cpp
+        * DAnCE/spec_RepositoryManager/HTTP_Handler.h
+        * DAnCE/spec_RepositoryManager/Options.cpp
+        * DAnCE/spec_RepositoryManager/Options.h
+        * DAnCE/spec_RepositoryManager/README.txt
+        * DAnCE/spec_RepositoryManager/RepositoryManager.cpp
+        * DAnCE/spec_RepositoryManager/RepositoryManager.idl
+        * DAnCE/spec_RepositoryManager/RepositoryManager_Impl.cpp
+        * DAnCE/spec_RepositoryManager/RepositoryManager_Impl.h
+        * DAnCE/spec_RepositoryManager/RMadmin.cpp
+        * DAnCE/spec_RepositoryManager/RM_Helper.cpp
+        * DAnCE/spec_RepositoryManager/RM_Helper.h
+        * DAnCE/spec_RepositoryManager/spec_RepositoryManager.mpc
+        * DAnCE/spec_RepositoryManager/spec_RepositoryManager.ncb
+        * DAnCE/spec_RepositoryManager/URL_Parser.cpp
+        * DAnCE/spec_RepositoryManager/URL_Parser.h
+        * DAnCE/spec_RepositoryManager/ZIP_Wrapper.cpp
+        * DAnCE/spec_RepositoryManager/ZIP_Wrapper.h
 
 
-	Checked in these file and cleaned up *some* of the underlying mess due to previous
-	mix-ups. Many of the files are new. Some are newer versions of older files.
-	Previously there were 2 RM directories spec_RepositoryManager and
-	new_RepositoryManager. Someone had removed the spec* verion and checked in the
-	wrong files in the new* version (which used to be a non-spec compilent impl).
-	Apparently on top of that the two directories have been linked somehow! I will
-	check on what the reason for this is later.
+        Checked in these file and cleaned up *some* of the underlying mess due to previous
+        mix-ups. Many of the files are new. Some are newer versions of older files.
+        Previously there were 2 RM directories spec_RepositoryManager and
+        new_RepositoryManager. Someone had removed the spec* verion and checked in the
+        wrong files in the new* version (which used to be a non-spec compilent impl).
+        Apparently on top of that the two directories have been linked somehow! I will
+        check on what the reason for this is later.
 
 
 Thu Sep 22 13:15:28 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -1669,42 +1669,42 @@ Thu Sep 22 13:15:28 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Sep 21 15:32:38 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
-	* DAnCE/ExecutionManager/Execution_Manager.cpp
-	* DAnCE/ExecutionManager/Execution_Manager_Impl.cpp
-	* DAnCE/NodeApplication/NodeApplication.cpp
-	* DAnCE/RTNodeApplication/NodeApplication_Task.cpp
-	* DAnCE/RepositoryManager/Repository_Manager.cpp
-	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp
-	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp
-	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp
-	* ciao/Container_Base.cpp
-	* ciao/Container_Impl.cpp
-	* ciao/Servant_Activator.cpp
-	* ciao/Servant_Impl_T.cpp
-	* ciao/Swapping_Container.cpp
-	* ciao/Swapping_Servant_Home_Impl_T.cpp
-	* ciao/Upgradeable_Context_Impl_T.cpp
-	* docs/templates/CIAO_Glue_Session_Template.cpp
-	* examples/Hello/Sender/Sender_exec.cpp
-	* examples/Swapping/Receiver/Receiver_exec.cpp
-	* examples/Swapping/Sender/Sender_exec.cpp
-	* examples/Swapping/Sender/Sender_exec_1.cpp
-	* examples/Swapping/Sender/Sender_exec_2.cpp
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        * DAnCE/ExecutionManager/Execution_Manager.cpp
+        * DAnCE/ExecutionManager/Execution_Manager_Impl.cpp
+        * DAnCE/NodeApplication/NodeApplication.cpp
+        * DAnCE/RTNodeApplication/NodeApplication_Task.cpp
+        * DAnCE/RepositoryManager/Repository_Manager.cpp
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp
+        * DAnCE/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp
+        * ciao/Container_Base.cpp
+        * ciao/Container_Impl.cpp
+        * ciao/Servant_Activator.cpp
+        * ciao/Servant_Impl_T.cpp
+        * ciao/Swapping_Container.cpp
+        * ciao/Swapping_Servant_Home_Impl_T.cpp
+        * ciao/Upgradeable_Context_Impl_T.cpp
+        * docs/templates/CIAO_Glue_Session_Template.cpp
+        * examples/Hello/Sender/Sender_exec.cpp
+        * examples/Swapping/Receiver/Receiver_exec.cpp
+        * examples/Swapping/Sender/Sender_exec.cpp
+        * examples/Swapping/Sender/Sender_exec_1.cpp
+        * examples/Swapping/Sender/Sender_exec_2.cpp
 
-	Fixed numerous emulated exception errors.
+        Fixed numerous emulated exception errors.
 
-	* DAnCE/ExecutionManager/ExecutionManager_Impl.cpp
-	* DAnCE/ExecutionManager/ExecutionManager_Impl.h
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.cpp
+        * DAnCE/ExecutionManager/ExecutionManager_Impl.h
 
-	removed obsolete EM implementation.
+        removed obsolete EM implementation.
 
 Wed Sep 21 13:34:28 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* tools/Config_Handlers/RT-CCM/test.cpp
+        * tools/Config_Handlers/RT-CCM/test.cpp
 
-	  Modified so the output XML file is based on the XSC dom document
-	  instead from the input file directly.
+          Modified so the output XML file is based on the XSC dom document
+          instead from the input file directly.
 
 Tue Sep 20 21:58:23 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1719,250 +1719,250 @@ Tue Sep 20 02:25:34 2005  William Otte  <wotte@dre.vanderbilt.edu>
         * tools/Config_Handlers/Config_Handlers.mpc
 
           Quick fix for a build problem on Windows.  A better solution
- 	  will follow when I check in my CIAO build system revamp.
+          will follow when I check in my CIAO build system revamp.
 
 Tue Sep 20 10:19:46 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* tools/Config_Handlers/test.cdp
+        * tools/Config_Handlers/test.cdp
 
-	A test deployment plan file that contains odd constructs.
-	Used for testing.
+        A test deployment plan file that contains odd constructs.
+        Used for testing.
 
 Tue Sep 20 10:07:43 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/new_RepositoryManager/new_RepositoryManager.mpc
+        * DAnCE/new_RepositoryManager/new_RepositoryManager.mpc
 
-	Added a missing library.
+        Added a missing library.
 
 Tue Sep 20 09:50:28 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
 
-	  Modified to kill all NodeApplication processes when the deployment fails.
+          Modified to kill all NodeApplication processes when the deployment fails.
 
 Tue Sep 20 09:35:28 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/Plan_Launcher/Plan_Launcher.mpc
+        * DAnCE/Plan_Launcher/Plan_Launcher.mpc
 
-	Added a missing library.
+        Added a missing library.
 
 Mon Sep 19 16:29:57 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* ADD_Handler.cpp
-	* Common.h
-	* IDD_Handler.cpp
-	* IDD_Handler.h
-	* IDREF_Base.cpp
-	* IDREF_Base.h
-	* IRDD_Handler.cpp
-	* IRDD_Handler.h
-	* MDD_Handler.cpp
-	* PSPE_Handler.cpp
-	* STD_CID_Handler.cpp
-	* XML_Error_Handler.cpp
+        * ADD_Handler.cpp
+        * Common.h
+        * IDD_Handler.cpp
+        * IDD_Handler.h
+        * IDREF_Base.cpp
+        * IDREF_Base.h
+        * IRDD_Handler.cpp
+        * IRDD_Handler.h
+        * MDD_Handler.cpp
+        * PSPE_Handler.cpp
+        * STD_CID_Handler.cpp
+        * XML_Error_Handler.cpp
 
-	Added some improved error handling/reporting. Much more to come.
+        Added some improved error handling/reporting. Much more to come.
 
-	* test.cpp
-	* RT-CCM/RT-CCM-Handlers.mpc
-	* RT-CCM/SRD_Handler.cpp
-	* RT-CCM/SRD_Handler.h
-	* Config_Handlers.mpc
-	* DP_Handler.cpp
+        * test.cpp
+        * RT-CCM/RT-CCM-Handlers.mpc
+        * RT-CCM/SRD_Handler.cpp
+        * RT-CCM/SRD_Handler.h
+        * Config_Handlers.mpc
+        * DP_Handler.cpp
 
-	Added hooks for parsing ServerResources document into a deployment
-	plan.
+        Added hooks for parsing ServerResources document into a deployment
+        plan.
 
-	This is activated by adding an InfoProperty with name
-	"CIAOServerResources" with a value of a valid CSR file.
+        This is activated by adding an InfoProperty with name
+        "CIAOServerResources" with a value of a valid CSR file.
 
-	Also enabled parsing of deployRequirements and infoProperties.
+        Also enabled parsing of deployRequirements and infoProperties.
 
 Mon Sep 19 10:55:05 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* RACE/Input_Adapters/Base/Input_Adapter.mpc
-	* RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc
-	* RACE/Output_Adapters/Base/Output_Adapter.mpc
-	* RACE/Output_Adapters/Interface/Output_Adapter_Interface.mpc
-	* RACE/Output_Adapters/XML_Output_Adapter/XML_Output_Adapter.mpc
-	* RACE/Plan_Analyzer/Component/Plan_Analyzer.mpc
-	* RACE/Plan_Analyzer/Interface/Plan_Analyzer_Interface.mpc
-	* RACE/Planner_Manager/Component/Planner_Manager.mpc
-	* RACE/Planner_Manager/Interface/Planner_Manager_Interface.mpc
-	* RACE/Planners/Base/Planner.mpc
-	* RACE/Planners/Interface/Planner_Interface.mpc
-	* RACE/Planners/SimpleBinPacker/SimpleBinPacker.mpc
-	* RACE/common/RACE_common.mpc
-	* tools/Config_Handlers/RT-CCM/CLA_Handler.h
-	* tools/Config_Handlers/RT-CCM/OC_Handler.cpp
-	* tools/Config_Handlers/RT-CCM/OR_Handler.cpp
-	* tools/Config_Handlers/RT-CCM/OR_Handler.h
+        * RACE/Input_Adapters/Base/Input_Adapter.mpc
+        * RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc
+        * RACE/Output_Adapters/Base/Output_Adapter.mpc
+        * RACE/Output_Adapters/Interface/Output_Adapter_Interface.mpc
+        * RACE/Output_Adapters/XML_Output_Adapter/XML_Output_Adapter.mpc
+        * RACE/Plan_Analyzer/Component/Plan_Analyzer.mpc
+        * RACE/Plan_Analyzer/Interface/Plan_Analyzer_Interface.mpc
+        * RACE/Planner_Manager/Component/Planner_Manager.mpc
+        * RACE/Planner_Manager/Interface/Planner_Manager_Interface.mpc
+        * RACE/Planners/Base/Planner.mpc
+        * RACE/Planners/Interface/Planner_Interface.mpc
+        * RACE/Planners/SimpleBinPacker/SimpleBinPacker.mpc
+        * RACE/common/RACE_common.mpc
+        * tools/Config_Handlers/RT-CCM/CLA_Handler.h
+        * tools/Config_Handlers/RT-CCM/OC_Handler.cpp
+        * tools/Config_Handlers/RT-CCM/OR_Handler.cpp
+        * tools/Config_Handlers/RT-CCM/OR_Handler.h
 
-	Misc fuzz fixes.
+        Misc fuzz fixes.
 
 Fri Sep 16 09:54:44 2005  William Otte  <wotte@william-ottes-powerbook-g4-15.local>
 
-	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
-	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h
-	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
 
-	Emulated exception fixes.
+        Emulated exception fixes.
 
 Thu Sep 15 07:29:03 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* TAO/CIAO/examples/Hello/descriptors/NodeManagerMap.dat: Make sure
-	  there's a newline at the end of this file.  Thanks to Zachi
- 	  Klopman <zklopman@gmail.com> for reporting this.
+        * TAO/CIAO/examples/Hello/descriptors/NodeManagerMap.dat: Make sure
+          there's a newline at the end of this file.  Thanks to Zachi
+          Klopman <zklopman@gmail.com> for reporting this.
 
 Thu Sep 15 11:20:20 2005 CSET William Otte  <wotte@dre.vanderbilt.edu>
 
 
-	* ciao/Container_Base.cpp
+        * ciao/Container_Base.cpp
 
-	Fix for compile error on platforms with emulated exceptions.
+        Fix for compile error on platforms with emulated exceptions.
 
 Wed Sep 14 13:25:00 CEST 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc
+        * RACE/Input_Adapters/Interactive_Input_Adapter/Interactive_Input_Adapter.mpc
 
-	Fix for a library ordering problem.
+        Fix for a library ordering problem.
 
 Wed Sep 14 11:18:42 2005 CEST William Otte  <wotte@william-ottes-powerbook-g4-15.local>
 
-	* tools/Config_Handlers/CIAOServerResources.cpp
-	* tools/Config_Handlers/CIAOServerResources.hpp
+        * tools/Config_Handlers/CIAOServerResources.cpp
+        * tools/Config_Handlers/CIAOServerResources.hpp
 
-	Removed these from the repo to avoid confusion.
+        Removed these from the repo to avoid confusion.
 
-	* tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
+        * tools/Config_Handlers/RT-CCM/CIAOServerResources.hpp
 
-	Ported patches from:
-	Tue Sep 13 17:18:12 CEST 2005  William Otte  <wotte@dre.vanderbilt.edu>
+        Ported patches from:
+        Tue Sep 13 17:18:12 CEST 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	which were made against the wrong file.  Thanks to Gan Deng for
-	pointing this out.
+        which were made against the wrong file.  Thanks to Gan Deng for
+        pointing this out.
 
 Wed Sep 14 13:28:14 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* examples/Hello/descriptors/run_NodeDaemons.pl
+        * examples/Hello/descriptors/run_NodeDaemons.pl
 
-	  Modified the relevant path due to the recent CIAO directory
-	  reorganization.
+          Modified the relevant path due to the recent CIAO directory
+          reorganization.
 
-	* examples/Hello/Sender/Sender.idl
-	* examples/Hello/Sender_exec.cpp
-	* examples/Hello/starter.cpp
+        * examples/Hello/Sender/Sender.idl
+        * examples/Hello/Sender_exec.cpp
+        * examples/Hello/starter.cpp
 
-	  Added test for "readonly" attribute.
-	  Fixed a bug of setting attribute through command line options
-	  through the "starter" executable. Also, make the default ior
-	  file name to be "Sender.ior" to make it consistent with the
-	  output generated by DAnCE. Thanks Zacki
-	  <zklopman at gmail dot com> for reporting these.
+          Added test for "readonly" attribute.
+          Fixed a bug of setting attribute through command line options
+          through the "starter" executable. Also, make the default ior
+          file name to be "Sender.ior" to make it consistent with the
+          output generated by DAnCE. Thanks Zacki
+          <zklopman at gmail dot com> for reporting these.
 
-	* examples/Hello/step-by-step.html
+        * examples/Hello/step-by-step.html
 
-	  Updated the documentation to run the example.
+          Updated the documentation to run the example.
 
 Tue Sep 13 17:18:12 CEST 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* tools/Config_Handlers/CIAOServerResources.hpp
+        * tools/Config_Handlers/CIAOServerResources.hpp
 
-	Fixes for compile errors in:
-	.  Especially strict C++ compilers
-	.  Windows VC71 (hopefully)
+        Fixes for compile errors in:
+        .  Especially strict C++ compilers
+        .  Windows VC71 (hopefully)
 
 Tue Sep 13 17:05:31 2005 CEST William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
-	* DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h
-	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
-	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h
-	* DAnCE/NodeManager/NodeManager_Impl.cpp
-	* DAnCE/NodeManager/NodeManager_Impl.h
-	* DAnCE/NodeManager/Node_Manager.cpp
-	* DAnCE/Plan_Launcher/Plan_Launcher.cpp
-	* DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
-	* DAnCE/Plan_Launcher/Plan_Launcher_Impl.h
-	* ciao/Container_Base.cpp
-	* ciao/NodeApplication_Impl.cpp
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.h
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h
+        * DAnCE/NodeManager/NodeManager_Impl.cpp
+        * DAnCE/NodeManager/NodeManager_Impl.h
+        * DAnCE/NodeManager/Node_Manager.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.cpp
+        * DAnCE/Plan_Launcher/Plan_Launcher_Impl.h
+        * ciao/Container_Base.cpp
+        * ciao/NodeApplication_Impl.cpp
 
-	Folding in some of the error reporting work that I have been
-	working on for the past couple weeks. Most common deployment
-	errors are now reported through the plan_launcher.
+        Folding in some of the error reporting work that I have been
+        working on for the past couple weeks. Most common deployment
+        errors are now reported through the plan_launcher.
 
 Tue Sep 13 16:55:15 CEST 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* tools/Config_Handlers/IDD_Handler.cpp
-	* tools/Config_Handlers/MDD_Handler.cpp
-	* tools/Config_Handlers/PSPE_Handler.cpp
-	* tools/Config_Handlers/STD_CID_Handler.cpp
+        * tools/Config_Handlers/IDD_Handler.cpp
+        * tools/Config_Handlers/MDD_Handler.cpp
+        * tools/Config_Handlers/PSPE_Handler.cpp
+        * tools/Config_Handlers/STD_CID_Handler.cpp
 
-	Fixes for compile errors on both:
-	.  64 bit platforms
-	.  GCC4
+        Fixes for compile errors on both:
+        .  64 bit platforms
+        .  GCC4
 
 Tue Sep 13 16:01:35 CEST 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* tools/Config_Handlers/XMLSchema/Traversal.hpp
-	* tools/Config_Handlers/XMLSchema/TypeInfo.hpp
-	* tools/Config_Handlers/XMLSchema/Types.hpp
-	* tools/Config_Handlers/XMLSchema/Writer.hpp
-	* tools/Config_Handlers/XSCRT/Elements.hpp
-	* tools/Config_Handlers/XSCRT/ExtendedTypeInfo.hpp
-	* tools/Config_Handlers/XSCRT/Parser.hpp
-	* tools/Config_Handlers/XSCRT/Traversal.hpp
-	* tools/Config_Handlers/XSCRT/Writer.hpp
-	* tools/Config_Handlers/XSCRT/XML.hpp
-	* tools/Config_Handlers/XSCRT/XMLSchema.hpp
+        * tools/Config_Handlers/XMLSchema/Traversal.hpp
+        * tools/Config_Handlers/XMLSchema/TypeInfo.hpp
+        * tools/Config_Handlers/XMLSchema/Types.hpp
+        * tools/Config_Handlers/XMLSchema/Writer.hpp
+        * tools/Config_Handlers/XSCRT/Elements.hpp
+        * tools/Config_Handlers/XSCRT/ExtendedTypeInfo.hpp
+        * tools/Config_Handlers/XSCRT/Parser.hpp
+        * tools/Config_Handlers/XSCRT/Traversal.hpp
+        * tools/Config_Handlers/XSCRT/Writer.hpp
+        * tools/Config_Handlers/XSCRT/XML.hpp
+        * tools/Config_Handlers/XSCRT/XMLSchema.hpp
 
-	Rolled back Stoyan's changes from the previous commit.  The proper
-	fix for this problem would be to update the include paths in the
-	affected MPC files, which has the virtue of not breaking
-	builds on platforms with case-sensitive filesystems.
+        Rolled back Stoyan's changes from the previous commit.  The proper
+        fix for this problem would be to update the include paths in the
+        affected MPC files, which has the virtue of not breaking
+        builds on platforms with case-sensitive filesystems.
 
-	* DAnCE/new_RepositoryManager/new_RepositoryManager.mpc
+        * DAnCE/new_RepositoryManager/new_RepositoryManager.mpc
 
-	Updated the include path to include the new config handlers directory.
+        Updated the include path to include the new config handlers directory.
 
 Mon Sep 12 17:34:47 CDT 2005 Stoyan Paunov <spaunov@isis.vanderbilt.edu>
 
-	* tools/Config_Handlers/XMLSchema/Traversal.hpp
-	* tools/Config_Handlers/XMLSchema/TypeInfo.hpp
-	* tools/Config_Handlers/XMLSchema/Types.hpp
-	* tools/Config_Handlers/XMLSchema/Writer.hpp
-	* tools/Config_Handlers/XSCRT/Elements.hpp
-	* tools/Config_Handlers/XSCRT/ExtendedTypeInfo.hpp
-	* tools/Config_Handlers/XSCRT/Parser.hpp
-	* tools/Config_Handlers/XSCRT/Traversal.hpp
-	* tools/Config_Handlers/XSCRT/Writer.hpp
-	* tools/Config_Handlers/XSCRT/XML.hpp
-	* tools/Config_Handlers/XSCRT/XMLSchema.hpp
+        * tools/Config_Handlers/XMLSchema/Traversal.hpp
+        * tools/Config_Handlers/XMLSchema/TypeInfo.hpp
+        * tools/Config_Handlers/XMLSchema/Types.hpp
+        * tools/Config_Handlers/XMLSchema/Writer.hpp
+        * tools/Config_Handlers/XSCRT/Elements.hpp
+        * tools/Config_Handlers/XSCRT/ExtendedTypeInfo.hpp
+        * tools/Config_Handlers/XSCRT/Parser.hpp
+        * tools/Config_Handlers/XSCRT/Traversal.hpp
+        * tools/Config_Handlers/XSCRT/Writer.hpp
+        * tools/Config_Handlers/XSCRT/XML.hpp
+        * tools/Config_Handlers/XSCRT/XMLSchema.hpp
 
-	Fixed a number of problems related to Will's changes. The XSC_Config_Handler_Tests
-	project was not compiling. I had the same problem in RepositoryManager. Will had
-	changed the directory structure, but did not update any of the include paths.
-	Needless to say there were like 30-40 of those in the XSCRT and XMLSchema directories
+        Fixed a number of problems related to Will's changes. The XSC_Config_Handler_Tests
+        project was not compiling. I had the same problem in RepositoryManager. Will had
+        changed the directory structure, but did not update any of the include paths.
+        Needless to say there were like 30-40 of those in the XSCRT and XMLSchema directories
 
 Fri Sep  9 12:35:20 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* tools/Config_Handlers/STD_IAD_Handler.cpp
-	* tools/Config_Handlers/STD_PCD_Handler.cpp
-	* tools/Config_Handlers/STD_PC_Intf.cpp
+        * tools/Config_Handlers/STD_IAD_Handler.cpp
+        * tools/Config_Handlers/STD_PCD_Handler.cpp
+        * tools/Config_Handlers/STD_PC_Intf.cpp
 
-	Changed to comform with new refactoring.
+        Changed to comform with new refactoring.
 
 Fri Sep  9 12:32:14 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* ciao/CCM_Core.mpc
-	* ciao/Container_Base.cpp
-	* ciao/Deployment.idl
-	* ciao/Deployment_Core.idl
-	* ciao/Deployment_Data.idl
-	* ciao/Packaging_Data.idl
+        * ciao/CCM_Core.mpc
+        * ciao/Container_Base.cpp
+        * ciao/Deployment.idl
+        * ciao/Deployment_Core.idl
+        * ciao/Deployment_Data.idl
+        * ciao/Packaging_Data.idl
 
-	Refactoring to support cidl compilation of deployment structures.
-	This refactoring should solve compilation errors in the config handlers.
+        Refactoring to support cidl compilation of deployment structures.
+        This refactoring should solve compilation errors in the config handlers.
 
 Wed Sep  7 16:31:12 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1975,197 +1975,197 @@ Wed Sep  7 16:31:12 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Sep  6 11:39:15 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* ciao/Deployment_Data.idl
+        * ciao/Deployment_Data.idl
 
-	Commented out IDL that is unsupported by CIDLC.
+        Commented out IDL that is unsupported by CIDLC.
 
-	* RACE
+        * RACE
 
-	Added IDL for RACE.
+        Added IDL for RACE.
 
 Tue Sep  6 09:58:12 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* examples/Hello/descriptors/run_test.pl
+        * examples/Hello/descriptors/run_test.pl
 
-	Modified the script to fix the absolute path to the naming service
-	with a relative path.
+        Modified the script to fix the absolute path to the naming service
+        with a relative path.
 
 Fri Sep  2 17:38:31 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* performance-tests/Protocols/Controller/Controller.mpc
-	* performance-tests/Protocols/Receiver/Receiver.mpc
-	* performance-tests/Protocols/Sender/Sender.mpc
-	* performance-tests/Protocols/common/Protocols.mpc
-	* tests/CIDL/CodeGen/CodeGen.mpc
+        * performance-tests/Protocols/Controller/Controller.mpc
+        * performance-tests/Protocols/Receiver/Receiver.mpc
+        * performance-tests/Protocols/Sender/Sender.mpc
+        * performance-tests/Protocols/common/Protocols.mpc
+        * tests/CIDL/CodeGen/CodeGen.mpc
 
-	Migrated to modern CIAO base projects.
+        Migrated to modern CIAO base projects.
 
 Fri Sep  2 16:41:08 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* performance-tests/Benchmark/Benchmark.mpc
-	* performance-tests/Benchmark/Multi_Threaded/Multi_Threaded.mpc
-	* performance-tests/Benchmark/RoundTrip/RoundTrip.mpc
-	* performance-tests/Benchmark/RoundTripClient/RoundTripClient.mpc
-	* performance-tests/Benchmark/RoundTripServer/RoundTripServer.mpc
+        * performance-tests/Benchmark/Benchmark.mpc
+        * performance-tests/Benchmark/Multi_Threaded/Multi_Threaded.mpc
+        * performance-tests/Benchmark/RoundTrip/RoundTrip.mpc
+        * performance-tests/Benchmark/RoundTripClient/RoundTripClient.mpc
+        * performance-tests/Benchmark/RoundTripServer/RoundTripServer.mpc
 
-	Migrated to modern CIAO projects.
+        Migrated to modern CIAO projects.
 
 Fri Sep  2 15:10:43 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* docs/tutorial
+        * docs/tutorial
 
-	Removed the obsolete hello tutorial.
+        Removed the obsolete hello tutorial.
 
 Fri Sep  2 15:04:00 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* tests/tests.mwc
-	* tests/IDL3/Components/ComplexComponent/Attributes/Attributes.mpc
-	* tests/IDL3/Components/ComplexComponent/EventSink/EventSink.mpc
-	* tests/IDL3/Components/ComplexComponent/EventSource/EventSource.mpc
-	* tests/IDL3/Components/ComplexComponent/Facets/Facets.mpc
-	* tests/IDL3/Components/ComplexComponent/Receptacles/Receptacles.mpc
-	* tests/IDL3/Components/SimpleComponent/SimpleComponent.mpc
-	* tests/IDL3/Events/Abstract/Abstract.mpc
-	* tests/IDL3/Events/Regular/Regular.mpc
-	* tests/IDL3/Homes/Attributes/HomeAttributes.mpc
-	* tests/IDL3/Homes/Basic/Basic.mpc
-	* tests/IDL3/Homes/Factory/Factory.mpc
-	* tests/IDL3/Homes/Finder/Finder.mpc
-	* tests/IDL3/Homes/Inheritance/Inheritance.mpc
-	* tests/IDL3/ImpliedIDL/Components/Basic/ICBasic.mpc
-	* tests/IDL3/ImpliedIDL/Components/EventSink/ICEventSink.mpc
-	* tests/IDL3/ImpliedIDL/Components/EventSource/ICEventSource.mpc
-	* tests/IDL3/ImpliedIDL/Components/Receptacles/ICReceptacles.mpc
-	* tests/IDL3/ImpliedIDL/Events/Events.mpc
-	* tests/IDL3/ImpliedIDL/Homes/Homes.mpc
-	* tests/IDL3/Lookup/lookup_test.mpc
+        * tests/tests.mwc
+        * tests/IDL3/Components/ComplexComponent/Attributes/Attributes.mpc
+        * tests/IDL3/Components/ComplexComponent/EventSink/EventSink.mpc
+        * tests/IDL3/Components/ComplexComponent/EventSource/EventSource.mpc
+        * tests/IDL3/Components/ComplexComponent/Facets/Facets.mpc
+        * tests/IDL3/Components/ComplexComponent/Receptacles/Receptacles.mpc
+        * tests/IDL3/Components/SimpleComponent/SimpleComponent.mpc
+        * tests/IDL3/Events/Abstract/Abstract.mpc
+        * tests/IDL3/Events/Regular/Regular.mpc
+        * tests/IDL3/Homes/Attributes/HomeAttributes.mpc
+        * tests/IDL3/Homes/Basic/Basic.mpc
+        * tests/IDL3/Homes/Factory/Factory.mpc
+        * tests/IDL3/Homes/Finder/Finder.mpc
+        * tests/IDL3/Homes/Inheritance/Inheritance.mpc
+        * tests/IDL3/ImpliedIDL/Components/Basic/ICBasic.mpc
+        * tests/IDL3/ImpliedIDL/Components/EventSink/ICEventSink.mpc
+        * tests/IDL3/ImpliedIDL/Components/EventSource/ICEventSource.mpc
+        * tests/IDL3/ImpliedIDL/Components/Receptacles/ICReceptacles.mpc
+        * tests/IDL3/ImpliedIDL/Events/Events.mpc
+        * tests/IDL3/ImpliedIDL/Homes/Homes.mpc
+        * tests/IDL3/Lookup/lookup_test.mpc
 
-	Updated to use dnc ciao base project.
+        Updated to use dnc ciao base project.
 
-	* tests/RTCCM
+        * tests/RTCCM
 
-	Removed this test.
+        Removed this test.
 
 Thu Sep  1 10:20:48 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	CIAO Reorganization.  Plese see tag before_ciao_reorg
-	to obtain the old version.
+        CIAO Reorganization.  Plese see tag before_ciao_reorg
+        to obtain the old version.
 
 Wed Aug 31 15:16:23 2005  William Otte  <wotte@dre.vanderbilt.edu>
-	* DAnCE/Config_Handlers/RT-CCM/CB_Handler.cpp
-	* DAnCE/Config_Handlers/RT-CCM/PM_Handler.cpp
-	* DAnCE/Config_Handlers/RT-CCM/TPL_Handler.cpp
-	* DAnCE/Config_Handlers/RT-CCM/TP_Handler.cpp
+        * DAnCE/Config_Handlers/RT-CCM/CB_Handler.cpp
+        * DAnCE/Config_Handlers/RT-CCM/PM_Handler.cpp
+        * DAnCE/Config_Handlers/RT-CCM/TPL_Handler.cpp
+        * DAnCE/Config_Handlers/RT-CCM/TP_Handler.cpp
 
-	Fixes to satisfy a tempramental Borland compiler.
+        Fixes to satisfy a tempramental Borland compiler.
 
 Wed Aug 31 13:28:46 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/Config_Handlers/ADD_Handler.cpp
-	* DAnCE/Config_Handlers/ADD_Handler.h
-	* DAnCE/Config_Handlers/IDD_Handler.cpp
-	* DAnCE/Config_Handlers/IDD_Handler.h
-	* DAnCE/Config_Handlers/IDREF_Base.cpp
-	* DAnCE/Config_Handlers/IDREF_Base.h
-	* DAnCE/Config_Handlers/MDD_Handler.cpp
-	* DAnCE/Config_Handlers/MDD_Handler.h
-	* DAnCE/Config_Handlers/STD_CID_Handler.cpp
-	* DAnCE/Config_Handlers/STD_CID_Handler.h
+        * DAnCE/Config_Handlers/ADD_Handler.cpp
+        * DAnCE/Config_Handlers/ADD_Handler.h
+        * DAnCE/Config_Handlers/IDD_Handler.cpp
+        * DAnCE/Config_Handlers/IDD_Handler.h
+        * DAnCE/Config_Handlers/IDREF_Base.cpp
+        * DAnCE/Config_Handlers/IDREF_Base.h
+        * DAnCE/Config_Handlers/MDD_Handler.cpp
+        * DAnCE/Config_Handlers/MDD_Handler.h
+        * DAnCE/Config_Handlers/STD_CID_Handler.cpp
+        * DAnCE/Config_Handlers/STD_CID_Handler.h
 
-	Simple refactoring to make the IDREF interface more generic.
+        Simple refactoring to make the IDREF interface more generic.
 
-	* DAnCE/Config_Handlers/XML_Helper.cpp
-	* DAnCE/Config_Handlers/XML_Helper.h
+        * DAnCE/Config_Handlers/XML_Helper.cpp
+        * DAnCE/Config_Handlers/XML_Helper.h
 
-	Made empty document creation more generic.
+        Made empty document creation more generic.
 
-	* DAnCE/Config_Handlers/RT-CCM/CB_Handler.cpp
-	* DAnCE/Config_Handlers/RT-CCM/CB_Handler.h
-	* DAnCE/Config_Handlers/RT-CCM/CIAOServerResources.cpp
-	* DAnCE/Config_Handlers/RT-CCM/CIAOServerResources.hpp
-	* DAnCE/Config_Handlers/RT-CCM/CLA_Handler.cpp
-	* DAnCE/Config_Handlers/RT-CCM/CLA_Handler.h
-	* DAnCE/Config_Handlers/RT-CCM/OC_Handler.cpp
-	* DAnCE/Config_Handlers/RT-CCM/OC_Handler.h
-	* DAnCE/Config_Handlers/RT-CCM/OR_Handler.cpp
-	* DAnCE/Config_Handlers/RT-CCM/OR_Handler.h
-	* DAnCE/Config_Handlers/RT-CCM/PM_Handler.cpp
-	* DAnCE/Config_Handlers/RT-CCM/PM_Handler.h
-	* DAnCE/Config_Handlers/RT-CCM/PS_Handler.cpp
-	* DAnCE/Config_Handlers/RT-CCM/PS_Handler.h
-	* DAnCE/Config_Handlers/RT-CCM/RT-CCM-Handlers.mpc
-	* DAnCE/Config_Handlers/RT-CCM/SRD_Handler.cpp
-	* DAnCE/Config_Handlers/RT-CCM/SRD_Handler.h
-	* DAnCE/Config_Handlers/RT-CCM/TPL_Handler.cpp
-	* DAnCE/Config_Handlers/RT-CCM/TPL_Handler.h
-	* DAnCE/Config_Handlers/RT-CCM/TP_Handler.cpp
-	* DAnCE/Config_Handlers/RT-CCM/TP_Handler.h
-	* DAnCE/Config_Handlers/RT-CCM/input.csr
-	* DAnCE/Config_Handlers/RT-CCM/test.cpp
+        * DAnCE/Config_Handlers/RT-CCM/CB_Handler.cpp
+        * DAnCE/Config_Handlers/RT-CCM/CB_Handler.h
+        * DAnCE/Config_Handlers/RT-CCM/CIAOServerResources.cpp
+        * DAnCE/Config_Handlers/RT-CCM/CIAOServerResources.hpp
+        * DAnCE/Config_Handlers/RT-CCM/CLA_Handler.cpp
+        * DAnCE/Config_Handlers/RT-CCM/CLA_Handler.h
+        * DAnCE/Config_Handlers/RT-CCM/OC_Handler.cpp
+        * DAnCE/Config_Handlers/RT-CCM/OC_Handler.h
+        * DAnCE/Config_Handlers/RT-CCM/OR_Handler.cpp
+        * DAnCE/Config_Handlers/RT-CCM/OR_Handler.h
+        * DAnCE/Config_Handlers/RT-CCM/PM_Handler.cpp
+        * DAnCE/Config_Handlers/RT-CCM/PM_Handler.h
+        * DAnCE/Config_Handlers/RT-CCM/PS_Handler.cpp
+        * DAnCE/Config_Handlers/RT-CCM/PS_Handler.h
+        * DAnCE/Config_Handlers/RT-CCM/RT-CCM-Handlers.mpc
+        * DAnCE/Config_Handlers/RT-CCM/SRD_Handler.cpp
+        * DAnCE/Config_Handlers/RT-CCM/SRD_Handler.h
+        * DAnCE/Config_Handlers/RT-CCM/TPL_Handler.cpp
+        * DAnCE/Config_Handlers/RT-CCM/TPL_Handler.h
+        * DAnCE/Config_Handlers/RT-CCM/TP_Handler.cpp
+        * DAnCE/Config_Handlers/RT-CCM/TP_Handler.h
+        * DAnCE/Config_Handlers/RT-CCM/input.csr
+        * DAnCE/Config_Handlers/RT-CCM/test.cpp
 
-	The new RT-CCM handlers.  These have yet to be integrated into the
-	main config_handler path.
+        The new RT-CCM handlers.  These have yet to be integrated into the
+        main config_handler path.
 
-	* DAnCE/ciao/CCM_Core.mpc
-	* DAnCE/ciao/ServerResources.idl
+        * DAnCE/ciao/CCM_Core.mpc
+        * DAnCE/ciao/ServerResources.idl
 
-	Updates to the support the RT-CCM Handlers.
+        Updates to the support the RT-CCM Handlers.
 
-	* docs/schema/CIAOServerResources.xsd
+        * docs/schema/CIAOServerResources.xsd
 
-	Corrected a few oversights.
+        Corrected a few oversights.
 
 Wed Aug 31 09:49:28 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/Config_Handlers/XMLSchema/TypeInfo.tpp
+        * DAnCE/Config_Handlers/XMLSchema/TypeInfo.tpp
 
-	Workaround for a buggy Borland compiler.
+        Workaround for a buggy Borland compiler.
 
 Tue Aug 30 14:33:08 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/Config_Handlers/Basic_Deployment_Data.hpp
+        * DAnCE/Config_Handlers/Basic_Deployment_Data.hpp
 
-	Slight handcrafting to remove commas from the end of enumerator lists.
+        Slight handcrafting to remove commas from the end of enumerator lists.
 
 Tue Aug 30 11:59:14 CDT 2005  William Otte <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/Config_Handlers/IRDD_Handler.h
-	* DAnCE/Config_Handlers/PCD_Handler.h
+        * DAnCE/Config_Handlers/IRDD_Handler.h
+        * DAnCE/Config_Handlers/PCD_Handler.h
 
-	Fixed a class/struct mismatch.
+        Fixed a class/struct mismatch.
 
 Tue Aug 30 11:51:32 CDT 2005  William Otte <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/Config_Handlers/Basic_Deployment_Data.cpp
-	* DAnCE/Config_Handlers/Basic_Deployment_Data.hpp
-	* DAnCE/Config_Handlers/CIAOServerResources.cpp
-	* DAnCE/Config_Handlers/CIAOServerResources.hpp
-	* DAnCE/Config_Handlers/Deployment.cpp
-	* DAnCE/Config_Handlers/Deployment.hpp
-	* DAnCE/Config_Handlers/ccd.cpp
-	* DAnCE/Config_Handlers/ccd.hpp
-	* DAnCE/Config_Handlers/cdd.cpp
-	* DAnCE/Config_Handlers/cdd.hpp
-	* DAnCE/Config_Handlers/cdp.cpp
-	* DAnCE/Config_Handlers/cdp.hpp
-	* DAnCE/Config_Handlers/cid.cpp
-	* DAnCE/Config_Handlers/cid.hpp
-	* DAnCE/Config_Handlers/cpd.cpp
-	* DAnCE/Config_Handlers/cpd.hpp
-	* DAnCE/Config_Handlers/iad.cpp
-	* DAnCE/Config_Handlers/iad.hpp
-	* DAnCE/Config_Handlers/pcd.cpp
-	* DAnCE/Config_Handlers/pcd.hpp
-	* DAnCE/Config_Handlers/toplevel.cpp
-	* DAnCE/Config_Handlers/toplevel.hpp
+        * DAnCE/Config_Handlers/Basic_Deployment_Data.cpp
+        * DAnCE/Config_Handlers/Basic_Deployment_Data.hpp
+        * DAnCE/Config_Handlers/CIAOServerResources.cpp
+        * DAnCE/Config_Handlers/CIAOServerResources.hpp
+        * DAnCE/Config_Handlers/Deployment.cpp
+        * DAnCE/Config_Handlers/Deployment.hpp
+        * DAnCE/Config_Handlers/ccd.cpp
+        * DAnCE/Config_Handlers/ccd.hpp
+        * DAnCE/Config_Handlers/cdd.cpp
+        * DAnCE/Config_Handlers/cdd.hpp
+        * DAnCE/Config_Handlers/cdp.cpp
+        * DAnCE/Config_Handlers/cdp.hpp
+        * DAnCE/Config_Handlers/cid.cpp
+        * DAnCE/Config_Handlers/cid.hpp
+        * DAnCE/Config_Handlers/cpd.cpp
+        * DAnCE/Config_Handlers/cpd.hpp
+        * DAnCE/Config_Handlers/iad.cpp
+        * DAnCE/Config_Handlers/iad.hpp
+        * DAnCE/Config_Handlers/pcd.cpp
+        * DAnCE/Config_Handlers/pcd.hpp
+        * DAnCE/Config_Handlers/toplevel.cpp
+        * DAnCE/Config_Handlers/toplevel.hpp
 
-	Fixes a large number of compiler warnings in Borland.
+        Fixes a large number of compiler warnings in Borland.
 
 Thu Aug 25 15:26:25 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
-	* DAnCE/ciao/ServerResources.idl: Added the missing <stacksize>
-	  attribute to ORS_ThreadpoolWithLanes struct.  Thanks to Will
-	  Otte for catching this.
+        * DAnCE/ciao/ServerResources.idl: Added the missing <stacksize>
+          attribute to ORS_ThreadpoolWithLanes struct.  Thanks to Will
+          Otte for catching this.
 
 Wed Aug 24 20:41:59 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -2178,15 +2178,15 @@ Wed Aug 24 20:41:59 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Aug 23 20:09:59 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* DAnCE/Old_Config_Handlers/DT_Handler.h:
-	* DAnCE/RTNodeApplication/RTServer_Impl.h:
-	* DAnCE/ciao/Container_Base.h:
-	* DAnCE/ciao/Context_Impl_Base.h:
-	* DAnCE/ciao/NodeApplication_Impl.h:
+        * DAnCE/Old_Config_Handlers/DT_Handler.h:
+        * DAnCE/RTNodeApplication/RTServer_Impl.h:
+        * DAnCE/ciao/Container_Base.h:
+        * DAnCE/ciao/Context_Impl_Base.h:
+        * DAnCE/ciao/NodeApplication_Impl.h:
 
-	  Reordered include directives to make sure all necessary
-	  non-dependent names are parsed before the templates that use
-	  them.  Addresses g++ 3.4.x or better compile-time errors.
+          Reordered include directives to make sure all necessary
+          non-dependent names are parsed before the templates that use
+          them.  Addresses g++ 3.4.x or better compile-time errors.
 
 Tue Aug 23 19:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -2197,16 +2197,16 @@ Tue Aug 23 19:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Aug 22 10:59:18 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/DeploymentManager/DeploymentManager.cidl
-	* DAnCE/DeploymentManager/DeploymentManager.idl
-	* DAnCE/DeploymentManager/DeploymentManager.mpc
-	* DAnCE/DeploymentManager/DeploymentManager_Impl.cpp
-	* DAnCE/DeploymentManager/DeploymentManager_Impl.h
-	* DAnCE/DeploymentManager/DeploymentManager_exec_export.h
-	* DAnCE/DeploymentManager/DeploymentManager_stub_export.h
-	* DAnCE/DeploymentManager/DeploymentManager_svnt_export.h
+        * DAnCE/DeploymentManager/DeploymentManager.cidl
+        * DAnCE/DeploymentManager/DeploymentManager.idl
+        * DAnCE/DeploymentManager/DeploymentManager.mpc
+        * DAnCE/DeploymentManager/DeploymentManager_Impl.cpp
+        * DAnCE/DeploymentManager/DeploymentManager_Impl.h
+        * DAnCE/DeploymentManager/DeploymentManager_exec_export.h
+        * DAnCE/DeploymentManager/DeploymentManager_stub_export.h
+        * DAnCE/DeploymentManager/DeploymentManager_svnt_export.h
 
-	Preliminary skeleton for the DeploymentManager.
+        Preliminary skeleton for the DeploymentManager.
 
 Fri Aug 19 07:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -2219,83 +2219,83 @@ Fri Aug 19 07:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Aug 16 15:16:10 2005  Nanbor Wang  <nanbor@exothermic.txcorp.com>
 
-	* docs/schema/CIAOServerResources.xsd: Changed to define most of
-	  the RT policy details with "element"s instead of "attribute"s
-	  since "attribute"s  can be optional.  Thanks to Will Otte for
-	  pointing this out.
+        * docs/schema/CIAOServerResources.xsd: Changed to define most of
+          the RT policy details with "element"s instead of "attribute"s
+          since "attribute"s  can be optional.  Thanks to Will Otte for
+          pointing this out.
 
 Tue Aug 16 09:46:45 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/Config_Handlers/Config_Handlers.mpc
+        * DAnCE/Config_Handlers/Config_Handlers.mpc
 
-	Moved some changes in from the branch to correct errors from:
-	Mon Aug 15 12:03:43 2005  William Otte  <wotte@dre.vanderbilt.edu>
+        Moved some changes in from the branch to correct errors from:
+        Mon Aug 15 12:03:43 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
 Mon Aug 15 12:03:43 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/Config_Handlers/ADD_Handler.cpp
-	* DAnCE/Config_Handlers/ADD_Handler.h
-	* DAnCE/Config_Handlers/CCD_Handler.cpp
-	* DAnCE/Config_Handlers/CCD_Handler.h
-	* DAnCE/Config_Handlers/CRDD_Handler.h
-	* DAnCE/Config_Handlers/DP_Handler.cpp
-	* DAnCE/Config_Handlers/DP_Handler.h
-	* DAnCE/Config_Handlers/DP_PCD_Handler.cpp
-	* DAnCE/Config_Handlers/DP_PCD_Handler.h
-	* DAnCE/Config_Handlers/IDD_Handler.cpp
-	* DAnCE/Config_Handlers/IDD_Handler.h
-	* DAnCE/Config_Handlers/IDREF_Base.cpp
-	* DAnCE/Config_Handlers/ID_Handler.h
-	* DAnCE/Config_Handlers/IRDD_Handler.cpp
-	* DAnCE/Config_Handlers/MDD_Handler.cpp
-	* DAnCE/Config_Handlers/MDD_Handler.h
-	* DAnCE/Config_Handlers/PCD_Handler.cpp
-	* DAnCE/Config_Handlers/PCD_Handler.h
-	* DAnCE/Config_Handlers/PSPE_Handler.cpp
-	* DAnCE/Config_Handlers/Req_Handler.cpp
-	* DAnCE/Config_Handlers/XML_Helper.cpp
-	* DAnCE/Config_Handlers/XML_Helper.h
-	* DAnCE/Config_Handlers/XercesString.cpp
-	* DAnCE/Config_Handlers/XercesString.h
-	* DAnCE/Config_Handlers/test.cpp
+        * DAnCE/Config_Handlers/ADD_Handler.cpp
+        * DAnCE/Config_Handlers/ADD_Handler.h
+        * DAnCE/Config_Handlers/CCD_Handler.cpp
+        * DAnCE/Config_Handlers/CCD_Handler.h
+        * DAnCE/Config_Handlers/CRDD_Handler.h
+        * DAnCE/Config_Handlers/DP_Handler.cpp
+        * DAnCE/Config_Handlers/DP_Handler.h
+        * DAnCE/Config_Handlers/DP_PCD_Handler.cpp
+        * DAnCE/Config_Handlers/DP_PCD_Handler.h
+        * DAnCE/Config_Handlers/IDD_Handler.cpp
+        * DAnCE/Config_Handlers/IDD_Handler.h
+        * DAnCE/Config_Handlers/IDREF_Base.cpp
+        * DAnCE/Config_Handlers/ID_Handler.h
+        * DAnCE/Config_Handlers/IRDD_Handler.cpp
+        * DAnCE/Config_Handlers/MDD_Handler.cpp
+        * DAnCE/Config_Handlers/MDD_Handler.h
+        * DAnCE/Config_Handlers/PCD_Handler.cpp
+        * DAnCE/Config_Handlers/PCD_Handler.h
+        * DAnCE/Config_Handlers/PSPE_Handler.cpp
+        * DAnCE/Config_Handlers/Req_Handler.cpp
+        * DAnCE/Config_Handlers/XML_Helper.cpp
+        * DAnCE/Config_Handlers/XML_Helper.h
+        * DAnCE/Config_Handlers/XercesString.cpp
+        * DAnCE/Config_Handlers/XercesString.h
+        * DAnCE/Config_Handlers/test.cpp
 
-	Checked in support for IDL->XSC->XML mapping.  Thanks to Lucas
-	Seibert <heynonynony at yahoo dot com> for completing this work.
+        Checked in support for IDL->XSC->XML mapping.  Thanks to Lucas
+        Seibert <heynonynony at yahoo dot com> for completing this work.
 
 Mon Aug 15 00:01:01 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* CIDLC/cidlc.cpp: Made ErrorHandler auto-detach itself
-	from the stream when it is destroyed. This fixes the
-	segmentation fault on Solaris in libstdc++ termination code.
+        * CIDLC/cidlc.cpp: Made ErrorHandler auto-detach itself
+        from the stream when it is destroyed. This fixes the
+        segmentation fault on Solaris in libstdc++ termination code.
 
 Wed Aug 10 09:39:41 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* DAnCE/Config_Handlers/Basic_Deployment_Data.cpp
-	* DAnCE/Config_Handlers/Basic_Deployment_Data.hpp
-	* DAnCE/Config_Handlers/CIAOServerResources.cpp
-	* DAnCE/Config_Handlers/CIAOServerResources.hpp
-	* DAnCE/Config_Handlers/Deployment.cpp
-	* DAnCE/Config_Handlers/Deployment.hpp
-	* DAnCE/Config_Handlers/ccd.cpp
-	* DAnCE/Config_Handlers/ccd.hpp
-	* DAnCE/Config_Handlers/cdd.cpp
-	* DAnCE/Config_Handlers/cdd.hpp
-	* DAnCE/Config_Handlers/cdp.cpp
-	* DAnCE/Config_Handlers/cdp.hpp
-	* DAnCE/Config_Handlers/cid.cpp
-	* DAnCE/Config_Handlers/cid.hpp
-	* DAnCE/Config_Handlers/cpd.cpp
-	* DAnCE/Config_Handlers/cpd.hpp
-	* DAnCE/Config_Handlers/iad.cpp
-	* DAnCE/Config_Handlers/iad.hpp
-	* DAnCE/Config_Handlers/pcd.cpp
-	* DAnCE/Config_Handlers/pcd.hpp
-	* DAnCE/Config_Handlers/toplevel.cpp
-	* DAnCE/Config_Handlers/toplevel.hpp
+        * DAnCE/Config_Handlers/Basic_Deployment_Data.cpp
+        * DAnCE/Config_Handlers/Basic_Deployment_Data.hpp
+        * DAnCE/Config_Handlers/CIAOServerResources.cpp
+        * DAnCE/Config_Handlers/CIAOServerResources.hpp
+        * DAnCE/Config_Handlers/Deployment.cpp
+        * DAnCE/Config_Handlers/Deployment.hpp
+        * DAnCE/Config_Handlers/ccd.cpp
+        * DAnCE/Config_Handlers/ccd.hpp
+        * DAnCE/Config_Handlers/cdd.cpp
+        * DAnCE/Config_Handlers/cdd.hpp
+        * DAnCE/Config_Handlers/cdp.cpp
+        * DAnCE/Config_Handlers/cdp.hpp
+        * DAnCE/Config_Handlers/cid.cpp
+        * DAnCE/Config_Handlers/cid.hpp
+        * DAnCE/Config_Handlers/cpd.cpp
+        * DAnCE/Config_Handlers/cpd.hpp
+        * DAnCE/Config_Handlers/iad.cpp
+        * DAnCE/Config_Handlers/iad.hpp
+        * DAnCE/Config_Handlers/pcd.cpp
+        * DAnCE/Config_Handlers/pcd.hpp
+        * DAnCE/Config_Handlers/toplevel.cpp
+        * DAnCE/Config_Handlers/toplevel.hpp
 
-	Regenerated with the latest CVS-head version of XSC. These support
-	a couple improvements that will aid in optimizing the config
-	handlers.
+        Regenerated with the latest CVS-head version of XSC. These support
+        a couple improvements that will aid in optimizing the config
+        handlers.
 
 Tue Aug  9 11:55:13 2005  Ming Xiong <mxiong@dre.vanderbilt.edu>
 
