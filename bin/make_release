@@ -639,7 +639,7 @@ sub update_version_files () {
         "\#define ACE_MAJOR_VERSION ${major_version}\n" .
         "\#define ACE_MINOR_VERSION ${minor_version}\n" .
         "\#define ACE_BETA_VERSION ${beta_version}\n" .
-        "\#define ACE_VERSION \"${version}\"\n\n"
+        "\#define ACE_VERSION \"${version}\"\n\n";
 ##	"\#include \"ace/Versioned_Namespace.h\"\n";
 
       close ACE_VERSION_H;
