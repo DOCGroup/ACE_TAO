@@ -1,20 +1,20 @@
 Thu Dec 15 08:08:31 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/Asynch_IO.h: Clarified arguments and return value for
-	  ACE_Asynch_Read_Stream::open.
+        * ace/Asynch_IO.h: Clarified arguments and return value for
+          ACE_Asynch_Read_Stream::open.
 
 Thu Dec 15 08:06:29 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/Service_Templates.cpp: Only #include headers if we need to
-	  instantiate templates; i.e., if using either form of explicit
-	  template instantiation. This avoids the sigaction issue with
-	  HP aC++ A.03.56.
+        * ace/Service_Templates.cpp: Only #include headers if we need to
+          instantiate templates; i.e., if using either form of explicit
+          template instantiation. This avoids the sigaction issue with
+          HP aC++ A.03.56.
 
 Tue Dec 13 12:13:26 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* COPYING: Updated this file to mention compliance issues wrt the
-	  new "The Energy Policy Act of 2005".  Thanks to Malcolm Spence
- 	  for providing this.
+        * COPYING: Updated this file to mention compliance issues wrt the
+          new "The Energy Policy Act of 2005".  Thanks to Malcolm Spence
+          for providing this.
 
 Tue Dec 13 18:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -24,26 +24,26 @@ Tue Dec 13 18:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Dec 13 00:54:04 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/tao_versioning_idl_defaults.mpb:
+        * bin/MakeProjectCreator/config/tao_versioning_idl_defaults.mpb:
 
-	  New MPC base project containing necessary versioned namespace
-	  related TAO_IDL flags for PIDL and IDL files in core TAO
-	  libraries and TAO orbsvcs libraries.
+          New MPC base project containing necessary versioned namespace
+          related TAO_IDL flags for PIDL and IDL files in core TAO
+          libraries and TAO orbsvcs libraries.
 
 Mon Dec 12 15:31:50 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/ace_for_tao.mpc:
+        * ace/ace_for_tao.mpc:
 
-	  Added "nmake" to the list of Windows-based build types that
-	  should be considered when adding Windows-specific sources to the
-	  ace_for_tao subset.
+          Added "nmake" to the list of Windows-based build types that
+          should be considered when adding Windows-specific sources to the
+          ace_for_tao subset.
 
 Mon Dec 12 15:23:29 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/tests.mpc (UPIPE_SAP_Test):
+        * tests/tests.mpc (UPIPE_SAP_Test):
 
-	  Disable this test in the ace_for_tao configuration.  It depends
-	  on features not found in the ace_for_tao subset.
+          Disable this test in the ace_for_tao configuration.  It depends
+          on features not found in the ace_for_tao subset.
 
 Mon Dec 12 14:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -60,41 +60,41 @@ Mon Dec 12 13:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Dec 11 18:03:05 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/UPIPE_Stream.h (MT_Stream):
+        * ace/UPIPE_Stream.h (MT_Stream):
 
-	  Moved this typedef out of the global namespace to the
-	  ACE_UPIPE_Stream class.  It is only used within this class.
-	  Doing so also addresses global namespace pollution issues.
+          Moved this typedef out of the global namespace to the
+          ACE_UPIPE_Stream class.  It is only used within this class.
+          Doing so also addresses global namespace pollution issues.
 
-	* examples/ASX/Event_Server/Event_Server/event_server.cpp:
-	* examples/ASX/UPIPE_Event_Server/event_server.cpp:
+        * examples/ASX/Event_Server/Event_Server/event_server.cpp:
+        * examples/ASX/UPIPE_Event_Server/event_server.cpp:
 
-	  Reinstated local MT_Stream typedefs.  The global namespace
-	  pollution fix described above allows this.  Fixes compile-time
-	  error in single threaded builds.
+          Reinstated local MT_Stream typedefs.  The global namespace
+          pollution fix described above allows this.  Fixes compile-time
+          error in single threaded builds.
 
 Thu Dec  8 07:20:25 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Dynamic.h:
-	* ace/OS_main.cpp:
-	* ace/OS_main.h:
-	* ace/TSS_Adapter.h:
-	* ace/QoS/QoS_Decorator.cpp:
-	* ace/QoS/QoS_Decorator.h:
-	* ace/QoS/QoS_Manager.cpp:
-	* ace/QoS/QoS_Manager.h:
-	* ace/QoS/QoS_Session.h:
-	* ace/QoS/QoS_Session_Factory.cpp:
-	* ace/QoS/QoS_Session_Factory.h:
-	* ace/QoS/QoS_Session_Impl.cpp:
-	* ace/QoS/QoS_Session_Impl.h:
-	* ace/QoS/QoS_Session_Impl.i:
-	* ace/QoS/SOCK_Dgram_Mcast_QoS.cpp:
-	* ace/QoS/SOCK_Dgram_Mcast_QoS.h:
-	* ace/QoS/SOCK_Dgram_Mcast_QoS.i:
+        * ace/Dynamic.h:
+        * ace/OS_main.cpp:
+        * ace/OS_main.h:
+        * ace/TSS_Adapter.h:
+        * ace/QoS/QoS_Decorator.cpp:
+        * ace/QoS/QoS_Decorator.h:
+        * ace/QoS/QoS_Manager.cpp:
+        * ace/QoS/QoS_Manager.h:
+        * ace/QoS/QoS_Session.h:
+        * ace/QoS/QoS_Session_Factory.cpp:
+        * ace/QoS/QoS_Session_Factory.h:
+        * ace/QoS/QoS_Session_Impl.cpp:
+        * ace/QoS/QoS_Session_Impl.h:
+        * ace/QoS/QoS_Session_Impl.i:
+        * ace/QoS/SOCK_Dgram_Mcast_QoS.cpp:
+        * ace/QoS/SOCK_Dgram_Mcast_QoS.h:
+        * ace/QoS/SOCK_Dgram_Mcast_QoS.i:
 
-	  Fixed versioned namespace support.  The versioning macros calls
-	  were missing.
+          Fixed versioned namespace support.  The versioning macros calls
+          were missing.
 
 Thu Dec  8 08:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -104,29 +104,29 @@ Thu Dec  8 08:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Dec  7 05:50:01 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* apps/JAWS/clients/Caching/caching.mpc:
-	* apps/JAWS2/JAWS/jaws2.mpc:
-	* bin/MakeProjectCreator/config/winregistry.mpb:
-	* examples/APG/Containers/containers.mpc:
-	* examples/APG/Svc_Config/svc_config.mpc:
-	* examples/APG/ThreadSafety/threadsafety.mpc:
-	* examples/C++NPv2/C++NPv2.mpc:
-	* examples/QOS/Diffserv/QOS_Diffserv.mpc:
-	* examples/Reactor/Proactor/Proactor.mpc:
-	* examples/Reactor/WFMO_Reactor/WFMO_Reactor.mpc:
-	* tests/tests.mpc:
+        * apps/JAWS/clients/Caching/caching.mpc:
+        * apps/JAWS2/JAWS/jaws2.mpc:
+        * bin/MakeProjectCreator/config/winregistry.mpb:
+        * examples/APG/Containers/containers.mpc:
+        * examples/APG/Svc_Config/svc_config.mpc:
+        * examples/APG/ThreadSafety/threadsafety.mpc:
+        * examples/C++NPv2/C++NPv2.mpc:
+        * examples/QOS/Diffserv/QOS_Diffserv.mpc:
+        * examples/Reactor/Proactor/Proactor.mpc:
+        * examples/Reactor/WFMO_Reactor/WFMO_Reactor.mpc:
+        * tests/tests.mpc:
 
-	  Disable some projects in these MPC files when "ace_for_tao" is
-	  enabled.
+          Disable some projects in these MPC files when "ace_for_tao" is
+          enabled.
 
 Tue Dec  6 21:34:03 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* examples/ASX/Event_Server/Event_Server/event_server.cpp:
-	* examples/ASX/UPIPE_Event_Server/event_server.cpp:
+        * examples/ASX/Event_Server/Event_Server/event_server.cpp:
+        * examples/ASX/UPIPE_Event_Server/event_server.cpp:
 
-	  Removed duplicate "MT_Stream" typedef that made the same typedef
-	  in `ace/UPIPE_Stream.h' ambiguous.  Fixes a versioned namespace
-	  build error.
+          Removed duplicate "MT_Stream" typedef that made the same typedef
+          in `ace/UPIPE_Stream.h' ambiguous.  Fixes a versioned namespace
+          build error.
 
 Tue Dec  6 18:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -142,13 +142,13 @@ Tue Dec  6 18:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Dec  6 01:55:12 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/config-macros.h:
+        * ace/config-macros.h:
 
-	  Removed "#pragma once" directive.  The necessary preprocessor
-	  symbol definitions necessary to disable this directive
-	  are generally C++ preprocessor/compiler-specific.  This
-	  prevents proper configuration of this #pragma in the
-	  presence of a C compiler.
+          Removed "#pragma once" directive.  The necessary preprocessor
+          symbol definitions necessary to disable this directive
+          are generally C++ preprocessor/compiler-specific.  This
+          prevents proper configuration of this #pragma in the
+          presence of a C compiler.
 
 Mon Dec  5 14:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -170,90 +170,90 @@ Mon Dec  5 08:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Dec  4 06:49:59 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/SSL/SSL_Context.cpp:
+        * ace/SSL/SSL_Context.cpp:
 
-	  Use an ACE_Thread_Mutex instead of ACE_Mutex.  The former is
-	  faster and lighter weight.
+          Use an ACE_Thread_Mutex instead of ACE_Mutex.  The former is
+          faster and lighter weight.
 
 Sat Dec  3 17:56:04 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/SSL/SSL_Asynch_BIO.cpp:
-	* ace/SSL/SSL_Asynch_Stream.h:
+        * ace/SSL/SSL_Asynch_BIO.cpp:
+        * ace/SSL/SSL_Asynch_Stream.h:
 
-	  Replaced ACE_SSL_bio_{read,write} functors with a single
-	  structure containing static read() and write() methods.
-	  Functors are overkill in this case.
+          Replaced ACE_SSL_bio_{read,write} functors with a single
+          structure containing static read() and write() methods.
+          Functors are overkill in this case.
 
-	  Documented why a structure is used instead of a free
-	  function.
+          Documented why a structure is used instead of a free
+          function.
 
-	* ace/SSL/SSL_Context.h:
+        * ace/SSL/SSL_Context.h:
 
-	  Removed obsolete comment.
+          Removed obsolete comment.
 
 Sat Dec  3 11:51:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Base_Thread_Adapter.h:
+        * ace/Base_Thread_Adapter.h:
 
-	  Removed unnecessary "ace/Global_Macros.h" include directive in
-	  versioned namespace case.
+          Removed unnecessary "ace/Global_Macros.h" include directive in
+          versioned namespace case.
 
-	* ace/SSL/SSL_Asynch_BIO.cpp:
+        * ace/SSL/SSL_Asynch_BIO.cpp:
 
-	  Fixed versioned namespace support for free functions in this
-	  file.
+          Fixed versioned namespace support for free functions in this
+          file.
 
-	  (BIO_s_Asynch):
+          (BIO_s_Asynch):
 
-	  Removed this unnecessary function.  It simply returned the
-	  address of a global object.  Just take the address directly in
-	  the calling code.
+          Removed this unnecessary function.  It simply returned the
+          address of a global object.  Just take the address directly in
+          the calling code.
 
-	  (BIO_new_ACE_Asynch, ACE_SSL_make_BIO):
+          (BIO_new_ACE_Asynch, ACE_SSL_make_BIO):
 
-	  Renamed BIO factory function to "ACE_SSL_make_BIO", which is
-	  more consistent with ACE naming conventions.  Removed extern "C"
-	  declaration, as well, since there's no need for it to be so.
+          Renamed BIO factory function to "ACE_SSL_make_BIO", which is
+          more consistent with ACE naming conventions.  Removed extern "C"
+          declaration, as well, since there's no need for it to be so.
 
-	  (ACE_SSL_bio_read, ACE_SSL_bio_write):
+          (ACE_SSL_bio_read, ACE_SSL_bio_write):
 
-	  New functors that that make the necessary calls on the
-	  ACE_SSL_Asynch_Stream object.
+          New functors that that make the necessary calls on the
+          ACE_SSL_Asynch_Stream object.
 
-	  (ACE_Asynch_BIO_read, ACE_Asynch_BIO_write):
+          (ACE_Asynch_BIO_read, ACE_Asynch_BIO_write):
 
-	  Use new ACE_SSL_bio_{read,write} functors instead of making
-	  direct calls on the ACE_SSL_Asynch_Stream object.
+          Use new ACE_SSL_bio_{read,write} functors instead of making
+          direct calls on the ACE_SSL_Asynch_Stream object.
 
-	* ace/SSL/SSL_Asynch_BIO.h:
+        * ace/SSL/SSL_Asynch_BIO.h:
 
-	  Moved extern "C" BIO callback function prototypes to
-	  SSL_Asynch_BIO.cpp.  There's no need for them to be visibile to
-	  the user.
+          Moved extern "C" BIO callback function prototypes to
+          SSL_Asynch_BIO.cpp.  There's no need for them to be visibile to
+          the user.
 
-	  Renamed BIO factory function to "ACE_SSL_make_BIO", which is
-	  more consistent with ACE naming conventions.  Removed extern "C"
-	  declaration, as well, since there's no need for it to be so.
+          Renamed BIO factory function to "ACE_SSL_make_BIO", which is
+          more consistent with ACE naming conventions.  Removed extern "C"
+          declaration, as well, since there's no need for it to be so.
 
-	* ace/SSL/SSL_Asynch_Stream.cpp (open):
+        * ace/SSL/SSL_Asynch_Stream.cpp (open):
 
-	  Updated name of BIO factory function.
+          Updated name of BIO factory function.
 
-	* ace/SSL/SSL_Asynch_Stream.h:
+        * ace/SSL/SSL_Asynch_Stream.h:
 
-	  Removed unnecessary free function prototypes.
+          Removed unnecessary free function prototypes.
 
-	  (ACE_SSL_Asynch_Stream):
+          (ACE_SSL_Asynch_Stream):
 
-	  Replaced friend function declarations with friend structure
-	  (used as functors) declarations.  Works around scope qualifier
-	  problems in Sun compilers when used on free functions.
+          Replaced friend function declarations with friend structure
+          (used as functors) declarations.  Works around scope qualifier
+          problems in Sun compilers when used on free functions.
 
 Fri Dec  2 10:27:47 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* bin/msvc_static_order.lst:
+        * bin/msvc_static_order.lst:
 
-	  Add RTEventLogAdmin project.
+          Add RTEventLogAdmin project.
 
 Fri Dec  2 13:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -270,108 +270,108 @@ Fri Dec  2 11:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Dec  2 01:25:52 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Versioned_Namespace.h:
+        * ace/Versioned_Namespace.h:
 
-	  Update preprocessor check to use new config-macros.h specific
-	  include guard preprocessor symbol.
+          Update preprocessor check to use new config-macros.h specific
+          include guard preprocessor symbol.
 
-	* ace/config-macros.h:
-	* ace/config-lite.h:
+        * ace/config-macros.h:
+        * ace/config-lite.h:
 
-	  Moved all macros, preprocessor symbols and some non-C++-specific
-	  typedefs to the new `config-macros.h' header.  Allows
-	  configuration macros/values to be used in C sources.
+          Moved all macros, preprocessor symbols and some non-C++-specific
+          typedefs to the new `config-macros.h' header.  Allows
+          configuration macros/values to be used in C sources.
 
-	* ace/config-all.h:
+        * ace/config-all.h:
 
-	  Removed redundant "ace/ace_wchar.h" include directive.  It's
-	  already included by `config-lite.h'.
+          Removed redundant "ace/ace_wchar.h" include directive.  It's
+          already included by `config-lite.h'.
 
-	* ace/config-aix-4.x.h:
-	* ace/config-chorus.h:
-	* ace/config-cygwin32.h:
-	* ace/config-linux-common.h:
-	* ace/config-osf1-4.0.h:
-	* ace/config-rtems.h:
-	* ace/config-sunos5.5.h:
-	* ace/config-vxworks5.x.h:
-	* ace/config-vxworks6.1.h:
+        * ace/config-aix-4.x.h:
+        * ace/config-chorus.h:
+        * ace/config-cygwin32.h:
+        * ace/config-linux-common.h:
+        * ace/config-osf1-4.0.h:
+        * ace/config-rtems.h:
+        * ace/config-sunos5.5.h:
+        * ace/config-vxworks5.x.h:
+        * ace/config-vxworks6.1.h:
 
-	  Relaxed unsupported compiler preprocessor error for non-C++
-	  compilers. Simplifies use of configuration macros/values in
-	  presence of C compiler.
+          Relaxed unsupported compiler preprocessor error for non-C++
+          compilers. Simplifies use of configuration macros/values in
+          presence of C compiler.
 
-	* ace/Makefile.am:
-	* ace/ace.mpc:
+        * ace/Makefile.am:
+        * ace/ace.mpc:
 
-	  Added new config-macros.h header to the appropriate header
-	  lists.
+          Added new config-macros.h header to the appropriate header
+          lists.
 
 Fri Dec  2 00:43:12 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Module.h:
-	* apps/JAWS/server/HTTP_Request.h:
-	* apps/JAWS/server/IO.h:
-	* apps/JAWS2/JAWS/Cache_Object.h:
-	* apps/JAWS2/JAWS/IO.h:
-	* apps/JAWS2/JAWS/IO_Acceptor.h:
-	* apps/JAWS2/JAWS/IO_Handler.h:
-	* apps/soreduce/Obj_Module.h:
-	* examples/APG/Containers/Hash_Map_Hash.h:
-	* examples/APG/Containers/RB_Tree_Functors.h:
-	* examples/APG/ThreadPools/Request_Handler.h:
-	* examples/ASX/Event_Server/Event_Server/Options.h:
-	* examples/ASX/Event_Server/Event_Server/event_server.cpp:
-	* examples/C++NPv1/Iterative_Logging_Server.h:
-	* examples/C++NPv1/Logging_Handler.h:
-	* examples/C++NPv1/Logging_Server.h:
-	* examples/C++NPv2/Logging_Handler.h:
-	* examples/Shared_Malloc/Malloc.h:
+        * ace/Module.h:
+        * apps/JAWS/server/HTTP_Request.h:
+        * apps/JAWS/server/IO.h:
+        * apps/JAWS2/JAWS/Cache_Object.h:
+        * apps/JAWS2/JAWS/IO.h:
+        * apps/JAWS2/JAWS/IO_Acceptor.h:
+        * apps/JAWS2/JAWS/IO_Handler.h:
+        * apps/soreduce/Obj_Module.h:
+        * examples/APG/Containers/Hash_Map_Hash.h:
+        * examples/APG/Containers/RB_Tree_Functors.h:
+        * examples/APG/ThreadPools/Request_Handler.h:
+        * examples/ASX/Event_Server/Event_Server/Options.h:
+        * examples/ASX/Event_Server/Event_Server/event_server.cpp:
+        * examples/C++NPv1/Iterative_Logging_Server.h:
+        * examples/C++NPv1/Logging_Handler.h:
+        * examples/C++NPv1/Logging_Server.h:
+        * examples/C++NPv2/Logging_Handler.h:
+        * examples/Shared_Malloc/Malloc.h:
 
-	  More versioned namespace build fixes.
+          More versioned namespace build fixes.
 
 Thu Dec  1 08:07:23 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Service_Config.cpp (open_i):
-	* ace/Service_Config.h (ACE_Service_Config): Don't try to
-	  register a signal handler if the signal number is < 0!  Thanks
- 	  to Brian Raven <brianr at liffe dot com> for this fix.
+        * ace/Service_Config.cpp (open_i):
+        * ace/Service_Config.h (ACE_Service_Config): Don't try to
+          register a signal handler if the signal number is < 0!  Thanks
+          to Brian Raven <brianr at liffe dot com> for this fix.
 
 Wed Nov 30 13:37:59 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/cidlc.mpb
+        * bin/MakeProjectCreator/config/cidlc.mpb
 
-	  Updated to make thie base project consistent with the semantics
- 	  of the boost base projects from MPC.
+          Updated to make thie base project consistent with the semantics
+          of the boost base projects from MPC.
 
 Tue Nov 29 11:20:12 UTC 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Parse_Node.cpp (make_func_name):
+        * ace/Parse_Node.cpp (make_func_name):
 
-	  Do not use a stack instantiated variable length array.  Use a
-	  dynamically allocated array instead.  Saves us a copy, and
-	  fixes g++ build errors when using its "-pedantic" command line
-	  option.
+          Do not use a stack instantiated variable length array.  Use a
+          dynamically allocated array instead.  Saves us a copy, and
+          fixes g++ build errors when using its "-pedantic" command line
+          option.
 
-	  Fixed string length calculation.  Addresses Service
-	  Configurator failures when versioned namespace support is
-	  enabled.
+          Fixed string length calculation.  Addresses Service
+          Configurator failures when versioned namespace support is
+          enabled.
 
 Wed Nov 30 00:33:21 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ACEXML/parser/parser/parser.mpc:
-	* bin/MakeProjectCreator/config/avstreams.mpb:
-	* bin/MakeProjectCreator/config/rmcast.mpb:
-	* netsvcs/clients/Logger/Logger.mpc:
-	* netsvcs/servers/servers.mpc:
+        * ACEXML/parser/parser/parser.mpc:
+        * bin/MakeProjectCreator/config/avstreams.mpb:
+        * bin/MakeProjectCreator/config/rmcast.mpb:
+        * netsvcs/clients/Logger/Logger.mpc:
+        * netsvcs/servers/servers.mpc:
 
-	  Disable these projects when "ace_for_tao" is enabled.
+          Disable these projects when "ace_for_tao" is enabled.
 
 Wed Nov 30 08:58:35 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* html/index.html
+        * html/index.html
 
-	  Removed obsolete CIAO components, cleaned up the HTML a bit.
+          Removed obsolete CIAO components, cleaned up the HTML a bit.
 
 Tue Nov 29 11:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -390,249 +390,249 @@ Tue Nov 29 07:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Nov 28 07:26:31 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* protocols/ace/HTBP/HTBP.mpc:
+        * protocols/ace/HTBP/HTBP.mpc:
 
-	  Added missing "avoids += ace_for_tao".
+          Added missing "avoids += ace_for_tao".
 
 Mon Nov 28 06:50:04 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/ACE_Init_Test.cpp (run_main):
+        * tests/ACE_Init_Test.cpp (run_main):
 
-	  Removed unnecessary versioned namespace related "using"
-	  keyword.
+          Removed unnecessary versioned namespace related "using"
+          keyword.
 
 Sun Nov 27 22:37:44 2005  Bala Natarajan <bala_natarajan at symantec dot com>
 
-	* ace/Array_Map.h:
+        * ace/Array_Map.h:
 
-	  Included the Sun CC 5.8, as an additional CC compiler that
-	  requires complete specification for a trait declaration.
+          Included the Sun CC 5.8, as an additional CC compiler that
+          requires complete specification for a trait declaration.
 
-	  Just for information. Sun CC 5.8 comes with Studio 11, which is
-	  free (as in FREE BEER!!).
+          Just for information. Sun CC 5.8 comes with Studio 11, which is
+          free (as in FREE BEER!!).
 
 Sun Nov 27 04:05:52 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/ace.mpc:
-	* ace/ace_for_tao.mpc:
-	* bin/MakeProjectCreator/config/aceexe.mpb:
-	* bin/MakeProjectCreator/config/acelib.mpb:
-	* bin/MakeProjectCreator/config/versioned_namespace.mpb:
+        * ace/ace.mpc:
+        * ace/ace_for_tao.mpc:
+        * bin/MakeProjectCreator/config/aceexe.mpb:
+        * bin/MakeProjectCreator/config/acelib.mpb:
+        * bin/MakeProjectCreator/config/versioned_namespace.mpb:
 
-	  Added versioned namespace MPC support.  Disabled by default.
-	  Add "versioned_namespace=1" to default.features to enable.
+          Added versioned namespace MPC support.  Disabled by default.
+          Add "versioned_namespace=1" to default.features to enable.
 
-	* Kokyu/Kokyu_defs.h:
-	* ace/Asynch_Connector.h:
-	* ace/Cleanup.cpp:
-	* ace/Cleanup.h:
-	* ace/If_Then_Else.h:
-	* ace/OS.h:
-	* ace/Object_Manager.cpp:
-	* ace/Object_Manager.inl:
-	* ace/Value_Ptr.h:
-	* ace/SSL/SSL_Asynch_Stream.h:
-	* ace/SSL/SSL_SOCK_Acceptor.cpp:
-	* protocols/ace/HTBP/HTBP_Addr.cpp:
-	* protocols/ace/HTBP/HTBP_Addr.h:
-	* protocols/ace/HTBP/HTBP_Channel.cpp:
-	* protocols/ace/HTBP/HTBP_Channel.h:
-	* protocols/ace/HTBP/HTBP_Channel.inl:
-	* protocols/ace/HTBP/HTBP_Environment.cpp:
-	* protocols/ace/HTBP/HTBP_Environment.h:
-	* protocols/ace/HTBP/HTBP_Filter.cpp:
-	* protocols/ace/HTBP/HTBP_Filter.h:
-	* protocols/ace/HTBP/HTBP_Filter.inl:
-	* protocols/ace/HTBP/HTBP_Filter_Factory.cpp:
-	* protocols/ace/HTBP/HTBP_Filter_Factory.h:
-	* protocols/ace/HTBP/HTBP_ID_Requestor.cpp:
-	* protocols/ace/HTBP/HTBP_ID_Requestor.h:
-	* protocols/ace/HTBP/HTBP_Inside_Squid_Filter.cpp:
-	* protocols/ace/HTBP/HTBP_Inside_Squid_Filter.h:
-	* protocols/ace/HTBP/HTBP_Inside_Squid_Filter.inl:
-	* protocols/ace/HTBP/HTBP_Notifier.cpp:
-	* protocols/ace/HTBP/HTBP_Notifier.h:
-	* protocols/ace/HTBP/HTBP_Outside_Squid_Filter.cpp:
-	* protocols/ace/HTBP/HTBP_Outside_Squid_Filter.h:
-	* protocols/ace/HTBP/HTBP_Outside_Squid_Filter.inl:
-	* protocols/ace/HTBP/HTBP_Session.cpp:
-	* protocols/ace/HTBP/HTBP_Session.h:
-	* protocols/ace/HTBP/HTBP_Session.inl:
-	* protocols/ace/HTBP/HTBP_Stream.cpp:
-	* protocols/ace/HTBP/HTBP_Stream.h:
-	* tests/ACE_Init_Test.cpp:
-	* tests/Process_Strategy_Test.h:
+        * Kokyu/Kokyu_defs.h:
+        * ace/Asynch_Connector.h:
+        * ace/Cleanup.cpp:
+        * ace/Cleanup.h:
+        * ace/If_Then_Else.h:
+        * ace/OS.h:
+        * ace/Object_Manager.cpp:
+        * ace/Object_Manager.inl:
+        * ace/Value_Ptr.h:
+        * ace/SSL/SSL_Asynch_Stream.h:
+        * ace/SSL/SSL_SOCK_Acceptor.cpp:
+        * protocols/ace/HTBP/HTBP_Addr.cpp:
+        * protocols/ace/HTBP/HTBP_Addr.h:
+        * protocols/ace/HTBP/HTBP_Channel.cpp:
+        * protocols/ace/HTBP/HTBP_Channel.h:
+        * protocols/ace/HTBP/HTBP_Channel.inl:
+        * protocols/ace/HTBP/HTBP_Environment.cpp:
+        * protocols/ace/HTBP/HTBP_Environment.h:
+        * protocols/ace/HTBP/HTBP_Filter.cpp:
+        * protocols/ace/HTBP/HTBP_Filter.h:
+        * protocols/ace/HTBP/HTBP_Filter.inl:
+        * protocols/ace/HTBP/HTBP_Filter_Factory.cpp:
+        * protocols/ace/HTBP/HTBP_Filter_Factory.h:
+        * protocols/ace/HTBP/HTBP_ID_Requestor.cpp:
+        * protocols/ace/HTBP/HTBP_ID_Requestor.h:
+        * protocols/ace/HTBP/HTBP_Inside_Squid_Filter.cpp:
+        * protocols/ace/HTBP/HTBP_Inside_Squid_Filter.h:
+        * protocols/ace/HTBP/HTBP_Inside_Squid_Filter.inl:
+        * protocols/ace/HTBP/HTBP_Notifier.cpp:
+        * protocols/ace/HTBP/HTBP_Notifier.h:
+        * protocols/ace/HTBP/HTBP_Outside_Squid_Filter.cpp:
+        * protocols/ace/HTBP/HTBP_Outside_Squid_Filter.h:
+        * protocols/ace/HTBP/HTBP_Outside_Squid_Filter.inl:
+        * protocols/ace/HTBP/HTBP_Session.cpp:
+        * protocols/ace/HTBP/HTBP_Session.h:
+        * protocols/ace/HTBP/HTBP_Session.inl:
+        * protocols/ace/HTBP/HTBP_Stream.cpp:
+        * protocols/ace/HTBP/HTBP_Stream.h:
+        * tests/ACE_Init_Test.cpp:
+        * tests/Process_Strategy_Test.h:
 
-	  Corrected build errors in versioned namespace builds.
+          Corrected build errors in versioned namespace builds.
 
-	* bin/MakeProjectCreator/config/acexml.mpb:
+        * bin/MakeProjectCreator/config/acexml.mpb:
 
-	  Disable ACEXML libraries when "ace_for_tao" is enabled.
+          Disable ACEXML libraries when "ace_for_tao" is enabled.
 
 Fri Nov 25 19:04:10 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* NEWS:
+        * NEWS:
 
-	  Updated with latest versioned namespace information.
+          Updated with latest versioned namespace information.
 
-	* ace/ACE_Codecs_export.h:
-	* ace/ACE_Memory_export.h:
-	* ace/ACE_Reactor_export.h:
-	* ace/ACE_Sockets_export.h:
-	* ace/ACE_Threads_export.h:
-	* ace/ace.mwc:
-	* ace/ace_codecs_for_tao.mpc:
-	* ace/ace_configuration_for_tao.mpc:
-	* ace/ace_memory_for_tao.mpc:
-	* ace/ace_reactor_for_tao.mpc:
-	* ace/ace_sockets_for_tao.mpc:
-	* ace/ace_threads_for_tao.mpc:
-	* ace/ace_timer_for_tao.mpc:
-	* bin/MakeProjectCreator/config/acecodecslib_for_tao.mpb:
-	* bin/MakeProjectCreator/config/acememorylib_for_tao.mpb:
-	* bin/MakeProjectCreator/config/acereactorlib_for_tao.mpb:
-	* bin/MakeProjectCreator/config/acesocketslib_for_tao.mpb:
-	* bin/MakeProjectCreator/config/acethreadslib_for_tao.mpb:
-	* bin/MakeProjectCreator/config/acetimerlib_for_tao.mpb:
+        * ace/ACE_Codecs_export.h:
+        * ace/ACE_Memory_export.h:
+        * ace/ACE_Reactor_export.h:
+        * ace/ACE_Sockets_export.h:
+        * ace/ACE_Threads_export.h:
+        * ace/ace.mwc:
+        * ace/ace_codecs_for_tao.mpc:
+        * ace/ace_configuration_for_tao.mpc:
+        * ace/ace_memory_for_tao.mpc:
+        * ace/ace_reactor_for_tao.mpc:
+        * ace/ace_sockets_for_tao.mpc:
+        * ace/ace_threads_for_tao.mpc:
+        * ace/ace_timer_for_tao.mpc:
+        * bin/MakeProjectCreator/config/acecodecslib_for_tao.mpb:
+        * bin/MakeProjectCreator/config/acememorylib_for_tao.mpb:
+        * bin/MakeProjectCreator/config/acereactorlib_for_tao.mpb:
+        * bin/MakeProjectCreator/config/acesocketslib_for_tao.mpb:
+        * bin/MakeProjectCreator/config/acethreadslib_for_tao.mpb:
+        * bin/MakeProjectCreator/config/acetimerlib_for_tao.mpb:
 
-	  Removed smaller ace_for_tao subsets.  Only a single ace_for_tao
-	  subset library was originally intended.
+          Removed smaller ace_for_tao subsets.  Only a single ace_for_tao
+          subset library was originally intended.
 
-	* ace/Activation_Queue.h:
-	* ace/Barrier.h:
-	* ace/Based_Pointer_Repository.h:
-	* ace/Codecs.h:
-	* ace/Dev_Poll_Reactor.h:
-	* ace/File_Lock.h:
-	* ace/LSOCK.h:
-	* ace/LSOCK_Acceptor.h:
-	* ace/LSOCK_CODgram.h:
-	* ace/LSOCK_Connector.h:
-	* ace/LSOCK_Dgram.h:
-	* ace/LSOCK_Stream.h:
-	* ace/MEM_Acceptor.h:
-	* ace/MEM_Addr.h:
-	* ace/MEM_Connector.h:
-	* ace/MEM_IO.h:
-	* ace/MEM_SAP.h:
-	* ace/MEM_Stream.h:
-	* ace/MMAP_Memory_Pool.h:
-	* ace/Mem_Map.h:
-	* ace/Method_Request.h:
-	* ace/Msg_WFMO_Reactor.h:
-	* ace/Multihomed_INET_Addr.h:
-	* ace/PI_Malloc.h:
-	* ace/Pagefile_Memory_Pool.h:
-	* ace/Priority_Reactor.h:
-	* ace/Process.h:
-	* ace/Process_Manager.h:
-	* ace/Process_Semaphore.h:
-	* ace/RW_Process_Mutex.h:
-	* ace/SOCK_CODgram.h:
-	* ace/SOCK_Dgram_Bcast.h:
-	* ace/SOCK_Dgram_Mcast.h:
-	* ace/SOCK_SEQPACK_Acceptor.h:
-	* ace/SOCK_SEQPACK_Association.h:
-	* ace/SOCK_SEQPACK_Connector.h:
-	* ace/SV_Shared_Memory.h:
-	* ace/Sbrk_Memory_Pool.h:
-	* ace/Shared_Memory.h:
-	* ace/Shared_Memory_MM.h:
-	* ace/Shared_Memory_Pool.h:
-	* ace/Shared_Memory_SV.h:
-	* ace/Thread_Semaphore.h:
-	* ace/UNIX_Addr.h:
+        * ace/Activation_Queue.h:
+        * ace/Barrier.h:
+        * ace/Based_Pointer_Repository.h:
+        * ace/Codecs.h:
+        * ace/Dev_Poll_Reactor.h:
+        * ace/File_Lock.h:
+        * ace/LSOCK.h:
+        * ace/LSOCK_Acceptor.h:
+        * ace/LSOCK_CODgram.h:
+        * ace/LSOCK_Connector.h:
+        * ace/LSOCK_Dgram.h:
+        * ace/LSOCK_Stream.h:
+        * ace/MEM_Acceptor.h:
+        * ace/MEM_Addr.h:
+        * ace/MEM_Connector.h:
+        * ace/MEM_IO.h:
+        * ace/MEM_SAP.h:
+        * ace/MEM_Stream.h:
+        * ace/MMAP_Memory_Pool.h:
+        * ace/Mem_Map.h:
+        * ace/Method_Request.h:
+        * ace/Msg_WFMO_Reactor.h:
+        * ace/Multihomed_INET_Addr.h:
+        * ace/PI_Malloc.h:
+        * ace/Pagefile_Memory_Pool.h:
+        * ace/Priority_Reactor.h:
+        * ace/Process.h:
+        * ace/Process_Manager.h:
+        * ace/Process_Semaphore.h:
+        * ace/RW_Process_Mutex.h:
+        * ace/SOCK_CODgram.h:
+        * ace/SOCK_Dgram_Bcast.h:
+        * ace/SOCK_Dgram_Mcast.h:
+        * ace/SOCK_SEQPACK_Acceptor.h:
+        * ace/SOCK_SEQPACK_Association.h:
+        * ace/SOCK_SEQPACK_Connector.h:
+        * ace/SV_Shared_Memory.h:
+        * ace/Sbrk_Memory_Pool.h:
+        * ace/Shared_Memory.h:
+        * ace/Shared_Memory_MM.h:
+        * ace/Shared_Memory_Pool.h:
+        * ace/Shared_Memory_SV.h:
+        * ace/Thread_Semaphore.h:
+        * ace/UNIX_Addr.h:
 
-	  Removed ace_for_tao subset-specific export macro calls and
-	  include directives.  They are no longer needed.
+          Removed ace_for_tao subset-specific export macro calls and
+          include directives.  They are no longer needed.
 
-	* ace/ace_for_tao.mpc:
+        * ace/ace_for_tao.mpc:
 
-	  Added a number of source files required to build the
-	  Notification Service and its tests.
+          Added a number of source files required to build the
+          Notification Service and its tests.
 
-	* Kokyu/tests/DSRT_MIF/DSRT_MIF.mpc:
-	* ace/QoS/qos.mpc:
-	* apps/soreduce/soreduce.mpc:
-	* bin/MakeProjectCreator/config/ftclientorb.mpb:
-	* bin/MakeProjectCreator/config/htbp.mpb:
-	* bin/MakeProjectCreator/config/ifrservice.mpb:
-	* bin/MakeProjectCreator/config/naming_serv.mpb:
-	* bin/MakeProjectCreator/config/portablegroup.mpb:
-	* bin/MakeProjectCreator/config/rtevent_serv.mpb:
-	* bin/MakeProjectCreator/config/ssl.mpb:
-	* bin/MakeProjectCreator/config/strategies.mpb:
-	* bin/MakeProjectCreator/config/tmcast.mpb:
-	* examples/APG/Active_Objects/active_objects.mpc:
-	* examples/APG/Config/config.mpc:
-	* examples/APG/Misc_IPC/misc_ipc.mpc:
-	* examples/APG/Naming/naming.mpc:
-	* examples/APG/Proactor/proactor.mpc:
-	* examples/APG/Processes/processes.mpc:
-	* examples/APG/Shared_Memory/shared_memory.mpc:
-	* examples/APG/Streams/streams.mpc:
-	* examples/APG/Svc_Config/svc_config.mpc:
-	* examples/APG/ThreadPools/threadpools.mpc:
-	* examples/APG/ThreadSafety/threadsafety.mpc:
-	* examples/ASX/Event_Server/Event_Server/Event.mpc:
-	* examples/ASX/UPIPE_Event_Server/UPIPE_Event.mpc:
-	* examples/C++NPv1/C++NPv1.mpc:
-	* examples/C++NPv2/C++NPv2.mpc:
-	* examples/Connection/blocking/Connection_Blocking.mpc:
-	* examples/Connection/misc/Connection_Misc.mpc:
-	* examples/Connection/non_blocking/Connection_Non_Blocking.mpc:
-	* examples/IPC_SAP/DEV_SAP/reader/dev_sap_reader.mpc:
-	* examples/IPC_SAP/DEV_SAP/writer/dev_sap_writer.mpc:
-	* examples/IPC_SAP/FIFO_SAP/fifo_sap.mpc:
-	* examples/IPC_SAP/FILE_SAP/file_sap_client.mpc:
-	* examples/IPC_SAP/SOCK_SAP/sock_sap.mpc:
-	* examples/IPC_SAP/UPIPE_SAP/UPIPE_SAP.mpc:
-	* examples/Mem_Map/IO-tests/Mem_Map_IO_Tests.mpc:
-	* examples/Mem_Map/file-reverse/Mem_Map_File_Reverse.mpc:
-	* examples/Misc/Misc.mpc:
-	* examples/Naming/Naming.mpc:
-	* examples/OS/Process/OS_Process.mpc:
-	* examples/Reactor/Dgram/Reactor_Dgram.mpc:
-	* examples/Reactor/FIFO/Reactor_FIFO.mpc:
-	* examples/Reactor/Proactor/Proactor.mpc:
-	* examples/Service_Configurator/IPC-tests/client/Svc_Cfg_IPC_Client.mpc:
-	* examples/Shared_Malloc/Shared_Malloc.mpc:
-	* examples/Shared_Memory/Shared_Memory.mpc:
-	* examples/Synch/Synch.mpc:
-	* examples/System_V_IPC/SV_Message_Queues/SV_Message_Queues.mpc:
-	* examples/System_V_IPC/SV_Semaphores/SV_Semaphores.mpc:
-	* examples/Threads/Threads.mpc:
-	* performance-tests/SCTP/SCTP.mpc:
-	* tests/tests.mpc:
+        * Kokyu/tests/DSRT_MIF/DSRT_MIF.mpc:
+        * ace/QoS/qos.mpc:
+        * apps/soreduce/soreduce.mpc:
+        * bin/MakeProjectCreator/config/ftclientorb.mpb:
+        * bin/MakeProjectCreator/config/htbp.mpb:
+        * bin/MakeProjectCreator/config/ifrservice.mpb:
+        * bin/MakeProjectCreator/config/naming_serv.mpb:
+        * bin/MakeProjectCreator/config/portablegroup.mpb:
+        * bin/MakeProjectCreator/config/rtevent_serv.mpb:
+        * bin/MakeProjectCreator/config/ssl.mpb:
+        * bin/MakeProjectCreator/config/strategies.mpb:
+        * bin/MakeProjectCreator/config/tmcast.mpb:
+        * examples/APG/Active_Objects/active_objects.mpc:
+        * examples/APG/Config/config.mpc:
+        * examples/APG/Misc_IPC/misc_ipc.mpc:
+        * examples/APG/Naming/naming.mpc:
+        * examples/APG/Proactor/proactor.mpc:
+        * examples/APG/Processes/processes.mpc:
+        * examples/APG/Shared_Memory/shared_memory.mpc:
+        * examples/APG/Streams/streams.mpc:
+        * examples/APG/Svc_Config/svc_config.mpc:
+        * examples/APG/ThreadPools/threadpools.mpc:
+        * examples/APG/ThreadSafety/threadsafety.mpc:
+        * examples/ASX/Event_Server/Event_Server/Event.mpc:
+        * examples/ASX/UPIPE_Event_Server/UPIPE_Event.mpc:
+        * examples/C++NPv1/C++NPv1.mpc:
+        * examples/C++NPv2/C++NPv2.mpc:
+        * examples/Connection/blocking/Connection_Blocking.mpc:
+        * examples/Connection/misc/Connection_Misc.mpc:
+        * examples/Connection/non_blocking/Connection_Non_Blocking.mpc:
+        * examples/IPC_SAP/DEV_SAP/reader/dev_sap_reader.mpc:
+        * examples/IPC_SAP/DEV_SAP/writer/dev_sap_writer.mpc:
+        * examples/IPC_SAP/FIFO_SAP/fifo_sap.mpc:
+        * examples/IPC_SAP/FILE_SAP/file_sap_client.mpc:
+        * examples/IPC_SAP/SOCK_SAP/sock_sap.mpc:
+        * examples/IPC_SAP/UPIPE_SAP/UPIPE_SAP.mpc:
+        * examples/Mem_Map/IO-tests/Mem_Map_IO_Tests.mpc:
+        * examples/Mem_Map/file-reverse/Mem_Map_File_Reverse.mpc:
+        * examples/Misc/Misc.mpc:
+        * examples/Naming/Naming.mpc:
+        * examples/OS/Process/OS_Process.mpc:
+        * examples/Reactor/Dgram/Reactor_Dgram.mpc:
+        * examples/Reactor/FIFO/Reactor_FIFO.mpc:
+        * examples/Reactor/Proactor/Proactor.mpc:
+        * examples/Service_Configurator/IPC-tests/client/Svc_Cfg_IPC_Client.mpc:
+        * examples/Shared_Malloc/Shared_Malloc.mpc:
+        * examples/Shared_Memory/Shared_Memory.mpc:
+        * examples/Synch/Synch.mpc:
+        * examples/System_V_IPC/SV_Message_Queues/SV_Message_Queues.mpc:
+        * examples/System_V_IPC/SV_Semaphores/SV_Semaphores.mpc:
+        * examples/Threads/Threads.mpc:
+        * performance-tests/SCTP/SCTP.mpc:
+        * tests/tests.mpc:
 
-	  Added "avoids += ace_for_tao" to projects that require features
-	  of ACE not found in the ace_for_tao subset.  Addresses link-time
-	  errors.
+          Added "avoids += ace_for_tao" to projects that require features
+          of ACE not found in the ace_for_tao subset.  Addresses link-time
+          errors.
 
 Fri Nov 25 12:45:20 2005  Steve Huston  <shuston@riverace.com>
 
-	* tests/Proactor_Test.cpp:
-	* tests/Proactor_Test_IPV6.cpp: Corrected ACE_Atomic_Op instantiations
-	  for size_t.
+        * tests/Proactor_Test.cpp:
+        * tests/Proactor_Test_IPV6.cpp: Corrected ACE_Atomic_Op instantiations
+          for size_t.
 
 Fri Nov 25 10:00:21 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/POSIX_Proactor.cpp (ACE_POSIX_Asynch_Timer): Don't explicitly
-	  call ACE_Asynch_Result_Impl() - it's pointless and isn't listed
-	  as an ancestor of this class.
-	  (create_asynch_timer): Use a ACE_POSIX_Asynch_Timer * to match
-	  the created object type.
+        * ace/POSIX_Proactor.cpp (ACE_POSIX_Asynch_Timer): Don't explicitly
+          call ACE_Asynch_Result_Impl() - it's pointless and isn't listed
+          as an ancestor of this class.
+          (create_asynch_timer): Use a ACE_POSIX_Asynch_Timer * to match
+          the created object type.
 
-	* ace/POSIX_Asynch_IO.cpp: Remove explicit calls to base-class
-	  constructors from all constructors. It's not needed and seems to
-	  cause problems on 64-bit code, at least on AIX.
+        * ace/POSIX_Asynch_IO.cpp: Remove explicit calls to base-class
+          constructors from all constructors. It's not needed and seems to
+          cause problems on 64-bit code, at least on AIX.
 
-	* include/makeinclude/platform_aix_ibm.GNU: AIX now uses the XPG4 tail
-	  command syntax, requiring "-n 1" to read the last line; refuses "-1".
-	  Thanks to Mike Knight <mike dot knight at compuware dot com> for
-	  alerting us to this.
+        * include/makeinclude/platform_aix_ibm.GNU: AIX now uses the XPG4 tail
+          command syntax, requiring "-n 1" to read the last line; refuses "-1".
+          Thanks to Mike Knight <mike dot knight at compuware dot com> for
+          alerting us to this.
 
-	* THANKS: Added Mike Knight to the Hall of Fame.
+        * THANKS: Added Mike Knight to the Hall of Fame.
 
 Thu Nov 24 20:00:37 2005  Simon McQueen  <sm@prismtech.com>
 
@@ -647,68 +647,68 @@ Thu Nov 24 14:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Nov 24 01:38:57 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* bin/fuzz.pl:
+        * bin/fuzz.pl:
 
-	  Added a test that flags common versioned namespace related
-	  errors/misuses.
+          Added a test that flags common versioned namespace related
+          errors/misuses.
 
-	* bin/MakeProjectCreator/config/global.features:
+        * bin/MakeProjectCreator/config/global.features:
 
-	  Disable versioned namespace support by default.
+          Disable versioned namespace support by default.
 
-	* ace/Atomic_Op.h:
-	* ace/Auto_Ptr.h:
-	* ace/Barrier.h:
-	* ace/Base_Thread_Adapter.h:
-	* ace/CDR_Stream.h:
-	* ace/Cleanup_Strategies_T.cpp:
-	* ace/Dev_Poll_Reactor.h:
-	* ace/Functor_String.h:
-	* ace/High_Res_Timer.cpp:
-	* ace/LSOCK_Connector.inl:
-	* ace/Local_Name_Space_T.h:
-	* ace/Log_Msg.h:
-	* ace/Malloc.h:
-	* ace/Malloc_Allocator.h:
-	* ace/Message_Queue.h:
-	* ace/OS_Memory.h:
-	* ace/OS_NS_Thread.cpp:
-	* ace/OS_NS_Thread.h:
-	* ace/OS_NS_errno.h:
-	* ace/OS_NS_math.inl:
-	* ace/OS_NS_netdb.cpp:
-	* ace/OS_NS_netdb.h:
-	* ace/OS_NS_sys_msg.h:
-	* ace/OS_NS_time.h:
-	* ace/OS_main.cpp:
-	* ace/Object_Manager.h:
-	* ace/Parse_Node.cpp:
-	* ace/Ping_Socket.cpp:
-	* ace/Proactor.cpp:
-	* ace/Proactor.h:
-	* ace/Profile_Timer.cpp:
-	* ace/Profile_Timer.inl:
-	* ace/SOCK_Dgram_Mcast.cpp:
-	* ace/SOCK_Dgram_Mcast.h:
-	* ace/SOCK_Dgram_Mcast.inl:
-	* ace/SPIPE_Stream.h:
-	* ace/Select_Reactor_T.cpp:
-	* ace/Service_Config.h:
-	* ace/Service_Templates.cpp:
-	* ace/Sock_Connect.cpp:
-	* ace/Svc_Conf_l.cpp:
-	* ace/Svc_Conf_y.cpp:
-	* ace/Thread_Manager.cpp:
-	* ace/Time_Value.h:
-	* ace/Timeprobe.h:
-	* ace/Timer_Hash_T.h:
-	* ace/Timer_List.cpp:
-	* ace/Timer_Queue.cpp:
-	* ace/config-lite.h:
-	* ace/SSL/SSL_Asynch_BIO.cpp:
-	* ace/SSL/SSL_Context.cpp:
+        * ace/Atomic_Op.h:
+        * ace/Auto_Ptr.h:
+        * ace/Barrier.h:
+        * ace/Base_Thread_Adapter.h:
+        * ace/CDR_Stream.h:
+        * ace/Cleanup_Strategies_T.cpp:
+        * ace/Dev_Poll_Reactor.h:
+        * ace/Functor_String.h:
+        * ace/High_Res_Timer.cpp:
+        * ace/LSOCK_Connector.inl:
+        * ace/Local_Name_Space_T.h:
+        * ace/Log_Msg.h:
+        * ace/Malloc.h:
+        * ace/Malloc_Allocator.h:
+        * ace/Message_Queue.h:
+        * ace/OS_Memory.h:
+        * ace/OS_NS_Thread.cpp:
+        * ace/OS_NS_Thread.h:
+        * ace/OS_NS_errno.h:
+        * ace/OS_NS_math.inl:
+        * ace/OS_NS_netdb.cpp:
+        * ace/OS_NS_netdb.h:
+        * ace/OS_NS_sys_msg.h:
+        * ace/OS_NS_time.h:
+        * ace/OS_main.cpp:
+        * ace/Object_Manager.h:
+        * ace/Parse_Node.cpp:
+        * ace/Ping_Socket.cpp:
+        * ace/Proactor.cpp:
+        * ace/Proactor.h:
+        * ace/Profile_Timer.cpp:
+        * ace/Profile_Timer.inl:
+        * ace/SOCK_Dgram_Mcast.cpp:
+        * ace/SOCK_Dgram_Mcast.h:
+        * ace/SOCK_Dgram_Mcast.inl:
+        * ace/SPIPE_Stream.h:
+        * ace/Select_Reactor_T.cpp:
+        * ace/Service_Config.h:
+        * ace/Service_Templates.cpp:
+        * ace/Sock_Connect.cpp:
+        * ace/Svc_Conf_l.cpp:
+        * ace/Svc_Conf_y.cpp:
+        * ace/Thread_Manager.cpp:
+        * ace/Time_Value.h:
+        * ace/Timeprobe.h:
+        * ace/Timer_Hash_T.h:
+        * ace/Timer_List.cpp:
+        * ace/Timer_Queue.cpp:
+        * ace/config-lite.h:
+        * ace/SSL/SSL_Asynch_BIO.cpp:
+        * ace/SSL/SSL_Context.cpp:
 
-	  Corrected build errors in versioned namespace builds.
+          Corrected build errors in versioned namespace builds.
 
 Wed Nov 23 19:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -717,9 +717,9 @@ Wed Nov 23 19:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Nov 23 11:00:46 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* docs/ACE-guidelines.html: Updated the guidelines to explain how
-	  TAO binary options should be specified, i.e. as the integral
- 	  values 0 or 1.
+        * docs/ACE-guidelines.html: Updated the guidelines to explain how
+          TAO binary options should be specified, i.e. as the integral
+          values 0 or 1.
 
 Wed Nov 23 09:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -731,34 +731,34 @@ Wed Nov 23 09:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Nov 22 17:42:13 2005  Kobi Cohen-Arazi  <kobi.cohenarazi at gmail dot com>
 
-	* ace/Select_Reactor_T.cpp (dispatch):
-	  Fixed a bug which derived from bug #1890. active_handle_count
- 	  must be updated when state is changed. Every time some handler
- 	  remove add or suspend itself of another handle, state is
- 	  changed, and that should be reflected in the
- 	  active_handle_count.  Thanks for Vadim Iosevich <viosevich at
- 	  gmail dot com>.
+        * ace/Select_Reactor_T.cpp (dispatch):
+          Fixed a bug which derived from bug #1890. active_handle_count
+          must be updated when state is changed. Every time some handler
+          remove add or suspend itself of another handle, state is
+          changed, and that should be reflected in the
+          active_handle_count.  Thanks for Vadim Iosevich <viosevich at
+          gmail dot com>.
 
 Tue Nov 22 18:27:30 2005  Steve Huston  <shuston@riverace.com>
 
-	* m4/tls.m4: Correct botched assignment to ace_TLS_CPPFLAGS when
-	  additional Kerberos directory is needed.
+        * m4/tls.m4: Correct botched assignment to ace_TLS_CPPFLAGS when
+          additional Kerberos directory is needed.
 
 Tue Nov 22 03:33:14 2005  Bala Natarajan  <bala_natarajan at symantec dot com>
 
-	* ace/ace_configuration_for_tao.mpc:
+        * ace/ace_configuration_for_tao.mpc:
 
-	  Some groups require ACE_Configuration. This MPC should probably
-	  help those groups with a smaller library to use instead of
-	  pulling in the whole ACE library.
+          Some groups require ACE_Configuration. This MPC should probably
+          help those groups with a smaller library to use instead of
+          pulling in the whole ACE library.
 
 Tue Nov 22 01:43:52 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/portablegroup.mpb:
+        * bin/MakeProjectCreator/config/portablegroup.mpb:
 
-	  Rather than disable this project in the ACE_FOR_TAO
-	  configuration, inherit from acesocketslib_for_tao to allow it to
-	  be used.
+          Rather than disable this project in the ACE_FOR_TAO
+          configuration, inherit from acesocketslib_for_tao to allow it to
+          be used.
 
 Tue Nov 22 09:40:00 UTC 2005  Simon Massey  <sma@prismtech.com>
 
@@ -768,94 +768,94 @@ Tue Nov 22 09:40:00 UTC 2005  Simon Massey  <sma@prismtech.com>
 
 Mon Nov 21 23:56:06 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/ace_for_tao.mpc:
-	* ace/ace_threads_for_tao.mpc:
+        * ace/ace_for_tao.mpc:
+        * ace/ace_threads_for_tao.mpc:
 
-	  Moved ACE_crc32.cpp to ace_threads_for_tao subset within
-	  Windows compiler conditional.  It is only needed by the
-	  SV_Semaphore_Simple listed within that conditional block.
+          Moved ACE_crc32.cpp to ace_threads_for_tao subset within
+          Windows compiler conditional.  It is only needed by the
+          SV_Semaphore_Simple listed within that conditional block.
 
-	* ace/ace_timer_for_tao.mpc:
-	* bin/MakeProjectCreator/config/acetimerlib_for_tao.mpb:
+        * ace/ace_timer_for_tao.mpc:
+        * bin/MakeProjectCreator/config/acetimerlib_for_tao.mpb:
 
-	  New ACE_FOR_TAO timer library subset.
+          New ACE_FOR_TAO timer library subset.
 
-	* ace/Obchunk.cpp:
-	* ace/Obchunk.h:
-	* ace/Obchunk.inl:
-	* ace/Object_Manager.cpp:
-	* ace/Object_Manager.h:
-	* ace/Object_Manager.inl:
-	* ace/Object_Manager_Base.cpp:
-	* ace/Object_Manager_Base.h:
-	* ace/Obstack.cpp:
-	* ace/Obstack.h:
-	* ace/Obstack_T.cpp:
-	* ace/Obstack_T.h:
-	* ace/Obstack_T.inl:
+        * ace/Obchunk.cpp:
+        * ace/Obchunk.h:
+        * ace/Obchunk.inl:
+        * ace/Object_Manager.cpp:
+        * ace/Object_Manager.h:
+        * ace/Object_Manager.inl:
+        * ace/Object_Manager_Base.cpp:
+        * ace/Object_Manager_Base.h:
+        * ace/Obstack.cpp:
+        * ace/Obstack.h:
+        * ace/Obstack_T.cpp:
+        * ace/Obstack_T.h:
+        * ace/Obstack_T.inl:
 
-	  Added missing versioned namespace support.
+          Added missing versioned namespace support.
 
-	* ace/SSL/SSL_Context.h:
+        * ace/SSL/SSL_Context.h:
 
-	  Removed ACE_SSL_locking_callback prototype since it is not part
-	  of the public interface, and since a prototype (and definition)
-	  already exists in the SSL_Context.cpp implementation file.
+          Removed ACE_SSL_locking_callback prototype since it is not part
+          of the public interface, and since a prototype (and definition)
+          already exists in the SSL_Context.cpp implementation file.
 
-	  Removed static class members and placed them in anonymous
-	  namespace in the implementation file.
+          Removed static class members and placed them in anonymous
+          namespace in the implementation file.
 
-	* ace/SSL_Context.cpp:
+        * ace/SSL_Context.cpp:
 
-	  Static class members are now in an anonymous namespace.  There's
-	  no need to expose them in the corresponding header.
+          Static class members are now in an anonymous namespace.  There's
+          no need to expose them in the corresponding header.
 
-	  Mangle global SSL callback functions with the appropriate
-	  versioned namespace name, if enabled.
+          Mangle global SSL callback functions with the appropriate
+          versioned namespace name, if enabled.
 
-	  Improved exception safety of lock memory management and
-	  lock acquisition/release by taking advantage of an
-	  ACE_Auto_Basic_Array_Ptr and ACE_Mutex, respectively.
+          Improved exception safety of lock memory management and
+          lock acquisition/release by taking advantage of an
+          ACE_Auto_Basic_Array_Ptr and ACE_Mutex, respectively.
 
-	* Kokyu/tests/DSRT_MIF/DSRT_MIF.mpc:
-	* apps/drwho/drwho.mpc:
-	* apps/soreduce/soreduce.mpc:
-	* examples/APG/Active_Objects/active_objects.mpc:
-	* examples/APG/Misc_IPC/misc_ipc.mpc:
-	* examples/APG/Shared_Memory/shared_memory.mpc:
-	* examples/APG/ThreadPools/threadpools.mpc:
-	* examples/APG/ThreadSafety/threadsafety.mpc:
-	* examples/ASX/Event_Server/Event_Server/Event.mpc:
+        * Kokyu/tests/DSRT_MIF/DSRT_MIF.mpc:
+        * apps/drwho/drwho.mpc:
+        * apps/soreduce/soreduce.mpc:
+        * examples/APG/Active_Objects/active_objects.mpc:
+        * examples/APG/Misc_IPC/misc_ipc.mpc:
+        * examples/APG/Shared_Memory/shared_memory.mpc:
+        * examples/APG/ThreadPools/threadpools.mpc:
+        * examples/APG/ThreadSafety/threadsafety.mpc:
+        * examples/ASX/Event_Server/Event_Server/Event.mpc:
 
-	  Inherit from the appropriate ACE_FOR_TAO subset MPC base
-	  project.  Addresses unresolved symbol errors.
+          Inherit from the appropriate ACE_FOR_TAO subset MPC base
+          project.  Addresses unresolved symbol errors.
 
 Tue Nov 22 09:33:30 (IST) 2005  Bala Natarajan <bala_natarajan@symantec.com>
 
-	* bin/MakeProjectCreator/config/portablegroup.mpb:
+        * bin/MakeProjectCreator/config/portablegroup.mpb:
 
           Do not build in ACE_FOR_TAO configuration.
 
 Tue Nov 22 09:27:30 (IST) 2005  Bala Natarajan <bala_natarajan@symantec.com>
 
-	* ace/OS_NS_sys_utsname.cpp:
-	* ace/OS_NS_sys_utsname.h:
-	* ace/OS_NS_sys_utsname.inl:
+        * ace/OS_NS_sys_utsname.cpp:
+        * ace/OS_NS_sys_utsname.h:
+        * ace/OS_NS_sys_utsname.inl:
 
           Uninlined uname (). Compiling it on Solaris 9 with Studio9,
           and inline enabled is a pain. DOC's scoreboard uses inline=0
           on corona, and hence doesn't show the error. Uninlining solves
           the problem.
 
-	* ace/ace_for_tao.mpc:
+        * ace/ace_for_tao.mpc:
 
           Added a few files to be built in ACE_FOR_TAO config. This fixes
           many errors in gperf and orbsvcs on Solaris.
 
 Mon Nov 21 19:16:30 2005  Steve Huston  <shuston@riverace.com>
 
-	* m4/tls.m4: Make sure we don't lose the user's specified OpenSSL
-	  location when searching for Kerberos files.
+        * m4/tls.m4: Make sure we don't lose the user's specified OpenSSL
+          location when searching for Kerberos files.
 
 Mon Nov 21 13:26:53 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
@@ -865,15 +865,15 @@ Mon Nov 21 13:26:53 2005  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
 Mon Nov 21 11:00:02 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/cidlc.mpb
+        * bin/MakeProjectCreator/config/cidlc.mpb
 
-	Added a verbatim section for gnuace targets to pull in the
-	boost_filesystem and boost_regex libraries.
+        Added a verbatim section for gnuace targets to pull in the
+        boost_filesystem and boost_regex libraries.
 
 Mon Nov 21 08:16:29 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/SSL/SSL_Context.h: Removed "::" from friend declaration to
-	  fix compile errors on Solaris, Forte 6 Update 2. (Sun C++ 5.4).
+        * ace/SSL/SSL_Context.h: Removed "::" from friend declaration to
+          fix compile errors on Solaris, Forte 6 Update 2. (Sun C++ 5.4).
 
 Fri Nov 18 23:07:09 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -888,34 +888,34 @@ Fri Nov 18 23:07:09 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Nov 18 17:22:19 2005  Steve Huston  <shuston@riverace.com>
 
-	* protocols/ace/RMCast/Template_Instantiations.cpp: Completed
-	  template instantiations.
+        * protocols/ace/RMCast/Template_Instantiations.cpp: Completed
+          template instantiations.
 
-	* protocols/ace/RMCast/Makefile.am:
-	* protocols/ace/TMCast/Template_Instantiations.cpp: Explicit
-	  instantiations needed for TMCast.
+        * protocols/ace/RMCast/Makefile.am:
+        * protocols/ace/TMCast/Template_Instantiations.cpp: Explicit
+          instantiations needed for TMCast.
 
-	* tests/Based_Pointer_Test.cpp: Added explicit instantiation for
-	  ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex,
-	  ACE_PI_Control_Block>.
+        * tests/Based_Pointer_Test.cpp: Added explicit instantiation for
+          ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex,
+          ACE_PI_Control_Block>.
 
-	* tests/DLList_Test.cpp: #include "ace/Malloc_T.h" rather than
-	  "ace/Malloc.h" to pick up ACE_Allocator<> before the explicit
-	  instantiation needs it.
+        * tests/DLList_Test.cpp: #include "ace/Malloc_T.h" rather than
+          "ace/Malloc.h" to pick up ACE_Allocator<> before the explicit
+          instantiation needs it.
 
 Fri Nov 18 14:16:45 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/WIN32_Asynch_IO.cpp (shared_read): Added a new case for
-	  ERROR_MORE_DATA, which isn't actually an error after all.
-  	  Thanks to Yongming Wang <wangym@gmail.com> for contributing
- 	  this.
+        * ace/WIN32_Asynch_IO.cpp (shared_read): Added a new case for
+          ERROR_MORE_DATA, which isn't actually an error after all.
+          Thanks to Yongming Wang <wangym@gmail.com> for contributing
+          this.
 
 Fri Nov 18 10:39:01 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/cidlc.mpb
+        * bin/MakeProjectCreator/config/cidlc.mpb
 
-	  Added rest of change intended for:
-	  Thu Nov 17 18:08:45 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+          Added rest of change intended for:
+          Thu Nov 17 18:08:45 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Nov 17 18:08:45 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -949,16 +949,16 @@ Thu Nov 16 12:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Nov 16 15:48:29 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/Hash_Map_Manager_T.h: For Sun CC 5.4 and earlier with explicit
-	  template instantiation, can't prevent seeing operator= or
-	  ACE_Hash_Map_Manager explicit templates won't compile. Ick.
+        * ace/Hash_Map_Manager_T.h: For Sun CC 5.4 and earlier with explicit
+          template instantiation, can't prevent seeing operator= or
+          ACE_Hash_Map_Manager explicit templates won't compile. Ick.
 
-	* apps/JAWS3/jaws3/Templates.cpp: Adjusted ACE_Reactor_Token_T type
-	  usage. Follow-up change to match those in:
-	  Fri Aug 26 18:01:31 2005  Steve Huston  <shuston@riverace.com>
+        * apps/JAWS3/jaws3/Templates.cpp: Adjusted ACE_Reactor_Token_T type
+          usage. Follow-up change to match those in:
+          Fri Aug 26 18:01:31 2005  Steve Huston  <shuston@riverace.com>
 
-	* protocols/ace/RMCast/Template_Instantiations.cpp: Added more needed
-	  instantiations.
+        * protocols/ace/RMCast/Template_Instantiations.cpp: Added more needed
+          instantiations.
 
 Wed Nov 16 14:12:08 USMST 2005  Yan Dai  <dai_y@ociweb.com>
 
@@ -968,71 +968,71 @@ Wed Nov 16 14:12:08 USMST 2005  Yan Dai  <dai_y@ociweb.com>
 
 Tue Nov 15 23:41:39 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Service_Config.cpp (ACE_FACTORY_DEFINE):
+        * ace/Service_Config.cpp (ACE_FACTORY_DEFINE):
 
-	  Moved this macro call outside of the versioned namespace.  It
-	  should be in the global namespace.
+          Moved this macro call outside of the versioned namespace.  It
+          should be in the global namespace.
 
-	* ace/Svc_Conf.h:
-	* ace/Svc_Conf.l:
-	* ace/Svc_Conf.y:
-	* ace/Svc_Conf_Lexer_Guard.cpp:
-	* ace/Svc_Conf_Lexer_Guard.h:
-	* ace/Svc_Conf_l.cpp:
-	* ace/Svc_Conf_y.cpp:
+        * ace/Svc_Conf.h:
+        * ace/Svc_Conf.l:
+        * ace/Svc_Conf.y:
+        * ace/Svc_Conf_Lexer_Guard.cpp:
+        * ace/Svc_Conf_Lexer_Guard.h:
+        * ace/Svc_Conf_l.cpp:
+        * ace/Svc_Conf_y.cpp:
 
-	  Added missing versioned namespace macros.
+          Added missing versioned namespace macros.
 
 Tue Nov 15 15:41:19 2005  Steve Huston  <shuston@riverace.com>
 
-	* NEWS: Added WinCE, VC8, ACE_Dev_Poll_Reactor, and ACE_RB_Tree notes.
+        * NEWS: Added WinCE, VC8, ACE_Dev_Poll_Reactor, and ACE_RB_Tree notes.
 
-	* bin/make_release: Generate VC8 files for both Win32 and WinCE.
-	  Since VC8 uses the same suffixes as VC71, the Win32 files have
-	  _vc8 appended, and WinCE files have _WinCE appended. WinCE files
-	  are generated with feature uses_wchar=1, vc8 uses defaults.
+        * bin/make_release: Generate VC8 files for both Win32 and WinCE.
+          Since VC8 uses the same suffixes as VC71, the Win32 files have
+          _vc8 appended, and WinCE files have _WinCE appended. WinCE files
+          are generated with feature uses_wchar=1, vc8 uses defaults.
 
-	* docs/CE-status.txt: Added some info on CE support under VC8.
+        * docs/CE-status.txt: Added some info on CE support under VC8.
 
 Tue Nov 15 12:44:37 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/cidlc.mpb
+        * bin/MakeProjectCreator/config/cidlc.mpb
 
-	Added a directive to remove runtime dependancy on VC71
-	runtime libraries on Windows.  Thanks to Kitty for suggesting
-	the fix.
+        Added a directive to remove runtime dependancy on VC71
+        runtime libraries on Windows.  Thanks to Kitty for suggesting
+        the fix.
 
 Tue Nov 15 11:31:41 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/Atomic_Op.{h inl} (ACE_Atomic_Op (TYPE c)): Changed the signature
-	  to be const TYPE& for long and unsigned long. This aligns it with the
-	  ACE_Atomic_Op template's (const TYPE&) constructor signature and
-	  resolves undefined references to it in the explicit template builds.
+        * ace/Atomic_Op.{h inl} (ACE_Atomic_Op (TYPE c)): Changed the signature
+          to be const TYPE& for long and unsigned long. This aligns it with the
+          ACE_Atomic_Op template's (const TYPE&) constructor signature and
+          resolves undefined references to it in the explicit template builds.
 
-	* ace/Event_Handler.cpp: Added explicit instantiation of
-	  ACE_Atomic_Op<ACE_SYNCH_MUTEX,long> when ACE_HAS_BUILTIN_ATOMIC_OP
-	  is not defined. This covers the event handler reference counting
-	  use of ACE_Atomic_Op.
+        * ace/Event_Handler.cpp: Added explicit instantiation of
+          ACE_Atomic_Op<ACE_SYNCH_MUTEX,long> when ACE_HAS_BUILTIN_ATOMIC_OP
+          is not defined. This covers the event handler reference counting
+          use of ACE_Atomic_Op.
 
-	* ace/Malloc_Instantiations.cpp: Corrected header file inclusions.
+        * ace/Malloc_Instantiations.cpp: Corrected header file inclusions.
 
-	* protocols/ace/RMCast/Makefile.am:
-	* protocols/ace/RMCast/Template_Instantiations.cpp: New file to
-	  hold all explicit template instantiations needed for RMCast.
-	  This is a temporary file, only for the ACE 5.5 release. Then it
-	  can be expunged with the test of the explicit template
-	  instantiation support.
+        * protocols/ace/RMCast/Makefile.am:
+        * protocols/ace/RMCast/Template_Instantiations.cpp: New file to
+          hold all explicit template instantiations needed for RMCast.
+          This is a temporary file, only for the ACE 5.5 release. Then it
+          can be expunged with the test of the explicit template
+          instantiation support.
 
 Tue Nov 15 09:31:29 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/Dev_Poll_Reactor.{h cpp}: Add an optional decr_refcnt parameter
-	  to ACE_Dev_Poll_Rector_Repository::unbind () to control whether or
-	  not the unbound event handler's refcount is to be decremented.
-	  When registering a handler, remember to increment its refcount if
-	  needed; conversely, decrement it when all events are removed.
-	  Be sure to initialize epoll_event structs.
+        * ace/Dev_Poll_Reactor.{h cpp}: Add an optional decr_refcnt parameter
+          to ACE_Dev_Poll_Rector_Repository::unbind () to control whether or
+          not the unbound event handler's refcount is to be decremented.
+          When registering a handler, remember to increment its refcount if
+          needed; conversely, decrement it when all events are removed.
+          Be sure to initialize epoll_event structs.
 
-	* tests/Dev_Poll_Reactor_Test.cpp (handle_input): Fix buffer overrun.
+        * tests/Dev_Poll_Reactor_Test.cpp (handle_input): Fix buffer overrun.
 
 Tue Nov 15 13:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1041,10 +1041,10 @@ Tue Nov 15 13:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Nov 15 07:28:35 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Service_Config.cpp (initialize): Added a check to avoid
-	  overwriting a service that's already installed without having it
- 	  explicitly removed first.  Thanks to Domingos Monteiro <d dot
-	  monteiro at netia dot net> for this fix.
+        * ace/Service_Config.cpp (initialize): Added a check to avoid
+          overwriting a service that's already installed without having it
+          explicitly removed first.  Thanks to Domingos Monteiro <d dot
+          monteiro at netia dot net> for this fix.
 
 Mon Nov 14 08:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1073,45 +1073,45 @@ Mon Nov 14 07:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Nov 11 16:04:44 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* bin/MakeProjectCreator/templates/gnu.mpd:
+        * bin/MakeProjectCreator/templates/gnu.mpd:
 
-	  Emit "idl_stubs" target for IDL projects defining MPC's
-	  custom_only variable.  Fixes problems with some of the
-	  scoreboard statistics builds.
+          Emit "idl_stubs" target for IDL projects defining MPC's
+          custom_only variable.  Fixes problems with some of the
+          scoreboard statistics builds.
 
 Fri Nov 11 11:06:31 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ACEXML/common/common.mpc:
-	* ace/ACE_Codecs_export.h:
-	* ace/Codecs.h:
-	* ace/ace.mwc:
-	* ace/ace_codecs_for_tao.mpc:
-	* apps/JAWS/server/server.mpc:
-	* apps/JAWS3/jaws3/jaws3.mpc:
-	* examples/Service_Configurator/IPC-tests/server/Svc_Cfg_IPC_Server.mpc:
-	* examples/Threads/Threads.mpc:
-	* examples/Web_Crawler/Web_Crawler.mpc:
-	* netsvcs/clients/Naming/Client/Client.mpc:
-	* netsvcs/clients/Naming/Dump_Restore/Dump_Restore.mpc:
-	* netsvcs/lib/lib.mpc:
-	* performance-tests/Misc/Misc.mpc:
-	* performance-tests/SCTP/SCTP.mpc:
-	* performance-tests/Server_Concurrency/Leader_Follower/Svr_Conc_Leader_Follower.mpc:
-	* performance-tests/Server_Concurrency/Queue_Based_Workers/Svr_Conc_Queue_Based_Workers.mpc:
-	* performance-tests/Synch-Benchmarks/Base_Test/Synch_Benchmarks_Base_Test.mpc:
-	* performance-tests/Synch-Benchmarks/Perf_Test/Synch_Benchmarks_Perf_Test.mpc:
-	* performance-tests/TCP/TCP.mpc:
-	* performance-tests/UDP/UDP.mpc:
-	* tests/tests.mpc:
+        * ACEXML/common/common.mpc:
+        * ace/ACE_Codecs_export.h:
+        * ace/Codecs.h:
+        * ace/ace.mwc:
+        * ace/ace_codecs_for_tao.mpc:
+        * apps/JAWS/server/server.mpc:
+        * apps/JAWS3/jaws3/jaws3.mpc:
+        * examples/Service_Configurator/IPC-tests/server/Svc_Cfg_IPC_Server.mpc:
+        * examples/Threads/Threads.mpc:
+        * examples/Web_Crawler/Web_Crawler.mpc:
+        * netsvcs/clients/Naming/Client/Client.mpc:
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.mpc:
+        * netsvcs/lib/lib.mpc:
+        * performance-tests/Misc/Misc.mpc:
+        * performance-tests/SCTP/SCTP.mpc:
+        * performance-tests/Server_Concurrency/Leader_Follower/Svr_Conc_Leader_Follower.mpc:
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/Svr_Conc_Queue_Based_Workers.mpc:
+        * performance-tests/Synch-Benchmarks/Base_Test/Synch_Benchmarks_Base_Test.mpc:
+        * performance-tests/Synch-Benchmarks/Perf_Test/Synch_Benchmarks_Perf_Test.mpc:
+        * performance-tests/TCP/TCP.mpc:
+        * performance-tests/UDP/UDP.mpc:
+        * tests/tests.mpc:
 
-	  Addressed some "ace_for_tao" link-time failures.
+          Addressed some "ace_for_tao" link-time failures.
 
 Fri Nov 11 09:21:53 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* include/makeinclude/wrapper_macros.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
 
-	  Added missing "ace_for_tao" support.  Addresses "ace_for_tao"
-	  build errors in GNU Make based builds.
+          Added missing "ace_for_tao" support.  Addresses "ace_for_tao"
+          build errors in GNU Make based builds.
 
 Fri Nov 11 12:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -2834,16 +2834,16 @@ Thu Oct 20 08:53:47 2005  Arvind S. Krishna  <arvindk@doc.dre.vanderbilt.edu>
         * ace/Message_Block.cpp:
 
           CORBA specification mandates alignment of basic types to their
- 	  natural boundaries. However, in certain situations (1) where
- 	  such alignment is not needed by the platform and/or (2)
- 	  homogeneous systems exists on the client and server sides, this
- 	  alignment can be ignored to improve (de)marshaling
- 	  efficiency. This commit adds the ACE_LACKS_CDR_ALIGNMENT flag to
- 	  the CDR streams that enables applications to ignore alignment
- 	  during (de)marshaling. This macro should be used when ACE_CDR is
- 	  both the (de)marshaler. Additionally, use this option only when
- 	  byte orders of the two machines are the same.  This restriction
- 	  is temporary and will be removed in a subsequent commit.
+          natural boundaries. However, in certain situations (1) where
+          such alignment is not needed by the platform and/or (2)
+          homogeneous systems exists on the client and server sides, this
+          alignment can be ignored to improve (de)marshaling
+          efficiency. This commit adds the ACE_LACKS_CDR_ALIGNMENT flag to
+          the CDR streams that enables applications to ignore alignment
+          during (de)marshaling. This macro should be used when ACE_CDR is
+          both the (de)marshaler. Additionally, use this option only when
+          byte orders of the two machines are the same.  This restriction
+          is temporary and will be removed in a subsequent commit.
 
 Thu Oct 29 11:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
