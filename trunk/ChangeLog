@@ -1,3 +1,10 @@
+Mon Dec 19 14:40:00 UTC 2005  Simon Massey  <simon.massey@prismtech.com>
+
+        * bin/make_release:
+          Removed the #include "ace/Versioned_Namespace.h" generator
+          from line 643 (it wasn't adding the correct end of line
+          and concensous was that it was actually in error anyway).
+
 Thu Dec 15 08:08:31 2005  Steve Huston  <shuston@riverace.com>
 
         * ace/Asynch_IO.h: Clarified arguments and return value for
