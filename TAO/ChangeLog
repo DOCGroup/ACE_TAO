@@ -1,136 +1,136 @@
 Fri Dec 16 18:06:27 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_global.cpp:
-	* TAO_IDL/be_include/be_global.h:
-	* TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/driver/drv_args.cpp:
 
-	  Added missing code that sets versioned namespace opening and
-	  closing text.
+          Added missing code that sets versioned namespace opening and
+          closing text.
 
-	* TAO_IDL/be/be_visitor_union/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_ch.cpp:
 
-	  Fixed typo that caused generated versioned namespace to be
-	  reopened before it was closed.
+          Fixed typo that caused generated versioned namespace to be
+          reopened before it was closed.
 
-	* orbsvcs/orbsvcs/AV.mpc:
-	* orbsvcs/orbsvcs/CosConcurrency.mpc:
-	* orbsvcs/orbsvcs/CosEvent.mpc:
-	* orbsvcs/orbsvcs/CosLifeCycle.mpc:
-	* orbsvcs/orbsvcs/CosLoadBalancing.mpc:
-	* orbsvcs/orbsvcs/CosNaming.mpc:
-	* orbsvcs/orbsvcs/CosNotification.mpc:
-	* orbsvcs/orbsvcs/CosProperty.mpc:
-	* orbsvcs/orbsvcs/CosTime.mpc:
-	* orbsvcs/orbsvcs/CosTrading.mpc:
-	* orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
-	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
-	* orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
-	* orbsvcs/orbsvcs/FTORB.mpc:
-	* orbsvcs/orbsvcs/FaultTolerance.mpc:
-	* orbsvcs/orbsvcs/FtRtEvent.mpc:
-	* orbsvcs/orbsvcs/HTIOP.mpc:
-	* orbsvcs/orbsvcs/PortableGroup.mpc:
-	* orbsvcs/orbsvcs/RTCosScheduling.mpc:
-	* orbsvcs/orbsvcs/RTEvent.mpc:
-	* orbsvcs/orbsvcs/RTEventLogAdmin.mpc:
-	* orbsvcs/orbsvcs/RTSched.mpc:
-	* orbsvcs/orbsvcs/RT_Notification.mpc:
-	* orbsvcs/orbsvcs/SSLIOP.mpc:
-	* orbsvcs/orbsvcs/Security.mpc:
-	* orbsvcs/orbsvcs/Svc_Utils.mpc:
+        * orbsvcs/orbsvcs/AV.mpc:
+        * orbsvcs/orbsvcs/CosConcurrency.mpc:
+        * orbsvcs/orbsvcs/CosEvent.mpc:
+        * orbsvcs/orbsvcs/CosLifeCycle.mpc:
+        * orbsvcs/orbsvcs/CosLoadBalancing.mpc:
+        * orbsvcs/orbsvcs/CosNaming.mpc:
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+        * orbsvcs/orbsvcs/CosProperty.mpc:
+        * orbsvcs/orbsvcs/CosTime.mpc:
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+        * orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsLogAdmin.mpc:
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+        * orbsvcs/orbsvcs/FTORB.mpc:
+        * orbsvcs/orbsvcs/FaultTolerance.mpc:
+        * orbsvcs/orbsvcs/FtRtEvent.mpc:
+        * orbsvcs/orbsvcs/HTIOP.mpc:
+        * orbsvcs/orbsvcs/PortableGroup.mpc:
+        * orbsvcs/orbsvcs/RTCosScheduling.mpc:
+        * orbsvcs/orbsvcs/RTEvent.mpc:
+        * orbsvcs/orbsvcs/RTEventLogAdmin.mpc:
+        * orbsvcs/orbsvcs/RTSched.mpc:
+        * orbsvcs/orbsvcs/RT_Notification.mpc:
+        * orbsvcs/orbsvcs/SSLIOP.mpc:
+        * orbsvcs/orbsvcs/Security.mpc:
+        * orbsvcs/orbsvcs/Svc_Utils.mpc:
 
-	  Core orbsvcs stubs/skeletons must have ability to support
-	  versioned namespaces.  IDL-capable MPC projects now inherit from
-	  the "tao_versioning_idl_defaults" MPC base project.
+          Core orbsvcs stubs/skeletons must have ability to support
+          versioned namespaces.  IDL-capable MPC projects now inherit from
+          the "tao_versioning_idl_defaults" MPC base project.
 
-	* tao/CONV_FRAME.pidl:
-	* tao/CharSeq.pidl:
-	* tao/Current.pidl:
-	* tao/Domain.pidl:
-	* tao/DoubleSeq.pidl:
-	* tao/FloatSeq.pidl:
-	* tao/GIOP.pidl:
-	* tao/IIOP.pidl:
-	* tao/AnyTypeCode/AnySeq.pidl:
-	* tao/AnyTypeCode/Bounds.pidl:
-	* tao/AnyTypeCode/Dynamic.pidl:
-	* tao/AnyTypeCode/Dynamic_Parameter.pidl:
-	* tao/AnyTypeCode/ValueModifier.pidl:
-	* tao/AnyTypeCode/Visibility.pidl:
-	* tao/BiDir_GIOP/BiDirPolicy.pidl:
-	* tao/CSD_Framework/CSD_Framework.pidl:
-	* tao/CodecFactory/IOP_Codec.pidl:
-	* tao/CodecFactory/IOP_Codec_include.pidl:
-	* tao/DynamicAny/DynamicAny.pidl:
-	* tao/IFR_Client/IFR_Base.pidl:
-	* tao/IFR_Client/IFR_Basic.pidl:
-	* tao/IFR_Client/IFR_Components.pidl:
-	* tao/IFR_Client/IFR_Extended.pidl:
+        * tao/CONV_FRAME.pidl:
+        * tao/CharSeq.pidl:
+        * tao/Current.pidl:
+        * tao/Domain.pidl:
+        * tao/DoubleSeq.pidl:
+        * tao/FloatSeq.pidl:
+        * tao/GIOP.pidl:
+        * tao/IIOP.pidl:
+        * tao/AnyTypeCode/AnySeq.pidl:
+        * tao/AnyTypeCode/Bounds.pidl:
+        * tao/AnyTypeCode/Dynamic.pidl:
+        * tao/AnyTypeCode/Dynamic_Parameter.pidl:
+        * tao/AnyTypeCode/ValueModifier.pidl:
+        * tao/AnyTypeCode/Visibility.pidl:
+        * tao/BiDir_GIOP/BiDirPolicy.pidl:
+        * tao/CSD_Framework/CSD_Framework.pidl:
+        * tao/CodecFactory/IOP_Codec.pidl:
+        * tao/CodecFactory/IOP_Codec_include.pidl:
+        * tao/DynamicAny/DynamicAny.pidl:
+        * tao/IFR_Client/IFR_Base.pidl:
+        * tao/IFR_Client/IFR_Basic.pidl:
+        * tao/IFR_Client/IFR_Components.pidl:
+        * tao/IFR_Client/IFR_Extended.pidl:
 
-	  Added versioned namespace related TAO_IDL command line options
-	  to the stub/skeleton generation documentation.
+          Added versioned namespace related TAO_IDL command line options
+          to the stub/skeleton generation documentation.
 
-	* tests/Param_Test/results.h:
+        * tests/Param_Test/results.h:
 
-	  Wrap forward declaration of class in CORBA namespace within a
-	  TAO versioned namespace since the core TAO library does so.
+          Wrap forward declaration of class in CORBA namespace within a
+          TAO versioned namespace since the core TAO library does so.
 
 Thu Dec 15 16:19:48 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_codegen.cpp:
-	* TAO_IDL/be/be_global.cpp:
-	* TAO_IDL/be/be_valuetype.cpp:
-	* TAO_IDL/be/be_visitor_arg_traits.cpp:
-	* TAO_IDL/be/be_visitor_traits.cpp:
-	* TAO_IDL/be/be_visitor_array/any_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_array/cdr_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_array/cdr_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_enum/any_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_enum/cdr_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_enum/cdr_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_exception/any_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_exception/cdr_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_exception/cdr_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/cdr_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_root/root.cpp:
-	* TAO_IDL/be/be_visitor_root/root_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_structure/any_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_structure/cdr_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_structure/cdr_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
-	* TAO_IDL/be/be_visitor_union/any_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_union/cdr_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_valuebox/any_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_valuebox/any_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_valuebox/cdr_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_valuebox/cdr_op_cs.cpp:
-	* TAO_IDL/be_include/be_global.h:
-	* TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_array/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_enum/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_enum/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_exception/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_structure/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuebox/cdr_op_cs.cpp:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/driver/drv_args.cpp:
 
-	  Added ability to set "versioned" namespace opening and closing
-	  text.  Addresses problem where applications that do not enable
-	  versioned namespace support in their own code need not get
-	  "versioned" stubs/skeletons.
+          Added ability to set "versioned" namespace opening and closing
+          text.  Addresses problem where applications that do not enable
+          versioned namespace support in their own code need not get
+          "versioned" stubs/skeletons.
 
 Tue Dec 13 12:13:26 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* COPYING: Updated this file to mention compliance issues wrt the
-	  new "The Energy Policy Act of 2005".  Thanks to Malcolm Spence
- 	  for providing this.
-  
+        * COPYING: Updated this file to mention compliance issues wrt the
+          new "The Energy Policy Act of 2005".  Thanks to Malcolm Spence
+          for providing this.
+
 Wed Dec 14 09:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Borland/README:
@@ -174,16 +174,16 @@ Tue Dec 13 09:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Dec 12 15:20:10 2005    <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/Notify_Service/Notify_Service.mpc:
+        * orbsvcs/Notify_Service/Notify_Service.mpc:
 
-	  Disable NT_Notify_Service project in ace_for_tao configuration.
-	  It depends on ace/NT_Service.*, which is currently not part of
-	the ace_for_tao subset.
+          Disable NT_Notify_Service project in ace_for_tao configuration.
+          It depends on ace/NT_Service.*, which is currently not part of
+        the ace_for_tao subset.
 
-	* examples/Load_Balancing/Load_Balancing.mpc:
+        * examples/Load_Balancing/Load_Balancing.mpc:
 
-	  Disable in ace_for_tao configuration.  It requires ACE_DLList,
-	  which is not part of the ace_for_tao subset.
+          Disable in ace_for_tao configuration.  It requires ACE_DLList,
+          which is not part of the ace_for_tao subset.
 
 Mon Dec 12 09:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -224,30 +224,30 @@ Fri Dec  9 21:48:48 UTC 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Dec  8 16:37:06 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* examples/RTCORBA/Activity/Activity.mpc:
+        * examples/RTCORBA/Activity/Activity.mpc:
 
-	  Do not override "macros" variable.  Add to it instead.  Fixes
-	  problem where versioned namespace preprocessor symbols were not
-	  added to generated Makefiles/projects.
+          Do not override "macros" variable.  Add to it instead.  Fixes
+          problem where versioned namespace preprocessor symbols were not
+          added to generated Makefiles/projects.
 
-	* examples/RTCORBA/Activity/Activity.h:
-	* examples/RTCORBA/Activity/Builder.h:
-	* examples/RTCORBA/Activity/Job_i.h:
-	* examples/RTCORBA/Activity/POA_Holder.h:
-	* examples/RTCORBA/Activity/Periodic_Task.h:
-	* examples/RTScheduling/Job_i.h:
-	* examples/RTScheduling/POA_Holder.h:
-	* examples/Simple/bank/AccountManager_i.h:
+        * examples/RTCORBA/Activity/Activity.h:
+        * examples/RTCORBA/Activity/Builder.h:
+        * examples/RTCORBA/Activity/Job_i.h:
+        * examples/RTCORBA/Activity/POA_Holder.h:
+        * examples/RTCORBA/Activity/Periodic_Task.h:
+        * examples/RTScheduling/Job_i.h:
+        * examples/RTScheduling/POA_Holder.h:
+        * examples/Simple/bank/AccountManager_i.h:
 
-	  Fixed versioned namespace support.
+          Fixed versioned namespace support.
 
 Thu Dec  8 14:19:52 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.h:
-	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlert_Handler.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlert_Handler.h:
 
-	  Fixed versioned namespace support.  The versioning macros calls
-	  were missing.
+          Fixed versioned namespace support.  The versioning macros calls
+          were missing.
 
 Thu Dec  8 20:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -273,32 +273,32 @@ Thu Dec  8 13:10:42 USMST 2005  Yan Dai  <dai_y@ociweb.com>
 
 Thu Dec  8 07:17:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Asynch_Queued_Message.h:
-	* tao/default_server.h:
-	* tao/PortableServer/Operation_Table_Binary_Search.h:
+        * tao/Asynch_Queued_Message.h:
+        * tao/default_server.h:
+        * tao/PortableServer/Operation_Table_Binary_Search.h:
 
-	  Fixed versioned namespace support.  The versioning macros calls
-	  were missing.
+          Fixed versioned namespace support.  The versioning macros calls
+          were missing.
 
 Thu Dec  8 06:54:31 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/examples/LoadBalancing/ServerRequestInterceptor.h:
+        * orbsvcs/examples/LoadBalancing/ServerRequestInterceptor.h:
 
-	  Fixed versioned namespace build errors, predominantly caused by
-	  forwared declarations not being placed within the appropriate
-	  {ACE,TAO}_{BEGIN,END}_VERSIONED_NAMESPACE_DECL block.
+          Fixed versioned namespace build errors, predominantly caused by
+          forwared declarations not being placed within the appropriate
+          {ACE,TAO}_{BEGIN,END}_VERSIONED_NAMESPACE_DECL block.
 
 Thu Dec  8 06:45:36 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/OctetSeq/OctetSeq.mpc:
-	* performance-tests/Anyop/Anyop.mpc:
-	* performance-tests/POA/Create_Reference/Create_Reference.mpc:
-	* performance-tests/POA/Implicit_Activation/Implicit_Activation.mpc:
-	* performance-tests/POA/Object_Creation_And_Registration/Object_Creation_And_Registration.mpc:
-	* performance-tests/Protocols/Protocols.mpc:
-	* performance-tests/RTCorba/Thread_Pool/Thread_Pool.mpc:
+        * tests/OctetSeq/OctetSeq.mpc:
+        * performance-tests/Anyop/Anyop.mpc:
+        * performance-tests/POA/Create_Reference/Create_Reference.mpc:
+        * performance-tests/POA/Implicit_Activation/Implicit_Activation.mpc:
+        * performance-tests/POA/Object_Creation_And_Registration/Object_Creation_And_Registration.mpc:
+        * performance-tests/Protocols/Protocols.mpc:
+        * performance-tests/RTCorba/Thread_Pool/Thread_Pool.mpc:
 
-	  Disable these projects when "ace_for_tao" is enabled.
+          Disable these projects when "ace_for_tao" is enabled.
 
 Wed Dec  7 19:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -320,9 +320,9 @@ Wed Dec  7 18:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Dec  7 05:43:53 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/Connection_Timeout/Connection_Timeout.mpc:
-	* tests/Hang_Shutdown/Hang.mpc:
-	* tests/Param_Test/Param_Test.mpc:
+        * tests/Connection_Timeout/Connection_Timeout.mpc:
+        * tests/Hang_Shutdown/Hang.mpc:
+        * tests/Param_Test/Param_Test.mpc:
 
           Disable these projects when "ace_for_tao" is enabled.
 
@@ -355,19 +355,19 @@ Wed Dec  7 12:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Dec  6 21:16:05 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/ServerRequestInterceptor.h:
-	* orbsvcs/tests/Notify/lib/Activation_Manager.h:
-	* orbsvcs/tests/Notify/lib/Command.h:
-	* orbsvcs/tests/Notify/lib/EventChannel_Command.h:
-	* orbsvcs/tests/Notify/lib/Options_Parser.cpp:
-	* orbsvcs/tests/Notify/lib/Options_Parser.h:
-	* orbsvcs/tests/Notify/lib/Peer.h:
-	* orbsvcs/tests/Notify/lib/Periodic_Consumer.h:
-	* orbsvcs/tests/Notify/lib/Periodic_Supplier.h:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/ServerRequestInterceptor.h:
+        * orbsvcs/tests/Notify/lib/Activation_Manager.h:
+        * orbsvcs/tests/Notify/lib/Command.h:
+        * orbsvcs/tests/Notify/lib/EventChannel_Command.h:
+        * orbsvcs/tests/Notify/lib/Options_Parser.cpp:
+        * orbsvcs/tests/Notify/lib/Options_Parser.h:
+        * orbsvcs/tests/Notify/lib/Peer.h:
+        * orbsvcs/tests/Notify/lib/Periodic_Consumer.h:
+        * orbsvcs/tests/Notify/lib/Periodic_Supplier.h:
 
-	  Fixed versioned namespace build errors, predominantly caused by
-	  forwared declarations not being placed within the appropriate
-	  {ACE,TAO}_{BEGIN,END}_VERSIONED_NAMESPACE_DECL block.
+          Fixed versioned namespace build errors, predominantly caused by
+          forwared declarations not being placed within the appropriate
+          {ACE,TAO}_{BEGIN,END}_VERSIONED_NAMESPACE_DECL block.
 
 Tue Dec  6 14:55:41 USMST 2005  Yan Dai  <dai_y@ociweb.com>
 
@@ -416,23 +416,23 @@ Mon Dec  5 14:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Dec  4 11:34:11 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Notify/XML_Loader.cpp
+        * orbsvcs/orbsvcs/Notify/XML_Loader.cpp
 
-	Moved definition of TOPOLOGY_ID_NAME earier in the file to avoid
-	undefined argument error.
+        Moved definition of TOPOLOGY_ID_NAME earier in the file to avoid
+        undefined argument error.
 
 Sun Dec  4 11:14:45 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_helper.cpp
+        * TAO_IDL/be/be_helper.cpp
 
-	Fixed an unused arg warning.
+        Fixed an unused arg warning.
 
 Sat Dec  3 20:54:28 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* orbsvcs/orbsvcs/Notify/XML_Loader.cpp: Moved the namespace decl
-	  for TOPOLOGY_ID_NAME inside the VERSIONED_NAMESPACE_DECL block
-	  to fix broken versioned namespace builds.  Thanks to Ossama for
-	  pointing this out.
+        * orbsvcs/orbsvcs/Notify/XML_Loader.cpp: Moved the namespace decl
+          for TOPOLOGY_ID_NAME inside the VERSIONED_NAMESPACE_DECL block
+          to fix broken versioned namespace builds.  Thanks to Ossama for
+          pointing this out.
 
 Sat Dec  3 19:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -447,20 +447,20 @@ Sat Dec  3 09:43:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Dec  2 16:18:15 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp (DTOR):
-	  Add try/catch block around call to ec->destroy() because it
-	  seems that often in this test the EC is gone by the time
-	  destroy() gets called.  This raises a COMM_FAILURE which now
-	  gets caught and noticed printed.  We also now catch and print
-	  any exception raised in the DTOR since there's little chance of
-	  doing anything about it, and at least this way we get
-	  information.
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.cpp (DTOR):
+          Add try/catch block around call to ec->destroy() because it
+          seems that often in this test the EC is gone by the time
+          destroy() gets called.  This raises a COMM_FAILURE which now
+          gets caught and noticed printed.  We also now catch and print
+          any exception raised in the DTOR since there's little chance of
+          doing anything about it, and at least this way we get
+          information.
 
 Fri Dec  2 10:26:33 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* orbsvcs/orbsvcs/Notify/XML_Topology_Factory.h: Added 'extern'
-	  declaration in here as this seems to placate the VC8 compiler's
-	  errors.
+        * orbsvcs/orbsvcs/Notify/XML_Topology_Factory.h: Added 'extern'
+          declaration in here as this seems to placate the VC8 compiler's
+          errors.
 
 Fri Dec  2 11:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -485,53 +485,53 @@ Fri Dec  2 11:05:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Dec  2 01:35:31 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Makefile.am:
-	* orbsvcs/orbsvcs/SSLIOP/params_dup.c:
-	* orbsvcs/orbsvcs/SSLIOP/params_dup.cpp:
+        * orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/SSLIOP/params_dup.c:
+        * orbsvcs/orbsvcs/SSLIOP/params_dup.cpp:
 
-	  Reintroduced `params_dup.c' and removed `params_dup.cpp' file.
-	  Some C++ compiler/platform combinations cannot handle the broken
-	  OpenSSL function pointer conversions.  Stick with a C compiler.
+          Reintroduced `params_dup.c' and removed `params_dup.cpp' file.
+          Some C++ compiler/platform combinations cannot handle the broken
+          OpenSSL function pointer conversions.  Stick with a C compiler.
 
-	* orbsvcs/orbsvcs/SSLIOP/params_dup.h:
+        * orbsvcs/orbsvcs/SSLIOP/params_dup.h:
 
-	  Include the new "ace/config-macros.h" header instead of
-	  "ace/config-lite.h".  The former can be parsed by C compilers.
+          Include the new "ace/config-macros.h" header instead of
+          "ace/config-lite.h".  The former can be parsed by C compilers.
 
-	* tao/TAO_Singleton_Manager.cpp:
-	* tao/TAO_Singleton_Manager.h:
+        * tao/TAO_Singleton_Manager.cpp:
+        * tao/TAO_Singleton_Manager.h:
 
-	  Moved static "instance_" pointer to an anonymous namespace
-	  within the implementation file.  Allows the friend declaration
-	  to be removed, in turn fixing builds that cannot handle the
-	  global scope qualifier prepended to that friend declaration.
+          Moved static "instance_" pointer to an anonymous namespace
+          within the implementation file.  Allows the friend declaration
+          to be removed, in turn fixing builds that cannot handle the
+          global scope qualifier prepended to that friend declaration.
 
-	  Removed unused "preallocated_object" static array.
+          Removed unused "preallocated_object" static array.
 
-	* tao/Versioned_Namespace.h:
+        * tao/Versioned_Namespace.h:
 
-	  Update preprocessor check to use new config-macros.h specific
-	  include guard preprocessor symbol.
+          Update preprocessor check to use new config-macros.h specific
+          include guard preprocessor symbol.
 
 Thu Dec  1 08:07:23 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* TAO-INSTALL.html: Updated this file for VxWorks.
-	  Thanks to Nathan Anderson <nathan dot l dot anderson at lmco dot
- 	  com> for these suggestions.
+        * TAO-INSTALL.html: Updated this file for VxWorks.
+          Thanks to Nathan Anderson <nathan dot l dot anderson at lmco dot
+          com> for these suggestions.
 
 Thu Dec  1 20:17:29 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Topology_Object.h:
         * orbsvcs/orbsvcs/Notify/Topology_Object.cpp:
 
-	  Removed TOPOLOGY_ID from here.  It should have been nmoved when
-	  the persistence stuff was broken into a separate library.
+          Removed TOPOLOGY_ID from here.  It should have been nmoved when
+          the persistence stuff was broken into a separate library.
 
         * orbsvcs/orbsvcs/Notify/XML_Loader.cpp:
         * orbsvcs/orbsvcs/Notify/XML_Saver.cpp:
         * orbsvcs/orbsvcs/Notify/XML_Topology_Factory.cpp:
 
-	  Moved TOPOLOGY_ID into here since that's all that uses it.
+          Moved TOPOLOGY_ID into here since that's all that uses it.
 
 Thu Dec  1 12:08:17 2005  Chris Cleeland  <cleeland_c@ociweb.com>
 
@@ -7210,7 +7210,7 @@ Tue Oct 18 00:08:30 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
           (resolve_initial_references):
 
           Updated calls to resolve_service() to reflect new signature and
-	  void return type.
+          void return type.
 
         * tao/ORB_Core.cpp (init):
 
