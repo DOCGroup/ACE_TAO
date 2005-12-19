@@ -1,6 +1,13 @@
+Mon Dec 19 16:50:00 UTC 2005  Simon Massey  <simon.massey@prismtech.com>
+
+        * bin/make_release:
+          Removed the extra end of line inserted into the $Id$ comment
+          from all of the Version.h generators. (Around the same line
+          as before.)
+
 Mon Dec 19 08:48:13 2005  Simon Massey  <simon.massey@prismtech.com>
 
-        * ACE version 5.4.8 released.
+        * ACE version 5.4.8 released. ABORTED
 
 Mon Dec 19 14:40:00 UTC 2005  Simon Massey  <simon.massey@prismtech.com>
 
