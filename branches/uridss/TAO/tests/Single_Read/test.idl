@@ -1,0 +1,14 @@
+//
+// $Id$
+//
+
+interface test
+{
+  typedef sequence<octet> data;
+
+  // A one way operation that pushes the data to the server
+  oneway void method (in unsigned long req_no,
+                      in data d);
+
+  oneway void shutdown ();
+};

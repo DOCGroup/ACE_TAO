@@ -1,0 +1,17 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Client) : taoclient, anytypecode, minimum_corba {
+  after += *Server
+  source_files {
+    FileC.cpp
+    client.cpp
+  }
+}
+
+project(*Server) : taoserver, minimum_corba {
+  source_files {
+    File_i.cpp
+    server.cpp
+  }
+}

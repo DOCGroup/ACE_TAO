@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : orbsvcslib, event {
+  after     += CosNotification
+  libs      += TAO_CosNotification
+}
