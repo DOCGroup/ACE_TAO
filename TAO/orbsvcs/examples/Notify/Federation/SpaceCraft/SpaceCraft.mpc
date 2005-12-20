@@ -1,9 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : rmcast, orbsvcsexe, notification, notification_skel, notification_serv, typecodefactory {
-  exename = craft
-  after += Gate
-  libs += Gate
-  includes += ..
-}

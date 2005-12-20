@@ -1,7 +1,0 @@
-//$Id$
-
-project(CompilerElements): cidlc {
-  sharedname =
-  staticname = CompilerElements
-  libout = ..
-}
