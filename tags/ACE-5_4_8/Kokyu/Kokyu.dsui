@@ -1,0 +1,37 @@
+# DSRT Dispatcher Impl (DSRT_Dispatcher_Impl.cpp)
+DSTRM_EVENT	DSRT_DISPATCH_IMPL	10	INIT2	0	"Initialize Dispatcher object"	print_string
+
+# Dispatcher Task (Dispatcher_Task.cpp)
+DSTRM_EVENT     DISP_TASK       9       EVENT_DEFERRED  3       "Time event is deferred"        print_string
+DSTRM_EVENT     DISP_TASK       9       EVENT_FINISHED_DISPATCHING      2       "End time of dispatching event"    print_string
+DSTRM_EVENT     DISP_TASK       9       EVENT_START_DISPATCHING 1       "Start time of actually dispatching event"    print_string
+DSTRM_EVENT     DISP_TASK       9       EVENT_DEQUEUED  0       "Time of event duqueue" print_string
+
+# Dispatch Deferrer  (Dispatch_Deferrer.cpp)
+DSTRM_EVENT     DISP_DEFERRER   8       EVENT_DEFERRED_DEQUEUE  1       "Enqueue event in dispatch queue"       print_string
+DSTRM_EVENT     DISP_DEFERRER   8       EVENT_DEFERRED_ENQUEUE  0       "Buffer event until timer expires"    print_string
+
+# DSRT DIRECT Dispatcher (DSRT_DIRECT_Dispatcher_Impl_T.cpp)
+DSTRM_EVENT     DSRT_DIRECT_DISPATCH        7       SCHEDULE_EXIT   1       "Exit Schedule_i"      print_string
+DSTRM_EVENT     DSRT_DIRECT_DISPATCH        7       SCHEDULE_ENTER  0       "Enter Schedule_i"      print_string
+
+# DSRT CV Dispatcher (DSRT_CV_Dispatcher_Impl_T.cpp)
+DSTRM_EVENT	DSRT_CV_DISPATCH	6	INIT	13	"Enter DSRT_Dispatcher_Impl init"	print_string
+DSTRM_EVENT     DSRT_CV_DISPATCH        6       SHUTDOWN     12       "Enter shutdown_i function"  print_string
+DSTRM_EVENT     DSRT_CV_DISPATCH        6       CANCEL_SCHEDULE_END     11       "Exit cancel_schedule_i function"  print_string
+DSTRM_EVENT     DSRT_CV_DISPATCH        6       CANCEL_SCHEDULE_START     10       "Enter cancel_schedule_i function"  print_string
+DSTRM_EVENT     DSRT_CV_DISPATCH        6       UPDATE_SCHEDULE_END     9       "Exit update_schedule_i function"  print_string
+DSTRM_EVENT     DSRT_CV_DISPATCH        6       UPDATE_SCHEDULE_START     8       "Enter update_schedule_i function"  print_string
+DSTRM_EVENT     DSRT_CV_DISPATCH        6       RELEASE_GUARD_END     7       "Exit release_guard_i function"  print_string
+DSTRM_EVENT     DSRT_CV_DISPATCH        6       RELEASE_GUARD_START     6       "Enter release_guard_i function"  print_string
+DSTRM_EVENT     DSRT_CV_DISPATCH        6       INIT_I    5       "Initialization"        print_string
+DSTRM_EVENT     DSRT_CV_DISPATCH        6       NONRG_EVENT_RELEASED  4 "Event release time on the server side" print_string
+DSTRM_EVENT     DSRT_CV_DISPATCH        6       RG_DELAYED_EVENT_RELEASED  3       "Event delayed by release guard release time on the server side" print_string
+DSTRM_EVENT     DSRT_CV_DISPATCH        6       RG_EVENT_RELEASED  2       "Release guard Event release time on the server side" print_string
+DSTRM_EVENT     DSRT_CV_DISPATCH        6       SCHEDULE_EXIT   1       "Exit Schedule_i"      print_string
+DSTRM_EVENT     DSRT_CV_DISPATCH        6       SCHEDULE_ENTER  0       "Enter Schedule_i"      print_string
+
+# DSRT_Dispatcher (Kokyu_dsrt.cpp)
+DSTRM_EVENT	DSRT_DISPATCH	5	CREATE_DSRT_DISPATCH_SCHED_END	2	"Done creating appropriate Scheduler"	print_string
+DSTRM_EVENT	DSRT_DISPATCH	5	CREATE_DSRT_DISPATCH_SCHED_START	1	"Create appropriate Scheduler"	print_string
+DSTRM_EVENT	DSRT_DISPATCH	5	SCHEDULE	0	"Schedule task"	print_string
