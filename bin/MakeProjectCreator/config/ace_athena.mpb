@@ -1,7 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project: ace_xt {
-  requires += athena
-  lit_libs += Xaw
-}
