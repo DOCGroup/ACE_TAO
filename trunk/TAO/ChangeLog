@@ -1,11 +1,3 @@
-Tue Dec 20 04:51:06 2005  Simon Massey  <simon.massey@prismtech.com>
-
-        * TAO version 1.4.8 released.
-
-Mon Dec 19 08:50:17 2005  Simon Massey  <simon.massey@prismtech.com>
-
-        * TAO version 1.4.8 released. ABORTED
-
 Fri Dec 16 18:06:27 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
         * TAO_IDL/be/be_global.cpp:
