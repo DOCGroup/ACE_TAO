@@ -1,0 +1,6 @@
+// $Id$
+
+interface test
+{
+  void destroy_poa ();
+};

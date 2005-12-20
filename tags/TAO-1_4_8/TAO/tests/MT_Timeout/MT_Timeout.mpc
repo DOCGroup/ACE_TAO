@@ -1,0 +1,20 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Server): messaging, taoserver {
+  Source_Files {
+    Sleep_Service.cpp
+    Server_Task.cpp
+    server.cpp
+  }
+}
+
+project(*Client): messaging, taoexe, portableserver {
+  after += *Server
+  Source_Files {
+    TestC.cpp
+    Client_Task.cpp
+    client.cpp
+  }
+}
+

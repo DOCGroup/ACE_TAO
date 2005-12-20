@@ -1,0 +1,51 @@
+/**
+ * @file Test.idl
+ *
+ * $Id$
+ *
+ */
+
+module Test
+{
+   typedef string<10> MyStringType;
+   typedef string<10> MyOtherStringType;     // Note: SAME LENGTH
+
+   interface Foo
+   {
+      void op1( in MyStringType s );
+      void op2( in MyOtherStringType s );
+   };
+};
+
+module Foo
+{
+   module One
+   {
+      typedef string<40> MyString;
+
+      interface Whatever
+      {
+         void someOp( in MyString s );
+      };
+   };
+
+   module Two
+   {
+      typedef string<100> MyString; // Same name, different size!
+
+      interface WhoCares
+      {
+         void someOp( in MyString s );
+      };
+   };
+
+   module Three
+   {
+      typedef string<100> MyString; // Same name, same size!
+
+      interface WhoCares
+      {
+         void someOp( in MyString s );
+      };
+   };
+};
