@@ -1,0 +1,18 @@
+// file      : CCF/Example/CIDL/LocalExecutorMapping/test-2.cidl
+// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+// cvs-id    : $Id$
+
+#include "test-2.idl"
+
+module M3
+{
+  composition session Impl
+  {
+    home executor HImpl
+    {
+      implements M2::H2;
+      manages CImpl;
+    };
+  };
+};
+

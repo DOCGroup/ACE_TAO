@@ -1,0 +1,17 @@
+//$Id$
+
+#ifndef SENDER_CIDL
+#define SENDER_CIDL
+
+#include "Receiver.idl"
+
+composition session Receiver_Impl
+{
+  home executor ReceiverHome_Exec
+  {
+    implements Hello::ReceiverHome;
+    manages    Receiver_Exec;
+  };
+};
+
+#endif /* SENDER_CIDL */
