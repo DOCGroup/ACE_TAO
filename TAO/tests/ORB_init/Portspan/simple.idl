@@ -1,5 +1,0 @@
-// $Id$
-
-interface simple {
-    void test();
-};

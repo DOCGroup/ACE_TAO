@@ -1,5 +1,0 @@
-// $Id$
-
-project: namingexe, iortable, core, rtevent_serv, rteventlogadmin {
-  exename   = RTEvent_Logging_Service
-}

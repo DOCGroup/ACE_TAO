@@ -1,7 +1,0 @@
-<?xml version='1.0'?>
-<!-- Converted from ./docs/tutorials/Quoter/Event_Service/ec.conf by svcconf-convert.pl -->
-<ACE_Svc_Conf>
- <!--  $Id$ -->
- <!--  static EC_Factory "-ECfiltering null"  -->
- <!--  -ECproxyconsumerlock thread " #-ECproxysupplierlock thread" # -ECsupplierfiltering per-supplier" -->
-</ACE_Svc_Conf>

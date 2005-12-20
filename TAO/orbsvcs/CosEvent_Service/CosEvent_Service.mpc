@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : orbsvcsexe, core, naming, event_serv, svc_utils, iortable, messaging_optional, portableserver {
-  exename  = CosEvent_Service
-}
