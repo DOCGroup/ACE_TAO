@@ -8,7 +8,7 @@ Mon Dec 19 16:50:00 UTC 2005  Simon Massey  <simon.massey@prismtech.com>
 
         * bin/make_release:
           Removed the extra end of line inserted into the
-          $Id$
+          Id: ChangeLog,v 4.9518 2005/12/20 10:03:35 bugzilla Exp
           comment from all of the Version.h generators. (Around the same
           line as before.)
 
