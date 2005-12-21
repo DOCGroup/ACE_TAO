@@ -2606,7 +2606,7 @@ ACE_WFMO_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh,
   queue_size  = local_queue.message_count ();
   for (index = 0; index < queue_size; ++index)
     {
-      ACE_Message_Block  *mb;
+      ACE_Message_Block  *mb = 0;
       if (-1 == local_queue.dequeue_head (mb))
         {
           ACE_ASSERT (0);
