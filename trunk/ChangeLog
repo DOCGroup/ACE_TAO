@@ -1,3 +1,12 @@
+Wed Dec 21 12:32:10 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Time_Value.inl:
+
+	  Use g++'s __builtin_constant_p() predicate to avoid calling
+	  ::normalize() if both arguments to ACE_Time_Value::set(long,
+	  long) are already "normalized".  This avoids an unnecessary
+	  method call when initializing ACE_Time_Value constants.
+
 Wed Dec 21 11:40:53 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/OS_NS_Thread.cpp (ACE_OS::thr_create):
