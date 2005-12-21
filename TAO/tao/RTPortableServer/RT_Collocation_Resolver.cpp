@@ -26,7 +26,7 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
   // Make sure that the servant is in the same ORB that created this
   // object.
   if (!object->_is_collocated ())
-    return 0;
+    return false;
 
   // Get the orb core.
   TAO_ORB_Core *orb_core =
@@ -47,7 +47,7 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
   // If the target POA does not have a dedicated thread pool, then all
   // calls to it are collocated.
   if (target_thread_pool == 0)
-    return 1;
+    return true;
 
   /// Get the ORB_Core's TSS resources.
   TAO_ORB_Core_TSS_Resources &tss =
@@ -68,17 +68,17 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
   // different pool than POA.  Therefore, this object is not
   // collocated.
   if (current_thread_pool != target_thread_pool)
-    return 0;
+    return false;
 
   // If the current thread and the POA are in the default thread pool,
   // then the object is collocated.
   if (current_thread_pool == 0)
-    return 1;
+    return true;
 
   // If the current thread and the POA are in a thread pool without
   // lanes, then the object is collocated.
   if (!current_thread_pool->with_lanes ())
-    return 1;
+    return true;
 
   // Grab the priority model used by the POA.  Note that this cannot
   // be NOT_SPECIFIED because NOT_SPECIFIED is not allowed with thread
@@ -90,7 +90,7 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
   // because the current thread is of the correct priority :-) and
   // we'll simple use the current thread to run the upcall.
   if (priority_model == TAO::Portable_Server::Cached_Policies::CLIENT_PROPAGATED)
-    return 1;
+    return true;
 
   // Locate the target servant.  We are really not interested in the
   // servant itself but in the priority that this servant will run at.
@@ -116,9 +116,9 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object
   // If it matches the current thread's priority, then we are
   // collocated.  Otherwise we are not.
   if (target_priority == current_thread_lane->lane_priority ())
-    return 1;
+    return true;
   else
-    return 0;
+    return false;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

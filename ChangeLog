@@ -1,3 +1,13 @@
+Wed Dec 21 18:45:12 UTC 2005  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ace/WFMO_Reactor.cpp:
+        * protocols/ace/HTBP/HTBP_Session.cpp:
+          Initialise pointer with 0
+
+        * include/makeinclude/platform_vxworks6.1.GNU:
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+          Use EXEEXT instead of .exe when setting TAO_IDL
+
 Wed Dec 21 18:42:12 UTC 2005  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
