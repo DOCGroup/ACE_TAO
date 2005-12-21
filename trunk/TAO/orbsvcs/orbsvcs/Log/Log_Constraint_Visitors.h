@@ -27,6 +27,7 @@
 
 #include "orbsvcs/ETCL/ETCL_Constraint_Visitor.h"
 #include "orbsvcs/DsLogAdminC.h"
+#include "ace/Null_Mutex.h"
 
 #include "log_serv_export.h"
 
@@ -102,10 +103,11 @@ private:
                                     CORBA::TCKind tc_kind);
 
 private:
+  static const size_t property_lookup_size_ = 31;
 
   typedef ACE_Hash_Map_Manager <ACE_CString,
                                 CORBA::Any_var,
-                                TAO_SYNCH_MUTEX> HASH_MAP;
+                                ACE_Null_Mutex> HASH_MAP;
 
   typedef HASH_MAP::ENTRY HASH_ENTRY;
 

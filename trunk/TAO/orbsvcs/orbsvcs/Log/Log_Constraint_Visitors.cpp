@@ -21,12 +21,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (
   DsLogAdmin::LogRecord &rec)
-  :rec_ (rec)
+  : property_lookup_ (property_lookup_size_),
+    rec_ (rec)
 {
-  ACE_CString name1 = (ACE_CString)"id";
-  ACE_CString name2 = (ACE_CString)"time";
-  ACE_CString name3 = (ACE_CString)"info";
-
   CORBA::Any* value;
   ACE_NEW (value, CORBA::Any);
 
@@ -38,7 +35,8 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (
   if (value != 0)
     {
       // @@ Where's the error check?
-      this->property_lookup_.bind (name1, value);
+      this->property_lookup_.bind (ACE_CString("id", 0, 0),
+				   value);
     }
 
   CORBA::Any* value2;
@@ -52,7 +50,8 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (
   if (value2 != 0)
     {
       // @@ Where's the error check?
-      this->property_lookup_.bind (name2, value2);
+      this->property_lookup_.bind (ACE_CString("time", 0, 0),
+				   value2);
     }
 
   CORBA::Any* value3;
@@ -63,7 +62,8 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (
   if (value3 != 0)
     {
       // @@ Where's the error check?
-      this->property_lookup_.bind (name3, value3);
+      this->property_lookup_.bind (ACE_CString("info", 0, 0),
+				   value3);
     }
 
   // Bind an entry for each item in the record's attribute list.
@@ -78,7 +78,10 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (
       if (value != 0)
 	{
 	  *value = this->rec_.attr_list[i].value;
-	  this->property_lookup_.bind (name, value);
+	  this->property_lookup_.bind (ACE_CString(this->rec_.attr_list[i].name,
+						   0,
+						   0),
+				       value);
 	}
     }
 }
