@@ -1000,7 +1000,7 @@ RR_Object_Group::unbind (const char *id
   this->allocator_->free (iter.next ());
   iter.remove ();
 
-  int curr_size = this->members_->current_size ();
+  size_t curr_size = this->members_->current_size ();
 
   // Update <next_> if necessary to reflect the deletion.
   if (position < next_)

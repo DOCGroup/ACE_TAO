@@ -29,7 +29,6 @@ TAO_EC_Simple_Queue_Full_Action::TAO_EC_Simple_Queue_Full_Action (void)
 int
 TAO_EC_Simple_Queue_Full_Action::init_svcs (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Simple_Queue_Full_Action::init_svcs()\n"));
   return ACE_Service_Config::static_svcs ()->
     insert (&ace_svc_desc_TAO_EC_Simple_Queue_Full_Action);
 }
@@ -106,7 +105,7 @@ TAO_EC_Dispatching_Task::svc (void)
     {
       ACE_TRY_NEW_ENV
         {
-          ACE_Message_Block *mb;
+          ACE_Message_Block *mb = 0;
           if (this->getq (mb) == -1)
             if (ACE_OS::last_error () == ESHUTDOWN)
               return 0;
@@ -175,11 +174,7 @@ TAO_EC_Dispatching_Task::push (TAO_EC_ProxyPushSupplier *proxy,
                                    event,
                                    this->data_block_.duplicate (),
                                    this->allocator_);
-  ACE_DEBUG ((LM_DEBUG, "EC (%P|%t): task %@ queue size before putq: %d\n",
-              this, this->the_queue_.message_count ()));
   this->putq (mb);
-  ACE_DEBUG ((LM_DEBUG, "EC (%P|%t): task %@ queue size after putq: %d\n",
-              this, this->the_queue_.message_count ()));
 }
 
 // ****************************************************************

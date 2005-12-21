@@ -43,9 +43,8 @@ namespace TAO
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
         active_object_map_entry_ (0)
     {
-      TAO_Adapter *adapter = oc->poa_adapter ();
       TAO_Object_Adapter *object_adapter =
-        dynamic_cast<TAO_Object_Adapter *>(adapter);
+        dynamic_cast<TAO_Object_Adapter *>(oc->poa_adapter ());
       this->object_adapter_ = object_adapter;
     }
 
