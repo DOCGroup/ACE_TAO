@@ -12,7 +12,7 @@
 AUTOMAKE_OPTIONS = foreign
 
 ACLOCAL = @ACLOCAL@
-ACLOCAL_AMFLAGS = -I ../m4
+ACLOCAL_AMFLAGS = -I m4 -I ../m4
 
 SUBDIRS = \
         TAO_IDL \

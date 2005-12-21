@@ -1,3 +1,23 @@
+Wed Dec 21 13:06:53 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+
+	  Use TAO_ENABLE_MINIMUM_CORBA macro instead of explicitly setting
+	  BUILD_MINIMUM_CORBA automake conditional to false.
+
+	* m4/tao.m4:
+
+	  New file, autoconf macros for TAO-specific feature tests.
+
+	  Added TAO_ENABLE_MINIMUM_CORBA autoconf macro.  Configuring with
+	  --enable-minimum-corba will set the BUILD_MINIMUM_CORBA automake
+	  conditional.
+
+	* configure.ac:
+	* Makefile.am:
+
+	  Look for automake macro files (*.m4) in ../m4 and ./m4.
+
 Wed Dec 21 12:08:57 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
@@ -6,7 +26,7 @@ Wed Dec 21 12:08:57 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 	  ACE_CString constructors that don't copy or take ownership of
 	  the string, this allows us to wrap string literals for use as
 	  map bindings with as little overhead as possible.
-	
+
 	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
 
 	  Changed lock strategy of property_lookup_map_ from
