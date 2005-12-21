@@ -802,7 +802,7 @@ YY_RULE_SETUP
 
 { 
 		  yylval.constraint_ = 
-		    new TAO_Literal_Constraint((CORBA::Boolean) 1);
+		    new TAO_Literal_Constraint(true);
 		  TAO_YY_LEX_DEBUG; return TAO_BOOLEAN;
 		}
 	ACE_NOTREACHED (YY_BREAK)
@@ -811,7 +811,7 @@ YY_RULE_SETUP
 
 { 
 		  yylval.constraint_ = 
-		    new TAO_Literal_Constraint((CORBA::Boolean) 0);
+		    new TAO_Literal_Constraint(false);
 		  TAO_YY_LEX_DEBUG; return TAO_BOOLEAN;
 		}
 	ACE_NOTREACHED (YY_BREAK)
