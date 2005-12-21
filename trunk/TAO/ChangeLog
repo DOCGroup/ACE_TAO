@@ -1,3 +1,24 @@
+Wed Dec 21 19:28:12 UTC 2005  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Servant_Upcall.cpp:
+          No need to store the TAO_Adapter in an intermediate variable
+
+        * examples/Load_Balancing_persistent/Load_Balancer_i.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+          Fixed 64bit conversion warning
+
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
+          Initialise pointer with 0 and removed some debugging statements that
+          appear always and don't add a value to the log
+
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp:
+          Removed some old comments
+
+        * tao/orbconf.h:
+          Did some cleanup, removed TAO_USE_SEQUENCE_TEMPLATES,
+          TAO_MAXIMUM_NATIVE_TYPE_SIZE, TAO_MAX_TRANSPORT_REREAD_ATTEMPTS.
+          I couldn't find these throughtout all the code.
+
 Wed Dec 21 11:03:25 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* TAO_IDL/ast/ast_expression.cpp:
