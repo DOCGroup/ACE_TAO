@@ -371,8 +371,8 @@ Client_Test::list_options (void)
                   this->name_options_->nameserver_port ()));
       break;
     default:
-      assert (!"shouldn't occur!\n");
-      /* NOTREACHED */
+      ACE_ERROR ((LM_ERROR, "ERROR: shouldn't occur!\n"));
+      break;
     }
   ACE_DEBUG ((LM_DEBUG,
               "  *** Namespace directory is %s ***\n",
