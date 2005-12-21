@@ -1,3 +1,10 @@
+Wed Dec 21 18:50:12 UTC 2005  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Trader/constraint.l:
+        * orbsvcs/orbsvcs/Trader/Constraint_l.cpp:
+        * tao/RTPortableServer/RT_Collocation_Resolver.cpp:
+          Use true and false for booleans
+
 Wed Dec 21 18:40:12 UTC 2005  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tests/Bug_2328_Regression/*:
