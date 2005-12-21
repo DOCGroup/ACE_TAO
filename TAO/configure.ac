@@ -44,6 +44,7 @@ AC_PREREQ([2.58])
 AC_CONFIG_SRCDIR([tao/TAO_Internal.cpp])
 
 AC_CONFIG_AUX_DIR([../aux_config])
+AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_MACRO_DIR([../m4])
 
 dnl Check what platform we are running on.
@@ -155,10 +156,10 @@ AC_SUBST([TAO_BETA])
 
 dnl We should have --with/--enable flags for these options.
 dnl Until we do, set them to reasonable defaults.
+TAO_ENABLE_MINIMUM_CORBA
 AM_CONDITIONAL(TEMPLATES_REQUIRE_SOURCE, false)
 AM_CONDITIONAL(BUILD_RT_CORBA, true)
 AM_CONDITIONAL(BUILD_CORBA_MESSAGING, true)
-AM_CONDITIONAL(BUILD_MINIMUM_CORBA, false)
 AM_CONDITIONAL(BUILD_INTERCEPTORS, true)
 AM_CONDITIONAL(BUILD_ACE_UUID, true)
 AM_CONDITIONAL(BUILD_AMI, true)
