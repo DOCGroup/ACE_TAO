@@ -4050,8 +4050,15 @@ WE_HAVE_SHARED_POSIX_SEMAPHORES
     [
      AC_DEFINE([ACE_HAS_POSIX_SEM])
 
-     AC_CHECK_FUNC([sem_open],
-       [
+     AC_CHECK_FUNC([sem_open])
+     AC_CHECK_FUNC([sem_close])
+     AC_CHECK_FUNC([sem_unlink])
+     if test "$ace_cv_func_sem_open" = no ||
+        test "$ace_cv_func_sem_close" = no ||
+        test "$ace_cv_func_sem_unlink" = no; then
+
+        AC_DEFINE([ACE_LACKS_NAMED_POSIX_SEM])
+     else
         dnl Check if it works!  For example, in glibc 2.x sem_open exists
         dnl but it appears to be a stub.  However, it isn't listed as a
         dnl stub in <gnu/stubs.h> so the configure script thinks it is
@@ -4099,10 +4106,7 @@ main ()
               ace_cv_sem_open_works=yes
              ])
           ],, [AC_DEFINE([ACE_LACKS_NAMED_POSIX_SEM])])
-       ],
-       [
-        AC_DEFINE([ACE_LACKS_NAMED_POSIX_SEM])
-       ])
+       fi
     ],)
 
 fi dnl check for POSIX Semaphore functions

@@ -1,3 +1,15 @@
+Wed Dec 21 12:44:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* THANKS: Add Jonathan Sprinkle to the hall of fame.
+
+	* configure.ac:
+
+	  Define ACE_LACKS_NAMED_POSIX_SEM if platform lacks any of
+	  sem_open(), sem_close(), or sem_unlink() are undefined.  This
+	  should help automake builds on Cygwin, which does not provide
+	  sem_unlink().  Thanks to Jonathan Sprinkle who provided the
+	  failing config.log.
+
 Wed Dec 21 12:32:10 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/Time_Value.inl:
