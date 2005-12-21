@@ -108,7 +108,7 @@ int
 TAO_UIPMC_Profile::decode (TAO_InputCDR& cdr)
 {
   // The following is a selective reproduction of TAO_Profile::decode
-  
+
   CORBA::ULong encap_len = cdr.length ();
 
   // Read and verify major, minor versions, ignoring profiles
@@ -151,7 +151,7 @@ TAO_UIPMC_Profile::decode (TAO_InputCDR& cdr)
                   encap_len));
     }
 
-  // We don't call ::decode_endpoints because it is implemented 
+  // We don't call ::decode_endpoints because it is implemented
   // as ACE_NOTSUP_RETURN (-1) for this profile
 
   return 1;
@@ -275,7 +275,7 @@ TAO_UIPMC_Profile::parse_string_i (const char *string
   ACE_CString ace_str (string, 0, 0);
 
   // Look for the group domain delimitor.
-  int pos = ace_str.find ('-');
+  ssize_t pos = ace_str.find ('-');
 
   if (pos == ACE_CString::npos)
     {
@@ -296,7 +296,7 @@ TAO_UIPMC_Profile::parse_string_i (const char *string
 
   // Skip past the last '-'.
   pos++;
-  int end_pos = ace_str.find ('-',pos);
+  ssize_t end_pos = ace_str.find ('-',pos);
 
   CORBA::Boolean parse_group_ref_version_flag = 0;
 

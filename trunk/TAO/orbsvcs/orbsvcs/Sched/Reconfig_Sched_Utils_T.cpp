@@ -122,8 +122,7 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
 
               // Reference the associated scheduling entry: the double cast is
               // needed to ensure that the size of the pointer and the size of the
-              // stored magic cookie are the same (see the definition of
-              // ptr_arith_t in ACE to grok how this works portably).
+              // stored magic cookie are the same
               next_rse =
                 ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
                                      next_rt_info->volatile_token);
