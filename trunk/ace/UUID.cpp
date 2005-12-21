@@ -411,27 +411,19 @@ namespace ACE_Utils
   void
   UUID_Generator::get_timestamp (UUID_time& timestamp)
   {
+    ACE_GUARD (ACE_SYNCH_MUTEX, mon, *lock_);
+
     this->get_systemtime(timestamp);
 
-    /// Account for the clock being set back. Increment the clock
-    /// sequence.
+    // Account for the clock being set back. Increment the clock /
+    // sequence.
     if (timestamp <= timeLast_)
-      {
-        {
-          ACE_GUARD (ACE_SYNCH_MUTEX, mon, *lock_);
-          uuid_state_.clockSequence = (uuid_state_.clockSequence + 1) & ACE_UUID_CLOCK_SEQ_MASK;
-        }
-      }
+      uuid_state_.clockSequence = (uuid_state_.clockSequence + 1) & ACE_UUID_CLOCK_SEQ_MASK;
 
-    /// If the system time ticked since the last UUID was generated. Set
-    /// the clock sequence back.
+    // If the system time ticked since the last UUID was
+    // generated. Set / the clock sequence back.
     else if (timestamp > timeLast_)
-      {
-        {
-          ACE_GUARD (ACE_SYNCH_MUTEX, mon, *lock_);
-          uuid_state_.clockSequence = 0;
-        }
-      }
+      uuid_state_.clockSequence = 0;
 
     timeLast_ = timestamp;
   }

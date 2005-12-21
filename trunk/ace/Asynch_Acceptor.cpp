@@ -174,7 +174,7 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
   return 0;
 }
 
-template <class HANDLER> void
+template <class HANDLER> int
 ACE_Asynch_Acceptor<HANDLER>::set_handle (ACE_HANDLE listen_handle)
 {
   ACE_TRACE ("ACE_Asynch_Acceptor<>::set_handle");
@@ -187,9 +187,10 @@ ACE_Asynch_Acceptor<HANDLER>::set_handle (ACE_HANDLE listen_handle)
                                  this->listen_handle_,
                                  0,
                                  this->proactor ()) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("ACE_Asynch_Accept::open")));
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_LIB_TEXT ("%p\n"),
+                       ACE_LIB_TEXT ("ACE_Asynch_Accept::open")),
+                      -1);
 }
 
 template <class HANDLER> ACE_HANDLE
