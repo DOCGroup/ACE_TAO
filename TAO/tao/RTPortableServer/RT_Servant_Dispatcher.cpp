@@ -1,3 +1,4 @@
+
 #include "RT_Servant_Dispatcher.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
@@ -83,7 +84,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
   TAO_Protocols_Hooks *tph =
     poa.orb_core ().get_protocols_hooks ();
 
-  const char *priority_model;
+  const char *priority_model = 0;
   RTCORBA::Priority target_priority = TAO_INVALID_PRIORITY;
 
   // NOT_SPECIFIED PriorityModel processing.

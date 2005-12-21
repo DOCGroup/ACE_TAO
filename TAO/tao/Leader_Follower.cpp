@@ -160,7 +160,7 @@ TAO_Leader_Follower::set_client_thread (void)
       // re-enable it if we want to receive any replys...
       this->orb_core_->reactor ()->reset_reactor_event_loop ();
     }
-  this->clients_++;
+  ++this->clients_;
 }
 
 void
@@ -175,7 +175,7 @@ TAO_Leader_Follower::reset_client_thread (void)
       ++this->leaders_;
     }
 
-  this->clients_--;
+  --this->clients_;
   if (this->clients_ == 0 &&
       this->orb_core_->has_shutdown ())
     {
