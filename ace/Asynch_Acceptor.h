@@ -125,7 +125,7 @@ public:
    * closed and the all outstanding asynchronous operations have
    * either completed or have been canceled on the old listen handle.
    */
-  virtual void set_handle (ACE_HANDLE handle);
+  virtual int set_handle (ACE_HANDLE handle);
 
   /// This initiates a new asynchronous accept operation.
   /**
