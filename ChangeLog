@@ -1,3 +1,59 @@
+Wed Dec 21 16:19:12 UTC 2005  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ace/CDR_Base.cpp:
+        * ace/CDR_Stream.cpp:
+          Fixed 64bit conversion warnings from int to long
+
+        * ace/config-vxworks6.1.h:
+          VxWorks 6.1 defines MAP as CPU type, if it is defined,
+          undef it so that we can use MAP as typedef throughout ACE/TAO
+
+        * ace/Configuration_Import_Export.cpp:
+          Fixed 64bit conversion warning from u_int to u_long
+
+        * ace/Malloc_T.cpp:
+          Added some checks for valid pointers before calling memset.
+          Thanks to Oh Yoon Sik <boom at estsoft dot com> for reporting
+          this.
+
+        * ace/OS_NS_sys_stat.inl (mkdir):
+          Replaced c-style cast with C++ cast
+
+        * ace/Basic_Types.h:
+          Removed ptr_arith_t, it is not used anymore
+
+        * ace/OS_NS_time.cpp:
+          Fixed the month calculation for WinCE.
+          Thanks to Oh Yoon Sik <boom at estsoft dot com> for reporting
+          this.
+
+        * ace/WIN32_Proactor.cpp:
+          The code for ACE_WIN64 should also be used for ACE_WIN32 so
+          zapped the ACE_WIN32 specific case
+
+        * include/makeinclude/platform_linux_icc.GNU:
+          When optimizations are disabled pass -O2 to the compiler. Always
+          disable the floating point optimizations to get correct floats
+          in the IDL compiler.
+
+        * examples/Reactor/Misc/test_demuxing.cpp:
+          Instead of an ACE_ASSERT, use ACE_ERROR_RETURN
+
+        * tests/Basic_Types_Test.cpp:
+          Use ptr_diff_t instead of ptr_arith_t
+
+        * tests/Buffer_Stream_Test.cpp:
+          Initialise pointers with 0
+
+        * etc/tao.doxygen:
+          Expand all emulated exception macros, that will improve our
+          documentation. I will recheck doxygen later and if things look
+          correct I will apply the same change to the other configuration
+          files.
+
+        * bin/MakeProjectCreator/modules/BorlandProjectCreator.pm:
+          Updated because of changes to MPC.
+
 Tue Dec 20 08:02:03 2005  Simon McQueen  <sm@prismtech.com>
 
         * ACE version 5.4.8 released.

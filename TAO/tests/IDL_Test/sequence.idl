@@ -9,7 +9,7 @@
 //    sequence.idl
 //
 // = DESCRIPTION
-//    This file contains examples of IDL code that has 
+//    This file contains examples of IDL code that has
 //    caused problems in the past for the TAO IDL
 //    compiler. This test is to make sure the problems
 //    stay fixed.
@@ -28,12 +28,18 @@ typedef sequence<CORBA::OctetSeq> OctetSeqSeq;
 // Bounded string elements of a sequence,
 // require the use of CORBA_Any::to_char.
 
-interface seqTest 
+interface seqTest
 {
   typedef sequence< string<12> > dozens;
 
   void send_dozen (inout dozens bouquets);
 };
+
+local interface seqLocal
+{
+};
+
+typedef sequence<seqLocal> seqLocalSeq;
 
 // Anonymous sequence members must be unique types even if the
 // sequence itself is not, so the member name has been
@@ -54,7 +60,7 @@ struct nestedSeqStruct
 };
 
 // Tests deeply nested recursive type.
-module Deployment 
+module Deployment
 {
   struct ComponentPackageDescription;
 

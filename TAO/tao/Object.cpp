@@ -846,7 +846,7 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
 CORBA::Boolean
 operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
 {
-  int lazy_strategy = 0;
+  bool lazy_strategy = false;
   TAO_ORB_Core *orb_core = cdr.orb_core ();
 
   if (orb_core == 0)
@@ -863,7 +863,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
     {
       if (orb_core->resource_factory ()->resource_usage_strategy () ==
           TAO_Resource_Factory::TAO_LAZY)
-        lazy_strategy = 1;
+        lazy_strategy = true;
     }
 
   if (!lazy_strategy)

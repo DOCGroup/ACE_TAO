@@ -9,7 +9,7 @@
 //    interface.idl
 //
 // = DESCRIPTION
-//    This file contains examples of IDL code that has 
+//    This file contains examples of IDL code that has
 //    caused problems in the past for the TAO IDL
 //    compiler. This test is to make sure the problems
 //    stay fixed.
@@ -21,7 +21,7 @@
 
 
 
-// Used to be a problem in the get() and set() 
+// Used to be a problem in the get() and set()
 // generated code.
 
 interface Base
@@ -38,7 +38,7 @@ interface Derived : Base
 // foo's scope.
 module foo_mod
 {
-  struct date 
+  struct date
     {
 	    short month;
     };
@@ -78,11 +78,11 @@ typedef boolean Bool;
 
 interface later_user
 {
-  later op (in later inarg, 
+  later op (in later inarg,
             inout later inoutarg,
             out later outarg);
 
-            
+
   // Not a clash with the C++ keyword because they are case sensitive,
   // but the Arg_Traits<> specialization parameter (ACE_InputCDR::to_boolean)
   // needs the unaliased type name to work.
@@ -102,7 +102,7 @@ interface later {};
 // somewhere other than the scope where the
 // lookup starts.
 
-interface Begin 
+interface Begin
 {
   typedef long Value;
 };
@@ -111,11 +111,11 @@ interface Middle : Begin
 {
 };
 
-interface End : Middle 
+interface End : Middle
 {
 };
 
-interface Client 
+interface Client
 {
   attribute End::Value v;
 };
@@ -137,31 +137,33 @@ module ParamMod
     {
       ParameterTester objref;
     };
-  
+
     typedef sequence<ParameterTester> object_seq_type;
-    
+
     typedef ParameterTester object_array_type[5];
 
-    struct object_struct_type 
+    struct object_struct_type
     {
       octet o1;
       ParameterTester p1;
-      long l1;        
+      long l1;
     };
-    
+
     union object_union_type switch (long)
     {
       case 0: string str;
       case 1: ParameterTester pt;
     };
-    
+
     object_seq_type parameter_tester_op (
         in object_struct_type inarg,
         inout object_array_type inoutarg,
         out object_union_type outarg
       )
-      raises (object_excep_type); 
+      raises (object_excep_type);
   };
 };
 
- 
+local interface testlocal
+{
+};
