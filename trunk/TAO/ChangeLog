@@ -1,3 +1,24 @@
+Wed Dec 21 11:03:25 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* TAO_IDL/ast/ast_expression.cpp:
+	* TAO_IDL/include/ast_expression.h:
+
+	  If !ACE_LACKS_LONGLONG_T, perform operations on CORBA::LongLong
+	  and CORBA::ULongLong types using 64 bit arithmetic.  Previously
+	  this was done with doubles (53 bit mantissa) for '+', '-', '*';
+	  or disallowed for the other operators.
+
+	* TAO_IDL/ast/ast_expression.cpp:
+	* TAO_IDL/include/ast_expression.h:
+
+	  Add EvalKind parameter to ::eval_bin_op and ::eval_mod_op so
+	  that operations can be done in terms of the given type.
+
+	* TAO_IDL/ast/ast_expression.cpp:
+
+	  Remove handling of '%' operator in AST_Expression::eval_bin_op()
+	  as it is handled by AST_Expression::eval_mod_op().
+
 Wed Dec 21 18:50:12 UTC 2005  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Trader/constraint.l:
