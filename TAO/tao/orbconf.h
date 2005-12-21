@@ -19,8 +19,6 @@
 
 #include /**/ "ace/pre.h"
 
-// "ace/OS.h" is overkill.  "ace/Basic_Types.h" is enough.  In
-// particular, it is needed for the definition of ACE_LITTLE_ENDIAN.
 #include "ace/Basic_Types.h"
 #include "ace/Global_Macros.h"
 #include "ace/Synch_Traits.h"
@@ -163,35 +161,9 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 #define TAO_MAXBUFSIZE 1024
 #endif /* TAO_MAXBUFSIZE */
 
-/*!
-
-  The number of times the transport will try to re-read before
-  returning control to the reactor when it has an uncompleted
-  message (see TAO_Transport::handle_input()).
-
-  The idea behind re-reading is that more data may have arrived
-  while the transport was busy deciding what to do with the bytes
-  it got, so we should probably try to re-read.
-
-  This value shouldn't be too large, lest the transport starve
-  out other transports while trying to complete its message.
-
-  When choosing a value, think of the type of this as 'unsigned int'.
- */
-#if !defined(TAO_MAX_TRANSPORT_REREAD_ATTEMPTS)
-#define TAO_MAX_TRANSPORT_REREAD_ATTEMPTS 2
-#endif
-
-// This controls the alignment for TAO structs.  It supports built-in
-// types up to and including 16 bytes (128 bits) in size.
-#if !defined (TAO_MAXIMUM_NATIVE_TYPE_SIZE)
-# define TAO_MAXIMUM_NATIVE_TYPE_SIZE 128
-#endif /* TAO_MAXIMUM_NATIVE_TYPE_SIZE */
-
 #if !defined (TAO_CONNECTION_PURGING_STRATEGY)
 # define TAO_CONNECTION_PURGING_STRATEGY TAO_Resource_Factory::LRU
 #endif /* TAO_CONNECTION_PURGING_STRATEGY */
-
 
 #if !defined (TAO_PURGE_PERCENT)
 # define TAO_PURGE_PERCENT 20
@@ -214,10 +186,6 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 #   define TAO_NAMESPACE_INLINE_FUNCTION TAO_NAMESPACE_STORAGE_CLASS
 # endif
 
-// Instead of replacing this with the ACE macro
-// in 20+ files, define it conditionally.
-// The TAO_OutputCDR class uses the ACE macro, which
-// is defined by default.
 #if !defined(TAO_NO_COPY_OCTET_SEQUENCES)
 # define TAO_NO_COPY_OCTET_SEQUENCES 1
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES */
@@ -247,7 +215,7 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 // byte first.
 
 // @todo It seems to be that this definition of TAO_ENCAP_BYTE_ORDER
-// should be  removed. We have an equivalent ACE definition in
+// should be removed. We have an equivalent ACE definition in
 // ACE_CDR_BYTE_ORDER. Today both of them are consistent. It would be
 // a havoc if oneday this consistency is gone..
 #if defined (ACE_LITTLE_ENDIAN)
@@ -291,36 +259,6 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 // "C4355: 'this' : used in base member initializer list"
 #  pragma warning (disable:4355) /* disable C4355 warning */
 #endif /* defined (_MSC_VER) */
-
-// The IDL compiler can generate the classes corresponding to IDL
-// sequences in two ways:
-// + Use the TAO templates for sequences,
-//   i.e. TAO_{Unb,B}ounded_Sequence<>
-// + Explicitly generate code for the sequence.
-//
-// The first approach can (potentially) produce smaller code, because
-// the code for a sequence over a particular type (say sequence<long>)
-// can be shared across multiple IDL files.
-// Unfortunately it is hard to manage the template instantiations on
-// platforms that do not automatically generate them, mainly because
-// it is hard to decide on which generated file are the templates
-// instantiated.  Thus the second approach is more convenient for most
-// applications.
-//
-// On platforms that support automatic template instantiation we use
-// the first approach.
-// On platforms that require explicit template instantiations we use
-// explicitly generated code for sequences if the platform does not.
-// If the application requires it (such as embedded systems) the
-// default can be changed, but then the application developer is
-// responsible for instantiating the templates.
-//
-#if defined (AIX) || \
-    (!defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) && \
-     (defined (ACE_HAS_TEMPLATE_SPECIALIZATION) || \
-      (defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA) && defined (_UNICOS))))
-#define TAO_USE_SEQUENCE_TEMPLATES
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // The Root POA default name.
 #if !defined (TAO_DEFAULT_ROOTPOA_NAME)

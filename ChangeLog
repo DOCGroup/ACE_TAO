@@ -1,3 +1,8 @@
+Wed Dec 21 19:17:12 UTC 2005  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * netsvcs/clients/Naming/Client/Client_Test.cpp:
+          Replaced assert with ACE_ERROR
+
 Wed Dec 21 19:14:12 UTC 2005  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/vc8nmake.mpb:
