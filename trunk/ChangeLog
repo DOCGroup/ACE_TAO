@@ -1,3 +1,11 @@
+Wed Dec 21 19:14:12 UTC 2005  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/vc8nmake.mpb:
+          With vc8 and nmake we have to pass different compiler flags then
+          with vc6 and vc71. To make it easier to use, you can regenerate
+          the nmake files for vc8 using: -type nmake -base vc8nmake -recurse
+          This way you get the needed flags for vc8
+
 Wed Dec 21 18:45:12 UTC 2005  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/WFMO_Reactor.cpp:
