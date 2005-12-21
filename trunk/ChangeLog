@@ -1,3 +1,19 @@
+Wed Dec 21 11:40:53 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/OS_NS_Thread.cpp (ACE_OS::thr_create):
+
+	  If ACE_HAS_PTHREAD_ATTR_SETCREATESUSPEND_NP and THR_SUSPENDED
+	  is set, use pthread_attr_setcreatesuspend_np() and set thread
+	  creation attributes so thread is started in "suspended" state.
+
+	* configure.ac:
+
+	  Add feature test for ACE_HAS_PTHREAD_ATTR_SETCREATESUSPSEND_NP.
+
+	* ace/README:
+
+	  Document ACE_HAS_PTHREAD_ATTR_SETCREATESUSPEND_NP.
+
 Wed Dec 21 19:17:12 UTC 2005  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * netsvcs/clients/Naming/Client/Client_Test.cpp:
