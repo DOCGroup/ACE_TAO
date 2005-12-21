@@ -60,7 +60,7 @@ namespace TAO
     public:
 
       /// Constructor.
-      TP_Strategy(unsigned int num_threads = 1,
+      TP_Strategy(unsigned long num_threads = 1,
                   bool     serialize_servants = true);
 
       /// Virtual Destructor.
@@ -186,7 +186,7 @@ namespace TAO
       TP_Task task_;
 
       /// The number of worker threads to use for the task.
-      unsigned int num_threads_;
+      unsigned long num_threads_;
 
       /// The "serialize servants" flag.
       bool serialize_servants_;

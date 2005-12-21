@@ -5,7 +5,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO::CSD::TP_Strategy::TP_Strategy(unsigned int num_threads,
+TAO::CSD::TP_Strategy::TP_Strategy(unsigned long num_threads,
                                    bool     serialize_servants)
   : num_threads_(num_threads),
     serialize_servants_(serialize_servants)
