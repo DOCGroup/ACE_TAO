@@ -3,10 +3,7 @@
 
 // The following configuration file is designed to work for VxWorks
 // 6.1 platforms using one of these compilers:
-// 1) The GNU g++ compiler that is shipped with Tornado 2.2 or newer.
-// 2) The Green Hills 1.8.8 and newer 1.8.9 compilers (not tested
-// already for a long time)
-// 3) The WindRiver Compiler (formerly known as Diab)
+// 1) The GNU g++ compiler that is shipped with VxWorks 6.1
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
@@ -265,6 +262,12 @@
 // ACE_OS::gethrtime () can use the RDTSC instruction.
 # define ACE_HAS_PENTIUM
 #endif
+
+// VxWorks defines the CPU define MAP, undef it to prevent problems with
+// application code
+#if defined (MAP)
+#undef MAP
+#endif /* MAP */
 
 #if !defined (ACE_NEEDS_HUGE_THREAD_STACKSIZE)
 # define ACE_NEEDS_HUGE_THREAD_STACKSIZE 65536
