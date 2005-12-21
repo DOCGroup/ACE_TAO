@@ -513,6 +513,8 @@ ACE_HAS_PTHREADS_STD                    Platform supports POSIX.1c-1995 threads
                                         Pthreads).
 ACE_HAS_PTHREADS_UNIX98_EXT             Platform has the UNIX98 extensions to
                                         Pthreads (rwlocks)
+ACE_HAS_PTHREAD_ATTR_SETCREATESUSPEND_NP  Platform has
+					pthread_attr_setcreatesuspend_np().
 ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP     Platform has pthread_condattr_setkind_np().
 ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP    Platform has
                                         pthread_mutexattr_setkind_np().

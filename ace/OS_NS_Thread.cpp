@@ -4386,6 +4386,22 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
         }
 #   endif /* !ACE_LACKS_THREAD_PROCESS_SCOPING */
 
+#   ifdef ACE_HAS_PTHREAD_ATTR_SETCREATESUSPEND_NP
+      if (ACE_BIT_ENABLED (flags, THR_SUSPENDED))
+        {
+           if (ACE_ADAPT_RETVAL(::pthread_attr_setcreatesuspend_np(&attr), result) != 0)
+	     {
+
+#     if defined (ACE_HAS_PTHREADS_DRAFT4)
+              ::pthread_attr_delete (&attr);
+#     else /* ACE_HAS_PTHREADS_DRAFT4 */
+              ::pthread_attr_destroy (&attr);
+#     endif /* ACE_HAS_PTHREADS_DRAFT4 */
+	      return -1;
+	    }
+        }
+#   endif /* !ACE_HAS_PTHREAD_ATTR_SETCREATESUSPEND_NP */
+
       if (ACE_BIT_ENABLED (flags, THR_NEW_LWP))
         {
           // Increment the number of LWPs by one to emulate the
