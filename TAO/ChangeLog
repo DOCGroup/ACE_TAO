@@ -1,3 +1,26 @@
+Wed Dec 21 12:08:57 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+
+	  Changed TAO_Log_Constraint_Visitor constructor to use
+	  ACE_CString constructors that don't copy or take ownership of
+	  the string, this allows us to wrap string literals for use as
+	  map bindings with as little overhead as possible.
+	
+	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
+
+	  Changed lock strategy of property_lookup_map_ from
+	  TAO_SYNCH_MUTEX to ACE_Null_Mutex, since all accesses to the map
+	  are already protected at a higher level.
+
+	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
+
+	  Explicitly set the size of the property_lookup_map_ to 31 hash
+	  buckets.  A typical log record has very few if any attributes,
+	  the cost of allocating the default (1024 hash bucket) size map
+	  outweighs any benefits of fewer hash collisions.
+
 Wed Dec 21 19:28:12 UTC 2005  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Servant_Upcall.cpp:
