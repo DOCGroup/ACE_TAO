@@ -1,3 +1,13 @@
+Wed Dec 21 18:40:12 UTC 2005  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tests/Bug_2328_Regression/*:
+          Added new regression for bug 2328. When having a client without
+          codeset support and a server with, sending multiple strings in one
+          invocation caused a crash with x.4.7. A retest just before the
+          release of x.4.8 proved things where fixed already, just putting
+          the regression into the repo to make sure we don't get this bug
+          back.
+
 Wed Dec 21 16:23:12 UTC 2005  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tao/Leader_Follower.cpp:
