@@ -1,6 +1,11 @@
+Wed Dec 21 18:42:12 UTC 2005  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added bug_2328_regression
+
 Tue Dec 20 20:24:39 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/UUID.cpp (ACE_Utils): Move the lock to the top of the 
+	* ace/UUID.cpp (ACE_Utils): Move the lock to the top of the
 	  UUID_Generator::get_timestamp() method to avoid subtle race
  	  conditions.  Thanks to Howard Finer <hfiner@sonusnet.com> for
  	  this fix.
@@ -11,7 +16,7 @@ Fri Dec 16 12:38:27 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 	  set_handle() so that errors can be propagated back to callers.
   	  Thanks to Eyal Car <eyal_car at hotmail dot com> for this fix.
   	  This closes bugid 2261.
-  
+
 Wed Dec 21 16:19:12 UTC 2005  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/CDR_Base.cpp:

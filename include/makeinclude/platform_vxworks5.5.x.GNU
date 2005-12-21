@@ -17,7 +17,7 @@ VXWORKS = 1
 CROSS-COMPILE = 1
 
 ifneq (,$(HOST_ROOT))
-  TAO_IDL := $(HOST_ROOT)/bin/tao_idl.exe
+  TAO_IDL := $(HOST_ROOT)/bin/tao_idl$(EXEEXT)
   TAO_IDL_DEP := $(TAO_IDL)
   TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/gperf
 endif

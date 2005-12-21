@@ -46,7 +46,7 @@ ACE::HTBP::Session::remove_session (ACE::HTBP::Session *s)
 int
 ACE::HTBP::Session::find_session (const ACE::HTBP::Session_Id_t &sid, ACE::HTBP::Session *&out)
 {
-  ACE::HTBP::Session::Map_Entry *e;
+  ACE::HTBP::Session::Map_Entry *e = 0;
   if (session_map_.find (sid,e) == -1)
     {
       out = 0;
