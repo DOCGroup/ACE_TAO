@@ -1,3 +1,30 @@
+Wed Dec 21 16:23:12 UTC 2005  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tao/Leader_Follower.cpp:
+          Use prefix increment/decrement instead of postfix
+
+        * tao/Object.cpp:
+          Made lazy_strategy a real bool instead of an int
+
+        * tao/CSD_ThreadPool/CSD_TP_Strategy.{h,inl}:
+          Made num_threads a long to fix 64bit conversion warnings
+
+        * tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+          Initialise pointer with 0
+
+        * tests/IDL_Test/array.idl:
+          Added some bound array types
+
+        * tests/IDL_Test/interface.idl:
+          Added an empty local interface
+
+        * tests/IDL_Test/sequence.idl:
+          Added a sequence of local interfaces
+
+        * tests/RTCORBA/Dynamic_Thread_Pool/*:
+          Added new test to show dynamic thread pools with the idle timeout
+          functionality
+
 Tue Dec 20 08:04:30 2005  Simon McQueen  <sm@prismtech.com>
 
         * TAO version 1.4.8 released.
