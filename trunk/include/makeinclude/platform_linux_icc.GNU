@@ -105,15 +105,18 @@ ifneq ($(SYSARCH),ia64)
 endif
 
 # Disable floating point optimizer solves problem with
-# min/max float values in the TAO_IDL compiler tests when
-# optimizations are enabled. If these options are not
-# passed we can get overflows when testing min/max
+# min/max float values in the TAO_IDL compiler tests
+# If these options are not passed we can get overflows
+# when testing min/max
+ifeq ($(SYSARCH),ia64)
+  CPPFLAGS += -mp
+else
+  CPPFLAGS += -fp-model double
+endif
+
 ifeq ($(optimize),0)
-  ifeq ($(SYSARCH),ia64)
-    CPPFLAGS += -mp
-  else
-    CPPFLAGS += -fp-model double
-  endif
+  # Disable all optimizing in code
+  CPPFLAGS += -O0
 endif
 
 PIC     = -fPIC

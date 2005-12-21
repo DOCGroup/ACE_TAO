@@ -461,7 +461,7 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
 
    res->tm_mday = systime.wDay;
    res->tm_min = systime.wMinute;
-   res->tm_mon = systime.wMonth;
+   res->tm_mon = systime.wMonth - 1;
    res->tm_sec = systime.wSecond;
    res->tm_wday = systime.wDayOfWeek;
    res->tm_yday = __mon_yday[iLeap][systime.wMonth] + systime.wDay;

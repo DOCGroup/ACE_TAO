@@ -122,11 +122,7 @@ int
 ACE_WIN32_Proactor::register_handle (ACE_HANDLE handle,
                                      const void *completion_key)
 {
-#if defined (ACE_WIN64)
   ULONG_PTR comp_key (reinterpret_cast<ULONG_PTR> (completion_key));
-#else
-  ULONG comp_key (reinterpret_cast<ULONG> (completion_key));
-#endif /* ACE_WIN64 */
 
   // No locking is needed here as no state changes.
   ACE_HANDLE cp = ::CreateIoCompletionPort (handle,
@@ -570,11 +566,7 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
 {
   ACE_OVERLAPPED *overlapped = 0;
   u_long bytes_transferred = 0;
-#if defined (ACE_WIN64)
-          ULONG_PTR completion_key = 0;
-#else
-          ULONG completion_key = 0;
-#endif /* ACE_WIN64 */
+  ULONG_PTR completion_key = 0;
 
   // Get the next asynchronous operation that completes
   BOOL result = ::GetQueuedCompletionStatus (this->completion_port_,
@@ -687,11 +679,8 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
       bytes_transferred = static_cast<DWORD> (result->bytes_transferred ());
       completion_key = result->completion_key();
     }
-#if defined (ACE_WIN64)
+
   ULONG_PTR comp_key (reinterpret_cast<ULONG_PTR> (completion_key));
-#else
-  ULONG comp_key (reinterpret_cast<ULONG> (completion_key));
-#endif /* ACE_WIN64 */
 
   // Post a completion
   if (::PostQueuedCompletionStatus (this->completion_port_, // completion port

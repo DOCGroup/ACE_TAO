@@ -290,14 +290,9 @@ typedef unsigned char ACE_Byte;
 // Type for doing arithmetic on pointers ... as elsewhere, we assume
 // that unsigned versions of a type are the same size as the signed
 // version of the same type.
-// NOTE! ptr_arith_t is an ACE-defined type and should not be used.
-// It has been superseded by the standard type ptrdiff_t. This definition
-// is simply a placeholder til all ptr_arith_t usage can be expunged from
-// ACE and TAO.
 # if defined (ACE_HAS_WINCE) && (_WIN32_WCE < 400)
-typedef unsigned long  ptrdiff_t;    // evc3, PocketPC don't defined ptrdiff_t
+typedef unsigned long ptrdiff_t;    // evc3, PocketPC don't defined ptrdiff_t
 # endif
-typedef ptrdiff_t ptr_arith_t;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
