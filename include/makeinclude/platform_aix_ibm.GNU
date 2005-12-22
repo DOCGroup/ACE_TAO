@@ -3,8 +3,8 @@
 # This file is for use with AIX 4.3 and up, using either of the IBM
 # compilers (IBM C/C++ 3.6.6 or Visual Age C++ 5 or 6 batch compiler).
 # If you wish to use the CSet++ compiler, please use platform_aix4_cset++.GNU.
-# Note that as of ACE 6.0, the only supported compiler from IBM will
-# be Visual Age C++ 5 (batch mode only) and up.
+# Note that as of ACE 5.4, the only supported compilers from IBM are
+# Visual Age C++ 6 and up.
 
 debug ?= 1
 distrib ?= 0
@@ -102,7 +102,7 @@ ifeq ($(XLCVERSION),0x0306)
 # template instances in rules.lib.GNU.
   ibmcxx_build = 1
   rtti = 0
-else    # Visual Age 5 and 6
+else    # Visual Age 5 and up
   SHR_FILTER=$(ACE_ROOT)/bin/aix_shr
   ifeq ($(XLCVERSION),0x0500)
     TEMPINCDIR  = tempinc
@@ -114,12 +114,17 @@ else    # Visual Age 5 and 6
       # warns that __C99_RESTRICT is reserved. When that workaround is gone, this
       # ifeq can be removed also. -qflag=w:w is what we want in the end.
       ifeq (502,$(AIX_VERS))
-        CCFLAGS    += -qflag=e:e -qtempinc=$(TEMPINCDIR) -DACE_TEMPLATES_REQUIRE_SOURCE
+        CCFLAGS    += -qflag=e:e -qtempinc=$(TEMPINCDIR)
       else
-        CCFLAGS    += -qflag=w:w -qtempinc=$(TEMPINCDIR) -DACE_TEMPLATES_REQUIRE_SOURCE
+        CCFLAGS    += -qflag=w:w -qtempinc=$(TEMPINCDIR)
       endif
     else
-      CXX = echo "Unrecognized compiler version $(XLCVERSION)\n"
+      ifeq ($(XLCVERSION),0x0700)
+        CCFLAGS += -qflag=w:w -qtemplateregistry=templateregistry.$(MAKEFILE)
+	SHR_FILTER =
+      else
+        CXX = echo "Unrecognized compiler version $(XLCVERSION)\n"
+      endif
     endif
   endif
   DLD         = $(CXX) -qmkshrobj

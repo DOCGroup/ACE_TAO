@@ -16,6 +16,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Malloc.h"               /* Need ACE_Control_Block */
+#include "ace/Malloc_Base.h"          /* Need ACE_Allocator */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

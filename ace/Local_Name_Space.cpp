@@ -1,4 +1,5 @@
 #include "ace/Local_Name_Space.h"
+#include "ace/ACE.h"
 #include "ace/RW_Process_Mutex.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_string.h"
