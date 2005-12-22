@@ -13,7 +13,7 @@ package ChangeLogEntry;
 use strict;
 use File::Basename;
 
-use FileLocator;
+use FileLocatorFactory;
 
 # ************************************************************
 # Subroutine Section
@@ -83,7 +83,7 @@ sub sortFileList {
 sub create {
   my($self)  = shift;
   my(@dirs)  = @_;
-  my($fl)    = new FileLocator();
+  my($fl)    = FileLocatorFactory::create();
   my($modif,
      $remov,
      $confl,

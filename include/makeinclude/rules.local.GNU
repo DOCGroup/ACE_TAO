@@ -412,6 +412,13 @@ endif
 
 DEPGEN ?= $(ACE_ROOT)/bin/depgen.pl
 
+ifeq ($(notdir $(DEPGEN)), depgen.pl)
+  DEPEND_CMD_ARGS += -i
+  ifeq ($(inline), 0)
+    DEPEND_CMD_ARGS += -n
+  endif
+endif
+
 depend.local: $(MAKEFILE) idl_stubs.local
 	@$(RM) $(DEPENDENCY_FILE).old
 	@cp $(DEPENDENCY_FILE) $(DEPENDENCY_FILE).old

@@ -1,3 +1,42 @@
+Thu Dec 22 10:43:23 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/cle.pl:
+        * bin/ChangeLogEditor/CVSFileLocator.pm:
+        * bin/ChangeLogEditor/ChangeLogEntry.pm:
+        * bin/ChangeLogEditor/FileLocator.pm:
+        * bin/ChangeLogEditor/FileLocatorFactory.pm:
+        * bin/ChangeLogEditor/SVNFileLocator.pm:
+
+          Added support for Subversion.  It will automatically switch to
+          svn if it detects that it is being run in a directory
+          controlled by Subversion.
+
+        * bin/DependencyGenerator/GNUObjectGenerator.pm:
+        * bin/DependencyGenerator/MakeObjectGenerator.pm:
+
+          Switch to actual arrays inside the process() method and return the
+          reference.  It is faster to push onto an array than an array
+          reference.
+
+        * bin/MakeProjectCreator/config/cidlc.mpb:
+
+          Added nmake to the specific section for compile_flags.
+
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+
+          Added .PHONY when creating named targets to avoid problems with
+          target executables that have the same name as the project.
+
+        * bin/depgen.pl:
+
+          Added a -i option to not print an error if no source files are
+          provided.
+
+        * include/makeinclude/rules.local.GNU:
+
+          Modified to pass the -i option to depgen.pl and to pass the -n
+          option to depgen.pl if inline=1.
+
 Thu Dec 22 12:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.cpp:
@@ -23,72 +62,72 @@ Thu Dec 22 12:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Dec 21 06:40:29 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/Asynch_Acceptor.cpp (set_handle): Added return 0 to success case.
-	  Also see:
-	  Fri Dec 16 12:38:27 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+        * ace/Asynch_Acceptor.cpp (set_handle): Added return 0 to success case.
+          Also see:
+          Fri Dec 16 12:38:27 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Thu Dec 22 06:12:39 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/SSL/SSL_SOCK_Stream.cpp: Add missing #include "ace/OS_Memory.h"
-	  to see ACE_NEW_RETURN. Also changed the type used with
-	  ioctl (, FIONREAD, ) from u_long to ACE_UINT32 for portability.
+        * ace/SSL/SSL_SOCK_Stream.cpp: Add missing #include "ace/OS_Memory.h"
+          to see ACE_NEW_RETURN. Also changed the type used with
+          ioctl (, FIONREAD, ) from u_long to ACE_UINT32 for portability.
 
-	* apps/JAWS2/JAWS/Headers.cpp: Add missing
-	  #include "ace/OS_NS_stdlib.h" to see ACE_OS::free().
+        * apps/JAWS2/JAWS/Headers.cpp: Add missing
+          #include "ace/OS_NS_stdlib.h" to see ACE_OS::free().
 
-	* apps/JAWS2/JAWS/IO.cpp: Add missing #include "ace/OS_NS_string.h"
-	  to see ACE_OS::memcpy(). Add missing #include "ace/Min_Max.h" to see
-	  ACE_MIN.
+        * apps/JAWS2/JAWS/IO.cpp: Add missing #include "ace/OS_NS_string.h"
+          to see ACE_OS::memcpy(). Add missing #include "ace/Min_Max.h" to see
+          ACE_MIN.
 
-	* apps/JAWS2/JAWS/Server.cpp: Add missing #include "ace/OS_NS_string.h"
-	  to see ACE_OS::strcpy().
+        * apps/JAWS2/JAWS/Server.cpp: Add missing #include "ace/OS_NS_string.h"
+          to see ACE_OS::strcpy().
 
-	* apps/JAWS2/JAWS/Parse_Headers.cpp: Add missing
-	  #include "ace/Log_Msg.h".
+        * apps/JAWS2/JAWS/Parse_Headers.cpp: Add missing
+          #include "ace/Log_Msg.h".
 
-	* examples/APG/Containers/Map_Manager.cpp:
-	* examples/APG/Containers/Map_Manager_Specialization.cpp: Add missing
-	  #include "ace/Log_Msg.h".
+        * examples/APG/Containers/Map_Manager.cpp:
+        * examples/APG/Containers/Map_Manager_Specialization.cpp: Add missing
+          #include "ace/Log_Msg.h".
 
-	* examples/IPC_SAP/SSL_SAP/SSL-server-poll.cpp: Add missing
-	  #include "ace/OS_NS_stdlib.h" for ACE_OS::malloc()/free().
+        * examples/IPC_SAP/SSL_SAP/SSL-server-poll.cpp: Add missing
+          #include "ace/OS_NS_stdlib.h" for ACE_OS::malloc()/free().
 
 Wed Dec 21 12:44:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* THANKS: Add Jonathan Sprinkle to the hall of fame.
+        * THANKS: Add Jonathan Sprinkle to the hall of fame.
 
-	* configure.ac:
+        * configure.ac:
 
-	  Define ACE_LACKS_NAMED_POSIX_SEM if platform lacks any of
-	  sem_open(), sem_close(), or sem_unlink() are undefined.  This
-	  should help automake builds on Cygwin, which does not provide
-	  sem_unlink().  Thanks to Jonathan Sprinkle who provided the
-	  failing config.log.
+          Define ACE_LACKS_NAMED_POSIX_SEM if platform lacks any of
+          sem_open(), sem_close(), or sem_unlink() are undefined.  This
+          should help automake builds on Cygwin, which does not provide
+          sem_unlink().  Thanks to Jonathan Sprinkle who provided the
+          failing config.log.
 
 Wed Dec 21 12:32:10 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Time_Value.inl:
+        * ace/Time_Value.inl:
 
-	  Use g++'s __builtin_constant_p() predicate to avoid calling
-	  ::normalize() if both arguments to ACE_Time_Value::set(long,
-	  long) are already "normalized".  This avoids an unnecessary
-	  method call when initializing ACE_Time_Value constants.
+          Use g++'s __builtin_constant_p() predicate to avoid calling
+          ::normalize() if both arguments to ACE_Time_Value::set(long,
+          long) are already "normalized".  This avoids an unnecessary
+          method call when initializing ACE_Time_Value constants.
 
 Wed Dec 21 11:40:53 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/OS_NS_Thread.cpp (ACE_OS::thr_create):
+        * ace/OS_NS_Thread.cpp (ACE_OS::thr_create):
 
-	  If ACE_HAS_PTHREAD_ATTR_SETCREATESUSPEND_NP and THR_SUSPENDED
-	  is set, use pthread_attr_setcreatesuspend_np() and set thread
-	  creation attributes so thread is started in "suspended" state.
+          If ACE_HAS_PTHREAD_ATTR_SETCREATESUSPEND_NP and THR_SUSPENDED
+          is set, use pthread_attr_setcreatesuspend_np() and set thread
+          creation attributes so thread is started in "suspended" state.
 
-	* configure.ac:
+        * configure.ac:
 
-	  Add feature test for ACE_HAS_PTHREAD_ATTR_SETCREATESUSPSEND_NP.
+          Add feature test for ACE_HAS_PTHREAD_ATTR_SETCREATESUSPSEND_NP.
 
-	* ace/README:
+        * ace/README:
 
-	  Document ACE_HAS_PTHREAD_ATTR_SETCREATESUSPEND_NP.
+          Document ACE_HAS_PTHREAD_ATTR_SETCREATESUSPEND_NP.
 
 Wed Dec 21 19:17:12 UTC 2005  Johnny Willemsen <jwillemsen@remedy.nl>
 
@@ -120,58 +159,58 @@ Wed Dec 21 18:42:12 UTC 2005  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Tue Dec 20 17:24:39 2005  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-aix-4.x.h: Define ACE_TEMPLATES_REQUIRE_SOURCE if
-	  compiling with an IBM compiler and __TEMPINC__ is not defined.
-	  This covers -qnotempinc and -qtemplateregistry cases (for XL C++ 7).
-	  Define ACE_TEMPLATES_REQUIRE_PRAGMA if compiling with an IBM
-	  compiler and -qtempinc was specified on the command line. This
-	  unifies proper handling and covers both ACE+TAO builds and users'
-	  inclusion of ACE+TAO in user projects regardless of which template
-	  model chosen.
+        * ace/config-aix-4.x.h: Define ACE_TEMPLATES_REQUIRE_SOURCE if
+          compiling with an IBM compiler and __TEMPINC__ is not defined.
+          This covers -qnotempinc and -qtemplateregistry cases (for XL C++ 7).
+          Define ACE_TEMPLATES_REQUIRE_PRAGMA if compiling with an IBM
+          compiler and -qtempinc was specified on the command line. This
+          unifies proper handling and covers both ACE+TAO builds and users'
+          inclusion of ACE+TAO in user projects regardless of which template
+          model chosen.
 
-	* ace/Local_Name_Space.cpp: Add #include "ace/ACE.h" to see
-	  ACE::hash_pjw().
+        * ace/Local_Name_Space.cpp: Add #include "ace/ACE.h" to see
+          ACE::hash_pjw().
 
-	* ace/Malloc_T.h: Add #include "ace/Malloc_Base.h" to see
-	  ACE_Allocator.
+        * ace/Malloc_T.h: Add #include "ace/Malloc_Base.h" to see
+          ACE_Allocator.
 
-	* ace/POSIX_CB_Proactor.cpp: Add #include "ace/OS_NS_sys_time.h" to see
-	  ACE_OS::gettimeofday().
+        * ace/POSIX_CB_Proactor.cpp: Add #include "ace/OS_NS_sys_time.h" to see
+          ACE_OS::gettimeofday().
 
-	* ace/Sock_Connect.cpp: Removed hack at this compiler version.
+        * ace/Sock_Connect.cpp: Removed hack at this compiler version.
 
-	* ace/SString.inl: Add #include "ace/OS_NS_stdlib.h" to see
-	  ACE_OS::free().
+        * ace/SString.inl: Add #include "ace/OS_NS_stdlib.h" to see
+          ACE_OS::free().
 
-	* ace/SString.cpp: Add #include "ace/OS_Memory.h" to see
-	  ACE_NEW_RETURN. Change #include "ace/Malloc.h" to "ace/Malloc_T.h"
-	  to pick up needed symbols.
+        * ace/SString.cpp: Add #include "ace/OS_Memory.h" to see
+          ACE_NEW_RETURN. Change #include "ace/Malloc.h" to "ace/Malloc_T.h"
+          to pick up needed symbols.
 
-	* include/makeinclude/platform_aix_ibm.GNU: Added compiler-specific
-	  section for XL C++ 7. Also removed the explicit setting of
-	  ACE_TEMPLATES_REQUIRE_[PRAGMA|SOURCE]. The proper one to use is
-	  determined by whether or not -qtempinc is specified to the compiler.
-	  Since this is knowable at compile time and what a user does may
-	  not match what the ACE/TAO build does, proper selection of the
-	  correct setting is moved to config-aix-4.x.h.
+        * include/makeinclude/platform_aix_ibm.GNU: Added compiler-specific
+          section for XL C++ 7. Also removed the explicit setting of
+          ACE_TEMPLATES_REQUIRE_[PRAGMA|SOURCE]. The proper one to use is
+          determined by whether or not -qtempinc is specified to the compiler.
+          Since this is knowable at compile time and what a user does may
+          not match what the ACE/TAO build does, proper selection of the
+          correct setting is moved to config-aix-4.x.h.
 
-	* include/makeinclude/rules.local.GNU: Add templateregistry.* to the
-	  file cleanup list. XL C/C++ 7 builds use -qtemplateregistry and
-	  specify a name templateregistry.$(MAKEFILE).
+        * include/makeinclude/rules.local.GNU: Add templateregistry.* to the
+          file cleanup list. XL C/C++ 7 builds use -qtemplateregistry and
+          specify a name templateregistry.$(MAKEFILE).
 
 Tue Dec 20 20:24:39 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/UUID.cpp (ACE_Utils): Move the lock to the top of the
-	  UUID_Generator::get_timestamp() method to avoid subtle race
- 	  conditions.  Thanks to Howard Finer <hfiner@sonusnet.com> for
- 	  this fix.
+        * ace/UUID.cpp (ACE_Utils): Move the lock to the top of the
+          UUID_Generator::get_timestamp() method to avoid subtle race
+          conditions.  Thanks to Howard Finer <hfiner@sonusnet.com> for
+          this fix.
 
 Fri Dec 16 12:38:27 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Asynch_Acceptor.{h,cpp}: Added an int return value to
-	  set_handle() so that errors can be propagated back to callers.
-  	  Thanks to Eyal Car <eyal_car at hotmail dot com> for this fix.
-  	  This closes bugid 2261.
+        * ace/Asynch_Acceptor.{h,cpp}: Added an int return value to
+          set_handle() so that errors can be propagated back to callers.
+          Thanks to Eyal Car <eyal_car at hotmail dot com> for this fix.
+          This closes bugid 2261.
 
 Wed Dec 21 16:19:12 UTC 2005  Johnny Willemsen <jwillemsen@remedy.nl>
 
