@@ -7,7 +7,7 @@
  *
  *  This file contains servant implementation for Deployment:NodeManager
  *  interface. In the current design of the NodeManager, as with the
- *  legacy  implementation of CIAO, Each NodeManager corresponds to
+ *  legacy implementation of CIAO, Each NodeManager corresponds to
  *  ONE NodeApplication Manager. Though, the name intuitively suggests
  *  that there be one NodeManager  for every node, our design, allows
  *  the end-user to have multiple components run on the same node.
@@ -26,11 +26,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#if defined (_MSC_VER)
-# pragma warning(push)
-# pragma warning (disable:4250)
-#endif /* _MSC_VER */
 
 #include "NAM_Map.h"
 
@@ -115,7 +110,7 @@ namespace CIAO
     virtual ~NodeManager_Impl_Base (void);
 
     virtual ::CIAO::NodeApplicationManager_Impl_Base *
-    create_node_app_manager (CORBA::ORB_ptr orb, 
+    create_node_app_manager (CORBA::ORB_ptr orb,
                              PortableServer::POA_ptr poa
                              ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))=0;
@@ -174,7 +169,7 @@ namespace CIAO
     virtual ~NodeManager_Impl (void);
 
     virtual ::CIAO::NodeApplicationManager_Impl_Base *
-    create_node_app_manager (CORBA::ORB_ptr orb, 
+    create_node_app_manager (CORBA::ORB_ptr orb,
                              PortableServer::POA_ptr poa
                              ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
@@ -218,19 +213,15 @@ namespace CIAO
     virtual ~Static_NodeManager_Impl (void);
 
     virtual ::CIAO::NodeApplicationManager_Impl_Base *
-    create_node_app_manager (CORBA::ORB_ptr orb, 
+    create_node_app_manager (CORBA::ORB_ptr orb,
                              PortableServer::POA_ptr poa
                              ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    Static_Config_EntryPoints_Maps* static_config_entrypoints_maps_;    
+    Static_Config_EntryPoints_Maps* static_config_entrypoints_maps_;
   };
 
 }
-
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* CIAO_NODEMANAGER_IMPL_H */
