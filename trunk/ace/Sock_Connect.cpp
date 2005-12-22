@@ -625,10 +625,10 @@ ACE::get_ip_interfaces (size_t &count,
 
   // Now go through the list and transfer the good ones to the list of
   // because they're down or don't have an IP address.
-  for (count = 0, i = 0; i < n_interfaces; i++)
+  for (count = 0, i = 0; i < n_interfaces; ++i)
     {
       LPINTERFACE_INFO lpii;
-      struct sockaddr_in *addrp;
+      struct sockaddr_in *addrp = 0;
 
       lpii = &info[i];
       if (!(lpii->iiFlags & IFF_UP))
@@ -976,7 +976,7 @@ ACE::get_ip_interfaces (size_t &count,
 
   // Count the number of interfaces
   while (dev_names.next () != 0)
-    n_interfaces ++;
+    ++n_interfaces;
 
   // case 1. no interfaces present, empty string? OS version change?
   if (n_interfaces == 0)
@@ -1076,7 +1076,7 @@ ACE::get_ip_interfaces (size_t &count,
               addrs[count].set ((u_short) 0,
                                 addr->sin_addr.s_addr,
                                 0);
-              count++;
+              ++count;
             }
         }
 # if defined (ACE_HAS_IPV6)
@@ -1091,7 +1091,7 @@ ACE::get_ip_interfaces (size_t &count,
             {
               addrs[count].set(reinterpret_cast<struct sockaddr_in *> (addr),
                                sizeof(sockaddr_in6));
-              count++;
+              ++count;
             }
         }
 # endif /* ACE_HAS_IPV6 */
@@ -1101,7 +1101,7 @@ ACE::get_ip_interfaces (size_t &count,
 
   return 0;
 
-#elif defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (_AIX)
+#elif defined (VXWORKS) || (__unix) || defined (__unix__) || defined (__Lynx__) || defined (_AIX)
   // COMMON (SVR4 and BSD) UNIX CODE
 
   size_t num_ifs, num_ifs_found;
@@ -1211,17 +1211,17 @@ ACE::get_ip_interfaces (size_t &count,
           if (inAddr.sin_addr.s_addr != 0)
             {
               addrs[count].set(&inAddr, sizeof(struct sockaddr_in));
-              count++;
+              ++count;
             }
 #endif /* ! _UNICOS */
         }
 
 #if !defined(CHORUS_4) && !defined(AIX) && !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__)
-      pcur++;
+      ++pcur;
 #else
       if (pcur->ifr_addr.sa_len <= sizeof (struct sockaddr))
         {
-           pcur++;
+           ++pcur;
         }
       else
         {
@@ -1269,7 +1269,7 @@ ACE::get_ip_interfaces (size_t &count,
                 !IN6_IS_ADDR_UNSPECIFIED (&reinterpret_cast<sockaddr_in6 *> (res0->ai_addr)->sin6_addr))
             {
               addrs[count].set(reinterpret_cast<sockaddr_in *> (res0->ai_addr), res0->ai_addrlen);
-              count++;
+              ++count;
             }
           freeaddrinfo (res0);
 
@@ -1279,57 +1279,10 @@ ACE::get_ip_interfaces (size_t &count,
 # endif /* ACE_HAS_IPV6 */
 
   return 0;
-#elif defined (VXWORKS)
-  count = 0;
-  // Loop through each address structure
-  for (struct in_ifaddr* ia = in_ifaddr; ia != 0; ia = ia->ia_next)
-    {
-      ++count;
-    }
-
-  // Now create and initialize output array.
-  ACE_NEW_RETURN (addrs,
-                  ACE_INET_Addr[count],
-                  -1); // caller must free
-  count = 0;
-  for (struct in_ifaddr* ia = in_ifaddr; ia != 0; ia = ia->ia_next)
-    {
-      struct ifnet* ifp = ia->ia_ifa.ifa_ifp;
-      if (ifp != 0)
-        {
-          // Get the current interface name
-          char interface[64];
-          ACE_OS::sprintf(interface, "%s%d", ifp->if_name, ifp->if_unit);
-
-          // Get the address for the current interface
-          char address [INET_ADDR_LEN];
-          STATUS status = ifAddrGet(interface, address);
-
-          if (status == OK)
-            {
-              // Concatenate a ':' at the end. This is because in
-              // ACE_INET_Addr::string_to_addr, the ip_address is
-              // obtained using ':' as the delimiter. Since, using
-              // ifAddrGet(), we just get the IP address, I am adding
-              // a ":" to get with the general case.
-              ACE_OS::strcat (address, ":");
-              addrs[count].set (address);
-            }
-          else
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_LIB_TEXT ("ACE::get_ip_interface failed\n")
-                                 ACE_LIB_TEXT ("Couldnt get the IP Address\n")),
-                                 -1);
-            }
-          ++count;
-        }
-    }
-  return 0;
 #else
   ACE_UNUSED_ARG (count);
   ACE_UNUSED_ARG (addrs);
-  ACE_NOTSUP_RETURN (-1);;                      // no implementation
+  ACE_NOTSUP_RETURN (-1);                      // no implementation
 #endif /* ACE_WIN32 */
 }
 
@@ -1466,7 +1419,7 @@ ACE::count_interfaces (ACE_HANDLE handle, size_t &how_many)
 #else
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (how_many);
-  ACE_NOTSUP_RETURN (-1);; // no implmentation
+  ACE_NOTSUP_RETURN (-1); // no implementation
 #endif /* sparc && SIOCGIFNUM */
 }
 

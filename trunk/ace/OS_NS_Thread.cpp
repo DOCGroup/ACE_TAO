@@ -4822,12 +4822,12 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
             // pStackBase, but is that of the current task?  If so, it
             // might be a bit quicker than this extraction of the tcb
             // . . .
-            ACE_OS::strsncpy (*thr_id + 1, ::taskTcb (tid)->name, 10);
+            ACE_OS::strsncpy (*thr_id + 1, ::taskName (tid), 10);
           else
             // *thr_id was not allocated by the Thread_Manager.
             // Pass back the task name in the location pointed to
             // by thr_id.
-            *thr_id = ::taskTcb (tid)->name;
+            *thr_id = ::taskName (tid);
         }
       // else if the thr_id was provided, there's no need to overwrite
       // it with the same value (string).  If thr_id is 0, then we can't
@@ -5417,6 +5417,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (VXWORKS)
 # include /**/ <usrLib.h>   /* for ::sp() */
+# include /**/ <sysLib.h>   /* for ::sysClkRateGet() */
 
 // This global function can be used from the VxWorks shell to pass
 // arguments to a C main () function.
