@@ -1,3 +1,8 @@
+Thu Dec 22 12:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/WIN32_Proactor.cpp:
+          Added workarounds for vc6 which doesn't have ULONG_PTR
+
 Wed Dec 21 06:40:29 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/Asynch_Acceptor.cpp (set_handle): Added return 0 to success case.
