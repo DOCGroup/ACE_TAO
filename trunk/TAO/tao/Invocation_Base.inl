@@ -84,6 +84,12 @@ namespace TAO
   {
     return this->invoke_status_;
   }
+
+  ACE_INLINE bool
+  Invocation_Base::is_remote_request (void) const
+  {
+    return this->is_remote_request_;
+  }
 #endif /* TAO_HAS_INTERCEPTORS */
 }
 

@@ -260,6 +260,86 @@ TAO_ORBInitInfo::add_ior_interceptor (
                                      ACE_ENV_ARG_PARAMETER);
 }
 
+void
+TAO_ORBInitInfo::add_client_request_interceptor_with_policy (
+    PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
+    const CORBA::PolicyList& policies
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ORBInitInfo::DuplicateName,
+                   CORBA::PolicyError))
+{
+# if TAO_HAS_INTERCEPTORS == 1
+  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->orb_core_->add_interceptor (interceptor,
+                                    policies
+                                    ACE_ENV_ARG_PARAMETER);
+#else
+  ACE_UNUSED_ARG (interceptor);
+  ACE_UNUSED_ARG (policies);
+  ACE_THROW (CORBA::NO_IMPLEMENT (
+               CORBA::SystemException::_tao_minor_code (
+                 0,
+                 ENOTSUP),
+               CORBA::COMPLETED_NO));
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+}
+
+void
+TAO_ORBInitInfo::add_server_request_interceptor_with_policy (
+    PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
+    const CORBA::PolicyList& policies
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ORBInitInfo::DuplicateName,
+                   CORBA::PolicyError))
+{
+# if TAO_HAS_INTERCEPTORS == 1
+  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->orb_core_->add_interceptor (interceptor,
+                                    policies
+                                    ACE_ENV_ARG_PARAMETER);
+
+#else
+  ACE_UNUSED_ARG (interceptor);
+  ACE_UNUSED_ARG (policies);
+  ACE_THROW (CORBA::NO_IMPLEMENT (
+               CORBA::SystemException::_tao_minor_code (
+                 0,
+                 ENOTSUP),
+               CORBA::COMPLETED_NO));
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+}
+
+void
+TAO_ORBInitInfo::add_ior_interceptor_with_policy (
+    PortableInterceptor::IORInterceptor_ptr interceptor,
+    const CORBA::PolicyList& policies
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ORBInitInfo::DuplicateName,
+                   CORBA::PolicyError))
+{
+  this->check_validity (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Since there are currently no PI Policies that pertain to
+  // IOR Interceptors, we will always raise the NO_IMPLEMENT
+  // CORBA System Exception here to indicate that this method
+  // is currently not implemented/supported.
+  ACE_UNUSED_ARG (interceptor);
+  ACE_UNUSED_ARG (policies);
+  ACE_THROW (CORBA::NO_IMPLEMENT (
+               CORBA::SystemException::_tao_minor_code (
+                 0,
+                 ENOTSUP),
+               CORBA::COMPLETED_NO));
+}
+
 PortableInterceptor::SlotId
 TAO_ORBInitInfo::allocate_slot_id (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))

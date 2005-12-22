@@ -42,6 +42,11 @@ namespace PortableInterceptor
   typedef CORBA::Short ReplyStatus;
 }
 
+namespace CORBA
+{
+  class PolicyList;
+}
+
 namespace TAO
 {
   class Invocation_Base;
@@ -93,6 +98,12 @@ namespace TAO
     /// Register an interceptor.
     virtual void add_interceptor (
       PortableInterceptor::ClientRequestInterceptor_ptr interceptor
+      ACE_ENV_ARG_DECL) = 0;
+
+    /// Register an interceptor with policies.
+    virtual void add_interceptor (
+      PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
+      const CORBA::PolicyList& policies
       ACE_ENV_ARG_DECL) = 0;
 
     virtual void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL) = 0;

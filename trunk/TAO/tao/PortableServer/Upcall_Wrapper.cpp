@@ -14,6 +14,7 @@
 #include "tao/TAO_Server_Request.h"
 #include "tao/CDR.h"
 #include "tao/Argument.h"
+#include "tao/operation_details.h"
 #include "ace/Log_Msg.h"
 
 ACE_RCSID (PortableServer,
@@ -48,6 +49,32 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
 
 #if TAO_HAS_INTERCEPTORS == 1
 
+  // Make sure that, for the collocated case, we use the client-side
+  // arguments.  For the non-collocated case, we will use the server-side
+  // arguments since they got set up in our pre_upcall() method.  Note that
+  // our pre_upcall() method doesn't get invoked in the collocated case,
+  // and is the reason why we need to provide the client-side args instead
+  // of the (never set or initialized) server-side args.
+  //
+  // Before the following logic was added, the
+  // $TAO_ROOT/tests/Portable_Interceptors/Collocated/run_test.pl
+  // showed that the server-side request interceptor was getting bogus
+  // values when it took a look at the request arguments.  Some
+  // additional testing revealed that this only occurred in the
+  // collocated request case.
+
+  // By default, we assume that we will use the server-side args.
+  TAO::Argument * const * the_args = args;
+  size_t the_nargs = nargs;
+
+  if (server_request.collocated())
+    {
+      // It is a collocated request so we need to use the client-side
+      // args instead.
+      the_args = server_request.operation_details()->args();
+      the_nargs = server_request.operation_details()->args_num();
+    }
+
   TAO::ServerRequestInterceptor_Adapter *interceptor_adapter =
     server_request.orb_core ()->serverrequestinterceptor_adapter ();
 
@@ -58,8 +85,8 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
           {
             // Invoke intermediate server side interception points.
             interceptor_adapter->receive_request (server_request,
-                                                  args,
-                                                  nargs,
+                                                  the_args,
+                                                  the_nargs,
                                                   servant_upcall,
                                                   exceptions,
                                                   nexceptions
@@ -113,8 +140,8 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
               // No location forward by interceptors and successful upcall.
               server_request.reply_status (PortableInterceptor::SUCCESSFUL);
               interceptor_adapter->send_reply (server_request,
-                                               args,
-                                               nargs,
+                                               the_args,
+                                               the_nargs,
                                                servant_upcall,
                                                exceptions,
                                                nexceptions
@@ -137,8 +164,8 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
       if (interceptor_adapter != 0)
         {
           interceptor_adapter->send_exception (server_request,
-                                               args,
-                                               nargs,
+                                               the_args,
+                                               the_nargs,
                                                servant_upcall,
                                                exceptions,
                                                nexceptions
@@ -173,8 +200,8 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
       if (interceptor_adapter != 0)
         {
           interceptor_adapter->send_exception (server_request,
-                                               args,
-                                               nargs,
+                                               the_args,
+                                               the_nargs,
                                                servant_upcall,
                                                exceptions,
                                                nexceptions

@@ -2981,7 +2981,6 @@ TAO_ORB_Core::clientrequestinterceptor_adapter_i (void)
   return this->client_request_interceptor_adapter_;
 }
 
-
 void
 TAO_ORB_Core::add_interceptor (
    PortableInterceptor::ServerRequestInterceptor_ptr interceptor
@@ -2991,6 +2990,58 @@ TAO_ORB_Core::add_interceptor (
     {
       this->server_request_interceptor_adapter_->add_interceptor (interceptor
                                                                   ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+  else
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("ERROR: ORB Core unable to find the ")
+                  ACE_TEXT ("Server Request Interceptor Adapter Factory instance")));
+
+      ACE_THROW (CORBA::INTERNAL ());
+    }
+}
+
+void
+TAO_ORB_Core::add_interceptor (
+   PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
+   const CORBA::PolicyList& policies
+   ACE_ENV_ARG_DECL)
+{
+  if (this->clientrequestinterceptor_adapter_i ())
+    {
+      this->client_request_interceptor_adapter_->add_interceptor (
+        interceptor,
+        policies
+        ACE_ENV_ARG_PARAMETER);
+
+      ACE_CHECK;
+    }
+  else
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("ERROR: ORB Core unable to find the ")
+                  ACE_TEXT ("Client Request Interceptor Adapter Factory instance")));
+
+      ACE_THROW (CORBA::INTERNAL ());
+    }
+}
+
+void
+TAO_ORB_Core::add_interceptor (
+   PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
+   const CORBA::PolicyList& policies
+   ACE_ENV_ARG_DECL)
+{
+  if (this->serverrequestinterceptor_adapter_i ())
+    {
+      this->server_request_interceptor_adapter_->add_interceptor (
+        interceptor,
+        policies
+        ACE_ENV_ARG_PARAMETER);
+
       ACE_CHECK;
     }
   else

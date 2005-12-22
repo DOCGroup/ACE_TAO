@@ -27,7 +27,6 @@
 #include "ace/CORBA_macros.h"
 #include "tao/SystemException.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableInterceptor
@@ -36,6 +35,11 @@ namespace PortableInterceptor
   typedef ServerRequestInterceptor *ServerRequestInterceptor_ptr;
 
   typedef CORBA::Short ReplyStatus;
+}
+
+namespace CORBA
+{
+  class PolicyList;
 }
 
 class TAO_ServerRequest;
@@ -142,6 +146,12 @@ namespace TAO
     /// Register an interceptor.
     virtual void add_interceptor (
       PortableInterceptor::ServerRequestInterceptor_ptr interceptor
+      ACE_ENV_ARG_DECL) = 0;
+
+    /// Register an interceptor with policies.
+    virtual void add_interceptor (
+      PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
+      const CORBA::PolicyList& policies
       ACE_ENV_ARG_DECL) = 0;
 
     virtual void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL) = 0;

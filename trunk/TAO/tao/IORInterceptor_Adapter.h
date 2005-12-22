@@ -67,6 +67,12 @@ public:
       ACE_ENV_ARG_DECL
     ) = 0;
 
+  virtual void add_interceptor (
+      PortableInterceptor::IORInterceptor_ptr interceptor,
+      const CORBA::PolicyList& policies
+      ACE_ENV_ARG_DECL
+    ) = 0;
+
   virtual void destroy_interceptors (
       ACE_ENV_SINGLE_ARG_DECL
       ) = 0;

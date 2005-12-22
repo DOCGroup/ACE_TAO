@@ -31,6 +31,19 @@ TAO_IORInterceptor_Adapter_Impl::add_interceptor (
 }
 
 void
+TAO_IORInterceptor_Adapter_Impl::add_interceptor (
+    PortableInterceptor::IORInterceptor_ptr i,
+    const CORBA::PolicyList& policies
+    ACE_ENV_ARG_DECL
+  )
+{
+  this->ior_interceptor_list_.add_interceptor (i,
+                                               policies
+                                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+}
+
+void
 TAO_IORInterceptor_Adapter_Impl::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->ior_interceptor_list_.destroy_interceptors (ACE_ENV_SINGLE_ARG_PARAMETER);

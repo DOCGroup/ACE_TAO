@@ -603,8 +603,10 @@ TAO_ClientRequestInfo::result (ACE_ENV_SINGLE_ARG_DECL)
 bool
 TAO_ClientRequestInfo::result (CORBA::Any *any)
 {
-  for (CORBA::ULong i = 0; i != this->invocation_->operation_details ().args_num (); ++i)
-    (*this->invocation_->operation_details ().args ()[i]).interceptor_value (any);
+  // Result is always first element in TAO::Argument array.
+  TAO::Argument * const r = this->invocation_->operation_details ().args ()[0];
+
+  r->interceptor_value (any);
 
   return true;
 }
