@@ -1,3 +1,10 @@
+Thu Dec 22 12:38:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Makefile.am:
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Regenerated.
+
 Thu Dec 22 14:13:14 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/run_test.pl:
