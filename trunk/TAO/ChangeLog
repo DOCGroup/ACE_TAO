@@ -1,3 +1,10 @@
+Thu Dec 22 13:04:09 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+
+	  Added BUILD_ACE_FOR_TAO automake conditional.  Explicitly
+	  set to false (at least for now).
+
 Thu Dec 22 14:43:24 2005  Paul Calabrese  <calabrese_p@ociweb.com>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.cpp:
