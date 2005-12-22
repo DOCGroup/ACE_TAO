@@ -3,9 +3,11 @@
 #include "ace/Message_Block.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Filecache.h"
+#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_uio.h"
 #include "ace/OS_NS_sys_socket.h"
+#include "ace/Min_Max.h"
 
 #include "JAWS/JAWS.h"
 #include "JAWS/Data_Block.h"
