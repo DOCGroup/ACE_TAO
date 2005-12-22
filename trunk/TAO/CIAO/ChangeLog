@@ -1,3 +1,17 @@
+Thu Dec 22 18:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/ComponentPackager/ComponentPackager.mpc:
+          Use exceptions as base project
+
+        * DAnCE/ComponentPackager/Component_Packager.cpp:
+          Converted some documentation to doxygen style
+
+        * DAnCE/ComponentPackager/Base_Packager.cpp:
+          Fixed argument not used warnings
+
+        * DAnCE/ComponentPackager/CPK_Packager.{h,cpp}:
+          Small cleanup
+
 Thu Dec 22 14:10:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/ComponentPackager/Base_Packager.h:
