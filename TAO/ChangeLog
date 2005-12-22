@@ -1,10 +1,17 @@
+Wed Dec 23 19:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/Notify/Federation/federation.mwc:
+          Removed this file, it causes project files with
+          just different casing, which causes problems when extracting
+          the zip release files under windows
+
 Thu Dec 22 10:12:33 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/PI/ProcessingModePolicyC.h:
         * tao/PI/ProcessingModePolicyC.cpp:
         * tao/PI/ProcessingModePolicyS.h:
 
-          These did not show up as unknown files for the previous commit. 
+          These did not show up as unknown files for the previous commit.
 
 Thu Dec 22 08:54:09 2005  Chad Elliott  <elliott_c@ociweb.com>
 

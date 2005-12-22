@@ -1,9 +1,9 @@
 // -*- MPC -*-
 // $Id$
 
-project(ComponentPackager): naming, ciao_server_dnc, xerces, taoexe, ziparchive {
+project(ComponentPackager): naming, ciao_server_dnc, xerces, taoexe, ziparchive, exceptions {
   exename = Component_Packager
-  requires += exceptions ziparchive
+  requires += ziparchive
   after += XSC_Config_Handlers NodeDaemon_stub
 
   libs     += XSC_Config_Handlers

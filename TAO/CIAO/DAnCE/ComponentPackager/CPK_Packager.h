@@ -18,21 +18,8 @@
 
 #include "ace/SString.h"
 #include "Base_Packager.h"
-
-#ifdef __GNUC__
-    #include "ZipArchive.h"
-    #include "ZipPlatform.h"
-    #include <sys/types.h>
-    #include <sys/stat.h>
-    #include <dirent.h>
-    #include <fnmatch.h>
-    #include <unistd.h>
-#else
-    #include "ZipArchive.h"
-    #include "ZipPlatform.h"
-#endif
-
-#include <set>
+#include "ZipArchive.h"
+#include "ZipPlatform.h"
 #include "Base_Packager.h"
 
 namespace CIAO
