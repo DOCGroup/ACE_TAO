@@ -28,16 +28,25 @@ namespace TAO
   {
     // This method implements one of the "starting" client side
     // interception point.
+
+    bool is_remote_request = invocation.is_remote_request();
+
     ACE_TRY
       {
         TAO_ClientRequestInfo ri (&invocation);
 
         for (size_t i = 0 ; i < this->interceptor_list_.size (); ++i)
           {
-            this->interceptor_list_.interceptor (i)->
-              send_request (&ri
-                            ACE_ENV_ARG_PARAMETER);
-            ACE_TRY_CHECK;
+            ClientRequestInterceptor_List::RegisteredInterceptor& registered =
+              this->interceptor_list_.registered_interceptor (i);
+
+            if (registered.details_.should_be_processed (is_remote_request))
+              {
+                registered.interceptor_->
+                  send_request (&ri
+                                ACE_ENV_ARG_PARAMETER);
+                ACE_TRY_CHECK;
+              }
 
             // The starting interception point completed successfully.
             // Push  the interceptor on to the flow stack.
@@ -63,6 +72,8 @@ namespace TAO
     // This is an "ending" interception point so we only process the
     // interceptors pushed on to the flow stack.
 
+    bool is_remote_request = invocation.is_remote_request();
+
     // Notice that the interceptors are processed in the opposite order
     // they were pushed onto the stack since this is an "ending"
     // interception point.
@@ -79,11 +90,18 @@ namespace TAO
         // invoked in another "ending" interception point.
         --invocation.stack_size ();
 
-        this->interceptor_list_.interceptor (invocation.stack_size ())->
-          receive_reply (
-            &ri
-            ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
+        ClientRequestInterceptor_List::RegisteredInterceptor& registered =
+          this->interceptor_list_.registered_interceptor (
+            invocation.stack_size ());
+
+        if (registered.details_.should_be_processed (is_remote_request))
+          {
+            registered.interceptor_->
+              receive_reply (
+                &ri
+                ACE_ENV_ARG_PARAMETER);
+            ACE_CHECK;
+          }
       }
 
     // The receive_reply() interception point does not raise a
@@ -98,6 +116,8 @@ namespace TAO
   {
     // This is an "ending" interception point so we only process the
     // interceptors pushed on to the flow stack.
+
+    bool is_remote_request = invocation.is_remote_request();
 
     // Notice that the interceptors are processed in the opposite order
     // they were pushed onto the stack since this is an "ending"
@@ -116,11 +136,18 @@ namespace TAO
             // being invoked in another "ending" interception point.
             --invocation.stack_size ();
 
-            this->interceptor_list_.interceptor (invocation.stack_size ())->
-              receive_exception (
-                &ri
-                ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+            ClientRequestInterceptor_List::RegisteredInterceptor& registered =
+              this->interceptor_list_.registered_interceptor (
+                invocation.stack_size ());
+
+            if (registered.details_.should_be_processed (is_remote_request))
+              {
+                registered.interceptor_->
+                  receive_exception (
+                    &ri
+                    ACE_ENV_ARG_PARAMETER);
+                ACE_TRY_CHECK;
+              }
           }
       }
     ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
@@ -169,6 +196,8 @@ namespace TAO
     // This is an "ending" interception point so we only process the
     // interceptors pushed on to the flow stack.
 
+    bool is_remote_request = invocation.is_remote_request();
+
     // Notice that the interceptors are processed in the opposite order
     // they were pushed onto the stack since this is an "ending"
     // interception point.
@@ -187,11 +216,18 @@ namespace TAO
           // being invoked in another "ending" interception point.
           --invocation.stack_size ();
 
-          this->interceptor_list_.interceptor (invocation.stack_size ())->
-            receive_other (
-              &ri
-              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          ClientRequestInterceptor_List::RegisteredInterceptor& registered =
+            this->interceptor_list_.registered_interceptor (
+              invocation.stack_size ());
+
+          if (registered.details_.should_be_processed (is_remote_request))
+            {
+              registered.interceptor_->
+                receive_other (
+                  &ri
+                  ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
         }
       }
     ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
@@ -225,6 +261,18 @@ namespace TAO
     ACE_ENV_ARG_DECL)
   {
     this->interceptor_list_.add_interceptor (interceptor ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+  }
+
+  void
+  ClientRequestInterceptor_Adapter_Impl::add_interceptor (
+    PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
+    const CORBA::PolicyList& policies
+    ACE_ENV_ARG_DECL)
+  {
+    this->interceptor_list_.add_interceptor (interceptor,
+                                             policies
+                                             ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
   }
 

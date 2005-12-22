@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:277
+// be/be_codegen.cpp:292
 
 
 #include "ORBInitInfoC.h"
@@ -43,10 +43,12 @@
 #include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
 #include "ace/OS_NS_string.h"
 
-// TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:70
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+
+
+// TAO_IDL - Generated from
+// be/be_visitor_arg_traits.cpp:70
 
 // Arg traits specializations.
 namespace TAO
@@ -55,7 +57,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_cs.cpp:60
+// be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for PortableInterceptor::ORBInitInfo.
 
@@ -83,7 +85,7 @@ TAO::Objref_Traits<PortableInterceptor::ORBInitInfo>::nil (void)
 
 ::CORBA::Boolean
 TAO::Objref_Traits<PortableInterceptor::ORBInitInfo>::marshal (
-    PortableInterceptor::ORBInitInfo_ptr p,
+    const PortableInterceptor::ORBInitInfo_ptr p,
     TAO_OutputCDR & cdr
   )
 {
@@ -91,7 +93,7 @@ TAO::Objref_Traits<PortableInterceptor::ORBInitInfo>::marshal (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/alias_typecode.cpp:50
+// be/be_visitor_typecode/alias_typecode.cpp:50
 
 static TAO::TypeCode::Alias<char const *,
                             ::CORBA::TypeCode_ptr const *,
@@ -101,12 +103,12 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/PortableInterceptor/ORBInitInfo/ObjectId:1.0",
     "ObjectId",
     &CORBA::_tc_string);
-  
+
 ::CORBA::TypeCode_ptr const PortableInterceptor::ORBInitInfo::_tc_ObjectId =
   &_tao_tc_PortableInterceptor_ORBInitInfo_ObjectId;
 
-// TAO_IDL - Generated from 
-// be\be_visitor_exception/exception_cs.cpp:63
+// TAO_IDL - Generated from
+// be/be_visitor_exception/exception_cs.cpp:63
 
 PortableInterceptor::ORBInitInfo::DuplicateName::DuplicateName (void)
   : ::CORBA::UserException (
@@ -199,7 +201,7 @@ void PortableInterceptor::ORBInitInfo::DuplicateName::_tao_decode (
 
 
 // TAO_IDL - Generated from
-// be\be_visitor_exception/exception_ctor.cpp:66
+// be/be_visitor_exception/exception_ctor.cpp:66
 
 PortableInterceptor::ORBInitInfo::DuplicateName::DuplicateName (
     const char * _tao_name
@@ -219,12 +221,12 @@ PortableInterceptor::ORBInitInfo::DuplicateName::DuplicateName (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:89
+// be/be_visitor_typecode/struct_typecode.cpp:89
 
 static TAO::TypeCode::Struct_Field<char const *, ::CORBA::TypeCode_ptr const *> const _tao_fields_PortableInterceptor_ORBInitInfo_DuplicateName[] =
   {
     { "name", &CORBA::_tc_string }
-    
+
   };
 static TAO::TypeCode::Struct<char const *,
                       ::CORBA::TypeCode_ptr const *,
@@ -236,12 +238,12 @@ static TAO::TypeCode::Struct<char const *,
     "DuplicateName",
     _tao_fields_PortableInterceptor_ORBInitInfo_DuplicateName,
     1);
-  
+
 ::CORBA::TypeCode_ptr const PortableInterceptor::ORBInitInfo::_tc_DuplicateName =
   &_tao_tc_PortableInterceptor_ORBInitInfo_DuplicateName;
 
-// TAO_IDL - Generated from 
-// be\be_visitor_exception/exception_cs.cpp:63
+// TAO_IDL - Generated from
+// be/be_visitor_exception/exception_cs.cpp:63
 
 PortableInterceptor::ORBInitInfo::InvalidName::InvalidName (void)
   : ::CORBA::UserException (
@@ -336,7 +338,7 @@ void PortableInterceptor::ORBInitInfo::InvalidName::_tao_decode (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/struct_typecode.cpp:89
+// be/be_visitor_typecode/struct_typecode.cpp:89
 
 static TAO::TypeCode::Struct_Field<char const *, ::CORBA::TypeCode_ptr const *> const * const _tao_fields_PortableInterceptor_ORBInitInfo_InvalidName = 0;
 static TAO::TypeCode::Struct<char const *,
@@ -349,7 +351,7 @@ static TAO::TypeCode::Struct<char const *,
     "InvalidName",
     _tao_fields_PortableInterceptor_ORBInitInfo_InvalidName,
     0);
-  
+
 ::CORBA::TypeCode_ptr const PortableInterceptor::ORBInitInfo::_tc_InvalidName =
   &_tao_tc_PortableInterceptor_ORBInitInfo_InvalidName;
 
@@ -388,7 +390,7 @@ PortableInterceptor::ORBInitInfo::_duplicate (ORBInitInfo_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -439,7 +441,7 @@ PortableInterceptor::ORBInitInfo::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/objref_typecode.cpp:76
+// be/be_visitor_typecode/objref_typecode.cpp:76
 
 static TAO::TypeCode::Objref<char const *,
                              TAO::Null_RefCount_Policy>
@@ -447,7 +449,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_local_interface,
     "IDL:omg.org/PortableInterceptor/ORBInitInfo:1.0",
     "ORBInitInfo");
-  
+
 namespace PortableInterceptor
 {
   ::CORBA::TypeCode_ptr const _tc_ORBInitInfo =
@@ -455,4 +457,151 @@ namespace PortableInterceptor
 }
 
 
+
+// TAO_IDL - Generated from
+// be/be_visitor_interface/interface_cs.cpp:60
+
+// Traits specializations for PortableInterceptor::ORBInitInfo_3_1.
+
+PortableInterceptor::ORBInitInfo_3_1_ptr
+TAO::Objref_Traits<PortableInterceptor::ORBInitInfo_3_1>::duplicate (
+    PortableInterceptor::ORBInitInfo_3_1_ptr p
+  )
+{
+  return PortableInterceptor::ORBInitInfo_3_1::_duplicate (p);
+}
+
+void
+TAO::Objref_Traits<PortableInterceptor::ORBInitInfo_3_1>::release (
+    PortableInterceptor::ORBInitInfo_3_1_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+PortableInterceptor::ORBInitInfo_3_1_ptr
+TAO::Objref_Traits<PortableInterceptor::ORBInitInfo_3_1>::nil (void)
+{
+  return PortableInterceptor::ORBInitInfo_3_1::_nil ();
+}
+
+::CORBA::Boolean
+TAO::Objref_Traits<PortableInterceptor::ORBInitInfo_3_1>::marshal (
+    const PortableInterceptor::ORBInitInfo_3_1_ptr p,
+    TAO_OutputCDR & cdr
+  )
+{
+  return ::CORBA::Object::marshal (p, cdr);
+}
+
+PortableInterceptor::ORBInitInfo_3_1::ORBInitInfo_3_1 (void)
+{}
+
+PortableInterceptor::ORBInitInfo_3_1::~ORBInitInfo_3_1 (void)
+{}
+
+PortableInterceptor::ORBInitInfo_3_1_ptr
+PortableInterceptor::ORBInitInfo_3_1::_narrow (
+    ::CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  return ORBInitInfo_3_1::_duplicate (
+      dynamic_cast<ORBInitInfo_3_1_ptr> (_tao_objref)
+    );
+}
+
+PortableInterceptor::ORBInitInfo_3_1_ptr
+PortableInterceptor::ORBInitInfo_3_1::_unchecked_narrow (
+    ::CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  return ORBInitInfo_3_1::_duplicate (
+      dynamic_cast<ORBInitInfo_3_1_ptr> (_tao_objref)
+    );
+}
+
+PortableInterceptor::ORBInitInfo_3_1_ptr
+PortableInterceptor::ORBInitInfo_3_1::_duplicate (ORBInitInfo_3_1_ptr obj)
+{
+  if (! CORBA::is_nil (obj))
+    {
+      obj->_add_ref ();
+    }
+
+  return obj;
+}
+
+void
+PortableInterceptor::ORBInitInfo_3_1::_tao_release (ORBInitInfo_3_1_ptr obj)
+{
+  CORBA::release (obj);
+}
+
+::CORBA::Boolean
+PortableInterceptor::ORBInitInfo_3_1::_is_a (
+    const char *value
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (
+      !ACE_OS::strcmp (
+          value,
+          "IDL:omg.org/PortableInterceptor/ORBInitInfo:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          value,
+          "IDL:omg.org/PortableInterceptor/ORBInitInfo_3_1:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          value,
+          "IDL:omg.org/CORBA/LocalObject:1.0"
+        ) ||
+      !ACE_OS::strcmp (
+          value,
+          "IDL:omg.org/CORBA/Object:1.0"
+        )
+    )
+    {
+      return true; // success using local knowledge
+    }
+  else
+    {
+      return false;
+    }
+}
+
+const char* PortableInterceptor::ORBInitInfo_3_1::_interface_repository_id (void) const
+{
+  return "IDL:omg.org/PortableInterceptor/ORBInitInfo_3_1:1.0";
+}
+
+::CORBA::Boolean
+PortableInterceptor::ORBInitInfo_3_1::marshal (TAO_OutputCDR &)
+{
+  return false;
+}
+
+// TAO_IDL - Generated from
+// be/be_visitor_typecode/objref_typecode.cpp:76
+
+static TAO::TypeCode::Objref<char const *,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_PortableInterceptor_ORBInitInfo_3_1 (
+    ::CORBA::tk_local_interface,
+    "IDL:omg.org/PortableInterceptor/ORBInitInfo_3_1:1.0",
+    "ORBInitInfo_3_1");
+
+namespace PortableInterceptor
+{
+  ::CORBA::TypeCode_ptr const _tc_ORBInitInfo_3_1 =
+    &_tao_tc_PortableInterceptor_ORBInitInfo_3_1;
+}
+
+
+
+
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+

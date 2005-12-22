@@ -39,6 +39,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::tao_ft_interception_point (
 {
   // This method implements one of the "starting" server side
   // interception point.
+  bool is_remote_request = !server_request.collocated ();
 
   ACE_TRY
     {
@@ -53,11 +54,17 @@ TAO::ServerRequestInterceptor_Adapter_Impl::tao_ft_interception_point (
 
       for (size_t i = 0 ; i < this->interceptor_list_.size(); ++i)
         {
-          this->interceptors_[i]->tao_ft_interception_point (
-            ri,
-            oc
-            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          ServerRequestInterceptor_List::RegisteredInterceptor& registered =
+            this->interceptor_list_.registered_interceptor (i);
+
+          if (registered.details_.should_be_processed (is_remote_request))
+            {
+              registered.interceptor_->
+                tao_ft_interception_point (ri,
+                                           oc
+                                           ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
 
           if (oc != 0)
             {
@@ -98,6 +105,8 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
 {
   // This method implements one of the "intermediate" server side
   // interception point.
+  bool is_remote_request = !server_request.collocated ();
+
   if (this->interceptor_list_.size() != this->server_request.interceptor_count ())
     {
       // This method (i.e. the receive_request() interception point)
@@ -122,10 +131,16 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
 
       for (size_t i = 0 ; i < server_request.interceptor_count (); ++i)
         {
-          this->interceptors_[i]->receive_request_service_contexts (
-            ri
-            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          ServerRequestInterceptor_List::RegisteredInterceptor& registered =
+            this->interceptor_list_.registered_interceptor (i);
+
+          if (registered.details_.should_be_processed (is_remote_request))
+            {
+              registered.interceptor_->
+                receive_request_service_contexts (ri
+                                                  ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
         }
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
@@ -156,9 +171,10 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
   CORBA::ULong nexceptions
   ACE_ENV_ARG_DECL)
 {
-
   // This method implements one of the "starting" server side
   // interception point if extended interceptors are not in place.
+
+  bool is_remote_request = !server_request.collocated ();
 
   TAO::ServerRequestInfo request_info (server_request,
                                        args,
@@ -179,11 +195,16 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
 
       for (size_t i = 0 ; i < this->interceptor_list_.size(); ++i)
         {
-          this->interceptor_list_.interceptor(i)->
-            receive_request_service_contexts (
-              &request_info
-              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          ServerRequestInterceptor_List::RegisteredInterceptor& registered =
+            this->interceptor_list_.registered_interceptor (i);
+
+          if (registered.details_.should_be_processed (is_remote_request))
+            {
+              registered.interceptor_->
+                receive_request_service_contexts (&request_info
+                                                  ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
 
           // The starting interception point completed successfully.
           // Push the interceptor on to the flow stack.
@@ -223,6 +244,8 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request (
   // point.  Interceptors are invoked in the same order they were
   // pushed on to the flow stack.
 
+  bool is_remote_request = !server_request.collocated ();
+
   if (this->interceptor_list_.size() != server_request.interceptor_count ())
     {
       // This method (i.e. the receive_request() interception point)
@@ -250,10 +273,16 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request (
     {
       for (size_t i = 0; i < server_request.interceptor_count (); ++i)
         {
-          this->interceptor_list_.interceptor(i)->receive_request (
-            &request_info
-            ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          ServerRequestInterceptor_List::RegisteredInterceptor& registered =
+            this->interceptor_list_.registered_interceptor (i);
+
+          if (registered.details_.should_be_processed (is_remote_request))
+            {
+              registered.interceptor_->
+                receive_request (&request_info
+                                 ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
 
           // Note that no interceptors are pushed on to or popped off
           // of the flow stack in this interception point since it is
@@ -291,6 +320,8 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_reply (
   // This is an "ending" interception point so we only process the
   // interceptors pushed on to the flow stack.
 
+  bool is_remote_request = !server_request.collocated ();
+
   // Notice that the interceptors are processed in the opposite order
   // they were pushed onto the stack since this is an "ending"
   // interception point.
@@ -312,11 +343,17 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_reply (
       // invoked in another "ending" interception point.
       --server_request.interceptor_count ();
 
-      this->interceptor_list_.interceptor (
-        server_request.interceptor_count ())->send_reply (
-          &request_info
-          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ServerRequestInterceptor_List::RegisteredInterceptor& registered =
+        this->interceptor_list_.registered_interceptor (
+          server_request.interceptor_count ());
+
+      if (registered.details_.should_be_processed (is_remote_request))
+        {
+          registered.interceptor_->
+            send_reply (&request_info
+                        ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK;
+        }
     }
 
   // The send_reply() interception point does not raise a
@@ -336,6 +373,8 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_exception (
 {
   // This is an "ending" server side interception point so we only
   // process the interceptors pushed on to the flow stack.
+
+  bool is_remote_request = !server_request.collocated ();
 
   // Notice that the interceptors are processed in the opposite order
   // they were pushed onto the stack since this is an "ending" server
@@ -360,11 +399,17 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_exception (
           // being invoked in another "ending" interception point.
           --server_request.interceptor_count ();
 
-          this->interceptor_list_.interceptor (
-            server_request.interceptor_count ())->send_exception (
-              &request_info
-              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          ServerRequestInterceptor_List::RegisteredInterceptor& registered =
+            this->interceptor_list_.registered_interceptor (
+              server_request.interceptor_count ());
+
+          if (registered.details_.should_be_processed (is_remote_request))
+            {
+              registered.interceptor_->
+                send_exception (&request_info
+                                ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
         }
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
@@ -430,6 +475,8 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_other (
   // This is an "ending" server side interception point so we only
   // process the interceptors pushed on to the flow stack.
 
+  bool is_remote_request = !server_request.collocated ();
+
   TAO::ServerRequestInfo request_info (server_request,
                                        args,
                                        nargs,
@@ -453,11 +500,17 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_other (
           // being invoked in another "ending" interception point.
           --server_request.interceptor_count ();
 
-          this->interceptor_list_.interceptor(
-            server_request.interceptor_count ())->send_other (
-              &request_info
-              ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          ServerRequestInterceptor_List::RegisteredInterceptor& registered =
+            this->interceptor_list_.registered_interceptor (
+              server_request.interceptor_count ());
+
+          if (registered.details_.should_be_processed (is_remote_request))
+            {
+              registered.interceptor_->
+                send_other (&request_info
+                            ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
         }
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
@@ -477,13 +530,23 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_other (
   ACE_CHECK;
 }
 
-
 void
 TAO::ServerRequestInterceptor_Adapter_Impl::add_interceptor (
   PortableInterceptor::ServerRequestInterceptor_ptr interceptor
   ACE_ENV_ARG_DECL)
 {
   this->interceptor_list_.add_interceptor (interceptor ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO::ServerRequestInterceptor_Adapter_Impl::add_interceptor (
+  PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
+  const CORBA::PolicyList& policies
+  ACE_ENV_ARG_DECL)
+{
+  this->interceptor_list_.add_interceptor (interceptor,
+                                           policies
+                                           ACE_ENV_ARG_PARAMETER);
 }
 
 void

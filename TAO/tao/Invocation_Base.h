@@ -127,7 +127,8 @@ namespace TAO
                      CORBA::Object_ptr target,
                      TAO_Stub *stub,
                      TAO_Operation_Details &op,
-                     bool response_expected);
+                     bool response_expected,
+                     bool request_is_remote);
 
   protected:
     /// The operation details on which we are operating on.
@@ -189,6 +190,11 @@ namespace TAO
 
     PortableInterceptor::ReplyStatus reply_status (void) const;
 
+    /// Accessor used to determine if the current invocation is part
+    /// of a remote request, and if not, it will be considered to be
+    /// part of a collocated request.
+    bool is_remote_request() const;
+
   protected:
     /// Helper method to invoke send_request interception call to all
     /// the registered interceptors.
@@ -225,6 +231,10 @@ namespace TAO
   private:
     /// Pointer to the caught exception.
     CORBA::Exception *caught_exception_;
+
+    /// Flag used to distinguish a remote invocation versus a collocated
+    /// (thru-poa) invocation.
+    bool is_remote_request_;
 #endif /*TAO_HAS_INTERCEPTORS*/
     //@}
   };

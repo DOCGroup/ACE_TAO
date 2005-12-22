@@ -32,6 +32,11 @@ namespace PortableInterceptor
   typedef Interceptor *Interceptor_ptr;
 }
 
+namespace CORBA
+{
+  class PolicyList;
+}
+
 namespace TAO
 {
   /**
@@ -42,14 +47,19 @@ namespace TAO
    * Template for the various portable interceptor lists used
    * internally by TAO.
    */
-  template <typename InterceptorType>
+  template <typename InterceptorType, typename DetailsType>
   class Interceptor_List
   {
   public:
     /// Define the traits for the underlying portable interceptor array.
     typedef typename InterceptorType::_var_type InterceptorType_var_type;
     typedef typename InterceptorType::_ptr_type InterceptorType_ptr_type;
-    typedef ACE_Array_Base<InterceptorType_var_type> TYPE;
+
+    struct RegisteredInterceptor
+    {
+      InterceptorType_var_type interceptor_;
+      DetailsType              details_;
+    };
 
     /// Constructor.
     Interceptor_List (void);
@@ -58,7 +68,16 @@ namespace TAO
       InterceptorType_ptr_type i
       ACE_ENV_ARG_DECL);
 
+    /// Register an interceptor with policies.
+    void add_interceptor (InterceptorType_ptr_type i,
+                          const CORBA::PolicyList& policies
+                          ACE_ENV_ARG_DECL);
+
     void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL);
+
+    /// Return the registered interceptor in sequence element @a index.
+    RegisteredInterceptor& registered_interceptor (
+      size_t index);
 
     /// Return the interceptor in sequence element @a index.
     InterceptorType_ptr_type interceptor (size_t index);
@@ -66,9 +85,11 @@ namespace TAO
     size_t size (void);
 
   private:
-    /// Dynamic array of registered interceptors.
-    TYPE interceptors_;
 
+    typedef ACE_Array_Base<RegisteredInterceptor > RegisteredArray;
+
+    /// Dynamic array of registered interceptors.
+    RegisteredArray interceptors_;
   };
 }
 

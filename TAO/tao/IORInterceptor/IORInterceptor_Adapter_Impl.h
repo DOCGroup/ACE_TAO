@@ -25,12 +25,14 @@
 #include "tao/IORInterceptor/IORInterceptor.h"
 #include "tao/IORInterceptor_Adapter.h"
 #include "tao/PI/Interceptor_List_T.h"
+#include "IORInterceptor_Details.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  typedef Interceptor_List< ::PortableInterceptor::IORInterceptor>
+  typedef Interceptor_List< ::PortableInterceptor::IORInterceptor,
+                            IORInterceptor_Details>
     IORInterceptor_List;
 }
 
@@ -53,6 +55,11 @@ public:
 
   virtual void add_interceptor (
       PortableInterceptor::IORInterceptor_ptr interceptor
+      ACE_ENV_ARG_DECL);
+
+  virtual void add_interceptor (
+      PortableInterceptor::IORInterceptor_ptr interceptor,
+      const CORBA::PolicyList& policies
       ACE_ENV_ARG_DECL);
 
   virtual void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL);
