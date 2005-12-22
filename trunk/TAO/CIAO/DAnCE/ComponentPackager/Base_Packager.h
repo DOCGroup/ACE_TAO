@@ -57,16 +57,16 @@ namespace CIAO
     int createPackage (const PACKAGE_PLAN &pkg_plan);
 
   protected:
-    // URL for package
+    /// URL for package
     const char *pkg_url_;
 
-    // URL for flattened_deploymentplan
+    /// URL for flattened_deploymentplan
     const char *cdp_url_;
 
-    // URL for PackageDescriptorsList file
+    /// URL for PackageDescriptorsList file
     const char *pdl_url_;
 
-    // Indicate whether to include separate descriptors
+    /// Indicate whether to include separate descriptors
     bool include_std_desc_;
   };
   }
