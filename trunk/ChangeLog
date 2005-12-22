@@ -1,3 +1,29 @@
+Thu Dec 22 06:12:39 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/SSL/SSL_SOCK_Stream.cpp: Add missing #include "ace/OS_Memory.h"
+	  to see ACE_NEW_RETURN. Also changed the type used with
+	  ioctl (, FIONREAD, ) from u_long to ACE_UINT32 for portability.
+
+	* apps/JAWS2/JAWS/Headers.cpp: Add missing
+	  #include "ace/OS_NS_stdlib.h" to see ACE_OS::free().
+
+	* apps/JAWS2/JAWS/IO.cpp: Add missing #include "ace/OS_NS_string.h"
+	  to see ACE_OS::memcpy(). Add missing #include "ace/Min_Max.h" to see
+	  ACE_MIN.
+
+	* apps/JAWS2/JAWS/Server.cpp: Add missing #include "ace/OS_NS_string.h"
+	  to see ACE_OS::strcpy().
+
+	* apps/JAWS2/JAWS/Parse_Headers.cpp: Add missing
+	  #include "ace/Log_Msg.h".
+
+	* examples/APG/Containers/Map_Manager.cpp:
+	* examples/APG/Containers/Map_Manager_Specialization.cpp: Add missing
+	  #include "ace/Log_Msg.h".
+
+	* examples/IPC_SAP/SSL_SAP/SSL-server-poll.cpp: Add missing
+	  #include "ace/OS_NS_stdlib.h" for ACE_OS::malloc()/free().
+
 Wed Dec 21 12:44:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* THANKS: Add Jonathan Sprinkle to the hall of fame.
