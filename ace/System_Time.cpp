@@ -67,7 +67,7 @@ int
 ACE_System_Time::get_local_system_time (ACE_Time_Value &time_out)
 {
   ACE_TRACE ("ACE_System_Time::get_local_system_time");
-  time_out.sec (ACE_OS::time (0));
+  time_out.set (ACE_OS::time (0));
   return 0;
 }
 
