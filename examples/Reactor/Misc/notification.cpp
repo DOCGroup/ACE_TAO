@@ -29,8 +29,8 @@ class Thread_Handler : public ACE_Event_Handler
   //   thread exits it notifies the ACE_Reactor in the main thread
   //   using the ACE_Reactor's notification mechanism.
 public:
-  Thread_Handler (int delay,
-                  int interval,
+  Thread_Handler (long delay,
+                  long interval,
                   size_t n_threads,
                   size_t max_iterations);
   // Constructor.
@@ -109,8 +109,9 @@ Thread_Handler::~Thread_Handler (void)
   ACE_Reactor::instance ()->cancel_timer (this);
 }
 
-Thread_Handler::Thread_Handler (int delay,
-				int interval,
+Thread_Handler::Thread_Handler (
+        long delay,
+        long interval,
 				size_t n_threads,
         size_t max_iterations)
     : iterations_ (max_iterations)
