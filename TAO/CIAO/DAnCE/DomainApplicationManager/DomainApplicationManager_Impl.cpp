@@ -5,10 +5,6 @@
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
 #include "ace/SString.h"
-//#include "DnC_Dump.h"
-//#include "Config_Handlers/RT-CCM/SRD_Handler.h"
-//#include "Config_Handlers/Utils/XML_Helper.h"
-//#include "Config_Handlers/RT-CCM/CIAOServerResources.hpp"
 
 #if !defined (__ACE_INLINE__)
 # include "DomainApplicationManager_Impl.inl"
@@ -428,7 +424,7 @@ add_connections (const Deployment::Connections & incoming_conn)
 {
   CIAO_TRACE("CIAO::DomainApplicationManager_Impl::add_connections");
 
-  CORBA::ULong old_len = this->all_connections_->length ();
+  CORBA::ULong const old_len = this->all_connections_->length ();
 
   // Expand the length of the <all_connection_> sequence.
   this->all_connections_->length (old_len + incoming_conn.length ());

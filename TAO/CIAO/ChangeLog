@@ -1,4 +1,16 @@
-Thu Dec 22 18:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+Thu Dec 22 19:43:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp:
+          Initialise pointers with 0
+
+        * DAnCE/NodeApplicationManager/ImplementationInfo.h:
+          Removed include of cpp file in this file, this file is not
+          declaring a template
+
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h:
+          Converted documentation to doxygen style
+
+Thu Dec 22 19:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/ComponentPackager/ComponentPackager.mpc:
           Use exceptions as base project
