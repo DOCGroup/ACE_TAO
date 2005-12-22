@@ -65,7 +65,7 @@ CIAO::Deployment_Configuration::init (const char *filename)
 }
 
 const char *
-CIAO::Deployment_Configuration::get_node_manager_ior (const char *name)
+CIAO::Deployment_Configuration::get_node_manager_ior (const char *name) const
 {
   if (name == 0)
     return get_default_node_manager_ior ();
@@ -88,7 +88,7 @@ CIAO::Deployment_Configuration::get_node_manager_ior (const char *name)
 }
 
 const char *
-CIAO::Deployment_Configuration::get_default_node_manager_ior (void)
+CIAO::Deployment_Configuration::get_default_node_manager_ior (void) const
 {
   if (this->default_node_manager_.IOR_.length () == 0)
     return 0;

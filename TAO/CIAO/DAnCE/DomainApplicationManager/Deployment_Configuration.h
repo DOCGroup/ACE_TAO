@@ -82,7 +82,7 @@ namespace CIAO
      * @retval 0 if no valid name were found.  When @c name = 0, then
      * this function behave exactly as get_default_activator_ior.
      */
-    virtual const char *get_node_manager_ior (const char *name);
+    virtual const char *get_node_manager_ior (const char *name) const;
 
     /**
      * Return the default NodeManager the DomainApplicationManager
@@ -92,7 +92,7 @@ namespace CIAO
      *
      * @retval 0 if no valid daemon is configured.
      */
-    virtual const char *get_default_node_manager_ior ();
+    virtual const char *get_default_node_manager_ior () const;
 
     /**
      * @retval nil if no valid name were found.
