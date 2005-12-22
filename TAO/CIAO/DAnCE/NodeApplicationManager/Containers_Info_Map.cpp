@@ -60,7 +60,7 @@ namespace CIAO
           {
             my_resource_id =
               this->plan_.instance[i].deployedResource[0].resourceName.in ();
-              
+
             this->plan_.instance[i].deployedResource[0].resourceValue >>=
               my_policy_set_id;
           }
@@ -77,7 +77,7 @@ namespace CIAO
             continue;
           }
         else
-          
+
     {
       Deployment::ContainerImplementationInfo * info;
       ACE_NEW (info, Deployment::ContainerImplementationInfo);
@@ -103,7 +103,7 @@ namespace CIAO
               for (k = 0; k < policy_sets_length; ++k)
                 {
                   ACE_DEBUG ((LM_DEBUG, "Looking for policy set id: %s\n", my_policy_set_id));
-                  ACE_DEBUG ((LM_DEBUG, "Compare against policy set id: %s\n\n", 
+                  ACE_DEBUG ((LM_DEBUG, "Compare against policy set id: %s\n\n",
                               (*server_resource_def).orb_config.policy_set[k].Id.in ()));
 
                   if (ACE_OS::strcmp (my_policy_set_id,
@@ -259,7 +259,7 @@ namespace CIAO
                 ACE_CString name (arti.execParameter[prop_num].name.in ());
                 if (name == ACE_CString ("entryPoint"))
                   {
-                    const char * entry;
+                    const char * entry = 0;
                     (arti.execParameter[prop_num].value) >>= entry;
                     impl_infos[i].servant_entrypt = CORBA::string_dup (entry);
                   }
@@ -301,7 +301,7 @@ namespace CIAO
                 ACE_CString name (arti.execParameter[prop_num].name.in ());
                 if (name == ACE_CString ("entryPoint"))
                   {
-                    const char * entry;
+                    const char * entry = 0;
                     (arti.execParameter[prop_num].value) >>= entry;
                     impl_infos[i].executor_entrypt = CORBA::string_dup (entry);
                   }
