@@ -1,3 +1,11 @@
+Thu Dec 22 12:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Time_Value.{h,cpp}:
+          Added set that just access time_t.
+
+        * ace/System_Time.cpp:
+          Use the new Time_Value::set method that accepts time_t
+
 Thu Dec 22 12:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/WIN32_Proactor.cpp:
