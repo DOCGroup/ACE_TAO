@@ -132,6 +132,10 @@ Task::svc (void)
                       end
                       ACE_ENV_ARG_PARAMETER);
 
+      ACE_ASSERT (re == 0);
+      // Assert disappears on with optimizations on.
+      ACE_UNUSED_ARG (re);
+
       if (end != 0)
         {
           ACE_ERROR ((LM_ERROR, "Dynamic thread count should be 0, not %d\n", end));
