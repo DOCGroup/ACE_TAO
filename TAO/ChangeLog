@@ -1,3 +1,9 @@
+Thu Dec 22 14:43:24 2005  Paul Calabrese  <calabrese_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.cpp:
+
+          Fix some uninitialized data members.
+
 Thu Dec 22 12:38:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:
