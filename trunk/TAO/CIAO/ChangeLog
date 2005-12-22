@@ -1,3 +1,12 @@
+Thu Dec 22 19:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+          Removed some old includes, make a variable const
+
+        * DAnCE/DomainApplicationManager/Deployment_Configuration.{h,cpp}:
+          Made get_default_node_manager_ior and get_node_manager_ior
+          const methods
+
 Thu Dec 22 19:43:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeApplicationManager/Containers_Info_Map.cpp:

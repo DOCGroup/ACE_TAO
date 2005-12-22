@@ -71,7 +71,7 @@ namespace CIAO
     DAM_Map::get_dams (ACE_ENV_SINGLE_ARG_DECL)
     {
       CIAO_TRACE("Execution_Manager::DAM_Map::get_dams");
-      CORBA::ULong sz =
+      CORBA::ULong const sz =
         this->map_.current_size ();
 
       // Initialize the list of DomainApplication Managers
