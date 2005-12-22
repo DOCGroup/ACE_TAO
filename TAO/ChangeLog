@@ -1,3 +1,8 @@
+Thu Dec 22 12:25:12 UTC 2005  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tests/RTCORBA/Dynamic_Thread_Pool/*.mpc:
+          Shortened filename to fix fuzz error
+
 Wed Dec 21 13:06:53 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
