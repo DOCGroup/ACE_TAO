@@ -10,15 +10,15 @@ namespace CIAO
 {
   namespace Component_Packager
   {
-    // URL for flattened component deployment plan
+    /// URL for flattened component deployment plan
     const char* cdp_url = 0;
-    // URL for .cid file, which will help to archive
-    // the standard descriptors into package
+    /// URL for .cid file, which will help to archive
+    /// the standard descriptors into package
     const char* pdl_url = 0;
-    // URL for component package to be produced
+    /// URL for component package to be produced
     const char* pkg_url = "ComponentPackage.cpk";
-    // Indicate whether to include standard descriptors
-    // in the package or not
+    /// Indicate whether to include standard descriptors
+    /// in the package or not
     bool include_std_desc = false;
 
 
@@ -112,16 +112,16 @@ namespace CIAO
           ACE_ERROR ((LM_ERROR,
                      "(%P|%t) Component_Packager: Error preparing package plan\n"));
           throw;
-        };
+        }
         if (-1 == packager.createPackage (pkg_plan))
         {
           ACE_ERROR ((LM_ERROR,
                      "(%P|%t) Component_Packager: Error creating package plan\n"));
           throw;
-        };
+        }
 
-         ACE_DEBUG ((LM_INFO,
-                     "(%P|%t)[success] The Component Package has been created!"));
+        ACE_DEBUG ((LM_INFO,
+                    "(%P|%t)[success] The Component Package has been created!"));
 
       }
       ACE_CATCHANY
