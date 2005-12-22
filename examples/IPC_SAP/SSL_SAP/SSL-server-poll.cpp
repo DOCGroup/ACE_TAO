@@ -5,6 +5,7 @@
 // single-threaded concurrent server.  This server program can be
 // driven by the oneway test mode of SSL-client.cpp.
 
+#include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Time_Value.h"
 #include "ace/SSL/SSL_SOCK_Acceptor.h"
