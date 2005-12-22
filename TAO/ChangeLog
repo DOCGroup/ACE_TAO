@@ -1,3 +1,40 @@
+Thu Dec 22 15:24:38 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* TAO_IDL/tao_idl.mpc:
+	* docs/tutorials/Quoter/Naming_Service/Quoter_Naming_Service.mpc:
+	* docs/tutorials/Quoter/Simple/Client/Quoter_Simple_Client.mpc:
+	* docs/tutorials/Quoter/Simple/Impl-Repo/Quoter_Simple_Impl_Repo.mpc:
+	* docs/tutorials/Quoter/Simple/ImprovedServer/Quoter_Simple_ImprovedServer.mpc:
+	* docs/tutorials/Quoter/Simple/Persistent/Quoter_Simple_Persistent.mpc:
+	* docs/tutorials/Quoter/Simple/Server/Quoter_Simple_Server.mpc:
+	* examples/POA/Adapter_Activator/POA_Adapter_Activator.mpc:
+	* examples/POA/Explicit_Activation/POA_Explicit_Activation.mpc:
+	* examples/POA/On_Demand_Activation/POA_On_Demand_Activation.mpc:
+	* examples/POA/Reference_Counted_Servant/Reference_Counted_Servant.mpc:
+	* orbsvcs/examples/CosEC/RtEC_Based/bin/CosEC_RtEC_Based_bin.mpc:
+	* orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/CosEC_RtEC_Based_tests_Basic.mpc:
+	* orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/CosEC_RtEC_Based_Mult.mpc:
+	* orbsvcs/examples/Notify/Federation/Agent/Agent.mpc:
+	* orbsvcs/examples/Notify/Federation/SpaceCraft/SpaceCraft.mpc:
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Colocated_Roundtrip.mpc:
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Federated_Roundtrip.mpc:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/RTCORBA_Baseline.mpc:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/RTCORBA_Callback.mpc:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/Roundtrip.mpc:
+	* orbsvcs/performance-tests/RTEvent/TCP_Baseline/TCP_Baseline.mpc:
+	* orbsvcs/tests/Bug_2285_Regression/Bug_2285_Regression.mpc:
+	* orbsvcs/tests/Bug_2287_Regression/Bug_2287_Regression.mpc:
+	* orbsvcs/tests/CosEvent/Basic/basiceventtestexe.mpb:
+	* orbsvcs/tests/Event/Basic/rteventtestexe.mpb:
+	* orbsvcs/tests/Event/Mcast/Complex/Complex.mpc:
+	* orbsvcs/tests/Event/Mcast/Simple/Simple.mpc:
+	* orbsvcs/tests/Event/Mcast/Two_Way/Two_Way.mpc:
+	* orbsvcs/tests/Event/Performance/eventperftestexe.mpb:
+	* performance-tests/Protocols/Protocols.mpc:
+
+	  Add automake specific blocks that either add or replace include
+	  paths definitions with $(srcdir) relative paths.
+
 Thu Dec 22 13:04:09 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:

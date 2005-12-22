@@ -4,5 +4,10 @@
 project : messaging, rteventexe, rtevent_serv, naming, iortable {
   after    += Event_Test_Lib
   libs     += ECTests
-  includes += ../lib
+
+  specific (automake) {
+    includes += $(srcdir)/../lib
+  } else {
+    includes += ../lib
+  }
 }
