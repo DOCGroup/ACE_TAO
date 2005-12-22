@@ -1,3 +1,8 @@
+Thu Dec 22 14:10:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/ComponentPackager/Base_Packager.h:
+          Changed documentation to doxygen style
+
 Tue Dec 20 08:07:51 2005  Simon McQueen  <sm@prismtech.com>
 
         * CIAO version 0.4.8 released.
@@ -38,7 +43,7 @@ Tue Dec 13 09:07:21 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
         Updates to the CIDLC build documentation.  Thanks to James  Hill
         <hillj at isis dot vanderbilt dot edu> for completing this update.
-        
+
 Mon Dec 12 13:20:00 UTC 2005  Simon Massey  <sma@prismtech.com>
 
         * NEWS:
@@ -54,9 +59,9 @@ Fri Dec  9 13:39:10 2005  William Otte  <wotte@dre.vanderbilt.edu>
 Fri Dec  9 09:18:01 2005  William Otte  <wotte@dre.vanderbilt.edu>
 
         * ciao/Server_init.h
-        
+
         Added a missing include for the versioned namespace macros.
-        
+
 Thu Dec 08 21:34:36 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * NEWS
