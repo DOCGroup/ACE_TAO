@@ -18,7 +18,7 @@
 #ifndef _PROCESSING_MODE_POLICY_PIDL_
 #define _PROCESSING_MODE_POLICY_PIDL_
 
-#include <tao/Policy.pidl>
+#include "tao/Policy.pidl"
 
 module PortableInterceptor
 {
