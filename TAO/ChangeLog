@@ -1,3 +1,11 @@
+Thu Dec 22 10:12:33 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/PI/ProcessingModePolicyC.h:
+        * tao/PI/ProcessingModePolicyC.cpp:
+        * tao/PI/ProcessingModePolicyS.h:
+
+          These did not show up as unknown files for the previous commit. 
+
 Thu Dec 22 08:54:09 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         Committing these changes on behalf of Tim Bradley
@@ -157,46 +165,46 @@ Thu Dec 22 12:25:12 UTC 2005  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Wed Dec 21 13:06:53 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Use TAO_ENABLE_MINIMUM_CORBA macro instead of explicitly setting
-	  BUILD_MINIMUM_CORBA automake conditional to false.
+          Use TAO_ENABLE_MINIMUM_CORBA macro instead of explicitly setting
+          BUILD_MINIMUM_CORBA automake conditional to false.
 
-	* m4/tao.m4:
+        * m4/tao.m4:
 
-	  New file, autoconf macros for TAO-specific feature tests.
+          New file, autoconf macros for TAO-specific feature tests.
 
-	  Added TAO_ENABLE_MINIMUM_CORBA autoconf macro.  Configuring with
-	  --enable-minimum-corba will set the BUILD_MINIMUM_CORBA automake
-	  conditional.
+          Added TAO_ENABLE_MINIMUM_CORBA autoconf macro.  Configuring with
+          --enable-minimum-corba will set the BUILD_MINIMUM_CORBA automake
+          conditional.
 
-	* configure.ac:
-	* Makefile.am:
+        * configure.ac:
+        * Makefile.am:
 
-	  Look for automake macro files (*.m4) in ../m4 and ./m4.
+          Look for automake macro files (*.m4) in ../m4 and ./m4.
 
 Wed Dec 21 12:08:57 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
 
-	  Changed TAO_Log_Constraint_Visitor constructor to use
-	  ACE_CString constructors that don't copy or take ownership of
-	  the string, this allows us to wrap string literals for use as
-	  map bindings with as little overhead as possible.
+          Changed TAO_Log_Constraint_Visitor constructor to use
+          ACE_CString constructors that don't copy or take ownership of
+          the string, this allows us to wrap string literals for use as
+          map bindings with as little overhead as possible.
 
-	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
 
-	  Changed lock strategy of property_lookup_map_ from
-	  TAO_SYNCH_MUTEX to ACE_Null_Mutex, since all accesses to the map
-	  are already protected at a higher level.
+          Changed lock strategy of property_lookup_map_ from
+          TAO_SYNCH_MUTEX to ACE_Null_Mutex, since all accesses to the map
+          are already protected at a higher level.
 
-	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
-	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
 
-	  Explicitly set the size of the property_lookup_map_ to 31 hash
-	  buckets.  A typical log record has very few if any attributes,
-	  the cost of allocating the default (1024 hash bucket) size map
-	  outweighs any benefits of fewer hash collisions.
+          Explicitly set the size of the property_lookup_map_ to 31 hash
+          buckets.  A typical log record has very few if any attributes,
+          the cost of allocating the default (1024 hash bucket) size map
+          outweighs any benefits of fewer hash collisions.
 
 Wed Dec 21 19:28:12 UTC 2005  Johnny Willemsen <jwillemsen@remedy.nl>
 
@@ -221,24 +229,24 @@ Wed Dec 21 19:28:12 UTC 2005  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Wed Dec 21 11:03:25 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* TAO_IDL/ast/ast_expression.cpp:
-	* TAO_IDL/include/ast_expression.h:
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/include/ast_expression.h:
 
-	  If !ACE_LACKS_LONGLONG_T, perform operations on CORBA::LongLong
-	  and CORBA::ULongLong types using 64 bit arithmetic.  Previously
-	  this was done with doubles (53 bit mantissa) for '+', '-', '*';
-	  or disallowed for the other operators.
+          If !ACE_LACKS_LONGLONG_T, perform operations on CORBA::LongLong
+          and CORBA::ULongLong types using 64 bit arithmetic.  Previously
+          this was done with doubles (53 bit mantissa) for '+', '-', '*';
+          or disallowed for the other operators.
 
-	* TAO_IDL/ast/ast_expression.cpp:
-	* TAO_IDL/include/ast_expression.h:
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/include/ast_expression.h:
 
-	  Add EvalKind parameter to ::eval_bin_op and ::eval_mod_op so
-	  that operations can be done in terms of the given type.
+          Add EvalKind parameter to ::eval_bin_op and ::eval_mod_op so
+          that operations can be done in terms of the given type.
 
-	* TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/ast/ast_expression.cpp:
 
-	  Remove handling of '%' operator in AST_Expression::eval_bin_op()
-	  as it is handled by AST_Expression::eval_mod_op().
+          Remove handling of '%' operator in AST_Expression::eval_bin_op()
+          as it is handled by AST_Expression::eval_mod_op().
 
 Wed Dec 21 18:50:12 UTC 2005  Johnny Willemsen <jwillemsen@remedy.nl>
 
