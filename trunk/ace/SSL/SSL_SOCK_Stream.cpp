@@ -5,6 +5,7 @@
 #include "ace/Countdown_Time.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_select.h"
+#include "ace/OS_Memory.h"
 
 #include <openssl/err.h>
 
@@ -157,12 +158,11 @@ ACE_SSL_SOCK_Stream::recvv (iovec *io_vec,
       break;
     }
 
-  u_long inlen;
-
+  ACE_UINT32 inlen;
 
   if (ACE_OS::ioctl (this->get_handle (),
                      FIONREAD,
-                     (u_long *) &inlen) == -1)
+                     &inlen) == -1)
     return -1;
   else if (inlen > 0)
     {
