@@ -1,3 +1,14 @@
+Thu Dec 22 19:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/Misc/notification.cpp:
+        * examples/Reactor/Misc/test_signals_1.cpp:
+          Fixed ambiguity warnings
+
+        * ace/Time_Value.{h,cpp,inl}:
+          Don't pass time_t as reference to set, just by value, moved the
+          method to the inline file and set tv_usec to 0, thanks to JT
+          for this suggestions.
+
 Thu Dec 22 10:43:23 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/cle.pl:
@@ -50,7 +61,8 @@ Thu Dec 22 12:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 Thu Dec 22 12:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Time_Value.{h,cpp}:
-          Added set that just access time_t.
+          Added set that accepts time_t, time_t is a 64bit type under
+          Windows64.
 
         * ace/System_Time.cpp:
           Use the new Time_Value::set method that accepts time_t
