@@ -22,16 +22,16 @@ use vars qw(@ISA);
 
 sub process {
   my($noext)   = $_[1];
-  my($objects) = [];
+  my(@objects) = ();
   $noext =~ s/\.[^\.]+$//o;
 
   foreach my $dirs (qw(VDIR VSHDIR)) {
     foreach my $ext (qw(SOEXT OBJEXT)) {
-      push @{$objects}, '$('.$dirs.')'.$noext.'.$('.$ext.')';
+      push(@objects, '$('.$dirs.')'.$noext.'.$('.$ext.')');
     }
   }
 
-  return $objects;
+  return \@objects;
 }
 
 
