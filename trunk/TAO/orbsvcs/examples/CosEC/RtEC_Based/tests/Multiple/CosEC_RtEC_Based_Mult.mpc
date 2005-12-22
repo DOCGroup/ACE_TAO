@@ -3,9 +3,15 @@
 
 project(*Cons) : orbsvcsexe, event, event_skel, rtevent, rtsched, rtevent_serv {
   after += CosEC_RtEC_Based_lib
-  includes += ../../lib
   libs += CosEC_RtEC_Based
   libpaths += ../../lib
+
+  specific (automake) {
+    includes += $(srcdir)/../../lib
+  } else {
+    includes += ../../lib
+  }
+
   source_files {
     Consumer.cpp
     Multiple.cpp
@@ -14,9 +20,15 @@ project(*Cons) : orbsvcsexe, event, event_skel, rtevent, rtsched, rtevent_serv {
 
 project(*Supp) : orbsvcsexe, event, event_skel, rtevent, rtsched, rtevent_serv {
   after += CosEC_RtEC_Based_lib
-  includes += ../../lib
   libs += CosEC_RtEC_Based
   libpaths += ../../lib
+
+  specific (automake) {
+    includes += $(srcdir)/../../lib
+  } else {
+    includes += ../../lib
+  }
+
   source_files {
     Supplier.cpp
     Multiple.cpp
