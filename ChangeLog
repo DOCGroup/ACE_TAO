@@ -1,3 +1,13 @@
+Thu Dec 22 12:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.cpp:
+          Use taskName to get the task name under VxWorks instead of directly
+          using the TCB struct
+
+        * ace/Sock_Connect.cpp:
+          Use for VxWorks also the unix way of retrieving the interfaces, the
+          VxWorks specific way doesn't work with VxWorks 6.1 anymore
+
 Thu Dec 22 12:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Time_Value.{h,cpp}:
