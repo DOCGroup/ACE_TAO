@@ -1105,6 +1105,7 @@ libTAO_PI_la_CPPFLAGS = \
   -DTAO_PI_BUILD_DLL
 
 libTAO_PI_la_SOURCES = \
+  PI/ClientRequestDetails.cpp \
   PI/ClientRequestInfo.cpp \
   PI/ClientRequestInfoA.cpp \
   PI/ClientRequestInfoC.cpp \
@@ -1130,10 +1131,14 @@ libTAO_PI_la_SOURCES = \
   PI/PICurrent_Loader.cpp \
   PI/PIForwardRequestA.cpp \
   PI/PIForwardRequestC.cpp \
+  PI/PI_ORBInitializer.cpp \
+  PI/PI_PolicyFactory.cpp \
   PI/PolicyFactoryA.cpp \
   PI/PolicyFactoryC.cpp \
   PI/PolicyFactory_Loader.cpp \
   PI/PolicyFactory_Registry.cpp \
+  PI/ProcessingModePolicy.cpp \
+  PI/ProcessingModePolicyC.cpp \
   PI/RequestInfoA.cpp \
   PI/RequestInfoC.cpp \
   PI/RequestInfo_Util.cpp
@@ -1148,6 +1153,8 @@ libTAO_PI_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
+  PI/ClientRequestDetails.h \
+  PI/ClientRequestDetails.inl \
   PI/ClientRequestInfo.h \
   PI/ClientRequestInfo.pidl \
   PI/ClientRequestInfoA.h \
@@ -1195,12 +1202,18 @@ nobase_include_HEADERS += \
   PI/PIForwardRequestA.h \
   PI/PIForwardRequestC.h \
   PI/PIForwardRequestS.h \
+  PI/PI_ORBInitializer.h \
+  PI/PI_PolicyFactory.h \
   PI/PolicyFactory.pidl \
   PI/PolicyFactoryA.h \
   PI/PolicyFactoryC.h \
   PI/PolicyFactoryS.h \
   PI/PolicyFactory_Loader.h \
   PI/PolicyFactory_Registry.h \
+  PI/ProcessingModePolicy.h \
+  PI/ProcessingModePolicy.pidl \
+  PI/ProcessingModePolicyC.h \
+  PI/ProcessingModePolicyS.h \
   PI/RequestInfo.pidl \
   PI/RequestInfoA.h \
   PI/RequestInfoC.h \
@@ -2303,7 +2316,8 @@ libTAO_IORInterceptor_la_SOURCES = \
   IORInterceptor/IORInfoC.cpp \
   IORInterceptor/IORInterceptorC.cpp \
   IORInterceptor/IORInterceptor_Adapter_Factory_Impl.cpp \
-  IORInterceptor/IORInterceptor_Adapter_Impl.cpp
+  IORInterceptor/IORInterceptor_Adapter_Impl.cpp \
+  IORInterceptor/IORInterceptor_Details.cpp
 
 libTAO_IORInterceptor_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
@@ -2328,6 +2342,8 @@ nobase_include_HEADERS += \
   IORInterceptor/IORInterceptorC.h \
   IORInterceptor/IORInterceptor_Adapter_Factory_Impl.h \
   IORInterceptor/IORInterceptor_Adapter_Impl.h \
+  IORInterceptor/IORInterceptor_Details.h \
+  IORInterceptor/IORInterceptor_Details.inl \
   IORInterceptor/iorinterceptor_export.h
 
 pkgconfig_DATA += \
@@ -2511,6 +2527,7 @@ libTAO_PI_Server_la_SOURCES = \
   PI_Server/PortableServer_ORBInitializer.cpp \
   PI_Server/PortableServer_PolicyFactory.cpp \
   PI_Server/ServerInterceptorAdapter.cpp \
+  PI_Server/ServerRequestDetails.cpp \
   PI_Server/ServerRequestInfo.cpp \
   PI_Server/ServerRequestInfoA.cpp \
   PI_Server/ServerRequestInfoC.cpp \
@@ -2541,6 +2558,8 @@ nobase_include_HEADERS += \
   PI_Server/PortableServer_ORBInitializer.h \
   PI_Server/PortableServer_PolicyFactory.h \
   PI_Server/ServerInterceptorAdapter.h \
+  PI_Server/ServerRequestDetails.h \
+  PI_Server/ServerRequestDetails.inl \
   PI_Server/ServerRequestInfo.h \
   PI_Server/ServerRequestInfo.inl \
   PI_Server/ServerRequestInfo.pidl \
@@ -2862,6 +2881,8 @@ EXTRA_DIST += \
 
 ## Makefile.Strategies.am
 
+if !BUILD_ACE_FOR_TAO
+
 lib_LTLIBRARIES += libTAO_Strategies.la
 
 libTAO_Strategies_la_CPPFLAGS = \
@@ -2975,6 +2996,8 @@ CLEANFILES += \
 
 TAO_Strategies.pc: ${top_builddir}/config.status ${srcdir}/Strategies/TAO_Strategies.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/Strategies/TAO_Strategies.pc.in
+
+endif !BUILD_ACE_FOR_TAO
 
 EXTRA_DIST += \
   Strategies/TAO_Strategies.pc.in \
