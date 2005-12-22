@@ -64,6 +64,13 @@ ACE_Time_Value::set (long sec, long usec)
 }
 
 ACE_INLINE void
+ACE_Time_Value::set (time_t t)
+{
+  this->tv_.tv_sec = t;
+  this->tv_.tv_usec = 0;
+}
+
+ACE_INLINE void
 ACE_Time_Value::set (double d)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::set");

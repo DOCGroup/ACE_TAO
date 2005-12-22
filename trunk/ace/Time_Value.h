@@ -139,8 +139,8 @@ public:
   void set (const FILETIME &ft);
 # endif /* ACE_WIN32 */
 
-  /// Initializes a ACE_Time_Value object form a time_t.
-  void set (const time_t &t);
+  /// Initializes a ACE_Time_Value object from a time_t.
+  void set (time_t t);
 
   /// Converts from ACE_Time_Value format into milli-seconds format.
   /**
