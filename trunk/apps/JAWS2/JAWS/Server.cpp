@@ -1,5 +1,7 @@
 // $Id$
 
+#include "ace/config-lite.h"
+#include "ace/OS_NS_string.h"
 #include "ace/Get_Opt.h"
 
 #if (ACE_NTRACE != 1)
