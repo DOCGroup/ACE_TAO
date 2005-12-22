@@ -149,6 +149,12 @@ ACE_Time_Value::operator FILETIME () const
 
 #endif /* ACE_WIN32 */
 
+void ACE_Time_Value::set (const time_t &t)
+{
+  this->tv_.tv_sec = t;
+}
+
+
 void
 ACE_Time_Value::dump (void) const
 {
