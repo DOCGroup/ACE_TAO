@@ -1,3 +1,9 @@
+Wed Dec 21 06:40:29 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/Asynch_Acceptor.cpp (set_handle): Added return 0 to success case.
+	  Also see:
+	  Fri Dec 16 12:38:27 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
 Thu Dec 22 06:12:39 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/SSL/SSL_SOCK_Stream.cpp: Add missing #include "ace/OS_Memory.h"
