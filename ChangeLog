@@ -63,6 +63,47 @@ Wed Dec 21 18:42:12 UTC 2005  Johnny Willemsen <jwillemsen@remedy.nl>
         * bin/tao_orb_tests.lst:
           Added bug_2328_regression
 
+Tue Dec 20 17:24:39 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/config-aix-4.x.h: Define ACE_TEMPLATES_REQUIRE_SOURCE if
+	  compiling with an IBM compiler and __TEMPINC__ is not defined.
+	  This covers -qnotempinc and -qtemplateregistry cases (for XL C++ 7).
+	  Define ACE_TEMPLATES_REQUIRE_PRAGMA if compiling with an IBM
+	  compiler and -qtempinc was specified on the command line. This
+	  unifies proper handling and covers both ACE+TAO builds and users'
+	  inclusion of ACE+TAO in user projects regardless of which template
+	  model chosen.
+
+	* ace/Local_Name_Space.cpp: Add #include "ace/ACE.h" to see
+	  ACE::hash_pjw().
+
+	* ace/Malloc_T.h: Add #include "ace/Malloc_Base.h" to see
+	  ACE_Allocator.
+
+	* ace/POSIX_CB_Proactor.cpp: Add #include "ace/OS_NS_sys_time.h" to see
+	  ACE_OS::gettimeofday().
+
+	* ace/Sock_Connect.cpp: Removed hack at this compiler version.
+
+	* ace/SString.inl: Add #include "ace/OS_NS_stdlib.h" to see
+	  ACE_OS::free().
+
+	* ace/SString.cpp: Add #include "ace/OS_Memory.h" to see
+	  ACE_NEW_RETURN. Change #include "ace/Malloc.h" to "ace/Malloc_T.h"
+	  to pick up needed symbols.
+
+	* include/makeinclude/platform_aix_ibm.GNU: Added compiler-specific
+	  section for XL C++ 7. Also removed the explicit setting of
+	  ACE_TEMPLATES_REQUIRE_[PRAGMA|SOURCE]. The proper one to use is
+	  determined by whether or not -qtempinc is specified to the compiler.
+	  Since this is knowable at compile time and what a user does may
+	  not match what the ACE/TAO build does, proper selection of the
+	  correct setting is moved to config-aix-4.x.h.
+
+	* include/makeinclude/rules.local.GNU: Add templateregistry.* to the
+	  file cleanup list. XL C/C++ 7 builds use -qtemplateregistry and
+	  specify a name templateregistry.$(MAKEFILE).
+
 Tue Dec 20 20:24:39 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/UUID.cpp (ACE_Utils): Move the lock to the top of the

@@ -67,10 +67,7 @@ namespace
 // and not the one for <sys/socket.h> which is also needed.  Although we
 // don't need the template defined here, it makes the compiler pull in
 // <sys/socket.h> and the build runs clean.
-#if defined (AIX) && defined (__IBMCPP__) && (__IBMCPP__ >= 500)
-#  if (__IBMCPP__ >= 700)
-#    error Recheck this hack to see if version 7 fixed it!
-#  endif
+#if defined (AIX) && defined (__IBMCPP__) && (__IBMCPP__ >= 500) && (__IBMCPP__ < 700)
 static ACE_Auto_Array_Ptr<sockaddr> force_compiler_to_include_socket_h;
 #endif /* AIX && __IBMCPP__ >= 500 */
 
