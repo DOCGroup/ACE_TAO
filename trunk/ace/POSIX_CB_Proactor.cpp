@@ -7,7 +7,7 @@
 #include "ace/Task_T.h"
 #include "ace/Log_Msg.h"
 #include "ace/Object_Manager.h"
-
+#include "ace/OS_NS_sys_time.h"
 
 ACE_RCSID (ace,
            POSIX_CB_Proactor,

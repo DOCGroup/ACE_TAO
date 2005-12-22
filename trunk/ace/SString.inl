@@ -9,6 +9,8 @@
 #  include "ace/ACE.h"
 #endif /* !ACE_ACE_H */
 
+#include "ace/OS_NS_stdlib.h"
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
