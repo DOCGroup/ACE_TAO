@@ -103,25 +103,25 @@ ifeq ($(XLCVERSION),0x0306)
   ibmcxx_build = 1
   rtti = 0
 else    # Visual Age 5 and up
-  SHR_FILTER=$(ACE_ROOT)/bin/aix_shr
   ifeq ($(XLCVERSION),0x0500)
+    SHR_FILTER=$(ACE_ROOT)/bin/aix_shr
     TEMPINCDIR  = tempinc
-    CCFLAGS    += -qflag=w:w -qonce -qtempinc=$(TEMPINCDIR) -DACE_TEMPLATES_REQUIRE_PRAGMA
+    CCFLAGS    += -qflag=w:w -qonce -qtempinc=$(TEMPINCDIR)
   else
     ifeq ($(XLCVERSION),0x0600)
-      TEMPINCDIR = tempinc
-      # This is just for the workaround for aio, above. Without it, the compiler
-      # warns that __C99_RESTRICT is reserved. When that workaround is gone, this
-      # ifeq can be removed also. -qflag=w:w is what we want in the end.
+      # This is just for the workaround for aio, above. Without it, the
+      # compiler warns that __C99_RESTRICT is reserved. When that workaround
+      # is gone, this ifeq can be removed also. -qflag=w:w is what we want
+      # in the end.
+      CCFLAGS += -qtemplateregistry=templateregistry.$(MAKEFILE)
       ifeq (502,$(AIX_VERS))
-        CCFLAGS    += -qflag=e:e -qtempinc=$(TEMPINCDIR)
+        CCFLAGS    += -qflag=e:e
       else
-        CCFLAGS    += -qflag=w:w -qtempinc=$(TEMPINCDIR)
+        CCFLAGS    += -qflag=w:w
       endif
     else
       ifeq ($(XLCVERSION),0x0700)
         CCFLAGS += -qflag=w:w -qtemplateregistry=templateregistry.$(MAKEFILE)
-	SHR_FILTER =
       else
         CXX = echo "Unrecognized compiler version $(XLCVERSION)\n"
       endif
@@ -134,14 +134,14 @@ else    # Visual Age 5 and up
     CCFLAGS += -q64 -qwarn64
     ARFLAGS := -X64 $(ARFLAGS)
 
-    # This option results in a crash of TAO when building 64bit with Visual Age 6. No idea
-    # why but don't use it when using Visual Age 6.
+    # This option results in a crash of TAO when building 64bit with
+    # Visual Age 6. No idea why but don't use it when using Visual Age 6.
     ifneq ($(XLCVERSION),0x0600)
-      CCFLAGS += -qstaticinline
+     # CCFLAGS += -qstaticinline
     endif
   else
     # Using 32bit the staticinline option works.
-    CCFLAGS += -qstaticinline
+    #CCFLAGS += -qstaticinline
   endif
   CCFLAGS += -qfuncsect
 endif

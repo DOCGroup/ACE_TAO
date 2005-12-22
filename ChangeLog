@@ -1,3 +1,14 @@
+Thu Dec 22 18:33:29 2005  Steve Huston  <shuston@riverace.com>
+
+	* include/makeinclude/platform_aix_ibm.GNU: Change Visual Age 6 to use
+	  -qtemplateregistry also. It's faster and doesn't require the same
+	  strict source organization of templates that -qtempinc does.
+	  Also stop using the aixshr hack to strip warnings out of the
+	  linker output - it's not needed with -qtemplateregistry.
+	  Try removing -qstaticinline - this was an attempt to stop some of
+	  the duplicate symbol warnings that -qtempinc triggered; hopefully,
+	  removing this will let the linker/compiler unify singleton instances.
+
 Thu Dec 22 14:35:12 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/MakeProjectCreator/config/rtcorbacommon.mpb:
