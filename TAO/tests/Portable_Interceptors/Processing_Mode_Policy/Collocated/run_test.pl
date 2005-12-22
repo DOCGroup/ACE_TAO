@@ -84,10 +84,19 @@ for ($testid = 1; $testid <= 9; ++$testid)
 
   ($client_mode, $server_mode) = get_test_modes($testid);
 
-  my $SV = new PerlACE::Process ("PI_ProcMode_Collocated_Test",
-                                 "-c $client_mode " .
-                                 "-s $server_mode " .
-                                 "-ORBobjrefstyle url");
+  my $SV;
+  if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("PI_ProcMode_Collocated_Test",
+                                  "-c $client_mode " .
+                                  "-s $server_mode " .
+                                  "-ORBobjrefstyle url");
+  }
+  else {
+    $SV = new PerlACE::Process ("PI_ProcMode_Collocated_Test",
+                                "-c $client_mode " .
+                                "-s $server_mode " .
+                                "-ORBobjrefstyle url");
+  }
 
   print STDERR "\n\n==== Starting test variant #$testid\n\n";
 

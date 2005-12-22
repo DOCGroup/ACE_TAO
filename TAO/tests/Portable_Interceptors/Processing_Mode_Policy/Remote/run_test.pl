@@ -84,9 +84,17 @@ for ($testid = 1; $testid <= 9; ++$testid)
 
   ($client_mode, $server_mode) = get_test_modes($testid);
 
-  my $SV = new PerlACE::Process ("PI_ProcMode_Remote_TestServer",
-                                 "-p $server_mode " .
-                                 "-ORBobjrefstyle url");
+  my $SV;
+  if (PerlACE::is_vxworks_test()) {
+    $SV = new PerlACE::ProcessVX ("PI_ProcMode_Remote_TestServer",
+                                  "-p $server_mode " .
+                                  "-ORBobjrefstyle url");
+  }
+  else {
+    $SV = new PerlACE::Process ("PI_ProcMode_Remote_TestServer",
+                                "-p $server_mode " .
+                                "-ORBobjrefstyle url");
+  }
 
   print STDERR "\n\n==== Starting test variant #$testid\n\n";
 
@@ -98,9 +106,17 @@ for ($testid = 1; $testid <= 9; ++$testid)
       exit 1;
   }
 
-  my $CLIENT = new PerlACE::Process ("PI_ProcMode_Remote_TestClient",
-                                     "-p $client_mode " .
-                                     "-ORBobjrefstyle url");
+  my $CLIENT;
+  if (PerlACE::is_vxworks_test()) {
+    $CLIENT = new PerlACE::ProcessVX ("PI_ProcMode_Remote_TestClient",
+                                      "-p $client_mode " .
+                                      "-ORBobjrefstyle url");
+  }
+  else {
+    $CLIENT = new PerlACE::Process ("PI_ProcMode_Remote_TestClient",
+                                    "-p $client_mode " .
+                                    "-ORBobjrefstyle url");
+  }
 
   my $client_status = $CLIENT->SpawnWaitKill (5);
 
