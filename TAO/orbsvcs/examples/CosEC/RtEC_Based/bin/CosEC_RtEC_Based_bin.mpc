@@ -3,7 +3,13 @@
 
 project : orbsvcsexe, rtevent_serv, event_skel, naming {
   after += CosEC_RtEC_Based_lib
-  includes += ../lib
   libs += CosEC_RtEC_Based
+
+  specific (automake) {
+    includes += $(srcdir)/../lib
+  } else {
+    includes += ../lib
+  }
+
   libpaths += ../lib
 }
