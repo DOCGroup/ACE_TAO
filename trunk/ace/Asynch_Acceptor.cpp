@@ -191,6 +191,7 @@ ACE_Asynch_Acceptor<HANDLER>::set_handle (ACE_HANDLE listen_handle)
                        ACE_LIB_TEXT ("%p\n"),
                        ACE_LIB_TEXT ("ACE_Asynch_Accept::open")),
                       -1);
+  return 0;
 }
 
 template <class HANDLER> ACE_HANDLE
