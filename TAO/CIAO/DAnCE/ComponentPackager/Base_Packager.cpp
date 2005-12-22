@@ -18,13 +18,13 @@ namespace CIAO
   {}
 
   int
-  Base_Packager::preparePackage (PACKAGE_PLAN &pkg_plan)
+  Base_Packager::preparePackage (PACKAGE_PLAN & /*pkg_plan*/)
   {
     return 0;
   }
 
   int
-  Base_Packager::createPackage (const PACKAGE_PLAN &pkg_plan)
+  Base_Packager::createPackage (const PACKAGE_PLAN &/*pkg_plan*/)
   {
     return 0;
   }

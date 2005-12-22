@@ -20,7 +20,6 @@ namespace CIAO
     ACE_TString desc_inzip_path ("descriptors");
     desc_inzip_path += ACE_DIRECTORY_SEPARATOR_STR;
 
-
     CIAO::Config_Handlers::XML_File_Intf intf (this->cdp_url_);
     Deployment::DeploymentPlan_var obj_plan = intf.get_plan ();
 
@@ -83,7 +82,8 @@ namespace CIAO
 
     // return if separated descriptors are not required to be inluded
     // in the package
-    if (!this->include_std_desc_ ) return 0;
+    if (!this->include_std_desc_ )
+      return 0;
 
     //@@ retrieve location information for standard descriptors
     PDL_Handler pdl_handler;
@@ -99,7 +99,7 @@ namespace CIAO
 
     for (PDL_Handler::DESC_LIST::iterator iter = desc_list.begin ();
          iter != desc_list.end ();
-         iter++)
+         ++iter)
     {
       ACE_TString path ((*iter).c_str ());
       ACE_TString inzip_path = desc_inzip_path + path;
@@ -132,8 +132,6 @@ namespace CIAO
       return -1;
     }
 
-
-
     //@@ Archive descriptors
     for (Component_Packager::DESC_PLAN_CONST_ITER iter = pkg_plan.descriptors.begin ();
          iter != pkg_plan.descriptors.end ();
@@ -141,7 +139,6 @@ namespace CIAO
     {
       ACE_TString inzip_path ((*iter).first);
       ACE_TString path ((*iter).second);
-
 
       CZipAddNewFileInfo desc_info (path.c_str (),
                                     inzip_path.c_str ());
