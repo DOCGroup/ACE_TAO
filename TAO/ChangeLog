@@ -1,3 +1,150 @@
+Thu Dec 22 08:54:09 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        Committing these changes on behalf of Time Bradley
+        <bradley_t@ociweb.com>.
+
+          The following changes were made in order to support a new
+          feature that is described in the CORBA 3.1 draft specification.
+          The new feature consists of adding the capability to register
+          Portable Interceptors with an associated set of Policy objects.
+          In addition, a new Policy was introduced: the
+          PortableInterceptor::ProcessingModePolicy.  This policy can be
+          applied to either client request interceptors or server request
+          interceptors.  There are three possible ProcessingMode values:
+
+          - LOCAL_AND_REMOTE (the default)
+          - LOCAL_ONLY
+          - REMOTE_ONLY
+
+          The policy is used during the dispatching of a CORBA request.
+          It comes into play for remote requests as well as collocated
+          (thru-poa) requests.  When the policy value is something other
+          than the default value, the interception points on the
+          corresponding interceptor may or may not be invoked.  For the
+          LOCAL_ONLY policy value, the interception points are only invoked
+          on the interceptor if the request is a collocated (thru-poa)
+          request.  If it is a remote request, the LOCAL_ONLY policy value
+          causes the interceptor to not apply to the current request.
+          The REMOTE_ONLY has the opposite effect - only remote requests
+          cause the interception points to be invoked in the interceptor.
+
+        * tao/IORInterceptor/IORInterceptor_Details.cpp:
+        * tao/IORInterceptor/IORInterceptor_Details.h:
+        * tao/IORInterceptor/IORInterceptor_Details.inl:
+        * tao/PI/ClientRequestDetails.cpp:
+        * tao/PI/ClientRequestDetails.h:
+        * tao/PI/ClientRequestDetails.inl:
+        * tao/PI/PI_ORBInitializer.cpp:
+        * tao/PI/PI_ORBInitializer.h:
+        * tao/PI/PI_PolicyFactory.cpp:
+        * tao/PI/PI_PolicyFactory.h:
+        * tao/PI/ProcessingModePolicy.cpp:
+        * tao/PI/ProcessingModePolicy.h:
+        * tao/PI/ProcessingModePolicy.pidl:
+        * tao/PI/ProcessingModePolicyC.cpp:
+        * tao/PI/ProcessingModePolicyC.h:
+        * tao/PI/ProcessingModePolicyS.h:
+        * tao/PI_Server/ServerRequestDetails.cpp:
+        * tao/PI_Server/ServerRequestDetails.h:
+        * tao/PI_Server/ServerRequestDetails.inl:
+
+          The files listed above have been added as part of the
+          the new PI Policy support (including the new
+          PI ProcessingModePolicy).
+
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/Client_Task.cpp:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/Client_Task.h:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/Collocated_Test.cpp:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/Echo_Collocated_ORBInitializer.cpp:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/Echo_Collocated_ORBInitializer.h:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/interceptors.cpp:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/interceptors.h:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/PI_ProcMode_Collocated.mpc:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/run_test.pl:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/Server_Task.cpp:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/Server_Task.h:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/test_i.cpp:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/test.idl:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/test_i.h:
+
+          The files listed above make up a new "collocated" test for the
+          new PortableInterceptor::ProcessingModePolicy "feature".
+
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/client_interceptor.cpp:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/client_interceptor.h:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/client_main.cpp:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/Client_Task.cpp:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/Client_Task.h:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/Echo_Client_ORBInitializer.cpp:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/Echo_Client_ORBInitializer.h:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/Echo_Server_ORBInitializer.cpp:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/Echo_Server_ORBInitializer.h:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/PI_ProcMode_Remote.mpc:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/run_test.pl:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/server_interceptor.cpp:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/server_interceptor.h:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/server_main.cpp:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/Server_Task.cpp:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/Server_Task.h:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/test_i.cpp:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/test.idl:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/test_i.h:
+
+          The files listed above make up a new "remote" test for the
+          new PortableInterceptor::ProcessingModePolicy "feature".
+
+        * tao/PortableServer/Upcall_Wrapper.cpp:
+
+          The Upcall_Wrapper class was modified to fix a bug that
+          was observed while testing the new ProcessingModePolicy.
+          The server request portable interceptors were being supplied
+          with a ServerRequestInfo object that referenced uninitialized
+          operation arguments in the collocated (thru_poa) case.
+
+        * tao/PI/ClientRequestInfo.cpp:
+
+          During testing of the new ProcessingModePolicy, another bug
+          was observed.  Client request interceptors were not getting
+          the proper "result argument" (both collocated and remote cases).
+          The changes made to the tao/PI/ClientRequestInfo.cpp file fixes
+          this bug.
+
+        * tao/ClientRequestInterceptor_Adapter.h:
+        * tao/Collocated_Invocation.cpp:
+        * tao/IORInterceptor_Adapter.h:
+        * tao/Invocation_Base.cpp:
+        * tao/Invocation_Base.h:
+        * tao/Invocation_Base.inl:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/Remote_Invocation.cpp:
+        * tao/ServerRequestInterceptor_Adapter.h:
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.cpp:
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.h:
+        * tao/PI/ClientRequestInterceptor_Adapter_Impl.cpp:
+        * tao/PI/ClientRequestInterceptor_Adapter_Impl.h:
+        * tao/PI/Interceptor_List_T.cpp:
+        * tao/PI/Interceptor_List_T.h:
+        * tao/PI/ORBInitInfo.cpp:
+        * tao/PI/ORBInitInfo.h:
+        * tao/PI/ORBInitInfo.pidl:
+        * tao/PI/ORBInitInfoC.cpp:
+        * tao/PI/ORBInitInfoC.h:
+        * tao/PI/ORBInitInfoS.h:
+        * tao/PI/PI.cpp:
+        * tao/PI_Server/ServerInterceptorAdapter.cpp:
+        * tao/PI_Server/ServerInterceptorAdapter.h:
+
+          The files listed above were modified as part of the
+          changes made to support policies at PI registration-time
+          and the new PI ProcessingModePolicy.
+
+        * tests/Portable_Interceptors/Collocated/Dynamic/test_i.cpp:
+
+          Added a sleep before the shutdown to allow the client thread to
+          complete the collocated call before shutting down the ORB to avoid
+          BAD_INV_ORDER exceptions on fast multi-processor machines.
+
 Thu Dec 22 14:04:12 UTC 2005  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tests/RTCORBA/Dynamic_Thread_Pool/client.cpp:

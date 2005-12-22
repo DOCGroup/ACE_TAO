@@ -30,7 +30,8 @@ namespace TAO
                                     CORBA::Object_ptr t,
                                     TAO_Stub *stub,
                                     TAO_Operation_Details &details,
-                                    bool response_expected)
+                                    bool response_expected,
+                                    bool request_is_remote)
     : details_ (details)
     , forwarded_to_ (0)
     , response_expected_ (response_expected)
@@ -43,8 +44,12 @@ namespace TAO
     , stack_size_ (0)
     , invoke_status_ (TAO_INVOKE_START)
     , caught_exception_ (0)
+    , is_remote_request_ (request_is_remote)
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
   {
+#if TAO_HAS_INTERCEPTORS == 0
+    ACE_UNUSED_ARG (request_is_remote);
+#endif /*TAO_HAS_INTERCEPTORS == 0*/
   }
 
   Invocation_Base::~Invocation_Base (void)

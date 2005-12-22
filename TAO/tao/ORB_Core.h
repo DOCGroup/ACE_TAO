@@ -791,6 +791,18 @@ public:
     PortableInterceptor::ServerRequestInterceptor_ptr interceptor
     ACE_ENV_ARG_DECL);
 
+  /// Register a client request interceptor with policies.
+  void add_interceptor (
+    PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
+    const CORBA::PolicyList& policies
+    ACE_ENV_ARG_DECL);
+
+  /// Register a server request interceptor with policies.
+  void add_interceptor (
+    PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
+    const CORBA::PolicyList& policies
+    ACE_ENV_ARG_DECL);
+
   /// Get the Client Request Interceptor adapter.
   /// Will not create a new one if not available yet.
   TAO::ClientRequestInterceptor_Adapter *clientrequestinterceptor_adapter (void);

@@ -50,14 +50,14 @@ typedef TAO_Objref_Out_T<TAO_ORBInitInfo>
 /**
  * @class TAO_ORBInitInfo
  *
- * @brief An implementation of the PortableInterceptor::ORBInitInfo
+ * @brief An implementation of the PortableInterceptor::ORBInitInfo_3_1
  *        interface.
  *
  * This class encapsulates the data passed to ORBInitializers during
  * ORB initialization.
  */
 class TAO_PI_Export TAO_ORBInitInfo
-  : public virtual PortableInterceptor::ORBInitInfo,
+  : public virtual PortableInterceptor::ORBInitInfo_3_1,
     public virtual TAO_Local_RefCounted_Object
 {
 public:
@@ -141,6 +141,36 @@ public:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ORBInitInfo::DuplicateName));
+
+  /// Register a client request interceptor with the ORB currently
+  /// being initialized, along with a list of policies.
+  virtual void add_client_request_interceptor_with_policy (
+      PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
+      const CORBA::PolicyList& policies
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ORBInitInfo::DuplicateName,
+                     CORBA::PolicyError));
+
+  /// Register a server request interceptor with the ORB currently
+  /// being initialized, along with a list of policies.
+  virtual void add_server_request_interceptor_with_policy (
+      PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
+      const CORBA::PolicyList& policies
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ORBInitInfo::DuplicateName,
+                     CORBA::PolicyError));
+
+  /// Register an IOR interceptor with the ORB currently being
+  /// initialized, along with a list of policies.
+  virtual void add_ior_interceptor_with_policy (
+      PortableInterceptor::IORInterceptor_ptr interceptor,
+      const CORBA::PolicyList& policies
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::ORBInitInfo::DuplicateName,
+                     CORBA::PolicyError));
 
   /// Reserve a slot in table found within the
   /// PortableInterceptor::Current object.

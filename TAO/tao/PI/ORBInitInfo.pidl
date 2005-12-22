@@ -68,6 +68,23 @@ module PortableInterceptor {
       in CORBA::PolicyType type,
       in PolicyFactory policy_factory);
   };
+
+  local interface ORBInitInfo_3_1 : ORBInitInfo
+  {
+    void add_client_request_interceptor_with_policy(
+       in ClientRequestInterceptor interceptor,
+       in CORBA::PolicyList policies)
+       raises (DuplicateName, CORBA::PolicyError);
+    void add_server_request_interceptor_with_policy(
+       in ServerRequestInterceptor interceptor,
+       in CORBA::PolicyList policies)
+       raises (DuplicateName, CORBA::PolicyError);
+    void add_ior_interceptor_with_policy(
+       in IORInterceptor interceptor,
+       in CORBA::PolicyList policies)
+       raises (DuplicateName, CORBA::PolicyError);
+  };
+
 };
 
 #endif  /* _ORBINITINFO_PIDL_ */

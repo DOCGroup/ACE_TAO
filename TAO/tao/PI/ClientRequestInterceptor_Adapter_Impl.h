@@ -32,13 +32,15 @@
 
 #include "Interceptor_List_T.h"
 #include "ClientRequestInterceptorC.h"
+#include "ClientRequestDetails.h"
 #include "tao/ClientRequestInterceptor_Adapter.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  typedef Interceptor_List< ::PortableInterceptor::ClientRequestInterceptor>
+  typedef Interceptor_List< ::PortableInterceptor::ClientRequestInterceptor,
+                            ClientRequestDetails>
     ClientRequestInterceptor_List;
 }
 
@@ -98,6 +100,12 @@ namespace TAO
     /// Register an interceptor.
     virtual void add_interceptor (
       PortableInterceptor::ClientRequestInterceptor_ptr interceptor
+      ACE_ENV_ARG_DECL);
+
+    /// Register an interceptor with policies.
+    virtual void add_interceptor (
+      PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
+      const CORBA::PolicyList& policies
       ACE_ENV_ARG_DECL);
 
     virtual void destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL);
