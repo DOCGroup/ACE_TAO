@@ -1,9 +1,9 @@
-package FileLocator;
+package FileLocatorFactory;
 
 # ************************************************************
-# Description   : Base class for file locators.
+# Description   : Create FileLocator objects.
 # Author        : Chad Elliott
-# Create Date   : 6/18/2002
+# Create Date   : 11/29/2005
 # ************************************************************
 
 # ************************************************************
@@ -11,28 +11,22 @@ package FileLocator;
 # ************************************************************
 
 use strict;
-use FileHandle;
+
+use CVSFileLocator;
+use SVNFileLocator;
 
 # ************************************************************
 # Subroutine Section
 # ************************************************************
 
-sub new {
-  my($class)  = shift;
-  my($self)   = bless {
-                      }, $class;
-  return $self;
-}
+sub create {
+  switch: {
+    -d 'CVS'  && do { return new CVSFileLocator(); };
+    -d '.svn' && do { return new SVNFileLocator(); };
+    print STDERR "WARNING: Unsupported revision control protocol\n";
+  }
 
-
-sub locate {
-  my($self)      = shift;
-  my(@dirs)      = @_;
-  my(@modified)  = ();
-  my(@removed)   = ();
-  my(@conflicts) = ();
-  my(@unknown)   = ();
-  return \@modified, \@removed, \@conflicts, \@unknown;
+  return new FileLocator();
 }
 
 

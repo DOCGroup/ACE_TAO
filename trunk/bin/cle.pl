@@ -11,6 +11,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use strict;
 use Cwd;
 use File::Basename;
+use Sys::Hostname;
 
 if ( $^O eq 'VMS' ) {
   require VMS::Filespec;
@@ -110,10 +111,9 @@ sub getExecutePath {
 
 sub getDefaultDomain {
   my($domain) = undef;
-  my($host)   = `hostname`;
+  my($host)   = hostname();
 
   if (defined $host) {
-    chop($host);
     ## First try the hostname
     if ($host =~ /[^\.]+\.(.*)/) {
       $domain = $1;
