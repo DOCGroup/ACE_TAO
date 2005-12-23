@@ -29,6 +29,8 @@
 #include "ORBInitializerC.h"
 #include "PolicyFactoryC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// Forward Declarations
 class TAO_PI_PolicyFactory;
 
@@ -72,6 +74,8 @@ private:
    */
   PortableInterceptor::PolicyFactory_var policy_factory_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 

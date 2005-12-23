@@ -28,6 +28,8 @@
 #include "tao/LocalObject.h"
 #include "PolicyFactoryC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /// Policy factory for all PortableInterceptor related policies.
 class TAO_PI_Export TAO_PI_PolicyFactory
   : public virtual PortableInterceptor::PolicyFactory,
@@ -40,6 +42,8 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CORBA::PolicyError));
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
