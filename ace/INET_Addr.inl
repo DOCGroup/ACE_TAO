@@ -30,8 +30,9 @@ ACE_INET_Addr::determine_type (void) const
 #  else
   return AF_INET6;
 #  endif /* ACE_USES_IPV4_IPV6_MIGRATION */
-#endif /* ACE_HAS_IPV6 */
+#else
   return AF_INET;
+#endif /* ACE_HAS_IPV6 */
 }
 
 ACE_INLINE void *
