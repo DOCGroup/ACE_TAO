@@ -19,7 +19,7 @@
 #include "testS.h"
 
 class Visual_i : public POA_Test_Interceptors::Visual,
-                 public virtual PortableServer::RefCountServantBase
+                 public virtual PortableServer::ServantBase
 {
   // = DESCRIPTION
   //   Implements the Visual interface in test.idl
