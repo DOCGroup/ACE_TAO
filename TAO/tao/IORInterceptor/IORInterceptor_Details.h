@@ -51,20 +51,12 @@ namespace TAO
   class IORInterceptor_Details
   {
   public:
-
-    IORInterceptor_Details (void);
-    ~IORInterceptor_Details (void);
-
     void apply_policies (const CORBA::PolicyList& policies
                          ACE_ENV_ARG_DECL);
   };
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-#if defined (__ACE_INLINE__)
-#include "IORInterceptor_Details.inl"
-#endif  /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 

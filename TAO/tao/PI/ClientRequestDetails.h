@@ -22,11 +22,11 @@
 
 #include /**/ "ace/pre.h"
 
+#include "tao/orbconf.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/orbconf.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
@@ -53,7 +53,6 @@ namespace TAO
   public:
 
     ClientRequestDetails (void);
-    ~ClientRequestDetails (void);
 
     void apply_policies (const CORBA::PolicyList& policies
                          ACE_ENV_ARG_DECL);
