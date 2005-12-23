@@ -91,7 +91,7 @@ namespace CIAO
       
       return this->launch_plan (plan.in ());
     }
-    
+
     const char * 
     Plan_Launcher_i::launch_plan (const ::Deployment::DeploymentPlan &plan ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((Plan_Launcher_i::Deployment_Failure))
@@ -143,7 +143,7 @@ namespace CIAO
           if (CIAO::debug_level ())
             ACE_DEBUG ((LM_DEBUG,
                         "CIAO_PlanLauncher: finish Launch application...\n"));
-          dam->finishLaunch (start);
+          dam->finishLaunch (start, false); // is_ReDAC by default is <false>
       
           if (CIAO::debug_level ())
             ACE_DEBUG ((LM_DEBUG, "[success]\n"));
@@ -164,8 +164,6 @@ namespace CIAO
       
           map_.bind_dam_reference (plan.UUID.in (),
                                    Deployment::DomainApplicationManager::_duplicate (dam.in ()));
-
-
         }
       ACE_CATCH (Deployment::ResourceNotAvailable, ex)
         {
@@ -272,7 +270,41 @@ namespace CIAO
       if (CIAO::debug_level ())
         ACE_DEBUG ((LM_DEBUG, "[success]\n"));
     }
-    
+
+    const char * 
+    Plan_Launcher_i::re_launch_plan (const char *plan_uri ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((Plan_Launcher_i::Deployment_Failure))
+    {
+      CIAO::Config_Handlers::XML_File_Intf intf (plan_uri);
+      
+      ::Deployment::DeploymentPlan_var plan =
+          intf.get_plan ();
+      
+      return this->re_launch_plan (plan.in ());
+    }
+
+    const char * 
+    Plan_Launcher_i::re_launch_plan (const ::Deployment::DeploymentPlan &plan ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((Plan_Launcher_i::Deployment_Failure))
+    {
+          
+      if (CORBA::is_nil (this->em_.in ()))
+        {
+          ACE_ERROR ((LM_ERROR, 
+                      ACE_TEXT ("CIAO::Plan_Launcher_i: ")
+                      ACE_TEXT ("re_launch_plan called witn an uninitialized EM.\n")));            
+          return 0;
+        }
+      
+      this->em_->perform_redeployment (plan);
+      
+      if (CIAO::debug_level ())
+        ACE_DEBUG ((LM_DEBUG,
+                    "CIAO_PlanLauncher: new plan redeployed ...\n"));
+
+      std::string * retv = new std::string (plan.UUID.in ());
+      
+      return (*retv).c_str (); 
+    }
   }
-  
 }

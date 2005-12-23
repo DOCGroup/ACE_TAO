@@ -45,6 +45,10 @@ namespace CIAO
       const char * launch_plan (const char *plan_uri
                                 ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((Deployment_Failure));
+
+      const char * re_launch_plan (const char *plan_uri
+                                   ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((Deployment_Failure));
       
       /**
        * @fn launch_plan
@@ -54,6 +58,10 @@ namespace CIAO
        */
       const char * launch_plan (const ::Deployment::DeploymentPlan &plan
                                 ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((Deployment_Failure));
+
+      const char * re_launch_plan (const ::Deployment::DeploymentPlan &plan
+                                   ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((Deployment_Failure));
       
       /// Returns the DAM associated with a given plan URI

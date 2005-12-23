@@ -48,11 +48,10 @@ CIAO::Deployment_Configuration::init (const char *filename)
       //
       if (this->deployment_info_.bind (destination, ior) != 0)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "DAnCE (%P|%t) Deployment_Configuration.cpp:"
-                             "Failed to bind destination [%s] : \n",
-                             destination),
-                             -1);
+          ACE_DEBUG ((LM_ERROR,
+                      "DAnCE (%P|%t) Deployment_Configuration.cpp:"
+                      "Reuse existing node in the cached map: [%s]\n",
+                      destination));
         }
 
       if (first)
@@ -61,6 +60,7 @@ CIAO::Deployment_Configuration::init (const char *filename)
           first = 0;
         }
     }
+  ACE_OS::fclose (inf);
   return 0;
 }
 

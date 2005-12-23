@@ -100,9 +100,10 @@
     </configProperty>
   </instance>
 
-  <instance id="Hello-Receiver-idd">
-    <name>Hello-Receiver-idd</name>
-    <node>SenderNode</node>
+
+  <instance id="Hello-Receiver-idd-UPDATE-XXXXXXXX">
+    <name>Hello-Receiver-idd-UPDATE-XXXXXXXXX</name>
+    <node>ReceiverNode</node>
     <source><!-- @@ What goes here --></source>
     <implementation>Hello-Receiver-mdd</implementation>
     <configProperty>
@@ -112,7 +113,7 @@
           <kind>tk_string</kind>
         </type>
         <value>
-          <string>Receiver.ior</string>
+          <string>Receiver_2.ior</string>
         </value>
       </value>
     </configProperty>
@@ -120,7 +121,7 @@
 
 
   <connection>
-    <name>hello_event_connection</name>
+    <name>hello_event_connection_new</name>
     <internalEndpoint>
       <portName>click_out</portName>
       <kind>EventPublisher</kind>
@@ -129,12 +130,12 @@
     <internalEndpoint>
       <portName>click_in</portName>
       <kind>EventConsumer</kind>
-      <instance>Hello-Receiver-idd</instance>
+      <instance>Hello-Receiver-idd-UPDATE-XXXXXXXX</instance>
     </internalEndpoint>
   </connection>
 
   <connection>
-    <name>hello_facet_connection</name>
+    <name>hello_facet_connection_new</name>
     <internalEndpoint>
       <portName>push_message</portName>
       <kind>Facet</kind>
@@ -143,7 +144,7 @@
     <internalEndpoint>
       <portName>read_message</portName>
       <kind>SimplexReceptacle</kind>
-      <instance>Hello-Receiver-idd</instance>
+      <instance>Hello-Receiver-idd-UPDATE-XXXXXXXX</instance>
     </internalEndpoint>
   </connection>
 
