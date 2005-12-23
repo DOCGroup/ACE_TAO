@@ -1,3 +1,17 @@
+Fri Dec 23 08:50:37 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/Echo_Collocated_ORBInitializer.h:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/interceptors.h:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/test_i.h:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/Echo_Client_ORBInitializer.h:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/Echo_Server_ORBInitializer.h:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/client_interceptor.h:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/server_interceptor.h:
+        * tests/Portable_Interceptors/Processing_Mode_Policy/Remote/test_i.h:
+
+          Fixed fuzz errors related to RefCountedServantBase and _MSC_VER >=
+          1200.
+
 Fri Dec 23 13:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/util/utl_err.cpp:
@@ -47,194 +61,194 @@ Fri Dec 23 08:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Dec 22 16:07:11 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* docs/tutorials/Quoter/RT_Event_Service/Makefile.am:
-	* examples/Makefile.am:
-	* examples/AMH/Sink_Server/Makefile.am:
-	* examples/AMI/FL_Callback/Makefile.am:
-	* examples/Buffered_AMI/Makefile.am:
-	* examples/Buffered_Oneways/Makefile.am:
-	* examples/CSD_Strategy/ThreadPool/Makefile.am:
-	* examples/CSD_Strategy/ThreadPool2/Makefile.am:
-	* examples/CSD_Strategy/ThreadPool3/Makefile.am:
-	* examples/CSD_Strategy/ThreadPool5/Makefile.am:
-	* examples/CSD_Strategy/ThreadPool6/Makefile.am:
-	* examples/Content_Server/AMI_Iterator/Makefile.am:
-	* examples/Content_Server/AMI_Observer/Makefile.am:
-	* examples/Content_Server/SMI_Iterator/Makefile.am:
-	* examples/Kokyu_dsrt_schedulers/mif_example/Makefile.am:
-	* examples/Load_Balancing/Makefile.am:
-	* examples/Load_Balancing_persistent/Makefile.am:
-	* examples/OBV/Typed_Events/Makefile.am:
-	* examples/POA/DSI/Makefile.am:
-	* examples/POA/Default_Servant/Makefile.am:
-	* examples/POA/Forwarding/Makefile.am:
-	* examples/POA/Generic_Servant/Makefile.am:
-	* examples/POA/TIE/Makefile.am:
-	* examples/Persistent_Grid/Makefile.am:
-	* examples/PluggableUDP/tests/Basic/Makefile.am:
-	* examples/PluggableUDP/tests/Performance/Makefile.am:
-	* examples/PluggableUDP/tests/SimplePerformance/Makefile.am:
-	* examples/Simulator/Event_Supplier/Makefile.am:
-	* interop-tests/wchar/Makefile.am:
-	* orbsvcs/Event_Service/Makefile.am:
-	* orbsvcs/FTRT_Event_Service/Event_Service/Makefile.am:
-	* orbsvcs/FTRT_Event_Service/Factory_Service/Makefile.am:
-	* orbsvcs/FTRT_Event_Service/Gateway_Service/Makefile.am:
-	* orbsvcs/FT_ReplicationManager/Makefile.am:
-	* orbsvcs/Fault_Detector/Makefile.am:
-	* orbsvcs/Fault_Notifier/Makefile.am:
-	* orbsvcs/IFR_Service/Makefile.am:
-	* orbsvcs/ImplRepo_Service/Makefile.am:
-	* orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
-	* orbsvcs/Naming_Service/Makefile.am:
-	* orbsvcs/Notify_Service/Makefile.am:
-	* orbsvcs/examples/CosEC/RtEC_Based/bin/Makefile.am:
-	* orbsvcs/examples/CosEC/RtEC_Based/lib/Makefile.am:
-	* orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Makefile.am:
-	* orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Makefile.am:
-	* orbsvcs/examples/FaultTolerance/RolyPoly/Makefile.am:
-	* orbsvcs/examples/LoadBalancing/Makefile.am:
-	* orbsvcs/examples/Log/RTEvent/Makefile.am:
-	* orbsvcs/examples/Notify/Federation/Agent/Makefile.am:
-	* orbsvcs/examples/Notify/Federation/Gate/Makefile.am:
-	* orbsvcs/examples/Notify/Federation/SpaceCraft/Makefile.am:
-	* orbsvcs/examples/Notify/Subscribe/Makefile.am:
-	* orbsvcs/examples/RtEC/IIOPGateway/Makefile.am:
-	* orbsvcs/examples/RtEC/Kokyu/Makefile.am:
-	* orbsvcs/examples/RtEC/MCast/Makefile.am:
-	* orbsvcs/examples/RtEC/Schedule/Makefile.am:
-	* orbsvcs/examples/RtEC/Simple/Makefile.am:
-	* orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/TCP_Baseline/Makefile.am:
-	* orbsvcs/performance-tests/RTEvent/lib/Makefile.am:
-	* orbsvcs/tests/Makefile.am:
-	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile.am:
-	* orbsvcs/tests/AVStreams/Bidirectional_Flows/Makefile.am:
-	* orbsvcs/tests/AVStreams/Component_Switching/Makefile.am:
-	* orbsvcs/tests/AVStreams/Full_Profile/Makefile.am:
-	* orbsvcs/tests/AVStreams/Latency/Makefile.am:
-	* orbsvcs/tests/AVStreams/Modify_QoS/Makefile.am:
-	* orbsvcs/tests/AVStreams/Multicast/Makefile.am:
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile.am:
-	* orbsvcs/tests/AVStreams/Multiple_Flows/Makefile.am:
-	* orbsvcs/tests/AVStreams/Pluggable/Makefile.am:
-	* orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/Makefile.am:
-	* orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile.am:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile.am:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile.am:
-	* orbsvcs/tests/Bug_2137_Regression/Makefile.am:
-	* orbsvcs/tests/Bug_2247_Regression/Makefile.am:
-	* orbsvcs/tests/Bug_2248_Regression/Makefile.am:
-	* orbsvcs/tests/Bug_2285_Regression/Makefile.am:
-	* orbsvcs/tests/Bug_2287_Regression/Makefile.am:
-	* orbsvcs/tests/EC_Custom_Marshal/Makefile.am:
-	* orbsvcs/tests/EC_MT_Mcast/Makefile.am:
-	* orbsvcs/tests/EC_Mcast/Makefile.am:
-	* orbsvcs/tests/EC_Multiple/Makefile.am:
-	* orbsvcs/tests/EC_Throughput/Makefile.am:
-	* orbsvcs/tests/Event/Basic/Makefile.am:
-	* orbsvcs/tests/Event/Mcast/Common/Makefile.am:
-	* orbsvcs/tests/Event/Mcast/Complex/Makefile.am:
-	* orbsvcs/tests/Event/Mcast/Simple/Makefile.am:
-	* orbsvcs/tests/Event/Mcast/Two_Way/Makefile.am:
-	* orbsvcs/tests/Event/Performance/Makefile.am:
-	* orbsvcs/tests/Event/lib/Makefile.am:
-	* orbsvcs/tests/FT_App/Makefile.am:
-	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Makefile.am:
-	* orbsvcs/tests/FaultTolerance/IOGR/Makefile.am:
-	* orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile.am:
-	* orbsvcs/tests/FtRtEvent/Makefile.am:
-	* orbsvcs/tests/ImplRepo/Makefile.am:
-	* orbsvcs/tests/InterfaceRepo/Latency_Test/Makefile.am:
-	* orbsvcs/tests/Notify/performance-tests/Throughput/Makefile.am:
-	* orbsvcs/tests/Security/Big_Request/Makefile.am:
-	* orbsvcs/tests/Security/Callback/Makefile.am:
-	* orbsvcs/tests/Security/Crash_Test/Makefile.am:
-	* orbsvcs/tests/Security/MT_IIOP_SSL/Makefile.am:
-	* orbsvcs/tests/Security/MT_SSLIOP/Makefile.am:
-	* orbsvcs/tests/Security/Secure_Invocation/Makefile.am:
-	* performance-tests/Makefile.am:
-	* performance-tests/Anyop/Makefile.am:
-	* performance-tests/Callback/Makefile.am:
-	* performance-tests/Cubit/TAO/DII_Cubit/Makefile.am:
-	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile.am:
-	* performance-tests/Cubit/TAO/MT_Cubit/Makefile.am:
-	* performance-tests/Latency/AMH_Single_Threaded/Makefile.am:
-	* performance-tests/Latency/AMI/Makefile.am:
-	* performance-tests/Latency/Collocation/Makefile.am:
-	* performance-tests/Latency/DII/Makefile.am:
-	* performance-tests/Latency/DSI/Makefile.am:
-	* performance-tests/Latency/Deferred/Makefile.am:
-	* performance-tests/Latency/Single_Threaded/Makefile.am:
-	* performance-tests/Latency/Thread_Per_Connection/Makefile.am:
-	* performance-tests/Latency/Thread_Pool/Makefile.am:
-	* performance-tests/POA/Create_Reference/Makefile.am:
-	* performance-tests/POA/Implicit_Activation/Makefile.am:
-	* performance-tests/POA/Object_Creation_And_Registration/Makefile.am:
-	* performance-tests/Protocols/Makefile.am:
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile.am:
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile.am:
-	* performance-tests/RTCorba/Thread_Pool/Makefile.am:
-	* performance-tests/Sequence_Latency/AMH_Single_Threaded/Makefile.am:
-	* performance-tests/Sequence_Latency/AMI/Makefile.am:
-	* performance-tests/Sequence_Latency/DII/Makefile.am:
-	* performance-tests/Sequence_Latency/DSI/Makefile.am:
-	* performance-tests/Sequence_Latency/Deferred/Makefile.am:
-	* performance-tests/Sequence_Latency/Single_Threaded/Makefile.am:
-	* performance-tests/Sequence_Latency/Thread_Per_Connection/Makefile.am:
-	* performance-tests/Sequence_Latency/Thread_Pool/Makefile.am:
-	* performance-tests/Throughput/Makefile.am:
+        * docs/tutorials/Quoter/RT_Event_Service/Makefile.am:
+        * examples/Makefile.am:
+        * examples/AMH/Sink_Server/Makefile.am:
+        * examples/AMI/FL_Callback/Makefile.am:
+        * examples/Buffered_AMI/Makefile.am:
+        * examples/Buffered_Oneways/Makefile.am:
+        * examples/CSD_Strategy/ThreadPool/Makefile.am:
+        * examples/CSD_Strategy/ThreadPool2/Makefile.am:
+        * examples/CSD_Strategy/ThreadPool3/Makefile.am:
+        * examples/CSD_Strategy/ThreadPool5/Makefile.am:
+        * examples/CSD_Strategy/ThreadPool6/Makefile.am:
+        * examples/Content_Server/AMI_Iterator/Makefile.am:
+        * examples/Content_Server/AMI_Observer/Makefile.am:
+        * examples/Content_Server/SMI_Iterator/Makefile.am:
+        * examples/Kokyu_dsrt_schedulers/mif_example/Makefile.am:
+        * examples/Load_Balancing/Makefile.am:
+        * examples/Load_Balancing_persistent/Makefile.am:
+        * examples/OBV/Typed_Events/Makefile.am:
+        * examples/POA/DSI/Makefile.am:
+        * examples/POA/Default_Servant/Makefile.am:
+        * examples/POA/Forwarding/Makefile.am:
+        * examples/POA/Generic_Servant/Makefile.am:
+        * examples/POA/TIE/Makefile.am:
+        * examples/Persistent_Grid/Makefile.am:
+        * examples/PluggableUDP/tests/Basic/Makefile.am:
+        * examples/PluggableUDP/tests/Performance/Makefile.am:
+        * examples/PluggableUDP/tests/SimplePerformance/Makefile.am:
+        * examples/Simulator/Event_Supplier/Makefile.am:
+        * interop-tests/wchar/Makefile.am:
+        * orbsvcs/Event_Service/Makefile.am:
+        * orbsvcs/FTRT_Event_Service/Event_Service/Makefile.am:
+        * orbsvcs/FTRT_Event_Service/Factory_Service/Makefile.am:
+        * orbsvcs/FTRT_Event_Service/Gateway_Service/Makefile.am:
+        * orbsvcs/FT_ReplicationManager/Makefile.am:
+        * orbsvcs/Fault_Detector/Makefile.am:
+        * orbsvcs/Fault_Notifier/Makefile.am:
+        * orbsvcs/IFR_Service/Makefile.am:
+        * orbsvcs/ImplRepo_Service/Makefile.am:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile.am:
+        * orbsvcs/Naming_Service/Makefile.am:
+        * orbsvcs/Notify_Service/Makefile.am:
+        * orbsvcs/examples/CosEC/RtEC_Based/bin/Makefile.am:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/Makefile.am:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Makefile.am:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Makefile.am:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/Makefile.am:
+        * orbsvcs/examples/LoadBalancing/Makefile.am:
+        * orbsvcs/examples/Log/RTEvent/Makefile.am:
+        * orbsvcs/examples/Notify/Federation/Agent/Makefile.am:
+        * orbsvcs/examples/Notify/Federation/Gate/Makefile.am:
+        * orbsvcs/examples/Notify/Federation/SpaceCraft/Makefile.am:
+        * orbsvcs/examples/Notify/Subscribe/Makefile.am:
+        * orbsvcs/examples/RtEC/IIOPGateway/Makefile.am:
+        * orbsvcs/examples/RtEC/Kokyu/Makefile.am:
+        * orbsvcs/examples/RtEC/MCast/Makefile.am:
+        * orbsvcs/examples/RtEC/Schedule/Makefile.am:
+        * orbsvcs/examples/RtEC/Simple/Makefile.am:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/TCP_Baseline/Makefile.am:
+        * orbsvcs/performance-tests/RTEvent/lib/Makefile.am:
+        * orbsvcs/tests/Makefile.am:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile.am:
+        * orbsvcs/tests/AVStreams/Bidirectional_Flows/Makefile.am:
+        * orbsvcs/tests/AVStreams/Component_Switching/Makefile.am:
+        * orbsvcs/tests/AVStreams/Full_Profile/Makefile.am:
+        * orbsvcs/tests/AVStreams/Latency/Makefile.am:
+        * orbsvcs/tests/AVStreams/Modify_QoS/Makefile.am:
+        * orbsvcs/tests/AVStreams/Multicast/Makefile.am:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile.am:
+        * orbsvcs/tests/AVStreams/Multiple_Flows/Makefile.am:
+        * orbsvcs/tests/AVStreams/Pluggable/Makefile.am:
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/Makefile.am:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile.am:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile.am:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile.am:
+        * orbsvcs/tests/Bug_2137_Regression/Makefile.am:
+        * orbsvcs/tests/Bug_2247_Regression/Makefile.am:
+        * orbsvcs/tests/Bug_2248_Regression/Makefile.am:
+        * orbsvcs/tests/Bug_2285_Regression/Makefile.am:
+        * orbsvcs/tests/Bug_2287_Regression/Makefile.am:
+        * orbsvcs/tests/EC_Custom_Marshal/Makefile.am:
+        * orbsvcs/tests/EC_MT_Mcast/Makefile.am:
+        * orbsvcs/tests/EC_Mcast/Makefile.am:
+        * orbsvcs/tests/EC_Multiple/Makefile.am:
+        * orbsvcs/tests/EC_Throughput/Makefile.am:
+        * orbsvcs/tests/Event/Basic/Makefile.am:
+        * orbsvcs/tests/Event/Mcast/Common/Makefile.am:
+        * orbsvcs/tests/Event/Mcast/Complex/Makefile.am:
+        * orbsvcs/tests/Event/Mcast/Simple/Makefile.am:
+        * orbsvcs/tests/Event/Mcast/Two_Way/Makefile.am:
+        * orbsvcs/tests/Event/Performance/Makefile.am:
+        * orbsvcs/tests/Event/lib/Makefile.am:
+        * orbsvcs/tests/FT_App/Makefile.am:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Makefile.am:
+        * orbsvcs/tests/FaultTolerance/IOGR/Makefile.am:
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile.am:
+        * orbsvcs/tests/FtRtEvent/Makefile.am:
+        * orbsvcs/tests/ImplRepo/Makefile.am:
+        * orbsvcs/tests/InterfaceRepo/Latency_Test/Makefile.am:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Makefile.am:
+        * orbsvcs/tests/Security/Big_Request/Makefile.am:
+        * orbsvcs/tests/Security/Callback/Makefile.am:
+        * orbsvcs/tests/Security/Crash_Test/Makefile.am:
+        * orbsvcs/tests/Security/MT_IIOP_SSL/Makefile.am:
+        * orbsvcs/tests/Security/MT_SSLIOP/Makefile.am:
+        * orbsvcs/tests/Security/Secure_Invocation/Makefile.am:
+        * performance-tests/Makefile.am:
+        * performance-tests/Anyop/Makefile.am:
+        * performance-tests/Callback/Makefile.am:
+        * performance-tests/Cubit/TAO/DII_Cubit/Makefile.am:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Makefile.am:
+        * performance-tests/Cubit/TAO/MT_Cubit/Makefile.am:
+        * performance-tests/Latency/AMH_Single_Threaded/Makefile.am:
+        * performance-tests/Latency/AMI/Makefile.am:
+        * performance-tests/Latency/Collocation/Makefile.am:
+        * performance-tests/Latency/DII/Makefile.am:
+        * performance-tests/Latency/DSI/Makefile.am:
+        * performance-tests/Latency/Deferred/Makefile.am:
+        * performance-tests/Latency/Single_Threaded/Makefile.am:
+        * performance-tests/Latency/Thread_Per_Connection/Makefile.am:
+        * performance-tests/Latency/Thread_Pool/Makefile.am:
+        * performance-tests/POA/Create_Reference/Makefile.am:
+        * performance-tests/POA/Implicit_Activation/Makefile.am:
+        * performance-tests/POA/Object_Creation_And_Registration/Makefile.am:
+        * performance-tests/Protocols/Makefile.am:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile.am:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile.am:
+        * performance-tests/RTCorba/Thread_Pool/Makefile.am:
+        * performance-tests/Sequence_Latency/AMH_Single_Threaded/Makefile.am:
+        * performance-tests/Sequence_Latency/AMI/Makefile.am:
+        * performance-tests/Sequence_Latency/DII/Makefile.am:
+        * performance-tests/Sequence_Latency/DSI/Makefile.am:
+        * performance-tests/Sequence_Latency/Deferred/Makefile.am:
+        * performance-tests/Sequence_Latency/Single_Threaded/Makefile.am:
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/Makefile.am:
+        * performance-tests/Sequence_Latency/Thread_Pool/Makefile.am:
+        * performance-tests/Throughput/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
 Thu Dec 22 15:24:38 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* TAO_IDL/tao_idl.mpc:
-	* docs/tutorials/Quoter/Naming_Service/Quoter_Naming_Service.mpc:
-	* docs/tutorials/Quoter/Simple/Client/Quoter_Simple_Client.mpc:
-	* docs/tutorials/Quoter/Simple/Impl-Repo/Quoter_Simple_Impl_Repo.mpc:
-	* docs/tutorials/Quoter/Simple/ImprovedServer/Quoter_Simple_ImprovedServer.mpc:
-	* docs/tutorials/Quoter/Simple/Persistent/Quoter_Simple_Persistent.mpc:
-	* docs/tutorials/Quoter/Simple/Server/Quoter_Simple_Server.mpc:
-	* examples/POA/Adapter_Activator/POA_Adapter_Activator.mpc:
-	* examples/POA/Explicit_Activation/POA_Explicit_Activation.mpc:
-	* examples/POA/On_Demand_Activation/POA_On_Demand_Activation.mpc:
-	* examples/POA/Reference_Counted_Servant/Reference_Counted_Servant.mpc:
-	* orbsvcs/examples/CosEC/RtEC_Based/bin/CosEC_RtEC_Based_bin.mpc:
-	* orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/CosEC_RtEC_Based_tests_Basic.mpc:
-	* orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/CosEC_RtEC_Based_Mult.mpc:
-	* orbsvcs/examples/Notify/Federation/Agent/Agent.mpc:
-	* orbsvcs/examples/Notify/Federation/SpaceCraft/SpaceCraft.mpc:
-	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Colocated_Roundtrip.mpc:
-	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Federated_Roundtrip.mpc:
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/RTCORBA_Baseline.mpc:
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/RTCORBA_Callback.mpc:
-	* orbsvcs/performance-tests/RTEvent/Roundtrip/Roundtrip.mpc:
-	* orbsvcs/performance-tests/RTEvent/TCP_Baseline/TCP_Baseline.mpc:
-	* orbsvcs/tests/Bug_2285_Regression/Bug_2285_Regression.mpc:
-	* orbsvcs/tests/Bug_2287_Regression/Bug_2287_Regression.mpc:
-	* orbsvcs/tests/CosEvent/Basic/basiceventtestexe.mpb:
-	* orbsvcs/tests/Event/Basic/rteventtestexe.mpb:
-	* orbsvcs/tests/Event/Mcast/Complex/Complex.mpc:
-	* orbsvcs/tests/Event/Mcast/Simple/Simple.mpc:
-	* orbsvcs/tests/Event/Mcast/Two_Way/Two_Way.mpc:
-	* orbsvcs/tests/Event/Performance/eventperftestexe.mpb:
-	* performance-tests/Protocols/Protocols.mpc:
+        * TAO_IDL/tao_idl.mpc:
+        * docs/tutorials/Quoter/Naming_Service/Quoter_Naming_Service.mpc:
+        * docs/tutorials/Quoter/Simple/Client/Quoter_Simple_Client.mpc:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/Quoter_Simple_Impl_Repo.mpc:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/Quoter_Simple_ImprovedServer.mpc:
+        * docs/tutorials/Quoter/Simple/Persistent/Quoter_Simple_Persistent.mpc:
+        * docs/tutorials/Quoter/Simple/Server/Quoter_Simple_Server.mpc:
+        * examples/POA/Adapter_Activator/POA_Adapter_Activator.mpc:
+        * examples/POA/Explicit_Activation/POA_Explicit_Activation.mpc:
+        * examples/POA/On_Demand_Activation/POA_On_Demand_Activation.mpc:
+        * examples/POA/Reference_Counted_Servant/Reference_Counted_Servant.mpc:
+        * orbsvcs/examples/CosEC/RtEC_Based/bin/CosEC_RtEC_Based_bin.mpc:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/CosEC_RtEC_Based_tests_Basic.mpc:
+        * orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/CosEC_RtEC_Based_Mult.mpc:
+        * orbsvcs/examples/Notify/Federation/Agent/Agent.mpc:
+        * orbsvcs/examples/Notify/Federation/SpaceCraft/SpaceCraft.mpc:
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Colocated_Roundtrip.mpc:
+        * orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Federated_Roundtrip.mpc:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/RTCORBA_Baseline.mpc:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/RTCORBA_Callback.mpc:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/Roundtrip.mpc:
+        * orbsvcs/performance-tests/RTEvent/TCP_Baseline/TCP_Baseline.mpc:
+        * orbsvcs/tests/Bug_2285_Regression/Bug_2285_Regression.mpc:
+        * orbsvcs/tests/Bug_2287_Regression/Bug_2287_Regression.mpc:
+        * orbsvcs/tests/CosEvent/Basic/basiceventtestexe.mpb:
+        * orbsvcs/tests/Event/Basic/rteventtestexe.mpb:
+        * orbsvcs/tests/Event/Mcast/Complex/Complex.mpc:
+        * orbsvcs/tests/Event/Mcast/Simple/Simple.mpc:
+        * orbsvcs/tests/Event/Mcast/Two_Way/Two_Way.mpc:
+        * orbsvcs/tests/Event/Performance/eventperftestexe.mpb:
+        * performance-tests/Protocols/Protocols.mpc:
 
-	  Add automake specific blocks that either add or replace include
-	  paths definitions with $(srcdir) relative paths.
+          Add automake specific blocks that either add or replace include
+          paths definitions with $(srcdir) relative paths.
 
 Thu Dec 22 13:04:09 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Added BUILD_ACE_FOR_TAO automake conditional.  Explicitly
-	  set to false (at least for now).
+          Added BUILD_ACE_FOR_TAO automake conditional.  Explicitly
+          set to false (at least for now).
 
 Thu Dec 22 14:43:24 2005  Paul Calabrese  <calabrese_p@ociweb.com>
 
@@ -244,10 +258,10 @@ Thu Dec 22 14:43:24 2005  Paul Calabrese  <calabrese_p@ociweb.com>
 
 Thu Dec 22 12:38:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tao/Makefile.am:
-	* orbsvcs/orbsvcs/Makefile.am:
+        * tao/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.am:
 
-	  Regenerated.
+          Regenerated.
 
 Thu Dec 22 14:13:14 2005  Chad Elliott  <elliott_c@ociweb.com>
 
