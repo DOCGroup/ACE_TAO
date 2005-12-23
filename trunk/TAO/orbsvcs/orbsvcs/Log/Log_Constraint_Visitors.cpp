@@ -70,8 +70,6 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (
   CORBA::Long len = this->rec_.attr_list.length();
   for (CORBA::Long i = 0; i < len; ++i)
     {
-      const char* name = this->rec_.attr_list[i].name;
-
       CORBA::Any* value;
       ACE_NEW(value, CORBA::Any);
 
