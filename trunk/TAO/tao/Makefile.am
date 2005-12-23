@@ -2343,7 +2343,6 @@ nobase_include_HEADERS += \
   IORInterceptor/IORInterceptor_Adapter_Factory_Impl.h \
   IORInterceptor/IORInterceptor_Adapter_Impl.h \
   IORInterceptor/IORInterceptor_Details.h \
-  IORInterceptor/IORInterceptor_Details.inl \
   IORInterceptor/iorinterceptor_export.h
 
 pkgconfig_DATA += \
