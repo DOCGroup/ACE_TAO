@@ -169,14 +169,14 @@ Consumer::svc (void)
 
   for (;;)
     {
-      this->timeout_.set (ACE_OS::time (0) + 4); // Wait for upto 4 seconds
+      this->timeout_.set (ACE_OS::time (0) + 4, 0); // Wait for upto 4 seconds
 
       result = this->getq (mb, &this->timeout_);
 
       if (result == -1)
         break;
 
-      size_t length = mb->length ();
+      size_t const length = mb->length ();
 
       if (length > 0)
         {
