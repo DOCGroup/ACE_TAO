@@ -27,8 +27,7 @@
 #include "tao/LocalObject.h"
 #include "ProcessingModePolicyC.h"
 
-// TBD - Should this be wrapped in a check for (TAO_HAS_MINIMUM_POA == 0)?
-
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_ProcessingModePolicy
@@ -72,6 +71,8 @@ private:
   /// The attribute
   PortableInterceptor::ProcessingMode processing_mode_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
