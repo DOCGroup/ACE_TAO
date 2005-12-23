@@ -19,7 +19,7 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "tao/TAO_Export.h"
+#include "pi_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,7 +29,7 @@
 #include "PolicyFactoryC.h"
 
 /// Policy factory for all PortableInterceptor related policies.
-class TAO_Export TAO_PI_PolicyFactory
+class TAO_PI_Export TAO_PI_PolicyFactory
   : public virtual PortableInterceptor::PolicyFactory,
     public virtual TAO_Local_RefCounted_Object
 {
