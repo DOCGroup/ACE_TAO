@@ -13,11 +13,6 @@ namespace TAO
   }
 
   ACE_INLINE
-  ClientRequestDetails::~ClientRequestDetails (void)
-  {
-  }
-
-  ACE_INLINE
   bool
   ClientRequestDetails::should_be_processed (bool is_remote_request) const
   {

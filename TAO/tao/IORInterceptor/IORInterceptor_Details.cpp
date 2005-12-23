@@ -1,10 +1,6 @@
 #include "IORInterceptor_Details.h"
 
-#if !defined (__ACE_INLINE__)
-#include "IORInterceptor_Details.inl"
-#endif /* defined INLINE */
-
-ACE_RCSID (PI,
+ACE_RCSID (IORInterceptor,
            IORInterceptor_Details,
            "$Id$")
 
@@ -16,11 +12,10 @@ namespace TAO
 {
   void
   IORInterceptor_Details::apply_policies (
-      const CORBA::PolicyList &policies
+      const CORBA::PolicyList &/*policies*/
       ACE_ENV_ARG_DECL)
   {
     // There are currently no policies that apply to IOR Interceptors.
-    ACE_UNUSED_ARG (policies);
     ACE_THROW (CORBA::INV_POLICY ());
   }
 }
