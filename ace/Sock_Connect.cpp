@@ -1101,7 +1101,7 @@ ACE::get_ip_interfaces (size_t &count,
 
   return 0;
 
-#elif defined (VXWORKS) || (__unix) || defined (__unix__) || defined (__Lynx__) || defined (_AIX)
+#elif defined (VXWORKS) || defined (__unix) || defined (__unix__) || defined (__Lynx__) || defined (_AIX)
   // COMMON (SVR4 and BSD) UNIX CODE
 
   size_t num_ifs, num_ifs_found;
