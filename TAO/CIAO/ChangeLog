@@ -1,3 +1,10 @@
+Fri Dec 23 13:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/ComponentPackager/*
+          Removed all these files, this component was using ziparchive and
+          we didn't build it. After checking this with the DAnCE developers
+          the conclustion was to zap it
+
 Thu Dec 22 19:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeManager/NodeManager_Impl.h:
