@@ -1,3 +1,11 @@
+Fri Dec 23 10:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Native_Exceptions/Native_Exceptions.mpc:
+        * tests/UNKNOWN_Exception/UNKNOWN_Exception.mpc:
+          Changed the way we change the TAO_IDL flags so that adding
+          more flags from the platform_macros.GNU file works for these
+          projects
+
 Fri Dec 23 10:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI/PI_PolicyFactory.h:
