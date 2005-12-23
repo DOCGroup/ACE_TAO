@@ -1,3 +1,9 @@
+Fri Dec 23 08:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI/PI_ORBInitializer.h:
+        * tao/PI/ProcessingModePolicy.h:
+          Fixed export macros
+
 Thu Dec 22 16:07:11 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* docs/tutorials/Quoter/RT_Event_Service/Makefile.am:
@@ -209,7 +215,7 @@ Thu Dec 22 14:13:14 2005  Chad Elliott  <elliott_c@ociweb.com>
 
           Made an attempt at supporting these new tests on VxWorks.
 
-Wed Dec 23 19:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+Wed Dec 21 19:30:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/Notify/Federation/federation.mwc:
           Removed this file, it causes project files with
