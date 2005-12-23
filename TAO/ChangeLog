@@ -1,3 +1,16 @@
+Fri Dec 23 10:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI/ClientRequestDetails.{h,inl}:
+        * tao/PI_Server/ServerRequestDetails.{h,inl}:
+        * tao/IORInterceptor/IORInterceptor_Details.{h,inl,cpp}:
+          Fixed pragma once warning, removed empty destructor, not needed
+
+        * tao/IORInterceptor/IORInterceptor_Details.inl:
+          Removed this file, it is now empty
+
+        * tao/Makefile.am:
+          Updated
+
 Fri Dec 23 08:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI/PI_ORBInitializer.h:
