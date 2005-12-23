@@ -1,3 +1,8 @@
+Fri Dec 23 10:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PI/PI_PolicyFactory.h:
+          Fixed export macros
+
 Fri Dec 23 10:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PI/ClientRequestDetails.{h,inl}:
