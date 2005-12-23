@@ -6,6 +6,8 @@
 
 #include "tao/PortableInterceptorC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_RCSID (tao,
            ProcessingModePolicy,
            "$Id$")
@@ -50,6 +52,8 @@ TAO_ProcessingModePolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return PortableInterceptor::PROCESSING_MODE_POLICY_TYPE;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 

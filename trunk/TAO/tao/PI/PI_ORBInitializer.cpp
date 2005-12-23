@@ -9,6 +9,8 @@
 #include "tao/ORB_Core.h"
 #include "ORBInitInfoC.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 ACE_RCSID (tao,
            PI_ORBInitializer,
            "$Id$")
@@ -99,5 +101,7 @@ TAO_PI_ORBInitializer::register_policy_factories (
       ACE_CHECK;
     }
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

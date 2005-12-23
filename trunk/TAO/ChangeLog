@@ -1,3 +1,14 @@
+Fri Dec 23 09:09:14 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/PI/PI_ORBInitializer.h:
+        * tao/PI/PI_ORBInitializer.cpp:
+        * tao/PI/PI_PolicyFactory.h:
+        * tao/PI/PI_PolicyFactory.cpp:
+        * tao/PI/ProcessingModePolicy.h:
+        * tao/PI/ProcessingModePolicy.cpp:
+
+          Added the TAO versioning namespace macros.
+
 Fri Dec 23 08:50:37 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/Echo_Collocated_ORBInitializer.h:
