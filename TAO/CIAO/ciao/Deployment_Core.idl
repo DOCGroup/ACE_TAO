@@ -20,8 +20,6 @@ module Deployment
   exception InvalidLocation {};
   exception InstallationFailure 
   {
-    /*Do we still need a reason? --Tao
-     *Yes -- will */
     string name;
     string reason;
   };
@@ -71,7 +69,16 @@ module Deployment
     MultiplexReceptacle,
     EventEmitter,
     EventPublisher,
-    EventConsumer
+    EventConsumer,
+	ecEventEmitter,
+    ecEventPublisher,
+    ecEventConsumer,
+    rtecEventEmitter,
+    rtecEventPublisher,
+    rtecEventConsumer,
+    nsEventEmitter,
+    nsEventPublisher,
+    nsEventConsumer
   };
 
   // CIAO's specific <Connection> type defition. 
@@ -83,6 +90,9 @@ module Deployment
     string instanceName;
     string portName;
     CCMComponentPortKind kind;
+
+    string endpointInstanceName; // CIAO specific extension 
+    string endpointPortName;     // CIAO specific extension
 
     // the endpoints member is change to endpoint.
     // Since we will not have more than 1 objref in there.
@@ -124,7 +134,9 @@ module Deployment
   //==================================
   interface Application
   {
-    void finishLaunch (in Connections providedReference, in boolean start)
+    void finishLaunch (in Connections providedReference, 
+                       in boolean start,
+                       in boolean is_ReDAC)
       raises (StartError, InvalidConnection);
     void start ()
       raises (StartError);

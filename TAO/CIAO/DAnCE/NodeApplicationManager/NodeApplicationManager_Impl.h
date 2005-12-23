@@ -1,4 +1,4 @@
-//$Id$
+// $Id$
 
 // -*- C++ -*-
 
@@ -81,6 +81,11 @@ namespace CIAO
                        ::Deployment::InvalidConnection,
                        ::Deployment::InvalidProperty,
                        ::Components::RemoveFailure));
+
+    virtual void 
+    reset_plan (const ::Deployment::DeploymentPlan & plan
+                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((::CORBA::SystemException));
 
     /**
      * A factory operation to create NodeApplicationManager interface, and return

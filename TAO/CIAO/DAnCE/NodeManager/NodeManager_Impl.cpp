@@ -149,6 +149,14 @@ CIAO::NodeManager_Impl_Base::preparePlan (const Deployment::DeploymentPlan &plan
           ACE_TRY_CHECK;
 
           this->map_.insert_nam (plan.UUID.in (), oid.in ());
+
+          CORBA::Object_var obj =
+            this->poa_->id_to_reference (this->map_.get_nam (plan.UUID.in ()));
+          ACE_TRY_CHECK;
+
+          // narrow should return a nil reference if it fails.
+          return
+            Deployment::NodeApplicationManager::_narrow (obj.in ());
         }
       else
         {
@@ -158,16 +166,22 @@ CIAO::NodeManager_Impl_Base::preparePlan (const Deployment::DeploymentPlan &plan
                           "with UUID: %s\n",
                           plan.UUID.in ()));
             }
+
+          CORBA::Object_var obj =
+            this->poa_->id_to_reference (this->map_.get_nam (plan.UUID.in ()));
+          ACE_TRY_CHECK;
+
+          Deployment::NodeApplicationManager_var nam =
+            Deployment::NodeApplicationManager::_narrow (obj.in ());
+          ACE_TRY_CHECK;
+
+          nam->reset_plan (plan);
+          ACE_TRY_CHECK;
+
+          // Potentially we could reset many other configuration settings
+          // such as command line options, service configuration file, etc.
+          return nam._retn ();
         }
-
-
-      CORBA::Object_var obj =
-        this->poa_->id_to_reference (this->map_.get_nam (plan.UUID.in ()));
-      ACE_TRY_CHECK;
-
-      // narrow should return a nil reference if it fails.
-      return
-        Deployment::NodeApplicationManager::_narrow (obj.in ());
     }
   ACE_CATCH (PortableServer::POA::ObjectNotActive, ex)
     {

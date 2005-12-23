@@ -85,6 +85,11 @@ namespace CIAO
                          ::Deployment::InvalidProperty,
                          ::Components::RemoveFailure));
 
+      virtual Deployment::DeploymentPlan * getPlan (
+          const char * plan_uuid
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((::CORBA::SystemException));
+
     protected:
       /// Destructor.
       ~Execution_Manager_Impl (void);
