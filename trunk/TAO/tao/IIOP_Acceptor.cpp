@@ -1067,8 +1067,8 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
   ACE_CString **argv = 0;
   ACE_NEW_RETURN (argv, ACE_CString*[argc],-1);
 
-  int begin = 0;
-  int end = -1;
+  ssize_t begin = 0;
+  ssize_t end = -1;
   int result = 0;
   for (int j = 0; j < argc; ++j)
     {
@@ -1077,7 +1077,7 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
       if (j < argc - 1)
         end = options.find (option_delimiter, begin);
       else
-        end = static_cast<CORBA::ULong> (len);
+        end = static_cast<ssize_t> (len);
 
       if (end == begin)
         {
@@ -1121,9 +1121,9 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
   while (i < argc)
     {
       size_t len = argv[i]->length();
-      int slot = argv[i]->find ("=");
+      ssize_t slot = argv[i]->find ("=");
 
-      if (slot == static_cast <int> (len - 1)
+      if (slot == static_cast <ssize_t> (len - 1)
           || slot == ACE_CString::npos)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("TAO (%P|%t) - IIOP option <%s> is ")
