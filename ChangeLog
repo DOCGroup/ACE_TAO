@@ -1,3 +1,8 @@
+Fri Dec 23 08:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Buffer_Stream_Test.cpp:
+          Fixed ambiguity errors with vc6
+
 Fri Dec 23 07:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Time_Value.{h,inl}:
