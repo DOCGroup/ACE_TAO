@@ -121,8 +121,8 @@ public:
   ACE_Time_Value (const FILETIME &ft);
 # endif /* ACE_WIN32 */
 
-  /// Initializes the ACE_Time_Value from two longs.
-  void set (long sec, long usec);
+  /// Initializes the ACE_Time_Value from seconds and useconds.
+  void set (time_t sec, long usec);
 
   /// Initializes the ACE_Time_Value from a double, which is assumed to be
   /// in second format, with any remainder treated as microseconds.
@@ -138,9 +138,6 @@ public:
   ///  Initializes the ACE_Time_Value object from a Win32 FILETIME.
   void set (const FILETIME &ft);
 # endif /* ACE_WIN32 */
-
-  /// Initializes a ACE_Time_Value object from a time_t.
-  void set (time_t t);
 
   /// Converts from ACE_Time_Value format into milli-seconds format.
   /**

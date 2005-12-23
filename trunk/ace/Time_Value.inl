@@ -49,25 +49,18 @@ ACE_Time_Value::operator const timeval * () const
 }
 
 ACE_INLINE void
-ACE_Time_Value::set (long sec, long usec)
+ACE_Time_Value::set (time_t sec, long usec)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::set");
   this->tv_.tv_sec = sec;
   this->tv_.tv_usec = usec;
 #if __GNUC__
   if (__builtin_constant_p(sec) &&
-      __builtin_constant_p(usec) && 
+      __builtin_constant_p(usec) &&
       (sec >= 0 && usec >= 0 && usec < ACE_ONE_SECOND_IN_USECS))
     return;
 #endif
   this->normalize ();
-}
-
-ACE_INLINE void
-ACE_Time_Value::set (time_t t)
-{
-  this->tv_.tv_sec = t;
-  this->tv_.tv_usec = 0;
 }
 
 ACE_INLINE void
