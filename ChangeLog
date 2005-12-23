@@ -1,3 +1,13 @@
+Fri Dec 23 07:55:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Time_Value.{h,inl}:
+          Removed the set with time_t and changed the set with two longs to
+          pass seconds as time_t. This should work on all platforms fine.
+          Thanks to JT for the ideas.
+
+        * ace/System_Time.cpp:
+          Use the set with two arguments
+
 Thu Dec 22 18:33:29 2005  Steve Huston  <shuston@riverace.com>
 
 	* include/makeinclude/platform_aix_ibm.GNU: Change Visual Age 6 to use
