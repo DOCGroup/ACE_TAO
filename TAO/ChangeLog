@@ -1,6 +1,7 @@
 Fri Dec 23 10:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Acceptor.cpp:
+        * examples/POA/On_Demand_Loading/Servant_Manager.cpp:
           Fixed 64bit conversion warnings
 
 Fri Dec 23 10:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
