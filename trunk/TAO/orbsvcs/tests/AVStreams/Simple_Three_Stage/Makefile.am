@@ -13,9 +13,13 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_ROOT = $(top_srcdir)
 
+noinst_PROGRAMS =
+
 ## Makefile.AVS_Simple_Three_Stage_Dist.am
 
-noinst_PROGRAMS = distributer
+if !BUILD_ACE_FOR_TAO
+
+noinst_PROGRAMS += distributer
 
 distributer_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -38,7 +42,11 @@ distributer_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
+
 ## Makefile.AVS_Simple_Three_Stage_Recv.am
+
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += receiver
 
@@ -63,7 +71,11 @@ receiver_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
+
 ## Makefile.AVS_Simple_Three_Stage_Send.am
+
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += sender
 
@@ -87,6 +99,8 @@ sender_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

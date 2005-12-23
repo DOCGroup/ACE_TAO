@@ -176,6 +176,7 @@ endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.nestea_server.am
 
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += nestea_server
@@ -204,6 +205,7 @@ nestea_server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

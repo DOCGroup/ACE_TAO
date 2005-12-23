@@ -17,6 +17,7 @@ TAO_ROOT = $(top_srcdir)
 ## Makefile.Event_Test_Lib.am
 
 if BUILD_CORBA_MESSAGING
+if !BUILD_ACE_FOR_TAO
 
 noinst_LTLIBRARIES = libECTests.la
 
@@ -45,6 +46,7 @@ noinst_HEADERS = \
   Supplier.h \
   ectest_export.h
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Clean up template repositories, etc.

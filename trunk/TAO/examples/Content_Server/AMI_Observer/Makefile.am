@@ -20,82 +20,11 @@ CLEANFILES =
 noinst_PROGRAMS =
 BUILT_SOURCES =
 
-## Makefile.AMI_Observer_Client.am
-
-if BUILD_AMI
-if BUILD_CORBA_MESSAGING
-
-BUILT_SOURCES += \
-  Push_Web_ServerC.cpp \
-  Push_Web_ServerC.h \
-  Push_Web_ServerC.inl \
-  Push_Web_ServerS.cpp \
-  Push_Web_ServerS.h \
-  Push_Web_ServerS.inl \
-  Push_Web_ServerS_T.cpp \
-  Push_Web_ServerS_T.h \
-  Push_Web_ServerS_T.inl
-
-CLEANFILES += \
-  Push_Web_Server-stamp \
-  Push_Web_ServerC.cpp \
-  Push_Web_ServerC.h \
-  Push_Web_ServerC.inl \
-  Push_Web_ServerS.cpp \
-  Push_Web_ServerS.h \
-  Push_Web_ServerS.inl \
-  Push_Web_ServerS_T.cpp \
-  Push_Web_ServerS_T.h \
-  Push_Web_ServerS_T.inl
-
-Push_Web_ServerC.cpp Push_Web_ServerC.h Push_Web_ServerC.inl Push_Web_ServerS.cpp Push_Web_ServerS.h Push_Web_ServerS.inl Push_Web_ServerS_T.cpp Push_Web_ServerS_T.h Push_Web_ServerS_T.inl: Push_Web_Server-stamp
-
-Push_Web_Server-stamp: $(srcdir)/Push_Web_Server.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -I$(TAO_ROOT)/orbsvcs $(srcdir)/Push_Web_Server.idl
-	@touch $@
-
-noinst_PROGRAMS += client
-
-client_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs
-
-client_SOURCES = \
-  Callback_i.cpp \
-  Push_Iterator_Handler.cpp \
-  Push_Web_ServerC.cpp \
-  Push_Web_ServerS.cpp \
-  client.cpp \
-  Callback_i.h \
-  Push_Iterator_Handler.h \
-  Push_Web_ServerC.h \
-  Push_Web_ServerC.inl \
-  Push_Web_ServerS.h \
-  Push_Web_ServerS_T.h \
-  Push_Web_ServerS_T.inl
-
-client_LDADD = \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_CORBA_MESSAGING
-endif BUILD_AMI
-
 ## Makefile.AMI_Observer_Server.am
 
 if BUILD_AMI
 if BUILD_CORBA_MESSAGING
+if !BUILD_ACE_FOR_TAO
 
 BUILT_SOURCES += \
   Push_Web_ServerC.cpp \
@@ -161,6 +90,81 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
+endif BUILD_CORBA_MESSAGING
+endif BUILD_AMI
+
+## Makefile.AMI_Observer_Client.am
+
+if BUILD_AMI
+if BUILD_CORBA_MESSAGING
+if !BUILD_ACE_FOR_TAO
+
+BUILT_SOURCES += \
+  Push_Web_ServerC.cpp \
+  Push_Web_ServerC.h \
+  Push_Web_ServerC.inl \
+  Push_Web_ServerS.cpp \
+  Push_Web_ServerS.h \
+  Push_Web_ServerS.inl \
+  Push_Web_ServerS_T.cpp \
+  Push_Web_ServerS_T.h \
+  Push_Web_ServerS_T.inl
+
+CLEANFILES += \
+  Push_Web_Server-stamp \
+  Push_Web_ServerC.cpp \
+  Push_Web_ServerC.h \
+  Push_Web_ServerC.inl \
+  Push_Web_ServerS.cpp \
+  Push_Web_ServerS.h \
+  Push_Web_ServerS.inl \
+  Push_Web_ServerS_T.cpp \
+  Push_Web_ServerS_T.h \
+  Push_Web_ServerS_T.inl
+
+Push_Web_ServerC.cpp Push_Web_ServerC.h Push_Web_ServerC.inl Push_Web_ServerS.cpp Push_Web_ServerS.h Push_Web_ServerS.inl Push_Web_ServerS_T.cpp Push_Web_ServerS_T.h Push_Web_ServerS_T.inl: Push_Web_Server-stamp
+
+Push_Web_Server-stamp: $(srcdir)/Push_Web_Server.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) -GC -I$(TAO_ROOT)/orbsvcs $(srcdir)/Push_Web_Server.idl
+	@touch $@
+
+noinst_PROGRAMS += client
+
+client_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs
+
+client_SOURCES = \
+  Callback_i.cpp \
+  Push_Iterator_Handler.cpp \
+  Push_Web_ServerC.cpp \
+  Push_Web_ServerS.cpp \
+  client.cpp \
+  Callback_i.h \
+  Push_Iterator_Handler.h \
+  Push_Web_ServerC.h \
+  Push_Web_ServerC.inl \
+  Push_Web_ServerS.h \
+  Push_Web_ServerS_T.h \
+  Push_Web_ServerS_T.inl
+
+client_LDADD = \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 endif BUILD_AMI
 

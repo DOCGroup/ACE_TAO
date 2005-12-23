@@ -53,6 +53,7 @@ test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
 ## Makefile.Thread_Pool_RTCorba_Client.am
 
 if BUILD_RT_CORBA
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += client
@@ -76,6 +77,7 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_RT_CORBA
 
 ## Makefile.Thread_Pool_RTCorba_Server.am

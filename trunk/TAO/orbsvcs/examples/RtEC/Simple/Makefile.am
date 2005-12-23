@@ -52,6 +52,7 @@ endif BUILD_CORBA_MESSAGING
 ## Makefile.RtEC_Simple_Service.am
 
 if BUILD_CORBA_MESSAGING
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += Service
 
@@ -83,6 +84,7 @@ Service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.RtEC_Simple_Supplier.am

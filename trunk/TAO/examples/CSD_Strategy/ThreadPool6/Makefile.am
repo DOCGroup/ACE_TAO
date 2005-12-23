@@ -16,59 +16,9 @@ TAO_IDL_DEP = $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 TAO_ROOT = $(top_srcdir)
 
-
-## Makefile.CSD_Test_ThreadPool6_Client.am
-
-BUILT_SOURCES = \
-  FooC.cpp \
-  FooC.h \
-  FooC.inl \
-  FooS.h \
-  FooS.inl \
-  FooS_T.cpp \
-  FooS_T.h \
-  FooS_T.inl
-
-CLEANFILES = \
-  Foo-stamp \
-  FooC.cpp \
-  FooC.h \
-  FooC.inl \
-  FooS.h \
-  FooS.inl \
-  FooS_T.cpp \
-  FooS_T.h \
-  FooS_T.inl
-
-FooC.cpp FooC.h FooC.inl FooS.h FooS.inl FooS_T.cpp FooS_T.h FooS_T.inl: Foo-stamp
-
-Foo-stamp: $(srcdir)/Foo.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Foo.idl
-	@touch $@
-
-noinst_PROGRAMS = client_main
-
-client_main_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-client_main_SOURCES = \
-  ClientApp.cpp \
-  FooC.cpp \
-  client_main.cpp \
-  ClientApp.h \
-  FooC.h \
-  FooC.inl \
-  FooS.h \
-  FooS_T.h \
-  FooS_T.inl
-
-client_main_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
+CLEANFILES =
+noinst_PROGRAMS =
+BUILT_SOURCES =
 
 ## Makefile.CSD_Test_ThreadPool6_Server.am
 
@@ -138,6 +88,59 @@ server_main_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+
+## Makefile.CSD_Test_ThreadPool6_Client.am
+
+BUILT_SOURCES += \
+  FooC.cpp \
+  FooC.h \
+  FooC.inl \
+  FooS.h \
+  FooS.inl \
+  FooS_T.cpp \
+  FooS_T.h \
+  FooS_T.inl
+
+CLEANFILES += \
+  Foo-stamp \
+  FooC.cpp \
+  FooC.h \
+  FooC.inl \
+  FooS.h \
+  FooS.inl \
+  FooS_T.cpp \
+  FooS_T.h \
+  FooS_T.inl
+
+FooC.cpp FooC.h FooC.inl FooS.h FooS.inl FooS_T.cpp FooS_T.h FooS_T.inl: Foo-stamp
+
+Foo-stamp: $(srcdir)/Foo.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Foo.idl
+	@touch $@
+
+noinst_PROGRAMS += client_main
+
+client_main_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+client_main_SOURCES = \
+  ClientApp.cpp \
+  FooC.cpp \
+  client_main.cpp \
+  ClientApp.h \
+  FooC.h \
+  FooC.inl \
+  FooS.h \
+  FooS_T.h \
+  FooS_T.inl
+
+client_main_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:
