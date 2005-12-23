@@ -63,6 +63,8 @@ namespace CIAO
   {
   public:
     /// Default constructor.
+NodeApplication_Impl(void);
+
     NodeApplication_Impl (CORBA::ORB_ptr o,
                           PortableServer::POA_ptr p,
                           NodeApp_Configurator &c,
