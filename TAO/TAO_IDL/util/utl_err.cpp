@@ -81,6 +81,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
+#include "ace/Log_Msg.h"
+
 ACE_RCSID (util,
            utl_err,
            "$Id$")

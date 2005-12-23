@@ -1,3 +1,12 @@
+Fri Dec 23 13:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/util/utl_err.cpp:
+          Added include of Log_Msg.h to get ACE_ERROR. Can't reproduce
+          it on my machine but it can be that because of other defines
+          this file is not included implicitly. This fixes bugzilla bug
+          2342. Thanks to Dave Craig <dwcraig at qualcomm dot com> for
+          reporting this.
+
 Fri Dec 23 10:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Acceptor.cpp:
