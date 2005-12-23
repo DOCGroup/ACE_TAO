@@ -18,7 +18,7 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "tao/TAO_Export.h"
+#include "pi_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -39,7 +39,7 @@
  * remote) should (or should not) cause a Portable Interceptor to be used.
  */
 
-class TAO_Export TAO_ProcessingModePolicy
+class TAO_PI_Export TAO_ProcessingModePolicy
   : public PortableInterceptor::ProcessingModePolicy,
     public TAO_Local_RefCounted_Object
 {
