@@ -642,7 +642,7 @@ namespace CIAO
 
     if (t == Container::Facet_Consumer)
     {
-      if (CIAO::debug_level () > 1)
+      if (CIAO::debug_level () > 9)
         ACE_DEBUG ((LM_DEBUG, "STRING in container is %s\n",
                     str.in ()));
     }

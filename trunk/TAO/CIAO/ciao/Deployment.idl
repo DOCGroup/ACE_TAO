@@ -57,17 +57,24 @@ module Deployment {
   {
     DeploymentPlan getPlan ();
 
+
     /// CIAO specific version of startLaunch implementation, this one
     /// differs with spec-defined operation in the sense that it doesn't
     /// return DomainApplication object reference.
+
     void startLaunch (in Properties configProperty, in boolean start)
       raises (ResourceNotAvailable, StartError, InvalidProperty);
-    void finishLaunch (in boolean start)
+
+    void finishLaunch (in boolean start, 
+                       in boolean is_ReDAC)
       raises (StartError, InvalidConnection);
+
     void start ()
       raises (StartError);
+
     void destroyApplication ()
       raises (StopError);
+
     void destroyManager ()
       raises (StopError);
 
@@ -106,6 +113,9 @@ module Deployment {
               InvalidConnection,
               InvalidProperty,
               ::Components::RemoveFailure);
+
+    // Get operation
+    DeploymentPlan getPlan (in string plan_uuid);
   };
 
   interface TargetManager {
@@ -139,6 +149,8 @@ module Deployment {
               InvalidConnection,
               InvalidProperty,
               ::Components::RemoveFailure);
+
+      void reset_plan (in DeploymentPlan plan);
   };
 
   interface NodeManager {

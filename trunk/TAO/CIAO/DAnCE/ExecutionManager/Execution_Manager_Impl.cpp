@@ -51,8 +51,7 @@ namespace CIAO
       if (this->map_.is_plan_available (plan.UUID.in ()))
         return this->map_.fetch_dam_reference (plan.UUID.in ());
 
-      // We are about to begin working on a new
-      // DeploymentPlan.
+      // We are about to begin working on a new DeploymentPlan.
       // Create a DAM servant, which will be populated
       // to be sent back to the PlanLauncher.
       //
@@ -97,10 +96,6 @@ namespace CIAO
       //
       ACE_CHECK_RETURN (::Deployment::DomainApplicationManager::_nil ());
 
-      /// @@ Can be removed -- Bala
-      /// Gan, have you addressed this comment by Bala?
-      /// Do we still need this code lying around?
-      ///
       dam_servant->set_uuid (plan.UUID.in ());
 
       Deployment::DomainApplicationManager_var dam =
@@ -215,18 +210,47 @@ namespace CIAO
 
       ACE_TRY
         {
-          // Reset the plan_ private instance variable of the DAM servant
-          //dam->set_plan (plan);
-
           // Call perform_redeployment() on the DAM, which will do the
           // actual redeployment and reconfiguration on the dommain level.
           dam->perform_redeployment (plan);
-
         }
       ACE_CATCHANY
         {
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                                "Execution_Manager_Impl::perform_redeployment\t\n");
+          ACE_RE_THROW;
+        }
+      ACE_ENDTRY;
+      ACE_CHECK;
+    }
+
+    Deployment::DeploymentPlan * 
+      Execution_Manager_Impl::getPlan (
+        const char * plan_uuid
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((::CORBA::SystemException))
+    {
+      Deployment::DomainApplicationManager_var dam;
+
+      if (this->map_.is_plan_available (plan_uuid))
+        dam = this->map_.fetch_dam_reference (plan_uuid);
+      else
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      "DAnCE (%P|%t) ExecutionManager_Impl.cpp -"
+                      "CIAO::Execution_Manager_Impl::getPlan -"
+                      "Invalid plan uuid: %s!\n", plan_uuid));
+          ACE_THROW (::CORBA::BAD_PARAM ());
+        }
+
+      ACE_TRY
+        {
+          return dam->getPlan ();
+        }
+      ACE_CATCHANY
+        {
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                               "Execution_Manager_Impl::getPlan\t\n");
           ACE_RE_THROW;
         }
       ACE_ENDTRY;
