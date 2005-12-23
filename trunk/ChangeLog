@@ -1,3 +1,8 @@
+Fri Dec 23 11:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Sock_Connect.cpp:
+          Added missing defined
+
 Fri Dec 23 08:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Buffer_Stream_Test.cpp:
