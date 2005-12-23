@@ -17,6 +17,7 @@ TAO_ROOT = $(top_srcdir)
 ## Makefile.Agent.am
 
 if BUILD_THREADS
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS = agent
@@ -54,6 +55,7 @@ agent_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_THREADS
 
 ## Clean up template repositories, etc.

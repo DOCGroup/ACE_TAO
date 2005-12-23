@@ -20,73 +20,7 @@ CLEANFILES =
 noinst_PROGRAMS =
 BUILT_SOURCES =
 
-## Makefile.mif_client.am
-
-if BUILD_RT_CORBA
-
-BUILT_SOURCES += \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl \
-  testS_T.cpp \
-  testS_T.h \
-  testS_T.inl
-
-CLEANFILES += \
-  test-stamp \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS.inl \
-  testS_T.cpp \
-  testS_T.h \
-  testS_T.inl
-
-testC.cpp testC.h testC.inl testS.h testS.inl testS_T.cpp testS_T.h testS_T.inl: test-stamp
-
-test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/test.idl
-	@touch $@
-
-noinst_PROGRAMS += mif_client
-
-mif_client_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR) \
-  -I$(ACE_ROOT)/Kokyu \
-  -I$(TAO_ROOT)/examples/Kokyu_dsrt_schedulers \
-  -I$(TAO_BUILDDIR)/examples/Kokyu_dsrt_schedulers
-
-mif_client_SOURCES = \
-  client.cpp \
-  testC.cpp \
-  testC.h \
-  testC.inl \
-  testS.h \
-  testS_T.h \
-  testS_T.inl
-
-mif_client_LDADD = \
-  $(top_builddir)/examples/Kokyu_dsrt_schedulers/libKokyu_DSRT_Schedulers.la \
-  $(TAO_BUILDDIR)/tao/libTAO_RTScheduler.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(ACE_BUILDDIR)/Kokyu/libKokyu.la \
-  $(TAO_BUILDDIR)/tao/libTAO_RTCORBA.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif BUILD_RT_CORBA
-
-## Makefile.mif_server.am
+## Makefile.mif_example_server.am
 
 if BUILD_RT_CORBA
 
@@ -152,6 +86,72 @@ mif_server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif BUILD_RT_CORBA
+
+## Makefile.mif_example_client.am
+
+if BUILD_RT_CORBA
+
+BUILT_SOURCES += \
+  testC.cpp \
+  testC.h \
+  testC.inl \
+  testS.h \
+  testS.inl \
+  testS_T.cpp \
+  testS_T.h \
+  testS_T.inl
+
+CLEANFILES += \
+  test-stamp \
+  testC.cpp \
+  testC.h \
+  testC.inl \
+  testS.h \
+  testS.inl \
+  testS_T.cpp \
+  testS_T.h \
+  testS_T.inl
+
+testC.cpp testC.h testC.inl testS.h testS.inl testS_T.cpp testS_T.h testS_T.inl: test-stamp
+
+test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/test.idl
+	@touch $@
+
+noinst_PROGRAMS += mif_client
+
+mif_client_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR) \
+  -I$(ACE_ROOT)/Kokyu \
+  -I$(TAO_ROOT)/examples/Kokyu_dsrt_schedulers \
+  -I$(TAO_BUILDDIR)/examples/Kokyu_dsrt_schedulers
+
+mif_client_SOURCES = \
+  client.cpp \
+  testC.cpp \
+  testC.h \
+  testC.inl \
+  testS.h \
+  testS_T.h \
+  testS_T.inl
+
+mif_client_LDADD = \
+  $(top_builddir)/examples/Kokyu_dsrt_schedulers/libKokyu_DSRT_Schedulers.la \
+  $(TAO_BUILDDIR)/tao/libTAO_RTScheduler.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI_Server.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(ACE_BUILDDIR)/Kokyu/libKokyu.la \
+  $(TAO_BUILDDIR)/tao/libTAO_RTCORBA.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la

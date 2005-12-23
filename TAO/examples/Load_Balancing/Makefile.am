@@ -22,6 +22,7 @@ BUILT_SOURCES =
 
 ## Makefile.Load_Balancing_Balancer.am
 
+if !BUILD_ACE_FOR_TAO
 if !BUILD_REPO
 
 BUILT_SOURCES += \
@@ -75,6 +76,105 @@ load_balancer_SOURCES = \
   Load_Balancing_Service.h
 
 load_balancer_LDADD = \
+  $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
+  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_REPO
+endif !BUILD_ACE_FOR_TAO
+
+## Makefile.Load_Balancing_Server.am
+
+if !BUILD_REPO
+
+BUILT_SOURCES += \
+  IdentityC.cpp \
+  IdentityC.h \
+  IdentityC.inl \
+  IdentityS.cpp \
+  IdentityS.h \
+  IdentityS.inl \
+  IdentityS_T.cpp \
+  IdentityS_T.h \
+  IdentityS_T.inl
+
+CLEANFILES += \
+  Identity-stamp \
+  IdentityC.cpp \
+  IdentityC.h \
+  IdentityC.inl \
+  IdentityS.cpp \
+  IdentityS.h \
+  IdentityS.inl \
+  IdentityS_T.cpp \
+  IdentityS_T.h \
+  IdentityS_T.inl
+
+IdentityC.cpp IdentityC.h IdentityC.inl IdentityS.cpp IdentityS.h IdentityS.inl IdentityS_T.cpp IdentityS_T.h IdentityS_T.inl: Identity-stamp
+
+Identity-stamp: $(srcdir)/Identity.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Identity.idl
+	@touch $@
+
+BUILT_SOURCES += \
+  Load_BalancerC.cpp \
+  Load_BalancerC.h \
+  Load_BalancerC.inl \
+  Load_BalancerS.h \
+  Load_BalancerS.inl \
+  Load_BalancerS_T.cpp \
+  Load_BalancerS_T.h \
+  Load_BalancerS_T.inl
+
+CLEANFILES += \
+  Load_Balancer-stamp \
+  Load_BalancerC.cpp \
+  Load_BalancerC.h \
+  Load_BalancerC.inl \
+  Load_BalancerS.h \
+  Load_BalancerS.inl \
+  Load_BalancerS_T.cpp \
+  Load_BalancerS_T.h \
+  Load_BalancerS_T.inl
+
+Load_BalancerC.cpp Load_BalancerC.h Load_BalancerC.inl Load_BalancerS.h Load_BalancerS.inl Load_BalancerS_T.cpp Load_BalancerS_T.h Load_BalancerS_T.inl: Load_Balancer-stamp
+
+Load_Balancer-stamp: $(srcdir)/Load_Balancer.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Load_Balancer.idl
+	@touch $@
+
+noinst_PROGRAMS += server
+
+server_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+server_SOURCES = \
+  IdentityC.cpp \
+  IdentityS.cpp \
+  Identity_Server.cpp \
+  Identity_i.cpp \
+  Load_BalancerC.cpp \
+  IdentityC.h \
+  IdentityC.inl \
+  IdentityS.h \
+  IdentityS_T.h \
+  IdentityS_T.inl \
+  Identity_Server.h \
+  Identity_i.h \
+  Load_BalancerC.h \
+  Load_BalancerC.inl \
+  Load_BalancerS.h \
+  Load_BalancerS_T.h \
+  Load_BalancerS_T.inl
+
+server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
@@ -168,104 +268,6 @@ client_SOURCES = \
   Load_BalancerS_T.inl
 
 client_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PI.la \
-  $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif !BUILD_REPO
-
-## Makefile.Load_Balancing_Server.am
-
-if !BUILD_REPO
-
-BUILT_SOURCES += \
-  IdentityC.cpp \
-  IdentityC.h \
-  IdentityC.inl \
-  IdentityS.cpp \
-  IdentityS.h \
-  IdentityS.inl \
-  IdentityS_T.cpp \
-  IdentityS_T.h \
-  IdentityS_T.inl
-
-CLEANFILES += \
-  Identity-stamp \
-  IdentityC.cpp \
-  IdentityC.h \
-  IdentityC.inl \
-  IdentityS.cpp \
-  IdentityS.h \
-  IdentityS.inl \
-  IdentityS_T.cpp \
-  IdentityS_T.h \
-  IdentityS_T.inl
-
-IdentityC.cpp IdentityC.h IdentityC.inl IdentityS.cpp IdentityS.h IdentityS.inl IdentityS_T.cpp IdentityS_T.h IdentityS_T.inl: Identity-stamp
-
-Identity-stamp: $(srcdir)/Identity.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Identity.idl
-	@touch $@
-
-BUILT_SOURCES += \
-  Load_BalancerC.cpp \
-  Load_BalancerC.h \
-  Load_BalancerC.inl \
-  Load_BalancerS.h \
-  Load_BalancerS.inl \
-  Load_BalancerS_T.cpp \
-  Load_BalancerS_T.h \
-  Load_BalancerS_T.inl
-
-CLEANFILES += \
-  Load_Balancer-stamp \
-  Load_BalancerC.cpp \
-  Load_BalancerC.h \
-  Load_BalancerC.inl \
-  Load_BalancerS.h \
-  Load_BalancerS.inl \
-  Load_BalancerS_T.cpp \
-  Load_BalancerS_T.h \
-  Load_BalancerS_T.inl
-
-Load_BalancerC.cpp Load_BalancerC.h Load_BalancerC.inl Load_BalancerS.h Load_BalancerS.inl Load_BalancerS_T.cpp Load_BalancerS_T.h Load_BalancerS_T.inl: Load_Balancer-stamp
-
-Load_Balancer-stamp: $(srcdir)/Load_Balancer.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Load_Balancer.idl
-	@touch $@
-
-noinst_PROGRAMS += server
-
-server_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-server_SOURCES = \
-  IdentityC.cpp \
-  IdentityS.cpp \
-  Identity_Server.cpp \
-  Identity_i.cpp \
-  Load_BalancerC.cpp \
-  IdentityC.h \
-  IdentityC.inl \
-  IdentityS.h \
-  IdentityS_T.h \
-  IdentityS_T.inl \
-  Identity_Server.h \
-  Identity_i.h \
-  Load_BalancerC.h \
-  Load_BalancerC.inl \
-  Load_BalancerS.h \
-  Load_BalancerS_T.h \
-  Load_BalancerS_T.inl
-
-server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_PI.la \
   $(TAO_BUILDDIR)/tao/libTAO_CodecFactory.la \

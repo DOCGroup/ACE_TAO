@@ -23,6 +23,7 @@ BUILT_SOURCES =
 ## Makefile.Event_Supplier_DualEC_Sup.am
 
 if BUILD_CORBA_MESSAGING
+if !BUILD_ACE_FOR_TAO
 
 BUILT_SOURCES += \
   ./NavWeapC.cpp \
@@ -94,6 +95,7 @@ DualEC_Sup_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Event_Supplier_Event_Con.am

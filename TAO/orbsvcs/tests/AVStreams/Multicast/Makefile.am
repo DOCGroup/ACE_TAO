@@ -13,9 +13,13 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_ROOT = $(top_srcdir)
 
+noinst_PROGRAMS =
+
 ## Makefile.AVS_Multicast_Ftp.am
 
-noinst_PROGRAMS = ftp
+if !BUILD_ACE_FOR_TAO
+
+noinst_PROGRAMS += ftp
 
 ftp_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -39,7 +43,11 @@ ftp_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
+
 ## Makefile.AVS_Multicast_Server.am
+
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += server
 
@@ -64,6 +72,8 @@ server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

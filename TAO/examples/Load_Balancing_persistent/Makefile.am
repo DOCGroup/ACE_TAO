@@ -22,6 +22,7 @@ BUILT_SOURCES =
 
 ## Makefile.Load_Balancing_Persistent_Balancer.am
 
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 if !BUILD_REPO
 
@@ -86,6 +87,7 @@ load_balancer_LDADD = \
 
 endif !BUILD_REPO
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Load_Balancing_Persistent_Client.am
 

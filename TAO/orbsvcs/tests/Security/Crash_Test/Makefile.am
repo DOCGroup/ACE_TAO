@@ -55,6 +55,7 @@ test-stamp: $(srcdir)/test.idl $(TAO_IDL_DEP)
 if BUILD_CORBA_MESSAGING
 if BUILD_INTERCEPTORS
 if BUILD_SSL
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += client
 
@@ -91,6 +92,7 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la \
   @ACE_TLS_LIBS@
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_SSL
 endif BUILD_INTERCEPTORS
 endif BUILD_CORBA_MESSAGING
@@ -100,6 +102,7 @@ endif BUILD_CORBA_MESSAGING
 if BUILD_CORBA_MESSAGING
 if BUILD_INTERCEPTORS
 if BUILD_SSL
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += server
 
@@ -138,6 +141,7 @@ server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la \
   @ACE_TLS_LIBS@
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_SSL
 endif BUILD_INTERCEPTORS
 endif BUILD_CORBA_MESSAGING
