@@ -20,8 +20,6 @@ module Deployment
   exception InvalidLocation {};
   exception InstallationFailure 
   {
-    /*Do we still need a reason? --Tao
-     *Yes -- will */
     string name;
     string reason;
   };
@@ -71,7 +69,16 @@ module Deployment
     MultiplexReceptacle,
     EventEmitter,
     EventPublisher,
-    EventConsumer
+    EventConsumer,
+	ecEventEmitter,
+    ecEventPublisher,
+    ecEventConsumer,
+    rtecEventEmitter,
+    rtecEventPublisher,
+    rtecEventConsumer,
+    nsEventEmitter,
+    nsEventPublisher,
+    nsEventConsumer
   };
 
   // To avoid the connection info in the plan being passed to the
@@ -82,6 +89,9 @@ module Deployment
     string instanceName;
     string portName;
     CCMComponentPortKind kind;
+
+    string endpointInstanceName; // CIAO specific extension 
+    string endpointPortName;     // CIAO specific extension
 
     // the endpoints member is change to endpoint.
     // Since we will not have more than 1 objref in there.

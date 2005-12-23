@@ -1,6 +1,9 @@
 /* -*- C++ -*- */
 // $Id$
 
+
+#include "Configurator_Factory.h"
+
 ACE_INLINE
 CIAO::NodeApplication_Impl::
 NodeApplication_Impl (CORBA::ORB_ptr o,
@@ -11,6 +14,16 @@ NodeApplication_Impl (CORBA::ORB_ptr o,
     poa_ (PortableServer::POA::_duplicate (p)),
     configurator_ (c),
     static_entrypts_maps_ (static_entrypts_maps)
+{
+}
+
+ACE_INLINE
+CIAO::NodeApplication_Impl::
+NodeApplication_Impl ()
+  : orb_ (0),
+    poa_ (0),
+    configurator_ (CIAO::NoOp_Configurator ()),
+    static_entrypts_maps_ (0)
 {
 }
 
