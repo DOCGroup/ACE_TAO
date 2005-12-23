@@ -81,6 +81,8 @@ endif BUILD_RT_CORBA
 
 ## Makefile.Protocols_Receiver.am
 
+if !BUILD_ACE_FOR_TAO
+
 noinst_PROGRAMS += receiver
 
 receiver_CPPFLAGS = \
@@ -100,9 +102,12 @@ receiver_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
+
 ## Makefile.Protocols_Sender.am
 
 if BUILD_RT_CORBA
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += sender
 
@@ -125,6 +130,7 @@ sender_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_RT_CORBA
 
 ## Clean up template repositories, etc.

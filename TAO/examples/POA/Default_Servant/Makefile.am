@@ -20,61 +20,6 @@ CLEANFILES =
 noinst_PROGRAMS =
 BUILT_SOURCES =
 
-## Makefile.POA_Default_Servant_Client.am
-
-if !BUILD_MINIMUM_CORBA
-
-BUILT_SOURCES += \
-  FileC.cpp \
-  FileC.h \
-  FileC.inl \
-  FileS.h \
-  FileS.inl \
-  FileS_T.cpp \
-  FileS_T.h \
-  FileS_T.inl
-
-CLEANFILES += \
-  File-stamp \
-  FileC.cpp \
-  FileC.h \
-  FileC.inl \
-  FileS.h \
-  FileS.inl \
-  FileS_T.cpp \
-  FileS_T.h \
-  FileS_T.inl
-
-FileC.cpp FileC.h FileC.inl FileS.h FileS.inl FileS_T.cpp FileS_T.h FileS_T.inl: File-stamp
-
-File-stamp: $(srcdir)/File.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/File.idl
-	@touch $@
-
-noinst_PROGRAMS += client
-
-client_CPPFLAGS = \
-  -I$(ACE_ROOT) \
-  -I$(ACE_BUILDDIR) \
-  -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
-
-client_SOURCES = \
-  FileC.cpp \
-  client.cpp \
-  FileC.h \
-  FileC.inl \
-  FileS.h \
-  FileS_T.h \
-  FileS_T.inl
-
-client_LDADD = \
-  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
-  $(TAO_BUILDDIR)/tao/libTAO.la \
-  $(ACE_BUILDDIR)/ace/libACE.la
-
-endif !BUILD_MINIMUM_CORBA
-
 ## Makefile.POA_Default_Servant_Server.am
 
 if !BUILD_MINIMUM_CORBA
@@ -130,6 +75,61 @@ server_SOURCES = \
 
 server_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
+  $(TAO_BUILDDIR)/tao/libTAO.la \
+  $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_MINIMUM_CORBA
+
+## Makefile.POA_Default_Servant_Client.am
+
+if !BUILD_MINIMUM_CORBA
+
+BUILT_SOURCES += \
+  FileC.cpp \
+  FileC.h \
+  FileC.inl \
+  FileS.h \
+  FileS.inl \
+  FileS_T.cpp \
+  FileS_T.h \
+  FileS_T.inl
+
+CLEANFILES += \
+  File-stamp \
+  FileC.cpp \
+  FileC.h \
+  FileC.inl \
+  FileS.h \
+  FileS.inl \
+  FileS_T.cpp \
+  FileS_T.h \
+  FileS_T.inl
+
+FileC.cpp FileC.h FileC.inl FileS.h FileS.inl FileS_T.cpp FileS_T.h FileS_T.inl: File-stamp
+
+File-stamp: $(srcdir)/File.idl $(TAO_IDL_DEP)
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/File.idl
+	@touch $@
+
+noinst_PROGRAMS += client
+
+client_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+client_SOURCES = \
+  FileC.cpp \
+  client.cpp \
+  FileC.h \
+  FileC.inl \
+  FileS.h \
+  FileS_T.h \
+  FileS_T.inl
+
+client_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la

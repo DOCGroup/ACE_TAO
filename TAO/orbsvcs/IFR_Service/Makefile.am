@@ -17,6 +17,7 @@ bin_PROGRAMS =
 
 ## Makefile.IFR_Service.am
 
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 bin_PROGRAMS += IFR_Service
@@ -50,6 +51,7 @@ IFR_Service_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.TAO_IFR_BE.am
 

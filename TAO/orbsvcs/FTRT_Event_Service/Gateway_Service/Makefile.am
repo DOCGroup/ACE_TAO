@@ -19,6 +19,7 @@ TAO_ROOT = $(top_srcdir)
 if BUILD_ACE_UUID
 if BUILD_CORBA_MESSAGING
 if BUILD_INTERCEPTORS
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS = ftrtec_gateway_service
@@ -58,6 +59,7 @@ ftrtec_gateway_service_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_INTERCEPTORS
 endif BUILD_CORBA_MESSAGING
 endif BUILD_ACE_UUID

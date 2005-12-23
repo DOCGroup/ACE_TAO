@@ -20,6 +20,7 @@ noinst_PROGRAMS =
 
 ## Makefile.Deferred_Latency_Idl.am
 
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 BUILT_SOURCES = \
@@ -53,10 +54,12 @@ Test-stamp: $(srcdir)/Test.idl $(TAO_IDL_DEP)
 
 
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 
 ## Makefile.Deferred_Latency_Client.am
 
 if BUILD_CORBA_MESSAGING
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += client
@@ -85,10 +88,12 @@ client_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 endif BUILD_CORBA_MESSAGING
 
 ## Makefile.Deferred_Latency_Server.am
 
+if !BUILD_ACE_FOR_TAO
 if !BUILD_MINIMUM_CORBA
 
 noinst_PROGRAMS += server
@@ -114,6 +119,7 @@ server_LDADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 endif !BUILD_MINIMUM_CORBA
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

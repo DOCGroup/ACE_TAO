@@ -13,9 +13,13 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_ROOT = $(top_srcdir)
 
+noinst_PROGRAMS =
+
 ## Makefile.AVS_Latency_Cntl.am
 
-noinst_PROGRAMS = control
+if !BUILD_ACE_FOR_TAO
+
+noinst_PROGRAMS += control
 
 control_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -40,7 +44,11 @@ control_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
+
 ## Makefile.AVS_Latency_Ping.am
+
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += ping
 
@@ -66,7 +74,11 @@ ping_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
+
 ## Makefile.AVS_Latency_Pong.am
+
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += pong
 
@@ -91,6 +103,8 @@ pong_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

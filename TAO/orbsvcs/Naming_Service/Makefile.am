@@ -13,9 +13,13 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_ROOT = $(top_srcdir)
 
+bin_PROGRAMS =
+
 ## Makefile.NT_Naming_Service.am
 
-bin_PROGRAMS = NT_Naming_Service
+if !BUILD_ACE_FOR_TAO
+
+bin_PROGRAMS += NT_Naming_Service
 
 NT_Naming_Service_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -47,7 +51,11 @@ NT_Naming_Service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
+
 ## Makefile.Naming_Service.am
+
+if !BUILD_ACE_FOR_TAO
 
 bin_PROGRAMS += Naming_Service
 
@@ -78,6 +86,8 @@ Naming_Service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_AnyTypeCode.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:

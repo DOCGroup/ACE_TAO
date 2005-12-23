@@ -13,9 +13,13 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_ROOT = $(top_srcdir)
 
+noinst_PROGRAMS =
+
 ## Makefile.AVS_Pluggable_Flow_Protocol_Recv.am
 
-noinst_PROGRAMS = receiver
+if !BUILD_ACE_FOR_TAO
+
+noinst_PROGRAMS += receiver
 
 receiver_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -38,7 +42,11 @@ receiver_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
+
 ## Makefile.AVS_Pluggable_Flow_Protocol_Send.am
+
+if !BUILD_ACE_FOR_TAO
 
 noinst_PROGRAMS += sender
 
@@ -63,7 +71,11 @@ sender_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_ACE_FOR_TAO
+
 ## Makefile.AVS_Pluggable_Flow_Protocol_Ts.am
+
+if !BUILD_ACE_FOR_TAO
 
 noinst_LTLIBRARIES = libTAO_TS.la
 
@@ -81,6 +93,8 @@ libTAO_TS_la_SOURCES = \
 
 noinst_HEADERS = \
   TimeStamp.h
+
+endif !BUILD_ACE_FOR_TAO
 
 ## Clean up template repositories, etc.
 clean-local:
