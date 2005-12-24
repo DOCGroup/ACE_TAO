@@ -1,3 +1,9 @@
+Fri Dec 23 16:16:20 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/tests/Bug_2316_Regression/Makefile.am:
+
+	  New file.
+
 Fri Dec 23 13:06:22 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
