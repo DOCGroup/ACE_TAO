@@ -1,3 +1,16 @@
+Fri Dec 23 13:06:22 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h:
+
+	  Don't assign values to dynamically allocated Any's if the
+	  allocation failed.
+
+	  Remove rec_ member variable.  The constructor extracts all
+	  relevant fields and adds them to property_lookup_ map.
+
+	  Const-qualify constructor argument.
+
 Fri Dec 23 10:47:55 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:

@@ -48,7 +48,7 @@ class TAO_Log_Serv_Export TAO_Log_Constraint_Visitor :
 public:
 
   /// Constructor.
-  TAO_Log_Constraint_Visitor (DsLogAdmin::LogRecord &rec);
+  TAO_Log_Constraint_Visitor (const DsLogAdmin::LogRecord &rec);
 
   /**
    * Returns 1 if the offer satisfies the constraint
@@ -120,9 +120,6 @@ private:
   /// Holder for a value found in property_lookup_ or for a
   /// nested type within that value.
   CORBA::Any_var current_member_;
-
-  /// Local LogRecord.
-  DsLogAdmin::LogRecord &rec_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
