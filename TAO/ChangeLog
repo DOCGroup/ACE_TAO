@@ -1,5 +1,10 @@
 Fri Dec 23 16:16:20 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
+	* configure.ac:
+
+	  Add orbsvcs/tests/Bug_2316_Regression/Makefile to
+	  AC_CONFIG_FILES.
+
 	* orbsvcs/tests/Bug_2316_Regression/Makefile.am:
 
 	  New file.
