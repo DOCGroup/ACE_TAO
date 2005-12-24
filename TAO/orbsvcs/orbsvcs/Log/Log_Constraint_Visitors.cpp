@@ -19,22 +19,20 @@ ACE_RCSID (Log,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (
-  DsLogAdmin::LogRecord &rec)
-  : property_lookup_ (property_lookup_size_),
-    rec_ (rec)
+TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (const DsLogAdmin::LogRecord &rec)
+  : property_lookup_ (property_lookup_size_)
 {
   CORBA::Any* value;
   ACE_NEW (value, CORBA::Any);
 
-#if defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
-  *value <<= ACE_U64_TO_U32 (this->rec_.id);
-#else
-  *value <<= static_cast<ACE_UINT32> ((this->rec_.id));
-#endif
   if (value != 0)
     {
-      // @@ Where's the error check?
+#if defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
+      *value <<= ACE_U64_TO_U32 (rec.id);
+#else
+      *value <<= static_cast<ACE_UINT32> (rec.id);
+#endif
+
       this->property_lookup_.bind (ACE_CString("id", 0, 0),
 				   value);
     }
@@ -42,14 +40,14 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (
   CORBA::Any* value2;
   ACE_NEW (value2, CORBA::Any);
 
-#if defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
-  *value2 <<= ACE_U64_TO_U32 (this->rec_.time);
-#else
-  *value2 <<= static_cast<ACE_UINT32> ((this->rec_.time));
-#endif
   if (value2 != 0)
     {
-      // @@ Where's the error check?
+#if defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
+      *value2 <<= ACE_U64_TO_U32 (rec.time);
+#else
+      *value2 <<= static_cast<ACE_UINT32> (rec.time);
+#endif
+
       this->property_lookup_.bind (ACE_CString("time", 0, 0),
 				   value2);
     }
@@ -57,17 +55,16 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (
   CORBA::Any* value3;
   ACE_NEW (value3, CORBA::Any);
 
-  *value3 = this->rec_.info;
-
   if (value3 != 0)
     {
-      // @@ Where's the error check?
+      *value3 = rec.info;
+
       this->property_lookup_.bind (ACE_CString("info", 0, 0),
 				   value3);
     }
 
   // Bind an entry for each item in the record's attribute list.
-  CORBA::Long len = this->rec_.attr_list.length();
+  CORBA::Long len = rec.attr_list.length();
   for (CORBA::Long i = 0; i < len; ++i)
     {
       CORBA::Any* value;
@@ -75,8 +72,8 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (
 
       if (value != 0)
 	{
-	  *value = this->rec_.attr_list[i].value;
-	  this->property_lookup_.bind (ACE_CString(this->rec_.attr_list[i].name,
+	  *value = rec.attr_list[i].value;
+	  this->property_lookup_.bind (ACE_CString(rec.attr_list[i].name,
 						   0,
 						   0),
 				       value);
