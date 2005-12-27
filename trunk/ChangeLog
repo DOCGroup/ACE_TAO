@@ -1,3 +1,9 @@
+Tue Dec 27 11:06:00 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+
+	  Add ACE_LACKS_ALARM feature test.
+
 Tue Dec 27 15:26:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks6.1.h:
