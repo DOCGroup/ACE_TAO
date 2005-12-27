@@ -86,7 +86,7 @@
 // OS-specific configuration
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 #define ACE_HAS_SIZET_PTR_ASCTIME_R_AND_CTIME_R
-#define ACE_MKDIR_LACKS_MODE
+#define ACE_MKDIR_LACKS_MODE /* Not needed for 6.2 */
 #define ACE_HAS_NONCONST_GETBY
 #define ACE_HAS_NONCONST_SWAB
 #define ACE_HAS_NONCONST_READV
@@ -180,9 +180,8 @@
 
 #define ACE_LACKS_STDINT_H
 #define ACE_LACKS_INTTYPES_H
-#define ACE_LACKS_SYS_SELECT_H
-#define ACE_LACKS_SYS_TIME_H
-#define ACE_LACKS_SYS_RESOURCE_H
+#define ACE_LACKS_SYS_SELECT_H /* Not needed for 6.2 */
+#define ACE_LACKS_SYS_TIME_H /* Not needed for 6.2 */
 #define ACE_LACKS_DLFCN_H
 #define ACE_LACKS_SYS_UIO_H
 #define ACE_LACKS_SYS_IPC_H

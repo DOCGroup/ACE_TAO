@@ -74,13 +74,12 @@ ACE_INLINE u_int
 ACE_OS::alarm (u_int secs)
 {
   ACE_OS_TRACE ("ACE_OS::alarm");
-#if defined (ACE_WIN32) || defined (VXWORKS) || defined (CHORUS) || defined (ACE_PSOS)
+#if defined (ACE_LACKS_ALARM)
   ACE_UNUSED_ARG (secs);
-
   ACE_NOTSUP_RETURN (0);
 #else
   return ::alarm (secs);
-#endif /* ACE_WIN32 || VXWORKS || CHORUS || ACE_PSOS */
+#endif /* ACE_LACKS_ALARM */
 }
 
 ACE_INLINE long

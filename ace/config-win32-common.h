@@ -234,6 +234,7 @@
 #define ACE_LACKS_SETSID
 
 /* LACKS miscellaneous */
+#define ACE_LACKS_ALARM
 #define ACE_LACKS_ARPA_INET_H
 #define ACE_LACKS_DUP2
 #define ACE_LACKS_FORK
