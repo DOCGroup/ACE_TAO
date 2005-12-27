@@ -1,3 +1,44 @@
+Tue Dec 27 14:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-cygwin32.h:
+        * ace/config-dgux-4.11-epc.h:
+        * ace/config-dgux-4.x-ghs.h:
+        * ace/config-freebsd.h:
+        * ace/config-irix5.3-g++.h:
+        * ace/config-irix5.3-sgic++.h:
+        * ace/config-irix6.x-common.h:
+        * ace/config-linux-common.h:
+        * ace/config-macosx-panther.h:
+        * ace/config-macosx-tiger.h:
+        * ace/config-macosx.h:
+        * ace/config-mvs.h:
+        * ace/config-openbsd.h:
+        * ace/config-psos-diab-mips.h:
+        * ace/config-psos-diab-ppc.h:
+        * ace/config-psos-diab.h:
+        * ace/config-psos-tm.h:
+        * ace/config-psosim-g++.h:
+        * ace/config-qnx-neutrino.h:
+        * ace/config-qnx-rtp-62x.h:
+        * ace/config-qnx-rtp-pre62x.h:
+        * ace/config-sco-5.0.0-mit-pthread.h:
+        * ace/config-sco-5.0.0.h:
+        * ace/config-sunos4-g++.h:
+        * ace/config-sunos4-sun4.1.4.h:
+        * ace/config-sunos4-sun4.x.h:
+        * ace/config-tandem-nsk-mips-v2.h:
+        * ace/config-tandem-nsk-mips-v3.h:
+        * ace/config-tandem.h:
+        * ace/config-tru64.h:
+        * ace/config-unixware-2.1.2-g++.h:
+        * ace/config-unixware-7.1.0.h:
+        * ace/config-unixware-7.1.0.udk.h:
+        * ace/config-vxworks5.x.h:
+        * ace/config-vxworks6.2.h:
+        * ace/config-win32-interix.h:
+        * ace/README:
+          Removed ACE_LACKS_SYSTIME_H, it is not used anymore in ACE
+
 Tue Dec 27 14:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks6.1.h:
