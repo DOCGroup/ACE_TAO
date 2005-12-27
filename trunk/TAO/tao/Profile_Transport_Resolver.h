@@ -114,6 +114,13 @@ namespace TAO
     /// Accessor for the transport reserved for this invocation.
     TAO_Transport *transport (void) const;
 
+    /// See if the transport cache has an available transport and
+    /// use that one rather than trying to connect via the connector.
+    /// Separating this functionality enables the look up of many
+    /// endpoints before trying the more time-consuming trip through
+    /// the actual connector.
+    int find_transport (TAO_Transport_Descriptor_Interface *);
+
     /// Accessor to indicate whether we should block while
     /// establishing a connection.
     bool blocked_connect (void) const;

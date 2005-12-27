@@ -1,3 +1,29 @@
+Tue Dec 27 08:22:42 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Profile_Transport_Resolver.cpp:
+        * tao/Profile_Transport_Resolver.h:
+        * tao/Strategies/OC_Endpoint_Selector_Loader.cpp:
+        * tao/Strategies/OC_Endpoint_Selector_Loader.h:
+        * tao/Strategies/OC_Endpoint_Selector_Factory.cpp:
+        * tao/Strategies/OC_Endpoint_Selector_Factory.h:
+        * tao/Strategies/Optimized_Connection_Endpoint_Selector.cpp:
+        * tao/Strategies/Optimized_Connection_Endpoint_Selector.h:
+
+          A new feature requested by Homag.  This feature is an
+          alternative endpoint selector that improves the performance of
+          connection establishment when an IOR contains unreachable
+          endpoints. The two elements of this optimization are a
+          connection cache lookup before attempting any connections and a
+          second means for setting the connection timeout without loading
+          the AMI library to use the TAO-specific connection timeout
+          policy.
+
+        * tests/AlternateIIOP/svc.conf:
+
+          The alternate IIOP test now uses the Optimized Connection
+          Endpoint Selector to speed up the selection of the correct endpoint.
+
+
 Tue Dec 27 09:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/FlResource_Loader.h:

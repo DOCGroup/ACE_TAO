@@ -2,10 +2,12 @@
 
 #include "Profile_Transport_Resolver.h"
 #include "Profile.h"
-#include "Transport.h"
 #include "Stub.h"
+#include "Transport.h"
 #include "Invocation_Endpoint_Selectors.h"
 #include "ORB_Core.h"
+#include "Thread_Lane_Resources.h"
+#include "Transport_Cache_Manager.h"
 #include "Endpoint_Selector_Factory.h"
 #include "Codeset_Manager.h"
 #include "Connector_Registry.h"
@@ -218,6 +220,21 @@ namespace TAO
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   }
+
+
+  int
+  Profile_Transport_Resolver::find_transport (TAO_Transport_Descriptor_Interface *desc)
+  {
+    TAO::Transport_Cache_Manager &cache =
+      this->profile_->orb_core()->lane_resources ().transport_cache();
+
+    // the cache increments the reference count on the transport if the
+    // find is successful. Find_transport uses negative logic in its return,
+    // 0 for success
+    return (cache.find_transport(desc,this->transport_) == 0);
+  }
+
+
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
