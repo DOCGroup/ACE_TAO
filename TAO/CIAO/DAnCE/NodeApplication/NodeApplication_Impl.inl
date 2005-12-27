@@ -17,16 +17,6 @@ NodeApplication_Impl (CORBA::ORB_ptr o,
 {
 }
 
-ACE_INLINE
-CIAO::NodeApplication_Impl::
-NodeApplication_Impl ()
-  : orb_ (0),
-    poa_ (0),
-    configurator_ (CIAO::NoOp_Configurator ()),
-    static_entrypts_maps_ (0)
-{
-}
-
 // Access the readonly attribute
 ACE_INLINE
 Deployment::Properties *
@@ -69,7 +59,7 @@ set_objref (Components::Deployment::ServerActivator_ptr act,
             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (!CORBA::is_nil (this->node_app_manager_.in ()) || 
+  if (!CORBA::is_nil (this->node_app_manager_.in ()) ||
       !CORBA::is_nil (this->objref_.in ()))
     ACE_THROW (CORBA::BAD_INV_ORDER ());
 
