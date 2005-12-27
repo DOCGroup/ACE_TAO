@@ -1,3 +1,12 @@
+Tue Dec 27 12:41:00 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+
+	  Add ACE_HAS_CPU_SET_T, ACE_HAS_PTHREAD_GETAFINITY_NP,
+	  ACE_HAS_PTHREAD_SETAFFINITY_NP, ACE_HAS_SCHED_GETAFFINITY,
+	  and ACE_HAS_SCHED_SETAFFINITY feature tests for a patch
+	  Johnny is preparing.
+
 Tue Dec 27 11:11:15 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* m4/config_h.m4:
