@@ -1,3 +1,20 @@
+Tue Dec 27 15:33:28 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* Makefile.am:
+
+	  Remove DISTCLEANFILES definitions.  We no longer ship
+	  tao-config and tao-config.1.
+
+	* Makefile.am:
+
+	  Build examples and interop-tests subdirectories.
+
+	* Makefile.am:
+
+	  I accidently clobbered this file by checking in the MPC
+	  generated version.   Restore to revision 1.13, the last
+	  known good version.
+
 Tue Dec 27 15:11:18 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* Release
@@ -53,13 +70,6 @@ Tue Dec 27 11:34:29 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 	* performance-tests/Makefile.am:
 
 	  Disable building CSD_Strategy subdirectory.
-	  These *.mpc files need major changes to support separate build
-	  directories.  This is too risky to complete within this beta
-	  cycle.
-
-	* tests/Makefile.am:
-
-	  Disable building CSD_Strategy_Tests subdirectory.
 	  These *.mpc files need major changes to support separate build
 	  directories.  This is too risky to complete within this beta
 	  cycle.
