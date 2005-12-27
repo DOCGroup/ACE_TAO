@@ -3699,9 +3699,9 @@ ACE_CHECK_HAS_FUNCS(sigsuspend sigtimedwait)
 
 ACE_CHECK_LACKS_FUNCS(socketpair strcasecmp)
 
-AC_CHECK_FUNC([strdup],
-  ,
-  [AC_DEFINE([ACE_HAS_STRDUP_EMULATION])])
+ACE_CHECK_LACKS_FUNCS(strchr)
+
+ACE_CHECK_LACKS_FUNCS(strdup)
 
 ACE_CHECK_LACKS_FUNCS(strrchr)
 
