@@ -17,12 +17,13 @@ TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(T
 TAO_ROOT = $(top_srcdir)
 
 
-## Makefile.Persistent_Grid_Client.am
+## Makefile.Persistent_Grid_IDL.am
 
 BUILT_SOURCES = \
   GridC.cpp \
   GridC.h \
   GridC.inl \
+  GridS.cpp \
   GridS.h \
   GridS.inl \
   GridS_T.cpp \
@@ -34,17 +35,21 @@ CLEANFILES = \
   GridC.cpp \
   GridC.h \
   GridC.inl \
+  GridS.cpp \
   GridS.h \
   GridS.inl \
   GridS_T.cpp \
   GridS_T.h \
   GridS_T.inl
 
-GridC.cpp GridC.h GridC.inl GridS.h GridS.inl GridS_T.cpp GridS_T.h GridS_T.inl: Grid-stamp
+GridC.cpp GridC.h GridC.inl GridS.cpp GridS.h GridS.inl GridS_T.cpp GridS_T.h GridS_T.inl: Grid-stamp
 
 Grid-stamp: $(srcdir)/Grid.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Grid.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Grid.idl
 	@touch $@
+
+
+## Makefile.Persistent_Grid_Client.am
 
 noinst_PROGRAMS = client
 
@@ -59,11 +64,6 @@ client_SOURCES = \
   Grid_Client_i.cpp \
   Simple_util.cpp \
   client.cpp \
-  GridC.h \
-  GridC.inl \
-  GridS.h \
-  GridS_T.h \
-  GridS_T.inl \
   Grid_Client_i.h \
   Simple_util.h
 
@@ -78,33 +78,6 @@ client_LDADD = \
 
 ## Makefile.Persistent_Grid_Persistent_Client.am
 
-BUILT_SOURCES += \
-  GridC.cpp \
-  GridC.h \
-  GridC.inl \
-  GridS.h \
-  GridS.inl \
-  GridS_T.cpp \
-  GridS_T.h \
-  GridS_T.inl
-
-CLEANFILES += \
-  Grid-stamp \
-  GridC.cpp \
-  GridC.h \
-  GridC.inl \
-  GridS.h \
-  GridS.inl \
-  GridS_T.cpp \
-  GridS_T.h \
-  GridS_T.inl
-
-GridC.cpp GridC.h GridC.inl GridS.h GridS.inl GridS_T.cpp GridS_T.h GridS_T.inl: Grid-stamp
-
-Grid-stamp: $(srcdir)/Grid.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Grid.idl
-	@touch $@
-
 noinst_PROGRAMS += persistent_client
 
 persistent_client_CPPFLAGS = \
@@ -118,11 +91,6 @@ persistent_client_SOURCES = \
   Persistent_Client_i.cpp \
   Simple_util.cpp \
   persistent_client.cpp \
-  GridC.h \
-  GridC.inl \
-  GridS.h \
-  GridS_T.h \
-  GridS_T.inl \
   Simple_util.h
 
 persistent_client_LDADD = \
@@ -138,35 +106,6 @@ persistent_client_LDADD = \
 
 if !BUILD_ACE_FOR_TAO
 
-BUILT_SOURCES += \
-  GridC.cpp \
-  GridC.h \
-  GridC.inl \
-  GridS.cpp \
-  GridS.h \
-  GridS.inl \
-  GridS_T.cpp \
-  GridS_T.h \
-  GridS_T.inl
-
-CLEANFILES += \
-  Grid-stamp \
-  GridC.cpp \
-  GridC.h \
-  GridC.inl \
-  GridS.cpp \
-  GridS.h \
-  GridS.inl \
-  GridS_T.cpp \
-  GridS_T.h \
-  GridS_T.inl
-
-GridC.cpp GridC.h GridC.inl GridS.cpp GridS.h GridS.inl GridS_T.cpp GridS_T.h GridS_T.inl: Grid-stamp
-
-Grid-stamp: $(srcdir)/Grid.idl $(TAO_IDL_DEP)
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Grid.idl
-	@touch $@
-
 noinst_PROGRAMS += server
 
 server_CPPFLAGS = \
@@ -181,11 +120,6 @@ server_SOURCES = \
   Grid_i.cpp \
   Simple_util.cpp \
   server.cpp \
-  GridC.h \
-  GridC.inl \
-  GridS.h \
-  GridS_T.h \
-  GridS_T.inl \
   Grid_i.h \
   Simple_util.h
 
