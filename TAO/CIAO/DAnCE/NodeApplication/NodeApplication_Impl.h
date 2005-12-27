@@ -62,9 +62,6 @@ namespace CIAO
     : public virtual POA_Deployment::NodeApplication
   {
   public:
-    /// Default constructor.
-NodeApplication_Impl(void);
-
     NodeApplication_Impl (CORBA::ORB_ptr o,
                           PortableServer::POA_ptr p,
                           NodeApp_Configurator &c,
@@ -160,7 +157,7 @@ NodeApplication_Impl(void);
                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((::CORBA::SystemException,
                        ::Components::RemoveFailure));
-                       
+
     /// Remove everything inside including all components and homes.
     virtual void remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
@@ -273,6 +270,9 @@ NodeApplication_Impl(void);
     ::Deployment::NodeApplication_var objref_;
 
     const Static_Config_EntryPoints_Maps* static_entrypts_maps_;
+  private:
+    /// Default constructor, noop
+    NodeApplication_Impl(void);
   };
 }
 
