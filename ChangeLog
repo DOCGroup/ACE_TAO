@@ -1,3 +1,43 @@
+Tue Dec 27 14:49:20 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* m4/config_h.m4:
+
+	  Remove ACE_HAS_STRDUP_EMULATION autoconf header template.
+
+	* configure.ac:
+
+	  Changed strdup feature test to set ACE_LACKS_STRDUP instead
+	  of ACE_HAS_STRDUP_EMULATION.
+
+	  Added (missing) ACE_LACKS_STRCHR feature test.
+
+	* ace/README:
+
+	  Update ACE_HAS_STRDUP_EMULATION description.  Added
+	  ACE_HAS_WCSDUP_EMULATION, ACE_LACKS_STRCHR, ACE_LACKS_WCSCHR,
+	  ACE_LACKS_STRDUP, and ACE_LACKS_WCSDUP descriptions.
+
+	* ace/OS_Memory.h:
+
+	  Updated comment explaining that users may want to set
+	  ACE_HAS_STRDUP_EMULATION if they need to control what memory
+	  allocator is used to include ACE_HAS_WCSDUP_EMULATION.
+
+	* ace/OS_NS_string.cpp:
+
+	  The ACE_HAS_STRDUP_EMULATION feature test macro was being used
+	  for two purposes.  One is for systems which don't have a native
+	  strdup().  The other is for when the user needs to control/
+	  override what memory allocator is used.
+
+	  I've separated these options by adding a new ACE_LACKS_STRDUP
+	  feature test macro. ACE's emulated strdup() implementation is
+	  used if either ACE_LACK_STRDUP or ACE_HAS_STRDUP_EMULATION is
+	  set.
+
+	  Added ACE_HAS_WCSDUP_EMULATION, similar to the above, for
+	  symmetry with the wide character version.
+
 Tue Dec 27 14:17:56 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* m4/config_h.m4:
