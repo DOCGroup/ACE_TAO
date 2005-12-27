@@ -4298,7 +4298,7 @@ dnl Check for Unix98 pthreads extensions
   ACE_CHECK_HAS_FUNCS(pthread_attr_setcreatesuspend_np)
 
   ACE_CHECK_HAS_FUNCS(pthread_getaffinity_np pthread_setaffinity_np)
-  ACE_CHECK_HAS_FUNCS(sched_getaffinity, sched_setaffinity)
+  ACE_CHECK_HAS_FUNCS(sched_getaffinity sched_setaffinity)
 
   AC_CHECK_FUNC([pthread_rwlock_init],,)
   AC_CHECK_FUNC([pthread_rwlock_destroy],,)
