@@ -3693,7 +3693,7 @@ AC_CHECK_FUNC([pread],
 
 ACE_CHECK_LACKS_FUNCS(readv writev)
 
-AC_CHECK_FUNC([set_t_errno], [AC_DEFINE([ACE_HAS_SET_T_ERRNO])],)
+ACE_CHECK_HAS_FUNCS(set_t_errno)
 
 ACE_CHECK_HAS_FUNCS(sigsuspend sigtimedwait)
 
