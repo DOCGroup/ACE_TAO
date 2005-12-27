@@ -1,3 +1,10 @@
+Tue Dec 27 14:31:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-vxworks6.1.h:
+        * ace/config-vxworks6.2.h:
+          Added initial version of VxWorks 6.2 config file. This is updated
+          based on the documentation, no testing has been done
+
 Tue Dec 27 13:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/sys/os_select.h:
