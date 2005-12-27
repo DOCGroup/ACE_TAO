@@ -32,7 +32,7 @@
 #  include /**/ <sys/select.h>
 #endif /* !ACE_LACKS_SYS_SELECT_H */
 
-#if defined (VXWORKS)
+#if defined (VXWORKS) && defined (ACE_LACKS_SYS_SELECT_H)
 #  include /**/ <selectLib.h>
 #endif /* VXWORKS */
 
