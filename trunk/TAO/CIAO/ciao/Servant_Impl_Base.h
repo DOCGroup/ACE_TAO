@@ -48,9 +48,7 @@ namespace CIAO
     : public virtual POA_Components::CCMObject
   {
   public:
-    explicit Servant_Impl_Base (void);
-
-    Servant_Impl_Base (Components::CCMHome_ptr home, 
+    Servant_Impl_Base (Components::CCMHome_ptr home,
                        Home_Servant_Impl_Base *home_servant,
                        Session_Container * c);
 
@@ -107,11 +105,11 @@ namespace CIAO
     get_all_facets (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    
+
     virtual ::Components::ConsumerDescriptions *
     get_all_consumers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
 
     virtual ::Components::EventConsumerBase_ptr
     get_consumer (const char *sink_name
@@ -167,7 +165,7 @@ namespace CIAO
                                  ACE_ENV_ARG_DECL) = 0;
 
     // Creates and returns the StandardConfigurator for the component.
-    virtual ::Components::StandardConfigurator_ptr 
+    virtual ::Components::StandardConfigurator_ptr
     get_standard_configurator (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -198,7 +196,7 @@ namespace CIAO
     ::Components::ConsumerDescription *lookup_consumer_description (
         const char *port_name
       );
-      
+
   protected:
     typedef ACE_Hash_Map_Manager_Ex<const char *,
                                     ::Components::FacetDescription_var,
@@ -219,6 +217,9 @@ namespace CIAO
     Components::CCMHome_var home_;
     Home_Servant_Impl_Base *home_servant_;
     Session_Container * container_;
+  private:
+    /// Not allowed to be used
+    Servant_Impl_Base (void);
   };
 }
 

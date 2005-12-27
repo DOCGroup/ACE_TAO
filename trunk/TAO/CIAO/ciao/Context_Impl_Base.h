@@ -56,8 +56,6 @@ namespace CIAO
     : public virtual Components::CCMContext
   {
   public:
-    explicit Context_Impl_Base (void);
-
     Context_Impl_Base (Components::CCMHome_ptr home,
                        Session_Container * c);
 
@@ -100,6 +98,9 @@ namespace CIAO
   protected:
     Components::CCMHome_var home_;
     Session_Container *container_;
+  private:
+    // Should not be called
+    Context_Impl_Base (void);
   };
 }
 
