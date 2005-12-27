@@ -1,3 +1,29 @@
+Fri Dec 23 20:17:39 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h:
+
+          Changed lock strategy of implicit_ids_, filterable_data_, and
+          variable_header_ maps from TAO_SYNCH_MUTEX to ACE_Null_Mutex,
+          since accesses to the maps are already protected at a higher
+          level.
+
+          Explicitly set the size of the implicit_ids_, filterable_data_,
+          and variable_header_ maps to 27, 31, and 31 hash buckets
+          respectively.
+
+          A fixed set of 9 keys are stored in implicit_ids_.  With the
+          default hash_pjw() hash function, 27 buckets is the smallest
+          table where each key is hashed to a unique bucket.  Further
+          optimizations, perhaps using a minimal perfect hash, may be
+          possible.
+
+          A 31 bucket hash table size was selected for filterable_data_
+          and variable_header_ because a typical structured event has very
+          few if any attributes, the cost of allocating default (1024 hash
+          buckets) size maps outweigh any benefits of fewer hash
+          collisions.
+
 Tue Dec 27 12:24:29 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* Makefile.am:
