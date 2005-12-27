@@ -2,8 +2,8 @@
 // $Id$
 
 // The following configuration file is designed to work for VxWorks
-// 6.1 platforms using one of these compilers:
-// 1) The GNU g++ compiler that is shipped with VxWorks 6.1
+// 6.2 platforms using one of these compilers:
+// 1) The GNU g++ compiler that is shipped with VxWorks 6.2
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
@@ -14,7 +14,7 @@
 #endif /* ! VXWORKS */
 
 #if ! defined (ACE_VXWORKS)
-# define ACE_VXWORKS 0x610
+# define ACE_VXWORKS 0x620
 #endif /* ! ACE_VXWORKS */
 
 #if ! defined (__ACE_INLINE__)
@@ -86,7 +86,6 @@
 // OS-specific configuration
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 #define ACE_HAS_SIZET_PTR_ASCTIME_R_AND_CTIME_R
-#define ACE_MKDIR_LACKS_MODE
 #define ACE_HAS_NONCONST_GETBY
 #define ACE_HAS_NONCONST_SWAB
 #define ACE_HAS_NONCONST_READV
@@ -156,6 +155,7 @@
 #define ACE_LACKS_STRCASECMP
 #define ACE_LACKS_STRRECVFD
 #define ACE_LACKS_SYSCALL
+#define ACE_LACKS_SYSTIME_H
 #define ACE_LACKS_SYSV_SHMEM
 #define ACE_LACKS_TELLDIR
 #define ACE_LACKS_TEMPNAM
@@ -179,8 +179,6 @@
 
 #define ACE_LACKS_STDINT_H
 #define ACE_LACKS_INTTYPES_H
-#define ACE_LACKS_SYS_SELECT_H
-#define ACE_LACKS_SYS_TIME_H
 #define ACE_LACKS_DLFCN_H
 #define ACE_LACKS_SYS_UIO_H
 #define ACE_LACKS_SYS_IPC_H
