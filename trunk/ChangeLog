@@ -1,3 +1,22 @@
+Tue Dec 27 13:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/sys/os_select.h:
+          Only include selectLib for VxWorks when VxWorks doesn't deliver
+          sys/select.h
+
+        * ace/OS_NS_unistd.inl:
+          Introduced ACE_LACKS_ALARM to make it easier to determine which
+          platform has alarm and which not
+
+        * ace/config-chorus.h:
+        * ace/config-psos-diab.h:
+        * ace/config-win32-common.h:
+          Added ACE_LACKS_ALARM
+
+        * ace/config-vxworks6.1.h:
+          Added some documentation about defines which we could drop for
+          VxWorks 6.2 according to the documentation
+
 Tue Dec 27 11:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-vxworks6.1.h:
