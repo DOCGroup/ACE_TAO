@@ -1,3 +1,14 @@
+Tue Dec 27 14:17:56 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* m4/config_h.m4:
+
+	  Remove ACE_HAS_SET_T_ERRNO autoconf header template.
+
+	* configure.ac:
+
+	  Change ACE_HAS_SET_T_ERRNO feature test to use "standard"
+	  ACE_CHECK_HAS_FUNC() macro.
+
 Tue Dec 27 13:36:22 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/os_include/sys/os_mman.h:

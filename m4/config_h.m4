@@ -613,9 +613,6 @@ AH_TEMPLATE([ACE_HAS_REGEX],
 AH_TEMPLATE([ACE_HAS_SEMUN],
 [Compiler/platform defines a union semun for SysV shared memory ])
 
-AH_TEMPLATE([ACE_HAS_SET_T_ERRNO],
-[Platform has a function to set t_errno (e.g., Tandem).])
-
 AH_TEMPLATE([ACE_HAS_SHM_OPEN],[Platform has shm_open()])
 
 AH_TEMPLATE([ACE_HAS_SIGISMEMBER_BUG],
