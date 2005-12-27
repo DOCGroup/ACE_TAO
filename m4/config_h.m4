@@ -1048,9 +1048,6 @@ AH_TEMPLATE([ACE_NEEDS_REGEXPR_H],
 AH_TEMPLATE([ACE_NEEDS_SCHED_H],
 [Platform needs to #include <sched.h> to get thread scheduling defs.])
 
-AH_TEMPLATE([ACE_LACKS_SYSTIME_H],
-[<time.h> doesn't automatically #include <sys/time.h>])
-
 AH_TEMPLATE([ACE_NEW_THROWS_EXCEPTIONS],
 [Compiler's 'new' throws exception on failure (ANSI C++ behavior).])
 
