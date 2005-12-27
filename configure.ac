@@ -1070,6 +1070,14 @@ AC_CHECK_DECL([getopt],
               # include <unistd.h>
               #endif])
 
+dnl Check for madvise() prototype
+AC_CHECK_DECL([madvise],
+	      []
+	      [AC_DEFINE([ACE_LACKS_MADVISE_PROTOTYPE], 1,
+			 [Define to 1 if platform lacks the declaration
+			 of madvise().])],
+	      [#include <sys/mman.h>])
+
 dnl Check for *_timedwait() prototypes
 dnl TODO: We only check for one of the *_timedwait() prototypes.
 dnl       Is this enough?
