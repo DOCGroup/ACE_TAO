@@ -1,3 +1,9 @@
+Tue Dec 27 09:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Time_Value.{h,inl}:
+          Changed the first argument of the constructor accepting two
+          longs to time_t to fix 64bit conversion warnings
+
 Sun Dec 25 09:04:50 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* Merry Christmas, 2005!!!!
