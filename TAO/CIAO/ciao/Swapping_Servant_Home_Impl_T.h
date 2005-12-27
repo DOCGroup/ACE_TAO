@@ -54,9 +54,10 @@ namespace CIAO
   {
   public:
     Swapping_Home_Servant_Impl (EXEC * exe,
-                       Session_Container * c,
-                       const char* ins_name,
-                       const char* obj_id, const char* repo_id);
+                                Session_Container * c,
+                                const char* ins_name,
+                                const char* obj_id,
+                                const char* repo_id);
 
     virtual ~Swapping_Home_Servant_Impl (void);
 

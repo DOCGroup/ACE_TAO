@@ -57,8 +57,6 @@ namespace CIAO
         Facet_Consumer
       };
 
-    explicit Container (void);
-
     Container (CORBA::ORB_ptr o);
     Container (CORBA::ORB_ptr o, Container_Impl *container_impl);
 
@@ -135,6 +133,9 @@ namespace CIAO
     PortableServer::POA_var facet_cons_poa_;
     PortableServer::POA_var home_servant_poa_;
     Container_Impl *container_impl_;
+  private:
+    /// Not allowed to be used
+    Container (void);
   };
 
   class Session_Container;
@@ -173,9 +174,6 @@ namespace CIAO
   class CIAO_SERVER_Export Session_Container : public Container
   {
   public:
-
-    explicit Session_Container (void);
-
     // @@ (OO) Does the static_config_flag really need to be an int?
     //         It appears to be a boolean value.  Please use bool
     //         instead.
@@ -313,6 +311,9 @@ namespace CIAO
                                     const CORBA::PolicyList *p,
                                     PortableServer::POA_ptr root
                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+
+    /// Not allowed to be
+    Session_Container (void);
 
   protected:
     long number_;
