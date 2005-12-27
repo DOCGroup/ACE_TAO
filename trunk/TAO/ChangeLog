@@ -1,3 +1,8 @@
+Tue Dec 26 09:03:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IORInterceptor/IORInterceptor_Details.h:
+          Fixed pragma once warning
+
 Fri Dec 23 16:16:20 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
