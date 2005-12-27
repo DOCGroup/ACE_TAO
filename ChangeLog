@@ -1,3 +1,14 @@
+Tue Dec 27 13:29:27 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* apps/gperf/Makefile.am:
+
+	  Regenerated.
+
+	* apps/gperf/gperf.mpc:
+
+	  New file.  Adds rule for building/installing gperf.1 manpage.
+	  Partially addresses bugzilla issue #2280.
+
 Tue Dec 27 12:45:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
@@ -21,9 +32,9 @@ Tue Dec 27 11:11:15 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
 
-	  Remove ACE_LACKS_SYSTIME_H feature test, and the use of 
+	  Remove ACE_LACKS_SYSTIME_H feature test, and the use of
 	  ACE_LACKS_SYSTIME_H in other feature test macros.  C.f.
-	
+
 	  Tue Dec 27 14:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Dec 27 11:06:00 2005  J.T. Conklin  <jtc@acorntoolworks.com>
