@@ -1140,6 +1140,12 @@ dnl AC_CHECK_TYPE([off64_t],[long long])
 
 dnl Specific typedef checks
 dnl TODO: Check whether these typedefs can be defined somewhere else.
+AC_CHECK_TYPE([cpu_set_t],
+	      [AC_DEFINE([ACE_HAS_CPU_SET_T], 1,
+			 [Define to 1 if the system has the type `cpu_set_t'.])],
+	      [],
+	      [#include <sys/types.h>])
+
 AC_CHECK_TYPE([idtype_t],
 	      [AC_DEFINE([ACE_HAS_IDTYPE_T], 1,
 			 [Define to 1 if the system has the type `idtype_t'.])],
@@ -4290,6 +4296,9 @@ dnl Check for Unix98 pthreads extensions
   ACE_CHECK_HAS_FUNCS(pthread_continue pthread_continue_np pthread_resume_np pthread_suspend pthread_suspend_np)
   ACE_CHECK_HAS_FUNCS(pthread_getconcurrency pthread_setconcurrency)
   ACE_CHECK_HAS_FUNCS(pthread_attr_setcreatesuspend_np)
+
+  ACE_CHECK_HAS_FUNCS(pthread_getaffinity_np pthread_setaffinity_np)
+  ACE_CHECK_HAS_FUNCS(sched_getaffinity, sched_setaffinity)
 
   AC_CHECK_FUNC([pthread_rwlock_init],,)
   AC_CHECK_FUNC([pthread_rwlock_destroy],,)
