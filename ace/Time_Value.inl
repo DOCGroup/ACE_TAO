@@ -103,7 +103,7 @@ ACE_Time_Value::ACE_Time_Value (void)
 }
 
 ACE_INLINE
-ACE_Time_Value::ACE_Time_Value (long sec, long usec)
+ACE_Time_Value::ACE_Time_Value (time_t sec, long usec)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::ACE_Time_Value");
   this->set (sec, usec);

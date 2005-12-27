@@ -106,7 +106,7 @@ public:
   ACE_Time_Value (void);
 
   /// Constructor.
-  ACE_Time_Value (long sec, long usec = 0);
+  ACE_Time_Value (time_t sec, long usec = 0);
 
   // = Methods for converting to/from various time formats.
 
