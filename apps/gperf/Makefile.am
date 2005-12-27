@@ -6,9 +6,23 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
+## ./bin/mwc.pl -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/./MPC/config -include /home/jtc/ACE/ACE-autoconf/ACE_wrappers/./MPC/templates -type automake -noreldefs ACE.mwc
+
 
 SUBDIRS = \
+        . \
         src \
         tests
 
+## Makefile.gperf_docs.am
+
+man_MANS = gperf.1
+
+
+## Clean up template repositories, etc.
+clean-local:
+	-rm -f *~ *.bak *.rpo *.sym lib*.*_pure_* core core.*
+	-rm -f gcctemp.c gcctemp so_locations *.ics
+	-rm -rf cxx_repository ptrepository ti_files
+	-rm -rf templateregistry ir.out
+	-rm -rf ptrepository SunWS_cache Templates.DB
