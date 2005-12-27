@@ -1,3 +1,7 @@
+Tue Dec 27 15:14:05 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* THANKS: Added Vladimir Panov to the Hall of Fame.
+
 Tue Dec 27 14:49:20 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* m4/config_h.m4:
@@ -359,7 +363,7 @@ Thu Dec 22 06:12:39 2005  Steve Huston  <shuston@riverace.com>
 
 Wed Dec 21 12:44:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-        * THANKS: Add Jonathan Sprinkle to the hall of fame.
+        * THANKS: Add Jonathan Sprinkle to the Hall of Fame.
 
         * configure.ac:
 
