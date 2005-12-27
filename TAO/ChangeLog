@@ -1,3 +1,10 @@
+Tue Dec 27 15:11:18 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* Release
+
+	  Add aclocal.m4 to RELEASE_FILES.  Thanks to Vladimir Panov
+	  < gbr at voidland dot org >.
+
 Fri Dec 23 20:17:39 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
