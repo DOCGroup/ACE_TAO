@@ -15,7 +15,10 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Constraint_Visitor::TAO_Notify_Constraint_Visitor (void)
-: implicit_id_ (TAO_Notify_Constraint_Visitor::EMPTY)
+  : implicit_id_ (TAO_Notify_Constraint_Visitor::EMPTY),
+    implicit_ids_(implicit_ids_size_),
+    filterable_data_(filterable_data_size_),
+    variable_header_(variable_header_size_)
 {
   (void) this->implicit_ids_.bind (ACE_CString ("filterable_data",
     0,
