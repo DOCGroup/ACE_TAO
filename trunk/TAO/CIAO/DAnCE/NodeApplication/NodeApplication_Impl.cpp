@@ -16,7 +16,7 @@ CORBA::Long
 CIAO::NodeApplication_Impl::init (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  //@@TODO initialize this NodeApplication properties
+  /// @todo initialize this NodeApplication properties
   return 0;
 }
 
@@ -29,7 +29,7 @@ CIAO::NodeApplication_Impl::create_all_containers (
 {
   // Create all the containers here based on the input node_impl_info.
   const CORBA::ULong len = container_infos.length ();
-  
+
   for (CORBA::ULong i = 0; i < len; ++i)
     {
       // The factory method <create_container> will intialize the container
@@ -41,7 +41,7 @@ CIAO::NodeApplication_Impl::create_all_containers (
         this->create_container (container_infos[i].container_config);
 
       // Build the Component_Container_Map
-      for (CORBA::ULong j = 0; 
+      for (CORBA::ULong j = 0;
           j < container_infos[i].impl_infos.length ();
           ++j)
         {
@@ -50,7 +50,7 @@ CIAO::NodeApplication_Impl::create_all_containers (
             ::Deployment::Container::_duplicate (cref.in ()));
         }
     }
-  
+
   return 0;
 }
 
@@ -106,7 +106,7 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
 
           Components::EventConsumerBase_var consumer;
 
-          // Since we know CCMObject inherits from 
+          // Since we know CCMObject inherits from
           // navigation/event/receptacle, no need
           // to narrow here.
 
@@ -160,7 +160,7 @@ CIAO::NodeApplication_Impl::finishLaunch_i (
                       ACE_TRY_THROW (Deployment::InvalidConnection ());
                     }
 
-                  comp->disconnect (providedReference[i].portName.in (), 
+                  comp->disconnect (providedReference[i].portName.in (),
                                     cookie.in ());
                   this->cookie_map_.unbind (key);
                   if (CIAO::debug_level () > 6)
@@ -478,7 +478,7 @@ CIAO::NodeApplication_Impl::install (
       // @@ Maybe we can optimize this. We can come up with a decision later.
       // Cache a copy of the component object references for all the components
       // installed on this NodeApplication. I know we can delegates these to the
-      // undelying containers, but in that case, we should loop 
+      // undelying containers, but in that case, we should loop
       // all the containers to find the component object reference. - Gan
       const CORBA::ULong comp_len = retv->length ();
       for (CORBA::ULong len = 0;
@@ -532,7 +532,7 @@ CIAO::NodeApplication_Impl::remove_component (const char * inst_name
                   inst_name));
       ACE_TRY_THROW (::Components::RemoveFailure ());
     }
-  
+
   // Remove this component instance from the node application
   ACE_CString name (inst_name);
   this->component_container_map_.unbind (name);
@@ -666,7 +666,7 @@ CIAO::NodeApplication_Impl::remove_container (::Deployment::Container_ptr cref
     {
       ACE_THROW (::Components::RemoveFailure ());
     }
-    
+
   ACE_DEBUG ((LM_DEBUG, "LEAVING: NodeApplication_Impl::remove_container()\n"));
 }
 
@@ -684,7 +684,7 @@ create_connection_key (const Deployment::Connection & connection)
 {
   ACE_CString * retv;
   ACE_NEW_RETURN (retv, ACE_CString, 0);
-    
+
   (*retv) += connection.instanceName.in ();
   (*retv) += connection.portName.in ();
   (*retv) += connection.endpointInstanceName.in ();
