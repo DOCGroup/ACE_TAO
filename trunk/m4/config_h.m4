@@ -651,9 +651,6 @@ AH_TEMPLATE([ACE_HAS_STANDARD_CPP_LIBRARY],
 
 AH_TEMPLATE([ACE_HAS_STRBUF_T],[Compiler/platform supports struct strbuf])
 
-AH_TEMPLATE([ACE_HAS_STRDUP_EMULATION],
-[Platform/compiler lacks strdup() (e.g., VxWorks, Chorus, WinCE)])
-
 AH_TEMPLATE([ACE_HAS_STRPTIME],[Compile ACE_OS::strptime() wrapper into ACE.])
 
 AH_TEMPLATE([ACE_HAS_STREAMS],[Platform supports STREAMS])
