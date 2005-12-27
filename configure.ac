@@ -907,16 +907,6 @@ AS_IF([test "$ace_has_xti" = yes || test "$ace_has_tli" = yes],
 
  ],[])
 
-AC_CHECK_HEADER([sys/time.h],
-  [
-   dnl This is a weak test.
-   AC_EGREP_HEADER([sys/time.h],[time.h],
-     ,
-      [
-       AC_DEFINE([ACE_LACKS_SYSTIME_H])
-      ])
-  ],)
-
 dnl See the notes about ACE_LACKS_MMAP in the functions section of this
 dnl configure script.
 dnl                       -Ossama
@@ -1394,10 +1384,6 @@ ACE_CACHE_CHECK([for POSIX timer structure],
  [
   AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #include <time.h>
-
-#if defined(ACE_LACKS_SYSTIME_H)
-# include <sys/time.h>
-#endif
         ]],[[
          timespec sr;
         ]])],[
@@ -1408,10 +1394,6 @@ ACE_CACHE_CHECK([for POSIX timer structure],
          AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
            [[
 #include <time.h>
-
-#if defined(ACE_LACKS_SYSTIME_H)
-# include <sys/time.h>
-#endif
            ]],
            [[
             timestruc_t sr;
@@ -1469,10 +1451,6 @@ ACE_CACHE_CHECK([for timespec_t],
     [ace_cv_lib_posix_timespec_t],[
       AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #include <time.h>
-
-#if defined(ACE_LACKS_SYSTIME_H)
-# include <sys/time.h>
-#endif
         ]],[[
          timespec_t tt;
         ]])],[
@@ -1512,10 +1490,6 @@ ACE_CACHE_CHECK([for broken struct timespec members],
   [
     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #include <time.h>
-
-#if defined(ACE_LACKS_SYSTIME_H)
-# include <sys/time.h>
-#endif
         ]],[[
          timespec sr;
          sr.ts_sec  = 0;
@@ -5950,10 +5924,6 @@ if test "$ace_cv_lib_voidptr_gettimeofday" = yes ||
      AC_EGREP_CPP([gettimeofday],
        [
 #include <time.h>
-
-#ifdef ACE_LACKS_SYSTIME_H
-# include <sys/time.h>
-#endif
        ],
        [
 dnl We have a gettimeofday prototype
@@ -5992,10 +5962,6 @@ if test "$ac_cv_func_ctime_r" = yes; then
 #endif
 
 #include <time.h>
-
-#if defined(ACE_LACKS_SYSTIME_H)
-# include <sys/time.h>
-#endif
        ]], [[
         const time_t *t = 0;
         char *buf;
@@ -6176,10 +6142,6 @@ ACE_CACHE_CHECK([for ctime() macro],
      [
 #include <time.h>
 
-#if defined(ACE_LACKS_SYSTIME_H)
-# include <sys/time.h>
-#endif
-
 #if defined (ctime)
   ACE_CTIME_MACRO
 #endif
@@ -6204,10 +6166,6 @@ ACE_CACHE_CHECK([for reentrant function macros],
 #endif
 
 #include <time.h>
-
-#if defined(ACE_LACKS_SYSTIME_H)
-# include <sys/time.h>
-#endif
 
 #if !defined (ACE_LACKS_PWD_H)
 # include <pwd.h>
