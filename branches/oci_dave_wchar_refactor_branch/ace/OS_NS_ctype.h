@@ -32,7 +32,8 @@
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
 
-namespace ACE_OS {
+namespace ACE_OS
+{
 
   // these are non-standard names...
 
