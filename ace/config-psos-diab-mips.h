@@ -213,8 +213,6 @@
 
 #define ACE_LACKS_UNIX_SIGNALS
 
-// #define ACE_LACKS_SYSTIME_H
-
 // @todo: (dhinton) Not sure about this, but the following was in ace/OS_String.h
 // #if !defined (ACE_PSOS_DIAB_MIPS)
 //  # include /**/ <stdlib.h>

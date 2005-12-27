@@ -1060,8 +1060,6 @@ ACE_LACKS_WCSRCHR                       Platform/compiler lacks wcsrchr ()
                                         function
 ACE_LACKS_SWAB                          Platform/compiler lacks
                                         swab () function.
-ACE_LACKS_SYSTIME_H                     <time.h> doesn't automatically
-                                        #include /**/ <sys/time.h>
 ACE_LACKS_SYS_MSG_H                     Platform lacks sys/msg.h
                                         (e.g., Chorus and VxWorks)
 ACE_LACKS_SYS_PARAM_H                   Platform lacks <sys/param.h>

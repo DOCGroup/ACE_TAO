@@ -115,7 +115,6 @@
 //        but that may depend on the version of glibc that is used.
 //# define ACE_HAS_DLFCN_H_BROKEN_EXTERN_C
 # define ACE_HAS_VOIDPTR_SOCKOPT
-# define ACE_LACKS_SYSTIME_H
 
 // Don't define _POSIX_SOURCE in ACE to make strtok() prototype
 // visible.  ACE shouldn't depend on feature test macros to make

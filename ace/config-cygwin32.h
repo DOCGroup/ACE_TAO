@@ -33,8 +33,6 @@
 #define ACE_IMPORT_SINGLETON_DECLARATION(T) extern template class T
 #define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) extern template class SINGLETON_TYPE <CLASS, LOCK>;
 
-#define ACE_LACKS_SYSTIME_H
-
 #define ACE_HAS_SELECT_H
 
 #define ACE_LACKS_PRAGMA_ONCE
@@ -102,7 +100,7 @@
 #define ACE_HAS_BIG_FD_SET
 
 // Platform has POSIX terminal interface.
-#define ACE_HAS_TERMIOS 
+#define ACE_HAS_TERMIOS
 
 #define ACE_DEFAULT_MAX_SOCKET_BUFSIZ 65535
 

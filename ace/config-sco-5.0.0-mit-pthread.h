@@ -52,7 +52,7 @@
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 
 // Platform has POSIX terminal interface.
-#define ACE_HAS_TERMIOS 
+#define ACE_HAS_TERMIOS
 
 // Platform supports recvmsg and sendmsg.
 #define ACE_HAS_MSG
@@ -118,7 +118,6 @@
 #define ACE_HAS_SIGINFO_T
 #define ACE_HAS_UCONTEXT_T
 
-#define ACE_LACKS_SYSTIME_H
 #define ACE_HAS_INLINED_OSCALLS
 
 #define ACE_HAS_STRBUF_T
