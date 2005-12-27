@@ -6,11 +6,6 @@
 
 namespace CIAO
 {
-  Servant_Impl_Base::Servant_Impl_Base (void)
-  {
-    ACE_ASSERT (0);
-  }
-
   Servant_Impl_Base::Servant_Impl_Base (Components::CCMHome_ptr home,
                                         Home_Servant_Impl_Base *home_servant,
                                         Session_Container * c)
@@ -136,7 +131,7 @@ namespace CIAO
                                               oid.out ()
                                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       this->home_servant_->update_component_map (oid);
     }
     ACE_CATCHANY
