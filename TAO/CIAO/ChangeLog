@@ -1,3 +1,14 @@
+Tue Dec 27 15:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Container_Base.{h,cpp}:
+        * ciao/Context_Impl_Base.{h,cpp}:
+        * ciao/Home_Servant_Impl_Base.{h,cpp}:
+        * ciao/Servant_Impl_Base.{h,cpp}:
+        * ciao/Swapping_Servant_Home_Impl_Base.{h,cpp}:
+        * ciao/Swapping_Servant_Home_Impl_T.h:
+          Moved the default constructor to the private section and removed
+          the implementation with the assert
+
 Tue Dec 27 15:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/NodeApplication/NodeApplication_Core.cpp:
