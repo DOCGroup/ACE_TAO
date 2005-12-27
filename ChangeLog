@@ -1,3 +1,17 @@
+Tue Dec 27 13:36:22 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/os_include/sys/os_mman.h:
+
+	  Provide madvise prototype if ACE_LACKS_MADVISE_PROTOTYPE.
+
+	* configure.ac:
+
+	  Added ACE_LACKS_MADVISE_PROTOTYPE feature test.
+
+	  This should fix bugzilla bug 2274.  Thanks to Steve Williams
+	  < steve at telxio dot com > for reporting this and providing
+	  an initial patch.
+
 Tue Dec 27 13:29:27 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* apps/gperf/Makefile.am:
@@ -7,7 +21,7 @@ Tue Dec 27 13:29:27 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 	* apps/gperf/gperf.mpc:
 
 	  New file.  Adds rule for building/installing gperf.1 manpage.
-	  Partially addresses bugzilla issue #2280.
+	  Partially addresses bugzilla bug 2280.
 
 Tue Dec 27 12:45:37 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
