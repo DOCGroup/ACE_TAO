@@ -142,7 +142,6 @@
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
 #define ACE_LACKS_SYS_PARAM_H
 #define ACE_LACKS_PWD_FUNCTIONS
-#define ACE_LACKS_RAND_REENTRANT_FUNCTIONS
 #define ACE_LACKS_READDIR_R
 #define ACE_LACKS_READLINK
 #define ACE_LACKS_REALPATH
@@ -228,6 +227,13 @@
 #define ACE_LACKS_FGETWC
 #define ACE_LACKS_FGETWS
 #define ACE_LACKS_FPUTWS
+
+#if defined __RTP__
+// We are building for RTP mode
+#else
+// We are building for kernel mode
+#define ACE_LACKS_RAND_REENTRANT_FUNCTIONS
+#endif
 
 // It is possible to enable pthread support with VxWorks, when the user decides
 // to use this, we need some more defines
