@@ -158,7 +158,6 @@
 
 // Platform supports POSIX timers via timestruc_t.
 #define ACE_HAS_POSIX_TIME
-#define ACE_LACKS_SYSTIME_H
 
 //**************************************************************
 
@@ -184,7 +183,7 @@
 #define ACE_PI_CONTROL_BLOCK_ALIGN_LONGS 2
 
 // Platform has POSIX terminal interface.
-#define ACE_HAS_TERMIOS 
+#define ACE_HAS_TERMIOS
 
 // IRIX 6.5 supports AIO
 #define ACE_HAS_AIO_CALLS

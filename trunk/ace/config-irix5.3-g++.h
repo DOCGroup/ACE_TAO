@@ -16,7 +16,6 @@
 
 #define ACE_SIZEOF_LONG_DOUBLE 8
 
-#define ACE_LACKS_SYSTIME_H
 // Platform supports getpagesize() call.
 #define ACE_HAS_GETPAGESIZE
 #define IRIX5

@@ -60,7 +60,6 @@
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
 #define ACE_HAS_POSIX_TIME                  // Supports POSIX timers via struct timespec.
 #define ACE_LACKS_TIMESPEC_T                // Defines struct timespec but not timespec_t.
-#define ACE_LACKS_SYSTIME_H
 #define ACE_LACKS_STRRECVFD
 #define ACE_LACKS_SETSCHED
 #define ACE_HAS_SIN_LEN

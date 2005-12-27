@@ -174,8 +174,6 @@
 
 #define ACE_LACKS_UNIX_SIGNALS
 
-// #define ACE_LACKS_SYSTIME_H
-
 #define ACE_PAGE_SIZE 4096
 
 #define ACE_PSOS_TM

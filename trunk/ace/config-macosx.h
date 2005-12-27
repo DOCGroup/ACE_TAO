@@ -154,7 +154,6 @@
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 #define ACE_HAS_DIRENT
-#define ACE_LACKS_SYSTIME_H
 #define ACE_LACKS_POLL_H
 #define ACE_LACKS_SEARCH_H
 
@@ -162,7 +161,7 @@
 //#define ACE_HAS_RECURSIVE_MUTEXES
 
 // Platform has POSIX terminal interface.
-#define ACE_HAS_TERMIOS 
+#define ACE_HAS_TERMIOS
 
 #define ACE_HAS_SEMUN
 #define ACE_HAS_SIGINFO_T

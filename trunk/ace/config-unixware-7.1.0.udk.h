@@ -417,9 +417,6 @@
 /* Platform needs to #include <sched.h> to get thread scheduling defs. */
 #define ACE_NEEDS_SCHED_H 1
 
-/* <time.h> doesn't automatically #include <sys/time.h> */
-#define ACE_LACKS_SYSTIME_H 1
-
 /* Turns off the LM_DEBUG and LM_ERROR logging macros... */
 /* #undef ACE_NLOGGING */
 

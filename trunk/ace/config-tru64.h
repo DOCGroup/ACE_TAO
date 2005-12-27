@@ -27,9 +27,6 @@
     Interface wide-character
     classification.*/
 # endif /* DIGITAL_UNIX >= 0x500 */
-# if DIGITAL_UNIX >= 0x40D
-#   define ACE_LACKS_SYSTIME_H
-# endif /* DIGITAL_UNIX >= 0x40D */
 # if DIGITAL_UNIX >= 0x40E
 #   define ACE_LACKS_STDINT_H
 # endif /* DIGITAL_UNIX >= 0x40E */

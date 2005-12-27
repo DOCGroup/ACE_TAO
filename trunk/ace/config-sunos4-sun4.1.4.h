@@ -16,7 +16,6 @@
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
 #define ACE_HAS_CHARPTR_SPRINTF
-#define ACE_LACKS_SYSTIME_H
 #define ACE_HAS_UNION_WAIT
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)

@@ -218,8 +218,6 @@
 
 #define ACE_LACKS_UTSNAME_T
 
-// #define ACE_LACKS_SYSTIME_H
-
 #define ACE_PAGE_SIZE 4096
 
 #if !defined (ACE_PSOS)

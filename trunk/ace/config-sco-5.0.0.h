@@ -36,7 +36,7 @@
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 
 // Platform has POSIX terminal interface.
-#define ACE_HAS_TERMIOS 
+#define ACE_HAS_TERMIOS
 
 // Compiler/platform contains the <sys/syscall.h> file.
 //#define ACE_HAS_SYS_SYSCALL_H
@@ -88,7 +88,6 @@
 #define ACE_HAS_SIGINFO_T
 #define ACE_HAS_UCONTEXT_T
 
-#define ACE_LACKS_SYSTIME_H
 #define ACE_LACKS_STRCASECMP
 
 // #define      ACE_HAS_POSIX_TIME
