@@ -97,8 +97,6 @@
 // Platform defines struct timespec but not timespec_t
 #define ACE_LACKS_TIMESPEC_T
 
-#define ACE_LACKS_SYSTIME_H
-
 #define ACE_LACKS_STDINT_H
 #define ACE_LACKS_STROPTS_H
 #define ACE_LACKS_WCHAR_H

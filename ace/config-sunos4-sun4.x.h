@@ -8,7 +8,6 @@
 #define ACE_CONFIG_H
 #include /**/ "ace/pre.h"
 
-#define ACE_LACKS_SYSTIME_H
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_SETPGID
 #define ACE_LACKS_SETREGID

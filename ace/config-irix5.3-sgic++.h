@@ -17,14 +17,12 @@
 #define ACE_SIZEOF_LONG_DOUBLE 8
 
 #define ACE_LACKS_STDINT_H
-#define ACE_LACKS_SYSTIME_H
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
 // Platform supports getpagesize() call.
 #define ACE_HAS_GETPAGESIZE
 
-#define ACE_LACKS_SYSTIME_H
 #define ACE_HAS_SIGWAIT
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)

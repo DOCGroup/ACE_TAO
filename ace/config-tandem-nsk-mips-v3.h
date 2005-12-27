@@ -330,9 +330,6 @@ extern int cma_sigwait  (sigset_t *);
 // Platform lacks malloc.h
 #define ACE_LACKS_MALLOC_H
 
-// <time.h> doesn't automatically #include /**/ <sys/time.h>
-#define ACE_LACKS_SYSTIME_H
-
 // Platform lacks the siginfo.h include file
 #define ACE_LACKS_SIGINFO_H
 

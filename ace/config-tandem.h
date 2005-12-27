@@ -184,8 +184,6 @@
 #define ACE_LACKS_MADVISE
 //Compiler/platform lacks strcasecmp() (e.g., DG/UX, UNIXWARE, VXWORKS)
 #define ACE_LACKS_STRCASECMP
-//<time.h> doesn't automatically #include /**/ <sys/time.h>
-#define ACE_LACKS_SYSTIME_H
 
 // Defines the page size of the system.
 #define ACE_PAGE_SIZE 4096
