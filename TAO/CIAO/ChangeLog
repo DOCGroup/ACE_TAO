@@ -1,3 +1,12 @@
+Tue Dec 27 15:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/NodeApplication/NodeApplication_Core.cpp:
+          Initialise pointer with 0
+
+        * DAnCE/NodeApplication/NodeApplication_Impl.{h,cpp,inl}:
+          Just declare the default constructor private, it seems not
+          to be used and the implementation was incorrect
+
 Fri Dec 23 11:49:04 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
 	* DAnCE/DomainApplicationManager/Deployment_Configuration.cpp
@@ -25,7 +34,7 @@ Fri Dec 23 11:49:04 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 	* examples/Hello/descriptors/flattened_deploymentplan_without_ns_remove.cdp
 
 	 Merged from CVS Branch CIAO_ReDAC_01.
-	
+
 Fri Dec 23 13:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/ComponentPackager/*
