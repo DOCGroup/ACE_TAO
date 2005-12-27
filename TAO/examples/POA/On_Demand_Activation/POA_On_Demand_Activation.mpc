@@ -7,9 +7,8 @@ project(*Server): taoexe, portableserver, minimum_corba {
 
    specific (automake) {
      includes += $(srcdir)/../Generic_Servant
-   } else {
-     includes += ../Generic_Servant
    }
+   includes += ../Generic_Servant
 
    Source_Files {
     server.cpp

@@ -1,3 +1,60 @@
+Tue Dec 27 11:34:29 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* Makefile.am:
+
+	  Build examples subdirectory.
+
+	* examples/Makefile.am:
+
+	  Disable building CSD_Strategy and RTScheduling subdirectories.
+	  These *.mpc files need major changes to support separate build
+	  directories.  This is too risky to complete within this beta
+	  cycle.
+
+	* performance-tests/Makefile.am:
+
+	  Disable building CSD_Strategy subdirectory.
+	  These *.mpc files need major changes to support separate build
+	  directories.  This is too risky to complete within this beta
+	  cycle.
+
+	* tests/Makefile.am:
+
+	  Disable building CSD_Strategy_Tests subdirectory.
+	  These *.mpc files need major changes to support separate build
+	  directories.  This is too risky to complete within this beta
+	  cycle.
+
+	* examples/Load_Balancing/Makefile.am:
+	* examples/Load_Balancing_persistent/Makefile.am:
+	* examples/POA/Adapter_Activator/Makefile.am:
+	* examples/POA/Explicit_Activation/Makefile.am:
+	* examples/POA/On_Demand_Activation/Makefile.am:
+	* examples/POA/Reference_Counted_Servant/Makefile.am:
+	* examples/POA/TIE/Makefile.am:
+	* examples/Persistent_Grid/Makefile.am:
+	* examples/Simulator/Event_Supplier/Makefile.am:
+
+	  Regenerated.
+
+	* examples/POA/Adapter_Activator/POA_Adapter_Activator.mpc:
+	* examples/POA/Explicit_Activation/POA_Explicit_Activation.mpc:
+	* examples/POA/On_Demand_Activation/POA_On_Demand_Activation.mpc:
+	* examples/POA/Reference_Counted_Servant/Reference_Counted_Servant.mpc:
+
+          Change automake specific includes definitions to to have both
+	  build dir and source dir relative paths.
+
+	* examples/Load_Balancing/Load_Balancing.mpc:
+	* examples/Load_Balancing_persistent/Load_Balancing_persistent.mpc:
+	* examples/POA/TIE/POA_TIE.mpc:
+	* examples/Persistent_Grid/Persistent_Grid.mpc:
+	* examples/Simulator/Event_Supplier/Event_Supplier.mpc:
+
+          Add *_IDL projects for compiling *.idl files.  This eliminates
+          duplicate rules that would otherwise result when Makefile.am's
+          are aggregated in the automake build.
+
 Tue Dec 27 08:22:42 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Profile_Transport_Resolver.cpp:
