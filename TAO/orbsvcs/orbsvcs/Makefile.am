@@ -427,9 +427,7 @@ BUILT_SOURCES += \
   CosConcurrencyControlC.inl \
   CosConcurrencyControlS.cpp \
   CosConcurrencyControlS.h \
-  CosConcurrencyControlS.inl \
   CosConcurrencyControlS_T.cpp \
-  CosConcurrencyControlS_T.h \
   CosConcurrencyControlS_T.inl
 
 CLEANFILES += \
@@ -439,12 +437,10 @@ CLEANFILES += \
   CosConcurrencyControlC.inl \
   CosConcurrencyControlS.cpp \
   CosConcurrencyControlS.h \
-  CosConcurrencyControlS.inl \
   CosConcurrencyControlS_T.cpp \
-  CosConcurrencyControlS_T.h \
   CosConcurrencyControlS_T.inl
 
-CosConcurrencyControlC.cpp CosConcurrencyControlC.h CosConcurrencyControlC.inl CosConcurrencyControlS.cpp CosConcurrencyControlS.h CosConcurrencyControlS.inl CosConcurrencyControlS_T.cpp CosConcurrencyControlS_T.h CosConcurrencyControlS_T.inl: CosConcurrencyControl-stamp
+CosConcurrencyControlC.cpp CosConcurrencyControlC.h CosConcurrencyControlC.inl CosConcurrencyControlS.cpp CosConcurrencyControlS.h CosConcurrencyControlS_T.cpp CosConcurrencyControlS_T.inl: CosConcurrencyControl-stamp
 
 CosConcurrencyControl-stamp: $(srcdir)/CosConcurrencyControl.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,versioning_begin=TAO_BEGIN_VERSIONED_NAMESPACE_DECL -Wb,versioning_end=TAO_END_VERSIONED_NAMESPACE_DECL -Wb,export_macro=TAO_Concurrency_Export -Wb,export_include=orbsvcs/Concurrency/concurrency_export.h $(srcdir)/CosConcurrencyControl.idl
@@ -485,13 +481,12 @@ nobase_include_HEADERS += \
   Concurrency/CC_LockSetFactory.h \
   Concurrency/Concurrency_Loader.h \
   Concurrency/Concurrency_Utils.h \
+  Concurrency/concurrency_export.h \
   CosConcurrencyControl.idl \
   CosConcurrencyControlC.h \
   CosConcurrencyControlC.inl \
   CosConcurrencyControlS.h \
   CosConcurrencyControlS_T.cpp \
-  CosConcurrencyControlS_T.h \
-  CosConcurrencyControlS_T.inl \
   CosConcurrencyControlS_T.inl
 
 pkgconfig_DATA += \

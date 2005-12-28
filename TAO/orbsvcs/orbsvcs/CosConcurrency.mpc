@@ -13,15 +13,22 @@ project(CosConcurrency) : orbsvcslib, core, portableserver, tao_versioning_idl_d
     CosConcurrencyControl.idl
   }
 
-  Source_Files(ORBSVCS_COMPONENTS) {
-    Concurrency {
-      CosConcurrencyControlC.cpp
-      CosConcurrencyControlS.cpp
-      Concurrency
-    }
+  Source_Files {
+    CosConcurrencyControlC.cpp
+    CosConcurrencyControlS.cpp
+    Concurrency
+  }
+
+  Header_Files {
+    Concurrency
+  }
+
+  Inline_Files {
+    Concurrency
   }
 
   Template_Files {
+    Concurrency
   }
 
   Pkgconfig_Files {
