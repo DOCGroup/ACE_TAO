@@ -1,3 +1,8 @@
+Wed Dec 28 11:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Message_Block.h:
+          Doxygen improvements
+
 Wed Dec 28 10:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-linux-common.h:
