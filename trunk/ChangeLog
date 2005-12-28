@@ -1,3 +1,15 @@
+Wed Dec 28 16:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.cpp:
+          Introduced ACE_HAS_2_PARAM_SCHED_SETAFFINITY and
+          ACE_HAS_2_PARAM_SCHED_GETAFFINITY. Some glibc versions ship with
+          a two param version.
+
+        * ace/config-linux-common.h:
+          Removed the setting for setaffinity/getaffinity based on
+          glibc version. Found that even with glibc 2.3 some systems had a
+          two param version, some 3.
+
 Wed Dec 28 12:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_sched.h:
