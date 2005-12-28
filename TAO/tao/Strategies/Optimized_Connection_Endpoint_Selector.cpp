@@ -54,7 +54,7 @@ TAO_Optimized_Connection_Endpoint_Selector::hook (TAO_ORB_Core *,
     timeout_ > ACE_Time_Value::zero;
   if (has_timeout)
     tv = TAO_Optimized_Connection_Endpoint_Selector::timeout_;
-};
+}
 
 int
 TAO_Optimized_Connection_Endpoint_Selector::check_profile (TAO_Profile *p,
