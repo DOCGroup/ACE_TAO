@@ -153,6 +153,7 @@ ACE_THREAD_MANAGER_USES_SAFE_SPAWN      Disable the "check before lock" feature
                                         macro avoids a potential race condition
                                         on platforms with aggressive read/write
                                         reordering.
+ACE_HAS_CPU_SET_T                       Platform delivers cpu_set_t.
 ACE_HAS_PRIOCNTL                        OS has priocntl (2).
 ACE_HAS_RECURSIVE_MUTEXES               Mutexes are inherently recursive
                                         (e.g., Win32)

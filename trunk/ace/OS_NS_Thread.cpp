@@ -23,7 +23,6 @@ ACE_RCSID (ace,
 #include "ace/Condition_T.h"
 #include "ace/Guard_T.h"
 
-
 extern "C" void
 ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args)
 {
@@ -5012,6 +5011,74 @@ ACE_OS::thr_key_detach (ACE_thread_key_t key, void *)
   ACE_UNUSED_ARG (key);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_WTHREADS || ACE_HAS_TSS_EMULATION */
+}
+
+int
+ACE_OS::thr_get_affinity (ACE_hthread_t thr_id,
+                          size_t cpu_set_size,
+                          cpu_set_t * cpu_mask)
+{
+#if defined (ACE_HAS_PTHREAD_GETAFFINITY_NP)
+  // Handle of the thread, which is NPTL thread-id, normally a big number
+  if (::pthread_getaffinity_np (thr_id,
+                                cpu_set_size,
+                                cpu_mask) != 0)
+    {
+      return -1;
+    }
+  return 0;
+#elif defined (ACE_HAS_SCHED_GETAFFINITY)
+  // The process-id is expected as <thr_id>, which can be a thread-id of
+  // linux-thread, thus making binding to cpu of that particular thread only.
+  // If you are using this flag for NPTL-threads, however, please pass as a
+  // thr_id process id obtained by ACE_OS::getpid ()
+  if (::sched_getaffinity(thr_id,
+                          cpu_set_size,
+                          cpu_mask) == -1)
+    {
+      return -1;
+    }
+  return 0;
+#else
+  ACE_UNUSED_ARG (thr_id);
+  ACE_UNUSED_ARG (cpu_set_size);
+  ACE_UNUSED_ARG (cpu_mask);
+  ACE_NOTSUP_RETURN (-1);
+#endif
+}
+
+int
+ACE_OS::thr_set_affinity (ACE_hthread_t thr_id,
+                          size_t cpu_set_size,
+                          const cpu_set_t * cpu_mask)
+{
+#if defined (ACE_HAS_PTHREAD_SETAFFINITY_NP)
+  if (::pthread_setaffinity_np (thr_id,
+                                cpu_set_size,
+                                cpu_mask) != 0)
+    {
+      return -1;
+    }
+  return 0;
+#elif defined (ACE_HAS_SCHED_SETAFFINITY)
+  // The process-id is expected as <thr_id>, which can be a thread-id of
+  // linux-thread, thus making binding to cpu of that particular thread only.
+  // If you are using this flag for NPTL-threads, however, please pass as a
+  // thr_id process id obtained by ACE_OS::getpid (), but whole process will bind your CPUs
+  //
+  if (::sched_setaffinity (thr_id,
+                           cpu_set_size,
+                           cpu_mask == -1)
+    {
+      return -1;
+    }
+  return 0;
+#else
+  ACE_UNUSED_ARG (thr_id);
+  ACE_UNUSED_ARG (cpu_set_size);
+  ACE_UNUSED_ARG (cpu_mask);
+  ACE_NOTSUP_RETURN (-1);
+#endif
 }
 
 int
