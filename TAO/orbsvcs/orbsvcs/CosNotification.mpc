@@ -254,10 +254,10 @@ project(CosNotification_Persist) : notification_serv, core, acexml {
 
   Source_Files {
     Notify/XML_*.cpp
-    Notify/notify_persist_export.h
   }
 
   Header_Files {
+    Notify/notify_persist_export.h
   }
 
   Inline_Files {
